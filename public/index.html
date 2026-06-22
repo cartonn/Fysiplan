@@ -79,6 +79,11 @@
   .modal label{font-size:12px;color:var(--muted);display:block;margin:10px 0 3px}
   .modal select{width:100%;height:32px;border:1px solid var(--line);border-radius:6px}
   .modal .acts{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+  .modal.wide{width:480px;max-width:calc(100vw - 32px)}
+  .uphelp{margin-top:12px;font-size:12.5px;color:var(--muted);line-height:1.55;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+  .uphelp b{color:var(--ink)}
+  .uphelp code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:0 4px;font-size:12px}
+  #up_result{margin-top:10px;font-size:12.5px;color:var(--accent);min-height:16px}
   @media print{
     @page{size:A4 landscape;margin:7mm}
     html,body{background:#fff !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -104,6 +109,7 @@
   <h1>Fysiplan</h1>
   <div class="menu"><span>Bestand</span><span>Eigen Gegevens</span><span>Help</span></div>
   <div class="spacer"></div>
+  <button class="btn" id="uploadBtn">Plaatjes uploaden</button>
   <button class="btn" id="addBtn">+ Oefening toevoegen</button>
   <button class="btn" id="clearBtn">Wis kaart</button>
   <button class="btn primary" id="printBtn">Print trainingschema (PDF)</button>
@@ -184,6 +190,41 @@
   </div>
 </div>
 
+<!-- upload images modal -->
+<div class="ov" id="ovUp">
+  <div class="modal wide">
+    <h3>Bestand met oefeningen + plaatjes uploaden</h3>
+    <label>Kies je bestand (.txt of .csv)</label>
+    <input type="file" id="up_files" accept=".txt,.csv,text/plain,text/csv"/>
+    <div class="uphelp">
+      <b>Zo moet het bestand eruitzien</b><br/>
+      Eén tekstbestand. Per oefening: eerst de <b>naam van de oefening</b> op een regel, daaronder de
+      <b>bestandsnamen van de plaatjes</b> die erbij horen (elk op een eigen regel). Dan een
+      <b>lege regel</b>, en daarna de volgende oefening. Enzovoort:
+      <div style="background:#fff;border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin-top:8px;font-family:monospace;font-size:12px;white-space:pre">Squat (kniebuiging)
+squat-start.png
+squat-uitvoering.png
+
+Lunge (uitval)
+lunge.png
+
+Glute bridge
+bridge1.jpg
+bridge2.jpg</div>
+      <div style="margin-top:8px">
+        • De oefeningnaam exact zoals in Fysiplan (niet-herkende namen worden gemeld).<br/>
+        • Eén of meer plaatjes per oefening — gewoon meer regels eronder.<br/>
+        • Steeds een lege regel tussen twee oefeningen.
+      </div>
+    </div>
+    <div id="up_result"></div>
+    <div class="acts">
+      <button class="btn" id="up_cancel">Sluiten</button>
+      <button class="btn primary" id="up_do">Inlezen</button>
+    </div>
+  </div>
+</div>
+
 <script>
 (function(){
   var P={
@@ -219,6 +260,7 @@
     return svgStr(im.key,im.m,size);
   }
   function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function normEx(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');}
 
   var BASE=[
     ["Squat (kniebuiging)","onder",3,12,"squat"],["Mini-squat","onder",3,15,"squat"],["Wandzit (wall squat)","onder",3,1,"squat"],["Eénbenige squat","onder",3,8,"squat"],
@@ -264,6 +306,10 @@
     NOTES[o.naam]={s:o.starthouding,u:o.uitvoering,o:o.opmerking};
     try{localStorage.setItem('fysiplan_notes',JSON.stringify(NOTES));}catch(e){}
   }
+  // naam -> oefening-index, voor het koppelen van geüploade plaatjes
+  var byNorm={};
+  function rebuildLookup(){byNorm={};OEF.forEach(function(o){byNorm[normEx(o.naam)]=o.id;});}
+  rebuildLookup();
   // practice settings + autosave of the current card
   var SET={praktijk:'FysioTotaal'};
   try{SET=Object.assign(SET,JSON.parse(localStorage.getItem('fysiplan_settings')||'{}'));}catch(e){}
@@ -418,6 +464,7 @@
   function applyRealImages(map){
     if(!map)return;
     OEF.forEach(function(o){
+      if(o.userimg)return;
       var v=map[o.naam];if(!v)return;var imgs=[];
       if(typeof v==='string')imgs=[{type:'img',src:'images/'+v,label:'Plaatje'}];
       else if(Array.isArray(v))imgs=v.map(function(f,i){return {type:'img',src:'images/'+f,label:i===0?'Starthouding':(i===1?'Uitvoering':'Plaatje '+(i+1))};});
@@ -429,6 +476,58 @@
       if(imgs.length){o.imgs=imgs;o.echt=true;}
     });
   }
+
+  // ---- Bestand (txt/csv) met oefeningen + plaatjes inlezen ----
+  function setImgsFromFiles(o,files){
+    o.imgs=files.map(function(fn,i){return {type:'img',src:'images/'+fn,label:i===0?'Starthouding':(i===1?'Uitvoering':'Plaatje '+(i+1))};});
+    o.userimg=true;o.echt=true;
+  }
+  function parseStructure(text){
+    return String(text).replace(/\r\n?/g,'\n').split(/\n[ \t]*\n+/)
+      .map(function(b){return b.split('\n').map(function(l){return l.trim();}).filter(Boolean);})
+      .filter(function(b){return b.length;})
+      .map(function(b){return {naam:b[0],files:b.slice(1)};});
+  }
+  function applyMapping(entries){
+    var rep={matched:0,unmatched:[],files:0};
+    entries.forEach(function(e){
+      rep.files+=e.files.length;
+      var oi=byNorm[normEx(e.naam)];
+      if(oi==null){rep.unmatched.push(e.naam);return;}
+      if(!e.files.length)return;
+      setImgsFromFiles(OEF[oi],e.files);rep.matched++;
+    });
+    return rep;
+  }
+  function persistMapping(){
+    var map={};OEF.forEach(function(o){if(o.userimg)map[o.naam]=o.imgs.map(function(im){return im.src.replace(/^images\//,'');});});
+    try{localStorage.setItem('fysiplan_mapping',JSON.stringify(map));}catch(e){}
+  }
+  function loadMapping(){
+    try{var map=JSON.parse(localStorage.getItem('fysiplan_mapping')||'{}');
+      Object.keys(map).forEach(function(naam){var oi=byNorm[normEx(naam)];if(oi!=null)setImgsFromFiles(OEF[oi],map[naam]);});
+    }catch(e){}
+  }
+  var ovUp=document.getElementById('ovUp');
+  document.getElementById('uploadBtn').addEventListener('click',function(){document.getElementById('up_result').textContent='';ovUp.classList.add('on');});
+  document.getElementById('up_cancel').addEventListener('click',function(){ovUp.classList.remove('on');});
+  document.getElementById('up_do').addEventListener('click',function(){
+    var fl=document.getElementById('up_files').files;
+    if(!fl||!fl.length){alert('Kies eerst je bestand (.txt of .csv).');return;}
+    var res=document.getElementById('up_result');res.textContent='Bezig met inlezen…';
+    fl[0].text().then(function(txt){
+      var rep=applyMapping(parseStructure(txt));
+      persistMapping();
+      chosen=chosen.filter(function(c){return OEF[c.o]&&OEF[c.o].imgs[c.i];});
+      render();
+      var msg=rep.matched+' oefening(en) gekoppeld · '+rep.files+' plaatje(s) in het bestand.';
+      if(rep.unmatched.length)msg+=' Niet herkend: '+rep.unmatched.slice(0,8).join(', ')+(rep.unmatched.length>8?'…':'');
+      res.textContent=msg;
+    }).catch(function(){res.textContent='Kon het bestand niet lezen. Gebruik een .txt of .csv bestand.';});
+  });
+  loadMapping();
+  chosen=chosen.filter(function(c){return OEF[c.o]&&OEF[c.o].imgs[c.i];});
+
   if(window.fetch){
     fetch('oefening-plaatjes.json').then(function(r){return r.ok?r.json():null;}).then(function(m){
       if(m&&Object.keys(m).length){applyRealImages(m);chosen=chosen.filter(function(c){return OEF[c.o]&&OEF[c.o].imgs[c.i];});render();}
