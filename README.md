@@ -32,8 +32,19 @@ Lokaal draaien: `npm run build && npm run start`, daarna http://localhost:3000
 
 ## De echte oefening-plaatjes
 
-De tekeningen in de app zijn nu nette stand-ins. De echte plaatjes uit het oude programma
-vervangen ze later: dat is een content-wissel (afbeeldingen + verwijzingen), geen codewijziging.
+De tekeningen in de app zijn nu nette stand-ins. De echte plaatjes vervangen ze later **zonder
+codewijziging** — gekoppeld op oefeningnaam:
+
+1. Zet de afbeeldingen (PNG/JPG) in `public/images/`.
+2. Koppel ze in `public/oefening-plaatjes.json` (sleutel = oefeningnaam). Drie vormen mogelijk,
+   zie `public/oefening-plaatjes.VOORBEELD.json` en `public/images/LEESMIJ.txt`:
+   - één plaatje: `"Squat (kniebuiging)": "squat.png"`
+   - meerdere: `"Lunge (uitval)": ["lunge-start.png", "lunge-uitvoering.png"]`
+   - met labels: `"Glute bridge": { "start": "...", "uitvoering": "..." }`
+3. Opslaan + pushen. De placeholders verdwijnen automatisch voor elke gekoppelde oefening.
+
+Lever je een lijst aan met "oefeningnaam + bestandsnaam", dan is `oefening-plaatjes.json` in één
+keer te vullen.
 
 ## Data & privacy
 
