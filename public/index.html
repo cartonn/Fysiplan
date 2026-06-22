@@ -85,6 +85,11 @@
   #a4 table.mon th,#a4 table.mon td{border:1px solid #d0d5dd;padding:3px;text-align:center;color:#475467}
   #a4 table.mon thead th{background:#f2f5f9}
   #a4 table.mon .ex{text-align:left;font-size:9.5px;color:#101828}
+  #a4 .meta-in{border:none;border-bottom:1px solid #cbd2da;font-size:12px;width:130px;padding:0 2px 1px;background:transparent;font-family:inherit;color:#101828;text-align:left}
+  #a4 .meta-in:focus{outline:none;border-bottom-color:var(--brand)}
+  #a4 table.mon input{border:none;width:100%;height:18px;text-align:center;font-size:10px;padding:0;background:transparent;font-family:inherit;color:#101828}
+  #a4 table.mon input:focus{outline:none;background:var(--brand-50);border-radius:3px}
+  #a4 table.mon input.dcol{font-size:9px}
   #a4 .pic .rm{position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:50%;background:#d92d20;color:#fff;font-size:12px;line-height:18px;text-align:center;cursor:pointer;display:none;box-shadow:var(--sh-sm)}
   #a4 .pic:hover .rm{display:block}
   .notes{margin-top:12px;border-top:1px solid var(--line2);padding-top:10px}
@@ -123,6 +128,8 @@
     #a4 table.mon{font-size:9px}
     #a4 table.mon th,#a4 table.mon td{padding:1px}
     #a4 table.mon thead th{background:#f2f5f9 !important}
+    #a4 table.mon input{font-size:9px;height:14px}
+    #a4 .meta-in{border-bottom:1px solid #999 !important}
   }
 </style>
 </head>
@@ -173,7 +180,7 @@
     <div id="a4">
       <div class="a4hd">
         <div><input class="logoIn" id="praktijk" value="FysioTotaal" aria-label="Praktijknaam"/><div class="sub">Trainingskaart · 1 × A4</div></div>
-        <div class="sub" style="text-align:right">Datum: ______________<br/>Therapeut: <span id="a4therapeut">______________</span></div>
+        <div class="sub" style="text-align:right">Datum: <input class="meta-in" id="a4datum" aria-label="Datum"/><br/>Therapeut: <input class="meta-in" id="a4ther" aria-label="Therapeut"/></div>
       </div>
       <div class="client">
         <div><label>Naam</label><input class="fld" id="c_naam"/></div>
@@ -394,7 +401,7 @@ bridge2.jpg</div>
   function saveState(){
     try{
       var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
-      localStorage.setItem('fysiplan_state',JSON.stringify({chosen:chosen,client:client}));
+      localStorage.setItem('fysiplan_state',JSON.stringify({chosen:chosen,client:client,grid:GRID}));
     }catch(e){}
   }
   function loadState(){
@@ -402,10 +409,11 @@ bridge2.jpg</div>
       var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');
       if(Array.isArray(st.chosen))chosen=st.chosen.filter(function(c){return OEF[c.o]&&OEF[c.o].imgs[c.i];});
       if(st.client)CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el&&st.client[k]!=null)el.value=st.client[k];});
+      if(st.grid&&typeof st.grid==='object'){GRID={dates:st.grid.dates||{},cells:st.grid.cells||{},datum:st.grid.datum||''};}
     }catch(e){}
   }
 
-  var curG='all',q='',active=null,chosen=[],CUSTOMLIB=false,IMGCACHE={};
+  var curG='all',q='',active=null,chosen=[],CUSTOMLIB=false,IMGCACHE={},GRID={dates:{},cells:{},datum:''};
   var elList=document.getElementById('list'),elStrip=document.getElementById('strip'),
       elActive=document.getElementById('activeName'),elPics=document.getElementById('pics'),
       elMon=document.getElementById('mon'),elEmpty=document.getElementById('emptyA4'),elCnt=document.getElementById('cnt'),
@@ -460,23 +468,24 @@ bridge2.jpg</div>
       }
     }
     elPics.innerHTML=slots;
-    // monitoring
-    var dates=8,head="<tr><th style='width:16px'>#</th><th style='width:150px'>oefening</th>";
-    for(var d=0;d<dates;d++)head+="<th colspan='3'>datum<br/>__/__</th>";
+    // monitoring (invulbaar: datum per kolom + serie/herhaling/weerstand)
+    var dates=6;
+    function cell(rowKey,col,f){var key=rowKey+'|'+col+'|'+f;return "<td><input data-k='"+key+"' value='"+esc(GRID.cells[key]||'')+"'/></td>";}
+    var head="<thead><tr><th style='width:16px'>#</th><th style='width:150px'>oefening</th>";
+    for(var d=0;d<dates;d++)head+="<th colspan='3'>datum<br/><input class='dcol' data-col='"+d+"' value='"+esc(GRID.dates[d]||'')+"' placeholder='__/__'/></th>";
     head+="</tr><tr><th></th><th></th>";
     for(var d2=0;d2<dates;d2++)head+="<th>S</th><th>H</th><th>W</th>";
-    head+="</tr>";
+    head+="</tr></thead>";
     var seen={},rows='',k=0;
     chosen.forEach(function(c){
       if(seen[c.o])return;seen[c.o]=1;k++;var o=OEF[c.o];
-      var r="<tr><td>"+k+"</td><td class='ex'>"+o.naam+"</td>";
-      for(var d=0;d<dates;d++)r+="<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";
+      var r="<tr><td>"+k+"</td><td class='ex'>"+esc(o.naam)+"</td>";
+      for(var d=0;d<dates;d++)r+=cell('e'+c.o,d,'S')+cell('e'+c.o,d,'H')+cell('e'+c.o,d,'W');
       rows+=r+"</tr>";
     });
-    // pad to some empty rows for writing space
     var pad=Math.max(0,6-k);
-    for(var p=0;p<pad;p++){var r2="<tr><td>"+(k+p+1)+"</td><td class='ex'>&nbsp;</td>";for(var d=0;d<dates;d++)r2+="<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";rows+=r2+"</tr>";}
-    elMon.innerHTML=chosen.length?head+rows:'';
+    for(var p=0;p<pad;p++){var r2="<tr><td>"+(k+p+1)+"</td><td class='ex'>&nbsp;</td>";for(var d=0;d<dates;d++)r2+=cell('p'+p,d,'S')+cell('p'+p,d,'H')+cell('p'+p,d,'W');rows+=r2+"</tr>";}
+    elMon.innerHTML=chosen.length?(head+"<tbody>"+rows+"</tbody>"):'';
   }
   function render(){updateChipCounts();renderList();renderStrip();renderA4();saveState();}
 
@@ -539,7 +548,8 @@ bridge2.jpg</div>
   function closeOv(id){document.getElementById(id).classList.remove('on');}
   function applySettings(){
     var p=document.getElementById('praktijk');if(p)p.value=SET.praktijk||'';
-    var t=document.getElementById('a4therapeut');if(t)t.textContent=SET.therapeut?SET.therapeut:'______________';
+    var t=document.getElementById('a4ther');if(t)t.value=SET.therapeut||'';
+    var dt=document.getElementById('a4datum');if(dt)dt.value=GRID.datum||'';
   }
   document.getElementById('menuBestand').addEventListener('click',function(){openOv('ovFile');});
   document.getElementById('menuHelp').addEventListener('click',function(){openOv('ovHelp');});
@@ -565,9 +575,19 @@ bridge2.jpg</div>
   });
   document.querySelectorAll('.ov').forEach(function(ov){ov.addEventListener('click',function(e){if(e.target===ov)ov.classList.remove('on');});});
 
-  // practice name + restore previous card
+  // invulbare A4-velden: praktijk, datum, therapeut, en het monitoring-grid
   var elPraktijk=document.getElementById('praktijk');
   if(elPraktijk){elPraktijk.value=SET.praktijk;elPraktijk.addEventListener('input',function(){SET.praktijk=elPraktijk.value;saveSettings();});}
+  var elTher=document.getElementById('a4ther');
+  if(elTher)elTher.addEventListener('input',function(){SET.therapeut=elTher.value;saveSettings();});
+  var elDatum=document.getElementById('a4datum');
+  if(elDatum)elDatum.addEventListener('input',function(){GRID.datum=elDatum.value;saveState();});
+  elMon.addEventListener('input',function(e){
+    var t=e.target;if(t.tagName!=='INPUT')return;
+    if(t.classList.contains('dcol')){GRID.dates[t.dataset.col]=t.value;}
+    else if(t.dataset.k){GRID.cells[t.dataset.k]=t.value;}
+    saveState();
+  });
   applySettings();
   CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.addEventListener('input',saveState);});
   loadState();
@@ -663,8 +683,8 @@ bridge2.jpg</div>
     IMGCACHE=imgs||{};
     var lib=loadLib();
     if(lib){buildLibrary(lib);chosen=[];}
-    render();
-  }).catch(function(){render();});
+    applySettings();render();
+  }).catch(function(){applySettings();render();});
 })();
 </script>
 </body>
