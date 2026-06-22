@@ -546,6 +546,7 @@ bridge2.jpg</div>
   // ---- menubalk: Bestand / Eigen Gegevens / Help ----
   function openOv(id){document.getElementById(id).classList.add('on');}
   function closeOv(id){document.getElementById(id).classList.remove('on');}
+  function today(){var d=new Date();function p(n){return (n<10?'0':'')+n;}return p(d.getDate())+'-'+p(d.getMonth()+1)+'-'+d.getFullYear();}
   function applySettings(){
     var p=document.getElementById('praktijk');if(p)p.value=SET.praktijk||'';
     var t=document.getElementById('a4ther');if(t)t.value=SET.therapeut||'';
@@ -565,6 +566,7 @@ bridge2.jpg</div>
   document.getElementById('file_new').addEventListener('click',function(){
     if(confirm('Nieuwe kaart: gekozen plaatjes én cliëntgegevens wissen?')){
       chosen=[];CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value='';});
+      GRID={dates:{},cells:{},datum:today()};applySettings();
       saveState();render();closeOv('ovFile');
     }
   });
@@ -683,8 +685,9 @@ bridge2.jpg</div>
     IMGCACHE=imgs||{};
     var lib=loadLib();
     if(lib){buildLibrary(lib);chosen=[];}
+    if(!GRID.datum){GRID.datum=today();saveState();}
     applySettings();render();
-  }).catch(function(){applySettings();render();});
+  }).catch(function(){if(!GRID.datum)GRID.datum=today();applySettings();render();});
 })();
 </script>
 </body>
