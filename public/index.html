@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Fysiplan — trainingskaarten</title>
+<style>
+  :root{
+    --bg:#f4f5f7; --panel:#ffffff; --line:#d9dce1; --line2:#eceef1;
+    --text:#1c2430; --muted:#6b7480; --soft:#9aa3ad;
+    --accent:#1769aa; --accent-bg:#e8f1fa; --accent-line:#9cc6ea;
+    --ink:#2a2f36;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+  header.topbar{display:flex;align-items:center;gap:14px;padding:10px 16px;background:var(--panel);border-bottom:1px solid var(--line)}
+  header.topbar h1{font-size:17px;font-weight:600;margin:0;color:var(--accent)}
+  header.topbar .menu{display:flex;gap:14px;color:var(--muted);font-size:13px}
+  header.topbar .spacer{flex:1}
+  header.topbar button{font:inherit}
+  .btn{padding:7px 12px;border:1px solid var(--line);background:var(--panel);border-radius:7px;cursor:pointer;color:var(--ink)}
+  .btn:hover{background:var(--bg)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn.primary:hover{filter:brightness(1.06)}
+  .wrap{display:grid;grid-template-columns:300px 250px minmax(0,1fr);gap:14px;padding:14px;align-items:start}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px}
+  .card .hd{padding:9px 12px;border-bottom:1px solid var(--line2);font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+  .card .bd{padding:10px 12px}
+  .step{display:inline-flex;width:18px;height:18px;border-radius:50%;background:var(--accent-bg);color:var(--accent);align-items:center;justify-content:center;font-size:11px;font-weight:600}
+  .filters{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+  .chip{font-size:12px;padding:4px 9px;border-radius:6px;border:1px solid var(--line);background:var(--panel);cursor:pointer;color:var(--muted)}
+  .chip.on{background:var(--accent-bg);border-color:var(--accent-line);color:var(--accent)}
+  input[type=text],input.fld{width:100%;height:32px;border:1px solid var(--line);border-radius:6px;padding:0 8px;font:inherit;background:var(--panel)}
+  .list{height:420px;overflow:auto}
+  .row{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:7px;cursor:pointer;border:1px solid transparent}
+  .row:hover{background:var(--bg)}
+  .row.active{background:var(--accent-bg);border-color:var(--accent-line)}
+  .row .nm{flex:1;line-height:1.25}
+  .row .nm small{display:block;color:var(--soft);font-size:11px}
+  .thumb{width:36px;height:36px;flex:0 0 36px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);object-fit:contain}
+  .strip{display:flex;flex-wrap:wrap;gap:10px;min-height:90px}
+  .pick{position:relative;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;padding:5px;width:78px;text-align:center;color:var(--ink)}
+  .pick.on{border:2px solid var(--accent);padding:4px}
+  .pick .lab{font-size:10px;color:var(--muted);margin-top:2px}
+  .pick .bdg{position:absolute;top:-8px;right:-8px;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center}
+  .hint{color:var(--soft);font-size:12.5px;padding:14px 6px;text-align:center}
+  /* ---- A4 ---- */
+  #a4wrap{overflow:auto}
+  #a4{background:#fff;border:1px solid var(--line);border-radius:6px;width:1010px;min-height:715px;padding:22px 26px;color:#111;position:relative}
+  #a4 .a4hd{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #111;padding-bottom:8px}
+  #a4 .a4hd .logo{font-size:20px;font-weight:700;color:var(--accent)}
+  #a4 .a4hd .sub{font-size:11px;color:#555}
+  #a4 .client{display:grid;grid-template-columns:repeat(4,1fr);gap:6px 18px;margin:12px 0 16px}
+  #a4 .client label{font-size:11px;color:#555;display:block}
+  #a4 .client input{height:26px;border:none;border-bottom:1px solid #999;border-radius:0;font-size:13px}
+  #a4 .pics{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;margin-bottom:14px}
+  #a4 .pic{border:1px solid #bbb;border-radius:4px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;position:relative;color:#222}
+  #a4 .pic .n{position:absolute;top:1px;left:3px;font-size:9px;color:#777}
+  #a4 .pic .cap{position:absolute;bottom:-13px;left:0;right:0;font-size:7.5px;text-align:center;color:#555;line-height:1;height:12px;overflow:hidden}
+  #a4 table.mon{border-collapse:collapse;width:100%;font-size:10px;table-layout:fixed;margin-top:8px}
+  #a4 table.mon th,#a4 table.mon td{border:1px solid #aaa;padding:2px;text-align:center;color:#333}
+  #a4 table.mon .ex{text-align:left;font-size:9.5px}
+  .ph{color:#bbb;font-size:11px}
+  /* ---- modal ---- */
+  .ov{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:50}
+  .ov.on{display:flex}
+  .modal{background:#fff;border-radius:12px;width:380px;padding:18px 20px}
+  .modal h3{margin:0 0 12px;font-size:16px}
+  .modal label{font-size:12px;color:var(--muted);display:block;margin:10px 0 3px}
+  .modal select{width:100%;height:32px;border:1px solid var(--line);border-radius:6px}
+  .modal .acts{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+  @media print{
+    @page{size:A4 landscape;margin:8mm}
+    body{background:#fff}
+    .topbar,.wrap>.card,.wrap .col-controls,.no-print{display:none !important}
+    .wrap{display:block;padding:0;gap:0}
+    #a4wrap{overflow:visible}
+    #a4{width:100%;min-height:auto;border:none;border-radius:0;padding:0}
+    #a4 .pic .cap{font-size:7px}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <h1>Fysiplan</h1>
+  <div class="menu"><span>Bestand</span><span>Eigen Gegevens</span><span>Help</span></div>
+  <div class="spacer"></div>
+  <button class="btn" id="addBtn">+ Oefening toevoegen</button>
+  <button class="btn primary" id="printBtn">Print trainingschema (PDF)</button>
+</header>
+
+<div class="wrap">
+  <!-- col 1: exercise list -->
+  <div class="card col-controls">
+    <div class="hd"><span class="step">1</span> Kies oefening <span id="cnt" style="margin-left:auto"></span></div>
+    <div class="bd">
+      <div class="filters" id="filters">
+        <span class="chip on" data-g="all">alle groepen</span>
+        <span class="chip" data-g="boven">bovenste extr.</span>
+        <span class="chip" data-g="onder">onderste extr.</span>
+        <span class="chip" data-g="romp">romp</span>
+        <span class="chip" data-g="divers">divers</span>
+      </div>
+      <input type="text" id="search" placeholder="zoek oefening..." style="margin-bottom:8px"/>
+      <div class="list" id="list"></div>
+    </div>
+  </div>
+
+  <!-- col 2: picture picker -->
+  <div class="card col-controls">
+    <div class="hd"><span class="step">2</span> Kies plaatje(s)</div>
+    <div class="bd">
+      <div id="activeName" style="font-size:13px;font-weight:600;margin-bottom:8px;min-height:18px;color:var(--ink)">—</div>
+      <div class="strip" id="strip"><div class="hint">Kies links een oefening.</div></div>
+    </div>
+  </div>
+
+  <!-- col 3: A4 -->
+  <div id="a4wrap">
+    <div id="a4">
+      <div class="a4hd">
+        <div><div class="logo">FysioTotaal</div><div class="sub">Trainingskaart · 1 × A4</div></div>
+        <div class="sub" style="text-align:right">Datum: ______________<br/>Therapeut: ______________</div>
+      </div>
+      <div class="client">
+        <div><label>Naam</label><input class="fld" id="c_naam"/></div>
+        <div><label>Leeftijd</label><input class="fld" id="c_leeftijd"/></div>
+        <div><label>max. HF</label><input class="fld" id="c_hf"/></div>
+        <div><label>Trainingszone</label><input class="fld" id="c_zone"/></div>
+      </div>
+      <div class="pics" id="pics"></div>
+      <div id="emptyA4" class="hint no-print" style="padding:30px">Kies oefeningen en plaatjes — ze verschijnen hier genummerd in de A4.</div>
+      <table class="mon" id="mon"></table>
+    </div>
+  </div>
+</div>
+
+<!-- add exercise modal -->
+<div class="ov" id="ov">
+  <div class="modal">
+    <h3>Oefening toevoegen</h3>
+    <label>Naam</label>
+    <input type="text" id="m_naam" placeholder="bijv. Wandelende lunge"/>
+    <label>Groep</label>
+    <select id="m_groep">
+      <option value="boven">bovenste extremiteit</option>
+      <option value="onder">onderste extremiteit</option>
+      <option value="romp">romp</option>
+      <option value="divers">divers</option>
+    </select>
+    <label>Series × herhalingen</label>
+    <div style="display:flex;gap:8px">
+      <input type="text" id="m_s" value="3" style="width:60px"/>
+      <span style="align-self:center">×</span>
+      <input type="text" id="m_h" value="12" style="width:60px"/>
+    </div>
+    <label>Eigen plaatje (optioneel)</label>
+    <input type="file" id="m_img" accept="image/*"/>
+    <div class="acts">
+      <button class="btn" id="m_cancel">Annuleren</button>
+      <button class="btn primary" id="m_save">Opslaan</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var P={
+    squat:"<circle cx='40' cy='18' r='6'/><line x1='40' y1='24' x2='40' y2='40'/><line x1='40' y1='29' x2='55' y2='29'/><line x1='40' y1='40' x2='28' y2='53'/><line x1='40' y1='40' x2='52' y2='53'/><line x1='28' y1='53' x2='30' y2='68'/><line x1='52' y1='53' x2='50' y2='68'/><line x1='22' y1='70' x2='58' y2='70'/>",
+    lunge:"<circle cx='32' cy='17' r='6'/><line x1='33' y1='23' x2='36' y2='40'/><line x1='36' y1='40' x2='30' y2='55'/><line x1='30' y1='55' x2='30' y2='68'/><line x1='36' y1='40' x2='52' y2='54'/><line x1='52' y1='54' x2='60' y2='68'/><line x1='24' y1='70' x2='64' y2='70'/>",
+    calf:"<circle cx='40' cy='15' r='6'/><line x1='40' y1='21' x2='40' y2='46'/><line x1='40' y1='27' x2='52' y2='30'/><line x1='40' y1='46' x2='36' y2='64'/><line x1='40' y1='46' x2='44' y2='64'/><line x1='32' y1='68' x2='48' y2='68'/><path d='M58 40 v-12 m-4 4 l4 -4 4 4' fill='none'/>",
+    seated:"<circle cx='26' cy='28' r='5'/><line x1='26' y1='33' x2='30' y2='48'/><line x1='30' y1='48' x2='52' y2='48'/><line x1='52' y1='48' x2='52' y2='64'/><line x1='26' y1='36' x2='44' y2='40'/><line x1='22' y1='48' x2='30' y2='48'/><line x1='14' y1='64' x2='60' y2='64'/>",
+    bridge:"<circle cx='18' cy='58' r='5'/><line x1='22' y1='60' x2='44' y2='46'/><line x1='44' y1='46' x2='55' y2='58'/><line x1='55' y1='58' x2='59' y2='68'/><line x1='12' y1='70' x2='66' y2='70'/>",
+    side:"<circle cx='20' cy='40' r='5'/><line x1='25' y1='42' x2='50' y2='46'/><line x1='50' y1='46' x2='62' y2='58'/><line x1='50' y1='46' x2='66' y2='46'/><line x1='14' y1='66' x2='68' y2='66'/>",
+    supine:"<circle cx='18' cy='57' r='5'/><line x1='23' y1='59' x2='44' y2='59'/><line x1='44' y1='59' x2='60' y2='44'/><line x1='44' y1='59' x2='62' y2='61'/><line x1='12' y1='64' x2='66' y2='64'/>",
+    plank:"<circle cx='20' cy='50' r='5'/><line x1='24' y1='52' x2='64' y2='63'/><line x1='24' y1='52' x2='20' y2='64'/><line x1='12' y1='66' x2='68' y2='66'/>",
+    sideplank:"<circle cx='60' cy='42' r='5'/><line x1='22' y1='64' x2='56' y2='46'/><line x1='22' y1='50' x2='22' y2='64'/><line x1='14' y1='66' x2='68' y2='66'/>",
+    deadbug:"<circle cx='18' cy='57' r='5'/><line x1='23' y1='59' x2='42' y2='59'/><line x1='30' y1='59' x2='30' y2='46'/><line x1='38' y1='59' x2='42' y2='46'/><line x1='42' y1='59' x2='52' y2='48'/><line x1='52' y1='48' x2='58' y2='52'/><line x1='12' y1='64' x2='66' y2='64'/>",
+    birddog:"<circle cx='20' cy='44' r='5'/><line x1='24' y1='46' x2='48' y2='46'/><line x1='24' y1='46' x2='24' y2='60'/><line x1='48' y1='46' x2='48' y2='60'/><line x1='24' y1='46' x2='11' y2='40'/><line x1='48' y1='46' x2='64' y2='40'/><line x1='14' y1='62' x2='62' y2='62'/>",
+    superman:"<circle cx='16' cy='52' r='5'/><line x1='20' y1='54' x2='48' y2='52'/><line x1='20' y1='54' x2='9' y2='47'/><line x1='48' y1='52' x2='62' y2='46'/><line x1='12' y1='64' x2='66' y2='64'/>",
+    catcow:"<circle cx='20' cy='50' r='5'/><path d='M24 58 Q37 40 50 58' fill='none'/><line x1='24' y1='58' x2='24' y2='62'/><line x1='50' y1='58' x2='50' y2='62'/><line x1='14' y1='64' x2='62' y2='64'/>",
+    armraise:"<circle cx='40' cy='16' r='6'/><line x1='40' y1='22' x2='40' y2='50'/><line x1='40' y1='28' x2='52' y2='15'/><line x1='40' y1='28' x2='28' y2='15'/><line x1='40' y1='50' x2='34' y2='68'/><line x1='40' y1='50' x2='46' y2='68'/>",
+    armband:"<circle cx='40' cy='16' r='6'/><line x1='40' y1='22' x2='40' y2='50'/><line x1='40' y1='30' x2='28' y2='34'/><line x1='28' y1='34' x2='32' y2='42'/><line x1='40' y1='30' x2='52' y2='34'/><line x1='52' y1='34' x2='48' y2='42'/><line x1='40' y1='50' x2='34' y2='68'/><line x1='40' y1='50' x2='46' y2='68'/>",
+    pushup:"<circle cx='20' cy='50' r='5'/><line x1='24' y1='52' x2='64' y2='62'/><line x1='24' y1='52' x2='26' y2='64'/><line x1='50' y1='58' x2='52' y2='64'/><line x1='12' y1='66' x2='68' y2='66'/>",
+    pendulum:"<circle cx='30' cy='26' r='5'/><line x1='34' y1='28' x2='50' y2='40'/><line x1='50' y1='40' x2='50' y2='64'/><line x1='34' y1='30' x2='34' y2='46'/><circle cx='34' cy='52' r='7' fill='none' stroke-dasharray='3 3'/><line x1='50' y1='40' x2='62' y2='40'/>",
+    stretch:"<circle cx='28' cy='30' r='5'/><line x1='32' y1='32' x2='42' y2='44'/><line x1='42' y1='44' x2='40' y2='66'/><line x1='42' y1='44' x2='48' y2='66'/><line x1='32' y1='34' x2='30' y2='50'/><line x1='30' y1='66' x2='52' y2='66'/>",
+    breathing:"<circle cx='18' cy='55' r='5'/><line x1='23' y1='57' x2='46' y2='57'/><line x1='46' y1='57' x2='56' y2='49'/><line x1='56' y1='49' x2='60' y2='59'/><line x1='34' y1='57' x2='39' y2='51'/><line x1='12' y1='62' x2='66' y2='62'/>",
+    balance:"<circle cx='40' cy='16' r='6'/><line x1='40' y1='22' x2='40' y2='48'/><line x1='40' y1='48' x2='40' y2='68'/><line x1='40' y1='48' x2='52' y2='56'/><line x1='40' y1='30' x2='28' y2='30'/><line x1='40' y1='30' x2='52' y2='30'/><line x1='32' y1='70' x2='48' y2='70'/>",
+    cardio:"<circle cx='26' cy='58' r='9' fill='none'/><circle cx='58' cy='58' r='9' fill='none'/><line x1='26' y1='58' x2='44' y2='44'/><line x1='44' y1='44' x2='58' y2='58'/><line x1='44' y1='44' x2='34' y2='44'/><circle cx='46' cy='28' r='5'/><line x1='46' y1='33' x2='44' y2='44'/><line x1='46' y1='35' x2='34' y2='42'/>"
+  };
+  function svgStr(k,m,size){
+    var s=size||34;
+    return "<svg class='thumb' style='width:"+s+"px;height:"+s+"px' viewBox='0 0 80 80' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'>"+(m?"<g transform='translate(80,0) scale(-1,1)'>":"<g>")+(P[k]||P.squat)+"</g></svg>";
+  }
+  function imgRender(im,size){
+    if(im.type==='img') return "<img class='thumb' style='width:"+(size||34)+"px;height:"+(size||34)+"px' src='"+im.src+"'/>";
+    return svgStr(im.key,im.m,size);
+  }
+
+  var BASE=[
+    ["Squat (kniebuiging)","onder",3,12,"squat"],["Mini-squat","onder",3,15,"squat"],["Wandzit (wall squat)","onder",3,1,"squat"],["Eénbenige squat","onder",3,8,"squat"],
+    ["Split squat","onder",3,10,"lunge"],["Lunge (uitval)","onder",3,10,"lunge"],["Wandelende lunge","onder",3,12,"lunge"],["Step-up","onder",3,12,"lunge"],
+    ["Kuitheffen staand","onder",3,15,"calf"],["Kuitheffen zittend","onder",3,15,"seated"],["Beenpers (leg press)","onder",3,12,"seated"],["Beenextensie (quadriceps)","onder",3,12,"seated"],
+    ["Hamstring curl","onder",3,12,"seated"],["Glute bridge","onder",3,15,"bridge"],["Eénbenige bridge","onder",3,10,"bridge"],["Hip thrust","onder",3,12,"bridge"],
+    ["Clam (schelp)","onder",3,15,"side"],["Heupabductie zijlig","onder",3,15,"side"],["Monster walk (band)","onder",3,12,"side"],["Terminal knee extension","onder",3,15,"supine"],
+    ["Quadriceps aanspannen","onder",3,10,"supine"],["Gestrekt been heffen","onder",3,12,"supine"],["Hielslides","onder",3,15,"supine"],["Enkel pompen","onder",3,20,"supine"],
+    ["Enkel dorsaalflexie (band)","onder",3,15,"supine"],["Hamstring rek","onder",3,1,"stretch"],["Kuitrek","onder",3,1,"stretch"],["Heupbuiger rek","onder",3,1,"lunge"],
+    ["Bosu squat","onder",3,12,"balance"],["Bosu eenbenige squat","onder",3,8,"balance"],
+    ["Schouderanteflexie","boven",3,12,"armraise"],["Schouderabductie","boven",3,12,"armraise"],["Exorotatie schouder (band)","boven",3,15,"armband"],["Endorotatie schouder (band)","boven",3,15,"armband"],
+    ["Scapula retractie","boven",3,15,"armband"],["Scaption","boven",3,12,"armraise"],["Wall slides","boven",3,12,"armraise"],["Slinger-/pendel (Codman)","boven",3,1,"pendulum"],
+    ["Biceps curl","boven",3,12,"seated"],["Triceps extensie","boven",3,12,"seated"],["Opdrukken (push-up)","boven",3,10,"pushup"],["Opdrukken tegen muur","boven",3,12,"pushup"],
+    ["Roeien (row)","boven",3,12,"armband"],["Lat pulldown","boven",3,12,"armband"],["Schouderpers","boven",3,10,"seated"],["Zijwaarts heffen","boven",3,12,"armraise"],
+    ["Voorwaarts heffen","boven",3,12,"armraise"],["Sleeper stretch","boven",3,1,"stretch"],["Borstrek in deuropening","boven",3,1,"stretch"],["Polsflexie/-extensie","boven",3,15,"seated"],
+    ["Knijpkracht (grip)","boven",3,15,"seated"],
+    ["Plank","romp",3,1,"plank"],["Side plank (zijplank)","romp",3,1,"sideplank"],["Dead bug","romp",3,12,"deadbug"],["Bird dog","romp",3,12,"birddog"],
+    ["Curl-up (buikspier)","romp",3,15,"deadbug"],["Bekkenkanteling","romp",3,15,"deadbug"],["Superman","romp",3,12,"superman"],["Kat-koe (cat-cow)","romp",3,12,"catcow"],
+    ["Romprotatie liggend","romp",3,12,"deadbug"],["Knie naar borst","romp",3,1,"deadbug"],["Kindhouding","romp",3,1,"catcow"],["McKenzie extensie","romp",3,10,"superman"],
+    ["Thoracale rotatie","romp",3,10,"catcow"],["Russian twist","romp",3,16,"deadbug"],["Mountain climber","romp",3,20,"plank"],["Transversus activatie","romp",3,10,"deadbug"],
+    ["Bosu plank","romp",3,1,"plank"],["Bosu mountain climb","romp",3,20,"plank"],
+    ["Diafragma-ademhaling","divers",3,10,"breathing"],["Buikademhaling liggend","divers",3,10,"breathing"],["Pursed-lip ademhaling","divers",3,10,"breathing"],["Segmentale ademhaling","divers",3,10,"breathing"],
+    ["Eénbeenstand (balans)","divers",3,1,"balance"],["Tandemstand","divers",3,1,"balance"],["Tandem lopen","divers",3,10,"balance"],["Gewichtsverplaatsing","divers",3,15,"balance"],
+    ["Bosu balans","divers",3,1,"balance"],["Hometrainer (fietsen)","divers",1,1,"cardio"],["Loopband wandelen","divers",1,1,"cardio"],["Crosstrainer","divers",1,1,"cardio"],
+    ["Roei-ergometer","divers",1,1,"seated"]
+  ];
+  function mkOef(a,id){
+    return {id:id,naam:a[0],groep:a[1],s:a[2],h:a[3],bron:'standaard',
+      imgs:[{type:'svg',key:a[4],m:0,label:'Starthouding'},{type:'svg',key:a[4],m:1,label:'Uitvoering'}]};
+  }
+  var OEF=BASE.map(mkOef);
+  // load custom from storage
+  try{
+    var saved=JSON.parse(localStorage.getItem('fysiplan_custom')||'[]');
+    saved.forEach(function(o){o.id=OEF.length;OEF.push(o);});
+  }catch(e){}
+
+  var curG='all',q='',active=null,chosen=[];
+  var elList=document.getElementById('list'),elStrip=document.getElementById('strip'),
+      elActive=document.getElementById('activeName'),elPics=document.getElementById('pics'),
+      elMon=document.getElementById('mon'),elEmpty=document.getElementById('emptyA4'),elCnt=document.getElementById('cnt');
+
+  function renderList(){
+    var f=OEF.filter(function(o){return (curG==='all'||o.groep===curG)&&(!q||o.naam.toLowerCase().indexOf(q)>-1);});
+    elCnt.textContent='('+f.length+')';
+    elList.innerHTML=f.map(function(o){
+      var has=chosen.some(function(c){return c.o===o.id;});
+      return "<div class='row"+(active===o.id?" active":"")+"' data-id='"+o.id+"'>"+imgRender(o.imgs[0],34)+
+        "<div class='nm'>"+o.naam+"<small>"+o.s+" × "+o.h+(o.h==1?" (statisch/cardio)":"")+(o.bron=='eigen'?" · eigen":"")+"</small></div>"+
+        (has?"<span style='color:var(--accent)'>●</span>":"")+"</div>";
+    }).join("");
+  }
+  function renderStrip(){
+    if(active===null){elActive.textContent='—';elStrip.innerHTML="<div class='hint'>Kies links een oefening.</div>";return;}
+    var o=OEF[active];elActive.textContent=o.naam;
+    elStrip.innerHTML=o.imgs.map(function(im,i){
+      var idx=chosen.findIndex(function(c){return c.o===o.id&&c.i===i;});
+      var on=idx>-1;
+      return "<div class='pick"+(on?" on":"")+"' data-o='"+o.id+"' data-i='"+i+"'>"+
+        (on?"<span class='bdg'>"+(idx+1)+"</span>":"")+
+        "<div style='color:var(--ink)'>"+imgRender(im,56)+"</div><div class='lab'>"+(im.label||'plaatje')+"</div></div>";
+    }).join("");
+  }
+  function renderA4(){
+    elEmpty.style.display=chosen.length?'none':'block';
+    var slots='';
+    for(var n=0;n<12;n++){
+      if(n<chosen.length){
+        var c=chosen[n],o=OEF[c.o],im=o.imgs[c.i];
+        slots+="<div class='pic'><span class='n'>"+(n+1)+"</span><div style='width:78%;height:78%;color:#222'>"+imgRender(im,90)+"</div><span class='cap'>"+o.naam+"</span></div>";
+      }else{
+        slots+="<div class='pic'><span class='n'>"+(n+1)+"</span></div>";
+      }
+    }
+    elPics.innerHTML=slots;
+    // monitoring
+    var dates=8,head="<tr><th style='width:16px'>#</th><th style='width:150px'>oefening</th>";
+    for(var d=0;d<dates;d++)head+="<th colspan='3'>datum<br/>__/__</th>";
+    head+="</tr><tr><th></th><th></th>";
+    for(var d2=0;d2<dates;d2++)head+="<th>S</th><th>H</th><th>W</th>";
+    head+="</tr>";
+    var seen={},rows='',k=0;
+    chosen.forEach(function(c){
+      if(seen[c.o])return;seen[c.o]=1;k++;var o=OEF[c.o];
+      var r="<tr><td>"+k+"</td><td class='ex'>"+o.naam+"</td>";
+      for(var d=0;d<dates;d++)r+="<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";
+      rows+=r+"</tr>";
+    });
+    // pad to some empty rows for writing space
+    var pad=Math.max(0,6-k);
+    for(var p=0;p<pad;p++){var r2="<tr><td>"+(k+p+1)+"</td><td class='ex'>&nbsp;</td>";for(var d=0;d<dates;d++)r2+="<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";rows+=r2+"</tr>";}
+    elMon.innerHTML=chosen.length?head+rows:'';
+  }
+  function render(){renderList();renderStrip();renderA4();}
+
+  elList.addEventListener('click',function(e){var r=e.target.closest('.row');if(!r)return;active=+r.dataset.id;render();});
+  elStrip.addEventListener('click',function(e){
+    var p=e.target.closest('.pick');if(!p)return;
+    var o=+p.dataset.o,i=+p.dataset.i,idx=chosen.findIndex(function(c){return c.o===o&&c.i===i;});
+    if(idx>-1)chosen.splice(idx,1);else{if(chosen.length>=12){alert('Maximaal 12 plaatjes op één A4.');return;}chosen.push({o:o,i:i});}
+    render();
+  });
+  document.querySelectorAll('.chip').forEach(function(b){
+    b.addEventListener('click',function(){document.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');});b.classList.add('on');curG=b.dataset.g;renderList();});
+  });
+  document.getElementById('search').addEventListener('input',function(e){q=e.target.value.toLowerCase();renderList();});
+  document.getElementById('printBtn').addEventListener('click',function(){window.print();});
+
+  // add exercise modal
+  var ov=document.getElementById('ov'),pendingImg=null;
+  document.getElementById('addBtn').addEventListener('click',function(){ov.classList.add('on');});
+  document.getElementById('m_cancel').addEventListener('click',function(){ov.classList.remove('on');});
+  document.getElementById('m_img').addEventListener('change',function(e){
+    var f=e.target.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){pendingImg=rd.result;};rd.readAsDataURL(f);
+  });
+  document.getElementById('m_save').addEventListener('click',function(){
+    var naam=document.getElementById('m_naam').value.trim();if(!naam){alert('Geef een naam op.');return;}
+    var groep=document.getElementById('m_groep').value,s=document.getElementById('m_s').value||'3',h=document.getElementById('m_h').value||'12';
+    var imgs= pendingImg ? [{type:'img',src:pendingImg,label:'Eigen'}] : [{type:'svg',key:'stand',m:0,label:'Starthouding'},{type:'svg',key:'stand',m:1,label:'Uitvoering'}];
+    var o={id:OEF.length,naam:naam,groep:groep,s:+s,h:+h,bron:'eigen',imgs:imgs};
+    OEF.push(o);
+    // persist
+    try{var cust=JSON.parse(localStorage.getItem('fysiplan_custom')||'[]');cust.push({naam:naam,groep:groep,s:+s,h:+h,bron:'eigen',imgs:imgs});localStorage.setItem('fysiplan_custom',JSON.stringify(cust));}catch(e){}
+    pendingImg=null;document.getElementById('m_naam').value='';document.getElementById('m_img').value='';
+    ov.classList.remove('on');active=o.id;curG='all';document.querySelectorAll('.chip').forEach(function(x){x.classList.toggle('on',x.dataset.g==='all');});render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
