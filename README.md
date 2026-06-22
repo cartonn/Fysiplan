@@ -2,6 +2,8 @@
 
 Fysiplan is een eerste deploybare basis voor een fysiotherapie-planner.
 
+Live Railway URL: https://fysiplan-production.up.railway.app
+
 ## Scripts
 
 - `npm run build` schrijft buildmetadata naar `dist/build-info.json`.
