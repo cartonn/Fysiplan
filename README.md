@@ -46,6 +46,30 @@ codewijziging** — gekoppeld op oefeningnaam:
 Lever je een lijst aan met "oefeningnaam + bestandsnaam", dan is `oefening-plaatjes.json` in één
 keer te vullen.
 
+### Automatisch inlezen van Carla's bestand
+
+Carla levert een bestand aan in dit formaat (oefeningnaam, daaronder de plaatjes die erbij horen,
+lege regel, volgende oefening):
+
+```
+Squat (kniebuiging)
+squat-start.png
+squat-uitvoering.png
+
+Lunge (uitval)
+lunge.png
+```
+
+Het script `scripts/import-plaatjes.mjs` leest dit in, splitst het per oefening en bouwt het
+manifest. Het meldt ook welke namen niet matchen met de app (met een suggestie):
+
+```
+node scripts/import-plaatjes.mjs <bestand>           # dry-run: alleen rapport
+node scripts/import-plaatjes.mjs <bestand> --write   # schrijft public/oefening-plaatjes.json
+```
+
+Daarna de bijbehorende afbeeldingen in `public/images/` zetten en pushen.
+
 ## Data & privacy
 
 Alle gegevens (cliëntvelden, eigen oefeningen) blijven nu **lokaal in de browser**
