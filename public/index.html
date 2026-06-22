@@ -38,6 +38,11 @@
   .row .nm{flex:1;line-height:1.25}
   .row .nm small{display:block;color:var(--soft);font-size:11px}
   .thumb{width:36px;height:36px;flex:0 0 36px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);object-fit:contain}
+  .row .add{flex:0 0 auto;width:28px;height:28px;border-radius:50%;border:1px solid var(--accent-line);background:var(--accent-bg);color:var(--accent);font-size:18px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .row .add:hover{background:var(--accent);color:#fff}
+  .row .add.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  #a4 .a4hd .logoIn{font-size:20px;font-weight:700;color:var(--accent);border:none;border-bottom:1px dashed transparent;background:transparent;width:260px;padding:0;font-family:inherit}
+  #a4 .a4hd .logoIn:hover,#a4 .a4hd .logoIn:focus{border-bottom-color:var(--accent-line);outline:none}
   .strip{display:flex;flex-wrap:wrap;gap:10px;min-height:90px}
   .pick{position:relative;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;padding:5px;width:78px;text-align:center;color:var(--ink)}
   .pick.on{border:2px solid var(--accent);padding:4px}
@@ -82,6 +87,7 @@
     #a4wrap{overflow:visible}
     #a4{width:100%;min-height:auto;border:none;border-radius:0;padding:0}
     #a4 .a4hd .logo{color:#1769aa !important}
+    #a4 .a4hd .logoIn{color:#1769aa !important;border:none !important}
     #a4 .client input{border-bottom:1px solid #999 !important}
     #a4 .pics{gap:5px;margin-bottom:20px}
     #a4 .pic{border-color:#999}
@@ -134,7 +140,7 @@
   <div id="a4wrap">
     <div id="a4">
       <div class="a4hd">
-        <div><div class="logo">FysioTotaal</div><div class="sub">Trainingskaart · 1 × A4</div></div>
+        <div><input class="logoIn" id="praktijk" value="FysioTotaal" aria-label="Praktijknaam"/><div class="sub">Trainingskaart · 1 × A4</div></div>
         <div class="sub" style="text-align:right">Datum: ______________<br/>Therapeut: ______________</div>
       </div>
       <div class="client">
@@ -144,7 +150,7 @@
         <div><label>Trainingszone</label><input class="fld" id="c_zone"/></div>
       </div>
       <div class="pics" id="pics"></div>
-      <div id="emptyA4" class="hint no-print" style="padding:30px">Kies oefeningen en plaatjes — ze verschijnen hier genummerd in de A4.</div>
+      <div id="emptyA4" class="hint no-print" style="padding:30px">Klik links op de <b>+</b> bij een oefening — het plaatje komt hier genummerd in de A4.</div>
       <table class="mon" id="mon"></table>
     </div>
   </div>
@@ -258,6 +264,24 @@
     NOTES[o.naam]={s:o.starthouding,u:o.uitvoering,o:o.opmerking};
     try{localStorage.setItem('fysiplan_notes',JSON.stringify(NOTES));}catch(e){}
   }
+  // practice settings + autosave of the current card
+  var SET={praktijk:'FysioTotaal'};
+  try{SET=Object.assign(SET,JSON.parse(localStorage.getItem('fysiplan_settings')||'{}'));}catch(e){}
+  function saveSettings(){try{localStorage.setItem('fysiplan_settings',JSON.stringify(SET));}catch(e){}}
+  var CLIENTKEYS=['c_naam','c_leeftijd','c_hf','c_zone'];
+  function saveState(){
+    try{
+      var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
+      localStorage.setItem('fysiplan_state',JSON.stringify({chosen:chosen,client:client}));
+    }catch(e){}
+  }
+  function loadState(){
+    try{
+      var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');
+      if(Array.isArray(st.chosen))chosen=st.chosen.filter(function(c){return OEF[c.o]&&OEF[c.o].imgs[c.i];});
+      if(st.client)CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el&&st.client[k]!=null)el.value=st.client[k];});
+    }catch(e){}
+  }
 
   var curG='all',q='',active=null,chosen=[];
   var elList=document.getElementById('list'),elStrip=document.getElementById('strip'),
@@ -279,7 +303,7 @@
       var has=chosen.some(function(c){return c.o===o.id;});
       return "<div class='row"+(active===o.id?" active":"")+"' data-id='"+o.id+"'>"+imgRender(o.imgs[0],34)+
         "<div class='nm'>"+o.naam+"<small>"+o.s+" × "+o.h+(o.h==1?" (statisch/cardio)":"")+(o.bron=='eigen'?" · eigen":"")+"</small></div>"+
-        (has?"<span style='color:var(--accent)'>●</span>":"")+"</div>";
+        "<button class='add"+(has?" on":"")+"' data-add='"+o.id+"' title='"+(has?"van kaart halen":"op kaart zetten")+"' aria-label='"+(has?"van kaart halen":"op kaart zetten")+"'>"+(has?"−":"+")+"</button></div>";
     }).join("");
   }
   function renderStrip(){
@@ -327,9 +351,19 @@
     for(var p=0;p<pad;p++){var r2="<tr><td>"+(k+p+1)+"</td><td class='ex'>&nbsp;</td>";for(var d=0;d<dates;d++)r2+="<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";rows+=r2+"</tr>";}
     elMon.innerHTML=chosen.length?head+rows:'';
   }
-  function render(){updateChipCounts();renderList();renderStrip();renderA4();}
+  function render(){updateChipCounts();renderList();renderStrip();renderA4();saveState();}
 
-  elList.addEventListener('click',function(e){var r=e.target.closest('.row');if(!r)return;active=+r.dataset.id;render();});
+  function toggleExercise(id){
+    var has=chosen.some(function(c){return c.o===id;});
+    if(has){chosen=chosen.filter(function(c){return c.o!==id;});}
+    else{if(chosen.length>=12){alert('Maximaal 12 plaatjes op één A4.');return;}chosen.push({o:id,i:0});}
+    render();
+  }
+  elList.addEventListener('click',function(e){
+    var add=e.target.closest('.add');
+    if(add){active=+add.dataset.add;toggleExercise(active);return;}
+    var r=e.target.closest('.row');if(!r)return;active=+r.dataset.id;render();
+  });
   elStrip.addEventListener('click',function(e){
     var p=e.target.closest('.pick');if(!p)return;
     var o=+p.dataset.o,i=+p.dataset.i,idx=chosen.findIndex(function(c){return c.o===o&&c.i===i;});
@@ -372,6 +406,12 @@
     pendingImg=null;document.getElementById('m_naam').value='';document.getElementById('m_img').value='';
     ov.classList.remove('on');active=o.id;curG='all';document.querySelectorAll('.chip').forEach(function(x){x.classList.toggle('on',x.dataset.g==='all');});render();
   });
+
+  // practice name + restore previous card
+  var elPraktijk=document.getElementById('praktijk');
+  if(elPraktijk){elPraktijk.value=SET.praktijk;elPraktijk.addEventListener('input',function(){SET.praktijk=elPraktijk.value;saveSettings();});}
+  CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.addEventListener('input',saveState);});
+  loadState();
 
   render();
 })();
