@@ -15,7 +15,9 @@
   body{margin:0;font-family:'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);font-size:14px}
   header.topbar{display:flex;align-items:center;gap:14px;padding:10px 16px;background:var(--panel);border-bottom:1px solid var(--line)}
   header.topbar h1{font-size:17px;font-weight:600;margin:0;color:var(--accent)}
-  header.topbar .menu{display:flex;gap:14px;color:var(--muted);font-size:13px}
+  header.topbar .menu{display:flex;gap:6px;color:var(--muted);font-size:13px}
+  header.topbar .menu .mi{cursor:pointer;padding:4px 8px;border-radius:6px}
+  header.topbar .menu .mi:hover{background:var(--bg);color:var(--ink)}
   header.topbar .spacer{flex:1}
   header.topbar button{font:inherit}
   .btn{padding:7px 12px;border:1px solid var(--line);background:var(--panel);border-radius:7px;cursor:pointer;color:var(--ink)}
@@ -107,7 +109,7 @@
 
 <header class="topbar">
   <h1>Fysiplan</h1>
-  <div class="menu"><span>Bestand</span><span>Eigen Gegevens</span><span>Help</span></div>
+  <div class="menu"><span class="mi" id="menuBestand">Bestand</span><span class="mi" id="menuEigen">Eigen Gegevens</span><span class="mi" id="menuHelp">Help</span></div>
   <div class="spacer"></div>
   <button class="btn" id="uploadBtn">Plaatjes uploaden</button>
   <button class="btn" id="addBtn">+ Oefening toevoegen</button>
@@ -147,7 +149,7 @@
     <div id="a4">
       <div class="a4hd">
         <div><input class="logoIn" id="praktijk" value="FysioTotaal" aria-label="Praktijknaam"/><div class="sub">Trainingskaart · 1 × A4</div></div>
-        <div class="sub" style="text-align:right">Datum: ______________<br/>Therapeut: ______________</div>
+        <div class="sub" style="text-align:right">Datum: ______________<br/>Therapeut: <span id="a4therapeut">______________</span></div>
       </div>
       <div class="client">
         <div><label>Naam</label><input class="fld" id="c_naam"/></div>
@@ -228,6 +230,50 @@ bridge2.jpg</div>
         <button class="btn primary" id="up_do">Inlezen</button>
       </span>
     </div>
+  </div>
+</div>
+
+<!-- Bestand menu -->
+<div class="ov" id="ovFile">
+  <div class="modal">
+    <h3>Bestand</h3>
+    <button class="btn" id="file_new" style="width:100%;text-align:left;margin-bottom:8px">Nieuwe kaart (alles wissen)</button>
+    <button class="btn" id="file_print" style="width:100%;text-align:left">Print trainingschema (PDF)</button>
+    <div class="acts"><button class="btn" id="file_close">Sluiten</button></div>
+  </div>
+</div>
+
+<!-- Eigen gegevens menu -->
+<div class="ov" id="ovEigen">
+  <div class="modal">
+    <h3>Eigen gegevens</h3>
+    <label>Praktijknaam</label>
+    <input type="text" id="set_praktijk" placeholder="bijv. FysioTotaal"/>
+    <label>Therapeut</label>
+    <input type="text" id="set_therapeut" placeholder="naam therapeut"/>
+    <div class="acts"><button class="btn" id="eigen_close">Sluiten</button><button class="btn primary" id="eigen_save">Opslaan</button></div>
+  </div>
+</div>
+
+<!-- Help menu -->
+<div class="ov" id="ovHelp">
+  <div class="modal wide">
+    <h3>Help — zo werkt Fysiplan</h3>
+    <div class="uphelp" style="margin-top:0">
+      <b>Een trainingskaart maken</b><br/>
+      1. Klik links bij een oefening op <b>+</b> — het plaatje komt op de A4.<br/>
+      2. Vul bovenaan de cliëntgegevens in (Naam, Leeftijd, max. HF, Trainingszone).<br/>
+      3. Klik <b>Print trainingschema (PDF)</b> om te printen of als PDF op te slaan.<br/><br/>
+      <b>Eigen oefeningen + plaatjes</b><br/>
+      Met <b>Plaatjes uploaden</b> laad je je eigen lijst: een tekstbestand met per oefening de naam,
+      daaronder de bestandsnamen van de plaatjes, en een lege regel tussen oefeningen. Selecteer de
+      plaatjes in dezelfde keer mee. Je lijst vervangt dan de standaardlijst.<br/><br/>
+      <b>Eigen gegevens</b><br/>
+      Stel je praktijknaam en therapeut in via het menu <b>Eigen Gegevens</b>; die komen op de A4.<br/><br/>
+      <b>Onthouden</b><br/>
+      Je kaart, cliëntgegevens en eigen lijst worden in deze browser bewaard.
+    </div>
+    <div class="acts"><button class="btn" id="help_close">Sluiten</button></div>
   </div>
 </div>
 
@@ -464,9 +510,41 @@ bridge2.jpg</div>
     ov.classList.remove('on');active=o.id;curG='all';document.querySelectorAll('.chip').forEach(function(x){x.classList.toggle('on',x.dataset.g==='all');});render();
   });
 
+  // ---- menubalk: Bestand / Eigen Gegevens / Help ----
+  function openOv(id){document.getElementById(id).classList.add('on');}
+  function closeOv(id){document.getElementById(id).classList.remove('on');}
+  function applySettings(){
+    var p=document.getElementById('praktijk');if(p)p.value=SET.praktijk||'';
+    var t=document.getElementById('a4therapeut');if(t)t.textContent=SET.therapeut?SET.therapeut:'______________';
+  }
+  document.getElementById('menuBestand').addEventListener('click',function(){openOv('ovFile');});
+  document.getElementById('menuHelp').addEventListener('click',function(){openOv('ovHelp');});
+  document.getElementById('menuEigen').addEventListener('click',function(){
+    document.getElementById('set_praktijk').value=SET.praktijk||'';
+    document.getElementById('set_therapeut').value=SET.therapeut||'';
+    openOv('ovEigen');
+  });
+  document.getElementById('file_close').addEventListener('click',function(){closeOv('ovFile');});
+  document.getElementById('help_close').addEventListener('click',function(){closeOv('ovHelp');});
+  document.getElementById('eigen_close').addEventListener('click',function(){closeOv('ovEigen');});
+  document.getElementById('file_print').addEventListener('click',function(){closeOv('ovFile');window.print();});
+  document.getElementById('file_new').addEventListener('click',function(){
+    if(confirm('Nieuwe kaart: gekozen plaatjes én cliëntgegevens wissen?')){
+      chosen=[];CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value='';});
+      saveState();render();closeOv('ovFile');
+    }
+  });
+  document.getElementById('eigen_save').addEventListener('click',function(){
+    SET.praktijk=document.getElementById('set_praktijk').value;
+    SET.therapeut=document.getElementById('set_therapeut').value;
+    saveSettings();applySettings();closeOv('ovEigen');
+  });
+  document.querySelectorAll('.ov').forEach(function(ov){ov.addEventListener('click',function(e){if(e.target===ov)ov.classList.remove('on');});});
+
   // practice name + restore previous card
   var elPraktijk=document.getElementById('praktijk');
   if(elPraktijk){elPraktijk.value=SET.praktijk;elPraktijk.addEventListener('input',function(){SET.praktijk=elPraktijk.value;saveSettings();});}
+  applySettings();
   CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.addEventListener('input',saveState);});
   loadState();
 
