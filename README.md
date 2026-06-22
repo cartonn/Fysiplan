@@ -30,7 +30,15 @@ Live Railway URL: https://fysiplan-production.up.railway.app
 
 Lokaal draaien: `npm run build && npm run start`, daarna http://localhost:3000
 
-## De echte oefening-plaatjes
+## Eigen oefeningenlijst uploaden (Carla)
+
+Via de knop **"Plaatjes uploaden"** in de app kan de praktijk haar eigen lijst uploaden. Dat
+bestand (.txt/.csv) **wordt de oefeningenlijst** en vervangt de standaard 82 placeholders. Format:
+oefeningnaam, daaronder de bestandsnamen van de bijbehorende plaatjes, lege regel, volgende oefening.
+De plaatjes kunnen in dezelfde upload mee (worden lokaal in de browser bewaard via IndexedDB).
+Met de knop **"Standaardlijst"** keer je terug naar de standaardlijst.
+
+## De echte oefening-plaatjes (alternatief: in de repo)
 
 De tekeningen in de app zijn nu nette stand-ins. De echte plaatjes vervangen ze later **zonder
 codewijziging** — gekoppeld op oefeningnaam:

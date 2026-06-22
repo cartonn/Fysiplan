@@ -193,10 +193,13 @@
 <!-- upload images modal -->
 <div class="ov" id="ovUp">
   <div class="modal wide">
-    <h3>Bestand met oefeningen + plaatjes uploaden</h3>
-    <label>Kies je bestand (.txt of .csv)</label>
-    <input type="file" id="up_files" accept=".txt,.csv,text/plain,text/csv"/>
+    <h3>Oefeningenlijst uploaden</h3>
+    <label>Kies je bestand (.txt/.csv) — selecteer er meteen je plaatjes bij</label>
+    <input type="file" id="up_files" multiple accept=".txt,.csv,text/plain,text/csv,image/*"/>
     <div class="uphelp">
+      <b>Jouw lijst wordt de oefeningenlijst in Fysiplan.</b> De oefeningen die nu in de app staan,
+      worden vervangen door die uit jouw bestand. Selecteer de plaatjesbestanden in dezelfde keer mee,
+      dan zie je ze meteen.<br/><br/>
       <b>Zo moet het bestand eruitzien</b><br/>
       Eén tekstbestand. Per oefening: eerst de <b>naam van de oefening</b> op een regel, daaronder de
       <b>bestandsnamen van de plaatjes</b> die erbij horen (elk op een eigen regel). Dan een
@@ -212,15 +215,18 @@ Glute bridge
 bridge1.jpg
 bridge2.jpg</div>
       <div style="margin-top:8px">
-        • De oefeningnaam exact zoals in Fysiplan (niet-herkende namen worden gemeld).<br/>
+        • De oefeningnaam zoals jij hem in de lijst wilt zien.<br/>
         • Eén of meer plaatjes per oefening — gewoon meer regels eronder.<br/>
         • Steeds een lege regel tussen twee oefeningen.
       </div>
     </div>
     <div id="up_result"></div>
-    <div class="acts">
-      <button class="btn" id="up_cancel">Sluiten</button>
-      <button class="btn primary" id="up_do">Inlezen</button>
+    <div class="acts" style="justify-content:space-between">
+      <button class="btn" id="up_reset">Standaardlijst</button>
+      <span style="display:flex;gap:8px">
+        <button class="btn" id="up_cancel">Sluiten</button>
+        <button class="btn primary" id="up_do">Inlezen</button>
+      </span>
     </div>
   </div>
 </div>
@@ -329,7 +335,7 @@ bridge2.jpg</div>
     }catch(e){}
   }
 
-  var curG='all',q='',active=null,chosen=[];
+  var curG='all',q='',active=null,chosen=[],CUSTOMLIB=false,IMGCACHE={};
   var elList=document.getElementById('list'),elStrip=document.getElementById('strip'),
       elActive=document.getElementById('activeName'),elPics=document.getElementById('pics'),
       elMon=document.getElementById('mon'),elEmpty=document.getElementById('emptyA4'),elCnt=document.getElementById('cnt'),
@@ -337,7 +343,10 @@ bridge2.jpg</div>
   var CHIP_LABELS={all:'alle groepen',boven:'bovenste extr.',onder:'onderste extr.',romp:'romp',divers:'divers'};
   function updateChipCounts(){
     document.querySelectorAll('.chip').forEach(function(c){
-      var g=c.dataset.g,n=OEF.filter(function(o){return g==='all'||o.groep===g;}).length;
+      var g=c.dataset.g;
+      if(CUSTOMLIB){c.style.display=(g==='all')?'':'none';if(g==='all')c.textContent='alle oefeningen ('+OEF.length+')';return;}
+      c.style.display='';
+      var n=OEF.filter(function(o){return g==='all'||o.groep===g;}).length;
       c.textContent=CHIP_LABELS[g]+' ('+n+')';
     });
   }
@@ -347,8 +356,10 @@ bridge2.jpg</div>
     elCnt.textContent='('+f.length+')';
     elList.innerHTML=f.map(function(o){
       var has=chosen.some(function(c){return c.o===o.id;});
+      var np=o.imgs.filter(function(im){return im.type==='img';}).length;
+      var sub=(o.bron==='carla')?(np+' plaatje'+(np===1?'':'s')):(o.s+" × "+o.h+(o.h==1?" (statisch/cardio)":"")+(o.bron=='eigen'?" · eigen":""));
       return "<div class='row"+(active===o.id?" active":"")+"' data-id='"+o.id+"'>"+imgRender(o.imgs[0],34)+
-        "<div class='nm'>"+o.naam+"<small>"+o.s+" × "+o.h+(o.h==1?" (statisch/cardio)":"")+(o.bron=='eigen'?" · eigen":"")+"</small></div>"+
+        "<div class='nm'>"+esc(o.naam)+"<small>"+sub+"</small></div>"+
         "<button class='add"+(has?" on":"")+"' data-add='"+o.id+"' title='"+(has?"van kaart halen":"op kaart zetten")+"' aria-label='"+(has?"van kaart halen":"op kaart zetten")+"'>"+(has?"−":"+")+"</button></div>";
     }).join("");
   }
@@ -477,64 +488,81 @@ bridge2.jpg</div>
     });
   }
 
-  // ---- Bestand (txt/csv) met oefeningen + plaatjes inlezen ----
-  function setImgsFromFiles(o,files){
-    o.imgs=files.map(function(fn,i){return {type:'img',src:'images/'+fn,label:i===0?'Starthouding':(i===1?'Uitvoering':'Plaatje '+(i+1))};});
-    o.userimg=true;o.echt=true;
-  }
+  // ---- IndexedDB: opslag voor geüploade plaatjes (groot, geen quota-probleem) ----
+  function idbOpen(){return new Promise(function(res,rej){try{var r=indexedDB.open('fysiplan',1);r.onupgradeneeded=function(){r.result.createObjectStore('imgs');};r.onsuccess=function(){res(r.result);};r.onerror=function(){rej(r.error);};}catch(e){rej(e);}});}
+  function idbPut(map){return idbOpen().then(function(db){return new Promise(function(res){var tx=db.transaction('imgs','readwrite'),st=tx.objectStore('imgs');Object.keys(map).forEach(function(k){st.put(map[k],k);});tx.oncomplete=function(){res();};tx.onerror=function(){res();};});}).catch(function(){});}
+  function idbAll(){return idbOpen().then(function(db){return new Promise(function(res){var out={},cur=db.transaction('imgs','readonly').objectStore('imgs').openCursor();cur.onsuccess=function(e){var c=e.target.result;if(c){out[c.key]=c.value;c.continue();}else res(out);};cur.onerror=function(){res(out);};});}).catch(function(){return {};});}
+
+  // ---- Carla's bestand WORDT de oefeningenlijst (naam + eigen plaatjes) ----
   function parseStructure(text){
     return String(text).replace(/\r\n?/g,'\n').split(/\n[ \t]*\n+/)
       .map(function(b){return b.split('\n').map(function(l){return l.trim();}).filter(Boolean);})
       .filter(function(b){return b.length;})
       .map(function(b){return {naam:b[0],files:b.slice(1)};});
   }
-  function applyMapping(entries){
-    var rep={matched:0,unmatched:[],files:0};
-    entries.forEach(function(e){
-      rep.files+=e.files.length;
-      var oi=byNorm[normEx(e.naam)];
-      if(oi==null){rep.unmatched.push(e.naam);return;}
-      if(!e.files.length)return;
-      setImgsFromFiles(OEF[oi],e.files);rep.matched++;
+  function imgSrc(fn){return IMGCACHE[fn]||('images/'+fn);}
+  function buildLibrary(entries){
+    OEF=entries.map(function(e,i){
+      var files=(e.files&&e.files.length)?e.files:[];
+      var imgs=files.length?files.map(function(fn,j){return {type:'img',src:imgSrc(fn),label:j===0?'Starthouding':(j===1?'Uitvoering':'Plaatje '+(j+1))};})
+                           :[{type:'svg',key:'stand',m:0,label:'Plaatje'}];
+      return {id:i,naam:e.naam,groep:'eigen',s:3,h:12,bron:'carla',starthouding:'',uitvoering:'',opmerking:'',imgs:imgs};
     });
-    return rep;
+    CUSTOMLIB=true;curG='all';rebuildLookup();
+    OEF.forEach(function(o){var n=NOTES[o.naam];if(n){o.starthouding=n.s||'';o.uitvoering=n.u||'';o.opmerking=n.o||'';}});
   }
-  function persistMapping(){
-    var map={};OEF.forEach(function(o){if(o.userimg)map[o.naam]=o.imgs.map(function(im){return im.src.replace(/^images\//,'');});});
-    try{localStorage.setItem('fysiplan_mapping',JSON.stringify(map));}catch(e){}
+  function buildDefault(){
+    OEF=BASE.map(mkOef);
+    try{var saved=JSON.parse(localStorage.getItem('fysiplan_custom')||'[]');saved.forEach(function(o){o.id=OEF.length;o.starthouding=o.starthouding||'';o.uitvoering=o.uitvoering||'';o.opmerking=o.opmerking||'';OEF.push(o);});}catch(e){}
+    CUSTOMLIB=false;curG='all';rebuildLookup();
+    OEF.forEach(function(o){var n=NOTES[o.naam];if(n){o.starthouding=n.s||o.starthouding;o.uitvoering=n.u||o.uitvoering;o.opmerking=n.o||o.opmerking;}});
   }
-  function loadMapping(){
-    try{var map=JSON.parse(localStorage.getItem('fysiplan_mapping')||'{}');
-      Object.keys(map).forEach(function(naam){var oi=byNorm[normEx(naam)];if(oi!=null)setImgsFromFiles(OEF[oi],map[naam]);});
-    }catch(e){}
+  function saveLib(entries){try{localStorage.setItem('fysiplan_lib',JSON.stringify(entries));}catch(e){}}
+  function loadLib(){try{var l=JSON.parse(localStorage.getItem('fysiplan_lib')||'null');return (Array.isArray(l)&&l.length)?l:null;}catch(e){return null;}}
+  function clearLib(){try{localStorage.removeItem('fysiplan_lib');}catch(e){}}
+
+  function readUploaded(fileList){
+    var images={},imgP=[],txtP=[],text={v:''};
+    Array.prototype.forEach.call(fileList,function(f){
+      if(/\.(txt|csv|md)$/i.test(f.name)||/^text\//.test(f.type)){txtP.push(f.text().then(function(t){text.v+=(text.v?'\n\n':'')+t;}));}
+      else if(/^image\//.test(f.type)||/\.(png|jpe?g|gif|webp|svg)$/i.test(f.name)){imgP.push(new Promise(function(res){var r=new FileReader();r.onload=function(){images[f.name]=r.result;res();};r.onerror=function(){res();};r.readAsDataURL(f);}));}
+    });
+    return Promise.all([Promise.all(imgP),Promise.all(txtP)]).then(function(){return {images:images,text:text.v};});
   }
+
   var ovUp=document.getElementById('ovUp');
   document.getElementById('uploadBtn').addEventListener('click',function(){document.getElementById('up_result').textContent='';ovUp.classList.add('on');});
   document.getElementById('up_cancel').addEventListener('click',function(){ovUp.classList.remove('on');});
+  document.getElementById('up_reset').addEventListener('click',function(){
+    if(!confirm('Terug naar de standaard-oefeningenlijst?'))return;
+    clearLib();buildDefault();chosen=[];render();
+    document.getElementById('up_result').textContent='Standaardlijst hersteld.';
+  });
   document.getElementById('up_do').addEventListener('click',function(){
     var fl=document.getElementById('up_files').files;
-    if(!fl||!fl.length){alert('Kies eerst je bestand (.txt of .csv).');return;}
+    if(!fl||!fl.length){alert('Kies eerst je bestand (.txt of .csv), eventueel met de plaatjes erbij.');return;}
     var res=document.getElementById('up_result');res.textContent='Bezig met inlezen…';
-    fl[0].text().then(function(txt){
-      var rep=applyMapping(parseStructure(txt));
-      persistMapping();
-      chosen=chosen.filter(function(c){return OEF[c.o]&&OEF[c.o].imgs[c.i];});
-      render();
-      var msg=rep.matched+' oefening(en) gekoppeld · '+rep.files+' plaatje(s) in het bestand.';
-      if(rep.unmatched.length)msg+=' Niet herkend: '+rep.unmatched.slice(0,8).join(', ')+(rep.unmatched.length>8?'…':'');
-      res.textContent=msg;
+    readUploaded(fl).then(function(d){
+      if(!d.text){res.textContent='Geen tekstbestand (.txt/.csv) gevonden. Voeg het bestand met de oefeningnamen toe.';return;}
+      var entries=parseStructure(d.text);
+      if(!entries.length){res.textContent='Geen oefeningen gevonden in het bestand.';return;}
+      var nImg=Object.keys(d.images).length;
+      Object.keys(d.images).forEach(function(k){IMGCACHE[k]=d.images[k];});
+      return idbPut(d.images).then(function(){
+        saveLib(entries);buildLibrary(entries);chosen=[];active=null;render();
+        var withImg=entries.filter(function(e){return e.files.length;}).length;
+        res.textContent=entries.length+' oefening(en) ingelezen · '+withImg+' met plaatje · '+nImg+' afbeelding(en) bewaard.';
+      });
     }).catch(function(){res.textContent='Kon het bestand niet lezen. Gebruik een .txt of .csv bestand.';});
   });
-  loadMapping();
-  chosen=chosen.filter(function(c){return OEF[c.o]&&OEF[c.o].imgs[c.i];});
 
-  if(window.fetch){
-    fetch('oefening-plaatjes.json').then(function(r){return r.ok?r.json():null;}).then(function(m){
-      if(m&&Object.keys(m).length){applyRealImages(m);chosen=chosen.filter(function(c){return OEF[c.o]&&OEF[c.o].imgs[c.i];});render();}
-    }).catch(function(){});
-  }
-
-  render();
+  // init: laad geüploade plaatjes + eventuele eigen oefeningenlijst, dan renderen
+  idbAll().then(function(imgs){
+    IMGCACHE=imgs||{};
+    var lib=loadLib();
+    if(lib){buildLibrary(lib);chosen=[];}
+    render();
+  }).catch(function(){render();});
 })();
 </script>
 </body>
