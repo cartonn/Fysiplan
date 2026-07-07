@@ -86,12 +86,12 @@
   #a4 .box b{font-size:11px;color:#101828}
   #a4 .box textarea{border:none;background:transparent;font:inherit;font-size:10.5px;resize:none;flex:1;min-height:0;padding:1px 0;color:#101828}
   #a4 .box textarea:focus{outline:none;background:var(--brand-50)}
-  #a4 .pics{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;margin:16px 0 6px 50px}
-  #a4 .picwrap{text-align:center;position:relative}
-  #a4 .picwrap .num{font-size:11.5px;font-weight:700;color:#101828;margin-bottom:3px}
-  #a4 .pic{border:1.5px solid #475467;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;position:relative;color:#222;background:#fff;overflow:hidden}
-  #a4 .pic .thumb{width:100% !important;height:100% !important;border:none;border-radius:0;background:none;padding:0;object-fit:contain}
-  #a4 table.mon{border-collapse:collapse;width:100%;font-size:9.5px;table-layout:fixed;margin-top:8px}
+  #a4 .pic{border:1.5px solid #475467;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;position:relative;color:#222;background:#fff}
+  #a4 .pic .thumb{width:100% !important;height:100% !important;border:none;border-radius:0;background:none;padding:2px;object-fit:contain}
+  #a4 table.mon{border-collapse:collapse;width:100%;font-size:9.5px;table-layout:fixed;margin-top:14px}
+  #a4 table.mon td.nob{border:none}
+  #a4 table.mon td.numc{border:none;font-size:11.5px;font-weight:700;color:#101828;padding:2px 0}
+  #a4 table.mon td.picc{border:none;padding:2px;vertical-align:bottom}
   #a4 table.mon th,#a4 table.mon td{border:1px solid #475467;padding:2px 1px;text-align:center;color:#101828}
   #a4 table.mon th.dd,#a4 table.mon td.dd{width:50px}
   #a4 table.mon th.ddh{border:none;text-align:left;font-size:10.5px;font-weight:700;vertical-align:bottom}
@@ -132,7 +132,6 @@
     #a4{width:100%;min-height:auto;border:none;border-radius:0;padding:0;box-shadow:none;margin:0}
     #a4 .a4hd .logoIn{color:#1f6feb !important;border:none !important}
     #a4 .client input{border-bottom:1px solid #333 !important}
-    #a4 .pics{gap:5px}
     #a4 .pic .rm{display:none !important}
     #a4 table.mon{font-size:9px}
     #a4 table.mon th,#a4 table.mon td{padding:1px}
@@ -207,8 +206,7 @@
           <div class="box"><b>Doel:</b><textarea id="c_doel" aria-label="Doel"></textarea></div>
         </div>
       </div>
-      <div class="pics" id="pics"></div>
-      <div id="emptyA4" class="hint no-print" style="padding:30px">Klik links op de <b>+</b> bij een oefening — het plaatje komt hier genummerd in de A4.</div>
+      <div id="emptyA4" class="hint no-print" style="padding:14px 30px 0">Klik links op de <b>+</b> bij een oefening — het plaatje komt hieronder genummerd in de A4.</div>
       <table class="mon" id="mon"></table>
     </div>
   </div>
@@ -440,7 +438,7 @@ bridge2.jpg</div>
 
   var curG='all',q='',active=null,chosen=[],CUSTOMLIB=false,IMGCACHE={},GRID={rows:{},cells:{}};
   var elList=document.getElementById('list'),elStrip=document.getElementById('strip'),
-      elActive=document.getElementById('activeName'),elPics=document.getElementById('pics'),
+      elActive=document.getElementById('activeName'),
       elMon=document.getElementById('mon'),elEmpty=document.getElementById('emptyA4'),elCnt=document.getElementById('cnt'),
       elNotes=document.getElementById('notes');
   var CHIP_LABELS={all:'alle groepen',boven:'bovenste extr.',onder:'onderste extr.',romp:'romp',divers:'divers'};
@@ -483,23 +481,21 @@ bridge2.jpg</div>
   }
   function renderA4(){
     elEmpty.style.display=chosen.length?'none':'block';
-    var slots='';
+    // monitoring: links de datumkolom (D.D); per plaatje één kolomgroep S/H/W, even breed
+    var colKeys=[],names=[],numcells='',piccells='';
     for(var n=0;n<12;n++){
       var inner='';
       if(n<chosen.length){
         var c=chosen[n],o=OEF[c.o],im=o&&o.imgs[c.i];
-        inner="<span class='rm no-print' data-rm='"+n+"' title='verwijderen'>×</span><div style='width:86%;height:86%;color:#222'>"+(im?imgRender(im,90):'')+"</div>";
-      }
-      slots+="<div class='picwrap'><div class='num'>"+(n+1)+"</div><div class='pic'>"+inner+"</div></div>";
+        inner="<span class='rm no-print' data-rm='"+n+"' title='verwijderen'>×</span>"+(im?imgRender(im,90):'');
+        colKeys.push('e'+c.o+'.'+c.i);names.push(o?o.naam:'');
+      }else{colKeys.push('x'+n);names.push('');}
+      numcells+="<td colspan='3' class='numc'>"+(n+1)+"</td>";
+      piccells+="<td colspan='3' class='picc'><div class='pic'>"+inner+"</div></td>";
     }
-    elPics.innerHTML=slots;
-    // monitoring: links de datumkolom (D.D), per oefening een kolom met S/H/W
-    var colKeys=[],names=[];
-    for(n=0;n<12;n++){
-      if(n<chosen.length){var c2=chosen[n];colKeys.push('e'+c2.o+'.'+c2.i);names.push(OEF[c2.o]?OEF[c2.o].naam:'');}
-      else{colKeys.push('x'+n);names.push('');}
-    }
-    var head="<thead><tr><th class='ddh dd'>D.D</th>";
+    var head="<thead><tr><td class='dd nob'></td>"+numcells+"</tr>";
+    head+="<tr><td class='dd nob'></td>"+piccells+"</tr>";
+    head+="<tr><th class='ddh dd'>D.D</th>";
     names.forEach(function(nm){head+="<th colspan='3' class='exh' title='"+esc(nm)+"'>"+esc(nm)+"</th>";});
     head+="</tr><tr class='shw'><th class='dd'></th>";
     for(var d=0;d<12;d++)head+="<th>S</th><th>H</th><th>W</th>";
@@ -550,7 +546,7 @@ bridge2.jpg</div>
     if(!chosen.length)return;
     if(confirm('Hele kaart wissen? De gekozen plaatjes worden verwijderd.')){chosen=[];render();}
   });
-  elPics.addEventListener('click',function(e){
+  elMon.addEventListener('click',function(e){
     var rm=e.target.closest('.rm');if(!rm)return;
     var n=+rm.dataset.rm;if(n>=0&&n<chosen.length){chosen.splice(n,1);render();}
   });
