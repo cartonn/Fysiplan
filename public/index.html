@@ -69,27 +69,38 @@
   /* ---- A4 ---- */
   #a4wrap{overflow:auto;background:var(--tray);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;box-shadow:inset 0 1px 3px rgba(16,24,40,.05)}
   #a4{background:#fff;border:1px solid #e6e8ec;border-radius:6px;width:1010px;min-height:715px;padding:26px 30px;color:#111;position:relative;box-shadow:var(--sh-lg);margin:0 auto}
-  #a4 .a4hd{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #0f172a;padding-bottom:10px}
-  #a4 .a4hd .logoIn{font-size:22px;font-weight:700;color:var(--brand);border:none;border-bottom:1px dashed transparent;background:transparent;width:280px;padding:0;font-family:inherit}
+  #a4 .a4hd{display:flex;gap:26px;align-items:flex-start}
+  #a4 .prak{width:240px;flex:0 0 240px}
+  #a4 .a4hd .logoIn{font-size:21px;font-weight:700;color:var(--brand);border:none;border-bottom:1px dashed transparent;background:transparent;width:100%;padding:0;font-family:inherit}
   #a4 .a4hd .logoIn:hover,#a4 .a4hd .logoIn:focus{border-bottom-color:var(--brand-100);outline:none}
-  #a4 .a4hd .sub{font-size:11px;color:#667085}
-  #a4 .client{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 20px;margin:16px 0 18px}
-  #a4 .client label{font-size:10.5px;color:#667085;display:block;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
-  #a4 .client input{height:28px;border:none;border-bottom:1.5px solid #cbd2da;border-radius:0;font-size:14px;width:100%;background:transparent;padding:0;color:#101828}
+  #a4 .adres{margin-top:10px}
+  #a4 .adres input{display:block;border:none;background:transparent;font:inherit;font-size:10.5px;color:#344054;width:100%;padding:1px 0}
+  #a4 .adres input:focus{outline:none;background:var(--brand-50);border-radius:3px}
+  #a4 .client{flex:1;padding-top:2px;min-width:0}
+  #a4 .client .cr{display:flex;align-items:flex-end;gap:10px;margin-bottom:10px}
+  #a4 .client label{font-size:11.5px;font-weight:700;color:#101828;flex:0 0 96px}
+  #a4 .client input{height:20px;border:none;border-bottom:1.5px solid #98a2b3;border-radius:0;font-size:12.5px;flex:1;min-width:0;background:transparent;padding:0 2px;color:#101828;font-family:inherit}
   #a4 .client input:focus{outline:none;border-bottom-color:var(--brand)}
-  #a4 .pics{display:grid;grid-template-columns:repeat(12,1fr);gap:7px;margin-bottom:16px}
-  #a4 .pic{border:1px solid #d0d5dd;border-radius:7px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;position:relative;color:#222;background:#fcfcfd}
-  #a4 .pic .n{position:absolute;top:2px;left:4px;font-size:9px;color:#98a2b3;font-weight:600}
-  #a4 .pic .cap{position:absolute;bottom:-13px;left:0;right:0;font-size:7.5px;text-align:center;color:#667085;line-height:1;height:12px;overflow:hidden}
-  #a4 table.mon{border-collapse:collapse;width:100%;font-size:10px;table-layout:fixed;margin-top:10px}
-  #a4 table.mon th,#a4 table.mon td{border:1px solid #d0d5dd;padding:3px;text-align:center;color:#475467}
-  #a4 table.mon thead th{background:#f2f5f9}
-  #a4 table.mon .ex{text-align:left;font-size:9.5px;color:#101828}
-  #a4 .meta-in{border:none;border-bottom:1px solid #cbd2da;font-size:12px;width:130px;padding:0 2px 1px;background:transparent;font-family:inherit;color:#101828;text-align:left}
-  #a4 .meta-in:focus{outline:none;border-bottom-color:var(--brand)}
-  #a4 table.mon input{border:none;width:100%;height:18px;text-align:center;font-size:10px;padding:0;background:transparent;font-family:inherit;color:#101828}
-  #a4 table.mon input:focus{outline:none;background:var(--brand-50);border-radius:3px}
-  #a4 table.mon input.dcol{font-size:9px}
+  #a4 .boxes{display:flex;gap:10px;flex:0 0 auto}
+  #a4 .box{border:1.5px solid #475467;width:148px;height:130px;padding:5px 7px;display:flex;flex-direction:column}
+  #a4 .box b{font-size:11px;color:#101828}
+  #a4 .box textarea{border:none;background:transparent;font:inherit;font-size:10.5px;resize:none;flex:1;min-height:0;padding:1px 0;color:#101828}
+  #a4 .box textarea:focus{outline:none;background:var(--brand-50)}
+  #a4 .pics{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;margin:16px 0 6px 50px}
+  #a4 .picwrap{text-align:center;position:relative}
+  #a4 .picwrap .num{font-size:11.5px;font-weight:700;color:#101828;margin-bottom:3px}
+  #a4 .pic{border:1.5px solid #475467;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;position:relative;color:#222;background:#fff;overflow:hidden}
+  #a4 .pic .thumb{width:100% !important;height:100% !important;border:none;border-radius:0;background:none;padding:0;object-fit:contain}
+  #a4 table.mon{border-collapse:collapse;width:100%;font-size:9.5px;table-layout:fixed;margin-top:8px}
+  #a4 table.mon th,#a4 table.mon td{border:1px solid #475467;padding:2px 1px;text-align:center;color:#101828}
+  #a4 table.mon th.dd,#a4 table.mon td.dd{width:50px}
+  #a4 table.mon th.ddh{border:none;text-align:left;font-size:10.5px;font-weight:700;vertical-align:bottom}
+  #a4 table.mon th.exh{border:none;font-size:7.5px;font-weight:700;padding:1px;overflow:hidden;line-height:1.15;max-height:20px;vertical-align:bottom}
+  #a4 table.mon tr.shw th{background:#f2f5f9;font-weight:600}
+  #a4 table.mon td.lbl{border:none;text-align:left;font-weight:700;font-size:9px;padding-left:1px}
+  #a4 table.mon input{border:none;width:100%;height:16px;text-align:center;font-size:9.5px;padding:0;background:transparent;font-family:inherit;color:#101828}
+  #a4 table.mon input:focus{outline:none;background:var(--brand-50);border-radius:2px}
+  #a4 table.mon input.drow{font-size:9px}
   #a4 .pic .rm{position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:50%;background:#d92d20;color:#fff;font-size:12px;line-height:18px;text-align:center;cursor:pointer;display:none;box-shadow:var(--sh-sm)}
   #a4 .pic:hover .rm{display:block}
   .notes{margin-top:12px;border-top:1px solid var(--line2);padding-top:10px}
@@ -120,16 +131,13 @@
     #a4wrap{overflow:visible;background:none;border:none;border-radius:0;padding:0;box-shadow:none}
     #a4{width:100%;min-height:auto;border:none;border-radius:0;padding:0;box-shadow:none;margin:0}
     #a4 .a4hd .logoIn{color:#1f6feb !important;border:none !important}
-    #a4 .client input{border-bottom:1px solid #999 !important}
-    #a4 .pics{gap:5px;margin-bottom:20px}
-    #a4 .pic{border-color:#999}
-    #a4 .pic .cap{font-size:7px;bottom:-12px}
+    #a4 .client input{border-bottom:1px solid #333 !important}
+    #a4 .pics{gap:5px}
     #a4 .pic .rm{display:none !important}
     #a4 table.mon{font-size:9px}
     #a4 table.mon th,#a4 table.mon td{padding:1px}
-    #a4 table.mon thead th{background:#f2f5f9 !important}
+    #a4 table.mon tr.shw th{background:#f2f5f9 !important}
     #a4 table.mon input{font-size:9px;height:14px}
-    #a4 .meta-in{border-bottom:1px solid #999 !important}
   }
 </style>
 </head>
@@ -179,14 +187,25 @@
   <div id="a4wrap">
     <div id="a4">
       <div class="a4hd">
-        <div><input class="logoIn" id="praktijk" value="FysioTotaal" aria-label="Praktijknaam"/><div class="sub">Trainingskaart · 1 × A4</div></div>
-        <div class="sub" style="text-align:right">Datum: <input class="meta-in" id="a4datum" aria-label="Datum"/><br/>Therapeut: <input class="meta-in" id="a4ther" aria-label="Therapeut"/></div>
-      </div>
-      <div class="client">
-        <div><label>Naam</label><input class="fld" id="c_naam"/></div>
-        <div><label>Leeftijd</label><input class="fld" id="c_leeftijd"/></div>
-        <div><label>max. HF</label><input class="fld" id="c_hf"/></div>
-        <div><label>Trainingszone</label><input class="fld" id="c_zone"/></div>
+        <div class="prak">
+          <input class="logoIn" id="praktijk" value="FysioTotaal" aria-label="Praktijknaam"/>
+          <div class="adres">
+            <input id="p_adres" placeholder="adres" aria-label="Adres"/>
+            <input id="p_plaats" placeholder="postcode en plaats" aria-label="Postcode en plaats"/>
+            <input id="p_tel" placeholder="telefoon" aria-label="Telefoon"/>
+            <input id="p_email" placeholder="e-mail" aria-label="E-mail"/>
+          </div>
+        </div>
+        <div class="client">
+          <div class="cr"><label>Naam</label><input id="c_naam" aria-label="Naam"/></div>
+          <div class="cr"><label>Leeftijd</label><input id="c_leeftijd" aria-label="Leeftijd"/></div>
+          <div class="cr"><label>max. HF</label><input id="c_hf" aria-label="max. HF"/></div>
+          <div class="cr"><label>Trainingszone</label><input id="c_zone" aria-label="Trainingszone"/></div>
+        </div>
+        <div class="boxes">
+          <div class="box"><b>Opm.</b><textarea id="c_opm" aria-label="Opmerking"></textarea><b>Cave</b><textarea id="c_cave" aria-label="Cave" style="flex:0 0 24px"></textarea></div>
+          <div class="box"><b>Doel:</b><textarea id="c_doel" aria-label="Doel"></textarea></div>
+        </div>
       </div>
       <div class="pics" id="pics"></div>
       <div id="emptyA4" class="hint no-print" style="padding:30px">Klik links op de <b>+</b> bij een oefening — het plaatje komt hier genummerd in de A4.</div>
@@ -280,8 +299,14 @@ bridge2.jpg</div>
     <h3>Eigen gegevens</h3>
     <label>Praktijknaam</label>
     <input type="text" id="set_praktijk" placeholder="bijv. FysioTotaal"/>
-    <label>Therapeut</label>
-    <input type="text" id="set_therapeut" placeholder="naam therapeut"/>
+    <label>Adres</label>
+    <input type="text" id="set_adres" placeholder="bijv. Hoofdlocatie: De Schans 9a - 10"/>
+    <label>Postcode en plaats</label>
+    <input type="text" id="set_plaats" placeholder="bijv. 7773 AA Hardenberg"/>
+    <label>Telefoon</label>
+    <input type="text" id="set_tel" placeholder="telefoonnummer"/>
+    <label>E-mail</label>
+    <input type="text" id="set_email" placeholder="e-mailadres"/>
     <div class="acts"><button class="btn" id="eigen_close">Sluiten</button><button class="btn primary" id="eigen_save">Opslaan</button></div>
   </div>
 </div>
@@ -397,7 +422,7 @@ bridge2.jpg</div>
   var SET={praktijk:'FysioTotaal'};
   try{SET=Object.assign(SET,JSON.parse(localStorage.getItem('fysiplan_settings')||'{}'));}catch(e){}
   function saveSettings(){try{localStorage.setItem('fysiplan_settings',JSON.stringify(SET));}catch(e){}}
-  var CLIENTKEYS=['c_naam','c_leeftijd','c_hf','c_zone'];
+  var CLIENTKEYS=['c_naam','c_leeftijd','c_hf','c_zone','c_opm','c_cave','c_doel'];
   function saveState(){
     try{
       var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
@@ -409,11 +434,11 @@ bridge2.jpg</div>
       var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');
       if(Array.isArray(st.chosen))chosen=st.chosen.filter(function(c){return OEF[c.o]&&OEF[c.o].imgs[c.i];});
       if(st.client)CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el&&st.client[k]!=null)el.value=st.client[k];});
-      if(st.grid&&typeof st.grid==='object'){GRID={dates:st.grid.dates||{},cells:st.grid.cells||{},datum:st.grid.datum||''};}
+      if(st.grid&&typeof st.grid==='object'){GRID={rows:st.grid.rows||{},cells:st.grid.cells||{}};}
     }catch(e){}
   }
 
-  var curG='all',q='',active=null,chosen=[],CUSTOMLIB=false,IMGCACHE={},GRID={dates:{},cells:{},datum:''};
+  var curG='all',q='',active=null,chosen=[],CUSTOMLIB=false,IMGCACHE={},GRID={rows:{},cells:{}};
   var elList=document.getElementById('list'),elStrip=document.getElementById('strip'),
       elActive=document.getElementById('activeName'),elPics=document.getElementById('pics'),
       elMon=document.getElementById('mon'),elEmpty=document.getElementById('emptyA4'),elCnt=document.getElementById('cnt'),
@@ -460,32 +485,42 @@ bridge2.jpg</div>
     elEmpty.style.display=chosen.length?'none':'block';
     var slots='';
     for(var n=0;n<12;n++){
+      var inner='';
       if(n<chosen.length){
         var c=chosen[n],o=OEF[c.o],im=o&&o.imgs[c.i];
-        slots+="<div class='pic'><span class='n'>"+(n+1)+"</span><span class='rm no-print' data-rm='"+n+"' title='verwijderen'>×</span><div style='width:78%;height:78%;color:#222'>"+(im?imgRender(im,90):'')+"</div><span class='cap'>"+(o?o.naam:'')+"</span></div>";
-      }else{
-        slots+="<div class='pic'><span class='n'>"+(n+1)+"</span></div>";
+        inner="<span class='rm no-print' data-rm='"+n+"' title='verwijderen'>×</span><div style='width:86%;height:86%;color:#222'>"+(im?imgRender(im,90):'')+"</div>";
       }
+      slots+="<div class='picwrap'><div class='num'>"+(n+1)+"</div><div class='pic'>"+inner+"</div></div>";
     }
     elPics.innerHTML=slots;
-    // monitoring (invulbaar: datum per kolom + serie/herhaling/weerstand)
-    var dates=6;
-    function cell(rowKey,col,f){var key=rowKey+'|'+col+'|'+f;return "<td><input data-k='"+key+"' value='"+esc(GRID.cells[key]||'')+"'/></td>";}
-    var head="<thead><tr><th style='width:16px'>#</th><th style='width:150px'>oefening</th>";
-    for(var d=0;d<dates;d++)head+="<th colspan='3'>datum<br/><input class='dcol' data-col='"+d+"' value='"+esc(GRID.dates[d]||'')+"' placeholder='__/__'/></th>";
-    head+="</tr><tr><th></th><th></th>";
-    for(var d2=0;d2<dates;d2++)head+="<th>S</th><th>H</th><th>W</th>";
+    // monitoring: links de datumkolom (D.D), per oefening een kolom met S/H/W
+    var colKeys=[],names=[];
+    for(n=0;n<12;n++){
+      if(n<chosen.length){var c2=chosen[n];colKeys.push('e'+c2.o+'.'+c2.i);names.push(OEF[c2.o]?OEF[c2.o].naam:'');}
+      else{colKeys.push('x'+n);names.push('');}
+    }
+    var head="<thead><tr><th class='ddh dd'>D.D</th>";
+    names.forEach(function(nm){head+="<th colspan='3' class='exh' title='"+esc(nm)+"'>"+esc(nm)+"</th>";});
+    head+="</tr><tr class='shw'><th class='dd'></th>";
+    for(var d=0;d<12;d++)head+="<th>S</th><th>H</th><th>W</th>";
     head+="</tr></thead>";
-    var seen={},rows='',k=0;
-    chosen.forEach(function(c){
-      if(seen[c.o])return;seen[c.o]=1;k++;var o=OEF[c.o];
-      var r="<tr><td>"+k+"</td><td class='ex'>"+esc(o.naam)+"</td>";
-      for(var d=0;d<dates;d++)r+=cell('e'+c.o,d,'S')+cell('e'+c.o,d,'H')+cell('e'+c.o,d,'W');
-      rows+=r+"</tr>";
-    });
-    var pad=Math.max(0,6-k);
-    for(var p=0;p<pad;p++){var r2="<tr><td>"+(k+p+1)+"</td><td class='ex'>&nbsp;</td>";for(var d=0;d<dates;d++)r2+=cell('p'+p,d,'S')+cell('p'+p,d,'H')+cell('p'+p,d,'W');rows+=r2+"</tr>";}
-    elMon.innerHTML=chosen.length?(head+"<tbody>"+rows+"</tbody>"):'';
+    function dateRow(r){
+      var tr="<tr><td class='dd'><input class='drow' data-row='"+r+"' value='"+esc(GRID.rows[r]||'')+"' placeholder='__-__'/></td>";
+      colKeys.forEach(function(ck){['S','H','W'].forEach(function(f){var key=ck+'|'+r+'|'+f;tr+="<td><input data-k='"+key+"' value='"+esc(GRID.cells[key]||'')+"'/></td>";});});
+      return tr+"</tr>";
+    }
+    function labelRow(lbl,r){
+      var tr="<tr><td class='dd lbl'>"+lbl+"</td>";
+      colKeys.forEach(function(ck){var key=ck+'|'+r+'|V';tr+="<td colspan='3'><input data-k='"+key+"' value='"+esc(GRID.cells[key]||'')+"'/></td>";});
+      return tr+"</tr>";
+    }
+    var rows='',ri=0;
+    for(var b=0;b<2;b++){
+      for(var i=0;i<6;i++)rows+=dateRow('r'+(ri++));
+      rows+=labelRow('BORG','borg'+b);
+    }
+    rows+=labelRow('XRM','xrm');
+    elMon.innerHTML=head+"<tbody>"+rows+"</tbody>";
   }
   function render(){updateChipCounts();renderList();renderStrip();renderA4();saveState();}
 
@@ -546,17 +581,19 @@ bridge2.jpg</div>
   // ---- menubalk: Bestand / Eigen Gegevens / Help ----
   function openOv(id){document.getElementById(id).classList.add('on');}
   function closeOv(id){document.getElementById(id).classList.remove('on');}
-  function today(){var d=new Date();function p(n){return (n<10?'0':'')+n;}return p(d.getDate())+'-'+p(d.getMonth()+1)+'-'+d.getFullYear();}
+  var PRAKKEYS={p_adres:'adres',p_plaats:'plaats',p_tel:'tel',p_email:'email'};
   function applySettings(){
     var p=document.getElementById('praktijk');if(p)p.value=SET.praktijk||'';
-    var t=document.getElementById('a4ther');if(t)t.value=SET.therapeut||'';
-    var dt=document.getElementById('a4datum');if(dt)dt.value=GRID.datum||'';
+    Object.keys(PRAKKEYS).forEach(function(id){var el=document.getElementById(id);if(el)el.value=SET[PRAKKEYS[id]]||'';});
   }
   document.getElementById('menuBestand').addEventListener('click',function(){openOv('ovFile');});
   document.getElementById('menuHelp').addEventListener('click',function(){openOv('ovHelp');});
   document.getElementById('menuEigen').addEventListener('click',function(){
     document.getElementById('set_praktijk').value=SET.praktijk||'';
-    document.getElementById('set_therapeut').value=SET.therapeut||'';
+    document.getElementById('set_adres').value=SET.adres||'';
+    document.getElementById('set_plaats').value=SET.plaats||'';
+    document.getElementById('set_tel').value=SET.tel||'';
+    document.getElementById('set_email').value=SET.email||'';
     openOv('ovEigen');
   });
   document.getElementById('file_close').addEventListener('click',function(){closeOv('ovFile');});
@@ -566,27 +603,30 @@ bridge2.jpg</div>
   document.getElementById('file_new').addEventListener('click',function(){
     if(confirm('Nieuwe kaart: gekozen plaatjes én cliëntgegevens wissen?')){
       chosen=[];CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value='';});
-      GRID={dates:{},cells:{},datum:today()};applySettings();
+      GRID={rows:{},cells:{}};applySettings();
       saveState();render();closeOv('ovFile');
     }
   });
   document.getElementById('eigen_save').addEventListener('click',function(){
     SET.praktijk=document.getElementById('set_praktijk').value;
-    SET.therapeut=document.getElementById('set_therapeut').value;
+    SET.adres=document.getElementById('set_adres').value;
+    SET.plaats=document.getElementById('set_plaats').value;
+    SET.tel=document.getElementById('set_tel').value;
+    SET.email=document.getElementById('set_email').value;
     saveSettings();applySettings();closeOv('ovEigen');
   });
   document.querySelectorAll('.ov').forEach(function(ov){ov.addEventListener('click',function(e){if(e.target===ov)ov.classList.remove('on');});});
 
-  // invulbare A4-velden: praktijk, datum, therapeut, en het monitoring-grid
+  // invulbare A4-velden: praktijk + adresblok, en het monitoring-grid
   var elPraktijk=document.getElementById('praktijk');
   if(elPraktijk){elPraktijk.value=SET.praktijk;elPraktijk.addEventListener('input',function(){SET.praktijk=elPraktijk.value;saveSettings();});}
-  var elTher=document.getElementById('a4ther');
-  if(elTher)elTher.addEventListener('input',function(){SET.therapeut=elTher.value;saveSettings();});
-  var elDatum=document.getElementById('a4datum');
-  if(elDatum)elDatum.addEventListener('input',function(){GRID.datum=elDatum.value;saveState();});
+  Object.keys(PRAKKEYS).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.addEventListener('input',function(){SET[PRAKKEYS[id]]=el.value;saveSettings();});
+  });
   elMon.addEventListener('input',function(e){
     var t=e.target;if(t.tagName!=='INPUT')return;
-    if(t.classList.contains('dcol')){GRID.dates[t.dataset.col]=t.value;}
+    if(t.classList.contains('drow')){GRID.rows[t.dataset.row]=t.value;}
     else if(t.dataset.k){GRID.cells[t.dataset.k]=t.value;}
     saveState();
   });
@@ -685,9 +725,8 @@ bridge2.jpg</div>
     IMGCACHE=imgs||{};
     var lib=loadLib();
     if(lib){buildLibrary(lib);chosen=[];}
-    if(!GRID.datum){GRID.datum=today();saveState();}
     applySettings();render();
-  }).catch(function(){if(!GRID.datum)GRID.datum=today();applySettings();render();});
+  }).catch(function(){applySettings();render();});
 })();
 </script>
 </body>
