@@ -481,7 +481,7 @@ bridge2.jpg</div>
   }
   function renderA4(){
     elEmpty.style.display=chosen.length?'none':'block';
-    // monitoring: links de datumkolom (D.D); per plaatje één kolomgroep S/H/W, even breed
+    // monitoring: links de datumkolom; per plaatje één kolomgroep S/H/W, even breed
     var colKeys=[],names=[],numcells='',piccells='';
     for(var n=0;n<12;n++){
       var inner='';
@@ -495,7 +495,7 @@ bridge2.jpg</div>
     }
     var head="<thead><tr><td class='dd nob'></td>"+numcells+"</tr>";
     head+="<tr><td class='dd nob'></td>"+piccells+"</tr>";
-    head+="<tr><th class='ddh dd'>D.D</th>";
+    head+="<tr><th class='ddh dd'>Datum</th>";
     names.forEach(function(nm){head+="<th colspan='3' class='exh' title='"+esc(nm)+"'>"+esc(nm)+"</th>";});
     head+="</tr><tr class='shw'><th class='dd'></th>";
     for(var d=0;d<12;d++)head+="<th>S</th><th>H</th><th>W</th>";
