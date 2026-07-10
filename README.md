@@ -13,7 +13,7 @@ Live Railway URL: https://fysiplan-production.up.railway.app
   Kettlebell, Foam roller, Speedladder) + zoeken. Deze lijst wordt door de **server** geleverd,
   dus **iedereen die de URL opent** ziet ze — op elk apparaat, zonder inloggen of upload.
   (Is `public/oefeningen.json` afwezig, dan valt de app terug op nette placeholder-tekeningen.)
-- Twee staps: klik een oefening → kies één of meer plaatjes → ze komen genummerd op de A4.
+- Klik een oefening en het bijbehorende plaatje komt direct genummerd op de A4.
 - Eén A4-trainingskaart met cliëntvelden (Naam, Leeftijd, max. HF, Trainingszone) en
   monitoring-grid.
 - Printen + opslaan als PDF (via het printvenster van de browser).
