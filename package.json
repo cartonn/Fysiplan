@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.js",
+    "images:normalize": "python3 scripts/normalize-image-visibility.py --write",
     "start": "node server.js"
   },
   "engines": {
