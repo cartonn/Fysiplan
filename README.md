@@ -8,8 +8,11 @@ Live Railway URL: https://fysiplan-production.up.railway.app
 
 ## Wat de app doet
 
-- Oefeningenbibliotheek (82 oefeningen), filterbaar op groep (bovenste / onderste extremiteit /
-  romp / divers) + zoeken.
+- Oefeningenbibliotheek met **echte oefening-plaatjes** (107 stuks, geleverd in de repo),
+  gegroepeerd per categorie (Bovenste/Onderste extremiteit, Core, Cardio, Bosu, TRX, Yoga,
+  Kettlebell, Foam roller, Speedladder) + zoeken. Deze lijst wordt door de **server** geleverd,
+  dus **iedereen die de URL opent** ziet ze — op elk apparaat, zonder inloggen of upload.
+  (Is `public/oefeningen.json` afwezig, dan valt de app terug op nette placeholder-tekeningen.)
 - Twee staps: klik een oefening → kies één of meer plaatjes → ze komen genummerd op de A4.
 - Eén A4-trainingskaart met cliëntvelden (Naam, Leeftijd, max. HF, Trainingszone) en
   monitoring-grid.
@@ -19,8 +22,13 @@ Live Railway URL: https://fysiplan-production.up.railway.app
 ## Structuur
 
 - `public/index.html` — de volledige front-end app (zelfstandig: HTML + CSS + JS + data).
+- `public/oefeningen.json` — de **server-bibliotheek**: lijst van `{naam, groep, img}` die de app bij
+  het opstarten inleest, zodat de plaatjes voor iedereen (elk apparaat) beschikbaar zijn.
+- `public/images/` — de web-geoptimaliseerde JPEG's, per categorie in een submap.
 - `server.js` — minimale Node-server (geen dependencies): serveert `public/` en `/health`.
 - `scripts/build.js` — schrijft buildmetadata naar `dist/build-info.json`.
+- `scripts/convert-images.mjs` — eenmalig hulpscript: zet zware BMP/PNG naar compacte JPEG's en
+  (her)bouwt `public/oefeningen.json`. Zie "Nieuwe plaatjes toevoegen" hieronder.
 - `railway.json` — Railway build/deploy + healthcheck op `/health`.
 
 ## Scripts
@@ -32,54 +40,40 @@ Lokaal draaien: `npm run build && npm run start`, daarna http://localhost:3000
 
 ## Eigen oefeningenlijst uploaden (Carla)
 
-Via de knop **"Plaatjes uploaden"** in de app kan de praktijk haar eigen lijst uploaden. Dat
-bestand (.txt/.csv) **wordt de oefeningenlijst** en vervangt de standaard 82 placeholders. Format:
-oefeningnaam, daaronder de bestandsnamen van de bijbehorende plaatjes, lege regel, volgende oefening.
-De plaatjes kunnen in dezelfde upload mee (worden lokaal in de browser bewaard via IndexedDB).
-Met de knop **"Standaardlijst"** keer je terug naar de standaardlijst.
+De oefeningen met plaatjes worden **standaard door de server geleverd** (zie `oefeningen.json`
+hierboven), dus iedereen ziet dezelfde lijst. Wil één werkplek daarnaast toch een eigen,
+afwijkende lijst gebruiken, dan kan dat via de knop **"Plaatjes uploaden"**: dat bestand
+(.txt/.csv) **wordt de oefeningenlijst** en vervangt de server-lijst — maar alleen **lokaal in
+die ene browser** (bewaard via IndexedDB). Format: oefeningnaam, daaronder de bestandsnamen van de
+bijbehorende plaatjes, lege regel, volgende oefening. Met de knop **"Standaardlijst"** keer je
+terug naar de gedeelde server-lijst.
 
-## De echte oefening-plaatjes (alternatief: in de repo)
+## Nieuwe plaatjes toevoegen (in de repo)
 
-De tekeningen in de app zijn nu nette stand-ins. De echte plaatjes vervangen ze later **zonder
-codewijziging** — gekoppeld op oefeningnaam:
+De 107 oefening-plaatjes staan in `public/images/` (per categorie in een submap) en zijn
+gekoppeld via `public/oefeningen.json`. Zo voeg je er nieuwe toe zodat **iedereen** ze via de URL
+krijgt:
 
-1. Zet de afbeeldingen (PNG/JPG) in `public/images/`.
-2. Koppel ze in `public/oefening-plaatjes.json` (sleutel = oefeningnaam). Drie vormen mogelijk,
-   zie `public/oefening-plaatjes.VOORBEELD.json` en `public/images/LEESMIJ.txt`:
-   - één plaatje: `"Squat (kniebuiging)": "squat.png"`
-   - meerdere: `"Lunge (uitval)": ["lunge-start.png", "lunge-uitvoering.png"]`
-   - met labels: `"Glute bridge": { "start": "...", "uitvoering": "..." }`
-3. Opslaan + pushen. De placeholders verdwijnen automatisch voor elke gekoppelde oefening.
+1. Zet de nieuwe afbeeldingen (elk formaat: BMP/PNG/JPG) in een submap onder `public/images/`.
+   De **mapnaam bepaalt de categorie**, de **bestandsnaam wordt de oefeningnaam**.
+2. Draai het conversiescript. Het zet zware BMP/PNG om naar compacte JPEG's, verwijdert de
+   originele bronmappen en (her)bouwt `public/oefeningen.json`:
 
-Lever je een lijst aan met "oefeningnaam + bestandsnaam", dan is `oefening-plaatjes.json` in één
-keer te vullen.
+   ```
+   npm install --no-save jimp        # eenmalig, alleen voor dit script (staat niet in deps)
+   node scripts/convert-images.mjs
+   ```
 
-### Automatisch inlezen van Carla's bestand
+3. Controleer de app lokaal (`npm run build && npm run start`), dan committen + pushen. Railway
+   deployt automatisch en de nieuwe oefeningen staan live voor iedereen.
 
-Carla levert een bestand aan in dit formaat (oefeningnaam, daaronder de plaatjes die erbij horen,
-lege regel, volgende oefening):
-
-```
-Squat (kniebuiging)
-squat-start.png
-squat-uitvoering.png
-
-Lunge (uitval)
-lunge.png
-```
-
-Het script `scripts/import-plaatjes.mjs` leest dit in, splitst het per oefening en bouwt het
-manifest. Het meldt ook welke namen niet matchen met de app (met een suggestie):
-
-```
-node scripts/import-plaatjes.mjs <bestand>           # dry-run: alleen rapport
-node scripts/import-plaatjes.mjs <bestand> --write   # schrijft public/oefening-plaatjes.json
-```
-
-Daarna de bijbehorende afbeeldingen in `public/images/` zetten en pushen.
+> De categorie-namen en hun volgorde staan bovenin `scripts/convert-images.mjs` (de `CAT`-tabel);
+> pas die aan als je een map anders wilt labelen.
 
 ## Data & privacy
 
-Alle gegevens (cliëntvelden, eigen oefeningen) blijven nu **lokaal in de browser**
-(`localStorage`); er gaat niets naar een server. Voor een toekomstige gedeelde/multi-praktijk
-versie met centrale opslag moeten AVG / NEN 7510 worden ingericht (nu buiten scope).
+De **oefening-plaatjes** staan op de server en zijn dus gedeeld/openbaar via de URL — dat is de
+bedoeling (het zijn geen persoonsgegevens). Alle **cliëntgegevens** (naam, leeftijd, kaart-inhoud,
+eigen oefeningen) blijven **lokaal in de browser** (`localStorage`/IndexedDB); daarvan gaat niets
+naar een server. Voor een toekomstige gedeelde/multi-praktijk versie met centrale opslag van
+cliëntdata moeten AVG / NEN 7510 worden ingericht (nu buiten scope).

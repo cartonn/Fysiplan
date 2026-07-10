@@ -436,7 +436,7 @@ bridge2.jpg</div>
     }catch(e){}
   }
 
-  var curG='all',q='',active=null,chosen=[],CUSTOMLIB=false,IMGCACHE={},GRID={rows:{},cells:{}};
+  var curG='all',q='',active=null,chosen=[],CUSTOMLIB=false,SERVERLIB=false,GROUPS=null,IMGCACHE={},GRID={rows:{},cells:{}};
   var elList=document.getElementById('list'),elStrip=document.getElementById('strip'),
       elActive=document.getElementById('activeName'),
       elMon=document.getElementById('mon'),elEmpty=document.getElementById('emptyA4'),elCnt=document.getElementById('cnt'),
@@ -448,8 +448,17 @@ bridge2.jpg</div>
       if(CUSTOMLIB){c.style.display=(g==='all')?'':'none';if(g==='all')c.textContent='alle oefeningen ('+OEF.length+')';return;}
       c.style.display='';
       var n=OEF.filter(function(o){return g==='all'||o.groep===g;}).length;
-      c.textContent=CHIP_LABELS[g]+' ('+n+')';
+      var label=SERVERLIB?(g==='all'?'alle oefeningen':g):CHIP_LABELS[g];
+      c.textContent=label+' ('+n+')';
     });
+  }
+  // chip-balk opnieuw opbouwen (dynamische categorieën uit de server-bibliotheek)
+  function renderChips(){
+    var f=document.getElementById('filters');
+    if(!f||!GROUPS)return;
+    f.innerHTML=GROUPS.map(function(x){
+      return "<span class='chip"+(curG===x.g?" on":"")+"' data-g=\""+esc(x.g)+"\">"+esc(x.label)+"</span>";
+    }).join("");
   }
 
   function renderList(){
@@ -537,8 +546,10 @@ bridge2.jpg</div>
     if(idx>-1)chosen.splice(idx,1);else{if(chosen.length>=12){alert('Maximaal 12 plaatjes op één A4.');return;}chosen.push({o:o,i:i});}
     render();
   });
-  document.querySelectorAll('.chip').forEach(function(b){
-    b.addEventListener('click',function(){document.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');});b.classList.add('on');curG=b.dataset.g;renderList();});
+  document.getElementById('filters').addEventListener('click',function(e){
+    var b=e.target.closest('.chip');if(!b)return;
+    document.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');curG=b.dataset.g;renderList();
   });
   document.getElementById('search').addEventListener('input',function(e){q=e.target.value.toLowerCase();renderList();});
   document.getElementById('printBtn').addEventListener('click',function(){window.print();});
@@ -630,23 +641,6 @@ bridge2.jpg</div>
   CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.addEventListener('input',saveState);});
   loadState();
 
-  // Echte tekeningen: zodra public/oefening-plaatjes.json + public/images/ gevuld zijn,
-  // vervangen die automatisch de placeholders (gekoppeld op oefeningnaam). Geen codewijziging nodig.
-  function applyRealImages(map){
-    if(!map)return;
-    OEF.forEach(function(o){
-      if(o.userimg)return;
-      var v=map[o.naam];if(!v)return;var imgs=[];
-      if(typeof v==='string')imgs=[{type:'img',src:'images/'+v,label:'Plaatje'}];
-      else if(Array.isArray(v))imgs=v.map(function(f,i){return {type:'img',src:'images/'+f,label:i===0?'Starthouding':(i===1?'Uitvoering':'Plaatje '+(i+1))};});
-      else if(v&&typeof v==='object'){
-        if(v.start)imgs.push({type:'img',src:'images/'+v.start,label:'Starthouding'});
-        if(v.uitvoering)imgs.push({type:'img',src:'images/'+v.uitvoering,label:'Uitvoering'});
-        if(v.bestand)imgs.push({type:'img',src:'images/'+v.bestand,label:'Plaatje'});
-      }
-      if(imgs.length){o.imgs=imgs;o.echt=true;}
-    });
-  }
 
   // ---- IndexedDB: opslag voor geüploade plaatjes (groot, geen quota-probleem) ----
   function idbOpen(){return new Promise(function(res,rej){try{var r=indexedDB.open('fysiplan',1);r.onupgradeneeded=function(){r.result.createObjectStore('imgs');};r.onsuccess=function(){res(r.result);};r.onerror=function(){rej(r.error);};}catch(e){rej(e);}});}
@@ -668,13 +662,37 @@ bridge2.jpg</div>
                            :[{type:'svg',key:'stand',m:0,label:'Plaatje'}];
       return {id:i,naam:e.naam,groep:'eigen',s:3,h:12,bron:'carla',starthouding:'',uitvoering:'',opmerking:'',imgs:imgs};
     });
-    CUSTOMLIB=true;curG='all';rebuildLookup();
+    CUSTOMLIB=true;SERVERLIB=false;curG='all';rebuildLookup();
     OEF.forEach(function(o){var n=NOTES[o.naam];if(n){o.starthouding=n.s||'';o.uitvoering=n.u||'';o.opmerking=n.o||'';}});
+  }
+  // De server-bibliotheek (public/oefeningen.json): echte oefening-plaatjes die IEDEREEN
+  // krijgt die de URL opent — op elk apparaat, zonder upload. Elke afbeelding = één oefening.
+  function buildServerLibrary(entries){
+    var cats=[];
+    OEF=entries.map(function(e,i){
+      if(cats.indexOf(e.groep)<0)cats.push(e.groep);
+      return {id:i,naam:e.naam,groep:e.groep,s:3,h:12,bron:'server',
+        starthouding:'',uitvoering:'',opmerking:'',
+        imgs:[{type:'img',src:e.img,label:'Plaatje'}]};
+    });
+    SERVERLIB=true;CUSTOMLIB=false;curG='all';
+    GROUPS=[{g:'all',label:'alle oefeningen'}].concat(cats.map(function(c){return {g:c,label:c};}));
+    renderChips();rebuildLookup();
+    OEF.forEach(function(o){var n=NOTES[o.naam];if(n){o.starthouding=n.s||'';o.uitvoering=n.u||'';o.opmerking=n.o||'';}});
+  }
+  // laadt de standaardbibliotheek: eerst de server-bibliotheek, anders de placeholders
+  function loadDefaultLibrary(){
+    return fetch('oefeningen.json',{cache:'no-cache'})
+      .then(function(r){return r.ok?r.json():null;})
+      .then(function(data){if(data&&data.length){buildServerLibrary(data);}else{buildDefault();}})
+      .catch(function(){buildDefault();});
   }
   function buildDefault(){
     OEF=BASE.map(mkOef);
     try{var saved=JSON.parse(localStorage.getItem('fysiplan_custom')||'[]');saved.forEach(function(o){o.id=OEF.length;o.starthouding=o.starthouding||'';o.uitvoering=o.uitvoering||'';o.opmerking=o.opmerking||'';OEF.push(o);});}catch(e){}
-    CUSTOMLIB=false;curG='all';rebuildLookup();
+    CUSTOMLIB=false;SERVERLIB=false;curG='all';
+    GROUPS=[{g:'all',label:CHIP_LABELS.all},{g:'boven',label:CHIP_LABELS.boven},{g:'onder',label:CHIP_LABELS.onder},{g:'romp',label:CHIP_LABELS.romp},{g:'divers',label:CHIP_LABELS.divers}];
+    renderChips();rebuildLookup();
     OEF.forEach(function(o){var n=NOTES[o.naam];if(n){o.starthouding=n.s||o.starthouding;o.uitvoering=n.u||o.uitvoering;o.opmerking=n.o||o.opmerking;}});
   }
   function saveLib(entries){try{localStorage.setItem('fysiplan_lib',JSON.stringify(entries));}catch(e){}}
@@ -695,8 +713,8 @@ bridge2.jpg</div>
   document.getElementById('up_cancel').addEventListener('click',function(){ovUp.classList.remove('on');});
   document.getElementById('up_reset').addEventListener('click',function(){
     if(!confirm('Terug naar de standaard-oefeningenlijst?'))return;
-    clearLib();buildDefault();chosen=[];render();
-    document.getElementById('up_result').textContent='Standaardlijst hersteld.';
+    clearLib();loadDefaultLibrary().then(function(){chosen=[];active=null;render();
+      document.getElementById('up_result').textContent='Standaardlijst hersteld.';});
   });
   document.getElementById('up_do').addEventListener('click',function(){
     var fl=document.getElementById('up_files').files;
@@ -716,13 +734,13 @@ bridge2.jpg</div>
     }).catch(function(){res.textContent='Kon het bestand niet lezen. Gebruik een .txt of .csv bestand.';});
   });
 
-  // init: laad geüploade plaatjes + eventuele eigen oefeningenlijst, dan renderen
+  // init: eigen upload heeft voorrang; anders de server-bibliotheek (voor iedereen), dan renderen
   idbAll().then(function(imgs){
     IMGCACHE=imgs||{};
     var lib=loadLib();
-    if(lib){buildLibrary(lib);chosen=[];}
-    applySettings();render();
-  }).catch(function(){applySettings();render();});
+    if(lib){buildLibrary(lib);chosen=[];applySettings();render();return;}
+    return loadDefaultLibrary().then(function(){applySettings();render();});
+  }).catch(function(){buildDefault();applySettings();render();});
 })();
 </script>
 </body>
