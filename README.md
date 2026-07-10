@@ -29,14 +29,16 @@ Live Railway URL: https://fysiplan-production.up.railway.app
 - `scripts/build.js` — schrijft buildmetadata naar `dist/build-info.json`.
 - `scripts/convert-images.mjs` — eenmalig hulpscript: zet zware BMP/PNG naar compacte JPEG's en
   (her)bouwt `public/oefeningen.json`. Zie "Nieuwe plaatjes toevoegen" hieronder.
-- `scripts/normalize-image-visibility.py` — brengt lichte lijnen per afbeelding op een consistente
-  zichtbaarheid, gemeten op het 56×56-formaat van de keuzelijst, zonder afmetingen te wijzigen.
+- `scripts/normalize-image-visibility.py` — brengt lijnzwart, randscherpte en kleur per afbeelding
+  op de zichtbaarheid van de biceps-referentie, gemeten op het 56×56-formaat van de keuzelijst,
+  zonder afmetingen te wijzigen.
 - `railway.json` — Railway build/deploy + healthcheck op `/health`.
 
 ## Scripts
 
 - `npm run build` — schrijft buildmetadata naar `dist/build-info.json`.
-- `npm run images:normalize` — normaliseert lichte oefentekeningen (vereist Python + Pillow).
+- `npm run images:normalize` — normaliseert oefentekeningen naar de biceps-referentie
+  (vereist Python + Pillow).
 - `npm run start` — start de webserver op `PORT` (Railway) of lokaal op `3000`.
 
 Lokaal draaien: `npm run build && npm run start`, daarna http://localhost:3000
