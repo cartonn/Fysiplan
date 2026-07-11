@@ -127,7 +127,7 @@
   .helpsection ol,.helpsection ul{margin:4px 0 0;padding-left:18px}
   .helpsection.full{grid-column:1/-1}
   #up_result{margin-top:12px;font-size:12.5px;color:var(--brand-700);min-height:16px;font-weight:500}
-  @page{size:297mm 210mm;margin:5mm}
+  @page{size:A4 landscape;margin:5mm}
   @media print{
     html,body{width:287mm;height:200mm;margin:0;overflow:hidden;background:#fff !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
     .topbar,.wrap>.card,.wrap .col-controls,.no-print{display:none !important}
@@ -149,6 +149,13 @@
     #a4 table.mon thead tr:nth-child(3){height:5mm}
     #a4 table.mon thead tr:nth-child(4){height:5mm}
     #a4 table.mon tbody tr{height:6.7mm}
+    /* Safari houdt de macOS-printerstand op Staand. Draai de kaart daarom
+       binnen het beschikbare A4-printvlak, zodat één klik toch het vel vult. */
+    html.safari-print,html.safari-print body{width:197mm;height:276mm}
+    html.safari-print body{position:relative}
+    html.safari-print .wrap{position:relative;width:197mm;height:276mm}
+    html.safari-print #a4wrap{position:relative;width:197mm;height:276mm;overflow:visible}
+    html.safari-print #a4{position:absolute;top:0;left:197mm;width:276mm;height:197mm;min-height:197mm;max-height:197mm;transform:rotate(90deg);transform-origin:top left}
   }
 </style>
 </head>
@@ -307,7 +314,7 @@ bridge2.jpg</div>
       </div>
       <div class="helpsection">
         <b>4. Printen of opslaan als PDF</b>
-        Klik op <strong>Print trainingsschema (PDF)</strong>. Kies in het afdrukvenster een printer of <strong>Bewaar als PDF</strong>. De kaart vult automatisch één liggende A4 met een veilige printerrand van 5 mm; laat de schaal op 100% of Standaard staan.
+        Klik op <strong>Print trainingsschema (PDF)</strong>. Kies in het afdrukvenster een printer of <strong>Bewaar als PDF</strong>. De kaart vult automatisch één A4 met een veilige printerrand; laat de schaal op 100% of Standaard staan. In Safari mag Richting op <strong>Staand</strong> blijven: Fysiplan draait de kaart daar automatisch A4-vullend.
       </div>
       <div class="helpsection">
         <b>5. Kaart wissen</b>
@@ -527,7 +534,11 @@ bridge2.jpg</div>
     b.classList.add('on');curG=b.dataset.g;renderList();
   });
   document.getElementById('search').addEventListener('input',function(e){q=e.target.value.toLowerCase();renderList();});
-  document.getElementById('printBtn').addEventListener('click',function(){window.print();});
+  var SAFARI_PRINT=/Safari/i.test(navigator.userAgent)&&!/Chrome|Chromium|CriOS|Android/i.test(navigator.userAgent);
+  document.getElementById('printBtn').addEventListener('click',function(){
+    if(SAFARI_PRINT)document.documentElement.classList.add('safari-print');
+    window.print();
+  });
   document.getElementById('clearBtn').addEventListener('click',function(){
     if(!chosen.length)return;
     if(confirm('Hele kaart wissen? De gekozen plaatjes worden verwijderd.')){chosen=[];render();}
