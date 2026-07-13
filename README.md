@@ -53,6 +53,16 @@ die ene browser** (bewaard via IndexedDB). Format: oefeningnaam, daaronder de be
 bijbehorende plaatjes, lege regel, volgende oefening. Met de knop **"Standaardlijst"** keer je
 terug naar de gedeelde server-lijst.
 
+## Praktijkprofielen en opgeslagen kaarten
+
+- **Praktijken (gedeeld):** vul je op de A4 een praktijknaam + adres in, dan wordt dat profiel via
+  `POST /api/praktijken` op de server bewaard (`praktijken.json`) en is het op elk apparaat te
+  kiezen via het keuzemenu boven de praktijknaam. `GET /api/praktijken` levert de lijst.
+- **Kaarten (lokaal):** via de knop **Kaarten** sla je de huidige kaart onder een naam op en open
+  of verwijder je eerder opgeslagen kaarten. Kaarten bevatten cliëntgegevens en blijven daarom
+  bewust **lokaal in de browser** (`localStorage`, sleutel `fysiplan_kaarten`). Oefeningen worden
+  op naam bewaard, zodat een kaart blijft werken als de bibliotheek verandert.
+
 ## Oefening hernoemen (in de app)
 
 Beweeg in de lijst over een oefening en klik het potloodje (✎) → nieuwe naam invoeren. De

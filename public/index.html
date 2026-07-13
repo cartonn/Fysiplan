@@ -173,6 +173,7 @@
   <div class="spacer"></div>
   <button class="btn" id="uploadBtn">Plaatjes uploaden</button>
   <button class="btn" id="addBtn">+ Oefening toevoegen</button>
+  <button class="btn" id="kaartenBtn">Kaarten</button>
   <button class="btn" id="clearBtn">Wis kaart</button>
   <button class="btn primary" id="printBtn">Print trainingsschema (PDF)</button>
 </header>
@@ -199,6 +200,7 @@
     <div id="a4">
       <div class="a4hd">
         <div class="prak">
+          <select id="prakSelect" class="no-print" aria-label="Kies praktijk" style="display:none;width:100%;margin-bottom:4px;font-size:11px;padding:3px 6px;border:1px solid var(--line);border-radius:6px;color:var(--muted);background:#fff"></select>
           <input class="logoIn" id="praktijk" value="FysioTotaal" aria-label="Praktijknaam"/>
           <div class="adres">
             <input id="p_adres" placeholder="adres" aria-label="Adres"/>
@@ -313,6 +315,22 @@ bridge2.jpg</div>
   </div>
 </div>
 
+<!-- opgeslagen kaarten modal -->
+<div class="ov" id="ovKaarten">
+  <div class="modal">
+    <h3>Kaarten</h3>
+    <label>Huidige kaart opslaan als</label>
+    <div style="display:flex;gap:8px">
+      <input type="text" id="k_naam" placeholder="bijv. cliëntnaam of programmanaam" style="flex:1"/>
+      <button class="btn primary" id="k_save">Opslaan</button>
+    </div>
+    <div id="k_result" style="margin-top:6px;font-size:12px;color:var(--muted)"></div>
+    <label style="margin-top:12px;display:block">Opgeslagen kaarten <span style="font-weight:400;color:var(--muted)">(alleen op dit apparaat)</span></label>
+    <div id="k_lijst" style="max-height:280px;overflow:auto"></div>
+    <div class="acts"><button class="btn" id="k_close">Sluiten</button></div>
+  </div>
+</div>
+
 <!-- Help menu -->
 <div class="ov" id="ovHelp">
   <div class="modal help">
@@ -329,7 +347,7 @@ bridge2.jpg</div>
       </div>
       <div class="helpsection">
         <b>2. Gegevens invullen</b>
-        Vul praktijknaam, adres, cliëntgegevens, Opm., Casus en Doel rechtstreeks bovenaan de A4 in. De velden worden automatisch in deze browser bewaard.
+        Vul praktijknaam, adres, cliëntgegevens, Opm., Casus en Doel rechtstreeks bovenaan de A4 in. De velden worden automatisch in deze browser bewaard. Een ingevulde <strong>praktijk + adres</strong> wordt onthouden voor iedereen: kies hem daarna snel via het keuzemenu boven de praktijknaam.
       </div>
       <div class="helpsection">
         <b>3. Schema bijhouden</b>
@@ -344,11 +362,15 @@ bridge2.jpg</div>
         Met <strong>Wis kaart</strong> kies je <strong>Alles wissen</strong> (plaatjes, datums, ingevulde vakjes én cliëntgegevens leeg — ook na verversen blijft de kaart leeg, klaar voor een nieuwe cliënt) of <strong>Alleen plaatjes</strong> (tekst en gegevens blijven staan). De praktijkgegevens blijven altijd bewaard.
       </div>
       <div class="helpsection">
-        <b>6. Eigen oefening toevoegen</b>
+        <b>6. Kaart opslaan en later openen</b>
+        Met <strong>Kaarten</strong> sla je de huidige kaart op onder een naam (plaatjes, schema én gegevens) en open of verwijder je eerder opgeslagen kaarten. Opgeslagen kaarten blijven <strong>alleen op dit apparaat</strong> (privacy van cliëntgegevens).
+      </div>
+      <div class="helpsection">
+        <b>7. Eigen oefening toevoegen</b>
         Met <strong>+ Oefening toevoegen</strong> voeg je één oefening en eventueel een eigen afbeelding toe. Deze oefening wordt alleen in deze browser bewaard.
       </div>
       <div class="helpsection full">
-        <b>7. Een complete eigen oefeningenlijst uploaden</b>
+        <b>8. Een complete eigen oefeningenlijst uploaden</b>
         Met <strong>Plaatjes uploaden</strong> selecteer je tegelijk één .txt- of .csv-bestand en de bijbehorende afbeeldingen. Zet per oefening eerst de naam, daaronder de afbeeldingsbestandsnamen en daarna een lege regel. De eigen lijst vervangt lokaal de standaardlijst; via <strong>Standaardlijst</strong> keer je terug naar de gedeelde oefeningenlijst.
       </div>
       <div class="helpsection full">
@@ -581,6 +603,123 @@ bridge2.jpg</div>
     if(SAFARI_PRINT)document.documentElement.classList.add('safari-print');
     window.print();
   });
+  // ---- praktijkprofielen: server-side gedeeld, kiesbaar via dropdown op de A4 ----
+  var PRAKTIJKEN=[];
+  var prakSel=document.getElementById('prakSelect');
+  function renderPrakSelect(){
+    if(!PRAKTIJKEN.length){prakSel.style.display='none';return;}
+    prakSel.style.display='';
+    prakSel.innerHTML='<option value="">— kies praktijk —</option>'+PRAKTIJKEN.map(function(p,i){
+      return "<option value='"+i+"'>"+esc(p.praktijk)+(p.plaats?' · '+esc(p.plaats):'')+"</option>";
+    }).join("");
+    // huidige praktijk voorselecteren als die in de lijst staat
+    var cur=(SET.praktijk||'').toLowerCase();
+    PRAKTIJKEN.forEach(function(p,i){if(p.praktijk.toLowerCase()===cur)prakSel.value=String(i);});
+  }
+  function loadPraktijken(){
+    fetch('api/praktijken',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];})
+      .then(function(l){PRAKTIJKEN=Array.isArray(l)?l:[];renderPrakSelect();}).catch(function(){});
+  }
+  prakSel.addEventListener('change',function(){
+    var p=PRAKTIJKEN[+prakSel.value];if(!p)return;
+    SET.praktijk=p.praktijk;SET.adres=p.adres||'';SET.plaats=p.plaats||'';SET.tel=p.tel||'';SET.email=p.email||'';
+    saveSettings();applySettings();
+  });
+  // ingevulde praktijk + adres automatisch onthouden op de server (bij verlaten van een veld)
+  var prakSaveTimer=null;
+  function upsertPraktijk(){
+    var p={praktijk:SET.praktijk||'',adres:SET.adres||'',plaats:SET.plaats||'',tel:SET.tel||'',email:SET.email||''};
+    if(!p.praktijk.trim()||!p.adres.trim())return;
+    clearTimeout(prakSaveTimer);
+    prakSaveTimer=setTimeout(function(){
+      fetch('api/praktijken',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(p)})
+        .then(function(r){return r.json();}).then(function(d){if(d.ok)loadPraktijken();}).catch(function(){});
+    },600);
+  }
+  ['praktijk','p_adres','p_plaats','p_tel','p_email'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.addEventListener('change',upsertPraktijk);
+  });
+  loadPraktijken();
+
+  // ---- kaarten opslaan/openen: lokaal in deze browser (cliëntgegevens blijven lokaal) ----
+  // oefeningen worden op naam bewaard, zodat een kaart blijft werken als de bibliotheek verandert
+  function loadCards(){try{var l=JSON.parse(localStorage.getItem('fysiplan_kaarten')||'[]');return Array.isArray(l)?l:[];}catch(e){return [];}}
+  function persistCards(l){try{localStorage.setItem('fysiplan_kaarten',JSON.stringify(l));return true;}catch(e){alert('Kaart opslaan is niet gelukt (opslagruimte vol?).');return false;}}
+  function currentCard(naam){
+    var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
+    var ch=chosen.map(function(c){return OEF[c.o]?{n:OEF[c.o].naam,i:c.i}:null;}).filter(Boolean);
+    var cells={};
+    Object.keys(GRID.cells).forEach(function(k){
+      var m=k.match(/^e(\d+)\.(\d+)\|(.+)$/);
+      if(m&&OEF[+m[1]])cells['n'+normEx(OEF[+m[1]].naam)+'.'+m[2]+'|'+m[3]]=GRID.cells[k];
+      else cells[k]=GRID.cells[k];
+    });
+    return {naam:naam,ts:Date.now(),client:client,chosen:ch,rows:GRID.rows,cells:cells};
+  }
+  function openCard(c){
+    var missing=[];
+    chosen=[];
+    (c.chosen||[]).forEach(function(x){
+      var id=byNorm[normEx(x.n)];
+      if(id!=null&&OEF[id]&&OEF[id].imgs[x.i||0])chosen.push({o:id,i:x.i||0});
+      else missing.push(x.n);
+    });
+    GRID={rows:c.rows||{},cells:{}};
+    Object.keys(c.cells||{}).forEach(function(k){
+      var m=k.match(/^n([a-z0-9]*)\.(\d+)\|(.+)$/);
+      if(m){var id=byNorm[m[1]];if(id!=null)GRID.cells['e'+id+'.'+m[2]+'|'+m[3]]=c.cells[k];}
+      else GRID.cells[k]=c.cells[k];
+    });
+    CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value=(c.client&&c.client[k])||'';});
+    render();
+    if(missing.length)alert('Niet meer in de oefeningenlijst (overgeslagen): '+missing.join(', '));
+  }
+  function renderCardList(){
+    var lijst=loadCards();
+    var el=document.getElementById('k_lijst');
+    if(!lijst.length){el.innerHTML="<div class='hint'>Nog geen kaarten opgeslagen.</div>";return;}
+    el.innerHTML=lijst.map(function(c,i){
+      var dt=c.ts?new Date(c.ts).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}):'';
+      var n=(c.chosen||[]).length;
+      return "<div style='display:flex;align-items:center;gap:8px;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
+        "<div style='flex:1;min-width:0'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+n+" oefening"+(n===1?"":"en")+"</small></div>"+
+        "<button class='btn' data-kopen='"+i+"'>Openen</button>"+
+        "<button class='btn' data-kdel='"+i+"' title='verwijderen' aria-label='verwijderen'>×</button></div>";
+    }).join("");
+  }
+  document.getElementById('kaartenBtn').addEventListener('click',function(){
+    var nm=document.getElementById('c_naam');
+    document.getElementById('k_naam').value=(nm&&nm.value.trim())||'';
+    document.getElementById('k_result').textContent='';
+    renderCardList();openOv('ovKaarten');
+  });
+  document.getElementById('k_close').addEventListener('click',function(){closeOv('ovKaarten');});
+  document.getElementById('k_save').addEventListener('click',function(){
+    var naam=document.getElementById('k_naam').value.trim();
+    if(!naam){alert('Geef de kaart een naam.');return;}
+    var lijst=loadCards();
+    var idx=lijst.findIndex(function(c){return c.naam.toLowerCase()===naam.toLowerCase();});
+    var kaart=currentCard(naam);
+    var msg;
+    if(idx>-1){lijst[idx]=kaart;msg='Kaart “'+naam+'” bijgewerkt.';}
+    else{lijst.unshift(kaart);msg='Kaart “'+naam+'” opgeslagen.';}
+    if(persistCards(lijst)){document.getElementById('k_result').textContent=msg;renderCardList();}
+  });
+  document.getElementById('k_lijst').addEventListener('click',function(e){
+    var o=e.target.closest('[data-kopen]'),x=e.target.closest('[data-kdel]');
+    var lijst=loadCards();
+    if(o){
+      var c=lijst[+o.dataset.kopen];if(!c)return;
+      if(chosen.length&&!confirm('Huidige kaart vervangen door “'+c.naam+'”?'))return;
+      openCard(c);closeOv('ovKaarten');
+    }else if(x){
+      var c2=lijst[+x.dataset.kdel];if(!c2)return;
+      if(!confirm('Kaart “'+c2.naam+'” verwijderen?'))return;
+      lijst.splice(+x.dataset.kdel,1);persistCards(lijst);renderCardList();
+    }
+  });
+
   // Wis kaart: "alles" legt ook de bewaarde browserstaat leeg, zodat er na
   // verversen of opnieuw openen niets terugkomt (kaart is klaar voor een nieuwe cliënt).
   document.getElementById('clearBtn').addEventListener('click',function(){openOv('ovWis');});
