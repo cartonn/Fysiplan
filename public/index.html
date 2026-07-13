@@ -59,6 +59,9 @@
   .row .add{flex:0 0 auto;width:28px;height:28px;border-radius:50%;border:1px solid var(--brand-100);background:var(--brand-50);color:var(--brand-700);font-size:18px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
   .row .add:hover{background:var(--brand);color:#fff;border-color:var(--brand)}
   .row .add.on{background:var(--brand);border-color:var(--brand);color:#fff}
+  .row .ren{flex:0 0 auto;width:28px;height:28px;border-radius:50%;border:1px solid transparent;background:transparent;color:var(--soft);font-size:14px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;opacity:0}
+  .row:hover .ren{opacity:1}
+  .row .ren:hover{background:#eef1f5;color:var(--ink);border-color:var(--line)}
   .hint{color:var(--soft);font-size:12.5px;padding:16px 6px;text-align:center}
   /* ---- A4 ---- */
   #a4wrap{overflow:auto;background:var(--tray);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;box-shadow:inset 0 1px 3px rgba(16,24,40,.05)}
@@ -211,7 +214,7 @@
           <div class="cr"><label>Trainingszone</label><input id="c_zone" aria-label="Trainingszone"/></div>
         </div>
         <div class="boxes">
-          <div class="box"><b>Opm.</b><textarea id="c_opm" aria-label="Opmerking"></textarea><b>Cave</b><textarea id="c_cave" aria-label="Cave" style="flex:0 0 24px"></textarea></div>
+          <div class="box"><b>Opm.</b><textarea id="c_opm" aria-label="Opmerking"></textarea><b>Casus</b><textarea id="c_cave" aria-label="Casus" style="flex:0 0 24px"></textarea></div>
           <div class="box"><b>Doel:</b><textarea id="c_doel" aria-label="Doel"></textarea></div>
         </div>
       </div>
@@ -306,7 +309,7 @@ bridge2.jpg</div>
       </div>
       <div class="helpsection">
         <b>2. Gegevens invullen</b>
-        Vul praktijknaam, adres, cliëntgegevens, Opm., Cave en Doel rechtstreeks bovenaan de A4 in. De velden worden automatisch in deze browser bewaard.
+        Vul praktijknaam, adres, cliëntgegevens, Opm., Casus en Doel rechtstreeks bovenaan de A4 in. De velden worden automatisch in deze browser bewaard.
       </div>
       <div class="helpsection">
         <b>3. Schema bijhouden</b>
@@ -473,8 +476,9 @@ bridge2.jpg</div>
       var has=chosen.some(function(c){return c.o===o.id;});
       var np=o.imgs.filter(function(im){return im.type==='img';}).length;
       var sub=(o.bron==='carla')?(np+' plaatje'+(np===1?'':'s')):(o.s+" × "+o.h+(o.h==1?" (statisch/cardio)":"")+(o.bron=='eigen'?" · eigen":""));
+      var ren=(o.bron==='server')?"<button class='ren' data-ren='"+o.id+"' title='naam wijzigen' aria-label='naam wijzigen'>&#9998;</button>":"";
       return "<div class='row' data-id='"+o.id+"'>"+imgRender(o.imgs[0],56)+
-        "<div class='nm'>"+esc(o.naam)+"<small>"+sub+"</small></div>"+
+        "<div class='nm'>"+esc(o.naam)+"<small>"+sub+"</small></div>"+ren+
         "<button class='add"+(has?" on":"")+"' data-add='"+o.id+"' title='"+(has?"van kaart halen":"op kaart zetten")+"' aria-label='"+(has?"van kaart halen":"op kaart zetten")+"'>"+(has?"−":"+")+"</button></div>";
     }).join("");
   }
@@ -525,7 +529,25 @@ bridge2.jpg</div>
     else{if(chosen.length>=12){alert('Maximaal 12 plaatjes op één A4.');return;}chosen.push({o:id,i:0});}
     render();
   }
+  // naam wijzigen: opgeslagen op de server, dus daarna voor iedereen zichtbaar
+  function renameExercise(id){
+    var o=OEF[id];if(!o)return;
+    var naar=prompt('Nieuwe naam voor "'+o.naam+'":',o.naam);
+    if(naar==null)return;
+    naar=naar.trim().replace(/\s+/g,' ');
+    if(!naar||naar===o.naam)return;
+    fetch('api/hernoem',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({van:o.naam,naar:naar})})
+      .then(function(r){return r.json().catch(function(){return {ok:false,fout:'Onverwacht antwoord van de server.'};});})
+      .then(function(d){
+        if(!d.ok){alert(d.fout||'Naam wijzigen is niet gelukt.');return;}
+        if(NOTES[o.naam]){NOTES[d.naam]=NOTES[o.naam];delete NOTES[o.naam];try{localStorage.setItem('fysiplan_notes',JSON.stringify(NOTES));}catch(err){}}
+        o.naam=d.naam;rebuildLookup();render();
+      })
+      .catch(function(){alert('Naam wijzigen is niet gelukt: geen verbinding met de server.');});
+  }
   elList.addEventListener('click',function(e){
+    var p=e.target.closest('.ren');
+    if(p){renameExercise(+p.dataset.ren);return;}
     var r=e.target.closest('.row');if(!r)return;toggleExercise(+r.dataset.id);
   });
   document.getElementById('filters').addEventListener('click',function(e){

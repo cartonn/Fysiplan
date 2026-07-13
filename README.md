@@ -53,6 +53,19 @@ die ene browser** (bewaard via IndexedDB). Format: oefeningnaam, daaronder de be
 bijbehorende plaatjes, lege regel, volgende oefening. Met de knop **"Standaardlijst"** keer je
 terug naar de gedeelde server-lijst.
 
+## Oefening hernoemen (in de app)
+
+Beweeg in de lijst over een oefening en klik het potloodje (✎) → nieuwe naam invoeren. De
+wijziging wordt via `POST /api/hernoem` **op de server opgeslagen** (in
+`naam-wijzigingen.json`, sleutel = oorspronkelijke naam) en geldt daarna voor iedereen die de
+URL opent. `oefeningen.json` wordt geserveerd mét de toegepaste wijzigingen; `/health` toont
+onder `hernoemd` hoeveel namen er zijn aangepast.
+
+> **Blijvend bewaren op Railway:** de containerschijf wordt bij elke redeploy gewist. Voeg in
+> Railway een **Volume** toe met mount path `/data` (service → rechtsklik → Attach volume) —
+> de server gebruikt die map dan automatisch en de naamwijzigingen overleven elke deploy.
+> Zonder volume blijven wijzigingen bewaard tot de eerstvolgende redeploy/herstart.
+
 ## Nieuwe plaatjes toevoegen (in de repo)
 
 De 173 oefening-plaatjes staan in `public/images/` (per categorie in een submap) en zijn
