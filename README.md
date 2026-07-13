@@ -8,7 +8,7 @@ Live Railway URL: https://fysiplan-production.up.railway.app
 
 ## Wat de app doet
 
-- Oefeningenbibliotheek met **echte oefening-plaatjes** (107 stuks, geleverd in de repo),
+- Oefeningenbibliotheek met **echte oefening-plaatjes** (173 stuks, geleverd in de repo),
   gegroepeerd per categorie (Bovenste/Onderste extremiteit, Core, Cardio, Bosu, TRX, Yoga,
   Kettlebell, Foam roller, Speedladder) + zoeken. Deze lijst wordt door de **server** geleverd,
   dus **iedereen die de URL opent** ziet ze — op elk apparaat, zonder inloggen of upload.
@@ -55,7 +55,7 @@ terug naar de gedeelde server-lijst.
 
 ## Nieuwe plaatjes toevoegen (in de repo)
 
-De 107 oefening-plaatjes staan in `public/images/` (per categorie in een submap) en zijn
+De 173 oefening-plaatjes staan in `public/images/` (per categorie in een submap) en zijn
 gekoppeld via `public/oefeningen.json`. Zo voeg je er nieuwe toe zodat **iedereen** ze via de URL
 krijgt:
 
