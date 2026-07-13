@@ -25,12 +25,19 @@ const renamesPath = join(dataDir, "naam-wijzigingen.json");
 let renames = {};
 try { renames = JSON.parse(await readFile(renamesPath, "utf8")); } catch {}
 
-async function saveRenames() {
+// praktijkprofielen (naam + adresblok), gedeeld over alle apparaten; sleutel = naam in kleine letters
+const praktijkenPath = join(dataDir, "praktijken.json");
+let praktijken = {};
+try { praktijken = JSON.parse(await readFile(praktijkenPath, "utf8")); } catch {}
+
+async function saveJson(path, obj) {
   await mkdir(dataDir, { recursive: true });
-  const tmp = renamesPath + ".tmp";
-  await writeFile(tmp, JSON.stringify(renames, null, 2));
-  await rename(tmp, renamesPath);
+  const tmp = path + ".tmp";
+  await writeFile(tmp, JSON.stringify(obj, null, 2));
+  await rename(tmp, path);
 }
+const saveRenames = () => saveJson(renamesPath, renames);
+const savePraktijken = () => saveJson(praktijkenPath, praktijken);
 
 async function readManifest() {
   return JSON.parse(await readFile(join(publicDir, "oefeningen.json"), "utf8"));
@@ -110,6 +117,35 @@ const server = createServer(async (request, response) => {
       else renames[orig.naam] = nieuw;
       await saveRenames();
       await sendJson(response, 200, { ok: true, naam: nieuw });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
+  // praktijkprofielen: ophalen en opslaan/bijwerken (gedeeld over alle apparaten)
+  if (urlPath === "/api/praktijken" && request.method === "GET") {
+    const list = Object.values(praktijken).sort((a, b) => a.praktijk.localeCompare(b.praktijk, "nl"));
+    await sendJson(response, 200, list);
+    return;
+  }
+  if (urlPath === "/api/praktijken" && request.method === "POST") {
+    try {
+      const b = JSON.parse(await readBody(request));
+      const clean = (v, max) => String(v || "").trim().replace(/\s+/g, " ").slice(0, max);
+      const p = {
+        praktijk: clean(b.praktijk, 80),
+        adres: clean(b.adres, 120),
+        plaats: clean(b.plaats, 120),
+        tel: clean(b.tel, 40),
+        email: clean(b.email, 120)
+      };
+      if (!p.praktijk || !p.adres) { await sendJson(response, 400, { ok: false, fout: "Vul minimaal praktijknaam en adres in." }); return; }
+      const key = p.praktijk.toLowerCase();
+      if (!praktijken[key] && Object.keys(praktijken).length >= 200) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal praktijken bereikt." }); return; }
+      praktijken[key] = p;
+      await savePraktijken();
+      await sendJson(response, 200, { ok: true });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }
