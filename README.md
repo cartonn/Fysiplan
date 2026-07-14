@@ -71,7 +71,10 @@ De gewone URL is voor het maken en printen van kaarten. Bibliotheekbeheer gebeur
 **`/admin88`** (herkenbaar aan de "Beheer"-badge). Alleen daar zijn beschikbaar:
 
 - **Oefening toevoegen** (naam + categorie + plaatje) — `POST /api/oefeningen`; het plaatje wordt
-  in de browser verkleind naar max 900px en op de server bewaard onder `uploads/`.
+  in de browser verkleind naar max 900px en op de server bewaard onder `uploads/`. De categorie is
+  een vrij veld met suggesties: een bestaande naam (ook bij ander hoofdlettergebruik) hergebruikt
+  die categorie, een onbekende naam **maakt automatisch een nieuwe categorie** aan. Tijdens het
+  typen van de oefeningnaam wordt een logische categorie voorgesteld (bv. "TRX …" → TRX).
 - **Oefening hernoemen** (potloodje ✎) — `POST /api/hernoem` (`naam-wijzigingen.json`).
 - **Categorie wijzigen** (pijltjes ⇄) — `POST /api/oefeningen/categorie`
   (`categorie-wijzigingen.json`): verplaats een oefening naar een andere categorie en/of toon hem

@@ -78,8 +78,17 @@ async function buildManifest() {
       return o;
     });
   return base.concat(extra)
-    .sort((a, b) => catOrder(a.groep) - catOrder(b.groep) || a.naam.localeCompare(b.naam, "nl"));
+    .sort((a, b) => catOrder(a.groep) - catOrder(b.groep)
+      || a.groep.localeCompare(b.groep, "nl")
+      || a.naam.localeCompare(b.naam, "nl"));
 }
+// alle categorieën die nu bestaan (vaste volgorde + door beheer aangemaakte)
+async function knownCategories() {
+  const manifest = await buildManifest();
+  return [...new Set([...CATS, ...manifest.map((e) => e.groep), ...manifest.flatMap((e) => e.ook || [])])];
+}
+// hergebruik een bestaande categorie bij ander hoofdlettergebruik; anders is het een nieuwe
+const canonCategory = (list, g) => list.find((c) => c.toLowerCase() === g.toLowerCase()) || g;
 const currentNames = (manifest) => manifest.map((e) => e.naam.toLowerCase());
 
 function slug(s) {
@@ -183,8 +192,10 @@ const server = createServer(async (request, response) => {
     try {
       const b = JSON.parse(await readBody(request, 4 * 1024 * 1024));
       const naam = cleanName(b.naam, 80);
-      const groep = cleanName(b.groep, 40);
+      let groep = cleanName(b.groep, 40);
       if (!naam || !groep) { await sendJson(response, 400, { ok: false, fout: "Geef een naam en een categorie op." }); return; }
+      // bestaande categorie hergebruiken (juiste spelling); bestaat hij niet, dan wordt hij aangemaakt
+      groep = canonCategory(await knownCategories(), groep);
       const manifest = await buildManifest();
       if (currentNames(manifest).includes(naam.toLowerCase())) { await sendJson(response, 409, { ok: false, fout: "Er bestaat al een oefening met de naam “" + naam + "”." }); return; }
       const m = String(b.img || "").match(/^data:image\/(jpeg|png);base64,([A-Za-z0-9+/=]+)$/);
@@ -209,12 +220,13 @@ const server = createServer(async (request, response) => {
     try {
       const b = JSON.parse(await readBody(request));
       const naam = String(b.naam || "").trim();
-      const g = cleanName(b.groep, 40);
+      const cats = await knownCategories();
+      const g = canonCategory(cats, cleanName(b.groep, 40));
       const ookList = Array.isArray(b.ook)
-        ? [...new Set(b.ook.map((v) => cleanName(v, 40)).filter((v) => v && v !== g))].slice(0, 3)
+        ? [...new Set(b.ook.map((v) => canonCategory(cats, cleanName(v, 40))).filter((v) => v && v !== g))].slice(0, 3)
         : [];
       if (!naam || !g) { await sendJson(response, 400, { ok: false, fout: "Geef een naam en categorie op." }); return; }
-      if (!CATS.includes(g) || ookList.some((v) => !CATS.includes(v))) { await sendJson(response, 400, { ok: false, fout: "Onbekende categorie." }); return; }
+      if (!cats.includes(g) || ookList.some((v) => !cats.includes(v))) { await sendJson(response, 400, { ok: false, fout: "Onbekende categorie." }); return; }
       const ex = extra.find((e) => e.naam === naam);
       if (ex) {
         ex.groep = g;
