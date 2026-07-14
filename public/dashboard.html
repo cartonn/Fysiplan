@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Fysiplan — Dashboard</title>
+<style>
+  :root{
+    color-scheme:light;
+    --surface:#f4f6f9; --panel:#ffffff; --line:#e5e9f0; --line2:#eef1f6;
+    --ink:#0b1220; --text:#1c2433; --muted:#5a6472; --soft:#8b94a3;
+    --brand:#1f6feb; --brand-50:#eaf1fd;
+    --serie1:#2a78d6; --serie2:#1baf7a;
+    --goed:#0a7d33; --goed-bg:#e7f6ec; --waarschuwing:#9a5b00; --waarschuwing-bg:#fdf3e2;
+    --sh:0 1px 2px rgba(16,24,40,.05),0 1px 3px rgba(16,24,40,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      color-scheme:dark;
+      --surface:#0f1420; --panel:#171e2c; --line:#28324a; --line2:#202940;
+      --ink:#f4f6fb; --text:#e5e9f2; --muted:#9aa5b8; --soft:#707c92;
+      --brand:#3987e5; --brand-50:#1b2a45;
+      --serie1:#3987e5; --serie2:#199e70;
+      --goed:#3fbf70; --goed-bg:#12301e; --waarschuwing:#e3a03a; --waarschuwing-bg:#33270f;
+      --sh:0 1px 2px rgba(0,0,0,.4);
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--surface);color:var(--text)}
+  header{display:flex;align-items:center;gap:12px;padding:14px 26px;background:var(--panel);border-bottom:1px solid var(--line);box-shadow:var(--sh);position:sticky;top:0;z-index:10}
+  .mark{display:inline-flex;width:30px;height:30px;border-radius:9px;background:var(--brand);align-items:center;justify-content:center}
+  h1{font-size:17px;margin:0;color:var(--ink);letter-spacing:-.01em}
+  .badge{background:#b45309;color:#fff;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px}
+  .tijd{margin-left:auto;color:var(--soft);font-size:12px}
+  header a{color:var(--muted);text-decoration:none;font-size:13px;padding:6px 10px;border-radius:8px}
+  header a:hover{background:var(--brand-50);color:var(--brand)}
+  main{max-width:1160px;margin:0 auto;padding:22px 26px 40px}
+  h2{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin:26px 0 10px}
+  .tegels{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+  .tegel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--sh)}
+  .tegel .w{font-size:28px;font-weight:700;color:var(--ink);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .tegel .l{font-size:12px;color:var(--muted);margin-top:2px}
+  .tegel .s{font-size:11px;color:var(--soft);margin-top:6px}
+  .paneel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:var(--sh)}
+  .twee{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:900px){.twee{grid-template-columns:1fr}}
+  .charttitel{font-size:13px;font-weight:600;color:var(--ink);margin:0 0 2px}
+  .chartsub{font-size:12px;color:var(--soft);margin:0 0 10px}
+  .legenda{display:flex;gap:14px;font-size:12px;color:var(--muted);margin:8px 0 0}
+  .legenda i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  svg{display:block;width:100%;height:auto}
+  .bar{transition:opacity .1s}
+  .staaf:hover .bar{opacity:.75}
+  #tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--surface);font-size:12px;padding:6px 10px;border-radius:8px;opacity:0;transition:opacity .1s;z-index:50;white-space:nowrap}
+  .status{display:flex;flex-direction:column;gap:10px}
+  .stat-item{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;border-radius:10px;font-size:13px}
+  .stat-item b{display:block;font-size:13px}
+  .stat-item small{color:inherit;opacity:.85}
+  .st-goed{background:var(--goed-bg);color:var(--goed)}
+  .st-warn{background:var(--waarschuwing-bg);color:var(--waarschuwing)}
+  .pogingen{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px}
+  .pogingen th{text-align:left;color:var(--soft);font-weight:600;padding:5px 8px;border-bottom:1px solid var(--line)}
+  .pogingen td{padding:5px 8px;border-bottom:1px solid var(--line2);color:var(--muted);font-variant-numeric:tabular-nums}
+  .leeg{color:var(--soft);font-size:13px;padding:8px 0}
+  #fout{display:none;max-width:520px;margin:80px auto;text-align:center}
+  #fout .paneel{padding:32px}
+</style>
+</head>
+<body>
+<header>
+  <span class="mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg></span>
+  <h1>Fysiplan</h1><span class="badge">Dashboard</span>
+  <a href="/admin88">← naar beheer</a>
+  <span class="tijd" id="bijgewerkt"></span>
+</header>
+
+<div id="fout"><div class="paneel"><h2 style="margin-top:0">Geen toegang</h2><div class="leeg">Het dashboard kon de gegevens niet ophalen.</div></div></div>
+
+<main id="inhoud" style="display:none">
+  <h2>Gebruik</h2>
+  <div class="tegels" id="gebruikTegels"></div>
+
+  <div class="twee" style="margin-top:12px">
+    <div class="paneel">
+      <p class="charttitel">Bezoeken per dag</p>
+      <p class="chartsub" id="sub1"></p>
+      <div id="chart1"></div>
+    </div>
+    <div class="paneel">
+      <p class="charttitel">Kaarten per dag</p>
+      <p class="chartsub" id="sub2"></p>
+      <div id="chart2"></div>
+      <div class="legenda"><span><i style="background:var(--serie1)"></i>Opgeslagen</span><span><i style="background:var(--serie2)"></i>Geprint</span></div>
+    </div>
+  </div>
+
+  <h2>Bibliotheek</h2>
+  <div class="tegels" id="bibTegels"></div>
+
+  <h2>Security</h2>
+  <div class="twee">
+    <div class="paneel status" id="secStatus"></div>
+    <div class="paneel">
+      <p class="charttitel">Geweigerde beheer-verzoeken</p>
+      <p class="chartsub" id="secSub"></p>
+      <div id="secLijst"></div>
+    </div>
+  </div>
+</main>
+<div id="tip"></div>
+
+<script>
+(function(){
+  var HDR={'x-admin-sleutel':'admin88'};
+  var tip=document.getElementById('tip');
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function dagLabel(iso){var d=new Date(iso+'T12:00:00');return d.toLocaleDateString('nl-NL',{day:'numeric',month:'short'});}
+  function toonTip(e,html){tip.innerHTML=html;tip.style.opacity=1;tip.style.left=(e.clientX+14)+'px';tip.style.top=(e.clientY-10)+'px';}
+  function verbergTip(){tip.style.opacity=0;}
+
+  function tegel(w,l,s){return "<div class='tegel'><div class='w'>"+esc(w)+"</div><div class='l'>"+esc(l)+"</div>"+(s?"<div class='s'>"+esc(s)+"</div>":"")+"</div>";}
+
+  // staafdiagram: dunne staven, 4px afgeronde top, 2px tussenruimte, hover-tooltip
+  function barChart(el,dagen,series){
+    var W=520,H=190,padL=30,padB=22,padT=8;
+    var innerW=W-padL-6,innerH=H-padT-padB;
+    var max=1;
+    dagen.forEach(function(d){series.forEach(function(s){max=Math.max(max,d[s.k]);});});
+    var stapY=Math.max(1,Math.ceil(max/3));max=stapY*3;
+    var groep=innerW/dagen.length;
+    var bw=Math.min(16,(groep-4)/series.length);
+    var svg="<svg viewBox='0 0 "+W+" "+H+"' role='img'>";
+    for(var g=0;g<=3;g++){
+      var y=padT+innerH-(innerH*g/3);
+      svg+="<line x1='"+padL+"' y1='"+y+"' x2='"+(W-6)+"' y2='"+y+"' stroke='var(--line2)' stroke-width='1'/>";
+      svg+="<text x='"+(padL-6)+"' y='"+(y+4)+"' text-anchor='end' font-size='10' fill='var(--soft)'>"+(stapY*g)+"</text>";
+    }
+    dagen.forEach(function(d,i){
+      var x0=padL+i*groep+(groep-bw*series.length-(series.length-1)*2)/2;
+      var kop=series.map(function(s){return s.l+": <b>"+d[s.k]+"</b>";}).join(" · ");
+      svg+="<g class='staaf' data-tip=\""+esc(dagLabel(d.datum)+" — ")+kop+"\">";
+      svg+="<rect x='"+(padL+i*groep)+"' y='"+padT+"' width='"+groep+"' height='"+innerH+"' fill='transparent'/>";
+      series.forEach(function(s,si){
+        var h=Math.round(innerH*d[s.k]/max);
+        var x=x0+si*(bw+2), y=padT+innerH-h;
+        if(h>0)svg+="<rect class='bar' x='"+x+"' y='"+y+"' width='"+bw+"' height='"+h+"' rx='4' ry='4' fill='var("+s.c+")'/>";
+        else svg+="<rect class='bar' x='"+x+"' y='"+(padT+innerH-1.5)+"' width='"+bw+"' height='1.5' fill='var(--line)'/>";
+      });
+      if(i%2===0||dagen.length<=7)svg+="<text x='"+(padL+i*groep+groep/2)+"' y='"+(H-6)+"' text-anchor='middle' font-size='10' fill='var(--soft)'>"+esc(dagLabel(d.datum))+"</text>";
+      svg+="</g>";
+    });
+    svg+="</svg>";
+    el.innerHTML=svg;
+    el.querySelectorAll('.staaf').forEach(function(g){
+      g.addEventListener('mousemove',function(e){toonTip(e,g.dataset.tip);});
+      g.addEventListener('mouseleave',verbergTip);
+    });
+  }
+
+  function statusItem(ok,titel,tekst){
+    var icoon=ok?"&#10003;":"&#9888;";
+    return "<div class='stat-item "+(ok?'st-goed':'st-warn')+"'><span style='font-size:15px'>"+icoon+"</span><span><b>"+esc(titel)+"</b><small>"+esc(tekst)+"</small></span></div>";
+  }
+
+  function laad(){
+    fetch('/api/dashboard',{headers:HDR,cache:'no-cache'})
+      .then(function(r){if(!r.ok)throw 0;return r.json();})
+      .then(function(d){
+        document.getElementById('inhoud').style.display='';
+        document.getElementById('fout').style.display='none';
+        document.getElementById('bijgewerkt').textContent='bijgewerkt '+new Date().toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'});
+        var vandaag=d.dagen[d.dagen.length-1];
+        document.getElementById('gebruikTegels').innerHTML=
+          tegel(vandaag.bezoek,'bezoeken vandaag','waarvan beheer: '+vandaag.admin)+
+          tegel(vandaag.uniek,'unieke bezoekers vandaag','op basis van dag-hash, anoniem')+
+          tegel(d.totalen.kaartOpgeslagen,'kaarten opgeslagen','sinds '+dagLabel(d.meetSinds))+
+          tegel(d.totalen.print,'kaarten geprint','sinds '+dagLabel(d.meetSinds))+
+          tegel(d.totalen.bezoek,'bezoeken totaal','beheer: '+d.totalen.admin);
+        document.getElementById('sub1').textContent='laatste 14 dagen · totaal '+d.dagen.reduce(function(s,x){return s+x.bezoek;},0)+' bezoeken';
+        barChart(document.getElementById('chart1'),d.dagen,[{k:'bezoek',l:'bezoeken',c:'--serie1'}]);
+        document.getElementById('sub2').textContent='laatste 14 dagen · opgeslagen '+d.dagen.reduce(function(s,x){return s+x.kaartOpgeslagen;},0)+' · geprint '+d.dagen.reduce(function(s,x){return s+x.print;},0);
+        barChart(document.getElementById('chart2'),d.dagen,[{k:'kaartOpgeslagen',l:'opgeslagen',c:'--serie1'},{k:'print',l:'geprint',c:'--serie2'}]);
+        var b=d.bibliotheek;
+        document.getElementById('bibTegels').innerHTML=
+          tegel(b.oefeningen,'oefeningen','in '+b.categorieen+' categorieën')+
+          tegel(b.toegevoegd,'toegevoegd via beheer')+
+          tegel(b.hernoemd,'hernoemd')+
+          tegel(b.verplaatst,'categorie gewijzigd')+
+          tegel(b.verwijderd,'verwijderd')+
+          tegel(b.praktijken,'praktijkprofielen');
+        var s=d.security;
+        document.getElementById('secStatus').innerHTML=
+          statusItem(s.volumeActief,'Gegevensopslag '+(s.volumeActief?'blijvend (volume actief)':'tijdelijk!'),
+            s.volumeActief?'Beheer-wijzigingen overleven elke redeploy.':'Koppel in Railway een Volume op /data — anders wist elke redeploy de beheer-wijzigingen.')+
+          statusItem(s.adminSleutelAangepast,'Beheer-sleutel '+(s.adminSleutelAangepast?'aangepast':'standaard'),
+            s.adminSleutelAangepast?'Eigen ADMIN_KEY ingesteld via Railway.':'De standaardsleutel is actief. Stel in Railway de variabele ADMIN_KEY in voor extra afscherming.')+
+          statusItem(true,'Versie '+d.versie.commit.slice(0,7),'draait '+d.versie.uptimeUren+' uur · gebouwd '+(d.versie.builtAt?new Date(d.versie.builtAt).toLocaleString('nl-NL'):'-'))+
+          statusItem(true,'Privacy','Cliëntgegevens blijven lokaal in de browser; het dashboard telt anoniem.');
+        document.getElementById('secSub').textContent=s.geweigerd+' verzoeken zonder geldige sleutel geweigerd (totaal)';
+        var lijst=s.laatste||[];
+        document.getElementById('secLijst').innerHTML=!lijst.length
+          ?"<div class='leeg'>Geen geweigerde pogingen — niets verdachts gezien.</div>"
+          :"<table class='pogingen'><tr><th>Tijd</th><th>IP (gemaskeerd)</th><th>Doel</th></tr>"+lijst.map(function(p){
+              return "<tr><td>"+esc(new Date(p.t).toLocaleString('nl-NL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}))+"</td><td>"+esc(p.ip)+"</td><td>"+esc(p.pad)+"</td></tr>";
+            }).join("")+"</table>";
+      })
+      .catch(function(){
+        document.getElementById('inhoud').style.display='none';
+        document.getElementById('fout').style.display='block';
+      });
+  }
+  laad();
+  setInterval(laad,60000);
+})();
+</script>
+</body>
+</html>

@@ -97,6 +97,21 @@ wie de beheer-URL kent, kan beheren. Echte authenticatie is bewust buiten scope 
 > de server gebruikt die map dan automatisch en de naamwijzigingen overleven elke deploy.
 > Zonder volume blijven wijzigingen bewaard tot de eerstvolgende redeploy/herstart.
 
+## Eigenaars-dashboard via /dashboard88
+
+Op **`/dashboard88`** (ook bereikbaar via de knop *Dashboard* in beheer) staat het
+eigenaars-dashboard, met automatische verversing per minuut en een donkere modus:
+
+- **Gebruik:** bezoeken en unieke bezoekers per dag (anonieme dag-hash van IP+browser, niets
+  herleidbaars opgeslagen), kaarten opgeslagen en geprint (de app stuurt tellers via
+  `POST /api/stats/event` — alleen aantallen, nooit inhoud).
+- **Bibliotheek:** oefeningen, categorieën en de beheer-tellers.
+- **Security:** geweigerde beheer-verzoeken (tijd, gemaskeerd IP, doel), of de opslag blijvend is
+  (Railway-volume) en of er een eigen `ADMIN_KEY` is ingesteld, plus versie en uptime.
+
+De data komt uit `GET /api/dashboard` (beheer-sleutel vereist); tellers staan in
+`statistieken.json` in de datamap.
+
 ## Nieuwe plaatjes toevoegen (in de repo)
 
 De 215 oefening-plaatjes staan in `public/images/` (per categorie in een submap) en zijn

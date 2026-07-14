@@ -1,6 +1,7 @@
 import { createServer } from "node:http";
 import { readFile, writeFile, mkdir, rename, access, unlink } from "node:fs/promises";
 import { constants } from "node:fs";
+import { createHash } from "node:crypto";
 import { join, extname, normalize, sep } from "node:path";
 
 const port = Number(process.env.PORT || 3000);
@@ -47,6 +48,44 @@ try { deleted = JSON.parse(await readFile(deletedPath, "utf8")); } catch {}
 const catsPath = join(dataDir, "categorie-wijzigingen.json");
 let catOverrides = {};
 try { catOverrides = JSON.parse(await readFile(catsPath, "utf8")); } catch {}
+
+// ---- gebruiksstatistieken (anoniem) + security-log voor het eigenaars-dashboard ----
+const statsPath = join(dataDir, "statistieken.json");
+let stats = { dagen: {}, security: { geweigerd: 0, laatste: [] } };
+try { stats = { ...stats, ...JSON.parse(await readFile(statsPath, "utf8")) }; } catch {}
+const startTijd = Date.now();
+let statsTimer = null;
+function bewaarStats() { // gebundeld wegschrijven, max 1x per 2s
+  if (statsTimer) return;
+  statsTimer = setTimeout(() => { statsTimer = null; saveJson(statsPath, stats).catch(() => {}); }, 2000);
+}
+const vandaagKey = () => new Date().toISOString().slice(0, 10);
+function dagStats(d) {
+  if (!stats.dagen[d]) stats.dagen[d] = { bezoek: 0, admin: 0, uniek: [], print: 0, kaartOpgeslagen: 0, kaartVerwijderd: 0 };
+  return stats.dagen[d];
+}
+function clientIp(req) {
+  const fwd = String(req.headers["x-forwarded-for"] || "").split(",")[0].trim();
+  return fwd || req.socket.remoteAddress || "?";
+}
+function telBezoek(req, isAdminPagina) {
+  const d = dagStats(vandaagKey());
+  if (isAdminPagina) d.admin++; else d.bezoek++;
+  // unieke bezoekers: dag-gebonden hash van IP+browser — geen herleidbare gegevens opgeslagen
+  const h = createHash("sha256").update(clientIp(req) + "|" + (req.headers["user-agent"] || "") + "|" + vandaagKey()).digest("hex").slice(0, 12);
+  if (!d.uniek.includes(h) && d.uniek.length < 5000) d.uniek.push(h);
+  bewaarStats();
+}
+function maskIp(ip) {
+  if (ip.includes(".")) { const p = ip.split("."); return p[0] + "." + p[1] + ".x.x"; }
+  return ip.split(":").slice(0, 3).join(":") + ":…";
+}
+function logGeweigerd(req, pad) {
+  stats.security.geweigerd++;
+  stats.security.laatste.unshift({ t: new Date().toISOString(), ip: maskIp(clientIp(req)), pad });
+  stats.security.laatste = stats.security.laatste.slice(0, 20);
+  bewaarStats();
+}
 
 async function saveJson(path, obj) {
   await mkdir(dataDir, { recursive: true });
@@ -132,7 +171,7 @@ async function send(res, status, type, body) {
   res.end(body);
 }
 const sendJson = (res, status, obj) => send(res, status, "application/json; charset=utf-8", JSON.stringify(obj));
-const denied = (res) => sendJson(res, 403, { ok: false, fout: "Alleen beschikbaar voor beheer." });
+const denied = (req, res, pad) => { logGeweigerd(req, pad); return sendJson(res, 403, { ok: false, fout: "Alleen beschikbaar voor beheer." }); };
 
 const server = createServer(async (request, response) => {
   let urlPath = decodeURIComponent((request.url || "/").split("?")[0]);
@@ -161,7 +200,7 @@ const server = createServer(async (request, response) => {
 
   // oefeningnaam wijzigen; geldt daarna voor iedereen op beide URL's
   if (urlPath === "/api/hernoem" && request.method === "POST") {
-    if (!isAdmin(request)) { await denied(response); return; }
+    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
     try {
       const { van, naar } = JSON.parse(await readBody(request));
       const nieuw = cleanName(naar, 80);
@@ -188,7 +227,7 @@ const server = createServer(async (request, response) => {
 
   // oefening toevoegen (naam + categorie + plaatje); direct live op beide URL's
   if (urlPath === "/api/oefeningen" && request.method === "POST") {
-    if (!isAdmin(request)) { await denied(response); return; }
+    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
     try {
       const b = JSON.parse(await readBody(request, 4 * 1024 * 1024));
       const naam = cleanName(b.naam, 80);
@@ -216,7 +255,7 @@ const server = createServer(async (request, response) => {
 
   // categorie wijzigen (verplaatsen en/of 2e categorie); direct live op beide URL's
   if (urlPath === "/api/oefeningen/categorie" && request.method === "POST") {
-    if (!isAdmin(request)) { await denied(response); return; }
+    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
     try {
       const b = JSON.parse(await readBody(request));
       const naam = String(b.naam || "").trim();
@@ -250,7 +289,7 @@ const server = createServer(async (request, response) => {
 
   // oefening verwijderen; direct weg op beide URL's
   if (urlPath === "/api/oefeningen/verwijder" && request.method === "POST") {
-    if (!isAdmin(request)) { await denied(response); return; }
+    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
     try {
       const naam = String(JSON.parse(await readBody(request)).naam || "").trim();
       const i = extra.findIndex((e) => e.naam === naam);
@@ -271,6 +310,53 @@ const server = createServer(async (request, response) => {
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }
+    return;
+  }
+
+  // gebruiks-ping vanuit de app (anoniem, alleen tellers)
+  if (urlPath === "/api/stats/event" && request.method === "POST") {
+    try {
+      const type = String(JSON.parse(await readBody(request)).type || "");
+      const d = dagStats(vandaagKey());
+      if (type === "print") d.print++;
+      else if (type === "kaart-opgeslagen") d.kaartOpgeslagen++;
+      else if (type === "kaart-verwijderd") d.kaartVerwijderd++;
+      else { await sendJson(response, 400, { ok: false }); return; }
+      bewaarStats();
+      await sendJson(response, 200, { ok: true });
+    } catch { await sendJson(response, 400, { ok: false }); }
+    return;
+  }
+
+  // eigenaars-dashboard: samengevatte gebruiks-, bibliotheek- en security-gegevens
+  if (urlPath === "/api/dashboard" && request.method === "GET") {
+    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
+    const dagen = [];
+    for (let i = 13; i >= 0; i--) {
+      const dt = new Date(Date.now() - i * 86400000).toISOString().slice(0, 10);
+      const d = stats.dagen[dt] || {};
+      dagen.push({ datum: dt, bezoek: d.bezoek || 0, admin: d.admin || 0, uniek: (d.uniek || []).length,
+        print: d.print || 0, kaartOpgeslagen: d.kaartOpgeslagen || 0, kaartVerwijderd: d.kaartVerwijderd || 0 });
+    }
+    const alle = Object.values(stats.dagen);
+    const som = (k) => alle.reduce((s, d) => s + (d[k] || 0), 0);
+    let count = null, cats = 0;
+    try { const m = await buildManifest(); count = m.length; cats = new Set(m.map((e) => e.groep)).size; } catch {}
+    const eerste = Object.keys(stats.dagen).sort()[0] || vandaagKey();
+    await sendJson(response, 200, {
+      ok: true,
+      meetSinds: eerste,
+      dagen,
+      totalen: { bezoek: som("bezoek"), admin: som("admin"), print: som("print"),
+        kaartOpgeslagen: som("kaartOpgeslagen"), kaartVerwijderd: som("kaartVerwijderd") },
+      bibliotheek: { oefeningen: count, categorieen: cats, hernoemd: Object.keys(renames).length,
+        toegevoegd: extra.length, verwijderd: deleted.length, verplaatst: Object.keys(catOverrides).length,
+        praktijken: Object.keys(praktijken).length },
+      security: { geweigerd: stats.security.geweigerd, laatste: stats.security.laatste.slice(0, 10),
+        adminSleutelAangepast: !!process.env.ADMIN_KEY, volumeActief: dataDir === "/data" || !!process.env.DATA_DIR },
+      versie: { commit: buildInfo.commit || "onbekend", builtAt: buildInfo.builtAt || null,
+        uptimeUren: Math.round((Date.now() - startTijd) / 360000) / 10 }
+    });
     return;
   }
 
@@ -316,7 +402,15 @@ const server = createServer(async (request, response) => {
     return;
   }
 
-  if (urlPath === "/") urlPath = "/index.html";
+  // eigenaars-dashboard (aparte, onopvallende URL; de data-API eist de beheer-sleutel)
+  if (urlPath === "/dashboard88" || urlPath === "/dashboard88/") {
+    try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "dashboard.html"))); }
+    catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
+    return;
+  }
+
+  if (urlPath === "/") { telBezoek(request, false); urlPath = "/index.html"; }
+  else if (urlPath === "/admin88") telBezoek(request, true);
 
   const filePath = normalize(join(publicDir, urlPath));
   if (filePath !== publicDir && !filePath.startsWith(publicDir + sep)) {
