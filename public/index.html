@@ -244,6 +244,8 @@
       <option value="romp">romp</option>
       <option value="divers">divers</option>
     </select>
+    <input type="text" id="m_groep_vrij" list="m_cats" placeholder="bijv. Yoga — nieuwe naam maakt automatisch een nieuwe categorie" style="display:none"/>
+    <datalist id="m_cats"></datalist>
     <label>Series × herhalingen</label>
     <div style="display:flex;gap:8px">
       <input type="text" id="m_s" value="3" style="width:60px"/>
@@ -862,13 +864,43 @@ bridge2.jpg</div>
   });
   // add exercise modal
   var ov=document.getElementById('ov'),pendingImg=null;
+  // in beheer is de categorie een vrij veld: bestaande naam = die categorie (ook bij ander
+  // hoofdlettergebruik), onbekende naam = de categorie wordt automatisch aangemaakt
+  function bestaandeCategorie(g){
+    return ((GROUPS||[]).filter(function(x){return x.g!=='all';})
+      .find(function(x){return x.g.toLowerCase()===g.toLowerCase();})||{}).g||null;
+  }
+  // logische categorie raden op basis van de oefeningnaam (voorinvulling, altijd te overschrijven)
+  function raadCategorie(naam){
+    var n=' '+naam.toLowerCase()+' ';
+    var cats=(GROUPS||[]).filter(function(x){return x.g!=='all';});
+    for(var i=0;i<cats.length;i++){if(n.indexOf(cats[i].g.toLowerCase())>-1)return cats[i].g;}
+    var M=[[/(trx)/,'TRX'],[/(yoga)/,'Yoga'],[/(bosu)/,'Bosu'],[/(kettlebell)/,'Kettlebell'],
+      [/(bodyblade)/,'Bodyblade'],[/(foam)/,'Foam roller'],[/(ladder)/,'Speedladder'],
+      [/(apparaat|machine|endy)/,'Apparaten'],
+      [/(fiets|loopband|roeier|crosstrainer|stairs|jump|cardio|jog)/,'Cardio'],
+      [/(pully|curl|press|triceps|biceps|schouder|shoulder|arm|pols|wrist|row|flyes|dip|pull|raise)/,'Bovenste extremiteit'],
+      [/(squat|lunge|been|leg|calf|kuit|heup|hip|glute|abduct|adduct|step)/,'Onderste extremiteit'],
+      [/(buik|crunch|plank|rug|core|abdominal|twist|scissor|superman|bridge|brug)/,'Core']];
+    for(var j=0;j<M.length;j++){if(M[j][0].test(n)){var c=bestaandeCategorie(M[j][1]);if(c)return c;}}
+    return '';
+  }
+  var laatsteSuggestie='';
+  document.getElementById('m_naam').addEventListener('input',function(){
+    if(!(IS_ADMIN&&SERVERLIB))return;
+    var veld=document.getElementById('m_groep_vrij');
+    if(veld.value===''||veld.value===laatsteSuggestie){
+      laatsteSuggestie=raadCategorie(this.value)||'';
+      veld.value=laatsteSuggestie;
+    }
+  });
   document.getElementById('addBtn').addEventListener('click',function(){
-    // in beheer: categorieën uit de server-bibliotheek aanbieden
     if(IS_ADMIN&&SERVERLIB&&GROUPS){
-      var sel=document.getElementById('m_groep');
-      sel.innerHTML=GROUPS.filter(function(x){return x.g!=='all';}).map(function(x){
-        return "<option value=\""+esc(x.g)+"\">"+esc(x.label)+"</option>";
-      }).join("");
+      document.getElementById('m_groep').style.display='none';
+      var veld=document.getElementById('m_groep_vrij');
+      veld.style.display='';veld.value='';laatsteSuggestie='';
+      document.getElementById('m_cats').innerHTML=GROUPS.filter(function(x){return x.g!=='all';})
+        .map(function(x){return "<option value=\""+esc(x.g)+"\"></option>";}).join("");
     }
     ov.classList.add('on');
   });
@@ -895,7 +927,9 @@ bridge2.jpg</div>
     // in beheer: direct op de server — meteen live voor iedereen op beide URL's
     if(IS_ADMIN&&SERVERLIB){
       if(!pendingImg){alert('Kies een plaatje — verplicht bij toevoegen aan de gedeelde bibliotheek.');return;}
-      var g=document.getElementById('m_groep').value;
+      var g=document.getElementById('m_groep_vrij').value.trim().replace(/\s+/g,' ');
+      if(!g){alert('Geef een categorie op (een nieuwe naam maakt automatisch een nieuwe categorie).');return;}
+      g=bestaandeCategorie(g)||g;
       resizeDataUrl(pendingImg,900,function(durl){
         if(!durl){alert('Het plaatje kon niet worden gelezen.');return;}
         fetch('api/oefeningen',{method:'POST',headers:Object.assign({'content-type':'application/json'},ADMIN_HDR),body:JSON.stringify({naam:naam,groep:g,img:durl})})
