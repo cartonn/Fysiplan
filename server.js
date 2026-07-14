@@ -166,8 +166,14 @@ const MIME = {
   ".woff2": "font/woff2"
 };
 
+// HTML/JSON altijd opnieuw valideren (anders toont de browser een oude pagina na een
+// deploy); afbeeldingen mogen een dag gecachet worden — die veranderen zelden.
+function cacheHeader(type) {
+  if (type.startsWith("image/") || type.startsWith("font/")) return "public, max-age=86400";
+  return "no-cache";
+}
 async function send(res, status, type, body) {
-  res.writeHead(status, { "content-type": type });
+  res.writeHead(status, { "content-type": type, "cache-control": cacheHeader(type) });
   res.end(body);
 }
 const sendJson = (res, status, obj) => send(res, status, "application/json; charset=utf-8", JSON.stringify(obj));
