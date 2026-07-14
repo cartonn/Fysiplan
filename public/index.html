@@ -35,7 +35,11 @@
   .btn:focus-visible{outline:none;box-shadow:var(--ring)}
   .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
   .btn.primary:hover{background:var(--brand-700);border-color:var(--brand-700)}
-  .wrap{display:grid;grid-template-columns:320px minmax(0,1fr);gap:16px;padding:18px;align-items:start}
+  .wrap{display:grid;grid-template-columns:390px minmax(0,1fr);gap:16px;padding:18px;align-items:start}
+  /* kies-oefening blok: plakt onder de balk en loopt door tot de onderkant van het scherm */
+  .col-controls{position:sticky;top:76px;display:flex;flex-direction:column;height:calc(100vh - 94px)}
+  .col-controls .bd{display:flex;flex-direction:column;flex:1;min-height:0}
+  .col-controls .list{height:auto;flex:1;min-height:160px}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-sm);overflow:hidden}
   .card .hd{padding:11px 14px;border-bottom:1px solid var(--line2);font-size:11.5px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;display:flex;align-items:center;gap:8px;background:#fbfcfe}
   .card .bd{padding:12px 14px}
