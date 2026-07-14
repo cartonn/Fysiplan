@@ -526,12 +526,18 @@ bridge2.jpg</div>
   // server-side, dus meteen live op beide URL's. De gewone weergave kan alleen kaarten maken.
   var IS_ADMIN=/^\/admin88\/?$/.test(location.pathname);
   var ADMIN_HDR={'x-admin-sleutel':'admin88'};
+  // anonieme gebruiksteller voor het eigenaars-dashboard (alleen aantallen, geen inhoud)
+  function ping(type){try{fetch('api/stats/event',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({type:type})}).catch(function(){});}catch(e){}}
   if(IS_ADMIN){
     document.title='Fysiplan — Beheer';
     var _bdg=document.createElement('span');
     _bdg.textContent='Beheer';
     _bdg.style.cssText='background:#b45309;color:#fff;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;margin-left:8px;align-self:center';
     document.querySelector('.brand').appendChild(_bdg);
+    var _dash=document.createElement('button');
+    _dash.type='button';_dash.className='mi';_dash.textContent='Dashboard';
+    _dash.addEventListener('click',function(){location.href='/dashboard88';});
+    document.querySelector('.menu').appendChild(_dash);
   }else{
     ['uploadBtn','addBtn'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='none';});
   }
@@ -727,6 +733,7 @@ bridge2.jpg</div>
   var SAFARI_PRINT=/Safari/i.test(navigator.userAgent)&&!/Chrome|Chromium|CriOS|Android/i.test(navigator.userAgent);
   document.getElementById('printBtn').addEventListener('click',function(){
     if(SAFARI_PRINT)document.documentElement.classList.add('safari-print');
+    ping('print');
     window.print();
   });
   // ---- praktijkprofielen: server-side gedeeld, kiesbaar via dropdown op de A4 ----
@@ -830,7 +837,7 @@ bridge2.jpg</div>
     var msg;
     if(idx>-1){lijst[idx]=kaart;msg='Kaart “'+naam+'” bijgewerkt.';}
     else{lijst.unshift(kaart);msg='Kaart “'+naam+'” opgeslagen.';}
-    if(persistCards(lijst)){document.getElementById('k_result').textContent=msg;renderCardList();}
+    if(persistCards(lijst)){document.getElementById('k_result').textContent=msg;renderCardList();ping('kaart-opgeslagen');}
   });
   document.getElementById('k_lijst').addEventListener('click',function(e){
     var o=e.target.closest('[data-kopen]'),x=e.target.closest('[data-kdel]');
@@ -842,7 +849,7 @@ bridge2.jpg</div>
     }else if(x){
       var c2=lijst[+x.dataset.kdel];if(!c2)return;
       if(!confirm('Kaart “'+c2.naam+'” verwijderen?'))return;
-      lijst.splice(+x.dataset.kdel,1);persistCards(lijst);renderCardList();
+      lijst.splice(+x.dataset.kdel,1);persistCards(lijst);renderCardList();ping('kaart-verwijderd');
     }
   });
 
