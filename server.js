@@ -43,6 +43,10 @@ try { extra = JSON.parse(await readFile(extraPath, "utf8")); } catch {}
 // door de beheerder verwijderde oefeningen (oorspronkelijke namen uit oefeningen.json)
 let deleted = [];
 try { deleted = JSON.parse(await readFile(deletedPath, "utf8")); } catch {}
+// categorie-wijzigingen: sleutel = oorspronkelijke naam, waarde = {groep, ook}
+const catsPath = join(dataDir, "categorie-wijzigingen.json");
+let catOverrides = {};
+try { catOverrides = JSON.parse(await readFile(catsPath, "utf8")); } catch {}
 
 async function saveJson(path, obj) {
   await mkdir(dataDir, { recursive: true });
@@ -58,12 +62,21 @@ const catOrder = (g) => { const i = CATS.indexOf(g); return i < 0 ? 999 : i; };
 async function readBaseManifest() {
   return JSON.parse(await readFile(join(publicDir, "oefeningen.json"), "utf8"));
 }
-// het geserveerde manifest = basis + naamwijzigingen − verwijderd + toegevoegd, gesorteerd
+// het geserveerde manifest = basis + naam-/categoriewijzigingen − verwijderd + toegevoegd
 async function buildManifest() {
   const del = new Set(deleted);
   const base = (await readBaseManifest())
     .filter((e) => !del.has(e.naam))
-    .map((e) => (renames[e.naam] ? { ...e, naam: renames[e.naam] } : e));
+    .map((e) => {
+      const o = { ...e };
+      const c = catOverrides[e.naam];
+      if (c) {
+        o.groep = c.groep;
+        if (c.ook && c.ook.length) o.ook = c.ook; else delete o.ook;
+      }
+      if (renames[e.naam]) o.naam = renames[e.naam];
+      return o;
+    });
   return base.concat(extra)
     .sort((a, b) => catOrder(a.groep) - catOrder(b.groep) || a.naam.localeCompare(b.naam, "nl"));
 }
@@ -129,7 +142,8 @@ const server = createServer(async (request, response) => {
       oefeningen: count,
       hernoemd: Object.keys(renames).length,
       toegevoegd: extra.length,
-      verwijderd: deleted.length
+      verwijderd: deleted.length,
+      verplaatst: Object.keys(catOverrides).length
     });
     return;
   }
@@ -185,6 +199,39 @@ const server = createServer(async (request, response) => {
       await sendJson(response, 200, { ok: true, naam });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek (of plaatje te groot)." });
+    }
+    return;
+  }
+
+  // categorie wijzigen (verplaatsen en/of 2e categorie); direct live op beide URL's
+  if (urlPath === "/api/oefeningen/categorie" && request.method === "POST") {
+    if (!isAdmin(request)) { await denied(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const naam = String(b.naam || "").trim();
+      const g = cleanName(b.groep, 40);
+      const ookList = Array.isArray(b.ook)
+        ? [...new Set(b.ook.map((v) => cleanName(v, 40)).filter((v) => v && v !== g))].slice(0, 3)
+        : [];
+      if (!naam || !g) { await sendJson(response, 400, { ok: false, fout: "Geef een naam en categorie op." }); return; }
+      if (!CATS.includes(g) || ookList.some((v) => !CATS.includes(v))) { await sendJson(response, 400, { ok: false, fout: "Onbekende categorie." }); return; }
+      const ex = extra.find((e) => e.naam === naam);
+      if (ex) {
+        ex.groep = g;
+        if (ookList.length) ex.ook = ookList; else delete ex.ook;
+        await saveJson(extraPath, extra);
+        await sendJson(response, 200, { ok: true }); return;
+      }
+      const base = await readBaseManifest();
+      const orig = base.find((e) => (renames[e.naam] || e.naam) === naam && !deleted.includes(e.naam));
+      if (!orig) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden: " + naam }); return; }
+      const origOok = (orig.ook || []).slice().sort().join("|");
+      if (g === orig.groep && ookList.slice().sort().join("|") === origOok) delete catOverrides[orig.naam];
+      else catOverrides[orig.naam] = { groep: g, ook: ookList };
+      await saveJson(catsPath, catOverrides);
+      await sendJson(response, 200, { ok: true });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }
     return;
   }

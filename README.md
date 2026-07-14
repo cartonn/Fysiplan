@@ -73,6 +73,9 @@ De gewone URL is voor het maken en printen van kaarten. Bibliotheekbeheer gebeur
 - **Oefening toevoegen** (naam + categorie + plaatje) — `POST /api/oefeningen`; het plaatje wordt
   in de browser verkleind naar max 900px en op de server bewaard onder `uploads/`.
 - **Oefening hernoemen** (potloodje ✎) — `POST /api/hernoem` (`naam-wijzigingen.json`).
+- **Categorie wijzigen** (pijltjes ⇄) — `POST /api/oefeningen/categorie`
+  (`categorie-wijzigingen.json`): verplaats een oefening naar een andere categorie en/of toon hem
+  op een 2e plek (het `ook`-veld).
 - **Oefening verwijderen** (🗑) — `POST /api/oefeningen/verwijder`; basis-oefeningen komen in
   `oefeningen-verwijderd.json`, zelf toegevoegde worden echt verwijderd.
 - **Plaatjes uploaden** (de lokale lijst-override) is ook alleen zichtbaar in beheer.
