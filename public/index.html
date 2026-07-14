@@ -319,11 +319,11 @@ bridge2.jpg</div>
 <!-- categorie wijzigen (beheer) -->
 <div class="ov" id="ovCategorie">
   <div class="modal">
-    <h3>Categorie wijzigen</h3>
+    <h3>Oefening aanpassen</h3>
     <div id="vc_naam" style="margin:6px 0 4px;line-height:1.5"></div>
-    <label>Categorie</label>
+    <label>Categorie aanpassen</label>
     <select id="vc_hoofd" style="width:100%"></select>
-    <label>Ook zichtbaar in (optioneel, 2e plek)</label>
+    <label>Ook op een 2e categorie zetten (optioneel)</label>
     <select id="vc_tweede" style="width:100%"></select>
     <div class="acts">
       <button class="btn" id="vc_cancel">Annuleren</button>
@@ -565,9 +565,11 @@ bridge2.jpg</div>
       var sub=(o.bron==='carla')?(np+' plaatje'+(np===1?'':'s')):(o.s+" × "+o.h+(o.h==1?" (statisch/cardio)":"")+(o.bron=='eigen'?" · eigen":""));
       var ren=(IS_ADMIN&&o.bron==='server')
         ?"<button class='ren' data-ren='"+o.id+"' title='naam wijzigen' aria-label='naam wijzigen'>&#9998;</button>"+
-         "<button class='ren' data-cat='"+o.id+"' title='categorie wijzigen' aria-label='categorie wijzigen'>"+
+         "<button class='ren' data-cat='"+o.id+"' title='aanpassen (categorie)' aria-label='aanpassen (categorie)'>"+
            "<svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>"+
-           "<path d='M8 3 4 7l4 4'/><path d='M4 7h16'/><path d='m16 21 4-4-4-4'/><path d='M20 17H4'/></svg></button>"+
+           "<line x1='4' y1='6' x2='20' y2='6'/><circle cx='9' cy='6' r='2.2' fill='#fff'/>"+
+           "<line x1='4' y1='12' x2='20' y2='12'/><circle cx='15' cy='12' r='2.2' fill='#fff'/>"+
+           "<line x1='4' y1='18' x2='20' y2='18'/><circle cx='7' cy='18' r='2.2' fill='#fff'/></svg></button>"+
          "<button class='ren del' data-verwijder='"+o.id+"' title='verwijderen uit bibliotheek' aria-label='verwijderen uit bibliotheek'>"+
            "<svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>"+
            "<path d='M3 6h18'/><path d='M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2'/>"+
