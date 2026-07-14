@@ -23,7 +23,9 @@ Live Railway URL: https://fysiplan-production.up.railway.app
 
 - `public/index.html` — de volledige front-end app (zelfstandig: HTML + CSS + JS + data).
 - `public/oefeningen.json` — de **server-bibliotheek**: lijst van `{naam, groep, img}` die de app bij
-  het opstarten inleest, zodat de plaatjes voor iedereen (elk apparaat) beschikbaar zijn.
+  het opstarten inleest, zodat de plaatjes voor iedereen (elk apparaat) beschikbaar zijn. Optioneel
+  veld `ook` (lijst van extra categorieën) toont een oefening op meerdere plekken — zo staan de
+  cardio-apparaten zowel onder **Apparaten** als onder **Cardio**.
 - `public/images/` — de web-geoptimaliseerde JPEG's, per categorie in een submap.
 - `server.js` — minimale Node-server (geen dependencies): serveert `public/` en `/health`.
 - `scripts/build.js` — schrijft buildmetadata naar `dist/build-info.json`.
@@ -63,13 +65,26 @@ terug naar de gedeelde server-lijst.
   bewust **lokaal in de browser** (`localStorage`, sleutel `fysiplan_kaarten`). Oefeningen worden
   op naam bewaard, zodat een kaart blijft werken als de bibliotheek verandert.
 
-## Oefening hernoemen (in de app)
+## Beheer via /admin88
 
-Beweeg in de lijst over een oefening en klik het potloodje (✎) → nieuwe naam invoeren. De
-wijziging wordt via `POST /api/hernoem` **op de server opgeslagen** (in
-`naam-wijzigingen.json`, sleutel = oorspronkelijke naam) en geldt daarna voor iedereen die de
-URL opent. `oefeningen.json` wordt geserveerd mét de toegepaste wijzigingen; `/health` toont
-onder `hernoemd` hoeveel namen er zijn aangepast.
+De gewone URL is voor het maken en printen van kaarten. Bibliotheekbeheer gebeurt op
+**`/admin88`** (herkenbaar aan de "Beheer"-badge). Alleen daar zijn beschikbaar:
+
+- **Oefening toevoegen** (naam + categorie + plaatje) — `POST /api/oefeningen`; het plaatje wordt
+  in de browser verkleind naar max 900px en op de server bewaard onder `uploads/`.
+- **Oefening hernoemen** (potloodje ✎) — `POST /api/hernoem` (`naam-wijzigingen.json`).
+- **Oefening verwijderen** (🗑) — `POST /api/oefeningen/verwijder`; basis-oefeningen komen in
+  `oefeningen-verwijderd.json`, zelf toegevoegde worden echt verwijderd.
+- **Plaatjes uploaden** (de lokale lijst-override) is ook alleen zichtbaar in beheer.
+
+Elke beheeractie is **direct server-side** en dus meteen live op beide URL's — er is geen
+synchronisatie, wachttijd of aparte deploy nodig. Het geserveerde `oefeningen.json` =
+basisbestand + hernoemingen − verwijderd + toegevoegd. `/health` toont de tellers
+(`hernoemd`, `toegevoegd`, `verwijderd`).
+
+De mutatie-API's eisen een sleutel-header die alleen de beheerpagina meestuurt
+(instelbaar via `ADMIN_KEY`, standaard `admin88`). Let op: dit is afscherming-door-verhulling —
+wie de beheer-URL kent, kan beheren. Echte authenticatie is bewust buiten scope gehouden.
 
 > **Blijvend bewaren op Railway:** de containerschijf wordt bij elke redeploy gewist. Voeg in
 > Railway een **Volume** toe met mount path `/data` (service → rechtsklik → Attach volume) —

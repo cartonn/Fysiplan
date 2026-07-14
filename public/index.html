@@ -487,6 +487,20 @@ bridge2.jpg</div>
     }catch(e){}
   }
 
+  // beheer-weergave: /admin88 kan oefeningen toevoegen, hernoemen en verwijderen — direct
+  // server-side, dus meteen live op beide URL's. De gewone weergave kan alleen kaarten maken.
+  var IS_ADMIN=/^\/admin88\/?$/.test(location.pathname);
+  var ADMIN_HDR={'x-admin-sleutel':'admin88'};
+  if(IS_ADMIN){
+    document.title='Fysiplan — Beheer';
+    var _bdg=document.createElement('span');
+    _bdg.textContent='Beheer';
+    _bdg.style.cssText='background:#b45309;color:#fff;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;margin-left:8px;align-self:center';
+    document.querySelector('.brand').appendChild(_bdg);
+  }else{
+    ['uploadBtn','addBtn'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='none';});
+  }
+
   var curG='all',q='',chosen=[],CUSTOMLIB=false,SERVERLIB=false,GROUPS=null,IMGCACHE={},GRID={rows:{},cells:{}};
   var elList=document.getElementById('list'),
       elMon=document.getElementById('mon'),elEmpty=document.getElementById('emptyA4'),elCnt=document.getElementById('cnt');
@@ -496,11 +510,13 @@ bridge2.jpg</div>
       var g=c.dataset.g;
       if(CUSTOMLIB){c.style.display=(g==='all')?'':'none';if(g==='all')c.textContent='alle oefeningen ('+OEF.length+')';return;}
       c.style.display='';
-      var n=OEF.filter(function(o){return g==='all'||o.groep===g;}).length;
+      var n=OEF.filter(function(o){return inGroep(o,g);}).length;
       var label=SERVERLIB?(g==='all'?'alle oefeningen':g):CHIP_LABELS[g];
       c.textContent=label+' ('+n+')';
     });
   }
+  // hoort een oefening bij een groep? (groep zelf, of via 'ook' op meerdere plekken zichtbaar)
+  function inGroep(o,g){return g==='all'||o.groep===g||(o.ook&&o.ook.indexOf(g)>-1);}
   // chip-balk opnieuw opbouwen (dynamische categorieën uit de server-bibliotheek)
   function renderChips(){
     var f=document.getElementById('filters');
@@ -511,14 +527,17 @@ bridge2.jpg</div>
   }
 
   function renderList(){
-    var f=OEF.filter(function(o){return (curG==='all'||o.groep===curG)&&(!q||o.naam.toLowerCase().indexOf(q)>-1);})
+    var f=OEF.filter(function(o){return inGroep(o,curG)&&(!q||o.naam.toLowerCase().indexOf(q)>-1);})
       .sort(function(a,b){return a.naam.localeCompare(b.naam,'nl',{sensitivity:'base',numeric:true});});
     elCnt.textContent='('+f.length+')';
     elList.innerHTML=f.map(function(o){
       var has=chosen.some(function(c){return c.o===o.id;});
       var np=o.imgs.filter(function(im){return im.type==='img';}).length;
       var sub=(o.bron==='carla')?(np+' plaatje'+(np===1?'':'s')):(o.s+" × "+o.h+(o.h==1?" (statisch/cardio)":"")+(o.bron=='eigen'?" · eigen":""));
-      var ren=(o.bron==='server')?"<button class='ren' data-ren='"+o.id+"' title='naam wijzigen' aria-label='naam wijzigen'>&#9998;</button>":"";
+      var ren=(IS_ADMIN&&o.bron==='server')
+        ?"<button class='ren' data-ren='"+o.id+"' title='naam wijzigen' aria-label='naam wijzigen'>&#9998;</button>"+
+         "<button class='ren' data-verwijder='"+o.id+"' title='verwijderen uit bibliotheek' aria-label='verwijderen uit bibliotheek'>&#128465;</button>"
+        :"";
       return "<div class='row' data-id='"+o.id+"'>"+imgRender(o.imgs[0],56)+
         "<div class='nm'>"+esc(o.naam)+"<small>"+sub+"</small></div>"+ren+
         "<button class='add"+(has?" on":"")+"' data-add='"+o.id+"' title='"+(has?"van kaart halen":"op kaart zetten")+"' aria-label='"+(has?"van kaart halen":"op kaart zetten")+"'>"+(has?"−":"+")+"</button></div>";
@@ -578,7 +597,7 @@ bridge2.jpg</div>
     if(naar==null)return;
     naar=naar.trim().replace(/\s+/g,' ');
     if(!naar||naar===o.naam)return;
-    fetch('api/hernoem',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({van:o.naam,naar:naar})})
+    fetch('api/hernoem',{method:'POST',headers:Object.assign({'content-type':'application/json'},ADMIN_HDR),body:JSON.stringify({van:o.naam,naar:naar})})
       .then(function(r){return r.json().catch(function(){return {ok:false,fout:'Onverwacht antwoord van de server.'};});})
       .then(function(d){
         if(!d.ok){alert(d.fout||'Naam wijzigen is niet gelukt.');return;}
@@ -587,7 +606,25 @@ bridge2.jpg</div>
       })
       .catch(function(){alert('Naam wijzigen is niet gelukt: geen verbinding met de server.');});
   }
+  // bibliotheek opnieuw laden zonder de huidige kaart te verliezen (koppeling op naam)
+  function reloadLibraryKeepingCard(){
+    var snap=currentCard('');
+    return loadDefaultLibrary().then(function(){openCard(snap);});
+  }
+  function deleteExercise(id){
+    var o=OEF[id];if(!o)return;
+    if(!confirm('"'+o.naam+'" verwijderen uit de bibliotheek? Dit geldt direct voor iedereen.'))return;
+    fetch('api/oefeningen/verwijder',{method:'POST',headers:Object.assign({'content-type':'application/json'},ADMIN_HDR),body:JSON.stringify({naam:o.naam})})
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(!d.ok){alert(d.fout||'Verwijderen is niet gelukt.');return;}
+        reloadLibraryKeepingCard();
+      })
+      .catch(function(){alert('Verwijderen is niet gelukt: geen verbinding met de server.');});
+  }
   elList.addEventListener('click',function(e){
+    var del=e.target.closest('[data-verwijder]');
+    if(del){deleteExercise(+del.dataset.verwijder);return;}
     var p=e.target.closest('.ren');
     if(p){renameExercise(+p.dataset.ren);return;}
     var r=e.target.closest('.row');if(!r)return;toggleExercise(+r.dataset.id);
@@ -738,13 +775,54 @@ bridge2.jpg</div>
   });
   // add exercise modal
   var ov=document.getElementById('ov'),pendingImg=null;
-  document.getElementById('addBtn').addEventListener('click',function(){ov.classList.add('on');});
+  document.getElementById('addBtn').addEventListener('click',function(){
+    // in beheer: categorieën uit de server-bibliotheek aanbieden
+    if(IS_ADMIN&&SERVERLIB&&GROUPS){
+      var sel=document.getElementById('m_groep');
+      sel.innerHTML=GROUPS.filter(function(x){return x.g!=='all';}).map(function(x){
+        return "<option value=\""+esc(x.g)+"\">"+esc(x.label)+"</option>";
+      }).join("");
+    }
+    ov.classList.add('on');
+  });
   document.getElementById('m_cancel').addEventListener('click',function(){ov.classList.remove('on');});
   document.getElementById('m_img').addEventListener('change',function(e){
     var f=e.target.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){pendingImg=rd.result;};rd.readAsDataURL(f);
   });
+  // plaatje verkleinen naar max 900px en als JPEG-dataURL teruggeven (witte achtergrond)
+  function resizeDataUrl(src,max,cb){
+    var img=new Image();
+    img.onload=function(){
+      var r=Math.min(1,max/Math.max(img.width,img.height));
+      var c=document.createElement('canvas');
+      c.width=Math.max(1,Math.round(img.width*r));c.height=Math.max(1,Math.round(img.height*r));
+      var x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);
+      x.drawImage(img,0,0,c.width,c.height);
+      cb(c.toDataURL('image/jpeg',0.82));
+    };
+    img.onerror=function(){cb(null);};
+    img.src=src;
+  }
   document.getElementById('m_save').addEventListener('click',function(){
     var naam=document.getElementById('m_naam').value.trim();if(!naam){alert('Geef een naam op.');return;}
+    // in beheer: direct op de server — meteen live voor iedereen op beide URL's
+    if(IS_ADMIN&&SERVERLIB){
+      if(!pendingImg){alert('Kies een plaatje — verplicht bij toevoegen aan de gedeelde bibliotheek.');return;}
+      var g=document.getElementById('m_groep').value;
+      resizeDataUrl(pendingImg,900,function(durl){
+        if(!durl){alert('Het plaatje kon niet worden gelezen.');return;}
+        fetch('api/oefeningen',{method:'POST',headers:Object.assign({'content-type':'application/json'},ADMIN_HDR),body:JSON.stringify({naam:naam,groep:g,img:durl})})
+          .then(function(r){return r.json();})
+          .then(function(d){
+            if(!d.ok){alert(d.fout||'Toevoegen is niet gelukt.');return;}
+            pendingImg=null;document.getElementById('m_naam').value='';document.getElementById('m_img').value='';
+            ov.classList.remove('on');
+            reloadLibraryKeepingCard();
+          })
+          .catch(function(){alert('Toevoegen is niet gelukt: geen verbinding met de server.');});
+      });
+      return;
+    }
     var groep=document.getElementById('m_groep').value,s=document.getElementById('m_s').value||'3',h=document.getElementById('m_h').value||'12';
     var imgs= pendingImg ? [{type:'img',src:pendingImg,label:'Eigen'}] : [{type:'svg',key:'stand',m:0,label:'Starthouding'},{type:'svg',key:'stand',m:1,label:'Uitvoering'}];
     var o={id:OEF.length,naam:naam,groep:groep,s:+s,h:+h,bron:'eigen',imgs:imgs};
@@ -814,7 +892,7 @@ bridge2.jpg</div>
     var cats=[];
     OEF=entries.map(function(e,i){
       if(cats.indexOf(e.groep)<0)cats.push(e.groep);
-      return {id:i,naam:e.naam,groep:e.groep,s:3,h:12,bron:'server',
+      return {id:i,naam:e.naam,groep:e.groep,ook:e.ook||null,s:3,h:12,bron:'server',
         starthouding:'',uitvoering:'',opmerking:'',
         imgs:[{type:'img',src:e.img,label:'Plaatje'}]};
     });
