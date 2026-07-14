@@ -62,6 +62,7 @@
   .row .ren{flex:0 0 auto;width:28px;height:28px;border-radius:50%;border:1px solid transparent;background:transparent;color:var(--soft);font-size:14px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;opacity:0}
   .row:hover .ren{opacity:1}
   .row .ren:hover{background:#eef1f5;color:var(--ink);border-color:var(--line)}
+  .row .ren.del:hover{background:#fdecec;color:#b3261e;border-color:#f3c1bd}
   .hint{color:var(--soft);font-size:12.5px;padding:16px 6px;text-align:center}
   /* ---- A4 ---- */
   #a4wrap{overflow:auto;background:var(--tray);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;box-shadow:inset 0 1px 3px rgba(16,24,40,.05)}
@@ -315,6 +316,18 @@ bridge2.jpg</div>
   </div>
 </div>
 
+<!-- oefening verwijderen (beheer) -->
+<div class="ov" id="ovVerwijder">
+  <div class="modal">
+    <h3>Oefening verwijderen</h3>
+    <div id="vw_tekst" style="margin:6px 0 4px;line-height:1.5"></div>
+    <div class="acts">
+      <button class="btn" id="vw_cancel">Annuleren</button>
+      <button class="btn primary" id="vw_ok">Ja, verwijderen</button>
+    </div>
+  </div>
+</div>
+
 <!-- opgeslagen kaarten modal -->
 <div class="ov" id="ovKaarten">
   <div class="modal">
@@ -536,7 +549,11 @@ bridge2.jpg</div>
       var sub=(o.bron==='carla')?(np+' plaatje'+(np===1?'':'s')):(o.s+" × "+o.h+(o.h==1?" (statisch/cardio)":"")+(o.bron=='eigen'?" · eigen":""));
       var ren=(IS_ADMIN&&o.bron==='server')
         ?"<button class='ren' data-ren='"+o.id+"' title='naam wijzigen' aria-label='naam wijzigen'>&#9998;</button>"+
-         "<button class='ren' data-verwijder='"+o.id+"' title='verwijderen uit bibliotheek' aria-label='verwijderen uit bibliotheek'>&#128465;</button>"
+         "<button class='ren del' data-verwijder='"+o.id+"' title='verwijderen uit bibliotheek' aria-label='verwijderen uit bibliotheek'>"+
+           "<svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>"+
+           "<path d='M3 6h18'/><path d='M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2'/>"+
+           "<path d='M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6'/>"+
+           "<line x1='10' y1='11' x2='10' y2='17'/><line x1='14' y1='11' x2='14' y2='17'/></svg></button>"
         :"";
       return "<div class='row' data-id='"+o.id+"'>"+imgRender(o.imgs[0],56)+
         "<div class='nm'>"+esc(o.naam)+"<small>"+sub+"</small></div>"+ren+
@@ -611,17 +628,27 @@ bridge2.jpg</div>
     var snap=currentCard('');
     return loadDefaultLibrary().then(function(){openCard(snap);});
   }
+  var pendingDelete=null;
   function deleteExercise(id){
     var o=OEF[id];if(!o)return;
-    if(!confirm('"'+o.naam+'" verwijderen uit de bibliotheek? Dit geldt direct voor iedereen.'))return;
-    fetch('api/oefeningen/verwijder',{method:'POST',headers:Object.assign({'content-type':'application/json'},ADMIN_HDR),body:JSON.stringify({naam:o.naam})})
+    pendingDelete=o.naam;
+    document.getElementById('vw_tekst').innerHTML=
+      'Weet je zeker dat je <b>'+esc(o.naam)+'</b> uit de bibliotheek wilt verwijderen?'+
+      '<br/><small style="color:var(--muted)">Dit geldt direct voor iedereen, op beide adressen.</small>';
+    openOv('ovVerwijder');
+  }
+  document.getElementById('vw_cancel').addEventListener('click',function(){pendingDelete=null;closeOv('ovVerwijder');});
+  document.getElementById('vw_ok').addEventListener('click',function(){
+    var naam=pendingDelete;if(!naam){closeOv('ovVerwijder');return;}
+    pendingDelete=null;closeOv('ovVerwijder');
+    fetch('api/oefeningen/verwijder',{method:'POST',headers:Object.assign({'content-type':'application/json'},ADMIN_HDR),body:JSON.stringify({naam:naam})})
       .then(function(r){return r.json();})
       .then(function(d){
         if(!d.ok){alert(d.fout||'Verwijderen is niet gelukt.');return;}
         reloadLibraryKeepingCard();
       })
       .catch(function(){alert('Verwijderen is niet gelukt: geen verbinding met de server.');});
-  }
+  });
   elList.addEventListener('click',function(e){
     var del=e.target.closest('[data-verwijder]');
     if(del){deleteExercise(+del.dataset.verwijder);return;}
