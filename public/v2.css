@@ -53,6 +53,25 @@ html.v2 .v2badge{background:linear-gradient(150deg,#2f66bd,#1c4487);color:#fff;
   font-size:11px;font-weight:700;letter-spacing:.06em;padding:2px 9px;border-radius:999px;
   margin-left:8px;align-self:center}
 
+/* ---- mobiel en smalle tablet: de app blijft bruikbaar op één kolom ---- */
+@media (max-width:920px){
+  html.v2 header.topbar{flex-wrap:wrap;gap:8px;padding:10px 12px}
+  html.v2 header.topbar .brand{margin-right:auto}
+  html.v2 header.topbar .menu,html.v2 header.topbar .spacer{display:none}
+  html.v2 header.topbar .btn{padding:8px 11px;font-size:13px}
+  html.v2 .wrap{grid-template-columns:1fr;padding:10px;gap:10px}
+  /* oefeningenlijst: compact blok boven de kaart, met eigen scroll */
+  html.v2 .col-controls{position:static;height:auto;max-height:46vh}
+  html.v2 .col-controls .list{min-height:120px}
+  /* de A4 behoudt zijn echte maat en schuift horizontaal — zo blijft de print exact gelijk */
+  html.v2 #a4wrap{overflow-x:auto;padding:10px;-webkit-overflow-scrolling:touch}
+  html.v2 .modal{width:min(420px,94vw);padding:18px}
+}
+@media (max-width:520px){
+  html.v2 header.topbar .btn{flex:1 1 calc(50% - 8px)}
+  html.v2 header.topbar .btn.primary{flex-basis:100%}
+}
+
 /* ---- nieuwe printvarianten (alleen v2) ---- */
 @media print{
   /* Groot lettertype: beter leesbaar voor oudere patienten */

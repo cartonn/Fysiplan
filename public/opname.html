@@ -4,58 +4,94 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="color-scheme" content="light"/>
+<meta name="theme-color" content="#f6f2e9"/>
 <meta name="robots" content="noindex"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232456a6'/%3E%3Cpath d='M5 16h5l2.5 6 5-12 2.5 7h7' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
 <title>Video opnemen — Fysiplan</title>
 <style>
-  :root{--blauw:#2456a6;--blauw-d:#1c4487;--inkt:#232019;--grijs:#777162;--bg:#f6f2e9;--vlak:#fffefa;--lijn:#e7e0cf;--rood:#d64545}
+  :root{--blauw:#2456a6;--blauw-d:#1c4487;--inkt:#232019;--grijs:#777162;--bg:#f6f2e9;
+    --vlak:#fffefa;--lijn:#e7e0cf;--rood:#d64545;--disp:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font:16px/1.5 'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--inkt);
-    min-height:100vh;display:flex;flex-direction:column}
-  header{padding:14px 18px;background:var(--vlak);border-bottom:1px solid var(--lijn);font-weight:700;color:var(--blauw)}
-  header small{display:block;font-weight:400;color:var(--grijs);font-size:13px}
-  main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;gap:16px}
-  video{width:100%;max-width:480px;aspect-ratio:3/4;object-fit:cover;background:#000;border-radius:16px}
-  .knoppen{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
-  button{font:inherit;border:none;border-radius:999px;padding:14px 26px;cursor:pointer;font-weight:700}
-  .op{background:var(--rood);color:#fff;width:84px;height:84px;border-radius:999px;padding:0;font-size:14px;
-    box-shadow:0 6px 18px rgba(214,69,69,.35)}
-  .op.bezig{animation:puls 1.2s infinite}
-  @keyframes puls{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+  body{font:16px/1.5 var(--disp);background:var(--bg);color:var(--inkt);
+    min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+  header{padding:calc(10px + env(safe-area-inset-top)) 18px 10px;background:var(--vlak);
+    border-bottom:1px solid var(--lijn);display:flex;align-items:center;gap:10px}
+  header .mark{width:26px;height:26px;border-radius:8px;background:linear-gradient(150deg,#2f66bd,#1c4487);
+    display:flex;align-items:center;justify-content:center;flex:0 0 26px}
+  header b{font-size:15px}
+  header small{display:block;font-weight:500;color:var(--grijs);font-size:12px}
+  main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;gap:14px}
+
+  /* camerabeeld met bediening eroverheen */
+  .cam{position:relative;width:100%;max-width:430px;flex:1;max-height:72vh;border-radius:20px;
+    overflow:hidden;background:#111;box-shadow:0 14px 40px rgba(35,32,25,.25)}
+  .cam video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+  .naamchip{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:center;pointer-events:none}
+  .naamchip span{font:600 13px/1 var(--disp);color:#fff;background:rgba(20,20,20,.55);
+    backdrop-filter:blur(6px);padding:8px 14px;border-radius:999px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .tijd{position:absolute;top:52px;left:0;right:0;display:none;justify-content:center;pointer-events:none}
+  .tijd span{font:700 14px/1 var(--disp);color:#fff;background:var(--rood);padding:7px 14px;border-radius:999px;
+    font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;gap:7px}
+  .tijd .stip{width:8px;height:8px;border-radius:99px;background:#fff;animation:knip 1s infinite}
+  @keyframes knip{50%{opacity:.25}}
+  .balk{position:absolute;left:0;right:0;bottom:0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));
+    display:flex;align-items:center;justify-content:center;gap:18px;
+    background:linear-gradient(transparent,rgba(0,0,0,.45))}
+  .opknop{width:76px;height:76px;border-radius:999px;border:4px solid #fff;background:transparent;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+  .opknop i{width:56px;height:56px;border-radius:999px;background:var(--rood);transition:all .2s ease;display:block}
+  .opknop.bezig i{width:30px;height:30px;border-radius:8px}
+  .uitleg{font-size:14.5px;color:var(--grijs);text-align:center;max-width:340px;line-height:1.5}
+
+  /* voorvertoning en klaar-scherm */
+  .paneel{width:100%;max-width:430px;display:flex;flex-direction:column;gap:12px;align-items:center}
+  .paneel video{width:100%;max-height:62vh;border-radius:20px;background:#000;box-shadow:0 14px 40px rgba(35,32,25,.25)}
+  .knoppen{display:flex;gap:10px;width:100%}
+  .knoppen button{flex:1;font:600 16px/1 var(--disp);border:none;border-radius:14px;padding:16px;cursor:pointer}
   .blauw{background:var(--blauw);color:#fff}
-  .grijs{background:#fff;border:1px solid var(--lijn);color:var(--inkt)}
-  .status{font-size:15px;color:var(--grijs);text-align:center;max-width:340px}
-  .tijd{font-variant-numeric:tabular-nums;font-weight:700;color:var(--rood)}
-  .klaarblok{text-align:center;padding:34px 22px;background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;max-width:380px}
-  .klaarblok .vink{width:64px;height:64px;border-radius:999px;background:#e7f3e9;color:#2e7d43;font-size:34px;
-    display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+  .blauw:active{background:var(--blauw-d)}
+  .grijsknop{background:var(--vlak);border:1px solid var(--lijn) !important;color:var(--inkt)}
+  .klaarblok{text-align:center;padding:38px 26px;background:var(--vlak);border:1px solid var(--lijn);
+    border-radius:22px;max-width:400px;box-shadow:0 10px 34px rgba(80,64,32,.12)}
+  .klaarblok .vink{width:72px;height:72px;border-radius:999px;background:#e7f3e9;color:#2e7d43;
+    display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+  @media (prefers-reduced-motion:no-preference){
+    .klaarblok .vink{animation:pop .35s cubic-bezier(.2,1.4,.4,1)}
+    @keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+  }
+  .klaarblok b{font-size:19px}
+  .klaarblok p{color:var(--grijs);margin-top:8px;font-size:15px;line-height:1.55}
+  button:focus-visible{outline:3px solid rgba(36,86,166,.4);outline-offset:2px}
 </style>
 </head>
 <body>
-<header>Fysiplan — video opnemen<small id="sub">Neem de oefening op; het beeldscherm ziet de video vanzelf verschijnen.</small></header>
+<header>
+  <span class="mark"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg></span>
+  <div><b>Video opnemen</b><small>Het beeldscherm ziet de video vanzelf verschijnen</small></div>
+</header>
 <main id="main">
-  <div class="status" id="status">Camera wordt gestart…</div>
+  <div class="uitleg" id="status">Camera wordt gestart&hellip;</div>
 </main>
 <script>
 (function(){
   'use strict';
   var token=(location.pathname.match(/^\/o\/([a-f0-9]{12})$/)||[])[1];
   var main=document.getElementById('main');
+  function esc(s){return String(s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];});}
   function toon(html){main.innerHTML=html;}
-  function fout(msg){toon("<div class='klaarblok'><b>Dat lukte niet</b><div class='status' style='margin-top:8px'>"+msg+"</div></div>");}
+  function fout(msg){toon("<div class='klaarblok'><b>Dat lukte niet</b><p>"+msg+"</p></div>");}
+  function klaarScherm(){
+    toon("<div class='klaarblok'><div class='vink'><svg width='34' height='34' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6L9 17l-5-5'/></svg></div>"+
+      "<b>Video verstuurd</b><p>De video staat nu op het beeldscherm. Je kunt de telefoon weer wegleggen.</p></div>");
+  }
   if(!token){fout('Deze opnamelink is niet geldig. Scan de QR-code op het beeldscherm opnieuw.');return;}
   if(!navigator.mediaDevices||!window.MediaRecorder){fout('Deze browser ondersteunt geen video-opname. Probeer Safari (iPhone) of Chrome (Android).');return;}
 
-  // eerst checken of het token nog leeft (max. 15 minuten)
   fetch('/api/opname/status?token='+token).then(function(r){return r.json();}).then(function(d){
     if(!d.ok){fout('Deze opnamelink is verlopen. Klik op het beeldscherm opnieuw op het camera-icoon en scan de nieuwe QR-code.');return;}
     if(d.klaar){klaarScherm();return;}
     start(d);
   }).catch(function(){fout('Geen verbinding met de server.');});
-
-  function klaarScherm(){
-    toon("<div class='klaarblok'><div class='vink'>&#10003;</div><b>Video verstuurd!</b>"+
-      "<div class='status' style='margin-top:8px'>De video staat op het beeldscherm. Je kunt de telefoon weer wegleggen.</div></div>");
-  }
 
   function start(info){
     var stream=null,rec=null,delen=[],timer=null,sec=0,MAXSEC=60;
@@ -67,10 +103,11 @@
       .catch(function(){fout('Geen toegang tot de camera. Geef de browser toestemming voor camera en microfoon en probeer het opnieuw.');});
 
     function opnameUI(){
-      toon("<video id='v' autoplay muted playsinline></video>"+
-        "<div class='status' id='st'>"+(info.naam?"Oefening: <b>"+esc(info.naam)+"</b><br/>":"")+
-        "Richt de camera, druk op de rode knop en doe de oefening voor (max. 1 minuut).</div>"+
-        "<div class='knoppen'><button class='op' id='knop'>Opname</button></div>");
+      toon("<div class='cam'><video id='v' autoplay muted playsinline></video>"+
+        (info.naam?"<div class='naamchip'><span>"+esc(info.naam)+"</span></div>":"")+
+        "<div class='tijd' id='tijd'><span><i class='stip'></i><b id='tel'>0:00</b></span></div>"+
+        "<div class='balk'><button class='opknop' id='knop' aria-label='opname starten of stoppen'><i></i></button></div></div>"+
+        "<div class='uitleg'>Richt de camera, tik op de rode knop en doe de oefening voor (max. 1 minuut). Tik nogmaals om te stoppen.</div>");
       document.getElementById('v').srcObject=stream;
       document.getElementById('knop').addEventListener('click',wissel);
     }
@@ -82,9 +119,10 @@
       rec.ondataavailable=function(e){if(e.data&&e.data.size)delen.push(e.data);};
       rec.onstop=voorvertoning;
       rec.start();
-      b.textContent='0:00';b.classList.add('bezig');
+      b.classList.add('bezig');
+      document.getElementById('tijd').style.display='flex';
       timer=setInterval(function(){
-        sec++;b.textContent=Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');
+        sec++;document.getElementById('tel').textContent=Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');
         if(sec>=MAXSEC)stopOpname();
       },1000);
     }
@@ -92,10 +130,10 @@
     function voorvertoning(){
       var blob=new Blob(delen,{type:rec.mimeType||mime});
       var url=URL.createObjectURL(blob);
-      toon("<video id='v' src='"+url+"' controls playsinline></video>"+
-        "<div class='status'>Tevreden met de opname?</div>"+
-        "<div class='knoppen'><button class='grijs' id='opnieuw'>Opnieuw</button>"+
-        "<button class='blauw' id='stuur'>Gebruik deze video</button></div>");
+      toon("<div class='paneel'><video src='"+url+"' controls playsinline autoplay muted></video>"+
+        "<div class='uitleg'>Tevreden met de opname?</div>"+
+        "<div class='knoppen'><button class='grijsknop' id='opnieuw'>Opnieuw</button>"+
+        "<button class='blauw' id='stuur'>Gebruik deze video</button></div></div>");
       document.getElementById('opnieuw').addEventListener('click',opnameUI);
       document.getElementById('stuur').addEventListener('click',function(){
         var knop=this;knop.disabled=true;knop.textContent='Versturen…';
@@ -111,7 +149,6 @@
       });
     }
   }
-  function esc(s){return String(s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];});}
 })();
 </script>
 </body>
