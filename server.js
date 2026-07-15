@@ -384,7 +384,7 @@ const server = createServer(async (request, response) => {
   }
   if (urlPath === "/api/praktijken" && request.method === "POST") {
     try {
-      const b = JSON.parse(await readBody(request));
+      const b = JSON.parse(await readBody(request, 1024 * 1024));
       const p = {
         praktijk: cleanName(b.praktijk, 80),
         adres: cleanName(b.adres, 120),
@@ -395,11 +395,27 @@ const server = createServer(async (request, response) => {
       if (!p.praktijk || !p.adres) { await sendJson(response, 400, { ok: false, fout: "Vul minimaal praktijknaam en adres in." }); return; }
       const key = p.praktijk.toLowerCase();
       if (!praktijken[key] && Object.keys(praktijken).length >= 200) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal praktijken bereikt." }); return; }
+      // praktijklogo: meegestuurd als dataURL, opgeslagen als bestand; zonder nieuw
+      // logo blijft het bestaande logo van deze praktijk gewoon staan
+      const oud = praktijken[key];
+      if (b.logo) {
+        const m = String(b.logo).match(/^data:image\/(jpeg|png);base64,([A-Za-z0-9+/=]+)$/);
+        if (!m) { await sendJson(response, 400, { ok: false, fout: "Logo moet een JPEG of PNG zijn." }); return; }
+        const buf = Buffer.from(m[2], "base64");
+        if (buf.length < 100 || buf.length > 400 * 1024) { await sendJson(response, 400, { ok: false, fout: "Logo is te groot (max. 400 kB)." }); return; }
+        await mkdir(uploadsDir, { recursive: true });
+        const file = `logo-${slug(p.praktijk)}-${Date.now()}.${m[1] === "png" ? "png" : "jpg"}`;
+        await writeFile(join(uploadsDir, file), buf);
+        p.logo = "uploads/" + file;
+        if (oud && oud.logo && oud.logo.startsWith("uploads/")) { try { await unlink(join(dataDir, oud.logo)); } catch {} }
+      } else if (oud && oud.logo) {
+        p.logo = oud.logo;
+      }
       praktijken[key] = p;
       await saveJson(praktijkenPath, praktijken);
-      await sendJson(response, 200, { ok: true });
+      await sendJson(response, 200, { ok: true, logo: p.logo || "" });
     } catch {
-      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek (of logo te groot)." });
     }
     return;
   }

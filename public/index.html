@@ -178,6 +178,7 @@
   <div class="spacer"></div>
   <button class="btn" id="uploadBtn">Plaatjes uploaden</button>
   <button class="btn" id="addBtn">+ Oefening toevoegen</button>
+  <button class="btn" id="sjabBtn" style="display:none">Sjablonen</button>
   <button class="btn" id="kaartenBtn">Kaarten</button>
   <button class="btn" id="clearBtn">Wis kaart</button>
   <button class="btn primary" id="printBtn">Print trainingsschema (PDF)</button>
@@ -206,7 +207,10 @@
       <div class="a4hd">
         <div class="prak">
           <select id="prakSelect" class="no-print" aria-label="Kies praktijk" style="display:none;width:100%;margin-bottom:4px;font-size:11px;padding:3px 6px;border:1px solid var(--line);border-radius:6px;color:var(--muted);background:#fff"></select>
+          <img id="prakLogo" alt="" style="display:none"/>
           <input class="logoIn" id="praktijk" value="FysioTotaal" aria-label="Praktijknaam"/>
+          <button type="button" class="no-print" id="logoBtn" style="display:none">+ praktijklogo</button>
+          <input type="file" id="logoFile" accept="image/jpeg,image/png,image/webp" class="no-print" style="display:none"/>
           <div class="adres">
             <input id="p_adres" placeholder="adres" aria-label="Adres"/>
             <input id="p_plaats" placeholder="postcode en plaats" aria-label="Postcode en plaats"/>
@@ -342,6 +346,19 @@ bridge2.jpg</div>
       <button class="btn" id="pr_cancel">Annuleren</button>
       <button class="btn primary" id="pr_do">Print / PDF</button>
     </div>
+  </div>
+</div>
+
+<!-- kaartsjablonen (v2) -->
+<div class="ov" id="ovSjab">
+  <div class="modal">
+    <h3>Kaartsjablonen</h3>
+    <div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;line-height:1.5">
+      Kies een startpunt per klacht: de oefeningen komen direct op de kaart en zijn daarna
+      gewoon aan te passen. Cli&euml;ntgegevens en ingevulde vakjes blijven staan.
+    </div>
+    <div id="sj_lijst" style="max-height:340px;overflow:auto"></div>
+    <div class="acts"><button class="btn" id="sj_close">Sluiten</button></div>
   </div>
 </div>
 
@@ -559,6 +576,7 @@ bridge2.jpg</div>
     var _v2b=document.createElement('span');
     _v2b.textContent='v2';_v2b.className='v2badge';
     document.querySelector('.brand').appendChild(_v2b);
+    document.getElementById('sjabBtn').style.display='';
   }
   if(IS_ADMIN){
     document.title='Fysiplan — Beheer';
@@ -802,6 +820,7 @@ bridge2.jpg</div>
   prakSel.addEventListener('change',function(){
     var p=PRAKTIJKEN[+prakSel.value];if(!p)return;
     SET.praktijk=p.praktijk;SET.adres=p.adres||'';SET.plaats=p.plaats||'';SET.tel=p.tel||'';SET.email=p.email||'';
+    SET.logo=p.logo||'';
     saveSettings();applySettings();
   });
   // ingevulde praktijk + adres automatisch onthouden op de server (bij verlaten van een veld)
@@ -820,6 +839,69 @@ bridge2.jpg</div>
     if(el)el.addEventListener('change',upsertPraktijk);
   });
   loadPraktijken();
+
+  // ---- praktijklogo (v2): één keer uploaden, daarna op elke geprinte kaart ----
+  // het logo hoort bij het praktijkprofiel op de server, dus het werkt op elk apparaat
+  function applyLogo(){
+    var img=document.getElementById('prakLogo');
+    var btn=document.getElementById('logoBtn');
+    var has=!!(IS_V2&&SET.logo);
+    if(has){img.src=SET.logo;img.style.display='block';}
+    else{img.removeAttribute('src');img.style.display='none';}
+    if(btn){btn.style.display=IS_V2?'':'none';btn.textContent=has?'logo wijzigen':'+ praktijklogo';}
+  }
+  document.getElementById('logoBtn').addEventListener('click',function(){document.getElementById('logoFile').click();});
+  document.getElementById('logoFile').addEventListener('change',function(e){
+    var f=e.target.files[0];e.target.value='';if(!f)return;
+    if(!(SET.praktijk||'').trim()||!(SET.adres||'').trim()){alert('Vul eerst de praktijknaam en het adres op de kaart in; het logo wordt bij dat praktijkprofiel bewaard.');return;}
+    var rd=new FileReader();
+    rd.onload=function(){
+      resizeDataUrl(rd.result,320,function(durl){
+        var p={praktijk:SET.praktijk,adres:SET.adres||'',plaats:SET.plaats||'',tel:SET.tel||'',email:SET.email||'',logo:durl};
+        fetch('api/praktijken',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(p)})
+          .then(function(r){return r.json().catch(function(){return {ok:false};});})
+          .then(function(d){
+            if(!d.ok){alert(d.fout||'Logo opslaan is niet gelukt.');return;}
+            SET.logo=d.logo||'';saveSettings();applyLogo();loadPraktijken();
+          })
+          .catch(function(){alert('Logo opslaan is niet gelukt: geen verbinding met de server.');});
+      });
+    };
+    rd.readAsDataURL(f);
+  });
+
+  // ---- kaartsjablonen (v2): kant-en-klare oefenprogramma's per klacht ----
+  var SJABLONEN=[];
+  if(IS_V2){
+    fetch('sjablonen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];})
+      .then(function(l){SJABLONEN=Array.isArray(l)?l:[];}).catch(function(){});
+  }
+  function renderSjabLijst(){
+    var el=document.getElementById('sj_lijst');
+    if(!SJABLONEN.length){el.innerHTML="<div class='hint'>Geen sjablonen gevonden.</div>";return;}
+    el.innerHTML=SJABLONEN.map(function(s,i){
+      var besch=(s.oefeningen||[]).filter(function(n){return byNorm[normEx(n)]!=null;}).length;
+      return "<div style='display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--line)'>"+
+        "<div style='flex:1;min-width:0'><b>"+esc(s.naam)+"</b> <small style='color:var(--muted)'>&middot; "+besch+" oefeningen</small>"+
+        "<br/><small style='color:var(--muted)'>"+esc(s.sub||'')+"</small></div>"+
+        "<button class='btn primary' data-sjab='"+i+"'>Gebruik</button></div>";
+    }).join("");
+  }
+  document.getElementById('sjabBtn').addEventListener('click',function(){renderSjabLijst();openOv('ovSjab');});
+  document.getElementById('sj_close').addEventListener('click',function(){closeOv('ovSjab');});
+  document.getElementById('sj_lijst').addEventListener('click',function(e){
+    var b=e.target.closest('[data-sjab]');if(!b)return;
+    var s=SJABLONEN[+b.dataset.sjab];if(!s)return;
+    var missing=[];
+    chosen=[];
+    (s.oefeningen||[]).forEach(function(n){
+      var id=byNorm[normEx(n)];
+      if(id!=null&&OEF[id]){if(chosen.length<12)chosen.push({o:id,i:0});}
+      else missing.push(n);
+    });
+    closeOv('ovSjab');render();
+    if(missing.length)alert('Niet meer in de oefeningenlijst (overgeslagen): '+missing.join(', '));
+  });
 
   // ---- kaarten opslaan/openen: lokaal in deze browser (cliëntgegevens blijven lokaal) ----
   // oefeningen worden op naam bewaard, zodat een kaart blijft werken als de bibliotheek verandert
@@ -1014,6 +1096,7 @@ bridge2.jpg</div>
   function applySettings(){
     var p=document.getElementById('praktijk');if(p)p.value=SET.praktijk||'';
     Object.keys(PRAKKEYS).forEach(function(id){var el=document.getElementById(id);if(el)el.value=SET[PRAKKEYS[id]]||'';});
+    applyLogo();
   }
   document.getElementById('menuHelp').addEventListener('click',function(){openOv('ovHelp');});
   document.getElementById('help_close').addEventListener('click',function(){closeOv('ovHelp');});

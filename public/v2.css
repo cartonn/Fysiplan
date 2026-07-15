@@ -34,6 +34,15 @@ html.v2 input[type=text],html.v2 input.fld,html.v2 select,html.v2 textarea{backg
 html.v2 .modal{border-radius:18px}
 html.v2 #a4wrap{background:transparent}
 
+/* praktijklogo op de kaart: hoort bij het praktijkprofiel, print mee op elke kaart */
+@media screen{
+  html.v2 #a4 .a4hd{flex:0 0 auto;min-height:150px}
+}
+html.v2 #a4 .prak #prakLogo{max-height:38px;max-width:170px;object-fit:contain;object-position:left bottom;margin-bottom:5px}
+html.v2 #logoBtn{margin-top:5px;font-size:10.5px;color:var(--muted);background:transparent;
+  border:1px dashed var(--line);border-radius:999px;padding:2px 9px;cursor:pointer;font-family:inherit}
+html.v2 #logoBtn:hover{color:var(--brand);border-color:var(--brand-100)}
+
 /* v2-badge naast het logo */
 html.v2 .v2badge{background:linear-gradient(150deg,#2f66bd,#1c4487);color:#fff;
   font-size:11px;font-weight:700;letter-spacing:.06em;padding:2px 9px;border-radius:999px;
@@ -51,4 +60,7 @@ html.v2 .v2badge{background:linear-gradient(150deg,#2f66bd,#1c4487);color:#fff;
   /* Compacte kaart: kleinere plaatjes zodat het invulgrid meer ruimte krijgt */
   html.v2.print-compact #a4 .pic img{width:62px !important;height:62px !important}
   html.v2.print-compact #a4 table.mon thead tr:nth-child(2) .pic{min-height:0}
+
+  /* praktijklogo compact meeprinten in de kaartkop */
+  html.v2 #a4 .prak #prakLogo{max-height:10mm;max-width:45mm;margin-bottom:1.5mm}
 }
