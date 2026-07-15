@@ -416,6 +416,27 @@ const server = createServer(async (request, response) => {
     return;
   }
 
+  // v2: landingspagina op /v2, de vernieuwde app op /v2/app (zelfde index.html met
+  // een v2-vlag en -stylesheet erin gezet; de bestaande app op / blijft ongewijzigd)
+  if (urlPath === "/v2" || urlPath === "/v2/") {
+    if (urlPath === "/v2/") { response.writeHead(301, { location: "/v2" }); response.end(); return; }
+    telBezoek(request, false);
+    try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "v2.html"))); }
+    catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
+    return;
+  }
+  if (urlPath === "/v2/app" || urlPath === "/v2/app/") {
+    if (urlPath === "/v2/app/") { response.writeHead(301, { location: "/v2/app" }); response.end(); return; }
+    telBezoek(request, false);
+    try {
+      let html = await readFile(join(publicDir, "index.html"), "utf8");
+      html = html.replace("<head>", '<head><base href="/"/><meta name="color-scheme" content="light"/><script>window.FYSIPLAN_V2=true</script>');
+      html = html.replace("</head>", '<link rel="stylesheet" href="/v2.css"/></head>');
+      await send(response, 200, "text/html; charset=utf-8", html);
+    } catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
+    return;
+  }
+
   // eigenaars-dashboard (aparte, onopvallende URL; de data-API eist de beheer-sleutel)
   if (urlPath === "/dashboard88" || urlPath === "/dashboard88/") {
     try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "dashboard.html"))); }
