@@ -57,6 +57,22 @@ function opnameOpschonen() {
   const nu = Date.now();
   for (const [t, o] of opnames) if (nu - o.made > 15 * 60 * 1000) opnames.delete(t);
 }
+// persoonlijke videobestanden weggooien zodra geen enkele kaart (of oefening) ze nog gebruikt;
+// juist bij beelden van cliënten hoort er niets achter te blijven
+async function ruimKaartVideosOp(paden) {
+  for (const pad of paden) {
+    if (!/^uploads\/videos\/v-[a-f0-9]+\.(mp4|webm)$/.test(pad)) continue;
+    let inGebruik = Object.values(videolinks).some((v) => v.eigen === pad);
+    for (const pk of Object.keys(kaarten)) {
+      if (inGebruik) break;
+      for (const kk of Object.keys(kaarten[pk])) {
+        if (Object.values(kaarten[pk][kk].vids || {}).includes(pad)) { inGebruik = true; break; }
+      }
+    }
+    if (!inGebruik) { try { await unlink(join(dataDir, pad)); } catch {} }
+  }
+}
+
 // YouTube-id uit een geplakte link (watch/shorts/embed/youtu.be) of een los id
 function ytId(u) {
   const s = String(u || "").trim();
@@ -626,9 +642,11 @@ const server = createServer(async (request, response) => {
           if (/^uploads\/videos\/v-[a-f0-9]+\.(mp4|webm)$/.test(v)) vids[sanStr(k, 80)] = v;
         }
       }
+      const oudeVids = map[kk] ? Object.values(map[kk].vids || {}) : [];
       map[kk] = { id: map[kk] ? map[kk].id : randomBytes(6).toString("hex"),
         praktijk, naam, ts: Date.now(), client, chosen, rows, cells, vids };
       await saveJson(kaartenPath, kaarten);
+      await ruimKaartVideosOp(oudeVids.filter((p) => !Object.values(vids).includes(p)));
       await sendJson(response, 200, { ok: true, id: map[kk].id });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek (of kaart te groot)." });
@@ -643,9 +661,11 @@ const server = createServer(async (request, response) => {
       const pk = String(b.praktijk || "").trim().toLowerCase();
       const kk = String(b.naam || "").trim().toLowerCase();
       if (!kaarten[pk] || !kaarten[pk][kk]) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      const wegVids = Object.values(kaarten[pk][kk].vids || {});
       delete kaarten[pk][kk];
       if (!Object.keys(kaarten[pk]).length) delete kaarten[pk];
       await saveJson(kaartenPath, kaarten);
+      await ruimKaartVideosOp(wegVids);
       await sendJson(response, 200, { ok: true });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });

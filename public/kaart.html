@@ -2,75 +2,137 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="color-scheme" content="light"/>
+<meta name="theme-color" content="#f6f2e9"/>
 <meta name="robots" content="noindex"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232456a6'/%3E%3Cpath d='M5 16h5l2.5 6 5-12 2.5 7h7' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
 <title>Trainingskaart — Fysiplan</title>
 <style>
   :root{
-    --blauw:#2456a6; --blauw-d:#1c4487; --inkt:#232019; --tekst:#3d3a31; --grijs:#777162;
-    --bg:#f6f2e9; --vlak:#fffefa; --lijn:#e7e0cf;
+    --blauw:#2456a6; --blauw-d:#1c4487; --blauw-05:#edf2fa; --blauw-10:#d9e4f5;
+    --inkt:#232019; --tekst:#3d3a31; --grijs:#777162; --zacht:#a39c8a;
+    --bg:#f6f2e9; --vlak:#fffefa; --lijn:#e7e0cf; --lijn2:#f0ebdd;
+    --sh:0 1px 2px rgba(80,64,32,.05),0 6px 24px rgba(80,64,32,.08);
+    --disp:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font:16px/1.55 Charter,Georgia,'Times New Roman',serif;background:var(--bg);color:var(--tekst)}
-  h1,h2,.tag,.shw{font-family:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif}
-  .wrap{max-width:720px;margin:0 auto;padding:20px 16px 60px}
-  .kop{background:var(--vlak);border:1px solid var(--lijn);border-radius:16px;padding:20px;box-shadow:0 6px 22px rgba(80,64,32,.09)}
-  .kop img.logo{max-height:44px;max-width:190px;object-fit:contain;display:block;margin-bottom:8px}
-  .kop h1{font-size:22px;color:var(--blauw);letter-spacing:-.01em}
-  .kop .adres{font-size:13.5px;color:var(--grijs);margin-top:4px}
-  .tag{display:inline-block;background:#edf2fa;color:var(--blauw);font-size:12px;font-weight:600;
-    padding:3px 10px;border-radius:999px;margin-bottom:10px;letter-spacing:.02em}
-  .clientblok{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--lijn);font-size:15px}
-  .clientblok b{color:var(--inkt)}
-  .clientblok .veld{margin-top:2px}
-  .oef{display:flex;gap:14px;align-items:center;background:var(--vlak);border:1px solid var(--lijn);
-    border-radius:14px;padding:12px 14px;margin-top:10px;box-shadow:0 1px 2px rgba(80,64,32,.05)}
-  .oef .nr{flex:0 0 28px;height:28px;border-radius:999px;background:var(--blauw);color:#fff;
-    display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;
-    font-family:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif}
-  .oef img{width:84px;height:84px;object-fit:contain;background:#fff;border:1px solid var(--lijn);border-radius:10px;flex:0 0 84px}
-  .oef .naam{font-size:16.5px;color:var(--inkt);font-weight:700}
-  .oef .shw{font-size:13px;color:var(--grijs);margin-top:3px}
-  .vbtn{display:inline-flex;align-items:center;gap:6px;margin-top:7px;font:600 13px/1 'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif;
-    color:var(--blauw);background:#edf2fa;border:1px solid #d9e4f5;border-radius:999px;padding:7px 13px;cursor:pointer}
-  .vbtn.eigen{background:var(--blauw);color:#fff;border-color:var(--blauw)}
-  .vhouder{margin:10px -14px -12px;border-radius:0 0 14px 14px;overflow:hidden;background:#000}
+  html{-webkit-text-size-adjust:100%}
+  body{font:17px/1.55 Charter,Georgia,'Times New Roman',serif;color:var(--tekst);
+    background:
+      radial-gradient(900px 420px at 90% -8%, rgba(36,86,166,.06), transparent 60%),
+      var(--bg);
+    min-height:100vh}
+  .wrap{max-width:660px;margin:0 auto;padding:18px 14px calc(56px + env(safe-area-inset-bottom))}
+
+  /* koptekst van de praktijk */
+  .kop{background:var(--vlak);border:1px solid var(--lijn);border-radius:20px;padding:22px 20px 18px;box-shadow:var(--sh);position:relative;overflow:hidden}
+  .kop::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--blauw),#4f7fc9 55%,#eb6834)}
+  .eyebrow{font:700 11px/1 var(--disp);letter-spacing:.14em;color:var(--blauw);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .eyebrow::after{content:"";flex:1;height:1px;background:var(--lijn2)}
+  .kop img.logo{max-height:46px;max-width:200px;object-fit:contain;object-position:left;display:block;margin-bottom:8px}
+  .kop h1{font:700 24px/1.2 var(--disp);color:var(--inkt);letter-spacing:-.015em}
+  .kop .adres{font-size:14px;color:var(--grijs);margin-top:5px}
+  .client{margin-top:16px;padding-top:14px;border-top:1px solid var(--lijn2);display:flex;flex-direction:column;gap:6px}
+  .client .rij{display:flex;gap:10px;font-size:16px}
+  .client .rij b{font:600 12.5px/1.7 var(--disp);color:var(--zacht);text-transform:uppercase;letter-spacing:.06em;flex:0 0 74px}
+
+  /* oefeningen */
+  h2{font:700 19px/1.3 var(--disp);color:var(--inkt);margin:30px 4px 12px;display:flex;align-items:baseline;gap:8px}
+  h2 .tel{font:600 13px/1 var(--disp);color:var(--blauw);background:var(--blauw-05);border:1px solid var(--blauw-10);padding:4px 10px;border-radius:999px}
+  .oef{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;box-shadow:var(--sh);margin-bottom:12px;overflow:hidden}
+  .oefkop{display:flex;gap:14px;align-items:center;padding:14px 16px 14px 14px}
+  .nr{flex:0 0 30px;height:30px;border-radius:999px;background:var(--blauw);color:#fff;
+    display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--disp);
+    box-shadow:0 2px 6px rgba(36,86,166,.28)}
+  .oefkop img{width:88px;height:88px;flex:0 0 88px;object-fit:contain;background:#fff;
+    border:1px solid var(--lijn);border-radius:14px;padding:4px}
+  .oefinfo{flex:1;min-width:0}
+  .naam{font:700 17.5px/1.25 var(--disp);color:var(--inkt);letter-spacing:-.01em}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+  .chip{font:600 12.5px/1 var(--disp);color:var(--grijs);background:#faf7ef;border:1px solid var(--lijn);
+    padding:5px 10px;border-radius:999px;white-space:nowrap}
+  .chip b{color:var(--inkt)}
+  .vbtn{display:flex;align-items:center;justify-content:center;gap:9px;width:calc(100% - 28px);margin:0 14px 14px;
+    font:600 15px/1 var(--disp);padding:13px 16px;border-radius:14px;cursor:pointer;
+    border:1px solid var(--blauw-10);background:var(--blauw-05);color:var(--blauw);
+    transition:background .15s,color .15s;-webkit-tap-highlight-color:transparent}
+  .vbtn:active{background:var(--blauw-10)}
+  .vbtn.eigen{background:var(--blauw);border-color:var(--blauw);color:#fff}
+  .vbtn.eigen:active{background:var(--blauw-d)}
+  .vbtn .driehoek{width:22px;height:22px;border-radius:999px;background:rgba(255,255,255,.22);
+    display:inline-flex;align-items:center;justify-content:center;flex:0 0 22px}
+  .vbtn:not(.eigen) .driehoek{background:var(--blauw-10)}
+  .vbtn .driehoek svg{margin-left:1.5px}
+  .vbtn[aria-expanded="true"] .driehoek svg{margin:0;transform:rotate(90deg)}
+  .vhouder{display:none;background:#000}
+  .vhouder.open{display:block;animation:vopen .25s ease-out}
+  @keyframes vopen{from{opacity:0}to{opacity:1}}
   .vhouder video,.vhouder iframe{display:block;width:100%;aspect-ratio:16/10;border:none;background:#000}
-  .oefwrap{margin-top:10px}
-  h2{font-size:17px;color:var(--inkt);margin:26px 0 4px}
-  .schemawrap{overflow-x:auto;background:var(--vlak);border:1px solid var(--lijn);border-radius:14px;margin-top:8px}
-  table{border-collapse:collapse;font-size:12.5px;min-width:100%}
-  th,td{border:1px solid var(--lijn);padding:5px 7px;text-align:center;white-space:nowrap}
-  th{background:#fbf8f0;color:var(--grijs);font-weight:600}
-  td.dat{background:#fbf8f0;font-weight:700;color:var(--inkt)}
-  .voet{margin-top:34px;text-align:center;font-size:13px;color:var(--grijs)}
-  .voet a{color:var(--blauw)}
-  .fout{background:var(--vlak);border:1px solid var(--lijn);border-radius:16px;padding:28px;text-align:center;margin-top:30vh}
+
+  /* schema */
+  .schemakaart{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;box-shadow:var(--sh);overflow:hidden}
+  .schemawrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{border-collapse:separate;border-spacing:0;font:13px/1.4 var(--disp);min-width:100%}
+  th,td{border-bottom:1px solid var(--lijn2);border-right:1px solid var(--lijn2);padding:8px 9px;text-align:center;white-space:nowrap}
+  thead th{background:#fbf8f0;color:var(--grijs);font-weight:600;font-size:12px}
+  tr:last-child td{border-bottom:none}
+  td.dat,th.dat{position:sticky;left:0;background:#fbf8f0;font-weight:700;color:var(--inkt);z-index:1;border-right:1px solid var(--lijn)}
+  .schemahint{font:500 12.5px/1.5 var(--disp);color:var(--zacht);padding:10px 14px;border-top:1px solid var(--lijn2);display:flex;align-items:center;gap:7px}
+
+  /* voet */
+  .voet{margin-top:36px;text-align:center;font-size:14px;color:var(--grijs)}
+  .voet a{color:var(--blauw);text-decoration:none;border-bottom:1px solid var(--blauw-10)}
+  .voet .merk{font:700 13px/1 var(--disp);letter-spacing:.02em;color:var(--zacht);margin-top:10px;
+    display:inline-flex;align-items:center;gap:7px}
+  .voet .merk svg{opacity:.75}
+
+  .fout{background:var(--vlak);border:1px solid var(--lijn);border-radius:20px;padding:34px 24px;text-align:center;margin-top:26vh;box-shadow:var(--sh)}
+  .fout h1{font:700 20px/1.3 var(--disp);color:var(--inkt);margin-bottom:8px}
+
+  /* rustige binnenkomst */
+  @media (prefers-reduced-motion:no-preference){
+    .kop,.oef,.schemakaart{animation:kom .4s ease-out backwards}
+    .oef:nth-child(1){animation-delay:.05s}.oef:nth-child(2){animation-delay:.09s}
+    .oef:nth-child(3){animation-delay:.13s}.oef:nth-child(4){animation-delay:.17s}
+    .oef:nth-child(n+5){animation-delay:.2s}
+    @keyframes kom{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+  }
+  @media (min-width:520px){
+    .wrap{padding-top:32px}
+    .oefkop{padding:16px 18px 16px 16px}
+  }
+  button:focus-visible{outline:3px solid rgba(36,86,166,.35);outline-offset:2px}
   @media print{
     body{background:#fff}
-    .wrap{max-width:none;padding:0}
-    .kop,.oef,.schemawrap{box-shadow:none}
+    .vbtn,.vhouder{display:none !important}
+    .kop,.oef,.schemakaart{box-shadow:none}
   }
 </style>
 </head>
 <body>
 <div class="wrap" id="wrap" style="display:none">
-  <div class="kop">
-    <span class="tag">Trainingskaart</span>
+  <header class="kop">
+    <div class="eyebrow">Trainingskaart</div>
     <img class="logo" id="logo" alt="" style="display:none"/>
     <h1 id="prak"></h1>
     <div class="adres" id="adres"></div>
-    <div class="clientblok" id="clientblok" style="display:none"></div>
-  </div>
-  <h2 id="oefkop">Jouw oefeningen</h2>
+    <div class="client" id="clientblok" style="display:none"></div>
+  </header>
+
+  <h2>Jouw oefeningen <span class="tel" id="oeftel"></span></h2>
   <div id="oefs"></div>
+
   <div id="schema"></div>
-  <div class="voet">Deze kaart is gemaakt door je fysiotherapeut met <a href="https://fysiplan.nl/v2">Fysiplan</a>.<br/>
-    Vragen over de uitvoering? Neem contact op met je praktijk.</div>
+
+  <div class="voet">
+    Vragen over de uitvoering? Neem contact op met je praktijk.<br/>
+    <span class="merk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a39c8a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg>
+    Gemaakt met <a href="https://fysiplan.nl/v2">Fysiplan</a></span>
+  </div>
 </div>
 <div class="fout" id="fout" style="display:none">
-  <h1 style="font-size:20px;color:var(--inkt);margin-bottom:8px">Kaart niet gevonden</h1>
+  <h1>Kaart niet gevonden</h1>
   Deze trainingskaart bestaat niet (meer). Vraag je fysiotherapeut om een nieuwe QR-code.
 </div>
 <script>
@@ -79,6 +141,8 @@
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];});}
   function normEx(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');}
   var id=(location.pathname.match(/^\/k\/([a-f0-9]{8,16})$/)||[])[1];
+  var DRIEHOEK='<span class="driehoek"><svg width="10" height="10" viewBox="0 0 12 12"><path d="M2 1.5l8 4.5-8 4.5z" fill="currentColor"/></svg></span>';
+
   function toon(kaart,praktijk,lib){
     var byNorm={};(lib||[]).forEach(function(o){byNorm[normEx(o.naam)]=o;});
     document.title='Trainingskaart — '+(praktijk.praktijk||'Fysiplan');
@@ -87,80 +151,91 @@
     document.getElementById('adres').textContent=[praktijk.adres,praktijk.plaats,praktijk.tel].filter(Boolean).join(' · ');
     var cl=kaart.client||{};
     var regels=[];
-    if(cl.c_naam)regels.push('<div class="veld"><b>Voor:</b> '+esc(cl.c_naam)+'</div>');
-    if(cl.c_doel)regels.push('<div class="veld"><b>Doel:</b> '+esc(cl.c_doel)+'</div>');
-    if(cl.c_opm)regels.push('<div class="veld"><b>Opmerking:</b> '+esc(cl.c_opm)+'</div>');
-    if(regels.length){var cb=document.getElementById('clientblok');cb.innerHTML=regels.join('');cb.style.display='block';}
-    // oefeningen met plaatjes uit de bibliotheek; S/H/W uit de eerst ingevulde rij van het schema
+    if(cl.c_naam)regels.push('<div class="rij"><b>Voor</b><span>'+esc(cl.c_naam)+'</span></div>');
+    if(cl.c_doel)regels.push('<div class="rij"><b>Doel</b><span>'+esc(cl.c_doel)+'</span></div>');
+    if(cl.c_opm)regels.push('<div class="rij"><b>Let op</b><span>'+esc(cl.c_opm)+'</span></div>');
+    if(regels.length){var cb=document.getElementById('clientblok');cb.innerHTML=regels.join('');cb.style.display='flex';}
+
     var cells=kaart.cells||{};
     var vids=kaart.vids||{};
+    var chosen=kaart.chosen||[];
+    document.getElementById('oeftel').textContent=chosen.length;
     var html='';
-    (kaart.chosen||[]).forEach(function(x,idx){
+    chosen.forEach(function(x,idx){
       var nk=normEx(x.n);
       var o=byNorm[nk];
       var key='n'+nk+'.'+(x.i||0);
-      var voorschrift='';
+      // voorschrift: eerste ingevulde rij van het schema als losse chips
+      var chips='';
       for(var r=0;r<12;r++){
         var s=cells[key+'|r'+r+'|S'],h=cells[key+'|r'+r+'|H'],w=cells[key+'|r'+r+'|W'];
         if(s||h||w){
-          voorschrift=[s?s+' series':'',h?h+' herhalingen':'',w?w:''].filter(Boolean).join(' · ');
+          if(s)chips+='<span class="chip"><b>'+esc(s)+'</b>&nbsp;series</span>';
+          if(h)chips+='<span class="chip"><b>'+esc(h)+'</b>&nbsp;herhalingen</span>';
+          if(w)chips+='<span class="chip"><b>'+esc(w)+'</b></span>';
           break;
         }
       }
-      // videovoorrang: persoonlijke opname van de therapeut > praktijkopname > YouTube-link
       var eigen=vids[nk]||(o&&o.video&&o.video.eigen)||null;
       var yt=(!eigen&&o&&o.video&&o.video.yt)||null;
       var knop='';
-      if(eigen)knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'">&#9654; Video van je therapeut</button>';
-      else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'">&#9654; Bekijk instructievideo</button>';
-      html+='<div class="oef" style="flex-wrap:wrap"><span class="nr">'+(idx+1)+'</span>'+
-        (o?'<img src="/'+esc(o.img)+'" alt=""/>':'')+
-        '<div style="flex:1;min-width:0"><div class="naam">'+esc(x.n)+'</div>'+
-        (voorschrift?'<div class="shw">'+esc(voorschrift)+'</div>':'')+knop+'</div>'+
-        '<div class="vhouder" style="display:none;flex-basis:100%"></div></div>';
+      if(eigen)knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'" aria-expanded="false">'+DRIEHOEK+'Video van je therapeut</button>';
+      else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'" aria-expanded="false">'+DRIEHOEK+'Bekijk instructievideo</button>';
+      html+='<div class="oef"><div class="oefkop"><span class="nr">'+(idx+1)+'</span>'+
+        (o?'<img src="/'+esc(o.img)+'" alt="" loading="lazy"/>':'')+
+        '<div class="oefinfo"><div class="naam">'+esc(x.n)+'</div>'+
+        (chips?'<div class="chips">'+chips+'</div>':'')+'</div></div>'+
+        knop+'<div class="vhouder"></div></div>';
     });
-    document.getElementById('oefs').innerHTML=html||'<div class="oef">Er staan nog geen oefeningen op deze kaart.</div>';
-    // video pas laden bij een tik op de knop (spaart data, en YouTube laadt privacyvriendelijk)
+    document.getElementById('oefs').innerHTML=html||'<div class="oef"><div class="oefkop">Er staan nog geen oefeningen op deze kaart.</div></div>';
+
+    // video laden bij een tik; één tegelijk open, de rest pauzeert vanzelf
     document.getElementById('oefs').addEventListener('click',function(e){
       var b=e.target.closest('.vbtn');if(!b)return;
       var houder=b.closest('.oef').querySelector('.vhouder');
-      if(houder.style.display!=='none'){houder.style.display='none';houder.innerHTML='';return;}
+      var open=houder.classList.contains('open');
+      document.querySelectorAll('.vhouder.open').forEach(function(h){h.classList.remove('open');h.innerHTML='';});
+      document.querySelectorAll('.vbtn[aria-expanded="true"]').forEach(function(k){k.setAttribute('aria-expanded','false');});
+      if(open)return;
       if(b.dataset.eigen){
         houder.innerHTML='<video controls autoplay playsinline preload="metadata" src="'+b.dataset.eigen+'"></video>';
       }else{
         houder.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+b.dataset.yt+
           '?autoplay=1&rel=0&modestbranding=1" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
       }
-      houder.style.display='block';
+      houder.classList.add('open');
+      b.setAttribute('aria-expanded','true');
+      setTimeout(function(){houder.scrollIntoView({block:'nearest',behavior:'smooth'});},120);
     });
-    // volledig schema alleen tonen als er iets is ingevuld
-    var rowdefs=[];
-    for(var r2=0;r2<12;r2++)rowdefs.push('r'+r2);
+
+    // ingevuld schema, alleen als er iets staat
+    var rowdefs=[];for(var r2=0;r2<12;r2++)rowdefs.push('r'+r2);
     var gevuld=rowdefs.filter(function(rk){
-      return (kaart.rows&&kaart.rows[rk])||(kaart.chosen||[]).some(function(x){
+      return (kaart.rows&&kaart.rows[rk])||chosen.some(function(x){
         var key='n'+normEx(x.n)+'.'+(x.i||0);
         return ['S','H','W'].some(function(f){return cells[key+'|'+rk+'|'+f];});
       });
     });
     if(gevuld.length){
-      var t='<h2>Schema</h2><div class="schemawrap"><table><tr><th>Datum</th>';
-      (kaart.chosen||[]).forEach(function(x,idx){t+='<th colspan="3">'+(idx+1)+'. '+esc(x.n)+'</th>';});
-      t+='</tr><tr><th></th>';
-      (kaart.chosen||[]).forEach(function(){t+='<th>S</th><th>H</th><th>W</th>';});
-      t+='</tr>';
+      var t='<h2>Ingevuld schema</h2><div class="schemakaart"><div class="schemawrap"><table><thead><tr><th class="dat">Datum</th>';
+      chosen.forEach(function(x,idx){t+='<th colspan="3">'+(idx+1)+'. '+esc(x.n)+'</th>';});
+      t+='</tr><tr><th class="dat"></th>';
+      chosen.forEach(function(){t+='<th>S</th><th>H</th><th>W</th>';});
+      t+='</tr></thead><tbody>';
       gevuld.forEach(function(rk){
         t+='<tr><td class="dat">'+esc((kaart.rows&&kaart.rows[rk])||'')+'</td>';
-        (kaart.chosen||[]).forEach(function(x){
+        chosen.forEach(function(x){
           var key='n'+normEx(x.n)+'.'+(x.i||0);
           ['S','H','W'].forEach(function(f){t+='<td>'+esc(cells[key+'|'+rk+'|'+f]||'')+'</td>';});
         });
         t+='</tr>';
       });
-      t+='</table></div>';
+      t+='</tbody></table></div><div class="schemahint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>S = series &nbsp;·&nbsp; H = herhalingen &nbsp;·&nbsp; W = gewicht — veeg opzij voor alle oefeningen</div></div>';
       document.getElementById('schema').innerHTML=t;
     }
     document.getElementById('wrap').style.display='block';
   }
+
   if(!id){document.getElementById('fout').style.display='block';}
   else{
     Promise.all([
