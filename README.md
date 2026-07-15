@@ -80,6 +80,16 @@ terug naar de gedeelde server-lijst.
   bewaard en krijgt een QR (eigen encoder, `public/qr.js`, geen dependencies) naar
   **/k/&lt;id&gt;** (`public/kaart.html`): een mobielvriendelijke, alleen-lezen weergave die de
   cliënt zonder app of account opent. Het id is onraadbaar (12 hex-tekens).
+- **Oefenvideo's (zonder app):** per oefening kan beheer in het aanpas-venster een
+  YouTube-link zetten (`POST /api/oefeningen/video`, privacyvriendelijke nocookie-embed) of een
+  **eigen video opnemen**: er verschijnt een QR op het scherm, de telefoon opent
+  `/o/&lt;token&gt;` (`public/opname.html`) met één opnameknop, en de upload
+  (`/api/opname/*`, mp4/webm, max. 60 MB) hangt de video aan de oefening (`videolinks.json`,
+  bestanden in `uploads/videos/`). In v2 kan de therapeut per kaart ook een **persoonlijke
+  video** voor één cliënt opnemen (camera-icoon op het plaatje; opgeslagen in het
+  `vids`-veld van de kaart). Voorrang op de digitale kaart: persoonlijke opname →
+  praktijkopname → YouTube-link. Video's worden geserveerd met Range-ondersteuning
+  (vereist voor iPhone/Safari).
 
 ## Beheer via /admin88
 

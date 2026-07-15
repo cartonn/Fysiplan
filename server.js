@@ -30,6 +30,7 @@ const uploadsDir = join(dataDir, "uploads");
 const renamesPath = join(dataDir, "naam-wijzigingen.json");
 const praktijkenPath = join(dataDir, "praktijken.json");
 const kaartenPath = join(dataDir, "kaarten.json");
+const videolinksPath = join(dataDir, "videolinks.json");
 const extraPath = join(dataDir, "oefeningen-extra.json");
 const deletedPath = join(dataDir, "oefeningen-verwijderd.json");
 
@@ -44,6 +45,25 @@ try { praktijken = JSON.parse(await readFile(praktijkenPath, "utf8")); } catch {
 // een onraadbaar id waarmee de digitale kaart achter de QR-code wordt opgehaald
 let kaarten = {};
 try { kaarten = JSON.parse(await readFile(kaartenPath, "utf8")); } catch {}
+
+// oefenvideo's per oefening (huidige naam als sleutel): YouTube-id en/of eigen opname
+let videolinks = {};
+try { videolinks = JSON.parse(await readFile(videolinksPath, "utf8")); } catch {}
+
+// lopende video-opnames: de scherm-QR bevat een kortlevend token; de telefoon uploadt
+// ermee en het beeldscherm ziet via polling dat de video binnen is
+const opnames = new Map();
+function opnameOpschonen() {
+  const nu = Date.now();
+  for (const [t, o] of opnames) if (nu - o.made > 15 * 60 * 1000) opnames.delete(t);
+}
+// YouTube-id uit een geplakte link (watch/shorts/embed/youtu.be) of een los id
+function ytId(u) {
+  const s = String(u || "").trim();
+  if (/^[A-Za-z0-9_-]{11}$/.test(s)) return s;
+  const m = s.match(/(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
 // door de beheerder toegevoegde oefeningen: [{naam, groep, img}]
 let extra = [];
 try { extra = JSON.parse(await readFile(extraPath, "utf8")); } catch {}
@@ -123,6 +143,7 @@ async function buildManifest() {
       return o;
     });
   return base.concat(extra)
+    .map((e) => (videolinks[e.naam] ? { ...e, video: videolinks[e.naam] } : e))
     .sort((a, b) => catOrder(a.groep) - catOrder(b.groep)
       || a.groep.localeCompare(b.groep, "nl")
       || a.naam.localeCompare(b.naam, "nl"));
@@ -155,6 +176,20 @@ function readBody(req, limit = 16 * 1024) {
     req.on("error", reject);
   });
 }
+// als readBody, maar levert de ruwe bytes (voor video-uploads)
+function readBodyRaw(req, limit) {
+  return new Promise((resolve, reject) => {
+    let size = 0;
+    const chunks = [];
+    req.on("data", (c) => {
+      size += c.length;
+      if (size > limit) { reject(new Error("body te groot")); req.destroy(); return; }
+      chunks.push(c);
+    });
+    req.on("end", () => resolve(Buffer.concat(chunks)));
+    req.on("error", reject);
+  });
+}
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -169,7 +204,9 @@ const MIME = {
   ".webp": "image/webp",
   ".bmp": "image/bmp",
   ".ico": "image/x-icon",
-  ".woff2": "font/woff2"
+  ".woff2": "font/woff2",
+  ".mp4": "video/mp4",
+  ".webm": "video/webm"
 };
 
 // Pagina's en data nooit lokaal bewaren: zo kan ook een eerder bezochte pagina niet
@@ -177,7 +214,7 @@ const MIME = {
 // onveranderlijke assets (uploads krijgen een unieke bestandsnaam) en mogen één dag
 // gecachet worden.
 function cacheHeaders(type) {
-  if (type.startsWith("image/") || type.startsWith("font/")) {
+  if (type.startsWith("image/") || type.startsWith("font/") || type.startsWith("video/")) {
     return { "cache-control": "public, max-age=86400" };
   }
   return {
@@ -230,14 +267,23 @@ const server = createServer(async (request, response) => {
       if (manifest.some((e) => e.naam.toLowerCase() === nieuw.toLowerCase() && e.naam.toLowerCase() !== oud.toLowerCase())) {
         await sendJson(response, 409, { ok: false, fout: "Er bestaat al een oefening met de naam “" + nieuw + "”." }); return;
       }
+      // eventuele oefenvideo verhuist mee met de nieuwe naam
+      const migreerVideo = async () => {
+        if (videolinks[oud] && oud !== nieuw) {
+          videolinks[nieuw] = videolinks[oud];
+          delete videolinks[oud];
+          await saveJson(videolinksPath, videolinks);
+        }
+      };
       const ex = extra.find((e) => e.naam === oud);
-      if (ex) { ex.naam = nieuw; await saveJson(extraPath, extra); await sendJson(response, 200, { ok: true, naam: nieuw }); return; }
+      if (ex) { ex.naam = nieuw; await saveJson(extraPath, extra); await migreerVideo(); await sendJson(response, 200, { ok: true, naam: nieuw }); return; }
       const base = await readBaseManifest();
       const orig = base.find((e) => (renames[e.naam] || e.naam) === oud && !deleted.includes(e.naam));
       if (!orig) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden: " + oud }); return; }
       if (nieuw === orig.naam) delete renames[orig.naam];
       else renames[orig.naam] = nieuw;
       await saveJson(renamesPath, renames);
+      await migreerVideo();
       await sendJson(response, 200, { ok: true, naam: nieuw });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
@@ -312,6 +358,12 @@ const server = createServer(async (request, response) => {
     if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
     try {
       const naam = String(JSON.parse(await readBody(request)).naam || "").trim();
+      // bijbehorende oefenvideo (link + eigen opnamebestand) mee opruimen
+      if (videolinks[naam]) {
+        if (videolinks[naam].eigen) { try { await unlink(join(dataDir, videolinks[naam].eigen)); } catch {} }
+        delete videolinks[naam];
+        await saveJson(videolinksPath, videolinks);
+      }
       const i = extra.findIndex((e) => e.naam === naam);
       if (i > -1) {
         const [gone] = extra.splice(i, 1);
@@ -426,6 +478,105 @@ const server = createServer(async (request, response) => {
     return;
   }
 
+  // ---- oefenvideo's: YouTube-link per oefening (beheer) en eigen opnames via scherm-QR ----
+
+  // videolink instellen/wissen en eigen opname wissen (beheer)
+  if (urlPath === "/api/oefeningen/video" && request.method === "POST") {
+    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const naam = String(b.naam || "").trim();
+      const manifest = await buildManifest();
+      if (!manifest.some((e) => e.naam === naam)) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden: " + naam }); return; }
+      const cur = videolinks[naam] || {};
+      if (b.eigenWissen && cur.eigen) {
+        try { await unlink(join(dataDir, cur.eigen)); } catch {}
+        delete cur.eigen;
+      }
+      if (typeof b.yt === "string") {
+        const id = ytId(b.yt);
+        if (b.yt.trim() && !id) { await sendJson(response, 400, { ok: false, fout: "Dat is geen geldige YouTube-link." }); return; }
+        if (id) cur.yt = id; else delete cur.yt;
+      }
+      if (cur.yt || cur.eigen) videolinks[naam] = cur; else delete videolinks[naam];
+      await saveJson(videolinksPath, videolinks);
+      await sendJson(response, 200, { ok: true, video: videolinks[naam] || null });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
+  // opname starten: geeft een kortlevend token terug; de scherm-QR wijst naar /opname/<token>
+  if (urlPath === "/api/opname/start" && request.method === "POST") {
+    try {
+      const b = JSON.parse(await readBody(request));
+      const doel = b.doel === "oefening" ? "oefening" : "kaart";
+      if (doel === "oefening") {
+        if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
+        const naam = String(b.naam || "").trim();
+        const manifest = await buildManifest();
+        if (!manifest.some((e) => e.naam === naam)) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden." }); return; }
+        b.naam = naam;
+      }
+      opnameOpschonen();
+      if (opnames.size >= 200) { await sendJson(response, 429, { ok: false, fout: "Te veel gelijktijdige opnames; probeer het zo weer." }); return; }
+      // kort token: de QR-URL (/o/<token>) moet in een kleine, snel scanbare code passen
+      const token = randomBytes(6).toString("hex");
+      opnames.set(token, { doel, naam: doel === "oefening" ? b.naam : null, made: Date.now(), video: null });
+      await sendJson(response, 200, { ok: true, token });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
+  // het beeldscherm pollt tot de telefoon de video heeft geüpload
+  if (urlPath === "/api/opname/status" && request.method === "GET") {
+    const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    const o = opnames.get(String(q.get("token") || ""));
+    if (!o) { await sendJson(response, 404, { ok: false, fout: "Opname verlopen. Sluit dit venster en begin opnieuw." }); return; }
+    await sendJson(response, 200, { ok: true, klaar: !!o.video, video: o.video, doel: o.doel, naam: o.naam });
+    return;
+  }
+
+  // de telefoon uploadt de opname (ruwe videobody, max 60 MB)
+  if (urlPath === "/api/opname/upload" && request.method === "POST") {
+    const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    const token = String(q.get("token") || "");
+    const o = opnames.get(token);
+    if (!o || o.video) { await sendJson(response, 404, { ok: false, fout: "Opname verlopen of al afgerond. Scan de QR-code opnieuw." }); return; }
+    try {
+      const ct = String(request.headers["content-type"] || "");
+      const ext = ct.startsWith("video/mp4") ? ".mp4" : ct.startsWith("video/webm") ? ".webm" : null;
+      if (!ext) { await sendJson(response, 400, { ok: false, fout: "Alleen mp4- of webm-video." }); return; }
+      const buf = await readBodyRaw(request, 60 * 1024 * 1024);
+      if (buf.length < 10 * 1024) { await sendJson(response, 400, { ok: false, fout: "De opname is leeg of te kort." }); return; }
+      await mkdir(join(uploadsDir, "videos"), { recursive: true });
+      const pad = "uploads/videos/v-" + token + ext;
+      await writeFile(join(dataDir, pad), buf);
+      if (o.doel === "oefening" && o.naam) {
+        const cur = videolinks[o.naam] || {};
+        if (cur.eigen) { try { await unlink(join(dataDir, cur.eigen)); } catch {} }
+        cur.eigen = pad;
+        videolinks[o.naam] = cur;
+        await saveJson(videolinksPath, videolinks);
+      }
+      o.video = pad;
+      await sendJson(response, 200, { ok: true, video: pad });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Upload mislukt (video te groot?)." });
+    }
+    return;
+  }
+
+  // de opnamepagina die de telefoon opent na het scannen van de scherm-QR
+  if (urlPath.startsWith("/o/")) {
+    try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "opname.html"))); }
+    catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
+    return;
+  }
+
   // ---- gedeelde kaarten per praktijk + de digitale kaart achter de QR-code ----
 
   // lijst van kaarten van één praktijk (licht: alleen naam, datum en aantal oefeningen)
@@ -467,8 +618,16 @@ const server = createServer(async (request, response) => {
       const chosen = (Array.isArray(b.chosen) ? b.chosen : []).slice(0, 12)
         .map((x) => ({ n: sanStr(x && x.n, 80), i: Math.max(0, Math.min(9, Number(x && x.i) || 0)) }))
         .filter((x) => x.n);
+      // persoonlijke video's per oefening (alleen paden van eigen opnames toegestaan)
+      const vids = {};
+      if (b.vids && typeof b.vids === "object") {
+        for (const k of Object.keys(b.vids).slice(0, 12)) {
+          const v = String(b.vids[k] || "");
+          if (/^uploads\/videos\/v-[a-f0-9]+\.(mp4|webm)$/.test(v)) vids[sanStr(k, 80)] = v;
+        }
+      }
       map[kk] = { id: map[kk] ? map[kk].id : randomBytes(6).toString("hex"),
-        praktijk, naam, ts: Date.now(), client, chosen, rows, cells };
+        praktijk, naam, ts: Date.now(), client, chosen, rows, cells, vids };
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, id: map[kk].id });
     } catch {
@@ -521,15 +680,40 @@ const server = createServer(async (request, response) => {
     return;
   }
 
-  // door beheer geüploade plaatjes (staan in de datamap, niet in public/)
+  // door beheer geüploade plaatjes en video's (staan in de datamap, niet in public/)
   if (urlPath.startsWith("/uploads/")) {
     const file = normalize(join(uploadsDir, urlPath.slice("/uploads/".length)));
-    if (!file.startsWith(uploadsDir + sep) || ![".jpg", ".png"].includes(extname(file))) {
+    const ext = extname(file);
+    if (!file.startsWith(uploadsDir + sep) || ![".jpg", ".png", ".mp4", ".webm"].includes(ext)) {
       await send(response, 403, "text/plain; charset=utf-8", "Forbidden");
       return;
     }
-    try { await send(response, 200, MIME[extname(file)], await readFile(file)); }
-    catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
+    try {
+      const data = await readFile(file);
+      // video: Range-verzoeken beantwoorden, anders speelt iOS Safari niets af
+      const range = request.headers.range;
+      if ((ext === ".mp4" || ext === ".webm") && range) {
+        const m = String(range).match(/bytes=(\d*)-(\d*)/);
+        const start = m && m[1] ? parseInt(m[1], 10) : 0;
+        const end = m && m[2] ? Math.min(parseInt(m[2], 10), data.length - 1) : data.length - 1;
+        if (!m || start > end || start >= data.length) {
+          response.writeHead(416, { "content-range": `bytes */${data.length}` });
+          response.end();
+          return;
+        }
+        response.writeHead(206, {
+          "content-type": MIME[ext],
+          "content-range": `bytes ${start}-${end}/${data.length}`,
+          "accept-ranges": "bytes",
+          "content-length": end - start + 1,
+          ...cacheHeaders(MIME[ext])
+        });
+        response.end(data.subarray(start, end + 1));
+        return;
+      }
+      response.writeHead(200, { "content-type": MIME[ext], "accept-ranges": "bytes", ...cacheHeaders(MIME[ext]) });
+      response.end(data);
+    } catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
   }
 

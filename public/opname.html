@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="color-scheme" content="light"/>
+<meta name="robots" content="noindex"/>
+<title>Video opnemen — Fysiplan</title>
+<style>
+  :root{--blauw:#2456a6;--blauw-d:#1c4487;--inkt:#232019;--grijs:#777162;--bg:#f6f2e9;--vlak:#fffefa;--lijn:#e7e0cf;--rood:#d64545}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font:16px/1.5 'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--inkt);
+    min-height:100vh;display:flex;flex-direction:column}
+  header{padding:14px 18px;background:var(--vlak);border-bottom:1px solid var(--lijn);font-weight:700;color:var(--blauw)}
+  header small{display:block;font-weight:400;color:var(--grijs);font-size:13px}
+  main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;gap:16px}
+  video{width:100%;max-width:480px;aspect-ratio:3/4;object-fit:cover;background:#000;border-radius:16px}
+  .knoppen{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+  button{font:inherit;border:none;border-radius:999px;padding:14px 26px;cursor:pointer;font-weight:700}
+  .op{background:var(--rood);color:#fff;width:84px;height:84px;border-radius:999px;padding:0;font-size:14px;
+    box-shadow:0 6px 18px rgba(214,69,69,.35)}
+  .op.bezig{animation:puls 1.2s infinite}
+  @keyframes puls{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+  .blauw{background:var(--blauw);color:#fff}
+  .grijs{background:#fff;border:1px solid var(--lijn);color:var(--inkt)}
+  .status{font-size:15px;color:var(--grijs);text-align:center;max-width:340px}
+  .tijd{font-variant-numeric:tabular-nums;font-weight:700;color:var(--rood)}
+  .klaarblok{text-align:center;padding:34px 22px;background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;max-width:380px}
+  .klaarblok .vink{width:64px;height:64px;border-radius:999px;background:#e7f3e9;color:#2e7d43;font-size:34px;
+    display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+</style>
+</head>
+<body>
+<header>Fysiplan — video opnemen<small id="sub">Neem de oefening op; het beeldscherm ziet de video vanzelf verschijnen.</small></header>
+<main id="main">
+  <div class="status" id="status">Camera wordt gestart…</div>
+</main>
+<script>
+(function(){
+  'use strict';
+  var token=(location.pathname.match(/^\/o\/([a-f0-9]{12})$/)||[])[1];
+  var main=document.getElementById('main');
+  function toon(html){main.innerHTML=html;}
+  function fout(msg){toon("<div class='klaarblok'><b>Dat lukte niet</b><div class='status' style='margin-top:8px'>"+msg+"</div></div>");}
+  if(!token){fout('Deze opnamelink is niet geldig. Scan de QR-code op het beeldscherm opnieuw.');return;}
+  if(!navigator.mediaDevices||!window.MediaRecorder){fout('Deze browser ondersteunt geen video-opname. Probeer Safari (iPhone) of Chrome (Android).');return;}
+
+  // eerst checken of het token nog leeft (max. 15 minuten)
+  fetch('/api/opname/status?token='+token).then(function(r){return r.json();}).then(function(d){
+    if(!d.ok){fout('Deze opnamelink is verlopen. Klik op het beeldscherm opnieuw op het camera-icoon en scan de nieuwe QR-code.');return;}
+    if(d.klaar){klaarScherm();return;}
+    start(d);
+  }).catch(function(){fout('Geen verbinding met de server.');});
+
+  function klaarScherm(){
+    toon("<div class='klaarblok'><div class='vink'>&#10003;</div><b>Video verstuurd!</b>"+
+      "<div class='status' style='margin-top:8px'>De video staat op het beeldscherm. Je kunt de telefoon weer wegleggen.</div></div>");
+  }
+
+  function start(info){
+    var stream=null,rec=null,delen=[],timer=null,sec=0,MAXSEC=60;
+    var mime=MediaRecorder.isTypeSupported('video/mp4')?'video/mp4'
+            :MediaRecorder.isTypeSupported('video/webm;codecs=vp9')?'video/webm;codecs=vp9'
+            :'video/webm';
+    navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1280},height:{ideal:720}},audio:true})
+      .then(function(s){stream=s;opnameUI();})
+      .catch(function(){fout('Geen toegang tot de camera. Geef de browser toestemming voor camera en microfoon en probeer het opnieuw.');});
+
+    function opnameUI(){
+      toon("<video id='v' autoplay muted playsinline></video>"+
+        "<div class='status' id='st'>"+(info.naam?"Oefening: <b>"+esc(info.naam)+"</b><br/>":"")+
+        "Richt de camera, druk op de rode knop en doe de oefening voor (max. 1 minuut).</div>"+
+        "<div class='knoppen'><button class='op' id='knop'>Opname</button></div>");
+      document.getElementById('v').srcObject=stream;
+      document.getElementById('knop').addEventListener('click',wissel);
+    }
+    function wissel(){
+      var b=document.getElementById('knop');
+      if(rec&&rec.state==='recording'){stopOpname();return;}
+      delen=[];sec=0;
+      try{rec=new MediaRecorder(stream,{mimeType:mime});}catch(e){try{rec=new MediaRecorder(stream);}catch(e2){fout('Opnemen lukt niet in deze browser.');return;}}
+      rec.ondataavailable=function(e){if(e.data&&e.data.size)delen.push(e.data);};
+      rec.onstop=voorvertoning;
+      rec.start();
+      b.textContent='0:00';b.classList.add('bezig');
+      timer=setInterval(function(){
+        sec++;b.textContent=Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');
+        if(sec>=MAXSEC)stopOpname();
+      },1000);
+    }
+    function stopOpname(){clearInterval(timer);if(rec&&rec.state==='recording')rec.stop();}
+    function voorvertoning(){
+      var blob=new Blob(delen,{type:rec.mimeType||mime});
+      var url=URL.createObjectURL(blob);
+      toon("<video id='v' src='"+url+"' controls playsinline></video>"+
+        "<div class='status'>Tevreden met de opname?</div>"+
+        "<div class='knoppen'><button class='grijs' id='opnieuw'>Opnieuw</button>"+
+        "<button class='blauw' id='stuur'>Gebruik deze video</button></div>");
+      document.getElementById('opnieuw').addEventListener('click',opnameUI);
+      document.getElementById('stuur').addEventListener('click',function(){
+        var knop=this;knop.disabled=true;knop.textContent='Versturen…';
+        var ct=(rec.mimeType||mime).indexOf('mp4')>-1?'video/mp4':'video/webm';
+        fetch('/api/opname/upload?token='+token,{method:'POST',headers:{'content-type':ct},body:blob})
+          .then(function(r){return r.json();})
+          .then(function(d){
+            if(!d.ok){knop.disabled=false;knop.textContent='Gebruik deze video';alert(d.fout||'Versturen is niet gelukt.');return;}
+            if(stream)stream.getTracks().forEach(function(t){t.stop();});
+            klaarScherm();
+          })
+          .catch(function(){knop.disabled=false;knop.textContent='Gebruik deze video';alert('Versturen is niet gelukt: geen verbinding.');});
+      });
+    }
+  }
+  function esc(s){return String(s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];});}
+})();
+</script>
+</body>
+</html>
