@@ -65,6 +65,22 @@ terug naar de gedeelde server-lijst.
   bewust **lokaal in de browser** (`localStorage`, sleutel `fysiplan_kaarten`). Oefeningen worden
   op naam bewaard, zodat een kaart blijft werken als de bibliotheek verandert.
 
+## Fysiplan v2 (/v2 en /v2/app)
+
+- **/v2** is de landingspagina, **/v2/app** dezelfde app met een nieuw licht uiterlijk (`v2.css`)
+  en extra functies; de site op `/` blijft onaangeroerd. Extra in v2:
+- **Kaartsjablonen** (`public/sjablonen.json`): kant-en-klare programma's per klacht, gekoppeld
+  op oefening­naam.
+- **Praktijklogo:** upload bij het praktijkprofiel (`POST /api/praktijken` met `logo`-dataURL,
+  bewaard in `uploads/`), print mee op elke kaart.
+- **Gedeelde kaarten per praktijk:** `GET/POST /api/kaarten` en `POST /api/kaarten/verwijder`
+  (opslag `kaarten.json`, sleutel praktijk + kaartnaam, max. 100 per praktijk). Let op: zo'n
+  kaart staat mét cliëntgegevens op de server — de app meldt dat in het deelvenster.
+- **QR-code op de print:** aanvinkbaar in het printvenster. De kaart wordt dan bij de praktijk
+  bewaard en krijgt een QR (eigen encoder, `public/qr.js`, geen dependencies) naar
+  **/k/&lt;id&gt;** (`public/kaart.html`): een mobielvriendelijke, alleen-lezen weergave die de
+  cliënt zonder app of account opent. Het id is onraadbaar (12 hex-tekens).
+
 ## Beheer via /admin88
 
 De gewone URL is voor het maken en printen van kaarten. Bibliotheekbeheer gebeurt op
