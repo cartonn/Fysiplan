@@ -111,13 +111,15 @@
   #a4 table.mon thead tr:nth-child(4){height:22px}
   #a4 table.mon tbody tr{height:26px}
   #emptyA4{position:absolute;top:170px;left:26px;right:26px;z-index:2;pointer-events:none}
-  /* knopjes op het plaatje: binnen het vak (het vak snijdt alles erbuiten af) en altijd zichtbaar */
-  #a4 .pic .rm{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:#d92d20;color:#fff;font-size:15px;font-weight:700;line-height:21px;text-align:center;cursor:pointer;display:block;box-shadow:0 1px 5px rgba(16,24,40,.3);opacity:.88}
-  #a4 .pic .rm:hover{opacity:1;transform:scale(1.08)}
-  /* v2: persoonlijke video per plaatje — wit = nog geen video, blauw = video aanwezig */
-  #a4 .pic .vid{position:absolute;top:4px;left:4px;width:22px;height:22px;border-radius:50%;background:#fff;border:1.5px solid #98a2b3;color:#475467;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 5px rgba(16,24,40,.25)}
+  /* knopjes op het plaatje: binnen het vak (het vak snijdt alles erbuiten af), zichtbaar bij aanwijzen */
+  #a4 .pic .rm{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:#d92d20;color:#fff;font-size:15px;font-weight:700;line-height:21px;text-align:center;cursor:pointer;display:none;box-shadow:0 1px 5px rgba(16,24,40,.3)}
+  #a4 .pic:hover .rm{display:block}
+  #a4 .pic .rm:hover{transform:scale(1.08)}
+  /* v2: persoonlijke video per plaatje — verschijnt bij aanwijzen; blauw (= video aanwezig) blijft staan */
+  #a4 .pic .vid{position:absolute;top:4px;left:4px;width:22px;height:22px;border-radius:50%;background:#fff;border:1.5px solid #98a2b3;color:#475467;display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 5px rgba(16,24,40,.25)}
+  #a4 .pic:hover .vid{display:flex}
   #a4 .pic .vid:hover{border-color:var(--brand);color:var(--brand);transform:scale(1.08)}
-  #a4 .pic .vid.aan{background:var(--brand);border-color:var(--brand);color:#fff}
+  #a4 .pic .vid.aan{display:flex;background:var(--brand);border-color:var(--brand);color:#fff}
   /* ---- modal ---- */
   .ov{position:fixed;inset:0;background:rgba(16,24,40,.45);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
   .ov.on{display:flex}
