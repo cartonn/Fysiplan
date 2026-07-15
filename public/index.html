@@ -322,6 +322,29 @@ bridge2.jpg</div>
   </div>
 </div>
 
+<!-- printopties (v2) -->
+<div class="ov" id="ovPrint">
+  <div class="modal">
+    <h3>Printen of opslaan als PDF</h3>
+    <label style="display:flex;align-items:center;gap:10px;padding:6px 0;cursor:pointer">
+      <input type="radio" name="pr_layout" id="pr_uitgebreid" checked/> Uitgebreide kaart (standaard)
+    </label>
+    <label style="display:flex;align-items:center;gap:10px;padding:6px 0;cursor:pointer">
+      <input type="radio" name="pr_layout" id="pr_compact"/> Compacte kaart — kleinere plaatjes, meer ruimte voor het schema
+    </label>
+    <label style="display:flex;align-items:center;gap:10px;padding:10px 0 6px;cursor:pointer;border-top:1px solid var(--line2);margin-top:6px">
+      <input type="checkbox" id="pr_groot"/> Groot lettertype — beter leesbaar voor oudere pati&euml;nten
+    </label>
+    <div style="font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.5">
+      Tip voor het dossier: kies in het printvenster <b>Bewaar als PDF</b> en voeg het bestand toe aan het pati&euml;ntdossier in je EPD.
+    </div>
+    <div class="acts">
+      <button class="btn" id="pr_cancel">Annuleren</button>
+      <button class="btn primary" id="pr_do">Print / PDF</button>
+    </div>
+  </div>
+</div>
+
 <!-- categorie wijzigen (beheer) -->
 <div class="ov" id="ovCategorie">
   <div class="modal">
@@ -528,6 +551,15 @@ bridge2.jpg</div>
   var ADMIN_HDR={'x-admin-sleutel':'admin88'};
   // anonieme gebruiksteller voor het eigenaars-dashboard (alleen aantallen, geen inhoud)
   function ping(type){try{fetch('api/stats/event',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({type:type})}).catch(function(){});}catch(e){}}
+  // v2: /v2/app krijgt de vernieuwde huisstijl en de nieuwe printopties
+  var IS_V2=!!window.FYSIPLAN_V2;
+  if(IS_V2){
+    document.documentElement.classList.add('v2');
+    document.title='Fysiplan v2 — trainingskaarten';
+    var _v2b=document.createElement('span');
+    _v2b.textContent='v2';_v2b.className='v2badge';
+    document.querySelector('.brand').appendChild(_v2b);
+  }
   if(IS_ADMIN){
     document.title='Fysiplan — Beheer';
     var _bdg=document.createElement('span');
@@ -731,10 +763,24 @@ bridge2.jpg</div>
   });
   document.getElementById('search').addEventListener('input',function(e){q=e.target.value.toLowerCase();renderList();});
   var SAFARI_PRINT=/Safari/i.test(navigator.userAgent)&&!/Chrome|Chromium|CriOS|Android/i.test(navigator.userAgent);
-  document.getElementById('printBtn').addEventListener('click',function(){
+  function doePrint(){
     if(SAFARI_PRINT)document.documentElement.classList.add('safari-print');
     ping('print');
     window.print();
+  }
+  document.getElementById('printBtn').addEventListener('click',function(){
+    if(IS_V2){openOv('ovPrint');return;}
+    doePrint();
+  });
+  // v2: printopties — indeling en lettergrootte, plus de PDF-naar-dossier-route
+  document.getElementById('pr_cancel').addEventListener('click',function(){closeOv('ovPrint');});
+  document.getElementById('pr_do').addEventListener('click',function(){
+    var compact=document.getElementById('pr_compact').checked;
+    var groot=document.getElementById('pr_groot').checked;
+    document.documentElement.classList.toggle('print-compact',compact);
+    document.documentElement.classList.toggle('print-groot',groot);
+    closeOv('ovPrint');
+    doePrint();
   });
   // ---- praktijkprofielen: server-side gedeeld, kiesbaar via dropdown op de A4 ----
   var PRAKTIJKEN=[];

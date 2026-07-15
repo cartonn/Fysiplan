@@ -1,0 +1,54 @@
+/* Fysiplan v2 — nieuw uiterlijk voor /v2/app. Alleen licht. Werkt via token-overrides
+   op de bestaande app plus een handvol vormcorrecties; v1 op / blijft onaangeroerd. */
+
+html.v2{
+  --brand:#2456a6; --brand-700:#1c4487; --brand-50:#edf2fa; --brand-100:#d9e4f5;
+  --bg:#f6f2e9; --tray:#efe9dc; --panel:#fffefa;
+  --ink:#232019; --text:#3d3a31; --muted:#777162; --soft:#a39c8a;
+  --line:#e7e0cf; --line2:#f0ebdd;
+  --ring:0 0 0 3px rgba(36,86,166,.18);
+  --sh-sm:0 1px 2px rgba(80,64,32,.05);
+  --sh:0 6px 22px rgba(80,64,32,.09);
+  --sh-lg:0 18px 44px rgba(80,64,32,.15);
+  --r:12px; --r-lg:18px;
+}
+html.v2 body{background:
+  radial-gradient(1100px 500px at 85% -10%, rgba(36,86,166,.05), transparent 60%),
+  var(--bg)}
+html.v2 header.topbar{background:rgba(255,254,250,.94);border-bottom:1px solid var(--line)}
+html.v2 header.topbar .mark{border-radius:11px;background:linear-gradient(150deg,#2f66bd,#1c4487)}
+html.v2 .btn{border-radius:999px;border-color:var(--line)}
+html.v2 .btn:hover{border-color:#cfc6ad}
+html.v2 .btn.primary{background:var(--brand);border-color:var(--brand)}
+html.v2 .btn.primary:hover{background:var(--brand-700)}
+html.v2 .chip{border-radius:999px;background:#fbf8f1}
+html.v2 .chip.on{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:600}
+html.v2 .card{border-radius:var(--r-lg)}
+html.v2 .card .hd{background:#fbf8f0;color:var(--muted)}
+html.v2 .row{border-radius:12px}
+html.v2 .row:hover{background:#f7f3e8}
+html.v2 .row .thumb{border-radius:12px;background:#fffdf6;border-color:var(--line)}
+html.v2 .row .add{background:var(--brand-50);border-color:var(--brand-100);color:var(--brand)}
+html.v2 .row .add:hover,html.v2 .row .add.on{background:var(--brand);border-color:var(--brand);color:#fff}
+html.v2 input[type=text],html.v2 input.fld,html.v2 select,html.v2 textarea{background:#fffefa}
+html.v2 .modal{border-radius:18px}
+html.v2 #a4wrap{background:transparent}
+
+/* v2-badge naast het logo */
+html.v2 .v2badge{background:linear-gradient(150deg,#2f66bd,#1c4487);color:#fff;
+  font-size:11px;font-weight:700;letter-spacing:.06em;padding:2px 9px;border-radius:999px;
+  margin-left:8px;align-self:center}
+
+/* ---- nieuwe printvarianten (alleen v2) ---- */
+@media print{
+  /* Groot lettertype: beter leesbaar voor oudere patienten */
+  html.v2.print-groot #a4 table.mon{font-size:11px}
+  html.v2.print-groot #a4 table.mon input{font-size:11.5px;height:22px}
+  html.v2.print-groot #a4 .client input,
+  html.v2.print-groot #a4 .boxes textarea{font-size:12px}
+  html.v2.print-groot #a4 table.mon th.exh{font-size:10px}
+
+  /* Compacte kaart: kleinere plaatjes zodat het invulgrid meer ruimte krijgt */
+  html.v2.print-compact #a4 .pic img{width:62px !important;height:62px !important}
+  html.v2.print-compact #a4 table.mon thead tr:nth-child(2) .pic{min-height:0}
+}
