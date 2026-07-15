@@ -32,6 +32,12 @@
   .oef img{width:84px;height:84px;object-fit:contain;background:#fff;border:1px solid var(--lijn);border-radius:10px;flex:0 0 84px}
   .oef .naam{font-size:16.5px;color:var(--inkt);font-weight:700}
   .oef .shw{font-size:13px;color:var(--grijs);margin-top:3px}
+  .vbtn{display:inline-flex;align-items:center;gap:6px;margin-top:7px;font:600 13px/1 'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif;
+    color:var(--blauw);background:#edf2fa;border:1px solid #d9e4f5;border-radius:999px;padding:7px 13px;cursor:pointer}
+  .vbtn.eigen{background:var(--blauw);color:#fff;border-color:var(--blauw)}
+  .vhouder{margin:10px -14px -12px;border-radius:0 0 14px 14px;overflow:hidden;background:#000}
+  .vhouder video,.vhouder iframe{display:block;width:100%;aspect-ratio:16/10;border:none;background:#000}
+  .oefwrap{margin-top:10px}
   h2{font-size:17px;color:var(--inkt);margin:26px 0 4px}
   .schemawrap{overflow-x:auto;background:var(--vlak);border:1px solid var(--lijn);border-radius:14px;margin-top:8px}
   table{border-collapse:collapse;font-size:12.5px;min-width:100%}
@@ -87,10 +93,12 @@
     if(regels.length){var cb=document.getElementById('clientblok');cb.innerHTML=regels.join('');cb.style.display='block';}
     // oefeningen met plaatjes uit de bibliotheek; S/H/W uit de eerst ingevulde rij van het schema
     var cells=kaart.cells||{};
+    var vids=kaart.vids||{};
     var html='';
     (kaart.chosen||[]).forEach(function(x,idx){
-      var o=byNorm[normEx(x.n)];
-      var key='n'+normEx(x.n)+'.'+(x.i||0);
+      var nk=normEx(x.n);
+      var o=byNorm[nk];
+      var key='n'+nk+'.'+(x.i||0);
       var voorschrift='';
       for(var r=0;r<12;r++){
         var s=cells[key+'|r'+r+'|S'],h=cells[key+'|r'+r+'|H'],w=cells[key+'|r'+r+'|W'];
@@ -99,12 +107,32 @@
           break;
         }
       }
-      html+='<div class="oef"><span class="nr">'+(idx+1)+'</span>'+
+      // videovoorrang: persoonlijke opname van de therapeut > praktijkopname > YouTube-link
+      var eigen=vids[nk]||(o&&o.video&&o.video.eigen)||null;
+      var yt=(!eigen&&o&&o.video&&o.video.yt)||null;
+      var knop='';
+      if(eigen)knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'">&#9654; Video van je therapeut</button>';
+      else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'">&#9654; Bekijk instructievideo</button>';
+      html+='<div class="oef" style="flex-wrap:wrap"><span class="nr">'+(idx+1)+'</span>'+
         (o?'<img src="/'+esc(o.img)+'" alt=""/>':'')+
-        '<div><div class="naam">'+esc(x.n)+'</div>'+
-        (voorschrift?'<div class="shw">'+esc(voorschrift)+'</div>':'')+'</div></div>';
+        '<div style="flex:1;min-width:0"><div class="naam">'+esc(x.n)+'</div>'+
+        (voorschrift?'<div class="shw">'+esc(voorschrift)+'</div>':'')+knop+'</div>'+
+        '<div class="vhouder" style="display:none;flex-basis:100%"></div></div>';
     });
     document.getElementById('oefs').innerHTML=html||'<div class="oef">Er staan nog geen oefeningen op deze kaart.</div>';
+    // video pas laden bij een tik op de knop (spaart data, en YouTube laadt privacyvriendelijk)
+    document.getElementById('oefs').addEventListener('click',function(e){
+      var b=e.target.closest('.vbtn');if(!b)return;
+      var houder=b.closest('.oef').querySelector('.vhouder');
+      if(houder.style.display!=='none'){houder.style.display='none';houder.innerHTML='';return;}
+      if(b.dataset.eigen){
+        houder.innerHTML='<video controls autoplay playsinline preload="metadata" src="'+b.dataset.eigen+'"></video>';
+      }else{
+        houder.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+b.dataset.yt+
+          '?autoplay=1&rel=0&modestbranding=1" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
+      }
+      houder.style.display='block';
+    });
     // volledig schema alleen tonen als er iets is ingevuld
     var rowdefs=[];
     for(var r2=0;r2<12;r2++)rowdefs.push('r'+r2);

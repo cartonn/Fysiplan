@@ -113,6 +113,10 @@
   #emptyA4{position:absolute;top:170px;left:26px;right:26px;z-index:2;pointer-events:none}
   #a4 .pic .rm{position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:50%;background:#d92d20;color:#fff;font-size:12px;line-height:18px;text-align:center;cursor:pointer;display:none;box-shadow:var(--sh-sm)}
   #a4 .pic:hover .rm{display:block}
+  /* v2: persoonlijke video per plaatje — grijs = nog geen video, blauw = video aanwezig */
+  #a4 .pic .vid{position:absolute;top:-7px;left:-7px;width:18px;height:18px;border-radius:50%;background:#fff;border:1px solid var(--line);color:#667085;display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--sh-sm)}
+  #a4 .pic:hover .vid{display:flex}
+  #a4 .pic .vid.aan{display:flex;background:var(--brand);border-color:var(--brand);color:#fff}
   /* ---- modal ---- */
   .ov{position:fixed;inset:0;background:rgba(16,24,40,.45);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
   .ov.on{display:flex}
@@ -385,10 +389,31 @@ bridge2.jpg</div>
     <select id="vc_hoofd" style="width:100%"></select>
     <label>Ook op een 2e categorie zetten (optioneel)</label>
     <select id="vc_tweede" style="width:100%"></select>
+    <label>Video bij deze oefening (YouTube-link, optioneel)</label>
+    <input type="text" id="vc_yt" placeholder="plak een YouTube-link — leeg laten = geen video"/>
+    <div id="vc_eigen_info" style="font-size:12px;color:var(--muted);margin-top:6px"></div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn" type="button" id="vc_opname">Eigen video opnemen</button>
+      <button class="btn" type="button" id="vc_eigen_wis" style="display:none">Eigen video verwijderen</button>
+    </div>
     <div class="acts">
       <button class="btn" id="vc_cancel">Annuleren</button>
       <button class="btn primary" id="vc_ok">Opslaan</button>
     </div>
+  </div>
+</div>
+
+<!-- video opnemen via de telefoon (scherm-QR) -->
+<div class="ov" id="ovOpname">
+  <div class="modal" style="text-align:center">
+    <h3 id="on_titel">Video opnemen</h3>
+    <div style="font-size:13px;color:var(--muted);line-height:1.5;margin:4px 0 6px">
+      Scan deze code met de <b>camera van je telefoon</b>. Er opent een pagina met &eacute;&eacute;n
+      opnameknop — geen app, geen login. Na het versturen verschijnt de video hier vanzelf.
+    </div>
+    <div id="on_qr" style="display:flex;justify-content:center;margin:6px 0"></div>
+    <div id="on_status" style="font-size:13px;color:var(--muted)">Wachten op de video&hellip;</div>
+    <div class="acts" style="justify-content:center"><button class="btn" id="on_cancel">Annuleren</button></div>
   </div>
 </div>
 
@@ -570,7 +595,7 @@ bridge2.jpg</div>
   function saveState(){
     try{
       var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
-      localStorage.setItem('fysiplan_state',JSON.stringify({chosen:chosen,client:client,grid:GRID}));
+      localStorage.setItem('fysiplan_state',JSON.stringify({chosen:chosen,client:client,grid:GRID,vids:VIDS}));
     }catch(e){}
   }
   function loadState(){
@@ -579,6 +604,7 @@ bridge2.jpg</div>
       if(Array.isArray(st.chosen))chosen=st.chosen.filter(function(c){return OEF[c.o]&&OEF[c.o].imgs[c.i];});
       if(st.client)CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el&&st.client[k]!=null)el.value=st.client[k];});
       if(st.grid&&typeof st.grid==='object'){GRID={rows:st.grid.rows||{},cells:st.grid.cells||{}};}
+      if(st.vids&&typeof st.vids==='object')VIDS=st.vids;
     }catch(e){}
   }
 
@@ -613,6 +639,8 @@ bridge2.jpg</div>
   }
 
   var curG='all',q='',chosen=[],CUSTOMLIB=false,SERVERLIB=false,GROUPS=null,IMGCACHE={},GRID={rows:{},cells:{}};
+  // persoonlijke video's op deze kaart: normEx(oefeningnaam) -> uploads/videos/...-pad
+  var VIDS={};
   var elList=document.getElementById('list'),
       elMon=document.getElementById('mon'),elEmpty=document.getElementById('emptyA4'),elCnt=document.getElementById('cnt');
   var CHIP_LABELS={all:'alle groepen',boven:'bovenste extr.',onder:'onderste extr.',romp:'romp',divers:'divers'};
@@ -672,6 +700,13 @@ bridge2.jpg</div>
       if(n<chosen.length){
         var c=chosen[n],o=OEF[c.o],im=o&&o.imgs[c.i];
         inner="<span class='rm no-print' data-rm='"+n+"' title='verwijderen'>×</span>"+(im?imgRender(im,90):'');
+        // v2: persoonlijke video opnemen voor deze cliënt (camera-icoon per plaatje)
+        if(IS_V2&&o){
+          var heeftVid=!!VIDS[normEx(o.naam)];
+          inner+="<span class='vid no-print"+(heeftVid?" aan":"")+"' data-vid='"+n+"' title='"+(heeftVid?"persoonlijke video vervangen":"persoonlijke video opnemen voor deze cli&euml;nt")+"'>"+
+            "<svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'>"+
+            "<path d='M15 10l6-3.5v11L15 14'/><rect x='2' y='6' width='13' height='12' rx='2.5'/></svg></span>";
+        }
         colKeys.push('e'+c.o+'.'+c.i);names.push(o?o.naam:'');
       }else{colKeys.push('x'+n);names.push('');}
       numcells+="<td colspan='3' class='numc'>"+(n+1)+"</td>";
@@ -731,11 +766,57 @@ bridge2.jpg</div>
     var snap=currentCard('');
     return loadDefaultLibrary().then(function(){openCard(snap);});
   }
+  // ---- video opnemen via de telefoon: QR op het scherm, opnamepagina op de telefoon ----
+  // qr.js wordt alleen op /v2/app standaard geladen; elders (beheer) laden we hem on demand
+  function ensureQr(cb){
+    if(window.FYSIQR){cb();return;}
+    var s=document.createElement('script');s.src='qr.js';s.onload=cb;s.onerror=cb;
+    document.head.appendChild(s);
+  }
+  var opnamePoll=null;
+  function stopOpname(){if(opnamePoll){clearInterval(opnamePoll);opnamePoll=null;}}
+  function startOpname(doel,naam,cb){
+    var hdrs={'content-type':'application/json'};
+    if(doel==='oefening')Object.assign(hdrs,ADMIN_HDR);
+    fetch('api/opname/start',{method:'POST',headers:hdrs,body:JSON.stringify({doel:doel,naam:naam})})
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(!d.ok){alert(d.fout||'Opname starten is niet gelukt.');return;}
+        document.getElementById('on_titel').textContent=naam?('Video opnemen — '+naam):'Video opnemen';
+        document.getElementById('on_status').textContent='Wachten op de video…';
+        var url=location.origin+'/o/'+d.token;
+        ensureQr(function(){
+          var svg=window.FYSIQR?FYSIQR.svg(url,190):'';
+          document.getElementById('on_qr').innerHTML=svg||("<a href='"+url+"' target='_blank'>"+url+"</a>");
+        });
+        openOv('ovOpname');
+        opnamePoll=setInterval(function(){
+          fetch('api/opname/status?token='+d.token,{cache:'no-cache'})
+            .then(function(r){return r.json();})
+            .then(function(s){
+              if(!s.ok){document.getElementById('on_status').textContent='De opnamelink is verlopen — sluit dit venster en probeer het opnieuw.';stopOpname();return;}
+              if(s.klaar){stopOpname();closeOv('ovOpname');cb(s.video);}
+            }).catch(function(){});
+        },1500);
+      })
+      .catch(function(){alert('Opname starten is niet gelukt: geen verbinding met de server.');});
+  }
+  document.getElementById('on_cancel').addEventListener('click',function(){stopOpname();closeOv('ovOpname');});
+
   // categorie verplaatsen en/of op een 2e plek tonen (beheer)
-  var pendingCat=null;
+  var pendingCat=null,pendingCatId=null;
+  function toonEigenVideoInfo(o){
+    var eigen=o.video&&o.video.eigen;
+    document.getElementById('vc_eigen_info').textContent=eigen
+      ?'Er is een eigen opname voor deze oefening; die gaat vóór de YouTube-link.'
+      :'Nog geen eigen opname. "Eigen video opnemen" opent een QR-code voor je telefoon.';
+    document.getElementById('vc_eigen_wis').style.display=eigen?'':'none';
+  }
   function moveExercise(id){
     var o=OEF[id];if(!o)return;
-    pendingCat=o.naam;
+    pendingCat=o.naam;pendingCatId=id;
+    document.getElementById('vc_yt').value=(o.video&&o.video.yt)?('https://youtu.be/'+o.video.yt):'';
+    toonEigenVideoInfo(o);
     var cats=(GROUPS||[]).filter(function(x){return x.g!=='all';});
     document.getElementById('vc_naam').innerHTML=
       '<b>'+esc(o.naam)+'</b> staat nu in <b>'+esc(o.groep)+'</b>'+
@@ -749,12 +830,42 @@ bridge2.jpg</div>
     }).join("");
     openOv('ovCategorie');
   }
-  document.getElementById('vc_cancel').addEventListener('click',function(){pendingCat=null;closeOv('ovCategorie');});
+  document.getElementById('vc_cancel').addEventListener('click',function(){pendingCat=null;pendingCatId=null;closeOv('ovCategorie');});
+  // eigen video opnemen of verwijderen voor de oefening in het aanpas-venster
+  document.getElementById('vc_opname').addEventListener('click',function(){
+    var o=OEF[pendingCatId];if(!o)return;
+    startOpname('oefening',o.naam,function(pad){
+      o.video=o.video||{};o.video.eigen=pad;
+      toonEigenVideoInfo(o);
+      openOv('ovCategorie');
+    });
+    closeOv('ovCategorie');
+  });
+  document.getElementById('vc_eigen_wis').addEventListener('click',function(){
+    var o=OEF[pendingCatId];if(!o)return;
+    fetch('api/oefeningen/video',{method:'POST',headers:Object.assign({'content-type':'application/json'},ADMIN_HDR),body:JSON.stringify({naam:o.naam,eigenWissen:true})})
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(!d.ok){alert(d.fout||'Verwijderen is niet gelukt.');return;}
+        o.video=d.video;toonEigenVideoInfo(o);
+      })
+      .catch(function(){alert('Verwijderen is niet gelukt: geen verbinding met de server.');});
+  });
   document.getElementById('vc_ok').addEventListener('click',function(){
     var naam=pendingCat;if(!naam){closeOv('ovCategorie');return;}
+    var o=OEF[pendingCatId];
     var g=document.getElementById('vc_hoofd').value;
     var t=document.getElementById('vc_tweede').value;
-    pendingCat=null;closeOv('ovCategorie');
+    var yt=document.getElementById('vc_yt').value.trim();
+    pendingCat=null;pendingCatId=null;closeOv('ovCategorie');
+    // videolink apart opslaan (mag ook leeg = link weghalen)
+    fetch('api/oefeningen/video',{method:'POST',headers:Object.assign({'content-type':'application/json'},ADMIN_HDR),body:JSON.stringify({naam:naam,yt:yt})})
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(!d.ok){alert(d.fout||'De videolink is niet opgeslagen.');return;}
+        if(o)o.video=d.video;
+      })
+      .catch(function(){});
     fetch('api/oefeningen/categorie',{method:'POST',headers:Object.assign({'content-type':'application/json'},ADMIN_HDR),body:JSON.stringify({naam:naam,groep:g,ook:(t&&t!==g)?[t]:[]})})
       .then(function(r){return r.json();})
       .then(function(d){
@@ -959,7 +1070,10 @@ bridge2.jpg</div>
       if(m&&OEF[+m[1]])cells['n'+normEx(OEF[+m[1]].naam)+'.'+m[2]+'|'+m[3]]=GRID.cells[k];
       else cells[k]=GRID.cells[k];
     });
-    return {naam:naam,ts:Date.now(),client:client,chosen:ch,rows:GRID.rows,cells:cells};
+    // alleen persoonlijke video's van oefeningen die nu op de kaart staan
+    var vids={};
+    chosen.forEach(function(c){var o=OEF[c.o];if(o){var k=normEx(o.naam);if(VIDS[k])vids[k]=VIDS[k];}});
+    return {naam:naam,ts:Date.now(),client:client,chosen:ch,rows:GRID.rows,cells:cells,vids:vids};
   }
   function openCard(c){
     var missing=[];
@@ -970,6 +1084,7 @@ bridge2.jpg</div>
       else missing.push(x.n);
     });
     GRID={rows:c.rows||{},cells:{}};
+    VIDS=(c.vids&&typeof c.vids==='object')?c.vids:{};
     Object.keys(c.cells||{}).forEach(function(k){
       var m=k.match(/^n([a-z0-9]*)\.(\d+)\|(.+)$/);
       if(m){var id=byNorm[m[1]];if(id!=null)GRID.cells['e'+id+'.'+m[2]+'|'+m[3]]=c.cells[k];}
@@ -1093,14 +1208,20 @@ bridge2.jpg</div>
   document.getElementById('clearBtn').addEventListener('click',function(){openOv('ovWis');});
   document.getElementById('wis_cancel').addEventListener('click',function(){closeOv('ovWis');});
   document.getElementById('wis_plaatjes').addEventListener('click',function(){
-    chosen=[];verbergQr();closeOv('ovWis');render();
+    chosen=[];VIDS={};verbergQr();closeOv('ovWis');render();
   });
   document.getElementById('wis_alles').addEventListener('click',function(){
-    chosen=[];GRID={rows:{},cells:{}};
+    chosen=[];GRID={rows:{},cells:{}};VIDS={};
     CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value='';});
     verbergQr();closeOv('ovWis');render();
   });
   elMon.addEventListener('click',function(e){
+    var vb=e.target.closest('[data-vid]');
+    if(vb){
+      var cv=chosen[+vb.dataset.vid],ov=cv&&OEF[cv.o];
+      if(ov)startOpname('kaart',ov.naam,function(pad){VIDS[normEx(ov.naam)]=pad;saveState();render();});
+      return;
+    }
     var rm=e.target.closest('.rm');if(!rm)return;
     var n=+rm.dataset.rm;if(n>=0&&n<chosen.length){chosen.splice(n,1);render();}
   });
@@ -1257,7 +1378,7 @@ bridge2.jpg</div>
     OEF=entries.map(function(e,i){
       if(cats.indexOf(e.groep)<0)cats.push(e.groep);
       return {id:i,naam:e.naam,groep:e.groep,ook:e.ook||null,s:3,h:12,bron:'server',
-        starthouding:'',uitvoering:'',opmerking:'',
+        video:e.video||null,starthouding:'',uitvoering:'',opmerking:'',
         imgs:[{type:'img',src:e.img,label:'Plaatje'}]};
     });
     SERVERLIB=true;CUSTOMLIB=false;curG='all';
