@@ -1,0 +1,32 @@
+[
+  {
+    "naam": "Knie na operatie",
+    "sub": "Opbouw na een knieoperatie (bijv. voorste kruisband of knieprothese): rustig beginnen op de fiets, daarna kracht en stabiliteit.",
+    "oefeningen": ["Fiets", "Leg press", "Leg extension", "Leg curl", "Squat", "Step up", "Calf raises", "Glute bridges", "Balans op 1 been", "Lunges"]
+  },
+  {
+    "naam": "Heup na operatie",
+    "sub": "Opbouw na een heupoperatie (bijv. heupprothese): mobiliteit, bilspieren en veilig belasten.",
+    "oefeningen": ["Been pendelen", "Fiets", "Glute bridges", "Lying abduction", "Standing abduction", "Standing gluteus", "Kick back", "Chair squat", "Step up"]
+  },
+  {
+    "naam": "Schouderrevalidatie",
+    "sub": "Rotator cuff en schoudergordel: eerst gecontroleerd bewegen, daarna kracht in alle richtingen.",
+    "oefeningen": ["Anteflexie armen", "Exo pull", "Endo pull", "Front raises", "Lateral raises", "Reversed flyes", "Shoulder rotation (shrugs)", "Pully row"]
+  },
+  {
+    "naam": "Lage rugklachten",
+    "sub": "Mobiliseren en de rompspieren versterken bij aspecifieke lage rugklachten.",
+    "oefeningen": ["Mobilisatie rotatie rug", "Yoga cat tail", "Yoga knee to chest hip stretch", "Dead bug", "Bruggen beginner", "Curl up", "Superman", "Plank basis", "Back extension"]
+  },
+  {
+    "naam": "Valpreventie en balans",
+    "sub": "Balans, beenkracht en zelfvertrouwen voor ouderen; ook geschikt als groepsprogramma.",
+    "oefeningen": ["Balans op 1 been", "Chair squat", "Step up", "Calf raises", "Standing abduction", "Standing gluteus", "Wall sit", "Loopband"]
+  },
+  {
+    "naam": "Algemene conditie",
+    "sub": "Full-body startprogramma: kracht en conditie voor wie (weer) begint met trainen.",
+    "oefeningen": ["Roeier", "Squat", "Lunges", "Push up", "Lat pull front", "Pully row", "Crunch", "Plank basis"]
+  }
+]
