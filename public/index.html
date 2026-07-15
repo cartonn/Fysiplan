@@ -111,12 +111,13 @@
   #a4 table.mon thead tr:nth-child(4){height:22px}
   #a4 table.mon tbody tr{height:26px}
   #emptyA4{position:absolute;top:170px;left:26px;right:26px;z-index:2;pointer-events:none}
-  #a4 .pic .rm{position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:50%;background:#d92d20;color:#fff;font-size:12px;line-height:18px;text-align:center;cursor:pointer;display:none;box-shadow:var(--sh-sm)}
-  #a4 .pic:hover .rm{display:block}
-  /* v2: persoonlijke video per plaatje — grijs = nog geen video, blauw = video aanwezig */
-  #a4 .pic .vid{position:absolute;top:-7px;left:-7px;width:18px;height:18px;border-radius:50%;background:#fff;border:1px solid var(--line);color:#667085;display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--sh-sm)}
-  #a4 .pic:hover .vid{display:flex}
-  #a4 .pic .vid.aan{display:flex;background:var(--brand);border-color:var(--brand);color:#fff}
+  /* knopjes op het plaatje: binnen het vak (het vak snijdt alles erbuiten af) en altijd zichtbaar */
+  #a4 .pic .rm{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:#d92d20;color:#fff;font-size:15px;font-weight:700;line-height:21px;text-align:center;cursor:pointer;display:block;box-shadow:0 1px 5px rgba(16,24,40,.3);opacity:.88}
+  #a4 .pic .rm:hover{opacity:1;transform:scale(1.08)}
+  /* v2: persoonlijke video per plaatje — wit = nog geen video, blauw = video aanwezig */
+  #a4 .pic .vid{position:absolute;top:4px;left:4px;width:22px;height:22px;border-radius:50%;background:#fff;border:1.5px solid #98a2b3;color:#475467;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 5px rgba(16,24,40,.25)}
+  #a4 .pic .vid:hover{border-color:var(--brand);color:var(--brand);transform:scale(1.08)}
+  #a4 .pic .vid.aan{background:var(--brand);border-color:var(--brand);color:#fff}
   /* ---- modal ---- */
   .ov{position:fixed;inset:0;background:rgba(16,24,40,.45);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
   .ov.on{display:flex}
@@ -704,7 +705,7 @@ bridge2.jpg</div>
         if(IS_V2&&o){
           var heeftVid=!!VIDS[normEx(o.naam)];
           inner+="<span class='vid no-print"+(heeftVid?" aan":"")+"' data-vid='"+n+"' title='"+(heeftVid?"persoonlijke video vervangen":"persoonlijke video opnemen voor deze cli&euml;nt")+"'>"+
-            "<svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'>"+
+            "<svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'>"+
             "<path d='M15 10l6-3.5v11L15 14'/><rect x='2' y='6' width='13' height='12' rx='2.5'/></svg></span>";
         }
         colKeys.push('e'+c.o+'.'+c.i);names.push(o?o.naam:'');
