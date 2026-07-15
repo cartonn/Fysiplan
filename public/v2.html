@@ -4,146 +4,208 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="color-scheme" content="light"/>
-<title>Fysiplan — Trainingskaarten die gewoon uit de printer komen</title>
+<meta name="theme-color" content="#f6f2e9"/>
+<meta name="description" content="Fysiplan: trainingskaarten voor fysiotherapiepraktijken. Print een verzorgde A4-kaart in één minuut — met QR-code en video's van je eigen praktijk, zonder app."/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232456a6'/%3E%3Cpath d='M5 16h5l2.5 6 5-12 2.5 7h7' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
+<title>Fysiplan — de trainingskaart die gewoon uit de printer komt</title>
 <style>
   :root{
-    --papier:#f6f2e9; --vlak:#fffefa; --lijn:#e7e0cf; --lijn2:#f0ebdd;
-    --inkt:#232019; --tekst:#3d3a31; --demp:#777162; --zacht:#a39c8a;
-    --blauw:#2456a6; --blauw-d:#1c4487; --blauw-l:#edf2fa;
-    --oranje:#c05621; --groen:#2e7d43; --groen-l:#e9f3ea;
-    --sh:0 1px 2px rgba(80,64,32,.05),0 6px 22px rgba(80,64,32,.08);
-    --sh-lg:0 24px 60px rgba(80,64,32,.18);
+    --blauw:#2456a6; --blauw-d:#193c78; --navy:#152f5b; --blauw-05:#edf2fa; --blauw-10:#d9e4f5;
+    --oranje:#e05c2a; --oranje-05:#fdefe8;
+    --inkt:#232019; --tekst:#3d3a31; --demp:#6b6557; --zacht:#a39c8a;
+    --bg:#f6f2e9; --vlak:#fffefa; --creme2:#f0eadb; --lijn:#e7e0cf; --lijn2:#f0ebdd;
+    --sh-sm:0 1px 2px rgba(80,64,32,.06);
+    --sh:0 2px 6px rgba(80,64,32,.05),0 14px 40px rgba(80,64,32,.1);
+    --disp:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif;
   }
-  *{box-sizing:border-box}
+  *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{margin:0;color:var(--tekst);background:
-    radial-gradient(1200px 600px at 90% -10%, rgba(36,86,166,.06), transparent 60%),
-    var(--papier);
-    font:17px/1.65 Charter,'Bitstream Charter','Sitka Text',Cambria,Georgia,serif}
-  h1,h2,h3,.knop,nav,.pill,.stat,th,.stap b,.usp b{font-family:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif}
-  a{color:var(--blauw)}
+  body{font:18px/1.6 Charter,Georgia,'Times New Roman',serif;color:var(--tekst);background:var(--bg)}
+  h1,h2,h3,.knop,nav,.pill,.stat,.stap b,.usp b,.chip,.eyebrow,figcaption,.cel,.kop,.balk *{font-family:var(--disp)}
+  a{color:inherit}
+  section{scroll-margin-top:76px}
+  .binnen{max-width:1120px;margin:0 auto;padding:0 28px}
 
+  /* ---------- navigatie ---------- */
   nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;
-    padding:14px 28px;background:rgba(255,254,250,.92);backdrop-filter:blur(8px);
+    padding:12px 22px;background:rgba(246,242,233,.88);backdrop-filter:saturate(1.3) blur(10px);
     border-bottom:1px solid var(--lijn)}
-  .mark{display:inline-flex;width:32px;height:32px;border-radius:10px;align-items:center;justify-content:center;
-    background:linear-gradient(150deg,#2f66bd,#1c4487)}
-  nav .naam{font-weight:700;font-size:18px;color:var(--inkt);letter-spacing:-.01em}
-  nav .links{margin-left:26px;display:flex;gap:4px}
-  nav .links a{color:var(--demp);text-decoration:none;font-size:14.5px;padding:7px 12px;border-radius:999px}
-  nav .links a:hover{background:var(--blauw-l);color:var(--blauw)}
+  nav .mark{width:32px;height:32px;border-radius:9px;background:linear-gradient(150deg,#2f66bd,#1c4487);
+    display:flex;align-items:center;justify-content:center;flex:0 0 32px;box-shadow:var(--sh-sm)}
+  nav .naam{font-weight:700;font-size:19px;color:var(--inkt);letter-spacing:-.01em}
+  nav .links{display:flex;gap:4px;margin-left:18px}
+  nav .links a{font-size:14.5px;font-weight:500;color:var(--demp);text-decoration:none;padding:7px 12px;border-radius:999px}
+  nav .links a:hover{background:var(--creme2);color:var(--inkt)}
   nav .spacer{flex:1}
-  .knop{display:inline-block;text-decoration:none;font-weight:600;font-size:15px;
-    padding:10px 22px;border-radius:999px;transition:.15s}
-  .knop.primair{background:var(--blauw);color:#fff;box-shadow:0 2px 10px rgba(36,86,166,.25)}
-  .knop.primair:hover{background:var(--blauw-d)}
-  .knop.stil{color:var(--blauw);border:1.5px solid var(--blauw-l);background:var(--vlak)}
-  .knop.stil:hover{border-color:var(--blauw)}
   @media (max-width:760px){nav .links{display:none}}
 
-  .hero{max-width:1120px;margin:0 auto;padding:72px 28px 40px;display:grid;
-    grid-template-columns:minmax(0,10fr) minmax(0,9fr);gap:56px;align-items:center}
-  @media (max-width:900px){.hero{grid-template-columns:1fr;padding-top:48px}}
-  .hero h1{font-size:clamp(34px,4.6vw,52px);line-height:1.08;color:var(--inkt);
-    margin:0 0 18px;font-weight:700;letter-spacing:-.02em;text-wrap:balance}
+  .knop{display:inline-block;font-weight:600;font-size:16px;text-decoration:none;border-radius:999px;
+    padding:13px 26px;transition:transform .15s ease,box-shadow .15s ease,background .15s}
+  .knop.primair{background:var(--blauw);color:#fff;box-shadow:0 4px 14px rgba(36,86,166,.3)}
+  .knop.primair:hover{background:var(--blauw-d);transform:translateY(-1px);box-shadow:0 6px 18px rgba(36,86,166,.35)}
+  .knop.oranje{background:var(--oranje);color:#fff;box-shadow:0 4px 14px rgba(224,92,42,.32)}
+  .knop.oranje:hover{background:#c94d1f;transform:translateY(-1px)}
+  nav .knop{padding:9px 20px;font-size:15px}
+  .tekstlink{font:600 15.5px/1 var(--disp);color:var(--blauw);text-decoration:none;border-bottom:2px solid var(--blauw-10);padding-bottom:2px}
+  .tekstlink:hover{border-bottom-color:var(--blauw)}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(1000px 480px at 82% -10%, rgba(36,86,166,.07), transparent 60%),
+               radial-gradient(700px 400px at -8% 108%, rgba(224,92,42,.06), transparent 60%)}
+  .hero .binnen{position:relative;padding-top:76px;padding-bottom:56px;display:grid;
+    grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:56px;align-items:center}
+  @media (max-width:940px){.hero .binnen{grid-template-columns:1fr;padding-top:44px;gap:44px}}
+  .hero h1{font-size:clamp(38px,5.2vw,62px);line-height:1.04;color:var(--inkt);
+    letter-spacing:-.028em;font-weight:700;margin-bottom:22px}
   .hero h1 em{font-style:normal;color:var(--blauw)}
-  .hero p{font-size:19px;max-width:54ch;margin:0 0 14px}
-  .hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
-  .hero .klein{font-size:14px;color:var(--zacht);margin-top:14px;font-family:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif}
+  .hero p{font-size:19.5px;max-width:52ch;margin:0 0 14px}
+  .hero .cta{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin-top:28px}
+  .hero .klein{font:500 14px/1.5 var(--disp);color:var(--zacht);margin-top:16px}
 
-  /* de kaart als held: opgebouwd uit echte oefentekeningen */
-  .kaartwrap{position:relative;min-height:380px}
-  .kaart{background:#fff;border:1px solid #e8e2d3;border-radius:6px;box-shadow:var(--sh-lg);
-    padding:18px 20px 16px;transform:rotate(1.6deg);max-width:460px;margin-left:auto}
-  .kaart .kop{display:flex;justify-content:space-between;align-items:baseline;
-    border-bottom:2px solid var(--inkt);padding-bottom:8px;margin-bottom:12px}
-  .kaart .kop b{font-size:15px;color:var(--blauw);font-family:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif}
-  .kaart .kop span{font-size:11px;color:var(--zacht)}
-  .oefs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-  .oefs figure{margin:0;text-align:center}
-  .oefs img{width:100%;aspect-ratio:1;object-fit:contain;background:#fff;border:1px solid var(--lijn2);border-radius:6px}
-  .oefs figcaption{font-size:9.5px;color:var(--demp);margin-top:3px;
-    font-family:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .grid{margin-top:12px;border:1px solid var(--inkt);border-radius:4px;overflow:hidden}
-  .grid .rij{display:grid;grid-template-columns:52px repeat(8,1fr);border-top:1px solid var(--lijn)}
-  .grid .rij:first-child{border-top:0;background:#f4f1e8}
-  .grid .cel{height:17px;border-left:1px solid var(--lijn2);font-size:8.5px;color:var(--zacht);
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif}
-  .grid .cel:first-child{border-left:0;color:var(--demp);font-weight:600}
-  .stempel{position:absolute;right:-6px;bottom:-14px;background:var(--groen-l);color:var(--groen);
-    font-family:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif;font-weight:700;font-size:13px;
-    padding:8px 16px;border-radius:999px;transform:rotate(-2deg);box-shadow:var(--sh)}
+  /* productbeeld: A4-kaart met telefoon ervoor */
+  .toneel{position:relative;padding:10px 6px 26px}
+  .kaart{background:#fff;border:1px solid #e6e2d6;border-radius:14px;box-shadow:var(--sh);
+    padding:18px 18px 14px;transform:rotate(-1.1deg)}
+  .kaart .kop{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--blauw);padding-bottom:8px;margin-bottom:12px}
+  .kaart .kop b{color:var(--blauw);font-size:17px}
+  .kaart .kop span{font-size:10.5px;color:#98a2b3}
+  .oefs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+  .oefs figure{border:1px solid #eceae2;border-radius:8px;padding:6px 4px 3px;text-align:center;background:#fff}
+  .oefs img{width:100%;aspect-ratio:1;object-fit:contain}
+  .oefs figcaption{font-size:9px;color:#667085;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .grid{border:1px solid #eceae2;border-radius:8px;overflow:hidden}
+  .rij{display:grid;grid-template-columns:1.5fr repeat(8,1fr)}
+  .rij:first-child{background:#f8f7f2;font-weight:600;color:#667085}
+  .cel{font-size:9.5px;padding:5px 7px;border-bottom:1px solid #f0eee6;border-right:1px solid #f0eee6;color:#344054}
+  .rij:last-child .cel{border-bottom:none}
+  .stempel{position:absolute;top:-12px;right:2px;background:var(--oranje);color:#fff;
+    font:700 12.5px/1 var(--disp);letter-spacing:.04em;padding:9px 15px;border-radius:999px;
+    transform:rotate(3deg);box-shadow:0 6px 16px rgba(224,92,42,.4)}
+  /* telefoon met de digitale kaart */
+  .fone{position:absolute;right:-6px;bottom:-14px;width:172px;background:#fff;border:1px solid #e3ded1;
+    border-radius:22px;box-shadow:0 18px 44px rgba(35,32,25,.22);padding:10px 10px 12px;transform:rotate(2.4deg)}
+  .fone .notch{width:56px;height:5px;border-radius:99px;background:#e8e4d8;margin:0 auto 8px}
+  .fone .fkop{font:700 11px/1.2 var(--disp);color:var(--blauw)}
+  .fone .fsub{font:500 8.5px/1.3 var(--disp);color:#98a2b3;margin-bottom:7px}
+  .fone .foef{display:flex;gap:6px;align-items:center;border:1px solid var(--lijn2);border-radius:9px;padding:5px;margin-bottom:5px}
+  .fone .foef img{width:30px;height:30px;object-fit:contain;background:#fff;border:1px solid var(--lijn2);border-radius:6px}
+  .fone .foef div{min-width:0}
+  .fone .foef b{display:block;font:700 9px/1.2 var(--disp);color:var(--inkt)}
+  .fone .foef small{font:500 7.5px/1.3 var(--disp);color:var(--zacht)}
+  .fone .fknop{display:flex;align-items:center;justify-content:center;gap:4px;background:var(--blauw);color:#fff;
+    font:600 8.5px/1 var(--disp);border-radius:8px;padding:7px 4px;margin-top:2px}
+  .fone .fqr{position:absolute;top:-11px;left:-13px;background:#fff;border:1px solid var(--lijn);border-radius:9px;
+    padding:5px;box-shadow:var(--sh-sm);transform:rotate(-6deg)}
+  @media (max-width:520px){.fone{width:142px;right:-2px}}
 
-  section{max-width:1120px;margin:0 auto;padding:56px 28px}
-  .eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blauw);
-    font-family:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif}
-  h2{font-size:clamp(26px,3.4vw,34px);color:var(--inkt);margin:8px 0 12px;letter-spacing:-.015em;text-wrap:balance}
-  .sub{font-size:17.5px;max-width:62ch;color:var(--demp)}
+  /* feitenstrook onder de hero */
+  .feiten{border-top:1px solid var(--lijn);border-bottom:1px solid var(--lijn);background:var(--vlak)}
+  .feiten .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding-top:20px;padding-bottom:20px}
+  @media (max-width:700px){.feiten .binnen{grid-template-columns:1fr;gap:8px}}
+  .feit{display:flex;align-items:center;gap:12px;justify-content:center;font:500 15px/1.35 var(--disp);color:var(--demp)}
+  .feit b{color:var(--inkt);font-size:17px}
+  .feit .bol{width:34px;height:34px;flex:0 0 34px;border-radius:999px;background:var(--blauw-05);border:1px solid var(--blauw-10);
+    display:flex;align-items:center;justify-content:center;color:var(--blauw)}
 
-  .usps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:30px}
-  .usp{background:var(--vlak);border:1px solid var(--lijn);border-radius:16px;padding:24px 24px 20px;box-shadow:var(--sh)}
-  .usp .stat{font-size:34px;font-weight:700;color:var(--blauw);letter-spacing:-.02em}
-  .usp b{display:block;font-size:17px;color:var(--inkt);margin:8px 0 6px}
-  .usp p{margin:0;font-size:15.5px}
+  /* ---------- secties ---------- */
+  section .binnen{padding-top:78px;padding-bottom:26px}
+  .eyebrow{font:700 12px/1 var(--disp);letter-spacing:.16em;text-transform:uppercase;color:var(--oranje);margin-bottom:14px}
+  h2{font-size:clamp(28px,3.4vw,40px);line-height:1.12;color:var(--inkt);letter-spacing:-.022em;margin-bottom:14px;font-weight:700}
+  p.sub{font-size:18.5px;color:var(--demp);max-width:62ch;margin-bottom:8px}
 
-  .stappen{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:30px;counter-reset:stap}
-  .stap{position:relative;background:var(--vlak);border:1px solid var(--lijn);border-radius:16px;padding:22px;box-shadow:var(--sh)}
-  .stap::before{counter-increment:stap;content:counter(stap);position:absolute;top:-14px;left:20px;
-    width:28px;height:28px;border-radius:50%;background:var(--blauw);color:#fff;font-weight:700;
-    display:flex;align-items:center;justify-content:center;font-size:14px;
-    font-family:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif}
-  .stap b{display:block;color:var(--inkt);margin:4px 0 6px;font-size:16px}
-  .stap p{margin:0;font-size:15px}
+  .usps{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px;margin-top:34px}
+  .usp{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;padding:26px 26px 22px;box-shadow:var(--sh-sm);
+    transition:transform .18s ease,box-shadow .18s ease}
+  .usp:hover{transform:translateY(-3px);box-shadow:var(--sh)}
+  .usp .stat{font-size:36px;font-weight:700;color:var(--oranje);letter-spacing:-.02em}
+  .usp b{display:block;font-size:17.5px;color:var(--inkt);margin:9px 0 7px}
+  .usp p{margin:0;font-size:15.5px;line-height:1.55}
 
-  .tabelwrap{overflow-x:auto;margin-top:26px;background:var(--vlak);border:1px solid var(--lijn);
-    border-radius:16px;box-shadow:var(--sh)}
-  table{width:100%;border-collapse:collapse;font-size:15px;min-width:640px;
-    font-family:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif}
-  th{text-align:left;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--demp);
-    border-bottom:2px solid var(--inkt);padding:14px 16px;font-weight:600}
-  th.fp{color:var(--blauw)}
-  td{padding:12px 16px;border-bottom:1px solid var(--lijn2);vertical-align:top}
-  tr:last-child td{border-bottom:0}
-  td.fp{background:var(--blauw-l)}
-  .ja{color:var(--groen);font-weight:600}
-  .nee{color:var(--zacht)}
+  /* stappen met verbindingslijn */
+  .stappen{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:44px;counter-reset:stap;position:relative}
+  .stap{position:relative;background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;padding:26px 24px 22px;box-shadow:var(--sh-sm)}
+  .stap::before{counter-increment:stap;content:counter(stap);position:absolute;top:-17px;left:22px;
+    width:34px;height:34px;border-radius:999px;background:var(--blauw);color:#fff;
+    display:flex;align-items:center;justify-content:center;font:700 15px/1 var(--disp);
+    box-shadow:0 4px 10px rgba(36,86,166,.35)}
+  .stap b{display:block;color:var(--inkt);margin:6px 0 7px;font-size:17px}
+  .stap p{margin:0;font-size:15.5px;line-height:1.55}
 
-  .bewijs{background:var(--blauw);border-radius:20px;color:#e9effa;padding:44px 40px;margin-top:10px}
-  .bewijs h2{color:#fff}
-  .bewijs .eyebrow{color:#a9c3ec}
-  .bewijs p{max-width:64ch;font-size:17px}
-  .bewijs .noot{font-size:13.5px;color:#9db8e4;font-family:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif}
+  /* bento: wat erin zit */
+  .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+  @media (max-width:940px){.bento{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:620px){.bento{grid-template-columns:1fr}}
+  .vak{background:var(--vlak);border:1px solid var(--lijn);border-radius:20px;padding:26px;box-shadow:var(--sh-sm);
+    transition:transform .18s ease,box-shadow .18s ease;position:relative;overflow:hidden}
+  .vak:hover{transform:translateY(-3px);box-shadow:var(--sh)}
+  .vak b{display:block;font-size:17.5px;color:var(--inkt);margin-bottom:8px}
+  .vak p{margin:0;font-size:15.5px;line-height:1.55}
+  .vak.groot{grid-column:span 2;grid-row:span 1;background:linear-gradient(140deg,var(--navy),var(--blauw-d) 70%);border:none;color:#e8eefb}
+  @media (max-width:620px){.vak.groot{grid-column:span 1}}
+  .vak.groot b{color:#fff;font-size:20px}
+  .vak.groot p{color:#c9d7f0;font-size:16px;max-width:46ch}
+  .vak.groot .badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.14);
+    font:600 12px/1 var(--disp);color:#fff;padding:7px 13px;border-radius:999px;margin-bottom:14px}
+  .vak.groot .badge i{width:7px;height:7px;border-radius:99px;background:var(--oranje);display:block}
+  .vak .ikoon{width:38px;height:38px;border-radius:11px;background:var(--blauw-05);border:1px solid var(--blauw-10);
+    display:flex;align-items:center;justify-content:center;color:var(--blauw);margin-bottom:14px}
 
-  .prijskaart{max-width:520px;margin:30px auto 0;background:var(--vlak);border:2px solid var(--inkt);
-    border-radius:20px;padding:34px 36px;box-shadow:var(--sh-lg);text-align:center}
-  .prijskaart .bedrag{font-size:56px;font-weight:700;color:var(--inkt);letter-spacing:-.03em;
-    font-family:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif}
-  .prijskaart .bedrag small{font-size:17px;font-weight:500;color:var(--demp)}
-  .prijskaart ul{list-style:none;margin:20px 0 24px;padding:0;text-align:left;font-size:15.5px;
-    font-family:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif}
-  .prijskaart li{padding:7px 0 7px 30px;position:relative;border-bottom:1px solid var(--lijn2)}
-  .prijskaart li:last-child{border-bottom:0}
-  .prijskaart li::before{content:"";position:absolute;left:2px;top:12px;width:16px;height:16px;
-    border-radius:50%;background:var(--groen-l)}
-  .prijskaart li::after{content:"";position:absolute;left:6px;top:15px;width:8px;height:5px;
-    border-left:2px solid var(--groen);border-bottom:2px solid var(--groen);transform:rotate(-45deg)}
-  .prijskaart .klein{font-size:13.5px;color:var(--zacht);margin-top:12px;
-    font-family:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif}
+  /* wetenschap */
+  .bewijs{background:linear-gradient(150deg,var(--navy),var(--blauw-d));border-radius:26px;color:#dbe5f5;
+    padding:56px 54px;margin-top:56px;position:relative;overflow:hidden}
+  .bewijs::before{content:"”";position:absolute;top:-42px;right:22px;font:700 260px/1 Charter,Georgia,serif;color:rgba(255,255,255,.06)}
+  @media (max-width:700px){.bewijs{padding:38px 26px}}
+  .bewijs .eyebrow{color:#f0b294}
+  .bewijs h2{color:#fff;max-width:22ch}
+  .bewijs p{max-width:66ch;font-size:17.5px}
+  .bewijs .noot{font:500 13.5px/1.6 var(--disp);color:#93a9cd;margin-top:16px}
 
-  details{background:var(--vlak);border:1px solid var(--lijn);border-radius:14px;
-    padding:4px 22px;margin:10px 0;box-shadow:var(--sh)}
-  summary{cursor:pointer;font-weight:600;color:var(--inkt);padding:14px 0;font-size:16px;
-    font-family:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif;list-style-position:outside}
+  /* prijs */
+  .prijskaart{max-width:520px;margin:36px auto 0;background:var(--vlak);border:1px solid var(--lijn);border-radius:24px;
+    padding:38px 38px 32px;box-shadow:var(--sh);text-align:center;position:relative;overflow:hidden}
+  .prijskaart::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,var(--blauw),#4f7fc9 55%,var(--oranje))}
+  .bedrag{font:700 54px/1 var(--disp);color:var(--inkt);letter-spacing:-.03em}
+  .bedrag small{display:block;font-size:15px;font-weight:500;color:var(--demp);margin-top:8px;letter-spacing:0}
+  .prijskaart ul{list-style:none;text-align:left;margin:26px 0 28px;font-family:var(--disp)}
+  .prijskaart li{padding:9px 0 9px 32px;position:relative;font-size:15.5px;color:var(--tekst);border-bottom:1px solid var(--lijn2)}
+  .prijskaart li:last-child{border-bottom:none}
+  .prijskaart li::before{content:"";position:absolute;left:2px;top:13px;width:18px;height:18px;border-radius:99px;
+    background:var(--blauw-05);border:1px solid var(--blauw-10);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232456a6' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
+    background-size:10px;background-position:center;background-repeat:no-repeat}
+  .prijskaart .klein{font:500 13.5px/1.6 var(--disp);color:var(--zacht);margin-top:14px}
+
+  /* faq */
+  details{max-width:760px;margin:0 auto;border-bottom:1px solid var(--lijn)}
+  summary{cursor:pointer;list-style:none;font:600 17.5px/1.4 var(--disp);color:var(--inkt);padding:19px 34px 19px 2px;position:relative}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";position:absolute;right:6px;top:14px;font-size:24px;font-weight:400;color:var(--oranje);transition:transform .2s}
+  details[open] summary::after{transform:rotate(45deg)}
   summary:focus-visible{outline:2px solid var(--blauw);outline-offset:4px;border-radius:6px}
-  details p{margin:0 0 16px;font-size:15.5px}
+  details p{margin:0 0 18px;font-size:16px;max-width:70ch}
 
-  footer{border-top:1px solid var(--lijn);margin-top:40px;padding:30px 28px 50px;text-align:center;
-    color:var(--zacht);font-size:14px;font-family:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif}
+  /* afsluitende cta */
+  .slot{margin-top:80px;background:linear-gradient(150deg,var(--navy),var(--blauw-d));position:relative;overflow:hidden}
+  .slot::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(700px 320px at 85% 120%, rgba(224,92,42,.22), transparent 60%)}
+  .slot .binnen{position:relative;padding:72px 28px;text-align:center}
+  .slot h2{color:#fff;max-width:24ch;margin:0 auto 12px}
+  .slot p{color:#c9d7f0;font-size:18px;max-width:52ch;margin:0 auto 30px}
+  .slot .klein{font:500 13.5px/1.6 var(--disp);color:#93a9cd;margin-top:16px}
+
+  footer{padding:30px 28px 46px;text-align:center;color:var(--zacht);font:500 14px/1.6 var(--disp)}
   footer a{color:var(--demp);text-decoration:none}
   footer a:hover{color:var(--blauw)}
+
+  /* rustige binnenkomst van het toneel */
+  @media (prefers-reduced-motion:no-preference){
+    .toneel{animation:optreden .6s cubic-bezier(.2,.8,.3,1) backwards .1s}
+    .fone{animation:optreden .6s cubic-bezier(.2,.8,.3,1) backwards .28s}
+    @keyframes optreden{from{opacity:0;transform:translateY(14px) rotate(-1.1deg)}to{opacity:1}}
+  }
 </style>
 </head>
 <body>
@@ -161,151 +223,201 @@
   <a class="knop primair" href="/v2/app">Inloggen</a>
 </nav>
 
-<div class="hero">
-  <div>
-    <h1>De trainingskaart die gewoon <em>uit de printer</em> komt</h1>
-    <p>Fysiplan is het snelste hulpmiddel voor fysiotherapeuten om oefenschema's met duidelijke tekeningen samen te stellen. Klik je oefeningen aan, vul het schema in en print een verzorgde A4-kaart. Of bewaar hem als PDF voor het dossier.</p>
-    <p>Geen app die je patiënt moet installeren, geen account, geen gedoe. Gewoon een kaart die werkt — ook voor de patiënt van 72 zonder smartphone. En wie wél een telefoon heeft, scant de QR-code en ziet thuis de kaart met video's van je eigen praktijk.</p>
-    <div class="cta">
-      <a class="knop primair" href="/v2/app">Probeer Fysiplan</a>
-      <a class="knop stil" href="#functies">Bekijk wat erin zit</a>
+<header class="hero">
+  <div class="binnen">
+    <div>
+      <h1>De trainingskaart die gewoon <em>uit de printer</em> komt</h1>
+      <p>Klik je oefeningen aan, vul het schema in en print een verzorgde A4-kaart met duidelijke tekeningen. Klaar in één minuut.</p>
+      <p>Je patiënt hoeft niets te installeren. Wie een telefoon heeft, scant de QR-code op de kaart en ziet thuis de oefeningen — met video's van je eigen praktijk.</p>
+      <div class="cta">
+        <a class="knop oranje" href="/v2/app">Probeer Fysiplan gratis</a>
+        <a class="tekstlink" href="#functies">Bekijk wat erin zit</a>
+      </div>
+      <div class="klein">Direct in de browser. Niets te installeren, ook niet voor jou.</div>
     </div>
-    <div class="klein">Direct te gebruiken in de browser. Niets te installeren.</div>
+    <div class="toneel">
+      <div class="kaart">
+        <div class="kop"><b>FysioTotaal</b><span>Trainingsschema &nbsp;|&nbsp; Naam: ____________</span></div>
+        <div class="oefs">
+          <figure><img src="/images/onderste-extremiteit/front-squat.jpg" alt="Front squat"/><figcaption>Front squat</figcaption></figure>
+          <figure><img src="/images/bovenste-extremiteit/bench-press.jpg" alt="Bench press"/><figcaption>Bench press</figcaption></figure>
+          <figure><img src="/images/core/abroller.jpg" alt="Abroller"/><figcaption>Abroller</figcaption></figure>
+          <figure><img src="/images/bovenste-extremiteit/biceps-curl.jpg" alt="Biceps curl"/><figcaption>Biceps curl</figcaption></figure>
+        </div>
+        <div class="grid">
+          <div class="rij"><div class="cel">Datum</div><div class="cel">S</div><div class="cel">H</div><div class="cel">W</div><div class="cel">S</div><div class="cel">H</div><div class="cel">W</div><div class="cel">S</div><div class="cel">H</div></div>
+          <div class="rij"><div class="cel">14-07</div><div class="cel">3</div><div class="cel">12</div><div class="cel">20</div><div class="cel">3</div><div class="cel">10</div><div class="cel">35</div><div class="cel">3</div><div class="cel">12</div></div>
+          <div class="rij"><div class="cel">17-07</div><div class="cel">3</div><div class="cel">12</div><div class="cel">22,5</div><div class="cel">3</div><div class="cel">10</div><div class="cel">35</div><div class="cel">3</div><div class="cel">12</div></div>
+          <div class="rij"><div class="cel"></div><div class="cel"></div><div class="cel"></div><div class="cel"></div><div class="cel"></div><div class="cel"></div><div class="cel"></div><div class="cel"></div><div class="cel"></div></div>
+        </div>
+      </div>
+      <div class="stempel">Klaar in 1 minuut</div>
+      <div class="fone">
+        <span class="fqr"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#232019" stroke-width="1.8"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3z"/><path d="M14 14h3v3h-3zM18 18h3v3h-3zM18 14h3M14 18v3"/></svg></span>
+        <div class="notch"></div>
+        <div class="fkop">FysioTotaal</div>
+        <div class="fsub">Jouw trainingskaart</div>
+        <div class="foef">
+          <img src="/images/onderste-extremiteit/front-squat.jpg" alt=""/>
+          <div><b>Front squat</b><small>3 series · 12 herh.</small></div>
+        </div>
+        <div class="fknop">&#9654;&nbsp; Video van je therapeut</div>
+      </div>
+    </div>
   </div>
-  <div class="kaartwrap">
-    <div class="kaart">
-      <div class="kop"><b>FysioTotaal</b><span>Trainingsschema &nbsp;|&nbsp; Naam: ____________</span></div>
-      <div class="oefs">
-        <figure><img src="/images/onderste-extremiteit/front-squat.jpg" alt="Front squat"/><figcaption>Front squat</figcaption></figure>
-        <figure><img src="/images/bovenste-extremiteit/bench-press.jpg" alt="Bench press"/><figcaption>Bench press</figcaption></figure>
-        <figure><img src="/images/core/abroller.jpg" alt="Abroller"/><figcaption>Abroller</figcaption></figure>
-        <figure><img src="/images/bovenste-extremiteit/biceps-curl.jpg" alt="Biceps curl"/><figcaption>Biceps curl</figcaption></figure>
-      </div>
-      <div class="grid">
-        <div class="rij"><div class="cel">Datum</div><div class="cel">S</div><div class="cel">H</div><div class="cel">W</div><div class="cel">S</div><div class="cel">H</div><div class="cel">W</div><div class="cel">S</div><div class="cel">H</div></div>
-        <div class="rij"><div class="cel">14-07</div><div class="cel">3</div><div class="cel">12</div><div class="cel">20</div><div class="cel">3</div><div class="cel">10</div><div class="cel">35</div><div class="cel">3</div><div class="cel">12</div></div>
-        <div class="rij"><div class="cel">17-07</div><div class="cel">3</div><div class="cel">12</div><div class="cel">22,5</div><div class="cel">3</div><div class="cel">10</div><div class="cel">35</div><div class="cel">3</div><div class="cel">12</div></div>
-        <div class="rij"><div class="cel"></div><div class="cel"></div><div class="cel"></div><div class="cel"></div><div class="cel"></div><div class="cel"></div><div class="cel"></div><div class="cel"></div><div class="cel"></div></div>
-      </div>
-    </div>
-    <div class="stempel">Klaar in 1 minuut</div>
+</header>
+
+<div class="feiten">
+  <div class="binnen">
+    <div class="feit"><span class="bol"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg></span><span><b>Print in 1 minuut</b><br/>van lege kaart naar A4</span></div>
+    <div class="feit"><span class="bol"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg></span><span><b>Ruim 200 oefeningen</b><br/>met duidelijke tekeningen</span></div>
+    <div class="feit"><span class="bol"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 18h.01"/></svg></span><span><b>0 apps nodig</b><br/>niet voor jou, niet voor je patiënt</span></div>
   </div>
 </div>
 
 <section id="waarom">
-  <div class="eyebrow">Waarom Fysiplan</div>
-  <h2>Drie keuzes die alles bepalen</h2>
-  <div class="usps">
-    <div class="usp">
-      <div class="stat">57%</div>
-      <b>Papier voorop. Bewezen.</b>
-      <p>Als ouderen zelf mogen kiezen, kiest 57 procent van de 70-plussers een papieren oefenschema. En onderzoek laat zien dat papier even goed werkt voor therapietrouw. Daarom begint Fysiplan bij een verzorgde geprinte kaart — en krijgt die kaart er gratis een digitale schaduw bij via de QR-code.</p>
-    </div>
-    <div class="usp">
-      <div class="stat">1 prijs</div>
-      <b>Per praktijk, niet per therapeut</b>
-      <p>Eén vast bedrag voor de hele praktijk, hoeveel collega's er ook mee werken. Nooit rekenen per stoel, per login of per behandelaar — een nieuwe collega kost niets extra.</p>
-    </div>
-    <div class="usp">
-      <div class="stat">0 gedoe</div>
-      <b>Cliëntgegevens blijven bij de praktijk</b>
-      <p>Namen en schema's blijven standaard gewoon op de computer van de praktijk. Alleen wat je zelf bewust deelt — een kaart voor collega's of achter een QR-code — wordt bij de praktijk op de server bewaard, en verwijderde kaarten ruimen zichzelf en hun video's op. Dat houdt de AVG-kant overzichtelijk.</p>
+  <div class="binnen">
+    <div class="eyebrow">Waarom Fysiplan</div>
+    <h2>Drie keuzes die alles bepalen</h2>
+    <div class="usps">
+      <div class="usp">
+        <div class="stat">57%</div>
+        <b>Papier voorop. Bewezen.</b>
+        <p>Als ouderen zelf mogen kiezen, kiest 57 procent van de 70-plussers een papieren oefenschema. En onderzoek laat zien dat papier even goed werkt voor therapietrouw. Daarom begint Fysiplan bij een verzorgde geprinte kaart — en krijgt die kaart er gratis een digitale schaduw bij via de QR-code.</p>
+      </div>
+      <div class="usp">
+        <div class="stat">1 prijs</div>
+        <b>Per praktijk, niet per therapeut</b>
+        <p>Eén vast bedrag voor de hele praktijk, hoeveel collega's er ook mee werken. Nooit rekenen per stoel, per login of per behandelaar — een nieuwe collega kost niets extra.</p>
+      </div>
+      <div class="usp">
+        <div class="stat">0 gedoe</div>
+        <b>Cliëntgegevens blijven bij de praktijk</b>
+        <p>Namen en schema's blijven standaard gewoon op de computer van de praktijk. Alleen wat je zelf bewust deelt — een kaart voor collega's of achter een QR-code — wordt bij de praktijk op de server bewaard, en verwijderde kaarten ruimen zichzelf en hun video's op.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <section>
-  <div class="eyebrow">Zo werkt het</div>
-  <h2>Van lege kaart naar geprint schema</h2>
-  <div class="stappen">
-    <div class="stap"><b>Kies de oefeningen</b><p>Start vanuit een kaartsjabloon per klacht — knie na operatie, schouder, lage rug, valpreventie — of zoek zelf door ruim 200 oefeningen met duidelijke tekeningen. Elke klik zet de oefening genummerd op de kaart.</p></div>
-    <div class="stap"><b>Vul het schema in</b><p>Series, herhalingen en gewicht per datum, plus Borg en XRM. De cliëntgegevens, de praktijkgegevens en het logo van je praktijk staan er automatisch bij.</p></div>
-    <div class="stap"><b>Print of bewaar als PDF</b><p>Eén druk op de knop geeft een verzorgde A4-kaart in je eigen huisstijl, desgewenst met een QR-code waarmee de cliënt de kaart thuis op de telefoon opent — zonder app. De PDF hang je zo in het dossier van je EPD.</p></div>
+  <div class="binnen">
+    <div class="eyebrow">Zo werkt het</div>
+    <h2>Van lege kaart naar geprint schema</h2>
+    <div class="stappen">
+      <div class="stap"><b>Kies de oefeningen</b><p>Start vanuit een kaartsjabloon per klacht — knie na operatie, schouder, lage rug, valpreventie — of zoek zelf door ruim 200 oefeningen met duidelijke tekeningen. Elke klik zet de oefening genummerd op de kaart.</p></div>
+      <div class="stap"><b>Vul het schema in</b><p>Series, herhalingen en gewicht per datum, plus Borg en XRM. De cliëntgegevens, de praktijkgegevens en het logo van je praktijk staan er automatisch bij.</p></div>
+      <div class="stap"><b>Print of bewaar als PDF</b><p>Eén druk op de knop geeft een verzorgde A4-kaart in je eigen huisstijl, desgewenst met een QR-code waarmee de cliënt de kaart thuis op de telefoon opent — zonder app. De PDF hang je zo in het dossier van je EPD.</p></div>
+    </div>
   </div>
 </section>
 
 <section id="functies">
-  <div class="eyebrow">Wat erin zit</div>
-  <h2>Alles voor de kaart — en voor thuis</h2>
-  <p class="sub">Gebouwd rond één gedachte: de therapeut houdt het simpel, de cliënt hoeft niets te installeren.</p>
-  <div class="usps">
-    <div class="usp">
-      <b>Kaartsjablonen per klacht</b>
-      <p>Knie of heup na een operatie, schouder, lage rug, valpreventie of algemene conditie: één klik en het programma staat op de kaart. Daarna pas je alles gewoon aan.</p>
-    </div>
-    <div class="usp">
-      <b>QR-code naar de digitale kaart</b>
-      <p>Zet met één vinkje een QR-code op de print. De cliënt scant hem met de gewone camera en ziet thuis de kaart op de telefoon — oefeningen, plaatjes en schema. Zonder app, zonder account.</p>
-    </div>
-    <div class="usp">
-      <b>Video's van je eigen praktijk</b>
-      <p>Neem in vijftien seconden een oefening op met je telefoon — als vaste instructie of speciaal voor één cliënt ("zó doe jij hem"). De video staat direct achter de QR-code, opgenomen op jouw apparaten, met jouw aanwijzingen. Een videolink per oefening kan ook.</p>
-    </div>
-    <div class="usp">
-      <b>Je eigen huisstijl</b>
-      <p>Logo één keer uploaden en elke kaart — geprint én digitaal — is herkenbaar van jouw praktijk. Ook de oefentekeningen zijn je eigen vertrouwde materiaal, aangevuld met ruim 200 kant-en-klare oefeningen.</p>
-    </div>
-    <div class="usp">
-      <b>Kaarten delen met collega's</b>
-      <p>Bewaar een kaart bij de praktijk en iedere collega opent hem op elk apparaat, precies waar de behandeling was gebleven. Lokaal opslaan blijft gewoon de standaard.</p>
-    </div>
-    <div class="usp">
-      <b>Printen zoals jij wilt</b>
-      <p>Uitgebreide of compacte kaart, groot lettertype voor oudere cliënten, en een PDF die je zo in het dossier van je EPD hangt.</p>
+  <div class="binnen">
+    <div class="eyebrow">Wat erin zit</div>
+    <h2>Alles voor de kaart — en voor thuis</h2>
+    <p class="sub">Gebouwd rond één gedachte: de therapeut houdt het simpel, de cliënt hoeft niets te installeren.</p>
+    <div class="bento">
+      <div class="vak groot">
+        <span class="badge"><i></i>Nieuw in v2</span>
+        <b>Video's van je eigen praktijk, achter de QR-code</b>
+        <p>Neem in vijftien seconden een oefening op met je telefoon — als vaste instructie of speciaal voor één cliënt ("zó doe jij hem"). De cliënt scant de kaart en ziet jouw video, op jouw apparaten, met jouw aanwijzingen. Zonder app, zonder account. Een videolink per oefening kan ook.</p>
+      </div>
+      <div class="vak">
+        <span class="ikoon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3z"/><path d="M14 14h3v3h-3zM18 18h3v3h-3z"/></svg></span>
+        <b>QR-code naar de digitale kaart</b>
+        <p>Zet met één vinkje een QR-code op de print. De cliënt scant hem met de gewone camera en ziet thuis de kaart op de telefoon — oefeningen, plaatjes en schema.</p>
+      </div>
+      <div class="vak">
+        <span class="ikoon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+        <b>Kaartsjablonen per klacht</b>
+        <p>Knie of heup na een operatie, schouder, lage rug, valpreventie of algemene conditie: één klik en het programma staat op de kaart. Daarna pas je alles gewoon aan.</p>
+      </div>
+      <div class="vak">
+        <span class="ikoon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M3 21c0-4 4-6.5 9-6.5s9 2.5 9 6.5"/></svg></span>
+        <b>Je eigen huisstijl</b>
+        <p>Logo één keer uploaden en elke kaart — geprint én digitaal — is herkenbaar van jouw praktijk. Ook je eigen oefentekeningen en materiaal doen gewoon mee.</p>
+      </div>
+      <div class="vak">
+        <span class="ikoon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <b>Kaarten delen met collega's</b>
+        <p>Bewaar een kaart bij de praktijk en iedere collega opent hem op elk apparaat, precies waar de behandeling was gebleven. Lokaal opslaan blijft de standaard.</p>
+      </div>
+      <div class="vak">
+        <span class="ikoon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg></span>
+        <b>Printen zoals jij wilt</b>
+        <p>Uitgebreide of compacte kaart, groot lettertype voor oudere cliënten, en een PDF die je zo in het dossier van je EPD hangt.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <section>
-  <div class="bewijs">
-    <div class="eyebrow">De wetenschap</div>
-    <h2>"Een app is nooit overtuigend beter gebleken dan papier"</h2>
-    <p>Drie studies naar therapietrouw bij huiswerkoefeningen laten hetzelfde beeld zien. De beste studie in het voordeel van apps vond een minimaal verschil, en alleen mét telefonische begeleiding erbij. Bij 65-plussers presteerden papier en app exact gelijk op balans, trouw en plezier. En bij vrije keuze kiest de meerderheid van de oudere patiënten papier.</p>
-    <p class="noot">Bronnen: Journal of Physiotherapy 2017, RCT 2019, Sensors 2023, BMC Geriatrics 2020. De gemiddelde fysiotherapiepatiënt in Nederland is bijna vijftig jaar (Nivel, 2024).</p>
+  <div class="binnen">
+    <div class="bewijs">
+      <div class="eyebrow">De wetenschap</div>
+      <h2>"Een app is nooit overtuigend beter gebleken dan papier"</h2>
+      <p>Drie studies naar therapietrouw bij huiswerkoefeningen laten hetzelfde beeld zien. De beste studie in het voordeel van apps vond een minimaal verschil, en alleen mét telefonische begeleiding erbij. Bij 65-plussers presteerden papier en app exact gelijk op balans, trouw en plezier. En bij vrije keuze kiest de meerderheid van de oudere patiënten papier.</p>
+      <p class="noot">Bronnen: Journal of Physiotherapy 2017, RCT 2019, Sensors 2023, BMC Geriatrics 2020. De gemiddelde fysiotherapiepatiënt in Nederland is bijna vijftig jaar (Nivel, 2024).</p>
+    </div>
   </div>
 </section>
 
 <section id="prijs">
-  <div class="eyebrow" style="text-align:center">Prijs</div>
-  <h2 style="text-align:center">Eén prijs. Klaar.</h2>
-  <div class="prijskaart">
-    <div class="bedrag">19 euro<small> per praktijk per maand</small></div>
-    <ul>
-      <li>Onbeperkt therapeuten en werkplekken</li>
-      <li>Ruim 200 oefeningen met tekeningen, plus je eigen materiaal</li>
-      <li>Kaartsjablonen, kaarten delen met collega's en je eigen logo</li>
-      <li>QR-code naar de digitale kaart, met video's van je eigen praktijk</li>
-      <li>PDF voor het dossier, groot lettertype en compacte indeling</li>
-    </ul>
-    <a class="knop primair" href="/v2/app">Probeer Fysiplan</a>
-    <div class="klein">Jaarlijks betalen kan ook: 190 euro per jaar. Stoppen kan maandelijks.</div>
+  <div class="binnen" style="text-align:center">
+    <div class="eyebrow">Prijs</div>
+    <h2>Eén prijs. Klaar.</h2>
+    <div class="prijskaart">
+      <div class="bedrag">€ 19<small>per praktijk per maand</small></div>
+      <ul>
+        <li>Onbeperkt therapeuten en werkplekken</li>
+        <li>Ruim 200 oefeningen met tekeningen, plus je eigen materiaal</li>
+        <li>Kaartsjablonen, kaarten delen met collega's en je eigen logo</li>
+        <li>QR-code naar de digitale kaart, met video's van je eigen praktijk</li>
+        <li>PDF voor het dossier, groot lettertype en compacte indeling</li>
+      </ul>
+      <a class="knop oranje" href="/v2/app">Probeer Fysiplan gratis</a>
+      <div class="klein">Jaarlijks betalen kan ook: 190 euro per jaar. Stoppen kan maandelijks.</div>
+    </div>
   </div>
 </section>
 
 <section id="vragen">
-  <div class="eyebrow">Veelgestelde vragen</div>
-  <h2>Goed om te weten</h2>
-  <details>
-    <summary>Werkt Fysiplan samen met mijn EPD?</summary>
-    <p>De geprinte kaart en de PDF werken naast elk EPD: je hangt de PDF in het dossier zoals je dat met elk document doet. Een directe koppeling met Intramed en Incura staat boven aan onze roadmap.</p>
-  </details>
-  <details>
-    <summary>Moeten mijn patiënten iets installeren?</summary>
-    <p>Nee, helemaal niets. De patiënt krijgt een papieren kaart of een PDF, en wie wil scant de QR-code op de kaart: de digitale versie opent dan gewoon in de browser van de telefoon. Geen app, geen account, geen wachtwoord.</p>
-  </details>
-  <details>
-    <summary>Hoe werken de oefenvideo's?</summary>
-    <p>De therapeut klikt op het camera-icoon, scant de QR-code op het beeldscherm met de telefoon en filmt de oefening — klaar in vijftien seconden. De cliënt ziet de video thuis via de QR-code op de kaart. Je kunt ook per oefening een videolink instellen, en een persoonlijke opname voor één cliënt gaat altijd voor.</p>
-  </details>
-  <details>
-    <summary>Hoe zit het met de AVG?</summary>
-    <p>Overzichtelijk: namen en schema's blijven standaard op de computer van de praktijk. Alleen wat je bewust deelt — een kaart voor collega's of een kaart met QR-code — wordt bij het praktijkprofiel op de server bewaard, achter een onraadbare link. Verwijder je zo'n kaart, dan worden ook de bijbehorende persoonlijke video's van de server gewist.</p>
-  </details>
-  <details>
-    <summary>Kunnen we onze eigen oefeningen en tekeningen gebruiken?</summary>
-    <p>Ja. De beheerder van de praktijk voegt eigen oefeningen met eigen afbeeldingen toe, past namen aan en ordent de categorieën. De hele praktijk werkt daarna met hetzelfde materiaal.</p>
-  </details>
+  <div class="binnen">
+    <div class="eyebrow" style="text-align:center">Veelgestelde vragen</div>
+    <h2 style="text-align:center">Goed om te weten</h2>
+    <div style="margin-top:26px">
+      <details>
+        <summary>Werkt Fysiplan samen met mijn EPD?</summary>
+        <p>De geprinte kaart en de PDF werken naast elk EPD: je hangt de PDF in het dossier zoals je dat met elk document doet. Een directe koppeling met Intramed en Incura staat boven aan onze roadmap.</p>
+      </details>
+      <details>
+        <summary>Moeten mijn patiënten iets installeren?</summary>
+        <p>Nee, helemaal niets. De patiënt krijgt een papieren kaart of een PDF, en wie wil scant de QR-code op de kaart: de digitale versie opent dan gewoon in de browser van de telefoon. Geen app, geen account, geen wachtwoord.</p>
+      </details>
+      <details>
+        <summary>Hoe werken de oefenvideo's?</summary>
+        <p>De therapeut klikt op het camera-icoon, scant de QR-code op het beeldscherm met de telefoon en filmt de oefening — klaar in vijftien seconden. De cliënt ziet de video thuis via de QR-code op de kaart. Je kunt ook per oefening een videolink instellen, en een persoonlijke opname voor één cliënt gaat altijd voor.</p>
+      </details>
+      <details>
+        <summary>Hoe zit het met de AVG?</summary>
+        <p>Overzichtelijk: namen en schema's blijven standaard op de computer van de praktijk. Alleen wat je bewust deelt — een kaart voor collega's of een kaart met QR-code — wordt bij het praktijkprofiel op de server bewaard, achter een onraadbare link. Verwijder je zo'n kaart, dan worden ook de bijbehorende persoonlijke video's van de server gewist.</p>
+      </details>
+      <details>
+        <summary>Kunnen we onze eigen oefeningen en tekeningen gebruiken?</summary>
+        <p>Ja. De beheerder van de praktijk voegt eigen oefeningen met eigen afbeeldingen toe, past namen aan en ordent de categorieën. De hele praktijk werkt daarna met hetzelfde materiaal.</p>
+      </details>
+    </div>
+  </div>
 </section>
+
+<div class="slot">
+  <div class="binnen">
+    <h2>Maak je eerste kaart in één minuut</h2>
+    <p>Open Fysiplan in de browser, klik een paar oefeningen aan en druk op print. Meer is het niet.</p>
+    <a class="knop oranje" href="/v2/app">Probeer Fysiplan gratis</a>
+    <div class="klein">Geen installatie, geen creditcard, geen account voor je patiënt.</div>
+  </div>
+</div>
 
 <footer>
   Fysiplan · trainingskaarten voor fysiotherapiepraktijken · <a href="/v2/app">Inloggen</a>
