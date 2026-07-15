@@ -228,6 +228,7 @@
           <div class="box"><b>Opm.</b><textarea id="c_opm" aria-label="Opmerking"></textarea><b>Casus</b><textarea id="c_cave" aria-label="Casus" style="flex:0 0 24px"></textarea></div>
           <div class="box"><b>Doel:</b><textarea id="c_doel" aria-label="Doel"></textarea></div>
         </div>
+        <div id="qrBlok" class="qrblok" style="display:none"></div>
       </div>
       <div id="emptyA4" class="hint no-print" style="padding:14px 30px 0">Klik links op een oefening — het plaatje komt direct genummerd op de A4.</div>
       <table class="mon" id="mon"></table>
@@ -339,6 +340,11 @@ bridge2.jpg</div>
     <label style="display:flex;align-items:center;gap:10px;padding:10px 0 6px;cursor:pointer;border-top:1px solid var(--line2);margin-top:6px">
       <input type="checkbox" id="pr_groot"/> Groot lettertype — beter leesbaar voor oudere pati&euml;nten
     </label>
+    <label style="display:flex;align-items:flex-start;gap:10px;padding:6px 0;cursor:pointer">
+      <input type="checkbox" id="pr_qr" style="margin-top:3px"/>
+      <span>QR-code op de kaart — de cli&euml;nt opent de kaart thuis op de telefoon, zonder app.
+      <small style="display:block;color:var(--muted)">De kaart wordt hiervoor bij de praktijk bewaard.</small></span>
+    </label>
     <div style="font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.5">
       Tip voor het dossier: kies in het printvenster <b>Bewaar als PDF</b> en voeg het bestand toe aan het pati&euml;ntdossier in je EPD.
     </div>
@@ -398,10 +404,16 @@ bridge2.jpg</div>
     <div style="display:flex;gap:8px">
       <input type="text" id="k_naam" placeholder="bijv. cliëntnaam of programmanaam" style="flex:1"/>
       <button class="btn primary" id="k_save">Opslaan</button>
+      <button class="btn" id="k_save_srv" style="display:none">In de praktijk</button>
     </div>
     <div id="k_result" style="margin-top:6px;font-size:12px;color:var(--muted)"></div>
     <label style="margin-top:12px;display:block">Opgeslagen kaarten <span style="font-weight:400;color:var(--muted)">(alleen op dit apparaat)</span></label>
-    <div id="k_lijst" style="max-height:280px;overflow:auto"></div>
+    <div id="k_lijst" style="max-height:220px;overflow:auto"></div>
+    <div id="k_srv" style="display:none">
+      <label style="margin-top:14px;display:block">Kaarten van de praktijk <span id="k_srv_naam" style="font-weight:400;color:var(--muted)"></span></label>
+      <div style="font-size:12px;color:var(--muted);margin:2px 0 4px">Gedeeld met collega's: iedereen die deze praktijk kiest ziet deze kaarten, op elk apparaat. Let op: de kaart (inclusief cli&euml;ntgegevens) staat dan op de server.</div>
+      <div id="k_srv_lijst" style="max-height:200px;overflow:auto"></div>
+    </div>
     <div class="acts"><button class="btn" id="k_close">Sluiten</button></div>
   </div>
 </div>
@@ -790,15 +802,38 @@ bridge2.jpg</div>
     if(IS_V2){openOv('ovPrint');return;}
     doePrint();
   });
-  // v2: printopties — indeling en lettergrootte, plus de PDF-naar-dossier-route
+  // v2: printopties — indeling, lettergrootte en de QR-code naar de digitale kaart
   document.getElementById('pr_cancel').addEventListener('click',function(){closeOv('ovPrint');});
+  function verbergQr(){var b=document.getElementById('qrBlok');b.style.display='none';b.innerHTML='';}
+  function toonQr(id){
+    var url=location.origin+'/k/'+id;
+    var b=document.getElementById('qrBlok');
+    b.innerHTML=window.FYSIQR?FYSIQR.svg(url,120):'';
+    if(!b.innerHTML){verbergQr();return false;}
+    b.innerHTML+='<small>Scan voor de digitale kaart</small>';
+    b.style.display='flex';
+    return true;
+  }
   document.getElementById('pr_do').addEventListener('click',function(){
     var compact=document.getElementById('pr_compact').checked;
     var groot=document.getElementById('pr_groot').checked;
     document.documentElement.classList.toggle('print-compact',compact);
     document.documentElement.classList.toggle('print-groot',groot);
-    closeOv('ovPrint');
-    doePrint();
+    var metQr=document.getElementById('pr_qr').checked;
+    if(!metQr){
+      verbergQr();closeOv('ovPrint');doePrint();
+      return;
+    }
+    // QR: kaart eerst bij de praktijk bewaren, dan de code op de kaart zetten en printen
+    if(!(SET.praktijk||'').trim()){alert('Vul eerst de praktijknaam op de kaart in — de digitale kaart hoort bij de praktijk.');return;}
+    var cn=document.getElementById('c_naam');
+    var naam=(cn&&cn.value.trim())||('Kaart '+new Date().toLocaleDateString('nl-NL'));
+    saveServerCard(naam,function(d){
+      if(!d.ok){alert(d.fout||'De kaart bewaren voor de QR-code is niet gelukt.');return;}
+      if(!toonQr(d.id)){alert('De QR-code maken is niet gelukt.');return;}
+      ping('kaart-opgeslagen');
+      closeOv('ovPrint');doePrint();
+    });
   });
   // ---- praktijkprofielen: server-side gedeeld, kiesbaar via dropdown op de A4 ----
   var PRAKTIJKEN=[];
@@ -953,7 +988,71 @@ bridge2.jpg</div>
     var nm=document.getElementById('c_naam');
     document.getElementById('k_naam').value=(nm&&nm.value.trim())||'';
     document.getElementById('k_result').textContent='';
-    renderCardList();openOv('ovKaarten');
+    renderCardList();
+    if(IS_V2)toonSrvKaarten();
+    openOv('ovKaarten');
+  });
+
+  // ---- gedeelde kaarten van de praktijk (v2): server-side, voor alle collega's ----
+  function saveServerCard(naam,cb){
+    var c=currentCard(naam);
+    c.praktijk=(SET.praktijk||'').trim();
+    fetch('api/kaarten',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(c)})
+      .then(function(r){return r.json().catch(function(){return {ok:false};});})
+      .then(function(d){cb(d);})
+      .catch(function(){cb({ok:false,fout:'Geen verbinding met de server.'});});
+  }
+  function toonSrvKaarten(){
+    var blok=document.getElementById('k_srv');
+    var knop=document.getElementById('k_save_srv');
+    var pr=(SET.praktijk||'').trim();
+    if(!pr){blok.style.display='none';knop.style.display='none';return;}
+    blok.style.display='';knop.style.display='';
+    document.getElementById('k_srv_naam').textContent='('+pr+')';
+    var el=document.getElementById('k_srv_lijst');
+    el.innerHTML="<div class='hint'>Laden…</div>";
+    fetch('api/kaarten?praktijk='+encodeURIComponent(pr),{cache:'no-cache'})
+      .then(function(r){return r.ok?r.json():[];})
+      .then(function(l){
+        if(!Array.isArray(l)||!l.length){el.innerHTML="<div class='hint'>Nog geen gedeelde kaarten voor deze praktijk.</div>";return;}
+        el.innerHTML=l.map(function(c){
+          var dt=c.ts?new Date(c.ts).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}):'';
+          return "<div style='display:flex;align-items:center;gap:8px;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
+            "<div style='flex:1;min-width:0'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+"</small></div>"+
+            "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
+            "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>";
+        }).join("");
+      })
+      .catch(function(){el.innerHTML="<div class='hint'>Kaarten laden is niet gelukt.</div>";});
+  }
+  document.getElementById('k_save_srv').addEventListener('click',function(){
+    var naam=document.getElementById('k_naam').value.trim();
+    if(!naam){alert('Geef de kaart een naam.');return;}
+    saveServerCard(naam,function(d){
+      if(!d.ok){alert(d.fout||'Kaart delen is niet gelukt.');return;}
+      document.getElementById('k_result').textContent='Kaart “'+naam+'” gedeeld met de praktijk.';
+      toonSrvKaarten();ping('kaart-opgeslagen');
+    });
+  });
+  document.getElementById('k_srv_lijst').addEventListener('click',function(e){
+    var o=e.target.closest('[data-sopen]'),x=e.target.closest('[data-sdel]');
+    if(o){
+      fetch('api/kaart?id='+o.dataset.sopen,{cache:'no-cache'})
+        .then(function(r){return r.json();})
+        .then(function(d){
+          if(!d.ok){alert('Kaart openen is niet gelukt.');return;}
+          if(chosen.length&&!confirm('Huidige kaart vervangen door “'+d.kaart.naam+'”?'))return;
+          openCard(d.kaart);verbergQr();closeOv('ovKaarten');
+        })
+        .catch(function(){alert('Kaart openen is niet gelukt: geen verbinding.');});
+    }else if(x){
+      var nm=x.dataset.sdel;
+      if(!confirm('Gedeelde kaart “'+nm+'” voor de hele praktijk verwijderen?'))return;
+      fetch('api/kaarten/verwijder',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({praktijk:SET.praktijk||'',naam:nm})})
+        .then(function(r){return r.json();})
+        .then(function(d){if(d.ok){toonSrvKaarten();ping('kaart-verwijderd');}else alert(d.fout||'Verwijderen is niet gelukt.');})
+        .catch(function(){alert('Verwijderen is niet gelukt: geen verbinding.');});
+    }
   });
   document.getElementById('k_close').addEventListener('click',function(){closeOv('ovKaarten');});
   document.getElementById('k_save').addEventListener('click',function(){
@@ -973,7 +1072,7 @@ bridge2.jpg</div>
     if(o){
       var c=lijst[+o.dataset.kopen];if(!c)return;
       if(chosen.length&&!confirm('Huidige kaart vervangen door “'+c.naam+'”?'))return;
-      openCard(c);closeOv('ovKaarten');
+      openCard(c);verbergQr();closeOv('ovKaarten');
     }else if(x){
       var c2=lijst[+x.dataset.kdel];if(!c2)return;
       if(!confirm('Kaart “'+c2.naam+'” verwijderen?'))return;
@@ -986,12 +1085,12 @@ bridge2.jpg</div>
   document.getElementById('clearBtn').addEventListener('click',function(){openOv('ovWis');});
   document.getElementById('wis_cancel').addEventListener('click',function(){closeOv('ovWis');});
   document.getElementById('wis_plaatjes').addEventListener('click',function(){
-    chosen=[];closeOv('ovWis');render();
+    chosen=[];verbergQr();closeOv('ovWis');render();
   });
   document.getElementById('wis_alles').addEventListener('click',function(){
     chosen=[];GRID={rows:{},cells:{}};
     CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value='';});
-    closeOv('ovWis');render();
+    verbergQr();closeOv('ovWis');render();
   });
   elMon.addEventListener('click',function(e){
     var rm=e.target.closest('.rm');if(!rm)return;

@@ -1,7 +1,7 @@
 import { createServer } from "node:http";
 import { readFile, writeFile, mkdir, rename, access, unlink } from "node:fs/promises";
 import { constants } from "node:fs";
-import { createHash } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 import { join, extname, normalize, sep } from "node:path";
 
 const port = Number(process.env.PORT || 3000);
@@ -29,6 +29,7 @@ const dataDir = await resolveDataDir();
 const uploadsDir = join(dataDir, "uploads");
 const renamesPath = join(dataDir, "naam-wijzigingen.json");
 const praktijkenPath = join(dataDir, "praktijken.json");
+const kaartenPath = join(dataDir, "kaarten.json");
 const extraPath = join(dataDir, "oefeningen-extra.json");
 const deletedPath = join(dataDir, "oefeningen-verwijderd.json");
 
@@ -38,6 +39,11 @@ try { renames = JSON.parse(await readFile(renamesPath, "utf8")); } catch {}
 // praktijkprofielen (naam + adresblok), gedeeld over alle apparaten
 let praktijken = {};
 try { praktijken = JSON.parse(await readFile(praktijkenPath, "utf8")); } catch {}
+
+// gedeelde kaarten per praktijk: { praktijkKey: { kaartKey: kaart } }; elke kaart heeft
+// een onraadbaar id waarmee de digitale kaart achter de QR-code wordt opgehaald
+let kaarten = {};
+try { kaarten = JSON.parse(await readFile(kaartenPath, "utf8")); } catch {}
 // door de beheerder toegevoegde oefeningen: [{naam, groep, img}]
 let extra = [];
 try { extra = JSON.parse(await readFile(extraPath, "utf8")); } catch {}
@@ -420,6 +426,101 @@ const server = createServer(async (request, response) => {
     return;
   }
 
+  // ---- gedeelde kaarten per praktijk + de digitale kaart achter de QR-code ----
+
+  // lijst van kaarten van één praktijk (licht: alleen naam, datum en aantal oefeningen)
+  if (urlPath === "/api/kaarten" && request.method === "GET") {
+    const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    const pk = String(q.get("praktijk") || "").trim().toLowerCase();
+    const map = kaarten[pk] || {};
+    const list = Object.values(map)
+      .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, aantal: (k.chosen || []).length }))
+      .sort((a, b) => b.ts - a.ts);
+    await sendJson(response, 200, list);
+    return;
+  }
+
+  // kaart opslaan of bijwerken (sleutel: praktijk + kaartnaam); geeft het kaart-id terug
+  if (urlPath === "/api/kaarten" && request.method === "POST") {
+    try {
+      const b = JSON.parse(await readBody(request, 256 * 1024));
+      const praktijk = cleanName(b.praktijk, 80);
+      const naam = cleanName(b.naam, 60);
+      if (!praktijk || !naam) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam en een kaartnaam op." }); return; }
+      const pk = praktijk.toLowerCase();
+      const kk = naam.toLowerCase();
+      const map = (kaarten[pk] = kaarten[pk] || {});
+      if (!map[kk] && Object.keys(map).length >= 100) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal kaarten voor deze praktijk bereikt." }); return; }
+      const sanStr = (v, m) => String(v == null ? "" : v).slice(0, m);
+      const cells = {};
+      if (b.cells && typeof b.cells === "object") {
+        for (const k of Object.keys(b.cells).slice(0, 800)) { const v = sanStr(b.cells[k], 60); if (v) cells[sanStr(k, 80)] = v; }
+      }
+      const rows = {};
+      if (b.rows && typeof b.rows === "object") {
+        for (const k of Object.keys(b.rows).slice(0, 40)) { const v = sanStr(b.rows[k], 20); if (v) rows[sanStr(k, 12)] = v; }
+      }
+      const client = {};
+      for (const k of ["c_naam", "c_leeftijd", "c_hf", "c_zone", "c_opm", "c_cave", "c_doel"]) {
+        if (b.client && b.client[k]) client[k] = sanStr(b.client[k], 500);
+      }
+      const chosen = (Array.isArray(b.chosen) ? b.chosen : []).slice(0, 12)
+        .map((x) => ({ n: sanStr(x && x.n, 80), i: Math.max(0, Math.min(9, Number(x && x.i) || 0)) }))
+        .filter((x) => x.n);
+      map[kk] = { id: map[kk] ? map[kk].id : randomBytes(6).toString("hex"),
+        praktijk, naam, ts: Date.now(), client, chosen, rows, cells };
+      await saveJson(kaartenPath, kaarten);
+      await sendJson(response, 200, { ok: true, id: map[kk].id });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek (of kaart te groot)." });
+    }
+    return;
+  }
+
+  // kaart verwijderen uit het praktijkoverzicht
+  if (urlPath === "/api/kaarten/verwijder" && request.method === "POST") {
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = String(b.praktijk || "").trim().toLowerCase();
+      const kk = String(b.naam || "").trim().toLowerCase();
+      if (!kaarten[pk] || !kaarten[pk][kk]) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      delete kaarten[pk][kk];
+      if (!Object.keys(kaarten[pk]).length) delete kaarten[pk];
+      await saveJson(kaartenPath, kaarten);
+      await sendJson(response, 200, { ok: true });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
+  // één kaart op id (voor de digitale kaart die de cliënt via de QR-code opent)
+  if (urlPath === "/api/kaart" && request.method === "GET") {
+    const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    const id = String(q.get("id") || "");
+    let found = null;
+    if (/^[a-f0-9]{8,16}$/.test(id)) {
+      for (const pk of Object.keys(kaarten)) {
+        for (const kk of Object.keys(kaarten[pk])) {
+          if (kaarten[pk][kk].id === id) { found = kaarten[pk][kk]; break; }
+        }
+        if (found) break;
+      }
+    }
+    if (!found) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+    const prof = praktijken[found.praktijk.toLowerCase()] || { praktijk: found.praktijk };
+    await sendJson(response, 200, { ok: true, kaart: found, praktijk: prof });
+    return;
+  }
+
+  // de digitale kaart zelf: /k/<id> (de pagina haalt de kaart via de API op)
+  if (urlPath === "/k" || urlPath.startsWith("/k/")) {
+    telBezoek(request, false);
+    try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "kaart.html"))); }
+    catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
+    return;
+  }
+
   // door beheer geüploade plaatjes (staan in de datamap, niet in public/)
   if (urlPath.startsWith("/uploads/")) {
     const file = normalize(join(uploadsDir, urlPath.slice("/uploads/".length)));
@@ -447,7 +548,7 @@ const server = createServer(async (request, response) => {
     try {
       let html = await readFile(join(publicDir, "index.html"), "utf8");
       html = html.replace("<head>", '<head><base href="/"/><meta name="color-scheme" content="light"/><script>window.FYSIPLAN_V2=true</script>');
-      html = html.replace("</head>", '<link rel="stylesheet" href="/v2.css"/></head>');
+      html = html.replace("</head>", '<link rel="stylesheet" href="/v2.css"/><script src="/qr.js" defer></script></head>');
       await send(response, 200, "text/html; charset=utf-8", html);
     } catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
