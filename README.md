@@ -174,3 +174,4 @@ bedoeling (het zijn geen persoonsgegevens). Alle **cliëntgegevens** (naam, leef
 eigen oefeningen) blijven **lokaal in de browser** (`localStorage`/IndexedDB); daarvan gaat niets
 naar een server. Voor een toekomstige gedeelde/multi-praktijk versie met centrale opslag van
 cliëntdata moeten AVG / NEN 7510 worden ingericht (nu buiten scope).
+
