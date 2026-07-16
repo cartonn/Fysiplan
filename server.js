@@ -129,6 +129,29 @@ function logGeweigerd(req, pad) {
   bewaarStats();
 }
 
+// eenvoudige schrijflimiet per IP voor de open API's (kaarten, opnames, praktijkprofielen):
+// normaal praktijkgebruik haalt dit nooit, maar het stopt scripts die de opslag volpompen.
+// Venster van 5 minuten, max. 40 schrijfacties per IP; overschrijding wordt gelogd.
+const schrijfTeller = new Map();
+function schrijfLimiet(req, res) {
+  const nu = Date.now();
+  if (schrijfTeller.size > 5000) {
+    for (const [k, v] of schrijfTeller) if (nu - v.start > 5 * 60 * 1000) schrijfTeller.delete(k);
+  }
+  const ip = clientIp(req);
+  const t = schrijfTeller.get(ip);
+  if (!t || nu - t.start > 5 * 60 * 1000) {
+    schrijfTeller.set(ip, { start: nu, n: 1 });
+    return false;
+  }
+  if (++t.n > 40) {
+    if (t.n === 41) logGeweigerd(req, "limiet");
+    sendJson(res, 429, { ok: false, fout: "Even te veel verzoeken achter elkaar; probeer het over een paar minuten opnieuw." });
+    return true;
+  }
+  return false;
+}
+
 async function saveJson(path, obj) {
   await mkdir(dataDir, { recursive: true });
   const tmp = path + ".tmp";
@@ -457,6 +480,7 @@ const server = createServer(async (request, response) => {
     return;
   }
   if (urlPath === "/api/praktijken" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
     try {
       const b = JSON.parse(await readBody(request, 1024 * 1024));
       const p = {
@@ -525,6 +549,7 @@ const server = createServer(async (request, response) => {
 
   // opname starten: geeft een kortlevend token terug; de scherm-QR wijst naar /opname/<token>
   if (urlPath === "/api/opname/start" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
     try {
       const b = JSON.parse(await readBody(request));
       const doel = b.doel === "oefening" ? "oefening" : "kaart";
@@ -558,6 +583,7 @@ const server = createServer(async (request, response) => {
 
   // de telefoon uploadt de opname (ruwe videobody, max 60 MB)
   if (urlPath === "/api/opname/upload" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const token = String(q.get("token") || "");
     const o = opnames.get(token);
@@ -609,6 +635,7 @@ const server = createServer(async (request, response) => {
 
   // kaart opslaan of bijwerken (sleutel: praktijk + kaartnaam); geeft het kaart-id terug
   if (urlPath === "/api/kaarten" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
     try {
       const b = JSON.parse(await readBody(request, 256 * 1024));
       const praktijk = cleanName(b.praktijk, 80);
@@ -656,6 +683,7 @@ const server = createServer(async (request, response) => {
 
   // kaart verwijderen uit het praktijkoverzicht
   if (urlPath === "/api/kaarten/verwijder" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
     try {
       const b = JSON.parse(await readBody(request));
       const pk = String(b.praktijk || "").trim().toLowerCase();
@@ -752,7 +780,7 @@ const server = createServer(async (request, response) => {
     try {
       let html = await readFile(join(publicDir, "index.html"), "utf8");
       html = html.replace("<head>", '<head><base href="/"/><meta name="color-scheme" content="light"/><script>window.FYSIPLAN_V2=true</script>');
-      html = html.replace("</head>", '<link rel="stylesheet" href="/v2.css"/><script src="/qr.js" defer></script></head>');
+      html = html.replace("</head>", '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'%3E%3Crect width=\'32\' height=\'32\' rx=\'8\' fill=\'%232456a6\'/%3E%3Cpath d=\'M5 16h5l2.5 6 5-12 2.5 7h7\' fill=\'none\' stroke=\'%23fff\' stroke-width=\'2.6\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3E%3C/svg%3E"/><link rel="stylesheet" href="/v2.css"/><script src="/qr.js" defer></script></head>');
       await send(response, 200, "text/html; charset=utf-8", html);
     } catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;

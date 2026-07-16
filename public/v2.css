@@ -31,6 +31,8 @@ html.v2 .row .thumb{border-radius:12px;background:#fffdf6;border-color:var(--lin
 html.v2 .row .add{background:var(--brand-50);border-color:var(--brand-100);color:var(--brand)}
 html.v2 .row .add:hover,html.v2 .row .add.on{background:var(--brand);border-color:var(--brand);color:#fff}
 html.v2 input[type=text],html.v2 input.fld,html.v2 select,html.v2 textarea{background:#fffefa}
+html.v2 #a4 #prakSelect{border-radius:9px;padding:5px 9px;font-size:11.5px;color:var(--text);
+  border-color:var(--line);background:#fffefa;box-shadow:var(--sh-sm)}
 html.v2 .modal{border-radius:18px}
 html.v2 #a4wrap{background:transparent}
 

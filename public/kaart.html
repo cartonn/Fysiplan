@@ -33,6 +33,7 @@
   .kop img.logo{max-height:46px;max-width:200px;object-fit:contain;object-position:left;display:block;margin-bottom:8px}
   .kop h1{font:700 24px/1.2 var(--disp);color:var(--inkt);letter-spacing:-.015em}
   .kop .adres{font-size:14px;color:var(--grijs);margin-top:5px}
+  .kop .adres a{color:var(--blauw);text-decoration:none;border-bottom:1px solid var(--blauw-10)}
   .client{margin-top:16px;padding-top:14px;border-top:1px solid var(--lijn2);display:flex;flex-direction:column;gap:6px}
   .client .rij{display:flex;gap:10px;font-size:16px}
   .client .rij b{font:600 12.5px/1.7 var(--disp);color:var(--zacht);text-transform:uppercase;letter-spacing:.06em;flex:0 0 74px}
@@ -148,7 +149,10 @@
     document.title='Trainingskaart — '+(praktijk.praktijk||'Fysiplan');
     if(praktijk.logo){var lg=document.getElementById('logo');lg.src='/'+praktijk.logo;lg.style.display='block';}
     document.getElementById('prak').textContent=praktijk.praktijk||kaart.praktijk;
-    document.getElementById('adres').textContent=[praktijk.adres,praktijk.plaats,praktijk.tel].filter(Boolean).join(' · ');
+    // telefoonnummer als tel-link: op de telefoon bel je de praktijk in één tik
+    var delen=[praktijk.adres,praktijk.plaats].filter(Boolean).map(esc);
+    if(praktijk.tel)delen.push('<a href="tel:'+esc(String(praktijk.tel).replace(/[^+\d]/g,''))+'">'+esc(praktijk.tel)+'</a>');
+    document.getElementById('adres').innerHTML=delen.join(' · ');
     var cl=kaart.client||{};
     var regels=[];
     if(cl.c_naam)regels.push('<div class="rij"><b>Voor</b><span>'+esc(cl.c_naam)+'</span></div>');
