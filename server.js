@@ -53,6 +53,7 @@ try { videolinks = JSON.parse(await readFile(videolinksPath, "utf8")); } catch {
 // lopende video-opnames: de scherm-QR bevat een kortlevend token; de telefoon uploadt
 // ermee en het beeldscherm ziet via polling dat de video binnen is
 const opnames = new Map();
+let lopendeUploads = 0;
 function opnameOpschonen() {
   const nu = Date.now();
   for (const [t, o] of opnames) if (nu - o.made > 15 * 60 * 1000) opnames.delete(t);
@@ -263,7 +264,9 @@ function cacheHeaders(type) {
   };
 }
 async function send(res, status, type, body) {
-  res.writeHead(status, { "content-type": type, ...cacheHeaders(type) });
+  // nosniff en een sobere referrer-policy op alles: puur verhardend, verandert geen gedrag
+  res.writeHead(status, { "content-type": type, "x-content-type-options": "nosniff",
+    "referrer-policy": "same-origin", ...cacheHeaders(type) });
   res.end(body);
 }
 const sendJson = (res, status, obj) => send(res, status, "application/json; charset=utf-8", JSON.stringify(obj));
@@ -588,6 +591,17 @@ const server = createServer(async (request, response) => {
     const token = String(q.get("token") || "");
     const o = opnames.get(token);
     if (!o || o.video) { await sendJson(response, 404, { ok: false, fout: "Opname verlopen of al afgerond. Scan de QR-code opnieuw." }); return; }
+    // te grote uploads meteen afwijzen (vóór het bufferen) en het aantal gelijktijdige
+    // uploads begrenzen: elke upload staat kort in het geheugen
+    if (Number(request.headers["content-length"] || 0) > 60 * 1024 * 1024) {
+      await sendJson(response, 413, { ok: false, fout: "De video is te groot (max. 60 MB). Neem een kortere opname." });
+      return;
+    }
+    if (lopendeUploads >= 4) {
+      await sendJson(response, 429, { ok: false, fout: "Het is even druk; probeer het over een minuut opnieuw." });
+      return;
+    }
+    lopendeUploads++;
     try {
       const ct = String(request.headers["content-type"] || "");
       const ext = ct.startsWith("video/mp4") ? ".mp4" : ct.startsWith("video/webm") ? ".webm" : null;
@@ -608,12 +622,15 @@ const server = createServer(async (request, response) => {
       await sendJson(response, 200, { ok: true, video: pad });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Upload mislukt (video te groot?)." });
+    } finally {
+      lopendeUploads--;
     }
     return;
   }
 
   // de opnamepagina die de telefoon opent na het scannen van de scherm-QR
   if (urlPath.startsWith("/o/")) {
+    response.setHeader("x-frame-options", "DENY");
     try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "opname.html"))); }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
@@ -723,6 +740,7 @@ const server = createServer(async (request, response) => {
   // de digitale kaart zelf: /k/<id> (de pagina haalt de kaart via de API op)
   if (urlPath === "/k" || urlPath.startsWith("/k/")) {
     telBezoek(request, false);
+    response.setHeader("x-frame-options", "DENY");
     try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "kaart.html"))); }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
@@ -770,6 +788,7 @@ const server = createServer(async (request, response) => {
   if (urlPath === "/v2" || urlPath === "/v2/") {
     if (urlPath === "/v2/") { response.writeHead(301, { location: "/v2" }); response.end(); return; }
     telBezoek(request, false);
+    response.setHeader("x-frame-options", "DENY");
     try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "v2.html"))); }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
@@ -777,6 +796,7 @@ const server = createServer(async (request, response) => {
   if (urlPath === "/v2/app" || urlPath === "/v2/app/") {
     if (urlPath === "/v2/app/") { response.writeHead(301, { location: "/v2/app" }); response.end(); return; }
     telBezoek(request, false);
+    response.setHeader("x-frame-options", "DENY");
     try {
       let html = await readFile(join(publicDir, "index.html"), "utf8");
       html = html.replace("<head>", '<head><base href="/"/><meta name="color-scheme" content="light"/><script>window.FYSIPLAN_V2=true</script>');
