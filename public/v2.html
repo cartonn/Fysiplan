@@ -77,28 +77,18 @@
   .mini-a4 .rij:first-child .cel{background:#f8f7f1;font-weight:600}
   .mini-a4 .cel{font:8px/1 var(--disp);padding:5px 5px;border-bottom:1px solid #f3f1e9;border-right:1px solid #f3f1e9;color:#344054}
 
-  /* iPhone: titanium rand, Dynamic Island, statusbalk, zijknoppen, thuisbalk */
-  .fone{width:234px;margin:0 auto;background:linear-gradient(160deg,#3a3d45,#17191f 30%,#26282f 90%);
-    border-radius:44px;padding:9px;box-shadow:0 30px 70px rgba(0,0,0,.5),0 4px 14px rgba(0,0,0,.35);position:relative}
-  .fone::before{content:"";position:absolute;left:-2.5px;top:84px;width:3px;height:30px;border-radius:2px;background:#3a3d45;box-shadow:0 44px 0 #3a3d45}
-  .fone::after{content:"";position:absolute;right:-2.5px;top:104px;width:3px;height:62px;border-radius:2px;background:#3a3d45}
-  .fone .scherm{background:#fdfcf8;border-radius:36px;overflow:hidden;position:relative;padding-bottom:6px}
-  .fone .eiland{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:72px;height:21px;border-radius:999px;background:#0b0d12;z-index:3}
-  .fone .status{display:flex;justify-content:space-between;align-items:center;padding:12px 20px 6px;font:600 11.5px/1 var(--disp);color:#111}
+  /* iPhone: echte verhoudingen (1:1,97), dunne rand met glans, echt schermbeeld van de digitale kaart */
+  .fone{width:238px;background:#101216;border-radius:44px;padding:8px;position:relative;
+    box-shadow:0 34px 80px rgba(0,0,0,.55),0 6px 18px rgba(0,0,0,.35),inset 0 0 0 2px #454a54,inset 0 0 0 3.5px #23262c}
+  .fone::before{content:"";position:absolute;left:-2px;top:96px;width:2.5px;height:26px;border-radius:2px;background:#31353d;box-shadow:0 40px 0 #31353d}
+  .fone::after{content:"";position:absolute;right:-2px;top:120px;width:2.5px;height:58px;border-radius:2px;background:#31353d}
+  .fone .scherm{position:relative;border-radius:36px;overflow:hidden;background:#f6f2e9}
+  .fone .scherm img.app{display:block;width:100%;margin-top:33px}
+  .fone .eiland{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:78px;height:22px;border-radius:999px;background:#000;z-index:3}
+  .fone .status{position:absolute;top:0;left:0;right:0;height:33px;display:flex;justify-content:space-between;align-items:center;
+    padding:6px 21px 0;font:600 11px/1 var(--disp);color:#111;z-index:2;background:#f6f2e9}
   .fone .status svg{display:block}
-  .fone .inhoud{padding:6px 12px 0}
-  .fone .fkop{font:700 13px/1.2 var(--disp);color:var(--blauw)}
-  .fone .fsub{font:500 9.5px/1.4 var(--disp);color:#98a2b3;margin-bottom:9px}
-  .fone .foef{display:flex;gap:8px;align-items:center;border:1px solid var(--lijn2);border-radius:11px;padding:7px;margin-bottom:7px;background:#fff}
-  .fone .foef img{width:38px;height:38px;object-fit:contain;border:1px solid var(--lijn2);border-radius:8px;background:#fff}
-  .fone .foef b{display:block;font:700 10.5px/1.2 var(--disp);color:var(--inkt)}
-  .fone .foef small{font:500 8.5px/1.3 var(--disp);color:var(--zacht)}
-  .fone .fknop{display:flex;align-items:center;justify-content:center;gap:5px;background:var(--blauw);color:#fff;
-    font:600 10px/1 var(--disp);border-radius:10px;padding:9px 5px}
-  .fone .fvideo{margin-top:7px;border-radius:10px;background:linear-gradient(160deg,#12264a,#0d1e3c);aspect-ratio:16/9;
-    display:flex;align-items:center;justify-content:center}
-  .fone .fvideo .play{width:28px;height:28px;border-radius:99px;background:rgba(255,255,255,.94);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.3)}
-  .fone .thuisbalk{width:88px;height:4px;border-radius:99px;background:#111;opacity:.28;margin:9px auto 5px}
+  .fone .thuisbalk{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:90px;height:4px;border-radius:99px;background:#111;opacity:.3;z-index:2}
 
   .brug{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;position:relative;z-index:2}
   @media (max-width:900px){.brug{flex-direction:row;padding:18px 0}}
@@ -245,7 +235,7 @@
     </div>
     <div class="wereld digitaal">
       <div class="etiket"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 18h.01"/></svg> Op de telefoon</div>
-      <div class="fone" role="img" aria-label="Telefoon met de digitale trainingskaart en een oefenvideo">
+      <div class="fone" role="img" aria-label="Telefoon met de digitale trainingskaart zoals de cliënt hem ziet">
         <div class="scherm">
           <div class="eiland"></div>
           <div class="status"><span>9:41</span><span style="display:flex;gap:5px;align-items:center">
@@ -253,16 +243,7 @@
             <svg width="14" height="10" viewBox="0 0 16 12" fill="#111"><path d="M8 9.6a1.7 1.7 0 1 1 0 2.4 1.7 1.7 0 0 1 0-2.4zM4.9 7.2a5 5 0 0 1 6.2 0l-1.4 1.7a2.8 2.8 0 0 0-3.4 0zM1.8 4.4a9.4 9.4 0 0 1 12.4 0l-1.5 1.7a7.2 7.2 0 0 0-9.4 0z"/></svg>
             <svg width="20" height="10" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="20" height="11" rx="3" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="15" height="8" rx="1.8" fill="#111"/><path d="M22.5 4v4a2.2 2.2 0 0 0 0-4z" fill="#111" fill-opacity=".4"/></svg>
           </span></div>
-          <div class="inhoud">
-            <div class="fkop">FysioTotaal</div>
-            <div class="fsub">Jouw trainingskaart</div>
-            <div class="foef">
-              <img src="/images/onderste-extremiteit/front-squat.jpg" alt=""/>
-              <div><b>Front squat</b><small>3 series · 12 herh.</small></div>
-            </div>
-            <div class="fknop">&#9654;&nbsp; Video van je therapeut</div>
-            <div class="fvideo"><span class="play"><svg width="11" height="11" viewBox="0 0 12 12"><path d="M3 1.5l7 4.5-7 4.5z" fill="#152f5b"/></svg></span></div>
-          </div>
+          <img class="app" src="/images/telefoon-kaart.jpg" alt="" width="480" height="861"/>
           <div class="thuisbalk"></div>
         </div>
       </div>
