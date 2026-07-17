@@ -577,6 +577,7 @@ const server = createServer(async (request, response) => {
 
   // het beeldscherm pollt tot de telefoon de video heeft geüpload
   if (urlPath === "/api/opname/status" && request.method === "GET") {
+    opnameOpschonen();
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const o = opnames.get(String(q.get("token") || ""));
     if (!o) { await sendJson(response, 404, { ok: false, fout: "Opname verlopen. Sluit dit venster en begin opnieuw." }); return; }
@@ -664,6 +665,7 @@ const server = createServer(async (request, response) => {
       if (!praktijk || !naam) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam en een kaartnaam op." }); return; }
       const pk = praktijk.toLowerCase();
       const kk = naam.toLowerCase();
+      if (!kaarten[pk] && Object.keys(kaarten).length >= 300) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal praktijken met gedeelde kaarten bereikt." }); return; }
       const map = (kaarten[pk] = kaarten[pk] || {});
       if (!map[kk] && Object.keys(map).length >= 100) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal kaarten voor deze praktijk bereikt." }); return; }
       const sanStr = (v, m) => String(v == null ? "" : v).slice(0, m);
