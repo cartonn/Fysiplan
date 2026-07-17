@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
-import { readFile, writeFile, mkdir, rename, access, unlink, copyFile, readdir, rm } from "node:fs/promises";
-import { constants } from "node:fs";
+import { readFile, writeFile, mkdir, rename, access, unlink, copyFile, readdir, rm, stat } from "node:fs/promises";
+import { constants, createReadStream } from "node:fs";
 import { createHash, randomBytes } from "node:crypto";
 import { join, extname, normalize, sep } from "node:path";
 
@@ -183,7 +183,8 @@ async function vraagClaude(model, maxTokens, system, user) {
   const r = await fetch(AI_BASIS + "/v1/messages", {
     method: "POST",
     headers: { "content-type": "application/json", "x-api-key": AI_KEY, "anthropic-version": "2023-06-01" },
-    body: JSON.stringify({ model, max_tokens: maxTokens, system, messages: [{ role: "user", content: user }] })
+    body: JSON.stringify({ model, max_tokens: maxTokens, system, messages: [{ role: "user", content: user }] }),
+    signal: AbortSignal.timeout(60 * 1000)
   });
   if (!r.ok) throw new Error("api " + r.status);
   const d = await r.json();
@@ -232,6 +233,11 @@ async function maakBackup() {
     for (const oud of alle.slice(0, Math.max(0, alle.length - 7))) {
       await rm(join(dataDir, "backups", oud), { recursive: true, force: true });
     }
+    // oude dagstatistieken opruimen (120 dagen bewaren): het geheugen en het
+    // statistiekenbestand blijven klein, het dashboard toont toch maar 14 dagen
+    const statDagen = Object.keys(stats.dagen).sort();
+    for (const d of statDagen.slice(0, Math.max(0, statDagen.length - 120))) delete stats.dagen[d];
+    bewaarStats();
   } catch {}
 }
 maakBackup();
@@ -356,8 +362,28 @@ async function send(res, status, type, body) {
 const sendJson = (res, status, obj) => send(res, status, "application/json; charset=utf-8", JSON.stringify(obj));
 const denied = (req, res, pad) => { logGeweigerd(req, pad); return sendJson(res, 403, { ok: false, fout: "Alleen beschikbaar voor beheer." }); };
 
-const server = createServer(async (request, response) => {
-  let urlPath = decodeURIComponent((request.url || "/").split("?")[0]);
+// Elk verzoek loopt door dit vangnet: één kapotte aanvraag (bot, rare URL, afgebroken
+// verbinding) mag nooit het hele proces neerhalen. Zonder dit stopt Node bij een
+// onafgevangen fout in de async handler en houdt Railway na drie herstarts de site uit.
+const server = createServer((request, response) => {
+  afhandelen(request, response).catch((err) => {
+    console.error("verzoek mislukt:", request.method, request.url, "-", (err && err.message) || err);
+    try {
+      if (!response.headersSent) {
+        response.writeHead(500, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+        response.end(JSON.stringify({ ok: false, fout: "Onverwachte serverfout." }));
+      } else {
+        response.end();
+      }
+    } catch {}
+  });
+});
+
+async function afhandelen(request, response) {
+  // misvormde percent-encoding (bijv. /%c0 van botscans) netjes weigeren in plaats van crashen
+  let urlPath;
+  try { urlPath = decodeURIComponent((request.url || "/").split("?")[0]); }
+  catch { await send(response, 400, "text/plain; charset=utf-8", "Bad request"); return; }
 
   // beheer-URL zonder slash, zodat relatieve paden (images/, api/) blijven kloppen
   if (urlPath === "/admin88/") { response.writeHead(301, { location: "/admin88" }); response.end(); return; }
@@ -1001,32 +1027,42 @@ const server = createServer(async (request, response) => {
       await send(response, 403, "text/plain; charset=utf-8", "Forbidden");
       return;
     }
+    // bestanden streamen in plaats van volledig in het geheugen laden: een video van
+    // 60 MB die door meerdere telefoons tegelijk (met veel Range-verzoeken) wordt
+    // bekeken, drukte anders het werkgeheugen van de container over de rand
+    let info;
     try {
-      const data = await readFile(file);
-      // video: Range-verzoeken beantwoorden, anders speelt iOS Safari niets af
-      const range = request.headers.range;
-      if ((ext === ".mp4" || ext === ".webm") && range) {
-        const m = String(range).match(/bytes=(\d*)-(\d*)/);
-        const start = m && m[1] ? parseInt(m[1], 10) : 0;
-        const end = m && m[2] ? Math.min(parseInt(m[2], 10), data.length - 1) : data.length - 1;
-        if (!m || start > end || start >= data.length) {
-          response.writeHead(416, { "content-range": `bytes */${data.length}` });
-          response.end();
-          return;
-        }
-        response.writeHead(206, {
-          "content-type": MIME[ext],
-          "content-range": `bytes ${start}-${end}/${data.length}`,
-          "accept-ranges": "bytes",
-          "content-length": end - start + 1,
-          ...cacheHeaders(MIME[ext])
-        });
-        response.end(data.subarray(start, end + 1));
+      info = await stat(file);
+      if (!info.isFile()) throw new Error("geen bestand");
+    } catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); return; }
+    const totaal = info.size;
+    const stroom = (opties, status, extraHeaders) => new Promise((resolve) => {
+      const s = createReadStream(file, opties);
+      s.on("error", () => { try { response.destroy(); } catch {} resolve(); });
+      response.on("close", () => { s.destroy(); resolve(); });
+      response.writeHead(status, { "content-type": MIME[ext], "accept-ranges": "bytes",
+        ...extraHeaders, ...cacheHeaders(MIME[ext]) });
+      s.pipe(response);
+      s.on("end", resolve);
+    });
+    // video: Range-verzoeken beantwoorden, anders speelt iOS Safari niets af
+    const range = request.headers.range;
+    if ((ext === ".mp4" || ext === ".webm") && range) {
+      const m = String(range).match(/bytes=(\d*)-(\d*)/);
+      const start = m && m[1] ? parseInt(m[1], 10) : 0;
+      const end = m && m[2] ? Math.min(parseInt(m[2], 10), totaal - 1) : totaal - 1;
+      if (!m || start > end || start >= totaal) {
+        response.writeHead(416, { "content-range": `bytes */${totaal}` });
+        response.end();
         return;
       }
-      response.writeHead(200, { "content-type": MIME[ext], "accept-ranges": "bytes", ...cacheHeaders(MIME[ext]) });
-      response.end(data);
-    } catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
+      await stroom({ start, end }, 206, {
+        "content-range": `bytes ${start}-${end}/${totaal}`,
+        "content-length": end - start + 1
+      });
+      return;
+    }
+    await stroom(undefined, 200, { "content-length": totaal });
     return;
   }
 
@@ -1087,7 +1123,12 @@ const server = createServer(async (request, response) => {
       await send(response, 404, "text/plain; charset=utf-8", "Not found");
     }
   }
-});
+}
+
+// allerlaatste vangnet op procesniveau: loggen en doordraaien in plaats van stoppen.
+// De site blijft bereikbaar; de fout staat in de Railway-logs om op te pakken.
+process.on("uncaughtException", (err) => { console.error("uncaughtException:", err); });
+process.on("unhandledRejection", (err) => { console.error("unhandledRejection:", err); });
 
 server.listen(port, host, () => {
   console.log(`Fysiplan listening on ${host}:${port} (data: ${dataDir})`);
