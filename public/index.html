@@ -190,6 +190,7 @@
   <div class="spacer"></div>
   <button class="btn" id="uploadBtn">Plaatjes uploaden</button>
   <button class="btn" id="addBtn">+ Oefening toevoegen</button>
+  <button class="btn" id="aiBtn" style="display:none">AI-hulp</button>
   <button class="btn" id="sjabBtn" style="display:none">Sjablonen</button>
   <button class="btn" id="kaartenBtn">Kaarten</button>
   <button class="btn" id="clearBtn">Wis kaart</button>
@@ -380,6 +381,24 @@ bridge2.jpg</div>
     </div>
     <div id="sj_lijst" style="max-height:340px;overflow:auto"></div>
     <div class="acts"><button class="btn" id="sj_close">Sluiten</button></div>
+  </div>
+</div>
+
+<!-- AI-kaartassistent (v2): een voorstel voor de therapeut, die beoordeelt en beslist -->
+<div class="ov" id="ovAi">
+  <div class="modal">
+    <h3>AI-kaartassistent</h3>
+    <div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;line-height:1.5">
+      Omschrijf de klacht en het niveau van de cli&euml;nt. De assistent stelt een kaart voor
+      uit je eigen oefeningenlijst, met een voorzichtige startdosering. Het blijft een voorstel:
+      jij beoordeelt, past aan en beslist wat op de kaart komt.
+    </div>
+    <textarea id="ai_klacht" rows="3" style="width:100%;resize:vertical;font-family:inherit;font-size:13px" placeholder="bijv. artrose knie links, vrouw van 68, kan 10 minuten lopen, doel: weer traplopen"></textarea>
+    <div id="ai_result" style="max-height:320px;overflow:auto;margin-top:8px"></div>
+    <div class="acts">
+      <button class="btn" id="ai_close">Sluiten</button>
+      <button class="btn primary" id="ai_go">Stel een kaart voor</button>
+    </div>
   </div>
 </div>
 
@@ -626,6 +645,7 @@ bridge2.jpg</div>
     _v2b.textContent='v2';_v2b.className='v2badge';
     document.querySelector('.brand').appendChild(_v2b);
     document.getElementById('sjabBtn').style.display='';
+    document.getElementById('aiBtn').style.display='';
   }
   if(IS_ADMIN){
     document.title='Fysiplan — Beheer';
@@ -1058,6 +1078,53 @@ bridge2.jpg</div>
     });
     closeOv('ovSjab');render();
     if(missing.length)alert('Niet meer in de oefeningenlijst (overgeslagen): '+missing.join(', '));
+  });
+
+  // ---- AI-kaartassistent (v2): klacht omschrijven, voorstel beoordelen, op de kaart zetten ----
+  var AI_VOORSTEL=null;
+  document.getElementById('aiBtn').addEventListener('click',function(){openOv('ovAi');});
+  document.getElementById('ai_close').addEventListener('click',function(){closeOv('ovAi');});
+  document.getElementById('ai_go').addEventListener('click',function(){
+    var kl=document.getElementById('ai_klacht').value.trim();
+    var uit=document.getElementById('ai_result');
+    if(kl.length<3){alert('Omschrijf eerst de klacht.');return;}
+    var go=document.getElementById('ai_go');
+    go.disabled=true;go.textContent='Bezig met nadenken...';
+    uit.innerHTML="<div class='hint'>De assistent stelt een kaart samen; dit duurt een paar tellen.</div>";
+    fetch('api/assistent',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({klacht:kl})})
+      .then(function(r){return r.json().catch(function(){return {ok:false};});})
+      .then(function(d){
+        go.disabled=false;go.textContent='Stel een kaart voor';
+        if(!d.ok){uit.innerHTML="<div class='hint'>"+esc(d.fout||'De AI-hulp is even niet bereikbaar.')+"</div>";return;}
+        AI_VOORSTEL=d;
+        uit.innerHTML=(d.toelichting?"<div style='font-size:12.5px;line-height:1.5;margin-bottom:6px'>"+esc(d.toelichting)+"</div>":"")+
+          d.oefeningen.map(function(o,i){
+            var dos=[o.series&&o.series+' series',o.herhalingen&&o.herhalingen+' herhalingen',o.gewicht].filter(Boolean).join(', ');
+            return "<label style='display:flex;gap:8px;align-items:flex-start;padding:7px 4px;border-bottom:1px solid var(--line);cursor:pointer'>"+
+              "<input type='checkbox' checked data-ai='"+i+"' style='margin-top:3px'/>"+
+              "<span style='flex:1;min-width:0'><b>"+esc(o.naam)+"</b>"+(dos?" <small style='color:var(--muted)'>"+esc(dos)+"</small>":"")+
+              (o.waarom?"<br/><small style='color:var(--muted)'>"+esc(o.waarom)+"</small>":"")+"</span></label>";
+          }).join("")+
+          "<div style='margin-top:10px;text-align:right'><button class='btn primary' id='ai_apply'>Zet op de kaart</button></div>";
+      })
+      .catch(function(){go.disabled=false;go.textContent='Stel een kaart voor';uit.innerHTML="<div class='hint'>Geen verbinding met de server.</div>";});
+  });
+  document.getElementById('ai_result').addEventListener('click',function(e){
+    if(e.target.id!=='ai_apply'||!AI_VOORSTEL)return;
+    var gekozen=[];
+    document.querySelectorAll('#ai_result [data-ai]').forEach(function(cb){if(cb.checked)gekozen.push(AI_VOORSTEL.oefeningen[+cb.dataset.ai]);});
+    if(!gekozen.length){alert('Vink minstens één oefening aan.');return;}
+    if(chosen.length&&!confirm('De huidige oefeningen op de kaart vervangen door het voorstel?'))return;
+    var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
+    var cells={};
+    gekozen.forEach(function(o){
+      var nk=normEx(o.naam);
+      if(o.series)cells['n'+nk+'.0|r0|S']=o.series;
+      if(o.herhalingen)cells['n'+nk+'.0|r0|H']=o.herhalingen;
+      if(o.gewicht)cells['n'+nk+'.0|r0|W']=o.gewicht;
+    });
+    openCard({client:client,chosen:gekozen.map(function(o){return {n:o.naam,i:0};}),rows:{},cells:cells,vids:VIDS});
+    closeOv('ovAi');
   });
 
   // ---- kaarten opslaan/openen: lokaal in deze browser (cliëntgegevens blijven lokaal) ----

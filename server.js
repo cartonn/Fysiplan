@@ -50,6 +50,11 @@ try { kaarten = JSON.parse(await readFile(kaartenPath, "utf8")); } catch {}
 let videolinks = {};
 try { videolinks = JSON.parse(await readFile(videolinksPath, "utf8")); } catch {}
 
+// vertaalcache voor de digitale kaart: per taal eenmaal vertalen, daarna gratis uit de cache
+const vertalingenPath = join(dataDir, "vertalingen.json");
+let vertalingen = {};
+try { vertalingen = JSON.parse(await readFile(vertalingenPath, "utf8")); } catch {}
+
 // lopende video-opnames: de scherm-QR bevat een kortlevend token; de telefoon uploadt
 // ermee en het beeldscherm ziet via polling dat de video binnen is
 const opnames = new Map();
@@ -166,9 +171,55 @@ function schrijfLimiet(req, res) {
   return false;
 }
 
+// ---- AI-hulp (v2): kaartassistent en vertalingen via de Claude-API ----
+// Werkt alleen als de eigenaar ANTHROPIC_API_KEY op de server heeft ingesteld;
+// zonder sleutel geven de endpoints een nette melding en verandert er niets.
+const AI_KEY = process.env.ANTHROPIC_API_KEY || "";
+const AI_BASIS = process.env.ANTHROPIC_BASE_URL || "https://api.anthropic.com";
+const AI_MODEL = process.env.AI_MODEL || "claude-sonnet-5";
+const AI_MODEL_VERTAAL = process.env.AI_MODEL_VERTAAL || "claude-haiku-4-5-20251001";
+const normEx = (s) => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
+async function vraagClaude(model, maxTokens, system, user) {
+  const r = await fetch(AI_BASIS + "/v1/messages", {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-api-key": AI_KEY, "anthropic-version": "2023-06-01" },
+    body: JSON.stringify({ model, max_tokens: maxTokens, system, messages: [{ role: "user", content: user }] })
+  });
+  if (!r.ok) throw new Error("api " + r.status);
+  const d = await r.json();
+  const tekst = (d.content || []).map((c) => c.text || "").join("");
+  const m = tekst.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
+  if (!m) throw new Error("geen json in antwoord");
+  return JSON.parse(m[0]);
+}
+// eigen limiet voor de AI-endpoints (die kosten per aanroep geld): per IP en per dag
+const aiTeller = new Map();
+let aiDag = { dag: "", n: 0 };
+function aiLimiet(req, res) {
+  const dag = vandaagKey();
+  if (aiDag.dag !== dag) aiDag = { dag, n: 0 };
+  if (++aiDag.n > 300) {
+    sendJson(res, 429, { ok: false, fout: "De AI-hulp heeft het dagmaximum bereikt; probeer het morgen opnieuw." });
+    return true;
+  }
+  const nu = Date.now();
+  if (aiTeller.size > 5000) {
+    for (const [k, v] of aiTeller) if (nu - v.start > 3600e3) aiTeller.delete(k);
+  }
+  const ip = clientIp(req);
+  const t = aiTeller.get(ip);
+  if (!t || nu - t.start > 3600e3) { aiTeller.set(ip, { start: nu, n: 1 }); return false; }
+  if (++t.n > 20) {
+    if (t.n === 21) logGeweigerd(req, "ai-limiet");
+    sendJson(res, 429, { ok: false, fout: "Even te veel AI-verzoeken; probeer het over een uur opnieuw." });
+    return true;
+  }
+  return false;
+}
+
 // dagelijkse reservekopie van alle databestanden (laatste 7 dagen): vangnet tegen
 // beschadigde schrijfacties of een bug die een bestand leegtrekt
-const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath];
+const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, vertalingenPath];
 async function maakBackup() {
   try {
     const dag = new Date().toISOString().slice(0, 10);
@@ -844,6 +895,86 @@ const server = createServer(async (request, response) => {
     ].join("\r\n");
     response.setHeader("content-disposition", 'attachment; filename="oefenmomenten.ics"');
     await send(response, 200, "text/calendar; charset=utf-8", ics);
+    return;
+  }
+
+  // AI-kaartassistent (v2): de therapeut omschrijft de klacht en krijgt een voorstel
+  // uit de eigen oefenbibliotheek. Nadrukkelijk alleen een voorstel richting de
+  // fysiotherapeut, die beoordeelt en beslist; er gaat nooit advies naar de patiënt.
+  if (urlPath === "/api/assistent" && request.method === "POST") {
+    if (!AI_KEY) {
+      await sendJson(response, 503, { ok: false, fout: "De AI-hulp staat nog uit. De eigenaar kan hem aanzetten door de omgevingsvariabele ANTHROPIC_API_KEY op de server in te stellen." });
+      return;
+    }
+    if (schrijfLimiet(request, response)) return;
+    if (aiLimiet(request, response)) return;
+    try {
+      const b = JSON.parse(await readBody(request));
+      const klacht = String(b.klacht || "").trim().slice(0, 500);
+      if (klacht.length < 3) { await sendJson(response, 400, { ok: false, fout: "Omschrijf de klacht in een paar woorden." }); return; }
+      const manifest = await buildManifest();
+      const lijst = manifest.map((e) => e.naam + " | " + e.groep + (e.ook && e.ook.length ? "/" + e.ook.join("/") : "")).join("\n");
+      const sys = "Je bent de kaartassistent van Fysiplan, een hulp voor fysiotherapeuten die een trainingskaart samenstellen. " +
+        "Kies bij de beschreven klacht 4 tot 8 passende oefeningen, uitsluitend uit de onderstaande bibliotheek en met de namen letterlijk overgenomen. " +
+        "Geef per oefening een voorzichtige startdosering (series, herhalingen en eventueel gewicht of duur, als korte tekst). Begin licht en vermijd oefeningen die bij de klacht riskant zijn. " +
+        "Dit is een voorstel voor de fysiotherapeut, die het beoordeelt en aanpast; richt de toelichting dus aan de therapeut, nooit aan de patiënt. " +
+        'Antwoord met uitsluitend JSON in dit formaat: {"toelichting":"...","oefeningen":[{"naam":"...","series":"3","herhalingen":"10","gewicht":"","waarom":"..."}]}' +
+        "\n\nBibliotheek (naam | categorie):\n" + lijst;
+      const uit = await vraagClaude(AI_MODEL, 1500, sys, "Klacht van de cliënt: " + klacht);
+      const byNorm = new Map(manifest.map((e) => [normEx(e.naam), e.naam]));
+      const kort = (v, m) => String(v == null ? "" : v).trim().slice(0, m);
+      const oefeningen = (Array.isArray(uit.oefeningen) ? uit.oefeningen : []).slice(0, 10)
+        .map((o) => ({ naam: byNorm.get(normEx(o && o.naam)) || "", series: kort(o && o.series, 12),
+          herhalingen: kort(o && o.herhalingen, 12), gewicht: kort(o && o.gewicht, 20), waarom: kort(o && o.waarom, 160) }))
+        .filter((o) => o.naam);
+      if (!oefeningen.length) {
+        await sendJson(response, 502, { ok: false, fout: "De assistent gaf geen bruikbaar voorstel; omschrijf de klacht iets anders en probeer opnieuw." });
+        return;
+      }
+      const d = dagStats(vandaagKey()); d.ai = (d.ai || 0) + 1; bewaarStats();
+      await sendJson(response, 200, { ok: true, toelichting: kort(uit.toelichting, 400), oefeningen });
+    } catch {
+      await sendJson(response, 502, { ok: false, fout: "De AI-hulp is even niet bereikbaar; probeer het zo opnieuw." });
+    }
+    return;
+  }
+
+  // vertaling van de kaartteksten (oefeningnamen en notities) voor de digitale kaart;
+  // per taal en per tekst één keer vertaald, daarna komt alles gratis uit de cache
+  if (urlPath === "/api/kaart/vertaal" && request.method === "GET") {
+    const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    const found = vindKaart(String(q.get("id") || ""));
+    if (!found) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+    const TALEN = { en: "Engels", de: "Duits", fr: "Frans", es: "Spaans", pl: "Pools", tr: "Turks", ar: "Arabisch", uk: "Oekraïens" };
+    const taal = String(q.get("taal") || "");
+    if (!TALEN[taal]) { await sendJson(response, 400, { ok: false, fout: "Onbekende taal." }); return; }
+    const cl = found.client || {};
+    const teksten = [...new Set([...(found.chosen || []).map((x) => x.n), cl.c_doel, cl.c_opm, cl.c_cave]
+      .filter(Boolean).map((s) => String(s).slice(0, 300)))].slice(0, 40);
+    const cache = (vertalingen[taal] = vertalingen[taal] || {});
+    const sleutel = (s) => createHash("sha256").update(s).digest("hex").slice(0, 16);
+    const missend = teksten.filter((s) => cache[sleutel(s)] == null);
+    if (missend.length) {
+      if (!AI_KEY) { await sendJson(response, 503, { ok: false, fout: "Vertalen staat nog uit op deze server." }); return; }
+      if (schrijfLimiet(request, response)) return;
+      if (aiLimiet(request, response)) return;
+      try {
+        const uit = await vraagClaude(AI_MODEL_VERTAAL, 2000,
+          "Je vertaalt korte teksten van een fysiotherapie-trainingskaart uit het Nederlands naar het " + TALEN[taal] + ". " +
+          "Vertaal natuurlijk en begrijpelijk voor patiënten; namen van apparaten of merknamen mag je laten staan. " +
+          "Antwoord met uitsluitend een JSON-array met de vertalingen, in dezelfde volgorde en met precies hetzelfde aantal als de invoer.",
+          JSON.stringify(missend));
+        if (!Array.isArray(uit) || uit.length !== missend.length) throw new Error("verkeerde vorm");
+        missend.forEach((s, i) => { cache[sleutel(s)] = String(uit[i]).slice(0, 400); });
+        await saveJson(vertalingenPath, vertalingen);
+      } catch {
+        await sendJson(response, 502, { ok: false, fout: "Vertalen is even niet gelukt; de kaart blijft in het Nederlands." });
+        return;
+      }
+    }
+    const map = {};
+    teksten.forEach((s) => { if (cache[sleutel(s)] != null) map[s] = cache[sleutel(s)]; });
+    await sendJson(response, 200, { ok: true, teksten: map });
     return;
   }
 

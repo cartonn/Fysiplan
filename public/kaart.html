@@ -81,6 +81,21 @@
   td.dat,th.dat{position:sticky;left:0;background:#fbf8f0;font-weight:700;color:var(--inkt);z-index:1;border-right:1px solid var(--lijn)}
   .schemahint{font:500 12.5px/1.5 var(--disp);color:var(--zacht);padding:10px 14px;border-top:1px solid var(--lijn2);display:flex;align-items:center;gap:7px}
 
+  /* taalkeuze en voorlezen: de kaart is er ook voor wie geen Nederlands leest of slecht ziet */
+  .kopacties{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .kopacties select{font:600 13.5px/1 var(--disp);color:var(--tekst);padding:9px 10px;
+    border:1px solid var(--lijn);border-radius:10px;background:#fffefa;max-width:180px}
+  .kopacties button{display:inline-flex;align-items:center;gap:7px;font:600 13.5px/1 var(--disp);
+    padding:9px 13px;border-radius:10px;cursor:pointer;border:1px solid var(--blauw-10);
+    background:var(--blauw-05);color:var(--blauw);-webkit-tap-highlight-color:transparent}
+  .kopacties button:active,.kopacties button.aan{background:var(--blauw);border-color:var(--blauw);color:#fff}
+
+  /* vaste veiligheidsregel op elke kaart */
+  .veilig{display:flex;gap:9px;align-items:flex-start;margin-top:12px;padding:11px 14px;
+    background:#fdf6e8;border:1px solid #eeddb8;border-radius:14px;
+    font:500 13.5px/1.5 var(--disp);color:#7a622e}
+  .veilig svg{margin-top:2px}
+
   /* Hoe ging het vandaag: pijnscore 0-10 in één tik */
   .mkaart,.agkaart{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;box-shadow:var(--sh);padding:16px;margin-bottom:12px}
   .mvraag{font-size:15.5px;color:var(--tekst);margin-bottom:12px}
@@ -146,7 +161,7 @@
   button:focus-visible{outline:3px solid rgba(36,86,166,.35);outline-offset:2px}
   @media print{
     body{background:#fff}
-    .vbtn,.vhouder,.mkaart,.agkaart,#metingkop,#agendakop{display:none !important}
+    .vbtn,.vhouder,.mkaart,.agkaart,#metingkop,#agendakop,.kopacties{display:none !important}
     .kop,.oef,.schemakaart{box-shadow:none}
   }
 </style>
@@ -158,43 +173,55 @@
     <img class="logo" id="logo" alt="" style="display:none"/>
     <h1 id="prak"></h1>
     <div class="adres" id="adres"></div>
+    <div class="kopacties">
+      <select id="taalsel" aria-label="Taal / Language">
+        <option value="nl">Nederlands</option><option value="en">English</option>
+        <option value="de">Deutsch</option><option value="fr">Fran&ccedil;ais</option>
+        <option value="es">Espa&ntilde;ol</option><option value="pl">Polski</option>
+        <option value="tr">T&uuml;rk&ccedil;e</option><option value="ar">&#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577;</option>
+        <option value="uk">&#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1089;&#1100;&#1082;&#1072;</option>
+      </select>
+      <button type="button" id="leesBtn" style="display:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"/></svg><span id="leesTxt">Lees voor</span></button>
+    </div>
     <div class="client" id="clientblok" style="display:none"></div>
   </header>
 
-  <h2>Jouw oefeningen <span class="tel" id="oeftel"></span></h2>
+  <div class="veilig" id="veilig"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 16px"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18.1a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg><span id="veiligTxt"></span></div>
+
+  <h2><span id="oefkop">Jouw oefeningen</span> <span class="tel" id="oeftel"></span></h2>
   <div id="oefs"></div>
 
   <h2 id="metingkop">Hoe ging het vandaag?</h2>
   <div class="mkaart" id="meting">
-    <p class="mvraag">Klaar met oefenen? Tik aan hoeveel pijn je had tijdens het oefenen.</p>
+    <p class="mvraag" id="mvraag">Klaar met oefenen? Tik aan hoeveel pijn je had tijdens het oefenen.</p>
     <div class="mschaal" id="mschaal"></div>
-    <div class="mlabels"><span>0 = geen pijn</span><span>10 = ergste pijn</span></div>
+    <div class="mlabels"><span id="ml0">0 = geen pijn</span><span id="ml10">10 = ergste pijn</span></div>
     <div class="mdank" id="mdank" style="display:none"></div>
     <div class="mhist" id="mhist" style="display:none">
-      <div class="mtitel">Jouw verloop</div>
+      <div class="mtitel" id="mtitel">Jouw verloop</div>
       <div class="mbars" id="mbars"></div>
     </div>
-    <p class="mnoot">Je score wordt bij je kaart bewaard, zodat je fysiotherapeut je voortgang kan volgen. Er telt één score per dag; tik een ander cijfer aan om die te wijzigen.</p>
+    <p class="mnoot" id="mnoot">Je score wordt bij je kaart bewaard, zodat je fysiotherapeut je voortgang kan volgen. Er telt één score per dag; tik een ander cijfer aan om die te wijzigen.</p>
   </div>
 
   <h2 id="agendakop">Herinnering in je agenda</h2>
   <div class="agkaart">
-    <p>Vergeet je oefeningen niet: zet vaste oefenmomenten in de agenda van je telefoon. Kies je dagen en tijdstip.</p>
+    <p id="agintro">Vergeet je oefeningen niet: zet vaste oefenmomenten in de agenda van je telefoon. Kies je dagen en tijdstip.</p>
     <div class="agdagen" id="agdagen"></div>
     <div class="agrij">
-      <label for="agtijd">Tijdstip</label>
+      <label for="agtijd" id="aglabel">Tijdstip</label>
       <input type="time" id="agtijd" value="09:00"/>
     </div>
-    <button class="agbtn" id="agbtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M12 14v4M10 16h4"/></svg>Zet in mijn agenda</button>
-    <p class="aghint">Je telefoon opent een agenda-uitnodiging die zichzelf elke week herhaalt. Dit werkt op iPhone en Android, zonder app of account.</p>
+    <button class="agbtn" id="agbtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M12 14v4M10 16h4"/></svg><span id="agknopTxt">Zet in mijn agenda</span></button>
+    <p class="aghint" id="aghint">Je telefoon opent een agenda-uitnodiging die zichzelf elke week herhaalt. Dit werkt op iPhone en Android, zonder app of account.</p>
   </div>
 
   <div id="schema"></div>
 
   <div class="voet">
-    Vragen over de uitvoering? Neem contact op met je praktijk.<br/>
+    <span id="voet1">Vragen over de uitvoering? Neem contact op met je praktijk.</span><br/>
     <span class="merk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a39c8a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg>
-    Gemaakt met <a href="https://fysiplan.nl/v2">Fysiplan</a></span>
+    <span id="gemaakt">Gemaakt met</span> <a href="https://fysiplan.nl/v2">Fysiplan</a></span>
   </div>
 </div>
 <div class="fout" id="fout" style="display:none">
@@ -209,9 +236,59 @@
   var id=(location.pathname.match(/^\/k\/([a-f0-9]{8,16})$/)||[])[1];
   var DRIEHOEK='<span class="driehoek"><svg width="10" height="10" viewBox="0 0 12 12"><path d="M2 1.5l8 4.5-8 4.5z" fill="currentColor"/></svg></span>';
 
-  function toon(kaart,praktijk,lib){
+  // ---- vaste teksten in negen talen; de kaartinhoud zelf vertaalt de server op verzoek ----
+  var T={
+  nl:{eyebrow:'Trainingskaart',oefkop:'Jouw oefeningen',geenoef:'Er staan nog geen oefeningen op deze kaart.',series:'series',herh:'herhalingen',vidEigen:'Video van je therapeut',vidYt:'Bekijk instructievideo',veilig:'Neem pijn serieus: stop bij toenemende pijn en overleg met je fysiotherapeut.',metingkop:'Hoe ging het vandaag?',mvraag:'Klaar met oefenen? Tik aan hoeveel pijn je had tijdens het oefenen.',ml0:'0 = geen pijn',ml10:'10 = ergste pijn',mtitel:'Jouw verloop',mnoot:'Je score wordt bij je kaart bewaard, zodat je fysiotherapeut je voortgang kan volgen. Er telt één score per dag; tik een ander cijfer aan om die te wijzigen.',mdank:'Genoteerd, dank je wel. Je fysiotherapeut kan je verloop bij deze kaart zien.',mfout:'Opslaan is niet gelukt, probeer het zo nog eens.',agendakop:'Herinnering in je agenda',agintro:'Vergeet je oefeningen niet: zet vaste oefenmomenten in de agenda van je telefoon. Kies je dagen en tijdstip.',aglabel:'Tijdstip',agknop:'Zet in mijn agenda',aghint:'Je telefoon opent een agenda-uitnodiging die zichzelf elke week herhaalt. Dit werkt op iPhone en Android, zonder app of account.',agleeg:'Kies minstens één dag voor je oefenmomenten.',dagen:['Ma','Di','Wo','Do','Vr','Za','Zo'],schemakop:'Ingevuld schema',datum:'Datum',schemahint:'S = series, H = herhalingen, W = gewicht. Veeg opzij voor alle oefeningen.',voet1:'Vragen over de uitvoering? Neem contact op met je praktijk.',gemaakt:'Gemaakt met',voor:'Voor',doel:'Doel',letop:'Let op',lees:'Lees voor',stop:'Stop',oefening:'Oefening'},
+  en:{eyebrow:'Training card',oefkop:'Your exercises',geenoef:'There are no exercises on this card yet.',series:'sets',herh:'repetitions',vidEigen:'Video from your therapist',vidYt:'Watch instruction video',veilig:'Take pain seriously: stop if the pain increases and contact your physiotherapist.',metingkop:'How did it go today?',mvraag:'Finished exercising? Tap how much pain you felt while exercising.',ml0:'0 = no pain',ml10:'10 = worst pain',mtitel:'Your progress',mnoot:'Your score is saved with your card so your physiotherapist can follow your progress. One score counts per day; tap another number to change it.',mdank:'Saved, thank you. Your physiotherapist can see your progress on this card.',mfout:'Saving did not work, please try again in a moment.',agendakop:'Reminder in your calendar',agintro:'Do not forget your exercises: put fixed exercise moments in the calendar of your phone. Choose your days and time.',aglabel:'Time',agknop:'Add to my calendar',aghint:'Your phone opens a calendar invitation that repeats every week. Works on iPhone and Android, without an app or account.',agleeg:'Choose at least one day for your exercises.',dagen:['Mo','Tu','We','Th','Fr','Sa','Su'],schemakop:'Completed schedule',datum:'Date',schemahint:'S = sets, H = repetitions, W = weight. Swipe sideways to see all exercises.',voet1:'Questions about how to do an exercise? Contact your practice.',gemaakt:'Made with',voor:'For',doel:'Goal',letop:'Note',lees:'Read aloud',stop:'Stop',oefening:'Exercise'},
+  de:{eyebrow:'Trainingskarte',oefkop:'Deine Übungen',geenoef:'Auf dieser Karte stehen noch keine Übungen.',series:'Sätze',herh:'Wiederholungen',vidEigen:'Video von deinem Therapeuten',vidYt:'Anleitungsvideo ansehen',veilig:'Nimm Schmerzen ernst: höre auf, wenn der Schmerz zunimmt, und sprich mit deinem Physiotherapeuten.',metingkop:'Wie ist es heute gelaufen?',mvraag:'Fertig mit den Übungen? Tippe an, wie viel Schmerz du beim Üben hattest.',ml0:'0 = kein Schmerz',ml10:'10 = stärkster Schmerz',mtitel:'Dein Verlauf',mnoot:'Dein Wert wird bei deiner Karte gespeichert, damit dein Physiotherapeut deinen Fortschritt verfolgen kann. Es zählt ein Wert pro Tag; tippe eine andere Zahl an, um ihn zu ändern.',mdank:'Gespeichert, danke. Dein Physiotherapeut kann deinen Verlauf bei dieser Karte sehen.',mfout:'Speichern hat nicht geklappt, versuche es gleich noch einmal.',agendakop:'Erinnerung in deinem Kalender',agintro:'Vergiss deine Übungen nicht: trage feste Übungszeiten in den Kalender deines Handys ein. Wähle deine Tage und die Uhrzeit.',aglabel:'Uhrzeit',agknop:'In meinen Kalender',aghint:'Dein Handy öffnet eine Kalendereinladung, die sich jede Woche wiederholt. Funktioniert auf iPhone und Android, ohne App oder Konto.',agleeg:'Wähle mindestens einen Tag für deine Übungen.',dagen:['Mo','Di','Mi','Do','Fr','Sa','So'],schemakop:'Ausgefülltes Schema',datum:'Datum',schemahint:'S = Sätze, H = Wiederholungen, W = Gewicht. Wische zur Seite für alle Übungen.',voet1:'Fragen zur Ausführung? Wende dich an deine Praxis.',gemaakt:'Erstellt mit',voor:'Für',doel:'Ziel',letop:'Beachte',lees:'Vorlesen',stop:'Stopp',oefening:'Übung'},
+  fr:{eyebrow:"Carte d'entraînement",oefkop:'Tes exercices',geenoef:"Il n'y a pas encore d'exercices sur cette carte.",series:'séries',herh:'répétitions',vidEigen:'Vidéo de ton kinésithérapeute',vidYt:'Voir la vidéo d’instruction',veilig:'Prends la douleur au sérieux : arrête si la douleur augmente et contacte ton kinésithérapeute.',metingkop:"Comment ça s'est passé aujourd'hui ?",mvraag:'Exercices terminés ? Indique la douleur ressentie pendant les exercices.',ml0:'0 = pas de douleur',ml10:'10 = douleur maximale',mtitel:'Ton évolution',mnoot:'Ton score est enregistré avec ta carte pour que ton kinésithérapeute puisse suivre tes progrès. Un score compte par jour ; touche un autre chiffre pour le modifier.',mdank:'Enregistré, merci. Ton kinésithérapeute peut voir ton évolution sur cette carte.',mfout:"L'enregistrement n'a pas fonctionné, réessaie dans un instant.",agendakop:'Rappel dans ton agenda',agintro:"N'oublie pas tes exercices : ajoute des moments fixes dans l'agenda de ton téléphone. Choisis tes jours et l'heure.",aglabel:'Heure',agknop:'Ajouter à mon agenda',aghint:"Ton téléphone ouvre une invitation d'agenda qui se répète chaque semaine. Fonctionne sur iPhone et Android, sans application ni compte.",agleeg:'Choisis au moins un jour pour tes exercices.',dagen:['Lu','Ma','Me','Je','Ve','Sa','Di'],schemakop:'Schéma rempli',datum:'Date',schemahint:'S = séries, H = répétitions, W = poids. Fais glisser sur le côté pour tous les exercices.',voet1:"Des questions sur l'exécution ? Contacte ton cabinet.",gemaakt:'Créé avec',voor:'Pour',doel:'Objectif',letop:'Attention',lees:'Lire à voix haute',stop:'Stop',oefening:'Exercice'},
+  es:{eyebrow:'Tarjeta de entrenamiento',oefkop:'Tus ejercicios',geenoef:'Todavía no hay ejercicios en esta tarjeta.',series:'series',herh:'repeticiones',vidEigen:'Vídeo de tu fisioterapeuta',vidYt:'Ver el vídeo de instrucciones',veilig:'Toma el dolor en serio: para si el dolor aumenta y consulta a tu fisioterapeuta.',metingkop:'¿Cómo ha ido hoy?',mvraag:'¿Has terminado? Toca cuánto dolor sentiste durante los ejercicios.',ml0:'0 = sin dolor',ml10:'10 = dolor máximo',mtitel:'Tu evolución',mnoot:'Tu puntuación se guarda con tu tarjeta para que tu fisioterapeuta pueda seguir tu progreso. Cuenta una puntuación por día; toca otro número para cambiarla.',mdank:'Guardado, gracias. Tu fisioterapeuta puede ver tu evolución en esta tarjeta.',mfout:'No se pudo guardar, inténtalo de nuevo en un momento.',agendakop:'Recordatorio en tu calendario',agintro:'No olvides tus ejercicios: pon momentos fijos en el calendario de tu teléfono. Elige tus días y la hora.',aglabel:'Hora',agknop:'Añadir a mi calendario',aghint:'Tu teléfono abre una invitación de calendario que se repite cada semana. Funciona en iPhone y Android, sin aplicación ni cuenta.',agleeg:'Elige al menos un día para tus ejercicios.',dagen:['Lu','Ma','Mi','Ju','Vi','Sá','Do'],schemakop:'Esquema completado',datum:'Fecha',schemahint:'S = series, H = repeticiones, W = peso. Desliza hacia un lado para ver todos los ejercicios.',voet1:'¿Preguntas sobre la ejecución? Contacta con tu consulta.',gemaakt:'Hecho con',voor:'Para',doel:'Objetivo',letop:'Atención',lees:'Leer en voz alta',stop:'Parar',oefening:'Ejercicio'},
+  pl:{eyebrow:'Karta treningowa',oefkop:'Twoje ćwiczenia',geenoef:'Na tej karcie nie ma jeszcze ćwiczeń.',series:'serie',herh:'powtórzenia',vidEigen:'Wideo od twojego fizjoterapeuty',vidYt:'Zobacz film instruktażowy',veilig:'Traktuj ból poważnie: przerwij, gdy ból narasta, i skontaktuj się z fizjoterapeutą.',metingkop:'Jak poszło dzisiaj?',mvraag:'Skończyłeś ćwiczyć? Zaznacz, jak silny ból odczuwałeś podczas ćwiczeń.',ml0:'0 = brak bólu',ml10:'10 = najsilniejszy ból',mtitel:'Twój przebieg',mnoot:'Twój wynik jest zapisywany przy karcie, aby fizjoterapeuta mógł śledzić twoje postępy. Liczy się jeden wynik dziennie; dotknij innej cyfry, aby go zmienić.',mdank:'Zapisano, dziękujemy. Twój fizjoterapeuta może zobaczyć twoje postępy przy tej karcie.',mfout:'Zapis się nie udał, spróbuj ponownie za chwilę.',agendakop:'Przypomnienie w kalendarzu',agintro:'Nie zapominaj o ćwiczeniach: ustaw stałe momenty ćwiczeń w kalendarzu telefonu. Wybierz dni i godzinę.',aglabel:'Godzina',agknop:'Dodaj do kalendarza',aghint:'Telefon otworzy zaproszenie do kalendarza, które powtarza się co tydzień. Działa na iPhonie i Androidzie, bez aplikacji i konta.',agleeg:'Wybierz co najmniej jeden dzień na ćwiczenia.',dagen:['Pn','Wt','Śr','Cz','Pt','So','Nd'],schemakop:'Wypełniony harmonogram',datum:'Data',schemahint:'S = serie, H = powtórzenia, W = ciężar. Przesuń w bok, aby zobaczyć wszystkie ćwiczenia.',voet1:'Pytania o wykonanie? Skontaktuj się ze swoim gabinetem.',gemaakt:'Stworzone w',voor:'Dla',doel:'Cel',letop:'Uwaga',lees:'Przeczytaj na głos',stop:'Stop',oefening:'Ćwiczenie'},
+  tr:{eyebrow:'Antrenman kartı',oefkop:'Egzersizlerin',geenoef:'Bu kartta henüz egzersiz yok.',series:'set',herh:'tekrar',vidEigen:'Terapistinden video',vidYt:'Eğitim videosunu izle',veilig:'Ağrıyı ciddiye al: ağrı artarsa dur ve fizyoterapistinle görüş.',metingkop:'Bugün nasıl geçti?',mvraag:'Egzersiz bitti mi? Egzersiz sırasında ne kadar ağrı hissettiğini işaretle.',ml0:'0 = ağrı yok',ml10:'10 = en şiddetli ağrı',mtitel:'Gelişimin',mnoot:'Puanın kartınla birlikte kaydedilir, böylece fizyoterapistin ilerlemeni takip edebilir. Günde bir puan sayılır; değiştirmek için başka bir sayıya dokun.',mdank:'Kaydedildi, teşekkürler. Fizyoterapistin bu karttaki gelişimini görebilir.',mfout:'Kaydetme başarısız oldu, birazdan tekrar dene.',agendakop:'Takviminde hatırlatma',agintro:'Egzersizlerini unutma: telefonunun takvimine sabit egzersiz zamanları ekle. Günlerini ve saatini seç.',aglabel:'Saat',agknop:'Takvimime ekle',aghint:'Telefonun her hafta tekrarlanan bir takvim daveti açar. iPhone ve Android üzerinde, uygulama veya hesap olmadan çalışır.',agleeg:'Egzersizlerin için en az bir gün seç.',dagen:['Pt','Sa','Ça','Pe','Cu','Ct','Pa'],schemakop:'Doldurulan program',datum:'Tarih',schemahint:'S = set, H = tekrar, W = ağırlık. Tüm egzersizler için yana kaydır.',voet1:'Uygulama hakkında soruların mı var? Kliniğinle iletişime geç.',gemaakt:'Hazırlayan:',voor:'Kim için',doel:'Hedef',letop:'Dikkat',lees:'Sesli oku',stop:'Durdur',oefening:'Egzersiz'},
+  ar:{eyebrow:'بطاقة التمارين',oefkop:'تمارينك',geenoef:'لا توجد تمارين على هذه البطاقة بعد.',series:'مجموعات',herh:'تكرارات',vidEigen:'فيديو من معالجك',vidYt:'شاهد فيديو التعليمات',veilig:'خذ الألم على محمل الجد: توقف إذا زاد الألم وتواصل مع أخصائي العلاج الطبيعي.',metingkop:'كيف سار الأمر اليوم؟',mvraag:'انتهيت من التمارين؟ اضغط على مقدار الألم الذي شعرت به أثناء التمرين.',ml0:'0 = لا ألم',ml10:'10 = أسوأ ألم',mtitel:'تقدمك',mnoot:'يتم حفظ نتيجتك مع بطاقتك حتى يتمكن أخصائي العلاج الطبيعي من متابعة تقدمك. تُحتسب نتيجة واحدة في اليوم؛ اضغط على رقم آخر لتغييرها.',mdank:'تم الحفظ، شكرًا لك. يمكن لمعالجك رؤية تقدمك في هذه البطاقة.',mfout:'لم ينجح الحفظ، حاول مرة أخرى بعد قليل.',agendakop:'تذكير في التقويم',agintro:'لا تنسَ تمارينك: أضف أوقات تمرين ثابتة إلى تقويم هاتفك. اختر الأيام والوقت.',aglabel:'الوقت',agknop:'أضف إلى تقويمي',aghint:'يفتح هاتفك دعوة تقويم تتكرر كل أسبوع. يعمل على iPhone وAndroid، بدون تطبيق أو حساب.',agleeg:'اختر يومًا واحدًا على الأقل لتمارينك.',dagen:['اث','ثل','أر','خم','جم','سب','أح'],schemakop:'الجدول المعبأ',datum:'التاريخ',schemahint:'S = مجموعات، H = تكرارات، W = وزن. اسحب جانبًا لرؤية كل التمارين.',voet1:'أسئلة حول طريقة الأداء؟ تواصل مع عيادتك.',gemaakt:'صُنع بواسطة',voor:'لـ',doel:'الهدف',letop:'تنبيه',lees:'اقرأ بصوت عالٍ',stop:'إيقاف',oefening:'تمرين'},
+  uk:{eyebrow:'Картка вправ',oefkop:'Твої вправи',geenoef:'На цій картці ще немає вправ.',series:'підходи',herh:'повторення',vidEigen:'Відео від твого терапевта',vidYt:'Переглянути відеоінструкцію',veilig:'Стався до болю серйозно: зупинися, якщо біль посилюється, і звернися до фізіотерапевта.',metingkop:'Як пройшло сьогодні?',mvraag:'Закінчив вправи? Натисни, наскільки сильним був біль під час вправ.',ml0:'0 = болю немає',ml10:'10 = найсильніший біль',mtitel:'Твій прогрес',mnoot:'Твій результат зберігається з карткою, щоб фізіотерапевт міг стежити за прогресом. Зараховується один результат на день; натисни іншу цифру, щоб змінити його.',mdank:'Збережено, дякуємо. Твій фізіотерапевт може бачити твій прогрес на цій картці.',mfout:'Не вдалося зберегти, спробуй ще раз за мить.',agendakop:'Нагадування в календарі',agintro:'Не забувай про вправи: додай постійний час вправ у календар телефона. Обери дні та час.',aglabel:'Час',agknop:'Додати в календар',aghint:'Телефон відкриє запрошення в календар, що повторюється щотижня. Працює на iPhone та Android, без застосунку чи облікового запису.',agleeg:'Обери хоча б один день для вправ.',dagen:['Пн','Вт','Ср','Чт','Пт','Сб','Нд'],schemakop:'Заповнена схема',datum:'Дата',schemahint:'S = підходи, H = повторення, W = вага. Гортай убік, щоб побачити всі вправи.',voet1:'Питання щодо виконання? Звернися до своєї практики.',gemaakt:'Створено з',voor:'Для',doel:'Мета',letop:'Увага',lees:'Читати вголос',stop:'Стоп',oefening:'Вправа'}
+  };
+  var SPRAAK={nl:'nl-NL',en:'en-GB',de:'de-DE',fr:'fr-FR',es:'es-ES',pl:'pl-PL',tr:'tr-TR',ar:'ar-SA',uk:'uk-UA'};
+  var TAAL=(function(){try{var t=localStorage.getItem('fp_taal');return T[t]?t:'nl';}catch(e){return 'nl';}})();
+  var VERT={};
+  var K=null;
+  function tr(k){var d=T[TAAL]||T.nl;return d[k]!=null?d[k]:T.nl[k];}
+  function vt(s){var m=VERT[TAAL];return (m&&m[s])||s;}
+  function dagStr(t){var d=new Date(t);return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
+  function staafKleur(s){return s<=3?'#3e8e5a':(s<=6?'#d98a2b':'#c94f36');}
+
+  // ---- vaste teksten van de pagina in de gekozen taal zetten ----
+  function tekenStatisch(){
+    document.documentElement.lang=TAAL;
+    document.documentElement.dir=(TAAL==='ar')?'rtl':'ltr';
+    function zet(i,t){var el=document.getElementById(i);if(el)el.textContent=t;}
+    document.querySelector('.eyebrow').textContent=tr('eyebrow');
+    zet('veiligTxt',tr('veilig'));zet('oefkop',tr('oefkop'));
+    zet('metingkop',tr('metingkop'));zet('mvraag',tr('mvraag'));
+    zet('ml0',tr('ml0'));zet('ml10',tr('ml10'));zet('mtitel',tr('mtitel'));zet('mnoot',tr('mnoot'));
+    zet('agendakop',tr('agendakop'));zet('agintro',tr('agintro'));zet('aglabel',tr('aglabel'));
+    zet('agknopTxt',tr('agknop'));zet('aghint',tr('aghint'));
+    zet('voet1',tr('voet1'));zet('gemaakt',tr('gemaakt'));
+    if(!bezigLezen)zet('leesTxt',tr('lees'));
+    tekenDagen();
+  }
+  var DAGCODES=['MO','TU','WE','TH','FR','SA','SU'];
+  var agInit=false;
+  function tekenDagen(){
+    var houder=document.getElementById('agdagen');
+    var sel=['MO','WE','FR'];
+    if(agInit){sel=[];houder.querySelectorAll('button.aan').forEach(function(b){sel.push(b.dataset.dag);});}
+    agInit=true;
+    houder.innerHTML=DAGCODES.map(function(c,i){
+      return '<button type="button" data-dag="'+c+'"'+(sel.indexOf(c)>-1?' class="aan"':'')+'>'+tr('dagen')[i]+'</button>';
+    }).join('');
+  }
+
+  // ---- de kaart zelf tekenen (oefeningen, schema, meting) in de gekozen taal ----
+  function tekenKaart(){
+    var kaart=K.kaart,praktijk=K.praktijk,lib=K.lib;
     var byNorm={};(lib||[]).forEach(function(o){byNorm[normEx(o.naam)]=o;});
-    document.title='Trainingskaart — '+(praktijk.praktijk||'Fysiplan');
+    document.title=tr('eyebrow')+' — '+(praktijk.praktijk||'Fysiplan');
     if(praktijk.logo){var lg=document.getElementById('logo');lg.src='/'+praktijk.logo;lg.style.display='block';}
     document.getElementById('prak').textContent=praktijk.praktijk||kaart.praktijk;
     // telefoonnummer als tel-link: op de telefoon bel je de praktijk in één tik
@@ -220,10 +297,11 @@
     document.getElementById('adres').innerHTML=delen.join(' · ');
     var cl=kaart.client||{};
     var regels=[];
-    if(cl.c_naam)regels.push('<div class="rij"><b>Voor</b><span>'+esc(cl.c_naam)+'</span></div>');
-    if(cl.c_doel)regels.push('<div class="rij"><b>Doel</b><span>'+esc(cl.c_doel)+'</span></div>');
-    if(cl.c_opm)regels.push('<div class="rij"><b>Let op</b><span>'+esc(cl.c_opm)+'</span></div>');
-    if(regels.length){var cb=document.getElementById('clientblok');cb.innerHTML=regels.join('');cb.style.display='flex';}
+    if(cl.c_naam)regels.push('<div class="rij"><b>'+esc(tr('voor'))+'</b><span>'+esc(cl.c_naam)+'</span></div>');
+    if(cl.c_doel)regels.push('<div class="rij"><b>'+esc(tr('doel'))+'</b><span>'+esc(vt(cl.c_doel))+'</span></div>');
+    if(cl.c_opm)regels.push('<div class="rij"><b>'+esc(tr('letop'))+'</b><span>'+esc(vt(cl.c_opm))+'</span></div>');
+    var cb=document.getElementById('clientblok');
+    if(regels.length){cb.innerHTML=regels.join('');cb.style.display='flex';}else cb.style.display='none';
 
     var cells=kaart.cells||{};
     var vids=kaart.vids||{};
@@ -239,8 +317,8 @@
       for(var r=0;r<12;r++){
         var s=cells[key+'|r'+r+'|S'],h=cells[key+'|r'+r+'|H'],w=cells[key+'|r'+r+'|W'];
         if(s||h||w){
-          if(s)chips+='<span class="chip"><b>'+esc(s)+'</b>&nbsp;series</span>';
-          if(h)chips+='<span class="chip"><b>'+esc(h)+'</b>&nbsp;herhalingen</span>';
+          if(s)chips+='<span class="chip"><b>'+esc(s)+'</b>&nbsp;'+esc(tr('series'))+'</span>';
+          if(h)chips+='<span class="chip"><b>'+esc(h)+'</b>&nbsp;'+esc(tr('herh'))+'</span>';
           if(w)chips+='<span class="chip"><b>'+esc(w)+'</b></span>';
           break;
         }
@@ -248,16 +326,128 @@
       var eigen=vids[nk]||(o&&o.video&&o.video.eigen)||null;
       var yt=(!eigen&&o&&o.video&&o.video.yt)||null;
       var knop='';
-      if(eigen)knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'" aria-expanded="false">'+DRIEHOEK+'Video van je therapeut</button>';
-      else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'" aria-expanded="false">'+DRIEHOEK+'Bekijk instructievideo</button>';
+      if(eigen)knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'" aria-expanded="false">'+DRIEHOEK+esc(tr('vidEigen'))+'</button>';
+      else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'" aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
       html+='<div class="oef"><div class="oefkop"><span class="nr">'+(idx+1)+'</span>'+
         (o?'<img src="/'+esc(o.img)+'" alt="" loading="lazy"/>':'')+
-        '<div class="oefinfo"><div class="naam">'+esc(x.n)+'</div>'+
+        '<div class="oefinfo"><div class="naam">'+esc(vt(x.n))+'</div>'+
         (chips?'<div class="chips">'+chips+'</div>':'')+'</div></div>'+
         knop+'<div class="vhouder"></div></div>';
     });
-    document.getElementById('oefs').innerHTML=html||'<div class="oef"><div class="oefkop">Er staan nog geen oefeningen op deze kaart.</div></div>';
+    document.getElementById('oefs').innerHTML=html||'<div class="oef"><div class="oefkop">'+esc(tr('geenoef'))+'</div></div>';
 
+    // ingevuld schema, alleen als er iets staat
+    var rowdefs=[];for(var r2=0;r2<12;r2++)rowdefs.push('r'+r2);
+    var gevuld=rowdefs.filter(function(rk){
+      return (kaart.rows&&kaart.rows[rk])||chosen.some(function(x){
+        var key='n'+normEx(x.n)+'.'+(x.i||0);
+        return ['S','H','W'].some(function(f){return cells[key+'|'+rk+'|'+f];});
+      });
+    });
+    var schemaEl=document.getElementById('schema');
+    if(gevuld.length){
+      var t='<h2>'+esc(tr('schemakop'))+'</h2><div class="schemakaart"><div class="schemawrap"><table><thead><tr><th class="dat">'+esc(tr('datum'))+'</th>';
+      chosen.forEach(function(x,idx){t+='<th colspan="3">'+(idx+1)+'. '+esc(vt(x.n))+'</th>';});
+      t+='</tr><tr><th class="dat"></th>';
+      chosen.forEach(function(){t+='<th>S</th><th>H</th><th>W</th>';});
+      t+='</tr></thead><tbody>';
+      gevuld.forEach(function(rk){
+        t+='<tr><td class="dat">'+esc((kaart.rows&&kaart.rows[rk])||'')+'</td>';
+        chosen.forEach(function(x){
+          var key='n'+normEx(x.n)+'.'+(x.i||0);
+          ['S','H','W'].forEach(function(f){t+='<td>'+esc(cells[key+'|'+rk+'|'+f]||'')+'</td>';});
+        });
+        t+='</tr>';
+      });
+      t+='</tbody></table></div><div class="schemahint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'+esc(tr('schemahint'))+'</div></div>';
+      schemaEl.innerHTML=t;
+    }else schemaEl.innerHTML='';
+    tekenMeting();
+  }
+
+  // ---- Hoe ging het vandaag: pijnscore 0-10, één tik, één score per dag ----
+  function tekenMeting(){
+    var schaal=document.getElementById('mschaal');
+    if(!schaal.childNodes.length){
+      var h='';
+      for(var s=0;s<=10;s++)h+='<button type="button" data-score="'+s+'" aria-label="'+s+'">'+s+'</button>';
+      schaal.innerHTML=h;
+    }
+    var m=K.kaart.metingen||[];
+    var vandaag=dagStr(Date.now());
+    var vDag=null;
+    m.forEach(function(x){if(dagStr(x.t)===vandaag)vDag=x.s;});
+    schaal.querySelectorAll('button').forEach(function(b){
+      b.classList.toggle('aan',vDag!==null&&Number(b.dataset.score)===vDag);
+    });
+    var laatste=m.slice(-14);
+    if(laatste.length){
+      document.getElementById('mhist').style.display='block';
+      document.getElementById('mbars').innerHTML=laatste.map(function(x){
+        var d=new Date(x.t);
+        return '<div class="mbar"><span class="mval">'+x.s+'</span>'+
+          '<span class="staaf" style="height:'+(6+x.s*5.2)+'px;background:'+staafKleur(x.s)+'"></span>'+
+          '<span class="mdat">'+('0'+d.getDate()).slice(-2)+'-'+('0'+(d.getMonth()+1)).slice(-2)+'</span></div>';
+      }).join('');
+    }
+  }
+
+  function alles(){tekenStatisch();tekenKaart();}
+
+  // ---- taal wisselen: vaste teksten direct, kaartinhoud via de server (eenmalig per taal) ----
+  function wisselTaal(t){
+    TAAL=T[t]?t:'nl';
+    try{localStorage.setItem('fp_taal',TAAL);}catch(e){}
+    stopLezen();
+    if(TAAL!=='nl'&&!VERT[TAAL]){
+      fetch('/api/kaart/vertaal?id='+id+'&taal='+TAAL,{cache:'no-cache'})
+        .then(function(r){return r.json();})
+        .then(function(d){VERT[TAAL]=(d&&d.ok&&d.teksten)||{};alles();})
+        .catch(function(){VERT[TAAL]={};alles();});
+    }else alles();
+  }
+
+  // ---- voorlezen met de ingebouwde spraak van de telefoon (gratis, ook offline) ----
+  var bezigLezen=false;
+  function stopLezen(){
+    if(window.speechSynthesis)speechSynthesis.cancel();
+    bezigLezen=false;
+    var b=document.getElementById('leesBtn');
+    b.classList.remove('aan');
+    document.getElementById('leesTxt').textContent=tr('lees');
+  }
+  function leesVoor(){
+    if(!window.speechSynthesis||!K)return;
+    if(bezigLezen){stopLezen();return;}
+    var cells=K.kaart.cells||{};
+    var delen=[K.praktijk.praktijk||K.kaart.praktijk||'',tr('veilig')];
+    var cl=K.kaart.client||{};
+    if(cl.c_doel)delen.push(tr('doel')+': '+vt(cl.c_doel));
+    (K.kaart.chosen||[]).forEach(function(x,idx){
+      var zin=tr('oefening')+' '+(idx+1)+': '+vt(x.n);
+      var key='n'+normEx(x.n)+'.'+(x.i||0);
+      for(var r=0;r<12;r++){
+        var s=cells[key+'|r'+r+'|S'],h=cells[key+'|r'+r+'|H'],w=cells[key+'|r'+r+'|W'];
+        if(s||h||w){
+          var d2=[];if(s)d2.push(s+' '+tr('series'));if(h)d2.push(h+' '+tr('herh'));if(w)d2.push(w);
+          zin+='. '+d2.join(', ');break;
+        }
+      }
+      delen.push(zin);
+    });
+    var u=new SpeechSynthesisUtterance(delen.join('. '));
+    u.lang=SPRAAK[TAAL]||'nl-NL';
+    u.rate=0.95;
+    u.onend=function(){stopLezen();};
+    bezigLezen=true;
+    document.getElementById('leesBtn').classList.add('aan');
+    document.getElementById('leesTxt').textContent=tr('stop');
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  }
+
+  // ---- alle knoppen één keer koppelen; hertekenen vervangt alleen de inhoud ----
+  function bindEens(){
     // video laden bij een tik; één tegelijk open, de rest pauzeert vanzelf
     document.getElementById('oefs').addEventListener('click',function(e){
       var b=e.target.closest('.vbtn');if(!b)return;
@@ -276,99 +466,39 @@
       b.setAttribute('aria-expanded','true');
       setTimeout(function(){houder.scrollIntoView({block:'nearest',behavior:'smooth'});},120);
     });
-
-    // ingevuld schema, alleen als er iets staat
-    var rowdefs=[];for(var r2=0;r2<12;r2++)rowdefs.push('r'+r2);
-    var gevuld=rowdefs.filter(function(rk){
-      return (kaart.rows&&kaart.rows[rk])||chosen.some(function(x){
-        var key='n'+normEx(x.n)+'.'+(x.i||0);
-        return ['S','H','W'].some(function(f){return cells[key+'|'+rk+'|'+f];});
-      });
-    });
-    if(gevuld.length){
-      var t='<h2>Ingevuld schema</h2><div class="schemakaart"><div class="schemawrap"><table><thead><tr><th class="dat">Datum</th>';
-      chosen.forEach(function(x,idx){t+='<th colspan="3">'+(idx+1)+'. '+esc(x.n)+'</th>';});
-      t+='</tr><tr><th class="dat"></th>';
-      chosen.forEach(function(){t+='<th>S</th><th>H</th><th>W</th>';});
-      t+='</tr></thead><tbody>';
-      gevuld.forEach(function(rk){
-        t+='<tr><td class="dat">'+esc((kaart.rows&&kaart.rows[rk])||'')+'</td>';
-        chosen.forEach(function(x){
-          var key='n'+normEx(x.n)+'.'+(x.i||0);
-          ['S','H','W'].forEach(function(f){t+='<td>'+esc(cells[key+'|'+rk+'|'+f]||'')+'</td>';});
-        });
-        t+='</tr>';
-      });
-      t+='</tbody></table></div><div class="schemahint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>S = series &nbsp;·&nbsp; H = herhalingen &nbsp;·&nbsp; W = gewicht — veeg opzij voor alle oefeningen</div></div>';
-      document.getElementById('schema').innerHTML=t;
-    }
-    initMeting(kaart.metingen||[]);
-    initAgenda(kaart.praktijk||'');
-    document.getElementById('wrap').style.display='block';
-  }
-
-  // ---- Hoe ging het vandaag: pijnscore 0-10, één tik, één score per dag ----
-  function dagStr(t){var d=new Date(t);return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
-  function staafKleur(s){return s<=3?'#3e8e5a':(s<=6?'#d98a2b':'#c94f36');}
-  function initMeting(metingen){
-    var schaal=document.getElementById('mschaal');
-    var html='';
-    for(var s=0;s<=10;s++)html+='<button type="button" data-score="'+s+'" aria-label="pijnscore '+s+'">'+s+'</button>';
-    schaal.innerHTML=html;
-    function render(m){
-      var vandaag=dagStr(Date.now());
-      var vDag=null;
-      m.forEach(function(x){if(dagStr(x.t)===vandaag)vDag=x.s;});
-      schaal.querySelectorAll('button').forEach(function(b){
-        b.classList.toggle('aan',vDag!==null&&Number(b.dataset.score)===vDag);
-      });
-      var hist=document.getElementById('mhist');
-      var laatste=m.slice(-14);
-      if(laatste.length){
-        hist.style.display='block';
-        document.getElementById('mbars').innerHTML=laatste.map(function(x){
-          var d=new Date(x.t);
-          return '<div class="mbar"><span class="mval">'+x.s+'</span>'+
-            '<span class="staaf" style="height:'+(6+x.s*5.2)+'px;background:'+staafKleur(x.s)+'"></span>'+
-            '<span class="mdat">'+('0'+d.getDate()).slice(-2)+'-'+('0'+(d.getMonth()+1)).slice(-2)+'</span></div>';
-        }).join('');
-      }
-    }
-    render(metingen);
-    schaal.addEventListener('click',function(e){
+    document.getElementById('mschaal').addEventListener('click',function(e){
       var b=e.target.closest('button[data-score]');if(!b)return;
-      var score=Number(b.dataset.score);
       var dank=document.getElementById('mdank');
       fetch('/api/kaart/meting',{method:'POST',headers:{'content-type':'application/json'},
-        body:JSON.stringify({id:id,score:score})})
+        body:JSON.stringify({id:id,score:Number(b.dataset.score)})})
         .then(function(r){return r.json();})
         .then(function(d){
-          if(!d.ok){dank.style.display='block';dank.textContent=d.fout||'Opslaan is niet gelukt, probeer het zo nog eens.';return;}
-          render(d.metingen||[]);
           dank.style.display='block';
-          dank.textContent='Genoteerd, dank je wel. Je fysiotherapeut kan je verloop bij deze kaart zien.';
+          if(!d.ok){dank.textContent=d.fout||tr('mfout');return;}
+          K.kaart.metingen=d.metingen||[];
+          tekenMeting();
+          dank.textContent=tr('mdank');
         })
-        .catch(function(){dank.style.display='block';dank.textContent='Opslaan is niet gelukt, controleer je verbinding en probeer het opnieuw.';});
+        .catch(function(){dank.style.display='block';dank.textContent=tr('mfout');});
     });
-  }
-
-  // ---- vaste oefenmomenten in de agenda van de telefoon (ICS, zonder account) ----
-  function initAgenda(){
-    var dagen=[['MO','Ma'],['TU','Di'],['WE','Wo'],['TH','Do'],['FR','Vr'],['SA','Za'],['SU','Zo']];
-    var standaard=['MO','WE','FR'];
-    var houder=document.getElementById('agdagen');
-    houder.innerHTML=dagen.map(function(d){
-      return '<button type="button" data-dag="'+d[0]+'"'+(standaard.indexOf(d[0])>-1?' class="aan"':'')+'>'+d[1]+'</button>';
-    }).join('');
-    houder.addEventListener('click',function(e){
+    document.getElementById('agdagen').addEventListener('click',function(e){
       var b=e.target.closest('button[data-dag]');if(b)b.classList.toggle('aan');
     });
     document.getElementById('agbtn').addEventListener('click',function(){
-      var gekozen=[];houder.querySelectorAll('button.aan').forEach(function(b){gekozen.push(b.dataset.dag);});
-      if(!gekozen.length){alert('Kies minstens één dag voor je oefenmomenten.');return;}
+      var gekozen=[];
+      document.querySelectorAll('#agdagen button.aan').forEach(function(b){gekozen.push(b.dataset.dag);});
+      if(!gekozen.length){alert(tr('agleeg'));return;}
       var tijd=document.getElementById('agtijd').value||'09:00';
       location.href='/api/kaart/agenda?id='+id+'&dagen='+gekozen.join(',')+'&tijd='+encodeURIComponent(tijd);
     });
+    var sel=document.getElementById('taalsel');
+    sel.value=TAAL;
+    sel.addEventListener('change',function(){wisselTaal(sel.value);});
+    if(window.speechSynthesis){
+      var lb=document.getElementById('leesBtn');
+      lb.style.display='';
+      lb.addEventListener('click',leesVoor);
+    }
   }
 
   if(!id){document.getElementById('fout').style.display='block';}
@@ -378,7 +508,10 @@
       fetch('/oefeningen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
     ]).then(function(res){
       if(!res[0]||!res[0].ok){document.getElementById('fout').style.display='block';return;}
-      toon(res[0].kaart,res[0].praktijk||{},res[1]);
+      K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1]};
+      bindEens();
+      if(TAAL!=='nl')wisselTaal(TAAL);else alles();
+      document.getElementById('wrap').style.display='block';
     }).catch(function(){document.getElementById('fout').style.display='block';});
   }
 })();

@@ -102,6 +102,11 @@ html.v2 .v2badge{background:linear-gradient(150deg,#2f66bd,#1c4487);color:#fff;
   html.v2 header.topbar .btn.primary{flex-basis:100%}
 }
 
+/* vaste veiligheidsregel onderaan elke kaart (alleen v2): print mee op papier */
+html.v2 #a4::after{content:"Neem pijn serieus: stop bij toenemende pijn en overleg met je fysiotherapeut.";
+  position:absolute;left:0;right:0;bottom:4px;text-align:center;
+  font-size:9px;color:#9a937f;pointer-events:none}
+
 /* ---- nieuwe printvarianten (alleen v2) ---- */
 @media print{
   /* Groot lettertype: beter leesbaar voor oudere patienten */
@@ -121,4 +126,7 @@ html.v2 .v2badge{background:linear-gradient(150deg,#2f66bd,#1c4487);color:#fff;
   /* QR-code op de geprinte kaart: groot genoeg om vlot te scannen */
   html.v2 #a4 .qrblok svg{width:21mm;height:21mm}
   html.v2 #a4 .qrblok small{font-size:6.5pt;max-width:24mm}
+
+  /* veiligheidsregel klein en rustig onderaan het papier */
+  html.v2 #a4::after{bottom:1mm;font-size:6.5pt;color:#666}
 }
