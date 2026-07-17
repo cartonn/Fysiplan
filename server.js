@@ -632,6 +632,7 @@ const server = createServer(async (request, response) => {
   // de opnamepagina die de telefoon opent na het scannen van de scherm-QR
   if (urlPath.startsWith("/o/")) {
     response.setHeader("x-frame-options", "DENY");
+    response.setHeader("permissions-policy", "camera=(self), microphone=(self), geolocation=()");
     response.setHeader("content-security-policy",
       "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; " +
       "img-src 'self' data:; media-src 'self' blob:; frame-src 'none'; " +
@@ -747,6 +748,7 @@ const server = createServer(async (request, response) => {
   if (urlPath === "/k" || urlPath.startsWith("/k/")) {
     telBezoek(request, false);
     response.setHeader("x-frame-options", "DENY");
+    response.setHeader("permissions-policy", "camera=(), microphone=(), geolocation=()");
     // defensielaag: de patiëntpagina mag alleen laden van de eigen server (+ de YouTube-speler)
     response.setHeader("content-security-policy",
       "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; " +
