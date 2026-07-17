@@ -1072,6 +1072,9 @@ async function afhandelen(request, response) {
     if (urlPath === "/v2/") { response.writeHead(301, { location: "/v2" }); response.end(); return; }
     telBezoek(request, false);
     response.setHeader("x-frame-options", "DENY");
+    // de landingspagina heeft geen scripts en laadt alleen eigen beelden: dat mag de browser afdwingen
+    response.setHeader("content-security-policy",
+      "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'");
     try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "v2.html"))); }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
