@@ -81,6 +81,46 @@
   td.dat,th.dat{position:sticky;left:0;background:#fbf8f0;font-weight:700;color:var(--inkt);z-index:1;border-right:1px solid var(--lijn)}
   .schemahint{font:500 12.5px/1.5 var(--disp);color:var(--zacht);padding:10px 14px;border-top:1px solid var(--lijn2);display:flex;align-items:center;gap:7px}
 
+  /* Hoe ging het vandaag: pijnscore 0-10 in één tik */
+  .mkaart,.agkaart{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;box-shadow:var(--sh);padding:16px;margin-bottom:12px}
+  .mvraag{font-size:15.5px;color:var(--tekst);margin-bottom:12px}
+  .mschaal{display:grid;grid-template-columns:repeat(11,1fr);gap:5px}
+  .mschaal button{font:700 15px/1 var(--disp);padding:12px 0;border-radius:10px;cursor:pointer;
+    border:1px solid var(--lijn);background:#faf7ef;color:var(--tekst);
+    -webkit-tap-highlight-color:transparent;transition:background .12s,color .12s,border-color .12s}
+  .mschaal button:active{background:var(--blauw-10)}
+  .mschaal button.aan{background:var(--blauw);border-color:var(--blauw);color:#fff;
+    box-shadow:0 2px 6px rgba(36,86,166,.28)}
+  .mlabels{display:flex;justify-content:space-between;font:600 11.5px/1 var(--disp);color:var(--zacht);margin-top:8px}
+  .mdank{font:600 14px/1.4 var(--disp);color:#3e7a52;background:#eef6ef;border:1px solid #d7e8da;
+    border-radius:10px;padding:10px 12px;margin-top:12px}
+  .mnoot{font:500 12.5px/1.5 var(--disp);color:var(--zacht);margin-top:12px}
+  .mhist{margin-top:14px;padding-top:12px;border-top:1px solid var(--lijn2)}
+  .mhist .mtitel{font:700 12px/1 var(--disp);letter-spacing:.08em;text-transform:uppercase;color:var(--grijs);margin-bottom:10px}
+  .mbars{display:flex;align-items:flex-end;gap:5px;height:64px}
+  .mbar{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
+  .mbar .staaf{width:100%;max-width:26px;border-radius:5px 5px 2px 2px;min-height:5px}
+  .mbar .mdat{font:600 9.5px/1 var(--disp);color:var(--zacht);white-space:nowrap}
+  .mbar .mval{font:700 11px/1 var(--disp);color:var(--tekst)}
+
+  /* herinnering in de agenda van de telefoon */
+  .agkaart p{font-size:15.5px;margin-bottom:12px}
+  .agdagen{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:12px}
+  .agdagen button{font:700 13px/1 var(--disp);padding:11px 0;border-radius:10px;cursor:pointer;
+    border:1px solid var(--lijn);background:#faf7ef;color:var(--tekst);
+    -webkit-tap-highlight-color:transparent;transition:background .12s,color .12s,border-color .12s}
+  .agdagen button.aan{background:var(--blauw);border-color:var(--blauw);color:#fff}
+  .agrij{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .agrij label{font:600 13.5px/1 var(--disp);color:var(--grijs)}
+  .agrij input[type=time]{font:600 15px/1 var(--disp);color:var(--inkt);padding:9px 10px;
+    border:1px solid var(--lijn);border-radius:10px;background:#fffefa}
+  .agbtn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;margin-top:12px;
+    font:600 15px/1 var(--disp);padding:13px 16px;border-radius:14px;cursor:pointer;
+    border:1px solid var(--blauw);background:var(--blauw);color:#fff;
+    -webkit-tap-highlight-color:transparent}
+  .agbtn:active{background:var(--blauw-d)}
+  .aghint{font:500 12.5px/1.5 var(--disp);color:var(--zacht);margin-top:10px;margin-bottom:0}
+
   /* voet */
   .voet{margin-top:36px;text-align:center;font-size:14px;color:var(--grijs)}
   .voet a{color:var(--blauw);text-decoration:none;border-bottom:1px solid var(--blauw-10)}
@@ -106,7 +146,7 @@
   button:focus-visible{outline:3px solid rgba(36,86,166,.35);outline-offset:2px}
   @media print{
     body{background:#fff}
-    .vbtn,.vhouder{display:none !important}
+    .vbtn,.vhouder,.mkaart,.agkaart,#metingkop,#agendakop{display:none !important}
     .kop,.oef,.schemakaart{box-shadow:none}
   }
 </style>
@@ -123,6 +163,31 @@
 
   <h2>Jouw oefeningen <span class="tel" id="oeftel"></span></h2>
   <div id="oefs"></div>
+
+  <h2 id="metingkop">Hoe ging het vandaag?</h2>
+  <div class="mkaart" id="meting">
+    <p class="mvraag">Klaar met oefenen? Tik aan hoeveel pijn je had tijdens het oefenen.</p>
+    <div class="mschaal" id="mschaal"></div>
+    <div class="mlabels"><span>0 = geen pijn</span><span>10 = ergste pijn</span></div>
+    <div class="mdank" id="mdank" style="display:none"></div>
+    <div class="mhist" id="mhist" style="display:none">
+      <div class="mtitel">Jouw verloop</div>
+      <div class="mbars" id="mbars"></div>
+    </div>
+    <p class="mnoot">Je score wordt bij je kaart bewaard, zodat je fysiotherapeut je voortgang kan volgen. Er telt één score per dag; tik een ander cijfer aan om die te wijzigen.</p>
+  </div>
+
+  <h2 id="agendakop">Herinnering in je agenda</h2>
+  <div class="agkaart">
+    <p>Vergeet je oefeningen niet: zet vaste oefenmomenten in de agenda van je telefoon. Kies je dagen en tijdstip.</p>
+    <div class="agdagen" id="agdagen"></div>
+    <div class="agrij">
+      <label for="agtijd">Tijdstip</label>
+      <input type="time" id="agtijd" value="09:00"/>
+    </div>
+    <button class="agbtn" id="agbtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M12 14v4M10 16h4"/></svg>Zet in mijn agenda</button>
+    <p class="aghint">Je telefoon opent een agenda-uitnodiging die zichzelf elke week herhaalt. Dit werkt op iPhone en Android, zonder app of account.</p>
+  </div>
 
   <div id="schema"></div>
 
@@ -237,7 +302,73 @@
       t+='</tbody></table></div><div class="schemahint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>S = series &nbsp;·&nbsp; H = herhalingen &nbsp;·&nbsp; W = gewicht — veeg opzij voor alle oefeningen</div></div>';
       document.getElementById('schema').innerHTML=t;
     }
+    initMeting(kaart.metingen||[]);
+    initAgenda(kaart.praktijk||'');
     document.getElementById('wrap').style.display='block';
+  }
+
+  // ---- Hoe ging het vandaag: pijnscore 0-10, één tik, één score per dag ----
+  function dagStr(t){var d=new Date(t);return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
+  function staafKleur(s){return s<=3?'#3e8e5a':(s<=6?'#d98a2b':'#c94f36');}
+  function initMeting(metingen){
+    var schaal=document.getElementById('mschaal');
+    var html='';
+    for(var s=0;s<=10;s++)html+='<button type="button" data-score="'+s+'" aria-label="pijnscore '+s+'">'+s+'</button>';
+    schaal.innerHTML=html;
+    function render(m){
+      var vandaag=dagStr(Date.now());
+      var vDag=null;
+      m.forEach(function(x){if(dagStr(x.t)===vandaag)vDag=x.s;});
+      schaal.querySelectorAll('button').forEach(function(b){
+        b.classList.toggle('aan',vDag!==null&&Number(b.dataset.score)===vDag);
+      });
+      var hist=document.getElementById('mhist');
+      var laatste=m.slice(-14);
+      if(laatste.length){
+        hist.style.display='block';
+        document.getElementById('mbars').innerHTML=laatste.map(function(x){
+          var d=new Date(x.t);
+          return '<div class="mbar"><span class="mval">'+x.s+'</span>'+
+            '<span class="staaf" style="height:'+(6+x.s*5.2)+'px;background:'+staafKleur(x.s)+'"></span>'+
+            '<span class="mdat">'+('0'+d.getDate()).slice(-2)+'-'+('0'+(d.getMonth()+1)).slice(-2)+'</span></div>';
+        }).join('');
+      }
+    }
+    render(metingen);
+    schaal.addEventListener('click',function(e){
+      var b=e.target.closest('button[data-score]');if(!b)return;
+      var score=Number(b.dataset.score);
+      var dank=document.getElementById('mdank');
+      fetch('/api/kaart/meting',{method:'POST',headers:{'content-type':'application/json'},
+        body:JSON.stringify({id:id,score:score})})
+        .then(function(r){return r.json();})
+        .then(function(d){
+          if(!d.ok){dank.style.display='block';dank.textContent=d.fout||'Opslaan is niet gelukt, probeer het zo nog eens.';return;}
+          render(d.metingen||[]);
+          dank.style.display='block';
+          dank.textContent='Genoteerd, dank je wel. Je fysiotherapeut kan je verloop bij deze kaart zien.';
+        })
+        .catch(function(){dank.style.display='block';dank.textContent='Opslaan is niet gelukt, controleer je verbinding en probeer het opnieuw.';});
+    });
+  }
+
+  // ---- vaste oefenmomenten in de agenda van de telefoon (ICS, zonder account) ----
+  function initAgenda(){
+    var dagen=[['MO','Ma'],['TU','Di'],['WE','Wo'],['TH','Do'],['FR','Vr'],['SA','Za'],['SU','Zo']];
+    var standaard=['MO','WE','FR'];
+    var houder=document.getElementById('agdagen');
+    houder.innerHTML=dagen.map(function(d){
+      return '<button type="button" data-dag="'+d[0]+'"'+(standaard.indexOf(d[0])>-1?' class="aan"':'')+'>'+d[1]+'</button>';
+    }).join('');
+    houder.addEventListener('click',function(e){
+      var b=e.target.closest('button[data-dag]');if(b)b.classList.toggle('aan');
+    });
+    document.getElementById('agbtn').addEventListener('click',function(){
+      var gekozen=[];houder.querySelectorAll('button.aan').forEach(function(b){gekozen.push(b.dataset.dag);});
+      if(!gekozen.length){alert('Kies minstens één dag voor je oefenmomenten.');return;}
+      var tijd=document.getElementById('agtijd').value||'09:00';
+      location.href='/api/kaart/agenda?id='+id+'&dagen='+gekozen.join(',')+'&tijd='+encodeURIComponent(tijd);
+    });
   }
 
   if(!id){document.getElementById('fout').style.display='block';}

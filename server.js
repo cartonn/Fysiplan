@@ -74,6 +74,19 @@ async function ruimKaartVideosOp(paden) {
   }
 }
 
+// kaart opzoeken op het onraadbare id uit de QR-code
+function vindKaart(id) {
+  if (!/^[a-f0-9]{8,16}$/.test(String(id || ""))) return null;
+  for (const pk of Object.keys(kaarten)) {
+    for (const kk of Object.keys(kaarten[pk])) {
+      if (kaarten[pk][kk].id === id) return kaarten[pk][kk];
+    }
+  }
+  return null;
+}
+// kalenderdag in Nederlandse tijd (pijnscores horen bij de dag van de patiënt, niet bij UTC)
+const nlDag = (ts) => new Date(ts).toLocaleDateString("en-CA", { timeZone: "Europe/Amsterdam" });
+
 // YouTube-id uit een geplakte link (watch/shorts/embed/youtu.be) of een los id
 function ytId(u) {
   const s = String(u || "").trim();
@@ -670,7 +683,8 @@ const server = createServer(async (request, response) => {
     const pk = String(q.get("praktijk") || "").trim().toLowerCase();
     const map = kaarten[pk] || {};
     const list = Object.values(map)
-      .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, aantal: (k.chosen || []).length }))
+      .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, aantal: (k.chosen || []).length,
+        scores: (k.metingen || []).slice(-14) }))
       .sort((a, b) => b.ts - a.ts);
     await sendJson(response, 200, list);
     return;
@@ -714,8 +728,10 @@ const server = createServer(async (request, response) => {
         }
       }
       const oudeVids = map[kk] ? Object.values(map[kk].vids || {}) : [];
+      // pijnscores van de patiënt blijven bewaard als de therapeut de kaart opnieuw opslaat
       map[kk] = { id: map[kk] ? map[kk].id : randomBytes(6).toString("hex"),
-        praktijk, naam, ts: Date.now(), client, chosen, rows, cells, vids };
+        praktijk, naam, ts: Date.now(), client, chosen, rows, cells, vids,
+        metingen: map[kk] ? map[kk].metingen || [] : [] };
       await saveJson(kaartenPath, kaarten);
       await ruimKaartVideosOp(oudeVids.filter((p) => !Object.values(vids).includes(p)));
       await sendJson(response, 200, { ok: true, id: map[kk].id });
@@ -748,19 +764,86 @@ const server = createServer(async (request, response) => {
   // één kaart op id (voor de digitale kaart die de cliënt via de QR-code opent)
   if (urlPath === "/api/kaart" && request.method === "GET") {
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
-    const id = String(q.get("id") || "");
-    let found = null;
-    if (/^[a-f0-9]{8,16}$/.test(id)) {
-      for (const pk of Object.keys(kaarten)) {
-        for (const kk of Object.keys(kaarten[pk])) {
-          if (kaarten[pk][kk].id === id) { found = kaarten[pk][kk]; break; }
-        }
-        if (found) break;
-      }
-    }
+    const found = vindKaart(String(q.get("id") || ""));
     if (!found) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     const prof = praktijken[found.praktijk.toLowerCase()] || { praktijk: found.praktijk };
     await sendJson(response, 200, { ok: true, kaart: found, praktijk: prof });
+    return;
+  }
+
+  // pijnscore van de patiënt (NPRS 0-10) bij de kaart noteren; één score per dag,
+  // een nieuwe tik op dezelfde dag vervangt de vorige. Alleen registreren en tonen:
+  // de duiding blijft bij de fysiotherapeut.
+  if (urlPath === "/api/kaart/meting" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    try {
+      const b = JSON.parse(await readBody(request));
+      const found = vindKaart(String(b.id || ""));
+      if (!found) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      const score = b.score;
+      if (typeof score !== "number" || !Number.isInteger(score) || score < 0 || score > 10) {
+        await sendJson(response, 400, { ok: false, fout: "Geef een score van 0 tot en met 10." });
+        return;
+      }
+      const m = (found.metingen = found.metingen || []);
+      const nu = Date.now();
+      const laatste = m[m.length - 1];
+      if (laatste && nlDag(laatste.t) === nlDag(nu)) laatste.s = score;
+      else m.push({ t: nu, s: score });
+      found.metingen = m.slice(-366);
+      await saveJson(kaartenPath, kaarten);
+      const d = dagStats(vandaagKey()); d.meting = (d.meting || 0) + 1; bewaarStats();
+      await sendJson(response, 200, { ok: true, metingen: found.metingen });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
+  // agenda-bestand (ICS) met herhalende oefenmomenten: werkt op elke telefoon,
+  // zonder account of app. De patiënt kiest de dagen en het tijdstip op de kaart.
+  if (urlPath === "/api/kaart/agenda" && request.method === "GET") {
+    const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    const found = vindKaart(String(q.get("id") || ""));
+    if (!found) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+    const volgorde = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
+    const dagen = [...new Set(String(q.get("dagen") || "").split(",").filter((d) => volgorde.includes(d)))]
+      .sort((a, b) => volgorde.indexOf(a) - volgorde.indexOf(b));
+    const tijd = String(q.get("tijd") || "");
+    if (!dagen.length || !/^([01]\d|2[0-3]):[0-5]\d$/.test(tijd)) {
+      await sendJson(response, 400, { ok: false, fout: "Kies minstens één dag en een geldig tijdstip." });
+      return;
+    }
+    // eerstvolgend gekozen oefenmoment in Nederlandse tijd (vandaag telt mee als het tijdstip nog komt)
+    const kort = { Mon: "MO", Tue: "TU", Wed: "WE", Thu: "TH", Fri: "FR", Sat: "SA", Sun: "SU" };
+    const nuTijd = new Date().toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Europe/Amsterdam" });
+    let startDag = null;
+    for (let i = 0; i < 8 && !startDag; i++) {
+      const dd = new Date(Date.now() + i * 864e5);
+      const wd = kort[dd.toLocaleDateString("en-US", { weekday: "short", timeZone: "Europe/Amsterdam" })];
+      if (dagen.includes(wd) && (i > 0 || tijd > nuTijd)) startDag = nlDag(dd.getTime());
+    }
+    // zwevende lokale tijd (geen tijdzone in het bestand): elke agenda-app leest dit als eigen lokale tijd
+    const dtStart = startDag.replace(/-/g, "") + "T" + tijd.replace(":", "") + "00";
+    const stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
+    const icsTekst = (s) => String(s).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
+    const link = "https://" + (request.headers.host || "fysiplan.nl") + "/k/" + found.id;
+    const ics = [
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Fysiplan//Trainingskaart//NL", "CALSCALE:GREGORIAN",
+      "BEGIN:VEVENT",
+      "UID:fysiplan-" + found.id + "-" + dagen.join("") + "-" + tijd.replace(":", "") + "@fysiplan.nl",
+      "DTSTAMP:" + stamp,
+      "DTSTART:" + dtStart,
+      "DURATION:PT20M",
+      "RRULE:FREQ=WEEKLY;BYDAY=" + dagen.join(",") + ";COUNT=" + dagen.length * 12,
+      "SUMMARY:" + icsTekst("Oefeningen doen" + (found.praktijk ? " (" + found.praktijk + ")" : "")),
+      "DESCRIPTION:" + icsTekst("Jouw trainingskaart met alle oefeningen en video's: " + link),
+      "URL:" + link,
+      "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsTekst("Tijd voor je oefeningen"), "TRIGGER:-PT0M", "END:VALARM",
+      "END:VEVENT", "END:VCALENDAR", ""
+    ].join("\r\n");
+    response.setHeader("content-disposition", 'attachment; filename="oefenmomenten.ics"');
+    await send(response, 200, "text/calendar; charset=utf-8", ics);
     return;
   }
 

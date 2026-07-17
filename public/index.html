@@ -1143,10 +1143,28 @@ bridge2.jpg</div>
         if(!Array.isArray(l)||!l.length){el.innerHTML="<div class='hint'>Nog geen gedeelde kaarten voor deze praktijk.</div>";return;}
         el.innerHTML=l.map(function(c){
           var dt=c.ts?new Date(c.ts).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}):'';
+          // pijnscores die de patiënt op de digitale kaart aantikt (alleen tonen, duiding blijft bij de therapeut)
+          var vg='',vgBlok='';
+          if(c.scores&&c.scores.length){
+            var lt=c.scores[c.scores.length-1];
+            var kleur=function(s){return s<=3?'#3e8e5a':(s<=6?'#d98a2b':'#c94f36');};
+            vg="<button class='btn' data-mtoon='"+esc(c.id)+"' title='voortgang bekijken' style='font-size:11.5px;padding:4px 10px'>"+
+              "<span style='display:inline-block;width:8px;height:8px;border-radius:99px;background:"+kleur(lt.s)+";margin-right:5px'></span>pijn "+lt.s+"</button>";
+            vgBlok="<div id='mh_"+esc(c.id)+"' style='display:none;padding:8px 4px 10px;border-bottom:1px solid var(--line)'>"+
+              "<small style='color:var(--muted)'>Pijnscore die de patiënt na het oefenen aantikt (0 = geen pijn, 10 = ergste pijn)</small>"+
+              "<div style='display:flex;align-items:flex-end;gap:6px;height:56px;margin-top:8px'>"+
+              c.scores.map(function(m){
+                var d=new Date(m.t);
+                return "<div style='flex:1;max-width:34px;display:flex;flex-direction:column;align-items:center;gap:3px'>"+
+                  "<small style='font-weight:700'>"+m.s+"</small>"+
+                  "<span style='width:100%;border-radius:4px 4px 2px 2px;height:"+(4+m.s*3.4)+"px;background:"+kleur(m.s)+"'></span>"+
+                  "<small style='color:var(--muted);font-size:9px'>"+('0'+d.getDate()).slice(-2)+'-'+('0'+(d.getMonth()+1)).slice(-2)+"</small></div>";
+              }).join("")+"</div></div>";
+          }
           return "<div style='display:flex;align-items:center;gap:8px;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
-            "<div style='flex:1;min-width:0'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+"</small></div>"+
+            "<div style='flex:1;min-width:0'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+"</small></div>"+vg+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
-            "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>";
+            "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>"+vgBlok;
         }).join("");
       })
       .catch(function(){el.innerHTML="<div class='hint'>Kaarten laden is niet gelukt.</div>";});
@@ -1161,6 +1179,8 @@ bridge2.jpg</div>
     });
   });
   document.getElementById('k_srv_lijst').addEventListener('click',function(e){
+    var m=e.target.closest('[data-mtoon]');
+    if(m){var h=document.getElementById('mh_'+m.dataset.mtoon);if(h)h.style.display=h.style.display==='none'?'':'none';return;}
     var o=e.target.closest('[data-sopen]'),x=e.target.closest('[data-sdel]');
     if(o){
       fetch('api/kaart?id='+o.dataset.sopen,{cache:'no-cache'})
