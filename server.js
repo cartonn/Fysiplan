@@ -1,5 +1,5 @@
 import { createServer } from "node:http";
-import { readFile, writeFile, mkdir, rename, access, unlink } from "node:fs/promises";
+import { readFile, writeFile, mkdir, rename, access, unlink, copyFile, readdir, rm } from "node:fs/promises";
 import { constants } from "node:fs";
 import { createHash, randomBytes } from "node:crypto";
 import { join, extname, normalize, sep } from "node:path";
@@ -152,6 +152,26 @@ function schrijfLimiet(req, res) {
   }
   return false;
 }
+
+// dagelijkse reservekopie van alle databestanden (laatste 7 dagen): vangnet tegen
+// beschadigde schrijfacties of een bug die een bestand leegtrekt
+const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath];
+async function maakBackup() {
+  try {
+    const dag = new Date().toISOString().slice(0, 10);
+    const map = join(dataDir, "backups", dag);
+    await mkdir(map, { recursive: true });
+    for (const pad of backupBestanden) {
+      try { await copyFile(pad, join(map, pad.split(sep).pop())); } catch {}
+    }
+    const alle = (await readdir(join(dataDir, "backups"))).sort();
+    for (const oud of alle.slice(0, Math.max(0, alle.length - 7))) {
+      await rm(join(dataDir, "backups", oud), { recursive: true, force: true });
+    }
+  } catch {}
+}
+maakBackup();
+setInterval(maakBackup, 24 * 60 * 60 * 1000).unref();
 
 async function saveJson(path, obj) {
   await mkdir(dataDir, { recursive: true });
