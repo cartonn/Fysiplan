@@ -218,6 +218,29 @@ function aiLimiet(req, res) {
   return false;
 }
 
+// leeslimiet voor de open kaart-API's: normaal gebruik (een lijstje per keer dat het
+// Kaarten-venster opent, één kaart per scan) blijft hier ver onder, maar een script
+// dat praktijknamen afloopt om kaartnamen en scores te verzamelen loopt vast.
+const leesTeller = new Map();
+function leesLimiet(req, res) {
+  const nu = Date.now();
+  if (leesTeller.size > 5000) {
+    for (const [k, v] of leesTeller) if (nu - v.start > 5 * 60 * 1000) leesTeller.delete(k);
+  }
+  const ip = clientIp(req);
+  const t = leesTeller.get(ip);
+  if (!t || nu - t.start > 5 * 60 * 1000) {
+    leesTeller.set(ip, { start: nu, n: 1 });
+    return false;
+  }
+  if (++t.n > 120) {
+    if (t.n === 121) logGeweigerd(req, "leeslimiet");
+    sendJson(res, 429, { ok: false, fout: "Even te veel verzoeken achter elkaar; probeer het over een paar minuten opnieuw." });
+    return true;
+  }
+  return false;
+}
+
 // dagelijkse reservekopie van alle databestanden (laatste 7 dagen): vangnet tegen
 // beschadigde schrijfacties of een bug die een bestand leegtrekt
 const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, vertalingenPath];
@@ -756,6 +779,7 @@ async function afhandelen(request, response) {
 
   // lijst van kaarten van één praktijk (licht: alleen naam, datum en aantal oefeningen)
   if (urlPath === "/api/kaarten" && request.method === "GET") {
+    if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const pk = String(q.get("praktijk") || "").trim().toLowerCase();
     const map = kaarten[pk] || {};
