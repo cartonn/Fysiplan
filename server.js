@@ -631,6 +631,10 @@ const server = createServer(async (request, response) => {
   // de opnamepagina die de telefoon opent na het scannen van de scherm-QR
   if (urlPath.startsWith("/o/")) {
     response.setHeader("x-frame-options", "DENY");
+    response.setHeader("content-security-policy",
+      "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; " +
+      "img-src 'self' data:; media-src 'self' blob:; frame-src 'none'; " +
+      "connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'");
     try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "opname.html"))); }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
@@ -741,6 +745,11 @@ const server = createServer(async (request, response) => {
   if (urlPath === "/k" || urlPath.startsWith("/k/")) {
     telBezoek(request, false);
     response.setHeader("x-frame-options", "DENY");
+    // defensielaag: de patiëntpagina mag alleen laden van de eigen server (+ de YouTube-speler)
+    response.setHeader("content-security-policy",
+      "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; " +
+      "img-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com; " +
+      "connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'");
     try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "kaart.html"))); }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
