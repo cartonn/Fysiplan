@@ -742,6 +742,15 @@ async function afhandelen(request, response) {
       if (!ext) { await sendJson(response, 400, { ok: false, fout: "Alleen mp4- of webm-video." }); return; }
       const buf = await readBodyRaw(request, 60 * 1024 * 1024);
       if (buf.length < 10 * 1024) { await sendJson(response, 400, { ok: false, fout: "De opname is leeg of te kort." }); return; }
+      // inhoudscontrole: het bestand moet ook echt een mp4 ('ftyp' op positie 4) of
+      // webm (EBML-kop) zijn; zo kan de opslag niet dienen als verspreidpunt voor
+      // willekeurige bestanden die zich als video voordoen
+      const echtMp4 = buf.subarray(4, 8).toString("latin1") === "ftyp";
+      const echtWebm = buf[0] === 0x1a && buf[1] === 0x45 && buf[2] === 0xdf && buf[3] === 0xa3;
+      if ((ext === ".mp4" && !echtMp4) || (ext === ".webm" && !echtWebm)) {
+        await sendJson(response, 400, { ok: false, fout: "Dit bestand is geen geldige video-opname." });
+        return;
+      }
       await mkdir(join(uploadsDir, "videos"), { recursive: true });
       const pad = "uploads/videos/v-" + token + ext;
       await writeFile(join(dataDir, pad), buf);
