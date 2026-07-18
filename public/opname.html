@@ -41,6 +41,12 @@
     display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
   .opknop i{width:56px;height:56px;border-radius:999px;background:var(--rood);transition:all .2s ease;display:block}
   .opknop.bezig i{width:30px;height:30px;border-radius:8px}
+  /* wisselen tussen voor- en achtercamera, zoals in de camera-app van de telefoon */
+  .flip{position:absolute;right:18px;bottom:calc(30px + env(safe-area-inset-bottom));
+    width:48px;height:48px;border-radius:999px;border:none;cursor:pointer;color:#fff;
+    background:rgba(20,20,20,.45);backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center}
+  .flip:active{background:rgba(20,20,20,.7)}
   .uitleg{font-size:14.5px;color:var(--grijs);text-align:center;max-width:340px;line-height:1.5}
 
   /* voorvertoning en klaar-scherm */
@@ -94,22 +100,46 @@
   }).catch(function(){fout('Geen verbinding met de server.');});
 
   function start(info){
-    var stream=null,rec=null,delen=[],timer=null,sec=0,MAXSEC=60;
+    var stream=null,rec=null,delen=[],timer=null,sec=0,MAXSEC=60,richting='environment';
     var mime=MediaRecorder.isTypeSupported('video/mp4')?'video/mp4'
             :MediaRecorder.isTypeSupported('video/webm;codecs=vp9')?'video/webm;codecs=vp9'
             :'video/webm';
-    navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1280},height:{ideal:720}},audio:true})
-      .then(function(s){stream=s;opnameUI();})
-      .catch(function(){fout('Geen toegang tot de camera. Geef de browser toestemming voor camera en microfoon en probeer het opnieuw.');});
+    function vraagCamera(facing,gelukt,mislukt){
+      navigator.mediaDevices.getUserMedia({video:{facingMode:facing,width:{ideal:1280},height:{ideal:720}},audio:true})
+        .then(function(s){richting=facing;stream=s;gelukt();})
+        .catch(mislukt);
+    }
+    vraagCamera('environment',opnameUI,function(){fout('Geen toegang tot de camera. Geef de browser toestemming voor camera en microfoon en probeer het opnieuw.');});
 
+    function spiegel(){
+      // voorcamera gespiegeld tonen, zoals elke camera-app; de opname zelf blijft gewoon rechtop
+      var v=document.getElementById('v');
+      if(v)v.style.transform=(richting==='user')?'scaleX(-1)':'';
+    }
+    function toonStream(){
+      var v=document.getElementById('v');
+      if(v)v.srcObject=stream;
+      spiegel();
+    }
+    function wisselCamera(){
+      if(rec&&rec.state==='recording')return;
+      var nieuw=(richting==='environment')?'user':'environment';
+      var oud=richting;
+      if(stream)stream.getTracks().forEach(function(t){t.stop();});
+      vraagCamera(nieuw,toonStream,function(){
+        vraagCamera(oud,toonStream,function(){fout('De camera is niet meer bereikbaar. Ververs de pagina en probeer het opnieuw.');});
+      });
+    }
     function opnameUI(){
       toon("<div class='cam'><video id='v' autoplay muted playsinline></video>"+
         (info.naam?"<div class='naamchip'><span>"+esc(info.naam)+"</span></div>":"")+
         "<div class='tijd' id='tijd'><span><i class='stip'></i><b id='tel'>0:00</b></span></div>"+
-        "<div class='balk'><button class='opknop' id='knop' aria-label='opname starten of stoppen'><i></i></button></div></div>"+
+        "<div class='balk'><button class='opknop' id='knop' aria-label='opname starten of stoppen'><i></i></button>"+
+        "<button class='flip' id='flip' aria-label='wissel tussen voor- en achtercamera'><svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M20 8h-3l-2-3H9L7 8H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z'/><path d='M15.5 13.5a3.5 3.5 0 1 1-1-2.4'/><path d='M15.5 9.5v2h-2'/></svg></button></div></div>"+
         "<div class='uitleg'>Richt de camera, tik op de rode knop en doe de oefening voor (max. 1 minuut). Tik nogmaals om te stoppen.</div>");
-      document.getElementById('v').srcObject=stream;
+      toonStream();
       document.getElementById('knop').addEventListener('click',wissel);
+      document.getElementById('flip').addEventListener('click',wisselCamera);
     }
     function wissel(){
       var b=document.getElementById('knop');
@@ -120,6 +150,7 @@
       rec.onstop=voorvertoning;
       rec.start();
       b.classList.add('bezig');
+      var fl=document.getElementById('flip');if(fl)fl.style.visibility='hidden';
       document.getElementById('tijd').style.display='flex';
       timer=setInterval(function(){
         sec++;document.getElementById('tel').textContent=Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');

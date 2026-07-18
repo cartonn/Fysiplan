@@ -883,6 +883,7 @@ async function afhandelen(request, response) {
 
   // één kaart op id (voor de digitale kaart die de cliënt via de QR-code opent)
   if (urlPath === "/api/kaart" && request.method === "GET") {
+    if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const found = vindKaart(String(q.get("id") || ""));
     if (!found) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
@@ -923,6 +924,7 @@ async function afhandelen(request, response) {
   // agenda-bestand (ICS) met herhalende oefenmomenten: werkt op elke telefoon,
   // zonder account of app. De patiënt kiest de dagen en het tijdstip op de kaart.
   if (urlPath === "/api/kaart/agenda" && request.method === "GET") {
+    if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const found = vindKaart(String(q.get("id") || ""));
     if (!found) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
