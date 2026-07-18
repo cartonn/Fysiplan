@@ -403,6 +403,11 @@ const server = createServer((request, response) => {
 });
 
 async function afhandelen(request, response) {
+  // HSTS zodra het verkeer via HTTPS loopt (op Railway altijd, via de proxy-header):
+  // de browser van bezoekers en QR-scanners weigert daarna onversleutelde verbindingen
+  if (request.headers["x-forwarded-proto"] === "https") {
+    response.setHeader("strict-transport-security", "max-age=15552000");
+  }
   // misvormde percent-encoding (bijv. /%c0 van botscans) netjes weigeren in plaats van crashen
   let urlPath;
   try { urlPath = decodeURIComponent((request.url || "/").split("?")[0]); }
