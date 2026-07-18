@@ -1,7 +1,7 @@
 import { createServer } from "node:http";
 import { readFile, writeFile, mkdir, rename, access, unlink, copyFile, readdir, rm, stat } from "node:fs/promises";
 import { constants, createReadStream } from "node:fs";
-import { createHash, randomBytes } from "node:crypto";
+import { createHash, randomBytes, timingSafeEqual } from "node:crypto";
 import { join, extname, normalize, sep } from "node:path";
 
 const port = Number(process.env.PORT || 3000);
@@ -11,7 +11,12 @@ const publicDir = join(process.cwd(), "public");
 // Beheer: /admin88 toont de beheer-weergave; mutatie-API's eisen deze sleutel als header.
 // Let op: dit is afscherming-door-verhulling, geen echte authenticatie.
 const ADMIN_KEY = process.env.ADMIN_KEY || "admin88";
-const isAdmin = (req) => req.headers["x-admin-sleutel"] === ADMIN_KEY;
+// constant-time vergelijking: het antwoordtempo verraadt niets over de sleutel
+const isAdmin = (req) => {
+  const a = Buffer.from(String(req.headers["x-admin-sleutel"] || ""));
+  const b = Buffer.from(ADMIN_KEY);
+  return a.length === b.length && timingSafeEqual(a, b);
+};
 
 // versie-info voor /health: welke commit draait er en hoeveel oefeningen levert de server
 let buildInfo = {};
