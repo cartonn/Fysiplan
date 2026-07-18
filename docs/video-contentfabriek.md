@@ -34,6 +34,76 @@ FYSIPLAN_ADMIN_KEY='...' npm run videos:upload-batch -- \
   --dir ./renders --base-url https://fysiplan.nl --confirm-upload
 ```
 
+## Productiegraph: 1.721 afhankelijke nodes
+
+De actuele conceptroute is geen handmatige lus over 215 items. `scripts/video-graph.mjs` bouwt een
+gerichte acyclische graph (DAG) met één gedeelde avatarbron en een afzonderlijke, herstartbare tak
+per oefening. Een fout blokkeert alleen de nakomelingen van die oefening; voltooide nodes worden op
+inputhash uit de cache hervat.
+
+```mermaid
+flowchart LR
+  A["Avatar master\nGemini 3 Pro Image"] --> P["Poseframe per oefening\navatar + bronillustratie"]
+  P --> M["Motionclip\nOmni Flash · complex: Seedance 2"]
+  S["Nederlands conceptscript"] --> V["Nederlandse stem\nEleven Multilingual v2"]
+  V --> C["Getimede captions"]
+  M --> F["1080p compositing"]
+  V --> F
+  C --> F
+  F --> Q["Technische QA\ncodec · audio · duur · grootte"]
+  Q --> U["Concept-upload\n+ Video"]
+  U --> R["Fysioreview 1 + 2"]
+  R --> G["Klinisch goedgekeurd"]
+```
+
+De gekozen graph gebruikt Runway als modelhub. Gemini 3 Pro Image maakt eerst één vaste
+fotorealistische avatar. Per oefening combineert een poseframe die menselijke identiteit met de
+bestaande bronillustratie; daarna maakt Gemini Omni Flash één rustige bewegingscyclus. De tien
+`extra-review`-items gaan direct via het duurdere Seedance 2 op 1080p. De Nederlandse ElevenLabs-stem loopt
+als onafhankelijke tak en komt pas bij compositing samen met beeld en captions. Complexe of
+afgekeurde takes kunnen later op Seedance of menselijke motion capture worden vervangen zonder de
+overige nodes opnieuw te betalen.
+
+```bash
+# graph en actuele prijsraming tonen; geen providerkosten
+npm run videos:graph
+node scripts/video-graph.mjs plan --provider runway --upload-concepts \
+  --base-url https://fysiplan.nl
+
+# één pilot volledig maken, technisch controleren en als zichtbaar concept koppelen
+RUNWAYML_API_SECRET='...' FYSIPLAN_ADMIN_KEY='...' \
+  node scripts/video-graph.mjs run --provider runway --execute \
+  --only fp_ff306042c93f0900 --budget-usd 1 \
+  --upload-concepts --base-url https://fysiplan.nl
+
+# na goedkeuring van de pilot de volledige graph fan-out uitvoeren
+RUNWAYML_API_SECRET='...' FYSIPLAN_ADMIN_KEY='...' \
+  node scripts/video-graph.mjs run --provider runway --execute \
+  --budget-usd 230 --concurrency 3 \
+  --upload-concepts --base-url https://fysiplan.nl
+```
+
+Op 18 juli 2026 raamt de graph de eerste generatie van alle 215 items op ongeveer **$207**, exclusief
+herkansingen en belasting. De runner weigert te starten als de berekende nodekosten boven
+`--budget-usd` liggen. Runway noemt voor de gebruikte modellen 10 credits per videoseconde,
+20 credits per Gemini 3 Pro-render, 40 credits per seconde Seedance 2 op 1080p en 1 credit per 50
+TTS-tekens; API-credits kosten $0,01.
+Zie de officiële [Runway API-prijzen](https://docs.dev.runwayml.com/guides/pricing/) en
+[SDK-workflow](https://docs.dev.runwayml.com/api-details/sdks/).
+
+De lokale provider is uitsluitend een kosteloze end-to-endtest van graph, titels, Nederlandse
+systeemstem, captions, compositing, QA en upload. Hij is geen avatarproductie. Alleen de
+`runway`-provider maakt de menselijk ogende pose- en motion-assets.
+
+## Concepten zichtbaar, nooit stilzwijgend goedgekeurd
+
+De gebruiker heeft gekozen om de conceptvideo's vóór fysiobeoordeling te laten maken. Daarom mag de
+graph ze na technische QA koppelen, maar bewaart de server `reviewStatus: concept`. Op de
+patiëntkaart staat dan in de gekozen taal zichtbaar **“AI-concept · beoordeling door
+fysiotherapeut volgt”**. Pas na twee inhoudelijke reviews mag de status naar klinisch gecontroleerd.
+Een handmatig opgenomen therapeutvideo blijft gewoon een menselijke praktijkvideo en krijgt deze
+AI-markering niet.
+
 De TTS-batch maakt eveneens alleen audio voor scripts met twee ingevulde reviewers:
 
 ```bash
@@ -43,9 +113,9 @@ ELEVENLABS_API_KEY='...' ELEVENLABS_VOICE_ID='...' \
 
 ## Besluit in één zin
 
-Bouw één herkenbare digitale Fysiplan-fysiotherapeut, laat iedere beweging door een echte
-fysiotherapeut uitvoeren en vastleggen met motion capture, en gebruik AI alleen voor de avatar,
-stem en lokalisatie — nooit om een therapeutische beweging te verzinnen.
+Bouw één herkenbare digitale Fysiplan-fysiotherapeut, laat de graph alle 215 conceptbewegingen,
+stemmen en video's maken, en laat fysiotherapeuten ze daarna gericht goedkeuren, corrigeren of voor
+de complexe gevallen vervangen door menselijke motion capture.
 
 Dat geeft Fysiplan een eigen, meertalige bibliotheek die klinisch controleerbaar en veel goedkoper
 te onderhouden is dan per taal een volledige video opnieuw maken.
@@ -53,20 +123,25 @@ te onderhouden is dan per taal een volledige video opnieuw maken.
 ## Waarom dit anders moet dan een gewone AI-avatar
 
 Synthesia en HeyGen zijn sterk in pratende avatars, lipsynchronisatie en templatevideo's op schaal.
-Hun productdocumentatie beschrijft echter geen klinisch betrouwbare full-body biomechanica. Een
-tekstprompt als “doe een squat” is daarom geen veilige bron voor patiëntinstructie. Zie de officiële
+Hun productdocumentatie beschrijft echter geen gegarandeerd klinisch betrouwbare full-body
+biomechanica. Een tekstprompt als “doe een squat” is daarom wel een bruikbare conceptbron, maar geen
+zelfstandige klinische goedkeuring. Zie de officiële
 [Synthesia API- en templatedocumentatie](https://docs.synthesia.io/reference/introduction),
 [Synthesia Personal Avatars](https://docs.synthesia.io/docs/personal-avatars) en
 [HeyGen API-prijzen](https://help.heygen.com/en/articles/10060327-heygen-api-pricing-explained).
 
-De beweging is het medische product. Daarom is de bron altijd een fysiotherapeut die de oefening
-daadwerkelijk uitvoert; de avatar is alleen de consistente visuele huid daaroverheen.
+De beweging is het medische product. Daarom blijft iedere gegenereerde beweging zichtbaar een
+concept totdat twee fysiotherapeuten de volledige take hebben gezien. Alleen afgekeurde of
+onvoldoende consistente bewegingen hoeven opnieuw te worden gegenereerd of met menselijke motion
+capture te worden vervangen.
 
 ## Aanbevolen stack
 
 | Laag | Keuze | Reden |
 | --- | --- | --- |
-| Bewegingsbron | Ervaren fysiotherapeut + vast captureprotocol | Menselijke, herhaalbare en reviewbare uitvoering |
+| Conceptavatar en -pose | Gemini 3 Pro Image via Runway | Krachtigste aangeboden beeldmodel, mensreferentie voor identiteit en bronillustratie als posecontext |
+| Conceptmotion | Gemini Omni Flash + Seedance 2 via Runway | Schaalbare cyclus; de tien extra-risico-items krijgen direct het sterkere 1080p-model |
+| Premium/vervanging | Ervaren fysiotherapeut + vast captureprotocol | Menselijke, herhaalbare uitvoering voor afgekeurde of zeer complexe AI-takes |
 | Productie motion capture | Rokoko Smartsuit Pro II | 200 fps, onbeperkt opnemen, FBX/BVH/CSV, directe Unreal/Blender-workflow en ingebouwde cleanup; [productinformatie](https://www.rokoko.com/products/smartsuit-pro) |
 | Goedkope pilot | Move One op iPhone | Snel valideren zonder studio-investering; [prijzen en limieten](https://docs.move.ai/knowledge/move-one-pricing) |
 | Avatar/render | Epic MetaHuman + Unreal Engine | Fotorealistische, consistente eigen avatar en controle over camera, kleding, licht en anatomische zichtbaarheid; [MetaHuman-documentatie](https://dev.epicgames.com/documentation/en-us/metahuman/metahuman-documentation) |

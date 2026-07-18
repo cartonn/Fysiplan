@@ -719,12 +719,13 @@ async function afhandelen(request, response) {
     try {
       const b = JSON.parse(await readBody(request));
       const id = String(b.exerciseId || "");
+      const conceptVideo = b.reviewStatus === "concept" && b.aiGenerated === true;
       const manifest = await buildManifest();
       const oefening = manifest.find((e) => exerciseId(e) === id);
       if (!oefening) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden." }); return; }
       if (!STREAM_ENABLED) {
         await sendJson(response, 200, { ok: true, provider: "railway-volume", maxBytes: 60 * 1024 * 1024,
-          uploadURL: `/api/oefeningen/video/upload?exerciseId=${encodeURIComponent(id)}` });
+          uploadURL: `/api/oefeningen/video/upload?exerciseId=${encodeURIComponent(id)}${conceptVideo ? "&reviewStatus=concept&aiGenerated=1" : ""}` });
         return;
       }
       const expiry = new Date(Date.now() + 60 * 60 * 1000).toISOString();
@@ -735,7 +736,8 @@ async function afhandelen(request, response) {
           expiry,
           requireSignedURLs: false,
           creator: "fysiplan",
-          meta: { name: cleanName(b.bestandsnaam, 120) || `${oefening.naam}.mp4`, exerciseId: id, exerciseName: oefening.naam }
+          meta: { name: cleanName(b.bestandsnaam, 120) || `${oefening.naam}.mp4`, exerciseId: id, exerciseName: oefening.naam,
+            reviewStatus: conceptVideo ? "concept" : "reviewed", aiGenerated: conceptVideo ? "true" : "false" }
         })
       });
       const uid = streamUid(result && result.uid);
@@ -772,7 +774,10 @@ async function afhandelen(request, response) {
       const oudBestand = cur.eigen || "";
       const oudeStream = cur.stream && cur.stream.uid;
       delete cur.eigen;
-      cur.stream = { provider: "cloudflare-stream", uid, iframe: streamIframe(uid), aiGenerated: true };
+      delete cur.eigenMeta;
+      const conceptVideo = asset.meta.reviewStatus === "concept" && String(asset.meta.aiGenerated) === "true";
+      cur.stream = { provider: "cloudflare-stream", uid, iframe: streamIframe(uid), aiGenerated: conceptVideo,
+        reviewStatus: conceptVideo ? "concept" : "reviewed" };
       videolinks[oefening.naam] = cur;
       try {
         await saveJson(videolinksPath, videolinks);
@@ -809,6 +814,7 @@ async function afhandelen(request, response) {
     try {
       const q = new URLSearchParams((request.url || "").split("?")[1] || "");
       const id = String(q.get("exerciseId") || "");
+      const conceptVideo = q.get("reviewStatus") === "concept" && q.get("aiGenerated") === "1";
       const manifest = await buildManifest();
       const oefening = manifest.find((e) => exerciseId(e) === id);
       if (!oefening) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden." }); return; }
@@ -830,6 +836,8 @@ async function afhandelen(request, response) {
       await writeFile(join(dataDir, nieuwPad), buf);
       const vorige = videolinks[oefening.naam] || null;
       const cur = { ...(vorige || {}), eigen: nieuwPad };
+      if (conceptVideo) cur.eigenMeta = { aiGenerated: true, reviewStatus: "concept" };
+      else delete cur.eigenMeta;
       const oudeStream = cur.stream && cur.stream.uid;
       delete cur.stream;
       videolinks[oefening.naam] = cur;
@@ -866,6 +874,7 @@ async function afhandelen(request, response) {
       if ((b.eigenWissen || b.uploadWissen) && cur.eigen) {
         try { await unlink(join(dataDir, cur.eigen)); } catch {}
         delete cur.eigen;
+        delete cur.eigenMeta;
       }
       if (b.uploadWissen && cur.stream) {
         if (cur.stream.uid) verwijderStream(cur.stream.uid);
@@ -961,6 +970,7 @@ async function afhandelen(request, response) {
         const oudeStream = cur.stream && cur.stream.uid;
         if (cur.eigen) { try { await unlink(join(dataDir, cur.eigen)); } catch {} }
         cur.eigen = pad;
+        delete cur.eigenMeta;
         delete cur.stream;
         videolinks[o.naam] = cur;
         await saveJson(videolinksPath, videolinks);

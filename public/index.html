@@ -753,10 +753,11 @@ bridge2.jpg</div>
       var np=o.imgs.filter(function(im){return im.type==='img';}).length;
       var sub=(o.bron==='carla')?(np+' plaatje'+(np===1?'':'s')):(o.s+" × "+o.h+(o.h==1?" (statisch/cardio)":"")+(o.bron=='eigen'?" · eigen":""));
       var metVideo=!!(o.video&&(o.video.eigen||o.video.stream||o.video.yt||o.video.catalog));
-      var videoBadge=metVideo?"<span class='video-ok'><svg viewBox='0 0 12 12' aria-hidden='true'><path d='M2 1.5l8 4.5-8 4.5z' fill='currentColor'/></svg>video inbegrepen</span>":"";
+      var videoConcept=!!(o.video&&((o.video.eigenMeta&&o.video.eigenMeta.reviewStatus==='concept')||(o.video.stream&&o.video.stream.reviewStatus==='concept')));
+      var videoBadge=metVideo?"<span class='video-ok'><svg viewBox='0 0 12 12' aria-hidden='true'><path d='M2 1.5l8 4.5-8 4.5z' fill='currentColor'/></svg>"+(videoConcept?'AI-concept · review volgt':'video inbegrepen')+"</span>":"";
       var videoBeheer=(IS_ADMIN&&o.bron==='server')
         ?"<button class='video-manage"+(metVideo?" has-video":"")+"' data-video='"+o.id+"' title='"+(metVideo?"video bekijken of vervangen":"avatarvideo uploaden")+"'>"+
-          (metVideo?"<svg viewBox='0 0 12 12' aria-hidden='true'><path d='M2 1.5l8 4.5-8 4.5z' fill='currentColor'/></svg>Video beheren":"+ Video")+"</button>"
+          (metVideo?"<svg viewBox='0 0 12 12' aria-hidden='true'><path d='M2 1.5l8 4.5-8 4.5z' fill='currentColor'/></svg>"+(videoConcept?'Concept beoordelen':'Video beheren'):"+ Video")+"</button>"
         :videoBadge;
       var ren=(IS_ADMIN&&o.bron==='server')
         ?"<button class='ren' data-ren='"+o.id+"' title='naam wijzigen' aria-label='naam wijzigen'>&#9998;</button>"+
@@ -913,9 +914,11 @@ bridge2.jpg</div>
     var v=o&&o.video;
     if(v&&v.eigen){
       var src=String(v.eigen);if(src.charAt(0)!=='/')src='/'+src;
-      html="<video src='"+esc(src)+"' controls playsinline preload='metadata'></video><div class='video-caption'>Geüploade avatarvideo · gaat automatisch mee met deze oefening</div>";
+      html="<video src='"+esc(src)+"' controls playsinline preload='metadata'></video><div class='video-caption'>"+
+        ((v.eigenMeta&&v.eigenMeta.reviewStatus==='concept')?'AI-concept · beoordeling door fysiotherapeut volgt':'Geüploade avatarvideo · gaat automatisch mee met deze oefening')+"</div>";
     }else if(v&&v.stream&&v.stream.iframe){
-      html="<iframe src='"+esc(v.stream.iframe)+"' title='Avatarvideo' allowfullscreen></iframe><div class='video-caption'>Avatarvideo in Cloudflare Stream · geschikt voor de volledige videotheek</div>";
+      html="<iframe src='"+esc(v.stream.iframe)+"' title='Avatarvideo' allowfullscreen></iframe><div class='video-caption'>"+
+        (v.stream.reviewStatus==='concept'?'AI-concept · beoordeling door fysiotherapeut volgt':'Avatarvideo in Cloudflare Stream · geschikt voor de volledige videotheek')+"</div>";
     }else if(v&&v.yt){
       html="<iframe src='https://www.youtube-nocookie.com/embed/"+esc(v.yt)+"' title='Instructievideo' allowfullscreen></iframe><div class='video-caption'>YouTube-video · te vervangen door een eigen avatarvideo</div>";
     }else if(v&&v.catalog&&v.catalog.iframe){

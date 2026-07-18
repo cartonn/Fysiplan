@@ -3,11 +3,11 @@
   "collection": "Fysiplan uitlegvideo's — 215 oefeningen",
   "language": "nl-NL",
   "avatar": {
-    "platform": "Unreal Engine MetaHuman",
-    "profile": "Fysiplan MetaHuman v1 — fotorealistisch, volwassen, neutrale en professionele uitstraling",
-    "bodyMotionSource": "motion capture van een BIG-geregistreerde of aantoonbaar bevoegde fysiotherapeut",
-    "facialAnimationSource": "MetaHuman Audio Driven Animation op de goedgekeurde Nederlandse voice-over",
-    "rule": "Nooit lichaamsbeweging uit tekst-naar-video genereren."
+    "platform": "Runway multi-model graph; MetaHuman/motion capture blijft de latere premium-vervanging",
+    "profile": "Fysiplan Avatar v1 — fotorealistisch, volwassen, neutrale en professionele uitstraling",
+    "bodyMotionSource": "AI-concept via poseframe en motionvideo; fysiotherapeuten beoordelen en vervangen fouten vóór klinische goedkeuring",
+    "facialAnimationSource": "Nederlandse ElevenLabs-voice-over; demonstratievideo bevat geen pratende mond nodig",
+    "rule": "Generatieve lichaamsbeweging mag uitsluitend als duidelijk gemarkeerd concept zichtbaar zijn; nooit als klinisch gecontroleerd publiceren zonder twee fysioreviewers."
   },
   "render": {
     "resolution": "1920x1080",

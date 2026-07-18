@@ -11,10 +11,16 @@
     "videos:production": "node scripts/video-productie.mjs",
     "videos:production:write": "node scripts/video-productie.mjs --write",
     "videos:production:csv": "node scripts/video-productie.mjs --export-csv",
+    "videos:graph": "node scripts/video-graph.mjs plan",
+    "videos:graph:status": "node scripts/video-graph.mjs status",
     "videos:upload-batch": "node scripts/video-upload-batch.mjs",
     "start": "node server.js"
   },
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "@runwayml/sdk": "^4.10.0",
+    "sharp": "^0.35.3"
   }
 }

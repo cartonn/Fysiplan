@@ -261,6 +261,7 @@
   };
   var SPRAAK={nl:'nl-NL',en:'en-GB',de:'de-DE',fr:'fr-FR',es:'es-ES',pl:'pl-PL',tr:'tr-TR',ar:'ar-SA',uk:'uk-UA'};
   var VIDEO_META={nl:'AI-demonstratie · klinisch gecontroleerd',en:'AI demonstration · clinically reviewed',de:'KI-Demonstration · klinisch geprüft',fr:'Démonstration IA · vérifiée cliniquement',es:'Demostración con IA · revisada clínicamente',pl:'Demonstracja AI · sprawdzona klinicznie',tr:'Yapay zekâ gösterimi · klinik olarak kontrol edildi',ar:'عرض بالذكاء الاصطناعي · تمت مراجعته سريريًا',uk:'ШІ-демонстрація · клінічно перевірено'};
+  var VIDEO_META_CONCEPT={nl:'AI-concept · beoordeling door fysiotherapeut volgt',en:'AI concept · physiotherapist review pending',de:'KI-Konzept · physiotherapeutische Prüfung folgt',fr:'Concept IA · validation du kinésithérapeute à venir',es:'Concepto de IA · pendiente de revisión fisioterapéutica',pl:'Koncepcja AI · oczekuje na ocenę fizjoterapeuty',tr:'Yapay zekâ taslağı · fizyoterapist incelemesi bekleniyor',ar:'مسودة بالذكاء الاصطناعي · بانتظار مراجعة أخصائي العلاج الطبيعي',uk:'ШІ-концепт · очікує перевірки фізіотерапевта'};
   var TAAL=(function(){try{var t=localStorage.getItem('fp_taal');return T[t]?t:'nl';}catch(e){return 'nl';}})();
   var VERT={};
   var K=null;
@@ -340,16 +341,22 @@
           break;
         }
       }
-      var eigen=vids[nk]||(o&&o.video&&o.video.eigen)||null;
+      var persoonlijk=vids[nk]||null;
+      var praktijkEigen=(!persoonlijk&&o&&o.video&&o.video.eigen)||null;
+      var eigen=persoonlijk||praktijkEigen;
       var praktijkStream=(!eigen&&o&&o.video&&o.video.stream)||null;
       var yt=(!eigen&&!praktijkStream&&o&&o.video&&o.video.yt)||null;
       var catalogus=(!eigen&&!praktijkStream&&!yt&&o&&o.video&&o.video.catalog)||null;
       var stream=(praktijkStream&&praktijkStream.iframe)||(catalogus&&catalogus.iframe);
       var aiVideo=praktijkStream||catalogus;
       var knop='';
-      if(eigen)knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'" aria-expanded="false">'+DRIEHOEK+esc(tr('vidEigen'))+'</button>';
+      if(eigen){
+        var eigenMeta=praktijkEigen&&o.video&&o.video.eigenMeta;
+        knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'" aria-expanded="false">'+DRIEHOEK+esc(eigenMeta&&eigenMeta.aiGenerated?tr('vidYt'):tr('vidEigen'))+'</button>'+
+          (eigenMeta&&eigenMeta.aiGenerated?'<div class="vmeta">'+esc(eigenMeta.reviewStatus==='concept'?(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl):(VIDEO_META[TAAL]||VIDEO_META.nl))+'</div>':'');
+      }
       else if(stream)knop='<button class="vbtn" data-stream="'+esc(stream)+'" aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>'+
-        (aiVideo.aiGenerated?'<div class="vmeta">'+esc(VIDEO_META[TAAL]||VIDEO_META.nl)+'</div>':'');
+        (aiVideo.aiGenerated?'<div class="vmeta">'+esc(aiVideo.reviewStatus==='concept'?(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl):(VIDEO_META[TAAL]||VIDEO_META.nl))+'</div>':'');
       else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'" aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
       html+='<div class="oef"><div class="oefkop"><span class="nr">'+(idx+1)+'</span>'+
         (o?'<img src="/'+esc(o.img)+'" alt="" loading="lazy"/>':'')+
