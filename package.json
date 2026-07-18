@@ -4,10 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/video-catalogus.mjs && node scripts/build.js",
+    "build": "node scripts/video-catalogus.mjs && node scripts/video-productie.mjs && node scripts/build.js",
     "images:normalize": "python3 scripts/normalize-image-visibility.py --write",
     "videos:check": "node scripts/video-catalogus.mjs",
     "videos:export": "node scripts/video-catalogus.mjs --export-csv",
+    "videos:production": "node scripts/video-productie.mjs",
+    "videos:production:write": "node scripts/video-productie.mjs --write",
+    "videos:production:csv": "node scripts/video-productie.mjs --export-csv",
+    "videos:upload-batch": "node scripts/video-upload-batch.mjs",
     "start": "node server.js"
   },
   "engines": {

@@ -1,5 +1,46 @@
 # Fysiplan video-contentfabriek
 
+## Productiestatus van de huidige 215 oefeningen
+
+De repository bevat nu voor alle **215/215** oefeningen een gekoppeld Nederlands conceptscript,
+shotplan, materiaalset, stabiele `exerciseId` en reviewstatus in
+`content/video-productie-215.json`. Tien items hebben daarnaast een expliciete extra
+risicobeoordeling. Geen item staat automatisch op goedgekeurd: een script, motion-capturetake en
+eindvideo doorlopen elk hun eigen poort. Zo kan een batchproces nooit een medisch onbeoordeelde
+avatarvideo live zetten.
+
+De scripts zijn bewust compact opgebouwd uit uitgangshouding, uitvoering, belangrijkste cue en een
+vaste veiligheidszin. Het zijn productieconcepten, geen vervanging voor individueel fysiotherapeutisch
+advies. Merkspecifieke machines worden op het fysieke apparaat geverifieerd voordat de performer ze
+opneemt.
+
+De productiebestanden worden als volgt beheerd:
+
+```bash
+# controleert exact 215 koppelingen en alle publicatiepoorten
+npm run videos:production
+
+# synchroniseert gewijzigde scripts; bestaande review- en assetvelden blijven behouden
+npm run videos:production:write
+
+# maakt de opnamelijst in studio-volgorde
+npm run --silent videos:production:csv > video-opnamelijst.csv
+
+# droge controle van dubbel goedgekeurde renders met bestandsnaam <exerciseId>.mp4
+npm run videos:upload-batch -- --dir ./renders --base-url https://fysiplan.nl
+
+# pas na controle echt koppelen aan de bestaande + Video-functie
+FYSIPLAN_ADMIN_KEY='...' npm run videos:upload-batch -- \
+  --dir ./renders --base-url https://fysiplan.nl --confirm-upload
+```
+
+De TTS-batch maakt eveneens alleen audio voor scripts met twee ingevulde reviewers:
+
+```bash
+ELEVENLABS_API_KEY='...' ELEVENLABS_VOICE_ID='...' \
+  node scripts/video-productie.mjs --tts-dir ./audio-nl
+```
+
 ## Besluit in één zin
 
 Bouw één herkenbare digitale Fysiplan-fysiotherapeut, laat iedere beweging door een echte
@@ -28,14 +69,23 @@ daadwerkelijk uitvoert; de avatar is alleen de consistente visuele huid daarover
 | Bewegingsbron | Ervaren fysiotherapeut + vast captureprotocol | Menselijke, herhaalbare en reviewbare uitvoering |
 | Productie motion capture | Rokoko Smartsuit Pro II | 200 fps, onbeperkt opnemen, FBX/BVH/CSV, directe Unreal/Blender-workflow en ingebouwde cleanup; [productinformatie](https://www.rokoko.com/products/smartsuit-pro) |
 | Goedkope pilot | Move One op iPhone | Snel valideren zonder studio-investering; [prijzen en limieten](https://docs.move.ai/knowledge/move-one-pricing) |
-| Avatar/render | Epic MetaHuman + Unreal Engine | Hoogste realistische, consistente eigen avatar en controle over camera, kleding, licht en anatomische zichtbaarheid; [MetaHuman Animator](https://dev.epicgames.com/documentation/metahuman/metahuman-animator-in-unreal-engine) |
+| Avatar/render | Epic MetaHuman + Unreal Engine | Fotorealistische, consistente eigen avatar en controle over camera, kleding, licht en anatomische zichtbaarheid; [MetaHuman-documentatie](https://dev.epicgames.com/documentation/en-us/metahuman/metahuman-documentation) |
 | Stem | ElevenLabs Multilingual v2/v3 | Consistente stem over veel talen via API; [modellen](https://elevenlabs.io/docs/overview/models) en [TTS API](https://elevenlabs.io/docs/api-reference/text-to-speech/convert) |
 | Video delivery | Cloudflare Stream | Upload, encoding, adaptieve playback, signed URL-optie, captions en meerdere audiosporen in één videomaster; [Stream](https://developers.cloudflare.com/stream/) |
 | App-koppeling | `exerciseId` + goedgekeurde catalogus | Automatische één-klik-koppeling die hernoemen en vertalen overleeft |
 
-MetaHuman markerless body capture vanaf één camera is in Unreal 5.8 nog experimenteel. Gebruik dat
-daarom voor tests, niet als enige productiebron. Zie
-[MetaHuman mono video capture](https://dev.epicgames.com/documentation/metahuman/metahuman-animation-from-mono-video-capture-in-unreal-engine).
+MetaHuman markerless body capture vanaf één camera is in Unreal 5.8 nog experimenteel en de
+body-animatiefunctionaliteit is Windows-only. Gebruik dat daarom voor tests, niet als enige
+productiebron. De batch-API is in 5.8 wel uitgebreid; zie de officiële
+[MetaHuman 5.8 release notes](https://dev.epicgames.com/documentation/metahuman/metahuman-5-8-release-notes-in-unreal-engine).
+Gezichtsanimatie kan daarna reproduceerbaar uit de goedgekeurde voice-over komen via
+[Audio Driven Animation](https://dev.epicgames.com/documentation/en-us/metahuman/audio-driven-animation).
+MetaHuman Animator en Creator zijn via Python te automatiseren
+([Animator Python API](https://dev.epicgames.com/documentation/metahuman/python-scripting-for-metahuman-animator),
+[Creator Python API](https://dev.epicgames.com/documentation/metahuman/metahuman-creator-python-scripting-in-unreal-engine)).
+De 215 shots worden ten slotte als vaste queue gerenderd via Unreal
+[Movie Render Queue](https://dev.epicgames.com/documentation/unreal-engine/movie-render-pipeline-in-unreal-engine)
+en de officiële [commandline-rendering](https://dev.epicgames.com/documentation/en-us/unreal-engine/using-command-line-rendering-with-move-render-queue-in-unreal-engine).
 Voor latere studio-opschaling is Move Genesis een professioneel markerless multi-camerasysteem met
 biomechanische modellering; zie [Genesis overview](https://docs.move.ai/knowledge/genesis-overview).
 
@@ -70,7 +120,7 @@ leesbare naam; oudere kaarten blijven via de naamfallback werken.
 
 ## Eén visuele master, alle talen
 
-Render per oefening één korte visuele master van ongeveer 15–25 seconden. Voeg daarna per taal een
+Render per oefening één korte visuele master van ongeveer 20–32 seconden. Voeg daarna per taal een
 apart audiospoor en captionbestand toe. Cloudflare Stream ondersteunt extra audiosporen en captions:
 
 - [extra audiosporen](https://developers.cloudflare.com/stream/edit-videos/adding-additional-audio-tracks/);
@@ -82,6 +132,9 @@ beschikbare taalsporen en opent automatisch de captiontaal als die bestaat.
 
 Gebruik één gelicentieerde Fysiplan-stem, een vaste medische woordenlijst en taalreview door een
 moedertaalspreker. Een letterlijke AI-vertaling is geen publicatiegoedkeuring.
+ElevenLabs ondersteunt uitspraakwoordenboeken voor vaste termen; beheer die als versieerbaar
+onderdeel van de stemproductie. Zie de officiële
+[pronunciation-dictionaryhandleiding](https://elevenlabs.io/docs/eleven-api/guides/how-to/text-to-speech/pronunciation-dictionaries).
 
 ## Publicatiepoort
 
@@ -145,7 +198,8 @@ gratis deliverylaag en multi-audio; zie [Mux pricing](https://www.mux.com/pricin
 
 ## Pilot van zes weken
 
-1. Kies de 50 meest gebruikte oefeningen uit gebruiksdata en laat één fysiotherapeut de definitieve
+1. Kies uit het manifest eerst 12 representatieve oefeningen: staand, mat, apparaat, TRX, Bosu,
+   kettlebell en minstens twee `extra-review`-items. Laat twee fysiotherapeuten de definitieve
    uitvoering en foutenlijst vastleggen.
 2. Bouw één Fysiplan MetaHuman, leg performer-, gezicht- en stemrechten schriftelijk vast en maak
    een vast camera/licht/kledingprotocol.
@@ -154,7 +208,10 @@ gratis deliverylaag en multi-audio; zie [Mux pricing](https://www.mux.com/pricin
 4. Publiceer Nederlands, Engels en Turks, ieder met captions en taalreview.
 5. Laat twee fysiotherapeuten onafhankelijk op uitvoering, camerazicht, tempo en veiligheidszin
    controleren; verschillen moeten vóór publicatie worden opgelost.
-6. Meet afspelen, volledig bekijken, patiëntbegrip en therapietrouw — geen diagnose of automatische
+6. Laat pas na een foutloze ketentest de overige 203 items per materiaalbatch opnemen. Bij gemiddeld
+   vijf tot acht minuten capturetijd per oefening is alleen de motion-capturedag circa 18–29 uur;
+   plan daarnaast cleanup, render, uitspraakcontrole en dubbele klinische review.
+7. Meet afspelen, volledig bekijken, patiëntbegrip en therapietrouw — geen diagnose of automatische
    voorschrijfbeslissing.
 
 Video bij een thuisoefenprogramma kan gedrag verbeteren: in een RCT na beroerte was de
@@ -166,7 +223,9 @@ daarna de productielijn naar 250 en 1.000 items opschalen.
 
 ## Dagelijks beheer
 
-- Exporteer de actuele wachtrij met `npm run videos:export > video-productie.csv`.
+- Exporteer de capturewachtrij met `npm run --silent videos:production:csv > video-opnamelijst.csv`.
+- Genereer stem en render pas nadat twee namen en een reviewdatum bij het script zijn vastgelegd.
+- Laat het batch-uploadscript standaard in droge modus draaien; `--confirm-upload` is een bewuste tweede stap.
 - Voeg alleen na beide reviews een item aan `content/video-catalogus.json` toe.
 - Controleer met `npm run videos:check`.
 - Publiceer een wijziging als nieuwe `version`; overschrijf nooit stil een klinisch goedgekeurde
