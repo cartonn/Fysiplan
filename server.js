@@ -3,10 +3,18 @@ import { readFile, writeFile, mkdir, rename, access, unlink, copyFile, readdir, 
 import { constants, createReadStream } from "node:fs";
 import { createHash, randomBytes, timingSafeEqual } from "node:crypto";
 import { join, extname, normalize, sep } from "node:path";
+import { exerciseId } from "./lib/exercise-id.js";
+import { publicCatalogVideo } from "./lib/video-catalog.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
 const publicDir = join(process.cwd(), "public");
+const videoCatalogusPath = join(process.cwd(), "content", "video-catalogus.json");
+
+// De eigen Fysiplan-videotheek is versiegestuurd en wordt alleen gepubliceerd na
+// klinische goedkeuring. Concepten en reviewmetadata verlaten de server niet.
+let videoCatalogus = { schemaVersion: 1, videos: [] };
+try { videoCatalogus = JSON.parse(await readFile(videoCatalogusPath, "utf8")); } catch {}
 
 // Beheer: /admin88 toont de beheer-weergave; mutatie-API's eisen deze sleutel als header.
 // Let op: dit is afscherming-door-verhulling, geen echte authenticatie.
@@ -301,7 +309,14 @@ async function buildManifest() {
       return o;
     });
   return base.concat(extra)
-    .map((e) => (videolinks[e.naam] ? { ...e, video: videolinks[e.naam] } : e))
+    .map((e) => {
+      const id = exerciseId(e);
+      const praktijk = videolinks[e.naam];
+      const catalogus = publicCatalogVideo(videoCatalogus, id);
+      const video = praktijk || catalogus ? { ...(praktijk || {}) } : null;
+      if (video && catalogus) video.catalog = catalogus;
+      return { ...e, exerciseId: id, ...(video ? { video } : {}) };
+    })
     .sort((a, b) => catOrder(a.groep) - catOrder(b.groep)
       || a.groep.localeCompare(b.groep, "nl")
       || a.naam.localeCompare(b.naam, "nl"));
@@ -433,7 +448,8 @@ async function afhandelen(request, response) {
       hernoemd: Object.keys(renames).length,
       toegevoegd: extra.length,
       verwijderd: deleted.length,
-      verplaatst: Object.keys(catOverrides).length
+      verplaatst: Object.keys(catOverrides).length,
+      catalogusVideos: (videoCatalogus.videos || []).filter((v) => v.status === "approved").length
     });
     return;
   }
@@ -837,7 +853,9 @@ async function afhandelen(request, response) {
         if (b.client && b.client[k]) client[k] = sanStr(b.client[k], 500);
       }
       const chosen = (Array.isArray(b.chosen) ? b.chosen : []).slice(0, 12)
-        .map((x) => ({ n: sanStr(x && x.n, 80), i: Math.max(0, Math.min(9, Number(x && x.i) || 0)) }))
+        .map((x) => ({ n: sanStr(x && x.n, 80),
+          id: /^fp_[a-f0-9]{16}$/.test(String(x && x.id || "")) ? String(x.id) : "",
+          i: Math.max(0, Math.min(9, Number(x && x.i) || 0)) }))
         .filter((x) => x.n);
       // persoonlijke video's per oefening (alleen paden van eigen opnames toegestaan)
       const vids = {};
@@ -1061,7 +1079,7 @@ async function afhandelen(request, response) {
     // defensielaag: de patiëntpagina mag alleen laden van de eigen server (+ de YouTube-speler)
     response.setHeader("content-security-policy",
       "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; " +
-      "img-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com; " +
+      "img-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com https://*.cloudflarestream.com https://iframe.videodelivery.net; " +
       "connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'");
     try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "kaart.html"))); }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }

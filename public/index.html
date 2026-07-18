@@ -58,6 +58,9 @@
   .row:hover{background:#f6f8fb}
   .row .nm{flex:1;line-height:1.3;font-weight:500;color:var(--ink)}
   .row .nm small{display:block;color:var(--soft);font-size:11px;font-weight:400}
+  .row .video-ok{display:inline-flex;align-items:center;gap:4px;margin-top:3px;padding:2px 6px;border-radius:999px;
+    background:#ecfdf3;color:#287a4b;font-size:10.5px;font-weight:600;line-height:1.2}
+  .row .video-ok svg{width:9px;height:9px}
   .thumb{width:38px;height:38px;flex:0 0 38px;border:1px solid var(--line);border-radius:9px;background:#fbfcfe;color:var(--ink);object-fit:contain;padding:2px}
   .row .thumb{width:56px !important;height:56px !important;flex:0 0 56px;border-radius:10px}
   .row .add{flex:0 0 auto;width:28px;height:28px;border-radius:50%;border:1px solid var(--brand-100);background:var(--brand-50);color:var(--brand-700);font-size:18px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
@@ -120,6 +123,10 @@
   #a4 .pic:hover .vid{display:flex}
   #a4 .pic .vid:hover{border-color:var(--brand);color:var(--brand);transform:scale(1.08)}
   #a4 .pic .vid.aan{display:flex;background:var(--brand);border-color:var(--brand);color:#fff}
+  /* Een catalogus-/praktijkvideo reist automatisch mee met de oefening naar de digitale kaart. */
+  #a4 .pic .vauto{position:absolute;bottom:4px;left:4px;display:flex;align-items:center;gap:3px;
+    padding:3px 5px;border-radius:999px;background:rgba(31,111,235,.92);color:#fff;font-size:8px;font-weight:700;
+    line-height:1;box-shadow:0 1px 4px rgba(16,24,40,.22)}
   /* ---- modal ---- */
   .ov{position:fixed;inset:0;background:rgba(16,24,40,.45);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
   .ov.on{display:flex}
@@ -606,8 +613,8 @@ bridge2.jpg</div>
     try{localStorage.setItem('fysiplan_notes',JSON.stringify(NOTES));}catch(e){}
   }
   // naam -> oefening-index, voor het koppelen van geüploade plaatjes
-  var byNorm={};
-  function rebuildLookup(){byNorm={};OEF.forEach(function(o){byNorm[normEx(o.naam)]=o.id;});}
+  var byNorm={},byStable={};
+  function rebuildLookup(){byNorm={};byStable={};OEF.forEach(function(o){byNorm[normEx(o.naam)]=o.id;if(o.exerciseId)byStable[o.exerciseId]=o.id;});}
   rebuildLookup();
   // practice settings + autosave of the current card
   var SET={praktijk:'FysioTotaal'};
@@ -696,6 +703,8 @@ bridge2.jpg</div>
       var has=chosen.some(function(c){return c.o===o.id;});
       var np=o.imgs.filter(function(im){return im.type==='img';}).length;
       var sub=(o.bron==='carla')?(np+' plaatje'+(np===1?'':'s')):(o.s+" × "+o.h+(o.h==1?" (statisch/cardio)":"")+(o.bron=='eigen'?" · eigen":""));
+      var metVideo=!!(o.video&&(o.video.eigen||o.video.yt||o.video.catalog));
+      var videoBadge=metVideo?"<span class='video-ok'><svg viewBox='0 0 12 12' aria-hidden='true'><path d='M2 1.5l8 4.5-8 4.5z' fill='currentColor'/></svg>video inbegrepen</span>":"";
       var ren=(IS_ADMIN&&o.bron==='server')
         ?"<button class='ren' data-ren='"+o.id+"' title='naam wijzigen' aria-label='naam wijzigen'>&#9998;</button>"+
          "<button class='ren' data-cat='"+o.id+"' title='aanpassen (categorie)' aria-label='aanpassen (categorie)'>"+
@@ -710,8 +719,8 @@ bridge2.jpg</div>
            "<line x1='10' y1='11' x2='10' y2='17'/><line x1='14' y1='11' x2='14' y2='17'/></svg></button>"
         :"";
       return "<div class='row' data-id='"+o.id+"'>"+imgRender(o.imgs[0],56)+
-        "<div class='nm'>"+esc(o.naam)+"<small>"+sub+"</small></div>"+ren+
-        "<button class='add"+(has?" on":"")+"' data-add='"+o.id+"' title='"+(has?"van kaart halen":"op kaart zetten")+"' aria-label='"+(has?"van kaart halen":"op kaart zetten")+"'>"+(has?"−":"+")+"</button></div>";
+        "<div class='nm'>"+esc(o.naam)+"<small>"+sub+"</small>"+videoBadge+"</div>"+ren+
+        "<button class='add"+(has?" on":"")+"' data-add='"+o.id+"' title='"+(has?"van kaart halen":(metVideo?"oefening en video op kaart zetten":"op kaart zetten"))+"' aria-label='"+(has?"van kaart halen":(metVideo?"oefening en video op kaart zetten":"op kaart zetten"))+"'>"+(has?"−":"+")+"</button></div>";
     }).join("");
   }
   function renderA4(){
@@ -729,6 +738,10 @@ bridge2.jpg</div>
           inner+="<span class='vid no-print"+(heeftVid?" aan":"")+"' data-vid='"+n+"' title='"+(heeftVid?"persoonlijke video vervangen":"persoonlijke video opnemen voor deze cli&euml;nt")+"'>"+
             "<svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'>"+
             "<path d='M15 10l6-3.5v11L15 14'/><rect x='2' y='6' width='13' height='12' rx='2.5'/></svg></span>";
+          if(o.video&&(o.video.eigen||o.video.yt||o.video.catalog)){
+            inner+="<span class='vauto no-print' title='Instructievideo wordt automatisch toegevoegd aan de digitale kaart'>"+
+              "<svg width='7' height='7' viewBox='0 0 12 12' aria-hidden='true'><path d='M2 1.5l8 4.5-8 4.5z' fill='currentColor'/></svg>VIDEO</span>";
+          }
         }
         colKeys.push('e'+c.o+'.'+c.i);names.push(o?o.naam:'');
       }else{colKeys.push('x'+n);names.push('');}
@@ -1133,11 +1146,14 @@ bridge2.jpg</div>
   function persistCards(l){try{localStorage.setItem('fysiplan_kaarten',JSON.stringify(l));return true;}catch(e){alert('Kaart opslaan is niet gelukt (opslagruimte vol?).');return false;}}
   function currentCard(naam){
     var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
-    var ch=chosen.map(function(c){return OEF[c.o]?{n:OEF[c.o].naam,i:c.i}:null;}).filter(Boolean);
+    var ch=chosen.map(function(c){return OEF[c.o]?{n:OEF[c.o].naam,id:OEF[c.o].exerciseId||'',i:c.i}:null;}).filter(Boolean);
     var cells={};
     Object.keys(GRID.cells).forEach(function(k){
       var m=k.match(/^e(\d+)\.(\d+)\|(.+)$/);
-      if(m&&OEF[+m[1]])cells['n'+normEx(OEF[+m[1]].naam)+'.'+m[2]+'|'+m[3]]=GRID.cells[k];
+      if(m&&OEF[+m[1]]){
+        var oef=OEF[+m[1]],prefix=oef.exerciseId?('x'+oef.exerciseId):('n'+normEx(oef.naam));
+        cells[prefix+'.'+m[2]+'|'+m[3]]=GRID.cells[k];
+      }
       else cells[k]=GRID.cells[k];
     });
     // alleen persoonlijke video's van oefeningen die nu op de kaart staan
@@ -1149,15 +1165,17 @@ bridge2.jpg</div>
     var missing=[];
     chosen=[];
     (c.chosen||[]).forEach(function(x){
-      var id=byNorm[normEx(x.n)];
+      var id=(x.id&&byStable[x.id]!=null)?byStable[x.id]:byNorm[normEx(x.n)];
       if(id!=null&&OEF[id]&&OEF[id].imgs[x.i||0])chosen.push({o:id,i:x.i||0});
       else missing.push(x.n);
     });
     GRID={rows:c.rows||{},cells:{}};
     VIDS=(c.vids&&typeof c.vids==='object')?c.vids:{};
     Object.keys(c.cells||{}).forEach(function(k){
+      var stable=k.match(/^x(fp_[a-f0-9]{16})\.(\d+)\|(.+)$/);
       var m=k.match(/^n([a-z0-9]*)\.(\d+)\|(.+)$/);
-      if(m){var id=byNorm[m[1]];if(id!=null)GRID.cells['e'+id+'.'+m[2]+'|'+m[3]]=c.cells[k];}
+      if(stable){var sid=byStable[stable[1]];if(sid!=null)GRID.cells['e'+sid+'.'+stable[2]+'|'+stable[3]]=c.cells[k];}
+      else if(m){var id=byNorm[m[1]];if(id!=null)GRID.cells['e'+id+'.'+m[2]+'|'+m[3]]=c.cells[k];}
       else GRID.cells[k]=c.cells[k];
     });
     CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value=(c.client&&c.client[k])||'';});
@@ -1468,7 +1486,7 @@ bridge2.jpg</div>
     OEF=entries.map(function(e,i){
       if(cats.indexOf(e.groep)<0)cats.push(e.groep);
       return {id:i,naam:e.naam,groep:e.groep,ook:e.ook||null,s:3,h:12,bron:'server',
-        video:e.video||null,starthouding:'',uitvoering:'',opmerking:'',
+        exerciseId:e.exerciseId||'',video:e.video||null,starthouding:'',uitvoering:'',opmerking:'',
         imgs:[{type:'img',src:e.img,label:'Plaatje'}]};
     });
     SERVERLIB=true;CUSTOMLIB=false;curG='all';

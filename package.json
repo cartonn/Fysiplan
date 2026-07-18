@@ -4,8 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build.js",
+    "build": "node scripts/video-catalogus.mjs && node scripts/build.js",
     "images:normalize": "python3 scripts/normalize-image-visibility.py --write",
+    "videos:check": "node scripts/video-catalogus.mjs",
+    "videos:export": "node scripts/video-catalogus.mjs --export-csv",
     "start": "node server.js"
   },
   "engines": {

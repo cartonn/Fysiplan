@@ -66,6 +66,7 @@
   .vbtn:not(.eigen) .driehoek{background:var(--blauw-10)}
   .vbtn .driehoek svg{margin-left:1.5px}
   .vbtn[aria-expanded="true"] .driehoek svg{margin:0;transform:rotate(90deg)}
+  .vmeta{font:600 11.5px/1.3 var(--disp);color:var(--zacht);text-align:center;margin:-6px 14px 13px}
   .vhouder{display:none;background:#000}
   .vhouder.open{display:block;animation:vopen .25s ease-out}
   @keyframes vopen{from{opacity:0}to{opacity:1}}
@@ -259,11 +260,13 @@
   uk:{eyebrow:'Картка вправ',oefkop:'Твої вправи',geenoef:'На цій картці ще немає вправ.',series:'підходи',herh:'повторення',vidEigen:'Відео від твого терапевта',vidYt:'Переглянути відеоінструкцію',veilig:'Стався до болю серйозно: зупинися, якщо біль посилюється, і звернися до фізіотерапевта.',metingkop:'Як пройшло сьогодні?',mvraag:'Закінчив вправи? Натисни, наскільки сильним був біль під час вправ.',ml0:'0 = болю немає',ml10:'10 = найсильніший біль',mtitel:'Твій прогрес',mnoot:'Твій результат зберігається з карткою, щоб фізіотерапевт міг стежити за прогресом. Зараховується один результат на день; натисни іншу цифру, щоб змінити його.',mdank:'Збережено, дякуємо. Твій фізіотерапевт може бачити твій прогрес на цій картці.',mfout:'Не вдалося зберегти, спробуй ще раз за мить.',agendakop:'Нагадування в календарі',agintro:'Не забувай про вправи: додай постійний час вправ у календар телефона. Обери дні та час.',aglabel:'Час',agknop:'Додати в календар',aghint:'Телефон відкриє запрошення в календар, що повторюється щотижня. Працює на iPhone та Android, без застосунку чи облікового запису.',agleeg:'Обери хоча б один день для вправ.',dagen:['Пн','Вт','Ср','Чт','Пт','Сб','Нд'],schemakop:'Заповнена схема',datum:'Дата',schemahint:'S = підходи, H = повторення, W = вага. Гортай убік, щоб побачити всі вправи.',voet1:'Питання щодо виконання? Звернися до своєї практики.',gemaakt:'Створено з',voor:'Для',doel:'Мета',letop:'Увага',lees:'Читати вголос',stop:'Стоп',oefening:'Вправа',bel:'Подзвонити у практику'}
   };
   var SPRAAK={nl:'nl-NL',en:'en-GB',de:'de-DE',fr:'fr-FR',es:'es-ES',pl:'pl-PL',tr:'tr-TR',ar:'ar-SA',uk:'uk-UA'};
+  var VIDEO_META={nl:'AI-demonstratie · klinisch gecontroleerd',en:'AI demonstration · clinically reviewed',de:'KI-Demonstration · klinisch geprüft',fr:'Démonstration IA · vérifiée cliniquement',es:'Demostración con IA · revisada clínicamente',pl:'Demonstracja AI · sprawdzona klinicznie',tr:'Yapay zekâ gösterimi · klinik olarak kontrol edildi',ar:'عرض بالذكاء الاصطناعي · تمت مراجعته سريريًا',uk:'ШІ-демонстрація · клінічно перевірено'};
   var TAAL=(function(){try{var t=localStorage.getItem('fp_taal');return T[t]?t:'nl';}catch(e){return 'nl';}})();
   var VERT={};
   var K=null;
   function tr(k){var d=T[TAAL]||T.nl;return d[k]!=null?d[k]:T.nl[k];}
   function vt(s){var m=VERT[TAAL];return (m&&m[s])||s;}
+  function cellPrefix(x){return x&&x.id?'x'+x.id:'n'+normEx(x&&x.n);}
   function dagStr(t){var d=new Date(t);return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
   function staafKleur(s){return s<=3?'#3e8e5a':(s<=6?'#d98a2b':'#c94f36');}
 
@@ -298,7 +301,7 @@
   // ---- de kaart zelf tekenen (oefeningen, schema, meting) in de gekozen taal ----
   function tekenKaart(){
     var kaart=K.kaart,praktijk=K.praktijk,lib=K.lib;
-    var byNorm={};(lib||[]).forEach(function(o){byNorm[normEx(o.naam)]=o;});
+    var byNorm={},byStable={};(lib||[]).forEach(function(o){byNorm[normEx(o.naam)]=o;if(o.exerciseId)byStable[o.exerciseId]=o;});
     document.title=tr('eyebrow')+' — '+(praktijk.praktijk||'Fysiplan');
     if(praktijk.logo){var lg=document.getElementById('logo');lg.src='/'+praktijk.logo;lg.style.display='block';}
     document.getElementById('prak').textContent=praktijk.praktijk||kaart.praktijk;
@@ -324,8 +327,8 @@
     var html='';
     chosen.forEach(function(x,idx){
       var nk=normEx(x.n);
-      var o=byNorm[nk];
-      var key='n'+nk+'.'+(x.i||0);
+      var o=(x.id&&byStable[x.id])||byNorm[nk];
+      var key=cellPrefix(x)+'.'+(x.i||0);
       // voorschrift: eerste ingevulde rij van het schema als losse chips
       var chips='';
       for(var r=0;r<12;r++){
@@ -339,9 +342,13 @@
       }
       var eigen=vids[nk]||(o&&o.video&&o.video.eigen)||null;
       var yt=(!eigen&&o&&o.video&&o.video.yt)||null;
+      var catalogus=(!eigen&&!yt&&o&&o.video&&o.video.catalog)||null;
+      var stream=catalogus&&catalogus.iframe;
       var knop='';
       if(eigen)knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'" aria-expanded="false">'+DRIEHOEK+esc(tr('vidEigen'))+'</button>';
       else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'" aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
+      else if(stream)knop='<button class="vbtn" data-stream="'+esc(stream)+'" aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>'+
+        (catalogus.aiGenerated?'<div class="vmeta">'+esc(VIDEO_META[TAAL]||VIDEO_META.nl)+'</div>':'');
       html+='<div class="oef"><div class="oefkop"><span class="nr">'+(idx+1)+'</span>'+
         (o?'<img src="/'+esc(o.img)+'" alt="" loading="lazy"/>':'')+
         '<div class="oefinfo"><div class="naam">'+esc(vt(x.n))+'</div>'+
@@ -354,7 +361,7 @@
     var rowdefs=[];for(var r2=0;r2<12;r2++)rowdefs.push('r'+r2);
     var gevuld=rowdefs.filter(function(rk){
       return (kaart.rows&&kaart.rows[rk])||chosen.some(function(x){
-        var key='n'+normEx(x.n)+'.'+(x.i||0);
+        var key=cellPrefix(x)+'.'+(x.i||0);
         return ['S','H','W'].some(function(f){return cells[key+'|'+rk+'|'+f];});
       });
     });
@@ -368,7 +375,7 @@
       gevuld.forEach(function(rk){
         t+='<tr><td class="dat">'+esc((kaart.rows&&kaart.rows[rk])||'')+'</td>';
         chosen.forEach(function(x){
-          var key='n'+normEx(x.n)+'.'+(x.i||0);
+          var key=cellPrefix(x)+'.'+(x.i||0);
           ['S','H','W'].forEach(function(f){t+='<td>'+esc(cells[key+'|'+rk+'|'+f]||'')+'</td>';});
         });
         t+='</tr>';
@@ -439,7 +446,7 @@
     if(cl.c_doel)delen.push(tr('doel')+': '+vt(cl.c_doel));
     (K.kaart.chosen||[]).forEach(function(x,idx){
       var zin=tr('oefening')+' '+(idx+1)+': '+vt(x.n);
-      var key='n'+normEx(x.n)+'.'+(x.i||0);
+      var key=cellPrefix(x)+'.'+(x.i||0);
       for(var r=0;r<12;r++){
         var s=cells[key+'|r'+r+'|S'],h=cells[key+'|r'+r+'|H'],w=cells[key+'|r'+r+'|W'];
         if(s||h||w){
@@ -472,9 +479,13 @@
       if(open)return;
       if(b.dataset.eigen){
         houder.innerHTML='<video controls autoplay playsinline preload="metadata" src="'+b.dataset.eigen+'"></video>';
-      }else{
+      }else if(b.dataset.yt){
         houder.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+b.dataset.yt+
           '?autoplay=1&rel=0&modestbranding=1" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
+      }else if(/^https:\/\/(?:customer-[a-z0-9-]+\.cloudflarestream\.com|iframe\.videodelivery\.net)\/[A-Za-z0-9_-]+\/iframe(?:\?.*)?$/.test(b.dataset.stream||'')){
+        var streamUrl=b.dataset.stream+(b.dataset.stream.indexOf('?')>-1?'&':'?')+
+          'autoplay=true&defaultTextTrack='+encodeURIComponent(TAAL);
+        houder.innerHTML='<iframe src="'+esc(streamUrl)+'" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
       }
       houder.classList.add('open');
       b.setAttribute('aria-expanded','true');

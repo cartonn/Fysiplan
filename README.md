@@ -14,6 +14,8 @@ Live Railway URL: https://fysiplan-production.up.railway.app
   dus **iedereen die de URL opent** ziet ze — op elk apparaat, zonder inloggen of upload.
   (Is `public/oefeningen.json` afwezig, dan valt de app terug op nette placeholder-tekeningen.)
 - Klik een oefening en het bijbehorende plaatje komt direct genummerd op de A4.
+- Heeft de oefening een praktijk- of Fysiplan-video, dan gaat die met dezelfde klik automatisch
+  mee naar de digitale kaart. De videobadge maakt dat al vóór het kiezen zichtbaar.
 - Eén A4-trainingskaart met cliëntvelden (Naam, Leeftijd, max. HF, Trainingszone) en
   monitoring-grid.
 - Printen + opslaan als PDF (via het printvenster van de browser).
@@ -27,6 +29,10 @@ Live Railway URL: https://fysiplan-production.up.railway.app
   veld `ook` (lijst van extra categorieën) toont een oefening op meerdere plekken — zo staan de
   cardio-apparaten zowel onder **Apparaten** als onder **Cardio**.
 - `public/images/` — de web-geoptimaliseerde JPEG's, per categorie in een submap.
+- `content/video-catalogus.json` — versiegestuurde Fysiplan-videotheek, gekoppeld via een stabiele
+  `exerciseId`; alleen klinisch goedgekeurde items worden aan patiënten geleverd.
+- `docs/video-contentfabriek.md` — productieontwerp voor avatar, motion capture, talen, review,
+  hosting, kosten en de eerste pilot.
 - `server.js` — minimale Node-server (geen dependencies): serveert `public/` en `/health`.
 - `scripts/build.js` — schrijft buildmetadata naar `dist/build-info.json`.
 - `scripts/convert-images.mjs` — eenmalig hulpscript: zet zware BMP/PNG naar compacte JPEG's en
@@ -41,6 +47,8 @@ Live Railway URL: https://fysiplan-production.up.railway.app
 - `npm run build` — schrijft buildmetadata naar `dist/build-info.json`.
 - `npm run images:normalize` — normaliseert oefentekeningen naar de biceps-referentie
   (vereist Python + Pillow).
+- `npm run videos:check` — controleert IDs, reviewstatus en veilige Stream-URL's van de videotheek.
+- `npm run videos:export` — schrijft de actuele productiewachtrij als CSV naar standaarduitvoer.
 - `npm run start` — start de webserver op `PORT` (Railway) of lokaal op `3000`.
 
 Lokaal draaien: `npm run build && npm run start`, daarna http://localhost:3000
@@ -174,4 +182,3 @@ bedoeling (het zijn geen persoonsgegevens). Alle **cliëntgegevens** (naam, leef
 eigen oefeningen) blijven **lokaal in de browser** (`localStorage`/IndexedDB); daarvan gaat niets
 naar een server. Voor een toekomstige gedeelde/multi-praktijk versie met centrale opslag van
 cliëntdata moeten AVG / NEN 7510 worden ingericht (nu buiten scope).
-
