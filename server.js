@@ -121,7 +121,8 @@ async function cloudflareStream(path, options = {}) {
   if (!STREAM_ENABLED) throw new Error("Cloudflare Stream is niet ingesteld");
   const r = await fetch(`https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(STREAM_ACCOUNT_ID)}/stream${path}`, {
     ...options,
-    headers: { authorization: `Bearer ${STREAM_API_TOKEN}`, "content-type": "application/json", ...(options.headers || {}) }
+    headers: { authorization: `Bearer ${STREAM_API_TOKEN}`, "content-type": "application/json", ...(options.headers || {}) },
+    signal: AbortSignal.timeout(30 * 1000)
   });
   let d = null;
   try { d = await r.json(); } catch {}
