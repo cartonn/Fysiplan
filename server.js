@@ -1035,6 +1035,10 @@ async function afhandelen(request, response) {
           JSON.stringify(missend));
         if (!Array.isArray(uit) || uit.length !== missend.length) throw new Error("verkeerde vorm");
         missend.forEach((s, i) => { cache[sleutel(s)] = String(uit[i]).slice(0, 400); });
+        // cache begrensd op 5000 teksten per taal: de oudste vallen eruit, zodat het
+        // bestand niet onbeperkt kan groeien door massaal aangemaakte kaarten
+        const sleutels = Object.keys(cache);
+        for (const oud of sleutels.slice(0, Math.max(0, sleutels.length - 5000))) delete cache[oud];
         await saveJson(vertalingenPath, vertalingen);
       } catch {
         await sendJson(response, 502, { ok: false, fout: "Vertalen is even niet gelukt; de kaart blijft in het Nederlands." });
