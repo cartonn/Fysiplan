@@ -341,14 +341,16 @@
         }
       }
       var eigen=vids[nk]||(o&&o.video&&o.video.eigen)||null;
-      var yt=(!eigen&&o&&o.video&&o.video.yt)||null;
-      var catalogus=(!eigen&&!yt&&o&&o.video&&o.video.catalog)||null;
-      var stream=catalogus&&catalogus.iframe;
+      var praktijkStream=(!eigen&&o&&o.video&&o.video.stream)||null;
+      var yt=(!eigen&&!praktijkStream&&o&&o.video&&o.video.yt)||null;
+      var catalogus=(!eigen&&!praktijkStream&&!yt&&o&&o.video&&o.video.catalog)||null;
+      var stream=(praktijkStream&&praktijkStream.iframe)||(catalogus&&catalogus.iframe);
+      var aiVideo=praktijkStream||catalogus;
       var knop='';
       if(eigen)knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'" aria-expanded="false">'+DRIEHOEK+esc(tr('vidEigen'))+'</button>';
-      else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'" aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
       else if(stream)knop='<button class="vbtn" data-stream="'+esc(stream)+'" aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>'+
-        (catalogus.aiGenerated?'<div class="vmeta">'+esc(VIDEO_META[TAAL]||VIDEO_META.nl)+'</div>':'');
+        (aiVideo.aiGenerated?'<div class="vmeta">'+esc(VIDEO_META[TAAL]||VIDEO_META.nl)+'</div>':'');
+      else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'" aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
       html+='<div class="oef"><div class="oefkop"><span class="nr">'+(idx+1)+'</span>'+
         (o?'<img src="/'+esc(o.img)+'" alt="" loading="lazy"/>':'')+
         '<div class="oefinfo"><div class="naam">'+esc(vt(x.n))+'</div>'+

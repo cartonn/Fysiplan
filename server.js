@@ -19,6 +19,9 @@ try { videoCatalogus = JSON.parse(await readFile(videoCatalogusPath, "utf8")); }
 // Beheer: /admin88 toont de beheer-weergave; mutatie-API's eisen deze sleutel als header.
 // Let op: dit is afscherming-door-verhulling, geen echte authenticatie.
 const ADMIN_KEY = process.env.ADMIN_KEY || "admin88";
+const STREAM_ACCOUNT_ID = String(process.env.CLOUDFLARE_ACCOUNT_ID || "").trim();
+const STREAM_API_TOKEN = String(process.env.CLOUDFLARE_STREAM_TOKEN || process.env.CLOUDFLARE_API_TOKEN || "").trim();
+const STREAM_ENABLED = !!(STREAM_ACCOUNT_ID && STREAM_API_TOKEN);
 // constant-time vergelijking: het antwoordtempo verraadt niets over de sleutel
 const isAdmin = (req) => {
   const a = Buffer.from(String(req.headers["x-admin-sleutel"] || ""));
@@ -111,6 +114,28 @@ function ytId(u) {
   if (/^[A-Za-z0-9_-]{11}$/.test(s)) return s;
   const m = s.match(/(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
   return m ? m[1] : null;
+}
+const streamUid = (v) => /^[A-Za-z0-9_-]{1,64}$/.test(String(v || "")) ? String(v) : "";
+const streamIframe = (uid) => `https://iframe.videodelivery.net/${uid}/iframe`;
+async function cloudflareStream(path, options = {}) {
+  if (!STREAM_ENABLED) throw new Error("Cloudflare Stream is niet ingesteld");
+  const r = await fetch(`https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(STREAM_ACCOUNT_ID)}/stream${path}`, {
+    ...options,
+    headers: { authorization: `Bearer ${STREAM_API_TOKEN}`, "content-type": "application/json", ...(options.headers || {}) }
+  });
+  let d = null;
+  try { d = await r.json(); } catch {}
+  if (!r.ok || !d || d.success !== true) {
+    const melding = d && Array.isArray(d.errors) && d.errors[0] && d.errors[0].message;
+    throw new Error(melding || `Cloudflare Stream gaf status ${r.status}`);
+  }
+  return d.result;
+}
+async function verwijderStream(uid) {
+  uid = streamUid(uid);
+  if (!uid || !STREAM_ENABLED) return;
+  try { await cloudflareStream(`/${encodeURIComponent(uid)}`, { method: "DELETE" }); }
+  catch (err) { console.error("oude Stream-video opruimen mislukt:", uid, "-", err.message); }
 }
 // door de beheerder toegevoegde oefeningen: [{naam, groep, img}]
 let extra = [];
@@ -449,7 +474,8 @@ async function afhandelen(request, response) {
       toegevoegd: extra.length,
       verwijderd: deleted.length,
       verplaatst: Object.keys(catOverrides).length,
-      catalogusVideos: (videoCatalogus.videos || []).filter((v) => v.status === "approved").length
+      catalogusVideos: (videoCatalogus.videos || []).filter((v) => v.status === "approved").length,
+      videoOpslag: STREAM_ENABLED ? "cloudflare-stream" : "railway-volume"
     });
     return;
   }
@@ -562,6 +588,7 @@ async function afhandelen(request, response) {
       // bijbehorende oefenvideo (link + eigen opnamebestand) mee opruimen
       if (videolinks[naam]) {
         if (videolinks[naam].eigen) { try { await unlink(join(dataDir, videolinks[naam].eigen)); } catch {} }
+        if (videolinks[naam].stream && videolinks[naam].stream.uid) verwijderStream(videolinks[naam].stream.uid);
         delete videolinks[naam];
         await saveJson(videolinksPath, videolinks);
       }
@@ -682,6 +709,150 @@ async function afhandelen(request, response) {
 
   // ---- oefenvideo's: YouTube-link per oefening (beheer) en eigen opnames via scherm-QR ----
 
+  // Kies automatisch schaalbare Stream-opslag zodra de twee Railway-variabelen bestaan.
+  // De browser uploadt rechtstreeks naar een eenmalige Cloudflare-URL; het API-token
+  // verlaat de server nooit. Zonder Stream blijft dezelfde UI op /data werken.
+  if (urlPath === "/api/oefeningen/video/upload/start" && request.method === "POST") {
+    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
+    if (schrijfLimiet(request, response)) return;
+    try {
+      const b = JSON.parse(await readBody(request));
+      const id = String(b.exerciseId || "");
+      const manifest = await buildManifest();
+      const oefening = manifest.find((e) => exerciseId(e) === id);
+      if (!oefening) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden." }); return; }
+      if (!STREAM_ENABLED) {
+        await sendJson(response, 200, { ok: true, provider: "railway-volume", maxBytes: 60 * 1024 * 1024,
+          uploadURL: `/api/oefeningen/video/upload?exerciseId=${encodeURIComponent(id)}` });
+        return;
+      }
+      const expiry = new Date(Date.now() + 60 * 60 * 1000).toISOString();
+      const result = await cloudflareStream("/direct_upload", {
+        method: "POST",
+        body: JSON.stringify({
+          maxDurationSeconds: 180,
+          expiry,
+          requireSignedURLs: false,
+          creator: "fysiplan",
+          meta: { name: cleanName(b.bestandsnaam, 120) || `${oefening.naam}.mp4`, exerciseId: id, exerciseName: oefening.naam }
+        })
+      });
+      const uid = streamUid(result && result.uid);
+      const uploadURL = String(result && result.uploadURL || "");
+      if (!uid || !/^https:\/\/upload\.videodelivery\.net\/[A-Za-z0-9_-]+$/.test(uploadURL)) {
+        throw new Error("Cloudflare gaf geen geldige upload-URL terug");
+      }
+      await sendJson(response, 200, { ok: true, provider: "cloudflare-stream", uid, uploadURL, maxBytes: 200 * 1024 * 1024 });
+    } catch (err) {
+      await sendJson(response, 502, { ok: false, fout: "Cloudflare Stream kon de upload niet starten: " + cleanName(err.message, 160) });
+    }
+    return;
+  }
+
+  // Na de rechtstreekse upload controleren we het asset opnieuw via Cloudflare. Het
+  // exerciseId in de server-side metadata voorkomt dat een uid aan een andere oefening
+  // kan worden gehangen, ook wanneer Railway tussen upload en afronden herstart.
+  if (urlPath === "/api/oefeningen/video/upload/complete" && request.method === "POST") {
+    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const id = String(b.exerciseId || "");
+      const uid = streamUid(b.uid);
+      if (!STREAM_ENABLED || !uid) { await sendJson(response, 400, { ok: false, fout: "Ongeldige Stream-upload." }); return; }
+      const manifest = await buildManifest();
+      const oefening = manifest.find((e) => exerciseId(e) === id);
+      if (!oefening) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden." }); return; }
+      const asset = await cloudflareStream(`/${encodeURIComponent(uid)}`);
+      if (!asset || !asset.meta || String(asset.meta.exerciseId || "") !== id) {
+        await sendJson(response, 409, { ok: false, fout: "Deze upload hoort niet bij de gekozen oefening." }); return;
+      }
+      const vorige = videolinks[oefening.naam] || null;
+      const cur = { ...(vorige || {}) };
+      const oudBestand = cur.eigen || "";
+      const oudeStream = cur.stream && cur.stream.uid;
+      delete cur.eigen;
+      cur.stream = { provider: "cloudflare-stream", uid, iframe: streamIframe(uid), aiGenerated: true };
+      videolinks[oefening.naam] = cur;
+      try {
+        await saveJson(videolinksPath, videolinks);
+      } catch (err) {
+        if (vorige) videolinks[oefening.naam] = vorige; else delete videolinks[oefening.naam];
+        throw err;
+      }
+      if (oudBestand) { try { await unlink(join(dataDir, oudBestand)); } catch {} }
+      if (oudeStream && oudeStream !== uid) verwijderStream(oudeStream);
+      await sendJson(response, 200, { ok: true, video: cur, exerciseId: id });
+    } catch (err) {
+      await sendJson(response, 502, { ok: false, fout: "De Stream-upload kon niet worden gekoppeld: " + cleanName(err.message, 160) });
+    }
+    return;
+  }
+
+  // direct een gerenderde avatarvideo vanaf de beheercomputer uploaden. De stabiele
+  // exerciseId voorkomt dat een video zijn oefening kwijtraakt na hernoemen. We schrijven
+  // eerst het nieuwe bestand + de koppeling en verwijderen pas daarna de vorige versie.
+  if (urlPath === "/api/oefeningen/video/upload" && request.method === "POST") {
+    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
+    if (schrijfLimiet(request, response)) return;
+    const maxVideo = 60 * 1024 * 1024;
+    if (Number(request.headers["content-length"] || 0) > maxVideo) {
+      await sendJson(response, 413, { ok: false, fout: "De video is te groot (max. 60 MB). Exporteer een kortere MP4 in webkwaliteit." });
+      return;
+    }
+    if (lopendeUploads >= 4) {
+      await sendJson(response, 429, { ok: false, fout: "Er worden al meerdere video's verwerkt; probeer het zo opnieuw." });
+      return;
+    }
+    lopendeUploads++;
+    let nieuwPad = "";
+    try {
+      const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+      const id = String(q.get("exerciseId") || "");
+      const manifest = await buildManifest();
+      const oefening = manifest.find((e) => exerciseId(e) === id);
+      if (!oefening) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden." }); return; }
+
+      const ct = String(request.headers["content-type"] || "").split(";")[0].trim().toLowerCase();
+      const ext = ct === "video/mp4" ? ".mp4" : ct === "video/webm" ? ".webm" : null;
+      if (!ext) { await sendJson(response, 400, { ok: false, fout: "Gebruik een MP4- of WebM-video." }); return; }
+      const buf = await readBodyRaw(request, maxVideo);
+      if (buf.length < 10 * 1024) { await sendJson(response, 400, { ok: false, fout: "De video is leeg of te klein." }); return; }
+      const echtMp4 = buf.subarray(4, 8).toString("latin1") === "ftyp";
+      const echtWebm = buf[0] === 0x1a && buf[1] === 0x45 && buf[2] === 0xdf && buf[3] === 0xa3;
+      if ((ext === ".mp4" && !echtMp4) || (ext === ".webm" && !echtWebm)) {
+        await sendJson(response, 400, { ok: false, fout: "Dit bestand bevat geen geldige MP4- of WebM-video." });
+        return;
+      }
+
+      await mkdir(join(uploadsDir, "videos"), { recursive: true });
+      nieuwPad = `uploads/videos/avatar-${id}-${randomBytes(8).toString("hex")}${ext}`;
+      await writeFile(join(dataDir, nieuwPad), buf);
+      const vorige = videolinks[oefening.naam] || null;
+      const cur = { ...(vorige || {}), eigen: nieuwPad };
+      const oudeStream = cur.stream && cur.stream.uid;
+      delete cur.stream;
+      videolinks[oefening.naam] = cur;
+      try {
+        await saveJson(videolinksPath, videolinks);
+      } catch (err) {
+        if (vorige) videolinks[oefening.naam] = vorige; else delete videolinks[oefening.naam];
+        throw err;
+      }
+      if (vorige && vorige.eigen && vorige.eigen !== nieuwPad) {
+        try { await unlink(join(dataDir, vorige.eigen)); } catch {}
+      }
+      if (oudeStream) verwijderStream(oudeStream);
+      await sendJson(response, 200, { ok: true, video: cur, exerciseId: id });
+    } catch (err) {
+      if (nieuwPad) { try { await unlink(join(dataDir, nieuwPad)); } catch {} }
+      await sendJson(response, 400, { ok: false, fout: err && err.message === "body te groot"
+        ? "De video is te groot (max. 60 MB)." : "Uploaden is niet gelukt." });
+    } finally {
+      lopendeUploads--;
+    }
+    return;
+  }
+
   // videolink instellen/wissen en eigen opname wissen (beheer)
   if (urlPath === "/api/oefeningen/video" && request.method === "POST") {
     if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
@@ -690,17 +861,21 @@ async function afhandelen(request, response) {
       const naam = String(b.naam || "").trim();
       const manifest = await buildManifest();
       if (!manifest.some((e) => e.naam === naam)) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden: " + naam }); return; }
-      const cur = videolinks[naam] || {};
-      if (b.eigenWissen && cur.eigen) {
+      const cur = { ...(videolinks[naam] || {}) };
+      if ((b.eigenWissen || b.uploadWissen) && cur.eigen) {
         try { await unlink(join(dataDir, cur.eigen)); } catch {}
         delete cur.eigen;
+      }
+      if (b.uploadWissen && cur.stream) {
+        if (cur.stream.uid) verwijderStream(cur.stream.uid);
+        delete cur.stream;
       }
       if (typeof b.yt === "string") {
         const id = ytId(b.yt);
         if (b.yt.trim() && !id) { await sendJson(response, 400, { ok: false, fout: "Dat is geen geldige YouTube-link." }); return; }
         if (id) cur.yt = id; else delete cur.yt;
       }
-      if (cur.yt || cur.eigen) videolinks[naam] = cur; else delete videolinks[naam];
+      if (cur.yt || cur.eigen || cur.stream) videolinks[naam] = cur; else delete videolinks[naam];
       await saveJson(videolinksPath, videolinks);
       await sendJson(response, 200, { ok: true, video: videolinks[naam] || null });
     } catch {
@@ -781,11 +956,14 @@ async function afhandelen(request, response) {
       const pad = "uploads/videos/v-" + token + ext;
       await writeFile(join(dataDir, pad), buf);
       if (o.doel === "oefening" && o.naam) {
-        const cur = videolinks[o.naam] || {};
+        const cur = { ...(videolinks[o.naam] || {}) };
+        const oudeStream = cur.stream && cur.stream.uid;
         if (cur.eigen) { try { await unlink(join(dataDir, cur.eigen)); } catch {} }
         cur.eigen = pad;
+        delete cur.stream;
         videolinks[o.naam] = cur;
         await saveJson(videolinksPath, videolinks);
+        if (oudeStream) verwijderStream(oudeStream);
       }
       o.video = pad;
       await sendJson(response, 200, { ok: true, video: pad });

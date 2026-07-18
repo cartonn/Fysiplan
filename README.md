@@ -88,9 +88,16 @@ terug naar de gedeelde server-lijst.
   bewaard en krijgt een QR (eigen encoder, `public/qr.js`, geen dependencies) naar
   **/k/&lt;id&gt;** (`public/kaart.html`): een mobielvriendelijke, alleen-lezen weergave die de
   cliënt zonder app of account opent. Het id is onraadbaar (12 hex-tekens).
-- **Oefenvideo's (zonder app):** per oefening kan beheer in het aanpas-venster een
-  YouTube-link zetten (`POST /api/oefeningen/video`, privacyvriendelijke nocookie-embed) of een
-  **eigen video opnemen**: er verschijnt een QR op het scherm, de telefoon opent
+- **Oefenvideo's (zonder app):** iedere serveroefening heeft in `/admin88` een zichtbare
+  **+ Video**. Daarmee kan beheer een gerenderde avatarvideo direct kiezen of slepen,
+  vooraf bekijken, vervangen en verwijderen. Met `CLOUDFLARE_ACCOUNT_ID` plus
+  `CLOUDFLARE_STREAM_TOKEN` maakt `POST /api/oefeningen/video/upload/start` een eenmalige
+  Direct Creator Upload (MP4/WebM, max. 200 MB) en gaat het bestand rechtstreeks van de browser
+  naar Cloudflare Stream; het API-token komt nooit in de browser. Zonder die variabelen gebruikt
+  dezelfde knop automatisch `POST /api/oefeningen/video/upload` en `/data` (max. 60 MB). De
+  koppeling gebruikt het stabiele `exerciseId` en blijft dus bestaan bij
+  hernoemen. Daarnaast kan beheer een YouTube-link zetten (`POST /api/oefeningen/video`,
+  privacyvriendelijke nocookie-embed) of een **eigen video opnemen**: er verschijnt een QR op het scherm, de telefoon opent
   `/o/&lt;token&gt;` (`public/opname.html`) met één opnameknop, en de upload
   (`/api/opname/*`, mp4/webm, max. 60 MB) hangt de video aan de oefening (`videolinks.json`,
   bestanden in `uploads/videos/`). In v2 kan de therapeut per kaart ook een **persoonlijke
@@ -115,6 +122,8 @@ De gewone URL is voor het maken en printen van kaarten. Bibliotheekbeheer gebeur
   op een 2e plek (het `ook`-veld).
 - **Oefening verwijderen** (🗑) — `POST /api/oefeningen/verwijder`; basis-oefeningen komen in
   `oefeningen-verwijderd.json`, zelf toegevoegde worden echt verwijderd.
+- **+ Video** — upload, preview, vervang of verwijder een avatar-/instructievideo direct naast
+  de oefening; zodra de therapeut de oefening met `+` op een kaart zet, reist de video mee.
 - **Plaatjes uploaden** (de lokale lijst-override) is ook alleen zichtbaar in beheer.
 
 Elke beheeractie is **direct server-side** en dus meteen live op beide URL's — er is geen
@@ -130,6 +139,15 @@ wie de beheer-URL kent, kan beheren. Echte authenticatie is bewust buiten scope 
 > Railway een **Volume** toe met mount path `/data` (service → rechtsklik → Attach volume) —
 > de server gebruikt die map dan automatisch en de naamwijzigingen overleven elke deploy.
 > Zonder volume blijven wijzigingen bewaard tot de eerstvolgende redeploy/herstart.
+
+Voor een videotheek met duizenden avatarvideo's hoort de daadwerkelijke video-opslag in
+Cloudflare Stream. Zet daarvoor op de Railway-service:
+
+- `CLOUDFLARE_ACCOUNT_ID` — Cloudflare account-id;
+- `CLOUDFLARE_STREAM_TOKEN` — API-token met uitsluitend **Stream Write**.
+
+De koppelingen en metadata blijven op `/data`; de zware videobestanden staan dan in Stream.
+`/health` meldt onder `videoOpslag` welke route actief is.
 
 ## Eigenaars-dashboard via /dashboard88
 

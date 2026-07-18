@@ -32,6 +32,7 @@
   .btn{padding:8px 14px;border:1px solid var(--line);background:var(--panel);border-radius:9px;cursor:pointer;color:var(--text);font-weight:500;box-shadow:var(--sh-sm);transition:.15s}
   .btn:hover{background:#f8fafc;border-color:#d0d5dd}
   .btn:active{transform:translateY(1px)}
+  .btn:disabled{opacity:.42;cursor:not-allowed;transform:none;box-shadow:none}
   .btn:focus-visible{outline:none;box-shadow:var(--ring)}
   .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
   .btn.primary:hover{background:var(--brand-700);border-color:var(--brand-700)}
@@ -61,6 +62,13 @@
   .row .video-ok{display:inline-flex;align-items:center;gap:4px;margin-top:3px;padding:2px 6px;border-radius:999px;
     background:#ecfdf3;color:#287a4b;font-size:10.5px;font-weight:600;line-height:1.2}
   .row .video-ok svg{width:9px;height:9px}
+  .row .video-manage{display:inline-flex;align-items:center;gap:5px;margin-top:4px;padding:3px 8px;border-radius:999px;
+    border:1px solid var(--brand-100);background:var(--brand-50);color:var(--brand-700);font:inherit;font-size:10.5px;
+    font-weight:650;line-height:1.2;cursor:pointer;transition:.15s}
+  .row .video-manage:hover{background:var(--brand);border-color:var(--brand);color:#fff}
+  .row .video-manage.has-video{border-color:#b7e3c8;background:#ecfdf3;color:#287a4b}
+  .row .video-manage.has-video:hover{background:#287a4b;border-color:#287a4b;color:#fff}
+  .row .video-manage svg{width:10px;height:10px}
   .thumb{width:38px;height:38px;flex:0 0 38px;border:1px solid var(--line);border-radius:9px;background:#fbfcfe;color:var(--ink);object-fit:contain;padding:2px}
   .row .thumb{width:56px !important;height:56px !important;flex:0 0 56px;border-radius:10px}
   .row .add{flex:0 0 auto;width:28px;height:28px;border-radius:50%;border:1px solid var(--brand-100);background:var(--brand-50);color:var(--brand-700);font-size:18px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
@@ -145,6 +153,18 @@
   .modal .acts{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
   .modal.wide{width:520px}
   .modal.help{width:680px;max-height:calc(100vh - 40px);overflow:auto}
+  .video-preview{border:1px solid var(--line);border-radius:12px;background:#f7f9fc;overflow:hidden;margin:12px 0}
+  .video-preview video,.video-preview iframe{display:block;width:100%;aspect-ratio:16/9;border:0;background:#101828}
+  .video-preview .video-empty{display:flex;min-height:124px;align-items:center;justify-content:center;text-align:center;padding:24px;color:var(--muted);font-size:12.5px;line-height:1.5}
+  .video-preview .video-caption{padding:8px 11px;border-top:1px solid var(--line);background:#fff;color:var(--muted);font-size:11.5px}
+  .video-drop{display:flex;align-items:center;gap:12px;border:1.5px dashed #b8c8e6;border-radius:12px;padding:14px;background:var(--brand-50);cursor:pointer;transition:.15s}
+  .video-drop:hover,.video-drop.drag{border-color:var(--brand);background:#e6efff}
+  .video-drop .video-plus{width:38px;height:38px;flex:0 0 38px;border-radius:11px;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:400}
+  .video-drop b{display:block;color:var(--ink);font-size:13px;margin-bottom:2px}
+  .video-drop small{display:block;color:var(--muted);font-size:11.5px;line-height:1.4}
+  .video-progress{height:7px;border-radius:999px;background:#e8edf5;overflow:hidden;margin-top:10px;display:none}
+  .video-progress span{display:block;height:100%;width:0;background:var(--brand);border-radius:inherit;transition:width .12s}
+  .video-status{min-height:18px;margin-top:8px;color:var(--muted);font-size:12px;line-height:1.5}
   .uphelp{margin-top:14px;font-size:12.5px;color:var(--muted);line-height:1.6;background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
   .uphelp b{color:var(--ink)}
   .uphelp code{background:#fff;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:12px}
@@ -405,6 +425,35 @@ bridge2.jpg</div>
     <div class="acts">
       <button class="btn" id="ai_close">Sluiten</button>
       <button class="btn primary" id="ai_go">Stel een kaart voor</button>
+    </div>
+  </div>
+</div>
+
+<!-- avatar-/instructievideo direct aan één oefening koppelen (beheer) -->
+<div class="ov" id="ovVideo">
+  <div class="modal wide">
+    <h3 id="vup_titel">Video bij oefening</h3>
+    <div style="font-size:12.5px;color:var(--muted);line-height:1.5">
+      Upload de gerenderde avatarvideo. Na het uploaden gaat deze video automatisch mee zodra
+      iemand de oefening met <b>+</b> op een kaart zet.
+    </div>
+    <div class="video-preview" id="vup_preview">
+      <div class="video-empty">Nog geen video gekoppeld.</div>
+    </div>
+    <input type="file" id="vup_file" accept="video/mp4,video/webm,.mp4,.webm" style="display:none"/>
+    <div class="video-drop" id="vup_drop" role="button" tabindex="0" aria-label="Kies een avatarvideo om te uploaden">
+      <span class="video-plus">+</span>
+      <span><b id="vup_keuze">Kies een avatarvideo</b><small>MP4 of WebM · tot 200 MB met Stream · slepen mag ook</small></span>
+    </div>
+    <div class="video-progress" id="vup_progress"><span></span></div>
+    <div class="video-status" id="vup_status"></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap">
+      <button class="btn" type="button" id="vup_opname">Opnemen met telefoon</button>
+      <button class="btn" type="button" id="vup_wis" style="display:none;color:#b3261e">Geüploade video verwijderen</button>
+    </div>
+    <div class="acts">
+      <button class="btn" id="vup_cancel">Sluiten</button>
+      <button class="btn primary" id="vup_upload" disabled>Upload en koppel</button>
     </div>
   </div>
 </div>
@@ -703,8 +752,12 @@ bridge2.jpg</div>
       var has=chosen.some(function(c){return c.o===o.id;});
       var np=o.imgs.filter(function(im){return im.type==='img';}).length;
       var sub=(o.bron==='carla')?(np+' plaatje'+(np===1?'':'s')):(o.s+" × "+o.h+(o.h==1?" (statisch/cardio)":"")+(o.bron=='eigen'?" · eigen":""));
-      var metVideo=!!(o.video&&(o.video.eigen||o.video.yt||o.video.catalog));
+      var metVideo=!!(o.video&&(o.video.eigen||o.video.stream||o.video.yt||o.video.catalog));
       var videoBadge=metVideo?"<span class='video-ok'><svg viewBox='0 0 12 12' aria-hidden='true'><path d='M2 1.5l8 4.5-8 4.5z' fill='currentColor'/></svg>video inbegrepen</span>":"";
+      var videoBeheer=(IS_ADMIN&&o.bron==='server')
+        ?"<button class='video-manage"+(metVideo?" has-video":"")+"' data-video='"+o.id+"' title='"+(metVideo?"video bekijken of vervangen":"avatarvideo uploaden")+"'>"+
+          (metVideo?"<svg viewBox='0 0 12 12' aria-hidden='true'><path d='M2 1.5l8 4.5-8 4.5z' fill='currentColor'/></svg>Video beheren":"+ Video")+"</button>"
+        :videoBadge;
       var ren=(IS_ADMIN&&o.bron==='server')
         ?"<button class='ren' data-ren='"+o.id+"' title='naam wijzigen' aria-label='naam wijzigen'>&#9998;</button>"+
          "<button class='ren' data-cat='"+o.id+"' title='aanpassen (categorie)' aria-label='aanpassen (categorie)'>"+
@@ -719,7 +772,7 @@ bridge2.jpg</div>
            "<line x1='10' y1='11' x2='10' y2='17'/><line x1='14' y1='11' x2='14' y2='17'/></svg></button>"
         :"";
       return "<div class='row' data-id='"+o.id+"'>"+imgRender(o.imgs[0],56)+
-        "<div class='nm'>"+esc(o.naam)+"<small>"+sub+"</small>"+videoBadge+"</div>"+ren+
+        "<div class='nm'>"+esc(o.naam)+"<small>"+sub+"</small>"+videoBeheer+"</div>"+ren+
         "<button class='add"+(has?" on":"")+"' data-add='"+o.id+"' title='"+(has?"van kaart halen":(metVideo?"oefening en video op kaart zetten":"op kaart zetten"))+"' aria-label='"+(has?"van kaart halen":(metVideo?"oefening en video op kaart zetten":"op kaart zetten"))+"'>"+(has?"−":"+")+"</button></div>";
     }).join("");
   }
@@ -738,7 +791,7 @@ bridge2.jpg</div>
           inner+="<span class='vid no-print"+(heeftVid?" aan":"")+"' data-vid='"+n+"' title='"+(heeftVid?"persoonlijke video vervangen":"persoonlijke video opnemen voor deze cli&euml;nt")+"'>"+
             "<svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'>"+
             "<path d='M15 10l6-3.5v11L15 14'/><rect x='2' y='6' width='13' height='12' rx='2.5'/></svg></span>";
-          if(o.video&&(o.video.eigen||o.video.yt||o.video.catalog)){
+          if(o.video&&(o.video.eigen||o.video.stream||o.video.yt||o.video.catalog)){
             inner+="<span class='vauto no-print' title='Instructievideo wordt automatisch toegevoegd aan de digitale kaart'>"+
               "<svg width='7' height='7' viewBox='0 0 12 12' aria-hidden='true'><path d='M2 1.5l8 4.5-8 4.5z' fill='currentColor'/></svg>VIDEO</span>";
           }
@@ -839,13 +892,144 @@ bridge2.jpg</div>
   }
   document.getElementById('on_cancel').addEventListener('click',function(){stopOpname();closeOv('ovOpname');});
 
+  // ---- avatarvideo direct uploaden en aan één stabiele oefening koppelen (beheer) ----
+  var pendingVideoId=null,pendingVideoFile=null,videoUploadBusy=false;
+  function videoMime(file){
+    var t=String(file&&file.type||'').toLowerCase();
+    if(t==='video/mp4'||t==='video/webm')return t;
+    var n=String(file&&file.name||'').toLowerCase();
+    return /\.mp4$/.test(n)?'video/mp4':(/\.webm$/.test(n)?'video/webm':'');
+  }
+  function setVideoBusy(busy){
+    videoUploadBusy=busy;
+    document.getElementById('vup_upload').disabled=busy||!pendingVideoFile;
+    document.getElementById('vup_cancel').disabled=busy;
+    document.getElementById('vup_opname').disabled=busy;
+    document.getElementById('vup_wis').disabled=busy;
+    document.getElementById('vup_drop').style.pointerEvents=busy?'none':'';
+  }
+  function renderVideoPreview(o){
+    var box=document.getElementById('vup_preview'),html="<div class='video-empty'>Nog geen video gekoppeld.<br/>Upload hier de gerenderde, menselijk uitziende avatar.</div>";
+    var v=o&&o.video;
+    if(v&&v.eigen){
+      var src=String(v.eigen);if(src.charAt(0)!=='/')src='/'+src;
+      html="<video src='"+esc(src)+"' controls playsinline preload='metadata'></video><div class='video-caption'>Geüploade avatarvideo · gaat automatisch mee met deze oefening</div>";
+    }else if(v&&v.stream&&v.stream.iframe){
+      html="<iframe src='"+esc(v.stream.iframe)+"' title='Avatarvideo' allowfullscreen></iframe><div class='video-caption'>Avatarvideo in Cloudflare Stream · geschikt voor de volledige videotheek</div>";
+    }else if(v&&v.yt){
+      html="<iframe src='https://www.youtube-nocookie.com/embed/"+esc(v.yt)+"' title='Instructievideo' allowfullscreen></iframe><div class='video-caption'>YouTube-video · te vervangen door een eigen avatarvideo</div>";
+    }else if(v&&v.catalog&&v.catalog.iframe){
+      html="<iframe src='"+esc(v.catalog.iframe)+"' title='Fysiplan-video' allowfullscreen></iframe><div class='video-caption'>Goedgekeurde Fysiplan-catalogusvideo</div>";
+    }
+    box.innerHTML=html;
+    document.getElementById('vup_wis').style.display=v&&(v.eigen||v.stream)?'':'none';
+  }
+  function kiesVideoFile(file){
+    var status=document.getElementById('vup_status');
+    if(!file)return;
+    if(!videoMime(file)){
+      pendingVideoFile=null;document.getElementById('vup_keuze').textContent='Kies een avatarvideo';
+      status.style.color='#b3261e';status.textContent='Gebruik een MP4- of WebM-bestand.';setVideoBusy(false);return;
+    }
+    if(file.size>200*1024*1024){
+      pendingVideoFile=null;document.getElementById('vup_keuze').textContent='Kies een avatarvideo';
+      status.style.color='#b3261e';status.textContent='Deze video is groter dan 200 MB. Exporteer hem als korte web-MP4.';setVideoBusy(false);return;
+    }
+    pendingVideoFile=file;
+    document.getElementById('vup_keuze').textContent=file.name+' · '+Math.max(1,Math.round(file.size/1024/1024))+' MB';
+    status.style.color='var(--muted)';status.textContent='Klaar om te uploaden en direct aan deze oefening te koppelen.';
+    setVideoBusy(false);
+  }
+  function openVideoManager(id){
+    var o=OEF[id];if(!o||!o.exerciseId)return;
+    pendingVideoId=id;pendingVideoFile=null;
+    document.getElementById('vup_titel').textContent='Video · '+o.naam;
+    document.getElementById('vup_file').value='';
+    document.getElementById('vup_keuze').textContent='Kies een avatarvideo';
+    document.getElementById('vup_status').textContent='';
+    document.getElementById('vup_status').style.color='var(--muted)';
+    var p=document.getElementById('vup_progress');p.style.display='none';p.firstElementChild.style.width='0%';
+    renderVideoPreview(o);setVideoBusy(false);openOv('ovVideo');
+  }
+  var vupDrop=document.getElementById('vup_drop'),vupFile=document.getElementById('vup_file');
+  vupDrop.addEventListener('click',function(){if(!videoUploadBusy)vupFile.click();});
+  vupDrop.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&!videoUploadBusy){e.preventDefault();vupFile.click();}});
+  ['dragenter','dragover'].forEach(function(type){vupDrop.addEventListener(type,function(e){e.preventDefault();if(!videoUploadBusy)vupDrop.classList.add('drag');});});
+  ['dragleave','drop'].forEach(function(type){vupDrop.addEventListener(type,function(e){e.preventDefault();vupDrop.classList.remove('drag');});});
+  vupDrop.addEventListener('drop',function(e){if(!videoUploadBusy&&e.dataTransfer&&e.dataTransfer.files[0])kiesVideoFile(e.dataTransfer.files[0]);});
+  vupFile.addEventListener('change',function(){kiesVideoFile(this.files&&this.files[0]);});
+  document.getElementById('vup_cancel').addEventListener('click',function(){if(videoUploadBusy)return;pendingVideoId=null;pendingVideoFile=null;closeOv('ovVideo');});
+  function videoUploadKlaar(o,d){
+    var catalog=o.video&&o.video.catalog;o.video=d.video||{};if(catalog)o.video.catalog=catalog;
+    pendingVideoFile=null;vupFile.value='';document.getElementById('vup_keuze').textContent='Kies een nieuwe avatarvideo';
+    var progress=document.getElementById('vup_progress'),status=document.getElementById('vup_status');
+    progress.firstElementChild.style.width='100%';status.style.color='#287a4b';status.textContent='Klaar — de video is gekoppeld en gaat voortaan automatisch mee met deze oefening.';
+    renderVideoPreview(o);renderList();setVideoBusy(false);
+  }
+  function videoUploadFout(tekst){
+    var status=document.getElementById('vup_status');status.style.color='#b3261e';status.textContent=tekst||'Uploaden is niet gelukt.';setVideoBusy(false);
+  }
+  document.getElementById('vup_upload').addEventListener('click',function(){
+    var o=OEF[pendingVideoId],file=pendingVideoFile;if(!o||!file||videoUploadBusy)return;
+    var status=document.getElementById('vup_status'),progress=document.getElementById('vup_progress');
+    setVideoBusy(true);status.style.color='var(--muted)';status.textContent='Veilige upload voorbereiden…';
+    progress.style.display='block';progress.firstElementChild.style.width='2%';
+    fetch('api/oefeningen/video/upload/start',{method:'POST',headers:Object.assign({'content-type':'application/json'},ADMIN_HDR),body:JSON.stringify({exerciseId:o.exerciseId,bestandsnaam:file.name})})
+      .then(function(r){return r.json();}).then(function(start){
+        if(!start.ok)throw new Error(start.fout||'Uploaden kon niet worden gestart.');
+        if(start.maxBytes&&file.size>start.maxBytes)throw new Error('Zonder Cloudflare Stream is maximaal 60 MB mogelijk. Exporteer een kleinere MP4 of stel Stream in.');
+        status.textContent=start.provider==='cloudflare-stream'?'Rechtstreeks naar de videotheek uploaden…':'Video naar de beveiligde opslag uploaden…';
+        var xhr=new XMLHttpRequest();xhr.open('POST',start.uploadURL);
+        var body=file;
+        if(start.provider==='cloudflare-stream'){var form=new FormData();form.append('file',file,file.name);body=form;}
+        else{Object.keys(ADMIN_HDR).forEach(function(k){xhr.setRequestHeader(k,ADMIN_HDR[k]);});xhr.setRequestHeader('content-type',videoMime(file));}
+        xhr.upload.onprogress=function(e){if(e.lengthComputable)progress.firstElementChild.style.width=Math.max(2,Math.min(96,Math.round(e.loaded/e.total*96)))+'%';};
+        xhr.onerror=function(){videoUploadFout('Uploaden is niet gelukt: geen verbinding.');};
+        xhr.onload=function(){
+          if(xhr.status<200||xhr.status>=300){
+            var fout={};try{fout=JSON.parse(xhr.responseText||'{}');}catch(err){}
+            videoUploadFout(fout.fout||'De video-upload is geweigerd.');return;
+          }
+          if(start.provider!=='cloudflare-stream'){
+            var lokaal={};try{lokaal=JSON.parse(xhr.responseText||'{}');}catch(err){}
+            if(!lokaal.ok){videoUploadFout(lokaal.fout||'Koppelen is niet gelukt.');return;}
+            videoUploadKlaar(o,lokaal);return;
+          }
+          progress.firstElementChild.style.width='98%';status.textContent='Upload controleren en aan de oefening koppelen…';
+          fetch('api/oefeningen/video/upload/complete',{method:'POST',headers:Object.assign({'content-type':'application/json'},ADMIN_HDR),body:JSON.stringify({exerciseId:o.exerciseId,uid:start.uid})})
+            .then(function(r){return r.json();}).then(function(d){if(!d.ok)throw new Error(d.fout||'Koppelen is niet gelukt.');videoUploadKlaar(o,d);})
+            .catch(function(err){videoUploadFout(err.message||'Koppelen is niet gelukt.');});
+        };
+        xhr.send(body);
+      }).catch(function(err){videoUploadFout(err.message||'Uploaden kon niet worden gestart.');});
+  });
+  document.getElementById('vup_wis').addEventListener('click',function(){
+    var o=OEF[pendingVideoId];if(!o||!(o.video&&(o.video.eigen||o.video.stream))||videoUploadBusy)return;
+    if(!confirm('De geüploade video bij “'+o.naam+'” verwijderen?'))return;
+    setVideoBusy(true);
+    fetch('api/oefeningen/video',{method:'POST',headers:Object.assign({'content-type':'application/json'},ADMIN_HDR),body:JSON.stringify({naam:o.naam,uploadWissen:true})})
+      .then(function(r){return r.json();}).then(function(d){
+        if(!d.ok)throw new Error(d.fout||'Verwijderen is niet gelukt.');
+        var catalog=o.video&&o.video.catalog;o.video=d.video||null;
+        if(catalog){o.video=o.video||{};o.video.catalog=catalog;}
+        renderVideoPreview(o);renderList();document.getElementById('vup_status').style.color='#287a4b';document.getElementById('vup_status').textContent='De geüploade video is verwijderd.';setVideoBusy(false);
+      }).catch(function(err){document.getElementById('vup_status').style.color='#b3261e';document.getElementById('vup_status').textContent=err.message||'Verwijderen is niet gelukt.';setVideoBusy(false);});
+  });
+  document.getElementById('vup_opname').addEventListener('click',function(){
+    var o=OEF[pendingVideoId];if(!o||videoUploadBusy)return;
+    closeOv('ovVideo');
+    startOpname('oefening',o.naam,function(pad){o.video=o.video||{};o.video.eigen=pad;delete o.video.stream;renderList();openVideoManager(o.id);document.getElementById('vup_status').style.color='#287a4b';document.getElementById('vup_status').textContent='De opname is gekoppeld aan deze oefening.';});
+  });
+
   // categorie verplaatsen en/of op een 2e plek tonen (beheer)
   var pendingCat=null,pendingCatId=null;
   function toonEigenVideoInfo(o){
     var eigen=o.video&&o.video.eigen;
-    document.getElementById('vc_eigen_info').textContent=eigen
-      ?'Er is een eigen opname voor deze oefening; die gaat vóór de YouTube-link.'
-      :'Nog geen eigen opname. "Eigen video opnemen" opent een QR-code voor je telefoon.';
+    var stream=o.video&&o.video.stream;
+    document.getElementById('vc_eigen_info').textContent=stream
+      ?'Er is een avatarvideo in de Stream-videotheek gekoppeld. Gebruik “Video beheren” naast de oefening om hem te bekijken of vervangen.'
+      :(eigen?'Er is een eigen opname voor deze oefening; die gaat vóór de YouTube-link.'
+      :'Nog geen eigen opname. “Eigen video opnemen” opent een QR-code voor je telefoon.');
     document.getElementById('vc_eigen_wis').style.display=eigen?'':'none';
   }
   function moveExercise(id){
@@ -933,6 +1117,8 @@ bridge2.jpg</div>
       .catch(function(){alert('Verwijderen is niet gelukt: geen verbinding met de server.');});
   });
   elList.addEventListener('click',function(e){
+    var video=e.target.closest('[data-video]');
+    if(video){openVideoManager(+video.dataset.video);return;}
     var del=e.target.closest('[data-verwijder]');
     if(del){deleteExercise(+del.dataset.verwijder);return;}
     var mv=e.target.closest('[data-cat]');
