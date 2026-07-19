@@ -5,10 +5,10 @@ De 215 beelden worden niet als één oncontroleerbare batch gemaakt. Elke oefeni
 ```mermaid
 flowchart LR
   A["Vaste FysiPlan-avatar"] --> G1
-  S1["Originele oefening 1 + individuele instructie"] --> U1["Bronaudit en compositiekeuze"] --> N1["Referentie normaliseren"] --> G1["Posepaar genereren"] --> C1["800×1200 + vaste branding"] --> Q1["Kaart- en print-QA"] --> R1["Klaar voor fysio-review"] --> P1["Concept publiceren"]
-  S2["Originele oefening 2 + individuele instructie"] --> U2["Bronaudit en compositiekeuze"] --> N2["Referentie normaliseren"] --> G2["Posepaar genereren"] --> C2["800×1200 + vaste branding"] --> Q2["Kaart- en print-QA"] --> R2["Klaar voor fysio-review"] --> P2["Concept publiceren"]
+  S1["Originele oefening 1 + individuele instructie"] --> U1["Bronaudit en compositiekeuze"] --> N1["Referentie normaliseren"] --> G1["Posepaar genereren"] --> C1["800×1200 + vaste branding"] --> W1["Witte-achtergrond-gate"] --> Q1["Kaart- en print-QA"] --> R1["Klaar voor fysio-review"] --> P1["Concept publiceren"]
+  S2["Originele oefening 2 + individuele instructie"] --> U2["Bronaudit en compositiekeuze"] --> N2["Referentie normaliseren"] --> G2["Posepaar genereren"] --> C2["800×1200 + vaste branding"] --> W2["Witte-achtergrond-gate"] --> Q2["Kaart- en print-QA"] --> R2["Klaar voor fysio-review"] --> P2["Concept publiceren"]
   A --> G2
-  SN["… oefening 215"] --> UN["Bronaudit en compositiekeuze"] --> NN["Referentie normaliseren"] --> GN["Posepaar genereren"] --> CN["800×1200 + vaste branding"] --> QN["Kaart- en print-QA"] --> RN["Klaar voor fysio-review"] --> PN["Concept publiceren"]
+  SN["… oefening 215"] --> UN["Bronaudit en compositiekeuze"] --> NN["Referentie normaliseren"] --> GN["Posepaar genereren"] --> CN["800×1200 + vaste branding"] --> WN["Witte-achtergrond-gate"] --> QN["Kaart- en print-QA"] --> RN["Klaar voor fysio-review"] --> PN["Concept publiceren"]
   A --> GN
 ```
 
@@ -21,7 +21,8 @@ flowchart LR
 - Camerastand is licht gedraaid, behalve wanneer een helder zijaanzicht klinisch noodzakelijk is.
 - FysiPlan-logo en naam worden na generatie exact linksboven geplaatst; het model mag zelf geen tekst of logo tekenen.
 - De individuele Nederlandse instructie is leidend. De oorspronkelijke oefeningafbeelding is een secundaire posehint en wordt genegeerd wanneer hij met de tekst botst; brede opnamebatchvelden worden bewust niet gebruikt.
-- Technische QA controleert exact 2:3-formaat, bestandsgrootte, helderheid, zwart-witcontrast en een eventuele harde middenscheiding.
+- Een afzonderlijke graph-gate eist een neutrale randmediaan van minimaal 245/255; een grijze studio kan daardoor niet ongemerkt worden gepubliceerd.
+- Technische QA controleert exact 2:3-formaat, bestandsgrootte, achtergrondwit, helderheid, zwart-witcontrast en een eventuele harde middenscheiding.
 - De output blijft `awaiting-physiotherapist-review` totdat beginhouding, eindhouding, materiaal, gewrichtsstand en bewegingsrichting klinisch zijn beoordeeld.
 
 ## Modelrouting en budget

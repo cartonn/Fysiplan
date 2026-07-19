@@ -15,7 +15,7 @@ const qaOverrides = JSON.parse(await readFile(qaOverridesPath, "utf8"));
 const seamApprovals = new Map(qaOverrides.seamApprovals.map((entry) => [entry.exerciseId, entry]));
 const productionByName = new Map(production.map((entry) => [entry.sourceName, entry]));
 
-const GRAPH_VERSION = 4;
+const GRAPH_VERSION = 5;
 const ASSET_VERSION = 5;
 const args = process.argv.slice(2);
 const command = args.find((arg) => !arg.startsWith("--")) || "plan";
@@ -111,7 +111,8 @@ function buildGraph() {
       { id: `prepare-reference:${id}`, kind: "prepare-reference", plan, dependencies: [`audit:${id}`], output: artifact("references", `${id}.png`), costCredits: 0 },
       { id: `generate:${id}`, kind: "generate", plan, dependencies: [avatar.id, `prepare-reference:${id}`], output: artifact("generated", `${id}.png`), costCredits: plan.credits },
       { id: `compose:${id}`, kind: "compose", plan, dependencies: [`generate:${id}`], output: artifact("cards", `${id}.jpg`), costCredits: 0 },
-      { id: `qa:${id}`, kind: "qa", plan, dependencies: [`compose:${id}`], output: artifact("qa", `${id}.json`), costCredits: 0 },
+      { id: `white-background-gate:${id}`, kind: "white-background-gate", plan, dependencies: [`compose:${id}`], output: artifact("white-background", `${id}.json`), costCredits: 0 },
+      { id: `qa:${id}`, kind: "qa", plan, dependencies: [`compose:${id}`, `white-background-gate:${id}`], output: artifact("qa", `${id}.json`), costCredits: 0 },
       { id: `review-ready:${id}`, kind: "review-ready", plan, dependencies: [`qa:${id}`], output: artifact("review-ready", `${id}.json`), costCredits: 0 },
     ];
     if (publishConcepts) nodes.push({ id: `publish:${id}`, kind: "publish", plan, dependencies: [`review-ready:${id}`], output: join(root, "public", plan.outputImage), costCredits: 0 });
@@ -318,7 +319,7 @@ async function generate(node) {
   const source = artifact("references", `${node.plan.exerciseId}.png`);
   await mkdir(dirname(node.output), { recursive: true });
   if (provider === "local") {
-    await sharp(source).resize(800, 1200, { fit: "contain", background: "#ecebe7" }).png().toFile(node.output);
+    await sharp(source).resize(800, 1200, { fit: "contain", background: "#ffffff" }).png().toFile(node.output);
     return { source: "local-reference", credits: 0 };
   }
   const [avatar, movement] = await Promise.all([dataUri(avatarPath), dataUri(source)]);
@@ -374,6 +375,19 @@ function quantile(values, q) {
 
 async function imageStructure(path) {
   const { data, info } = await sharp(path).greyscale().resize(100, 150, { fit: "fill" }).raw().toBuffer({ resolveWithObject: true });
+  const { data: colour, info: colourInfo } = await sharp(path).resize(80, 120, { fit: "fill" }).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  const neutralEdgeValues = [];
+  for (let y = 0; y < colourInfo.height; y += 1) {
+    for (let x = 0; x < colourInfo.width; x += 1) {
+      if (x > 4 && x < colourInfo.width - 5 && y > 4 && y < colourInfo.height - 5) continue;
+      if (x < 18 && y < 15) continue;
+      const offset = (y * colourInfo.width + x) * 3;
+      const channels = [colour[offset], colour[offset + 1], colour[offset + 2]];
+      if (Math.max(...channels) - Math.min(...channels) < 20 && Math.max(...channels) > 150) {
+        neutralEdgeValues.push((channels[0] + channels[1] + channels[2]) / 3);
+      }
+    }
+  }
   const columnGradients = Array.from({ length: info.width - 1 }, (_, x) => {
     let total = 0;
     for (let y = 16; y < info.height - 4; y += 1) total += Math.abs(data[y * info.width + x + 1] - data[y * info.width + x]);
@@ -398,9 +412,26 @@ async function imageStructure(path) {
     medianGradient: Number(medianGradient.toFixed(2)),
     middleRowGradient: Number(middleRowGradient.toFixed(2)),
     medianRowGradient: Number(medianRowGradient.toFixed(2)),
+    neutralEdgeMedian: Number(quantile(neutralEdgeValues, 0.5).toFixed(2)),
     verticalDividerLikely: centreGradient > Math.max(32, medianGradient * 4.2),
     horizontalDividerLikely: middleRowGradient > Math.max(32, medianRowGradient * 4.2),
   };
+}
+
+async function whiteBackgroundGate(node) {
+  const card = artifact("cards", `${node.plan.exerciseId}.jpg`);
+  const structure = await imageStructure(card);
+  const report = {
+    exerciseId: node.plan.exerciseId,
+    sourceName: node.plan.sourceName,
+    passed: structure.neutralEdgeMedian >= 245,
+    neutralEdgeMedian: structure.neutralEdgeMedian,
+    requiredMinimum: 245,
+  };
+  await mkdir(dirname(node.output), { recursive: true });
+  await writeFile(node.output, JSON.stringify(report, null, 2) + "\n");
+  if (!report.passed) throw new Error(`Achtergrond is niet wit genoeg: ${structure.neutralEdgeMedian}/255`);
+  return report;
 }
 
 async function qa(node) {
@@ -411,6 +442,7 @@ async function qa(node) {
   const seamApproval = seamApprovals.get(node.plan.exerciseId) || null;
   const checks = {
     exactPortraitCard: metadata.width === 800 && metadata.height === 1200,
+    whiteStudioBackground: structure.neutralEdgeMedian >= 245,
     printableContrast: structure.stdev >= 24,
     printableBrightness: structure.mean >= 95 && structure.mean <= 242,
     noHardCentreDivider: seamApproval ? true : node.plan.layout === "stacked" ? !structure.horizontalDividerLikely : !structure.verticalDividerLikely,
@@ -474,7 +506,7 @@ async function publish(node) {
   return { catalogue: "public/oefeningen.json", publicImage: node.plan.outputImage, status: "concept-awaiting-physio-review" };
 }
 
-const actions = { "source-avatar": sourceAvatar, audit, "prepare-reference": prepareReference, generate, compose, qa, "review-ready": reviewReady, publish };
+const actions = { "source-avatar": sourceAvatar, audit, "prepare-reference": prepareReference, generate, compose, "white-background-gate": whiteBackgroundGate, qa, "review-ready": reviewReady, publish };
 
 function countBy(items, classifier) {
   return Object.fromEntries(items.reduce((map, item) => {
