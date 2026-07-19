@@ -1678,7 +1678,7 @@ bridge2.jpg</div>
       if(cats.indexOf(e.groep)<0)cats.push(e.groep);
       return {id:i,naam:e.naam,groep:e.groep,ook:e.ook||null,s:3,h:12,bron:'server',
         exerciseId:e.exerciseId||'',video:e.video||null,starthouding:'',uitvoering:'',opmerking:'',
-        imgs:[{type:'img',src:e.img,label:'Plaatje'}]};
+        imgs:[{type:'img',src:e.kaartImg||e.img,label:'Plaatje'}]};
     });
     SERVERLIB=true;CUSTOMLIB=false;curG='all';
     GROUPS=[{g:'all',label:'alle oefeningen'}].concat(cats.map(function(c){return {g:c,label:c};}));
