@@ -126,6 +126,7 @@ function relevantPolicy(node, policy = modelPolicy) {
     motionSeconds: policy.motionSeconds,
   };
   if (node.kind === "voice") return { voice: policy.voice, voicePreset: policy.voicePreset };
+  if (node.kind === "compose") return { composeVersion: 2 };
   return {};
 }
 
@@ -373,13 +374,13 @@ function xmlEscape(value) {
   return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&apos;");
 }
 
-function wrapText(value, limit = 58) {
+function wrapText(value, limit = 58, maxLines = 3) {
   return String(value).split(/\s+/).reduce((lines, word) => {
     const last = lines.at(-1) || "";
     if (!last || `${last} ${word}`.length > limit) lines.push(word);
     else lines[lines.length - 1] = `${last} ${word}`;
     return lines;
-  }, []).slice(0, 3);
+  }, []).slice(0, maxLines);
 }
 
 function parseVtt(value) {
@@ -415,25 +416,32 @@ async function compose(node) {
   const overlayDir = artifact("overlays", id);
   const chromePath = join(overlayDir, "chrome.png");
   await renderOverlay(chromePath, `<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080">
-    <rect x="0" y="0" width="1920" height="106" fill="#073b5c" fill-opacity="0.94"/>
-    <text x="64" y="68" font-family="Arial,Helvetica,sans-serif" font-size="48" font-weight="600" fill="white">${xmlEscape(node.entry.titleNl)}</text>
-    <rect x="0" y="1016" width="1920" height="64" fill="white" fill-opacity="0.92"/>
-    <text x="960" y="1057" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="27" font-weight="600" fill="#073b5c">AI-concept · beoordeling door fysiotherapeut volgt</text>
+    <rect width="1920" height="1080" fill="#edf3f7"/>
+    <circle cx="82" cy="65" r="10" fill="#2f8fb7"/>
+    <text x="106" y="73" font-family="Arial,Helvetica,sans-serif" font-size="25" font-weight="700" letter-spacing="2" fill="#2f6680">FYSIPLAN · OEFENING</text>
+    <text x="72" y="137" font-family="Arial,Helvetica,sans-serif" font-size="52" font-weight="650" fill="#092f45">${xmlEscape(node.entry.titleNl)}</text>
+    <rect x="62" y="164" width="1396" height="794" rx="22" fill="#d6e1e7"/>
+    <rect x="1488" y="174" width="360" height="774" rx="24" fill="white"/>
+    <text x="1524" y="230" font-family="Arial,Helvetica,sans-serif" font-size="23" font-weight="700" letter-spacing="2" fill="#2f8fb7">UITLEG</text>
+    <line x1="1524" y1="254" x2="1812" y2="254" stroke="#d8e4ea" stroke-width="2"/>
+    <text x="1524" y="810" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#5f7480">Beweeg rustig en gecontroleerd.</text>
+    <rect x="1518" y="856" width="300" height="56" rx="28" fill="#e7f2f7"/>
+    <text x="1668" y="892" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" fill="#215c77">AI-CONCEPT · FYSIOREVIEW</text>
   </svg>`);
   const cues = parseVtt(await readFile(captions, "utf8"));
   const subtitlePaths = await Promise.all(cues.map(async (cue, index) => {
     const target = join(overlayDir, `caption-${String(index + 1).padStart(2, "0")}.png`);
-    const lines = wrapText(cue.text);
-    const firstY = 826 - (lines.length - 1) * 24;
-    const tspans = lines.map((line, lineIndex) => `<tspan x="960" y="${firstY + lineIndex * 48}">${xmlEscape(line)}</tspan>`).join("");
+    const lines = wrapText(cue.text, 22, 8);
+    const lineHeight = 42;
+    const firstY = 500 - ((lines.length - 1) * lineHeight) / 2;
+    const tspans = lines.map((line, lineIndex) => `<tspan x="1668" y="${firstY + lineIndex * lineHeight}">${xmlEscape(line)}</tspan>`).join("");
     await renderOverlay(target, `<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080">
-      <rect x="230" y="${firstY - 43}" width="1460" height="${lines.length * 48 + 30}" rx="18" fill="#061927" fill-opacity="0.84"/>
-      <text text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="37" font-weight="500" fill="white">${tspans}</text>
+      <text text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="29" font-weight="600" fill="#173f53">${tspans}</text>
     </svg>`);
     return target;
   }));
   const inputArgs = ["-stream_loop", "-1", "-i", motion, "-i", voice, "-i", chromePath, ...subtitlePaths.flatMap((path) => ["-i", path])];
-  const filters = ["[0:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=#edf3f8[base]", "[base][2:v]overlay=0:0:format=auto[v0]"];
+  const filters = ["[0:v]scale=1376:774:force_original_aspect_ratio=decrease,pad=1376:774:(ow-iw)/2:(oh-ih)/2:color=#dce6eb[exercise]", "[2:v][exercise]overlay=72:174:format=auto[v0]"];
   cues.forEach((cue, index) => filters.push(`[v${index}][${index + 3}:v]overlay=0:0:format=auto:enable='between(t,${cue.start.toFixed(3)},${cue.end.toFixed(3)})'[v${index + 1}]`));
   filters.push(`[v${cues.length}]format=yuv420p[outv]`);
   await exec("ffmpeg", ["-y", "-loglevel", "error", ...inputArgs, "-t", String(duration + 0.35), "-filter_complex", filters.join(";"), "-map", "[outv]", "-map", "1:a:0", "-c:v", "libx264", "-preset", "medium", "-crf", "21", "-r", "25", "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-movflags", "+faststart", node.output]);
