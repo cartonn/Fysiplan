@@ -12,6 +12,7 @@ const root = resolve(new URL("../", import.meta.url).pathname);
 const manifestPath = join(root, "content", "video-productie-215.json");
 const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
 const GRAPH_VERSION = 2;
+const HASH_VERSION = 2;
 const args = process.argv.slice(2);
 const command = args.find((arg) => !arg.startsWith("--")) || "plan";
 
@@ -44,7 +45,7 @@ const modelPolicy = {
   complexRule: "risk.level === extra-review",
   voice: "eleven_multilingual_v2",
   motionSeconds: 6,
-  voicePreset: "Marlene",
+  voicePreset: "Serene",
 };
 
 function artifact(...parts) {
@@ -86,6 +87,7 @@ function buildGraph() {
 }
 
 const nodes = buildGraph();
+const nodesById = new Map(nodes.map((node) => [node.id, node]));
 graphLayers(nodes);
 
 async function readState() {
@@ -97,6 +99,8 @@ async function readState() {
 }
 
 const state = await readState();
+const previousModelPolicy = state.modelPolicy ? { ...state.modelPolicy } : { ...modelPolicy };
+const legacyHashState = !state.hashVersion;
 if (state.provider && state.provider !== provider && command === "run") {
   throw new Error(`Werkmap hoort bij provider ${state.provider}; kies een andere --work-dir voor ${provider}`);
 }
@@ -114,7 +118,41 @@ function saveState() {
   return saveStateChain;
 }
 
-function hashNode(node) {
+function relevantPolicy(node, policy = modelPolicy) {
+  if (node.kind === "avatar") return { avatarImage: policy.avatarImage };
+  if (node.kind === "pose") return { poseImage: policy.poseImage };
+  if (node.kind === "motion") return {
+    motionVideo: node.entry?.risk.level === "extra-review" ? policy.motionVideoComplex : policy.motionVideoStandard,
+    motionSeconds: policy.motionSeconds,
+  };
+  if (node.kind === "voice") return { voice: policy.voice, voicePreset: policy.voicePreset };
+  return {};
+}
+
+function hashNode(node, memo = new Map()) {
+  if (memo.has(node.id)) return memo.get(node.id);
+  const dependencyHashes = (node.dependencies || []).map((id) => {
+    const dependency = nodesById.get(id);
+    if (!dependency) throw new Error(`Onbekende afhankelijkheid ${id} voor ${node.id}`);
+    return hashNode(dependency, memo);
+  });
+  const hash = createHash("sha256").update(JSON.stringify({
+    graphVersion: GRAPH_VERSION,
+    hashVersion: HASH_VERSION,
+    kind: node.kind,
+    exerciseId: node.entry?.exerciseId,
+    titleNl: node.entry?.titleNl,
+    referenceImage: node.entry?.referenceImage,
+    script: node.entry?.script,
+    shotPlan: node.entry?.shotPlan,
+    policy: relevantPolicy(node),
+    dependencyHashes,
+  })).digest("hex").slice(0, 20);
+  memo.set(node.id, hash);
+  return hash;
+}
+
+function legacyHashNode(node, policy) {
   return createHash("sha256").update(JSON.stringify({
     graphVersion: GRAPH_VERSION,
     kind: node.kind,
@@ -123,14 +161,36 @@ function hashNode(node) {
     referenceImage: node.entry?.referenceImage,
     script: node.entry?.script,
     shotPlan: node.entry?.shotPlan,
-    modelPolicy,
+    modelPolicy: policy,
   })).digest("hex").slice(0, 20);
+}
+
+function cacheCompatible(node, previousPolicy = previousModelPolicy, currentPolicy = modelPolicy, memo = new Map()) {
+  if (memo.has(node.id)) return memo.get(node.id);
+  const ownPolicyMatches = JSON.stringify(relevantPolicy(node, previousPolicy)) === JSON.stringify(relevantPolicy(node, currentPolicy));
+  const dependenciesMatch = (node.dependencies || []).every((id) => {
+    const dependency = nodesById.get(id);
+    return dependency && cacheCompatible(dependency, previousPolicy, currentPolicy, memo);
+  });
+  const compatible = ownPolicyMatches && dependenciesMatch;
+  memo.set(node.id, compatible);
+  return compatible;
 }
 
 async function validCompleted(node) {
   const record = state.nodes[node.id];
-  if (!record || record.status !== "succeeded" || record.inputHash !== hashNode(node)) return false;
-  try { return (await stat(node.output)).size > 100; } catch { return false; }
+  if (!record || record.status !== "succeeded") return false;
+  const currentHash = hashNode(node);
+  const currentMatch = record.inputHash === currentHash;
+  const legacyMatch = legacyHashState
+    && record.inputHash === legacyHashNode(node, previousModelPolicy)
+    && cacheCompatible(node);
+  if (!currentMatch && !legacyMatch) return false;
+  try {
+    const valid = (await stat(node.output)).size > 100;
+    if (valid && legacyMatch) record.inputHash = currentHash;
+    return valid;
+  } catch { return false; }
 }
 
 function dataUri(path, mimeOverride) {
@@ -496,6 +556,7 @@ if (command === "status") {
 if (command !== "run") throw new Error("Gebruik plan, run of status");
 if (!executeApproved) throw new Error("Run is standaard droog. Voeg --execute toe om artifacts te maken en eventueel providertegoed te gebruiken.");
 const completionChecks = await Promise.all(nodes.map(async (node) => [node, await validCompleted(node)]));
+state.hashVersion = HASH_VERSION;
 const remainingCost = completionChecks.filter(([, complete]) => !complete).reduce((sum, [node]) => sum + node.costUsd, 0);
 if (provider === "runway" && (!budgetUsd || remainingCost > budgetUsd)) {
   throw new Error(`Resterende geschatte kosten $${remainingCost.toFixed(2)} overschrijden --budget-usd ${budgetUsd.toFixed(2)}.`);
