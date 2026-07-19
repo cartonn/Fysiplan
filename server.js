@@ -261,6 +261,7 @@ function aiLimiet(req, res) {
 // Kaarten-venster opent, één kaart per scan) blijft hier ver onder, maar een script
 // dat praktijknamen afloopt om kaartnamen en scores te verzamelen loopt vast.
 const leesTeller = new Map();
+const pollTeller = new Map();
 function leesLimiet(req, res) {
   const nu = Date.now();
   if (leesTeller.size > 5000) {
@@ -920,8 +921,22 @@ async function afhandelen(request, response) {
     return;
   }
 
-  // het beeldscherm pollt tot de telefoon de video heeft geüpload
+  // het beeldscherm pollt tot de telefoon de video heeft geüpload; de limiet is ruim
+  // (13+ schermen tegelijk achter één IP) maar smoort een eindeloze flood
   if (urlPath === "/api/opname/status" && request.method === "GET") {
+    const nuPoll = Date.now();
+    const ipPoll = clientIp(request);
+    const tp = pollTeller.get(ipPoll);
+    if (!tp || nuPoll - tp.start > 5 * 60 * 1000) {
+      if (pollTeller.size > 5000) {
+        for (const [k, v] of pollTeller) if (nuPoll - v.start > 5 * 60 * 1000) pollTeller.delete(k);
+      }
+      pollTeller.set(ipPoll, { start: nuPoll, n: 1 });
+    } else if (++tp.n > 1800) {
+      if (tp.n === 1801) logGeweigerd(request, "poll-limiet");
+      await sendJson(response, 429, { ok: false, fout: "Even te veel verzoeken; probeer het over een paar minuten opnieuw." });
+      return;
+    }
     opnameOpschonen();
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const o = opnames.get(String(q.get("token") || ""));

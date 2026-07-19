@@ -102,6 +102,22 @@ html.v2 .v2badge{background:linear-gradient(150deg,#2f66bd,#1c4487);color:#fff;
   html.v2 header.topbar .btn.primary{flex-basis:100%}
 }
 
+/* AI-kaartassistent: het voorstel als verzorgde kaartjes met doseringchips */
+html.v2 .ai-denken{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:13px;padding:14px 4px}
+html.v2 .ai-denken i{width:7px;height:7px;border-radius:99px;background:var(--brand);animation:aiblink 1.2s infinite}
+html.v2 .ai-denken i:nth-child(2){animation-delay:.2s}
+html.v2 .ai-denken i:nth-child(3){animation-delay:.4s;margin-right:6px}
+@keyframes aiblink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+html.v2 .ai-toel{font-size:12.5px;line-height:1.55;background:var(--brand-50);border:1px solid var(--brand-100);
+  border-radius:12px;padding:10px 12px;margin-bottom:8px;color:var(--text)}
+html.v2 .ai-oef{display:flex;gap:10px;align-items:flex-start;padding:10px 11px;border:1px solid var(--line);
+  border-radius:12px;margin-bottom:6px;cursor:pointer;background:#fffdf6;transition:border-color .12s,background .12s}
+html.v2 .ai-oef:hover{border-color:var(--brand-100);background:var(--brand-50)}
+html.v2 .ai-oef input{margin-top:3px;accent-color:var(--brand)}
+html.v2 .ai-dos{display:inline-block;font-size:11px;font-weight:600;color:var(--brand);background:var(--brand-50);
+  border:1px solid var(--brand-100);border-radius:999px;padding:3px 9px;margin:5px 4px 0 0}
+html.v2 .ai-waarom{display:block;color:var(--muted);font-size:11.5px;margin-top:4px;line-height:1.45}
+
 /* vaste veiligheidsregel onderaan elke kaart (alleen v2): print mee op papier */
 html.v2 #a4::after{content:"Neem pijn serieus: stop bij toenemende pijn en overleg met je fysiotherapeut.";
   position:absolute;left:0;right:0;bottom:4px;text-align:center;

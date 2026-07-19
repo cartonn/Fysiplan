@@ -1292,20 +1292,22 @@ bridge2.jpg</div>
     if(kl.length<3){alert('Omschrijf eerst de klacht.');return;}
     var go=document.getElementById('ai_go');
     go.disabled=true;go.textContent='Bezig met nadenken...';
-    uit.innerHTML="<div class='hint'>De assistent stelt een kaart samen; dit duurt een paar tellen.</div>";
+    uit.innerHTML="<div class='ai-denken'><i></i><i></i><i></i>De assistent stelt een kaart samen; dit duurt een paar tellen.</div>";
     fetch('api/assistent',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({klacht:kl})})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
       .then(function(d){
         go.disabled=false;go.textContent='Stel een kaart voor';
         if(!d.ok){uit.innerHTML="<div class='hint'>"+esc(d.fout||'De AI-hulp is even niet bereikbaar.')+"</div>";return;}
         AI_VOORSTEL=d;
-        uit.innerHTML=(d.toelichting?"<div style='font-size:12.5px;line-height:1.5;margin-bottom:6px'>"+esc(d.toelichting)+"</div>":"")+
+        uit.innerHTML=(d.toelichting?"<div class='ai-toel'>"+esc(d.toelichting)+"</div>":"")+
           d.oefeningen.map(function(o,i){
-            var dos=[o.series&&o.series+' series',o.herhalingen&&o.herhalingen+' herhalingen',o.gewicht].filter(Boolean).join(', ');
-            return "<label style='display:flex;gap:8px;align-items:flex-start;padding:7px 4px;border-bottom:1px solid var(--line);cursor:pointer'>"+
-              "<input type='checkbox' checked data-ai='"+i+"' style='margin-top:3px'/>"+
-              "<span style='flex:1;min-width:0'><b>"+esc(o.naam)+"</b>"+(dos?" <small style='color:var(--muted)'>"+esc(dos)+"</small>":"")+
-              (o.waarom?"<br/><small style='color:var(--muted)'>"+esc(o.waarom)+"</small>":"")+"</span></label>";
+            var dos=[o.series&&o.series+' series',o.herhalingen&&o.herhalingen+' herhalingen',o.gewicht]
+              .filter(Boolean).map(function(t){return "<span class='ai-dos'>"+esc(t)+"</span>";}).join('');
+            return "<label class='ai-oef'>"+
+              "<input type='checkbox' checked data-ai='"+i+"'/>"+
+              "<span style='flex:1;min-width:0'><b>"+esc(o.naam)+"</b>"+
+              (dos?"<br/>"+dos:"")+
+              (o.waarom?"<span class='ai-waarom'>"+esc(o.waarom)+"</span>":"")+"</span></label>";
           }).join("")+
           "<div style='margin-top:10px;text-align:right'><button class='btn primary' id='ai_apply'>Zet op de kaart</button></div>";
       })
