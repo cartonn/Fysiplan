@@ -211,7 +211,7 @@ function schrijfLimiet(req, res) {
   }
   if (++t.n > 40) {
     if (t.n === 41) logGeweigerd(req, "limiet");
-    sendJson(res, 429, { ok: false, fout: "Even te veel verzoeken achter elkaar; probeer het over een paar minuten opnieuw." });
+    send429(res, 300, { ok: false, fout: "Even te veel verzoeken achter elkaar; probeer het over een paar minuten opnieuw." });
     return true;
   }
   return false;
@@ -246,7 +246,7 @@ function aiLimiet(req, res) {
   const dag = vandaagKey();
   if (aiDag.dag !== dag) aiDag = { dag, n: 0 };
   if (++aiDag.n > 300) {
-    sendJson(res, 429, { ok: false, fout: "De AI-hulp heeft het dagmaximum bereikt; probeer het morgen opnieuw." });
+    send429(res, 3600, { ok: false, fout: "De AI-hulp heeft het dagmaximum bereikt; probeer het morgen opnieuw." });
     return true;
   }
   const nu = Date.now();
@@ -258,7 +258,7 @@ function aiLimiet(req, res) {
   if (!t || nu - t.start > 3600e3) { aiTeller.set(ip, { start: nu, n: 1 }); return false; }
   if (++t.n > 20) {
     if (t.n === 21) logGeweigerd(req, "ai-limiet");
-    sendJson(res, 429, { ok: false, fout: "Even te veel AI-verzoeken; probeer het over een uur opnieuw." });
+    send429(res, 3600, { ok: false, fout: "Even te veel AI-verzoeken; probeer het over een uur opnieuw." });
     return true;
   }
   return false;
@@ -282,7 +282,7 @@ function leesLimiet(req, res) {
   }
   if (++t.n > 120) {
     if (t.n === 121) logGeweigerd(req, "leeslimiet");
-    sendJson(res, 429, { ok: false, fout: "Even te veel verzoeken achter elkaar; probeer het over een paar minuten opnieuw." });
+    send429(res, 300, { ok: false, fout: "Even te veel verzoeken achter elkaar; probeer het over een paar minuten opnieuw." });
     return true;
   }
   return false;
@@ -437,6 +437,8 @@ async function send(res, status, type, body) {
   res.end(body);
 }
 const sendJson = (res, status, obj) => send(res, status, "application/json; charset=utf-8", JSON.stringify(obj));
+// 429 met Retry-After: nette clients weten zo hoelang ze moeten wachten en blijven niet hameren
+const send429 = (res, seconds, obj) => { try { res.setHeader("retry-after", String(seconds)); } catch {} return sendJson(res, 429, obj); };
 const denied = (req, res, pad) => { logGeweigerd(req, pad); return sendJson(res, 403, { ok: false, fout: "Alleen beschikbaar voor beheer." }); };
 
 // Elk verzoek loopt door dit vangnet: één kapotte aanvraag (bot, rare URL, afgebroken
@@ -943,7 +945,7 @@ async function afhandelen(request, response) {
       pollTeller.set(ipPoll, { start: nuPoll, n: 1 });
     } else if (++tp.n > 1800) {
       if (tp.n === 1801) logGeweigerd(request, "poll-limiet");
-      await sendJson(response, 429, { ok: false, fout: "Even te veel verzoeken; probeer het over een paar minuten opnieuw." });
+      await send429(response, 300, { ok: false, fout: "Even te veel verzoeken; probeer het over een paar minuten opnieuw." });
       return;
     }
     opnameOpschonen();
