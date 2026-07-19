@@ -95,6 +95,13 @@ async function ruimKaartVideosOp(paden) {
   }
 }
 
+// inhoudscontrole voor afbeeldingsuploads: het bestand moet echt een JPEG of PNG zijn,
+// niet alleen zo heten; dezelfde bescherming die video-uploads al hebben
+function echteAfbeelding(buf, soort) {
+  if (soort === "png") return buf.length > 8 && buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4e && buf[3] === 0x47;
+  return buf.length > 3 && buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff;
+}
+
 // kaart opzoeken op het onraadbare id uit de QR-code
 function vindKaart(id) {
   if (!/^[a-f0-9]{8,16}$/.test(String(id || ""))) return null;
@@ -536,6 +543,7 @@ async function afhandelen(request, response) {
       if (!m) { await sendJson(response, 400, { ok: false, fout: "Voeg een plaatje toe (JPEG of PNG)." }); return; }
       const buf = Buffer.from(m[2], "base64");
       if (buf.length < 100 || buf.length > 2.5 * 1024 * 1024) { await sendJson(response, 400, { ok: false, fout: "Plaatje is te groot (max. 2,5 MB)." }); return; }
+      if (!echteAfbeelding(buf, m[1])) { await sendJson(response, 400, { ok: false, fout: "Dit bestand is geen geldige JPEG of PNG." }); return; }
       await mkdir(uploadsDir, { recursive: true });
       const file = `${slug(naam)}-${Date.now()}.${m[1] === "png" ? "png" : "jpg"}`;
       await writeFile(join(uploadsDir, file), buf);
@@ -692,6 +700,7 @@ async function afhandelen(request, response) {
         if (!m) { await sendJson(response, 400, { ok: false, fout: "Logo moet een JPEG of PNG zijn." }); return; }
         const buf = Buffer.from(m[2], "base64");
         if (buf.length < 100 || buf.length > 400 * 1024) { await sendJson(response, 400, { ok: false, fout: "Logo is te groot (max. 400 kB)." }); return; }
+        if (!echteAfbeelding(buf, m[1])) { await sendJson(response, 400, { ok: false, fout: "Dit bestand is geen geldige JPEG of PNG." }); return; }
         await mkdir(uploadsDir, { recursive: true });
         const file = `logo-${slug(p.praktijk)}-${Date.now()}.${m[1] === "png" ? "png" : "jpg"}`;
         await writeFile(join(uploadsDir, file), buf);
