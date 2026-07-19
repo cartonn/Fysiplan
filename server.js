@@ -757,6 +757,7 @@ async function afhandelen(request, response) {
   // kan worden gehangen, ook wanneer Railway tussen upload en afronden herstart.
   if (urlPath === "/api/oefeningen/video/upload/complete" && request.method === "POST") {
     if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
+    if (schrijfLimiet(request, response)) return;
     try {
       const b = JSON.parse(await readBody(request));
       const id = String(b.exerciseId || "");
