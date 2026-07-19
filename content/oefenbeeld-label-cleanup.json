@@ -1,0 +1,18 @@
+{
+  "images": [
+    {
+      "sourceName": "Standing abduction",
+      "rectangles": [
+        { "left": 35, "top": 900, "width": 315, "height": 75 },
+        { "left": 390, "top": 900, "width": 315, "height": 75 }
+      ]
+    },
+    {
+      "sourceName": "Standing gluteus",
+      "rectangles": [
+        { "left": 175, "top": 1060, "width": 165, "height": 70 },
+        { "left": 525, "top": 1060, "width": 145, "height": 70 }
+      ]
+    }
+  ]
+}

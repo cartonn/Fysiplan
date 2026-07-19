@@ -6,6 +6,9 @@
   "scripts": {
     "build": "node scripts/video-catalogus.mjs && node scripts/video-productie.mjs && node scripts/build.js",
     "images:normalize": "python3 scripts/normalize-image-visibility.py --write",
+    "images:graph": "node scripts/exercise-image-graph.mjs plan",
+    "images:graph:status": "node scripts/exercise-image-graph.mjs status",
+    "images:clean-labels": "node scripts/clean-exercise-image-labels.mjs",
     "videos:check": "node scripts/video-catalogus.mjs",
     "videos:export": "node scripts/video-catalogus.mjs --export-csv",
     "videos:production": "node scripts/video-productie.mjs",
