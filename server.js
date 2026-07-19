@@ -1340,6 +1340,14 @@ async function afhandelen(request, response) {
     if (urlPath === "/v2/app/") { response.writeHead(301, { location: "/v2/app" }); response.end(); return; }
     telBezoek(request, false);
     response.setHeader("x-frame-options", "DENY");
+    // defensielaag zoals op /k en /o: de app laadt alleen eigen bronnen, plus de
+    // videospelers; base-uri 'self' omdat de pagina zelf een <base href="/"> zet
+    response.setHeader("content-security-policy",
+      "default-src 'self'; script-src 'self' 'unsafe-inline'; " +
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; " +
+      "img-src 'self' data: blob:; media-src 'self' blob:; " +
+      "frame-src https://www.youtube-nocookie.com https://*.cloudflarestream.com https://iframe.videodelivery.net; " +
+      "connect-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'");
     try {
       let html = await readFile(join(publicDir, "index.html"), "utf8");
       html = html.replace("<head>", '<head><base href="/"/><meta name="color-scheme" content="light"/><script>window.FYSIPLAN_V2=true</script>');
