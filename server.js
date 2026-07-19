@@ -1372,6 +1372,14 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // standaardadres voor het melden van beveiligingslekken (RFC 9116)
+  if (urlPath === "/.well-known/security.txt" || urlPath === "/security.txt") {
+    const volgendJaar = new Date(Date.now() + 365 * 86400000).toISOString().slice(0, 10);
+    await send(response, 200, "text/plain; charset=utf-8",
+      "Contact: mailto:cartonn78@gmail.com\nPreferred-Languages: nl, en\nExpires: " + volgendJaar + "T00:00:00Z\n");
+    return;
+  }
+
   // eigenaars-dashboard (aparte, onopvallende URL; de data-API eist de beheer-sleutel)
   if (urlPath === "/dashboard88" || urlPath === "/dashboard88/") {
     try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "dashboard.html"))); }
