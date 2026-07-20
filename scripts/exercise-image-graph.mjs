@@ -16,7 +16,7 @@ const seamApprovals = new Map(qaOverrides.seamApprovals.map((entry) => [entry.ex
 const productionByName = new Map(production.map((entry) => [entry.sourceName, entry]));
 
 const GRAPH_VERSION = 5;
-const ASSET_VERSION = 5;
+const ASSET_VERSION = 6;
 const args = process.argv.slice(2);
 const command = args.find((arg) => !arg.startsWith("--")) || "plan";
 
