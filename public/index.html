@@ -691,6 +691,7 @@ bridge2.jpg</div>
       var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
       localStorage.setItem('fysiplan_state',JSON.stringify({chosen:chosen,client:client,grid:GRID,vids:VIDS}));
     }catch(e){}
+    planAutoDeel();
   }
   function loadState(){
     try{
@@ -1221,7 +1222,11 @@ bridge2.jpg</div>
     window.print();
   }
   document.getElementById('printBtn').addEventListener('click',function(){
-    if(IS_V2){openOv('ovPrint');return;}
+    if(IS_V2){
+      var pq=document.getElementById('pr_qr');
+      pq.checked=(QR_UIT_VOOR===null||QR_UIT_VOOR!==huidigeKaartNaam().toLowerCase());
+      openOv('ovPrint');return;
+    }
     doePrint();
   });
   // v2: printopties — indeling, lettergrootte en de QR-code naar de digitale kaart
@@ -1232,10 +1237,43 @@ bridge2.jpg</div>
     var b=document.getElementById('qrBlok');
     b.innerHTML=window.FYSIQR?FYSIQR.svg(url,120):'';
     if(!b.innerHTML){verbergQr();return false;}
-    b.innerHTML+='<small>Scan voor de digitale kaart</small>';
+    b.innerHTML+='<small>Scan voor de digitale kaart</small>'+
+      (IS_V2?"<span class='qrx no-print' id='qrx' title='QR-code van deze kaart afhalen'>×</span>":'');
     b.style.display='flex';
     return true;
   }
+  // ---- v2: de QR staat er standaard op zodra de kaart een cliëntnaam heeft ----
+  // De kaart wordt na een korte pauze stil met de praktijk gedeeld; de link (en dus de
+  // geprinte QR-code) blijft bij elke latere bewerking dezelfde, alleen de inhoud vernieuwt.
+  var autoDeelTimer=null,laatsteDeel='',QR_UIT_VOOR=null;
+  function huidigeKaartNaam(){var el=document.getElementById('c_naam');return el?el.value.trim():'';}
+  function planAutoDeel(){
+    if(!IS_V2)return;
+    clearTimeout(autoDeelTimer);
+    autoDeelTimer=setTimeout(doeAutoDeel,4000);
+  }
+  function doeAutoDeel(){
+    var naam=huidigeKaartNaam();
+    var pr=(SET.praktijk||'').trim();
+    if(!naam||!chosen.length){verbergQr();laatsteDeel='';return;}
+    if(!pr||QR_UIT_VOOR===naam.toLowerCase())return;
+    var c=currentCard(naam);c.praktijk=pr;
+    var afdruk=JSON.stringify(c);
+    if(afdruk===laatsteDeel)return;
+    fetch('api/kaarten',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(c)})
+      .then(function(r){return r.json().catch(function(){return {ok:false};});})
+      .then(function(d){
+        if(!d.ok)return;
+        laatsteDeel=afdruk;
+        ensureQr(function(){toonQr(d.id);});
+      })
+      .catch(function(){});
+  }
+  document.getElementById('qrBlok').addEventListener('click',function(e){
+    if(e.target.id!=='qrx')return;
+    QR_UIT_VOOR=huidigeKaartNaam().toLowerCase();
+    verbergQr();
+  });
   document.getElementById('pr_do').addEventListener('click',function(){
     var compact=document.getElementById('pr_compact').checked;
     var groot=document.getElementById('pr_groot').checked;
@@ -1243,9 +1281,11 @@ bridge2.jpg</div>
     document.documentElement.classList.toggle('print-groot',groot);
     var metQr=document.getElementById('pr_qr').checked;
     if(!metQr){
+      if(IS_V2)QR_UIT_VOOR=huidigeKaartNaam().toLowerCase();
       verbergQr();closeOv('ovPrint');doePrint();
       return;
     }
+    QR_UIT_VOOR=null;
     // QR: kaart eerst bij de praktijk bewaren, dan de code op de kaart zetten en printen
     if(!(SET.praktijk||'').trim()){alert('Vul eerst de praktijknaam op de kaart in — de digitale kaart hoort bij de praktijk.');return;}
     var cn=document.getElementById('c_naam');
@@ -1585,7 +1625,7 @@ bridge2.jpg</div>
   document.getElementById('clearBtn').addEventListener('click',function(){openOv('ovWis');});
   document.getElementById('wis_cancel').addEventListener('click',function(){closeOv('ovWis');});
   document.getElementById('wis_plaatjes').addEventListener('click',function(){
-    chosen=[];VIDS={};verbergQr();closeOv('ovWis');render();
+    chosen=[];VIDS={};laatsteDeel='';QR_UIT_VOOR=null;verbergQr();closeOv('ovWis');render();
   });
   document.getElementById('wis_alles').addEventListener('click',function(){
     chosen=[];GRID={rows:{},cells:{}};VIDS={};
