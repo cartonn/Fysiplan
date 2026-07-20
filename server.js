@@ -315,9 +315,16 @@ setInterval(maakBackup, 24 * 60 * 60 * 1000).unref();
 
 async function saveJson(path, obj) {
   await mkdir(dataDir, { recursive: true });
-  const tmp = path + ".tmp";
-  await writeFile(tmp, JSON.stringify(obj, null, 2));
-  await rename(tmp, path);
+  // uniek tijdelijk bestand per schrijfactie: twee gelijktijdige saves kunnen elkaars
+  // halfgeschreven bestand dan nooit als definitief bestand neerzetten
+  const tmp = path + ".tmp-" + randomBytes(4).toString("hex");
+  try {
+    await writeFile(tmp, JSON.stringify(obj, null, 2));
+    await rename(tmp, path);
+  } catch (err) {
+    try { await unlink(tmp); } catch {}
+    throw err;
+  }
 }
 
 const CATS = ["Bovenste extremiteit", "Onderste extremiteit", "Core", "Cardio", "Bosu", "TRX",
