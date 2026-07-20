@@ -1395,6 +1395,30 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // app-manifest per kaart: hierdoor opent de op het beginscherm gezette kaart
+  // altijd precies deze kaart, schermvullend en met eigen icoon
+  if (urlPath === "/api/kaart/manifest" && request.method === "GET") {
+    if (leesLimiet(request, response)) return;
+    const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    const found = vindKaart(String(q.get("id") || ""));
+    if (!found) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+    response.setHeader("x-robots-tag", "noindex, noarchive");
+    await send(response, 200, "application/manifest+json; charset=utf-8", JSON.stringify({
+      name: "Trainingskaart " + (found.client && found.client.c_naam ? found.client.c_naam : found.naam),
+      short_name: "Trainingskaart",
+      start_url: "/k/" + found.id,
+      scope: "/k/",
+      display: "standalone",
+      background_color: "#f6f2e9",
+      theme_color: "#f6f2e9",
+      icons: [
+        { src: "/images/icoon-192.png", sizes: "192x192", type: "image/png" },
+        { src: "/images/icoon-512.png", sizes: "512x512", type: "image/png" }
+      ]
+    }));
+    return;
+  }
+
   // de digitale kaart zelf: /k/<id> (de pagina haalt de kaart via de API op)
   if (urlPath === "/k" || urlPath.startsWith("/k/")) {
     telBezoek(request, false);
@@ -1405,7 +1429,7 @@ async function afhandelen(request, response) {
     response.setHeader("content-security-policy",
       "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; " +
       "img-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com https://*.cloudflarestream.com https://iframe.videodelivery.net; " +
-      "connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'");
+      "connect-src 'self'; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'");
     try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "kaart.html"))); }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
