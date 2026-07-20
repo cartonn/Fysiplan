@@ -1477,6 +1477,14 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // contentstudio-dashboard: intern werkscherm, nooit indexeren (data-API eist de sleutel)
+  if (urlPath === "/content1000.html" || urlPath === "/content1000") {
+    response.setHeader("x-robots-tag", "noindex, noarchive");
+    try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "content1000.html"))); }
+    catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
+    return;
+  }
+
   // eigenaars-dashboard (aparte, onopvallende URL; de data-API eist de beheer-sleutel)
   if (urlPath === "/dashboard88" || urlPath === "/dashboard88/") {
     try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "dashboard.html"))); }
