@@ -1023,6 +1023,7 @@ async function afhandelen(request, response) {
   // de opnamepagina die de telefoon opent na het scannen van de scherm-QR
   if (urlPath.startsWith("/o/")) {
     response.setHeader("x-frame-options", "DENY");
+    response.setHeader("x-robots-tag", "noindex, noarchive");
     response.setHeader("permissions-policy", "camera=(self), microphone=(self), geolocation=()");
     response.setHeader("content-security-policy",
       "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; " +
@@ -1206,6 +1207,7 @@ async function afhandelen(request, response) {
       "END:VEVENT", "END:VCALENDAR", ""
     ].join("\r\n");
     response.setHeader("content-disposition", 'attachment; filename="oefenmomenten.ics"');
+    response.setHeader("x-robots-tag", "noindex, noarchive");
     await send(response, 200, "text/calendar; charset=utf-8", ics);
     return;
   }
@@ -1298,6 +1300,7 @@ async function afhandelen(request, response) {
   if (urlPath === "/k" || urlPath.startsWith("/k/")) {
     telBezoek(request, false);
     response.setHeader("x-frame-options", "DENY");
+    response.setHeader("x-robots-tag", "noindex, noarchive");
     response.setHeader("permissions-policy", "camera=(), microphone=(), geolocation=()");
     // defensielaag: de patiëntpagina mag alleen laden van de eigen server (+ de YouTube-speler)
     response.setHeader("content-security-policy",
@@ -1311,6 +1314,8 @@ async function afhandelen(request, response) {
 
   // door beheer geüploade plaatjes en video's (staan in de datamap, niet in public/)
   if (urlPath.startsWith("/uploads/")) {
+    // geüploade beelden en (patiënt)video's horen nooit in een zoekmachine
+    response.setHeader("x-robots-tag", "noindex, noarchive");
     const file = normalize(join(uploadsDir, urlPath.slice("/uploads/".length)));
     const ext = extname(file);
     if (!file.startsWith(uploadsDir + sep) || ![".jpg", ".png", ".mp4", ".webm"].includes(ext)) {

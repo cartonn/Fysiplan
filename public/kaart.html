@@ -47,7 +47,19 @@
     display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--disp);
     box-shadow:0 2px 6px rgba(36,86,166,.28)}
   .oefkop img{width:88px;height:88px;flex:0 0 88px;object-fit:contain;background:#fff;
-    border:1px solid var(--lijn);border-radius:14px;padding:4px}
+    border:1px solid var(--lijn);border-radius:14px;padding:4px;cursor:zoom-in}
+
+  /* tik op een oefenfoto: groot bekijken, één tik terug */
+  .lightbox{position:fixed;inset:0;background:rgba(22,19,12,.9);display:none;
+    align-items:center;justify-content:center;z-index:30;padding:18px;cursor:zoom-out}
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:100%;max-height:82vh;border-radius:18px;background:#fff;padding:10px}
+  .lightbox .lbnaam{position:absolute;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom));
+    text-align:center;color:#fff;font:600 15px/1.4 var(--disp);padding:0 20px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+  @media (prefers-reduced-motion:no-preference){
+    .lightbox.open img{animation:lbin .18s ease-out}
+    @keyframes lbin{from{transform:scale(.94);opacity:0}to{transform:none;opacity:1}}
+  }
   .oefinfo{flex:1;min-width:0}
   .naam{font:700 17.5px/1.25 var(--disp);color:var(--inkt);letter-spacing:-.01em}
   .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
@@ -234,6 +246,7 @@
     <span id="gemaakt">Gemaakt met</span> <a href="https://fysiplan.nl/v2">Fysiplan</a></span>
   </div>
 </div>
+<div class="lightbox" id="lightbox" role="dialog" aria-label="vergrote oefenfoto"><img id="lbimg" alt=""/><div class="lbnaam" id="lbnaam"></div></div>
 <a class="belknop" id="belknop" style="display:none" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/></svg><span id="beltxt">Bel de praktijk</span></a>
 <div class="fout" id="fout" style="display:none">
   <h1>Kaart niet gevonden</h1>
@@ -480,6 +493,16 @@
   function bindEens(){
     // video laden bij een tik; één tegelijk open, de rest pauzeert vanzelf
     document.getElementById('oefs').addEventListener('click',function(e){
+      // tik op de foto: groot bekijken met de naam eronder
+      var foto=e.target.closest('.oefkop img');
+      if(foto){
+        var lb=document.getElementById('lightbox');
+        document.getElementById('lbimg').src=foto.src;
+        var oefEl=foto.closest('.oef').querySelector('.naam');
+        document.getElementById('lbnaam').textContent=oefEl?oefEl.textContent:'';
+        lb.classList.add('open');
+        return;
+      }
       var b=e.target.closest('.vbtn');if(!b)return;
       var houder=b.closest('.oef').querySelector('.vhouder');
       var open=houder.classList.contains('open');
@@ -525,6 +548,9 @@
       var tijd=document.getElementById('agtijd').value||'09:00';
       location.href='/api/kaart/agenda?id='+id+'&dagen='+gekozen.join(',')+'&tijd='+encodeURIComponent(tijd);
     });
+    var lbox=document.getElementById('lightbox');
+    lbox.addEventListener('click',function(){lbox.classList.remove('open');});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')lbox.classList.remove('open');});
     var sel=document.getElementById('taalsel');
     sel.value=TAAL;
     sel.addEventListener('change',function(){wisselTaal(sel.value);});
