@@ -848,12 +848,8 @@ bridge2.jpg</div>
       if(n<chosen.length){
         var c=chosen[n],o=OEF[c.o],im=o&&o.imgs[c.i];
         inner="<span class='rm no-print' data-rm='"+n+"' title='verwijderen'>×</span>"+(im?imgRender(im,90):'');
-        // v2: persoonlijke video opnemen voor deze cliënt (camera-icoon per plaatje)
+        // v2: de instructievideo zit automatisch bij de oefening (bibliotheekvideo's)
         if(IS_V2&&o){
-          var heeftVid=!!VIDS[normEx(o.naam)];
-          inner+="<span class='vid no-print"+(heeftVid?" aan":"")+"' data-vid='"+n+"' title='"+(heeftVid?"persoonlijke video vervangen":"persoonlijke video opnemen voor deze cli&euml;nt")+"'>"+
-            "<svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'>"+
-            "<path d='M15 10l6-3.5v11L15 14'/><rect x='2' y='6' width='13' height='12' rx='2.5'/></svg></span>";
           if(o.video&&(o.video.eigen||o.video.stream||o.video.yt||o.video.catalog)){
             inner+="<span class='vauto no-print' title='Instructievideo wordt automatisch toegevoegd aan de digitale kaart'>"+
               "<svg width='7' height='7' viewBox='0 0 12 12' aria-hidden='true'><path d='M2 1.5l8 4.5-8 4.5z' fill='currentColor'/></svg>VIDEO</span>";
@@ -1597,12 +1593,6 @@ bridge2.jpg</div>
     verbergQr();closeOv('ovWis');render();
   });
   elMon.addEventListener('click',function(e){
-    var vb=e.target.closest('[data-vid]');
-    if(vb){
-      var cv=chosen[+vb.dataset.vid],ov=cv&&OEF[cv.o];
-      if(ov)startOpname('kaart',ov.naam,function(pad){VIDS[normEx(ov.naam)]=pad;saveState();render();});
-      return;
-    }
     var rm=e.target.closest('.rm');if(!rm)return;
     var n=+rm.dataset.rm;if(n>=0&&n<chosen.length){chosen.splice(n,1);render();}
   });
