@@ -1,0 +1,2158 @@
+{
+  "schemaVersion": 1,
+  "assetVersion": 7,
+  "model": "birefnet-general",
+  "background": "#FFFFFF",
+  "cards": [
+    {
+      "order": 1,
+      "name": "Anteflexie armen",
+      "source": "images/bovenste-extremiteit/anteflexie-armen-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/anteflexie-armen-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.76183,
+      "sha256": "f8f33346dc5383665967481555abb9ceaeecf216d383a121397d3522c1253dd1"
+    },
+    {
+      "order": 2,
+      "name": "Barbell front press",
+      "source": "images/bovenste-extremiteit/barbell-front-press-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/barbell-front-press-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.8265,
+      "sha256": "32d048286a62bdd0508de279107b1d941d280075f8a22db640c027843265bad2"
+    },
+    {
+      "order": 3,
+      "name": "Barbell neck press",
+      "source": "images/bovenste-extremiteit/barbell-neck-press-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/barbell-neck-press-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.77129,
+      "sha256": "a575a8533e6ba924325a847e60f728d44c2f48833606150ca9435217bec9ba73"
+    },
+    {
+      "order": 4,
+      "name": "Barbell pull over",
+      "source": "images/bovenste-extremiteit/barbell-pull-over-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/barbell-pull-over-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.78703,
+      "sha256": "cb9a62ffdad69e4396ead9155476572635f4964628a69f63a1e356b82fae5d2c"
+    },
+    {
+      "order": 5,
+      "name": "Bench press",
+      "source": "images/bovenste-extremiteit/bench-press-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/bench-press-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.76845,
+      "sha256": "86b53be08ab4f2c9afd9659731ff74ea3593fbce43185c72dd1dc738b92416fd"
+    },
+    {
+      "order": 6,
+      "name": "Biceps alternate dumbell",
+      "source": "images/bovenste-extremiteit/biceps-alternate-dumbell-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/biceps-alternate-dumbell-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.73343,
+      "sha256": "5223833e7d4ca0092f0e14fd656f55ae4eaaca189a07f859c7b14262f9cadf10"
+    },
+    {
+      "order": 7,
+      "name": "Biceps curl",
+      "source": "images/bovenste-extremiteit/biceps-curl-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/biceps-curl-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.71704,
+      "sha256": "03c5fe9f9e43901abcefb8e74e55e7af8b5368063311d97e6afeb0ac4ade5e87"
+    },
+    {
+      "order": 8,
+      "name": "Biceps pull",
+      "source": "images/bovenste-extremiteit/biceps-pull-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/biceps-pull-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.68858,
+      "sha256": "87cde66cf7f4df9885d7d68c5edda4350309114dbc63ac6db2ba87b0fef6107f"
+    },
+    {
+      "order": 9,
+      "name": "Dips",
+      "source": "images/bovenste-extremiteit/dips-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/dips-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.71837,
+      "sha256": "ae7ea9bc2bcf7646e69832179c1ada68c42f1fb39af8e05effe15c6758bf7298"
+    },
+    {
+      "order": 10,
+      "name": "Dumbell bench press",
+      "source": "images/bovenste-extremiteit/dumbell-bench-press-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/dumbell-bench-press-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79986,
+      "sha256": "a4119635d7e6ca7a6d87e4174e142ed7784b3c1318ce31af4d09af969870d43d"
+    },
+    {
+      "order": 11,
+      "name": "Dumbell front press",
+      "source": "images/bovenste-extremiteit/dumbell-front-press-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/dumbell-front-press-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.76729,
+      "sha256": "019a26db7f9d07db4ab6134dbdbc887c8d3faa88b48929e8b12febebf8313f26"
+    },
+    {
+      "order": 12,
+      "name": "Dumbell neck press",
+      "source": "images/bovenste-extremiteit/dumbell-neck-press-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/dumbell-neck-press-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.75594,
+      "sha256": "20cab11143e6b702326928bd1882908247a74b2180b824953373ea7714398770"
+    },
+    {
+      "order": 13,
+      "name": "Dumbell pull over",
+      "source": "images/bovenste-extremiteit/dumbell-pull-over-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/dumbell-pull-over-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.7743,
+      "sha256": "b9c8ada4e17b20a61fd655d3058741bba1f1da3a146322923554a553a8ddccda"
+    },
+    {
+      "order": 14,
+      "name": "Duplex pull",
+      "source": "images/bovenste-extremiteit/duplex-pull-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/duplex-pull-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.74364,
+      "sha256": "1c0d88e9b4c7ea2937d113ccce4aed93e8f28cf4396ccaceb946550e7b38fa1f"
+    },
+    {
+      "order": 15,
+      "name": "Endo pull",
+      "source": "images/bovenste-extremiteit/endo-pull-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/endo-pull-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.68503,
+      "sha256": "dc9a5d99456133f03863c2226f3c6326d14fac74549b0841846058f722a0907b"
+    },
+    {
+      "order": 16,
+      "name": "Exo pull",
+      "source": "images/bovenste-extremiteit/exo-pull-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/exo-pull-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.74014,
+      "sha256": "f85e76ee034c7273195e7abe9dca6e643610379b006f9d4c19feffa889dfa147"
+    },
+    {
+      "order": 17,
+      "name": "Flyes",
+      "source": "images/bovenste-extremiteit/flyes-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/flyes-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.7746,
+      "sha256": "c41db07f01858ca9b1a060b966e38b884216642684dbc1ee23690d7e28185ab0"
+    },
+    {
+      "order": 18,
+      "name": "French press",
+      "source": "images/bovenste-extremiteit/french-press-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/french-press-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.78412,
+      "sha256": "c6f9c1655b002a6c288c7e7ac04ffb48c73b2ac056069330646e198b5d5954d2"
+    },
+    {
+      "order": 19,
+      "name": "Front pully row",
+      "source": "images/bovenste-extremiteit/front-pully-row-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/front-pully-row-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.76918,
+      "sha256": "974ef5509b80ea8671bda510e1010d078945e58f702533f02fc39a6f24cbdf41"
+    },
+    {
+      "order": 20,
+      "name": "Front raises",
+      "source": "images/bovenste-extremiteit/front-raises-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/front-raises-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.56539,
+      "sha256": "3b451c32e3252b181d3d2b14278f8efe6c4e268a8a47b180318cfb71457ef909"
+    },
+    {
+      "order": 21,
+      "name": "Incline bench press",
+      "source": "images/bovenste-extremiteit/incline-bench-press-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/incline-bench-press-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.83109,
+      "sha256": "60dbbb6bd7eca80b00a05bff0d111d8bbab98f640e480e4a50b7e3fe8e637bea"
+    },
+    {
+      "order": 22,
+      "name": "Incline flyes",
+      "source": "images/bovenste-extremiteit/incline-flyes-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/incline-flyes-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.80651,
+      "sha256": "7bf6f38e75b32639d8810a047816d1765e067e5738374623e4fd1f19aa125b9e"
+    },
+    {
+      "order": 23,
+      "name": "Lat pull front",
+      "source": "images/bovenste-extremiteit/lat-pull-front-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/lat-pull-front-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.75873,
+      "sha256": "c81a270599e27dd09c89bf5fe89712f7e0f2b1a8dc90c9eb2236e8551ef5de1c"
+    },
+    {
+      "order": 24,
+      "name": "Lateral raises",
+      "source": "images/bovenste-extremiteit/lateral-raises-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/lateral-raises-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.7795,
+      "sha256": "401a5142799ac621dc6b8909b66b54783c4843f9f7dc1ca5447d981bb15b8d54"
+    },
+    {
+      "order": 25,
+      "name": "Military press",
+      "source": "images/bovenste-extremiteit/military-press-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/military-press-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.83847,
+      "sha256": "2bcd81bdcec09bed5867c8976d05fedd6d69d66addc911be603deff77832e0e7"
+    },
+    {
+      "order": 26,
+      "name": "Nose breakers",
+      "source": "images/bovenste-extremiteit/nose-breakers-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/nose-breakers-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.80778,
+      "sha256": "c331a08d0396592d9a1f384bb77b2e7ebf3cc51f40c883ece329b180e504aa9c"
+    },
+    {
+      "order": 27,
+      "name": "One arm bent over row",
+      "source": "images/bovenste-extremiteit/one-arm-bent-over-row-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/one-arm-bent-over-row-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.77815,
+      "sha256": "2faf70a906973517ee4c9e36b0065e544156f5d98cf7016f6e7b78a6022ecd29"
+    },
+    {
+      "order": 28,
+      "name": "Pully cross down",
+      "source": "images/bovenste-extremiteit/pully-cross-down-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/pully-cross-down-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79318,
+      "sha256": "73dd7ccc788caba939ceae66622698b0725d291bbfa858c24620005831992589"
+    },
+    {
+      "order": 29,
+      "name": "Pully cross over",
+      "source": "images/bovenste-extremiteit/pully-cross-over-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/pully-cross-over-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.82146,
+      "sha256": "ccaaf85a26eeb7a663a0d0b03c96b241f19f59aac26efe18e88682de9e93ee56"
+    },
+    {
+      "order": 30,
+      "name": "Pully cross up",
+      "source": "images/bovenste-extremiteit/pully-cross-up-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/pully-cross-up-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.74787,
+      "sha256": "b54552c6a0013fa3610b0ba4211486d050023586cbb9cec354fd06279941e01e"
+    },
+    {
+      "order": 31,
+      "name": "Pully dips",
+      "source": "images/bovenste-extremiteit/pully-dips-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/pully-dips-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.74225,
+      "sha256": "febe75aa95a294085aa0470fdad73ad28f7fdb4eaa6ba5d0831be2413428f2ac"
+    },
+    {
+      "order": 32,
+      "name": "Pully down",
+      "source": "images/bovenste-extremiteit/pully-down-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/pully-down-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.77128,
+      "sha256": "566b86d1885ffe7e9c4023aedbe02de189ab05ed942b42e95916a4f3b49ce337"
+    },
+    {
+      "order": 33,
+      "name": "Pully press double",
+      "source": "images/bovenste-extremiteit/pully-press-double-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/pully-press-double-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81565,
+      "sha256": "e2f53c226078efef65aea4c7fc637a1e2013ab23de64f9c08838d7b39c81d1b2"
+    },
+    {
+      "order": 34,
+      "name": "Pully press single",
+      "source": "images/bovenste-extremiteit/pully-press-single-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/pully-press-single-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.84637,
+      "sha256": "26ce5d14e5945b1ac4c8ea3b493d518a55c1d5bdc60e9bf1da837fd08bc14293"
+    },
+    {
+      "order": 35,
+      "name": "Pully pull over",
+      "source": "images/bovenste-extremiteit/pully-pull-over-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/pully-pull-over-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.88842,
+      "sha256": "1f31001f41a2dc8bc1b8f475b0b3580496211df9304efedfca8f96c2e7ce22eb"
+    },
+    {
+      "order": 36,
+      "name": "Pully row",
+      "source": "images/bovenste-extremiteit/pully-row-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/pully-row-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.71989,
+      "sha256": "392cca472226fcd5ff0b11421ad70b90b163b6565d8184dd44292dd4f3bb2962"
+    },
+    {
+      "order": 37,
+      "name": "Push up",
+      "source": "images/bovenste-extremiteit/push-up-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/push-up-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.80854,
+      "sha256": "7691c97137533158454a674fb74c6ff38f6e7f283d0137c863ef95e6cc9a431d"
+    },
+    {
+      "order": 38,
+      "name": "Reversed flyes",
+      "source": "images/bovenste-extremiteit/reversed-flyes-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/reversed-flyes-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.83641,
+      "sha256": "bc8beaf9c03d479fb884229c00967d2ad6f6984ffe04718db3fad07045b729f9"
+    },
+    {
+      "order": 39,
+      "name": "Shoulder rotation (shrugs)",
+      "source": "images/bovenste-extremiteit/shoulder-rotation-shrugs-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/shoulder-rotation-shrugs-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.53897,
+      "sha256": "b2f91a3e116026dc60cecf491de1c8f59f01b8c1dd2ddf7fc963097d16333c7e"
+    },
+    {
+      "order": 40,
+      "name": "Triceps dips",
+      "source": "images/bovenste-extremiteit/triceps-dips-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.84582,
+      "sha256": "7a3f8095e040023498c3d6ec46d1b6a0d31d8d559a2141deecd98770fd84487a"
+    },
+    {
+      "order": 41,
+      "name": "Triceps dumbell kickbacks",
+      "source": "images/bovenste-extremiteit/triceps-dumbell-kickbacks-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/triceps-dumbell-kickbacks-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.88057,
+      "sha256": "b4d3eeae978292fab35eb0e62ca124fd0d0e0cbae1e26ec943fb3d5cdedf91ae"
+    },
+    {
+      "order": 42,
+      "name": "Triceps push down",
+      "source": "images/bovenste-extremiteit/triceps-push-down-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/triceps-push-down-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.76599,
+      "sha256": "7ccfaac01c579bee5def984afb88ef5661285b69c0da99236ff8a118dc4d9fd1"
+    },
+    {
+      "order": 43,
+      "name": "Upright row",
+      "source": "images/bovenste-extremiteit/upright-row-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/upright-row-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.74212,
+      "sha256": "2511f1cd4f63d51a1c5e8a39042bcc1302bb9cc5c8fa70cd12ca73c15fa43130"
+    },
+    {
+      "order": 44,
+      "name": "Wrist extension",
+      "source": "images/bovenste-extremiteit/wrist-extension-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/wrist-extension-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.69873,
+      "sha256": "2329571e8fb4c2f38b8a0e4fd576c07a5793965f6dbe2337c73967e47acd4346"
+    },
+    {
+      "order": 45,
+      "name": "Wrist flexion",
+      "source": "images/bovenste-extremiteit/wrist-flexion-avatar-v6.jpg",
+      "output": "images/bovenste-extremiteit/wrist-flexion-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.67082,
+      "sha256": "74b93c223bdc72fe1e9a6d4207cdb45d90deacc1b6da7618ab994616fc88b852"
+    },
+    {
+      "order": 46,
+      "name": "Been pendelen",
+      "source": "images/onderste-extremiteit/been-pendelen-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/been-pendelen-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.7612,
+      "sha256": "717beeef1c5b7b52c78eeccba9ae89521b76781918601629ed71aaacda6bb7d7"
+    },
+    {
+      "order": 47,
+      "name": "Bridges kicker",
+      "source": "images/onderste-extremiteit/bridges-kicker-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/bridges-kicker-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81978,
+      "sha256": "d88a27ec6138c79d80c3bcf470610936f2fb9a51a3dfae936188543c00608e02"
+    },
+    {
+      "order": 48,
+      "name": "Calf raises",
+      "source": "images/onderste-extremiteit/calf-raises-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/calf-raises-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.76185,
+      "sha256": "3e7e45b6647e1a8eeacd48873b24b9e2c375ac8e5fdf175d3c79a14bf2fcb922"
+    },
+    {
+      "order": 49,
+      "name": "Chair squat",
+      "source": "images/onderste-extremiteit/chair-squat-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/chair-squat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81304,
+      "sha256": "a4d98858e15a11f54fa84e98cacf73603a302c0ff8dc632fd62d0bdd9bd96418"
+    },
+    {
+      "order": 50,
+      "name": "Crabwalk",
+      "source": "images/onderste-extremiteit/crabwalk-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/crabwalk-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.76086,
+      "sha256": "d1408e90fa81c5ed7f52c35e0c28534e642283f9b1be40102c064d5b6137f79e"
+    },
+    {
+      "order": 51,
+      "name": "Dead lift",
+      "source": "images/onderste-extremiteit/dead-lift-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/dead-lift-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.76278,
+      "sha256": "b8e06b33e1d670a86608c425a034e9f260c2e4ec38fe754abae41d05599ef31e"
+    },
+    {
+      "order": 52,
+      "name": "Extension squat",
+      "source": "images/onderste-extremiteit/extension-squat-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/extension-squat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.7661,
+      "sha256": "5c176ae52a7a5c504a2278d76dd654a9896b480b3c6de7d638d7a5eada707935"
+    },
+    {
+      "order": 53,
+      "name": "Front squat",
+      "source": "images/onderste-extremiteit/front-squat-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/front-squat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79538,
+      "sha256": "d875acf162ecdaeb9ebc92c869573f1f8d2f8f30a960eb753bfcbce2c6061b3b"
+    },
+    {
+      "order": 54,
+      "name": "Glute bridges",
+      "source": "images/onderste-extremiteit/glute-bridges-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/glute-bridges-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.77388,
+      "sha256": "dc816ba30abfdb1456a236d39f2f2b7d9f1d81e6b0e9661afa6d4fce5093f76e"
+    },
+    {
+      "order": 55,
+      "name": "Hack squat",
+      "source": "images/onderste-extremiteit/hack-squat-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/hack-squat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.6828,
+      "sha256": "d411295707aec9c4e58ed1feb2c5f063f744658a33aeec91e3d9cf51232d4a6e"
+    },
+    {
+      "order": 56,
+      "name": "Jefferson squat",
+      "source": "images/onderste-extremiteit/jefferson-squat-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/jefferson-squat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79844,
+      "sha256": "445ddcb57b10b5b6c7c9a3044423e61d9ace2b33c0e618cdd66ee9c1c8626330"
+    },
+    {
+      "order": 57,
+      "name": "Kick back",
+      "source": "images/onderste-extremiteit/kick-back-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/kick-back-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.8253,
+      "sha256": "c47fbc78bda5e5df824fe49dd049a0fce8d29247e3e65bf487ec70002e59f4e3"
+    },
+    {
+      "order": 58,
+      "name": "Leg curl",
+      "source": "images/onderste-extremiteit/leg-curl-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/leg-curl-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.85241,
+      "sha256": "0f892d7e0c50bfe9ebfcf46a31811ee61e172d084b7cfed5698d64609d047fad"
+    },
+    {
+      "order": 59,
+      "name": "Leg extension",
+      "source": "images/onderste-extremiteit/leg-extension-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/leg-extension-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.78525,
+      "sha256": "1802481af851bc653979cdbe6bcc396ebbdc7213b6c6fd426f56fd93db1fa80e"
+    },
+    {
+      "order": 60,
+      "name": "Leg press",
+      "source": "images/onderste-extremiteit/leg-press-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/leg-press-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.68016,
+      "sha256": "d0cc71ac26169aa80be4696f57c1f174f53b68ddc7c1df76682bc313ea8f8ea3"
+    },
+    {
+      "order": 61,
+      "name": "Lunges",
+      "source": "images/onderste-extremiteit/lunges-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/lunges-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.80908,
+      "sha256": "e66117e1283e2a3bdc6a376611d6aef43fbb36a58e1712f6eff617a25cc0effe"
+    },
+    {
+      "order": 62,
+      "name": "Lunges curtsy alt",
+      "source": "images/onderste-extremiteit/lunges-curtsy-alt-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/lunges-curtsy-alt-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.7695,
+      "sha256": "5dc585ed5052825385a815a7979fc0a2b1a4fab26e42ed4b3686e084779bf290"
+    },
+    {
+      "order": 63,
+      "name": "Lying abduction",
+      "source": "images/onderste-extremiteit/lying-abduction-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/lying-abduction-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79929,
+      "sha256": "0274c3620c3f2f034a437116b0188ad163cb4c9012c6cae1b133901284322dcc"
+    },
+    {
+      "order": 64,
+      "name": "Lying adduction",
+      "source": "images/onderste-extremiteit/lying-adduction-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/lying-adduction-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.82403,
+      "sha256": "b48c81291614c32e0bb5befbf92274183eb4c5b7b9ede3fa8ead227cc3bef25b"
+    },
+    {
+      "order": 65,
+      "name": "Single leg squat",
+      "source": "images/onderste-extremiteit/single-leg-squat-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/single-leg-squat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.83945,
+      "sha256": "7f52bc1e92a9c7b7fc4d8b9b0498b3208c3e5934d4c4b3789b0c7c92b354e1c5"
+    },
+    {
+      "order": 66,
+      "name": "Squat",
+      "source": "images/onderste-extremiteit/squat-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/squat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.72933,
+      "sha256": "928156faa0d4ea1b827080fa36132575f669758a549e30817d6d0a63e90aec23"
+    },
+    {
+      "order": 67,
+      "name": "Squat lunges",
+      "source": "images/onderste-extremiteit/squat-lunges-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/squat-lunges-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.6732,
+      "sha256": "2bc3bd0e31d469bad9b94c2e8677f1c974fe773eb2ce7c482a2d7641f6da7f2b"
+    },
+    {
+      "order": 68,
+      "name": "Standing abduction",
+      "source": "images/onderste-extremiteit/standing-abduction-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/standing-abduction-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.85366,
+      "sha256": "c986799fbeaba7567589a56255f79dd784f2a1417fc7edf0608d12756f305ba8"
+    },
+    {
+      "order": 69,
+      "name": "Standing adduction",
+      "source": "images/onderste-extremiteit/standing-adduction-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/standing-adduction-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.86818,
+      "sha256": "944226dc3e862175f78b022b90d3f9935f0e0da8b2f55c8ef17e41b3ce9e7d2c"
+    },
+    {
+      "order": 70,
+      "name": "Standing gluteus",
+      "source": "images/onderste-extremiteit/standing-gluteus-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/standing-gluteus-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.89331,
+      "sha256": "b0bb8db68bc1d4db85b7046be2eee0f02276c67c4fc796144939e61e9b884e71"
+    },
+    {
+      "order": 71,
+      "name": "Step up",
+      "source": "images/onderste-extremiteit/step-up-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/step-up-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.82023,
+      "sha256": "8961e743e173d5d7dd28037d64520a7b28c1ec3fab2bbb5c7f6590c2ffd1652f"
+    },
+    {
+      "order": 72,
+      "name": "Step up tempo",
+      "source": "images/onderste-extremiteit/step-up-tempo-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/step-up-tempo-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.66481,
+      "sha256": "f5c085d594cd2a40bb0b3a34c09b4ef5817dbea18bac2246771e06d817e4b194"
+    },
+    {
+      "order": 73,
+      "name": "Step up with knee raise",
+      "source": "images/onderste-extremiteit/step-up-with-knee-raise-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.77438,
+      "sha256": "2dbad9164159e9602e62bdf374a58ed5bdd2f55b2a2160c83a68ee13528149c3"
+    },
+    {
+      "order": 74,
+      "name": "Surrenders",
+      "source": "images/onderste-extremiteit/surrenders-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/surrenders-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.7644,
+      "sha256": "67000a8ab3cdaebc523a8d74272352a6025d97d4e88554b2d7df0b38d22de8d4"
+    },
+    {
+      "order": 75,
+      "name": "Wall sit",
+      "source": "images/onderste-extremiteit/wall-sit-avatar-v6.jpg",
+      "output": "images/onderste-extremiteit/wall-sit-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.77598,
+      "sha256": "8f5dad30fd267554da433de2478cc3200e93dd8246aabe52cca2f486a947b646"
+    },
+    {
+      "order": 76,
+      "name": "Abroller",
+      "source": "images/core/abroller-avatar-v6.jpg",
+      "output": "images/core/abroller-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.77951,
+      "sha256": "2333f209dc0c3e9d8bdd37a06d86e9e149bfc505442b95cc5618591b24b7aa25"
+    },
+    {
+      "order": 77,
+      "name": "Alternate heel touchers",
+      "source": "images/core/alternate-heel-touchers-avatar-v6.jpg",
+      "output": "images/core/alternate-heel-touchers-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.77368,
+      "sha256": "065e091f86178319a54fc36ec8bb1e6d3dc596c893af5bc795fc00a51d98d4aa"
+    },
+    {
+      "order": 78,
+      "name": "Back extension",
+      "source": "images/core/back-extension-avatar-v6.jpg",
+      "output": "images/core/back-extension-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.80694,
+      "sha256": "fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50"
+    },
+    {
+      "order": 79,
+      "name": "Barbell rotation",
+      "source": "images/core/barbell-rotation-avatar-v6.jpg",
+      "output": "images/core/barbell-rotation-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.80132,
+      "sha256": "ec3846ca32af88b25bc666a83dadfededb5cd91748b5fa82e902df2581b85ea9"
+    },
+    {
+      "order": 80,
+      "name": "Barbell twist",
+      "source": "images/core/barbell-twist-avatar-v6.jpg",
+      "output": "images/core/barbell-twist-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.7663,
+      "sha256": "f6ae1ae75a7f690c32dc2447d7a7b48a22d472f820d5565fa60fa84d24de38e9"
+    },
+    {
+      "order": 81,
+      "name": "Bear crawls",
+      "source": "images/core/bear-crawls-avatar-v6.jpg",
+      "output": "images/core/bear-crawls-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81462,
+      "sha256": "04b33e2353a46c08207b2d7da2404f18ccd4f64253690f949401bb1429b13114"
+    },
+    {
+      "order": 82,
+      "name": "Benen laten zakken",
+      "source": "images/core/benen-laten-zakken-avatar-v6.jpg",
+      "output": "images/core/benen-laten-zakken-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.85009,
+      "sha256": "7ace4022ebf1ae770e2443c890f629e2b2ca86c9c5a60c1dab47f6c618dcb2b1"
+    },
+    {
+      "order": 83,
+      "name": "Bicycles buik",
+      "source": "images/core/bicycles-buik-avatar-v6.jpg",
+      "output": "images/core/bicycles-buik-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79715,
+      "sha256": "6fe06ba1c9ebf6462736d03c775014492a26d1d894ed689188633e9ba53f01be"
+    },
+    {
+      "order": 84,
+      "name": "Bruggen 1 been liften",
+      "source": "images/core/bruggen-1-been-liften-avatar-v6.jpg",
+      "output": "images/core/bruggen-1-been-liften-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.7736,
+      "sha256": "d52d0f2e15b5093ffe6735bec2d3803f13fc5a7e3193ba957aabc2558bd62543"
+    },
+    {
+      "order": 85,
+      "name": "Bruggen beginner",
+      "source": "images/core/bruggen-beginner-avatar-v6.jpg",
+      "output": "images/core/bruggen-beginner-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81259,
+      "sha256": "bffde6185bdc75dc12907944689b5268b0364bde5ed7edd055bccb3abaf559f1"
+    },
+    {
+      "order": 86,
+      "name": "Bruggen met halter",
+      "source": "images/core/bruggen-met-halter-avatar-v6.jpg",
+      "output": "images/core/bruggen-met-halter-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79217,
+      "sha256": "6342fd6d568640ae1c517ded4f84883ae4f826c52a2fa286ed1f3a9a943085c0"
+    },
+    {
+      "order": 87,
+      "name": "Bruggen met halter op bank",
+      "source": "images/core/bruggen-met-halter-op-bank-avatar-v6.jpg",
+      "output": "images/core/bruggen-met-halter-op-bank-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.73989,
+      "sha256": "f0c4a63d08cea62d063d32d805aedce64df7001ea2b9441cfaf067771c3460a1"
+    },
+    {
+      "order": 88,
+      "name": "Bruggen op bal",
+      "source": "images/core/bruggen-op-bal-avatar-v6.jpg",
+      "output": "images/core/bruggen-op-bal-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79073,
+      "sha256": "b1766b43e41e872b6d31d1cbab16616643b1a5b29f257cfe5211d5e8c2bf4048"
+    },
+    {
+      "order": 89,
+      "name": "Crunch",
+      "source": "images/core/crunch-avatar-v6.jpg",
+      "output": "images/core/crunch-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79081,
+      "sha256": "899782a2a4ca55e93d29560e813b61a7d6d39702e21d1fad7fdeb6841f007021"
+    },
+    {
+      "order": 90,
+      "name": "Curl up",
+      "source": "images/core/curl-up-avatar-v6.jpg",
+      "output": "images/core/curl-up-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81298,
+      "sha256": "a0c6a51060f2ebd74065b472ca526c8a245916021c0834026320d17f800f1605"
+    },
+    {
+      "order": 91,
+      "name": "Dead bug",
+      "source": "images/core/dead-bug-avatar-v6.jpg",
+      "output": "images/core/dead-bug-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.84165,
+      "sha256": "95cd2b5bd5d05479d7828e3e6f61f9e9f46196675a240d1252640f7a6008f1a7"
+    },
+    {
+      "order": 92,
+      "name": "Good mornings",
+      "source": "images/core/good-mornings-avatar-v6.jpg",
+      "output": "images/core/good-mornings-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79316,
+      "sha256": "a149ad1998f365e07375f52f0873868198adaeb1254438fbef097e6a379a3269"
+    },
+    {
+      "order": 93,
+      "name": "Knee elbow",
+      "source": "images/core/knee-elbow-avatar-v6.jpg",
+      "output": "images/core/knee-elbow-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.78853,
+      "sha256": "608bbc1fe6083a3b0f7a73c4bbc29ac8ddbaec1dbcc0004aa76846040c9224fb"
+    },
+    {
+      "order": 94,
+      "name": "Leg raises",
+      "source": "images/core/leg-raises-avatar-v6.jpg",
+      "output": "images/core/leg-raises-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.86687,
+      "sha256": "a9b033dacbdae0c67a6337e0623a9674e26edb2e8f3c092acf87170493ecebf2"
+    },
+    {
+      "order": 95,
+      "name": "Mobilisatie rotatie rug",
+      "source": "images/core/mobilisatie-rotatie-rug-avatar-v6.jpg",
+      "output": "images/core/mobilisatie-rotatie-rug-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79985,
+      "sha256": "90f723a9e9fe6d82a24d0190552d5af0b461713f10c8b57ed4e97f8f99e2f9e0"
+    },
+    {
+      "order": 96,
+      "name": "Mountain climber",
+      "source": "images/core/mountain-climber-avatar-v6.jpg",
+      "output": "images/core/mountain-climber-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.75527,
+      "sha256": "164cb189b149f06069af7b3891ac9a49574d9d300e57237f1ddc77f6f74e3bc5"
+    },
+    {
+      "order": 97,
+      "name": "Mountain climber x",
+      "source": "images/core/mountain-climber-x-avatar-v6.jpg",
+      "output": "images/core/mountain-climber-x-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.7785,
+      "sha256": "e3c5ccf18fb26f513d68c1c3137d6ecd311100c1d9807098d2fbe57232202628"
+    },
+    {
+      "order": 98,
+      "name": "Plank basis",
+      "source": "images/core/plank-basis-avatar-v6.jpg",
+      "output": "images/core/plank-basis-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.80327,
+      "sha256": "9f661fcccb71d2d2e0c0dbfe3d2deb7587d050f811dbca8c01219d14bcc809ac"
+    },
+    {
+      "order": 99,
+      "name": "Plank high",
+      "source": "images/core/plank-high-avatar-v6.jpg",
+      "output": "images/core/plank-high-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79192,
+      "sha256": "da7710c31a79977b415ebeaa413313bcd89c382dfb4d7e42f5402a99330ef2d4"
+    },
+    {
+      "order": 100,
+      "name": "Plank jacks",
+      "source": "images/core/plank-jacks-avatar-v6.jpg",
+      "output": "images/core/plank-jacks-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81474,
+      "sha256": "98c50a4ca046fd48ecd270a60e5ffdc6de9cdf9ca19f7c09811767e9e02f3190"
+    },
+    {
+      "order": 101,
+      "name": "Plank voorwaarts",
+      "source": "images/core/plank-voorwaarts-avatar-v6.jpg",
+      "output": "images/core/plank-voorwaarts-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79731,
+      "sha256": "de105b6f15133fee5166f14bd4ef93306e5a46cd5edf486c9b17f1fdf23a50ca"
+    },
+    {
+      "order": 102,
+      "name": "Reversed crunch",
+      "source": "images/core/reversed-crunch-avatar-v6.jpg",
+      "output": "images/core/reversed-crunch-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.7983,
+      "sha256": "db1f75d7f0574836c343399e7f32ec9a236c44b1d4ab1e5dc3522f879087b063"
+    },
+    {
+      "order": 103,
+      "name": "Rug extensie",
+      "source": "images/core/rug-extensie-avatar-v6.jpg",
+      "output": "images/core/rug-extensie-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.87349,
+      "sha256": "7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47"
+    },
+    {
+      "order": 104,
+      "name": "Rusian twist",
+      "source": "images/core/rusian-twist-avatar-v6.jpg",
+      "output": "images/core/rusian-twist-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.78024,
+      "sha256": "362f2fbd333a85cb792f0cb48d5df813d00722fe0f847231ced3199182b9dc15"
+    },
+    {
+      "order": 105,
+      "name": "Scissors 1",
+      "source": "images/core/scissors-1-avatar-v6.jpg",
+      "output": "images/core/scissors-1-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.82425,
+      "sha256": "4846b92278a409b1d8e52721255cb85729c61d20b2b124d1fb47573d0b7355a8"
+    },
+    {
+      "order": 106,
+      "name": "Scissors 2",
+      "source": "images/core/scissors-2-avatar-v6.jpg",
+      "output": "images/core/scissors-2-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81077,
+      "sha256": "f18062ab3ed932eb08ade861b9666d0f6746056c8f1731354a73a163b9ce9829"
+    },
+    {
+      "order": 107,
+      "name": "Side bents",
+      "source": "images/core/side-bents-avatar-v6.jpg",
+      "output": "images/core/side-bents-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.69668,
+      "sha256": "c46c5aebdccc52640a569fc126f20e843cdd3ca60904ea08086ea60cd86456cf"
+    },
+    {
+      "order": 108,
+      "name": "Stick twist",
+      "source": "images/core/stick-twist-avatar-v6.jpg",
+      "output": "images/core/stick-twist-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.74713,
+      "sha256": "4711c9092383a4482bce5117f905793be4d9d13d2c0065f99da6bb4ac933a64d"
+    },
+    {
+      "order": 109,
+      "name": "Superman",
+      "source": "images/core/superman-avatar-v6.jpg",
+      "output": "images/core/superman-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.865,
+      "sha256": "cc45bacd708908c919816e83c1204f5ae45619db8af5e67e84105bcac3dfa2dc"
+    },
+    {
+      "order": 110,
+      "name": "Fiets",
+      "source": "images/cardio/fiets-avatar-v6.jpg",
+      "output": "images/cardio/fiets-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.71017,
+      "sha256": "4edc2427444d8346af4310052e5d35ae382dfd8a91d79fa7c12bf83d518d487c"
+    },
+    {
+      "order": 111,
+      "name": "Jumping jacks",
+      "source": "images/cardio/jumping-jacks-avatar-v6.jpg",
+      "output": "images/cardio/jumping-jacks-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.77772,
+      "sha256": "a864df0d267aa91b7f172b3a81d2e9f21d13e0374a1666cc0aec1152bb867260"
+    },
+    {
+      "order": 112,
+      "name": "Loopband",
+      "source": "images/cardio/loopband-avatar-v6.jpg",
+      "output": "images/cardio/loopband-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.64094,
+      "sha256": "c745515b6c41c181e10920e83513bf46de0194e224081803ed6e3b5967301f95"
+    },
+    {
+      "order": 113,
+      "name": "Roeier",
+      "source": "images/cardio/roeier-avatar-v6.jpg",
+      "output": "images/cardio/roeier-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.72296,
+      "sha256": "01fe4c5c79e0b13ed7b270967000f4dd1f4dffc37441cff64293541440177c73"
+    },
+    {
+      "order": 114,
+      "name": "Squat jumps",
+      "source": "images/cardio/squat-jumps-avatar-v6.jpg",
+      "output": "images/cardio/squat-jumps-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.76602,
+      "sha256": "76e11135e7ac1b8787de69094c4a33eab228b6b03dca60969a29078cb09470f8"
+    },
+    {
+      "order": 115,
+      "name": "Stairs",
+      "source": "images/cardio/stairs-avatar-v6.jpg",
+      "output": "images/cardio/stairs-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.71213,
+      "sha256": "3e5e71fa2f63cfe3f9de9f17808d2609962c29d1aa449bca99c11c64265e66bc"
+    },
+    {
+      "order": 116,
+      "name": "Balans op 1 been",
+      "source": "images/bosu/balans-op-1-been-avatar-v6.jpg",
+      "output": "images/bosu/balans-op-1-been-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.75815,
+      "sha256": "9de421fedf052ba705fe2e444b55786488e522e6a42330c7f65c9f28145ee838"
+    },
+    {
+      "order": 117,
+      "name": "Bosu brigdes",
+      "source": "images/bosu/bosu-brigdes-avatar-v6.jpg",
+      "output": "images/bosu/bosu-brigdes-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.76061,
+      "sha256": "6b0efa5bc0eaabf8db1b36843a4d113b45971d4ed03470ac449bd333b875a3d7"
+    },
+    {
+      "order": 118,
+      "name": "Bosu brigdes single leg",
+      "source": "images/bosu/bosu-brigdes-single-leg-avatar-v6.jpg",
+      "output": "images/bosu/bosu-brigdes-single-leg-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.85218,
+      "sha256": "bb13c58e4f5eff13b34faca7e99555cde31a818323df17a0a46314c402e2b965"
+    },
+    {
+      "order": 119,
+      "name": "Bosu chest press dumbell",
+      "source": "images/bosu/bosu-chest-press-dumbell-avatar-v6.jpg",
+      "output": "images/bosu/bosu-chest-press-dumbell-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.86631,
+      "sha256": "01610277d0383f6f08f485715f5d9f66232ca7aa08ad917346cd3c67c7226064"
+    },
+    {
+      "order": 120,
+      "name": "Bosu leg pull in",
+      "source": "images/bosu/bosu-leg-pull-in-avatar-v6.jpg",
+      "output": "images/bosu/bosu-leg-pull-in-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.77736,
+      "sha256": "6cd768beeadd19444aaf8d2561ca7d3e617b1683a638c1d3a8886b90c312d6fc"
+    },
+    {
+      "order": 121,
+      "name": "Bosu mountain climber",
+      "source": "images/bosu/bosu-mountain-climber-avatar-v6.jpg",
+      "output": "images/bosu/bosu-mountain-climber-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79015,
+      "sha256": "f3053a2f3592274a6d41306831a6ba21014510382c31c931ea5e49ac1a3e1e13"
+    },
+    {
+      "order": 122,
+      "name": "Bosu plank",
+      "source": "images/bosu/bosu-plank-avatar-v6.jpg",
+      "output": "images/bosu/bosu-plank-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.80218,
+      "sha256": "d0243060fd3f3d63e680023a422b193f2e0efae73f12f83aac208417206998b3"
+    },
+    {
+      "order": 123,
+      "name": "Bosu plank leg lift",
+      "source": "images/bosu/bosu-plank-leg-lift-avatar-v6.jpg",
+      "output": "images/bosu/bosu-plank-leg-lift-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.76364,
+      "sha256": "d8ce04d18925bb7fc8c31d6b63db32739701e9459c878303a1f8600737eafe90"
+    },
+    {
+      "order": 124,
+      "name": "Bosu squat",
+      "source": "images/bosu/bosu-squat-avatar-v6.jpg",
+      "output": "images/bosu/bosu-squat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.74974,
+      "sha256": "6eb1478baadf6f1a39b48f4c898208577ca50772152619c1260c52b18413a062"
+    },
+    {
+      "order": 125,
+      "name": "Bosu v ups",
+      "source": "images/bosu/bosu-v-ups-avatar-v6.jpg",
+      "output": "images/bosu/bosu-v-ups-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.77651,
+      "sha256": "9915fc2e9fab00e4df3b8f8e994a710f3e71fc654872b63a4024bfc82eca323a"
+    },
+    {
+      "order": 126,
+      "name": "Bosu zijw plank",
+      "source": "images/bosu/bosu-zijw-plank-avatar-v6.jpg",
+      "output": "images/bosu/bosu-zijw-plank-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.75311,
+      "sha256": "e8abd5b933e5d63471c4e6eb9fdd707f05bd41d11e64922239ffd69d6fd9f705"
+    },
+    {
+      "order": 127,
+      "name": "TRX ab roll out",
+      "source": "images/trx/trx-ab-roll-out-avatar-v6.jpg",
+      "output": "images/trx/trx-ab-roll-out-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.84684,
+      "sha256": "9ac0939dbba7312652caf6108c8e6570d19512ae1a4018ba2261f079514b4a53"
+    },
+    {
+      "order": 128,
+      "name": "TRX biceps curl",
+      "source": "images/trx/trx-biceps-curl-avatar-v6.jpg",
+      "output": "images/trx/trx-biceps-curl-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.82355,
+      "sha256": "cce8e8506786ffe43c2626a19852eefe78516829d2b73a0d37ed85ce5611ad9b"
+    },
+    {
+      "order": 129,
+      "name": "TRX chest press",
+      "source": "images/trx/trx-chest-press-avatar-v6.jpg",
+      "output": "images/trx/trx-chest-press-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.84307,
+      "sha256": "695aaf4e2ec87d2e0c3499c14108cf7c5cecb24ea24e060956add1beccfcccbb"
+    },
+    {
+      "order": 130,
+      "name": "TRX flyes I",
+      "source": "images/trx/trx-flyes-i-avatar-v6.jpg",
+      "output": "images/trx/trx-flyes-i-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.87645,
+      "sha256": "43e226ed2f78afcc263639a57fc6abf0d0c69b4be7da02c7a83084a6e98e377e"
+    },
+    {
+      "order": 131,
+      "name": "TRX flyes II",
+      "source": "images/trx/trx-flyes-ii-avatar-v6.jpg",
+      "output": "images/trx/trx-flyes-ii-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.87576,
+      "sha256": "b90d5775fdd04c34047493a69178ea0a23e10797b6037cdaf24455f891658de2"
+    },
+    {
+      "order": 132,
+      "name": "TRX glute bridge",
+      "source": "images/trx/trx-glute-bridge-avatar-v6.jpg",
+      "output": "images/trx/trx-glute-bridge-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81861,
+      "sha256": "a4f050c32ccc2fc84d4c31f9a39bf3c5eaaa7cae1d47d14eeb918f37c81213b6"
+    },
+    {
+      "order": 133,
+      "name": "TRX lunge",
+      "source": "images/trx/trx-lunge-avatar-v6.jpg",
+      "output": "images/trx/trx-lunge-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79672,
+      "sha256": "fd202536f97c9acea9fe6f21df21159b1181dcc3bc04af9c07067139a8aa8f1b"
+    },
+    {
+      "order": 134,
+      "name": "TRX lunge lateral high",
+      "source": "images/trx/trx-lunge-lateral-high-avatar-v6.jpg",
+      "output": "images/trx/trx-lunge-lateral-high-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79743,
+      "sha256": "a8e127bdfd9909102ee390be8ff71553c1c02950dc0f593c176ac2f40c2c83a4"
+    },
+    {
+      "order": 135,
+      "name": "TRX lunge lateral low",
+      "source": "images/trx/trx-lunge-lateral-low-avatar-v6.jpg",
+      "output": "images/trx/trx-lunge-lateral-low-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.82916,
+      "sha256": "d0ff34b31f9023c5d91dfd9e24495a785fa1da4fe3a2954c3beb20902b4afc27"
+    },
+    {
+      "order": 136,
+      "name": "TRX lunge reverse",
+      "source": "images/trx/trx-lunge-reverse-avatar-v6.jpg",
+      "output": "images/trx/trx-lunge-reverse-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79916,
+      "sha256": "963b6d25770c792440ad5fda2ff643d607bbefbff72ee8a2aec52652374f7919"
+    },
+    {
+      "order": 137,
+      "name": "TRX mountain climber",
+      "source": "images/trx/trx-mountain-climber-avatar-v6.jpg",
+      "output": "images/trx/trx-mountain-climber-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81816,
+      "sha256": "76870845bad1ae1f6df3ccc55c28350d759a6fab06571527ddfd896fd5a95f08"
+    },
+    {
+      "order": 138,
+      "name": "TRX plank",
+      "source": "images/trx/trx-plank-avatar-v6.jpg",
+      "output": "images/trx/trx-plank-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.84438,
+      "sha256": "534eabd1b494a5f9f6d1c578b166439d7a8438624bf1b0b8e1715bbc668d8309"
+    },
+    {
+      "order": 139,
+      "name": "TRX plank side",
+      "source": "images/trx/trx-plank-side-avatar-v6.jpg",
+      "output": "images/trx/trx-plank-side-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.80813,
+      "sha256": "071f1699c9b2361d68184ed4d21335777989d418bb80810ffc1bfc65d88e36d1"
+    },
+    {
+      "order": 140,
+      "name": "TRX pull up",
+      "source": "images/trx/trx-pull-up-avatar-v6.jpg",
+      "output": "images/trx/trx-pull-up-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.80326,
+      "sha256": "474c16affdc73f6a9c1f4c76348f91527ae4ae6941002c7361fe4fdb5b301a2f"
+    },
+    {
+      "order": 141,
+      "name": "TRX row",
+      "source": "images/trx/trx-row-avatar-v6.jpg",
+      "output": "images/trx/trx-row-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.80845,
+      "sha256": "e73e1fab3d982fb9427cc9a7221d4aeb1700071736d3ad41bc2c9f9643f82822"
+    },
+    {
+      "order": 142,
+      "name": "TRX saw pikes",
+      "source": "images/trx/trx-saw-pikes-avatar-v6.jpg",
+      "output": "images/trx/trx-saw-pikes-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.83015,
+      "sha256": "92c1322b49ebe5b1482c017aebaaa73d98e1a518297f97d2c333cc41db623718"
+    },
+    {
+      "order": 143,
+      "name": "TRX squat",
+      "source": "images/trx/trx-squat-avatar-v6.jpg",
+      "output": "images/trx/trx-squat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.8222,
+      "sha256": "c5b1b8a27cbd2669dae5814d1cef6e9a342e049b525b9f4136d974ab652e7429"
+    },
+    {
+      "order": 144,
+      "name": "TRX squat overhead",
+      "source": "images/trx/trx-squat-overhead-avatar-v6.jpg",
+      "output": "images/trx/trx-squat-overhead-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.83139,
+      "sha256": "ba220157d43a2b1c29d3bb5981ca8c902787d92d868579afe1395d34a1974447"
+    },
+    {
+      "order": 145,
+      "name": "TRX squat pistol",
+      "source": "images/trx/trx-squat-pistol-avatar-v6.jpg",
+      "output": "images/trx/trx-squat-pistol-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.8223,
+      "sha256": "167d1a1a45046531f55b7a1fb08eb672cab879ab625d8c70b68f96ea26d5a64a"
+    },
+    {
+      "order": 146,
+      "name": "TRX triceps extension",
+      "source": "images/trx/trx-triceps-extension-avatar-v6.jpg",
+      "output": "images/trx/trx-triceps-extension-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.83883,
+      "sha256": "3535ce693a1d15abd870e5e41c6e6904c320464444c82e86b129f1681666614e"
+    },
+    {
+      "order": 147,
+      "name": "TRX triceps extension II",
+      "source": "images/trx/trx-triceps-extension-ii-avatar-v6.jpg",
+      "output": "images/trx/trx-triceps-extension-ii-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81627,
+      "sha256": "9bcf365ed23cc27bfbda8c3f4ae7810267158bd38e56d4b1a562789d7837431b"
+    },
+    {
+      "order": 148,
+      "name": "Yoga butterfly stretch",
+      "source": "images/yoga/yoga-butterfly-stretch-avatar-v6.jpg",
+      "output": "images/yoga/yoga-butterfly-stretch-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.80622,
+      "sha256": "856608bf0db7d79e16077a70fc229f7d6eb1f47940a80de9b68b61e60d7f7cf2"
+    },
+    {
+      "order": 149,
+      "name": "Yoga camel",
+      "source": "images/yoga/yoga-camel-avatar-v6.jpg",
+      "output": "images/yoga/yoga-camel-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.73483,
+      "sha256": "3c528533b192d7b6d7d448de0e63f7cc834e8ea01ea82d58f1c31d51f99ccaa3"
+    },
+    {
+      "order": 150,
+      "name": "Yoga cat tail",
+      "source": "images/yoga/yoga-cat-tail-avatar-v6.jpg",
+      "output": "images/yoga/yoga-cat-tail-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.7247,
+      "sha256": "c5f9bb109a77f2810b83d741d304ec889615fca424b4fc4818b283a638cced74"
+    },
+    {
+      "order": 151,
+      "name": "Yoga cobra",
+      "source": "images/yoga/yoga-cobra-avatar-v6.jpg",
+      "output": "images/yoga/yoga-cobra-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81098,
+      "sha256": "41553b5f66d3d5471f8ee01c75108171d689b148f97ad0d4117bc7eae0f6a327"
+    },
+    {
+      "order": 152,
+      "name": "Yoga deep squat",
+      "source": "images/yoga/yoga-deep-squat-avatar-v6.jpg",
+      "output": "images/yoga/yoga-deep-squat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.72944,
+      "sha256": "1091f257a5d8f510224d25c049fe045bb040f52241db07225191ac6eedd81907"
+    },
+    {
+      "order": 153,
+      "name": "Yoga downward dog",
+      "source": "images/yoga/yoga-downward-dog-avatar-v6.jpg",
+      "output": "images/yoga/yoga-downward-dog-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81338,
+      "sha256": "e359278fd9a07e807e8b4391ba61c15add6b4e69cba4ecc5b147bf2b513a6f20"
+    },
+    {
+      "order": 154,
+      "name": "Yoga ear pressure",
+      "source": "images/yoga/yoga-ear-pressure-avatar-v6.jpg",
+      "output": "images/yoga/yoga-ear-pressure-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81132,
+      "sha256": "fd275e794c900d0fcb1d4414fbc7aa0d69c399e152c3e2be4c8eaa90ed5fa74f"
+    },
+    {
+      "order": 155,
+      "name": "Yoga extended child's pose",
+      "source": "images/yoga/yoga-extended-child-s-pose-avatar-v6.jpg",
+      "output": "images/yoga/yoga-extended-child-s-pose-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.75062,
+      "sha256": "fd912023370b315fb3d0d9abe905f79809675c51acd8f6955d471187266f7141"
+    },
+    {
+      "order": 156,
+      "name": "Yoga extended puppy",
+      "source": "images/yoga/yoga-extended-puppy-avatar-v6.jpg",
+      "output": "images/yoga/yoga-extended-puppy-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.78738,
+      "sha256": "4b967d10458faf7db05e0c053d97ce0922cee563b0541ac3308f6be6c874bea0"
+    },
+    {
+      "order": 157,
+      "name": "Yoga extended triangle",
+      "source": "images/yoga/yoga-extended-triangle-avatar-v6.jpg",
+      "output": "images/yoga/yoga-extended-triangle-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.8551,
+      "sha256": "b23343014c8b8870b9f0b20e4943dc246b1d9b3e8c6d35d323c56a4cbecac186"
+    },
+    {
+      "order": 158,
+      "name": "Yoga frog",
+      "source": "images/yoga/yoga-frog-avatar-v6.jpg",
+      "output": "images/yoga/yoga-frog-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.7686,
+      "sha256": "935d88516c0b82dd850b3de3b54d819f37df1d57cd88535242fb3a79cf5f0914"
+    },
+    {
+      "order": 159,
+      "name": "Yoga full boat",
+      "source": "images/yoga/yoga-full-boat-avatar-v6.jpg",
+      "output": "images/yoga/yoga-full-boat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.76452,
+      "sha256": "34b2e69c63c09de38e92890e452735eff2f996d591c21ef9404ebf5728af5672"
+    },
+    {
+      "order": 160,
+      "name": "Yoga glute stretch",
+      "source": "images/yoga/yoga-glute-stretch-avatar-v6.jpg",
+      "output": "images/yoga/yoga-glute-stretch-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.78166,
+      "sha256": "214ea6597dcba4a4277d53873a494260eb4410cb00a597f89cfc7516680db136"
+    },
+    {
+      "order": 161,
+      "name": "Yoga half monkey",
+      "source": "images/yoga/yoga-half-monkey-avatar-v6.jpg",
+      "output": "images/yoga/yoga-half-monkey-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79279,
+      "sha256": "d52e6c7b36414eee86e1a86beb977341829306bfde696902fc87d4cc07fff3c4"
+    },
+    {
+      "order": 162,
+      "name": "Yoga hamstring stretch",
+      "source": "images/yoga/yoga-hamstring-stretch-avatar-v6.jpg",
+      "output": "images/yoga/yoga-hamstring-stretch-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.75925,
+      "sha256": "d2b5e7f8a4aaf575891d6c64d6379d174a3368fc1e57924611966d980f5d812d"
+    },
+    {
+      "order": 163,
+      "name": "Yoga happy baby",
+      "source": "images/yoga/yoga-happy-baby-avatar-v6.jpg",
+      "output": "images/yoga/yoga-happy-baby-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.78649,
+      "sha256": "522d385a04021cf4dc1e51a3e1201014b4555be08ff5103671e92283d2e2108e"
+    },
+    {
+      "order": 164,
+      "name": "Yoga hip flexor stretch",
+      "source": "images/yoga/yoga-hip-flexor-stretch-avatar-v6.jpg",
+      "output": "images/yoga/yoga-hip-flexor-stretch-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.78544,
+      "sha256": "1a291688269ba56075de14b7c7d350a4a60eec92abfec49c216d86b8612e6b60"
+    },
+    {
+      "order": 165,
+      "name": "Yoga knee to chest hip stretch",
+      "source": "images/yoga/yoga-knee-to-chest-hip-stretch-avatar-v6.jpg",
+      "output": "images/yoga/yoga-knee-to-chest-hip-stretch-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.83101,
+      "sha256": "23078cfdace6379fe85d578037b5f813b477032b3bf51cd6702e5cc9053d333a"
+    },
+    {
+      "order": 166,
+      "name": "Yoga Marichi’s III",
+      "source": "images/yoga/yoga-marichi-s-iii-avatar-v6.jpg",
+      "output": "images/yoga/yoga-marichi-s-iii-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79043,
+      "sha256": "5aeee4d4260d9ec9bb3a5fe4fb0cf81fcd82e02684fd527a67c8ec987601440b"
+    },
+    {
+      "order": 167,
+      "name": "Yoga noose",
+      "source": "images/yoga/yoga-noose-avatar-v6.jpg",
+      "output": "images/yoga/yoga-noose-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.77146,
+      "sha256": "861293ce74f6699d6f7bbffd260642e142b7105cbe100e8340c7017b2d016835"
+    },
+    {
+      "order": 168,
+      "name": "Yoga pigeon",
+      "source": "images/yoga/yoga-pigeon-avatar-v6.jpg",
+      "output": "images/yoga/yoga-pigeon-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.82875,
+      "sha256": "853b6cdb5807a2152058cd732fb9a5722d0435cf3d346df41bac9cef61a4da54"
+    },
+    {
+      "order": 169,
+      "name": "Yoga plow",
+      "source": "images/yoga/yoga-plow-avatar-v6.jpg",
+      "output": "images/yoga/yoga-plow-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79736,
+      "sha256": "44fc1c4773ade66fa84020f3777bc78813acedf13f59eb44f9dbca3b6200904e"
+    },
+    {
+      "order": 170,
+      "name": "Yoga reverse warrior",
+      "source": "images/yoga/yoga-reverse-warrior-avatar-v6.jpg",
+      "output": "images/yoga/yoga-reverse-warrior-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.83655,
+      "sha256": "dbb66af13827bcf29f432e13c0fe935a062a0b175c1b779f98d944148081a08b"
+    },
+    {
+      "order": 171,
+      "name": "Yoga revolved downward facing dog",
+      "source": "images/yoga/yoga-revolved-downward-facing-dog-avatar-v6.jpg",
+      "output": "images/yoga/yoga-revolved-downward-facing-dog-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.84808,
+      "sha256": "00f7c5f047b2cbc5de4454412b18b73a07d5608b0b205ee510f53f41e18e3925"
+    },
+    {
+      "order": 172,
+      "name": "Yoga snake",
+      "source": "images/yoga/yoga-snake-avatar-v6.jpg",
+      "output": "images/yoga/yoga-snake-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.84136,
+      "sha256": "085287d9624a8d90d25064b280c6e02c27daac00adfad6e91ea35bf7ba59a8a9"
+    },
+    {
+      "order": 173,
+      "name": "Yoga warrior II",
+      "source": "images/yoga/yoga-warrior-ii-avatar-v6.jpg",
+      "output": "images/yoga/yoga-warrior-ii-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.78934,
+      "sha256": "a7fbb6438e84295ef261c6dab175be90c703d8d3dec9856b466d28e34eb96847"
+    },
+    {
+      "order": 174,
+      "name": "Yoga warrior III",
+      "source": "images/yoga/yoga-warrior-iii-avatar-v6.jpg",
+      "output": "images/yoga/yoga-warrior-iii-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.86195,
+      "sha256": "e27f7e9a1988471af1ba05f5ee6189cdb0edad570bbdb0a35187348480bb9eea"
+    },
+    {
+      "order": 175,
+      "name": "Yoga wide angle seated forward bend",
+      "source": "images/yoga/yoga-wide-angle-seated-forward-bend-avatar-v6.jpg",
+      "output": "images/yoga/yoga-wide-angle-seated-forward-bend-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79551,
+      "sha256": "1d2aea570ba570ce7b5cd8845f286edefefecd2e9eb55a487e82d625d42ee165"
+    },
+    {
+      "order": 176,
+      "name": "Kettlebell swing",
+      "source": "images/kettlebell/kettlebell-swing-avatar-v6.jpg",
+      "output": "images/kettlebell/kettlebell-swing-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.74881,
+      "sha256": "6b0b447613afe23df1b96facdf46ab542ce9b765edccac3083cc8c5306ef64ca"
+    },
+    {
+      "order": 177,
+      "name": "Kettlebelle swing one arm",
+      "source": "images/kettlebell/kettlebelle-swing-one-arm-avatar-v6.jpg",
+      "output": "images/kettlebell/kettlebelle-swing-one-arm-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81057,
+      "sha256": "fc10bf55eee1d5cdf50e2d1eaeb273a07bde611df2b1349fc5e2bcf804fc9c36"
+    },
+    {
+      "order": 178,
+      "name": "Bodyblade back",
+      "source": "images/bodyblade/bodyblade-back-avatar-v6.jpg",
+      "output": "images/bodyblade/bodyblade-back-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.7764,
+      "sha256": "1c3c83c4505e8248fcd0f8b7f58b4b87a225605427fd3e488793d02710c28b4a"
+    },
+    {
+      "order": 179,
+      "name": "Bodyblade diagonaal",
+      "source": "images/bodyblade/bodyblade-diagonaal-avatar-v6.jpg",
+      "output": "images/bodyblade/bodyblade-diagonaal-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.80699,
+      "sha256": "98202f2d61a049e6b246a4cc86edea7e32b1a4ae2e3bc0b3d0bed55038aa8c7b"
+    },
+    {
+      "order": 180,
+      "name": "Bodyblade front bovengreep",
+      "source": "images/bodyblade/bodyblade-front-bovengreep-avatar-v6.jpg",
+      "output": "images/bodyblade/bodyblade-front-bovengreep-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.82388,
+      "sha256": "a4ffdd76f958381decb2fb7a877e58f6ed27ee9df6a47bd7de956df53fd4cd48"
+    },
+    {
+      "order": 181,
+      "name": "Bodyblade front ondergreep",
+      "source": "images/bodyblade/bodyblade-front-ondergreep-avatar-v6.jpg",
+      "output": "images/bodyblade/bodyblade-front-ondergreep-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.82558,
+      "sha256": "ef3dfa0be082cb00bd42ba666b80e7a3dd37baeb4b15f2bd0db981035ac15068"
+    },
+    {
+      "order": 182,
+      "name": "Bodyblade front squat",
+      "source": "images/bodyblade/bodyblade-front-squat-avatar-v6.jpg",
+      "output": "images/bodyblade/bodyblade-front-squat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.8137,
+      "sha256": "ad5db18edcc9f1a37bdcb330d45d619615249b3746a856edb80bf5e2215dd431"
+    },
+    {
+      "order": 183,
+      "name": "Bodyblade front uitstap",
+      "source": "images/bodyblade/bodyblade-front-uitstap-avatar-v6.jpg",
+      "output": "images/bodyblade/bodyblade-front-uitstap-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79426,
+      "sha256": "445949d5844c1d6dcf402d8b052577d04e412882b999e74512411ce8a9c9efcf"
+    },
+    {
+      "order": 184,
+      "name": "Bodyblade high",
+      "source": "images/bodyblade/bodyblade-high-avatar-v6.jpg",
+      "output": "images/bodyblade/bodyblade-high-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.7943,
+      "sha256": "7ec3e7bc96644755a49c1bb5ebe2dcc3fa6933fdbf657ff704a33d16184cde05"
+    },
+    {
+      "order": 185,
+      "name": "Foam rol glutes stretch",
+      "source": "images/foam-roller/foam-rol-glutes-stretch-avatar-v6.jpg",
+      "output": "images/foam-roller/foam-rol-glutes-stretch-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.74528,
+      "sha256": "262c072c68000b552ad2a4ab6bdf225a92aae22dcf4b7085a99104c435b34247"
+    },
+    {
+      "order": 186,
+      "name": "Foam rol quat stretch",
+      "source": "images/foam-roller/foam-rol-quat-stretch-avatar-v6.jpg",
+      "output": "images/foam-roller/foam-rol-quat-stretch-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.78802,
+      "sha256": "045202e5955feb9ae83612a41c120aba53ac7fd4eb1f4558995b86f09aa629af"
+    },
+    {
+      "order": 187,
+      "name": "Foam rol upper back stretch",
+      "source": "images/foam-roller/foam-rol-upper-back-stretch-avatar-v6.jpg",
+      "output": "images/foam-roller/foam-rol-upper-back-stretch-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.70604,
+      "sha256": "cfbd44ef7e07dadb5cf8d473bc96ebba5cae2418b6d80e9392fba6a42ea975ba"
+    },
+    {
+      "order": 188,
+      "name": "Voor zijwaarts",
+      "source": "images/speedladder/voor-zijwaarts-avatar-v6.jpg",
+      "output": "images/speedladder/voor-zijwaarts-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81672,
+      "sha256": "ff9463c38857c543e4791adba3e03a53911f7ac54f01ea15bda3374b5f52cb7c"
+    },
+    {
+      "order": 189,
+      "name": "Abdominal (apparaat)",
+      "source": "images/apparaten/abdominal-apparaat-avatar-v6.jpg",
+      "output": "images/apparaten/abdominal-apparaat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.63861,
+      "sha256": "afdf4ff3f0bb7ea550687cb2b0db1965302cbb9a8563b7f9bbf277b29f8c895c"
+    },
+    {
+      "order": 190,
+      "name": "Back (apparaat)",
+      "source": "images/apparaten/back-apparaat-avatar-v6.jpg",
+      "output": "images/apparaten/back-apparaat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.68978,
+      "sha256": "097c9123bd46c4f7fddf1ec6e5f336365d18fac8ddf4cbb7d4ae4bade0c816fe"
+    },
+    {
+      "order": 191,
+      "name": "Backextensie (apparaat)",
+      "source": "images/apparaten/backextensie-apparaat-avatar-v6.jpg",
+      "output": "images/apparaten/backextensie-apparaat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.8332,
+      "sha256": "b6696994d6086662ae426cc913ab6ee35bfe192fd6bd1b247bf60f6b73c13c2c"
+    },
+    {
+      "order": 192,
+      "name": "Chest press (apparaat)",
+      "source": "images/apparaten/chest-press-apparaat-avatar-v6.jpg",
+      "output": "images/apparaten/chest-press-apparaat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.68857,
+      "sha256": "d0a6cf415cba237c7e89a418ba848baf637af207cf2a77bc6657a2b29d2ff0ac"
+    },
+    {
+      "order": 193,
+      "name": "Chin-dip (apparaat)",
+      "source": "images/apparaten/chin-dip-apparaat-avatar-v6.jpg",
+      "output": "images/apparaten/chin-dip-apparaat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81695,
+      "sha256": "ffb9c2a2424def5c7d876af6ba8905ed15e293f681e617cea0669c23d548fc9b"
+    },
+    {
+      "order": 194,
+      "name": "Circle (apparaat)",
+      "source": "images/apparaten/circle-apparaat-avatar-v6.jpg",
+      "output": "images/apparaten/circle-apparaat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.77436,
+      "sha256": "8f551b55c1aed20c8068eefa0ecabacda46429b96bb5a874f5bcf3f1d049233c"
+    },
+    {
+      "order": 195,
+      "name": "Crosstrainer (apparaat)",
+      "source": "images/apparaten/crosstrainer-apparaat-avatar-v6.jpg",
+      "output": "images/apparaten/crosstrainer-apparaat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79147,
+      "sha256": "26b13b97856dc26d7c0d42f3770fc19939cf60c7e579116beb2d9c387a192006"
+    },
+    {
+      "order": 196,
+      "name": "Dorsi-pecto (apparaat)",
+      "source": "images/apparaten/dorsi-pecto-apparaat-avatar-v6.jpg",
+      "output": "images/apparaten/dorsi-pecto-apparaat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.79269,
+      "sha256": "890f27cee81d718d298ffc268ce8da2011e1007c88c27de9d3cc8987cd7962c0"
+    },
+    {
+      "order": 197,
+      "name": "Endy Armstrekker",
+      "source": "images/apparaten/endy-armstrekker-avatar-v6.jpg",
+      "output": "images/apparaten/endy-armstrekker-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.76117,
+      "sha256": "bd89f91fabbba9e39984641dca3e63c576b4295b69aabcc9b4f53993891858fd"
+    },
+    {
+      "order": 198,
+      "name": "Endy Beenstrekker",
+      "source": "images/apparaten/endy-beenstrekker-avatar-v6.jpg",
+      "output": "images/apparaten/endy-beenstrekker-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.70384,
+      "sha256": "a5b0f7f0af0fa8407f0c83da50c8c5f3964be064741ec0d716e1e7257a900227"
+    },
+    {
+      "order": 199,
+      "name": "Endy Buikmachine",
+      "source": "images/apparaten/endy-buikmachine-avatar-v6.jpg",
+      "output": "images/apparaten/endy-buikmachine-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.72568,
+      "sha256": "7745783e1fa7c007d6bb676c2206c9e0472da1258daa9f33b35b6795e3bd9876"
+    },
+    {
+      "order": 200,
+      "name": "Endy Fly",
+      "source": "images/apparaten/endy-fly-avatar-v6.jpg",
+      "output": "images/apparaten/endy-fly-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.70667,
+      "sha256": "5bace58d01e380b2c2f0454dab0509c65ed9064716f531f090ab18b57b92c8a8"
+    },
+    {
+      "order": 201,
+      "name": "Endy Heup abductie",
+      "source": "images/apparaten/endy-heup-abductie-avatar-v6.jpg",
+      "output": "images/apparaten/endy-heup-abductie-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.66771,
+      "sha256": "a88761069e52bf16a029e0a801df26fce5e7f4d07b8b85080496427dbb42fda6"
+    },
+    {
+      "order": 202,
+      "name": "Endy Leg curl",
+      "source": "images/apparaten/endy-leg-curl-avatar-v6.jpg",
+      "output": "images/apparaten/endy-leg-curl-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.63066,
+      "sha256": "2161cc4f1453eece77b8c416c2bfef45c51a306986f372c6bd4ea4ddc7ca0d56"
+    },
+    {
+      "order": 203,
+      "name": "Endy Leg ext",
+      "source": "images/apparaten/endy-leg-ext-avatar-v6.jpg",
+      "output": "images/apparaten/endy-leg-ext-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.69245,
+      "sha256": "aaa90b1a6895fe2097a6bf3176535ad825da1f61913a875ed4d623d8c66d33d2"
+    },
+    {
+      "order": 204,
+      "name": "Endy Pulldown",
+      "source": "images/apparaten/endy-pulldown-avatar-v6.jpg",
+      "output": "images/apparaten/endy-pulldown-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.80907,
+      "sha256": "0a7d40f72e1bc5d463bcb45f0d0a4dcf0f368f277c87b720a60e955d4478d871"
+    },
+    {
+      "order": 205,
+      "name": "Endy Rotator",
+      "source": "images/apparaten/endy-rotator-avatar-v6.jpg",
+      "output": "images/apparaten/endy-rotator-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.75607,
+      "sha256": "040f454032db0be4aeda9e8a050c1645587d26b59d68fd1558fc8242824a3cd9"
+    },
+    {
+      "order": 206,
+      "name": "Endy Rugmachine",
+      "source": "images/apparaten/endy-rugmachine-avatar-v6.jpg",
+      "output": "images/apparaten/endy-rugmachine-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.71734,
+      "sha256": "c51794d9a33c6e79ae0a78ae6c546f027d28709ec2388f53b3666484cd697a7f"
+    },
+    {
+      "order": 207,
+      "name": "Endy Triceps dips",
+      "source": "images/apparaten/endy-triceps-dips-avatar-v6.jpg",
+      "output": "images/apparaten/endy-triceps-dips-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.78823,
+      "sha256": "181df4cc650820af366d37547b353b21b9922954fb566d070c6614739f33438b"
+    },
+    {
+      "order": 208,
+      "name": "Fiets (apparaat)",
+      "source": "images/apparaten/fiets-apparaat-avatar-v6.jpg",
+      "output": "images/apparaten/fiets-apparaat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.81614,
+      "sha256": "34bcb0fe1eb8d5932639b8f4ecf350c00aaf235ac3c1a2c273a2d807dff8cb33"
+    },
+    {
+      "order": 209,
+      "name": "Gluteus kick (apparaat)",
+      "source": "images/apparaten/gluteus-kick-apparaat-avatar-v6.jpg",
+      "output": "images/apparaten/gluteus-kick-apparaat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.67092,
+      "sha256": "27d851cb7fc52c3ff72c4d520c9bd569fb8cc8b8411b0670bf852b68b43febca"
+    },
+    {
+      "order": 210,
+      "name": "Leg press (apparaat)",
+      "source": "images/apparaten/leg-press-apparaat-avatar-v6.jpg",
+      "output": "images/apparaten/leg-press-apparaat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.60109,
+      "sha256": "d0e36e216267508b735fdf7ebef322984e41f49865d6db5280bb6f24542dc857"
+    },
+    {
+      "order": 211,
+      "name": "Loopband (apparaat)",
+      "source": "images/apparaten/loopband-apparaat-avatar-v6.jpg",
+      "output": "images/apparaten/loopband-apparaat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.77699,
+      "sha256": "913d9dc0fd15017a9df23d172a16075c91187038b4a066133952e7779a177924"
+    },
+    {
+      "order": 212,
+      "name": "Roeier (apparaat)",
+      "source": "images/apparaten/roeier-apparaat-avatar-v6.jpg",
+      "output": "images/apparaten/roeier-apparaat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.72036,
+      "sha256": "1d1be175cad4619a12eab2e96bd1b2e8e8d150c129e662bcfb83403ddc5c3cac"
+    },
+    {
+      "order": 213,
+      "name": "Rotator (apparaat)",
+      "source": "images/apparaten/rotator-apparaat-avatar-v6.jpg",
+      "output": "images/apparaten/rotator-apparaat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.70373,
+      "sha256": "4bbe11d6b4bf9f9752b8d919d8cf4d7228b7d5175efa9ca124dfe19d79d532a1"
+    },
+    {
+      "order": 214,
+      "name": "Stairs (apparaat)",
+      "source": "images/apparaten/stairs-apparaat-avatar-v6.jpg",
+      "output": "images/apparaten/stairs-apparaat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.75287,
+      "sha256": "64eb6d13ac9ec19db20ce6f936cc383f3d5e79b64face9c05c498a011718b24c"
+    },
+    {
+      "order": 215,
+      "name": "Vertical row (apparaat)",
+      "source": "images/apparaten/vertical-row-apparaat-avatar-v6.jpg",
+      "output": "images/apparaten/vertical-row-apparaat-avatar-v7.jpg",
+      "width": 800,
+      "height": 1200,
+      "nearWhiteRatio": 0.60696,
+      "sha256": "e20bb33eeff75263cea722e309ff3271cf58756020047afa23bd0b0209088d65"
+    }
+  ]
+}

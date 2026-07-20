@@ -15,8 +15,8 @@ const qaOverrides = JSON.parse(await readFile(qaOverridesPath, "utf8"));
 const seamApprovals = new Map(qaOverrides.seamApprovals.map((entry) => [entry.exerciseId, entry]));
 const productionByName = new Map(production.map((entry) => [entry.sourceName, entry]));
 
-const GRAPH_VERSION = 5;
-const ASSET_VERSION = 6;
+const GRAPH_VERSION = 6;
+const ASSET_VERSION = 7;
 const args = process.argv.slice(2);
 const command = args.find((arg) => !arg.startsWith("--")) || "plan";
 
@@ -224,10 +224,10 @@ async function remoteImage(body, target) {
 
 function compositionInstruction(plan) {
   if (plan.layout === "stacked") {
-    if (seamRecovery) return "Create one single tall camera photograph in one shared white studio. Arrange the START version above and the END version below while keeping one continuous background, floor, lighting and shadows across the whole frame. Absolutely no panels, frames, horizontal seam, split or before-after graphic.";
+    if (seamRecovery) return "Create one single tall camera photograph in one shared pure-white field. Arrange the START version above and the END version below while keeping one continuous #FFFFFF background across the whole frame. Absolutely no panels, frames, horizontal seam, split or before-after graphic.";
     return "Show exactly two large views in one continuous studio: START on the upper half and END on the lower half. No panel border or dividing line.";
   }
-  if (seamRecovery) return "Create one single camera photograph of two identical-twin versions of the woman together in the same shared white studio: START left and END right. The floor, background, lighting and shadows must continue uninterrupted across the centre. Absolutely no panels, frames, vertical seam, split or before-after graphic.";
+  if (seamRecovery) return "Create one single camera photograph of two identical-twin versions of the woman together in the same shared pure-white field: START left and END right. The #FFFFFF background must continue uninterrupted across the centre. Absolutely no panels, frames, vertical seam, split or before-after graphic.";
   return "Show exactly two large views in one continuous studio: START on the left and END on the right. No panel border or dividing line.";
 }
 
@@ -258,7 +258,7 @@ function prompt(plan) {
     equipmentInstruction(plan),
     framing,
     "Use a 20-35 degree three-quarter angle unless the reference requires a clear side view. Keep the joint path unobstructed.",
-    "Clean bright-white seamless physiotherapy studio and white floor, with soft natural contact shadows and subtle contour light so the light-grey shirt remains distinct in grayscale print. Leave the top-left corner clear for branding.",
+    "Use one perfectly uniform pure-white #FFFFFF background. There is no visible room, wall, floor line, gradient, texture, contact shadow or cast shadow. Keep subtle contour light only on the subject and equipment so the light-grey shirt remains distinct in grayscale print. Leave the top-left corner clear for branding.",
     "No text, labels, arrows, logo, watermark, border, split screen, duplicate limbs or extra people. Anatomically correct hands, feet, joints and equipment.",
   ].join(" ");
 }
@@ -276,7 +276,7 @@ function providerPrompt(plan) {
     equipmentInstruction(plan),
     framing,
     "Use a clear 20-35 degree three-quarter view unless a side view is clinically needed.",
-    "Pure white seamless studio and floor, soft contact shadow and contour light, strong grayscale-print contrast; top-left clear.",
+    "Perfectly uniform #FFFFFF background without room, floor line, gradient, texture, contact shadow or cast shadow; contour light stays on the subject only; strong grayscale-print contrast; top-left clear.",
     "No text, labels, arrows, logo, watermark, border, split screen, extra people or limbs. Correct anatomy and equipment.",
   ].join(" ");
   if (concise.length > 1000) throw new Error(`Gen-4-prompt is te lang voor ${plan.sourceName}: ${concise.length}`);
