@@ -156,16 +156,34 @@
   .bewijs .noot{grid-column:1/-1;font:italic 13.5px/1.6 var(--serif);color:var(--zacht);border-top:1px solid var(--lijn2);padding-top:14px}
 
   /* prijs */
-  .prijskaart{max-width:520px;margin:36px auto 0;background:var(--vlak);border:1px solid var(--lijn);border-radius:24px;
-    padding:38px 38px 32px;box-shadow:var(--sh);text-align:center;position:relative;overflow:hidden}
-  .prijskaart::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,var(--blauw),#4f7fc9 55%,var(--oranje))}
-  .bedrag{font:700 54px/1 var(--disp);color:var(--inkt);letter-spacing:-.03em}
-  .bedrag small{display:block;font:500 15px/1 var(--disp);color:var(--demp);margin-top:8px}
-  .prijskaart ul{list-style:none;text-align:left;margin:26px 0 28px;font-family:var(--disp)}
-  .prijskaart li{padding:9px 0 9px 30px;position:relative;font-size:15.5px;border-bottom:1px solid var(--lijn2)}
-  .prijskaart li:last-child{border-bottom:none}
-  .prijskaart li::before{content:"✓";position:absolute;left:4px;font-weight:700;color:var(--blauw)}
-  .prijskaart .klein{font:500 13.5px/1.6 var(--disp);color:var(--zacht);margin-top:14px}
+  .prijsintro{font-size:17px;color:var(--demp);max-width:60ch;margin:14px auto 0;text-align:center}
+  .prijzen{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px;text-align:left}
+  @media (max-width:880px){.prijzen{grid-template-columns:1fr;max-width:440px;margin-left:auto;margin-right:auto}}
+  .pk{background:var(--vlak);border:1px solid var(--lijn);border-radius:20px;padding:26px 24px 22px;box-shadow:var(--sh);
+    display:flex;flex-direction:column;position:relative}
+  .pk.top{border:2px solid var(--blauw)}
+  .pk.oprichter{background:linear-gradient(160deg,var(--oranje-05),var(--vlak) 70%);border-color:#f0cdb8}
+  .pknaam{font:700 16px/1 var(--disp);color:var(--inkt)}
+  .pkwie{font:500 13px/1.5 var(--disp);color:var(--zacht);margin-top:4px}
+  .pkprijs{font:700 44px/1 var(--disp);color:var(--inkt);letter-spacing:-.03em;margin-top:14px}
+  .pkprijs small{font:500 13.5px/1.2 var(--disp);color:var(--demp);margin-left:6px;letter-spacing:0}
+  .pkjaar{font:500 13px/1 var(--disp);color:var(--demp);margin-top:9px}
+  .pk ul{list-style:none;margin:16px 0 20px;font-family:var(--disp);flex:1}
+  .pk li{padding:7px 0 7px 26px;position:relative;font-size:14.5px;border-bottom:1px solid var(--lijn2)}
+  .pk li:last-child{border-bottom:none}
+  .pk li::before{content:"✓";position:absolute;left:2px;font-weight:700;color:var(--blauw)}
+  .pk.oprichter li::before{color:var(--oranje)}
+  .pk .knop{text-align:center}
+  .pkbadge{position:absolute;top:-12px;right:16px;font:700 11px/1 var(--disp);letter-spacing:.06em;text-transform:uppercase;
+    background:var(--oranje);color:#fff;border-radius:999px;padding:7px 12px;box-shadow:0 4px 12px rgba(224,92,42,.35)}
+  .rekensom{max-width:660px;margin:26px auto 0;background:var(--blauw-05);border:1px solid var(--blauw-10);border-radius:16px;
+    padding:16px 22px;font:500 15px/1.65 var(--disp);color:var(--tekst);text-align:center}
+  .rekensom b{color:var(--blauw)}
+  .beloften{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:960px;margin:22px auto 0;text-align:center}
+  @media (max-width:880px){.beloften{grid-template-columns:repeat(2,1fr)}}
+  .beloften .b{font:500 13px/1.5 var(--disp);color:var(--demp);background:var(--vlak);border:1px solid var(--lijn);
+    border-radius:14px;padding:14px 14px 12px}
+  .beloften .b b{display:block;font-size:14px;color:var(--inkt);margin-bottom:3px}
 
   details{max-width:760px;margin:0 auto;border-bottom:1px solid var(--lijn)}
   summary{cursor:pointer;list-style:none;font:600 17.5px/1.4 var(--disp);color:var(--inkt);padding:19px 34px 19px 2px;position:relative}
@@ -331,21 +349,52 @@
 <section id="prijs">
   <div class="binnen" style="text-align:center">
     <div class="eyebrow" style="text-align:center">Prijs</div>
-    <h2>Eén prijs. Beide werelden.</h2>
-    <div class="prijskaart">
-      <div class="bedrag">€ 19<small>per praktijk per maand</small></div>
-      <ul>
-        <li>Onbeperkt therapeuten en werkplekken</li>
-        <li>Ruim 200 oefeningen plus je eigen materiaal</li>
-        <li>Kaartsjablonen, kaarten delen en je eigen logo</li>
-        <li>QR-kaart met video's van je eigen praktijk</li>
-        <li>Pijnscore, agenda-herinnering, negen talen en voorlezen op de digitale kaart</li>
-        <li>AI-kaartassistent die met je meedenkt</li>
-        <li>PDF voor het dossier, groot lettertype en compact</li>
-      </ul>
-      <a class="knop oranje" href="/v2/app">Probeer Fysiplan gratis</a>
-      <div class="klein">Jaarlijks kan ook: 190 euro per jaar. Stoppen kan maandelijks.</div>
-      <div class="klein" style="margin-top:8px">Eén prijs voor de hele praktijk. Veel oefensoftware rekent per therapeut per maand; met vier collega's loopt dat al snel op naar 40 euro of meer. Bij Fysiplan blijft het 19 euro, of je nu met twee of met tien bent.</div>
+    <h2>Eén vaste prijs per praktijk. Nooit per therapeut.</h2>
+    <p class="prijsintro">Alles zit er altijd in: de AI-assistent, negen talen met voorlezen, pijnscore met verloop, eigen video's en agenda-herinneringen. Geen modules, geen verrassingen. En zolang je klant bent, gaat jouw prijs nooit omhoog.</p>
+    <div class="prijzen">
+      <div class="pk">
+        <div class="pknaam">Solo</div>
+        <div class="pkwie">Voor de zelfstandige therapeut</div>
+        <div class="pkprijs">&euro; 9<small>per maand</small></div>
+        <div class="pkjaar">of 90 euro per jaar (2 maanden gratis)</div>
+        <ul>
+          <li>Alle functies, &eacute;&eacute;n therapeut</li>
+          <li>Ruim 200 oefeningen plus je eigen materiaal</li>
+          <li>Maandelijks opzegbaar</li>
+        </ul>
+        <a class="knop blauw" href="/v2/app">Probeer gratis</a>
+      </div>
+      <div class="pk top">
+        <div class="pknaam">Praktijk</div>
+        <div class="pkwie">Voor elke praktijk, groot of klein</div>
+        <div class="pkprijs">&euro; 19<small>per maand</small></div>
+        <div class="pkjaar">of 190 euro per jaar (2 maanden gratis)</div>
+        <ul>
+          <li>Onbeperkt therapeuten en werkplekken</li>
+          <li>Kaarten delen met alle collega's</li>
+          <li>Vanaf twee collega's al de voordeligste</li>
+        </ul>
+        <a class="knop oranje" href="/v2/app">Probeer Fysiplan gratis</a>
+      </div>
+      <div class="pk oprichter">
+        <span class="pkbadge">Nog __OPRICHTERS_OVER__ plekken</span>
+        <div class="pknaam">Oprichters</div>
+        <div class="pkwie">Voor de eerste honderd praktijken</div>
+        <div class="pkprijs">&euro; 12<small>per maand, voor altijd</small></div>
+        <div class="pkjaar">of 120 euro per jaar, voor altijd</div>
+        <ul>
+          <li>Alles van Praktijk</li>
+          <li>Blijvend het lagere tarief, hoe groot je ook groeit</li>
+        </ul>
+        <a class="knop oranje" href="/v2/app">Word oprichter</a>
+      </div>
+    </div>
+    <div class="rekensom">Veel oefensoftware rekent per therapeut per maand. Met vier collega's betaal je elders al snel 24 tot 40 euro per maand; bij Fysiplan blijft het <b>19 euro, oftewel 4,75 per therapeut</b>. Met tien collega's nog steeds 19.</div>
+    <div class="beloften">
+      <div class="b"><b>De prijsbelofte</b>Jouw prijs stijgt nooit zolang je klant bent</div>
+      <div class="b"><b>Printen blijft gratis</b>Kaarten maken en printen kost nooit iets</div>
+      <div class="b"><b>30 dagen proberen</b>Volledig en gratis, zonder betaalgegevens</div>
+      <div class="b"><b>Studenten gratis</b>Voor opleidingen en studenten fysiotherapie</div>
     </div>
   </div>
 </section>

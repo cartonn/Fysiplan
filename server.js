@@ -88,6 +88,12 @@ try { kaarten = JSON.parse(await readFile(kaartenPath, "utf8")); } catch {}
 let videolinks = {};
 try { videolinks = JSON.parse(await readFile(videolinksPath, "utf8")); } catch {}
 
+// oprichterstarief: hoeveel van de honderd plekken zijn vergeven; de teller staat
+// live op de landingspagina en wordt door beheer bijgewerkt zodra praktijken instappen
+const oprichtersPath = join(dataDir, "oprichters.json");
+let oprichters = { vergeven: 0 };
+try { oprichters = { ...oprichters, ...JSON.parse(await readFile(oprichtersPath, "utf8")) }; } catch {}
+
 // vertaalcache voor de digitale kaart: per taal eenmaal vertalen, daarna gratis uit de cache
 const vertalingenPath = join(dataDir, "vertalingen.json");
 let vertalingen = {};
@@ -312,7 +318,7 @@ function leesLimiet(req, res) {
 
 // dagelijkse reservekopie van alle databestanden (laatste 7 dagen): vangnet tegen
 // beschadigde schrijfacties of een bug die een bestand leegtrekt
-const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, vertalingenPath];
+const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, vertalingenPath, oprichtersPath];
 async function maakBackup() {
   try {
     const dag = new Date().toISOString().slice(0, 10);
@@ -669,6 +675,24 @@ async function afhandelen(request, response) {
       bewaarStats();
       await sendJson(response, 200, { ok: true });
     } catch { await sendJson(response, 400, { ok: false }); }
+    return;
+  }
+
+  // oprichtersteller bijwerken (beheer): aantal vergeven plekken van de honderd
+  if (urlPath === "/api/oprichters" && request.method === "POST") {
+    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
+    try {
+      const n = Number(JSON.parse(await readBody(request)).vergeven);
+      if (!Number.isInteger(n) || n < 0 || n > 100) {
+        await sendJson(response, 400, { ok: false, fout: "Geef een aantal tussen 0 en 100 op." });
+        return;
+      }
+      oprichters.vergeven = n;
+      await saveJson(oprichtersPath, oprichters);
+      await sendJson(response, 200, { ok: true, vergeven: n, beschikbaar: 100 - n });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
     return;
   }
 
@@ -1446,7 +1470,11 @@ async function afhandelen(request, response) {
     // de landingspagina heeft geen scripts en laadt alleen eigen beelden: dat mag de browser afdwingen
     response.setHeader("content-security-policy",
       "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'");
-    try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "v2.html"))); }
+    try {
+      let html = await readFile(join(publicDir, "v2.html"), "utf8");
+      html = html.replace(/__OPRICHTERS_OVER__/g, String(Math.max(0, 100 - (oprichters.vergeven || 0))));
+      await send(response, 200, "text/html; charset=utf-8", html);
+    }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
   }
