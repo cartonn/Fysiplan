@@ -681,6 +681,7 @@ async function afhandelen(request, response) {
   // oprichtersteller bijwerken (beheer): aantal vergeven plekken van de honderd
   if (urlPath === "/api/oprichters" && request.method === "POST") {
     if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
+    if (schrijfLimiet(request, response)) return;
     try {
       const n = Number(JSON.parse(await readBody(request)).vergeven);
       if (!Number.isInteger(n) || n < 0 || n > 100) {
