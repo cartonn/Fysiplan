@@ -28,6 +28,7 @@ const executeApproved = args.includes("--execute");
 const concurrency = Math.max(1, Math.min(8, Number(valueAfter("--concurrency", "3")) || 3));
 const budgetUsd = Number(valueAfter("--budget-usd", "0"));
 const only = valueAfter("--only");
+const complexMotionTier = valueAfter("--complex-motion-tier", "premium");
 const uploadConcepts = args.includes("--upload-concepts");
 const baseUrl = valueAfter("--base-url").replace(/\/$/, "");
 const allExercises = manifest.exercises;
@@ -36,15 +37,21 @@ const selected = only
   : allExercises;
 if (only && !selected.length) throw new Error(`Oefening niet gevonden: ${only}`);
 if (!['local', 'runway'].includes(provider)) throw new Error("--provider moet local of runway zijn");
+if (!["premium", "standard"].includes(complexMotionTier)) throw new Error("--complex-motion-tier moet premium of standard zijn");
 
 const modelPolicy = {
   avatarImage: "gemini_image3_pro",
   poseImage: "gemini_image3_pro",
+  endPoseImage: "gemini_image3_pro",
   motionVideoStandard: "gemini_omni_flash",
-  motionVideoComplex: "seedance2",
+  motionVideoComplex: complexMotionTier === "standard" ? "gemini_omni_flash" : "seedance2",
+  motionVideoKeyframed: "veo3.1_fast",
+  complexMotionTier,
   complexRule: "risk.level === extra-review",
+  motionPromptVersion: "clinical-motion-v3-safe-override",
   voice: "eleven_multilingual_v2",
   motionSeconds: 6,
+  keyframeMotionSeconds: 8,
   voicePreset: "Serene",
   visualStyle: "full-bleed-white-studio-v3",
   captions: "sidecar-webvtt-no-body-occlusion",
@@ -66,7 +73,9 @@ function nodeCost(kind, entry) {
   if (provider !== "runway") return 0;
   if (kind === "avatar") return 0.20;
   if (kind === "pose") return 0.20;
-  if (kind === "motion") return modelPolicy.motionSeconds * (entry.risk.level === "extra-review" ? 0.40 : 0.10);
+  if (kind === "end-pose") return 0.20;
+  if (kind === "motion" && entry.motionKeyframes) return modelPolicy.keyframeMotionSeconds * 0.10;
+  if (kind === "motion") return modelPolicy.motionSeconds * (entry.risk.level === "extra-review" && modelPolicy.complexMotionTier === "premium" ? 0.40 : 0.10);
   if (kind === "voice") return Math.ceil(entry.script.narration.length / 50) * 0.01;
   return 0;
 }
@@ -81,9 +90,11 @@ function buildGraph() {
   };
   const branches = selected.flatMap((entry) => {
     const id = entry.exerciseId;
+    const hasEndPose = Boolean(entry.motionKeyframes?.endPosePromptEn);
     const exerciseNodes = [
       { id: `pose:${id}`, kind: "pose", entry, dependencies: [avatar.id], output: artifact("poses", `${id}.png`), costUsd: nodeCost("pose", entry) },
-      { id: `motion:${id}`, kind: "motion", entry, dependencies: [`pose:${id}`], output: artifact("motion", `${id}.mp4`), costUsd: nodeCost("motion", entry) },
+      ...(hasEndPose ? [{ id: `end-pose:${id}`, kind: "end-pose", entry, dependencies: [`pose:${id}`], output: artifact("end-poses", `${id}.png`), costUsd: nodeCost("end-pose", entry) }] : []),
+      { id: `motion:${id}`, kind: "motion", entry, dependencies: hasEndPose ? [`pose:${id}`, `end-pose:${id}`] : [`pose:${id}`], output: artifact("motion", `${id}.mp4`), costUsd: nodeCost("motion", entry) },
       { id: `voice:${id}`, kind: "voice", entry, dependencies: [], output: artifact("voice", `${id}.mp3`), costUsd: nodeCost("voice", entry) },
       { id: `captions:${id}`, kind: "captions", entry, dependencies: [`voice:${id}`], output: artifact("captions", `${id}.vtt`), costUsd: 0 },
       { id: `compose:${id}`, kind: "compose", entry, dependencies: [`motion:${id}`, `voice:${id}`, `captions:${id}`], output: artifact("final", `${id}.mp4`), costUsd: 0 },
@@ -131,9 +142,11 @@ function saveState() {
 function relevantPolicy(node, policy = modelPolicy) {
   if (node.kind === "avatar") return { avatarImage: policy.avatarImage };
   if (node.kind === "pose") return { poseImage: policy.poseImage };
+  if (node.kind === "end-pose") return { endPoseImage: policy.endPoseImage };
   if (node.kind === "motion") return {
-    motionVideo: node.entry?.risk.level === "extra-review" ? policy.motionVideoComplex : policy.motionVideoStandard,
-    motionSeconds: policy.motionSeconds,
+    motionVideo: node.entry?.motionKeyframes ? policy.motionVideoKeyframed : node.entry?.risk.level === "extra-review" ? policy.motionVideoComplex : policy.motionVideoStandard,
+    motionSeconds: node.entry?.motionKeyframes ? policy.keyframeMotionSeconds : policy.motionSeconds,
+    motionPromptVersion: policy.motionPromptVersion,
   };
   if (node.kind === "voice") return { voice: policy.voice, voicePreset: policy.voicePreset };
   if (node.kind === "compose") return { composeVersion: 2 };
@@ -155,6 +168,8 @@ function hashNode(node, memo = new Map()) {
     titleNl: node.entry?.titleNl,
     referenceImage: node.entry?.referenceImage,
     script: node.entry?.script,
+    motionPromptEn: node.kind === "motion" ? node.entry?.motionPromptEn : undefined,
+    motionKeyframes: ["end-pose", "motion"].includes(node.kind) ? node.entry?.motionKeyframes : undefined,
     shotPlan: node.entry?.shotPlan,
     policy: relevantPolicy(node),
     dependencyHashes,
@@ -240,6 +255,14 @@ function posePrompt(entry) {
 }
 
 function motionPrompt(entry) {
+  if (entry.motionPromptEn) {
+    return [
+      entry.motionPromptEn,
+      "The same adult fitness instructor and clothing as the input frame.",
+      "Perform one complete controlled repetition and return to the exact starting pose, keeping the camera locked off and the full body visible.",
+      "Natural sports biomechanics, no talking, no camera movement, no cuts, no added people, no changing clothes or equipment, no text or watermark.",
+    ].join(" ");
+  }
   return [
     `The same physiotherapist demonstrates '${entry.titleNl}' slowly and precisely for a patient education video.`,
     `Start position: ${entry.script.setup}`,
@@ -311,6 +334,30 @@ async function createPose(node) {
   return result;
 }
 
+async function createEndPose(node) {
+  await mkdir(dirname(node.output), { recursive: true });
+  const startPosePath = artifact("poses", `${node.entry.exerciseId}.png`);
+  if (provider === "local") {
+    await exec("ffmpeg", ["-y", "-loglevel", "error", "-i", startPosePath, "-frames:v", "1", node.output]);
+    return { source: "local-keyframe-test" };
+  }
+  const startPose = await dataUri(startPosePath);
+  const promptText = [
+    "Edit @start into the clinically precise end pose described below while preserving the exact same adult woman, face, hair, clothing, stool, camera, crop, lighting and pure white studio.",
+    node.entry.motionKeyframes.endPosePromptEn,
+    "Keep the full body, both feet, hands and all equipment visible. Photorealistic anatomy, no text, no logo, no watermark, no added person.",
+  ].join(" ");
+  const result = await remoteTask(() => runway().textToImage.create({
+    model: modelPolicy.endPoseImage,
+    promptText,
+    ratio: "1344:768",
+    outputCount: 1,
+    referenceImages: [{ uri: startPose, tag: "start", subject: "human" }],
+  }), node.output);
+  await normalizeGeneratedPng(node.output);
+  return result;
+}
+
 async function createMotion(node) {
   await mkdir(dirname(node.output), { recursive: true });
   const posePath = artifact("poses", `${node.entry.exerciseId}.png`);
@@ -319,7 +366,19 @@ async function createMotion(node) {
     return { source: "local-graph-test" };
   }
   const pose = await dataUri(posePath);
-  if (node.entry.risk.level === "extra-review") {
+  if (node.entry.motionKeyframes) {
+    const endPose = await dataUri(artifact("end-poses", `${node.entry.exerciseId}.png`));
+    return remoteTask(() => runway().imageToVideo.create({
+      model: modelPolicy.motionVideoKeyframed,
+      promptImage: [{ uri: pose, position: "first" }, { uri: endPose, position: "last" }],
+      promptText: node.entry.motionKeyframes.motionPromptEn || motionPrompt(node.entry),
+      negativePrompt: "head tilt, nodding, looking up, looking down, camera movement, body movement, changing identity, changing clothes, extra limbs, text, watermark",
+      ratio: "1920:1080",
+      duration: modelPolicy.keyframeMotionSeconds,
+      audio: false,
+    }), node.output);
+  }
+  if (node.entry.risk.level === "extra-review" && modelPolicy.complexMotionTier === "premium") {
     return remoteTask(() => runway().imageToVideo.create({
       model: modelPolicy.motionVideoComplex,
       promptImage: [{ uri: pose, position: "first" }],
@@ -580,7 +639,7 @@ async function uploadConcept(node) {
   return stored;
 }
 
-const actions = { avatar: createAvatar, pose: createPose, motion: createMotion, voice: createVoice, captions: createCaptions, compose, qa, "review-ready": reviewReady, "concept-upload": uploadConcept };
+const actions = { avatar: createAvatar, pose: createPose, "end-pose": createEndPose, motion: createMotion, voice: createVoice, captions: createCaptions, compose, qa, "review-ready": reviewReady, "concept-upload": uploadConcept };
 
 function countBy(items, classifier) {
   return Object.fromEntries(items.reduce((map, item) => {
@@ -610,9 +669,14 @@ if (command === "status") {
 if (command !== "run") throw new Error("Gebruik plan, run of status");
 if (!executeApproved) throw new Error("Run is standaard droog. Voeg --execute toe om artifacts te maken en eventueel providertegoed te gebruiken.");
 const completionChecks = await Promise.all(nodes.map(async (node) => [node, await validCompleted(node)]));
+for (const [node, complete] of completionChecks) {
+  if (!complete && state.nodes[node.id]?.status === "succeeded") {
+    state.nodes[node.id] = { ...state.nodes[node.id], status: "stale", staleAt: new Date().toISOString() };
+  }
+}
 state.hashVersion = HASH_VERSION;
 const remainingCost = completionChecks.filter(([, complete]) => !complete).reduce((sum, [node]) => sum + node.costUsd, 0);
-if (provider === "runway" && (!budgetUsd || remainingCost > budgetUsd)) {
+if (provider === "runway" && (!budgetUsd || remainingCost - budgetUsd > 1e-9)) {
   throw new Error(`Resterende geschatte kosten $${remainingCost.toFixed(2)} overschrijden --budget-usd ${budgetUsd.toFixed(2)}.`);
 }
 
@@ -621,7 +685,7 @@ await saveState();
 const results = await runDag({
   nodes,
   concurrency,
-  canRun: (node) => (node.dependencies || []).every((dependency) => state.nodes[dependency]?.status === "succeeded"),
+  canRun: (node, results) => (node.dependencies || []).every((dependency) => results.get(dependency)?.status === "succeeded"),
   execute: async (node) => {
     if (await validCompleted(node)) {
       console.log(`cached\t${node.id}`);

@@ -18335,6 +18335,11 @@
         "safety": "Stop bij scherpe of toenemende pijn en overleg met je fysiotherapeut als je twijfelt.",
         "narration": "Dit is kin intrekken · zittend actief. Zit rechtop met beide voeten op de vloer. Trek je kin rustig recht naar achteren zonder omlaag te kijken. Voer de beweging zonder hulp uit. Houd je kruin lang en laat je schouders los. Stop bij scherpe of toenemende pijn en overleg met je fysiotherapeut als je twijfelt."
       },
+      "motionPromptEn": "A seated adult physiotherapy instructor demonstrates one precise cervical retraction. Keep the eyes level, nose horizontal and head upright. Glide the entire head straight backward horizontally to form a gentle double chin without looking up, looking down, nodding, flexing or extending the neck. Hold the retracted position for two seconds, then glide straight forward to neutral. The torso and shoulders remain completely still.",
+      "motionKeyframes": {
+        "endPosePromptEn": "Move only the head a small distance straight backward horizontally into a gentle double-chin position. Keep the eyes and nose perfectly level and preserve the exact head angle: absolutely no looking up, looking down, nodding, neck flexion or neck extension. Keep shoulders and torso unchanged.",
+        "motionPromptEn": "Interpolate one slow, precise cervical retraction from the neutral start to the supplied retracted end frame. The head glides horizontally backward with eyes level; torso, shoulders and camera remain completely still. No nodding or vertical head rotation."
+      },
       "dosage": {
         "sets": 2,
         "repetitions": 8,
@@ -82337,6 +82342,7 @@
         "safety": "Stop bij scherpe of toenemende pijn en overleg met je fysiotherapeut als je twijfelt.",
         "narration": "Dit is landing op één been · sportspecifiek. Maak een veilige zone die past bij de doelsport. Land op één been en houd de positie gecontroleerd vast. Voer de beweging op sportspecifieke snelheid uit na vrijgave. Houd bekken horizontaal en knie boven de voet. Stop bij scherpe of toenemende pijn en overleg met je fysiotherapeut als je twijfelt."
       },
+      "motionPromptEn": "A professional adult sports instructor demonstrates a controlled single-leg landing drill. From a stable athletic stance while holding the ball at chest height, make one small forward hop, land softly on one foot, keep the pelvis level and the knee aligned over the toes, hold the balanced finish for two seconds, then step back to the starting stance.",
       "dosage": {
         "sets": 2,
         "repetitions": 5,

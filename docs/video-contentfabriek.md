@@ -39,11 +39,12 @@ npm run videos:languages
 node scripts/video-graph.mjs plan --provider runway --manifest content/core-1000.json
 ```
 
-De Runway-raming voor één eerste generatiepass is momenteel **$933,86**, vóór herkansingen. De
+De Runway-raming voor één eerste generatiepass is momenteel **$934,26**, vóór herkansingen. De
 runner vereist altijd `--execute` én een harde `--budget-usd`-grens. Op 20 juli 2026 weigerde Runway
-de nieuwe pilot vóór generatie omdat het API-project geen credits had; er is daardoor niets
+de eerste pilot vóór generatie omdat het API-project geen credits had; er is daardoor niets
 uitgegeven. Na toevoegen van credits hervat de graph op node-hash zonder reeds geslaagde artifacts
-opnieuw te betalen.
+opnieuw te betalen. De uiteindelijke representatieve proef gebruikte 442 credits ($4,42) en liet
+563 credits staan; automatisch opwaarderen bleef uitgeschakeld.
 
 De meertalige sidecar in `content/core-1000-translations.json` houdt vertaal- en taalreviewstatus
 apart van de bewegingsmaster. Een gewijzigde Duitse uitleg vraagt dus geen nieuwe motionrender. Met
@@ -84,7 +85,7 @@ FYSIPLAN_ADMIN_KEY='...' npm run videos:upload-batch -- \
   --dir ./renders --base-url https://fysiplan.nl --confirm-upload
 ```
 
-## Productiegraph: 1.721 afhankelijke nodes
+## Productiegraph: 7.002 afhankelijke nodes
 
 De actuele conceptroute is geen handmatige lus over 215 items. `scripts/video-graph.mjs` bouwt een
 gerichte acyclische graph (DAG) met één gedeelde avatarbron en een afzonderlijke, herstartbare tak
@@ -94,10 +95,13 @@ inputhash uit de cache hervat.
 ```mermaid
 flowchart LR
   A["Avatar master\nGemini 3 Pro Image"] --> P["Poseframe per oefening\navatar + bronillustratie"]
+  P --> E["Optionele klinische eindpose\nGemini 3 Pro Image"]
   P --> M["Motionclip\nOmni Flash · complex: Seedance 2"]
+  E --> K["Start/eind-keyframes\nVeo 3.1 Fast"]
   S["Nederlands conceptscript"] --> V["Nederlandse stem\nEleven Multilingual v2"]
   V --> C["Getimede captions"]
   M --> F["1080p compositing"]
+  K --> F
   V --> F
   C --> F
   F --> Q["Technische QA\ncodec · audio · duur · grootte"]
@@ -114,11 +118,24 @@ als onafhankelijke tak en komt pas bij compositing samen met beeld en captions. 
 afgekeurde takes kunnen later op Seedance of menselijke motion capture worden vervangen zonder de
 overige nodes opnieuw te betalen.
 
+Voor subtiele bewegingen kan een item `motionKeyframes` krijgen. De DAG maakt dan eerst een aparte,
+controleerbare eindpose en laat Veo 3.1 Fast alleen tussen start en eind interpoleren. Als Seedance
+een aantoonbaar onschuldige menselijke referentie blokkeert, kan één geselecteerde tak met
+`--complex-motion-tier standard` via Omni Flash worden hervat. De inputhash bevat modeltier,
+promptversie en keyframes; gewijzigde bewegingen maken alleen hun eigen motion en nakomelingen
+stale. De runner baseert uitvoerbaarheid uitsluitend op resultaten uit de actuele run, zodat een
+oude geslaagde descendant nooit een mislukte nieuwe parent kan omzeilen.
+
 ```bash
 # graph en actuele prijsraming tonen; geen providerkosten
 npm run videos:graph
 node scripts/video-graph.mjs plan --provider runway --upload-concepts \
   --base-url https://fysiplan.nl
+
+# alleen na een inhoudelijk veilige providerblokkade: goedkope fallback voor die ene tak
+node scripts/video-graph.mjs run --provider runway --execute \
+  --manifest content/core-1000.json --only '<exacte titel>' \
+  --complex-motion-tier standard --budget-usd 0.60
 
 # één pilot volledig maken, technisch controleren en als zichtbaar concept koppelen
 RUNWAYML_API_SECRET='...' FYSIPLAN_ADMIN_KEY='...' \
@@ -140,6 +157,19 @@ herkansingen en belasting. De runner weigert te starten als de berekende nodekos
 TTS-tekens; API-credits kosten $0,01.
 Zie de officiële [Runway API-prijzen](https://docs.dev.runwayml.com/guides/pricing/) en
 [SDK-workflow](https://docs.dev.runwayml.com/api-details/sdks/).
+
+## Uitkomst representatieve pilots — 20 juli 2026
+
+Drie Nederlandse concepten zijn gegenereerd met één gedeelde avatar en de zachte vrouwelijke
+`Serene`-stem. **Eenbeenstand zonder steun** en **sportspecifieke landing op één been** doorliepen
+de technische en visuele gate en wachten op fysiobeoordeling. De complexe landing gebruikte na
+twee kosteloze moderatieblokkades gecontroleerd Omni Flash in plaats van Seedance.
+
+**Kin intrekken zittend** doorliep uiteindelijk ook de technische checks, maar is inhoudelijk
+afgekeurd: zowel vrije generatie als start/eind-keyframes maakten onderweg te veel nekextensie.
+Dit bewijst waarom `technicalQa: true` nooit gelijkstaat aan klinische goedkeuring. De nekvideo
+wordt niet gepubliceerd; voor dit type subtiele driedimensionale beweging is menselijke
+motion-capture of een anatomisch gerigde avatar de volgende productieroute.
 
 De lokale provider is uitsluitend een kosteloze end-to-endtest van graph, titels, Nederlandse
 systeemstem, captions, compositing, QA en upload. Hij is geen avatarproductie. Alleen de
