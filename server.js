@@ -1388,8 +1388,10 @@ async function afhandelen(request, response) {
 
   // door beheer geüploade plaatjes en video's (staan in de datamap, niet in public/)
   if (urlPath.startsWith("/uploads/")) {
-    // geüploade beelden en (patiënt)video's horen nooit in een zoekmachine
+    // geüploade beelden en (patiënt)video's horen nooit in een zoekmachine, en
+    // andere websites mogen ze niet insluiten of hotlinken
     response.setHeader("x-robots-tag", "noindex, noarchive");
+    response.setHeader("cross-origin-resource-policy", "same-origin");
     const file = normalize(join(uploadsDir, urlPath.slice("/uploads/".length)));
     const ext = extname(file);
     if (!file.startsWith(uploadsDir + sep) || ![".jpg", ".png", ".mp4", ".webm"].includes(ext)) {
