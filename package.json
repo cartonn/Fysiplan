@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/video-catalogus.mjs && node scripts/video-productie.mjs && node scripts/validate-exercise-backgrounds.mjs && node scripts/build.js",
+    "build": "node scripts/core1000.mjs && node scripts/video-language-plan.mjs && node scripts/video-catalogus.mjs && node scripts/video-productie.mjs && node scripts/validate-exercise-backgrounds.mjs && node scripts/build.js",
     "images:normalize": "python3 scripts/normalize-image-visibility.py --write",
     "images:graph": "node scripts/exercise-image-graph.mjs plan",
     "images:graph:status": "node scripts/exercise-image-graph.mjs status",
@@ -18,6 +18,9 @@
     "videos:graph": "node scripts/video-graph.mjs plan",
     "videos:graph:status": "node scripts/video-graph.mjs status",
     "videos:upload-batch": "node scripts/video-upload-batch.mjs",
+    "core1000:check": "node scripts/core1000.mjs",
+    "core1000:write": "node scripts/core1000.mjs --write",
+    "videos:languages": "node scripts/video-language-plan.mjs",
     "start": "node server.js"
   },
   "engines": {

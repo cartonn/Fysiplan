@@ -10,11 +10,33 @@ const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
 const publicDir = join(process.cwd(), "public");
 const videoCatalogusPath = join(process.cwd(), "content", "video-catalogus.json");
+const core1000Path = join(process.cwd(), "content", "core-1000.json");
 
 // De eigen Fysiplan-videotheek is versiegestuurd en wordt alleen gepubliceerd na
 // klinische goedkeuring. Concepten en reviewmetadata verlaten de server niet.
 let videoCatalogus = { schemaVersion: 1, videos: [] };
 try { videoCatalogus = JSON.parse(await readFile(videoCatalogusPath, "utf8")); } catch {}
+
+// De Core 1000 bevat ook nog niet-gepubliceerde productie-items. Alleen compacte
+// zoekmetadata van de bestaande 215 mag naar de bibliotheek; conceptoefeningen en
+// klinische reviewgegevens blijven buiten het publieke manifest.
+let coreSearchMetadata = new Map();
+let core1000 = { exercises: [] };
+let core1000Summary = { total: 0, expansionByDomain: {} };
+try {
+  core1000 = JSON.parse(await readFile(core1000Path, "utf8"));
+  core1000Summary = JSON.parse(await readFile(join(process.cwd(), "content", "core-1000-summary.json"), "utf8"));
+  coreSearchMetadata = new Map((core1000.exercises || [])
+    .filter((entry) => entry.source === "legacy-215")
+    .map((entry) => [entry.exerciseId, {
+      region: entry.region,
+      joint: entry.joint === "clinical-review-pending" ? "" : entry.joint,
+      goals: entry.goals || [],
+      equipment: entry.equipment || [],
+      difficulty: entry.difficulty || "",
+      searchAliases: entry.searchAliases || []
+    }]));
+} catch {}
 
 // Beheer: /admin88 toont de beheer-weergave; mutatie-API's eisen deze sleutel als header.
 // Let op: dit is afscherming-door-verhulling, geen echte authenticatie.
@@ -354,9 +376,10 @@ async function buildManifest() {
       const id = exerciseId(e);
       const praktijk = videolinks[e.naam];
       const catalogus = publicCatalogVideo(videoCatalogus, id);
+      const searchMetadata = coreSearchMetadata.get(id) || {};
       const video = praktijk || catalogus ? { ...(praktijk || {}) } : null;
       if (video && catalogus) video.catalog = catalogus;
-      return { ...e, exerciseId: id, ...(video ? { video } : {}) };
+      return { ...e, exerciseId: id, ...searchMetadata, ...(video ? { video } : {}) };
     })
     .sort((a, b) => catOrder(a.groep) - catOrder(b.groep)
       || a.groep.localeCompare(b.groep, "nl")
@@ -493,6 +516,8 @@ async function afhandelen(request, response) {
       verwijderd: deleted.length,
       verplaatst: Object.keys(catOverrides).length,
       catalogusVideos: (videoCatalogus.videos || []).filter((v) => v.status === "approved").length,
+      core1000: core1000Summary.total || 0,
+      core1000Gepubliceerd: (core1000.exercises || []).filter((entry) => entry.publication?.status === "published").length,
       videoOpslag: STREAM_ENABLED ? "cloudflare-stream" : "railway-volume"
     });
     return;
@@ -676,6 +701,55 @@ async function afhandelen(request, response) {
       versie: { commit: buildInfo.commit || "onbekend", builtAt: buildInfo.builtAt || null,
         uptimeUren: Math.round((Date.now() - startTijd) / 360000) / 10 }
     });
+    return;
+  }
+
+  // Core-1000 productiedashboard: wel voortgang en compacte contentvelden, geen
+  // revieweridentiteiten, providergeheimen of ongepubliceerde media-URL's.
+  if (urlPath === "/api/core1000/status" && request.method === "GET") {
+    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
+    const exercises = core1000.exercises || [];
+    const countStatus = (selector, value) => exercises.filter((entry) => selector(entry) === value).length;
+    await sendJson(response, 200, {
+      ok: true,
+      ...core1000Summary,
+      progress: {
+        scriptApproved: countStatus((entry) => entry.approvals?.script?.status, "approved"),
+        motionApproved: countStatus((entry) => entry.approvals?.motion?.status, "approved"),
+        videoApproved: countStatus((entry) => entry.approvals?.finalVideo?.status, "approved"),
+        published: countStatus((entry) => entry.publication?.status, "published")
+      },
+      pipeline: ["Nederlands script", "Bewegingsmaster", "Technische QA", "Klinische review", "Taalreview", "Publicatie"]
+    });
+    return;
+  }
+  if (urlPath === "/api/core1000/exercises" && request.method === "GET") {
+    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
+    const query = new URL(request.url, "http://localhost").searchParams;
+    const term = normEx(query.get("q") || "");
+    const category = String(query.get("category") || "");
+    const limit = Math.max(1, Math.min(1000, Number(query.get("limit") || 1000)));
+    const items = (core1000.exercises || []).filter((entry) => {
+      if (category && entry.category !== category) return false;
+      if (!term) return true;
+      return normEx([entry.titleNl, entry.category, entry.region, entry.joint, ...(entry.searchAliases || [])].join(" ")).includes(term);
+    }).slice(0, limit).map((entry) => ({
+      order: entry.order,
+      exerciseId: entry.exerciseId,
+      titleNl: entry.titleNl,
+      category: entry.category,
+      region: entry.region,
+      joint: entry.joint,
+      equipment: entry.equipment,
+      difficulty: entry.difficulty,
+      risk: entry.risk?.level,
+      script: entry.approvals?.script?.status,
+      motion: entry.approvals?.motion?.status,
+      video: entry.approvals?.finalVideo?.status,
+      publication: entry.publication?.status,
+      languages: Object.values(entry.languages || {}).filter((status) => status === "approved").length
+    }));
+    await sendJson(response, 200, { ok: true, total: items.length, exercises: items });
     return;
   }
 

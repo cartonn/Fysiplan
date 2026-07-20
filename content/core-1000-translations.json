@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "sourceCollection": "FysiPlan Core 1000",
+  "languages": {
+    "en": { "label": "English", "voice": "soft-female", "review": "native-medical" },
+    "de": { "label": "Deutsch", "voice": "soft-female", "review": "native-medical" },
+    "fr": { "label": "Français", "voice": "soft-female", "review": "native-medical" },
+    "es": { "label": "Español", "voice": "soft-female", "review": "native-medical" },
+    "pl": { "label": "Polski", "voice": "soft-female", "review": "native-medical" },
+    "tr": { "label": "Türkçe", "voice": "soft-female", "review": "native-medical" },
+    "ar": { "label": "العربية", "voice": "soft-female", "review": "native-medical" },
+    "uk": { "label": "Українська", "voice": "soft-female", "review": "native-medical" }
+  },
+  "translations": {}
+}

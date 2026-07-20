@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "collection": "FysiPlan Core 1000",
+  "total": 1000,
+  "existing": 215,
+  "clinicalExpansion": 785,
+  "movementMasters": 1000,
+  "ownVideoTarget": 1000,
+  "plannedLanguages": [
+    "nl",
+    "en",
+    "de",
+    "fr",
+    "es",
+    "pl",
+    "tr",
+    "ar",
+    "uk"
+  ],
+  "publication": {
+    "published": 0,
+    "blocked": 1000
+  },
+  "review": {
+    "standard": 967,
+    "extra": 33
+  },
+  "expansionByDomain": {
+    "Nek": 50,
+    "Schouder": 60,
+    "Elleboog, pols en hand": 60,
+    "Rug": 60,
+    "Heup": 55,
+    "Knie": 55,
+    "Enkel en voet": 55,
+    "Balans en valpreventie": 70,
+    "Neurologische revalidatie": 55,
+    "Vestibulair": 30,
+    "Bekkengezondheid": 35,
+    "Zwangerschap en postpartum": 20,
+    "Cardiopulmonaal": 35,
+    "Postoperatieve revalidatie": 45,
+    "Pediatrie": 25,
+    "Werk en dagelijkse handelingen": 35,
+    "Sportrevalidatie": 40
+  }
+}

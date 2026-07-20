@@ -9,8 +9,6 @@ import { graphLayers, runDag } from "../lib/dag-runner.js";
 
 const exec = promisify(execFile);
 const root = resolve(new URL("../", import.meta.url).pathname);
-const manifestPath = join(root, "content", "video-productie-215.json");
-const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
 const GRAPH_VERSION = 2;
 const HASH_VERSION = 2;
 const args = process.argv.slice(2);
@@ -21,6 +19,8 @@ function valueAfter(flag, fallback = "") {
   return index === -1 ? fallback : String(args[index + 1] || fallback);
 }
 
+const manifestPath = resolve(valueAfter("--manifest", join(root, "content", "video-productie-215.json")));
+const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
 const provider = valueAfter("--provider", "local");
 const workDir = resolve(valueAfter("--work-dir", join(root, "video-work")));
 const statePath = join(workDir, "state.json");
@@ -46,7 +46,17 @@ const modelPolicy = {
   voice: "eleven_multilingual_v2",
   motionSeconds: 6,
   voicePreset: "Serene",
+  visualStyle: "full-bleed-white-studio-v3",
+  captions: "sidecar-webvtt-no-body-occlusion",
 };
+
+function entryProps(entry) {
+  return entry.shotPlan?.props || entry.equipment || [];
+}
+
+function entryReference(entry) {
+  return entry.referenceImage ? join(root, "public", entry.referenceImage) : "";
+}
 
 function artifact(...parts) {
   return join(workDir, "artifacts", ...parts);
@@ -212,8 +222,8 @@ function avatarPrompt() {
   return [
     "Create a photorealistic full-body Dutch physiotherapist for a medical exercise library.",
     "A warm, trustworthy adult woman around 38 years old, natural face, realistic anatomy, athletic but approachable build.",
-    "She wears an unbranded cobalt-blue fitted physiotherapy top, charcoal training trousers and clean white trainers.",
-    "Neutral bright physiotherapy studio, soft daylight, uncluttered pale background, full body and both feet visible.",
+    "She wears an unbranded fitted light-grey physiotherapy T-shirt, charcoal training trousers and clean white trainers; the clothing has enough tonal contrast for black-and-white printing.",
+    "Pure white seamless physiotherapy studio, soft shadow-free daylight, full body and both feet visible with generous safety space around every limb.",
     "Documentary realism, accurate hands, natural skin texture, no text, no logo, no watermark, 16:9 landscape.",
   ].join(" ");
 }
@@ -222,9 +232,9 @@ function posePrompt(entry) {
   return [
     "Use @fysio as the exact same person, face, hairstyle, clothing and proportions.",
     `Create a photorealistic full-body start frame for the physiotherapy exercise '${entry.titleNl}'.`,
-    `The source reference @movement shows the intended exercise. Dutch instructions: ${entry.script.setup} ${entry.script.movement}`,
-    `Required equipment: ${entry.shotPlan.props.join(", ") || "none"}.`,
-    "Show the clinically intended starting pose in a bright neutral physiotherapy studio, three-quarter front camera, all joints, hands, feet and equipment visible.",
+    entry.referenceImage ? `The source reference @movement shows the intended exercise. Dutch instructions: ${entry.script.setup} ${entry.script.movement}` : `Dutch clinical instructions: ${entry.script.setup} ${entry.script.movement}`,
+    `Required equipment: ${entryProps(entry).join(", ") || "none"}.`,
+    "Show the clinically intended starting pose against a pure white seamless studio background, three-quarter camera chosen so the complete movement plane is visible, with all joints, hands, feet and equipment inside frame.",
     "No text, no logo, no watermark, no extra person, no cropped limbs, anatomically correct hands and feet.",
   ].join(" ");
 }
@@ -248,7 +258,13 @@ function runway() {
 }
 
 async function remoteTask(createTask, target) {
-  const task = await createTask().waitForTaskOutput({ timeout: 12 * 60 * 1000 });
+  // De Runway-SDK wacht voor de eerste poll, maar een direct geweigerde create-call
+  // (bijvoorbeeld geen credits) kan in die wachttijd al rejecten. Meteen een handler
+  // koppelen voorkomt een procesbrede unhandled rejection; waitForTaskOutput levert
+  // dezelfde fout daarna normaal aan de DAG-runner, die de node als failed bewaart.
+  const pending = createTask();
+  pending.catch(() => {});
+  const task = await pending.waitForTaskOutput({ timeout: 12 * 60 * 1000 });
   if (!task.output?.[0]) throw new Error("Runway-task leverde geen output-URL");
   await download(task.output[0], target);
   return { taskId: task.id, outputUrlStoredLocally: true };
@@ -271,22 +287,25 @@ async function createAvatar(node) {
 }
 
 async function createPose(node) {
-  const referencePath = join(root, "public", node.entry.referenceImage);
+  const referencePath = entryReference(node.entry);
   await mkdir(dirname(node.output), { recursive: true });
   if (provider === "local") {
-    await exec("ffmpeg", ["-y", "-loglevel", "error", "-i", referencePath, "-vf", "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=white", "-frames:v", "1", node.output]);
-    return { source: "exercise-reference" };
+    if (referencePath) {
+      await exec("ffmpeg", ["-y", "-loglevel", "error", "-i", referencePath, "-vf", "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=white", "-frames:v", "1", node.output]);
+      return { source: "exercise-reference" };
+    }
+    await exec("ffmpeg", ["-y", "-loglevel", "error", "-f", "lavfi", "-i", "color=c=white:s=1280x720", "-frames:v", "1", node.output]);
+    return { source: "core1000-text-pose-placeholder" };
   }
-  const [avatarReference, movementReference] = await Promise.all([dataUri(artifact("avatar", "fysiplan-avatar-master.png")), dataUri(referencePath)]);
+  const avatarReference = await dataUri(artifact("avatar", "fysiplan-avatar-master.png"));
+  const referenceImages = [{ uri: avatarReference, tag: "fysio", subject: "human" }];
+  if (referencePath) referenceImages.push({ uri: await dataUri(referencePath), tag: "movement", subject: "object" });
   const result = await remoteTask(() => runway().textToImage.create({
     model: modelPolicy.poseImage,
     promptText: posePrompt(node.entry),
     ratio: "1344:768",
     outputCount: 1,
-    referenceImages: [
-      { uri: avatarReference, tag: "fysio", subject: "human" },
-      { uri: movementReference, tag: "movement", subject: "object" },
-    ],
+    referenceImages,
   }), node.output);
   await normalizeGeneratedPng(node.output);
   return result;
@@ -410,42 +429,19 @@ async function compose(node) {
   const id = node.entry.exerciseId;
   const motion = artifact("motion", `${id}.mp4`);
   const voice = artifact("voice", `${id}.mp3`);
-  const captions = artifact("captions", `${id}.vtt`);
   const duration = await mediaDuration(voice);
   await mkdir(dirname(node.output), { recursive: true });
-  const overlayDir = artifact("overlays", id);
-  const chromePath = join(overlayDir, "chrome.png");
-  await renderOverlay(chromePath, `<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080">
-    <rect width="1920" height="1080" fill="#edf3f7"/>
-    <circle cx="82" cy="65" r="10" fill="#2f8fb7"/>
-    <text x="106" y="73" font-family="Arial,Helvetica,sans-serif" font-size="25" font-weight="700" letter-spacing="2" fill="#2f6680">FYSIPLAN · OEFENING</text>
-    <text x="72" y="137" font-family="Arial,Helvetica,sans-serif" font-size="52" font-weight="650" fill="#092f45">${xmlEscape(node.entry.titleNl)}</text>
-    <rect x="62" y="164" width="1396" height="794" rx="22" fill="#d6e1e7"/>
-    <rect x="1488" y="174" width="360" height="774" rx="24" fill="white"/>
-    <text x="1524" y="230" font-family="Arial,Helvetica,sans-serif" font-size="23" font-weight="700" letter-spacing="2" fill="#2f8fb7">UITLEG</text>
-    <line x1="1524" y1="254" x2="1812" y2="254" stroke="#d8e4ea" stroke-width="2"/>
-    <text x="1524" y="810" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#5f7480">Beweeg rustig en gecontroleerd.</text>
-    <rect x="1518" y="856" width="300" height="56" rx="28" fill="#e7f2f7"/>
-    <text x="1668" y="892" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" fill="#215c77">AI-CONCEPT · FYSIOREVIEW</text>
-  </svg>`);
-  const cues = parseVtt(await readFile(captions, "utf8"));
-  const subtitlePaths = await Promise.all(cues.map(async (cue, index) => {
-    const target = join(overlayDir, `caption-${String(index + 1).padStart(2, "0")}.png`);
-    const lines = wrapText(cue.text, 22, 8);
-    const lineHeight = 42;
-    const firstY = 500 - ((lines.length - 1) * lineHeight) / 2;
-    const tspans = lines.map((line, lineIndex) => `<tspan x="1668" y="${firstY + lineIndex * lineHeight}">${xmlEscape(line)}</tspan>`).join("");
-    await renderOverlay(target, `<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080">
-      <text text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="29" font-weight="600" fill="#173f53">${tspans}</text>
-    </svg>`);
-    return target;
-  }));
-  const inputArgs = ["-stream_loop", "-1", "-i", motion, "-i", voice, "-i", chromePath, ...subtitlePaths.flatMap((path) => ["-i", path])];
-  const filters = ["[0:v]scale=1376:774:force_original_aspect_ratio=decrease,pad=1376:774:(ow-iw)/2:(oh-ih)/2:color=#dce6eb[exercise]", "[2:v][exercise]overlay=72:174:format=auto[v0]"];
-  cues.forEach((cue, index) => filters.push(`[v${index}][${index + 3}:v]overlay=0:0:format=auto:enable='between(t,${cue.start.toFixed(3)},${cue.end.toFixed(3)})'[v${index + 1}]`));
-  filters.push(`[v${cues.length}]format=yuv420p[outv]`);
-  await exec("ffmpeg", ["-y", "-loglevel", "error", ...inputArgs, "-t", String(duration + 0.35), "-filter_complex", filters.join(";"), "-map", "[outv]", "-map", "1:a:0", "-c:v", "libx264", "-preset", "medium", "-crf", "21", "-r", "25", "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-movflags", "+faststart", node.output]);
-  return { durationSeconds: duration + 0.35 };
+  // De bewegingsmaster blijft beeldvullend en vrij van titels, balken en ingebakken
+  // ondertitels. De app toont titel, uitleg en WebVTT onder/naast het beeld zodat
+  // niets ooit handen, gezicht, voeten of apparatuur bedekt.
+  await exec("ffmpeg", [
+    "-y", "-loglevel", "error", "-stream_loop", "-1", "-i", motion, "-i", voice,
+    "-t", String(duration + 0.35),
+    "-vf", "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=white,format=yuv420p",
+    "-map", "0:v:0", "-map", "1:a:0", "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-r", "25",
+    "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-movflags", "+faststart", node.output
+  ]);
+  return { durationSeconds: duration + 0.35, layout: "full-bleed", captions: "sidecar" };
 }
 
 async function qa(node) {
@@ -456,6 +452,39 @@ async function qa(node) {
   const audioStream = probe.streams.find((stream) => stream.codec_type === "audio");
   const size = Number(probe.format?.size || 0);
   const duration = Number(probe.format?.duration || 0);
+  const qaFramesDir = artifact("qa-frames", node.entry.exerciseId);
+  await mkdir(qaFramesDir, { recursive: true });
+  const frameTimes = [0.5, Math.max(0.6, duration / 2), Math.max(0.7, duration - 0.8)];
+  const frameBuffers = [];
+  for (const [index, at] of frameTimes.entries()) {
+    const framePath = join(qaFramesDir, `${index + 1}.jpg`);
+    await exec("ffmpeg", ["-y", "-loglevel", "error", "-ss", String(at), "-i", video, "-frames:v", "1", "-q:v", "2", framePath]);
+    frameBuffers.push(await sharp(framePath).resize(320, 180, { fit: "fill" }).grayscale().raw().toBuffer());
+  }
+  const pixelCount = frameBuffers[0].length;
+  const frameMetrics = frameBuffers.map((buffer) => {
+    let sum = 0, white = 0, darkTop = 0;
+    const topPixels = 320 * 24;
+    for (let i = 0; i < buffer.length; i++) {
+      const value = buffer[i]; sum += value;
+      if (value >= 242) white++;
+      if (i < topPixels && value < 95) darkTop++;
+    }
+    return { meanLuma: sum / buffer.length, whiteRatio: white / buffer.length, darkTopRatio: darkTop / topPixels };
+  });
+  const frameDifference = (a, b) => {
+    let sum = 0;
+    for (let i = 0; i < a.length; i++) sum += Math.abs(a[i] - b[i]);
+    return sum / a.length;
+  };
+  const motionDifference = Math.max(frameDifference(frameBuffers[0], frameBuffers[1]), frameDifference(frameBuffers[1], frameBuffers[2]));
+  const captions = parseVtt(await readFile(artifact("captions", `${node.entry.exerciseId}.vtt`), "utf8"));
+  const automatedVisualChecks = {
+    subjectPresent: frameMetrics.every((frame) => frame.whiteRatio < 0.985),
+    brightWhiteStudio: frameMetrics.every((frame) => frame.whiteRatio >= 0.20 && frame.meanLuma >= 145),
+    noDarkTopBar: frameMetrics.every((frame) => frame.darkTopRatio < 0.08),
+    visibleMotion: motionDifference >= 0.45,
+  };
   const checks = {
     videoH264: videoStream?.codec_name === "h264",
     resolution1080p: videoStream?.width === 1920 && videoStream?.height === 1080,
@@ -463,8 +492,20 @@ async function qa(node) {
     audioAac: audioStream?.codec_name === "aac",
     durationSafe: duration >= 10 && duration <= 45,
     uploadSizeSafe: size >= 10 * 1024 && size <= 60 * 1024 * 1024,
+    captionsPresent: captions.length >= 2,
+    captionsCoverNarration: captions.length > 0 && Math.abs(captions.at(-1).end - (duration - 0.35)) <= 1.2,
+    ...Object.fromEntries(Object.entries(automatedVisualChecks).map(([key, value]) => [key, provider === "local" ? true : value])),
   };
-  const report = { exerciseId: node.entry.exerciseId, sourceName: node.entry.sourceName, passed: Object.values(checks).every(Boolean), checks, duration, sizeBytes: size, review: "required" };
+  const report = {
+    exerciseId: node.entry.exerciseId,
+    sourceName: node.entry.sourceName,
+    passed: Object.values(checks).every(Boolean),
+    checks,
+    metrics: { frameMetrics, motionDifference, visualChecksBypassedForLocalProvider: provider === "local" },
+    duration,
+    sizeBytes: size,
+    review: "required"
+  };
   await mkdir(dirname(node.output), { recursive: true });
   await writeFile(node.output, JSON.stringify(report, null, 2) + "\n");
   if (!report.passed) throw new Error(`technische QA faalde: ${JSON.stringify(checks)}`);
@@ -481,7 +522,12 @@ async function reviewReady(node) {
     status: "awaiting-physiotherapist-review",
     technicalQa: qaReport.passed,
     requiredReviewers: 2,
-    clinicalChecks: manifest.qualityGate.checks,
+    clinicalChecks: manifest.qualityGate?.checks || [
+      "Start- en eindhouding zijn klinisch correct.",
+      "Alle relevante gewrichten, handen, voeten en hulpmiddelen blijven zichtbaar.",
+      "Tempo, bewegingsbaan en compensaties zijn beoordeeld.",
+      "Nederlandse uitleg en veiligheidsinstructie zijn begrijpelijk.",
+    ],
   };
   await mkdir(dirname(node.output), { recursive: true });
   await writeFile(node.output, JSON.stringify(review, null, 2) + "\n");
@@ -547,7 +593,7 @@ function countBy(items, classifier) {
 function summarizePlan() {
   const counts = countBy(nodes, (node) => node.kind);
   const cost = nodes.reduce((sum, node) => sum + node.costUsd, 0);
-  return { architecture: "directed-acyclic-graph", exercises: selected.length, nodes: nodes.length, layers: graphLayers(nodes).length, concurrency, provider, modelPolicy, estimatedGenerationCostUsd: Number(cost.toFixed(2)), counts };
+  return { architecture: "directed-acyclic-graph", manifest: relative(root, manifestPath), exercises: selected.length, nodes: nodes.length, layers: graphLayers(nodes).length, concurrency, provider, modelPolicy, estimatedGenerationCostUsd: Number(cost.toFixed(2)), counts };
 }
 
 if (command === "plan") {

@@ -1,5 +1,55 @@
 # Fysiplan video-contentfabriek
 
+## Core 1000 — productieblauwdruk
+
+De contentfabriek bevat naast de bestaande 215 nu een gevalideerde **FysiPlan Core 1000** in
+`content/core-1000.json`: 215 bestaande items en 785 klinisch gerichte uitbreidingen. De uitbreiding
+is verdeeld over zeventien domeinen, waaronder nek, schouder, hand, rug, heup, knie, enkel/voet,
+balans, neurologie, vestibulair, bekkenzorg, postoperatief, pediatrie, ADL en sport. Elk item heeft
+een stabiele ID, Nederlandse vierstapsuitleg, zoekmetadata, materiaal, niveau, risicoklasse,
+bewegingsmaster en geblokkeerde publicatiestatus.
+
+```mermaid
+flowchart LR
+  C["Core 1000\n1000 Nederlandse scripts"] --> M["1000 bewegingsmasters\nwitte studio · volledig lichaam"]
+  M --> Q["Technische QA\n1080p · H.264 · 25 fps"]
+  C --> L["9 taalroutes\nNL + 8 vertalingen"]
+  L --> A["9000 audiosporen"]
+  L --> V["9000 WebVTT-sporen"]
+  Q --> R["Dubbele klinische review"]
+  A --> R
+  V --> R
+  R --> P["Publicatie\nalleen approved"]
+```
+
+De video blijft beeldvullend en bevat geen titelbalk of ingebakken ondertiteling. Titel, uitleg en
+WebVTT worden door de app onder of naast het beeld getoond, zodat gezicht, handen, voeten en
+apparatuur nooit worden afgedekt. De avatar draagt een lichtgrijs shirt tegen een zuiver witte,
+schaduwloze achtergrond.
+
+De technische gate controleert niet alleen codec, resolutie, framerate, duur en bestandsgrootte,
+maar bemonstert ook drie videoframes. De build controleert automatisch op een zichtbaar onderwerp,
+heldere witte studio, afwezigheid van een donkere bovenbalk, daadwerkelijke beweging en volledige
+captiondekking. Deze controles vervangen de fysioreview niet, maar halen evidente renderfouten uit
+de wachtrij voordat een beoordelaar tijd verliest.
+
+```bash
+npm run core1000:check
+npm run videos:languages
+node scripts/video-graph.mjs plan --provider runway --manifest content/core-1000.json
+```
+
+De Runway-raming voor één eerste generatiepass is momenteel **$933,86**, vóór herkansingen. De
+runner vereist altijd `--execute` én een harde `--budget-usd`-grens. Op 20 juli 2026 weigerde Runway
+de nieuwe pilot vóór generatie omdat het API-project geen credits had; er is daardoor niets
+uitgegeven. Na toevoegen van credits hervat de graph op node-hash zonder reeds geslaagde artifacts
+opnieuw te betalen.
+
+De meertalige sidecar in `content/core-1000-translations.json` houdt vertaal- en taalreviewstatus
+apart van de bewegingsmaster. Een gewijzigde Duitse uitleg vraagt dus geen nieuwe motionrender. Met
+`node scripts/video-language-plan.mjs --export-language de` kan een volledig, stabiel
+vertaalpakket voor medische taalreview worden gemaakt.
+
 ## Productiestatus van de huidige 215 oefeningen
 
 De repository bevat nu voor alle **215/215** oefeningen een gekoppeld Nederlands conceptscript,
