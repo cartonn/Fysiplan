@@ -1401,6 +1401,12 @@ async function afhandelen(request, response) {
   if (urlPath === "/") { telBezoek(request, false); urlPath = "/index.html"; }
   else if (urlPath === "/admin88") telBezoek(request, true);
 
+  // onbekende API-paden krijgen een echte 404 in plaats van de startpagina met status 200
+  if (urlPath.startsWith("/api/")) {
+    await sendJson(response, 404, { ok: false, fout: "Onbekend API-pad." });
+    return;
+  }
+
   const filePath = normalize(join(publicDir, urlPath));
   if (filePath !== publicDir && !filePath.startsWith(publicDir + sep)) {
     await send(response, 403, "text/plain; charset=utf-8", "Forbidden");
