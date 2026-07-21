@@ -1527,6 +1527,14 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // echte robots.txt (voorheen viel dit terug op de app-pagina): crawlers blijven
+  // weg bij de patiëntpaden; die sturen bovendien al een noindex-header
+  if (urlPath === "/robots.txt") {
+    await send(response, 200, "text/plain; charset=utf-8",
+      "User-agent: *\nDisallow: /k/\nDisallow: /o/\nDisallow: /uploads/\nDisallow: /api/\n");
+    return;
+  }
+
   // standaardadres voor het melden van beveiligingslekken (RFC 9116)
   if (urlPath === "/.well-known/security.txt" || urlPath === "/security.txt") {
     const volgendJaar = new Date(Date.now() + 365 * 86400000).toISOString().slice(0, 10);
