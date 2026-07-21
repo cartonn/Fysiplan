@@ -684,13 +684,13 @@ async function afhandelen(request, response) {
     if (schrijfLimiet(request, response)) return;
     try {
       const n = Number(JSON.parse(await readBody(request)).vergeven);
-      if (!Number.isInteger(n) || n < 0 || n > 100) {
-        await sendJson(response, 400, { ok: false, fout: "Geef een aantal tussen 0 en 100 op." });
+      if (!Number.isInteger(n) || n < 0 || n > 25) {
+        await sendJson(response, 400, { ok: false, fout: "Geef een aantal tussen 0 en 25 op." });
         return;
       }
       oprichters.vergeven = n;
       await saveJson(oprichtersPath, oprichters);
-      await sendJson(response, 200, { ok: true, vergeven: n, beschikbaar: 100 - n });
+      await sendJson(response, 200, { ok: true, vergeven: n, beschikbaar: 25 - n });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }
@@ -1498,7 +1498,7 @@ async function afhandelen(request, response) {
       "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'");
     try {
       let html = await readFile(join(publicDir, "v2.html"), "utf8");
-      html = html.replace(/__OPRICHTERS_OVER__/g, String(Math.max(0, 100 - (oprichters.vergeven || 0))));
+      html = html.replace(/__OPRICHTERS_OVER__/g, String(Math.max(0, 25 - (oprichters.vergeven || 0))));
       await send(response, 200, "text/html; charset=utf-8", html);
     }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
