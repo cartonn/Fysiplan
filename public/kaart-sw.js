@@ -15,6 +15,15 @@ self.addEventListener('activate', function (e) {
 
 // netwerk eerst (de kaart moet altijd de laatste versie tonen), cache als vangnet
 // wanneer de telefoon offline is; grote videobestanden slaan we bewust niet op
+// plafond op de cache: ruim genoeg voor meerdere kaarten met beelden, maar de
+// telefoon van de patiënt loopt nooit vol; het overschot wordt weggesnoeid
+var TELLER = 0;
+function snoei(c) {
+  c.keys().then(function (ks) {
+    for (var i = 0; i < ks.length - 180; i++) c.delete(ks[i]);
+  }).catch(function () {});
+}
+
 self.addEventListener('fetch', function (e) {
   var req = e.request;
   if (req.method !== 'GET') return;
@@ -25,7 +34,10 @@ self.addEventListener('fetch', function (e) {
     fetch(req).then(function (antwoord) {
       if (antwoord && antwoord.status === 200) {
         var kopie = antwoord.clone();
-        caches.open(CACHE).then(function (c) { c.put(req, kopie); }).catch(function () {});
+        caches.open(CACHE).then(function (c) {
+          c.put(req, kopie);
+          if (++TELLER % 25 === 0) snoei(c);
+        }).catch(function () {});
       }
       return antwoord;
     }).catch(function () {
