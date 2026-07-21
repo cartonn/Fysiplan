@@ -1492,6 +1492,7 @@ async function afhandelen(request, response) {
     if (urlPath === "/v2/") { response.writeHead(301, { location: "/v2" }); response.end(); return; }
     telBezoek(request, false);
     response.setHeader("x-frame-options", "DENY");
+    response.setHeader("permissions-policy", "camera=(), microphone=(), geolocation=()");
     // de landingspagina heeft geen scripts en laadt alleen eigen beelden: dat mag de browser afdwingen
     response.setHeader("content-security-policy",
       "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'");
@@ -1507,6 +1508,8 @@ async function afhandelen(request, response) {
     if (urlPath === "/v2/app/") { response.writeHead(301, { location: "/v2/app" }); response.end(); return; }
     telBezoek(request, false);
     response.setHeader("x-frame-options", "DENY");
+    // sinds de eigen opname uit de v2-app is verdwenen, kan camera en microfoon hier dicht
+    response.setHeader("permissions-policy", "camera=(), microphone=(), geolocation=()");
     // defensielaag zoals op /k en /o: de app laadt alleen eigen bronnen, plus de
     // videospelers; base-uri 'self' omdat de pagina zelf een <base href="/"> zet
     response.setHeader("content-security-policy",
