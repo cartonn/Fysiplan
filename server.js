@@ -1404,7 +1404,7 @@ async function afhandelen(request, response) {
     if (!found) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     response.setHeader("x-robots-tag", "noindex, noarchive");
     await send(response, 200, "application/manifest+json; charset=utf-8", JSON.stringify({
-      name: "Trainingskaart " + (found.client && found.client.c_naam ? found.client.c_naam : found.naam),
+      name: ("Trainingskaart " + (found.client && found.client.c_naam ? found.client.c_naam : found.naam)).slice(0, 60),
       short_name: "Trainingskaart",
       start_url: "/k/" + found.id,
       scope: "/k/",
