@@ -178,6 +178,7 @@ function hashNode(node, memo = new Map()) {
     referenceImage: node.entry?.referenceImage,
     script: node.entry?.script,
     motionPromptEn: node.kind === "motion" ? node.entry?.motionPromptEn : undefined,
+    motionNegativePromptEn: node.kind === "motion" ? node.entry?.motionNegativePromptEn : undefined,
     motionKeyframes: ["end-pose", "motion"].includes(node.kind) ? node.entry?.motionKeyframes : undefined,
     shotPlan: node.entry?.shotPlan,
     policy: relevantPolicy(node),
@@ -388,6 +389,28 @@ async function createMotion(node) {
       "Move continuously from the exact first keyframe to the exact last keyframe at a slow clinical teaching pace.",
       "No pause, no repeated cycle and no generated speech; preserve identity, clothing, equipment, locked camera and white background exactly.",
     ].join(" ");
+    const createVeoFallback = async (fallbackFrom) => {
+      const fallback = await remoteTask(() => runway().imageToVideo.create({
+        model: modelPolicy.motionVideoModerationFallback,
+        promptImage: [{ uri: pose, position: "first" }, { uri: endPose, position: "last" }],
+        promptText: clinicalPrompt,
+        negativePrompt: [
+          node.entry.motionNegativePromptEn || "wrong movement plane, compensatory movement",
+          "camera movement, cut, text, watermark, extra person, extra limbs, distorted hands, distorted feet, changing identity, changing clothing, cropped body",
+        ].join(", "),
+        ratio: "1920:1080",
+        // Veo 3.1 Fast accepteert native 1080p uitsluitend als achtsecondenclip.
+        duration: modelPolicy.keyframeMotionSeconds,
+        audio: false,
+      }), node.output);
+      return { ...fallback, fallbackFrom, model: modelPolicy.motionVideoModerationFallback };
+    };
+    // Seedance reserveert voor deze taak 6 × 40 credits. Als het bestaande saldo
+    // daar niet aan komt, starten we geen aanvraag die Runway toch vooraf afwijst.
+    const organization = await runway().organization.retrieve();
+    if (Number(organization.creditBalance) < modelPolicy.motionSeconds * 40) {
+      return createVeoFallback("seedance-insufficient-existing-credits");
+    }
     try {
       return await remoteTask(() => runway().imageToVideo.create({
         model: "seedance2",
@@ -399,17 +422,7 @@ async function createMotion(node) {
       }), node.output);
     } catch (error) {
       if (!/content moderation|moderation system/i.test(String(error?.message || error))) throw error;
-      const fallback = await remoteTask(() => runway().imageToVideo.create({
-        model: modelPolicy.motionVideoModerationFallback,
-        promptImage: [{ uri: pose, position: "first" }, { uri: endPose, position: "last" }],
-        promptText: clinicalPrompt,
-        negativePrompt: "camera movement, cut, text, watermark, extra person, extra limbs, distorted hands, distorted feet, changing identity, changing clothing, cropped body",
-        ratio: "1920:1080",
-        // Veo 3.1 Fast accepteert native 1080p uitsluitend als achtsecondenclip.
-        duration: modelPolicy.keyframeMotionSeconds,
-        audio: false,
-      }), node.output);
-      return { ...fallback, fallbackFrom: "seedance2-moderation", model: modelPolicy.motionVideoModerationFallback };
+      return createVeoFallback("seedance2-moderation");
     }
   }
   if (node.entry.motionKeyframes) {

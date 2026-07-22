@@ -99,6 +99,7 @@ function generatedEntry(oefening, position, previous = {}) {
     // Handmatig aangescherpte bewegingsbanen blijven behouden wanneer de overige
     // productiemetadata opnieuw uit de bibliotheek wordt gesynchroniseerd.
     ...(previous.motionPromptEn ? { motionPromptEn: previous.motionPromptEn } : {}),
+    ...(previous.motionNegativePromptEn ? { motionNegativePromptEn: previous.motionNegativePromptEn } : {}),
     ...(previous.motionKeyframes ? { motionKeyframes: previous.motionKeyframes } : {}),
     approvals,
     assets,
