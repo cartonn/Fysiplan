@@ -1375,6 +1375,7 @@ async function afhandelen(request, response) {
   // vertaling van de kaartteksten (oefeningnamen en notities) voor de digitale kaart;
   // per taal en per tekst één keer vertaald, daarna komt alles gratis uit de cache
   if (urlPath === "/api/kaart/vertaal" && request.method === "GET") {
+    if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const found = vindKaart(String(q.get("id") || ""));
     if (!found) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
