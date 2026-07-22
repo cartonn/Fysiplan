@@ -519,7 +519,22 @@ async function send(res, status, type, body) {
 const sendJson = (res, status, obj) => send(res, status, "application/json; charset=utf-8", JSON.stringify(obj));
 // 429 met Retry-After: nette clients weten zo hoelang ze moeten wachten en blijven niet hameren
 const send429 = (res, seconds, obj) => { try { res.setHeader("retry-after", String(seconds)); } catch {} return sendJson(res, 429, obj); };
-const denied = (req, res, pad) => { logGeweigerd(req, pad); return sendJson(res, 403, { ok: false, fout: "Alleen beschikbaar voor beheer." }); };
+// rem op het raden van de beheersleutel: na 20 geweigerde pogingen per vijf minuten
+// per IP volgt 429 in plaats van 403. Met de juiste sleutel verandert er niets, ook
+// niet voor v1-beheer; alleen wie sleutels zit te proberen loopt vast.
+const adminMisTeller = new Map();
+const denied = (req, res, pad) => {
+  logGeweigerd(req, pad);
+  const nu = Date.now();
+  if (adminMisTeller.size > 5000) {
+    for (const [k, v] of adminMisTeller) if (nu - v.start > 5 * 60 * 1000) adminMisTeller.delete(k);
+  }
+  const ip = clientIp(req);
+  const t = adminMisTeller.get(ip);
+  if (!t || nu - t.start > 5 * 60 * 1000) adminMisTeller.set(ip, { start: nu, n: 1 });
+  else if (++t.n > 20) return send429(res, 300, { ok: false, fout: "Even te veel verzoeken; probeer het over een paar minuten opnieuw." });
+  return sendJson(res, 403, { ok: false, fout: "Alleen beschikbaar voor beheer." });
+};
 
 // Elk verzoek loopt door dit vangnet: één kapotte aanvraag (bot, rare URL, afgebroken
 // verbinding) mag nooit het hele proces neerhalen. Zonder dit stopt Node bij een
