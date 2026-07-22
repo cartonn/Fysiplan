@@ -188,6 +188,9 @@ try { catOverrides = JSON.parse(await readFile(catsPath, "utf8")); } catch {}
 const statsPath = join(dataDir, "statistieken.json");
 let stats = { dagen: {}, security: { geweigerd: 0, laatste: [] } };
 try { stats = { ...stats, ...JSON.parse(await readFile(statsPath, "utf8")) }; } catch {}
+// anonieme gebruiksteller per oefening (hoe vaak op een gedeelde kaart): stuurt de
+// videoproductie zodat het budget eerst naar de meest gebruikte oefeningen gaat
+stats.oefeningGebruik = stats.oefeningGebruik || {};
 const startTijd = Date.now();
 let statsTimer = null;
 function bewaarStats() { // gebundeld wegschrijven, max 1x per 2s
@@ -693,6 +696,18 @@ async function afhandelen(request, response) {
       bewaarStats();
       await sendJson(response, 200, { ok: true });
     } catch { await sendJson(response, 400, { ok: false }); }
+    return;
+  }
+
+  // gebruiksranglijst per oefening (beheer): voedt de videoproductie zodat de
+  // meest gebruikte oefeningen als eerste een video krijgen
+  if (urlPath === "/api/oefeningen/gebruik" && request.method === "GET") {
+    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
+    const lijst = Object.entries(stats.oefeningGebruik)
+      .map(([naam, aantal]) => ({ naam, aantal }))
+      .sort((a, b) => b.aantal - a.aantal)
+      .slice(0, 500);
+    await sendJson(response, 200, { ok: true, totaal: lijst.reduce((s2, r) => s2 + r.aantal, 0), oefeningen: lijst });
     return;
   }
 
@@ -1214,6 +1229,8 @@ async function afhandelen(request, response) {
         metingen: map[kk] ? map[kk].metingen || [] : [] };
       await saveJson(kaartenPath, kaarten);
       await ruimKaartVideosOp(oudeVids.filter((p) => !Object.values(vids).includes(p)));
+      chosen.forEach((x) => { stats.oefeningGebruik[x.n] = (stats.oefeningGebruik[x.n] || 0) + 1; });
+      bewaarStats();
       await sendJson(response, 200, { ok: true, id: map[kk].id });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek (of kaart te groot)." });
