@@ -53,12 +53,15 @@ const modelPolicy = {
   complexMotionTier,
   motionQuality,
   complexRule: "risk.level === extra-review",
-  motionPromptVersion: "clinical-motion-v4-native-1080-cycle",
+  avatarPromptVersion: "video-avatar-v2-blue-shirt",
+  posePromptVersion: "clinical-pose-v2-blue-shirt",
+  motionPromptVersion: "clinical-motion-v5-single-outward",
   voice: "eleven_multilingual_v2",
   motionSeconds: 6,
   keyframeMotionSeconds: 8,
   voicePreset: "Serene",
-  visualStyle: "full-bleed-white-studio-v3",
+  videoWardrobe: "fysiplan-blue-shirt-charcoal-trousers",
+  visualStyle: "full-bleed-white-studio-v4-blue-video-shirt",
   captions: "sidecar-webvtt-no-body-occlusion",
 };
 
@@ -148,8 +151,17 @@ function saveState() {
 }
 
 function relevantPolicy(node, policy = modelPolicy) {
-  if (node.kind === "avatar") return { avatarImage: policy.avatarImage };
-  if (node.kind === "pose") return { poseImage: policy.poseImage };
+  if (node.kind === "avatar") return {
+    avatarImage: policy.avatarImage,
+    avatarPromptVersion: policy.avatarPromptVersion,
+    videoWardrobe: policy.videoWardrobe,
+    visualStyle: policy.visualStyle,
+  };
+  if (node.kind === "pose") return {
+    poseImage: policy.poseImage,
+    posePromptVersion: policy.posePromptVersion,
+    videoWardrobe: policy.videoWardrobe,
+  };
   if (node.kind === "end-pose") return { endPoseImage: policy.endPoseImage };
   if (node.kind === "motion") return {
     motionVideo: node.entry?.motionKeyframes ? policy.motionVideoKeyframed : node.entry?.risk.level === "extra-review" ? policy.motionVideoComplex : policy.motionVideoStandard,
@@ -248,7 +260,7 @@ function avatarPrompt() {
   return [
     "Create a photorealistic full-body Dutch physiotherapist for a medical exercise library.",
     "A warm, trustworthy adult woman around 38 years old, natural face, realistic anatomy, athletic but approachable build.",
-    "She wears an unbranded fitted light-grey physiotherapy T-shirt, charcoal training trousers and clean white trainers; the clothing has enough tonal contrast for black-and-white printing.",
+    "She wears an unbranded fitted FysiPlan-blue physiotherapy T-shirt, charcoal training trousers and clean white trainers. The blue shirt is a deliberate video-only wardrobe choice with strong contrast against the white studio.",
     "Pure white seamless physiotherapy studio, soft shadow-free daylight, full body and both feet visible with generous safety space around every limb.",
     "Documentary realism, accurate hands, natural skin texture, no text, no logo, no watermark, 16:9 landscape.",
   ].join(" ");
@@ -281,6 +293,15 @@ function motionPrompt(entry) {
     `Technique: ${entry.script.cue}`,
     "Perform one complete controlled repetition and return to the exact starting pose, keeping the camera locked off and the full body visible.",
     "Natural biomechanics, no talking, no camera movement, no cuts, no added people, no changing clothes or equipment, no text or watermark.",
+  ].join(" ");
+}
+
+function clinicalOutwardPrompt(entry) {
+  return [
+    entry.motionKeyframes?.motionPromptEn || `Demonstrate '${entry.titleNl}' using this clinical movement description only to identify its intended plane and end range: ${entry.script.movement}`,
+    `Start position: ${entry.script.setup}`,
+    `Technique: ${entry.script.cue}`,
+    "This render is only the single outward phase from the start keyframe to the end keyframe, even if the clinical description also mentions returning.",
   ].join(" ");
 }
 
@@ -386,9 +407,10 @@ async function createMotion(node) {
   if (motionQuality === "clinical-1080") {
     const endPose = await dataUri(artifact("end-poses", `${node.entry.exerciseId}.png`));
     const clinicalPrompt = [
-      node.entry.motionKeyframes?.motionPromptEn || motionPrompt(node.entry),
-      "Move continuously from the exact first keyframe to the exact last keyframe at a slow clinical teaching pace.",
-      "No pause, no repeated cycle and no generated speech; preserve identity, clothing, equipment, locked camera and white background exactly.",
+      clinicalOutwardPrompt(node.entry),
+      "Move continuously and monotonically from the exact first keyframe to the exact last keyframe at a slow clinical teaching pace.",
+      "Generate only the outward phase. Do not pause, bounce, overshoot, open into a second movement plane or start the return movement; the local compositor creates the exact reverse phase.",
+      "No generated speech; preserve identity, blue shirt, equipment, locked camera and white background exactly.",
     ].join(" ");
     const createVeoFallback = async (fallbackFrom) => {
       // Veo accepteert maximaal 1.000 tekens. De oefeningsspecifieke baan staat

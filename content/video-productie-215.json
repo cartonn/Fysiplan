@@ -4,7 +4,7 @@
   "language": "nl-NL",
   "avatar": {
     "platform": "Runway multi-model graph; MetaHuman/motion capture blijft de latere premium-vervanging",
-    "profile": "Fysiplan Avatar v1 — fotorealistisch, volwassen, neutrale en professionele uitstraling",
+    "profile": "Fysiplan Video-avatar v2 — fotorealistische vrouw met blauw shirt; oefenafbeeldingen behouden afzonderlijk hun lichtgrijze printshirt",
     "bodyMotionSource": "AI-concept via poseframe en motionvideo; fysiotherapeuten beoordelen en vervangen fouten vóór klinische goedkeuring",
     "facialAnimationSource": "Nederlandse ElevenLabs-voice-over; demonstratievideo bevat geen pratende mond nodig",
     "rule": "Generatieve lichaamsbeweging mag uitsluitend als duidelijk gemarkeerd concept zichtbaar zijn; nooit als klinisch gecontroleerd publiceren zonder twee fysioreviewers."
@@ -22,6 +22,7 @@
     "publicationDefault": "blocked",
     "checks": [
       "De beweging, startpositie, ademhaling en belangrijkste compensaties zijn klinisch juist.",
+      "De heenfase verloopt vloeiend zonder tik, bounce, overshoot of wisseling van bewegingsvlak; de terugweg is de exacte lokale reverse.",
       "De avatar, alle relevante gewrichten en het volledige hulpmiddel blijven zichtbaar.",
       "Nederlands klinkt natuurlijk en uitspraak van anatomische termen is gecontroleerd.",
       "Beeld, audio en ondertiteling zijn synchroon en bevatten geen merk- of bronmateriaal zonder rechten.",

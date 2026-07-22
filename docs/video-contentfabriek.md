@@ -24,8 +24,9 @@ flowchart LR
 
 De video blijft beeldvullend en bevat geen titelbalk of ingebakken ondertiteling. Titel, uitleg en
 WebVTT worden door de app onder of naast het beeld getoond, zodat gezicht, handen, voeten en
-apparatuur nooit worden afgedekt. De avatar draagt een lichtgrijs shirt tegen een zuiver witte,
-schaduwloze achtergrond.
+apparatuur nooit worden afgedekt. De video-avatar draagt een FysiPlan-blauw shirt tegen een zuiver
+witte, schaduwloze achtergrond. De losse oefenafbeeldingen houden bewust hun lichtgrijze shirt,
+omdat dat bij zwart-wit afdrukken het beste leesbaar blijft.
 
 De technische gate controleert niet alleen codec, resolutie, framerate, duur en bestandsgrootte,
 maar bemonstert ook drie videoframes. De build controleert automatisch op een zichtbaar onderwerp,
@@ -94,13 +95,14 @@ inputhash uit de cache hervat.
 
 ```mermaid
 flowchart LR
-  A["Avatar master\nvaste FysiPlan-vrouw"] --> P["Beginpose per oefening\navatar + bronillustratie"]
+  A["Video-avatar master\nvaste FysiPlan-vrouw · blauw shirt"] --> P["Beginpose per oefening\navatar + bronillustratie"]
   P --> E["Klinische eindpose per oefening\nzelfde identiteit en camera"]
   P --> M["Native 1080p motion\nSeedance 2"]
   E --> M
   S["Nederlands conceptscript"] --> V["Zachte vrouwelijke Runway-stem\nSerene · Eleven Multilingual v2"]
   V --> C["Getimede captions"]
-  M --> Y["Naadloze heen-en-terugcyclus\ngeen harde frame-sprong"]
+  M --> K["Visuele bewegingsgate\ngeen tik · overshoot · zijbaan"]
+  K --> Y["Exact lokale terugweg\nreverse van goedgekeurde heenfase"]
   Y --> F["1080p compositing"]
   V --> F
   C --> F
@@ -113,8 +115,10 @@ flowchart LR
 De standaardroute `clinical-1080` gebruikt Runway als modelhub. Gemini 3 Pro Image maakt eerst één vaste
 fotorealistische avatar. Per oefening combineert een poseframe die menselijke identiteit met de
 bestaande bronillustratie. Iedere oefening krijgt een afzonderlijk controleerbaar eindframe. Seedance 2
-interpoleert daar native op 1920×1080 tussen; de lokale compositor maakt van de heenbeweging een vloeiende
-heen-en-terugcyclus zonder een zichtbare sprong terug naar frame één. De zachte vrouwelijke Runway-preset
+interpoleert daar native op 1920×1080 tussen. Elke motionmaster bevat uitsluitend één monotone heenfase:
+geen eindpauze, tik, overshoot, tweede bewegingsbaan of door het model bedachte terugweg. Na visuele controle
+maakt de lokale compositor de terugweg als exacte reverse van die goedgekeurde heenfase. Daardoor blijft de
+oefenbaan identiek en ontstaat een vloeiende cyclus zonder zichtbare sprong. De zachte vrouwelijke Runway-preset
 `Serene` loopt als onafhankelijke tak en komt pas bij compositing samen met beeld en captions. Een
 afgekeurde take kan daardoor worden vervangen zonder stem, captions of andere oefeningen opnieuw te betalen.
 
