@@ -1270,7 +1270,12 @@ async function afhandelen(request, response) {
         metingen: map[kk] ? map[kk].metingen || [] : [] };
       await saveJson(kaartenPath, kaarten);
       await ruimKaartVideosOp(oudeVids.filter((p) => !Object.values(vids).includes(p)));
-      chosen.forEach((x) => { stats.oefeningGebruik[x.n] = (stats.oefeningGebruik[x.n] || 0) + 1; });
+      // gebruiksranglijst: alleen namen uit de echte bibliotheek tellen mee, anders
+      // kan een script het statistiekbestand onbeperkt laten groeien met nepnamen
+      try {
+        const geldig = new Set((await buildManifest()).map((e) => e.naam));
+        chosen.forEach((x) => { if (geldig.has(x.n)) stats.oefeningGebruik[x.n] = (stats.oefeningGebruik[x.n] || 0) + 1; });
+      } catch {}
       bewaarStats();
       await sendJson(response, 200, { ok: true, id: map[kk].id });
     } catch {
