@@ -297,6 +297,24 @@ function aiLimiet(req, res) {
 // dat praktijknamen afloopt om kaartnamen en scores te verzamelen loopt vast.
 const leesTeller = new Map();
 const pollTeller = new Map();
+// nieuwe praktijk-buckets in de kaartenopslag: max 5 per dag per IP, zodat één afzender
+// de totale grens van 300 praktijken nooit kan volpompen en echte praktijken blokkeert
+const nieuwePraktijkTeller = new Map();
+function nieuwePraktijkLimiet(req, res) {
+  const dag = vandaagKey();
+  const ip = clientIp(req);
+  if (nieuwePraktijkTeller.size > 5000) {
+    for (const [k, v] of nieuwePraktijkTeller) if (v.dag !== dag) nieuwePraktijkTeller.delete(k);
+  }
+  const t = nieuwePraktijkTeller.get(ip);
+  if (!t || t.dag !== dag) { nieuwePraktijkTeller.set(ip, { dag, n: 1 }); return false; }
+  if (++t.n > 5) {
+    if (t.n === 6) logGeweigerd(req, "praktijk-limiet");
+    send429(res, 3600, { ok: false, fout: "Er zijn vandaag al meerdere nieuwe praktijken vanaf dit adres aangemaakt; probeer het morgen opnieuw." });
+    return true;
+  }
+  return false;
+}
 function leesLimiet(req, res) {
   const nu = Date.now();
   if (leesTeller.size > 5000) {
@@ -1160,6 +1178,7 @@ async function afhandelen(request, response) {
       const pk = praktijk.toLowerCase();
       const kk = naam.toLowerCase();
       if (!kaarten[pk] && Object.keys(kaarten).length >= 300) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal praktijken met gedeelde kaarten bereikt." }); return; }
+      if (!kaarten[pk] && nieuwePraktijkLimiet(request, response)) return;
       const map = (kaarten[pk] = kaarten[pk] || {});
       if (!map[kk] && Object.keys(map).length >= 100) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal kaarten voor deze praktijk bereikt." }); return; }
       const sanStr = (v, m) => String(v == null ? "" : v).slice(0, m);
