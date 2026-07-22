@@ -1403,7 +1403,14 @@ async function afhandelen(request, response) {
     const taal = String(q.get("taal") || "");
     if (!TALEN[taal]) { await sendJson(response, 400, { ok: false, fout: "Onbekende taal." }); return; }
     const cl = found.client || {};
-    const teksten = [...new Set([...(found.chosen || []).map((x) => x.n), cl.c_doel, cl.c_opm, cl.c_cave]
+    // ook de korte uitvoeringsuitleg van de gekozen oefeningen vertaalt mee
+    // (12 oefeningen x naam+uitleg plus drie clientvelden blijft onder de cap van 40)
+    let uitlegTeksten = [];
+    try {
+      const perNaam = new Map((await buildManifest()).map((e) => [e.naam, e.uitleg]));
+      uitlegTeksten = (found.chosen || []).map((x) => perNaam.get(x.n)).filter(Boolean);
+    } catch {}
+    const teksten = [...new Set([...(found.chosen || []).map((x) => x.n), ...uitlegTeksten, cl.c_doel, cl.c_opm, cl.c_cave]
       .filter(Boolean).map((s) => String(s).slice(0, 300)))].slice(0, 40);
     const cache = (vertalingen[taal] = vertalingen[taal] || {});
     const sleutel = (s) => createHash("sha256").update(s).digest("hex").slice(0, 16);
