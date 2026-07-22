@@ -6,7 +6,7 @@ import { promisify } from "node:util";
 const exec = promisify(execFile);
 
 const root = resolve(new URL("../", import.meta.url).pathname);
-const catalogue = JSON.parse(await readFile(join(root, "public", "oefeningen.json"), "utf8"));
+const catalogue = JSON.parse(await readFile(join(root, "public", "oefeningen-v2.json"), "utf8"));
 const cleanup = JSON.parse(await readFile(join(root, "content", "oefenbeeld-label-cleanup.json"), "utf8"));
 
 for (const item of cleanup.images) {

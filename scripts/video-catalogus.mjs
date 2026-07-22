@@ -3,7 +3,7 @@ import { exerciseId } from "../lib/exercise-id.js";
 import { STREAM_IFRAME_RE } from "../lib/video-catalog.js";
 
 const root = new URL("../", import.meta.url);
-const oefeningen = JSON.parse(await readFile(new URL("public/oefeningen.json", root), "utf8"));
+const oefeningen = JSON.parse(await readFile(new URL("public/oefeningen-v2.json", root), "utf8"));
 const catalogus = JSON.parse(await readFile(new URL("content/video-catalogus.json", root), "utf8"));
 const ids = new Map(oefeningen.map((o) => [exerciseId(o), o.naam]));
 const gezien = new Set();

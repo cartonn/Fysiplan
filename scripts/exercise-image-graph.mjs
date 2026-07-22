@@ -4,10 +4,13 @@ import { createHash } from "node:crypto";
 import { copyFile, mkdir, readFile, rename, stat, writeFile } from "node:fs/promises";
 import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { graphLayers, runDag } from "../lib/dag-runner.js";
+import { isRunwayCapacityError } from "../lib/runway-errors.js";
 
 const root = resolve(new URL("../", import.meta.url).pathname);
-const cataloguePath = join(root, "public", "oefeningen.json");
-const productionPath = join(root, "content", "video-productie-215.json");
+// Alle nieuwe beeldproductie hoort bij v2. De stabiele v1-catalogus wordt door
+// deze graph bewust nooit gelezen of overschreven.
+const cataloguePath = join(root, "public", "oefeningen-v2.json");
+const productionPath = join(root, "content", "video-productie-v2.json");
 const qaOverridesPath = join(root, "content", "oefenbeeld-qa-overrides.json");
 const exercises = JSON.parse(await readFile(cataloguePath, "utf8"));
 const production = JSON.parse(await readFile(productionPath, "utf8")).exercises;
@@ -15,7 +18,7 @@ const qaOverrides = JSON.parse(await readFile(qaOverridesPath, "utf8"));
 const seamApprovals = new Map(qaOverrides.seamApprovals.map((entry) => [entry.exerciseId, entry]));
 const productionByName = new Map(production.map((entry) => [entry.sourceName, entry]));
 
-const GRAPH_VERSION = 6;
+const GRAPH_VERSION = 7;
 const ASSET_VERSION = 7;
 const args = process.argv.slice(2);
 const command = args.find((arg) => !arg.startsWith("--")) || "plan";
@@ -29,6 +32,19 @@ function csv(flag) {
   return valueAfter(flag).split(",").map((value) => value.trim()).filter(Boolean);
 }
 
+function numericSelection(flag) {
+  const values = new Set();
+  for (const token of csv(flag)) {
+    const range = token.match(/^(\d+)-(\d+)$/);
+    if (range) {
+      const start = Number(range[1]);
+      const end = Number(range[2]);
+      for (let value = Math.min(start, end); value <= Math.max(start, end); value += 1) values.add(value);
+    } else if (Number.isFinite(Number(token))) values.add(Number(token));
+  }
+  return values;
+}
+
 const provider = valueAfter("--provider", "runway");
 const workDir = resolve(valueAfter("--work-dir", join(root, "image-work")));
 const statePath = join(workDir, "state.json");
@@ -38,11 +54,12 @@ const quiet = args.includes("--quiet");
 const seamRecovery = args.includes("--seam-recovery");
 const forceGptLow = args.includes("--force-gpt-low");
 const forceGeminiFlash = args.includes("--force-gemini-flash");
+const stopOnQuota = args.includes("--stop-on-quota");
 const concurrency = Math.max(1, Math.min(4, Number(valueAfter("--concurrency", "4")) || 4));
 const budgetCredits = Number(valueAfter("--budget-credits", "0"));
 const limit = Math.max(0, Number(valueAfter("--limit", "0")) || 0);
 const only = new Set(csv("--only").map((value) => value.toLowerCase()));
-const orders = new Set(csv("--orders").map(Number).filter(Number.isFinite));
+const orders = numericSelection("--orders");
 const groups = new Set(csv("--groups").map((value) => value.toLowerCase()));
 if (!['local', 'runway'].includes(provider)) throw new Error("--provider moet local of runway zijn");
 
@@ -58,14 +75,15 @@ if ((only.size || orders.size || groups.size) && !selected.length) throw new Err
 const avatarPath = join(root, "video-work", "runway-pilot", "artifacts", "avatar", "fysiplan-avatar-master.png");
 const complexGroups = new Set(["Apparaten", "TRX", "Bosu", "Bodyblade", "Cardio", "Kettlebell", "Foam roller", "Speedladder"]);
 const complexNames = /pully|pulley|bench press|incline fly|lat pull|one arm bent over row|leg curl|leg extension|leg press|hack squat/i;
-const horizontalNames = /pull over|pullover|bench press|flyes|nose breakers|lying|bridge|bruggen|plank|push up|bear crawl|benen laten zakken|bicycle|crunch|curl up|dead bug|leg raise|mountain climber|rug extensie|superman|roeier|cobra|child|puppy|frog|boat|glute stretch|half monkey|hamstring stretch|happy baby|knee to chest|pigeon|plow|snake|foam rol|abroller/i;
-const detailNames = /wrist|endo pull|exo pull/i;
+const horizontalNames = /pull over|pullover|bench press|flyes|nose breakers|lying|liggend|zijlig|bridge|brug|plank|push up|bear crawl|benen laten zakken|bicycle|crunch|curl up|dead bug|leg raise|mountain climber|rug extensie|superman|roeier|cobra|child|puppy|frog|boat|glute stretch|half monkey|hamstring stretch|happy baby|knee to chest|knie naar borst|pigeon|plow|snake|foam rol|abroller|bekkenbodem/i;
+const detailNames = /wrist|pols|duim|vinger|peesglijden|knijpkracht|endo pull|exo pull|blikstabilisatie|ogen naar doelen/i;
 
 function slugFromImage(image) {
   return basename(image, extname(image));
 }
 
 function publicOutput(entry) {
+  if (entry.coreExerciseId && entry.kaartImg) return entry.kaartImg;
   const directory = dirname(entry.img);
   return join(directory, `${slugFromImage(entry.img)}-avatar-v${ASSET_VERSION}.jpg`);
 }
@@ -76,17 +94,19 @@ function classify(entry, index) {
   const complex = complexGroups.has(entry.groep) || complexNames.test(entry.naam);
   const layout = horizontalNames.test(entry.naam) || entry.groep === "Apparaten" ? "stacked" : "side-by-side";
   const framing = detailNames.test(entry.naam) ? "active-chain-detail" : "full-body";
-  const instructionSensitive = !complex && (layout === "stacked" || entry.groep === "Core" || entry.groep === "Yoga");
+  const instructionSensitive = !!entry.coreExerciseId || (!complex && (layout === "stacked" || entry.groep === "Core" || entry.groep === "Yoga"));
   const model = forceGeminiFlash ? "gemini_2.5_flash" : forceGptLow || complex || instructionSensitive ? "gpt_image_2" : "seedream5_lite";
   const quality = forceGeminiFlash ? null : forceGptLow ? "low" : complex ? "medium" : instructionSensitive ? "low" : null;
+  const hasMovementReference = !entry.coreExerciseId;
   return {
     order: index + 1,
     exerciseId: meta.exerciseId,
     sourceName: entry.naam,
     titleNl: meta.titleNl,
     group: entry.groep,
-    sourceImage: entry.img,
+    sourceImage: hasMovementReference ? entry.img : null,
     outputImage: publicOutput(entry),
+    hasMovementReference,
     layout,
     framing,
     model,
@@ -106,10 +126,13 @@ function buildGraph() {
   const avatar = { id: "source:avatar", kind: "source-avatar", dependencies: [], output: avatarPath, costCredits: 0 };
   const branches = plans.flatMap((plan) => {
     const id = plan.exerciseId;
+    const auditNode = { id: `audit:${id}`, kind: "audit", plan, dependencies: [], output: artifact("audit", `${id}.json`), costCredits: 0 };
+    const referenceNode = { id: `prepare-reference:${id}`, kind: "prepare-reference", plan, dependencies: [auditNode.id], output: artifact("references", `${id}.png`), costCredits: 0 };
+    const generationDependencies = [avatar.id, plan.hasMovementReference ? referenceNode.id : auditNode.id];
     const nodes = [
-      { id: `audit:${id}`, kind: "audit", plan, dependencies: [], output: artifact("audit", `${id}.json`), costCredits: 0 },
-      { id: `prepare-reference:${id}`, kind: "prepare-reference", plan, dependencies: [`audit:${id}`], output: artifact("references", `${id}.png`), costCredits: 0 },
-      { id: `generate:${id}`, kind: "generate", plan, dependencies: [avatar.id, `prepare-reference:${id}`], output: artifact("generated", `${id}.png`), costCredits: plan.credits },
+      auditNode,
+      ...(plan.hasMovementReference ? [referenceNode] : []),
+      { id: `generate:${id}`, kind: "generate", plan, dependencies: generationDependencies, output: artifact("generated", `${id}.png`), costCredits: plan.credits },
       { id: `compose:${id}`, kind: "compose", plan, dependencies: [`generate:${id}`], output: artifact("cards", `${id}.jpg`), costCredits: 0 },
       { id: `white-background-gate:${id}`, kind: "white-background-gate", plan, dependencies: [`compose:${id}`], output: artifact("white-background", `${id}.json`), costCredits: 0 },
       { id: `qa:${id}`, kind: "qa", plan, dependencies: [`compose:${id}`, `white-background-gate:${id}`], output: artifact("qa", `${id}.json`), costCredits: 0 },
@@ -155,6 +178,7 @@ function saveState() {
 function hashNode(node, memo = new Map()) {
   if (memo.has(node.id)) return memo.get(node.id);
   const dependencyHashes = (node.dependencies || []).map((id) => hashNode(nodesById.get(id), memo));
+  const qaOverride = node.kind === "qa" ? seamApprovals.get(node.plan?.exerciseId) || null : undefined;
   const hash = createHash("sha256").update(JSON.stringify({
     graphVersion: GRAPH_VERSION,
     assetVersion: ASSET_VERSION,
@@ -164,6 +188,7 @@ function hashNode(node, memo = new Map()) {
     seamRecovery,
     forceGptLow,
     forceGeminiFlash,
+    ...(node.kind === "qa" ? { qaOverride } : {}),
     dependencyHashes,
   })).digest("hex").slice(0, 20);
   memo.set(node.id, hash);
@@ -192,6 +217,8 @@ async function download(url, target) {
 
 let runwayClient;
 const modelSlots = new Map();
+let quotaReached = false;
+let quotaReason = null;
 function runway() {
   if (!process.env.RUNWAYML_API_SECRET) throw new Error("RUNWAYML_API_SECRET ontbreekt");
   runwayClient ||= new RunwayML();
@@ -212,7 +239,11 @@ async function withModelSlot(model, action) {
 
 async function remoteImage(body, target) {
   return withModelSlot(body.model, async () => {
-    const task = await runway().textToImage.create(body).waitForTaskOutput({ timeout: 12 * 60 * 1000 });
+    // De SDK wacht standaard enkele seconden voordat de create-promise wordt
+    // geawait. Een direct afgewezen create-call (zoals quota-429) kan daardoor
+    // als unhandled rejection ontsnappen. Await de create-call eerst expliciet.
+    const created = await runway().textToImage.create(body);
+    const task = await runway().tasks.retrieve(created.id).waitForTaskOutput({ timeout: 12 * 60 * 1000 });
     if (!task.output?.[0]) throw new Error("Runway-task leverde geen afbeelding op");
     await download(task.output[0], target);
     const normalized = `${target}.normalized`;
@@ -253,7 +284,9 @@ function prompt(plan) {
     "Create one photorealistic vertical physiotherapy exercise card using @avatar as the exact same adult woman: same face, hair, age and proportions.",
     "Change only her top to a plain light-grey short-sleeve T-shirt; keep charcoal trousers and grey-white trainers.",
     `The Dutch instructions are authoritative for '${clinicalPromptName(plan)}': ${plan.script.setup} ${plan.script.movement} Technique: ${plan.script.cue}`,
-    "Use @movement only as a secondary pose hint; ignore any part that conflicts with the Dutch instructions and never copy its drawing style or branding.",
+    plan.hasMovementReference
+      ? "Use @movement only as a secondary pose hint; ignore any part that conflicts with the Dutch instructions and never copy its drawing style or branding."
+      : "Derive both clinically distinct poses directly from the Dutch setup and movement. Make the changed joint position immediately readable without arrows or labels.",
     compositionInstruction(plan),
     equipmentInstruction(plan),
     framing,
@@ -290,12 +323,14 @@ async function sourceAvatar(node) {
 }
 
 async function audit(node) {
-  const source = join(root, "public", node.plan.sourceImage);
-  const metadata = await sharp(source).metadata();
+  const source = node.plan.sourceImage ? join(root, "public", node.plan.sourceImage) : null;
+  const metadata = source ? await sharp(source).metadata() : null;
   const report = {
     ...node.plan,
-    source: { width: metadata.width, height: metadata.height, format: metadata.format },
-    truthPriority: ["individual-dutch-script", "original-reference-image-as-secondary-hint"],
+    source: metadata ? { width: metadata.width, height: metadata.height, format: metadata.format } : null,
+    truthPriority: node.plan.hasMovementReference
+      ? ["individual-dutch-script", "original-reference-image-as-secondary-hint"]
+      : ["individual-dutch-script", "curated-start-end-plan"],
     ignored: ["batch-level-video-props"],
     clinicalStatus: "awaiting-physiotherapist-review",
   };
@@ -319,14 +354,18 @@ async function generate(node) {
   const source = artifact("references", `${node.plan.exerciseId}.png`);
   await mkdir(dirname(node.output), { recursive: true });
   if (provider === "local") {
-    await sharp(source).resize(800, 1200, { fit: "contain", background: "#ffffff" }).png().toFile(node.output);
-    return { source: "local-reference", credits: 0 };
+    const localSource = node.plan.hasMovementReference ? source : avatarPath;
+    await sharp(localSource).resize(800, 1200, { fit: "contain", background: "#ffffff" }).png().toFile(node.output);
+    return { source: node.plan.hasMovementReference ? "local-reference" : "local-avatar", credits: 0 };
   }
-  const [avatar, movement] = await Promise.all([dataUri(avatarPath), dataUri(source)]);
+  const avatar = await dataUri(avatarPath);
+  const movement = node.plan.hasMovementReference ? await dataUri(source) : null;
+  const taggedReferences = [{ uri: avatar, tag: "avatar" }];
+  if (movement) taggedReferences.push({ uri: movement, tag: "movement" });
   const common = {
     model: node.plan.model,
     promptText: providerPrompt(node.plan),
-    referenceImages: [{ uri: avatar, tag: "avatar" }, { uri: movement, tag: "movement" }],
+    referenceImages: taggedReferences,
   };
   if (node.plan.model === "gpt_image_2") {
     return remoteImage({ ...common, ratio: "1280:1920", quality: node.plan.quality, background: "opaque", outputCount: 1 }, node.output);
@@ -335,7 +374,7 @@ async function generate(node) {
     return remoteImage({
       model: node.plan.model,
       promptText: providerPrompt(node.plan),
-      referenceImages: [{ uri: avatar }, { uri: movement }],
+      referenceImages: movement ? [{ uri: avatar }, { uri: movement }] : [{ uri: avatar }],
       ratio: "1664:2496",
       outputCount: 1,
       outputFormat: "png",
@@ -490,9 +529,10 @@ function updateCatalogue(plan) {
     const catalogue = JSON.parse(await readFile(cataloguePath, "utf8"));
     const entry = catalogue.find((item) => item.naam === plan.sourceName);
     if (!entry) throw new Error(`Catalogusitem ontbreekt: ${plan.sourceName}`);
+    if (entry.coreExerciseId) entry.img = plan.outputImage;
     entry.kaartImg = plan.outputImage;
     const temporary = `${cataloguePath}.tmp`;
-    await writeFile(temporary, JSON.stringify(catalogue));
+    await writeFile(temporary, JSON.stringify(catalogue, null, 2) + "\n");
     await rename(temporary, cataloguePath);
   });
   return catalogueChain;
@@ -503,7 +543,7 @@ async function publish(node) {
   await mkdir(dirname(node.output), { recursive: true });
   await copyFile(source, node.output);
   await updateCatalogue(node.plan);
-  return { catalogue: "public/oefeningen.json", publicImage: node.plan.outputImage, status: "concept-awaiting-physio-review" };
+  return { catalogue: "public/oefeningen-v2.json", publicImage: node.plan.outputImage, status: "concept-awaiting-physio-review" };
 }
 
 const actions = { "source-avatar": sourceAvatar, audit, "prepare-reference": prepareReference, generate, compose, "white-background-gate": whiteBackgroundGate, qa, "review-ready": reviewReady, publish };
@@ -529,6 +569,7 @@ function summarizePlan() {
     seamRecovery,
     forceGptLow,
     forceGeminiFlash,
+    stopOnQuota,
     estimatedCredits: cost,
     estimatedUsd: Number((cost * 0.01).toFixed(2)),
     models: countBy(plans, (plan) => `${plan.model}${plan.quality ? `:${plan.quality}` : ""}`),
@@ -561,7 +602,8 @@ await saveState();
 const results = await runDag({
   nodes,
   concurrency,
-  canRun: (node) => (node.dependencies || []).every((dependency) => state.nodes[dependency]?.status === "succeeded"),
+  shouldStop: () => quotaReached,
+  canRun: (node, liveResults) => (node.dependencies || []).every((dependency) => liveResults.get(dependency)?.status === "succeeded"),
   execute: async (node) => {
     if (await validCompleted(node)) {
       if (!quiet) console.log(`cached\t${node.id}`);
@@ -576,9 +618,20 @@ const results = await runDag({
       if (!quiet) console.log(`succeeded\t${node.id}`);
       return state.nodes[node.id];
     } catch (error) {
-      state.nodes[node.id] = { ...state.nodes[node.id], status: "failed", completedAt: new Date().toISOString(), error: String(error?.message || error).slice(0, 1500) };
+      const errorMessage = String(error?.message || error).slice(0, 1500);
+      const deferredForQuota = stopOnQuota && node.kind === "generate" && isRunwayCapacityError(error);
+      if (deferredForQuota) {
+        quotaReached = true;
+        quotaReason = errorMessage;
+      }
+      state.nodes[node.id] = {
+        ...state.nodes[node.id],
+        status: deferredForQuota ? "deferred-quota" : "failed",
+        completedAt: new Date().toISOString(),
+        error: errorMessage,
+      };
       await saveState();
-      console.error(`failed\t${node.id}\t${state.nodes[node.id].error}`);
+      console.error(`${deferredForQuota ? "deferred-quota" : "failed"}\t${node.id}\t${state.nodes[node.id].error}`);
       return state.nodes[node.id];
     }
   },
@@ -586,7 +639,18 @@ const results = await runDag({
 await saveState();
 await catalogueChain;
 const failed = Array.from(results.values()).filter((result) => result.status === "failed").length;
+const deferredQuota = Array.from(results.values()).filter((result) => result.status === "deferred-quota").length;
 const ready = Object.keys(state.nodes).filter((id) => id.startsWith("review-ready:") && state.nodes[id].status === "succeeded").length;
 const published = Object.keys(state.nodes).filter((id) => id.startsWith("publish:") && state.nodes[id].status === "succeeded").length;
-console.log(JSON.stringify({ complete: failed === 0, failed, reviewReady: ready, published, remainingCreditsEstimate: remainingCredits, workDir }, null, 2));
+console.log(JSON.stringify({
+  complete: failed === 0 && !quotaReached,
+  failed,
+  deferredQuota,
+  quotaReached,
+  quotaReason,
+  reviewReady: ready,
+  published,
+  remainingCreditsEstimate: remainingCredits,
+  workDir,
+}, null, 2));
 if (failed) process.exitCode = 1;

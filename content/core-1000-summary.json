@@ -2,8 +2,10 @@
   "schemaVersion": 1,
   "collection": "FysiPlan Core 1000",
   "total": 1000,
-  "existing": 215,
-  "clinicalExpansion": 785,
+  "existing": 500,
+  "legacy": 215,
+  "publicTop500Expansion": 285,
+  "clinicalExpansion": 500,
   "movementMasters": 1000,
   "ownVideoTarget": 1000,
   "plannedLanguages": [

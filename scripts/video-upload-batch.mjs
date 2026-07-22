@@ -2,7 +2,7 @@ import { readFile, stat } from "node:fs/promises";
 import { extname, resolve } from "node:path";
 
 const root = new URL("../", import.meta.url);
-const manifest = JSON.parse(await readFile(new URL("content/video-productie-215.json", root), "utf8"));
+const manifest = JSON.parse(await readFile(new URL("content/video-productie-v2.json", root), "utf8"));
 const args = process.argv.slice(2);
 
 function valueAfter(flag) {

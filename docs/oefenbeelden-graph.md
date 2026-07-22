@@ -1,6 +1,8 @@
 # FysiPlan oefenbeelden-graph
 
-De 215 beelden worden niet als één oncontroleerbare batch gemaakt. Elke oefening is een eigen tak in een gerichte acyclische graph (DAG). Daardoor kan een mislukte generatie worden herhaald zonder geslaagde beelden opnieuw te betalen of te overschrijven.
+De 500 beelden worden niet als één oncontroleerbare batch gemaakt. Elke oefening is een eigen tak in een gerichte acyclische graph (DAG). Daardoor kan een mislukte generatie worden herhaald zonder geslaagde beelden opnieuw te betalen of te overschrijven.
+
+De graph publiceert uitsluitend naar `public/oefeningen-v2.json`. De historische lijntekeningencatalogus in `public/oefeningen.json` is geen node in deze productiegraaf en kan daardoor niet door een dagelijkse Runway-run worden gewijzigd.
 
 ```mermaid
 flowchart LR
@@ -8,7 +10,7 @@ flowchart LR
   S1["Originele oefening 1 + individuele instructie"] --> U1["Bronaudit en compositiekeuze"] --> N1["Referentie normaliseren"] --> G1["Posepaar genereren"] --> C1["800×1200 + vaste branding"] --> B1["BiRefNet: studio en schaduw verwijderen"] --> W1["#FFFFFF-gate"] --> Q1["Kaart- en print-QA"] --> R1["Klaar voor fysio-review"] --> P1["Concept publiceren"]
   S2["Originele oefening 2 + individuele instructie"] --> U2["Bronaudit en compositiekeuze"] --> N2["Referentie normaliseren"] --> G2["Posepaar genereren"] --> C2["800×1200 + vaste branding"] --> B2["BiRefNet: studio en schaduw verwijderen"] --> W2["#FFFFFF-gate"] --> Q2["Kaart- en print-QA"] --> R2["Klaar voor fysio-review"] --> P2["Concept publiceren"]
   A --> G2
-  SN["… oefening 215"] --> UN["Bronaudit en compositiekeuze"] --> NN["Referentie normaliseren"] --> GN["Posepaar genereren"] --> CN["800×1200 + vaste branding"] --> BN["BiRefNet: studio en schaduw verwijderen"] --> WN["#FFFFFF-gate"] --> QN["Kaart- en print-QA"] --> RN["Klaar voor fysio-review"] --> PN["Concept publiceren"]
+  SN["… oefening 500"] --> UN["Bronaudit en compositiekeuze"] --> NN["Referentie normaliseren"] --> GN["Posepaar genereren"] --> CN["800×1200 + vaste branding"] --> BN["BiRefNet: studio en schaduw verwijderen"] --> WN["#FFFFFF-gate"] --> QN["Kaart- en print-QA"] --> RN["Klaar voor fysio-review"] --> PN["Concept publiceren"]
   A --> GN
 ```
 
@@ -29,7 +31,22 @@ flowchart LR
 
 ## Modelrouting en budget
 
-Eenvoudige staande bewegingen gebruiken `seedream5_lite` (4 credits), omdat de goedkopere Gen-4-route in de representatieve proef te vaak zonder inhoudelijke reden uitviel. Instructiegevoelige vloer- en yogaposes gebruiken `gpt_image_2` op lage renderkwaliteit (1 credit), omdat daar correcte pose-instructies belangrijker zijn dan extra textuur. Oefeningen met machines, TRX, Bosu of ander lastig te reconstrueren materiaal gebruiken hetzelfde model op mediumkwaliteit (5 credits). De graph gebruikt maximaal vier totale taken, met een semaphore van twee gelijktijdige generaties per model overeenkomstig de huidige Runway-accountlimieten.
+Eenvoudige staande bewegingen gebruiken standaard `seedream5_lite` (4 credits). Instructiegevoelige vloer- en yogaposes gebruiken `gpt_image_2`. Oefeningen met machines, TRX, Bosu of ander lastig materiaal gebruiken hetzelfde model op mediumkwaliteit. Voor de uitbreiding van 215 naar 500 oefeningen wordt bewust overal `gpt_image_2` op lage kwaliteit (1 credit) gebruikt: zo blijft de avatar- en kaartstijl gelijk aan de goedgekeurde proefbeelden.
+
+## Rollend Runway-venster
+
+`scripts/runway-image-batch.mjs` bestuurt de beeld-DAG zonder zelf een tweede productiepijplijn te vormen. De controller selecteert alleen kaartbestanden die werkelijk ontbreken, telt geslaagde GPT Image 2-generaties uit de laatste 24 uur en start per run maximaal tien nieuwe aanvragen. De lokale veiligheidsgrens is 190 aanvragen in plaats van Runways gepubliceerde maximum van 200; tien plaatsen blijven beschikbaar voor controles of handmatige herstelruns.
+
+De generatie draait sequentieel. Zodra Runway een quota-`429` teruggeeft, wordt die node als `deferred-quota` opgeslagen en stopt de hele run vóór een volgende betaalde aanvraag. Een volgende run pakt dezelfde node weer op. Geslaagde nodes, downloads, composities en QA-resultaten zijn checkpoints en worden niet opnieuw betaald.
+
+```bash
+# Alleen planning en actuele voortgang; gebruikt geen credits.
+npm run images:runway-batch
+npm run images:runway-batch:status
+
+# Eén begrensde, hervatbare batch.
+node --env-file=.env scripts/runway-image-batch.mjs run --execute
+```
 
 ```bash
 npm run images:graph

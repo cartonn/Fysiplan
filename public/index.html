@@ -804,14 +804,18 @@ bridge2.jpg</div>
     return changed;
   }
 
-  // beheer-weergave: /admin88 kan oefeningen toevoegen, hernoemen en verwijderen — direct
-  // server-side, dus meteen live op beide URL's. De gewone weergave kan alleen kaarten maken.
+  // beheer-weergave: /admin88 toont dezelfde lijntekeningencatalogus als de root.
+  // Nieuwe beeldcontent wordt via de productiegraph uitsluitend in v2 gepubliceerd.
   var IS_ADMIN=/^\/admin88\/?$/.test(location.pathname);
   var ADMIN_HDR={'x-admin-sleutel':'admin88'};
   // anonieme gebruiksteller voor het eigenaars-dashboard (alleen aantallen, geen inhoud)
   function ping(type){try{fetch('api/stats/event',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({type:type})}).catch(function(){});}catch(e){}}
   // v2: /v2/app krijgt de vernieuwde huisstijl en de nieuwe printopties
   var IS_V2=!!window.FYSIPLAN_V2;
+  // Alleen /v2/app gebruikt de nieuwe fotobibliotheek. Ook /admin88 blijft op
+  // de vertrouwde 215 lijntekeningen werken.
+  var USE_V2_LIBRARY=IS_V2;
+  if(!USE_V2_LIBRARY)document.querySelector('.smart-filters').style.display='none';
   if(IS_V2){
     document.documentElement.classList.add('v2');
     document.title='Fysiplan v2 — trainingskaarten';
@@ -1264,7 +1268,7 @@ bridge2.jpg</div>
     pendingDelete=o.naam;
     document.getElementById('vw_tekst').innerHTML=
       'Weet je zeker dat je <b>'+esc(o.naam)+'</b> uit de bibliotheek wilt verwijderen?'+
-      '<br/><small style="color:var(--muted)">Dit geldt direct voor iedereen, op beide adressen.</small>';
+      '<br/><small style="color:var(--muted)">Dit geldt direct voor iedereen in Fysiplan v2.</small>';
     openOv('ovVerwijder');
   }
   document.getElementById('vw_cancel').addEventListener('click',function(){pendingDelete=null;closeOv('ovVerwijder');});
@@ -1803,7 +1807,7 @@ bridge2.jpg</div>
   }
   document.getElementById('m_save').addEventListener('click',function(){
     var naam=document.getElementById('m_naam').value.trim();if(!naam){alert('Geef een naam op.');return;}
-    // in beheer: direct op de server — meteen live voor iedereen op beide URL's
+    // in beheer: direct op de server — meteen live voor iedereen in v2
     if(IS_ADMIN&&SERVERLIB){
       if(!pendingImg){alert('Kies een plaatje — verplicht bij toevoegen aan de gedeelde bibliotheek.');return;}
       var g=document.getElementById('m_groep_vrij').value.trim().replace(/\s+/g,' ');
@@ -1889,15 +1893,14 @@ bridge2.jpg</div>
     CUSTOMLIB=true;SERVERLIB=false;curG='all';rebuildLookup();
     OEF.forEach(function(o){var n=NOTES[o.naam];if(n){o.starthouding=n.s||'';o.uitvoering=n.u||'';o.opmerking=n.o||'';}});
   }
-  // De server-bibliotheek (public/oefeningen.json): echte oefening-plaatjes die IEDEREEN
-  // krijgt die de URL opent — op elk apparaat, zonder upload. Elke afbeelding = één oefening.
+  // v1 en beheer krijgen de vaste lijntekeningen; alleen v2 krijgt de fotocatalogus.
   function buildServerLibrary(entries){
     var cats=[];
     OEF=entries.map(function(e,i){
       if(cats.indexOf(e.groep)<0)cats.push(e.groep);
       return {id:i,naam:e.naam,groep:e.groep,ook:e.ook||null,s:3,h:12,bron:'server',
         exerciseId:e.exerciseId||'',video:e.video||null,region:e.region||'',joint:e.joint||'',goals:e.goals||[],equipment:e.equipment||[],difficulty:e.difficulty||'',searchAliases:e.searchAliases||[],starthouding:'',uitvoering:'',opmerking:'',
-        imgs:[{type:'img',src:e.kaartImg||e.img,label:'Plaatje'}]};
+        imgs:[{type:'img',src:USE_V2_LIBRARY?(e.kaartImg||e.img):e.img,label:'Plaatje'}]};
     });
     SERVERLIB=true;CUSTOMLIB=false;curG='all';
     GROUPS=[{g:'all',label:'alle oefeningen'}].concat(cats.map(function(c){return {g:c,label:c};}));
@@ -1906,7 +1909,7 @@ bridge2.jpg</div>
   }
   // laadt de standaardbibliotheek: eerst de server-bibliotheek, anders de placeholders
   function loadDefaultLibrary(){
-    return fetch('oefeningen.json',{cache:'no-cache'})
+    return fetch(USE_V2_LIBRARY?'/v2/oefeningen.json':'/oefeningen.json',{cache:'no-cache'})
       .then(function(r){return r.ok?r.json():null;})
       .then(function(data){if(data&&data.length){buildServerLibrary(data);}else{buildDefault();}})
       .catch(function(){buildDefault();});

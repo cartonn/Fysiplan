@@ -1,5 +1,5 @@
 // Eenmalige conversie: zware BMP/PNG/JPG uit de WeTransfer-upload -> compacte,
-// web-vriendelijke JPEG's, plus een server-side manifest (public/oefeningen.json)
+// web-vriendelijke JPEG's, plus het v2-manifest (v1 blijft een vaste lijntekeningenset)
 // zodat de oefeningen voor IEDEREEN die de URL opent beschikbaar zijn.
 //
 //   node scripts/convert-images.mjs
@@ -9,7 +9,7 @@ import { readdir, stat, mkdir, writeFile, rm } from "node:fs/promises";
 import { join, extname, relative, dirname } from "node:path";
 
 const IMAGES = new URL("../public/images/", import.meta.url).pathname;
-const MANIFEST = new URL("../public/oefeningen.json", import.meta.url).pathname;
+const MANIFEST = new URL("../public/oefeningen-v2.json", import.meta.url).pathname;
 const MAX = 900;      // langste zijde in px
 const QUALITY = 82;   // JPEG-kwaliteit
 
@@ -110,4 +110,4 @@ const cats = [...new Set(entries.map((e) => e.groep))];
 console.log(`Geconverteerd: ${entries.length} afbeeldingen`);
 console.log(`Categorieën (${cats.length}): ${cats.join(", ")}`);
 if (failed.length) { console.log(`\nMislukt (${failed.length}):`); failed.forEach((f) => console.log("  - " + f)); }
-console.log(`\nManifest: public/oefeningen.json`);
+console.log(`\nManifest: public/oefeningen-v2.json`);

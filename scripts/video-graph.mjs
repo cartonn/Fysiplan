@@ -19,7 +19,7 @@ function valueAfter(flag, fallback = "") {
   return index === -1 ? fallback : String(args[index + 1] || fallback);
 }
 
-const manifestPath = resolve(valueAfter("--manifest", join(root, "content", "video-productie-215.json")));
+const manifestPath = resolve(valueAfter("--manifest", join(root, "content", "video-productie-v2.json")));
 const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
 const provider = valueAfter("--provider", "local");
 const workDir = resolve(valueAfter("--work-dir", join(root, "video-work")));

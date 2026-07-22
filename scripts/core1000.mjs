@@ -1,9 +1,10 @@
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
+import { exerciseId as publicExerciseId } from "../lib/exercise-id.js";
 
 const root = new URL("../", import.meta.url);
-const libraryUrl = new URL("public/oefeningen.json", root);
-const legacyProductionUrl = new URL("content/video-productie-215.json", root);
+const libraryUrl = new URL("public/oefeningen-v2.json", root);
+const legacyProductionUrl = new URL("content/video-productie-v2.json", root);
 const outputUrl = new URL("content/core-1000.json", root);
 const summaryUrl = new URL("content/core-1000-summary.json", root);
 const SAFETY = "Stop bij scherpe of toenemende pijn en overleg met je fysiotherapeut als je twijfelt.";
@@ -394,6 +395,7 @@ function buildExpansionEntry(domain, movement, technique, movementIndex, techniq
     order: 216,
     exerciseId,
     source: "core1000-clinical-expansion",
+    sourceDomain: domain.label,
     sourceName: title,
     titleNl: title,
     category: domain.label,
@@ -475,6 +477,26 @@ function legacyEntry(exercise, production, position) {
   };
 }
 
+function selectedPublicEntry(exercise, source, position) {
+  const cardImage = exercise.kaartImg || exercise.img;
+  return {
+    ...source,
+    order: position + 1,
+    source: "top500-public",
+    sourceDomain: source.sourceDomain || source.category,
+    sourceName: exercise.naam,
+    titleNl: exercise.naam,
+    category: exercise.groep,
+    publicExerciseId: publicExerciseId(exercise),
+    searchAliases: Array.from(new Set([
+      ...(source.searchAliases || []), source.titleNl, exercise.naam, exercise.groep
+    ])),
+    referenceImage: exercise.img,
+    cardImage,
+    media: { ...source.media, poster: cardImage },
+  };
+}
+
 function validate(catalog) {
   const errors = [];
   if (catalog.exercises.length !== 1000) errors.push(`verwacht exact 1000 oefeningen, gevonden ${catalog.exercises.length}`);
@@ -491,7 +513,7 @@ function validate(catalog) {
     }
     if (entry.publication.status === "published") errors.push(`${entry.exerciseId}: generator mag niets automatisch publiceren`);
   }
-  const expansionCounts = Object.fromEntries(DOMAINS.map((domain) => [domain.label, catalog.exercises.filter((entry) => entry.category === domain.label && entry.source === "core1000-clinical-expansion").length]));
+  const expansionCounts = Object.fromEntries(DOMAINS.map((domain) => [domain.label, catalog.exercises.filter((entry) => entry.sourceDomain === domain.label).length]));
   for (const domain of DOMAINS) if (expansionCounts[domain.label] !== domain.quota) errors.push(`${domain.label}: quota klopt niet`);
   return { errors, expansionCounts };
 }
@@ -501,9 +523,17 @@ const [legacyLibrary, legacyProduction] = await Promise.all([
   readFile(legacyProductionUrl, "utf8").then(JSON.parse)
 ]);
 const productionByName = new Map(legacyProduction.exercises.map((entry) => [entry.sourceName, entry]));
-const legacy = legacyLibrary.map((exercise, index) => legacyEntry(exercise, productionByName, index));
-const expansion = buildExpansion();
-const exercises = [...legacy, ...expansion].map((entry, index) => ({ ...entry, order: index + 1 }));
+const expansionBlueprint = buildExpansion();
+const expansionById = new Map(expansionBlueprint.map((entry) => [entry.exerciseId, entry]));
+const publicEntries = legacyLibrary.map((exercise, index) => {
+  if (!exercise.coreExerciseId) return legacyEntry(exercise, productionByName, index);
+  const source = expansionById.get(exercise.coreExerciseId);
+  if (!source) throw new Error(`Core-bron ontbreekt voor publieke oefening: ${exercise.naam}`);
+  return selectedPublicEntry(exercise, source, index);
+});
+const selectedIds = new Set(legacyLibrary.map((entry) => entry.coreExerciseId).filter(Boolean));
+const expansion = expansionBlueprint.filter((entry) => !selectedIds.has(entry.exerciseId));
+const exercises = [...publicEntries, ...expansion].map((entry, index) => ({ ...entry, order: index + 1 }));
 const catalog = {
   schemaVersion: 1,
   collection: "FysiPlan Core 1000",
@@ -526,7 +556,9 @@ const summary = {
   schemaVersion: 1,
   collection: catalog.collection,
   total: exercises.length,
-  existing: legacy.length,
+  existing: publicEntries.length,
+  legacy: publicEntries.filter((entry) => entry.source === "legacy-215").length,
+  publicTop500Expansion: publicEntries.filter((entry) => entry.source === "top500-public").length,
   clinicalExpansion: expansion.length,
   movementMasters: new Set(exercises.map((entry) => entry.movementMasterId)).size,
   ownVideoTarget: exercises.length,

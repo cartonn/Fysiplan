@@ -62,7 +62,7 @@ vertaalpakket voor medische taalreview worden gemaakt.
 
 De repository bevat nu voor alle **215/215** oefeningen een gekoppeld Nederlands conceptscript,
 shotplan, materiaalset, stabiele `exerciseId` en reviewstatus in
-`content/video-productie-215.json`. Tien items hebben daarnaast een expliciete extra
+`content/video-productie-v2.json`. Tien items hebben daarnaast een expliciete extra
 risicobeoordeling. Geen item staat automatisch op goedgekeurd: een script, motion-capturetake en
 eindvideo doorlopen elk hun eigen poort. Zo kan een batchproces nooit een medisch onbeoordeelde
 avatarvideo live zetten.

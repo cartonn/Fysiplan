@@ -4,9 +4,11 @@ import { exerciseId } from "../lib/exercise-id.js";
 import { GUIDANCE_NL } from "./video-guidance-nl.mjs";
 
 const root = new URL("../", import.meta.url);
-const libraryUrl = new URL("public/oefeningen.json", root);
-const manifestUrl = new URL("content/video-productie-215.json", root);
+const libraryUrl = new URL("public/oefeningen-v2.json", root);
+const manifestUrl = new URL("content/video-productie-v2.json", root);
 const oefeningen = JSON.parse(await readFile(libraryUrl, "utf8"));
+const core1000 = JSON.parse(await readFile(new URL("content/core-1000.json", root), "utf8"));
+const coreById = new Map((core1000.exercises || []).map((entry) => [entry.exerciseId, entry]));
 const SAFETY = "Stop bij scherpe of toenemende pijn en volg de dosering van je fysiotherapeut.";
 const MANIFEST_VERSION = 1;
 
@@ -36,6 +38,14 @@ const batchByGroup = {
   "Foam roller": "10-foamroller",
   Speedladder: "11-speedladder",
   Apparaten: "12-apparaten",
+  Nek: "13-nek",
+  Rug: "14-rug",
+  "Balans en valpreventie": "15-balans-valpreventie",
+  "Neurologische revalidatie": "16-neurologisch",
+  Vestibulair: "17-vestibulair",
+  "Werk en dagelijkse handelingen": "18-functioneel",
+  "Bekken & postpartum": "19-bekken-postpartum",
+  Sportrevalidatie: "20-sportrevalidatie",
 };
 
 const propsByGroup = {
@@ -53,7 +63,7 @@ const propsByGroup = {
   Apparaten: ["exact afgebeeld apparaat"],
 };
 
-function shotPlan(oefening) {
+function shotPlan(oefening, coreEntry) {
   const group = oefening.groep;
   const floorExercise = ["Core", "Yoga", "Foam roller"].includes(group);
   const machineExercise = ["Cardio", "Apparaten"].includes(group);
@@ -63,14 +73,22 @@ function shotPlan(oefening) {
     secondaryCamera: floorExercise ? "zijaanzicht op heuphoogte" : "zijaanzicht op gewrichtshoogte",
     repetitions: machineExercise ? 3 : 2,
     targetDurationSeconds: highRisk.has(oefening.naam) ? 32 : 26,
-    props: propsByGroup[group] || [],
+    props: coreEntry?.equipment || propsByGroup[group] || [],
     wardrobe: "effen contrasterende sportkleding; gewrichten en voetplaatsing zichtbaar",
   };
 }
 
 function generatedEntry(oefening, position, previous = {}) {
-  const [titleNl, setup, movement, cue] = GUIDANCE_NL[oefening.naam];
-  const narration = `Dit is de ${titleNl}. ${setup} ${movement} ${cue} ${SAFETY}`;
+  const coreEntry = oefening.coreExerciseId ? coreById.get(oefening.coreExerciseId) : null;
+  const guidance = coreEntry
+    ? [oefening.naam, coreEntry.script.setup, coreEntry.script.movement, coreEntry.script.cue]
+    : GUIDANCE_NL[oefening.naam];
+  if (!guidance) throw new Error(`Conceptscript ontbreekt: ${oefening.naam}`);
+  const [titleNl, setup, movement, cue] = guidance;
+  const safety = coreEntry?.script?.safety || SAFETY;
+  const narration = coreEntry
+    ? `Dit is ${titleNl.toLowerCase()}. ${setup} ${movement} ${cue} ${safety}`
+    : `Dit is de ${titleNl}. ${setup} ${movement} ${cue} ${safety}`;
   const id = exerciseId(oefening);
   const scriptChanged = !!previous.script?.narration && previous.script.narration !== narration;
   const defaultApprovals = {
@@ -91,16 +109,11 @@ function generatedEntry(oefening, position, previous = {}) {
     titleNl,
     category: oefening.groep,
     referenceImage: oefening.img,
-    script: { language: "nl-NL", setup, movement, cue, safety: SAFETY, narration },
-    shotPlan: shotPlan(oefening),
-    risk: highRisk.has(oefening.naam)
+    script: { language: "nl-NL", setup, movement, cue, safety, narration },
+    shotPlan: shotPlan(oefening, coreEntry),
+    risk: coreEntry?.risk || (highRisk.has(oefening.naam)
       ? { level: "extra-review", reason: highRisk.get(oefening.naam) }
-      : { level: "standard", reason: "Standaard dubbele klinische beoordeling blijft vereist." },
-    // Handmatig aangescherpte bewegingsbanen blijven behouden wanneer de overige
-    // productiemetadata opnieuw uit de bibliotheek wordt gesynchroniseerd.
-    ...(previous.motionPromptEn ? { motionPromptEn: previous.motionPromptEn } : {}),
-    ...(previous.motionNegativePromptEn ? { motionNegativePromptEn: previous.motionNegativePromptEn } : {}),
-    ...(previous.motionKeyframes ? { motionKeyframes: previous.motionKeyframes } : {}),
+      : { level: "standard", reason: "Standaard dubbele klinische beoordeling blijft vereist." }),
     approvals,
     assets,
     publication: scriptChanged
@@ -113,13 +126,13 @@ function buildManifest(previous) {
   const prior = new Map((previous?.exercises || []).map((entry) => [entry.exerciseId, entry]));
   return {
     schemaVersion: MANIFEST_VERSION,
-    collection: "Fysiplan uitlegvideo's — 215 oefeningen",
+    collection: "Fysiplan uitlegvideo's — top 500",
     language: "nl-NL",
     avatar: {
       platform: "Runway multi-model graph; MetaHuman/motion capture blijft de latere premium-vervanging",
-      profile: "Fysiplan Video-avatar v2 — fotorealistische vrouw met blauw shirt; oefenafbeeldingen behouden afzonderlijk hun lichtgrijze printshirt",
+      profile: "Fysiplan Avatar v1 — fotorealistisch, volwassen, neutrale en professionele uitstraling",
       bodyMotionSource: "AI-concept via poseframe en motionvideo; fysiotherapeuten beoordelen en vervangen fouten vóór klinische goedkeuring",
-      facialAnimationSource: "Runway Serene via Eleven Multilingual v2; exact dezelfde vrouwelijke stemidentiteit in alle talen; demonstratievideo bevat geen pratende mond nodig",
+      facialAnimationSource: "Nederlandse ElevenLabs-voice-over; demonstratievideo bevat geen pratende mond nodig",
       rule: "Generatieve lichaamsbeweging mag uitsluitend als duidelijk gemarkeerd concept zichtbaar zijn; nooit als klinisch gecontroleerd publiceren zonder twee fysioreviewers.",
     },
     render: {
@@ -128,17 +141,15 @@ function buildManifest(previous) {
       codec: "H.264 high profile",
       audio: "AAC-LC 48 kHz",
       background: "rustige lichte studio met sterk contrast tussen avatar, hulpmiddel en achtergrond",
-      captions: "Getimede WebVTT-sidecar per taal plus een rustig tekstblok onder de speler; nooit ingebakken over gezicht of beweging",
+      captions: "Nederlandse WebVTT en ingebakken ondertiteling als toegankelijke fallback",
     },
     qualityGate: {
       requiredFinalReviewers: 2,
       publicationDefault: "blocked",
       checks: [
         "De beweging, startpositie, ademhaling en belangrijkste compensaties zijn klinisch juist.",
-        "De heenfase verloopt vloeiend zonder tik, bounce, overshoot of wisseling van bewegingsvlak; de terugweg is de exacte lokale reverse.",
         "De avatar, alle relevante gewrichten en het volledige hulpmiddel blijven zichtbaar.",
         "Nederlands klinkt natuurlijk en uitspraak van anatomische termen is gecontroleerd.",
-        "Per taal zijn audio, WebVTT en patiënttekstblok afgeleid van exact dezelfde goedgekeurde narration en gebruiken alle audiosporen stemidentiteit fysiplan-serene-v1.",
         "Beeld, audio en ondertiteling zijn synchroon en bevatten geen merk- of bronmateriaal zonder rechten.",
         "Bestand doorstaat technische controle en heeft geen zwarte frames, clipping of zichtbare motion-capturefouten.",
       ],
@@ -151,12 +162,14 @@ function validateSource() {
   const errors = [];
   const sourceNames = new Set(oefeningen.map((o) => o.naam));
   const guidanceNames = new Set(Object.keys(GUIDANCE_NL));
-  if (oefeningen.length !== 215) errors.push(`verwacht 215 oefeningen, gevonden ${oefeningen.length}`);
+  if (oefeningen.length !== 500) errors.push(`verwacht 500 oefeningen, gevonden ${oefeningen.length}`);
   if (sourceNames.size !== oefeningen.length) errors.push("de oefenbibliotheek bevat dubbele namen");
   const ids = oefeningen.map(exerciseId);
   if (new Set(ids).size !== ids.length) errors.push("de oefenbibliotheek bevat dubbele stabiele exerciseId's");
-  for (const name of sourceNames) {
-    if (!guidanceNames.has(name)) errors.push(`conceptscript ontbreekt: ${name}`);
+  for (const oefening of oefeningen) {
+    if (oefening.coreExerciseId) {
+      if (!coreById.has(oefening.coreExerciseId)) errors.push(`core-conceptscript ontbreekt: ${oefening.naam}`);
+    } else if (!guidanceNames.has(oefening.naam)) errors.push(`conceptscript ontbreekt: ${oefening.naam}`);
   }
   for (const name of guidanceNames) {
     if (!sourceNames.has(name)) errors.push(`conceptscript hoort niet bij de bibliotheek: ${name}`);
@@ -171,7 +184,7 @@ function validateSource() {
 function validateManifest(manifest, generated) {
   const errors = [];
   if (manifest.schemaVersion !== MANIFEST_VERSION) errors.push("manifest schemaVersion is ongeldig");
-  if (!Array.isArray(manifest.exercises) || manifest.exercises.length !== 215) errors.push("manifest moet 215 oefeningen bevatten");
+  if (!Array.isArray(manifest.exercises) || manifest.exercises.length !== 500) errors.push("manifest moet 500 oefeningen bevatten");
   const generatedById = new Map(generated.exercises.map((entry) => [entry.exerciseId, entry]));
   const seen = new Set();
   for (const entry of manifest.exercises || []) {
@@ -302,4 +315,4 @@ if (ttsIndex !== -1) {
 }
 
 const extraReview = manifest.exercises.filter((entry) => entry.risk.level === "extra-review").length;
-console.log(`Videoproductie geldig: ${manifest.exercises.length}/215 conceptscripts; ${extraReview} met extra klinische review; publicatie standaard geblokkeerd.`);
+console.log(`Videoproductie geldig: ${manifest.exercises.length}/500 conceptscripts; ${extraReview} met extra klinische review; publicatie standaard geblokkeerd.`);

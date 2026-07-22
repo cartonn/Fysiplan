@@ -18,8 +18,8 @@ let videoCatalogus = { schemaVersion: 1, videos: [] };
 try { videoCatalogus = JSON.parse(await readFile(videoCatalogusPath, "utf8")); } catch {}
 
 // De Core 1000 bevat ook nog niet-gepubliceerde productie-items. Alleen compacte
-// zoekmetadata van de bestaande 215 mag naar de bibliotheek; conceptoefeningen en
-// klinische reviewgegevens blijven buiten het publieke manifest.
+// zoekmetadata van de publieke v2-top-500 mag naar de bibliotheek; de resterende
+// productieconcepten en klinische reviewgegevens blijven buiten het manifest.
 let coreSearchMetadata = new Map();
 let core1000 = { exercises: [] };
 let core1000Summary = { total: 0, expansionByDomain: {} };
@@ -27,8 +27,8 @@ try {
   core1000 = JSON.parse(await readFile(core1000Path, "utf8"));
   core1000Summary = JSON.parse(await readFile(join(process.cwd(), "content", "core-1000-summary.json"), "utf8"));
   coreSearchMetadata = new Map((core1000.exercises || [])
-    .filter((entry) => entry.source === "legacy-215")
-    .map((entry) => [entry.exerciseId, {
+    .filter((entry) => entry.source === "legacy-215" || entry.source === "top500-public")
+    .map((entry) => [entry.publicExerciseId || entry.exerciseId, {
       region: entry.region,
       joint: entry.joint === "clinical-review-pending" ? "" : entry.joint,
       goals: entry.goals || [],
@@ -399,17 +399,61 @@ async function saveJson(path, obj) {
   }
 }
 
-const CATS = ["Bovenste extremiteit", "Onderste extremiteit", "Core", "Cardio", "Bosu", "TRX",
-  "Yoga", "Kettlebell", "Bodyblade", "Foam roller", "Speedladder", "Apparaten"];
+const CATS = ["Bovenste extremiteit", "Onderste extremiteit", "Nek", "Rug", "Core",
+  "Balans en valpreventie", "Neurologische revalidatie", "Vestibulair",
+  "Werk en dagelijkse handelingen", "Bekken & postpartum", "Sportrevalidatie", "Cardio",
+  "Bosu", "TRX", "Yoga", "Kettlebell", "Bodyblade", "Foam roller", "Speedladder", "Apparaten"];
 const catOrder = (g) => { const i = CATS.indexOf(g); return i < 0 ? 999 : i; };
 
-async function readBaseManifest() {
-  return JSON.parse(await readFile(join(publicDir, "oefeningen.json"), "utf8"));
+const catalogueFile = (channel) => channel === "v1" ? "oefeningen.json" : "oefeningen-v2.json";
+
+async function readBaseManifest(channel = "v2") {
+  return JSON.parse(await readFile(join(publicDir, catalogueFile(channel)), "utf8"));
 }
-// het geserveerde manifest = basis + naam-/categoriewijzigingen − verwijderd + toegevoegd
-async function buildManifest() {
+
+async function imageReady(entry) {
+  const source = String(entry.kaartImg || entry.img || "");
+  if (!source || /^(?:data:|https?:|uploads\/)/.test(source)) return Boolean(source);
+  try { await access(join(publicDir, source.replace(/^\/+/, "")), constants.R_OK); return true; }
+  catch { return false; }
+}
+
+function v2AssetPath(source) {
+  const value = String(source || "");
+  return value.startsWith("images/") ? "/v2/" + value : value;
+}
+
+// v1 is een bevroren lijntekeningencatalogus. Alleen v2 ontvangt beheerwijzigingen,
+// video's, zoekmetadata, foto's en de dagelijks door de beeldgraph gepubliceerde kaarten.
+async function buildManifest(channel = "v2") {
+  if (channel === "v1") {
+    const del = new Set(deleted);
+    return (await readBaseManifest("v1"))
+      .filter((entry) => !del.has(entry.naam))
+      .map((entry) => {
+        const exercise = { ...entry };
+        const category = catOverrides[entry.naam];
+        if (category) {
+          exercise.groep = category.groep;
+          if (category.ook?.length) exercise.ook = category.ook; else delete exercise.ook;
+        }
+        if (renames[entry.naam]) exercise.naam = renames[entry.naam];
+        return exercise;
+      })
+      .map((entry) => {
+        const { kaartImg, video, ...lineDrawing } = entry;
+        return { ...lineDrawing, exerciseId: exerciseId(entry), img: entry.img };
+      })
+      .sort((a, b) => catOrder(a.groep) - catOrder(b.groep)
+        || a.groep.localeCompare(b.groep, "nl")
+        || a.naam.localeCompare(b.naam, "nl"));
+  }
+
   const del = new Set(deleted);
-  const base = (await readBaseManifest())
+  const candidates = await readBaseManifest("v2");
+  const availability = await Promise.all(candidates.map(imageReady));
+  const base = candidates
+    .filter((entry, index) => availability[index])
     .filter((e) => !del.has(e.naam))
     .map((e) => {
       const o = { ...e };
@@ -429,7 +473,14 @@ async function buildManifest() {
       const searchMetadata = coreSearchMetadata.get(id) || {};
       const video = praktijk || catalogus ? { ...(praktijk || {}) } : null;
       if (video && catalogus) video.catalog = catalogus;
-      return { ...e, exerciseId: id, ...searchMetadata, ...(video ? { video } : {}) };
+      return {
+        ...e,
+        img: v2AssetPath(e.img),
+        ...(e.kaartImg ? { kaartImg: v2AssetPath(e.kaartImg) } : {}),
+        exerciseId: id,
+        ...searchMetadata,
+        ...(video ? { video } : {})
+      };
     })
     .sort((a, b) => catOrder(a.groep) - catOrder(b.groep)
       || a.groep.localeCompare(b.groep, "nl")
@@ -568,14 +619,22 @@ async function afhandelen(request, response) {
   if (urlPath === "/admin88/") { response.writeHead(301, { location: "/admin88" }); response.end(); return; }
 
   if (urlPath === "/health") {
-    let count = null;
-    try { count = (await buildManifest()).length; } catch {}
+    let v1Count = null;
+    let v2Count = null;
+    try {
+      [v1Count, v2Count] = await Promise.all([
+        buildManifest("v1").then((manifest) => manifest.length),
+        buildManifest("v2").then((manifest) => manifest.length)
+      ]);
+    } catch {}
     await sendJson(response, 200, {
       ok: true,
       service: "Fysiplan",
       commit: buildInfo.commit || "onbekend",
       builtAt: buildInfo.builtAt || null,
-      oefeningen: count,
+      oefeningen: v1Count,
+      v1Oefeningen: v1Count,
+      v2Oefeningen: v2Count,
       hernoemd: Object.keys(renames).length,
       toegevoegd: extra.length,
       verwijderd: deleted.length,
@@ -590,7 +649,7 @@ async function afhandelen(request, response) {
 
   // ---- beheer-API's (alleen met admin-sleutel) ----
 
-  // oefeningnaam wijzigen; geldt daarna voor iedereen op beide URL's
+  // oefeningnaam wijzigen; geldt daarna voor iedereen in v2
   if (urlPath === "/api/hernoem" && request.method === "POST") {
     if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
     try {
@@ -626,7 +685,7 @@ async function afhandelen(request, response) {
     return;
   }
 
-  // oefening toevoegen (naam + categorie + plaatje); direct live op beide URL's
+  // oefening toevoegen (naam + categorie + plaatje); direct live in v2
   if (urlPath === "/api/oefeningen" && request.method === "POST") {
     if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
     try {
@@ -655,7 +714,7 @@ async function afhandelen(request, response) {
     return;
   }
 
-  // categorie wijzigen (verplaatsen en/of 2e categorie); direct live op beide URL's
+  // categorie wijzigen (verplaatsen en/of 2e categorie); direct live in v2
   if (urlPath === "/api/oefeningen/categorie" && request.method === "POST") {
     if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
     try {
@@ -689,7 +748,7 @@ async function afhandelen(request, response) {
     return;
   }
 
-  // oefening verwijderen; direct weg op beide URL's
+  // oefening verwijderen; direct weg uit v2
   if (urlPath === "/api/oefeningen/verwijder" && request.method === "POST") {
     if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
     try {
@@ -1659,15 +1718,31 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // v2-assets krijgen ook werkelijk een /v2-URL. Fysiek delen we de map om de
+  // 215 bestaande foto's niet te dupliceren; v1 verwijst uitsluitend naar lijntekeningen.
+  if (urlPath.startsWith("/v2/images/")) {
+    const relativeImage = urlPath.slice(4);
+    if (relativeImage.split("/").includes("..")) {
+      await send(response, 403, "text/plain; charset=utf-8", "Forbidden");
+      return;
+    }
+    urlPath = "/" + relativeImage;
+  }
+
   const filePath = normalize(join(publicDir, urlPath));
   if (filePath !== publicDir && !filePath.startsWith(publicDir + sep)) {
     await send(response, 403, "text/plain; charset=utf-8", "Forbidden");
     return;
   }
 
-  // het manifest wordt geserveerd mét beheer-wijzigingen (hernoemd/toegevoegd/verwijderd)
+  // v1: vaste lijntekeningen. v2: foto's, nieuwe categorieën en beheerwijzigingen.
   if (urlPath === "/oefeningen.json") {
-    try { await sendJson(response, 200, await buildManifest()); }
+    try { await sendJson(response, 200, await buildManifest("v1")); }
+    catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
+    return;
+  }
+  if (urlPath === "/v2/oefeningen.json") {
+    try { await sendJson(response, 200, await buildManifest("v2")); }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
   }

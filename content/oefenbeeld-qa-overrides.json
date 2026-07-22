@@ -5,6 +5,120 @@
       "sourceName": "Bodyblade front uitstap",
       "reason": "Visueel gecontroleerd op de herstelcontactsheet: de donkere verticale structuur is de Bodyblade, niet een paneelnaad. Achtergrond, vloer en belichting lopen door.",
       "reviewedAt": "2026-07-19"
+    },
+    {
+      "exerciseId": "fp_0a58d6f429bf05d6",
+      "sourceName": "Schouder zijwaarts heffen – actief",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen paneelnaad; de detector reageerde op de verticale lichaamscontour. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-21"
+    },
+    {
+      "exerciseId": "fp_56c1a9c21c88afd2",
+      "sourceName": "Schouder zijwaarts heffen – isometrisch tegen de muur",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen paneelnaad; de detector reageerde op de verticale lichaams- en handdoekcontour. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-21"
+    },
+    {
+      "exerciseId": "fp_3cd3d8a393b2c05f",
+      "sourceName": "Schouder naar binnen draaien – met elastiek",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen paneelnaad; de detector reageerde op het doorlopende elastiek en de lichaamscontour. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-21"
+    },
+    {
+      "exerciseId": "fp_9de6526f9ae23459",
+      "sourceName": "Serratus punch – functioneel reikend",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen paneelnaad; de detector reageerde op de verticale tafel- en lichaamscontour. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-21"
+    },
+    {
+      "exerciseId": "fp_6e8f36a1f0adaa8b",
+      "sourceName": "Heup zijwaarts heffen – functioneel op één been",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen paneelnaad; de detector reageerde op de lange verticale steun. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-21"
+    },
+    {
+      "exerciseId": "fp_9353962100b7d714",
+      "sourceName": "Knie strekken – zittend",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen paneelnaad; de detector reageerde op de lange stoel- en lichaamscontouren. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-21"
+    },
+    {
+      "exerciseId": "fp_6408a72e59118347",
+      "sourceName": "Quadriceps aanspannen – zittend",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen paneelnaad; de detector reageerde op de lange stoel- en lichaamscontouren. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-21"
+    },
+    {
+      "exerciseId": "fp_5dc88b45468d2b56",
+      "sourceName": "Split squat – staand met steun",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen paneelnaad; de detector reageerde op de lange verticale tafelpoot. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-22"
+    },
+    {
+      "exerciseId": "fp_88f973026ba77b39",
+      "sourceName": "Terminal knee extension – met elastiek",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen paneelnaad; de detector reageerde op de lange verticale steun en het elastiek. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-22"
+    },
+    {
+      "exerciseId": "fp_380122d75f8fab0e",
+      "sourceName": "Kuitheffing – op één been",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen paneelnaad; de detector reageerde op de lange verticale steun. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-22"
+    },
+    {
+      "exerciseId": "fp_abfbb99e7b696800",
+      "sourceName": "Bekken kantelen – op handen en knieën",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen horizontale paneelnaad; de detector reageerde op een lange lichaamscontour. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-22"
+    },
+    {
+      "exerciseId": "fp_743499bf9c634cde",
+      "sourceName": "Lippenremademhaling – zittend",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen paneelnaad; de detector reageerde op de lange stoel- en lichaamscontouren. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-22"
+    },
+    {
+      "exerciseId": "fp_81f9c7ec61491556",
+      "sourceName": "Bovenste trapezius rek – functioneel staand",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen paneelnaad; de detector reageerde op een lange lichaamscontour. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-22"
+    },
+    {
+      "exerciseId": "fp_3bb38ea6ce79b6b2",
+      "sourceName": "Rug bol en hol – op handen en knieën",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen horizontale paneelnaad; de detector reageerde op een lange lichaamscontour. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-22"
+    },
+    {
+      "exerciseId": "fp_eef0b37c3fc7e5cf",
+      "sourceName": "Romp draaien – op handen en knieën",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen horizontale paneelnaad; de detector reageerde op een lange lichaamscontour. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-22"
+    },
+    {
+      "exerciseId": "fp_2a34b9b837cb89d3",
+      "sourceName": "Open boek – op handen en knieën",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen paneelnaad; de detector reageerde op de verticale lichaamscontour rond het midden. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-22"
+    },
+    {
+      "exerciseId": "fp_091e13c087c6d210",
+      "sourceName": "Reiken in stand – zonder steun",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen paneelnaad; de detector reageerde op de lichaamscontour rond het midden. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-22"
+    },
+    {
+      "exerciseId": "fp_9b188d1eb734dd9c",
+      "sourceName": "Blikstabilisatie horizontaal – staand langzaam",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen paneelnaad; de detector reageerde op de donkere verticale lichaamscontour rond het midden. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-22"
+    },
+    {
+      "exerciseId": "fp_e29762409439002e",
+      "sourceName": "Boven schouderhoogte plaatsen – licht en dichtbij",
+      "reason": "Visueel gecontroleerd op de gegenereerde kaart: er is geen paneelnaad; de detector reageerde op de verticale lichaamscontour rond het midden. De witte achtergrond loopt zichtbaar ononderbroken door.",
+      "reviewedAt": "2026-07-22"
     }
   ]
 }

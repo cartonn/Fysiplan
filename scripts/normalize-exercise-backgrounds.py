@@ -79,7 +79,7 @@ def main() -> None:
     os.environ["U2NET_HOME"] = str(args.model_home.resolve())
     from rembg import new_session, remove
 
-    catalogue = json.loads((args.root / "public/oefeningen.json").read_text())
+    catalogue = json.loads((args.root / "public/oefeningen-v2.json").read_text())
     if args.limit:
         catalogue = catalogue[: args.limit]
     session = new_session("birefnet-general")
