@@ -143,13 +143,13 @@ node scripts/video-graph.mjs run --provider runway --execute \
 RUNWAYML_API_SECRET='...' FYSIPLAN_ADMIN_KEY='...' \
   node scripts/video-graph.mjs run --provider runway --execute \
   --only fp_ff306042c93f0900 --motion-quality clinical-1080 --budget-usd 3.10 \
-  --upload-concepts --base-url https://fysiplan.nl
+  --upload-concepts --approve-visual-concept --base-url https://fysiplan.nl
 
 # na goedkeuring van de pilot de volledige graph fan-out uitvoeren
 RUNWAYML_API_SECRET='...' FYSIPLAN_ADMIN_KEY='...' \
   node scripts/video-graph.mjs run --provider runway --execute \
   --motion-quality clinical-1080 --budget-usd 620 --concurrency 3 \
-  --upload-concepts --base-url https://fysiplan.nl
+  --upload-concepts --approve-visual-concept --base-url https://fysiplan.nl
 ```
 
 Op 22 juli 2026 raamt de native 1080p-route de eerste generatie van alle 215 items op **$618,28**, exclusief

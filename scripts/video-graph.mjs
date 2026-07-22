@@ -31,6 +31,7 @@ const only = valueAfter("--only");
 const complexMotionTier = valueAfter("--complex-motion-tier", "premium");
 const motionQuality = valueAfter("--motion-quality", "clinical-1080");
 const uploadConcepts = args.includes("--upload-concepts");
+const visualConceptApproved = args.includes("--approve-visual-concept");
 const baseUrl = valueAfter("--base-url").replace(/\/$/, "");
 const allExercises = manifest.exercises;
 const selected = only
@@ -735,7 +736,7 @@ function countBy(items, classifier) {
 function summarizePlan() {
   const counts = countBy(nodes, (node) => node.kind);
   const cost = nodes.reduce((sum, node) => sum + node.costUsd, 0);
-  return { architecture: "directed-acyclic-graph", manifest: relative(root, manifestPath), exercises: selected.length, nodes: nodes.length, layers: graphLayers(nodes).length, concurrency, provider, modelPolicy, estimatedGenerationCostUsd: Number(cost.toFixed(2)), counts };
+  return { architecture: "directed-acyclic-graph", manifest: relative(root, manifestPath), exercises: selected.length, nodes: nodes.length, layers: graphLayers(nodes).length, concurrency, provider, modelPolicy, uploadConcepts, visualConceptApproved, estimatedGenerationCostUsd: Number(cost.toFixed(2)), counts };
 }
 
 if (command === "plan") {
@@ -751,6 +752,9 @@ if (command === "status") {
 
 if (command !== "run") throw new Error("Gebruik plan, run of status");
 if (!executeApproved) throw new Error("Run is standaard droog. Voeg --execute toe om artifacts te maken en eventueel providertegoed te gebruiken.");
+if (uploadConcepts && !visualConceptApproved) {
+  throw new Error("Concept-upload vereist na het bekijken van de volledige video ook --approve-visual-concept. Technische QA alleen is niet genoeg.");
+}
 const completionChecks = await Promise.all(nodes.map(async (node) => [node, await validCompleted(node)]));
 for (const [node, complete] of completionChecks) {
   if (!complete && state.nodes[node.id]?.status === "succeeded") {
