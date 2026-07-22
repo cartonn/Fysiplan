@@ -5,10 +5,18 @@ const core = JSON.parse(await readFile(new URL("content/core-1000.json", root), 
 const sidecar = JSON.parse(await readFile(new URL("content/core-1000-translations.json", root), "utf8"));
 const languages = ["nl", ...Object.keys(sidecar.languages || {})];
 const errors = [];
+const voicePolicy = sidecar.voicePolicy || {};
 
 if (sidecar.schemaVersion !== 1) errors.push("translation schemaVersion moet 1 zijn");
 if (core.exercises?.length !== 1000) errors.push("Core 1000 moet exact 1000 oefeningen bevatten");
 if (languages.length !== 9 || !languages.includes("nl")) errors.push("verwacht Nederlands plus acht vertaaltalen");
+if (voicePolicy.provider !== "runway" || voicePolicy.model !== "eleven_multilingual_v2" || voicePolicy.presetId !== "Serene") {
+  errors.push("alle vertaalaudio moet de vaste Runway-stem Serene via eleven_multilingual_v2 gebruiken");
+}
+if (!voicePolicy.voiceIdentity) errors.push("voicePolicy.voiceIdentity ontbreekt");
+for (const [language, config] of Object.entries(sidecar.languages || {})) {
+  if (config.voiceIdentity !== voicePolicy.voiceIdentity) errors.push(`${language}: andere stemidentiteit dan de FysiPlan-masterstem`);
+}
 
 const knownIds = new Set(core.exercises.map((entry) => entry.exerciseId));
 for (const [exerciseId, translated] of Object.entries(sidecar.translations || {})) {
@@ -43,6 +51,10 @@ const summary = {
   translationsPending: core.exercises.length * (languages.length - 1) - translated,
   plannedAudioTracks: core.exercises.length * languages.length,
   plannedWebVttTracks: core.exercises.length * languages.length,
+  voiceIdentity: voicePolicy.voiceIdentity,
+  voicePreset: voicePolicy.presetId,
+  subtitleFormat: "WebVTT-sidecar plus extern patiënttekstblok; nooit ingebakken over het lichaam",
+  synchronizationRule: "Audio en WebVTT komen per taal uit exact dezelfde goedgekeurde narration.",
   renderSavings: "De bewegingsmaster wordt één keer gerenderd; taalwijzigingen vervangen alleen audio en WebVTT.",
   publicationGate: "Per taal: scriptreview + uitspraakreview + klinische eindcontrole."
 };
@@ -55,6 +67,7 @@ if (exportIndex !== -1) {
     schemaVersion: 1,
     language,
     languageLabel: sidecar.languages[language].label,
+    voicePolicy,
     instructions: "Vertaal natuurlijk voor patiënten; behoud medische betekenis en voeg geen advies toe. Een moedertaalspreker met medische kennis beoordeelt iedere vertaling vóór TTS.",
     exercises: core.exercises.map((entry) => ({
       exerciseId: entry.exerciseId,

@@ -111,10 +111,15 @@
   .vbtn .driehoek svg{margin-left:1.5px}
   .vbtn[aria-expanded="true"] .driehoek svg{margin:0;transform:rotate(90deg)}
   .vmeta{font:600 11.5px/1.3 var(--disp);color:var(--zacht);text-align:center;margin:-6px 14px 13px}
-  .vhouder{display:none;background:#000}
+  .vhouder{display:none;background:#fff;border-top:1px solid var(--lijn2)}
   .vhouder.open{display:block;animation:vopen .25s ease-out}
   @keyframes vopen{from{opacity:0}to{opacity:1}}
   .vhouder video,.vhouder iframe{display:block;width:100%;aspect-ratio:16/10;border:none;background:#000}
+  .vtekst{margin:0;padding:15px 17px 17px;background:#fffefa;border-top:1px solid var(--lijn2)}
+  .vtekst-label{display:flex;align-items:center;gap:7px;margin-bottom:6px;font:700 11px/1.2 var(--disp);
+    color:var(--blauw);letter-spacing:.055em;text-transform:uppercase}
+  .vtekst-label:before{content:'';width:7px;height:7px;border-radius:999px;background:var(--blauw);flex:0 0 7px}
+  .vtekst p{margin:0;max-width:68ch;font:500 15px/1.62 var(--disp);color:var(--tekst)}
 
   /* schema */
   .schemakaart{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;box-shadow:var(--sh);overflow:hidden}
@@ -321,6 +326,7 @@
   var SPRAAK={nl:'nl-NL',en:'en-GB',de:'de-DE',fr:'fr-FR',es:'es-ES',pl:'pl-PL',tr:'tr-TR',ar:'ar-SA',uk:'uk-UA'};
   var VIDEO_META={nl:'AI-demonstratie · klinisch gecontroleerd',en:'AI demonstration · clinically reviewed',de:'KI-Demonstration · klinisch geprüft',fr:'Démonstration IA · vérifiée cliniquement',es:'Demostración con IA · revisada clínicamente',pl:'Demonstracja AI · sprawdzona klinicznie',tr:'Yapay zekâ gösterimi · klinik olarak kontrol edildi',ar:'عرض بالذكاء الاصطناعي · تمت مراجعته سريريًا',uk:'ШІ-демонстрація · клінічно перевірено'};
   var VIDEO_META_CONCEPT={nl:'AI-concept · beoordeling door fysiotherapeut volgt',en:'AI concept · physiotherapist review pending',de:'KI-Konzept · physiotherapeutische Prüfung folgt',fr:'Concept IA · validation du kinésithérapeute à venir',es:'Concepto de IA · pendiente de revisión fisioterapéutica',pl:'Koncepcja AI · oczekuje na ocenę fizjoterapeuty',tr:'Yapay zekâ taslağı · fizyoterapist incelemesi bekleniyor',ar:'مسودة بالذكاء الاصطناعي · بانتظار مراجعة أخصائي العلاج الطبيعي',uk:'ШІ-концепт · очікує перевірки фізіотерапевта'};
+  var VIDEO_TEKST_LABEL={nl:'Uitleg bij de video',en:'Video instructions',de:'Anleitung zum Video',fr:'Instructions de la vidéo',es:'Instrucciones del vídeo',pl:'Instrukcja do filmu',tr:'Video açıklaması',ar:'شرح الفيديو',uk:'Пояснення до відео'};
   var TAAL=(function(){try{var t=localStorage.getItem('fp_taal');return T[t]?t:'nl';}catch(e){return 'nl';}})();
   var VERT={};
   var K=null;
@@ -410,14 +416,16 @@
       var stream=(praktijkStream&&praktijkStream.iframe)||(catalogus&&catalogus.iframe);
       var aiVideo=praktijkStream||catalogus;
       var knop='';
+      var videoTekst=o&&o.uitleg?vt(o.uitleg):'';
+      var videoTekstData=videoTekst?' data-vtekst="'+esc(videoTekst)+'"':'';
       if(eigen){
         var eigenMeta=praktijkEigen&&o.video&&o.video.eigenMeta;
-        knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'" aria-expanded="false">'+DRIEHOEK+esc(eigenMeta&&eigenMeta.aiGenerated?tr('vidYt'):tr('vidEigen'))+'</button>'+
+        knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(eigenMeta&&eigenMeta.aiGenerated?tr('vidYt'):tr('vidEigen'))+'</button>'+
           (eigenMeta&&eigenMeta.aiGenerated?'<div class="vmeta">'+esc(eigenMeta.reviewStatus==='concept'?(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl):(VIDEO_META[TAAL]||VIDEO_META.nl))+'</div>':'');
       }
-      else if(stream)knop='<button class="vbtn" data-stream="'+esc(stream)+'" aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>'+
+      else if(stream)knop='<button class="vbtn" data-stream="'+esc(stream)+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>'+
         (aiVideo.aiGenerated?'<div class="vmeta">'+esc(aiVideo.reviewStatus==='concept'?(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl):(VIDEO_META[TAAL]||VIDEO_META.nl))+'</div>':'');
-      else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'" aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
+      else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
       var beeldpad=o?(o.kaartImg||o.img):'';
       var heeftVideo=Boolean(knop);
       html+='<div class="oef"><div class="oefkop"><span class="nr">'+(idx+1)+'</span>'+
@@ -803,15 +811,19 @@
       document.querySelectorAll('.vhouder.open').forEach(function(h){h.classList.remove('open');h.innerHTML='';});
       document.querySelectorAll('.vbtn[aria-expanded="true"]').forEach(function(k){k.setAttribute('aria-expanded','false');});
       if(open)return;
+      var videoTekst=b.dataset.vtekst||'';
+      var videoLabel=VIDEO_TEKST_LABEL[TAAL]||VIDEO_TEKST_LABEL.nl;
+      var tekstblok=videoTekst?'<div class="vtekst" role="region" aria-label="'+esc(videoLabel)+'"><div class="vtekst-label">'+esc(videoLabel)+'</div><p>'+esc(videoTekst)+'</p></div>':'';
       if(b.dataset.eigen){
-        houder.innerHTML='<video controls autoplay playsinline preload="metadata" src="'+b.dataset.eigen+'"></video>';
+        houder.innerHTML='<video controls autoplay playsinline preload="metadata" aria-label="'+esc(videoLabel)+'" src="'+b.dataset.eigen+'"></video>'+tekstblok;
       }else if(b.dataset.yt){
         houder.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+b.dataset.yt+
-          '?autoplay=1&rel=0&modestbranding=1" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
+          '?autoplay=1&rel=0&modestbranding=1" title="'+esc(videoLabel)+'" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>'+tekstblok;
       }else if(/^https:\/\/(?:customer-[a-z0-9-]+\.cloudflarestream\.com|iframe\.videodelivery\.net)\/[A-Za-z0-9_-]+\/iframe(?:\?.*)?$/.test(b.dataset.stream||'')){
-        var streamUrl=b.dataset.stream+(b.dataset.stream.indexOf('?')>-1?'&':'?')+
-          'autoplay=true&defaultTextTrack='+encodeURIComponent(TAAL);
-        houder.innerHTML='<iframe src="'+esc(streamUrl)+'" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+        // Het rustige tekstblok is standaard zichtbaar. Getimede WebVTT blijft in de
+        // speler beschikbaar als optionele CC-laag, maar bedekt niet automatisch het lichaam.
+        var streamUrl=b.dataset.stream+(b.dataset.stream.indexOf('?')>-1?'&':'?')+'autoplay=true';
+        houder.innerHTML='<iframe src="'+esc(streamUrl)+'" title="'+esc(videoLabel)+'" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>'+tekstblok;
       }
       houder.classList.add('open');
       b.setAttribute('aria-expanded','true');

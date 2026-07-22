@@ -22,11 +22,17 @@ flowchart LR
   R --> P["Publicatie\nalleen approved"]
 ```
 
-De video blijft beeldvullend en bevat geen titelbalk of ingebakken ondertiteling. Titel, uitleg en
-WebVTT worden door de app onder of naast het beeld getoond, zodat gezicht, handen, voeten en
-apparatuur nooit worden afgedekt. De video-avatar draagt een FysiPlan-blauw shirt tegen een zuiver
+De video blijft beeldvullend en bevat geen titelbalk of ingebakken ondertiteling. Titel en volledige
+uitleg staan in een rustig, taalafhankelijk tekstblok direct onder de speler. Getimede WebVTT blijft
+als optionele CC-laag beschikbaar. Daardoor worden gezicht, handen, voeten en
+apparatuur nooit afgedekt. De video-avatar draagt een FysiPlan-blauw shirt tegen een zuiver
 witte, schaduwloze achtergrond. De losse oefenafbeeldingen houden bewust hun lichtgrijze shirt,
 omdat dat bij zwart-wit afdrukken het beste leesbaar blijft.
+
+WebVTT wordt semantisch gesegmenteerd op zins- en zinsdeelgrenzen met maximaal twee regels van
+42 tekens. Audio, WebVTT en het tekstblok komen per taal uit exact dezelfde goedgekeurde narration.
+Alle negen audiosporen gebruiken de vaste vrouwelijke stemidentiteit `fysiplan-serene-v1`
+(`Serene` via `eleven_multilingual_v2`); alleen taal en uitspraak veranderen.
 
 De technische gate controleert niet alleen codec, resolutie, framerate, duur en bestandsgrootte,
 maar bemonstert ook drie videoframes. De build controleert automatisch op een zichtbaar onderwerp,
@@ -99,8 +105,9 @@ flowchart LR
   P --> E["Klinische eindpose per oefening\nzelfde identiteit en camera"]
   P --> M["Native 1080p motion\nSeedance 2"]
   E --> M
-  S["Nederlands conceptscript"] --> V["Zachte vrouwelijke Runway-stem\nSerene · Eleven Multilingual v2"]
-  V --> C["Getimede captions"]
+  S["Goedgekeurde narration per taal"] --> V["Dezelfde vrouwelijke stemidentiteit\nSerene · Eleven Multilingual v2"]
+  S --> C["WebVTT + tekstblok\nzelfde woorden als audio"]
+  V --> C
   M --> K["Visuele bewegingsgate\ngeen tik · overshoot · zijbaan"]
   K --> Y["Exact lokale terugweg\nreverse van goedgekeurde heenfase"]
   Y --> F["1080p compositing"]

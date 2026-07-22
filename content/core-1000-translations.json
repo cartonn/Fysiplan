@@ -1,15 +1,22 @@
 {
   "schemaVersion": 1,
   "sourceCollection": "FysiPlan Core 1000",
+  "voicePolicy": {
+    "provider": "runway",
+    "model": "eleven_multilingual_v2",
+    "presetId": "Serene",
+    "voiceIdentity": "fysiplan-serene-v1",
+    "rule": "Elke taal gebruikt dezelfde vrouwelijke stemidentiteit; alleen uitspraak en taal veranderen. Audio en WebVTT worden uit exact dezelfde goedgekeurde narration gemaakt."
+  },
   "languages": {
-    "en": { "label": "English", "voice": "soft-female", "review": "native-medical" },
-    "de": { "label": "Deutsch", "voice": "soft-female", "review": "native-medical" },
-    "fr": { "label": "Français", "voice": "soft-female", "review": "native-medical" },
-    "es": { "label": "Español", "voice": "soft-female", "review": "native-medical" },
-    "pl": { "label": "Polski", "voice": "soft-female", "review": "native-medical" },
-    "tr": { "label": "Türkçe", "voice": "soft-female", "review": "native-medical" },
-    "ar": { "label": "العربية", "voice": "soft-female", "review": "native-medical" },
-    "uk": { "label": "Українська", "voice": "soft-female", "review": "native-medical" }
+    "en": { "label": "English", "voiceIdentity": "fysiplan-serene-v1", "review": "native-medical" },
+    "de": { "label": "Deutsch", "voiceIdentity": "fysiplan-serene-v1", "review": "native-medical" },
+    "fr": { "label": "Français", "voiceIdentity": "fysiplan-serene-v1", "review": "native-medical" },
+    "es": { "label": "Español", "voiceIdentity": "fysiplan-serene-v1", "review": "native-medical" },
+    "pl": { "label": "Polski", "voiceIdentity": "fysiplan-serene-v1", "review": "native-medical" },
+    "tr": { "label": "Türkçe", "voiceIdentity": "fysiplan-serene-v1", "review": "native-medical" },
+    "ar": { "label": "العربية", "voiceIdentity": "fysiplan-serene-v1", "review": "native-medical" },
+    "uk": { "label": "Українська", "voiceIdentity": "fysiplan-serene-v1", "review": "native-medical" }
   },
   "translations": {}
 }

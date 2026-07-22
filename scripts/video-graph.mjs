@@ -60,6 +60,8 @@ const modelPolicy = {
   motionSeconds: 6,
   keyframeMotionSeconds: 8,
   voicePreset: "Serene",
+  voiceIdentity: "fysiplan-serene-v1",
+  captionProfile: "webvtt-semantic-v3-max-2-lines-42-chars",
   videoWardrobe: "fysiplan-blue-shirt-charcoal-trousers",
   visualStyle: "full-bleed-white-studio-v4-blue-video-shirt",
   captions: "sidecar-webvtt-no-body-occlusion",
@@ -170,7 +172,8 @@ function relevantPolicy(node, policy = modelPolicy) {
     motionQuality: policy.motionQuality,
     moderationFallback: policy.motionVideoModerationFallback,
   };
-  if (node.kind === "voice") return { voice: policy.voice, voicePreset: policy.voicePreset };
+  if (node.kind === "voice") return { voice: policy.voice, voicePreset: policy.voicePreset, voiceIdentity: policy.voiceIdentity };
+  if (node.kind === "captions") return { captionProfile: policy.captionProfile, voiceIdentity: policy.voiceIdentity };
   if (node.kind === "compose") return { composeVersion: 2 };
   return {};
 }
@@ -518,15 +521,49 @@ function timestamp(seconds) {
 
 async function createCaptions(node) {
   const duration = await mediaDuration(artifact("voice", `${node.entry.exerciseId}.mp3`));
-  const sentences = node.entry.script.narration.match(/[^.!?]+[.!?]+/g) || [node.entry.script.narration];
-  const totalWords = sentences.reduce((sum, sentence) => sum + sentence.trim().split(/\s+/).length, 0);
+  const narration = node.entry.script.narration.trim();
+  const words = narration.split(/\s+/);
+  const segments = [];
+  let current = [];
+  for (const word of words) {
+    const candidate = [...current, word].join(" ");
+    if (current.length && (candidate.length > 68 || current.length >= 10)) {
+      segments.push(current.join(" "));
+      current = [word];
+    } else current.push(word);
+    if (current.length >= 5 && /[.!?;:]$/.test(word)) {
+      segments.push(current.join(" "));
+      current = [];
+    }
+  }
+  if (current.length) segments.push(current.join(" "));
+  if (segments.length > 1 && segments.at(-1).split(/\s+/).length <= 3) {
+    const tail = segments.pop();
+    if (`${segments.at(-1)} ${tail}`.length <= 68) segments[segments.length - 1] += ` ${tail}`;
+    else segments.push(tail);
+  }
+  const captionLines = (text) => {
+    if (text.length <= 42) return text;
+    const parts = text.split(/\s+/);
+    let best = null;
+    for (let index = 1; index < parts.length; index++) {
+      const left = parts.slice(0, index).join(" ");
+      const right = parts.slice(index).join(" ");
+      if (left.length <= 42 && right.length <= 42) {
+        const score = Math.abs(left.length - right.length);
+        if (!best || score < best.score) best = { left, right, score };
+      }
+    }
+    return best ? `${best.left}\n${best.right}` : text;
+  };
+  const totalWords = segments.reduce((sum, segment) => sum + segment.split(/\s+/).length, 0);
   let cursor = 0;
-  const cues = sentences.map((sentence, index) => {
-    const words = sentence.trim().split(/\s+/).length;
+  const cues = segments.map((segment, index) => {
+    const segmentWords = segment.split(/\s+/).length;
     const start = cursor;
-    const end = index === sentences.length - 1 ? duration : cursor + duration * words / totalWords;
+    const end = index === segments.length - 1 ? duration : cursor + duration * segmentWords / totalWords;
     cursor = end;
-    return `${index + 1}\n${timestamp(start)} --> ${timestamp(end)}\n${sentence.trim()}\n`;
+    return `${index + 1}\n${timestamp(start)} --> ${timestamp(end)}\n${captionLines(segment)}\n`;
   });
   await mkdir(dirname(node.output), { recursive: true });
   await writeFile(node.output, `WEBVTT\n\n${cues.join("\n")}`);
@@ -551,10 +588,11 @@ function parseVtt(value) {
     const [hours, minutes, rest] = stamp.split(":");
     return Number(hours) * 3600 + Number(minutes) * 60 + Number(rest);
   };
-  return Array.from(value.matchAll(/\d+\n(\d{2}:\d{2}:\d{2}\.\d{3}) --> (\d{2}:\d{2}:\d{2}\.\d{3})\n([^\n]+)(?:\n|$)/g), (match) => ({
+  return Array.from(value.matchAll(/\d+\n(\d{2}:\d{2}:\d{2}\.\d{3}) --> (\d{2}:\d{2}:\d{2}\.\d{3})\n([\s\S]*?)(?=\n\n|\s*$)/g), (match) => ({
     start: toSeconds(match[1]),
     end: toSeconds(match[2]),
-    text: match[3],
+    text: match[3].trim().replace(/\n/g, " "),
+    lines: match[3].trim().split("\n"),
   }));
 }
 
@@ -642,6 +680,7 @@ async function qa(node) {
   };
   const motionDifference = Math.max(frameDifference(frameBuffers[0], frameBuffers[1]), frameDifference(frameBuffers[1], frameBuffers[2]));
   const captions = parseVtt(await readFile(artifact("captions", `${node.entry.exerciseId}.vtt`), "utf8"));
+  const normalizeText = (value) => String(value || "").toLocaleLowerCase("nl-NL").replace(/\s+/g, " ").trim();
   const automatedVisualChecks = {
     subjectPresent: frameMetrics.every((frame) => frame.whiteRatio < 0.985),
     brightWhiteStudio: frameMetrics.every((frame) => frame.whiteRatio >= 0.20 && frame.meanLuma >= 145),
@@ -657,8 +696,10 @@ async function qa(node) {
     uploadSizeSafe: size >= 10 * 1024 && size <= 60 * 1024 * 1024,
     captionsPresent: captions.length >= 2,
     captionsCoverNarration: captions.length > 0 && Math.abs(captions.at(-1).end - (duration - 0.35)) <= 1.2,
+    captionsReadable: captions.every((caption) => caption.lines.length <= 2 && caption.lines.every((line) => line.length <= 42)),
+    captionsMatchVoiceScript: normalizeText(captions.map((caption) => caption.text).join(" ")) === normalizeText(node.entry.script.narration),
     nativeMotion1080p: provider === "local" || motionQuality !== "clinical-1080" || (motionVideoStream?.width === 1920 && motionVideoStream?.height === 1080),
-    runwayFemaleVoice: provider === "local" || modelPolicy.voicePreset === "Serene",
+    runwayFemaleVoice: provider === "local" || (modelPolicy.voicePreset === "Serene" && modelPolicy.voiceIdentity === "fysiplan-serene-v1"),
     ...Object.fromEntries(Object.entries(automatedVisualChecks).map(([key, value]) => [key, provider === "local" ? true : value])),
   };
   const report = {
