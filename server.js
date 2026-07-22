@@ -248,6 +248,29 @@ function schrijfLimiet(req, res) {
   return false;
 }
 
+// aparte rem op mislukte kaart-opvragingen: het kaart-id is de enige sleutel tot
+// een kaart, dus systematisch raden moet snel vastlopen. Geldige links merken hier
+// niets van; de teller loopt alleen bij een id dat niet bestaat.
+const kaartMisTeller = new Map();
+function kaartMisLimiet(req, res) {
+  const nu = Date.now();
+  if (kaartMisTeller.size > 5000) {
+    for (const [k, v] of kaartMisTeller) if (nu - v.start > 5 * 60 * 1000) kaartMisTeller.delete(k);
+  }
+  const ip = clientIp(req);
+  const t = kaartMisTeller.get(ip);
+  if (!t || nu - t.start > 5 * 60 * 1000) {
+    kaartMisTeller.set(ip, { start: nu, n: 1 });
+    return false;
+  }
+  if (++t.n > 30) {
+    if (t.n === 31) logGeweigerd(req, "kaart-raden");
+    send429(res, 300, { ok: false, fout: "Even te veel verzoeken; probeer het over een paar minuten opnieuw." });
+    return true;
+  }
+  return false;
+}
+
 // ---- AI-hulp (v2): kaartassistent en vertalingen via de Claude-API ----
 // Werkt alleen als de eigenaar ANTHROPIC_API_KEY op de server heeft ingesteld;
 // zonder sleutel geven de endpoints een nette melding en verandert er niets.
@@ -1266,7 +1289,7 @@ async function afhandelen(request, response) {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const found = vindKaart(String(q.get("id") || ""));
-    if (!found) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+    if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     const prof = praktijken[found.praktijk.toLowerCase()] || { praktijk: found.praktijk };
     await sendJson(response, 200, { ok: true, kaart: found, praktijk: prof });
     return;
@@ -1280,7 +1303,7 @@ async function afhandelen(request, response) {
     try {
       const b = JSON.parse(await readBody(request));
       const found = vindKaart(String(b.id || ""));
-      if (!found) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const score = b.score;
       if (typeof score !== "number" || !Number.isInteger(score) || score < 0 || score > 10) {
         await sendJson(response, 400, { ok: false, fout: "Geef een score van 0 tot en met 10." });
@@ -1307,7 +1330,7 @@ async function afhandelen(request, response) {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const found = vindKaart(String(q.get("id") || ""));
-    if (!found) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+    if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     const volgorde = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
     const dagen = [...new Set(String(q.get("dagen") || "").split(",").filter((d) => volgorde.includes(d)))]
       .sort((a, b) => volgorde.indexOf(a) - volgorde.indexOf(b));
@@ -1398,7 +1421,7 @@ async function afhandelen(request, response) {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const found = vindKaart(String(q.get("id") || ""));
-    if (!found) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+    if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     const TALEN = { en: "Engels", de: "Duits", fr: "Frans", es: "Spaans", pl: "Pools", tr: "Turks", ar: "Arabisch", uk: "Oekraïens" };
     const taal = String(q.get("taal") || "");
     if (!TALEN[taal]) { await sendJson(response, 400, { ok: false, fout: "Onbekende taal." }); return; }
@@ -1450,7 +1473,7 @@ async function afhandelen(request, response) {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const found = vindKaart(String(q.get("id") || ""));
-    if (!found) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+    if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     response.setHeader("x-robots-tag", "noindex, noarchive");
     await send(response, 200, "application/manifest+json; charset=utf-8", JSON.stringify({
       name: ("Trainingskaart " + (found.client && found.client.c_naam ? found.client.c_naam : found.naam)).slice(0, 60),
