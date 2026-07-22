@@ -5,6 +5,7 @@
     "buildCommand": "npm run build"
   },
   "deploy": {
+    "multiRegionConfig": null,
     "startCommand": "npm run start",
     "healthcheckPath": "/health",
     "healthcheckTimeout": 120,
