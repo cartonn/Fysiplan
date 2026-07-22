@@ -105,10 +105,16 @@
   #a4 .client input{height:20px;border:none;border-bottom:1.5px solid #98a2b3;border-radius:0;font-size:12.5px;flex:1;min-width:0;background:transparent;padding:0 2px;color:#101828;font-family:inherit}
   #a4 .client input:focus{outline:none;border-bottom-color:var(--brand)}
   #a4 .boxes{display:flex;gap:10px;flex:0 0 auto}
-  #a4 .box{border:1.5px solid #475467;width:170px;height:150px;padding:6px 8px;display:flex;flex-direction:column}
+  #a4 .box{border:1.5px solid #475467;width:43mm;height:39mm;padding:1.5mm 2mm;display:flex;flex-direction:column}
   #a4 .box b{font-size:11px;color:#101828}
-  #a4 .box textarea{border:none;background:transparent;font:inherit;font-size:10.5px;resize:none;flex:1;min-height:0;padding:1px 0;color:#101828}
+  #a4 .box textarea{border:none;background:transparent;font:inherit;font-size:12px;line-height:1.25;resize:none;flex:1;min-height:0;padding:1px 0;color:#101828}
+  #a4 .box textarea.print-limited{overflow:hidden}
   #a4 .box textarea:focus{outline:none;background:var(--brand-50)}
+  #a4 .box textarea.print-limit-hit{background:#fff4e5;box-shadow:inset 0 0 0 1px #f79009}
+  #a4 .box .print-text-value{display:none;min-height:0;padding:1px 0;color:#101828;font-size:12px;line-height:1.25;white-space:pre-wrap;overflow:hidden;overflow-wrap:anywhere}
+  #a4 .box .print-text-value.opmerking{flex:1}
+  #a4 .box .print-text-value.casus{flex:0 0 24px}
+  .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
   #a4 .pic{border:1.5px solid #475467;aspect-ratio:2/3;display:flex;align-items:center;justify-content:center;position:relative;color:#222;background:#fff;overflow:hidden}
   #a4 .pic .thumb{width:100% !important;height:100% !important;border:none;border-radius:0;background:none;padding:2px;object-fit:contain}
   #a4 table.mon{border-collapse:collapse;width:100%;font-size:9.5px;table-layout:fixed;margin-top:10px;flex:1 1 0;min-height:0}
@@ -195,6 +201,8 @@
     #a4 .prak{width:60mm;flex-basis:60mm}
     #a4 .boxes{gap:2.5mm}
     #a4 .box{width:43mm;height:39mm;padding:1.5mm 2mm}
+    #a4 .box textarea.print-limited{display:none!important}
+    #a4 .box .print-text-value{display:block}
     #a4 table.mon{flex:1 1 0;min-height:0;margin-top:2.5mm;font-size:9px}
     #a4 .a4hd .logoIn{color:#1f6feb !important;border:none !important}
     #a4 .client input{border-bottom:1px solid #333 !important}
@@ -281,7 +289,7 @@
           <div class="cr"><label>Trainingszone</label><input id="c_zone" aria-label="Trainingszone"/></div>
         </div>
         <div class="boxes">
-          <div class="box"><b>Opm.</b><textarea id="c_opm" aria-label="Opmerking"></textarea><b>Casus</b><textarea id="c_cave" aria-label="Casus" style="flex:0 0 24px"></textarea></div>
+          <div class="box"><b>Opm.</b><textarea id="c_opm" class="print-limited" aria-label="Opmerking" aria-describedby="printLimitStatus"></textarea><div class="print-text-value opmerking" data-print-for="c_opm" aria-hidden="true"></div><b>Casus</b><textarea id="c_cave" class="print-limited" aria-label="Casus" aria-describedby="printLimitStatus" style="flex:0 0 24px"></textarea><div class="print-text-value casus" data-print-for="c_cave" aria-hidden="true"></div></div>
           <div class="box"><b>Doel:</b><textarea id="c_doel" aria-label="Doel"></textarea></div>
         </div>
         <div id="qrBlok" class="qrblok" style="display:none"></div>
@@ -291,6 +299,8 @@
     </div>
   </div>
 </div>
+
+<div id="printLimitStatus" class="sr-only" aria-live="polite"></div>
 
 <!-- add exercise modal -->
 <div class="ov" id="ov">
@@ -701,6 +711,97 @@ bridge2.jpg</div>
       if(st.grid&&typeof st.grid==='object'){GRID={rows:st.grid.rows||{},cells:st.grid.cells||{}};}
       if(st.vids&&typeof st.vids==='object')VIDS=st.vids;
     }catch(e){}
+  }
+
+  // Opm. en Casus mogen nooit meer tekst bevatten dan fysiek in het printvak past.
+  // De vakken hebben op scherm en papier exact dezelfde maat en het grote printlettertype
+  // is ook tijdens invoer actief, zodat de limiet voor iedere printvariant klopt.
+  function printableTextFits(el,value){
+    var current=el.value;
+    el.value=value;
+    el.scrollTop=0;
+    var fits=el.scrollHeight<=el.clientHeight+1&&el.scrollWidth<=el.clientWidth+1;
+    el.value=current;
+    return fits;
+  }
+  function fittingPrintablePrefix(el,value){
+    if(printableTextFits(el,value))return value;
+    var low=0,high=value.length;
+    while(low<high){
+      var mid=Math.ceil((low+high)/2);
+      if(printableTextFits(el,value.slice(0,mid)))low=mid;else high=mid-1;
+    }
+    return value.slice(0,low);
+  }
+  function syncPrintableText(el){
+    var proxy=document.querySelector('[data-print-for="'+el.id+'"]');
+    if(proxy)proxy.textContent=el.value;
+    el.scrollTop=0;
+  }
+  function signalPrintableLimit(el){
+    var status=document.getElementById('printLimitStatus');
+    if(status)status.textContent='Het vak '+el.getAttribute('aria-label')+' is vol; extra tekst past niet op de print.';
+    el.classList.add('print-limit-hit');
+    clearTimeout(el._printLimitTimer);
+    el._printLimitTimer=setTimeout(function(){el.classList.remove('print-limit-hit');},700);
+  }
+  function insertPrintableText(el,text){
+    var start=el.selectionStart==null?el.value.length:el.selectionStart;
+    var end=el.selectionEnd==null?start:el.selectionEnd;
+    var before=el.value.slice(0,start),after=el.value.slice(end),candidate=before+text+after;
+    if(printableTextFits(el,candidate)){
+      el.setRangeText(text,start,end,'end');
+      el.dispatchEvent(new Event('input',{bubbles:true}));
+      return true;
+    }
+    var low=0,high=text.length;
+    while(low<high){
+      var mid=Math.ceil((low+high)/2);
+      if(printableTextFits(el,before+text.slice(0,mid)+after))low=mid;else high=mid-1;
+    }
+    if(low){el.setRangeText(text.slice(0,low),start,end,'end');el.dispatchEvent(new Event('input',{bubbles:true}));}
+    signalPrintableLimit(el);
+    return false;
+  }
+  function normalizePrintableTextFields(){
+    var changed=false;
+    document.querySelectorAll('#c_opm,#c_cave').forEach(function(el){
+      var fitted=fittingPrintablePrefix(el,el.value);
+      if(fitted!==el.value){el.value=fitted;changed=true;}
+      el._lastPrintableValue=el.value;
+      syncPrintableText(el);
+    });
+    return changed;
+  }
+  function setupPrintableTextLimits(){
+    var changed=normalizePrintableTextFields();
+    document.querySelectorAll('#c_opm,#c_cave').forEach(function(el){
+      el.addEventListener('beforeinput',function(e){
+        if(e.isComposing||/^delete/.test(e.inputType))return;
+        var text=e.inputType==='insertLineBreak'||e.inputType==='insertParagraph'?'\n':e.data;
+        if(text==null)return;
+        var start=el.selectionStart==null?el.value.length:el.selectionStart;
+        var end=el.selectionEnd==null?start:el.selectionEnd;
+        if(printableTextFits(el,el.value.slice(0,start)+text+el.value.slice(end)))return;
+        e.preventDefault();insertPrintableText(el,text);
+      });
+      el.addEventListener('paste',function(e){
+        var text=e.clipboardData&&e.clipboardData.getData('text/plain');
+        if(text==null)return;
+        e.preventDefault();insertPrintableText(el,text.replace(/\r\n?/g,'\n'));
+      });
+      el.addEventListener('input',function(){
+        if(printableTextFits(el,el.value))el._lastPrintableValue=el.value;
+        else{el.value=el._lastPrintableValue||'';signalPrintableLimit(el);}
+        syncPrintableText(el);
+      });
+      el.addEventListener('compositionend',function(){
+        if(!printableTextFits(el,el.value)){el.value=el._lastPrintableValue||'';signalPrintableLimit(el);}
+        else el._lastPrintableValue=el.value;
+        syncPrintableText(el);
+      });
+    });
+    return changed;
   }
 
   // beheer-weergave: /admin88 kan oefeningen toevoegen, hernoemen en verwijderen — direct
@@ -1218,6 +1319,8 @@ bridge2.jpg</div>
   var SAFARI_PRINT=/Safari/i.test(navigator.userAgent)&&!/Chrome|Chromium|CriOS|Android/i.test(navigator.userAgent);
   function doePrint(){
     if(SAFARI_PRINT)document.documentElement.classList.add('safari-print');
+    if(normalizePrintableTextFields())saveState();
+    if(document.activeElement&&document.activeElement.matches&&document.activeElement.matches('#c_opm,#c_cave'))document.activeElement.blur();
     ping('print');
     window.print();
   }
@@ -1488,6 +1591,7 @@ bridge2.jpg</div>
       else GRID.cells[k]=c.cells[k];
     });
     CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value=(c.client&&c.client[k])||'';});
+    normalizePrintableTextFields();
     render();
     if(missing.length)alert('Niet meer in de oefeningenlijst (overgeslagen): '+missing.join(', '));
   }
@@ -1630,6 +1734,7 @@ bridge2.jpg</div>
   document.getElementById('wis_alles').addEventListener('click',function(){
     chosen=[];GRID={rows:{},cells:{}};VIDS={};
     CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value='';});
+    normalizePrintableTextFields();
     verbergQr();closeOv('ovWis');render();
   });
   elMon.addEventListener('click',function(e){
@@ -1755,8 +1860,10 @@ bridge2.jpg</div>
     saveState();
   });
   applySettings();
-  CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.addEventListener('input',saveState);});
   loadState();
+  var printTextTrimmed=setupPrintableTextLimits();
+  CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.addEventListener('input',saveState);});
+  if(printTextTrimmed)saveState();
 
 
   // ---- IndexedDB: opslag voor geüploade plaatjes (groot, geen quota-probleem) ----
