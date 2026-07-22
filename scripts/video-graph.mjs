@@ -390,10 +390,13 @@ async function createMotion(node) {
       "No pause, no repeated cycle and no generated speech; preserve identity, clothing, equipment, locked camera and white background exactly.",
     ].join(" ");
     const createVeoFallback = async (fallbackFrom) => {
+      // Veo accepteert maximaal 1.000 tekens. De oefeningsspecifieke baan staat
+      // bewust vooraan en blijft daardoor volledig behouden bij begrenzing.
+      const veoPrompt = clinicalPrompt.slice(0, 1000);
       const fallback = await remoteTask(() => runway().imageToVideo.create({
         model: modelPolicy.motionVideoModerationFallback,
         promptImage: [{ uri: pose, position: "first" }, { uri: endPose, position: "last" }],
-        promptText: clinicalPrompt,
+        promptText: veoPrompt,
         negativePrompt: [
           node.entry.motionNegativePromptEn || "wrong movement plane, compensatory movement",
           "camera movement, cut, text, watermark, extra person, extra limbs, distorted hands, distorted feet, changing identity, changing clothing, cropped body",
