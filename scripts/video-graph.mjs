@@ -405,7 +405,8 @@ async function createMotion(node) {
         promptText: clinicalPrompt,
         negativePrompt: "camera movement, cut, text, watermark, extra person, extra limbs, distorted hands, distorted feet, changing identity, changing clothing, cropped body",
         ratio: "1920:1080",
-        duration: modelPolicy.motionSeconds,
+        // Veo 3.1 Fast accepteert native 1080p uitsluitend als achtsecondenclip.
+        duration: modelPolicy.keyframeMotionSeconds,
         audio: false,
       }), node.output);
       return { ...fallback, fallbackFrom: "seedance2-moderation", model: modelPolicy.motionVideoModerationFallback };
