@@ -48,6 +48,7 @@ const modelPolicy = {
   motionVideoStandard: motionQuality === "clinical-1080" ? "seedance2" : "gemini_omni_flash",
   motionVideoComplex: complexMotionTier === "standard" && motionQuality !== "clinical-1080" ? "gemini_omni_flash" : "seedance2",
   motionVideoKeyframed: motionQuality === "clinical-1080" ? "seedance2" : "veo3.1_fast",
+  motionVideoModerationFallback: "veo3.1_fast",
   complexMotionTier,
   motionQuality,
   complexRule: "risk.level === extra-review",
@@ -154,6 +155,7 @@ function relevantPolicy(node, policy = modelPolicy) {
     motionSeconds: node.entry?.motionKeyframes ? policy.keyframeMotionSeconds : policy.motionSeconds,
     motionPromptVersion: policy.motionPromptVersion,
     motionQuality: policy.motionQuality,
+    moderationFallback: policy.motionVideoModerationFallback,
   };
   if (node.kind === "voice") return { voice: policy.voice, voicePreset: policy.voicePreset };
   if (node.kind === "compose") return { composeVersion: 2 };
@@ -381,18 +383,33 @@ async function createMotion(node) {
   const pose = await dataUri(posePath);
   if (motionQuality === "clinical-1080") {
     const endPose = await dataUri(artifact("end-poses", `${node.entry.exerciseId}.png`));
-    return remoteTask(() => runway().imageToVideo.create({
-      model: "seedance2",
-      promptImage: [{ uri: pose, position: "first" }, { uri: endPose, position: "last" }],
-      promptText: [
-        node.entry.motionKeyframes?.motionPromptEn || motionPrompt(node.entry),
-        "Move continuously from the exact first keyframe to the exact last keyframe at a slow clinical teaching pace.",
-        "No pause, no repeated cycle and no generated speech; preserve identity, clothing, equipment, locked camera and white background exactly.",
-      ].join(" "),
-      ratio: "1920:1080",
-      duration: modelPolicy.motionSeconds,
-      audio: false,
-    }), node.output);
+    const clinicalPrompt = [
+      node.entry.motionKeyframes?.motionPromptEn || motionPrompt(node.entry),
+      "Move continuously from the exact first keyframe to the exact last keyframe at a slow clinical teaching pace.",
+      "No pause, no repeated cycle and no generated speech; preserve identity, clothing, equipment, locked camera and white background exactly.",
+    ].join(" ");
+    try {
+      return await remoteTask(() => runway().imageToVideo.create({
+        model: "seedance2",
+        promptImage: [{ uri: pose, position: "first" }, { uri: endPose, position: "last" }],
+        promptText: clinicalPrompt,
+        ratio: "1920:1080",
+        duration: modelPolicy.motionSeconds,
+        audio: false,
+      }), node.output);
+    } catch (error) {
+      if (!/content moderation|moderation system/i.test(String(error?.message || error))) throw error;
+      const fallback = await remoteTask(() => runway().imageToVideo.create({
+        model: modelPolicy.motionVideoModerationFallback,
+        promptImage: [{ uri: pose, position: "first" }, { uri: endPose, position: "last" }],
+        promptText: clinicalPrompt,
+        negativePrompt: "camera movement, cut, text, watermark, extra person, extra limbs, distorted hands, distorted feet, changing identity, changing clothing, cropped body",
+        ratio: "1920:1080",
+        duration: modelPolicy.motionSeconds,
+        audio: false,
+      }), node.output);
+      return { ...fallback, fallbackFrom: "seedance2-moderation", model: modelPolicy.motionVideoModerationFallback };
+    }
   }
   if (node.entry.motionKeyframes) {
     const endPose = await dataUri(artifact("end-poses", `${node.entry.exerciseId}.png`));

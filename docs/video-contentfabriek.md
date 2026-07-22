@@ -118,6 +118,10 @@ heen-en-terugcyclus zonder een zichtbare sprong terug naar frame één. De zacht
 `Serene` loopt als onafhankelijke tak en komt pas bij compositing samen met beeld en captions. Een
 afgekeurde take kan daardoor worden vervangen zonder stem, captions of andere oefeningen opnieuw te betalen.
 
+Als Seedance een verder geldige fysiotherapiepose expliciet door providermoderatie weigert, probeert die ene
+motionnode precies één keer dezelfde native-1080p begin/eindopdracht via Veo 3.1 Fast. De fallback geldt niet
+voor time-outs, programmeerfouten of kwaliteitsafkeur; zulke fouten blijven gestopt voor diagnose.
+
 `motionKeyframes` kan de automatisch afgeleide eindpose verder klinisch specificeren. De vroegere
 `economy-720`-route blijft alleen beschikbaar voor goedkope technische proeven; de QA noemt die uitvoer
 nooit native 1080p. De inputhash bevat kwaliteitstier, promptversie en keyframes; gewijzigde bewegingen
