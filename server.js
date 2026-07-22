@@ -1049,11 +1049,14 @@ async function afhandelen(request, response) {
   // opname starten: geeft een kortlevend token terug; de scherm-QR wijst naar /opname/<token>
   if (urlPath === "/api/opname/start" && request.method === "POST") {
     if (schrijfLimiet(request, response)) return;
+    // sinds de eigen opname uit de app is verdwenen start alleen de beheerder nog
+    // opnames; zonder deze grendel kan iedereen uploadtokens munten en de schijf
+    // volschrijven met video's van 60 MB per stuk
+    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
     try {
       const b = JSON.parse(await readBody(request));
       const doel = b.doel === "oefening" ? "oefening" : "kaart";
       if (doel === "oefening") {
-        if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
         const naam = String(b.naam || "").trim();
         const manifest = await buildManifest();
         if (!manifest.some((e) => e.naam === naam)) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden." }); return; }

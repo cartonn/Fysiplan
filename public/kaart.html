@@ -52,6 +52,13 @@
     box-shadow:0 2px 6px rgba(36,86,166,.28)}
   .oefkop img{width:88px;height:88px;flex:0 0 88px;object-fit:contain;background:#fff;
     border:1px solid var(--lijn);border-radius:14px;padding:4px;cursor:zoom-in}
+  /* afspeelteken op de miniatuur: nodigt uit om de demonstratie te openen */
+  .fotoknop{position:relative;flex:0 0 88px;display:block}
+  .fotoknop img{display:block}
+  .demobadge{position:absolute;right:3px;bottom:3px;width:24px;height:24px;border-radius:999px;
+    background:var(--blauw);color:#fff;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 1px 5px rgba(36,86,166,.4);pointer-events:none}
+  .demobadge .driehoek{display:flex}
 
   /* tik op een oefenfoto: groot bekijken, één tik terug */
   .lightbox{position:fixed;inset:0;background:rgba(22,19,12,.9);display:none;
@@ -217,7 +224,7 @@
   button:focus-visible{outline:3px solid rgba(36,86,166,.35);outline-offset:2px}
   @media print{
     body{background:#fff}
-    .vbtn,.vhouder,.mkaart,.agkaart,#metingkop,#agendakop,.kopacties,.belknop,.appbanner{display:none !important}
+    .vbtn,.vhouder,.mkaart,.agkaart,#metingkop,#agendakop,.kopacties,.belknop,.appbanner,.demobadge{display:none !important}
     .kop,.oef,.schemakaart{box-shadow:none}
   }
 </style>
@@ -406,8 +413,10 @@
       else if(stream)knop='<button class="vbtn" data-stream="'+esc(stream)+'" aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>'+
         (aiVideo.aiGenerated?'<div class="vmeta">'+esc(aiVideo.reviewStatus==='concept'?(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl):(VIDEO_META[TAAL]||VIDEO_META.nl))+'</div>':'');
       else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'" aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
+      var beeldpad=o?(o.kaartImg||o.img):'';
       html+='<div class="oef"><div class="oefkop"><span class="nr">'+(idx+1)+'</span>'+
-        (o?'<img src="/'+esc(o.kaartImg||o.img)+'" alt="" loading="lazy"/>':'')+
+        (o?'<span class="fotoknop"><img src="/'+esc(beeldpad)+'" alt="" loading="lazy"/>'+
+          (/-avatar-v\d+\./.test(beeldpad)?'<span class="demobadge" aria-hidden="true">'+DRIEHOEK+'</span>':'')+'</span>':'')+
         '<div class="oefinfo"><div class="naam">'+esc(vt(x.n))+'</div>'+
         (chips?'<div class="chips">'+chips+'</div>':'')+'</div></div>'+
         knop+'<div class="vhouder"></div></div>';
@@ -702,12 +711,17 @@
         document.getElementById('lbimg').src=foto.src;
         var oefEl=foto.closest('.oef').querySelector('.naam');
         document.getElementById('lbnaam').textContent=oefEl?oefEl.textContent:'';
-        // de knop alleen tonen als het beeld echt twee vindbare houdingen bevat
+        // als het beeld twee vindbare houdingen bevat start de demonstratie meteen;
+        // de foto blijft één tik verwijderd via de knop bovenin
         var kd=document.getElementById('lbdemoKnop');
         kd.hidden=true;
         if(/-avatar-v\d+\./.test(foto.src)){
           var li=document.getElementById('lbimg');
-          var beslis=function(){kd.hidden=!demoSplitsing(li);};
+          var beslis=function(){
+            var sp=demoSplitsing(li);
+            kd.hidden=!sp;
+            if(sp)demoStart();
+          };
           if(li.complete&&li.naturalWidth)beslis();
           else li.addEventListener('load',beslis,{once:true});
         }
