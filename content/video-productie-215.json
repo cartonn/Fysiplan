@@ -62,6 +62,7 @@
         "level": "standard",
         "reason": "Standaard dubbele klinische beoordeling blijft vereist."
       },
+      "motionPromptEn": "A professional physiotherapy instructor demonstrates bilateral shoulder flexion with dumbbells. Both hands travel strictly forward and upward in the sagittal plane, directly in front of the shoulders, from beside the thighs to shoulder height. Never move the arms outward to the sides and never perform shoulder abduction or a lateral raise. Keep the elbows nearly straight, the trunk vertical, the shoulders relaxed and the camera locked. Complete only this precise forward arm raise.",
       "approvals": {
         "script": {
           "status": "draft",

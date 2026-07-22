@@ -96,6 +96,10 @@ function generatedEntry(oefening, position, previous = {}) {
     risk: highRisk.has(oefening.naam)
       ? { level: "extra-review", reason: highRisk.get(oefening.naam) }
       : { level: "standard", reason: "Standaard dubbele klinische beoordeling blijft vereist." },
+    // Handmatig aangescherpte bewegingsbanen blijven behouden wanneer de overige
+    // productiemetadata opnieuw uit de bibliotheek wordt gesynchroniseerd.
+    ...(previous.motionPromptEn ? { motionPromptEn: previous.motionPromptEn } : {}),
+    ...(previous.motionKeyframes ? { motionKeyframes: previous.motionKeyframes } : {}),
     approvals,
     assets,
     publication: scriptChanged
