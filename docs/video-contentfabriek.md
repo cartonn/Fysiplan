@@ -85,7 +85,7 @@ FYSIPLAN_ADMIN_KEY='...' npm run videos:upload-batch -- \
   --dir ./renders --base-url https://fysiplan.nl --confirm-upload
 ```
 
-## Productiegraph: 7.002 afhankelijke nodes
+## Productiegraph: native 1080p, herstartbaar en klinisch begrensd
 
 De actuele conceptroute is geen handmatige lus over 215 items. `scripts/video-graph.mjs` bouwt een
 gerichte acyclische graph (DAG) met één gedeelde avatarbron en een afzonderlijke, herstartbare tak
@@ -94,14 +94,14 @@ inputhash uit de cache hervat.
 
 ```mermaid
 flowchart LR
-  A["Avatar master\nGemini 3 Pro Image"] --> P["Poseframe per oefening\navatar + bronillustratie"]
-  P --> E["Optionele klinische eindpose\nGemini 3 Pro Image"]
-  P --> M["Motionclip\nOmni Flash · complex: Seedance 2"]
-  E --> K["Start/eind-keyframes\nVeo 3.1 Fast"]
-  S["Nederlands conceptscript"] --> V["Nederlandse stem\nEleven Multilingual v2"]
+  A["Avatar master\nvaste FysiPlan-vrouw"] --> P["Beginpose per oefening\navatar + bronillustratie"]
+  P --> E["Klinische eindpose per oefening\nzelfde identiteit en camera"]
+  P --> M["Native 1080p motion\nSeedance 2"]
+  E --> M
+  S["Nederlands conceptscript"] --> V["Zachte vrouwelijke Runway-stem\nSerene · Eleven Multilingual v2"]
   V --> C["Getimede captions"]
-  M --> F["1080p compositing"]
-  K --> F
+  M --> Y["Naadloze heen-en-terugcyclus\ngeen harde frame-sprong"]
+  Y --> F["1080p compositing"]
   V --> F
   C --> F
   F --> Q["Technische QA\ncodec · audio · duur · grootte"]
@@ -110,49 +110,47 @@ flowchart LR
   R --> G["Klinisch goedgekeurd"]
 ```
 
-De gekozen graph gebruikt Runway als modelhub. Gemini 3 Pro Image maakt eerst één vaste
+De standaardroute `clinical-1080` gebruikt Runway als modelhub. Gemini 3 Pro Image maakt eerst één vaste
 fotorealistische avatar. Per oefening combineert een poseframe die menselijke identiteit met de
-bestaande bronillustratie; daarna maakt Gemini Omni Flash één rustige bewegingscyclus. De tien
-`extra-review`-items gaan direct via het duurdere Seedance 2 op 1080p. De Nederlandse ElevenLabs-stem loopt
-als onafhankelijke tak en komt pas bij compositing samen met beeld en captions. Complexe of
-afgekeurde takes kunnen later op Seedance of menselijke motion capture worden vervangen zonder de
-overige nodes opnieuw te betalen.
+bestaande bronillustratie. Iedere oefening krijgt een afzonderlijk controleerbaar eindframe. Seedance 2
+interpoleert daar native op 1920×1080 tussen; de lokale compositor maakt van de heenbeweging een vloeiende
+heen-en-terugcyclus zonder een zichtbare sprong terug naar frame één. De zachte vrouwelijke Runway-preset
+`Serene` loopt als onafhankelijke tak en komt pas bij compositing samen met beeld en captions. Een
+afgekeurde take kan daardoor worden vervangen zonder stem, captions of andere oefeningen opnieuw te betalen.
 
-Voor subtiele bewegingen kan een item `motionKeyframes` krijgen. De DAG maakt dan eerst een aparte,
-controleerbare eindpose en laat Veo 3.1 Fast alleen tussen start en eind interpoleren. Als Seedance
-een aantoonbaar onschuldige menselijke referentie blokkeert, kan één geselecteerde tak met
-`--complex-motion-tier standard` via Omni Flash worden hervat. De inputhash bevat modeltier,
-promptversie en keyframes; gewijzigde bewegingen maken alleen hun eigen motion en nakomelingen
-stale. De runner baseert uitvoerbaarheid uitsluitend op resultaten uit de actuele run, zodat een
-oude geslaagde descendant nooit een mislukte nieuwe parent kan omzeilen.
+`motionKeyframes` kan de automatisch afgeleide eindpose verder klinisch specificeren. De vroegere
+`economy-720`-route blijft alleen beschikbaar voor goedkope technische proeven; de QA noemt die uitvoer
+nooit native 1080p. De inputhash bevat kwaliteitstier, promptversie en keyframes; gewijzigde bewegingen
+maken alleen hun eigen motion en nakomelingen stale. De runner baseert uitvoerbaarheid uitsluitend op
+resultaten uit de actuele run, zodat een oude geslaagde descendant nooit een mislukte nieuwe parent kan omzeilen.
 
 ```bash
 # graph en actuele prijsraming tonen; geen providerkosten
 npm run videos:graph
 node scripts/video-graph.mjs plan --provider runway --upload-concepts \
-  --base-url https://fysiplan.nl
+  --motion-quality clinical-1080 --base-url https://fysiplan.nl
 
-# alleen na een inhoudelijk veilige providerblokkade: goedkope fallback voor die ene tak
+# goedkope 720p-route uitsluitend om graph/compositing te testen, niet als productiebeeld
 node scripts/video-graph.mjs run --provider runway --execute \
   --manifest content/core-1000.json --only '<exacte titel>' \
-  --complex-motion-tier standard --budget-usd 0.60
+  --motion-quality economy-720 --complex-motion-tier standard --budget-usd 0.60
 
 # één pilot volledig maken, technisch controleren en als zichtbaar concept koppelen
 RUNWAYML_API_SECRET='...' FYSIPLAN_ADMIN_KEY='...' \
   node scripts/video-graph.mjs run --provider runway --execute \
-  --only fp_ff306042c93f0900 --budget-usd 1 \
+  --only fp_ff306042c93f0900 --motion-quality clinical-1080 --budget-usd 3.10 \
   --upload-concepts --base-url https://fysiplan.nl
 
 # na goedkeuring van de pilot de volledige graph fan-out uitvoeren
 RUNWAYML_API_SECRET='...' FYSIPLAN_ADMIN_KEY='...' \
   node scripts/video-graph.mjs run --provider runway --execute \
-  --budget-usd 230 --concurrency 3 \
+  --motion-quality clinical-1080 --budget-usd 620 --concurrency 3 \
   --upload-concepts --base-url https://fysiplan.nl
 ```
 
-Op 18 juli 2026 raamt de graph de eerste generatie van alle 215 items op ongeveer **$207**, exclusief
-herkansingen en belasting. De runner weigert te starten als de berekende nodekosten boven
-`--budget-usd` liggen. Runway noemt voor de gebruikte modellen 10 credits per videoseconde,
+Op 22 juli 2026 raamt de native 1080p-route de eerste generatie van alle 215 items op **$618,28**, exclusief
+herkansingen en belasting. Eén begrensde pilot kost maximaal circa **$3,07**. De runner weigert te starten
+als de berekende nodekosten boven `--budget-usd` liggen. Runway noemt voor de gebruikte modellen 10 credits per videoseconde,
 20 credits per Gemini 3 Pro-render, 40 credits per seconde Seedance 2 op 1080p en 1 credit per 50
 TTS-tekens; API-credits kosten $0,01.
 Zie de officiële [Runway API-prijzen](https://docs.dev.runwayml.com/guides/pricing/) en
@@ -220,12 +218,12 @@ capture te worden vervangen.
 | Laag | Keuze | Reden |
 | --- | --- | --- |
 | Conceptavatar en -pose | Gemini 3 Pro Image via Runway | Krachtigste aangeboden beeldmodel, mensreferentie voor identiteit en bronillustratie als posecontext |
-| Conceptmotion | Gemini Omni Flash + Seedance 2 via Runway | Schaalbare cyclus; de tien extra-risico-items krijgen direct het sterkere 1080p-model |
+| Conceptmotion | Seedance 2 native 1080p via Runway | Begin/eind-keyframes voor iedere oefening; de 720p-route is alleen een technische proefstand |
 | Premium/vervanging | Ervaren fysiotherapeut + vast captureprotocol | Menselijke, herhaalbare uitvoering voor afgekeurde of zeer complexe AI-takes |
 | Productie motion capture | Rokoko Smartsuit Pro II | 200 fps, onbeperkt opnemen, FBX/BVH/CSV, directe Unreal/Blender-workflow en ingebouwde cleanup; [productinformatie](https://www.rokoko.com/products/smartsuit-pro) |
 | Goedkope pilot | Move One op iPhone | Snel valideren zonder studio-investering; [prijzen en limieten](https://docs.move.ai/knowledge/move-one-pricing) |
 | Avatar/render | Epic MetaHuman + Unreal Engine | Fotorealistische, consistente eigen avatar en controle over camera, kleding, licht en anatomische zichtbaarheid; [MetaHuman-documentatie](https://dev.epicgames.com/documentation/en-us/metahuman/metahuman-documentation) |
-| Stem | ElevenLabs Multilingual v2/v3 | Consistente stem over veel talen via API; [modellen](https://elevenlabs.io/docs/overview/models) en [TTS API](https://elevenlabs.io/docs/api-reference/text-to-speech/convert) |
+| Stem | Runway `Serene` op Eleven Multilingual v2 | Zachte vaste vrouwenstem, rechtstreeks in dezelfde providergraph en los van de motionmaster |
 | Video delivery | Cloudflare Stream | Upload, encoding, adaptieve playback, signed URL-optie, captions en meerdere audiosporen in één videomaster; [Stream](https://developers.cloudflare.com/stream/) |
 | App-koppeling | `exerciseId` + goedgekeurde catalogus | Automatische één-klik-koppeling die hernoemen en vertalen overleeft |
 

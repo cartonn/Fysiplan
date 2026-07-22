@@ -9,8 +9,8 @@ import { graphLayers, runDag } from "../lib/dag-runner.js";
 
 const exec = promisify(execFile);
 const root = resolve(new URL("../", import.meta.url).pathname);
-const GRAPH_VERSION = 2;
-const HASH_VERSION = 2;
+const GRAPH_VERSION = 3;
+const HASH_VERSION = 3;
 const args = process.argv.slice(2);
 const command = args.find((arg) => !arg.startsWith("--")) || "plan";
 
@@ -29,6 +29,7 @@ const concurrency = Math.max(1, Math.min(8, Number(valueAfter("--concurrency", "
 const budgetUsd = Number(valueAfter("--budget-usd", "0"));
 const only = valueAfter("--only");
 const complexMotionTier = valueAfter("--complex-motion-tier", "premium");
+const motionQuality = valueAfter("--motion-quality", "clinical-1080");
 const uploadConcepts = args.includes("--upload-concepts");
 const baseUrl = valueAfter("--base-url").replace(/\/$/, "");
 const allExercises = manifest.exercises;
@@ -38,17 +39,19 @@ const selected = only
 if (only && !selected.length) throw new Error(`Oefening niet gevonden: ${only}`);
 if (!['local', 'runway'].includes(provider)) throw new Error("--provider moet local of runway zijn");
 if (!["premium", "standard"].includes(complexMotionTier)) throw new Error("--complex-motion-tier moet premium of standard zijn");
+if (!["clinical-1080", "economy-720"].includes(motionQuality)) throw new Error("--motion-quality moet clinical-1080 of economy-720 zijn");
 
 const modelPolicy = {
   avatarImage: "gemini_image3_pro",
   poseImage: "gemini_image3_pro",
   endPoseImage: "gemini_image3_pro",
-  motionVideoStandard: "gemini_omni_flash",
-  motionVideoComplex: complexMotionTier === "standard" ? "gemini_omni_flash" : "seedance2",
-  motionVideoKeyframed: "veo3.1_fast",
+  motionVideoStandard: motionQuality === "clinical-1080" ? "seedance2" : "gemini_omni_flash",
+  motionVideoComplex: complexMotionTier === "standard" && motionQuality !== "clinical-1080" ? "gemini_omni_flash" : "seedance2",
+  motionVideoKeyframed: motionQuality === "clinical-1080" ? "seedance2" : "veo3.1_fast",
   complexMotionTier,
+  motionQuality,
   complexRule: "risk.level === extra-review",
-  motionPromptVersion: "clinical-motion-v3-safe-override",
+  motionPromptVersion: "clinical-motion-v4-native-1080-cycle",
   voice: "eleven_multilingual_v2",
   motionSeconds: 6,
   keyframeMotionSeconds: 8,
@@ -74,6 +77,7 @@ function nodeCost(kind, entry) {
   if (kind === "avatar") return 0.20;
   if (kind === "pose") return 0.20;
   if (kind === "end-pose") return 0.20;
+  if (kind === "motion" && motionQuality === "clinical-1080") return modelPolicy.motionSeconds * 0.40;
   if (kind === "motion" && entry.motionKeyframes) return modelPolicy.keyframeMotionSeconds * 0.10;
   if (kind === "motion") return modelPolicy.motionSeconds * (entry.risk.level === "extra-review" && modelPolicy.complexMotionTier === "premium" ? 0.40 : 0.10);
   if (kind === "voice") return Math.ceil(entry.script.narration.length / 50) * 0.01;
@@ -90,7 +94,9 @@ function buildGraph() {
   };
   const branches = selected.flatMap((entry) => {
     const id = entry.exerciseId;
-    const hasEndPose = Boolean(entry.motionKeyframes?.endPosePromptEn);
+    // De productieroute heeft voor iedere oefening expliciete begin- en eindcontrole.
+    // Alleen de goedkope proefroute mag zonder apart eindframe werken.
+    const hasEndPose = motionQuality === "clinical-1080" || Boolean(entry.motionKeyframes?.endPosePromptEn);
     const exerciseNodes = [
       { id: `pose:${id}`, kind: "pose", entry, dependencies: [avatar.id], output: artifact("poses", `${id}.png`), costUsd: nodeCost("pose", entry) },
       ...(hasEndPose ? [{ id: `end-pose:${id}`, kind: "end-pose", entry, dependencies: [`pose:${id}`], output: artifact("end-poses", `${id}.png`), costUsd: nodeCost("end-pose", entry) }] : []),
@@ -147,6 +153,7 @@ function relevantPolicy(node, policy = modelPolicy) {
     motionVideo: node.entry?.motionKeyframes ? policy.motionVideoKeyframed : node.entry?.risk.level === "extra-review" ? policy.motionVideoComplex : policy.motionVideoStandard,
     motionSeconds: node.entry?.motionKeyframes ? policy.keyframeMotionSeconds : policy.motionSeconds,
     motionPromptVersion: policy.motionPromptVersion,
+    motionQuality: policy.motionQuality,
   };
   if (node.kind === "voice") return { voice: policy.voice, voicePreset: policy.voicePreset };
   if (node.kind === "compose") return { composeVersion: 2 };
@@ -342,9 +349,15 @@ async function createEndPose(node) {
     return { source: "local-keyframe-test" };
   }
   const startPose = await dataUri(startPosePath);
+  const endPoseInstruction = node.entry.motionKeyframes?.endPosePromptEn || [
+    `Create the clinically precise end position of '${node.entry.titleNl}'.`,
+    `The movement instruction is: ${node.entry.script.movement}`,
+    `The most important technique cue is: ${node.entry.script.cue}`,
+    "Show the natural end of the safe range of motion, without exaggeration or compensation.",
+  ].join(" ");
   const promptText = [
     "Edit @start into the clinically precise end pose described below while preserving the exact same adult woman, face, hair, clothing, stool, camera, crop, lighting and pure white studio.",
-    node.entry.motionKeyframes.endPosePromptEn,
+    endPoseInstruction,
     "Keep the full body, both feet, hands and all equipment visible. Photorealistic anatomy, no text, no logo, no watermark, no added person.",
   ].join(" ");
   const result = await remoteTask(() => runway().textToImage.create({
@@ -366,6 +379,21 @@ async function createMotion(node) {
     return { source: "local-graph-test" };
   }
   const pose = await dataUri(posePath);
+  if (motionQuality === "clinical-1080") {
+    const endPose = await dataUri(artifact("end-poses", `${node.entry.exerciseId}.png`));
+    return remoteTask(() => runway().imageToVideo.create({
+      model: "seedance2",
+      promptImage: [{ uri: pose, position: "first" }, { uri: endPose, position: "last" }],
+      promptText: [
+        node.entry.motionKeyframes?.motionPromptEn || motionPrompt(node.entry),
+        "Move continuously from the exact first keyframe to the exact last keyframe at a slow clinical teaching pace.",
+        "No pause, no repeated cycle and no generated speech; preserve identity, clothing, equipment, locked camera and white background exactly.",
+      ].join(" "),
+      ratio: "1920:1080",
+      duration: modelPolicy.motionSeconds,
+      audio: false,
+    }), node.output);
+  }
   if (node.entry.motionKeyframes) {
     const endPose = await dataUri(artifact("end-poses", `${node.entry.exerciseId}.png`));
     return remoteTask(() => runway().imageToVideo.create({
@@ -493,20 +521,39 @@ async function compose(node) {
   // De bewegingsmaster blijft beeldvullend en vrij van titels, balken en ingebakken
   // ondertitels. De app toont titel, uitleg en WebVTT onder/naast het beeld zodat
   // niets ooit handen, gezicht, voeten of apparatuur bedekt.
+  let motionInput = motion;
+  let cycle = "source-loop";
+  if (motionQuality === "clinical-1080" || Boolean(node.entry.motionKeyframes?.endPosePromptEn)) {
+    // Een begin->eind-generatie hard terug naar frame één laten springen oogt nep.
+    // Een deterministische reverse maakt er een vloeiende oefenherhaling van en kost
+    // geen extra providercredits.
+    motionInput = artifact("cycles", `${id}.mp4`);
+    await mkdir(dirname(motionInput), { recursive: true });
+    await exec("ffmpeg", [
+      "-y", "-loglevel", "error", "-i", motion,
+      "-filter_complex", "[0:v]split=2[forward][reverse];[reverse]reverse[backward];[forward][backward]concat=n=2:v=1:a=0,format=yuv420p[out]",
+      "-map", "[out]", "-an", "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-r", "25", "-movflags", "+faststart", motionInput,
+    ]);
+    cycle = "ping-pong-keyframes";
+  }
   await exec("ffmpeg", [
-    "-y", "-loglevel", "error", "-stream_loop", "-1", "-i", motion, "-i", voice,
+    "-y", "-loglevel", "error", "-stream_loop", "-1", "-i", motionInput, "-i", voice,
     "-t", String(duration + 0.35),
     "-vf", "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=white,format=yuv420p",
     "-map", "0:v:0", "-map", "1:a:0", "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-r", "25",
     "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-movflags", "+faststart", node.output
   ]);
-  return { durationSeconds: duration + 0.35, layout: "full-bleed", captions: "sidecar" };
+  return { durationSeconds: duration + 0.35, layout: "full-bleed", captions: "sidecar", cycle, voicePreset: modelPolicy.voicePreset };
 }
 
 async function qa(node) {
   const video = artifact("final", `${node.entry.exerciseId}.mp4`);
+  const motion = artifact("motion", `${node.entry.exerciseId}.mp4`);
   const { stdout } = await exec("ffprobe", ["-v", "error", "-show_streams", "-show_format", "-of", "json", video]);
   const probe = JSON.parse(stdout);
+  const { stdout: motionStdout } = await exec("ffprobe", ["-v", "error", "-show_streams", "-show_format", "-of", "json", motion]);
+  const motionProbe = JSON.parse(motionStdout);
+  const motionVideoStream = motionProbe.streams.find((stream) => stream.codec_type === "video");
   const videoStream = probe.streams.find((stream) => stream.codec_type === "video");
   const audioStream = probe.streams.find((stream) => stream.codec_type === "audio");
   const size = Number(probe.format?.size || 0);
@@ -553,6 +600,8 @@ async function qa(node) {
     uploadSizeSafe: size >= 10 * 1024 && size <= 60 * 1024 * 1024,
     captionsPresent: captions.length >= 2,
     captionsCoverNarration: captions.length > 0 && Math.abs(captions.at(-1).end - (duration - 0.35)) <= 1.2,
+    nativeMotion1080p: provider === "local" || motionQuality !== "clinical-1080" || (motionVideoStream?.width === 1920 && motionVideoStream?.height === 1080),
+    runwayFemaleVoice: provider === "local" || modelPolicy.voicePreset === "Serene",
     ...Object.fromEntries(Object.entries(automatedVisualChecks).map(([key, value]) => [key, provider === "local" ? true : value])),
   };
   const report = {
@@ -560,7 +609,7 @@ async function qa(node) {
     sourceName: node.entry.sourceName,
     passed: Object.values(checks).every(Boolean),
     checks,
-    metrics: { frameMetrics, motionDifference, visualChecksBypassedForLocalProvider: provider === "local" },
+    metrics: { frameMetrics, motionDifference, sourceMotionResolution: `${motionVideoStream?.width || 0}x${motionVideoStream?.height || 0}`, visualChecksBypassedForLocalProvider: provider === "local" },
     duration,
     sizeBytes: size,
     review: "required"

@@ -419,10 +419,11 @@
         (aiVideo.aiGenerated?'<div class="vmeta">'+esc(aiVideo.reviewStatus==='concept'?(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl):(VIDEO_META[TAAL]||VIDEO_META.nl))+'</div>':'');
       else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'" aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
       var beeldpad=o?(o.kaartImg||o.img):'';
+      var heeftVideo=Boolean(knop);
       html+='<div class="oef"><div class="oefkop"><span class="nr">'+(idx+1)+'</span>'+
         (o?'<span class="fotoknop"><img src="/'+esc(beeldpad)+'" alt="" loading="lazy" data-s="'+esc(eersteS)+
-          '" data-h="'+esc(eersteH)+'" data-uitleg="'+esc((o.uitleg||''))+'"/>'+
-          (/-avatar-v\d+\./.test(beeldpad)?'<span class="demobadge" aria-hidden="true">'+DRIEHOEK+'</span>':'')+'</span>':'')+
+          '" data-h="'+esc(eersteH)+'" data-uitleg="'+esc((o.uitleg||''))+'" data-heeft-video="'+(heeftVideo?'1':'0')+'"/>'+
+          (heeftVideo?'<span class="demobadge" aria-hidden="true">'+DRIEHOEK+'</span>':'')+'</span>':'')+
         '<div class="oefinfo"><div class="naam">'+esc(vt(x.n))+'</div>'+
         (chips?'<div class="chips">'+chips+'</div>':'')+'</div></div>'+
         knop+'<div class="vhouder"></div></div>';
@@ -779,26 +780,20 @@
       // tik op de foto: groot bekijken met de naam eronder
       var foto=e.target.closest('.oefkop img');
       if(foto){
+        // Een play-badge betekent altijd een echte gekoppelde video. De foto is dan
+        // één grote afspeelknop; er wordt nooit een CSS-overvloeiing als video getoond.
+        if(foto.dataset.heeftVideo==='1'){
+          var echteVideoKnop=foto.closest('.oef').querySelector('.vbtn');
+          if(echteVideoKnop){echteVideoKnop.click();return;}
+        }
         var lb=document.getElementById('lightbox');
         demoStop();
         demo.info={s:foto.dataset.s||'',h:foto.dataset.h||'',uitleg:foto.dataset.uitleg||''};
         document.getElementById('lbimg').src=foto.src;
         var oefEl=foto.closest('.oef').querySelector('.naam');
         document.getElementById('lbnaam').textContent=oefEl?oefEl.textContent:'';
-        // als het beeld twee vindbare houdingen bevat start de demonstratie meteen;
-        // de foto blijft één tik verwijderd via de knop bovenin
         var kd=document.getElementById('lbdemoKnop');
         kd.hidden=true;
-        if(/-avatar-v\d+\./.test(foto.src)){
-          var li=document.getElementById('lbimg');
-          var beslis=function(){
-            var sp=demoSplitsing(li);
-            kd.hidden=!sp;
-            if(sp)demoStart();
-          };
-          if(li.complete&&li.naturalWidth)beslis();
-          else li.addEventListener('load',beslis,{once:true});
-        }
         lb.classList.add('open');
         return;
       }
