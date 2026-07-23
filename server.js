@@ -586,6 +586,25 @@ async function send(res, status, type, body) {
 const sendJson = (res, status, obj) => send(res, status, "application/json; charset=utf-8", JSON.stringify(obj));
 // 429 met Retry-After: nette clients weten zo hoelang ze moeten wachten en blijven niet hameren
 const send429 = (res, seconds, obj) => { try { res.setHeader("retry-after", String(seconds)); } catch {} return sendJson(res, 429, obj); };
+// eigen ruime rem voor de open statistiek-teller: normaal gebruik (printen, kaarten
+// opslaan) haalt dit nooit, maar hameren schrijft dan niet meer naar schijf
+const statsEventTeller = new Map();
+function statsEventLimiet(req, res) {
+  const nu = Date.now();
+  if (statsEventTeller.size > 5000) {
+    for (const [k, v] of statsEventTeller) if (nu - v.start > 5 * 60 * 1000) statsEventTeller.delete(k);
+  }
+  const ip = clientIp(req);
+  const t = statsEventTeller.get(ip);
+  if (!t || nu - t.start > 5 * 60 * 1000) { statsEventTeller.set(ip, { start: nu, n: 1 }); return false; }
+  if (++t.n > 120) {
+    if (t.n === 121) logGeweigerd(req, "stats-limiet");
+    send429(res, 300, { ok: false });
+    return true;
+  }
+  return false;
+}
+
 // rem op het raden van de beheersleutel: na 20 geweigerde pogingen per vijf minuten
 // per IP volgt 429 in plaats van 403. Met de juiste sleutel verandert er niets, ook
 // niet voor v1-beheer; alleen wie sleutels zit te proberen loopt vast.
@@ -799,6 +818,9 @@ async function afhandelen(request, response) {
 
   // gebruiks-ping vanuit de app (anoniem, alleen tellers)
   if (urlPath === "/api/stats/event" && request.method === "POST") {
+    // eigen ruime rem (los van de schrijflimiet, zodat kaarten opslaan er nooit
+    // last van heeft): dit endpoint schrijft naar schijf en stuurt de statistieken
+    if (statsEventLimiet(request, response)) return;
     try {
       const type = String(JSON.parse(await readBody(request)).type || "");
       const d = dagStats(vandaagKey());
@@ -1666,6 +1688,10 @@ async function afhandelen(request, response) {
     try {
       let html = await readFile(join(publicDir, "v2.html"), "utf8");
       html = html.replace(/__OPRICHTERS_OVER__/g, String(Math.max(0, 25 - (oprichters.vergeven || 0))));
+      // levend oefeningenaantal: groeit vanzelf mee met wat de bibliotheek echt serveert
+      let telling = 200;
+      try { telling = (await buildManifest("v2")).length; } catch {}
+      html = html.replace(/__OEFENINGEN_AANTAL__/g, String(telling));
       await send(response, 200, "text/html; charset=utf-8", html);
     }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
