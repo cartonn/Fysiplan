@@ -950,6 +950,9 @@ async function afhandelen(request, response) {
 
   // praktijkprofielen: ophalen en opslaan/bijwerken (gedeeld over alle apparaten)
   if (urlPath === "/api/praktijken" && request.method === "GET") {
+    // de praktijkenlijst voedt de keuzelijst in de app; de leeslimiet houdt normaal
+    // gebruik ongemoeid maar maakt het massaal afschrapen van contactgegevens traag
+    if (leesLimiet(request, response)) return;
     const list = Object.values(praktijken).sort((a, b) => a.praktijk.localeCompare(b.praktijk, "nl"));
     await sendJson(response, 200, list);
     return;
