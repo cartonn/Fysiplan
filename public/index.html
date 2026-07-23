@@ -1203,6 +1203,19 @@ bridge2.jpg</div>
     var o=OEF[id];if(!o)return;
     pendingCat=o.naam;pendingCatId=id;
     document.getElementById('vc_yt').value=(o.video&&o.video.yt)?('https://youtu.be/'+o.video.yt):'';
+    // de v1-bibliotheek draagt geen videovelden meer; haal de bestaande link uit het
+    // v2-kanaal, anders zou opslaan met een leeg veld die link ongemerkt wissen
+    if(!o.video&&!USE_V2_LIBRARY){
+      fetch('/v2/oefeningen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];})
+        .then(function(v2){
+          var v=v2.find?v2.find(function(e){return e.naam===o.naam;}):null;
+          if(v&&v.video&&pendingCat===o.naam){
+            o.video=v.video;
+            if(v.video.yt)document.getElementById('vc_yt').value='https://youtu.be/'+v.video.yt;
+            toonEigenVideoInfo(o);
+          }
+        }).catch(function(){});
+    }
     toonEigenVideoInfo(o);
     var cats=(GROUPS||[]).filter(function(x){return x.g!=='all';});
     document.getElementById('vc_naam').innerHTML=

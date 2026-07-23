@@ -411,11 +411,20 @@ async function readBaseManifest(channel = "v2") {
   return JSON.parse(await readFile(join(publicDir, catalogueFile(channel)), "utf8"));
 }
 
+// de uitkomst per beeldpad wordt een minuut onthouden: het publieke v2-manifest is
+// vrij opvraagbaar en zou anders per aanvraag honderden bestandscontroles uitlokken
+const beeldKlaarCache = new Map();
 async function imageReady(entry) {
   const source = String(entry.kaartImg || entry.img || "");
   if (!source || /^(?:data:|https?:|uploads\/)/.test(source)) return Boolean(source);
-  try { await access(join(publicDir, source.replace(/^\/+/, "")), constants.R_OK); return true; }
-  catch { return false; }
+  const nu = Date.now();
+  const c = beeldKlaarCache.get(source);
+  if (c && nu - c.t < 60 * 1000) return c.ok;
+  let ok = false;
+  try { await access(join(publicDir, source.replace(/^\/+/, "")), constants.R_OK); ok = true; }
+  catch {}
+  beeldKlaarCache.set(source, { t: nu, ok });
+  return ok;
 }
 
 function v2AssetPath(source) {

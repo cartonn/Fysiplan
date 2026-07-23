@@ -429,9 +429,12 @@
         (aiVideo.aiGenerated?'<div class="vmeta">'+esc(aiVideo.reviewStatus==='concept'?(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl):(VIDEO_META[TAAL]||VIDEO_META.nl))+'</div>':'');
       else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
       var beeldpad=o?(o.kaartImg||o.img):'';
+      // het v2-kanaal levert al absolute paden (/v2/images/...); oudere relatieve paden
+      // krijgen zelf een schuine streep, zodat er nooit een dubbele ontstaat
+      if(beeldpad&&beeldpad.charAt(0)!=='/')beeldpad='/'+beeldpad;
       var heeftVideo=Boolean(knop);
       html+='<div class="oef"><div class="oefkop"><span class="nr">'+(idx+1)+'</span>'+
-        (o?'<span class="fotoknop"><img src="/'+esc(beeldpad)+'" alt="" loading="lazy" data-s="'+esc(eersteS)+
+        (o?'<span class="fotoknop"><img src="'+esc(beeldpad)+'" alt="" loading="lazy" data-s="'+esc(eersteS)+
           '" data-h="'+esc(eersteH)+'" data-uitleg="'+esc((o.uitleg||''))+'" data-heeft-video="'+(heeftVideo?'1':'0')+'"/>'+
           (heeftVideo?'<span class="demobadge" aria-hidden="true">'+DRIEHOEK+'</span>':'')+'</span>':'')+
         '<div class="oefinfo"><div class="naam">'+esc(vt(x.n))+'</div>'+
@@ -911,7 +914,7 @@
   else{
     Promise.all([
       fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){return r.json();}),
-      fetch('/oefeningen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
+      fetch('/v2/oefeningen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
     ]).then(function(res){
       if(!res[0]||!res[0].ok){document.getElementById('fout').style.display='block';return;}
       K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1]};
