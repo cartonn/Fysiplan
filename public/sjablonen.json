@@ -1,173 +1,241 @@
 [
-  {
-    "naam": "Knie na operatie",
-    "sub": "Opbouw na een knieoperatie (bijv. voorste kruisband of knieprothese): rustig beginnen op de fiets, daarna kracht en stabiliteit.",
-    "oefeningen": [
-      "Fiets",
-      "Leg press",
-      "Leg extension",
-      "Leg curl",
-      "Squat",
-      "Step up",
-      "Calf raises",
-      "Glute bridges",
-      "Balans op 1 been",
-      "Lunges"
-    ]
-  },
-  {
-    "naam": "Heup na operatie",
-    "sub": "Opbouw na een heupoperatie (bijv. heupprothese): mobiliteit, bilspieren en veilig belasten.",
-    "oefeningen": [
-      "Been pendelen",
-      "Fiets",
-      "Glute bridges",
-      "Lying abduction",
-      "Standing abduction",
-      "Standing gluteus",
-      "Kick back",
-      "Chair squat",
-      "Step up"
-    ]
-  },
-  {
-    "naam": "Schouderrevalidatie",
-    "sub": "Rotator cuff en schoudergordel: eerst gecontroleerd bewegen, daarna kracht in alle richtingen.",
-    "oefeningen": [
-      "Anteflexie armen",
-      "Exo pull",
-      "Endo pull",
-      "Front raises",
-      "Lateral raises",
-      "Reversed flyes",
-      "Shoulder rotation (shrugs)",
-      "Pully row"
-    ]
-  },
-  {
-    "naam": "Lage rugklachten",
-    "sub": "Mobiliseren en de rompspieren versterken bij aspecifieke lage rugklachten.",
-    "oefeningen": [
-      "Mobilisatie rotatie rug",
-      "Yoga cat tail",
-      "Yoga knee to chest hip stretch",
-      "Dead bug",
-      "Bruggen beginner",
-      "Curl up",
-      "Superman",
-      "Plank basis",
-      "Back extension"
-    ]
-  },
-  {
-    "naam": "Valpreventie en balans",
-    "sub": "Balans, beenkracht en zelfvertrouwen voor ouderen; ook geschikt als groepsprogramma.",
-    "oefeningen": [
-      "Balans op 1 been",
-      "Chair squat",
-      "Step up",
-      "Calf raises",
-      "Standing abduction",
-      "Standing gluteus",
-      "Wall sit",
-      "Loopband"
-    ]
-  },
-  {
-    "naam": "Algemene conditie",
-    "sub": "Full-body startprogramma: kracht en conditie voor wie (weer) begint met trainen.",
-    "oefeningen": [
-      "Roeier",
-      "Squat",
-      "Lunges",
-      "Push up",
-      "Lat pull front",
-      "Pully row",
-      "Crunch",
-      "Plank basis"
-    ]
-  },
-  {
-    "naam": "Enkel na verzwikking",
-    "sub": "Opbouw na een enkelblessure: eerst rustig belasten en kracht, daarna balans en stevigheid op één been.",
-    "oefeningen": [
-      "Fiets",
-      "Calf raises",
-      "Standing abduction",
-      "Step up",
-      "Lunges",
-      "Single leg squat",
-      "Wall sit",
-      "Yoga hamstring stretch"
-    ]
-  },
-  {
-    "naam": "Nek en schoudergordel",
-    "sub": "Houding en ontspanning bij nek- en schouderklachten: de schoudergordel sterker maken en de rug soepel houden.",
-    "oefeningen": [
-      "Shoulder rotation (shrugs)",
-      "Reversed flyes",
-      "Front raises",
-      "Lateral raises",
-      "Upright row",
-      "Mobilisatie rotatie rug",
-      "Yoga cat tail",
-      "Yoga cobra"
-    ]
-  },
-  {
-    "naam": "Artrose knie en heup",
-    "sub": "Rustig blijven bewegen bij artrose: licht beginnen, kracht rond het gewricht opbouwen en actief blijven.",
-    "oefeningen": [
-      "Fiets",
-      "Chair squat",
-      "Leg extension",
-      "Leg curl",
-      "Standing abduction",
-      "Glute bridges",
-      "Calf raises",
-      "Step up",
-      "Wall sit"
-    ]
-  },
-  {
-    "naam": "Pols en onderarm",
-    "sub": "Bij pols- en elleboogklachten zoals een tenniselleboog: de onderarm rustig sterker maken.",
-    "oefeningen": [
-      "Wrist extension",
-      "Wrist flexion",
-      "Biceps curl",
-      "Triceps push down",
-      "Front raises",
-      "One arm bent over row"
-    ]
-  },
-  {
-    "naam": "Soepel blijven (mobiliteit)",
-    "sub": "Rek- en mobiliteitsprogramma om soepel te blijven; ook geschikt als rustige afsluiting van een training.",
-    "oefeningen": [
-      "Yoga cat tail",
-      "Yoga cobra",
-      "Yoga downward dog",
-      "Yoga extended child's pose",
-      "Yoga knee to chest hip stretch",
-      "Yoga hamstring stretch",
-      "Yoga glute stretch",
-      "Yoga butterfly stretch"
-    ]
-  },
-  {
-    "naam": "Kracht thuis zonder apparaten",
-    "sub": "Volledig lichaam met alleen lichaamsgewicht: overal uit te voeren, geen materiaal nodig.",
-    "oefeningen": [
-      "Squat",
-      "Lunges",
-      "Push up",
-      "Glute bridges",
-      "Plank basis",
-      "Dead bug",
-      "Superman",
-      "Calf raises"
-    ]
-  }
+ {
+  "naam": "Knie na operatie",
+  "sub": "Opbouw na een knieoperatie (bijv. voorste kruisband of knieprothese): rustig beginnen op de fiets, daarna kracht en stabiliteit.",
+  "oefeningen": [
+   "Fiets",
+   "Leg press",
+   "Leg extension",
+   "Leg curl",
+   "Squat",
+   "Step up",
+   "Calf raises",
+   "Glute bridges",
+   "Balans op 1 been",
+   "Lunges"
+  ]
+ },
+ {
+  "naam": "Heup na operatie",
+  "sub": "Opbouw na een heupoperatie (bijv. heupprothese): mobiliteit, bilspieren en veilig belasten.",
+  "oefeningen": [
+   "Been pendelen",
+   "Fiets",
+   "Glute bridges",
+   "Lying abduction",
+   "Standing abduction",
+   "Standing gluteus",
+   "Kick back",
+   "Chair squat",
+   "Step up"
+  ]
+ },
+ {
+  "naam": "Schouderrevalidatie",
+  "sub": "Rotator cuff en schoudergordel: eerst gecontroleerd bewegen, daarna kracht in alle richtingen.",
+  "oefeningen": [
+   "Anteflexie armen",
+   "Exo pull",
+   "Endo pull",
+   "Front raises",
+   "Lateral raises",
+   "Reversed flyes",
+   "Shoulder rotation (shrugs)",
+   "Pully row"
+  ]
+ },
+ {
+  "naam": "Lage rugklachten",
+  "sub": "Mobiliseren en de rompspieren versterken bij aspecifieke lage rugklachten.",
+  "oefeningen": [
+   "Mobilisatie rotatie rug",
+   "Yoga cat tail",
+   "Yoga knee to chest hip stretch",
+   "Dead bug",
+   "Bruggen beginner",
+   "Curl up",
+   "Superman",
+   "Plank basis",
+   "Back extension"
+  ]
+ },
+ {
+  "naam": "Valpreventie en balans",
+  "sub": "Balans, beenkracht en zelfvertrouwen voor ouderen; ook geschikt als groepsprogramma.",
+  "oefeningen": [
+   "Balans op 1 been",
+   "Chair squat",
+   "Step up",
+   "Calf raises",
+   "Standing abduction",
+   "Standing gluteus",
+   "Wall sit",
+   "Loopband"
+  ]
+ },
+ {
+  "naam": "Algemene conditie",
+  "sub": "Full-body startprogramma: kracht en conditie voor wie (weer) begint met trainen.",
+  "oefeningen": [
+   "Roeier",
+   "Squat",
+   "Lunges",
+   "Push up",
+   "Lat pull front",
+   "Pully row",
+   "Crunch",
+   "Plank basis"
+  ]
+ },
+ {
+  "naam": "Enkel na verzwikking",
+  "sub": "Opbouw na een enkelblessure: eerst rustig belasten en kracht, daarna balans en stevigheid op één been.",
+  "oefeningen": [
+   "Fiets",
+   "Calf raises",
+   "Standing abduction",
+   "Step up",
+   "Lunges",
+   "Single leg squat",
+   "Wall sit",
+   "Yoga hamstring stretch"
+  ]
+ },
+ {
+  "naam": "Nek en schoudergordel",
+  "sub": "Houding en ontspanning bij nek- en schouderklachten: de schoudergordel sterker maken en de rug soepel houden.",
+  "oefeningen": [
+   "Shoulder rotation (shrugs)",
+   "Reversed flyes",
+   "Front raises",
+   "Lateral raises",
+   "Upright row",
+   "Mobilisatie rotatie rug",
+   "Yoga cat tail",
+   "Yoga cobra"
+  ]
+ },
+ {
+  "naam": "Artrose knie en heup",
+  "sub": "Rustig blijven bewegen bij artrose: licht beginnen, kracht rond het gewricht opbouwen en actief blijven.",
+  "oefeningen": [
+   "Fiets",
+   "Chair squat",
+   "Leg extension",
+   "Leg curl",
+   "Standing abduction",
+   "Glute bridges",
+   "Calf raises",
+   "Step up",
+   "Wall sit"
+  ]
+ },
+ {
+  "naam": "Pols en onderarm",
+  "sub": "Bij pols- en elleboogklachten zoals een tenniselleboog: de onderarm rustig sterker maken.",
+  "oefeningen": [
+   "Wrist extension",
+   "Wrist flexion",
+   "Biceps curl",
+   "Triceps push down",
+   "Front raises",
+   "One arm bent over row"
+  ]
+ },
+ {
+  "naam": "Soepel blijven (mobiliteit)",
+  "sub": "Rek- en mobiliteitsprogramma om soepel te blijven; ook geschikt als rustige afsluiting van een training.",
+  "oefeningen": [
+   "Yoga cat tail",
+   "Yoga cobra",
+   "Yoga downward dog",
+   "Yoga extended child's pose",
+   "Yoga knee to chest hip stretch",
+   "Yoga hamstring stretch",
+   "Yoga glute stretch",
+   "Yoga butterfly stretch"
+  ]
+ },
+ {
+  "naam": "Kracht thuis zonder apparaten",
+  "sub": "Volledig lichaam met alleen lichaamsgewicht: overal uit te voeren, geen materiaal nodig.",
+  "oefeningen": [
+   "Squat",
+   "Lunges",
+   "Push up",
+   "Glute bridges",
+   "Plank basis",
+   "Dead bug",
+   "Superman",
+   "Calf raises"
+  ]
+ },
+ {
+  "naam": "Nekprogramma basis",
+  "sub": "Rustige mobilisatie en activatie bij nekklachten, zittend uit te voeren; per oefening is er een staande variant om naartoe te werken.",
+  "oefeningen": [
+   "Kin intrekken – zittend actief",
+   "Diepe nekflexoren activeren – zittend actief",
+   "Nek draaien – zittend actief",
+   "Nek zijwaarts buigen – zittend actief",
+   "Schouderblad liften en ontspannen – zittend actief",
+   "Nekrotatie met oogfixatie – zittend actief",
+   "Bovenste trapezius rek – zittend actief",
+   "Levator scapulae rek – zittend actief"
+  ]
+ },
+ {
+  "naam": "Rug soepel maken",
+  "sub": "De hele rug rustig in beweging, van liggend naar staand: buigen, strekken, draaien en zijwaarts.",
+  "oefeningen": [
+   "Rug bol en hol – op handen en knieën",
+   "Knie naar borst – liggend",
+   "Romp draaien – liggend",
+   "Open boek – liggend",
+   "Rug strekken – op handen en knieën",
+   "Thoracale extensie – zittend",
+   "Romp zijwaarts buigen – staand",
+   "Rug strekken – staand"
+  ]
+ },
+ {
+  "naam": "Valpreventie opbouw met steun",
+  "sub": "Balansopbouw voor wie nog steun gebruikt: begin bij het aanrecht en bouw per oefening af naar zonder steun.",
+  "oefeningen": [
+   "Voeten naast elkaar staan – met steun",
+   "Semi-tandemstand – met steun",
+   "Tandemstand – met steun",
+   "Eenbeenstand – met steun",
+   "Gewicht verplaatsen voor-achter – met steun",
+   "Zijwaarts stappen – met steun",
+   "Op de plaats marcheren – met steun",
+   "Stoel opstaan en lopen – zonder steun"
+  ]
+ },
+ {
+  "naam": "Duizeligheid (vestibulair)",
+  "sub": "Blik- en hoofdbewegingen bij duizeligheid: eerst zittend en langzaam, daarna staand en tijdens het lopen.",
+  "oefeningen": [
+   "Blikstabilisatie horizontaal – zittend langzaam",
+   "Blikstabilisatie verticaal – zittend langzaam",
+   "Ogen naar doelen – zittend langzaam",
+   "Doel volgen – zittend langzaam",
+   "Blikstabilisatie horizontaal – staand langzaam",
+   "Hoofd draaien in stand – staand langzaam",
+   "Buigen en oprichten – staand langzaam"
+  ]
+ },
+ {
+  "naam": "Neurologische revalidatie basis",
+  "sub": "Na bijvoorbeeld een beroerte: reiken, grijpen, opstaan en stappen met duidelijke visuele en ritmische aanwijzingen.",
+  "oefeningen": [
+   "Reiken met aangedane arm – met visueel doel",
+   "Hand openen na grijpen – bilateraal",
+   "Romp rotatie in zit – bilateraal",
+   "Symmetrisch opstaan – met fysieke steun",
+   "Stap initiëren – met visueel doel",
+   "Ritmisch marcheren – met ritmische cue",
+   "Brug met symmetrie – bilateraal"
+  ]
+ }
 ]

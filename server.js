@@ -1790,7 +1790,14 @@ async function afhandelen(request, response) {
     try {
       const nu = Date.now();
       if (!manifestCacheV2.json || nu - manifestCacheV2.t > 5000) {
-        manifestCacheV2 = { t: nu, json: JSON.stringify(await buildManifest("v2")) };
+        const json = JSON.stringify(await buildManifest("v2"));
+        manifestCacheV2 = { t: nu, json,
+          etag: '"' + createHash("sha256").update(json).digest("hex").slice(0, 16) + '"' };
+      }
+      // het manifest is ~130 kB; met een ETag kost een herhaalde ophaalactie een lege 304
+      response.setHeader("etag", manifestCacheV2.etag);
+      if (request.headers["if-none-match"] === manifestCacheV2.etag) {
+        response.writeHead(304); response.end(); return;
       }
       await send(response, 200, "application/json; charset=utf-8", manifestCacheV2.json);
     }
