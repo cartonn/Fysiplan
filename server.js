@@ -586,6 +586,26 @@ async function send(res, status, type, body) {
 const sendJson = (res, status, obj) => send(res, status, "application/json; charset=utf-8", JSON.stringify(obj));
 // 429 met Retry-After: nette clients weten zo hoelang ze moeten wachten en blijven niet hameren
 const send429 = (res, seconds, obj) => { try { res.setHeader("retry-after", String(seconds)); } catch {} return sendJson(res, 429, obj); };
+// opslagwaakhond voor video-uploads: het volume deelt de ruimte met de kaartendata,
+// en kaarten opslaan moet altijd door kunnen. De meting wordt vijf minuten onthouden
+// en na elke upload bijgeteld; boven de grens weigeren we nieuwe video's netjes.
+const VIDEO_OPSLAG_MAX = Math.max(0.01, Number(process.env.VIDEO_OPSLAG_MAX_MB) || 4096) * 1024 * 1024;
+let videoOpslag = { t: 0, bytes: 0 };
+async function videoOpslagVol(extraBytes) {
+  const nu = Date.now();
+  if (nu - videoOpslag.t > 5 * 60 * 1000) {
+    let som = 0;
+    try {
+      const dir = join(dataDir, "uploads", "videos");
+      for (const f of await readdir(dir)) {
+        try { som += (await stat(join(dir, f))).size; } catch {}
+      }
+    } catch {}
+    videoOpslag = { t: nu, bytes: som };
+  }
+  return videoOpslag.bytes + extraBytes > VIDEO_OPSLAG_MAX;
+}
+
 // eigen ruime rem voor de open statistiek-teller: normaal gebruik (printen, kaarten
 // opslaan) haalt dit nooit, maar hameren schrijft dan niet meer naar schijf
 const statsEventTeller = new Map();
@@ -1121,9 +1141,14 @@ async function afhandelen(request, response) {
         return;
       }
 
+      if (await videoOpslagVol(buf.length)) {
+        await sendJson(response, 507, { ok: false, fout: "De videopslag is vol. Ruim oude video's op of vergroot het volume." });
+        return;
+      }
       await mkdir(join(uploadsDir, "videos"), { recursive: true });
       nieuwPad = `uploads/videos/avatar-${id}-${randomBytes(8).toString("hex")}${ext}`;
       await writeFile(join(dataDir, nieuwPad), buf);
+      videoOpslag.bytes += buf.length;
       const vorige = videolinks[oefening.naam] || null;
       const cur = { ...(vorige || {}), eigen: nieuwPad };
       if (conceptVideo) cur.eigenMeta = { aiGenerated: true, reviewStatus: "concept" };
@@ -1269,9 +1294,14 @@ async function afhandelen(request, response) {
         await sendJson(response, 400, { ok: false, fout: "Dit bestand is geen geldige video-opname." });
         return;
       }
+      if (await videoOpslagVol(buf.length)) {
+        await sendJson(response, 507, { ok: false, fout: "De videopslag is vol; de opname kan nu niet bewaard worden." });
+        return;
+      }
       await mkdir(join(uploadsDir, "videos"), { recursive: true });
       const pad = "uploads/videos/v-" + token + ext;
       await writeFile(join(dataDir, pad), buf);
+      videoOpslag.bytes += buf.length;
       if (o.doel === "oefening" && o.naam) {
         const cur = { ...(videolinks[o.naam] || {}) };
         const oudeStream = cur.stream && cur.stream.uid;
