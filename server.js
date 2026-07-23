@@ -397,7 +397,14 @@ async function saveJson(path, obj) {
     try { await unlink(tmp); } catch {}
     throw err;
   }
+  // beheerwijzigingen die het manifest raken maken de manifestcache direct leeg
+  if (manifestStores.has(path)) wisManifestCache();
 }
+// korte servercache voor het publieke v2-manifest: hameren kost dan geen rekenwerk
+// meer, terwijl elke beheermutatie de cache direct leegt en dus meteen zichtbaar is
+let manifestCacheV2 = { t: 0, json: "" };
+const wisManifestCache = () => { manifestCacheV2 = { t: 0, json: "" }; };
+const manifestStores = new Set([renamesPath, videolinksPath, extraPath, deletedPath, catsPath]);
 
 const CATS = ["Bovenste extremiteit", "Onderste extremiteit", "Nek", "Rug", "Core",
   "Balans en valpreventie", "Neurologische revalidatie", "Vestibulair",
@@ -1751,7 +1758,13 @@ async function afhandelen(request, response) {
     return;
   }
   if (urlPath === "/v2/oefeningen.json") {
-    try { await sendJson(response, 200, await buildManifest("v2")); }
+    try {
+      const nu = Date.now();
+      if (!manifestCacheV2.json || nu - manifestCacheV2.t > 5000) {
+        manifestCacheV2 = { t: nu, json: JSON.stringify(await buildManifest("v2")) };
+      }
+      await send(response, 200, "application/json; charset=utf-8", manifestCacheV2.json);
+    }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
   }
