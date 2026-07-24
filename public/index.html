@@ -872,6 +872,23 @@ bridge2.jpg</div>
     knie:['patella','quadriceps'],enkel:['voet','kuit'],balans:['evenwicht','vallen'],
     buik:['core','romp'],bil:['gluteus','heup'],rek:['mobiliteit','stretch'],kracht:['versterken','weerstand']
   };
+  // klachtwoorden voor de klinische v2-domeinen: zo vindt 'duizelig' de vestibulaire
+  // oefeningen en 'vallen' de valpreventie; alleen in het v2-kanaal, v1 zoekt als vanouds
+  if(USE_V2_LIBRARY)Object.assign(SEARCH_SYNONYMS,{
+    duizelig:['vestibulair','blikstabilisatie','evenwicht'],
+    duizeligheid:['vestibulair','blikstabilisatie','evenwicht'],
+    draaierig:['vestibulair','blikstabilisatie'],
+    vallen:['valpreventie','balans','evenwicht'],
+    valangst:['valpreventie','balans','steun'],
+    beroerte:['neurologische','symmetrisch','reiken'],
+    cva:['neurologische','symmetrisch','reiken'],
+    zwanger:['bekkenbodem','postpartum'],
+    zwangerschap:['bekkenbodem','postpartum'],
+    bevalling:['bekkenbodem','postpartum'],
+    rugpijn:['rug'],nekpijn:['nek'],
+    werk:['tillen','ergonomische','handelingen'],
+    ergonomie:['tillen','ergonomische']
+  });
   function searchWords(value){
     var words=normEx(value).match(/[a-z0-9]+/g)||[];
     Object.keys(SEARCH_SYNONYMS).forEach(function(key){
