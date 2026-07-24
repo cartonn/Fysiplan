@@ -403,7 +403,8 @@ async function saveJson(path, obj) {
 // korte servercache voor het publieke v2-manifest: hameren kost dan geen rekenwerk
 // meer, terwijl elke beheermutatie de cache direct leegt en dus meteen zichtbaar is
 let manifestCacheV2 = { t: 0, json: "" };
-const wisManifestCache = () => { manifestCacheV2 = { t: 0, json: "" }; };
+let healthTelling = { t: 0, v1: null, v2: null };
+const wisManifestCache = () => { manifestCacheV2 = { t: 0, json: "" }; healthTelling = { t: 0, v1: null, v2: null }; };
 const manifestStores = new Set([renamesPath, videolinksPath, extraPath, deletedPath, catsPath]);
 
 const CATS = ["Bovenste extremiteit", "Onderste extremiteit", "Nek", "Rug", "Core",
@@ -674,14 +675,22 @@ async function afhandelen(request, response) {
   if (urlPath === "/admin88/") { response.writeHead(301, { location: "/admin88" }); response.end(); return; }
 
   if (urlPath === "/health") {
+    // /health is publiek en wordt continu gepingd; de tellingen bouwen beide
+    // manifesten op en worden daarom een minuut onthouden
     let v1Count = null;
     let v2Count = null;
-    try {
-      [v1Count, v2Count] = await Promise.all([
-        buildManifest("v1").then((manifest) => manifest.length),
-        buildManifest("v2").then((manifest) => manifest.length)
-      ]);
-    } catch {}
+    const nuH = Date.now();
+    if (healthTelling.t && nuH - healthTelling.t < 60 * 1000) {
+      v1Count = healthTelling.v1; v2Count = healthTelling.v2;
+    } else {
+      try {
+        [v1Count, v2Count] = await Promise.all([
+          buildManifest("v1").then((manifest) => manifest.length),
+          buildManifest("v2").then((manifest) => manifest.length)
+        ]);
+        healthTelling = { t: nuH, v1: v1Count, v2: v2Count };
+      } catch {}
+    }
     await sendJson(response, 200, {
       ok: true,
       service: "Fysiplan",
