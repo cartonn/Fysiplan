@@ -4,7 +4,8 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="color-scheme" content="light"/>
-<meta name="theme-color" content="#f6f2e9"/>
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f2e9"/>
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171512"/>
 <meta name="robots" content="noindex"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
@@ -17,8 +18,19 @@
     --blauw:#2456a6; --blauw-d:#1c4487; --blauw-05:#edf2fa; --blauw-10:#d9e4f5;
     --inkt:#232019; --tekst:#3d3a31; --grijs:#777162; --zacht:#a39c8a;
     --bg:#f6f2e9; --vlak:#fffefa; --lijn:#e7e0cf; --lijn2:#f0ebdd;
+    --chip:#faf7ef; --veilig-bg:#fdf6e8; --veilig-rand:#eeddb8; --veilig-tekst:#7a622e;
     --sh:0 1px 2px rgba(80,64,32,.05),0 6px 24px rgba(80,64,32,.08);
     --disp:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif;
+  }
+  /* donkere stand voor wie 's avonds oefent; printen blijft altijd licht */
+  @media screen and (prefers-color-scheme:dark){
+    :root{
+      --blauw:#7aa4e8; --blauw-d:#93b5ee; --blauw-05:#1d2836; --blauw-10:#28374d;
+      --inkt:#efece4; --tekst:#d7d3c9; --grijs:#a49d8e; --zacht:#7e786b;
+      --bg:#171512; --vlak:#211e19; --lijn:#37332a; --lijn2:#2c2922;
+      --chip:#2a2721; --veilig-bg:#2b2517; --veilig-rand:#4a3f26; --veilig-tekst:#d9bf82;
+      --sh:0 1px 2px rgba(0,0,0,.35),0 6px 24px rgba(0,0,0,.4);
+    }
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{-webkit-text-size-adjust:100%}
@@ -85,7 +97,7 @@
     transition:opacity .85s cubic-bezier(.45,0,.55,1),transform .85s cubic-bezier(.45,0,.55,1)}
   .lightbox .demowrap.tweede canvas.boven{opacity:1}
   /* ondertiteling onder de demonstratie: benoemt de houding die in beeld is */
-  .lightbox .demotekst{text-align:center;font:600 15px/1.5 var(--disp);color:#16130c;
+  .lightbox .demotekst{text-align:center;font:600 15px/1.5 var(--disp);color:var(--inkt);
     padding:10px 8px 0;min-height:28px}
   .lightbox .demouitleg{text-align:center;font:400 12.5px/1.5 var(--disp);color:#6b6455;
     padding:2px 10px 2px;max-width:420px;margin:0 auto}
@@ -97,7 +109,7 @@
   .oefinfo{flex:1;min-width:0}
   .naam{font:700 17.5px/1.25 var(--disp);color:var(--inkt);letter-spacing:-.01em}
   .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
-  .chip{font:600 12.5px/1 var(--disp);color:var(--grijs);background:#faf7ef;border:1px solid var(--lijn);
+  .chip{font:600 12.5px/1 var(--disp);color:var(--grijs);background:var(--chip);border:1px solid var(--lijn);
     padding:5px 10px;border-radius:999px;white-space:nowrap}
   .chip b{color:var(--inkt)}
   .vbtn{display:flex;align-items:center;justify-content:center;gap:9px;width:calc(100% - 28px);margin:0 14px 14px;
@@ -117,7 +129,7 @@
   .vhouder.open{display:block;animation:vopen .25s ease-out}
   @keyframes vopen{from{opacity:0}to{opacity:1}}
   .vhouder video,.vhouder iframe{display:block;width:100%;aspect-ratio:16/10;border:none;background:#000}
-  .vtekst{margin:0;padding:15px 17px 17px;background:#fffefa;border-top:1px solid var(--lijn2)}
+  .vtekst{margin:0;padding:15px 17px 17px;background:var(--vlak);border-top:1px solid var(--lijn2)}
   .vtekst-label{display:flex;align-items:center;gap:7px;margin-bottom:6px;font:700 11px/1.2 var(--disp);
     color:var(--blauw);letter-spacing:.055em;text-transform:uppercase}
   .vtekst-label:before{content:'';width:7px;height:7px;border-radius:999px;background:var(--blauw);flex:0 0 7px}
@@ -137,7 +149,7 @@
   /* taalkeuze en voorlezen: de kaart is er ook voor wie geen Nederlands leest of slecht ziet */
   .kopacties{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
   .kopacties select{font:600 13.5px/1 var(--disp);color:var(--tekst);padding:9px 10px;
-    border:1px solid var(--lijn);border-radius:10px;background:#fffefa;max-width:180px}
+    border:1px solid var(--lijn);border-radius:10px;background:var(--vlak);max-width:180px}
   .kopacties button{display:inline-flex;align-items:center;gap:7px;font:600 13.5px/1 var(--disp);
     padding:9px 13px;border-radius:10px;cursor:pointer;border:1px solid var(--blauw-10);
     background:var(--blauw-05);color:var(--blauw);-webkit-tap-highlight-color:transparent}
@@ -166,8 +178,8 @@
 
   /* vaste veiligheidsregel op elke kaart */
   .veilig{display:flex;gap:9px;align-items:flex-start;margin-top:12px;padding:11px 14px;
-    background:#fdf6e8;border:1px solid #eeddb8;border-radius:14px;
-    font:500 13.5px/1.5 var(--disp);color:#7a622e}
+    background:var(--veilig-bg);border:1px solid var(--veilig-rand);border-radius:14px;
+    font:500 13.5px/1.5 var(--disp);color:var(--veilig-tekst)}
   .veilig svg{margin-top:2px}
 
   /* Hoe ging het vandaag: pijnscore 0-10 in één tik */
@@ -175,7 +187,7 @@
   .mvraag{font-size:15.5px;color:var(--tekst);margin-bottom:12px}
   .mschaal{display:grid;grid-template-columns:repeat(11,1fr);gap:5px}
   .mschaal button{font:700 15px/1 var(--disp);padding:12px 0;border-radius:10px;cursor:pointer;
-    border:1px solid var(--lijn);background:#faf7ef;color:var(--tekst);
+    border:1px solid var(--lijn);background:var(--chip);color:var(--tekst);
     -webkit-tap-highlight-color:transparent;transition:background .12s,color .12s,border-color .12s}
   .mschaal button:active{background:var(--blauw-10)}
   .mschaal button.aan{background:var(--blauw);border-color:var(--blauw);color:#fff;
@@ -196,7 +208,7 @@
   .agkaart p{font-size:15.5px;margin-bottom:12px}
   .agdagen{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:12px}
   .agdagen button{font:700 13px/1 var(--disp);padding:11px 0;border-radius:10px;cursor:pointer;
-    border:1px solid var(--lijn);background:#faf7ef;color:var(--tekst);
+    border:1px solid var(--lijn);background:var(--chip);color:var(--tekst);
     -webkit-tap-highlight-color:transparent;transition:background .12s,color .12s,border-color .12s}
   .agdagen button.aan{background:var(--blauw);border-color:var(--blauw);color:#fff}
   .agrij{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
