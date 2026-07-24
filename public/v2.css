@@ -150,3 +150,10 @@ html.v2 #a4::after{content:"Neem pijn serieus: stop bij toenemende pijn en overl
   /* veiligheidsregel klein en rustig onderaan het papier */
   html.v2 #a4::after{bottom:1mm;font-size:6.5pt;color:#666}
 }
+
+/* telefoon en smalle schermen: het A4-werkblad kan opzij vegen, maar niets wees daarop;
+   deze hint staat alleen op het scherm en print nooit mee */
+@media screen and (max-width:1160px){
+  html.v2 #a4wrap::before{content:'Veeg opzij om het hele blad te zien';display:block;
+    font:600 12px/1.4 -apple-system,'Segoe UI',sans-serif;color:#98a2b3;padding:0 0 8px 2px}
+}
