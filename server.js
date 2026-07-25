@@ -1510,8 +1510,12 @@ async function afhandelen(request, response) {
     // zwevende lokale tijd (geen tijdzone in het bestand): elke agenda-app leest dit als eigen lokale tijd
     const dtStart = startDag.replace(/-/g, "") + "T" + tijd.replace(":", "") + "00";
     const stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
-    const icsTekst = (s) => String(s).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
-    const link = "https://" + (request.headers.host || "fysiplan.nl") + "/k/" + found.id;
+    const icsTekst = (s) => String(s).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/[\r\n]+/g, "\\n");
+    // de Host-header komt van buiten en belandt in een bestand dat een agenda-app inleest;
+    // alleen een net domein (eventueel met poort) toelaten, anders terugvallen op fysiplan.nl
+    const rawHost = String(request.headers.host || "");
+    const veiligeHost = /^[a-z0-9.-]+(:\d+)?$/i.test(rawHost) ? rawHost : "fysiplan.nl";
+    const link = "https://" + veiligeHost + "/k/" + found.id;
     const ics = [
       "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Fysiplan//Trainingskaart//NL", "CALSCALE:GREGORIAN",
       "BEGIN:VEVENT",
@@ -1522,7 +1526,7 @@ async function afhandelen(request, response) {
       "RRULE:FREQ=WEEKLY;BYDAY=" + dagen.join(",") + ";COUNT=" + dagen.length * 12,
       "SUMMARY:" + icsTekst("Oefeningen doen" + (found.praktijk ? " (" + found.praktijk + ")" : "")),
       "DESCRIPTION:" + icsTekst("Jouw trainingskaart met alle oefeningen en video's: " + link),
-      "URL:" + link,
+      "URL:" + icsTekst(link),
       "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsTekst("Tijd voor je oefeningen"), "TRIGGER:-PT0M", "END:VALARM",
       "END:VEVENT", "END:VCALENDAR", ""
     ].join("\r\n");
