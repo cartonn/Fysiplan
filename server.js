@@ -248,6 +248,15 @@ function schrijfLimiet(req, res) {
   return false;
 }
 
+// CSRF-rem voor de open v2-schrijfroutes: een kwaadaardige site kan met een bekende
+// kaartlink anders stilletjes een pijnscore of kaart wegschrijven. Moderne browsers
+// sturen Sec-Fetch-Site; we weigeren alleen als die expliciet 'cross-site' is. Ontbreekt
+// de header (oudere browser, geen browser), dan laten we door: geen gedragswijziging.
+function kruisSite(req) {
+  return String(req.headers["sec-fetch-site"] || "") === "cross-site";
+}
+const weigerKruis = (res) => sendJson(res, 403, { ok: false, fout: "Dit verzoek komt van een andere website en is geweigerd." });
+
 // aparte rem op mislukte kaart-opvragingen: het kaart-id is de enige sleutel tot
 // een kaart, dus systematisch raden moet snel vastlopen. Geldige links merken hier
 // niets van; de teller loopt alleen bij een id dat niet bestaat.
@@ -1365,6 +1374,7 @@ async function afhandelen(request, response) {
   // kaart opslaan of bijwerken (sleutel: praktijk + kaartnaam); geeft het kaart-id terug
   if (urlPath === "/api/kaarten" && request.method === "POST") {
     if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request, 256 * 1024));
       const praktijk = cleanName(b.praktijk, 80);
@@ -1426,6 +1436,7 @@ async function afhandelen(request, response) {
   // kaart verwijderen uit het praktijkoverzicht
   if (urlPath === "/api/kaarten/verwijder" && request.method === "POST") {
     if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
       const pk = String(b.praktijk || "").trim().toLowerCase();
@@ -1459,6 +1470,7 @@ async function afhandelen(request, response) {
   // de duiding blijft bij de fysiotherapeut.
   if (urlPath === "/api/kaart/meting" && request.method === "POST") {
     if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
       const found = vindKaart(String(b.id || ""));
