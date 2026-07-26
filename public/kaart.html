@@ -71,6 +71,12 @@
     background:var(--blauw);color:#fff;display:flex;align-items:center;justify-content:center;
     box-shadow:0 1px 5px rgba(36,86,166,.4);pointer-events:none}
   .demobadge .driehoek{display:flex}
+  /* foto zonder video maar met uitleg: subtiel vergrootteken, zodat de patient weet
+     dat een tik de oefening met uitleg groot opent */
+  .infobadge{position:absolute;right:3px;bottom:3px;width:22px;height:22px;border-radius:999px;
+    background:var(--vlak);border:1px solid var(--lijn);color:var(--grijs);
+    display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(80,64,32,.15);
+    pointer-events:none}
 
   /* tik op een oefenfoto: groot bekijken, één tik terug */
   .lightbox{position:fixed;inset:0;background:rgba(22,19,12,.9);display:none;
@@ -253,7 +259,7 @@
   button:focus-visible{outline:3px solid rgba(36,86,166,.35);outline-offset:2px}
   @media print{
     body{background:#fff}
-    .vbtn,.vhouder,.mkaart,.agkaart,#metingkop,#agendakop,.kopacties,.belknop,.appbanner,.demobadge{display:none !important}
+    .vbtn,.vhouder,.mkaart,.agkaart,#metingkop,#agendakop,.kopacties,.belknop,.appbanner,.demobadge,.infobadge{display:none !important}
     .kop,.oef,.schemakaart{box-shadow:none}
   }
 </style>
@@ -452,10 +458,15 @@
       // krijgen zelf een schuine streep, zodat er nooit een dubbele ontstaat
       if(beeldpad&&beeldpad.charAt(0)!=='/')beeldpad='/'+beeldpad;
       var heeftVideo=Boolean(knop);
+      // teken op de miniatuur: afspeelteken bij video, anders een vergrootteken zodra
+      // er uitleg bij de oefening is (een tik opent dan de oefening groot met uitleg)
+      var badge=heeftVideo
+        ?'<span class="demobadge" aria-hidden="true">'+DRIEHOEK+'</span>'
+        :((o&&o.uitleg)?'<span class="infobadge" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35M11 8v0M11 11v3"/></svg></span>':'');
       html+='<div class="oef"><div class="oefkop"><span class="nr">'+(idx+1)+'</span>'+
         (o?'<span class="fotoknop"><img src="'+esc(beeldpad)+'" alt="" loading="lazy" data-s="'+esc(eersteS)+
           '" data-h="'+esc(eersteH)+'" data-uitleg="'+esc((o.uitleg||''))+'" data-heeft-video="'+(heeftVideo?'1':'0')+'"/>'+
-          (heeftVideo?'<span class="demobadge" aria-hidden="true">'+DRIEHOEK+'</span>':'')+'</span>':'')+
+          badge+'</span>':'')+
         '<div class="oefinfo"><div class="naam">'+esc(vt(x.n))+'</div>'+
         (chips?'<div class="chips">'+chips+'</div>':'')+'</div></div>'+
         knop+'<div class="vhouder"></div></div>';
