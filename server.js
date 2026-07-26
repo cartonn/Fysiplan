@@ -996,6 +996,10 @@ async function afhandelen(request, response) {
     return;
   }
   if (urlPath === "/api/praktijken" && request.method === "POST") {
+    // praktijkprofiel (naam, adres, telefoon, e-mail, logo): een cross-site pagina mag
+    // dit niet stiekem aanmaken of overschrijven. Fail-open, dus geen wijziging voor het
+    // echte gebruik in de app of het beheer (die sturen same-origin)
+    if (kruisSite(request)) { await weigerKruis(response); return; }
     if (schrijfLimiet(request, response)) return;
     try {
       const b = JSON.parse(await readBody(request, 1024 * 1024));
