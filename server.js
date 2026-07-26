@@ -1285,6 +1285,9 @@ async function afhandelen(request, response) {
 
   // de telefoon uploadt de opname (ruwe videobody, max 60 MB)
   if (urlPath === "/api/opname/upload" && request.method === "POST") {
+    // de echte upload komt van de opnamepagina op hetzelfde domein; een cross-site
+    // pagina mag zelfs met een bekend token geen video wegschrijven. Fail-open.
+    if (kruisSite(request)) { await weigerKruis(response); return; }
     if (schrijfLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const token = String(q.get("token") || "");
