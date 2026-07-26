@@ -1556,6 +1556,8 @@ async function afhandelen(request, response) {
       await sendJson(response, 503, { ok: false, fout: "De AI-hulp staat nog uit. De eigenaar kan hem aanzetten door de omgevingsvariabele ANTHROPIC_API_KEY op de server in te stellen." });
       return;
     }
+    // deze aanroep kost geld; een cross-site pagina mag het budget niet opstoken
+    if (kruisSite(request)) { await weigerKruis(response); return; }
     if (schrijfLimiet(request, response)) return;
     if (aiLimiet(request, response)) return;
     try {
@@ -1615,6 +1617,9 @@ async function afhandelen(request, response) {
     const missend = teksten.filter((s) => cache[sleutel(s)] == null);
     if (missend.length) {
       if (!AI_KEY) { await sendJson(response, 503, { ok: false, fout: "Vertalen staat nog uit op deze server." }); return; }
+      // alleen de vertaalslag kost geld; gecachte vertalingen (ook cross-site) blijven vrij,
+      // maar een cross-site pagina mag geen nieuwe AI-vertalingen laten maken
+      if (kruisSite(request)) { await weigerKruis(response); return; }
       if (schrijfLimiet(request, response)) return;
       if (aiLimiet(request, response)) return;
       try {
