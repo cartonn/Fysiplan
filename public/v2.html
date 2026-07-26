@@ -47,6 +47,9 @@
   .hero h1 .p{color:var(--blauw)}
   .hero h1 .d{color:var(--oranje)}
   .hero .sub{font-size:20.5px;color:var(--demp);max-width:56ch;margin:22px auto 0}
+  /* op smalle schermen leest de lange intro prettiger links uitgelijnd dan gecentreerd;
+     de kop en de knoppen blijven gecentreerd */
+  @media (max-width:560px){.hero .sub{text-align:left}}
   .hero .cta{display:flex;gap:20px;justify-content:center;align-items:center;margin-top:30px}
   .hero .cta a.tl{font:600 15.5px/1 var(--disp);color:var(--inkt);text-decoration:none;border-bottom:2px solid var(--lijn);padding-bottom:3px}
   .hero .klein{font:italic 15px/1 var(--serif);color:var(--zacht);margin-top:16px}
