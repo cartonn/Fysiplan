@@ -1539,6 +1539,7 @@ bridge2.jpg</div>
 
   // ---- AI-kaartassistent (v2): klacht omschrijven, voorstel beoordelen, op de kaart zetten ----
   var AI_VOORSTEL=null;
+  var VIDEO_ICOON="<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M8 6l10 6-10 6z'/></svg>";
   document.getElementById('aiBtn').addEventListener('click',function(){openOv('ovAi');});
   document.getElementById('ai_close').addEventListener('click',function(){closeOv('ovAi');});
   document.getElementById('ai_go').addEventListener('click',function(){
@@ -1558,9 +1559,13 @@ bridge2.jpg</div>
           d.oefeningen.map(function(o,i){
             var dos=[o.series&&o.series+' series',o.herhalingen&&o.herhalingen+' herhalingen',o.gewicht]
               .filter(Boolean).map(function(t){return "<span class='ai-dos'>"+esc(t)+"</span>";}).join('');
+            // laat zien welke voorgestelde oefeningen een instructievideo meekrijgen,
+            // zodat de therapeut ziet dat de patiënt die oefening ook op beeld krijgt
+            var bron=OEF[byNorm[normEx(o.naam)]];
+            var vid=(bron&&hasVideo(bron))?"<span class='ai-vid'>"+VIDEO_ICOON+"video</span>":"";
             return "<label class='ai-oef'>"+
               "<input type='checkbox' checked data-ai='"+i+"'/>"+
-              "<span style='flex:1;min-width:0'><b>"+esc(o.naam)+"</b>"+
+              "<span style='flex:1;min-width:0'><b>"+esc(o.naam)+"</b>"+vid+
               (dos?"<br/>"+dos:"")+
               (o.waarom?"<span class='ai-waarom'>"+esc(o.waarom)+"</span>":"")+"</span></label>";
           }).join("")+

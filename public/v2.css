@@ -121,6 +121,11 @@ html.v2 .ai-oef input{margin-top:3px;accent-color:var(--brand)}
 html.v2 .ai-dos{display:inline-block;font-size:11px;font-weight:600;color:var(--brand);background:var(--brand-50);
   border:1px solid var(--brand-100);border-radius:999px;padding:3px 9px;margin:5px 4px 0 0}
 html.v2 .ai-waarom{display:block;color:var(--muted);font-size:11.5px;margin-top:4px;line-height:1.45}
+/* markering dat een voorgestelde oefening een instructievideo meekrijgt */
+html.v2 .ai-vid{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;
+  color:#2e7d43;background:#eaf5ec;border:1px solid #cfe6d5;border-radius:999px;
+  padding:2px 8px 2px 6px;margin-left:8px;vertical-align:2px;text-transform:uppercase;letter-spacing:.03em}
+html.v2 .ai-vid svg{width:11px;height:11px}
 
 /* vaste veiligheidsregel onderaan elke kaart (alleen v2): print mee op papier */
 html.v2 #a4::after{content:"Neem pijn serieus: stop bij toenemende pijn en overleg met je fysiotherapeut.";
