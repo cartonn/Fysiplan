@@ -856,6 +856,9 @@ async function afhandelen(request, response) {
 
   // gebruiks-ping vanuit de app (anoniem, alleen tellers)
   if (urlPath === "/api/stats/event" && request.method === "POST") {
+    // een cross-site pagina mag de bedrijfsstatistieken niet vervuilen; fail-open, dus
+    // het echte gebruik (printen/opslaan vanaf de app, same-origin) verandert niet
+    if (kruisSite(request)) { await weigerKruis(response); return; }
     // eigen ruime rem (los van de schrijflimiet, zodat kaarten opslaan er nooit
     // last van heeft): dit endpoint schrijft naar schijf en stuurt de statistieken
     if (statsEventLimiet(request, response)) return;
