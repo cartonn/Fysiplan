@@ -412,9 +412,24 @@ async function saveJson(path, obj) {
 // korte servercache voor het publieke v2-manifest: hameren kost dan geen rekenwerk
 // meer, terwijl elke beheermutatie de cache direct leegt en dus meteen zichtbaar is
 let manifestCacheV2 = { t: 0, json: "" };
+let manifestArrV2 = { t: 0, arr: null };
 let healthTelling = { t: 0, v1: null, v2: null };
-const wisManifestCache = () => { manifestCacheV2 = { t: 0, json: "" }; healthTelling = { t: 0, v1: null, v2: null }; };
+const wisManifestCache = () => {
+  manifestCacheV2 = { t: 0, json: "" };
+  manifestArrV2 = { t: 0, arr: null };
+  healthTelling = { t: 0, v1: null, v2: null };
+};
 const manifestStores = new Set([renamesPath, videolinksPath, extraPath, deletedPath, catsPath]);
+// het opgebouwde v2-manifest kort vasthouden voor interne lezers (vertaal, per-kaart
+// manifest): zo kost hameren op die publieke routes geen 500-oefeningen-opbouw per keer.
+// Elke beheermutatie leegt de cache via wisManifestCache, dus wijzigingen blijven direct zichtbaar.
+async function manifestV2Gecacht() {
+  const nu = Date.now();
+  if (manifestArrV2.arr && nu - manifestArrV2.t < 5000) return manifestArrV2.arr;
+  const arr = await buildManifest("v2");
+  manifestArrV2 = { t: nu, arr };
+  return arr;
+}
 
 const CATS = ["Bovenste extremiteit", "Onderste extremiteit", "Nek", "Rug", "Core",
   "Balans en valpreventie", "Neurologische revalidatie", "Vestibulair",
@@ -1617,7 +1632,7 @@ async function afhandelen(request, response) {
     // (12 oefeningen x naam+uitleg plus drie clientvelden blijft onder de cap van 40)
     let uitlegTeksten = [];
     try {
-      const perNaam = new Map((await buildManifest()).map((e) => [e.naam, e.uitleg]));
+      const perNaam = new Map((await manifestV2Gecacht()).map((e) => [e.naam, e.uitleg]));
       uitlegTeksten = (found.chosen || []).map((x) => perNaam.get(x.n)).filter(Boolean);
     } catch {}
     const teksten = [...new Set([...(found.chosen || []).map((x) => x.n), ...uitlegTeksten, cl.c_doel, cl.c_opm, cl.c_cave]
