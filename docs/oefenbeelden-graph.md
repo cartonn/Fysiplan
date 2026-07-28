@@ -29,6 +29,33 @@ flowchart LR
 - Technische QA controleert exact 2:3-formaat, bestandsgrootte, achtergrondwit, helderheid, zwart-witcontrast en een eventuele harde middenscheiding.
 - De output blijft `awaiting-physiotherapist-review` totdat beginhouding, eindhouding, materiaal, gewrichtsstand en bewegingsrichting klinisch zijn beoordeeld.
 
+## Eén posepaar, twee V2-weergaven
+
+Iedere gepubliceerde V2-kleurkaart krijgt lokaal en zonder extra Runway-kosten een exact gekoppelde lijnvariant. De fysiotherapeut wisselt met één toggle tussen beide weergaven voor de kaart en PDF; de digitale QR-ervaring blijft altijd in kleur.
+
+```mermaid
+flowchart LR
+  C["Goedgekeurde kleurkaart 800×1200"] --> E["Contourdetectie op hetzelfde pixelvlak"]
+  E --> B["Harde binaire omzetting"]
+  B --> Q["QA: uitsluitend #000000 en #FFFFFF"]
+  Q --> L["Lijnkaart 800×1200"]
+  C --> P["V2-kleurpad"]
+  L --> P2["V2-lijnpad"]
+  P --> T["Therapeut-toggle"]
+  P2 --> T
+  P --> QR["QR en digitale ervaring"]
+```
+
+De graph in `scripts/v2-line-art-graph.mjs` bewaakt de 1-op-1-koppeling. De start- en eindhouding, uitsnede, apparatuur en branding kunnen niet verschuiven, omdat de lijnvariant rechtstreeks uit de gepubliceerde kleurkaart wordt afgeleid. PNG wordt bewust gebruikt: daardoor blijven alle pixels exact zwart of wit en kunnen JPEG-compressie, grijze antialiasing en schaduw niet terugkomen.
+
+```bash
+# Alleen inventariseren; schrijft niets.
+npm run images:line-pairs:status
+
+# Ontbrekende lijnvarianten genereren en V2-koppelingen bijwerken.
+npm run images:line-pairs:generate
+```
+
 ## Modelrouting en budget
 
 Eenvoudige staande bewegingen gebruiken standaard `seedream5_lite` (4 credits). Instructiegevoelige vloer- en yogaposes gebruiken `gpt_image_2`. Oefeningen met machines, TRX, Bosu of ander lastig materiaal gebruiken hetzelfde model op mediumkwaliteit. Voor de uitbreiding van 215 naar 500 oefeningen wordt bewust overal `gpt_image_2` op lage kwaliteit (1 credit) gebruikt: zo blijft de avatar- en kaartstijl gelijk aan de goedgekeurde proefbeelden.

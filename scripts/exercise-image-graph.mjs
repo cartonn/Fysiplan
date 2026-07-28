@@ -5,14 +5,18 @@ import { copyFile, mkdir, readFile, rename, stat, writeFile } from "node:fs/prom
 import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { graphLayers, runDag } from "../lib/dag-runner.js";
 import { isRunwayCapacityError } from "../lib/runway-errors.js";
+import { createBinaryLineArt, linePathForColor, publicAssetPath } from "../lib/v2-line-art.js";
 
 const root = resolve(new URL("../", import.meta.url).pathname);
 // Alle nieuwe beeldproductie hoort bij v2. De stabiele v1-catalogus wordt door
 // deze graph bewust nooit gelezen of overschreven.
 const cataloguePath = join(root, "public", "oefeningen-v2.json");
+const v1CataloguePath = join(root, "public", "oefeningen.json");
 const productionPath = join(root, "content", "video-productie-v2.json");
 const qaOverridesPath = join(root, "content", "oefenbeeld-qa-overrides.json");
 const exercises = JSON.parse(await readFile(cataloguePath, "utf8"));
+const v1Exercises = JSON.parse(await readFile(v1CataloguePath, "utf8"));
+const v1ByName = new Map(v1Exercises.map((entry) => [entry.naam, entry]));
 const production = JSON.parse(await readFile(productionPath, "utf8")).exercises;
 const qaOverrides = JSON.parse(await readFile(qaOverridesPath, "utf8"));
 const seamApprovals = new Map(qaOverrides.seamApprovals.map((entry) => [entry.exerciseId, entry]));
@@ -83,7 +87,7 @@ function slugFromImage(image) {
 }
 
 function publicOutput(entry) {
-  if (entry.coreExerciseId && entry.kaartImg) return entry.kaartImg;
+  if (entry.kaartImg) return entry.kaartImg;
   const directory = dirname(entry.img);
   return join(directory, `${slugFromImage(entry.img)}-avatar-v${ASSET_VERSION}.jpg`);
 }
@@ -98,13 +102,15 @@ function classify(entry, index) {
   const model = forceGeminiFlash ? "gemini_2.5_flash" : forceGptLow || complex || instructionSensitive ? "gpt_image_2" : "seedream5_lite";
   const quality = forceGeminiFlash ? null : forceGptLow ? "low" : complex ? "medium" : instructionSensitive ? "low" : null;
   const hasMovementReference = !entry.coreExerciseId;
+  const sourceImage = hasMovementReference ? v1ByName.get(entry.naam)?.img : null;
+  if (hasMovementReference && !sourceImage) throw new Error(`Historische v1-bewegingsbron ontbreekt voor ${entry.naam}`);
   return {
     order: index + 1,
     exerciseId: meta.exerciseId,
     sourceName: entry.naam,
     titleNl: meta.titleNl,
     group: entry.groep,
-    sourceImage: hasMovementReference ? entry.img : null,
+    sourceImage,
     outputImage: publicOutput(entry),
     hasMovementReference,
     layout,
@@ -524,15 +530,15 @@ async function reviewReady(node) {
   return report;
 }
 
-function updateCatalogue(plan) {
+function updateCatalogue(plan, lineImage) {
   catalogueChain = catalogueChain.then(async () => {
     const catalogue = JSON.parse(await readFile(cataloguePath, "utf8"));
     const entry = catalogue.find((item) => item.naam === plan.sourceName);
     if (!entry) throw new Error(`Catalogusitem ontbreekt: ${plan.sourceName}`);
-    if (entry.coreExerciseId) entry.img = plan.outputImage;
     entry.kaartImg = plan.outputImage;
+    entry.img = lineImage;
     const temporary = `${cataloguePath}.tmp`;
-    await writeFile(temporary, JSON.stringify(catalogue, null, 2) + "\n");
+    await writeFile(temporary, JSON.stringify(catalogue, null, 1) + "\n");
     await rename(temporary, cataloguePath);
   });
   return catalogueChain;
@@ -542,8 +548,16 @@ async function publish(node) {
   const source = artifact("cards", `${node.plan.exerciseId}.jpg`);
   await mkdir(dirname(node.output), { recursive: true });
   await copyFile(source, node.output);
-  await updateCatalogue(node.plan);
-  return { catalogue: "public/oefeningen-v2.json", publicImage: node.plan.outputImage, status: "concept-awaiting-physio-review" };
+  const lineImage = linePathForColor(node.plan.outputImage);
+  const lineOutput = publicAssetPath(join(root, "public"), lineImage);
+  await createBinaryLineArt(node.output, lineOutput);
+  await updateCatalogue(node.plan, lineImage);
+  return {
+    catalogue: "public/oefeningen-v2.json",
+    publicImage: node.plan.outputImage,
+    lineImage,
+    status: "concept-awaiting-physio-review",
+  };
 }
 
 const actions = { "source-avatar": sourceAvatar, audit, "prepare-reference": prepareReference, generate, compose, "white-background-gate": whiteBackgroundGate, qa, "review-ready": reviewReady, publish };

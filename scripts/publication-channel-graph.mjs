@@ -1,6 +1,7 @@
 import { readFile, stat } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { graphLayers, runDag } from "../lib/dag-runner.js";
+import { linePathForColor } from "../lib/v2-line-art.js";
 
 const root = resolve(new URL("../", import.meta.url).pathname);
 const publicDir = join(root, "public");
@@ -51,8 +52,26 @@ async function execute(node, results) {
     assert(v1.every((entry) => v2Names.has(entry.naam)), "v2 bevat niet de volledige stabiele v1-set");
     const extension = v2.filter((entry) => entry.coreExerciseId);
     assert(extension.length === 285, `v2-uitbreiding moet 285 oefeningen bevatten; gevonden ${extension.length}`);
-    const ready = await Promise.all(v2.map((entry) => imageExists(entry.kaartImg || entry.img)));
-    return { sourceCount: v2.length, extensionCount: extension.length, publishedCount: ready.filter(Boolean).length, pendingCount: ready.filter((value) => !value).length };
+    const pathErrors = v2.filter((entry) => !entry.kaartImg || entry.img !== linePathForColor(entry.kaartImg));
+    assert(pathErrors.length === 0, `v2 bevat ${pathErrors.length} onjuiste kleur/lijn-koppelingen: ${pathErrors.slice(0, 5).map((entry) => entry.naam).join(", ")}`);
+    const pairs = await Promise.all(v2.map(async (entry) => {
+      const [colorReady, lineReady] = await Promise.all([
+        imageExists(entry.kaartImg),
+        imageExists(entry.img),
+      ]);
+      return { name: entry.naam, colorReady, lineReady, pairReady: colorReady && lineReady };
+    }));
+    const unpaired = pairs.filter((pair) => pair.colorReady !== pair.lineReady);
+    assert(unpaired.length === 0, `v2 bevat ${unpaired.length} half gepubliceerde beeldparen: ${unpaired.slice(0, 5).map((pair) => pair.name).join(", ")}`);
+    return {
+      sourceCount: v2.length,
+      extensionCount: extension.length,
+      publishedCount: pairs.filter((pair) => pair.colorReady).length,
+      lineDrawingsReady: pairs.filter((pair) => pair.lineReady).length,
+      pairsReady: pairs.filter((pair) => pair.pairReady).length,
+      pendingCount: pairs.filter((pair) => !pair.pairReady).length,
+      lineRule: "black-only contours on pure #FFFFFF",
+    };
   }
 
   if (node.kind === "route-gate") {
@@ -75,6 +94,7 @@ async function execute(node, results) {
     const files = [
       "scripts/exercise-image-graph.mjs",
       "scripts/runway-image-batch.mjs",
+      "scripts/v2-line-art-graph.mjs",
       "scripts/top500.mjs",
       "scripts/normalize-exercise-backgrounds.py",
     ];

@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import sharp from "sharp";
+import { analyzeBinaryLineArt, linePathForColor } from "../lib/v2-line-art.js";
 
 const root = resolve(new URL("../", import.meta.url).pathname);
 const catalogue = JSON.parse(await readFile(join(root, "public", "oefeningen-v2.json"), "utf8"));
@@ -42,7 +43,7 @@ await Promise.all(legacyCatalogue.map(async (exercise) => {
 const expansionRatios = [];
 const pendingExpansion = [];
 await Promise.all(top500Expansion.map(async (exercise) => {
-  if (!exercise.kaartImg || exercise.img !== exercise.kaartImg || !exercise.kaartImg.endsWith("-avatar-v8.jpg")) {
+  if (!exercise.kaartImg || exercise.img !== linePathForColor(exercise.kaartImg) || !exercise.kaartImg.endsWith("-avatar-v8.jpg")) {
     throw new Error(`Verkeerde v8-kaartkoppeling voor ${exercise.naam}`);
   }
   const path = join(root, "public", exercise.kaartImg);
@@ -65,11 +66,42 @@ await Promise.all(top500Expansion.map(async (exercise) => {
   expansionRatios.push(nearWhiteRatio);
 }));
 
+const pairRatios = [];
+const pendingPairs = [];
+await Promise.all(catalogue.map(async (exercise) => {
+  if (!exercise.kaartImg || exercise.img !== linePathForColor(exercise.kaartImg)) {
+    throw new Error(`Geen geldige 1-op-1 kleur/lijn-koppeling voor ${exercise.naam}`);
+  }
+  const colorPath = join(root, "public", exercise.kaartImg);
+  const linePath = join(root, "public", exercise.img);
+  let colorExists = true;
+  let lineExists = true;
+  try { await readFile(colorPath); }
+  catch (error) {
+    if (error.code !== "ENOENT") throw error;
+    colorExists = false;
+  }
+  try { await readFile(linePath); }
+  catch (error) {
+    if (error.code !== "ENOENT") throw error;
+    lineExists = false;
+  }
+  if (colorExists !== lineExists) throw new Error(`Half gepubliceerd kleur/lijn-paar voor ${exercise.naam}`);
+  if (!colorExists) {
+    pendingPairs.push(exercise.naam);
+    return;
+  }
+  const qa = await analyzeBinaryLineArt(linePath);
+  pairRatios.push(qa.blackRatio);
+}));
+
 if (process.argv.includes("--strict") && pendingExpansion.length) {
   throw new Error(`Nog ${pendingExpansion.length} uitbreidingskaarten niet gepubliceerd: ${pendingExpansion.join(", ")}`);
 }
 
 ratios.sort((a, b) => a - b);
 expansionRatios.sort((a, b) => a - b);
+pairRatios.sort((a, b) => a - b);
 console.log(`Legacy-oefenbeelden geldig: ${legacyCatalogue.length}/215 op #FFFFFF; minimum witvlak ${ratios[0]}; mediaan ${ratios[Math.floor(ratios.length / 2)]}.`);
 console.log(`Top-500-uitbreidingsbeelden geldig: ${expansionRatios.length}/285 op #FFFFFF; nog niet gepubliceerd: ${pendingExpansion.length}; minimum witvlak ${expansionRatios[0]}; mediaan ${expansionRatios[Math.floor(expansionRatios.length / 2)]}.`);
+console.log(`V2-beeldparen geldig: ${pairRatios.length}/500; nog niet gepubliceerd: ${pendingPairs.length}; lijnkaarten bevatten uitsluitend zwart op #FFFFFF.`);
