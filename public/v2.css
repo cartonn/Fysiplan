@@ -54,6 +54,16 @@ html.v2 .beeldsegment button:hover{color:var(--brand)}
 html.v2 .beeldsegment button.aan{background:var(--brand);color:#fff;box-shadow:0 1px 3px rgba(36,86,166,.22)}
 html.v2 .beeldsegment button:focus-visible{outline:none;box-shadow:var(--ring)}
 
+/* Houd de bibliotheek ruim: categorieën staan in één veegbare rij in plaats van
+   meerdere regels die de oefeningen en hun plus/min-knoppen uit beeld drukken. */
+html.v2 .filters{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;flex:0 0 auto;
+  margin-right:-4px;padding:0 4px 6px 0;scrollbar-width:thin;overscroll-behavior-x:contain;
+  -webkit-overflow-scrolling:touch}
+html.v2 .filters .chip{flex:0 0 auto;white-space:nowrap}
+html.v2 .filters::-webkit-scrollbar{height:5px}
+html.v2 .filters::-webkit-scrollbar-thumb{background:#ddd4bd;border-radius:99px}
+html.v2 .row .nm{min-width:0;overflow-wrap:anywhere}
+
 /* praktijklogo op de kaart: hoort bij het praktijkprofiel, print mee op elke kaart */
 @media screen{
   html.v2 #a4 .a4hd{flex:0 0 auto;min-height:150px}
@@ -113,8 +123,13 @@ html.v2 .v2badge{background:linear-gradient(150deg,#2f66bd,#1c4487);color:#fff;
   html.v2 header.topbar .btn{padding:8px 11px;font-size:13px}
   html.v2 .wrap{grid-template-columns:1fr;padding:10px;gap:10px}
   /* oefeningenlijst: compact blok boven de kaart, met eigen scroll */
-  html.v2 .col-controls{position:static;height:auto;max-height:46vh}
-  html.v2 .col-controls .list{min-height:120px}
+  html.v2 .col-controls{position:static;height:clamp(480px,70svh,640px);max-height:none}
+  html.v2 .col-controls .bd{overflow:hidden}
+  html.v2 .col-controls .list{min-height:220px;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+  html.v2 .row{gap:7px;padding:7px 5px}
+  html.v2 .row .thumb{width:48px !important;height:48px !important;flex-basis:48px}
+  html.v2 .row .fav{width:32px;height:32px}
+  html.v2 .row .add{width:36px;height:36px;font-size:20px}
   /* de A4 behoudt zijn echte maat en schuift horizontaal — zo blijft de print exact gelijk */
   html.v2 #a4wrap{overflow-x:auto;padding:10px;-webkit-overflow-scrolling:touch}
   html.v2 .modal{width:min(420px,94vw);padding:18px}
