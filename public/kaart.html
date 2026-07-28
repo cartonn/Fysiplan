@@ -295,9 +295,9 @@
   <h2 id="metingkop">Hoe ging het vandaag?</h2>
   <div class="mkaart" id="meting">
     <p class="mvraag" id="mvraag">Klaar met oefenen? Tik aan hoeveel pijn je had tijdens het oefenen.</p>
-    <div class="mschaal" id="mschaal"></div>
+    <div class="mschaal" id="mschaal" role="group" aria-labelledby="mvraag"></div>
     <div class="mlabels"><span id="ml0">0 = geen pijn</span><span id="ml10">10 = ergste pijn</span></div>
-    <div class="mdank" id="mdank" style="display:none"></div>
+    <div class="mdank" id="mdank" role="status" aria-live="polite" style="display:none"></div>
     <div class="mhist" id="mhist" style="display:none">
       <div class="mtitel" id="mtitel">Jouw verloop</div>
       <div class="mbars" id="mbars"></div>
@@ -517,7 +517,7 @@
     var schaal=document.getElementById('mschaal');
     if(!schaal.childNodes.length){
       var h='';
-      for(var s=0;s<=10;s++)h+='<button type="button" data-score="'+s+'" aria-label="'+s+'">'+s+'</button>';
+      for(var s=0;s<=10;s++)h+='<button type="button" data-score="'+s+'" aria-label="'+s+'" aria-pressed="false">'+s+'</button>';
       schaal.innerHTML=h;
     }
     var m=K.kaart.metingen||[];
@@ -525,7 +525,9 @@
     var vDag=null;
     m.forEach(function(x){if(dagStr(x.t)===vandaag)vDag=x.s;});
     schaal.querySelectorAll('button').forEach(function(b){
-      b.classList.toggle('aan',vDag!==null&&Number(b.dataset.score)===vDag);
+      var aan=vDag!==null&&Number(b.dataset.score)===vDag;
+      b.classList.toggle('aan',aan);
+      b.setAttribute('aria-pressed',aan?'true':'false');
     });
     var laatste=m.slice(-14);
     if(laatste.length){
