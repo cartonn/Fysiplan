@@ -973,6 +973,8 @@
   else{
     Promise.all([
       fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){return r.json();}),
+      // De therapeut kan voor editor/PDF een lijntekening kiezen. De digitale
+      // patiëntkaart gebruikt bewust altijd het kleurenbeeld uit de v2-catalogus.
       fetch('/v2/oefeningen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
     ]).then(function(res){
       if(!res[0]||!res[0].ok){document.getElementById('fout').style.display='block';return;}

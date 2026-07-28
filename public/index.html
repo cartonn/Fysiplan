@@ -247,6 +247,16 @@
   <div class="card col-controls">
     <div class="hd">Kies oefening <span id="cnt" style="margin-left:auto"></span></div>
     <div class="bd">
+      <div class="beeldkeuze-v2 no-print" id="beeldKeuze" hidden>
+        <div class="beeldkeuze-kop">
+          <span><b>Kaartbeeld</b><small>Geldt voor de kaart en PDF</small></span>
+          <span class="beeldkeuze-qr">QR blijft in kleur</span>
+        </div>
+        <div class="beeldsegment" role="group" aria-label="Kies het beeld voor de kaart en PDF">
+          <button type="button" data-v2-beeld="lijn" aria-pressed="false">Lijntekening</button>
+          <button type="button" data-v2-beeld="kleur" aria-pressed="false">Kleur</button>
+        </div>
+      </div>
       <div class="filters" id="filters">
         <span class="chip on" data-g="all">alle groepen</span>
         <span class="chip" data-g="boven">bovenste extr.</span>
@@ -416,6 +426,7 @@ bridge2.jpg</div>
     </label>
     <div style="font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.5">
       Tip voor het dossier: kies in het printvenster <b>Bewaar als PDF</b> en voeg het bestand toe aan het pati&euml;ntdossier in je EPD.
+      De PDF gebruikt de beeldkeuze boven de oefeningen; de digitale kaart achter de QR-code blijft altijd in kleur.
     </div>
     <div class="acts">
       <button class="btn" id="pr_cancel">Annuleren</button>
@@ -637,7 +648,12 @@ bridge2.jpg</div>
     return "<svg class='thumb' style='width:"+s+"px;height:"+s+"px' viewBox='0 0 80 80' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'>"+(m?"<g transform='translate(80,0) scale(-1,1)'>":"<g>")+(P[k]||P.squat)+"</g></svg>";
   }
   function imgRender(im,size){
-    if(im.type==='img') return "<img class='thumb' style='width:"+(size||34)+"px;height:"+(size||34)+"px' src='"+im.src+"'/>";
+    if(im.type==='img'){
+      var src=im.src;
+      if(IS_V2&&V2_BEELD==='lijn'&&im.lineSrc)src=im.lineSrc;
+      else if(IS_V2&&V2_BEELD==='kleur'&&im.colorSrc)src=im.colorSrc;
+      return "<img class='thumb' style='width:"+(size||34)+"px;height:"+(size||34)+"px' src='"+src+"'/>";
+    }
     return svgStr(im.key,im.m,size);
   }
   function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
@@ -815,6 +831,18 @@ bridge2.jpg</div>
   // Alleen /v2/app gebruikt de nieuwe fotobibliotheek. Ook /admin88 blijft op
   // de vertrouwde 215 lijntekeningen werken.
   var USE_V2_LIBRARY=IS_V2;
+  // Deze keuze geldt alleen voor de v2-editor en PDF. De digitale kaart haalt
+  // altijd kaartImg uit de v2-catalogus en blijft daardoor onafhankelijk in kleur.
+  var V2_BEELD=SET.v2Beeld==='kleur'?'kleur':'lijn';
+  function syncV2Beeldkeuze(){
+    var houder=document.getElementById('beeldKeuze');
+    if(!houder)return;
+    houder.querySelectorAll('[data-v2-beeld]').forEach(function(knop){
+      var aan=knop.dataset.v2Beeld===V2_BEELD;
+      knop.classList.toggle('aan',aan);
+      knop.setAttribute('aria-pressed',aan?'true':'false');
+    });
+  }
   if(!USE_V2_LIBRARY)document.querySelector('.smart-filters').style.display='none';
   if(IS_V2){
     document.documentElement.classList.add('v2');
@@ -824,6 +852,19 @@ bridge2.jpg</div>
     document.querySelector('.brand').appendChild(_v2b);
     document.getElementById('sjabBtn').style.display='';
     document.getElementById('aiBtn').style.display='';
+    var _beeldKeuze=document.getElementById('beeldKeuze');
+    _beeldKeuze.hidden=false;
+    syncV2Beeldkeuze();
+    _beeldKeuze.addEventListener('click',function(e){
+      var knop=e.target.closest('[data-v2-beeld]');
+      if(!knop||knop.dataset.v2Beeld===V2_BEELD)return;
+      V2_BEELD=knop.dataset.v2Beeld;
+      SET.v2Beeld=V2_BEELD;
+      saveSettings();
+      syncV2Beeldkeuze();
+      renderList();
+      renderA4();
+    });
   }
   if(IS_ADMIN){
     document.title='Fysiplan — Beheer';
@@ -1933,9 +1974,11 @@ bridge2.jpg</div>
     var cats=[];
     OEF=entries.map(function(e,i){
       if(cats.indexOf(e.groep)<0)cats.push(e.groep);
+      var lineSrc=e.img;
+      var colorSrc=e.kaartImg||e.img;
       return {id:i,naam:e.naam,groep:e.groep,ook:e.ook||null,s:3,h:12,bron:'server',
         exerciseId:e.exerciseId||'',video:e.video||null,region:e.region||'',joint:e.joint||'',goals:e.goals||[],equipment:e.equipment||[],difficulty:e.difficulty||'',searchAliases:e.searchAliases||[],starthouding:'',uitvoering:'',opmerking:'',
-        imgs:[{type:'img',src:USE_V2_LIBRARY?(e.kaartImg||e.img):e.img,label:'Plaatje'}]};
+        imgs:[{type:'img',src:USE_V2_LIBRARY?colorSrc:lineSrc,lineSrc:USE_V2_LIBRARY?lineSrc:null,colorSrc:USE_V2_LIBRARY?colorSrc:null,label:'Plaatje'}]};
     });
     SERVERLIB=true;CUSTOMLIB=false;curG='all';
     GROUPS=[{g:'all',label:'alle oefeningen'}].concat(cats.map(function(c){return {g:c,label:c};}));
