@@ -207,11 +207,12 @@
   .mnoot{font:500 12.5px/1.5 var(--disp);color:var(--zacht);margin-top:12px}
   .mhist{margin-top:14px;padding-top:12px;border-top:1px solid var(--lijn2)}
   .mhist .mtitel{font:700 12px/1 var(--disp);letter-spacing:.08em;text-transform:uppercase;color:var(--grijs);margin-bottom:10px}
-  .mbars{display:flex;align-items:flex-end;gap:5px;height:64px}
-  .mbar{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
-  .mbar .staaf{width:100%;max-width:26px;border-radius:5px 5px 2px 2px;min-height:5px}
-  .mbar .mdat{font:600 9.5px/1 var(--disp);color:var(--zacht);white-space:nowrap}
-  .mbar .mval{font:700 11px/1 var(--disp);color:var(--tekst)}
+  .mbars{display:flex;align-items:flex-end;gap:6px;height:92px;padding:10px 10px 8px;
+    background:var(--chip);border:1px solid var(--lijn2);border-radius:12px}
+  .mbar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-width:0}
+  .mbar .staaf{width:100%;max-width:30px;border-radius:6px 6px 2px 2px;min-height:6px;box-shadow:0 1px 2px rgba(20,30,50,.12)}
+  .mbar .mdat{font:600 10px/1 var(--disp);color:var(--zacht);white-space:nowrap;margin-top:2px}
+  .mbar .mval{font:700 12px/1 var(--disp);color:var(--tekst)}
   /* neutrale, feitelijke samenvatting van de scores; bewust geen kleuroordeel,
      de duiding blijft bij de fysiotherapeut */
   .mtrend{display:flex;align-items:center;gap:7px;margin-top:12px;padding:9px 12px;
@@ -535,7 +536,7 @@
       document.getElementById('mbars').innerHTML=laatste.map(function(x){
         var d=new Date(x.t);
         return '<div class="mbar"><span class="mval">'+x.s+'</span>'+
-          '<span class="staaf" style="height:'+(6+x.s*5.2)+'px;background:'+staafKleur(x.s)+'"></span>'+
+          '<span class="staaf" style="height:'+(6+x.s*3.6)+'px;background:'+staafKleur(x.s)+'"></span>'+
           '<span class="mdat">'+('0'+d.getDate()).slice(-2)+'-'+('0'+(d.getMonth()+1)).slice(-2)+'</span></div>';
       }).join('');
     }
