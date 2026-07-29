@@ -1780,6 +1780,10 @@ async function afhandelen(request, response) {
       let telling = 200;
       try { telling = (await buildManifest("v2")).length; } catch {}
       html = html.replace(/__OEFENINGEN_AANTAL__/g, String(telling));
+      // levend aantal kaartsjablonen: de landing blijft kloppen als er sjablonen bijkomen
+      let sjabTelling = 12;
+      try { const sj = JSON.parse(await readFile(join(publicDir, "sjablonen.json"), "utf8")); if (Array.isArray(sj) && sj.length) sjabTelling = sj.length; } catch {}
+      html = html.replace(/__SJABLONEN_AANTAL__/g, String(sjabTelling));
       await send(response, 200, "text/html; charset=utf-8", html);
     }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
