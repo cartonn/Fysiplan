@@ -1548,10 +1548,16 @@ async function afhandelen(request, response) {
     const dtStart = startDag.replace(/-/g, "") + "T" + tijd.replace(":", "") + "00";
     const stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
     const icsTekst = (s) => String(s).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/[\r\n]+/g, "\\n");
-    // de Host-header komt van buiten en belandt in een bestand dat een agenda-app inleest;
-    // alleen een net domein (eventueel met poort) toelaten, anders terugvallen op fysiplan.nl
+    // de Host-header komt van buiten en belandt in een bestand dat een agenda-app inleest.
+    // Alleen het eigen domein (of loopback tijdens ontwikkeling) mag in de link staan; elke
+    // andere waarde valt terug op het canonieke fysiplan.nl, zodat de kaartlink nooit naar
+    // een vreemd domein kan wijzen, wat er ook in de Host-header wordt meegestuurd.
     const rawHost = String(request.headers.host || "");
-    const veiligeHost = /^[a-z0-9.-]+(:\d+)?$/i.test(rawHost) ? rawHost : "fysiplan.nl";
+    const netjes = /^[a-z0-9.-]+(:\d+)?$/i.test(rawHost) ? rawHost : "";
+    const kaalHost = netjes.split(":")[0].toLowerCase();
+    const eigenDomein = kaalHost === "fysiplan.nl" || kaalHost.endsWith(".fysiplan.nl")
+      || kaalHost === "localhost" || kaalHost === "127.0.0.1";
+    const veiligeHost = eigenDomein ? netjes : "fysiplan.nl";
     const link = "https://" + veiligeHost + "/k/" + found.id;
     const ics = [
       "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Fysiplan//Trainingskaart//NL", "CALSCALE:GREGORIAN",
