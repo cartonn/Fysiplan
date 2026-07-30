@@ -1371,6 +1371,8 @@ async function afhandelen(request, response) {
     response.setHeader("x-frame-options", "DENY");
     response.setHeader("x-robots-tag", "noindex, noarchive");
     response.setHeader("permissions-policy", "camera=(self), microphone=(self), geolocation=()");
+    // de opnamepagina opent geen popups; browsingcontext isoleren tegen andere vensters
+    response.setHeader("cross-origin-opener-policy", "same-origin");
     response.setHeader("content-security-policy",
       "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; " +
       "img-src 'self' data:; media-src 'self' blob:; frame-src 'none'; " +
@@ -1708,6 +1710,9 @@ async function afhandelen(request, response) {
     response.setHeader("x-frame-options", "DENY");
     response.setHeader("x-robots-tag", "noindex, noarchive");
     response.setHeader("permissions-policy", "camera=(), microphone=(), geolocation=()");
+    // de patiëntkaart heeft geen popups of window.opener nodig; door de browsingcontext
+    // te isoleren kan geen enkel ander venster naar deze pagina met patiëntgegevens verwijzen
+    response.setHeader("cross-origin-opener-policy", "same-origin");
     // defensielaag: de patiëntpagina mag alleen laden van de eigen server (+ de YouTube-speler)
     response.setHeader("content-security-policy",
       "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; " +
