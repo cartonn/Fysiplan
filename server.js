@@ -1806,6 +1806,9 @@ async function afhandelen(request, response) {
     response.setHeader("x-frame-options", "DENY");
     // sinds de eigen opname uit de v2-app is verdwenen, kan camera en microfoon hier dicht
     response.setHeader("permissions-policy", "camera=(), microphone=(), geolocation=()");
+    // net als /k en /o: de app toont cliëntnamen en pijnscores en heeft geen popups of
+    // window.opener nodig; de browsingcontext isoleren houdt vreemde vensters buiten
+    response.setHeader("cross-origin-opener-policy", "same-origin");
     // defensielaag zoals op /k en /o: de app laadt alleen eigen bronnen, plus de
     // videospelers; base-uri 'self' omdat de pagina zelf een <base href="/"> zet
     response.setHeader("content-security-policy",
