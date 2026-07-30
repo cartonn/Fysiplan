@@ -260,7 +260,10 @@
     .wrap{padding-top:32px}
     .oefkop{padding:16px 18px 16px 16px}
   }
-  button:focus-visible{outline:3px solid rgba(36,86,166,.35);outline-offset:2px}
+  /* één duidelijk zichtbare toetsenbord-focus op álle bedienbare elementen (WCAG 2.4.7):
+     ook de taalkeuze en het tijdveld, die eerder op de browserstandaard terugvielen */
+  button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{
+    outline:3px solid rgba(36,86,166,.6);outline-offset:2px}
   @media print{
     body{background:#fff}
     .vbtn,.vhouder,.mkaart,.agkaart,#metingkop,#agendakop,.kopacties,.belknop,.appbanner,.demobadge,.infobadge{display:none !important}
