@@ -52,6 +52,13 @@
   @media (max-width:560px){.hero .sub{text-align:left}}
   .hero .cta{display:flex;gap:20px;justify-content:center;align-items:center;margin-top:30px}
   .hero .cta a.tl{font:600 15.5px/1 var(--disp);color:var(--inkt);text-decoration:none;border-bottom:2px solid var(--lijn);padding-bottom:3px}
+  /* op smalle schermen de knoppen onder elkaar: de hoofdknop over de volle breedte
+     (grotere trefzone, geen afbrekende tekst), de tekstlink netjes eronder */
+  @media (max-width:560px){
+    .hero .cta{flex-direction:column;align-items:stretch;gap:14px;margin-top:26px}
+    .hero .cta .knop{text-align:center;padding:15px 26px}
+    .hero .cta a.tl{align-self:center}
+  }
   .hero .klein{font:italic 15px/1 var(--serif);color:var(--zacht);margin-top:16px}
 
   /* het duet */
