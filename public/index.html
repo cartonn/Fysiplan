@@ -828,6 +828,13 @@ bridge2.jpg</div>
   function ping(type){try{fetch('api/stats/event',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({type:type})}).catch(function(){});}catch(e){}}
   // v2: /v2/app krijgt de vernieuwde huisstijl en de nieuwe printopties
   var IS_V2=!!window.FYSIPLAN_V2;
+  // praktijksessie (v2-accountlaag): een token in localStorage, meegestuurd op de
+  // praktijkroutes. In v1 wordt er nooit een token opgeslagen, dus deze helpers
+  // geven daar altijd de kale headers terug — v1-gedrag verandert niet.
+  function prakSes(){try{return localStorage.getItem('fp_praksessie')||'';}catch(e){return '';}}
+  function setPrakSes(t){try{if(t)localStorage.setItem('fp_praksessie',t);else localStorage.removeItem('fp_praksessie');}catch(e){}}
+  function PJSON(){var h={'content-type':'application/json'};var s=prakSes();if(s)h['x-praktijk-sessie']=s;return h;}
+  function PGET(){var o={cache:'no-cache'};var s=prakSes();if(s)o.headers={'x-praktijk-sessie':s};return o;}
   // Alleen /v2/app gebruikt de nieuwe fotobibliotheek. Ook /admin88 blijft op
   // de vertrouwde 215 lijntekeningen werken.
   var USE_V2_LIBRARY=IS_V2;
@@ -1438,7 +1445,7 @@ bridge2.jpg</div>
     var c=currentCard(naam);c.praktijk=pr;
     var afdruk=JSON.stringify(c);
     if(afdruk===laatsteDeel)return;
-    fetch('api/kaarten',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(c)})
+    fetch('api/kaarten',{method:'POST',headers:PJSON(),body:JSON.stringify(c)})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
       .then(function(d){
         if(!d.ok)return;
@@ -1505,7 +1512,7 @@ bridge2.jpg</div>
     if(!p.praktijk.trim()||!p.adres.trim())return;
     clearTimeout(prakSaveTimer);
     prakSaveTimer=setTimeout(function(){
-      fetch('api/praktijken',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(p)})
+      fetch('api/praktijken',{method:'POST',headers:PJSON(),body:JSON.stringify(p)})
         .then(function(r){return r.json();}).then(function(d){if(d.ok)loadPraktijken();}).catch(function(){});
     },600);
   }
@@ -1533,7 +1540,7 @@ bridge2.jpg</div>
     rd.onload=function(){
       resizeDataUrl(rd.result,320,function(durl){
         var p={praktijk:SET.praktijk,adres:SET.adres||'',plaats:SET.plaats||'',tel:SET.tel||'',email:SET.email||'',logo:durl};
-        fetch('api/praktijken',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(p)})
+        fetch('api/praktijken',{method:'POST',headers:PJSON(),body:JSON.stringify(p)})
           .then(function(r){return r.json().catch(function(){return {ok:false};});})
           .then(function(d){
             if(!d.ok){alert(d.fout||'Logo opslaan is niet gelukt.');return;}
@@ -1697,11 +1704,75 @@ bridge2.jpg</div>
     openOv('ovKaarten');
   });
 
+  // ---- beveiligingsslot per praktijk (v2-accountlaag) ----
+  function bouwPrakSlot(blok){
+    if(document.getElementById('prakslot'))return;
+    var s=document.createElement('div');
+    s.id='prakslot';
+    s.style.cssText='margin:8px 0 10px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg2,transparent)';
+    s.innerHTML=
+      "<div id='ps_status' style='font-size:12.5px;color:var(--muted);margin-bottom:6px'></div>"+
+      "<div id='ps_form' style='display:none;gap:6px;align-items:center;flex-wrap:wrap'>"+
+        "<input id='ps_ww' type='password' autocomplete='current-password' placeholder='Wachtwoord' style='flex:1;min-width:130px'/>"+
+        "<button class='btn' id='ps_do' type='button'></button></div>"+
+      "<div id='ps_msg' style='font-size:12px;color:var(--muted);margin-top:6px;display:none'></div>";
+    blok.insertBefore(s,blok.firstChild);
+    document.getElementById('ps_do').addEventListener('click',prakSlotActie);
+    document.getElementById('ps_ww').addEventListener('keydown',function(e){if(e.key==='Enter')prakSlotActie();});
+  }
+  var PRAKSLOT={geclaimd:false,ingelogd:false,pr:''};
+  function toonPrakSlot(pr){
+    PRAKSLOT.pr=pr;
+    fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET())
+      .then(function(r){return r.json();}).then(function(d){
+        PRAKSLOT.geclaimd=!!d.geclaimd;PRAKSLOT.ingelogd=!!d.ingelogd;
+        rendPrakSlot();
+      }).catch(function(){});
+  }
+  function rendPrakSlot(){
+    var st=document.getElementById('ps_status'),form=document.getElementById('ps_form'),
+        knop=document.getElementById('ps_do'),ww=document.getElementById('ps_ww');
+    if(!st)return;
+    if(!PRAKSLOT.geclaimd){
+      st.innerHTML="🔓 Deze praktijk is nog niet beveiligd. Zet er een wachtwoord op zodat alleen jouw praktijk het kaartoverzicht ziet.";
+      form.style.display='flex';ww.placeholder='Kies een wachtwoord (min. 8 tekens)';ww.autocomplete='new-password';knop.textContent='Beveiligen';knop.dataset.act='claim';
+    }else if(PRAKSLOT.ingelogd){
+      st.innerHTML="🔒 Beveiligd en ingelogd. <a href='#' id='ps_uit'>Uitloggen</a>";
+      form.style.display='none';
+      var u=document.getElementById('ps_uit');if(u)u.addEventListener('click',function(e){e.preventDefault();prakLogout();});
+    }else{
+      st.innerHTML="🔒 Deze praktijk is beveiligd. Log in om de gedeelde kaarten te zien.";
+      form.style.display='flex';ww.placeholder='Wachtwoord';ww.autocomplete='current-password';knop.textContent='Inloggen';knop.dataset.act='login';
+    }
+  }
+  function prakSlotActie(){
+    var knop=document.getElementById('ps_do'),ww=document.getElementById('ps_ww'),msg=document.getElementById('ps_msg');
+    var act=knop.dataset.act,w=ww.value;
+    if(act==='claim'&&w.length<8){toonPsMsg('Kies een wachtwoord van minstens 8 tekens.');return;}
+    if(!w){toonPsMsg('Vul je wachtwoord in.');return;}
+    knop.disabled=true;
+    fetch('api/praktijk/'+(act==='claim'?'claim':'login'),{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({praktijk:PRAKSLOT.pr,wachtwoord:w})})
+      .then(function(r){return r.json().catch(function(){return{ok:false};});})
+      .then(function(d){
+        knop.disabled=false;
+        if(!d.ok){toonPsMsg(d.fout||'Dat lukte niet.');return;}
+        setPrakSes(d.sessie);ww.value='';document.getElementById('ps_msg').style.display='none';
+        PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;rendPrakSlot();toonSrvKaarten();
+      })
+      .catch(function(){knop.disabled=false;toonPsMsg('Geen verbinding.');});
+  }
+  function prakLogout(){
+    fetch('api/praktijk/logout',{method:'POST',headers:PJSON()}).catch(function(){});
+    setPrakSes('');PRAKSLOT.ingelogd=false;rendPrakSlot();toonSrvKaarten();
+  }
+  function toonPsMsg(t){var m=document.getElementById('ps_msg');if(m){m.textContent=t;m.style.display='';}}
+
   // ---- gedeelde kaarten van de praktijk (v2): server-side, voor alle collega's ----
   function saveServerCard(naam,cb){
     var c=currentCard(naam);
     c.praktijk=(SET.praktijk||'').trim();
-    fetch('api/kaarten',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(c)})
+    fetch('api/kaarten',{method:'POST',headers:PJSON(),body:JSON.stringify(c)})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
       .then(function(d){cb(d);})
       .catch(function(){cb({ok:false,fout:'Geen verbinding met de server.'});});
@@ -1713,6 +1784,8 @@ bridge2.jpg</div>
     if(!pr){blok.style.display='none';knop.style.display='none';return;}
     blok.style.display='';knop.style.display='';
     document.getElementById('k_srv_naam').textContent='('+pr+')';
+    // v2: beveiligingsslot — claim/inloggen per praktijk (alleen in de v2-app)
+    if(window.FYSIPLAN_V2){bouwPrakSlot(blok);toonPrakSlot(pr);}
     // v2: de weekbrief — korte, beschrijvende AI-samenvatting van de gedeelde
     // kaarten (alleen in de v2-app; v1 blijft exact zoals hij was)
     if(window.FYSIPLAN_V2&&!document.getElementById('weekbrief')){
@@ -1724,7 +1797,7 @@ bridge2.jpg</div>
       document.getElementById('wb_knop').addEventListener('click',function(){
         var uit=document.getElementById('wb_uit'),k2=this;
         k2.disabled=true;uit.style.display='';uit.textContent='De weekbrief wordt geschreven…';
-        fetch('api/praktijk/brief?praktijk='+encodeURIComponent(SET.praktijk||''),{cache:'no-cache'})
+        fetch('api/praktijk/brief?praktijk='+encodeURIComponent(SET.praktijk||''),PGET())
           .then(function(r){return r.json();})
           .then(function(d){uit.textContent=d.ok?d.brief:(d.fout||'De weekbrief is nu niet beschikbaar.');k2.disabled=false;})
           .catch(function(){uit.textContent='De weekbrief is nu niet beschikbaar.';k2.disabled=false;});
@@ -1732,7 +1805,7 @@ bridge2.jpg</div>
     }
     var el=document.getElementById('k_srv_lijst');
     el.innerHTML="<div class='hint'>Laden…</div>";
-    fetch('api/kaarten?praktijk='+encodeURIComponent(pr),{cache:'no-cache'})
+    fetch('api/kaarten?praktijk='+encodeURIComponent(pr),PGET())
       .then(function(r){return r.ok?r.json():[];})
       .then(function(l){
         if(!Array.isArray(l)||!l.length){el.innerHTML="<div class='hint'>Nog geen gedeelde kaarten voor deze praktijk.</div>";return;}
@@ -1789,7 +1862,7 @@ bridge2.jpg</div>
     }else if(x){
       var nm=x.dataset.sdel;
       if(!confirm('Gedeelde kaart “'+nm+'” voor de hele praktijk verwijderen?'))return;
-      fetch('api/kaarten/verwijder',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({praktijk:SET.praktijk||'',naam:nm})})
+      fetch('api/kaarten/verwijder',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',naam:nm})})
         .then(function(r){return r.json();})
         .then(function(d){if(d.ok){toonSrvKaarten();ping('kaart-verwijderd');}else alert(d.fout||'Verwijderen is niet gelukt.');})
         .catch(function(){alert('Verwijderen is niet gelukt: geen verbinding.');});
