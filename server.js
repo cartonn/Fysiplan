@@ -1152,6 +1152,25 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // herstelpad (beheer): een claim verwijderen wanneer iemand een praktijknaam
+  // ten onrechte heeft geclaimd. Haalt het account weg en maakt alle sessies
+  // van die praktijk ongeldig; de praktijk werkt daarna weer als vanouds en
+  // kan opnieuw (door de juiste eigenaar) geclaimd worden.
+  if (urlPath === "/api/praktijk/reset" && request.method === "POST") {
+    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      if (!pk || !praktijkAccounts[pk]) { await sendJson(response, 404, { ok: false, fout: "Geen account voor deze praktijk." }); return; }
+      delete praktijkAccounts[pk];
+      await saveJson(accountsPath, praktijkAccounts);
+      for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
+      auditLog(pk, "claim-gereset-door-beheer", request);
+      await sendJson(response, 200, { ok: true });
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+    return;
+  }
+
   // maandagbrief: korte, puur beschrijvende weeksamenvatting van de gedeelde
   // kaarten van één praktijk. De server rekent de feiten deterministisch uit
   // (activiteit, oefendagen, pijnrichting); de AI schrijft er hoogstens vijf
