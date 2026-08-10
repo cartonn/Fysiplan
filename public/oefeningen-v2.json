@@ -1527,1994 +1527,2279 @@
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-met-stok-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-met-stok-avatar-v8.jpg",
-  "coreExerciseId": "fc_03702bf427ce8652"
+  "coreExerciseId": "fc_03702bf427ce8652",
+  "uitleg": "Sta rechtop en houd een stok met beide handen vast voor je lichaam. Breng de stok met gestrekte armen rustig naar voren omhoog en laat hem weer langzaam zakken."
  },
  {
   "naam": "Schouder voorwaarts heffen – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_666979ac93a2d017"
+  "coreExerciseId": "fc_666979ac93a2d017",
+  "uitleg": "Sta rechtop met je armen langs je lichaam. Hef je gestrekte arm rustig naar voren tot schouderhoogte en laat hem weer langzaam zakken."
  },
  {
   "naam": "Schouder voorwaarts heffen – isometrisch tegen de muur",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-isometrisch-tegen-de-muur-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-isometrisch-tegen-de-muur-avatar-v8.jpg",
-  "coreExerciseId": "fc_7518bd9bb71d880c"
+  "coreExerciseId": "fc_7518bd9bb71d880c",
+  "uitleg": "Sta rechtop met je gezicht naar de muur en zet je vuist op schouderhoogte tegen de muur. Duw je arm rustig naar voren tegen de muur zonder dat er beweging ontstaat en laat de spanning daarna langzaam los."
  },
  {
   "naam": "Schouder voorwaarts heffen – met elastiek",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-met-elastiek-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_4387146876fecac9"
+  "coreExerciseId": "fc_4387146876fecac9",
+  "uitleg": "Sta rechtop met je voet op het uiteinde van een elastiek en houd het andere uiteinde in je hand. Hef je gestrekte arm rustig naar voren tot schouderhoogte en laat hem langzaam terugzakken."
  },
  {
   "naam": "Schouder voorwaarts heffen – functioneel reikend",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-functioneel-reikend-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-functioneel-reikend-avatar-v8.jpg",
-  "coreExerciseId": "fc_33a2d93ee11092b9"
+  "coreExerciseId": "fc_33a2d93ee11092b9",
+  "uitleg": "Sta rechtop voor een kast of plank. Reik met je arm rustig naar voren omhoog, alsof je iets van de plank pakt, en breng je arm daarna langzaam weer terug."
  },
  {
   "naam": "Schouder zijwaarts heffen – met stok",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-met-stok-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-met-stok-avatar-v8.jpg",
-  "coreExerciseId": "fc_ad61fe53d2d30ad7"
+  "coreExerciseId": "fc_ad61fe53d2d30ad7",
+  "uitleg": "Sta rechtop en houd een stok met beide handen vast, je armen langs je lichaam. Duw met je ene hand de stok opzij omhoog, zodat je andere arm rustig zijwaarts omhoog komt, en breng hem langzaam terug."
  },
  {
   "naam": "Schouder zijwaarts heffen – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_554b16dfc340adb1"
+  "coreExerciseId": "fc_554b16dfc340adb1",
+  "uitleg": "Sta rechtop met je armen langs je lichaam. Hef je gestrekte arm rustig zijwaarts tot schouderhoogte en laat hem weer langzaam zakken."
  },
  {
   "naam": "Schouder zijwaarts heffen – isometrisch tegen de muur",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-isometrisch-tegen-de-muur-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-isometrisch-tegen-de-muur-avatar-v8.jpg",
-  "coreExerciseId": "fc_4f7f0c8b2dfad8a8"
+  "coreExerciseId": "fc_4f7f0c8b2dfad8a8",
+  "uitleg": "Sta rechtop met je zij naar de muur, je arm langs je lichaam. Duw de buitenkant van je arm rustig tegen de muur zonder dat je arm beweegt en laat de spanning daarna langzaam los."
  },
  {
   "naam": "Schouder zijwaarts heffen – met elastiek",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-met-elastiek-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_9708918c7ba49ccb"
+  "coreExerciseId": "fc_9708918c7ba49ccb",
+  "uitleg": "Sta rechtop met je voet op het uiteinde van een elastiek en houd het andere uiteinde in je hand. Hef je gestrekte arm rustig zijwaarts tot schouderhoogte en laat hem langzaam terugzakken."
  },
  {
   "naam": "Schouder zijwaarts heffen – functioneel reikend",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-functioneel-reikend-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-functioneel-reikend-avatar-v8.jpg",
-  "coreExerciseId": "fc_225dc6fc519468b4"
+  "coreExerciseId": "fc_225dc6fc519468b4",
+  "uitleg": "Sta rechtop met je armen langs je lichaam. Reik met je arm rustig zijwaarts omhoog, alsof je iets naast je van een plank pakt, en breng je arm daarna langzaam terug."
  },
  {
   "naam": "Schouder naar buiten draaien – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-naar-buiten-draaien-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-naar-buiten-draaien-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_e0f762d19d5f198c"
+  "coreExerciseId": "fc_e0f762d19d5f198c",
+  "uitleg": "Sta rechtop met je elleboog gebogen tegen je zij en je hand naar voren. Draai je onderarm rustig naar buiten en breng hem langzaam terug naar het midden. Houd je elleboog steeds tegen je lichaam."
  },
  {
   "naam": "Schouder naar buiten draaien – isometrisch tegen de muur",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-naar-buiten-draaien-isometrisch-tegen-de-muur-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-naar-buiten-draaien-isometrisch-tegen-de-muur-avatar-v8.jpg",
-  "coreExerciseId": "fc_3e00e292f20fa79d"
+  "coreExerciseId": "fc_3e00e292f20fa79d",
+  "uitleg": "Sta rechtop met je zij naast de muur, je elleboog gebogen tegen je lichaam. Duw met de buitenkant van je hand rustig tegen de muur zonder dat er beweging ontstaat en laat de spanning langzaam los."
  },
  {
   "naam": "Schouder naar buiten draaien – met elastiek",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_04103dc1431c5605"
+  "coreExerciseId": "fc_04103dc1431c5605",
+  "uitleg": "Sta rechtop met je elleboog gebogen tegen je zij en houd een elastiek vast dat opzij van je is vastgemaakt. Draai je onderarm rustig naar buiten en laat hem langzaam weer terugkomen."
  },
  {
   "naam": "Schouder naar binnen draaien – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-naar-binnen-draaien-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-naar-binnen-draaien-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_d5bcb3482574858c"
+  "coreExerciseId": "fc_d5bcb3482574858c",
+  "uitleg": "Sta rechtop met je elleboog gebogen tegen je zij en je hand naar voren. Draai je onderarm rustig naar binnen richting je buik en breng hem langzaam terug. Houd je elleboog tegen je lichaam."
  },
  {
   "naam": "Schouder naar binnen draaien – isometrisch tegen de muur",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-naar-binnen-draaien-isometrisch-tegen-de-muur-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-naar-binnen-draaien-isometrisch-tegen-de-muur-avatar-v8.jpg",
-  "coreExerciseId": "fc_5990492630e6f663"
+  "coreExerciseId": "fc_5990492630e6f663",
+  "uitleg": "Sta rechtop bij de rand van een muur, met je elleboog gebogen tegen je zij. Duw met de binnenkant van je hand rustig tegen de muur zonder dat er beweging ontstaat en laat de spanning langzaam los."
  },
  {
   "naam": "Schouder naar binnen draaien – met elastiek",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-naar-binnen-draaien-met-elastiek-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-naar-binnen-draaien-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_fc04a7fd8655fdfb"
+  "coreExerciseId": "fc_fc04a7fd8655fdfb",
+  "uitleg": "Sta rechtop met je elleboog gebogen tegen je zij en houd een elastiek vast dat opzij van je is vastgemaakt. Draai je onderarm rustig naar binnen richting je buik en laat hem langzaam terugkomen."
  },
  {
   "naam": "Schouderblad naar achteren – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouderblad-naar-achteren-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouderblad-naar-achteren-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_dc9ce2c06bbfd6bd"
+  "coreExerciseId": "fc_dc9ce2c06bbfd6bd",
+  "uitleg": "Sta rechtop met je armen ontspannen langs je lichaam. Trek je schouderbladen rustig naar achteren en naar elkaar toe en laat ze daarna weer langzaam los."
  },
  {
   "naam": "Schouderblad naar achteren – isometrisch tegen de muur",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouderblad-naar-achteren-isometrisch-tegen-de-muur-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouderblad-naar-achteren-isometrisch-tegen-de-muur-avatar-v8.jpg",
-  "coreExerciseId": "fc_d6e63ed52511fe51"
+  "coreExerciseId": "fc_d6e63ed52511fe51",
+  "uitleg": "Sta rechtop met je rug tegen de muur en je armen langs je lichaam. Duw je ellebogen en schouderbladen rustig naar achteren tegen de muur en laat de spanning daarna langzaam los."
  },
  {
   "naam": "Schouderblad naar achteren – met elastiek",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouderblad-naar-achteren-met-elastiek-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouderblad-naar-achteren-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_333366c477992884"
+  "coreExerciseId": "fc_333366c477992884",
+  "uitleg": "Sta rechtop en houd de uiteinden vast van een elastiek dat voor je is vastgemaakt. Trek je ellebogen rustig naar achteren, breng je schouderbladen naar elkaar toe en laat het elastiek langzaam terugkomen."
  },
  {
   "naam": "Schouderblad omhoog draaien – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouderblad-omhoog-draaien-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouderblad-omhoog-draaien-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_882c1efe227e803f"
+  "coreExerciseId": "fc_882c1efe227e803f",
+  "uitleg": "Sta rechtop met je armen langs je lichaam. Hef je gestrekte arm rustig schuin naar voren omhoog, zodat je schouderblad meedraait, en laat hem weer langzaam zakken."
  },
  {
   "naam": "Schouderblad omhoog draaien – met elastiek",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouderblad-omhoog-draaien-met-elastiek-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouderblad-omhoog-draaien-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_087912d69e656882"
+  "coreExerciseId": "fc_087912d69e656882",
+  "uitleg": "Sta rechtop met je voet op een elastiek en houd het uiteinde in je hand. Hef je gestrekte arm rustig schuin naar voren omhoog, zodat je schouderblad meedraait, en laat hem langzaam terugzakken."
  },
  {
   "naam": "Schouderblad omhoog draaien – functioneel reikend",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouderblad-omhoog-draaien-functioneel-reikend-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouderblad-omhoog-draaien-functioneel-reikend-avatar-v8.jpg",
-  "coreExerciseId": "fc_92838c7fb57617c5"
+  "coreExerciseId": "fc_92838c7fb57617c5",
+  "uitleg": "Sta rechtop voor een kast of hoge plank. Reik met je arm rustig schuin omhoog, alsof je iets hoog wegzet, en breng je arm daarna langzaam weer terug."
  },
  {
   "naam": "Serratus punch – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/serratus-punch-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/serratus-punch-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_1cdc2eb9fe86602e"
+  "coreExerciseId": "fc_1cdc2eb9fe86602e",
+  "uitleg": "Ga op je rug liggen en strek je arm recht omhoog naar het plafond. Duw je vuist rustig nog iets verder omhoog, zodat je schouderblad van de grond komt, en laat je schouder langzaam terugzakken."
  },
  {
   "naam": "Serratus punch – met elastiek",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/serratus-punch-met-elastiek-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/serratus-punch-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_540306ad67f2e937"
+  "coreExerciseId": "fc_540306ad67f2e937",
+  "uitleg": "Sta rechtop met je rug naar het punt waar het elastiek vastzit en houd het uiteinde in je hand op schouderhoogte. Duw je arm rustig naar voren tot hij gestrekt is, laat je schouder nog iets meebewegen en kom langzaam terug."
  },
  {
   "naam": "Serratus punch – functioneel reikend",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/serratus-punch-functioneel-reikend-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/serratus-punch-functioneel-reikend-avatar-v8.jpg",
-  "coreExerciseId": "fc_dfc23a987e0016bb"
+  "coreExerciseId": "fc_dfc23a987e0016bb",
+  "uitleg": "Sta rechtop met je arm gestrekt naar voren op schouderhoogte. Reik rustig zo ver mogelijk naar voren, alsof je iets net buiten bereik pakt, en laat je schouder langzaam terugkomen."
  },
  {
   "naam": "Schouder extensie – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-extensie-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-extensie-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_774d7be8975277a9"
+  "coreExerciseId": "fc_774d7be8975277a9",
+  "uitleg": "Sta rechtop met je armen langs je lichaam. Beweeg je gestrekte arm rustig naar achteren, zonder je rug te bewegen, en breng hem langzaam weer terug."
  },
  {
   "naam": "Schouder extensie – met elastiek",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-extensie-met-elastiek-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-extensie-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_f73a99bdb059c276"
+  "coreExerciseId": "fc_f73a99bdb059c276",
+  "uitleg": "Sta rechtop met je gezicht naar het punt waar het elastiek vastzit en houd het uiteinde in je hand. Trek je gestrekte arm rustig naar achteren langs je lichaam en laat hem langzaam terugkomen."
  },
  {
   "naam": "Schouder extensie – functioneel reikend",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-extensie-functioneel-reikend-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-extensie-functioneel-reikend-avatar-v8.jpg",
-  "coreExerciseId": "fc_324b7e2d789f67f5"
+  "coreExerciseId": "fc_324b7e2d789f67f5",
+  "uitleg": "Sta rechtop met je armen langs je lichaam. Reik met je hand rustig naar achteren, alsof je iets in je achterzak stopt, en breng je arm daarna langzaam weer terug."
  },
  {
   "naam": "Horizontaal openen – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/horizontaal-openen-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/horizontaal-openen-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_75a086465fd56913"
+  "coreExerciseId": "fc_75a086465fd56913",
+  "uitleg": "Sta rechtop en strek je armen op schouderhoogte naar voren. Beweeg je gestrekte armen rustig zijwaarts naar achteren, zodat je borst opent, en breng ze langzaam weer naar voren."
  },
  {
   "naam": "Horizontaal openen – met elastiek",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/horizontaal-openen-met-elastiek-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/horizontaal-openen-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_4378e68aa5faab55"
+  "coreExerciseId": "fc_4378e68aa5faab55",
+  "uitleg": "Sta rechtop en houd een elastiek met beide handen voor je borst, met je armen gestrekt naar voren. Beweeg je armen rustig zijwaarts uit elkaar en laat het elastiek daarna langzaam terugkomen."
  },
  {
   "naam": "Onderste trapezius heffen – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/onderste-trapezius-heffen-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/onderste-trapezius-heffen-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_39388c406779ff27"
+  "coreExerciseId": "fc_39388c406779ff27",
+  "uitleg": "Ga op je buik liggen met je arm gestrekt schuin boven je hoofd. Hef je gestrekte arm rustig een stukje op en laat hem daarna weer langzaam zakken."
  },
  {
   "naam": "Onderste trapezius heffen – functioneel reikend",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/onderste-trapezius-heffen-functioneel-reikend-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/onderste-trapezius-heffen-functioneel-reikend-avatar-v8.jpg",
-  "coreExerciseId": "fc_66908d9476f84888"
+  "coreExerciseId": "fc_66908d9476f84888",
+  "uitleg": "Sta rechtop met je armen ontspannen langs je lichaam. Reik met je hand rustig schuin omhoog, alsof je iets van een hoge plank pakt, en breng je arm daarna langzaam terug."
  },
  {
   "naam": "Schouder pendelen – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/schouder-pendelen-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/schouder-pendelen-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_8b0a8bf5b0f7db0a"
+  "coreExerciseId": "fc_8b0a8bf5b0f7db0a",
+  "uitleg": "Sta licht voorovergebogen en steun met je hand op een tafel. Laat je andere arm ontspannen hangen en maak er rustig kleine slingerbewegingen mee, heen en weer."
  },
  {
   "naam": "Hand achter de rug brengen – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/hand-achter-de-rug-brengen-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/hand-achter-de-rug-brengen-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_726482f04280ec44"
+  "coreExerciseId": "fc_726482f04280ec44",
+  "uitleg": "Sta rechtop met je armen langs je lichaam. Breng je hand rustig achter je rug omhoog richting je schouderbladen en laat je arm daarna weer langzaam terugkomen."
  },
  {
   "naam": "Hand achter de rug brengen – functioneel reikend",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/hand-achter-de-rug-brengen-functioneel-reikend-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/hand-achter-de-rug-brengen-functioneel-reikend-avatar-v8.jpg",
-  "coreExerciseId": "fc_3ec079807b5e79c2"
+  "coreExerciseId": "fc_3ec079807b5e79c2",
+  "uitleg": "Sta rechtop met je armen ontspannen langs je lichaam. Reik met je hand rustig achter je rug omhoog, alsof je je rug wast, en breng je arm daarna langzaam terug."
  },
  {
   "naam": "Elleboog buigen – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/elleboog-buigen-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/elleboog-buigen-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_582042140a2a460a"
+  "coreExerciseId": "fc_582042140a2a460a",
+  "uitleg": "Sta rechtop met je arm langs je lichaam en je handpalm naar voren. Buig je elleboog rustig zodat je hand richting je schouder komt en strek je arm daarna weer langzaam."
  },
  {
   "naam": "Elleboog buigen – met lichte weerstand",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/elleboog-buigen-met-lichte-weerstand-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/elleboog-buigen-met-lichte-weerstand-avatar-v8.jpg",
-  "coreExerciseId": "fc_08a6d319558fbe91"
+  "coreExerciseId": "fc_08a6d319558fbe91",
+  "uitleg": "Sta rechtop met een gevulde waterfles in je hand en je arm langs je lichaam. Buig je elleboog rustig zodat je hand richting je schouder komt en laat je arm daarna weer langzaam zakken."
  },
  {
   "naam": "Elleboog strekken – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/elleboog-strekken-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/elleboog-strekken-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_6bcd4a65128879e0"
+  "coreExerciseId": "fc_6bcd4a65128879e0",
+  "uitleg": "Zit rechtop op een stoel met je elleboog gebogen en je hand bij je schouder. Strek je arm rustig helemaal uit en buig hem daarna weer langzaam terug."
  },
  {
   "naam": "Onderarm naar handpalm boven – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/onderarm-naar-handpalm-boven-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/onderarm-naar-handpalm-boven-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_e38b347c73065f95"
+  "coreExerciseId": "fc_e38b347c73065f95",
+  "uitleg": "Zit rechtop op een stoel en leg je onderarm op tafel, met je elleboog gebogen. Draai je onderarm rustig zodat je handpalm naar boven wijst en draai daarna langzaam terug."
  },
  {
   "naam": "Onderarm naar handpalm onder – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/onderarm-naar-handpalm-onder-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/onderarm-naar-handpalm-onder-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_08cfeeedfb4b8f9f"
+  "coreExerciseId": "fc_08cfeeedfb4b8f9f",
+  "uitleg": "Zit rechtop op een stoel en leg je onderarm op tafel, met je elleboog gebogen. Draai je onderarm rustig zodat je handpalm naar beneden wijst en draai daarna langzaam terug."
  },
  {
   "naam": "Pols omhoog – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/pols-omhoog-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/pols-omhoog-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_d8ac752144bca4a4"
+  "coreExerciseId": "fc_d8ac752144bca4a4",
+  "uitleg": "Zit rechtop op een stoel en leg je onderarm op tafel, met je hand over de rand en je handpalm naar beneden. Beweeg je hand rustig omhoog en laat hem daarna weer langzaam zakken."
  },
  {
   "naam": "Pols omhoog – met lichte weerstand",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/pols-omhoog-met-lichte-weerstand-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/pols-omhoog-met-lichte-weerstand-avatar-v8.jpg",
-  "coreExerciseId": "fc_5532da663c73f31f"
+  "coreExerciseId": "fc_5532da663c73f31f",
+  "uitleg": "Zit rechtop aan tafel met een gevulde waterfles in je hand, je onderarm op tafel en je hand over de rand met de handpalm naar beneden. Beweeg je hand rustig omhoog en laat hem daarna weer langzaam zakken."
  },
  {
   "naam": "Pols omlaag – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/pols-omlaag-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/pols-omlaag-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_ce2477410cacb518"
+  "coreExerciseId": "fc_ce2477410cacb518",
+  "uitleg": "Zit rechtop op een stoel en leg je onderarm op tafel, met je hand over de rand en je handpalm naar beneden. Buig je hand rustig naar beneden en breng hem daarna langzaam terug."
  },
  {
   "naam": "Pols naar duimzijde – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/pols-naar-duimzijde-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/pols-naar-duimzijde-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_ef4a28637f676c77"
+  "coreExerciseId": "fc_ef4a28637f676c77",
+  "uitleg": "Zit rechtop op een stoel en leg je onderarm op tafel, met je hand over de rand en je duim naar boven. Beweeg je hand rustig omhoog richting de duimzijde en laat hem daarna langzaam terugzakken."
  },
  {
   "naam": "Pols naar pinkzijde – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/pols-naar-pinkzijde-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/pols-naar-pinkzijde-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_e5aae2103437529f"
+  "coreExerciseId": "fc_e5aae2103437529f",
+  "uitleg": "Zit rechtop aan tafel en leg je onderarm en hand plat op tafel. Schuif je hand rustig richting je pinkzijde en beweeg hem daarna langzaam terug naar het midden."
  },
  {
   "naam": "Vingers openen en sluiten – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/vingers-openen-en-sluiten-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/vingers-openen-en-sluiten-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_f4dd93506ea188d9"
+  "coreExerciseId": "fc_f4dd93506ea188d9",
+  "uitleg": "Zit rechtop op een stoel en houd je hand voor je, met je handpalm naar voren. Spreid je vingers rustig zo ver mogelijk open en sluit ze daarna langzaam tot een vuist."
  },
  {
   "naam": "Duim oppositie – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/duim-oppositie-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/duim-oppositie-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_01cd46a33951413d"
+  "coreExerciseId": "fc_01cd46a33951413d",
+  "uitleg": "Zit rechtop op een stoel en houd je hand voor je met de handpalm naar boven. Raak met je duimtop rustig de top van elke vinger aan en open je hand daarna weer langzaam."
  },
  {
   "naam": "Peesglijden hand – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/peesglijden-hand-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/peesglijden-hand-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_8c7d1c62f818b029"
+  "coreExerciseId": "fc_8c7d1c62f818b029",
+  "uitleg": "Zit rechtop op een stoel en houd je hand omhoog met gestrekte vingers. Buig je vingers rustig stap voor stap naar je handpalm, van een haakje tot een vuist, en strek ze daarna weer langzaam."
  },
  {
   "naam": "Knijpkracht – actief",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/knijpkracht-actief-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/knijpkracht-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_7f91fb8f38c1440f"
+  "coreExerciseId": "fc_7f91fb8f38c1440f",
+  "uitleg": "Zit rechtop op een stoel en leg je onderarm ontspannen op je bovenbeen. Knijp je hand rustig tot een vuist en open hem daarna weer langzaam."
  },
  {
   "naam": "Knijpkracht – met lichte weerstand",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/knijpkracht-met-lichte-weerstand-line-v1.png",
   "kaartImg": "images/bovenste-extremiteit/knijpkracht-met-lichte-weerstand-avatar-v8.jpg",
-  "coreExerciseId": "fc_b765e6c4113807c7"
+  "coreExerciseId": "fc_b765e6c4113807c7",
+  "uitleg": "Zit rechtop op een stoel met een zachte bal in je hand. Knijp de bal rustig in en laat hem daarna langzaam weer terugveren."
  },
  {
   "naam": "Heup buigen – liggend ondersteund",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-buigen-liggend-ondersteund-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-buigen-liggend-ondersteund-avatar-v8.jpg",
-  "coreExerciseId": "fc_11bd71d8611b1762"
+  "coreExerciseId": "fc_11bd71d8611b1762",
+  "uitleg": "Ga op je rug liggen met je benen gestrekt. Schuif je hiel rustig over de ondergrond richting je billen, zodat je heup en knie buigen, en schuif daarna langzaam terug."
  },
  {
   "naam": "Heup buigen – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-buigen-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-buigen-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_95baf5a1bc158012"
+  "coreExerciseId": "fc_95baf5a1bc158012",
+  "uitleg": "Sta rechtop en houd je vast aan een stoel of tafel voor steun. Til je knie rustig op richting je heup en zet je voet daarna weer langzaam terug op de grond."
  },
  {
   "naam": "Heup buigen – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-buigen-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-buigen-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_83538ab797690eec"
+  "coreExerciseId": "fc_83538ab797690eec",
+  "uitleg": "Sta rechtop met een elastiek om je enkels en houd zo nodig iets vast voor steun. Til je knie rustig op tegen de weerstand van het elastiek in en zet je voet daarna langzaam terug."
  },
  {
   "naam": "Heup strekken – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-strekken-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-strekken-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_29bf469def9af11d"
+  "coreExerciseId": "fc_29bf469def9af11d",
+  "uitleg": "Sta rechtop achter een stoel en houd de leuning vast voor steun. Beweeg je gestrekte been rustig naar achteren, houd je rug recht en breng je been daarna langzaam terug."
  },
  {
   "naam": "Heup strekken – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-strekken-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-strekken-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_e1912b396a0b944a"
+  "coreExerciseId": "fc_e1912b396a0b944a",
+  "uitleg": "Sta rechtop met een elastiek om je enkels en houd iets vast voor steun. Beweeg je gestrekte been rustig naar achteren tegen het elastiek in en breng het daarna langzaam terug."
  },
  {
   "naam": "Heup strekken – functioneel op één been",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-strekken-functioneel-op-een-been-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-strekken-functioneel-op-een-been-avatar-v8.jpg",
-  "coreExerciseId": "fc_c7a486edc3a5dbf9"
+  "coreExerciseId": "fc_c7a486edc3a5dbf9",
+  "uitleg": "Sta rechtop op één been en houd je vast aan een tafel of aanrecht voor steun. Beweeg je andere been rustig gestrekt naar achteren en breng het daarna langzaam terug."
  },
  {
   "naam": "Heup zijwaarts heffen – zijlig",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-zijwaarts-heffen-zijlig-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-zijwaarts-heffen-zijlig-avatar-v8.jpg",
-  "coreExerciseId": "fc_a7f69b78b58ddd94"
+  "coreExerciseId": "fc_a7f69b78b58ddd94",
+  "uitleg": "Ga op je zij liggen met je benen gestrekt op elkaar. Hef je bovenste been rustig gestrekt omhoog en laat het daarna weer langzaam zakken."
  },
  {
   "naam": "Heup zijwaarts heffen – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-zijwaarts-heffen-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-zijwaarts-heffen-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_8ac3c5c338ab978e"
+  "coreExerciseId": "fc_8ac3c5c338ab978e",
+  "uitleg": "Sta rechtop naast een stoel en houd de leuning vast voor steun. Beweeg je gestrekte been rustig zijwaarts omhoog en breng het daarna langzaam terug."
  },
  {
   "naam": "Heup zijwaarts heffen – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-zijwaarts-heffen-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-zijwaarts-heffen-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_5ccec7eec0ceb3a5"
+  "coreExerciseId": "fc_5ccec7eec0ceb3a5",
+  "uitleg": "Sta rechtop met een elastiek om je enkels en houd je met één hand vast aan een stevige steun. Beweeg je gestrekte been rustig opzij tegen het elastiek in en breng het langzaam weer terug."
  },
  {
   "naam": "Heup zijwaarts heffen – functioneel op één been",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-zijwaarts-heffen-functioneel-op-een-been-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-zijwaarts-heffen-functioneel-op-een-been-avatar-v8.jpg",
-  "coreExerciseId": "fc_1df334465ad24f57"
+  "coreExerciseId": "fc_1df334465ad24f57",
+  "uitleg": "Sta rechtop op één been en houd zo nodig iets vast voor je balans. Beweeg je andere gestrekte been rustig opzij en breng het langzaam weer terug."
  },
  {
   "naam": "Heup naar binnen bewegen – liggend ondersteund",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-naar-binnen-bewegen-liggend-ondersteund-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-naar-binnen-bewegen-liggend-ondersteund-avatar-v8.jpg",
-  "coreExerciseId": "fc_5f8844f9bbb06397"
+  "coreExerciseId": "fc_5f8844f9bbb06397",
+  "uitleg": "Ga op je rug liggen met je benen gestrekt en je lichaam goed ondersteund. Schuif je been rustig naar binnen richting je andere been en beweeg het langzaam weer terug."
  },
  {
   "naam": "Heup naar binnen bewegen – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-naar-binnen-bewegen-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-naar-binnen-bewegen-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_4dd878a45a183483"
+  "coreExerciseId": "fc_4dd878a45a183483",
+  "uitleg": "Sta rechtop en houd je met één hand vast aan een stevige steun. Beweeg je gestrekte been rustig voor je andere been langs naar binnen en breng het langzaam weer terug."
  },
  {
   "naam": "Heup naar binnen bewegen – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-naar-binnen-bewegen-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-naar-binnen-bewegen-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_ed5bb5f9d781b648"
+  "coreExerciseId": "fc_ed5bb5f9d781b648",
+  "uitleg": "Sta rechtop met een elastiek om je enkel, aan de zijkant vastgemaakt, en houd je vast aan een steun. Beweeg je gestrekte been rustig naar binnen tegen het elastiek in en laat het langzaam terugkomen."
  },
  {
   "naam": "Heup naar buiten draaien – liggend ondersteund",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-naar-buiten-draaien-liggend-ondersteund-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-naar-buiten-draaien-liggend-ondersteund-avatar-v8.jpg",
-  "coreExerciseId": "fc_08a9b920254252a0"
+  "coreExerciseId": "fc_08a9b920254252a0",
+  "uitleg": "Ga op je rug liggen met je benen gestrekt en goed ondersteund. Draai je been rustig naar buiten, zodat je tenen opzij wijzen, en draai het langzaam weer terug naar het midden."
  },
  {
   "naam": "Heup naar buiten draaien – zijlig",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-naar-buiten-draaien-zijlig-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-naar-buiten-draaien-zijlig-avatar-v8.jpg",
-  "coreExerciseId": "fc_d2e5f8139cc22cdd"
+  "coreExerciseId": "fc_d2e5f8139cc22cdd",
+  "uitleg": "Ga op je zij liggen met je knieën gebogen en je voeten op elkaar. Draai je bovenste knie rustig naar buiten omhoog, terwijl je voeten op elkaar blijven, en laat de knie langzaam weer zakken."
  },
  {
   "naam": "Heup naar buiten draaien – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-naar-buiten-draaien-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-naar-buiten-draaien-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_4b5697d0ce0df620"
+  "coreExerciseId": "fc_4b5697d0ce0df620",
+  "uitleg": "Zit rechtop op een stoel met een elastiek om je knieën en je voeten op de grond. Duw je knieën rustig naar buiten tegen het elastiek in en laat ze langzaam weer terugkomen."
  },
  {
   "naam": "Heup naar binnen draaien – liggend ondersteund",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-naar-binnen-draaien-liggend-ondersteund-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-naar-binnen-draaien-liggend-ondersteund-avatar-v8.jpg",
-  "coreExerciseId": "fc_f15419a8bed4ad44"
+  "coreExerciseId": "fc_f15419a8bed4ad44",
+  "uitleg": "Ga op je rug liggen met je knieën gebogen en je voeten plat op de grond. Laat je knie rustig naar binnen zakken richting je andere been en breng hem langzaam weer terug."
  },
  {
   "naam": "Heup naar binnen draaien – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heup-naar-binnen-draaien-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heup-naar-binnen-draaien-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_448fc075c6aebc6b"
+  "coreExerciseId": "fc_448fc075c6aebc6b",
+  "uitleg": "Sta rechtop en houd je met één hand vast aan een stevige steun. Draai je been rustig naar binnen, zodat je tenen naar je andere been wijzen, en draai het langzaam weer terug."
  },
  {
   "naam": "Clamshell – zijlig",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/clamshell-zijlig-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/clamshell-zijlig-avatar-v8.jpg",
-  "coreExerciseId": "fc_3c76ef2ef1b9c047"
+  "coreExerciseId": "fc_3c76ef2ef1b9c047",
+  "uitleg": "Ga op je zij liggen met je knieën gebogen en je voeten op elkaar. Open je bovenste knie rustig als een schelp en laat hem langzaam weer zakken. Houd je heupen recht boven elkaar."
  },
  {
   "naam": "Clamshell – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/clamshell-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/clamshell-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_f4ac3b80b3e5e26b"
+  "coreExerciseId": "fc_f4ac3b80b3e5e26b",
+  "uitleg": "Ga op je zij liggen met een elastiek om je knieën en je knieën gebogen. Open je bovenste knie rustig tegen het elastiek in en laat hem langzaam weer zakken. Houd je voeten op elkaar."
  },
  {
   "naam": "Heupscharnier – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heupscharnier-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heupscharnier-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_1f604a59f34b394e"
+  "coreExerciseId": "fc_1f604a59f34b394e",
+  "uitleg": "Sta rechtop en houd je met één hand vast aan een stevige steun. Buig rustig vanuit je heupen naar voren met een rechte rug en kom langzaam weer omhoog."
  },
  {
   "naam": "Heupscharnier – functioneel op één been",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heupscharnier-functioneel-op-een-been-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heupscharnier-functioneel-op-een-been-avatar-v8.jpg",
-  "coreExerciseId": "fc_6b639ed423eb228e"
+  "coreExerciseId": "fc_6b639ed423eb228e",
+  "uitleg": "Sta rechtop op één been en houd zo nodig iets vast voor je balans. Buig rustig vanuit je heup naar voren met een rechte rug, terwijl je andere been naar achteren strekt, en kom langzaam weer omhoog."
  },
  {
   "naam": "Monster walk – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/monster-walk-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/monster-walk-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_8e5e5f492d29ec15"
+  "coreExerciseId": "fc_8e5e5f492d29ec15",
+  "uitleg": "Sta rechtop met een elastiek om je benen en zak licht door je knieën. Zet rustig stappen schuin naar voren en opzij, terwijl je spanning op het elastiek houdt."
  },
  {
   "naam": "Heupflexor rek – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/heupflexor-rek-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/heupflexor-rek-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_d252ac90054d7c66"
+  "coreExerciseId": "fc_d252ac90054d7c66",
+  "uitleg": "Sta rechtop in een lichte uitvalstand en houd je vast aan een stevige steun. Duw je heup rustig naar voren tot je een lichte rek voelt aan de voorkant van je heup en kom langzaam terug."
  },
  {
   "naam": "Piriformis rek – liggend ondersteund",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/piriformis-rek-liggend-ondersteund-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/piriformis-rek-liggend-ondersteund-avatar-v8.jpg",
-  "coreExerciseId": "fc_d5a58bb89d05489d"
+  "coreExerciseId": "fc_d5a58bb89d05489d",
+  "uitleg": "Ga op je rug liggen en leg je enkel op je andere knie. Trek dat been rustig naar je toe tot je een lichte rek voelt in je bil en laat het langzaam weer los."
  },
  {
   "naam": "Knie buigen – liggend",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/knie-buigen-liggend-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/knie-buigen-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_8dac0738ef56a1aa"
+  "coreExerciseId": "fc_8dac0738ef56a1aa",
+  "uitleg": "Ga op je rug liggen met je benen gestrekt. Schuif je hiel rustig over de grond naar je bil, zodat je knie buigt, en schuif hem langzaam weer terug."
  },
  {
   "naam": "Knie buigen – zittend",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/knie-buigen-zittend-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/knie-buigen-zittend-avatar-v8.jpg",
-  "coreExerciseId": "fc_f9b88819636b0b82"
+  "coreExerciseId": "fc_f9b88819636b0b82",
+  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Schuif je voet rustig naar achteren onder de stoel, zodat je knie verder buigt, en beweeg langzaam weer terug."
  },
  {
   "naam": "Knie buigen – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/knie-buigen-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/knie-buigen-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_7fe6a69b5babad30"
+  "coreExerciseId": "fc_7fe6a69b5babad30",
+  "uitleg": "Sta rechtop en houd je met één hand vast aan een stevige steun. Buig je knie rustig door je hiel richting je bil te brengen en laat je voet langzaam weer zakken."
  },
  {
   "naam": "Knie buigen – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/knie-buigen-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/knie-buigen-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_2f41adc210b215b9"
+  "coreExerciseId": "fc_2f41adc210b215b9",
+  "uitleg": "Sta rechtop met een elastiek om je enkel en houd je vast aan een stevige steun. Buig je knie rustig tegen het elastiek in, zodat je hiel richting je bil beweegt, en laat je voet langzaam weer zakken."
  },
  {
   "naam": "Knie strekken – liggend",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/knie-strekken-liggend-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/knie-strekken-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_366e73bb708e2b18"
+  "coreExerciseId": "fc_366e73bb708e2b18",
+  "uitleg": "Ga op je rug liggen met een opgerolde handdoek onder je knie. Strek je knie rustig door je hiel op te tillen en laat je been langzaam weer zakken."
  },
  {
   "naam": "Knie strekken – zittend",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/knie-strekken-zittend-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/knie-strekken-zittend-avatar-v8.jpg",
-  "coreExerciseId": "fc_074f4d1dd8bf423d"
+  "coreExerciseId": "fc_074f4d1dd8bf423d",
+  "uitleg": "Zit rechtop op een stoel met je voeten op de grond. Strek je knie rustig, zodat je been naar voren omhoog komt, en laat je voet langzaam weer zakken."
  },
  {
   "naam": "Knie strekken – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/knie-strekken-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/knie-strekken-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_6c0928ca205ec113"
+  "coreExerciseId": "fc_6c0928ca205ec113",
+  "uitleg": "Sta rechtop en houd je met één hand vast aan een stevige steun. Til je voet iets van de grond, strek je knie rustig naar voren en buig hem langzaam weer terug."
  },
  {
   "naam": "Knie strekken – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/knie-strekken-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/knie-strekken-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_857d7528724b059b"
+  "coreExerciseId": "fc_857d7528724b059b",
+  "uitleg": "Zit rechtop op een stoel met een elastiek om je enkel, achter je vastgemaakt. Strek je knie rustig naar voren tegen het elastiek in en laat je been langzaam weer terugkomen."
  },
  {
   "naam": "Quadriceps aanspannen – liggend",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/quadriceps-aanspannen-liggend-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/quadriceps-aanspannen-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_04f1daf4c37087ae"
+  "coreExerciseId": "fc_04f1daf4c37087ae",
+  "uitleg": "Ga op je rug liggen met je been gestrekt. Span de spier aan de bovenkant van je bovenbeen rustig aan door je knieholte naar beneden te duwen en laat de spanning langzaam weer los."
  },
  {
   "naam": "Quadriceps aanspannen – zittend",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/quadriceps-aanspannen-zittend-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/quadriceps-aanspannen-zittend-avatar-v8.jpg",
-  "coreExerciseId": "fc_7e52a7a1b76ba444"
+  "coreExerciseId": "fc_7e52a7a1b76ba444",
+  "uitleg": "Zit rechtop met je been gestrekt voor je. Span de spier aan de bovenkant van je bovenbeen rustig aan door je knieholte naar beneden te duwen en ontspan daarna langzaam."
  },
  {
   "naam": "Straight leg raise – liggend",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/straight-leg-raise-liggend-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/straight-leg-raise-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_9bf13cf795e4e530"
+  "coreExerciseId": "fc_9bf13cf795e4e530",
+  "uitleg": "Ga op je rug liggen met je ene been gebogen en het andere been gestrekt. Til je gestrekte been rustig omhoog tot ongeveer de hoogte van je andere knie en laat het langzaam weer zakken."
  },
  {
   "naam": "Straight leg raise – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/straight-leg-raise-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/straight-leg-raise-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_d3eff36bf1ee840d"
+  "coreExerciseId": "fc_d3eff36bf1ee840d",
+  "uitleg": "Ga op je rug liggen met een elastiek om je gestrekte been en je andere been gebogen. Til je gestrekte been rustig omhoog tegen het elastiek in en laat het langzaam weer zakken."
  },
  {
   "naam": "Mini-squat – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/mini-squat-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/mini-squat-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_f193144158ac3ec6"
+  "coreExerciseId": "fc_f193144158ac3ec6",
+  "uitleg": "Sta rechtop en houd je vast aan een stevige steun. Buig je knieën rustig een klein stukje, alsof je gaat zitten, en kom langzaam weer omhoog."
  },
  {
   "naam": "Mini-squat – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/mini-squat-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/mini-squat-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_a7b4b1973c2fbfba"
+  "coreExerciseId": "fc_a7b4b1973c2fbfba",
+  "uitleg": "Sta rechtop met een elastiek net boven je knieën. Buig je knieën rustig een klein stukje en kom langzaam weer omhoog. Houd je knieën boven je voeten."
  },
  {
   "naam": "Sit-to-stand – zittend",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/sit-to-stand-zittend-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/sit-to-stand-zittend-avatar-v8.jpg",
-  "coreExerciseId": "fc_440944237c927a09"
+  "coreExerciseId": "fc_440944237c927a09",
+  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Kom rustig omhoog tot je staat en ga langzaam weer zitten."
  },
  {
   "naam": "Sit-to-stand – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/sit-to-stand-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/sit-to-stand-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_cc2f1ec88c684e6a"
+  "coreExerciseId": "fc_cc2f1ec88c684e6a",
+  "uitleg": "Zit rechtop op een stoel en houd je vast aan een stevige steun. Kom rustig omhoog tot je rechtop staat en ga langzaam weer zitten."
  },
  {
   "naam": "Sit-to-stand – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/sit-to-stand-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/sit-to-stand-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_782cedbf98d756df"
+  "coreExerciseId": "fc_782cedbf98d756df",
+  "uitleg": "Zit rechtop op een stoel met een elastiek net boven je knieën. Kom rustig omhoog tot je staat, houd je knieën licht naar buiten gericht en ga langzaam weer zitten."
  },
  {
   "naam": "Step-up – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/step-up-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/step-up-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_d1c46fb7bd403cf8"
+  "coreExerciseId": "fc_d1c46fb7bd403cf8",
+  "uitleg": "Sta rechtop voor een traptrede en houd je vast aan een stevige steun. Stap rustig met je voet omhoog, breng je andere voet erbij en stap langzaam weer terug."
  },
  {
   "naam": "Step-up – op verhoging",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/step-up-op-verhoging-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/step-up-op-verhoging-avatar-v8.jpg",
-  "coreExerciseId": "fc_6cd017541cb3fb1a"
+  "coreExerciseId": "fc_6cd017541cb3fb1a",
+  "uitleg": "Sta rechtop voor een verhoging. Stap rustig met je voet op de verhoging, breng je andere voet erbij en stap langzaam weer terug naar de grond."
  },
  {
   "naam": "Step-down – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/step-down-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/step-down-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_215436c0f6cb427a"
+  "coreExerciseId": "fc_215436c0f6cb427a",
+  "uitleg": "Sta rechtop op een traptrede en houd je vast aan een stevige steun. Laat je voet rustig naar de grond zakken, tik de grond licht aan en kom langzaam weer omhoog."
  },
  {
   "naam": "Step-down – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/step-down-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/step-down-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_9b1abb39c8c262c5"
+  "coreExerciseId": "fc_9b1abb39c8c262c5",
+  "uitleg": "Sta rechtop op een traptrede met een elastiek net boven je knieën. Laat je voet rustig naar de grond zakken, tik de grond licht aan en kom langzaam weer omhoog."
  },
  {
   "naam": "Step-down – op verhoging",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/step-down-op-verhoging-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/step-down-op-verhoging-avatar-v8.jpg",
-  "coreExerciseId": "fc_7caaff5192b04a39"
+  "coreExerciseId": "fc_7caaff5192b04a39",
+  "uitleg": "Sta rechtop op een verhoging. Laat je voet rustig naar de grond zakken, tik de grond licht aan en kom langzaam weer omhoog op de verhoging."
  },
  {
   "naam": "Split squat – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/split-squat-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/split-squat-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_70cc761a1e937456"
+  "coreExerciseId": "fc_70cc761a1e937456",
+  "uitleg": "Sta rechtop in een ruime stap-stand en houd je vast aan een stevige steun. Zak rustig recht naar beneden door beide knieën te buigen en kom langzaam weer omhoog."
  },
  {
   "naam": "Split squat – op verhoging",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/split-squat-op-verhoging-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/split-squat-op-verhoging-avatar-v8.jpg",
-  "coreExerciseId": "fc_6d48f173cbfddeab"
+  "coreExerciseId": "fc_6d48f173cbfddeab",
+  "uitleg": "Sta rechtop in een ruime stap-stand met je achterste voet op een verhoging. Zak rustig recht naar beneden door beide knieën te buigen en kom langzaam weer omhoog."
  },
  {
   "naam": "Hamstring curl – liggend",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/hamstring-curl-liggend-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/hamstring-curl-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_f0e7e426029ffde8"
+  "coreExerciseId": "fc_f0e7e426029ffde8",
+  "uitleg": "Ga op je buik liggen met je benen gestrekt. Buig je knie rustig zodat je hiel richting je billen komt en laat je been langzaam weer zakken."
  },
  {
   "naam": "Hamstring curl – zittend",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/hamstring-curl-zittend-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/hamstring-curl-zittend-avatar-v8.jpg",
-  "coreExerciseId": "fc_32f73eb8caa06a9c"
+  "coreExerciseId": "fc_32f73eb8caa06a9c",
+  "uitleg": "Zit rechtop op een stoel met je voeten op de grond. Schuif je hiel rustig onder de stoel naar achteren en breng je voet langzaam weer terug."
  },
  {
   "naam": "Hamstring curl – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/hamstring-curl-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/hamstring-curl-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_292f133de46a577c"
+  "coreExerciseId": "fc_292f133de46a577c",
+  "uitleg": "Sta rechtop en houd je vast aan een stevige steun. Buig je knie rustig zodat je hiel richting je billen komt en laat je voet langzaam weer zakken."
  },
  {
   "naam": "Hamstring curl – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/hamstring-curl-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/hamstring-curl-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_a816e5871d232970"
+  "coreExerciseId": "fc_a816e5871d232970",
+  "uitleg": "Ga op je buik liggen met een elastiek om je enkel, vastgemaakt aan een stevig punt achter je. Buig je knie rustig tegen de weerstand in en laat je been langzaam weer zakken."
  },
  {
   "naam": "Terminal knee extension – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/terminal-knee-extension-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/terminal-knee-extension-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_c8932f764884054a"
+  "coreExerciseId": "fc_c8932f764884054a",
+  "uitleg": "Sta rechtop met je knie licht gebogen en houd je vast aan een stevige steun. Strek je knie rustig helemaal en buig hem langzaam weer een klein stukje."
  },
  {
   "naam": "Terminal knee extension – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/terminal-knee-extension-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/terminal-knee-extension-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_f87ad20054b3c2d1"
+  "coreExerciseId": "fc_f87ad20054b3c2d1",
+  "uitleg": "Sta rechtop met een elastiek achter je knie, vastgemaakt aan een stevig punt voor je. Strek je knie rustig helemaal tegen de weerstand in en buig hem langzaam weer een klein stukje."
  },
  {
   "naam": "Enkel optrekken – zittend actief",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/enkel-optrekken-zittend-actief-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/enkel-optrekken-zittend-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_dc77302a1c93ba91"
+  "coreExerciseId": "fc_dc77302a1c93ba91",
+  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Trek je voorvoet rustig omhoog terwijl je hiel op de grond blijft, en laat je voet langzaam weer zakken."
  },
  {
   "naam": "Enkel optrekken – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/enkel-optrekken-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/enkel-optrekken-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_4b2033291c37810c"
+  "coreExerciseId": "fc_4b2033291c37810c",
+  "uitleg": "Sta rechtop en houd je vast aan een stevige steun. Trek je voorvoet rustig omhoog terwijl je hiel op de grond blijft, en laat je voet langzaam weer zakken."
  },
  {
   "naam": "Enkel optrekken – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/enkel-optrekken-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/enkel-optrekken-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_726673a29888da6e"
+  "coreExerciseId": "fc_726673a29888da6e",
+  "uitleg": "Zit met je been gestrekt en een elastiek om je voorvoet, vastgemaakt aan een stevig punt voor je. Trek je voet rustig naar je toe en laat hem langzaam weer terugkomen."
  },
  {
   "naam": "Enkel wegduwen – zittend actief",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/enkel-wegduwen-zittend-actief-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/enkel-wegduwen-zittend-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_506b152122ba8f41"
+  "coreExerciseId": "fc_506b152122ba8f41",
+  "uitleg": "Zit rechtop op een stoel met je been iets naar voren gestrekt. Duw je voet rustig van je af, alsof je een gaspedaal indrukt, en breng hem langzaam weer terug."
  },
  {
   "naam": "Enkel wegduwen – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/enkel-wegduwen-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/enkel-wegduwen-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_2d4b2c1aa32d949c"
+  "coreExerciseId": "fc_2d4b2c1aa32d949c",
+  "uitleg": "Sta rechtop en houd je vast aan een stevige steun. Duw je voeten rustig van de grond af zodat je op je tenen komt te staan, en laat je hielen langzaam weer zakken."
  },
  {
   "naam": "Enkel wegduwen – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/enkel-wegduwen-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/enkel-wegduwen-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_9431de5590406368"
+  "coreExerciseId": "fc_9431de5590406368",
+  "uitleg": "Zit met je been gestrekt en een elastiek om je voorvoet, waarvan je de uiteinden vasthoudt. Duw je voet rustig van je af tegen de weerstand in en laat hem langzaam weer terugkomen."
  },
  {
   "naam": "Voet naar binnen – zittend actief",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/voet-naar-binnen-zittend-actief-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/voet-naar-binnen-zittend-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_cda0be17235beeed"
+  "coreExerciseId": "fc_cda0be17235beeed",
+  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Draai je voet rustig naar binnen en breng hem langzaam weer terug. Houd je hiel op de grond."
  },
  {
   "naam": "Voet naar binnen – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/voet-naar-binnen-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/voet-naar-binnen-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_2bfe917379e16c19"
+  "coreExerciseId": "fc_2bfe917379e16c19",
+  "uitleg": "Zit met je been gestrekt en een elastiek om je voorvoet, vastgemaakt aan de buitenkant. Draai je voet rustig naar binnen tegen de weerstand in en laat hem langzaam weer terugkomen."
  },
  {
   "naam": "Voet naar buiten – zittend actief",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/voet-naar-buiten-zittend-actief-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/voet-naar-buiten-zittend-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_2e97ce71eabbe869"
+  "coreExerciseId": "fc_2e97ce71eabbe869",
+  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Draai je voet rustig naar buiten en breng hem langzaam weer terug. Houd je hiel op de grond."
  },
  {
   "naam": "Voet naar buiten – met elastiek",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/voet-naar-buiten-met-elastiek-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/voet-naar-buiten-met-elastiek-avatar-v8.jpg",
-  "coreExerciseId": "fc_ef3be9c89dfd6e46"
+  "coreExerciseId": "fc_ef3be9c89dfd6e46",
+  "uitleg": "Zit met je been gestrekt en een elastiek om je voorvoet, vastgemaakt aan de binnenkant. Draai je voet rustig naar buiten tegen de weerstand in en laat hem langzaam weer terugkomen."
  },
  {
   "naam": "Kuitheffing – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/kuitheffing-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/kuitheffing-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_34b8c7bede0e1ff1"
+  "coreExerciseId": "fc_34b8c7bede0e1ff1",
+  "uitleg": "Sta rechtop en houd je vast aan een stevige steun. Kom rustig omhoog op je tenen en laat je hielen langzaam weer zakken."
  },
  {
   "naam": "Kuitheffing – op een verhoging",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/kuitheffing-op-een-verhoging-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/kuitheffing-op-een-verhoging-avatar-v8.jpg",
-  "coreExerciseId": "fc_72d7a7fecad5ff3f"
+  "coreExerciseId": "fc_72d7a7fecad5ff3f",
+  "uitleg": "Sta met je voorvoeten op de rand van een verhoging en houd je ergens aan vast voor je balans. Duw jezelf rustig omhoog op je tenen en laat je hielen langzaam weer zakken tot net onder de rand."
  },
  {
   "naam": "Kuitheffing – op één been",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/kuitheffing-op-een-been-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/kuitheffing-op-een-been-avatar-v8.jpg",
-  "coreExerciseId": "fc_e8939d1eaaa3848f"
+  "coreExerciseId": "fc_e8939d1eaaa3848f",
+  "uitleg": "Sta rechtop op één been en houd je licht vast voor je balans. Duw jezelf rustig omhoog op je tenen en laat je hiel langzaam weer zakken."
  },
  {
   "naam": "Kuitrek gestrekte knie – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/kuitrek-gestrekte-knie-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/kuitrek-gestrekte-knie-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_970da660eed5669f"
+  "coreExerciseId": "fc_970da660eed5669f",
+  "uitleg": "Sta rechtop met steun van een muur en zet één been naar achteren. Houd de achterste knie gestrekt en de hiel op de grond, en beweeg je heupen rustig naar voren tot je rek in je kuit voelt. Kom daarna langzaam terug."
  },
  {
   "naam": "Kuitrek gestrekte knie – op een verhoging",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/kuitrek-gestrekte-knie-op-een-verhoging-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/kuitrek-gestrekte-knie-op-een-verhoging-avatar-v8.jpg",
-  "coreExerciseId": "fc_65f411ac5a399b8d"
+  "coreExerciseId": "fc_65f411ac5a399b8d",
+  "uitleg": "Sta met je voorvoet op de rand van een verhoging en houd je vast voor je balans. Laat je hiel met een gestrekte knie rustig zakken tot je rek in je kuit voelt en kom langzaam weer omhoog."
  },
  {
   "naam": "Kuitrek gebogen knie – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/kuitrek-gebogen-knie-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/kuitrek-gebogen-knie-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_3e86d28593f3fc27"
+  "coreExerciseId": "fc_3e86d28593f3fc27",
+  "uitleg": "Sta rechtop met steun van een muur of stoel en zet één been iets naar achteren. Buig beide knieën licht terwijl je achterste hiel op de grond blijft, en voel de rek laag in je kuit. Kom daarna rustig terug omhoog."
  },
  {
   "naam": "Kuitrek gebogen knie – op een verhoging",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/kuitrek-gebogen-knie-op-een-verhoging-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/kuitrek-gebogen-knie-op-een-verhoging-avatar-v8.jpg",
-  "coreExerciseId": "fc_26e0b2808a041629"
+  "coreExerciseId": "fc_26e0b2808a041629",
+  "uitleg": "Sta met je voorvoet op de rand van een verhoging en houd je ergens aan vast. Buig je knie licht en laat je hiel rustig zakken tot je rek laag in je kuit voelt. Kom langzaam weer omhoog."
  },
  {
   "naam": "Knie naar voren over voet – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/knie-naar-voren-over-voet-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/knie-naar-voren-over-voet-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_cef24992348e8f7d"
+  "coreExerciseId": "fc_cef24992348e8f7d",
+  "uitleg": "Sta rechtop met steun van een muur of stoel en zet één voet iets naar voren. Beweeg je knie rustig naar voren over je tenen terwijl je hiel op de grond blijft, en kom langzaam weer terug."
  },
  {
   "naam": "Knie naar voren over voet – op een verhoging",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/knie-naar-voren-over-voet-op-een-verhoging-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/knie-naar-voren-over-voet-op-een-verhoging-avatar-v8.jpg",
-  "coreExerciseId": "fc_334166261c069b4a"
+  "coreExerciseId": "fc_334166261c069b4a",
+  "uitleg": "Zet één voet op een verhoging en sta stevig op je andere been. Beweeg je knie rustig naar voren over je voet terwijl je hiel op de verhoging blijft, en kom langzaam weer terug."
  },
  {
   "naam": "Tenen heffen – zittend actief",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/tenen-heffen-zittend-actief-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/tenen-heffen-zittend-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_61633e2d7d480381"
+  "coreExerciseId": "fc_61633e2d7d480381",
+  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Til je tenen rustig omhoog terwijl je hielen op de grond blijven, en laat ze langzaam weer zakken."
  },
  {
   "naam": "Tenen heffen – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/tenen-heffen-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/tenen-heffen-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_da7d6cc1581f7c71"
+  "coreExerciseId": "fc_da7d6cc1581f7c71",
+  "uitleg": "Sta rechtop en houd je licht vast aan een stoel of muur. Til je tenen rustig omhoog terwijl je hielen op de grond blijven, en laat ze langzaam weer zakken."
  },
  {
   "naam": "Korte voet – zittend actief",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/korte-voet-zittend-actief-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/korte-voet-zittend-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_a585857e88ae2e40"
+  "coreExerciseId": "fc_a585857e88ae2e40",
+  "uitleg": "Zit rechtop op een stoel met je voet plat op de grond. Trek de bal van je voet rustig iets naar je hiel toe, zodat je voetboog omhoog komt, en ontspan daarna langzaam. Houd je tenen ontspannen op de grond."
  },
  {
   "naam": "Korte voet – staand met steun",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/korte-voet-staand-met-steun-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/korte-voet-staand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_17c285bf4fb1efc5"
+  "coreExerciseId": "fc_17c285bf4fb1efc5",
+  "uitleg": "Sta rechtop met lichte steun van een stoel of muur. Trek de bal van je voet rustig iets naar je hiel toe, zodat je voetboog omhoog komt, en ontspan daarna langzaam."
  },
  {
   "naam": "Korte voet – op één been",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/korte-voet-op-een-been-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/korte-voet-op-een-been-avatar-v8.jpg",
-  "coreExerciseId": "fc_533ee002e0555acf"
+  "coreExerciseId": "fc_533ee002e0555acf",
+  "uitleg": "Sta rechtop op één been en houd je zo nodig licht vast voor je balans. Trek de bal van je voet rustig iets naar je hiel toe, zodat je voetboog omhoog komt, en ontspan daarna langzaam."
  },
  {
   "naam": "Tenen spreiden – zittend actief",
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/tenen-spreiden-zittend-actief-line-v1.png",
   "kaartImg": "images/onderste-extremiteit/tenen-spreiden-zittend-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_bb16c1a51cd515bb"
+  "coreExerciseId": "fc_bb16c1a51cd515bb",
+  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Spreid je tenen rustig zo ver mogelijk uit elkaar en breng ze langzaam weer bij elkaar."
  },
  {
   "naam": "Bekken kantelen – liggend",
   "groep": "Core",
   "img": "images/core/bekken-kantelen-liggend-line-v1.png",
   "kaartImg": "images/core/bekken-kantelen-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_e67719afce6ea283"
+  "coreExerciseId": "fc_e67719afce6ea283",
+  "uitleg": "Ga op je rug liggen met gebogen knieën en je voeten plat op de grond. Kantel je bekken rustig zodat je onderrug tegen de grond drukt, en beweeg daarna langzaam terug."
  },
  {
   "naam": "Bekken kantelen – op handen en knieën",
   "groep": "Core",
   "img": "images/core/bekken-kantelen-op-handen-en-knieen-line-v1.png",
   "kaartImg": "images/core/bekken-kantelen-op-handen-en-knieen-avatar-v8.jpg",
-  "coreExerciseId": "fc_164ceca2c451a6e9"
+  "coreExerciseId": "fc_164ceca2c451a6e9",
+  "uitleg": "Ga op handen en knieën zitten met je handen onder je schouders. Maak je onderrug rustig bol door je bekken te kantelen en beweeg daarna langzaam terug naar een rechte rug."
  },
  {
   "naam": "Bekken kantelen – zittend",
   "groep": "Core",
   "img": "images/core/bekken-kantelen-zittend-line-v1.png",
   "kaartImg": "images/core/bekken-kantelen-zittend-avatar-v8.jpg",
-  "coreExerciseId": "fc_e0716a1330efc480"
+  "coreExerciseId": "fc_e0716a1330efc480",
+  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Kantel je bekken rustig naar achteren zodat je onderrug bol wordt, en beweeg daarna langzaam terug naar rechtop."
  },
  {
   "naam": "Bekken kantelen – staand",
   "groep": "Core",
   "img": "images/core/bekken-kantelen-staand-line-v1.png",
   "kaartImg": "images/core/bekken-kantelen-staand-avatar-v8.jpg",
-  "coreExerciseId": "fc_4a567baedc40ebd4"
+  "coreExerciseId": "fc_4a567baedc40ebd4",
+  "uitleg": "Sta rechtop met je knieën licht gebogen. Kantel je bekken rustig naar achteren zodat je onderrug vlakker wordt, en beweeg daarna langzaam terug."
  },
  {
   "naam": "Bekken kantelen – met lichte weerstand",
   "groep": "Core",
   "img": "images/core/bekken-kantelen-met-lichte-weerstand-line-v1.png",
   "kaartImg": "images/core/bekken-kantelen-met-lichte-weerstand-avatar-v8.jpg",
-  "coreExerciseId": "fc_49f10d332d302a5e"
+  "coreExerciseId": "fc_49f10d332d302a5e",
+  "uitleg": "Ga op je rug liggen met gebogen knieën en leg je handen met lichte druk op je bekken. Kantel je bekken rustig tegen deze lichte weerstand in en beweeg daarna langzaam terug."
  },
  {
   "naam": "Brug – liggend",
   "groep": "Core",
   "img": "images/core/brug-liggend-line-v1.png",
   "kaartImg": "images/core/brug-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_e07aeef0bf691a98"
+  "coreExerciseId": "fc_e07aeef0bf691a98",
+  "uitleg": "Ga op je rug liggen met gebogen knieën en je voeten plat op de grond. Duw je heupen rustig omhoog tot je lichaam een rechte lijn vormt van schouders tot knieën, en laat ze langzaam weer zakken."
  },
  {
   "naam": "Brug – met lichte weerstand",
   "groep": "Core",
   "img": "images/core/brug-met-lichte-weerstand-line-v1.png",
   "kaartImg": "images/core/brug-met-lichte-weerstand-avatar-v8.jpg",
-  "coreExerciseId": "fc_892e99f2581bea53"
+  "coreExerciseId": "fc_892e99f2581bea53",
+  "uitleg": "Ga op je rug liggen met gebogen knieën en een lichte weerstand om je bovenbenen. Duw je knieën iets uit elkaar, til je heupen rustig omhoog en laat ze daarna langzaam weer zakken."
  },
  {
   "naam": "Bird dog – op handen en knieën",
   "groep": "Core",
   "img": "images/core/bird-dog-op-handen-en-knieen-line-v1.png",
   "kaartImg": "images/core/bird-dog-op-handen-en-knieen-avatar-v8.jpg",
-  "coreExerciseId": "fc_a6edd896bd4200e0"
+  "coreExerciseId": "fc_a6edd896bd4200e0",
+  "uitleg": "Ga op handen en knieën zitten met je rug recht en je handen onder je schouders. Strek rustig één arm naar voren en het tegenovergestelde been naar achteren, en breng ze langzaam weer terug."
  },
  {
   "naam": "Bird dog – staand",
   "groep": "Core",
   "img": "images/core/bird-dog-staand-line-v1.png",
   "kaartImg": "images/core/bird-dog-staand-avatar-v8.jpg",
-  "coreExerciseId": "fc_af144d48d2fa6bec"
+  "coreExerciseId": "fc_af144d48d2fa6bec",
+  "uitleg": "Sta rechtop met je voeten onder je heupen. Strek rustig één arm naar voren en het tegenovergestelde been naar achteren terwijl je romp stil blijft, en kom langzaam terug."
  },
  {
   "naam": "Bird dog – met lichte weerstand",
   "groep": "Core",
   "img": "images/core/bird-dog-met-lichte-weerstand-line-v1.png",
   "kaartImg": "images/core/bird-dog-met-lichte-weerstand-avatar-v8.jpg",
-  "coreExerciseId": "fc_10ac6e1c7e7b1021"
+  "coreExerciseId": "fc_10ac6e1c7e7b1021",
+  "uitleg": "Ga op handen en knieën zitten met een lichte weerstand tussen je hand en voet. Strek rustig één arm naar voren en het tegenovergestelde been naar achteren, en kom langzaam weer terug."
  },
  {
   "naam": "Dead bug – liggend",
   "groep": "Core",
   "img": "images/core/dead-bug-liggend-line-v1.png",
   "kaartImg": "images/core/dead-bug-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_ec806bc50d827710"
+  "coreExerciseId": "fc_ec806bc50d827710",
+  "uitleg": "Ga op je rug liggen met je armen omhoog en je knieën gebogen boven je heupen. Strek rustig één arm naar achteren en het tegenovergestelde been naar voren, en breng ze langzaam weer terug."
  },
  {
   "naam": "Dead bug – staand",
   "groep": "Core",
   "img": "images/core/dead-bug-staand-line-v1.png",
   "kaartImg": "images/core/dead-bug-staand-avatar-v8.jpg",
-  "coreExerciseId": "fc_6e6f41316acc5234"
+  "coreExerciseId": "fc_6e6f41316acc5234",
+  "uitleg": "Sta rechtop met beide armen gestrekt omhoog. Til rustig één knie omhoog terwijl je de tegenovergestelde arm naar beneden beweegt, en kom langzaam terug naar de beginhouding."
  },
  {
   "naam": "Dead bug – met lichte weerstand",
   "groep": "Core",
   "img": "images/core/dead-bug-met-lichte-weerstand-line-v1.png",
   "kaartImg": "images/core/dead-bug-met-lichte-weerstand-avatar-v8.jpg",
-  "coreExerciseId": "fc_9127466e54d4048a"
+  "coreExerciseId": "fc_9127466e54d4048a",
+  "uitleg": "Ga op je rug liggen met je knieën gebogen boven je heupen en een lichte weerstand tussen je handen en knieën. Strek rustig één arm en het tegenovergestelde been uit, en breng ze langzaam weer terug."
  },
  {
   "naam": "Romp heupscharnier – op handen en knieën",
   "groep": "Core",
   "img": "images/core/romp-heupscharnier-op-handen-en-knieen-line-v1.png",
   "kaartImg": "images/core/romp-heupscharnier-op-handen-en-knieen-avatar-v8.jpg",
-  "coreExerciseId": "fc_9a7d1074950fc14d"
+  "coreExerciseId": "fc_9a7d1074950fc14d",
+  "uitleg": "Ga op handen en knieën zitten met een rechte rug. Beweeg je heupen rustig naar achteren richting je hielen terwijl je rug recht blijft, en kom langzaam weer naar voren."
  },
  {
   "naam": "Romp heupscharnier – zittend",
   "groep": "Core",
   "img": "images/core/romp-heupscharnier-zittend-line-v1.png",
   "kaartImg": "images/core/romp-heupscharnier-zittend-avatar-v8.jpg",
-  "coreExerciseId": "fc_dfaf4f468f172ed9"
+  "coreExerciseId": "fc_dfaf4f468f172ed9",
+  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Buig rustig vanuit je heupen naar voren met een rechte rug en kom langzaam weer terug naar rechtop."
  },
  {
   "naam": "Romp heupscharnier – staand",
   "groep": "Core",
   "img": "images/core/romp-heupscharnier-staand-line-v1.png",
   "kaartImg": "images/core/romp-heupscharnier-staand-avatar-v8.jpg",
-  "coreExerciseId": "fc_14ad1e81dbb67608"
+  "coreExerciseId": "fc_14ad1e81dbb67608",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte en je knieën licht gebogen. Buig rustig vanuit je heupen naar voren met een rechte rug en kom langzaam weer omhoog."
  },
  {
   "naam": "Romp heupscharnier – met lichte weerstand",
   "groep": "Core",
   "img": "images/core/romp-heupscharnier-met-lichte-weerstand-line-v1.png",
   "kaartImg": "images/core/romp-heupscharnier-met-lichte-weerstand-avatar-v8.jpg",
-  "coreExerciseId": "fc_b9afb611bed36add"
+  "coreExerciseId": "fc_b9afb611bed36add",
+  "uitleg": "Sta rechtop en houd een lichte weerstand met beide handen voor je lichaam. Buig rustig vanuit je heupen naar voren met een rechte rug en kom langzaam weer omhoog."
  },
  {
   "naam": "Romp draaien – met lichte weerstand",
   "groep": "Core",
   "img": "images/core/romp-draaien-met-lichte-weerstand-line-v1.png",
   "kaartImg": "images/core/romp-draaien-met-lichte-weerstand-avatar-v8.jpg",
-  "coreExerciseId": "fc_91ec773b4aa918aa"
+  "coreExerciseId": "fc_91ec773b4aa918aa",
+  "uitleg": "Sta rechtop en houd een lichte weerstand met beide handen voor je borst. Draai je romp rustig naar één kant en beweeg langzaam terug naar het midden. Houd je heupen stil."
  },
  {
   "naam": "Romp zijwaarts buigen – met lichte weerstand",
   "groep": "Core",
   "img": "images/core/romp-zijwaarts-buigen-met-lichte-weerstand-line-v1.png",
   "kaartImg": "images/core/romp-zijwaarts-buigen-met-lichte-weerstand-avatar-v8.jpg",
-  "coreExerciseId": "fc_79460ae8de6fef00"
+  "coreExerciseId": "fc_79460ae8de6fef00",
+  "uitleg": "Sta rechtop met een lichte weerstand in één hand langs je lichaam. Buig je romp rustig zijwaarts en kom langzaam weer terug tot je rechtop staat."
  },
  {
   "naam": "Rug strekken – met lichte weerstand",
   "groep": "Core",
   "img": "images/core/rug-strekken-met-lichte-weerstand-line-v1.png",
   "kaartImg": "images/core/rug-strekken-met-lichte-weerstand-avatar-v8.jpg",
-  "coreExerciseId": "fc_e8afdecc8524d6b3"
+  "coreExerciseId": "fc_e8afdecc8524d6b3",
+  "uitleg": "Sta licht voorovergebogen met een lichte weerstand in beide handen. Strek je rug rustig tot je helemaal rechtop staat en buig daarna langzaam weer iets naar voren."
  },
  {
   "naam": "Diafragma-ademhaling – zittend",
   "groep": "Cardio",
   "img": "images/cardio/diafragma-ademhaling-zittend-line-v1.png",
   "kaartImg": "images/cardio/diafragma-ademhaling-zittend-avatar-v8.jpg",
-  "coreExerciseId": "fc_b21fb04b055a6374"
+  "coreExerciseId": "fc_b21fb04b055a6374",
+  "uitleg": "Zit rechtop op een stoel met één hand op je buik. Adem rustig in door je neus zodat je buik naar voren komt en laat de lucht daarna langzaam weer ontsnappen."
  },
  {
   "naam": "Lippenremademhaling – zittend",
   "groep": "Cardio",
   "img": "images/cardio/lippenremademhaling-zittend-line-v1.png",
   "kaartImg": "images/cardio/lippenremademhaling-zittend-avatar-v8.jpg",
-  "coreExerciseId": "fc_3b3dec662966916f"
+  "coreExerciseId": "fc_3b3dec662966916f",
+  "uitleg": "Zit rechtop op een stoel met je schouders ontspannen. Adem rustig in door je neus en blaas de lucht langzaam uit door getuite lippen, alsof je zachtjes een kaarsje uitblaast."
  },
  {
   "naam": "Armen en adem koppelen – met armtaak",
   "groep": "Cardio",
   "img": "images/cardio/armen-en-adem-koppelen-met-armtaak-line-v1.png",
   "kaartImg": "images/cardio/armen-en-adem-koppelen-met-armtaak-avatar-v8.jpg",
-  "coreExerciseId": "fc_9cf150b2fdc6ab06"
+  "coreExerciseId": "fc_9cf150b2fdc6ab06",
+  "uitleg": "Sta rechtop met je armen langs je lichaam. Hef je armen rustig omhoog terwijl je inademt en laat ze langzaam zakken terwijl je uitademt."
  },
  {
   "naam": "Marcheren – interval kort",
   "groep": "Cardio",
   "img": "images/cardio/marcheren-interval-kort-line-v1.png",
   "kaartImg": "images/cardio/marcheren-interval-kort-avatar-v8.jpg",
-  "coreExerciseId": "fc_53b03384ce37fa2e"
+  "coreExerciseId": "fc_53b03384ce37fa2e",
+  "uitleg": "Sta rechtop met je armen ontspannen langs je lichaam. Marcheer rustig op de plaats door je knieën om de beurt op te tillen. Wissel korte stukjes bewegen af met een moment rust."
  },
  {
   "naam": "Marcheren – interval langer",
   "groep": "Cardio",
   "img": "images/cardio/marcheren-interval-langer-line-v1.png",
   "kaartImg": "images/cardio/marcheren-interval-langer-avatar-v8.jpg",
-  "coreExerciseId": "fc_b01a96a8a69a7a9b"
+  "coreExerciseId": "fc_b01a96a8a69a7a9b",
+  "uitleg": "Sta rechtop met je armen ontspannen langs je lichaam. Marcheer in een rustig tempo op de plaats en houd dit wat langer vol voordat je even rust neemt."
  },
  {
   "naam": "Opstaan herhalen – interval kort",
   "groep": "Cardio",
   "img": "images/cardio/opstaan-herhalen-interval-kort-line-v1.png",
   "kaartImg": "images/cardio/opstaan-herhalen-interval-kort-avatar-v8.jpg",
-  "coreExerciseId": "fc_4b8218bffa6c5564"
+  "coreExerciseId": "fc_4b8218bffa6c5564",
+  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Sta rustig op en ga langzaam weer zitten. Wissel korte stukjes bewegen af met een moment rust."
  },
  {
   "naam": "Thorax openen – met armtaak",
   "groep": "Cardio",
   "img": "images/cardio/thorax-openen-met-armtaak-line-v1.png",
   "kaartImg": "images/cardio/thorax-openen-met-armtaak-avatar-v8.jpg",
-  "coreExerciseId": "fc_c1ba6bba58f0ea88"
+  "coreExerciseId": "fc_c1ba6bba58f0ea88",
+  "uitleg": "Sta rechtop met je armen gebogen voor je borst. Open je armen rustig zijwaarts terwijl je je borstkas breed maakt en breng ze langzaam weer naar voren."
  },
  {
   "naam": "Zijwaarts stappen – interval kort",
   "groep": "Cardio",
   "img": "images/cardio/zijwaarts-stappen-interval-kort-line-v1.png",
   "kaartImg": "images/cardio/zijwaarts-stappen-interval-kort-avatar-v8.jpg",
-  "coreExerciseId": "fc_83e5712db724fbc2"
+  "coreExerciseId": "fc_83e5712db724fbc2",
+  "uitleg": "Sta rechtop met je voeten naast elkaar. Stap rustig opzij, sluit je andere voet aan en beweeg zo heen en weer. Wissel korte stukjes bewegen af met een moment rust."
  },
  {
   "naam": "Kin intrekken – zittend actief",
   "groep": "Nek",
   "img": "images/nek/kin-intrekken-zittend-actief-line-v1.png",
   "kaartImg": "images/nek/kin-intrekken-zittend-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_2050086df6d023ac"
+  "coreExerciseId": "fc_2050086df6d023ac",
+  "uitleg": "Zit rechtop op een stoel en kijk recht vooruit. Trek je kin rustig recht naar achteren, alsof je een dubbele kin maakt, en laat daarna langzaam weer los."
  },
  {
   "naam": "Kin intrekken – liggend ondersteund",
   "groep": "Nek",
   "img": "images/nek/kin-intrekken-liggend-ondersteund-line-v1.png",
   "kaartImg": "images/nek/kin-intrekken-liggend-ondersteund-avatar-v8.jpg",
-  "coreExerciseId": "fc_ed6f63998d6a2164"
+  "coreExerciseId": "fc_ed6f63998d6a2164",
+  "uitleg": "Ga op je rug liggen met je hoofd op een kussen. Trek je kin rustig in zodat je achterhoofd zacht in het kussen drukt en laat de beweging langzaam weer los."
  },
  {
   "naam": "Nek buigen – zittend actief",
   "groep": "Nek",
   "img": "images/nek/nek-buigen-zittend-actief-line-v1.png",
   "kaartImg": "images/nek/nek-buigen-zittend-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_40dd5453000369cc"
+  "coreExerciseId": "fc_40dd5453000369cc",
+  "uitleg": "Zit rechtop op een stoel met je schouders ontspannen. Buig je hoofd rustig naar voren met je kin richting je borst en kom langzaam weer terug."
  },
  {
   "naam": "Nek buigen – liggend ondersteund",
   "groep": "Nek",
   "img": "images/nek/nek-buigen-liggend-ondersteund-line-v1.png",
   "kaartImg": "images/nek/nek-buigen-liggend-ondersteund-avatar-v8.jpg",
-  "coreExerciseId": "fc_27c280db0ff9ff04"
+  "coreExerciseId": "fc_27c280db0ff9ff04",
+  "uitleg": "Ga op je rug liggen met je hoofd op een kussen. Breng je kin rustig richting je borst terwijl je hoofd door het kussen gesteund blijft en beweeg langzaam weer terug."
  },
  {
   "naam": "Nek strekken – zittend actief",
   "groep": "Nek",
   "img": "images/nek/nek-strekken-zittend-actief-line-v1.png",
   "kaartImg": "images/nek/nek-strekken-zittend-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_3c82c33155e9e958"
+  "coreExerciseId": "fc_3c82c33155e9e958",
+  "uitleg": "Zit rechtop op een stoel met je schouders ontspannen. Beweeg je hoofd rustig naar achteren zodat je omhoog kijkt en kom langzaam weer terug naar het midden."
  },
  {
   "naam": "Nek strekken – functioneel staand",
   "groep": "Nek",
   "img": "images/nek/nek-strekken-functioneel-staand-line-v1.png",
   "kaartImg": "images/nek/nek-strekken-functioneel-staand-avatar-v8.jpg",
-  "coreExerciseId": "fc_dda6e3f8a8ef1d77"
+  "coreExerciseId": "fc_dda6e3f8a8ef1d77",
+  "uitleg": "Sta rechtop met je armen langs je lichaam. Kijk rustig omhoog alsof je iets op een hoge plank zoekt en breng je hoofd langzaam weer terug naar het midden."
  },
  {
   "naam": "Nek draaien – zittend actief",
   "groep": "Nek",
   "img": "images/nek/nek-draaien-zittend-actief-line-v1.png",
   "kaartImg": "images/nek/nek-draaien-zittend-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_853c97009144ec09"
+  "coreExerciseId": "fc_853c97009144ec09",
+  "uitleg": "Zit rechtop op een stoel en kijk recht vooruit. Draai je hoofd rustig naar één kant en beweeg langzaam terug naar het midden. Wissel daarna van kant."
  },
  {
   "naam": "Nek draaien – functioneel staand",
   "groep": "Nek",
   "img": "images/nek/nek-draaien-functioneel-staand-line-v1.png",
   "kaartImg": "images/nek/nek-draaien-functioneel-staand-avatar-v8.jpg",
-  "coreExerciseId": "fc_94978d72b278d453"
+  "coreExerciseId": "fc_94978d72b278d453",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte. Draai je hoofd rustig opzij alsof je over je schouder kijkt en beweeg langzaam terug naar het midden."
  },
  {
   "naam": "Nek zijwaarts buigen – zittend actief",
   "groep": "Nek",
   "img": "images/nek/nek-zijwaarts-buigen-zittend-actief-line-v1.png",
   "kaartImg": "images/nek/nek-zijwaarts-buigen-zittend-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_1afcb7bdb7baa422"
+  "coreExerciseId": "fc_1afcb7bdb7baa422",
+  "uitleg": "Zit rechtop op een stoel met je schouders laag en ontspannen. Breng je oor rustig richting je schouder en kom langzaam weer terug naar het midden."
  },
  {
   "naam": "Nek zijwaarts buigen – isometrisch",
   "groep": "Nek",
   "img": "images/nek/nek-zijwaarts-buigen-isometrisch-line-v1.png",
   "kaartImg": "images/nek/nek-zijwaarts-buigen-isometrisch-avatar-v8.jpg",
-  "coreExerciseId": "fc_235f2757a0a9bf8b"
+  "coreExerciseId": "fc_235f2757a0a9bf8b",
+  "uitleg": "Zit rechtop en leg je hand tegen de zijkant van je hoofd. Duw je hoofd rustig tegen je hand zonder dat je hoofd beweegt en laat de spanning daarna langzaam weer los."
  },
  {
   "naam": "Diepe nekflexoren activeren – zittend actief",
   "groep": "Nek",
   "img": "images/nek/diepe-nekflexoren-activeren-zittend-actief-line-v1.png",
   "kaartImg": "images/nek/diepe-nekflexoren-activeren-zittend-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_96e1e26c339377de"
+  "coreExerciseId": "fc_96e1e26c339377de",
+  "uitleg": "Zit rechtop op een stoel en maak je nek lang. Knik je kin rustig een klein stukje naar beneden, alsof je zachtjes ja knikt, en laat daarna langzaam weer los."
  },
  {
   "naam": "Diepe nekflexoren activeren – liggend ondersteund",
   "groep": "Nek",
   "img": "images/nek/diepe-nekflexoren-activeren-liggend-ondersteund-line-v1.png",
   "kaartImg": "images/nek/diepe-nekflexoren-activeren-liggend-ondersteund-avatar-v8.jpg",
-  "coreExerciseId": "fc_1aba16ba0c3ab4de"
+  "coreExerciseId": "fc_1aba16ba0c3ab4de",
+  "uitleg": "Ga op je rug liggen met je hoofd op een kussen. Knik je kin rustig een klein stukje richting je borst zonder je hoofd op te tillen en laat langzaam weer los."
  },
  {
   "naam": "Nekrotatie met oogfixatie – zittend actief",
   "groep": "Nek",
   "img": "images/nek/nekrotatie-met-oogfixatie-zittend-actief-line-v1.png",
   "kaartImg": "images/nek/nekrotatie-met-oogfixatie-zittend-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_4b910890a2f2f4f8"
+  "coreExerciseId": "fc_4b910890a2f2f4f8",
+  "uitleg": "Zit rechtop op een stoel en kijk naar een vast punt voor je. Draai je hoofd rustig naar één kant terwijl je ogen op het punt gericht blijven en draai langzaam weer terug."
  },
  {
   "naam": "Nekrotatie met oogfixatie – functioneel staand",
   "groep": "Nek",
   "img": "images/nek/nekrotatie-met-oogfixatie-functioneel-staand-line-v1.png",
   "kaartImg": "images/nek/nekrotatie-met-oogfixatie-functioneel-staand-avatar-v8.jpg",
-  "coreExerciseId": "fc_c30a316b7265fd58"
+  "coreExerciseId": "fc_c30a316b7265fd58",
+  "uitleg": "Sta rechtop en kijk naar een vast punt voor je. Draai je hoofd rustig opzij terwijl je ogen op het punt gericht blijven en draai langzaam weer terug naar het midden."
  },
  {
   "naam": "Schouderblad liften en ontspannen – zittend actief",
   "groep": "Nek",
   "img": "images/nek/schouderblad-liften-en-ontspannen-zittend-actief-line-v1.png",
   "kaartImg": "images/nek/schouderblad-liften-en-ontspannen-zittend-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_ab59b4079ed25d86"
+  "coreExerciseId": "fc_ab59b4079ed25d86",
+  "uitleg": "Zit rechtop op een stoel met je armen ontspannen. Trek je schouders rustig op richting je oren en laat ze daarna langzaam weer zakken en helemaal ontspannen."
  },
  {
   "naam": "Schouderblad liften en ontspannen – functioneel staand",
   "groep": "Nek",
   "img": "images/nek/schouderblad-liften-en-ontspannen-functioneel-staand-line-v1.png",
   "kaartImg": "images/nek/schouderblad-liften-en-ontspannen-functioneel-staand-avatar-v8.jpg",
-  "coreExerciseId": "fc_fbbd364280ea1867"
+  "coreExerciseId": "fc_fbbd364280ea1867",
+  "uitleg": "Sta rechtop met je armen los langs je lichaam. Breng je schouders rustig omhoog richting je oren en laat ze langzaam weer zakken tot ze helemaal ontspannen zijn."
  },
  {
   "naam": "Levator scapulae rek – zittend actief",
   "groep": "Nek",
   "img": "images/nek/levator-scapulae-rek-zittend-actief-line-v1.png",
   "kaartImg": "images/nek/levator-scapulae-rek-zittend-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_28822e943fd23d8a"
+  "coreExerciseId": "fc_28822e943fd23d8a",
+  "uitleg": "Zit rechtop op een stoel en kijk schuin naar beneden richting je oksel. Buig je hoofd rustig verder mee tot je een lichte rek in je nek voelt en kom langzaam terug omhoog. Wissel daarna van kant."
  },
  {
   "naam": "Levator scapulae rek – functioneel staand",
   "groep": "Nek",
   "img": "images/nek/levator-scapulae-rek-functioneel-staand-line-v1.png",
   "kaartImg": "images/nek/levator-scapulae-rek-functioneel-staand-avatar-v8.jpg",
-  "coreExerciseId": "fc_eb1fe221f6163084"
+  "coreExerciseId": "fc_eb1fe221f6163084",
+  "uitleg": "Sta rechtop met ontspannen schouders en kijk schuin naar beneden richting je oksel. Buig je hoofd rustig verder mee tot je een lichte rek in de zijkant van je nek voelt en kom langzaam terug. Wissel van kant."
  },
  {
   "naam": "Bovenste trapezius rek – zittend actief",
   "groep": "Nek",
   "img": "images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png",
   "kaartImg": "images/nek/bovenste-trapezius-rek-zittend-actief-avatar-v8.jpg",
-  "coreExerciseId": "fc_900ad9e6b6170739"
+  "coreExerciseId": "fc_900ad9e6b6170739",
+  "uitleg": "Zit rechtop op een stoel met ontspannen schouders. Laat je hoofd rustig opzij zakken, met je oor richting je schouder, en breng je hoofd langzaam terug naar het midden. Wissel daarna van kant."
  },
  {
   "naam": "Bovenste trapezius rek – functioneel staand",
   "groep": "Nek",
   "img": "images/nek/bovenste-trapezius-rek-functioneel-staand-line-v1.png",
   "kaartImg": "images/nek/bovenste-trapezius-rek-functioneel-staand-avatar-v8.jpg",
-  "coreExerciseId": "fc_afeec71f0b902609"
+  "coreExerciseId": "fc_afeec71f0b902609",
+  "uitleg": "Sta rechtop en laat je schouders ontspannen hangen. Beweeg je hoofd rustig opzij, met je oor richting je schouder, en kom langzaam terug naar het midden. Wissel daarna van kant."
  },
  {
   "naam": "Rug bol en hol – op handen en knieën",
   "groep": "Rug",
   "img": "images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png",
   "kaartImg": "images/rug/rug-bol-en-hol-op-handen-en-knieen-avatar-v8.jpg",
-  "coreExerciseId": "fc_43e2f46134f44243"
+  "coreExerciseId": "fc_43e2f46134f44243",
+  "uitleg": "Ga op handen en knieën staan met je handen onder je schouders. Maak je rug rustig bol en laat hem daarna langzaam weer hol worden."
  },
  {
   "naam": "Rug bol en hol – zittend",
   "groep": "Rug",
   "img": "images/rug/rug-bol-en-hol-zittend-line-v1.png",
   "kaartImg": "images/rug/rug-bol-en-hol-zittend-avatar-v8.jpg",
-  "coreExerciseId": "fc_6446c0caa826b384"
+  "coreExerciseId": "fc_6446c0caa826b384",
+  "uitleg": "Zit rechtop op een stoel met je handen op je knieën. Maak je rug rustig bol door je kin naar je borst te brengen en beweeg daarna langzaam terug naar een holle rug."
  },
  {
   "naam": "Rug bol en hol – staand",
   "groep": "Rug",
   "img": "images/rug/rug-bol-en-hol-staand-line-v1.png",
   "kaartImg": "images/rug/rug-bol-en-hol-staand-avatar-v8.jpg",
-  "coreExerciseId": "fc_b5a0b1955195b0c4"
+  "coreExerciseId": "fc_b5a0b1955195b0c4",
+  "uitleg": "Sta rechtop en steun met je handen op je bovenbenen. Maak je rug rustig bol en beweeg daarna langzaam terug naar een holle rug."
  },
  {
   "naam": "Rug bol en hol – met lichte weerstand",
   "groep": "Rug",
   "img": "images/rug/rug-bol-en-hol-met-lichte-weerstand-line-v1.png",
   "kaartImg": "images/rug/rug-bol-en-hol-met-lichte-weerstand-avatar-v8.jpg",
-  "coreExerciseId": "fc_7638a0e78e3d6adf"
+  "coreExerciseId": "fc_7638a0e78e3d6adf",
+  "uitleg": "Ga op handen en knieën staan en span je buikspieren licht aan, zodat je tegen een lichte weerstand in beweegt. Maak je rug rustig bol en laat hem daarna langzaam weer hol worden."
  },
  {
   "naam": "Romp draaien – liggend",
   "groep": "Rug",
   "img": "images/rug/romp-draaien-liggend-line-v1.png",
   "kaartImg": "images/rug/romp-draaien-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_f21f66686859c3da"
+  "coreExerciseId": "fc_f21f66686859c3da",
+  "uitleg": "Ga op je rug liggen met gebogen knieën en je armen gespreid. Laat je knieën rustig samen naar één kant zakken en breng ze langzaam terug naar het midden. Wissel daarna van kant."
  },
  {
   "naam": "Romp draaien – op handen en knieën",
   "groep": "Rug",
   "img": "images/rug/romp-draaien-op-handen-en-knieen-line-v1.png",
   "kaartImg": "images/rug/romp-draaien-op-handen-en-knieen-avatar-v8.jpg",
-  "coreExerciseId": "fc_689fa673a9e89631"
+  "coreExerciseId": "fc_689fa673a9e89631",
+  "uitleg": "Ga op handen en knieën staan. Schuif één arm rustig onder je lichaam door zodat je romp meedraait en draai dezelfde arm daarna langzaam open naar het plafond. Wissel van arm."
  },
  {
   "naam": "Romp draaien – zittend",
   "groep": "Rug",
   "img": "images/rug/romp-draaien-zittend-line-v1.png",
   "kaartImg": "images/rug/romp-draaien-zittend-avatar-v8.jpg",
-  "coreExerciseId": "fc_e71478262a4e04f1"
+  "coreExerciseId": "fc_e71478262a4e04f1",
+  "uitleg": "Zit rechtop op een stoel met je armen gekruist voor je borst. Draai je bovenlichaam rustig naar één kant en kom langzaam terug naar het midden. Wissel daarna van kant."
  },
  {
   "naam": "Romp draaien – staand",
   "groep": "Rug",
   "img": "images/rug/romp-draaien-staand-line-v1.png",
   "kaartImg": "images/rug/romp-draaien-staand-avatar-v8.jpg",
-  "coreExerciseId": "fc_cf93c6434e719c36"
+  "coreExerciseId": "fc_cf93c6434e719c36",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte en je armen gekruist voor je borst. Draai je romp rustig naar één kant en kom langzaam terug naar het midden. Wissel daarna van kant."
  },
  {
   "naam": "Romp zijwaarts buigen – liggend",
   "groep": "Rug",
   "img": "images/rug/romp-zijwaarts-buigen-liggend-line-v1.png",
   "kaartImg": "images/rug/romp-zijwaarts-buigen-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_5976aa5b0e4528dc"
+  "coreExerciseId": "fc_5976aa5b0e4528dc",
+  "uitleg": "Ga op je rug liggen met je benen gestrekt. Schuif één hand rustig langs je zij richting je knie zodat je romp opzij buigt, en kom langzaam terug naar het midden. Wissel van kant."
  },
  {
   "naam": "Romp zijwaarts buigen – zittend",
   "groep": "Rug",
   "img": "images/rug/romp-zijwaarts-buigen-zittend-line-v1.png",
   "kaartImg": "images/rug/romp-zijwaarts-buigen-zittend-avatar-v8.jpg",
-  "coreExerciseId": "fc_759af88530d52e67"
+  "coreExerciseId": "fc_759af88530d52e67",
+  "uitleg": "Zit rechtop op een stoel met je armen langs je lichaam. Laat één hand rustig langs de zijkant van de stoel naar beneden glijden en kom langzaam terug omhoog. Wissel daarna van kant."
  },
  {
   "naam": "Romp zijwaarts buigen – staand",
   "groep": "Rug",
   "img": "images/rug/romp-zijwaarts-buigen-staand-line-v1.png",
   "kaartImg": "images/rug/romp-zijwaarts-buigen-staand-avatar-v8.jpg",
-  "coreExerciseId": "fc_c2151d6081411f27"
+  "coreExerciseId": "fc_c2151d6081411f27",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte en je armen langs je lichaam. Laat één hand rustig langs de zijkant van je been naar beneden glijden en kom langzaam terug omhoog. Wissel van kant."
  },
  {
   "naam": "Rug strekken – liggend",
   "groep": "Rug",
   "img": "images/rug/rug-strekken-liggend-line-v1.png",
   "kaartImg": "images/rug/rug-strekken-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_991986ebdb21d76c"
+  "coreExerciseId": "fc_991986ebdb21d76c",
+  "uitleg": "Ga op je buik liggen met je handen naast je schouders. Duw je bovenlichaam rustig omhoog terwijl je heupen op de grond blijven, en zak langzaam weer terug."
  },
  {
   "naam": "Rug strekken – op handen en knieën",
   "groep": "Rug",
   "img": "images/rug/rug-strekken-op-handen-en-knieen-line-v1.png",
   "kaartImg": "images/rug/rug-strekken-op-handen-en-knieen-avatar-v8.jpg",
-  "coreExerciseId": "fc_fad9de92160ed800"
+  "coreExerciseId": "fc_fad9de92160ed800",
+  "uitleg": "Ga op handen en knieën staan. Schuif je billen rustig richting je hielen terwijl je handen ver naar voren op de grond blijven, en kom langzaam weer terug."
  },
  {
   "naam": "Rug strekken – zittend",
   "groep": "Rug",
   "img": "images/rug/rug-strekken-zittend-line-v1.png",
   "kaartImg": "images/rug/rug-strekken-zittend-avatar-v8.jpg",
-  "coreExerciseId": "fc_7acabb5963687c38"
+  "coreExerciseId": "fc_7acabb5963687c38",
+  "uitleg": "Zit rechtop op een stoel met je handen in je zij. Strek je rug rustig achterover terwijl je iets omhoog kijkt, en kom langzaam terug naar rechtop."
  },
  {
   "naam": "Rug strekken – staand",
   "groep": "Rug",
   "img": "images/rug/rug-strekken-staand-line-v1.png",
   "kaartImg": "images/rug/rug-strekken-staand-avatar-v8.jpg",
-  "coreExerciseId": "fc_075d2bba44bc1907"
+  "coreExerciseId": "fc_075d2bba44bc1907",
+  "uitleg": "Sta rechtop met je handen in je zij op je onderrug. Strek je rug rustig achterover en kom daarna langzaam terug naar rechtop."
  },
  {
   "naam": "Knie naar borst – liggend",
   "groep": "Rug",
   "img": "images/rug/knie-naar-borst-liggend-line-v1.png",
   "kaartImg": "images/rug/knie-naar-borst-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_0301bc5a1a722f6e"
+  "coreExerciseId": "fc_0301bc5a1a722f6e",
+  "uitleg": "Ga op je rug liggen met je benen gestrekt. Pak één knie met beide handen vast, trek hem rustig richting je borst en laat je been daarna langzaam weer zakken. Wissel van been."
  },
  {
   "naam": "Knie naar borst – zittend",
   "groep": "Rug",
   "img": "images/rug/knie-naar-borst-zittend-line-v1.png",
   "kaartImg": "images/rug/knie-naar-borst-zittend-avatar-v8.jpg",
-  "coreExerciseId": "fc_0d76c61d33323777"
+  "coreExerciseId": "fc_0d76c61d33323777",
+  "uitleg": "Zit rechtop op een stoel. Pak één knie met beide handen vast, trek hem rustig richting je borst en zet je voet daarna langzaam weer neer. Wissel van been."
  },
  {
   "naam": "Knie naar borst – staand",
   "groep": "Rug",
   "img": "images/rug/knie-naar-borst-staand-line-v1.png",
   "kaartImg": "images/rug/knie-naar-borst-staand-avatar-v8.jpg",
-  "coreExerciseId": "fc_c9d9fbe08c7182eb"
+  "coreExerciseId": "fc_c9d9fbe08c7182eb",
+  "uitleg": "Sta rechtop op één been. Trek je andere knie rustig met beide handen richting je borst en zet je voet daarna langzaam weer neer. Wissel van been."
  },
  {
   "naam": "Open boek – liggend",
   "groep": "Rug",
   "img": "images/rug/open-boek-liggend-line-v1.png",
   "kaartImg": "images/rug/open-boek-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_3a97462d2cbbf47f"
+  "coreExerciseId": "fc_3a97462d2cbbf47f",
+  "uitleg": "Ga op je zij liggen met gebogen knieën en je armen gestrekt voor je op elkaar. Draai je bovenste arm rustig open naar de andere kant, zoals een boek dat opengaat, en breng hem langzaam terug."
  },
  {
   "naam": "Open boek – op handen en knieën",
   "groep": "Rug",
   "img": "images/rug/open-boek-op-handen-en-knieen-line-v1.png",
   "kaartImg": "images/rug/open-boek-op-handen-en-knieen-avatar-v8.jpg",
-  "coreExerciseId": "fc_486c10a52135ebc7"
+  "coreExerciseId": "fc_486c10a52135ebc7",
+  "uitleg": "Ga op handen en knieën staan en leg één hand op je achterhoofd. Draai je elleboog rustig open naar het plafond, zoals een boek dat opengaat, en kom langzaam terug. Wissel van arm."
  },
  {
   "naam": "Open boek – zittend",
   "groep": "Rug",
   "img": "images/rug/open-boek-zittend-line-v1.png",
   "kaartImg": "images/rug/open-boek-zittend-avatar-v8.jpg",
-  "coreExerciseId": "fc_848f0080a86e171f"
+  "coreExerciseId": "fc_848f0080a86e171f",
+  "uitleg": "Zit rechtop op een stoel met je armen gestrekt voor je tegen elkaar. Beweeg één arm rustig zijwaarts naar achteren terwijl je hoofd meedraait, en breng hem langzaam terug. Wissel van arm."
  },
  {
   "naam": "Thoracale extensie – liggend",
   "groep": "Rug",
   "img": "images/rug/thoracale-extensie-liggend-line-v1.png",
   "kaartImg": "images/rug/thoracale-extensie-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_41e4b01b4311cd5e"
+  "coreExerciseId": "fc_41e4b01b4311cd5e",
+  "uitleg": "Ga op je rug liggen met een opgerolde handdoek dwars onder je bovenrug en je handen achter je hoofd. Laat je bovenrug rustig over de rol strekken en kom langzaam weer terug omhoog."
  },
  {
   "naam": "Thoracale extensie – op handen en knieën",
   "groep": "Rug",
   "img": "images/rug/thoracale-extensie-op-handen-en-knieen-line-v1.png",
   "kaartImg": "images/rug/thoracale-extensie-op-handen-en-knieen-avatar-v8.jpg",
-  "coreExerciseId": "fc_00b729ad9cfba568"
+  "coreExerciseId": "fc_00b729ad9cfba568",
+  "uitleg": "Ga op handen en knieën staan met je handen iets verder naar voren. Laat je borstkas rustig richting de vloer zakken zodat je bovenrug strekt, en kom langzaam weer terug."
  },
  {
   "naam": "Thoracale extensie – zittend",
   "groep": "Rug",
   "img": "images/rug/thoracale-extensie-zittend-line-v1.png",
   "kaartImg": "images/rug/thoracale-extensie-zittend-avatar-v8.jpg",
-  "coreExerciseId": "fc_85d97a6b4b4625d3"
+  "coreExerciseId": "fc_85d97a6b4b4625d3",
+  "uitleg": "Zit rechtop op een stoel met je handen achter je hoofd. Strek je bovenrug rustig achterover over de rugleuning en kom langzaam terug naar rechtop."
  },
  {
   "naam": "Thoracale extensie – staand",
   "groep": "Rug",
   "img": "images/rug/thoracale-extensie-staand-line-v1.png",
   "kaartImg": "images/rug/thoracale-extensie-staand-avatar-v8.jpg",
-  "coreExerciseId": "fc_12fda57fdacad3dc"
+  "coreExerciseId": "fc_12fda57fdacad3dc",
+  "uitleg": "Sta rechtop met je handen achter je hoofd. Strek je bovenrug rustig achterover terwijl je iets omhoog kijkt, en kom langzaam terug naar rechtop."
  },
  {
   "naam": "Voeten naast elkaar staan – met steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_6a3459e816bd4d7c"
+  "coreExerciseId": "fc_6a3459e816bd4d7c",
+  "uitleg": "Sta rechtop met je voeten vlak naast elkaar en houd een stevige stoel of tafel vast. Blijf rustig in deze houding staan en kijk ontspannen voor je uit."
  },
  {
   "naam": "Voeten naast elkaar staan – zonder steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-zonder-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-zonder-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_ef0474e1751f658f"
+  "coreExerciseId": "fc_ef0474e1751f658f",
+  "uitleg": "Sta rechtop met je voeten vlak naast elkaar, zonder ergens steun te zoeken. Houd je armen ontspannen langs je lichaam en blijf rustig zo staan terwijl je voor je uit kijkt."
  },
  {
   "naam": "Voeten naast elkaar staan – met hoofdbeweging",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-hoofdbeweging-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-hoofdbeweging-avatar-v8.jpg",
-  "coreExerciseId": "fc_0563675ff5fb17b7"
+  "coreExerciseId": "fc_0563675ff5fb17b7",
+  "uitleg": "Sta rechtop met je voeten vlak naast elkaar. Draai je hoofd rustig naar links en daarna langzaam naar rechts, terwijl je stevig blijft staan."
  },
  {
   "naam": "Semi-tandemstand – met steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/semi-tandemstand-met-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/semi-tandemstand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_4efd59fd568e6c13"
+  "coreExerciseId": "fc_4efd59fd568e6c13",
+  "uitleg": "Sta rechtop achter een stevige stoel en houd de leuning vast. Zet je ene voet een halve voetlengte voor de andere en blijf rustig in deze houding staan."
  },
  {
   "naam": "Semi-tandemstand – zonder steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/semi-tandemstand-zonder-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/semi-tandemstand-zonder-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_061c37f1d0bf7794"
+  "coreExerciseId": "fc_061c37f1d0bf7794",
+  "uitleg": "Sta rechtop zonder steun. Zet je ene voet een halve voetlengte voor de andere, houd je armen ontspannen langs je lichaam en blijf rustig zo staan."
  },
  {
   "naam": "Semi-tandemstand – met hoofdbeweging",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/semi-tandemstand-met-hoofdbeweging-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/semi-tandemstand-met-hoofdbeweging-avatar-v8.jpg",
-  "coreExerciseId": "fc_52eb4456b6571ee5"
+  "coreExerciseId": "fc_52eb4456b6571ee5",
+  "uitleg": "Sta rechtop en zet je ene voet een halve voetlengte voor de andere. Draai je hoofd rustig naar links en daarna langzaam naar rechts, terwijl je stevig blijft staan."
  },
  {
   "naam": "Tandemstand – met steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/tandemstand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_f2bb0167e911ded8"
+  "coreExerciseId": "fc_f2bb0167e911ded8",
+  "uitleg": "Sta rechtop achter een stevige stoel en houd de leuning vast. Plaats je ene voet recht voor de andere, zodat de hak je tenen raakt, en blijf rustig in deze houding staan."
  },
  {
   "naam": "Tandemstand – zonder steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/tandemstand-zonder-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/tandemstand-zonder-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_523a2aa44f116ef5"
+  "coreExerciseId": "fc_523a2aa44f116ef5",
+  "uitleg": "Sta rechtop zonder steun. Plaats je ene voet recht voor de andere, zodat de hak je tenen raakt, en houd rustig je balans terwijl je voor je uit kijkt."
  },
  {
   "naam": "Tandemstand – met hoofdbeweging",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/tandemstand-met-hoofdbeweging-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/tandemstand-met-hoofdbeweging-avatar-v8.jpg",
-  "coreExerciseId": "fc_abbb9020d7fa5e96"
+  "coreExerciseId": "fc_abbb9020d7fa5e96",
+  "uitleg": "Sta rechtop en plaats je ene voet recht voor de andere, zodat de hak je tenen raakt. Draai je hoofd rustig naar links en daarna langzaam naar rechts, terwijl je in balans blijft."
  },
  {
   "naam": "Eenbeenstand – met steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/eenbeenstand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_3ebd4cb1c86cf3b5"
+  "coreExerciseId": "fc_3ebd4cb1c86cf3b5",
+  "uitleg": "Sta rechtop naast een stevige stoel en houd de leuning vast. Til je ene voet rustig van de grond en blijf even op je andere been staan. Zet je voet daarna langzaam weer neer."
  },
  {
   "naam": "Eenbeenstand – zonder steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/eenbeenstand-zonder-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/eenbeenstand-zonder-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_49462d404ea6805b"
+  "coreExerciseId": "fc_49462d404ea6805b",
+  "uitleg": "Sta rechtop zonder steun, met je armen ontspannen langs je lichaam. Til je ene voet rustig van de grond en blijf even op je andere been staan. Zet je voet daarna langzaam weer neer."
  },
  {
   "naam": "Eenbeenstand – met hoofdbeweging",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/eenbeenstand-met-hoofdbeweging-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/eenbeenstand-met-hoofdbeweging-avatar-v8.jpg",
-  "coreExerciseId": "fc_260474f39a0df7c1"
+  "coreExerciseId": "fc_260474f39a0df7c1",
+  "uitleg": "Sta rechtop op je ene been, met je andere voet los van de grond. Draai je hoofd rustig naar links en daarna langzaam naar rechts, terwijl je in balans blijft."
  },
  {
   "naam": "Gewicht verplaatsen voor-achter – met steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_0035f09e9704a7d7"
+  "coreExerciseId": "fc_0035f09e9704a7d7",
+  "uitleg": "Sta rechtop achter een stevige stoel en houd de leuning vast. Verplaats je gewicht rustig naar voren richting je tenen en daarna langzaam naar achteren richting je hakken. Houd je voeten plat op de grond."
  },
  {
   "naam": "Gewicht verplaatsen voor-achter – zonder steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-zonder-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-zonder-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_beccea608c3029fc"
+  "coreExerciseId": "fc_beccea608c3029fc",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte, zonder steun. Verplaats je gewicht rustig naar voren richting je tenen en langzaam terug naar je hakken, terwijl je voeten op de grond blijven."
  },
  {
   "naam": "Gewicht verplaatsen zijwaarts – met steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_0d5387765cfc38e7"
+  "coreExerciseId": "fc_0d5387765cfc38e7",
+  "uitleg": "Sta rechtop achter een stevige stoel en houd de leuning vast. Verplaats je gewicht rustig naar je ene been en daarna langzaam naar je andere been, terwijl je voeten op de grond blijven staan."
  },
  {
   "naam": "Gewicht verplaatsen zijwaarts – zonder steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-zonder-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-zonder-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_aa25189df7f2b3d1"
+  "coreExerciseId": "fc_aa25189df7f2b3d1",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte, zonder steun. Verplaats je gewicht rustig van je ene been naar je andere been en beweeg langzaam weer terug, met je voeten plat op de grond."
  },
  {
   "naam": "Reiken in stand – met steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/reiken-in-stand-met-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/reiken-in-stand-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_bb06a906b2c2ead1"
+  "coreExerciseId": "fc_bb06a906b2c2ead1",
+  "uitleg": "Sta rechtop naast een stevige stoel en houd de leuning met je ene hand vast. Reik met je andere arm rustig naar voren zo ver als lukt en kom langzaam weer terug in de beginhouding."
  },
  {
   "naam": "Reiken in stand – zonder steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/reiken-in-stand-zonder-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/reiken-in-stand-zonder-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_13d4f42cd5d42e1b"
+  "coreExerciseId": "fc_13d4f42cd5d42e1b",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte, zonder steun. Reik met je arm rustig naar voren of opzij zo ver als lukt en kom langzaam weer terug in de beginhouding."
  },
  {
   "naam": "Op de plaats marcheren – met steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_4847f5839fbea8ed"
+  "coreExerciseId": "fc_4847f5839fbea8ed",
+  "uitleg": "Sta rechtop achter een stevige stoel en houd de leuning vast. Til je knieën om de beurt rustig op, alsof je op de plaats loopt, en zet je voet steeds langzaam weer neer."
  },
  {
   "naam": "Op de plaats marcheren – zonder steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/op-de-plaats-marcheren-zonder-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/op-de-plaats-marcheren-zonder-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_2533f49ad524c872"
+  "coreExerciseId": "fc_2533f49ad524c872",
+  "uitleg": "Sta rechtop zonder steun, met je armen ontspannen langs je lichaam. Til je knieën om de beurt rustig op, alsof je op de plaats loopt, en zet je voet steeds langzaam weer neer."
  },
  {
   "naam": "Zijwaarts stappen – met steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/zijwaarts-stappen-met-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/zijwaarts-stappen-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_aff98ba2f3eed4a1"
+  "coreExerciseId": "fc_aff98ba2f3eed4a1",
+  "uitleg": "Sta rechtop achter een stevige tafel of het aanrecht en houd deze vast. Zet rustig een stap opzij en sluit je andere voet langzaam aan. Stap daarna dezelfde weg weer terug."
  },
  {
   "naam": "Zijwaarts stappen – zonder steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/zijwaarts-stappen-zonder-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/zijwaarts-stappen-zonder-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_2c5f7b37b58c3172"
+  "coreExerciseId": "fc_2c5f7b37b58c3172",
+  "uitleg": "Sta rechtop met je voeten naast elkaar, zonder steun. Zet rustig een stap opzij en sluit je andere voet langzaam aan. Stap daarna in je eigen tempo weer terug."
  },
  {
   "naam": "Achterwaarts stappen – met steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/achterwaarts-stappen-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_2ec462568da67aa5"
+  "coreExerciseId": "fc_2ec462568da67aa5",
+  "uitleg": "Sta rechtop naast een stevige tafel of het aanrecht en houd deze met je hand vast. Zet rustig een stap naar achteren en sluit je andere voet langzaam aan. Stap daarna weer rustig naar voren."
  },
  {
   "naam": "Achterwaarts stappen – zonder steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/achterwaarts-stappen-zonder-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/achterwaarts-stappen-zonder-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_86e33499bed65f8e"
+  "coreExerciseId": "fc_86e33499bed65f8e",
+  "uitleg": "Sta rechtop zonder steun en kijk voor je uit. Zet rustig een stap naar achteren en sluit je andere voet langzaam aan. Stap daarna weer rustig naar voren."
  },
  {
   "naam": "Over een obstakel stappen – met steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/over-een-obstakel-stappen-met-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/over-een-obstakel-stappen-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_627a00c690415086"
+  "coreExerciseId": "fc_627a00c690415086",
+  "uitleg": "Sta rechtop voor een laag obstakel, zoals een opgerolde handdoek, en houd een stevige stoel of tafel vast. Stap rustig met je ene voet over het obstakel heen en breng je andere voet langzaam erachteraan."
  },
  {
   "naam": "Over een obstakel stappen – zonder steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_b1763a1f5e6f37b6"
+  "coreExerciseId": "fc_b1763a1f5e6f37b6",
+  "uitleg": "Sta rechtop voor een laag obstakel, zoals een opgerolde handdoek, zonder steun. Stap rustig met je ene voet over het obstakel heen en breng je andere voet langzaam erachteraan."
  },
  {
   "naam": "Draaien op de plaats – met steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_93b7f045f74e310c"
+  "coreExerciseId": "fc_93b7f045f74e310c",
+  "uitleg": "Sta rechtop achter een stevige stoel en houd de leuning met je handen vast. Draai rustig met kleine stapjes een rondje op de plaats en kom langzaam weer terug in je beginhouding."
  },
  {
   "naam": "Draaien op de plaats – zonder steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/draaien-op-de-plaats-zonder-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/draaien-op-de-plaats-zonder-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_18dac3364808ab3e"
+  "coreExerciseId": "fc_18dac3364808ab3e",
+  "uitleg": "Sta rechtop zonder steun, met je armen ontspannen langs je lichaam. Draai rustig met kleine stapjes een rondje op de plaats en draai daarna langzaam dezelfde weg weer terug."
  },
  {
   "naam": "Stoel opstaan en lopen – zonder steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/stoel-opstaan-en-lopen-zonder-steun-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/stoel-opstaan-en-lopen-zonder-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_b8171927f278788b"
+  "coreExerciseId": "fc_b8171927f278788b",
+  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Sta rustig op zonder je handen te gebruiken, loop een klein stukje en ga daarna langzaam weer op de stoel zitten."
  },
  {
   "naam": "Dubbele taak lopen – met cognitieve taak",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/dubbele-taak-lopen-met-cognitieve-taak-line-v1.png",
   "kaartImg": "images/balans-en-valpreventie/dubbele-taak-lopen-met-cognitieve-taak-avatar-v8.jpg",
-  "coreExerciseId": "fc_958e0de1a9242a78"
+  "coreExerciseId": "fc_958e0de1a9242a78",
+  "uitleg": "Sta rechtop en begin rustig te lopen. Doe tijdens het lopen een denktaak, zoals hardop woorden opnoemen, en blijf ondertussen in je eigen tempo rustig doorstappen."
  },
  {
   "naam": "Reiken met aangedane arm – met visueel doel",
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/reiken-met-aangedane-arm-met-visueel-doel-line-v1.png",
   "kaartImg": "images/neurologische-revalidatie/reiken-met-aangedane-arm-met-visueel-doel-avatar-v8.jpg",
-  "coreExerciseId": "fc_666cfa06181603a1"
+  "coreExerciseId": "fc_666cfa06181603a1",
+  "uitleg": "Zit rechtop op een stoel met een doel voor je, zoals een kopje op tafel. Reik met je aangedane arm rustig naar het doel en breng je hand langzaam weer terug."
  },
  {
   "naam": "Reiken met aangedane arm – functionele combinatie",
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/reiken-met-aangedane-arm-functionele-combinatie-line-v1.png",
   "kaartImg": "images/neurologische-revalidatie/reiken-met-aangedane-arm-functionele-combinatie-avatar-v8.jpg",
-  "coreExerciseId": "fc_cfc59cb0beb2fdd6"
+  "coreExerciseId": "fc_cfc59cb0beb2fdd6",
+  "uitleg": "Zit rechtop aan een tafel. Reik met je aangedane arm rustig naar een voorwerp, pak het op en zet het op een andere plek. Breng je arm daarna langzaam terug."
  },
  {
   "naam": "Hand openen na grijpen – bilateraal",
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/hand-openen-na-grijpen-bilateraal-line-v1.png",
   "kaartImg": "images/neurologische-revalidatie/hand-openen-na-grijpen-bilateraal-avatar-v8.jpg",
-  "coreExerciseId": "fc_2ab6250d362bc593"
+  "coreExerciseId": "fc_2ab6250d362bc593",
+  "uitleg": "Zit rechtop aan een tafel met beide handen voor je. Pak met beide handen rustig een voorwerp vast, open daarna je handen langzaam en laat het weer helemaal los."
  },
  {
   "naam": "Romp rotatie in zit – bilateraal",
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/romp-rotatie-in-zit-bilateraal-line-v1.png",
   "kaartImg": "images/neurologische-revalidatie/romp-rotatie-in-zit-bilateraal-avatar-v8.jpg",
-  "coreExerciseId": "fc_b8ee989efbfcfab7"
+  "coreExerciseId": "fc_b8ee989efbfcfab7",
+  "uitleg": "Zit rechtop op een stoel met je armen gekruist voor je borst. Draai je romp rustig naar één kant, kom langzaam terug en draai daarna naar de andere kant."
  },
  {
   "naam": "Symmetrisch opstaan – met fysieke steun",
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/symmetrisch-opstaan-met-fysieke-steun-line-v1.png",
   "kaartImg": "images/neurologische-revalidatie/symmetrisch-opstaan-met-fysieke-steun-avatar-v8.jpg",
-  "coreExerciseId": "fc_76c68afc16c35516"
+  "coreExerciseId": "fc_76c68afc16c35516",
+  "uitleg": "Zit rechtop op een stoel met steun binnen handbereik, zoals een tafel of leuning. Sta rustig op met je gewicht gelijk over beide benen en ga langzaam weer zitten."
  },
  {
   "naam": "Symmetrisch opstaan – met ritmische cue",
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/symmetrisch-opstaan-met-ritmische-cue-line-v1.png",
   "kaartImg": "images/neurologische-revalidatie/symmetrisch-opstaan-met-ritmische-cue-avatar-v8.jpg",
-  "coreExerciseId": "fc_60155cd0e61a8d54"
+  "coreExerciseId": "fc_60155cd0e61a8d54",
+  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Sta op het ritme van een tel of muziek rustig op met je gewicht gelijk over beide benen en ga langzaam weer zitten."
  },
  {
   "naam": "Stap initiëren – met visueel doel",
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/stap-initieren-met-visueel-doel-line-v1.png",
   "kaartImg": "images/neurologische-revalidatie/stap-initieren-met-visueel-doel-avatar-v8.jpg",
-  "coreExerciseId": "fc_637b67e2a5c68382"
+  "coreExerciseId": "fc_637b67e2a5c68382",
+  "uitleg": "Sta rechtop met een markering op de vloer voor je. Zet rustig een stap richting het doel en breng je voet langzaam weer terug."
  },
  {
   "naam": "Stap initiëren – met ritmische cue",
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/stap-initieren-met-ritmische-cue-line-v1.png",
   "kaartImg": "images/neurologische-revalidatie/stap-initieren-met-ritmische-cue-avatar-v8.jpg",
-  "coreExerciseId": "fc_5e8876ea59a13e64"
+  "coreExerciseId": "fc_5e8876ea59a13e64",
+  "uitleg": "Sta rechtop met je voeten naast elkaar. Zet op het ritme van een tel of muziek rustig een stap naar voren en breng je voet langzaam weer terug."
  },
  {
   "naam": "Zijwaarts verplaatsen in zit – met visueel doel",
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/zijwaarts-verplaatsen-in-zit-met-visueel-doel-line-v1.png",
   "kaartImg": "images/neurologische-revalidatie/zijwaarts-verplaatsen-in-zit-met-visueel-doel-avatar-v8.jpg",
-  "coreExerciseId": "fc_3bdef557b5723f2f"
+  "coreExerciseId": "fc_3bdef557b5723f2f",
+  "uitleg": "Zit rechtop op een stevige ondergrond met naast je een doel, zoals een markering. Verplaats je zitvlak rustig zijwaarts richting het doel en schuif daarna langzaam terug."
  },
  {
   "naam": "Hiel plaatsen – met visueel doel",
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/hiel-plaatsen-met-visueel-doel-line-v1.png",
   "kaartImg": "images/neurologische-revalidatie/hiel-plaatsen-met-visueel-doel-avatar-v8.jpg",
-  "coreExerciseId": "fc_afc4d9221c96ae9f"
+  "coreExerciseId": "fc_afc4d9221c96ae9f",
+  "uitleg": "Zit rechtop op een stoel met een markering op de vloer voor je. Plaats je hiel rustig op de markering en breng je voet daarna langzaam weer terug."
  },
  {
   "naam": "Voet naar marker – met visueel doel",
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/voet-naar-marker-met-visueel-doel-line-v1.png",
   "kaartImg": "images/neurologische-revalidatie/voet-naar-marker-met-visueel-doel-avatar-v8.jpg",
-  "coreExerciseId": "fc_f45da1ef3ac1340d"
+  "coreExerciseId": "fc_f45da1ef3ac1340d",
+  "uitleg": "Sta rechtop met een marker op de vloer voor je. Tik met je voet rustig de marker aan en breng je voet langzaam weer terug. Wissel rustig af tussen beide voeten."
  },
  {
   "naam": "Ritmisch marcheren – met ritmische cue",
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/ritmisch-marcheren-met-ritmische-cue-line-v1.png",
   "kaartImg": "images/neurologische-revalidatie/ritmisch-marcheren-met-ritmische-cue-avatar-v8.jpg",
-  "coreExerciseId": "fc_a98dfce4b81e5710"
+  "coreExerciseId": "fc_a98dfce4b81e5710",
+  "uitleg": "Sta rechtop met je armen ontspannen langs je lichaam. Marcheer rustig op de plaats op het ritme van een tel of muziek en til je knieën om de beurt op."
  },
  {
   "naam": "Grote stappen – met ritmische cue",
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/grote-stappen-met-ritmische-cue-line-v1.png",
   "kaartImg": "images/neurologische-revalidatie/grote-stappen-met-ritmische-cue-avatar-v8.jpg",
-  "coreExerciseId": "fc_38008e5077ef0393"
+  "coreExerciseId": "fc_38008e5077ef0393",
+  "uitleg": "Sta rechtop aan het begin van een vrije ruimte. Loop rustig vooruit met bewust grote stappen, op het ritme van een tel of muziek, en houd je tempo gelijkmatig."
  },
  {
   "naam": "Grote stappen – functionele combinatie",
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/grote-stappen-functionele-combinatie-line-v1.png",
   "kaartImg": "images/neurologische-revalidatie/grote-stappen-functionele-combinatie-avatar-v8.jpg",
-  "coreExerciseId": "fc_22b7c517d84eda44"
+  "coreExerciseId": "fc_22b7c517d84eda44",
+  "uitleg": "Sta rechtop in een vrije ruimte. Loop met bewust grote stappen rustig naar een doel, bijvoorbeeld om iets te pakken, en loop daarna in je eigen tempo weer terug."
  },
  {
   "naam": "Brug met symmetrie – bilateraal",
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/brug-met-symmetrie-bilateraal-line-v1.png",
   "kaartImg": "images/neurologische-revalidatie/brug-met-symmetrie-bilateraal-avatar-v8.jpg",
-  "coreExerciseId": "fc_bc3217abb14c2e26"
+  "coreExerciseId": "fc_bc3217abb14c2e26",
+  "uitleg": "Ga op je rug liggen met je knieën gebogen en je voeten plat op de grond. Til je heupen rustig op terwijl je op beide benen evenveel steunt en zak langzaam weer terug."
  },
  {
   "naam": "Blikstabilisatie horizontaal – zittend langzaam",
   "groep": "Vestibulair",
   "img": "images/vestibulair/blikstabilisatie-horizontaal-zittend-langzaam-line-v1.png",
   "kaartImg": "images/vestibulair/blikstabilisatie-horizontaal-zittend-langzaam-avatar-v8.jpg",
-  "coreExerciseId": "fc_efb221042af6b0a7"
+  "coreExerciseId": "fc_efb221042af6b0a7",
+  "uitleg": "Zit rechtop op een stoel en houd een doel op ooghoogte voor je, bijvoorbeeld je duim. Draai je hoofd langzaam van links naar rechts terwijl je ogen op het doel gericht blijven."
  },
  {
   "naam": "Blikstabilisatie horizontaal – staand langzaam",
   "groep": "Vestibulair",
   "img": "images/vestibulair/blikstabilisatie-horizontaal-staand-langzaam-line-v1.png",
   "kaartImg": "images/vestibulair/blikstabilisatie-horizontaal-staand-langzaam-avatar-v8.jpg",
-  "coreExerciseId": "fc_cead0131534a2bff"
+  "coreExerciseId": "fc_cead0131534a2bff",
+  "uitleg": "Sta rechtop en houd een doel op ooghoogte voor je, bijvoorbeeld je duim. Draai je hoofd langzaam van links naar rechts terwijl je ogen op het doel gericht blijven."
  },
  {
   "naam": "Blikstabilisatie horizontaal – tijdens lopen",
   "groep": "Vestibulair",
   "img": "images/vestibulair/blikstabilisatie-horizontaal-tijdens-lopen-line-v1.png",
   "kaartImg": "images/vestibulair/blikstabilisatie-horizontaal-tijdens-lopen-avatar-v8.jpg",
-  "coreExerciseId": "fc_bfb33b0593c691bb"
+  "coreExerciseId": "fc_bfb33b0593c691bb",
+  "uitleg": "Sta rechtop en kies een doel op ooghoogte, bijvoorbeeld een punt op de muur. Loop rustig vooruit en draai je hoofd langzaam van links naar rechts terwijl je naar het doel blijft kijken."
  },
  {
   "naam": "Blikstabilisatie verticaal – zittend langzaam",
   "groep": "Vestibulair",
   "img": "images/vestibulair/blikstabilisatie-verticaal-zittend-langzaam-line-v1.png",
   "kaartImg": "images/vestibulair/blikstabilisatie-verticaal-zittend-langzaam-avatar-v8.jpg",
-  "coreExerciseId": "fc_c7b3d77f61e147d3"
+  "coreExerciseId": "fc_c7b3d77f61e147d3",
+  "uitleg": "Zit rechtop op een stoel en houd een doel op ooghoogte voor je, bijvoorbeeld je duim. Beweeg je hoofd langzaam op en neer terwijl je ogen op het doel gericht blijven."
  },
  {
   "naam": "Blikstabilisatie verticaal – staand langzaam",
   "groep": "Vestibulair",
   "img": "images/vestibulair/blikstabilisatie-verticaal-staand-langzaam-line-v1.png",
   "kaartImg": "images/vestibulair/blikstabilisatie-verticaal-staand-langzaam-avatar-v8.jpg",
-  "coreExerciseId": "fc_d656a2eb9a76d9ef"
+  "coreExerciseId": "fc_d656a2eb9a76d9ef",
+  "uitleg": "Sta rechtop en houd een doel op ooghoogte voor je, bijvoorbeeld je duim. Beweeg je hoofd langzaam op en neer terwijl je ogen op het doel gericht blijven."
  },
  {
   "naam": "Ogen naar doelen – zittend langzaam",
   "groep": "Vestibulair",
   "img": "images/vestibulair/ogen-naar-doelen-zittend-langzaam-line-v1.png",
   "kaartImg": "images/vestibulair/ogen-naar-doelen-zittend-langzaam-avatar-v8.jpg",
-  "coreExerciseId": "fc_411b82de13689588"
+  "coreExerciseId": "fc_411b82de13689588",
+  "uitleg": "Zit rechtop op een stoel met twee doelen voor je, links en rechts op ooghoogte. Kijk langzaam van het ene doel naar het andere en houd je hoofd daarbij stil."
  },
  {
   "naam": "Ogen naar doelen – staand langzaam",
   "groep": "Vestibulair",
   "img": "images/vestibulair/ogen-naar-doelen-staand-langzaam-line-v1.png",
   "kaartImg": "images/vestibulair/ogen-naar-doelen-staand-langzaam-avatar-v8.jpg",
-  "coreExerciseId": "fc_7eed90930b01e0e8"
+  "coreExerciseId": "fc_7eed90930b01e0e8",
+  "uitleg": "Sta rechtop met twee doelen voor je, links en rechts op ooghoogte. Kijk langzaam van het ene doel naar het andere en houd je hoofd daarbij stil."
  },
  {
   "naam": "Doel volgen – zittend langzaam",
   "groep": "Vestibulair",
   "img": "images/vestibulair/doel-volgen-zittend-langzaam-line-v1.png",
   "kaartImg": "images/vestibulair/doel-volgen-zittend-langzaam-avatar-v8.jpg",
-  "coreExerciseId": "fc_8560671c8e715cf6"
+  "coreExerciseId": "fc_8560671c8e715cf6",
+  "uitleg": "Zit rechtop op een stoel en houd je duim op ooghoogte voor je. Beweeg je duim langzaam heen en weer en volg hem met je ogen, terwijl je hoofd stil blijft."
  },
  {
   "naam": "Hoofd draaien in stand – staand langzaam",
   "groep": "Vestibulair",
   "img": "images/vestibulair/hoofd-draaien-in-stand-staand-langzaam-line-v1.png",
   "kaartImg": "images/vestibulair/hoofd-draaien-in-stand-staand-langzaam-avatar-v8.jpg",
-  "coreExerciseId": "fc_a1ae4fdf660acec3"
+  "coreExerciseId": "fc_a1ae4fdf660acec3",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte. Draai je hoofd langzaam naar één kant, kom rustig terug en draai daarna naar de andere kant, terwijl je stevig blijft staan."
  },
  {
   "naam": "Buigen en oprichten – staand langzaam",
   "groep": "Vestibulair",
   "img": "images/vestibulair/buigen-en-oprichten-staand-langzaam-line-v1.png",
   "kaartImg": "images/vestibulair/buigen-en-oprichten-staand-langzaam-avatar-v8.jpg",
-  "coreExerciseId": "fc_5ed1df1b5682ceeb"
+  "coreExerciseId": "fc_5ed1df1b5682ceeb",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte. Buig langzaam voorover alsof je iets van de grond pakt en richt je daarna rustig weer helemaal op."
  },
  {
   "naam": "Voorwerp van vloer tillen – ergonomische basis",
   "groep": "Werk en dagelijkse handelingen",
   "img": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-ergonomische-basis-line-v1.png",
   "kaartImg": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-ergonomische-basis-avatar-v8.jpg",
-  "coreExerciseId": "fc_032b55a53dbdab28"
+  "coreExerciseId": "fc_032b55a53dbdab28",
+  "uitleg": "Sta rechtop voor een licht voorwerp op de vloer. Zak rustig door je knieën met een rechte rug, pak het voorwerp dicht bij je lichaam en kom langzaam weer omhoog."
  },
  {
   "naam": "Voorwerp van vloer tillen – licht en dichtbij",
   "groep": "Werk en dagelijkse handelingen",
   "img": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-licht-en-dichtbij-line-v1.png",
   "kaartImg": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-licht-en-dichtbij-avatar-v8.jpg",
-  "coreExerciseId": "fc_135ada4abb4d2796"
+  "coreExerciseId": "fc_135ada4abb4d2796",
+  "uitleg": "Sta rechtop met een licht voorwerp vlak voor je voeten op de vloer. Zak rustig door je knieën, pak het voorwerp dicht bij je lichaam en kom langzaam weer omhoog."
  },
  {
   "naam": "Voorwerp van tafel pakken – licht en dichtbij",
   "groep": "Werk en dagelijkse handelingen",
   "img": "images/werk-en-dagelijkse-handelingen/voorwerp-van-tafel-pakken-licht-en-dichtbij-line-v1.png",
   "kaartImg": "images/werk-en-dagelijkse-handelingen/voorwerp-van-tafel-pakken-licht-en-dichtbij-avatar-v8.jpg",
-  "coreExerciseId": "fc_07a47f244d7392e6"
+  "coreExerciseId": "fc_07a47f244d7392e6",
+  "uitleg": "Sta rechtop voor een tafel met een licht voorwerp dicht bij de rand. Pak het voorwerp rustig op, houd het dicht bij je lichaam en zet het langzaam weer terug."
  },
  {
   "naam": "Boven schouderhoogte plaatsen – ergonomische basis",
   "groep": "Werk en dagelijkse handelingen",
   "img": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-ergonomische-basis-line-v1.png",
   "kaartImg": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-ergonomische-basis-avatar-v8.jpg",
-  "coreExerciseId": "fc_aac28a0ab28bbd7c"
+  "coreExerciseId": "fc_aac28a0ab28bbd7c",
+  "uitleg": "Sta rechtop en dicht bij een plank of kast. Til een licht voorwerp met beide handen rustig tot boven schouderhoogte, plaats het neer en breng je armen langzaam terug omlaag."
  },
  {
   "naam": "Boven schouderhoogte plaatsen – licht en dichtbij",
   "groep": "Werk en dagelijkse handelingen",
   "img": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-licht-en-dichtbij-line-v1.png",
   "kaartImg": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-licht-en-dichtbij-avatar-v8.jpg",
-  "coreExerciseId": "fc_755ad3fa6b77945f"
+  "coreExerciseId": "fc_755ad3fa6b77945f",
+  "uitleg": "Sta rechtop vlak voor een plank. Houd een licht voorwerp dicht bij je lichaam, plaats het rustig boven schouderhoogte en pak het daarna langzaam weer terug."
  },
  {
   "naam": "Duwen – licht en dichtbij",
   "groep": "Werk en dagelijkse handelingen",
   "img": "images/werk-en-dagelijkse-handelingen/duwen-licht-en-dichtbij-line-v1.png",
   "kaartImg": "images/werk-en-dagelijkse-handelingen/duwen-licht-en-dichtbij-avatar-v8.jpg",
-  "coreExerciseId": "fc_d8194db9d6d169af"
+  "coreExerciseId": "fc_d8194db9d6d169af",
+  "uitleg": "Sta rechtop voor iets lichts dat je kunt duwen. Houd je handen dicht bij je lichaam, duw het rustig naar voren en kom daarna langzaam terug in je beginhouding."
  },
  {
   "naam": "Duwen – met stapverplaatsing",
   "groep": "Werk en dagelijkse handelingen",
   "img": "images/werk-en-dagelijkse-handelingen/duwen-met-stapverplaatsing-line-v1.png",
   "kaartImg": "images/werk-en-dagelijkse-handelingen/duwen-met-stapverplaatsing-avatar-v8.jpg",
-  "coreExerciseId": "fc_c06b5e314b8973b5"
+  "coreExerciseId": "fc_c06b5e314b8973b5",
+  "uitleg": "Sta rechtop met je handen tegen wat je wilt duwen. Zet een stap naar voren terwijl je rustig duwt en kom daarna langzaam weer terug in je beginhouding."
  },
  {
   "naam": "Trekken – licht en dichtbij",
   "groep": "Werk en dagelijkse handelingen",
   "img": "images/werk-en-dagelijkse-handelingen/trekken-licht-en-dichtbij-line-v1.png",
   "kaartImg": "images/werk-en-dagelijkse-handelingen/trekken-licht-en-dichtbij-avatar-v8.jpg",
-  "coreExerciseId": "fc_6acf065b27810714"
+  "coreExerciseId": "fc_6acf065b27810714",
+  "uitleg": "Sta rechtop met je gezicht naar het voorwerp dat je wilt trekken. Pak het vast, houd het dicht bij je lichaam, trek het rustig naar je toe en laat het langzaam weer terugkomen."
  },
  {
   "naam": "Draaien en plaatsen – met stapverplaatsing",
   "groep": "Werk en dagelijkse handelingen",
   "img": "images/werk-en-dagelijkse-handelingen/draaien-en-plaatsen-met-stapverplaatsing-line-v1.png",
   "kaartImg": "images/werk-en-dagelijkse-handelingen/draaien-en-plaatsen-met-stapverplaatsing-avatar-v8.jpg",
-  "coreExerciseId": "fc_0b50191c7b31787d"
+  "coreExerciseId": "fc_0b50191c7b31787d",
+  "uitleg": "Sta rechtop met een licht voorwerp in je handen. Zet een stap opzij, draai je hele lichaam rustig mee, plaats het voorwerp neer en kom langzaam terug in je beginhouding."
  },
  {
   "naam": "Langdurig zitten onderbreken – met tempo of herhaling",
   "groep": "Werk en dagelijkse handelingen",
   "img": "images/werk-en-dagelijkse-handelingen/langdurig-zitten-onderbreken-met-tempo-of-herhaling-line-v1.png",
   "kaartImg": "images/werk-en-dagelijkse-handelingen/langdurig-zitten-onderbreken-met-tempo-of-herhaling-avatar-v8.jpg",
-  "coreExerciseId": "fc_bd4e042fc4dacab6"
+  "coreExerciseId": "fc_bd4e042fc4dacab6",
+  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Sta rustig op tot je helemaal rechtop staat en ga daarna langzaam weer zitten."
  },
  {
   "naam": "Bekkenbodem aanspannen – liggend",
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/bekkenbodem-aanspannen-liggend-line-v1.png",
   "kaartImg": "images/bekken-postpartum/bekkenbodem-aanspannen-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_d3b175db57cddbff"
+  "coreExerciseId": "fc_d3b175db57cddbff",
+  "uitleg": "Ga op je rug liggen met je knieën gebogen. Span je bekkenbodem rustig aan alsof je je plas ophoudt en laat de spanning daarna langzaam weer los."
  },
  {
   "naam": "Bekkenbodem ontspannen – liggend",
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/bekkenbodem-ontspannen-liggend-line-v1.png",
   "kaartImg": "images/bekken-postpartum/bekkenbodem-ontspannen-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_5f84b78fbf651cdf"
+  "coreExerciseId": "fc_5f84b78fbf651cdf",
+  "uitleg": "Ga ontspannen op je rug liggen met je knieën gebogen. Adem rustig naar je buik en laat je bekkenbodem bij elke uitademing langzaam zacht en los worden."
  },
  {
   "naam": "Bekkenbodem snel aanspannen – zittend",
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/bekkenbodem-snel-aanspannen-zittend-line-v1.png",
   "kaartImg": "images/bekken-postpartum/bekkenbodem-snel-aanspannen-zittend-avatar-v8.jpg",
-  "coreExerciseId": "fc_98e2ae0c112e5894"
+  "coreExerciseId": "fc_98e2ae0c112e5894",
+  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Span je bekkenbodem kort en vlot aan en laat de spanning daarna meteen weer rustig los."
  },
  {
   "naam": "Bekkenbodem met uitademing – liggend",
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/bekkenbodem-met-uitademing-liggend-line-v1.png",
   "kaartImg": "images/bekken-postpartum/bekkenbodem-met-uitademing-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_4c89f053d8c62426"
+  "coreExerciseId": "fc_4c89f053d8c62426",
+  "uitleg": "Ga op je rug liggen met je knieën gebogen. Adem rustig in naar je buik, span tijdens de uitademing je bekkenbodem aan en laat daarna langzaam weer los."
  },
  {
   "naam": "Diepe buikactivatie – liggend",
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/diepe-buikactivatie-liggend-line-v1.png",
   "kaartImg": "images/bekken-postpartum/diepe-buikactivatie-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_13a93af892cd15ed"
+  "coreExerciseId": "fc_13a93af892cd15ed",
+  "uitleg": "Ga op je rug liggen met je knieën gebogen. Trek je onderbuik rustig een beetje in, alsof je je navel zachtjes naar binnen brengt, en laat daarna langzaam weer los."
  },
  {
   "naam": "Bekkenmobiliteit – liggend",
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/bekkenmobiliteit-liggend-line-v1.png",
   "kaartImg": "images/bekken-postpartum/bekkenmobiliteit-liggend-avatar-v8.jpg",
-  "coreExerciseId": "fc_0c0c1d08d20d8deb"
+  "coreExerciseId": "fc_0c0c1d08d20d8deb",
+  "uitleg": "Ga op je rug liggen met je knieën gebogen. Kantel je bekken rustig naar voren en langzaam weer naar achteren, zodat je onderrug afwisselend hol en plat wordt."
  },
  {
   "naam": "360 graden ademhaling – eerste fase rustig",
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/360-graden-ademhaling-eerste-fase-rustig-line-v1.png",
   "kaartImg": "images/bekken-postpartum/360-graden-ademhaling-eerste-fase-rustig-avatar-v8.jpg",
-  "coreExerciseId": "fc_dedda204d4d6ff84"
+  "coreExerciseId": "fc_dedda204d4d6ff84",
+  "uitleg": "Ga ontspannen op je rug liggen met je handen op je onderste ribben. Adem rustig in zodat je ribben naar alle kanten breed worden en adem daarna langzaam weer uit."
  },
  {
   "naam": "Bekkenkanteling postpartum – eerste fase rustig",
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/bekkenkanteling-postpartum-eerste-fase-rustig-line-v1.png",
   "kaartImg": "images/bekken-postpartum/bekkenkanteling-postpartum-eerste-fase-rustig-avatar-v8.jpg",
-  "coreExerciseId": "fc_c913994a1a47547f"
+  "coreExerciseId": "fc_c913994a1a47547f",
+  "uitleg": "Ga op je rug liggen met je knieën gebogen. Kantel je bekken rustig zodat je onderrug plat op de grond komt en laat je bekken daarna langzaam weer terugkomen."
  },
  {
   "naam": "Functioneel opstaan – functioneel",
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/functioneel-opstaan-functioneel-line-v1.png",
   "kaartImg": "images/bekken-postpartum/functioneel-opstaan-functioneel-avatar-v8.jpg",
-  "coreExerciseId": "fc_c59dde6438e9269d"
+  "coreExerciseId": "fc_c59dde6438e9269d",
+  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Buig licht naar voren, sta rustig op tot je helemaal rechtop staat en ga daarna langzaam weer zitten."
  },
  {
   "naam": "Zijlig heupkracht – zijlig",
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/zijlig-heupkracht-zijlig-line-v1.png",
   "kaartImg": "images/bekken-postpartum/zijlig-heupkracht-zijlig-avatar-v8.jpg",
-  "coreExerciseId": "fc_2b6821717468e1cd"
+  "coreExerciseId": "fc_2b6821717468e1cd",
+  "uitleg": "Ga op je zij liggen met je benen gestrekt op elkaar. Hef je bovenste been rustig omhoog en laat het daarna langzaam weer zakken."
  },
  {
   "naam": "Hop vooruit – techniek langzaam",
   "groep": "Sportrevalidatie",
   "img": "images/sportrevalidatie/hop-vooruit-techniek-langzaam-line-v1.png",
   "kaartImg": "images/sportrevalidatie/hop-vooruit-techniek-langzaam-avatar-v8.jpg",
-  "coreExerciseId": "fc_5b1d066a138ccdf3"
+  "coreExerciseId": "fc_5b1d066a138ccdf3",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte. Zak licht door je knieën, hop rustig een klein stukje naar voren en land zacht met gebogen knieën."
  },
  {
   "naam": "Landing op twee benen – techniek langzaam",
   "groep": "Sportrevalidatie",
   "img": "images/sportrevalidatie/landing-op-twee-benen-techniek-langzaam-line-v1.png",
   "kaartImg": "images/sportrevalidatie/landing-op-twee-benen-techniek-langzaam-avatar-v8.jpg",
-  "coreExerciseId": "fc_289895d1214071bf"
+  "coreExerciseId": "fc_289895d1214071bf",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte. Spring rustig een klein stukje omhoog en land zacht op beide benen met je knieën licht gebogen."
  },
  {
   "naam": "Landing op één been – techniek langzaam",
   "groep": "Sportrevalidatie",
   "img": "images/sportrevalidatie/landing-op-een-been-techniek-langzaam-line-v1.png",
   "kaartImg": "images/sportrevalidatie/landing-op-een-been-techniek-langzaam-avatar-v8.jpg",
-  "coreExerciseId": "fc_503d65aa09365e1d"
+  "coreExerciseId": "fc_503d65aa09365e1d",
+  "uitleg": "Sta rechtop op één been met je knie licht gebogen. Spring rustig een klein stukje omhoog en land zacht op datzelfde been, met je knie soepel meeverend."
  },
  {
   "naam": "Laterale shuffle – submaximaal",
   "groep": "Sportrevalidatie",
   "img": "images/sportrevalidatie/laterale-shuffle-submaximaal-line-v1.png",
   "kaartImg": "images/sportrevalidatie/laterale-shuffle-submaximaal-avatar-v8.jpg",
-  "coreExerciseId": "fc_3c918288d1699acf"
+  "coreExerciseId": "fc_3c918288d1699acf",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte en je knieën licht gebogen. Beweeg met kleine, vlotte zijpasjes rustig opzij en kom daarna in hetzelfde tempo terug."
  },
  {
   "naam": "Richtingsverandering – techniek langzaam",
   "groep": "Sportrevalidatie",
   "img": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-line-v1.png",
   "kaartImg": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-avatar-v8.jpg",
-  "coreExerciseId": "fc_cd28b12babdbd052"
+  "coreExerciseId": "fc_cd28b12babdbd052",
+  "uitleg": "Sta rechtop en loop rustig een klein stukje naar voren. Zak licht door je knieën, draai in een rustig tempo van richting en loop kalm weer terug."
  },
  {
   "naam": "Sprinttechniek marcheren – techniek langzaam",
   "groep": "Sportrevalidatie",
   "img": "images/sportrevalidatie/sprinttechniek-marcheren-techniek-langzaam-line-v1.png",
   "kaartImg": "images/sportrevalidatie/sprinttechniek-marcheren-techniek-langzaam-avatar-v8.jpg",
-  "coreExerciseId": "fc_6ba08990351cb15a"
+  "coreExerciseId": "fc_6ba08990351cb15a",
+  "uitleg": "Sta rechtop met je armen langs je lichaam. Marcheer rustig op de plaats, breng afwisselend je knieën omhoog en laat je armen soepel meebewegen."
  },
  {
   "naam": "Versnellen en afremmen – submaximaal",
   "groep": "Sportrevalidatie",
   "img": "images/sportrevalidatie/versnellen-en-afremmen-submaximaal-line-v1.png",
   "kaartImg": "images/sportrevalidatie/versnellen-en-afremmen-submaximaal-avatar-v8.jpg",
-  "coreExerciseId": "fc_34255e8d091ea3c2"
+  "coreExerciseId": "fc_34255e8d091ea3c2",
+  "uitleg": "Sta rechtop en begin rustig te wandelen. Versnel geleidelijk naar een vlot tempo en rem daarna langzaam weer af tot je rustig stilstaat."
  }
 ]
