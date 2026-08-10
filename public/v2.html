@@ -91,6 +91,34 @@
     border:1px solid var(--blauw-10);border-radius:999px;padding:8px 15px}
   .hero .wig span:first-child{background:var(--blauw);color:#fff;border-color:var(--blauw)}
 
+  /* voor wie: twee panelen in dezelfde beeldtaal als de hero-werelden —
+     therapeut licht, patiënt navy */
+  .hulp{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+  @media (max-width:900px){.hulp{grid-template-columns:1fr}}
+  .hp{border-radius:24px;padding:30px 32px;box-shadow:var(--sh)}
+  .hp .etiket{font:700 12px/1 var(--disp);letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px;display:block}
+  .hp h3{font:700 24px/1.2 var(--disp);letter-spacing:-.015em;margin-bottom:18px;text-wrap:balance}
+  .hp ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:15px}
+  .hp li{display:flex;gap:12px}
+  .hp .v{flex:0 0 22px;height:22px;border-radius:999px;position:relative;margin-top:2px}
+  .hp .v::after{content:"";position:absolute;left:7px;top:4px;width:5px;height:10px;border:solid;border-width:0 2.2px 2.2px 0;transform:rotate(42deg)}
+  .hp li b{display:block;font:700 16px/1.35 var(--disp);margin-bottom:2px}
+  .hp li p{font-size:15.5px;line-height:1.55;margin:0}
+  .hp.ther{background:var(--vlak);border:1px solid var(--lijn)}
+  .hp.ther .etiket{color:var(--blauw)}
+  .hp.ther h3{color:var(--inkt)}
+  .hp.ther .v{background:var(--blauw-05);border:1px solid var(--blauw-10)}
+  .hp.ther .v::after{border-color:var(--blauw)}
+  .hp.ther li b{color:var(--inkt)}
+  .hp.ther li p{color:var(--demp)}
+  .hp.pat{background:linear-gradient(155deg,var(--navy),var(--blauw-d) 75%)}
+  .hp.pat .etiket{color:#f2a37c}
+  .hp.pat h3{color:#fff}
+  .hp.pat .v{background:rgba(255,255,255,.14)}
+  .hp.pat .v::after{border-color:#f2a37c}
+  .hp.pat li b{color:#fff}
+  .hp.pat li p{color:#c9d7f0}
+
   /* het duet */
   .duet{display:grid;grid-template-columns:1fr 96px 1fr;align-items:stretch;gap:0;max-width:1040px;margin:56px auto 0;padding:0 28px 90px}
   @media (max-width:900px){.duet{grid-template-columns:1fr;gap:0;padding-bottom:70px}}
@@ -252,6 +280,7 @@
   <span class="naam">Fysiplan</span>
   <div class="links">
     <a href="#keuze">Waarom Fysiplan</a>
+    <a href="#hulp">Voor wie</a>
     <a href="#functies">Wat erin zit</a>
     <a href="#prijs">Prijs</a>
     <a href="#vragen">Vragen</a>
@@ -358,6 +387,37 @@
   </div>
 </section>
 
+<section id="hulp">
+  <div class="binnen">
+    <div class="eyebrow">Voor wie</div>
+    <h2>Jij houdt tijd over. Je pati&euml;nt houdt vol.</h2>
+    <div class="hulp">
+      <div class="hp ther">
+        <span class="etiket">Voor jou als therapeut</span>
+        <h3>Minder administratie, meer zicht op thuis</h3>
+        <ul>
+          <li><span class="v"></span><div><b>Kaart klaar in &eacute;&eacute;n minuut</b><p>Kies een sjabloon per klacht of laat de AI-assistent een voorstel doen uit je eigen bibliotheek. Jij beoordeelt en beslist.</p></div></li>
+          <li><span class="v"></span><div><b>Je ziet wat er thuis gebeurt</b><p>Het pijnverloop en &ldquo;ik heb geoefend&rdquo; verschijnen vanzelf bij de kaart &mdash; zonder dat je pati&euml;nt iets installeert.</p></div></li>
+          <li><span class="v"></span><div><b>Niets migreren</b><p>Fysiplan werkt naast elk EPD: de PDF hangt in het dossier zoals elk document. Stoppen kan maandelijks.</p></div></li>
+          <li><span class="v"></span><div><b>Jouw huisstijl, jouw bibliotheek</b><p>Logo &eacute;&eacute;n keer uploaden, eigen oefeningen en eigen video&rsquo;s toevoegen; elke kaart is herkenbaar van jouw praktijk.</p></div></li>
+          <li><span class="v"></span><div><b>Je praktijk beveiligd</b><p>Zet het kaartoverzicht achter een wachtwoord, met strikte scheiding tussen praktijken en een auditlog.</p></div></li>
+        </ul>
+      </div>
+      <div class="hp pat">
+        <span class="etiket">Voor je pati&euml;nt</span>
+        <h3>Oefenen op de manier die het beste past</h3>
+        <ul>
+          <li><span class="v"></span><div><b>Niets installeren</b><p>Papier voor wie papier prettig vindt; &eacute;&eacute;n scan voor de volledige mobiele ervaring. Geen app, geen account.</p></div></li>
+          <li><span class="v"></span><div><b>In de eigen taal</b><p>De kaart schakelt naar negen talen en leest zichzelf hardop voor &mdash; ook voor wie lezen lastig is.</p></div></li>
+          <li><span class="v"></span><div><b>Elke oefening voorgedaan &eacute;n uitgelegd</b><p>Bij alle oefeningen staat een korte uitvoeringsuitleg en een beweegdemonstratie klaar.</p></div></li>
+          <li><span class="v"></span><div><b>De kaart beantwoordt vragen</b><p>Een korte vraag over de uitvoering krijgt direct uitleg &mdash; altijd binnen wat jij voorschreef, nooit medisch advies.</p></div></li>
+          <li><span class="v"></span><div><b>Steun om vol te houden</b><p>Vaste oefenmomenten in de agenda en na elke sessie &eacute;&eacute;n tik: de oefenweek groeit vanzelf.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="functies">
   <div class="binnen">
     <div class="eyebrow">Wat erin zit</div>
@@ -365,6 +425,8 @@
     <div class="fx">
       <div class="f"><span class="ik"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l6-3.5v11L15 14"/><rect x="2" y="6" width="13" height="12" rx="2.5"/></svg></span><div><b>Instructievideo bij elke oefening</b><p>Professionele oefenvideo's in één herkenbare stijl, klinisch gecontroleerd. De cliënt bekijkt ze thuis achter de QR-code, zonder dat jij iets hoeft te doen.</p></div></div>
       <div class="f"><span class="ik"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span><div><b>De cliënt geeft een pijnscore door<span class="nieuw">NIEUW</span></b><p>Na het oefenen tikt de cliënt op de digitale kaart een score van 0 tot 10 aan. Jij ziet het verloop bij de kaart, de cliënt hoeft niets te installeren.</p></div></div>
+      <div class="f"><span class="ik"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.6 0-3.1-.4-4.4-1.2L3 20l1.2-5.1A8.5 8.5 0 1 1 21 11.5z"/><path d="M9 10h6M9 13.5h4"/></svg></span><div><b>De kaart beantwoordt vragen<span class="nieuw">NIEUW</span></b><p>De cliënt stelt op de digitale kaart een korte vraag over de uitvoering en krijgt uitleg — altijd binnen jouw voorschrift, nooit medisch advies, in negen talen.</p></div></div>
+      <div class="f"><span class="ik"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>&ldquo;Ik heb geoefend&rdquo; met oefenweek<span class="nieuw">NIEUW</span></b><p>Eén tik na het oefenen; de kaart toont de oefenweek en jij ziet de therapietrouw bij de kaart terug. Zonder app.</p></div></div>
       <div class="f"><span class="ik"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></span><div><b>Oefenmomenten in de agenda<span class="nieuw">NIEUW</span></b><p>Eén knop op de digitale kaart zet vaste oefenmomenten in de agenda van elke telefoon. Werkt op iPhone en Android, zonder app of account.</p></div></div>
       <div class="f"><span class="ik"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 4 5.7 4 9s-1.5 6.4-4 9c-2.5-2.6-4-5.7-4-9s1.5-6.4 4-9z"/></svg></span><div><b>Negen talen en voorlezen<span class="nieuw">NIEUW</span></b><p>De digitale kaart schakelt naar onder meer Engels, Turks, Arabisch en Pools, en leest zichzelf hardop voor. Zo doet echt iedereen mee.</p></div></div>
       <div class="f"><span class="ik"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9z"/></svg></span><div><b>AI-kaartassistent<span class="nieuw">NIEUW</span></b><p>Omschrijf de klacht en krijg een kaartvoorstel uit je eigen oefeningenlijst, met voorzichtige startdosering. Jij beoordeelt en beslist.</p></div></div>
@@ -437,7 +499,7 @@
         <a class="knop oranje" href="/v2/app">Word oprichter</a>
       </div>
     </div>
-    <div class="rekensom">Veel oefensoftware rekent 6 tot 14 euro per behandelaar per maand. Met vier collega's betaal je elders dus al snel 24 tot 56 euro per maand; bij Fysiplan is het <b>39 euro voor de hele locatie, oftewel 9,75 per behandelaar</b>. Met acht collega's is dat 4,88, en een nieuwe collega kost altijd nul euro extra.</div>
+    <div class="rekensom">Eén vaste prijs voor de hele locatie, hoe groot je team ook is. Met vier behandelaars is dat <b>39 euro per maand, oftewel 9,75 per behandelaar</b>; met acht is het 4,88. Een nieuwe collega kost altijd nul euro extra, printen en kaarten blijven onbeperkt, en je prijs staat minstens 24 maanden vast.</div>
     <div class="beloften">
       <div class="b"><b>De prijsbelofte</b>Je prijs staat minstens 24 maanden vast</div>
       <div class="b"><b>Printen blijft gratis</b>Kaarten maken en printen kost nooit iets</div>
