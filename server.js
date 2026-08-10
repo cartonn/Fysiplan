@@ -116,6 +116,22 @@ function checkHash(wachtwoord, opgeslagen) {
     return doel.length === test.length && timingSafeEqual(doel, test);
   } catch { return false; }
 }
+// per-praktijk inlogrem: naast de rem-per-IP (denied) knijpt dit een gerichte,
+// over veel IP's verdeelde aanval op één praktijkwachtwoord af. Tien missers per
+// praktijk binnen een kwartier -> tijdelijk op slot, ongeacht het IP.
+const loginMisPraktijk = new Map(); // pk -> { start, n }
+function loginOpSlot(pk) {
+  const nu = Date.now();
+  if (loginMisPraktijk.size > 5000) for (const [k, v] of loginMisPraktijk) if (nu - v.start > 15 * 60000) loginMisPraktijk.delete(k);
+  const t = loginMisPraktijk.get(pk);
+  return !!t && nu - t.start <= 15 * 60000 && t.n >= 10;
+}
+function loginMisTel(pk) {
+  const nu = Date.now();
+  const t = loginMisPraktijk.get(pk);
+  if (!t || nu - t.start > 15 * 60000) loginMisPraktijk.set(pk, { start: nu, n: 1 });
+  else t.n++;
+}
 const praktijkGeclaimd = (pk) => !!praktijkAccounts[pk];
 function praktijkSessieVan(req) {
   const token = String(req.headers["x-praktijk-sessie"] || "").trim();
@@ -1129,13 +1145,21 @@ async function afhandelen(request, response) {
       const b = JSON.parse(await readBody(request));
       const pk = cleanName(b.praktijk, 80).toLowerCase();
       const ww = String(b.wachtwoord || "");
+      // per-praktijk op slot na te veel missers, ongeacht het IP van de aanvaller
+      if (pk && loginOpSlot(pk)) {
+        if ((loginMisPraktijk.get(pk) || {}).n === 10) { loginMisTel(pk); auditLog(pk, "login-op-slot", request); }
+        await send429(response, 900, { ok: false, fout: "Te veel inlogpogingen voor deze praktijk; probeer het over een kwartier opnieuw." });
+        return;
+      }
       const acc = praktijkAccounts[pk];
-      // mislukte inlogpogingen tellen mee in dezelfde teller als de beheer-misser
+      // mislukte inlogpogingen tellen mee in de rem-per-IP én de rem-per-praktijk
       if (!acc || !checkHash(ww, acc.hash)) {
+        loginMisTel(pk || "?");
         await denied(request, response, "praktijk-login");
         auditLog(pk || "?", "login-mislukt", request);
         return;
       }
+      loginMisPraktijk.delete(pk); // geslaagd: teller schoon
       const token = randomBytes(24).toString("hex");
       praktijkSessies.set(token, { pk, t: Date.now() });
       auditLog(pk, "ingelogd", request);
