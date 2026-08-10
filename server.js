@@ -140,6 +140,33 @@ function auditLog(pk, actie, req) {
   saveJson(auditPath, praktijkAudit).catch(() => {});
 }
 
+// maandagbrief: één AI-samenvatting per praktijk per dag (daarna uit de cache)
+const briefCache = new Map(); // pk -> { dag, brief }
+// weekfeiten per kaart, deterministisch berekend: de AI krijgt alleen deze
+// cijfers en schrijft er beschrijvende zinnen bij — de duiding blijft bij de
+// therapeut (MDR: registreren en tonen, geen oordeel)
+function weekFeiten(pk) {
+  const nu = Date.now();
+  const dagenGeleden = (t) => Math.floor((nu - t) / 86400000);
+  return Object.values(kaarten[pk] || {}).slice(0, 40).map((k) => {
+    const m = k.metingen || [];
+    const g = k.gedaan || [];
+    const laatsteT = Math.max(k.ts || 0, m.length ? m[m.length - 1].t : 0, g.length ? g[g.length - 1].t : 0);
+    const oefendagen7 = new Set(g.filter((x) => nu - x.t < 7 * 86400000).map((x) => nlDag(x.t))).size;
+    let scoreRichting = null, laatsteScore = null;
+    const recent = m.slice(-14);
+    if (recent.length >= 3) {
+      const eerdere = recent.slice(0, -1);
+      const gem = eerdere.reduce((s, x) => s + x.s, 0) / eerdere.length;
+      laatsteScore = recent[recent.length - 1].s;
+      const d = laatsteScore - gem;
+      scoreRichting = d <= -1 ? "lager" : d >= 1 ? "hoger" : "gelijk";
+    } else if (recent.length) laatsteScore = recent[recent.length - 1].s;
+    return { kaart: k.naam, dagenSindsActiviteit: laatsteT ? dagenGeleden(laatsteT) : null,
+      oefendagenAfgelopenWeek: oefendagen7, laatstePijnscore: laatsteScore, pijnrichting: scoreRichting };
+  });
+}
+
 // oprichterstarief: hoeveel van de honderd plekken zijn vergeven; de teller staat
 // live op de landingspagina en wordt door beheer bijgewerkt zodra praktijken instappen
 const oprichtersPath = join(dataDir, "oprichters.json");
@@ -1122,6 +1149,44 @@ async function afhandelen(request, response) {
     const token = String(request.headers["x-praktijk-sessie"] || "").trim();
     if (token) praktijkSessies.delete(token);
     await sendJson(response, 200, { ok: true });
+    return;
+  }
+
+  // maandagbrief: korte, puur beschrijvende weeksamenvatting van de gedeelde
+  // kaarten van één praktijk. De server rekent de feiten deterministisch uit
+  // (activiteit, oefendagen, pijnrichting); de AI schrijft er hoogstens vijf
+  // zinnen bij en geeft nooit medisch advies. Eén keer per praktijk per dag.
+  if (urlPath === "/api/praktijk/brief" && request.method === "GET") {
+    // deze aanroep kost geld; een cross-site pagina blijft buiten. Fail-open.
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    if (leesLimiet(request, response)) return;
+    const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    const pk = String(q.get("praktijk") || "").trim().toLowerCase();
+    if (!pk) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam op." }); return; }
+    if (await eisPraktijk(request, response, pk)) return;
+    const feiten = weekFeiten(pk);
+    if (!feiten.length) { await sendJson(response, 200, { ok: true, brief: "Er zijn nog geen gedeelde kaarten voor deze praktijk; zodra er kaarten met pijnscores of oefenvinkjes zijn, staat hier elke week een korte samenvatting." }); return; }
+    const dag = vandaagKey();
+    const cached = briefCache.get(pk);
+    if (cached && cached.dag === dag) { await sendJson(response, 200, { ok: true, brief: cached.brief, cache: true }); return; }
+    if (!AI_KEY) { await sendJson(response, 503, { ok: false, fout: "De weekbrief staat nog uit op deze server." }); return; }
+    if (aiLimiet(request, response)) return;
+    try {
+      const sys = "Je schrijft de weekbrief voor een fysiotherapeut over de gedeelde trainingskaarten van de praktijk. " +
+        "Je bent uitsluitend BESCHRIJVEND op basis van de meegegeven cijfers: wie actief oefent, wie stil is gevallen, hoe pijnscores zich bewegen. " +
+        "Strenge regels: GEEN medisch advies, geen diagnoses, geen behandel- of doseeradviezen en geen conclusies over herstel; hoogstens neutraal opmerken dat een kaart een blik waard is. " +
+        "Warm en nuchter Nederlands, maximaal vijf korte zinnen in lopende tekst (geen opsomming), noem hooguit vier kaartnamen. " +
+        "Betekenis van de velden: dagenSindsActiviteit = dagen sinds de laatste activiteit op de kaart; oefendagenAfgelopenWeek = aantal dagen met een oefenvinkje in de laatste zeven dagen; pijnrichting vergelijkt de laatste pijnscore met het gemiddelde van eerdere scores. " +
+        'Antwoord met uitsluitend JSON: {"brief":"..."}';
+      const uit = await vraagClaude(AI_MODEL, 500, sys, JSON.stringify(feiten));
+      const brief = String((uit && uit.brief) || "").trim().slice(0, 900);
+      if (!brief) { await sendJson(response, 502, { ok: false, fout: "De weekbrief kwam niet door; probeer het zo opnieuw." }); return; }
+      briefCache.set(pk, { dag, brief });
+      const d = dagStats(dag); d.brief = (d.brief || 0) + 1; bewaarStats();
+      await sendJson(response, 200, { ok: true, brief });
+    } catch {
+      await sendJson(response, 502, { ok: false, fout: "De weekbrief is even niet beschikbaar; probeer het zo opnieuw." });
+    }
     return;
   }
 

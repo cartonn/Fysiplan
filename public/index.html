@@ -1713,6 +1713,23 @@ bridge2.jpg</div>
     if(!pr){blok.style.display='none';knop.style.display='none';return;}
     blok.style.display='';knop.style.display='';
     document.getElementById('k_srv_naam').textContent='('+pr+')';
+    // v2: de weekbrief — korte, beschrijvende AI-samenvatting van de gedeelde
+    // kaarten (alleen in de v2-app; v1 blijft exact zoals hij was)
+    if(window.FYSIPLAN_V2&&!document.getElementById('weekbrief')){
+      var wb=document.createElement('div');
+      wb.id='weekbrief';
+      wb.innerHTML="<button class='btn' id='wb_knop' type='button' style='margin-top:8px'>Weekbrief van je praktijk</button>"+
+        "<div id='wb_uit' class='hint' style='display:none;white-space:pre-wrap;margin-top:8px'></div>";
+      blok.appendChild(wb);
+      document.getElementById('wb_knop').addEventListener('click',function(){
+        var uit=document.getElementById('wb_uit'),k2=this;
+        k2.disabled=true;uit.style.display='';uit.textContent='De weekbrief wordt geschreven…';
+        fetch('api/praktijk/brief?praktijk='+encodeURIComponent(SET.praktijk||''),{cache:'no-cache'})
+          .then(function(r){return r.json();})
+          .then(function(d){uit.textContent=d.ok?d.brief:(d.fout||'De weekbrief is nu niet beschikbaar.');k2.disabled=false;})
+          .catch(function(){uit.textContent='De weekbrief is nu niet beschikbaar.';k2.disabled=false;});
+      });
+    }
     var el=document.getElementById('k_srv_lijst');
     el.innerHTML="<div class='hint'>Laden…</div>";
     fetch('api/kaarten?praktijk='+encodeURIComponent(pr),{cache:'no-cache'})
