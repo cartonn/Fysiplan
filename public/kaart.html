@@ -194,6 +194,18 @@
   /* Hoe ging het vandaag: pijnscore 0-10 in één tik */
   .mkaart,.agkaart{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;box-shadow:var(--sh);padding:16px;margin-bottom:12px}
   .mvraag{font-size:15.5px;color:var(--tekst);margin-bottom:12px}
+  /* vraag het aan je kaart: korte AI-uitleg over de eigen oefeningen */
+  .vkaart{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;box-shadow:var(--sh);padding:16px;margin-bottom:12px}
+  .vkaart .vrij{display:flex;gap:8px}
+  .vkaart input{flex:1;min-width:0;font:500 15.5px/1.3 var(--disp);color:var(--tekst);
+    background:var(--chip);border:1px solid var(--lijn);border-radius:12px;padding:12px 14px}
+  .vkaart input::placeholder{color:var(--zacht)}
+  .vkaart .vgo{font:700 15px/1 var(--disp);color:#fff;background:var(--blauw);border:none;
+    border-radius:12px;padding:12px 18px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .vkaart .vgo:disabled{opacity:.55;cursor:default}
+  .vknoot{font:500 12.5px/1.5 var(--disp);color:var(--zacht);margin-bottom:10px}
+  .vantwoord{margin-top:12px;padding:12px 14px;background:var(--blauw-05,#edf2fa);
+    border:1px solid var(--lijn);border-radius:12px;font:500 15px/1.55 var(--disp);color:var(--tekst)}
   .mschaal{display:grid;grid-template-columns:repeat(11,1fr);gap:5px}
   .mschaal button{font:700 15px/1 var(--disp);padding:12px 0;border-radius:10px;cursor:pointer;
     border:1px solid var(--lijn);background:var(--chip);color:var(--tekst);
@@ -266,7 +278,7 @@
     outline:3px solid rgba(36,86,166,.6);outline-offset:2px}
   @media print{
     body{background:#fff}
-    .vbtn,.vhouder,.mkaart,.agkaart,#metingkop,#agendakop,.kopacties,.belknop,.appbanner,.demobadge,.infobadge{display:none !important}
+    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,#metingkop,#agendakop,#vraagkop,.kopacties,.belknop,.appbanner,.demobadge,.infobadge{display:none !important}
     .kop,.oef,.schemakaart{box-shadow:none}
   }
 </style>
@@ -295,6 +307,16 @@
 
   <h2><span id="oefkop">Jouw oefeningen</span> <span class="tel" id="oeftel"></span></h2>
   <div id="oefs"></div>
+
+  <h2 id="vraagkop" style="display:none">Vraag het aan je kaart</h2>
+  <div class="vkaart" id="vraagkaart" style="display:none">
+    <p class="vknoot" id="vraagintro">De kaart legt alleen jouw eigen oefeningen uit en geeft geen medisch advies. Vragen worden niet bewaard.</p>
+    <form class="vrij" id="vraagform">
+      <input type="text" id="vraagveld" maxlength="300" autocomplete="off" aria-label="Vraag het aan je kaart"/>
+      <button type="submit" class="vgo" id="vraagknop">Vraag</button>
+    </form>
+    <div class="vantwoord" id="vantwoord" role="status" aria-live="polite" style="display:none"></div>
+  </div>
 
   <h2 id="metingkop">Hoe ging het vandaag?</h2>
   <div class="mkaart" id="meting">
@@ -365,6 +387,31 @@
   var VERT={};
   var K=null;
   function tr(k){var d=T[TAAL]||T.nl;return d[k]!=null?d[k]:T.nl[k];}
+  // teksten voor "vraag het aan je kaart" (apart blokje; valt terug op Nederlands)
+  var TQ={
+    nl:{kop:'Vraag het aan je kaart',intro:'De kaart legt alleen jouw eigen oefeningen uit en geeft geen medisch advies. Vragen worden niet bewaard.',ph:'Bijv. hoe diep moet ik zakken?',knop:'Vraag',bezig:'Even denken…',fout:'Dat lukte even niet; probeer het zo opnieuw.'},
+    en:{kop:'Ask your card',intro:'The card only explains your own exercises and gives no medical advice. Questions are not stored.',ph:'E.g. how deep should I go?',knop:'Ask',bezig:'Thinking…',fout:'That did not work; please try again in a moment.'},
+    de:{kop:'Frag deine Karte',intro:'Die Karte erklärt nur deine eigenen Übungen und gibt keinen medizinischen Rat. Fragen werden nicht gespeichert.',ph:'Z. B. wie tief soll ich gehen?',knop:'Fragen',bezig:'Einen Moment…',fout:'Das hat gerade nicht geklappt; versuch es gleich noch einmal.'},
+    fr:{kop:'Posez une question à votre carte',intro:'La carte explique uniquement vos propres exercices et ne donne aucun avis médical. Les questions ne sont pas conservées.',ph:'Ex. : jusqu’où descendre ?',knop:'Demander',bezig:'Un instant…',fout:'Cela n’a pas fonctionné ; réessayez dans un instant.'},
+    es:{kop:'Pregunta a tu tarjeta',intro:'La tarjeta solo explica tus propios ejercicios y no da consejos médicos. Las preguntas no se guardan.',ph:'P. ej., ¿hasta dónde debo bajar?',knop:'Preguntar',bezig:'Un momento…',fout:'No ha funcionado; inténtalo de nuevo en un momento.'},
+    pl:{kop:'Zapytaj swoją kartę',intro:'Karta objaśnia tylko twoje ćwiczenia i nie udziela porad medycznych. Pytania nie są zapisywane.',ph:'Np. jak nisko mam zejść?',knop:'Zapytaj',bezig:'Chwileczkę…',fout:'Nie udało się; spróbuj za chwilę.'},
+    tr:{kop:'Kartına sor',intro:'Kart yalnızca kendi egzersizlerini açıklar, tıbbi tavsiye vermez. Sorular kaydedilmez.',ph:'Örn. ne kadar alçalmalıyım?',knop:'Sor',bezig:'Bir saniye…',fout:'Olmadı; birazdan tekrar dene.'},
+    ar:{kop:'اسأل بطاقتك',intro:'البطاقة تشرح تمارينك فقط ولا تقدم نصيحة طبية. الأسئلة لا تُحفظ.',ph:'مثلاً: إلى أي مدى أنزل؟',knop:'اسأل',bezig:'لحظة…',fout:'لم ينجح ذلك؛ حاول مرة أخرى بعد قليل.'},
+    uk:{kop:'Запитай свою картку',intro:'Картка пояснює лише твої вправи і не дає медичних порад. Запитання не зберігаються.',ph:'Напр., як низько присідати?',knop:'Запитати',bezig:'Хвилинку…',fout:'Не вдалося; спробуй ще раз за мить.'}
+  };
+  function trq(k){var d=TQ[TAAL]||TQ.nl;return d[k]!=null?d[k]:TQ.nl[k];}
+  // de vraaghulp verschijnt alleen als de server een AI-sleutel heeft (K.ai)
+  function tekenVraag(){
+    if(!K||!K.ai)return;
+    document.getElementById('vraagkop').style.display='';
+    document.getElementById('vraagkaart').style.display='';
+    document.getElementById('vraagkop').textContent=trq('kop');
+    document.getElementById('vraagintro').textContent=trq('intro');
+    var veld=document.getElementById('vraagveld');
+    veld.placeholder=trq('ph');
+    veld.setAttribute('aria-label',trq('kop'));
+    document.getElementById('vraagknop').textContent=trq('knop');
+  }
   function vt(s){var m=VERT[TAAL];return (m&&m[s])||s;}
   function cellPrefix(x){return x&&x.id?'x'+x.id:'n'+normEx(x&&x.n);}
   function dagStr(t){var d=new Date(t);return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
@@ -562,7 +609,7 @@
     }else{trend.style.display='none';}
   }
 
-  function alles(){tekenStatisch();tekenKaart();}
+  function alles(){tekenStatisch();tekenKaart();tekenVraag();}
 
   // ---- taal wisselen: vaste teksten direct, kaartinhoud via de server (eenmalig per taal) ----
   function wisselTaal(t){
@@ -924,6 +971,21 @@
         })
         .catch(function(){dank.style.display='block';dank.textContent=tr('mfout');});
     });
+    document.getElementById('vraagform').addEventListener('submit',function(e){
+      e.preventDefault();
+      var veld=document.getElementById('vraagveld'),knop=document.getElementById('vraagknop'),ant=document.getElementById('vantwoord');
+      var q=(veld.value||'').trim();
+      if(q.length<3||knop.disabled)return;
+      knop.disabled=true;ant.style.display='block';ant.textContent=trq('bezig');
+      fetch('/api/kaart/vraag',{method:'POST',headers:{'content-type':'application/json'},
+        body:JSON.stringify({id:id,vraag:q,taal:TAAL})})
+        .then(function(r){return r.json();})
+        .then(function(d){
+          ant.textContent=d.ok?d.antwoord:((TAAL==='nl'&&d.fout)?d.fout:trq('fout'));
+          knop.disabled=false;
+        })
+        .catch(function(){ant.textContent=trq('fout');knop.disabled=false;});
+    });
     document.getElementById('agdagen').addEventListener('click',function(e){
       var b=e.target.closest('button[data-dag]');
       if(b){var aan=b.classList.toggle('aan');b.setAttribute('aria-pressed',aan?'true':'false');}
@@ -984,7 +1046,7 @@
       fetch('/v2/oefeningen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
     ]).then(function(res){
       if(!res[0]||!res[0].ok){document.getElementById('fout').style.display='block';return;}
-      K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1]};
+      K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1],ai:!!res[0].ai};
       bindEens();
       initApp();
       if(TAAL!=='nl')wisselTaal(TAAL);else alles();
