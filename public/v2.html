@@ -48,7 +48,16 @@
   nav .links{display:flex;gap:4px;margin-left:16px}
   nav .links a{font:500 14.5px/1 var(--disp);color:var(--demp);text-decoration:none;padding:7px 12px;border-radius:999px}
   nav .links a:hover{background:#f0eadb;color:var(--inkt)}
-  @media (max-width:800px){nav .links{display:none}}
+  /* op smalle schermen de sectielinks niet verbergen maar als compacte, horizontaal
+     scrollbare chip-rij onder de merkbalk tonen, zodat Prijs en Vragen bereikbaar
+     blijven op de lange landingspagina (geen script nodig) */
+  @media (max-width:800px){
+    nav{flex-wrap:wrap;row-gap:8px}
+    nav .links{order:3;flex-basis:100%;margin-left:0;gap:6px;justify-content:flex-start;
+      overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    nav .links::-webkit-scrollbar{display:none}
+    nav .links a{white-space:nowrap;font-size:13.5px;padding:6px 12px;background:#f0eadb;color:var(--inkt)}
+  }
   nav .spacer{flex:1}
   .knop{display:inline-block;font:600 16px/1 var(--disp);text-decoration:none;border-radius:999px;padding:13px 26px;transition:.15s}
   .knop.blauw{background:var(--blauw);color:#fff;box-shadow:0 4px 14px rgba(36,86,166,.3)}
@@ -76,6 +85,11 @@
     .hero .cta a.tl{align-self:center}
   }
   .hero .klein{font:italic 15px/1 var(--serif);color:var(--zacht);margin-top:16px}
+  /* de wig: wat geen enkele concurrent kan matchen, direct onder de hero-knoppen */
+  .hero .wig{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px}
+  .hero .wig span{font:600 13.5px/1.2 var(--disp);color:var(--blauw);background:var(--blauw-05);
+    border:1px solid var(--blauw-10);border-radius:999px;padding:8px 15px}
+  .hero .wig span:first-child{background:var(--blauw);color:#fff;border-color:var(--blauw)}
 
   /* het duet */
   .duet{display:grid;grid-template-columns:1fr 96px 1fr;align-items:stretch;gap:0;max-width:1040px;margin:56px auto 0;padding:0 28px 90px}
@@ -255,6 +269,11 @@
       <a class="tl" href="#functies">Bekijk wat erin zit</a>
     </div>
     <div class="klein">Direct in de browser. Klaar in één minuut.</div>
+    <div class="wig" aria-label="Wat Fysiplan anders maakt">
+      <span>Geen app of account voor de patiënt</span>
+      <span>Negen talen met voorlezen</span>
+      <span>Eén vaste praktijkprijs</span>
+    </div>
   </div>
   <div class="duet">
     <div class="wereld papier">
