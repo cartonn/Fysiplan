@@ -1,7 +1,7 @@
 import { createServer } from "node:http";
 import { readFile, writeFile, mkdir, rename, access, unlink, copyFile, readdir, rm, stat } from "node:fs/promises";
 import { constants, createReadStream } from "node:fs";
-import { createHash, randomBytes, timingSafeEqual } from "node:crypto";
+import { createHash, randomBytes, timingSafeEqual, scryptSync } from "node:crypto";
 import { join, extname, normalize, sep } from "node:path";
 import { exerciseId } from "./lib/exercise-id.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
@@ -87,6 +87,58 @@ try { kaarten = JSON.parse(await readFile(kaartenPath, "utf8")); } catch {}
 // oefenvideo's per oefening (huidige naam als sleutel): YouTube-id en/of eigen opname
 let videolinks = {};
 try { videolinks = JSON.parse(await readFile(videolinksPath, "utf8")); } catch {}
+
+// ---- praktijkaccounts (opt-in): een praktijk kan zichzelf claimen met een
+// wachtwoord. Zolang een praktijk NIET geclaimd is, werkt alles precies als
+// voorheen (achterwaarts compatibel, v1 blijft ongemoeid). Zodra geclaimd,
+// eisen het kaartoverzicht, opslaan en verwijderen een geldige praktijksessie.
+const accountsPath = join(dataDir, "praktijk-accounts.json");
+const auditPath = join(dataDir, "praktijk-audit.json");
+let praktijkAccounts = {}; // { praktijkKey: { hash, gemaakt } }  hash = "scrypt$saltHex$hashHex"
+try { praktijkAccounts = JSON.parse(await readFile(accountsPath, "utf8")); } catch {}
+let praktijkAudit = []; // laatste gebeurtenissen: { t, praktijk, actie, ip }
+try { praktijkAudit = JSON.parse(await readFile(auditPath, "utf8")); } catch {}
+// sessies bewust in het geheugen: bij een herstart logt de praktijk opnieuw in
+const praktijkSessies = new Map(); // token -> { pk, t }
+
+function maakHash(wachtwoord) {
+  const salt = randomBytes(16);
+  const hash = scryptSync(String(wachtwoord), salt, 32);
+  return "scrypt$" + salt.toString("hex") + "$" + hash.toString("hex");
+}
+function checkHash(wachtwoord, opgeslagen) {
+  const d = String(opgeslagen || "").split("$");
+  if (d.length !== 3 || d[0] !== "scrypt") return false;
+  try {
+    const salt = Buffer.from(d[1], "hex");
+    const doel = Buffer.from(d[2], "hex");
+    const test = scryptSync(String(wachtwoord), salt, doel.length);
+    return doel.length === test.length && timingSafeEqual(doel, test);
+  } catch { return false; }
+}
+const praktijkGeclaimd = (pk) => !!praktijkAccounts[pk];
+function praktijkSessieVan(req) {
+  const token = String(req.headers["x-praktijk-sessie"] || "").trim();
+  if (!token) return null;
+  const s = praktijkSessies.get(token);
+  if (!s) return null;
+  if (Date.now() - s.t > 30 * 86400000) { praktijkSessies.delete(token); return null; }
+  return s.pk;
+}
+// blokkeert (stuurt 401) alleen als de praktijk geclaimd is én er geen geldige
+// sessie voor precies díé praktijk meekomt; geeft true terug als het blokkeerde
+async function eisPraktijk(req, res, pk) {
+  if (!praktijkGeclaimd(pk)) return false;
+  if (praktijkSessieVan(req) === pk) return false;
+  auditLog(pk, "toegang-geweigerd", req);
+  await sendJson(res, 401, { ok: false, fout: "Log eerst in bij deze praktijk.", login: true });
+  return true;
+}
+function auditLog(pk, actie, req) {
+  praktijkAudit.unshift({ t: new Date().toISOString(), praktijk: pk, actie, ip: maskIp(clientIp(req)) });
+  praktijkAudit = praktijkAudit.slice(0, 500);
+  saveJson(auditPath, praktijkAudit).catch(() => {});
+}
 
 // oprichterstarief: hoeveel van de honderd plekken zijn vergeven; de teller staat
 // live op de landingspagina en wordt door beheer bijgewerkt zodra praktijken instappen
@@ -1007,6 +1059,72 @@ async function afhandelen(request, response) {
 
   // ---- gedeelde API's ----
 
+  // ---- praktijkaccounts (opt-in beveiliging van het praktijkoverzicht) ----
+
+  // status: is deze praktijk al geclaimd, en ben ik ingelogd? (voor de app-UI)
+  if (urlPath === "/api/praktijk/status" && request.method === "GET") {
+    if (leesLimiet(request, response)) return;
+    const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    const pk = String(q.get("praktijk") || "").trim().toLowerCase();
+    await sendJson(response, 200, { ok: true, geclaimd: praktijkGeclaimd(pk), ingelogd: pk && praktijkSessieVan(request) === pk });
+    return;
+  }
+
+  // claimen: een nog niet geclaimde praktijk beveiligen met een wachtwoord.
+  // Bestaat de praktijk al als account, dan kan hij niet opnieuw geclaimd worden.
+  if (urlPath === "/api/praktijk/claim" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    if (nieuwePraktijkLimiet(request, response)) return;
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const ww = String(b.wachtwoord || "");
+      if (!pk) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam op." }); return; }
+      if (ww.length < 8) { await sendJson(response, 400, { ok: false, fout: "Kies een wachtwoord van minstens 8 tekens." }); return; }
+      if (praktijkGeclaimd(pk)) { await sendJson(response, 409, { ok: false, fout: "Deze praktijk is al beveiligd. Log in.", login: true }); return; }
+      if (Object.keys(praktijkAccounts).length >= 1000) { await sendJson(response, 400, { ok: false, fout: "Maximum bereikt." }); return; }
+      praktijkAccounts[pk] = { hash: maakHash(ww), gemaakt: Date.now() };
+      await saveJson(accountsPath, praktijkAccounts);
+      auditLog(pk, "geclaimd", request);
+      const token = randomBytes(24).toString("hex");
+      praktijkSessies.set(token, { pk, t: Date.now() });
+      await sendJson(response, 200, { ok: true, sessie: token });
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+    return;
+  }
+
+  // inloggen bij een geclaimde praktijk
+  if (urlPath === "/api/praktijk/login" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const ww = String(b.wachtwoord || "");
+      const acc = praktijkAccounts[pk];
+      // mislukte inlogpogingen tellen mee in dezelfde teller als de beheer-misser
+      if (!acc || !checkHash(ww, acc.hash)) {
+        await denied(request, response, "praktijk-login");
+        auditLog(pk || "?", "login-mislukt", request);
+        return;
+      }
+      const token = randomBytes(24).toString("hex");
+      praktijkSessies.set(token, { pk, t: Date.now() });
+      auditLog(pk, "ingelogd", request);
+      await sendJson(response, 200, { ok: true, sessie: token });
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+    return;
+  }
+
+  // uitloggen: de eigen sessie ongeldig maken
+  if (urlPath === "/api/praktijk/logout" && request.method === "POST") {
+    const token = String(request.headers["x-praktijk-sessie"] || "").trim();
+    if (token) praktijkSessies.delete(token);
+    await sendJson(response, 200, { ok: true });
+    return;
+  }
+
   // praktijkprofielen: ophalen en opslaan/bijwerken (gedeeld over alle apparaten)
   if (urlPath === "/api/praktijken" && request.method === "GET") {
     // de praktijkenlijst voedt de keuzelijst in de app; de leeslimiet houdt normaal
@@ -1033,6 +1151,8 @@ async function afhandelen(request, response) {
       };
       if (!p.praktijk || !p.adres) { await sendJson(response, 400, { ok: false, fout: "Vul minimaal praktijknaam en adres in." }); return; }
       const key = p.praktijk.toLowerCase();
+      // een geclaimde praktijk kan alleen door de ingelogde praktijk zelf worden bijgewerkt
+      if (await eisPraktijk(request, response, key)) return;
       if (!praktijken[key] && Object.keys(praktijken).length >= 200) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal praktijken bereikt." }); return; }
       // praktijklogo: meegestuurd als dataURL, opgeslagen als bestand; zonder nieuw
       // logo blijft het bestaande logo van deze praktijk gewoon staan
@@ -1392,6 +1512,7 @@ async function afhandelen(request, response) {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const pk = String(q.get("praktijk") || "").trim().toLowerCase();
+    if (await eisPraktijk(request, response, pk)) return;
     const map = kaarten[pk] || {};
     const list = Object.values(map)
       .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, aantal: (k.chosen || []).length,
@@ -1411,6 +1532,7 @@ async function afhandelen(request, response) {
       const naam = cleanName(b.naam, 60);
       if (!praktijk || !naam) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam en een kaartnaam op." }); return; }
       const pk = praktijk.toLowerCase();
+      if (await eisPraktijk(request, response, pk)) return;
       const kk = naam.toLowerCase();
       if (!kaarten[pk] && Object.keys(kaarten).length >= 300) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal praktijken met gedeelde kaarten bereikt." }); return; }
       if (!kaarten[pk] && nieuwePraktijkLimiet(request, response)) return;
@@ -1471,6 +1593,7 @@ async function afhandelen(request, response) {
       const b = JSON.parse(await readBody(request));
       const pk = String(b.praktijk || "").trim().toLowerCase();
       const kk = String(b.naam || "").trim().toLowerCase();
+      if (await eisPraktijk(request, response, pk)) return;
       if (!kaarten[pk] || !kaarten[pk][kk]) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const wegVids = Object.values(kaarten[pk][kk].vids || {});
       delete kaarten[pk][kk];
