@@ -730,7 +730,10 @@ async function afhandelen(request, response) {
       catalogusVideos: (videoCatalogus.videos || []).filter((v) => v.status === "approved").length,
       core1000: core1000Summary.total || 0,
       core1000Gepubliceerd: (core1000.exercises || []).filter((entry) => entry.publication?.status === "published").length,
-      videoOpslag: STREAM_ENABLED ? "cloudflare-stream" : "railway-volume"
+      videoOpslag: STREAM_ENABLED ? "cloudflare-stream" : "railway-volume",
+      // zichtbaar maken of de data op een blijvend volume staat (waar zonder
+      // geheimen): zo is "overleeft een herstart" in één blik te controleren
+      volumeActief: dataDir === "/data" || !!process.env.DATA_DIR
     });
     return;
   }
