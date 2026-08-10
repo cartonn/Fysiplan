@@ -194,6 +194,24 @@
   /* Hoe ging het vandaag: pijnscore 0-10 in één tik */
   .mkaart,.agkaart{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;box-shadow:var(--sh);padding:16px;margin-bottom:12px}
   .mvraag{font-size:15.5px;color:var(--tekst);margin-bottom:12px}
+  /* oefenvinkje: één tik "ik heb vandaag geoefend", met de oefenweek eronder
+     (zelfde groentinten als de dank-melding, leesbaar in licht en donker) */
+  .gdaan{display:flex;align-items:center;gap:10px;width:100%;font:700 15.5px/1.25 var(--disp);
+    color:var(--tekst);background:var(--chip);border:1px solid var(--lijn);border-radius:12px;
+    padding:13px 14px;cursor:pointer;margin-bottom:12px;text-align:left;
+    -webkit-tap-highlight-color:transparent;transition:background .12s,border-color .12s}
+  .gdaan .gvink{flex:0 0 22px;height:22px;border-radius:7px;border:2px solid var(--zacht);background:var(--vlak)}
+  .gdaan.aan{background:#eef6ef;border-color:#d7e8da;color:#3e7a52}
+  .gdaan.aan .gvink{border-color:#3e8e5a;background:#3e8e5a}
+  .gdaan.aan .gvink::after{content:"";display:block;width:6px;height:11px;margin:1px 0 0 6px;
+    border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(42deg)}
+  .gweek{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  .gtitel{font:700 11px/1 var(--disp);letter-spacing:.08em;text-transform:uppercase;color:var(--grijs)}
+  .gdots{display:flex;gap:7px}
+  .gdots span{display:flex;flex-direction:column;align-items:center;gap:3px;
+    font:600 9.5px/1 var(--disp);color:var(--zacht)}
+  .gdots i{width:16px;height:16px;border-radius:999px;border:1.5px solid var(--lijn);background:var(--chip)}
+  .gdots .aan i{background:#3e8e5a;border-color:#3e8e5a}
   /* vraag het aan je kaart: korte AI-uitleg over de eigen oefeningen */
   .vkaart{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;box-shadow:var(--sh);padding:16px;margin-bottom:12px}
   .vkaart .vrij{display:flex;gap:8px}
@@ -320,6 +338,8 @@
 
   <h2 id="metingkop">Hoe ging het vandaag?</h2>
   <div class="mkaart" id="meting">
+    <button type="button" class="gdaan" id="gdaan" aria-pressed="false"><span class="gvink" aria-hidden="true"></span><span id="gdaanTxt">Ik heb vandaag geoefend</span></button>
+    <div class="gweek" id="gweek" style="display:none"><span class="gtitel" id="gweekTitel">Jouw oefenweek</span><div class="gdots" id="gdots"></div></div>
     <p class="mvraag" id="mvraag">Klaar met oefenen? Tik aan hoeveel pijn je had tijdens het oefenen.</p>
     <div class="mschaal" id="mschaal" role="group" aria-labelledby="mvraag"></div>
     <div class="mlabels"><span id="ml0">0 = geen pijn</span><span id="ml10">10 = ergste pijn</span></div>
@@ -400,6 +420,41 @@
     uk:{kop:'Запитай свою картку',intro:'Картка пояснює лише твої вправи і не дає медичних порад. Запитання не зберігаються.',ph:'Напр., як низько присідати?',knop:'Запитати',bezig:'Хвилинку…',fout:'Не вдалося; спробуй ще раз за мить.'}
   };
   function trq(k){var d=TQ[TAAL]||TQ.nl;return d[k]!=null?d[k]:TQ.nl[k];}
+  // teksten voor het oefenvinkje en de oefenweek
+  var TG={
+    nl:{vdaan:'Ik heb vandaag geoefend',vweek:'Jouw oefenweek'},
+    en:{vdaan:'I did my exercises today',vweek:'Your exercise week'},
+    de:{vdaan:'Ich habe heute geübt',vweek:'Deine Übungswoche'},
+    fr:{vdaan:'J’ai fait mes exercices aujourd’hui',vweek:'Votre semaine d’exercices'},
+    es:{vdaan:'Hoy he hecho mis ejercicios',vweek:'Tu semana de ejercicios'},
+    pl:{vdaan:'Ćwiczyłem(-am) dzisiaj',vweek:'Twój tydzień ćwiczeń'},
+    tr:{vdaan:'Bugün egzersiz yaptım',vweek:'Egzersiz haftan'},
+    ar:{vdaan:'تمرّنت اليوم',vweek:'أسبوع تمارينك'},
+    uk:{vdaan:'Сьогодні я тренувався(-лась)',vweek:'Твій тиждень вправ'}
+  };
+  function trg(k){var d=TG[TAAL]||TG.nl;return d[k]!=null?d[k]:TG.nl[k];}
+  // oefenvinkje + oefenweek tekenen (alleen registreren en tonen, geen oordeel)
+  function tekenGedaan(){
+    var g=(K.kaart.gedaan||[]);
+    var knop=document.getElementById('gdaan');
+    var vandaag=dagStr(Date.now());
+    var aan=g.some(function(x){return dagStr(x.t)===vandaag;});
+    knop.classList.toggle('aan',aan);
+    knop.setAttribute('aria-pressed',aan?'true':'false');
+    document.getElementById('gdaanTxt').textContent=trg('vdaan');
+    var week=document.getElementById('gweek');
+    if(!g.length){week.style.display='none';return;}
+    week.style.display='flex';
+    document.getElementById('gweekTitel').textContent=trg('vweek');
+    var set={};g.forEach(function(x){set[dagStr(x.t)]=1;});
+    var h='';
+    for(var i=6;i>=0;i--){
+      var d=new Date(Date.now()-i*864e5);
+      var letter=tr('dagen')[(d.getDay()+6)%7];
+      h+='<span class="'+(set[dagStr(d.getTime())]?'aan':'')+'"><i></i>'+esc(letter)+'</span>';
+    }
+    document.getElementById('gdots').innerHTML=h;
+  }
   // de vraaghulp verschijnt alleen als de server een AI-sleutel heeft (K.ai)
   function tekenVraag(){
     if(!K||!K.ai)return;
@@ -609,7 +664,7 @@
     }else{trend.style.display='none';}
   }
 
-  function alles(){tekenStatisch();tekenKaart();tekenVraag();}
+  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();}
 
   // ---- taal wisselen: vaste teksten direct, kaartinhoud via de server (eenmalig per taal) ----
   function wisselTaal(t){
@@ -970,6 +1025,14 @@
           dank.textContent=tr('mdank');
         })
         .catch(function(){dank.style.display='block';dank.textContent=tr('mfout');});
+    });
+    document.getElementById('gdaan').addEventListener('click',function(){
+      var knop=this;if(knop.dataset.bezig)return;knop.dataset.bezig='1';
+      fetch('/api/kaart/gedaan',{method:'POST',headers:{'content-type':'application/json'},
+        body:JSON.stringify({id:id})})
+        .then(function(r){return r.json();})
+        .then(function(d){if(d.ok){K.kaart.gedaan=d.gedaan||[];tekenGedaan();}delete knop.dataset.bezig;})
+        .catch(function(){delete knop.dataset.bezig;});
     });
     document.getElementById('vraagform').addEventListener('submit',function(e){
       e.preventDefault();

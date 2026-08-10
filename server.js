@@ -1392,7 +1392,7 @@ async function afhandelen(request, response) {
     const map = kaarten[pk] || {};
     const list = Object.values(map)
       .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, aantal: (k.chosen || []).length,
-        scores: (k.metingen || []).slice(-14) }))
+        scores: (k.metingen || []).slice(-14), gedaan: (k.gedaan || []).slice(-14) }))
       .sort((a, b) => b.ts - a.ts);
     await sendJson(response, 200, list);
     return;
@@ -1517,6 +1517,32 @@ async function afhandelen(request, response) {
       await saveJson(kaartenPath, kaarten);
       const d = dagStats(vandaagKey()); d.meting = (d.meting || 0) + 1; bewaarStats();
       await sendJson(response, 200, { ok: true, metingen: found.metingen });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
+  // oefenvinkje: één tik "ik heb vandaag geoefend"; nogmaals tikken haalt de
+  // aantekening voor vandaag weer weg. Alleen registreren en tonen — de duiding
+  // blijft bij de fysiotherapeut. Dit is de app-vrije therapietrouw waarvoor de
+  // concurrentie een verplichte patiënt-app nodig heeft.
+  if (urlPath === "/api/kaart/gedaan" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const found = vindKaart(String(b.id || ""));
+      if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      const g = (found.gedaan = found.gedaan || []);
+      const nu = Date.now();
+      const laatste = g[g.length - 1];
+      if (laatste && nlDag(laatste.t) === nlDag(nu)) g.pop();
+      else g.push({ t: nu });
+      found.gedaan = g.slice(-366);
+      await saveJson(kaartenPath, kaarten);
+      const d = dagStats(vandaagKey()); d.gedaan = (d.gedaan || 0) + 1; bewaarStats();
+      await sendJson(response, 200, { ok: true, gedaan: found.gedaan });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }
