@@ -253,8 +253,12 @@
           <span class="beeldkeuze-qr">QR blijft in kleur</span>
         </div>
         <div class="beeldsegment" role="group" aria-label="Kies het poppetje: kleur of lijntekening">
-          <button type="button" data-v2-beeld="lijn" aria-pressed="false">Lijntekening</button>
-          <button type="button" data-v2-beeld="kleur" aria-pressed="false">Kleur</button>
+          <button type="button" data-v2-beeld="lijn" aria-pressed="false">
+            <img class="beeldkeuze-vb" alt="Voorbeeld als lijntekening"/><span>Lijntekening</span>
+          </button>
+          <button type="button" data-v2-beeld="kleur" aria-pressed="false">
+            <img class="beeldkeuze-vb" alt="Voorbeeld in kleur"/><span>Kleur</span>
+          </button>
         </div>
       </div>
       <div class="filters" id="filters">
@@ -850,6 +854,23 @@ bridge2.jpg</div>
       knop.setAttribute('aria-pressed',aan?'true':'false');
     });
   }
+  // Toon in de twee keuzekaartjes een echt voorbeeld: de eerste gekozen oefening
+  // (of anders de eerste uit de bibliotheek) in lijntekening én in kleur.
+  function updateBeeldPreview(){
+    if(!IS_V2)return;
+    var houder=document.getElementById('beeldKeuze');
+    if(!houder)return;
+    var o=null;
+    if(typeof chosen!=='undefined'&&chosen.length&&OEF[chosen[0].o])o=OEF[chosen[0].o];
+    if(!o&&OEF.length)o=OEF[0];
+    var im=o&&o.imgs&&o.imgs[0];
+    if(!im||im.type!=='img')return;
+    var lijn=im.lineSrc||im.src, kleur=im.colorSrc||im.src;
+    var elL=houder.querySelector('[data-v2-beeld="lijn"] .beeldkeuze-vb');
+    var elK=houder.querySelector('[data-v2-beeld="kleur"] .beeldkeuze-vb');
+    if(elL&&lijn&&elL.getAttribute('src')!==lijn)elL.setAttribute('src',lijn);
+    if(elK&&kleur&&elK.getAttribute('src')!==kleur)elK.setAttribute('src',kleur);
+  }
   if(!USE_V2_LIBRARY)document.querySelector('.smart-filters').style.display='none';
   if(IS_V2){
     document.documentElement.classList.add('v2');
@@ -862,6 +883,7 @@ bridge2.jpg</div>
     var _beeldKeuze=document.getElementById('beeldKeuze');
     _beeldKeuze.hidden=false;
     syncV2Beeldkeuze();
+    updateBeeldPreview();
     _beeldKeuze.addEventListener('click',function(e){
       var knop=e.target.closest('[data-v2-beeld]');
       if(!knop||knop.dataset.v2Beeld===V2_BEELD)return;
@@ -1012,6 +1034,7 @@ bridge2.jpg</div>
   }
   function renderA4(){
     elEmpty.style.display=chosen.length?'none':'block';
+    if(IS_V2)updateBeeldPreview();
     // monitoring: links de datumkolom; per plaatje één kolomgroep S/H/W, even breed
     var colKeys=[],names=[],numcells='',piccells='';
     for(var n=0;n<12;n++){
@@ -2072,7 +2095,7 @@ bridge2.jpg</div>
     });
     SERVERLIB=true;CUSTOMLIB=false;curG='all';
     GROUPS=[{g:'all',label:'alle oefeningen'}].concat(cats.map(function(c){return {g:c,label:c};}));
-    renderChips();rebuildLookup();
+    renderChips();rebuildLookup();updateBeeldPreview();
     OEF.forEach(function(o){var n=NOTES[o.naam];if(n){o.starthouding=n.s||'';o.uitvoering=n.u||'';o.opmerking=n.o||'';}});
   }
   // laadt de standaardbibliotheek: eerst de server-bibliotheek, anders de placeholders

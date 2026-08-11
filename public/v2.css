@@ -45,14 +45,22 @@ html.v2 .beeldkeuze-kop b{font-size:12px;color:var(--ink)}
 html.v2 .beeldkeuze-kop small{font-size:10.5px;color:var(--muted)}
 html.v2 .beeldkeuze-qr{font-size:10px;font-weight:650;color:var(--brand);background:var(--brand-50);
   border:1px solid var(--brand-100);border-radius:999px;padding:4px 7px;white-space:nowrap}
-html.v2 .beeldsegment{display:grid;grid-template-columns:1fr 1fr;padding:3px;border:1px solid var(--line);
-  border-radius:999px;background:#fffefa}
-html.v2 .beeldsegment button{border:0;border-radius:999px;padding:7px 10px;background:transparent;color:var(--muted);
-  font:inherit;font-size:11.5px;font-weight:600;line-height:1.2;cursor:pointer;
-  transition:background .15s,color .15s,box-shadow .15s}
-html.v2 .beeldsegment button:hover{color:var(--brand)}
-html.v2 .beeldsegment button.aan{background:var(--brand);color:#fff;box-shadow:0 1px 3px rgba(36,86,166,.22)}
+/* Twee keuzekaartjes met een echt voorbeeldpoppetje, precies zoals de schets:
+   je ziet de gekozen oefening naast elkaar in lijntekening én in kleur. */
+html.v2 .beeldsegment{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0;border:0;background:transparent}
+html.v2 .beeldsegment button{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;
+  border:1.5px solid var(--line);border-radius:12px;padding:8px 6px;background:#fffefa;color:var(--muted);
+  font:inherit;font-size:11.5px;font-weight:650;line-height:1.2;cursor:pointer;
+  transition:border-color .15s,color .15s,box-shadow .15s,background .15s}
+html.v2 .beeldsegment button:hover{border-color:var(--brand-100);color:var(--brand)}
+html.v2 .beeldsegment button.aan{border-color:var(--brand);color:var(--brand);background:var(--brand-50);
+  box-shadow:0 1px 3px rgba(36,86,166,.14)}
+html.v2 .beeldsegment button.aan::after{content:'✓';position:absolute;top:5px;right:8px;font-size:11px;font-weight:800;color:var(--brand)}
 html.v2 .beeldsegment button:focus-visible{outline:none;box-shadow:var(--ring)}
+html.v2 .beeldkeuze-vb{width:100%;max-width:80px;aspect-ratio:1;object-fit:contain;border-radius:8px;
+  background:#fff;border:1px solid var(--line);padding:3px}
+html.v2 .beeldsegment button.aan .beeldkeuze-vb{border-color:var(--brand-100)}
+html.v2 .beeldkeuze-vb:not([src]){visibility:hidden}
 
 /* Houd de bibliotheek ruim: categorieën staan in één veegbare rij in plaats van
    meerdere regels die de oefeningen en hun plus/min-knoppen uit beeld drukken. */
