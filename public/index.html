@@ -1852,8 +1852,21 @@ bridge2.jpg</div>
                   "<small style='color:var(--muted);font-size:9px'>"+('0'+d.getDate()).slice(-2)+'-'+('0'+(d.getMonth()+1)).slice(-2)+"</small></div>";
               }).join("")+"</div></div>";
           }
+          // therapietrouw zonder patiënt-app: hoe vaak de patiënt de afgelopen week
+          // "ik heb geoefend" aantikte op de digitale kaart (alleen tonen; de duiding
+          // blijft bij de therapeut). Dit inzicht hebben concurrenten alleen mét app.
+          var trTxt='';
+          if(c.gedaan&&c.gedaan.length){
+            var nuT=Date.now(),dag=864e5;
+            var week=c.gedaan.filter(function(g){return nuT-g.t<7*dag;}).length;
+            var dSinds=Math.floor((nuT-c.gedaan[c.gedaan.length-1].t)/dag);
+            var laatstTxt=dSinds<=0?'vandaag':(dSinds===1?'gisteren':dSinds+' dagen geleden');
+            var trk=week>=3?'#3e8e5a':(week>=1?'#d98a2b':'#9aa1ab');
+            trTxt=" · <span title='Dagen waarop de patiënt aantikte dat hij geoefend heeft (afgelopen 7 dagen). Laatst geoefend: "+laatstTxt+".' style='white-space:nowrap'>"+
+              "<span style='display:inline-block;width:7px;height:7px;border-radius:99px;background:"+trk+";vertical-align:middle;margin-right:3px'></span>"+week+"/7 geoefend</span>";
+          }
           return "<div style='display:flex;align-items:center;gap:8px;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
-            "<div style='flex:1;min-width:0'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+"</small></div>"+vg+
+            "<div style='flex:1;min-width:0'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+"</small></div>"+vg+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
             "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>"+vgBlok;
         }).join("");
