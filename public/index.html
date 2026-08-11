@@ -1867,6 +1867,7 @@ bridge2.jpg</div>
           }
           return "<div style='display:flex;align-items:center;gap:8px;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
             "<div style='flex:1;min-width:0'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+"</small></div>"+vg+
+            "<button class='btn' data-slink='"+esc(c.id)+"' title='Kopieer de patiëntlink — de digitale kaart opent zonder app in de browser'>Link</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
             "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>"+vgBlok;
         }).join("");
@@ -1885,6 +1886,18 @@ bridge2.jpg</div>
   document.getElementById('k_srv_lijst').addEventListener('click',function(e){
     var m=e.target.closest('[data-mtoon]');
     if(m){var h=document.getElementById('mh_'+m.dataset.mtoon);if(h)h.style.display=h.style.display==='none'?'':'none';return;}
+    // patiëntlink kopiëren: de kaart opent zonder app, gewoon in de browser, zodat de
+    // therapeut hem via WhatsApp/e-mail/portaal kan delen. Geen serveraanroep nodig.
+    var lk=e.target.closest('[data-slink]');
+    if(lk){
+      var url=location.origin+'/k/'+lk.dataset.slink;
+      var oud=lk.textContent;
+      var toon=function(t){lk.textContent=t;setTimeout(function(){lk.textContent=oud;},1600);};
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).then(function(){toon('Gekopieerd ✓');}).catch(function(){window.prompt('Kopieer de patiëntlink:',url);});
+      }else{window.prompt('Kopieer de patiëntlink:',url);}
+      return;
+    }
     var o=e.target.closest('[data-sopen]'),x=e.target.closest('[data-sdel]');
     if(o){
       fetch('api/kaart?id='+o.dataset.sopen,{cache:'no-cache'})
