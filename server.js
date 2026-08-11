@@ -132,6 +132,22 @@ function loginMisTel(pk) {
   if (!t || nu - t.start > 15 * 60000) loginMisPraktijk.set(pk, { start: nu, n: 1 });
   else t.n++;
 }
+// nieuwe sessie aanmaken met opruiming: verlopen sessies (>30 dagen) weghalen en
+// het totaal begrenzen, zodat de sessietabel niet ongelimiteerd kan groeien
+function nieuweSessie(pk) {
+  const nu = Date.now();
+  if (praktijkSessies.size > 5000) {
+    for (const [tok, s] of praktijkSessies) if (nu - s.t > 30 * 86400000) praktijkSessies.delete(tok);
+    // harde bovengrens: bij extreme groei de oudste sessies laten vallen
+    if (praktijkSessies.size > 50000) {
+      const oud = [...praktijkSessies.entries()].sort((a, b) => a[1].t - b[1].t).slice(0, praktijkSessies.size - 50000);
+      for (const [tok] of oud) praktijkSessies.delete(tok);
+    }
+  }
+  const token = randomBytes(24).toString("hex");
+  praktijkSessies.set(token, { pk, t: nu });
+  return token;
+}
 const praktijkGeclaimd = (pk) => !!praktijkAccounts[pk];
 function praktijkSessieVan(req) {
   const token = String(req.headers["x-praktijk-sessie"] || "").trim();
@@ -1130,8 +1146,7 @@ async function afhandelen(request, response) {
       praktijkAccounts[pk] = { hash: maakHash(ww), gemaakt: Date.now() };
       await saveJson(accountsPath, praktijkAccounts);
       auditLog(pk, "geclaimd", request);
-      const token = randomBytes(24).toString("hex");
-      praktijkSessies.set(token, { pk, t: Date.now() });
+      const token = nieuweSessie(pk);
       await sendJson(response, 200, { ok: true, sessie: token });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
@@ -1160,8 +1175,7 @@ async function afhandelen(request, response) {
         return;
       }
       loginMisPraktijk.delete(pk); // geslaagd: teller schoon
-      const token = randomBytes(24).toString("hex");
-      praktijkSessies.set(token, { pk, t: Date.now() });
+      const token = nieuweSessie(pk);
       auditLog(pk, "ingelogd", request);
       await sendJson(response, 200, { ok: true, sessie: token });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
