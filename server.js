@@ -2179,6 +2179,16 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // ontwerpgalerij: statische redesign-concepten voor de eigenaar. De losse
+  // conceptpagina's serveert de gewone bestandsafhandeling al; alleen de map-URL
+  // heeft een index nodig, want deze server kent geen directory-index.
+  if (urlPath === "/ontwerp" || urlPath === "/ontwerp/") {
+    response.setHeader("x-robots-tag", "noindex, noarchive");
+    try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "ontwerp", "index.html"))); }
+    catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
+    return;
+  }
+
   if (urlPath === "/") { telBezoek(request, false); urlPath = "/index.html"; }
   else if (urlPath === "/admin88") telBezoek(request, true);
 

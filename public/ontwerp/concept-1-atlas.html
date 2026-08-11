@@ -1,0 +1,748 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 1 — Atlas · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 1 — ATLAS
+   De trainingskaart als bladzijde uit een anatomische atlas.
+   Plaatnummers, haarlijnen, legendaletters, roodkrijt.
+   Alle CSS staat in dit bestand; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  /* papier & inkt */
+  --papier:#f4efe3;
+  --papier-vel:#fbf8f1;
+  --papier-diep:#eae2d1;
+  --inkt:#221e18;
+  --inkt-zacht:#4a4338;
+  --inkt-flauw:#7d7364;
+  /* roodkrijt (sanguine) — het enige echte accent */
+  --krijt:#a33b23;
+  --krijt-licht:#f2e3dc;
+  --oker:#9a7628;
+  /* lijnen */
+  --haar:#cdc0a6;
+  --haar-flauw:#e0d6c1;
+
+  --serif:Charter,"Bitstream Charter","Iowan Old Style","Palatino Linotype",Georgia,"Times New Roman",serif;
+  --kap:"Avenir Next",Seravek,Optima,"Segoe UI",system-ui,sans-serif;
+
+  /* spatie-schaal: 4 · 8 · 12 · 20 · 32 · 52 (fibonacci-achtig, rustig) */
+  --s1:4px; --s2:8px; --s3:12px; --s4:20px; --s5:32px; --s6:52px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font:17.5px/1.6 var(--serif);
+  color:var(--inkt-zacht);
+  background:var(--papier);
+  /* nauwelijks zichtbare vezelstructuur: papier, geen scherm */
+  background-image:
+    radial-gradient(circle at 18% 12%, rgba(160,140,100,.055), transparent 60%),
+    radial-gradient(circle at 82% 78%, rgba(160,140,100,.05), transparent 55%);
+}
+img{max-width:100%;display:block}
+a{color:var(--krijt)}
+:focus-visible{outline:2.5px solid var(--krijt);outline-offset:3px}
+
+/* ---------- labbalk (hoort bij de galerij, niet bij het concept) ---------- */
+.labbalk{
+  position:sticky;top:0;z-index:50;display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);
+  padding:10px 22px;background:rgba(34,30,24,.96);color:#e8e0cf;
+  font:500 13px/1 var(--kap);letter-spacing:.02em;
+}
+.labbalk a{color:#e8e0cf;text-decoration:none;padding:6px 10px;border-radius:4px}
+.labbalk a:hover{background:rgba(255,255,255,.12)}
+.labbalk .nr{color:#e0a58f;letter-spacing:.16em;text-transform:uppercase;font-size:11.5px}
+.labbalk .rek{flex:1}
+.labbalk .terug{border:1px solid rgba(255,255,255,.28)}
+
+/* ---------- schermen-omhulsel ---------- */
+.scherm{padding:var(--s6) 22px}
+.scherm + .scherm{border-top:1px solid var(--haar-flauw)}
+.binnen{max-width:1180px;margin:0 auto}
+.schermkop{display:flex;align-items:baseline;gap:var(--s3);margin-bottom:var(--s5);
+  border-bottom:2px solid var(--inkt);padding-bottom:var(--s2)}
+.schermkop b{font:600 12px/1 var(--kap);letter-spacing:.22em;text-transform:uppercase;color:var(--krijt)}
+.schermkop h2{font:400 27px/1.15 var(--serif);color:var(--inkt);letter-spacing:-.01em}
+.schermkop p{flex:1;text-align:right;font:italic 15px/1.4 var(--serif);color:var(--inkt-flauw)}
+@media (max-width:760px){
+  .schermkop{flex-wrap:wrap}
+  .schermkop p{text-align:left;flex-basis:100%}
+}
+
+/* ============================================================
+   1 · LANDING
+   ============================================================ */
+.atl-nav{display:flex;align-items:center;gap:var(--s4);padding-bottom:var(--s4);
+  border-bottom:1px solid var(--haar)}
+.atl-merk{display:flex;align-items:baseline;gap:10px}
+.atl-merk .naam{font:400 26px/1 var(--serif);color:var(--inkt);letter-spacing:.02em}
+.atl-merk .sub{font:600 10.5px/1 var(--kap);letter-spacing:.2em;text-transform:uppercase;color:var(--krijt)}
+.atl-nav ul{display:flex;gap:var(--s4);list-style:none;margin-left:auto}
+.atl-nav a{font:15px/1 var(--serif);color:var(--inkt-zacht);text-decoration:none;
+  border-bottom:1px solid transparent;padding-bottom:3px}
+.atl-nav a:hover{border-bottom-color:var(--krijt);color:var(--inkt)}
+@media (max-width:760px){.atl-nav ul{display:none}}
+
+.atl-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--s6);align-items:center;
+  padding:var(--s6) 0}
+@media (max-width:940px){.atl-hero{grid-template-columns:1fr;gap:var(--s5)}}
+.atl-hero .plaatnr{font:600 11px/1 var(--kap);letter-spacing:.26em;text-transform:uppercase;
+  color:var(--krijt);margin-bottom:var(--s3)}
+.atl-hero h1{font:400 clamp(38px,5.2vw,60px)/1.05 var(--serif);color:var(--inkt);
+  letter-spacing:-.018em;max-width:15ch}
+.atl-hero h1 em{font-style:italic;color:var(--krijt)}
+.atl-hero .lood{margin:var(--s4) 0;width:64px;height:1px;background:var(--inkt);position:relative}
+.atl-hero .lood::after{content:"";position:absolute;left:0;top:3px;width:34px;height:1px;background:var(--krijt)}
+.atl-hero p.intro{font-size:19px;line-height:1.62;max-width:46ch;color:var(--inkt-zacht)}
+.atl-hero .doen{display:flex;flex-wrap:wrap;gap:var(--s4);align-items:center;margin-top:var(--s5)}
+
+.atl-knop{display:inline-block;font:600 14px/1 var(--kap);letter-spacing:.06em;text-transform:uppercase;
+  text-decoration:none;padding:15px 28px;background:var(--inkt);color:var(--papier-vel);
+  border:1px solid var(--inkt);transition:.15s}
+.atl-knop:hover{background:var(--krijt);border-color:var(--krijt);color:#fff}
+.atl-knop.leeg{background:transparent;color:var(--inkt);border-color:var(--haar)}
+.atl-knop.leeg:hover{background:var(--inkt);color:var(--papier-vel);border-color:var(--inkt)}
+
+/* het vel in de hero: een plaat op een schuine stapel */
+.atl-stapel{position:relative;padding:var(--s4) var(--s4) var(--s5)}
+.atl-stapel .vel{background:var(--papier-vel);border:1px solid var(--haar);
+  box-shadow:0 1px 0 var(--haar-flauw),0 18px 44px rgba(60,45,20,.16)}
+.atl-stapel .achter{position:absolute;inset:var(--s2) var(--s2) var(--s4) var(--s5);
+  transform:rotate(-1.4deg);background:var(--papier-diep);border:1px solid var(--haar);z-index:0}
+.atl-stapel .voor{position:relative;z-index:1;padding:var(--s4)}
+.atl-stapel .kopregel{display:flex;justify-content:space-between;align-items:baseline;
+  border-bottom:2px solid var(--inkt);padding-bottom:6px;margin-bottom:var(--s3)}
+.atl-stapel .kopregel span{font:600 10px/1 var(--kap);letter-spacing:.2em;text-transform:uppercase;color:var(--inkt-flauw)}
+.atl-stapel .kopregel b{font:400 19px/1 var(--serif);color:var(--inkt)}
+.atl-stapel .rooster{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3)}
+.atl-stapel figure{border:1px solid var(--haar-flauw);padding:6px;background:#fff}
+.atl-stapel figure img{height:96px;width:100%;object-fit:contain;mix-blend-mode:multiply}
+.atl-stapel figcaption{font:italic 12px/1.3 var(--serif);color:var(--inkt-flauw);margin-top:4px;text-align:center}
+.atl-stapel figcaption b{font-style:normal;font-weight:400;color:var(--krijt);letter-spacing:.1em;font-size:10.5px}
+
+/* argumentenrij: als een colofon, geen SaaS-kaartjes */
+.atl-colofon{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--haar);
+  border-bottom:1px solid var(--haar);margin-top:var(--s5)}
+@media (max-width:860px){.atl-colofon{grid-template-columns:1fr}}
+.atl-colofon > div{padding:var(--s4) var(--s4) var(--s4) 0;border-right:1px solid var(--haar-flauw)}
+.atl-colofon > div:last-child{border-right:0}
+@media (max-width:860px){
+  .atl-colofon > div{border-right:0;border-bottom:1px solid var(--haar-flauw);padding-right:0}
+  .atl-colofon > div:last-child{border-bottom:0}
+}
+.atl-colofon .cijfer{font:400 40px/1 var(--serif);color:var(--krijt);letter-spacing:-.02em}
+.atl-colofon h3{font:600 11px/1 var(--kap);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--inkt);margin:var(--s2) 0 6px}
+.atl-colofon p{font-size:16px;color:var(--inkt-flauw);max-width:34ch}
+
+/* ============================================================
+   2 · OEFENINGEN-KIEZER — als een register achterin een boek
+   ============================================================ */
+.reg{display:grid;grid-template-columns:1fr 320px;gap:var(--s6);align-items:start}
+@media (max-width:1000px){.reg{grid-template-columns:1fr;gap:var(--s5)}}
+
+.reg-zoek{display:flex;align-items:baseline;gap:var(--s3);border-bottom:2px solid var(--inkt);
+  padding-bottom:var(--s2);margin-bottom:var(--s4)}
+.reg-zoek label{font:600 10.5px/1 var(--kap);letter-spacing:.2em;text-transform:uppercase;color:var(--inkt-flauw)}
+.reg-zoek .veld{flex:1;font:400 21px/1.2 var(--serif);color:var(--inkt)}
+.reg-zoek .veld .cursor{display:inline-block;width:1px;height:19px;background:var(--krijt);
+  vertical-align:-3px;margin-left:1px}
+.reg-zoek .telling{font:italic 14px/1 var(--serif);color:var(--inkt-flauw);white-space:nowrap}
+
+.reg-tabs{display:flex;flex-wrap:wrap;gap:var(--s1);margin-bottom:var(--s4)}
+.reg-tabs button{font:500 13.5px/1 var(--kap);color:var(--inkt-zacht);background:none;
+  border:1px solid var(--haar-flauw);padding:8px 14px;cursor:pointer;letter-spacing:.02em}
+.reg-tabs button:hover{border-color:var(--haar);background:var(--papier-vel)}
+.reg-tabs button[aria-pressed="true"]{background:var(--inkt);color:var(--papier-vel);border-color:var(--inkt)}
+
+.reg-lijst{list-style:none;column-count:2;column-gap:var(--s5)}
+@media (max-width:700px){.reg-lijst{column-count:1}}
+.reg-lijst li{break-inside:avoid;display:flex;align-items:baseline;gap:6px;padding:7px 0;
+  border-bottom:1px dotted var(--haar)}
+.reg-lijst .merk{flex:0 0 12px;height:12px;border:1px solid var(--haar);align-self:center;background:#fff}
+.reg-lijst .titel{color:var(--inkt);font-size:16.5px}
+.reg-lijst .stip{flex:1;border-bottom:1px dotted var(--haar);transform:translateY(-4px);min-width:14px}
+.reg-lijst .pl{font:500 12px/1 var(--kap);letter-spacing:.12em;color:var(--inkt-flauw);white-space:nowrap}
+.reg-lijst li.gekozen .merk{background:var(--krijt);border-color:var(--krijt);position:relative}
+.reg-lijst li.gekozen .merk::after{content:"";position:absolute;left:3px;top:1px;width:4px;height:7px;
+  border:solid #fff;border-width:0 1.6px 1.6px 0;transform:rotate(42deg)}
+.reg-lijst li.gekozen .titel{color:var(--krijt)}
+.reg-lijst li.uit{opacity:.42}
+.reg-lijst li.uit .titel{text-decoration:line-through;text-decoration-color:var(--haar)}
+.reg-lijst li:hover:not(.uit) .titel{color:var(--krijt)}
+
+/* rechterkolom: de plaat in samenstelling */
+.reg-zij{background:var(--papier-vel);border:1px solid var(--haar);padding:var(--s4);position:sticky;top:70px}
+@media (max-width:1000px){.reg-zij{position:static}}
+.reg-zij h3{font:600 10.5px/1 var(--kap);letter-spacing:.2em;text-transform:uppercase;color:var(--krijt);
+  padding-bottom:var(--s2);border-bottom:1px solid var(--haar);margin-bottom:var(--s3)}
+.reg-zij ol{list-style:none;counter-reset:pl}
+.reg-zij ol li{counter-increment:pl;display:flex;gap:10px;align-items:center;padding:9px 0;
+  border-bottom:1px solid var(--haar-flauw)}
+.reg-zij ol li::before{content:counter(pl,upper-roman);font:500 11px/1 var(--kap);letter-spacing:.08em;
+  color:var(--krijt);flex:0 0 26px;text-align:right}
+.reg-zij ol li img{width:40px;height:34px;object-fit:contain;mix-blend-mode:multiply;flex:0 0 40px}
+.reg-zij ol li span{font-size:14.5px;color:var(--inkt);line-height:1.3}
+.reg-zij ol li .greep{margin-left:auto;color:var(--haar);letter-spacing:2px;cursor:grab;font-size:12px}
+.reg-zij .leeg{font:italic 14.5px/1.5 var(--serif);color:var(--inkt-flauw);padding:var(--s3) 0}
+.reg-zij .knoppen{margin-top:var(--s4);display:grid;gap:var(--s2)}
+.reg-zij .knoppen .atl-knop{text-align:center;padding:13px 18px}
+.reg-zij .voet{font:italic 13px/1.45 var(--serif);color:var(--inkt-flauw);margin-top:var(--s3);text-align:center}
+
+/* ============================================================
+   3 · DIGITALE CLIËNTKAART (telefoon)
+   ============================================================ */
+.tel-rij{display:grid;grid-template-columns:300px 1fr;gap:var(--s6);align-items:start}
+@media (max-width:900px){.tel-rij{grid-template-columns:1fr}}
+.telefoon{width:300px;max-width:100%;border:10px solid var(--inkt);border-radius:34px;
+  background:var(--papier-vel);overflow:hidden;box-shadow:0 20px 46px rgba(60,45,20,.2)}
+.tel-kop{background:var(--inkt);color:var(--papier-vel);padding:10px 16px 14px;text-align:center}
+.tel-kop .wie{font:600 9.5px/1 var(--kap);letter-spacing:.22em;text-transform:uppercase;color:#c9a08e}
+.tel-kop .dag{font:400 19px/1.2 var(--serif);margin-top:5px}
+.tel-body{padding:var(--s3)}
+.tel-voortgang{display:flex;gap:5px;margin-bottom:var(--s3)}
+.tel-voortgang i{flex:1;height:4px;background:var(--haar-flauw)}
+.tel-voortgang i.af{background:var(--krijt)}
+.tel-plaat{border:1px solid var(--haar);background:#fff;padding:10px}
+.tel-plaat .nr{font:600 10px/1 var(--kap);letter-spacing:.2em;color:var(--krijt);text-transform:uppercase}
+.tel-plaat img{height:150px;width:100%;object-fit:contain;mix-blend-mode:multiply;margin:8px 0}
+.tel-plaat h4{font:400 19px/1.25 var(--serif);color:var(--inkt)}
+.tel-plaat .dosis{font:500 12.5px/1 var(--kap);letter-spacing:.08em;color:var(--krijt);margin-top:6px}
+.tel-plaat p{font-size:15px;line-height:1.55;margin-top:8px;color:var(--inkt-zacht)}
+.tel-plaat p .let{font-style:italic;color:var(--krijt)}
+.tel-acties{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:var(--s3)}
+.tel-acties button{font:600 13px/1 var(--kap);letter-spacing:.05em;padding:14px 8px;cursor:pointer;
+  border:1px solid var(--inkt);background:var(--inkt);color:var(--papier-vel)}
+.tel-acties button.leeg{background:transparent;color:var(--inkt);border-color:var(--haar)}
+.tel-stempel{margin-top:var(--s3);border-top:1px solid var(--haar-flauw);padding-top:var(--s3);
+  display:flex;align-items:center;gap:10px}
+.tel-stempel .zegel{flex:0 0 46px;height:46px;border:2px solid var(--krijt);border-radius:50%;
+  color:var(--krijt);font:600 8.5px/1.15 var(--kap);letter-spacing:.06em;text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;text-align:center;transform:rotate(-9deg);opacity:.85}
+.tel-stempel p{font:italic 13.5px/1.4 var(--serif);color:var(--inkt-flauw)}
+
+.tel-uitleg h3{font:400 23px/1.25 var(--serif);color:var(--inkt);margin-bottom:var(--s3)}
+.tel-uitleg ul{list-style:none;display:grid;gap:var(--s3)}
+.tel-uitleg li{display:flex;gap:var(--s3);border-bottom:1px solid var(--haar-flauw);padding-bottom:var(--s3)}
+.tel-uitleg li b{flex:0 0 30px;font:400 22px/1 var(--serif);color:var(--krijt)}
+.tel-uitleg li p{font-size:16px;color:var(--inkt-zacht)}
+.tel-uitleg li p em{color:var(--inkt);font-style:italic}
+
+/* ============================================================
+   4 · A4-PRINTKAART (staand — het is een boekpagina)
+   ============================================================ */
+.bladhouder{overflow-x:auto;padding-bottom:var(--s3);-webkit-overflow-scrolling:touch}
+.bladwenk{font:italic 14px/1.4 var(--serif);color:var(--inkt-flauw);margin-bottom:var(--s3)}
+.blad{
+  width:210mm;height:297mm;flex:0 0 auto;
+  background:#fff;color:#000;
+  border:1px solid var(--haar);box-shadow:0 14px 40px rgba(60,45,20,.18);
+  padding:13mm 14mm 11mm;
+  display:flex;flex-direction:column;
+  font-family:var(--serif);
+  transform-origin:top left;
+}
+/* op smalle schermen het vel evenredig verkleinen (nooit in print) */
+@media (max-width:860px){
+  .bladhouder{height:190mm}
+  .blad{transform:scale(.6)}
+}
+@media (max-width:520px){
+  .bladhouder{height:130mm}
+  .blad{transform:scale(.41)}
+}
+
+/* --- kop van het vel --- */
+.b-kop{display:flex;justify-content:space-between;align-items:flex-start;
+  border-bottom:2.2px solid #000;padding-bottom:3.5mm}
+.b-kop .links .praktijk{font:400 15pt/1.05 var(--serif);letter-spacing:.01em}
+.b-kop .links .plaats{font:600 7pt/1 var(--kap);letter-spacing:.2em;text-transform:uppercase;
+  color:#6a6154;margin-top:1.6mm}
+.b-kop .rechts{text-align:right}
+.b-kop .rechts .reeks{font:600 7pt/1 var(--kap);letter-spacing:.22em;text-transform:uppercase;color:var(--krijt)}
+.b-kop .rechts .titel{font:400 12.5pt/1.15 var(--serif);margin-top:1.4mm}
+
+/* --- cartouche met de cliëntgegevens --- */
+.b-cartouche{border:1px solid #000;border-top:0;display:grid;grid-template-columns:1.35fr 1fr 1fr;
+  margin-top:0}
+.b-cartouche > div{padding:2.6mm 3mm;border-right:1px solid #000}
+.b-cartouche > div:last-child{border-right:0}
+.b-cartouche dt{font:600 6.6pt/1 var(--kap);letter-spacing:.18em;text-transform:uppercase;color:#6a6154}
+.b-cartouche dd{font:400 11.5pt/1.2 var(--serif);margin-top:1.4mm;color:#000}
+.b-cartouche dd small{font:400 8.5pt/1.2 var(--serif);color:#4a4338;display:block;margin-top:.8mm}
+
+/* --- de leidraad: één zin die het hele blad draagt --- */
+.b-leidraad{display:flex;gap:3mm;align-items:baseline;padding:3.2mm 0 3mm;border-bottom:1px solid #000}
+.b-leidraad .lab{font:600 6.6pt/1 var(--kap);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--krijt);flex:0 0 auto;transform:translateY(-.4mm)}
+.b-leidraad p{font:italic 11.5pt/1.35 var(--serif);color:#000}
+
+/* --- platen --- */
+.b-platen{flex:1 1 auto;display:grid;grid-template-columns:1fr 1fr;
+  grid-auto-rows:1fr;gap:0;min-height:0;margin-top:0}
+.b-plaat{border-bottom:1px solid #b9ac92;border-right:1px solid #b9ac92;padding:3.4mm 3.4mm 3mm;
+  display:flex;gap:3.4mm;min-height:0;break-inside:avoid;align-items:center}
+.b-plaat:nth-child(2n){border-right:0;padding-right:0}
+.b-plaat:nth-child(2n+1){padding-left:0}
+.b-plaat.laatste{border-bottom:0}
+.b-plaat .beeld{flex:0 0 38mm;display:flex;flex-direction:column;align-items:center}
+.b-plaat .beeld .kader{border:.7px solid #000;padding:1.2mm;width:100%;background:#fff}
+.b-plaat .beeld img{width:100%;height:33mm;object-fit:contain;mix-blend-mode:multiply}
+.b-plaat .beeld .nr{font:600 7.4pt/1 var(--kap);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--krijt);margin-bottom:1.4mm;align-self:flex-start}
+.b-plaat .tekst{flex:1;min-width:0;display:flex;flex-direction:column}
+.b-plaat h3{font:400 12.5pt/1.15 var(--serif);color:#000;letter-spacing:-.005em}
+.b-plaat .dosis{font:600 8pt/1 var(--kap);letter-spacing:.1em;color:#000;margin-top:1.6mm;
+  border-bottom:1.4px solid var(--krijt);padding-bottom:1.4mm;display:inline-block;align-self:flex-start}
+.b-plaat p{font:400 9.6pt/1.42 var(--serif);color:#171410;margin-top:2mm}
+.b-plaat p .let{font-style:italic;color:var(--krijt);font-weight:600}
+.b-plaat .let-uitleg{font:italic 8.2pt/1.35 var(--serif);color:#4a4338;margin-top:2.4mm;
+  border-top:.5px solid #d9cfba;padding-top:1.6mm}
+
+/* --- afvinkstrook per week --- */
+.b-week{border-top:1px solid #000;padding-top:2.6mm;margin-top:2.6mm;display:flex;align-items:center;gap:3mm}
+.b-week .lab{font:600 6.6pt/1 var(--kap);letter-spacing:.18em;text-transform:uppercase;color:#6a6154}
+.b-week table{border-collapse:collapse;flex:1}
+.b-week th{font:600 6.8pt/1 var(--kap);letter-spacing:.1em;text-transform:uppercase;color:#6a6154;
+  padding:0 0 1mm;text-align:center}
+.b-week td{border:.7px solid #8d8271;height:6.2mm;width:6.2mm}
+
+/* --- voet --- */
+.b-voet{display:flex;align-items:flex-end;justify-content:space-between;gap:4mm;
+  border-top:2.2px solid #000;margin-top:3mm;padding-top:2.6mm}
+.b-voet .qr{flex:0 0 17mm}
+.b-voet .qr .vlak{width:17mm;height:17mm;border:.7px solid #000;
+  background-image:
+    linear-gradient(90deg,#000 25%,transparent 25% 50%,#000 50% 62%,transparent 62%),
+    linear-gradient(#000 18%,transparent 18% 34%,#000 34% 44%,transparent 44% 66%,#000 66% 78%,transparent 78%);
+  background-size:5.6mm 5.6mm,4.2mm 4.2mm;opacity:.9}
+.b-voet .mid{flex:1}
+.b-voet .mid b{font:400 10.5pt/1.2 var(--serif);color:#000;display:block}
+.b-voet .mid span{font:400 8.4pt/1.35 var(--serif);color:#4a4338;display:block;margin-top:1mm}
+.b-voet .folio{text-align:right;font:600 6.8pt/1.4 var(--kap);letter-spacing:.16em;text-transform:uppercase;color:#6a6154}
+.b-voet .folio b{display:block;font:400 12pt/1 var(--serif);color:var(--krijt);letter-spacing:.06em;margin-top:1.2mm}
+
+/* ============================================================
+   PRINT — alleen het vel, precies op A4 staand
+   ============================================================ */
+@page{size:A4 portrait;margin:0}
+@media print{
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  /* alleen het printkaart-scherm gaat mee naar de printer */
+  main > section:not(#printkaart){display:none !important}
+  /* de galerij-omlijsting mag het vel niet verschuiven of een rand meedrukken */
+  .scherm{padding:0 !important;border-top:0 !important;border-bottom:0 !important}
+  .bladhouder{overflow:visible !important;height:auto !important;padding:0 !important;margin:0 !important}
+  .blad{
+    width:210mm;height:297mm;transform:none !important;
+    border:0 !important;box-shadow:none !important;margin:0 !important;
+    break-inside:avoid;page-break-inside:avoid;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 1</span>
+  <strong style="font:600 14px/1 var(--kap)">Atlas</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>de plaat als belofte, niet de app</p>
+    </div>
+
+    <nav class="atl-nav">
+      <div class="atl-merk">
+        <span class="naam">Fysiplan</span>
+        <span class="sub">Atlas-editie</span>
+      </div>
+      <ul>
+        <li><a href="#kiezer">De bibliotheek</a></li>
+        <li><a href="#printkaart">De plaat</a></li>
+        <li><a href="#clientkaart">Op de telefoon</a></li>
+        <li><a href="#landing">Prijs</a></li>
+      </ul>
+    </nav>
+
+    <div class="atl-hero">
+      <div>
+        <div class="plaatnr">Fysiotherapie · sinds de eerste anatomische plaat</div>
+        <h1>Eén blad papier, gemaakt als een <em>plaat</em>.</h1>
+        <div class="lood"></div>
+        <p class="intro">Uw patiënt loopt de deur uit met één vel. Geen app, geen wachtwoord,
+          geen inlogmail. Vijf oefeningen, elk met een figuur, een nummer en één zin die
+          klopt — op een blad dat op de koelkast past en over zes weken nog leesbaar is.</p>
+        <div class="doen">
+          <a class="atl-knop" href="#printkaart">Bekijk de plaat</a>
+          <a class="atl-knop leeg" href="#kiezer">Blader het register</a>
+        </div>
+      </div>
+
+      <div class="atl-stapel">
+        <div class="vel achter" aria-hidden="true"></div>
+        <div class="vel voor">
+          <div class="kopregel">
+            <b>Oefenplaat</b>
+            <span>Fol. 1 · reeks A</span>
+          </div>
+          <div class="rooster">
+            <figure>
+              <img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/>
+              <figcaption><b>PLAAT I</b><br>opstaan uit de stoel</figcaption>
+            </figure>
+            <figure>
+              <img src="/images/core/bruggen-beginner-line-v1.png" alt="Het bruggetje"/>
+              <figcaption><b>PLAAT II</b><br>het bruggetje</figcaption>
+            </figure>
+            <figure>
+              <img src="/images/onderste-extremiteit/heup-buigen-liggend-ondersteund-line-v1.png" alt="Hiel schuiven"/>
+              <figcaption><b>PLAAT III</b><br>hiel schuiven</figcaption>
+            </figure>
+            <figure>
+              <img src="/images/onderste-extremiteit/enkel-optrekken-zittend-actief-line-v1.png" alt="Voet optrekken"/>
+              <figcaption><b>PLAAT IV</b><br>voet optrekken</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="atl-colofon">
+      <div>
+        <div class="cijfer">52 sec.</div>
+        <h3>Van keuze tot printer</h3>
+        <p>Vink aan in het register, druk op printen. Geen opmaakscherm, geen voorbeeld dat
+          afwijkt van wat eruit rolt.</p>
+      </div>
+      <div>
+        <div class="cijfer">515</div>
+        <h3>Platen in de bibliotheek</h3>
+        <p>Elke oefening heeft één figuur, één naam en één zin. Geen dubbele varianten die
+          hetzelfde bedoelen.</p>
+      </div>
+      <div>
+        <div class="cijfer">0</div>
+        <h3>Accounts voor de patiënt</h3>
+        <p>De QR-code op het blad opent dezelfde plaat op de telefoon. Wie liever papier
+          houdt, mist niets.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>Oefeningen kiezen</h2>
+      <p>geen tegelraster maar een register met leiderpunten</p>
+    </div>
+
+    <div class="reg">
+      <div>
+        <div class="reg-zoek">
+          <label for="zoekveld">Zoek in het register</label>
+          <div class="veld" id="zoekveld" role="textbox" aria-readonly="true">knie<span class="cursor"></span></div>
+          <div class="telling">31 van 515</div>
+        </div>
+
+        <div class="reg-tabs" role="group" aria-label="Regio">
+          <button type="button" aria-pressed="true">Onderste extremiteit</button>
+          <button type="button" aria-pressed="false">Core</button>
+          <button type="button" aria-pressed="false">Rug</button>
+          <button type="button" aria-pressed="false">Nek</button>
+          <button type="button" aria-pressed="false">Balans</button>
+          <button type="button" aria-pressed="false">Bovenste extremiteit</button>
+        </div>
+
+        <ul class="reg-lijst">
+          <li class="gekozen"><i class="merk"></i><span class="titel">Opstaan uit de stoel</span><i class="stip"></i><span class="pl">pl. 041</span></li>
+          <li class="gekozen"><i class="merk"></i><span class="titel">Bruggetje — beginner</span><i class="stip"></i><span class="pl">pl. 112</span></li>
+          <li class="gekozen"><i class="merk"></i><span class="titel">Hiel schuiven — liggend</span><i class="stip"></i><span class="pl">pl. 208</span></li>
+          <li class="gekozen"><i class="merk"></i><span class="titel">Voet optrekken — zittend</span><i class="stip"></i><span class="pl">pl. 233</span></li>
+          <li class="gekozen"><i class="merk"></i><span class="titel">Piriformis rek — liggend</span><i class="stip"></i><span class="pl">pl. 251</span></li>
+          <li><i class="merk"></i><span class="titel">Knie strekken — zittend</span><i class="stip"></i><span class="pl">pl. 044</span></li>
+          <li><i class="merk"></i><span class="titel">Heup naar buiten draaien</span><i class="stip"></i><span class="pl">pl. 197</span></li>
+          <li><i class="merk"></i><span class="titel">Kuit heffen — staand</span><i class="stip"></i><span class="pl">pl. 220</span></li>
+          <li><i class="merk"></i><span class="titel">Tenen heffen — zittend</span><i class="stip"></i><span class="pl">pl. 236</span></li>
+          <li><i class="merk"></i><span class="titel">Korte voet — zittend</span><i class="stip"></i><span class="pl">pl. 238</span></li>
+          <li class="uit"><i class="merk"></i><span class="titel">Hack squat</span><i class="stip"></i><span class="pl">apparaat</span></li>
+          <li class="uit"><i class="merk"></i><span class="titel">Single leg squat</span><i class="stip"></i><span class="pl">te zwaar</span></li>
+        </ul>
+        <p style="font:italic 14px/1.5 var(--serif);color:var(--inkt-flauw);margin-top:20px">
+          Doorgestreepte regels blijven staan: ze tonen wat u bewust <em>niet</em> meegeeft.
+          Bij de volgende controle weet u nog waarom.</p>
+      </div>
+
+      <aside class="reg-zij">
+        <h3>In samenstelling — reeks A</h3>
+        <ol>
+          <li><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt=""/><span>Opstaan uit de stoel</span><i class="greep">⠿</i></li>
+          <li><img src="/images/core/bruggen-beginner-line-v1.png" alt=""/><span>Bruggetje</span><i class="greep">⠿</i></li>
+          <li><img src="/images/onderste-extremiteit/heup-buigen-liggend-ondersteund-line-v1.png" alt=""/><span>Hiel schuiven</span><i class="greep">⠿</i></li>
+          <li><img src="/images/onderste-extremiteit/enkel-optrekken-zittend-actief-line-v1.png" alt=""/><span>Voet optrekken</span><i class="greep">⠿</i></li>
+          <li><img src="/images/onderste-extremiteit/piriformis-rek-liggend-ondersteund-line-v1.png" alt=""/><span>Piriformis rek</span><i class="greep">⠿</i></li>
+        </ol>
+        <div class="knoppen">
+          <a class="atl-knop" href="#printkaart">Zet de plaat →</a>
+          <a class="atl-knop leeg" href="#clientkaart">Eerst op de telefoon zien</a>
+        </div>
+        <p class="voet">Vijf platen vullen één vel. Bij een zesde biedt Fysiplan aan om te
+          splitsen in reeks A en B.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>Digitale cliëntkaart</h2>
+      <p>dezelfde plaat, één figuur per keer</p>
+    </div>
+
+    <div class="tel-rij">
+      <div class="telefoon">
+        <div class="tel-kop">
+          <div class="wie">Fysiotherapie De Waterlinie</div>
+          <div class="dag">Dinsdag — dag 9 van 42</div>
+        </div>
+        <div class="tel-body">
+          <div class="tel-voortgang" aria-label="Twee van vijf platen gedaan">
+            <i class="af"></i><i class="af"></i><i></i><i></i><i></i>
+          </div>
+
+          <div class="tel-plaat">
+            <div class="nr">Plaat III · van vijf</div>
+            <img src="/images/onderste-extremiteit/heup-buigen-liggend-ondersteund-line-v1.png" alt="Liggend de hiel over de vloer naar de billen schuiven"/>
+            <h4>Hiel schuiven</h4>
+            <div class="dosis">2 × 10 · rechterbeen</div>
+            <p>Ga op uw rug liggen met de benen gestrekt <span class="let">(a)</span>.
+              Schuif de hiel rustig over de vloer richting uw billen, zodat heup en knie buigen
+              <span class="let">(b)</span>. Schuif daarna langzaam terug.</p>
+          </div>
+
+          <div class="tel-acties">
+            <button type="button">Gedaan ✓</button>
+            <button type="button" class="leeg">Deed pijn</button>
+          </div>
+
+          <div class="tel-stempel">
+            <div class="zegel">Gedaan<br>8×</div>
+            <p>U deed deze plaat acht keer. Sanne ziet dat terug bij de controle op 3 september.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tel-uitleg">
+        <h3>Waarom deze vorm</h3>
+        <ul>
+          <li><b>a</b><p>De telefoon toont <em>één plaat tegelijk</em> op ware grootte in plaats van
+            een lijst met duimnagels. Wie 71 is, hoeft niet te zoomen.</p></li>
+          <li><b>b</b><p>De letters in de tekst wijzen naar de figuur — de methode van Vesalius,
+            waarbij de legenda de plaat leesbaar maakt zonder de tekening vol te schrijven.</p></li>
+          <li><b>c</b><p>Afvinken laat een <em>stempel</em> achter, geen groene voortgangsbalk.
+            Herhaling wordt zichtbaar als een spoor op papier.</p></li>
+          <li><b>d</b><p>“Deed pijn” staat even groot als “Gedaan”. De therapeut wil juist die
+            melding zien, dus die knop mag niet wegvallen.</p></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · A4-PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen geen-print">
+    <div class="schermkop">
+      <b>Scherm 4</b><h2>De A4-printkaart</h2>
+      <p>staand, want het is een boekpagina — Ctrl/⌘+P toont exact dit vel</p>
+    </div>
+    <p class="bladwenk">Hieronder staat het vel op ware grootte (210 × 297 mm). Alleen dit vel
+      komt uit de printer; de galerij eromheen wordt niet meegedrukt.</p>
+  </div>
+
+  <div class="bladhouder">
+    <div class="blad">
+
+      <header class="b-kop">
+        <div class="links">
+          <div class="praktijk">Fysiotherapie De Waterlinie</div>
+          <div class="plaats">Oudegracht 214 · Utrecht · 030 — 231 44 08</div>
+        </div>
+        <div class="rechts">
+          <div class="reeks">Oefenplaat · reeks A</div>
+          <div class="titel">Knie rechts — opbouw week 2</div>
+        </div>
+      </header>
+
+      <div class="b-cartouche">
+        <div>
+          <dt>Voor</dt>
+          <dd>Mevr. A. Doornbos-Vlietstra<small>71 jaar · artrose rechterknie</small></dd>
+        </div>
+        <div>
+          <dt>Therapeut</dt>
+          <dd>Sanne Kramer<small>Volgende controle: wo 3 september</small></dd>
+        </div>
+        <div>
+          <dt>Ritme</dt>
+          <dd>5 × per week<small>ongeveer 15 minuten per keer</small></dd>
+        </div>
+      </div>
+
+      <div class="b-leidraad">
+        <span class="lab">Leidraad</span>
+        <p>Rustig bewegen, ademen blijven doen. Een beetje trekken mag; scherpe pijn niet —
+          stop dan en noteer het hieronder.</p>
+      </div>
+
+      <div class="b-platen">
+
+        <article class="b-plaat">
+          <div class="beeld">
+            <div class="nr">Plaat I</div>
+            <div class="kader"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/></div>
+          </div>
+          <div class="tekst">
+            <h3>Opstaan uit de stoel</h3>
+            <div class="dosis">2 × 8 · rustig tempo</div>
+            <p>Ga voor een stoel staan, voeten op heupbreedte <span class="let">(a)</span>.
+              Zak met de billen naar achteren tot u de stoel bijna raakt
+              <span class="let">(b)</span> en kom weer rechtop.</p>
+            <div class="let-uitleg">(a) voeten plat · (b) knieën achter de tenen</div>
+          </div>
+        </article>
+
+        <article class="b-plaat">
+          <div class="beeld">
+            <div class="nr">Plaat II</div>
+            <div class="kader"><img src="/images/core/bruggen-beginner-line-v1.png" alt="Het bruggetje"/></div>
+          </div>
+          <div class="tekst">
+            <h3>Het bruggetje</h3>
+            <div class="dosis">2 × 10 · 3 tellen vasthouden</div>
+            <p>Lig op uw rug met gebogen knieën en de voeten plat op de grond
+              <span class="let">(a)</span>. Til de heupen op tot uw lichaam een rechte lijn
+              vormt <span class="let">(b)</span> en laat ze rustig zakken.</p>
+            <div class="let-uitleg">(a) hielen onder de knieën · (b) billen aanspannen</div>
+          </div>
+        </article>
+
+        <article class="b-plaat">
+          <div class="beeld">
+            <div class="nr">Plaat III</div>
+            <div class="kader"><img src="/images/onderste-extremiteit/heup-buigen-liggend-ondersteund-line-v1.png" alt="Hiel schuiven"/></div>
+          </div>
+          <div class="tekst">
+            <h3>Hiel schuiven</h3>
+            <div class="dosis">2 × 10 · rechterbeen</div>
+            <p>Lig op uw rug met de benen gestrekt <span class="let">(a)</span>. Schuif de hiel
+              over de vloer richting de billen, zodat heup en knie buigen
+              <span class="let">(b)</span>, en schuif langzaam terug.</p>
+            <div class="let-uitleg">(a) rug ontspannen · (b) zo ver als prettig gaat</div>
+          </div>
+        </article>
+
+        <article class="b-plaat">
+          <div class="beeld">
+            <div class="nr">Plaat IV</div>
+            <div class="kader"><img src="/images/onderste-extremiteit/enkel-optrekken-zittend-actief-line-v1.png" alt="Voet optrekken"/></div>
+          </div>
+          <div class="tekst">
+            <h3>Voet optrekken</h3>
+            <div class="dosis">2 × 15 · beide voeten</div>
+            <p>Zit rechtop op een stoel, voeten plat op de grond <span class="let">(a)</span>.
+              Trek de voorvoet omhoog terwijl de hiel op de grond blijft
+              <span class="let">(b)</span>, en laat langzaam zakken.</p>
+            <div class="let-uitleg">(a) rug tegen de leuning · (b) hiel blijft liggen</div>
+          </div>
+        </article>
+
+        <article class="b-plaat laatste">
+          <div class="beeld">
+            <div class="nr">Plaat V</div>
+            <div class="kader"><img src="/images/onderste-extremiteit/piriformis-rek-liggend-ondersteund-line-v1.png" alt="Piriformis rek"/></div>
+          </div>
+          <div class="tekst">
+            <h3>Bilspier rekken</h3>
+            <div class="dosis">3 × 30 seconden</div>
+            <p>Lig op uw rug en leg de enkel op de andere knie <span class="let">(a)</span>.
+              Trek dat been rustig naar u toe tot u een lichte rek in de bil voelt
+              <span class="let">(b)</span> en laat langzaam los.</p>
+            <div class="let-uitleg">(a) schouders blijven liggen · (b) blijf ademen</div>
+          </div>
+        </article>
+
+        <article class="b-plaat laatste" style="align-items:flex-start">
+          <div class="tekst" style="width:100%">
+            <h3 style="font-size:11pt">Wat viel op deze week?</h3>
+            <div style="border-bottom:.7px solid #8d8271;height:7mm;margin-top:3mm"></div>
+            <div style="border-bottom:.7px solid #8d8271;height:7mm"></div>
+            <div style="border-bottom:.7px solid #8d8271;height:7mm"></div>
+            <div style="border-bottom:.7px solid #8d8271;height:7mm"></div>
+            <div style="border-bottom:.7px solid #8d8271;height:7mm"></div>
+            <div style="border-bottom:.7px solid #8d8271;height:7mm"></div>
+            <div class="let-uitleg">Neem dit blad mee naar de controle.</div>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="b-week">
+        <span class="lab">Afgevinkt</span>
+        <table>
+          <thead><tr><th>ma</th><th>di</th><th>wo</th><th>do</th><th>vr</th><th>za</th><th>zo</th></tr></thead>
+          <tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody>
+        </table>
+        <table>
+          <thead><tr><th>ma</th><th>di</th><th>wo</th><th>do</th><th>vr</th><th>za</th><th>zo</th></tr></thead>
+          <tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody>
+        </table>
+      </div>
+
+      <footer class="b-voet">
+        <div class="qr"><div class="vlak" role="img" aria-label="QR-code naar dezelfde kaart op de telefoon"></div></div>
+        <div class="mid">
+          <b>Liever op de telefoon? Scan de code.</b>
+          <span>Dezelfde vijf platen, met een filmpje bij elke oefening. U hoeft niets te
+            installeren en geen account te maken. fysiplan.nl/k/8P3-QW</span>
+        </div>
+        <div class="folio">
+          Oefenplaat
+          <b>Fol. 1 / 1</b>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+</section>
+
+</main>
+</body>
+</html>

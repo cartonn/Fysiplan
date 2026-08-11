@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 2 — Partituur · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 2 — PARTITUUR
+   De week is een partituur, de oefening een regel op een balk.
+   Ontleend aan Benesh Movement Notation: een horizontale balk van
+   vijf lijnen (hoofd · schouder · middel · knie · voet), met de
+   telling bóven de balk. De notatie geeft ritme; de Nederlandse
+   zin ernaast geeft betekenis. Nooit alleen notatie.
+   ============================================================ */
+
+:root{
+  --wit:#fbfbf9;
+  --papier:#ffffff;
+  --inkt:#0e0e0d;
+  --inkt-2:#3a3a37;
+  --grijs:#8b8b84;
+  --grijs-l:#d6d6cf;
+  --grijs-xl:#ecece6;
+  --rood:#d4331d;          /* vermiljoen — uitsluitend voor "vandaag" en nadruk */
+  --rood-vlak:#fdece9;
+
+  --grot:"Helvetica Neue",Helvetica,Arial,"Segoe UI",system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --seri:Charter,Georgia,"Times New Roman",serif;
+
+  --s1:4px; --s2:8px; --s3:14px; --s4:22px; --s5:36px; --s6:60px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:16.5px/1.55 var(--grot);color:var(--inkt-2);background:var(--wit)}
+img{max-width:100%;display:block}
+:focus-visible{outline:2.5px solid var(--rood);outline-offset:3px}
+
+/* de balk zelf: vijf lijnen, overal herbruikbaar */
+.balk{
+  --lijn:var(--grijs-l);
+  --h:44px;
+  height:var(--h);position:relative;
+  background:repeating-linear-gradient(
+    to bottom,
+    var(--lijn) 0 1px,
+    transparent 1px calc(var(--h)/4)
+  );
+  background-size:100% calc(var(--h)/4 + 0px);
+}
+/* de onderste lijn los erbij, anders eindigt het patroon in het niets */
+.balk::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--lijn)}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);
+  padding:10px 22px;background:var(--inkt);color:#f2f2ee;font:500 13px/1 var(--grot);letter-spacing:.01em}
+.labbalk a{color:#f2f2ee;text-decoration:none;padding:6px 10px}
+.labbalk a:hover{background:rgba(255,255,255,.14)}
+.labbalk .nr{color:#ff8f7d;font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase}
+.labbalk .rek{flex:1}
+.labbalk .terug{border:1px solid rgba(255,255,255,.3)}
+
+.scherm{padding:var(--s6) 22px}
+.scherm + .scherm{border-top:1px solid var(--grijs-l)}
+.binnen{max-width:1200px;margin:0 auto}
+.schermkop{display:flex;align-items:flex-end;gap:var(--s3);margin-bottom:var(--s5);
+  border-bottom:3px solid var(--inkt);padding-bottom:var(--s2)}
+.schermkop b{font:600 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--rood)}
+.schermkop h2{font:700 26px/1 var(--grot);letter-spacing:-.025em;color:var(--inkt)}
+.schermkop p{flex:1;text-align:right;font:italic 15px/1.4 var(--seri);color:var(--grijs)}
+@media (max-width:760px){.schermkop{flex-wrap:wrap}.schermkop p{text-align:left;flex-basis:100%}}
+
+/* ============================================================
+   1 · LANDING
+   ============================================================ */
+.pt-nav{display:flex;align-items:center;gap:var(--s4);background:var(--inkt);color:#fff;padding:14px 20px}
+.pt-nav .merk{font:700 20px/1 var(--grot);letter-spacing:-.03em}
+.pt-nav .merk sup{font:600 9px/1 var(--mono);letter-spacing:.18em;vertical-align:super;color:#ff8f7d;margin-left:6px}
+.pt-nav ul{display:flex;gap:var(--s4);list-style:none;margin-left:auto;font-size:14px}
+.pt-nav a{color:#d5d5cf;text-decoration:none}
+.pt-nav a:hover{color:#fff}
+@media (max-width:800px){.pt-nav ul{display:none}}
+
+.pt-hero{padding:var(--s6) 0 var(--s5);border-bottom:1px solid var(--grijs-l)}
+.pt-tempo{font:italic 17px/1 var(--seri);color:var(--rood);margin-bottom:var(--s3)}
+.pt-hero h1{font:700 clamp(40px,7.4vw,88px)/.94 var(--grot);letter-spacing:-.045em;color:var(--inkt);max-width:16ch}
+.pt-hero h1 span{color:var(--rood)}
+.pt-hero .onder{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);margin-top:var(--s4);align-items:end}
+@media (max-width:860px){.pt-hero .onder{grid-template-columns:1fr;gap:var(--s4)}}
+.pt-hero p{font-size:18.5px;line-height:1.6;color:var(--inkt-2);max-width:48ch}
+.pt-hero .doen{display:flex;gap:var(--s3);flex-wrap:wrap}
+.pt-knop{display:inline-block;font:600 13.5px/1 var(--grot);letter-spacing:.04em;text-transform:uppercase;
+  text-decoration:none;padding:16px 26px;background:var(--inkt);color:#fff;border:2px solid var(--inkt)}
+.pt-knop:hover{background:var(--rood);border-color:var(--rood)}
+.pt-knop.leeg{background:transparent;color:var(--inkt)}
+.pt-knop.leeg:hover{background:var(--inkt);color:#fff}
+
+/* het motief: een lopende balk met noten over de hele breedte */
+.pt-motief{margin-top:var(--s5);border-top:3px solid var(--inkt);border-bottom:3px solid var(--inkt);padding:var(--s4) 0}
+.pt-motief .maten{display:grid;grid-template-columns:repeat(7,1fr);gap:0}
+.pt-motief .maat{border-left:1px solid var(--inkt);padding:0 10px;position:relative}
+.pt-motief .maat:last-child{border-right:1px solid var(--inkt)}
+.pt-motief .maat .dag{font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--grijs);padding-bottom:8px}
+.pt-motief .maat.nu .dag{color:var(--rood)}
+.pt-motief .maat.nu{background:var(--rood-vlak)}
+.pt-motief .noot{position:absolute;width:11px;height:11px;border-radius:50%;background:var(--inkt);
+  transform:translate(-50%,-50%)}
+.pt-motief .noot.open{background:#fff;border:2px solid var(--inkt)}
+.pt-motief .noot.rood{background:var(--rood)}
+.pt-motief .balk{margin-top:0}
+.pt-motief .legenda{display:flex;gap:var(--s4);flex-wrap:wrap;margin-top:var(--s3);
+  font:500 12px/1.4 var(--mono);letter-spacing:.04em;color:var(--grijs)}
+.pt-motief .legenda b{color:var(--inkt);font-weight:600}
+
+.pt-drie{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5);margin-top:var(--s5)}
+@media (max-width:860px){.pt-drie{grid-template-columns:1fr;gap:var(--s4)}}
+.pt-drie h3{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--rood);
+  border-top:2px solid var(--inkt);padding-top:var(--s2);margin-bottom:var(--s2)}
+.pt-drie b{display:block;font:700 21px/1.18 var(--grot);letter-spacing:-.02em;color:var(--inkt);margin-bottom:6px}
+.pt-drie p{font-size:16px;color:var(--inkt-2)}
+
+/* ============================================================
+   2 · KIEZER — repertoire links, partituur rechts
+   ============================================================ */
+.rep{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5)}
+@media (max-width:1000px){.rep{grid-template-columns:1fr}}
+.rep-kop{display:flex;align-items:baseline;gap:var(--s3);border-bottom:2px solid var(--inkt);
+  padding-bottom:8px;margin-bottom:var(--s3)}
+.rep-kop h3{font:700 15px/1 var(--grot);letter-spacing:-.01em;color:var(--inkt)}
+.rep-kop span{margin-left:auto;font:500 11px/1 var(--mono);letter-spacing:.12em;color:var(--grijs);text-transform:uppercase}
+
+.rep-filter{display:flex;flex-wrap:wrap;gap:0;margin-bottom:var(--s3);border:1px solid var(--inkt)}
+.rep-filter button{flex:1;min-width:88px;font:600 12px/1 var(--grot);letter-spacing:.02em;padding:11px 8px;
+  background:#fff;border:0;border-right:1px solid var(--inkt);cursor:pointer;color:var(--inkt-2)}
+.rep-filter button:last-child{border-right:0}
+.rep-filter button:hover{background:var(--grijs-xl)}
+.rep-filter button[aria-pressed="true"]{background:var(--inkt);color:#fff}
+
+.rep-rij{display:grid;grid-template-columns:52px 1fr auto;gap:var(--s3);align-items:center;
+  padding:11px 10px;border-bottom:1px solid var(--grijs-l);background:#fff;cursor:pointer}
+.rep-rij:hover{background:var(--grijs-xl)}
+.rep-rij img{width:52px;height:42px;object-fit:contain;mix-blend-mode:multiply}
+.rep-rij .nm{font:600 16px/1.25 var(--grot);color:var(--inkt);letter-spacing:-.01em}
+.rep-rij .mt{font:500 11.5px/1 var(--mono);letter-spacing:.06em;color:var(--grijs);margin-top:4px}
+.rep-rij .plus{width:30px;height:30px;border:1.5px solid var(--inkt);background:#fff;color:var(--inkt);
+  font:400 19px/26px var(--grot);text-align:center}
+.rep-rij[aria-selected="true"]{background:var(--rood-vlak);box-shadow:inset 4px 0 0 var(--rood)}
+.rep-rij[aria-selected="true"] .plus{background:var(--rood);border-color:var(--rood);color:#fff;font-size:15px;line-height:28px}
+.rep-rij.leeg-staat{grid-template-columns:1fr;cursor:default;background:#fff;
+  font:italic 15px/1.5 var(--seri);color:var(--grijs);padding:var(--s4) var(--s3);text-align:center;
+  border:1px dashed var(--grijs-l)}
+
+.pt-bouw{background:#fff;border:2px solid var(--inkt);padding:var(--s3)}
+.pt-bouw .regel{padding:var(--s3) 0;border-bottom:1px solid var(--grijs-l)}
+.pt-bouw .regel:last-of-type{border-bottom:0}
+.pt-bouw .regel .top{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+.pt-bouw .regel .top .num{font:600 11px/1 var(--mono);color:var(--rood);letter-spacing:.14em}
+.pt-bouw .regel .top .nm{font:600 16px/1.2 var(--grot);color:var(--inkt);letter-spacing:-.01em}
+.pt-bouw .regel .top .tel{margin-left:auto;font:500 12px/1 var(--mono);letter-spacing:.06em;color:var(--inkt-2)}
+.pt-bouw .regel .balkje{position:relative;--h:30px}
+.pt-bouw .regel .balkje .noot{position:absolute;width:9px;height:9px;border-radius:50%;
+  background:var(--inkt);transform:translate(-50%,-50%)}
+.pt-bouw .regel .zin{font:400 14.5px/1.45 var(--seri);color:var(--inkt-2);margin-top:8px}
+.pt-bouw .stuur{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2);margin-top:var(--s3)}
+.pt-bouw .stuur .pt-knop{text-align:center;padding:14px 10px;font-size:12.5px}
+
+/* ============================================================
+   3 · CLIËNTKAART (telefoon)
+   ============================================================ */
+.tel-rij{display:grid;grid-template-columns:310px 1fr;gap:var(--s6);align-items:start}
+@media (max-width:900px){.tel-rij{grid-template-columns:1fr;gap:var(--s5)}}
+.telefoon{width:310px;max-width:100%;border:11px solid var(--inkt);border-radius:32px;overflow:hidden;
+  background:#fff;box-shadow:0 18px 44px rgba(0,0,0,.18)}
+.tel-kop{background:var(--inkt);color:#fff;padding:12px 16px}
+.tel-kop .rgl{display:flex;justify-content:space-between;align-items:baseline}
+.tel-kop .maat{font:600 10px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#ff8f7d}
+.tel-kop .dat{font:500 11px/1 var(--mono);color:#a9a9a2}
+.tel-kop h4{font:700 21px/1.1 var(--grot);letter-spacing:-.03em;margin-top:7px}
+
+/* de dag als maatstreep-rij bovenin */
+.tel-dagen{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:2px solid var(--inkt)}
+.tel-dagen div{text-align:center;padding:8px 0 7px;border-right:1px solid var(--grijs-l);
+  font:600 11px/1 var(--mono);letter-spacing:.06em;color:var(--grijs)}
+.tel-dagen div:last-child{border-right:0}
+.tel-dagen div.af{color:var(--inkt)}
+.tel-dagen div.af::after{content:"";display:block;width:7px;height:7px;background:var(--inkt);
+  border-radius:50%;margin:5px auto 0}
+.tel-dagen div.nu{background:var(--rood);color:#fff}
+.tel-dagen div.nu::after{content:"";display:block;width:7px;height:7px;background:#fff;
+  border-radius:50%;margin:5px auto 0}
+
+.tel-body{padding:var(--s3)}
+.tel-oef{border-bottom:1px solid var(--grijs-l);padding-bottom:var(--s3);margin-bottom:var(--s3)}
+.tel-oef .kop{display:flex;align-items:baseline;gap:8px}
+.tel-oef .kop .num{font:600 11px/1 var(--mono);color:var(--rood);letter-spacing:.14em}
+.tel-oef .kop .tel{margin-left:auto;font:600 12px/1 var(--mono);color:var(--inkt)}
+.tel-oef h5{font:700 19px/1.2 var(--grot);letter-spacing:-.025em;color:var(--inkt);margin-top:5px}
+.tel-oef img{height:132px;width:100%;object-fit:contain;mix-blend-mode:multiply;margin:8px 0 4px}
+.tel-oef .balkje{position:relative;--h:26px;margin:6px 0 10px}
+.tel-oef .balkje .noot{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--inkt);
+  transform:translate(-50%,-50%)}
+.tel-oef .balkje .noot.open{background:#fff;border:1.8px solid var(--inkt)}
+.tel-oef p{font:400 15.5px/1.5 var(--seri);color:var(--inkt-2)}
+.tel-oef .vink{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:11px}
+.tel-oef .vink button{font:600 13px/1 var(--grot);letter-spacing:.03em;padding:14px 10px;cursor:pointer;
+  border:2px solid var(--inkt);background:var(--inkt);color:#fff}
+.tel-oef .vink button.leeg{background:#fff;color:var(--inkt)}
+.tel-oef.gedaan{opacity:.55}
+.tel-oef.gedaan .vink button{background:#fff;color:var(--grijs);border-color:var(--grijs-l)}
+.tel-voet{background:var(--grijs-xl);padding:12px 16px;font:500 12px/1.4 var(--mono);color:var(--inkt-2)}
+
+.tel-uit h3{font:700 22px/1.2 var(--grot);letter-spacing:-.025em;color:var(--inkt);margin-bottom:var(--s3)}
+.tel-uit ol{list-style:none;counter-reset:u}
+.tel-uit li{counter-increment:u;display:flex;gap:var(--s3);padding:var(--s3) 0;border-bottom:1px solid var(--grijs-l)}
+.tel-uit li::before{content:counter(u,decimal-leading-zero);font:600 12px/1.5 var(--mono);color:var(--rood);
+  flex:0 0 28px;letter-spacing:.08em}
+.tel-uit li p{font-size:16px;color:var(--inkt-2)}
+.tel-uit li p b{color:var(--inkt)}
+
+/* ============================================================
+   4 · A4-PRINTKAART — liggend, want een partituur leest van links naar rechts
+   ============================================================ */
+.bladhouder{overflow-x:auto;padding-bottom:var(--s3);-webkit-overflow-scrolling:touch}
+.bladwenk{font:italic 15px/1.45 var(--seri);color:var(--grijs);margin-bottom:var(--s3)}
+.blad{
+  width:297mm;height:210mm;flex:0 0 auto;
+  background:#fff;color:#000;
+  border:1px solid var(--grijs-l);box-shadow:0 14px 40px rgba(0,0,0,.16);
+  padding:10mm 12mm 9mm;
+  display:flex;flex-direction:column;
+  font-family:var(--grot);
+  transform-origin:top left;
+}
+@media (max-width:1240px){.bladhouder{height:150mm}.blad{transform:scale(.66)}}
+@media (max-width:760px){.bladhouder{height:92mm}.blad{transform:scale(.40)}}
+@media (max-width:430px){.bladhouder{height:66mm}.blad{transform:scale(.285)}}
+
+.p-kop{display:flex;justify-content:space-between;align-items:flex-end;
+  border-bottom:2.4px solid #000;padding-bottom:2.6mm}
+.p-kop h1{font:700 17pt/1 var(--grot);letter-spacing:-.035em;color:#000}
+.p-kop .tempo{font:italic 10pt/1.2 var(--seri);color:#c22e1a;margin-top:1.4mm}
+.p-kop .rechts{text-align:right;font-family:var(--mono)}
+.p-kop .rechts .r1{font:600 7pt/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#66665f}
+.p-kop .rechts .r2{font:600 10.5pt/1.3 var(--mono);color:#000;margin-top:1mm}
+
+/* de maatkop: dagen over de volle breedte */
+.p-maten{display:grid;grid-template-columns:88mm repeat(7,1fr);border-bottom:1.4px solid #000;
+  margin-top:3mm}
+.p-maten .hoek{font:600 6.6pt/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#66665f;
+  padding:0 0 1.6mm}
+.p-maten .dag{text-align:center;border-left:.8px solid #000;padding:0 0 1.6mm;
+  font:600 8pt/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#000}
+.p-maten .dag:last-child{border-right:.8px solid #000}
+.p-maten .dag.rust{color:#8b8b84}
+
+/* de regels van de partituur */
+.p-regels{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
+.p-regel{flex:1 1 0;display:grid;grid-template-columns:88mm repeat(7,1fr);
+  border-bottom:.8px solid #b6b6ae;min-height:0}
+.p-regel:last-child{border-bottom:1.4px solid #000}
+
+.p-regel .zij{display:flex;gap:2.6mm;padding:2.2mm 3mm 2.2mm 0;min-width:0;align-items:center;overflow:hidden}
+.p-regel .zij .fig{flex:0 0 23mm;border:.8px solid #000;padding:.8mm;background:#fff}
+.p-regel .zij .fig img{width:100%;height:19mm;object-fit:contain;mix-blend-mode:multiply}
+.p-regel .zij .txt{flex:1;min-width:0}
+.p-regel .zij .num{font:600 6.6pt/1 var(--mono);letter-spacing:.16em;color:#c22e1a}
+.p-regel .zij h3{font:700 10.6pt/1.1 var(--grot);letter-spacing:-.03em;color:#000;margin-top:1mm}
+.p-regel .zij .tel{font:600 7.6pt/1 var(--mono);letter-spacing:.04em;color:#000;margin-top:1.2mm}
+.p-regel .zij p{font:400 7.8pt/1.32 var(--seri);color:#1c1c19;margin-top:1.2mm}
+
+/* per dag een vakje met de balk en de af te vinken noten */
+.p-vak{border-left:.8px solid #000;position:relative;display:flex;align-items:center;justify-content:center}
+.p-regel .p-vak:last-child{border-right:.8px solid #000}
+.p-vak.rust{background:#f4f4f0}
+.p-vak .staaf{width:100%;height:9mm;position:relative;
+  background:repeating-linear-gradient(to bottom,#c9c9c1 0 .4px,transparent .4px 2.25mm)}
+.p-vak .staaf::after{content:"";position:absolute;left:0;right:0;bottom:0;height:.4px;background:#c9c9c1}
+.p-vak .noot{position:absolute;width:3.4mm;height:3.4mm;border-radius:50%;border:.9px solid #000;
+  background:#fff;transform:translate(-50%,-50%)}
+.p-vak .noot.vol{background:#000}
+/* hele rust: een blokje dat onder een lijn hangt — geen glyph, dus altijd zichtbaar */
+.rustmark{display:inline-block;position:relative;width:5.4mm;height:1.7mm;background:#3a3a37}
+.rustmark::before{content:"";position:absolute;left:-1.2mm;right:-1.2mm;top:-.6mm;height:.5mm;background:#3a3a37}
+.rustmark.klein{width:13px;height:4px;background:var(--grijs)}
+.rustmark.klein::before{left:-3px;right:-3px;top:-2px;height:1.5px;background:var(--grijs)}
+
+.p-voet{display:flex;align-items:flex-end;gap:5mm;border-top:2.4px solid #000;margin-top:3mm;padding-top:2.6mm}
+.p-voet .qr{flex:0 0 15mm;height:15mm;border:.8px solid #000;
+  background-image:
+    linear-gradient(90deg,#000 22%,transparent 22% 48%,#000 48% 60%,transparent 60%),
+    linear-gradient(#000 16%,transparent 16% 32%,#000 32% 43%,transparent 43% 64%,#000 64% 76%,transparent 76%);
+  background-size:5mm 5mm,3.8mm 3.8mm;opacity:.9}
+.p-voet .leg{flex:1;display:flex;gap:6mm;flex-wrap:wrap;font:500 7.6pt/1.5 var(--mono);color:#3a3a37}
+.p-voet .leg i{display:inline-block;width:3mm;height:3mm;border:.9px solid #000;border-radius:50%;
+  vertical-align:-.4mm;margin-right:1.4mm;background:#fff}
+.p-voet .leg i.vol{background:#000}
+.p-voet .wie{text-align:right;font:400 8.4pt/1.4 var(--seri);color:#1c1c19}
+.p-voet .wie b{display:block;font:700 10.5pt/1.2 var(--grot);letter-spacing:-.02em;color:#000}
+
+/* ============================================================
+   PRINT — alleen het vel, A4 liggend
+   ============================================================ */
+@page{size:A4 landscape;margin:0}
+@media print{
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  /* alleen het printkaart-scherm gaat mee naar de printer */
+  main > section:not(#printkaart){display:none !important}
+  /* de galerij-omlijsting mag het vel niet verschuiven of een rand meedrukken */
+  .scherm{padding:0 !important;border-top:0 !important;border-bottom:0 !important}
+  .bladhouder{overflow:visible !important;height:auto !important;padding:0 !important;margin:0 !important}
+  .blad{
+    width:297mm;height:210mm;transform:none !important;
+    border:0 !important;box-shadow:none !important;margin:0 !important;
+    break-inside:avoid;page-break-inside:avoid;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 2</span>
+  <strong style="font:700 14px/1 var(--grot)">Partituur</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>het ritme is het product, niet de oefeningenlijst</p>
+    </div>
+
+    <nav class="pt-nav">
+      <div class="merk">Fysiplan<sup>op. 2</sup></div>
+      <ul>
+        <li><a href="#kiezer">Repertoire</a></li>
+        <li><a href="#printkaart">De partituur</a></li>
+        <li><a href="#clientkaart">Op de telefoon</a></li>
+        <li><a href="#landing">Prijs</a></li>
+      </ul>
+    </nav>
+
+    <div class="pt-hero">
+      <div class="pt-tempo">rustig · drie tellen op, drie tellen neer</div>
+      <h1>Oefenen is geen lijstje.<br>Het is een <span>ritme.</span></h1>
+      <div class="onder">
+        <p>Een trainingskaart die eruitziet als een takenlijst wordt afgewerkt of vergeten.
+          Een kaart die eruitziet als een partituur laat zien wat er vandaag speelt, wat er
+          gisteren stond en wat er zaterdag rust is. Eén vel, zeven maten, vijf regels.</p>
+        <div class="doen">
+          <a class="pt-knop" href="#printkaart">Bekijk de partituur</a>
+          <a class="pt-knop leeg" href="#kiezer">Naar het repertoire</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-motief">
+      <div class="maten">
+        <div class="maat"><div class="dag">ma</div><div class="balk">
+          <span class="noot" style="left:34%;top:28%"></span><span class="noot" style="left:66%;top:56%"></span></div></div>
+        <div class="maat"><div class="dag">di</div><div class="balk">
+          <span class="noot" style="left:30%;top:52%"></span><span class="noot open" style="left:62%;top:26%"></span></div></div>
+        <div class="maat nu"><div class="dag">wo — vandaag</div><div class="balk">
+          <span class="noot rood" style="left:26%;top:30%"></span><span class="noot rood" style="left:54%;top:62%"></span><span class="noot rood" style="left:80%;top:44%"></span></div></div>
+        <div class="maat"><div class="dag">do</div><div class="balk">
+          <span class="noot open" style="left:38%;top:40%"></span><span class="noot open" style="left:70%;top:70%"></span></div></div>
+        <div class="maat"><div class="dag">vr</div><div class="balk">
+          <span class="noot open" style="left:32%;top:60%"></span><span class="noot open" style="left:64%;top:32%"></span></div></div>
+        <div class="maat"><div class="dag">za</div><div class="balk">
+          <span class="rustmark klein" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)" role="img" aria-label="rustdag"></span></div></div>
+        <div class="maat"><div class="dag">zo</div><div class="balk">
+          <span class="noot open" style="left:50%;top:46%"></span></div></div>
+      </div>
+      <div class="legenda">
+        <span><b>●</b> gedaan</span>
+        <span><b>○</b> staat nog open</span>
+        <span><span class="rustmark klein" aria-hidden="true"></span> rustdag — die hoort erbij</span>
+        <span>vijf lijnen = hoofd · schouder · middel · knie · voet</span>
+      </div>
+    </div>
+
+    <div class="pt-drie">
+      <div>
+        <h3>Waarom een balk</h3>
+        <b>Hoogte betekent iets</b>
+        <p>Een noot hoog op de balk gaat over hoofd en schouder, laag over knie en voet.
+          U ziet in één oogopslag of een week bovenlichaam of onderlichaam is.</p>
+      </div>
+      <div>
+        <h3>Waarom maten</h3>
+        <b>De week is af te lezen</b>
+        <p>Zeven maten, zeven dagen. Rustdagen staan er expliciet in, met een rustteken.
+          Niets doen op zaterdag is dan geen falen maar het plan.</p>
+      </div>
+      <div>
+        <h3>Waarom tekst blijft</h3>
+        <b>Notatie stuurt, taal legt uit</b>
+        <p>Naast elke regel staat één gewone Nederlandse zin, in 8,4&nbsp;pt serif op papier.
+          Wie de notatie negeert, kan de kaart nog volledig gebruiken.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>Oefeningen kiezen</h2>
+      <p>links het repertoire, rechts groeit de partituur mee</p>
+    </div>
+
+    <div class="rep">
+      <div>
+        <div class="rep-kop"><h3>Repertoire — Nek &amp; schouder</h3><span>20 regels</span></div>
+        <div class="rep-filter" role="group" aria-label="Uitgangshouding">
+          <button type="button" aria-pressed="true">Alles</button>
+          <button type="button" aria-pressed="false">Zittend</button>
+          <button type="button" aria-pressed="false">Staand</button>
+          <button type="button" aria-pressed="false">Liggend</button>
+        </div>
+
+        <div class="rep-rij" role="option" aria-selected="true" tabindex="0">
+          <img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png" alt=""/>
+          <div><div class="nm">Kin intrekken</div><div class="mt">zittend · 3 tellen · laag op de balk</div></div>
+          <div class="plus">✓</div>
+        </div>
+        <div class="rep-rij" role="option" aria-selected="true" tabindex="0">
+          <img src="/images/nek/nek-draaien-zittend-actief-line-v1.png" alt=""/>
+          <div><div class="nm">Nek draaien</div><div class="mt">zittend · 2 tellen per kant</div></div>
+          <div class="plus">✓</div>
+        </div>
+        <div class="rep-rij" role="option" aria-selected="true" tabindex="0">
+          <img src="/images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png" alt=""/>
+          <div><div class="nm">Trapezius rekken</div><div class="mt">zittend · 30 sec vasthouden</div></div>
+          <div class="plus">✓</div>
+        </div>
+        <div class="rep-rij" role="option" aria-selected="true" tabindex="0">
+          <img src="/images/nek/schouderblad-liften-en-ontspannen-functioneel-staand-line-v1.png" alt=""/>
+          <div><div class="nm">Schouders optrekken en laten zakken</div><div class="mt">staand · 2 tellen op, 4 neer</div></div>
+          <div class="plus">✓</div>
+        </div>
+        <div class="rep-rij" role="option" aria-selected="false" tabindex="0">
+          <img src="/images/nek/diepe-nekflexoren-activeren-liggend-ondersteund-line-v1.png" alt=""/>
+          <div><div class="nm">Diepe nekspieren activeren</div><div class="mt">liggend · 10 sec aanhouden</div></div>
+          <div class="plus">+</div>
+        </div>
+        <div class="rep-rij" role="option" aria-selected="false" tabindex="0">
+          <img src="/images/nek/levator-scapulae-rek-zittend-actief-line-v1.png" alt=""/>
+          <div><div class="nm">Levator scapulae rekken</div><div class="mt">zittend · 30 sec per kant</div></div>
+          <div class="plus">+</div>
+        </div>
+        <div class="rep-rij" role="option" aria-selected="false" tabindex="0">
+          <img src="/images/nek/nekrotatie-met-oogfixatie-zittend-actief-line-v1.png" alt=""/>
+          <div><div class="nm">Nek draaien met oogfixatie</div><div class="mt">zittend · langzaam, 6 tellen</div></div>
+          <div class="plus">+</div>
+        </div>
+        <div class="rep-rij leeg-staat">
+          Verder geen regels in dit filter. Wis “Zittend” om alle 20 nekregels te zien.
+        </div>
+      </div>
+
+      <div class="pt-bouw">
+        <div class="rep-kop"><h3>Partituur — Rik Vermeulen</h3><span>4 van max. 6</span></div>
+
+        <div class="regel">
+          <div class="top"><span class="num">R1</span><span class="nm">Kin intrekken</span><span class="tel">3 × 8</span></div>
+          <div class="balk balkje">
+            <span class="noot" style="left:16%;top:64%"></span><span class="noot" style="left:38%;top:64%"></span>
+            <span class="noot" style="left:60%;top:64%"></span><span class="noot" style="left:82%;top:64%"></span>
+          </div>
+          <p class="zin">Zit rechtop, kijk recht vooruit. Trek uw kin recht naar achteren, alsof u een
+            dubbele kin maakt, en laat langzaam los.</p>
+        </div>
+
+        <div class="regel">
+          <div class="top"><span class="num">R2</span><span class="nm">Nek draaien</span><span class="tel">2 × 10</span></div>
+          <div class="balk balkje">
+            <span class="noot" style="left:20%;top:26%"></span><span class="noot" style="left:44%;top:26%"></span>
+            <span class="noot" style="left:68%;top:26%"></span>
+          </div>
+          <p class="zin">Draai uw hoofd rustig naar één kant en terug naar het midden. Wissel daarna
+            van kant.</p>
+        </div>
+
+        <div class="regel">
+          <div class="top"><span class="num">R3</span><span class="nm">Trapezius rekken</span><span class="tel">3 × 30 sec</span></div>
+          <div class="balk balkje">
+            <span class="noot" style="left:26%;top:40%"></span><span class="noot" style="left:56%;top:40%"></span>
+            <span class="noot" style="left:86%;top:40%"></span>
+          </div>
+          <p class="zin">Laat uw hoofd opzij zakken, oor richting schouder, en kom langzaam terug.
+            Blijf ademen.</p>
+        </div>
+
+        <div class="regel">
+          <div class="top"><span class="num">R4</span><span class="nm">Schouders optrekken</span><span class="tel">2 × 12</span></div>
+          <div class="balk balkje">
+            <span class="noot" style="left:22%;top:16%"></span><span class="noot" style="left:50%;top:16%"></span>
+            <span class="noot" style="left:78%;top:16%"></span>
+          </div>
+          <p class="zin">Breng uw schouders omhoog richting uw oren en laat ze daarna helemaal
+            ontspannen zakken.</p>
+        </div>
+
+        <div class="stuur">
+          <a class="pt-knop" href="#printkaart">Partituur printen</a>
+          <a class="pt-knop leeg" href="#clientkaart">Naar de telefoon sturen</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>Digitale cliëntkaart</h2>
+      <p>de telefoon toont één maat: die van vandaag</p>
+    </div>
+
+    <div class="tel-rij">
+      <div class="telefoon">
+        <div class="tel-kop">
+          <div class="rgl"><span class="maat">Maat 3 van 7</span><span class="dat">wo 12 aug</span></div>
+          <h4>Vandaag: drie regels</h4>
+        </div>
+        <div class="tel-dagen" aria-label="De week">
+          <div class="af">ma</div><div class="af">di</div><div class="nu">wo</div>
+          <div>do</div><div>vr</div><div>za</div><div>zo</div>
+        </div>
+        <div class="tel-body">
+
+          <div class="tel-oef gedaan">
+            <div class="kop"><span class="num">R1</span><span class="tel">3 × 8 ✓</span></div>
+            <h5>Kin intrekken</h5>
+            <div class="balk balkje">
+              <span class="noot" style="left:20%;top:64%"></span><span class="noot" style="left:50%;top:64%"></span>
+              <span class="noot" style="left:80%;top:64%"></span>
+            </div>
+            <div class="vink"><button type="button" class="leeg">Gedaan om 08:14</button></div>
+          </div>
+
+          <div class="tel-oef">
+            <div class="kop"><span class="num">R2</span><span class="tel">2 × 10</span></div>
+            <h5>Nek draaien</h5>
+            <img src="/images/nek/nek-draaien-zittend-actief-line-v1.png" alt="Zittend het hoofd rustig naar één kant draaien en terug"/>
+            <div class="balk balkje">
+              <span class="noot" style="left:22%;top:26%"></span><span class="noot open" style="left:52%;top:26%"></span>
+              <span class="noot open" style="left:82%;top:26%"></span>
+            </div>
+            <p>Zit rechtop en kijk recht vooruit. Draai uw hoofd rustig naar één kant en beweeg
+              langzaam terug naar het midden. Wissel daarna van kant.</p>
+            <div class="vink">
+              <button type="button">Serie afvinken</button>
+              <button type="button" class="leeg">Pijn</button>
+            </div>
+          </div>
+
+          <div class="tel-oef" style="border-bottom:0;margin-bottom:0;padding-bottom:0">
+            <div class="kop"><span class="num">R3</span><span class="tel">3 × 30 sec</span></div>
+            <h5>Trapezius rekken</h5>
+            <div class="balk balkje">
+              <span class="noot open" style="left:26%;top:40%"></span><span class="noot open" style="left:56%;top:40%"></span>
+              <span class="noot open" style="left:86%;top:40%"></span>
+            </div>
+          </div>
+
+        </div>
+        <div class="tel-voet">za = rust · niets doen is deel van het plan</div>
+      </div>
+
+      <div class="tel-uit">
+        <h3>Wat deze vorm oplost</h3>
+        <ol>
+          <li><p><b>Eén maat tegelijk.</b> De patiënt ziet vandaag, niet een scrollbare
+            zes-weken-planning. De week eromheen staat als zeven kleine vakjes bovenin — genoeg
+            om te weten waar je bent.</p></li>
+          <li><p><b>Afvinken is invullen.</b> Een open notehoofd wordt zwart. Dezelfde
+            vorm als op papier, dus wie beide gebruikt herkent het meteen.</p></li>
+          <li><p><b>De rustdag is zichtbaar.</b> Het rustteken op zaterdag voorkomt de
+            schuldbeleving die een lege takenlijst oproept.</p></li>
+          <li><p><b>Pijn is één tik.</b> Naast elke serie, niet weggestopt in een menu.
+            De therapeut ziet de melding met regel en datum erbij.</p></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · A4-PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen geen-print">
+    <div class="schermkop">
+      <b>Scherm 4</b><h2>De A4-printkaart</h2>
+      <p>liggend, want een partituur leest van links naar rechts</p>
+    </div>
+    <p class="bladwenk">Het vel hieronder staat op ware grootte (297 × 210 mm). Ctrl/⌘+P drukt
+      uitsluitend dit vel af, zonder de galerij eromheen.</p>
+  </div>
+
+  <div class="bladhouder">
+    <div class="blad">
+
+      <header class="p-kop">
+        <div>
+          <h1>Nek &amp; schouder — week 3</h1>
+          <div class="tempo">rustig · geen enkele beweging mag pijn doen</div>
+        </div>
+        <div class="rechts">
+          <div class="r1">Fysiotherapie De Waterlinie · Utrecht</div>
+          <div class="r2">R. VERMEULEN · 38 J. · S. KRAMER</div>
+        </div>
+      </header>
+
+      <div class="p-maten">
+        <div class="hoek">Regel · oefening · telling</div>
+        <div class="dag">ma</div><div class="dag">di</div><div class="dag">wo</div>
+        <div class="dag">do</div><div class="dag">vr</div><div class="dag rust">za</div><div class="dag">zo</div>
+      </div>
+
+      <div class="p-regels">
+
+        <div class="p-regel">
+          <div class="zij">
+            <div class="fig"><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png" alt="Kin intrekken"/></div>
+            <div class="txt">
+              <div class="num">R1</div>
+              <h3>Kin intrekken</h3>
+              <div class="tel">3 × 8 · 3 tellen vast</div>
+              <p>Zit rechtop en kijk recht vooruit. Trek uw kin recht naar achteren, alsof u een
+                dubbele kin maakt, en laat langzaam los.</p>
+            </div>
+          </div>
+          <div class="p-vak"><div class="staaf"><span class="noot vol" style="left:30%;top:78%"></span><span class="noot vol" style="left:70%;top:78%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot vol" style="left:30%;top:78%"></span><span class="noot vol" style="left:70%;top:78%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:30%;top:78%"></span><span class="noot" style="left:70%;top:78%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:30%;top:78%"></span><span class="noot" style="left:70%;top:78%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:30%;top:78%"></span><span class="noot" style="left:70%;top:78%"></span></div></div>
+          <div class="p-vak rust"><span class="rustmark" role="img" aria-label="rustdag"></span></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:30%;top:78%"></span><span class="noot" style="left:70%;top:78%"></span></div></div>
+        </div>
+
+        <div class="p-regel">
+          <div class="zij">
+            <div class="fig"><img src="/images/nek/nek-draaien-zittend-actief-line-v1.png" alt="Nek draaien"/></div>
+            <div class="txt">
+              <div class="num">R2</div>
+              <h3>Nek draaien</h3>
+              <div class="tel">2 × 10 · per kant</div>
+              <p>Draai uw hoofd rustig naar één kant en beweeg langzaam terug naar het midden.
+                Wissel daarna van kant.</p>
+            </div>
+          </div>
+          <div class="p-vak"><div class="staaf"><span class="noot vol" style="left:50%;top:22%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot vol" style="left:50%;top:22%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:50%;top:22%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:50%;top:22%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:50%;top:22%"></span></div></div>
+          <div class="p-vak rust"><span class="rustmark" role="img" aria-label="rustdag"></span></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:50%;top:22%"></span></div></div>
+        </div>
+
+        <div class="p-regel">
+          <div class="zij">
+            <div class="fig"><img src="/images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png" alt="Trapezius rekken"/></div>
+            <div class="txt">
+              <div class="num">R3</div>
+              <h3>Trapezius rekken</h3>
+              <div class="tel">3 × 30 sec · per kant</div>
+              <p>Laat uw hoofd opzij zakken, oor richting schouder, en kom langzaam terug naar
+                het midden. Blijf rustig doorademen.</p>
+            </div>
+          </div>
+          <div class="p-vak"><div class="staaf"><span class="noot vol" style="left:26%;top:44%"></span><span class="noot vol" style="left:56%;top:44%"></span><span class="noot" style="left:86%;top:44%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot vol" style="left:26%;top:44%"></span><span class="noot" style="left:56%;top:44%"></span><span class="noot" style="left:86%;top:44%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:26%;top:44%"></span><span class="noot" style="left:56%;top:44%"></span><span class="noot" style="left:86%;top:44%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:26%;top:44%"></span><span class="noot" style="left:56%;top:44%"></span><span class="noot" style="left:86%;top:44%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:26%;top:44%"></span><span class="noot" style="left:56%;top:44%"></span><span class="noot" style="left:86%;top:44%"></span></div></div>
+          <div class="p-vak rust"><span class="rustmark" role="img" aria-label="rustdag"></span></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:26%;top:44%"></span><span class="noot" style="left:56%;top:44%"></span><span class="noot" style="left:86%;top:44%"></span></div></div>
+        </div>
+
+        <div class="p-regel">
+          <div class="zij">
+            <div class="fig"><img src="/images/nek/schouderblad-liften-en-ontspannen-functioneel-staand-line-v1.png" alt="Schouders optrekken en laten zakken"/></div>
+            <div class="txt">
+              <div class="num">R4</div>
+              <h3>Schouders optrekken en laten zakken</h3>
+              <div class="tel">2 × 12 · 2 tellen op, 4 neer</div>
+              <p>Breng uw schouders omhoog richting uw oren en laat ze langzaam helemaal
+                ontspannen zakken.</p>
+            </div>
+          </div>
+          <div class="p-vak"><div class="staaf"><span class="noot vol" style="left:34%;top:14%"></span><span class="noot vol" style="left:66%;top:14%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot vol" style="left:34%;top:14%"></span><span class="noot" style="left:66%;top:14%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:34%;top:14%"></span><span class="noot" style="left:66%;top:14%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:34%;top:14%"></span><span class="noot" style="left:66%;top:14%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:34%;top:14%"></span><span class="noot" style="left:66%;top:14%"></span></div></div>
+          <div class="p-vak rust"><span class="rustmark" role="img" aria-label="rustdag"></span></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:34%;top:14%"></span><span class="noot" style="left:66%;top:14%"></span></div></div>
+        </div>
+
+        <div class="p-regel">
+          <div class="zij">
+            <div class="fig"><img src="/images/nek/diepe-nekflexoren-activeren-liggend-ondersteund-line-v1.png" alt="Diepe nekspieren activeren"/></div>
+            <div class="txt">
+              <div class="num">R5</div>
+              <h3>Diepe nekspieren activeren</h3>
+              <div class="tel">1 × 10 · 10 sec vast</div>
+              <p>Lig op uw rug, hoofd op een kussen. Knik uw kin een klein stukje richting uw borst
+                zonder uw hoofd op te tillen.</p>
+            </div>
+          </div>
+          <div class="p-vak"><div class="staaf"><span class="noot vol" style="left:50%;top:82%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:50%;top:82%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:50%;top:82%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:50%;top:82%"></span></div></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:50%;top:82%"></span></div></div>
+          <div class="p-vak rust"><span class="rustmark" role="img" aria-label="rustdag"></span></div>
+          <div class="p-vak"><div class="staaf"><span class="noot" style="left:50%;top:82%"></span></div></div>
+        </div>
+
+      </div>
+
+      <footer class="p-voet">
+        <div class="qr" role="img" aria-label="QR-code naar dezelfde partituur op de telefoon"></div>
+        <div class="leg">
+          <span><i class="vol"></i>gedaan — kleur het rondje in</span>
+          <span><i></i>staat nog open</span>
+          <span><span class="rustmark klein" aria-hidden="true"></span> rustdag, bewust leeg</span>
+          <span>hoog op de balk = hoofd en schouder · laag = knie en voet</span>
+          <span>Scan de code voor dezelfde partituur met filmpjes — geen account nodig.</span>
+        </div>
+        <div class="wie">
+          <b>Vragen? Bel 030 — 231 44 08</b>
+          Volgende controle: donderdag 20 augustus, 14:20 u.
+        </div>
+      </footer>
+
+    </div>
+  </div>
+</section>
+
+</main>
+</body>
+</html>

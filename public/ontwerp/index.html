@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Ontwerpgalerij — Fysiplan</title>
+<style>
+/* ============================================================
+   FYSIPLAN — ONTWERPGALERIJ
+   Overzicht van alle redesign-concepten. Deze index is bewust
+   terughoudend: de concepten moeten schreeuwen, de index niet.
+   De galerij groeit: elke run voegt kaartjes toe, verwijdert nooit.
+   ============================================================ */
+
+:root{
+  --papier:#f7f6f3;
+  --vlak:#ffffff;
+  --inkt:#16181a;
+  --inkt-2:#454a4f;
+  --grijs:#787f85;
+  --lijn:#dfe1e3;
+  --lijn-2:#eceeef;
+  --accent:#1f4fd8;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --serif:Charter,Georgia,"Times New Roman",serif;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:68px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.6 var(--sans);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--accent)}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:3px;border-radius:3px}
+
+.binnen{max-width:1180px;margin:0 auto;padding:0 22px}
+
+/* ---------- kop ---------- */
+header.top{border-bottom:1px solid var(--lijn);background:var(--vlak)}
+header.top .binnen{padding-top:var(--s6);padding-bottom:var(--s5)}
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s4)}
+.merkregel .vlag{width:26px;height:26px;border-radius:7px;background:var(--inkt);
+  display:flex;align-items:center;justify-content:center}
+.merkregel .naam{font:600 15px/1 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+.merkregel .pad{font:500 12px/1 var(--mono);color:var(--grijs);letter-spacing:.06em}
+header.top h1{font:600 clamp(34px,4.6vw,50px)/1.06 var(--sans);letter-spacing:-.035em;color:var(--inkt);max-width:18ch}
+header.top p.lead{font:400 19px/1.6 var(--serif);color:var(--inkt-2);max-width:62ch;margin-top:var(--s3)}
+header.top .meta{display:flex;flex-wrap:wrap;gap:var(--s4);margin-top:var(--s4);
+  font:500 12.5px/1 var(--mono);letter-spacing:.05em;color:var(--grijs)}
+header.top .meta b{color:var(--inkt);font-weight:600}
+
+/* ---------- uitleg over de galerij ---------- */
+.spelregels{background:var(--papier);border-bottom:1px solid var(--lijn)}
+.spelregels .binnen{padding-top:var(--s5);padding-bottom:var(--s5);
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){.spelregels .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+.spelregels h2{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs);
+  border-top:2px solid var(--inkt);padding-top:var(--s2);margin-bottom:var(--s2)}
+.spelregels p{font-size:16px;color:var(--inkt-2)}
+
+/* ---------- galerij ---------- */
+main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
+.galerijkop{display:flex;align-items:baseline;gap:var(--s3);margin-bottom:var(--s4);
+  border-bottom:2px solid var(--inkt);padding-bottom:var(--s2)}
+.galerijkop h2{font:600 22px/1 var(--sans);letter-spacing:-.028em;color:var(--inkt)}
+.galerijkop span{margin-left:auto;font:500 12px/1 var(--mono);letter-spacing:.08em;color:var(--grijs)}
+
+.raster{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:var(--s4)}
+
+.kaart{background:var(--vlak);border:1px solid var(--lijn);display:flex;flex-direction:column;
+  transition:box-shadow .16s,transform .16s}
+.kaart:hover{box-shadow:0 10px 30px rgba(22,24,26,.11);transform:translateY(-2px)}
+
+/* het staaltje: elk concept toont zijn eigen kleuren en letterbeeld,
+   zodat de index niet alles gelijkschakelt */
+.staal{height:132px;padding:var(--s3);display:flex;flex-direction:column;justify-content:space-between;
+  position:relative;overflow:hidden}
+.staal .plaatnr{font:600 10px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase}
+.staal .woord{font-size:30px;line-height:1;letter-spacing:-.03em}
+.staal .strepen{position:absolute;right:var(--s3);top:var(--s3);display:flex;gap:5px}
+.staal .strepen i{width:13px;height:13px;border-radius:50%;display:block;border:1px solid rgba(0,0,0,.16)}
+
+/* — staal concept 1: Atlas — */
+.staal.atlas{background:#f4efe3;color:#221e18}
+.staal.atlas .plaatnr{color:#a33b23}
+.staal.atlas .woord{font-family:Charter,Georgia,serif;font-weight:400}
+.staal.atlas .woord em{font-style:italic;color:#a33b23}
+
+/* — staal concept 2: Partituur — */
+.staal.partituur{background:#fbfbf9;color:#0e0e0d}
+.staal.partituur .plaatnr{color:#d4331d;font-family:var(--mono)}
+.staal.partituur .woord{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;letter-spacing:-.045em}
+.staal.partituur .lijnen{position:absolute;left:0;right:0;top:44px;height:28px;
+  background:repeating-linear-gradient(to bottom,#d6d6cf 0 1px,transparent 1px 9px)}
+.staal.partituur .noot{position:absolute;width:9px;height:9px;border-radius:50%;background:#0e0e0d}
+.staal.partituur .noot.r{background:#d4331d}
+
+/* — staal concept 3: Vouwblad — */
+.staal.vouwblad{background:#f2c200;color:#111417}
+.staal.vouwblad .plaatnr{color:#4d3f00;font-family:var(--mono)}
+.staal.vouwblad .woord{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:800;letter-spacing:-.045em}
+.staal.vouwblad .vouwlijn{position:absolute;top:0;bottom:0;border-left:1px dashed rgba(17,20,23,.45)}
+.staal.vouwblad .cijfer{position:absolute;right:var(--s3);bottom:var(--s3);width:34px;height:34px;
+  border-radius:50%;background:#111417;color:#f2c200;font:800 18px/34px "Helvetica Neue",Helvetica,Arial,sans-serif;
+  text-align:center}
+
+.kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
+.kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
+.kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
+.kaart .richting{font:400 15.5px/1.45 var(--serif);font-style:italic;color:var(--accent);margin-top:6px}
+.kaart .rationale{font-size:15.5px;line-height:1.55;color:var(--inkt-2);margin-top:var(--s3)}
+.kaart dl{margin-top:var(--s3);border-top:1px solid var(--lijn-2);padding-top:var(--s3);font-size:14px}
+.kaart dt{font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--grijs);
+  margin-bottom:5px}
+.kaart dd{color:var(--inkt-2);line-height:1.5}
+.kaart dd + dt{margin-top:var(--s3)}
+.kaart .knoppen{margin-top:auto;padding-top:var(--s4);display:flex;gap:var(--s2);flex-wrap:wrap}
+.kaart .kn{font:600 13px/1 var(--sans);text-decoration:none;padding:12px 16px;border:1.5px solid var(--inkt);
+  background:var(--inkt);color:#fff}
+.kaart .kn:hover{background:var(--accent);border-color:var(--accent)}
+.kaart .kn.leeg{background:transparent;color:var(--inkt)}
+.kaart .kn.leeg:hover{background:var(--inkt);color:#fff}
+
+/* ---------- voet ---------- */
+footer{border-top:1px solid var(--lijn);background:var(--vlak)}
+footer .binnen{padding-top:var(--s5);padding-bottom:var(--s6);display:flex;flex-wrap:wrap;gap:var(--s5)}
+footer .kolom{flex:1;min-width:230px}
+footer h4{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs);
+  margin-bottom:var(--s2)}
+footer p,footer li{font-size:15px;color:var(--inkt-2)}
+footer ul{list-style:none}
+footer li{padding:4px 0}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="binnen">
+    <div class="merkregel">
+      <span class="vlag" aria-hidden="true">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"
+             stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg>
+      </span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">/ontwerp</span>
+    </div>
+    <h1>Ontwerpgalerij</h1>
+    <p class="lead">Een groeiende verzameling redesign-concepten voor Fysiplan. Elk concept is
+      één zelfstandige pagina die dezelfde vier schermen in één designtaal laat zien: de landing,
+      de oefeningen-kiezer, de digitale cliëntkaart en — altijd — de A4-printkaart. Die printkaart
+      is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
+      patiënten van elke leeftijd.</p>
+    <div class="meta">
+      <span><b>3</b> concepten</span>
+      <span>Eerste ronde <b>11 augustus 2026</b></span>
+      <span>Niets hiervan raakt de live app</span>
+      <span>noindex</span>
+    </div>
+  </div>
+</header>
+
+<section class="spelregels">
+  <div class="binnen">
+    <div>
+      <h2>Wat hier staat</h2>
+      <p>Uitgewerkte richtingen, geen moodboards. Elk concept heeft eigen typografie, eigen kleur
+        en complete schermen met echte Nederlandse demo-inhoud en echte oefenbeelden uit de
+        bibliotheek.</p>
+    </div>
+    <div>
+      <h2>Wat hier niet staat</h2>
+      <p>Geen werkende backend, geen wijziging aan v1 of v2. De concepten zijn statische pagina's
+        die je naast elkaar kunt leggen. Wat wint, bouwen we daarna pas echt.</p>
+    </div>
+    <div>
+      <h2>Hoe je kijkt</h2>
+      <p>Open een concept en scroll de vier schermen langs. Druk op de printkaart Ctrl/⌘+P: er komt
+        precies één A4 uit, zonder de galerij eromheen. Dat is de eerlijkste test.</p>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="binnen">
+    <div class="galerijkop">
+      <h2>De concepten</h2>
+      <span>ronde 1 · 11 aug 2026</span>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         NIEUWE CONCEPTEN HIERONDER TOEVOEGEN.
+         Volgorde: nieuwste ronde bovenaan of onderaan, maar nooit
+         iets verwijderen — de galerij accumuleert. Nummer door op
+         het hoogste bestaande concept-nummer. Geef elk concept een
+         eigen .staal-klasse met zijn eigen kleuren en letterbeeld.
+         ══════════════════════════════════════════════════════════ -->
+
+    <div class="raster">
+
+      <!-- ─────────── CONCEPT 1 ─────────── -->
+      <article class="kaart">
+        <div class="staal atlas">
+          <div class="plaatnr">Plaat I — Fol. 1</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#f4efe3"></i><i style="background:#a33b23"></i>
+            <i style="background:#221e18"></i><i style="background:#9a7628"></i>
+          </div>
+          <div class="woord">Hiel <em>schuiven</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 1</div>
+          <h3>Atlas</h3>
+          <p class="richting">De trainingskaart als bladzijde uit een anatomische atlas.</p>
+          <p class="rationale">Roodkrijt, haarlijnen en plaatnummers geven de kaart het gezag van
+            een gravure in plaats van de vluchtigheid van een uitdraai — en legendaletters
+            <em>(a)</em> <em>(b)</em> koppelen de zin aan de tekening, zodat de figuur schoon blijft.
+            De kiezer is een register met leiderpunten, geen tegelraster.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Vesalius' <i>De humani corporis fabrica</i> (legendaletters bij de plaat) ·
+              Gray's Anatomy, houtgravures van H. V. Carter · boektypografie en het register
+              achterin · roodkrijt-tekeningen uit de renaissance</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — het is een boekpagina</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-1-atlas.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-1-atlas.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 2 ─────────── -->
+      <article class="kaart">
+        <div class="staal partituur">
+          <div class="plaatnr">R1 — maat 3/7</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#fbfbf9"></i><i style="background:#d4331d"></i>
+            <i style="background:#0e0e0d"></i><i style="background:#d6d6cf"></i>
+          </div>
+          <div class="lijnen" aria-hidden="true">
+            <span class="noot" style="left:22px;top:4px"></span>
+            <span class="noot r" style="left:62px;top:22px"></span>
+            <span class="noot" style="left:104px;top:13px"></span>
+            <span class="noot" style="left:146px;top:31px"></span>
+          </div>
+          <div class="woord">Nek draaien</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 2</div>
+          <h3>Partituur</h3>
+          <p class="richting">De week is een partituur, de oefening een regel op een balk.</p>
+          <p class="rationale">Vijf lijnen van hoofd tot voet, zeven maten voor zeven dagen: je
+            leest in één blik wat er vandaag speelt en dat zaterdag een rustteken is, geen
+            vergeten dag. De notatie geeft ritme, maar naast elke regel staat altijd één gewone
+            Nederlandse zin — wie de notatie negeert kan de kaart volledig gebruiken.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Benesh Movement Notation (vijflijnige balk, hoofd tot voet, telling boven de balk) ·
+              Labanotation · muziekgravure: maatstrepen, rusttekens, tempo-aanduiding in cursief ·
+              Zwitserse tabelzetting</dd>
+            <dt>Print</dt>
+            <dd>A4 liggend — een partituur leest van links naar rechts</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-2-partituur.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-2-partituur.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 3 ─────────── -->
+      <article class="kaart">
+        <div class="staal vouwblad">
+          <div class="vouwlijn" style="left:33.33%" aria-hidden="true"></div>
+          <div class="vouwlijn" style="left:66.66%" aria-hidden="true"></div>
+          <div class="plaatnr">Stap 3 van 4</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#f2c200"></i><i style="background:#111417"></i>
+            <i style="background:#ffffff"></i><i style="background:#6d757c"></i>
+          </div>
+          <div class="woord">Blijf staan.</div>
+          <div class="cijfer" aria-hidden="true">3</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 3</div>
+          <h3>Vouwblad</h3>
+          <p class="richting">Geen document maar een instructiekaart die rechtop op het aanrecht staat.</p>
+          <p class="rationale">De logica van de veiligheidskaart in het vliegtuig en het
+            IKEA-montageblad: beeld eerst, hooguit twee regels tekst, stapcijfers die je vanaf de
+            bank leest. Twee vouwlijnen op een derde en twee derde maken van het A4 een staand
+            drieluik — precies het formaat dat een tachtigjarige naast de waterkoker zet.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Vliegtuigveiligheidskaarten (pictogram-index, wordless-first sinds Lufthansa) ·
+              IKEA-montage-instructies · ANSI-waarschuwingspictogrammen · signaalgeel uit
+              industriële bewegwijzering · de gevouwen plattegrond</dd>
+            <dt>Print</dt>
+            <dd>A4 liggend, drieluik met vouwlijnen</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-3-vouwblad.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-3-vouwblad.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="binnen">
+    <div class="kolom">
+      <h4>Het anker</h4>
+      <p>Hoe eigenzinnig een richting ook is: waar de patiënt leest, is het rustig en groot.
+        Contrast en regellengte gaan altijd voor op het effect — zeker op papier.</p>
+    </div>
+    <div class="kolom">
+      <h4>Toetsen</h4>
+      <ul>
+        <li>Print de A4 en leg hem op tafel. Leesbaar op armlengte?</li>
+        <li>Print in zwart-wit. Blijft alles begrijpelijk zonder kleur?</li>
+        <li>Zet twee concepten naast elkaar. Verschillen ze echt, of alleen in kleur?</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Live product</h4>
+      <ul>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
