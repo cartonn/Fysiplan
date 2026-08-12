@@ -1,0 +1,960 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 5 — Patroon · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 5 — PATROON
+   De oefenweek als telpatroon. Een breipatroon doet al eeuwen
+   wat een oefenschema wil doen: herhaling noteren zonder te
+   vervelen. Een ruitje is één steek, een rij is één dag, en
+   je leest van onderaf omhoog — wat je gedaan hebt zit al in
+   het werk, wat komt ligt nog boven je naald.
+   Twee dingen houden het toegankelijk: elk symbool staat ook
+   voluit in gewone taal (net als in een echt patroon), en de
+   ruitjes zijn groot genoeg om met een pen af te vinken.
+   Alles inline; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  --papier:#f3efe4;        /* havermout, ongebleekt */
+  --vlak:#fbf9f3;
+  --inkt:#231f19;
+  --inkt-2:#4b453c;
+  --grijs:#857c6e;
+  --grijs-l:#b8afa0;
+  --lijn:#ddd6c6;
+  --lijn-d:#c6bda9;
+  --draad:#8c2b2a;         /* de enige draadkleur — betekenis staat altijd óók in tekst */
+  --draad-l:#f0e2df;
+  --groen:#4b6b52;         /* alleen voor "gedaan", nooit alleen als kleur */
+
+  --serif:"Iowan Old Style",Charter,"Palatino Linotype",Palatino,Georgia,serif;
+  --sans:Seravek,"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:68px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17.5px/1.62 var(--serif);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+:focus-visible{outline:2.5px solid var(--draad);outline-offset:3px}
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+
+.labbalk{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);
+  padding:10px 22px;background:var(--inkt);color:#fff;font:600 13px/1 var(--sans)}
+.labbalk a{color:#fff;text-decoration:none;padding:6px 10px}
+.labbalk a:hover{background:rgba(255,255,255,.18)}
+.labbalk .nr{color:#e6a9a5;font:700 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase}
+.labbalk .rek{flex:1}
+.labbalk .terug{border:1px solid rgba(255,255,255,.34)}
+
+.scherm{padding:var(--s6) 22px}
+.scherm + .scherm{border-top:1px solid var(--lijn-d)}
+.binnen{max-width:1180px;margin:0 auto}
+.schermkop{display:flex;align-items:flex-end;gap:var(--s3);margin-bottom:var(--s5)}
+.schermkop b{font:700 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--draad);
+  border:1px solid var(--draad);padding:7px 10px;border-radius:2px}
+.schermkop h2{font:600 26px/1 var(--sans);letter-spacing:-.028em;color:var(--inkt)}
+.schermkop p{flex:1;text-align:right;font-style:italic;font-size:15.5px;color:var(--grijs)}
+@media (max-width:760px){.schermkop{flex-wrap:wrap}.schermkop p{text-align:left;flex-basis:100%}}
+
+/* ── symbolen ───────────────────────────────────────────── */
+.sym{width:1em;height:1em;display:inline-block;vertical-align:-.12em;stroke:currentColor;fill:none;
+  stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* ============================================================
+   1 · LANDING — het omslag van een patroonboekje
+   ============================================================ */
+.omslag{background:var(--vlak);border:1px solid var(--lijn-d);
+  display:grid;grid-template-columns:1.15fr .85fr}
+@media (max-width:900px){.omslag{grid-template-columns:1fr}}
+.omslag .links{padding:var(--s6) var(--s5) var(--s5);border-right:1px solid var(--lijn)}
+@media (max-width:900px){.omslag .links{border-right:0;border-bottom:1px solid var(--lijn);padding:var(--s5) var(--s4)}}
+.merkregel{display:flex;align-items:baseline;gap:12px;margin-bottom:var(--s5)}
+.merkregel .naam{font:600 19px/1 var(--sans);letter-spacing:-.02em;color:var(--inkt)}
+.merkregel .reeks{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--draad)}
+.omslag h1{font:400 clamp(38px,5.4vw,64px)/1.04 var(--serif);letter-spacing:-.022em;color:var(--inkt);max-width:17ch}
+.omslag h1 em{font-style:italic;color:var(--draad)}
+.omslag .inleiding{font-size:19px;line-height:1.55;margin-top:var(--s4);max-width:50ch}
+.omslag .doen{display:flex;flex-wrap:wrap;gap:var(--s3);margin-top:var(--s5)}
+.kn{display:inline-block;font:600 14px/1 var(--sans);letter-spacing:.01em;text-decoration:none;
+  padding:16px 24px;background:var(--inkt);color:#fff;border:1.5px solid var(--inkt);border-radius:2px}
+.kn:hover{background:var(--draad);border-color:var(--draad)}
+.kn.leeg{background:transparent;color:var(--inkt)}
+.kn.leeg:hover{background:var(--inkt);color:#fff}
+
+/* het "benodigdheden"-blok van een patroon */
+.benodigd{margin-top:var(--s5);border-top:2px solid var(--inkt);padding-top:var(--s3);
+  display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s3) var(--s4)}
+@media (max-width:560px){.benodigd{grid-template-columns:1fr}}
+.benodigd dt{font:700 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--grijs)}
+.benodigd dd{font-size:16.5px;line-height:1.45;color:var(--inkt);margin-top:5px}
+
+/* rechterkant: een stukje patroon, groot en trots */
+.omslag .rechts{padding:var(--s5);display:flex;flex-direction:column;justify-content:center;
+  background:
+    linear-gradient(to right,var(--lijn) 1px,transparent 1px) 0 0/30px 30px,
+    linear-gradient(to bottom,var(--lijn) 1px,transparent 1px) 0 0/30px 30px,
+    var(--papier)}
+.staalkaart{background:var(--vlak);border:2px solid var(--inkt);padding:var(--s4);
+  box-shadow:6px 6px 0 rgba(35,31,25,.09)}
+.staalkaart .titel{font:700 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--draad);
+  margin-bottom:var(--s3)}
+.staalraster{display:grid;grid-template-columns:repeat(7,1fr);gap:0;border:1.5px solid var(--inkt)}
+.staalraster i{aspect-ratio:1;border-right:1px solid var(--lijn-d);border-bottom:1px solid var(--lijn-d);
+  display:flex;align-items:center;justify-content:center;color:var(--inkt);font-size:19px;background:var(--vlak)}
+.staalraster i:nth-child(7n){border-right:0}
+.staalraster i.gedaan{background:var(--draad-l);color:var(--draad)}
+.staalraster i.rust{color:var(--grijs-l)}
+.staalkaart .voet{display:flex;justify-content:space-between;margin-top:var(--s3);
+  font:600 11px/1.4 var(--mono);letter-spacing:.06em;color:var(--grijs)}
+
+/* drie beloften, als patroonaantekeningen */
+.aantekeningen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s5)}
+@media (max-width:860px){.aantekeningen{grid-template-columns:1fr}}
+.aantekening{background:var(--vlak);border:1px solid var(--lijn-d);padding:var(--s4)}
+.aantekening .glyph{width:44px;height:44px;border:1.5px solid var(--inkt);display:flex;align-items:center;
+  justify-content:center;font-size:24px;color:var(--draad);margin-bottom:var(--s3)}
+.aantekening h3{font:600 20px/1.2 var(--sans);letter-spacing:-.022em;color:var(--inkt)}
+.aantekening p{font-size:16px;line-height:1.5;margin-top:9px}
+
+/* ============================================================
+   2 · KIEZER — het steekwoordenboek
+   ============================================================ */
+.woordenboek{display:grid;grid-template-columns:1fr 310px;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.woordenboek{grid-template-columns:1fr}}
+
+.filterrij{display:flex;flex-wrap:wrap;gap:var(--s2);margin-bottom:var(--s4);align-items:center}
+.filterrij button{font:600 13.5px/1 var(--sans);background:var(--vlak);border:1.5px solid var(--lijn-d);
+  padding:11px 15px;border-radius:2px;color:var(--inkt-2);cursor:pointer}
+.filterrij button[aria-pressed="true"]{background:var(--inkt);border-color:var(--inkt);color:#fff}
+.filterrij .telling{margin-left:auto;font:600 11px/1 var(--mono);letter-spacing:.1em;color:var(--grijs)}
+
+.steken{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:var(--s3)}
+.steek{background:var(--vlak);border:1.5px solid var(--lijn-d);padding:var(--s3);display:flex;gap:var(--s3);
+  align-items:flex-start;border-radius:2px}
+.steek .hok{flex:0 0 58px;height:58px;border:1.5px solid var(--inkt);display:flex;align-items:center;
+  justify-content:center;font-size:30px;color:var(--inkt);background:#fff}
+.steek b{display:block;font:600 17px/1.2 var(--sans);letter-spacing:-.015em;color:var(--inkt)}
+.steek .lees{display:block;font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--grijs);margin-top:6px}
+.steek p{font-size:15.5px;line-height:1.45;margin-top:8px}
+.steek img{width:100%;height:56px;object-fit:contain;mix-blend-mode:multiply;margin-top:10px}
+.steek.gekozen{border-color:var(--draad);background:var(--draad-l);box-shadow:3px 3px 0 rgba(140,43,42,.16)}
+.steek.gekozen .hok{border-color:var(--draad);color:var(--draad)}
+.steek .gekozenmerk{display:inline-flex;align-items:center;gap:6px;font:700 10px/1 var(--sans);
+  letter-spacing:.14em;text-transform:uppercase;color:var(--draad);margin-top:9px}
+
+/* de legenda die meegroeit */
+.legenda{border:1.5px solid var(--inkt);background:var(--vlak);position:sticky;top:56px}
+.legenda .kop{background:var(--inkt);color:#fff;padding:13px var(--s3);font:600 11px/1 var(--mono);
+  letter-spacing:.16em;text-transform:uppercase;display:flex;justify-content:space-between}
+.legenda .kop i{font-style:normal;color:#e6a9a5}
+.legenda ul{list-style:none}
+.legenda li{display:flex;gap:12px;align-items:center;padding:12px var(--s3);border-bottom:1px solid var(--lijn)}
+.legenda li .hok{flex:0 0 32px;height:32px;border:1.3px solid var(--inkt);display:flex;align-items:center;
+  justify-content:center;font-size:18px;color:var(--inkt);background:#fff}
+.legenda li b{font:600 15.5px/1.2 var(--sans);color:var(--inkt);display:block}
+.legenda li span{font:600 10.5px/1 var(--mono);color:var(--grijs);display:block;margin-top:4px;letter-spacing:.06em}
+.legenda .spanning{padding:var(--s3);border-bottom:1px solid var(--lijn);font-size:15.5px;line-height:1.5}
+.legenda .spanning b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--draad);margin-bottom:7px}
+.legenda .slot{padding:var(--s3)}
+.legenda .slot a{display:block;text-align:center;font:600 14px/1 var(--sans);text-decoration:none;
+  background:var(--inkt);color:#fff;padding:15px;border-radius:2px}
+.legenda .slot a:hover{background:var(--draad)}
+.legenda .slot p{font-size:14px;color:var(--grijs);text-align:center;margin-top:10px;font-style:italic}
+
+/* ============================================================
+   3 · CLIËNTKAART — het werk op de naald
+   ============================================================ */
+.werkrij{display:grid;grid-template-columns:355px 1fr;gap:var(--s5);align-items:start}
+@media (max-width:940px){.werkrij{grid-template-columns:1fr}}
+.telefoon{border:11px solid var(--inkt);border-radius:34px;overflow:hidden;background:var(--vlak);
+  box-shadow:0 18px 44px rgba(35,31,25,.2)}
+.tel{padding:var(--s3) var(--s3) var(--s4);max-height:660px;overflow:auto}
+.tel .balk{display:flex;justify-content:space-between;font:600 10px/1 var(--mono);letter-spacing:.12em;
+  text-transform:uppercase;color:var(--grijs);padding-bottom:11px;border-bottom:2px solid var(--inkt)}
+.tel h3{font:400 26px/1.14 var(--serif);color:var(--inkt);margin-top:var(--s3)}
+.tel h3 em{font-style:italic;color:var(--draad)}
+.tel .naald{margin-top:var(--s3);border:1.5px solid var(--inkt);background:#fff}
+.tel .naald .rijkop{display:grid;grid-template-columns:34px repeat(5,1fr);border-bottom:1.5px solid var(--inkt);
+  background:var(--papier)}
+.tel .naald .rijkop span{font:600 9.5px/1 var(--mono);letter-spacing:.04em;text-align:center;padding:7px 2px;
+  color:var(--grijs);border-right:1px solid var(--lijn)}
+.tel .naald .rijkop span:last-child{border-right:0}
+.tel .naald .rij{display:grid;grid-template-columns:34px repeat(5,1fr);border-bottom:1px solid var(--lijn)}
+.tel .naald .rij:last-child{border-bottom:0}
+.tel .naald .rij .nr{font:600 10px/1 var(--mono);color:var(--grijs);display:flex;align-items:center;
+  justify-content:center;border-right:1.5px solid var(--inkt);background:var(--papier)}
+.tel .naald .rij i{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:17px;
+  border-right:1px solid var(--lijn);color:var(--inkt)}
+.tel .naald .rij i:last-child{border-right:0}
+.tel .naald .rij.af i{background:var(--draad-l);color:var(--draad)}
+.tel .naald .rij.nu{outline:2.5px solid var(--inkt);outline-offset:-2px}
+.tel .naald .rij.nu .nr{background:var(--inkt);color:#fff}
+.tel .naald .rij i.leeg{color:var(--grijs-l)}
+.tel .naaldvoet{font:600 10px/1.4 var(--mono);letter-spacing:.06em;color:var(--grijs);padding:9px;
+  border-top:1.5px solid var(--inkt);background:var(--papier);text-align:center}
+.tel .vandaag{margin-top:var(--s3);border-top:2px solid var(--inkt);padding-top:12px}
+.tel .vandaag .kopje{font:700 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--draad)}
+.tel .stap{display:grid;grid-template-columns:34px 1fr 30px;gap:11px;align-items:center;padding:11px 0;
+  border-bottom:1px solid var(--lijn)}
+.tel .stap .hok{width:34px;height:34px;border:1.3px solid var(--inkt);display:flex;align-items:center;
+  justify-content:center;font-size:18px;background:#fff}
+.tel .stap b{font:600 16px/1.2 var(--sans);color:var(--inkt);display:block}
+.tel .stap span{font:600 10.5px/1 var(--mono);color:var(--grijs);display:block;margin-top:4px;letter-spacing:.05em}
+.tel .stap .vink{width:30px;height:30px;border:1.5px solid var(--lijn-d);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:transparent;font:700 15px/1 var(--sans)}
+.tel .stap.af .vink{background:var(--groen);border-color:var(--groen);color:#fff}
+.tel .stap.af b{color:var(--grijs)}
+.tel .briefje{margin-top:var(--s3);background:var(--draad-l);border-left:4px solid var(--draad);
+  padding:12px var(--s3);font-size:15.5px;line-height:1.5}
+.tel .briefje b{color:var(--draad)}
+
+.werkuitleg h3{font:400 31px/1.12 var(--serif);color:var(--inkt);max-width:23ch}
+.werkuitleg > p{font-size:17px;line-height:1.58;margin-top:var(--s3);max-width:58ch}
+.regels{margin-top:var(--s4);border-top:2px solid var(--inkt)}
+.regels .r{display:grid;grid-template-columns:150px 1fr;gap:var(--s4);padding:var(--s3) 0;
+  border-bottom:1px solid var(--lijn)}
+@media (max-width:600px){.regels .r{grid-template-columns:1fr;gap:6px}}
+.regels dt{font:700 10.5px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--draad)}
+.regels dd{font-size:16.5px;line-height:1.5}
+.regels dd b{color:var(--inkt)}
+
+.telstrook{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3);margin-top:var(--s4)}
+@media (max-width:700px){.telstrook{grid-template-columns:repeat(2,1fr)}}
+.teller{background:var(--vlak);border:1.5px solid var(--lijn-d);padding:var(--s3)}
+.teller .getal{font:600 34px/1 var(--sans);letter-spacing:-.04em;color:var(--inkt);font-variant-numeric:tabular-nums}
+.teller .label{font:600 10.5px/1.35 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--grijs);
+  margin-top:8px}
+
+/* ============================================================
+   4 · PRINTKAART — het patroonblad
+   ============================================================ */
+.printtoelichting{display:flex;flex-wrap:wrap;gap:var(--s4);align-items:flex-start;margin-bottom:var(--s4)}
+.printtoelichting p{flex:1;min-width:290px;font-size:16px;line-height:1.5}
+.printtoelichting .knop{font:600 14px/1 var(--sans);background:var(--inkt);color:#fff;border:0;
+  padding:16px 24px;border-radius:2px;cursor:pointer}
+.printtoelichting .knop:hover{background:var(--draad)}
+
+.bladhouder{--z:1;display:flex;justify-content:center}
+.bladschaal{width:calc(210mm * var(--z));height:calc(297mm * var(--z))}
+@media (max-width:1000px){.bladhouder{--z:.68}}
+@media (max-width:760px){.bladhouder{--z:.46}}
+@media (max-width:420px){.bladhouder{--z:.36}}
+
+.blad{width:210mm;height:297mm;transform:scale(var(--z));transform-origin:top left;background:#fff;
+  border:1px solid var(--lijn-d);box-shadow:0 14px 40px rgba(35,31,25,.14);
+  padding:13mm 13mm 9mm;display:flex;flex-direction:column;color:var(--inkt-2)}
+
+.blad .kop{display:flex;justify-content:space-between;align-items:flex-end;gap:6mm;
+  border-bottom:1.6pt solid var(--inkt);padding-bottom:2.6mm}
+.blad .kop .model{font:700 7.6pt/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--draad)}
+.blad .kop h1{font:400 21pt/1.02 var(--serif);color:var(--inkt);margin-top:1.6mm;letter-spacing:-.015em}
+.blad .kop .wie{text-align:right;font:600 8.4pt/1.45 var(--mono);letter-spacing:.05em;color:var(--grijs)}
+.blad .kop .wie b{display:block;font-size:10pt;color:var(--inkt);letter-spacing:.02em}
+
+.blad .aanwijzing{font:400 10.8pt/1.42 var(--serif);color:var(--inkt-2);padding:3mm 0;
+  border-bottom:1px solid var(--lijn)}
+.blad .aanwijzing b{color:var(--inkt)}
+
+/* — het telpatroon — */
+.blad .patroonblok{padding:3.5mm 0 0}
+.blad .blokkop{display:flex;justify-content:space-between;align-items:baseline;
+  font:700 7.8pt/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--inkt);
+  padding-bottom:2mm}
+.blad .blokkop i{font-style:normal;font-family:var(--mono);font-weight:600;letter-spacing:.06em;color:var(--grijs)}
+
+.telpatroon{border:1.4pt solid var(--inkt);background:#fff}
+.telpatroon .hoofdrij{display:grid;grid-template-columns:13mm repeat(5,1fr) 13mm;
+  border-bottom:1.4pt solid var(--inkt);background:#faf8f2}
+.telpatroon .hoofdrij span{font:700 7.2pt/1.15 var(--sans);text-align:center;padding:1.8mm .8mm;
+  color:var(--inkt);border-right:1px solid var(--lijn-d);display:flex;align-items:center;justify-content:center}
+.telpatroon .hoofdrij span:last-child{border-right:0}
+.telpatroon .hoofdrij .hoek{font-family:var(--mono);font-size:6.4pt;letter-spacing:.08em;color:var(--grijs);
+  font-weight:600}
+.telpatroon .rij{display:grid;grid-template-columns:13mm repeat(5,1fr) 13mm;border-bottom:1px solid var(--lijn-d)}
+.telpatroon .rij:last-child{border-bottom:0}
+.telpatroon .rij .dag{font:700 8.4pt/1 var(--sans);display:flex;align-items:center;justify-content:center;
+  border-right:1.4pt solid var(--inkt);background:#faf8f2;color:var(--inkt)}
+.telpatroon .rij .nr{font:600 7pt/1 var(--mono);display:flex;align-items:center;justify-content:center;
+  border-left:1.4pt solid var(--inkt);background:#faf8f2;color:var(--grijs)}
+.telpatroon .rij .vak{height:9.2mm;display:flex;align-items:center;justify-content:center;
+  border-right:1px solid var(--lijn-d);font-size:15pt;color:var(--inkt)}
+.telpatroon .rij .vak.rust{color:var(--grijs-l)}
+.telpatroon .rij.zondag{background:#f7f4ec}
+
+/* — de legenda: symbool, tekening, gewone zin — */
+.blad .legendablok{flex:1;padding-top:3.5mm;display:flex;flex-direction:column}
+.blad .legendalijst{display:grid;grid-template-columns:1fr 1fr;column-gap:6mm;row-gap:0;
+  border-top:1.4pt solid var(--inkt)}
+.blad .uitleg{display:grid;grid-template-columns:8mm 12mm 1fr;gap:2mm;align-items:start;
+  padding:1.7mm 0;border-bottom:1px solid var(--lijn)}
+.blad .uitleg .hok{width:8mm;height:8mm;border:1pt solid var(--inkt);display:flex;align-items:center;
+  justify-content:center;font-size:12pt;color:var(--inkt)}
+.blad .uitleg .fig{height:12mm;border:1px solid var(--lijn);display:flex;align-items:center;justify-content:center;
+  padding:1mm;background:#fff}
+.blad .uitleg .fig img{max-height:100%;max-width:100%;object-fit:contain;mix-blend-mode:multiply}
+.blad .uitleg b{font:700 10.4pt/1.16 var(--sans);color:var(--inkt);display:block;letter-spacing:-.01em}
+.blad .uitleg p{font:400 9.7pt/1.3 var(--serif);color:var(--inkt-2);margin-top:.9mm}
+.blad .uitleg .tel{font:700 7.8pt/1 var(--mono);letter-spacing:.08em;color:var(--draad);margin-top:1.1mm;
+  display:block;text-transform:uppercase}
+
+/* — spanning & aantekeningen — */
+.blad .onderrij{display:grid;grid-template-columns:1fr 1fr;gap:6mm;margin-top:3mm}
+.blad .kaartje{border:1pt solid var(--inkt);padding:2.8mm}
+.blad .kaartje h4{font:700 7.4pt/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--draad);
+  margin-bottom:1.8mm}
+.blad .kaartje p{font:400 9.9pt/1.36 var(--serif)}
+.blad .kaartje ul{list-style:none;margin-top:1.2mm}
+.blad .kaartje li{font:400 9.9pt/1.34 var(--serif);padding-left:4mm;position:relative;margin-top:.9mm}
+.blad .kaartje li::before{content:"·";position:absolute;left:1.2mm;color:var(--draad);font-weight:700}
+
+.blad .voet{margin-top:auto;padding-top:2.6mm;border-top:1.4pt solid var(--inkt);display:flex;
+  justify-content:space-between;gap:5mm;font:600 7.4pt/1.35 var(--mono);letter-spacing:.07em;
+  text-transform:uppercase;color:var(--grijs)}
+.blad .voet b{color:var(--inkt)}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;border:0 !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+  .blad .uitleg .fig img{mix-blend-mode:normal}
+}
+</style>
+</head>
+<body>
+
+<!-- de steeksymbolen: één keer getekend, overal hergebruikt -->
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="s-beweging" viewBox="0 0 24 24"><path d="M12 4v16"/><path d="M8 8l4-4 4 4"/><path d="M8 16l4 4 4-4"/></symbol>
+  <symbol id="s-rek" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.4"/></symbol>
+  <symbol id="s-kracht" viewBox="0 0 24 24"><path d="M5 19L19 5"/><path d="M5 5l14 14"/></symbol>
+  <symbol id="s-balans" viewBox="0 0 24 24"><path d="M12 4.6L20 19H4z"/></symbol>
+  <symbol id="s-adem" viewBox="0 0 24 24"><path d="M3 14c3.2 0 3.2-4 6.4-4s3.2 4 6.4 4 3.2-4 5.2-4"/><path d="M3 19c3.2 0 3.2-4 6.4-4s3.2 4 6.4 4 3.2-4 5.2-4"/></symbol>
+  <symbol id="s-rust" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="s-nieuw" viewBox="0 0 24 24"><path d="M12 3.6l8.4 8.4-8.4 8.4L3.6 12z"/></symbol>
+</svg>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 5</span>
+  <strong style="font:700 14px/1 var(--sans)">Patroon</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>het omslag van een patroonboekje, niet de homepage van een startup</p>
+    </div>
+
+    <div class="omslag">
+      <div class="links">
+        <div class="merkregel">
+          <span class="naam">Fysiplan</span>
+          <span class="reeks">Model 14 · Rug &amp; romp</span>
+        </div>
+
+        <h1>Herstel is <em>herhaling</em>. Niemand noteert herhaling mooier dan een breipatroon.</h1>
+
+        <p class="inleiding">Een telpatroon zet honderden steken op één blad zonder één keer saai
+          te worden: een ruitje is een steek, een rij is een toer, en de legenda vertelt in gewone
+          taal wat elk teken betekent. Fysiplan gebruikt diezelfde notatie voor de oefenweek —
+          en drukt hem af op één vel dat u met een pen afvinkt.</p>
+
+        <div class="doen">
+          <a class="kn" href="#printkaart">Bekijk het patroonblad</a>
+          <a class="kn leeg" href="#kiezer">Steken kiezen</a>
+        </div>
+
+        <dl class="benodigd">
+          <div>
+            <dt>Benodigdheden</dt>
+            <dd>Een keukenstoel, een handdoek, tien minuten per dag. Geen elastiek nodig in week 1–2.</dd>
+          </div>
+          <div>
+            <dt>Spanning</dt>
+            <dd>10 herhalingen op één minuut. Gaat het sneller, dan is de beweging te klein.</dd>
+          </div>
+          <div>
+            <dt>Maat</dt>
+            <dd>Vier weken, 28 rijen. Daarna meet de therapeut opnieuw op.</dd>
+          </div>
+          <div>
+            <dt>Moeilijkheid</dt>
+            <dd>Beginner. Elke rij staat ook voluit in woorden — u hoeft geen symbool te leren.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="rechts">
+        <div class="staalkaart">
+          <div class="titel">Proeflapje — week 2, rij 8 t/m 14</div>
+          <div class="staalraster" aria-hidden="true">
+            <i class="gedaan"><svg class="sym"><use href="#s-beweging"/></svg></i>
+            <i class="gedaan"><svg class="sym"><use href="#s-rek"/></svg></i>
+            <i class="gedaan"><svg class="sym"><use href="#s-beweging"/></svg></i>
+            <i class="gedaan"><svg class="sym"><use href="#s-adem"/></svg></i>
+            <i class="gedaan"><svg class="sym"><use href="#s-rek"/></svg></i>
+            <i class="gedaan"><svg class="sym"><use href="#s-beweging"/></svg></i>
+            <i class="rust"><svg class="sym"><use href="#s-rust"/></svg></i>
+            <i><svg class="sym"><use href="#s-beweging"/></svg></i>
+            <i><svg class="sym"><use href="#s-kracht"/></svg></i>
+            <i><svg class="sym"><use href="#s-rek"/></svg></i>
+            <i><svg class="sym"><use href="#s-beweging"/></svg></i>
+            <i><svg class="sym"><use href="#s-nieuw"/></svg></i>
+            <i><svg class="sym"><use href="#s-adem"/></svg></i>
+            <i class="rust"><svg class="sym"><use href="#s-rust"/></svg></i>
+          </div>
+          <div class="voet"><span>Gelezen van onder naar boven</span><span>2 toeren</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="aantekeningen">
+      <div class="aantekening">
+        <div class="glyph"><svg class="sym"><use href="#s-nieuw"/></svg></div>
+        <h3>Van onderaf lezen</h3>
+        <p>Wat u gedaan hebt zit al in het werk en staat onderaan. Wat komt ligt daarboven. Geen
+          voortgangsbalk die leegloopt als u een dag mist — een gemiste rij blijft gewoon open staan.</p>
+      </div>
+      <div class="aantekening">
+        <div class="glyph"><svg class="sym"><use href="#s-rek"/></svg></div>
+        <h3>Symbool én zin</h3>
+        <p>Zoals elk fatsoenlijk patroon geeft de kaart beide: het teken in het ruitje en de
+          uitgeschreven aanwijzing eronder. Wie niets van de tekens wil weten, leest alleen de zinnen.</p>
+      </div>
+      <div class="aantekening">
+        <div class="glyph"><svg class="sym"><use href="#s-kracht"/></svg></div>
+        <h3>Herhaling is de vorm</h3>
+        <p>“Herhaal rij 3 tot 6 nog twee keer” is één regel in plaats van veertien kaartjes. Het
+          schema wordt korter naarmate het langer duurt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>Oefeningen kiezen</h2>
+      <p>een steekwoordenboek: elk teken hoort bij één beweging</p>
+    </div>
+
+    <div class="woordenboek">
+      <div>
+        <div class="filterrij">
+          <button type="button" aria-pressed="true">Rug</button>
+          <button type="button" aria-pressed="false">Romp</button>
+          <button type="button" aria-pressed="false">Heup</button>
+          <button type="button" aria-pressed="false">Op de stoel</button>
+          <button type="button" aria-pressed="false">Op de grond</button>
+          <span class="telling">38 steken · 5 gekozen</span>
+        </div>
+
+        <div class="steken">
+
+          <article class="steek gekozen">
+            <div class="hok"><svg class="sym"><use href="#s-beweging"/></svg></div>
+            <div>
+              <b>Rug bol en hol</b>
+              <span class="lees">Op handen en knieën · rij-opener</span>
+              <p>Maak de rug rustig bol en laat hem daarna langzaam weer hol worden.</p>
+              <img src="/images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png" alt=""/>
+              <span class="gekozenmerk"><svg class="sym"><use href="#s-nieuw"/></svg> In het patroon</span>
+            </div>
+          </article>
+
+          <article class="steek gekozen">
+            <div class="hok"><svg class="sym"><use href="#s-rek"/></svg></div>
+            <div>
+              <b>Knie naar borst</b>
+              <span class="lees">Liggend · rek, 20 tellen</span>
+              <p>Pak één knie met beide handen, trek hem rustig richting de borst en laat het been
+                langzaam zakken.</p>
+              <img src="/images/rug/knie-naar-borst-liggend-line-v1.png" alt=""/>
+              <span class="gekozenmerk"><svg class="sym"><use href="#s-nieuw"/></svg> In het patroon</span>
+            </div>
+          </article>
+
+          <article class="steek gekozen">
+            <div class="hok"><svg class="sym"><use href="#s-adem"/></svg></div>
+            <div>
+              <b>Open boek</b>
+              <span class="lees">Zijlig · draaien op de uitademing</span>
+              <p>Draai de bovenste arm rustig open naar de andere kant, zoals een boek dat opengaat.</p>
+              <img src="/images/rug/open-boek-liggend-line-v1.png" alt=""/>
+              <span class="gekozenmerk"><svg class="sym"><use href="#s-nieuw"/></svg> In het patroon</span>
+            </div>
+          </article>
+
+          <article class="steek gekozen">
+            <div class="hok"><svg class="sym"><use href="#s-kracht"/></svg></div>
+            <div>
+              <b>Romp draaien</b>
+              <span class="lees">Zittend · armen gekruist</span>
+              <p>Draai het bovenlichaam rustig naar één kant en kom langzaam terug naar het midden.</p>
+              <img src="/images/rug/romp-draaien-zittend-line-v1.png" alt=""/>
+              <span class="gekozenmerk"><svg class="sym"><use href="#s-nieuw"/></svg> In het patroon</span>
+            </div>
+          </article>
+
+          <article class="steek gekozen">
+            <div class="hok"><svg class="sym"><use href="#s-balans"/></svg></div>
+            <div>
+              <b>Rug strekken</b>
+              <span class="lees">Buiklig · heupen blijven liggen</span>
+              <p>Duw het bovenlichaam rustig omhoog terwijl de heupen op de grond blijven.</p>
+              <img src="/images/rug/rug-strekken-liggend-line-v1.png" alt=""/>
+              <span class="gekozenmerk"><svg class="sym"><use href="#s-nieuw"/></svg> In het patroon</span>
+            </div>
+          </article>
+
+          <article class="steek">
+            <div class="hok"><svg class="sym"><use href="#s-beweging"/></svg></div>
+            <div>
+              <b>Romp zijwaarts buigen</b>
+              <span class="lees">Staand · hand langs het been</span>
+              <p>Buig rustig opzij en laat de hand langs de zijkant van het been glijden.</p>
+              <img src="/images/rug/romp-zijwaarts-buigen-staand-line-v1.png" alt=""/>
+            </div>
+          </article>
+
+          <article class="steek">
+            <div class="hok"><svg class="sym"><use href="#s-rek"/></svg></div>
+            <div>
+              <b>Knie naar borst — zittend</b>
+              <span class="lees">Op de stoel · lichtere variant</span>
+              <p>Trek de knie zittend rustig omhoog richting de borst en zet de voet langzaam terug.</p>
+              <img src="/images/rug/knie-naar-borst-zittend-line-v1.png" alt=""/>
+            </div>
+          </article>
+
+          <article class="steek">
+            <div class="hok"><svg class="sym"><use href="#s-adem"/></svg></div>
+            <div>
+              <b>Romp draaien — liggend</b>
+              <span class="lees">Rugligging · knieën vallen opzij</span>
+              <p>Laat de gebogen knieën rustig naar één kant zakken en breng ze langzaam terug.</p>
+              <img src="/images/rug/romp-draaien-liggend-line-v1.png" alt=""/>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <aside class="legenda">
+        <div class="kop"><span>Legenda</span><i>5 tekens</i></div>
+        <ul>
+          <li><span class="hok"><svg class="sym"><use href="#s-beweging"/></svg></span>
+            <span><b>Bol en hol</b><span>10 × · rustig tempo</span></span></li>
+          <li><span class="hok"><svg class="sym"><use href="#s-rek"/></svg></span>
+            <span><b>Knie naar borst</b><span>2 × 20 sec per been</span></span></li>
+          <li><span class="hok"><svg class="sym"><use href="#s-adem"/></svg></span>
+            <span><b>Open boek</b><span>8 × per kant</span></span></li>
+          <li><span class="hok"><svg class="sym"><use href="#s-kracht"/></svg></span>
+            <span><b>Romp draaien</b><span>10 × per kant</span></span></li>
+          <li><span class="hok"><svg class="sym"><use href="#s-balans"/></svg></span>
+            <span><b>Rug strekken</b><span>8 × · alleen bij geen pijn</span></span></li>
+        </ul>
+        <div class="spanning">
+          <b>Spanning</b>
+          Tien herhalingen horen ongeveer één minuut te duren. Gaat het sneller, dan is de beweging
+          te klein — dat is de enige maat die de cliënt zelf kan controleren.
+        </div>
+        <div class="slot">
+          <a href="#printkaart">Patroonblad maken</a>
+          <p>Eén A4, patroon boven, uitleg onder.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>Digitale cliëntkaart</h2>
+      <p>het werk op de naald: gedane rijen zitten al in het breisel</p>
+    </div>
+
+    <div class="werkrij">
+      <div class="telefoon">
+        <div class="tel">
+          <div class="balk"><span>Model 14 · Rug</span><span>Rij 9 van 28</span></div>
+
+          <h3>U bent op <em>rij 9</em>. Nog vier rijen tot het einde van week 2.</h3>
+
+          <div class="naald">
+            <div class="rijkop">
+              <span>rij</span><span>bol</span><span>knie</span><span>boek</span><span>draai</span><span>strek</span>
+            </div>
+            <div class="rij"><span class="nr">12</span>
+              <i class="leeg"><svg class="sym"><use href="#s-beweging"/></svg></i>
+              <i class="leeg"><svg class="sym"><use href="#s-rek"/></svg></i>
+              <i class="leeg"><svg class="sym"><use href="#s-adem"/></svg></i>
+              <i class="leeg"><svg class="sym"><use href="#s-kracht"/></svg></i>
+              <i class="leeg"><svg class="sym"><use href="#s-balans"/></svg></i></div>
+            <div class="rij"><span class="nr">11</span>
+              <i class="leeg"><svg class="sym"><use href="#s-beweging"/></svg></i>
+              <i class="leeg"><svg class="sym"><use href="#s-rek"/></svg></i>
+              <i class="leeg"><svg class="sym"><use href="#s-adem"/></svg></i>
+              <i class="leeg"><svg class="sym"><use href="#s-kracht"/></svg></i>
+              <i class="leeg"><svg class="sym"><use href="#s-balans"/></svg></i></div>
+            <div class="rij"><span class="nr">10</span>
+              <i class="leeg"><svg class="sym"><use href="#s-beweging"/></svg></i>
+              <i class="leeg"><svg class="sym"><use href="#s-rek"/></svg></i>
+              <i class="leeg"><svg class="sym"><use href="#s-rust"/></svg></i>
+              <i class="leeg"><svg class="sym"><use href="#s-kracht"/></svg></i>
+              <i class="leeg"><svg class="sym"><use href="#s-balans"/></svg></i></div>
+            <div class="rij nu"><span class="nr">9</span>
+              <i><svg class="sym"><use href="#s-beweging"/></svg></i>
+              <i><svg class="sym"><use href="#s-rek"/></svg></i>
+              <i><svg class="sym"><use href="#s-adem"/></svg></i>
+              <i><svg class="sym"><use href="#s-kracht"/></svg></i>
+              <i class="leeg"><svg class="sym"><use href="#s-rust"/></svg></i></div>
+            <div class="rij af"><span class="nr">8</span>
+              <i><svg class="sym"><use href="#s-beweging"/></svg></i>
+              <i><svg class="sym"><use href="#s-rek"/></svg></i>
+              <i><svg class="sym"><use href="#s-adem"/></svg></i>
+              <i><svg class="sym"><use href="#s-kracht"/></svg></i>
+              <i><svg class="sym"><use href="#s-balans"/></svg></i></div>
+            <div class="rij af"><span class="nr">7</span>
+              <i><svg class="sym"><use href="#s-beweging"/></svg></i>
+              <i><svg class="sym"><use href="#s-rek"/></svg></i>
+              <i><svg class="sym"><use href="#s-rust"/></svg></i>
+              <i><svg class="sym"><use href="#s-kracht"/></svg></i>
+              <i><svg class="sym"><use href="#s-balans"/></svg></i></div>
+            <div class="rij af"><span class="nr">6</span>
+              <i><svg class="sym"><use href="#s-beweging"/></svg></i>
+              <i><svg class="sym"><use href="#s-rek"/></svg></i>
+              <i><svg class="sym"><use href="#s-adem"/></svg></i>
+              <i><svg class="sym"><use href="#s-kracht"/></svg></i>
+              <i><svg class="sym"><use href="#s-balans"/></svg></i></div>
+          </div>
+          <div class="naaldvoet">Lees van onder naar boven · rij 1 = maandag week 1</div>
+
+          <div class="vandaag">
+            <div class="kopje">Rij 9 — woensdag</div>
+            <div class="stap af">
+              <span class="hok"><svg class="sym"><use href="#s-beweging"/></svg></span>
+              <div><b>Rug bol en hol</b><span>10 × · op handen en knieën</span></div>
+              <span class="vink" aria-hidden="true">✓</span>
+            </div>
+            <div class="stap af">
+              <span class="hok"><svg class="sym"><use href="#s-rek"/></svg></span>
+              <div><b>Knie naar borst</b><span>2 × 20 sec per been</span></div>
+              <span class="vink" aria-hidden="true">✓</span>
+            </div>
+            <div class="stap">
+              <span class="hok"><svg class="sym"><use href="#s-adem"/></svg></span>
+              <div><b>Open boek</b><span>8 × per kant · op de uitademing</span></div>
+              <span class="vink" aria-hidden="true">✓</span>
+            </div>
+            <div class="stap">
+              <span class="hok"><svg class="sym"><use href="#s-kracht"/></svg></span>
+              <div><b>Romp draaien</b><span>10 × per kant · op de stoel</span></div>
+              <span class="vink" aria-hidden="true">✓</span>
+            </div>
+          </div>
+
+          <div class="briefje">
+            <b>Aantekening van de therapeut ·</b> Rij 9 tot en met 12 zonder de rugstrekking. Hij
+            gaf u vorige week te veel pijn; we pakken hem in week 3 opnieuw op.
+          </div>
+        </div>
+      </div>
+
+      <div class="werkuitleg">
+        <h3>Een patroon vergeeft een gemiste rij. Een streak niet.</h3>
+        <p>Breiwerk kent geen verloren dagen: wie een avond overslaat pakt de volgende avond
+          dezelfde rij weer op. Die logica zit in de hele cliëntkaart. Er is geen percentage, geen
+          vuurtje dat uitgaat, geen rood vlak. Er is een rij die nog open staat, en het werk dat
+          er al ligt.</p>
+
+        <dl class="regels">
+          <div class="r">
+            <dt>Rij = dag</dt>
+            <dd>Eén rij is één dag. Vijf ruitjes, vijf oefeningen. <b>De rij telt pas als af
+              wanneer alle ruitjes gevuld zijn</b> — maar een half gevulde rij blijft staan zoals
+              hij is.</dd>
+          </div>
+          <div class="r">
+            <dt>Herhaling</dt>
+            <dd>“Herhaal rij 3 t/m 6 nog twee keer” staat er letterlijk. Zo past een maand op één
+              blad zonder dat er 28 kaartjes nodig zijn.</dd>
+          </div>
+          <div class="r">
+            <dt>Nooit alleen kleur</dt>
+            <dd>Een gevuld ruitje is niet alleen rood: het is ook <b>omkaderd en van een teken
+              voorzien</b>. Op een zwart-witprinter en voor kleurenblinde ogen blijft het patroon
+              leesbaar.</dd>
+          </div>
+          <div class="r">
+            <dt>Meerdere maten</dt>
+            <dd>Zoals een patroon maten kent (S–M–L), kent het schema <b>lichte, gewone en zware
+              uitvoering</b> per steek. De therapeut kiest de maat, niet een algoritme.</dd>
+          </div>
+        </dl>
+
+        <div class="telstrook">
+          <div class="teller"><div class="getal">9</div><div class="label">rijen op de naald</div></div>
+          <div class="teller"><div class="getal">28</div><div class="label">rijen in het model</div></div>
+          <div class="teller"><div class="getal">2</div><div class="label">rijen overgeslagen</div></div>
+          <div class="teller"><div class="getal">11′</div><div class="label">gemiddeld per rij</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De A4-printkaart</h2>
+      <p>het patroonblad — boven het telpatroon, onder de uitgeschreven aanwijzingen</p>
+    </div>
+
+    <div class="printtoelichting geen-print">
+      <p>Het vel is een patroonblad: bovenaan het telpatroon van deze week met ruitjes van ruim negen
+        millimeter — groot genoeg om er met een balpen een streep in te zetten — en daaronder de
+        legenda, waarin elk teken een tekening én een uitgeschreven zin krijgt. Wie de tekens
+        negeert, heeft aan de zinnen genoeg.</p>
+      <button class="knop" type="button" onclick="window.print()">Print dit blad</button>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <div class="kop">
+            <div>
+              <div class="model">Model 14 — Rug &amp; romp · week 2 van 4</div>
+              <h1>Oefenpatroon voor de heer J. Bosveld</h1>
+            </div>
+            <div class="wie">
+              <b>Fysiotherapie De Vaart</b>
+              Marijke Talsma · 038 — 421 66 08<br/>
+              Blad gemaakt 12-08-2026
+            </div>
+          </div>
+
+          <p class="aanwijzing">Lees het patroon <b>van onder naar boven</b>, één rij per dag. Zet een streep
+            door elk ruitje dat u gedaan hebt; een overgeslagen ruitje laat u open. <b>Herhaal dit
+            blad volgende week nog één keer.</b></p>
+
+          <div class="patroonblok">
+            <div class="blokkop"><span>Telpatroon — week 2</span><i>7 rijen × 5 steken</i></div>
+
+            <div class="telpatroon">
+              <div class="hoofdrij">
+                <span class="hoek">dag</span>
+                <span>Bol en hol</span>
+                <span>Knie naar borst</span>
+                <span>Open boek</span>
+                <span>Romp draaien</span>
+                <span>Rug strekken</span>
+                <span class="hoek">rij</span>
+              </div>
+
+              <div class="rij zondag">
+                <span class="dag">zo</span>
+                <span class="vak"><svg class="sym"><use href="#s-beweging"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-rek"/></svg></span>
+                <span class="vak rust"><svg class="sym"><use href="#s-rust"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-kracht"/></svg></span>
+                <span class="vak rust"><svg class="sym"><use href="#s-rust"/></svg></span>
+                <span class="nr">14</span>
+              </div>
+              <div class="rij">
+                <span class="dag">za</span>
+                <span class="vak"><svg class="sym"><use href="#s-beweging"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-rek"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-adem"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-kracht"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-balans"/></svg></span>
+                <span class="nr">13</span>
+              </div>
+              <div class="rij">
+                <span class="dag">vr</span>
+                <span class="vak"><svg class="sym"><use href="#s-beweging"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-rek"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-adem"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-kracht"/></svg></span>
+                <span class="vak rust"><svg class="sym"><use href="#s-rust"/></svg></span>
+                <span class="nr">12</span>
+              </div>
+              <div class="rij">
+                <span class="dag">do</span>
+                <span class="vak"><svg class="sym"><use href="#s-beweging"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-rek"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-adem"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-kracht"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-balans"/></svg></span>
+                <span class="nr">11</span>
+              </div>
+              <div class="rij">
+                <span class="dag">wo</span>
+                <span class="vak"><svg class="sym"><use href="#s-beweging"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-rek"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-adem"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-kracht"/></svg></span>
+                <span class="vak rust"><svg class="sym"><use href="#s-rust"/></svg></span>
+                <span class="nr">10</span>
+              </div>
+              <div class="rij">
+                <span class="dag">di</span>
+                <span class="vak"><svg class="sym"><use href="#s-beweging"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-rek"/></svg></span>
+                <span class="vak rust"><svg class="sym"><use href="#s-rust"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-kracht"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-balans"/></svg></span>
+                <span class="nr">9</span>
+              </div>
+              <div class="rij">
+                <span class="dag">ma</span>
+                <span class="vak"><svg class="sym"><use href="#s-beweging"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-rek"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-adem"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-kracht"/></svg></span>
+                <span class="vak"><svg class="sym"><use href="#s-balans"/></svg></span>
+                <span class="nr">8</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="legendablok">
+            <div class="blokkop" style="padding-top:3.4mm"><span>Legenda — wat elk teken betekent</span><i>lees dit één keer</i></div>
+            <div class="legendalijst">
+
+              <div class="uitleg">
+                <span class="hok"><svg class="sym"><use href="#s-beweging"/></svg></span>
+                <span class="fig"><img src="/images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png" alt="Rug bol en hol op handen en knieën"/></span>
+                <span>
+                  <b>Rug bol en hol</b>
+                  <p>Op handen en knieën, handen onder de schouders. Maak uw rug rustig bol en laat
+                    hem daarna langzaam weer hol worden.</p>
+                  <span class="tel">10 × · rustig tempo</span>
+                </span>
+              </div>
+
+              <div class="uitleg">
+                <span class="hok"><svg class="sym"><use href="#s-rek"/></svg></span>
+                <span class="fig"><img src="/images/rug/knie-naar-borst-liggend-line-v1.png" alt="Knie naar borst, liggend"/></span>
+                <span>
+                  <b>Knie naar borst</b>
+                  <p>Op uw rug. Trek één knie met beide handen rustig naar de borst en laat het been
+                    langzaam zakken. Wissel van been.</p>
+                  <span class="tel">2 × 20 sec per been</span>
+                </span>
+              </div>
+
+              <div class="uitleg">
+                <span class="hok"><svg class="sym"><use href="#s-adem"/></svg></span>
+                <span class="fig"><img src="/images/rug/open-boek-liggend-line-v1.png" alt="Open boek, zijlig"/></span>
+                <span>
+                  <b>Open boek</b>
+                  <p>Op uw zij, knieën gebogen, armen voor u op elkaar. Draai de bovenste arm rustig
+                    open en breng hem langzaam terug.</p>
+                  <span class="tel">8 × per kant · uitademen</span>
+                </span>
+              </div>
+
+              <div class="uitleg">
+                <span class="hok"><svg class="sym"><use href="#s-kracht"/></svg></span>
+                <span class="fig"><img src="/images/rug/romp-draaien-zittend-line-v1.png" alt="Romp draaien, zittend"/></span>
+                <span>
+                  <b>Romp draaien</b>
+                  <p>Rechtop op een stoel, armen gekruist. Draai uw bovenlichaam rustig naar één kant
+                    en kom langzaam terug.</p>
+                  <span class="tel">10 × per kant</span>
+                </span>
+              </div>
+
+              <div class="uitleg">
+                <span class="hok"><svg class="sym"><use href="#s-balans"/></svg></span>
+                <span class="fig"><img src="/images/rug/rug-strekken-liggend-line-v1.png" alt="Rug strekken, buiklig"/></span>
+                <span>
+                  <b>Rug strekken</b>
+                  <p>Op uw buik, handen naast de schouders. Duw uw bovenlichaam rustig omhoog; de
+                    heupen blijven liggen.</p>
+                  <span class="tel">8 × · stoppen bij pijn</span>
+                </span>
+              </div>
+
+              <div class="uitleg">
+                <span class="hok"><svg class="sym"><use href="#s-rust"/></svg></span>
+                <span class="fig" style="border-style:dashed">—</span>
+                <span>
+                  <b>Rust — deze steek slaat u over</b>
+                  <p>Een streepje betekent: vandaag niet. Geen gemiste oefening maar een geplande
+                    rustdag — laat het ruitje leeg.</p>
+                  <span class="tel">niets doen is ook het patroon volgen</span>
+                </span>
+              </div>
+
+            </div>
+
+            <div class="onderrij">
+              <div class="kaartje">
+                <h4>Spanning — de enige maat die u zelf meet</h4>
+                <p>Tien herhalingen duren ongeveer één minuut. Bent u er in dertig tellen doorheen,
+                  dan is de beweging te klein geworden.</p>
+              </div>
+              <div class="kaartje">
+                <h4>Bel de praktijk bij</h4>
+                <ul>
+                  <li>pijn die de volgende ochtend nog niet weg is;</li>
+                  <li>uitstraling naar het been onder de knie;</li>
+                  <li>tintelingen of krachtverlies in de voet.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="voet">
+            <span><b>Herhaal dit blad</b> volgende week nog één keer — daarna model 15</span>
+            <span>Volgende afspraak: <b>di 18 aug, 09:20</b> · blad 1 van 1</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+</body>
+</html>

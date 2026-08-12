@@ -1,0 +1,889 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 6 — Tegelwijsheid · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 6 — TEGELWIJSHEID
+   De oefenkaart als tegeltableau boven het aanrecht. Vier eeuwen
+   lang hing in Nederlandse keukens instructie aan de muur in
+   kobalt op tinwit: één beeld per tegel, één zin eronder, een
+   ossenkopje in elke hoek zodat de tegels tot een veld aaneen
+   groeien.
+   Waarom het werkt voor dit product: een tegel dwingt tot één
+   ding per vlak, het ornament zit alleen in de rand, en kobalt
+   op wit is het hoogste contrast dat een enkele inkt kan geven —
+   ook op een zwart-witprinter.
+   Het sieraad staat in de lijst, nooit in de zin. De zinnen zijn
+   groot, donker en gewoon.
+   Alles inline; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  --tin:#f6f4ec;          /* tinglazuur, licht gebroken wit */
+  --wit:#fffefb;
+  --kobalt:#1d3f8f;
+  --kobalt-diep:#142c66;
+  --kobalt-l:#dee5f4;
+  --kobalt-xl:#eef2fa;
+  --inkt:#14203c;         /* tekstkleur: donker marineblauw-zwart */
+  --inkt-2:#37405c;
+  --grijs:#7b8296;
+  --lijn:#c8cfe0;
+  --lijn-l:#e2e6f0;
+  --klei:#c9bfae;         /* de voegkleur */
+
+  --serif:"Iowan Old Style",Charter,"Palatino Linotype",Palatino,Georgia,serif;
+  --sans:Seravek,"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:68px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17.5px/1.62 var(--serif);color:var(--inkt-2);background:var(--tin)}
+img{max-width:100%;display:block}
+:focus-visible{outline:2.5px solid var(--kobalt);outline-offset:3px}
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+
+/* de blauwe wassing over de lijntekeningen — de tegelschilder had ook maar één kleur.
+   De filterketen maakt het papier weer zuiver wit; de kobaltlaag erboven kleurt alleen
+   wat donker is. Drukt een printer geen achtergronden af, dan blijven de lijnen zwart —
+   ook dat is een leesbaar vel. */
+.blauwdruk{position:relative;display:inline-block;line-height:0;background:#fff;isolation:isolate}
+.blauwdruk img{filter:grayscale(1) contrast(1.35) brightness(1.06)}
+.blauwdruk::after{content:"";position:absolute;inset:0;background:var(--kobalt-diep);
+  mix-blend-mode:screen;pointer-events:none}
+
+.labbalk{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);
+  padding:10px 22px;background:var(--kobalt-diep);color:#fff;font:600 13px/1 var(--sans)}
+.labbalk a{color:#fff;text-decoration:none;padding:6px 10px}
+.labbalk a:hover{background:rgba(255,255,255,.2)}
+.labbalk .nr{color:#a9c0ee;font:700 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase}
+.labbalk .rek{flex:1}
+.labbalk .terug{border:1px solid rgba(255,255,255,.4)}
+
+.scherm{padding:var(--s6) 22px}
+.scherm + .scherm{border-top:1px solid var(--lijn)}
+.binnen{max-width:1180px;margin:0 auto}
+.schermkop{display:flex;align-items:flex-end;gap:var(--s3);margin-bottom:var(--s5)}
+.schermkop b{font:700 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--kobalt);
+  border:1px solid var(--kobalt);padding:7px 10px}
+.schermkop h2{font:600 26px/1 var(--sans);letter-spacing:-.028em;color:var(--inkt)}
+.schermkop p{flex:1;text-align:right;font-style:italic;font-size:15.5px;color:var(--grijs)}
+@media (max-width:760px){.schermkop{flex-wrap:wrap}.schermkop p{text-align:left;flex-basis:100%}}
+
+.hoekje{position:absolute;width:19px;height:19px;color:var(--kobalt)}
+.hoekje.lb{left:7px;top:7px}
+.hoekje.rb{right:7px;top:7px;transform:scaleX(-1)}
+.hoekje.lo{left:7px;bottom:7px;transform:scaleY(-1)}
+.hoekje.ro{right:7px;bottom:7px;transform:scale(-1,-1)}
+
+/* ============================================================
+   1 · LANDING — de tegelwand
+   ============================================================ */
+.wand{background:var(--klei);padding:14px;border:1px solid var(--lijn)}
+@media (max-width:560px){.wand{padding:6px}.scherm{padding-left:14px;padding-right:14px}}
+.wandbinnen{background:var(--wit);border:2px solid var(--kobalt);padding:0}
+
+.cartouche{border-bottom:2px solid var(--kobalt);padding:var(--s5) var(--s5) var(--s4);text-align:center;
+  position:relative;background:
+    radial-gradient(120% 100% at 50% 0%,var(--kobalt-xl) 0%,var(--wit) 62%)}
+@media (max-width:700px){.cartouche{padding:var(--s4) var(--s3)}}
+.cartouche .plaat{font:700 10.5px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--kobalt)}
+.cartouche h1{font:400 clamp(34px,5.2vw,58px)/1.08 var(--serif);color:var(--inkt);margin:var(--s3) auto 0;
+  max-width:19ch;letter-spacing:-.015em}
+.cartouche h1 em{font-style:italic;color:var(--kobalt)}
+.cartouche .spreuk{font:400 19px/1.5 var(--serif);color:var(--inkt-2);max-width:56ch;margin:var(--s3) auto 0}
+.cartouche .lijnornament{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:var(--s4);
+  color:var(--kobalt)}
+.cartouche .lijnornament i{display:block;height:1px;width:min(180px,26vw);background:var(--kobalt);opacity:.5}
+.cartouche .doen{display:flex;flex-wrap:wrap;gap:var(--s3);justify-content:center;margin-top:var(--s4)}
+.kn{display:inline-block;font:600 14px/1 var(--sans);text-decoration:none;padding:16px 24px;
+  background:var(--kobalt);color:#fff;border:1.5px solid var(--kobalt)}
+.kn:hover{background:var(--kobalt-diep);border-color:var(--kobalt-diep)}
+.kn.leeg{background:transparent;color:var(--kobalt)}
+.kn.leeg:hover{background:var(--kobalt);color:#fff}
+
+/* het tableau zelf: tegels met voegen ertussen */
+.tableau{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;background:var(--klei);padding:3px}
+@media (max-width:860px){.tableau{grid-template-columns:repeat(2,1fr)}}
+.tegel{background:var(--wit);position:relative;padding:var(--s3);display:flex;flex-direction:column;
+  align-items:center;text-align:center;aspect-ratio:1;justify-content:center;gap:10px;min-width:0}
+.tegel .blauwdruk{height:142px;width:100%;display:flex;align-items:center;justify-content:center}
+.tegel img{max-height:100%;max-width:100%;width:auto;object-fit:contain}
+.tegel .naam{font:600 15.5px/1.28 var(--sans);color:var(--inkt);letter-spacing:-.012em}
+.tegel .dosis{font:600 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--kobalt)}
+@media (max-width:900px){.tegel .blauwdruk{height:112px}}
+@media (max-width:520px){.tegel .blauwdruk{height:84px}.tegel .naam{font-size:14px}}
+
+/* drie argumenten, gezet als een fries onder de wand */
+.fries{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s5)}
+@media (max-width:860px){.fries{grid-template-columns:1fr}}
+.friesvak{background:var(--wit);border:1px solid var(--lijn);padding:var(--s4);position:relative}
+.friesvak h3{font:600 20px/1.2 var(--sans);letter-spacing:-.022em;color:var(--inkt);margin-bottom:9px}
+.friesvak h3 span{display:block;font:700 10px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--kobalt);margin-bottom:9px}
+.friesvak p{font-size:16px;line-height:1.5}
+
+/* ============================================================
+   2 · KIEZER — de tegelbakkerij
+   ============================================================ */
+.bakkerij{display:grid;grid-template-columns:1fr 320px;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.bakkerij{grid-template-columns:1fr}}
+
+.rekken{display:flex;flex-wrap:wrap;gap:var(--s2);margin-bottom:var(--s4);align-items:center}
+.rekken button{font:600 13.5px/1 var(--sans);background:var(--wit);border:1.5px solid var(--lijn);
+  padding:11px 15px;color:var(--inkt-2);cursor:pointer}
+.rekken button[aria-pressed="true"]{background:var(--kobalt);border-color:var(--kobalt);color:#fff}
+.rekken .telling{margin-left:auto;font:600 11px/1 var(--mono);letter-spacing:.1em;color:var(--grijs)}
+
+.kiestableau{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;background:var(--klei);padding:3px;
+  border:1px solid var(--lijn)}
+@media (max-width:860px){.kiestableau{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.kiestableau{grid-template-columns:1fr}}
+.kiestegel{background:var(--wit);position:relative;padding:var(--s4) var(--s3) var(--s3);text-align:center;
+  display:flex;flex-direction:column;gap:11px;cursor:pointer;min-width:0}
+.kiestegel .blauwdruk{height:104px;width:100%;display:flex;align-items:center;justify-content:center}
+.kiestegel img{max-height:100%;max-width:100%;object-fit:contain}
+.kiestegel b{font:600 17px/1.24 var(--sans);color:var(--inkt);letter-spacing:-.015em}
+.kiestegel p{font-size:15px;line-height:1.45;color:var(--inkt-2)}
+.kiestegel .voet{margin-top:auto;padding-top:11px;border-top:1px solid var(--lijn-l);
+  font:600 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--grijs);
+  display:flex;justify-content:space-between;gap:8px}
+.kiestegel.gekozen{background:var(--kobalt-xl);box-shadow:inset 0 0 0 2px var(--kobalt)}
+.kiestegel.gekozen .voet{color:var(--kobalt)}
+.kiestegel .gebakken{position:absolute;top:0;left:0;background:var(--kobalt);color:#fff;
+  font:700 9.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;padding:6px 9px}
+
+.zetlijst{border:2px solid var(--kobalt);background:var(--wit);position:sticky;top:56px}
+.zetlijst .kop{background:var(--kobalt);color:#fff;padding:13px var(--s3);font:600 11px/1 var(--mono);
+  letter-spacing:.16em;text-transform:uppercase;display:flex;justify-content:space-between}
+.zetlijst .kop i{font-style:normal;color:#bcd0f4}
+.zetlijst ol{list-style:none;counter-reset:t}
+.zetlijst li{counter-increment:t;display:flex;gap:11px;align-items:baseline;padding:12px var(--s3);
+  border-bottom:1px solid var(--lijn-l);font-size:16px}
+.zetlijst li::before{content:counter(t);font:700 11px/1 var(--mono);color:var(--kobalt);flex:0 0 14px}
+.zetlijst li span{margin-left:auto;font:600 10.5px/1 var(--mono);color:var(--grijs);white-space:nowrap}
+.zetlijst .maat{padding:var(--s3);border-bottom:1px solid var(--lijn-l);font-size:15.5px;line-height:1.5}
+.zetlijst .maat b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--kobalt);margin-bottom:7px}
+.zetlijst .maatbalk{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;margin-top:11px}
+.zetlijst .maatbalk i{height:20px;background:var(--kobalt-l);border:1px solid var(--lijn)}
+.zetlijst .maatbalk i.vol{background:var(--kobalt);border-color:var(--kobalt)}
+.zetlijst .slot{padding:var(--s3)}
+.zetlijst .slot a{display:block;text-align:center;font:600 14px/1 var(--sans);text-decoration:none;
+  background:var(--kobalt);color:#fff;padding:15px}
+.zetlijst .slot a:hover{background:var(--kobalt-diep)}
+.zetlijst .slot p{font-size:14px;color:var(--grijs);text-align:center;margin-top:10px;font-style:italic}
+
+/* ============================================================
+   3 · CLIËNTKAART — de tegellijst boven het aanrecht
+   ============================================================ */
+.lijstrij{display:grid;grid-template-columns:340px 1fr;gap:var(--s5);align-items:start}
+@media (max-width:940px){.lijstrij{grid-template-columns:1fr}}
+.telefoon{border:11px solid var(--inkt);border-radius:34px;overflow:hidden;background:var(--wit);
+  box-shadow:0 18px 44px rgba(20,32,60,.22)}
+.tel{padding:var(--s3) var(--s3) var(--s4);max-height:660px;overflow:auto;background:var(--klei)}
+.tel .lijstkop{background:var(--wit);border:2px solid var(--kobalt);padding:var(--s3);text-align:center;
+  position:relative;margin-bottom:3px}
+.tel .lijstkop .dag{font:700 10px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--kobalt)}
+.tel .lijstkop h3{font:400 25px/1.15 var(--serif);color:var(--inkt);margin-top:9px}
+.tel .lijstkop p{font-size:15px;line-height:1.45;color:var(--inkt-2);margin-top:8px}
+
+.teltegel{background:var(--wit);display:grid;grid-template-columns:78px 1fr 34px;gap:12px;align-items:center;
+  padding:12px;margin-bottom:3px;position:relative}
+.teltegel .blauwdruk{height:66px;width:78px;display:flex;align-items:center;justify-content:center}
+.teltegel img{max-height:100%;max-width:100%;object-fit:contain}
+.teltegel b{font:600 16.5px/1.2 var(--sans);color:var(--inkt);display:block;letter-spacing:-.012em}
+.teltegel .zin{font-size:14.5px;line-height:1.4;color:var(--inkt-2);margin-top:5px}
+.teltegel .telling{font:600 10px/1 var(--mono);letter-spacing:.08em;color:var(--kobalt);margin-top:7px;
+  text-transform:uppercase;display:block}
+.teltegel .vink{width:34px;height:34px;border:1.5px solid var(--lijn);display:flex;align-items:center;
+  justify-content:center;color:transparent;font:700 17px/1 var(--sans)}
+.teltegel.geglazuurd{background:var(--kobalt)}
+.teltegel.geglazuurd b,.teltegel.geglazuurd .zin{color:#fff}
+.teltegel.geglazuurd .telling{color:#bcd0f4}
+.teltegel.geglazuurd .vink{background:var(--wit);border-color:var(--wit);color:var(--kobalt)}
+.teltegel.geglazuurd img{filter:invert(1) grayscale(1) brightness(1.9);mix-blend-mode:screen}
+
+.tel .voetplaat{background:var(--wit);border:2px solid var(--kobalt);padding:var(--s3);text-align:center;
+  position:relative;margin-top:3px}
+.tel .voetplaat .spreuk{font:italic 400 19px/1.35 var(--serif);color:var(--kobalt)}
+.tel .voetplaat .van{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs);
+  margin-top:11px}
+
+.lijstuitleg h3{font:400 31px/1.12 var(--serif);color:var(--inkt);max-width:23ch}
+.lijstuitleg > p{font-size:17px;line-height:1.58;margin-top:var(--s3);max-width:58ch}
+.beginselen{margin-top:var(--s4);display:grid;grid-template-columns:1fr 1fr;gap:3px;background:var(--klei);
+  padding:3px;border:1px solid var(--lijn)}
+@media (max-width:640px){.beginselen{grid-template-columns:1fr}}
+.beginsel{background:var(--wit);padding:var(--s4);position:relative}
+.beginsel h4{font:700 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--kobalt);
+  margin-bottom:9px}
+.beginsel p{font-size:16px;line-height:1.5}
+.beginsel p b{color:var(--inkt)}
+
+.weekwand{margin-top:var(--s4)}
+.weekwand .titel{font:700 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--inkt);
+  border-bottom:2px solid var(--kobalt);padding-bottom:8px;margin-bottom:var(--s3)}
+.weekraster{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;background:var(--klei);padding:3px}
+.weekvak{background:var(--wit);aspect-ratio:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:6px;position:relative}
+.weekvak .d{font:700 11px/1 var(--sans);letter-spacing:.06em;color:var(--grijs);text-transform:uppercase}
+.weekvak .g{font:600 13px/1 var(--mono);color:var(--inkt)}
+.weekvak.vol{background:var(--kobalt)}
+.weekvak.vol .d{color:#bcd0f4}
+.weekvak.vol .g{color:#fff}
+.weekvak.half{background:var(--kobalt-l)}
+.weekwand .onderschrift{font-size:15px;color:var(--grijs);margin-top:11px;font-style:italic}
+
+/* ============================================================
+   4 · PRINTKAART — het tableau op A4
+   ============================================================ */
+.printtoelichting{display:flex;flex-wrap:wrap;gap:var(--s4);align-items:flex-start;margin-bottom:var(--s4)}
+.printtoelichting p{flex:1;min-width:290px;font-size:16px;line-height:1.5}
+.printtoelichting .knop{font:600 14px/1 var(--sans);background:var(--kobalt);color:#fff;border:0;
+  padding:16px 24px;cursor:pointer}
+.printtoelichting .knop:hover{background:var(--kobalt-diep)}
+
+.bladhouder{--z:1;display:flex;justify-content:center}
+.bladschaal{width:calc(210mm * var(--z));height:calc(297mm * var(--z))}
+@media (max-width:1000px){.bladhouder{--z:.68}}
+@media (max-width:760px){.bladhouder{--z:.46}}
+@media (max-width:420px){.bladhouder{--z:.36}}
+
+.blad{width:210mm;height:297mm;transform:scale(var(--z));transform-origin:top left;background:#fff;
+  border:1px solid var(--lijn);box-shadow:0 14px 40px rgba(20,32,60,.16);
+  padding:12mm;display:flex;flex-direction:column;color:var(--inkt-2)}
+
+/* de geschilderde lijst rond het hele vel */
+.blad .lijst{border:1.6pt solid var(--kobalt);padding:2.2mm;flex:1;display:flex;flex-direction:column}
+.blad .lijstbinnen{border:.6pt solid var(--kobalt);flex:1;display:flex;flex-direction:column;padding:4mm}
+
+.blad .kopplaat{text-align:center;padding-bottom:3.5mm;border-bottom:.8pt solid var(--kobalt);position:relative}
+.blad .kopplaat .praktijk{font:700 7.4pt/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--kobalt)}
+.blad .kopplaat h1{font:400 20pt/1.06 var(--serif);color:var(--inkt);margin-top:2.2mm;letter-spacing:-.012em}
+.blad .kopplaat .voor{font:400 11pt/1.35 var(--serif);color:var(--inkt-2);margin-top:1.8mm}
+.blad .kopplaat .voor b{color:var(--inkt)}
+
+.blad .aanhef{font:400 10.6pt/1.4 var(--serif);text-align:center;padding:3mm 6mm 0;color:var(--inkt-2)}
+.blad .aanhef b{color:var(--inkt)}
+
+/* het tableau: 2 × 3 tegels met voegen */
+.blad .tableau6{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2mm;background:var(--klei);
+  padding:1.2mm;margin-top:3.5mm}
+.blad .ptegel{background:#fff;padding:2.6mm;display:grid;grid-template-columns:22mm 1fr;gap:2.6mm;
+  align-items:start;position:relative}
+.blad .ptegel .fig{height:22mm;display:flex;align-items:center;justify-content:center;
+  border:.6pt solid var(--lijn)}
+.blad .ptegel .fig .blauwdruk{height:100%;display:flex;align-items:center;justify-content:center}
+.blad .ptegel .fig img{max-height:100%;max-width:100%;object-fit:contain}
+.blad .ptegel .nr{font:700 7.2pt/1 var(--mono);letter-spacing:.16em;color:var(--kobalt)}
+.blad .ptegel h3{font:700 11.6pt/1.14 var(--serif);color:var(--inkt);margin-top:1.2mm;letter-spacing:-.008em}
+.blad .ptegel p{font:400 9.9pt/1.32 var(--serif);color:var(--inkt-2);margin-top:1.1mm}
+.blad .ptegel .dosis{font:700 8.2pt/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--kobalt);margin-top:1.6mm;display:block}
+/* de dagvakjes als randversiering onderin elke tegel */
+.blad .ptegel .dagen{grid-column:1/-1;display:grid;grid-template-columns:repeat(7,1fr);gap:1mm;
+  margin-top:2mm;border-top:.6pt solid var(--lijn);padding-top:1.6mm}
+.blad .ptegel .dagen span{border:.6pt solid var(--kobalt);height:5.6mm;display:flex;align-items:flex-start;
+  justify-content:center;font:600 6.2pt/1 var(--mono);color:var(--grijs);padding-top:.8mm;text-transform:uppercase}
+
+/* de onderplaat met de spreuk */
+.blad .spreukplaat{margin-top:3mm;border:.8pt solid var(--kobalt);padding:3mm;text-align:center;
+  position:relative;background:#fbfcff}
+.blad .spreukplaat .spreuk{font:italic 400 13pt/1.3 var(--serif);color:var(--kobalt)}
+.blad .spreukplaat .toelichting{font:400 9.8pt/1.36 var(--serif);color:var(--inkt-2);margin-top:2mm;
+  max-width:74%;margin-left:auto;margin-right:auto}
+
+.blad .waarschuwing{margin-top:3mm;display:grid;grid-template-columns:1fr 1fr;gap:4mm}
+.blad .waarschuwing .vak h4{font:700 7.4pt/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--kobalt);margin-bottom:1.6mm;border-bottom:.6pt solid var(--kobalt);padding-bottom:1.2mm}
+.blad .waarschuwing ul{list-style:none}
+.blad .waarschuwing li{font:400 9.8pt/1.34 var(--serif);padding-left:4mm;position:relative;margin-top:1mm}
+.blad .waarschuwing li::before{content:"◆";position:absolute;left:0;color:var(--kobalt);font-size:6pt;top:1.1mm}
+.blad .waarschuwing p{font:400 9.8pt/1.34 var(--serif)}
+
+.blad .voet{margin-top:auto;padding-top:2.6mm;border-top:.8pt solid var(--kobalt);display:flex;
+  justify-content:space-between;gap:5mm;font:600 7.4pt/1.35 var(--mono);letter-spacing:.07em;
+  text-transform:uppercase;color:var(--grijs)}
+.blad .voet b{color:var(--inkt)}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;border:0 !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<!-- het ossenkopje: het hoekmotief dat sinds 1620 elke Nederlandse tegel afmaakt -->
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="ossenkop" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <path d="M1.5 1.5c6.6 0 11.6 2 15 6"/>
+      <path d="M1.5 10.5c4-2 6.8-4.8 9-9"/>
+      <path d="M1.5 1.5l6 6"/>
+      <circle cx="11.6" cy="11.6" r="2.4"/>
+    </g>
+  </symbol>
+  <symbol id="tulp" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 21V11"/>
+      <path d="M12 11c-3 0-5-2.2-5-5 1.9 0 3.6.9 5 2.4C13.4 6.9 15.1 6 17 6c0 2.8-2 5-5 5z"/>
+      <path d="M12 15.6c-2.2 0-3.9-1.2-4.6-3"/>
+    </g>
+  </symbol>
+</svg>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 6</span>
+  <strong style="font:700 14px/1 var(--sans)">Tegelwijsheid</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>een wand, geen webpagina — het product hangt in de keuken</p>
+    </div>
+
+    <div class="wand">
+      <div class="wandbinnen">
+        <div class="cartouche">
+          <svg class="hoekje lb"><use href="#ossenkop"/></svg>
+          <svg class="hoekje rb"><use href="#ossenkop"/></svg>
+          <div class="plaat">Fysiplan · Tableau nr. 6</div>
+          <h1>Vier eeuwen lang hing instructie in de keuken. <em>In kobalt op tinwit.</em></h1>
+          <p class="spreuk">Eén beeld per tegel, één zin eronder, ornament alleen in de rand.
+            Fysiplan drukt het oefenschema af als tegeltableau: zes tegels op één A4, groot genoeg
+            om vanaf de keukentafel te lezen, mooi genoeg om te blijven hangen.</p>
+          <div class="lijnornament" aria-hidden="true">
+            <i></i><svg style="width:22px;height:22px" viewBox="0 0 24 24"><use href="#tulp"/></svg><i></i>
+          </div>
+          <div class="doen">
+            <a class="kn" href="#printkaart">Bekijk het tableau</a>
+            <a class="kn leeg" href="#kiezer">Tegels kiezen</a>
+          </div>
+        </div>
+
+        <div class="tableau">
+          <div class="tegel">
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg><svg class="hoekje ro"><use href="#ossenkop"/></svg>
+            <span class="blauwdruk"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/></span>
+            <span class="naam">Opstaan uit de stoel</span>
+            <span class="dosis">3 × 8</span>
+          </div>
+          <div class="tegel">
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg><svg class="hoekje ro"><use href="#ossenkop"/></svg>
+            <span class="blauwdruk"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen komen"/></span>
+            <span class="naam">Op de tenen komen</span>
+            <span class="dosis">2 × 12</span>
+          </div>
+          <div class="tegel">
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg><svg class="hoekje ro"><use href="#ossenkop"/></svg>
+            <span class="blauwdruk"><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Op één been staan"/></span>
+            <span class="naam">Op één been staan</span>
+            <span class="dosis">3 × 15 sec</span>
+          </div>
+          <div class="tegel">
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg><svg class="hoekje ro"><use href="#ossenkop"/></svg>
+            <span class="blauwdruk"><img src="/images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png" alt="Gewicht zijwaarts verplaatsen"/></span>
+            <span class="naam">Gewicht verplaatsen</span>
+            <span class="dosis">2 × 10</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fries">
+      <div class="friesvak">
+        <svg class="hoekje lb"><use href="#ossenkop"/></svg><svg class="hoekje ro"><use href="#ossenkop"/></svg>
+        <h3><span>Eén ding per vlak</span>De tegel dwingt tot keuzes</h3>
+        <p>Op een tegel past één beweging, één zin en één telling. Wat er niet op past, hoort er
+          niet op. Dat is de strengste redactieregel die een oefenkaart kan hebben — en precies de
+          reden dat de kaart in één minuut te lezen is.</p>
+      </div>
+      <div class="friesvak">
+        <svg class="hoekje lb"><use href="#ossenkop"/></svg><svg class="hoekje ro"><use href="#ossenkop"/></svg>
+        <h3><span>Sieraad in de rand</span>Het midden blijft rustig</h3>
+        <p>Het ossenkopje in de hoek maakt het vel mooi genoeg om te blijven hangen. Het staat
+          nergens in de weg: de tekening en de zin krijgen het hele midden, in donker marineblauw
+          op wit.</p>
+      </div>
+      <div class="friesvak">
+        <svg class="hoekje lb"><use href="#ossenkop"/></svg><svg class="hoekje ro"><use href="#ossenkop"/></svg>
+        <h3><span>Eén inkt</span>Kobalt haalt de zwart-witprinter</h3>
+        <p>Tegelschilders hadden één kleur en maakten er alles mee. Kobalt op wit blijft in
+          grijstinten donker genoeg om te lezen — de praktijkprinter met de lege kleurcartridge
+          levert dus hetzelfde vel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>Oefeningen kiezen</h2>
+      <p>de bakkerij: u zet zes tegels, niet zestien</p>
+    </div>
+
+    <div class="bakkerij">
+      <div>
+        <div class="rekken">
+          <button type="button" aria-pressed="true">Been &amp; heup</button>
+          <button type="button" aria-pressed="false">Balans</button>
+          <button type="button" aria-pressed="false">Staand met steun</button>
+          <button type="button" aria-pressed="false">Zittend</button>
+          <span class="telling">6 van de 6 tegels gezet</span>
+        </div>
+
+        <div class="kiestableau">
+
+          <article class="kiestegel gekozen">
+            <span class="gebakken">Gezet · tegel 1</span>
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg><svg class="hoekje ro"><use href="#ossenkop"/></svg>
+            <span class="blauwdruk"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt=""/></span>
+            <b>Opstaan uit de stoel</b>
+            <p>Zak met de billen naar achteren tot u de stoel bijna raakt en kom weer rechtop.</p>
+            <div class="voet"><span>3 × 8</span><span>Kracht</span></div>
+          </article>
+
+          <article class="kiestegel gekozen">
+            <span class="gebakken">Gezet · tegel 2</span>
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg><svg class="hoekje ro"><use href="#ossenkop"/></svg>
+            <span class="blauwdruk"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt=""/></span>
+            <b>Op de tenen komen</b>
+            <p>Kom omhoog op uw tenen en laat de hielen rustig weer zakken.</p>
+            <div class="voet"><span>2 × 12</span><span>Kracht</span></div>
+          </article>
+
+          <article class="kiestegel gekozen">
+            <span class="gebakken">Gezet · tegel 3</span>
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg><svg class="hoekje ro"><use href="#ossenkop"/></svg>
+            <span class="blauwdruk"><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt=""/></span>
+            <b>Op één been staan</b>
+            <p>Houd de leuning vast en til één voet rustig van de grond.</p>
+            <div class="voet"><span>3 × 15 s</span><span>Balans</span></div>
+          </article>
+
+          <article class="kiestegel gekozen">
+            <span class="gebakken">Gezet · tegel 4</span>
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg><svg class="hoekje ro"><use href="#ossenkop"/></svg>
+            <span class="blauwdruk"><img src="/images/onderste-extremiteit/hamstring-curl-staand-met-steun-line-v1.png" alt=""/></span>
+            <b>Hiel naar de billen</b>
+            <p>Buig uw knie rustig zodat de hiel richting de billen komt en laat de voet zakken.</p>
+            <div class="voet"><span>2 × 10</span><span>Kracht</span></div>
+          </article>
+
+          <article class="kiestegel gekozen">
+            <span class="gebakken">Gezet · tegel 5</span>
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg><svg class="hoekje ro"><use href="#ossenkop"/></svg>
+            <span class="blauwdruk"><img src="/images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png" alt=""/></span>
+            <b>Gewicht verplaatsen</b>
+            <p>Verplaats uw gewicht rustig van het ene been naar het andere; de voeten blijven staan.</p>
+            <div class="voet"><span>2 × 10</span><span>Balans</span></div>
+          </article>
+
+          <article class="kiestegel gekozen">
+            <span class="gebakken">Gezet · tegel 6</span>
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg><svg class="hoekje ro"><use href="#ossenkop"/></svg>
+            <span class="blauwdruk"><img src="/images/onderste-extremiteit/heup-zijwaarts-heffen-staand-met-steun-line-v1.png" alt=""/></span>
+            <b>Been zijwaarts heffen</b>
+            <p>Beweeg uw gestrekte been rustig zijwaarts omhoog en breng het langzaam terug.</p>
+            <div class="voet"><span>2 × 10</span><span>Heup</span></div>
+          </article>
+
+          <article class="kiestegel">
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg><svg class="hoekje ro"><use href="#ossenkop"/></svg>
+            <span class="blauwdruk"><img src="/images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-line-v1.png" alt=""/></span>
+            <b>Voor en achter wiegen</b>
+            <p>Verplaats uw gewicht naar de tenen en daarna naar de hakken; voeten plat op de grond.</p>
+            <div class="voet"><span>2 × 10</span><span>Balans</span></div>
+          </article>
+
+          <article class="kiestegel">
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg><svg class="hoekje ro"><use href="#ossenkop"/></svg>
+            <span class="blauwdruk"><img src="/images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png" alt=""/></span>
+            <b>Achterwaarts stappen</b>
+            <p>Stap met steun rustig achteruit en weer terug, één voet tegelijk.</p>
+            <div class="voet"><span>2 × 8</span><span>Balans</span></div>
+          </article>
+
+          <article class="kiestegel">
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg><svg class="hoekje ro"><use href="#ossenkop"/></svg>
+            <span class="blauwdruk"><img src="/images/onderste-extremiteit/enkel-optrekken-zittend-actief-line-v1.png" alt=""/></span>
+            <b>Tenen optrekken</b>
+            <p>Trek zittend uw tenen rustig omhoog richting uw scheenbeen en laat ze weer zakken.</p>
+            <div class="voet"><span>2 × 15</span><span>Zittend</span></div>
+          </article>
+
+        </div>
+      </div>
+
+      <aside class="zetlijst">
+        <div class="kop"><span>Het tableau</span><i>6 tegels</i></div>
+        <ol>
+          <li>Opstaan uit de stoel <span>3 × 8</span></li>
+          <li>Op de tenen komen <span>2 × 12</span></li>
+          <li>Op één been staan <span>3 × 15 s</span></li>
+          <li>Hiel naar de billen <span>2 × 10</span></li>
+          <li>Gewicht verplaatsen <span>2 × 10</span></li>
+          <li>Been zijwaarts heffen <span>2 × 10</span></li>
+        </ol>
+        <div class="maat">
+          <b>De lijst is vol</b>
+          Zes tegels is één A4. Een zevende tegel betekent een tweede vel — en dan leest de cliënt
+          er nog maar één.
+          <div class="maatbalk" aria-hidden="true">
+            <i class="vol"></i><i class="vol"></i><i class="vol"></i><i class="vol"></i><i class="vol"></i><i class="vol"></i>
+          </div>
+        </div>
+        <div class="slot">
+          <a href="#printkaart">Tableau afdrukken</a>
+          <p>Eén vel, zes tegels, één spreuk.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>Digitale cliëntkaart</h2>
+      <p>dezelfde tegels op de telefoon — een gedane tegel wordt geglazuurd</p>
+    </div>
+
+    <div class="lijstrij">
+      <div class="telefoon">
+        <div class="tel">
+          <div class="lijstkop">
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg><svg class="hoekje rb"><use href="#ossenkop"/></svg>
+            <div class="dag">Woensdag 12 augustus</div>
+            <h3>Vier van de zes tegels</h3>
+            <p>Twee staan er nog open. U mag ze vanavond doen, of morgen — de tegels lopen niet weg.</p>
+          </div>
+
+          <div class="teltegel geglazuurd">
+            <img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt=""/>
+            <div>
+              <b>Opstaan uit de stoel</b>
+              <div class="zin">Zak naar achteren tot u de stoel bijna raakt.</div>
+              <span class="telling">3 × 8 · gedaan om 08:40</span>
+            </div>
+            <span class="vink" aria-hidden="true">✓</span>
+          </div>
+
+          <div class="teltegel geglazuurd">
+            <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt=""/>
+            <div>
+              <b>Op de tenen komen</b>
+              <div class="zin">Kom omhoog en laat de hielen rustig zakken.</div>
+              <span class="telling">2 × 12 · gedaan om 08:44</span>
+            </div>
+            <span class="vink" aria-hidden="true">✓</span>
+          </div>
+
+          <div class="teltegel geglazuurd">
+            <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt=""/>
+            <div>
+              <b>Op één been staan</b>
+              <div class="zin">Houd de leuning vast, til één voet van de grond.</div>
+              <span class="telling">3 × 15 sec · gedaan om 08:49</span>
+            </div>
+            <span class="vink" aria-hidden="true">✓</span>
+          </div>
+
+          <div class="teltegel geglazuurd">
+            <img src="/images/onderste-extremiteit/hamstring-curl-staand-met-steun-line-v1.png" alt=""/>
+            <div>
+              <b>Hiel naar de billen</b>
+              <div class="zin">Buig de knie rustig, hiel richting de billen.</div>
+              <span class="telling">2 × 10 · gedaan om 08:52</span>
+            </div>
+            <span class="vink" aria-hidden="true">✓</span>
+          </div>
+
+          <div class="teltegel">
+            <span class="blauwdruk"><img src="/images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png" alt=""/></span>
+            <div>
+              <b>Gewicht verplaatsen</b>
+              <div class="zin">Van het ene been naar het andere; voeten blijven staan.</div>
+              <span class="telling">2 × 10 · staat nog open</span>
+            </div>
+            <span class="vink" aria-hidden="true">✓</span>
+          </div>
+
+          <div class="teltegel">
+            <span class="blauwdruk"><img src="/images/onderste-extremiteit/heup-zijwaarts-heffen-staand-met-steun-line-v1.png" alt=""/></span>
+            <div>
+              <b>Been zijwaarts heffen</b>
+              <div class="zin">Gestrekt been rustig opzij en langzaam terug.</div>
+              <span class="telling">2 × 10 · staat nog open</span>
+            </div>
+            <span class="vink" aria-hidden="true">✓</span>
+          </div>
+
+          <div class="voetplaat">
+            <svg class="hoekje lo"><use href="#ossenkop"/></svg><svg class="hoekje ro"><use href="#ossenkop"/></svg>
+            <div class="spreuk">“Rustig aan komt ook vooruit.”</div>
+            <div class="van">Sanne Bijl · Fysiotherapie 't Zand, Makkum</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lijstuitleg">
+        <h3>Een tegel die je gedaan hebt, is geglazuurd. Meer feedback is er niet.</h3>
+        <p>Geen percentages, geen ringen, geen kleurverloop van rood naar groen. De tegel is wit of
+          blauw — u ziet in één oogopslag hoeveel van de wand er af is. En omdat de wand elke dag
+          opnieuw wit begint, verliest niemand een reeks door één slechte dag.</p>
+
+        <div class="beginselen">
+          <div class="beginsel">
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg>
+            <h4>Contrast als beginsel</h4>
+            <p>Kobalt op tinwit haalt ruim <b>8:1 contrast</b>. De zinnen op de tegels staan in
+              donker marineblauw op wit, minimaal 16 px op het scherm en 10,5 punt op papier —
+              gemaakt voor ogen van tachtig.</p>
+          </div>
+          <div class="beginsel">
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg>
+            <h4>Nooit alleen kleur</h4>
+            <p>Een geglazuurde tegel is niet alléén blauw: er staat ook een vinkje in, en het
+              tijdstip eronder. Wie kleur niet ziet, leest gewoon <b>“gedaan om 08:40”</b>.</p>
+          </div>
+          <div class="beginsel">
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg>
+            <h4>De spreuk is geen instructie</h4>
+            <p>Onderaan staat één tegeltjeswijsheid, en die vervangt nooit een aanwijzing. Ze zegt
+              iets over de toon: <b>vriendelijk, niet aanmoedigend</b>. Herstel is geen wedstrijd.</p>
+          </div>
+          <div class="beginsel">
+            <svg class="hoekje lb"><use href="#ossenkop"/></svg>
+            <h4>Papier en scherm zijn hetzelfde</h4>
+            <p>Dezelfde zes tegels, dezelfde volgorde, dezelfde zinnen. Wie het vel op de koelkast
+              heeft hangen en de telefoon erbij pakt, ziet <b>geen twee producten maar één</b>.</p>
+          </div>
+        </div>
+
+        <div class="weekwand">
+          <div class="titel">De week als wand — augustus, week 33</div>
+          <div class="weekraster">
+            <div class="weekvak vol"><span class="d">ma</span><span class="g">6/6</span></div>
+            <div class="weekvak vol"><span class="d">di</span><span class="g">6/6</span></div>
+            <div class="weekvak half"><span class="d">wo</span><span class="g">4/6</span></div>
+            <div class="weekvak"><span class="d">do</span><span class="g">—</span></div>
+            <div class="weekvak"><span class="d">vr</span><span class="g">—</span></div>
+            <div class="weekvak"><span class="d">za</span><span class="g">—</span></div>
+            <div class="weekvak"><span class="d">zo</span><span class="g">—</span></div>
+          </div>
+          <p class="onderschrift">Een halve dag is een halfgevulde tegel, geen rood kruis. Zo ziet
+            de therapeut in één blik waar het schuurt — en de cliënt geen verwijt.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De A4-printkaart</h2>
+      <p>zes tegels in een geschilderde lijst — het vel dat aan de keukendeur hangt</p>
+    </div>
+
+    <div class="printtoelichting geen-print">
+      <p>Eén A4 staand: een dubbele lijst rond het vel, zes tegels van gelijke grootte met voegen
+        ertussen, en onderin een plaquette met de spreuk en de gegevens van de praktijk. In elke
+        tegel staan zeven vakjes voor de dagen van de week — de randversiering is tegelijk het
+        afvinkstrookje.</p>
+      <button class="knop" type="button" onclick="window.print()">Print dit tableau</button>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+          <div class="lijst">
+            <div class="lijstbinnen">
+
+              <div class="kopplaat">
+                <svg class="hoekje lb"><use href="#ossenkop"/></svg>
+                <svg class="hoekje rb"><use href="#ossenkop"/></svg>
+                <div class="praktijk">Fysiotherapie 't Zand · Makkum</div>
+                <h1>Oefentableau — thuis, na de heupoperatie</h1>
+                <div class="voor">Voor <b>mevrouw G. Veenstra</b> · week 5 van 12 · opgesteld door
+                  Sanne Bijl op 12 augustus 2026</div>
+              </div>
+
+              <p class="aanhef">Doe deze zes oefeningen <b>elke dag, in deze volgorde</b>. Houd u
+                altijd vast aan de stoelleuning of het aanrecht. Zet in elke tegel een streepje
+                onder de dag waarop u hem gedaan hebt.</p>
+
+              <div class="tableau6">
+
+                <article class="ptegel">
+                  <svg class="hoekje lb"><use href="#ossenkop"/></svg>
+                  <div class="fig"><span class="blauwdruk"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/></span></div>
+                  <div>
+                    <span class="nr">Tegel 1</span>
+                    <h3>Opstaan uit de stoel</h3>
+                    <p>Voeten op heupbreedte. Zak met uw billen naar achteren tot u de zitting bijna
+                      raakt en kom rustig weer omhoog.</p>
+                    <span class="dosis">3 × 8 · met de armen los</span>
+                  </div>
+                  <div class="dagen">
+                    <span>ma</span><span>di</span><span>wo</span><span>do</span><span>vr</span><span>za</span><span>zo</span>
+                  </div>
+                </article>
+
+                <article class="ptegel">
+                  <svg class="hoekje lb"><use href="#ossenkop"/></svg>
+                  <div class="fig"><span class="blauwdruk"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen komen"/></span></div>
+                  <div>
+                    <span class="nr">Tegel 2</span>
+                    <h3>Op de tenen komen</h3>
+                    <p>Handen licht op de rand van het aanrecht. Kom omhoog op uw tenen en laat de
+                      hielen langzaam weer zakken.</p>
+                    <span class="dosis">2 × 12 · rustig tellen</span>
+                  </div>
+                  <div class="dagen">
+                    <span>ma</span><span>di</span><span>wo</span><span>do</span><span>vr</span><span>za</span><span>zo</span>
+                  </div>
+                </article>
+
+                <article class="ptegel">
+                  <svg class="hoekje lb"><use href="#ossenkop"/></svg>
+                  <div class="fig"><span class="blauwdruk"><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Op één been staan"/></span></div>
+                  <div>
+                    <span class="nr">Tegel 3</span>
+                    <h3>Op één been staan</h3>
+                    <p>Houd de leuning vast. Til één voet rustig van de grond en blijf even staan.
+                      Wissel daarna van been.</p>
+                    <span class="dosis">3 × 15 sec per been</span>
+                  </div>
+                  <div class="dagen">
+                    <span>ma</span><span>di</span><span>wo</span><span>do</span><span>vr</span><span>za</span><span>zo</span>
+                  </div>
+                </article>
+
+                <article class="ptegel">
+                  <svg class="hoekje lb"><use href="#ossenkop"/></svg>
+                  <div class="fig"><span class="blauwdruk"><img src="/images/onderste-extremiteit/hamstring-curl-staand-met-steun-line-v1.png" alt="Hiel naar de billen"/></span></div>
+                  <div>
+                    <span class="nr">Tegel 4</span>
+                    <h3>Hiel naar de billen</h3>
+                    <p>Houd u vast. Buig uw knie rustig zodat de hiel richting uw billen komt en laat
+                      de voet langzaam zakken.</p>
+                    <span class="dosis">2 × 10 per been</span>
+                  </div>
+                  <div class="dagen">
+                    <span>ma</span><span>di</span><span>wo</span><span>do</span><span>vr</span><span>za</span><span>zo</span>
+                  </div>
+                </article>
+
+                <article class="ptegel">
+                  <svg class="hoekje lb"><use href="#ossenkop"/></svg>
+                  <div class="fig"><span class="blauwdruk"><img src="/images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png" alt="Gewicht verplaatsen"/></span></div>
+                  <div>
+                    <span class="nr">Tegel 5</span>
+                    <h3>Gewicht verplaatsen</h3>
+                    <p>Handen op de leuning. Verplaats uw gewicht rustig naar het ene been en daarna
+                      naar het andere; de voeten blijven staan.</p>
+                    <span class="dosis">2 × 10 heen en weer</span>
+                  </div>
+                  <div class="dagen">
+                    <span>ma</span><span>di</span><span>wo</span><span>do</span><span>vr</span><span>za</span><span>zo</span>
+                  </div>
+                </article>
+
+                <article class="ptegel">
+                  <svg class="hoekje lb"><use href="#ossenkop"/></svg>
+                  <div class="fig"><span class="blauwdruk"><img src="/images/onderste-extremiteit/heup-zijwaarts-heffen-staand-met-steun-line-v1.png" alt="Been zijwaarts heffen"/></span></div>
+                  <div>
+                    <span class="nr">Tegel 6</span>
+                    <h3>Been zijwaarts heffen</h3>
+                    <p>Houd de leuning vast. Beweeg uw gestrekte been rustig zijwaarts omhoog en breng
+                      het langzaam terug.</p>
+                    <span class="dosis">2 × 10 per been</span>
+                  </div>
+                  <div class="dagen">
+                    <span>ma</span><span>di</span><span>wo</span><span>do</span><span>vr</span><span>za</span><span>zo</span>
+                  </div>
+                </article>
+
+              </div>
+
+              <div class="waarschuwing">
+                <div class="vak">
+                  <h4>Bel de praktijk wanneer</h4>
+                  <ul>
+                    <li>u zich onzeker voelt of bijna valt;</li>
+                    <li>de heup 's nachts pijn blijft doen;</li>
+                    <li>het been dikker wordt of warm aanvoelt.</li>
+                  </ul>
+                </div>
+                <div class="vak">
+                  <h4>Zo houdt u het vol</h4>
+                  <p>Hang dit vel op de plek waar u toch al elke ochtend staat: bij de waterkoker.
+                    Doe de zes tegels terwijl het water kookt — dat is precies de tijd die u nodig
+                    heeft.</p>
+                </div>
+              </div>
+
+              <div class="spreukplaat">
+                <svg class="hoekje lb"><use href="#ossenkop"/></svg>
+                <svg class="hoekje ro"><use href="#ossenkop"/></svg>
+                <div class="spreuk">“Rustig aan komt ook vooruit.”</div>
+                <div class="toelichting">Eén dag overslaan haalt niets weg van wat er al staat.
+                  Pak de volgende dag gewoon weer bij tegel 1 aan.</div>
+              </div>
+
+              <div class="voet">
+                <span>Sanne Bijl, fysiotherapeut · <b>0515 — 23 18 44</b></span>
+                <span>Volgende afspraak: <b>ma 17 aug, 11:00</b> · vel 1 van 1</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+</body>
+</html>

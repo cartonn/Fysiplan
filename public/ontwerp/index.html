@@ -100,6 +100,38 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
 .staal.partituur .noot{position:absolute;width:9px;height:9px;border-radius:50%;background:#0e0e0d}
 .staal.partituur .noot.r{background:#d4331d}
 
+/* — staal concept 4: Dagblad — */
+.staal.dagblad{background:#f1eee6;color:#131210}
+.staal.dagblad .plaatnr{color:#a81f16;font-family:var(--mono)}
+.staal.dagblad .woord{font-family:Charter,Georgia,serif;font-weight:400;letter-spacing:-.028em}
+.staal.dagblad .regels{position:absolute;left:var(--s3);right:var(--s3);top:52px;height:22px;
+  background:repeating-linear-gradient(to bottom,#c4bdae 0 1px,transparent 1px 5px);opacity:.75}
+.staal.dagblad .kopstreep{position:absolute;left:var(--s3);right:var(--s3);top:30px;
+  border-top:3px solid #131210;border-bottom:1px solid #131210;height:4px}
+
+/* — staal concept 5: Patroon — */
+.staal.patroon{color:#231f19;
+  background:
+    linear-gradient(to right,#ddd6c6 1px,transparent 1px) 0 0/22px 22px,
+    linear-gradient(to bottom,#ddd6c6 1px,transparent 1px) 0 0/22px 22px,
+    #f3efe4}
+.staal.patroon .plaatnr{color:#8c2b2a;font-family:var(--mono)}
+.staal.patroon .woord{font-family:"Iowan Old Style",Charter,Palatino,Georgia,serif;font-weight:400}
+.staal.patroon .woord em{font-style:italic;color:#8c2b2a}
+.staal.patroon .ruit{position:absolute;width:22px;height:22px;background:#f0e2df;
+  box-shadow:inset 0 0 0 1px #8c2b2a}
+
+/* — staal concept 6: Tegelwijsheid — */
+.staal.tegel{background:#fffefb;color:#14203c;box-shadow:inset 0 0 0 2px #1d3f8f}
+.staal.tegel .plaatnr{color:#1d3f8f;font-family:var(--mono)}
+.staal.tegel .woord{font-family:"Iowan Old Style",Charter,Palatino,Georgia,serif;font-weight:400}
+.staal.tegel .woord em{font-style:italic;color:#1d3f8f}
+.staal.tegel .hoek{position:absolute;width:15px;height:15px;color:#1d3f8f}
+.staal.tegel .hoek.a{left:8px;top:8px}
+.staal.tegel .hoek.b{right:8px;top:8px;transform:scaleX(-1)}
+.staal.tegel .hoek.c{left:8px;bottom:8px;transform:scaleY(-1)}
+.staal.tegel .hoek.d{right:8px;bottom:8px;transform:scale(-1,-1)}
+
 /* — staal concept 3: Vouwblad — */
 .staal.vouwblad{background:#f2c200;color:#111417}
 .staal.vouwblad .plaatnr{color:#4d3f00;font-family:var(--mono)}
@@ -139,6 +171,18 @@ footer li{padding:4px 0}
 </head>
 <body>
 
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false"
+     xmlns="http://www.w3.org/2000/svg">
+  <symbol id="gal-ossenkop" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <path d="M2 2c5.4 0 9.6 1.4 12.4 4.2"/>
+      <path d="M2 8.4c3.2-1.6 5.2-3.6 6.8-6.4"/>
+      <circle cx="10.6" cy="10.6" r="2.1"/>
+      <path d="M2 2l4.2 4.2"/>
+    </g>
+  </symbol>
+</svg>
+
 <header class="top">
   <div class="binnen">
     <div class="merkregel">
@@ -156,8 +200,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>3</b> concepten</span>
-      <span>Eerste ronde <b>11 augustus 2026</b></span>
+      <span><b>6</b> concepten</span>
+      <span>Laatste ronde <b>12 augustus 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -188,7 +232,7 @@ footer li{padding:4px 0}
 <main>
   <div class="binnen">
     <div class="galerijkop">
-      <h2>De concepten</h2>
+      <h2>Ronde 1</h2>
       <span>ronde 1 · 11 aug 2026</span>
     </div>
 
@@ -306,6 +350,119 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-3-vouwblad.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-3-vouwblad.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="galerijkop" style="margin-top:var(--s6)">
+      <h2>Ronde 2</h2>
+      <span>ronde 2 · 12 aug 2026</span>
+    </div>
+
+    <div class="raster">
+
+      <!-- ─────────── CONCEPT 4 ─────────── -->
+      <article class="kaart">
+        <div class="staal dagblad">
+          <div class="kopstreep" aria-hidden="true"></div>
+          <div class="plaatnr">Nr. 214 — pagina 1</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#f1eee6"></i><i style="background:#a81f16"></i>
+            <i style="background:#131210"></i><i style="background:#cdc7b9"></i>
+          </div>
+          <div class="regels" aria-hidden="true"></div>
+          <div class="woord">De Schouderkrant</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 4</div>
+          <h3>Dagblad</h3>
+          <p class="richting">De cliëntkaart als eigen krant, met de rangorde van een voorpagina.</p>
+          <p class="rationale">Een krantenpagina vertelt in één seconde wat ertoe doet: kopgrootte
+            is rangorde, een kader is een uitzondering, kolommen dwingen korte alinea's af. Dat is
+            precies wat een oefenschema mist. De krantvorm dus wel, de krantgrootte niet — op
+            papier twee brede kolommen op ruim twaalf punt, want de lezer is achtenzestig.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Nederlandse krantentypografie en Gerard Ungers krantletters (Swift, Gulliver,
+              Coranto) · de zetspiegel van de broadsheet: titelkop, standfirst, kader, rectificatie ·
+              de advertentiepagina als kiezer · de beursnotering als weektabel</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — een krantenpagina met een afvinkstrook</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-4-dagblad.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-4-dagblad.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 5 ─────────── -->
+      <article class="kaart">
+        <div class="staal patroon">
+          <span class="ruit" style="left:22px;top:44px"></span>
+          <span class="ruit" style="left:44px;top:66px"></span>
+          <span class="ruit" style="left:66px;top:44px"></span>
+          <div class="plaatnr">Model 14 — rij 9/28</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#f3efe4"></i><i style="background:#8c2b2a"></i>
+            <i style="background:#231f19"></i><i style="background:#c6bda9"></i>
+          </div>
+          <div class="woord">Rij <em>negen</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 5</div>
+          <h3>Patroon</h3>
+          <p class="richting">De oefenweek als telpatroon: een ruitje is een steek, een rij is een dag.</p>
+          <p class="rationale">Een breipatroon noteert al eeuwen herhaling zonder te vervelen, en
+            wordt van onderaf gelezen: wat gedaan is zit al in het werk, een gemiste rij blijft
+            gewoon open staan — geen streak die breekt. Zoals elk fatsoenlijk patroon geeft de
+            kaart altijd béide: het teken in het ruitje én de aanwijzing voluit in gewone taal.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Telpatronen en breischema's (Craft Yarn Council-symbolen, Brooklyn Tweed-charts) ·
+              de patroonconventies zelf: legenda, spanning, maat, “herhaal rij 3 t/m 6” ·
+              weefschema's en het Bauhaus-weefatelier van Anni Albers · millimeterpapier</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — patroon boven, legenda met tekeningen onder</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-5-patroon.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-5-patroon.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 6 ─────────── -->
+      <article class="kaart">
+        <div class="staal tegel">
+          <svg class="hoek a" viewBox="0 0 24 24" aria-hidden="true"><use href="#gal-ossenkop"/></svg>
+          <svg class="hoek b" viewBox="0 0 24 24" aria-hidden="true"><use href="#gal-ossenkop"/></svg>
+          <svg class="hoek c" viewBox="0 0 24 24" aria-hidden="true"><use href="#gal-ossenkop"/></svg>
+          <svg class="hoek d" viewBox="0 0 24 24" aria-hidden="true"><use href="#gal-ossenkop"/></svg>
+          <div class="plaatnr" style="padding-left:20px">Tegel 3 van 6</div>
+          <div class="woord" style="padding-left:20px">Op <em>één been</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 6</div>
+          <h3>Tegelwijsheid</h3>
+          <p class="richting">De printkaart als tegeltableau boven het aanrecht: kobalt op tinwit.</p>
+          <p class="rationale">Vier eeuwen lang hing instructie in Nederlandse keukens aan de muur:
+            één beeld per tegel, één zin eronder, een ossenkopje in de hoek. De tegel is de
+            strengste redactieregel die bestaat — wat er niet op past, hoort er niet op — en één
+            inkt kobalt haalt op de zwart-witprinter nog altijd genoeg contrast.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Delfts tegelwerk vanaf 1620: hoekmotieven (ossenkopjes, spinnekopjes), tegeltableaus,
+              de voeg als raster · Koninklijke Tichelaar Makkum · tegeltjeswijsheid als toon van
+              spreken · tinglazuur-wit en één kobaltinkt</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — zes tegels in een geschilderde lijst</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-6-tegelwijsheid.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-6-tegelwijsheid.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>

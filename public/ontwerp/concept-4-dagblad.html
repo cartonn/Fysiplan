@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 4 — Dagblad · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 4 — DAGBLAD
+   De cliëntkaart als eigen krant. Een krant zegt in één blik
+   wat belangrijk is: kopgrootte is rangorde, kolommen dwingen
+   korte alinea's af, een kader is een uitzondering. Dat is
+   precies wat een trainingskaart nodig heeft.
+   De krantvorm, maar niet de krantgrootte: op papier zetten we
+   twee brede kolommen op ~12pt, want de lezer is 68 en leest
+   op armlengte. Twee inkten: zwart en één rood.
+   Alles inline; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  --krant:#f1eee6;        /* krantenpapier */
+  --wit:#fbfaf6;
+  --inkt:#131210;
+  --inkt-2:#3a372f;
+  --grijs:#726d63;
+  --grijs-l:#a9a396;
+  --lijn:#cdc7b9;
+  --lijn-l:#e3ded2;
+  --rood:#a81f16;         /* de tweede inkt — nooit alleen drager van betekenis */
+  --rood-l:#f6e7e4;
+
+  --serif:Charter,"Iowan Old Style","Palatino Linotype",Georgia,"Times New Roman",serif;
+  --sans:"Helvetica Neue",Helvetica,Arial,"Segoe UI",system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:15px; --s4:24px; --s5:40px; --s6:64px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17.5px/1.6 var(--serif);color:var(--inkt-2);background:var(--krant)}
+img{max-width:100%;display:block}
+:focus-visible{outline:2.5px solid var(--rood);outline-offset:3px}
+
+/* de galerijbalk — hoort niet bij het ontwerp, gaat nooit mee naar de printer */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);
+  padding:10px 22px;background:var(--inkt);color:#fff;font:600 13px/1 var(--sans)}
+.labbalk a{color:#fff;text-decoration:none;padding:6px 10px}
+.labbalk a:hover{background:rgba(255,255,255,.18)}
+.labbalk .nr{color:#f0a49e;font:700 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase}
+.labbalk .rek{flex:1}
+.labbalk .terug{border:1px solid rgba(255,255,255,.34)}
+
+.scherm{padding:var(--s6) 22px}
+.scherm + .scherm{border-top:1px solid var(--lijn)}
+.binnen{max-width:1220px;margin:0 auto}
+.schermkop{display:flex;align-items:flex-end;gap:var(--s3);margin-bottom:var(--s5);
+  border-bottom:2px solid var(--inkt);padding-bottom:var(--s2)}
+.schermkop b{font:700 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--rood)}
+.schermkop h2{font:600 25px/1 var(--sans);letter-spacing:-.03em;color:var(--inkt)}
+.schermkop p{flex:1;text-align:right;font:400 15.5px/1.4 var(--serif);font-style:italic;color:var(--grijs)}
+@media (max-width:760px){.schermkop{flex-wrap:wrap}.schermkop p{text-align:left;flex-basis:100%}}
+
+/* ── gedeelde krantonderdelen ───────────────────────────── */
+.dubbelelijn{border-top:3px solid var(--inkt);border-bottom:1px solid var(--inkt);height:4px}
+.kopregel{font:600 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--grijs)}
+.katern{font:700 11px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--rood)}
+
+/* ============================================================
+   1 · LANDING — de voorpagina
+   ============================================================ */
+.krant{background:var(--wit);border:1px solid var(--lijn);padding:var(--s5) var(--s5) var(--s4)}
+@media (max-width:760px){.krant{padding:var(--s4) var(--s3)}}
+
+.kop-boven{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s3);
+  font:600 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--grijs);
+  padding-bottom:var(--s2)}
+.kop-boven .prijs{color:var(--rood)}
+@media (max-width:640px){.kop-boven span:nth-child(2){display:none}}
+
+.masthead{text-align:center;padding:var(--s4) 0 var(--s3)}
+.masthead h1{font:400 clamp(52px,10.5vw,132px)/.86 var(--serif);letter-spacing:-.035em;color:var(--inkt)}
+.masthead h1 .punt{color:var(--rood)}
+.masthead .onder{font:400 16px/1.4 var(--serif);font-style:italic;color:var(--grijs);margin-top:12px}
+
+.kop-onder{display:flex;justify-content:space-between;gap:var(--s3);border-top:1px solid var(--inkt);
+  border-bottom:3px solid var(--inkt);padding:8px 0;
+  font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--inkt)}
+@media (max-width:640px){.kop-onder span:nth-child(3){display:none}}
+
+.voorpagina{display:grid;grid-template-columns:2.35fr 1fr;gap:0;margin-top:var(--s4)}
+@media (max-width:900px){.voorpagina{grid-template-columns:1fr}}
+.voorpagina > .hoofd{padding-right:var(--s4);border-right:1px solid var(--lijn)}
+.voorpagina > .rail{padding-left:var(--s4)}
+@media (max-width:900px){
+  .voorpagina > .hoofd{padding-right:0;border-right:0;border-bottom:1px solid var(--lijn);padding-bottom:var(--s4)}
+  .voorpagina > .rail{padding-left:0;padding-top:var(--s4)}
+}
+
+.lead h2{font:400 clamp(34px,4.6vw,58px)/1.02 var(--serif);letter-spacing:-.028em;color:var(--inkt);
+  max-width:19ch}
+.lead .standfirst{font:400 20px/1.5 var(--serif);color:var(--inkt-2);margin-top:var(--s3);max-width:52ch}
+.lead .byline{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs);
+  margin-top:var(--s3);padding-top:var(--s3);border-top:1px solid var(--lijn-l)}
+.lead .byline b{color:var(--rood);font-weight:700}
+
+.kolommen{column-count:3;column-gap:var(--s4);column-rule:1px solid var(--lijn-l);margin-top:var(--s4)}
+@media (max-width:1000px){.kolommen{column-count:2}}
+@media (max-width:640px){.kolommen{column-count:1}}
+.kolommen p{font-size:16.5px;line-height:1.52;text-align:justify;hyphens:auto;margin-bottom:.7em}
+.kolommen p:first-child::first-letter{float:left;font-size:52px;line-height:.82;padding:4px 8px 0 0;
+  font-weight:400;color:var(--rood)}
+.kolommen .tussenkop{font:700 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--inkt);
+  margin:1.1em 0 .4em;break-after:avoid}
+
+.figuur{border-top:1px solid var(--inkt);border-bottom:1px solid var(--lijn);padding:var(--s3) 0;margin-top:var(--s4);
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);align-items:end}
+.figuur img{height:104px;width:100%;object-fit:contain;mix-blend-mode:multiply}
+.figuur .bijschrift{grid-column:1/-1;font:400 14.5px/1.45 var(--serif);font-style:italic;color:var(--grijs);
+  padding-top:var(--s2);border-top:1px solid var(--lijn-l)}
+.figuur .bijschrift b{font-style:normal;font-weight:700;color:var(--inkt);font-size:13.5px}
+
+.citaat{border-top:3px solid var(--rood);border-bottom:1px solid var(--rood);padding:var(--s3) 0;margin:var(--s4) 0}
+.citaat p{font:400 25px/1.24 var(--serif);letter-spacing:-.02em;color:var(--inkt)}
+.citaat cite{display:block;font:600 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--grijs);font-style:normal;margin-top:var(--s2)}
+
+/* rechterkolom */
+.rail h3{font:700 11px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--inkt);
+  border-bottom:2px solid var(--inkt);padding-bottom:6px;margin-bottom:var(--s3)}
+.inhoud{list-style:none}
+.inhoud li{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--lijn-l);font-size:16px;line-height:1.35}
+.inhoud .pg{flex:0 0 26px;font:700 12px/1.35 var(--mono);color:var(--rood)}
+.inhoud b{font-weight:700;color:var(--inkt);display:block}
+.inhoud span{color:var(--grijs);font-size:14.5px}
+
+.advertentie{border:1px solid var(--inkt);padding:var(--s3);margin-top:var(--s4);background:var(--rood-l)}
+.advertentie .kopregel{color:var(--rood)}
+.advertentie b{display:block;font:400 24px/1.15 var(--serif);color:var(--inkt);margin:8px 0}
+.advertentie p{font-size:15.5px;line-height:1.45}
+.advertentie a{display:inline-block;margin-top:var(--s3);font:700 13px/1 var(--sans);letter-spacing:.04em;
+  text-transform:uppercase;text-decoration:none;background:var(--inkt);color:#fff;padding:13px 18px}
+.advertentie a:hover{background:var(--rood)}
+
+.kioskregel{display:flex;flex-wrap:wrap;gap:var(--s3);margin-top:var(--s4);padding-top:var(--s3);
+  border-top:3px solid var(--inkt);align-items:center}
+.kioskregel .kn{font:700 13px/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;text-decoration:none;
+  padding:15px 22px;border:1.5px solid var(--inkt);background:var(--inkt);color:#fff}
+.kioskregel .kn:hover{background:var(--rood);border-color:var(--rood)}
+.kioskregel .kn.leeg{background:transparent;color:var(--inkt)}
+.kioskregel .kn.leeg:hover{background:var(--inkt);color:#fff}
+.kioskregel em{font-size:15.5px;color:var(--grijs)}
+
+/* ============================================================
+   2 · KIEZER — de rubriekenpagina (zetten, niet swipen)
+   ============================================================ */
+.zetterij{display:grid;grid-template-columns:1fr 330px;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.zetterij{grid-template-columns:1fr}}
+
+.rubrieken{display:flex;flex-wrap:wrap;gap:0;border-bottom:3px solid var(--inkt);margin-bottom:var(--s4)}
+.rubrieken button{font:700 12px/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;
+  background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-3px;padding:12px 16px;
+  color:var(--grijs);cursor:pointer}
+.rubrieken button[aria-current="true"]{color:var(--inkt);border-bottom-color:var(--rood)}
+.rubrieken .telling{margin-left:auto;align-self:center;font:600 11px/1 var(--mono);letter-spacing:.1em;
+  color:var(--grijs);padding:0 6px}
+
+.advertenties{column-count:2;column-gap:var(--s4);column-rule:1px solid var(--lijn-l)}
+@media (max-width:700px){.advertenties{column-count:1}}
+.regel{break-inside:avoid;padding:var(--s3) 0 var(--s3) 0;border-bottom:1px solid var(--lijn-l);
+  display:grid;grid-template-columns:58px 1fr;gap:var(--s3)}
+.regel img{width:58px;height:58px;object-fit:contain;mix-blend-mode:multiply}
+.regel b{font:700 17.5px/1.2 var(--serif);color:var(--inkt);display:block}
+.regel .streep{font-size:15.5px;line-height:1.45;color:var(--inkt-2);margin-top:3px}
+.regel .dosis{font:600 11px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--grijs);
+  margin-top:7px;display:flex;gap:12px;flex-wrap:wrap}
+.regel.opgenomen{background:var(--rood-l);border-left:4px solid var(--rood);padding-left:12px;
+  margin-left:-16px;padding-right:8px}
+.regel .merkje{display:inline-block;font:700 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  background:var(--rood);color:#fff;padding:4px 7px;margin-top:8px}
+
+/* het zetsel: wat er nu in de editie staat */
+.zetsel{border:1px solid var(--inkt);background:var(--wit);position:sticky;top:56px}
+.zetsel .kop{background:var(--inkt);color:#fff;padding:12px var(--s3);
+  font:700 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;display:flex;justify-content:space-between}
+.zetsel .kop i{font-style:normal;color:#f0a49e;font-family:var(--mono)}
+.zetsel ol{list-style:none;counter-reset:z}
+.zetsel li{counter-increment:z;display:flex;gap:10px;padding:11px var(--s3);border-bottom:1px solid var(--lijn-l);
+  font-size:16px;line-height:1.3;align-items:baseline}
+.zetsel li::before{content:counter(z);font:700 11px/1 var(--mono);color:var(--rood);flex:0 0 14px}
+.zetsel li span{margin-left:auto;font:600 11px/1 var(--mono);color:var(--grijs);white-space:nowrap}
+.zetsel .meting{padding:var(--s3);font-size:15px;color:var(--grijs);line-height:1.45;border-bottom:1px solid var(--lijn-l)}
+.zetsel .meting b{color:var(--inkt)}
+.zetsel .balk{height:9px;background:var(--lijn-l);margin-top:9px;position:relative;overflow:hidden}
+.zetsel .balk i{position:absolute;inset:0 34% 0 0;background:var(--rood)}
+.zetsel .persen{padding:var(--s3)}
+.zetsel .persen a{display:block;text-align:center;font:700 13px/1 var(--sans);letter-spacing:.05em;
+  text-transform:uppercase;text-decoration:none;background:var(--inkt);color:#fff;padding:15px}
+.zetsel .persen a:hover{background:var(--rood)}
+.zetsel .persen p{font-size:14px;color:var(--grijs);margin-top:10px;text-align:center;font-style:italic}
+
+/* ============================================================
+   3 · CLIËNTKAART — de persoonlijke editie op de telefoon
+   ============================================================ */
+.telefoonrij{display:grid;grid-template-columns:340px 1fr;gap:var(--s5);align-items:start}
+@media (max-width:900px){.telefoonrij{grid-template-columns:1fr}}
+.telefoon{border:11px solid var(--inkt);border-radius:34px;overflow:hidden;background:var(--wit);
+  box-shadow:0 18px 44px rgba(19,18,16,.2)}
+.tel-inhoud{padding:var(--s3) var(--s3) var(--s4);max-height:640px;overflow:auto}
+.tel-mast{text-align:center;border-bottom:3px solid var(--inkt);padding-bottom:9px}
+.tel-mast .naam{font:400 34px/1 var(--serif);letter-spacing:-.03em;color:var(--inkt)}
+.tel-mast .datum{font:600 9.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs);margin-top:7px}
+.tel-kop{font:400 27px/1.08 var(--serif);letter-spacing:-.02em;color:var(--inkt);margin-top:var(--s3)}
+.tel-sub{font-size:16px;line-height:1.45;color:var(--inkt-2);margin-top:8px}
+.tel-item{display:grid;grid-template-columns:52px 1fr 26px;gap:11px;align-items:center;padding:12px 0;
+  border-bottom:1px solid var(--lijn-l)}
+.tel-item img{width:52px;height:52px;object-fit:contain;mix-blend-mode:multiply}
+.tel-item b{font:700 16.5px/1.2 var(--serif);color:var(--inkt);display:block}
+.tel-item span{font:600 11px/1 var(--mono);color:var(--grijs);display:block;margin-top:4px;letter-spacing:.06em}
+.tel-item .vink{width:26px;height:26px;border:1.5px solid var(--lijn);display:flex;align-items:center;
+  justify-content:center;font:700 15px/1 var(--sans);color:transparent}
+.tel-item.klaar .vink{background:var(--inkt);border-color:var(--inkt);color:#fff}
+.tel-item.klaar b{color:var(--grijs)}
+.tel-kolom{border-top:3px solid var(--inkt);margin-top:var(--s3);padding-top:11px}
+.tel-kolom .kopregel{color:var(--rood)}
+.tel-kolom p{font-size:15.5px;line-height:1.5;margin-top:7px}
+.tel-kolom .ondertekening{font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--grijs);margin-top:10px}
+
+.uitleg-naast h3{font:400 30px/1.1 var(--serif);letter-spacing:-.024em;color:var(--inkt);max-width:22ch}
+.uitleg-naast > p{font-size:17px;line-height:1.55;margin-top:var(--s3);max-width:58ch}
+.notities{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-top:var(--s4)}
+@media (max-width:640px){.notities{grid-template-columns:1fr}}
+.notitie{border-top:2px solid var(--inkt);padding-top:11px}
+.notitie h4{font:700 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--rood);
+  margin-bottom:7px}
+.notitie p{font-size:15.5px;line-height:1.5;color:var(--inkt-2)}
+
+/* de koersenlijst: de week als tabel, zoals de beursnotering achterin */
+.notering{width:100%;border-collapse:collapse;margin-top:var(--s4);background:var(--wit)}
+.notering caption{text-align:left;font:700 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--inkt);border-bottom:3px solid var(--inkt);padding-bottom:7px;margin-bottom:0}
+.notering th{font:600 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--grijs);
+  text-align:right;padding:9px 6px;border-bottom:1px solid var(--lijn)}
+.notering th:first-child{text-align:left}
+.notering td{font-size:15.5px;padding:9px 6px;border-bottom:1px solid var(--lijn-l);text-align:right;
+  font-variant-numeric:tabular-nums}
+.notering td:first-child{text-align:left;font-weight:700;color:var(--inkt);font-family:var(--serif)}
+.notering .op{color:var(--rood);font-weight:700}
+.notering tfoot td{border-bottom:0;font:600 11px/1.4 var(--mono);color:var(--grijs);text-align:left;padding-top:11px}
+
+.rectificatie{border:1px solid var(--inkt);border-left:5px solid var(--rood);padding:var(--s3);margin-top:var(--s4);
+  background:var(--wit)}
+.rectificatie h4{font:700 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--rood);
+  margin-bottom:7px}
+.rectificatie p{font-size:16px;line-height:1.5}
+
+/* ============================================================
+   4 · PRINTKAART — de A4, het hart van het concept
+   ============================================================ */
+.printtoelichting{display:flex;flex-wrap:wrap;gap:var(--s4);align-items:flex-start;margin-bottom:var(--s4)}
+.printtoelichting p{flex:1;min-width:280px;font-size:16px;line-height:1.5;color:var(--inkt-2)}
+.printtoelichting .knop{font:700 13px/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;
+  background:var(--inkt);color:#fff;border:0;padding:15px 22px;cursor:pointer}
+.printtoelichting .knop:hover{background:var(--rood)}
+
+.bladhouder{--z:1;display:flex;justify-content:center}
+.bladschaal{width:calc(210mm * var(--z));height:calc(297mm * var(--z))}
+@media (max-width:1000px){.bladhouder{--z:.68}}
+@media (max-width:760px){.bladhouder{--z:.46}}
+@media (max-width:420px){.bladhouder{--z:.36}}
+
+.blad{width:210mm;height:297mm;transform:scale(var(--z));transform-origin:top left;
+  background:#fff;border:1px solid var(--lijn);box-shadow:0 14px 40px rgba(19,18,16,.14);
+  padding:13mm 13mm 10mm;display:flex;flex-direction:column;color:var(--inkt-2)}
+
+/* — kop van het vel — */
+.blad .bovenregel{display:flex;justify-content:space-between;font:600 7.4pt/1 var(--mono);
+  letter-spacing:.14em;text-transform:uppercase;color:var(--grijs);padding-bottom:2.5mm}
+.blad .mast{text-align:center;border-top:1px solid var(--inkt);border-bottom:3px solid var(--inkt);
+  padding:3.5mm 0 3mm}
+.blad .mast h1{font:400 30pt/.9 var(--serif);letter-spacing:-.03em;color:var(--inkt)}
+.blad .mast .onder{font:400 10pt/1.3 var(--serif);font-style:italic;color:var(--grijs);margin-top:2mm}
+.blad .balkje{display:flex;justify-content:space-between;gap:4mm;padding:2mm 0;
+  border-bottom:1px solid var(--inkt);font:600 7.8pt/1 var(--mono);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--inkt)}
+.blad .balkje b{color:var(--rood)}
+
+/* — de kop van vandaag — */
+.blad .aanhef{padding:4mm 0 3mm;border-bottom:1px solid var(--lijn)}
+.blad .aanhef h2{font:400 21pt/1.06 var(--serif);letter-spacing:-.022em;color:var(--inkt);max-width:26ch}
+.blad .aanhef p{font:400 11.2pt/1.42 var(--serif);color:var(--inkt-2);margin-top:2mm;max-width:64ch}
+
+/* — twee kolommen met de oefeningen als artikelen — */
+.blad .pagina{flex:1;display:grid;grid-template-columns:1fr 1fr;column-gap:7mm;
+  padding-top:3.5mm;position:relative}
+.blad .pagina::before{content:"";position:absolute;top:3.5mm;bottom:2mm;left:50%;border-left:1px solid var(--lijn-l)}
+.blad .kolom{display:flex;flex-direction:column;gap:3.5mm}
+
+.blad .artikel{display:grid;grid-template-columns:22mm 1fr;gap:3.5mm;align-items:start;
+  padding-bottom:3.5mm;border-bottom:1px solid var(--lijn-l)}
+.blad .artikel:last-child{border-bottom:0}
+.blad .artikel .fig{border:1px solid var(--lijn);background:#fff;height:22mm;display:flex;align-items:center;
+  justify-content:center;padding:1.4mm}
+.blad .artikel .fig img{max-height:100%;max-width:100%;object-fit:contain;mix-blend-mode:multiply}
+.blad .artikel .nr{font:700 7.4pt/1 var(--mono);letter-spacing:.14em;color:var(--rood);display:block}
+.blad .artikel h3{font:700 12.4pt/1.14 var(--serif);color:var(--inkt);margin-top:1.2mm;letter-spacing:-.01em}
+.blad .artikel p{font:400 10.6pt/1.42 var(--serif);color:var(--inkt-2);margin-top:1.4mm}
+.blad .artikel .dosis{font:700 8.4pt/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--inkt);
+  margin-top:2mm;border-top:1px solid var(--lijn);padding-top:1.6mm;display:flex;gap:4mm;flex-wrap:wrap}
+.blad .artikel .dosis i{font-style:normal;color:var(--grijs)}
+
+/* — het kader: de uitzondering op de pagina — */
+.blad .kader{border:1.2pt solid var(--inkt);padding:3mm;background:#fff}
+.blad .kader h4{font:700 7.6pt/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--rood);
+  margin-bottom:1.8mm}
+.blad .kader p{font:400 10.2pt/1.38 var(--serif)}
+.blad .kader ul{list-style:none;margin-top:1.5mm}
+.blad .kader li{font:400 10.2pt/1.38 var(--serif);padding-left:4mm;position:relative;margin-top:.8mm}
+.blad .kader li::before{content:"—";position:absolute;left:0;color:var(--rood)}
+
+/* — de afvinkstrook: zeven dagen, met de pen in te vullen — */
+.blad .strook{margin-top:3mm;border-top:3px solid var(--inkt);padding-top:2.5mm}
+.blad .strook .titel{font:700 7.6pt/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--inkt)}
+.blad .strook .dagen{display:grid;grid-template-columns:repeat(7,1fr);gap:2mm;margin-top:2mm}
+.blad .strook .dag{border:1px solid var(--inkt);text-align:center;padding:1.6mm 0 0}
+.blad .strook .dag b{display:block;font:700 8.2pt/1 var(--sans);letter-spacing:.06em;color:var(--inkt)}
+.blad .strook .dag .vak{height:9mm;border-top:1px solid var(--lijn);margin-top:1.4mm}
+
+/* — voet — */
+.blad .voet{margin-top:3mm;border-top:1px solid var(--inkt);padding-top:2mm;display:flex;
+  justify-content:space-between;gap:4mm;font:600 7.6pt/1.3 var(--mono);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--grijs)}
+.blad .voet b{color:var(--inkt)}
+
+/* ============================================================
+   PRINT — alleen het vel gaat naar de printer
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important}
+  .blad{
+    width:210mm;height:297mm;transform:none !important;
+    border:0 !important;box-shadow:none !important;margin:0 !important;
+    break-inside:avoid;page-break-inside:avoid;
+  }
+  .blad .artikel .fig img{mix-blend-mode:normal}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 4</span>
+  <strong style="font:700 14px/1 var(--sans)">Dagblad</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>een krant verkoopt zichzelf met haar voorpagina — dus dat doet deze ook</p>
+    </div>
+
+    <div class="krant">
+      <div class="kop-boven">
+        <span>Onafhankelijk sinds 2026</span>
+        <span>Verschijnt zodra u op printen drukt</span>
+        <span class="prijs">Losse nummers gratis</span>
+      </div>
+
+      <div class="masthead">
+        <h1>Fysiplan<span class="punt">.</span></h1>
+        <div class="onder">Dagblad voor de oefening thuis — één vel, één minuut, één lezer</div>
+      </div>
+
+      <div class="kop-onder">
+        <span>Woensdag 12 augustus 2026</span>
+        <span>Jaargang 1 — nr. 214</span>
+        <span>Praktijkeditie</span>
+        <span>1 pagina</span>
+      </div>
+
+      <div class="voorpagina">
+        <div class="hoofd">
+          <div class="lead">
+            <span class="katern">Uit de praktijk</span>
+            <h2>De patiënt leest geen behandelplan. Hij leest de krant.</h2>
+            <p class="standfirst">Fysiplan zet het huiswerk van uw cliënt op één vel met de rangorde
+              van een voorpagina: het belangrijkste staat linksboven en het grootst, de rest volgt
+              in kolommen. Geen scrollen, geen inloggen, geen app die na twee weken van de telefoon
+              verdwijnt.</p>
+            <div class="byline">Van onze <b>redactie fysiotherapie</b> · Zwolle</div>
+          </div>
+
+          <div class="kolommen">
+            <p>Wie een oefenschema uitdraait uit de gangbare software krijgt een raster van
+              postzegels: twaalf plaatjes van gelijke grootte, elk even belangrijk, elk even
+              onleesbaar. Een krantenpagina doet het omgekeerde. Daar vertelt de zetspiegel u
+              binnen een seconde wat ertoe doet en wat kan wachten.</p>
+            <p>Die rangorde is precies wat een trainingskaart mist. De oefening die de cliënt
+              elke dag moet doen hoort een kop te krijgen; de oefening voor drie keer per week
+              staat eronder; de waarschuwing staat in een kader, want een kader is een uitzondering.</p>
+            <p class="tussenkop">Twee inkten, geen meer</p>
+            <p>Het vel wordt gedrukt in zwart en één rood. Rood markeert, maar draagt nooit in
+              zijn eentje betekenis: naast elke rode markering staat een woord. Wie de kaart in
+              zwart-wit uitdraait — en dat doet de halve praktijk — mist niets.</p>
+            <p>De letter is een krantenletter, gemaakt om te overleven op ruw papier bij matige
+              inkt. Maar de <i>grootte</i> is die van een boek, niet van een krant: het vel is
+              gezet op twaalf punt, want de lezer is achtenzestig en houdt het papier op
+              armlengte.</p>
+            <p class="tussenkop">De editie van vandaag</p>
+            <p>Elke uitdraai is een nummer met een datum, een jaargang en een oplage van één.
+              Verandert het schema, dan verschijnt er een nieuwe editie — en drukt de vorige
+              zichzelf niet stiekem opnieuw af.</p>
+          </div>
+
+          <div class="figuur">
+            <img src="/images/bovenste-extremiteit/schouder-pendelen-actief-line-v1.png" alt="Schouder pendelen"/>
+            <img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt="Schouder naar buiten draaien met elastiek"/>
+            <img src="/images/bovenste-extremiteit/schouder-voorwaarts-heffen-functioneel-reikend-line-v1.png" alt="Schouder voorwaarts heffen, reikend"/>
+            <div class="bijschrift"><b>Foto's van de dag ·</b> drie oefeningen uit de schoudereditie
+              van mevrouw Kortleve. De tekeningen staan op het vel op ware grootte naast de tekst,
+              niet als postzegel eronder.</div>
+          </div>
+
+          <div class="citaat">
+            <p>“Ik hang hem naast de kalender. Dan lees ik hem, of ik wil of niet.”</p>
+            <cite>A. Kortleve (68), zes weken na haar schouderoperatie</cite>
+          </div>
+        </div>
+
+        <aside class="rail">
+          <h3>In dit nummer</h3>
+          <ul class="inhoud">
+            <li><span class="pg">1</span><span><b>De editie van vandaag</b><span>Vier oefeningen, één kader met de rode vlaggen</span></span></li>
+            <li><span class="pg">2</span><span><b>Rubrieken</b><span>500 oefeningen, gezet als advertentiepagina</span></span></li>
+            <li><span class="pg">3</span><span><b>Persoonlijke editie</b><span>Dezelfde krant, op de telefoon van de cliënt</span></span></li>
+            <li><span class="pg">4</span><span><b>De drukproef</b><span>Wat er werkelijk uit de printer komt</span></span></li>
+          </ul>
+
+          <div class="advertentie">
+            <span class="kopregel">Advertentie</span>
+            <b>Uw praktijk op de kop</b>
+            <p>De naam van de praktijk staat in de titelkop, niet als logo in een hoek. Het vel dat
+              de cliënt op de koelkast plakt draagt uw naam, drie maanden lang.</p>
+            <a href="#printkaart">Bekijk de drukproef</a>
+          </div>
+
+          <div class="kioskregel">
+            <a class="kn" href="#kiezer">Editie samenstellen</a>
+            <a class="kn leeg" href="#clientkaart">Op de telefoon</a>
+            <em>Geen account nodig om te lezen.</em>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>Oefeningen kiezen</h2>
+      <p>geen tegelraster maar een rubriekenpagina — u zet een editie</p>
+    </div>
+
+    <div class="zetterij">
+      <div>
+        <div class="rubrieken">
+          <button type="button" aria-current="true">Schouder</button>
+          <button type="button">Nek</button>
+          <button type="button">Rug</button>
+          <button type="button">Knie &amp; heup</button>
+          <button type="button">Balans</button>
+          <span class="telling">41 regels in deze rubriek</span>
+        </div>
+
+        <div class="advertenties">
+
+          <article class="regel opgenomen">
+            <img src="/images/bovenste-extremiteit/schouder-pendelen-actief-line-v1.png" alt=""/>
+            <div>
+              <b>Schouder pendelen — actief</b>
+              <p class="streep">Sta licht voorovergebogen en steun met uw hand op een tafel. Laat de
+                andere arm ontspannen hangen en maak er rustig kleine slingerbewegingen mee.</p>
+              <div class="dosis"><span>Dagelijks</span><span>2 × 10</span><span>Zonder weerstand</span></div>
+              <span class="merkje">★ Opgenomen — kop van de pagina</span>
+            </div>
+          </article>
+
+          <article class="regel opgenomen">
+            <img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt=""/>
+            <div>
+              <b>Schouder naar buiten draaien — met elastiek</b>
+              <p class="streep">Elleboog gebogen tegen de zij, elastiek opzij vastgemaakt. Draai de
+                onderarm rustig naar buiten en laat hem langzaam terugkomen.</p>
+              <div class="dosis"><span>3 × per week</span><span>3 × 12</span><span>Geel elastiek</span></div>
+              <span class="merkje">★ Opgenomen</span>
+            </div>
+          </article>
+
+          <article class="regel">
+            <img src="/images/bovenste-extremiteit/schouder-voorwaarts-heffen-functioneel-reikend-line-v1.png" alt=""/>
+            <div>
+              <b>Schouder voorwaarts heffen — reikend</b>
+              <p class="streep">Reik voor een kast rustig naar voren omhoog, alsof u iets van de
+                plank pakt, en breng de arm langzaam terug.</p>
+              <div class="dosis"><span>Dagelijks</span><span>2 × 8</span><span>Functioneel</span></div>
+            </div>
+          </article>
+
+          <article class="regel opgenomen">
+            <img src="/images/bovenste-extremiteit/schouder-naar-binnen-draaien-isometrisch-tegen-de-muur-line-v1.png" alt=""/>
+            <div>
+              <b>Naar binnen draaien — isometrisch tegen de muur</b>
+              <p class="streep">Duw met de binnenkant van de hand rustig tegen de muur zonder dat er
+                beweging ontstaat, en laat de spanning langzaam los.</p>
+              <div class="dosis"><span>Dagelijks</span><span>5 × 8 sec</span><span>Geen beweging</span></div>
+              <span class="merkje">★ Opgenomen</span>
+            </div>
+          </article>
+
+          <article class="regel">
+            <img src="/images/bovenste-extremiteit/schouder-extensie-met-elastiek-line-v1.png" alt=""/>
+            <div>
+              <b>Schouder strekken — met elastiek</b>
+              <p class="streep">Trek het elastiek vanuit de schouder rustig naar achteren langs het
+                lichaam en laat het gecontroleerd terugkomen.</p>
+              <div class="dosis"><span>3 × per week</span><span>3 × 10</span><span>Rood elastiek</span></div>
+            </div>
+          </article>
+
+          <article class="regel opgenomen">
+            <img src="/images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png" alt=""/>
+            <div>
+              <b>Bovenste trapezius rek — zittend</b>
+              <p class="streep">Laat het hoofd rustig opzij zakken, oor richting schouder, en breng
+                het langzaam terug naar het midden. Wissel van kant.</p>
+              <div class="dosis"><span>Dagelijks</span><span>3 × 20 sec</span><span>Beide kanten</span></div>
+              <span class="merkje">★ Opgenomen — het kader</span>
+            </div>
+          </article>
+
+          <article class="regel">
+            <img src="/images/bovenste-extremiteit/schouder-naar-binnen-draaien-met-elastiek-line-v1.png" alt=""/>
+            <div>
+              <b>Naar binnen draaien — met elastiek</b>
+              <p class="streep">Elleboog tegen de zij, draai de onderarm rustig naar binnen tegen de
+                weerstand van het elastiek in.</p>
+              <div class="dosis"><span>3 × per week</span><span>3 × 12</span><span>Geel elastiek</span></div>
+            </div>
+          </article>
+
+          <article class="regel">
+            <img src="/images/bovenste-extremiteit/elleboog-buigen-actief-line-v1.png" alt=""/>
+            <div>
+              <b>Elleboog buigen — actief</b>
+              <p class="streep">Buig en strek de elleboog rustig, zonder de schouder mee te laten
+                bewegen.</p>
+              <div class="dosis"><span>Op gevoel</span><span>2 × 15</span><span>Zonder gewicht</span></div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <aside class="zetsel">
+        <div class="kop"><span>Editie in de zetterij</span><i>nr. 214</i></div>
+        <ol>
+          <li>Schouder pendelen <span>2 × 10</span></li>
+          <li>Naar buiten draaien <span>3 × 12</span></li>
+          <li>Isometrisch — muur <span>5 × 8 s</span></li>
+          <li>Trapezius rek <span>3 × 20 s</span></li>
+        </ol>
+        <div class="meting">
+          <b>Vier oefeningen.</b> De pagina is voor twee derde gezet; er is nog ruimte voor één
+          artikel of een kader.
+          <span class="balk" aria-hidden="true"><i></i></span>
+        </div>
+        <div class="persen">
+          <a href="#printkaart">Ter perse — één A4</a>
+          <p>Wat u hier ziet, komt er zo uit.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>Digitale cliëntkaart</h2>
+      <p>dezelfde krant, maar dan de editie van één lezer</p>
+    </div>
+
+    <div class="telefoonrij">
+      <div class="telefoon">
+        <div class="tel-inhoud">
+          <div class="tel-mast">
+            <div class="naam">De Schouder</div>
+            <div class="datum">Woensdag 12 aug · week 3 van 8</div>
+          </div>
+
+          <h3 class="tel-kop">Vandaag drie stukken. Het zwaarste staat vooraan.</h3>
+          <p class="tel-sub">Gisteren alles gedaan. De reikoefening ging voor het eerst tot de
+            bovenste plank — dat stond vorige week nog niet in de krant.</p>
+
+          <div class="tel-item klaar">
+            <img src="/images/bovenste-extremiteit/schouder-pendelen-actief-line-v1.png" alt=""/>
+            <div><b>Schouder pendelen</b><span>2 × 10 · gedaan om 08:15</span></div>
+            <span class="vink" aria-hidden="true">✓</span>
+          </div>
+          <div class="tel-item">
+            <img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt=""/>
+            <div><b>Naar buiten draaien</b><span>3 × 12 · geel elastiek</span></div>
+            <span class="vink" aria-hidden="true">✓</span>
+          </div>
+          <div class="tel-item">
+            <img src="/images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png" alt=""/>
+            <div><b>Trapezius rek</b><span>3 × 20 sec · beide kanten</span></div>
+            <span class="vink" aria-hidden="true">✓</span>
+          </div>
+
+          <div class="tel-kolom">
+            <span class="kopregel">Column van de therapeut</span>
+            <p>“Mevrouw Kortleve, de pijn na het pendelen die u maandag meldde hoort erbij zolang
+              hij binnen het uur weg is. Blijft hij hangen tot de volgende ochtend, sla de
+              elastiekoefening dan één dag over en bel me. Verder: mooi doorgezet vorige week.”</p>
+            <div class="ondertekening">Rik Doornbos — Fysiotherapie De Vaart</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="uitleg-naast">
+        <h3>Een krant die elke ochtend precies één keer verschijnt</h3>
+        <p>De cliëntkaart is geen dashboard met ringen en percentages. Het is de editie van
+          vandaag: een kop die zegt wat er te doen is, drie stukken, en een column van de
+          therapeut die u ook echt leest omdat er maar één staat. Wat gisteren was, is oud
+          nieuws en staat in het archief.</p>
+
+        <div class="notities">
+          <div class="notitie">
+            <h4>Waarom een kop</h4>
+            <p>Een lijst met vinkjes vertelt niet wat vandaag anders is. Een kop wel — en die kop
+              is de enige zin die de cliënt bij de koffie leest.</p>
+          </div>
+          <div class="notitie">
+            <h4>Waarom geen streak</h4>
+            <p>Een gemiste dag is geen gebroken reeks maar een dag waarop de krant dunner was.
+              Herstel is geen spel; de toon blijft die van een redactie, niet van een coach.</p>
+          </div>
+        </div>
+
+        <table class="notering">
+          <caption>De week in cijfers — notering per oefening</caption>
+          <thead>
+            <tr><th>Oefening</th><th>Ma</th><th>Di</th><th>Wo</th><th>Do</th><th>Vr</th><th>Za</th><th>Zo</th><th>Verschil</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Pendelen</td><td>✓</td><td>✓</td><td>✓</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="op">+2 herh.</td></tr>
+            <tr><td>Naar buiten</td><td>✓</td><td>—</td><td>·</td><td>—</td><td>—</td><td>—</td><td>—</td><td>gelijk</td></tr>
+            <tr><td>Isometrisch</td><td>✓</td><td>✓</td><td>·</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="op">+2 sec</td></tr>
+            <tr><td>Trapezius</td><td>✓</td><td>✓</td><td>·</td><td>—</td><td>—</td><td>—</td><td>—</td><td>gelijk</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td colspan="9">✓ gedaan · · staat vandaag nog open · — nog niet verschenen.
+              Verschil ten opzichte van week 2.</td></tr>
+          </tfoot>
+        </table>
+
+        <div class="rectificatie">
+          <h4>Rectificatie</h4>
+          <p>In de editie van maandag stond bij <b>Naar buiten draaien</b> een rood elastiek
+            vermeld. Dat moest geel zijn. De therapeut heeft dit dinsdag hersteld; op uw papieren
+            vel van vorige week staat het nog fout — pak het nieuwe vel.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De A4-printkaart</h2>
+      <p>het hart van het concept — druk Ctrl/⌘+P en er komt precies dit uit</p>
+    </div>
+
+    <div class="printtoelichting geen-print">
+      <p>Eén A4 staand, twee inkten, twee kolommen op ruim twaalf punt. De titelkop draagt de naam
+        van de praktijk en de datum van de editie, zodat een oud vel op de koelkast zichzelf
+        verraadt. Onderaan zeven vakjes voor de pen: papier vinkt af zonder batterij.</p>
+      <button class="knop" type="button" onclick="window.print()">Print deze kaart</button>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <div class="bovenregel">
+            <span>Fysiotherapie De Vaart · Zwolle · 038 — 421 66 08</span>
+            <span>Editie voor één lezer</span>
+          </div>
+
+          <div class="mast">
+            <h1>De Schouderkrant</h1>
+            <div class="onder">Persoonlijke oefeneditie voor mevrouw A. Kortleve</div>
+          </div>
+
+          <div class="balkje">
+            <span>Woensdag 12 augustus 2026</span>
+            <span>Week <b>3</b> van 8</span>
+            <span>Nr. 214</span>
+            <span>Volgende afspraak: di 18 aug, 10:40</span>
+          </div>
+
+          <div class="aanhef">
+            <h2>Deze week erbij: reiken naar de bovenste plank</h2>
+            <p>De drie oefeningen van vorige week blijven staan. Nieuw is het reiken; doe die pas
+              ná het pendelen, als de schouder warm is. Pijn tijdens het bewegen mag, mits die
+              binnen een uur weer weg is.</p>
+          </div>
+
+          <div class="pagina">
+            <div class="kolom">
+
+              <article class="artikel">
+                <div class="fig"><img src="/images/bovenste-extremiteit/schouder-pendelen-actief-line-v1.png" alt="Schouder pendelen — actief"/></div>
+                <div>
+                  <span class="nr">Oefening 1 — elke dag</span>
+                  <h3>Schouder pendelen</h3>
+                  <p>Sta licht voorovergebogen en steun met uw goede hand op de tafel. Laat de
+                    andere arm los hangen en maak rustig kleine kringen, heen en weer.</p>
+                  <div class="dosis"><span>2 × 10</span><i>ochtend en avond</i></div>
+                </div>
+              </article>
+
+              <article class="artikel">
+                <div class="fig"><img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt="Schouder naar buiten draaien met elastiek"/></div>
+                <div>
+                  <span class="nr">Oefening 2 — ma · wo · vr</span>
+                  <h3>Naar buiten draaien</h3>
+                  <p>Elleboog gebogen tegen de zij, het gele elastiek opzij aan de deurklink. Draai
+                    de onderarm rustig naar buiten en laat hem langzaam terugkomen.</p>
+                  <div class="dosis"><span>3 × 12</span><i>geel elastiek</i></div>
+                </div>
+              </article>
+
+              <article class="artikel">
+                <div class="fig"><img src="/images/bovenste-extremiteit/schouder-voorwaarts-heffen-functioneel-reikend-line-v1.png" alt="Schouder voorwaarts heffen, reikend"/></div>
+                <div>
+                  <span class="nr">Oefening 3 — nieuw deze week</span>
+                  <h3>Reiken naar de plank</h3>
+                  <p>Ga voor de keukenkast staan. Reik rustig naar voren omhoog alsof u een pak
+                    thee pakt, en breng de arm langzaam weer terug.</p>
+                  <div class="dosis"><span>2 × 8</span><i>na het pendelen</i></div>
+                </div>
+              </article>
+
+            </div>
+
+            <div class="kolom">
+
+              <article class="artikel">
+                <div class="fig"><img src="/images/bovenste-extremiteit/schouder-naar-binnen-draaien-isometrisch-tegen-de-muur-line-v1.png" alt="Isometrisch tegen de muur"/></div>
+                <div>
+                  <span class="nr">Oefening 4 — elke dag</span>
+                  <h3>Duwen tegen de muur</h3>
+                  <p>Sta bij de deurpost, elleboog tegen de zij. Duw met de binnenkant van uw hand
+                    tegen de muur zonder te bewegen. Tel tot acht en laat rustig los.</p>
+                  <div class="dosis"><span>5 × 8 sec</span><i>geen beweging</i></div>
+                </div>
+              </article>
+
+              <article class="artikel">
+                <div class="fig"><img src="/images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png" alt="Bovenste trapezius rek, zittend"/></div>
+                <div>
+                  <span class="nr">Oefening 5 — bij stijfheid</span>
+                  <h3>Nek zijwaarts rekken</h3>
+                  <p>Zit rechtop, schouders laag. Laat het hoofd opzij zakken, oor naar de
+                    schouder, en kom langzaam terug. Wissel van kant.</p>
+                  <div class="dosis"><span>3 × 20 sec</span><i>beide kanten</i></div>
+                </div>
+              </article>
+
+              <div class="kader">
+                <h4>Kader — bel de praktijk</h4>
+                <p>Deze dingen horen er niet bij. Stop met oefenen en bel:</p>
+                <ul>
+                  <li>pijn die de volgende ochtend nog niet weg is;</li>
+                  <li>tintelingen of een doof gevoel in de hand;</li>
+                  <li>de arm die 's nachts wakker houdt, twee nachten achter elkaar.</li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="strook">
+            <div class="titel">Afgevinkt — zet een streepje per dag</div>
+            <div class="dagen">
+              <div class="dag"><b>ma</b><div class="vak"></div></div>
+              <div class="dag"><b>di</b><div class="vak"></div></div>
+              <div class="dag"><b>wo</b><div class="vak"></div></div>
+              <div class="dag"><b>do</b><div class="vak"></div></div>
+              <div class="dag"><b>vr</b><div class="vak"></div></div>
+              <div class="dag"><b>za</b><div class="vak"></div></div>
+              <div class="dag"><b>zo</b><div class="vak"></div></div>
+            </div>
+          </div>
+
+          <div class="voet">
+            <span>Uitgave van <b>Fysiotherapie De Vaart</b> · Rik Doornbos, fysiotherapeut</span>
+            <span>Gedrukt 12-08-2026 · <b>pagina 1 van 1</b></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+</body>
+</html>
