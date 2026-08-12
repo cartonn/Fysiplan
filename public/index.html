@@ -1049,6 +1049,14 @@ bridge2.jpg</div>
               "<svg width='7' height='7' viewBox='0 0 12 12' aria-hidden='true'><path d='M2 1.5l8 4.5-8 4.5z' fill='currentColor'/></svg>VIDEO</span>";
           }
         }
+        // v2: oefeningen herordenen met pijltjes (bv. warming-up eerst). Alleen v2;
+        // in v1 blijft de kaart exact zoals hij was.
+        if(IS_V2&&chosen.length>1){
+          inner+="<span class='mvrij no-print'>"+
+            (n>0?"<button type='button' class='mvknop' data-mvl='"+n+"' title='Naar links' aria-label='Oefening naar links'>‹</button>":"")+
+            (n<chosen.length-1?"<button type='button' class='mvknop' data-mvr='"+n+"' title='Naar rechts' aria-label='Oefening naar rechts'>›</button>":"")+
+          "</span>";
+        }
         colKeys.push('e'+c.o+'.'+c.i);names.push(o?o.naam:'');
       }else{colKeys.push('x'+n);names.push('');}
       numcells+="<td colspan='3' class='numc'>"+(n+1)+"</td>";
@@ -1974,6 +1982,10 @@ bridge2.jpg</div>
     verbergQr();closeOv('ovWis');render();
   });
   elMon.addEventListener('click',function(e){
+    // v2: oefening een kolom naar links/rechts verplaatsen (herordenen)
+    var ml=e.target.closest('[data-mvl]'),mr=e.target.closest('[data-mvr]');
+    if(ml){var i=+ml.dataset.mvl;if(i>0&&i<chosen.length){var t=chosen[i];chosen[i]=chosen[i-1];chosen[i-1]=t;render();}return;}
+    if(mr){var j=+mr.dataset.mvr;if(j>=0&&j<chosen.length-1){var u=chosen[j];chosen[j]=chosen[j+1];chosen[j+1]=u;render();}return;}
     var rm=e.target.closest('.rm');if(!rm)return;
     var n=+rm.dataset.rm;if(n>=0&&n<chosen.length){chosen.splice(n,1);render();}
   });
