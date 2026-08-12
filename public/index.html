@@ -1865,11 +1865,25 @@ bridge2.jpg</div>
             trTxt=" · <span title='Dagen waarop de patiënt aantikte dat hij geoefend heeft (afgelopen 7 dagen). Laatst geoefend: "+laatstTxt+".' style='white-space:nowrap'>"+
               "<span style='display:inline-block;width:7px;height:7px;border-radius:99px;background:"+trk+";vertical-align:middle;margin-right:3px'></span>"+week+"/7 geoefend</span>";
           }
+          // deel de kaart in één tik via het eigen kanaal van de patiënt: WhatsApp,
+          // e-mail of gewoon de link kopiëren. De patiënt opent hem zonder app of
+          // account in de browser — precies de app-vrije belofte van Fysiplan.
+          var kaartUrl=location.origin+'/k/'+c.id;
+          var deelTekst='Hoi! Hier is je persoonlijke oefenkaart van '+pr+': '+kaartUrl+' — je opent hem gewoon in je browser, je hebt er geen app voor nodig.';
+          var waHref='https://wa.me/?text='+encodeURIComponent(deelTekst);
+          var mailHref='mailto:?subject='+encodeURIComponent('Je oefenkaart van '+pr)+'&body='+encodeURIComponent(deelTekst);
+          var deelBlok="<div id='deel_"+esc(c.id)+"' style='display:none;padding:8px 4px 10px;border-bottom:1px solid var(--line)'>"+
+            "<small style='color:var(--muted)'>De patiënt opent de kaart zonder app, gewoon in de browser:</small>"+
+            "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px'>"+
+              "<button class='btn' data-slink='"+esc(c.id)+"'>Kopieer link</button>"+
+              "<a class='btn' href='"+esc(waHref)+"' target='_blank' rel='noopener' style='text-decoration:none'>WhatsApp</a>"+
+              "<a class='btn' href='"+esc(mailHref)+"' target='_blank' rel='noopener' style='text-decoration:none'>E-mail</a>"+
+            "</div></div>";
           return "<div style='display:flex;align-items:center;gap:8px;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
             "<div style='flex:1;min-width:0'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+"</small></div>"+vg+
-            "<button class='btn' data-slink='"+esc(c.id)+"' title='Kopieer de patiëntlink — de digitale kaart opent zonder app in de browser'>Link</button>"+
+            "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
-            "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>"+vgBlok;
+            "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>"+vgBlok+deelBlok;
         }).join("");
       })
       .catch(function(){el.innerHTML="<div class='hint'>Kaarten laden is niet gelukt.</div>";});
@@ -1886,6 +1900,9 @@ bridge2.jpg</div>
   document.getElementById('k_srv_lijst').addEventListener('click',function(e){
     var m=e.target.closest('[data-mtoon]');
     if(m){var h=document.getElementById('mh_'+m.dataset.mtoon);if(h)h.style.display=h.style.display==='none'?'':'none';return;}
+    // deelpaneel open/dicht klappen (WhatsApp / e-mail / link kopiëren)
+    var dl=e.target.closest('[data-sdeel]');
+    if(dl){var db=document.getElementById('deel_'+dl.dataset.sdeel);if(db)db.style.display=db.style.display==='none'?'':'none';return;}
     // patiëntlink kopiëren: de kaart opent zonder app, gewoon in de browser, zodat de
     // therapeut hem via WhatsApp/e-mail/portaal kan delen. Geen serveraanroep nodig.
     var lk=e.target.closest('[data-slink]');
