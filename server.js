@@ -681,6 +681,17 @@ function readBodyRaw(req, limit) {
   });
 }
 
+// Verhardt de v2-pagina's met een per-antwoord script-nonce, zodat 'unsafe-inline'
+// uit script-src kan. Zou er ooit ongefilterde invoer in de DOM belanden, dan mist
+// een geïnjecteerd <script> de nonce en draait het niet — de XSS-straal wordt kleiner.
+// De v2-pagina's hebben elk precies één inline <script> zonder src, geen inline
+// on...-handlers en geen eval/new Function; qr.js laadt same-origin ('self'), dus
+// het weghalen van 'unsafe-inline' breekt niets. v1 raakt dit nooit: alleen de
+// v2-routes roepen dit aan en zetten de bijbehorende CSP.
+const scriptNonce = () => randomBytes(16).toString("base64");
+const nonceInlineScripts = (html, nonce) =>
+  html.replace(/<script(?![^>]*\ssrc=)/gi, '<script nonce="' + nonce + '"');
+
 const MIME = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
@@ -1618,11 +1629,12 @@ async function afhandelen(request, response) {
     response.setHeader("permissions-policy", "camera=(self), microphone=(self), geolocation=()");
     // de opnamepagina opent geen popups; browsingcontext isoleren tegen andere vensters
     response.setHeader("cross-origin-opener-policy", "same-origin");
+    const nonce = scriptNonce();
     response.setHeader("content-security-policy",
-      "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; " +
+      "default-src 'self'; script-src 'self' 'nonce-" + nonce + "'; style-src 'self' 'unsafe-inline'; " +
       "img-src 'self' data:; media-src 'self' blob:; frame-src 'none'; " +
       "connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'");
-    try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "opname.html"))); }
+    try { await send(response, 200, "text/html; charset=utf-8", nonceInlineScripts(await readFile(join(publicDir, "opname.html"), "utf8"), nonce)); }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
   }
@@ -2036,11 +2048,12 @@ async function afhandelen(request, response) {
     // te isoleren kan geen enkel ander venster naar deze pagina met patiëntgegevens verwijzen
     response.setHeader("cross-origin-opener-policy", "same-origin");
     // defensielaag: de patiëntpagina mag alleen laden van de eigen server (+ de YouTube-speler)
+    const nonce = scriptNonce();
     response.setHeader("content-security-policy",
-      "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; " +
+      "default-src 'self'; script-src 'self' 'nonce-" + nonce + "'; style-src 'self' 'unsafe-inline'; " +
       "img-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com https://*.cloudflarestream.com https://iframe.videodelivery.net; " +
       "connect-src 'self'; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'");
-    try { await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "kaart.html"))); }
+    try { await send(response, 200, "text/html; charset=utf-8", nonceInlineScripts(await readFile(join(publicDir, "kaart.html"), "utf8"), nonce)); }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
   }
@@ -2133,8 +2146,9 @@ async function afhandelen(request, response) {
     response.setHeader("cross-origin-opener-policy", "same-origin");
     // defensielaag zoals op /k en /o: de app laadt alleen eigen bronnen, plus de
     // videospelers; base-uri 'self' omdat de pagina zelf een <base href="/"> zet
+    const nonce = scriptNonce();
     response.setHeader("content-security-policy",
-      "default-src 'self'; script-src 'self' 'unsafe-inline'; " +
+      "default-src 'self'; script-src 'self' 'nonce-" + nonce + "'; " +
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; " +
       "img-src 'self' data: blob:; media-src 'self' blob:; " +
       "frame-src https://www.youtube-nocookie.com https://*.cloudflarestream.com https://iframe.videodelivery.net; " +
@@ -2143,6 +2157,8 @@ async function afhandelen(request, response) {
       let html = await readFile(join(publicDir, "index.html"), "utf8");
       html = html.replace("<head>", '<head><base href="/"/><meta name="color-scheme" content="light"/><script>window.FYSIPLAN_V2=true</script>');
       html = html.replace("</head>", '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'%3E%3Crect width=\'32\' height=\'32\' rx=\'8\' fill=\'%232456a6\'/%3E%3Cpath d=\'M5 16h5l2.5 6 5-12 2.5 7h7\' fill=\'none\' stroke=\'%23fff\' stroke-width=\'2.6\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3E%3C/svg%3E"/><link rel="stylesheet" href="/v2.css"/><script src="/qr.js" defer></script></head>');
+      // nonce op de inline scripts (na alle injecties); de externe /qr.js houdt zijn src en valt onder 'self'
+      html = nonceInlineScripts(html, nonce);
       await send(response, 200, "text/html; charset=utf-8", html);
     } catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
