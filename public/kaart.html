@@ -234,6 +234,13 @@
   .mlabels{display:flex;justify-content:space-between;font:600 11.5px/1 var(--disp);color:var(--zacht);margin-top:8px}
   .mdank{font:600 14px/1.4 var(--disp);color:#3e7a52;background:#eef6ef;border:1px solid #d7e8da;
     border-radius:10px;padding:10px 12px;margin-top:12px}
+  /* rustige nudge bij een hoge pijnscore: alleen aandacht + de praktijk één tik weg,
+     nooit een oordeel of advies (MDR: registreren en tonen, duiding bij de fysiotherapeut) */
+  .mnudge{font:500 13.5px/1.5 var(--disp);color:#8a5a00;background:#fff7e6;border:1px solid #f2d999;
+    border-radius:10px;padding:11px 13px;margin-top:10px;display:flex;flex-direction:column;gap:9px}
+  .mnudge a{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;font:600 13.5px/1 var(--disp);
+    color:#fff;background:var(--blauw);border-radius:999px;padding:9px 14px;text-decoration:none}
+  .mnudge a:active{background:var(--blauw-d)}
   .mnoot{font:500 12.5px/1.5 var(--disp);color:var(--zacht);margin-top:12px}
   .mhist{margin-top:14px;padding-top:12px;border-top:1px solid var(--lijn2)}
   .mhist .mtitel{font:700 12px/1 var(--disp);letter-spacing:.08em;text-transform:uppercase;color:var(--grijs);margin-bottom:10px}
@@ -344,6 +351,7 @@
     <div class="mschaal" id="mschaal" role="group" aria-labelledby="mvraag"></div>
     <div class="mlabels"><span id="ml0">0 = geen pijn</span><span id="ml10">10 = ergste pijn</span></div>
     <div class="mdank" id="mdank" role="status" aria-live="polite" style="display:none"></div>
+    <div class="mnudge" id="mnudge" role="status" aria-live="polite" style="display:none"></div>
     <div class="mhist" id="mhist" style="display:none">
       <div class="mtitel" id="mtitel">Jouw verloop</div>
       <div class="mbars" id="mbars"></div>
@@ -1029,10 +1037,21 @@
         .then(function(r){return r.json();})
         .then(function(d){
           dank.style.display='block';
-          if(!d.ok){dank.textContent=d.fout||tr('mfout');return;}
+          var nudge=document.getElementById('mnudge');
+          if(!d.ok){dank.textContent=d.fout||tr('mfout');if(nudge)nudge.style.display='none';return;}
           K.kaart.metingen=d.metingen||[];
           tekenMeting();
           dank.textContent=tr('mdank');
+          // hoge pijn (7-10): rustige, MDR-veilige nudge — alleen aandacht + de praktijk
+          // één tik weg; geen oordeel of advies. Hergebruikt de bestaande vertalingen.
+          if(nudge){
+            if(Number(b.dataset.score)>=7){
+              var tel=(K.praktijk&&K.praktijk.tel)?String(K.praktijk.tel).replace(/[^+\d]/g,''):'';
+              nudge.innerHTML='<span>'+esc(tr('veilig'))+'</span>'+
+                (tel?'<a href="tel:'+esc(tel)+'"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.2 2.2z"/></svg>'+esc(tr('bel'))+'</a>':'');
+              nudge.style.display='flex';
+            }else nudge.style.display='none';
+          }
         })
         .catch(function(){dank.style.display='block';dank.textContent=tr('mfout');});
     });
