@@ -54,3 +54,36 @@ CSP-overtreding.
 **Volgende run — pak een ander gebied:** accountlaag (sessie-levensduur /
 fixation / rotatie na claim) of uploads (content-type-sniffing op
 `/api/opname/upload` en de beheer-videoupload).
+
+### 2026-08-13 — accountlaag (sessies, claim, login, audit)
+**Geauditeerd:** de volledige praktijk-accountlaag adversarieel bekeken op
+sessie-levensduur, session fixation, tokenrotatie, brute-force-remming en
+lekkage in het auditlog.
+
+**Bevindingen (geen kritiek gat — alles al dicht):**
+- Tokens: `randomBytes(24)` = 192 bit, server-side gemunt; een door de client
+  verzonnen token wordt nooit geaccepteerd (geen fixation). Elke claim/login
+  munt een vers, uniek token.
+- Levensduur: absolute vervaltijd van 30 dagen, per request gecontroleerd in
+  `praktijkSessieVan` (verlopen token wordt verwijderd). Sessietabel begrensd
+  (opruiming boven 5000, harde bovengrens 50000).
+- Rotatie/opruiming: logout verwijdert exact dat token; admin-reset verwijdert
+  álle sessies van de praktijk.
+- Wachtwoord: `scryptSync` met eigen salt; vergelijking constant-tijd via
+  `timingSafeEqual` met lengtecheck.
+- Brute-force: rem-per-IP (`denied`) plus rem-per-praktijk (10 missers/kwartier
+  → op slot, ongeacht IP).
+- Claim: `schrijfLimiet` + `kruisSite` + `nieuwePraktijkLimiet` + minimaal
+  8 tekens + 409 bij herclaim + **globale bovengrens van 1000 accounts**.
+- Auditlog: alleen tijd, praktijknaam, actie en **gemaskeerd IP** — nooit een
+  token of wachtwoord; begrensd op 500 regels.
+
+**Increment:** geen geforceerde codewijziging (de laag is aantoonbaar dicht),
+wel een regressie-guard `test-sessie.mjs` (15 checks) die fixation-weerstand,
+tokenversheid, tokenvorm (48 hex), robuustheid tegen misvormde tokens en de
+token-vrije audit vastzet.
+
+**Volgende run — pak een ander gebied:** uploads (content-type-/magic-byte-
+validatie op `/api/opname/upload` en de beheer-videoupload; te ruime limieten)
+of deeplinks/gedeelde kaarten (enumereerbaarheid van `/k/<id>`,
+`kaartMisLimiet`).
