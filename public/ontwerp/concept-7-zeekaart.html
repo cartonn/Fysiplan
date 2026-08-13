@@ -1,0 +1,1073 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 7 — Zeekaart · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 7 — ZEEKAART
+   Herstel is geen lijstje maar een vaart. Een zeekaart is het
+   enige document dat tegelijk zegt: waar je bent, hoe diep het
+   is, wat er verderop ligt en wat je moet mijden — zonder één
+   volzin te veel.
+   De conventies die we lenen:
+     · dieptecijfers in het water (hier: minuten per oefening)
+     · dieptelijnen die zones afbakenen (hier: zwaarte)
+     · MAGENTA voor alles wat advies of waarschuwing is —
+       dat is op elke echte kaart de kleur van de raadgever
+     · een verklaring der tekens waar élk symbool in gewone
+       taal wordt uitgeschreven
+     · een journaal: de vaart wordt bijgehouden, niet gescoord
+   Het anker van het product: de zinnen in de verklaring en op
+   de route staan groot en zwart. Wie niets van kaarten weet,
+   leest gewoon vijf zinnen en zeven hokjes.
+   Alles inline; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  --papier:#f4efe3;        /* kaartpapier, het brede blad rondom */
+  --zee:#ffffff;           /* diep water is op een zeekaart wit */
+  --zee-1:#d9e9f2;         /* ondiep */
+  --zee-2:#b6d5e6;         /* zeer ondiep */
+  --wad:#d7e3c6;           /* droogvallend */
+  --land:#ece0c4;          /* de vaste wal */
+  --land-lijn:#b9a67c;
+  --inkt:#0f2028;
+  --inkt-2:#3a4d57;
+  --grijs:#6f838d;
+  --lijn:#8ea7b3;
+  --lijn-l:#c4d4dc;
+  --magenta:#b3006b;       /* de kleur van de raadgever */
+  --magenta-l:#f7e3ee;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --serif:Charter,"Iowan Old Style",Georgia,serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:68px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.6 var(--sans);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+:focus-visible{outline:2.5px solid var(--magenta);outline-offset:3px}
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+
+/* de lijntekeningen: op een kaart is alles één inkt op wit papier */
+.tekening{background:#fff;position:relative;line-height:0}
+.tekening img{filter:grayscale(1) contrast(1.3) brightness(1.04);mix-blend-mode:multiply}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);
+  background:var(--inkt);color:#fff;padding:10px 18px;font:600 13px/1 var(--sans)}
+.labbalk a{color:#fff;text-decoration:none;padding:6px 10px}
+.labbalk a:hover{background:rgba(255,255,255,.2)}
+.labbalk .nr{color:#8fd0ea;font:700 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase}
+.labbalk .rek{flex:1}
+.labbalk .terug{border:1px solid rgba(255,255,255,.4)}
+
+.scherm{padding:var(--s6) 22px}
+.scherm + .scherm{border-top:1px solid var(--lijn-l)}
+.binnen{max-width:1180px;margin:0 auto}
+.schermkop{display:flex;align-items:flex-end;gap:var(--s3);margin-bottom:var(--s5)}
+.schermkop b{font:700 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--magenta);
+  border:1.5px solid var(--magenta);padding:6px 8px}
+.schermkop h2{font:600 26px/1 var(--sans);letter-spacing:-.028em;color:var(--inkt)}
+.schermkop p{flex:1;text-align:right;font:italic 400 15.5px/1.4 var(--serif);color:var(--grijs)}
+@media (max-width:760px){.schermkop{flex-wrap:wrap}.schermkop p{text-align:left;flex-basis:100%}}
+
+/* ============================================================
+   1 · LANDING — het blad ligt op tafel
+   ============================================================ */
+.blad-hero{background:var(--papier);border:1px solid var(--land-lijn);padding:14px;
+  box-shadow:0 18px 44px rgba(15,32,40,.14)}
+.kaartvlak{background:var(--zee);border:2.5px solid var(--inkt);position:relative}
+.kaartvlak .neat{position:absolute;inset:5px;border:.8px solid var(--inkt);pointer-events:none}
+
+.hero-raster{display:grid;grid-template-columns:1.05fr .95fr;gap:0;align-items:stretch}
+@media (max-width:940px){.hero-raster{grid-template-columns:1fr}}
+
+.hero-tekst{padding:var(--s5) var(--s5) var(--s5) var(--s5);border-right:1px solid var(--lijn-l);
+  background:linear-gradient(to bottom,#fff, #fbfdfe)}
+@media (max-width:940px){.hero-tekst{border-right:0;border-bottom:1px solid var(--lijn-l);padding:var(--s4)}}
+.cartouche{border:1.5px solid var(--inkt);padding:var(--s3);background:#fff;display:inline-block;margin-bottom:var(--s4)}
+.cartouche .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--magenta)}
+.cartouche .tt{font:600 15px/1.25 var(--sans);color:var(--inkt);letter-spacing:-.02em;margin-top:6px}
+.cartouche .sub{font:500 11px/1.4 var(--mono);color:var(--grijs);margin-top:5px;letter-spacing:.03em}
+
+.hero-tekst h1{font:600 clamp(30px,3.6vw,44px)/1.08 var(--sans);letter-spacing:-.035em;color:var(--inkt);
+  max-width:16ch}
+.hero-tekst h1 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--magenta)}
+.hero-tekst .lead{font:400 19px/1.62 var(--serif);color:var(--inkt-2);max-width:46ch;margin-top:var(--s3)}
+.hero-tekst .doen{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s4)}
+.kn{display:inline-block;text-decoration:none;font:600 14.5px/1 var(--sans);padding:15px 20px;
+  background:var(--inkt);color:#fff;border:1.5px solid var(--inkt)}
+.kn:hover{background:var(--magenta);border-color:var(--magenta)}
+.kn.leeg{background:transparent;color:var(--inkt)}
+.kn.leeg:hover{background:var(--inkt);color:#fff}
+.kn.magenta{background:var(--magenta);border-color:var(--magenta)}
+.kn.magenta:hover{background:var(--inkt);border-color:var(--inkt)}
+
+.randmeting{display:flex;gap:var(--s4);flex-wrap:wrap;margin-top:var(--s5);padding-top:var(--s3);
+  border-top:1px solid var(--lijn-l)}
+.randmeting div{min-width:110px}
+.randmeting dt{font:700 9.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--grijs)}
+.randmeting dd{font:600 19px/1.2 var(--sans);color:var(--inkt);margin-top:5px}
+.randmeting dd small{display:block;font:400 12.5px/1.4 var(--sans);color:var(--grijs);margin-top:3px}
+
+.hero-kaart{padding:0;position:relative;background:var(--zee);display:flex;flex-direction:column}
+.hero-kaart > svg{display:block;width:100%;height:auto}
+/* de legendastrook vult de onderrand van het kaartvlak: elk teken één regel */
+.kaartlegenda{margin-top:auto;border-top:1px solid var(--inkt);display:flex;flex-wrap:wrap}
+.kaartlegenda div{flex:1;min-width:150px;display:flex;gap:10px;align-items:flex-start;padding:14px var(--s3);
+  border-right:1px solid var(--lijn-l)}
+.kaartlegenda div:last-child{border-right:0}
+.kaartlegenda svg{flex:0 0 20px;width:20px;height:20px;color:var(--inkt);margin-top:1px}
+.kaartlegenda b{display:block;font:600 13px/1.2 var(--sans);color:var(--inkt)}
+.kaartlegenda span{font:400 13px/1.35 var(--sans);color:var(--grijs)}
+.kaartlegenda .mag svg,.kaartlegenda .mag b{color:var(--magenta)}
+
+/* de rand van het kaartblad: de graadverdeling */
+.graadrand{display:flex;height:16px;border-top:1px solid var(--inkt);background:#fff}
+.graadrand i{flex:1;border-right:1px solid var(--inkt);position:relative}
+.graadrand i:nth-child(even){background:var(--inkt)}
+
+/* ============================================================
+   2 · KIEZER — de zeilaanwijzing
+   ============================================================ */
+.kiezerlijf{display:grid;grid-template-columns:1fr 340px;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.kiezerlijf{grid-template-columns:1fr}}
+
+.zoekbalk{display:flex;flex-wrap:wrap;gap:var(--s2);align-items:center;background:#fff;
+  border:1.5px solid var(--inkt);padding:var(--s2);margin-bottom:var(--s4)}
+.zoekbalk .veld{flex:1;min-width:220px;display:flex;align-items:center;gap:10px;padding:10px 12px;
+  border:1px solid var(--lijn-l);background:#fbfdfe}
+.zoekbalk .veld span{font:400 16px/1 var(--sans);color:var(--grijs)}
+.laagknop{font:600 12.5px/1 var(--sans);padding:11px 13px;border:1px solid var(--lijn);background:#fff;
+  color:var(--inkt-2);cursor:default}
+.laagknop.aan{background:var(--inkt);border-color:var(--inkt);color:#fff}
+.laagknop.mag{border-color:var(--magenta);color:var(--magenta)}
+
+.vaklijst{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:var(--s3)}
+.vak{background:#fff;border:1px solid var(--lijn);display:flex;flex-direction:column;position:relative}
+.vak.uitgezet{border:2px solid var(--magenta);box-shadow:0 0 0 4px var(--magenta-l)}
+.vak .beeld{position:relative;background:#fff;border-bottom:1px solid var(--lijn-l);padding:6px}
+.vak .beeld .tekening{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.vak .beeld .tekening img{width:100%;height:100%;object-fit:contain}
+.vak .peiling{position:absolute;left:10px;top:10px;font:italic 600 15px/1 var(--serif);color:var(--inkt);
+  background:rgba(255,255,255,.9);padding:2px 5px}
+.vak .symbool{position:absolute;right:10px;top:10px;width:26px;height:26px;color:var(--inkt)}
+.vak .lijf{padding:var(--s3);display:flex;flex-direction:column;flex:1}
+.vak h3{font:600 18.5px/1.2 var(--sans);letter-spacing:-.022em;color:var(--inkt)}
+.vak .zin{font:400 15.5px/1.5 var(--sans);color:var(--inkt-2);margin-top:7px}
+.vak .regels{margin-top:var(--s3);padding-top:10px;border-top:1px dotted var(--lijn);
+  font:500 12px/1.5 var(--mono);letter-spacing:.03em;color:var(--grijs);display:flex;gap:14px;flex-wrap:wrap}
+.vak .regels b{color:var(--inkt);font-weight:700}
+.vak .voet{margin-top:auto;padding-top:var(--s3);display:flex;align-items:center;gap:10px}
+.vak .zetknop{font:600 13px/1 var(--sans);padding:11px 14px;border:1.5px solid var(--inkt);background:#fff;
+  color:var(--inkt)}
+.vak.uitgezet .zetknop{background:var(--magenta);border-color:var(--magenta);color:#fff}
+.vak .waarschuw{font:600 12px/1.35 var(--sans);color:var(--magenta);display:flex;gap:6px;align-items:flex-start}
+
+/* de route in aanbouw */
+.route{background:#fff;border:2px solid var(--inkt);position:sticky;top:70px}
+.route h3{font:700 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#fff;
+  background:var(--inkt);padding:12px var(--s3)}
+.route .lijf{padding:var(--s3)}
+.route ol{list-style:none;counter-reset:wp}
+.route li{counter-increment:wp;display:flex;gap:12px;padding:12px 0;border-bottom:1px dotted var(--lijn-l)}
+.route li:last-child{border-bottom:0}
+.route li .bol{flex:0 0 26px;height:26px;border-radius:50%;border:2px solid var(--inkt);background:#fff;
+  font:700 12px/22px var(--mono);text-align:center;color:var(--inkt)}
+.route li .bol::before{content:counter(wp)}
+.route li .naam{font:600 15px/1.3 var(--sans);color:var(--inkt)}
+.route li .det{font:500 12px/1.4 var(--mono);color:var(--grijs);margin-top:3px;letter-spacing:.03em}
+.route .som{margin-top:var(--s3);padding-top:var(--s3);border-top:1.5px solid var(--inkt);
+  display:flex;justify-content:space-between;font:600 14px/1 var(--sans);color:var(--inkt)}
+.route .kn{width:100%;text-align:center;margin-top:var(--s3)}
+.route .noot{font:italic 400 13.5px/1.45 var(--serif);color:var(--magenta);margin-top:12px}
+
+/* ============================================================
+   3 · CLIËNTKAART — het bestek van vandaag
+   ============================================================ */
+.dek{background:var(--inkt);color:#fff;padding:var(--s4);display:grid;grid-template-columns:1.2fr 1fr;
+  gap:var(--s4);align-items:center}
+@media (max-width:820px){.dek{grid-template-columns:1fr}}
+.dek .naam{font:600 27px/1.15 var(--sans);letter-spacing:-.03em;color:#fff}
+.dek .onder{font:500 12.5px/1.5 var(--mono);letter-spacing:.05em;color:#8fd0ea;margin-top:8px}
+.dek .positie{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.25);padding:var(--s3)}
+.dek .positie dt{font:700 9.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#8fd0ea}
+.dek .positie dd{font:600 17px/1.35 var(--sans);color:#fff;margin-top:6px}
+.dek .positie dd em{font-family:var(--serif);font-style:italic;font-weight:400}
+
+.vaartlijf{display:grid;grid-template-columns:1fr 330px;gap:0;border:2px solid var(--inkt);border-top:0;
+  background:#fff}
+@media (max-width:1000px){.vaartlijf{grid-template-columns:1fr}}
+.vandaag{padding:var(--s4);border-right:1px solid var(--lijn-l)}
+@media (max-width:1000px){.vandaag{border-right:0;border-bottom:1px solid var(--lijn-l)}}
+.vandaag > h3{font:700 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs);
+  padding-bottom:10px;border-bottom:1.5px solid var(--inkt);margin-bottom:var(--s3)}
+
+.taak{display:grid;grid-template-columns:96px 1fr auto;gap:var(--s3);align-items:center;padding:var(--s3) 0;
+  border-bottom:1px dotted var(--lijn)}
+.taak:last-of-type{border-bottom:0}
+.taak .tekening{border:1px solid var(--lijn-l);aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+.taak .tekening img{width:100%;height:100%;object-fit:contain}
+.taak h4{font:600 19px/1.22 var(--sans);letter-spacing:-.022em;color:var(--inkt)}
+.taak p{font:400 15.5px/1.45 var(--sans);color:var(--inkt-2);margin-top:4px}
+.taak .dosis{font:600 13px/1.4 var(--mono);color:var(--magenta);margin-top:6px;letter-spacing:.03em}
+.taak .vink{width:46px;height:46px;border:2px solid var(--inkt);background:#fff;display:flex;
+  align-items:center;justify-content:center}
+.taak.gedaan .vink{background:var(--inkt)}
+.taak.gedaan .vink svg{color:#fff}
+.taak.gedaan h4{color:var(--grijs)}
+@media (max-width:620px){.taak{grid-template-columns:72px 1fr auto;gap:12px}}
+
+.journaal{padding:var(--s4);background:#fbfdfe}
+.journaal h3{font:700 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs);
+  padding-bottom:10px;border-bottom:1.5px solid var(--inkt);margin-bottom:var(--s3)}
+.journaal .regel{display:flex;gap:12px;padding:11px 0;border-bottom:1px dotted var(--lijn-l);
+  font-size:15px;color:var(--inkt-2)}
+.journaal .regel time{flex:0 0 62px;font:600 12px/1.5 var(--mono);color:var(--grijs);letter-spacing:.03em}
+.journaal .regel b{color:var(--inkt);font-weight:600}
+.journaal .peilstok{margin-top:var(--s4);border:1.5px solid var(--magenta);background:var(--magenta-l);padding:var(--s3)}
+.journaal .peilstok h4{font:700 10px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--magenta)}
+.journaal .peilstok p{font:400 15px/1.5 var(--sans);color:var(--inkt);margin-top:8px}
+
+.weekstrook{display:flex;border:2px solid var(--inkt);border-top:0;background:#fff}
+.weekstrook div{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--lijn-l)}
+.weekstrook div:last-child{border-right:0}
+.weekstrook .d{font:700 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--grijs)}
+.weekstrook .m{margin-top:8px;height:28px;display:flex;align-items:center;justify-content:center;color:var(--inkt)}
+.weekstrook .vandaagcel{background:var(--zee-1)}
+.weekstrook .vandaagcel .d{color:var(--inkt)}
+
+/* ============================================================
+   4 · DE PRINTKAART — A4 liggend, één zeekaart
+   ============================================================ */
+.bladhouder{--z:1;display:flex;justify-content:center}
+.bladschaal{width:calc(297mm * var(--z));height:calc(210mm * var(--z))}
+@media (max-width:1240px){.bladhouder{--z:.74}}
+@media (max-width:960px){.bladhouder{--z:.56}}
+@media (max-width:680px){.bladhouder{--z:.38}}
+@media (max-width:430px){.bladhouder{--z:.3}}
+
+.blad{width:297mm;height:210mm;transform:scale(var(--z));transform-origin:top left;background:#fff;
+  border:1px solid var(--lijn);box-shadow:0 16px 44px rgba(15,32,40,.18);
+  padding:8mm;display:flex;flex-direction:column;color:var(--inkt);font-family:var(--sans)}
+
+/* de neatline: elke zeekaart heeft een dubbele kaderlijn */
+.blad .neatline{border:1.4pt solid var(--inkt);padding:1.6mm;flex:1;display:flex;flex-direction:column}
+.blad .neatbinnen{border:.5pt solid var(--inkt);flex:1;display:flex;flex-direction:column;padding:4mm}
+
+/* titelblok bovenaan */
+.blad .titelblok{display:flex;align-items:flex-end;gap:6mm;padding-bottom:2.6mm;
+  border-bottom:1pt solid var(--inkt)}
+.blad .titelblok .kaartnr{font:700 8pt/1 var(--mono);letter-spacing:.18em;color:var(--magenta);
+  border:.8pt solid var(--magenta);padding:1.6mm 2mm}
+.blad .titelblok h1{font:600 16pt/1.05 var(--sans);letter-spacing:-.03em;color:var(--inkt)}
+.blad .titelblok h1 small{display:block;font:400 9pt/1.3 var(--serif);font-style:italic;color:var(--inkt-2);
+  margin-top:1.2mm;letter-spacing:0}
+.blad .titelblok .uitgave{margin-left:auto;text-align:right;font:600 7.4pt/1.5 var(--mono);
+  letter-spacing:.05em;color:var(--inkt-2)}
+.blad .titelblok .uitgave b{color:var(--inkt)}
+
+.blad .romp{flex:1;display:grid;grid-template-columns:1fr 92mm;gap:4mm;padding-top:3mm;min-height:0}
+
+/* — het kaartvlak links — */
+.blad .kaartvak{border:.8pt solid var(--inkt);background:#fff;position:relative;overflow:hidden;
+  display:flex;flex-direction:column}
+.blad .kaartvak svg{display:block;width:100%;height:100%}
+.blad .kaartvak .voetregel{border-top:.5pt solid var(--inkt);padding:1.6mm 2mm;display:flex;gap:5mm;
+  font:600 6.6pt/1.2 var(--mono);letter-spacing:.06em;color:var(--inkt-2);align-items:center}
+.blad .kaartvak .voetregel b{color:var(--inkt)}
+.blad .kaartvak .voetregel .mag{color:var(--magenta)}
+
+/* — verklaring der tekens rechts — */
+.blad .verklaring{display:flex;flex-direction:column;min-height:0}
+.blad .verklaring > h2{font:700 7.6pt/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--inkt);border-bottom:1pt solid var(--inkt);padding-bottom:1.6mm}
+.blad .verklaring > .onderschrift{font:italic 400 7.6pt/1.3 var(--serif);color:var(--inkt-2);
+  margin-top:1.4mm;margin-bottom:2mm}
+.blad .post{display:grid;grid-template-columns:17mm 1fr;gap:2.6mm;padding:2.2mm 0;
+  border-bottom:.4pt dotted var(--lijn);align-items:start}
+.blad .post:last-of-type{border-bottom:0}
+.blad .post .fig{border:.5pt solid var(--lijn-l);background:#fff;aspect-ratio:1/1;display:flex;
+  align-items:center;justify-content:center;position:relative}
+.blad .post .fig img{width:100%;height:100%;object-fit:contain;filter:grayscale(1) contrast(1.35) brightness(1.04)}
+.blad .post .fig .teken{position:absolute;left:-1.2mm;top:-1.2mm;width:5.4mm;height:5.4mm;background:#fff;
+  border:.5pt solid var(--inkt);display:flex;align-items:center;justify-content:center;color:var(--inkt)}
+.blad .post .fig .teken svg{width:3.6mm;height:3.6mm}
+.blad .post h3{font:600 10.4pt/1.15 var(--sans);letter-spacing:-.02em;color:var(--inkt)}
+.blad .post p{font:400 9.4pt/1.34 var(--sans);color:var(--inkt);margin-top:1mm}
+.blad .post .dos{font:700 8.2pt/1.2 var(--mono);letter-spacing:.04em;color:var(--magenta);margin-top:1.2mm}
+
+/* — de onderbalk: journaal + raadgeving — */
+.blad .onderbalk{margin-top:3mm;padding-top:2.6mm;border-top:1pt solid var(--inkt);
+  display:grid;grid-template-columns:1fr 92mm;gap:4mm;align-items:start}
+.blad .journaalvak h2{font:700 7.6pt/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--inkt)}
+.blad .journaalvak .dagen{display:flex;gap:1.6mm;margin-top:2mm}
+.blad .journaalvak .dag{flex:1;border:.7pt solid var(--inkt);text-align:center;padding:1.4mm 0 0}
+.blad .journaalvak .dag .d{font:700 7pt/1 var(--mono);letter-spacing:.1em;color:var(--inkt)}
+.blad .journaalvak .dag .hok{height:8.5mm;border-top:.4pt solid var(--lijn-l);margin-top:1.4mm}
+.blad .journaalvak .schrijfregel{margin-top:2mm;display:flex;align-items:baseline;gap:2mm}
+.blad .journaalvak .schrijfregel span{font:600 7pt/1 var(--mono);letter-spacing:.08em;color:var(--inkt-2);
+  white-space:nowrap}
+.blad .journaalvak .schrijfregel i{flex:1;border-bottom:.5pt solid var(--lijn)}
+
+.blad .raadgeving{border:1pt solid var(--magenta);padding:2.4mm 3mm;background:#fff}
+.blad .raadgeving h2{font:700 7.6pt/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--magenta);display:flex;align-items:center;gap:1.6mm}
+.blad .raadgeving h2 svg{width:4mm;height:4mm}
+.blad .raadgeving p{font:400 9.2pt/1.35 var(--sans);color:var(--inkt);margin-top:1.6mm}
+.blad .raadgeving p b{font-weight:700}
+.blad .raadgeving .havenmeester{margin-top:2mm;padding-top:1.6mm;border-top:.4pt dotted var(--magenta);
+  font:600 8.4pt/1.35 var(--mono);color:var(--inkt);letter-spacing:.02em}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 landscape;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important}
+  .blad{width:297mm;height:210mm;transform:none !important;border:0 !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<!-- de tekens van de kaart; elk teken staat ook uitgeschreven in de verklaring -->
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="t-boei" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+      <path d="M12 3l3.4 6H8.6L12 3z"/><path d="M8.6 9h6.8l-1 6H9.6l-1-6z"/><path d="M6 18h12"/>
+    </g>
+  </symbol>
+  <symbol id="t-baken" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+      <path d="M12 2v9"/><path d="M8 21l4-10 4 10z"/><path d="M5 6l3.2 2M19 6l-3.2 2"/>
+    </g>
+  </symbol>
+  <symbol id="t-anker" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="4.5" r="2"/><path d="M12 6.5V21"/><path d="M7.5 10h9"/>
+      <path d="M4 15c0 4 3.8 6 8 6s8-2 8-6"/>
+    </g>
+  </symbol>
+  <symbol id="t-drempel" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 18h20"/><path d="M6 18l4-8 4 8"/><path d="M14 18l3-5 3 5"/>
+    </g>
+  </symbol>
+  <symbol id="t-kompas" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"/><path d="M12 3l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-1.6L12 3z"/>
+    </g>
+  </symbol>
+  <symbol id="t-vink" viewBox="0 0 24 24">
+    <path d="M4 12.6l5.2 5.2L20 6.4" fill="none" stroke="currentColor" stroke-width="3"
+      stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="t-uitroep" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <path d="M12 3L1.8 20.5h20.4L12 3z"/><path d="M12 9.5v5"/><path d="M12 17.6v.2"/>
+    </g>
+  </symbol>
+</svg>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 7</span>
+  <strong style="font:700 14px/1 var(--sans)">Zeekaart</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>het blad ligt op de kaartentafel, niet in een browser</p>
+    </div>
+
+    <div class="blad-hero">
+      <div class="kaartvlak">
+        <div class="hero-raster">
+          <div class="hero-tekst">
+            <div class="cartouche">
+              <div class="nr">Kaart 1811</div>
+              <div class="tt">Herstel na een heupoperatie</div>
+              <div class="sub">Diepten in minuten · Schaal 1 week = 30 mm</div>
+            </div>
+            <h1>Herstel is een vaart, <em>geen lijstje</em>.</h1>
+            <p class="lead">Een zeekaart zegt in één blik waar u bent, hoe diep het water is en
+              wat er verderop ligt. Fysiplan drukt uw oefenweken af als zo'n kaart: één A4 liggend,
+              met de route, de dieptecijfers en — in magenta, zoals op elke echte kaart — alles wat
+              de raadgever u wil meegeven.</p>
+            <div class="doen">
+              <a class="kn" href="#printkaart">Bekijk de kaart</a>
+              <a class="kn leeg" href="#kiezer">Zet een route uit</a>
+            </div>
+            <div class="randmeting">
+              <div><dt>Uitgifte</dt><dd>1 minuut<small>van keuze tot papier</small></dd></div>
+              <div><dt>Bladformaat</dt><dd>A4 liggend<small>één vel, geen bijlage</small></dd></div>
+              <div><dt>Leesafstand</dt><dd>armlengte<small>10,4 pt en groter</small></dd></div>
+            </div>
+          </div>
+
+          <div class="hero-kaart">
+            <!-- het kaartbeeld: de vaart van zes weken, van thuis naar de trap -->
+            <svg viewBox="0 0 560 520" role="img"
+                 aria-label="Kaartbeeld: een route van zes weken over water, van de wal 'Thuis, week 0' naar de haven 'Zelf de trap op'. Onderweg liggen dieptecijfers in minuten, een ondiepte bij week 3 en een ankerplaats voor de rustdag.">
+              <rect x="0" y="0" width="560" height="520" fill="#fff"/>
+
+              <!-- diep water met de vage ruitverdeling van de kaart -->
+              <g stroke="#e4eef3" stroke-width="1">
+                <path d="M0 60H560M0 130H560M0 200H560M0 270H560M0 340H560M0 410H560M0 480H560"/>
+                <path d="M70 0V520M140 0V520M210 0V520M280 0V520M350 0V520M420 0V520M490 0V520"/>
+              </g>
+
+              <!-- ondiep water: de zone waar het zwaar wordt -->
+              <path d="M60 300C140 250 250 268 330 232 400 200 470 210 560 176V520H60V300Z" fill="#d9e9f2"/>
+              <path d="M120 392C200 360 280 372 350 340 420 308 490 316 560 292V520H120V392Z" fill="#b6d5e6"/>
+
+              <!-- de wal linksonder: het gewone leven -->
+              <path d="M0 430C60 424 96 456 150 470 210 486 250 520 250 520H0V430Z" fill="#ece0c4" stroke="#b9a67c" stroke-width="1.4"/>
+              <path d="M0 452C50 448 84 474 132 486" fill="none" stroke="#d7e3c6" stroke-width="7"/>
+              <!-- de haven rechtsboven: het doel -->
+              <path d="M560 0V120C500 116 452 92 420 60 396 36 388 0 388 0H560Z" fill="#ece0c4" stroke="#b9a67c" stroke-width="1.4"/>
+
+              <!-- dieptelijnen (isobathen) -->
+              <g fill="none" stroke="#8ea7b3" stroke-width="1" stroke-dasharray="7 5">
+                <path d="M40 330C130 280 250 296 330 262 402 232 476 240 560 208"/>
+                <path d="M100 424C182 392 268 402 340 372 410 342 486 348 560 324"/>
+              </g>
+              <text x="46" y="325" font-family="Charter,Georgia,serif" font-style="italic" font-size="12" fill="#3a4d57">10 min</text>
+              <text x="108" y="419" font-family="Charter,Georgia,serif" font-style="italic" font-size="12" fill="#3a4d57">6 min</text>
+
+              <!-- dieptecijfers: minuten per dag -->
+              <g font-family="Charter,Georgia,serif" font-style="italic" font-size="13" fill="#3a4d57">
+                <text x="196" y="352">8</text><text x="268" y="404">7</text><text x="330" y="330">11</text>
+                <text x="404" y="286">12</text><text x="452" y="196">14</text><text x="150" y="272">9</text>
+                <text x="242" y="238">10</text><text x="356" y="428">6</text><text x="484" y="330">13</text>
+                <text x="96" y="200">9</text><text x="300" y="150">12</text><text x="180" y="110">10</text>
+              </g>
+
+              <!-- de route -->
+              <path d="M92 462L152 392 224 356 292 300 356 236 424 168 486 96"
+                    fill="none" stroke="#0f2028" stroke-width="2.6" stroke-dasharray="12 6"/>
+
+              <!-- waypoints -->
+              <g>
+                <circle cx="92" cy="462" r="9" fill="#fff" stroke="#0f2028" stroke-width="2.4"/>
+                <circle cx="152" cy="392" r="9" fill="#0f2028"/>
+                <circle cx="224" cy="356" r="9" fill="#0f2028"/>
+                <circle cx="292" cy="300" r="11" fill="#fff" stroke="#b3006b" stroke-width="3"/>
+                <circle cx="356" cy="236" r="9" fill="#fff" stroke="#0f2028" stroke-width="2.4"/>
+                <circle cx="424" cy="168" r="9" fill="#fff" stroke="#0f2028" stroke-width="2.4"/>
+                <circle cx="486" cy="96" r="11" fill="#fff" stroke="#0f2028" stroke-width="3"/>
+                <circle cx="486" cy="96" r="4.4" fill="#0f2028"/>
+              </g>
+              <g font-family="Avenir Next,Segoe UI,system-ui,sans-serif" font-size="12.5" font-weight="600" fill="#0f2028">
+                <text x="30" y="486">Thuis</text>
+                <text x="166" y="386">week 1</text>
+                <text x="238" y="350">week 2</text>
+                <text x="306" y="296" fill="#b3006b">week 3</text>
+                <text x="370" y="230">week 4</text>
+                <text x="438" y="162">week 5</text>
+                <text x="410" y="76">Zelf de trap op</text>
+              </g>
+
+              <!-- de ondiepte met raadgeving in magenta -->
+              <g stroke="#b3006b" fill="none">
+                <path d="M258 288a40 40 0 1 1 68 30 40 40 0 0 1-68-30z" stroke-width="1.6" stroke-dasharray="5 4"/>
+              </g>
+              <text x="238" y="256" font-family="Avenir Next,Segoe UI,system-ui,sans-serif" font-size="11.5"
+                    font-weight="700" fill="#b3006b">ondiepte</text>
+
+              <!-- ankerplaats: de rustdag -->
+              <g transform="translate(196,438) scale(1.5)" stroke="#0f2028" fill="none" stroke-width="1.6"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="4.5" r="2"/><path d="M12 6.5V21"/><path d="M7.5 10h9"/>
+                <path d="M4 15c0 4 3.8 6 8 6s8-2 8-6"/>
+              </g>
+              <text x="234" y="470" font-family="Charter,Georgia,serif" font-style="italic" font-size="12.5"
+                    fill="#0f2028">ankerplaats — zondag</text>
+
+              <!-- kompasroos -->
+              <g transform="translate(474,414)">
+                <circle cx="0" cy="0" r="40" fill="#fff" stroke="#0f2028" stroke-width="1.2"/>
+                <circle cx="0" cy="0" r="30" fill="none" stroke="#c4d4dc" stroke-width="1"/>
+                <path d="M0 -38L7 -6 0 0 -7 -6Z" fill="#b3006b"/>
+                <path d="M0 38L7 6 0 0 -7 6Z" fill="#0f2028"/>
+                <path d="M-38 0L-6 -7 0 0 -6 7Z" fill="#fff" stroke="#0f2028" stroke-width="1"/>
+                <path d="M38 0L6 -7 0 0 6 7Z" fill="#fff" stroke="#0f2028" stroke-width="1"/>
+                <text x="-4.5" y="-44" font-family="Avenir Next,sans-serif" font-size="12" font-weight="700"
+                      fill="#0f2028">N</text>
+              </g>
+
+              <!-- schaalbalk -->
+              <g transform="translate(40,40)">
+                <rect x="0" y="0" width="30" height="7" fill="#0f2028"/>
+                <rect x="30" y="0" width="30" height="7" fill="#fff" stroke="#0f2028" stroke-width="1"/>
+                <rect x="60" y="0" width="30" height="7" fill="#0f2028"/>
+                <text x="0" y="24" font-family="ui-monospace,Menlo,monospace" font-size="10.5"
+                      letter-spacing="1" fill="#3a4d57">1 WEEK</text>
+                <text x="66" y="24" font-family="ui-monospace,Menlo,monospace" font-size="10.5"
+                      letter-spacing="1" fill="#3a4d57">3 WEKEN</text>
+              </g>
+            </svg>
+
+            <div class="kaartlegenda">
+              <div>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#t-boei"/></svg>
+                <span><b>Boei</b>een oefening op de route</span>
+              </div>
+              <div>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#t-anker"/></svg>
+                <span><b>Ankerplaats</b>de rustdag, ingetekend</span>
+              </div>
+              <div class="mag">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#t-uitroep"/></svg>
+                <span><b>Magenta</b>raadgeving van de praktijk</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="graadrand" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>Oefeningen kiezen</h2>
+      <p>de zeilaanwijzing: elk vak één teken, één dieptecijfer, één zin</p>
+    </div>
+
+    <div class="zoekbalk">
+      <label class="veld">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6f838d" stroke-width="2"
+             aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg>
+        <span>Zoek in het vaarwater — “balans”, “knie”, “met steun”…</span>
+      </label>
+      <span class="laagknop aan">Heup &amp; been</span>
+      <span class="laagknop">Balans</span>
+      <span class="laagknop">Rug</span>
+      <span class="laagknop">Nek &amp; schouder</span>
+      <span class="laagknop mag">Alleen met steun</span>
+    </div>
+
+    <div class="kiezerlijf">
+      <div>
+        <div class="vaklijst">
+
+          <article class="vak uitgezet">
+            <div class="beeld">
+              <span class="peiling">8</span>
+              <svg class="symbool" viewBox="0 0 24 24" aria-hidden="true"><use href="#t-boei"/></svg>
+              <div class="tekening">
+                <img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png"
+                     alt="Lijntekening: op de plaats marcheren met steun van een stoelleuning" loading="lazy"/>
+              </div>
+            </div>
+            <div class="lijf">
+              <h3>Op de plaats marcheren</h3>
+              <p class="zin">Houd de rugleuning vast en til om beurten uw knie op, alsof u langzaam
+                loopt zonder vooruit te komen.</p>
+              <div class="regels"><span><b>2 ×</b> 20 stappen</span><span><b>8</b> min</span><span>met steun</span></div>
+              <div class="voet">
+                <span class="zetknop">Uitgezet — punt 1</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="vak uitgezet">
+            <div class="beeld">
+              <span class="peiling">6</span>
+              <svg class="symbool" viewBox="0 0 24 24" aria-hidden="true"><use href="#t-boei"/></svg>
+              <div class="tekening">
+                <img src="/images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png"
+                     alt="Lijntekening: staand het gewicht zijwaarts verplaatsen met steun" loading="lazy"/>
+              </div>
+            </div>
+            <div class="lijf">
+              <h3>Gewicht zijwaarts verplaatsen</h3>
+              <p class="zin">Sta rustig, handen op het aanrecht. Verplaats uw gewicht langzaam naar
+                links en weer naar rechts.</p>
+              <div class="regels"><span><b>3 ×</b> 10</span><span><b>6</b> min</span><span>met steun</span></div>
+              <div class="voet">
+                <span class="zetknop">Uitgezet — punt 2</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="vak uitgezet">
+            <div class="beeld">
+              <span class="peiling">7</span>
+              <svg class="symbool" viewBox="0 0 24 24" aria-hidden="true"><use href="#t-drempel"/></svg>
+              <div class="tekening">
+                <img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png"
+                     alt="Lijntekening: zittend op een stoel de knie strekken" loading="lazy"/>
+              </div>
+            </div>
+            <div class="lijf">
+              <h3>Knie strekken, zittend</h3>
+              <p class="zin">Zit rechtop op een stoel. Strek uw been tot het recht is, houd twee
+                tellen vast en laat weer zakken.</p>
+              <div class="regels"><span><b>3 ×</b> 12</span><span><b>7</b> min</span><span>zittend</span></div>
+              <div class="voet">
+                <span class="zetknop">Uitgezet — punt 3</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="vak">
+            <div class="beeld">
+              <span class="peiling">5</span>
+              <svg class="symbool" viewBox="0 0 24 24" aria-hidden="true"><use href="#t-boei"/></svg>
+              <div class="tekening">
+                <img src="/images/onderste-extremiteit/calf-raises-line-v1.png"
+                     alt="Lijntekening: op de tenen komen en weer zakken" loading="lazy"/>
+              </div>
+            </div>
+            <div class="lijf">
+              <h3>Op de tenen komen</h3>
+              <p class="zin">Kom langzaam op uw tenen en zak weer terug. Houd het aanrecht licht
+                vast voor uw evenwicht.</p>
+              <div class="regels"><span><b>2 ×</b> 12</span><span><b>5</b> min</span><span>staand</span></div>
+              <div class="voet">
+                <span class="zetknop">Zet uit op de route</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="vak">
+            <div class="beeld">
+              <span class="peiling">9</span>
+              <svg class="symbool" viewBox="0 0 24 24" aria-hidden="true"><use href="#t-baken"/></svg>
+              <div class="tekening">
+                <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png"
+                     alt="Lijntekening: op één been staan met steun" loading="lazy"/>
+              </div>
+            </div>
+            <div class="lijf">
+              <h3>Op één been staan</h3>
+              <p class="zin">Sta bij het aanrecht en til één voet net van de grond. Tel rustig tot
+                tien en wissel.</p>
+              <div class="regels"><span><b>3 ×</b> 10 tellen</span><span><b>9</b> min</span><span>met steun</span></div>
+              <div class="voet">
+                <span class="zetknop">Zet uit op de route</span>
+                <span class="waarschuw">
+                  <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="flex:0 0 15px;margin-top:1px"><use href="#t-uitroep"/></svg>
+                  Baken: pas vanaf week 4
+                </span>
+              </div>
+            </div>
+          </article>
+
+          <article class="vak">
+            <div class="beeld">
+              <span class="peiling">4</span>
+              <svg class="symbool" viewBox="0 0 24 24" aria-hidden="true"><use href="#t-anker"/></svg>
+              <div class="tekening">
+                <img src="/images/onderste-extremiteit/knie-buigen-liggend-line-v1.png"
+                     alt="Lijntekening: liggend de knie buigen" loading="lazy"/>
+              </div>
+            </div>
+            <div class="lijf">
+              <h3>Knie buigen, liggend</h3>
+              <p class="zin">Lig op bed of op de bank. Schuif uw hiel langzaam naar u toe en weer
+                terug. Dit mag ook op een rustdag.</p>
+              <div class="regels"><span><b>2 ×</b> 10</span><span><b>4</b> min</span><span>liggend</span></div>
+              <div class="voet">
+                <span class="zetknop">Zet uit op de route</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <aside class="route">
+        <h3>De route — week 3</h3>
+        <div class="lijf">
+          <ol>
+            <li>
+              <span class="bol" aria-hidden="true"></span>
+              <span><span class="naam">Op de plaats marcheren</span>
+                <span class="det">2 × 20 · diepte 8 · met steun</span></span>
+            </li>
+            <li>
+              <span class="bol" aria-hidden="true"></span>
+              <span><span class="naam">Gewicht zijwaarts verplaatsen</span>
+                <span class="det">3 × 10 · diepte 6 · met steun</span></span>
+            </li>
+            <li>
+              <span class="bol" aria-hidden="true"></span>
+              <span><span class="naam">Knie strekken, zittend</span>
+                <span class="det">3 × 12 · diepte 7 · zittend</span></span>
+            </li>
+          </ol>
+          <div class="som"><span>Vaartijd per dag</span><span>21 min</span></div>
+          <p class="noot">De raadgever tekent mee: week 3 is de ondiepte. Drie punten is hier
+            genoeg — vier maakt de week te zwaar.</p>
+          <a class="kn magenta" href="#printkaart">Kaart uitgeven — 1 A4</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>Digitale cliëntkaart</h2>
+      <p>het bestek van vandaag — waar u bent, niet hoe goed u het doet</p>
+    </div>
+
+    <div class="dek">
+      <div>
+        <div class="naam">Mevrouw A. Bosveld</div>
+        <div class="onder">Kaart 1811 · Fysiotherapie De Waterlinie · Kim Verhagen</div>
+      </div>
+      <dl class="positie">
+        <dt>Bestek van 13 augustus</dt>
+        <dd>Week <em>3 van 6</em> — halverwege de ondiepte.
+          Volgende punt: <em>zelf de trap op</em>.</dd>
+      </dl>
+    </div>
+
+    <div class="vaartlijf">
+      <div class="vandaag">
+        <h3>Vandaag — donderdag, 21 minuten</h3>
+
+        <div class="taak gedaan">
+          <div class="tekening">
+            <img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png"
+                 alt="Lijntekening: op de plaats marcheren met steun" loading="lazy"/>
+          </div>
+          <div>
+            <h4>Op de plaats marcheren</h4>
+            <p>Houd de rugleuning vast en til om beurten uw knie op.</p>
+            <div class="dosis">2 × 20 stappen · gedaan om 8:40</div>
+          </div>
+          <span class="vink" aria-label="gedaan">
+            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#t-vink"/></svg>
+          </span>
+        </div>
+
+        <div class="taak">
+          <div class="tekening">
+            <img src="/images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png"
+                 alt="Lijntekening: gewicht zijwaarts verplaatsen met steun" loading="lazy"/>
+          </div>
+          <div>
+            <h4>Gewicht zijwaarts verplaatsen</h4>
+            <p>Handen op het aanrecht. Rustig naar links, rustig naar rechts.</p>
+            <div class="dosis">3 × 10</div>
+          </div>
+          <span class="vink" aria-label="nog te doen"></span>
+        </div>
+
+        <div class="taak">
+          <div class="tekening">
+            <img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png"
+                 alt="Lijntekening: zittend de knie strekken" loading="lazy"/>
+          </div>
+          <div>
+            <h4>Knie strekken, zittend</h4>
+            <p>Strek uw been tot het recht is, houd twee tellen vast, laat zakken.</p>
+            <div class="dosis">3 × 12</div>
+          </div>
+          <span class="vink" aria-label="nog te doen"></span>
+        </div>
+      </div>
+
+      <aside class="journaal">
+        <h3>Journaal</h3>
+        <div class="regel"><time>13 aug</time><span><b>21 min gepland.</b> Eén punt gevaren.</span></div>
+        <div class="regel"><time>12 aug</time><span>Alles gevaren. Pijn na afloop: <b>3</b>.</span></div>
+        <div class="regel"><time>11 aug</time><span>Twee punten. Trap één keer zelf op.</span></div>
+        <div class="regel"><time>10 aug</time><span>Ankerplaats — rustdag.</span></div>
+        <div class="regel"><time>9 aug</time><span>Alles gevaren. Pijn na afloop: <b>4</b>.</span></div>
+
+        <div class="peilstok">
+          <h4>Raadgeving</h4>
+          <p>Pijn boven de <b>5</b>? Keer om: doe de helft en meld het bij Kim.
+            Dat is geen achteruitgang, dat is navigeren.</p>
+        </div>
+      </aside>
+    </div>
+
+    <div class="weekstrook">
+      <div><div class="d">Ma</div><div class="m"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><use href="#t-vink"/></svg></div></div>
+      <div><div class="d">Di</div><div class="m"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><use href="#t-vink"/></svg></div></div>
+      <div><div class="d">Wo</div><div class="m"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><use href="#t-vink"/></svg></div></div>
+      <div class="vandaagcel"><div class="d">Do — vandaag</div><div class="m"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><use href="#t-boei"/></svg></div></div>
+      <div><div class="d">Vr</div><div class="m"></div></div>
+      <div><div class="d">Za</div><div class="m"></div></div>
+      <div><div class="d">Zo</div><div class="m"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><use href="#t-anker"/></svg></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · DE PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 liggend</h2>
+      <p>druk Ctrl/⌘+P: er rolt precies deze ene kaart uit</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+          <div class="neatline">
+            <div class="neatbinnen">
+
+              <div class="titelblok">
+                <div class="kaartnr">Kaart 1811</div>
+                <h1>Herstel na een heupoperatie
+                  <small>Mevrouw A. Bosveld · week 3 van 6 · Fysiotherapie De Waterlinie</small></h1>
+                <div class="uitgave">
+                  Uitgave <b>13 augustus 2026</b><br/>
+                  Diepten in minuten · Schaal 1 week = 30 mm
+                </div>
+              </div>
+
+              <div class="romp">
+
+                <!-- ─── het kaartvlak ─── -->
+                <div class="kaartvak">
+                  <svg viewBox="0 0 620 330" role="img" style="flex:1"
+                       aria-label="Kaart van week 3: de route loopt van maandag naar zondag; bij donderdag ligt een ondiepte met de raadgeving om de helft te doen; zondag is ankerplaats.">
+                    <rect x="0" y="0" width="620" height="330" fill="#fff"/>
+
+                    <g stroke="#e8f0f4" stroke-width="1">
+                      <path d="M0 55H620M0 110H620M0 165H620M0 220H620M0 275H620"/>
+                      <path d="M62 0V330M124 0V330M186 0V330M248 0V330M310 0V330M372 0V330M434 0V330M496 0V330M558 0V330"/>
+                    </g>
+
+                    <!-- de ondiepte: een plaat midden in de week, niet een blok -->
+                    <path d="M222 238c-6-32 40-60 104-62 66-2 112 16 116 46 4 32-42 58-108 60-62 2-106-14-112-44Z"
+                          fill="#d9e9f2"/>
+                    <path d="M276 240c-4-18 26-34 62-35 38-1 64 9 66 26 2 18-24 33-62 34-36 1-62-8-66-25Z"
+                          fill="#b6d5e6"/>
+
+                    <!-- de wal: maandagochtend -->
+                    <path d="M0 268c40-4 66 14 96 26 26 10 46 36 46 36H0v-62Z" fill="#ece0c4" stroke="#b9a67c" stroke-width="1.1"/>
+                    <!-- de haven: zondag -->
+                    <path d="M620 0v86c-40-4-72-24-92-48-14-16-18-38-18-38h110Z" fill="#ece0c4" stroke="#b9a67c" stroke-width="1.1"/>
+
+                    <!-- dieptelijnen -->
+                    <g fill="none" stroke="#8ea7b3" stroke-width="1" stroke-dasharray="6 4">
+                      <path d="M20 250c70-30 150-18 214-44 60-24 110-16 174-42 40-16 100-14 192-38"/>
+                      <path d="M60 306c72-28 140-16 206-42 58-22 116-14 178-40 40-16 84-12 176-32"/>
+                    </g>
+
+                    <!-- dieptecijfers = minuten -->
+                    <g font-family="Charter,Georgia,serif" font-style="italic" font-size="11" fill="#3a4d57">
+                      <text x="86" y="196">21</text><text x="168" y="238">21</text><text x="252" y="180">21</text>
+                      <text x="330" y="256">10</text><text x="404" y="150">21</text><text x="470" y="216">21</text>
+                      <text x="536" y="118">rust</text>
+                      <text x="120" y="128">6</text><text x="300" y="96">8</text><text x="440" y="66">7</text>
+                      <text x="104" y="256">9</text><text x="182" y="308">7</text><text x="258" y="312">8</text>
+                      <text x="40" y="196">6</text><text x="596" y="252">9</text>
+                    </g>
+
+                    <!-- de route van de week -->
+                    <path d="M74 288L152 258 232 226 312 208 388 168 464 130 540 84"
+                          fill="none" stroke="#0f2028" stroke-width="2.2" stroke-dasharray="9 5"/>
+
+                    <g>
+                      <circle cx="74" cy="288" r="7" fill="#0f2028"/>
+                      <circle cx="152" cy="258" r="7" fill="#0f2028"/>
+                      <circle cx="232" cy="226" r="7" fill="#0f2028"/>
+                      <circle cx="312" cy="208" r="9" fill="#fff" stroke="#b3006b" stroke-width="2.6"/>
+                      <circle cx="388" cy="168" r="7" fill="#fff" stroke="#0f2028" stroke-width="2"/>
+                      <circle cx="464" cy="130" r="7" fill="#fff" stroke="#0f2028" stroke-width="2"/>
+                      <circle cx="540" cy="84" r="9" fill="#fff" stroke="#0f2028" stroke-width="2.6"/>
+                    </g>
+                    <g font-family="Avenir Next,Segoe UI,system-ui,sans-serif" font-size="11.5" font-weight="700" fill="#0f2028">
+                      <text x="58" y="312">MA</text><text x="136" y="282">DI</text><text x="216" y="250">WO</text>
+                      <text x="292" y="234" fill="#b3006b">DO</text><text x="372" y="192">VR</text>
+                      <text x="448" y="154">ZA</text><text x="524" y="108">ZO</text>
+                    </g>
+
+                    <!-- ondiepte + raadgeving -->
+                    <g stroke="#b3006b" fill="none">
+                      <path d="M282 198a34 30 0 1 1 58 22 34 30 0 0 1-58-22z" stroke-width="1.4" stroke-dasharray="4 3.4"/>
+                    </g>
+                    <text x="188" y="148" font-family="Avenir Next,Segoe UI,system-ui,sans-serif" font-size="10.5"
+                          font-weight="700" fill="#b3006b">ONDIEPTE · doe hier de helft</text>
+                    <path d="M300 154v34" stroke="#b3006b" stroke-width="1" stroke-dasharray="3 3"/>
+
+                    <!-- ankerplaats zondag -->
+                    <g transform="translate(556,168) scale(1.15)" stroke="#0f2028" fill="none" stroke-width="1.6"
+                       stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="4.5" r="2"/><path d="M12 6.5V21"/><path d="M7.5 10h9"/>
+                      <path d="M4 15c0 4 3.8 6 8 6s8-2 8-6"/>
+                    </g>
+                    <text x="500" y="216" font-family="Charter,Georgia,serif" font-style="italic" font-size="11"
+                          fill="#0f2028">ankerplaats</text>
+
+                    <!-- kompasroos -->
+                    <g transform="translate(66,74)">
+                      <circle cx="0" cy="0" r="30" fill="#fff" stroke="#0f2028" stroke-width="1"/>
+                      <circle cx="0" cy="0" r="22" fill="none" stroke="#c4d4dc" stroke-width="1"/>
+                      <path d="M0 -28L5 -4 0 0 -5 -4Z" fill="#b3006b"/>
+                      <path d="M0 28L5 4 0 0 -5 4Z" fill="#0f2028"/>
+                      <path d="M-28 0L-4 -5 0 0 -4 5Z" fill="#fff" stroke="#0f2028" stroke-width=".9"/>
+                      <path d="M28 0L4 -5 0 0 4 5Z" fill="#fff" stroke="#0f2028" stroke-width=".9"/>
+                      <text x="-3.5" y="-33" font-family="Avenir Next,sans-serif" font-size="10"
+                            font-weight="700" fill="#0f2028">N</text>
+                    </g>
+
+                    <!-- schaalbalk -->
+                    <g transform="translate(430,300)">
+                      <rect x="0" y="0" width="24" height="6" fill="#0f2028"/>
+                      <rect x="24" y="0" width="24" height="6" fill="#fff" stroke="#0f2028" stroke-width=".9"/>
+                      <rect x="48" y="0" width="24" height="6" fill="#0f2028"/>
+                      <text x="0" y="20" font-family="ui-monospace,Menlo,monospace" font-size="9"
+                            letter-spacing=".8" fill="#3a4d57">1 DAG</text>
+                      <text x="52" y="20" font-family="ui-monospace,Menlo,monospace" font-size="9"
+                            letter-spacing=".8" fill="#3a4d57">3 DAGEN</text>
+                    </g>
+                  </svg>
+
+                  <div class="voetregel">
+                    <span><b>DIEPTEN</b> in minuten per dag</span>
+                    <span><b>———</b> gevaren route</span>
+                    <span class="mag"><b>MAGENTA</b> = raadgeving van de praktijk</span>
+                  </div>
+                </div>
+
+                <!-- ─── verklaring der tekens ─── -->
+                <div class="verklaring">
+                  <h2>Verklaring der tekens</h2>
+                  <p class="onderschrift">Elk teken op de kaart staat hier voluit. Wie de tekens
+                    overslaat, leest gewoon deze drie zinnen.</p>
+
+                  <div class="post">
+                    <div class="fig">
+                      <span class="teken"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#t-boei"/></svg></span>
+                      <img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png"
+                           alt="Lijntekening: op de plaats marcheren met steun van een stoel"/>
+                    </div>
+                    <div>
+                      <h3>Op de plaats marcheren</h3>
+                      <p>Houd de rugleuning vast en til om beurten uw knie op, alsof u loopt zonder
+                        vooruit te komen.</p>
+                      <div class="dos">2 × 20 stappen · 8 min</div>
+                    </div>
+                  </div>
+
+                  <div class="post">
+                    <div class="fig">
+                      <span class="teken"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#t-boei"/></svg></span>
+                      <img src="/images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png"
+                           alt="Lijntekening: staand het gewicht zijwaarts verplaatsen met steun"/>
+                    </div>
+                    <div>
+                      <h3>Gewicht zijwaarts verplaatsen</h3>
+                      <p>Sta rustig met uw handen op het aanrecht. Verplaats uw gewicht langzaam
+                        naar links en weer naar rechts.</p>
+                      <div class="dos">3 × 10 · 6 min</div>
+                    </div>
+                  </div>
+
+                  <div class="post">
+                    <div class="fig">
+                      <span class="teken"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#t-drempel"/></svg></span>
+                      <img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png"
+                           alt="Lijntekening: zittend op een stoel de knie strekken"/>
+                    </div>
+                    <div>
+                      <h3>Knie strekken, zittend</h3>
+                      <p>Zit rechtop op een stoel. Strek uw been tot het recht is, houd twee tellen
+                        vast en laat het weer zakken.</p>
+                      <div class="dos">3 × 12 · 7 min</div>
+                    </div>
+                  </div>
+
+                  <div class="post">
+                    <div class="fig">
+                      <span class="teken"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#t-anker"/></svg></span>
+                      <img src="/images/onderste-extremiteit/knie-buigen-liggend-line-v1.png"
+                           alt="Lijntekening: liggend de hiel naar u toe schuiven"/>
+                    </div>
+                    <div>
+                      <h3>Ankerplaats — de rustdag</h3>
+                      <p>Zondag hoeft u niets. Wilt u tóch iets: schuif liggend uw hiel rustig naar
+                        u toe en weer terug.</p>
+                      <div class="dos">vrij · 2 × 10</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ─── onderbalk ─── -->
+              <div class="onderbalk">
+                <div class="journaalvak">
+                  <h2>Journaal — week 3</h2>
+                  <div class="dagen">
+                    <div class="dag"><div class="d">MA</div><div class="hok"></div></div>
+                    <div class="dag"><div class="d">DI</div><div class="hok"></div></div>
+                    <div class="dag"><div class="d">WO</div><div class="hok"></div></div>
+                    <div class="dag"><div class="d">DO</div><div class="hok"></div></div>
+                    <div class="dag"><div class="d">VR</div><div class="hok"></div></div>
+                    <div class="dag"><div class="d">ZA</div><div class="hok"></div></div>
+                    <div class="dag"><div class="d">ZO</div><div class="hok"></div></div>
+                  </div>
+                  <div class="schrijfregel">
+                    <span>PIJN NA AFLOOP (0–10)</span><i></i>
+                    <span>OPMERKING VOOR KIM</span><i></i>
+                  </div>
+                </div>
+
+                <div class="raadgeving">
+                  <h2><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#t-uitroep"/></svg> Raadgeving</h2>
+                  <p>Deze week ligt de <b>ondiepte</b>: het wordt zwaarder dan vorige week. Voelt het
+                    donderdag te zwaar, doe dan de helft en vaar verder. <b>Pijn boven de 5, of
+                    pijn die 's nachts blijft: stoppen en bellen.</b></p>
+                  <div class="havenmeester">Kim Verhagen · 020 — 555 41 08 · ma t/m do</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+</body>
+</html>

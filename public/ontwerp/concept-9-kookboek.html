@@ -1,0 +1,916 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 9 — Kookboek · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 9 — KOOKBOEK
+   Het huishoudschoolkookboek heeft een probleem opgelost dat
+   elk oefenschema nog steeds heeft: hoe je iemand zonder
+   voorkennis iets laat doen in de goede volgorde, met de
+   juiste hoeveelheden, in een tijd die vooraf bekend is.
+   De vondsten die we lenen:
+     · de kopregel vóór het recept — voor hoeveel, hoe lang,
+       hoe zwaar. Je weet waar je aan begint vóór stap 1.
+     · NODIG apart van BEREIDING. Eerst alles klaarzetten;
+       niemand zoekt halverwege nog een handdoek.
+     · hoeveelheden in de kantlijn, niet in de zin, zodat de
+       zin gewoon een zin blijft.
+     · de tip onderaan: de stem van iemand die het vaker deed.
+   Kleur: wijnrood linnen en dof goud op roomwit — de band van
+   een boek dat dertig jaar in de keuken staat. Het ornament
+   zit in de band, nooit in de instructie: de bereidingstekst
+   staat op 10,4 punt in gewone taal.
+   Alles inline; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  --room:#f6efe0;         /* het papier */
+  --room-d:#ece2ce;
+  --wit:#fffdf8;
+  --inkt:#241d15;
+  --inkt-2:#4c4235;
+  --grijs:#857866;
+  --lijn:#d8cdb6;
+  --lijn-l:#e9e0cd;
+  --wijn:#6d2140;         /* de linnen band */
+  --wijn-d:#4e1730;
+  --wijn-l:#f2e6ea;
+  --goud:#9d7a2c;         /* de stempeling */
+
+  --serif:"Iowan Old Style",Charter,"Palatino Linotype",Palatino,Georgia,serif;
+  --sans:Seravek,"Avenir Next","Gill Sans","Segoe UI",system-ui,sans-serif;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:68px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:18px/1.62 var(--serif);color:var(--inkt-2);background:var(--room)}
+img{max-width:100%;display:block}
+:focus-visible{outline:2.5px solid var(--wijn);outline-offset:3px}
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+
+/* de kleine kapitalen-labels: het letterbeeld van het huishoudschoolboek */
+.kapitaal{font:600 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase}
+
+.tekening{background:#fff;line-height:0}
+.tekening img{filter:grayscale(1) sepia(.12) contrast(1.28) brightness(1.05)}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);
+  background:var(--wijn);color:#fff;padding:10px 18px;font:600 13px/1 var(--sans)}
+.labbalk a{color:#fff;text-decoration:none;padding:6px 10px}
+.labbalk a:hover{background:rgba(255,255,255,.22)}
+.labbalk .nr{color:#e6c98a;font:600 11px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase}
+.labbalk .rek{flex:1}
+.labbalk .terug{border:1px solid rgba(255,255,255,.45)}
+
+.scherm{padding:var(--s6) 22px}
+.scherm + .scherm{border-top:1px solid var(--lijn)}
+.binnen{max-width:1180px;margin:0 auto}
+.schermkop{display:flex;align-items:flex-end;gap:var(--s3);margin-bottom:var(--s5)}
+.schermkop b{font:600 11px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--wijn);
+  border-bottom:2px solid var(--goud);padding-bottom:6px}
+.schermkop h2{font:400 27px/1 var(--serif);letter-spacing:-.02em;color:var(--inkt)}
+.schermkop p{flex:1;text-align:right;font-style:italic;font-size:16px;color:var(--grijs)}
+@media (max-width:760px){.schermkop{flex-wrap:wrap}.schermkop p{text-align:left;flex-basis:100%}}
+
+/* ============================================================
+   1 · LANDING — de band en het voorwoord
+   ============================================================ */
+.boekraster{display:grid;grid-template-columns:360px 1fr;gap:var(--s5);align-items:start}
+@media (max-width:900px){.boekraster{grid-template-columns:1fr}}
+
+/* de band: wijnrood linnen met goudstempel */
+.band{background:
+    repeating-linear-gradient(45deg,rgba(255,255,255,.028) 0 2px,transparent 2px 4px),
+    repeating-linear-gradient(-45deg,rgba(0,0,0,.05) 0 2px,transparent 2px 4px),
+    var(--wijn);
+  border:1px solid var(--wijn-d);box-shadow:0 18px 44px rgba(36,29,21,.28);
+  padding:34px 30px 30px;position:relative;aspect-ratio:3/4;display:flex;flex-direction:column}
+.band .stempel{border:2px solid var(--goud);padding:26px 20px;flex:1;display:flex;flex-direction:column;
+  align-items:center;text-align:center;justify-content:center;gap:16px}
+.band .stempel .lijnkop{width:54px;height:1.5px;background:var(--goud)}
+.band .stempel h1{font:400 34px/1.1 var(--serif);color:#f3dfa9;letter-spacing:.01em}
+.band .stempel .onder{font:600 11px/1.7 var(--sans);letter-spacing:.28em;text-transform:uppercase;
+  color:#e0bd88}
+.band .stempel .druk{font-style:italic;font-size:16px;color:#dcb9a8}
+.band .lint{position:absolute;right:44px;top:-1px;width:26px;height:120px;background:#c9a227;
+  box-shadow:0 6px 14px rgba(36,29,21,.35)}
+.band .lint::after{content:"";position:absolute;left:0;bottom:-13px;border-left:13px solid #c9a227;
+  border-right:13px solid #c9a227;border-bottom:13px solid transparent}
+
+.voorwoord h2{font:400 clamp(30px,3.6vw,44px)/1.1 var(--serif);color:var(--inkt);letter-spacing:-.02em;
+  max-width:20ch}
+.voorwoord h2 em{color:var(--wijn)}
+.voorwoord .initiaal{float:left;font:400 62px/.78 var(--serif);color:var(--wijn);margin:8px 12px 0 0}
+.voorwoord p{font-size:19px;line-height:1.65;color:var(--inkt-2);margin-top:var(--s3);max-width:60ch}
+.voorwoord .doen{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s4)}
+.kn{display:inline-block;text-decoration:none;font:600 14px/1 var(--sans);letter-spacing:.04em;
+  padding:16px 20px;background:var(--wijn);color:#fff;border:1.5px solid var(--wijn)}
+.kn:hover{background:var(--inkt);border-color:var(--inkt)}
+.kn.leeg{background:transparent;color:var(--inkt)}
+.kn.leeg:hover{background:var(--inkt);color:#fff}
+
+.beloften{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s5);
+  padding-top:var(--s4);border-top:1px solid var(--lijn)}
+@media (max-width:720px){.beloften{grid-template-columns:1fr;gap:var(--s3)}}
+.beloften h3{color:var(--grijs)}
+.beloften p{font-size:16.5px;line-height:1.55;color:var(--inkt-2);margin-top:9px}
+.beloften b{color:var(--inkt);font-weight:600}
+
+/* ============================================================
+   2 · KIEZER — de receptenkaartenbak
+   ============================================================ */
+.rubriekbalk{display:flex;flex-wrap:wrap;gap:var(--s2);align-items:center;margin-bottom:var(--s4);
+  border-top:2px solid var(--inkt);border-bottom:1px solid var(--lijn);padding:var(--s2) 0}
+.rubriekbalk .zoek{flex:1;min-width:240px;display:flex;align-items:center;gap:10px;padding:12px 14px;
+  background:var(--wit);border:1px solid var(--lijn);font-size:16.5px;color:var(--grijs)}
+.tab{font:600 12.5px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:13px 14px;
+  background:var(--room-d);color:var(--inkt-2);border:1px solid var(--lijn);border-bottom:0}
+.tab.aan{background:var(--wijn);border-color:var(--wijn);color:#fff}
+
+.bak{display:grid;grid-template-columns:1fr 340px;gap:var(--s5);align-items:start}
+@media (max-width:1020px){.bak{grid-template-columns:1fr}}
+.kaartjes{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--s3)}
+
+.receptkaart{background:var(--wit);border:1px solid var(--lijn);box-shadow:0 3px 0 var(--room-d);
+  display:flex;flex-direction:column}
+.receptkaart .kop{background:var(--wijn);color:#fff;padding:11px 14px;display:flex;align-items:baseline;gap:10px}
+.receptkaart .kop .rub{font:600 9.5px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#e6c98a}
+.receptkaart .kop .tijd{margin-left:auto;font:600 11px/1 var(--sans);letter-spacing:.1em;color:#f0dcc8}
+.receptkaart .lijf{padding:var(--s3);display:flex;flex-direction:column;flex:1}
+.receptkaart .beeldrij{display:flex;gap:12px;align-items:flex-start}
+.receptkaart .tekening{flex:0 0 92px;border:1px solid var(--lijn-l);aspect-ratio:1/1;
+  display:flex;align-items:center;justify-content:center}
+.receptkaart .tekening img{width:100%;height:100%;object-fit:contain}
+.receptkaart h3{font:400 21px/1.15 var(--serif);color:var(--inkt);letter-spacing:-.01em}
+.receptkaart .zin{font-size:16px;line-height:1.5;color:var(--inkt-2);margin-top:7px}
+.receptkaart .nodig{margin-top:var(--s3);padding-top:11px;border-top:1px dotted var(--lijn);
+  font-size:15px;color:var(--inkt-2)}
+.receptkaart .nodig b{color:var(--grijs);font:600 10px/1 var(--sans);letter-spacing:.2em;
+  text-transform:uppercase;display:block;margin-bottom:5px}
+.receptkaart .voet{margin-top:auto;padding-top:var(--s3);display:flex;align-items:center;gap:12px}
+.receptkaart .hoeveel{font:400 17px/1 var(--serif);color:var(--wijn);font-style:italic}
+.receptkaart .neem{margin-left:auto;font:600 12.5px/1 var(--sans);letter-spacing:.06em;padding:12px 14px;
+  border:1.5px solid var(--inkt);background:transparent;color:var(--inkt)}
+.receptkaart.opgenomen{border-color:var(--wijn);box-shadow:0 3px 0 var(--wijn-l)}
+.receptkaart.opgenomen .neem{background:var(--wijn);border-color:var(--wijn);color:#fff}
+
+.menu{background:var(--wit);border:1px solid var(--lijn);box-shadow:0 3px 0 var(--room-d);
+  position:sticky;top:70px}
+.menu > h3{font:400 22px/1 var(--serif);color:var(--inkt);padding:var(--s3);
+  border-bottom:2px solid var(--inkt);display:flex;align-items:baseline;gap:10px}
+.menu > h3 span{margin-left:auto;font:600 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--grijs)}
+.menu .lijf{padding:var(--s3)}
+.menu ol{list-style:none;counter-reset:gang}
+.menu li{counter-increment:gang;display:flex;gap:12px;padding:11px 0;border-bottom:1px dotted var(--lijn-l)}
+.menu li::before{content:counter(gang) ".";font:400 16px/1.4 var(--serif);color:var(--wijn);flex:0 0 18px}
+.menu li .n{font-size:16px;line-height:1.35;color:var(--inkt)}
+.menu li .h{display:block;font-style:italic;font-size:14.5px;color:var(--grijs);margin-top:2px}
+.menu .totaal{display:flex;justify-content:space-between;align-items:baseline;margin-top:var(--s3);
+  padding-top:var(--s3);border-top:2px solid var(--inkt);font:400 19px/1 var(--serif);color:var(--inkt)}
+.menu .lijstje{margin-top:var(--s3);background:var(--room);border:1px dashed var(--lijn);padding:var(--s3)}
+.menu .lijstje h4{color:var(--grijs)}
+.menu .lijstje ul{list-style:none;margin-top:9px}
+.menu .lijstje li{border:0;padding:4px 0;font-size:15.5px;color:var(--inkt-2)}
+.menu .lijstje li::before{content:"·";color:var(--goud);flex:0 0 10px;font-size:20px;line-height:1}
+.menu .kn{width:100%;text-align:center;margin-top:var(--s3)}
+
+/* ============================================================
+   3 · CLIËNTKAART — het weekmenu
+   ============================================================ */
+.menukop{background:var(--inkt);color:var(--room);padding:var(--s4);display:flex;flex-wrap:wrap;
+  gap:var(--s4);align-items:flex-end;border-bottom:3px solid var(--goud)}
+.menukop .wie{font:400 30px/1.05 var(--serif);color:#fff;letter-spacing:-.01em}
+.menukop .wat{font-size:16px;color:#c8bba6;margin-top:7px;font-style:italic}
+.menukop .vandaag{margin-left:auto;text-align:right}
+.menukop .vandaag b{display:block;font:400 26px/1 var(--serif);color:#f3dfa9}
+.menukop .vandaag span{color:#c8bba6;font:600 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase}
+@media (max-width:660px){.menukop .vandaag{margin-left:0;text-align:left}}
+
+.menulijf{display:grid;grid-template-columns:1fr 330px;background:var(--wit);
+  border:1px solid var(--lijn);border-top:0}
+@media (max-width:1000px){.menulijf{grid-template-columns:1fr}}
+.gerechten{padding:var(--s4);border-right:1px solid var(--lijn-l)}
+@media (max-width:1000px){.gerechten{border-right:0;border-bottom:1px solid var(--lijn-l)}}
+.gerechten > h3{color:var(--grijs);padding-bottom:11px;border-bottom:2px solid var(--inkt)}
+
+.gang{display:grid;grid-template-columns:34px 88px 1fr auto;gap:var(--s3);align-items:center;
+  padding:var(--s3) 0;border-bottom:1px dotted var(--lijn)}
+.gang:last-of-type{border-bottom:0}
+.gang .nr{font:400 26px/1 var(--serif);color:var(--wijn)}
+.gang .tekening{border:1px solid var(--lijn-l);aspect-ratio:1/1;display:flex;align-items:center;
+  justify-content:center}
+.gang .tekening img{width:100%;height:100%;object-fit:contain}
+.gang h4{font:400 21px/1.15 var(--serif);color:var(--inkt)}
+.gang p{font-size:16px;line-height:1.45;color:var(--inkt-2);margin-top:4px}
+.gang .hoev{font-style:italic;font-size:16px;color:var(--wijn);margin-top:6px}
+.gang .vink{width:44px;height:44px;border:1.5px solid var(--inkt);background:#fff;display:flex;
+  align-items:center;justify-content:center;color:var(--wijn)}
+.gang.klaar .vink{background:var(--wijn);border-color:var(--wijn);color:#fff}
+.gang.klaar h4{color:var(--grijs)}
+@media (max-width:640px){.gang{grid-template-columns:26px 68px 1fr;gap:11px}.gang .vink{grid-column:3}}
+
+.kantlijn{padding:var(--s4);background:var(--room)}
+.kantlijn h3{color:var(--grijs);padding-bottom:11px;border-bottom:2px solid var(--inkt);margin-bottom:var(--s3)}
+.weekmenu{list-style:none}
+.weekmenu li{display:flex;gap:12px;align-items:baseline;padding:10px 0;border-bottom:1px dotted var(--lijn)}
+.weekmenu li:last-child{border-bottom:0}
+.weekmenu .dag{flex:0 0 74px;font:600 11px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--grijs)}
+.weekmenu .gerecht{font-size:16px;color:var(--inkt)}
+.weekmenu li.nu .dag{color:var(--wijn)}
+.weekmenu li.nu .gerecht{font-weight:600}
+.weekmenu li.rust .gerecht{font-style:italic;color:var(--grijs)}
+.tipkader{margin-top:var(--s4);border-left:3px solid var(--goud);background:var(--wijn-l);padding:var(--s3)}
+.tipkader h4{color:var(--wijn)}
+.tipkader p{font-size:16.5px;line-height:1.55;color:var(--inkt);margin-top:9px;font-style:italic}
+
+/* ============================================================
+   4 · DE PRINTKAART — A4 staand, één receptbladzijde
+   ============================================================ */
+.bladhouder{--z:1;display:flex;justify-content:center}
+.bladschaal{width:calc(210mm * var(--z));height:calc(297mm * var(--z))}
+@media (max-width:1000px){.bladhouder{--z:.68}}
+@media (max-width:760px){.bladhouder{--z:.46}}
+@media (max-width:420px){.bladhouder{--z:.36}}
+
+.blad{width:210mm;height:297mm;transform:scale(var(--z));transform-origin:top left;background:#fff;
+  border:1px solid var(--lijn);box-shadow:0 14px 40px rgba(36,29,21,.18);
+  padding:14mm 15mm 11mm;display:flex;flex-direction:column;color:var(--inkt);font-family:var(--serif)}
+
+.blad .boekkop{display:flex;align-items:baseline;gap:4mm;font:600 6.8pt/1 var(--sans);
+  letter-spacing:.24em;text-transform:uppercase;color:var(--grijs);
+  padding-bottom:2mm;border-bottom:.5pt solid var(--lijn)}
+.blad .boekkop .mid{margin-left:auto;margin-right:auto}
+.blad .boekkop .bl{margin-left:auto}
+
+.blad h1{font:400 25pt/1.02 var(--serif);color:var(--inkt);letter-spacing:-.015em;margin-top:5mm}
+.blad h1 em{color:var(--wijn);font-style:italic}
+.blad .ondertitel{font:italic 400 11pt/1.4 var(--serif);color:var(--inkt-2);margin-top:2mm;max-width:78%}
+
+/* de kopregel van het recept: alles wat je vooraf wilt weten */
+.blad .kopregel{display:flex;gap:0;margin-top:4mm;border-top:1.6pt solid var(--inkt);
+  border-bottom:.6pt solid var(--inkt)}
+.blad .kopregel div{flex:1;padding:2.6mm 3mm 2.6mm 0;border-right:.4pt solid var(--lijn)}
+.blad .kopregel div:last-child{border-right:0}
+.blad .kopregel dt{font:600 6.4pt/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--grijs)}
+.blad .kopregel dd{font:400 12.4pt/1.1 var(--serif);color:var(--inkt);margin-top:1.6mm}
+.blad .kopregel dd small{font:italic 400 8.6pt/1.2 var(--serif);color:var(--inkt-2);display:block;margin-top:1mm}
+
+.blad .romp{display:grid;grid-template-columns:44mm 1fr;gap:7mm;margin-top:5mm;flex:1;min-height:0}
+
+/* — de kantlijn: NODIG — */
+.blad .nodig h2{font:600 7pt/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--wijn);
+  border-bottom:1pt solid var(--wijn);padding-bottom:1.6mm}
+.blad .nodig ul{list-style:none;margin-top:2.4mm}
+.blad .nodig li{font:400 10pt/1.35 var(--serif);color:var(--inkt);padding:1.6mm 0 1.6mm 4mm;
+  border-bottom:.4pt dotted var(--lijn);position:relative}
+.blad .nodig li::before{content:"";position:absolute;left:0;top:3.4mm;width:1.8mm;height:1.8mm;
+  background:var(--goud);transform:rotate(45deg)}
+.blad .nodig li:last-child{border-bottom:0}
+.blad .nodig .vooraf{margin-top:4mm;border:.6pt solid var(--lijn);background:#fdfaf3;padding:2.6mm}
+.blad .nodig .vooraf h3{font:600 6.4pt/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--grijs)}
+.blad .nodig .vooraf p{font:400 9.4pt/1.35 var(--serif);color:var(--inkt);margin-top:1.6mm}
+.blad .nodig .variatie{margin-top:4mm;border-top:.8pt solid var(--lijn);padding-top:2.4mm}
+.blad .nodig .variatie h3{font:600 6.4pt/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--wijn)}
+.blad .nodig .variatie p{font:400 9.4pt/1.35 var(--serif);color:var(--inkt);margin-top:1.8mm}
+.blad .nodig .variatie p b{color:var(--wijn);font-weight:600}
+.blad .nodig .sierlijn{display:flex;align-items:center;gap:2mm;margin-top:5mm;color:var(--goud)}
+.blad .nodig .sierlijn i{flex:1;border-top:.8pt solid var(--goud)}
+.blad .nodig .sierlijn svg{width:4.6mm;height:4.6mm;stroke:var(--goud);fill:none}
+
+/* — de bereiding — */
+.blad .bereiding > h2{font:600 7pt/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--wijn);
+  border-bottom:1pt solid var(--wijn);padding-bottom:1.6mm}
+.blad .stap{display:grid;grid-template-columns:7mm 1fr 21mm;gap:3mm;padding:2.8mm 0;
+  border-bottom:.4pt dotted var(--lijn);align-items:start}
+.blad .stap:last-of-type{border-bottom:0}
+.blad .stap .nr{font:400 15pt/1 var(--serif);color:var(--wijn);text-align:right}
+.blad .stap h3{font:600 11pt/1.15 var(--serif);color:var(--inkt)}
+.blad .stap p{font:400 10.4pt/1.38 var(--serif);color:var(--inkt);margin-top:1.2mm}
+.blad .stap .maat{font:italic 400 9.6pt/1.3 var(--serif);color:var(--wijn);margin-top:1.4mm}
+.blad .stap .fig{border:.5pt solid var(--lijn-l);background:#fff;aspect-ratio:1/1;display:flex;
+  align-items:center;justify-content:center}
+.blad .stap .fig img{width:100%;height:100%;object-fit:contain;
+  filter:grayscale(1) sepia(.1) contrast(1.3) brightness(1.05)}
+
+/* — de tip en het weekmenu onderaan — */
+.blad .onderin{margin-top:4mm;display:grid;grid-template-columns:1fr 66mm;gap:6mm;align-items:start}
+.blad .tip{border-left:1.6pt solid var(--goud);padding:1mm 0 1mm 3.4mm}
+.blad .tip h2{font:600 6.6pt/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--grijs)}
+.blad .tip p{font:italic 400 10pt/1.4 var(--serif);color:var(--inkt);margin-top:1.6mm}
+.blad .tip p b{font-style:normal;font-weight:600}
+
+.blad .weektabel h2{font:600 6.6pt/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--grijs);
+  margin-bottom:1.8mm}
+.blad .weektabel .rij{display:flex;gap:1.4mm}
+.blad .weektabel .cel{flex:1;border:.7pt solid var(--inkt);text-align:center}
+.blad .weektabel .cel .d{font:600 6.4pt/1 var(--sans);letter-spacing:.1em;color:var(--inkt);
+  padding:1.4mm 0;border-bottom:.4pt solid var(--lijn)}
+.blad .weektabel .cel .hok{height:9mm}
+.blad .weektabel .toelichting{font:italic 400 8.6pt/1.3 var(--serif);color:var(--inkt-2);margin-top:1.8mm}
+
+.blad .colofon{margin-top:auto;padding-top:2.6mm;border-top:.5pt solid var(--lijn);display:flex;
+  gap:5mm;align-items:baseline;font:600 6.4pt/1.4 var(--sans);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--grijs);white-space:nowrap}
+.blad .colofon b{color:var(--inkt)}
+.blad .colofon .rechts{margin-left:auto;text-align:right}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;border:0 !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="k-vink" viewBox="0 0 24 24">
+    <path d="M4 12.4l5.4 5.4L20 6.6" fill="none" stroke="currentColor" stroke-width="3"
+      stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="k-lepel" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <path d="M12 12.5V22"/><ellipse cx="12" cy="7" rx="4.2" ry="5.5"/>
+    </g>
+  </symbol>
+</svg>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 9</span>
+  <strong style="font:700 14px/1 var(--sans)">Kookboek</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>een band die dertig jaar in de keuken staat, geen productpagina</p>
+    </div>
+
+    <div class="boekraster">
+      <div class="band">
+        <span class="lint" aria-hidden="true"></span>
+        <div class="stempel">
+          <span class="lijnkop" aria-hidden="true"></span>
+          <h1>Oefeningen<br/>voor thuis</h1>
+          <div class="onder">Fysiplan · Negende druk</div>
+          <span class="lijnkop" aria-hidden="true"></span>
+          <div class="druk">Met 215 bereidingen<br/>en een register</div>
+        </div>
+      </div>
+
+      <div class="voorwoord">
+        <h2>Het kookboek loste dit al op: <em>hoeveel, hoe lang, in welke volgorde.</em></h2>
+        <p><span class="initiaal">E</span>en recept vertelt vóór stap 1 waar u aan begint: voor hoeveel
+          personen, hoe lang het duurt, wat u moet klaarzetten. Daarna volgen genummerde stappen in
+          gewone zinnen, met de hoeveelheden in de kantlijn zodat de zin een zin blijft. Precies dat
+          mist het gemiddelde oefenschema — dat begint meteen met “3 × 10” en laat u halverwege
+          zoeken naar een handdoek.</p>
+        <p>Fysiplan drukt de oefeningen af als één bladzijde uit zo'n boek: <b>Nodig</b> links,
+          <b>Bereiding</b> rechts, de tip onderaan, en een weektabel om af te vinken. Eén A4,
+          leesbaar op armlengte, en de toon van iemand die het vaker deed.</p>
+        <div class="doen">
+          <a class="kn" href="#printkaart">Bekijk de bladzijde</a>
+          <a class="kn leeg" href="#kiezer">Stel een menu samen</a>
+        </div>
+
+        <div class="beloften">
+          <div>
+            <h3 class="kapitaal">Vooraf bekend</h3>
+            <p>Boven elk recept: <b>voor wie, hoe lang, hoe zwaar</b>. U weet waar u aan begint
+              voordat u op de grond ligt.</p>
+          </div>
+          <div>
+            <h3 class="kapitaal">Eerst klaarzetten</h3>
+            <p><b>Nodig</b> staat apart. Stoel, handdoek, matje — alles staat er vóór stap 1, niet
+              halverwege.</p>
+          </div>
+          <div>
+            <h3 class="kapitaal">Maten in de kantlijn</h3>
+            <p>De zin blijft een zin. <b>3 × 5 per been</b> staat ernaast, niet erin. Dat leest
+              vier keer sneller.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>Oefeningen kiezen</h2>
+      <p>de kaartenbak: elk recept met zijn eigen “nodig” en zijn eigen tijd</p>
+    </div>
+
+    <div class="rubriekbalk">
+      <span class="zoek">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#857866" stroke-width="2"
+             aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg>
+        Zoek in het register — “rug”, “liggend”, “zonder matje”…
+      </span>
+      <span class="tab aan">Rug &amp; romp</span>
+      <span class="tab">Nek</span>
+      <span class="tab">Heup &amp; been</span>
+      <span class="tab">Balans</span>
+    </div>
+
+    <div class="bak">
+      <div class="kaartjes">
+
+        <article class="receptkaart opgenomen">
+          <div class="kop"><span class="rub">Rug &amp; romp</span><span class="tijd">3 min</span></div>
+          <div class="lijf">
+            <div class="beeldrij">
+              <div class="tekening">
+                <img src="/images/rug/knie-naar-borst-liggend-line-v1.png"
+                     alt="Lijntekening: liggend de knie naar de borst trekken" loading="lazy"/>
+              </div>
+              <div>
+                <h3>Knie naar de borst</h3>
+                <p class="zin">Lig op uw rug en trek één knie rustig naar uw borst tot u het in de
+                  onderrug voelt trekken.</p>
+              </div>
+            </div>
+            <div class="nodig"><b>Nodig</b>Een matje of een dik tapijt.</div>
+            <div class="voet">
+              <span class="hoeveel">3 × 5 per been</span>
+              <span class="neem">In het menu</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="receptkaart opgenomen">
+          <div class="kop"><span class="rub">Rug &amp; romp</span><span class="tijd">3 min</span></div>
+          <div class="lijf">
+            <div class="beeldrij">
+              <div class="tekening">
+                <img src="/images/rug/open-boek-liggend-line-v1.png"
+                     alt="Lijntekening: op de zij liggend de bovenste arm openen als een boek" loading="lazy"/>
+              </div>
+              <div>
+                <h3>Open boek</h3>
+                <p class="zin">Lig op uw zij met de knieën opgetrokken. Open uw bovenste arm naar
+                  achteren en kijk hem na.</p>
+              </div>
+            </div>
+            <div class="nodig"><b>Nodig</b>Een matje. Een kussen onder het hoofd mag.</div>
+            <div class="voet">
+              <span class="hoeveel">2 × 8 per kant</span>
+              <span class="neem">In het menu</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="receptkaart opgenomen">
+          <div class="kop"><span class="rub">Rug &amp; romp</span><span class="tijd">3 min</span></div>
+          <div class="lijf">
+            <div class="beeldrij">
+              <div class="tekening">
+                <img src="/images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png"
+                     alt="Lijntekening: op handen en knieën de rug bol en hol maken" loading="lazy"/>
+              </div>
+              <div>
+                <h3>Bol en hol</h3>
+                <p class="zin">Op handen en knieën: maak uw rug rond als een kat, en laat hem daarna
+                  rustig doorzakken.</p>
+              </div>
+            </div>
+            <div class="nodig"><b>Nodig</b>Een matje. Gevoelige knieën? Leg een handdoek dubbel.</div>
+            <div class="voet">
+              <span class="hoeveel">2 × 10</span>
+              <span class="neem">In het menu</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="receptkaart opgenomen">
+          <div class="kop"><span class="rub">Rug &amp; romp</span><span class="tijd">2 min</span></div>
+          <div class="lijf">
+            <div class="beeldrij">
+              <div class="tekening">
+                <img src="/images/rug/romp-draaien-zittend-line-v1.png"
+                     alt="Lijntekening: zittend op een stoel de romp draaien" loading="lazy"/>
+              </div>
+              <div>
+                <h3>Romp draaien, zittend</h3>
+                <p class="zin">Zit rechtop op een stoel zonder armleuningen en draai uw bovenlichaam
+                  rustig opzij. Heupen blijven staan.</p>
+              </div>
+            </div>
+            <div class="nodig"><b>Nodig</b>Een stevige stoel zonder armleuningen.</div>
+            <div class="voet">
+              <span class="hoeveel">2 × 8 per kant</span>
+              <span class="neem">In het menu</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="receptkaart opgenomen">
+          <div class="kop"><span class="rub">Rug &amp; romp</span><span class="tijd">3 min</span></div>
+          <div class="lijf">
+            <div class="beeldrij">
+              <div class="tekening">
+                <img src="/images/rug/rug-strekken-staand-line-v1.png"
+                     alt="Lijntekening: staand met de handen in de zij de rug strekken" loading="lazy"/>
+              </div>
+              <div>
+                <h3>Rug strekken, staand</h3>
+                <p class="zin">Handen in de zij, voeten op heupbreedte. Buig rustig naar achteren en
+                  kom weer rechtop.</p>
+              </div>
+            </div>
+            <div class="nodig"><b>Nodig</b>Niets. Een muur binnen handbereik is prettig.</div>
+            <div class="voet">
+              <span class="hoeveel">3 × 5</span>
+              <span class="neem">In het menu</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="receptkaart">
+          <div class="kop"><span class="rub">Rug &amp; romp</span><span class="tijd">4 min</span></div>
+          <div class="lijf">
+            <div class="beeldrij">
+              <div class="tekening">
+                <img src="/images/rug/romp-zijwaarts-buigen-staand-line-v1.png"
+                     alt="Lijntekening: staand de romp zijwaarts buigen" loading="lazy"/>
+              </div>
+              <div>
+                <h3>Zijwaarts buigen</h3>
+                <p class="zin">Sta rechtop en laat één hand langs uw been naar beneden glijden.
+                  Kom rustig terug.</p>
+              </div>
+            </div>
+            <div class="nodig"><b>Nodig</b>Niets.</div>
+            <div class="voet">
+              <span class="hoeveel">2 × 6 per kant</span>
+              <span class="neem">In het menu</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <aside class="menu">
+        <h3>Het menu <span>5 gangen</span></h3>
+        <div class="lijf">
+          <ol>
+            <li><span class="n">Knie naar de borst<span class="h">3 × 5 per been · liggend</span></span></li>
+            <li><span class="n">Open boek<span class="h">2 × 8 per kant · op de zij</span></span></li>
+            <li><span class="n">Bol en hol<span class="h">2 × 10 · handen en knieën</span></span></li>
+            <li><span class="n">Romp draaien<span class="h">2 × 8 per kant · zittend</span></span></li>
+            <li><span class="n">Rug strekken<span class="h">3 × 5 · staand</span></span></li>
+          </ol>
+          <div class="totaal"><span>Bereidingstijd</span><span>14 minuten</span></div>
+
+          <div class="lijstje">
+            <h4 class="kapitaal">Klaarzetten</h4>
+            <ul>
+              <li>Een matje of dik tapijt</li>
+              <li>Een stevige stoel zonder armleuningen</li>
+              <li>Een opgerolde handdoek</li>
+              <li>Een muur binnen handbereik</li>
+            </ul>
+          </div>
+          <a class="kn" href="#printkaart">De bladzijde afdrukken</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>Digitale cliëntkaart</h2>
+      <p>het weekmenu: wat er vandaag op tafel staat, en wat morgen</p>
+    </div>
+
+    <div class="menukop">
+      <div>
+        <div class="wie">Mevrouw T. de Wilde</div>
+        <div class="wat">Lage rugklachten · week 2 van 8 · Fysiotherapie De Hoefsmid · Joris Brandt</div>
+      </div>
+      <div class="vandaag">
+        <b>Donderdag</b>
+        <span>14 minuten · ochtend</span>
+      </div>
+    </div>
+
+    <div class="menulijf">
+      <div class="gerechten">
+        <h3 class="kapitaal">Vandaag — de ochtendbereiding</h3>
+
+        <div class="gang klaar">
+          <span class="nr">1</span>
+          <div class="tekening">
+            <img src="/images/rug/knie-naar-borst-liggend-line-v1.png"
+                 alt="Lijntekening: liggend de knie naar de borst trekken" loading="lazy"/>
+          </div>
+          <div>
+            <h4>Knie naar de borst</h4>
+            <p>Trek één knie rustig naar uw borst tot het in de onderrug trekt. Wissel van been.</p>
+            <div class="hoev">3 × 5 per been</div>
+          </div>
+          <span class="vink" aria-label="gedaan">
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><use href="#k-vink"/></svg>
+          </span>
+        </div>
+
+        <div class="gang klaar">
+          <span class="nr">2</span>
+          <div class="tekening">
+            <img src="/images/rug/open-boek-liggend-line-v1.png"
+                 alt="Lijntekening: op de zij liggend de arm openen als een boek" loading="lazy"/>
+          </div>
+          <div>
+            <h4>Open boek</h4>
+            <p>Op uw zij, knieën opgetrokken. Open uw bovenste arm naar achteren en kijk hem na.</p>
+            <div class="hoev">2 × 8 per kant</div>
+          </div>
+          <span class="vink" aria-label="gedaan">
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><use href="#k-vink"/></svg>
+          </span>
+        </div>
+
+        <div class="gang">
+          <span class="nr">3</span>
+          <div class="tekening">
+            <img src="/images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png"
+                 alt="Lijntekening: op handen en knieën de rug bol en hol maken" loading="lazy"/>
+          </div>
+          <div>
+            <h4>Bol en hol</h4>
+            <p>Maak uw rug rond als een kat en laat hem daarna rustig doorzakken. Adem door.</p>
+            <div class="hoev">2 × 10</div>
+          </div>
+          <span class="vink" aria-label="nog te doen"></span>
+        </div>
+
+        <div class="gang">
+          <span class="nr">4</span>
+          <div class="tekening">
+            <img src="/images/rug/romp-draaien-zittend-line-v1.png"
+                 alt="Lijntekening: zittend de romp draaien" loading="lazy"/>
+          </div>
+          <div>
+            <h4>Romp draaien, zittend</h4>
+            <p>Rechtop op de stoel, draai uw bovenlichaam rustig opzij. Heupen blijven staan.</p>
+            <div class="hoev">2 × 8 per kant</div>
+          </div>
+          <span class="vink" aria-label="nog te doen"></span>
+        </div>
+
+        <div class="gang">
+          <span class="nr">5</span>
+          <div class="tekening">
+            <img src="/images/rug/rug-strekken-staand-line-v1.png"
+                 alt="Lijntekening: staand de rug strekken" loading="lazy"/>
+          </div>
+          <div>
+            <h4>Rug strekken, staand</h4>
+            <p>Handen in de zij, buig rustig naar achteren en kom weer rechtop. Niet doorveren.</p>
+            <div class="hoev">3 × 5</div>
+          </div>
+          <span class="vink" aria-label="nog te doen"></span>
+        </div>
+      </div>
+
+      <aside class="kantlijn">
+        <h3 class="kapitaal">Het weekmenu</h3>
+        <ul class="weekmenu">
+          <li><span class="dag">Maandag</span><span class="gerecht">Ochtendbereiding, 5 gangen</span></li>
+          <li><span class="dag">Dinsdag</span><span class="gerecht">Ochtendbereiding, 5 gangen</span></li>
+          <li class="rust"><span class="dag">Woensdag</span><span class="gerecht">Alleen wandelen — 20 minuten</span></li>
+          <li class="nu"><span class="dag">Donderdag</span><span class="gerecht">Ochtendbereiding, 5 gangen</span></li>
+          <li><span class="dag">Vrijdag</span><span class="gerecht">Ochtendbereiding, 5 gangen</span></li>
+          <li class="rust"><span class="dag">Zaterdag</span><span class="gerecht">Vrij</span></li>
+          <li><span class="dag">Zondag</span><span class="gerecht">Alleen de eerste twee gangen</span></li>
+        </ul>
+
+        <div class="tipkader">
+          <h4 class="kapitaal">Tip van de praktijk</h4>
+          <p>Zet de stoel en het matje 's avonds al klaar. Wie 's ochtends eerst moet zoeken,
+            slaat over — dat is bij koken niet anders.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · DE PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>één bladzijde uit het boek: nodig links, bereiding rechts, tip onderaan</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <div class="boekkop">
+            <span>Fysiplan · oefeningen voor thuis</span>
+            <span class="mid">Rug &amp; romp</span>
+            <span class="bl">Bladzijde 41</span>
+          </div>
+
+          <h1>Rug in beweging — <em>de ochtendbereiding</em></h1>
+          <p class="ondertitel">Voor mevrouw T. de Wilde, week 2 van 8. Doe de gangen in volgorde:
+            eerst liggend, dan op handen en knieën, dan zittend en staand. Zo hoeft u maar één keer
+            op en neer.</p>
+
+          <div class="kopregel">
+            <div><dt>Voor</dt><dd>1 persoon<small>thuis, zonder hulp</small></dd></div>
+            <div><dt>Bereidingstijd</dt><dd>14 minuten<small>eerste keer: 20</small></dd></div>
+            <div><dt>Zwaarte</dt><dd>Rustig<small>u moet kunnen praten</small></dd></div>
+            <div><dt>Hoe vaak</dt><dd>5 × per week<small>zie de tabel onderaan</small></dd></div>
+          </div>
+
+          <div class="romp">
+
+            <div class="nodig">
+              <h2>Nodig</h2>
+              <ul>
+                <li>Een matje of een dik tapijt</li>
+                <li>Een stevige stoel zonder armleuningen</li>
+                <li>Een opgerolde handdoek</li>
+                <li>Een muur binnen handbereik</li>
+                <li>Sokken of blote voeten</li>
+                <li>14 minuten waarin niemand belt</li>
+              </ul>
+
+              <div class="vooraf">
+                <h3>Vooraf</h3>
+                <p>Zet alles klaar vóór u begint — dat scheelt de helft van de keren dat u het
+                  overslaat.</p>
+                <p style="margin-top:1.6mm">Pijn boven een <b>5</b> tijdens een gang: die gang
+                  overslaan, de rest gewoon doen, en het melden bij Joris.</p>
+              </div>
+
+              <div class="variatie">
+                <h3>Variatie</h3>
+                <p><b>Te makkelijk?</b> Houd bij gang 1 de knie vijf tellen vast in plaats van drie.</p>
+                <p><b>Te zwaar?</b> Laat gang 3 weg en doe gang 4 twee keer. Zeg het op de
+                  volgende afspraak.</p>
+                <p><b>Geen tijd?</b> Doe alleen gang 1 en 2. Dat is beter dan overslaan.</p>
+              </div>
+
+              <div class="sierlijn" aria-hidden="true">
+                <i></i><svg viewBox="0 0 24 24"><use href="#k-lepel"/></svg><i></i>
+              </div>
+            </div>
+
+            <div class="bereiding">
+              <h2>Bereiding</h2>
+
+              <div class="stap">
+                <div class="nr">1</div>
+                <div>
+                  <h3>Knie naar de borst</h3>
+                  <p>Ga op uw rug liggen met de benen gestrekt. Trek één knie rustig naar uw borst,
+                    tot u het in de onderrug voelt trekken. Houd drie tellen vast en laat het been
+                    weer zakken. Wissel van been.</p>
+                  <div class="maat">3 × 5 per been · 3 minuten</div>
+                </div>
+                <div class="fig">
+                  <img src="/images/rug/knie-naar-borst-liggend-line-v1.png"
+                       alt="Lijntekening: liggend de knie naar de borst trekken"/>
+                </div>
+              </div>
+
+              <div class="stap">
+                <div class="nr">2</div>
+                <div>
+                  <h3>Open boek</h3>
+                  <p>Blijf liggen en rol op uw zij, met de knieën opgetrokken en beide armen recht
+                    vooruit. Open de bovenste arm rustig naar achteren, alsof u een boek opent, en
+                    kijk uw hand na. Kom langzaam terug.</p>
+                  <div class="maat">2 × 8 per kant · 3 minuten</div>
+                </div>
+                <div class="fig">
+                  <img src="/images/rug/open-boek-liggend-line-v1.png"
+                       alt="Lijntekening: op de zij liggend de bovenste arm openen als een boek"/>
+                </div>
+              </div>
+
+              <div class="stap">
+                <div class="nr">3</div>
+                <div>
+                  <h3>Bol en hol</h3>
+                  <p>Kom op handen en knieën, handen onder de schouders. Maak uw rug rond als een
+                    kat en laat hem daarna rustig doorzakken. Adem door en beweeg langzaam — dit is
+                    geen krachtoefening.</p>
+                  <div class="maat">2 × 10 · 3 minuten</div>
+                </div>
+                <div class="fig">
+                  <img src="/images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png"
+                       alt="Lijntekening: op handen en knieën de rug bol en hol maken"/>
+                </div>
+              </div>
+
+              <div class="stap">
+                <div class="nr">4</div>
+                <div>
+                  <h3>Romp draaien, zittend</h3>
+                  <p>Ga rechtop op de stoel zitten, voeten plat op de grond. Draai uw bovenlichaam
+                    rustig opzij en kijk over uw schouder. Uw heupen blijven staan. Kom terug en
+                    draai de andere kant op.</p>
+                  <div class="maat">2 × 8 per kant · 2 minuten</div>
+                </div>
+                <div class="fig">
+                  <img src="/images/rug/romp-draaien-zittend-line-v1.png"
+                       alt="Lijntekening: zittend op een stoel de romp draaien"/>
+                </div>
+              </div>
+
+              <div class="stap">
+                <div class="nr">5</div>
+                <div>
+                  <h3>Rug strekken, staand</h3>
+                  <p>Sta op met de handen in de zij en de voeten op heupbreedte. Buig rustig naar
+                    achteren, tot waar het prettig blijft, en kom weer rechtop. Niet doorveren.
+                    Hierna bent u klaar.</p>
+                  <div class="maat">3 × 5 · 3 minuten</div>
+                </div>
+                <div class="fig">
+                  <img src="/images/rug/rug-strekken-staand-line-v1.png"
+                       alt="Lijntekening: staand met de handen in de zij de rug strekken"/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="onderin">
+            <div class="tip">
+              <h2>Tip van de praktijk</h2>
+              <p>Zet de stoel, het matje en de handdoek 's avonds al klaar. Wie 's ochtends eerst
+                moet zoeken, slaat over — bij koken is dat niet anders.
+                <b>Spierpijn de eerste week is normaal;</b> pijn die 's nachts blijft niet.</p>
+            </div>
+
+            <div class="weektabel">
+              <h2>Afvinken</h2>
+              <div class="rij">
+                <div class="cel"><div class="d">MA</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">DI</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">WO</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">DO</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">VR</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">ZA</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">ZO</div><div class="hok"></div></div>
+              </div>
+              <p class="toelichting">Woensdag en zaterdag hoeft u niets: dan alleen een wandeling
+                van twintig minuten.</p>
+            </div>
+          </div>
+
+          <div class="colofon">
+            <span>De Hoefsmid · <b>Joris Brandt</b> · 073 — 555 20 91</span>
+            <span class="rechts">Uitgegeven <b>13-08-2026</b> · volgende afspraak <b>27-08</b></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+</body>
+</html>
