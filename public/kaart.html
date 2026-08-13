@@ -403,7 +403,17 @@
   var VIDEO_META={nl:'AI-demonstratie · klinisch gecontroleerd',en:'AI demonstration · clinically reviewed',de:'KI-Demonstration · klinisch geprüft',fr:'Démonstration IA · vérifiée cliniquement',es:'Demostración con IA · revisada clínicamente',pl:'Demonstracja AI · sprawdzona klinicznie',tr:'Yapay zekâ gösterimi · klinik olarak kontrol edildi',ar:'عرض بالذكاء الاصطناعي · تمت مراجعته سريريًا',uk:'ШІ-демонстрація · клінічно перевірено'};
   var VIDEO_META_CONCEPT={nl:'AI-concept · beoordeling door fysiotherapeut volgt',en:'AI concept · physiotherapist review pending',de:'KI-Konzept · physiotherapeutische Prüfung folgt',fr:'Concept IA · validation du kinésithérapeute à venir',es:'Concepto de IA · pendiente de revisión fisioterapéutica',pl:'Koncepcja AI · oczekuje na ocenę fizjoterapeuty',tr:'Yapay zekâ taslağı · fizyoterapist incelemesi bekleniyor',ar:'مسودة بالذكاء الاصطناعي · بانتظار مراجعة أخصائي العلاج الطبيعي',uk:'ШІ-концепт · очікує перевірки фізіотерапевта'};
   var VIDEO_TEKST_LABEL={nl:'Uitleg bij de video',en:'Video instructions',de:'Anleitung zum Video',fr:'Instructions de la vidéo',es:'Instrucciones del vídeo',pl:'Instrukcja do filmu',tr:'Video açıklaması',ar:'شرح الفيديو',uk:'Пояснення до відео'};
-  var TAAL=(function(){try{var t=localStorage.getItem('fp_taal');return T[t]?t:'nl';}catch(e){return 'nl';}})();
+  // Een eerder gekozen taal wint; anders de taal van de telefoon/browser van de
+  // patiënt; anders Nederlands. Zo opent de kaart meteen in de taal van de patiënt,
+  // zonder app of instelling — de taalkiezer laat hem altijd nog wisselen.
+  var TAAL=(function(){
+    try{var t=localStorage.getItem('fp_taal');if(T[t])return t;}catch(e){}
+    try{
+      var voork=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||''];
+      for(var i=0;i<voork.length;i++){var code=String(voork[i]||'').slice(0,2).toLowerCase();if(T[code])return code;}
+    }catch(e){}
+    return 'nl';
+  })();
   var VERT={};
   var K=null;
   function tr(k){var d=T[TAAL]||T.nl;return d[k]!=null?d[k]:T.nl[k];}
