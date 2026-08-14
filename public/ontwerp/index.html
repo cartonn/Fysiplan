@@ -166,6 +166,40 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
 .staal.kookboek .goudlijst{position:absolute;inset:10px;border:1.5px solid #9d7a2c}
 .staal.kookboek .lint{position:absolute;right:26px;top:0;width:12px;height:52px;background:#c9a227}
 
+/* — staal concept 10: Bewegingsopname — */
+.staal.opname{background:#0b0d0f;color:#eef1f3}
+.staal.opname .plaatnr{color:#ff5236;font-family:var(--mono)}
+.staal.opname .woord{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:600;
+  letter-spacing:-.04em}
+.staal.opname .baan{position:absolute;left:0;right:0;top:34px;height:56px}
+.staal.opname .strepen i{border-color:rgba(255,255,255,.3)}
+
+/* — staal concept 11: Bouwtekening — */
+.staal.tekening{color:#141c21;
+  background:
+    linear-gradient(to right,#dde5e9 1px,transparent 1px) 0 0/18px 18px,
+    linear-gradient(to bottom,#dde5e9 1px,transparent 1px) 0 0/18px 18px,
+    #f7f9fa}
+.staal.tekening .plaatnr{color:#0f6ba8;font-family:var(--mono)}
+.staal.tekening .woord{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:600;
+  letter-spacing:-.035em}
+.staal.tekening .maatlijn{position:absolute;left:0;right:0;top:38px;height:44px}
+.staal.tekening .blokje{position:absolute;right:0;bottom:0;border-top:1px solid #141c21;
+  border-left:1px solid #141c21;background:#fff;padding:4px 8px;
+  font:600 9px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#6f7c83}
+.staal.tekening .blokje b{color:#c2371c}
+
+/* — staal concept 12: Weerbericht — */
+.staal.weer{background:#12293f;color:#ffffff}
+.staal.weer .plaatnr{color:#f4c96b;font-family:var(--mono)}
+.staal.weer .woord{font-family:"Avenir Next",Seravek,system-ui,sans-serif;font-weight:600;
+  letter-spacing:-.03em}
+.staal.weer .woord em{font-style:normal;color:#f4c96b}
+.staal.weer .strepen i{border-color:rgba(255,255,255,.3)}
+.staal.weer .lucht{position:absolute;right:14px;top:36px;width:62px;height:62px;opacity:.95}
+.staal.weer .kr{position:absolute;left:16px;bottom:44px;display:flex;gap:2.5px;align-items:flex-end}
+.staal.weer .kr i{width:4px;background:rgba(255,255,255,.28);display:block}
+
 /* — staal concept 3: Vouwblad — */
 .staal.vouwblad{background:#f2c200;color:#111417}
 .staal.vouwblad .plaatnr{color:#4d3f00;font-family:var(--mono)}
@@ -234,8 +268,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>9</b> concepten</span>
-      <span>Laatste ronde <b>13 augustus 2026</b></span>
+      <span><b>12</b> concepten</span>
+      <span>Laatste ronde <b>14 augustus 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -612,6 +646,144 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-9-kookboek.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-9-kookboek.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="galerijkop" style="margin-top:var(--s6)">
+      <h2>Ronde 4</h2>
+      <span>ronde 4 · 14 aug 2026</span>
+    </div>
+
+    <div class="raster">
+
+      <!-- ─────────── CONCEPT 10 ─────────── -->
+      <article class="kaart">
+        <div class="staal opname">
+          <svg class="baan" viewBox="0 0 340 56" aria-hidden="true" preserveAspectRatio="none">
+            <path d="M18 46C68 45 128 40 176 26 208 17 244 10 300 6" fill="none" stroke="#eef1f3"
+                  stroke-width="1.6"/>
+            <circle cx="18" cy="46" r="4" fill="none" stroke="#eef1f3" stroke-width="1.8"/>
+            <circle cx="94" cy="42" r="3" fill="#eef1f3"/>
+            <circle cx="176" cy="26" r="3" fill="#eef1f3"/>
+            <circle cx="240" cy="12" r="3" fill="#eef1f3"/>
+            <circle cx="300" cy="6" r="4.6" fill="#ff5236"/>
+          </svg>
+          <div class="plaatnr">Plaat 07/4 — 5 tikken</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#0b0d0f"></i><i style="background:#ff5236"></i>
+            <i style="background:#eef1f3"></i><i style="background:#f5b731"></i>
+          </div>
+          <div class="woord">2 · 2 · 4</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 10</div>
+          <h3>Bewegingsopname</h3>
+          <p class="richting">Een oefening is geen plaatje maar een baan door de tijd — met tempo erbij.</p>
+          <p class="rationale">Marey fotografeerde beweging als een spoor van lichtstippen op één
+            zwarte plaat; elke stip een gelijke tel. Precies die notatie geeft het schema terug wat
+            het altijd weglaat: <em>hoe snel heen, hoe lang vast, hoe langzaam terug</em>. Op het
+            scherm kijkt u naar de opname, op papier keert de plaat om tot een positief.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Étienne-Jules Marey's chronofotografie (1882: zwart pak, witte lijnen op de
+              gewrichten, één plaat) · Muybridge's genummerde bewegingsplaten · de roterende
+              sluiter als tijdmaat · zilvergelatine en het negatief-positiefproces</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — het positief: zwart op wit, met de baan naast de figuur</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-10-bewegingsopname.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-10-bewegingsopname.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 11 ─────────── -->
+      <article class="kaart">
+        <div class="staal tekening">
+          <svg class="maatlijn" viewBox="0 0 340 44" aria-hidden="true" preserveAspectRatio="none">
+            <path d="M40 8v30" stroke="#141c21" stroke-width="1.4"/>
+            <path d="M40 24h150" stroke="#0f6ba8" stroke-width="1.1" stroke-dasharray="4 3"/>
+            <path d="M40 24L154 4" stroke="#1c6b4b" stroke-width="2.4"/>
+            <path d="M40 24m66 0a66 66 0 0 0-22-30" fill="none" stroke="#0f6ba8" stroke-width="1.1"/>
+            <circle cx="40" cy="24" r="3" fill="#141c21"/>
+          </svg>
+          <div class="plaatnr">Blad 1/1 — schaal 1:1</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#f7f9fa"></i><i style="background:#0f6ba8"></i>
+            <i style="background:#141c21"></i><i style="background:#c2371c"></i>
+          </div>
+          <div class="woord">90° ±15</div>
+          <div class="blokje">Rev. <b>C</b><br/>14-08-2026</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 11</div>
+          <h3>Bouwtekening</h3>
+          <p class="richting">Zet de maat erbij — mét marge, zodat “bijna” gewoon gehaald is.</p>
+          <p class="rationale">Een bestektekening kan wat geen oefenschema kan: precies zeggen hoe
+            ver, met een boven- en ondergrens. <em>82° binnen 75–110</em> is geen bijna maar goed.
+            Daaromheen de rest van het tekenaarsvak: een stuklijst van wat u klaarzet, een titelblok
+            en een revisiebalk — <em>“Rev. C: 8 → 10 herhalingen”</em>, dus geen stilzwijgende ophoging.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Bouwkundig tekenen: maatlijnen met hulplijnen, ketting- en totaalmaten, arcering
+              volgens NEN 47 · het titelblok rechtsonder tegen de kaderlijn · toleranties uit de
+              werktuigbouw · de revisiewolk en de revisietabel</dd>
+            <dt>Print</dt>
+            <dd>A4 liggend — kaderlijn, drie details, stuklijst en titelblok</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-11-bouwtekening.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-11-bouwtekening.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 12 ─────────── -->
+      <article class="kaart">
+        <div class="staal weer">
+          <svg class="lucht" viewBox="0 0 48 48" aria-hidden="true">
+            <circle cx="18" cy="18" r="7" fill="#f4c96b"/>
+            <g stroke="#f4c96b" stroke-width="2.2" stroke-linecap="round" fill="none">
+              <path d="M18 3v4M3 18h4M7.4 7.4l2.8 2.8M28.6 7.4l-2.8 2.8"/>
+            </g>
+            <path d="M17 40a7 7 0 0 1 .6-13.9 9.5 9.5 0 0 1 18.1 2.3A6 6 0 0 1 35 40z"
+                  fill="#12293f" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          <div class="plaatnr">Verwachting — week 34</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#12293f"></i><i style="background:#f4c96b"></i>
+            <i style="background:#2b6fae"></i><i style="background:#ffffff"></i>
+          </div>
+          <div class="kr" aria-hidden="true">
+            <i style="height:6px;background:#f4c96b"></i><i style="height:9px;background:#f4c96b"></i>
+            <i style="height:12px;background:#f4c96b"></i><i style="height:15px"></i>
+            <i style="height:18px"></i><i style="height:21px"></i><i style="height:24px"></i>
+          </div>
+          <div class="woord">Wisselend, <em>met opklaringen</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 12</div>
+          <h3>Weerbericht</h3>
+          <p class="richting">De week als verwachting, niet als opdracht — en regen is geen mislukking.</p>
+          <p class="rationale">Het weerbericht is het best gelezen informatieontwerp van Nederland,
+            en het enige waarbij niemand zich schuldig voelt over een slechte dag. Belasting staat er
+            als <em>kracht 1 tot 7</em>, de maand als klimaatstrook die laat zien dat augustus beter
+            is dan juli, en er is precies één waarschuwingsniveau: code geel, met één handeling erachter.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Het KNMI-weerbericht en de vijfdaagse verwachtingsstrook · de schaal van Beaufort als
+              lekentaal voor belasting · code geel/oranje/rood en het weeralarm · de klimaatstrook en
+              “normaal voor de tijd van het jaar” · het waarnemingsstation</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — weekverwachting boven, oefeningen midden, eigen waarnemingen onder</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-12-weerbericht.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-12-weerbericht.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>

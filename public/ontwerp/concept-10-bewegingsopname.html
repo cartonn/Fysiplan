@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="dark light"/>
+<title>Concept 10 — Bewegingsopname · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 10 — BEWEGINGSOPNAME
+   Marey fotografeerde in 1882 mensen in een zwart pak met witte
+   strepen op de gewrichten, tegen zwart fluweel. Op één plaat
+   verscheen alleen het spoor van de beweging: geen houding, maar
+   een baan door de tijd. Dat is precies wat elk oefenschema mist.
+   Een oefening is nooit een plaatje. Ze heeft een aanzet, een
+   eindstand, een terugweg, en vooral een tempo — en juist het
+   tempo wordt overal weggelaten, terwijl daar het herstel zit.
+   De vondsten die we lenen:
+     · de plaat is zwart, het spoor is licht. Op het scherm kijk
+       je naar de opname zelf.
+     · tikken op gelijke afstand: elke stip is een tel. Wie de
+       stippen volgt, doet de oefening op tempo zonder te tellen.
+     · de baan als tekening naast de foto: de foto zegt hoe je
+       staat, de baan zegt waar je heen gaat.
+     · de afdruk is het positief. Op papier keert de plaat om:
+       zwarte lijn op wit, groot gezet, want daar leest de
+       patiënt. Het effect blijft op het scherm.
+   Kleur: plaatzwart, zilvergelatine, één seinrood voor het
+   sluitermoment en één amber voor "nu". Verder niets.
+   Alles inline; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  --plaat:#0b0d0f;         /* de fotografische plaat */
+  --plaat-2:#13181b;
+  --plaat-3:#1b2226;
+  --lijn:#28323a;
+  --lijn-l:#1e262c;
+  --zilver:#eef1f3;        /* het spoor */
+  --zilver-2:#b3bdc3;
+  --grijs:#7d888f;
+  --sein:#ff5236;          /* de sluiter */
+  --amber:#f5b731;         /* de tel die nu loopt */
+
+  --grot:"Helvetica Neue",Helvetica,Arial,"Liberation Sans",sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:68px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.6 var(--grot);color:var(--zilver-2);background:var(--plaat)}
+img{max-width:100%;display:block}
+:focus-visible{outline:2.5px solid var(--amber);outline-offset:3px}
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+
+/* het labelbeeld van de plaat: klein, gespatieerd, mono */
+.kap{font:600 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--grijs)}
+.kap.rood{color:var(--sein)}
+.tel{font-variant-numeric:tabular-nums}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);
+  background:#000;color:var(--zilver);padding:10px 18px;font:600 13px/1 var(--grot);
+  border-bottom:1px solid var(--lijn)}
+.labbalk a{color:var(--zilver);text-decoration:none;padding:6px 10px}
+.labbalk a:hover{background:rgba(255,255,255,.14)}
+.labbalk .nr{color:var(--sein);font:600 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase}
+.labbalk .rek{flex:1}
+.labbalk .terug{border:1px solid rgba(255,255,255,.4)}
+
+.scherm{padding:var(--s6) 22px}
+.scherm + .scherm{border-top:1px solid var(--lijn)}
+.binnen{max-width:1180px;margin:0 auto}
+.schermkop{display:flex;align-items:flex-end;gap:var(--s3);margin-bottom:var(--s5)}
+.schermkop b{font:600 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--sein);
+  border-bottom:2px solid var(--sein);padding-bottom:6px}
+.schermkop h2{font:600 27px/1 var(--grot);letter-spacing:-.03em;color:var(--zilver)}
+.schermkop p{flex:1;text-align:right;font-size:15.5px;color:var(--grijs)}
+@media (max-width:760px){.schermkop{flex-wrap:wrap}.schermkop p{text-align:left;flex-basis:100%}}
+
+/* de opname zelf: het beeld staat op zwart, de lijn is licht.
+   De line-art is zwart op wit; omkeren maakt er een plaat van. */
+.opname{background:#000;position:relative;line-height:0;overflow:hidden}
+.opname img{filter:invert(1) grayscale(1) contrast(1.15) brightness(.96);mix-blend-mode:screen}
+.opname .hoek{position:absolute;width:12px;height:12px;border:1px solid rgba(255,255,255,.34)}
+.opname .hoek.a{left:7px;top:7px;border-right:0;border-bottom:0}
+.opname .hoek.b{right:7px;top:7px;border-left:0;border-bottom:0}
+.opname .hoek.c{left:7px;bottom:7px;border-right:0;border-top:0}
+.opname .hoek.d{right:7px;bottom:7px;border-left:0;border-top:0}
+
+/* ---------- het spoor: de baan door de tijd ---------- */
+.spoor{display:block;width:100%;height:auto}
+.spoor .veld{stroke:#2a343b;stroke-width:.6}
+.spoor .baan{fill:none;stroke:#eef1f3;stroke-width:1.6;stroke-linecap:round}
+.spoor .tik{fill:#eef1f3}
+.spoor .tik.start{fill:none;stroke:#eef1f3;stroke-width:1.8}
+.spoor .tik.eind{fill:var(--sein)}
+.spoor .cijfer{fill:#8d979e;font:600 8px var(--mono)}
+.spoor .as{stroke:#3a464e;stroke-width:.8;stroke-dasharray:3 3}
+.spoor .bijschrift{fill:#b3bdc3;font:400 9px var(--grot)}
+
+/* ============================================================
+   1 · LANDING — de plaat
+   ============================================================ */
+.hero{display:grid;grid-template-columns:1.02fr .98fr;gap:var(--s5);align-items:center}
+@media (max-width:960px){.hero{grid-template-columns:1fr}}
+
+.hero h1{font:600 clamp(34px,4.4vw,54px)/1.04 var(--grot);letter-spacing:-.04em;color:var(--zilver);
+  max-width:17ch}
+.hero h1 em{font-style:normal;color:var(--sein)}
+.hero p.lead{font-size:19px;line-height:1.6;margin-top:var(--s3);max-width:52ch}
+.hero .doen{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s4)}
+.kn{display:inline-block;text-decoration:none;font:600 14px/1 var(--grot);letter-spacing:.02em;
+  padding:16px 20px;background:var(--zilver);color:#0b0d0f;border:1.5px solid var(--zilver)}
+.kn:hover{background:var(--sein);border-color:var(--sein);color:#fff}
+.kn.leeg{background:transparent;color:var(--zilver)}
+.kn.leeg:hover{background:var(--zilver);color:#0b0d0f}
+
+/* de heldenplaat: één opname met baan en telstrook eronder */
+.plaathouder{border:1px solid var(--lijn);background:var(--plaat-2);padding:14px}
+.plaathouder .strook{display:flex;align-items:center;justify-content:space-between;padding:0 2px 10px}
+.plaathouder .beeldrij{display:grid;grid-template-columns:1.15fr 1fr;gap:10px}
+@media (max-width:520px){.plaathouder .beeldrij{grid-template-columns:1fr}}
+.plaathouder .spoorvak{background:#000;padding:8px}
+
+/* de telstrook: gelijke tikken, één amber = nu */
+.telstrook{margin-top:12px;border-top:1px solid var(--lijn);padding-top:10px}
+.telstrook .balk{display:flex;gap:3px;align-items:flex-end;height:26px}
+.telstrook .balk i{flex:1;background:var(--lijn);height:9px;display:block}
+.telstrook .balk i.op{background:var(--zilver);height:22px}
+.telstrook .balk i.vast{background:var(--amber);height:16px}
+.telstrook .balk i.terug{background:var(--zilver-2);height:14px}
+.telstrook .legenda{display:flex;flex-wrap:wrap;gap:var(--s3);margin-top:8px;font:500 11.5px/1 var(--mono);
+  letter-spacing:.06em;color:var(--grijs)}
+.telstrook .legenda span{display:flex;align-items:center;gap:6px}
+.telstrook .legenda b{width:10px;height:10px;display:block}
+
+.vondsten{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s6);
+  border-top:1px solid var(--lijn);padding-top:var(--s4)}
+@media (max-width:880px){.vondsten{grid-template-columns:1fr;gap:var(--s3)}}
+.vondsten h3{font:600 17px/1.25 var(--grot);color:var(--zilver);letter-spacing:-.02em;margin:6px 0 6px}
+.vondsten p{font-size:15.5px}
+.vondsten .num{font:600 11px/1 var(--mono);color:var(--sein);letter-spacing:.2em}
+
+/* ============================================================
+   2 · KIEZER — de platenkast
+   ============================================================ */
+.zoekbalk{display:flex;flex-wrap:wrap;gap:var(--s2);align-items:center;border:1px solid var(--lijn);
+  background:var(--plaat-2);padding:10px}
+.zoekbalk .veldje{flex:1;min-width:220px;display:flex;align-items:center;gap:10px;
+  background:var(--plaat-3);border:1px solid var(--lijn);padding:12px 14px}
+.zoekbalk .veldje span{font-size:15.5px;color:var(--grijs)}
+.zoekbalk .knopje{font:600 12.5px/1 var(--grot);padding:13px 14px;border:1px solid var(--lijn);
+  color:var(--zilver-2);background:transparent;cursor:default}
+.zoekbalk .knopje.aan{background:var(--zilver);color:#0b0d0f;border-color:var(--zilver)}
+
+.rollen{display:flex;gap:var(--s2);flex-wrap:wrap;margin-top:var(--s3)}
+.rollen .rol{font:600 12px/1 var(--mono);letter-spacing:.08em;padding:9px 12px;border:1px solid var(--lijn);
+  color:var(--grijs)}
+.rollen .rol.aan{color:var(--amber);border-color:var(--amber)}
+
+.platen{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:var(--s3);
+  margin-top:var(--s4)}
+.plaat{border:1px solid var(--lijn);background:var(--plaat-2);display:flex;flex-direction:column}
+.plaat.gekozen{border-color:var(--sein);box-shadow:inset 0 0 0 1px var(--sein)}
+.plaat .kopregel{display:flex;justify-content:space-between;align-items:center;padding:9px 11px;
+  border-bottom:1px solid var(--lijn)}
+.plaat .beeld{background:#000;position:relative}
+.plaat .beeld .tijdbalk{position:absolute;left:0;right:0;bottom:0;height:4px;display:flex;gap:2px;padding:0 6px 5px}
+.plaat .beeld .tijdbalk i{flex:1;height:3px;background:rgba(255,255,255,.3)}
+.plaat .beeld .tijdbalk i.aan{background:var(--amber)}
+.plaat .tekst{padding:12px;flex:1;display:flex;flex-direction:column;gap:6px}
+.plaat .tekst h3{font:600 17px/1.25 var(--grot);color:var(--zilver);letter-spacing:-.02em}
+.plaat .tekst p{font-size:14.5px;line-height:1.5}
+.plaat .voet{display:flex;gap:var(--s2);align-items:center;padding:10px 12px;border-top:1px solid var(--lijn);
+  font:500 11.5px/1 var(--mono);letter-spacing:.06em;color:var(--grijs)}
+.plaat .voet .neem{margin-left:auto;font:600 12px/1 var(--grot);letter-spacing:0;color:var(--zilver);
+  border:1px solid var(--lijn);padding:8px 11px}
+.plaat.gekozen .voet .neem{background:var(--sein);border-color:var(--sein);color:#fff}
+
+.reeksbalk{margin-top:var(--s4);border:1px solid var(--lijn);background:var(--plaat-2);padding:var(--s3);
+  display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center}
+.reeksbalk .nrs{display:flex;gap:6px;flex-wrap:wrap}
+.reeksbalk .nrs i{width:34px;height:34px;border:1px solid var(--lijn);display:flex;align-items:center;
+  justify-content:center;font:600 13px/1 var(--mono);color:var(--grijs);font-style:normal}
+.reeksbalk .nrs i.vol{background:var(--zilver);color:#0b0d0f;border-color:var(--zilver)}
+.reeksbalk p{flex:1;min-width:220px;font-size:15px}
+
+/* ============================================================
+   3 · CLIËNTKAART — de opnametafel
+   ============================================================ */
+.tafel{display:grid;grid-template-columns:1fr 336px;gap:var(--s4);align-items:start}
+@media (max-width:960px){.tafel{grid-template-columns:1fr}}
+
+.dossierkop{border:1px solid var(--lijn);background:var(--plaat-2);padding:var(--s3) var(--s4);
+  display:flex;flex-wrap:wrap;gap:var(--s4);align-items:baseline}
+.dossierkop h3{font:600 25px/1.1 var(--grot);color:var(--zilver);letter-spacing:-.03em}
+.dossierkop .rek{flex:1}
+.dossierkop dl{display:flex;gap:var(--s4);flex-wrap:wrap}
+.dossierkop dt{font:600 10px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs)}
+.dossierkop dd{font:600 15px/1.3 var(--grot);color:var(--zilver);margin-top:5px}
+
+/* de belichtingsband: zes weken opnames onder elkaar */
+.band{border:1px solid var(--lijn);background:var(--plaat-2);margin-top:var(--s3);padding:var(--s4)}
+.band h4{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs);
+  margin-bottom:var(--s3)}
+.weekrij{display:grid;grid-template-columns:64px 1fr 92px;gap:var(--s3);align-items:center;
+  padding:9px 0;border-top:1px solid var(--lijn-l)}
+.weekrij:first-of-type{border-top:0}
+.weekrij .wk{font:600 12px/1 var(--mono);letter-spacing:.08em;color:var(--grijs)}
+.weekrij .dagen{display:flex;gap:4px}
+.weekrij .dagen i{flex:1;height:22px;background:var(--lijn-l);border:1px solid var(--lijn);display:block}
+.weekrij .dagen i.op{background:var(--zilver);border-color:var(--zilver)}
+.weekrij .dagen i.half{background:var(--grijs);border-color:var(--grijs)}
+.weekrij .dagen i.nu{background:var(--amber);border-color:var(--amber)}
+.weekrij .cijfer{text-align:right;font:600 13px/1 var(--mono);color:var(--zilver-2)}
+.band .duiding{margin-top:var(--s3);border-top:1px solid var(--lijn);padding-top:var(--s3);font-size:15.5px}
+.band .duiding b{color:var(--zilver)}
+
+/* de pijnlijn als lichtcurve */
+.curve{border:1px solid var(--lijn);background:var(--plaat-2);margin-top:var(--s3);padding:var(--s4)}
+.curve h4{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs);
+  margin-bottom:var(--s3)}
+.curve svg{width:100%;height:auto;display:block}
+.curve .uitleg{font-size:15px;margin-top:var(--s3);color:var(--zilver-2)}
+
+.zijkolom .blok{border:1px solid var(--lijn);background:var(--plaat-2);padding:var(--s3);margin-bottom:var(--s3)}
+.zijkolom h4{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs);
+  margin-bottom:var(--s3)}
+.zijkolom .vandaag{display:flex;flex-direction:column;gap:10px}
+.zijkolom .oef{display:flex;gap:10px;align-items:center;padding-bottom:10px;border-bottom:1px solid var(--lijn-l)}
+.zijkolom .oef:last-child{border-bottom:0;padding-bottom:0}
+.zijkolom .oef .mini{width:52px;height:52px;background:#000;flex:0 0 52px}
+.zijkolom .oef .mini img{width:100%;height:100%;object-fit:contain;
+  filter:invert(1) grayscale(1) contrast(1.15);mix-blend-mode:screen}
+.zijkolom .oef b{display:block;font:600 14.5px/1.3 var(--grot);color:var(--zilver)}
+.zijkolom .oef span{font:500 12px/1.4 var(--mono);color:var(--grijs)}
+.zijkolom .knoprij{display:flex;flex-direction:column;gap:var(--s2)}
+.zijkolom .knoprij .kn{text-align:center}
+.melding{border:1px solid var(--sein);background:rgba(255,82,54,.09);padding:var(--s3);
+  font-size:15px;color:var(--zilver)}
+.melding b{display:block;font:600 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--sein);margin-bottom:7px}
+
+/* ============================================================
+   4 · PRINTKAART — het positief
+   Op papier keert de plaat om: zwart op wit, groot gezet.
+   ============================================================ */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){
+  .bladschaal{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .bladschaal .blad{transform-origin:top left}
+}
+
+.blad{width:210mm;height:297mm;background:#fff;color:#101315;padding:11mm 12mm 9mm;
+  display:flex;flex-direction:column;box-shadow:0 28px 70px rgba(0,0,0,.55);
+  font-family:var(--grot)}
+.blad *{--p-inkt:#101315;--p-inkt-2:#333c41;--p-grijs:#6a747a;--p-lijn:#c8ced1;--p-lijn-l:#e2e6e8;
+  --p-sein:#c3341a}
+
+/* kop van het vel */
+.blad .vel-kop{display:flex;align-items:flex-start;gap:6mm;border-bottom:1.4pt solid #101315;
+  padding-bottom:3mm}
+.blad .vel-kop h1{font:600 20pt/1.05 var(--grot);letter-spacing:-.035em;color:#101315}
+.blad .vel-kop .sub{font:400 10.4pt/1.35 var(--grot);color:#333c41;margin-top:1.6mm;max-width:96mm}
+.blad .vel-kop .rechts{margin-left:auto;text-align:right}
+.blad .vel-kop .rechts .praktijk{font:600 9.4pt/1.3 var(--grot);color:#101315}
+.blad .vel-kop .rechts .regel{font:500 7.4pt/1.6 var(--mono);letter-spacing:.09em;text-transform:uppercase;
+  color:#6a747a}
+
+/* de tempo-uitleg: één keer bovenaan, niet bij elke oefening */
+.blad .tempo-uitleg{display:flex;gap:5mm;align-items:center;border:.8pt solid #c8ced1;padding:2mm 3mm;
+  margin-top:2.8mm}
+.blad .tempo-uitleg .tekens{display:flex;gap:2mm;align-items:flex-end;height:8mm}
+.blad .tempo-uitleg .tekens i{width:2.6mm;background:#101315;display:block}
+.blad .tempo-uitleg p{font:400 8.8pt/1.32 var(--grot);color:#333c41}
+.blad .tempo-uitleg p b{color:#101315}
+
+/* de drie opnames */
+.blad .reeks{margin-top:3mm;display:flex;flex-direction:column;gap:2.4mm;flex:1}
+.blad .oefening{display:grid;grid-template-columns:40mm 1fr 40mm;gap:4mm;align-items:start;
+  border-top:.8pt solid #c8ced1;padding-top:2.4mm}
+.blad .oefening:first-child{border-top:0;padding-top:0}
+/* rechts staan de baan en de tellingen onder elkaar: ze horen bij elkaar */
+.blad .oefening .rechtskolom{display:flex;flex-direction:column;gap:1.8mm}
+
+.blad .oefening .figuur{border:.8pt solid #c8ced1;background:#fff;aspect-ratio:1/.7;
+  display:flex;align-items:center;justify-content:center;position:relative}
+.blad .oefening .figuur img{width:100%;height:100%;object-fit:contain;
+  filter:grayscale(1) contrast(1.32) brightness(1.02)}
+.blad .oefening .figuur .nr{position:absolute;left:0;top:0;background:#101315;color:#fff;
+  font:600 9pt/1 var(--mono);padding:1.6mm 2.2mm}
+
+.blad .oefening .midden h2{font:600 13.4pt/1.15 var(--grot);letter-spacing:-.025em;color:#101315}
+.blad .oefening .midden .zin{font:400 10.2pt/1.38 var(--grot);color:#101315;margin-top:1.4mm;max-width:88mm}
+.blad .oefening .midden .let{font:400 9pt/1.32 var(--grot);color:#333c41;margin-top:1.2mm}
+.blad .oefening .midden .let b{color:#101315;font-weight:600}
+
+/* de baan + de telstrook op papier */
+.blad .oefening .baanvak{border:.8pt solid #c8ced1;padding:1.4mm}
+.blad .oefening .baanvak .spoor{height:17mm;width:100%}
+.blad .oefening .baanvak .spoor .veld{stroke:#e2e6e8}
+.blad .oefening .baanvak .spoor .baan{stroke:#101315;stroke-width:1.5}
+.blad .oefening .baanvak .spoor .tik{fill:#101315}
+.blad .oefening .baanvak .spoor .tik.start{fill:#fff;stroke:#101315;stroke-width:1.6}
+.blad .oefening .baanvak .spoor .tik.eind{fill:#c3341a}
+.blad .oefening .baanvak .spoor .cijfer{fill:#6a747a}
+.blad .oefening .baanvak .spoor .as{stroke:#c8ced1}
+.blad .oefening .baanvak .spoor .bijschrift{fill:#333c41}
+.blad .oefening .baanvak .maat{font:600 7.2pt/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  color:#6a747a;margin-top:1.4mm;text-align:center}
+
+.blad .oefening .telkolom{border-top:.8pt solid #c8ced1;padding-top:2mm}
+.blad .oefening .telkolom .groot{font:600 15pt/1 var(--grot);color:#101315;letter-spacing:-.03em}
+.blad .oefening .telkolom .klein{font:400 8.8pt/1.28 var(--grot);color:#333c41;margin-top:.8mm}
+.blad .oefening .telkolom .tempo{display:flex;gap:1.4mm;align-items:flex-end;height:5.6mm;margin-top:1.8mm}
+.blad .oefening .telkolom .tempo i{width:2.2mm;background:#101315;display:block}
+.blad .oefening .telkolom .tempo i.vast{background:#6a747a}
+.blad .oefening .telkolom .tempo i.terug{background:#a8b0b5}
+.blad .oefening .telkolom .tempotekst{font:500 7.4pt/1.4 var(--mono);letter-spacing:.06em;color:#6a747a;
+  margin-top:1.4mm}
+
+/* de opnamestrook onderaan: afvinken zonder scoren */
+.blad .onderin{margin-top:3mm;border-top:1.4pt solid #101315;padding-top:2.4mm;display:grid;
+  grid-template-columns:1fr 62mm;gap:6mm;align-items:start}
+.blad .opnamestrook h3{font:600 7.4pt/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:#6a747a;margin-bottom:2mm}
+.blad .opnamestrook .rij{display:flex;gap:1.6mm}
+.blad .opnamestrook .cel{flex:1;border:.8pt solid #101315;text-align:center}
+.blad .opnamestrook .cel .d{font:600 7.4pt/1 var(--grot);letter-spacing:.08em;padding:1.6mm 0;
+  border-bottom:.5pt solid #c8ced1;color:#101315}
+.blad .opnamestrook .cel .hok{height:8mm}
+.blad .opnamestrook .toelichting{font:400 8.8pt/1.35 var(--grot);color:#333c41;margin-top:2mm}
+
+.blad .praat{border-left:1.6pt solid #c3341a;padding-left:3.4mm}
+.blad .praat h3{font:600 7.4pt/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#6a747a}
+.blad .praat p{font:400 9.6pt/1.4 var(--grot);color:#101315;margin-top:1.6mm}
+.blad .praat p b{font-weight:600}
+
+.blad .colofon{margin-top:auto;padding-top:2.6mm;border-top:.5pt solid #c8ced1;display:flex;gap:5mm;
+  align-items:baseline;font:500 6.8pt/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  color:#6a747a}
+.blad .colofon b{color:#101315;font-weight:600}
+.blad .colofon .rechts{margin-left:auto;text-align:right}
+
+.printhulp{max-width:680px;margin:var(--s4) auto 0;text-align:center;font-size:15px;color:var(--grijs)}
+.printhulp .kn{margin-top:var(--s3)}
+
+/* ============================================================
+   PRINT — alleen het vel, en altijd wit
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;border:0 !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="o-zoek" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>
+    </g>
+  </symbol>
+  <symbol id="o-sluiter" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="1.6">
+      <circle cx="12" cy="12" r="9"/><path d="M12 3v9l7.8 4.5M12 12L4.2 16.5M12 12l7.8-4.5"/>
+    </g>
+  </symbol>
+</svg>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 10</span>
+  <strong style="font:700 14px/1 var(--grot)">Bewegingsopname</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>een plaat uit het bewegingslab, geen productpagina</p>
+    </div>
+
+    <div class="hero">
+      <div>
+        <div class="kap rood" style="margin-bottom:18px">Plaat 07 — belichting 1/25 s — 12 tikken</div>
+        <h1>Een oefening is geen plaatje. Het is een <em>baan door de tijd</em>.</h1>
+        <p class="lead">Elk schema drukt een houding af en laat het belangrijkste weg: hoe snel,
+          hoe lang vasthouden, hoe langzaam terug. Juist daar zit het herstel. Fysiplan noteert de
+          beweging zoals het bewegingslab dat sinds 1882 doet — als een spoor met tikken op gelijke
+          afstand. Wie de tikken volgt, doet de oefening op tempo zonder te tellen.</p>
+        <div class="doen">
+          <a class="kn" href="#printkaart">Bekijk de afdruk</a>
+          <a class="kn leeg" href="#kiezer">Stel een reeks samen</a>
+        </div>
+      </div>
+
+      <div class="plaathouder">
+        <div class="strook">
+          <span class="kap">Opname 07/4 — knie buigen, liggend</span>
+          <span class="kap rood">Sluiter ▲</span>
+        </div>
+        <div class="beeldrij">
+          <div class="opname">
+            <span class="hoek a"></span><span class="hoek b"></span>
+            <span class="hoek c"></span><span class="hoek d"></span>
+            <img src="/images/onderste-extremiteit/knie-buigen-liggend-line-v1.png"
+                 alt="Op de rug liggend, de hiel schuift over de grond naar de bil."/>
+          </div>
+          <div class="spoorvak">
+            <svg class="spoor" viewBox="0 0 220 150" role="img"
+                 aria-label="De baan van de hiel over de grond: vijf tikken heen, de eindstand rood gemarkeerd.">
+              <g class="veld">
+                <line x1="10" y1="30" x2="210" y2="30"/><line x1="10" y1="60" x2="210" y2="60"/>
+                <line x1="10" y1="90" x2="210" y2="90"/><line x1="10" y1="120" x2="210" y2="120"/>
+              </g>
+              <line class="as" x1="24" y1="18" x2="24" y2="132"/>
+              <path class="baan" d="M24 118 C70 117 118 112 150 92 C172 78 184 62 190 44"/>
+              <circle class="tik start" cx="24" cy="118" r="4.4"/>
+              <circle class="tik" cx="72" cy="116" r="3.4"/>
+              <circle class="tik" cx="118" cy="110" r="3.4"/>
+              <circle class="tik" cx="156" cy="86" r="3.4"/>
+              <circle class="tik eind" cx="190" cy="44" r="5"/>
+              <text class="cijfer" x="19" y="134">1</text>
+              <text class="cijfer" x="67" y="134">2</text>
+              <text class="cijfer" x="113" y="134">3</text>
+              <text class="cijfer" x="151" y="134">4</text>
+              <text class="cijfer" x="185" y="134">5</text>
+              <text class="bijschrift" x="12" y="16">hiel — 5 tikken heen</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="telstrook">
+          <div class="balk" aria-hidden="true">
+            <i class="op"></i><i class="op"></i><i class="vast"></i><i class="vast"></i>
+            <i class="terug"></i><i class="terug"></i><i class="terug"></i><i class="terug"></i>
+            <i></i><i></i><i></i><i></i>
+          </div>
+          <div class="legenda">
+            <span><b style="background:var(--zilver)"></b> 2 tellen heen</span>
+            <span><b style="background:var(--amber)"></b> 2 tellen vasthouden</span>
+            <span><b style="background:var(--zilver-2)"></b> 4 tellen terug</span>
+            <span><b style="background:var(--lijn)"></b> rust</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vondsten">
+      <div>
+        <div class="num">01</div>
+        <h3>Tempo staat op de kaart</h3>
+        <p>Niet alleen <b>3 × 10</b>, maar <b>2 heen · 2 vast · 4 terug</b>. Langzaam terug is voor
+          de meeste knieën de halve oefening — en juist dat vergeet iedereen op te schrijven.</p>
+      </div>
+      <div>
+        <div class="num">02</div>
+        <h3>De baan naast de foto</h3>
+        <p>De foto zegt hoe u ligt. De baan zegt waar de hiel heen gaat en hoe ver. Samen vervangen
+          ze drie regels uitleg die toch niemand leest.</p>
+      </div>
+      <div>
+        <div class="num">03</div>
+        <h3>Op papier draait de plaat om</h3>
+        <p>Het scherm is de opname: licht op zwart. De afdruk is het positief: zwarte lijn op wit,
+          op 10,6 punt gezet. Effect op het scherm, rust op tafel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>Oefeningen kiezen</h2>
+      <p>de platenkast: elke oefening is een opname met een eigen baan</p>
+    </div>
+
+    <div class="zoekbalk">
+      <span class="veldje">
+        <svg width="18" height="18" viewBox="0 0 24 24" style="color:#7d888f" aria-hidden="true"><use href="#o-zoek"/></svg>
+        <span>Zoek op naam, gewricht of beweging — “hiel”, “knie”, “balans”</span>
+      </span>
+      <span class="knopje aan">Onderste extremiteit</span>
+      <span class="knopje">Balans</span>
+      <span class="knopje">Core</span>
+      <span class="knopje">Nek</span>
+      <span class="knopje">Alle 215</span>
+    </div>
+
+    <div class="rollen">
+      <span class="rol aan">Tempo tonen</span>
+      <span class="rol aan">Baan tonen</span>
+      <span class="rol">Alleen met steun</span>
+      <span class="rol">Zonder hulpmiddel</span>
+      <span class="rol">Geschikt om te liggen</span>
+    </div>
+
+    <div class="platen">
+
+      <article class="plaat gekozen">
+        <div class="kopregel"><span class="kap">Plaat 07/4</span><span class="kap rood">In de reeks</span></div>
+        <div class="beeld">
+          <img src="/images/onderste-extremiteit/knie-buigen-liggend-line-v1.png" alt=""/>
+          <span class="tijdbalk" aria-hidden="true"><i class="aan"></i><i class="aan"></i><i></i><i></i><i></i><i></i></span>
+        </div>
+        <div class="tekst">
+          <h3>Knie buigen — liggend</h3>
+          <p>Ga op uw rug liggen met gestrekte benen. Schuif uw hiel rustig over de grond naar uw
+            bil, zodat uw knie buigt. Schuif daarna even rustig terug.</p>
+        </div>
+        <div class="voet"><span>2 · 2 · 4</span><span>3 × 10</span><span class="neem">In de reeks ✓</span></div>
+      </article>
+
+      <article class="plaat gekozen">
+        <div class="kopregel"><span class="kap">Plaat 11/2</span><span class="kap rood">In de reeks</span></div>
+        <div class="beeld">
+          <img src="/images/core/bruggen-beginner-line-v1.png" alt=""/>
+          <span class="tijdbalk" aria-hidden="true"><i class="aan"></i><i class="aan"></i><i class="aan"></i><i></i><i></i><i></i></span>
+        </div>
+        <div class="tekst">
+          <h3>Bruggen — beginner</h3>
+          <p>Lig op uw rug met gebogen knieën en de voeten plat op de grond. Til uw heupen op tot uw
+            lichaam een rechte lijn vormt, en zak daarna langzaam terug.</p>
+        </div>
+        <div class="voet"><span>2 · 3 · 4</span><span>3 × 8</span><span class="neem">In de reeks ✓</span></div>
+      </article>
+
+      <article class="plaat gekozen">
+        <div class="kopregel"><span class="kap">Plaat 03/9</span><span class="kap rood">In de reeks</span></div>
+        <div class="beeld">
+          <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt=""/>
+          <span class="tijdbalk" aria-hidden="true"><i class="aan"></i><i class="aan"></i><i class="aan"></i><i class="aan"></i><i class="aan"></i><i></i></span>
+        </div>
+        <div class="tekst">
+          <h3>Eenbeenstand — met steun</h3>
+          <p>Sta rechtop naast een stevige stoel en houd de leuning vast. Til uw ene voet rustig van
+            de grond en blijf even staan. Wissel daarna van been.</p>
+        </div>
+        <div class="voet"><span>houden</span><span>4 × 20 s</span><span class="neem">In de reeks ✓</span></div>
+      </article>
+
+      <article class="plaat">
+        <div class="kopregel"><span class="kap">Plaat 07/1</span><span class="kap">Verwant</span></div>
+        <div class="beeld">
+          <img src="/images/onderste-extremiteit/knie-buigen-zittend-line-v1.png" alt=""/>
+          <span class="tijdbalk" aria-hidden="true"><i class="aan"></i><i class="aan"></i><i></i><i></i><i></i><i></i></span>
+        </div>
+        <div class="tekst">
+          <h3>Knie buigen — zittend</h3>
+          <p>Zit rechtop op een stoel met de voeten plat op de grond. Schuif uw voet rustig naar
+            achteren onder de stoel, zodat uw knie verder buigt.</p>
+        </div>
+        <div class="voet"><span>2 · 2 · 4</span><span>3 × 10</span><span class="neem">Toevoegen</span></div>
+      </article>
+
+      <article class="plaat">
+        <div class="kopregel"><span class="kap">Plaat 09/6</span><span class="kap">Verwant</span></div>
+        <div class="beeld">
+          <img src="/images/onderste-extremiteit/heup-buigen-staand-met-steun-line-v1.png" alt=""/>
+          <span class="tijdbalk" aria-hidden="true"><i class="aan"></i><i class="aan"></i><i class="aan"></i><i></i><i></i><i></i></span>
+        </div>
+        <div class="tekst">
+          <h3>Heup buigen — staand met steun</h3>
+          <p>Sta rechtop en houd u vast aan een stoel of tafel. Til uw knie rustig op richting uw
+            heup en zet uw voet daarna gecontroleerd terug.</p>
+        </div>
+        <div class="voet"><span>2 · 1 · 3</span><span>2 × 12</span><span class="neem">Toevoegen</span></div>
+      </article>
+
+      <article class="plaat">
+        <div class="kopregel"><span class="kap">Plaat 03/2</span><span class="kap">Zwaarder</span></div>
+        <div class="beeld">
+          <img src="/images/balans-en-valpreventie/semi-tandemstand-zonder-steun-line-v1.png" alt=""/>
+          <span class="tijdbalk" aria-hidden="true"><i class="aan"></i><i class="aan"></i><i class="aan"></i><i class="aan"></i><i></i><i></i></span>
+        </div>
+        <div class="tekst">
+          <h3>Semi-tandemstand — zonder steun</h3>
+          <p>Sta rechtop zonder steun. Zet uw ene voet een halve voetlengte voor de andere en houd
+            uw armen ontspannen langs uw lichaam.</p>
+        </div>
+        <div class="voet"><span>houden</span><span>3 × 30 s</span><span class="neem">Toevoegen</span></div>
+      </article>
+
+    </div>
+
+    <div class="reeksbalk">
+      <div class="nrs" aria-hidden="true"><i class="vol">1</i><i class="vol">2</i><i class="vol">3</i><i>4</i><i>5</i></div>
+      <p><b style="color:var(--zilver)">Drie opnames in de reeks</b> — samen 14 minuten, tempo
+        meegerekend. Een reeks van meer dan vijf past niet op één vel en wordt thuis niet gedaan.</p>
+      <a class="kn" href="#printkaart">Reeks afdrukken</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>Digitale cliëntkaart</h2>
+      <p>de opnametafel: zes weken belichting onder elkaar</p>
+    </div>
+
+    <div class="tafel">
+      <div>
+        <div class="dossierkop">
+          <div>
+            <span class="kap">Dossier 2026-0412</span>
+            <h3>Mevrouw A. Verhoeven</h3>
+          </div>
+          <span class="rek"></span>
+          <dl>
+            <div><dt>Reeks</dt><dd>Knie links — na meniscus</dd></div>
+            <div><dt>Week</dt><dd>3 van 6</dd></div>
+            <div><dt>Fysiotherapeut</dt><dd>S. Bogaers</dd></div>
+          </dl>
+        </div>
+
+        <div class="band">
+          <h4>Belichtingsband — elke opname is een dag dat u geoefend heeft</h4>
+
+          <div class="weekrij">
+            <span class="wk">Week 1</span>
+            <span class="dagen" aria-label="Week 1: vier dagen geoefend, twee half, één niet">
+              <i class="op"></i><i class="op"></i><i class="half"></i><i class="op"></i>
+              <i></i><i class="half"></i><i class="op"></i>
+            </span>
+            <span class="cijfer tel">4 vol</span>
+          </div>
+          <div class="weekrij">
+            <span class="wk">Week 2</span>
+            <span class="dagen" aria-label="Week 2: vijf dagen geoefend">
+              <i class="op"></i><i class="op"></i><i class="op"></i><i></i>
+              <i class="op"></i><i class="half"></i><i class="op"></i>
+            </span>
+            <span class="cijfer tel">5 vol</span>
+          </div>
+          <div class="weekrij">
+            <span class="wk">Week 3</span>
+            <span class="dagen" aria-label="Week 3, loopt nu: drie dagen geoefend, vandaag open">
+              <i class="op"></i><i class="op"></i><i class="half"></i><i class="nu"></i>
+              <i></i><i></i><i></i>
+            </span>
+            <span class="cijfer tel">nu</span>
+          </div>
+          <div class="weekrij" style="opacity:.5">
+            <span class="wk">Week 4</span>
+            <span class="dagen" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="cijfer tel">—</span>
+          </div>
+
+          <p class="duiding"><b>Zestien opnames in drie weken.</b> Een lege dag is geen gebroken
+            reeks — hij is gewoon niet belicht. De band toont wat er wél staat, en dat is genoeg om
+            volgende week iets zwaarders aan te durven.</p>
+        </div>
+
+        <div class="curve">
+          <h4>Pijn na het oefenen — gemeld door mevrouw Verhoeven zelf</h4>
+          <svg viewBox="0 0 620 170" role="img"
+               aria-label="Pijnscore per week: week 1 gemiddeld 6, week 2 gemiddeld 5, week 3 gemiddeld 3, met uitschieters.">
+            <g stroke="#28323a" stroke-width=".8">
+              <line x1="40" y1="20" x2="600" y2="20"/><line x1="40" y1="58" x2="600" y2="58"/>
+              <line x1="40" y1="96" x2="600" y2="96"/><line x1="40" y1="134" x2="600" y2="134"/>
+            </g>
+            <g fill="#7d888f" font="500 11px ui-monospace,Menlo,monospace">
+              <text x="12" y="24">8</text><text x="12" y="62">6</text>
+              <text x="12" y="100">4</text><text x="12" y="138">2</text>
+            </g>
+            <path d="M70 52 L150 46 L230 60 L310 72 L390 68 L470 96 L550 108" fill="none"
+                  stroke="#eef1f3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <g fill="#eef1f3">
+              <circle cx="70" cy="52" r="4"/><circle cx="150" cy="46" r="4"/><circle cx="230" cy="60" r="4"/>
+              <circle cx="310" cy="72" r="4"/><circle cx="390" cy="68" r="4"/><circle cx="470" cy="96" r="4"/>
+            </g>
+            <circle cx="550" cy="108" r="6" fill="#f5b731"/>
+            <g fill="#7d888f" font="400 11px Helvetica,Arial,sans-serif">
+              <text x="56" y="158">wk 1</text><text x="216" y="158">wk 2</text>
+              <text x="376" y="158">wk 3</text><text x="520" y="158">gisteren</text>
+            </g>
+            <line x1="40" y1="20" x2="40" y2="140" stroke="#3a464e" stroke-width="1"/>
+          </svg>
+          <p class="uitleg">De lijn zakt, maar niet netjes. Week 2 stond hoger dan week 1 — dat hoort
+            erbij en is geen reden om te stoppen. Boven de 7 twee dagen achter elkaar: dan belt u ons.</p>
+        </div>
+      </div>
+
+      <aside class="zijkolom">
+        <div class="blok">
+          <h4>Vandaag — reeks 07</h4>
+          <div class="vandaag">
+            <div class="oef">
+              <span class="mini"><img src="/images/onderste-extremiteit/knie-buigen-liggend-line-v1.png" alt=""/></span>
+              <span><b>Knie buigen — liggend</b><span>3 × 10 · tempo 2·2·4</span></span>
+            </div>
+            <div class="oef">
+              <span class="mini"><img src="/images/core/bruggen-beginner-line-v1.png" alt=""/></span>
+              <span><b>Bruggen — beginner</b><span>3 × 8 · tempo 2·3·4</span></span>
+            </div>
+            <div class="oef">
+              <span class="mini"><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt=""/></span>
+              <span><b>Eenbeenstand — met steun</b><span>4 × 20 s · met steun</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="blok">
+          <h4>Doen</h4>
+          <div class="knoprij">
+            <a class="kn" href="#printkaart">Afdruk maken — 1 A4</a>
+            <a class="kn leeg" href="#kiezer">Reeks aanpassen</a>
+            <a class="kn leeg" href="#landing">Uitleg voor thuis</a>
+          </div>
+        </div>
+
+        <div class="blok" style="padding:0;border:0">
+          <div class="melding">
+            <b>Sluitermoment</b>
+            Gisteren stond de pijn op 6 en dat is twee weken lang niet gebeurd. De reeks blijft
+            deze week gelijk; volgende week pas verzwaren. <b style="display:inline;color:var(--zilver);
+            letter-spacing:0;text-transform:none;font-size:15px;font-family:var(--grot)">Bellen mag altijd:
+            010 &ndash; 402 18 76.</b>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>het positief: zwart op wit, tempo in beeld, tikken om te volgen</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <div class="vel-kop">
+            <div>
+              <h1>Uw oefeningen voor thuis</h1>
+              <p class="sub">Drie oefeningen, samen ongeveer veertien minuten. Doe ze rustig en op
+                tempo — de streepjes rechts zeggen hoe snel. Liever vijf keer rustig dan tien keer snel.</p>
+            </div>
+            <div class="rechts">
+              <div class="praktijk">Fysiotherapie Het Zandpad</div>
+              <div class="regel">Mw. A. Verhoeven<br/>Reeks 07 · week 3 van 6<br/>14 augustus 2026</div>
+            </div>
+          </div>
+
+          <div class="tempo-uitleg">
+            <span class="tekens" aria-hidden="true">
+              <i style="height:8mm"></i><i style="height:8mm"></i>
+              <i style="height:5.4mm;background:#6a747a"></i><i style="height:5.4mm;background:#6a747a"></i>
+              <i style="height:4mm;background:#a8b0b5"></i><i style="height:4mm;background:#a8b0b5"></i>
+              <i style="height:4mm;background:#a8b0b5"></i><i style="height:4mm;background:#a8b0b5"></i>
+            </span>
+            <p><b>Zo leest u het tempo.</b> Hoge streepjes: zoveel tellen heen. Middelhoge: zoveel
+              tellen vasthouden. Lage streepjes: zoveel tellen terug. Tel rustig mee — “eenentwintig,
+              tweeëntwintig”. Terug gaat altijd langzamer dan heen.</p>
+          </div>
+
+          <div class="reeks">
+
+            <!-- oefening 1 -->
+            <div class="oefening">
+              <div class="figuur">
+                <span class="nr">1</span>
+                <img src="/images/onderste-extremiteit/knie-buigen-liggend-line-v1.png"
+                     alt="Op de rug liggend, de hiel schuift over de grond naar de bil."/>
+              </div>
+              <div class="midden">
+                <h2>Knie buigen — liggend</h2>
+                <p class="zin">Ga op uw rug liggen met gestrekte benen. Schuif uw hiel rustig over de
+                  grond naar uw bil, zodat uw knie buigt. Schuif de hiel daarna langzaam terug.</p>
+                <p class="let"><b>Let op:</b> laat uw voet de grond raken, ook op de terugweg. Buig
+                  niet verder dan waar het nog rustig blijft.</p>
+              </div>
+              <div class="rechtskolom">
+              <div class="baanvak">
+                <svg class="spoor" viewBox="0 0 220 130" role="img"
+                     aria-label="De hiel schuift in vijf tellen van gestrekt naar gebogen.">
+                  <g class="veld"><line x1="10" y1="34" x2="210" y2="34"/><line x1="10" y1="70" x2="210" y2="70"/>
+                    <line x1="10" y1="106" x2="210" y2="106"/></g>
+                  <line class="as" x1="24" y1="20" x2="24" y2="116"/>
+                  <path class="baan" d="M24 104 C70 103 118 98 150 80 C172 68 184 52 190 36"/>
+                  <circle class="tik start" cx="24" cy="104" r="4.2"/>
+                  <circle class="tik" cx="72" cy="102" r="3.2"/>
+                  <circle class="tik" cx="118" cy="96" r="3.2"/>
+                  <circle class="tik" cx="156" cy="74" r="3.2"/>
+                  <circle class="tik eind" cx="190" cy="36" r="4.8"/>
+                  <text class="cijfer" x="19" y="120">1</text><text class="cijfer" x="67" y="120">2</text>
+                  <text class="cijfer" x="113" y="120">3</text><text class="cijfer" x="151" y="120">4</text>
+                  <text class="cijfer" x="185" y="120">5</text>
+                </svg>
+                <div class="maat">baan van de hiel</div>
+              </div>
+              <div class="telkolom">
+                <div class="groot">3 × 10</div>
+                <div class="klein">per been, met pauze tussen de series</div>
+                <div class="tempo" aria-hidden="true">
+                  <i style="height:5.6mm"></i><i style="height:5.6mm"></i>
+                  <i class="vast" style="height:3.9mm"></i><i class="vast" style="height:3.9mm"></i>
+                  <i class="terug" style="height:2.9mm"></i><i class="terug" style="height:2.9mm"></i>
+                  <i class="terug" style="height:2.9mm"></i><i class="terug" style="height:2.9mm"></i>
+                </div>
+                <div class="tempotekst">2 heen · 2 vast · 4 terug</div>
+              </div>
+              </div>
+            </div>
+
+            <!-- oefening 2 -->
+            <div class="oefening">
+              <div class="figuur">
+                <span class="nr">2</span>
+                <img src="/images/core/bruggen-beginner-line-v1.png"
+                     alt="Op de rug met gebogen knieën, de heupen komen omhoog tot een rechte lijn."/>
+              </div>
+              <div class="midden">
+                <h2>Bruggen — beginner</h2>
+                <p class="zin">Lig op uw rug met gebogen knieën en de voeten plat op de grond. Til uw
+                  heupen op tot uw lichaam een rechte lijn vormt van knie tot schouder. Zak daarna
+                  langzaam terug tot uw rug de grond raakt.</p>
+                <p class="let"><b>Let op:</b> knijp de billen aan bovenin. Komt u niet hoog? Half is
+                  ook goed — het gaat om de rechte lijn, niet om de hoogte.</p>
+              </div>
+              <div class="rechtskolom">
+              <div class="baanvak">
+                <svg class="spoor" viewBox="0 0 220 130" role="img"
+                     aria-label="De heup gaat in drie tellen omhoog, houdt drie tellen, en zakt in vier tellen terug.">
+                  <g class="veld"><line x1="10" y1="34" x2="210" y2="34"/><line x1="10" y1="70" x2="210" y2="70"/>
+                    <line x1="10" y1="106" x2="210" y2="106"/></g>
+                  <line class="as" x1="24" y1="20" x2="24" y2="116"/>
+                  <path class="baan" d="M24 104 C56 96 74 52 106 42 L150 42 C182 52 196 92 202 104"/>
+                  <circle class="tik start" cx="24" cy="104" r="4.2"/>
+                  <circle class="tik" cx="66" cy="66" r="3.2"/>
+                  <circle class="tik eind" cx="106" cy="42" r="4.8"/>
+                  <circle class="tik" cx="150" cy="42" r="3.2"/>
+                  <circle class="tik" cx="188" cy="82" r="3.2"/>
+                  <text class="cijfer" x="19" y="120">1</text><text class="cijfer" x="61" y="120">2</text>
+                  <text class="cijfer" x="101" y="120">3</text><text class="cijfer" x="145" y="120">4</text>
+                  <text class="cijfer" x="183" y="120">5</text>
+                </svg>
+                <div class="maat">hoogte van de heup</div>
+              </div>
+              <div class="telkolom">
+                <div class="groot">3 × 8</div>
+                <div class="klein">rust een halve minuut tussen de series</div>
+                <div class="tempo" aria-hidden="true">
+                  <i style="height:5.6mm"></i><i style="height:5.6mm"></i>
+                  <i class="vast" style="height:3.9mm"></i><i class="vast" style="height:3.9mm"></i>
+                  <i class="vast" style="height:3.9mm"></i>
+                  <i class="terug" style="height:2.9mm"></i><i class="terug" style="height:2.9mm"></i>
+                  <i class="terug" style="height:2.9mm"></i><i class="terug" style="height:2.9mm"></i>
+                </div>
+                <div class="tempotekst">2 omhoog · 3 vast · 4 terug</div>
+              </div>
+              </div>
+            </div>
+
+            <!-- oefening 3 -->
+            <div class="oefening">
+              <div class="figuur">
+                <span class="nr">3</span>
+                <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png"
+                     alt="Staand naast een stoel, één voet los van de grond, hand aan de leuning."/>
+              </div>
+              <div class="midden">
+                <h2>Eenbeenstand — met steun</h2>
+                <p class="zin">Sta rechtop naast een stevige stoel en houd de leuning vast. Til uw ene
+                  voet rustig van de grond en blijf staan. Wissel daarna van been.</p>
+                <p class="let"><b>Let op:</b> blijf de leuning vasthouden zolang het wiebelt. Lukt
+                  twintig tellen makkelijk met twee vingers aan de leuning? Meld dat, dan gaan we
+                  volgende week zonder steun.</p>
+              </div>
+              <div class="rechtskolom">
+              <div class="baanvak">
+                <svg class="spoor" viewBox="0 0 220 130" role="img"
+                     aria-label="Twintig tellen stilstaan: de lijn blijft vlak met kleine schommelingen.">
+                  <g class="veld"><line x1="10" y1="34" x2="210" y2="34"/><line x1="10" y1="70" x2="210" y2="70"/>
+                    <line x1="10" y1="106" x2="210" y2="106"/></g>
+                  <line class="as" x1="24" y1="20" x2="24" y2="116"/>
+                  <path class="baan" d="M24 104 C40 100 46 74 62 70 C86 64 96 76 118 70 C140 64 150 78 172 72 C186 68 194 74 202 70"/>
+                  <circle class="tik start" cx="24" cy="104" r="4.2"/>
+                  <circle class="tik" cx="62" cy="70" r="3.2"/>
+                  <circle class="tik" cx="118" cy="70" r="3.2"/>
+                  <circle class="tik" cx="172" cy="72" r="3.2"/>
+                  <circle class="tik eind" cx="202" cy="70" r="4.8"/>
+                  <text class="cijfer" x="19" y="120">op</text><text class="cijfer" x="56" y="120">5</text>
+                  <text class="cijfer" x="112" y="120">10</text><text class="cijfer" x="166" y="120">15</text>
+                  <text class="cijfer" x="194" y="120">20</text>
+                </svg>
+                <div class="maat">tellen blijven staan</div>
+              </div>
+              <div class="telkolom">
+                <div class="groot">4 × 20 s</div>
+                <div class="klein">twee keer links, twee keer rechts</div>
+                <div class="tempo" aria-hidden="true">
+                  <i class="vast" style="height:4.4mm"></i><i class="vast" style="height:4.4mm"></i>
+                  <i class="vast" style="height:4.4mm"></i><i class="vast" style="height:4.4mm"></i>
+                  <i class="vast" style="height:4.4mm"></i><i class="vast" style="height:4.4mm"></i>
+                </div>
+                <div class="tempotekst">stilstaan · rustig ademen</div>
+              </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="onderin">
+            <div class="opnamestrook">
+              <h3>Deze week — zet een streepje als u geoefend heeft</h3>
+              <div class="rij">
+                <div class="cel"><div class="d">MA</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">DI</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">WO</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">DO</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">VR</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">ZA</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">ZO</div><div class="hok"></div></div>
+              </div>
+              <p class="toelichting">Een leeg hokje is geen fout. Vijf van de zeven is een goede week;
+                neem het vel mee naar de volgende afspraak, dan kijken we er samen naar.</p>
+            </div>
+
+            <div class="praat">
+              <h3>Bel ons wanneer</h3>
+              <p>de pijn <b>twee dagen achter elkaar boven de 7</b> staat, uw knie dik wordt, of u
+                onderuit dreigt te gaan bij oefening 3.<br/>
+                <b>010 &ndash; 402 18 76</b>, ma&nbsp;t/m&nbsp;vr 8–17 uur.</p>
+            </div>
+          </div>
+
+          <div class="colofon">
+            <span><b>Fysiotherapie Het Zandpad</b> · Zandpad 14, Rotterdam</span>
+            <span class="rechts">Reeks 07 · afdruk 14-08-2026 · <b>Fysiplan</b></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <p class="printhulp geen-print">Dit vel is de hele afdruk: één A4, drie oefeningen, tempo erbij.
+      Druk op Ctrl/⌘+P — de galerij eromheen verdwijnt en er komt precies dit vel uit, in zwart-wit
+      net zo leesbaar als in kleur.
+      <a class="kn" href="#landing">Terug naar boven</a></p>
+  </div>
+</section>
+
+</main>
+</body>
+</html>

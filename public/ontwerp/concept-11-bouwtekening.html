@@ -1,0 +1,1041 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 11 — Bouwtekening · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 11 — BOUWTEKENING
+   Een bestektekening doet iets wat geen enkel oefenschema doet:
+   ze zet de maat erbij. Niet "til uw arm op", maar hoe ver, met
+   welke marge, en wat de vorige revisie was. De tekenaar heeft
+   daar in honderd jaar een taal voor ontwikkeld die iedereen
+   leest zonder uitleg: een maatlijn met twee pijltjes.
+   De vondsten die we lenen:
+     · MAATLIJNEN. De bewegingsuitslag staat in graden op de
+       tekening, met een marge eromheen. 72° binnen 60–90 is
+       gehaald, niet "bijna goed".
+     · TOLERANTIE. Elke maat heeft een boven- en ondergrens.
+       Een mindere dag valt binnen de marge in plaats van buiten
+       de boot.
+     · POSITIENUMMERS. Wat u nodig heeft, staat als (1) (2) (3)
+       in een stuklijst én met een ballon bij de tekening.
+     · TITELBLOK. Rechtsonder: wie, wat, welk blad, welke datum,
+       welke revisie. Op elk vel, altijd op dezelfde plek.
+     · REVISIETABEL. "Rev. C — 12 aug: 8 → 10 herhalingen." De
+       patiënt ziet wat er veranderde en waarom.
+   Kleur: bladwit en grafiet, hulplijnen in tekencyaan, en één
+   revisierood dat alleen wijzigingen mag aanwijzen.
+   Alles inline; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  --blad:#eef1f2;          /* het licht in de tekenzaal */
+  --vlak:#ffffff;          /* het vel */
+  --inkt:#141c21;
+  --inkt-2:#3d4a51;
+  --grijs:#6f7c83;
+  --lijn:#c9d1d4;
+  --lijn-l:#e3e8ea;
+  --cyaan:#0f6ba8;         /* hulplijnen, maatlijnen, verwijzingen */
+  --cyaan-l:#e5f0f7;
+  --rev:#c2371c;           /* alleen wijzigingen */
+  --rev-l:#fbeae6;
+  --groen:#1c6b4b;         /* gehaald binnen de marge */
+
+  --grot:"Helvetica Neue",Helvetica,Arial,"Liberation Sans",sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:68px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.6 var(--grot);color:var(--inkt-2);
+  background:
+    linear-gradient(to right,rgba(20,28,33,.05) 1px,transparent 1px) 0 0/20px 20px,
+    linear-gradient(to bottom,rgba(20,28,33,.05) 1px,transparent 1px) 0 0/20px 20px,
+    var(--blad)}
+img{max-width:100%;display:block}
+:focus-visible{outline:2.5px solid var(--cyaan);outline-offset:3px}
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+
+/* het letterbeeld van de tekenaar: klein, gespatieerd, kapitaal */
+.kap{font:600 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--grijs)}
+.kap.cy{color:var(--cyaan)}
+.kap.rv{color:var(--rev)}
+.tel{font-variant-numeric:tabular-nums}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);
+  background:var(--inkt);color:#fff;padding:10px 18px;font:600 13px/1 var(--grot)}
+.labbalk a{color:#fff;text-decoration:none;padding:6px 10px}
+.labbalk a:hover{background:rgba(255,255,255,.18)}
+.labbalk .nr{color:#8ecdf2;font:600 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase}
+.labbalk .rek{flex:1}
+.labbalk .terug{border:1px solid rgba(255,255,255,.42)}
+
+.scherm{padding:var(--s6) 22px}
+.scherm + .scherm{border-top:1px solid var(--lijn)}
+.binnen{max-width:1180px;margin:0 auto}
+.schermkop{display:flex;align-items:flex-end;gap:var(--s3);margin-bottom:var(--s5)}
+.schermkop b{font:600 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--cyaan);
+  border-bottom:2px solid var(--cyaan);padding-bottom:6px}
+.schermkop h2{font:600 27px/1 var(--grot);letter-spacing:-.03em;color:var(--inkt)}
+.schermkop p{flex:1;text-align:right;font-size:15.5px;color:var(--grijs)}
+@media (max-width:760px){.schermkop{flex-wrap:wrap}.schermkop p{text-align:left;flex-basis:100%}}
+
+.kn{display:inline-block;text-decoration:none;font:600 14px/1 var(--grot);letter-spacing:.02em;
+  padding:16px 20px;background:var(--inkt);color:#fff;border:1.5px solid var(--inkt)}
+.kn:hover{background:var(--cyaan);border-color:var(--cyaan)}
+.kn.leeg{background:transparent;color:var(--inkt)}
+.kn.leeg:hover{background:var(--inkt);color:#fff}
+
+/* de tekening zelf: line-art op wit, altijd in een kader met kruisjes */
+.tekenvlak{background:var(--vlak);border:1px solid var(--lijn);position:relative}
+.tekenvlak img{filter:grayscale(1) contrast(1.3) brightness(1.03)}
+.tekenvlak .kruis{position:absolute;width:9px;height:9px;color:var(--cyaan)}
+.tekenvlak .kruis::before,.tekenvlak .kruis::after{content:"";position:absolute;background:currentColor}
+.tekenvlak .kruis::before{left:4px;top:0;width:1px;height:9px}
+.tekenvlak .kruis::after{left:0;top:4px;width:9px;height:1px}
+.tekenvlak .kruis.a{left:6px;top:6px}.tekenvlak .kruis.b{right:6px;top:6px}
+.tekenvlak .kruis.c{left:6px;bottom:6px}.tekenvlak .kruis.d{right:6px;bottom:6px}
+
+/* de ballon met positienummer */
+.ballon{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--cyaan);color:var(--cyaan);
+  background:var(--vlak);display:inline-flex;align-items:center;justify-content:center;
+  font:600 13px/1 var(--mono);flex:0 0 26px}
+
+/* maatvoering-svg */
+.maat{display:block;width:100%;height:auto}
+.maat .fig{fill:none;stroke:var(--inkt);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.maat .hulp{stroke:var(--cyaan);stroke-width:.8;stroke-dasharray:4 3;fill:none}
+.maat .maatlijn{stroke:var(--cyaan);stroke-width:1.1;fill:none}
+.maat .marge{fill:var(--cyaan);opacity:.13}
+.maat .gehaald{stroke:var(--groen);stroke-width:2.4;fill:none}
+.maat .cijfer{fill:var(--cyaan);font:600 11px var(--mono)}
+.maat .cijfer.gr{fill:var(--groen)}
+.maat .bij{fill:var(--grijs);font:400 10.5px var(--grot)}
+
+/* ============================================================
+   1 · LANDING — blad 1
+   ============================================================ */
+.hero{display:grid;grid-template-columns:1fr 1.04fr;gap:var(--s5);align-items:center}
+@media (max-width:980px){.hero{grid-template-columns:1fr}}
+.hero h1{font:600 clamp(33px,4.3vw,52px)/1.05 var(--grot);letter-spacing:-.04em;color:var(--inkt);
+  max-width:16ch}
+.hero h1 em{font-style:normal;color:var(--cyaan)}
+.hero p.lead{font-size:19px;line-height:1.6;margin-top:var(--s3);max-width:52ch}
+.hero .doen{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s4)}
+
+.tekenvel{background:var(--vlak);border:1px solid var(--inkt);padding:12px}
+.tekenvel .rand{border:1.5px solid var(--inkt);padding:14px}
+.tekenvel .veldkop{display:flex;justify-content:space-between;align-items:baseline;
+  border-bottom:1px solid var(--lijn);padding-bottom:8px;margin-bottom:12px}
+.tekenvel .duo{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center}
+@media (max-width:520px){.tekenvel .duo{grid-template-columns:1fr}}
+.tekenvel .stuklijst{margin-top:12px;border-top:1px solid var(--lijn);padding-top:10px;
+  display:flex;flex-wrap:wrap;gap:14px}
+.tekenvel .stuklijst .pos{display:flex;align-items:center;gap:8px;font-size:14.5px;color:var(--inkt-2)}
+.tekenvel .titelblok{margin-top:12px;border:1px solid var(--inkt);display:grid;
+  grid-template-columns:repeat(4,1fr)}
+.tekenvel .titelblok div{border-left:1px solid var(--lijn);padding:8px 10px}
+.tekenvel .titelblok div:first-child{border-left:0}
+.tekenvel .titelblok dt{font:600 9px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--grijs)}
+.tekenvel .titelblok dd{font:600 14px/1.2 var(--grot);color:var(--inkt);margin-top:5px}
+
+.vondsten{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s6);
+  border-top:1px solid var(--lijn);padding-top:var(--s4)}
+@media (max-width:880px){.vondsten{grid-template-columns:1fr;gap:var(--s3)}}
+.vondsten h3{font:600 17px/1.25 var(--grot);color:var(--inkt);letter-spacing:-.02em;margin:6px 0 6px}
+.vondsten p{font-size:15.5px}
+.vondsten .num{font:600 11px/1 var(--mono);color:var(--cyaan);letter-spacing:.2em}
+
+/* ============================================================
+   2 · KIEZER — de detailbibliotheek
+   ============================================================ */
+.zoekbalk{display:flex;flex-wrap:wrap;gap:var(--s2);align-items:center;border:1px solid var(--lijn);
+  background:var(--vlak);padding:10px}
+.zoekbalk .veldje{flex:1;min-width:230px;display:flex;align-items:center;gap:10px;
+  background:var(--blad);border:1px solid var(--lijn);padding:12px 14px;font-size:15.5px;color:var(--grijs)}
+.zoekbalk .knopje{font:600 12.5px/1 var(--grot);padding:13px 14px;border:1px solid var(--lijn);
+  color:var(--inkt-2);background:var(--vlak)}
+.zoekbalk .knopje.aan{background:var(--inkt);color:#fff;border-color:var(--inkt)}
+
+.assen{display:flex;gap:var(--s3);flex-wrap:wrap;margin-top:var(--s3);border:1px solid var(--lijn);
+  background:var(--cyaan-l);padding:12px 14px;align-items:center}
+.assen .as{font:600 12px/1 var(--mono);letter-spacing:.08em;color:var(--cyaan)}
+.assen p{font-size:15px;color:var(--inkt-2);flex:1;min-width:230px}
+
+.details{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--s3);
+  margin-top:var(--s4)}
+.detail{background:var(--vlak);border:1px solid var(--lijn);display:flex;flex-direction:column}
+.detail.gekozen{border-color:var(--inkt);box-shadow:inset 0 0 0 1px var(--inkt)}
+.detail .kopregel{display:flex;justify-content:space-between;align-items:center;padding:9px 11px;
+  border-bottom:1px solid var(--lijn);background:var(--blad)}
+.detail .beeldrij{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--lijn)}
+.detail .beeldrij .tk{border-right:1px solid var(--lijn-l);padding:6px}
+.detail .beeldrij .mv{padding:6px;display:flex;align-items:center}
+.detail .tekst{padding:12px;flex:1;display:flex;flex-direction:column;gap:6px}
+.detail .tekst h3{font:600 17px/1.25 var(--grot);color:var(--inkt);letter-spacing:-.02em}
+.detail .tekst p{font-size:14.5px;line-height:1.5}
+.detail .voet{display:flex;gap:var(--s2);align-items:center;padding:10px 12px;border-top:1px solid var(--lijn-l);
+  font:500 11.5px/1 var(--mono);letter-spacing:.06em;color:var(--grijs)}
+.detail .voet .neem{margin-left:auto;font:600 12px/1 var(--grot);letter-spacing:0;color:var(--inkt);
+  border:1px solid var(--lijn);padding:8px 11px;background:var(--blad)}
+.detail.gekozen .voet .neem{background:var(--inkt);border-color:var(--inkt);color:#fff}
+
+.opzetbalk{margin-top:var(--s4);border:1px solid var(--inkt);background:var(--vlak);padding:var(--s3);
+  display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center}
+.opzetbalk .posrij{display:flex;gap:8px;flex-wrap:wrap}
+.opzetbalk p{flex:1;min-width:230px;font-size:15px}
+.opzetbalk p b{color:var(--inkt)}
+
+/* ============================================================
+   3 · CLIËNTKAART — het bladbeheer
+   ============================================================ */
+.dossier{display:grid;grid-template-columns:1fr 340px;gap:var(--s4);align-items:start}
+@media (max-width:980px){.dossier{grid-template-columns:1fr}}
+
+.dossierkop{border:1px solid var(--inkt);background:var(--vlak);padding:var(--s3) var(--s4);
+  display:flex;flex-wrap:wrap;gap:var(--s4);align-items:baseline}
+.dossierkop h3{font:600 25px/1.1 var(--grot);color:var(--inkt);letter-spacing:-.03em}
+.dossierkop .rek{flex:1}
+.dossierkop dl{display:flex;gap:var(--s4);flex-wrap:wrap}
+.dossierkop dt{font:600 9.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs)}
+.dossierkop dd{font:600 15px/1.3 var(--grot);color:var(--inkt);margin-top:5px}
+
+.blok{border:1px solid var(--lijn);background:var(--vlak);padding:var(--s4);margin-top:var(--s3)}
+.blok h4{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs);
+  margin-bottom:var(--s3);border-bottom:1px solid var(--lijn-l);padding-bottom:8px}
+
+/* de metingen als maatlijnen over de weken */
+.metingen{display:flex;flex-direction:column;gap:var(--s3)}
+.meting{display:grid;grid-template-columns:150px 1fr 92px;gap:var(--s3);align-items:center}
+@media (max-width:640px){.meting{grid-template-columns:1fr}}
+.meting .wat{font:600 15px/1.3 var(--grot);color:var(--inkt)}
+.meting .wat span{display:block;font:500 11.5px/1.4 var(--mono);color:var(--grijs);letter-spacing:.05em}
+.meting .balk{position:relative;height:34px;border-left:1px solid var(--lijn);border-right:1px solid var(--lijn)}
+.meting .balk .margevak{position:absolute;top:6px;bottom:6px;background:var(--cyaan);opacity:.14}
+.meting .balk .as{position:absolute;left:0;right:0;top:50%;border-top:1px solid var(--lijn)}
+.meting .balk .nu{position:absolute;top:2px;bottom:2px;width:3px;background:var(--groen)}
+.meting .balk .was{position:absolute;top:8px;bottom:8px;width:2px;background:var(--grijs)}
+.meting .balk .label{position:absolute;top:-2px;font:600 11px/1 var(--mono);color:var(--groen)}
+.meting .balk .label.grijs{color:var(--grijs);top:auto;bottom:-2px}
+.meting .uitkomst{text-align:right;font:600 14px/1.2 var(--grot);color:var(--groen)}
+.meting .uitkomst span{display:block;font:500 11px/1.4 var(--mono);color:var(--grijs)}
+
+/* revisietabel */
+.revisies{width:100%;border-collapse:collapse;font-size:15px}
+.revisies th{font:600 9.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--grijs);
+  text-align:left;padding:0 10px 8px 0;border-bottom:1px solid var(--lijn)}
+.revisies td{padding:10px 10px 10px 0;border-bottom:1px solid var(--lijn-l);vertical-align:top;
+  color:var(--inkt-2)}
+.revisies td.rev{font:600 13px/1 var(--mono);color:var(--rev);white-space:nowrap}
+.revisies td.dat{font:500 12.5px/1.3 var(--mono);color:var(--grijs);white-space:nowrap}
+.revisies tr.laatste td{background:var(--rev-l)}
+.revisies b{color:var(--inkt)}
+
+.zijkolom .kaartje{border:1px solid var(--lijn);background:var(--vlak);padding:var(--s3);margin-bottom:var(--s3)}
+.zijkolom h4{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs);
+  margin-bottom:var(--s3)}
+.zijkolom .pos{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--lijn-l)}
+.zijkolom .pos:last-child{border-bottom:0}
+.zijkolom .pos .mini{width:50px;height:50px;flex:0 0 50px;border:1px solid var(--lijn-l);background:#fff}
+.zijkolom .pos .mini img{width:100%;height:100%;object-fit:contain;filter:grayscale(1) contrast(1.3)}
+.zijkolom .pos b{display:block;font:600 14.5px/1.3 var(--grot);color:var(--inkt)}
+.zijkolom .pos span{font:500 12px/1.4 var(--mono);color:var(--grijs)}
+.zijkolom .knoprij{display:flex;flex-direction:column;gap:var(--s2)}
+.zijkolom .knoprij .kn{text-align:center}
+.wolk{border:1.5px solid var(--rev);background:var(--rev-l);padding:var(--s3);font-size:15px;color:var(--inkt)}
+.wolk b.kop{display:block;font:600 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--rev);margin-bottom:7px}
+
+/* ============================================================
+   4 · PRINTKAART — A4 liggend, het vel zelf
+   ============================================================ */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:297mm;max-width:100%}
+@media (max-width:1180px){
+  .bladschaal{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:10px}
+}
+
+.vel{width:297mm;height:210mm;background:#fff;color:#141c21;padding:5mm;display:flex;
+  box-shadow:0 24px 60px rgba(20,28,33,.26);font-family:var(--grot);flex-direction:column}
+.vel .kader{border:1.4pt solid #141c21;flex:1;display:flex;flex-direction:column;padding:3.4mm;
+  overflow:hidden}
+
+/* kop */
+.vel .velkop{display:flex;align-items:flex-start;gap:6mm;border-bottom:.8pt solid #141c21;
+  padding-bottom:2.6mm}
+.vel .velkop h1{font:600 15.4pt/1.05 var(--grot);letter-spacing:-.035em}
+.vel .velkop .sub{font:400 9.2pt/1.34 var(--grot);color:#3d4a51;margin-top:1.2mm;max-width:172mm}
+.vel .velkop .rechts{margin-left:auto;text-align:right;font:500 7.2pt/1.6 var(--mono);
+  letter-spacing:.09em;text-transform:uppercase;color:#6f7c83}
+.vel .velkop .rechts b{display:block;font:600 9.6pt/1.3 var(--grot);letter-spacing:0;text-transform:none;
+  color:#141c21}
+
+/* het tekenveld: drie details naast elkaar */
+.vel .veld{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:3.4mm;padding:2.6mm 0;
+  min-height:0}
+.vel .det{border:.8pt solid #c9d1d4;display:flex;flex-direction:column;padding:2.4mm}
+.vel .det .detkop{display:flex;align-items:baseline;gap:2.4mm;border-bottom:.6pt solid #e3e8ea;
+  padding-bottom:1.8mm}
+.vel .det .detkop .bol{width:6.4mm;height:6.4mm;border-radius:50%;border:.9pt solid #0f6ba8;color:#0f6ba8;
+  display:flex;align-items:center;justify-content:center;font:600 9pt/1 var(--mono);flex:0 0 6.4mm}
+.vel .det .detkop h2{font:600 12pt/1.12 var(--grot);letter-spacing:-.025em}
+.vel .det .detkop .schaal{margin-left:auto;font:500 6.6pt/1 var(--mono);letter-spacing:.1em;
+  text-transform:uppercase;color:#6f7c83;white-space:nowrap}
+
+.vel .det .tekening{display:grid;grid-template-columns:1fr 26mm;gap:2.4mm;align-items:center;
+  padding:2mm 0;border-bottom:.6pt solid #e3e8ea}
+.vel .det .tekening .fig{border:.6pt solid #e3e8ea;aspect-ratio:1/.66;display:flex;align-items:center;
+  justify-content:center;background:#fff}
+.vel .det .tekening .fig img{width:100%;height:100%;object-fit:contain;
+  filter:grayscale(1) contrast(1.32) brightness(1.02)}
+.vel .det .tekening .maatvak .maat .fig{stroke:#141c21}
+.vel .det .tekening .maatvak .bijmaat{font:600 6.4pt/1.3 var(--mono);letter-spacing:.06em;color:#0f6ba8;
+  text-align:center;margin-top:1mm;text-transform:uppercase}
+
+.vel .det .zin{font:400 9.6pt/1.38 var(--grot);color:#141c21;margin-top:1.8mm}
+.vel .det .let{font:400 8.6pt/1.32 var(--grot);color:#3d4a51;margin-top:1.4mm}
+.vel .det .let b{color:#141c21;font-weight:600}
+
+.vel .det .maten{margin-top:auto;padding-top:1.8mm;border-top:.6pt solid #e3e8ea;display:flex;
+  gap:3.4mm;align-items:flex-end}
+.vel .det .maten .groot{font:600 13.4pt/1 var(--grot);letter-spacing:-.03em}
+.vel .det .maten .tol{font:500 7.4pt/1.35 var(--mono);letter-spacing:.05em;color:#6f7c83}
+.vel .det .maten .tol b{color:#1c6b4b}
+
+/* onderbalk: stuklijst, revisies, titelblok */
+.vel .onderbalk{display:grid;grid-template-columns:1fr 1.14fr 78mm;gap:4mm;border-top:.8pt solid #141c21;
+  padding-top:2.2mm;margin-top:2mm}
+.vel .onderbalk h3{font:600 6.8pt/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:#6f7c83;margin-bottom:1.8mm}
+
+.vel .stuklijst .regel{display:flex;align-items:center;gap:2.2mm;padding:.7mm 0;
+  border-bottom:.4pt solid #e3e8ea;font:400 8.4pt/1.3 var(--grot);color:#141c21}
+.vel .stuklijst .regel:last-child{border-bottom:0}
+.vel .stuklijst .regel i{width:5mm;height:5mm;border-radius:50%;border:.8pt solid #0f6ba8;color:#0f6ba8;
+  display:flex;align-items:center;justify-content:center;font:600 7pt/1 var(--mono);font-style:normal;
+  flex:0 0 5mm}
+
+.vel .revlijst table{width:100%;border-collapse:collapse}
+.vel .revlijst th{font:600 6.4pt/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#6f7c83;
+  text-align:left;padding:0 2mm 1.2mm 0;border-bottom:.5pt solid #c9d1d4}
+.vel .revlijst td{font:400 8.2pt/1.3 var(--grot);color:#141c21;padding:.9mm 2mm .9mm 0;
+  border-bottom:.4pt solid #e3e8ea;vertical-align:top}
+.vel .revlijst td.r{font:600 8pt/1 var(--mono);color:#c2371c;white-space:nowrap}
+.vel .revlijst td.d{font:500 7.4pt/1.3 var(--mono);color:#6f7c83;white-space:nowrap}
+
+.vel .titelblok{border:.9pt solid #141c21;display:grid;grid-template-columns:1fr 1fr;align-self:end}
+.vel .titelblok div{border-left:.5pt solid #c9d1d4;border-top:.5pt solid #c9d1d4;padding:1.2mm 2.2mm}
+.vel .titelblok div:nth-child(-n+2){border-top:0}
+.vel .titelblok div:nth-child(odd){border-left:0}
+.vel .titelblok div.breed{grid-column:1/-1}
+.vel .titelblok dt{font:600 6.2pt/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#6f7c83}
+.vel .titelblok dd{font:600 9pt/1.2 var(--grot);color:#141c21;margin-top:.9mm}
+.vel .titelblok dd.klein{font-weight:400;font-size:8.2pt}
+
+/* de afvinkstrook loopt onderaan het tekenveld mee */
+.vel .weekstrook{border:.8pt solid #141c21;padding:1.6mm 2.4mm;margin-top:2mm}
+.vel .weekstrook .kopje{display:flex;align-items:baseline;gap:3mm;margin-bottom:1.6mm}
+.vel .weekstrook .kopje h3{margin:0}
+.vel .weekstrook .kopje p{font:400 8pt/1.3 var(--grot);color:#3d4a51}
+.vel .weekstrook .rij{display:flex;gap:1.6mm}
+.vel .weekstrook .cel{flex:1;border:.7pt solid #141c21;text-align:center}
+.vel .weekstrook .cel .d{font:600 7pt/1 var(--grot);letter-spacing:.08em;padding:1.2mm 0;
+  border-bottom:.4pt solid #c9d1d4}
+.vel .weekstrook .cel .hok{height:6mm}
+
+.printhulp{max-width:700px;margin:var(--s4) auto 0;text-align:center;font-size:15px;color:var(--grijs)}
+.printhulp .kn{margin-top:var(--s3)}
+
+/* ============================================================
+   PRINT — A4 liggend, alleen het vel
+   ============================================================ */
+@media print{
+  @page{size:A4 landscape;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important;padding:0 !important}
+  .vel{width:297mm;height:210mm;transform:none !important;border:0 !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="b-zoek" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>
+    </g>
+  </symbol>
+</svg>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 11</span>
+  <strong style="font:700 14px/1 var(--grot)">Bouwtekening</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>blad 1 van een bestek, geen productpagina</p>
+    </div>
+
+    <div class="hero">
+      <div>
+        <div class="kap cy" style="margin-bottom:18px">Blad 1/1 — schaal 1:1 — rev. C</div>
+        <h1>Zet de <em>maat</em> erbij. Dan weet iemand wanneer het goed is.</h1>
+        <p class="lead">“Til uw arm zo ver mogelijk op” is geen opdracht, dat is een gok. Een tekenaar
+          zou er een maatlijn onder zetten: <b>90°, marge 75–110</b>. Dan is 82° geen bijna, maar
+          gehaald. Fysiplan drukt de oefening af als een tekening met maten, een stuklijst van wat u
+          klaarzet, en een revisiebalk die laat zien wat er sinds vorige week veranderd is.</p>
+        <div class="doen">
+          <a class="kn" href="#printkaart">Bekijk het vel</a>
+          <a class="kn leeg" href="#kiezer">Stel een tekening samen</a>
+        </div>
+      </div>
+
+      <div class="tekenvel">
+        <div class="rand">
+          <div class="veldkop">
+            <span class="kap">Detail 2 — schouder voorwaarts heffen</span>
+            <span class="kap cy">Schaal 1:1</span>
+          </div>
+
+          <div class="duo">
+            <div class="tekenvlak">
+              <span class="kruis a"></span><span class="kruis b"></span>
+              <span class="kruis c"></span><span class="kruis d"></span>
+              <img src="/images/bovenste-extremiteit/schouder-voorwaarts-heffen-met-stok-line-v1.png"
+                   alt="Staand met een stok in beide handen, de armen komen gestrekt naar voren omhoog."/>
+            </div>
+            <div>
+              <svg class="maat" viewBox="0 0 240 200" role="img"
+                   aria-label="Maatlijn: de arm gaat van 0 tot 90 graden, met een marge van 75 tot 110 graden. Vandaag gemeten: 82 graden, binnen de marge.">
+                <!-- romp -->
+                <path class="fig" d="M60 40v122"/>
+                <path class="fig" d="M60 162h26"/>
+                <!-- hulplijn horizontaal (0°) -->
+                <line class="hulp" x1="60" y1="92" x2="228" y2="92"/>
+                <!-- margeboog 75–110 -->
+                <path class="marge" d="M60 92 L212 92 A152 152 0 0 0 156.6 -25.7 Z"
+                      transform="rotate(0 60 92)"/>
+                <!-- de arm op 82 graden -->
+                <path class="gehaald" d="M60 92 L186 30"/>
+                <!-- maatboog -->
+                <path class="maatlijn" d="M60 92 m92 0 a92 92 0 0 0 -35.4 -72.6"/>
+                <path class="maatlijn" d="M148 88l5 4-5 4"/>
+                <path class="maatlijn" d="M120 26l4 5.6 6-2"/>
+                <text class="cijfer gr" x="150" y="52">82°</text>
+                <text class="cijfer" x="176" y="94">0°</text>
+                <text class="cijfer" x="96" y="26">marge 75–110°</text>
+                <text class="bij" x="12" y="186">Gemeten 14-08 · linkerarm · staand met stok</text>
+                <circle cx="60" cy="92" r="3.4" fill="#141c21"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="stuklijst">
+            <span class="pos"><span class="ballon">1</span> Bezemsteel of wandelstok</span>
+            <span class="pos"><span class="ballon">2</span> Stoel zonder armleuning</span>
+            <span class="pos"><span class="ballon">3</span> Vrije wand van 1 meter</span>
+          </div>
+
+          <dl class="titelblok">
+            <div><dt>Opdrachtgever</dt><dd>Mw. T. Prins</dd></div>
+            <div><dt>Blad</dt><dd>1 van 1</dd></div>
+            <div><dt>Datum</dt><dd>14-08-2026</dd></div>
+            <div><dt>Revisie</dt><dd style="color:var(--rev)">C</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <div class="vondsten">
+      <div>
+        <div class="num">01</div>
+        <h3>Een maat met marge</h3>
+        <p>Elke oefening heeft een bovengrens én een ondergrens. Binnen de marge is <b>gehaald</b>.
+          Dat scheelt een hoop patiënten die denken dat ze het fout doen.</p>
+      </div>
+      <div>
+        <div class="num">02</div>
+        <h3>Alles ligt klaar</h3>
+        <p>De stuklijst staat op het vel met positienummers: <b>(1) stok, (2) stoel, (3) wand</b>.
+          Wie de stuklijst afwerkt, hoeft halverwege niets te zoeken.</p>
+      </div>
+      <div>
+        <div class="num">03</div>
+        <h3>Wijzigingen zijn zichtbaar</h3>
+        <p>Rev. A, B, C — met datum en reden. Een schema dat stilletjes verandert wekt wantrouwen;
+          een tekening met een revisiebalk juist niet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>Oefeningen kiezen</h2>
+      <p>de detailbibliotheek: elk detail met zijn eigen maat en marge</p>
+    </div>
+
+    <div class="zoekbalk">
+      <span class="veldje">
+        <svg width="18" height="18" viewBox="0 0 24 24" style="color:#6f7c83" aria-hidden="true"><use href="#b-zoek"/></svg>
+        Zoek op detail, gewricht of maat — “schouder”, “90°”, “met stok”
+      </span>
+      <span class="knopje aan">Bovenste extremiteit</span>
+      <span class="knopje">Nek</span>
+      <span class="knopje">Rug</span>
+      <span class="knopje">Core</span>
+      <span class="knopje">Alle 215</span>
+    </div>
+
+    <div class="assen">
+      <span class="as">Maat tonen: hoek</span>
+      <span class="as">Marge tonen: ±</span>
+      <p>De kiezer sorteert op <b>uitslag</b>, niet op populariteit: eerst wat binnen de huidige marge
+        van mevrouw Prins valt, daarna wat een stap zwaarder is.</p>
+    </div>
+
+    <div class="details">
+
+      <article class="detail gekozen">
+        <div class="kopregel"><span class="kap">Detail 1 — pos. 01</span><span class="kap cy">In het vel</span></div>
+        <div class="beeldrij">
+          <div class="tk"><div class="tekenvlak" style="border:0">
+            <img src="/images/bovenste-extremiteit/schouder-pendelen-actief-line-v1.png" alt=""/>
+          </div></div>
+          <div class="mv">
+            <svg class="maat" viewBox="0 0 140 110" aria-hidden="true">
+              <path class="fig" d="M40 18v58"/>
+              <line class="hulp" x1="40" y1="76" x2="128" y2="76"/>
+              <path class="gehaald" d="M40 30 C58 74 92 84 116 62"/>
+              <path class="maatlijn" d="M40 30 m0 8 a44 44 0 0 0 44 44"/>
+              <text class="cijfer" x="72" y="30">pendel</text>
+              <text class="cijfer gr" x="86" y="100">30 s</text>
+            </svg>
+          </div>
+        </div>
+        <div class="tekst">
+          <h3>Schouder pendelen — actief</h3>
+          <p>Steun met één hand op een tafel en laat uw andere arm ontspannen hangen. Laat de arm
+            rustig heen en weer slingeren, zonder kracht te zetten.</p>
+        </div>
+        <div class="voet"><span>vrij · geen maat</span><span>3 × 30 s</span><span class="neem">Op het vel ✓</span></div>
+      </article>
+
+      <article class="detail gekozen">
+        <div class="kopregel"><span class="kap">Detail 2 — pos. 02</span><span class="kap cy">In het vel</span></div>
+        <div class="beeldrij">
+          <div class="tk"><div class="tekenvlak" style="border:0">
+            <img src="/images/bovenste-extremiteit/schouder-voorwaarts-heffen-met-stok-line-v1.png" alt=""/>
+          </div></div>
+          <div class="mv">
+            <svg class="maat" viewBox="0 0 140 110" aria-hidden="true">
+              <path class="fig" d="M34 14v70"/>
+              <line class="hulp" x1="34" y1="56" x2="126" y2="56"/>
+              <path class="marge" d="M34 56 L118 56 A84 84 0 0 0 84 -12 Z"/>
+              <path class="gehaald" d="M34 56 L104 22"/>
+              <path class="maatlijn" d="M34 56 m52 0 a52 52 0 0 0 -20 -41"/>
+              <text class="cijfer gr" x="86" y="34">82°</text>
+              <text class="cijfer" x="100" y="70">0°</text>
+            </svg>
+          </div>
+        </div>
+        <div class="tekst">
+          <h3>Schouder voorwaarts heffen — met stok</h3>
+          <p>Sta rechtop en houd een stok met beide handen vast voor uw lichaam. Breng de stok met
+            gestrekte armen rustig naar voren omhoog, zo ver als prettig gaat.</p>
+        </div>
+        <div class="voet"><span>90° ±15</span><span>3 × 10</span><span class="neem">Op het vel ✓</span></div>
+      </article>
+
+      <article class="detail gekozen">
+        <div class="kopregel"><span class="kap">Detail 3 — pos. 03</span><span class="kap cy">In het vel</span></div>
+        <div class="beeldrij">
+          <div class="tk"><div class="tekenvlak" style="border:0">
+            <img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt=""/>
+          </div></div>
+          <div class="mv">
+            <svg class="maat" viewBox="0 0 140 110" aria-hidden="true">
+              <path class="fig" d="M30 20v66"/>
+              <path class="fig" d="M30 52h34"/>
+              <line class="hulp" x1="64" y1="52" x2="64" y2="14"/>
+              <path class="marge" d="M64 52 L64 16 A36 36 0 0 0 92 40 Z"/>
+              <path class="gehaald" d="M64 52 L96 34"/>
+              <path class="maatlijn" d="M64 52 m0 -26 a26 26 0 0 0 22 12"/>
+              <text class="cijfer gr" x="92" y="60">45°</text>
+              <text class="cijfer" x="24" y="102">elleboog 90°</text>
+            </svg>
+          </div>
+        </div>
+        <div class="tekst">
+          <h3>Schouder naar buiten draaien — met elastiek</h3>
+          <p>Houd uw elleboog in een rechte hoek tegen uw zij en pak het elastiek vast. Draai uw
+            onderarm rustig naar buiten en laat weer terugkomen.</p>
+        </div>
+        <div class="voet"><span>45° ±10</span><span>3 × 12</span><span class="neem">Op het vel ✓</span></div>
+      </article>
+
+      <article class="detail">
+        <div class="kopregel"><span class="kap">Detail 4</span><span class="kap">Zwaarder</span></div>
+        <div class="beeldrij">
+          <div class="tk"><div class="tekenvlak" style="border:0">
+            <img src="/images/bovenste-extremiteit/schouder-zijwaarts-heffen-met-elastiek-line-v1.png" alt=""/>
+          </div></div>
+          <div class="mv">
+            <svg class="maat" viewBox="0 0 140 110" aria-hidden="true">
+              <path class="fig" d="M34 14v70"/>
+              <line class="hulp" x1="34" y1="60" x2="126" y2="60"/>
+              <path class="marge" d="M34 60 L120 60 A86 86 0 0 0 94 -1 Z"/>
+              <path class="gehaald" d="M34 60 L112 40"/>
+              <path class="maatlijn" d="M34 60 m56 0 a56 56 0 0 0 -12 -34"/>
+              <text class="cijfer" x="86" y="30">doel 90°</text>
+              <text class="cijfer" x="98" y="76">0°</text>
+            </svg>
+          </div>
+        </div>
+        <div class="tekst">
+          <h3>Schouder zijwaarts heffen — met elastiek</h3>
+          <p>Sta op het elastiek en houd de uiteinden vast. Hef uw gestrekte armen rustig zijwaarts
+            tot schouderhoogte en laat ze langzaam zakken.</p>
+        </div>
+        <div class="voet"><span>90° ±15</span><span>3 × 10</span><span class="neem">Toevoegen</span></div>
+      </article>
+
+      <article class="detail">
+        <div class="kopregel"><span class="kap">Detail 5</span><span class="kap">Verwant</span></div>
+        <div class="beeldrij">
+          <div class="tk"><div class="tekenvlak" style="border:0">
+            <img src="/images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png" alt=""/>
+          </div></div>
+          <div class="mv">
+            <svg class="maat" viewBox="0 0 140 110" aria-hidden="true">
+              <path class="fig" d="M56 22v62"/>
+              <line class="hulp" x1="56" y1="30" x2="56" y2="8"/>
+              <path class="marge" d="M56 30 L56 8 A22 22 0 0 0 74 20 Z"/>
+              <path class="gehaald" d="M56 30 L74 18"/>
+              <path class="maatlijn" d="M56 30 m0 -16 a16 16 0 0 0 13 8"/>
+              <text class="cijfer gr" x="80" y="24">35°</text>
+              <text class="cijfer" x="16" y="102">rek · niet duwen</text>
+            </svg>
+          </div>
+        </div>
+        <div class="tekst">
+          <h3>Bovenste trapezius rek — zittend actief</h3>
+          <p>Zit rechtop met ontspannen schouders. Laat uw hoofd rustig opzij zakken, met uw oor
+            richting uw schouder, tot u rek voelt.</p>
+        </div>
+        <div class="voet"><span>35° ±10</span><span>3 × 20 s</span><span class="neem">Toevoegen</span></div>
+      </article>
+
+      <article class="detail">
+        <div class="kopregel"><span class="kap">Detail 6</span><span class="kap">Verwant</span></div>
+        <div class="beeldrij">
+          <div class="tk"><div class="tekenvlak" style="border:0">
+            <img src="/images/bovenste-extremiteit/onderste-trapezius-heffen-functioneel-reikend-line-v1.png" alt=""/>
+          </div></div>
+          <div class="mv">
+            <svg class="maat" viewBox="0 0 140 110" aria-hidden="true">
+              <path class="fig" d="M36 16v70"/>
+              <line class="hulp" x1="36" y1="58" x2="126" y2="58"/>
+              <path class="marge" d="M36 58 L120 58 A84 84 0 0 0 78 -14 Z"/>
+              <path class="gehaald" d="M36 58 L108 16"/>
+              <path class="maatlijn" d="M36 58 m54 0 a54 54 0 0 0 -26 -46"/>
+              <text class="cijfer" x="84" y="26">120°</text>
+              <text class="cijfer" x="98" y="74">0°</text>
+            </svg>
+          </div>
+        </div>
+        <div class="tekst">
+          <h3>Onderste trapezius heffen — reikend</h3>
+          <p>Sta rechtop met ontspannen armen. Reik met uw hand rustig schuin omhoog, alsof u iets
+            van een hoge plank pakt, en kom rustig terug.</p>
+        </div>
+        <div class="voet"><span>120° ±20</span><span>2 × 12</span><span class="neem">Toevoegen</span></div>
+      </article>
+
+    </div>
+
+    <div class="opzetbalk">
+      <div class="posrij" aria-hidden="true">
+        <span class="ballon">1</span><span class="ballon">2</span><span class="ballon">3</span>
+      </div>
+      <p><b>Drie details op het vel</b> — samen 12 minuten. Een vierde detail past nog, een vijfde
+        maakt de tekening onleesbaar. Dat is geen technische grens maar een leesgrens.</p>
+      <a class="kn" href="#printkaart">Vel samenstellen</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>Digitale cliëntkaart</h2>
+      <p>het bladbeheer: maten, marges en de revisiegeschiedenis</p>
+    </div>
+
+    <div class="dossier">
+      <div>
+        <div class="dossierkop">
+          <div>
+            <span class="kap">Dossier 2026-0187</span>
+            <h3>Mevrouw T. Prins</h3>
+          </div>
+          <span class="rek"></span>
+          <dl>
+            <div><dt>Tekening</dt><dd>Schouder rechts — na frozen shoulder</dd></div>
+            <div><dt>Blad</dt><dd>1 van 1</dd></div>
+            <div><dt>Revisie</dt><dd style="color:var(--rev)">C — 14-08</dd></div>
+          </dl>
+        </div>
+
+        <div class="blok">
+          <h4>Maten — gemeten in de praktijk, met de marge erbij</h4>
+          <div class="metingen">
+
+            <div class="meting">
+              <div class="wat">Voorwaarts heffen<span>anteflexie · rechts</span></div>
+              <div class="balk">
+                <span class="as" aria-hidden="true"></span>
+                <span class="margevak" style="left:34%;right:14%"></span>
+                <span class="was" style="left:41%"></span>
+                <span class="nu" style="left:56%"></span>
+                <span class="label" style="left:57%">82°</span>
+                <span class="label grijs" style="left:33%">was 64°</span>
+              </div>
+              <div class="uitkomst">Binnen marge<span>doel 90 ±15</span></div>
+            </div>
+
+            <div class="meting">
+              <div class="wat">Zijwaarts heffen<span>abductie · rechts</span></div>
+              <div class="balk">
+                <span class="as" aria-hidden="true"></span>
+                <span class="margevak" style="left:38%;right:12%"></span>
+                <span class="was" style="left:36%"></span>
+                <span class="nu" style="left:47%"></span>
+                <span class="label" style="left:48%">76°</span>
+                <span class="label grijs" style="left:28%">was 58°</span>
+              </div>
+              <div class="uitkomst">Binnen marge<span>doel 90 ±15</span></div>
+            </div>
+
+            <div class="meting">
+              <div class="wat">Naar buiten draaien<span>exorotatie · rechts</span></div>
+              <div class="balk">
+                <span class="as" aria-hidden="true"></span>
+                <span class="margevak" style="left:44%;right:22%"></span>
+                <span class="was" style="left:30%"></span>
+                <span class="nu" style="left:41%;background:var(--rev)"></span>
+                <span class="label" style="left:42%;color:var(--rev)">38°</span>
+                <span class="label grijs" style="left:22%">was 30°</span>
+              </div>
+              <div class="uitkomst" style="color:var(--rev)">Net onder<span>doel 45 ±10</span></div>
+            </div>
+
+          </div>
+          <p style="margin-top:var(--s3);border-top:1px solid var(--lijn-l);padding-top:var(--s3);font-size:15.5px">
+            Twee van de drie maten liggen binnen de marge. De derde staat er zeven graden onder — geen
+            reden voor een nieuw plan, wel voor <b style="color:var(--inkt)">tien dagen dezelfde
+            tekening</b> voordat we verzwaren.</p>
+        </div>
+
+        <div class="blok">
+          <h4>Revisies op dit blad</h4>
+          <table class="revisies">
+            <thead>
+              <tr><th style="width:52px">Rev.</th><th style="width:96px">Datum</th><th>Wijziging</th><th style="width:118px">Door</th></tr>
+            </thead>
+            <tbody>
+              <tr class="laatste">
+                <td class="rev">C</td><td class="dat">14-08-2026</td>
+                <td><b>Detail 3 toegevoegd</b> — naar buiten draaien met elastiek, licht. Herhalingen
+                  detail 2 van 8 naar 10.</td>
+                <td>S. Bogaers</td>
+              </tr>
+              <tr>
+                <td class="rev">B</td><td class="dat">31-07-2026</td>
+                <td><b>Marge verruimd</b> — doel voorwaarts heffen van 90 ±10 naar 90 ±15, na overleg
+                  met mevrouw Prins over de ochtendstijfheid.</td>
+                <td>S. Bogaers</td>
+              </tr>
+              <tr>
+                <td class="rev">A</td><td class="dat">10-07-2026</td>
+                <td><b>Eerste uitgifte</b> — pendelen en voorwaarts heffen met stok, 3 × 8.</td>
+                <td>S. Bogaers</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <aside class="zijkolom">
+        <div class="kaartje">
+          <h4>Op het vel — rev. C</h4>
+          <div class="pos">
+            <span class="mini"><img src="/images/bovenste-extremiteit/schouder-pendelen-actief-line-v1.png" alt=""/></span>
+            <span><b>Pendelen — actief</b><span>pos. 01 · 3 × 30 s</span></span>
+          </div>
+          <div class="pos">
+            <span class="mini"><img src="/images/bovenste-extremiteit/schouder-voorwaarts-heffen-met-stok-line-v1.png" alt=""/></span>
+            <span><b>Voorwaarts heffen — stok</b><span>pos. 02 · 3 × 10 · 90° ±15</span></span>
+          </div>
+          <div class="pos">
+            <span class="mini"><img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt=""/></span>
+            <span><b>Naar buiten draaien</b><span>pos. 03 · 3 × 12 · 45° ±10</span></span>
+          </div>
+        </div>
+
+        <div class="kaartje">
+          <h4>Doen</h4>
+          <div class="knoprij">
+            <a class="kn" href="#printkaart">Vel afdrukken — 1 A4</a>
+            <a class="kn leeg" href="#kiezer">Detail wijzigen (rev. D)</a>
+            <a class="kn leeg" href="#landing">Uitleg voor thuis</a>
+          </div>
+        </div>
+
+        <div class="wolk">
+          <b class="kop">Revisiewolk — wat verandert er</b>
+          Detail 2 gaat van 8 naar 10 herhalingen. Mevrouw Prins krijgt het nieuwe vel mee én ziet
+          de wijziging in de balk: <b>“Rev. C — 14 aug: 8 → 10”</b>. Geen stilzwijgende ophoging.
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 liggend</h2>
+      <p>het vel zelf: drie details, stuklijst, revisiebalk en titelblok</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="vel">
+          <div class="kader">
+
+            <div class="velkop">
+              <div>
+                <h1>Uw oefeningen voor thuis — schouder rechts</h1>
+                <p class="sub">Drie oefeningen, samen ongeveer twaalf minuten. Bij twee ervan staat een
+                  hoek met een marge: haalt u iets binnen die marge, dan is het goed. Verder komen dan
+                  de marge hoeft niet en helpt niet.</p>
+              </div>
+              <div class="rechts">
+                <b>Fysiotherapie De Stelling</b>
+                Mw. T. Prins<br/>Blad 1 van 1 · rev. C<br/>14 augustus 2026
+              </div>
+            </div>
+
+            <div class="veld">
+
+              <!-- detail 1 -->
+              <div class="det">
+                <div class="detkop">
+                  <span class="bol">1</span>
+                  <h2>Pendelen</h2>
+                  <span class="schaal">vrij · geen hoek</span>
+                </div>
+                <div class="tekening">
+                  <div class="fig">
+                    <img src="/images/bovenste-extremiteit/schouder-pendelen-actief-line-v1.png"
+                         alt="Steunend op een tafel hangt de arm ontspannen en slingert heen en weer."/>
+                  </div>
+                  <div class="maatvak">
+                    <svg class="maat" viewBox="0 0 90 120" role="img"
+                         aria-label="De arm hangt en slingert vrij heen en weer.">
+                      <path class="fig" d="M30 12v40"/>
+                      <line class="hulp" x1="30" y1="52" x2="30" y2="108"/>
+                      <path class="gehaald" d="M14 96 C24 108 42 108 54 94"/>
+                      <path class="maatlijn" d="M14 96l-2 -7 7 2"/>
+                      <path class="maatlijn" d="M54 94l2 -7 -7 2"/>
+                      <circle cx="30" cy="52" r="2.6" fill="#141c21"/>
+                    </svg>
+                    <div class="bijmaat">laat hangen</div>
+                  </div>
+                </div>
+                <p class="zin">Steun met uw linkerhand op de tafel en laat uw rechterarm ontspannen
+                  hangen. Laat de arm rustig heen en weer slingeren. Zet geen kracht — de arm slingert,
+                  u stuurt niet.</p>
+                <p class="let"><b>Let op:</b> dit mag geen pijn doen. Doet het dat wel, ga dan minder
+                  ver voorover staan.</p>
+                <div class="maten">
+                  <span class="groot">3 × 30 s</span>
+                  <span class="tol">rust 30 s tussendoor<br/><b>geen maat — op gevoel</b></span>
+                </div>
+              </div>
+
+              <!-- detail 2 -->
+              <div class="det">
+                <div class="detkop">
+                  <span class="bol">2</span>
+                  <h2>Voorwaarts heffen</h2>
+                  <span class="schaal">90° ±15</span>
+                </div>
+                <div class="tekening">
+                  <div class="fig">
+                    <img src="/images/bovenste-extremiteit/schouder-voorwaarts-heffen-met-stok-line-v1.png"
+                         alt="Staand met een stok in beide handen komen de gestrekte armen naar voren omhoog."/>
+                  </div>
+                  <div class="maatvak">
+                    <svg class="maat" viewBox="0 0 90 120" role="img"
+                         aria-label="De arm gaat van 0 graden tot 90 graden, marge 75 tot 110 graden.">
+                      <path class="fig" d="M22 10v96"/>
+                      <line class="hulp" x1="22" y1="62" x2="86" y2="62"/>
+                      <path class="marge" d="M22 62 L82 62 A60 60 0 0 0 60 15 Z"/>
+                      <path class="gehaald" d="M22 62 L74 34"/>
+                      <path class="maatlijn" d="M22 62 m38 0 a38 38 0 0 0 -14 -29"/>
+                      <text class="cijfer gr" x="52" y="24">90°</text>
+                      <text class="cijfer" x="66" y="76">0°</text>
+                      <circle cx="22" cy="62" r="2.6" fill="#141c21"/>
+                    </svg>
+                    <div class="bijmaat">marge 75–110°</div>
+                  </div>
+                </div>
+                <p class="zin">Sta rechtop en houd de stok met beide handen voor u vast. Breng de stok
+                  met gestrekte armen rustig omhoog tot ongeveer schouderhoogte, en laat hem net zo
+                  rustig zakken.</p>
+                <p class="let"><b>Let op:</b> uw linkerarm duwt, uw rechterarm gaat mee. Schouder laag
+                  houden — niet optrekken naar het oor.</p>
+                <div class="maten">
+                  <span class="groot">3 × 10</span>
+                  <span class="tol">rev. C: was 8<br/><b>82° gemeten op 14-08</b></span>
+                </div>
+              </div>
+
+              <!-- detail 3 -->
+              <div class="det">
+                <div class="detkop">
+                  <span class="bol">3</span>
+                  <h2>Naar buiten draaien</h2>
+                  <span class="schaal">45° ±10</span>
+                </div>
+                <div class="tekening">
+                  <div class="fig">
+                    <img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png"
+                         alt="Met de elleboog tegen de zij draait de onderarm met een elastiek naar buiten."/>
+                  </div>
+                  <div class="maatvak">
+                    <svg class="maat" viewBox="0 0 90 120" role="img"
+                         aria-label="De onderarm draait van 0 tot 45 graden naar buiten, marge 35 tot 55 graden.">
+                      <path class="fig" d="M20 14v92"/>
+                      <path class="fig" d="M20 58h26"/>
+                      <line class="hulp" x1="46" y1="58" x2="46" y2="16"/>
+                      <path class="marge" d="M46 58 L46 20 A38 38 0 0 0 74 44 Z"/>
+                      <path class="gehaald" d="M46 58 L76 38"/>
+                      <path class="maatlijn" d="M46 58 m0 -26 a26 26 0 0 0 20 12"/>
+                      <text class="cijfer gr" x="56" y="26">45°</text>
+                      <circle cx="46" cy="58" r="2.6" fill="#141c21"/>
+                    </svg>
+                    <div class="bijmaat">elleboog blijft 90°</div>
+                  </div>
+                </div>
+                <p class="zin">Klem uw elleboog tegen uw zij, in een rechte hoek. Pak het elastiek en
+                  draai uw onderarm rustig naar buiten, weg van uw buik. Laat langzaam terugkomen.</p>
+                <p class="let"><b>Let op:</b> uw elleboog blijft tegen uw zij, ook als het elastiek
+                  trekt. Klem er desnoods een opgerolde handdoek tussen.</p>
+                <div class="maten">
+                  <span class="groot">3 × 12</span>
+                  <span class="tol">nieuw in rev. C<br/><b>licht elastiek (geel)</b></span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="weekstrook">
+              <div class="kopje">
+                <h3>Deze week</h3>
+                <p>Zet een streepje op de dagen dat u geoefend heeft. Een leeg hokje is geen fout —
+                  vijf van de zeven is een goede week. Neem het vel mee naar de volgende afspraak.</p>
+              </div>
+              <div class="rij">
+                <div class="cel"><div class="d">MAANDAG</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">DINSDAG</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">WOENSDAG</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">DONDERDAG</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">VRIJDAG</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">ZATERDAG</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">ZONDAG</div><div class="hok"></div></div>
+              </div>
+            </div>
+
+            <div class="onderbalk">
+              <div class="stuklijst">
+                <h3>Wat u klaarzet</h3>
+                <div class="regel"><i>1</i> Stevige tafel om op te steunen</div>
+                <div class="regel"><i>2</i> Bezemsteel of wandelstok</div>
+                <div class="regel"><i>3</i> Geel elastiek (meegekregen)</div>
+                <div class="regel"><i>4</i> Stoel zonder armleuningen</div>
+              </div>
+
+              <div class="revlijst">
+                <h3>Wat er veranderd is</h3>
+                <table>
+                  <thead><tr><th>Rev.</th><th>Datum</th><th>Wijziging</th></tr></thead>
+                  <tbody>
+                    <tr><td class="r">C</td><td class="d">14-08</td><td>Detail 3 erbij; detail 2 van 8 naar 10 herhalingen</td></tr>
+                    <tr><td class="r">B</td><td class="d">31-07</td><td>Marge detail 2 verruimd naar ±15°</td></tr>
+                    <tr><td class="r">A</td><td class="d">10-07</td><td>Eerste vel: detail 1 en 2</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <dl class="titelblok">
+                <div class="breed"><dt>Praktijk</dt><dd>Fysiotherapie De Stelling · Stellingweg 3, Utrecht · 030 &ndash; 271 44 08</dd></div>
+                <div><dt>Voor</dt><dd>Mw. T. Prins</dd></div>
+                <div><dt>Fysiotherapeut</dt><dd>S. Bogaers</dd></div>
+                <div><dt>Blad · revisie</dt><dd>1 van 1 · <span style="color:#c2371c">C</span></dd></div>
+                <div><dt>Datum</dt><dd>14-08-2026</dd></div>
+                <div class="breed"><dt>Bel ons wanneer</dt>
+                  <dd class="klein">de pijn twee dagen achter elkaar boven de 7 staat, of uw arm 's nachts
+                    wakker houdt. 030 &ndash; 271 44 08, ma t/m vr 8–17 uur.</dd></div>
+              </dl>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="printhulp geen-print">Eén A4 liggend: drie details met hun maat, wat u klaarzet, wat er
+      veranderd is en waar u ons bereikt. Druk op Ctrl/⌘+P — de galerij eromheen verdwijnt en precies
+      dit vel komt eruit. In zwart-wit blijft de marge zichtbaar als grijsvlak.
+      <a class="kn" href="#landing">Terug naar boven</a></p>
+  </div>
+</section>
+
+</main>
+</body>
+</html>
