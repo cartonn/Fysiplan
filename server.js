@@ -242,7 +242,21 @@ function echteAfbeelding(buf, soort) {
 }
 
 // kaart opzoeken op het onraadbare id uit de QR-code
+// Publieke voorbeeldkaart voor de landingspagina: laat een geïnteresseerde
+// therapeut de app-vrije patiëntervaring meteen zien (oefeningen met beeld en
+// uitleg, taalkeuze, voorlezen, oefenvinkje, pijnscore, agenda) zonder dat er een
+// echte kaart of praktijk voor nodig is. Puur lezen; interactie wordt niet bewaard.
+function demoKaart() {
+  return {
+    id: "demo", demo: true, praktijk: "Fysiplan (voorbeeld)", naam: "Voorbeeldkaart",
+    ts: Date.now(),
+    client: { c_doel: "Weer soepel en pijnvrij bewegen in het dagelijks leven" },
+    chosen: [{ n: "Squat", i: 0 }, { n: "Dead bug", i: 0 }, { n: "Anteflexie armen", i: 0 }, { n: "Step up", i: 0 }],
+    rows: {}, cells: {}, vids: {}, metingen: [], gedaan: []
+  };
+}
 function vindKaart(id) {
+  if (String(id) === "demo") return demoKaart();
   if (!/^[a-f0-9]{8,16}$/.test(String(id || ""))) return null;
   for (const pk of Object.keys(kaarten)) {
     for (const kk of Object.keys(kaarten[pk])) {
@@ -1774,6 +1788,8 @@ async function afhandelen(request, response) {
       if (laatste && nlDag(laatste.t) === nlDag(nu)) laatste.s = score;
       else m.push({ t: nu, s: score });
       found.metingen = m.slice(-366);
+      // voorbeeldkaart: laat de interactie werken maar bewaar niets en tel niet mee
+      if (found.demo) { await sendJson(response, 200, { ok: true, metingen: found.metingen }); return; }
       await saveJson(kaartenPath, kaarten);
       const d = dagStats(vandaagKey()); d.meting = (d.meting || 0) + 1; bewaarStats();
       await sendJson(response, 200, { ok: true, metingen: found.metingen });
@@ -1800,6 +1816,7 @@ async function afhandelen(request, response) {
       if (laatste && nlDag(laatste.t) === nlDag(nu)) g.pop();
       else g.push({ t: nu });
       found.gedaan = g.slice(-366);
+      if (found.demo) { await sendJson(response, 200, { ok: true, gedaan: found.gedaan }); return; }
       await saveJson(kaartenPath, kaarten);
       const d = dagStats(vandaagKey()); d.gedaan = (d.gedaan || 0) + 1; bewaarStats();
       await sendJson(response, 200, { ok: true, gedaan: found.gedaan });

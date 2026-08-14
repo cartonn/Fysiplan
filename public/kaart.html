@@ -392,7 +392,7 @@
   'use strict';
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];});}
   function normEx(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');}
-  var id=(location.pathname.match(/^\/k\/([a-f0-9]{8,16})$/)||[])[1];
+  var id=(location.pathname.match(/^\/k\/(demo|[a-f0-9]{8,16})$/)||[])[1];
   var DRIEHOEK='<span class="driehoek"><svg width="10" height="10" viewBox="0 0 12 12"><path d="M2 1.5l8 4.5-8 4.5z" fill="currentColor"/></svg></span>';
 
   // ---- vaste teksten in negen talen; de kaartinhoud zelf vertaalt de server op verzoek ----
