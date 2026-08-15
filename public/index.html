@@ -1839,8 +1839,9 @@ bridge2.jpg</div>
     fetch('api/kaarten?praktijk='+encodeURIComponent(pr),PGET())
       .then(function(r){return r.ok?r.json():[];})
       .then(function(l){
-        if(!Array.isArray(l)||!l.length){el.innerHTML="<div class='hint'>Nog geen gedeelde kaarten voor deze praktijk.</div>";return;}
-        el.innerHTML=l.map(function(c){
+        var zoekEl=document.getElementById('k_srv_zoek');
+        if(!Array.isArray(l)||!l.length){if(zoekEl)zoekEl.style.display='none';el.innerHTML="<div class='hint'>Nog geen gedeelde kaarten voor deze praktijk.</div>";return;}
+        var rendRij=function(c){
           var dt=c.ts?new Date(c.ts).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}):'';
           // pijnscores die de patiënt op de digitale kaart aantikt (alleen tonen, duiding blijft bij de therapeut)
           var vg='',vgBlok='';
@@ -1892,7 +1893,29 @@ bridge2.jpg</div>
             "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
             "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>"+vgBlok+deelBlok;
-        }).join("");
+        };
+        var toonLijst=function(items){
+          el.innerHTML=items.length?items.map(rendRij).join(""):"<div class='hint'>Geen kaart gevonden voor deze zoekterm.</div>";
+        };
+        // zoekveld bij een langere lijst: snel een cliënt vinden zonder te scrollen
+        var zoek=document.getElementById('k_srv_zoek');
+        if(l.length>6){
+          if(!zoek){
+            zoek=document.createElement('input');
+            zoek.id='k_srv_zoek';zoek.type='search';zoek.className='no-print';
+            zoek.setAttribute('placeholder','Zoek een kaart of cliënt…');
+            zoek.setAttribute('aria-label','Zoek een gedeelde kaart');
+            zoek.style.cssText='width:100%;margin:2px 0 8px;font-size:13px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff';
+            el.parentNode.insertBefore(zoek,el);
+          }
+          zoek.style.display='';
+          var filter=function(){var t=zoek.value.trim().toLowerCase();toonLijst(t?l.filter(function(c){return String(c.naam||'').toLowerCase().indexOf(t)>=0;}):l);};
+          zoek.oninput=filter;
+          filter();
+        }else{
+          if(zoek)zoek.style.display='none';
+          toonLijst(l);
+        }
       })
       .catch(function(){el.innerHTML="<div class='hint'>Kaarten laden is niet gelukt.</div>";});
   }
