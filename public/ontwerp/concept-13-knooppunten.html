@@ -1,0 +1,992 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 13 — Knooppunten · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 13 — KNOOPPUNTEN
+   Het fietsknooppuntennetwerk is het best werkende
+   informatieontwerp van Nederland. Mensen die géén kaart kunnen
+   lezen fietsen er zestig kilometer mee, en het geheim is
+   wreed simpel: je krijgt nooit de hele route te zien. Je hoeft
+   maar één ding te weten — het volgende nummer.
+   Precies dáár gaat elk oefenschema stuk. De patiënt krijgt
+   twaalf weken in één keer op tafel, ziet acht oefeningen en
+   drie kolommen, en begint aan niets.
+   Wat we lenen:
+     · HET VOLGENDE NUMMER. Groot, alleen, midden op het vel.
+       De rest van de route staat er klein bij, als geruststelling,
+       niet als opdracht.
+     · KNOOPPUNTEN IN PLAATS VAN WEKEN. Een knooppunt is een
+       kunde, geen datum: "tandemstand mét steun". Je bent er
+       wanneer je er bent. Een week overslaan bestaat niet;
+       je staat gewoon nog bij 34.
+     · GEHAALD BLIJFT GEHAALD. De route achter je is groen en
+       gaat nooit meer weg. Geen streak die breekt.
+     · DE WEGWIJZER. Bord met punt naar rechts, groot cijfer,
+       afstand eronder. Op ooghoogte leesbaar vanaf drie meter —
+       dus ook op tafel leesbaar voor iemand van tweeëntachtig.
+     · KIEZEN OP DE KAART. De therapeut zet geen vinkjes in een
+       lijst maar legt een route door het netwerk. Zichtbaar wat
+       ervoor komt, zichtbaar waar het heen gaat.
+   Kleur: knooppuntgroen op wit — het systeem — met één amber
+   die maar één ding mag zeggen: u bent hier.
+   Alles inline; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  --papier:#eef1ec;
+  --vlak:#ffffff;
+  --groen:#00693c;        /* de kleur van het netwerk */
+  --groen-d:#004b2b;
+  --groen-l:#e4f0e9;
+  --inkt:#111a14;
+  --inkt-2:#3d4f45;
+  --grijs:#5f7167;
+  --lijn:#ccd7d0;
+  --lijn-l:#e5ebe7;
+  --amber:#a85f00;        /* alleen: u bent hier */
+  --amber-l:#fdf0dc;
+  --rood:#ad2b22;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:68px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--papier);color:var(--inkt);font-family:var(--sans);
+  font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:var(--groen)}
+
+/* ---------- labchrome (niet het concept, alleen de galerij) ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);
+  background:var(--groen-d);color:#fff;padding:10px 18px;font:600 13px/1 var(--sans)}
+.labbalk a{color:#fff;text-decoration:none;padding:6px 10px;border-radius:3px}
+.labbalk a:hover{background:rgba(255,255,255,.18)}
+.labbalk .nr{color:#ffd08a;font:600 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase}
+.labbalk .rek{flex:1}
+.labbalk .terug{border:1px solid rgba(255,255,255,.42)}
+
+.scherm{padding:var(--s6) 22px}
+.scherm + .scherm{border-top:1px solid var(--lijn)}
+.binnen{max-width:1180px;margin:0 auto}
+.schermkop{display:flex;align-items:flex-end;gap:var(--s3);margin-bottom:var(--s5)}
+.schermkop b{font:600 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--groen);
+  border-bottom:2px solid var(--groen);padding-bottom:6px}
+.schermkop h2{font:600 27px/1 var(--sans);letter-spacing:-.03em;color:var(--inkt)}
+.schermkop p{flex:1;text-align:right;font-size:15.5px;color:var(--grijs)}
+@media (max-width:760px){.schermkop{flex-wrap:wrap}.schermkop p{text-align:left;flex-basis:100%}}
+
+.kn{display:inline-block;text-decoration:none;font:600 14.5px/1 var(--sans);
+  padding:16px 22px;background:var(--groen);color:#fff;border:2px solid var(--groen);border-radius:4px}
+.kn:hover{background:var(--groen-d);border-color:var(--groen-d)}
+.kn.leeg{background:transparent;color:var(--groen-d)}
+.kn.leeg:hover{background:var(--groen-d);color:#fff}
+
+/* ============================================================
+   HET SYSTEEM — knooppuntbord, wegwijzer, route
+   Dit zijn de drie vormen waaruit het hele concept is opgebouwd.
+   ============================================================ */
+
+/* het knooppuntbord: wit vlak, groene rand, groot cijfer */
+.knoop{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;
+  width:76px;height:76px;background:var(--vlak);border:3px solid var(--groen);border-radius:9px;
+  text-decoration:none;flex:none}
+.knoop .kap{font:600 7.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--groen);margin-bottom:2px}
+.knoop .cijfer{font:600 30px/1 var(--sans);letter-spacing:-.03em;color:var(--inkt);
+  font-variant-numeric:tabular-nums}
+.knoop.gehaald{background:var(--groen);border-color:var(--groen)}
+.knoop.gehaald .cijfer,.knoop.gehaald .kap{color:#fff}
+.knoop.hier{border-color:var(--amber);background:var(--amber-l);box-shadow:0 0 0 5px rgba(168,95,0,.16)}
+.knoop.hier .kap{color:var(--amber)}
+.knoop.groot{width:118px;height:118px;border-width:4px;border-radius:13px}
+.knoop.groot .cijfer{font-size:52px}
+.knoop.groot .kap{font-size:9px}
+
+/* de wegwijzer: bord met een punt naar rechts */
+.wegwijzer{position:relative;background:var(--groen);color:#fff;padding:14px 40px 14px 18px;
+  clip-path:polygon(0 0,calc(100% - 22px) 0,100% 50%,calc(100% - 22px) 100%,0 100%)}
+.wegwijzer.licht{background:var(--vlak);color:var(--inkt);
+  box-shadow:inset 0 0 0 2px var(--groen)}
+
+/* de route: knooppunten aan een streepjeslijn */
+.route{display:flex;align-items:center;gap:0;flex-wrap:wrap}
+.route .schakel{flex:1;min-width:26px;height:0;border-top:3px dashed var(--groen);opacity:.5}
+.route .schakel.af{border-top-style:solid;opacity:1}
+
+/* hectometerstreepjes: het kleine ritme onder de grote vormen */
+.hm{display:flex;gap:5px;align-items:flex-end;height:11px}
+.hm i{width:2px;height:5px;background:var(--lijn);display:block}
+.hm i.aan{background:var(--groen);height:11px}
+
+/* ============================================================
+   1 · LANDING
+   ============================================================ */
+.hero{background:var(--vlak);border:2px solid var(--inkt);border-radius:6px;overflow:hidden}
+.hero .boven{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--s5);padding:var(--s5) var(--s5) var(--s4)}
+@media (max-width:940px){.hero .boven{grid-template-columns:1fr;gap:var(--s4)}}
+.hero h1{font:600 46px/1.03 var(--sans);letter-spacing:-.042em;color:var(--inkt);margin-bottom:var(--s3)}
+.hero h1 em{font-style:normal;color:var(--groen)}
+@media (max-width:640px){.hero h1{font-size:34px}}
+.hero .lead{font-size:18px;line-height:1.55;color:var(--inkt-2);max-width:50ch}
+.hero .doen{display:flex;gap:12px;flex-wrap:wrap;margin-top:var(--s4)}
+.kap{font:600 11px/1 var(--mono);letter-spacing:.19em;text-transform:uppercase;color:var(--grijs)}
+
+/* het paneel dat het hele idee in één klap uitlegt */
+.volgende{background:var(--groen-l);border:2px solid var(--groen);border-radius:6px;padding:var(--s4)}
+.volgende .rij{display:flex;align-items:center;gap:var(--s3);margin-bottom:var(--s3)}
+.volgende .wat{font:600 25px/1.12 var(--sans);letter-spacing:-.03em;color:var(--inkt)}
+.volgende .toel{font-size:15.5px;color:var(--inkt-2)}
+.volgende .toel b{font-weight:600;color:var(--inkt)}
+.volgende .streep{height:1px;background:var(--groen);opacity:.3;margin:var(--s3) 0}
+
+/* de routestrook onder de hero */
+.routestrook{border-top:2px solid var(--inkt);padding:var(--s4) var(--s5);background:#f7f9f7}
+@media (max-width:640px){.routestrook{padding:var(--s4) var(--s3)}}
+.routestrook .kop{display:flex;align-items:baseline;gap:var(--s3);margin-bottom:var(--s4)}
+.routestrook .kop .rechts{margin-left:auto;font:600 13px/1 var(--sans);color:var(--groen)}
+.punten{display:flex;align-items:flex-start;gap:0}
+.punt{flex:1;min-width:0;text-align:center;position:relative}
+.punt .lijn{position:absolute;top:38px;left:-50%;width:100%;border-top:3px dashed var(--lijn);z-index:0}
+.punt.af .lijn{border-top:3px solid var(--groen)}
+.punt:first-child .lijn{display:none}
+.punt .knoop{position:relative;z-index:1;margin:0 auto}
+.punt .naam{font:600 13.5px/1.3 var(--sans);color:var(--inkt);margin-top:10px;padding:0 4px}
+.punt .st{font:500 11px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--grijs);margin-top:5px}
+.punt.nu .st{color:var(--amber);font-weight:700}
+@media (max-width:820px){
+  .punten{flex-wrap:wrap;gap:var(--s3)}
+  .punt{flex:0 0 calc(33.333% - 12px)}
+  .punt .lijn{display:none}
+}
+
+.drieluik{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s5)}
+@media (max-width:860px){.drieluik{grid-template-columns:1fr}}
+.drieluik .vak{background:var(--vlak);border:1px solid var(--lijn);border-radius:6px;padding:var(--s4);
+  border-top:5px solid var(--groen)}
+.drieluik .vak h3{font:600 19px/1.2 var(--sans);letter-spacing:-.024em;margin:var(--s2) 0 10px}
+.drieluik .vak p{font-size:15.5px;color:var(--inkt-2)}
+.drieluik .vak p b{font-weight:600;color:var(--inkt)}
+.drieluik .num{font:600 12px/1 var(--mono);letter-spacing:.2em;color:var(--groen)}
+
+/* ============================================================
+   2 · KIEZER — de netwerkkaart
+   ============================================================ */
+.kiezerlay{display:grid;grid-template-columns:1.45fr 1fr;gap:var(--s4);align-items:start}
+@media (max-width:980px){.kiezerlay{grid-template-columns:1fr}}
+
+.kaartvlak{background:var(--vlak);border:2px solid var(--inkt);border-radius:6px;overflow:hidden}
+.kaartvlak .balk{background:var(--inkt);color:#fff;padding:12px 18px;display:flex;align-items:center;gap:var(--s3)}
+.kaartvlak .balk b{font:600 14px/1 var(--sans)}
+.kaartvlak .balk .rechts{margin-left:auto;font:500 11px/1 var(--mono);letter-spacing:.14em;
+  text-transform:uppercase;color:#a9c0b3}
+.netwerk{padding:var(--s3);background:
+  repeating-linear-gradient(0deg,transparent 0 23px,#eef2ef 23px 24px),
+  repeating-linear-gradient(90deg,transparent 0 23px,#eef2ef 23px 24px),var(--vlak)}
+.netwerk svg{width:100%;height:auto;display:block}
+
+.legenda{display:flex;flex-wrap:wrap;gap:var(--s3) var(--s4);padding:14px 18px;border-top:1px solid var(--lijn);
+  font-size:13.5px;color:var(--inkt-2)}
+.legenda span{display:flex;align-items:center;gap:8px}
+.legenda i{width:16px;height:16px;border-radius:4px;border:2.5px solid var(--groen);background:#fff;display:block;flex:none}
+.legenda i.vol{background:var(--groen)}
+.legenda i.nu{border-color:var(--amber);background:var(--amber-l)}
+.legenda i.uit{border-color:var(--lijn)}
+
+/* het paneel rechts: het gekozen knooppunt */
+.detail{background:var(--vlak);border:2px solid var(--groen);border-radius:6px;overflow:hidden}
+.detail .top{background:var(--groen);color:#fff;padding:16px 18px;display:flex;align-items:center;gap:14px}
+.detail .top .n{font:600 34px/1 var(--sans);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.detail .top .t{font:600 16.5px/1.22 var(--sans)}
+.detail .top .t small{display:block;font:500 10.5px/1 var(--mono);letter-spacing:.15em;text-transform:uppercase;
+  color:#b8d6c6;margin-bottom:5px}
+.detail figure{border-bottom:1px solid var(--lijn);background:#fff;padding:var(--s3)}
+.detail figure img{margin:0 auto;max-height:190px}
+.detail .body{padding:var(--s3) 18px 20px}
+.detail .body p{font-size:15.5px;color:var(--inkt-2)}
+.detail dl{display:grid;grid-template-columns:auto 1fr;gap:7px 16px;margin-top:var(--s3);
+  border-top:1px solid var(--lijn-l);padding-top:var(--s3)}
+.detail dt{font:600 11px/1.5 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--grijs)}
+.detail dd{font:600 14.5px/1.5 var(--sans);color:var(--inkt)}
+.detail .zetten{margin-top:var(--s3);display:flex;gap:10px;flex-wrap:wrap}
+.detail .zetten .kn{padding:13px 18px;font-size:13.5px}
+
+.routebouw{margin-top:var(--s4);background:var(--vlak);border:1px solid var(--lijn);border-radius:6px;padding:var(--s4)}
+.routebouw h3{font:600 17px/1.2 var(--sans);letter-spacing:-.02em;margin-bottom:6px}
+.routebouw .uitl{font-size:15px;color:var(--grijs);margin-bottom:var(--s3)}
+.gekozen{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:9px;background:var(--groen-l);border:1.5px solid var(--groen);
+  border-radius:22px;padding:7px 14px 7px 8px;font:600 14px/1 var(--sans);color:var(--inkt)}
+.chip .b{width:26px;height:26px;border-radius:50%;background:var(--groen);color:#fff;display:flex;
+  align-items:center;justify-content:center;font:600 12.5px/1 var(--sans);font-variant-numeric:tabular-nums}
+.chip.nu{background:var(--amber-l);border-color:var(--amber)}
+.chip.nu .b{background:var(--amber)}
+.chip .x{color:var(--grijs);font-weight:400;margin-left:2px}
+
+/* ============================================================
+   3 · CLIËNTKAART — onderweg
+   ============================================================ */
+.onderweg{background:var(--vlak);border:2px solid var(--inkt);border-radius:6px;overflow:hidden;max-width:520px;margin:0 auto}
+.onderweg .kop{background:var(--inkt);color:#fff;padding:16px 20px;display:flex;align-items:center;gap:12px}
+.onderweg .kop b{font:600 15px/1 var(--sans)}
+.onderweg .kop .rechts{margin-left:auto;font:500 10.5px/1 var(--mono);letter-spacing:.14em;
+  text-transform:uppercase;color:#9fb8aa}
+
+.hierpaneel{background:var(--amber-l);border-bottom:2px solid var(--amber);padding:var(--s4) var(--s3);text-align:center}
+.hierpaneel .kap{color:var(--amber);margin-bottom:12px}
+.hierpaneel .knoop{margin:0 auto}
+.hierpaneel .wat{font:600 22px/1.2 var(--sans);letter-spacing:-.028em;margin-top:14px;color:var(--inkt)}
+.hierpaneel .sinds{font-size:14.5px;color:var(--inkt-2);margin-top:6px}
+
+.vandaaglijst{padding:var(--s3)}
+.vandaaglijst h3{font:600 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--grijs);
+  margin-bottom:var(--s3);padding:0 4px}
+.oef{display:flex;gap:14px;align-items:center;padding:13px 10px;border-bottom:1px solid var(--lijn-l)}
+.oef:last-child{border-bottom:0}
+.oef img{width:64px;height:64px;object-fit:contain;flex:none}
+.oef .tekst{flex:1;min-width:0}
+.oef .tekst b{display:block;font:600 16.5px/1.24 var(--sans);color:var(--inkt)}
+.oef .tekst span{font-size:14.5px;color:var(--grijs)}
+.vink{width:38px;height:38px;border:2.5px solid var(--lijn);border-radius:50%;flex:none;display:flex;
+  align-items:center;justify-content:center}
+.vink.aan{border-color:var(--groen);background:var(--groen)}
+.vink svg{width:20px;height:20px;stroke:#fff;stroke-width:3.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.vink:not(.aan) svg{display:none}
+
+.volgpaneel{margin:0 var(--s3) var(--s3);background:var(--groen-l);border:1.5px solid var(--groen);
+  border-radius:6px;padding:var(--s3);display:flex;gap:14px;align-items:center}
+.volgpaneel .knoop{width:60px;height:60px}
+.volgpaneel .knoop .cijfer{font-size:24px}
+.volgpaneel .tk b{display:block;font:600 15.5px/1.25 var(--sans);color:var(--inkt)}
+.volgpaneel .tk span{font-size:14px;color:var(--inkt-2)}
+
+.notitie{margin:0 var(--s3) var(--s3);border-left:4px solid var(--groen);padding:10px 0 10px 14px}
+.notitie p{font-size:15px;color:var(--inkt-2)}
+.notitie .van{font:500 11px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--grijs);margin-top:8px}
+
+.mobtoel{max-width:430px;margin:var(--s4) auto 0;text-align:center;font-size:15px;color:var(--grijs)}
+
+/* ============================================================
+   4 · DE PRINTKAART — A4 staand
+   Alles in mm en pt: dit blad is voor papier ontworpen, niet
+   voor een scherm dat toevallig ook print.
+   ============================================================ */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){
+  .bladschaal{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+.blad{width:210mm;height:297mm;background:#fff;color:#111a14;padding:11mm 12mm 9mm;display:flex;
+  flex-direction:column;box-shadow:0 24px 60px rgba(17,26,20,.26);font-family:var(--sans)}
+
+.blad .bladkop{display:flex;align-items:flex-start;gap:6mm;border-bottom:2pt solid #00693c;padding-bottom:3mm}
+.blad .bladkop h1{font:600 22pt/1.02 var(--sans);letter-spacing:-.038em;color:#00693c}
+.blad .bladkop .sub{font:400 10.4pt/1.34 var(--sans);color:#3d4f45;margin-top:2mm;max-width:106mm}
+.blad .bladkop .rechts{margin-left:auto;text-align:right}
+.blad .bladkop .rechts b{font:600 9.6pt/1.3 var(--sans);color:#111a14;display:block}
+.blad .bladkop .rechts .regel{font:500 7.4pt/1.72 var(--mono);letter-spacing:.09em;text-transform:uppercase;
+  color:#5f7167}
+
+/* de route boven op het vel: klein, geruststellend, niet de hoofdzaak */
+.blad .routebalk{margin-top:3.4mm;border:.9pt solid #ccd7d0;padding:2.6mm 3mm 3mm}
+.blad .routebalk .titel{font:600 7.2pt/1 var(--mono);letter-spacing:.17em;text-transform:uppercase;
+  color:#5f7167;margin-bottom:2.4mm}
+.blad .rt{display:flex;align-items:flex-start}
+.blad .rt .p{flex:1;text-align:center;position:relative}
+.blad .rt .p .l{position:absolute;top:6.4mm;left:-50%;width:100%;border-top:1.2pt dashed #ccd7d0}
+.blad .rt .p.af .l{border-top:1.2pt solid #00693c}
+.blad .rt .p:first-child .l{display:none}
+.blad .rt .k{position:relative;width:12.8mm;height:12.8mm;margin:0 auto;border:1.4pt solid #00693c;
+  border-radius:2mm;background:#fff;display:flex;align-items:center;justify-content:center;
+  font:600 13pt/1 var(--sans);font-variant-numeric:tabular-nums;color:#111a14}
+.blad .rt .p.gehaald .k{background:#00693c;color:#fff}
+.blad .rt .p.nu .k{border:1.8pt solid #a85f00;background:#fdf0dc;color:#111a14}
+.blad .rt .n{font:600 7.6pt/1.24 var(--sans);color:#111a14;margin-top:1.6mm;padding:0 1mm}
+.blad .rt .s{font:500 6.4pt/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#5f7167;margin-top:.9mm}
+.blad .rt .p.nu .s{color:#a85f00;font-weight:700}
+
+/* u bent hier: het enige echt grote op het vel */
+.blad .hier{margin-top:3.6mm;border:1.8pt solid #a85f00;background:#fdf0dc;padding:3.2mm 4mm;
+  display:flex;align-items:center;gap:5mm}
+.blad .hier .bord{width:26mm;height:26mm;flex:none;border:2pt solid #a85f00;border-radius:3mm;background:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center}
+.blad .hier .bord .kp{font:600 6pt/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:#a85f00}
+.blad .hier .bord .c{font:600 26pt/1 var(--sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums;
+  color:#111a14;margin-top:.6mm}
+.blad .hier .tk .w{font:600 16pt/1.12 var(--sans);letter-spacing:-.03em;color:#111a14}
+.blad .hier .tk .z{font:400 10.2pt/1.36 var(--sans);color:#3d4f45;margin-top:1.6mm;max-width:118mm}
+.blad .hier .tk .z b{font-weight:600;color:#111a14}
+
+/* de drie oefeningen als wegwijzerborden */
+.blad .oefblok{margin-top:3.6mm;flex:1;display:flex;flex-direction:column;gap:2.6mm}
+.blad .oefening{border:.9pt solid #ccd7d0;display:flex;align-items:stretch;flex:1}
+.blad .oefening .bord{width:15mm;flex:none;background:#00693c;color:#fff;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;
+  clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
+.blad .oefening .bord .c{font:600 19pt/1 var(--sans);font-variant-numeric:tabular-nums}
+.blad .oefening .bord .k{font:600 5.6pt/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  color:#b8d6c6;margin-bottom:1mm}
+.blad .oefening figure{width:31mm;flex:none;border-right:.6pt solid #e5ebe7;padding:1.8mm;
+  display:flex;align-items:center;justify-content:center}
+.blad .oefening figure img{max-width:100%;max-height:26mm}
+.blad .oefening .tekst{flex:1;padding:2.6mm 3.4mm;display:flex;flex-direction:column;justify-content:center}
+.blad .oefening .tekst h2{font:600 13pt/1.14 var(--sans);letter-spacing:-.026em;color:#111a14}
+.blad .oefening .tekst p{font:400 10.4pt/1.4 var(--sans);color:#26332b;margin-top:1.4mm}
+.blad .oefening .dosis{width:33mm;flex:none;border-left:.6pt solid #e5ebe7;padding:2.6mm 3mm;
+  display:flex;flex-direction:column;justify-content:center;gap:2.4mm;background:#f6f9f7}
+/* Het label staat bóven de waarde, niet ernaast: bij een lange
+   dosering ("3× per been") liepen die twee anders over elkaar heen. */
+.blad .oefening .dosis div{display:block}
+.blad .oefening .dosis dt{font:600 6.4pt/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;
+  color:#5f7167}
+.blad .oefening .dosis dd{font:600 11pt/1.14 var(--sans);color:#111a14;margin-top:1mm}
+
+/* aftekenen + wanneer bellen */
+.blad .onder{display:flex;gap:4mm;align-items:flex-start;padding-top:3.4mm}
+.blad .afteken{flex:1;border:.9pt solid #ccd7d0}
+.blad .afteken .titel{background:#00693c;color:#fff;padding:1.6mm 3mm;font:600 7pt/1 var(--mono);
+  letter-spacing:.16em;text-transform:uppercase}
+.blad .afteken .rooster{display:grid;grid-template-columns:repeat(7,1fr)}
+.blad .afteken .cel{border-left:.6pt solid #e5ebe7;text-align:center}
+.blad .afteken .cel:first-child{border-left:0}
+.blad .afteken .cel .d{font:600 7pt/1 var(--sans);letter-spacing:.07em;padding:1.6mm 0;color:#5f7167;
+  border-bottom:.6pt solid #e5ebe7}
+.blad .afteken .cel .hok{height:8.4mm;display:flex;align-items:center;justify-content:center}
+.blad .afteken .cel .hok .r{width:5mm;height:5mm;border:.9pt solid #ccd7d0;border-radius:50%}
+.blad .bellen{width:58mm;flex:none;border:1.4pt solid #ad2b22;padding:2.4mm 3mm}
+.blad .bellen h3{font:600 7pt/1 var(--mono);letter-spacing:.15em;text-transform:uppercase;color:#ad2b22;
+  margin-bottom:1.6mm}
+.blad .bellen p{font:400 9.2pt/1.38 var(--sans);color:#111a14}
+.blad .bellen p b{font-weight:600}
+
+.blad .colofon{padding-top:2.6mm;margin-top:2.6mm;border-top:.6pt solid #ccd7d0;display:flex;gap:5mm;
+  align-items:baseline;font:500 6.8pt/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#5f7167}
+.blad .colofon b{color:#111a14;font-weight:600}
+.blad .colofon .rechts{margin-left:auto;text-align:right}
+
+.printhulp{max-width:690px;margin:var(--s4) auto 0;text-align:center;font-size:15px;color:var(--grijs)}
+.printhulp .kn{margin-top:var(--s3)}
+
+footer.uitleiding{background:var(--inkt);color:#c8d6cd;padding:var(--s5) 22px}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:860px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:600 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#fff;
+  margin-bottom:12px}
+footer.uitleiding p,footer.uitleiding li{font-size:14.5px;line-height:1.6}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:16px;position:relative;margin-bottom:7px}
+footer.uitleiding li::before{content:"→";position:absolute;left:0;color:#7fb99a}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT — er komt precies één A4 uit, zonder de galerij eromheen
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;border:0 !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 13</span>
+  <strong style="font:700 14px/1 var(--sans)">Knooppunten</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>de hele route bestaat, maar u hoeft er maar één nummer van te kennen</p>
+    </div>
+
+    <div class="hero">
+      <div class="boven">
+        <div>
+          <div class="kap" style="margin-bottom:14px">Fysiplan · routekaart in plaats van schema</div>
+          <h1>U hoeft de route niet te kennen.<br/>Alleen het <em>volgende knooppunt</em>.</h1>
+          <p class="lead">Niemand die het fietsknooppuntennetwerk gebruikt kan een kaart lezen — en
+            iedereen komt aan. Omdat er op elk bordje maar één ding staat: het nummer waar u nu heen
+            fietst. Zo geven wij een oefentraject: niet twaalf weken in één keer op tafel, maar één
+            knooppunt, groot, met de weg erachter in het groen.</p>
+          <div class="doen">
+            <a class="kn" href="#printkaart">Bekijk de routekaart</a>
+            <a class="kn leeg" href="#kiezer">Zo legt de therapeut een route</a>
+          </div>
+        </div>
+
+        <div class="volgende">
+          <div class="kap" style="color:var(--groen)">Voor mevrouw Van Dijk — donderdag 14 augustus</div>
+          <div class="rij" style="margin-top:14px">
+            <span class="knoop hier">
+              <span class="kap">Nu</span><span class="cijfer">34</span>
+            </span>
+            <div>
+              <div class="wat">Tandemstand<br/>— met steun</div>
+              <div class="kap" style="margin-top:8px">sinds 9 augustus</div>
+            </div>
+          </div>
+          <div class="streep"></div>
+          <p class="toel"><b>Drie oefeningen, samen negen minuten.</b> Blijft u dit vijf dagen op rij
+            twintig seconden volhouden, dan gaat u door naar knooppunt 41: dezelfde stand, zonder
+            de leuning.</p>
+          <div class="rij" style="margin-top:18px;gap:12px">
+            <span class="hm" aria-hidden="true"><i class="aan"></i><i class="aan"></i><i class="aan"></i><i></i><i></i></span>
+            <span style="font-size:14px;color:var(--inkt-2)">3 van de 5 dagen gehaald</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="routestrook">
+        <div class="kop">
+          <span class="kap">Uw route — balans na de heupoperatie</span>
+          <span class="rechts">nog 2 knooppunten te gaan</span>
+        </div>
+        <div class="punten">
+          <div class="punt af">
+            <span class="lijn" aria-hidden="true"></span>
+            <span class="knoop gehaald"><span class="kap">Knpt</span><span class="cijfer">24</span></span>
+            <div class="naam">Gewicht verplaatsen voor-achter</div>
+            <div class="st">Gehaald · 2 aug</div>
+          </div>
+          <div class="punt af">
+            <span class="lijn" aria-hidden="true"></span>
+            <span class="knoop gehaald"><span class="kap">Knpt</span><span class="cijfer">31</span></span>
+            <div class="naam">Semi-tandemstand, met steun</div>
+            <div class="st">Gehaald · 9 aug</div>
+          </div>
+          <div class="punt af nu">
+            <span class="lijn" aria-hidden="true"></span>
+            <span class="knoop hier"><span class="kap">Nu</span><span class="cijfer">34</span></span>
+            <div class="naam">Tandemstand, met steun</div>
+            <div class="st">U bent hier</div>
+          </div>
+          <div class="punt">
+            <span class="lijn" aria-hidden="true"></span>
+            <span class="knoop"><span class="kap">Knpt</span><span class="cijfer">41</span></span>
+            <div class="naam">Tandemstand, zonder steun</div>
+            <div class="st">Volgende</div>
+          </div>
+          <div class="punt">
+            <span class="lijn" aria-hidden="true"></span>
+            <span class="knoop"><span class="kap">Knpt</span><span class="cijfer">58</span></span>
+            <div class="naam">Eenbeenstand, met steun</div>
+            <div class="st">Einddoel</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="drieluik">
+      <div class="vak">
+        <div class="num">01</div>
+        <h3>Een knooppunt is een kunde, geen datum</h3>
+        <p>Knooppunt 34 is “tandemstand met steun”, niet “week 3”. <b>U bent er wanneer u er bent.</b>
+          Een week overslaan bestaat dus niet — u staat gewoon nog even bij 34, en dat is geen
+          achterstand.</p>
+      </div>
+      <div class="vak">
+        <div class="num">02</div>
+        <h3>Gehaald blijft gehaald</h3>
+        <p>De route achter u wordt groen en <b>gaat nooit meer weg</b>. Geen reeks die breekt bij één
+          gemiste dag. Wat u kon, kunt u; dat is geen beloning maar een feit op de kaart.</p>
+      </div>
+      <div class="vak">
+        <div class="num">03</div>
+        <h3>Nooit meer dan één nummer tegelijk</h3>
+        <p>De hele route staat er wel, klein, bovenaan — <b>als geruststelling, niet als opdracht</b>.
+          Wie alleen naar het grote amber vak kijkt, heeft alles gezien wat vandaag telt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>Oefeningen kiezen</h2>
+      <p>geen lijst met vinkjes — de therapeut legt een route door het netwerk</p>
+    </div>
+
+    <div class="kiezerlay">
+      <div class="kaartvlak">
+        <div class="balk">
+          <b>Netwerk — balans &amp; valpreventie</b>
+          <span class="rechts">31 knooppunten · route: 5</span>
+        </div>
+        <div class="netwerk">
+          <!-- De netwerkkaart. Elke oefening is een knooppunt; de lijnen zijn
+               zinnige overgangen (steun eraf, ogen dicht, ondergrond lastiger).
+               De gelegde route loopt dik groen; de rest van het netwerk blijft
+               zichtbaar zodat de therapeut ziet wat er nog ligt. -->
+          <svg viewBox="0 0 760 430" role="img"
+               aria-label="Netwerkkaart van balansoefeningen. De gelegde route loopt van knooppunt 24 via 31 en 34 naar 41 en 58.">
+            <!-- ongebruikte verbindingen -->
+            <g stroke="#ccd7d0" stroke-width="2.5" fill="none" stroke-dasharray="7 7">
+              <path d="M96 96 L96 216"/>
+              <path d="M96 216 L246 330"/>
+              <path d="M246 96 L400 96"/>
+              <path d="M400 96 L556 96"/>
+              <path d="M556 96 L556 216"/>
+              <path d="M246 330 L400 330"/>
+              <path d="M400 330 L556 330"/>
+              <path d="M556 330 L668 216"/>
+              <path d="M400 216 L400 330"/>
+              <path d="M668 216 L668 96"/>
+            </g>
+            <!-- de gelegde route -->
+            <g stroke="#00693c" stroke-width="5" fill="none" stroke-linecap="round">
+              <path d="M96 216 L246 216"/>
+              <path d="M246 216 L400 216"/>
+              <path d="M400 216 L556 216"/>
+              <path d="M556 216 L668 216"/>
+            </g>
+
+            <!-- knooppunten: g met vierkant + cijfer + naam -->
+            <g font-family="Avenir Next, Segoe UI, system-ui, sans-serif">
+              <!-- 12 -->
+              <g>
+                <rect x="70" y="70" width="52" height="52" rx="8" fill="#fff" stroke="#ccd7d0" stroke-width="3"/>
+                <text x="96" y="105" text-anchor="middle" font-size="22" font-weight="600" fill="#5f7167">12</text>
+                <text x="96" y="52" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5f7167">Voeten naast elkaar</text>
+              </g>
+              <!-- 24 gehaald -->
+              <g>
+                <rect x="70" y="190" width="52" height="52" rx="8" fill="#00693c" stroke="#00693c" stroke-width="3"/>
+                <text x="96" y="225" text-anchor="middle" font-size="22" font-weight="600" fill="#fff">24</text>
+                <text x="96" y="272" text-anchor="middle" font-size="12.5" font-weight="600" fill="#111a14">Gewicht verplaatsen</text>
+                <text x="96" y="288" text-anchor="middle" font-size="11" font-weight="500" fill="#5f7167">gehaald 2 aug</text>
+              </g>
+              <!-- 31 gehaald -->
+              <g>
+                <rect x="220" y="190" width="52" height="52" rx="8" fill="#00693c" stroke="#00693c" stroke-width="3"/>
+                <text x="246" y="225" text-anchor="middle" font-size="22" font-weight="600" fill="#fff">31</text>
+                <text x="246" y="272" text-anchor="middle" font-size="12.5" font-weight="600" fill="#111a14">Semi-tandem, steun</text>
+                <text x="246" y="288" text-anchor="middle" font-size="11" font-weight="500" fill="#5f7167">gehaald 9 aug</text>
+              </g>
+              <!-- 34 hier -->
+              <g>
+                <rect x="368" y="184" width="64" height="64" rx="10" fill="#fdf0dc" stroke="#a85f00" stroke-width="4"/>
+                <text x="400" y="226" text-anchor="middle" font-size="26" font-weight="600" fill="#111a14">34</text>
+                <text x="400" y="278" text-anchor="middle" font-size="13" font-weight="600" fill="#111a14">Tandemstand, steun</text>
+                <text x="400" y="294" text-anchor="middle" font-size="11" font-weight="700" fill="#a85f00">U BENT HIER</text>
+              </g>
+              <!-- 41 -->
+              <g>
+                <rect x="530" y="190" width="52" height="52" rx="8" fill="#fff" stroke="#00693c" stroke-width="3"/>
+                <text x="556" y="225" text-anchor="middle" font-size="22" font-weight="600" fill="#111a14">41</text>
+                <text x="556" y="272" text-anchor="middle" font-size="12.5" font-weight="600" fill="#111a14">Tandem, zonder steun</text>
+                <text x="556" y="288" text-anchor="middle" font-size="11" font-weight="500" fill="#5f7167">volgende</text>
+              </g>
+              <!-- 58 -->
+              <g>
+                <rect x="642" y="190" width="52" height="52" rx="8" fill="#fff" stroke="#00693c" stroke-width="3"/>
+                <text x="668" y="225" text-anchor="middle" font-size="22" font-weight="600" fill="#111a14">58</text>
+                <text x="668" y="272" text-anchor="middle" font-size="12.5" font-weight="600" fill="#111a14">Eenbeenstand</text>
+                <text x="668" y="288" text-anchor="middle" font-size="11" font-weight="500" fill="#5f7167">einddoel</text>
+              </g>
+              <!-- niet gekozen -->
+              <g>
+                <rect x="220" y="70" width="52" height="52" rx="8" fill="#fff" stroke="#ccd7d0" stroke-width="3"/>
+                <text x="246" y="105" text-anchor="middle" font-size="22" font-weight="600" fill="#5f7167">18</text>
+                <text x="246" y="52" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5f7167">Zijwaarts stappen</text>
+              </g>
+              <g>
+                <rect x="374" y="70" width="52" height="52" rx="8" fill="#fff" stroke="#ccd7d0" stroke-width="3"/>
+                <text x="400" y="105" text-anchor="middle" font-size="22" font-weight="600" fill="#5f7167">27</text>
+                <text x="400" y="52" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5f7167">Marcheren, steun</text>
+              </g>
+              <g>
+                <rect x="530" y="70" width="52" height="52" rx="8" fill="#fff" stroke="#ccd7d0" stroke-width="3"/>
+                <text x="556" y="105" text-anchor="middle" font-size="22" font-weight="600" fill="#5f7167">39</text>
+                <text x="556" y="52" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5f7167">Over obstakel</text>
+              </g>
+              <g>
+                <rect x="642" y="70" width="52" height="52" rx="8" fill="#fff" stroke="#ccd7d0" stroke-width="3"/>
+                <text x="668" y="105" text-anchor="middle" font-size="22" font-weight="600" fill="#5f7167">63</text>
+                <text x="668" y="52" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5f7167">Dubbele taak</text>
+              </g>
+              <g>
+                <rect x="220" y="304" width="52" height="52" rx="8" fill="#fff" stroke="#ccd7d0" stroke-width="3"/>
+                <text x="246" y="339" text-anchor="middle" font-size="22" font-weight="600" fill="#5f7167">29</text>
+                <text x="246" y="382" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5f7167">Reiken in stand</text>
+              </g>
+              <g>
+                <rect x="374" y="304" width="52" height="52" rx="8" fill="#fff" stroke="#ccd7d0" stroke-width="3"/>
+                <text x="400" y="339" text-anchor="middle" font-size="22" font-weight="600" fill="#5f7167">36</text>
+                <text x="400" y="382" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5f7167">Draaien op de plaats</text>
+              </g>
+              <g>
+                <rect x="530" y="304" width="52" height="52" rx="8" fill="#fff" stroke="#ccd7d0" stroke-width="3"/>
+                <text x="556" y="339" text-anchor="middle" font-size="22" font-weight="600" fill="#5f7167">44</text>
+                <text x="556" y="382" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5f7167">Achterwaarts stappen</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div class="legenda">
+          <span><i class="vol"></i> gehaald</span>
+          <span><i class="nu"></i> waar de cliënt nu staat</span>
+          <span><i></i> op de route, nog te gaan</span>
+          <span><i class="uit"></i> in het netwerk, niet gekozen</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="detail">
+          <div class="top">
+            <span class="n">34</span>
+            <span class="t"><small>Knooppunt · geselecteerd</small>Tandemstand — met steun</span>
+          </div>
+          <figure>
+            <img src="/images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png"
+                 alt="Iemand staat achter een stoel met beide handen aan de leuning; de ene voet staat recht voor de andere."/>
+          </figure>
+          <div class="body">
+            <p>Sta rechtop achter een stevige stoel en houd de leuning vast. Plaats uw ene voet recht
+              voor de andere, zodat de hak uw tenen raakt, en blijf rustig in deze houding staan.</p>
+            <dl>
+              <dt>Vasthouden</dt><dd>20 seconden</dd>
+              <dt>Herhalen</dt><dd>3× per been</dd>
+              <dt>Hoe vaak</dt><dd>Elke dag</dd>
+              <dt>Door bij</dt><dd>5 dagen op rij gehaald</dd>
+            </dl>
+            <div class="zetten">
+              <span class="kn">Op de route zetten</span>
+              <span class="kn leeg">Alternatief zoeken</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="routebouw">
+          <h3>De route van mevrouw Van Dijk</h3>
+          <p class="uitl">Sleep knooppunten om de volgorde te wijzigen. De cliënt ziet er altijd
+            maar één tegelijk.</p>
+          <div class="gekozen">
+            <span class="chip"><span class="b">24</span> Gewicht verplaatsen</span>
+            <span class="chip"><span class="b">31</span> Semi-tandem</span>
+            <span class="chip nu"><span class="b">34</span> Tandemstand</span>
+            <span class="chip"><span class="b">41</span> Tandem zonder steun <span class="x">×</span></span>
+            <span class="chip"><span class="b">58</span> Eenbeenstand <span class="x">×</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>Digitale cliëntkaart</h2>
+      <p>hetzelfde bord als op papier — één knooppunt, groot, en verder niets</p>
+    </div>
+
+    <div class="onderweg">
+      <div class="kop">
+        <b>Fysiplan</b>
+        <span class="rechts">Mw. A. van Dijk · do 14 aug</span>
+      </div>
+
+      <div class="hierpaneel">
+        <div class="kap">U bent hier</div>
+        <span class="knoop hier groot"><span class="kap">Knooppunt</span><span class="cijfer">34</span></span>
+        <div class="wat">Tandemstand — met steun</div>
+        <div class="sinds">Sinds 9 augustus · 3 van de 5 dagen gehaald</div>
+      </div>
+
+      <div class="vandaaglijst">
+        <h3>Vandaag — 9 minuten</h3>
+
+        <div class="oef">
+          <img src="/images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png"
+               alt="Staand achter een stoel met de handen aan de leuning, de ene voet recht voor de andere."/>
+          <div class="tekst">
+            <b>Tandemstand — met steun</b>
+            <span>20 seconden · 3× per been</span>
+          </div>
+          <span class="vink aan" role="img" aria-label="gedaan">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 7"/></svg>
+          </span>
+        </div>
+
+        <div class="oef">
+          <img src="/images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-line-v1.png"
+               alt="Staand achter een stoel wordt het gewicht rustig naar de tenen en daarna naar de hakken verplaatst."/>
+          <div class="tekst">
+            <b>Gewicht verplaatsen voor-achter</b>
+            <span>10 keer heen en weer · rustig</span>
+          </div>
+          <span class="vink aan" role="img" aria-label="gedaan">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 7"/></svg>
+          </span>
+        </div>
+
+        <div class="oef">
+          <img src="/images/onderste-extremiteit/been-pendelen-line-v1.png"
+               alt="Staand naast een steunpunt zwaait het been ontspannen naar voren en naar achteren."/>
+          <div class="tekst">
+            <b>Been pendelen</b>
+            <span>15 keer per been · romp stil</span>
+          </div>
+          <span class="vink" role="img" aria-label="nog te doen">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 7"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="volgpaneel">
+        <span class="knoop"><span class="kap">Straks</span><span class="cijfer">41</span></span>
+        <div class="tk">
+          <b>Hierna: tandemstand zonder steun</b>
+          <span>Nog 2 dagen op rij en u gaat door. Lukt het niet? Dan blijft u bij 34 — dat is geen
+            achterstand.</span>
+        </div>
+      </div>
+
+      <div class="notitie">
+        <p>“Handen los mag u best proberen als het makkelijk voelt, maar houd de leuning binnen
+          handbereik. Duizelig? Ga zitten en sla de rest van de dag over.”</p>
+        <div class="van">Notitie van Marijke Does, fysiotherapeut</div>
+      </div>
+    </div>
+
+    <p class="mobtoel">Op de telefoon is dit het hele scherm: geen tabbladen, geen voortgangsbalk
+      over twaalf weken. Wie klaar is, ziet knooppunt 34 groen worden en 41 verschijnen.</p>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>de route klein bovenaan, het knooppunt groot in het midden, aftekenen onderaan</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <div class="bladkop">
+            <div>
+              <h1>Uw routekaart</h1>
+              <p class="sub">U staat bij knooppunt 34. Dat is alles wat u vandaag hoeft te weten —
+                de rest van de route staat er alleen bij zodat u ziet waar het heen gaat.</p>
+            </div>
+            <div class="rechts">
+              <b>Fysiotherapie Noorderlicht</b>
+              <div class="regel">Mw. A. van Dijk<br/>Balans na heupoperatie<br/>14 augustus 2026</div>
+            </div>
+          </div>
+
+          <div class="routebalk">
+            <div class="titel">Uw route — 5 knooppunten, 2 nog te gaan</div>
+            <div class="rt">
+              <div class="p af gehaald">
+                <span class="l" aria-hidden="true"></span>
+                <div class="k">24</div>
+                <div class="n">Gewicht verplaatsen</div>
+                <div class="s">Gehaald 2 aug</div>
+              </div>
+              <div class="p af gehaald">
+                <span class="l" aria-hidden="true"></span>
+                <div class="k">31</div>
+                <div class="n">Semi-tandemstand</div>
+                <div class="s">Gehaald 9 aug</div>
+              </div>
+              <div class="p af nu">
+                <span class="l" aria-hidden="true"></span>
+                <div class="k">34</div>
+                <div class="n">Tandemstand, met steun</div>
+                <div class="s">U bent hier</div>
+              </div>
+              <div class="p">
+                <span class="l" aria-hidden="true"></span>
+                <div class="k">41</div>
+                <div class="n">Tandem, zonder steun</div>
+                <div class="s">Volgende</div>
+              </div>
+              <div class="p">
+                <span class="l" aria-hidden="true"></span>
+                <div class="k">58</div>
+                <div class="n">Eenbeenstand</div>
+                <div class="s">Einddoel</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hier">
+            <div class="bord">
+              <div class="kp">U bent hier</div>
+              <div class="c">34</div>
+            </div>
+            <div class="tk">
+              <div class="w">Tandemstand — met steun</div>
+              <div class="z">Drie oefeningen, samen ongeveer negen minuten, elke dag.
+                <b>Houdt u het vijf dagen op rij twintig seconden vol, dan gaat u door naar 41.</b>
+                Lukt dat deze week niet, dan blijft u gewoon bij 34 staan. Dat is geen achterstand,
+                dat is het tempo.</div>
+            </div>
+          </div>
+
+          <div class="oefblok">
+
+            <div class="oefening">
+              <div class="bord"><div class="k">Oef</div><div class="c">1</div></div>
+              <figure>
+                <img src="/images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png"
+                     alt="Staand achter een stoel met beide handen aan de leuning; de ene voet staat recht voor de andere, hak tegen tenen."/>
+              </figure>
+              <div class="tekst">
+                <h2>Tandemstand — met steun</h2>
+                <p>Sta rechtop achter een stevige stoel en houd de leuning vast. Zet uw ene voet
+                  recht voor de andere, zodat de hak uw tenen raakt. Blijf rustig staan en kijk
+                  voor u uit, niet naar uw voeten.</p>
+              </div>
+              <dl class="dosis">
+                <div><dt>Vasthouden</dt><dd>20 sec</dd></div>
+                <div><dt>Herhalen</dt><dd>3× per been</dd></div>
+                <div><dt>Wanneer</dt><dd>Elke dag</dd></div>
+              </dl>
+            </div>
+
+            <div class="oefening">
+              <div class="bord"><div class="k">Oef</div><div class="c">2</div></div>
+              <figure>
+                <img src="/images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-line-v1.png"
+                     alt="Staand achter een stoel wordt het gewicht rustig naar de tenen en daarna naar de hakken verplaatst."/>
+              </figure>
+              <div class="tekst">
+                <h2>Gewicht verplaatsen voor-achter</h2>
+                <p>Sta rechtop achter de stoel en houd de leuning vast. Verplaats uw gewicht rustig
+                  naar voren richting uw tenen en daarna langzaam naar achteren richting uw hakken.
+                  Houd uw voeten plat op de grond.</p>
+              </div>
+              <dl class="dosis">
+                <div><dt>Heen-weer</dt><dd>10 keer</dd></div>
+                <div><dt>Tempo</dt><dd>Rustig</dd></div>
+                <div><dt>Wanneer</dt><dd>Elke dag</dd></div>
+              </dl>
+            </div>
+
+            <div class="oefening">
+              <div class="bord"><div class="k">Oef</div><div class="c">3</div></div>
+              <figure>
+                <img src="/images/onderste-extremiteit/been-pendelen-line-v1.png"
+                     alt="Staand naast een steunpunt zwaait het gestrekte been ontspannen naar voren en naar achteren."/>
+              </figure>
+              <div class="tekst">
+                <h2>Been pendelen</h2>
+                <p>Sta rechtop naast een steunpunt en houd u vast. Zwaai uw been ontspannen naar
+                  voren en naar achteren, terwijl uw romp stil blijft. Niet forceren — het been
+                  mag slingeren, u hoeft het niet te duwen.</p>
+              </div>
+              <dl class="dosis">
+                <div><dt>Zwaaien</dt><dd>15 keer</dd></div>
+                <div><dt>Per been</dt><dd>Allebei</dd></div>
+                <div><dt>Wanneer</dt><dd>Elke dag</dd></div>
+              </dl>
+            </div>
+
+          </div>
+
+          <div class="onder">
+            <div class="afteken">
+              <div class="titel">Streep de dag af — 5 op rij en u gaat door naar 41</div>
+              <div class="rooster">
+                <div class="cel"><div class="d">MA</div><div class="hok"><span class="r"></span></div></div>
+                <div class="cel"><div class="d">DI</div><div class="hok"><span class="r"></span></div></div>
+                <div class="cel"><div class="d">WO</div><div class="hok"><span class="r"></span></div></div>
+                <div class="cel"><div class="d">DO</div><div class="hok"><span class="r"></span></div></div>
+                <div class="cel"><div class="d">VR</div><div class="hok"><span class="r"></span></div></div>
+                <div class="cel"><div class="d">ZA</div><div class="hok"><span class="r"></span></div></div>
+                <div class="cel"><div class="d">ZO</div><div class="hok"><span class="r"></span></div></div>
+              </div>
+            </div>
+            <div class="bellen">
+              <h3>Even bellen</h3>
+              <p>Duizelig, of tweemaal bijna gevallen? <b>Bel de praktijk: 050 — 313 44 21.</b>
+                Dan zetten we u een knooppunt terug. Dat mag; de route loopt twee kanten op.</p>
+            </div>
+          </div>
+
+          <div class="colofon">
+            <span><b>Fysiplan</b> · routekaart</span>
+            <span>Knooppunt 34 van route “balans na heupoperatie”</span>
+            <span class="rechts">Volgende afspraak <b>21 aug, 10:15</b></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <p class="printhulp geen-print">Druk op Ctrl/⌘+P: er komt precies dit ene vel uit, zonder de
+      galerij eromheen. Alle maten op dit blad staan in millimeters en punten — de kleinste tekst
+      is 9,2&nbsp;pt, de instructies 10,4&nbsp;pt.
+      <br/><a class="kn" href="/ontwerp/">← Terug naar de galerij</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div>
+      <h4>Waar het vandaan komt</h4>
+      <p>Het Nederlandse fietsknooppuntennetwerk (bedacht in Limburg, later door de ANWB en nu
+        door de Nationale Bewegwijzeringsdienst beheerd) · wegwijzers en paddenstoelen ·
+        hectometerpaaltjes · metrokaarten van Beck en zijn navolgers · de vorm van het
+        richtingbord met de punt naar rechts.</p>
+    </div>
+    <div>
+      <h4>Wat het oplost</h4>
+      <ul>
+        <li>Twaalf weken tegelijk lezen hoeft niet meer — één nummer per keer.</li>
+        <li>Een gemiste dag is geen gebroken reeks maar “nog even bij 34”.</li>
+        <li>De therapeut ziet bij het kiezen wat ervóór en wat erná komt.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Waar het wringt</h4>
+      <ul>
+        <li>Nummers zijn abstract: iemand die niet fietst kent het systeem niet. Daarom staat de
+          naam altijd voluit onder het cijfer.</li>
+        <li>Wie graag vooruitkijkt, ziet weinig — dat is opzet, maar niet voor iedereen prettig.</li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

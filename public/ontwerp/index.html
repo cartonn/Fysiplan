@@ -209,6 +209,42 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
   border-radius:50%;background:#111417;color:#f2c200;font:800 18px/34px "Helvetica Neue",Helvetica,Arial,sans-serif;
   text-align:center}
 
+/* — staal concept 13: Knooppunten — */
+.staal.knooppunt{background:#ffffff;color:#111a14;box-shadow:inset 0 0 0 2px #00693c}
+.staal.knooppunt .plaatnr{color:#00693c;font-family:var(--mono)}
+.staal.knooppunt .woord{font-family:"Avenir Next",Seravek,system-ui,sans-serif;font-weight:600;
+  letter-spacing:-.035em}
+.staal.knooppunt .rt{position:absolute;left:var(--s3);right:var(--s3);top:44px;height:34px}
+.staal.knooppunt .rt .ln{position:absolute;left:6px;right:6px;top:16px;border-top:2px dashed #00693c;opacity:.5}
+.staal.knooppunt .rt .ln.af{border-top-style:solid;opacity:1;right:auto;width:96px}
+.staal.knooppunt .bord{position:absolute;top:0;width:34px;height:34px;border-radius:6px;background:#fff;
+  border:2px solid #00693c;font:600 15px/30px "Avenir Next",Seravek,system-ui,sans-serif;text-align:center;
+  color:#111a14}
+.staal.knooppunt .bord.vol{background:#00693c;color:#fff}
+.staal.knooppunt .bord.nu{border-color:#a85f00;background:#fdf0dc}
+
+/* — staal concept 14: Zeefdruk — */
+.staal.zeefdruk{background:#f4efe2;color:#1a1246}
+.staal.zeefdruk .plaatnr{color:#1637a8;font-family:var(--mono)}
+.staal.zeefdruk .woord{font-family:"Avenir Next",Seravek,system-ui,sans-serif;font-weight:600;
+  letter-spacing:-.05em;position:relative;z-index:2}
+.staal.zeefdruk .woord em{font-style:normal;color:#f5347f}
+.staal.zeefdruk .bol{position:absolute;right:-34px;top:-30px;width:132px;height:132px;border-radius:50%;
+  background-image:radial-gradient(circle at 50% 50%,#f5347f 34%,transparent 36%);background-size:7px 7px}
+.staal.zeefdruk .balk{position:absolute;left:var(--s3);bottom:46px;width:88px;height:11px;background:#1637a8}
+.staal.zeefdruk .balk i{position:absolute;left:-5px;top:4px;width:88px;height:11px;background:#f5347f;
+  mix-blend-mode:multiply}
+.staal.zeefdruk .strepen i{border-color:rgba(26,18,70,.2)}
+
+/* — staal concept 15: Grootletter — */
+.staal.grootletter{background:#ffffff;color:#000000;box-shadow:inset 0 0 0 3px #000000}
+.staal.grootletter .plaatnr{font-family:Verdana,Tahoma,sans-serif;font-weight:700;color:#000}
+.staal.grootletter .woord{font-family:Verdana,"Atkinson Hyperlegible",Tahoma,sans-serif;font-weight:700;
+  letter-spacing:-.02em;font-size:27px;position:relative;z-index:2}
+.staal.grootletter .geel{position:absolute;left:0;right:0;bottom:0;height:58px;background:#ffd400;
+  border-top:3px solid #000}
+.staal.grootletter .strepen i{border-color:rgba(0,0,0,.3)}
+
 .kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
 .kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
 .kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
@@ -268,8 +304,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>12</b> concepten</span>
-      <span>Laatste ronde <b>14 augustus 2026</b></span>
+      <span><b>15</b> concepten</span>
+      <span>Laatste ronde <b>15 augustus 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -784,6 +820,127 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-12-weerbericht.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-12-weerbericht.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="galerijkop" style="margin-top:var(--s6)">
+      <h2>Ronde 5</h2>
+      <span>ronde 5 · 15 aug 2026</span>
+    </div>
+
+    <div class="raster">
+
+      <!-- ─────────── CONCEPT 13 ─────────── -->
+      <article class="kaart">
+        <div class="staal knooppunt">
+          <div class="plaatnr">Knpt 34 — u bent hier</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#ffffff"></i><i style="background:#00693c"></i>
+            <i style="background:#a85f00"></i><i style="background:#111a14"></i>
+          </div>
+          <div class="rt" aria-hidden="true">
+            <span class="ln af"></span><span class="ln"></span>
+            <span class="bord vol" style="left:0">24</span>
+            <span class="bord vol" style="left:62px">31</span>
+            <span class="bord nu" style="left:124px">34</span>
+            <span class="bord" style="left:186px">41</span>
+          </div>
+          <div class="woord">Tandemstand</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 13</div>
+          <h3>Knooppunten</h3>
+          <p class="richting">De hele route bestaat, maar u hoeft er maar één nummer van te kennen.</p>
+          <p class="rationale">Het fietsknooppuntennetwerk laat mensen die geen kaart kunnen lezen
+            zestig kilometer fietsen, omdat er op elk bordje maar één ding staat: het volgende nummer.
+            Zo geven we een traject — een knooppunt is een kúnde (“tandemstand met steun”), geen week,
+            dus een gemiste dag is geen achterstand maar “nog even bij 34”. De therapeut kiest niet in
+            een lijst maar legt een route door het netwerk, en ziet daarbij wat ervóór en wat erná komt.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Het Nederlandse fietsknooppuntennetwerk (ANWB, nu de Nationale Bewegwijzeringsdienst) ·
+              wegwijzers en paddenstoelen · hectometerpaaltjes · metrokaarten in de lijn van Beck ·
+              de vorm van het richtingbord met de punt naar rechts</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — route klein bovenaan, het knooppunt groot in het midden</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-13-knooppunten.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-13-knooppunten.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 14 ─────────── -->
+      <article class="kaart">
+        <div class="staal zeefdruk">
+          <div class="bol" aria-hidden="true"></div>
+          <div class="plaatnr">Inkt 1 + 2 — geen zwart</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#f4efe2"></i><i style="background:#1637a8"></i>
+            <i style="background:#f5347f"></i><i style="background:#1a1246"></i>
+          </div>
+          <div class="balk" aria-hidden="true"><i></i></div>
+          <div class="woord">Schouder <em>02</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 14</div>
+          <h3>Zeefdruk</h3>
+          <p class="richting">Twee inkten, en de donkerste kleur maakt de pers zelf.</p>
+          <p class="rationale">Een uitdraai verdwijnt in een la; een affiche gaat met een magneet op
+            de koelkast. Dus geen formulier maar drukwerk: federaal blauw en fluorroze, platte vlakken,
+            rasterstipjes in plaats van grijs — dat overleeft een goedkope praktijkprinter beter dan
+            grijstinten. De harde huisregel staat op de pagina zelf: roze mag vlakken, cijfers en beeld,
+            maar nooit een zin. Alles wat gelezen moet worden staat in de overdruk.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Risografie en zeefdruk · steundrukwerk uit de jaren zeventig · de Poolse en Zwitserse
+              posterscholen · fanzines en kleine drukkerijen · duotone en halftoonrasters ·
+              misregistratie als bewijs van drukwerk</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — affiche voor de koelkast, drie oefeningen en niet meer</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-14-zeefdruk.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-14-zeefdruk.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 15 ─────────── -->
+      <article class="kaart">
+        <div class="staal grootletter">
+          <div class="geel" aria-hidden="true"></div>
+          <div class="plaatnr">15 pt / 1,5 — Clear Print</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#ffffff"></i><i style="background:#000000"></i>
+            <i style="background:#ffd400"></i><i style="background:#444444"></i>
+          </div>
+          <div class="woord">Drie oefeningen</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 15</div>
+          <h3>Grootletter</h3>
+          <p class="richting">De enige richting die niets toevoegt, maar dingen weghaalt.</p>
+          <p class="rationale">Bij 15 punt met anderhalve regelafstand passen er precies drie
+            oefeningen op een A4 — en dat is niet de beperking maar het idee: drie die iemand doet,
+            verslaan acht die op papier blijven staan. De kiezer rekent die ruil hardop voor met een
+            leesbaarheidsbegroting, en de printkaart toont op het scherm zijn eigen punten en
+            regelafstand als een letterproef. Geen cursief, geen uitvulling, geen vierde oefening.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Grootletteruitgeverij en de Clear Print-richtlijnen van RNIB en UKAAF · het
+              Tiresias-lettertype · Atkinson Hyperlegible van het Braille Institute · geel-zwarte
+              markering uit de slechtziendenzorg · de letterproef als vorm</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — drie oefeningen, zwart op wit, één gele band</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-15-grootletter.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-15-grootletter.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>
