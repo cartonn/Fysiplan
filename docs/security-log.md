@@ -116,3 +116,31 @@ hex-veilig pad, token niet herbruikbaar, mp4- en webm-tak).
 **Volgende run — pak een ander gebied:** open endpoints & rate limiting op de
 overige lees-API's (`/api/kaart/manifest`, `/api/oefeningen/video/*`) of
 security-headers-review op de statische v2-assets en `/ontwerp`.
+
+### 2026-08-15 — lees-API's (toegang + rate limiting)
+**Geauditeerd:** alle GET-API's op auth en limieten, inclusief de nieuwe
+voorbeeldkaart (`/k/demo` via `vindKaart('demo')`).
+
+**Bevindingen (geen kritiek gat — alles gedekt):**
+- Patiëntkaart-reads (`/api/kaart`, `/agenda`, `/vertaal`, `/manifest`):
+  `leesLimiet` + `kaartMisLimiet` (enumeratie van 48-bit-ids wordt afgeknepen);
+  `manifest` escapet de naam via JSON en stuurt `noindex`.
+- Analyse/beheer (`/api/dashboard`, `/api/oefeningen/gebruik`,
+  `/api/core1000/*`): `isAdmin` (constant-tijd) + `denied` (403, 429 na 20).
+- Opname-status: eigen poll-rem (1800/5 min/IP → 429) en 404 zonder token.
+- Voorbeeldkaart: alle routes werken via het bestaande `vindKaart`-chokepoint;
+  `vertaal?id=demo` blijft achter taal-whitelist + `aiLimiet` (bounded cost).
+- Observatie (geen v2-scope, niet gewijzigd): `/api/praktijken` GET geeft de
+  volledige praktijklijst mét contactgegevens publiek terug (gedeeld/v1,
+  voedt de app-picker; `leesLimiet` remt scrapen). Zakelijke contactinfo;
+  e-mail is het gevoeligst — kandidaat voor data-minimalisatie als v1 ooit
+  meebeweegt, maar buiten deze v2-scope en niet aangeraakt.
+
+**Increment:** geen geforceerde codewijziging; regressie-guard
+`test-lees-apis.mjs` (11 checks): beheer-reads eisen de sleutel, manifest
+enumeratie-beschermd + demo werkt, id-raden loopt tegen 429, opname-status
+weigert zonder token, taal-whitelist op vertaal.
+
+**Volgende run — pak een ander gebied:** injectie/opslag-integriteit op de
+schrijfroutes (`/api/kaarten` cells/rows/vids-sanitisatie, `/api/praktijken`
+POST-velden) of security-headers-review op de statische v2-assets.
