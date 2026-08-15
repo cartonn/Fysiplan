@@ -1888,10 +1888,11 @@ bridge2.jpg</div>
               "<a class='btn' href='"+esc(waHref)+"' target='_blank' rel='noopener' style='text-decoration:none'>WhatsApp</a>"+
               "<a class='btn' href='"+esc(mailHref)+"' target='_blank' rel='noopener' style='text-decoration:none'>E-mail</a>"+
             "</div></div>";
-          return "<div style='display:flex;align-items:center;gap:8px;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
-            "<div style='flex:1;min-width:0'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+"</small></div>"+vg+
+          return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
+            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+"</small></div>"+vg+
             "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
+            "<button class='btn' data-skopie='"+esc(c.id)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+
             "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>"+vgBlok+deelBlok;
         };
         var toonLijst=function(items){
@@ -1944,6 +1945,27 @@ bridge2.jpg</div>
       if(navigator.clipboard&&navigator.clipboard.writeText){
         navigator.clipboard.writeText(url).then(function(){toon('Gekopieerd ✓');}).catch(function(){window.prompt('Kopieer de patiëntlink:',url);});
       }else{window.prompt('Kopieer de patiëntlink:',url);}
+      return;
+    }
+    // Kopie: dezelfde oefeningen en hetzelfde schema, maar een nieuwe cliënt.
+    // Scheelt de therapeut werk als meerdere patiënten een vergelijkbaar programma
+    // krijgen. De cliëntvelden worden geleegd; zodra er een nieuwe naam staat, deelt
+    // de app het als een níeuwe kaart (de originele kaart blijft ongemoeid).
+    var kp=e.target.closest('[data-skopie]');
+    if(kp){
+      fetch('api/kaart?id='+kp.dataset.skopie,{cache:'no-cache'})
+        .then(function(r){return r.json();})
+        .then(function(d){
+          if(!d.ok){alert('Kaart kopiëren is niet gelukt.');return;}
+          if(chosen.length&&!confirm('Huidige kaart vervangen door een kopie van “'+d.kaart.naam+'”?'))return;
+          openCard(d.kaart);
+          CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value='';});
+          laatsteDeel='';QR_UIT_VOOR=null;verbergQr();render();
+          closeOv('ovKaarten');
+          document.getElementById('k_result').textContent='';
+          var cn=document.getElementById('c_naam');if(cn)cn.focus();
+        })
+        .catch(function(){alert('Kaart kopiëren is niet gelukt: geen verbinding.');});
       return;
     }
     var o=e.target.closest('[data-sopen]'),x=e.target.closest('[data-sdel]');
