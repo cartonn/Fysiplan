@@ -245,6 +245,39 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
   border-top:3px solid #000}
 .staal.grootletter .strepen i{border-color:rgba(0,0,0,.3)}
 
+/* — staal concept 16: Lichtbak — */
+.staal.lichtbak{background:#0b1216;color:#e8f3f6}
+.staal.lichtbak .plaatnr{color:#63d3ea;font-family:var(--mono)}
+.staal.lichtbak .woord{font-family:"Inter","Avenir Next",Seravek,system-ui,sans-serif;font-weight:600;
+  letter-spacing:-.035em;position:relative;z-index:2}
+.staal.lichtbak .gloed{position:absolute;left:50%;top:44%;width:190px;height:120px;
+  transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(closest-side,rgba(99,211,234,.34),transparent 78%)}
+.staal.lichtbak .lood{position:absolute;right:var(--s3);bottom:var(--s3);font:700 12px/1 var(--mono);
+  color:#e2564d;border:1px solid rgba(226,86,77,.55);padding:3px 6px}
+.staal.lichtbak .strepen i{border-color:rgba(255,255,255,.22)}
+
+/* — staal concept 17: Poststempel — */
+.staal.poststempel{background:#f7f3e8;color:#191614}
+.staal.poststempel .plaatnr{color:#c8202d;font-family:var(--mono)}
+.staal.poststempel .woord{font-family:"Avenir Next",Seravek,system-ui,sans-serif;font-weight:600;
+  letter-spacing:-.03em}
+.staal.poststempel .luchtrand{position:absolute;left:0;right:0;top:0;height:7px;
+  background:repeating-linear-gradient(-45deg,#c8202d 0 6px,#fff 6px 12px,#153a86 12px 18px,#fff 18px 24px)}
+.staal.poststempel .stempel{position:absolute;right:18px;bottom:16px;width:52px;height:52px;
+  border:2px solid #3b4a5c;border-radius:50%;transform:rotate(-11deg);color:#3b4a5c;
+  display:flex;align-items:center;justify-content:center;font:700 9px/1.2 var(--mono);text-align:center}
+.staal.poststempel .strepen i{border-color:rgba(25,22,20,.2)}
+
+/* — staal concept 18: Schrift — */
+.staal.schrift{background:#fbfaf4;color:#1b1d22;
+  background-image:repeating-linear-gradient(to bottom,transparent 0 21px,#a8bde0 21px 22px)}
+.staal.schrift .plaatnr{color:#23459a;font-family:var(--mono);position:relative;z-index:2}
+.staal.schrift .woord{font-family:"Avenir Next",Seravek,system-ui,sans-serif;font-weight:600;
+  letter-spacing:-.03em;position:relative;z-index:2}
+.staal.schrift .kant{position:absolute;left:26px;top:0;bottom:0;width:1.5px;background:#c8443f;opacity:.6}
+.staal.schrift .strepen i{border-color:rgba(27,29,34,.2)}
+
 .kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
 .kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
 .kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
@@ -304,8 +337,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>15</b> concepten</span>
-      <span>Laatste ronde <b>15 augustus 2026</b></span>
+      <span><b>18</b> concepten</span>
+      <span>Laatste ronde <b>16 augustus 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -941,6 +974,122 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-15-grootletter.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-15-grootletter.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="galerijkop" style="margin-top:var(--s6)">
+      <h2>Ronde 6</h2>
+      <span>ronde 6 · 16 aug 2026</span>
+    </div>
+
+    <div class="raster">
+
+      <!-- ─────────── CONCEPT 16 ─────────── -->
+      <article class="kaart">
+        <div class="staal lichtbak">
+          <div class="gloed" aria-hidden="true"></div>
+          <div class="plaatnr">Serie 2026-08-14 · opn 01/03</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#0b1216"></i><i style="background:#63d3ea"></i>
+            <i style="background:#e2564d"></i><i style="background:#f2a63c"></i>
+          </div>
+          <div class="woord">Licht wordt inkt</div>
+          <span class="lood" aria-hidden="true">R</span>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 16</div>
+          <h3>Lichtbak</h3>
+          <p class="richting">Het scherm geeft licht, het papier geeft inkt — en dat is de hele omslag.</p>
+          <p class="rationale">De eerste donkere richting in de galerij, geleend van de radiologische
+            lichtbak: de loodletter L of R bij elke oefening, de hoekstrook met naam en datum altijd
+            op dezelfde plek, en een grijstrap waarmee de patiënt zijn eigen printer kan controleren.
+            Bij het printen draait het negatief om naar een positief — wit vel, zwarte lijn — want een
+            donkere A4 is een leugen tegen de printer én tegen het oog.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>De radiologische lichtbak en de leeskamer · loodmarkeringen L/R in het beeld ·
+              de stepwedge of grijstrap als kwaliteitscontrole · filmhoezen en hun typografie ·
+              de gewoonte om techniek niet te verstoppen maar in de rand te zetten</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — wit vel met diagnostische randen en een printtest onderaan</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-16-lichtbak.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-16-lichtbak.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 17 ─────────── -->
+      <article class="kaart">
+        <div class="staal poststempel">
+          <div class="luchtrand" aria-hidden="true"></div>
+          <div class="plaatnr" style="margin-top:9px">Week 34 — port betaald</div>
+          <div class="strepen" aria-hidden="true" style="top:22px">
+            <i style="background:#f7f3e8"></i><i style="background:#c8202d"></i>
+            <i style="background:#153a86"></i><i style="background:#3b4a5c"></i>
+          </div>
+          <div class="woord">Vandaag afgestempeld</div>
+          <div class="stempel" aria-hidden="true">14 VIII<br/>2026</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 17</div>
+          <h3>Poststempel</h3>
+          <p class="richting">Een dag die u doet, stempelt u af — en een verbruikte zegel komt niet terug.</p>
+          <p class="rationale">De kaart is post: met afzender, geadresseerde en een velletje van zeven
+            zegels als week. Afvinken wordt afstempelen, met pen op papier of met één tik in de app —
+            hetzelfde gebaar, geen tweede keus. De zegelstrook op de A4 is geperforeerd en mag eraf,
+            zodat de koelkast houdt wat de la anders opslokt. Eén rood, één blauw, en verder nuchtere
+            zwarte tekst: post is vrolijk, en vrolijkheid is gevaarlijk in de zorg.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>De cijferzegels van Van Krimpen (1946) en het raster dat Crouwel er in 1976 van maakte ·
+              perforatie als teken dat iets los mag · de ronde datumstempel met golfjes ·
+              luchtpostranden · de spaarkaart van de bakker</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — adresvlak, afscheurbare zegelstrook, drie zendingen</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-17-poststempel.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-17-poststempel.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 18 ─────────── -->
+      <article class="kaart">
+        <div class="staal schrift">
+          <div class="kant" aria-hidden="true"></div>
+          <div class="plaatnr">Liniatuur 9 mm · week 34</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#fbfaf4"></i><i style="background:#23459a"></i>
+            <i style="background:#a8bde0"></i><i style="background:#c8443f"></i>
+          </div>
+          <div class="woord">De helft is van u</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 18</div>
+          <h3>Schrift</h3>
+          <p class="richting">Niet iets om te lezen, maar iets om óp te schrijven.</p>
+          <p class="rationale">Het Nederlandse schoolschrift als model: blauwe liniatuur, rode kantlijn,
+            etiket met de naam erop. De bovenhelft van het vel is van de praktijk — drie oefeningen,
+            vast en gedrukt; de onderhelft is echt leeg en van de patiënt, met twee vragen en verder
+            lijnen. De kaart komt de volgende afspraak weer mee, en dan begint het gesprek onderaan.
+            Eén maat regeert alles: negen millimeter, waar niets tussen mag zweven.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Het schoolschrift met zijn liniatuur, kantlijn en kaftetiket · schrijfschriften uit
+              het Nederlandse schrijfonderwijs · logboeken en dagboeken, van scheepsjournaal tot
+              dieetdagboek · het schriftje dat de zorg altijd al meegaf</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — bovenhelft gedrukt, onderhelft blanco op 9 mm-lijnen</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-18-schrift.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-18-schrift.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>

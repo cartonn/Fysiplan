@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 18 — Schrift · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 18 — SCHRIFT
+   Alle andere concepten in deze galerij maken iets om te lézen.
+   Dit concept draait die aanname om: de kaart is er om óp te
+   schrijven. Het model is het Nederlandse schoolschrift — de
+   blauwe liniatuur, de rode kantlijn, het etiket op de kaft met
+   NAAM erop — en de reden is niet nostalgie maar iets nuchters:
+   een fysiotherapeut weet bij de volgende afspraak nooit precies
+   hoe de week ging, en de patiënt weet het na vier dagen zelf ook
+   niet meer. Alles wat er tussenin gebeurde, is nergens vastgelegd.
+   Dus krijgt het vel een tweede helft die leeg is. Niet leeg omdat
+   er niets meer paste, maar leeg als opdracht:
+     · de bovenhelft is van de praktijk — wat u doet, hoe vaak;
+     · de onderhelft is van de patiënt — wat het deed, wat opviel,
+       wat niet lukte;
+     · de kaart komt de volgende afspraak weer mee terug, en dan
+       wordt de onderhelft het gesprek.
+   Vormtechnisch zit de discipline in één maat: de liniatuur is
+   9 mm, en álles op het vel staat op die lijn. Regelafstand,
+   beeldhoogte, kaderhoogte — alles is een veelvoud van 9 mm.
+   Dat is wat een schrift een schrift maakt: niets zweeft.
+   Het handschrift in de voorbeelden is dekoratie op het scherm
+   en verdwijnt op papier — instructie staat nooit in schrijfletter,
+   want die is voor een deel van de lezers onleesbaar.
+   Waar het schuurt: de helft van een A4 weggeven aan wit is voor
+   een praktijk die acht oefeningen kwijt wil onbespreekbaar. Dat
+   is de prijs, en die wordt hier bewust betaald.
+   Alles inline; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  --papier:#fbfaf4;         /* schrijfpapier, warm wit */
+  --vlak:#ffffff;
+  --kaft:#23459a;           /* de blauwe kaft */
+  --kaft-d:#16307a;
+  --liniaal:#a8bde0;        /* de blauwe liniatuur */
+  --kantlijn:#c8443f;       /* de rode kantlijn */
+  --inkt:#1b1d22;
+  --inkt-2:#414650;
+  --grijs:#767c88;
+  --potlood:#8d93a0;
+  --lijn:#dcdccf;
+  --lijn-2:#ecece2;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --serif:Charter,"Iowan Old Style",Georgia,serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  /* schrijfletter: uitsluitend voor ingevulde voorbeelden, nooit
+     voor instructie — een deel van de lezers ontcijfert hem niet */
+  --hand:"Bradley Hand","Segoe Script","Brush Script MT","Snell Roundhand",cursive;
+
+  --s1:5px; --s2:10px; --s3:18px; --s4:30px; --s5:48px; --s6:76px;
+  --regel:27px;             /* de schermliniatuur: 3 × 9 mm-gevoel */
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--papier);color:var(--inkt-2);font:400 17px/1.62 var(--sans);
+  -webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:var(--kaft)}
+:focus-visible{outline:2.5px solid var(--kaft);outline-offset:3px}
+
+/* ---------- labchrome ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);
+  background:var(--kaft);color:#fff;padding:11px 18px;font:500 13.5px/1 var(--sans)}
+.labbalk a{color:#d9e2f5;text-decoration:none;padding:7px 9px}
+.labbalk a:hover{background:#fff;color:var(--kaft)}
+.labbalk .nr{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#f3d7d5}
+.labbalk .rek{flex:1}
+.labbalk .terug{border:1px solid rgba(255,255,255,.45)}
+
+.scherm{padding:var(--s6) 24px}
+.scherm + .scherm{border-top:1px solid var(--lijn)}
+.binnen{max-width:1140px;margin:0 auto}
+.schermkop{display:flex;align-items:flex-end;gap:var(--s3);margin-bottom:var(--s5);
+  border-bottom:1px solid var(--lijn);padding-bottom:var(--s3)}
+.schermkop b{font:600 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  background:var(--kaft);color:#fff;padding:6px 9px}
+.schermkop h2{font:600 27px/1.1 var(--sans);letter-spacing:-.03em;color:var(--inkt)}
+.schermkop p{flex:1;text-align:right;font-size:15px;color:var(--grijs)}
+@media (max-width:860px){.schermkop{flex-wrap:wrap}.schermkop p{text-align:left;flex-basis:100%}}
+
+.kap{font:600 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--grijs)}
+
+.kn{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font:600 15px/1 var(--sans);
+  padding:16px 22px;background:var(--kaft);color:#fff;border:1.5px solid var(--kaft)}
+.kn:hover{background:var(--kaft-d);border-color:var(--kaft-d)}
+.kn.leeg{background:transparent;color:var(--inkt);border-color:var(--inkt)}
+.kn.leeg:hover{background:var(--inkt);color:#fff}
+
+/* de handnotitie: alleen voorbeeldtekst, nooit uitleg */
+.hand{font-family:var(--hand);font-size:21px;line-height:var(--regel);color:#2c4a8f}
+.hand.potlood{color:#5b6172}
+
+/* een gelinieerd vlak: alles staat op de lijn */
+.gelinieerd{background-image:repeating-linear-gradient(to bottom,
+    transparent 0 calc(var(--regel) - 1px),var(--liniaal) calc(var(--regel) - 1px) var(--regel));
+  background-position:0 0}
+
+/* ============================================================
+   1 · LANDING
+   ============================================================ */
+.hero{display:grid;grid-template-columns:1fr 400px;gap:var(--s5);align-items:start}
+@media (max-width:1040px){.hero{grid-template-columns:1fr;gap:var(--s4)}}
+.hero h1{font:600 clamp(35px,4.9vw,55px)/1.08 var(--sans);letter-spacing:-.04em;color:var(--inkt);
+  max-width:17ch;margin:var(--s3) 0}
+.hero .lead{font-size:19.5px;line-height:1.62;max-width:47ch}
+.hero .doen{display:flex;gap:12px;flex-wrap:wrap;margin-top:var(--s4)}
+.hero .naregel{margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid var(--lijn);
+  font-size:14.5px;color:var(--grijs)}
+
+/* het schrift, dichtgeslagen: kaft met etiket */
+.schrift{background:var(--kaft);padding:22px 20px 26px;position:relative;
+  box-shadow:0 26px 66px rgba(27,29,34,.28)}
+.schrift::before{content:"";position:absolute;left:0;top:0;bottom:0;width:13px;
+  background:linear-gradient(to right,rgba(0,0,0,.28),rgba(0,0,0,0))}
+.schrift .etiket{background:var(--vlak);border:1px solid #cfd4e2;padding:var(--s3) var(--s3) var(--s4)}
+.schrift .etiket .titel{font:600 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--grijs);border-bottom:1px solid var(--lijn);padding-bottom:9px;margin-bottom:var(--s3)}
+.schrift .etiket .veld{border-bottom:1px solid var(--liniaal);padding-bottom:4px;margin-bottom:var(--s3);
+  display:flex;align-items:baseline;gap:10px}
+.schrift .etiket .veld .lab{font:600 11px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;
+  color:var(--grijs);width:66px;flex:none}
+.schrift .etiket .veld .hand{font-size:20px;line-height:1.15}
+.schrift .rug{margin-top:18px;display:flex;align-items:center;gap:10px;color:#c9d5ef;
+  font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase}
+.schrift .rug .streep{flex:1;height:1px;background:rgba(255,255,255,.32)}
+
+/* de drie regels van de richting */
+.regels{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s6)}
+@media (max-width:940px){.regels{grid-template-columns:1fr}}
+.regels .vak{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s4);position:relative}
+.regels .vak::before{content:"";position:absolute;left:22px;top:0;bottom:0;width:1.5px;background:var(--kantlijn);
+  opacity:.45}
+.regels .vak > *{margin-left:14px}
+.regels .vak h3{font:600 19px/1.24 var(--sans);letter-spacing:-.02em;color:var(--inkt);margin:var(--s2) 0 var(--s2) 14px}
+.regels .vak p{font-size:16px}
+.regels .vak .num{font:600 11px/1 var(--mono);letter-spacing:.2em;color:var(--kantlijn)}
+
+/* de tweedeling: bovenhelft praktijk, onderhelft patiënt */
+.tweedeling{margin-top:var(--s6);border:1px solid var(--lijn);background:var(--vlak)}
+.tweedeling .kopbalk{padding:16px var(--s4);border-bottom:1px solid var(--lijn);display:flex;
+  align-items:baseline;gap:var(--s3);flex-wrap:wrap}
+.tweedeling .kopbalk h3{font:600 21px/1.2 var(--sans);letter-spacing:-.025em;color:var(--inkt)}
+.tweedeling .kopbalk span{margin-left:auto;font:500 11px/1 var(--mono);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--grijs)}
+.tweedeling .helften{display:grid;grid-template-columns:1fr 1fr}
+@media (max-width:820px){.tweedeling .helften{grid-template-columns:1fr}}
+.tweedeling .helft{padding:var(--s4);border-left:1px solid var(--lijn)}
+.tweedeling .helft:first-child{border-left:0}
+.tweedeling .helft .kl{font:600 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--kaft);margin-bottom:12px}
+.tweedeling .helft.van-patient .kl{color:var(--kantlijn)}
+.tweedeling .helft h4{font:600 18px/1.3 var(--sans);letter-spacing:-.02em;color:var(--inkt);margin-bottom:10px}
+.tweedeling .helft p{font-size:15.5px}
+.tweedeling .proefregels{margin-top:var(--s3);padding:0 0 6px;min-height:calc(var(--regel) * 4)}
+
+/* ============================================================
+   2 · KIEZER — de therapeut schrijft de week
+   ============================================================ */
+.kiezerlay{display:grid;grid-template-columns:1fr 336px;gap:var(--s4);align-items:start}
+@media (max-width:1040px){.kiezerlay{grid-template-columns:1fr}}
+
+.bladzijde{background:var(--vlak);border:1px solid var(--lijn);position:relative}
+.bladzijde .kopbalk{padding:15px var(--s3) 15px 62px;border-bottom:1px solid var(--lijn);
+  display:flex;align-items:center;gap:var(--s3);background:var(--kaft);color:#fff}
+.bladzijde .kopbalk b{font:600 16px/1 var(--sans);letter-spacing:-.01em}
+.bladzijde .kopbalk .telling{margin-left:auto;font:500 10.5px/1 var(--mono);letter-spacing:.14em;
+  text-transform:uppercase;color:#c4d1ee}
+/* de rode kantlijn loopt door het hele blok, ook langs de regels */
+.bladzijde .kantlijn{position:absolute;left:46px;top:52px;bottom:0;width:1.5px;background:var(--kantlijn);
+  opacity:.5}
+@media (max-width:520px){.bladzijde .kantlijn{display:none}}
+
+.regelrij{display:flex;align-items:center;gap:var(--s3);padding:14px var(--s3) 14px 62px;
+  border-bottom:1px solid var(--lijn-2)}
+@media (max-width:520px){.regelrij{padding-left:var(--s3);flex-wrap:wrap}}
+.regelrij:last-child{border-bottom:0}
+.regelrij .volgnr{width:26px;flex:none;font:600 15px/1 var(--mono);color:var(--potlood);text-align:right}
+.regelrij figure{width:74px;height:74px;flex:none;border:1px solid var(--lijn-2);background:var(--vlak);
+  display:flex;align-items:center;justify-content:center;padding:4px}
+.regelrij figure img{max-height:64px;width:auto}
+.regelrij .tk{flex:1;min-width:0}
+.regelrij .tk b{display:block;font:600 17px/1.3 var(--sans);letter-spacing:-.018em;color:var(--inkt)}
+.regelrij .tk span{display:block;font-size:14px;color:var(--grijs);margin-top:3px}
+.regelrij .zet{flex:none;min-width:118px;text-align:center;font:600 13.5px/1 var(--sans);padding:12px;
+  border:1.5px solid var(--inkt);color:var(--inkt);background:transparent}
+.regelrij.aan{background:#f5f8ff}
+.regelrij.aan .zet{background:var(--kaft);border-color:var(--kaft);color:#fff}
+.regelrij.aan .volgnr{color:var(--kantlijn)}
+@media (max-width:520px){.regelrij .zet{width:100%}}
+
+/* de kantlijn-notitie van de therapeut, in de marge */
+.margenotitie{padding:12px var(--s3) 18px 62px;border-bottom:1px solid var(--lijn-2);
+  display:flex;gap:12px;align-items:flex-start}
+.margenotitie .pijl{color:var(--kantlijn);font:600 16px/1.2 var(--mono);flex:none}
+.margenotitie .hand{font-size:19px;line-height:1.4;color:#2c4a8f}
+
+/* het regelpaneel */
+.paneel{background:var(--vlak);border:1px solid var(--lijn);position:sticky;top:70px}
+.paneel .kopbalk{background:var(--papier);border-bottom:1px solid var(--lijn);padding:14px var(--s3);
+  font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs)}
+.paneel .body{padding:var(--s3)}
+.paneel h4{font:600 17px/1.28 var(--sans);letter-spacing:-.02em;color:var(--inkt)}
+.paneel p.toel{font-size:14.5px;color:var(--grijs);margin-top:7px}
+
+.verdeling{margin-top:var(--s3);border:1.5px solid var(--inkt)}
+.verdeling .strook{display:flex;height:32px}
+.verdeling .strook i{display:block}
+.verdeling .strook i.les{background:var(--kaft)}
+.verdeling .strook i.wit{background:repeating-linear-gradient(to bottom,
+  transparent 0 7px,var(--liniaal) 7px 8px)}
+.verdeling .onderregels{display:flex;justify-content:space-between;padding:9px 11px;
+  font:600 10.5px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--grijs);
+  border-top:1.5px solid var(--inkt)}
+.verdeling .onderregels .b{color:var(--kaft)}
+.verdeling .onderregels .p{color:var(--kantlijn)}
+
+.telling{margin-top:var(--s3);display:grid;grid-template-columns:auto 1fr;gap:9px 14px;font-size:14.5px}
+.telling dt{font:500 10.5px/1.6 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--grijs)}
+.telling dd{color:var(--inkt);font-weight:600}
+
+.marge-uitleg{margin-top:var(--s3);border-left:3px solid var(--kantlijn);background:#fdf4f3;
+  padding:13px 15px;font-size:14.5px}
+.marge-uitleg b{display:block;font:600 10.5px/1 var(--mono);letter-spacing:.15em;text-transform:uppercase;
+  color:var(--kantlijn);margin-bottom:7px}
+
+.klaarknop{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:var(--s3);
+  background:var(--kaft);color:#fff;border:0;padding:18px;font:600 16px/1 var(--sans)}
+
+/* ============================================================
+   3 · CLIËNTKAART — het schrift in de hand
+   ============================================================ */
+.telefoon{max-width:412px;margin:0 auto;background:var(--vlak);border:1px solid var(--lijn);
+  box-shadow:0 26px 70px rgba(27,29,34,.2)}
+.telefoon .balk{background:var(--kaft);color:#fff;padding:14px 18px;display:flex;align-items:center;gap:11px}
+.telefoon .balk b{font:600 15px/1 var(--sans)}
+.telefoon .balk .rechts{margin-left:auto;font:500 10px/1 var(--mono);letter-spacing:.14em;color:#c4d1ee}
+
+.dagenrand{display:flex;border-bottom:1px solid var(--lijn);background:var(--papier)}
+.dagenrand span{flex:1;text-align:center;padding:11px 3px;font:600 11.5px/1 var(--mono);
+  letter-spacing:.06em;color:var(--potlood);border-left:1px solid var(--lijn-2)}
+.dagenrand span:first-child{border-left:0}
+.dagenrand span.af{color:var(--kaft)}
+.dagenrand span.nu{background:var(--kaft);color:#fff}
+
+.bladinhoud{padding:var(--s3) 18px 0;position:relative}
+.bladinhoud::before{content:"";position:absolute;left:8px;top:0;bottom:0;width:1.5px;
+  background:var(--kantlijn);opacity:.35}
+.bladinhoud .beeldvak{border:1px solid var(--lijn-2);background:var(--vlak);padding:12px;position:relative}
+.bladinhoud .beeldvak img{max-height:236px;width:auto;margin:0 auto}
+.bladinhoud .beeldvak .hoek{position:absolute;left:10px;top:10px;font:600 9.5px/1 var(--mono);
+  letter-spacing:.14em;text-transform:uppercase;color:var(--grijs);background:var(--vlak);padding:4px 6px;
+  border:1px solid var(--lijn-2)}
+
+.bladinhoud .tekst{padding:var(--s3) 0}
+.bladinhoud .tekst .kl{font:600 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--kaft)}
+.bladinhoud .tekst h3{font:600 25px/1.2 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin:11px 0 var(--s2)}
+.bladinhoud .tekst p{font-size:17.5px;line-height:1.62}
+
+.dosisrij{display:flex;border-top:1px solid var(--lijn);border-bottom:1px solid var(--lijn)}
+.dosisrij div{flex:1;padding:14px 10px;text-align:center;border-left:1px solid var(--lijn-2)}
+.dosisrij div:first-child{border-left:0}
+.dosisrij dt{font:500 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
+.dosisrij dd{font:600 23px/1 var(--sans);color:var(--inkt);margin-top:8px;letter-spacing:-.02em}
+
+/* het notitieveld: hier schrijft de patiënt, ook digitaal */
+.notitie{margin:var(--s3) 0 0;padding:var(--s3) 0 0;border-top:1px dashed var(--lijn)}
+.notitie .kl{font:600 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--kantlijn);margin-bottom:10px}
+.notitie .vraag{font:400 17px/1.5 var(--serif);color:var(--inkt);margin-bottom:12px}
+.notitie .veld{min-height:calc(var(--regel) * 3);padding-top:2px}
+.notitie .veld .hand{display:block}
+.notitie .veld .leeg{color:var(--potlood);font-family:var(--sans);font-size:15px;line-height:var(--regel)}
+
+.acties{padding:var(--s3) 18px var(--s4);display:flex;flex-direction:column;gap:11px}
+.grootknop{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;
+  background:var(--kaft);color:#fff;border:1.5px solid var(--kaft);padding:19px 14px;font:600 17px/1 var(--sans)}
+.grootknop.leeg{background:transparent;color:var(--inkt);border-color:var(--inkt)}
+.grootknop svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;
+  stroke-linecap:round;stroke-linejoin:round}
+.mobtoel{max-width:470px;margin:var(--s4) auto 0;text-align:center;font-size:15.5px;color:var(--grijs)}
+
+/* ============================================================
+   4 · DE PRINTKAART — A4 staand
+   Eén maat regeert dit vel: de liniatuur van 9 mm. Elke regel,
+   elk kader en elke beeldhoogte is een veelvoud daarvan. De
+   bovenhelft is van de praktijk, de onderhelft van de patiënt —
+   en die onderhelft is echt leeg, want anders is het een gebaar
+   en geen ruimte.
+   ============================================================ */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){.bladschaal{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+
+.blad{width:210mm;height:297mm;background:#fbfaf4;color:#1b1d22;padding:9mm 11mm 9mm 22mm;
+  display:flex;flex-direction:column;font-family:var(--sans);position:relative;
+  box-shadow:0 26px 70px rgba(27,29,34,.26)}
+/* de rode kantlijn: één doorlopende streep, van boven tot onder */
+.blad::before{content:"";position:absolute;left:18mm;top:0;bottom:0;width:.9pt;background:#c8443f}
+/* de gaatjes van de ringband, links in de marge */
+.blad .gaatjes{position:absolute;left:7mm;top:0;bottom:0;width:5mm;display:flex;flex-direction:column;
+  justify-content:center;gap:26mm;align-items:center}
+.blad .gaatjes i{width:4mm;height:4mm;border:.8pt solid #c6c9c0;border-radius:50%;display:block}
+
+.blad .bladkop{display:flex;align-items:flex-end;gap:6mm;border-bottom:1.4pt solid #1b1d22;padding-bottom:3mm}
+.blad .bladkop h1{font:600 22pt/1.05 var(--sans);letter-spacing:-.035em}
+.blad .bladkop .naam{margin-left:auto;text-align:right}
+.blad .bladkop .naam .lab{font:600 7.5pt/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#767c88}
+.blad .bladkop .naam b{display:block;font:600 12pt/1.2 var(--sans);margin-top:1.2mm}
+.blad .bladkop .naam .reg{font:400 9.5pt/1.4 var(--sans);color:#414650}
+
+.blad .dagregel{display:flex;align-items:center;gap:3mm;margin-top:3mm;border:1pt solid #1b1d22}
+.blad .dagregel .kl{background:#23459a;color:#fff;padding:2mm 3mm;font:600 8pt/1 var(--mono);
+  letter-spacing:.14em;text-transform:uppercase;align-self:stretch;display:flex;align-items:center}
+.blad .dagregel p{font:400 12.5pt/1.4 var(--sans);padding:2mm 3mm 2mm 0}
+
+/* bovenhelft: van de praktijk */
+.blad .vanpraktijk{margin-top:3.6mm}
+.blad .deelkop{display:flex;align-items:baseline;gap:3mm;border-bottom:.8pt solid #b9bcc4;padding-bottom:1.4mm}
+.blad .deelkop .t{font:600 8.5pt/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#23459a}
+.blad .deelkop .n{margin-left:auto;font:400 8.5pt/1 var(--sans);color:#767c88}
+.blad .vanpatient .deelkop .t{color:#c8443f}
+
+.blad .oefreeks{display:flex;flex-direction:column;gap:2.6mm;margin-top:3mm}
+.blad .oef{display:flex;align-items:stretch;border:.8pt solid #c6c9c0;background:#fff;height:36mm}
+.blad .oef .nr{width:9mm;flex:none;background:#23459a;color:#fff;display:flex;align-items:center;
+  justify-content:center;font:600 15pt/1 var(--sans)}
+.blad .oef figure{width:32mm;flex:none;border-right:.8pt solid #e0e2da;display:flex;align-items:center;
+  justify-content:center;padding:1.8mm}
+.blad .oef figure img{max-width:100%;max-height:31mm}
+.blad .oef .tk{flex:1;padding:2.4mm 3.4mm;display:flex;flex-direction:column;justify-content:center}
+.blad .oef .tk h2{font:600 13.5pt/1.16 var(--sans);letter-spacing:-.025em}
+/* de leesregel: 12 pt met een interlinie van 1,5 — deze maat is
+   waar de patiënt echt in leest en hij wijkt voor niets */
+.blad .oef .tk p{font:400 12pt/1.5 var(--sans);color:#2b2f37;margin-top:1.4mm}
+.blad .oef .ds{width:27mm;flex:none;border-left:.8pt solid #e0e2da;display:flex;flex-direction:column}
+.blad .oef .ds div{flex:1;border-top:.8pt solid #edeee8;padding:1.4mm 2.4mm;display:flex;
+  flex-direction:column;justify-content:center}
+.blad .oef .ds div:first-child{border-top:0}
+.blad .oef .ds dt{font:600 7pt/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#767c88}
+.blad .oef .ds dd{font:600 12.5pt/1 var(--sans);margin-top:1mm}
+
+/* onderhelft: van de patiënt — echt leeg, met liniatuur van 9 mm */
+.blad .vanpatient{margin-top:4.4mm;flex:1;display:flex;flex-direction:column}
+.blad .vragen{display:flex;gap:4mm;margin-top:2.4mm}
+.blad .vragen .v{flex:1;font:400 10pt/1.35 var(--serif);color:#414650;border-left:1.6pt solid #c8443f;
+  padding-left:2.4mm}
+.blad .schrijfvlak{flex:1;margin-top:2.6mm;
+  background-image:repeating-linear-gradient(to bottom,
+    transparent 0 8.1mm,#a8bde0 8.1mm 9mm);
+  background-size:100% 9mm;background-position:0 100%;
+  border-bottom:.8pt solid #b9bcc4}
+.blad .weekhokjes{display:grid;grid-template-columns:repeat(7,1fr);margin-top:3mm;border:.8pt solid #1b1d22}
+.blad .weekhokjes .cel{border-left:.8pt solid #c6c9c0;text-align:center}
+.blad .weekhokjes .cel:first-child{border-left:0}
+.blad .weekhokjes .cel .d{font:600 9pt/1 var(--sans);padding:1.6mm 0;border-bottom:.8pt solid #c6c9c0}
+.blad .weekhokjes .cel .h{height:9mm}
+
+.blad .voetregel{margin-top:3mm;padding-top:2.4mm;border-top:.8pt solid #c6c9c0;display:flex;
+  gap:5mm;align-items:baseline;font:400 9pt/1.4 var(--sans);color:#565c67}
+.blad .voetregel b{color:#1b1d22;font-weight:600}
+.blad .voetregel .rechts{margin-left:auto;text-align:right;font:500 7.5pt/1.5 var(--mono);
+  letter-spacing:.1em;text-transform:uppercase;color:#767c88}
+
+.wijzer{position:absolute;z-index:5;background:var(--kantlijn);color:#fff;
+  font:600 10px/1.25 var(--mono);letter-spacing:.05em;padding:5px 7px;white-space:nowrap}
+.wijzer::after{content:"";position:absolute;background:var(--kantlijn)}
+.wijzer.r::after{left:100%;top:50%;width:18px;height:1.5px}
+.wijzer.l::after{right:100%;top:50%;width:18px;height:1.5px}
+@media (max-width:1060px){.wijzer{display:none}}
+
+.printhulp{max-width:700px;margin:var(--s4) auto 0;text-align:center;font-size:16px;color:var(--grijs)}
+.printhulp .kn{margin-top:var(--s3)}
+
+footer.uitleiding{background:var(--kaft);color:#dde5f6;padding:var(--s5) 24px var(--s6)}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:#f3d7d5;margin-bottom:13px}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:9px}
+footer.uitleiding li::before{content:"—";position:absolute;left:0;color:#9db1de}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;margin:0 !important;
+    break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 18</span>
+  <strong style="font:600 15px/1 var(--sans);color:#fff">Schrift</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>de enige kaart in deze galerij die half leeg is — en dat is de hele richting</p>
+    </div>
+
+    <div class="hero">
+      <div>
+        <div class="kap">Fysiplan · schrift</div>
+        <h1>De onderste helft van dit vel is niet van ons.</h1>
+        <p class="lead">Elk ander concept in deze galerij maakt iets om te lezen. Dit maakt iets om
+          óp te schrijven. De bovenhelft is van de praktijk: drie oefeningen, hoe vaak, hoe lang.
+          De onderhelft is van de patiënt: wat het deed, wat opviel, welke dag niet lukte. Bij de
+          volgende afspraak komt het vel weer mee, en dan begint het gesprek onderaan.</p>
+        <div class="doen">
+          <a class="kn" href="#printkaart">Bekijk de A4</a>
+          <a class="kn leeg" href="#kiezer">Hoe de week geschreven wordt</a>
+        </div>
+        <p class="naregel">Eén maat regeert dit ontwerp: de liniatuur van 9 millimeter uit het
+          Nederlandse schoolschrift. Regelafstand, beeldhoogte, kaderhoogte, invulhokje — alles is
+          een veelvoud daarvan. Dat is wat een schrift tot een schrift maakt: er zweeft niets.</p>
+      </div>
+
+      <div class="schrift">
+        <div class="etiket">
+          <div class="titel">Oefenschrift</div>
+          <div class="veld"><span class="lab">Naam</span><span class="hand">Ria Bouma</span></div>
+          <div class="veld"><span class="lab">Praktijk</span><span class="hand">Noorderlicht</span></div>
+          <div class="veld"><span class="lab">Week</span><span class="hand">34 — augustus</span></div>
+          <div class="veld" style="margin-bottom:0"><span class="lab">Terug op</span><span class="hand">do 21 aug.</span></div>
+        </div>
+        <div class="rug"><span>Fysiplan</span><span class="streep"></span><span>A4 · 9 mm</span></div>
+      </div>
+    </div>
+
+    <div class="regels">
+      <div class="vak">
+        <div class="num">01</div>
+        <h3>Wit is de opdracht</h3>
+        <p>De lege helft is niet de ruimte die overbleef, maar de ruimte die is vrijgehouden. Wie
+          niets schrijft, heeft ook iets gezegd. Wie drie woorden schrijft — “dinsdag ging het beter” —
+          geeft de therapeut meer dan een app met zeven groene vinkjes.</p>
+      </div>
+      <div class="vak">
+        <div class="num">02</div>
+        <h3>Alles staat op de lijn</h3>
+        <p>Negen millimeter, en geen enkel element mag ertussen gaan zweven. Die strengheid is niet
+          zichtbaar als stijl, maar wel voelbaar als rust: het oog hoeft nooit te zoeken waar de
+          volgende regel begint.</p>
+      </div>
+      <div class="vak">
+        <div class="num">03</div>
+        <h3>Handschrift is geen lettertype</h3>
+        <p>Op deze pagina staat schrijfletter alleen in de voorbeelden — nooit in een instructie.
+          Een sierlijke schuine letter is precies wat een oud of vermoeid oog niet ontcijfert. De
+          kaart nodigt uit tot handschrift; hij imiteert het niet.</p>
+      </div>
+    </div>
+
+    <div class="tweedeling">
+      <div class="kopbalk">
+        <h3>Twee helften, twee eigenaren</h3>
+        <span>Zo ligt het vel op tafel</span>
+      </div>
+      <div class="helften">
+        <div class="helft van-praktijk">
+          <div class="kl">Bovenhelft — van de praktijk</div>
+          <h4>Wat u doet</h4>
+          <p>Drie oefeningen, met tekening, herhalingen en series. Vast, gedrukt, onveranderlijk.
+            Dit deel is af op het moment dat het uit de printer komt en verandert die week niet meer.</p>
+          <div class="proefregels gelinieerd" aria-hidden="true"></div>
+        </div>
+        <div class="helft van-patient">
+          <div class="kl">Onderhelft — van de patiënt</div>
+          <h4>Wat het deed</h4>
+          <p>Twee vragen en dan lijnen. Geen invulvelden met vakjes, geen schaal van 1 tot 10:
+            gewoon regels, want een zin van iemand zelf zegt meer dan een cijfer dat hij moest kiezen.</p>
+          <div class="proefregels gelinieerd">
+            <span class="hand">Woensdag ging het opstaan opeens vanzelf.</span><br/>
+            <span class="hand">Donderdag stijve knie, alleen de eerste twee gedaan.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>Oefeningen kiezen</h2>
+      <p>de therapeut schrijft de week op de lijnen — en ziet meteen hoeveel wit er voor de patiënt overblijft</p>
+    </div>
+
+    <div class="kiezerlay">
+      <div class="bladzijde">
+        <div class="kantlijn" aria-hidden="true"></div>
+        <div class="kopbalk">
+          <b>Rug — dagelijkse serie</b>
+          <span class="telling">34 oefeningen · 3 gekozen</span>
+        </div>
+
+        <div class="regelrij aan">
+          <span class="volgnr">1.</span>
+          <figure><img src="/images/rug/knie-naar-borst-liggend-line-v1.png"
+                       alt="Liggend op de rug wordt één knie rustig naar de borst getrokken."/></figure>
+          <div class="tk">
+            <b>Knie naar borst — liggend</b>
+            <span>Liggend · matje of bed · 3 minuten</span>
+          </div>
+          <span class="zet">Op de lijn</span>
+        </div>
+
+        <div class="regelrij aan">
+          <span class="volgnr">2.</span>
+          <figure><img src="/images/rug/rug-bol-en-hol-met-lichte-weerstand-line-v1.png"
+                       alt="Op handen en knieën wordt de rug afwisselend bol en hol gemaakt."/></figure>
+          <div class="tk">
+            <b>Rug bol en hol</b>
+            <span>Op handen en knieën · matje · 3 minuten</span>
+          </div>
+          <span class="zet">Op de lijn</span>
+        </div>
+
+        <div class="regelrij aan">
+          <span class="volgnr">3.</span>
+          <figure><img src="/images/rug/romp-draaien-zittend-line-v1.png"
+                       alt="Zittend op een stoel draait de romp rustig opzij."/></figure>
+          <div class="tk">
+            <b>Romp draaien — zittend</b>
+            <span>Zittend · stoel zonder armleuning · 2 minuten</span>
+          </div>
+          <span class="zet">Op de lijn</span>
+        </div>
+
+        <div class="margenotitie">
+          <span class="pijl">→</span>
+          <span class="hand">Eerst liggend beginnen, pas na een week zittend erbij.</span>
+        </div>
+
+        <div class="regelrij">
+          <span class="volgnr">4.</span>
+          <figure><img src="/images/rug/open-boek-zittend-line-v1.png"
+                       alt="Zittend wordt één arm opzij geopend terwijl de blik meedraait."/></figure>
+          <div class="tk">
+            <b>Open boek — zittend</b>
+            <span>Zittend · geen materiaal · 3 minuten</span>
+          </div>
+          <span class="zet">Toevoegen</span>
+        </div>
+
+        <div class="regelrij">
+          <span class="volgnr">5.</span>
+          <figure><img src="/images/rug/romp-zijwaarts-buigen-staand-line-v1.png"
+                       alt="Staand buigt de romp rustig zijwaarts, de hand glijdt langs het been."/></figure>
+          <div class="tk">
+            <b>Zijwaarts buigen — staand</b>
+            <span>Staand · geen materiaal · 2 minuten</span>
+          </div>
+          <span class="zet">Toevoegen</span>
+        </div>
+
+        <div class="regelrij">
+          <span class="volgnr">6.</span>
+          <figure><img src="/images/rug/knie-naar-borst-zittend-line-v1.png"
+                       alt="Zittend wordt één knie rustig richting de borst gebracht."/></figure>
+          <div class="tk">
+            <b>Knie naar borst — zittend</b>
+            <span>Zittend · stevige stoel · 2 minuten</span>
+          </div>
+          <span class="zet">Toevoegen</span>
+        </div>
+      </div>
+
+      <div class="paneel">
+        <div class="kopbalk">De verdeling van het vel</div>
+        <div class="body">
+          <h4>Hoeveel blijft er wit?</h4>
+          <p class="toel">Elke oefening kost 36 millimeter — vier regels van negen. Wat overblijft,
+            is van de patiënt. Onder de zeven schrijfregels stopt Fysiplan met toevoegen: dan is het
+            geen schrift meer maar een folder.</p>
+
+          <div class="verdeling">
+            <div class="strook" aria-hidden="true">
+              <i class="les" style="width:54%"></i><i class="wit" style="width:46%"></i>
+            </div>
+            <div class="onderregels">
+              <span class="b">Praktijk · 3 oefeningen</span>
+              <span class="p">Patiënt · 7 regels</span>
+            </div>
+          </div>
+
+          <dl class="telling">
+            <dt>Liniatuur</dt><dd>9 mm</dd>
+            <dt>Leesregel</dt><dd>12 pt / 1,5</dd>
+            <dt>Per oefening</dt><dd>36 mm — 4 regels</dd>
+            <dt>Ondergrens</dt><dd>7 schrijfregels</dd>
+          </dl>
+
+          <div class="marge-uitleg">
+            <b>In de kantlijn</b>
+            Wat u in de rode marge schrijft, komt op het vel terecht als handgeschreven notitie —
+            precies zoals u het typt, in uw eigen bewoording. Eén regel, en de kaart is van deze
+            patiënt en van niemand anders.
+          </div>
+
+          <button class="klaarknop" type="button">Vel klaarmaken · printen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>hetzelfde schrift in de hand: bovenaan wat u doet, onderaan een regel om zelf te vullen</p>
+    </div>
+
+    <div class="telefoon">
+      <div class="balk">
+        <b>Oefenschrift · week 34</b>
+        <span class="rechts">R. BOUMA</span>
+      </div>
+
+      <div class="dagenrand" role="group" aria-label="De dagen van de week">
+        <span class="af">Ma</span><span class="af">Di</span><span class="af">Wo</span>
+        <span class="nu">Do</span><span>Vr</span><span>Za</span><span>Zo</span>
+      </div>
+
+      <div class="bladinhoud">
+        <div class="beeldvak">
+          <span class="hoek">Oefening 1 van 3</span>
+          <img src="/images/rug/knie-naar-borst-liggend-line-v1.png"
+               alt="Liggend op de rug wordt één knie rustig naar de borst getrokken."/>
+        </div>
+
+        <div class="tekst">
+          <div class="kl">Donderdag 14 augustus</div>
+          <h3>Knie naar borst — liggend</h3>
+          <p>Ga op uw rug liggen met beide knieën gebogen. Trek één knie rustig naar uw borst,
+            houd hem twintig tellen vast en laat langzaam los. Wissel daarna van been.</p>
+        </div>
+
+        <dl class="dosisrij">
+          <div><dt>Vasthouden</dt><dd>20 tel</dd></div>
+          <div><dt>Per been</dt><dd>3×</dd></div>
+          <div><dt>Series</dt><dd>1</dd></div>
+        </dl>
+
+        <div class="notitie">
+          <div class="kl">Uw eigen regel</div>
+          <p class="vraag">Wat merkte u vandaag?</p>
+          <div class="veld gelinieerd">
+            <span class="hand">Ging beter dan gisteren, rechterkant nog stijf.</span>
+            <span class="leeg">Tik om verder te schrijven — of laat leeg.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="acties">
+        <button class="grootknop" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>
+          Gedaan — volgende oefening
+        </button>
+        <button class="grootknop leeg" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 16l10-10 2 2-10 10H6z"/></svg>
+          Het hele schrift teruglezen
+        </button>
+      </div>
+    </div>
+
+    <p class="mobtoel">Wie liever op papier schrijft, hoeft de app niet te openen: de regels op de A4
+      en de regels op het scherm zijn dezelfde regels. De therapeut leest bij de volgende afspraak
+      wat er staat — op het scherm of met de pen, dat maakt niet uit.</p>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>rode kantlijn, liniatuur van 9 mm, en een onderhelft die echt leeg is</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer r geen-print" style="top:16mm;left:calc(100% + 20px)">naam op het etiket</span>
+          <span class="wijzer r geen-print" style="top:96mm;left:calc(100% + 20px)">12 pt / 1,5 leesregel</span>
+          <span class="wijzer r geen-print" style="top:186mm;left:calc(100% + 20px)">hier begint de patiënt</span>
+          <span class="wijzer l geen-print" style="top:220mm;right:calc(100% + 20px)">liniatuur 9 mm</span>
+
+          <div class="gaatjes" aria-hidden="true"><i></i><i></i><i></i></div>
+
+          <div class="bladkop">
+            <h1>Oefenschrift</h1>
+            <div class="naam">
+              <div class="lab">Naam · week</div>
+              <b>Mevr. R. Bouma — week 34</b>
+              <div class="reg">Fysiotherapie Noorderlicht · Groningen · 050 — 313 44 21</div>
+            </div>
+          </div>
+
+          <div class="dagregel">
+            <span class="kl">Elke dag</span>
+            <p>Drie oefeningen, samen ongeveer acht minuten. Doe ze het liefst 's ochtends, op bed
+              of op een matje. Stop bij scherpe pijn.</p>
+          </div>
+
+          <div class="vanpraktijk">
+            <div class="deelkop">
+              <span class="t">Van de praktijk — wat u doet</span>
+              <span class="n">drie oefeningen</span>
+            </div>
+
+            <div class="oefreeks">
+
+              <div class="oef">
+                <div class="nr">1</div>
+                <figure><img src="/images/rug/knie-naar-borst-liggend-line-v1.png"
+                             alt="Liggend op de rug wordt één knie rustig naar de borst getrokken."/></figure>
+                <div class="tk">
+                  <h2>Knie naar borst — liggend</h2>
+                  <p>Ga op uw rug liggen met beide knieën gebogen. Trek één knie rustig naar uw borst,
+                    houd hem twintig tellen vast en laat langzaam los. Wissel van been.</p>
+                </div>
+                <dl class="ds">
+                  <div><dt>Vasthouden</dt><dd>20 tel</dd></div>
+                  <div><dt>Per been</dt><dd>3×</dd></div>
+                </dl>
+              </div>
+
+              <div class="oef">
+                <div class="nr">2</div>
+                <figure><img src="/images/rug/rug-bol-en-hol-met-lichte-weerstand-line-v1.png"
+                             alt="Op handen en knieën wordt de rug afwisselend bol en hol gemaakt."/></figure>
+                <div class="tk">
+                  <h2>Rug bol en hol</h2>
+                  <p>Steun op handen en knieën. Maak uw rug rustig bol als een kat en daarna weer
+                    hol, zonder te forceren. Adem rustig door.</p>
+                </div>
+                <dl class="ds">
+                  <div><dt>Herhalingen</dt><dd>10×</dd></div>
+                  <div><dt>Series</dt><dd>2</dd></div>
+                </dl>
+              </div>
+
+              <div class="oef">
+                <div class="nr">3</div>
+                <figure><img src="/images/rug/romp-draaien-zittend-line-v1.png"
+                             alt="Zittend op een stoel draait de romp rustig opzij."/></figure>
+                <div class="tk">
+                  <h2>Romp draaien — zittend</h2>
+                  <p>Zit rechtop op een stoel zonder armleuningen. Draai uw bovenlichaam rustig opzij
+                    en kom langzaam terug. Uw voeten blijven plat op de grond.</p>
+                </div>
+                <dl class="ds">
+                  <div><dt>Per kant</dt><dd>8×</dd></div>
+                  <div><dt>Series</dt><dd>1</dd></div>
+                </dl>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="vanpatient">
+            <div class="deelkop">
+              <span class="t">Van u — wat het deed</span>
+              <span class="n">neem dit vel mee naar de volgende afspraak</span>
+            </div>
+
+            <div class="vragen">
+              <div class="v">Welke dag ging het goed, en waaraan merkte u dat?</div>
+              <div class="v">Wat lukte niet, of deed meer pijn dan u verwachtte?</div>
+            </div>
+
+            <div class="schrijfvlak" aria-hidden="true"></div>
+
+            <div class="weekhokjes">
+              <div class="cel"><div class="d">Ma</div><div class="h"></div></div>
+              <div class="cel"><div class="d">Di</div><div class="h"></div></div>
+              <div class="cel"><div class="d">Wo</div><div class="h"></div></div>
+              <div class="cel"><div class="d">Do</div><div class="h"></div></div>
+              <div class="cel"><div class="d">Vr</div><div class="h"></div></div>
+              <div class="cel"><div class="d">Za</div><div class="h"></div></div>
+              <div class="cel"><div class="d">Zo</div><div class="h"></div></div>
+            </div>
+          </div>
+
+          <div class="voetregel">
+            <span><b>Vragen of pijn?</b> Bel de praktijk: 050 — 313 44 21, werkdagen 8 tot 17 uur.</span>
+            <span class="rechts">Fysiplan · week 34 · blad 1/1<br/>Volgende afspraak do 21-08 · 09.30</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <p class="printhulp geen-print">Ctrl/⌘+P geeft precies dit vel, zonder de rode wijzertjes. De toets
+      voor deze richting: leg de uitdraai na een week op tafel. Staat er iets geschreven, dan werkt het
+      concept. Is hij nog blanco, dan is de vraag te groot geweest — en dat is dan ook echt de vraag.
+      <br/><a class="kn" href="/ontwerp/">← Terug naar de galerij</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div>
+      <h4>Waar het vandaan komt</h4>
+      <p>Het Nederlandse schoolschrift: de blauwe liniatuur, de rode kantlijn, het etiket met NAAM
+        erop, de ringbandgaatjes in de marge. Verder het dagboek en het logboek — van scheepsjournaal
+        tot dieetdagboek — en de oude gewoonte in de zorg om een schriftje mee te geven waarin de
+        patiënt zelf bijhoudt hoe het ging. De vorm is bekend bij iedereen die ooit op school heeft
+        gezeten, en dat is precies waarom er geen uitleg bij hoeft.</p>
+    </div>
+    <div>
+      <h4>Wat het oplost</h4>
+      <ul>
+        <li>De therapeut heeft bij de volgende afspraak iets in handen dat over díe week gaat.</li>
+        <li>Bijhouden vraagt geen app, geen inlog, geen batterij — alleen een pen.</li>
+        <li>De patiënt schrijft in eigen woorden, in plaats van een cijfer van 1 tot 10 te kiezen.</li>
+        <li>Eén maat (9 mm) maakt het hele vel rustig zonder dat iemand ziet waarom.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Waar het wringt</h4>
+      <ul>
+        <li>De helft van een A4 weggeven is duur. Een praktijk die acht oefeningen wil meegeven,
+          kan dit concept niet gebruiken — dat is de prijs en die wordt hier bewust betaald.</li>
+        <li>Schrijven is voor sommige mensen een drempel: reuma, tremor, laaggeletterdheid. De lege
+          helft mag daarom nooit als verplichting worden gepresenteerd, en blanco moet blanco mogen
+          blijven.</li>
+        <li>Een schoolschrift kan betuttelend voelen voor wie de associatie met de klas niet warm vindt.</li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

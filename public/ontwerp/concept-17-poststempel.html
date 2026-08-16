@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 17 — Poststempel · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 17 — POSTSTEMPEL
+   Een oefenkaart is post. Iemand stuurt hem, iemand krijgt hem,
+   en hij hoort ergens te liggen waar je hem tegenkomt — niet in
+   een app achter een inlog. Dit concept behandelt de kaart dus
+   als poststuk, met de complete grammatica die de post in twee
+   eeuwen heeft opgebouwd:
+     · de ZEGEL — een klein, streng vlak met een cijfer erin;
+       Van Krimpen tekende ze sober in 1946, Crouwel gaf ze in
+       1976 zijn wiskundige raster. Hier draagt elke zegel een
+       dag van de week.
+     · de PERFORATIE — de tandjes die zeggen: hier mag je scheuren.
+       Wat geperforeerd is, is bedoeld om los te maken.
+     · de AFSTEMPELING — de ronde datumstempel met golfjes.
+       Dít is de vondst van dit concept: een dag die gedaan is,
+       wordt afgestempeld. Niet afgevinkt met een grijs vinkje in
+       een app, maar met een stempel die je zelf zet — met pen,
+       met een streep, of in de app met één tik. Een afgestempelde
+       zegel is verbruikt en dat ziet iedereen aan de overkant van
+       de tafel ook.
+     · het ADRESVLAK — naam groot, afzender klein linksboven, en
+       de regel "port betaald door de praktijk".
+   De week is dus geen rooster maar een velletje zegels. Zeven
+   stuks, en aan het eind van de week zie je in één blik hoe vaak
+   er post verstuurd is.
+   Waar het schuurt: het is vrolijk. Post is een warm, licht
+   sentimenteel beeld, en een deel van de patiënten is niet vrolijk.
+   De kaart mag daarom nergens grappig worden — de zegels zijn
+   streng, de instructie is nuchter, het rood is één rood.
+   Alles inline; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  --papier:#f7f3e8;         /* postpapier, licht geel gebroken */
+  --vlak:#fffdf7;
+  --inkt:#191614;
+  --inkt-2:#443f39;
+  --grijs:#7d766c;
+  --lijn:#d9d1bf;
+  --lijn-2:#e9e3d5;
+  --rood:#c8202d;           /* postrood: één rood, nergens een tweede */
+  --blauw:#153a86;          /* luchtpostblauw */
+  --stempel:#3b4a5c;        /* stempelinkt: nooit helemaal zwart */
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --grotesk:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:5px; --s2:10px; --s3:18px; --s4:30px; --s5:48px; --s6:76px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--papier);color:var(--inkt-2);font:400 17px/1.62 var(--sans);
+  -webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:var(--rood)}
+:focus-visible{outline:2.5px solid var(--blauw);outline-offset:3px}
+
+/* ---------- labchrome ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);
+  background:var(--inkt);color:var(--vlak);padding:11px 18px;font:500 13.5px/1 var(--sans)}
+.labbalk a{color:#e6dfd2;text-decoration:none;padding:7px 9px}
+.labbalk a:hover{background:var(--rood);color:#fff}
+.labbalk .nr{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#f0b8ba}
+.labbalk .rek{flex:1}
+.labbalk .terug{border:1px solid #4a443c}
+
+.scherm{padding:var(--s6) 24px}
+.scherm + .scherm{border-top:1px solid var(--lijn)}
+.binnen{max-width:1140px;margin:0 auto}
+.schermkop{display:flex;align-items:flex-end;gap:var(--s3);margin-bottom:var(--s5);
+  border-bottom:1px solid var(--lijn);padding-bottom:var(--s3)}
+.schermkop b{font:600 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  background:var(--rood);color:#fff;padding:6px 9px}
+.schermkop h2{font:600 27px/1.1 var(--sans);letter-spacing:-.03em;color:var(--inkt)}
+.schermkop p{flex:1;text-align:right;font-size:15px;color:var(--grijs)}
+@media (max-width:860px){.schermkop{flex-wrap:wrap}.schermkop p{text-align:left;flex-basis:100%}}
+
+.kap{font:600 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--grijs)}
+
+.kn{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font:600 15px/1 var(--sans);
+  padding:16px 22px;background:var(--rood);color:#fff;border:1.5px solid var(--rood)}
+.kn:hover{background:#a4171f;border-color:#a4171f}
+.kn.leeg{background:transparent;color:var(--inkt);border-color:var(--inkt)}
+.kn.leeg:hover{background:var(--inkt);color:var(--vlak)}
+
+/* ---------- de luchtpostrand: rood-blauwe schuine streepjes ---------- */
+.luchtrand{height:11px;
+  background:repeating-linear-gradient(-45deg,
+    var(--rood) 0 9px,#fff 9px 18px,var(--blauw) 18px 27px,#fff 27px 36px)}
+
+/* ---------- de zegel ----------
+   Een zegel is een streng rechthoekje met een cijfer, en langs de
+   rand de tandjes. De tandjes maken we met een gestippelde rand
+   plus een lichte schulp; dat drukt betrouwbaar af, ook op een
+   simpele kantoorprinter. */
+.zegel{position:relative;background:var(--vlak);border:2px dotted var(--lijn);padding:5px;
+  display:flex;flex-direction:column}
+.zegel .binnenvlak{border:1px solid currentColor;flex:1;display:flex;flex-direction:column;
+  justify-content:space-between;padding:8px 9px}
+.zegel .cijfer{font:600 30px/1 var(--grotesk);letter-spacing:-.05em}
+.zegel .dag{font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase}
+.zegel .land{font:600 8.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;opacity:.75}
+
+/* de afstempeling: cirkel met golfjes, altijd schuin, altijd half over de zegel */
+.afstempeling{position:absolute;z-index:4;color:var(--stempel);pointer-events:none}
+.afstempeling .cirkel{width:56px;height:56px;border:2.4px solid currentColor;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font:600 8.5px/1.25 var(--mono);letter-spacing:.05em;text-align:center;
+  transform:rotate(-11deg);background:transparent}
+.afstempeling .cirkel b{font-size:11.5px;font-weight:700;display:block;border-top:1.4px solid currentColor;
+  border-bottom:1.4px solid currentColor;padding:2px 0;margin:2px 0;width:100%}
+.afstempeling .golven{position:absolute;left:52px;top:20px;width:74px;height:22px;transform:rotate(-11deg);
+  background:repeating-linear-gradient(to bottom,currentColor 0 2.4px,transparent 2.4px 8px)}
+@media (max-width:520px){.afstempeling .golven{display:none}}
+
+/* ============================================================
+   1 · LANDING — de kaart als poststuk
+   ============================================================ */
+.hero{display:grid;grid-template-columns:1fr 452px;gap:var(--s5);align-items:start}
+@media (max-width:1040px){.hero{grid-template-columns:1fr;gap:var(--s4)}}
+.hero h1{font:600 clamp(35px,4.9vw,56px)/1.06 var(--sans);letter-spacing:-.04em;color:var(--inkt);
+  max-width:17ch;margin:var(--s3) 0}
+.hero .lead{font-size:19.5px;line-height:1.62;max-width:47ch}
+.hero .doen{display:flex;gap:12px;flex-wrap:wrap;margin-top:var(--s4)}
+.hero .kleinvoet{margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid var(--lijn);
+  font-size:14.5px;color:var(--grijs)}
+
+/* de envelop */
+.envelop{background:var(--vlak);border:1px solid var(--lijn);box-shadow:0 22px 60px rgba(25,22,20,.14);
+  overflow:hidden}
+.envelop .bovenrand{display:flex}
+.envelop .bovenrand .luchtrand{flex:1}
+.envelop .binnenkant{padding:var(--s4);display:grid;grid-template-columns:1fr 122px;gap:var(--s4)}
+@media (max-width:520px){.envelop .binnenkant{grid-template-columns:1fr}}
+.envelop .afzender{font:400 13px/1.5 var(--mono);letter-spacing:.04em;color:var(--grijs);
+  border-left:2.5px solid var(--rood);padding-left:11px}
+.envelop .afzender b{display:block;color:var(--inkt);font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;font-size:11px;margin-bottom:4px}
+.envelop .adres{margin-top:var(--s4);font:400 20px/1.5 var(--sans);color:var(--inkt)}
+.envelop .adres b{display:block;font-weight:600;font-size:25px;letter-spacing:-.025em;margin-bottom:5px}
+.envelop .adres span{display:block;color:var(--inkt-2);font-size:17px}
+.envelop .zegelhoek{position:relative}
+.envelop .zegelhoek .zegel{height:150px;color:var(--rood)}
+.envelop .zegelhoek .afstempeling{left:34px;top:64px}
+.envelop .onderrand{border-top:1px dashed var(--lijn);padding:14px var(--s4);display:flex;
+  align-items:center;gap:var(--s3);font:500 11px/1.4 var(--mono);letter-spacing:.12em;
+  text-transform:uppercase;color:var(--grijs);flex-wrap:wrap}
+.envelop .onderrand .portvrij{border:1.5px solid var(--inkt);color:var(--inkt);padding:5px 8px}
+
+/* drie regels */
+.regels{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s6)}
+@media (max-width:940px){.regels{grid-template-columns:1fr}}
+.regels .vak{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s4);position:relative}
+.regels .vak::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--rood)}
+.regels .vak h3{font:600 19px/1.24 var(--sans);letter-spacing:-.02em;color:var(--inkt);margin:var(--s2) 0}
+.regels .vak p{font-size:16px}
+.regels .vak .num{font:600 11px/1 var(--mono);letter-spacing:.2em;color:var(--rood)}
+
+/* het velletje van de week */
+.velblok{margin-top:var(--s6);background:var(--vlak);border:1px solid var(--lijn)}
+.velblok .kopbalk{padding:16px var(--s4);border-bottom:1px dashed var(--lijn);display:flex;
+  align-items:baseline;gap:var(--s3);flex-wrap:wrap}
+.velblok .kopbalk h3{font:600 21px/1.2 var(--sans);letter-spacing:-.025em;color:var(--inkt)}
+.velblok .kopbalk span{margin-left:auto;font:500 11px/1 var(--mono);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--grijs)}
+.velletje{padding:var(--s4);display:grid;grid-template-columns:repeat(7,1fr);gap:var(--s3)}
+@media (max-width:860px){.velletje{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:520px){.velletje{grid-template-columns:repeat(2,1fr)}}
+.velletje .plek{position:relative}
+.velletje .zegel{height:132px;color:var(--blauw)}
+.velletje .plek.gedaan .zegel{color:var(--rood)}
+.velletje .plek .afstempeling{left:14px;top:38px}
+.velletje .plek.komt .zegel{opacity:.42}
+.velblok .voetregel{border-top:1px dashed var(--lijn);padding:14px var(--s4);font-size:15px;color:var(--grijs)}
+
+/* ============================================================
+   2 · KIEZER — het loket
+   Oefeningen liggen als zegels in het velletje van de balie; wat
+   u kiest, scheurt u eruit. Rechts staat de frankering: het
+   gewicht van de week, uitgedrukt in minuten per dag.
+   ============================================================ */
+.kiezerlay{display:grid;grid-template-columns:1fr 344px;gap:var(--s4);align-items:start}
+@media (max-width:1040px){.kiezerlay{grid-template-columns:1fr}}
+
+.balie{background:var(--vlak);border:1px solid var(--lijn)}
+.balie .kopbalk{padding:15px var(--s3);border-bottom:1px solid var(--lijn);display:flex;
+  align-items:center;gap:var(--s3);background:var(--inkt);color:var(--vlak)}
+.balie .kopbalk b{font:600 16px/1 var(--sans);letter-spacing:-.01em}
+.balie .kopbalk .telling{margin-left:auto;font:500 10.5px/1 var(--mono);letter-spacing:.14em;
+  text-transform:uppercase;color:#c8bfae}
+
+.zegelvel{padding:var(--s3);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3)}
+@media (max-width:820px){.zegelvel{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.zegelvel{grid-template-columns:1fr}}
+
+.oefzegel{position:relative;background:var(--vlak);border:2px dotted var(--lijn);padding:5px;color:var(--blauw)}
+.oefzegel .binnenvlak{border:1px solid currentColor;padding:11px;display:flex;flex-direction:column;gap:9px;
+  height:100%}
+.oefzegel .bovenregel{display:flex;align-items:baseline;gap:8px;
+  font:600 9.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase}
+.oefzegel .bovenregel .waarde{margin-left:auto;font-size:15px;letter-spacing:-.02em}
+.oefzegel figure{background:#fff;border:1px solid var(--lijn-2);height:126px;display:flex;
+  align-items:center;justify-content:center;padding:6px}
+.oefzegel figure img{max-height:112px;width:auto}
+.oefzegel .naam{font:600 15.5px/1.28 var(--sans);letter-spacing:-.018em;color:var(--inkt)}
+.oefzegel .sub{font-size:13.5px;color:var(--grijs)}
+.oefzegel .zet{margin-top:auto;text-align:center;font:600 13px/1 var(--sans);padding:11px;
+  border:1.5px solid var(--inkt);color:var(--inkt);background:transparent}
+.oefzegel.aan{color:var(--rood);background:#fffaf4}
+.oefzegel.aan .zet{background:var(--rood);border-color:var(--rood);color:#fff}
+.oefzegel.aan .afstempeling{left:16px;top:26px}
+
+/* het loketpaneel */
+.loket{background:var(--vlak);border:1px solid var(--lijn);position:sticky;top:70px}
+.loket .kopbalk{background:var(--papier);border-bottom:1px solid var(--lijn);padding:14px var(--s3);
+  font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs)}
+.loket .body{padding:var(--s3)}
+.loket h4{font:600 17px/1.28 var(--sans);letter-spacing:-.02em;color:var(--inkt)}
+.loket p.toel{font-size:14.5px;color:var(--grijs);margin-top:7px}
+
+.weegschaal{margin-top:var(--s3);border:1.5px solid var(--inkt);padding:var(--s3);background:var(--papier)}
+.weegschaal .groot{font:600 40px/1 var(--sans);letter-spacing:-.04em;color:var(--inkt)}
+.weegschaal .groot span{font-size:17px;font-weight:500;color:var(--grijs);letter-spacing:0}
+.weegschaal .balk{margin-top:var(--s3);height:16px;border:1.5px solid var(--inkt);display:flex;background:#fff}
+.weegschaal .balk i{display:block;background:var(--rood);border-right:1.5px solid var(--inkt)}
+.weegschaal .balk i:last-child{border-right:0}
+.weegschaal .schaalregel{display:flex;justify-content:space-between;margin-top:8px;
+  font:500 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--grijs)}
+
+.portlijst{margin-top:var(--s3);border-top:1px solid var(--lijn);padding-top:var(--s3)}
+.portlijst .rij{display:flex;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px dotted var(--lijn)}
+.portlijst .rij:last-child{border-bottom:0}
+.portlijst .rij .nm{flex:1;font-size:15px;color:var(--inkt)}
+.portlijst .rij .wa{font:600 14px/1 var(--mono);color:var(--inkt)}
+.portlijst .totaal{display:flex;align-items:baseline;gap:10px;padding-top:12px;margin-top:6px;
+  border-top:2px solid var(--inkt);font:600 16px/1 var(--sans);color:var(--inkt)}
+.portlijst .totaal .wa{margin-left:auto;font-family:var(--mono);font-size:16px}
+
+.postbriefje{margin-top:var(--s3);border-left:3px solid var(--blauw);background:#f2f5fb;padding:13px 15px;
+  font-size:14.5px;color:var(--inkt-2)}
+.postbriefje b{display:block;font:600 10.5px/1 var(--mono);letter-spacing:.15em;text-transform:uppercase;
+  color:var(--blauw);margin-bottom:7px}
+
+.verzendknop{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:var(--s3);
+  background:var(--inkt);color:var(--vlak);border:0;padding:18px;font:600 16px/1 var(--sans)}
+
+/* ============================================================
+   3 · CLIËNTKAART — de ansicht in de hand
+   ============================================================ */
+.telefoon{max-width:412px;margin:0 auto;background:var(--vlak);border:1px solid var(--lijn);
+  box-shadow:0 26px 70px rgba(25,22,20,.16)}
+.telefoon .balk{background:var(--inkt);color:var(--vlak);padding:14px 18px;display:flex;align-items:center;gap:11px}
+.telefoon .balk b{font:600 15px/1 var(--sans)}
+.telefoon .balk .rechts{margin-left:auto;font:500 10px/1 var(--mono);letter-spacing:.14em;color:#c8bfae}
+
+.weekstrip{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;padding:14px 16px;
+  border-bottom:1px dashed var(--lijn);background:var(--papier)}
+.weekstrip .mini{position:relative;border:1.5px dotted var(--lijn);background:var(--vlak);
+  padding:7px 3px;text-align:center;color:var(--blauw)}
+.weekstrip .mini .d{font:600 9px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.weekstrip .mini .c{font:600 17px/1 var(--grotesk);letter-spacing:-.04em;margin-top:5px}
+.weekstrip .mini.af{color:var(--rood)}
+.weekstrip .mini.af::after{content:"";position:absolute;inset:3px;border:2px solid var(--stempel);
+  border-radius:50%;opacity:.55}
+.weekstrip .mini.nu{background:var(--rood);color:#fff;border-color:var(--rood);border-style:solid}
+
+.ansicht{padding:var(--s3) 18px 0}
+.ansicht .beeldvak{border:1px solid var(--lijn);background:#fff;padding:12px;position:relative}
+.ansicht .beeldvak img{max-height:250px;width:auto;margin:0 auto}
+.ansicht .beeldvak .hoek{position:absolute;right:10px;top:10px;color:var(--rood);
+  font:600 9.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  border:1.5px solid currentColor;padding:5px 7px}
+
+.ansicht .tekst{padding:var(--s3) 0 var(--s4)}
+.ansicht .tekst .kl{font:600 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--rood)}
+.ansicht .tekst h3{font:600 25px/1.2 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin:11px 0 var(--s2)}
+.ansicht .tekst p{font-size:17.5px;line-height:1.62}
+
+.dosisrij{display:flex;border-top:1px solid var(--lijn);border-bottom:1px solid var(--lijn)}
+.dosisrij div{flex:1;padding:14px 10px;text-align:center;border-left:1px dotted var(--lijn)}
+.dosisrij div:first-child{border-left:0}
+.dosisrij dt{font:500 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
+.dosisrij dd{font:600 23px/1 var(--sans);color:var(--inkt);margin-top:8px;letter-spacing:-.02em}
+
+.acties{padding:var(--s3) 18px var(--s4);display:flex;flex-direction:column;gap:11px}
+.grootknop{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;
+  background:var(--rood);color:#fff;border:1.5px solid var(--rood);padding:19px 14px;font:600 17px/1 var(--sans)}
+.grootknop.leeg{background:transparent;color:var(--inkt);border-color:var(--inkt)}
+.grootknop svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;
+  stroke-linecap:round;stroke-linejoin:round}
+.mobtoel{max-width:460px;margin:var(--s4) auto 0;text-align:center;font-size:15.5px;color:var(--grijs)}
+
+/* ============================================================
+   4 · DE PRINTKAART — A4 staand, het poststuk zelf
+   Bovenaan het adresvlak, rechtsboven de zegelstrook met zeven
+   dagen. Elke dag die gedaan is, stempelt de patiënt zelf af:
+   een streep, een kruis, een datum — dat mag ruw, dat is het punt.
+   ============================================================ */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){.bladschaal{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+
+.blad{width:210mm;height:297mm;background:#fffdf7;color:#191614;padding:10mm 11mm 8mm;
+  display:flex;flex-direction:column;font-family:var(--sans);position:relative;
+  box-shadow:0 26px 70px rgba(25,22,20,.28)}
+
+.blad .luchtstreep{height:3.4mm;flex:none;
+  background:repeating-linear-gradient(-45deg,
+    #c8202d 0 3mm,#fffdf7 3mm 6mm,#153a86 6mm 9mm,#fffdf7 9mm 12mm)}
+
+.blad .postkop{display:flex;gap:6mm;align-items:flex-start;padding-top:4mm}
+.blad .postkop .adreskant{flex:1;min-width:0}
+.blad .postkop .afz{font:500 8pt/1.5 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:#6f695f;
+  border-left:1.6pt solid #c8202d;padding-left:2.4mm}
+.blad .postkop .afz b{display:block;color:#191614;font-weight:600}
+.blad .postkop .aan{margin-top:4mm}
+.blad .postkop .aan .kl{font:600 7.5pt/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#8a8377}
+.blad .postkop .aan h1{font:600 21pt/1.06 var(--sans);letter-spacing:-.035em;margin-top:1.6mm}
+.blad .postkop .aan .regel{font:400 11pt/1.42 var(--sans);color:#3d3830;margin-top:1.6mm}
+
+/* de zegelstrook: zeven dagen, geperforeerd, om zelf af te stempelen */
+.blad .strook{width:64mm;flex:none;border:1pt dashed #b9b0a0;padding:2mm}
+.blad .strook .kop{font:600 7.5pt/1.2 var(--mono);letter-spacing:.13em;text-transform:uppercase;
+  color:#6f695f;text-align:center;padding-bottom:1.6mm;border-bottom:.8pt dotted #b9b0a0}
+.blad .strook .vel{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4mm;margin-top:1.8mm}
+.blad .strook .z{border:1pt dotted #b9b0a0;padding:1mm;background:#fff}
+.blad .strook .z .in{border:.8pt solid #153a86;color:#153a86;padding:1.2mm 1mm;text-align:center}
+.blad .strook .z .d{font:600 7pt/1 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.blad .strook .z .c{font:600 11.5pt/1 var(--grotesk);letter-spacing:-.05em;margin-top:1mm}
+.blad .strook .z .h{height:3.2mm}
+.blad .strook .uitleg{font:400 7.5pt/1.34 var(--sans);color:#6f695f;margin-top:1.8mm;text-align:center}
+
+.blad .opdracht{margin-top:4mm;border-top:1.6pt solid #191614;border-bottom:.8pt solid #191614;
+  padding:2.8mm 0}
+.blad .opdracht .kl{font:600 8pt/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#8a8377}
+.blad .opdracht p{font:400 12.5pt/1.42 var(--sans);margin-top:1.8mm;max-width:62ch}
+
+.blad .zending{margin-top:4mm;flex:1;display:flex;flex-direction:column;gap:3.4mm}
+.blad .stuk{border:1pt solid #c9c1b0;display:flex;align-items:stretch;flex:1;position:relative;background:#fff}
+.blad .stuk .beeld{width:37mm;flex:none;border-right:1pt dotted #c9c1b0;display:flex;align-items:center;
+  justify-content:center;padding:2.4mm}
+.blad .stuk .beeld img{max-width:100%;max-height:35mm}
+.blad .stuk .nrzegel{position:absolute;left:2mm;top:2mm;border:1pt dotted #c8202d;padding:.8mm;
+  background:#fff}
+.blad .stuk .nrzegel .in{border:.8pt solid #c8202d;color:#c8202d;padding:.8mm 1.6mm;
+  font:600 12pt/1 var(--grotesk);letter-spacing:-.04em}
+.blad .stuk .tekst{flex:1;padding:3mm 4mm;display:flex;flex-direction:column;justify-content:center}
+.blad .stuk .tekst .kl{font:600 7.5pt/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#8a8377}
+.blad .stuk .tekst h2{font:600 15pt/1.14 var(--sans);letter-spacing:-.028em;margin-top:1.4mm}
+/* de leesregel — 12,5 pt met ruime interlinie; hier leest de
+   patiënt echt, dus hier wint rust van elk postaal effect */
+.blad .stuk .tekst p{font:400 12.5pt/1.46 var(--sans);color:#2d2822;margin-top:2mm}
+.blad .stuk .dosis{width:30mm;flex:none;border-left:1pt dotted #c9c1b0;display:flex;flex-direction:column}
+.blad .stuk .dosis div{flex:1;border-top:1pt dotted #e0d9c9;padding:1.8mm 2.6mm;display:flex;
+  flex-direction:column;justify-content:center}
+.blad .stuk .dosis div:first-child{border-top:0}
+.blad .stuk .dosis dt{font:600 7.5pt/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#8a8377}
+.blad .stuk .dosis dd{font:600 13.5pt/1 var(--sans);margin-top:1.2mm}
+
+.blad .voet{margin-top:3.6mm;display:flex;gap:4mm;align-items:stretch}
+.blad .voet .retour{flex:1;border:1pt solid #191614;padding:2.6mm 3mm}
+.blad .voet .retour h3{font:600 8pt/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#8a8377;
+  margin-bottom:1.6mm}
+.blad .voet .retour p{font:400 11pt/1.4 var(--sans)}
+.blad .voet .retour p b{font-weight:600;font-size:12.5pt}
+.blad .voet .stempelplek{width:58mm;flex:none;border:1pt dashed #b9b0a0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:2.6mm}
+.blad .voet .stempelplek .rond{width:22mm;height:22mm;border:1.4pt solid #3b4a5c;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;color:#3b4a5c;
+  font:600 7.5pt/1.3 var(--mono);letter-spacing:.06em;transform:rotate(-9deg)}
+.blad .voet .stempelplek .rond b{display:block;font-size:10pt;border-top:1pt solid currentColor;
+  border-bottom:1pt solid currentColor;padding:.8mm 0;margin:.8mm 0;width:84%}
+.blad .voet .stempelplek .bij{font:400 7.5pt/1.34 var(--sans);color:#6f695f;margin-top:1.8mm}
+
+.blad .colofon{margin-top:3mm;padding-top:2.4mm;border-top:.8pt dotted #b9b0a0;display:flex;
+  gap:5mm;align-items:baseline;font:500 7.5pt/1.5 var(--mono);letter-spacing:.11em;text-transform:uppercase;
+  color:#6f695f}
+.blad .colofon b{color:#191614;font-weight:600}
+.blad .colofon .rechts{margin-left:auto}
+
+.wijzer{position:absolute;z-index:5;background:var(--rood);color:#fff;
+  font:600 10px/1.25 var(--mono);letter-spacing:.05em;padding:5px 7px;white-space:nowrap}
+.wijzer::after{content:"";position:absolute;background:var(--rood)}
+.wijzer.r::after{left:100%;top:50%;width:18px;height:1.5px}
+.wijzer.l::after{right:100%;top:50%;width:18px;height:1.5px}
+@media (max-width:1060px){.wijzer{display:none}}
+
+.printhulp{max-width:700px;margin:var(--s4) auto 0;text-align:center;font-size:16px;color:var(--grijs)}
+.printhulp .kn{margin-top:var(--s3)}
+
+footer.uitleiding{background:var(--inkt);color:#ded6c8;padding:var(--s5) 24px var(--s6)}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:#f0b8ba;margin-bottom:13px}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:9px}
+footer.uitleiding li::before{content:"—";position:absolute;left:0;color:#8d8477}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;margin:0 !important;
+    break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 17</span>
+  <strong style="font:600 15px/1 var(--sans);color:#fffdf7">Poststempel</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>de kaart is post: verstuurd door de praktijk, afgestempeld door de patiënt</p>
+    </div>
+
+    <div class="hero">
+      <div>
+        <div class="kap">Fysiplan · poststempel</div>
+        <h1>Een dag die u doet, stempelt u af.</h1>
+        <p class="lead">Een oefenkaart is post. Iemand stuurt hem, iemand krijgt hem, en hij hoort te
+          liggen waar u hem tegenkomt — op de koelkast, niet in een app achter een inlog. De week is
+          een velletje van zeven zegels. Wie zijn oefeningen gedaan heeft, zet er een stempel op:
+          met pen, met een streep, of met één tik. Een afgestempelde zegel is verbruikt, en dat ziet
+          u van de andere kant van de tafel.</p>
+        <div class="doen">
+          <a class="kn" href="#printkaart">Bekijk de A4</a>
+          <a class="kn leeg" href="#kiezer">Zo kiest de praktijk</a>
+        </div>
+        <p class="kleinvoet">Zegel en perforatie komen uit de Nederlandse posttraditie: de sobere
+          cijferzegels van Van Krimpen uit 1946 en het wiskundige raster dat Crouwel er in 1976 van
+          maakte. Van beide leent dit concept dezelfde les — een klein vlak wordt streng, of het
+          wordt rommel.</p>
+      </div>
+
+      <div class="envelop">
+        <div class="bovenrand"><div class="luchtrand"></div></div>
+        <div class="binnenkant">
+          <div>
+            <div class="afzender">
+              <b>Afzender</b>
+              Fysiotherapie Noorderlicht<br/>
+              Praktijk aan het Reitdiep<br/>
+              9718 CG Groningen
+            </div>
+            <div class="adres">
+              <b>Mevr. A. Veenstra</b>
+              <span>Oefenkaart week 34</span>
+              <span>Drie oefeningen · elke dag</span>
+            </div>
+          </div>
+          <div class="zegelhoek">
+            <div class="zegel">
+              <div class="binnenvlak">
+                <div>
+                  <div class="land">Fysiplan</div>
+                  <div class="cijfer">34</div>
+                </div>
+                <div class="dag">Week</div>
+              </div>
+            </div>
+            <div class="afstempeling" aria-hidden="true">
+              <div class="cirkel">GRONINGEN<b>14 VIII</b>2026</div>
+              <div class="golven"></div>
+            </div>
+          </div>
+        </div>
+        <div class="onderrand">
+          <span class="portvrij">Port betaald door de praktijk</span>
+          <span>Bezorging: mee naar huis · of per e-mail</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="regels">
+      <div class="vak">
+        <div class="num">01</div>
+        <h3>Afstempelen in plaats van afvinken</h3>
+        <p>Een vinkje is een administratieve handeling; een stempel is een gebaar. Het verschil is
+          klein en het effect niet: wat afgestempeld is, is verbruikt en komt niet terug. Zeven zegels
+          per week maken op zondag in één blik zichtbaar hoe de week ging — zonder cijfer, zonder
+          percentage, zonder oordeel.</p>
+      </div>
+      <div class="vak">
+        <div class="num">02</div>
+        <h3>Wat geperforeerd is, mag los</h3>
+        <p>De tandjes zeggen waar u mag scheuren. De zegelstrook op de A4 is bewust los te trekken:
+          wie het hele vel te veel vindt, houdt de strook aan de koelkast en legt de rest in een la.
+          Het papier vertelt zelf hoe je het mag gebruiken.</p>
+      </div>
+      <div class="vak">
+        <div class="num">03</div>
+        <h3>Eén rood, en verder niets</h3>
+        <p>Post is vrolijk, en vrolijk is gevaarlijk in de zorg: niet iedereen die deze kaart krijgt,
+          voelt zich licht. Daarom is er precies één rood, één blauw in de luchtpostrand, en verder
+          zwarte tekst op postpapier. De vorm mag warm zijn; de toon blijft nuchter.</p>
+      </div>
+    </div>
+
+    <div class="velblok">
+      <div class="kopbalk">
+        <h3>Het velletje van week 34</h3>
+        <span>Vier afgestempeld · drie te gaan</span>
+      </div>
+      <div class="velletje">
+        <div class="plek gedaan">
+          <div class="zegel"><div class="binnenvlak">
+            <div><div class="land">Fysiplan</div><div class="cijfer">1</div></div>
+            <div class="dag">Maandag</div>
+          </div></div>
+          <div class="afstempeling" aria-hidden="true"><div class="cirkel">GRON<b>11 VIII</b>2026</div></div>
+        </div>
+        <div class="plek gedaan">
+          <div class="zegel"><div class="binnenvlak">
+            <div><div class="land">Fysiplan</div><div class="cijfer">2</div></div>
+            <div class="dag">Dinsdag</div>
+          </div></div>
+          <div class="afstempeling" aria-hidden="true"><div class="cirkel">GRON<b>12 VIII</b>2026</div></div>
+        </div>
+        <div class="plek gedaan">
+          <div class="zegel"><div class="binnenvlak">
+            <div><div class="land">Fysiplan</div><div class="cijfer">3</div></div>
+            <div class="dag">Woensdag</div>
+          </div></div>
+          <div class="afstempeling" aria-hidden="true"><div class="cirkel">GRON<b>13 VIII</b>2026</div></div>
+        </div>
+        <div class="plek gedaan">
+          <div class="zegel"><div class="binnenvlak">
+            <div><div class="land">Fysiplan</div><div class="cijfer">4</div></div>
+            <div class="dag">Donderdag</div>
+          </div></div>
+          <div class="afstempeling" aria-hidden="true"><div class="cirkel">GRON<b>14 VIII</b>2026</div></div>
+        </div>
+        <div class="plek komt">
+          <div class="zegel"><div class="binnenvlak">
+            <div><div class="land">Fysiplan</div><div class="cijfer">5</div></div>
+            <div class="dag">Vrijdag</div>
+          </div></div>
+        </div>
+        <div class="plek komt">
+          <div class="zegel"><div class="binnenvlak">
+            <div><div class="land">Fysiplan</div><div class="cijfer">6</div></div>
+            <div class="dag">Zaterdag</div>
+          </div></div>
+        </div>
+        <div class="plek komt">
+          <div class="zegel"><div class="binnenvlak">
+            <div><div class="land">Fysiplan</div><div class="cijfer">7</div></div>
+            <div class="dag">Zondag</div>
+          </div></div>
+        </div>
+      </div>
+      <div class="voetregel">Een gemiste dag blijft gewoon een blanco zegel. Er verschijnt geen rode
+        streep, geen gebroken reeks, geen aanmoediging. Wie er drie doet, heeft er drie gedaan.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>Oefeningen kiezen</h2>
+      <p>het loket: oefeningen liggen als zegels op de balie, en rechts wordt de zending gewogen</p>
+    </div>
+
+    <div class="kiezerlay">
+      <div class="balie">
+        <div class="kopbalk">
+          <b>Onderste extremiteit — knie en enkel</b>
+          <span class="telling">27 zegels · 3 gekozen</span>
+        </div>
+
+        <div class="zegelvel">
+
+          <div class="oefzegel aan">
+            <div class="binnenvlak">
+              <div class="bovenregel"><span>Fysiplan</span><span class="waarde">3 min</span></div>
+              <figure>
+                <img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+                     alt="Vanaf een stoel wordt rustig opgestaan en weer gaan zitten."/>
+              </figure>
+              <div class="naam">Opstaan uit de stoel</div>
+              <div class="sub">Staand · stevige stoel · 3 minuten</div>
+              <div class="zet">In de zending</div>
+            </div>
+            <div class="afstempeling" aria-hidden="true"><div class="cirkel">GRON<b>14 VIII</b>26</div></div>
+          </div>
+
+          <div class="oefzegel aan">
+            <div class="binnenvlak">
+              <div class="bovenregel"><span>Fysiplan</span><span class="waarde">2 min</span></div>
+              <figure>
+                <img src="/images/onderste-extremiteit/calf-raises-line-v1.png"
+                     alt="Staand komen de hielen rustig omhoog en weer omlaag."/>
+              </figure>
+              <div class="naam">Op de tenen komen</div>
+              <div class="sub">Staand · aanrecht als steun · 2 minuten</div>
+              <div class="zet">In de zending</div>
+            </div>
+            <div class="afstempeling" aria-hidden="true"><div class="cirkel">GRON<b>14 VIII</b>26</div></div>
+          </div>
+
+          <div class="oefzegel aan">
+            <div class="binnenvlak">
+              <div class="bovenregel"><span>Fysiplan</span><span class="waarde">4 min</span></div>
+              <figure>
+                <img src="/images/onderste-extremiteit/been-pendelen-line-v1.png"
+                     alt="Staand bij een steun zwaait één been rustig heen en weer."/>
+              </figure>
+              <div class="naam">Been pendelen</div>
+              <div class="sub">Staand · steun nodig · 4 minuten</div>
+              <div class="zet">In de zending</div>
+            </div>
+            <div class="afstempeling" aria-hidden="true"><div class="cirkel">GRON<b>14 VIII</b>26</div></div>
+          </div>
+
+          <div class="oefzegel">
+            <div class="binnenvlak">
+              <div class="bovenregel"><span>Fysiplan</span><span class="waarde">3 min</span></div>
+              <figure>
+                <img src="/images/onderste-extremiteit/enkel-optrekken-zittend-actief-line-v1.png"
+                     alt="Zittend wordt de voet rustig naar het lichaam toe opgetrokken."/>
+              </figure>
+              <div class="naam">Enkel optrekken — zittend</div>
+              <div class="sub">Zittend · geen materiaal · 3 minuten</div>
+              <div class="zet">Toevoegen</div>
+            </div>
+          </div>
+
+          <div class="oefzegel">
+            <div class="binnenvlak">
+              <div class="bovenregel"><span>Fysiplan</span><span class="waarde">4 min</span></div>
+              <figure>
+                <img src="/images/onderste-extremiteit/clamshell-zijlig-line-v1.png"
+                     alt="Op de zij liggend gaat de bovenste knie omhoog terwijl de voeten samenblijven."/>
+              </figure>
+              <div class="naam">Clamshell — zijlig</div>
+              <div class="sub">Liggend · matje nodig · 4 minuten</div>
+              <div class="zet">Toevoegen</div>
+            </div>
+          </div>
+
+          <div class="oefzegel">
+            <div class="binnenvlak">
+              <div class="bovenregel"><span>Fysiplan</span><span class="waarde">5 min</span></div>
+              <figure>
+                <img src="/images/onderste-extremiteit/bridges-kicker-line-v1.png"
+                     alt="Liggend op de rug komt het bekken omhoog en strekt één been."/>
+              </figure>
+              <div class="naam">Bruggetje met beenstrek</div>
+              <div class="sub">Liggend · matje nodig · 5 minuten</div>
+              <div class="zet">Toevoegen</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="loket">
+        <div class="kopbalk">Het loket — de zending wegen</div>
+        <div class="body">
+          <h4>Hoe zwaar is deze week?</h4>
+          <p class="toel">Geen puntensysteem en geen score: alleen de eerlijke optelsom van wat u
+            iemand elke dag vraagt. Boven de tien minuten wordt een kaart een opdracht in plaats van
+            een gewoonte.</p>
+
+          <div class="weegschaal">
+            <div class="groot">9 <span>minuten per dag</span></div>
+            <div class="balk" aria-hidden="true">
+              <i style="width:33%"></i><i style="width:22%"></i><i style="width:45%;background:#e8a2a6"></i>
+            </div>
+            <div class="schaalregel"><span>0 min</span><span>grens: 10 min</span><span>20 min</span></div>
+          </div>
+
+          <div class="portlijst">
+            <div class="rij"><span class="nm">Opstaan uit de stoel</span><span class="wa">3 min</span></div>
+            <div class="rij"><span class="nm">Op de tenen komen</span><span class="wa">2 min</span></div>
+            <div class="rij"><span class="nm">Been pendelen</span><span class="wa">4 min</span></div>
+            <div class="totaal"><span>Zending</span><span class="wa">9 min</span></div>
+          </div>
+
+          <div class="postbriefje">
+            <b>Bericht van het loket</b>
+            Er past nog één zegel bij zonder dat de kaart een tweede vel wordt. Daarna gaat de
+            zegelstrook eraf en dat is zonde: juist die strook blijft aan de koelkast hangen.
+          </div>
+
+          <button class="verzendknop" type="button">Zending klaarmaken · printen of mailen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>dezelfde zeven zegels, nu in de hand — en één knop die vandaag afstempelt</p>
+    </div>
+
+    <div class="telefoon">
+      <div class="balk">
+        <b>Oefenkaart week 34</b>
+        <span class="rechts">A. VEENSTRA</span>
+      </div>
+
+      <div class="weekstrip" role="group" aria-label="De week in zegels">
+        <div class="mini af"><div class="d">Ma</div><div class="c">1</div></div>
+        <div class="mini af"><div class="d">Di</div><div class="c">2</div></div>
+        <div class="mini af"><div class="d">Wo</div><div class="c">3</div></div>
+        <div class="mini nu"><div class="d">Do</div><div class="c">4</div></div>
+        <div class="mini"><div class="d">Vr</div><div class="c">5</div></div>
+        <div class="mini"><div class="d">Za</div><div class="c">6</div></div>
+        <div class="mini"><div class="d">Zo</div><div class="c">7</div></div>
+      </div>
+
+      <div class="ansicht">
+        <div class="beeldvak">
+          <span class="hoek">1 van 3</span>
+          <img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+               alt="Vanaf een stevige stoel wordt rustig opgestaan en weer gaan zitten."/>
+        </div>
+
+        <div class="tekst">
+          <div class="kl">Donderdag 14 augustus</div>
+          <h3>Opstaan uit de stoel</h3>
+          <p>Ga voor op de stoel zitten met uw voeten plat op de grond. Kom rustig omhoog zonder uw
+            handen te gebruiken, en ga net zo rustig weer zitten.</p>
+        </div>
+
+        <dl class="dosisrij">
+          <div><dt>Herhalingen</dt><dd>8×</dd></div>
+          <div><dt>Series</dt><dd>2</dd></div>
+          <div><dt>Rust</dt><dd>1 min</dd></div>
+        </dl>
+      </div>
+
+      <div class="acties">
+        <button class="grootknop" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M8.5 12h7"/></svg>
+          Vandaag afstempelen
+        </button>
+        <button class="grootknop leeg" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          Volgende oefening
+        </button>
+      </div>
+    </div>
+
+    <p class="mobtoel">Eén tik zet de datumstempel op de zegel van vandaag. Er volgt geen felicitatie,
+      geen confetti en geen reeks die u kunt breken — alleen een zegel die verbruikt is. Wie de app
+      niet gebruikt, doet exact hetzelfde met een pen op de papieren strook.</p>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>het poststuk zelf: adresvlak, zegelstrook om af te scheuren, drie zendingen en een stempelplek</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer r geen-print" style="top:30mm;left:calc(100% + 20px)">zegelstrook — scheur hier af</span>
+          <span class="wijzer r geen-print" style="top:132mm;left:calc(100% + 20px)">12,5 pt leesregel</span>
+          <span class="wijzer l geen-print" style="top:18mm;right:calc(100% + 20px)">adresvlak: naam groot</span>
+          <span class="wijzer l geen-print" style="top:258mm;right:calc(100% + 20px)">plek voor de datum</span>
+
+          <div class="luchtstreep" aria-hidden="true"></div>
+
+          <div class="postkop">
+            <div class="adreskant">
+              <div class="afz">
+                <b>Fysiotherapie Noorderlicht</b>
+                Praktijk aan het Reitdiep · 9718 CG Groningen · 050 — 313 44 21
+              </div>
+              <div class="aan">
+                <div class="kl">Aan</div>
+                <h1>Mevr. A. Veenstra</h1>
+                <div class="regel">Oefenkaart week 34 · drie oefeningen · elke dag ongeveer negen minuten</div>
+              </div>
+            </div>
+
+            <div class="strook">
+              <div class="kop">De week — stempel af wat u deed</div>
+              <div class="vel">
+                <div class="z"><div class="in"><div class="d">Ma</div><div class="c">1</div><div class="h"></div></div></div>
+                <div class="z"><div class="in"><div class="d">Di</div><div class="c">2</div><div class="h"></div></div></div>
+                <div class="z"><div class="in"><div class="d">Wo</div><div class="c">3</div><div class="h"></div></div></div>
+                <div class="z"><div class="in"><div class="d">Do</div><div class="c">4</div><div class="h"></div></div></div>
+                <div class="z"><div class="in"><div class="d">Vr</div><div class="c">5</div><div class="h"></div></div></div>
+                <div class="z"><div class="in"><div class="d">Za</div><div class="c">6</div><div class="h"></div></div></div>
+                <div class="z"><div class="in"><div class="d">Zo</div><div class="c">7</div><div class="h"></div></div></div>
+                <div class="z"><div class="in" style="border-style:dotted"><div class="d">Extra</div><div class="c">+</div><div class="h"></div></div></div>
+              </div>
+              <div class="uitleg">Een streep, een kruis of de datum — hoe u wilt. Blanco is ook een
+                antwoord.</div>
+            </div>
+          </div>
+
+          <div class="opdracht">
+            <div class="kl">Wat u elke dag doet</div>
+            <p>Drie oefeningen, samen ongeveer negen minuten. Doe ze bij het aanrecht of bij een
+              stevige stoel, op een moment dat u toch al in de keuken bent. Stop bij scherpe pijn en
+              bel dan de praktijk.</p>
+          </div>
+
+          <div class="zending">
+
+            <div class="stuk">
+              <div class="nrzegel"><div class="in">1</div></div>
+              <div class="beeld">
+                <img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+                     alt="Vanaf een stevige stoel wordt rustig opgestaan en weer gaan zitten."/>
+              </div>
+              <div class="tekst">
+                <div class="kl">Eerste oefening</div>
+                <h2>Opstaan uit de stoel</h2>
+                <p>Ga voor op de stoel zitten met uw voeten plat op de grond. Kom rustig omhoog
+                  zonder uw handen te gebruiken, en ga net zo rustig weer zitten.</p>
+              </div>
+              <dl class="dosis">
+                <div><dt>Herhalingen</dt><dd>8×</dd></div>
+                <div><dt>Series</dt><dd>2</dd></div>
+              </dl>
+            </div>
+
+            <div class="stuk">
+              <div class="nrzegel"><div class="in">2</div></div>
+              <div class="beeld">
+                <img src="/images/onderste-extremiteit/calf-raises-line-v1.png"
+                     alt="Staand bij het aanrecht komen de hielen rustig omhoog en weer omlaag."/>
+              </div>
+              <div class="tekst">
+                <div class="kl">Tweede oefening</div>
+                <h2>Op de tenen komen</h2>
+                <p>Sta bij het aanrecht en houd u licht vast. Kom rustig op uw tenen, houd het twee
+                  tellen vast en zak langzaam terug tot uw hielen de grond raken.</p>
+              </div>
+              <dl class="dosis">
+                <div><dt>Herhalingen</dt><dd>12×</dd></div>
+                <div><dt>Series</dt><dd>2</dd></div>
+              </dl>
+            </div>
+
+            <div class="stuk">
+              <div class="nrzegel"><div class="in">3</div></div>
+              <div class="beeld">
+                <img src="/images/onderste-extremiteit/been-pendelen-line-v1.png"
+                     alt="Staand bij een steun zwaait één been rustig naar voren en naar achteren."/>
+              </div>
+              <div class="tekst">
+                <div class="kl">Derde oefening</div>
+                <h2>Been pendelen</h2>
+                <p>Houd u met één hand vast. Laat uw been rustig naar voren en naar achteren zwaaien,
+                  zonder kracht te zetten. Wissel daarna van been.</p>
+              </div>
+              <dl class="dosis">
+                <div><dt>Per been</dt><dd>15×</dd></div>
+                <div><dt>Series</dt><dd>1</dd></div>
+              </dl>
+            </div>
+
+          </div>
+
+          <div class="voet">
+            <div class="retour">
+              <h3>Retouradres — vragen of pijn?</h3>
+              <p>Bel de praktijk: <b>050 — 313 44 21</b><br/>
+                Werkdagen van 8 tot 17 uur. Neem deze kaart mee naar uw volgende afspraak,
+                dan kijken we samen naar de stempels.</p>
+            </div>
+            <div class="stempelplek">
+              <div class="rond">AFGEGEVEN<b>14 VIII</b>2026</div>
+              <div class="bij">Volgende afspraak: donderdag 21 augustus, 9.30 uur</div>
+            </div>
+          </div>
+
+          <div class="colofon">
+            <b>Fysiplan</b>
+            <span>Week 34 · blad 1 van 1</span>
+            <span class="rechts">Port betaald door de praktijk</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <p class="printhulp geen-print">Ctrl/⌘+P geeft precies dit vel, zonder de rode wijzertjes. De toets
+      voor deze richting: hang de zegelstrook aan de koelkast en kijk of iemand op zondag zonder uitleg
+      begrijpt hoe de week ging.
+      <br/><a class="kn" href="/ontwerp/">← Terug naar de galerij</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div>
+      <h4>Waar het vandaan komt</h4>
+      <p>De Nederlandse posttraditie: de cijferzegels die Van Krimpen in 1946 sober hield en die
+        Crouwel in 1976 op een wiskundig raster zette · de perforatie als teken dat iets los mag ·
+        de ronde datumstempel met golfjes waarmee een zegel wordt afgestempeld · luchtpostranden ·
+        het adresvlak waarin de naam altijd het grootst is · en de spaarkaart van de bakker, die
+        precies dezelfde psychologie gebruikt zonder er ooit een woord aan vuil te maken.</p>
+    </div>
+    <div>
+      <h4>Wat het oplost</h4>
+      <ul>
+        <li>Bijhouden wordt een handeling met een spoor, niet een vinkje dat verdwijnt.</li>
+        <li>De kaart heeft een afzender en een geadresseerde: hij komt van iemand.</li>
+        <li>De zegelstrook mag los en blijft aan de koelkast, ook als het vel in een la belandt.</li>
+        <li>Papier en app doen exact hetzelfde: stempelen. Geen van beide is de tweede keus.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Waar het wringt</h4>
+      <ul>
+        <li>Post is een warm, licht nostalgisch beeld. Voor iemand die net een slechte uitslag heeft
+          gekregen kan dat als opgewektheid voelen die hij niet gevraagd heeft.</li>
+        <li>De zegelmetafoor werkt bij wie zegels kent. Voor een twintiger is een zegel museum.</li>
+        <li>Zeven blanco zegels aan het eind van de week zijn eerlijk, maar ook confronterend —
+          eerlijker dan een app die niets zegt, harder dan een app die iets aardigs zegt.</li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

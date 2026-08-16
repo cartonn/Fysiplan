@@ -1,0 +1,876 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="dark light"/>
+<title>Concept 16 — Lichtbak · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 16 — LICHTBAK
+   De eerste donkere richting in de galerij, en hij is donker om
+   één reden: een lichtbak werkt zo. De radiologie heeft een
+   beeldtaal die honderd jaar oud is en die niemand ooit "ontworpen"
+   heeft — hij is gegroeid uit noodzaak. Wat die taal kent:
+     · het beeld geeft licht, het vlak eromheen niet;
+     · een loodletter L of R in het beeld, want een verwisselde
+       kant is de duurste fout in de zorg;
+     · een grijstrap langs de rand, zodat je kunt zien of het
+       apparaat goed staat;
+     · een strook technische tekst in de hoek — naam, datum,
+       serie — in vaste letters, altijd op dezelfde plek.
+   De omslag zit in het printen. Op het scherm is het beeld licht
+   op donker, zoals op de lichtbak. Op papier draait alles om:
+   wit vel, zwarte lijn, want een donkere A4 is een leugen tegen
+   de printer én tegen het oog van de patiënt. Datzelfde negatief
+   dat op het scherm indruk maakt, wordt op tafel gewoon rustig
+   drukwerk. De diagnostische randen blijven — L en R, de strook
+   in de hoek, de grijstrap — maar dan als dunne inkt.
+   De grijstrap op de A4 is geen versiering: als de vijf blokjes
+   van elkaar verschillen, drukt uw printer goed af.
+   Waar het schuurt: dit is de meest klinische richting van de
+   galerij. Voor iemand die net slecht nieuws heeft gehad, kan
+   een röntgen-esthetiek koud aanvoelen. Daarom draagt het donker
+   alleen het scherm van de therapeut; het papier van de patiënt
+   is warm wit en groot gezet.
+   Alles inline; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  --nacht:#080d10;
+  --paneel:#101a20;
+  --paneel-2:#16242c;
+  --rand:#22343e;
+  --rand-l:#2f4855;
+  --licht:#e8f3f6;
+  --licht-2:#a9c2cb;
+  --dof:#8ea6b1;          /* lichter dan het oog verwacht: labels moeten ook op donker haalbaar blijven */
+  --koud:#63d3ea;          /* het licht van de bak */
+  --koud-d:#0d3f4c;
+  --amber:#f2a63c;         /* let op / aandacht */
+  --rood:#e2564d;          /* de loodletter, de kant */
+
+  --sans:"Inter","Avenir Next",Seravek,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Roboto Mono",monospace;
+
+  --s1:6px; --s2:11px; --s3:18px; --s4:30px; --s5:48px; --s6:76px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--nacht);color:var(--licht-2);font:400 17px/1.62 var(--sans);
+  -webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:var(--koud)}
+:focus-visible{outline:2.5px solid var(--koud);outline-offset:3px}
+
+/* het raster van de bak: heel zwak, alleen op donker */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(1100px 620px at 50% -8%,rgba(99,211,234,.10),transparent 62%),
+    radial-gradient(760px 520px at 8% 105%,rgba(99,211,234,.05),transparent 60%)}
+main,.labbalk,footer{position:relative;z-index:1}
+
+/* ---------- labchrome ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);
+  background:#050a0c;border-bottom:1px solid var(--rand);padding:11px 18px;
+  font:500 13.5px/1 var(--sans);color:var(--licht)}
+.labbalk a{color:var(--licht-2);text-decoration:none;padding:7px 9px;border-radius:4px}
+.labbalk a:hover{background:var(--koud-d);color:var(--licht)}
+.labbalk .nr{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--koud)}
+.labbalk .rek{flex:1}
+.labbalk .terug{border:1px solid var(--rand-l)}
+
+.scherm{padding:var(--s6) 24px}
+.scherm + .scherm{border-top:1px solid var(--rand)}
+.binnen{max-width:1160px;margin:0 auto}
+.schermkop{display:flex;align-items:flex-end;gap:var(--s3);margin-bottom:var(--s5);
+  border-bottom:1px solid var(--rand);padding-bottom:var(--s3)}
+.schermkop b{font:600 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--nacht);background:var(--koud);padding:6px 9px;border-radius:3px}
+.schermkop h2{font:600 27px/1.1 var(--sans);letter-spacing:-.03em;color:var(--licht)}
+.schermkop p{flex:1;text-align:right;font-size:15px;color:var(--dof)}
+@media (max-width:860px){.schermkop{flex-wrap:wrap}.schermkop p{text-align:left;flex-basis:100%}}
+
+.kap{font:600 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--dof)}
+
+.kn{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font:600 15px/1 var(--sans);
+  padding:16px 22px;background:var(--koud);color:#04181d;border:1px solid var(--koud);border-radius:4px}
+.kn:hover{background:#8ee2f4;border-color:#8ee2f4}
+.kn.leeg{background:transparent;color:var(--licht);border-color:var(--rand-l)}
+.kn.leeg:hover{background:var(--paneel-2);border-color:var(--koud)}
+
+/* de technische strook: mono, kapitaal, altijd dezelfde volgorde */
+.strook{font:500 10.5px/1.5 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--dof)}
+.strook b{color:var(--licht-2);font-weight:600}
+
+/* de loodletter: de kant, in rood, altijd links boven het beeld */
+.lood{position:absolute;z-index:3;font:700 15px/1 var(--mono);letter-spacing:.04em;color:var(--rood);
+  background:rgba(4,10,13,.72);border:1px solid rgba(226,86,77,.5);padding:3px 7px;border-radius:2px}
+
+/* het beeld op de bak: negatief, en het straalt */
+.negatief{background:#05090b;border:1px solid var(--rand);border-radius:3px;overflow:hidden;
+  position:relative;display:flex;align-items:center;justify-content:center}
+.negatief img{filter:invert(1) contrast(1.06) brightness(.97);mix-blend-mode:screen}
+.negatief::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(80% 70% at 50% 45%,rgba(99,211,234,.15),transparent 72%)}
+
+/* ============================================================
+   1 · LANDING
+   ============================================================ */
+.hero{display:grid;grid-template-columns:1fr 420px;gap:var(--s5);align-items:center}
+@media (max-width:1000px){.hero{grid-template-columns:1fr;gap:var(--s4)}}
+.hero h1{font:600 clamp(36px,5vw,58px)/1.05 var(--sans);letter-spacing:-.04em;color:var(--licht);
+  max-width:16ch;margin:var(--s3) 0 var(--s3)}
+.hero .lead{font-size:19.5px;line-height:1.62;max-width:46ch;color:var(--licht-2)}
+.hero .doen{display:flex;gap:12px;flex-wrap:wrap;margin-top:var(--s4)}
+.hero .voet{margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid var(--rand)}
+
+/* de bak zelf, als hero-beeld */
+.bak{background:var(--paneel);border:1px solid var(--rand);border-radius:6px;padding:14px;
+  box-shadow:0 30px 90px rgba(0,0,0,.6)}
+.bak .venster{height:330px;border-radius:3px}
+.bak .venster img{max-height:300px;width:auto}
+.bak .onderrand{display:flex;align-items:center;gap:var(--s3);margin-top:12px}
+.trap{display:flex;flex:none;border:1px solid var(--rand-l);border-radius:2px;overflow:hidden}
+.trap i{display:block;width:19px;height:15px}
+.bak .onderrand .strook{flex:1;text-align:right}
+
+/* de drie regels van de richting */
+.regels{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rand);
+  border:1px solid var(--rand);border-radius:5px;overflow:hidden;margin-top:var(--s6)}
+@media (max-width:940px){.regels{grid-template-columns:1fr}}
+.regels .vak{background:var(--paneel);padding:var(--s4)}
+.regels .vak h3{font:600 19px/1.24 var(--sans);letter-spacing:-.02em;color:var(--licht);margin:var(--s2) 0 var(--s2)}
+.regels .vak p{font-size:16px;color:var(--licht-2)}
+.regels .vak .num{font:600 11px/1 var(--mono);letter-spacing:.2em;color:var(--koud)}
+
+/* de omslag: scherm donker, papier licht — naast elkaar getoond */
+.omslag{margin-top:var(--s6);border:1px solid var(--rand);border-radius:5px;overflow:hidden}
+.omslag .kopbalk{background:var(--paneel-2);padding:14px var(--s4);border-bottom:1px solid var(--rand);
+  font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--licht-2)}
+.omslag .paar{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rand)}
+@media (max-width:820px){.omslag .paar{grid-template-columns:1fr}}
+.omslag .helft{padding:var(--s4);background:var(--paneel)}
+.omslag .helft.papier{background:#f6f4ee;color:#1b2226}
+.omslag .helft h4{font:600 17px/1.3 var(--sans);letter-spacing:-.02em;color:var(--licht);margin-bottom:var(--s2)}
+.omslag .helft.papier h4{color:#12191d}
+.omslag .helft p{font-size:15.5px}
+.omslag .helft.papier p{color:#3d4a52}
+.omslag .proef{height:150px;border-radius:3px;margin-bottom:var(--s3);display:flex;align-items:center;
+  justify-content:center;position:relative;overflow:hidden}
+.omslag .proef img{max-height:132px;width:auto}
+.omslag .proef.donker{background:#05090b;border:1px solid var(--rand)}
+.omslag .proef.donker img{filter:invert(1);mix-blend-mode:screen}
+.omslag .proef.licht{background:#fff;border:1px solid #d3cec2}
+
+/* ============================================================
+   2 · KIEZER — de vensterinstelling
+   In de radiologie stel je "window" en "level" in: hoeveel van
+   het grijsbereik je laat zien. Hier is dat de hoeveelheid tekst
+   op de kaart. Dezelfde oefening, drie diktes uitleg.
+   ============================================================ */
+.kiezerlay{display:grid;grid-template-columns:1fr 360px;gap:var(--s4);align-items:start}
+@media (max-width:1040px){.kiezerlay{grid-template-columns:1fr}}
+
+.bank{border:1px solid var(--rand);border-radius:5px;overflow:hidden;background:var(--paneel)}
+.bank .kopbalk{background:var(--paneel-2);border-bottom:1px solid var(--rand);padding:14px var(--s3);
+  display:flex;align-items:center;gap:var(--s3)}
+.bank .kopbalk b{font:600 16px/1 var(--sans);color:var(--licht);letter-spacing:-.01em}
+.bank .kopbalk .telling{margin-left:auto;font:500 10.5px/1 var(--mono);letter-spacing:.15em;
+  text-transform:uppercase;color:var(--dof)}
+
+.films{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rand)}
+@media (max-width:760px){.films{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:460px){.films{grid-template-columns:1fr}}
+.film{background:var(--paneel);padding:var(--s3);display:flex;flex-direction:column;gap:12px;
+  border:0;text-align:left;font:inherit;color:inherit;cursor:default}
+.film .venster{height:150px;border-radius:2px}
+.film .venster img{max-height:126px;width:auto}
+.film .naam{font:600 15.5px/1.3 var(--sans);color:var(--licht);letter-spacing:-.015em}
+.film .sub{font:500 10.5px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dof)}
+.film .zet{margin-top:auto;display:flex;align-items:center;gap:8px;font:600 13px/1 var(--sans);
+  color:var(--licht-2);border:1px solid var(--rand-l);border-radius:3px;padding:11px 13px;
+  justify-content:center}
+.film.aan{background:var(--paneel-2);box-shadow:inset 0 0 0 1px var(--koud)}
+.film.aan .zet{background:var(--koud);color:#04181d;border-color:var(--koud)}
+.film.uit{opacity:.42}
+.film.uit .zet{border-style:dashed}
+
+/* het regelpaneel */
+.paneel{border:1px solid var(--rand);border-radius:5px;background:var(--paneel);position:sticky;top:70px}
+.paneel .kopbalk{background:var(--paneel-2);border-bottom:1px solid var(--rand);padding:13px var(--s3);
+  font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--licht-2)}
+.paneel .body{padding:var(--s3)}
+.paneel h4{font:600 16px/1.3 var(--sans);color:var(--licht);letter-spacing:-.015em}
+.paneel p.toel{font-size:14.5px;color:var(--dof);margin-top:6px}
+
+.standen{display:flex;gap:1px;background:var(--rand);border:1px solid var(--rand);border-radius:3px;
+  overflow:hidden;margin-top:var(--s3)}
+.standen span{flex:1;text-align:center;padding:12px 6px;background:var(--paneel-2);
+  font:600 12.5px/1.3 var(--sans);color:var(--licht-2)}
+.standen span.nu{background:var(--koud);color:#04181d}
+
+.voorbeeld{margin-top:var(--s3);border:1px solid var(--rand-l);border-radius:3px;padding:var(--s3);
+  background:#0a1418}
+.voorbeeld .kl{font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--koud)}
+.voorbeeld p{font-size:16px;line-height:1.55;color:var(--licht);margin-top:9px}
+
+.meting{margin-top:var(--s3);display:grid;grid-template-columns:auto 1fr;gap:9px 14px;font-size:14.5px}
+.meting dt{font:500 10.5px/1.6 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dof)}
+.meting dd{color:var(--licht);font-weight:500}
+
+.let{margin-top:var(--s3);border-left:3px solid var(--amber);background:rgba(242,166,60,.09);
+  padding:13px 15px;font-size:14.5px;color:var(--licht-2)}
+.let b{color:var(--amber);display:block;font:600 11px/1 var(--mono);letter-spacing:.15em;
+  text-transform:uppercase;margin-bottom:7px}
+
+/* ============================================================
+   3 · CLIËNTKAART — de bak in de hand
+   ============================================================ */
+.telefoon{max-width:410px;margin:0 auto;border:1px solid var(--rand-l);border-radius:22px;overflow:hidden;
+  background:var(--paneel);box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.telefoon .balk{background:#050a0c;padding:14px 18px;display:flex;align-items:center;gap:11px;
+  border-bottom:1px solid var(--rand)}
+.telefoon .balk b{font:600 15px/1 var(--sans);color:var(--licht)}
+.telefoon .balk .rechts{margin-left:auto;font:500 10px/1 var(--mono);letter-spacing:.14em;color:var(--dof)}
+
+.serie{display:flex;gap:1px;background:var(--rand);border-bottom:1px solid var(--rand)}
+.serie span{flex:1;text-align:center;padding:11px 4px;background:var(--paneel-2);
+  font:600 11px/1 var(--mono);letter-spacing:.08em;color:var(--dof)}
+.serie span.af{color:var(--koud)}
+.serie span.nu{background:var(--koud);color:#04181d}
+
+.beeldvak{position:relative;background:#05090b;padding:var(--s3);display:flex;align-items:center;
+  justify-content:center;min-height:280px}
+.beeldvak img{max-height:246px;width:auto;filter:invert(1) contrast(1.05);mix-blend-mode:screen}
+.beeldvak::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(72% 62% at 50% 46%,rgba(99,211,234,.16),transparent 70%)}
+.beeldvak .hoekstrook{position:absolute;left:14px;bottom:12px;z-index:3}
+.beeldvak .schaal{position:absolute;right:14px;top:14px;z-index:3;display:flex;flex-direction:column;
+  border:1px solid var(--rand-l);border-radius:2px;overflow:hidden}
+.beeldvak .schaal i{display:block;width:13px;height:11px}
+
+.oeftekst{padding:var(--s3) 20px var(--s4)}
+.oeftekst .kl{font:600 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--koud)}
+.oeftekst h3{font:600 26px/1.2 var(--sans);letter-spacing:-.03em;color:var(--licht);margin:11px 0 var(--s2)}
+.oeftekst p{font-size:17.5px;line-height:1.62;color:var(--licht-2)}
+
+.dosisrij{display:flex;border-top:1px solid var(--rand);border-bottom:1px solid var(--rand);margin-top:var(--s3)}
+.dosisrij div{flex:1;padding:14px 10px;text-align:center;border-left:1px solid var(--rand)}
+.dosisrij div:first-child{border-left:0}
+.dosisrij dt{font:500 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dof)}
+.dosisrij dd{font:600 23px/1 var(--sans);color:var(--licht);margin-top:8px;letter-spacing:-.02em}
+
+.acties{padding:var(--s3) 20px var(--s4);display:flex;flex-direction:column;gap:11px}
+.grootknop{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;
+  background:var(--koud);color:#04181d;border:0;border-radius:5px;padding:19px 14px;
+  font:600 17px/1 var(--sans);letter-spacing:-.01em}
+.grootknop.leeg{background:transparent;color:var(--licht);border:1px solid var(--rand-l)}
+.grootknop svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;
+  stroke-linecap:round;stroke-linejoin:round}
+.mobtoel{max-width:440px;margin:var(--s4) auto 0;text-align:center;font-size:15.5px;color:var(--dof)}
+
+/* ============================================================
+   4 · DE PRINTKAART — A4 staand, en hier draait alles om
+   Wit vel, zwarte lijn. Het negatief van het scherm wordt hier
+   een positief: een donkere A4 kost een halve inktpatroon en
+   leest slechter op een keukentafel. Wat blijft, is de
+   diagnostische discipline: L en R bij elke oefening, de strook
+   met naam en datum altijd op dezelfde plek, en een grijstrap
+   waarmee de patiënt zijn eigen printer kan controleren.
+   ============================================================ */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){.bladschaal{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+
+.blad{width:210mm;height:297mm;background:#fff;color:#131a1e;padding:10mm 11mm 8mm;
+  display:flex;flex-direction:column;font-family:var(--sans);position:relative;
+  box-shadow:0 30px 80px rgba(0,0,0,.55)}
+
+/* de kopstrook: precies de volgorde van een filmrand */
+.blad .kopstrook{display:flex;align-items:flex-start;gap:5mm;border-bottom:1.6pt solid #131a1e;
+  padding-bottom:3mm}
+.blad .kopstrook .titel h1{font:600 22pt/1.06 var(--sans);letter-spacing:-.03em;color:#0d1418}
+.blad .kopstrook .titel .onder{font:500 9pt/1.4 var(--mono);letter-spacing:.13em;text-transform:uppercase;
+  color:#5c6d77;margin-top:1.6mm}
+.blad .kopstrook .id{margin-left:auto;text-align:right;font:500 8.5pt/1.6 var(--mono);
+  letter-spacing:.1em;text-transform:uppercase;color:#5c6d77}
+.blad .kopstrook .id b{color:#131a1e;font-weight:600;font-size:9.5pt}
+
+.blad .opdracht{margin-top:3.4mm;border:1.2pt solid #131a1e;border-left:3.4pt solid #131a1e;
+  padding:3mm 4mm}
+.blad .opdracht .kl{font:600 8.5pt/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#5c6d77}
+.blad .opdracht p{font:400 13pt/1.42 var(--sans);color:#131a1e;margin-top:1.8mm;max-width:58ch}
+
+.blad .reeks{margin-top:4mm;flex:1;display:flex;flex-direction:column;gap:3mm}
+.blad .opname{border:1pt solid #b9c3c9;display:flex;align-items:stretch;flex:1;position:relative}
+.blad .opname .beeld{width:41mm;flex:none;border-right:1pt solid #b9c3c9;background:#fbfbfa;
+  display:flex;align-items:center;justify-content:center;padding:2.4mm;position:relative}
+.blad .opname .beeld img{max-width:100%;max-height:42mm}
+/* de loodletter, nu in inkt: welke kant, groot genoeg om niet te missen */
+.blad .opname .kant{position:absolute;left:1.6mm;top:1.6mm;font:700 11pt/1 var(--mono);
+  color:#131a1e;border:1.2pt solid #131a1e;padding:.6mm 1.4mm}
+.blad .opname .nr{position:absolute;right:1.6mm;bottom:1.4mm;font:600 8pt/1 var(--mono);
+  letter-spacing:.1em;color:#7c8b94}
+.blad .opname .tekst{flex:1;padding:3mm 4mm;display:flex;flex-direction:column;justify-content:center}
+.blad .opname .tekst .kl{font:600 8pt/1 var(--mono);letter-spacing:.15em;text-transform:uppercase;color:#5c6d77}
+.blad .opname .tekst h2{font:600 15pt/1.14 var(--sans);letter-spacing:-.025em;color:#0d1418;margin-top:1.4mm}
+/* de leesregel: 12,5 pt met ruime interlinie — dit is het deel
+   waar de patiënt daadwerkelijk in leest, en het wint van alles. */
+.blad .opname .tekst p{font:400 12.5pt/1.46 var(--sans);color:#232e34;margin-top:2mm}
+.blad .opname .dosis{width:30mm;flex:none;border-left:1pt solid #b9c3c9;display:flex;flex-direction:column}
+.blad .opname .dosis div{flex:1;border-top:1pt solid #dfe5e8;padding:1.8mm 2.6mm;display:flex;
+  flex-direction:column;justify-content:center}
+.blad .opname .dosis div:first-child{border-top:0}
+.blad .opname .dosis dt{font:600 7.5pt/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#5c6d77}
+.blad .opname .dosis dd{font:600 13.5pt/1 var(--sans);color:#0d1418;margin-top:1.2mm}
+
+.blad .onderrij{margin-top:3.6mm;display:flex;gap:4mm;align-items:stretch}
+.blad .afvink{flex:1;border:1pt solid #131a1e}
+.blad .afvink .titel{background:#131a1e;color:#fff;padding:1.8mm 3mm;font:600 8.5pt/1 var(--mono);
+  letter-spacing:.13em;text-transform:uppercase}
+.blad .afvink .rooster{display:grid;grid-template-columns:repeat(7,1fr)}
+.blad .afvink .cel{border-left:1pt solid #b9c3c9;text-align:center}
+.blad .afvink .cel:first-child{border-left:0}
+.blad .afvink .cel .d{font:600 9.5pt/1 var(--sans);padding:1.8mm 0;border-bottom:1pt solid #b9c3c9;color:#131a1e}
+.blad .afvink .cel .hok{height:10mm}
+.blad .bellen{width:58mm;flex:none;border:1.4pt solid #131a1e;padding:2.6mm 3mm}
+.blad .bellen h3{font:600 8.5pt/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#5c6d77;
+  margin-bottom:1.6mm}
+.blad .bellen p{font:400 11pt/1.4 var(--sans);color:#131a1e}
+.blad .bellen p b{font-weight:600;font-size:12.5pt}
+
+/* de grijstrap: geen versiering maar een printtest.
+   Verschillen de vijf blokjes? Dan klopt de afdruk. */
+.blad .voetstrook{margin-top:3mm;padding-top:2.4mm;border-top:1pt solid #b9c3c9;display:flex;
+  align-items:center;gap:4mm}
+.blad .voetstrook .trapje{display:flex;flex:none;border:.8pt solid #131a1e}
+.blad .voetstrook .trapje i{display:block;width:6mm;height:3.4mm}
+.blad .voetstrook .uitleg{font:400 8.5pt/1.35 var(--sans);color:#5c6d77;max-width:74mm}
+.blad .voetstrook .colofon{margin-left:auto;text-align:right;font:500 8pt/1.5 var(--mono);
+  letter-spacing:.1em;text-transform:uppercase;color:#5c6d77}
+.blad .voetstrook .colofon b{color:#131a1e;font-weight:600}
+
+/* schermannotaties bij het vel */
+.wijzer{position:absolute;z-index:5;background:var(--koud);color:#04181d;
+  font:600 10px/1.25 var(--mono);letter-spacing:.05em;padding:5px 7px;white-space:nowrap;border-radius:2px}
+.wijzer::after{content:"";position:absolute;background:var(--koud)}
+.wijzer.r::after{left:100%;top:50%;width:18px;height:1.5px}
+.wijzer.l::after{right:100%;top:50%;width:18px;height:1.5px}
+@media (max-width:1060px){.wijzer{display:none}}
+
+.printhulp{max-width:700px;margin:var(--s4) auto 0;text-align:center;font-size:16px;color:var(--dof)}
+.printhulp .kn{margin-top:var(--s3)}
+
+footer.uitleiding{background:#050a0c;border-top:1px solid var(--rand);padding:var(--s5) 24px var(--s6)}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--koud);margin-bottom:13px}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62;color:var(--licht-2)}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:9px}
+footer.uitleiding li::before{content:"—";position:absolute;left:0;color:var(--dof)}
+
+/* ============================================================
+   PRINT — hier draait het negatief om naar positief
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000 !important;margin:0;padding:0}
+  body::before{display:none !important}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;margin:0 !important;
+    break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 16</span>
+  <strong style="font:600 15px/1 var(--sans);color:var(--licht)">Lichtbak</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>het scherm geeft licht, het papier geeft inkt — en dat is precies de omslag</p>
+    </div>
+
+    <div class="hero">
+      <div>
+        <div class="kap">Fysiplan · lichtbak</div>
+        <h1>Wat op het scherm licht geeft, wordt op papier inkt.</h1>
+        <p class="lead">De radiologie heeft honderd jaar geleden al bedacht hoe je een beeld leest:
+          licht van achteren, de kant erbij in lood, een grijstrap om te controleren of het apparaat
+          goed staat. Fysiplan leent die discipline — en draait hem om zodra het vel de printer in gaat.
+          Op tafel ligt geen röntgenfoto maar rustig drukwerk.</p>
+        <div class="doen">
+          <a class="kn" href="#printkaart">Naar de A4</a>
+          <a class="kn leeg" href="#kiezer">De vensterinstelling</a>
+        </div>
+        <div class="voet strook"><b>Praktijk</b> Fysiotherapie Noorderlicht · Groningen &nbsp;·&nbsp;
+          <b>Serie</b> 2026-08-14 · 3 opnamen</div>
+      </div>
+
+      <div class="bak">
+        <div class="negatief venster">
+          <span class="lood" style="left:12px;top:12px">R</span>
+          <img src="/images/nek/nek-draaien-zittend-actief-line-v1.png"
+               alt="Zittend op een stoel draait het hoofd rustig opzij, de schouders blijven recht."/>
+        </div>
+        <div class="onderrand">
+          <div class="trap" aria-hidden="true">
+            <i style="background:#0b0f11"></i><i style="background:#2b3238"></i>
+            <i style="background:#59646b"></i><i style="background:#93a0a7"></i>
+            <i style="background:#dfe7ea"></i>
+          </div>
+          <div class="strook"><b>Hoekstrook</b> HOEKSTRA J · 14-08-2026 · OEF 01/03</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="regels">
+      <div class="vak">
+        <div class="num">01</div>
+        <h3>De kant staat er altijd bij</h3>
+        <p>Links of rechts is in de fysiotherapie geen detail: de verkeerde schouder oefenen is
+          weken verlies. In de radiologie wordt daar een loodletter voor in het beeld gelegd. Hier
+          staat die letter bij elke oefening — op het scherm rood, op papier in een zwart kadertje,
+          nooit alleen als woord in een zin.</p>
+      </div>
+      <div class="vak">
+        <div class="num">02</div>
+        <h3>De hoekstrook op vaste plek</h3>
+        <p>Naam, datum, welke opname van hoeveel — in vaste letters, altijd linksonder. Wie tien
+          kaarten op een balie heeft liggen, hoeft niet te lezen om te weten welke van wie is.
+          Het is de saaiste beslissing van dit concept en de nuttigste.</p>
+      </div>
+      <div class="vak">
+        <div class="num">03</div>
+        <h3>Een grijstrap die iets doet</h3>
+        <p>Onderaan het vel staan vijf blokjes van zwart naar bijna wit. Zijn ze alle vijf van elkaar
+          te onderscheiden, dan drukt de printer goed af en zijn de tekeningen te vertrouwen. Zo niet:
+          bel de praktijk, dan komt er een nieuwe kaart. Een test die niets kost.</p>
+      </div>
+    </div>
+
+    <div class="omslag">
+      <div class="kopbalk">De omslag — hetzelfde beeld, twee dragers</div>
+      <div class="paar">
+        <div class="helft">
+          <div class="proef donker">
+            <img src="/images/rug/knie-naar-borst-liggend-line-v1.png"
+                 alt="Liggend op de rug wordt één knie rustig naar de borst getrokken."/>
+          </div>
+          <h4>Op het scherm: negatief</h4>
+          <p>Licht op donker, zoals op de bak. De therapeut werkt vaak in een halfdonkere ruimte,
+            met het beeld naast de patiënt. Donker chrome laat de tekening het enige zijn dat straalt.</p>
+        </div>
+        <div class="helft papier">
+          <div class="proef licht">
+            <img src="/images/rug/knie-naar-borst-liggend-line-v1.png"
+                 alt="Dezelfde oefening, nu als zwarte lijn op wit papier."/>
+          </div>
+          <h4>Op papier: positief</h4>
+          <p>Een donkere A4 kost een halve patroon en leest slechter op een keukentafel bij tl-licht.
+            Dus draait alles om: wit vel, zwarte lijn, ruime letter. De discipline blijft, het effect
+            gaat de deur uit.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>Oefeningen kiezen</h2>
+      <p>de vensterinstelling: dezelfde oefening, drie diktes uitleg — u kiest hoeveel de kaart vertelt</p>
+    </div>
+
+    <div class="kiezerlay">
+      <div class="bank">
+        <div class="kopbalk">
+          <b>Nek — zittend en staand</b>
+          <span class="telling">18 opnamen · 3 gekozen</span>
+        </div>
+        <div class="films">
+
+          <div class="film aan">
+            <div class="negatief venster">
+              <span class="lood" style="left:9px;top:9px">R</span>
+              <img src="/images/nek/nek-draaien-zittend-actief-line-v1.png"
+                   alt="Zittend draait het hoofd rustig naar rechts."/>
+            </div>
+            <div>
+              <div class="naam">Nek draaien — zittend</div>
+              <div class="sub">Zittend · geen materiaal · 2 min</div>
+            </div>
+            <span class="zet">Gekozen · 01</span>
+          </div>
+
+          <div class="film aan">
+            <div class="negatief venster">
+              <span class="lood" style="left:9px;top:9px">L+R</span>
+              <img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png"
+                   alt="Zittend wordt de kin rustig naar achteren ingetrokken, het hoofd blijft recht."/>
+            </div>
+            <div>
+              <div class="naam">Kin intrekken — zittend</div>
+              <div class="sub">Zittend · geen materiaal · 2 min</div>
+            </div>
+            <span class="zet">Gekozen · 02</span>
+          </div>
+
+          <div class="film aan">
+            <div class="negatief venster">
+              <span class="lood" style="left:9px;top:9px">L</span>
+              <img src="/images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png"
+                   alt="Zittend wordt het hoofd opzij gebogen om de bovenste schouderspier te rekken."/>
+            </div>
+            <div>
+              <div class="naam">Trapezius rekken — zittend</div>
+              <div class="sub">Zittend · stoel met leuning · 3 min</div>
+            </div>
+            <span class="zet">Gekozen · 03</span>
+          </div>
+
+          <div class="film">
+            <div class="negatief venster">
+              <span class="lood" style="left:9px;top:9px">L+R</span>
+              <img src="/images/nek/nek-strekken-functioneel-staand-line-v1.png"
+                   alt="Staand wordt het hoofd rustig achterover bewogen."/>
+            </div>
+            <div>
+              <div class="naam">Nek strekken — staand</div>
+              <div class="sub">Staand · geen materiaal · 2 min</div>
+            </div>
+            <span class="zet">Toevoegen</span>
+          </div>
+
+          <div class="film">
+            <div class="negatief venster">
+              <span class="lood" style="left:9px;top:9px">L</span>
+              <img src="/images/nek/levator-scapulae-rek-zittend-actief-line-v1.png"
+                   alt="Zittend wordt het hoofd schuin naar voren gebogen voor rek langs de nek."/>
+            </div>
+            <div>
+              <div class="naam">Levator scapulae rekken</div>
+              <div class="sub">Zittend · geen materiaal · 3 min</div>
+            </div>
+            <span class="zet">Toevoegen</span>
+          </div>
+
+          <div class="film uit">
+            <div class="negatief venster">
+              <span class="lood" style="left:9px;top:9px">—</span>
+              <img src="/images/nek/diepe-nekflexoren-activeren-liggend-ondersteund-line-v1.png"
+                   alt="Liggend met ondersteund hoofd worden de diepe nekspieren aangespannen."/>
+            </div>
+            <div>
+              <div class="naam">Diepe nekflexoren — liggend</div>
+              <div class="sub">Liggend · matje nodig · 4 min</div>
+            </div>
+            <span class="zet">Past niet op dit vel</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="paneel">
+        <div class="kopbalk">Vensterinstelling</div>
+        <div class="body">
+          <h4>Hoeveel vertelt de kaart?</h4>
+          <p class="toel">Zoals een radioloog het grijsvenster instelt op wat hij wil zien, stelt u in
+            hoeveel uitleg er meegaat. De oefeningen blijven dezelfde; alleen de dikte van de tekst
+            verandert.</p>
+
+          <div class="standen" role="group" aria-label="Hoeveelheid uitleg">
+            <span>Kort</span>
+            <span class="nu">Normaal</span>
+            <span>Ruim</span>
+          </div>
+
+          <div class="voorbeeld">
+            <div class="kl">Zo komt oefening 01 op papier</div>
+            <p>Zit rechtop op een stoel met uw voeten plat op de grond. Draai uw hoofd rustig naar
+              rechts tot u rek voelt, houd vijf tellen vast en kom langzaam terug.</p>
+          </div>
+
+          <dl class="meting">
+            <dt>Opnamen</dt><dd>3 van maximaal 4</dd>
+            <dt>Leesregel</dt><dd>12,5 pt / 1,46</dd>
+            <dt>Vel</dt><dd>A4 staand · 1 blad</dd>
+            <dt>Kanten</dt><dd>R · L+R · L</dd>
+          </dl>
+
+          <div class="let">
+            <b>Let op</b>
+            Bij <strong>Ruim</strong> past de vierde oefening niet meer op één vel. Fysiplan kiest dan
+            liever een tweede blad dan kleinere letters — de leesregel is de enige maat die nooit
+            inschikt.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>de bak in de hand: één opname tegelijk, de kant erbij, de serie bovenin</p>
+    </div>
+
+    <div class="telefoon">
+      <div class="balk">
+        <b>Uw oefeningen</b>
+        <span class="rechts">SERIE 2026-08-14</span>
+      </div>
+
+      <div class="serie" role="group" aria-label="Voortgang van de week">
+        <span class="af">MA ✓</span><span class="af">DI ✓</span><span class="af">WO ✓</span>
+        <span class="nu">DO</span><span>VR</span><span>ZA</span><span>ZO</span>
+      </div>
+
+      <div class="beeldvak">
+        <span class="lood" style="left:14px;top:14px">R</span>
+        <div class="schaal" aria-hidden="true">
+          <i style="background:#0b0f11"></i><i style="background:#333b41"></i>
+          <i style="background:#6a757c"></i><i style="background:#aab5bb"></i>
+          <i style="background:#e4ebee"></i>
+        </div>
+        <img src="/images/nek/nek-draaien-zittend-actief-line-v1.png"
+             alt="Zittend op een stoel draait het hoofd rustig naar rechts, de schouders blijven recht."/>
+        <div class="hoekstrook strook">HOEKSTRA J · OEF 01/03</div>
+      </div>
+
+      <div class="oeftekst">
+        <div class="kl">Opname 01 van 03 · rechts</div>
+        <h3>Nek draaien — zittend</h3>
+        <p>Zit rechtop met uw voeten plat op de grond. Draai uw hoofd rustig naar rechts tot u rek
+          voelt, houd vijf tellen vast en kom langzaam terug.</p>
+
+        <dl class="dosisrij">
+          <div><dt>Herhalingen</dt><dd>8×</dd></div>
+          <div><dt>Vasthouden</dt><dd>5 tel</dd></div>
+          <div><dt>Series</dt><dd>2</dd></div>
+        </dl>
+      </div>
+
+      <div class="acties">
+        <button class="grootknop" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>
+          Gedaan — volgende opname
+        </button>
+        <button class="grootknop leeg" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          Groter tonen
+        </button>
+      </div>
+    </div>
+
+    <p class="mobtoel">Het donker is hier functioneel: in de behandelkamer staat de telefoon vaak naast
+      de patiënt op de bank, en dan is een lichtgevend beeld op een donker vlak makkelijker te wijzen
+      dan een wit scherm dat verblindt. Zodra het vel geprint wordt, verdwijnt het donker helemaal.</p>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>het negatief wordt positief: wit vel, zwarte lijn, en de diagnostische randen blijven staan</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer r geen-print" style="top:22mm;left:calc(100% + 20px)">hoekstrook — vaste plek</span>
+          <span class="wijzer r geen-print" style="top:96mm;left:calc(100% + 20px)">loodletter: de kant</span>
+          <span class="wijzer r geen-print" style="top:140mm;left:calc(100% + 20px)">12,5 pt leesregel</span>
+          <span class="wijzer l geen-print" style="top:262mm;right:calc(100% + 20px)">grijstrap = printtest</span>
+
+          <div class="kopstrook">
+            <div class="titel">
+              <h1>Uw oefeningen</h1>
+              <div class="onder">Nek · drie opnamen · elke dag</div>
+            </div>
+            <div class="id">
+              <b>Fysiotherapie Noorderlicht</b><br/>
+              HOEKSTRA J · 14-08-2026<br/>
+              SERIE 2026-08-14 · BLAD 1/1
+            </div>
+          </div>
+
+          <div class="opdracht">
+            <div class="kl">Wat u elke dag doet</div>
+            <p>Drie oefeningen, samen ongeveer acht minuten. Doe ze zittend op een stoel met een
+              rechte rug, bij voorkeur op een vast moment van de dag. Stoppen bij scherpe pijn.</p>
+          </div>
+
+          <div class="reeks">
+
+            <div class="opname">
+              <div class="beeld">
+                <span class="kant">R</span>
+                <img src="/images/nek/nek-draaien-zittend-actief-line-v1.png"
+                     alt="Zittend op een stoel draait het hoofd rustig naar rechts, de schouders blijven recht."/>
+                <span class="nr">OEF 01</span>
+              </div>
+              <div class="tekst">
+                <div class="kl">Opname 01 · rechts</div>
+                <h2>Nek draaien — zittend</h2>
+                <p>Zit rechtop met uw voeten plat op de grond. Draai uw hoofd rustig naar rechts tot
+                  u rek voelt, houd vijf tellen vast en kom langzaam terug naar het midden.</p>
+              </div>
+              <dl class="dosis">
+                <div><dt>Herhalingen</dt><dd>8×</dd></div>
+                <div><dt>Vasthouden</dt><dd>5 tel</dd></div>
+                <div><dt>Series</dt><dd>2</dd></div>
+              </dl>
+            </div>
+
+            <div class="opname">
+              <div class="beeld">
+                <span class="kant">L+R</span>
+                <img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png"
+                     alt="Zittend wordt de kin rustig naar achteren ingetrokken, het hoofd blijft rechtop."/>
+                <span class="nr">OEF 02</span>
+              </div>
+              <div class="tekst">
+                <div class="kl">Opname 02 · beide kanten gelijk</div>
+                <h2>Kin intrekken — zittend</h2>
+                <p>Kijk recht vooruit en trek uw kin rustig naar achteren, alsof u een dubbele kin
+                  maakt. Uw hoofd blijft rechtop. Houd drie tellen vast en laat weer los.</p>
+              </div>
+              <dl class="dosis">
+                <div><dt>Herhalingen</dt><dd>10×</dd></div>
+                <div><dt>Vasthouden</dt><dd>3 tel</dd></div>
+                <div><dt>Series</dt><dd>2</dd></div>
+              </dl>
+            </div>
+
+            <div class="opname">
+              <div class="beeld">
+                <span class="kant">L</span>
+                <img src="/images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png"
+                     alt="Zittend wordt het hoofd opzij gebogen om de spier boven de linkerschouder te rekken."/>
+                <span class="nr">OEF 03</span>
+              </div>
+              <div class="tekst">
+                <div class="kl">Opname 03 · links</div>
+                <h2>Trapezius rekken — zittend</h2>
+                <p>Houd met uw rechterhand de zitting van de stoel vast. Buig uw hoofd rustig naar
+                  rechts tot u links in de nek rek voelt. Houd twintig tellen vast, adem door.</p>
+              </div>
+              <dl class="dosis">
+                <div><dt>Vasthouden</dt><dd>20 tel</dd></div>
+                <div><dt>Herhalingen</dt><dd>3×</dd></div>
+                <div><dt>Per dag</dt><dd>1</dd></div>
+              </dl>
+            </div>
+
+          </div>
+
+          <div class="onderrij">
+            <div class="afvink">
+              <div class="titel">Zet een streep als u klaar bent</div>
+              <div class="rooster">
+                <div class="cel"><div class="d">MA</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">DI</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">WO</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">DO</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">VR</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">ZA</div><div class="hok"></div></div>
+                <div class="cel"><div class="d">ZO</div><div class="hok"></div></div>
+              </div>
+            </div>
+            <div class="bellen">
+              <h3>Vragen of pijn?</h3>
+              <p>Bel de praktijk.<br/><b>050 — 313 44 21</b><br/>Werkdagen van 8 tot 17 uur.</p>
+            </div>
+          </div>
+
+          <div class="voetstrook">
+            <div class="trapje" aria-hidden="true">
+              <i style="background:#101619"></i><i style="background:#4a555b"></i>
+              <i style="background:#8a959b"></i><i style="background:#c3ccd1"></i>
+              <i style="background:#f2f5f6"></i>
+            </div>
+            <div class="uitleg">Ziet u vijf blokjes die van elkaar verschillen? Dan drukt uw printer
+              goed af. Zo niet: bel de praktijk voor een nieuwe kaart.</div>
+            <div class="colofon"><b>Fysiplan</b><br/>Volgende afspraak 21-08 · 09.30</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <p class="printhulp geen-print">Ctrl/⌘+P geeft precies dit vel — wit, zonder het donkere chrome en
+      zonder de blauwe wijzertjes. De toets voor deze richting: leg de uitdraai naast een kaart van
+      de huisarts en kijk welke van de twee je zonder aarzelen leest.
+      <br/><a class="kn" href="/ontwerp/">← Terug naar de galerij</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div>
+      <h4>Waar het vandaan komt</h4>
+      <p>De radiologische lichtbak en de conventies die daaromheen gegroeid zijn: de loodletter L of R
+        in het beeld, de vaste hoekstrook met naam en datum, de grijstrap of stepwedge waarmee een
+        afdruk gecontroleerd wordt. Verder: de donkere leeskamer, filmhoezen en hun typografie, en de
+        gewoonte in de beeldvormende zorg om techniek nooit te verstoppen maar altijd in de rand te zetten.</p>
+    </div>
+    <div>
+      <h4>Wat het oplost</h4>
+      <ul>
+        <li>Links of rechts is niet meer te missen — dat staat in een kader, niet in een zin.</li>
+        <li>Tien kaarten op een balie zijn uit elkaar te houden zonder ze te lezen.</li>
+        <li>De patiënt kan zelf controleren of de afdruk deugt, zonder iets te weten van printers.</li>
+        <li>De therapeut kiest de hoeveelheid uitleg zonder dat de letter kleiner wordt.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Waar het wringt</h4>
+      <ul>
+        <li>Dit is de meest klinische richting in de galerij. Voor iemand die net een nare uitslag
+          heeft gehad, kan röntgen-esthetiek koud of zelfs bedreigend voelen.</li>
+        <li>Het donkere scherm is prettig in een behandelkamer en vervelend in de zon; een lichte
+          variant van de therapeutschermen is een echte openstaande vraag.</li>
+        <li>De grijstrap kost inkt. Klein, maar wel elke kaart opnieuw.</li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
