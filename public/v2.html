@@ -134,6 +134,13 @@
   .wereld.digitaal .onderschrift{color:#c9d7f0}
   .wereld.digitaal .onderschrift a{color:#f2a37c;font-weight:650;text-decoration:none;white-space:nowrap}
   .wereld.digitaal .onderschrift a:hover{text-decoration:underline}
+  /* QR naar de voorbeeldkaart: een desktop-bezoeker scant hem en heeft de kaart op
+     de eigen telefoon. Op mobiel overbodig (daar is de link) en dus verborgen. */
+  .wereld.digitaal .demoqr{margin:16px auto 0;display:flex;flex-direction:column;align-items:center;gap:8px;
+    background:#fff;border-radius:14px;padding:12px 14px;width:max-content;max-width:100%;box-shadow:0 8px 24px rgba(6,18,40,.28)}
+  .wereld.digitaal .demoqr svg{display:block;width:132px;height:132px}
+  .wereld.digitaal .demoqr span{font:600 12px/1.35 var(--disp);color:#12294d;text-align:center;max-width:160px}
+  @media (max-width:700px){.wereld.digitaal .demoqr{display:none}}
 
   .mini-a4{background:#fff;border:1px solid #e8e4d6;border-radius:10px;padding:18px 18px 14px;box-shadow:0 10px 30px rgba(35,32,25,.12)}
   .mini-a4 .kop{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--blauw);padding-bottom:6px;margin-bottom:10px}
@@ -353,6 +360,7 @@
       </div>
       </div>
       <div class="onderschrift">Gescand met de gewone camera: dezelfde kaart, met een instructievideo bij elke oefening. Eén tik en hij staat als app op het beginscherm, zonder store of account. <a href="/k/demo" target="_blank" rel="noopener">Open zelf een voorbeeldkaart ↗</a></div>
+      <div class="demoqr" aria-hidden="true">__DEMO_QR__<span>Scan met je telefoon en ervaar de patiëntkaart zelf</span></div>
     </div>
   </div>
 </header>

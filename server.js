@@ -706,6 +706,27 @@ const scriptNonce = () => randomBytes(16).toString("base64");
 const nonceInlineScripts = (html, nonce) =>
   html.replace(/<script(?![^>]*\ssrc=)/gi, '<script nonce="' + nonce + '"');
 
+// Server-side QR voor de scriptloze landingspagina: we hergebruiken dezelfde
+// pure QR-encoder als de app (public/qr.js) door hem één keer met een window-shim
+// te laden. Zo blijft er één bron voor het algoritme en hoeft de landing geen
+// script te draaien (de strikte CSP blijft intact; een inline <svg> is geen fetch).
+let _fysiqr;
+async function laadFysiqr() {
+  if (_fysiqr !== undefined) return _fysiqr;
+  try { const src = await readFile(join(publicDir, "qr.js"), "utf8"); const shim = {}; new Function("window", src)(shim); _fysiqr = (shim.FYSIQR && typeof shim.FYSIQR.svg === "function") ? shim.FYSIQR : null; }
+  catch { _fysiqr = null; }
+  return _fysiqr;
+}
+const _qrCache = new Map();
+async function qrSvgVoor(url, px) {
+  const sleutel = px + "|" + url;
+  if (_qrCache.has(sleutel)) return _qrCache.get(sleutel);
+  let svg = "";
+  try { const q = await laadFysiqr(); if (q) svg = q.svg(url, px) || ""; } catch {}
+  _qrCache.set(sleutel, svg);
+  return svg;
+}
+
 const MIME = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
@@ -2147,6 +2168,17 @@ async function afhandelen(request, response) {
       let sjabTelling = 12;
       try { const sj = JSON.parse(await readFile(join(publicDir, "sjablonen.json"), "utf8")); if (Array.isArray(sj) && sj.length) sjabTelling = sj.length; } catch {}
       html = html.replace(/__SJABLONEN_AANTAL__/g, String(sjabTelling));
+      // QR naar de voorbeeldkaart: een desktop-bezoeker scant hem en ervaart de
+      // app-vrije patiëntkaart meteen op de eigen telefoon. Host-pinning zoals bij
+      // de ICS-agenda: alleen het eigen domein mag in de link, anders fysiplan.nl.
+      if (html.indexOf("__DEMO_QR__") >= 0) {
+        const rawHost = String(request.headers.host || "");
+        const netjes = /^[a-z0-9.-]+(:\d+)?$/i.test(rawHost) ? rawHost : "";
+        const kaalHost = netjes.split(":")[0].toLowerCase();
+        const eigenDomein = kaalHost === "fysiplan.nl" || kaalHost.endsWith(".fysiplan.nl") || kaalHost === "localhost" || kaalHost === "127.0.0.1";
+        const veiligeHost = eigenDomein ? netjes : "fysiplan.nl";
+        html = html.replace(/__DEMO_QR__/g, await qrSvgVoor("https://" + veiligeHost + "/k/demo", 132));
+      }
       await send(response, 200, "text/html; charset=utf-8", html);
     }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
