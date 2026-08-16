@@ -144,3 +144,30 @@ weigert zonder token, taal-whitelist op vertaal.
 **Volgende run — pak een ander gebied:** injectie/opslag-integriteit op de
 schrijfroutes (`/api/kaarten` cells/rows/vids-sanitisatie, `/api/praktijken`
 POST-velden) of security-headers-review op de statische v2-assets.
+
+### 2026-08-16 — injectie / opgeslagen-XSS op de kaartvelden
+**Geauditeerd:** de weg van door-de-therapeut (of via de open kaart-API)
+opgeslagen velden naar de uitvoer op `/k` — cliëntnaam/doel/opmerking,
+oefeningnamen, schema-rijen en -cellen, praktijkadres.
+
+**Bevindingen (geen kritiek gat — dubbel afgedekt):**
+- Invoer: `/api/kaarten` POST kapt en begrenst elk veld (`cleanName`/`sanStr`,
+  cells ≤ 800 sleutels à 60, rows ≤ 40, chosen ≤ 12 met id-regex,
+  vids alleen `uploads/videos/v-<hex>.<mp4|webm>`), 256 kB body-cap.
+- Uitvoer: `kaart.html` rendert álles via `esc()` — cliëntvelden
+  (`esc(vt(cl.c_*))`), oefeningnamen (`esc(vt(x.n))`), schema-datum en
+  S/H/W-cellen (`esc(...)`), adres (`.map(esc)`), video-data-attributen
+  (`esc(...)`); praktijknaam via `textContent`.
+- Defense-in-depth: de nonce-CSP op `/k` (geen `unsafe-inline`) zou een
+  eventueel doorgeglipt inline-script of `on…`-handler alsnog blokkeren.
+- Ook mijn recente toevoegingen in het overzicht (Deel-links, Kopie) escapen
+  id/naam en `encodeURIComponent`en de deeltekst.
+
+**Increment:** geen geforceerde codewijziging; regressie-guard
+`test-stored-xss.mjs` (8 checks) die payloads in cliëntnaam, doel, opmerking,
+oefeningnaam, schema-rij en -cel injecteert en aantoont dat niets draait,
+alles als tekst verschijnt en er geen kwaad `<img>/<iframe>/<svg>` ontstaat.
+
+**Volgende run — pak een ander gebied:** security-headers-review op de
+statische v2-assets en `/ontwerp`, of een tweede blik op de accountlaag
+(sessie-rotatie na wachtwoord-reset, herstelpad-audit).
