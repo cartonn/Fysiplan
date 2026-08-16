@@ -1898,6 +1898,25 @@ bridge2.jpg</div>
         var toonLijst=function(items){
           el.innerHTML=items.length?items.map(rendRij).join(""):"<div class='hint'>Geen kaart gevonden voor deze zoekterm.</div>";
         };
+        var dag=864e5,nu=Date.now();
+        // "aandacht"-prioriteit: een hoge laatste pijnscore of langer niet geoefend
+        // weegt zwaarder. Alleen tonen/sorteren; de duiding blijft bij de therapeut.
+        var aandacht=function(c){
+          var laatstePijn=(c.scores&&c.scores.length)?c.scores[c.scores.length-1].s:null;
+          var acts=[c.ts||0];
+          if(c.gedaan&&c.gedaan.length)acts.push(c.gedaan[c.gedaan.length-1].t);
+          if(c.scores&&c.scores.length)acts.push(c.scores[c.scores.length-1].t);
+          var dagenStil=Math.min(60,Math.floor((nu-Math.max.apply(null,acts))/dag));
+          return (laatstePijn!==null&&laatstePijn>=7?1000:0)+dagenStil;
+        };
+        var sortModus=function(){var s=document.getElementById('k_srv_sort');return (s&&s.style.display!=='none'&&s.dataset.mode)||'nieuw';};
+        var zoekTermVan=function(){var z=document.getElementById('k_srv_zoek');return (z&&z.style.display!=='none')?z.value.trim().toLowerCase():'';};
+        var toon=function(){
+          var t=zoekTermVan();
+          var items=t?l.filter(function(c){return String(c.naam||'').toLowerCase().indexOf(t)>=0;}):l.slice();
+          if(sortModus()==='aandacht')items.sort(function(a,b){return aandacht(b)-aandacht(a)||(b.ts||0)-(a.ts||0);});
+          toonLijst(items);
+        };
         // zoekveld bij een langere lijst: snel een cliënt vinden zonder te scrollen
         var zoek=document.getElementById('k_srv_zoek');
         if(l.length>6){
@@ -1909,14 +1928,22 @@ bridge2.jpg</div>
             zoek.style.cssText='width:100%;margin:2px 0 8px;font-size:13px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff';
             el.parentNode.insertBefore(zoek,el);
           }
-          zoek.style.display='';
-          var filter=function(){var t=zoek.value.trim().toLowerCase();toonLijst(t?l.filter(function(c){return String(c.naam||'').toLowerCase().indexOf(t)>=0;}):l);};
-          zoek.oninput=filter;
-          filter();
-        }else{
-          if(zoek)zoek.style.display='none';
-          toonLijst(l);
-        }
+          zoek.style.display='';zoek.oninput=toon;
+        }else if(zoek)zoek.style.display='none';
+        // sorteertoggle vanaf twee kaarten: nieuwste of "aandacht" bovenaan
+        var sortEl=document.getElementById('k_srv_sort');
+        var markeerSort=function(){if(!sortEl)return;var m=sortEl.dataset.mode||'nieuw';sortEl.querySelectorAll('[data-sort]').forEach(function(b){var aan=b.dataset.sort===m;b.style.background=aan?'var(--brand)':'';b.style.color=aan?'#fff':'';b.style.borderColor=aan?'var(--brand)':'';b.setAttribute('aria-pressed',aan?'true':'false');});};
+        if(l.length>=2){
+          if(!sortEl){
+            sortEl=document.createElement('div');sortEl.id='k_srv_sort';sortEl.className='no-print';sortEl.dataset.mode='nieuw';
+            sortEl.style.cssText='display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0 0 8px;font-size:12px;color:var(--muted)';
+            sortEl.innerHTML='<span>Sorteer:</span><button type="button" class="btn" data-sort="nieuw" style="font-size:11.5px;padding:3px 9px">Nieuwste</button><button type="button" class="btn" data-sort="aandacht" title="Hoge pijn of langer niet geoefend bovenaan" style="font-size:11.5px;padding:3px 9px">Aandacht</button>';
+            el.parentNode.insertBefore(sortEl,el);
+          }
+          sortEl.style.display='flex';markeerSort();
+          sortEl.onclick=function(e){var b=e.target.closest('[data-sort]');if(!b)return;sortEl.dataset.mode=b.dataset.sort;markeerSort();toon();};
+        }else if(sortEl)sortEl.style.display='none';
+        toon();
       })
       .catch(function(){el.innerHTML="<div class='hint'>Kaarten laden is niet gelukt.</div>";});
   }
