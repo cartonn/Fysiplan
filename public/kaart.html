@@ -1099,7 +1099,7 @@
       document.querySelectorAll('#agdagen button.aan').forEach(function(b){gekozen.push(b.dataset.dag);});
       if(!gekozen.length){alert(tr('agleeg'));return;}
       var tijd=document.getElementById('agtijd').value||'09:00';
-      location.href='/api/kaart/agenda?id='+id+'&dagen='+gekozen.join(',')+'&tijd='+encodeURIComponent(tijd);
+      location.href='/api/kaart/agenda?id='+id+'&dagen='+gekozen.join(',')+'&tijd='+encodeURIComponent(tijd)+'&taal='+encodeURIComponent(TAAL);
     });
     var lbox=document.getElementById('lightbox');
     lbox.addEventListener('click',function(e){

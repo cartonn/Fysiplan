@@ -1862,6 +1862,20 @@ async function afhandelen(request, response) {
       await sendJson(response, 400, { ok: false, fout: "Kies minstens één dag en een geldig tijdstip." });
       return;
     }
+    // de patiëntkaart is negentalig; de agenda-uitnodiging die de patiënt aan zijn
+    // eigen telefoon toevoegt spreekt daarom ook zijn taal (val terug op Nederlands)
+    const AGENDA_TAAL = {
+      nl: { sum: "Oefeningen doen", desc: "Jouw trainingskaart met alle oefeningen en video's: ", alarm: "Tijd voor je oefeningen" },
+      en: { sum: "Do your exercises", desc: "Your training card with all exercises and videos: ", alarm: "Time for your exercises" },
+      de: { sum: "Übungen machen", desc: "Deine Trainingskarte mit allen Übungen und Videos: ", alarm: "Zeit für deine Übungen" },
+      fr: { sum: "Faire mes exercices", desc: "Ta carte d'entraînement avec tous les exercices et vidéos : ", alarm: "C'est l'heure de tes exercices" },
+      es: { sum: "Hacer los ejercicios", desc: "Tu tarjeta de entrenamiento con todos los ejercicios y vídeos: ", alarm: "Hora de tus ejercicios" },
+      pl: { sum: "Zrób ćwiczenia", desc: "Twoja karta treningowa ze wszystkimi ćwiczeniami i filmami: ", alarm: "Czas na ćwiczenia" },
+      tr: { sum: "Egzersizleri yap", desc: "Tüm egzersizler ve videolarla antrenman kartın: ", alarm: "Egzersiz zamanı" },
+      ar: { sum: "قم بتمارينك", desc: "بطاقة تمارينك بكل التمارين والفيديوهات: ", alarm: "حان وقت تمارينك" },
+      uk: { sum: "Зробити вправи", desc: "Твоя картка вправ з усіма вправами та відео: ", alarm: "Час для твоїх вправ" }
+    };
+    const taalT = AGENDA_TAAL[String(q.get("taal") || "").toLowerCase()] || AGENDA_TAAL.nl;
     // eerstvolgend gekozen oefenmoment in Nederlandse tijd (vandaag telt mee als het tijdstip nog komt)
     const kort = { Mon: "MO", Tue: "TU", Wed: "WE", Thu: "TH", Fri: "FR", Sat: "SA", Sun: "SU" };
     const nuTijd = new Date().toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Europe/Amsterdam" });
@@ -1894,10 +1908,10 @@ async function afhandelen(request, response) {
       "DTSTART:" + dtStart,
       "DURATION:PT20M",
       "RRULE:FREQ=WEEKLY;BYDAY=" + dagen.join(",") + ";COUNT=" + dagen.length * 12,
-      "SUMMARY:" + icsTekst("Oefeningen doen" + (found.praktijk ? " (" + found.praktijk + ")" : "")),
-      "DESCRIPTION:" + icsTekst("Jouw trainingskaart met alle oefeningen en video's: " + link),
+      "SUMMARY:" + icsTekst(taalT.sum + (found.praktijk ? " (" + found.praktijk + ")" : "")),
+      "DESCRIPTION:" + icsTekst(taalT.desc + link),
       "URL:" + icsTekst(link),
-      "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsTekst("Tijd voor je oefeningen"), "TRIGGER:-PT0M", "END:VALARM",
+      "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsTekst(taalT.alarm), "TRIGGER:-PT0M", "END:VALARM",
       "END:VEVENT", "END:VCALENDAR", ""
     ].join("\r\n");
     response.setHeader("content-disposition", 'attachment; filename="oefenmomenten.ics"');
