@@ -1,0 +1,877 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 21 — Waardepapier · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 21 — WAARDEPAPIER
+   Niemand gooit een bankbiljet weg. Iedereen gooit een oefenkaart
+   weg. Het verschil zit niet in het papier maar in de vormtaal:
+   het ene stuk drukwerk zegt met elke lijn "dit is iets waard en
+   dit is van jou", het andere zegt "dit is een uitdraai".
+
+   Dus wordt de kaart gedrukt als waardepapier, in de traditie van
+   de Nederlandse bankbiljetten: gegraveerde kaderlijnen, een
+   guilloche-rozet, een serienummer, een geldigheidsdatum, en één
+   diepe drukinkt over een warme onderdruk. Dat is geen grap over
+   geld — de coupure is nadrukkelijk NIET in euro's maar in
+   MINUTEN: acht minuten per dag, verdeeld over drie oefeningen van
+   twee en drie. Wat het biljet waardeert is de inspanning van de
+   patiënt, niet de rekening van de praktijk.
+
+   Drie dingen die dit concept als enige in de galerij oplevert:
+
+   1. HET SERIENUMMER. Elke uitgifte krijgt een eigen nummer. Belt
+      iemand op met een vraag, dan vraagt de praktijk het nummer en
+      weet meteen welke versie er op de koelkast hangt — in plaats
+      van te raden welke uitdraai van welke week het is.
+   2. DE HANDTEKENING. Onderaan tekent de fysiotherapeut, met de
+      hand, met een pen. Een biljet zonder handtekening is niets
+      waard, en dat gebaar is precies het punt: iemand staat
+      persoonlijk in voor dit blad. Dat is nooit eerder gevraagd
+      van dit soort papier, en het kost tien seconden.
+   3. GELDIG TOT. Een kaart zonder einddatum is een kaart zonder
+      afspraak. "Geldig tot 14 september" is tegelijk de belofte om
+      dan een nieuwe uit te geven.
+
+   Waar het schuurt — en dat is bewust: geld en zorg naast elkaar
+   zetten is ongemakkelijk. Dat ongemak is de motor. Precies omdat
+   dit blad eruitziet als iets van waarde, blijft het liggen. De
+   rem staat erop in de woorden: geen enkel bedrag, geen munt, geen
+   valutateken; de coupure is een tijd, en de tekst is nuchter.
+
+   Leesbaarheid boven het effect: guilloche staat NOOIT onder
+   lopende tekst. Fijne lijnen zitten uitsluitend in het kader, in
+   de rozet en in de hoekcijfers. Alles wat gelezen moet worden
+   staat op een schoon, egaal vlak, in 11 punt met ruime interlinie.
+   In grijstinten blijft alles overeind: de onderdruk is licht, de
+   drukinkt is bijna zwart.
+   Alles inline; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  --papier:#f4f1e6;         /* biljetpapier, warm gebroken wit */
+  --papier-l:#faf8f1;
+  --vlak:#fffdf7;
+  --scherm:#e9e5d8;
+  --inkt:#252352;           /* de diepe drukinkt: indigo-violet */
+  --inkt-2:#3d3a70;
+  --inkt-3:#5c5990;
+  --grijs:#6f6c85;
+  --onder-a:#f2d99a;        /* onderdruk: zon */
+  --onder-b:#e7a9a1;        /* onderdruk: roze */
+  --accent:#a8324f;         /* de tweede, schaarse inkt */
+  --lijn:#c9c4b0;
+  --lijn-2:#e0dccb;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --serif:"Iowan Old Style",Charter,"Palatino Linotype",Georgia,serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:6px; --s2:12px; --s3:20px; --s4:34px; --s5:56px; --s6:88px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--scherm);color:var(--inkt);font-family:var(--sans);font-size:17px;line-height:1.6}
+img{max-width:100%;display:block}
+a{color:inherit}
+
+/* ── guilloche-gereedschap ───────────────────────────────
+   Fijnlijnwerk uit één techniek: gekruiste lijnrasters plus
+   concentrische ringen. Nooit onder lopende tekst.            */
+.gl-band{
+  background-color:var(--papier);
+  background-image:
+    repeating-linear-gradient(68deg,rgba(37,35,82,.30) 0 .5px,transparent .5px 4px),
+    repeating-linear-gradient(-68deg,rgba(37,35,82,.30) 0 .5px,transparent .5px 4px),
+    repeating-linear-gradient(90deg,rgba(37,35,82,.14) 0 .5px,transparent .5px 9px);
+}
+.rozet{position:relative;border-radius:50%;overflow:hidden;
+  background-color:var(--papier-l);
+  background-image:
+    repeating-conic-gradient(from 0deg,rgba(37,35,82,.40) 0deg .35deg,transparent .35deg 2.5deg),
+    repeating-radial-gradient(circle at 50% 50%,rgba(37,35,82,.34) 0 .6px,transparent .6px 4.2px),
+    radial-gradient(circle at 50% 50%,var(--onder-a) 0%,var(--onder-b) 62%,var(--papier-l) 100%);
+  box-shadow:0 0 0 1px var(--inkt) inset}
+.rozet::after{content:"";position:absolute;inset:22%;border-radius:50%;
+  background-image:
+    repeating-conic-gradient(from 12deg,rgba(37,35,82,.5) 0deg .5deg,transparent .5deg 4deg),
+    radial-gradient(circle,rgba(255,253,247,.9),rgba(255,253,247,.35));
+  box-shadow:0 0 0 1px rgba(37,35,82,.5) inset}
+.rozet .cf{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;z-index:2}
+
+/* ── labbalk ─────────────────────────────────────────────── */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:18px;
+  background:var(--inkt);color:#d9d6ee;padding:11px 22px;border-bottom:2px solid var(--accent)}
+.labbalk .nr{font:600 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:#f0c9a4;border:1px solid #4c497f;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{font:500 14px/1 var(--sans);color:#bbb7d8;text-decoration:none;padding:6px 4px}
+.labbalk a:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.labbalk a.terug{color:#eaa8ba}
+@media (max-width:820px){.labbalk{gap:12px;padding:9px 14px;flex-wrap:wrap}.labbalk a{font-size:13px}}
+
+/* ── raamwerk ───────────────────────────────────────────── */
+.scherm{padding:var(--s6) 24px;border-top:1px solid var(--lijn)}
+.scherm:first-child{border-top:0}
+.binnen{max-width:1180px;margin:0 auto}
+.schermkop{max-width:760px;margin-bottom:var(--s5)}
+.schermkop b{display:block;font:600 10.5px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:12px}
+.schermkop h2{font:400 40px/1.1 var(--serif);letter-spacing:-.015em;margin-bottom:10px}
+.schermkop p{font-size:17.5px;color:var(--grijs)}
+
+.kn{display:inline-block;font:600 15px/1 var(--sans);background:var(--inkt);color:#f6f3e8;
+  padding:15px 24px;text-decoration:none;border:1px solid var(--inkt)}
+.kn:hover{background:#171540;border-color:#171540}
+.kn.leeg{background:transparent;color:var(--inkt);border-color:var(--inkt)}
+.kn.leeg:hover{background:var(--inkt);color:#f6f3e8}
+
+/* ── 1 landing ──────────────────────────────────────────── */
+.hero{display:grid;grid-template-columns:1.02fr .98fr;gap:var(--s5);align-items:center}
+@media (max-width:1000px){.hero{grid-template-columns:1fr;gap:var(--s4)}}
+.kap{font:600 11px/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--accent);
+  margin-bottom:22px}
+h1{font:400 clamp(37px,5vw,60px)/1.05 var(--serif);letter-spacing:-.02em;margin-bottom:22px}
+.lead{font-size:19.5px;line-height:1.6;color:var(--inkt-2);max-width:47ch}
+.doen{display:flex;gap:12px;flex-wrap:wrap;margin-top:var(--s4)}
+.naregel{margin-top:var(--s3);font-size:15.5px;line-height:1.65;color:var(--grijs);max-width:52ch;
+  border-left:2px solid var(--accent);padding-left:16px}
+
+/* het biljet op de landing */
+.biljet{position:relative;background:var(--papier);border:1px solid var(--inkt);
+  box-shadow:0 24px 62px rgba(37,35,82,.26);overflow:hidden}
+.biljet::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(112deg,rgba(242,217,154,.55),rgba(231,169,161,.42) 46%,rgba(255,253,247,0) 78%)}
+.biljet .kader{position:absolute;inset:9px;border:1px solid var(--inkt-3);pointer-events:none}
+.biljet .kader::before{content:"";position:absolute;inset:4px;border:.5px solid rgba(37,35,82,.4)}
+.biljet .binnen-b{position:relative;z-index:2;padding:26px 26px 20px}
+.bkop{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:20px}
+.bkop .uitg{font:600 9.5px/1.5 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--inkt-2)}
+.bkop .naam{font:400 26px/1.1 var(--serif);margin-top:8px}
+.bkop .sub{font:400 13px/1.5 var(--mono);color:var(--grijs);margin-top:7px}
+.bkop .rozet{width:96px;height:96px;flex:0 0 96px}
+.bkop .rozet .cf .c{font:400 34px/1 var(--serif);color:var(--inkt)}
+.bkop .rozet .cf .e{font:600 7.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--inkt-2);margin-top:4px}
+.bmidden{display:flex;gap:20px;align-items:center;padding:18px 0;
+  border-top:1px solid rgba(37,35,82,.28);border-bottom:1px solid rgba(37,35,82,.28)}
+.bmidden .portret{flex:0 0 128px;height:128px;border-radius:50%;overflow:hidden;position:relative;
+  display:flex;align-items:center;justify-content:center;background:var(--papier-l);
+  box-shadow:0 0 0 1px var(--inkt),0 0 0 5px var(--papier),0 0 0 6px rgba(37,35,82,.45)}
+.bmidden .portret img{max-height:104px;width:auto;mix-blend-mode:multiply;position:relative;z-index:2}
+.bmidden .portret .ring{position:absolute;inset:0;
+  background-image:repeating-radial-gradient(circle at 50% 50%,rgba(37,35,82,.22) 0 .5px,transparent .5px 5px)}
+.bmidden .tk h3{font:400 23px/1.16 var(--serif);margin-bottom:6px}
+.bmidden .tk p{font-size:15px;line-height:1.5;color:var(--inkt-2)}
+.bmidden .tk .tel{margin-top:10px;font:600 13px/1 var(--mono);color:var(--accent);letter-spacing:.05em}
+.bvoet{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;padding-top:16px}
+.bvoet .hand{flex:1}
+.bvoet .hand .lijn{border-bottom:1px solid var(--inkt-3);height:30px;position:relative}
+.bvoet .hand .lijn i{position:absolute;left:2px;bottom:3px;font:400 italic 21px/1 var(--serif);
+  color:var(--inkt-2);font-family:"Snell Roundhand","Segoe Script","Brush Script MT",cursive}
+.bvoet .hand .lb{font:600 8.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--grijs);margin-top:7px}
+.bvoet .ser{text-align:right;font:600 12.5px/1.5 var(--mono);color:var(--inkt);letter-spacing:.08em}
+.bvoet .ser small{display:block;font-weight:400;font-size:10.5px;color:var(--grijs);letter-spacing:.14em;
+  text-transform:uppercase;margin-top:4px}
+
+.regels{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);margin-top:var(--s6)}
+@media (max-width:900px){.regels{grid-template-columns:1fr}}
+.vak{background:var(--vlak);border:1px solid var(--lijn);padding:26px 24px 24px;position:relative}
+.vak::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--inkt)}
+.vak:nth-child(2)::before{background:var(--accent)}
+.vak:nth-child(3)::before{background:var(--onder-b)}
+.vak .num{font:600 12px/1 var(--mono);color:var(--grijs);margin-bottom:14px;letter-spacing:.14em}
+.vak h3{font:400 22px/1.2 var(--serif);margin-bottom:9px}
+.vak p{font-size:15.5px;line-height:1.6;color:var(--inkt-2)}
+
+/* ── 2 kiezer: de coupurekiezer ─────────────────────────── */
+.balans{display:flex;align-items:center;gap:18px;flex-wrap:wrap;background:var(--vlak);
+  border:1px solid var(--inkt);padding:16px 20px;margin-bottom:var(--s4)}
+.balans .rozet{width:58px;height:58px;flex:0 0 58px}
+.balans .rozet .cf .c{font:400 21px/1 var(--serif);color:var(--inkt)}
+.balans .tt{font:600 10px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs)}
+.balans .gr{font:400 22px/1.2 var(--serif);margin-top:5px}
+.balans .rek{flex:1}
+.balans .waars{font-size:14.5px;line-height:1.5;color:var(--accent);max-width:38ch}
+
+.coupures{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media (max-width:1000px){.coupures{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.coupures{grid-template-columns:1fr}}
+.coup{position:relative;background:var(--papier);border:1px solid var(--inkt-3);overflow:hidden;
+  display:flex;flex-direction:column}
+.coup .onder{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(120deg,rgba(242,217,154,.5),rgba(231,169,161,.3) 55%,transparent 80%)}
+.coup .in{position:relative;z-index:2;padding:16px;display:flex;flex-direction:column;gap:12px;height:100%}
+.coup .ck{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.coup .ck .grp{font:600 9.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--grijs)}
+.coup .ck h4{font:400 19px/1.16 var(--serif);margin-top:7px}
+.coup .cf-nr{flex:0 0 auto;text-align:center}
+.coup .cf-nr .c{font:400 30px/1 var(--serif);color:var(--inkt)}
+.coup .cf-nr .e{font:600 7px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--grijs);margin-top:3px}
+.coup figure{background:var(--papier-l);border:1px solid rgba(37,35,82,.25);padding:12px;
+  display:flex;align-items:center;justify-content:center;min-height:130px}
+.coup figure img{max-height:114px;width:auto;mix-blend-mode:multiply}
+.coup .doe{margin-top:auto}
+.coup .doe button{width:100%;font:600 13.5px/1 var(--sans);padding:11px;background:transparent;
+  border:1px solid var(--inkt);color:var(--inkt);cursor:pointer;letter-spacing:.04em}
+.coup .doe button:hover{background:rgba(37,35,82,.07)}
+.coup.gekozen{border-color:var(--inkt);box-shadow:0 0 0 1px var(--inkt)}
+.coup.gekozen .doe button{background:var(--inkt);color:#f6f3e8}
+.coup .zegel{position:absolute;top:0;right:0;background:var(--accent);color:#fdf0f2;
+  font:600 9.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;padding:6px 9px;z-index:3}
+
+/* ── 3 cliëntkaart ──────────────────────────────────────── */
+.uitgifte{border:1px solid var(--inkt);background:var(--vlak);
+  box-shadow:0 22px 58px rgba(37,35,82,.16)}
+.ug-kop{position:relative;overflow:hidden;padding:28px 30px;color:#f2efe2;background:var(--inkt)}
+.ug-kop::before{content:"";position:absolute;inset:0;opacity:.28;
+  background-image:
+    repeating-conic-gradient(from 0deg at 82% 50%,rgba(242,217,154,.9) 0deg .4deg,transparent .4deg 2.6deg),
+    repeating-radial-gradient(circle at 82% 50%,rgba(231,169,161,.85) 0 .6px,transparent .6px 5px)}
+.ug-kop .rel{position:relative;z-index:2;display:flex;justify-content:space-between;
+  align-items:flex-end;gap:22px;flex-wrap:wrap}
+.ug-kop .uitg{font:600 9.5px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:#bfbadd}
+.ug-kop h3{font:400 30px/1.1 var(--serif);margin-top:10px}
+.ug-kop .sub{font:400 14.5px/1.5 var(--sans);color:#c8c3e2;margin-top:7px}
+.ug-kop .ser{text-align:right;font:600 13px/1.5 var(--mono);letter-spacing:.09em}
+.ug-kop .ser small{display:block;font-weight:400;font-size:10.5px;color:#bfbadd;letter-spacing:.16em;
+  text-transform:uppercase;margin-top:5px}
+
+.ug-lijst{padding:6px 30px 0}
+.post{display:flex;gap:22px;align-items:flex-start;padding:24px 0;border-bottom:1px solid var(--lijn-2)}
+.post:last-child{border-bottom:0}
+.post .cijfer{flex:0 0 74px;text-align:center}
+.post .cijfer .rozet{width:74px;height:74px}
+.post .cijfer .rozet .cf .c{font:400 28px/1 var(--serif);color:var(--inkt)}
+.post .cijfer .e{font:600 8px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--grijs);margin-top:7px}
+.post figure{flex:0 0 116px;background:var(--papier-l);border:1px solid rgba(37,35,82,.22);padding:9px;
+  display:flex;align-items:center;justify-content:center;height:110px}
+.post figure img{max-height:92px;width:auto;mix-blend-mode:multiply}
+.post .tk{flex:1;min-width:0}
+.post h4{font:400 21px/1.18 var(--serif);margin-bottom:6px}
+.post p{font-size:15.5px;line-height:1.56;color:var(--inkt-2)}
+.post .maat{display:flex;gap:16px;flex-wrap:wrap;margin-top:11px}
+.post .maat span{font:400 13px/1 var(--mono);color:var(--inkt-3)}
+.post .maat span b{color:var(--inkt);font-weight:700}
+.post .let{margin-top:10px;font-size:14px;line-height:1.5;color:var(--accent);
+  padding-left:13px;border-left:2px solid var(--accent)}
+
+.ug-voet{border-top:1px solid var(--inkt);margin-top:6px;padding:24px 30px 26px;
+  display:grid;grid-template-columns:1fr 1fr 200px;gap:26px;align-items:end}
+@media (max-width:900px){.ug-voet{grid-template-columns:1fr;gap:20px}}
+.tekenveld .lijn{border-bottom:1px solid var(--inkt-3);height:38px;position:relative}
+.tekenveld .lijn i{position:absolute;left:2px;bottom:4px;font:400 italic 23px/1 var(--serif);
+  color:var(--inkt-2);font-family:"Snell Roundhand","Segoe Script","Brush Script MT",cursive}
+.tekenveld .lb{font:600 9px/1.4 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--grijs);margin-top:8px}
+.tekenveld .lb small{display:block;letter-spacing:0;text-transform:none;font-weight:400;
+  font-size:13px;color:var(--inkt-2);margin-top:4px}
+.geldig{text-align:right}
+.geldig .t{font:600 9px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.geldig .d{font:400 21px/1.15 var(--serif);margin-top:8px}
+.geldig .n{font:400 13px/1.45 var(--sans);color:var(--grijs);margin-top:6px}
+
+/* ── 4 printkaart ───────────────────────────────────────── */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){.bladschaal{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+
+.blad{width:210mm;height:297mm;background:#f6f3e9;color:#252352;position:relative;overflow:hidden;
+  font-family:var(--sans);display:flex;flex-direction:column;padding:11mm;
+  box-shadow:0 26px 70px rgba(37,35,82,.26)}
+/* de onderdruk: één zacht verloop over het hele vel, licht genoeg om overheen te lezen */
+.blad .onderdruk{position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 88% 12%,rgba(242,217,154,.72),transparent 42%),
+    radial-gradient(circle at 8% 88%,rgba(231,169,161,.5),transparent 44%),
+    linear-gradient(140deg,rgba(242,217,154,.28),rgba(255,255,255,0) 55%)}
+/* het gegraveerde kader: dubbele lijn met fijnlijnrand ertussen */
+.blad .rand{position:absolute;inset:11mm;border:1pt solid #252352;pointer-events:none}
+.blad .rand::before{content:"";position:absolute;inset:1.4mm;border:.4pt solid rgba(37,35,82,.55)}
+.blad .rand::after{content:"";position:absolute;inset:.35mm;border:.35pt solid rgba(37,35,82,.3);
+  background-image:
+    repeating-linear-gradient(68deg,rgba(37,35,82,.18) 0 .12mm,transparent .12mm 1mm),
+    repeating-linear-gradient(-68deg,rgba(37,35,82,.18) 0 .12mm,transparent .12mm 1mm);
+  -webkit-mask:linear-gradient(#000,#000) padding-box content-box,linear-gradient(#000,#000);
+  -webkit-mask-composite:xor;mask-composite:exclude;padding:1.05mm}
+.blad .binnenblad{position:relative;z-index:2;flex:1;margin:4.5mm;display:flex;flex-direction:column;
+  min-height:0}
+
+.pb-kop{display:flex;justify-content:space-between;align-items:flex-start;gap:7mm;
+  border-bottom:1pt solid #252352;padding-bottom:4mm}
+.pb-kop .uitg{font:600 7.5pt/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:#3d3a70}
+.pb-kop h1{font:400 21pt/1.05 var(--serif);margin-top:2.6mm;letter-spacing:-.015em;margin-bottom:0}
+.pb-kop .sub{font:400 9.5pt/1.4 var(--serif);color:#3d3a70;margin-top:2mm}
+.pb-kop .ser{font:600 8.5pt/1.5 var(--mono);letter-spacing:.09em;color:#252352;margin-top:2.4mm}
+.pb-rozet{flex:0 0 30mm;text-align:center}
+.pb-rozet .rz{width:30mm;height:30mm;border-radius:50%;position:relative;overflow:hidden;
+  background-color:#faf8f1;
+  background-image:
+    repeating-conic-gradient(from 0deg,rgba(37,35,82,.42) 0deg .35deg,transparent .35deg 2.4deg),
+    repeating-radial-gradient(circle at 50% 50%,rgba(37,35,82,.34) 0 .12mm,transparent .12mm 1mm),
+    radial-gradient(circle,#f2d99a 0%,#e7a9a1 62%,#faf8f1 100%);
+  box-shadow:0 0 0 .8pt #252352 inset;display:flex;align-items:center;justify-content:center}
+.pb-rozet .rz::after{content:"";position:absolute;inset:22%;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,253,247,.94),rgba(255,253,247,.5));
+  box-shadow:0 0 0 .5pt rgba(37,35,82,.6) inset}
+.pb-rozet .rz b{position:relative;z-index:2;font:400 26pt/1 var(--serif);color:#252352}
+.pb-rozet .e{font:600 7pt/1.3 var(--sans);letter-spacing:.15em;text-transform:uppercase;
+  color:#3d3a70;margin-top:1.8mm}
+
+.pb-alg{display:flex;gap:5mm;align-items:baseline;margin-top:3.5mm;padding:3mm 4mm;
+  background:rgba(255,253,247,.82);border:.5pt solid rgba(37,35,82,.35)}
+.pb-alg .l{font:600 7.5pt/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  color:#a8324f;flex:0 0 25mm}
+.pb-alg p{font:400 10pt/1.42 var(--serif);color:#252352}
+
+.pb-posten{display:flex;flex-direction:column;gap:3.6mm;margin-top:4mm}
+.pb-post{display:flex;gap:4.5mm;align-items:stretch;background:rgba(255,253,247,.86);
+  border:.5pt solid rgba(37,35,82,.4);padding:3.2mm 4mm}
+.pb-post .cf{flex:0 0 15mm;display:flex;flex-direction:column;align-items:center;
+  border-right:.5pt solid rgba(37,35,82,.3);padding-right:3mm;justify-content:center}
+.pb-post .cf .c{font:400 25pt/1 var(--serif);color:#252352}
+.pb-post .cf .e{font:600 6.4pt/1.2 var(--sans);letter-spacing:.12em;text-transform:uppercase;
+  color:#5c5990;margin-top:1.4mm;text-align:center}
+.pb-post figure{flex:0 0 27mm;background:#faf8f1;border:.5pt solid rgba(37,35,82,.28);padding:1.6mm;
+  display:flex;align-items:center;justify-content:center}
+.pb-post figure img{max-height:23mm;max-width:100%;width:auto;mix-blend-mode:multiply}
+.pb-post .tk{flex:1;min-width:0}
+.pb-post .nm{display:flex;align-items:baseline;justify-content:space-between;gap:4mm;margin-bottom:1.6mm}
+.pb-post h2{font:400 14.5pt/1.12 var(--serif)}
+.pb-post .grp{font:600 7pt/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#5c5990}
+.pb-post p{font:400 10.5pt/1.4 var(--serif);color:#252352}
+.pb-post .maat{display:flex;gap:5mm;flex-wrap:wrap;margin-top:2mm}
+.pb-post .maat span{font:400 9.5pt/1 var(--mono);color:#3d3a70}
+.pb-post .maat span b{color:#252352;font-weight:700}
+.pb-post .let{margin-top:1.8mm;font:400 9pt/1.35 var(--serif);color:#a8324f}
+
+/* de voet: handtekening, geldigheid, microtekst */
+.pb-voet{margin-top:auto;padding-top:4mm}
+.pb-voet .vlak{display:grid;grid-template-columns:1fr 1fr 44mm;gap:6mm;align-items:end;
+  border-top:1pt solid #252352;padding-top:4mm}
+.tv .ln{border-bottom:.6pt solid #3d3a70;height:11mm;position:relative}
+.tv .ln i{position:absolute;left:1mm;bottom:1.2mm;font:400 italic 17pt/1 var(--serif);color:#3d3a70;
+  font-family:"Snell Roundhand","Segoe Script","Brush Script MT",cursive}
+.tv .lb{font:600 7pt/1.35 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#5c5990;
+  margin-top:1.8mm}
+.tv .lb small{display:block;letter-spacing:0;text-transform:none;font-weight:400;font-size:8.5pt;
+  color:#252352;margin-top:.8mm;font-family:var(--serif)}
+.pb-geldig{text-align:right}
+.pb-geldig .t{font:600 7pt/1 var(--sans);letter-spacing:.15em;text-transform:uppercase;color:#a8324f}
+.pb-geldig .d{font:400 14pt/1.1 var(--serif);margin-top:1.8mm}
+.pb-geldig .n{font:400 8pt/1.4 var(--sans);color:#5c5990;margin-top:1.4mm}
+
+/* microtekst: klein maar écht leesbaar bij 100% — geen nepletter */
+.microregel{margin-top:3mm;border-top:.4pt solid rgba(37,35,82,.4);padding-top:1.4mm;
+  font:400 4.6pt/1.5 var(--mono);color:#5c5990;letter-spacing:.02em;
+  white-space:nowrap;overflow:hidden;text-overflow:clip}
+.pb-mrk{display:flex;justify-content:space-between;gap:5mm;margin-top:1.6mm;
+  font:400 6.6pt/1.35 var(--mono);color:#5c5990;letter-spacing:.05em}
+
+.wijzer{position:absolute;font:500 12px/1.35 var(--sans);color:var(--grijs);width:134px;z-index:5}
+.wijzer::after{content:"";position:absolute;background:var(--lijn)}
+.wijzer.r::after{left:-20px;top:50%;width:16px;height:1px}
+.wijzer.l{text-align:right}
+.wijzer.l::after{right:-20px;top:50%;width:16px;height:1px}
+@media (max-width:1120px){.wijzer{display:none}}
+
+.printhulp{max-width:720px;margin:var(--s4) auto 0;text-align:center;font-size:16px;color:var(--grijs)}
+.printhulp .kn{margin-top:var(--s3)}
+
+/* ── uitleiding ─────────────────────────────────────────── */
+footer.uitleiding{background:var(--inkt);color:#c7c3e0;padding:var(--s5) 24px var(--s6);
+  border-top:3px solid var(--accent)}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:#eaa8ba;margin-bottom:13px}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:9px}
+footer.uitleiding li::before{content:"—";position:absolute;left:0;color:#f0c9a4}
+footer.uitleiding a{color:#eeebfa}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;margin:0 !important;
+    break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 21</span>
+  <strong style="font:600 15px/1 var(--sans);color:#fff">Waardepapier</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>het ongemakkelijkste concept in deze galerij, en het enige dat niet wordt weggegooid</p>
+    </div>
+
+    <div class="hero">
+      <div>
+        <div class="kap">Fysiplan · waardepapier</div>
+        <h1>Een uitdraai gooi je weg. Een ondertekend document niet.</h1>
+        <p class="lead">Het verschil zit niet in het papier maar in de vormtaal. Dus wordt deze
+          kaart gedrukt als waardepapier: gegraveerd kader, guilloche-rozet, serienummer,
+          geldigheidsdatum — en onderaan zet de fysiotherapeut met de hand zijn handtekening.
+          De coupure staat níet in euro's. Hij staat in minuten.</p>
+        <div class="doen">
+          <a class="kn" href="#printkaart">Bekijk de A4</a>
+          <a class="kn leeg" href="#clientkaart">Waarom die handtekening</a>
+        </div>
+        <p class="naregel">Geld en zorg naast elkaar zetten is ongemakkelijk, en dat ongemak is hier
+          de motor: wat gewaardeerd wordt is de inspanning van de patiënt, niet de rekening van de
+          praktijk. Nergens op dit blad staat een bedrag, een munt of een valutateken.</p>
+      </div>
+
+      <div class="biljet">
+        <span class="kader" aria-hidden="true"></span>
+        <div class="binnen-b">
+          <div class="bkop">
+            <div>
+              <div class="uitg">Fysiotherapie Noorderlicht · Groningen</div>
+              <div class="naam">Mevrouw R. Bouma</div>
+              <div class="sub">Week 34 · derde uitgifte · nek en schouders</div>
+            </div>
+            <div class="rozet">
+              <span class="cf"><span class="c">8</span><span class="e">minuten</span></span>
+            </div>
+          </div>
+
+          <div class="bmidden">
+            <div class="portret">
+              <span class="ring" aria-hidden="true"></span>
+              <img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png"
+                alt="Zittend op een stoel wordt de kin recht naar achteren getrokken tot een dubbele kin."/>
+            </div>
+            <div class="tk">
+              <h3>Drie oefeningen, acht minuten per dag</h3>
+              <p>Twee minuten voor de kin, drie voor het draaien, drie voor de rek. Elke dag, tot en
+                met 14 september. Daarna geeft de praktijk een nieuwe kaart uit.</p>
+              <div class="tel">Vragen? 050 — 313 44 21 · noem uw nummer</div>
+            </div>
+          </div>
+
+          <div class="bvoet">
+            <div class="hand">
+              <div class="lijn"><i>J. Veldkamp</i></div>
+              <div class="lb">Fysiotherapeut · met de hand getekend</div>
+            </div>
+            <div class="ser">
+              KRT 4 812 007 — 03
+              <small>Serienummer · uitgifte</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="regels">
+      <div class="vak">
+        <div class="num">01</div>
+        <h3>Het serienummer werkt echt</h3>
+        <p>Elke uitgifte krijgt een eigen nummer. Belt iemand met een vraag, dan vraagt de praktijk
+          het nummer en weet meteen welke versie op de koelkast hangt — in plaats van te raden welke
+          uitdraai van welke week het was. Dat is geen decoratie maar dossierhygiëne.</p>
+      </div>
+      <div class="vak">
+        <div class="num">02</div>
+        <h3>De handtekening is het hart</h3>
+        <p>Een biljet zonder handtekening is niets waard. Onderaan tekent de therapeut met een pen —
+          tien seconden werk, en iemand staat er persoonlijk voor in. Van dit soort papier is dat
+          nog nooit gevraagd, en het is precies wat het van een uitdraai onderscheidt.</p>
+      </div>
+      <div class="vak">
+        <div class="num">03</div>
+        <h3>Geldig tot is een afspraak</h3>
+        <p>Een kaart zonder einddatum is een kaart zonder afspraak. "Geldig tot 14 september" zegt
+          twee dingen tegelijk: tot dan doet u dit, en dan geven wij een nieuwe uit. Verlopen papier
+          is een reden om terug te komen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>Oefeningen kiezen</h2>
+      <p>elke oefening heeft een coupure in minuten; de therapeut stelt een biljet samen dat klopt</p>
+    </div>
+
+    <div class="balans">
+      <div class="rozet"><span class="cf"><span class="c">8</span></span></div>
+      <div>
+        <div class="tt">Totale coupure</div>
+        <div class="gr">8 minuten per dag</div>
+      </div>
+      <span class="rek"></span>
+      <p class="waars">Boven de twaalf minuten wordt de kaart in de praktijk zelden volgehouden.
+        De teller kleurt dan rood — geen blokkade, wel een waarschuwing.</p>
+    </div>
+
+    <div class="coupures">
+      <article class="coup gekozen">
+        <span class="zegel">In de uitgifte</span>
+        <span class="onder" aria-hidden="true"></span>
+        <div class="in">
+          <div class="ck">
+            <div><div class="grp">Nek</div><h4>Kin intrekken — zittend</h4></div>
+            <div class="cf-nr"><div class="c">2</div><div class="e">min</div></div>
+          </div>
+          <figure><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png"
+            alt="Zittend op een stoel wordt de kin recht naar achteren getrokken tot een dubbele kin."/></figure>
+          <div class="doe"><button type="button">Opgenomen</button></div>
+        </div>
+      </article>
+
+      <article class="coup gekozen">
+        <span class="zegel">In de uitgifte</span>
+        <span class="onder" aria-hidden="true"></span>
+        <div class="in">
+          <div class="ck">
+            <div><div class="grp">Nek</div><h4>Nek draaien — zittend</h4></div>
+            <div class="cf-nr"><div class="c">3</div><div class="e">min</div></div>
+          </div>
+          <figure><img src="/images/nek/nek-draaien-zittend-actief-line-v1.png"
+            alt="Zittend op een stoel wordt het hoofd rustig naar één kant gedraaid en weer terug."/></figure>
+          <div class="doe"><button type="button">Opgenomen</button></div>
+        </div>
+      </article>
+
+      <article class="coup gekozen">
+        <span class="zegel">In de uitgifte</span>
+        <span class="onder" aria-hidden="true"></span>
+        <div class="in">
+          <div class="ck">
+            <div><div class="grp">Nek</div><h4>Bovenste trapezius rek</h4></div>
+            <div class="cf-nr"><div class="c">3</div><div class="e">min</div></div>
+          </div>
+          <figure><img src="/images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png"
+            alt="Zittend met ontspannen schouders zakt het hoofd opzij met het oor richting de schouder."/></figure>
+          <div class="doe"><button type="button">Opgenomen</button></div>
+        </div>
+      </article>
+
+      <article class="coup">
+        <span class="onder" aria-hidden="true"></span>
+        <div class="in">
+          <div class="ck">
+            <div><div class="grp">Nek</div><h4>Nek zijwaarts buigen</h4></div>
+            <div class="cf-nr"><div class="c">2</div><div class="e">min</div></div>
+          </div>
+          <figure><img src="/images/nek/nek-zijwaarts-buigen-zittend-actief-line-v1.png"
+            alt="Zittend op een stoel buigt het hoofd rustig zijwaarts."/></figure>
+          <div class="doe"><button type="button">Opnemen</button></div>
+        </div>
+      </article>
+
+      <article class="coup">
+        <span class="onder" aria-hidden="true"></span>
+        <div class="in">
+          <div class="ck">
+            <div><div class="grp">Nek</div><h4>Schouderblad liften en ontspannen</h4></div>
+            <div class="cf-nr"><div class="c">2</div><div class="e">min</div></div>
+          </div>
+          <figure><img src="/images/nek/schouderblad-liften-en-ontspannen-zittend-actief-line-v1.png"
+            alt="Zittend worden de schouderbladen opgetrokken en weer ontspannen."/></figure>
+          <div class="doe"><button type="button">Opnemen</button></div>
+        </div>
+      </article>
+
+      <article class="coup">
+        <span class="onder" aria-hidden="true"></span>
+        <div class="in">
+          <div class="ck">
+            <div><div class="grp">Nek</div><h4>Levator scapulae rek</h4></div>
+            <div class="cf-nr"><div class="c">3</div><div class="e">min</div></div>
+          </div>
+          <figure><img src="/images/nek/levator-scapulae-rek-zittend-actief-line-v1.png"
+            alt="Zittend wordt het hoofd schuin naar voren gebogen voor een rek langs de nek."/></figure>
+          <div class="doe"><button type="button">Opnemen</button></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>op het scherm heet het geen kaart maar een uitgifte — met nummer, datum en ondertekenaar</p>
+    </div>
+
+    <div class="uitgifte">
+      <div class="ug-kop">
+        <div class="rel">
+          <div>
+            <div class="uitg">Fysiotherapie Noorderlicht · Groningen</div>
+            <h3>Mevrouw R. Bouma</h3>
+            <div class="sub">Derde uitgifte · week 34 · nek en schouders · totale coupure 8 minuten per dag</div>
+          </div>
+          <div class="ser">
+            KRT 4 812 007 — 03
+            <small>Serienummer · uitgifte</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="ug-lijst">
+        <div class="post">
+          <div class="cijfer">
+            <div class="rozet"><span class="cf"><span class="c">2</span></span></div>
+            <div class="e">minuten</div>
+          </div>
+          <figure><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png"
+            alt="Zittend op een stoel wordt de kin recht naar achteren getrokken tot een dubbele kin."/></figure>
+          <div class="tk">
+            <h4>Kin intrekken — zittend</h4>
+            <p>Zit rechtop op een stoel en kijk recht vooruit. Trek uw kin rustig recht naar achteren,
+              alsof u een dubbele kin maakt, en laat daarna langzaam weer los.</p>
+            <div class="maat"><span><b>10×</b></span><span><b>3</b> tellen vast</span><span><b>2</b>× per dag</span></div>
+          </div>
+        </div>
+
+        <div class="post">
+          <div class="cijfer">
+            <div class="rozet"><span class="cf"><span class="c">3</span></span></div>
+            <div class="e">minuten</div>
+          </div>
+          <figure><img src="/images/nek/nek-draaien-zittend-actief-line-v1.png"
+            alt="Zittend op een stoel wordt het hoofd rustig naar één kant gedraaid en weer terug."/></figure>
+          <div class="tk">
+            <h4>Nek draaien — zittend</h4>
+            <p>Zit rechtop en kijk recht vooruit. Draai uw hoofd rustig naar één kant en beweeg
+              langzaam terug naar het midden. Wissel daarna van kant.</p>
+            <div class="maat"><span><b>8×</b> per kant</span><span><b>langzaam</b></span><span><b>1</b>× per dag</span></div>
+          </div>
+        </div>
+
+        <div class="post">
+          <div class="cijfer">
+            <div class="rozet"><span class="cf"><span class="c">3</span></span></div>
+            <div class="e">minuten</div>
+          </div>
+          <figure><img src="/images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png"
+            alt="Zittend met ontspannen schouders zakt het hoofd opzij met het oor richting de schouder."/></figure>
+          <div class="tk">
+            <h4>Bovenste trapezius rek — zittend</h4>
+            <p>Zit rechtop met ontspannen schouders. Laat uw hoofd rustig opzij zakken, met uw oor
+              richting uw schouder, en breng uw hoofd langzaam terug naar het midden.</p>
+            <div class="maat"><span><b>3×</b> per kant</span><span><b>20</b> seconden</span><span><b>1</b>× per dag</span></div>
+            <div class="let">Rekkend gevoel langs de nek mag. Tintelingen in de arm niet — dan stoppen en bellen.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ug-voet">
+        <div class="tekenveld">
+          <div class="lijn"><i>J. Veldkamp</i></div>
+          <div class="lb">Uitgegeven door<small>J. Veldkamp, fysiotherapeut · 17 augustus 2026</small></div>
+        </div>
+        <div class="tekenveld">
+          <div class="lijn"></div>
+          <div class="lb">Voor ontvangst<small>uw handtekening — u weet wat er van u gevraagd wordt</small></div>
+        </div>
+        <div class="geldig">
+          <div class="t">Geldig tot</div>
+          <div class="d">14 september 2026</div>
+          <div class="n">Daarna geven wij een nieuwe uitgifte af, met een nieuw nummer.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>fijnlijnwerk zit uitsluitend in kader en rozet; alles wat gelezen wordt staat op een schoon vlak</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer r geen-print" style="top:26mm;left:calc(100% + 22px)">coupure in minuten, nooit in euro's</span>
+          <span class="wijzer r geen-print" style="top:118mm;left:calc(100% + 22px)">tekst op een egaal vlak, 10,5 pt</span>
+          <span class="wijzer l geen-print" style="top:246mm;right:calc(100% + 22px)">hier tekent de therapeut, met pen</span>
+          <span class="wijzer l geen-print" style="top:274mm;right:calc(100% + 22px)">microtekst: echt leesbaar, geen nepletter</span>
+
+          <div class="onderdruk" aria-hidden="true"></div>
+          <div class="rand" aria-hidden="true"></div>
+
+          <div class="binnenblad">
+
+            <div class="pb-kop">
+              <div>
+                <div class="uitg">Fysiotherapie Noorderlicht · Groningen</div>
+                <h1>Mevrouw R. Bouma</h1>
+                <div class="sub">Derde uitgifte · week 34 · nek en schouders</div>
+                <div class="ser">KRT 4 812 007 — 03 · uitgegeven 17 augustus 2026</div>
+              </div>
+              <div class="pb-rozet">
+                <div class="rz"><b>8</b></div>
+                <div class="e">minuten per dag</div>
+              </div>
+            </div>
+
+            <div class="pb-alg">
+              <span class="l">Lees dit eerst</span>
+              <p>Drie oefeningen, samen acht minuten per dag. Doe ze zittend op een stevige stoel,
+                het liefst op een vast moment. Een rekkend of vermoeid gevoel mag; tintelingen in
+                de arm of scherpe pijn niet — dan stoppen en de praktijk bellen.</p>
+            </div>
+
+            <div class="pb-posten">
+
+              <div class="pb-post">
+                <div class="cf"><div class="c">2</div><div class="e">minuten</div></div>
+                <figure><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png"
+                  alt="Zittend op een stoel wordt de kin recht naar achteren getrokken tot een dubbele kin."/></figure>
+                <div class="tk">
+                  <div class="nm"><h2>Kin intrekken — zittend</h2><span class="grp">Nek</span></div>
+                  <p>Zit rechtop en kijk recht vooruit. Trek uw kin rustig recht naar achteren,
+                    alsof u een dubbele kin maakt, en laat daarna langzaam weer los.</p>
+                  <div class="maat"><span><b>10×</b> achter elkaar</span><span><b>3</b> tellen vasthouden</span>
+                    <span><b>2</b>× per dag</span></div>
+                </div>
+              </div>
+
+              <div class="pb-post">
+                <div class="cf"><div class="c">3</div><div class="e">minuten</div></div>
+                <figure><img src="/images/nek/nek-draaien-zittend-actief-line-v1.png"
+                  alt="Zittend op een stoel wordt het hoofd rustig naar één kant gedraaid en weer terug."/></figure>
+                <div class="tk">
+                  <div class="nm"><h2>Nek draaien — zittend</h2><span class="grp">Nek</span></div>
+                  <p>Zit rechtop en kijk recht vooruit. Draai uw hoofd rustig naar één kant en beweeg
+                    langzaam terug naar het midden. Wissel daarna van kant.</p>
+                  <div class="maat"><span><b>8×</b> per kant</span><span>langzaam, niet forceren</span>
+                    <span><b>1</b>× per dag</span></div>
+                </div>
+              </div>
+
+              <div class="pb-post">
+                <div class="cf"><div class="c">3</div><div class="e">minuten</div></div>
+                <figure><img src="/images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png"
+                  alt="Zittend met ontspannen schouders zakt het hoofd opzij met het oor richting de schouder."/></figure>
+                <div class="tk">
+                  <div class="nm"><h2>Bovenste trapezius rek</h2><span class="grp">Nek</span></div>
+                  <p>Zit rechtop met ontspannen schouders. Laat uw hoofd rustig opzij zakken, met uw
+                    oor richting uw schouder, en breng uw hoofd langzaam terug naar het midden.</p>
+                  <div class="maat"><span><b>3×</b> per kant</span><span><b>20</b> seconden vasthouden</span>
+                    <span><b>1</b>× per dag</span></div>
+                  <div class="let">Tintelingen in de arm? Stoppen en bellen — 050 — 313 44 21.</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="pb-voet">
+              <div class="vlak">
+                <div class="tv">
+                  <div class="ln"><i>J. Veldkamp</i></div>
+                  <div class="lb">Uitgegeven door<small>J. Veldkamp, fysiotherapeut</small></div>
+                </div>
+                <div class="tv">
+                  <div class="ln"></div>
+                  <div class="lb">Voor ontvangst<small>uw handtekening</small></div>
+                </div>
+                <div class="pb-geldig">
+                  <div class="t">Geldig tot</div>
+                  <div class="d">14 september 2026</div>
+                  <div class="n">Daarna een nieuwe uitgifte, met een nieuw nummer.</div>
+                </div>
+              </div>
+
+              <div class="microregel">Fysiotherapie Noorderlicht · 050 — 313 44 21 · Fysiotherapie Noorderlicht · 050 — 313 44 21 · Fysiotherapie Noorderlicht · 050 — 313 44 21 · Fysiotherapie Noorderlicht · 050 — 313 44 21 · Fysiotherapie Noorderlicht · 050 — 313 44 21 · Fysiotherapie Noorderlicht · 050 — 313 44 21</div>
+
+              <div class="pb-mrk">
+                <span>Bewaar dit blad — het is op uw naam uitgegeven en ondertekend.</span>
+                <span>Fysiplan · concept 21 · waardepapier · A4 staand</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="printhulp geen-print">Print deze pagina (Ctrl/Cmd + P) — alles buiten de A4 valt weg.
+      Print hem daarna in grijstinten: de onderdruk wordt een lichte grijstoon en de drukinkt blijft
+      bijna zwart, dus de leesbaarheid verandert niet.
+      <br/><a class="kn" href="javascript:window.print()">Printvoorbeeld openen</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>De richting</h4>
+      <p>De oefenkaart gedrukt als waardepapier, in de traditie van de Nederlandse bankbiljetten:
+        gegraveerd kader, guilloche-rozet, serienummer, geldigheidsdatum — en een handtekening die
+        met de hand gezet wordt. De coupure staat in minuten, nooit in geld.</p>
+    </div>
+    <div class="kolom">
+      <h4>Waar het schuurt</h4>
+      <ul>
+        <li>Geld en zorg naast elkaar is ongemakkelijk — dat ongemak is bewust, want het is precies waarom het blad blijft liggen.</li>
+        <li>De handtekening kost de therapeut tien seconden per kaart; een praktijk die dat te veel vindt, moet dit concept niet nemen.</li>
+        <li>Nergens een bedrag, een munt of een valutateken. Die grens is hard.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Verder</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

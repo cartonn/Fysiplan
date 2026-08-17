@@ -278,6 +278,62 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
 .staal.schrift .kant{position:absolute;left:26px;top:0;bottom:0;width:1.5px;background:#c8443f;opacity:.6}
 .staal.schrift .strepen i{border-color:rgba(27,29,34,.2)}
 
+/* — staal concept 19: Getijdenboek — */
+.staal.getijden{background:#f3ead6;color:#2b2118}
+.staal.getijden .plaatnr{color:#a5302a;font-family:var(--mono);position:relative;z-index:2}
+.staal.getijden .woord{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  font-weight:400;position:relative;z-index:2;padding-left:44px}
+.staal.getijden .woord em{font-style:italic;color:#a5302a}
+.staal.getijden .versaal{position:absolute;left:var(--s3);bottom:var(--s3);width:34px;height:34px;
+  background:#27467f;color:#f3ead6;font:400 22px/34px "Iowan Old Style",Palatino,Georgia,serif;
+  text-align:center;z-index:2}
+.staal.getijden .versaal::after{content:"";position:absolute;inset:2px;border:1px solid rgba(243,234,214,.45)}
+.staal.getijden .kantstreep{position:absolute;left:0;right:0;top:38px;height:6px;
+  background:repeating-linear-gradient(90deg,#a5302a 0 7px,transparent 7px 12px,
+    #27467f 12px 19px,transparent 19px 24px);opacity:.55}
+.staal.getijden .strepen i{border-color:rgba(43,33,24,.2)}
+
+/* — staal concept 20: Zaaigoed — */
+.staal.zaaigoed{background:#ece6d6;color:#22261f}
+.staal.zaaigoed .band{position:absolute;left:0;right:0;top:0;height:38px;background:#1d4536}
+.staal.zaaigoed .plaatnr{color:#9dbfad;font-family:var(--mono);position:relative;z-index:2}
+.staal.zaaigoed .woord{font-family:"Iowan Old Style",Charter,Palatino,Georgia,serif;font-weight:700;
+  letter-spacing:-.025em;color:#1d4536;position:relative;z-index:2}
+.staal.zaaigoed .blokjes{position:absolute;right:var(--s3);bottom:var(--s3);display:grid;
+  grid-template-columns:repeat(7,10px);gap:3px;z-index:2}
+.staal.zaaigoed .blokjes i{width:10px;height:10px;display:block;border:1px solid #b9b39c;background:#fbf9f1}
+.staal.zaaigoed .blokjes i.v{background:#1d4536;border-color:#1d4536}
+.staal.zaaigoed .blokjes i.o{background:#cfdcd2;border-color:#8fae9c;
+  background-image:repeating-linear-gradient(45deg,rgba(29,69,54,.3) 0 2px,transparent 2px 5px)}
+.staal.zaaigoed .hkje{position:absolute;width:11px;height:11px;border:2px solid #bc4a2a;z-index:3}
+.staal.zaaigoed .hkje.a{left:6px;top:44px;border-right:0;border-bottom:0}
+.staal.zaaigoed .hkje.b{right:6px;bottom:6px;border-left:0;border-top:0}
+.staal.zaaigoed .strepen{top:11px}
+.staal.zaaigoed .strepen i{border-color:rgba(255,255,255,.3)}
+
+/* — staal concept 21: Waardepapier — */
+.staal.waarde{color:#252352;background-color:#f4f1e6;
+  background-image:
+    radial-gradient(circle at 86% 30%,rgba(242,217,154,.85),transparent 46%),
+    radial-gradient(circle at 6% 92%,rgba(231,169,161,.6),transparent 46%);
+  box-shadow:inset 0 0 0 1px #252352,inset 0 0 0 5px #f4f1e6,inset 0 0 0 6px rgba(37,35,82,.45)}
+.staal.waarde .plaatnr{color:#3d3a70;font-family:var(--mono);position:relative;z-index:2}
+.staal.waarde .woord{font-family:"Iowan Old Style",Charter,Palatino,Georgia,serif;font-weight:400;
+  letter-spacing:-.02em;position:relative;z-index:2}
+.staal.waarde .rozet{position:absolute;right:22px;top:50%;transform:translateY(-50%);
+  width:58px;height:58px;border-radius:50%;overflow:hidden;z-index:2;
+  display:flex;align-items:center;justify-content:center;background-color:#faf8f1;
+  background-image:
+    repeating-conic-gradient(from 0deg,rgba(37,35,82,.42) 0deg .4deg,transparent .4deg 2.6deg),
+    repeating-radial-gradient(circle at 50% 50%,rgba(37,35,82,.32) 0 .6px,transparent .6px 4px),
+    radial-gradient(circle,#f2d99a 0%,#e7a9a1 62%,#faf8f1 100%);
+  box-shadow:0 0 0 1px #252352 inset}
+.staal.waarde .rozet::after{content:"";position:absolute;inset:24%;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,253,247,.94),rgba(255,253,247,.5));
+  box-shadow:0 0 0 1px rgba(37,35,82,.55) inset}
+.staal.waarde .rozet b{position:relative;z-index:2;font:400 24px/1 "Iowan Old Style",Palatino,Georgia,serif}
+.staal.waarde .strepen i{border-color:rgba(37,35,82,.28)}
+
 .kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
 .kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
 .kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
@@ -337,8 +393,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>18</b> concepten</span>
-      <span>Laatste ronde <b>16 augustus 2026</b></span>
+      <span><b>21</b> concepten</span>
+      <span>Laatste ronde <b>17 augustus 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -1090,6 +1146,131 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-18-schrift.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-18-schrift.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="galerijkop" style="margin-top:var(--s6)">
+      <h2>Ronde 7</h2>
+      <span>ronde 7 · 17 aug 2026</span>
+    </div>
+
+    <div class="raster">
+
+      <!-- ─────────── CONCEPT 19 ─────────── -->
+      <article class="kaart">
+        <div class="staal getijden">
+          <div class="kantstreep" aria-hidden="true"></div>
+          <div class="plaatnr">Rubriek rood · versaal blauw</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#f3ead6"></i><i style="background:#a5302a"></i>
+            <i style="background:#27467f"></i><i style="background:#9a7a24"></i>
+          </div>
+          <div class="versaal" aria-hidden="true">I</div>
+          <div class="woord">Bij het <em>opstaan</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 19</div>
+          <h3>Getijdenboek</h3>
+          <p class="richting">Een dag is te groot om iets in te halen. Een uur niet.</p>
+          <p class="rationale">Geen lijst die af moet, maar een dagorde: elke oefening krijgt een
+            vast moment dat de patiënt toch al heeft — bij het opstaan, na de middag, voor het slapen.
+            Van het handschrift is de kleurgrammatica geleend, niet de vorm: rood is wat u dóet
+            (het uur, de waarschuwing), zwart is wat het is, blauw telt. De brede buitenmarge, waar
+            in een manuscript werd aangetekend, is hier het afvinkveld — zeven vakjes naast de tekst
+            in plaats van een tabel eronder. Gotisch schrift is bewust geweigerd.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Het getijdenboek als bestverkochte boek van de Lage Landen · rubricatie, waar rood
+              letterlijk de gebruiksaanwijzing is · de asymmetrische bladspiegel met brede
+              buitenmarge · versalen met pennewerk · regelvullers · het kalendarium met zijn rode
+              feestdagen</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — tekstkolom met marge van 34 mm, drie getijden, kalendarium onderaan</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-19-getijdenboek.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-19-getijdenboek.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 20 ─────────── -->
+      <article class="kaart">
+        <div class="staal zaaigoed">
+          <div class="band" aria-hidden="true"></div>
+          <span class="hkje a" aria-hidden="true"></span><span class="hkje b" aria-hidden="true"></span>
+          <div class="plaatnr">Kiemduur 10 – 14 dagen</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#ece6d6"></i><i style="background:#1d4536"></i>
+            <i style="background:#bc4a2a"></i><i style="background:#c98f22"></i>
+          </div>
+          <div class="blokjes" aria-hidden="true">
+            <i class="v"></i><i class="v"></i><i class="v"></i><i></i>
+            <i class="v"></i><i class="o"></i><i class="o"></i>
+          </div>
+          <div class="woord">Zaaien</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 20</div>
+          <h3>Zaaigoed</h3>
+          <p class="richting">Op geen enkele oefenkaart staat hoe lang je op niets moet wachten. Op een zaadzakje wel.</p>
+          <p class="rationale">Het zaadzakje als model, om één reden: "kiemduur 10–14 dagen" belooft
+            iets én geeft toestemming om de eerste twee weken niets te voelen — precies waar
+            oefenprogramma's stuklopen. Elke oefening krijgt daarom een kiemduur en een oogst in
+            gewone woorden ("opstaan zonder u af te zetten met uw armen"). De zaaikalender met zijn
+            donkere en gearceerde blokken maakt van de gemiste dag een zaadje dat niet opkwam in
+            plaats van een gat in een rij vinkjes. Het woord "groei" staat er nergens.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Het zaadzakje met zijn vier vaste kopjes — zaaien, standplaats, verzorging, oogst ·
+              de zaaikalender uit elk tuinboekje · de botanische naam onder de variëteit, hier de
+              spiernaam · Nederlandse zaadveredeling en bollencatalogi · het grove drukwerk van één
+              drukgang op ruw papier</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — drie zakjes en een zaaikalender van vier weken</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-20-zaaigoed.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-20-zaaigoed.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 21 ─────────── -->
+      <article class="kaart">
+        <div class="staal waarde">
+          <div class="plaatnr">KRT 4 812 007 — 03</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#f4f1e6"></i><i style="background:#252352"></i>
+            <i style="background:#f2d99a"></i><i style="background:#a8324f"></i>
+          </div>
+          <div class="rozet" aria-hidden="true"><b>8</b></div>
+          <div class="woord">Geldig tot</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 21</div>
+          <h3>Waardepapier</h3>
+          <p class="richting">Een uitdraai gooi je weg. Een ondertekend document niet.</p>
+          <p class="rationale">De kaart gedrukt als waardepapier: gegraveerd kader, guilloche-rozet,
+            serienummer, geldigheidsdatum — en onderaan zet de fysiotherapeut met de hand zijn
+            handtekening, want een biljet zonder handtekening is niets waard. De coupure staat
+            nadrukkelijk in mínuten, niet in geld: acht per dag, verdeeld over drie oefeningen. Het
+            serienummer is geen versiering maar dossierhygiëne — de praktijk weet meteen welke versie
+            op de koelkast hangt. Fijnlijnwerk zit alleen in kader en rozet, nooit onder tekst.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>De Nederlandse bankbiljetten van Ootje Oxenaar — guilloche, rozetten, gegraveerde
+              kaders, doorzichtregister · diepdruk en fijnlijnwerk als beveiliging · OCR-B-serienummers ·
+              aandelen, obligaties en diploma's · de warme onderdruk van de zonnebloem en de vuurtoren</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — gegraveerd kader, drie posten met coupure, handtekening en microtekst</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-21-waardepapier.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-21-waardepapier.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>

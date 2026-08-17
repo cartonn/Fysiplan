@@ -1,0 +1,917 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 19 — Getijdenboek · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 19 — GETIJDENBOEK
+   Het getijdenboek was eeuwenlang het bestverkochte boek van de
+   Lage Landen: geen boek om uit te lezen, maar om de dag mee te
+   verdelen. Niet "acht dingen die af moeten", maar vaste uren
+   waarop je iets doet — bij het opstaan, na de middag, voor het
+   slapen. Dat is precies wat er mis is met de gewone oefenkaart:
+   drie oefeningen zweven ergens in de dag, en een dag is groot.
+   Een uur is klein genoeg om te halen.
+
+   Wat we van het manuscript overnemen is niet de vorm maar de
+   KLEURLOGICA. In een middeleeuws boek is rood geen versiering:
+   de rubriek is letterlijk de gebruiksaanwijzing — "hier kniel je",
+   "hier begint het". Zwart is de tekst, rood is wat je moet doen.
+   Op een oefenkaart valt dat één op één samen:
+     · ROOD  = de handeling, het uur, de waarschuwing
+     · ZWART = wat de oefening is en hoe hij heet
+     · BLAUW = telling en tijd (de versalen, de dagen)
+   Daarmee wordt kleur een grammatica in plaats van een sfeer.
+
+   De gotische letter is met opzet NIET gebruikt. Die is voor een
+   flink deel van de lezers onleesbaar, en dit product wordt door
+   mensen van tachtig op armlengte gelezen. Wat we lenen is de
+   humanistische letter die uit diezelfde hand is voortgekomen,
+   op 12 pt met ruime interlinie.
+
+   De tweede lening is de MARGE. Een middeleeuwse bladspiegel staat
+   niet in het midden: de buitenmarge is breed, en daar gebeurde het
+   aantekenwerk — marginalia, handjes, kruisjes. Die brede buitenmarge
+   is hier het afvinkveld. De week staat naast de tekst, niet eronder,
+   dus de kaart blijft één beeld in plaats van twee.
+
+   Waar het schuurt: dit is een religieuze vorm voor een seculiere
+   opdracht, en "getijden" klinkt zwaar. Het antwoord is dat de
+   woorden gewoon Nederlands blijven — bij het opstaan, na de middag,
+   voor het slapen — en dat alleen de bouw van de bladzijde geleend is.
+
+   Zwart-wit-toets: rood draagt nooit in zijn eentje betekenis. Elk
+   rood element is óók een positie (bovenaan het blok), een kapitaal
+   of een kaderlijn. Print de A4 in grijstinten en er gaat niets weg.
+   Alles inline; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  --perkament:#f3ead6;      /* het blad */
+  --perkament-d:#e9dcc0;
+  --vlak:#fbf6e9;
+  --scherm:#efe6d2;
+  --inkt:#2b2118;           /* bruinzwart, geen puur zwart */
+  --inkt-2:#4d4030;
+  --grijs:#7a6e5c;
+  --rubriek:#a5302a;        /* rubriekrood */
+  --rubriek-l:#c9615a;
+  --lazuur:#27467f;         /* lapis, voor versalen en telling */
+  --lazuur-l:#5c7ab4;
+  --goud:#9a7a24;
+  --lijn:#d8c9a6;
+  --lijn-2:#e6dbc0;
+
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Charter,Georgia,serif;
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:6px; --s2:12px; --s3:20px; --s4:34px; --s5:56px; --s6:88px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--scherm);color:var(--inkt);font-family:var(--serif);
+  font-size:17px;line-height:1.6;
+  background-image:
+    radial-gradient(circle at 18% 12%,rgba(154,122,36,.05),transparent 55%),
+    radial-gradient(circle at 82% 78%,rgba(39,70,127,.04),transparent 55%);}
+img{max-width:100%;display:block}
+a{color:inherit}
+
+/* ── labbalk ─────────────────────────────────────────────── */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:18px;
+  background:#241b13;color:#e8dcc2;padding:11px 22px;
+  border-bottom:2px solid var(--rubriek)}
+.labbalk .nr{font:600 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:#d0a29c;border:1px solid #6a4a44;padding:5px 8px;border-radius:2px}
+.labbalk .rek{flex:1}
+.labbalk a{font:500 14px/1 var(--sans);color:#cfc2a6;text-decoration:none;padding:6px 4px}
+.labbalk a:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.labbalk a.terug{color:#e2b6b0}
+@media (max-width:820px){.labbalk{gap:12px;padding:9px 14px;flex-wrap:wrap}
+  .labbalk a{font-size:13px}}
+
+/* ── raamwerk ───────────────────────────────────────────── */
+.scherm{padding:var(--s6) 24px;border-top:1px solid var(--lijn)}
+.scherm:first-child{border-top:0}
+.binnen{max-width:1180px;margin:0 auto}
+.schermkop{max-width:760px;margin-bottom:var(--s5)}
+.schermkop b{display:block;font:600 10.5px/1 var(--mono);letter-spacing:.22em;
+  text-transform:uppercase;color:var(--rubriek);margin-bottom:12px}
+.schermkop h2{font:400 40px/1.12 var(--serif);letter-spacing:-.01em;margin-bottom:10px}
+.schermkop p{font-size:17.5px;color:var(--grijs);font-style:italic}
+
+/* rubriek: rode kapitaalregel — de gebruiksaanwijzing, nooit de tekst */
+.rubriek{font:600 12px/1.4 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--rubriek)}
+
+/* versaal: het gekleurde initiaal met pennewerk */
+.versaal{width:52px;height:52px;flex:0 0 52px;background:var(--lazuur);color:#f6eeda;
+  font:400 34px/52px var(--serif);text-align:center;position:relative;
+  box-shadow:0 0 0 1px var(--lazuur) inset}
+.versaal::before{content:"";position:absolute;inset:3px;border:1px solid rgba(246,238,218,.42)}
+.versaal.rood{background:var(--rubriek);box-shadow:0 0 0 1px var(--rubriek) inset}
+.versaal .pen{position:absolute;left:-9px;top:-4px;bottom:-4px;width:5px;
+  background:repeating-linear-gradient(180deg,var(--rubriek) 0 4px,transparent 4px 9px)}
+.versaal.rood .pen{background:repeating-linear-gradient(180deg,var(--lazuur) 0 4px,transparent 4px 9px)}
+
+/* regelvuller: het streepje dat in een manuscript de korte regel afmaakt */
+.vuller{display:inline-block;vertical-align:middle;height:7px;min-width:34px;flex:1;
+  background:repeating-linear-gradient(90deg,var(--rubriek) 0 7px,transparent 7px 12px,
+    var(--lazuur) 12px 19px,transparent 19px 24px);opacity:.65}
+
+.kn{display:inline-block;font:600 15px/1 var(--sans);background:var(--rubriek);color:#fdf6e6;
+  padding:14px 22px;text-decoration:none;border:1px solid var(--rubriek)}
+.kn:hover{background:#8d2823;border-color:#8d2823}
+.kn.leeg{background:transparent;color:var(--inkt);border-color:var(--inkt-2)}
+.kn.leeg:hover{background:var(--inkt);color:var(--perkament)}
+
+/* ── 1 landing ──────────────────────────────────────────── */
+.hero{display:grid;grid-template-columns:1.08fr .92fr;gap:var(--s5);align-items:start}
+@media (max-width:960px){.hero{grid-template-columns:1fr;gap:var(--s4)}}
+.kap{font:600 11px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;
+  color:var(--goud);margin-bottom:20px}
+h1{font:400 clamp(38px,5.1vw,62px)/1.06 var(--serif);letter-spacing:-.018em;margin-bottom:22px}
+h1 em{font-style:italic;color:var(--rubriek)}
+.lead{font-size:19.5px;line-height:1.62;color:var(--inkt-2);max-width:47ch}
+.doen{display:flex;gap:12px;flex-wrap:wrap;margin-top:var(--s4)}
+.naregel{margin-top:var(--s3);font-size:15.5px;line-height:1.66;color:var(--grijs);
+  max-width:52ch;border-left:2px solid var(--rubriek);padding-left:16px}
+
+/* het opengeslagen boek op de landing */
+.boek{background:var(--perkament);border:1px solid var(--lijn);padding:30px 30px 26px;
+  box-shadow:0 22px 60px rgba(43,33,24,.17);position:relative}
+.boek::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:22px;transform:translateX(-50%);
+  background:linear-gradient(90deg,transparent,rgba(43,33,24,.07),transparent);pointer-events:none}
+.boekkop{display:flex;align-items:baseline;justify-content:space-between;gap:14px;
+  border-bottom:1.5px solid var(--rubriek);padding-bottom:10px;margin-bottom:20px}
+.boekkop .t{font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--rubriek)}
+.boekkop .d{font:400 13px/1 var(--mono);color:var(--grijs)}
+.getij{display:flex;gap:16px;padding:16px 0;border-bottom:1px dotted var(--lijn)}
+.getij:last-of-type{border-bottom:0}
+.getij .tk{flex:1;min-width:0}
+.getij .uur{font:600 11px/1 var(--sans);letter-spacing:.15em;text-transform:uppercase;
+  color:var(--rubriek);margin-bottom:6px}
+.getij h4{font:400 21px/1.2 var(--serif);margin-bottom:5px}
+.getij p{font-size:15px;line-height:1.55;color:var(--inkt-2)}
+.getij .tel{font:400 13px/1 var(--mono);color:var(--lazuur);margin-top:8px;letter-spacing:.04em}
+
+.regels{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);margin-top:var(--s6)}
+@media (max-width:900px){.regels{grid-template-columns:1fr}}
+.vak{background:var(--vlak);border:1px solid var(--lijn);padding:26px 24px 24px;position:relative}
+.vak .num{font:400 13px/1 var(--mono);color:var(--rubriek);margin-bottom:14px;letter-spacing:.1em}
+.vak h3{font:400 22px/1.24 var(--serif);margin-bottom:9px}
+.vak p{font-size:15.5px;line-height:1.62;color:var(--inkt-2)}
+
+/* ── 2 kiezer ───────────────────────────────────────────── */
+.kiezer{display:grid;grid-template-columns:250px 1fr;gap:var(--s4);align-items:start}
+@media (max-width:940px){.kiezer{grid-template-columns:1fr}}
+.uurlijst{background:var(--perkament);border:1px solid var(--lijn);padding:22px 20px;
+  position:sticky;top:78px}
+@media (max-width:940px){.uurlijst{position:static}}
+.uurlijst h5{font:600 10.5px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--rubriek);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--lijn)}
+.uurlijst ul{list-style:none}
+.uurlijst li{display:flex;align-items:baseline;gap:10px;padding:11px 0;border-bottom:1px dotted var(--lijn-2);
+  font-size:16px;cursor:default}
+.uurlijst li:last-child{border-bottom:0}
+.uurlijst li i{font:400 12px/1 var(--mono);color:var(--lazuur);font-style:normal;width:34px}
+.uurlijst li.aan{color:var(--rubriek)}
+.uurlijst li.aan i{color:var(--rubriek)}
+.uurlijst li.aan::after{content:"·III·";margin-left:auto;font:400 11px/1 var(--mono)}
+.uurlijst .staat{margin-top:16px;padding-top:14px;border-top:1px solid var(--lijn);
+  font-size:14px;color:var(--grijs);line-height:1.5}
+
+.rooster{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media (max-width:1080px){.rooster{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.rooster{grid-template-columns:1fr}}
+.oefkaart{background:var(--vlak);border:1px solid var(--lijn);padding:16px;position:relative;
+  display:flex;flex-direction:column;gap:11px}
+.oefkaart figure{background:var(--perkament);border:1px solid var(--lijn-2);padding:10px;
+  display:flex;align-items:center;justify-content:center;min-height:132px}
+.oefkaart figure img{max-height:118px;width:auto;mix-blend-mode:multiply}
+.oefkaart h4{font:400 18px/1.24 var(--serif)}
+.oefkaart .grp{font:600 10px/1 var(--sans);letter-spacing:.15em;text-transform:uppercase;color:var(--grijs)}
+.oefkaart .toe{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
+.oefkaart .toe button{font:600 11.5px/1 var(--sans);letter-spacing:.06em;background:transparent;
+  border:1px solid var(--lijn);color:var(--inkt-2);padding:8px 9px;cursor:pointer}
+.oefkaart .toe button:hover{border-color:var(--rubriek);color:var(--rubriek)}
+.oefkaart.gekozen{border-color:var(--rubriek);box-shadow:0 0 0 1px var(--rubriek)}
+.oefkaart .merk{position:absolute;top:-1px;right:-1px;background:var(--rubriek);color:#fdf6e6;
+  font:600 10px/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;padding:6px 8px}
+.oefkaart.gekozen .toe button.aan{background:var(--rubriek);border-color:var(--rubriek);color:#fdf6e6}
+
+/* ── 3 cliëntkaart ──────────────────────────────────────── */
+.spread{background:var(--perkament);border:1px solid var(--lijn);
+  box-shadow:0 24px 64px rgba(43,33,24,.16);display:grid;grid-template-columns:1fr 268px}
+@media (max-width:900px){.spread{grid-template-columns:1fr}}
+.blokzijde{padding:38px 40px 34px;border-right:1px solid var(--lijn)}
+@media (max-width:900px){.blokzijde{border-right:0;border-bottom:1px solid var(--lijn);padding:28px 24px}}
+.incipit{border-bottom:1.5px solid var(--rubriek);padding-bottom:14px;margin-bottom:26px}
+.incipit .r{color:var(--rubriek);font:600 12px/1.5 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:8px}
+.incipit h3{font:400 30px/1.16 var(--serif)}
+.incipit .sub{font-size:15px;color:var(--grijs);margin-top:7px;font-style:italic}
+
+.dienst{display:flex;gap:20px;padding:24px 0;border-bottom:1px dotted var(--lijn)}
+.dienst:last-of-type{border-bottom:0;padding-bottom:6px}
+.dienst .lk{flex:0 0 118px}
+.dienst .lk figure{background:var(--vlak);border:1px solid var(--lijn-2);padding:8px;
+  display:flex;align-items:center;justify-content:center;min-height:104px}
+.dienst .lk img{max-height:92px;width:auto;mix-blend-mode:multiply}
+.dienst .tk{flex:1;min-width:0}
+.dienstkop{display:flex;align-items:center;gap:12px;margin-bottom:9px}
+.dienstkop .versaal{width:40px;height:40px;flex-basis:40px;font-size:25px;line-height:40px}
+.dienstkop .uur{font:600 11px/1.3 var(--sans);letter-spacing:.15em;text-transform:uppercase;color:var(--rubriek)}
+.dienstkop .uur small{display:block;font:400 12px/1.3 var(--mono);letter-spacing:0;text-transform:none;
+  color:var(--grijs);margin-top:3px}
+.dienst h4{font:400 21px/1.22 var(--serif);margin-bottom:6px}
+.dienst p{font-size:15.5px;line-height:1.58;color:var(--inkt-2)}
+.dienst .maat{display:flex;gap:16px;margin-top:11px;flex-wrap:wrap}
+.dienst .maat span{font:400 13px/1 var(--mono);color:var(--lazuur);letter-spacing:.03em}
+.dienst .maat span b{color:var(--inkt);font-weight:600}
+.dienst .waarsch{margin-top:11px;font-size:14px;color:var(--rubriek);line-height:1.5;
+  padding-left:14px;border-left:2px solid var(--rubriek-l)}
+
+/* de brede buitenmarge: hier wordt geturfd */
+.marge{padding:38px 24px 34px;background:var(--vlak)}
+.marge h5{font:600 10.5px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--rubriek);margin-bottom:6px}
+.marge .uitleg{font-size:13.5px;line-height:1.5;color:var(--grijs);margin-bottom:20px}
+.turf{margin-bottom:22px}
+.turf .kop{font:400 14px/1 var(--serif);margin-bottom:9px;display:flex;justify-content:space-between;
+  align-items:baseline;gap:8px}
+.turf .kop i{font:400 11px/1 var(--mono);font-style:normal;color:var(--grijs)}
+.turf .dagen{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.turf .dag{aspect-ratio:1;border:1px solid var(--lijn);background:var(--perkament);
+  display:flex;align-items:center;justify-content:center;
+  font:400 11px/1 var(--mono);color:var(--grijs);cursor:pointer}
+.turf .dag:hover{border-color:var(--rubriek)}
+.turf .dag.af{background:var(--lazuur);border-color:var(--lazuur);color:#f3ead6}
+.turf .dag.af::after{content:"✓";font-size:12px}
+.turf .dag.af i{display:none}
+.turf .dag.rood{border-color:var(--rubriek);color:var(--rubriek)}
+.marge .slot{border-top:1px solid var(--lijn);padding-top:16px;font-size:14px;line-height:1.55;
+  color:var(--inkt-2)}
+.marge .slot b{color:var(--rubriek)}
+
+/* ── 4 printkaart ───────────────────────────────────────── */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){.bladschaal{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+
+.blad{width:210mm;height:297mm;background:#f6efdd;color:#2b2118;position:relative;
+  font-family:var(--serif);display:flex;flex-direction:column;
+  padding:15mm 12mm 13mm 17mm;
+  box-shadow:0 26px 70px rgba(43,33,24,.26)}
+
+/* de bladspiegel: tekstkolom + brede buitenmarge, asymmetrisch zoals in het handschrift */
+.blad .spiegel{flex:1;display:grid;grid-template-columns:1fr 34mm;column-gap:6mm;min-height:0;
+  position:relative}
+/* de verticale liniëring die de marge afscheidt — potloodlijn, niet zwart.
+   Loopt precies zo ver als de bladspiegel: niet door de kop en niet door het kalendarium. */
+.blad .spiegel::after{content:"";position:absolute;top:0;bottom:0;right:calc(34mm + 3mm);
+  width:.4pt;background:#c2ab7e}
+
+.bl-kop{border-bottom:1.6pt solid #a5302a;padding-bottom:4mm;margin-bottom:5mm;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:8mm}
+.bl-kop .incip{font:600 9.5pt/1.35 var(--sans);letter-spacing:.1em;text-transform:uppercase;
+  color:#a5302a;margin-bottom:2.5mm}
+.bl-kop h1{font:400 22pt/1.1 var(--serif);letter-spacing:-.01em;margin-bottom:0}
+.bl-kop .wie{font:400 10.5pt/1.4 var(--serif);color:#4d4030;margin-top:2mm}
+.bl-kop .rechts{text-align:right;flex:0 0 auto}
+.bl-kop .rechts .prak{font:600 9pt/1.4 var(--sans);letter-spacing:.06em;color:#2b2118}
+.bl-kop .rechts .tel{font:400 9pt/1.5 var(--mono);color:#6b5f4d;margin-top:1mm}
+
+.bl-alg{display:flex;gap:4mm;align-items:flex-start;margin-bottom:5mm;
+  border-left:1.6pt solid #a5302a;padding-left:4mm}
+.bl-alg .r{font:600 8.5pt/1.4 var(--sans);letter-spacing:.12em;text-transform:uppercase;
+  color:#a5302a;flex:0 0 26mm;padding-top:.6mm}
+.bl-alg p{font:400 10.5pt/1.45 var(--serif);color:#33291e}
+
+.bl-diensten{display:flex;flex-direction:column;gap:4.5mm}
+.bl-dienst{display:flex;gap:5mm;align-items:flex-start;padding-bottom:4.5mm;
+  border-bottom:.5pt dotted #c2ab7e}
+.bl-dienst:last-child{border-bottom:0;padding-bottom:0}
+.bl-dienst figure{flex:0 0 28mm;background:#fbf6e9;border:.5pt solid #ddcda8;padding:1.5mm;
+  display:flex;align-items:center;justify-content:center;height:26mm}
+.bl-dienst figure img{max-height:22mm;max-width:100%;width:auto;mix-blend-mode:multiply}
+.bl-dienst .tk{flex:1;min-width:0}
+.bl-dienst .kopregel{display:flex;align-items:center;gap:3mm;margin-bottom:1.8mm}
+.bl-versaal{width:9mm;height:9mm;flex:0 0 9mm;background:#27467f;color:#f6efdd;
+  font:400 15pt/9mm var(--serif);text-align:center;position:relative}
+.bl-versaal::before{content:"";position:absolute;inset:.7mm;border:.4pt solid rgba(246,239,221,.5)}
+.bl-versaal.rood{background:#a5302a}
+.bl-dienst .uur{font:600 9pt/1.2 var(--sans);letter-spacing:.13em;text-transform:uppercase;color:#a5302a}
+.bl-dienst .uur small{display:block;font:400 8.5pt/1.3 var(--mono);letter-spacing:0;
+  text-transform:none;color:#6b5f4d;margin-top:.7mm}
+.bl-dienst h2{font:400 14.5pt/1.16 var(--serif);margin-bottom:1.4mm}
+.bl-dienst p{font:400 11pt/1.42 var(--serif);color:#2b2118}
+.bl-dienst .maat{display:flex;gap:6mm;margin-top:2mm;flex-wrap:wrap;align-items:center}
+.bl-dienst .maat span{font:400 10pt/1 var(--mono);color:#27467f}
+.bl-dienst .maat span b{color:#2b2118;font-weight:700}
+.bl-dienst .maat .vuller{height:1.6mm;min-width:12mm;max-width:34mm}
+
+/* de marge: zeven vakjes per dienst, en verder niets */
+.bl-marge{display:flex;flex-direction:column}
+.bl-marge .mk{font:600 8pt/1.3 var(--sans);letter-spacing:.12em;text-transform:uppercase;
+  color:#a5302a;padding-bottom:2mm;margin-bottom:3mm;border-bottom:.5pt solid #c2ab7e}
+.bl-marge .mk small{display:block;font:400 8pt/1.35 var(--serif);letter-spacing:0;text-transform:none;
+  color:#6b5f4d;margin-top:1mm}
+.mturf{margin-bottom:4.5mm}
+.mturf .mt{font:400 9.5pt/1.2 var(--serif);color:#4d4030;margin-bottom:1.6mm;
+  display:flex;justify-content:space-between;gap:2mm}
+.mturf .mt i{font:400 8pt/1.2 var(--mono);font-style:normal;color:#8a7c66}
+.mturf .rij{display:grid;grid-template-columns:repeat(7,1fr);gap:1mm}
+.mturf .vk{aspect-ratio:1;border:.5pt solid #a08d64;background:#fbf6e9;
+  display:flex;align-items:flex-start;justify-content:center;padding-top:.3mm;
+  font:400 5.6pt/1 var(--mono);color:#8a7c66}
+.mturf .vk.rood{border-color:#a5302a;border-width:.9pt;color:#a5302a}
+
+/* het kalendarium onderaan: de week met de afspraak als rode dag */
+.bl-kalender{margin-top:auto;padding-top:4.5mm;border-top:1.6pt solid #a5302a;
+  display:grid;grid-template-columns:1fr 34mm;column-gap:6mm;align-items:end}
+.kal{display:grid;grid-template-columns:repeat(7,1fr);gap:1.5mm}
+.kal .kd{border:.5pt solid #c2ab7e;background:#fbf6e9;padding:1.8mm 1.5mm 2mm;text-align:center}
+.kal .kd .dl{font:600 7.5pt/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:#6b5f4d}
+.kal .kd .dn{font:400 15pt/1.1 var(--serif);margin-top:1mm}
+.kal .kd .dm{font:400 7pt/1.2 var(--mono);color:#8a7c66;margin-top:.8mm;min-height:8pt}
+.kal .kd.feest{border-color:#a5302a;border-width:1pt;background:#fbeeec}
+.kal .kd.feest .dl,.kal .kd.feest .dn,.kal .kd.feest .dm{color:#a5302a}
+.bl-kalender .terugkomst{text-align:right}
+.bl-kalender .terugkomst .r{font:600 8pt/1.3 var(--sans);letter-spacing:.12em;text-transform:uppercase;
+  color:#a5302a}
+.bl-kalender .terugkomst .d{font:400 13pt/1.2 var(--serif);margin-top:1.2mm}
+.bl-kalender .terugkomst .n{font:400 8pt/1.35 var(--mono);color:#6b5f4d;margin-top:1mm}
+
+.bl-voet{margin-top:4mm;padding-top:2.5mm;border-top:.5pt solid #c2ab7e;
+  display:flex;justify-content:space-between;gap:6mm;align-items:baseline}
+.bl-voet .expl{font:400 9pt/1.4 var(--serif);color:#4d4030;max-width:118mm}
+.bl-voet .expl b{color:#a5302a;font-weight:600}
+.bl-voet .mrk{font:400 7.5pt/1.3 var(--mono);color:#8a7c66;text-align:right;letter-spacing:.04em}
+
+/* schermwijzers bij de A4 */
+.wijzer{position:absolute;font:500 12px/1.35 var(--sans);color:var(--grijs);width:130px;z-index:3}
+.wijzer::after{content:"";position:absolute;background:var(--lijn);}
+.wijzer.r{text-align:left}
+.wijzer.l{text-align:right}
+.wijzer.r::after{left:-20px;top:50%;width:16px;height:1px}
+.wijzer.l::after{right:-20px;top:50%;width:16px;height:1px}
+@media (max-width:1120px){.wijzer{display:none}}
+
+.printhulp{max-width:720px;margin:var(--s4) auto 0;text-align:center;font-size:16px;color:var(--grijs)}
+.printhulp .kn{margin-top:var(--s3)}
+
+/* ── uitleiding ─────────────────────────────────────────── */
+footer.uitleiding{background:#241b13;color:#d9cbaa;padding:var(--s5) 24px var(--s6);
+  border-top:3px solid var(--rubriek)}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:#e2b6b0;margin-bottom:13px}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:9px}
+footer.uitleiding li::before{content:"—";position:absolute;left:0;color:#9a7a24}
+footer.uitleiding a{color:#e8dcc2}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;margin:0 !important;
+    break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 19</span>
+  <strong style="font:600 15px/1 var(--sans);color:#fff">Getijdenboek</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>rood is hier geen versiering maar de gebruiksaanwijzing — precies zoals in het handschrift</p>
+    </div>
+
+    <div class="hero">
+      <div>
+        <div class="kap">Fysiplan · getijdenboek</div>
+        <h1>Een dag is te groot om iets in te halen. <em>Een uur niet.</em></h1>
+        <p class="lead">Op een gewone oefenkaart staan drie oefeningen die ergens vandaag moeten
+          gebeuren. Dat "ergens" is het probleem: een dag heeft zestien wakkere uren en die zijn
+          allemaal even goed, dus wordt het geen enkel uur. Deze kaart geeft elke oefening een vast
+          moment dat u toch al heeft — bij het opstaan, na de middag, voor het slapen — en verder niets.</p>
+        <div class="doen">
+          <a class="kn" href="#printkaart">Bekijk de A4</a>
+          <a class="kn leeg" href="#clientkaart">Hoe de week wordt bijgehouden</a>
+        </div>
+        <p class="naregel">Het getijdenboek was eeuwenlang het meest verspreide boek van de Lage
+          Landen — geen boek om uit te lezen, maar om de dag mee te verdelen. Wat we ervan lenen is
+          de kleurlogica: <strong style="color:var(--rubriek)">rood is wat u doet</strong>, zwart is
+          wat het is, blauw is hoe vaak. De gotische letter laten we staan; die is onleesbaar voor
+          een deel van de mensen voor wie dit gedrukt wordt.</p>
+      </div>
+
+      <div class="boek">
+        <div class="boekkop">
+          <span class="t">Dagorde · week 34</span>
+          <span class="d">R. Bouma</span>
+        </div>
+
+        <div class="getij">
+          <span class="versaal"><span class="pen" aria-hidden="true"></span>I</span>
+          <div class="tk">
+            <div class="uur">Bij het opstaan · voor de koffie</div>
+            <h4>Knie naar borst — liggend</h4>
+            <p>Nog op bed, voordat u er uit komt. Twee minuten.</p>
+            <div class="tel">10× per been · rustig · 3 tellen vasthouden</div>
+          </div>
+        </div>
+
+        <div class="getij">
+          <span class="versaal rood"><span class="pen" aria-hidden="true"></span>II</span>
+          <div class="tk">
+            <div class="uur">Na de middag · als u toch zit</div>
+            <h4>Rug bol en hol — zittend</h4>
+            <p>Op de keukenstoel, na het eten. Drie minuten.</p>
+            <div class="tel">12× · geen haast · adem door</div>
+          </div>
+        </div>
+
+        <div class="getij">
+          <span class="versaal"><span class="pen" aria-hidden="true"></span>III</span>
+          <div class="tk">
+            <div class="uur">Voor het slapen · na het tandenpoetsen</div>
+            <h4>Open boek — liggend</h4>
+            <p>Op de zij, in bed. Drie minuten.</p>
+            <div class="tel">8× per kant · langzaam · stop bij scherpe pijn</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="regels">
+      <div class="vak">
+        <div class="num">i</div>
+        <h3>De rubriek is de instructie</h3>
+        <p>In een middeleeuws boek staat in rood wat de lezer moet dóen, en in zwart wat er staat.
+          Op deze kaart is dat precies zo: het uur, de handeling en de waarschuwing zijn rood; de
+          naam van de oefening en de uitleg zijn zwart. Kleur betekent iets in plaats van iets te zijn.</p>
+      </div>
+      <div class="vak">
+        <div class="num">ii</div>
+        <h3>De marge is van de patiënt</h3>
+        <p>Een handschriftbladzijde staat nooit in het midden — de buitenmarge is breed, en daar
+          werd geturfd en aangetekend. Die marge is hier het afvinkveld: de zeven dagen staan
+          náást de oefening, niet in een tabel eronder. Eén blad, één beeld.</p>
+      </div>
+      <div class="vak">
+        <div class="num">iii</div>
+        <h3>Rood overleeft de zwart-wittest</h3>
+        <p>De meeste praktijken printen in grijs. Daarom draagt rood nooit alleen betekenis: elk
+          rood element is óók een positie, een kapitaal of een dikkere kaderlijn. Print de A4 in
+          zwart-wit en er verdwijnt sfeer, geen informatie.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>Oefeningen kiezen</h2>
+      <p>u kiest geen lijstje maar een dagorde: elke oefening krijgt meteen een uur</p>
+    </div>
+
+    <div class="kiezer">
+      <aside class="uurlijst">
+        <h5>De drie getijden</h5>
+        <ul>
+          <li class="aan"><i>I</i>Bij het opstaan</li>
+          <li class="aan"><i>II</i>Na de middag</li>
+          <li class="aan"><i>III</i>Voor het slapen</li>
+          <li><i>—</i>Los, geen vast uur</li>
+        </ul>
+        <div class="staat">Drie getijden gevuld. Een vierde oefening kan, maar krijgt dan geen eigen
+          uur meer — en dat is precies de oefening die niet gedaan wordt.</div>
+      </aside>
+
+      <div class="rooster">
+        <article class="oefkaart gekozen">
+          <span class="merk">Getijde I</span>
+          <figure><img src="/images/rug/knie-naar-borst-liggend-line-v1.png"
+            alt="Liggend op de rug wordt één knie met beide handen rustig naar de borst getrokken."/></figure>
+          <div class="grp">Rug</div>
+          <h4>Knie naar borst — liggend</h4>
+          <div class="toe">
+            <button class="aan" type="button">Opstaan</button>
+            <button type="button">Middag</button>
+            <button type="button">Slapen</button>
+          </div>
+        </article>
+
+        <article class="oefkaart gekozen">
+          <span class="merk">Getijde II</span>
+          <figure><img src="/images/rug/rug-bol-en-hol-zittend-line-v1.png"
+            alt="Zittend op een stoel wordt de rug afwisselend bol en hol gemaakt."/></figure>
+          <div class="grp">Rug</div>
+          <h4>Rug bol en hol — zittend</h4>
+          <div class="toe">
+            <button type="button">Opstaan</button>
+            <button class="aan" type="button">Middag</button>
+            <button type="button">Slapen</button>
+          </div>
+        </article>
+
+        <article class="oefkaart gekozen">
+          <span class="merk">Getijde III</span>
+          <figure><img src="/images/rug/open-boek-liggend-line-v1.png"
+            alt="Op de zij liggend draait de bovenste arm open naar de andere kant."/></figure>
+          <div class="grp">Rug</div>
+          <h4>Open boek — liggend</h4>
+          <div class="toe">
+            <button type="button">Opstaan</button>
+            <button type="button">Middag</button>
+            <button class="aan" type="button">Slapen</button>
+          </div>
+        </article>
+
+        <article class="oefkaart">
+          <figure><img src="/images/rug/thoracale-extensie-zittend-line-v1.png"
+            alt="Zittend met de handen achter het hoofd strekt de bovenrug achterover."/></figure>
+          <div class="grp">Rug</div>
+          <h4>Thoracale extensie — zittend</h4>
+          <div class="toe">
+            <button type="button">Opstaan</button>
+            <button type="button">Middag</button>
+            <button type="button">Slapen</button>
+          </div>
+        </article>
+
+        <article class="oefkaart">
+          <figure><img src="/images/rug/romp-draaien-zittend-line-v1.png"
+            alt="Zittend op een stoel draait de romp rustig naar één kant."/></figure>
+          <div class="grp">Rug</div>
+          <h4>Romp draaien — zittend</h4>
+          <div class="toe">
+            <button type="button">Opstaan</button>
+            <button type="button">Middag</button>
+            <button type="button">Slapen</button>
+          </div>
+        </article>
+
+        <article class="oefkaart">
+          <figure><img src="/images/rug/knie-naar-borst-zittend-line-v1.png"
+            alt="Zittend op een stoel wordt één knie richting de borst getrokken."/></figure>
+          <div class="grp">Rug</div>
+          <h4>Knie naar borst — zittend</h4>
+          <div class="toe">
+            <button type="button">Opstaan</button>
+            <button type="button">Middag</button>
+            <button type="button">Slapen</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>de bladspiegel van het handschrift, letterlijk: tekstblok links, brede marge rechts</p>
+    </div>
+
+    <div class="spread">
+      <div class="blokzijde">
+        <div class="incipit">
+          <div class="r">Hier beginnen de oefeningen van</div>
+          <h3>Mevrouw R. Bouma</h3>
+          <div class="sub">week 34 · 17 t/m 23 augustus · derde week na de eerste afspraak</div>
+        </div>
+
+        <div class="dienst">
+          <div class="lk">
+            <figure><img src="/images/rug/knie-naar-borst-liggend-line-v1.png"
+              alt="Liggend op de rug wordt één knie met beide handen rustig naar de borst getrokken."/></figure>
+          </div>
+          <div class="tk">
+            <div class="dienstkop">
+              <span class="versaal"><span class="pen" aria-hidden="true"></span>I</span>
+              <span class="uur">Bij het opstaan<small>nog op bed · ± 2 minuten</small></span>
+            </div>
+            <h4>Knie naar borst — liggend</h4>
+            <p>Ga op uw rug liggen met de benen gestrekt. Pak één knie met beide handen vast, trek
+              hem rustig richting uw borst en laat het been daarna langzaam weer zakken. Wissel van been.</p>
+            <div class="maat">
+              <span><b>10×</b> per been</span><span><b>3</b> tellen vast</span><span><b>1</b>× per dag</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dienst">
+          <div class="lk">
+            <figure><img src="/images/rug/rug-bol-en-hol-zittend-line-v1.png"
+              alt="Zittend op een stoel wordt de rug afwisselend bol en hol gemaakt."/></figure>
+          </div>
+          <div class="tk">
+            <div class="dienstkop">
+              <span class="versaal rood"><span class="pen" aria-hidden="true"></span>II</span>
+              <span class="uur">Na de middag<small>op de keukenstoel · ± 3 minuten</small></span>
+            </div>
+            <h4>Rug bol en hol — zittend</h4>
+            <p>Zit rechtop met uw handen op uw knieën. Maak uw rug rustig bol door uw kin naar uw
+              borst te brengen, en beweeg daarna langzaam terug naar een holle rug.</p>
+            <div class="maat">
+              <span><b>12×</b> heen en weer</span><span><b>rustig</b> ademen</span><span><b>1</b>× per dag</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dienst">
+          <div class="lk">
+            <figure><img src="/images/rug/open-boek-liggend-line-v1.png"
+              alt="Op de zij liggend draait de bovenste arm open naar de andere kant."/></figure>
+          </div>
+          <div class="tk">
+            <div class="dienstkop">
+              <span class="versaal"><span class="pen" aria-hidden="true"></span>III</span>
+              <span class="uur">Voor het slapen<small>in bed, op de zij · ± 3 minuten</small></span>
+            </div>
+            <h4>Open boek — liggend</h4>
+            <p>Ga op uw zij liggen met gebogen knieën en de armen gestrekt voor u op elkaar. Draai
+              uw bovenste arm rustig open naar de andere kant, zoals een boek dat opengaat, en breng
+              hem langzaam terug.</p>
+            <div class="maat">
+              <span><b>8×</b> per kant</span><span><b>langzaam</b></span><span><b>1</b>× per dag</span>
+            </div>
+            <div class="waarsch">Stop bij scherpe of uitstralende pijn. Trekkend gevoel mag.</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="marge">
+        <h5>De marge</h5>
+        <p class="uitleg">Zeven vakjes per getijde. Tik ze aan of zet er thuis met pen een kruisje in —
+          het is hetzelfde vakje op hetzelfde blad.</p>
+
+        <div class="turf">
+          <div class="kop">Getijde I <i>4 / 7</i></div>
+          <div class="dagen">
+            <span class="dag af"></span><span class="dag af"></span><span class="dag af"></span>
+            <span class="dag">do</span><span class="dag af"></span><span class="dag">za</span>
+            <span class="dag rood">zo</span>
+          </div>
+        </div>
+
+        <div class="turf">
+          <div class="kop">Getijde II <i>3 / 7</i></div>
+          <div class="dagen">
+            <span class="dag af"></span><span class="dag">di</span><span class="dag af"></span>
+            <span class="dag">do</span><span class="dag af"></span><span class="dag">za</span>
+            <span class="dag rood">zo</span>
+          </div>
+        </div>
+
+        <div class="turf">
+          <div class="kop">Getijde III <i>5 / 7</i></div>
+          <div class="dagen">
+            <span class="dag af"></span><span class="dag af"></span><span class="dag af"></span>
+            <span class="dag af"></span><span class="dag af"></span><span class="dag">za</span>
+            <span class="dag rood">zo</span>
+          </div>
+        </div>
+
+        <div class="slot">Twaalf van de eenentwintig. <b>Dat is geen cijfer</b>, het is een
+          gespreksonderwerp voor donderdag — welk uur lukte niet, en waarom dat uur?</div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>asymmetrische bladspiegel, rubrieken in rood, en de zeven vakjes in de buitenmarge</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer r geen-print" style="top:20mm;left:calc(100% + 22px)">incipit-rubriek: “hier beginnen…”</span>
+          <span class="wijzer r geen-print" style="top:92mm;left:calc(100% + 22px)">versaal = het uur, niet het nummer</span>
+          <span class="wijzer r geen-print" style="top:150mm;left:calc(100% + 22px)">buitenmarge: 7 vakjes per getijde</span>
+          <span class="wijzer l geen-print" style="top:250mm;right:calc(100% + 22px)">rode dag = de volgende afspraak</span>
+
+          <div class="bl-kop">
+            <div>
+              <div class="incip">Hier beginnen de oefeningen van</div>
+              <h1>Mevrouw R. Bouma</h1>
+              <div class="wie">Week 34 · 17 t/m 23 augustus 2026 · derde week</div>
+            </div>
+            <div class="rechts">
+              <div class="prak">Fysiotherapie Noorderlicht</div>
+              <div class="tel">Groningen · 050 — 313 44 21<br/>Therapeut: J. Veldkamp</div>
+            </div>
+          </div>
+
+          <div class="bl-alg">
+            <div class="r">Lees eerst</div>
+            <p>Drie oefeningen op drie vaste momenten van de dag, samen ongeveer acht minuten.
+              Doe ze op het uur dat erbij staat — niet ergens later. Stop bij scherpe pijn;
+              een trekkend gevoel hoort erbij.</p>
+          </div>
+
+          <div class="spiegel">
+            <div class="bl-diensten">
+
+              <div class="bl-dienst">
+                <figure><img src="/images/rug/knie-naar-borst-liggend-line-v1.png"
+                  alt="Liggend op de rug wordt één knie met beide handen rustig naar de borst getrokken."/></figure>
+                <div class="tk">
+                  <div class="kopregel">
+                    <span class="bl-versaal">I</span>
+                    <span class="uur">Bij het opstaan<small>nog op bed · ± 2 minuten</small></span>
+                  </div>
+                  <h2>Knie naar borst — liggend</h2>
+                  <p>Ga op uw rug liggen met de benen gestrekt. Pak één knie met beide handen vast,
+                    trek hem rustig richting uw borst en laat het been daarna langzaam weer zakken.
+                    Wissel van been.</p>
+                  <div class="maat">
+                    <span><b>10×</b> per been</span><span><b>3</b> tellen vasthouden</span>
+                    <i class="vuller" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bl-dienst">
+                <figure><img src="/images/rug/rug-bol-en-hol-zittend-line-v1.png"
+                  alt="Zittend op een stoel wordt de rug afwisselend bol en hol gemaakt."/></figure>
+                <div class="tk">
+                  <div class="kopregel">
+                    <span class="bl-versaal rood">II</span>
+                    <span class="uur">Na de middag<small>op de keukenstoel · ± 3 minuten</small></span>
+                  </div>
+                  <h2>Rug bol en hol — zittend</h2>
+                  <p>Zit rechtop met uw handen op uw knieën. Maak uw rug rustig bol door uw kin naar
+                    uw borst te brengen, en beweeg daarna langzaam terug naar een holle rug.</p>
+                  <div class="maat">
+                    <span><b>12×</b> heen en weer</span><span>rustig ademen</span>
+                    <i class="vuller" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bl-dienst">
+                <figure><img src="/images/rug/open-boek-liggend-line-v1.png"
+                  alt="Op de zij liggend draait de bovenste arm open naar de andere kant."/></figure>
+                <div class="tk">
+                  <div class="kopregel">
+                    <span class="bl-versaal">III</span>
+                    <span class="uur">Voor het slapen<small>in bed, op de zij · ± 3 minuten</small></span>
+                  </div>
+                  <h2>Open boek — liggend</h2>
+                  <p>Ga op uw zij liggen met gebogen knieën en de armen gestrekt voor u op elkaar.
+                    Draai uw bovenste arm rustig open naar de andere kant, zoals een boek dat
+                    opengaat, en breng hem langzaam terug.</p>
+                  <div class="maat">
+                    <span><b>8×</b> per kant</span><span>langzaam</span>
+                    <i class="vuller" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="bl-marge">
+              <div class="mk">De marge<small>Kruisje per dag, per getijde.</small></div>
+
+              <div class="mturf">
+                <div class="mt">Getijde I <i>opstaan</i></div>
+                <div class="rij">
+                  <span class="vk">ma</span><span class="vk">di</span><span class="vk">wo</span>
+                  <span class="vk">do</span><span class="vk">vr</span><span class="vk">za</span>
+                  <span class="vk rood">zo</span>
+                </div>
+              </div>
+
+              <div class="mturf">
+                <div class="mt">Getijde II <i>middag</i></div>
+                <div class="rij">
+                  <span class="vk">ma</span><span class="vk">di</span><span class="vk">wo</span>
+                  <span class="vk">do</span><span class="vk">vr</span><span class="vk">za</span>
+                  <span class="vk rood">zo</span>
+                </div>
+              </div>
+
+              <div class="mturf">
+                <div class="mt">Getijde III <i>slapen</i></div>
+                <div class="rij">
+                  <span class="vk">ma</span><span class="vk">di</span><span class="vk">wo</span>
+                  <span class="vk">do</span><span class="vk">vr</span><span class="vk">za</span>
+                  <span class="vk rood">zo</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bl-kalender">
+            <div class="kal">
+              <div class="kd"><div class="dl">ma</div><div class="dn">17</div><div class="dm">&nbsp;</div></div>
+              <div class="kd"><div class="dl">di</div><div class="dn">18</div><div class="dm">&nbsp;</div></div>
+              <div class="kd"><div class="dl">wo</div><div class="dn">19</div><div class="dm">&nbsp;</div></div>
+              <div class="kd feest"><div class="dl">do</div><div class="dn">20</div><div class="dm">afspraak</div></div>
+              <div class="kd"><div class="dl">vr</div><div class="dn">21</div><div class="dm">&nbsp;</div></div>
+              <div class="kd"><div class="dl">za</div><div class="dn">22</div><div class="dm">&nbsp;</div></div>
+              <div class="kd"><div class="dl">zo</div><div class="dn">23</div><div class="dm">&nbsp;</div></div>
+            </div>
+            <div class="terugkomst">
+              <div class="r">Neem dit blad mee</div>
+              <div class="d">do 20 aug · 10:45</div>
+              <div class="n">Noorderlicht, Groningen</div>
+            </div>
+          </div>
+
+          <div class="bl-voet">
+            <p class="expl"><b>Wat rood betekent:</b> alles wat u moet dóen — het uur, de
+              waarschuwing, de dag van de afspraak. Zwart is wat het is. Blauw telt.
+              Bij twijfel belt u de praktijk; daar wordt niet gezucht.</p>
+            <div class="mrk">Fysiplan · concept 19<br/>getijdenboek · A4 staand</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <p class="printhulp geen-print">Print deze pagina (Ctrl/Cmd + P) — alles buiten de A4 valt weg,
+      inclusief de aanwijzers hierboven. Print hem daarna nog eens in grijstinten: de rubrieken
+      blijven leesbaar, want rood staat nergens alleen.
+      <br/><a class="kn" href="javascript:window.print()">Printvoorbeeld openen</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>De richting</h4>
+      <p>Niet een lijst om af te werken, maar een dagorde om aan te houden. Drie oefeningen op drie
+        vaste uren die de patiënt toch al heeft, in de kleurgrammatica van het handschrift:
+        rood doet, zwart benoemt, blauw telt.</p>
+    </div>
+    <div class="kolom">
+      <h4>Waar het schuurt</h4>
+      <ul>
+        <li>Een religieuze vorm voor een seculiere opdracht — alleen de bouw is geleend, de woorden blijven gewoon.</li>
+        <li>Drie oefeningen is het maximum: er zijn maar drie uren. Een praktijk die er acht kwijt wil, kan hier niet terecht.</li>
+        <li>Gotisch schrift is bewust geweigerd; leesbaarheid gaat vóór het effect.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Verder</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 20 — Zaaigoed · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 20 — ZAAIGOED
+   Op een zaadzakje staat iets wat op geen enkele oefenkaart ter
+   wereld staat: WANNEER JE ER IETS VAN GAAT MERKEN. "Kiemduur
+   10–14 dagen." Dat ene zinnetje doet twee dingen tegelijk — het
+   belooft iets, en het vergeeft de eerste twee weken waarin er
+   niets gebeurt. Precies daar loopt de fysiotherapie stuk: de
+   patiënt doet zijn oefeningen vier dagen, voelt niets, en stopt.
+   Niemand heeft hem verteld dat niets voelen in week één het
+   normale verloop is.
+
+   Dus is de kaart een zaadzakje:
+     · ZAAIEN      — wat u doet, hoe vaak (de handeling)
+     · STANDPLAATS — waar het gebeurt: bed, keukenstoel, aanrecht
+     · VERZORGING  — waar u op let, en wanneer u stopt
+     · KIEMDUUR    — wanneer u er iets van merkt (en dat het duurt)
+     · OOGST       — wat het uiteindelijk oplevert, in gewone woorden
+   Die laatste twee bestaan nergens in dit vakgebied op papier.
+
+   De tweede lening is de ZAAIKALENDER: de strook met gekleurde
+   blokjes die op elk tuinboekje staat. Donker blok = zaaien, licht
+   blok = opkomst. Vertaald: donker = de dag dat u het doet, licht =
+   de weken waarin het effect komt. Daarmee is de gemiste dag niet
+   langer een gat in een rij vinkjes, maar een niet-opgekomen zaadje
+   in een rij die verder gewoon doorgroeit. Dat is geen truc: het is
+   feitelijk hoe belastbaarheid werkt.
+
+   Het cursieve regeltje onder elke oefeningsnaam is niet decoratief
+   maar de anatomische naam van de spier — het equivalent van de
+   botanische naam onder de variëteit. Het leert iets, en het geeft
+   de oefening standing.
+
+   Vormtaal: het drukwerk van het zakje zelf. Groen vlak met
+   omgekeerde letter voor de naam, warm oatmeal papier, een dubbele
+   kaderlijn met hoekornamenten, en verder grote nuchtere letter.
+   Kleur is grof en beperkt: flesgroen, terracotta, oker. Geen
+   verlopen, geen schaduwen op papier — een zakje is één drukgang.
+
+   Waar het schuurt: de metafoor kán zoetsappig worden ("uw herstel
+   bloeit!"). Dat wordt hier hard tegengehouden: het woord "groei"
+   staat nergens, en de toon is die van een tuinbouwcatalogus —
+   zakelijk, met getallen. Een zaadzakje belooft niets, het meldt
+   een kiemduur.
+
+   Zwart-wit-toets: de kalenderblokken verschillen niet alleen in
+   kleur maar in vulling (vol, gearceerd, leeg), dus in grijstinten
+   blijft het onderscheid overeind.
+   Alles inline; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  --papier:#ece6d6;         /* oatmeal, ruw zakjespapier */
+  --papier-l:#f4f0e4;
+  --vlak:#faf8f1;
+  --groen:#1d4536;          /* flesgroen, de hoofdinkt */
+  --groen-m:#3d6b55;
+  --groen-l:#8fae9c;
+  --groen-xl:#cfdcd2;
+  --terra:#bc4a2a;          /* terracotta, tweede inkt */
+  --oker:#c98f22;
+  --inkt:#22261f;
+  --inkt-2:#454b41;
+  --grijs:#6f7568;
+  --lijn:#cdc7b2;
+  --lijn-2:#e0dbc9;
+
+  --serif:"Iowan Old Style",Charter,"Palatino Linotype",Georgia,serif;
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:6px; --s2:12px; --s3:20px; --s4:34px; --s5:56px; --s6:88px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--papier);color:var(--inkt);font-family:var(--sans);
+  font-size:17px;line-height:1.6}
+img{max-width:100%;display:block}
+a{color:inherit}
+
+/* ── labbalk ─────────────────────────────────────────────── */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:18px;
+  background:var(--groen);color:#dce7e0;padding:11px 22px;border-bottom:3px solid var(--oker)}
+.labbalk .nr{font:600 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:#e8c98a;border:1px solid #4a7160;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{font:500 14px/1 var(--sans);color:#bdd0c5;text-decoration:none;padding:6px 4px}
+.labbalk a:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.labbalk a.terug{color:#f0b79c}
+@media (max-width:820px){.labbalk{gap:12px;padding:9px 14px;flex-wrap:wrap}.labbalk a{font-size:13px}}
+
+/* ── raamwerk ───────────────────────────────────────────── */
+.scherm{padding:var(--s6) 24px;border-top:1px solid var(--lijn)}
+.scherm:first-child{border-top:0}
+.binnen{max-width:1180px;margin:0 auto}
+.schermkop{max-width:760px;margin-bottom:var(--s5)}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.22em;
+  text-transform:uppercase;color:var(--terra);margin-bottom:12px}
+.schermkop h2{font:700 40px/1.1 var(--serif);letter-spacing:-.015em;margin-bottom:10px;color:var(--groen)}
+.schermkop p{font-size:17.5px;color:var(--grijs)}
+
+/* het kaderornament van een zakje: dubbele lijn + hoekjes */
+.kader{position:relative;background:var(--vlak);border:2px solid var(--groen)}
+.kader::before{content:"";position:absolute;inset:4px;border:1px solid var(--groen-l);
+  pointer-events:none}
+.hoek{position:absolute;width:13px;height:13px;border:2px solid var(--terra);z-index:2}
+.hoek.lb{left:-2px;top:-2px;border-right:0;border-bottom:0}
+.hoek.rb{right:-2px;top:-2px;border-left:0;border-bottom:0}
+.hoek.lo{left:-2px;bottom:-2px;border-right:0;border-top:0}
+.hoek.ro{right:-2px;bottom:-2px;border-left:0;border-top:0}
+
+.kn{display:inline-block;font:700 15px/1 var(--sans);background:var(--groen);color:#f2f7f3;
+  padding:15px 24px;text-decoration:none;border:2px solid var(--groen)}
+.kn:hover{background:#123028;border-color:#123028}
+.kn.leeg{background:transparent;color:var(--groen);border-color:var(--groen)}
+.kn.leeg:hover{background:var(--groen);color:#f2f7f3}
+
+/* ── 1 landing ──────────────────────────────────────────── */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--s5);align-items:start}
+@media (max-width:960px){.hero{grid-template-columns:1fr;gap:var(--s4)}}
+.kap{display:inline-block;font:700 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;
+  color:#f4efe0;background:var(--terra);padding:8px 12px;margin-bottom:22px}
+h1{font:700 clamp(38px,5.2vw,62px)/1.04 var(--serif);letter-spacing:-.022em;margin-bottom:22px;
+  color:var(--groen)}
+.lead{font-size:19.5px;line-height:1.6;color:var(--inkt-2);max-width:47ch}
+.doen{display:flex;gap:12px;flex-wrap:wrap;margin-top:var(--s4)}
+.naregel{margin-top:var(--s3);font-size:15.5px;line-height:1.65;color:var(--grijs);max-width:52ch;
+  border-left:3px solid var(--oker);padding-left:16px}
+
+/* het zakje op de landing */
+.zakje{padding:0;overflow:hidden}
+.zakje .band{background:var(--groen);color:#f1f6f2;padding:20px 24px 18px}
+.zakje .band .merk{font:700 10px/1 var(--sans);letter-spacing:.26em;text-transform:uppercase;
+  color:#a8c6b5;margin-bottom:10px}
+.zakje .band h3{font:700 30px/1.08 var(--serif);letter-spacing:-.015em}
+.zakje .band .lat{font:400 italic 15px/1.3 var(--serif);color:#a8c6b5;margin-top:6px}
+.zakje .beeld{background:var(--papier-l);padding:22px;display:flex;align-items:center;
+  justify-content:center;border-bottom:1px solid var(--lijn-2)}
+.zakje .beeld img{max-height:190px;width:auto;mix-blend-mode:multiply}
+.zakje .feiten{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.zakje .feiten div{padding:15px 20px;border-right:1px solid var(--lijn-2);border-bottom:1px solid var(--lijn-2)}
+.zakje .feiten div:nth-child(2n){border-right:0}
+.zakje .feiten dt{font:700 9.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--terra);margin-bottom:7px}
+.zakje .feiten dd{font:600 17px/1.25 var(--serif);color:var(--inkt)}
+.zakje .feiten dd small{display:block;font:400 13.5px/1.4 var(--sans);color:var(--grijs);margin-top:4px}
+.zakje .voet{padding:14px 20px;font:400 13.5px/1.5 var(--sans);color:var(--grijs);
+  display:flex;justify-content:space-between;gap:12px}
+.zakje .voet b{color:var(--groen);font-weight:700}
+
+.regels{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);margin-top:var(--s6)}
+@media (max-width:900px){.regels{grid-template-columns:1fr}}
+.vak{background:var(--vlak);border:1px solid var(--lijn);padding:26px 24px 24px;border-top:4px solid var(--groen)}
+.vak.t{border-top-color:var(--terra)}
+.vak.o{border-top-color:var(--oker)}
+.vak .num{font:700 12px/1 var(--mono);color:var(--grijs);margin-bottom:14px;letter-spacing:.14em}
+.vak h3{font:700 22px/1.2 var(--serif);margin-bottom:9px;color:var(--groen)}
+.vak p{font-size:15.5px;line-height:1.6;color:var(--inkt-2)}
+
+/* ── 2 kiezer: het zaadrek ──────────────────────────────── */
+.rekbalk{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:var(--s4);
+  background:var(--vlak);border:1px solid var(--lijn);padding:14px 18px}
+.rekbalk .t{font:700 10.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--terra)}
+.rekbalk .chip{font:600 14px/1 var(--sans);border:1px solid var(--lijn);padding:9px 13px;
+  background:var(--papier-l);color:var(--inkt-2);cursor:pointer}
+.rekbalk .chip.aan{background:var(--groen);border-color:var(--groen);color:#f1f6f2}
+.rekbalk .rek{flex:1}
+.rekbalk .staat{font:600 14px/1 var(--sans);color:var(--groen)}
+
+.zaadrek{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media (max-width:1080px){.zaadrek{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:800px){.zaadrek{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.zaadrek{grid-template-columns:1fr}}
+.zkl{background:var(--vlak);border:1.5px solid var(--groen);display:flex;flex-direction:column;
+  position:relative}
+.zkl .kop{background:var(--groen);color:#f1f6f2;padding:11px 13px}
+.zkl .kop h4{font:700 16.5px/1.16 var(--serif)}
+.zkl .kop .lat{font:400 italic 12.5px/1.3 var(--serif);color:#a8c6b5;margin-top:3px}
+.zkl figure{background:var(--papier-l);padding:14px;display:flex;align-items:center;
+  justify-content:center;min-height:128px}
+.zkl figure img{max-height:110px;width:auto;mix-blend-mode:multiply}
+.zkl .rij{display:flex;justify-content:space-between;gap:8px;padding:10px 13px;
+  border-top:1px solid var(--lijn-2);font:400 13px/1.35 var(--sans);color:var(--grijs)}
+.zkl .rij b{color:var(--inkt);font-weight:600;display:block;font-size:13.5px}
+.zkl .doe{padding:11px 13px;margin-top:auto}
+.zkl .doe button{width:100%;font:700 13.5px/1 var(--sans);letter-spacing:.04em;padding:11px;
+  background:transparent;border:1.5px solid var(--groen);color:var(--groen);cursor:pointer}
+.zkl .doe button:hover{background:var(--groen-xl)}
+.zkl.gekozen{border-color:var(--terra);box-shadow:0 0 0 2px rgba(188,74,42,.2)}
+.zkl.gekozen .kop{background:var(--terra)}
+.zkl.gekozen .kop .lat{color:#f4c3ae}
+.zkl.gekozen .doe button{background:var(--terra);border-color:var(--terra);color:#fdf3ee}
+.zkl .mrk{position:absolute;top:-1.5px;right:-1.5px;background:var(--oker);color:#2a2107;
+  font:700 10px/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;padding:6px 8px;z-index:2}
+
+/* ── 3 cliëntkaart: de achterkant van het zakje ─────────── */
+.achterkant{display:grid;grid-template-columns:1fr 300px;gap:0;border:2px solid var(--groen);
+  background:var(--vlak)}
+@media (max-width:940px){.achterkant{grid-template-columns:1fr}}
+.ak-hoofd{padding:0;border-right:1px solid var(--lijn)}
+@media (max-width:940px){.ak-hoofd{border-right:0;border-bottom:1px solid var(--lijn)}}
+.ak-kop{background:var(--groen);color:#eef4f0;padding:24px 28px}
+.ak-kop .merk{font:700 10px/1 var(--sans);letter-spacing:.26em;text-transform:uppercase;
+  color:#a8c6b5;margin-bottom:11px}
+.ak-kop h3{font:700 28px/1.1 var(--serif)}
+.ak-kop p{font-size:15px;color:#bdd6c7;margin-top:7px}
+
+.gewas{display:flex;gap:20px;padding:24px 28px;border-bottom:1px solid var(--lijn-2)}
+.gewas:last-child{border-bottom:0}
+.gewas figure{flex:0 0 118px;background:var(--papier-l);border:1px solid var(--lijn-2);padding:9px;
+  display:flex;align-items:center;justify-content:center;height:112px}
+.gewas figure img{max-height:94px;width:auto;mix-blend-mode:multiply}
+.gewas .tk{flex:1;min-width:0}
+.gewas h4{font:700 21px/1.18 var(--serif);color:var(--groen)}
+.gewas .lat{font:400 italic 14px/1.3 var(--serif);color:var(--grijs);margin:3px 0 12px}
+.gewas dl{display:grid;grid-template-columns:78px 1fr;gap:7px 14px;font-size:15px;line-height:1.5}
+.gewas dt{font:700 9.5px/1.9 var(--sans);letter-spacing:.13em;text-transform:uppercase;color:var(--terra)}
+.gewas dd{color:var(--inkt-2)}
+.gewas .kiem{margin-top:13px;background:var(--groen-xl);border-left:4px solid var(--groen-m);
+  padding:10px 14px;font-size:14.5px;line-height:1.5;color:#1a3a2e}
+.gewas .kiem b{font-weight:700}
+
+.ak-zij{padding:24px 22px;background:var(--papier-l)}
+.ak-zij h5{font:700 10px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--terra);margin-bottom:8px}
+.ak-zij .uit{font-size:13.5px;line-height:1.5;color:var(--grijs);margin-bottom:20px}
+/* de zaaikalender op het scherm */
+.zk{margin-bottom:22px}
+.zk .zkop{font:600 14.5px/1.2 var(--serif);color:var(--groen);margin-bottom:8px;
+  display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.zk .zkop i{font:400 11.5px/1 var(--mono);font-style:normal;color:var(--grijs)}
+.zk .strook{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.zk .b{aspect-ratio:1;border:1px solid var(--lijn);background:var(--vlak);
+  display:flex;align-items:center;justify-content:center;font:400 10px/1 var(--mono);color:var(--grijs)}
+.zk .b.zaai{background:var(--groen);border-color:var(--groen);color:#eef4f0}
+.zk .b.op{background:var(--groen-xl);border-color:var(--groen-l);color:#28503f;
+  background-image:repeating-linear-gradient(45deg,rgba(29,69,54,.16) 0 2px,transparent 2px 5px)}
+.zk .b.leeg{background:var(--vlak)}
+.legenda{display:flex;flex-direction:column;gap:8px;font-size:13.5px;color:var(--inkt-2);
+  border-top:1px solid var(--lijn);padding-top:16px;margin-bottom:18px}
+.legenda span{display:flex;align-items:center;gap:9px}
+.legenda i{width:17px;height:17px;flex:0 0 17px;border:1px solid var(--lijn);display:block}
+.legenda i.zaai{background:var(--groen);border-color:var(--groen)}
+.legenda i.op{background:var(--groen-xl);border-color:var(--groen-l);
+  background-image:repeating-linear-gradient(45deg,rgba(29,69,54,.16) 0 2px,transparent 2px 5px)}
+.ak-zij .slot{font-size:14px;line-height:1.55;color:var(--inkt-2);border-top:1px solid var(--lijn);
+  padding-top:16px}
+.ak-zij .slot b{color:var(--terra)}
+
+/* ── 4 printkaart ───────────────────────────────────────── */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){.bladschaal{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+
+.blad{width:210mm;height:297mm;background:#f1ecdd;color:#22261f;position:relative;
+  font-family:var(--sans);display:flex;flex-direction:column;padding:10mm;
+  box-shadow:0 26px 70px rgba(34,38,31,.24)}
+/* het zakjeskader: dubbele lijn met terracotta hoeken */
+.blad .rand{position:absolute;inset:10mm;border:1.4pt solid #1d4536;pointer-events:none}
+.blad .rand::before{content:"";position:absolute;inset:1.6mm;border:.4pt solid #8fae9c}
+.blad .hk{position:absolute;width:6mm;height:6mm;border:1.4pt solid #bc4a2a;z-index:2}
+.blad .hk.a{left:10mm;top:10mm;border-right:0;border-bottom:0}
+.blad .hk.b{right:10mm;top:10mm;border-left:0;border-bottom:0}
+.blad .hk.c{left:10mm;bottom:10mm;border-right:0;border-top:0}
+.blad .hk.d{right:10mm;bottom:10mm;border-left:0;border-top:0}
+.blad .binnenblad{flex:1;margin:4mm;display:flex;flex-direction:column;min-height:0;position:relative;z-index:1}
+
+.pk-kop{background:#1d4536;color:#eef4f0;padding:4mm 5.5mm 3.8mm;
+  display:flex;justify-content:space-between;align-items:flex-end;gap:6mm}
+.pk-kop .merk{font:700 7.5pt/1 var(--sans);letter-spacing:.26em;text-transform:uppercase;
+  color:#9dbfad;margin-bottom:2.2mm}
+/* let op: de algemene h1-regel hierboven zet kleur en ondermarge — hier allebei terugzetten,
+   anders staat de naam donkergroen op donkergroen en valt hij weg */
+.pk-kop h1{font:700 23pt/1.02 var(--serif);letter-spacing:-.02em;color:#f4f9f5;margin-bottom:0}
+.pk-kop .wie{font:400 10pt/1.35 var(--serif);color:#bdd6c7;margin-top:1.8mm}
+.pk-kop .rechts{text-align:right;flex:0 0 auto}
+.pk-kop .rechts .p{font:700 8.5pt/1.35 var(--sans);letter-spacing:.05em}
+.pk-kop .rechts .t{font:400 8.5pt/1.5 var(--mono);color:#9dbfad;margin-top:1.2mm}
+
+.pk-alg{border:.7pt solid #bc4a2a;border-top:0;padding:2.6mm 6mm;
+  display:flex;gap:5mm;align-items:baseline;background:#fbf7ec}
+.pk-alg .l{font:700 7.5pt/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  color:#bc4a2a;flex:0 0 24mm}
+.pk-alg p{font:400 10pt/1.4 var(--serif);color:#2e332b}
+
+.pk-gewassen{display:flex;flex-direction:column;gap:2.6mm;margin-top:3.2mm}
+.pk-gewas{border:.7pt solid #b9b39c;background:#fbf9f1;display:flex;align-items:stretch}
+.pk-gewas .beeld{flex:0 0 28mm;background:#f1ecdd;border-right:.7pt solid #b9b39c;padding:1.6mm;
+  display:flex;align-items:center;justify-content:center}
+.pk-gewas .beeld img{max-height:23mm;max-width:100%;width:auto;mix-blend-mode:multiply}
+.pk-gewas .tk{flex:1;min-width:0;padding:2.4mm 3.6mm 2.6mm}
+.pk-gewas .nm{display:flex;align-items:baseline;justify-content:space-between;gap:4mm;
+  border-bottom:.5pt solid #cdc7b2;padding-bottom:1.3mm;margin-bottom:1.7mm}
+.pk-gewas h2{font:700 13.5pt/1.1 var(--serif);color:#1d4536}
+.pk-gewas .lat{font:400 italic 8.5pt/1.2 var(--serif);color:#6f7568}
+.pk-gewas .nr{font:700 8pt/1 var(--mono);color:#bc4a2a;letter-spacing:.1em;flex:0 0 auto}
+/* de labelkolom moet het langste woord ("standplaats") kwijt kunnen, anders schuift
+   het over de tekst heen — 24 mm bij deze korpsgrootte en letterafstand */
+.pk-gewas dl{display:grid;grid-template-columns:24mm 1fr;gap:1.2mm 3mm}
+.pk-gewas dt{font:700 6.8pt/1.6 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:#bc4a2a}
+.pk-gewas dd{font:400 9.5pt/1.32 var(--serif);color:#22261f}
+.pk-gewas .oogstregel{margin-top:1.8mm;padding-top:1.5mm;border-top:.5pt dotted #b9b39c;
+  display:flex;gap:4mm;align-items:baseline;flex-wrap:wrap}
+.pk-gewas .oogstregel span{font:400 9pt/1.3 var(--serif);color:#2e332b}
+.pk-gewas .oogstregel b{font:700 7pt/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;
+  color:#1d4536}
+
+/* de zaaikalender: het hart van dit concept */
+.pk-kalender{margin-top:auto;padding-top:3.2mm}
+.pk-kalender .kk{display:flex;align-items:baseline;justify-content:space-between;gap:6mm;
+  border-bottom:1.2pt solid #1d4536;padding-bottom:1.6mm;margin-bottom:2.2mm}
+.pk-kalender .kk h3{font:700 11pt/1.1 var(--serif);color:#1d4536}
+.pk-kalender .kk .u{font:400 8.5pt/1.3 var(--serif);color:#454b41;text-align:right;max-width:100mm}
+.kalgrid{display:grid;grid-template-columns:26mm repeat(7,1fr);gap:.9mm;align-items:center}
+.kalgrid .hd{font:700 6.8pt/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;
+  color:#6f7568;text-align:center;padding-bottom:.8mm}
+.kalgrid .rijnaam{font:600 8pt/1.2 var(--serif);color:#22261f;padding-right:2mm;text-align:right}
+.kalgrid .rijnaam small{display:block;font:400 6.6pt/1.2 var(--mono);color:#6f7568;margin-top:.4mm}
+.kalgrid .cel{height:4.2mm;border:.5pt solid #b9b39c;background:#fbf9f1}
+.kalgrid .cel.zaai{background:#1d4536;border-color:#1d4536}
+.kalgrid .cel.op{background:#cfdcd2;border-color:#8fae9c;
+  background-image:repeating-linear-gradient(45deg,rgba(29,69,54,.3) 0 .5mm,transparent .5mm 1.3mm)}
+.kalgrid .weekkop{grid-column:1 / -1;font:700 6.8pt/1 var(--sans);letter-spacing:.16em;
+  text-transform:uppercase;color:#bc4a2a;padding:1.8mm 0 .8mm}
+
+.pk-legenda{display:flex;gap:6mm;flex-wrap:wrap;margin-top:2.2mm;padding-top:1.8mm;
+  border-top:.5pt solid #cdc7b2}
+.pk-legenda span{display:flex;align-items:center;gap:1.8mm;font:400 8pt/1.3 var(--serif);color:#2e332b}
+.pk-legenda i{width:4mm;height:4mm;flex:0 0 4mm;border:.5pt solid #b9b39c;display:block}
+.pk-legenda i.zaai{background:#1d4536;border-color:#1d4536}
+.pk-legenda i.op{background:#cfdcd2;border-color:#8fae9c;
+  background-image:repeating-linear-gradient(45deg,rgba(29,69,54,.3) 0 .5mm,transparent .5mm 1.3mm)}
+
+.pk-voet{margin-top:2.6mm;padding-top:2mm;border-top:.7pt solid #1d4536;
+  display:flex;justify-content:space-between;gap:6mm;align-items:baseline}
+.pk-voet .z{font:400 9pt/1.4 var(--serif);color:#2e332b;max-width:120mm}
+.pk-voet .z b{color:#bc4a2a;font-weight:700}
+.pk-voet .m{font:400 7pt/1.35 var(--mono);color:#6f7568;text-align:right;letter-spacing:.04em}
+
+.wijzer{position:absolute;font:500 12px/1.35 var(--sans);color:var(--grijs);width:132px;z-index:3}
+.wijzer::after{content:"";position:absolute;background:var(--lijn)}
+.wijzer.r::after{left:-20px;top:50%;width:16px;height:1px}
+.wijzer.l{text-align:right}
+.wijzer.l::after{right:-20px;top:50%;width:16px;height:1px}
+@media (max-width:1120px){.wijzer{display:none}}
+
+.printhulp{max-width:720px;margin:var(--s4) auto 0;text-align:center;font-size:16px;color:var(--grijs)}
+.printhulp .kn{margin-top:var(--s3)}
+
+/* ── uitleiding ─────────────────────────────────────────── */
+footer.uitleiding{background:var(--groen);color:#c9dbd0;padding:var(--s5) 24px var(--s6);
+  border-top:4px solid var(--oker)}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:#f0b79c;margin-bottom:13px}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:9px}
+footer.uitleiding li::before{content:"—";position:absolute;left:0;color:#e8c98a}
+footer.uitleiding a{color:#eef4f0}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;margin:0 !important;
+    break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 20</span>
+  <strong style="font:700 15px/1 var(--sans);color:#fff">Zaaigoed</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>het enige stuk drukwerk ter wereld dat eerlijk zegt hoe lang je op niets moet wachten</p>
+    </div>
+
+    <div class="hero">
+      <div>
+        <span class="kap">Fysiplan · zaaigoed</span>
+        <h1>Kiemduur: tien tot veertien dagen.</h1>
+        <p class="lead">Op een zaadzakje staat het gewoon: de eerste twee weken gebeurt er niets, en
+          dat hoort. Op geen enkele oefenkaart staat dat. Dus doet de patiënt vier dagen zijn best,
+          voelt niets, en stopt — precies op het moment dat het normale verloop nog niet eens begonnen
+          is. Deze kaart zet er wél een termijn bij, en durft daarmee iets te beloven.</p>
+        <div class="doen">
+          <a class="kn" href="#printkaart">Bekijk de A4</a>
+          <a class="kn leeg" href="#clientkaart">De achterkant van het zakje</a>
+        </div>
+        <p class="naregel">De gemiste dag wordt hier een niet-opgekomen zaadje in plaats van een gat
+          in een rij vinkjes. Dat is geen troostpraatje maar hoe belastbaarheid werkelijk werkt: het
+          effect komt van de reeks, niet van elke afzonderlijke dag.</p>
+      </div>
+
+      <div class="zakje kader">
+        <span class="hoek lb"></span><span class="hoek rb"></span>
+        <span class="hoek lo"></span><span class="hoek ro"></span>
+        <div class="band">
+          <div class="merk">Fysiotherapie Noorderlicht · nr. 12</div>
+          <h3>Opstaan uit de stoel</h3>
+          <div class="lat">musculus quadriceps femoris</div>
+        </div>
+        <div class="beeld">
+          <img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+            alt="Staand voor een stoel zakt iemand met de billen naar achteren tot vlak boven de zitting en komt weer rechtop."/>
+        </div>
+        <dl class="feiten">
+          <div><dt>Zaaien</dt><dd>8× per dag<small>elke ochtend, bij de eerste kop koffie</small></dd></div>
+          <div><dt>Standplaats</dt><dd>Keukenstoel<small>stevig, zonder wieltjes, tegen de muur</small></dd></div>
+          <div><dt>Kiemduur</dt><dd>10 – 14 dagen<small>daarvoor merkt u weinig; dat is normaal</small></dd></div>
+          <div><dt>Oogst</dt><dd>Week 5 – 6<small>opstaan zonder u af te zetten met de armen</small></dd></div>
+        </dl>
+        <div class="voet">
+          <span>Houdbaar zolang u zaait</span>
+          <span><b>Week 34</b> · R. Bouma</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="regels">
+      <div class="vak">
+        <div class="num">01</div>
+        <h3>Een termijn is een belofte</h3>
+        <p>"Kiemduur 10–14 dagen" doet twee dingen tegelijk: het zegt dat er iets komt, en het geeft
+          toestemming om de eerste twee weken niets te voelen. Dat tweede is waar de meeste
+          oefenprogramma's stuklopen — niet op moeite, maar op stilte.</p>
+      </div>
+      <div class="vak t">
+        <div class="num">02</div>
+        <h3>Oogst in gewone woorden</h3>
+        <p>Niet "verbeterde quadricepsfunctie" maar "opstaan zonder u af te zetten met de armen".
+          Elke oefening op deze kaart eindigt in een zin die de patiënt aan de keukentafel kan
+          navertellen. Kan die zin niet geschreven worden, dan hoort de oefening er niet op.</p>
+      </div>
+      <div class="vak o">
+        <div class="num">03</div>
+        <h3>De cursieve regel leert iets</h3>
+        <p>Onder elke naam staat de spier in het Latijn, zoals de botanische naam onder een
+          variëteit. Het is geen versiering: het geeft de oefening standing, en het is het enige
+          woord dat de patiënt bij de huisarts kan herhalen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>Oefeningen kiezen</h2>
+      <p>het zaadrek: elk zakje toont vooraf zijn kiemduur, dus u kiest ook een tijdpad</p>
+    </div>
+
+    <div class="rekbalk">
+      <span class="t">Rek</span>
+      <button class="chip aan" type="button">Onderste extremiteit</button>
+      <button class="chip" type="button">Balans</button>
+      <button class="chip" type="button">Rug</button>
+      <button class="chip" type="button">Nek</button>
+      <span class="rek"></span>
+      <span class="staat">3 zakjes gekozen · samen ± 9 minuten per dag</span>
+    </div>
+
+    <div class="zaadrek">
+      <article class="zkl gekozen">
+        <span class="mrk">Gekozen</span>
+        <div class="kop"><h4>Opstaan uit de stoel</h4><div class="lat">m. quadriceps femoris</div></div>
+        <figure><img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+          alt="Staand voor een stoel zakt iemand met de billen naar achteren en komt weer rechtop."/></figure>
+        <div class="rij"><span>Zaaien<b>8× per dag</b></span><span>Kiemduur<b>10–14 dgn</b></span></div>
+        <div class="doe"><button type="button">In het zaaiplan</button></div>
+      </article>
+
+      <article class="zkl gekozen">
+        <span class="mrk">Gekozen</span>
+        <div class="kop"><h4>Op de tenen komen</h4><div class="lat">m. gastrocnemius · m. soleus</div></div>
+        <figure><img src="/images/onderste-extremiteit/calf-raises-line-v1.png"
+          alt="Staand op heupbreedte komt iemand omhoog op de tenen en laat de hielen weer zakken."/></figure>
+        <div class="rij"><span>Zaaien<b>15× per dag</b></span><span>Kiemduur<b>7–10 dgn</b></span></div>
+        <div class="doe"><button type="button">In het zaaiplan</button></div>
+      </article>
+
+      <article class="zkl gekozen">
+        <span class="mrk">Gekozen</span>
+        <div class="kop"><h4>Bruggetje — liggend</h4><div class="lat">m. gluteus maximus</div></div>
+        <figure><img src="/images/onderste-extremiteit/glute-bridges-line-v1.png"
+          alt="Liggend op de rug met gebogen knieën worden de heupen omhoog geduwd tot een rechte lijn."/></figure>
+        <div class="rij"><span>Zaaien<b>10× per dag</b></span><span>Kiemduur<b>14–21 dgn</b></span></div>
+        <div class="doe"><button type="button">In het zaaiplan</button></div>
+      </article>
+
+      <article class="zkl">
+        <div class="kop"><h4>Been pendelen</h4><div class="lat">art. coxae, mobiliteit</div></div>
+        <figure><img src="/images/onderste-extremiteit/been-pendelen-line-v1.png"
+          alt="Staand met steun zwaait één been rustig heen en weer."/></figure>
+        <div class="rij"><span>Zaaien<b>20× per dag</b></span><span>Kiemduur<b>5–7 dgn</b></span></div>
+        <div class="doe"><button type="button">In het zaaiplan</button></div>
+      </article>
+
+      <article class="zkl">
+        <div class="kop"><h4>Eenbeenstand — met steun</h4><div class="lat">evenwicht, mm. glutei</div></div>
+        <figure><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png"
+          alt="Staand naast een stoel met de hand aan de leuning wordt één voet van de grond getild."/></figure>
+        <div class="rij"><span>Zaaien<b>3× 20 sec</b></span><span>Kiemduur<b>14–21 dgn</b></span></div>
+        <div class="doe"><button type="button">In het zaaiplan</button></div>
+      </article>
+
+      <article class="zkl">
+        <div class="kop"><h4>Hamstring curl — staand</h4><div class="lat">mm. ischiocrurales</div></div>
+        <figure><img src="/images/onderste-extremiteit/hamstring-curl-staand-met-steun-line-v1.png"
+          alt="Staand met steun wordt de hiel richting de bil gebogen."/></figure>
+        <div class="rij"><span>Zaaien<b>12× per dag</b></span><span>Kiemduur<b>10–14 dgn</b></span></div>
+        <div class="doe"><button type="button">In het zaaiplan</button></div>
+      </article>
+
+      <article class="zkl">
+        <div class="kop"><h4>Op de plaats marcheren</h4><div class="lat">gang &amp; cadans</div></div>
+        <figure><img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png"
+          alt="Achter een stoel met steun worden de knieën om de beurt opgetild."/></figure>
+        <div class="rij"><span>Zaaien<b>2× 30 sec</b></span><span>Kiemduur<b>7–10 dgn</b></span></div>
+        <div class="doe"><button type="button">In het zaaiplan</button></div>
+      </article>
+
+      <article class="zkl">
+        <div class="kop"><h4>Clamshell — zijlig</h4><div class="lat">m. gluteus medius</div></div>
+        <figure><img src="/images/onderste-extremiteit/clamshell-zijlig-line-v1.png"
+          alt="Op de zij liggend met gebogen knieën gaat de bovenste knie open als een schelp."/></figure>
+        <div class="rij"><span>Zaaien<b>12× per kant</b></span><span>Kiemduur<b>14–21 dgn</b></span></div>
+        <div class="doe"><button type="button">In het zaaiplan</button></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>de achterkant van het zakje: zaaien, standplaats, verzorging, kiemduur, oogst</p>
+    </div>
+
+    <div class="achterkant">
+      <div class="ak-hoofd">
+        <div class="ak-kop">
+          <div class="merk">Zaaiplan · week 34 · 17 t/m 23 augustus</div>
+          <h3>Mevrouw R. Bouma</h3>
+          <p>Derde week · Fysiotherapie Noorderlicht, Groningen · therapeut J. Veldkamp</p>
+        </div>
+
+        <div class="gewas">
+          <figure><img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+            alt="Staand voor een stoel zakt iemand met de billen naar achteren tot vlak boven de zitting en komt weer rechtop."/></figure>
+          <div class="tk">
+            <h4>Opstaan uit de stoel</h4>
+            <div class="lat">musculus quadriceps femoris</div>
+            <dl>
+              <dt>Zaaien</dt><dd>8× achter elkaar, één keer per dag. Rustig zakken, rustig omhoog.</dd>
+              <dt>Standplaats</dt><dd>Een stevige keukenstoel zonder wieltjes, met de rug tegen de muur.</dd>
+              <dt>Verzorging</dt><dd>Knieën boven de voeten houden. Stop bij scherpe kniepijn; zwaar en warm mag.</dd>
+            </dl>
+            <div class="kiem"><b>Kiemduur 10–14 dagen.</b> De eerste anderhalve week merkt u vrijwel
+              niets — dat hoort erbij. <b>Oogst rond week 5:</b> opstaan zonder u af te zetten met uw armen.</div>
+          </div>
+        </div>
+
+        <div class="gewas">
+          <figure><img src="/images/onderste-extremiteit/calf-raises-line-v1.png"
+            alt="Staand op heupbreedte komt iemand omhoog op de tenen en laat de hielen weer zakken."/></figure>
+          <div class="tk">
+            <h4>Op de tenen komen</h4>
+            <div class="lat">musculus gastrocnemius · musculus soleus</div>
+            <dl>
+              <dt>Zaaien</dt><dd>15× achter elkaar, één keer per dag. Hielen helemaal laten zakken.</dd>
+              <dt>Standplaats</dt><dd>Bij het aanrecht, met de vingertoppen op het blad voor uw evenwicht.</dd>
+              <dt>Verzorging</dt><dd>Niet wippen maar tellen: twee tellen omhoog, twee tellen omlaag.</dd>
+            </dl>
+            <div class="kiem"><b>Kiemduur 7–10 dagen.</b> Dit is de snelste van de drie.
+              <b>Oogst rond week 4:</b> een trap op zonder halverwege te moeten staan.</div>
+          </div>
+        </div>
+
+        <div class="gewas">
+          <figure><img src="/images/onderste-extremiteit/glute-bridges-line-v1.png"
+            alt="Liggend op de rug met gebogen knieën worden de heupen omhoog geduwd tot een rechte lijn."/></figure>
+          <div class="tk">
+            <h4>Bruggetje — liggend</h4>
+            <div class="lat">musculus gluteus maximus</div>
+            <dl>
+              <dt>Zaaien</dt><dd>10× achter elkaar, één keer per dag. Bovenin drie tellen vasthouden.</dd>
+              <dt>Standplaats</dt><dd>Op bed of op een matje op de grond, vlak voor het slapen.</dd>
+              <dt>Verzorging</dt><dd>Duw vanuit de billen, niet vanuit de onderrug. Voelt u het in uw rug, kom dan minder hoog.</dd>
+            </dl>
+            <div class="kiem"><b>Kiemduur 14–21 dagen.</b> De traagste, en de belangrijkste.
+              <b>Oogst rond week 6:</b> een half uur wandelen zonder dat uw rug gaat zeuren.</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="ak-zij">
+        <h5>Zaaikalender</h5>
+        <p class="uit">Donker is de dag dat u zaait. Gearceerd is de periode waarin het effect komt —
+          die schuift vanzelf op, ook op de dagen dat u niets deed.</p>
+
+        <div class="zk">
+          <div class="zkop">Opstaan uit de stoel <i>5 / 7</i></div>
+          <div class="strook">
+            <span class="b zaai"></span><span class="b zaai"></span><span class="b zaai"></span>
+            <span class="b">do</span><span class="b zaai"></span><span class="b zaai"></span><span class="b">zo</span>
+          </div>
+        </div>
+
+        <div class="zk">
+          <div class="zkop">Op de tenen komen <i>6 / 7</i></div>
+          <div class="strook">
+            <span class="b zaai"></span><span class="b zaai"></span><span class="b zaai"></span>
+            <span class="b zaai"></span><span class="b zaai"></span><span class="b">za</span><span class="b zaai"></span>
+          </div>
+        </div>
+
+        <div class="zk">
+          <div class="zkop">Bruggetje — liggend <i>4 / 7</i></div>
+          <div class="strook">
+            <span class="b zaai"></span><span class="b">di</span><span class="b zaai"></span>
+            <span class="b zaai"></span><span class="b">vr</span><span class="b zaai"></span><span class="b">zo</span>
+          </div>
+        </div>
+
+        <div class="zk">
+          <div class="zkop">Verwachte opkomst <i>week 4 – 6</i></div>
+          <div class="strook">
+            <span class="b leeg"></span><span class="b leeg"></span><span class="b op"></span>
+            <span class="b op"></span><span class="b op"></span><span class="b op"></span><span class="b op"></span>
+          </div>
+        </div>
+
+        <div class="legenda">
+          <span><i class="zaai"></i> gezaaid — u heeft het gedaan</span>
+          <span><i class="op"></i> opkomst — hier gaat u het merken</span>
+        </div>
+
+        <div class="slot">Vijftien van de eenentwintig deze week. <b>Dat is een goede opkomst.</b>
+          Niet elk zaadje komt op, en de oogst hangt aan de reeks — niet aan donderdag.</div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>drie zakjes en één zaaikalender van vier weken; de kiemduur staat er in gewone taal bij</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer r geen-print" style="top:18mm;left:calc(100% + 22px)">groen vlak = de naam, omgekeerd gezet</span>
+          <span class="wijzer r geen-print" style="top:88mm;left:calc(100% + 22px)">de spiernaam als botanische naam</span>
+          <span class="wijzer r geen-print" style="top:196mm;left:calc(100% + 22px)">kiemduur — nergens anders op papier</span>
+          <span class="wijzer l geen-print" style="top:238mm;right:calc(100% + 22px)">vier weken, niet één</span>
+
+          <div class="rand" aria-hidden="true"></div>
+          <span class="hk a" aria-hidden="true"></span><span class="hk b" aria-hidden="true"></span>
+          <span class="hk c" aria-hidden="true"></span><span class="hk d" aria-hidden="true"></span>
+
+          <div class="binnenblad">
+
+            <div class="pk-kop">
+              <div>
+                <div class="merk">Fysiotherapie Noorderlicht · zaaiplan</div>
+                <h1>Mevrouw R. Bouma</h1>
+                <div class="wie">Week 34 · 17 t/m 23 augustus 2026 · derde week</div>
+              </div>
+              <div class="rechts">
+                <div class="p">Therapeut: J. Veldkamp</div>
+                <div class="t">Groningen · 050 — 313 44 21</div>
+              </div>
+            </div>
+
+            <div class="pk-alg">
+              <span class="l">Lees dit eerst</span>
+              <p>Drie oefeningen, samen ongeveer negen minuten per dag. De eerste twee weken merkt u
+                weinig — dat staat er per oefening bij en het hoort erbij. Stop bij scherpe pijn;
+                zwaar, warm of trekkend mag.</p>
+            </div>
+
+            <div class="pk-gewassen">
+
+              <div class="pk-gewas">
+                <div class="beeld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+                  alt="Staand voor een stoel zakt iemand met de billen naar achteren tot vlak boven de zitting en komt weer rechtop."/></div>
+                <div class="tk">
+                  <div class="nm">
+                    <div>
+                      <h2>Opstaan uit de stoel</h2>
+                      <div class="lat">musculus quadriceps femoris</div>
+                    </div>
+                    <span class="nr">nr. 12</span>
+                  </div>
+                  <dl>
+                    <dt>Zaaien</dt><dd>8× achter elkaar, één keer per dag — rustig zakken, rustig omhoog.</dd>
+                    <dt>Standplaats</dt><dd>Stevige keukenstoel zonder wieltjes, rug tegen de muur.</dd>
+                    <dt>Verzorging</dt><dd>Knieën boven de voeten. Stop bij scherpe kniepijn.</dd>
+                  </dl>
+                  <div class="oogstregel">
+                    <span><b>Kiemduur</b> 10 – 14 dagen</span>
+                    <span><b>Oogst</b> rond week 5: opstaan zonder u af te zetten met uw armen</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pk-gewas">
+                <div class="beeld"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png"
+                  alt="Staand op heupbreedte komt iemand omhoog op de tenen en laat de hielen weer zakken."/></div>
+                <div class="tk">
+                  <div class="nm">
+                    <div>
+                      <h2>Op de tenen komen</h2>
+                      <div class="lat">musculus gastrocnemius · musculus soleus</div>
+                    </div>
+                    <span class="nr">nr. 07</span>
+                  </div>
+                  <dl>
+                    <dt>Zaaien</dt><dd>15× achter elkaar, één keer per dag — hielen helemaal laten zakken.</dd>
+                    <dt>Standplaats</dt><dd>Bij het aanrecht, vingertoppen op het blad voor uw evenwicht.</dd>
+                    <dt>Verzorging</dt><dd>Niet wippen maar tellen: twee omhoog, twee omlaag.</dd>
+                  </dl>
+                  <div class="oogstregel">
+                    <span><b>Kiemduur</b> 7 – 10 dagen</span>
+                    <span><b>Oogst</b> rond week 4: de trap op zonder halverwege te staan</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pk-gewas">
+                <div class="beeld"><img src="/images/onderste-extremiteit/glute-bridges-line-v1.png"
+                  alt="Liggend op de rug met gebogen knieën worden de heupen omhoog geduwd tot een rechte lijn."/></div>
+                <div class="tk">
+                  <div class="nm">
+                    <div>
+                      <h2>Bruggetje — liggend</h2>
+                      <div class="lat">musculus gluteus maximus</div>
+                    </div>
+                    <span class="nr">nr. 21</span>
+                  </div>
+                  <dl>
+                    <dt>Zaaien</dt><dd>10× achter elkaar, één keer per dag — bovenin drie tellen vasthouden.</dd>
+                    <dt>Standplaats</dt><dd>Op bed of op een matje, vlak voor het slapen.</dd>
+                    <dt>Verzorging</dt><dd>Duwen vanuit de billen. Voelt u het in uw rug, kom dan minder hoog.</dd>
+                  </dl>
+                  <div class="oogstregel">
+                    <span><b>Kiemduur</b> 14 – 21 dagen</span>
+                    <span><b>Oogst</b> rond week 6: een half uur wandelen zonder zeurende rug</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="pk-kalender">
+              <div class="kk">
+                <h3>Zaaikalender</h3>
+                <div class="u">Zet elke dag een streep in het vakje. De gearceerde weken zijn de
+                  opkomst — die komt ook als niet elke dag gelukt is.</div>
+              </div>
+
+              <div class="kalgrid">
+                <span></span>
+                <span class="hd">ma</span><span class="hd">di</span><span class="hd">wo</span>
+                <span class="hd">do</span><span class="hd">vr</span><span class="hd">za</span><span class="hd">zo</span>
+
+                <div class="weekkop">Week 34 — deze week, zaaien</div>
+                <span class="rijnaam">Stoel<small>8×</small></span>
+                <span class="cel"></span><span class="cel"></span><span class="cel"></span><span class="cel"></span>
+                <span class="cel"></span><span class="cel"></span><span class="cel"></span>
+                <span class="rijnaam">Tenen<small>15×</small></span>
+                <span class="cel"></span><span class="cel"></span><span class="cel"></span><span class="cel"></span>
+                <span class="cel"></span><span class="cel"></span><span class="cel"></span>
+                <span class="rijnaam">Bruggetje<small>10×</small></span>
+                <span class="cel"></span><span class="cel"></span><span class="cel"></span><span class="cel"></span>
+                <span class="cel"></span><span class="cel"></span><span class="cel"></span>
+
+                <div class="weekkop">Week 35 – 37 — doorzaaien, en dan de opkomst</div>
+                <span class="rijnaam">Week 35<small>zaaien</small></span>
+                <span class="cel"></span><span class="cel"></span><span class="cel"></span><span class="cel"></span>
+                <span class="cel"></span><span class="cel"></span><span class="cel"></span>
+                <span class="rijnaam">Week 36<small>eerste opkomst</small></span>
+                <span class="cel op"></span><span class="cel op"></span><span class="cel op"></span><span class="cel op"></span>
+                <span class="cel op"></span><span class="cel op"></span><span class="cel op"></span>
+                <span class="rijnaam">Week 37<small>oogst tenen</small></span>
+                <span class="cel op"></span><span class="cel op"></span><span class="cel op"></span><span class="cel op"></span>
+                <span class="cel op"></span><span class="cel op"></span><span class="cel op"></span>
+              </div>
+
+              <div class="pk-legenda">
+                <span><i class="zaai"></i> zaaien — de dag dat u het doet</span>
+                <span><i class="op"></i> opkomst — hier gaat u het merken</span>
+                <span>leeg vakje — nog niet geweest, of niet gelukt: allebei goed</span>
+              </div>
+            </div>
+
+            <div class="pk-voet">
+              <p class="z"><b>Bewaar dit blad.</b> Neem het donderdag 20 augustus om 10:45 mee terug —
+                dan kijken we niet naar het aantal strepen, maar naar welke rij het lastigst vol te
+                krijgen was.</p>
+              <div class="m">Fysiplan · concept 20<br/>zaaigoed · A4 staand</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="printhulp geen-print">Print deze pagina (Ctrl/Cmd + P) — alles buiten de A4 valt weg.
+      Print hem daarna in grijstinten: de zaai- en opkomstvakjes verschillen niet alleen in kleur
+      maar in vulling, dus het onderscheid blijft staan.
+      <br/><a class="kn" href="javascript:window.print()">Printvoorbeeld openen</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>De richting</h4>
+      <p>Het zaadzakje als model, om één reden: het is het enige drukwerk dat eerlijk zegt hoe lang
+        je op niets moet wachten. Kiemduur en oogst staan op deze kaart in gewone woorden, en de
+        gemiste dag wordt een zaadje dat niet opkwam in plaats van een gat in een rij vinkjes.</p>
+    </div>
+    <div class="kolom">
+      <h4>Waar het schuurt</h4>
+      <ul>
+        <li>De metafoor kan zoetsappig worden; de toon is daarom die van een tuinbouwcatalogus — zakelijk, met getallen.</li>
+        <li>Een kiemduur beloven vraagt lef van de praktijk: de termijn moet kloppen, anders werkt hij tegen.</li>
+        <li>Het woord "groei" komt bewust nergens voor.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Verder</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
