@@ -171,3 +171,33 @@ alles als tekst verschijnt en er geen kwaad `<img>/<iframe>/<svg>` ontstaat.
 **Volgende run — pak een ander gebied:** security-headers-review op de
 statische v2-assets en `/ontwerp`, of een tweede blik op de accountlaag
 (sessie-rotatie na wachtwoord-reset, herstelpad-audit).
+
+### 2026-08-17 — security-headers op het v2-oppervlak (clickjacking / framing)
+**Geauditeerd:** de volledige set verhardende koppen op alle v2-pagina's
+(`/v2` landing, `/v2/app`, `/k`, `/o`) plus `/uploads/` en de kaart-API's —
+nosniff, referrer-policy, HSTS-bereidheid, X-Frame-Options, COOP,
+permissions-policy, CSP, CORP en cache-control.
+
+**Bevindingen (dekking bijna volledig — één echte verharding):**
+- Globaal staat op álles `x-content-type-options: nosniff` en
+  `referrer-policy: same-origin` (via `send()`); HSTS op https-verzoeken.
+- Elke v2-HTML-pagina droeg al `x-frame-options: DENY`, COOP `same-origin`
+  (behalve de scriptloze landing, die geen JS-context heeft),
+  `permissions-policy` en een strikte CSP; `/uploads/` draagt CORP
+  `same-origin` + `noindex`; kaart-API's zijn `no-store`.
+- **Gat (klein, wél reëel):** de CSP's misten `frame-ancestors`. X-Frame-Options
+  is de verouderde kop; de CSP-Level-2-opvolger `frame-ancestors 'none'` dekt
+  ook `<embed>`/`<object>`-inbedding en wordt door moderne browsers boven XFO
+  geprefereerd — zonder deze regel was de framingbescherming afhankelijk van de
+  oudere kop alleen.
+
+**Increment:** `frame-ancestors 'none'` toegevoegd aan alle vier de v2-CSP's
+(`/o`, `/k`, `/v2` landing, `/v2/app`). Zuiver verhardend, geen gedragswijziging
+voor de pagina's zelf, v1 onaangeraakt. Regressie-guard
+`test-v2-headers.mjs` (35 checks) die op alle vier de pagina's de volledige
+koppenset afdwingt — inclusief `frame-ancestors 'none'` — plus `/uploads/`-CORP
+en kaart-API-`no-store`.
+
+**Volgende run — pak een ander gebied:** een tweede blik op de accountlaag
+(sessie-rotatie na wachtwoord-reset, herstelpad-audit) of de rate-limiting op
+de schrijfroutes (`/api/kaarten`, `/api/opname`, `/api/praktijken` POST).

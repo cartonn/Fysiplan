@@ -1668,7 +1668,7 @@ async function afhandelen(request, response) {
     response.setHeader("content-security-policy",
       "default-src 'self'; script-src 'self' 'nonce-" + nonce + "'; style-src 'self' 'unsafe-inline'; " +
       "img-src 'self' data:; media-src 'self' blob:; frame-src 'none'; " +
-      "connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'");
+      "connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'");
     try { await send(response, 200, "text/html; charset=utf-8", nonceInlineScripts(await readFile(join(publicDir, "opname.html"), "utf8"), nonce)); }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
@@ -2090,7 +2090,7 @@ async function afhandelen(request, response) {
     response.setHeader("content-security-policy",
       "default-src 'self'; script-src 'self' 'nonce-" + nonce + "'; style-src 'self' 'unsafe-inline'; " +
       "img-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com https://*.cloudflarestream.com https://iframe.videodelivery.net; " +
-      "connect-src 'self'; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'");
+      "connect-src 'self'; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'");
     try { await send(response, 200, "text/html; charset=utf-8", nonceInlineScripts(await readFile(join(publicDir, "kaart.html"), "utf8"), nonce)); }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
@@ -2156,7 +2156,7 @@ async function afhandelen(request, response) {
     response.setHeader("permissions-policy", "camera=(), microphone=(), geolocation=()");
     // de landingspagina heeft geen scripts en laadt alleen eigen beelden: dat mag de browser afdwingen
     response.setHeader("content-security-policy",
-      "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'");
+      "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
     try {
       let html = await readFile(join(publicDir, "v2.html"), "utf8");
       html = html.replace(/__OPRICHTERS_OVER__/g, String(Math.max(0, 25 - (oprichters.vergeven || 0))));
@@ -2201,7 +2201,7 @@ async function afhandelen(request, response) {
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; " +
       "img-src 'self' data: blob:; media-src 'self' blob:; " +
       "frame-src https://www.youtube-nocookie.com https://*.cloudflarestream.com https://iframe.videodelivery.net; " +
-      "connect-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'");
+      "connect-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'; frame-ancestors 'none'");
     try {
       let html = await readFile(join(publicDir, "index.html"), "utf8");
       html = html.replace("<head>", '<head><base href="/"/><meta name="color-scheme" content="light"/><script>window.FYSIPLAN_V2=true</script>');
