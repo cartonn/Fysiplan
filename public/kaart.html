@@ -212,6 +212,10 @@
     font:600 9.5px/1 var(--disp);color:var(--zacht)}
   .gdots i{width:16px;height:16px;border-radius:999px;border:1.5px solid var(--lijn);background:var(--chip)}
   .gdots .aan i{background:#3e8e5a;border-color:#3e8e5a}
+  /* korte, aanmoedigende samenvatting onder de oefenweek: zelfmonitoring + een
+     schouderklopje op inzet (nooit een oordeel over pijn of herstel) */
+  .gsom{flex-basis:100%;font:600 12.5px/1.5 var(--disp);color:var(--grijs);margin-top:2px}
+  .gsom.sterk{color:#3e7a52}
   /* vraag het aan je kaart: korte AI-uitleg over de eigen oefeningen */
   .vkaart{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;box-shadow:var(--sh);padding:16px;margin-bottom:12px}
   .vkaart .vrij{display:flex;gap:8px}
@@ -346,7 +350,7 @@
   <h2 id="metingkop">Hoe ging het vandaag?</h2>
   <div class="mkaart" id="meting">
     <button type="button" class="gdaan" id="gdaan" aria-pressed="false"><span class="gvink" aria-hidden="true"></span><span id="gdaanTxt">Ik heb vandaag geoefend</span></button>
-    <div class="gweek" id="gweek" style="display:none"><span class="gtitel" id="gweekTitel">Jouw oefenweek</span><div class="gdots" id="gdots"></div></div>
+    <div class="gweek" id="gweek" style="display:none"><span class="gtitel" id="gweekTitel">Jouw oefenweek</span><div class="gdots" id="gdots"></div><div class="gsom" id="gweeksom"></div></div>
     <p class="mvraag" id="mvraag">Klaar met oefenen? Tik aan hoeveel pijn je had tijdens het oefenen.</p>
     <div class="mschaal" id="mschaal" role="group" aria-labelledby="mvraag"></div>
     <div class="mlabels"><span id="ml0">0 = geen pijn</span><span id="ml10">10 = ergste pijn</span></div>
@@ -440,15 +444,15 @@
   function trq(k){var d=TQ[TAAL]||TQ.nl;return d[k]!=null?d[k]:TQ.nl[k];}
   // teksten voor het oefenvinkje en de oefenweek
   var TG={
-    nl:{vdaan:'Ik heb vandaag geoefend',vweek:'Jouw oefenweek'},
-    en:{vdaan:'I did my exercises today',vweek:'Your exercise week'},
-    de:{vdaan:'Ich habe heute geübt',vweek:'Deine Übungswoche'},
-    fr:{vdaan:'J’ai fait mes exercices aujourd’hui',vweek:'Votre semaine d’exercices'},
-    es:{vdaan:'Hoy he hecho mis ejercicios',vweek:'Tu semana de ejercicios'},
-    pl:{vdaan:'Ćwiczyłem(-am) dzisiaj',vweek:'Twój tydzień ćwiczeń'},
-    tr:{vdaan:'Bugün egzersiz yaptım',vweek:'Egzersiz haftan'},
-    ar:{vdaan:'تمرّنت اليوم',vweek:'أسبوع تمارينك'},
-    uk:{vdaan:'Сьогодні я тренувався(-лась)',vweek:'Твій тиждень вправ'}
+    nl:{vdaan:'Ik heb vandaag geoefend',vweek:'Jouw oefenweek',som0:'Nog geen keer deze week — pak je ritme weer op, één keer is genoeg om te beginnen.',som1:'Goed bezig — je oefende op {n} van de 7 dagen.',som3:'Sterk! Je oefende op {n} van de 7 dagen. Zo houd je het vol.'},
+    en:{vdaan:'I did my exercises today',vweek:'Your exercise week',som0:'Not yet this week — pick your rhythm back up, once is enough to start.',som1:'Well done — you practised on {n} of the last 7 days.',som3:'Strong! You practised on {n} of the last 7 days. That’s how you keep it up.'},
+    de:{vdaan:'Ich habe heute geübt',vweek:'Deine Übungswoche',som0:'Diese Woche noch nicht — nimm deinen Rhythmus wieder auf, einmal genügt zum Start.',som1:'Gut gemacht — du hast an {n} von 7 Tagen geübt.',som3:'Stark! Du hast an {n} von 7 Tagen geübt. So bleibst du dran.'},
+    fr:{vdaan:'J’ai fait mes exercices aujourd’hui',vweek:'Votre semaine d’exercices',som0:'Pas encore cette semaine — reprenez votre rythme, une fois suffit pour commencer.',som1:'Bravo — vous avez fait vos exercices {n} des 7 derniers jours.',som3:'Superbe ! Vous avez fait vos exercices {n} des 7 derniers jours. C’est comme ça qu’on tient.'},
+    es:{vdaan:'Hoy he hecho mis ejercicios',vweek:'Tu semana de ejercicios',som0:'Aún no esta semana — retoma tu ritmo, una vez basta para empezar.',som1:'Bien hecho — hiciste ejercicio {n} de los últimos 7 días.',som3:'¡Genial! Hiciste ejercicio {n} de los últimos 7 días. Así se mantiene.'},
+    pl:{vdaan:'Ćwiczyłem(-am) dzisiaj',vweek:'Twój tydzień ćwiczeń',som0:'Jeszcze nie w tym tygodniu — wróć do rytmu, jeden raz wystarczy na początek.',som1:'Dobra robota — ćwiczyłeś(-aś) przez {n} z 7 dni.',som3:'Świetnie! Ćwiczyłeś(-aś) przez {n} z 7 dni. Tak się utrzymuje formę.'},
+    tr:{vdaan:'Bugün egzersiz yaptım',vweek:'Egzersiz haftan',som0:'Bu hafta henüz yok — ritmini yeniden yakala, başlamak için bir kez yeter.',som1:'Aferin — son 7 günün {n} gününde egzersiz yaptın.',som3:'Harika! Son 7 günün {n} gününde egzersiz yaptın. Böyle devam.'},
+    ar:{vdaan:'تمرّنت اليوم',vweek:'أسبوع تمارينك',som0:'لم تتمرّن بعد هذا الأسبوع — استعد إيقاعك، مرّة واحدة تكفي للبدء.',som1:'أحسنت — تمرّنت في {n} من آخر 7 أيام.',som3:'رائع! تمرّنت في {n} من آخر 7 أيام. هكذا تحافظ على استمرارك.'},
+    uk:{vdaan:'Сьогодні я тренувався(-лась)',vweek:'Твій тиждень вправ',som0:'Цього тижня ще ні — поверни свій ритм, одного разу досить, щоб почати.',som1:'Молодець — ти займався(-лась) {n} із 7 днів.',som3:'Чудово! Ти займався(-лась) {n} із 7 днів. Так і тримай.'}
   };
   function trg(k){var d=TG[TAAL]||TG.nl;return d[k]!=null?d[k]:TG.nl[k];}
   // oefenvinkje + oefenweek tekenen (alleen registreren en tonen, geen oordeel)
@@ -465,13 +469,21 @@
     week.style.display='flex';
     document.getElementById('gweekTitel').textContent=trg('vweek');
     var set={};g.forEach(function(x){set[dagStr(x.t)]=1;});
-    var h='';
+    var h='',nweek=0;
     for(var i=6;i>=0;i--){
       var d=new Date(Date.now()-i*864e5);
+      var actief=!!set[dagStr(d.getTime())];if(actief)nweek++;
       var letter=tr('dagen')[(d.getDay()+6)%7];
-      h+='<span class="'+(set[dagStr(d.getTime())]?'aan':'')+'"><i></i>'+esc(letter)+'</span>';
+      h+='<span class="'+(actief?'aan':'')+'"><i></i>'+esc(letter)+'</span>';
     }
     document.getElementById('gdots').innerHTML=h;
+    // aanmoedigende samenvatting: inzet belonen, nooit een oordeel over pijn/herstel
+    var som=document.getElementById('gweeksom');
+    if(som){
+      var sleutel=nweek===0?'som0':(nweek>=3?'som3':'som1');
+      som.textContent=trg(sleutel).replace('{n}',nweek);
+      som.classList.toggle('sterk',nweek>=3);
+    }
   }
   // de vraaghulp verschijnt alleen als de server een AI-sleutel heeft (K.ai)
   function tekenVraag(){
