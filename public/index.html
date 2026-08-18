@@ -156,6 +156,9 @@
   .ov.on{display:flex}
   .modal{background:#fff;border-radius:16px;width:400px;max-width:100%;padding:22px 24px;box-shadow:var(--sh-lg);animation:pop .15s ease}
   @keyframes pop{from{transform:translateY(6px) scale(.985);opacity:0}to{transform:none;opacity:1}}
+  #ai_mic{display:inline-flex;align-items:center;gap:6px}
+  #ai_mic.luistert{background:#c94f36;border-color:#c94f36;color:#fff;animation:aipuls 1.1s ease-in-out infinite}
+  @keyframes aipuls{0%,100%{box-shadow:0 0 0 0 rgba(201,79,54,.45)}50%{box-shadow:0 0 0 6px rgba(201,79,54,0)}}
   .modal h3{margin:0 0 14px;font-size:17px;color:var(--ink);font-weight:700}
   .modal label{font-size:12px;color:var(--muted);display:block;margin:12px 0 4px;font-weight:600}
   .modal input,.modal select{width:100%;height:36px;border:1px solid var(--line);border-radius:9px;padding:0 11px;font:inherit;background:#fff;color:var(--text)}
@@ -462,6 +465,10 @@ bridge2.jpg</div>
       jij beoordeelt, past aan en beslist wat op de kaart komt.
     </div>
     <textarea id="ai_klacht" rows="3" style="width:100%;resize:vertical;font-family:inherit;font-size:13px" placeholder="bijv. artrose knie links, vrouw van 68, kan 10 minuten lopen, doel: weer traplopen"></textarea>
+    <div id="ai_dicteer" style="display:none;align-items:center;gap:9px;margin-top:6px">
+      <button type="button" class="btn" id="ai_mic" aria-pressed="false" title="Spreek de klacht in; de tekst verschijnt hierboven"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 19v3"/></svg><span>Inspreken</span></button>
+      <span id="ai_mic_status" style="font-size:12px;color:var(--muted)" aria-live="polite"></span>
+    </div>
     <div id="ai_result" style="max-height:320px;overflow:auto;margin-top:8px"></div>
     <div class="acts">
       <button class="btn" id="ai_close">Sluiten</button>
@@ -1629,6 +1636,44 @@ bridge2.jpg</div>
   var VIDEO_ICOON="<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M8 6l10 6-10 6z'/></svg>";
   document.getElementById('aiBtn').addEventListener('click',function(){openOv('ovAi');});
   document.getElementById('ai_close').addEventListener('click',function(){closeOv('ovAi');});
+  // klacht inspreken i.p.v. typen: spraakherkenning in de browser (Web Speech API).
+  // Alleen de herkende TEKST komt in het veld; er gaat niets extra's naar de server —
+  // pas bij "Stel een kaart voor" wordt die tekst (zoals altijd) verstuurd. Wordt de
+  // API niet ondersteund (bijv. Firefox), dan blijft de knop verborgen en typt men gewoon.
+  (function(){
+    var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+    var balk=document.getElementById('ai_dicteer');
+    if(!IS_V2||!SR||!balk)return;
+    var mic=document.getElementById('ai_mic');
+    var stat=document.getElementById('ai_mic_status');
+    var label=mic.querySelector('span');
+    var veld=document.getElementById('ai_klacht');
+    balk.style.display='flex';
+    var rec=null,luistert=false,basis='';
+    var zet=function(t){stat.textContent=t||'';};
+    var stop=function(){if(rec){try{rec.stop();}catch(e){}}};
+    mic.addEventListener('click',function(){
+      if(luistert){stop();return;}
+      try{rec=new SR();}catch(e){zet('Inspreken kan niet in deze browser.');return;}
+      rec.lang='nl-NL';rec.continuous=true;rec.interimResults=true;
+      basis=veld.value.replace(/\s+$/,'');
+      rec.onstart=function(){luistert=true;mic.classList.add('luistert');mic.setAttribute('aria-pressed','true');label.textContent='Stop';zet('Aan het luisteren… spreek de klacht in.');};
+      rec.onerror=function(ev){var m=ev&&ev.error;zet(m==='not-allowed'||m==='service-not-allowed'?'Geen toegang tot de microfoon — sta het toe in je browser.':(m==='no-speech'?'Niets gehoord — probeer het opnieuw.':'Inspreken lukt even niet.'));};
+      rec.onend=function(){luistert=false;mic.classList.remove('luistert');mic.setAttribute('aria-pressed','false');label.textContent='Inspreken';if(/Aan het luisteren/.test(stat.textContent))zet('');};
+      rec.onresult=function(ev){
+        var finaal='',tussen='';
+        for(var i=ev.resultIndex;i<ev.results.length;i++){
+          var res=ev.results[i];
+          if(res.isFinal)finaal+=res[0].transcript; else tussen+=res[0].transcript;
+        }
+        if(finaal)basis=(basis?basis+' ':'')+finaal.trim();
+        veld.value=(basis+(tussen?' '+tussen.trim():'')).replace(/\s+/g,' ').trim();
+      };
+      try{rec.start();}catch(e){zet('Inspreken lukt even niet.');}
+    });
+    // paneel sluiten stopt het luisteren netjes
+    document.getElementById('ai_close').addEventListener('click',stop);
+  })();
   document.getElementById('ai_go').addEventListener('click',function(){
     var kl=document.getElementById('ai_klacht').value.trim();
     var uit=document.getElementById('ai_result');

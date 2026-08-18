@@ -2202,8 +2202,10 @@ async function afhandelen(request, response) {
     if (urlPath === "/v2/app/") { response.writeHead(301, { location: "/v2/app" }); response.end(); return; }
     telBezoek(request, false);
     response.setHeader("x-frame-options", "DENY");
-    // sinds de eigen opname uit de v2-app is verdwenen, kan camera en microfoon hier dicht
-    response.setHeader("permissions-policy", "camera=(), microphone=(), geolocation=()");
+    // camera blijft dicht; de microfoon staat open zodat de therapeut de klacht kan
+    // inspreken voor de AI-assistent (spraakherkenning in de browser, alleen de tekst
+    // gaat naar de server). De browser vraagt de gebruiker nog steeds om toestemming.
+    response.setHeader("permissions-policy", "camera=(), microphone=(self), geolocation=()");
     // net als /k en /o: de app toont cliëntnamen en pijnscores en heeft geen popups of
     // window.opener nodig; de browsingcontext isoleren houdt vreemde vensters buiten
     response.setHeader("cross-origin-opener-policy", "same-origin");
