@@ -1982,6 +1982,17 @@ bridge2.jpg</div>
           var dagenStil=Math.min(60,Math.floor((nu-Math.max.apply(null,acts))/dag));
           return (laatstePijn!==null&&laatstePijn>=7?1000:0)+dagenStil;
         };
+        // vraagt deze kaart aandacht? hoge laatste pijn (>=7) of >=10 dagen stil.
+        // puur beschrijvend tellen; de duiding en het handelen blijven bij de therapeut.
+        var vraagtAandacht=function(c){
+          var laatstePijn=(c.scores&&c.scores.length)?c.scores[c.scores.length-1].s:null;
+          var acts=[c.ts||0];
+          if(c.gedaan&&c.gedaan.length)acts.push(c.gedaan[c.gedaan.length-1].t);
+          if(c.scores&&c.scores.length)acts.push(c.scores[c.scores.length-1].t);
+          var dagenStil=Math.floor((nu-Math.max.apply(null,acts))/dag);
+          return (laatstePijn!==null&&laatstePijn>=7)||dagenStil>=10;
+        };
+        var actiefDezeWeek=function(c){return !!(c.gedaan&&c.gedaan.some(function(g){return nu-g.t<7*dag;}));};
         var sortModus=function(){var s=document.getElementById('k_srv_sort');return (s&&s.style.display!=='none'&&s.dataset.mode)||'nieuw';};
         var zoekTermVan=function(){var z=document.getElementById('k_srv_zoek');return (z&&z.style.display!=='none')?z.value.trim().toLowerCase():'';};
         var toon=function(){
@@ -2016,6 +2027,25 @@ bridge2.jpg</div>
           sortEl.style.display='flex';markeerSort();
           sortEl.onclick=function(e){var b=e.target.closest('[data-sort]');if(!b)return;sortEl.dataset.mode=b.dataset.sort;markeerSort();toon();};
         }else if(sortEl)sortEl.style.display='none';
+        // samenvatting bovenaan: één oogopslag op de praktijk (telt over álle kaarten,
+        // niet de zoekfilter). De "aandacht"-teller zet met één tik de aandacht-sortering
+        // aan. Alleen tellen en tonen; de duiding blijft bij de therapeut.
+        var samEl=document.getElementById('k_srv_sam');
+        if(l.length>=2){
+          var actiefN=l.filter(actiefDezeWeek).length;
+          var aandN=l.filter(vraagtAandacht).length;
+          if(!samEl){
+            samEl=document.createElement('div');samEl.id='k_srv_sam';samEl.className='no-print';
+            samEl.style.cssText='display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0 0 8px;font-size:12px';
+            el.parentNode.insertBefore(samEl,zoek||sortEl||el);
+          }
+          var chip=function(t,st){return "<span style='background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;"+(st||'')+"'>"+t+"</span>";};
+          var h=chip('<b>'+l.length+'</b> kaart'+(l.length===1?'':'en'))+chip('<b>'+actiefN+'</b> deze week actief');
+          h+=aandN?"<button type='button' id='k_srv_sam_aand' class='no-print' title='Zet de kaarten die aandacht vragen bovenaan' style='cursor:pointer;background:#fbecea;border:1px solid #e7c3bc;color:#a23f2c;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+aandN+"</b> "+(aandN===1?'vraagt':'vragen')+" aandacht</button>":chip('<b>0</b> vragen aandacht');
+          samEl.innerHTML=h;samEl.style.display='flex';
+          var ab=document.getElementById('k_srv_sam_aand');
+          if(ab)ab.onclick=function(){if(sortEl){sortEl.dataset.mode='aandacht';markeerSort();}toon();};
+        }else if(samEl)samEl.style.display='none';
         toon();
       })
       .catch(function(){el.innerHTML="<div class='hint'>Kaarten laden is niet gelukt.</div>";});
