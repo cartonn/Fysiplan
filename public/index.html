@@ -1593,10 +1593,15 @@ bridge2.jpg</div>
     var el=document.getElementById('sj_lijst');
     if(!SJABLONEN.length){el.innerHTML="<div class='hint'>Geen sjablonen gevonden.</div>";return;}
     el.innerHTML=SJABLONEN.map(function(s,i){
-      var besch=(s.oefeningen||[]).filter(function(n){return byNorm[normEx(n)]!=null;}).length;
+      // alleen oefeningen die nog écht in de bibliotheek staan; die namen tonen we
+      // vooraf, zodat de therapeut ziet wat hij krijgt vóór hij op "Gebruik" tikt
+      var namen=(s.oefeningen||[]).filter(function(n){return byNorm[normEx(n)]!=null;});
+      var besch=namen.length;
       return "<div style='display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--line)'>"+
         "<div style='flex:1;min-width:0'><b>"+esc(s.naam)+"</b> <small style='color:var(--muted)'>&middot; "+besch+" oefeningen</small>"+
-        "<br/><small style='color:var(--muted)'>"+esc(s.sub||'')+"</small></div>"+
+        "<br/><small style='color:var(--muted)'>"+esc(s.sub||'')+"</small>"+
+        (besch?"<br/><small style='color:var(--muted);opacity:.85'>"+namen.map(esc).join(' &middot; ')+"</small>":"")+
+        "</div>"+
         "<button class='btn primary' data-sjab='"+i+"'>Gebruik</button></div>";
     }).join("");
   }
@@ -1605,6 +1610,9 @@ bridge2.jpg</div>
   document.getElementById('sj_lijst').addEventListener('click',function(e){
     var b=e.target.closest('[data-sjab]');if(!b)return;
     var s=SJABLONEN[+b.dataset.sjab];if(!s)return;
+    // een sjabloon vervangt de hele selectie; had de therapeut al oefeningen gekozen,
+    // vraag dan eerst — anders raakt dat werk stil kwijt
+    if(chosen.length&&!confirm('Je hebt al '+chosen.length+' oefening'+(chosen.length===1?'':'en')+' gekozen. Vervangen door het sjabloon "'+s.naam+'"?'))return;
     var missing=[];
     chosen=[];
     (s.oefeningen||[]).forEach(function(n){
