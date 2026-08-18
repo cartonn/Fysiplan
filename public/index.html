@@ -1808,6 +1808,15 @@ bridge2.jpg</div>
       .then(function(d){cb(d);})
       .catch(function(){cb({ok:false,fout:'Geen verbinding met de server.'});});
   }
+  // warme re-engagement-nudge voor een patiënt die stil is gevallen: dezelfde
+  // app-vrije /k-link, andere toon. Op moduleniveau zodat zowel de rijweergave
+  // als de klik-afhandeling in het overzicht hem kunnen opbouwen.
+  function herinnerBericht(cid){
+    var pr=(SET&&SET.praktijk?String(SET.praktijk).trim():'');
+    return 'Hoi! Hoe gaat het met je oefeningen? Je persoonlijke oefenkaart van '+pr+
+      ' staat voor je klaar: '+location.origin+'/k/'+cid+
+      ' — je opent hem gewoon in je browser, zonder app. Zullen we er deze week weer even induiken?';
+  }
   function toonSrvKaarten(){
     var blok=document.getElementById('k_srv');
     var knop=document.getElementById('k_save_srv');
@@ -1881,12 +1890,23 @@ bridge2.jpg</div>
           var deelTekst='Hoi! Hier is je persoonlijke oefenkaart van '+pr+': '+kaartUrl+' — je opent hem gewoon in je browser, je hebt er geen app voor nodig.';
           var waHref='https://wa.me/?text='+encodeURIComponent(deelTekst);
           var mailHref='mailto:?subject='+encodeURIComponent('Je oefenkaart van '+pr)+'&body='+encodeURIComponent(deelTekst);
+          // warme herinnering voor wie stil is gevallen: dezelfde app-vrije link, andere toon.
+          // Zo wordt het "aandacht"-signaal een handeling: zien wie stil is → in één tik nudgen.
+          var herinnerTekst=herinnerBericht(c.id);
+          var waHref2='https://wa.me/?text='+encodeURIComponent(herinnerTekst);
+          var mailHref2='mailto:?subject='+encodeURIComponent('Je oefeningen bij '+pr)+'&body='+encodeURIComponent(herinnerTekst);
           var deelBlok="<div id='deel_"+esc(c.id)+"' style='display:none;padding:8px 4px 10px;border-bottom:1px solid var(--line)'>"+
             "<small style='color:var(--muted)'>De patiënt opent de kaart zonder app, gewoon in de browser:</small>"+
             "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px'>"+
               "<button class='btn' data-slink='"+esc(c.id)+"'>Kopieer link</button>"+
               "<a class='btn' href='"+esc(waHref)+"' target='_blank' rel='noopener' style='text-decoration:none'>WhatsApp</a>"+
               "<a class='btn' href='"+esc(mailHref)+"' target='_blank' rel='noopener' style='text-decoration:none'>E-mail</a>"+
+            "</div>"+
+            "<small style='color:var(--muted);display:block;margin-top:10px'>Of stuur een vriendelijke herinnering als iemand stil is gevallen:</small>"+
+            "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px'>"+
+              "<button class='btn' data-sherinner='"+esc(c.id)+"'>Kopieer bericht</button>"+
+              "<a class='btn' href='"+esc(waHref2)+"' target='_blank' rel='noopener' style='text-decoration:none'>WhatsApp</a>"+
+              "<a class='btn' href='"+esc(mailHref2)+"' target='_blank' rel='noopener' style='text-decoration:none'>E-mail</a>"+
             "</div></div>";
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
             "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+"</small></div>"+vg+
@@ -1972,6 +1992,17 @@ bridge2.jpg</div>
       if(navigator.clipboard&&navigator.clipboard.writeText){
         navigator.clipboard.writeText(url).then(function(){toon('Gekopieerd ✓');}).catch(function(){window.prompt('Kopieer de patiëntlink:',url);});
       }else{window.prompt('Kopieer de patiëntlink:',url);}
+      return;
+    }
+    // herinneringsbericht kopiëren: de warme nudge-tekst mét link, klaar om te plakken
+    var hr=e.target.closest('[data-sherinner]');
+    if(hr){
+      var bericht=herinnerBericht(hr.dataset.sherinner);
+      var oudH=hr.textContent;
+      var toonH=function(t){hr.textContent=t;setTimeout(function(){hr.textContent=oudH;},1600);};
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(bericht).then(function(){toonH('Gekopieerd ✓');}).catch(function(){window.prompt('Kopieer de herinnering:',bericht);});
+      }else{window.prompt('Kopieer de herinnering:',bericht);}
       return;
     }
     // Kopie: dezelfde oefeningen en hetzelfde schema, maar een nieuwe cliënt.
