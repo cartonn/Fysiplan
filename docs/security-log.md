@@ -201,3 +201,36 @@ en kaart-API-`no-store`.
 **Volgende run — pak een ander gebied:** een tweede blik op de accountlaag
 (sessie-rotatie na wachtwoord-reset, herstelpad-audit) of de rate-limiting op
 de schrijfroutes (`/api/kaarten`, `/api/opname`, `/api/praktijken` POST).
+
+### 2026-08-18 — accountlaag: sessie-invalidatie op het herstelpad
+**Geauditeerd:** de volledige accountlaag adversarieel — claim, login, logout,
+sessievalidatie (`praktijkSessieVan`, `eisPraktijk`), de per-praktijk- en
+per-IP-inlogremmen, het admin-herstelpad (`/api/praktijk/reset`) en de audit.
+
+**Bevindingen (geen codegat — één ongedekte invariant):**
+- Wachtwoorden: scrypt + `timingSafeEqual`, minimaal 8 tekens. Sessies:
+  192-bit tokens, 30-daagse absolute vervaltijd, begrensde Map, in-geheugen,
+  geleverd via de header `x-praktijk-sessie` (geen cookie → geen CSRF op de
+  ingelogde schrijfroutes). Claim en login dragen de CSRF-check (`kruisSite`).
+- Geen wachtwoord-wijzig-endpoint; het enige credential-herstel is de
+  admin-reset, die het account verwijdert én álle sessies van die praktijk
+  wegvaagt (server.js: `for … if (s.pk === pk) praktijkSessies.delete(token)`).
+- De auditlog maskeert het IP, bevat geen wachtwoorden/tokens en is nergens via
+  HTTP op te vragen (write-only naar schijf). Timing-enumeratie bij login
+  onthult niets extra's: de claim-status is al publiek via `/api/praktijk/status`.
+- **De enige zwakke plek zat in de test, niet in de code:** de bestaande
+  regressietest controleerde na een reset alleen `geclaimd===false` en bewees
+  níét dat een vóór de reset uitgegeven sessie echt dood is. Dat is precies de
+  sessie-rotatie-op-herstel-invariant — ongedekt en dus stil regressiegevoelig.
+
+**Increment:** `test-accountlaag.mjs` verhard (nu 49 checks). Fase 9 bewijst nu
+het kroonjuweel via een echte eigendomsoverdracht: praktijk claimen → sessie
+uitgeven → admin-reset → **opnieuw claimen door een nieuwe eigenaar** → aantonen
+dat (a) de oude sessie én de allereerste claim-sessie 401 geven op de
+herclaimde praktijk, (b) de account-hash echt uit de opslag is, (c) het oude
+wachtwoord niet meer werkt, en (d) alleen de nieuwe eigenaar-sessie toegang
+heeft. Geen gedragswijziging; v1 onaangeraakt.
+
+**Volgende run — pak een ander gebied:** rate-limiting op de schrijfroutes
+(`/api/kaarten`, `/api/opname`, `/api/praktijken` POST) of een adversariële
+blik op de opname-/upload-keten (`/o`, `/api/opname`, videopaden).
