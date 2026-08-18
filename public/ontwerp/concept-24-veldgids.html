@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 24 — Veldgids · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 24 — VELDGIDS
+
+   In 1934 deed Roger Tory Peterson iets dat de hele vogelgids
+   veranderde: hij zette pijlen in de plaat. Niet naar de vogel —
+   naar het kenmerk. Naar de witte vleugelstreep, naar de gele
+   snavelbasis, naar precies dat ene ding waaraan je hem herkent
+   op dertig meter afstand, in de regen, in twee seconden. Alles
+   wat de plaat verder toont is achtergrond; de pijlen zijn de
+   inhoud.
+
+   Op vrijwel elke oefenkaart ter wereld staan die pijlen niet.
+   Er staat een plaatje van iemand die de oefening doet, en
+   eronder een zin die begint met "houd uw rug recht". Maar wát
+   je moet zien, wát je moet voelen, en waaraan je merkt dat het
+   goed gaat — dat weet de therapeut wel en het blad niet.
+
+   Dit concept zet die pijlen erbij. Elke oefening krijgt twee of
+   drie genummerde kenmerken, in rood, met een dunne lijn vanaf
+   de rand naar het punt waar je moet kijken. Daaronder staat de
+   sleutel, in gewone taal: ① schouders blijven laag ② de rug
+   beweegt, de heupen niet ③ u voelt het onder in de rug, niet in
+   de nek. Dat is precies de kennis die normaal alleen in de
+   spreekkamer wordt uitgesproken, en die thuis op dag vier
+   verdwenen is.
+
+   Twee dingen komen daar rechtstreeks uit de veldgids-traditie
+   bij:
+
+   1. VERWARREND MET. Elke gids waarschuwt voor de soort waarmee
+      je hem verwisselt: "lijkt op de kleine karekiet, maar…".
+      Patiënten verwisselen oefeningen net zo goed. Onder elke
+      oefening staat waar hij op lijkt, en waarin hij verschilt.
+   2. DE WAARNEMINGENLIJST. Een vogelaar streept af wat hij zelf
+      gezien heeft. Hier streept de patiënt af wat hij zelf
+      gevóeld heeft — niet dat hij de oefening gedaan heeft, maar
+      dat hij het kenmerk herkende. Dat is een fundamenteel ander
+      soort vinkje: het meet begrip in plaats van gehoorzaamheid.
+
+   Waar het schuurt: dit concept vraagt méér van de patiënt dan
+   de andere. Het gaat ervan uit dat iemand wíl leren waarnemen
+   aan zijn eigen lichaam, zoals een vogelaar leert kijken. Voor
+   wie alleen een lijstje wil afwerken, is dit te veel. Voor wie
+   maanden of jaren met een lichaam moet leren omgaan — na een
+   operatie, met reuma, met een chronische rug — is het precies
+   het verschil tussen uitvoeren en begrijpen.
+
+   Vorm: het papier van een veldgids — crème, dundruk-achtig,
+   ruime kantlijn voor aantekeningen. Zwarte lijntekening, één
+   rode inkt voor de pijlen en niets anders. Rood is hier geen
+   waarschuwing maar een aanwijzing; daarom is het het enige rood
+   op het blad. Tekst in een leesletter van 11 punt met ruime
+   interlinie, kolommen van hooguit 62 tekens.
+   Alles inline; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  --papier:#f7f2e4;
+  --papier-2:#efe8d6;
+  --vlak:#fdfbf4;
+  --inkt:#22201b;
+  --inkt-2:#4a4740;
+  --grijs:#7d786c;
+  --lijn:#d8d0bb;
+  --lijn-2:#e8e1cf;
+
+  --rood:#b02f18;        /* de pijl-inkt — het enige rood op het blad */
+  --groen:#33513c;       /* plaatnummers, familie-aanduidingen */
+  --groen-l:#e7ece5;
+
+  --serif:"Iowan Old Style",Charter,Palatino,"Palatino Linotype",Georgia,serif;
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:44px; --s6:74px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.68 var(--serif);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+svg{display:block}
+a{color:var(--rood)}
+:focus-visible{outline:2.5px solid var(--rood);outline-offset:3px}
+
+/* ── labbalk ─────────────────────────────────────────────── */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:18px;
+  background:var(--groen);color:#dce4dc;padding:11px 22px;border-bottom:2px solid var(--rood)}
+.labbalk .nr{font:600 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:#f2e6cd;border:1px solid #5a7460;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{font:500 14px/1 var(--sans);color:#bccbbe;text-decoration:none;padding:6px 4px}
+.labbalk a:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.labbalk a.terug{color:#efc9a8}
+@media (max-width:820px){.labbalk{gap:12px;padding:9px 14px;flex-wrap:wrap}.labbalk a{font-size:13px}
+  .scherm{scroll-margin-top:108px}}
+
+/* ── schermen ────────────────────────────────────────────── */
+.scherm{scroll-margin-top:64px;padding:var(--s6) 24px;border-top:1px solid var(--lijn)}
+.scherm:first-child{border-top:0}
+.scherm.vel{background:var(--vlak)}
+.binnen{max-width:1180px;margin:0 auto}
+.schermkop{max-width:760px;margin-bottom:var(--s5)}
+.schermkop b{display:block;font:600 10.5px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;
+  color:var(--rood);margin-bottom:12px}
+.schermkop h2{font:400 clamp(30px,3.8vw,44px)/1.1 var(--serif);letter-spacing:-.015em;color:var(--inkt);margin-bottom:10px}
+.schermkop p{font-size:17.5px;color:var(--grijs)}
+
+.kn{display:inline-flex;align-items:center;gap:10px;font:600 15px/1 var(--sans);background:var(--groen);
+  color:#f7f2e4;padding:15px 24px;text-decoration:none;border:1px solid var(--groen)}
+.kn:hover{background:#263d2c;border-color:#263d2c}
+.kn.leeg{background:transparent;color:var(--groen)}
+.kn.leeg:hover{background:var(--groen);color:#f7f2e4}
+
+/* ── 1 · landing ─────────────────────────────────────────── */
+.hero{display:grid;grid-template-columns:1.04fr .96fr;gap:var(--s6);align-items:center}
+@media (max-width:1000px){.hero{grid-template-columns:1fr;gap:var(--s5)}}
+.kap{font:600 11px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--groen);margin-bottom:var(--s3)}
+.hero h1{font:400 clamp(36px,5vw,58px)/1.06 var(--serif);letter-spacing:-.02em;color:var(--inkt);max-width:17ch}
+.hero h1 em{font-style:italic;color:var(--rood)}
+.hero .lead{font-size:19.5px;line-height:1.65;margin-top:var(--s3);max-width:50ch;color:var(--inkt-2)}
+.doen{display:flex;flex-wrap:wrap;gap:12px;margin-top:var(--s4)}
+.naregel{margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid var(--lijn);
+  font:400 15.5px/1.62 var(--sans);color:var(--grijs);max-width:54ch}
+
+/* de plaat: één oefening met pijlen, als bewijs */
+.plaat{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s4);position:relative}
+.plaat .plaatkop{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--inkt);
+  padding-bottom:10px;margin-bottom:var(--s4)}
+.plaat .plaatnr{font:600 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--groen)}
+.plaat .plaatnaam{margin-left:auto;font:400 italic 15px/1 var(--serif);color:var(--grijs)}
+
+/* het tekenveld met pijlen erover */
+.tekenveld{position:relative;background:var(--vlak);display:flex;align-items:center;justify-content:center;
+  padding:var(--s3) 34%;min-height:250px}
+.tekenveld img{max-height:230px;width:auto;mix-blend-mode:multiply}
+.merkpijl{position:absolute;display:flex;align-items:center;gap:0;z-index:3}
+.merkpijl .bal{width:22px;height:22px;border-radius:50%;background:var(--rood);color:#fff;flex:none;
+  display:flex;align-items:center;justify-content:center;font:600 12px/1 var(--sans)}
+.merkpijl .staaf{height:2px;background:var(--rood)}
+.merkpijl .punt{width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent}
+.merkpijl.naarrechts .punt{border-left:9px solid var(--rood)}
+.merkpijl.naarlinks{flex-direction:row-reverse}
+.merkpijl.naarlinks .punt{border-right:9px solid var(--rood)}
+.merkpijl .tekst{font:600 13px/1.3 var(--sans);color:var(--rood);white-space:nowrap}
+
+.sleutel{margin-top:var(--s4);border-top:1px solid var(--lijn);padding-top:var(--s3)}
+.sleutel h4{font:600 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--groen);margin-bottom:12px}
+.sleutel ol{list-style:none;display:flex;flex-direction:column;gap:11px}
+.sleutel li{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:start;font-size:16px;color:var(--inkt)}
+.sleutel .bal{width:22px;height:22px;border-radius:50%;background:var(--rood);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:600 12px/1 var(--sans);margin-top:2px}
+
+/* de drie eigenschappen */
+.drieluik{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5);margin-top:var(--s6);
+  border-top:2px solid var(--inkt);padding-top:var(--s4)}
+@media (max-width:900px){.drieluik{grid-template-columns:1fr;gap:var(--s4)}}
+.drieluik h4{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--groen);
+  margin-bottom:11px}
+.drieluik h5{font:400 21px/1.25 var(--serif);color:var(--inkt);margin-bottom:9px}
+.drieluik p{font-size:16px}
+
+/* ── 2 · kiezer ──────────────────────────────────────────── */
+.kiezerbalk{display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+  border:1px solid var(--lijn);padding:12px;background:var(--vlak);margin-bottom:var(--s4)}
+.zoek{flex:1;min-width:230px;display:flex;align-items:center;gap:10px;border:1px solid var(--lijn);padding:12px 14px}
+.zoek input{border:0;outline:0;font:400 16px/1 var(--serif);width:100%;color:var(--inkt);background:transparent}
+.filter{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--lijn);background:var(--vlak);
+  padding:11px 14px;font:600 13.5px/1 var(--sans);color:var(--inkt-2)}
+.filter.aan{border-color:var(--groen);background:var(--groen);color:#f7f2e4}
+
+.familiekop{display:flex;align-items:baseline;gap:14px;border-bottom:2px solid var(--inkt);
+  padding-bottom:9px;margin:var(--s5) 0 var(--s4)}
+.familiekop:first-of-type{margin-top:0}
+.familiekop h3{font:400 24px/1 var(--serif);color:var(--inkt)}
+.familiekop .lat{font:400 italic 15px/1 var(--serif);color:var(--grijs)}
+.familiekop .telling{margin-left:auto;font:600 11px/1 var(--mono);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--grijs)}
+
+.tegels{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:var(--s3)}
+.tegel{background:var(--vlak);border:1px solid var(--lijn);display:flex;flex-direction:column;position:relative}
+.tegel .beeld{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;padding:14px;
+  border-bottom:1px solid var(--lijn-2);position:relative}
+.tegel .beeld img{max-height:100%;width:auto;object-fit:contain;mix-blend-mode:multiply}
+.tegel .mini{position:absolute;background:var(--rood);border-radius:50%;width:15px;height:15px;
+  color:#fff;font:600 9px/1 var(--sans);display:flex;align-items:center;justify-content:center}
+.tegel .body{padding:var(--s3);display:flex;flex-direction:column;gap:8px;flex:1}
+.tegel .fam{font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--groen)}
+.tegel h4{font:400 19px/1.22 var(--serif);color:var(--inkt)}
+.tegel .kenm{font:600 12px/1 var(--sans);color:var(--rood);letter-spacing:.02em}
+.tegel .verw{margin-top:auto;padding-top:11px;border-top:1px solid var(--lijn-2);
+  font:400 italic 14px/1.45 var(--serif);color:var(--grijs)}
+.tegel.gekozen{border-color:var(--groen);box-shadow:inset 0 0 0 2px var(--groen)}
+.tegel .vink{position:absolute;top:10px;right:10px;width:24px;height:24px;background:var(--groen);
+  color:#fff;display:flex;align-items:center;justify-content:center;font:600 13px/1 var(--sans)}
+
+.kiezervoet{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);margin-top:var(--s4);
+  border:1px solid var(--lijn);background:var(--vlak);padding:var(--s3)}
+.kiezervoet .tel{font:600 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--groen)}
+.kiezervoet .rek{flex:1}
+.kiezervoet .opm{font:400 italic 15px/1.5 var(--serif);color:var(--grijs);max-width:46ch}
+
+/* ── 3 · cliëntkaart ─────────────────────────────────────── */
+.telefoon{display:grid;grid-template-columns:minmax(0,392px) 1fr;gap:var(--s6);align-items:start}
+@media (max-width:1000px){.telefoon{grid-template-columns:1fr;gap:var(--s5)}}
+.schermpje{border:1px solid var(--lijn);background:var(--vlak);overflow:hidden;
+  box-shadow:0 18px 44px rgba(34,32,27,.12)}
+.sk-top{background:var(--groen);color:#f2ede0;padding:15px 18px}
+.sk-top .naam{font:400 19px/1.2 var(--serif)}
+.sk-top .sub{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:#b7c9bb;margin-top:7px}
+
+.lijstkop{display:flex;align-items:baseline;gap:10px;padding:15px 18px 11px;border-bottom:1px solid var(--lijn)}
+.lijstkop b{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--groen)}
+.lijstkop span{margin-left:auto;font:600 11px/1 var(--mono);color:var(--grijs)}
+
+.waarn{border-bottom:1px solid var(--lijn-2);padding:16px 18px}
+.waarn:last-of-type{border-bottom:0}
+.w-kop{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.w-kop .nr{font:600 11px/1 var(--mono);letter-spacing:.1em;color:var(--groen);margin-top:5px}
+.w-kop h4{font:400 19px/1.24 var(--serif);color:var(--inkt)}
+.w-kop .maat{font:600 12px/1 var(--sans);color:var(--grijs);margin-top:5px;display:block}
+.w-beeld{position:relative;background:var(--papier);display:flex;align-items:center;justify-content:center;
+  padding:10px;border:1px solid var(--lijn-2)}
+.w-beeld img{max-height:120px;width:auto;mix-blend-mode:multiply}
+.w-beeld .mini{position:absolute;background:var(--rood);border-radius:50%;width:19px;height:19px;
+  color:#fff;font:600 11px/1 var(--sans);display:flex;align-items:center;justify-content:center}
+
+.kenmerken{list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:9px}
+.kenmerken li{display:grid;grid-template-columns:20px 1fr 30px;gap:10px;align-items:center;
+  font-size:15px;color:var(--inkt);line-height:1.45}
+.kenmerken .bal{width:19px;height:19px;border-radius:50%;background:var(--rood);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:600 11px/1 var(--sans)}
+.kenmerken .hok{width:26px;height:26px;border:1.5px solid var(--groen);display:flex;align-items:center;
+  justify-content:center;color:var(--groen);font:600 14px/1 var(--sans);background:var(--vlak)}
+.kenmerken .hok.aan{background:var(--groen);color:#fff}
+.w-verw{margin-top:12px;padding:11px 13px;background:var(--papier-2);border-left:3px solid var(--groen)}
+.w-verw b{display:block;font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--groen);margin-bottom:6px}
+.w-verw p{font:400 14.5px/1.5 var(--serif);color:var(--inkt-2)}
+
+.uitlegkolom h3{font:400 27px/1.22 var(--serif);color:var(--inkt);margin-bottom:var(--s3);max-width:22ch}
+.uitlegkolom > p{font-size:17px;max-width:56ch;margin-bottom:var(--s4)}
+.puntenlijst{list-style:none;border-top:2px solid var(--inkt)}
+.puntenlijst li{border-bottom:1px solid var(--lijn);padding:var(--s3) 0;display:grid;
+  grid-template-columns:30px 1fr;gap:var(--s3);align-items:start}
+.puntenlijst .bal{width:26px;height:26px;border-radius:50%;background:var(--rood);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:600 13px/1 var(--sans);margin-top:3px}
+.puntenlijst b{display:block;font:400 19px/1.3 var(--serif);color:var(--inkt);margin-bottom:6px}
+.puntenlijst p{font-size:16px}
+
+/* ── 4 · printkaart ──────────────────────────────────────── */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){.bladschaal{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+
+.blad{width:210mm;height:297mm;background:var(--vlak);color:var(--inkt);position:relative;overflow:hidden;
+  font-family:var(--serif);display:flex;flex-direction:column;padding:11mm 12mm 9mm;
+  box-shadow:0 26px 70px rgba(34,32,27,.2)}
+
+.pb-kop{display:flex;align-items:flex-end;gap:6mm;border-bottom:.8mm solid var(--inkt);padding-bottom:2.4mm}
+.pb-kop .plaatreeks{font:600 3mm/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--groen);
+  margin-bottom:2mm;display:block}
+.pb-kop h1{font:400 6.4mm/1.02 var(--serif);letter-spacing:-.012em}
+.pb-kop .wie{margin-left:auto;text-align:right;font:400 3.2mm/1.45 var(--serif);color:var(--inkt-2)}
+.pb-kop .wie b{display:block;font-weight:600;font-family:var(--sans);font-size:3.4mm;letter-spacing:.02em}
+
+.pb-inl{display:flex;gap:5mm;padding:2mm 0 2mm;border-bottom:.3mm solid var(--lijn)}
+.pb-inl .lbl{font:600 2.8mm/1.4 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--groen);
+  flex:none;width:26mm;padding-top:.6mm}
+.pb-inl p{font:400 3.3mm/1.44 var(--serif);max-width:150mm}
+
+.pb-platen{flex:1;display:flex;flex-direction:column}
+.pb-plaat{flex:1;display:grid;grid-template-columns:56mm 1fr;gap:4.6mm;padding:2.4mm 0;
+  border-bottom:.3mm solid var(--lijn)}
+.pb-plaat:last-of-type{border-bottom:0}
+
+.pb-fig{position:relative;background:var(--papier);border:.3mm solid var(--lijn);display:flex;
+  align-items:center;justify-content:center;padding:3mm}
+.pb-fig img{max-height:44mm;max-width:100%;width:auto;mix-blend-mode:multiply}
+.pb-fig .bal{position:absolute;width:5.4mm;height:5.4mm;border-radius:50%;background:var(--rood);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:600 3.2mm/1 var(--sans)}
+.pb-fig .staaf{position:absolute;height:.45mm;background:var(--rood)}
+.pb-fig .stip{position:absolute;width:1.8mm;height:1.8mm;border-radius:50%;background:var(--rood)}
+.pb-fig .fignr{position:absolute;left:2mm;top:1.6mm;font:600 2.7mm/1 var(--mono);letter-spacing:.16em;
+  color:var(--grijs)}
+
+.pb-tekst{display:flex;flex-direction:column}
+.pb-tekst h2{font:400 5.2mm/1.12 var(--serif);letter-spacing:-.014em;margin-bottom:1.2mm}
+.pb-tekst .fam{font:600 2.7mm/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--groen);
+  margin-bottom:2.4mm;display:block}
+.pb-tekst > p{font:400 3.5mm/1.42 var(--serif);max-width:124mm}
+.pb-kenm{list-style:none;margin-top:1.8mm;display:flex;flex-direction:column;gap:1mm}
+.pb-kenm li{display:grid;grid-template-columns:4.8mm 1fr;gap:2mm;align-items:start;
+  font:400 3.45mm/1.34 var(--serif)}
+.pb-kenm .bal{width:5mm;height:5mm;border-radius:50%;background:var(--rood);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:600 3mm/1 var(--sans);margin-top:.4mm}
+.pb-onder{display:flex;gap:4mm;align-items:flex-end;margin-top:auto;padding-top:2mm}
+.pb-verw{flex:1;font:400 3.1mm/1.38 var(--serif);color:var(--inkt-2);border-left:.7mm solid var(--groen);
+  padding-left:2.4mm}
+.pb-verw b{font-family:var(--sans);font-weight:600;font-size:2.7mm;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--groen);display:block;margin-bottom:1mm}
+.pb-maat{flex:none;display:flex;gap:1.6mm}
+.pb-maat .cel{border:.3mm solid var(--inkt);padding:1.6mm 2.4mm;text-align:center;min-width:16mm}
+.pb-maat .cel b{display:block;font:600 4.4mm/1 var(--sans);letter-spacing:-.02em}
+.pb-maat .cel span{display:block;font:600 2.5mm/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--grijs);margin-top:1.2mm}
+
+/* de waarnemingenlijst onderaan: het vinkje dat begrip meet */
+.pb-lijst{border:.6mm solid var(--groen);margin-top:2.2mm;padding:2.2mm 3.4mm}
+.pb-lijst .lk{display:flex;align-items:baseline;gap:3mm;border-bottom:.3mm solid var(--lijn);
+  padding-bottom:1.4mm;margin-bottom:1.8mm}
+.pb-lijst .lk b{font:600 2.9mm/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--groen)}
+.pb-lijst .lk span{margin-left:auto;font:400 italic 3.2mm/1 var(--serif);color:var(--grijs)}
+.pb-rijen{display:flex;flex-direction:column;gap:1.2mm}
+.pb-rij{display:grid;grid-template-columns:1fr repeat(7,7mm);gap:1.2mm;align-items:center}
+.pb-rij .wat{font:400 3.25mm/1.3 var(--serif)}
+.pb-rij .hok{height:4.8mm;border:.3mm solid var(--lijn);background:#fff}
+.pb-rij.kopregel .dag{font:600 2.6mm/1 var(--mono);letter-spacing:.06em;text-align:center;color:var(--grijs)}
+
+.pb-voet{display:flex;align-items:flex-end;gap:5mm;padding-top:2.2mm}
+.pb-voet .zorg{font:400 3.2mm/1.44 var(--serif);max-width:126mm}
+.pb-voet .zorg b{font-weight:600}
+.pb-voet .praktijk{margin-left:auto;text-align:right;font:600 2.7mm/1.5 var(--mono);letter-spacing:.12em;
+  text-transform:uppercase;color:var(--grijs)}
+
+.wijzer{position:absolute;font:500 12px/1.35 var(--sans);color:var(--grijs);width:138px;z-index:5}
+.wijzer::after{content:"";position:absolute;background:var(--lijn)}
+.wijzer.r::after{left:-20px;top:50%;width:16px;height:1px}
+.wijzer.l{text-align:right}
+.wijzer.l::after{right:-20px;top:50%;width:16px;height:1px}
+@media (max-width:1160px){.wijzer{display:none}}
+
+.printhulp{max-width:720px;margin:var(--s4) auto 0;text-align:center;font-size:16px;color:var(--grijs)}
+.printhulp .kn{margin-top:var(--s3)}
+
+/* ── voet ────────────────────────────────────────────────── */
+footer.uitleiding{background:var(--groen);color:#cfdbd0;padding:var(--s6) 24px}
+footer.uitleiding .binnen{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:#efc9a8;margin-bottom:13px}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:9px}
+footer.uitleiding li::before{content:"—";position:absolute;left:0;color:#efc9a8}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;margin:0 !important;
+    break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 24</span>
+  <strong style="font:600 15px/1 var(--sans);color:#fff">Veldgids</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm vel" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>het enige concept dat niet vertelt wat u moet dóen, maar wat u moet zíen</p>
+    </div>
+
+    <div class="hero">
+      <div>
+        <div class="kap">Fysiplan · veldgids</div>
+        <h1>Peterson tekende <em>pijlen</em> naar wat je moet zien. Op een oefenkaart staan die
+          pijlen nergens.</h1>
+        <p class="lead">In 1934 zette Roger Tory Peterson pijlen in zijn vogelplaten — niet naar de
+          vogel, maar naar het kenmerk waaraan je hem herkent in twee seconden. Elke oefenkaart toont
+          een plaatje van iemand die het goed doet, en niemand zegt erbij waar je moet kijken.
+          Hier staat het er: twee of drie kenmerken per oefening, met een rode pijl en een zin in
+          gewone taal.</p>
+        <div class="doen">
+          <a class="kn" href="#printkaart">Bekijk de A4</a>
+          <a class="kn leeg" href="#clientkaart">De waarnemingenlijst</a>
+        </div>
+        <p class="naregel">Rood is op dit blad geen waarschuwing maar een aanwijzing — daarom is het
+          de enige kleur naast zwart. Alles wat de pijl níet aanwijst, is achtergrond.</p>
+      </div>
+
+      <div class="plaat">
+        <div class="plaatkop">
+          <span class="plaatnr">Plaat 14</span>
+          <span class="plaatnaam">Rug bol en hol — op handen en knieën</span>
+        </div>
+
+        <div class="tekenveld">
+          <img src="/images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png"
+            alt="Lijntekening: op handen en knieën wordt de rug afwisselend bol en hol gemaakt."/>
+
+          <span class="merkpijl naarrechts" style="left:2%;top:26%">
+            <span class="bal">1</span>
+            <span class="staaf" style="width:52px"></span>
+            <span class="punt"></span>
+          </span>
+          <span class="merkpijl naarlinks" style="right:2%;top:44%">
+            <span class="bal">2</span>
+            <span class="staaf" style="width:52px"></span>
+            <span class="punt"></span>
+          </span>
+          <span class="merkpijl naarrechts" style="left:2%;top:70%">
+            <span class="bal">3</span>
+            <span class="staaf" style="width:52px"></span>
+            <span class="punt"></span>
+          </span>
+        </div>
+
+        <div class="sleutel">
+          <h4>De kenmerken</h4>
+          <ol>
+            <li><span class="bal">1</span><span>De beweging begint bij het staartbeen en loopt naar
+              boven weg — niet andersom.</span></li>
+            <li><span class="bal">2</span><span>De handen blijven recht onder de schouders staan; ze
+              schuiven niet naar voren mee.</span></li>
+            <li><span class="bal">3</span><span>De knieën blijven op hun plek. Verschuiven ze, dan
+              beweegt uw heup en niet uw rug.</span></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="drieluik">
+      <div>
+        <h4>Kenmerk</h4>
+        <h5>Waar u naar kijkt</h5>
+        <p>Twee of drie per oefening, nooit meer. Een gids die alles aanwijst, wijst niets aan.
+          Wat de pijl niet raakt, mag u vergeten.</p>
+      </div>
+      <div>
+        <h4>Verwarrend met</h4>
+        <h5>Waar hij op lijkt</h5>
+        <p>Elke veldgids waarschuwt voor de soort waarmee je hem verwisselt. Patiënten verwisselen
+          oefeningen net zo goed — dus staat er onder elke oefening waarop hij lijkt, en waarin hij
+          verschilt.</p>
+      </div>
+      <div>
+        <h4>Waarneming</h4>
+        <h5>Wat u zelf zag</h5>
+        <p>Een vogelaar streept af wat hij zelf gezien heeft. Hier streept u af wat u zelf gevóeld
+          heeft. Dat vinkje meet iets anders dan gehoorzaamheid: het meet of u het herkende.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>geordend als een gids: op familie, met het aantal kenmerken en de soort waarmee hij verward wordt</p>
+    </div>
+
+    <div class="kiezerbalk">
+      <div class="zoek">
+        <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+          <circle cx="8.5" cy="8.5" r="6" fill="none" stroke="#22201b" stroke-width="1.9"/>
+          <path d="M13 13l5 5" stroke="#22201b" stroke-width="1.9" stroke-linecap="round"/>
+        </svg>
+        <input type="text" value="lage rug" aria-label="Zoek een oefening" readonly/>
+      </div>
+      <span class="filter aan">Met kenmerken</span>
+      <span class="filter">Liggend</span>
+      <span class="filter">Op handen en knieën</span>
+      <span class="filter">Zittend</span>
+    </div>
+
+    <div class="familiekop">
+      <h3>Rompbeweging</h3>
+      <span class="lat">de bewegingen waarbij de wervelkolom zelf het werk doet</span>
+      <span class="telling">9 soorten · 3 gekozen</span>
+    </div>
+
+    <div class="tegels">
+
+      <article class="tegel gekozen">
+        <span class="vink">✓</span>
+        <div class="beeld">
+          <img src="/images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png"
+            alt="Lijntekening: op handen en knieën wordt de rug bol en hol gemaakt."/>
+          <span class="mini" style="left:27%;top:28%">1</span>
+          <span class="mini" style="right:28%;top:42%">2</span>
+          <span class="mini" style="left:32%;bottom:24%">3</span>
+        </div>
+        <div class="body">
+          <span class="fam">Rompbeweging</span>
+          <h4>Rug bol en hol</h4>
+          <span class="kenm">3 kenmerken</span>
+          <p class="verw">Verwarrend met: rug strekken op handen en knieën — daar beweegt de heup mee.</p>
+        </div>
+      </article>
+
+      <article class="tegel gekozen">
+        <span class="vink">✓</span>
+        <div class="beeld">
+          <img src="/images/rug/knie-naar-borst-liggend-line-v1.png"
+            alt="Lijntekening: liggend op de rug wordt één knie rustig naar de borst getrokken."/>
+          <span class="mini" style="right:28%;top:28%">1</span>
+          <span class="mini" style="left:30%;bottom:28%">2</span>
+        </div>
+        <div class="body">
+          <span class="fam">Rompbeweging</span>
+          <h4>Knie naar de borst — liggend</h4>
+          <span class="kenm">2 kenmerken</span>
+          <p class="verw">Verwarrend met: beide knieën tegelijk — dat is een andere oefening met een ander doel.</p>
+        </div>
+      </article>
+
+      <article class="tegel gekozen">
+        <span class="vink">✓</span>
+        <div class="beeld">
+          <img src="/images/rug/thoracale-extensie-zittend-line-v1.png"
+            alt="Lijntekening: zittend op een stoel wordt de bovenrug rustig gestrekt."/>
+          <span class="mini" style="left:28%;top:26%">1</span>
+          <span class="mini" style="right:29%;top:46%">2</span>
+          <span class="mini" style="left:31%;bottom:26%">3</span>
+        </div>
+        <div class="body">
+          <span class="fam">Rompbeweging</span>
+          <h4>Bovenrug strekken — zittend</h4>
+          <span class="kenm">3 kenmerken</span>
+          <p class="verw">Verwarrend met: achteroverleunen. Het verschil zit in de onderrug, die stil blijft.</p>
+        </div>
+      </article>
+
+      <article class="tegel">
+        <div class="beeld">
+          <img src="/images/rug/romp-draaien-zittend-line-v1.png"
+            alt="Lijntekening: zittend wordt de romp rustig naar één kant gedraaid."/>
+          <span class="mini" style="left:28%;top:30%">1</span>
+          <span class="mini" style="right:28%;bottom:30%">2</span>
+        </div>
+        <div class="body">
+          <span class="fam">Rompbeweging</span>
+          <h4>Romp draaien — zittend</h4>
+          <span class="kenm">2 kenmerken</span>
+          <p class="verw">Verwarrend met: draaien vanuit de schouders, waarbij de rug stil blijft.</p>
+        </div>
+      </article>
+
+      <article class="tegel">
+        <div class="beeld">
+          <img src="/images/rug/open-boek-liggend-line-v1.png"
+            alt="Lijntekening: zijligging waarbij de bovenste arm als een boek opengaat."/>
+          <span class="mini" style="right:28%;top:28%">1</span>
+          <span class="mini" style="left:30%;bottom:26%">2</span>
+        </div>
+        <div class="body">
+          <span class="fam">Rompbeweging</span>
+          <h4>Open boek — zijligging</h4>
+          <span class="kenm">2 kenmerken</span>
+          <p class="verw">Verwarrend met: de arm wegdraaien zonder dat de borstkas meekomt.</p>
+        </div>
+      </article>
+
+      <article class="tegel">
+        <div class="beeld">
+          <img src="/images/rug/romp-zijwaarts-buigen-staand-line-v1.png"
+            alt="Lijntekening: staand wordt de romp rustig zijwaarts gebogen."/>
+          <span class="mini" style="left:29%;top:28%">1</span>
+          <span class="mini" style="right:29%;bottom:28%">2</span>
+        </div>
+        <div class="body">
+          <span class="fam">Rompbeweging</span>
+          <h4>Zijwaarts buigen — staand</h4>
+          <span class="kenm">2 kenmerken</span>
+          <p class="verw">Verwarrend met: voorover hangen. De schouder blijft boven de heup.</p>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="kiezervoet">
+      <span class="tel">3 gekozen · 8 kenmerken · 3 verwarringen benoemd</span>
+      <span class="rek"></span>
+      <span class="opm">Een oefening zonder kenmerken kan wel op de kaart, maar dan is dit niet het
+        juiste concept — dan is er niets aan te wijzen.</span>
+      <a class="kn" href="#printkaart">Naar de plaat</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm vel" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>geen "gedaan"-knop maar een waarnemingenlijst: heeft u het kenmerk herkend?</p>
+    </div>
+
+    <div class="telefoon">
+      <div class="schermpje">
+        <div class="sk-top">
+          <div class="naam">A. el Amrani</div>
+          <div class="sub">Lage rug · week 3 van 8 · Noorderlicht</div>
+        </div>
+
+        <div class="lijstkop">
+          <b>Waarnemingen</b>
+          <span>5 van 8 herkend</span>
+        </div>
+
+        <div class="waarn">
+          <div class="w-kop">
+            <span class="nr">14</span>
+            <div>
+              <h4>Rug bol en hol</h4>
+              <span class="maat">10× langzaam · 2× per dag</span>
+            </div>
+          </div>
+          <div class="w-beeld">
+            <img src="/images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png"
+              alt="Lijntekening: op handen en knieën wordt de rug afwisselend bol en hol gemaakt."/>
+            <span class="mini" style="left:26%;top:26%">1</span>
+            <span class="mini" style="right:26%;top:40%">2</span>
+            <span class="mini" style="left:31%;bottom:22%">3</span>
+          </div>
+          <ul class="kenmerken">
+            <li><span class="bal">1</span><span>De beweging begint bij het staartbeen.</span>
+              <span class="hok aan">✓</span></li>
+            <li><span class="bal">2</span><span>Handen recht onder de schouders.</span>
+              <span class="hok aan">✓</span></li>
+            <li><span class="bal">3</span><span>De knieën blijven op hun plek.</span>
+              <span class="hok"></span></li>
+          </ul>
+          <div class="w-verw">
+            <b>Verwarrend met</b>
+            <p>Rug strekken op handen en knieën. Daar komt de beweging uit de heup; hier uit de rug.
+              Voelt u het in de heupplooi, dan doet u de andere.</p>
+          </div>
+        </div>
+
+        <div class="waarn">
+          <div class="w-kop">
+            <span class="nr">21</span>
+            <div>
+              <h4>Knie naar de borst — liggend</h4>
+              <span class="maat">5× per been · 30 tellen vast</span>
+            </div>
+          </div>
+          <div class="w-beeld">
+            <img src="/images/rug/knie-naar-borst-liggend-line-v1.png"
+              alt="Lijntekening: liggend op de rug wordt één knie rustig naar de borst getrokken."/>
+            <span class="mini" style="right:26%;top:26%">1</span>
+            <span class="mini" style="left:29%;bottom:26%">2</span>
+          </div>
+          <ul class="kenmerken">
+            <li><span class="bal">1</span><span>Het andere been blijft plat op de grond liggen.</span>
+              <span class="hok aan">✓</span></li>
+            <li><span class="bal">2</span><span>De trek zit in de bil, niet in de knieschijf.</span>
+              <span class="hok"></span></li>
+          </ul>
+          <div class="w-verw">
+            <b>Verwarrend met</b>
+            <p>Beide knieën tegelijk optrekken. Dat is een andere oefening, met een ander doel — en
+              deze week niet aan de orde.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="uitlegkolom">
+        <h3>Een vinkje dat iets anders meet dan gehoorzaamheid.</h3>
+        <p>Overal elders in de zorg betekent een vinkje: gedaan. Hier betekent het: herkend. De
+          patiënt streept niet af dat hij tien herhalingen heeft geteld, maar dat hij het kenmerk
+          heeft gevoeld — de trek in de bil, de knieën die stil bleven, de beweging die uit de rug
+          kwam. Dat is precies het verschil tussen een oefening uitvoeren en een oefening begrijpen,
+          en het is voor de therapeut oneindig veel bruikbaarder informatie.</p>
+
+        <ol class="puntenlijst">
+          <li>
+            <span class="bal">1</span>
+            <div>
+              <b>Een leeg hokje is geen fout</b>
+              <p>Kenmerk 3 niet herkend? Dan weet Marieke bij de volgende afspraak precies waar ze
+                op moet letten, in plaats van te vragen "en, lukte het een beetje?".</p>
+            </div>
+          </li>
+          <li>
+            <span class="bal">2</span>
+            <div>
+              <b>Twee of drie kenmerken, nooit meer</b>
+              <p>Peterson tekende ook geen tien pijlen. Een gids die alles aanwijst, wijst niets
+                aan. De therapeut kiest de twee dingen die er deze week toe doen.</p>
+            </div>
+          </li>
+          <li>
+            <span class="bal">3</span>
+            <div>
+              <b>De verwarring staat erbij</b>
+              <p>"Lijkt op, maar…" is in elke veldgids de nuttigste alinea. Bij oefeningen is dat
+                niet anders: de meeste mensen doen niet een oefening verkeerd, ze doen per ongeluk
+                een andere oefening.</p>
+            </div>
+          </li>
+          <li>
+            <span class="bal">4</span>
+            <div>
+              <b>Het blijft een gids, geen dagboek</b>
+              <p>Er zit geen reeks in die u kwijt kunt raken, geen percentage, geen aanmoediging. Een
+                waarnemingenlijst wordt voller of hij wordt dat niet — en dat is aan u.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>drie platen met hun kenmerken, en onderaan de week als waarnemingenlijst</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer r geen-print" style="top:64mm;left:calc(100% + 22px)">de pijl komt van
+            buiten en eindigt op één punt</span>
+          <span class="wijzer r geen-print" style="top:112mm;left:calc(100% + 22px)">de sleutel: één
+            zin per kenmerk, in gewone taal</span>
+          <span class="wijzer l geen-print" style="top:172mm;right:calc(100% + 22px)">"verwarrend met" —
+            de nuttigste alinea uit elke gids</span>
+          <span class="wijzer l geen-print" style="top:246mm;right:calc(100% + 22px)">afstrepen doet u
+            als u het kenmerk hérkende</span>
+
+          <div class="pb-kop">
+            <div>
+              <span class="plaatreeks">Platen 14 · 21 · 30 — lage rug</span>
+              <h1>Veldgids voor uw eigen rug</h1>
+            </div>
+            <div class="wie">
+              <b>A. el Amrani</b>
+              week 3 van 8 · 18 t/m 24 augustus
+            </div>
+          </div>
+
+          <div class="pb-inl">
+            <span class="lbl">Hoe u kijkt</span>
+            <p>Bij elke oefening staan twee of drie rode pijlen. Die wijzen niet naar de beweging maar
+              naar het kenmerk: het ene ding waaraan u merkt dat u het goed doet. Streep onderaan af
+              wanneer u het kenmerk herkende — niet wanneer u de oefening deed.</p>
+          </div>
+
+          <div class="pb-platen">
+
+            <!-- ── plaat 14 ── -->
+            <div class="pb-plaat">
+              <div class="pb-fig">
+                <span class="fignr">Plaat 14</span>
+                <img src="/images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png"
+                  alt="Lijntekening: op handen en knieën wordt de rug afwisselend bol en hol gemaakt."/>
+                <span class="bal" style="left:1.4mm;top:30%">1</span>
+                <span class="staaf" style="left:7mm;top:calc(30% + 2.7mm);width:12mm"></span>
+                <span class="stip" style="left:18.4mm;top:calc(30% + 1.8mm)"></span>
+
+                <span class="bal" style="right:1.4mm;top:44%">2</span>
+                <span class="staaf" style="right:7mm;top:calc(44% + 2.7mm);width:12mm"></span>
+                <span class="stip" style="right:18.4mm;top:calc(44% + 1.8mm)"></span>
+
+                <span class="bal" style="left:1.4mm;bottom:22%">3</span>
+                <span class="staaf" style="left:7mm;bottom:calc(22% + 2.7mm);width:14mm"></span>
+                <span class="stip" style="left:20.4mm;bottom:calc(22% + 1.8mm)"></span>
+              </div>
+              <div class="pb-tekst">
+                <span class="fam">Rompbeweging · dagelijks</span>
+                <h2>Rug bol en hol</h2>
+                <p>Ga op handen en knieën zitten, handen onder de schouders. Maak uw rug rustig bol
+                  en daarna weer hol, langzaam heen en terug.</p>
+                <ul class="pb-kenm">
+                  <li><span class="bal">1</span><span>De beweging begint bij het staartbeen en rolt
+                    van onder naar boven weg.</span></li>
+                  <li><span class="bal">2</span><span>De handen blijven recht onder de schouders;
+                    ze schuiven niet naar voren.</span></li>
+                  <li><span class="bal">3</span><span>De knieën blijven op hun plek — schuiven ze,
+                    dan beweegt uw heup en niet uw rug.</span></li>
+                </ul>
+                <div class="pb-onder">
+                  <div class="pb-verw">
+                    <b>Verwarrend met</b>
+                    Rug strekken op handen en knieën. Voelt u het in de heupplooi in plaats van in de
+                    rug, dan doet u die.
+                  </div>
+                  <div class="pb-maat">
+                    <div class="cel"><b>10×</b><span>Langzaam</span></div>
+                    <div class="cel"><b>2×</b><span>Per dag</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── plaat 21 ── -->
+            <div class="pb-plaat">
+              <div class="pb-fig">
+                <span class="fignr">Plaat 21</span>
+                <img src="/images/rug/knie-naar-borst-liggend-line-v1.png"
+                  alt="Lijntekening: liggend op de rug wordt één knie rustig naar de borst getrokken."/>
+                <span class="bal" style="right:1.4mm;top:28%">1</span>
+                <span class="staaf" style="right:7mm;top:calc(28% + 2.7mm);width:13mm"></span>
+                <span class="stip" style="right:19.4mm;top:calc(28% + 1.8mm)"></span>
+
+                <span class="bal" style="left:1.4mm;bottom:26%">2</span>
+                <span class="staaf" style="left:7mm;bottom:calc(26% + 2.7mm);width:13mm"></span>
+                <span class="stip" style="left:19.4mm;bottom:calc(26% + 1.8mm)"></span>
+              </div>
+              <div class="pb-tekst">
+                <span class="fam">Rompbeweging · dagelijks</span>
+                <h2>Knie naar de borst — liggend</h2>
+                <p>Lig op uw rug met beide benen gestrekt. Trek één knie rustig naar uw borst, houd
+                  hem dertig tellen vast en laat hem langzaam zakken. Wissel daarna van been.</p>
+                <ul class="pb-kenm">
+                  <li><span class="bal">1</span><span>Het andere been blijft de hele tijd plat op de
+                    grond liggen.</span></li>
+                  <li><span class="bal">2</span><span>De trek zit achter in de bil — niet in de
+                    knieschijf en niet in de lies.</span></li>
+                </ul>
+                <div class="pb-onder">
+                  <div class="pb-verw">
+                    <b>Verwarrend met</b>
+                    Beide knieën tegelijk optrekken. Dat is een andere oefening en deze week niet aan
+                    de orde.
+                  </div>
+                  <div class="pb-maat">
+                    <div class="cel"><b>5×</b><span>Per been</span></div>
+                    <div class="cel"><b>30</b><span>Tellen</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── plaat 30 ── -->
+            <div class="pb-plaat">
+              <div class="pb-fig">
+                <span class="fignr">Plaat 30</span>
+                <img src="/images/rug/thoracale-extensie-zittend-line-v1.png"
+                  alt="Lijntekening: zittend op een stoel wordt de bovenrug rustig gestrekt."/>
+                <span class="bal" style="left:1.4mm;top:26%">1</span>
+                <span class="staaf" style="left:7mm;top:calc(26% + 2.7mm);width:13mm"></span>
+                <span class="stip" style="left:19.4mm;top:calc(26% + 1.8mm)"></span>
+
+                <span class="bal" style="right:1.4mm;top:48%">2</span>
+                <span class="staaf" style="right:7mm;top:calc(48% + 2.7mm);width:12mm"></span>
+                <span class="stip" style="right:18.4mm;top:calc(48% + 1.8mm)"></span>
+
+                <span class="bal" style="left:1.4mm;bottom:20%">3</span>
+                <span class="staaf" style="left:7mm;bottom:calc(20% + 2.7mm);width:15mm"></span>
+                <span class="stip" style="left:21.4mm;bottom:calc(20% + 1.8mm)"></span>
+              </div>
+              <div class="pb-tekst">
+                <span class="fam">Rompbeweging · om de dag</span>
+                <h2>Bovenrug strekken — zittend</h2>
+                <p>Zit rechtop op een stoel met beide voeten plat op de grond. Strek uw bovenrug
+                  rustig omhoog en iets naar achteren, houd drie tellen vast en kom weer terug.</p>
+                <ul class="pb-kenm">
+                  <li><span class="bal">1</span><span>De beweging zit tussen de schouderbladen, niet
+                    in de nek.</span></li>
+                  <li><span class="bal">2</span><span>De onderrug blijft stil; de buik komt niet naar
+                    voren.</span></li>
+                  <li><span class="bal">3</span><span>Beide voeten blijven plat staan — ze mogen niet
+                    meeduwen.</span></li>
+                </ul>
+                <div class="pb-onder">
+                  <div class="pb-verw">
+                    <b>Verwarrend met</b>
+                    Achteroverleunen in de stoel. Het verschil zit in de onderrug: die blijft hier
+                    stil staan.
+                  </div>
+                  <div class="pb-maat">
+                    <div class="cel"><b>8×</b><span>Herhalen</span></div>
+                    <div class="cel"><b>3</b><span>Tellen</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="pb-lijst">
+            <div class="lk">
+              <b>Waarnemingenlijst</b>
+              <span>streep af wanneer u het kenmerk hérkende, niet wanneer u de oefening deed</span>
+            </div>
+            <div class="pb-rijen">
+              <div class="pb-rij kopregel">
+                <span class="wat"></span>
+                <span class="dag">ma</span><span class="dag">di</span><span class="dag">wo</span>
+                <span class="dag">do</span><span class="dag">vr</span><span class="dag">za</span><span class="dag">zo</span>
+              </div>
+              <div class="pb-rij">
+                <span class="wat">Plaat 14 — de beweging kwam uit de rug</span>
+                <span class="hok"></span><span class="hok"></span><span class="hok"></span>
+                <span class="hok"></span><span class="hok"></span><span class="hok"></span><span class="hok"></span>
+              </div>
+              <div class="pb-rij">
+                <span class="wat">Plaat 21 — de trek zat in de bil</span>
+                <span class="hok"></span><span class="hok"></span><span class="hok"></span>
+                <span class="hok"></span><span class="hok"></span><span class="hok"></span><span class="hok"></span>
+              </div>
+              <div class="pb-rij">
+                <span class="wat">Plaat 30 — de onderrug bleef stil</span>
+                <span class="hok"></span><span class="hok"></span><span class="hok"></span>
+                <span class="hok"></span><span class="hok"></span><span class="hok"></span><span class="hok"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pb-voet">
+            <span class="zorg"><b>Een rekkend of vermoeid gevoel hoort erbij.</b> Uitstralende pijn in
+              uw been, tintelingen of een doof gevoel horen er niet bij: stop dan en bel de praktijk.</span>
+            <span class="praktijk">Fysiotherapie Noorderlicht<br/>050 – 313 44 20</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <p class="printhulp geen-print">Print deze pagina: alles behalve de plaat valt weg. In zwart-wit
+      worden de rode pijlen donkergrijs en blijven ze het enige gevulde element op het vel — de
+      kenmerken springen er dan zelfs iets sterker uit dan in kleur.<br/>
+      <a class="kn geen-print" href="javascript:window.print()">Print de A4</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>De richting</h4>
+      <p>De oefenkaart als veldgids, met het Peterson-systeem uit 1934: rode pijlen die niet naar de
+        beweging wijzen maar naar het kenmerk waaraan u merkt dat u het goed doet. Plus twee dingen
+        die elke gids heeft en geen enkele oefenkaart: waar hij op lijkt, en een lijst van wat u zelf
+        hebt waargenomen.</p>
+    </div>
+    <div class="kolom">
+      <h4>Waar het schuurt</h4>
+      <ul>
+        <li>Dit vraagt meer van de patiënt dan de rest van de galerij: het gaat ervan uit dat iemand wíl leren waarnemen.</li>
+        <li>De therapeut moet per oefening twee kenmerken kiezen. Dat is echt werk, en het is niet te automatiseren.</li>
+        <li>Een oefening zonder aanwijsbaar kenmerk hoort niet in dit concept — dan valt er niets aan te wijzen.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Verder</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

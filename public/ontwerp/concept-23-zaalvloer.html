@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 23 — Zaalvloer · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 23 — ZAALVLOER
+
+   Op de vloer van elke Nederlandse sporthal liggen vijf, zes,
+   soms zeven sporten over elkaar heen: basketbal in rood,
+   volleybal in geel, badminton in blauw, tennis in wit. Lijnen
+   van vijftig millimeter breed, en één keiharde regel bij het
+   aanbrengen — de sport die het meest gespeeld wordt, ligt
+   bovenop; die lijn wordt door niets onderbroken. Alle andere
+   sporten liggen eronder en worden wél doorsneden.
+
+   Dat is de hele metafoor van dit concept, en hij klopt tot in
+   het detail. Een lichaam is ook een zaal waar van alles door
+   elkaar loopt: een oude knie, een stijve nek, een rug van
+   twintig jaar geleden, een operatie van vorige maand. Alles
+   ligt er nog. Maar deze week ligt er één ding bovenop, en dat
+   is wat op de kaart staat. De rest van de belijning blijft
+   zichtbaar — lichter, onderbroken, eronderdoor — want die is
+   niet weg, hij is alleen even niet aan de beurt.
+
+   Dit is een luide richting, en dat is met opzet. Waar de rest
+   van de galerij fluistert (papier, drukwerk, boekdruk), schreeuwt
+   dit concept: verzadigde lakverf, vijftig millimeter breed,
+   stencilletters, een scorebord. Fysiotherapie gebeurt in een
+   zaal met een gelakte vloer, niet in een bibliotheek. Eén keer
+   in de galerij mag het daarnaar ruiken.
+
+   De leesbaarheidsafspraak die het bij elkaar houdt, is
+   overgenomen van de vloer zelf: op een echte sportvloer ligt de
+   tekst nooit óp een lijn. Elk speelvlak heeft een egale,
+   lichte binnenkleur en daarbinnen staat alles in bijna-zwart.
+   Geel is uitsluitend lijnkleur, nooit tekstkleur — geel op licht
+   haalt geen enkel contrast. De lijnen dragen de structuur, de
+   vlakken dragen de tekst, en die twee raken elkaar nergens.
+
+   Drie dingen die alleen dit concept oplevert:
+
+   1. DE STAPELING. Wat er nog meer speelt, verdwijnt niet van de
+      kaart. Het ligt eronder, lichter en onderbroken. Patiënten
+      met vier klachten zien dat hun andere klachten niet vergeten
+      zijn — ze zijn alleen niet aan de beurt.
+   2. HET VELD ALS PLEK. Elke oefening heeft een eigen vlak met een
+      eigen kleur, en die kleur komt terug op de digitale kaart en
+      in de app. "Doe het rode veld" is een zin die een patiënt van
+      tachtig onthoudt; "doe oefening twee" niet.
+   3. HET SCOREBORD. Rechtsboven staat de week als scorebord:
+      gespeeld, niet gespeeld. Geen percentages, geen vlammetjes,
+      geen aanmoediging — de stand, meer niet.
+
+   Waar het schuurt: dit blad ziet er niet uit als zorg. Een
+   praktijk die rust en zachtheid wil uitstralen, moet dit concept
+   niet nemen. Het is bedoeld voor de mensen die van een veld
+   houden — en dat zijn er in Nederland nogal wat.
+   Alles inline; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  --vloer:#ead4ac;          /* gelakt beuken, de kleur van elke sporthal */
+  --vloer-l:#f3e5c9;
+  --vloer-d:#dcbf90;
+  --inkt:#14161a;
+  --inkt-2:#3a4048;
+  --grijs:#6e767f;
+  --wit:#ffffff;
+  --lijn:#cbb287;
+
+  --rood:#c8321f;           /* basketbal */
+  --geel:#f0bf00;           /* volleybal — NOOIT tekstkleur */
+  --blauw:#134a99;          /* badminton */
+  --groen:#0d6b4a;          /* de zaal zelf */
+
+  --veld-rood:#fbeae6;      /* egale binnenkleuren: hier staat de tekst */
+  --veld-geel:#fdf4d8;
+  --veld-blauw:#e8eef8;
+
+  --sans:"Helvetica Neue",Helvetica,Arial,"Liberation Sans",system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:44px; --s6:74px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.62 var(--sans);color:var(--inkt-2);background:var(--vloer-l)}
+img{max-width:100%;display:block}
+svg{display:block}
+a{color:var(--blauw)}
+:focus-visible{outline:3px solid var(--blauw);outline-offset:3px}
+
+.stencil{font-family:var(--sans);font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+
+/* ── labbalk ─────────────────────────────────────────────── */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:18px;
+  background:var(--inkt);color:#d6dade;padding:11px 22px;
+  border-bottom:6px solid var(--rood)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--inkt);background:var(--geel);padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{font:500 14px/1 var(--sans);color:#b3b9be;text-decoration:none;padding:6px 4px}
+.labbalk a:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.labbalk a.terug{color:var(--geel)}
+@media (max-width:820px){.labbalk{gap:12px;padding:9px 14px;flex-wrap:wrap}.labbalk a{font-size:13px}
+  .scherm{scroll-margin-top:108px}}
+
+/* ── schermen ────────────────────────────────────────────── */
+.scherm{scroll-margin-top:64px;padding:var(--s6) 24px;border-top:3px solid var(--vloer-d)}
+.scherm:first-child{border-top:0}
+.scherm.hout{background:var(--vloer);
+  background-image:repeating-linear-gradient(90deg,rgba(180,144,96,.16) 0 1px,transparent 1px 96px)}
+.binnen{max-width:1180px;margin:0 auto}
+.schermkop{max-width:760px;margin-bottom:var(--s5)}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;
+  color:var(--rood);margin-bottom:12px}
+.schermkop h2{font:700 clamp(28px,3.4vw,40px)/1.08 var(--sans);letter-spacing:-.035em;color:var(--inkt);margin-bottom:10px}
+.schermkop p{font-size:17.5px;color:var(--inkt-2)}
+
+.kn{display:inline-flex;align-items:center;gap:10px;font:700 15px/1 var(--sans);background:var(--inkt);
+  color:#fff;padding:16px 24px;text-decoration:none;border:3px solid var(--inkt);letter-spacing:.02em}
+.kn:hover{background:#000;border-color:#000}
+.kn.leeg{background:transparent;color:var(--inkt)}
+.kn.leeg:hover{background:var(--inkt);color:#fff}
+
+/* ── 1 · landing ─────────────────────────────────────────── */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:var(--s6);align-items:center}
+@media (max-width:1000px){.hero{grid-template-columns:1fr;gap:var(--s5)}}
+.kap{font:700 11px/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--groen);margin-bottom:var(--s3)}
+.hero h1{font:700 clamp(38px,5.6vw,64px)/1 var(--sans);letter-spacing:-.045em;color:var(--inkt);max-width:14ch}
+.hero .lead{font-size:19.5px;line-height:1.6;margin-top:var(--s3);max-width:48ch;color:var(--inkt-2)}
+.doen{display:flex;flex-wrap:wrap;gap:12px;margin-top:var(--s4)}
+.naregel{margin-top:var(--s4);padding-top:var(--s3);border-top:3px solid var(--inkt);
+  font-size:15.5px;color:var(--inkt-2);max-width:52ch}
+
+/* het bewijsstuk: een stukje echte vloer met vier sporten over elkaar */
+.vloerstuk{position:relative;background:var(--vloer);border:4px solid var(--inkt);
+  aspect-ratio:4/3;overflow:hidden;
+  background-image:repeating-linear-gradient(90deg,rgba(180,144,96,.2) 0 1px,transparent 1px 42px)}
+.vloerstuk .bijschrift{position:absolute;left:0;right:0;bottom:0;background:var(--inkt);color:#fff;
+  padding:12px 16px;font:600 13.5px/1.4 var(--sans)}
+.vloerstuk .bijschrift b{color:var(--geel)}
+
+/* de regel van de vloer */
+.vloerregel{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--inkt);
+  border:4px solid var(--inkt);margin-top:var(--s6)}
+@media (max-width:900px){.vloerregel{grid-template-columns:repeat(2,1fr)}}
+.vloerregel .cel{background:var(--vloer-l);padding:var(--s4) var(--s3)}
+.vloerregel .balk{height:14px;margin-bottom:var(--s3)}
+.vloerregel h4{font:700 15px/1.25 var(--sans);color:var(--inkt);margin-bottom:8px;letter-spacing:-.01em}
+.vloerregel .sp{display:block;font:700 10px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--grijs);margin-bottom:9px}
+.vloerregel p{font-size:14.5px;color:var(--inkt-2)}
+
+.stapel{margin-top:var(--s6);border:4px solid var(--inkt);background:var(--vloer-l);padding:var(--s5) var(--s4)}
+.stapel h3{font:700 26px/1.16 var(--sans);letter-spacing:-.03em;color:var(--inkt);max-width:24ch;margin-bottom:var(--s3)}
+.stapel > p{font-size:16.5px;max-width:62ch;margin-bottom:var(--s4)}
+.lagen{display:flex;flex-direction:column;gap:2px}
+.laag{display:grid;grid-template-columns:120px 1fr auto;gap:var(--s3);align-items:center;
+  background:var(--wit);padding:14px var(--s3);border-left:14px solid var(--lijn)}
+.laag .wat{font:700 15px/1.2 var(--sans);color:var(--inkt)}
+.laag .toe{font-size:14.5px;color:var(--grijs)}
+.laag .rang{font:700 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--grijs)}
+.laag.boven{border-left-color:var(--rood);background:var(--veld-rood)}
+.laag.boven .rang{color:var(--rood)}
+.laag.onder{opacity:.72}
+
+/* ── 2 · kiezer ──────────────────────────────────────────── */
+.kiezerbalk{display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+  border:4px solid var(--inkt);padding:12px;background:var(--wit);margin-bottom:var(--s4)}
+.zoek{flex:1;min-width:230px;display:flex;align-items:center;gap:10px;border:3px solid var(--lijn);padding:12px 14px}
+.zoek input{border:0;outline:0;font:500 16px/1 var(--sans);width:100%;color:var(--inkt);background:transparent}
+.filter{display:inline-flex;align-items:center;gap:8px;border:3px solid var(--lijn);background:var(--wit);
+  padding:10px 14px;font:700 14px/1 var(--sans);color:var(--inkt-2)}
+.filter i{width:22px;height:6px;display:block}
+.filter.aan{border-color:var(--inkt);background:var(--inkt);color:#fff}
+
+.tegels{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:var(--s3)}
+.tegel{background:var(--wit);border:3px solid var(--lijn);display:flex;flex-direction:column;position:relative}
+.tegel .band{height:14px}
+.tegel .beeld{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;padding:12px;background:var(--vloer-l)}
+.tegel .beeld img{max-height:100%;width:auto;object-fit:contain;mix-blend-mode:multiply}
+.tegel .body{padding:var(--s3);display:flex;flex-direction:column;gap:9px;flex:1}
+.tegel .grp{font:700 10px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs)}
+.tegel h3{font:700 17px/1.24 var(--sans);letter-spacing:-.02em;color:var(--inkt)}
+.tegel .zone{margin-top:auto;font:700 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--inkt-2);border-top:2px solid var(--vloer-d);padding-top:11px}
+.tegel.gekozen{border-color:var(--inkt);border-width:4px}
+.tegel .veldnr{position:absolute;top:14px;right:0;padding:7px 12px;font:700 13px/1 var(--sans);
+  letter-spacing:.1em;text-transform:uppercase;color:#fff}
+
+.toewijzing{margin-top:var(--s4);border:4px solid var(--inkt);background:var(--wit)}
+.toewijzing .kop{background:var(--inkt);color:#fff;padding:13px var(--s3);
+  font:700 12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;display:flex;align-items:center;gap:12px}
+.toewijzing .kop .rek{flex:1}
+.toewijzing .rij{display:grid;grid-template-columns:14px 46px 1fr 140px 120px;gap:var(--s3);align-items:center;
+  padding:14px var(--s3);border-bottom:2px solid var(--vloer-d)}
+.toewijzing .rij:last-child{border-bottom:0}
+@media (max-width:820px){.toewijzing .rij{grid-template-columns:14px 40px 1fr;gap:12px}
+  .toewijzing .rij .verberg{display:none}}
+.toewijzing .kleurbalk{height:34px}
+.toewijzing .nr{font:700 22px/1 var(--sans);color:var(--inkt);text-align:center}
+.toewijzing .nm{font:700 16px/1.3 var(--sans);color:var(--inkt)}
+.toewijzing .nm small{display:block;font:500 13.5px/1.4 var(--sans);color:var(--grijs);margin-top:3px}
+.toewijzing .maat{font:700 14px/1.35 var(--sans);color:var(--inkt-2)}
+.toewijzing .plek{font:700 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
+
+/* ── 3 · cliëntkaart ─────────────────────────────────────── */
+.telefoon{display:grid;grid-template-columns:minmax(0,392px) 1fr;gap:var(--s6);align-items:start}
+@media (max-width:1000px){.telefoon{grid-template-columns:1fr;gap:var(--s5)}}
+.schermpje{border:4px solid var(--inkt);background:var(--vloer);overflow:hidden}
+.sk-top{background:var(--inkt);color:#fff;padding:14px 18px;display:flex;align-items:center;gap:12px}
+.sk-top .naam{font:700 16px/1 var(--sans)}
+.sk-top .rond{margin-left:auto;font:700 11px/1 var(--mono);letter-spacing:.14em;color:var(--geel)}
+
+/* het scorebord */
+.scorebord{background:var(--inkt);padding:0 18px 16px;display:flex;gap:3px}
+.scorebord i{flex:1;height:42px;border:2px solid #40474e;display:flex;align-items:center;justify-content:center;
+  font:700 14px/1 var(--mono);color:#7b848c;background:#1c1f24}
+.scorebord i.gespeeld{background:var(--geel);border-color:var(--geel);color:var(--inkt)}
+.scorebord i.nu{border-color:var(--geel);color:var(--geel)}
+
+.velden{padding:var(--s3);display:flex;flex-direction:column;gap:var(--s3)}
+.veld{border:5px solid var(--rood);background:var(--veld-rood);padding:0}
+.veld.b{border-color:var(--blauw);background:var(--veld-blauw)}
+.veld.g{border-color:var(--geel);background:var(--veld-geel)}
+.veld .v-kop{display:flex;align-items:center;gap:11px;padding:11px 14px;border-bottom:3px solid rgba(20,22,26,.14)}
+.veld .v-nr{width:30px;height:30px;background:var(--inkt);color:#fff;display:flex;align-items:center;
+  justify-content:center;font:700 16px/1 var(--sans);flex:none}
+.veld .v-naam{font:700 15.5px/1.25 var(--sans);color:var(--inkt)}
+.veld .v-kleur{margin-left:auto;font:700 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--inkt-2)}
+.veld .v-lijf{display:flex;gap:12px;padding:12px 14px;align-items:center}
+.veld .v-lijf img{max-height:76px;width:auto;mix-blend-mode:multiply;flex:none}
+.veld .v-maat{display:flex;flex-wrap:wrap;gap:5px 14px;font:700 14px/1.3 var(--sans);color:var(--inkt)}
+.veld .v-maat span{white-space:nowrap}
+.veld .v-maat small{font:500 12.5px/1 var(--sans);color:var(--inkt-2);display:block;margin-top:3px;letter-spacing:0}
+.veld .v-knop{display:flex;gap:8px;padding:0 14px 12px}
+.vknop{flex:1;border:3px solid var(--inkt);background:transparent;color:var(--inkt);
+  font:700 14px/1 var(--sans);padding:13px 10px;letter-spacing:.06em;text-transform:uppercase}
+.vknop.vol{background:var(--inkt);color:#fff}
+.vknop.stil{border-color:rgba(20,22,26,.3);color:var(--grijs)}
+
+.onderlaag{margin:0 var(--s3) var(--s3);border:3px dashed var(--lijn);background:rgba(255,255,255,.6);padding:12px 14px}
+.onderlaag b{display:block;font:700 10px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--grijs);margin-bottom:8px}
+.onderlaag p{font-size:13.5px;line-height:1.5;color:var(--inkt-2)}
+
+.uitlegkolom h3{font:700 26px/1.16 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-bottom:var(--s3)}
+.uitlegkolom > p{font-size:17px;max-width:56ch;margin-bottom:var(--s4)}
+.puntenlijst{list-style:none;border-top:4px solid var(--inkt)}
+.puntenlijst li{border-bottom:2px solid var(--vloer-d);padding:var(--s3) 0;display:grid;
+  grid-template-columns:16px 1fr;gap:var(--s3);align-items:start}
+.puntenlijst .kleur{height:100%;min-height:44px}
+.puntenlijst b{display:block;font:700 16.5px/1.3 var(--sans);color:var(--inkt);margin-bottom:5px}
+.puntenlijst p{font-size:15.5px;color:var(--inkt-2)}
+
+/* ── 4 · printkaart ──────────────────────────────────────── */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){.bladschaal{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+
+.blad{width:210mm;height:297mm;background:var(--vloer);color:var(--inkt);position:relative;overflow:hidden;
+  font-family:var(--sans);display:flex;flex-direction:column;padding:9mm;
+  background-image:repeating-linear-gradient(90deg,rgba(180,144,96,.22) 0 .3mm,transparent .3mm 14mm);
+  box-shadow:0 26px 70px rgba(20,22,26,.28)}
+
+/* de buitenlijn van de zaal: 5 mm ≈ 50 mm belijning op ware schaal verkleind */
+.pk-rand{position:absolute;inset:9mm;border:1.6mm solid var(--groen);pointer-events:none}
+
+.pk-kop{display:flex;align-items:flex-start;gap:5mm;padding:4mm 5mm 3.6mm;position:relative;z-index:2}
+.pk-kop .naam{font:700 8mm/1 var(--sans);letter-spacing:-.035em}
+.pk-kop .sub{font:700 3.4mm/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--inkt-2);margin-top:2mm}
+.pk-bord{margin-left:auto;background:var(--inkt);padding:2.6mm 3mm;flex:none}
+.pk-bord .lbl{font:700 2.6mm/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:#8b939a;margin-bottom:2.2mm}
+.pk-bord .hokjes{display:flex;gap:.8mm}
+.pk-bord .hokjes i{width:6mm;height:7.4mm;border:.4mm solid #464d54;display:flex;align-items:center;
+  justify-content:center;font:700 3mm/1 var(--mono);color:#7b848c}
+.pk-bord .hokjes i.gespeeld{background:var(--geel);border-color:var(--geel);color:var(--inkt)}
+
+/* de drie speelvelden */
+.pk-velden{flex:1;display:flex;flex-direction:column;gap:3.4mm;padding:0 5mm;position:relative;z-index:2}
+.pk-veld{flex:1;border:1.6mm solid var(--rood);background:var(--veld-rood);display:grid;
+  grid-template-columns:1fr 46mm;position:relative}
+.pk-veld.b{border-color:var(--blauw);background:var(--veld-blauw)}
+.pk-veld.g{border-color:var(--geel);background:var(--veld-geel)}
+
+.pk-veld .links{padding:3.4mm 4mm;display:flex;flex-direction:column}
+.pk-veld .vkop{display:flex;align-items:center;gap:3mm;margin-bottom:2.6mm}
+.pk-veld .vnr{width:9mm;height:9mm;background:var(--inkt);color:#fff;display:flex;align-items:center;
+  justify-content:center;font:700 5.4mm/1 var(--sans);flex:none}
+.pk-veld h2{font:700 5.4mm/1.12 var(--sans);letter-spacing:-.03em;color:var(--inkt)}
+.pk-veld .grp{font:700 2.7mm/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--inkt-2);
+  margin-top:1.6mm;display:block}
+.pk-veld p{font:400 3.9mm/1.5 var(--sans);color:var(--inkt);max-width:88mm}
+.pk-veld .maatrij{display:flex;gap:2mm;margin-top:auto;padding-top:3mm}
+.pk-veld .maat{background:#fff;border:.5mm solid var(--inkt);padding:1.8mm 2.6mm;text-align:center;min-width:20mm}
+.pk-veld .maat b{display:block;font:700 5mm/1 var(--sans);letter-spacing:-.02em}
+.pk-veld .maat span{display:block;font:600 2.7mm/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--inkt-2);margin-top:1.4mm}
+
+.pk-veld .rechts{border-left:.5mm dashed rgba(20,22,26,.25);display:flex;align-items:center;
+  justify-content:center;padding:2mm 2.4mm;background:rgba(255,255,255,.62)}
+.pk-veld .rechts img{max-height:54mm;max-width:100%;width:auto;mix-blend-mode:multiply}
+
+/* het aftekenhokje in de hoek van elk veld: zeven vakjes */
+.pk-veld .afvink{position:absolute;right:2.4mm;top:2.4mm;display:flex;gap:.7mm}
+.pk-veld .afvink i{width:4.4mm;height:4.4mm;border:.4mm solid rgba(20,22,26,.45);background:#fff}
+
+/* de onderlaag: wat er nog meer speelt, lichter en onderbroken */
+.pk-onder{margin:3mm 5mm 0;border-top:.5mm dashed rgba(20,22,26,.4);padding-top:2.6mm;
+  display:flex;align-items:center;gap:4mm;position:relative;z-index:2}
+.pk-onder .lbl{font:700 2.8mm/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--inkt-2);flex:none}
+.pk-onder .items{display:flex;flex-wrap:wrap;gap:2mm 5mm}
+.pk-onder .item{display:flex;align-items:center;gap:1.8mm;font:600 3.2mm/1 var(--sans);color:var(--inkt-2)}
+.pk-onder .item i{width:8mm;height:1.4mm;display:block;opacity:.55}
+
+.pk-voet{display:flex;align-items:center;gap:4mm;padding:3mm 5mm 3mm;position:relative;z-index:2}
+.pk-voet .zorg{font:600 3.4mm/1.45 var(--sans);color:var(--inkt);max-width:112mm}
+.pk-voet .zorg b{font-weight:700}
+.pk-voet .praktijk{margin-left:auto;text-align:right;font:700 2.9mm/1.4 var(--mono);letter-spacing:.12em;
+  text-transform:uppercase;color:var(--inkt-2)}
+
+.wijzer{position:absolute;font:500 12px/1.35 var(--sans);color:var(--grijs);width:138px;z-index:5}
+.wijzer::after{content:"";position:absolute;background:var(--lijn)}
+.wijzer.r::after{left:-20px;top:50%;width:16px;height:1px}
+.wijzer.l{text-align:right}
+.wijzer.l::after{right:-20px;top:50%;width:16px;height:1px}
+@media (max-width:1160px){.wijzer{display:none}}
+
+.printhulp{max-width:720px;margin:var(--s4) auto 0;text-align:center;font-size:16px;color:var(--inkt-2)}
+.printhulp .kn{margin-top:var(--s3)}
+
+/* ── voet ────────────────────────────────────────────────── */
+footer.uitleiding{background:var(--inkt);color:#c3c9cd;padding:var(--s6) 24px;border-top:8px solid var(--geel)}
+footer.uitleiding .binnen{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--geel);margin-bottom:13px}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:9px}
+footer.uitleiding li::before{content:"—";position:absolute;left:0;color:var(--rood)}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;margin:0 !important;
+    break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 23</span>
+  <strong style="font:700 15px/1 var(--sans);color:#fff">Zaalvloer</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm hout" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>het luidste concept in de galerij — en het enige dat toegeeft dat er meer speelt dan deze week</p>
+    </div>
+
+    <div class="hero">
+      <div>
+        <div class="kap">Fysiplan · zaalvloer</div>
+        <h1>Deze week ligt bovenop.</h1>
+        <p class="lead">Op een sporthalvloer liggen zes sporten over elkaar heen: basketbal rood,
+          volleybal geel, badminton blauw, tennis wit. Bij het schilderen geldt één regel — de sport
+          die het meest gespeeld wordt ligt bovenop en wordt door niets onderbroken; de rest ligt
+          eronder. Een lichaam werkt net zo. De oude knie, de stijve nek, de rug van twintig jaar
+          geleden: alles ligt er nog. Deze kaart schildert er één bovenop.</p>
+        <div class="doen">
+          <a class="kn" href="#printkaart">Bekijk de A4</a>
+          <a class="kn leeg" href="#clientkaart">Wat ligt eronder?</a>
+        </div>
+        <p class="naregel">De belijning is vijftig millimeter breed en de tekst ligt er nooit op —
+          dat is niet alleen een ontwerpkeuze maar een voorschrift van de vloer zelf. Elk speelvlak
+          heeft een egale lichte binnenkleur; daarbinnen staat alles in bijna-zwart, groot genoeg
+          voor armlengte.</p>
+      </div>
+
+      <div class="vloerstuk">
+        <svg viewBox="0 0 400 300" width="100%" height="100%" role="img"
+          aria-label="Een stuk sporthalvloer waarop vier sportvelden over elkaar heen zijn geschilderd: badminton in blauw, volleybal in geel en tennis in wit liggen onder een doorlopende rode basketballijn.">
+          <!-- tennis, wit: onderste laag -->
+          <rect x="24" y="34" width="352" height="232" fill="none" stroke="#ffffff" stroke-width="7"/>
+          <path d="M200 34v232" stroke="#ffffff" stroke-width="7"/>
+          <!-- badminton, blauw -->
+          <rect x="56" y="58" width="288" height="184" fill="none" stroke="#134a99" stroke-width="7"/>
+          <path d="M56 150h288M128 58v184M272 58v184" stroke="#134a99" stroke-width="7"/>
+          <!-- volleybal, geel -->
+          <rect x="86" y="80" width="228" height="140" fill="none" stroke="#f0bf00" stroke-width="7"/>
+          <path d="M86 150h228" stroke="#f0bf00" stroke-width="7"/>
+          <!-- basketbal, rood: bovenste laag, ononderbroken -->
+          <rect x="40" y="46" width="320" height="208" fill="none" stroke="#c8321f" stroke-width="9"/>
+          <circle cx="200" cy="150" r="42" fill="none" stroke="#c8321f" stroke-width="9"/>
+          <path d="M200 46v208" stroke="#c8321f" stroke-width="9"/>
+          <path d="M40 96a58 58 0 0 1 0 108M360 96a58 58 0 0 0 0 108" fill="none" stroke="#c8321f" stroke-width="9"/>
+        </svg>
+        <div class="bijschrift">Vier sporten, één vloer. De <b>rode lijn ligt bovenop</b> en wordt
+          nergens onderbroken — precies zoals de belijner hem heeft aangebracht.</div>
+      </div>
+    </div>
+
+    <div class="vloerregel">
+      <div class="cel">
+        <div class="balk" style="background:#c8321f"></div>
+        <span class="sp">Rood</span>
+        <h4>Basketbal</h4>
+        <p>Bij ons: de oefening die deze week bovenop ligt. Eén per kaart, nooit meer.</p>
+      </div>
+      <div class="cel">
+        <div class="balk" style="background:#f0bf00"></div>
+        <span class="sp">Geel</span>
+        <h4>Volleybal</h4>
+        <p>Bij ons: de tweede oefening. Geel is lijnkleur; er staat nooit tekst in geel.</p>
+      </div>
+      <div class="cel">
+        <div class="balk" style="background:#134a99"></div>
+        <span class="sp">Blauw</span>
+        <h4>Badminton</h4>
+        <p>Bij ons: de derde. Blauw is het rustigste veld en krijgt daarom de langste oefening.</p>
+      </div>
+      <div class="cel">
+        <div class="balk" style="background:#cbb287"></div>
+        <span class="sp">Onderbroken</span>
+        <h4>Wat eronder ligt</h4>
+        <p>Bij ons: alles wat óók speelt maar nu niet aan de beurt is. Zichtbaar, lichter, gestreept.</p>
+      </div>
+    </div>
+
+    <div class="stapel">
+      <h3>Wat niet aan de beurt is, verdwijnt niet van de kaart.</h3>
+      <p>Iemand van eenenzestig heeft zelden één klacht. De gebruikelijke oplossing is de rest
+        weglaten — en dan denkt de patiënt dat het vergeten is. Hier blijft alles staan, in de
+        volgorde waarin de therapeut het heeft gelegd. Wat bovenop ligt is deze week; wat eronder
+        ligt komt terug.</p>
+      <div class="lagen">
+        <div class="laag boven">
+          <span class="rang">Bovenop</span>
+          <span class="wat">Rechterknie</span>
+          <span class="toe">na de meniscusoperatie in juni — drie oefeningen, deze week</span>
+        </div>
+        <div class="laag onder" style="border-left-color:#f0bf00">
+          <span class="rang">Laag 2</span>
+          <span class="wat">Balans</span>
+          <span class="toe">loopt mee met de knie, komt volgende maand naar boven</span>
+        </div>
+        <div class="laag onder" style="border-left-color:#134a99">
+          <span class="rang">Laag 3</span>
+          <span class="wat">Onderrug</span>
+          <span class="toe">rustig sinds maart — blijft liggen, wordt gecontroleerd</span>
+        </div>
+        <div class="laag onder">
+          <span class="rang">Laag 4</span>
+          <span class="wat">Nek en schouder</span>
+          <span class="toe">afgerond in 2023 — staat er nog, want het is niet weg</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>kiezen is hier ook belijnen: elke oefening krijgt een veld, een kleur en een plek in de stapeling</p>
+    </div>
+
+    <div class="kiezerbalk">
+      <div class="zoek">
+        <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+          <circle cx="8.5" cy="8.5" r="6" fill="none" stroke="#14161a" stroke-width="2.6"/>
+          <path d="M13 13l5 5" stroke="#14161a" stroke-width="2.6" stroke-linecap="round"/>
+        </svg>
+        <input type="text" value="knie · na operatie" aria-label="Zoek een oefening" readonly/>
+      </div>
+      <span class="filter aan"><i style="background:#c8321f"></i>Veld 1 bezet</span>
+      <span class="filter aan"><i style="background:#f0bf00"></i>Veld 2 bezet</span>
+      <span class="filter aan"><i style="background:#134a99"></i>Veld 3 bezet</span>
+      <span class="filter">Staand</span>
+      <span class="filter">Met steun</span>
+    </div>
+
+    <div class="tegels">
+
+      <article class="tegel gekozen">
+        <div class="band" style="background:#c8321f"></div>
+        <span class="veldnr" style="background:#c8321f">Veld 1</span>
+        <div class="beeld">
+          <img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+            alt="Lijntekening: iemand komt vanaf een stoel omhoog tot stand en zakt gecontroleerd terug."/>
+        </div>
+        <div class="body">
+          <span class="grp">Onderste extremiteit</span>
+          <h3>Opstaan uit de stoel</h3>
+          <span class="zone">Zone: stoel · zonder materiaal</span>
+        </div>
+      </article>
+
+      <article class="tegel gekozen">
+        <div class="band" style="background:#f0bf00"></div>
+        <span class="veldnr" style="background:#14161a">Veld 2</span>
+        <div class="beeld">
+          <img src="/images/onderste-extremiteit/calf-raises-line-v1.png"
+            alt="Lijntekening: iemand gaat staand op de tenen omhoog en zakt weer terug."/>
+        </div>
+        <div class="body">
+          <span class="grp">Onderste extremiteit</span>
+          <h3>Op de tenen omhoog</h3>
+          <span class="zone">Zone: aanrecht · steun met beide handen</span>
+        </div>
+      </article>
+
+      <article class="tegel gekozen">
+        <div class="band" style="background:#134a99"></div>
+        <span class="veldnr" style="background:#134a99">Veld 3</span>
+        <div class="beeld">
+          <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png"
+            alt="Lijntekening: iemand staat op één been en houdt zich met één hand vast aan een stoelleuning."/>
+        </div>
+        <div class="body">
+          <span class="grp">Balans en valpreventie</span>
+          <h3>Eenbeenstand met steun</h3>
+          <span class="zone">Zone: aanrecht · steun met één hand</span>
+        </div>
+      </article>
+
+      <article class="tegel">
+        <div class="band" style="background:#cbb287"></div>
+        <div class="beeld">
+          <img src="/images/onderste-extremiteit/glute-bridges-line-v1.png"
+            alt="Lijntekening: liggend op de rug met gebogen knieën wordt het bekken omhoog geduwd."/>
+        </div>
+        <div class="body">
+          <span class="grp">Onderste extremiteit</span>
+          <h3>Bruggetje op de rug</h3>
+          <span class="zone">Ligt eronder · komt bij ronde 2 naar boven</span>
+        </div>
+      </article>
+
+      <article class="tegel">
+        <div class="band" style="background:#cbb287"></div>
+        <div class="beeld">
+          <img src="/images/onderste-extremiteit/hamstring-curl-staand-met-steun-line-v1.png"
+            alt="Lijntekening: staand met steun wordt de hiel naar de bil gebracht."/>
+        </div>
+        <div class="body">
+          <span class="grp">Onderste extremiteit</span>
+          <h3>Hiel naar de bil</h3>
+          <span class="zone">Ligt eronder · wisselt met veld 2</span>
+        </div>
+      </article>
+
+      <article class="tegel">
+        <div class="band" style="background:#cbb287"></div>
+        <div class="beeld">
+          <img src="/images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png"
+            alt="Lijntekening: staand met steun wordt het gewicht rustig van het ene naar het andere been verplaatst."/>
+        </div>
+        <div class="body">
+          <span class="grp">Balans en valpreventie</span>
+          <h3>Gewicht zijwaarts verplaatsen</h3>
+          <span class="zone">Ligt eronder · opvolger van veld 3</span>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="toewijzing">
+      <div class="kop">
+        <span>Belijning van deze week</span>
+        <span class="rek"></span>
+        <span>3 velden · 1 vloer · 7 dagen</span>
+      </div>
+      <div class="rij">
+        <span class="kleurbalk" style="background:#c8321f"></span>
+        <span class="nr">1</span>
+        <span class="nm">Opstaan uit de stoel<small>Zonder de handen gebruiken, gecontroleerd terugzakken.</small></span>
+        <span class="maat verberg">10× · 2 series<br/>2 keer per dag</span>
+        <span class="plek verberg">Stoel<br/>keuken</span>
+      </div>
+      <div class="rij">
+        <span class="kleurbalk" style="background:#f0bf00"></span>
+        <span class="nr">2</span>
+        <span class="nm">Op de tenen omhoog<small>Twee handen aan het aanrecht, rustig omhoog en omlaag.</small></span>
+        <span class="maat verberg">15× · 2 series<br/>2 keer per dag</span>
+        <span class="plek verberg">Aanrecht</span>
+      </div>
+      <div class="rij">
+        <span class="kleurbalk" style="background:#134a99"></span>
+        <span class="nr">3</span>
+        <span class="nm">Eenbeenstand met steun<small>Eén hand vast, 20 tellen per been, kijk vooruit.</small></span>
+        <span class="maat verberg">20 tellen<br/>3× per been</span>
+        <span class="plek verberg">Aanrecht</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm hout" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>drie velden, een scorebord en één dunne streep naar wat eronder ligt</p>
+    </div>
+
+    <div class="telefoon">
+      <div class="schermpje">
+        <div class="sk-top">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" fill="none" stroke="#fff" stroke-width="2.2"/>
+            <path d="M12 4v16" stroke="#fff" stroke-width="2.2"/>
+            <circle cx="12" cy="12" r="4" fill="none" stroke="#fff" stroke-width="2.2"/>
+          </svg>
+          <span class="naam">J. Verkaik</span>
+          <span class="rond">Ronde 3 · week 34</span>
+        </div>
+
+        <div class="scorebord" role="img"
+          aria-label="Scorebord van de week: maandag, dinsdag, woensdag en donderdag zijn gespeeld, vrijdag is vandaag, zaterdag en zondag volgen nog.">
+          <i class="gespeeld">M</i><i class="gespeeld">D</i><i class="gespeeld">W</i>
+          <i class="gespeeld">D</i><i class="nu">V</i><i>Z</i><i>Z</i>
+        </div>
+
+        <div class="velden">
+
+          <div class="veld">
+            <div class="v-kop">
+              <span class="v-nr">1</span>
+              <span class="v-naam">Opstaan uit de stoel</span>
+              <span class="v-kleur">Rood</span>
+            </div>
+            <div class="v-lijf">
+              <img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+                alt="Lijntekening: opstaan vanaf een stoel zonder handen te gebruiken."/>
+              <div class="v-maat">
+                <span>10× <small>herhalingen</small></span>
+                <span>2 series <small>met pauze</small></span>
+                <span>2× <small>per dag</small></span>
+              </div>
+            </div>
+            <div class="v-knop">
+              <button class="vknop vol" type="button">Gespeeld</button>
+              <button class="vknop stil" type="button">Overgeslagen</button>
+            </div>
+          </div>
+
+          <div class="veld g">
+            <div class="v-kop">
+              <span class="v-nr">2</span>
+              <span class="v-naam">Op de tenen omhoog</span>
+              <span class="v-kleur">Geel</span>
+            </div>
+            <div class="v-lijf">
+              <img src="/images/onderste-extremiteit/calf-raises-line-v1.png"
+                alt="Lijntekening: staand op de tenen omhoog komen met steun aan het aanrecht."/>
+              <div class="v-maat">
+                <span>15× <small>herhalingen</small></span>
+                <span>2 series <small>met pauze</small></span>
+                <span>2× <small>per dag</small></span>
+              </div>
+            </div>
+            <div class="v-knop">
+              <button class="vknop vol" type="button">Gespeeld</button>
+              <button class="vknop stil" type="button">Overgeslagen</button>
+            </div>
+          </div>
+
+          <div class="veld b">
+            <div class="v-kop">
+              <span class="v-nr">3</span>
+              <span class="v-naam">Eenbeenstand met steun</span>
+              <span class="v-kleur">Blauw</span>
+            </div>
+            <div class="v-lijf">
+              <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png"
+                alt="Lijntekening: op één been staan met één hand aan de stoelleuning."/>
+              <div class="v-maat">
+                <span>20 tellen <small>per been</small></span>
+                <span>3× <small>per been</small></span>
+              </div>
+            </div>
+            <div class="v-knop">
+              <button class="vknop" type="button">Gespeeld</button>
+              <button class="vknop stil" type="button">Overgeslagen</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="onderlaag">
+          <b>Ligt eronder</b>
+          <p>Balans · onderrug · nek en schouder. Niet weg, niet aan de beurt. Marieke haalt bij de
+            volgende afspraak één laag naar boven.</p>
+        </div>
+      </div>
+
+      <div class="uitlegkolom">
+        <h3>Kleur is hier geen versiering maar een adres.</h3>
+        <p>"Doe het rode veld" is een zin die iemand van tachtig onthoudt aan de telefoon. "Doe
+          oefening twee" niet. Daarom krijgt elke oefening één kleur die overal hetzelfde blijft: op
+          de A4 op de koelkast, op het scherm in de hand en in het dossier van de praktijk. De
+          nummers lopen mee, maar de kleur is de naam.</p>
+
+        <ol class="puntenlijst">
+          <li>
+            <span class="kleur" style="background:#c8321f"></span>
+            <div>
+              <b>Het veld met de rode lijn ligt bovenop</b>
+              <p>Eén oefening per week is de belangrijkste, en die staat bovenaan met de dikste
+                lijn. Als er maar één ding lukt op een slechte dag, is dat dit.</p>
+            </div>
+          </li>
+          <li>
+            <span class="kleur" style="background:#f0bf00"></span>
+            <div>
+              <b>Geel is lijnkleur, nooit tekstkleur</b>
+              <p>Geel op licht papier leest niet. Het markeert wél de sterkste rand van het blad.
+                Alles wat gelezen moet worden staat in bijna-zwart op een egaal vlak.</p>
+            </div>
+          </li>
+          <li>
+            <span class="kleur" style="background:#134a99"></span>
+            <div>
+              <b>Overgeslagen is een stand, geen oordeel</b>
+              <p>Het scorebord toont wat gespeeld is en wat niet. Geen percentage, geen reeks die je
+                kwijt kunt raken, geen aanmoediging. Een stand, meer niet.</p>
+            </div>
+          </li>
+          <li>
+            <span class="kleur" style="background:#cbb287"></span>
+            <div>
+              <b>De onderlaag blijft in beeld</b>
+              <p>Onderaan het scherm en onderaan de A4 staat wat er nog meer speelt. Dat is voor
+                veel mensen het belangrijkste stukje van de kaart: het bewijs dat de rest niet
+                vergeten is.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>drie speelvelden op één vloer; de tekst ligt nergens op een lijn</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer r geen-print" style="top:22mm;left:calc(100% + 22px)">het scorebord:
+            zeven vakjes, verder niets</span>
+          <span class="wijzer r geen-print" style="top:96mm;left:calc(100% + 22px)">binnenvlak egaal en
+            licht — hier staat alle tekst</span>
+          <span class="wijzer l geen-print" style="top:150mm;right:calc(100% + 22px)">belijning 1,6 mm:
+            de rand draagt de structuur</span>
+          <span class="wijzer l geen-print" style="top:252mm;right:calc(100% + 22px)">de onderlaag —
+            wat wél speelt maar niet aan de beurt is</span>
+
+          <div class="pk-rand" aria-hidden="true"></div>
+
+          <div class="pk-kop">
+            <div>
+              <div class="naam">J. Verkaik</div>
+              <div class="sub">Rechterknie · ronde 3 · 18 t/m 24 augustus</div>
+            </div>
+            <div class="pk-bord">
+              <div class="lbl">Deze week</div>
+              <div class="hokjes" role="img"
+                aria-label="Zeven vakjes voor de dagen van de week; de eerste vier zijn afgetekend.">
+                <i class="gespeeld">M</i><i class="gespeeld">D</i><i class="gespeeld">W</i>
+                <i class="gespeeld">D</i><i>V</i><i>Z</i><i>Z</i>
+              </div>
+            </div>
+          </div>
+
+          <div class="pk-velden">
+
+            <div class="pk-veld">
+              <div class="afvink" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="links">
+                <div class="vkop">
+                  <span class="vnr">1</span>
+                  <div>
+                    <h2>Opstaan uit de stoel</h2>
+                    <span class="grp">Rood · bovenste laag</span>
+                  </div>
+                </div>
+                <p>Ga op de voorste helft van een stevige stoel zitten, voeten plat op de grond. Kom
+                  omhoog zonder uw handen te gebruiken en ga daarna langzaam weer zitten — vier
+                  tellen omlaag.</p>
+                <div class="maatrij">
+                  <div class="maat"><b>10×</b><span>Herhalen</span></div>
+                  <div class="maat"><b>2</b><span>Series</span></div>
+                  <div class="maat"><b>2×</b><span>Per dag</span></div>
+                </div>
+              </div>
+              <div class="rechts">
+                <img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+                  alt="Lijntekening: vanaf een stoel omhoog komen tot stand en gecontroleerd terugzakken."/>
+              </div>
+            </div>
+
+            <div class="pk-veld g">
+              <div class="afvink" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="links">
+                <div class="vkop">
+                  <span class="vnr">2</span>
+                  <div>
+                    <h2>Op de tenen omhoog</h2>
+                    <span class="grp">Geel · tweede laag</span>
+                  </div>
+                </div>
+                <p>Sta rechtop bij het aanrecht met beide handen licht op de rand. Kom rustig op uw
+                  tenen omhoog, houd één tel vast en zak langzaam terug tot de hielen de grond
+                  raken.</p>
+                <div class="maatrij">
+                  <div class="maat"><b>15×</b><span>Herhalen</span></div>
+                  <div class="maat"><b>2</b><span>Series</span></div>
+                  <div class="maat"><b>2×</b><span>Per dag</span></div>
+                </div>
+              </div>
+              <div class="rechts">
+                <img src="/images/onderste-extremiteit/calf-raises-line-v1.png"
+                  alt="Lijntekening: staand op de tenen omhoog komen en weer zakken."/>
+              </div>
+            </div>
+
+            <div class="pk-veld b">
+              <div class="afvink" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="links">
+                <div class="vkop">
+                  <span class="vnr">3</span>
+                  <div>
+                    <h2>Eenbeenstand met steun</h2>
+                    <span class="grp">Blauw · derde laag</span>
+                  </div>
+                </div>
+                <p>Houd u met één hand vast aan het aanrecht en til één voet los van de grond. Kijk
+                  recht vooruit naar een vast punt en blijf rustig doorademen. Wissel daarna van
+                  been.</p>
+                <div class="maatrij">
+                  <div class="maat"><b>20</b><span>Tellen</span></div>
+                  <div class="maat"><b>3×</b><span>Per been</span></div>
+                  <div class="maat"><b>1×</b><span>Per dag</span></div>
+                </div>
+              </div>
+              <div class="rechts">
+                <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png"
+                  alt="Lijntekening: op één been staan met één hand aan een steunpunt."/>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="pk-onder">
+            <span class="lbl">Ligt eronder</span>
+            <div class="items">
+              <span class="item"><i style="background:#f0bf00"></i>Balans — komt bij ronde 4 naar boven</span>
+              <span class="item"><i style="background:#134a99"></i>Onderrug — rustig sinds maart</span>
+              <span class="item"><i style="background:#6e767f"></i>Nek en schouder — afgerond in 2023</span>
+            </div>
+          </div>
+
+          <div class="pk-voet">
+            <span class="zorg"><b>Een beetje spierpijn hoort erbij.</b> Scherpe pijn in de knie of een
+              knie die opzwelt hoort er niet bij: stop dan en bel de praktijk.</span>
+            <span class="praktijk">Fysiotherapie Noorderlicht<br/>Groningen · 050 – 313 44 20</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <p class="printhulp geen-print">Print deze pagina en alles behalve de A4 verdwijnt. Het blad is
+      ook in zwart-wit compleet: de velden verschillen dan in lijndikte en in de grijswaarde van hun
+      binnenvlak, en elk veld draagt bovendien zijn nummer. Geen enkele instructie hangt aan kleur
+      alleen.<br/>
+      <a class="kn geen-print" href="javascript:window.print()">Print de A4</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>De richting</h4>
+      <p>De kaart als sporthalvloer: drie speelvelden in de standaardkleuren van de Nederlandse
+        belijning, met de regel van de belijner erbij — wat het meest gespeeld wordt, ligt bovenop.
+        Wat eronder ligt blijft zichtbaar, want dat is niet weg, alleen niet aan de beurt.</p>
+    </div>
+    <div class="kolom">
+      <h4>Waar het schuurt</h4>
+      <ul>
+        <li>Dit blad ziet er niet uit als zorg. Een praktijk die zachtheid wil uitstralen, moet dit niet nemen.</li>
+        <li>Verzadigde vlakken kosten inkt. Op een zuinige kantoorprinter wordt de vloer bleker dan hier.</li>
+        <li>De metafoor vraagt uitleg bij de eerste kaart. Daarna is hij van de patiënt.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Verder</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

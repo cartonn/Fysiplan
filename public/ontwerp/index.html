@@ -334,6 +334,57 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
 .staal.waarde .rozet b{position:relative;z-index:2;font:400 24px/1 "Iowan Old Style",Palatino,Georgia,serif}
 .staal.waarde .strepen i{border-color:rgba(37,35,82,.28)}
 
+/* — staal concept 22: Woordloos — */
+.staal.woordloos{background:#ffffff;color:#101314;box-shadow:inset 0 0 0 3px #101314}
+.staal.woordloos .plaatnr{color:#101314;font-family:var(--mono);position:relative;z-index:2}
+.staal.woordloos .woord{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;
+  letter-spacing:-.045em;position:relative;z-index:2}
+.staal.woordloos .geelbalk{position:absolute;left:0;right:0;bottom:0;height:16px;background:#ffcf2e}
+.staal.woordloos .paar{position:absolute;right:16px;top:50%;transform:translateY(-58%);
+  display:flex;gap:6px;z-index:2}
+.staal.woordloos .paar i{width:26px;height:26px;display:block;position:relative}
+.staal.woordloos .paar i.v{box-shadow:inset 0 0 0 3px #0f7345}
+.staal.woordloos .paar i.k{box-shadow:inset 0 0 0 3px #cf1f14}
+.staal.woordloos .paar i.v::after{content:"";position:absolute;left:5px;top:11px;width:7px;height:3px;
+  background:#0f7345;transform:rotate(45deg)}
+.staal.woordloos .paar i.v::before{content:"";position:absolute;left:9px;top:8px;width:13px;height:3px;
+  background:#0f7345;transform:rotate(-45deg)}
+.staal.woordloos .paar i.k::after,.staal.woordloos .paar i.k::before{content:"";position:absolute;
+  left:4px;top:11px;width:18px;height:3px;background:#cf1f14}
+.staal.woordloos .paar i.k::after{transform:rotate(45deg)}
+.staal.woordloos .paar i.k::before{transform:rotate(-45deg)}
+.staal.woordloos .strepen{display:none}
+
+/* — staal concept 23: Zaalvloer — */
+.staal.zaalvloer{color:#14161a;background-color:#ead4ac;
+  background-image:repeating-linear-gradient(90deg,rgba(180,144,96,.24) 0 1px,transparent 1px 26px)}
+.staal.zaalvloer .plaatnr{color:#14161a;font-family:var(--mono);position:relative;z-index:3}
+.staal.zaalvloer .woord{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;
+  letter-spacing:-.04em;text-transform:uppercase;position:relative;z-index:3}
+.staal.zaalvloer .veldjes{position:absolute;inset:0;z-index:1}
+.staal.zaalvloer .veldjes i{position:absolute;display:block}
+.staal.zaalvloer .veldjes i.wit{inset:10px 12px 10px 44%;box-shadow:inset 0 0 0 3px rgba(255,255,255,.92)}
+.staal.zaalvloer .veldjes i.blauw{inset:20px 24px 20px 48%;box-shadow:inset 0 0 0 3px #134a99}
+.staal.zaalvloer .veldjes i.geel{inset:30px 40px 30px 54%;box-shadow:inset 0 0 0 3px #f0bf00}
+.staal.zaalvloer .veldjes i.rood{inset:15px 18px 15px 46%;box-shadow:inset 0 0 0 4px #c8321f}
+.staal.zaalvloer .veldjes i.cirkel{left:72%;top:50%;width:38px;height:38px;margin:-19px 0 0 -19px;
+  border-radius:50%;box-shadow:inset 0 0 0 4px #c8321f}
+.staal.zaalvloer .strepen i{border-color:rgba(20,22,26,.3)}
+
+/* — staal concept 24: Veldgids — */
+.staal.veldgids{background:#f7f2e4;color:#22201b;box-shadow:inset 0 0 0 1px #d8d0bb}
+.staal.veldgids .plaatnr{color:#33513c;font-family:var(--mono);position:relative;z-index:2}
+.staal.veldgids .woord{font-family:"Iowan Old Style",Charter,Palatino,Georgia,serif;font-weight:400;
+  position:relative;z-index:2}
+.staal.veldgids .woord em{font-style:italic;color:#b02f18}
+.staal.veldgids .pijl{position:absolute;z-index:2;display:flex;align-items:center;gap:0}
+.staal.veldgids .pijl b{width:17px;height:17px;border-radius:50%;background:#b02f18;color:#fff;
+  font:600 9px/17px var(--sans);text-align:center;flex:none}
+.staal.veldgids .pijl s{height:1.5px;background:#b02f18;text-decoration:none;display:block}
+.staal.veldgids .pijl u{width:6px;height:6px;border-radius:50%;background:#b02f18;display:block;
+  text-decoration:none;flex:none}
+.staal.veldgids .strepen i{border-color:rgba(34,32,27,.24)}
+
 .kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
 .kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
 .kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
@@ -393,8 +444,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>21</b> concepten</span>
-      <span>Laatste ronde <b>17 augustus 2026</b></span>
+      <span><b>24</b> concepten</span>
+      <span>Laatste ronde <b>18 augustus 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -1271,6 +1322,132 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-21-waardepapier.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-21-waardepapier.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="galerijkop" style="margin-top:var(--s6)">
+      <h2>Ronde 8</h2>
+      <span>ronde 8 · 18 aug 2026</span>
+    </div>
+
+    <div class="raster">
+
+      <!-- ─────────── CONCEPT 22 ─────────── -->
+      <article class="kaart">
+        <div class="staal woordloos">
+          <div class="plaatnr">0 woorden · 1 regel</div>
+          <div class="paar" aria-hidden="true"><i class="v"></i><i class="k"></i></div>
+          <div class="woord">10× 3″ 2/dag</div>
+          <div class="geelbalk" aria-hidden="true"></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 22</div>
+          <h3>Woordloos</h3>
+          <p class="richting">Het blad werkt ook als u het niet kunt lezen.</p>
+          <p class="rationale">Alle taal weg, op precies één regel na: de veiligheidsregel, onderaan,
+            in een geel kader. Verder alleen cijfers, pijlen en pictogrammen — de regel die de
+            montagehandleiding al veertig jaar hanteert. Naast elke oefening staat niet alleen de
+            goede uitvoering maar ook de veelgemaakte fout, getekend, met een rode balk erdoor. De
+            oefeningen-kiezer heeft daarom een filter dat nergens anders bestaat: welke oefeningen
+            zíjn woordloos te tonen en welke hebben woorden nodig. Wat wegvalt op papier komt op de
+            cliëntkaart terug als ingesproken bericht van de eigen therapeut — gesproken taal vraagt
+            geen leesvaardigheid.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>De IKEA-montagehandleiding en haar regel "tekst bestaat alleen voor veiligheid" ·
+              de veiligheidskaart in de stoelzak van het vliegtuig · ISO-pictogrammen en hun
+              lijndikte · de vuistregel dat een dubbelzinnige stap opnieuw getekend wordt in plaats
+              van uitgelegd · doe-en-niet-doe-paren uit gebruiksaanwijzingen</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — gereedschapsrij, drie oefeningen met begin- en eindbeeld, en één gele regel</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-22-woordloos.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-22-woordloos.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 23 ─────────── -->
+      <article class="kaart">
+        <div class="staal zaalvloer">
+          <div class="veldjes" aria-hidden="true">
+            <i class="wit"></i><i class="blauw"></i><i class="geel"></i><i class="rood"></i><i class="cirkel"></i>
+          </div>
+          <div class="plaatnr">Veld 1 · rood</div>
+          <div class="woord">Bovenop</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 23</div>
+          <h3>Zaalvloer</h3>
+          <p class="richting">Op een sporthalvloer ligt de sport die het meest gespeeld wordt bovenop.</p>
+          <p class="rationale">De kaart als sportvloerbelijning: basketbal rood, volleybal geel,
+            badminton blauw, en de regel van de belijner erbij — de drukst bespeelde lijn ligt bovenop
+            en wordt nergens onderbroken. Een lichaam is net zo'n zaal: de oude knie, de stijve nek,
+            de rug van twintig jaar geleden liggen er allemaal nog. Deze week ligt er één bovenop, en
+            wat eronder ligt blijft lichter en gestreept in beeld — niet weg, alleen niet aan de
+            beurt. De kleur is bovendien het adres: "doe het rode veld" onthoudt iemand van tachtig,
+            "doe oefening twee" niet. Geel is uitsluitend lijnkleur; tekst staat altijd bijna-zwart
+            op een egaal binnenvlak, precies zoals op een echte vloer.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>De Nederlandse sportvloerbelijning: 50 mm breed, rood basketbal, geel volleybal,
+              blauw badminton, wit tennis · het voorschrift dat parallelle lijnen elkaar niet
+              overlappen · de aanbrengvolgorde waarin de populairste sport bovenop komt ·
+              stencilletters en scoreborden · gelakt beuken en lakverf</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — drie speelvelden, een scorebord van zeven vakjes en een onderlaag</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-23-zaalvloer.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-23-zaalvloer.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 24 ─────────── -->
+      <article class="kaart">
+        <div class="staal veldgids">
+          <div class="plaatnr">Plaat 14 — 3 kenmerken</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#f7f2e4"></i><i style="background:#22201b"></i>
+            <i style="background:#b02f18"></i><i style="background:#33513c"></i>
+          </div>
+          <span class="pijl" style="left:16px;bottom:44px" aria-hidden="true">
+            <b>1</b><s style="width:34px"></s><u></u>
+          </span>
+          <span class="pijl" style="left:16px;bottom:22px" aria-hidden="true">
+            <b>2</b><s style="width:52px"></s><u></u>
+          </span>
+          <div class="woord" style="align-self:flex-end"><em>Kijk</em> hier</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 24</div>
+          <h3>Veldgids</h3>
+          <p class="richting">Peterson tekende pijlen naar wat je moet zien. Op oefenkaarten staan die pijlen nergens.</p>
+          <p class="rationale">Het Peterson-systeem uit 1934, overgezet op de oefenkaart: rode pijlen
+            die niet naar de beweging wijzen maar naar het kenmerk waaraan u merkt dat u het goed
+            doet — twee of drie per oefening, nooit meer, met één zin in gewone taal. Daar komen twee
+            dingen bij die elke veldgids heeft en geen enkele oefenkaart: "verwarrend met", want de
+            meeste mensen doen niet een oefening verkeerd maar per ongeluk een ándere, en een
+            waarnemingenlijst waarop u afstreept dat u het kenmerk hérkende — niet dat u de oefening
+            deed. Dat vinkje meet begrip in plaats van gehoorzaamheid, en zegt de therapeut oneindig
+            veel meer dan "lukte het een beetje?".</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Roger Tory Peterson en zijn pijlen naar de field marks (1934) · de plaatnummering en
+              familie-indeling van veldgidsen · de rubriek "lijkt op, maar…" · de levenslijst van de
+              vogelaar · crèmekleurig dundrukpapier met ruime kantlijn · zwarte lijntekening met
+              precies één tweede inkt</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — drie platen met genummerde kenmerken en een waarnemingenlijst van een week</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-24-veldgids.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-24-veldgids.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>

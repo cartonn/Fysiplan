@@ -1,0 +1,1179 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 22 — Woordloos · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 22 — WOORDLOOS
+
+   Een oefenkaart is een stapel zinnen. Dat werkt voor wie goed
+   Nederlands leest, goed ziet, en op het moment van lezen rustig
+   genoeg is om te lezen. Een flink deel van de mensen die deze
+   kaart mee naar huis krijgt, voldoet aan geen van die drie:
+   laaggeletterd, anderstalig, oud, moe, of net een half uur
+   geleden iets naars gehoord in de spreekkamer.
+
+   Dus haalt dit concept de taal weg. Niet minder tekst — géén
+   tekst. Op de A4 staan alleen: cijfers, pijlen, pictogrammen,
+   de naam van de patiënt, en één enkele regel Nederlands
+   onderaan, in een kader, met een uitroepteken ervoor. Dat is de
+   regel die IKEA al veertig jaar hanteert: tekst bestaat alleen
+   voor veiligheid. Al het andere wordt getekend.
+
+   De harde regel die dit concept overeind houdt (ook van IKEA):
+   ALS EEN STAP TWEE KANTEN OP KAN, SCHRIJVEN WE ER GEEN ZIN BIJ
+   — DAN TEKENEN WE DE STAP OPNIEUW. Ambiguïteit is een
+   tekenfout, geen tekstprobleem. Daarom zit in de oefeningen-
+   kiezer een filter dat niemand anders heeft: welke oefeningen
+   zíjn woordloos te tonen, en welke niet. Een oefening die
+   "voel de spanning tussen uw schouderbladen" nodig heeft, valt
+   af — en dat is eerlijker dan hem er half in proppen.
+
+   Drie dingen die alleen dit concept oplevert:
+
+   1. HET BLAD WERKT ALS U HET NIET KUNT LEZEN. Geen vertaling
+      nodig, geen leesniveau nodig. De praktijk drukt één versie.
+   2. FOUT ERBIJ. Naast elke oefening staat wat er misgaat —
+      getekend, met een rode balk erdoor. Op vrijwel geen enkele
+      oefenkaart staat de fout; hij staat wel in het hoofd van
+      de therapeut.
+   3. DE TWIJFELSTREEP. Elke oefening heeft één ✓-beeld en één
+      ✗-beeld naast elkaar op dezelfde hoogte. Wie twijfelt,
+      vergelijkt — precies zoals bij een veiligheidskaart in het
+      vliegtuig.
+
+   Waar het schuurt: dit is een product dat van zinnen gemaakt is
+   en hier alle zinnen weggooit. Dat kost iets. Nuance verdwijnt,
+   "rustig aan" is niet te tekenen, en de therapeut moet zijn
+   toelichting mondeling geven of inspreken. Dit concept kiest
+   dat bewust: liever een blad dat iedereen half begrijpt dan een
+   blad dat de helft helemaal niet leest.
+
+   Toegankelijkheid: woordloos op papier, maar NIET stil voor
+   schermlezers. Elk pictogram en elke foto heeft een volledige
+   Nederlandse alt-tekst; wie niet ziet, krijgt juist alle taal.
+   Contrast: inkt bijna zwart op wit (>15:1), rood alleen groot
+   of als vlak, geel nooit als tekstkleur — alleen als vlak
+   onder zwarte inkt.
+   Alles inline; de pagina is zelfstandig.
+   ============================================================ */
+
+:root{
+  --papier:#ffffff;
+  --papier-2:#f2f2f0;
+  --papier-3:#e6e6e3;
+  --inkt:#101314;
+  --inkt-2:#3b4145;
+  --grijs:#71787c;
+  --lijn:#c9cccd;
+  --lijn-2:#e2e4e4;
+
+  --rood:#cf1f14;        /* fout, gevaar — nooit als leestekst op klein formaat */
+  --rood-l:#fdeceb;
+  --groen:#0f7345;       /* goed */
+  --groen-l:#e8f4ee;
+  --geel:#ffcf2e;        /* aandacht: alleen als vlak onder zwarte inkt */
+  --blauw:#12489e;       /* interactie op het scherm */
+
+  --sans:"Helvetica Neue",Helvetica,Arial,"Liberation Sans",system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:44px; --s6:74px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.62 var(--sans);color:var(--inkt-2);background:var(--papier-2)}
+img{max-width:100%;display:block}
+svg{display:block}
+a{color:var(--blauw)}
+:focus-visible{outline:3px solid var(--blauw);outline-offset:3px}
+
+/* ── labbalk ─────────────────────────────────────────────── */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:18px;
+  background:var(--inkt);color:#dfe2e3;padding:11px 22px;border-bottom:4px solid var(--geel)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--inkt);background:var(--geel);padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{font:500 14px/1 var(--sans);color:#b9bec0;text-decoration:none;padding:6px 4px}
+.labbalk a:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.labbalk a.terug{color:var(--geel)}
+@media (max-width:820px){.labbalk{gap:12px;padding:9px 14px;flex-wrap:wrap}.labbalk a{font-size:13px}
+  .scherm{scroll-margin-top:108px}}
+
+/* ── schermen ────────────────────────────────────────────── */
+.scherm{scroll-margin-top:64px;padding:var(--s6) 24px;border-top:1px solid var(--lijn)}
+.scherm:first-child{border-top:0}
+.scherm.wit{background:var(--papier)}
+.binnen{max-width:1180px;margin:0 auto}
+.schermkop{max-width:760px;margin-bottom:var(--s5)}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;
+  color:var(--inkt);margin-bottom:12px}
+.schermkop b::before{content:"";display:inline-block;width:22px;height:9px;background:var(--geel);
+  margin-right:9px;vertical-align:1px}
+.schermkop h2{font:700 clamp(28px,3.4vw,40px)/1.08 var(--sans);letter-spacing:-.035em;color:var(--inkt);margin-bottom:10px}
+.schermkop p{font-size:17.5px;color:var(--grijs)}
+
+.kn{display:inline-flex;align-items:center;gap:10px;font:700 15px/1 var(--sans);background:var(--inkt);
+  color:#fff;padding:16px 24px;text-decoration:none;border:2px solid var(--inkt)}
+.kn:hover{background:#000;border-color:#000}
+.kn.leeg{background:transparent;color:var(--inkt)}
+.kn.leeg:hover{background:var(--inkt);color:#fff}
+
+/* ── 1 · landing ─────────────────────────────────────────── */
+.hero{display:grid;grid-template-columns:1.02fr .98fr;gap:var(--s6);align-items:center}
+@media (max-width:980px){.hero{grid-template-columns:1fr;gap:var(--s5)}}
+.kap{font:700 11px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--grijs);margin-bottom:var(--s3)}
+.hero h1{font:700 clamp(38px,5.4vw,62px)/1.02 var(--sans);letter-spacing:-.045em;color:var(--inkt);max-width:15ch}
+.hero .lead{font-size:19.5px;line-height:1.6;margin-top:var(--s3);max-width:48ch;color:var(--inkt-2)}
+.doen{display:flex;flex-wrap:wrap;gap:12px;margin-top:var(--s4)}
+.naregel{margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid var(--lijn);
+  font-size:15.5px;color:var(--grijs);max-width:52ch}
+
+/* de regel-in-een-kader: het hart van dit concept */
+.regelkaart{border:3px solid var(--inkt);background:var(--papier);padding:var(--s4)}
+.regelkaart .r-kop{display:flex;align-items:center;gap:12px;margin-bottom:var(--s3);
+  border-bottom:3px solid var(--inkt);padding-bottom:var(--s3)}
+.regelkaart .r-kop span{font:700 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--inkt)}
+.regelkaart h3{font:700 25px/1.18 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-bottom:12px}
+.regelkaart p{font-size:16px;color:var(--inkt-2)}
+.regelrij{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-top:var(--s4)}
+.regelvak{border:2px solid var(--lijn);padding:var(--s3);text-align:center}
+.regelvak.goed{border-color:var(--groen);background:var(--groen-l)}
+.regelvak.fout{border-color:var(--rood);background:var(--rood-l)}
+.regelvak .vlag{font:700 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px;display:block}
+.regelvak.goed .vlag{color:var(--groen)}
+.regelvak.fout .vlag{color:var(--rood)}
+.regelvak p{font-size:14.5px;color:var(--inkt-2);margin-top:10px}
+.regelvak svg{margin:0 auto}
+
+/* pictogramstrook onder de hero */
+.picstrook{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;margin-top:var(--s6);
+  background:var(--lijn);border:2px solid var(--inkt)}
+@media (max-width:900px){.picstrook{grid-template-columns:repeat(3,1fr)}}
+.picstrook figure{background:var(--papier);padding:var(--s3) 10px;text-align:center}
+.picstrook svg{margin:0 auto 10px}
+.picstrook figcaption{font:600 12px/1.35 var(--sans);color:var(--grijs)}
+.picstrook figcaption b{display:block;font:700 10px/1 var(--mono);letter-spacing:.14em;color:var(--inkt);
+  text-transform:uppercase;margin-bottom:5px}
+
+/* wat het kost — het eerlijke blok */
+.kosten{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s6);
+  border-top:3px solid var(--inkt);padding-top:var(--s4)}
+@media (max-width:900px){.kosten{grid-template-columns:1fr;gap:var(--s3)}}
+.kosten h4{font:700 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--inkt);margin-bottom:10px}
+.kosten p{font-size:15.5px;color:var(--inkt-2)}
+
+/* ── 2 · kiezer ──────────────────────────────────────────── */
+.kiezerbalk{display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+  border:2px solid var(--inkt);padding:12px;background:var(--papier);margin-bottom:var(--s4)}
+.zoek{flex:1;min-width:230px;display:flex;align-items:center;gap:10px;border:2px solid var(--lijn);padding:12px 14px}
+.zoek input{border:0;outline:0;font:500 16px/1 var(--sans);width:100%;color:var(--inkt);background:transparent}
+.filter{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--lijn);background:var(--papier);
+  padding:11px 14px;font:600 14px/1 var(--sans);color:var(--inkt-2);cursor:default}
+.filter.aan{border-color:var(--inkt);background:var(--inkt);color:#fff}
+.filter .tel{font:700 11px/1 var(--mono);opacity:.75}
+
+.legenda{display:flex;flex-wrap:wrap;gap:var(--s4);margin-bottom:var(--s4);font-size:14.5px;color:var(--grijs)}
+.legenda span{display:inline-flex;align-items:center;gap:9px}
+.merk{width:22px;height:22px;border:2px solid var(--inkt);display:inline-flex;align-items:center;justify-content:center;
+  font:700 12px/1 var(--sans);flex:none}
+.merk.ja{background:var(--geel);color:var(--inkt);border-color:var(--inkt)}
+.merk.nee{background:var(--papier);color:var(--rood);border-color:var(--rood)}
+
+.tegels{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:2px;
+  background:var(--lijn);border:2px solid var(--inkt)}
+.tegel{background:var(--papier);padding:var(--s3);display:flex;flex-direction:column;gap:12px;position:relative}
+.tegel .beeld{background:var(--papier-2);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;padding:8px}
+.tegel .beeld img{max-height:100%;width:auto;object-fit:contain;mix-blend-mode:multiply}
+.tegel h3{font:700 16.5px/1.25 var(--sans);letter-spacing:-.02em;color:var(--inkt)}
+.tegel .grp{font:700 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--grijs)}
+.tegel .stap{display:flex;gap:6px;align-items:center;font:700 12px/1 var(--mono);color:var(--inkt-2)}
+.tegel .stap i{width:9px;height:9px;background:var(--inkt);display:block}
+.tegel .vlag{position:absolute;top:0;right:0;width:34px;height:34px;display:flex;align-items:center;
+  justify-content:center;font:700 15px/1 var(--sans)}
+.tegel .vlag.ja{background:var(--geel);color:var(--inkt)}
+.tegel .vlag.nee{background:var(--papier);color:var(--rood);border-left:2px solid var(--rood);border-bottom:2px solid var(--rood)}
+.tegel.uit{background:var(--papier-2)}
+.tegel.uit h3{color:var(--grijs)}
+.tegel.uit .beeld img{opacity:.45}
+.tegel .reden{font-size:13.5px;line-height:1.45;color:var(--rood);border-top:2px solid var(--rood-l);padding-top:9px}
+.tegel .gekozen{position:absolute;inset:0;border:4px solid var(--inkt);pointer-events:none}
+.tegel .nrbol{position:absolute;left:var(--s3);top:var(--s3);width:30px;height:30px;border-radius:50%;
+  background:var(--inkt);color:#fff;display:flex;align-items:center;justify-content:center;font:700 15px/1 var(--sans)}
+
+.kiezervoet{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);margin-top:var(--s4);
+  border:2px solid var(--inkt);background:var(--papier);padding:var(--s3)}
+.kiezervoet .tel{font:700 13px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--inkt)}
+.kiezervoet .rek{flex:1}
+.kiezervoet .waarsch{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--inkt-2);
+  background:var(--geel);padding:10px 14px}
+
+/* ── 3 · cliëntkaart ─────────────────────────────────────── */
+.telefoon{display:grid;grid-template-columns:minmax(0,392px) 1fr;gap:var(--s6);align-items:start}
+@media (max-width:1000px){.telefoon{grid-template-columns:1fr;gap:var(--s5)}}
+.schermpje{border:3px solid var(--inkt);background:var(--papier);overflow:hidden}
+.sk-top{background:var(--inkt);color:#fff;padding:14px 18px;display:flex;align-items:center;gap:12px}
+.sk-top .naam{font:700 16px/1 var(--sans)}
+.sk-top .dag{margin-left:auto;font:700 11px/1 var(--mono);letter-spacing:.12em;color:var(--geel)}
+.dagstrip{display:flex;gap:2px;padding:14px 18px;background:var(--papier-2);border-bottom:2px solid var(--lijn)}
+.dagstrip i{flex:1;height:36px;background:var(--papier);border:2px solid var(--lijn);display:flex;
+  align-items:center;justify-content:center;font:700 13px/1 var(--sans);color:var(--grijs)}
+.dagstrip i.klaar{background:var(--inkt);border-color:var(--inkt);color:#fff}
+.dagstrip i.nu{border-color:var(--inkt);color:var(--inkt);background:var(--geel)}
+
+.oef{border-bottom:2px solid var(--lijn);padding:18px}
+.oef:last-child{border-bottom:0}
+.oef-kop{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.oef-kop .bol{width:34px;height:34px;border-radius:50%;background:var(--inkt);color:#fff;flex:none;
+  display:flex;align-items:center;justify-content:center;font:700 17px/1 var(--sans)}
+.oef-kop .maat{margin-left:auto;display:flex;gap:12px;font:700 14px/1 var(--sans);color:var(--inkt)}
+.oef-kop .maat span{display:inline-flex;align-items:center;gap:5px}
+/* De lijntekening toont zelf al twee standen naast elkaar: begin links, eind
+   rechts. Er wordt dus niets gedupliceerd — de pijl loopt eronder van de ene
+   stand naar de andere en is de enige instructie. */
+.oef .frames{display:flex;flex-direction:column;gap:8px;
+  border:2px solid var(--lijn);padding:10px;background:var(--papier-2)}
+.oef .frames figure{background:var(--papier);padding:6px;display:flex;align-items:center;
+  justify-content:center;min-height:96px}
+.oef .frames img{max-height:132px;width:auto;mix-blend-mode:multiply}
+.oef .pijl{display:flex;align-items:center;justify-content:center}
+.oef .knoprij{display:flex;gap:8px;margin-top:12px}
+.knopje{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:2px solid var(--inkt);
+  background:var(--papier);color:var(--inkt);font:700 14px/1 var(--sans);padding:13px 10px}
+.knopje.vol{background:var(--inkt);color:#fff}
+.knopje.stil{border-color:var(--lijn);color:var(--grijs)}
+.geluidsknop{display:flex;align-items:center;gap:12px;border:2px solid var(--blauw);background:#eef3fb;
+  padding:12px 14px;margin-top:12px}
+.geluidsknop .txt{font:600 14px/1.35 var(--sans);color:var(--blauw)}
+.golf{display:flex;align-items:center;gap:3px;margin-left:auto}
+.golf i{width:3px;background:var(--blauw);display:block}
+
+/* uitleg naast het schermpje */
+.uitlegkolom h3{font:700 25px/1.18 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-bottom:var(--s3)}
+.uitlegkolom > p{font-size:17px;max-width:56ch;margin-bottom:var(--s4)}
+.puntenlijst{list-style:none;border-top:3px solid var(--inkt)}
+.puntenlijst li{border-bottom:1px solid var(--lijn);padding:var(--s3) 0;display:grid;
+  grid-template-columns:44px 1fr;gap:var(--s3);align-items:start}
+.puntenlijst .num{font:700 20px/1 var(--sans);color:var(--inkt)}
+.puntenlijst b{display:block;font:700 16.5px/1.3 var(--sans);color:var(--inkt);margin-bottom:5px}
+.puntenlijst p{font-size:15.5px;color:var(--inkt-2)}
+
+/* ── 4 · printkaart ──────────────────────────────────────── */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){.bladschaal{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+
+.blad{width:210mm;height:297mm;background:#fff;color:var(--inkt);position:relative;overflow:hidden;
+  font-family:var(--sans);display:flex;flex-direction:column;padding:11mm 11mm 9mm;
+  box-shadow:0 26px 70px rgba(16,19,20,.22)}
+
+.pk-kop{display:flex;align-items:flex-start;gap:6mm;border-bottom:1.4mm solid var(--inkt);padding-bottom:3mm}
+.pk-kop .persoon{display:flex;align-items:center;gap:4mm}
+.pk-kop .naam{font:700 7.4mm/1 var(--sans);letter-spacing:-.03em}
+.pk-kop .datum{font:700 3.6mm/1 var(--mono);letter-spacing:.08em;color:var(--inkt-2);margin-top:2.2mm}
+.pk-kop .weekvak{margin-left:auto;display:flex;gap:1mm}
+.pk-kop .weekvak i{width:6.6mm;height:9mm;border:.5mm solid var(--inkt);display:flex;align-items:flex-end;
+  justify-content:center;font:700 3mm/1 var(--sans);padding-bottom:1.2mm;color:var(--inkt-2)}
+.pk-kop .weekvak i.aan{background:var(--geel)}
+
+/* gereedschapsrij — IKEA opent er ook mee: wat heb je nodig */
+.pk-gereed{display:flex;align-items:center;gap:7mm;padding:2.6mm 0;border-bottom:.4mm solid var(--inkt)}
+.pk-gereed .stuk{display:flex;align-items:center;gap:2.4mm}
+.pk-gereed .stuk .aantal{font:700 5mm/1 var(--sans)}
+.pk-gereed .plek{margin-left:auto;display:flex;align-items:center;gap:2.4mm}
+
+/* de drie oefeningen */
+.pk-oefs{flex:1;display:flex;flex-direction:column}
+/* De tekening staat rechtop (2:3), dus het kader hugt haar en de vrijgekomen
+   breedte gaat naar wat op een woordloos blad de eigenlijke inhoud is: de
+   getallen en het paar goed/fout. */
+.pk-oef{flex:1;display:grid;grid-template-columns:11mm 40mm 1fr;gap:5mm;align-items:stretch;
+  border-bottom:.4mm solid var(--lijn);padding:2.6mm 0}
+.pk-oef:last-of-type{border-bottom:0}
+.pk-oef .nr{font:700 11mm/1 var(--sans);color:var(--inkt);text-align:center;
+  border-right:.4mm solid var(--lijn);padding-right:3mm}
+/* De lijntekening bevat zelf al de twee standen — links begin, rechts eind.
+   De pijl loopt eronder van de ene naar de andere en draagt de hele instructie:
+   één punt is heen, twee punten is heen en terug, omhoog is optrekken. */
+.pk-oef .beeldrij{display:flex;flex-direction:column;gap:1.6mm}
+.pk-oef .beeldrij figure{background:#fff;border:.4mm solid var(--lijn);flex:1;
+  display:flex;align-items:center;justify-content:center;padding:2mm}
+.pk-oef .beeldrij img{max-height:100%;max-width:100%;width:auto;mix-blend-mode:multiply}
+.pk-oef .pijl{display:flex;align-items:center;justify-content:center;flex:none}
+
+/* rechterkolom: dosering in cijfers, en de fout */
+.pk-rechts{display:flex;flex-direction:column;gap:2mm}
+.pk-maat{display:flex;gap:2.4mm}
+.pk-maat .cel{flex:1;border:.5mm solid var(--inkt);padding:1.4mm 2mm;text-align:center}
+.pk-maat .cel .g{font:700 7.4mm/1 var(--sans);letter-spacing:-.03em;display:block}
+.pk-maat .cel .p{display:flex;justify-content:center;margin-top:1.2mm}
+.pk-paar{display:flex;gap:2.4mm;flex:1}
+.pk-fout,.pk-goed{flex:1;display:flex;align-items:center;gap:2.6mm;padding:2mm 2.6mm;background:#fff}
+.pk-goed{border:.5mm solid var(--groen)}
+.pk-fout{border:.5mm solid var(--rood)}
+.pk-fout .beeldje{flex:none;position:relative}
+.pk-fout .lbl{font:700 3.6mm/1.28 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--rood)}
+.pk-goed .lbl{font:700 3.6mm/1.28 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--groen)}
+
+/* de enige tekst op het vel */
+.pk-voet{border:1mm solid var(--inkt);background:var(--geel);padding:3mm 4mm;display:flex;
+  align-items:center;gap:4mm;margin-top:2.4mm}
+.pk-voet .tekst{font:700 4.1mm/1.4 var(--sans);color:var(--inkt);max-width:118mm}
+.pk-voet .bellen{margin-left:auto;display:flex;align-items:center;gap:2.6mm;flex:none}
+.pk-voet .bellen .nrs{font:700 5.4mm/1 var(--sans);letter-spacing:-.01em;color:var(--inkt)}
+.pk-merk{display:flex;align-items:center;gap:2.4mm;padding-top:2.6mm;
+  font:600 3mm/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
+.pk-merk .rek{flex:1}
+
+.wijzer{position:absolute;font:500 12px/1.35 var(--sans);color:var(--grijs);width:138px;z-index:5}
+.wijzer::after{content:"";position:absolute;background:var(--lijn)}
+.wijzer.r::after{left:-20px;top:50%;width:16px;height:1px}
+.wijzer.l{text-align:right}
+.wijzer.l::after{right:-20px;top:50%;width:16px;height:1px}
+@media (max-width:1160px){.wijzer{display:none}}
+
+.printhulp{max-width:720px;margin:var(--s4) auto 0;text-align:center;font-size:16px;color:var(--grijs)}
+.printhulp .kn{margin-top:var(--s3)}
+
+/* ── voet ────────────────────────────────────────────────── */
+footer.uitleiding{background:var(--inkt);color:#c9cdcf;padding:var(--s6) 24px}
+footer.uitleiding .binnen{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--geel);margin-bottom:13px}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:9px}
+footer.uitleiding li::before{content:"—";position:absolute;left:0;color:var(--geel)}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT — alleen het A4-blad, op ware grootte
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;margin:0 !important;
+    break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 22</span>
+  <strong style="font:700 15px/1 var(--sans);color:#fff">Woordloos</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm wit" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>het enige concept in deze galerij dat zijn eigen taal weggooit</p>
+    </div>
+
+    <div class="hero">
+      <div>
+        <div class="kap">Fysiplan · woordloos</div>
+        <h1>Het blad werkt ook als u het niet kunt lezen.</h1>
+        <p class="lead">Een oefenkaart is meestal een stapel zinnen. Dat werkt voor wie goed
+          Nederlands leest, goed ziet en rustig genoeg is om te lezen. Een flink deel van de mensen
+          die deze kaart mee naar huis krijgt, voldoet aan geen van die drie. Dus staat er geen zin
+          op — alleen cijfers, pijlen en tekeningen. Precies één regel Nederlands blijft staan,
+          onderaan, in een geel kader: de veiligheidsregel.</p>
+        <div class="doen">
+          <a class="kn" href="#printkaart">Bekijk de A4</a>
+          <a class="kn leeg" href="#kiezer">Welke oefening kán woordloos?</a>
+        </div>
+        <p class="naregel">Ontleend aan twee soorten drukwerk die al decennia zonder taal werken:
+          de montagehandleiding en de veiligheidskaart in de stoelzak van het vliegtuig. Beide
+          hanteren dezelfde regel — tekst bestaat alleen voor veiligheid, al het andere wordt
+          getekend.</p>
+      </div>
+
+      <div class="regelkaart">
+        <div class="r-kop">
+          <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
+            <rect x="1.5" y="1.5" width="27" height="27" fill="none" stroke="#101314" stroke-width="3"/>
+            <path d="M9 15.5l4.4 4.4L21.5 11" fill="none" stroke="#101314" stroke-width="3"
+              stroke-linecap="square"/>
+          </svg>
+          <span>De regel</span>
+        </div>
+        <h3>Kan een stap twee kanten op, dan schrijven we er geen zin bij — dan tekenen we hem
+          opnieuw.</h3>
+        <p>Onduidelijkheid is een tekenfout, geen tekstprobleem. Zodra een oefening alleen met
+          woorden uit te leggen is, hoort hij niet op dit blad; hij hoort in de spreekkamer of op
+          een ingesproken bericht.</p>
+
+        <div class="regelrij">
+          <div class="regelvak goed">
+            <span class="vlag">Zo wel</span>
+            <svg width="88" height="60" viewBox="0 0 88 60" role="img"
+              aria-label="Twee tekeningen naast elkaar met een dikke pijl ertussen: de beginhouding en de eindhouding.">
+              <rect x="2" y="8" width="30" height="44" fill="#fff" stroke="#0f7345" stroke-width="2"/>
+              <circle cx="17" cy="20" r="5" fill="none" stroke="#0f7345" stroke-width="2"/>
+              <path d="M17 25v13M11 44l6-6 6 6" fill="none" stroke="#0f7345" stroke-width="2"/>
+              <path d="M38 30h12" stroke="#0f7345" stroke-width="3"/>
+              <path d="M46 25l6 5-6 5z" fill="#0f7345"/>
+              <rect x="56" y="8" width="30" height="44" fill="#fff" stroke="#0f7345" stroke-width="2"/>
+              <circle cx="71" cy="16" r="5" fill="none" stroke="#0f7345" stroke-width="2"/>
+              <path d="M71 21v13M65 40l6-6 6 6" fill="none" stroke="#0f7345" stroke-width="2"/>
+            </svg>
+            <p>Twee beelden, één pijl. De beweging staat in het verschil.</p>
+          </div>
+          <div class="regelvak fout">
+            <span class="vlag">Zo niet</span>
+            <svg width="88" height="60" viewBox="0 0 88 60" role="img"
+              aria-label="Eén tekening met een tekstregel eronder, doorgehaald met een rode streep.">
+              <rect x="20" y="6" width="48" height="30" fill="#fff" stroke="#cf1f14" stroke-width="2"/>
+              <circle cx="44" cy="16" r="5" fill="none" stroke="#cf1f14" stroke-width="2"/>
+              <path d="M44 21v9" fill="none" stroke="#cf1f14" stroke-width="2"/>
+              <path d="M20 43h48M20 50h34" stroke="#cf1f14" stroke-width="3" stroke-linecap="round"/>
+              <path d="M12 55L76 4" stroke="#cf1f14" stroke-width="3"/>
+            </svg>
+            <p>Eén beeld met een zin eronder die uitlegt wat je niet ziet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="picstrook">
+      <figure>
+        <svg width="46" height="46" viewBox="0 0 46 46" role="img"
+          aria-label="Pictogram: het cijfer tien met een rondgaande pijl eromheen, voor het aantal herhalingen.">
+          <path d="M8 23a15 15 0 1 1 5 11" fill="none" stroke="#101314" stroke-width="3"/>
+          <path d="M6 15l3 9 9-3z" fill="#101314"/>
+          <text x="25" y="29" font-family="Helvetica,Arial" font-size="15" font-weight="700" fill="#101314">10</text>
+        </svg>
+        <figcaption><b>Herhalen</b>hoe vaak achter elkaar</figcaption>
+      </figure>
+      <figure>
+        <svg width="46" height="46" viewBox="0 0 46 46" role="img"
+          aria-label="Pictogram: een klok met een wijzer, voor het aantal tellen vasthouden.">
+          <circle cx="23" cy="23" r="16" fill="none" stroke="#101314" stroke-width="3"/>
+          <path d="M23 12v11l8 5" fill="none" stroke="#101314" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <figcaption><b>Vasthouden</b>hoeveel tellen</figcaption>
+      </figure>
+      <figure>
+        <svg width="46" height="46" viewBox="0 0 46 46" role="img"
+          aria-label="Pictogram: een zon en een maan naast elkaar, voor ochtend en avond.">
+          <circle cx="14" cy="23" r="6" fill="#101314"/>
+          <path d="M14 10v3M14 33v3M4 23h3M21 23h3M7.5 16.5l2 2M18.5 27.5l2 2M7.5 29.5l2-2M18.5 18.5l2-2"
+            stroke="#101314" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M40 23a9 9 0 1 1-9-9 7 7 0 0 0 9 9z" fill="#101314"/>
+        </svg>
+        <figcaption><b>Wanneer</b>ochtend, avond</figcaption>
+      </figure>
+      <figure>
+        <svg width="46" height="46" viewBox="0 0 46 46" role="img"
+          aria-label="Pictogram: een stoel van opzij, voor de uitgangshouding zittend.">
+          <path d="M12 6v22M12 28h20M32 12v16M12 28l-2 12M32 28l2 12" fill="none" stroke="#101314"
+            stroke-width="3" stroke-linecap="round"/>
+          <path d="M12 12h20" stroke="#101314" stroke-width="3"/>
+        </svg>
+        <figcaption><b>Waar</b>stoel, bed, vloer</figcaption>
+      </figure>
+      <figure>
+        <svg width="46" height="46" viewBox="0 0 46 46" role="img"
+          aria-label="Pictogram: een groen vinkje in een kader, voor de goede uitvoering.">
+          <rect x="4" y="4" width="38" height="38" fill="none" stroke="#0f7345" stroke-width="3"/>
+          <path d="M13 23.5l6.5 6.5L34 15" fill="none" stroke="#0f7345" stroke-width="4" stroke-linecap="square"/>
+        </svg>
+        <figcaption><b>Goed</b>zo hoort het</figcaption>
+      </figure>
+      <figure>
+        <svg width="46" height="46" viewBox="0 0 46 46" role="img"
+          aria-label="Pictogram: een rood kruis in een kader, voor de veelgemaakte fout.">
+          <rect x="4" y="4" width="38" height="38" fill="none" stroke="#cf1f14" stroke-width="3"/>
+          <path d="M14 14l18 18M32 14L14 32" stroke="#cf1f14" stroke-width="4" stroke-linecap="square"/>
+        </svg>
+        <figcaption><b>Fout</b>dit gaat vaak mis</figcaption>
+      </figure>
+    </div>
+
+    <div class="kosten">
+      <div>
+        <h4>Wat het oplevert</h4>
+        <p>Eén versie voor iedereen. Geen vertaling, geen leesniveau, geen aparte "makkelijke"
+          uitdraai. Wie de taal niet spreekt, ziet hetzelfde blad als wie hem wel spreekt.</p>
+      </div>
+      <div>
+        <h4>Wat het kost</h4>
+        <p>Nuance. "Rustig aan" is niet te tekenen, "voel de spanning tussen uw schouderbladen"
+          evenmin. Die uitleg verhuist naar de mond van de therapeut of naar een ingesproken
+          bericht op de cliëntkaart.</p>
+      </div>
+      <div>
+        <h4>Wat blijft</h4>
+        <p>De veiligheidsregel, in gewoon Nederlands, in een geel kader onderaan. Dat is de enige
+          plek waar dit concept taal toelaat — en juist daardoor valt hij op.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>met één filter dat geen enkele andere planner heeft: is deze oefening woordloos te tonen?</p>
+    </div>
+
+    <div class="kiezerbalk">
+      <div class="zoek">
+        <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+          <circle cx="8.5" cy="8.5" r="6" fill="none" stroke="#101314" stroke-width="2.4"/>
+          <path d="M13 13l5 5" stroke="#101314" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+        <input type="text" value="nek" aria-label="Zoek een oefening" readonly/>
+      </div>
+      <span class="filter aan">Woordloos mogelijk <span class="tel">18</span></span>
+      <span class="filter">Vraagt uitleg <span class="tel">6</span></span>
+      <span class="filter">Zittend</span>
+      <span class="filter">Zonder materiaal</span>
+    </div>
+
+    <div class="legenda">
+      <span><i class="merk ja" aria-hidden="true">✓</i> Volledig in beeld te vertellen — mag op de A4</span>
+      <span><i class="merk nee" aria-hidden="true">✗</i> Heeft woorden nodig — blijft in de spreekkamer</span>
+    </div>
+
+    <div class="tegels">
+
+      <article class="tegel">
+        <span class="vlag ja" aria-hidden="true">✓</span>
+        <span class="nrbol">1</span>
+        <div class="beeld">
+          <img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png"
+            alt="Lijntekening: iemand zit rechtop op een stoel en trekt de kin recht naar achteren."/>
+        </div>
+        <div>
+          <span class="grp">Nek</span>
+          <h3>Kin intrekken — zittend</h3>
+        </div>
+        <div class="stap"><i></i><i></i> 2 beelden · 1 pijl</div>
+        <span class="gekozen" aria-hidden="true"></span>
+      </article>
+
+      <article class="tegel">
+        <span class="vlag ja" aria-hidden="true">✓</span>
+        <span class="nrbol">2</span>
+        <div class="beeld">
+          <img src="/images/nek/nek-draaien-zittend-actief-line-v1.png"
+            alt="Lijntekening: iemand zit rechtop en draait het hoofd rustig naar één kant."/>
+        </div>
+        <div>
+          <span class="grp">Nek</span>
+          <h3>Nek draaien — zittend</h3>
+        </div>
+        <div class="stap"><i></i><i></i> 2 beelden · 1 pijl</div>
+        <span class="gekozen" aria-hidden="true"></span>
+      </article>
+
+      <article class="tegel">
+        <span class="vlag ja" aria-hidden="true">✓</span>
+        <span class="nrbol">3</span>
+        <div class="beeld">
+          <img src="/images/nek/schouderblad-liften-en-ontspannen-zittend-actief-line-v1.png"
+            alt="Lijntekening: iemand trekt de schouders op naar de oren en laat ze weer zakken."/>
+        </div>
+        <div>
+          <span class="grp">Nek en schouders</span>
+          <h3>Schouderbladen optrekken</h3>
+        </div>
+        <div class="stap"><i></i><i></i> 2 beelden · 1 pijl</div>
+        <span class="gekozen" aria-hidden="true"></span>
+      </article>
+
+      <article class="tegel">
+        <span class="vlag ja" aria-hidden="true">✓</span>
+        <div class="beeld">
+          <img src="/images/nek/nek-zijwaarts-buigen-zittend-actief-line-v1.png"
+            alt="Lijntekening: iemand buigt het hoofd zijwaarts, oor richting schouder."/>
+        </div>
+        <div>
+          <span class="grp">Nek</span>
+          <h3>Nek zijwaarts buigen</h3>
+        </div>
+        <div class="stap"><i></i><i></i> 2 beelden · 1 pijl</div>
+      </article>
+
+      <article class="tegel uit">
+        <span class="vlag nee" aria-hidden="true">✗</span>
+        <div class="beeld">
+          <img src="/images/nek/levator-scapulae-rek-zittend-actief-line-v1.png"
+            alt="Lijntekening: een rekoefening voor de nekspier waarbij het hoofd schuin voorover wordt gebracht."/>
+        </div>
+        <div>
+          <span class="grp">Nek</span>
+          <h3>Levator scapulae — rek</h3>
+        </div>
+        <p class="reden">Het verschil tussen rek en pijn zit in het gevoel, niet in de houding.
+          Zonder woorden niet te tonen.</p>
+      </article>
+
+      <article class="tegel uit">
+        <span class="vlag nee" aria-hidden="true">✗</span>
+        <div class="beeld">
+          <img src="/images/rug/rug-bol-en-hol-zittend-line-v1.png"
+            alt="Lijntekening: zittend wordt de rug afwisselend bol en hol gemaakt."/>
+        </div>
+        <div>
+          <span class="grp">Rug</span>
+          <h3>Rug bol en hol — op ademhaling</h3>
+        </div>
+        <p class="reden">De beweging volgt de ademhaling. Een pijl kan een rug tekenen, geen
+          uitademing.</p>
+      </article>
+
+    </div>
+
+    <div class="kiezervoet">
+      <span class="tel">3 van 3 gekozen · beide beelden aanwezig</span>
+      <span class="rek"></span>
+      <span class="waarsch">
+        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+          <path d="M11 2l9.5 17H1.5z" fill="none" stroke="#101314" stroke-width="2.2" stroke-linejoin="round"/>
+          <path d="M11 8v5" stroke="#101314" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="11" cy="16" r="1.4" fill="#101314"/>
+        </svg>
+        Twee oefeningen vielen af: die vertelt u zelf, of u spreekt ze in.
+      </span>
+      <a class="kn" href="#printkaart">Naar de A4</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm wit" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>op papier verdwijnt de taal; op het scherm komt hij terug als geluid</p>
+    </div>
+
+    <div class="telefoon">
+      <div class="schermpje">
+        <div class="sk-top">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="8" r="4" fill="none" stroke="#fff" stroke-width="2.2"/>
+            <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="none" stroke="#fff" stroke-width="2.2"/>
+          </svg>
+          <span class="naam">R. Bouma</span>
+          <span class="dag">Dag 4 van 7</span>
+        </div>
+
+        <div class="dagstrip" role="img"
+          aria-label="Weekstrip: maandag, dinsdag en woensdag zijn afgevinkt, donderdag is vandaag, de rest volgt nog.">
+          <i class="klaar">M</i><i class="klaar">D</i><i class="klaar">W</i>
+          <i class="nu">D</i><i>V</i><i>Z</i><i>Z</i>
+        </div>
+
+        <div class="oef">
+          <div class="oef-kop">
+            <span class="bol">1</span>
+            <span class="maat">
+              <span>
+                <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M3.5 10a6.5 6.5 0 1 1 2.2 4.9" fill="none" stroke="#101314" stroke-width="2.2"/>
+                  <path d="M2.5 6l1.4 4 4-1.4z" fill="#101314"/>
+                </svg>10×</span>
+              <span>
+                <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+                  <circle cx="10" cy="10" r="7" fill="none" stroke="#101314" stroke-width="2.2"/>
+                  <path d="M10 5.5V10l3.4 2" fill="none" stroke="#101314" stroke-width="2.2" stroke-linecap="round"/>
+                </svg>3″</span>
+            </span>
+          </div>
+          <div class="frames">
+            <figure>
+              <img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png"
+                alt="Twee standen naast elkaar: links rechtop zitten met de blik vooruit, rechts de kin recht naar achteren getrokken tot een dubbele kin."/>
+            </figure>
+            <div class="pijl" aria-hidden="true">
+              <svg width="150" height="18" viewBox="0 0 150 18">
+                <path d="M4 9h132" stroke="#101314" stroke-width="4"/>
+                <path d="M134 1l14 8-14 8z" fill="#101314"/>
+              </svg>
+            </div>
+          </div>
+          <div class="geluidsknop">
+            <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+              <path d="M4 10h4l6-5v16l-6-5H4z" fill="#12489e"/>
+              <path d="M18 8.5a6 6 0 0 1 0 9M21 5.5a10 10 0 0 1 0 15" fill="none" stroke="#12489e"
+                stroke-width="2.2" stroke-linecap="round"/>
+            </svg>
+            <span class="txt">Uitleg van Marieke — 14 seconden</span>
+            <span class="golf" aria-hidden="true">
+              <i style="height:7px"></i><i style="height:14px"></i><i style="height:21px"></i>
+              <i style="height:12px"></i><i style="height:18px"></i><i style="height:8px"></i>
+            </span>
+          </div>
+          <div class="knoprij">
+            <button class="knopje vol" type="button">
+              <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+                <path d="M3 9.5l4 4L15 5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="square"/>
+              </svg>Gedaan
+            </button>
+            <button class="knopje stil" type="button">Niet gelukt</button>
+          </div>
+        </div>
+
+        <div class="oef">
+          <div class="oef-kop">
+            <span class="bol">2</span>
+            <span class="maat">
+              <span>
+                <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M3.5 10a6.5 6.5 0 1 1 2.2 4.9" fill="none" stroke="#101314" stroke-width="2.2"/>
+                  <path d="M2.5 6l1.4 4 4-1.4z" fill="#101314"/>
+                </svg>8× ↔</span>
+            </span>
+          </div>
+          <div class="frames">
+            <figure>
+              <img src="/images/nek/nek-draaien-zittend-actief-line-v1.png"
+                alt="Twee standen naast elkaar: links het hoofd recht vooruit, rechts het hoofd rustig naar één kant gedraaid."/>
+            </figure>
+            <div class="pijl" aria-hidden="true">
+              <svg width="150" height="18" viewBox="0 0 150 18">
+                <path d="M14 9h122" stroke="#101314" stroke-width="4"/>
+                <path d="M16 1L2 9l14 8z" fill="#101314"/>
+                <path d="M134 1l14 8-14 8z" fill="#101314"/>
+              </svg>
+            </div>
+          </div>
+          <div class="knoprij">
+            <button class="knopje" type="button">Gedaan</button>
+            <button class="knopje stil" type="button">Niet gelukt</button>
+          </div>
+        </div>
+
+        <div class="oef">
+          <div class="oef-kop">
+            <span class="bol">3</span>
+            <span class="maat">
+              <span>
+                <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M3.5 10a6.5 6.5 0 1 1 2.2 4.9" fill="none" stroke="#101314" stroke-width="2.2"/>
+                  <path d="M2.5 6l1.4 4 4-1.4z" fill="#101314"/>
+                </svg>12×</span>
+            </span>
+          </div>
+          <div class="frames">
+            <figure>
+              <img src="/images/nek/schouderblad-liften-en-ontspannen-zittend-actief-line-v1.png"
+                alt="Twee standen naast elkaar: links de schouders ontspannen omlaag, rechts de schouderbladen opgetrokken richting de oren."/>
+            </figure>
+            <div class="pijl" aria-hidden="true">
+              <svg width="150" height="18" viewBox="0 0 150 18">
+                <path d="M4 9h132" stroke="#101314" stroke-width="4"/>
+                <path d="M134 1l14 8-14 8z" fill="#101314"/>
+              </svg>
+            </div>
+          </div>
+          <div class="knoprij">
+            <button class="knopje" type="button">Gedaan</button>
+            <button class="knopje stil" type="button">Niet gelukt</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="uitlegkolom">
+        <h3>Wat op papier wegvalt, komt hier terug als stem.</h3>
+        <p>De A4 is woordloos omdat papier niet kan praten. Een telefoon kan dat wel. Elke oefening
+          op de cliëntkaart heeft een knop met een ingesproken bericht van de eigen therapeut — geen
+          voorgelezen standaardtekst, maar veertien seconden van iemand die de patiënt heeft gezien.
+          Dat is het enige stuk taal in dit concept, en het is bewust gesproken taal: die vraagt geen
+          leesvaardigheid.</p>
+
+        <ol class="puntenlijst">
+          <li>
+            <span class="num">1</span>
+            <div>
+              <b>Twee beelden, nooit één</b>
+              <p>Elke oefening toont begin én eind, op dezelfde hoogte, met een pijl ertussen. Eén
+                foto met tekst eronder is precies wat dit concept afschaft.</p>
+            </div>
+          </li>
+          <li>
+            <span class="num">2</span>
+            <div>
+              <b>De pijl vertelt de richting</b>
+              <p>Eén punt: heen. Twee punten: heen en terug. Omhoog: optrekken. De vorm van de pijl
+                ís de instructie — er staat nergens "wissel daarna van kant".</p>
+            </div>
+          </li>
+          <li>
+            <span class="num">3</span>
+            <div>
+              <b>"Niet gelukt" is een knop, geen falen</b>
+              <p>Wie iets niet kan uitvoeren tikt dat aan. De praktijk ziet het terug in het dossier
+                en past de volgende kaart aan. Er verschijnt geen bemoedigende tekst; er verschijnt
+                niets.</p>
+            </div>
+          </li>
+          <li>
+            <span class="num">4</span>
+            <div>
+              <b>Woordloos, maar niet stil</b>
+              <p>Voor wie niet ziet, draait het om: elk pictogram en elke tekening op deze pagina
+                heeft een volledige Nederlandse beschrijving voor de schermlezer. De taal is niet
+                verdwenen, hij is verplaatst naar waar hij nodig is.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>nul zinnen, op één na: de gele regel onderaan is de enige plek waar dit blad taal toelaat</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer r geen-print" style="top:34mm;left:calc(100% + 22px)">gereedschapsrij:
+            wat u nodig heeft, vóór de eerste oefening</span>
+          <span class="wijzer r geen-print" style="top:112mm;left:calc(100% + 22px)">de fout staat
+            erbij — getekend, met een rode balk</span>
+          <span class="wijzer l geen-print" style="top:150mm;right:calc(100% + 22px)">begin en eind naast
+            elkaar; de pijl is de instructie</span>
+          <span class="wijzer l geen-print" style="top:258mm;right:calc(100% + 22px)">de enige tekst op
+            het vel: veiligheid, en een telefoonnummer</span>
+
+          <div class="pk-kop">
+            <div class="persoon">
+              <svg width="16mm" height="16mm" viewBox="0 0 44 44" role="img"
+                aria-label="Pictogram van een persoon, als aanduiding voor wie deze kaart is.">
+                <rect x="1.5" y="1.5" width="41" height="41" fill="none" stroke="#101314" stroke-width="3"/>
+                <circle cx="22" cy="16" r="6.5" fill="none" stroke="#101314" stroke-width="3"/>
+                <path d="M9 37c0-7.5 5.8-12 13-12s13 4.5 13 12" fill="none" stroke="#101314" stroke-width="3"/>
+              </svg>
+              <div>
+                <div class="naam">R. Bouma</div>
+                <div class="datum">18 · 08 · 2026 — 24 · 08 · 2026</div>
+              </div>
+            </div>
+            <div class="weekvak" role="img" aria-label="Zeven vakjes voor de zeven dagen van de week, om af te vinken.">
+              <i class="aan">M</i><i class="aan">D</i><i class="aan">W</i><i>D</i><i>V</i><i>Z</i><i>Z</i>
+            </div>
+          </div>
+
+          <div class="pk-gereed">
+            <div class="stuk">
+              <svg width="11mm" height="11mm" viewBox="0 0 40 40" role="img"
+                aria-label="Pictogram van een stoel: de oefeningen worden zittend gedaan.">
+                <path d="M10 4v22M10 26h20M30 10v16M10 26l-2 10M30 26l2 10" fill="none" stroke="#101314"
+                  stroke-width="3" stroke-linecap="round"/>
+                <path d="M10 10h20" stroke="#101314" stroke-width="3"/>
+              </svg>
+              <span class="aantal">1</span>
+            </div>
+            <div class="stuk">
+              <svg width="11mm" height="11mm" viewBox="0 0 40 40" role="img"
+                aria-label="Pictogram van een klok: de hele kaart kost acht minuten per dag.">
+                <circle cx="20" cy="20" r="15" fill="none" stroke="#101314" stroke-width="3"/>
+                <path d="M20 9v11l7 4" fill="none" stroke="#101314" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+              <span class="aantal">8</span>
+            </div>
+            <div class="stuk">
+              <svg width="11mm" height="11mm" viewBox="0 0 40 40" role="img"
+                aria-label="Pictogram van een zon en een maan: doe de oefeningen 's ochtends en 's avonds.">
+                <circle cx="12" cy="20" r="5.5" fill="#101314"/>
+                <path d="M12 8v3M12 29v3M3 20h3M18 20h3M5.5 13.5l2 2M16.5 24.5l2 2M5.5 26.5l2-2M16.5 15.5l2-2"
+                  stroke="#101314" stroke-width="2.4" stroke-linecap="round"/>
+                <path d="M35 20a8 8 0 1 1-8-8 6.2 6.2 0 0 0 8 8z" fill="#101314"/>
+              </svg>
+              <span class="aantal">2</span>
+            </div>
+            <div class="plek">
+              <svg width="11mm" height="11mm" viewBox="0 0 40 40" role="img"
+                aria-label="Pictogram van een koelkast met een magneet: hang deze kaart op een zichtbare plek.">
+                <rect x="8" y="3" width="24" height="34" fill="none" stroke="#101314" stroke-width="3"/>
+                <path d="M8 14h24" stroke="#101314" stroke-width="3"/>
+                <path d="M13 8v3M13 19v4" stroke="#101314" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="pk-oefs">
+
+            <!-- ── oefening 1 ── -->
+            <div class="pk-oef">
+              <div class="nr">1</div>
+              <div class="beeldrij">
+                <figure>
+                  <img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png"
+                    alt="Twee standen naast elkaar: links rechtop zitten met de blik vooruit, rechts de kin recht naar achteren getrokken tot een dubbele kin."/>
+                </figure>
+                <div class="pijl" aria-hidden="true">
+                  <svg width="100%" height="7mm" viewBox="0 0 200 20" preserveAspectRatio="none">
+                    <path d="M4 10h180" stroke="#101314" stroke-width="5"/>
+                    <path d="M180 2l16 8-16 8z" fill="#101314"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="pk-rechts">
+                <div class="pk-maat">
+                  <div class="cel">
+                    <span class="g">10×</span>
+                    <span class="p" aria-hidden="true">
+                      <svg width="6mm" height="6mm" viewBox="0 0 24 24">
+                        <path d="M4 12a8 8 0 1 1 2.7 6" fill="none" stroke="#101314" stroke-width="2.6"/>
+                        <path d="M2.6 7.6l1.8 4.8 4.8-1.8z" fill="#101314"/>
+                      </svg>
+                    </span>
+                  </div>
+                  <div class="cel">
+                    <span class="g">3″</span>
+                    <span class="p" aria-hidden="true">
+                      <svg width="6mm" height="6mm" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="8.6" fill="none" stroke="#101314" stroke-width="2.6"/>
+                        <path d="M12 6.4V12l4 2.4" fill="none" stroke="#101314" stroke-width="2.6" stroke-linecap="round"/>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+                <div class="pk-paar">
+                  <div class="pk-goed">
+                  <svg width="10mm" height="10mm" viewBox="0 0 34 34" role="img"
+                    aria-label="Goed: het hoofd blijft recht en de schouders blijven laag.">
+                    <path d="M4 17.5l7.5 7.5L30 6" fill="none" stroke="#0f7345" stroke-width="5" stroke-linecap="square"/>
+                  </svg>
+                  <span class="lbl">Schouders<br/>laag</span>
+                  </div>
+                  <div class="pk-fout">
+                  <span class="beeldje" aria-hidden="true">
+                    <svg width="10mm" height="10mm" viewBox="0 0 34 34">
+                      <circle cx="17" cy="11" r="5.4" fill="none" stroke="#cf1f14" stroke-width="2.6"/>
+                      <path d="M8 24c0-4 4-6.5 9-6.5s9 2.5 9 6.5" fill="none" stroke="#cf1f14" stroke-width="2.6"/>
+                      <path d="M4 30L30 4" stroke="#cf1f14" stroke-width="3.4"/>
+                    </svg>
+                  </span>
+                    <span class="lbl">Schouders<br/>omhoog</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── oefening 2 ── -->
+            <div class="pk-oef">
+              <div class="nr">2</div>
+              <div class="beeldrij">
+                <figure>
+                  <img src="/images/nek/nek-draaien-zittend-actief-line-v1.png"
+                    alt="Twee standen naast elkaar: links het hoofd recht vooruit, rechts het hoofd rustig naar één kant gedraaid."/>
+                </figure>
+                <div class="pijl" aria-hidden="true">
+                  <svg width="100%" height="7mm" viewBox="0 0 200 20" preserveAspectRatio="none">
+                    <path d="M16 10h168" stroke="#101314" stroke-width="5"/>
+                    <path d="M20 2L4 10l16 8z" fill="#101314"/>
+                    <path d="M180 2l16 8-16 8z" fill="#101314"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="pk-rechts">
+                <div class="pk-maat">
+                  <div class="cel">
+                    <span class="g">8×</span>
+                    <span class="p" aria-hidden="true">
+                      <svg width="6mm" height="6mm" viewBox="0 0 24 24">
+                        <path d="M4 12a8 8 0 1 1 2.7 6" fill="none" stroke="#101314" stroke-width="2.6"/>
+                        <path d="M2.6 7.6l1.8 4.8 4.8-1.8z" fill="#101314"/>
+                      </svg>
+                    </span>
+                  </div>
+                  <div class="cel">
+                    <span class="g">↔</span>
+                    <span class="p" aria-hidden="true">
+                      <svg width="6mm" height="6mm" viewBox="0 0 24 24">
+                        <path d="M5 12h14" stroke="#101314" stroke-width="2.6"/>
+                        <path d="M8 7L3 12l5 5zM16 7l5 5-5 5z" fill="#101314"/>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+                <div class="pk-paar">
+                  <div class="pk-goed">
+                  <svg width="10mm" height="10mm" viewBox="0 0 34 34" role="img"
+                    aria-label="Goed: alleen het hoofd draait, de romp blijft stil.">
+                    <path d="M4 17.5l7.5 7.5L30 6" fill="none" stroke="#0f7345" stroke-width="5" stroke-linecap="square"/>
+                  </svg>
+                  <span class="lbl">Romp<br/>stil</span>
+                  </div>
+                  <div class="pk-fout">
+                  <span class="beeldje" aria-hidden="true">
+                    <svg width="10mm" height="10mm" viewBox="0 0 34 34">
+                      <circle cx="17" cy="10" r="5" fill="none" stroke="#cf1f14" stroke-width="2.6"/>
+                      <path d="M17 15v10M9 20l8-3 8 3" fill="none" stroke="#cf1f14" stroke-width="2.6"/>
+                      <path d="M26 27a11 11 0 0 0-18 0" fill="none" stroke="#cf1f14" stroke-width="2.6"/>
+                      <path d="M4 30L30 4" stroke="#cf1f14" stroke-width="3.4"/>
+                    </svg>
+                  </span>
+                    <span class="lbl">Schouders<br/>mee</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── oefening 3 ── -->
+            <div class="pk-oef">
+              <div class="nr">3</div>
+              <div class="beeldrij">
+                <figure>
+                  <img src="/images/nek/schouderblad-liften-en-ontspannen-zittend-actief-line-v1.png"
+                    alt="Twee standen naast elkaar: links de schouders ontspannen omlaag, rechts de schouderbladen opgetrokken richting de oren."/>
+                </figure>
+                <div class="pijl" aria-hidden="true">
+                  <svg width="100%" height="7mm" viewBox="0 0 200 20" preserveAspectRatio="none">
+                    <path d="M4 10h180" stroke="#101314" stroke-width="5"/>
+                    <path d="M180 2l16 8-16 8z" fill="#101314"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="pk-rechts">
+                <div class="pk-maat">
+                  <div class="cel">
+                    <span class="g">12×</span>
+                    <span class="p" aria-hidden="true">
+                      <svg width="6mm" height="6mm" viewBox="0 0 24 24">
+                        <path d="M4 12a8 8 0 1 1 2.7 6" fill="none" stroke="#101314" stroke-width="2.6"/>
+                        <path d="M2.6 7.6l1.8 4.8 4.8-1.8z" fill="#101314"/>
+                      </svg>
+                    </span>
+                  </div>
+                  <div class="cel">
+                    <span class="g">2″</span>
+                    <span class="p" aria-hidden="true">
+                      <svg width="6mm" height="6mm" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="8.6" fill="none" stroke="#101314" stroke-width="2.6"/>
+                        <path d="M12 6.4V12l4 2.4" fill="none" stroke="#101314" stroke-width="2.6" stroke-linecap="round"/>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+                <div class="pk-paar">
+                  <div class="pk-goed">
+                  <svg width="10mm" height="10mm" viewBox="0 0 34 34" role="img"
+                    aria-label="Goed: laat de schouders daarna volledig zakken.">
+                    <path d="M4 17.5l7.5 7.5L30 6" fill="none" stroke="#0f7345" stroke-width="5" stroke-linecap="square"/>
+                  </svg>
+                  <span class="lbl">Helemaal<br/>laten zakken</span>
+                  </div>
+                  <div class="pk-fout">
+                  <span class="beeldje" aria-hidden="true">
+                    <svg width="10mm" height="10mm" viewBox="0 0 34 34">
+                      <path d="M17 6v10" stroke="#cf1f14" stroke-width="2.6" stroke-linecap="round"/>
+                      <path d="M9 26c2-6 6-9 8-9s6 3 8 9" fill="none" stroke="#cf1f14" stroke-width="2.6"/>
+                      <path d="M22 12l4-4M12 12L8 8" stroke="#cf1f14" stroke-width="2.6" stroke-linecap="round"/>
+                      <path d="M4 30L30 4" stroke="#cf1f14" stroke-width="3.4"/>
+                    </svg>
+                  </span>
+                    <span class="lbl">Adem<br/>inhouden</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="pk-voet">
+            <svg width="12mm" height="12mm" viewBox="0 0 40 40" role="img"
+              aria-label="Uitroepteken in een driehoek: veiligheidswaarschuwing.">
+              <path d="M20 3l18 32H2z" fill="none" stroke="#101314" stroke-width="3.4" stroke-linejoin="round"/>
+              <path d="M20 14v9" stroke="#101314" stroke-width="3.4" stroke-linecap="round"/>
+              <circle cx="20" cy="29" r="2.2" fill="#101314"/>
+            </svg>
+            <span class="tekst">Stop bij tintelingen in uw arm of scherpe pijn. Bel ons dan.</span>
+            <span class="bellen">
+              <svg width="10mm" height="10mm" viewBox="0 0 34 34" aria-hidden="true">
+                <path d="M9 3l5 6-4 4c2 4 5 7 9 9l4-4 6 5-4 5c-1 1-3 1-5 0C11 24 6 17 4 10c-1-2-1-4 0-5z"
+                  fill="none" stroke="#101314" stroke-width="3" stroke-linejoin="round"/>
+              </svg>
+              <span class="nrs">050 – 313 44 20</span>
+            </span>
+          </div>
+
+          <div class="pk-merk">
+            <span>Fysiotherapie Noorderlicht · Groningen</span>
+            <span class="rek"></span>
+            <span>M. de Wilde</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <p class="printhulp geen-print">Print deze pagina: alles behalve de A4 valt weg en het blad komt
+      op ware grootte uit de printer. Kopieer hem daarna gerust in zwart-wit — geel wordt grijs,
+      rood wordt donker, en het blad blijft precies even leesbaar, want geen enkele betekenis hangt
+      hier aan kleur alleen.<br/>
+      <a class="kn geen-print" href="javascript:window.print()">Print de A4</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>De richting</h4>
+      <p>Alle taal weg, op één veiligheidsregel na. Cijfers, pijlen en pictogrammen doen de rest,
+        in de traditie van de montagehandleiding en de veiligheidskaart in het vliegtuig. Naast elke
+        oefening staat niet alleen wat goed is, maar ook wat er meestal misgaat — getekend, met een
+        rode balk erdoor.</p>
+    </div>
+    <div class="kolom">
+      <h4>Waar het schuurt</h4>
+      <ul>
+        <li>Een product van zinnen dat alle zinnen weggooit. Nuance verdwijnt; dat is de prijs.</li>
+        <li>Een oefening die woorden nodig heeft, komt níet op het blad. De kiezer zegt dat hardop.</li>
+        <li>De therapeut moet zijn toelichting inspreken of vertellen. Dat kost tijd per patiënt.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Verder</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
