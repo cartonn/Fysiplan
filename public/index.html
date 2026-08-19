@@ -1473,7 +1473,16 @@ bridge2.jpg</div>
   function planAutoDeel(){
     if(!IS_V2)return;
     clearTimeout(autoDeelTimer);
-    autoDeelTimer=setTimeout(doeAutoDeel,4000);
+    // korte pauze: de QR hoort er meteen op te staan, maar tijdens het typen van
+    // een naam willen we niet elke toetsaanslag een deel-POST laten worden
+    autoDeelTimer=setTimeout(doeAutoDeel,1500);
+  }
+  // direct delen zonder debounce: bij het openen van een kaart moet de QR er
+  // meteen op staan, niet pas na een bewerking of bij het printen
+  function deelNu(){
+    if(!IS_V2)return;
+    clearTimeout(autoDeelTimer);
+    doeAutoDeel();
   }
   function doeAutoDeel(){
     var naam=huidigeKaartNaam();
@@ -2172,7 +2181,11 @@ bridge2.jpg</div>
         .then(function(d){
           if(!d.ok){alert('Kaart openen is niet gelukt.');return;}
           if(chosen.length&&!confirm('Huidige kaart vervangen door “'+d.kaart.naam+'”?'))return;
-          openCard(d.kaart);verbergQr();closeOv('ovKaarten');
+          openCard(d.kaart);
+          // de gedeelde kaart hééft al een id: zet de QR er meteen op
+          QR_UIT_VOOR=null;laatsteDeel='';
+          if(IS_V2&&d.kaart.id)ensureQr(function(){toonQr(d.kaart.id);});else verbergQr();
+          closeOv('ovKaarten');
         })
         .catch(function(){alert('Kaart openen is niet gelukt: geen verbinding.');});
     }else if(x){
@@ -2203,6 +2216,9 @@ bridge2.jpg</div>
       var c=lijst[+o.dataset.kopen];if(!c)return;
       if(chosen.length&&!confirm('Huidige kaart vervangen door “'+c.naam+'”?'))return;
       openCard(c);verbergQr();closeOv('ovKaarten');
+      // lokale kaart heeft nog geen server-id: meteen delen zodat de QR er
+      // direct op komt (lukt alleen met cliëntnaam — dezelfde regel als altijd)
+      QR_UIT_VOOR=null;laatsteDeel='';deelNu();
     }else if(x){
       var c2=lijst[+x.dataset.kdel];if(!c2)return;
       if(!confirm('Kaart “'+c2.naam+'” verwijderen?'))return;
@@ -2354,6 +2370,9 @@ bridge2.jpg</div>
   var printTextTrimmed=setupPrintableTextLimits();
   CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.addEventListener('input',saveState);});
   if(printTextTrimmed)saveState();
+  // v2: de QR hoort er ook na een herlaadbeurt meteen weer op te staan — de
+  // herstelde kaart wordt stil gedeeld en de code verschijnt vanzelf
+  planAutoDeel();
 
 
   // ---- IndexedDB: opslag voor geüploade plaatjes (groot, geen quota-probleem) ----
@@ -2454,7 +2473,14 @@ bridge2.jpg</div>
     IMGCACHE=imgs||{};
     var lib=loadLib();
     if(lib){buildLibrary(lib);chosen=[];applySettings();render();return;}
-    return loadDefaultLibrary().then(function(){applySettings();render();});
+    return loadDefaultLibrary().then(function(){
+      // v2: de kaartstaat is opgeslagen tegen de server-bibliotheek, maar de
+      // eerste loadState() draaide tegen de ingebedde standaardlijst en
+      // filterde die ids weg. Nu de echte bibliotheek er staat: opnieuw
+      // herstellen, anders is de kaart na elke herlaadbeurt leeg.
+      if(IS_V2)loadState();
+      applySettings();render();
+    });
   }).catch(function(){buildDefault();applySettings();render();});
 })();
 </script>
