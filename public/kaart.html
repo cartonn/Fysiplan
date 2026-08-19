@@ -180,6 +180,10 @@
     padding:9px 13px;border-radius:10px;cursor:pointer;border:1px solid var(--blauw-10);
     background:var(--blauw-05);color:var(--blauw);-webkit-tap-highlight-color:transparent}
   .kopacties button:active,.kopacties button.aan{background:var(--blauw);border-color:var(--blauw);color:#fff}
+  /* grotere letters: één tik vergroot de hele kaart (57% van de 70-plussers wil
+     papier — wie tóch digitaal kijkt, verdient tekst zonder knijpzoomen) */
+  html.groot body{zoom:1.16}
+  @media print{html.groot body{zoom:1}}
 
   /* uitnodiging om de kaart als app op het beginscherm te zetten */
   .appbanner{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:12;
@@ -345,6 +349,7 @@
         <option value="uk">&#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1089;&#1100;&#1082;&#1072;</option>
       </select>
       <button type="button" id="leesBtn" style="display:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"/></svg><span id="leesTxt">Lees voor</span></button>
+      <button type="button" id="grootBtn" aria-pressed="false" title="Grotere letters"><span aria-hidden="true" style="font-size:11px;font-weight:800;line-height:1">A</span><span aria-hidden="true" style="font-size:16px;font-weight:800;line-height:1">A</span></button>
     </div>
     <div class="client" id="clientblok" style="display:none"></div>
   </header>
@@ -461,15 +466,15 @@
   function trq(k){var d=TQ[TAAL]||TQ.nl;return d[k]!=null?d[k]:TQ.nl[k];}
   // teksten voor het oefenvinkje en de oefenweek
   var TG={
-    nl:{vdaan:'Ik heb vandaag geoefend',vweek:'Jouw oefenweek',som0:'Nog geen keer deze week — pak je ritme weer op, één keer is genoeg om te beginnen.',som1:'Goed bezig — je oefende op {n} van de 7 dagen.',som3:'Sterk! Je oefende op {n} van de 7 dagen. Zo houd je het vol.'},
-    en:{vdaan:'I did my exercises today',vweek:'Your exercise week',som0:'Not yet this week — pick your rhythm back up, once is enough to start.',som1:'Well done — you practised on {n} of the last 7 days.',som3:'Strong! You practised on {n} of the last 7 days. That’s how you keep it up.'},
-    de:{vdaan:'Ich habe heute geübt',vweek:'Deine Übungswoche',som0:'Diese Woche noch nicht — nimm deinen Rhythmus wieder auf, einmal genügt zum Start.',som1:'Gut gemacht — du hast an {n} von 7 Tagen geübt.',som3:'Stark! Du hast an {n} von 7 Tagen geübt. So bleibst du dran.'},
-    fr:{vdaan:'J’ai fait mes exercices aujourd’hui',vweek:'Votre semaine d’exercices',som0:'Pas encore cette semaine — reprenez votre rythme, une fois suffit pour commencer.',som1:'Bravo — vous avez fait vos exercices {n} des 7 derniers jours.',som3:'Superbe ! Vous avez fait vos exercices {n} des 7 derniers jours. C’est comme ça qu’on tient.'},
-    es:{vdaan:'Hoy he hecho mis ejercicios',vweek:'Tu semana de ejercicios',som0:'Aún no esta semana — retoma tu ritmo, una vez basta para empezar.',som1:'Bien hecho — hiciste ejercicio {n} de los últimos 7 días.',som3:'¡Genial! Hiciste ejercicio {n} de los últimos 7 días. Así se mantiene.'},
-    pl:{vdaan:'Ćwiczyłem(-am) dzisiaj',vweek:'Twój tydzień ćwiczeń',som0:'Jeszcze nie w tym tygodniu — wróć do rytmu, jeden raz wystarczy na początek.',som1:'Dobra robota — ćwiczyłeś(-aś) przez {n} z 7 dni.',som3:'Świetnie! Ćwiczyłeś(-aś) przez {n} z 7 dni. Tak się utrzymuje formę.'},
-    tr:{vdaan:'Bugün egzersiz yaptım',vweek:'Egzersiz haftan',som0:'Bu hafta henüz yok — ritmini yeniden yakala, başlamak için bir kez yeter.',som1:'Aferin — son 7 günün {n} gününde egzersiz yaptın.',som3:'Harika! Son 7 günün {n} gününde egzersiz yaptın. Böyle devam.'},
-    ar:{vdaan:'تمرّنت اليوم',vweek:'أسبوع تمارينك',som0:'لم تتمرّن بعد هذا الأسبوع — استعد إيقاعك، مرّة واحدة تكفي للبدء.',som1:'أحسنت — تمرّنت في {n} من آخر 7 أيام.',som3:'رائع! تمرّنت في {n} من آخر 7 أيام. هكذا تحافظ على استمرارك.'},
-    uk:{vdaan:'Сьогодні я тренувався(-лась)',vweek:'Твій тиждень вправ',som0:'Цього тижня ще ні — поверни свій ритм, одного разу досить, щоб почати.',som1:'Молодець — ти займався(-лась) {n} із 7 днів.',som3:'Чудово! Ти займався(-лась) {n} із 7 днів. Так і тримай.'}
+    nl:{vdaan:'Ik heb vandaag geoefend',vweek:'Jouw oefenweek',som0:'Nog geen keer deze week — pak je ritme weer op, één keer is genoeg om te beginnen.',som1:'Goed bezig — je oefende op {n} van de 7 dagen.',som3:'Sterk! Je oefende op {n} van de 7 dagen. Zo houd je het vol.',groter:'Grotere letters'},
+    en:{vdaan:'I did my exercises today',vweek:'Your exercise week',som0:'Not yet this week — pick your rhythm back up, once is enough to start.',som1:'Well done — you practised on {n} of the last 7 days.',som3:'Strong! You practised on {n} of the last 7 days. That’s how you keep it up.',groter:'Larger text'},
+    de:{vdaan:'Ich habe heute geübt',vweek:'Deine Übungswoche',som0:'Diese Woche noch nicht — nimm deinen Rhythmus wieder auf, einmal genügt zum Start.',som1:'Gut gemacht — du hast an {n} von 7 Tagen geübt.',som3:'Stark! Du hast an {n} von 7 Tagen geübt. So bleibst du dran.',groter:'Größere Schrift'},
+    fr:{vdaan:'J’ai fait mes exercices aujourd’hui',vweek:'Votre semaine d’exercices',som0:'Pas encore cette semaine — reprenez votre rythme, une fois suffit pour commencer.',som1:'Bravo — vous avez fait vos exercices {n} des 7 derniers jours.',som3:'Superbe ! Vous avez fait vos exercices {n} des 7 derniers jours. C’est comme ça qu’on tient.',groter:'Texte plus grand'},
+    es:{vdaan:'Hoy he hecho mis ejercicios',vweek:'Tu semana de ejercicios',som0:'Aún no esta semana — retoma tu ritmo, una vez basta para empezar.',som1:'Bien hecho — hiciste ejercicio {n} de los últimos 7 días.',som3:'¡Genial! Hiciste ejercicio {n} de los últimos 7 días. Así se mantiene.',groter:'Texto más grande'},
+    pl:{vdaan:'Ćwiczyłem(-am) dzisiaj',vweek:'Twój tydzień ćwiczeń',som0:'Jeszcze nie w tym tygodniu — wróć do rytmu, jeden raz wystarczy na początek.',som1:'Dobra robota — ćwiczyłeś(-aś) przez {n} z 7 dni.',som3:'Świetnie! Ćwiczyłeś(-aś) przez {n} z 7 dni. Tak się utrzymuje formę.',groter:'Większy tekst'},
+    tr:{vdaan:'Bugün egzersiz yaptım',vweek:'Egzersiz haftan',som0:'Bu hafta henüz yok — ritmini yeniden yakala, başlamak için bir kez yeter.',som1:'Aferin — son 7 günün {n} gününde egzersiz yaptın.',som3:'Harika! Son 7 günün {n} gününde egzersiz yaptın. Böyle devam.',groter:'Daha büyük yazı'},
+    ar:{vdaan:'تمرّنت اليوم',vweek:'أسبوع تمارينك',som0:'لم تتمرّن بعد هذا الأسبوع — استعد إيقاعك، مرّة واحدة تكفي للبدء.',som1:'أحسنت — تمرّنت في {n} من آخر 7 أيام.',som3:'رائع! تمرّنت في {n} من آخر 7 أيام. هكذا تحافظ على استمرارك.',groter:'خط أكبر'},
+    uk:{vdaan:'Сьогодні я тренувався(-лась)',vweek:'Твій тиждень вправ',som0:'Цього тижня ще ні — поверни свій ритм, одного разу досить, щоб почати.',som1:'Молодець — ти займався(-лась) {n} із 7 днів.',som3:'Чудово! Ти займався(-лась) {n} із 7 днів. Так і тримай.',groter:'Більший текст'}
   };
   function trg(k){var d=TG[TAAL]||TG.nl;return d[k]!=null?d[k]:TG.nl[k];}
   // oefenvinkje + oefenweek tekenen (alleen registreren en tonen, geen oordeel)
@@ -533,6 +538,8 @@
     zet('voet1',tr('voet1'));zet('gemaakt',tr('gemaakt'));
     zet('beltxt',tr('bel'));
     if(!bezigLezen)zet('leesTxt',tr('lees'));
+    var gb=document.getElementById('grootBtn');
+    if(gb){gb.title=trg('groter');gb.setAttribute('aria-label',trg('groter'));}
     tekenDagen();
   }
   var DAGCODES=['MO','TU','WE','TH','FR','SA','SU'];
@@ -1151,6 +1158,16 @@
     var sel=document.getElementById('taalsel');
     sel.value=TAAL;
     sel.addEventListener('change',function(){wisselTaal(sel.value);});
+    // grotere letters: toggle op de hele kaart, keuze blijft bewaard op dit toestel
+    var gb=document.getElementById('grootBtn');
+    var zetGroot=function(aan){
+      document.documentElement.classList.toggle('groot',aan);
+      gb.classList.toggle('aan',aan);
+      gb.setAttribute('aria-pressed',aan?'true':'false');
+      try{localStorage.setItem('fp_groot',aan?'1':'');}catch(e){}
+    };
+    try{if(localStorage.getItem('fp_groot')==='1')zetGroot(true);}catch(e){}
+    gb.addEventListener('click',function(){zetGroot(!document.documentElement.classList.contains('groot'));});
     if(window.speechSynthesis){
       var lb=document.getElementById('leesBtn');
       lb.style.display='';
