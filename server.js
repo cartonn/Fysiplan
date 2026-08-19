@@ -247,12 +247,29 @@ function echteAfbeelding(buf, soort) {
 // uitleg, taalkeuze, voorlezen, oefenvinkje, pijnscore, agenda) zonder dat er een
 // echte kaart of praktijk voor nodig is. Puur lezen; interactie wordt niet bewaard.
 function demoKaart() {
+  const nu = Date.now(), dg = 864e5;
+  const ddmm = (t) => new Date(t).toLocaleDateString("nl-NL", { day: "2-digit", month: "2-digit", timeZone: "Europe/Amsterdam" });
   return {
     id: "demo", demo: true, praktijk: "Fysiplan (voorbeeld)", naam: "Voorbeeldkaart",
-    ts: Date.now(),
+    ts: nu - 9 * dg,
     client: { c_doel: "Weer soepel en pijnvrij bewegen in het dagelijks leven" },
     chosen: [{ n: "Squat", i: 0 }, { n: "Dead bug", i: 0 }, { n: "Anteflexie armen", i: 0 }, { n: "Step up", i: 0 }],
-    rows: {}, cells: {}, vids: {}, metingen: [], gedaan: []
+    // startdosering in de eerste schemarij: zo tonen de voorschrift-chips en het
+    // "ingevulde schema" precies wat een echte kaart laat zien (sleutels volgen
+    // cellPrefix van kaart.html: 'n' + kleingemaakte naam zonder leestekens)
+    rows: { r0: ddmm(nu - 9 * dg) },
+    cells: {
+      "nsquat.0|r0|S": "3", "nsquat.0|r0|H": "10",
+      "ndeadbug.0|r0|S": "3", "ndeadbug.0|r0|H": "8",
+      "nanteflexiearmen.0|r0|S": "2", "nanteflexiearmen.0|r0|H": "12",
+      "nstepup.0|r0|S": "3", "nstepup.0|r0|H": "10"
+    }, vids: {},
+    // een zachte, dalende pijnreeks tot en met gisteren en vier oefendagen in de
+    // laatste week: grafiek, trendregel en oefenweek staan meteen aan. Vandaag
+    // blijft bewust open, zodat de bezoeker zélf tikt en het live ziet veranderen
+    // (demo-interactie wordt niet bewaard — de POST-routes echoën alleen).
+    metingen: [[9, 6], [7, 5], [6, 5], [4, 4], [2, 3], [1, 2]].map(([d, s]) => ({ t: nu - d * dg, s })),
+    gedaan: [9, 7, 6, 4, 2, 1].map((d) => ({ t: nu - d * dg }))
   };
 }
 function vindKaart(id) {
