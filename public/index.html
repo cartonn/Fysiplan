@@ -442,6 +442,25 @@ bridge2.jpg</div>
   </div>
 </div>
 
+<!-- eenmalig welkom voor de eerste-keer-bezoeker (v2): van landingsklik naar eerste kaart -->
+<div class="ov" id="ovWelkom">
+  <div class="modal">
+    <h3>Welkom bij Fysiplan</h3>
+    <div style="font-size:13px;color:var(--muted);line-height:1.6;margin:2px 0 12px">
+      Je eerste trainingskaart staat in ongeveer een minuut:
+      <ol style="margin:8px 0 0 18px;padding:0">
+        <li>Kies een <b>sjabloon</b> per klacht, of klik links oefeningen aan.</li>
+        <li>Vul de <b>cli&euml;ntnaam</b> in &mdash; de QR-code naar de digitale kaart komt er vanzelf op.</li>
+        <li><b>Print</b> de A4 of deel de link via WhatsApp.</li>
+      </ol>
+    </div>
+    <div class="acts">
+      <button class="btn" id="welkom_zelf">Zelf ontdekken</button>
+      <button class="btn primary" id="welkom_sjab">Kies een sjabloon</button>
+    </div>
+  </div>
+</div>
+
 <!-- kaartsjablonen (v2) -->
 <div class="ov" id="ovSjab">
   <div class="modal">
@@ -1622,6 +1641,19 @@ bridge2.jpg</div>
     }).join("");
   }
   document.getElementById('sjabBtn').addEventListener('click',function(){renderSjabLijst();openOv('ovSjab');});
+  // eenmalig welkom (v2): wie vers van de landing komt, landt niet koud in de app
+  // maar krijgt de kaart-in-één-minuut-route. Eén keer ooit, daarna nooit meer;
+  // bestaande gebruikers (met opgeslagen kaartstaat) zien hem ook niet.
+  if(IS_V2){
+    var welkomNodig=false;
+    try{welkomNodig=!localStorage.getItem('fysiplan_welkom_gezien')&&!localStorage.getItem('fysiplan_state')&&!localStorage.getItem('fysiplan_settings');}catch(e){}
+    if(welkomNodig){
+      try{localStorage.setItem('fysiplan_welkom_gezien','1');}catch(e){}
+      setTimeout(function(){openOv('ovWelkom');},400);
+    }
+    document.getElementById('welkom_zelf').addEventListener('click',function(){closeOv('ovWelkom');});
+    document.getElementById('welkom_sjab').addEventListener('click',function(){closeOv('ovWelkom');renderSjabLijst();openOv('ovSjab');});
+  }
   document.getElementById('sj_close').addEventListener('click',function(){closeOv('ovSjab');});
   document.getElementById('sj_lijst').addEventListener('click',function(e){
     var b=e.target.closest('[data-sjab]');if(!b)return;
