@@ -234,3 +234,40 @@ heeft. Geen gedragswijziging; v1 onaangeraakt.
 **Volgende run — pak een ander gebied:** rate-limiting op de schrijfroutes
 (`/api/kaarten`, `/api/opname`, `/api/praktijken` POST) of een adversariële
 blik op de opname-/upload-keten (`/o`, `/api/opname`, videopaden).
+
+### 2026-08-19 — opname-/upload-keten (video via scherm-QR)
+**Geauditeerd:** de volledige video-uploadketen — `/api/opname/start`,
+`/api/opname/status`, `/api/opname/upload`, `/o/<token>` en de opslagpaden onder
+`uploads/videos/`.
+
+**Bevindingen (geen codegat — het oppervlak is stevig verhard):**
+- **Token munten** (`start`) is admin-only (`isAdmin`), met `schrijfLimiet`, een
+  cap van 200 gelijktijdige opnames, en tokens van `randomBytes(6)` (hex) met een
+  TTL van 15 min (`opnameOpschonen`).
+- **Upload** draagt de CSRF-check (`kruisSite`, fail-open), `schrijfLimiet`, een
+  cap van 4 gelijktijdige uploads, en een dubbele groottegrens: een gespoofte
+  `content-length` > 60 MB wordt vóór het bufferen met 413 afgewezen, en
+  `readBodyRaw` telt de échte bytes en breekt de stream af bij 60 MB (de
+  content-length-spoof kan de cap dus niet omzeilen).
+- **Inhoudscontrole:** alleen `video/mp4`/`video/webm`, plus een magic-byte-check
+  (mp4 `ftyp` op offset 4, webm EBML-kop) zodat de opslag geen verspreidpunt voor
+  vermomde bestanden kan worden; lege/te korte bodies (< 10 kB) geweigerd; een
+  globale opslagquota (`videoOpslagVol`).
+- **Padveiligheid:** het opslagpad is `uploads/videos/v-<token><ext>` met een
+  door-de-map-gevalideerd hex-token → geen path traversal; de opruiming
+  (`ruimKaartVideosOp`) matcht alleen `v-[a-f0-9]+\.(mp4|webm)`.
+
+**Increment:** geen geforceerde codewijziging. De regressiewacht
+`test-opname-upload.mjs` dekte al admin-gate/CSRF/content-type/magic-bytes/
+content-length-spoof/hex-pad/token-hergebruik, maar niet de gevoeligste tak:
+`doel:'oefening'`, die de video van een **bibliotheekoefening** vervangt die
+élke patiënt met die oefening ziet. Test uitgebreid (14 → 20 checks): een
+onbekende/lege oefeningnaam krijgt geen token (404, manifest-validatie), de tak
+is óók admin-only, en na een geldige upload wijst de bibliotheekkoppeling naar
+exact het hex-veilige pad met uitsluitend een gevalideerde manifestnaam als
+sleutel. Geen gedragswijziging; v1 onaangeraakt.
+
+**Volgende run — pak een ander gebied:** rate-limiting op de overige
+schrijfroutes (`/api/kaarten`, `/api/praktijken` POST) of een tweede blik op de
+deeplinks/gedeelde-kaart-vertaal- en vraag-API's (`/api/kaart/vraag`,
+`/api/kaart/vertaal`) op prompt-injectie en misbruik.
