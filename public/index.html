@@ -1883,10 +1883,24 @@ bridge2.jpg</div>
   }
   function deelBericht(cid,taal){return vulDeel(deelTaalVan(taal).deel,cid);}
   function herinnerBericht(cid,taal){return vulDeel(deelTaalVan(taal).her,cid);}
-  // de taal die in het deelpaneel van deze kaart gekozen is (standaard Nederlands)
+  // de gekozen berichttaal wordt per kaart onthouden (localStorage): de taal van
+  // de patiënt verandert niet, dus de therapeut hoort hem één keer te kiezen
+  function leesDeelTalen(){try{var m=JSON.parse(localStorage.getItem('fysiplan_deeltaal')||'{}');return (m&&typeof m==='object')?m:{};}catch(e){return {};}}
+  function bewaarDeelTaal(cid,taal){
+    try{
+      var m=leesDeelTalen();
+      if(taal==='nl')delete m[cid];else m[cid]=taal;
+      var ks=Object.keys(m);
+      if(ks.length>300)ks.slice(0,ks.length-300).forEach(function(k){delete m[k];});
+      localStorage.setItem('fysiplan_deeltaal',JSON.stringify(m));
+    }catch(e){}
+  }
+  // de taal die voor deze kaart geldt: de open kiezer, anders de onthouden keuze
   function deelTaalKeuze(cid){
     var s=document.querySelector("[data-staal='"+cid+"']");
-    return (s&&s.value)||'nl';
+    if(s&&s.value)return s.value;
+    var m=leesDeelTalen();
+    return DEELTAAL[m[cid]]?m[cid]:'nl';
   }
   // herschrijft de vier deellinks van één paneel naar de gekozen taal
   function zetDeelLinks(cid){
@@ -1967,17 +1981,19 @@ bridge2.jpg</div>
           // deel de kaart in één tik via het eigen kanaal van de patiënt: WhatsApp,
           // e-mail of gewoon de link kopiëren. De patiënt opent hem zonder app of
           // account in de browser — precies de app-vrije belofte van Fysiplan.
-          // de berichten starten in het Nederlands; de taalkiezer in het paneel
-          // herschrijft de vier links live (change-handler verderop)
-          var deelTekst=deelBericht(c.id,'nl');
+          // de berichten starten in de onthouden taal van deze kaart (standaard
+          // Nederlands); de taalkiezer herschrijft de vier links live en onthoudt
+          // de keuze per kaart (change-handler verderop)
+          var kTaal=deelTaalKeuze(c.id),kT=deelTaalVan(kTaal);
+          var deelTekst=deelBericht(c.id,kTaal);
           var waHref='https://wa.me/?text='+encodeURIComponent(deelTekst);
-          var mailHref='mailto:?subject='+encodeURIComponent(vulDeel(DEELTAAL.nl.sd,c.id))+'&body='+encodeURIComponent(deelTekst);
+          var mailHref='mailto:?subject='+encodeURIComponent(vulDeel(kT.sd,c.id))+'&body='+encodeURIComponent(deelTekst);
           // warme herinnering voor wie stil is gevallen: dezelfde app-vrije link, andere toon.
           // Zo wordt het "aandacht"-signaal een handeling: zien wie stil is → in één tik nudgen.
-          var herinnerTekst=herinnerBericht(c.id,'nl');
+          var herinnerTekst=herinnerBericht(c.id,kTaal);
           var waHref2='https://wa.me/?text='+encodeURIComponent(herinnerTekst);
-          var mailHref2='mailto:?subject='+encodeURIComponent(vulDeel(DEELTAAL.nl.sh,c.id))+'&body='+encodeURIComponent(herinnerTekst);
-          var taalOpties=Object.keys(DEELTAAL).map(function(k){return "<option value='"+k+"'>"+esc(DEELTAAL[k].naam)+"</option>";}).join("");
+          var mailHref2='mailto:?subject='+encodeURIComponent(vulDeel(kT.sh,c.id))+'&body='+encodeURIComponent(herinnerTekst);
+          var taalOpties=Object.keys(DEELTAAL).map(function(k){return "<option value='"+k+"'"+(k===kTaal?" selected":"")+">"+esc(DEELTAAL[k].naam)+"</option>";}).join("");
           var deelBlok="<div id='deel_"+esc(c.id)+"' style='display:none;padding:8px 4px 10px;border-bottom:1px solid var(--line)'>"+
             "<div style='display:flex;align-items:center;gap:7px;flex-wrap:wrap'>"+
               "<small style='color:var(--muted)'>De patiënt opent de kaart zonder app, gewoon in de browser.</small>"+
@@ -2093,10 +2109,11 @@ bridge2.jpg</div>
       toonSrvKaarten();ping('kaart-opgeslagen');
     });
   });
-  // taalkiezer in het deelpaneel: herschrijf de WhatsApp/e-maillinks naar de gekozen taal
+  // taalkiezer in het deelpaneel: herschrijf de WhatsApp/e-maillinks naar de
+  // gekozen taal en onthoud die keuze voor deze kaart
   document.getElementById('k_srv_lijst').addEventListener('change',function(e){
     var s=e.target.closest('[data-staal]');
-    if(s)zetDeelLinks(s.dataset.staal);
+    if(s){bewaarDeelTaal(s.dataset.staal,s.value);zetDeelLinks(s.dataset.staal);}
   });
   document.getElementById('k_srv_lijst').addEventListener('click',function(e){
     var m=e.target.closest('[data-mtoon]');

@@ -196,6 +196,12 @@
   .kv.links b{color:var(--inkt)}
   .kv.rechts b{color:#fff}
   .kv p{font-size:16px;margin:0}
+  /* proeflink in het donkere 1-scan-blok: de voorbeeldkaart leeft (verloop,
+     oefenweek), dus de landing mag ernaar wijzen als bewijs i.p.v. belofte */
+  .kv.rechts .kvlink{display:inline-block;margin-top:14px;color:#fff;font:700 14.5px/1.3 var(--disp);
+    text-decoration:none;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.28);
+    border-radius:999px;padding:9px 18px}
+  .kv.rechts .kvlink:hover{background:rgba(255,255,255,.22)}
   .kv.rechts p{color:#c9d7f0}
   .samen{margin-top:16px;text-align:center;font:italic 18px/1.6 var(--serif);color:var(--demp)}
   .samen b{color:var(--inkt);font-style:normal;font-family:var(--disp)}
@@ -379,6 +385,7 @@
         <div class="groot">1 scan</div>
         <b>en de volledige mobiele ervaring staat aan</b>
         <p>Wie wel met de telefoon overweg kan, scant de QR-code met de gewone camera en heeft dezelfde kaart als volwaardige app-ervaring: oefeningen met plaatjes, het schema en video's van je eigen therapeut. Zonder installatie en zonder account.</p>
+        <a class="kvlink" href="/k/demo" target="_blank" rel="noopener">Probeer de voorbeeldkaart — mét het verloop dat de therapeut ziet ↗</a>
       </div>
     </div>
     <div class="samen">Jij maakt <b>één kaart</b>. Fysiplan levert beide ervaringen, automatisch.</div>
