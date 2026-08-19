@@ -124,8 +124,13 @@ html.v2 .list::-webkit-scrollbar{width:8px}
 html.v2 .list::-webkit-scrollbar-thumb{background:#ddd4bd;border-radius:99px}
 html.v2 .list::-webkit-scrollbar-track{background:transparent}
 
-/* lege kaart: vriendelijke hint in plaats van een kale regel */
-html.v2 #emptyA4{text-align:center;color:var(--soft);font-size:14px;padding:22px 30px 0 !important}
+/* lege kaart: vriendelijke hint als zwevend chipje. De dekkende achtergrond en
+   z-index voorkomen dat de rasterlijnen van de lege A4 dwars door de tekst lopen
+   (dat oogde als doorgestreepte tekst) en de max-breedte houdt hem op het vel. */
+html.v2 #emptyA4{width:max-content;max-width:86%;margin:0 auto;position:relative;z-index:1;
+  text-align:center;color:var(--muted);font-size:13.5px;line-height:1.45;
+  background:var(--brand-50);border:1px solid var(--brand-100);border-radius:999px;
+  padding:9px 20px !important}
 html.v2 #emptyA4::before{content:"←";display:inline-block;margin-right:8px;color:var(--brand);font-weight:700}
 
 /* v2-badge naast het logo */
