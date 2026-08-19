@@ -385,6 +385,54 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
   text-decoration:none;flex:none}
 .staal.veldgids .strepen i{border-color:rgba(34,32,27,.24)}
 
+/* — staal concept 25: Draaischijf — */
+.staal.draaischijf{background:#efe8da;color:#171d2b;box-shadow:inset 0 0 0 1px #cdc4b0}
+.staal.draaischijf .plaatnr{color:#bd3a1c;font-family:var(--mono);position:relative;z-index:2}
+.staal.draaischijf .woord{font-family:Charter,"Iowan Old Style",Georgia,serif;font-weight:400;
+  position:relative;z-index:2}
+.staal.draaischijf .woord em{font-style:italic;color:#bd3a1c}
+.staal.draaischijf .schijf{position:absolute;right:-26px;top:-24px;width:132px;height:132px;
+  border-radius:50%;border:1px solid #171d2b;background:
+    repeating-conic-gradient(from 0deg,#171d2b 0 .5deg,transparent .5deg 9deg)}
+.staal.draaischijf .schijf::after{content:"";position:absolute;inset:11px;border-radius:50%;
+  background:linear-gradient(158deg,#26324c,#151c2a);border:1px solid #171d2b}
+.staal.draaischijf .venster{position:absolute;right:14px;top:2px;width:52px;height:26px;
+  border-radius:3px;background:#faf6ec;border:1px solid #171d2b;z-index:2}
+.staal.draaischijf .index{position:absolute;right:36px;top:-6px;z-index:3;width:0;height:0;
+  border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid #bd3a1c}
+.staal.draaischijf .strepen i{border-color:rgba(23,29,43,.22)}
+
+/* — staal concept 26: Kwartet — */
+.staal.kwartet{background:#1f4536;color:#fff}
+.staal.kwartet .plaatnr{color:#f0c33c;font-family:var(--mono);position:relative;z-index:2}
+.staal.kwartet .woord{font-family:"Avenir Next",Seravek,system-ui,sans-serif;font-weight:600;
+  letter-spacing:-.038em;position:relative;z-index:2}
+.staal.kwartet .woord em{font-style:normal;color:#f0c33c}
+.staal.kwartet .stapel{position:absolute;right:12px;top:16px;display:flex}
+.staal.kwartet .stapel b{display:block;width:38px;height:54px;border-radius:4px;
+  border:1px solid rgba(0,0,0,.35);box-shadow:0 6px 12px -6px rgba(0,0,0,.7)}
+.staal.kwartet .stapel b.rug{background:
+    repeating-linear-gradient(45deg,rgba(255,255,255,.12) 0 2px,transparent 2px 7px),
+    #9d1730;transform:rotate(-9deg)}
+.staal.kwartet .stapel b.voor{background:#fbf8f1;margin-left:-13px;transform:rotate(6deg);
+  font:700 9px/54px var(--mono);color:#1c4a8b;text-align:center;letter-spacing:.1em}
+.staal.kwartet .strepen i{border-color:rgba(255,255,255,.3)}
+
+/* — staal concept 27: Schaduwbord — */
+.staal.schaduwbord{color:#fff;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(0,0,0,.5) 0 1.6px, transparent 1.9px),
+    linear-gradient(180deg,#323a35,#252b27 40%,#1b201d);
+  background-size:12px 12px, auto}
+.staal.schaduwbord .plaatnr{color:#e8b400;font-family:var(--mono);position:relative;z-index:2}
+.staal.schaduwbord .woord{font-family:"Avenir Next",Seravek,system-ui,sans-serif;font-weight:700;
+  letter-spacing:-.042em;position:relative;z-index:2}
+.staal.schaduwbord .woord em{font-style:normal;color:#e8b400}
+.staal.schaduwbord .vorm{position:absolute;top:20px;width:44px;height:56px;border-radius:3px}
+.staal.schaduwbord .vorm.vol{right:74px;border:3px solid #e8b400;background:rgba(232,180,0,.14)}
+.staal.schaduwbord .vorm.leeg{right:18px;border:3px dashed #c02a18;background:rgba(192,42,24,.14)}
+.staal.schaduwbord .strepen i{border-color:rgba(255,255,255,.3)}
+
 .kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
 .kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
 .kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
@@ -444,7 +492,7 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>24</b> concepten</span>
+      <span><b>27</b> concepten</span>
       <span>Laatste ronde <b>18 augustus 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
@@ -1448,6 +1496,126 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-24-veldgids.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-24-veldgids.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 25 ─────────── -->
+      <article class="kaart">
+        <div class="staal draaischijf">
+          <div class="schijf" aria-hidden="true"></div>
+          <div class="venster" aria-hidden="true"></div>
+          <div class="index" aria-hidden="true"></div>
+          <div class="plaatnr">7 sectoren — 1 venster</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#efe8da"></i><i style="background:#171d2b"></i>
+            <i style="background:#bd3a1c"></i><i style="background:#9c7a2c"></i>
+          </div>
+          <div class="woord">Draai naar <em>vandaag</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 25</div>
+          <h3>Draaischijf</h3>
+          <p class="richting">Alles staat erop, en toch is er nooit meer dan één dag te zien.</p>
+          <p class="rationale">De volvelle uit de astronomische drukkunst: twee papieren schijven op
+            één splitpen, met een venster dat precies één antwoord vrijlaat en de rest wegdraait.
+            Toegepast op de oefenkaart draait de opdracht om — niet “hoe krijgen we de hele week op
+            één A4”, maar “hoe zorgen we dat de patiënt er per keer één dag van ziet”. Wie de hele
+            week ziet, ziet vooral wat er nog moet; wie één sector ziet, ziet iets wat af kan. De
+            zeven dagvakken staan gekanteld op het vel, precies zoals ze op de schijf gedrukt staan,
+            en onderaan ligt een vangnet voor wie niet knipt.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Petrus Apianus en zijn draaischijven in de Cosmographia (1524) · het astrolabium als
+              papieren rekeninstrument · de graadrand van een planisfeer · perkamentkleurig papier
+              met één tweede inkt in vermiljoen · de splitpen uit de knutseldoos</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — een gedrukte onderschijf met zeven dagsectoren, een uit te knippen
+              dekschijf met venster, en een leesbare weeklijst als vangnet</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-25-draaischijf.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-25-draaischijf.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 26 ─────────── -->
+      <article class="kaart">
+        <div class="staal kwartet">
+          <div class="stapel" aria-hidden="true">
+            <b class="rug"></b><b class="voor">B2</b>
+          </div>
+          <div class="plaatnr">6 kaarten — 1 vel</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#f4efe1"></i><i style="background:#b3122c"></i>
+            <i style="background:#1c4a8b"></i><i style="background:#f0c33c"></i>
+          </div>
+          <div class="woord">Geen lijstje. Een <em>setje</em>.</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 26</div>
+          <h3>Kwartet</h3>
+          <p class="richting">Een uitdraai is af als hij uit de printer komt. Een kwartet is pas af
+            als de familie compleet is.</p>
+          <p class="rationale">Speelkaarten werden nooit los gedrukt maar met tientallen tegelijk op
+            één vel, met snijtekens, registratiekruis en kleurbalk in de rand — en dat vel is hier de
+            A4. Het echte werk doet de kwartetregel: doordat elke kaart zijn hele familie noemt, weet
+            de patiënt altijd wat er nog ontbreekt zonder ergens anders te kijken. Vier is een grens
+            die iedereen kent, ook wie nooit een app opent. En er zit een joker in het spel: één
+            kaart per week waarmee u een dag mag overslaan, zonder uitleg — dat maakt van falen een
+            zet in plaats van een gat in de statistiek.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>het ongesneden drukkersvel van de kaartenmakerij · snijtekens, registratiekruizen en
+              de kleurcontrolestrook in de velrand · het Nederlandse kwartet en zijn familieregel ·
+              hoekindices en ruggetjespatroon van speelkaarten · de joker als geldige zet</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — zes kaarten op één vel: vier oefenkaarten, een jokerkaart en een
+              spelregelkaart; ongeknipt leest het als een gewone oefenkaart</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-26-kwartet.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-26-kwartet.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 27 ─────────── -->
+      <article class="kaart">
+        <div class="staal schaduwbord">
+          <div class="vorm vol" aria-hidden="true"></div>
+          <div class="vorm leeg" aria-hidden="true"></div>
+          <div class="plaatnr">6 plekken — 1 blik</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#252b27"></i><i style="background:#e8b400"></i>
+            <i style="background:#c02a18"></i><i style="background:#f1eee2"></i>
+          </div>
+          <div class="woord">Een gat leest <em>zichzelf</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 27</div>
+          <h3>Schaduwbord</h3>
+          <p class="richting">Wat ontbreekt hoort een vorm te zijn, geen zin.</p>
+          <p class="rationale">Het gereedschapsbord uit de werkplaats, waar elk stuk zijn eigen
+            geschilderde silhouet heeft: niemand telt en niemand leest, want een lege schaduw is van
+            vijf meter afstand gewoon een gat. Dat is precies wat een oefenkaart nooit doet — die
+            vraagt om lezen, tellen en afvinken, op het moment dat de dag daar het minst geschikt
+            voor is. Hier hangt het blad op ooghoogte aan de koelkast en maakt u het vakje zwart; wat
+            wit bleef is niet erg, maar wel zichtbaar. Twee dagen dezelfde lege plek is bovendien
+            informatie voor de therapeut die geen enkele patiënt hoeft te melden.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>5S en visueel management uit de lean-werkplaats · geschilderde gereedschapssilhouetten
+              op geperforeerd hardboard · signaalgeel en veiligheidsrood uit de fabrieksnorm ·
+              stencilletters op gelakt board · het principe dat een ontbrekend ding zichzelf meldt</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — drie omkaderde plekken met elk zeven haakvakjes om zwart te maken, plus
+              een legenda; werkt volledig in zwart-wit, want de vakjes zijn vorm en geen kleur</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-27-schaduwbord.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-27-schaduwbord.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>

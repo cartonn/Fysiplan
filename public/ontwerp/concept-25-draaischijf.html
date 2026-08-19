@@ -1,0 +1,1050 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 25 — Draaischijf · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 25 — DRAAISCHIJF
+   ------------------------------------------------------------
+   De volvelle: een papieren rekenschijf uit de astronomische
+   drukkunst (Apianus, 1524). Twee schijven op één splitpen; een
+   venster laat precies één ding zien en verbergt al het andere.
+   Toegepast: de patiënt ziet nooit de hele week, alleen vandaag.
+   Kalm is hier niet "weinig inkt" maar "weinig tegelijk".
+   ============================================================ */
+
+:root{
+  --perkament:#efe8da;
+  --blad:#faf6ec;
+  --vlak:#fffdf8;
+  --inkt:#171d2b;
+  --inkt-2:#414c66;
+  --grijs:#7b8299;
+  --lijn:#cdc4b0;
+  --lijn-2:#e2dacb;
+  --rood:#bd3a1c;         /* de indexpijl — de enige tweede inkt */
+  --oker:#9c7a2c;
+  --groen:#3d5d4a;
+
+  --serif:Charter,"Iowan Old Style",Georgia,"Times New Roman",serif;
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:15px; --s4:25px; --s5:40px; --s6:64px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font:17px/1.62 var(--serif);color:var(--inkt-2);background:var(--perkament)}
+img{max-width:100%;display:block}
+a{color:var(--rood)}
+:focus-visible{outline:2.5px solid var(--rood);outline-offset:3px}
+
+.binnen{max-width:1150px;margin:0 auto;padding:0 24px}
+
+/* ── labbalk ─────────────────────────────────────────────── */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:18px;
+  background:var(--inkt);color:#cdd3e2;padding:11px 22px;font:500 13.5px/1 var(--sans)}
+.labbalk .nr{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--blad);background:var(--rood);padding:5px 8px;border-radius:2px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#cdd3e2;text-decoration:none;padding:5px 2px;border-bottom:1.5px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--rood)}
+.labbalk a.terug{color:#fff;font-weight:600}
+@media (max-width:820px){.labbalk{gap:12px;font-size:12.5px;flex-wrap:wrap}}
+
+/* ── schermkoppen ────────────────────────────────────────── */
+.scherm{padding:var(--s6) 0;border-top:1px solid var(--lijn)}
+.scherm.vel{background:var(--blad)}
+.schermkop{margin-bottom:var(--s5);max-width:70ch}
+.schermkop b{display:block;font:600 10.5px/1 var(--mono);letter-spacing:.2em;
+  text-transform:uppercase;color:var(--rood);margin-bottom:11px}
+.schermkop h2{font:400 clamp(28px,3.4vw,38px)/1.14 var(--serif);color:var(--inkt);
+  letter-spacing:-.012em}
+.schermkop p{margin-top:10px;color:var(--grijs);font-size:16.5px}
+
+/* ============================================================
+   DE SCHIJF — gedeelde component (scherm)
+   ============================================================ */
+.schijfhouder{position:relative;display:grid;place-items:center}
+
+.schijf{position:relative;width:var(--d,420px);height:var(--d,420px);border-radius:50%;
+  background:
+    radial-gradient(circle at 38% 30%, #fffdf7 0%, var(--vlak) 46%, #f2ead9 100%);
+  box-shadow:0 2px 0 rgba(23,29,43,.06), 0 22px 46px -22px rgba(23,29,43,.42),
+             inset 0 0 0 1px var(--lijn);
+  flex:none}
+
+/* de gegraveerde ringen */
+.schijf .ring{position:absolute;inset:0;border-radius:50%;pointer-events:none}
+.schijf .ring.a{inset:3.2%;border:1px solid var(--lijn)}
+.schijf .ring.b{inset:7.5%;border:1.6px solid var(--inkt);opacity:.5}
+.schijf .ring.c{inset:31%;border:1px solid var(--lijn)}
+
+/* graadverdeling langs de rand: fijne streepjes, elke 5° */
+.schijf .tanden{position:absolute;inset:0;border-radius:50%;
+  background:repeating-conic-gradient(from 0deg,
+    var(--inkt-2) 0 .3deg, transparent .3deg 5deg);
+  -webkit-mask:radial-gradient(circle, transparent 0 45.5%, #000 45.5% 48.4%, transparent 48.4%);
+  mask:radial-gradient(circle, transparent 0 45.5%, #000 45.5% 48.4%, transparent 48.4%);
+  opacity:.55}
+
+/* de zeven dagvakken, elk gedraaid zoals ze op papier gedrukt staan */
+.vak{position:absolute;left:50%;top:50%;width:31%;
+  transform-origin:50% 50%;text-align:center}
+.vak .dag{font:600 11px/1 var(--mono);letter-spacing:.17em;text-transform:uppercase;
+  color:var(--rood)}
+.vak .reg{font:400 13.5px/1.34 var(--serif);color:var(--inkt);margin-top:6px}
+.vak .reg em{font-style:normal;color:var(--grijs);font-size:12px;display:block}
+
+/* de sectorscheidingen */
+.spaak{position:absolute;left:50%;top:50%;width:1px;height:47%;background:var(--lijn);
+  transform-origin:50% 100%;margin-top:-47%}
+
+/* de bovenschijf: een dekblad met één venster */
+.dekblad{position:absolute;inset:6%;border-radius:50%;
+  background:linear-gradient(158deg,#243049,#161d2b 62%);
+  box-shadow:0 10px 26px -12px rgba(0,0,0,.55);
+  -webkit-mask:
+     radial-gradient(circle, #000 100%) ,
+     linear-gradient(#000,#000);
+  pointer-events:none}
+.dekblad .venster{position:absolute;left:50%;top:5.5%;transform:translateX(-50%);
+  width:60%;height:31%;border-radius:5px;background:transparent;
+  box-shadow:0 0 0 1.5px rgba(250,246,236,.5)}
+.dekblad .merk{position:absolute;left:50%;bottom:11%;transform:translateX(-50%);
+  text-align:center;color:#8e99b5;font:600 9.5px/1.5 var(--mono);letter-spacing:.2em;
+  text-transform:uppercase}
+.dekblad .merk b{display:block;color:var(--blad);font:400 15px/1.3 var(--serif);
+  letter-spacing:0;text-transform:none;margin-top:4px}
+
+/* het venster wordt uitgesneden: we bouwen het dekblad als vier vlakken */
+.dek{position:absolute;inset:6%;border-radius:50%;overflow:hidden;pointer-events:none}
+.dek .vlak-blauw{position:absolute;inset:0;
+  background:linear-gradient(158deg,#26324c,#151c2a 64%)}
+.dek .gat{position:absolute;left:19%;top:4.5%;width:62%;height:37%;border-radius:5px;
+  background:var(--vlak);
+  box-shadow:0 0 0 1px rgba(23,29,43,.3), inset 0 2px 7px -3px rgba(23,29,43,.5)}
+.dek .naaf{position:absolute;left:50%;top:50%;width:34px;height:34px;margin:-17px 0 0 -17px;
+  border-radius:50%;background:radial-gradient(circle at 36% 32%,#e7dcc4,#a3936f 70%,#6f6449);
+  box-shadow:0 2px 5px rgba(0,0,0,.4)}
+.dek .naaf::after{content:"";position:absolute;inset:38%;border-radius:50%;
+  background:rgba(23,29,43,.45)}
+.dek .kaft{position:absolute;left:0;right:0;bottom:9%;text-align:center;color:#94a0bd;
+  font:600 9.5px/1.6 var(--mono);letter-spacing:.22em;text-transform:uppercase}
+.dek .kaft b{display:block;color:#f4efe3;font:400 16px/1.3 var(--serif);letter-spacing:0;
+  text-transform:none;margin-top:3px}
+.dek .schaal{position:absolute;left:0;right:0;top:41%;height:1px;background:rgba(244,239,227,.16)}
+
+/* wat er ín het venster staat */
+.venstertekst{position:absolute;left:25%;top:10.5%;width:50%;text-align:center;z-index:4}
+.venstertekst .dag{font:600 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--rood)}
+.venstertekst ol{list-style:none;margin-top:7px}
+.venstertekst li{font:400 14px/1.26 var(--serif);color:var(--inkt);margin-bottom:5px}
+.venstertekst li:last-child{margin-bottom:0}
+.venstertekst li span{display:block;font:500 11px/1.18 var(--mono);color:var(--grijs);
+  letter-spacing:.03em;margin-top:1px}
+
+/* de indexpijl: rood, wijst naar het venster */
+.pijl{position:absolute;left:50%;top:-16px;transform:translateX(-50%);z-index:6;
+  display:flex;flex-direction:column;align-items:center;gap:3px}
+.pijl i{width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;
+  border-top:14px solid var(--rood)}
+.pijl b{font:600 9.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--rood)}
+
+/* ============================================================
+   1 · LANDING
+   ============================================================ */
+.hero{display:grid;grid-template-columns:1.02fr .98fr;gap:var(--s6);align-items:center}
+@media (max-width:960px){.hero{grid-template-columns:1fr;gap:var(--s5)}}
+.hero .kicker{font:600 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--oker);margin-bottom:var(--s3)}
+.hero h1{font:400 clamp(38px,5.4vw,62px)/1.045 var(--serif);color:var(--inkt);
+  letter-spacing:-.022em}
+.hero h1 em{font-style:italic;color:var(--rood)}
+.hero p.lead{margin-top:var(--s3);font-size:19.5px;line-height:1.58;max-width:44ch}
+.hero .knoppen{display:flex;flex-wrap:wrap;gap:12px;margin-top:var(--s4)}
+
+.kn{display:inline-block;background:var(--inkt);color:var(--blad);text-decoration:none;
+  padding:13px 21px;border-radius:2px;font:600 14.5px/1 var(--sans);border:1.5px solid var(--inkt)}
+.kn:hover{background:#0e1420}
+.kn.leeg{background:transparent;color:var(--inkt);border-color:var(--lijn)}
+.kn.leeg:hover{border-color:var(--inkt);background:rgba(23,29,43,.04)}
+
+.hero .onder{margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid var(--lijn);
+  display:flex;flex-wrap:wrap;gap:var(--s4);font:500 12.5px/1.5 var(--mono);color:var(--grijs);
+  letter-spacing:.04em}
+.hero .onder b{color:var(--inkt);font-weight:600}
+
+.drie{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5);margin-top:var(--s6);
+  padding-top:var(--s5);border-top:1px solid var(--lijn)}
+@media (max-width:860px){.drie{grid-template-columns:1fr;gap:var(--s4)}}
+.drie h3{font:600 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--inkt);margin-bottom:12px}
+.drie h3 s{text-decoration:none;color:var(--rood);margin-right:9px}
+.drie p{font-size:16px}
+
+.citaat{margin-top:var(--s6);padding:var(--s5);background:var(--inkt);color:#d7dcea;
+  border-radius:3px;display:grid;grid-template-columns:auto 1fr;gap:var(--s5);align-items:center}
+@media (max-width:760px){.citaat{grid-template-columns:1fr;padding:var(--s4)}}
+.citaat .jaar{font:400 clamp(40px,6vw,74px)/1 var(--serif);color:var(--rood)}
+.citaat p{font:400 19px/1.55 var(--serif);color:#e8ebf3}
+.citaat p b{color:#fff;font-weight:400;font-style:italic}
+.citaat .bron{display:block;margin-top:11px;font:500 12px/1.5 var(--mono);
+  letter-spacing:.08em;color:#8e99b5}
+
+/* ============================================================
+   2 · KIEZER
+   ============================================================ */
+.kiezer{display:grid;grid-template-columns:1fr 400px;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.kiezer{grid-template-columns:1fr}}
+
+.zoekbalk{display:flex;gap:10px;margin-bottom:var(--s4)}
+.zoekbalk input{flex:1;font:400 17px/1 var(--serif);padding:15px 16px;border:1.5px solid var(--lijn);
+  background:var(--vlak);border-radius:2px;color:var(--inkt)}
+.zoekbalk input::placeholder{color:var(--grijs)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:var(--s4)}
+.filters button{font:600 12.5px/1 var(--sans);padding:9px 13px;border-radius:20px;
+  border:1.5px solid var(--lijn);background:var(--vlak);color:var(--inkt-2);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--inkt);border-color:var(--inkt);color:var(--blad)}
+
+.rij{display:grid;grid-template-columns:76px 1fr auto;gap:18px;align-items:center;
+  padding:15px 16px;background:var(--vlak);border:1.5px solid var(--lijn-2);
+  border-radius:3px;margin-bottom:10px}
+.rij:hover{border-color:var(--lijn)}
+.rij.gekozen{border-color:var(--inkt);box-shadow:inset 3px 0 0 var(--rood)}
+.rij .beeld{width:76px;height:60px;background:var(--blad);border:1px solid var(--lijn-2);
+  border-radius:2px;display:grid;place-items:center;overflow:hidden}
+.rij .beeld img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.rij h4{font:400 17.5px/1.25 var(--serif);color:var(--inkt)}
+.rij .meta{font:500 12px/1.5 var(--mono);color:var(--grijs);letter-spacing:.04em;margin-top:4px}
+.rij .meta b{color:var(--oker)}
+.rij .zet{font:600 12.5px/1 var(--sans);padding:10px 14px;border-radius:2px;cursor:pointer;
+  border:1.5px solid var(--lijn);background:transparent;color:var(--inkt);white-space:nowrap}
+.rij.gekozen .zet{background:var(--inkt);border-color:var(--inkt);color:var(--blad)}
+
+.paneel{position:sticky;top:74px;background:var(--vlak);border:1.5px solid var(--lijn);
+  border-radius:3px;padding:var(--s4)}
+.paneel h3{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--grijs);margin-bottom:var(--s3)}
+.paneel .mini{display:grid;place-items:center;margin:var(--s3) 0 var(--s4)}
+.paneel .telling{display:flex;justify-content:space-between;align-items:baseline;
+  padding:11px 0;border-top:1px solid var(--lijn-2);font-size:15px}
+.paneel .telling b{font:500 13px/1 var(--mono);color:var(--inkt)}
+.waarschuw{margin-top:var(--s3);padding:13px 15px;border-radius:2px;background:#fbf0e9;
+  border:1.5px solid #e3b49f;font-size:14.5px;color:#8a3417}
+.waarschuw b{display:block;font:600 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:6px}
+.leegstaat{margin-top:var(--s3);padding:13px 15px;border-radius:2px;background:var(--blad);
+  border:1.5px dashed var(--lijn);font-size:14.5px;color:var(--grijs)}
+
+/* ============================================================
+   3 · CLIËNTKAART
+   ============================================================ */
+.kaartgrid{display:grid;grid-template-columns:440px 1fr;gap:var(--s6);align-items:start}
+@media (max-width:1020px){.kaartgrid{grid-template-columns:1fr;gap:var(--s5)}}
+
+.vandaag h3{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--rood);margin-bottom:var(--s3)}
+.vandaag h4{font:400 clamp(26px,3vw,34px)/1.15 var(--serif);color:var(--inkt);
+  letter-spacing:-.015em;margin-bottom:var(--s4)}
+
+.taak{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;
+  padding:19px 20px;background:var(--vlak);border:1.5px solid var(--lijn-2);border-radius:3px;
+  margin-bottom:11px}
+.taak.af{background:#f4f1e6;border-color:var(--lijn)}
+.taak .bol{width:30px;height:30px;border-radius:50%;border:2px solid var(--lijn);
+  display:grid;place-items:center;flex:none}
+.taak.af .bol{background:var(--groen);border-color:var(--groen)}
+.taak.af .bol svg{display:block}
+.taak .bol svg{display:none}
+.taak h5{font:400 19px/1.25 var(--serif);color:var(--inkt)}
+.taak.af h5{color:var(--grijs)}
+.taak .dosis{font:500 13px/1.5 var(--mono);color:var(--inkt-2);letter-spacing:.04em;margin-top:3px}
+.taak .knopje{font:600 12.5px/1 var(--sans);padding:10px 14px;border:1.5px solid var(--lijn);
+  background:transparent;border-radius:2px;color:var(--inkt);cursor:pointer;white-space:nowrap}
+.taak.af .knopje{border-style:dashed;color:var(--grijs)}
+
+.weekband{margin-top:var(--s5);padding-top:var(--s4);border-top:1px solid var(--lijn)}
+.weekband h3{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--grijs);margin-bottom:var(--s3)}
+.weekband .dagen{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+.weekband .d{text-align:center;padding:13px 4px;border:1.5px solid var(--lijn-2);border-radius:2px;
+  background:var(--vlak)}
+.weekband .d b{display:block;font:600 10.5px/1 var(--mono);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--grijs)}
+.weekband .d i{display:block;margin:9px auto 0;width:13px;height:13px;border-radius:50%;
+  border:2px solid var(--lijn)}
+.weekband .d.af i{background:var(--groen);border-color:var(--groen)}
+.weekband .d.rust i{border-style:dotted;border-color:var(--oker)}
+.weekband .d.nu{border-color:var(--rood);box-shadow:0 0 0 1px var(--rood)}
+.weekband .d.nu b{color:var(--rood)}
+.weekband .d.komt{opacity:.5}
+.weekband .legenda{display:flex;flex-wrap:wrap;gap:var(--s3);margin-top:var(--s3);
+  font:500 12px/1.5 var(--mono);color:var(--grijs);letter-spacing:.03em}
+
+.notitie{margin-top:var(--s4);padding:var(--s4);background:var(--blad);border-left:3px solid var(--oker)}
+.notitie b{display:block;font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--oker);margin-bottom:9px}
+.notitie p{font-size:15.5px}
+
+/* ============================================================
+   4 · PRINTKAART — A4 STAAND
+   ============================================================ */
+.bladhouder{display:grid;place-items:center}
+.bladschaal{width:210mm;max-width:100%;overflow:visible}
+@media (max-width:1000px){
+  .bladschaal{width:100%;overflow:hidden}
+  .blad{transform:scale(.62);transform-origin:top center;margin-bottom:-118mm !important}
+}
+@media (max-width:620px){.blad{transform:scale(.42);margin-bottom:-176mm !important}}
+
+.blad{position:relative;width:210mm;height:297mm;background:#fff;color:#000;
+  box-shadow:0 26px 60px -30px rgba(23,29,43,.55), 0 0 0 1px var(--lijn);
+  padding:13mm 14mm 9mm;display:flex;flex-direction:column;
+  font-family:var(--serif);margin:0 auto}
+
+/* kop */
+.pk-kop{display:flex;align-items:flex-end;gap:8mm;border-bottom:.5mm solid #171d2b;
+  padding-bottom:2.6mm}
+.pk-kop .titel{flex:1}
+.pk-kop .reeks{font:600 2.5mm/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:#bd3a1c;display:block;margin-bottom:1.8mm}
+.pk-kop h1{font:400 7.4mm/1.06 var(--serif);color:#171d2b;letter-spacing:-.01em}
+.pk-kop .wie{text-align:right;font:400 3.2mm/1.42 var(--serif);color:#414c66}
+.pk-kop .wie b{display:block;font:600 3.9mm/1.3 var(--serif);color:#171d2b}
+
+/* korte instructie */
+.pk-inl{display:flex;gap:5mm;padding:2.8mm 0 3mm;border-bottom:.25mm solid #cdc4b0}
+.pk-inl .lbl{font:600 2.5mm/1.4 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:#bd3a1c;width:26mm;flex:none;padding-top:.4mm}
+.pk-inl p{font:400 3.25mm/1.44 var(--serif);color:#2c344a;max-width:145mm}
+
+/* het schijfvlak */
+.pk-schijf{position:relative;height:144mm;margin:1.5mm auto 0;width:144mm;flex:none}
+.pk-disc{position:absolute;left:1mm;top:1mm;width:142mm;height:142mm;border-radius:50%;
+  border:.5mm solid #171d2b}
+.pk-disc .r1{position:absolute;inset:3mm;border-radius:50%;border:.2mm solid #cdc4b0}
+.pk-disc .r2{position:absolute;inset:5mm;border-radius:50%;border:.2mm solid #cdc4b0}
+.pk-disc .r3{position:absolute;inset:44mm;border-radius:50%;border:.25mm solid #171d2b}
+.pk-disc .tand{position:absolute;inset:0;border-radius:50%;
+  background:repeating-conic-gradient(from 0deg,#171d2b 0 .28deg, transparent .28deg 5deg);
+  -webkit-mask:radial-gradient(circle, transparent 0 46.6%, #000 46.6% 48.6%, transparent 48.6%);
+  mask:radial-gradient(circle, transparent 0 46.6%, #000 46.6% 48.6%, transparent 48.6%)}
+
+/* de zeven dagvakken staan gedrukt zoals ze op de schijf staan: gekanteld */
+.pk-vak{position:absolute;left:50%;top:50%;width:38mm;margin:-15mm 0 0 -19mm;
+  transform-origin:50% 50%;text-align:center}
+.pk-vak .dag{font:600 2.6mm/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:#bd3a1c}
+.pk-vak ol{list-style:none;margin-top:1.6mm}
+.pk-vak li{font:400 3.05mm/1.28 var(--serif);color:#171d2b;margin-bottom:1.1mm}
+.pk-vak li b{font-weight:400}
+.pk-vak li span{display:block;font:500 2.5mm/1.15 var(--mono);color:#5d667d;letter-spacing:.03em}
+.pk-vak .rust{font:italic 400 3.1mm/1.35 var(--serif);color:#5d667d;margin-top:2mm}
+
+.pk-spaak{position:absolute;left:50%;top:50%;width:.2mm;height:70mm;background:#cdc4b0;
+  transform-origin:50% 0}
+.pk-naaf{position:absolute;left:50%;top:50%;width:9mm;height:9mm;margin:-4.5mm 0 0 -4.5mm;
+  border-radius:50%;border:.25mm solid #171d2b;background:#fff}
+.pk-naaf::before,.pk-naaf::after{content:"";position:absolute;background:#171d2b}
+.pk-naaf::before{left:50%;top:1.4mm;bottom:1.4mm;width:.25mm;margin-left:-.125mm}
+.pk-naaf::after{top:50%;left:1.4mm;right:1.4mm;height:.25mm;margin-top:-.125mm}
+.pk-naaf i{position:absolute;left:50%;top:10mm;transform:translateX(-50%);white-space:nowrap;
+  font:600 2.2mm/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#5d667d}
+
+/* de indexpijl bovenaan de schijf */
+.pk-index{position:absolute;left:50%;top:-1mm;transform:translateX(-50%);text-align:center;z-index:3}
+.pk-index i{display:block;margin:0 auto;width:0;height:0;
+  border-left:2.6mm solid transparent;border-right:2.6mm solid transparent;
+  border-top:4mm solid #bd3a1c}
+.pk-index b{display:block;font:600 2.3mm/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;
+  color:#bd3a1c;margin-top:1mm}
+
+/* onderblok: dekschijf + montage + de vangnetlijst */
+.pk-onder{display:grid;grid-template-columns:52mm 1fr;gap:6mm;margin-top:2.5mm;
+  padding-top:3mm;border-top:.25mm solid #cdc4b0;flex:1}
+
+.pk-dek{position:relative;width:50mm;height:50mm;border-radius:50%;
+  border:.35mm dashed #bd3a1c;background:#fbf8f1}
+.pk-dek .gat{position:absolute;left:20%;top:8%;width:60%;height:27%;border-radius:1mm;
+  border:.35mm dashed #bd3a1c;background:#fff}
+.pk-dek .gat span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  font:600 2mm/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#bd3a1c;
+  white-space:nowrap}
+.pk-dek .mid{position:absolute;left:50%;top:50%;width:4mm;height:4mm;margin:-2mm 0 0 -2mm}
+.pk-dek .mid::before,.pk-dek .mid::after{content:"";position:absolute;background:#171d2b}
+.pk-dek .mid::before{left:50%;top:0;bottom:0;width:.25mm;margin-left:-.125mm}
+.pk-dek .mid::after{top:50%;left:0;right:0;height:.25mm;margin-top:-.125mm}
+.pk-dek .naam{position:absolute;left:0;right:0;bottom:6mm;text-align:center;
+  font:400 3.1mm/1.3 var(--serif);color:#171d2b}
+.pk-dek .naam em{display:block;font:600 2.1mm/1.5 var(--mono);letter-spacing:.14em;
+  text-transform:uppercase;color:#5d667d;font-style:normal}
+.pk-deklabel{margin-top:1.6mm;font:600 2.3mm/1.4 var(--mono);letter-spacing:.1em;
+  text-transform:uppercase;color:#bd3a1c;text-align:center;width:50mm}
+
+.pk-stappen{display:flex;flex-direction:column}
+.pk-stappen h2{font:600 2.6mm/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:#171d2b;margin-bottom:2.2mm}
+.pk-stappen ol{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:4mm;
+  margin-bottom:3.4mm}
+.pk-stappen li{font:400 3mm/1.4 var(--serif);color:#2c344a;padding-left:5mm;position:relative}
+.pk-stappen li b{position:absolute;left:0;top:0;width:3.6mm;height:3.6mm;border-radius:50%;
+  background:#171d2b;color:#fff;font:600 2.3mm/3.6mm var(--mono);text-align:center}
+
+/* vangnet: de week gewoon leesbaar, voor wie niet knipt */
+.pk-vangnet{border:.3mm solid #171d2b;padding:3mm 3.4mm;background:#fbf8f1}
+.pk-vangnet h3{font:600 2.4mm/1 var(--mono);letter-spacing:.15em;text-transform:uppercase;
+  color:#bd3a1c;margin-bottom:2.4mm}
+.pk-vangnet .oef{display:grid;grid-template-columns:14mm 1fr auto;gap:3.5mm;align-items:center;
+  padding:1.9mm 0;border-top:.2mm solid #ded5c2}
+.pk-vangnet .oef:first-of-type{border-top:0}
+.pk-vangnet .oef img{width:14mm;height:11mm;object-fit:contain;mix-blend-mode:multiply}
+.pk-vangnet .oef h4{font:400 4mm/1.2 var(--serif);color:#171d2b}
+.pk-vangnet .oef p{font:400 2.9mm/1.34 var(--serif);color:#414c66;margin-top:.6mm}
+.pk-vangnet .oef .dos{font:600 3.4mm/1.2 var(--mono);color:#171d2b;text-align:right;white-space:nowrap}
+.pk-vangnet .oef .dos em{display:block;font:400 2.4mm/1.3 var(--mono);color:#5d667d;
+  font-style:normal;letter-spacing:.04em;margin-top:.5mm}
+
+.pk-voet{display:flex;align-items:flex-end;gap:5mm;padding-top:2.4mm;margin-top:auto}
+.pk-voet .zorg{font:400 3.1mm/1.42 var(--serif);color:#2c344a;max-width:120mm}
+.pk-voet .zorg b{font-weight:600}
+.pk-voet .praktijk{margin-left:auto;text-align:right;font:600 2.5mm/1.5 var(--mono);
+  letter-spacing:.12em;text-transform:uppercase;color:#5d667d}
+
+.wijzer{position:absolute;font:500 12px/1.35 var(--sans);color:var(--grijs);width:140px;z-index:5}
+.wijzer::after{content:"";position:absolute;background:var(--lijn)}
+.wijzer.r::after{left:-20px;top:50%;width:16px;height:1px}
+.wijzer.l{text-align:right}
+.wijzer.l::after{right:-20px;top:50%;width:16px;height:1px}
+@media (max-width:1180px){.wijzer{display:none}}
+
+.printhulp{max-width:660px;margin:var(--s4) auto 0;text-align:center;font-size:16px;color:var(--grijs)}
+.printhulp .kn{margin-top:var(--s3)}
+
+/* ── voet ────────────────────────────────────────────────── */
+footer.uitleiding{background:var(--inkt);color:#c5ccdd;padding:var(--s6) 24px}
+footer.uitleiding .binnen{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:#e0a48c;margin-bottom:13px}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:9px}
+footer.uitleiding li::before{content:"—";position:absolute;left:0;color:#e0a48c}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 25</span>
+  <strong style="font:600 15px/1 var(--sans);color:#fff">Draaischijf</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm vel" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2>Landing</h2>
+      <p>het enige concept dat de patiënt bewust minder laat zien dan het weet</p>
+    </div>
+
+    <div class="hero">
+      <div>
+        <div class="kicker">Fysiplan · richting 25</div>
+        <h1>De hele week staat erop.<br/>U ziet er <em>één dag</em> van.</h1>
+        <p class="lead">Een oefenkaart die alles tegelijk toont, vertelt de patiënt vooral hoeveel
+          er nog moet. Deze kaart draait: twee papieren schijven op één splitpen, en een venster dat
+          precies één dag vrijlaat. De rest van de week bestaat, maar wacht netjes onder het dekblad.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Naar de printkaart</a>
+          <a class="kn leeg" href="#clientkaart">De digitale schijf</a>
+        </div>
+        <div class="onder">
+          <span><b>Venster</b> · 1 dag zichtbaar</span>
+          <span><b>Schijf</b> · 7 sectoren</span>
+          <span><b>Inkten</b> · zwart + vermiljoen</span>
+        </div>
+      </div>
+
+      <div class="schijfhouder">
+        <div class="schijf" style="--d:430px" role="img"
+          aria-label="Een papieren draaischijf met zeven dagvakken; door een venster in het donkere dekblad is alleen woensdag zichtbaar.">
+          <div class="ring a"></div><div class="ring b"></div><div class="ring c"></div>
+          <div class="tanden"></div>
+
+          <span class="spaak" style="transform:rotate(25.7deg)"></span>
+          <span class="spaak" style="transform:rotate(77.1deg)"></span>
+          <span class="spaak" style="transform:rotate(128.6deg)"></span>
+          <span class="spaak" style="transform:rotate(180deg)"></span>
+          <span class="spaak" style="transform:rotate(231.4deg)"></span>
+          <span class="spaak" style="transform:rotate(282.9deg)"></span>
+          <span class="spaak" style="transform:rotate(334.3deg)"></span>
+
+          <div class="dek">
+            <div class="vlak-blauw"></div>
+            <div class="gat"></div>
+            <div class="schaal"></div>
+            <div class="naaf"></div>
+            <div class="kaft">Fysiplan
+              <b>Draai naar vandaag</b>
+            </div>
+          </div>
+
+          <div class="venstertekst">
+            <div class="dag">Woensdag</div>
+            <ol>
+              <li>Zitten naar staan <span>2 × 10</span></li>
+              <li>Kuitheffing met steun <span>2 × 12</span></li>
+              <li>Knie strekken zittend <span>2 × 10</span></li>
+            </ol>
+          </div>
+
+          <div class="pijl"><i></i><b>vandaag</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="drie">
+      <div>
+        <h3><s>01</s> Eén venster</h3>
+        <p>Wat er niet doorheen past, hoeft de patiënt vandaag niet te weten. De week is compleet,
+          maar de blik is dat niet — en dat is het hele ontwerp.</p>
+      </div>
+      <div>
+        <h3><s>02</s> Draaien is doen</h3>
+        <p>De schijf een slag verder zetten is een handeling met een geluid en een klik. Dat is meer
+          bevestiging dan een vinkje op een scherm ooit geeft.</p>
+      </div>
+      <div>
+        <h3><s>03</s> Papier dat werkt</h3>
+        <p>Een instrument van papier, niet een afdruk van een scherm. Het ding op tafel kan iets wat
+          het scherm niet kan: het blijft staan waar u het liet staan.</p>
+      </div>
+    </div>
+
+    <div class="citaat">
+      <div class="jaar">1524</div>
+      <div>
+        <p>Petrus Apianus drukte in zijn <b>Cosmographia</b> schijven die je met een draad kon draaien:
+          papieren rekeninstrumenten in een boek. Het idee was niet om informatie te tonen, maar om
+          er precies één antwoord uit te halen en de rest weg te draaien.</p>
+        <span class="bron">Volvelle · papieren analoge rekenschijf · astronomische drukkunst</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>u vult geen lijst maar een schijf — en een schijf heeft een rand</p>
+    </div>
+
+    <div class="kiezer">
+      <div>
+        <div class="zoekbalk">
+          <input type="search" value="knie" aria-label="Zoek een oefening"
+            placeholder="Zoek op klacht, gewricht of naam"/>
+          <button class="kn">Zoek</button>
+        </div>
+        <div class="filters">
+          <button aria-pressed="true">Onderste extremiteit</button>
+          <button aria-pressed="false">Balans</button>
+          <button aria-pressed="false">Rug</button>
+          <button aria-pressed="false">Nek</button>
+          <button aria-pressed="false">Zonder materiaal</button>
+          <button aria-pressed="false">Zittend mogelijk</button>
+        </div>
+
+        <div class="rij gekozen">
+          <div class="beeld"><img src="/images/onderste-extremiteit/sit-to-stand-zittend-line-v1.png"
+            alt="Lijntekening: vanaf een stoel opstaan en weer gaan zitten."/></div>
+          <div>
+            <h4>Zitten naar staan</h4>
+            <div class="meta">stoel · geen materiaal · <b>op 5 sectoren</b></div>
+          </div>
+          <button class="zet">Op de schijf</button>
+        </div>
+
+        <div class="rij gekozen">
+          <div class="beeld"><img src="/images/onderste-extremiteit/kuitheffing-staand-met-steun-line-v1.png"
+            alt="Lijntekening: staand op de tenen komen met steun van een stoelleuning."/></div>
+          <div>
+            <h4>Kuitheffing met steun</h4>
+            <div class="meta">staand · steunpunt nodig · <b>op 5 sectoren</b></div>
+          </div>
+          <button class="zet">Op de schijf</button>
+        </div>
+
+        <div class="rij gekozen">
+          <div class="beeld"><img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png"
+            alt="Lijntekening: zittend op een stoel wordt het onderbeen gestrekt."/></div>
+          <div>
+            <h4>Knie strekken zittend</h4>
+            <div class="meta">stoel · geen materiaal · <b>op 4 sectoren</b></div>
+          </div>
+          <button class="zet">Op de schijf</button>
+        </div>
+
+        <div class="rij">
+          <div class="beeld"><img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png"
+            alt="Lijntekening: op de plaats marcheren met een hand aan de leuning."/></div>
+          <div>
+            <h4>Op de plaats marcheren met steun</h4>
+            <div class="meta">staand · steunpunt nodig · nog niet geplaatst</div>
+          </div>
+          <button class="zet">Op de schijf</button>
+        </div>
+
+        <div class="rij">
+          <div class="beeld"><img src="/images/onderste-extremiteit/mini-squat-staand-met-steun-line-v1.png"
+            alt="Lijntekening: kleine kniebuiging staand met steun."/></div>
+          <div>
+            <h4>Mini-squat met steun</h4>
+            <div class="meta">staand · steunpunt nodig · nog niet geplaatst</div>
+          </div>
+          <button class="zet">Op de schijf</button>
+        </div>
+
+        <div class="rij">
+          <div class="beeld"><img src="/images/onderste-extremiteit/heup-zijwaarts-heffen-staand-met-steun-line-v1.png"
+            alt="Lijntekening: staand het been zijwaarts heffen met steun."/></div>
+          <div>
+            <h4>Heup zijwaarts heffen met steun</h4>
+            <div class="meta">staand · steunpunt nodig · nog niet geplaatst</div>
+          </div>
+          <button class="zet">Op de schijf</button>
+        </div>
+      </div>
+
+      <aside class="paneel">
+        <h3>De schijf van mevr. Bekker</h3>
+        <div class="mini">
+          <div class="schijf" style="--d:250px" role="img"
+            aria-label="Kleine voorbeeldschijf: vijf van de zeven sectoren zijn gevuld.">
+            <div class="ring a"></div><div class="ring c"></div>
+            <div class="tanden"></div>
+            <span class="spaak" style="transform:rotate(25.7deg)"></span>
+            <span class="spaak" style="transform:rotate(77.1deg)"></span>
+            <span class="spaak" style="transform:rotate(128.6deg)"></span>
+            <span class="spaak" style="transform:rotate(180deg)"></span>
+            <span class="spaak" style="transform:rotate(231.4deg)"></span>
+            <span class="spaak" style="transform:rotate(282.9deg)"></span>
+            <span class="spaak" style="transform:rotate(334.3deg)"></span>
+
+            <div class="vak" style="transform:rotate(0deg) translateY(-72px)">
+              <div class="dag" style="font-size:9px">ma</div>
+              <div class="reg" style="font-size:11px">3 oefeningen</div>
+            </div>
+            <div class="vak" style="transform:rotate(51.4deg) translateY(-72px)">
+              <div class="dag" style="font-size:9px">di</div>
+              <div class="reg" style="font-size:11px">1 oefening</div>
+            </div>
+            <div class="vak" style="transform:rotate(102.9deg) translateY(-72px)">
+              <div class="dag" style="font-size:9px">wo</div>
+              <div class="reg" style="font-size:11px">3 oefeningen</div>
+            </div>
+            <div class="vak" style="transform:rotate(154.3deg) translateY(-72px)">
+              <div class="dag" style="font-size:9px">do</div>
+              <div class="reg" style="font-size:11px">2 oefeningen</div>
+            </div>
+            <div class="vak" style="transform:rotate(205.7deg) translateY(-72px)">
+              <div class="dag" style="font-size:9px">vr</div>
+              <div class="reg" style="font-size:11px">3 oefeningen</div>
+            </div>
+            <div class="vak" style="transform:rotate(257.1deg) translateY(-72px)">
+              <div class="dag" style="font-size:9px;color:var(--grijs)">za</div>
+              <div class="reg" style="font-size:11px;color:var(--grijs)">leeg</div>
+            </div>
+            <div class="vak" style="transform:rotate(308.6deg) translateY(-72px)">
+              <div class="dag" style="font-size:9px;color:var(--oker)">zo</div>
+              <div class="reg" style="font-size:11px;color:var(--oker)">rust</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="telling"><span>Sectoren gevuld</span><b>5 van 7</b></div>
+        <div class="telling"><span>Oefeningen totaal</span><b>3</b></div>
+        <div class="telling"><span>Zwaarste dag</span><b>vr · 3 × 12</b></div>
+
+        <div class="waarschuw">
+          <b>Sector zit vol</b>
+          Op maandag staan drie oefeningen. Een vierde past niet in het venster zonder de letters te
+          verkleinen — en dat doen we niet. Zet hem op zaterdag, of haal er eerst één weg.
+        </div>
+
+        <div class="leegstaat">
+          Zaterdag is nog leeg. Dat mag: een lege sector drukt af als <em>“vandaag niets — en dat
+          klopt”</em>, niet als een gat.
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm vel" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>hetzelfde instrument, maar de schijf draait zichzelf naar de juiste dag</p>
+    </div>
+
+    <div class="kaartgrid">
+      <div class="schijfhouder">
+        <div class="schijf" style="--d:400px" role="img"
+          aria-label="De digitale draaischijf staat op woensdag; in het venster staan de drie oefeningen van vandaag.">
+          <div class="ring a"></div><div class="ring b"></div><div class="ring c"></div>
+          <div class="tanden"></div>
+          <span class="spaak" style="transform:rotate(25.7deg)"></span>
+          <span class="spaak" style="transform:rotate(77.1deg)"></span>
+          <span class="spaak" style="transform:rotate(128.6deg)"></span>
+          <span class="spaak" style="transform:rotate(180deg)"></span>
+          <span class="spaak" style="transform:rotate(231.4deg)"></span>
+          <span class="spaak" style="transform:rotate(282.9deg)"></span>
+          <span class="spaak" style="transform:rotate(334.3deg)"></span>
+
+          <div class="dek">
+            <div class="vlak-blauw"></div>
+            <div class="gat"></div>
+            <div class="schaal"></div>
+            <div class="naaf"></div>
+            <div class="kaft">week 2 van 6
+              <b>19 augustus</b>
+            </div>
+          </div>
+
+          <div class="venstertekst">
+            <div class="dag">Woensdag</div>
+            <ol>
+              <li>Zitten naar staan <span>2 × 10 · gedaan</span></li>
+              <li>Kuitheffing met steun <span>2 × 12 · gedaan</span></li>
+              <li>Knie strekken zittend <span>2 × 10 · nog niet</span></li>
+            </ol>
+          </div>
+
+          <div class="pijl"><i></i><b>vandaag</b></div>
+        </div>
+      </div>
+
+      <div class="vandaag">
+        <h3>Wat er in het venster staat</h3>
+        <h4>Woensdag 19 augustus — nog één te gaan</h4>
+
+        <div class="taak af">
+          <span class="bol"><svg width="15" height="12" viewBox="0 0 15 12" fill="none"
+            aria-hidden="true"><path d="M1.5 6.2 5.4 10 13.5 1.8" stroke="#fff" stroke-width="2.4"
+            stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div>
+            <h5>Zitten naar staan</h5>
+            <div class="dosis">2 × 10 · handen los als het lukt</div>
+          </div>
+          <button class="knopje">Ongedaan maken</button>
+        </div>
+
+        <div class="taak af">
+          <span class="bol"><svg width="15" height="12" viewBox="0 0 15 12" fill="none"
+            aria-hidden="true"><path d="M1.5 6.2 5.4 10 13.5 1.8" stroke="#fff" stroke-width="2.4"
+            stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div>
+            <h5>Kuitheffing met steun</h5>
+            <div class="dosis">2 × 12 · rustig zakken, tel tot drie</div>
+          </div>
+          <button class="knopje">Ongedaan maken</button>
+        </div>
+
+        <div class="taak">
+          <span class="bol"></span>
+          <div>
+            <h5>Knie strekken zittend</h5>
+            <div class="dosis">2 × 10 · bovenbeen blijft op de stoel</div>
+          </div>
+          <button class="knopje">Afvinken</button>
+        </div>
+
+        <div class="weekband">
+          <h3>De hele schijf — alleen voor u en de therapeut</h3>
+          <div class="dagen">
+            <div class="d af"><b>ma</b><i></i></div>
+            <div class="d rust"><b>di</b><i></i></div>
+            <div class="d nu"><b>wo</b><i></i></div>
+            <div class="d komt"><b>do</b><i></i></div>
+            <div class="d komt"><b>vr</b><i></i></div>
+            <div class="d komt"><b>za</b><i></i></div>
+            <div class="d komt rust"><b>zo</b><i></i></div>
+          </div>
+          <div class="legenda">
+            <span>● gedaan</span><span>○ nog niet</span><span>⋯ rustdag</span>
+            <span style="color:var(--rood)">▲ vandaag</span>
+          </div>
+        </div>
+
+        <div class="notitie">
+          <b>Notitie van de therapeut</b>
+          <p>Zondag staat er niets op de schijf. Dat is geen vergissing en ook geen vrijblijvend
+            advies: uw knie heeft die dag nodig. Draai de schijf gerust naar zondag om te zien dat
+            daar echt niets hoeft.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>één vel dat een instrument wordt: de onderschijf staat gedrukt, de dekschijf knipt u uit</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer r geen-print" style="top:58mm;left:calc(100% + 22px)">de dagvakken staan
+            gekanteld op het papier — pas als u draait, staan ze rechtop</span>
+          <span class="wijzer l geen-print" style="top:104mm;right:calc(100% + 22px)">de graadrand is
+            geen versiering: hij geeft de klik van één dag verder</span>
+          <span class="wijzer l geen-print" style="top:212mm;right:calc(100% + 22px)">de dekschijf met
+            venster, om uit te knippen</span>
+          <span class="wijzer r geen-print" style="top:250mm;left:calc(100% + 22px)">het vangnet: wie
+            niets knipt, heeft nog steeds een leesbare kaart</span>
+
+          <div class="pk-kop">
+            <div class="titel">
+              <span class="reeks">Draaischijf · week 2 van 6 · 17 t/m 23 augustus</span>
+              <h1>Uw week op één schijf</h1>
+            </div>
+            <div class="wie">
+              <b>Mevr. R. Bekker</b>
+              knieprothese rechts · 11 weken na operatie
+            </div>
+          </div>
+
+          <div class="pk-inl">
+            <span class="lbl">Hoe het werkt</span>
+            <p>Knip de kleine schijf hieronder uit, prik een splitpen door beide kruisjes en leg de
+              kleine schijf op de grote. Draai tot de dag van vandaag in het venster staat. Wat u dan
+              leest, is alles wat u vandaag hoeft te doen. De rest van de week zit eronder.</p>
+          </div>
+
+          <div class="pk-schijf">
+            <div class="pk-index"><i></i><b>venster</b></div>
+
+            <div class="pk-disc">
+              <div class="r1"></div><div class="r2"></div><div class="r3"></div>
+              <div class="tand"></div>
+
+              <span class="pk-spaak" style="transform:rotate(25.7deg)"></span>
+              <span class="pk-spaak" style="transform:rotate(77.1deg)"></span>
+              <span class="pk-spaak" style="transform:rotate(128.6deg)"></span>
+              <span class="pk-spaak" style="transform:rotate(180deg)"></span>
+              <span class="pk-spaak" style="transform:rotate(231.4deg)"></span>
+              <span class="pk-spaak" style="transform:rotate(282.9deg)"></span>
+              <span class="pk-spaak" style="transform:rotate(334.3deg)"></span>
+
+              <!-- maandag — staat rechtop op het vel -->
+              <div class="pk-vak" style="transform:rotate(0deg) translateY(-45mm)">
+                <div class="dag">Maandag</div>
+                <ol>
+                  <li>Zitten naar staan <span>2 × 8</span></li>
+                  <li>Kuitheffing met steun <span>2 × 10</span></li>
+                  <li>Knie strekken zittend <span>2 × 10</span></li>
+                </ol>
+              </div>
+
+              <div class="pk-vak" style="transform:rotate(51.4deg) translateY(-45mm)">
+                <div class="dag">Dinsdag</div>
+                <ol>
+                  <li>Kuitheffing met steun <span>1 × 10</span></li>
+                </ol>
+                <div class="rust">verder alleen wandelen — 10 minuten</div>
+              </div>
+
+              <div class="pk-vak" style="transform:rotate(102.9deg) translateY(-45mm)">
+                <div class="dag">Woensdag</div>
+                <ol>
+                  <li>Zitten naar staan <span>2 × 10</span></li>
+                  <li>Kuitheffing met steun <span>2 × 12</span></li>
+                  <li>Knie strekken zittend <span>2 × 10</span></li>
+                </ol>
+              </div>
+
+              <div class="pk-vak" style="transform:rotate(154.3deg) translateY(-45mm)">
+                <div class="dag">Donderdag</div>
+                <ol>
+                  <li>Zitten naar staan <span>2 × 10</span></li>
+                  <li>Knie strekken zittend <span>2 × 12</span></li>
+                </ol>
+                <div class="rust">kuiten krijgen vandaag rust</div>
+              </div>
+
+              <div class="pk-vak" style="transform:rotate(205.7deg) translateY(-45mm)">
+                <div class="dag">Vrijdag</div>
+                <ol>
+                  <li>Zitten naar staan <span>3 × 8</span></li>
+                  <li>Kuitheffing met steun <span>2 × 12</span></li>
+                  <li>Knie strekken zittend <span>2 × 12</span></li>
+                </ol>
+              </div>
+
+              <div class="pk-vak" style="transform:rotate(257.1deg) translateY(-45mm)">
+                <div class="dag">Zaterdag</div>
+                <ol>
+                  <li>Zitten naar staan <span>1 × 10</span></li>
+                </ol>
+                <div class="rust">en een wandeling van 15 minuten</div>
+              </div>
+
+              <div class="pk-vak" style="transform:rotate(308.6deg) translateY(-45mm)">
+                <div class="dag">Zondag</div>
+                <div class="rust" style="margin-top:3mm">Vandaag niets.<br/>Dat is de oefening.</div>
+              </div>
+
+              <div class="pk-naaf"><i>prik hier de splitpen</i></div>
+            </div>
+          </div>
+
+          <div class="pk-onder">
+            <div>
+              <div class="pk-dek">
+                <div class="gat"><span>venster — uitknippen</span></div>
+                <div class="mid"></div>
+                <div class="naam">Draai naar vandaag<em>Fysiplan</em></div>
+              </div>
+              <div class="pk-deklabel">knip langs de stippellijn</div>
+            </div>
+
+            <div class="pk-stappen">
+              <h2>In drie handelingen klaar</h2>
+              <ol>
+                <li><b>1</b>Knip de kleine schijf uit, en het venster eruit.</li>
+                <li><b>2</b>Leg hem op de grote schijf, kruisje op kruisje.</li>
+                <li><b>3</b>Splitpen erdoor. Klaar — draai naar vandaag.</li>
+              </ol>
+
+              <div class="pk-vangnet">
+                <h3>Knipt u liever niet? Dan leest u dit</h3>
+
+                <div class="oef">
+                  <img src="/images/onderste-extremiteit/sit-to-stand-zittend-line-v1.png"
+                    alt="Lijntekening: vanaf een stoel opstaan en weer gaan zitten."/>
+                  <div>
+                    <h4>Zitten naar staan</h4>
+                    <p>Vanaf een stevige stoel. Voeten onder de knieën, neus over de tenen.</p>
+                  </div>
+                  <div class="dos">2 × 10<em>vijf dagen</em></div>
+                </div>
+
+                <div class="oef">
+                  <img src="/images/onderste-extremiteit/kuitheffing-staand-met-steun-line-v1.png"
+                    alt="Lijntekening: staand op de tenen komen met steun van een stoelleuning."/>
+                  <div>
+                    <h4>Kuitheffing met steun</h4>
+                    <p>Hand aan het aanrecht. Omhoog in twee tellen, zakken in drie.</p>
+                  </div>
+                  <div class="dos">2 × 12<em>vier dagen</em></div>
+                </div>
+
+                <div class="oef">
+                  <img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png"
+                    alt="Lijntekening: zittend op een stoel wordt het onderbeen gestrekt."/>
+                  <div>
+                    <h4>Knie strekken zittend</h4>
+                    <p>Bovenbeen blijft op de stoel. Even vasthouden bovenin, dan laten zakken.</p>
+                  </div>
+                  <div class="dos">2 × 10<em>vier dagen</em></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pk-voet">
+            <div class="zorg"><b>Pijn tijdens het oefenen mag tot een 5 op 10, en moet binnen een uur
+              weer zijn gezakt.</b> Blijft het langer, doe dan de volgende keer één set minder en
+              bel ons als het na drie dagen niet beter is.</div>
+            <div class="praktijk">Fysiotherapie Boerhaave<br/>Zwolle · 038 — 421 90 33</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <p class="printhulp geen-print">Print dit blad op gewoon papier, staand, zonder marges aan te
+      passen. De graadrand langs de buitenkant hoort er precies uit te lopen — daaraan ziet u of uw
+      printer op ware grootte afdrukt.
+      <br/><button class="kn" onclick="window.print()">Print deze kaart</button></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>De richting</h4>
+      <p>De volvelle van Apianus was geen illustratie maar gereedschap: papier dat rekent doordat
+        het draait. Toegepast op de oefenkaart draait de vraag om — niet “hoe krijgen we de week op
+        één blad”, maar “hoe zorgen we dat er per keer één dag te zien is”. Alles staat erop, en
+        toch is er nooit meer dan één dag zichtbaar.</p>
+    </div>
+    <div class="kolom">
+      <h4>Waar het schuurt</h4>
+      <ul>
+        <li>De patiënt moet knippen en een splitpen vinden. Doet hij dat niet, dan blijft er een vel
+          met zes gekantelde vakken over — daarom staat het vangnet eronder.</li>
+        <li>Gekantelde tekst is op het platte vel slecht leesbaar. Dat is eerlijk aan het object,
+          maar het is wél de zwakste plek van dit concept.</li>
+        <li>Zeven sectoren is de bovengrens. Een schema van twee weken past er niet op zonder de
+          letters kleiner te maken, en dat is precies wat we niet willen.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Verder</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

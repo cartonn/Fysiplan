@@ -1,0 +1,999 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 26 — Kwartet · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 26 — KWARTET
+   ------------------------------------------------------------
+   Speelkaartendrukkerij. Kaarten werden nooit los gedrukt maar
+   met tientallen tegelijk op één vel, met snijtekens, een
+   registratiekruis en een kleurbalk in de rand — en pas daarna
+   uit elkaar gesneden. De A4 is hier dat drukkersvel.
+   De kwartetregel doet het werk: elke kaart noemt zijn hele
+   familie, dus je ziet altijd wat er nog ontbreekt.
+   ============================================================ */
+
+:root{
+  --tafel:#1f4536;          /* speeltafelgroen */
+  --tafel-licht:#2c5a46;
+  --karton:#f4efe1;         /* kaartkarton */
+  --karton-2:#fbf8f1;
+  --inkt:#17161c;
+  --inkt-2:#45434f;
+  --grijs:#7d7a88;
+  --lijn:#d8d2c2;
+  --lijn-2:#e9e4d6;
+  --rood:#b3122c;           /* kaartrood */
+  --blauw:#1c4a8b;
+  --oker:#b07d18;
+  --groen:#2f6b4f;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --serif:Charter,"Iowan Old Style",Georgia,"Times New Roman",serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:15px; --s4:25px; --s5:40px; --s6:64px;
+
+  /* het ruitmotief van de kaartrug */
+  --rug:
+    repeating-linear-gradient(45deg, rgba(255,255,255,.09) 0 2px, transparent 2px 9px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,.09) 0 2px, transparent 2px 9px),
+    radial-gradient(circle at 50% 50%, #9d1730 0%, #7d0f24 70%);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font:17px/1.6 var(--sans);color:var(--inkt-2);background:var(--karton)}
+img{max-width:100%;display:block}
+a{color:var(--rood)}
+:focus-visible{outline:2.5px solid var(--rood);outline-offset:3px}
+
+.binnen{max-width:1160px;margin:0 auto;padding:0 24px}
+
+/* ── labbalk ─────────────────────────────────────────────── */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:18px;
+  background:var(--inkt);color:#cfcbd8;padding:11px 22px;font:500 13.5px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:#fff;background:var(--rood);padding:5px 8px;border-radius:2px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#cfcbd8;text-decoration:none;padding:5px 2px;border-bottom:1.5px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--rood)}
+.labbalk a.terug{color:#fff;font-weight:600}
+@media (max-width:820px){.labbalk{gap:12px;font-size:12.5px;flex-wrap:wrap}}
+
+/* ── schermkoppen ────────────────────────────────────────── */
+.scherm{padding:var(--s6) 0;border-top:1px solid var(--lijn)}
+.scherm.tafel{background:var(--tafel);border-top-color:#12291f}
+.scherm.tafel .schermkop h2{color:#fff}
+.scherm.tafel .schermkop p{color:#a9c4b7}
+.schermkop{margin-bottom:var(--s5);max-width:70ch}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;
+  text-transform:uppercase;color:var(--rood);margin-bottom:11px}
+.scherm.tafel .schermkop b{color:#f0c33c}
+.schermkop h2{font:600 clamp(28px,3.4vw,38px)/1.12 var(--sans);color:var(--inkt);
+  letter-spacing:-.028em}
+.schermkop p{margin-top:10px;color:var(--grijs);font-size:16.5px}
+
+/* ============================================================
+   DE KAART — gedeelde component
+   ============================================================ */
+.kaart{position:relative;width:var(--kb,196px);background:var(--karton-2);
+  border-radius:9px;padding:9px;flex:none;
+  box-shadow:0 1px 0 rgba(23,22,28,.1), 0 16px 30px -18px rgba(0,0,0,.55);
+  border:1px solid rgba(23,22,28,.16)}
+.kaart .binnenrand{border:1.5px solid var(--fam,var(--rood));border-radius:5px;
+  padding:9px 9px 8px;height:100%;display:flex;flex-direction:column;background:var(--karton-2)}
+
+.kaart .index{display:flex;align-items:baseline;justify-content:space-between;
+  font:700 12px/1 var(--mono);letter-spacing:.1em;color:var(--fam,var(--rood))}
+.kaart .index em{font-style:normal;font:600 9.5px/1 var(--mono);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--grijs)}
+
+.kaart .fig{margin:9px 0 7px;height:88px;display:grid;place-items:center;
+  background:linear-gradient(180deg,#fff,#f7f2e6);border-radius:3px;
+  border:1px solid var(--lijn-2)}
+.kaart .fig img{max-height:82px;width:auto;mix-blend-mode:multiply}
+
+.kaart h4{font:600 15.5px/1.2 var(--sans);color:var(--inkt);letter-spacing:-.015em}
+.kaart .dosis{font:700 12.5px/1.3 var(--mono);color:var(--fam,var(--rood));margin-top:4px;
+  letter-spacing:.02em}
+.kaart .hoe{font:400 12px/1.36 var(--serif);color:var(--inkt-2);margin-top:6px}
+
+/* de kwartetregel: elke kaart noemt zijn eigen familie */
+.kaart .familie{margin-top:auto;padding-top:8px;border-top:1px solid var(--lijn-2)}
+.kaart .familie b{display:block;font:700 8.5px/1 var(--mono);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--grijs);margin-bottom:5px}
+.kaart .familie ol{list-style:none}
+.kaart .familie li{display:flex;gap:6px;align-items:baseline;font:500 10.5px/1.5 var(--mono);
+  color:var(--grijs)}
+.kaart .familie li s{text-decoration:none;color:var(--lijn);width:14px;flex:none}
+.kaart .familie li.dit{color:var(--fam,var(--rood));font-weight:700}
+.kaart .familie li.dit s{color:var(--fam,var(--rood))}
+
+/* de rug van de kaart */
+.rug{width:var(--kb,196px);border-radius:9px;flex:none;position:relative;overflow:hidden;
+  background:var(--rug);border:1px solid rgba(0,0,0,.3);
+  box-shadow:0 16px 30px -18px rgba(0,0,0,.55)}
+.rug::after{content:"";position:absolute;inset:11px;border:1.5px solid rgba(255,255,255,.28);
+  border-radius:4px}
+.rug .merk{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;
+  color:#f6e6c8;font:700 10px/1.6 var(--mono);letter-spacing:.24em;text-transform:uppercase}
+.rug .merk b{display:block;font:600 17px/1.2 var(--sans);letter-spacing:-.01em;
+  text-transform:none;color:#fff}
+
+/* ============================================================
+   1 · LANDING
+   ============================================================ */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:var(--s6);align-items:center}
+@media (max-width:1000px){.hero{grid-template-columns:1fr;gap:var(--s5)}}
+.hero .kicker{font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:#f0c33c;margin-bottom:var(--s3)}
+.hero h1{font:600 clamp(36px,5vw,58px)/1.03 var(--sans);color:#fff;letter-spacing:-.035em}
+.hero h1 em{font-style:normal;color:#f0c33c}
+.hero p.lead{margin-top:var(--s3);font:400 19.5px/1.56 var(--serif);color:#c9dcd2;max-width:44ch}
+.hero .knoppen{display:flex;flex-wrap:wrap;gap:12px;margin-top:var(--s4)}
+
+.kn{display:inline-block;background:#f0c33c;color:var(--inkt);text-decoration:none;
+  padding:13px 21px;border-radius:3px;font:700 14.5px/1 var(--sans);border:1.5px solid #f0c33c;
+  cursor:pointer}
+.kn:hover{background:#ffd35c;border-color:#ffd35c}
+.kn.leeg{background:transparent;color:#e6efe9;border-color:rgba(255,255,255,.4)}
+.kn.leeg:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+.kn.donker{background:var(--inkt);color:#fff;border-color:var(--inkt)}
+.kn.donker:hover{background:#000}
+.kn.rand{background:transparent;color:var(--inkt);border-color:var(--lijn)}
+.kn.rand:hover{border-color:var(--inkt)}
+
+.hero .onder{margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid rgba(255,255,255,.18);
+  display:flex;flex-wrap:wrap;gap:var(--s4);font:600 12.5px/1.5 var(--mono);color:#9fbfb0;
+  letter-spacing:.04em}
+.hero .onder b{color:#fff}
+
+/* de waaier */
+.waaier{position:relative;height:430px;display:grid;place-items:center}
+.waaier .kaart,.waaier .rug{position:absolute;transform-origin:50% 118%}
+@media (max-width:1000px){.waaier{height:360px}}
+@media (max-width:560px){.waaier{height:300px;transform:scale(.8)}}
+
+.drie{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5);margin-top:var(--s6);
+  padding-top:var(--s5);border-top:1px solid rgba(255,255,255,.18)}
+@media (max-width:860px){.drie{grid-template-columns:1fr;gap:var(--s4)}}
+.drie h3{font:700 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:#fff;margin-bottom:12px}
+.drie h3 s{text-decoration:none;color:#f0c33c;margin-right:9px}
+.drie p{font:400 16px/1.58 var(--serif);color:#bcd3c8}
+
+/* ============================================================
+   2 · KIEZER
+   ============================================================ */
+.kiezer{display:grid;grid-template-columns:1fr 392px;gap:var(--s5);align-items:start}
+@media (max-width:1040px){.kiezer{grid-template-columns:1fr}}
+
+.zoekbalk{display:flex;gap:10px;margin-bottom:var(--s4)}
+.zoekbalk input{flex:1;font:400 17px/1 var(--sans);padding:15px 16px;border:1.5px solid var(--lijn);
+  background:#fff;border-radius:3px;color:var(--inkt)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:var(--s4)}
+.filters button{font:600 12.5px/1 var(--sans);padding:9px 13px;border-radius:20px;
+  border:1.5px solid var(--lijn);background:#fff;color:var(--inkt-2);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--inkt);border-color:var(--inkt);color:#fff}
+
+.rij{display:grid;grid-template-columns:70px 1fr auto;gap:16px;align-items:center;
+  padding:13px 15px;background:#fff;border:1.5px solid var(--lijn-2);border-radius:4px;
+  margin-bottom:9px}
+.rij.inzet{border-color:var(--rood);box-shadow:inset 4px 0 0 var(--rood)}
+.rij .beeld{width:70px;height:56px;background:var(--karton);border:1px solid var(--lijn-2);
+  border-radius:2px;display:grid;place-items:center;overflow:hidden}
+.rij .beeld img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.rij h4{font:600 16.5px/1.24 var(--sans);color:var(--inkt);letter-spacing:-.012em}
+.rij .meta{font:600 11.5px/1.5 var(--mono);color:var(--grijs);letter-spacing:.04em;margin-top:3px}
+.rij .meta b{color:var(--blauw)}
+.rij .meta em{font-style:normal;color:var(--oker)}
+.rij .zet{font:700 12.5px/1 var(--sans);padding:10px 13px;border-radius:3px;cursor:pointer;
+  border:1.5px solid var(--lijn);background:transparent;color:var(--inkt);white-space:nowrap}
+.rij.inzet .zet{background:var(--rood);border-color:var(--rood);color:#fff}
+
+.paneel{position:sticky;top:74px;background:#fff;border:1.5px solid var(--lijn);border-radius:4px;
+  padding:var(--s4)}
+.paneel h3{font:700 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--grijs);margin-bottom:var(--s3)}
+.paneel .famnaam{font:600 21px/1.2 var(--sans);color:var(--inkt);letter-spacing:-.02em;
+  margin-bottom:4px}
+.paneel .famregel{font:600 12px/1.5 var(--mono);color:var(--rood);letter-spacing:.06em;
+  margin-bottom:var(--s3)}
+
+.sleuven{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:var(--s3)}
+.sleuf{aspect-ratio:.72;border-radius:5px;display:grid;place-items:center;text-align:center;
+  padding:6px}
+.sleuf.vol{background:var(--rug);border:1px solid rgba(0,0,0,.3);color:#f6e6c8;
+  font:700 9px/1.4 var(--mono);letter-spacing:.1em}
+.sleuf.vol span{display:block;font:600 12px/1.25 var(--sans);color:#fff;letter-spacing:-.01em;
+  text-transform:none;margin-top:3px;padding:0 2px}
+.sleuf.leeg{border:2px dashed var(--lijn);color:var(--grijs);font:600 11px/1.3 var(--sans);
+  background:var(--karton)}
+
+.telling{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;
+  border-top:1px solid var(--lijn-2);font-size:15px}
+.telling b{font:700 13px/1 var(--mono);color:var(--inkt)}
+.melding{margin-top:var(--s3);padding:13px 15px;border-radius:3px;font-size:14.5px}
+.melding b{display:block;font:700 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  margin-bottom:6px}
+.melding.wacht{background:#fdf4e3;border:1.5px solid #e0be76;color:#79571a}
+.melding.bezet{background:#f4eef7;border:1.5px solid #c9b4d6;color:#5d3f72}
+.melding.klaar{background:#eaf3ee;border:1.5px solid #9dc4ad;color:#255c3d}
+
+/* ============================================================
+   3 · CLIËNTKAART
+   ============================================================ */
+.hand{display:grid;grid-template-columns:1fr 340px;gap:var(--s5);align-items:start}
+@media (max-width:1040px){.hand{grid-template-columns:1fr}}
+.handkop{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--s3);margin-bottom:var(--s4)}
+.handkop h3{font:600 27px/1.2 var(--sans);color:var(--inkt);letter-spacing:-.024em}
+.handkop .stand{font:700 13px/1 var(--mono);color:var(--rood);letter-spacing:.06em;
+  padding:7px 11px;border:1.5px solid var(--rood);border-radius:20px}
+
+.tafelblad{background:var(--tafel);border-radius:6px;padding:var(--s4);
+  box-shadow:inset 0 0 60px rgba(0,0,0,.32)}
+.tafelblad .rijkaarten{display:flex;flex-wrap:wrap;gap:15px}
+.omgedraaid{position:relative}
+.omgedraaid .tik{position:absolute;left:0;right:0;bottom:12px;text-align:center;
+  font:700 9.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#f0c33c}
+.gespeeld{position:relative}
+.gespeeld::after{content:"gespeeld";position:absolute;right:-6px;top:12px;
+  background:var(--groen);color:#fff;font:700 9px/1 var(--mono);letter-spacing:.14em;
+  text-transform:uppercase;padding:6px 9px;border-radius:2px;transform:rotate(4deg);
+  box-shadow:0 4px 10px -4px rgba(0,0,0,.6)}
+
+.zijkolom .blok{background:#fff;border:1.5px solid var(--lijn);border-radius:4px;
+  padding:var(--s4);margin-bottom:var(--s3)}
+.zijkolom h4{font:700 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--grijs);margin-bottom:13px}
+.zijkolom .weekrij{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:11px}
+.zijkolom .wd{text-align:center;padding:9px 2px;border-radius:3px;border:1.5px solid var(--lijn-2);
+  font:700 10px/1 var(--mono);letter-spacing:.06em;color:var(--grijs);background:var(--karton)}
+.zijkolom .wd.vol{background:var(--groen);border-color:var(--groen);color:#fff}
+.zijkolom .wd.half{background:#fdf4e3;border-color:#e0be76;color:#79571a}
+.zijkolom .wd.nu{border-color:var(--rood);color:var(--rood);background:#fff}
+.zijkolom p{font:400 15px/1.55 var(--serif)}
+.zijkolom .streep{display:flex;justify-content:space-between;padding:8px 0;
+  border-top:1px solid var(--lijn-2);font-size:14.5px}
+.zijkolom .streep b{font:700 12.5px/1 var(--mono);color:var(--inkt)}
+
+.joker{background:linear-gradient(150deg,#2b1a3f,#4a2a63);color:#f0dcff;border-radius:6px;
+  padding:var(--s4);border:1.5px solid #6b4a86}
+.joker b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:#f0c33c;margin-bottom:10px}
+.joker p{font:400 15px/1.55 var(--serif);color:#e6d5f5}
+.joker .kn{margin-top:var(--s3)}
+
+/* ============================================================
+   4 · PRINTKAART — HET DRUKKERSVEL
+   ============================================================ */
+.bladhouder{display:grid;place-items:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){
+  .bladschaal{width:100%;overflow:hidden}
+  .blad{transform:scale(.62);transform-origin:top center;margin-bottom:-118mm !important}
+}
+@media (max-width:620px){.blad{transform:scale(.42);margin-bottom:-176mm !important}}
+
+.blad{position:relative;width:210mm;height:297mm;background:#fff;color:#000;
+  box-shadow:0 26px 60px -30px rgba(0,0,0,.55), 0 0 0 1px var(--lijn);
+  padding:11mm 12mm 8mm;display:flex;flex-direction:column;font-family:var(--sans);margin:0 auto}
+
+/* kop van het vel */
+.vel-kop{display:flex;align-items:flex-end;gap:6mm;border-bottom:.5mm solid #17161c;
+  padding-bottom:2.4mm}
+.vel-kop .t{flex:1}
+.vel-kop .reeks{display:block;font:700 2.4mm/1 var(--mono);letter-spacing:.2em;
+  text-transform:uppercase;color:#b3122c;margin-bottom:1.6mm}
+.vel-kop h1{font:600 7mm/1.04 var(--sans);color:#17161c;letter-spacing:-.03em}
+.vel-kop .wie{text-align:right;font:400 3.1mm/1.4 var(--sans);color:#45434f}
+.vel-kop .wie b{display:block;font:600 3.8mm/1.28 var(--sans);color:#17161c}
+
+.vel-inl{display:flex;gap:4mm;align-items:baseline;padding:2.4mm 0 2.6mm;
+  border-bottom:.25mm solid #d8d2c2}
+.vel-inl .lbl{font:700 2.4mm/1.4 var(--mono);letter-spacing:.15em;text-transform:uppercase;
+  color:#b3122c;width:24mm;flex:none}
+.vel-inl p{font:400 3.1mm/1.42 var(--serif);color:#2e2c37;max-width:150mm}
+
+/* het snijraster: 2 × 3 kaarten */
+.vel-raster{position:relative;display:grid;grid-template-columns:repeat(2,1fr);
+  gap:5mm;margin-top:4mm;flex:none}
+
+.pk{position:relative;height:74mm;border:.3mm solid #17161c;border-radius:2mm;
+  background:#fff;padding:3mm 3.2mm 2.6mm;display:flex;flex-direction:column}
+.pk.fam-a{--f:#b3122c} .pk.fam-b{--f:#1c4a8b} .pk.fam-r{--f:#2f6b4f} .pk.fam-j{--f:#6b4a86}
+
+/* snijtekens buiten elke kaarthoek */
+.pk .snij{position:absolute;width:3mm;height:3mm;pointer-events:none}
+.pk .snij::before,.pk .snij::after{content:"";position:absolute;background:#17161c}
+.pk .snij::before{width:3mm;height:.2mm;top:0;left:0}
+.pk .snij::after{width:.2mm;height:3mm;top:0;left:0}
+.pk .snij.lb{left:-4.4mm;top:-1.4mm}
+.pk .snij.rb{right:-4.4mm;top:-1.4mm;transform:scaleX(-1)}
+.pk .snij.lo{left:-4.4mm;bottom:-1.4mm;transform:scaleY(-1)}
+.pk .snij.ro{right:-4.4mm;bottom:-1.4mm;transform:scale(-1,-1)}
+
+.pk .kop{display:flex;align-items:baseline;justify-content:space-between}
+.pk .kop .idx{font:700 3.6mm/1 var(--mono);letter-spacing:.06em;color:var(--f)}
+.pk .kop .fam{font:700 2.1mm/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;
+  color:#7d7a88}
+
+.pk .lijf{display:grid;grid-template-columns:36mm 1fr;gap:3.4mm;margin-top:2.4mm;align-items:start}
+.pk .lijf img{width:36mm;height:40mm;object-fit:contain;mix-blend-mode:multiply}
+.pk h3{font:600 4.6mm/1.12 var(--sans);color:#17161c;letter-spacing:-.02em}
+.pk .dos{font:700 3.7mm/1.2 var(--mono);color:var(--f);margin-top:1.6mm}
+.pk .hoe{font:400 3mm/1.4 var(--serif);color:#2e2c37;margin-top:1.8mm}
+
+.pk .kwartet{margin-top:auto;padding-top:1.8mm;border-top:.2mm solid #e2dccd}
+.pk .kwartet b{display:block;font:700 2mm/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:#7d7a88;margin-bottom:1.2mm}
+.pk .kwartet ol{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.6mm 3mm}
+.pk .kwartet li{font:500 2.5mm/1.4 var(--mono);color:#7d7a88;display:flex;gap:1.4mm}
+.pk .kwartet li s{text-decoration:none;width:4mm;flex:none}
+.pk .kwartet li.dit{color:var(--f);font-weight:700}
+
+/* de rustkaart en de spelregelkaart wijken af */
+.pk.regel .grote{font:400 3mm/1.42 var(--serif);color:#2e2c37;margin-top:2mm}
+.pk.regel .grote li{margin-bottom:1.4mm;padding-left:4mm;position:relative;list-style:none}
+.pk.regel .grote li b{position:absolute;left:0;top:0;color:var(--f);font-weight:700}
+.pk.joker-k{background:repeating-linear-gradient(45deg,#faf7fc 0 2mm,#f4eef7 2mm 4mm)}
+.pk.joker-k .groot{font:600 5.4mm/1.14 var(--sans);color:#4a2a63;letter-spacing:-.02em;
+  margin-top:2mm}
+.pk.joker-k p{font:400 3mm/1.42 var(--serif);color:#3d3548;margin-top:1.8mm}
+.pk .stempel{position:absolute;right:3mm;bottom:3mm;width:15mm;height:15mm;border-radius:50%;
+  border:.4mm dashed var(--f);display:grid;place-items:center;text-align:center;
+  font:700 1.9mm/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--f)}
+
+/* drukkersrand: registratiekruis + kleurbalk */
+.vel-voet{margin-top:auto;padding-top:2.6mm;display:flex;align-items:flex-end;gap:5mm}
+.vel-voet .zorg{font:400 2.95mm/1.42 var(--serif);color:#2e2c37;max-width:112mm}
+.vel-voet .zorg b{font-weight:600}
+.vel-voet .drukkerij{margin-left:auto;text-align:right}
+.kleurbalk{display:flex;gap:0;margin-bottom:1.6mm;justify-content:flex-end}
+.kleurbalk i{display:block;width:6mm;height:3mm;border:.15mm solid #17161c;border-right:0}
+.kleurbalk i:last-child{border-right:.15mm solid #17161c}
+.vel-voet .naam{font:700 2.4mm/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  color:#7d7a88}
+.reg-kruis{position:absolute;width:5mm;height:5mm}
+.reg-kruis::before,.reg-kruis::after{content:"";position:absolute;background:#17161c}
+.reg-kruis::before{left:50%;top:0;bottom:0;width:.2mm;margin-left:-.1mm}
+.reg-kruis::after{top:50%;left:0;right:0;height:.2mm;margin-top:-.1mm}
+.reg-kruis span{position:absolute;inset:1.4mm;border:.2mm solid #17161c;border-radius:50%}
+
+.wijzer{position:absolute;font:500 12px/1.35 var(--sans);color:var(--grijs);width:140px;z-index:5}
+.wijzer::after{content:"";position:absolute;background:var(--lijn)}
+.wijzer.r::after{left:-20px;top:50%;width:16px;height:1px}
+.wijzer.l{text-align:right}
+.wijzer.l::after{right:-20px;top:50%;width:16px;height:1px}
+@media (max-width:1180px){.wijzer{display:none}}
+
+.printhulp{max-width:680px;margin:var(--s4) auto 0;text-align:center;font-size:16px;color:var(--grijs)}
+.printhulp .kn{margin-top:var(--s3)}
+
+/* ── voet ────────────────────────────────────────────────── */
+footer.uitleiding{background:var(--inkt);color:#c8c4d2;padding:var(--s6) 24px}
+footer.uitleiding .binnen{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:#f0c33c;margin-bottom:13px}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:9px}
+footer.uitleiding li::before{content:"—";position:absolute;left:0;color:#f0c33c}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 26</span>
+  <strong style="font:600 15px/1 var(--sans);color:#fff">Kwartet</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm tafel" id="landing">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 1</b><h2 style="color:#fff">Landing</h2>
+      <p>het enige concept waarin de patiënt niet afvinkt maar uitspeelt</p>
+    </div>
+
+    <div class="hero">
+      <div>
+        <div class="kicker">Fysiplan · richting 26</div>
+        <h1>Geen lijstje.<br/>Een <em>setje</em>.</h1>
+        <p class="lead">Een uitdraai is af zodra hij uit de printer komt — daarna kan hij alleen nog
+          maar verwijten dat er niets is afgestreept. Een kwartet werkt andersom: elke kaart noemt
+          zijn eigen familie, dus u ziet altijd wat er nog ontbreekt. En wat compleet is, ís af.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Naar het drukkersvel</a>
+          <a class="kn leeg" href="#clientkaart">Uw hand bekijken</a>
+        </div>
+        <div class="onder">
+          <span><b>6 kaarten</b> · op één A4</span>
+          <span><b>1 familie</b> · 4 oefeningen</span>
+          <span><b>1 joker</b> · per week</span>
+        </div>
+      </div>
+
+      <div class="waaier">
+        <div class="rug" style="--kb:186px;height:266px;transform:rotate(-21deg) translateX(-158px)">
+          <div class="merk">Fysiplan<b>Oefenkwartet</b></div>
+        </div>
+
+        <div class="kaart" style="--fam:var(--blauw);--kb:186px;height:266px;
+          transform:rotate(-10deg) translateX(-78px)">
+          <div class="binnenrand">
+            <div class="index"><span>B 1</span><em>Ochtend</em></div>
+            <div class="fig"><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png"
+              alt="Lijntekening: zittend wordt de kin ingetrokken."/></div>
+            <h4>Kin intrekken</h4>
+            <div class="dosis">3 × 5 · 5 tellen vast</div>
+            <div class="familie"><b>Familie B — Ochtend</b>
+              <ol>
+                <li class="dit"><s>B1</s>Kin intrekken</li>
+                <li><s>B2</s>Nek draaien</li>
+                <li><s>B3</s>Trapezius rekken</li>
+                <li><s>B4</s>Schouderbladen</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <div class="kaart" style="--fam:var(--blauw);--kb:186px;height:266px;
+          transform:rotate(2deg) translateX(6px);z-index:3">
+          <div class="binnenrand">
+            <div class="index"><span>B 2</span><em>Ochtend</em></div>
+            <div class="fig"><img src="/images/nek/nek-draaien-zittend-actief-line-v1.png"
+              alt="Lijntekening: zittend wordt het hoofd naar links en rechts gedraaid."/></div>
+            <h4>Nek draaien</h4>
+            <div class="dosis">2 × 8 · per kant</div>
+            <div class="familie"><b>Familie B — Ochtend</b>
+              <ol>
+                <li><s>B1</s>Kin intrekken</li>
+                <li class="dit"><s>B2</s>Nek draaien</li>
+                <li><s>B3</s>Trapezius rekken</li>
+                <li><s>B4</s>Schouderbladen</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <div class="kaart" style="--fam:var(--blauw);--kb:186px;height:266px;
+          transform:rotate(14deg) translateX(90px)">
+          <div class="binnenrand">
+            <div class="index"><span>B 3</span><em>Ochtend</em></div>
+            <div class="fig"><img src="/images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png"
+              alt="Lijntekening: zittend wordt de bovenste trapezius gerekt met een hand op het hoofd."/></div>
+            <h4>Trapezius rekken</h4>
+            <div class="dosis">3 × 20 sec</div>
+            <div class="familie"><b>Familie B — Ochtend</b>
+              <ol>
+                <li><s>B1</s>Kin intrekken</li>
+                <li><s>B2</s>Nek draaien</li>
+                <li class="dit"><s>B3</s>Trapezius rekken</li>
+                <li><s>B4</s>Schouderbladen</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <div class="kaart" style="--fam:var(--blauw);--kb:186px;height:266px;
+          transform:rotate(25deg) translateX(172px)">
+          <div class="binnenrand">
+            <div class="index"><span>B 4</span><em>Ochtend</em></div>
+            <div class="fig"><img src="/images/nek/schouderblad-liften-en-ontspannen-zittend-actief-line-v1.png"
+              alt="Lijntekening: zittend worden de schouderbladen opgetrokken en ontspannen."/></div>
+            <h4>Schouderbladen</h4>
+            <div class="dosis">2 × 10</div>
+            <div class="familie"><b>Familie B — Ochtend</b>
+              <ol>
+                <li><s>B1</s>Kin intrekken</li>
+                <li><s>B2</s>Nek draaien</li>
+                <li><s>B3</s>Trapezius rekken</li>
+                <li class="dit"><s>B4</s>Schouderbladen</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="drie">
+      <div>
+        <h3><s>01</s> De kwartetregel</h3>
+        <p>Elke kaart draagt zijn hele familie bij zich. U hoeft nooit ergens anders te kijken om te
+          weten wat er nog mist — dat staat op de kaart die u al vasthebt.</p>
+      </div>
+      <div>
+        <h3><s>02</s> Compleet is af</h3>
+        <p>Niet “80% van uw doelen behaald”, maar: de familie is compleet. Een set van vier is een
+          grens die iedereen kent, ook wie nooit een app opent.</p>
+      </div>
+      <div>
+        <h3><s>03</s> Er zit een joker in</h3>
+        <p>Eén kaart per week mag u spelen om een dag over te slaan. Niet stiekem — met een kaart.
+          Dat maakt van falen een zet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>de therapeut stelt geen programma samen maar een familie van vier</p>
+    </div>
+
+    <div class="kiezer">
+      <div>
+        <div class="zoekbalk">
+          <input type="search" value="nek" aria-label="Zoek een oefening"/>
+          <button class="kn donker">Zoek</button>
+        </div>
+        <div class="filters">
+          <button aria-pressed="true">Nek</button>
+          <button aria-pressed="false">Bovenste extremiteit</button>
+          <button aria-pressed="false">Rug</button>
+          <button aria-pressed="false">Zittend mogelijk</button>
+          <button aria-pressed="false">Zonder materiaal</button>
+        </div>
+
+        <div class="rij inzet">
+          <div class="beeld"><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png"
+            alt="Lijntekening: zittend wordt de kin ingetrokken."/></div>
+          <div>
+            <h4>Kin intrekken — zittend</h4>
+            <div class="meta">zittend · geen materiaal · <b>kaart B1</b></div>
+          </div>
+          <button class="zet">In de familie</button>
+        </div>
+
+        <div class="rij inzet">
+          <div class="beeld"><img src="/images/nek/nek-draaien-zittend-actief-line-v1.png"
+            alt="Lijntekening: zittend wordt het hoofd naar links en rechts gedraaid."/></div>
+          <div>
+            <h4>Nek draaien — zittend</h4>
+            <div class="meta">zittend · geen materiaal · <b>kaart B2</b></div>
+          </div>
+          <button class="zet">In de familie</button>
+        </div>
+
+        <div class="rij inzet">
+          <div class="beeld"><img src="/images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png"
+            alt="Lijntekening: zittend wordt de bovenste trapezius gerekt."/></div>
+          <div>
+            <h4>Bovenste trapezius rekken</h4>
+            <div class="meta">zittend · geen materiaal · <b>kaart B3</b></div>
+          </div>
+          <button class="zet">In de familie</button>
+        </div>
+
+        <div class="rij">
+          <div class="beeld"><img src="/images/nek/schouderblad-liften-en-ontspannen-zittend-actief-line-v1.png"
+            alt="Lijntekening: zittend worden de schouderbladen opgetrokken en ontspannen."/></div>
+          <div>
+            <h4>Schouderblad liften en ontspannen</h4>
+            <div class="meta">zittend · geen materiaal · <em>past op B4</em></div>
+          </div>
+          <button class="zet">In de familie</button>
+        </div>
+
+        <div class="rij">
+          <div class="beeld"><img src="/images/nek/levator-scapulae-rek-zittend-actief-line-v1.png"
+            alt="Lijntekening: zittend wordt de levator scapulae gerekt."/></div>
+          <div>
+            <h4>Levator scapulae rekken</h4>
+            <div class="meta">zittend · geen materiaal · <em>zit al in familie C</em></div>
+          </div>
+          <button class="zet">In de familie</button>
+        </div>
+
+        <div class="rij">
+          <div class="beeld"><img src="/images/nek/nekrotatie-met-oogfixatie-zittend-actief-line-v1.png"
+            alt="Lijntekening: zittend draait het hoofd terwijl de ogen op een punt gericht blijven."/></div>
+          <div>
+            <h4>Nekrotatie met oogfixatie</h4>
+            <div class="meta">zittend · geen materiaal · nog vrij</div>
+          </div>
+          <button class="zet">In de familie</button>
+        </div>
+      </div>
+
+      <aside class="paneel">
+        <h3>De familie in aanbouw</h3>
+        <div class="famnaam">Familie B — Ochtend</div>
+        <div class="famregel">3 van 4 kaarten · dhr. J. Vermeulen</div>
+
+        <div class="sleuven">
+          <div class="sleuf vol">B1<span>Kin intrekken</span></div>
+          <div class="sleuf vol">B2<span>Nek draaien</span></div>
+          <div class="sleuf vol">B3<span>Trapezius</span></div>
+          <div class="sleuf leeg">B4<br/>leeg</div>
+        </div>
+
+        <div class="telling"><span>Kaarten in de familie</span><b>3 / 4</b></div>
+        <div class="telling"><span>Tijd per ronde</span><b>ca. 6 min</b></div>
+        <div class="telling"><span>Andere families</span><b>C · Avond (4/4)</b></div>
+
+        <div class="melding wacht">
+          <b>Familie nog niet compleet</b>
+          Een kwartet van drie bestaat niet. Zolang B4 leeg is, kan dit programma niet naar de
+          drukker — de kaarten zouden naar een kaart verwijzen die er niet is.
+        </div>
+
+        <div class="melding bezet">
+          <b>Kaart zit al ergens in</b>
+          “Levator scapulae rekken” staat al in familie C. Eén oefening in twee families maakt het
+          tellen onbetrouwbaar: verplaats hem, of kies een andere.
+        </div>
+
+        <div class="melding klaar">
+          <b>Zo dadelijk klaar</b>
+          Met B4 erbij past de hele familie op één A4, samen met de rustkaart, de jokerkaart en de
+          spelregels. Zes kaarten, één vel, één keer knippen.
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>uw hand van vandaag: wat op de rug ligt moet nog, wat open ligt is gespeeld</p>
+    </div>
+
+    <div class="hand">
+      <div>
+        <div class="handkop">
+          <h3>Uw hand — woensdag 19 augustus</h3>
+          <span class="stand">2 van 4 gespeeld</span>
+        </div>
+
+        <div class="tafelblad">
+          <div class="rijkaarten">
+
+            <div class="kaart gespeeld" style="--fam:var(--blauw);--kb:178px;height:262px">
+              <div class="binnenrand">
+                <div class="index"><span>B 1</span><em>Ochtend</em></div>
+                <div class="fig"><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png"
+                  alt="Lijntekening: zittend wordt de kin ingetrokken."/></div>
+                <h4>Kin intrekken</h4>
+                <div class="dosis">3 × 5 · 5 tellen vast</div>
+                <div class="hoe">Kin recht naar achteren, alsof u een dubbele kin maakt.</div>
+              </div>
+            </div>
+
+            <div class="kaart gespeeld" style="--fam:var(--blauw);--kb:178px;height:262px">
+              <div class="binnenrand">
+                <div class="index"><span>B 2</span><em>Ochtend</em></div>
+                <div class="fig"><img src="/images/nek/nek-draaien-zittend-actief-line-v1.png"
+                  alt="Lijntekening: zittend wordt het hoofd gedraaid."/></div>
+                <h4>Nek draaien</h4>
+                <div class="dosis">2 × 8 · per kant</div>
+                <div class="hoe">Rustig draaien tot u weerstand voelt, niet tot het pijn doet.</div>
+              </div>
+            </div>
+
+            <div class="omgedraaid">
+              <div class="rug" style="--kb:178px;height:262px">
+                <div class="merk">Kaart B3<b>Nog te spelen</b></div>
+                <span class="tik">tik om te openen</span>
+              </div>
+            </div>
+
+            <div class="omgedraaid">
+              <div class="rug" style="--kb:178px;height:262px">
+                <div class="merk">Kaart B4<b>Nog te spelen</b></div>
+                <span class="tik">tik om te openen</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <aside class="zijkolom">
+        <div class="blok">
+          <h4>Deze week</h4>
+          <div class="weekrij">
+            <div class="wd vol">ma</div>
+            <div class="wd vol">di</div>
+            <div class="wd nu">wo</div>
+            <div class="wd">do</div>
+            <div class="wd">vr</div>
+            <div class="wd half">za</div>
+            <div class="wd">zo</div>
+          </div>
+          <div class="streep"><span>Volledige kwartetten</span><b>2</b></div>
+          <div class="streep"><span>Halve rondes</span><b>1</b></div>
+          <div class="streep"><span>Joker gebruikt</span><b>nee</b></div>
+          <p style="margin-top:13px;color:var(--grijs);font-size:14px">Zaterdag telt als half: twee
+            kaarten gespeeld, twee blijven liggen. Dat is geen fout, dat is een halve ronde.</p>
+        </div>
+
+        <div class="joker">
+          <b>Uw jokerkaart</b>
+          <p>Eén keer per week mag u een dag overslaan zonder uitleg. U speelt de joker, de dag telt
+            als gespeeld, en niemand komt erop terug — ook uw therapeut niet.</p>
+          <button class="kn">Joker spelen</button>
+        </div>
+
+        <div class="blok">
+          <h4>Van uw therapeut</h4>
+          <p>Familie C (avond) begint pas als B twee weken op rij compleet is. Er is geen reden om
+            te haasten: een kwartet dat halfaf blijft, is vervelender dan een kwartet dat later komt.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand, het drukkersvel</h2>
+      <p>zes kaarten op één vel, met snijtekens; ongeknipt is het een gewone oefenkaart</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer r geen-print" style="top:52mm;left:calc(100% + 22px)">snijtekens in de
+            hoeken — knippen mag, moet niet</span>
+          <span class="wijzer l geen-print" style="top:118mm;right:calc(100% + 22px)">elke kaart
+            noemt zijn hele familie: u ziet altijd wat nog ontbreekt</span>
+          <span class="wijzer l geen-print" style="top:214mm;right:calc(100% + 22px)">de rustkaart is
+            een kaart, geen leegte in het schema</span>
+          <span class="wijzer r geen-print" style="top:262mm;left:calc(100% + 22px)">registratiekruis
+            en kleurbalk: de rand van het vel, zoals bij echt kaartendrukwerk</span>
+
+          <div class="vel-kop">
+            <div class="t">
+              <span class="reeks">Oefenkwartet · familie B — ochtend · week 4 van 8</span>
+              <h1>Zes kaarten, één vel</h1>
+            </div>
+            <div class="wie">
+              <b>Dhr. J. Vermeulen</b>
+              nekklachten bij beeldschermwerk
+            </div>
+          </div>
+
+          <div class="vel-inl">
+            <span class="lbl">Zo speelt u</span>
+            <p>Doe elke ochtend de vier kaarten van familie B. Knip ze desgewenst los langs de
+              hoektekens en leg ze op tafel; wat u gedaan hebt, draait u om. Ligt alles omgedraaid,
+              dan is uw ochtend af. Niet geknipt? Dan leest u het vel gewoon van boven naar beneden.</p>
+          </div>
+
+          <div class="vel-raster">
+
+            <!-- ── B1 ── -->
+            <div class="pk fam-b">
+              <span class="snij lb"></span><span class="snij rb"></span>
+              <span class="snij lo"></span><span class="snij ro"></span>
+              <div class="kop"><span class="idx">B 1</span><span class="fam">Familie B · ochtend</span></div>
+              <div class="lijf">
+                <img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png"
+                  alt="Lijntekening: zittend wordt de kin recht naar achteren ingetrokken."/>
+                <div>
+                  <h3>Kin intrekken</h3>
+                  <div class="dos">3 × 5 · 5 tellen vast</div>
+                  <p class="hoe">Zit rechtop. Schuif uw kin recht naar achteren, alsof u een dubbele
+                    kin maakt. Niet knikken.</p>
+                </div>
+              </div>
+              <div class="kwartet"><b>Familie B bestaat uit</b>
+                <ol>
+                  <li class="dit"><s>B1</s>Kin intrekken</li>
+                  <li><s>B3</s>Trapezius rekken</li>
+                  <li><s>B2</s>Nek draaien</li>
+                  <li><s>B4</s>Schouderbladen</li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- ── B2 ── -->
+            <div class="pk fam-b">
+              <span class="snij lb"></span><span class="snij rb"></span>
+              <span class="snij lo"></span><span class="snij ro"></span>
+              <div class="kop"><span class="idx">B 2</span><span class="fam">Familie B · ochtend</span></div>
+              <div class="lijf">
+                <img src="/images/nek/nek-draaien-zittend-actief-line-v1.png"
+                  alt="Lijntekening: zittend wordt het hoofd naar links en rechts gedraaid."/>
+                <div>
+                  <h3>Nek draaien</h3>
+                  <div class="dos">2 × 8 · per kant</div>
+                  <p class="hoe">Draai uw hoofd rustig opzij tot u rek voelt. Schouders blijven waar
+                    ze zijn. Terug, en de andere kant.</p>
+                </div>
+              </div>
+              <div class="kwartet"><b>Familie B bestaat uit</b>
+                <ol>
+                  <li><s>B1</s>Kin intrekken</li>
+                  <li><s>B3</s>Trapezius rekken</li>
+                  <li class="dit"><s>B2</s>Nek draaien</li>
+                  <li><s>B4</s>Schouderbladen</li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- ── B3 ── -->
+            <div class="pk fam-b">
+              <span class="snij lb"></span><span class="snij rb"></span>
+              <span class="snij lo"></span><span class="snij ro"></span>
+              <div class="kop"><span class="idx">B 3</span><span class="fam">Familie B · ochtend</span></div>
+              <div class="lijf">
+                <img src="/images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png"
+                  alt="Lijntekening: zittend wordt de bovenste trapezius gerekt met een hand op het hoofd."/>
+                <div>
+                  <h3>Trapezius rekken</h3>
+                  <div class="dos">3 × 20 seconden</div>
+                  <p class="hoe">Oor naar de schouder, hand licht op het hoofd. Trek niet — laat het
+                    gewicht van uw hand het werk doen.</p>
+                </div>
+              </div>
+              <div class="kwartet"><b>Familie B bestaat uit</b>
+                <ol>
+                  <li><s>B1</s>Kin intrekken</li>
+                  <li class="dit"><s>B3</s>Trapezius rekken</li>
+                  <li><s>B2</s>Nek draaien</li>
+                  <li><s>B4</s>Schouderbladen</li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- ── B4 ── -->
+            <div class="pk fam-b">
+              <span class="snij lb"></span><span class="snij rb"></span>
+              <span class="snij lo"></span><span class="snij ro"></span>
+              <div class="kop"><span class="idx">B 4</span><span class="fam">Familie B · ochtend</span></div>
+              <div class="lijf">
+                <img src="/images/nek/schouderblad-liften-en-ontspannen-zittend-actief-line-v1.png"
+                  alt="Lijntekening: zittend worden de schouderbladen opgetrokken en weer ontspannen."/>
+                <div>
+                  <h3>Schouderbladen</h3>
+                  <div class="dos">2 × 10 · rustig tempo</div>
+                  <p class="hoe">Trek uw schouders op naar uw oren, houd twee tellen vast en laat ze
+                    dan echt vallen.</p>
+                </div>
+              </div>
+              <div class="kwartet"><b>Familie B bestaat uit</b>
+                <ol>
+                  <li><s>B1</s>Kin intrekken</li>
+                  <li><s>B3</s>Trapezius rekken</li>
+                  <li><s>B2</s>Nek draaien</li>
+                  <li class="dit"><s>B4</s>Schouderbladen</li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- ── de jokerkaart ── -->
+            <div class="pk fam-j joker-k">
+              <span class="snij lb"></span><span class="snij rb"></span>
+              <span class="snij lo"></span><span class="snij ro"></span>
+              <div class="kop"><span class="idx">JOKER</span><span class="fam">één per week</span></div>
+              <div class="groot">Vandaag sla ik over.</div>
+              <p>Leg deze kaart op tafel en de dag is gespeeld. U hoeft niets in te halen en niets
+                uit te leggen — ook niet aan uw therapeut. Volgende week krijgt u hem terug.</p>
+              <div class="stempel">Speel<br/>mij</div>
+            </div>
+
+            <!-- ── de spelregelkaart ── -->
+            <div class="pk fam-r regel">
+              <span class="snij lb"></span><span class="snij rb"></span>
+              <span class="snij lo"></span><span class="snij ro"></span>
+              <div class="kop"><span class="idx">SPELREGELS</span><span class="fam">altijd op tafel</span></div>
+              <ul class="grote">
+                <li><b>1</b>Pijn tijdens het oefenen mag tot een 5 op 10, en moet binnen een uur
+                  weer gezakt zijn.</li>
+                <li><b>2</b>Duizelig bij het draaien? Stop met die kaart en bel ons.</li>
+                <li><b>3</b>Een halve ronde telt als een halve ronde. Niet inhalen.</li>
+                <li><b>4</b>Familie compleet? Zet een streepje op de achterkant van deze kaart.</li>
+              </ul>
+            </div>
+
+          </div>
+
+          <div class="vel-voet">
+            <div class="zorg"><b>Kwijtgeraakt of gescheurd?</b> Print het vel gewoon opnieuw uit uw
+              cliëntportaal — het is hetzelfde spel, en uw streepjes op de spelregelkaart blijven
+              natuurlijk gewoon geldig.</div>
+            <div class="drukkerij">
+              <div class="kleurbalk" aria-hidden="true">
+                <i style="background:#17161c"></i><i style="background:#b3122c"></i>
+                <i style="background:#1c4a8b"></i><i style="background:#2f6b4f"></i>
+                <i style="background:#6b4a86"></i><i style="background:#fff"></i>
+              </div>
+              <div class="naam">Fysiotherapie De Wetering<br/>Amersfoort · 033 — 472 18 06</div>
+            </div>
+          </div>
+
+          <span class="reg-kruis" style="left:5mm;top:5mm" aria-hidden="true"><span></span></span>
+          <span class="reg-kruis" style="right:5mm;top:5mm" aria-hidden="true"><span></span></span>
+          <span class="reg-kruis" style="left:5mm;bottom:4mm" aria-hidden="true"><span></span></span>
+          <span class="reg-kruis" style="right:5mm;bottom:4mm" aria-hidden="true"><span></span></span>
+
+        </div>
+      </div>
+    </div>
+
+    <p class="printhulp geen-print">Print op stevig papier als u wilt knippen, op gewoon papier als
+      u het vel heel laat. Beide werken: ongeknipt leest het als een oefenkaart met zes vakken.
+      <br/><button class="kn donker" onclick="window.print()">Print dit vel</button></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>De richting</h4>
+      <p>Speelkaarten werden eeuwenlang met tientallen tegelijk op één vel gedrukt en pas daarna
+        gesneden. Dat vel — met snijtekens, registratiekruis en kleurbalk in de rand — is hier de
+        A4. En de kwartetregel doet het echte werk: doordat elke kaart zijn hele familie noemt,
+        weet de patiënt altijd wat er nog ontbreekt zonder ergens anders te kijken.</p>
+    </div>
+    <div class="kolom">
+      <h4>Waar het schuurt</h4>
+      <ul>
+        <li>Een spelmetafoor in de zorg kan kinderachtig overkomen. Het redmiddel is de uitvoering:
+          drukkersvakwerk, geen speelgoed.</li>
+        <li>Vier is een harde grens. Een programma van vijf oefeningen is geen kwartet, en de
+          therapeut moet dus echt kiezen.</li>
+        <li>De joker geeft de patiënt toestemming om over te slaan. Dat is bewust — maar het is een
+          keuze waar niet elke praktijk achter zal staan.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Verder</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
