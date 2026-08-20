@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 29 — Doorslag · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 29 — DOORSLAG
+   ------------------------------------------------------------
+   De kantooradministratie van vóór de kopieermachine: doorschijnend
+   luchtpostpapier (onionskin), carbonpapier ertussen, tot vijf
+   doorslagen in één aanslag. Het origineel ging het dossier in, de
+   doorslag ging mee naar buiten. Tweekleurslint (zwart/rood),
+   paarse carbon, rubberstempels, tabstops met puntjeslijnen.
+
+   Toegepast op de oefenkaart: de patiënt krijgt al jaren de mindere
+   versie — een uittreksel, een samenvatting, "de patiëntvriendelijke
+   uitleg". Dit concept draait dat om. De doorslag is hetzelfde
+   document als het origineel, tot op de aanslag. Wat de therapeut in
+   het dossier ziet, staat woord voor woord op uw blad. Niets is
+   voor u weggelaten.
+
+   Alles is monospace — ook waar de patiënt leest. Dat is een keuze
+   met een prijs; zie "waar het schuurt". De compensatie is grootte:
+   het printblad zet de leestekst op 11 punt met ruime regelafstand
+   en een korte regellengte.
+   ============================================================ */
+
+:root{
+  /* ── het papier ── */
+  --vel:#f4efe0;             /* luchtpostpapier, warm en dun */
+  --vel-2:#fbf8ee;
+  --vel-3:#e8e0cb;
+  --rand:#d3c9ae;
+
+  /* ── de inkt ── */
+  --carbon:#2a2336;          /* carbondoorslag: zwart met paars erin */
+  --carbon-2:#4c445c;
+  --grijs:#7c7488;
+  --lint:#a92f22;            /* de rode helft van het tweekleurslint */
+  --stempel:#563d84;         /* violet stempelkussen */
+  --stempel-licht:#e6ddf3;
+  --machine:#33333a;         /* het lak van de machine */
+  --machine-2:#1e1e23;
+
+  --mono:"SFMono-Regular",ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",
+    "DejaVu Sans Mono",monospace;
+
+  --s1:4px; --s2:9px; --s3:16px; --s4:26px; --s5:42px; --s6:68px;
+
+  /* de vezelstructuur van dun papier */
+  --vezel:
+    repeating-linear-gradient(96deg, rgba(120,100,60,.045) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(4deg, rgba(120,100,60,.035) 0 1px, transparent 1px 6px);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font:16px/1.72 var(--mono);color:var(--carbon-2);background:var(--vel);
+  background-image:var(--vezel)}
+img{max-width:100%;display:block}
+a{color:var(--lint)}
+:focus-visible{outline:3px solid var(--stempel);outline-offset:3px}
+
+.binnen{max-width:1140px;margin:0 auto;padding:0 24px}
+
+/* een aanslag zit nooit precies recht: minieme baseline-afwijking */
+.getikt span{display:inline-block}
+.getikt span:nth-child(3n){transform:translateY(-.7px)}
+.getikt span:nth-child(4n){transform:translateY(.8px)}
+.getikt span:nth-child(7n){transform:translateY(-.4px);opacity:.88}
+.getikt span:nth-child(5n){opacity:.93}
+
+/* doorgehaalde correctie, zoals je die op de machine maakte */
+.corr{text-decoration:none;position:relative;color:var(--grijs)}
+.corr::after{content:"xxxxxxxxxxxxxxxxxxxxxxxx";position:absolute;left:0;top:0;width:100%;
+  overflow:hidden;color:var(--carbon);opacity:.65;letter-spacing:-.06em}
+
+/* rubberstempel */
+.stempel{display:inline-block;border:2.5px solid var(--stempel);color:var(--stempel);
+  padding:7px 13px;font:700 12px/1.25 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  box-shadow:inset 0 0 0 1.5px var(--stempel);border-radius:2px;opacity:.86;text-align:center}
+
+/* ── labbalk ─────────────────────────────────────────────── */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:18px;
+  background:var(--machine-2);color:#b9b2c6;padding:11px 22px;font:500 13px/1 var(--mono)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--machine-2);background:#c8bddf;padding:5px 8px;border-radius:2px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#b9b2c6;text-decoration:none;padding:5px 2px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--lint)}
+.labbalk a.terug{color:#fff;font-weight:600}
+@media (max-width:820px){.labbalk{gap:12px;font-size:12px;flex-wrap:wrap}}
+
+/* ── schermkoppen ────────────────────────────────────────── */
+.scherm{padding:var(--s6) 0;border-top:1px solid var(--rand)}
+.scherm.eerste{border-top:0;padding-top:var(--s5)}
+.schermkop{margin-bottom:var(--s5);max-width:72ch}
+.schermkop b{display:block;font:700 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--lint);margin-bottom:11px}
+.schermkop h2{font:700 clamp(26px,3.2vw,36px)/1.14 var(--mono);color:var(--carbon);
+  letter-spacing:-.035em}
+.schermkop p{margin-top:10px;color:var(--grijs);font-size:15.5px;line-height:1.6}
+
+/* tabstop-regel met puntjeslijn, zoals in een ingevuld formulier */
+.tabregel{display:flex;align-items:baseline;gap:9px;padding:5px 0;font-size:15px;flex-wrap:wrap}
+.tabregel .veld{color:var(--grijs);white-space:nowrap}
+.tabregel .vul{flex:1;border-bottom:1.5px dotted var(--rand);transform:translateY(-4px)}
+.tabregel .waarde{color:var(--carbon);font-weight:600;white-space:nowrap}
+@media (max-width:620px){.tabregel .waarde{white-space:normal;flex:1 1 100%}
+  .tabregel .vul{display:none}}
+
+/* ============================================================
+   SCHERM 1 · LANDING — een vel in de machine
+   ============================================================ */
+.machine{position:relative;background:var(--machine);border-radius:5px 5px 0 0;height:34px;
+  box-shadow:inset 0 -7px 12px -8px rgba(0,0,0,.85), 0 3px 0 var(--machine-2);
+  display:flex;align-items:center;padding:0 20px;gap:9px}
+.machine .knop{width:11px;height:11px;border-radius:50%;background:#5b5b66;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22)}
+.machine .schaal{flex:1;height:9px;margin:0 12px;
+  background:repeating-linear-gradient(90deg,#5b5b66 0 1px,transparent 1px 9px)}
+.machine .merk{font:700 10px/1 var(--mono);letter-spacing:.28em;text-transform:uppercase;
+  color:#8e8799}
+
+.vel{position:relative;background:var(--vel-2);background-image:var(--vezel);
+  border:1px solid var(--rand);border-top:0;padding:var(--s5) var(--s4) var(--s4);
+  box-shadow:0 22px 48px -30px rgba(42,35,54,.65)}
+
+/* de carbonveeg langs de rand van een doorslag */
+.vel::after{content:"";position:absolute;right:0;top:8%;bottom:14%;width:34px;pointer-events:none;
+  background:linear-gradient(270deg, rgba(86,61,132,.16), transparent);filter:blur(3px)}
+
+.velkop{display:flex;justify-content:space-between;gap:var(--s4);flex-wrap:wrap;
+  border-bottom:2px solid var(--carbon);padding-bottom:var(--s3)}
+.velkop .links{font-size:14px;color:var(--grijs);line-height:1.7}
+.velkop .links b{color:var(--carbon)}
+
+.held h1{font:700 clamp(30px,4.4vw,52px)/1.06 var(--mono);color:var(--carbon);
+  letter-spacing:-.055em;margin-top:var(--s4);max-width:19ch}
+.held h1 em{font-style:normal;color:var(--lint)}
+.held .onder{margin-top:var(--s3);font-size:17px;line-height:1.62;max-width:56ch;
+  color:var(--carbon-2)}
+.held .onder b{color:var(--carbon)}
+.held .knoppen{display:flex;flex-wrap:wrap;gap:11px;margin-top:var(--s4)}
+
+.kn{display:inline-block;font:700 14px/1 var(--mono);letter-spacing:.06em;padding:15px 20px;
+  text-decoration:none;border:2px solid var(--carbon);background:var(--carbon);color:var(--vel-2);
+  cursor:pointer;border-radius:2px}
+.kn:hover{background:var(--lint);border-color:var(--lint)}
+.kn.leeg{background:transparent;color:var(--carbon)}
+.kn.leeg:hover{background:var(--carbon);color:var(--vel-2)}
+
+/* de drie doorslagen als gestapelde vellen */
+.stapel{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s5);
+  border-top:1px dashed var(--rand);padding-top:var(--s4)}
+@media (max-width:880px){.stapel{grid-template-columns:1fr}}
+.doorslagje{position:relative;padding:var(--s3);border:1px solid var(--rand);background:var(--vel)}
+.doorslagje.eerste{background:var(--vel-2);border-color:var(--carbon);border-width:2px}
+.doorslagje .lbl{font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--grijs);margin-bottom:10px;display:block}
+.doorslagje.eerste .lbl{color:var(--lint)}
+.doorslagje h3{font:700 18px/1.22 var(--mono);color:var(--carbon);letter-spacing:-.035em}
+.doorslagje p{margin-top:9px;font-size:14.5px;line-height:1.6}
+.doorslagje.derde{opacity:.62}
+
+/* ============================================================
+   SCHERM 2 · KIEZER — de kaartenbak
+   ============================================================ */
+.zoekbalk{display:flex;gap:11px;flex-wrap:wrap;align-items:center;margin-bottom:var(--s4);
+  border:1px solid var(--rand);background:var(--vel-2);padding:13px 15px}
+.zoekbalk .veld{font:700 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--grijs)}
+.zoekbalk .invoer{flex:1;min-width:200px;border:0;border-bottom:1.5px solid var(--carbon);
+  background:transparent;font:600 16px/1.4 var(--mono);color:var(--carbon);padding:3px 2px}
+.zoekbalk .tel{font-size:13.5px;color:var(--grijs)}
+
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:var(--s4)}
+.filters button{font:600 13px/1 var(--mono);padding:10px 13px;border:1.5px solid var(--rand);
+  background:var(--vel-2);color:var(--carbon-2);cursor:pointer;border-radius:2px}
+.filters button:hover{border-color:var(--carbon)}
+.filters button[aria-pressed="true"]{background:var(--carbon);color:var(--vel-2);
+  border-color:var(--carbon)}
+
+.kiezer{display:grid;grid-template-columns:1fr 330px;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.kiezer{grid-template-columns:1fr}}
+
+/* de oefeningen als regels in een doorslag: strak tabelwerk */
+.regels{border:1px solid var(--rand);background:var(--vel-2)}
+.regels .kolomkop{display:grid;grid-template-columns:52px 1fr 118px 96px 44px;gap:11px;
+  padding:9px 14px;border-bottom:2px solid var(--carbon);
+  font:700 10.5px/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
+@media (max-width:760px){.regels .kolomkop{display:none}}
+.regels .regel{display:grid;grid-template-columns:52px 1fr 118px 96px 44px;gap:11px;align-items:center;
+  padding:11px 14px;border-bottom:1px dotted var(--rand);cursor:pointer;background:transparent}
+.regels .regel:hover{background:#fff}
+.regels .regel[aria-pressed="true"]{background:var(--stempel-licht)}
+@media (max-width:760px){
+  .regels .regel{grid-template-columns:52px 1fr 44px;grid-template-areas:"b n v" ". d d" ". g g"}
+  .regels .regel .beeld{grid-area:b} .regels .regel .naam{grid-area:n} .regels .regel .dos{grid-area:d}
+  .regels .regel .gebied{grid-area:g} .regels .regel .vink{grid-area:v}
+}
+.regels .regel .beeld{width:52px;height:52px;border:1px solid var(--rand);background:#fff;
+  display:flex;align-items:center;justify-content:center;padding:3px;overflow:hidden}
+.regels .regel .beeld img{max-height:100%;max-width:100%;width:auto;height:auto;
+  mix-blend-mode:multiply}
+.regels .regel .naam b{display:block;font:600 16px/1.3 var(--mono);color:var(--carbon);
+  letter-spacing:-.02em}
+.regels .regel .naam span{display:block;font-size:13px;color:var(--grijs);margin-top:2px}
+.regels .regel .dos,.regels .regel .gebied{font-size:13.5px;color:var(--carbon-2)}
+.regels .regel .vink{width:26px;height:26px;border:1.5px solid var(--carbon);display:grid;place-items:center;
+  font:700 15px/1 var(--mono);color:transparent;border-radius:2px;justify-self:end}
+.regels .regel[aria-pressed="true"] .vink{color:var(--stempel);border-color:var(--stempel);
+  background:#fff}
+
+/* de zijkant */
+.opvel{border:2px solid var(--carbon);background:var(--vel-2);position:sticky;top:74px}
+.opvel .kop{background:var(--carbon);color:var(--vel-2);padding:11px 15px;
+  font:700 11px/1.4 var(--mono);letter-spacing:.18em;text-transform:uppercase}
+.opvel .lijf{padding:var(--s3) 15px var(--s4)}
+.opvel ol{list-style:none;counter-reset:r}
+.opvel li{counter-increment:r;display:flex;gap:10px;padding:10px 0;
+  border-bottom:1px dotted var(--rand);font-size:14.5px}
+.opvel li::before{content:counter(r,decimal-leading-zero);color:var(--lint);font-weight:700;
+  flex:none}
+.opvel li b{display:block;color:var(--carbon);font-weight:600;letter-spacing:-.02em}
+.opvel li span{display:block;color:var(--grijs);font-size:13px;margin-top:2px}
+.opvel .som{margin-top:var(--s3);padding-top:var(--s3);border-top:2px solid var(--carbon)}
+.opvel .kn{width:100%;text-align:center;margin-top:var(--s3)}
+.opvel .stempelplek{margin-top:var(--s3);text-align:center}
+
+/* ============================================================
+   SCHERM 3 · CLIËNTKAART — het dossierblad
+   ============================================================ */
+.dossier{border:1px solid var(--rand);background:var(--vel-2);
+  box-shadow:0 22px 48px -32px rgba(42,35,54,.6)}
+.dossier .balk{background:var(--carbon);color:var(--vel-2);padding:13px 20px;
+  display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  font:700 11px/1.5 var(--mono);letter-spacing:.18em;text-transform:uppercase}
+.dossier .balk .rechts{color:#c8bddf}
+.dossierlijf{display:grid;grid-template-columns:1fr 320px;gap:0}
+@media (max-width:960px){.dossierlijf{grid-template-columns:1fr}}
+.dossierlijf > *{min-width:0}
+.dossierlijf .hoofd{padding:var(--s4);border-right:1px dashed var(--rand)}
+@media (max-width:960px){.dossierlijf .hoofd{border-right:0;border-bottom:1px dashed var(--rand)}}
+.dossierlijf .zij{padding:var(--s4);background:var(--vel)}
+
+.blokkop{font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--lint);margin-bottom:var(--s3);padding-bottom:7px;border-bottom:1px solid var(--rand)}
+
+.logboek{list-style:none}
+.logboek li{display:grid;grid-template-columns:106px 1fr;gap:14px;padding:11px 0;
+  border-bottom:1px dotted var(--rand);font-size:14.5px;line-height:1.6}
+.logboek .datum{color:var(--grijs);white-space:nowrap}
+.logboek .tekst b{color:var(--carbon)}
+.logboek .tekst .door{display:block;color:var(--grijs);font-size:12.5px;margin-top:3px}
+
+.staat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3);
+  margin-bottom:var(--s4)}
+.staat .cel .cijfer{overflow-wrap:anywhere}
+@media (max-width:430px){.staat{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.staat .cel{border:1px solid var(--rand);background:#fff;padding:13px}
+.staat .cel .cijfer{font:700 26px/1 var(--mono);color:var(--carbon);letter-spacing:-.05em}
+.staat .cel .wat{font-size:12.5px;color:var(--grijs);margin-top:6px;line-height:1.4}
+
+.weekstrook{display:flex;gap:5px;margin-top:var(--s3)}
+.weekstrook .d{flex:1;text-align:center;border:1.5px solid var(--rand);background:#fff;
+  padding:8px 2px}
+.weekstrook .d b{display:block;font:700 10.5px/1 var(--mono);text-transform:uppercase;
+  color:var(--grijs)}
+.weekstrook .d i{display:block;margin-top:6px;font:700 15px/1 var(--mono);color:var(--rand)}
+.weekstrook .d.af{background:var(--carbon);border-color:var(--carbon)}
+.weekstrook .d.af b{color:#c8bddf}
+.weekstrook .d.af i{color:var(--vel-2)}
+.weekstrook .d.nu{border-color:var(--lint);border-width:2.5px}
+
+.opmerking{margin-top:var(--s4);border-left:3px solid var(--stempel);padding:3px 0 3px 14px;
+  font-size:14.5px;line-height:1.62;color:var(--carbon-2)}
+.opmerking b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--stempel);margin-bottom:7px}
+
+/* ============================================================
+   SCHERM 4 · PRINTBLAD
+   ============================================================ */
+.bladhouder{display:grid;place-items:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){
+  .bladschaal{width:100%;overflow:hidden}
+  .blad{transform:scale(.62);transform-origin:top center;margin-bottom:-116mm !important}
+}
+@media (max-width:620px){.blad{transform:scale(.42);margin-bottom:-174mm !important}}
+
+.blad{position:relative;width:210mm;height:297mm;background:#fdfbf3;color:#241d2e;
+  box-shadow:0 26px 60px -30px rgba(42,35,54,.6), 0 0 0 1px var(--rand);
+  padding:11mm 13mm 7mm;display:flex;flex-direction:column;font-family:var(--mono);margin:0 auto}
+
+/* de stempel rechtsboven, licht scheef zoals een stempel valt */
+.pb-stempel{position:absolute;top:12mm;right:12mm;transform:rotate(-4.5deg);
+  border:.8mm solid var(--stempel);color:var(--stempel);padding:2.2mm 3.4mm;
+  font:700 3.1mm/1.35 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  text-align:center;opacity:.84;box-shadow:inset 0 0 0 .35mm var(--stempel);border-radius:.6mm}
+
+.pb-kop{border-bottom:.8mm solid #241d2e;padding-bottom:2.4mm;padding-right:44mm}
+.pb-kop .org{font:700 2.7mm/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;
+  color:#7c7488}
+.pb-kop h1{font:700 7.4mm/1.02 var(--mono);letter-spacing:-.055em;margin-top:2mm}
+.pb-kop .inleidregel{margin-top:2.2mm;font:400 3.3mm/1.42 var(--mono);color:#4c445c}
+
+.pb-velden{margin-top:2.6mm;display:grid;grid-template-columns:1fr 1fr;gap:0 8mm}
+.pb-veld{display:flex;align-items:baseline;gap:2mm;padding:1.1mm 0;font-size:3.3mm;
+  border-bottom:.2mm dotted #c8bda2}
+.pb-veld .n{color:#7c7488;white-space:nowrap}
+.pb-veld .w{margin-left:auto;font-weight:600;color:#241d2e;text-align:right}
+
+/* de kernmededeling: waarom dit blad hetzelfde is als het dossier */
+.pb-mededeling{margin-top:2.8mm;border:.5mm solid #241d2e;padding:2.4mm 3mm;
+  background:#f6f1e6}
+.pb-mededeling .lbl{font:700 2.7mm/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:#a92f22;display:block;margin-bottom:2mm}
+.pb-mededeling p{font:400 3.9mm/1.42 var(--mono);color:#241d2e}
+
+/* de oefeningen als getypte posten */
+.pb-posten{margin-top:2.8mm;flex:1;display:flex;flex-direction:column;gap:2.4mm}
+.pb-post{display:grid;grid-template-columns:24mm 1fr;gap:3.4mm;border-top:.3mm solid #c8bda2;
+  padding-top:2.4mm}
+.pb-post:first-child{border-top:.5mm solid #241d2e}
+.pb-post .beeld{border:.3mm solid #c8bda2;background:#fff;height:23mm;display:flex;
+  align-items:center;justify-content:center;padding:1.4mm;overflow:hidden}
+.pb-post .beeld img{max-height:100%;max-width:100%;width:auto;height:auto;
+  mix-blend-mode:multiply}
+.pb-post .nrpost{display:block;margin-top:1.6mm;font:700 2.7mm/1 var(--mono);letter-spacing:.16em;
+  text-transform:uppercase;color:#7c7488;text-align:center}
+
+.pb-post h2{font:700 4.8mm/1.1 var(--mono);letter-spacing:-.045em}
+.pb-post .dosregel{display:flex;gap:2mm;align-items:baseline;margin-top:1.8mm;flex-wrap:wrap}
+.pb-post .dos{font:700 3.4mm/1 var(--mono);background:#241d2e;color:#fdfbf3;padding:1.4mm 2.2mm;
+  border-radius:.5mm;letter-spacing:.04em}
+.pb-post .wanneer{font:400 3.3mm/1.3 var(--mono);color:#563d84}
+.pb-post .hoe{margin-top:1.8mm;font:400 3.9mm/1.44 var(--mono);max-width:64ch}
+.pb-post .let{margin-top:1.6mm;font:400 3.3mm/1.36 var(--mono);color:#a92f22;padding-left:4.4mm;
+  position:relative}
+.pb-post .let::before{content:"!";position:absolute;left:0;top:0;font-weight:700;
+  border:.3mm solid #a92f22;width:3.4mm;height:3.4mm;line-height:2.9mm;text-align:center;
+  border-radius:50%;font-size:2.6mm}
+
+.pb-hokjes{display:flex;gap:1.2mm;margin-top:1.8mm}
+.pb-hokjes .d{width:9mm;text-align:center;border:.3mm solid #a9a08a;padding:1mm 0 1.3mm;
+  border-radius:.5mm}
+.pb-hokjes .d b{display:block;font:700 2.5mm/1 var(--mono);text-transform:uppercase;color:#7c7488}
+.pb-hokjes .d i{display:block;margin-top:1.2mm;font:700 3.4mm/1 var(--mono);color:#cfc5ae}
+.pb-hokjes .d.rust{border-style:dashed}
+.pb-hokjes .toel{align-self:center;margin-left:1.6mm;font:400 2.9mm/1.3 var(--mono);color:#7c7488}
+
+/* de perforatie en de voet */
+.pb-perf{margin-top:2.6mm;border-top:.4mm dashed #a9a08a;padding-top:2.6mm;
+  display:flex;justify-content:space-between;align-items:flex-end;gap:6mm}
+.pb-perf .ondertek{flex:1}
+.pb-perf .ondertek .lijn{border-bottom:.35mm solid #241d2e;height:6mm}
+.pb-perf .ondertek .bijs{margin-top:1.4mm;font:400 2.9mm/1.3 var(--mono);color:#7c7488}
+.pb-perf .arch{text-align:right;font:400 2.9mm/1.5 var(--mono);color:#7c7488;white-space:nowrap}
+.pb-perf .arch b{display:block;color:#241d2e;font-weight:700;letter-spacing:.08em}
+
+/* aanwijzers */
+.wijzer{position:absolute;z-index:9;width:152px;font:400 12.5px/1.4 var(--mono);color:var(--grijs)}
+.wijzer::after{content:"";position:absolute;background:var(--rand);height:1px}
+.wijzer.r::after{left:-20px;top:50%;width:16px}
+.wijzer.l{text-align:right}
+.wijzer.l::after{right:-20px;top:50%;width:16px}
+@media (max-width:1180px){.wijzer{display:none}}
+
+.printhulp{max-width:680px;margin:var(--s4) auto 0;text-align:center;font-size:15.5px;
+  color:var(--grijs);line-height:1.62}
+.printhulp .kn{margin-top:var(--s3)}
+
+/* ── voet ────────────────────────────────────────────────── */
+footer.uitleiding{background:var(--machine-2);color:#b4adc0;padding:var(--s6) 24px;
+  margin-top:var(--s6)}
+footer.uitleiding .binnen{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:#c8bddf;margin-bottom:13px}
+footer.uitleiding p,footer.uitleiding li{font-size:14.5px;line-height:1.68}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:9px}
+footer.uitleiding li::before{content:"—";position:absolute;left:0;color:#c8bddf}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 29</span>
+  <strong style="font:700 15px/1 var(--mono);color:#fff;letter-spacing:-.03em">Doorslag</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="binnen">
+
+    <div class="machine" aria-hidden="true">
+      <span class="knop"></span><span class="knop"></span>
+      <span class="schaal"></span>
+      <span class="merk">Fysiplan</span>
+    </div>
+
+    <div class="vel held">
+      <div class="velkop">
+        <div class="links">
+          <b>FYSIOTHERAPIE — OEFENVOORSCHRIFT</b><br/>
+          formulier 4a · vel 2 van 2 · doorslag<br/>
+          opgemaakt 17-08-2026, 09:14
+        </div>
+        <span class="stempel">Doorslag<br/>exemplaar voor<br/>de patiënt</span>
+      </div>
+
+      <h1 class="getikt">
+        <span>U</span><span> </span><span>k</span><span>r</span><span>i</span><span>j</span><span>g</span><span>t</span><span> </span><span>n</span><span>i</span><span>e</span><span>t</span><span> </span><span>d</span><span>e</span><span> </span><span>s</span><span>a</span><span>m</span><span>e</span><span>n</span><span>v</span><span>a</span><span>t</span><span>t</span><span>i</span><span>n</span><span>g</span><span>.</span>
+      </h1>
+      <p class="onder">Al veertig jaar krijgt de patiënt de mindere versie: het dossier heeft de
+        cijfers, de patiënt krijgt de aanmoediging. Fysiplan tikt beide vellen in één aanslag.
+        <b>Wat uw fysiotherapeut in het dossier ziet, staat woord voor woord op uw blad</b> — dezelfde
+        dosering, dezelfde twijfels, dezelfde datum waarop het opnieuw bekeken wordt. Niets is voor
+        u weggelaten.</p>
+
+      <div class="knoppen">
+        <a class="kn" href="#kiezer">Stel het voorschrift op</a>
+        <a class="kn leeg" href="#printkaart">Bekijk de doorslag</a>
+      </div>
+
+      <div class="stapel">
+        <div class="doorslagje eerste">
+          <span class="lbl">Vel 1 — origineel</span>
+          <h3>Het dossier</h3>
+          <p>Blijft bij de praktijk. Bevat het voorschrift, de dosering, de aantekeningen en de
+            datum van herbeoordeling.</p>
+        </div>
+        <div class="doorslagje">
+          <span class="lbl">Vel 2 — doorslag</span>
+          <h3>Uw blad</h3>
+          <p>Gaat mee naar huis. Bevat het voorschrift, de dosering, de aantekeningen en de datum
+            van herbeoordeling. Regel voor regel hetzelfde.</p>
+        </div>
+        <div class="doorslagje derde">
+          <span class="lbl">Vel 3 — tweede doorslag</span>
+          <h3>Voor de huisarts</h3>
+          <p>Alleen als u dat wilt. U beslist of dit vel wordt getikt; er is geen derde partij die
+            dat buiten u om regelt.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>een kaartenbak, geen etalage: regels met een vaste kolombreedte, waarin de therapeut leest
+        zoals hij in een dossier leest — van boven naar beneden, met tabstops op vaste plaatsen</p>
+    </div>
+
+    <div class="zoekbalk">
+      <span class="veld">Zoek —</span>
+      <input class="invoer" type="text" value="knie · na operatie" aria-label="Zoek een oefening"/>
+      <span class="tel">37 van 215 regels</span>
+    </div>
+
+    <div class="filters">
+      <button aria-pressed="true">Onderste extremiteit</button>
+      <button aria-pressed="true">Met steun</button>
+      <button aria-pressed="false">Zonder steun</button>
+      <button aria-pressed="false">Zittend</button>
+      <button aria-pressed="false">Liggend</button>
+      <button aria-pressed="false">Met elastiek</button>
+    </div>
+
+    <div class="kiezer">
+
+      <div class="regels">
+        <div class="kolomkop">
+          <span></span><span>Oefening</span><span>Dosering</span><span>Gebied</span><span>Op vel</span>
+        </div>
+
+        <div class="regel" role="button" tabindex="0" aria-pressed="true">
+          <div class="beeld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt=""/></div>
+          <div class="naam"><b>Stoelsquat</b><span>code OE-114 · gesloten keten</span></div>
+          <div class="dos">3 × 10</div>
+          <div class="gebied">knie, heup</div>
+          <div class="vink" aria-hidden="true">✕</div>
+        </div>
+
+        <div class="regel" role="button" tabindex="0" aria-pressed="true">
+          <div class="beeld"><img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png" alt=""/></div>
+          <div class="naam"><b>Knie strekken, zittend</b><span>code OE-042 · open keten</span></div>
+          <div class="dos">3 × 12</div>
+          <div class="gebied">knie</div>
+          <div class="vink" aria-hidden="true">✕</div>
+        </div>
+
+        <div class="regel" role="button" tabindex="0" aria-pressed="true">
+          <div class="beeld"><img src="/images/onderste-extremiteit/kuitheffing-staand-met-steun-line-v1.png" alt=""/></div>
+          <div class="naam"><b>Kuitheffing met steun</b><span>code OE-078 · staand</span></div>
+          <div class="dos">3 × 15</div>
+          <div class="gebied">enkel, kuit</div>
+          <div class="vink" aria-hidden="true">✕</div>
+        </div>
+
+        <div class="regel" role="button" tabindex="0" aria-pressed="false">
+          <div class="beeld"><img src="/images/onderste-extremiteit/bridges-kicker-line-v1.png" alt=""/></div>
+          <div class="naam"><b>Bruggetje</b><span>code OE-023 · liggend</span></div>
+          <div class="dos">3 × 12</div>
+          <div class="gebied">heup, bil</div>
+          <div class="vink" aria-hidden="true">✕</div>
+        </div>
+
+        <div class="regel" role="button" tabindex="0" aria-pressed="false">
+          <div class="beeld"><img src="/images/onderste-extremiteit/been-pendelen-line-v1.png" alt=""/></div>
+          <div class="naam"><b>Been pendelen</b><span>code OE-131 · staand, met steun</span></div>
+          <div class="dos">2 × 20</div>
+          <div class="gebied">heup</div>
+          <div class="vink" aria-hidden="true">✕</div>
+        </div>
+
+        <div class="regel" role="button" tabindex="0" aria-pressed="false">
+          <div class="beeld"><img src="/images/onderste-extremiteit/clamshell-zijlig-line-v1.png" alt=""/></div>
+          <div class="naam"><b>Clamshell, zijlig</b><span>code OE-055 · liggend</span></div>
+          <div class="dos">3 × 15</div>
+          <div class="gebied">heup, bil</div>
+          <div class="vink" aria-hidden="true">✕</div>
+        </div>
+
+      </div>
+
+      <aside class="opvel">
+        <div class="kop">Komt op het vel</div>
+        <div class="lijf">
+          <ol>
+            <li><div><b>Stoelsquat</b><span>3 × 10 · dagelijks</span></div></li>
+            <li><div><b>Knie strekken, zittend</b><span>3 × 12 · dagelijks</span></div></li>
+            <li><div><b>Kuitheffing met steun</b><span>3 × 15 · 5 dagen per week</span></div></li>
+          </ol>
+
+          <div class="som">
+            <div class="tabregel"><span class="veld">Regels</span><span class="vul"></span>
+              <span class="waarde">3</span></div>
+            <div class="tabregel"><span class="veld">Tijd per dag</span><span class="vul"></span>
+              <span class="waarde">± 11 min</span></div>
+            <div class="tabregel"><span class="veld">Vellen</span><span class="vul"></span>
+              <span class="waarde">1 A4</span></div>
+            <div class="tabregel"><span class="veld">Doorslagen</span><span class="vul"></span>
+              <span class="waarde">2</span></div>
+          </div>
+
+          <a class="kn" href="#printkaart">Tik het voorschrift</a>
+          <div class="stempelplek">
+            <span class="stempel" style="font-size:10.5px">Gelijkluidend<br/>aan het origineel</span>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>hetzelfde scherm voor beiden — de patiënt logt in en ziet het dossierblad, niet een
+        vriendelijkere variant ervan</p>
+    </div>
+
+    <div class="dossier">
+      <div class="balk">
+        <span>Dossier 2026-0417 · R. Veenstra · knie rechts, na artroscopie</span>
+        <span class="rechts">Weergave: patiënt — identiek aan behandelaar</span>
+      </div>
+
+      <div class="dossierlijf">
+
+        <div class="hoofd">
+          <div class="blokkop">Het voorschrift, zoals het in het dossier staat</div>
+
+          <div class="tabregel"><span class="veld">Opgemaakt door</span><span class="vul"></span>
+            <span class="waarde">J. Bakker, fysiotherapeut</span></div>
+          <div class="tabregel"><span class="veld">Datum</span><span class="vul"></span>
+            <span class="waarde">17-08-2026</span></div>
+          <div class="tabregel"><span class="veld">Fase</span><span class="vul"></span>
+            <span class="waarde">week 5 van 12 — belastingopbouw</span></div>
+          <div class="tabregel"><span class="veld">Herbeoordeling</span><span class="vul"></span>
+            <span class="waarde">31-08-2026</span></div>
+          <div class="tabregel"><span class="veld">Doel deze fase</span><span class="vul"></span>
+            <span class="waarde">traplopen zonder leuning</span></div>
+
+          <div class="blokkop" style="margin-top:var(--s5)">Logboek — beide partijen lezen dit</div>
+          <ul class="logboek">
+            <li>
+              <span class="datum">17-08 09:14</span>
+              <span class="tekst"><b>Dosering opgehoogd</b> van 3 × 8 naar 3 × 10 bij de stoelsquat.
+                Reden: geen napijn gemeld in week 4.
+                <span class="door">— J. Bakker</span></span>
+            </li>
+            <li>
+              <span class="datum">14-08 20:41</span>
+              <span class="tekst"><b>Gemeld door patiënt:</b> “knie stijf bij het opstaan, na een
+                halve minuut lopen weg.”
+                <span class="door">— R. Veenstra</span></span>
+            </li>
+            <li>
+              <span class="datum">12-08 11:02</span>
+              <span class="tekst"><b>Twijfel genoteerd.</b> <span class="corr">Kuitheffing lijkt te
+                vroeg</span> Kuitheffing gehandhaafd, maar met steun; opnieuw bekijken op 31-08 als
+                het traplopen dan nog niet vlot gaat.
+                <span class="door">— J. Bakker</span></span>
+            </li>
+            <li>
+              <span class="datum">03-08 09:30</span>
+              <span class="tekst"><b>Vel 3 aangevraagd</b> voor de huisarts. Toestemming vastgelegd
+                door patiënt; ingetrokken op 05-08.
+                <span class="door">— R. Veenstra</span></span>
+            </li>
+          </ul>
+
+          <div class="opmerking">
+            <b>Waarom de doorgehaalde regel blijft staan</b>
+            Een dossier laat zien wat er is overwogen, niet alleen wat er is besloten. Een
+            weggepoetste twijfel is voor de patiënt precies de regel die verklaart waarom de
+            oefening er nog steeds anders uitziet dan verwacht. De doorhaling blijft dus leesbaar,
+            zoals op een doorslag ook nooit iets echt verdween.
+          </div>
+        </div>
+
+        <div class="zij">
+          <div class="blokkop">Stand van zaken</div>
+          <div class="staat">
+            <div class="cel"><div class="cijfer">14</div><div class="wat">dagen<br/>afgetekend</div></div>
+            <div class="cel"><div class="cijfer">3×10</div><div class="wat">huidige<br/>dosering</div></div>
+            <div class="cel"><div class="cijfer">11</div><div class="wat">dagen tot<br/>herbeoordeling</div></div>
+          </div>
+
+          <div class="blokkop" style="margin-top:var(--s4)">Deze week</div>
+          <div class="weekstrook">
+            <div class="d af"><b>ma</b><i>✕</i></div>
+            <div class="d af"><b>di</b><i>✕</i></div>
+            <div class="d nu"><b>wo</b><i>·</i></div>
+            <div class="d"><b>do</b><i>·</i></div>
+            <div class="d"><b>vr</b><i>·</i></div>
+            <div class="d"><b>za</b><i>·</i></div>
+            <div class="d"><b>zo</b><i>·</i></div>
+          </div>
+
+          <div class="opmerking" style="border-left-color:var(--lint)">
+            <b style="color:var(--lint)">Wat u kunt tegenhouden</b>
+            Elk vel dat naar buiten gaat, staat hier met naam en datum. U kunt een doorslag
+            intrekken; dan verdwijnt hij uit de lijst van vellen die verstuurd mogen worden — maar
+            de regel dát hij bestond, blijft in het logboek staan. Voor u én voor de praktijk.
+          </div>
+
+          <div style="margin-top:var(--s4);text-align:center">
+            <span class="stempel">Gelijkluidend<br/>aan het origineel<br/>17-08-2026</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>het getikte voorschrift: kopveld met tabstops, drie posten, aftekenhokjes en een
+        ondertekening — één inkt, één stempel, geen versiering</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer r geen-print" style="top:20mm;left:calc(100% + 22px)">de stempel is de
+            hele belofte: dit vel is niet ingekort</span>
+          <span class="wijzer l geen-print" style="top:76mm;right:calc(100% + 22px)">de mededeling
+            staat bovenaan, niet in de kleine lettertjes</span>
+          <span class="wijzer l geen-print" style="top:150mm;right:calc(100% + 22px)">leestekst op
+            11,5 punt met korte regels — de maat van het blad, niet van de machine</span>
+          <span class="wijzer r geen-print" style="top:262mm;left:calc(100% + 22px)">u tekent zelf af;
+            het vel hoort niet terug naar de praktijk</span>
+
+          <div class="pb-stempel">Doorslag<br/>exemplaar voor<br/>de patiënt</div>
+
+          <div class="pb-kop">
+            <span class="org">Fysiplan · fysiotherapie · oefenvoorschrift · formulier 4a</span>
+            <h1>Voorschrift</h1>
+            <p class="inleidregel">Dit vel is een doorslag van het dossierblad van 17-08-2026. Regel voor
+              regel gelijk aan het origineel.</p>
+          </div>
+
+          <div class="pb-velden">
+            <div class="pb-veld"><span class="n">Naam</span><span class="w">R. Veenstra</span></div>
+            <div class="pb-veld"><span class="n">Dossier</span><span class="w">2026-0417</span></div>
+            <div class="pb-veld"><span class="n">Behandelaar</span><span class="w">J. Bakker</span></div>
+            <div class="pb-veld"><span class="n">Fase</span><span class="w">week 5 van 12</span></div>
+            <div class="pb-veld"><span class="n">Aandoening</span><span class="w">knie rechts, na artroscopie</span></div>
+            <div class="pb-veld"><span class="n">Herbeoordeling</span><span class="w">31-08-2026</span></div>
+          </div>
+
+          <div class="pb-mededeling">
+            <span class="lbl">Lees dit eerst</span>
+            <p>Alles wat uw fysiotherapeut over deze weken heeft opgeschreven, staat ook op dit vel.
+              Ook de twijfel: de kuitheffing blijft mét steun tot 31 augustus, omdat het traplopen
+              nog niet vlot gaat. Wordt het eerder beter, bel dan — dan wordt het vel opnieuw getikt.</p>
+          </div>
+
+          <div class="pb-posten">
+
+            <div class="pb-post">
+              <div>
+                <div class="beeld">
+                  <img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+                    alt="Lijntekening: vanuit stand tot net boven een stoel zakken en weer omhoog komen."/>
+                </div>
+                <span class="nrpost">Post 01 · OE-114</span>
+              </div>
+              <div>
+                <h2>Stoelsquat</h2>
+                <div class="dosregel">
+                  <span class="dos">3 × 10</span>
+                  <span class="wanneer">elke dag · 's ochtends bij de eettafel</span>
+                </div>
+                <p class="hoe">Zak vanuit stand tot vlak boven de zitting en kom weer omhoog. Voeten
+                  op heupbreedte, hielen op de vloer. Lukt het niet? Ga zitten en sta weer op — dat
+                  telt ook.</p>
+                <p class="let">Opgehoogd van 3 × 8 op 17-08, omdat u in week 4 geen napijn meldde.
+                  Napijn die 's avonds nog voelbaar is: terug naar 3 × 8 en bel de praktijk.</p>
+                <div class="pb-hokjes">
+                  <span class="d"><b>ma</b><i>·</i></span><span class="d"><b>di</b><i>·</i></span>
+                  <span class="d"><b>wo</b><i>·</i></span><span class="d"><b>do</b><i>·</i></span>
+                  <span class="d"><b>vr</b><i>·</i></span><span class="d"><b>za</b><i>·</i></span>
+                  <span class="d"><b>zo</b><i>·</i></span>
+                  <span class="toel">zet een kruisje op de dag dat u het deed</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pb-post">
+              <div>
+                <div class="beeld">
+                  <img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png"
+                    alt="Lijntekening: zittend op een stoel het onderbeen strekken tot de knie recht is."/>
+                </div>
+                <span class="nrpost">Post 02 · OE-042</span>
+              </div>
+              <div>
+                <h2>Knie strekken, zittend</h2>
+                <div class="dosregel">
+                  <span class="dos">3 × 12</span>
+                  <span class="wanneer">elke dag · zittend, na het eten</span>
+                </div>
+                <p class="hoe">Strek het onderbeen tot de knie recht is, houd twee tellen vast en laat
+                  langzaam zakken. Rug tegen de leuning, voet ontspannen.</p>
+                <p class="let">De laatste graden zijn de moeilijkste en juist die tellen. Komt de knie
+                  niet helemaal recht, forceer dan niet — noteer het en meld het op 31-08.</p>
+                <div class="pb-hokjes">
+                  <span class="d"><b>ma</b><i>·</i></span><span class="d"><b>di</b><i>·</i></span>
+                  <span class="d"><b>wo</b><i>·</i></span><span class="d"><b>do</b><i>·</i></span>
+                  <span class="d"><b>vr</b><i>·</i></span><span class="d"><b>za</b><i>·</i></span>
+                  <span class="d"><b>zo</b><i>·</i></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pb-post">
+              <div>
+                <div class="beeld">
+                  <img src="/images/onderste-extremiteit/kuitheffing-staand-met-steun-line-v1.png"
+                    alt="Lijntekening: op de tenen komen met een hand aan het aanrecht."/>
+                </div>
+                <span class="nrpost">Post 03 · OE-078</span>
+              </div>
+              <div>
+                <h2>Kuitheffing met steun</h2>
+                <div class="dosregel">
+                  <span class="dos">3 × 15</span>
+                  <span class="wanneer">5 dagen per week · aan het aanrecht</span>
+                </div>
+                <p class="hoe">Kom langzaam op uw tenen en zak weer terug. Eén hand licht aan het
+                  aanrecht — steunen mag, hangen niet.</p>
+                <p class="let">Deze oefening blijft mét steun tot 31-08. Zie de mededeling bovenaan
+                  dit vel: dat is een bewuste keuze, geen vergissing.</p>
+                <div class="pb-hokjes">
+                  <span class="d"><b>ma</b><i>·</i></span><span class="d"><b>di</b><i>·</i></span>
+                  <span class="d"><b>wo</b><i>·</i></span><span class="d"><b>do</b><i>·</i></span>
+                  <span class="d"><b>vr</b><i>·</i></span><span class="d rust"><b>za</b><i>·</i></span>
+                  <span class="d rust"><b>zo</b><i>·</i></span>
+                  <span class="toel">gestreept = rustdag</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="pb-perf">
+            <div class="ondertek">
+              <div class="lijn"></div>
+              <div class="bijs">Uw handtekening — u tekent voor gelezen, niet voor akkoord. Dit vel
+                blijft van u; het hoeft niet terug naar de praktijk.</div>
+            </div>
+            <div class="arch">
+              <b>2 van 2</b>
+              vel 1: dossier<br/>
+              vel 2: dit exemplaar<br/>
+              getikt 17-08-2026 09:14
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="printhulp geen-print">
+      <p>Eén A4 staand, in één inkt te drukken. De violette stempel en het rode accent zijn de enige
+        kleuren en dragen geen informatie: in zwart-wit blijft het vel woord voor woord hetzelfde
+        document. De leestekst staat op 11 punt met een regellengte van ruim zestig tekens.</p>
+      <button class="kn" onclick="window.print()">Print dit vel</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>De richting</h4>
+      <p>Elke oefenkaart in de zorg is een uittreksel: het dossier houdt de cijfers, de patiënt
+        krijgt de opgewekte versie. Dit concept haalt die scheiding weg met het oudste
+        kantoorgebaar dat er is — de doorslag, die per definitie identiek is aan het origineel,
+        omdat hij in dezelfde aanslag ontstond. De hele esthetiek volgt daaruit: één machine, één
+        inkt, één stempel die zegt dat er niets tussenuit is gehaald.</p>
+    </div>
+    <div class="kolom">
+      <h4>Waar het schuurt</h4>
+      <ul>
+        <li>Alles is monospace, ook waar de patiënt leest. Dat kost leessnelheid; het blad
+          compenseert met 11,5 punt en korte regels, maar wie dit met een leesbril op tafel legt,
+          merkt het verschil met een goede boekletter.</li>
+        <li>“Alles delen” is niet altijd vriendelijk. Een genoteerde twijfel kan geruststellen én
+          ongerust maken; wat de therapeut opschrijft, verandert zodra hij weet dat het meteen
+          meegaat naar huis.</li>
+        <li>De kantoorlook van 1955 kan lezen als bureaucratie in plaats van als openheid — precies
+          het gevoel dat mensen in de zorg toch al te vaak hebben.</li>
+        <li>De doorgehaalde correctie is mooi als idee, maar op papier onomkeerbaar. Een fout die er
+          echt naast zat, blijft dan zichtbaar op het vel dat bij de patiënt op tafel ligt.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Verder</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

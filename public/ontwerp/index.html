@@ -433,6 +433,53 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
 .staal.schaduwbord .vorm.leeg{right:18px;border:3px dashed #c02a18;background:rgba(192,42,24,.14)}
 .staal.schaduwbord .strepen i{border-color:rgba(255,255,255,.3)}
 
+/* — staal concept 28: Schoolplaat — */
+.staal.schoolplaat{background:#eee2c9;color:#241d13}
+.staal.schoolplaat::before{content:"";position:absolute;left:0;right:0;top:0;height:11px;
+  background:linear-gradient(180deg,#9a7440,#7a5a30 45%,#5d4322)}
+.staal.schoolplaat .plaatnr{color:#5b6b3b;position:relative;z-index:2}
+.staal.schoolplaat .woord{font-family:"Iowan Old Style",Charter,Georgia,serif;font-weight:600;
+  position:relative;z-index:2}
+.staal.schoolplaat .woord em{font-style:italic;color:#a53a24}
+.staal.schoolplaat .kamer{position:absolute;right:16px;top:26px;width:96px;height:72px;
+  background:linear-gradient(180deg,#dfe6e2 0 58%,#d9c8a4 58%);border:1px solid rgba(36,29,19,.3)}
+.staal.schoolplaat .kamer i{position:absolute;display:block}
+.staal.schoolplaat .kamer i.raam{left:9px;top:9px;width:30px;height:24px;background:#e7eef0;
+  border:2px solid #2c3a52}
+.staal.schoolplaat .kamer i.stoel{right:10px;top:22px;width:22px;height:24px;background:#c4862a;
+  opacity:.5}
+.staal.schoolplaat .kamer i.wijs{right:38px;top:16px;width:15px;height:15px;border-radius:50%;
+  border:2px solid #a53a24;background:#f7f0e1}
+
+/* — staal concept 29: Doorslag — */
+.staal.doorslag{background:#f4efe0;color:#2a2336}
+.staal.doorslag .plaatnr{color:#a92f22;font-family:var(--mono);position:relative;z-index:2}
+.staal.doorslag .woord{font-family:var(--mono);font-weight:700;letter-spacing:-.055em;
+  position:relative;z-index:2}
+.staal.doorslag .woord em{font-style:normal;color:#a92f22}
+.staal.doorslag .veeg{position:absolute;right:0;top:0;bottom:0;width:96px;
+  background:linear-gradient(270deg,rgba(86,61,132,.3),transparent);filter:blur(5px)}
+.staal.doorslag .zegel{position:absolute;right:14px;top:22px;transform:rotate(-7deg);
+  border:2px solid #563d84;color:#563d84;padding:5px 8px;border-radius:2px;opacity:.9;
+  font:700 8px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;text-align:center;
+  box-shadow:inset 0 0 0 1px #563d84;z-index:2}
+
+/* — staal concept 30: Ganzenbord — */
+.staal.ganzenbord{background:#eee4cd;color:#241f18}
+.staal.ganzenbord .plaatnr{color:#bd4429;position:relative;z-index:2}
+.staal.ganzenbord .woord{font-family:"Iowan Old Style",Charter,Georgia,serif;font-weight:600;
+  position:relative;z-index:2}
+.staal.ganzenbord .woord em{font-style:italic;color:#bd4429}
+.staal.ganzenbord .spiraal{position:absolute;right:-26px;top:-12px;width:148px;height:148px;
+  border-radius:50%;opacity:.85;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0 12px, #241f18 12px 13.6px, transparent 13.6px),
+    radial-gradient(circle at 50% 50%, transparent 0 30px, #c08a1e 30px 34px, transparent 34px),
+    radial-gradient(circle at 50% 50%, transparent 0 48px, #241f18 48px 49.6px, transparent 49.6px),
+    radial-gradient(circle at 50% 50%, transparent 0 66px, #bd4429 66px 70px, transparent 70px)}
+.staal.ganzenbord .pion{position:absolute;right:74px;top:28px;width:15px;height:15px;
+  border-radius:50%;background:#bd4429;border:2px solid #241f18;z-index:2}
+
 .kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
 .kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
 .kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
@@ -492,8 +539,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>27</b> concepten</span>
-      <span>Laatste ronde <b>18 augustus 2026</b></span>
+      <span><b>30</b> concepten</span>
+      <span>Laatste ronde <b>20 augustus 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -1616,6 +1663,127 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-27-schaduwbord.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-27-schaduwbord.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 28 ─────────── -->
+      <article class="kaart">
+        <div class="staal schoolplaat">
+          <div class="kamer" aria-hidden="true">
+            <i class="raam"></i><i class="stoel"></i><i class="wijs"></i>
+          </div>
+          <div class="plaatnr">Plaat 1 — bij het raam</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#c4862a"></i><i style="background:#5b6b3b"></i>
+            <i style="background:#a53a24"></i><i style="background:#2c3a52"></i>
+          </div>
+          <div class="woord">In een <em>kamer</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 28</div>
+          <h3>Schoolplaat</h3>
+          <p class="richting">Een oefening hoort in een kamer, niet op een leeg vlak.</p>
+          <p class="rationale">De Nederlandse schoolplaat hing aan een houten stok voor de klas en
+            zette de handeling altijd in een wereld: een raam, een vloer, een stoel. Elke moderne
+            oefenkaart doet het omgekeerde — een figuurtje losgeknipt op wit, dat nergens is. Hier
+            krijgt elke oefening zijn plek terug: de eettafelstoel, het aanrecht terwijl de ketel
+            kookt, de gang met de muur aan uw linkerhand. Die plek staat elke ochtend op u te
+            wachten, ook als het blad in de la ligt. De genummerde aanwijzingen komen uit de
+            praatplaat-traditie: u leest niet wat u moet doen, u ziet waar u naar moet kijken.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>schoolplaten van Cornelis Jetses, M.A. Koekkoek en J.H. Isings (uitgave Noordhoff,
+              1857–1970) · linnen randen, ophangstok en oogjes · de praatplaat met de aanwijsstok ·
+              handgeletterde onderschriftstrook · de uitgeversregel onderaan de plaat</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — één groot tafereel met drie genummerde aanwijzingen en een legenda, drie
+              kleinere taferelen eronder met elk hun plek in huis, en een colofon</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-28-schoolplaat.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-28-schoolplaat.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 29 ─────────── -->
+      <article class="kaart">
+        <div class="staal doorslag">
+          <div class="veeg" aria-hidden="true"></div>
+          <div class="zegel" aria-hidden="true">Doorslag<br/>voor de<br/>patiënt</div>
+          <div class="plaatnr">Formulier 4a · vel 2 van 2</div>
+          <div class="strepen" aria-hidden="true" style="right:auto;left:var(--s3);top:34px">
+            <i style="background:#2a2336"></i><i style="background:#a92f22"></i>
+            <i style="background:#563d84"></i><i style="background:#f4efe0"></i>
+          </div>
+          <div class="woord">Niet de <em>samenvatting</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 29</div>
+          <h3>Doorslag</h3>
+          <p class="richting">De patiënt krijgt al veertig jaar de mindere kopie.</p>
+          <p class="rationale">Het dossier houdt de cijfers, de patiënt krijgt de opgewekte versie —
+            een uittreksel, netjes ingekort, "patiëntvriendelijk". Dit concept haalt die scheiding
+            weg met het oudste kantoorgebaar dat er is: de doorslag, die per definitie identiek is
+            aan het origineel omdat hij in dezelfde aanslag ontstond. Wat de therapeut leest, staat
+            woord voor woord op uw vel — inclusief de doorgehaalde twijfel en de datum waarop het
+            opnieuw bekeken wordt. De hele esthetiek volgt daaruit: één machine, één inkt, één
+            stempel die zegt dat er niets tussenuit is gehaald.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>luchtpostpapier en carbonpapier: tot vijf doorslagen in één aanslag · het
+              tweekleurslint zwart/rood · violette rubberstempels en het stempelkussen · tabstops
+              met puntjeslijnen uit het ingevulde formulier · de overtypte correctie met xxxx</dd>
+            <dt>Print</dt>
+            <dd>A4 staand in één inkt — kopveld met tabstops, drie getikte posten met aftekenhokjes,
+              een mededeling bovenaan en een handtekeningregel; leestekst op 11 punt</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-29-doorslag.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-29-doorslag.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 30 ─────────── -->
+      <article class="kaart">
+        <div class="staal ganzenbord">
+          <div class="spiraal" aria-hidden="true"></div>
+          <div class="pion" aria-hidden="true"></div>
+          <div class="plaatnr">41 dagen · 6 regels</div>
+          <div class="strepen" aria-hidden="true" style="right:auto;left:var(--s3);top:34px">
+            <i style="background:#bd4429"></i><i style="background:#456b53"></i>
+            <i style="background:#c08a1e"></i><i style="background:#241f18"></i>
+          </div>
+          <div class="woord">De put staat <em>erop</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 30</div>
+          <h3>Ganzenbord</h3>
+          <p class="richting">Een spel drukt de tegenslag vooraf af, mét de regel eronder.</p>
+          <p class="rationale">Het oudste spelbord van de Lage Landen heeft de brug, de herberg en
+            de put al vier eeuwen in de plaat gegraveerd staan — inclusief wat u dan doet. Een
+            oefenkaart kent alleen het ideale verloop: zeven lege vinkvakjes per week. De
+            spierpijn, de verjaardag en de week waarin het slechter gaat komen er niet op voor, en
+            zijn daarmee stilzwijgend uw fout geworden. Hier krijgt de slechte week een nummer, een
+            kleur en een regel. Eén regel van het origineel is bewust geschrapt: u hoeft niet
+            precies uit te komen, en het vakje waarop u helemaal opnieuw moest beginnen bestaat
+            hier niet.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>het ganzenbord als losse prent, kopergravure of houtsnede uit de 16e en 17e eeuw ·
+              de spiraal van 63 met brug, herberg, put en gevangenis · handkleuring in vermiljoen,
+              groenspaan en oker · het gedrukte spelregelpaneel · het titelvignet (cartouche) van
+              een oude prent</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — het bord als vector-spiraal met 41 dagvakjes rond een middenvak, het
+              regelpaneel ernaast en drie oefeningen eronder; werkt volledig in zwart-wit, want elk
+              gekleurd vakje heeft ook een dikkere rand en een eigen genummerde regel</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-30-ganzenbord.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-30-ganzenbord.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>
