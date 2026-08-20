@@ -1702,7 +1702,8 @@ async function afhandelen(request, response) {
     const map = kaarten[pk] || {};
     const list = Object.values(map)
       .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, aantal: (k.chosen || []).length,
-        scores: (k.metingen || []).slice(-14), gedaan: (k.gedaan || []).slice(-14) }))
+        scores: (k.metingen || []).slice(-14), gedaan: (k.gedaan || []).slice(-14),
+        bekeken: k.bekeken ? k.bekeken.t : 0 }))
       .sort((a, b) => b.ts - a.ts);
     await sendJson(response, 200, list);
     return;
@@ -2110,6 +2111,20 @@ async function afhandelen(request, response) {
   // de digitale kaart zelf: /k/<id> (de pagina haalt de kaart via de API op)
   if (urlPath === "/k" || urlPath.startsWith("/k/")) {
     telBezoek(request, false);
+    // registreren wanneer de kaart voor het laatst is geopend (alleen tonen aan de
+    // eigen praktijk, geen oordeel): zo ziet de therapeut ook de patiënt die wél
+    // kijkt maar niets aantikt — en vooral wie de link nog nóóit opende. Alleen op
+    // de patiëntpagina zelf; de therapeut die de kaart in de app opent gebruikt de
+    // API en telt dus niet mee. Hooguit één schijfschrijf per kaart per 10 minuten.
+    const bkKaart = urlPath.startsWith("/k/") ? vindKaart(urlPath.slice(3)) : null;
+    if (bkKaart && !bkKaart.demo) {
+      const nuBk = Date.now();
+      const b = bkKaart.bekeken || { t: 0, n: 0 };
+      if (nuBk - b.t > 10 * 60 * 1000) {
+        bkKaart.bekeken = { t: nuBk, n: Math.min(9999, (b.n || 0) + 1) };
+        saveJson(kaartenPath, kaarten).catch(() => {});
+      }
+    }
     response.setHeader("x-frame-options", "DENY");
     response.setHeader("x-robots-tag", "noindex, noarchive");
     response.setHeader("permissions-policy", "camera=(), microphone=(), geolocation=()");

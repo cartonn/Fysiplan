@@ -2019,6 +2019,19 @@ bridge2.jpg</div>
             trTxt=" · <span title='Dagen waarop de patiënt aantikte dat hij geoefend heeft (afgelopen 7 dagen). Laatst geoefend: "+laatstTxt+".' style='white-space:nowrap'>"+
               "<span style='display:inline-block;width:7px;height:7px;border-radius:99px;background:"+trk+";vertical-align:middle;margin-right:3px'></span>"+week+"/7 geoefend</span>";
           }
+          // is de kaart überhaupt geopend? De patiënt die alleen kijkt (video's)
+          // tikt niets aan; en wie de link nooit opende, verdient een nieuw duwtje.
+          // Alleen tonen — de duiding blijft bij de therapeut.
+          var bkTxt='';
+          {
+            var dagB=864e5,nuB=Date.now();
+            if(c.bekeken>0){
+              var dS=Math.floor((nuB-c.bekeken)/dagB);
+              bkTxt=" · kaart bekeken: "+(dS<=0?'vandaag':(dS===1?'gisteren':dS+' dagen geleden'));
+            }else if(c.ts&&nuB-c.ts>dagB){
+              bkTxt=" · <span style='color:#a23f2c'>kaart nog niet geopend</span>";
+            }
+          }
           // deel de kaart in één tik via het eigen kanaal van de patiënt: WhatsApp,
           // e-mail of gewoon de link kopiëren. De patiënt opent hem zonder app of
           // account in de browser — precies de app-vrije belofte van Fysiplan.
@@ -2053,7 +2066,7 @@ bridge2.jpg</div>
               "<a class='btn' data-hmail='"+esc(c.id)+"' href='"+esc(mailHref2)+"' target='_blank' rel='noopener' style='text-decoration:none'>E-mail</a>"+
             "</div></div>";
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
-            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+"</small></div>"+vg+
+            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+"</small></div>"+vg+
             "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
             "<button class='btn' data-skopie='"+esc(c.id)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+
