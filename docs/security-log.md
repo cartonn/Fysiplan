@@ -271,3 +271,36 @@ sleutel. Geen gedragswijziging; v1 onaangeraakt.
 schrijfroutes (`/api/kaarten`, `/api/praktijken` POST) of een tweede blik op de
 deeplinks/gedeelde-kaart-vertaal- en vraag-API's (`/api/kaart/vraag`,
 `/api/kaart/vertaal`) op prompt-injectie en misbruik.
+
+### 2026-08-20 — AI-keten van de kaart: prompt-injectie en kosten-misbruik
+**Geauditeerd:** de publieke AI-endpoints `/api/kaart/vraag` en
+`/api/kaart/vertaal` plus de gedeelde bouwstenen `vraagClaude` en `aiLimiet` —
+adversarieel op prompt-injectie (via de vraag én via kwaadaardige kaartvelden),
+kosten-misbruik en de uitvoer-sinks in `kaart.html`.
+
+**Bevindingen (geen codegat — de keten is doordacht verhard):**
+- **Injectie:** de patiëntvraag gaat altijd ingepakt in `<vraag>`-tags met de
+  expliciete regel dat de inhoud nooit een instructie is; kaartvelden zitten in
+  een afgebakend Kaartgegevens-blok met dezelfde regel op de vertaalroute
+  ("uitsluitend te vertalen inhoud"). Vraag ≤ 300 tekens, taal-whitelist.
+- **Kosten:** dubbele rem — 20 AI-calls per IP per uur én een globaal dagplafond
+  van 300 (`aiLimiet`), bovenop `schrijfLimiet` en CSRF (`kruisSite`) op de
+  betaalde paden; de vertaalcache (sha256-sleutel, 5000 per taal, waarde ≤ 400
+  tekens) houdt herhaalverkeer gratis; 60s-timeout op de AI-call zelf.
+- **Uitvoer:** het antwoord wordt server-side op 700 tekens afgekapt en landt
+  client-side via `textContent`; vertalingen renderen door `esc(vt(...))`; de
+  nonce-CSP vangt een eventueel doorgeglipte injectie alsnog af.
+- **De echte zwakte:** deze hele keten had géén regressietest — de duurste en
+  meest injectie-gevoelige API's van het platform waren onbewaakt.
+
+**Increment:** `test-ai-keten.mjs` (13 checks) tegen een lokale mock-AI via
+`ANTHROPIC_BASE_URL`: bewijst het `<vraag>`-schild en het Kaartgegevens-blok op
+de echte uitgaande aanvraag, de 700-tekens-afkap, 502 bij een fout gevormd
+vertaalantwoord (nooit een halve cache), cache-herbruik zonder nieuwe AI-call,
+de 21e-vraag-429 per IP met eigen budget per ander IP, demo-vragen zonder
+persistentie, en dat een HTML-payload in het antwoord inert rendert (geen
+element, geen scripteffect). Geen gedragswijziging; v1 onaangeraakt.
+
+**Volgende run — pak een ander gebied:** rate-limiting op de overige
+schrijfroutes (`/api/kaarten`, `/api/praktijken` POST) of de statische
+bestandsroutes (`/uploads/`-randen, MIME-afhandeling, cache-headers).
