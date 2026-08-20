@@ -2076,25 +2076,30 @@ bridge2.jpg</div>
           el.innerHTML=items.length?items.map(rendRij).join(""):"<div class='hint'>Geen kaart gevonden voor deze zoekterm.</div>";
         };
         var dag=864e5,nu=Date.now();
-        // "aandacht"-prioriteit: een hoge laatste pijnscore of langer niet geoefend
-        // weegt zwaarder. Alleen tonen/sorteren; de duiding blijft bij de therapeut.
+        // nooit geopend: de kaart is ouder dan een dag en de patiëntpagina is nog
+        // nooit bekeken — de link is dus waarschijnlijk nooit aangekomen
+        var nooitGeopend=function(c){return !(c.bekeken>0)&&!!c.ts&&(nu-c.ts)>dag;};
+        // "aandacht"-prioriteit: hoge laatste pijn weegt het zwaarst, daarna een
+        // nooit geopende kaart, daarna stilte. Alleen tonen/sorteren; de duiding
+        // blijft bij de therapeut.
         var aandacht=function(c){
           var laatstePijn=(c.scores&&c.scores.length)?c.scores[c.scores.length-1].s:null;
           var acts=[c.ts||0];
           if(c.gedaan&&c.gedaan.length)acts.push(c.gedaan[c.gedaan.length-1].t);
           if(c.scores&&c.scores.length)acts.push(c.scores[c.scores.length-1].t);
           var dagenStil=Math.min(60,Math.floor((nu-Math.max.apply(null,acts))/dag));
-          return (laatstePijn!==null&&laatstePijn>=7?1000:0)+dagenStil;
+          return (laatstePijn!==null&&laatstePijn>=7?1000:0)+(nooitGeopend(c)?500:0)+dagenStil;
         };
-        // vraagt deze kaart aandacht? hoge laatste pijn (>=7) of >=10 dagen stil.
-        // puur beschrijvend tellen; de duiding en het handelen blijven bij de therapeut.
+        // vraagt deze kaart aandacht? hoge laatste pijn (>=7), >=10 dagen stil,
+        // of een kaart die nooit is geopend. Puur beschrijvend tellen; de duiding
+        // en het handelen blijven bij de therapeut.
         var vraagtAandacht=function(c){
           var laatstePijn=(c.scores&&c.scores.length)?c.scores[c.scores.length-1].s:null;
           var acts=[c.ts||0];
           if(c.gedaan&&c.gedaan.length)acts.push(c.gedaan[c.gedaan.length-1].t);
           if(c.scores&&c.scores.length)acts.push(c.scores[c.scores.length-1].t);
           var dagenStil=Math.floor((nu-Math.max.apply(null,acts))/dag);
-          return (laatstePijn!==null&&laatstePijn>=7)||dagenStil>=10;
+          return (laatstePijn!==null&&laatstePijn>=7)||dagenStil>=10||nooitGeopend(c);
         };
         var actiefDezeWeek=function(c){return !!(c.gedaan&&c.gedaan.some(function(g){return nu-g.t<7*dag;}));};
         var sortModus=function(){var s=document.getElementById('k_srv_sort');return (s&&s.style.display!=='none'&&s.dataset.mode)||'nieuw';};
@@ -2125,7 +2130,7 @@ bridge2.jpg</div>
           if(!sortEl){
             sortEl=document.createElement('div');sortEl.id='k_srv_sort';sortEl.className='no-print';sortEl.dataset.mode='nieuw';
             sortEl.style.cssText='display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0 0 8px;font-size:12px;color:var(--muted)';
-            sortEl.innerHTML='<span>Sorteer:</span><button type="button" class="btn" data-sort="nieuw" style="font-size:11.5px;padding:3px 9px">Nieuwste</button><button type="button" class="btn" data-sort="aandacht" title="Hoge pijn of langer niet geoefend bovenaan" style="font-size:11.5px;padding:3px 9px">Aandacht</button>';
+            sortEl.innerHTML='<span>Sorteer:</span><button type="button" class="btn" data-sort="nieuw" style="font-size:11.5px;padding:3px 9px">Nieuwste</button><button type="button" class="btn" data-sort="aandacht" title="Hoge pijn, langer niet geoefend of nooit geopende kaart bovenaan" style="font-size:11.5px;padding:3px 9px">Aandacht</button>';
             el.parentNode.insertBefore(sortEl,el);
           }
           sortEl.style.display='flex';markeerSort();
@@ -2145,7 +2150,7 @@ bridge2.jpg</div>
           }
           var chip=function(t,st){return "<span style='background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;"+(st||'')+"'>"+t+"</span>";};
           var h=chip('<b>'+l.length+'</b> kaart'+(l.length===1?'':'en'))+chip('<b>'+actiefN+'</b> deze week actief');
-          h+=aandN?"<button type='button' id='k_srv_sam_aand' class='no-print' title='Zet de kaarten die aandacht vragen bovenaan' style='cursor:pointer;background:#fbecea;border:1px solid #e7c3bc;color:#a23f2c;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+aandN+"</b> "+(aandN===1?'vraagt':'vragen')+" aandacht</button>":chip('<b>0</b> vragen aandacht');
+          h+=aandN?"<button type='button' id='k_srv_sam_aand' class='no-print' title='Hoge pijn, langer niet geoefend of nooit geopend: zet die kaarten bovenaan' style='cursor:pointer;background:#fbecea;border:1px solid #e7c3bc;color:#a23f2c;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+aandN+"</b> "+(aandN===1?'vraagt':'vragen')+" aandacht</button>":chip('<b>0</b> vragen aandacht');
           samEl.innerHTML=h;samEl.style.display='flex';
           var ab=document.getElementById('k_srv_sam_aand');
           if(ab)ab.onclick=function(){if(sortEl){sortEl.dataset.mode='aandacht';markeerSort();}toon();};
