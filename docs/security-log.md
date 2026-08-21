@@ -304,3 +304,32 @@ element, geen scripteffect). Geen gedragswijziging; v1 onaangeraakt.
 **Volgende run — pak een ander gebied:** rate-limiting op de overige
 schrijfroutes (`/api/kaarten`, `/api/praktijken` POST) of de statische
 bestandsroutes (`/uploads/`-randen, MIME-afhandeling, cache-headers).
+
+### 2026-08-21 — schrijfroutes: remmen, plafonds en schrijf-amplificatie
+**Geauditeerd:** de remmen en plafonds op de publieke schrijfroutes —
+`/api/kaarten` POST, `/api/kaart/meting`, `/api/praktijken` POST (incl. de
+logo-upload) — plus een adversariële tweede blik op het verse
+bekeken-schrijfpad op `/k`.
+
+**Bevindingen (geen codegat — de remmen houden stand):**
+- `schrijfLimiet` (40 per IP per 5 min) dekt alle schrijfroutes; het 41e
+  verzoek krijgt 429 en een ander IP houdt zijn eigen budget. Dezelfde rem
+  geldt voor de publieke patiëntroutes (pijnscore/vinkje).
+- De plafonds zijn IP-onafhankelijk en houden stand tegen IP-rotatie:
+  100 kaarten per praktijk, 200 praktijkprofielen, 300 praktijken met
+  gedeelde kaarten (die laatste al eerder gedekt). Logo-uploads weigeren
+  nep-bestanden (dataURL-vorm klopt maar magic bytes niet) en ruimen het
+  oude logo op — de opslag is dus begrensd (200 × 400 kB).
+- Het bekeken-schrijfpad op `/k` (vorige run toegevoegd) is hard begrensd:
+  30× hameren op één kaart geeft precies één registratie (max één
+  schijfschrijf per kaart per 10 minuten, teller gecapt, ids onraadbaar).
+
+**Increment:** geen geforceerde codewijziging. Nieuwe regressiewacht
+`test-schrijflimieten.mjs` (8 checks) die de rem (41e→429, eigen budget per
+IP), de patiëntroute-rem, beide plafonds mét IP-rotatie, de
+nep-logo-weigering en de bekeken-schrijfgrens vergrendelt. De hoofdrem op
+de schrijfroutes was tot nu toe volledig onbewaakt.
+
+**Volgende run — pak een ander gebied:** de statische bestandsroutes
+(`/uploads/`-randen, MIME-afhandeling, cache-headers) of een verse blik op
+de deeplinks/gedeelde kaarten (id-entropie, opsomming, delen-intrekken).
