@@ -1918,6 +1918,29 @@ bridge2.jpg</div>
     uk:{naam:'Українська',deel:'Привіт! Ось твоя особиста картка вправ від {pr}: {url} — вона відкривається просто у браузері, без жодного застосунку.',her:'Привіт! Як твої вправи? Твоя особиста картка вправ від {pr} чекає на тебе: {url} — відкривається просто у браузері, без застосунку. Повернемось до них цього тижня?',sd:'Твоя картка вправ від {pr}',sh:'Твої вправи у {pr}'}
   };
   function deelTaalVan(taal){return DEELTAAL[taal]||DEELTAAL.nl;}
+  // platte-tekstsamenvatting van een gedeelde kaart, klaar om in élk EPD-dossier
+  // te plakken (Intramed, FysioRoadmap, Incura, …): geen koppeling nodig, geen
+  // dubbele invoer — de kern van "werkt naast elk EPD"
+  function dossierTekst(kaart){
+    var r=[];var cl=kaart.client||{};var cells=kaart.cells||{};
+    r.push('Oefenkaart '+(kaart.naam||'')+' — '+(kaart.praktijk||''));
+    if(kaart.ts)r.push('Aangemaakt: '+new Date(kaart.ts).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}));
+    if(cl.c_doel)r.push('Doel: '+cl.c_doel);
+    if(cl.c_cave)r.push('Casus/let op: '+cl.c_cave);
+    if(cl.c_opm)r.push('Opmerking: '+cl.c_opm);
+    r.push('Oefeningen:');
+    (kaart.chosen||[]).forEach(function(x,i){
+      var prefix=(x.id?'x'+x.id:'n'+normEx(x.n))+'.'+(x.i||0);
+      var dos='';
+      for(var rij=0;rij<12&&!dos;rij++){
+        var s=cells[prefix+'|r'+rij+'|S'],h=cells[prefix+'|r'+rij+'|H'],w=cells[prefix+'|r'+rij+'|W'];
+        if(s||h||w)dos=[s&&s+' series',h&&h+' herhalingen',w].filter(Boolean).join(' x ');
+      }
+      r.push('  '+(i+1)+'. '+x.n+(dos?' — '+dos:''));
+    });
+    if(kaart.id)r.push('Digitale kaart: '+location.origin+'/k/'+kaart.id);
+    return r.join('\n');
+  }
   function vulDeel(sjab,cid){
     var pr=(SET&&SET.praktijk?String(SET.praktijk).trim():'');
     return sjab.replace('{pr}',pr).replace('{url}',location.origin+'/k/'+cid);
@@ -2059,6 +2082,10 @@ bridge2.jpg</div>
               "<a class='btn' data-dwa='"+esc(c.id)+"' href='"+esc(waHref)+"' target='_blank' rel='noopener' style='text-decoration:none'>WhatsApp</a>"+
               "<a class='btn' data-dmail='"+esc(c.id)+"' href='"+esc(mailHref)+"' target='_blank' rel='noopener' style='text-decoration:none'>E-mail</a>"+
             "</div>"+
+            "<small style='color:var(--muted);display:block;margin-top:10px'>Voor het EPD-dossier (Intramed, FysioRoadmap, Incura, …):</small>"+
+            "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px'>"+
+              "<button class='btn' data-sdossier='"+esc(c.id)+"' title='Kopieer een platte-tekstsamenvatting (cliënt, doel, oefeningen met dosering, kaartlink) om in het dossier te plakken'>Kopieer samenvatting voor dossier</button>"+
+            "</div>"+
             "<small style='color:var(--muted);display:block;margin-top:10px'>Of stuur een vriendelijke herinnering als iemand stil is gevallen:</small>"+
             "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px'>"+
               "<button class='btn' data-sherinner='"+esc(c.id)+"'>Kopieer bericht</button>"+
@@ -2190,6 +2217,23 @@ bridge2.jpg</div>
       if(navigator.clipboard&&navigator.clipboard.writeText){
         navigator.clipboard.writeText(url).then(function(){toon('Gekopieerd ✓');}).catch(function(){window.prompt('Kopieer de patiëntlink:',url);});
       }else{window.prompt('Kopieer de patiëntlink:',url);}
+      return;
+    }
+    // dossiersamenvatting kopiëren: kaart ophalen, platte tekst bouwen, klembord
+    var ds=e.target.closest('[data-sdossier]');
+    if(ds){
+      var oudD=ds.textContent;
+      var toonD=function(t){ds.textContent=t;setTimeout(function(){ds.textContent=oudD;},1600);};
+      fetch('api/kaart?id='+ds.dataset.sdossier,{cache:'no-cache'})
+        .then(function(r){return r.json();})
+        .then(function(d){
+          if(!d.ok){toonD('Ophalen mislukt');return;}
+          var tekst=dossierTekst(d.kaart);
+          if(navigator.clipboard&&navigator.clipboard.writeText){
+            navigator.clipboard.writeText(tekst).then(function(){toonD('Gekopieerd ✓');}).catch(function(){window.prompt('Kopieer de samenvatting:',tekst);});
+          }else{window.prompt('Kopieer de samenvatting:',tekst);}
+        })
+        .catch(function(){toonD('Geen verbinding');});
       return;
     }
     // herinneringsbericht kopiëren: de warme nudge-tekst mét link, klaar om te plakken
