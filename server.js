@@ -1253,6 +1253,43 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // wachtwoord wijzigen: alleen ingelogd én met het huidige wachtwoord. Foute
+  // pogingen tellen mee in de per-praktijk-inlogrem (dit endpoint mag geen
+  // brute-force-achterdeur zijn). Na de wijziging vervallen álle sessies van de
+  // praktijk (ook op andere apparaten) en krijgt de aanvrager een verse sessie.
+  if (urlPath === "/api/praktijk/wachtwoord" && request.method === "POST") {
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    if (schrijfLimiet(request, response)) return;
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const acc = praktijkAccounts[pk];
+      if (!pk || !acc) { await sendJson(response, 404, { ok: false, fout: "Geen account voor deze praktijk." }); return; }
+      if (praktijkSessieVan(request) !== pk) { await sendJson(response, 401, { ok: false, fout: "Log eerst in bij deze praktijk.", login: true }); return; }
+      if (loginOpSlot(pk)) {
+        await send429(response, 900, { ok: false, fout: "Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw." });
+        return;
+      }
+      if (!checkHash(String(b.huidig || ""), acc.hash)) {
+        loginMisTel(pk);
+        auditLog(pk, "wachtwoord-wijzigen-mislukt", request);
+        await denied(request, response, "praktijk-wachtwoord");
+        return;
+      }
+      const nieuw = String(b.nieuw || "");
+      if (nieuw.length < 8) { await sendJson(response, 400, { ok: false, fout: "Kies een nieuw wachtwoord van minstens 8 tekens." }); return; }
+      acc.hash = maakHash(nieuw);
+      acc.gewijzigd = Date.now();
+      await saveJson(accountsPath, praktijkAccounts);
+      for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
+      loginMisPraktijk.delete(pk);
+      const token = nieuweSessie(pk);
+      auditLog(pk, "wachtwoord-gewijzigd", request);
+      await sendJson(response, 200, { ok: true, sessie: token });
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+    return;
+  }
+
   // herstelpad (beheer): een claim verwijderen wanneer iemand een praktijknaam
   // ten onrechte heeft geclaimd. Haalt het account weg en maakt alle sessies
   // van die praktijk ongeldig; de praktijk werkt daarna weer als vanouds en

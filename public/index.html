@@ -1840,10 +1840,15 @@ bridge2.jpg</div>
       "<div id='ps_form' style='display:none;gap:6px;align-items:center;flex-wrap:wrap'>"+
         "<input id='ps_ww' type='password' autocomplete='current-password' placeholder='Wachtwoord' style='flex:1;min-width:130px'/>"+
         "<button class='btn' id='ps_do' type='button'></button></div>"+
+      "<div id='ps_wijzig' style='display:none;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px'>"+
+        "<input id='ps_huidig' type='password' autocomplete='current-password' placeholder='Huidig wachtwoord' style='flex:1;min-width:130px'/>"+
+        "<input id='ps_nieuw' type='password' autocomplete='new-password' placeholder='Nieuw wachtwoord (min. 8 tekens)' style='flex:1;min-width:150px'/>"+
+        "<button class='btn' id='ps_wdo' type='button'>Wijzig</button></div>"+
       "<div id='ps_msg' style='font-size:12px;color:var(--muted);margin-top:6px;display:none'></div>";
     blok.insertBefore(s,blok.firstChild);
     document.getElementById('ps_do').addEventListener('click',prakSlotActie);
     document.getElementById('ps_ww').addEventListener('keydown',function(e){if(e.key==='Enter')prakSlotActie();});
+    document.getElementById('ps_wdo').addEventListener('click',prakWachtwoord);
   }
   var PRAKSLOT={geclaimd:false,ingelogd:false,pr:''};
   function toonPrakSlot(pr){
@@ -1862,10 +1867,12 @@ bridge2.jpg</div>
       st.innerHTML="🔓 Deze praktijk is nog niet beveiligd. Zet er een wachtwoord op zodat alleen jouw praktijk het kaartoverzicht ziet.";
       form.style.display='flex';ww.placeholder='Kies een wachtwoord (min. 8 tekens)';ww.autocomplete='new-password';knop.textContent='Beveiligen';knop.dataset.act='claim';
     }else if(PRAKSLOT.ingelogd){
-      st.innerHTML="🔒 Beveiligd en ingelogd. <a href='#' id='ps_uit'>Uitloggen</a>";
+      st.innerHTML="🔒 Beveiligd en ingelogd. <a href='#' id='ps_uit'>Uitloggen</a> · <a href='#' id='ps_wtoon'>Wachtwoord wijzigen</a>";
       form.style.display='none';
       var u=document.getElementById('ps_uit');if(u)u.addEventListener('click',function(e){e.preventDefault();prakLogout();});
+      var wt=document.getElementById('ps_wtoon');if(wt)wt.addEventListener('click',function(e){e.preventDefault();var f=document.getElementById('ps_wijzig');f.style.display=f.style.display==='none'?'flex':'none';});
     }else{
+      document.getElementById('ps_wijzig').style.display='none';
       st.innerHTML="🔒 Deze praktijk is beveiligd. Log in om de gedeelde kaarten te zien.";
       form.style.display='flex';ww.placeholder='Wachtwoord';ww.autocomplete='current-password';knop.textContent='Inloggen';knop.dataset.act='login';
     }
@@ -1884,6 +1891,25 @@ bridge2.jpg</div>
         if(!d.ok){toonPsMsg(d.fout||'Dat lukte niet.');return;}
         setPrakSes(d.sessie);ww.value='';document.getElementById('ps_msg').style.display='none';
         PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;rendPrakSlot();toonSrvKaarten();
+      })
+      .catch(function(){knop.disabled=false;toonPsMsg('Geen verbinding.');});
+  }
+  // wachtwoord wijzigen: huidig + nieuw insturen; bij succes vervallen alle oude
+  // sessies (ook elders) en gaan we verder op de vers uitgegeven sessie
+  function prakWachtwoord(){
+    var hu=document.getElementById('ps_huidig'),nw=document.getElementById('ps_nieuw'),knop=document.getElementById('ps_wdo');
+    if(!hu.value){toonPsMsg('Vul je huidige wachtwoord in.');return;}
+    if(nw.value.length<8){toonPsMsg('Kies een nieuw wachtwoord van minstens 8 tekens.');return;}
+    knop.disabled=true;
+    fetch('api/praktijk/wachtwoord',{method:'POST',headers:PJSON(),
+      body:JSON.stringify({praktijk:PRAKSLOT.pr,huidig:hu.value,nieuw:nw.value})})
+      .then(function(r){return r.json().catch(function(){return{ok:false};});})
+      .then(function(d){
+        knop.disabled=false;
+        if(!d.ok){toonPsMsg(d.fout||'Wijzigen is niet gelukt.');return;}
+        setPrakSes(d.sessie);hu.value='';nw.value='';
+        document.getElementById('ps_wijzig').style.display='none';
+        toonPsMsg('Wachtwoord gewijzigd. Andere apparaten zijn uitgelogd.');
       })
       .catch(function(){knop.disabled=false;toonPsMsg('Geen verbinding.');});
   }
