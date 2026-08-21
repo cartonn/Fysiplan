@@ -480,6 +480,60 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
 .staal.ganzenbord .pion{position:absolute;right:74px;top:28px;width:15px;height:15px;
   border-radius:50%;background:#bd4429;border:2px solid #241f18;z-index:2}
 
+/* — staal concept 31: Grootboek — */
+.staal.grootboek{color:#1b2a33;
+  background:
+    repeating-linear-gradient(180deg, transparent 0 21px, #d3e2df 21px 22px),
+    #fbf7ec}
+.staal.grootboek .plaatnr{color:#9d2a26;font-family:var(--mono);position:relative;z-index:2}
+.staal.grootboek .woord{font-family:Charter,"Iowan Old Style",Georgia,serif;font-weight:400;
+  position:relative;z-index:2;max-width:60%}
+.staal.grootboek .woord em{font-style:italic;color:#9d2a26}
+.staal.grootboek .kolomlijn{position:absolute;top:0;bottom:0;width:1.5px;background:#d09a92}
+.staal.grootboek .kolomlijn.a{right:76px}
+.staal.grootboek .kolomlijn.b{right:36px}
+.staal.grootboek .getallen{position:absolute;right:var(--s3);top:34px;text-align:right;
+  font:600 15px/1.5 Charter,Georgia,serif;color:#1b2a33;font-variant-numeric:tabular-nums;z-index:2}
+.staal.grootboek .getallen .som{border-bottom:3px double #9d2a26;color:#9d2a26;padding-bottom:2px}
+
+/* — staal concept 32: Bodemprofiel — */
+.staal.bodemprofiel{background:#f6f2e7;color:#211f1a}
+.staal.bodemprofiel .plaatnr{color:#a8442c;font-family:var(--mono);position:relative;z-index:3}
+.staal.bodemprofiel .woord{font-family:"Avenir Next",Seravek,system-ui,sans-serif;font-weight:600;
+  letter-spacing:-.035em;position:relative;z-index:3;max-width:calc(100% - 122px)}
+.staal.bodemprofiel .woord em{font-style:normal;color:#a8442c}
+.staal.bodemprofiel .lagen{position:absolute;right:0;top:0;bottom:0;width:112px;
+  border-left:1.5px solid #211f1a;display:flex;flex-direction:column}
+.staal.bodemprofiel .lagen i{display:block;border-bottom:1px solid #57513f}
+.staal.bodemprofiel .lagen i.zand{flex:2;background-color:#e6d5ab;
+  background-image:radial-gradient(rgba(33,31,26,.6) 1px,transparent 1.1px);background-size:9px 9px}
+.staal.bodemprofiel .lagen i.leem{flex:2;background-color:#d5c2a0;
+  background-image:repeating-linear-gradient(48deg,rgba(33,31,26,.5) 0 1px,transparent 1px 6px)}
+.staal.bodemprofiel .lagen i.klei{flex:1;background-color:#bda88b;
+  background-image:repeating-linear-gradient(90deg,rgba(33,31,26,.5) 0 7px,transparent 7px 15px);
+  background-size:15px 9px}
+.staal.bodemprofiel .lagen i.veen{flex:2.4;background-color:#8d7c60;
+  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.34) 0 3px,transparent 3px 9px)}
+.staal.bodemprofiel .water{position:absolute;right:0;width:112px;top:62px;
+  border-top:2px solid #2f6885;z-index:2}
+
+/* — staal concept 33: Beeldverhaal — */
+.staal.beeldverhaal{background:#f7f2e4;color:#15161a}
+.staal.beeldverhaal .plaatnr{color:#d2704a;position:relative;z-index:3}
+.staal.beeldverhaal .woord{font-family:"Avenir Next",Seravek,system-ui,sans-serif;font-weight:800;
+  letter-spacing:-.045em;position:relative;z-index:3;max-width:calc(100% - 116px)}
+.staal.beeldverhaal .woord em{font-style:normal;color:#d2704a}
+.staal.beeldverhaal .kaders{position:absolute;right:12px;top:12px;display:grid;
+  grid-template-columns:44px 44px;gap:5px}
+.staal.beeldverhaal .kaders i{display:block;height:38px;border:2.5px solid #15161a;background:#fff}
+.staal.beeldverhaal .kaders i.lucht{background:#c7e0ec}
+.staal.beeldverhaal .kaders i.geel{background:#f3e3b0}
+.staal.beeldverhaal .kaders i.mos{background:#cadcc1}
+.staal.beeldverhaal .praat{position:absolute;right:70px;bottom:16px;width:34px;height:19px;
+  border:2.5px solid #15161a;border-radius:10px;background:#fff;z-index:2}
+.staal.beeldverhaal .praat::after{content:"";position:absolute;left:7px;bottom:-9px;width:0;height:0;
+  border-left:8px solid transparent;border-right:3px solid transparent;border-top:9px solid #15161a}
+
 .kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
 .kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
 .kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
@@ -539,8 +593,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>30</b> concepten</span>
-      <span>Laatste ronde <b>20 augustus 2026</b></span>
+      <span><b>33</b> concepten</span>
+      <span>Laatste ronde <b>21 augustus 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -1784,6 +1838,140 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-30-ganzenbord.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-30-ganzenbord.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 31 ─────────── -->
+      <article class="kaart">
+        <div class="staal grootboek">
+          <div class="kolomlijn a" aria-hidden="true"></div>
+          <div class="kolomlijn b" aria-hidden="true"></div>
+          <div class="plaatnr">Folio 12 · debet en credit</div>
+          <div class="getallen" aria-hidden="true">
+            <div>203</div>
+            <div>168</div>
+            <div class="som">− 35</div>
+          </div>
+          <div class="strepen" aria-hidden="true" style="right:auto;left:var(--s3);top:34px">
+            <i style="background:#1b2a33"></i><i style="background:#9d2a26"></i>
+            <i style="background:#8fb3ae"></i><i style="background:#fbf7ec"></i>
+          </div>
+          <div class="woord">Geen post zonder <em>tegenpost</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 31</div>
+          <h3>Grootboek</h3>
+          <p class="richting">Uw kaart boekt maar één kant, en daarom staat u altijd in het rood.</p>
+          <p class="rationale">Het dubbel boekhouden kent één regel: geen boeking zonder
+            tegenboeking. Elke oefenkaart overtreedt die regel — er staat alleen wat u nog moet
+            inbrengen, nooit wat u al ingebracht hebt. Zeven lege vinkvakjes zijn zeven openstaande
+            posten, en wie er vier haalt staat drie in de min, terwijl diezelfde week ook drie keer
+            de trap op ging en twee nachten goed sliep. Dit concept opent de tweede kolom, laat de
+            praktijk in rode inkt meeboeken in hetzelfde boek, en maakt het weeksaldo — niet het
+            aantal vinkjes — tot de maat van de week.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Pacioli's Summa uit 1494 en de Italiaanse wisselbankiers · gelinieerd rekenpapier
+              met blauwgroene liniatuur en rode kolomlijnen · de dubbele streep onder een totaal ·
+              ijzergallusinkt die naar blauwzwart trekt · marmerpapier op het bord met een rode
+              leren rugtitel · de duimindex langs de snede</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — kopveld met folionummer, drie posten met hun waarde, en een weekstaat
+              met een debetkant om af te vinken, een lege creditkolom om zelf in te vullen en een
+              saldovak per dag; het rood draagt geen informatie, dus in zwart-wit blijft alles staan</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-31-grootboek.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-31-grootboek.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 32 ─────────── -->
+      <article class="kaart">
+        <div class="staal bodemprofiel">
+          <div class="lagen" aria-hidden="true">
+            <i class="zand"></i><i class="zand"></i><i class="klei"></i>
+            <i class="leem"></i><i class="veen"></i>
+          </div>
+          <div class="water" aria-hidden="true"></div>
+          <div class="plaatnr">Boring 2026-0417</div>
+          <div class="strepen" aria-hidden="true" style="right:auto;left:var(--s3);top:34px">
+            <i style="background:#e6d5ab"></i><i style="background:#bda88b"></i>
+            <i style="background:#8d7c60"></i><i style="background:#2f6885"></i>
+          </div>
+          <div class="woord">Dun is <em>geen gat</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 32</div>
+          <h3>Bodemprofiel</h3>
+          <p class="richting">Herstel is niet terugkeren maar afzetten: niets verdwijnt eronder.</p>
+          <p class="rationale">Een geologisch profiel is de enige tekentraditie die tijd stapelt in
+            plaats van hem te wissen. Elke oefenkaart doet het omgekeerde — vooruitkijken, en het
+            verleden per week weggooien — waardoor een mindere week de vorm van een gat krijgt. Hier
+            is die week een dun laagje dat alles wat erna komt gewoon draagt. Eén horizontale lijn
+            loopt dwars door de hele kolom: de pijngrens. Alles eronder is gevormd toen het nog zeer
+            deed, en dat je kunt zien waar die lijn zat, is het punt.</p>
+            <dl>
+            <dt>Inspiratie</dt>
+            <dd>de boorstaat en het geologisch profiel · de arceringen van de FGDC-standaard voor
+              geologische kaarten: stippen voor zand, streepjes voor klei, blokjes voor veen ·
+              de dieptelat in centimeters · veldnotities in de kantlijn van een opnameformulier ·
+              de grondwaterstand als één doorlopende lijn · de legenda onder aan het blad</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — links de geboorde kolom van negen weken met dieptelat en
+              kantlijnnotities, rechts drie oefeningen op leesmaat, onderaan de legenda en zeven
+              open dagvakken; de arceringen zijn ontworpen voor zwart-wit, de aardkleuren zijn toegift</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-32-bodemprofiel.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-32-bodemprofiel.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 33 ─────────── -->
+      <article class="kaart">
+        <div class="staal beeldverhaal">
+          <div class="kaders" aria-hidden="true">
+            <i class="lucht"></i><i class="geel"></i>
+            <i class="mos"></i><i></i>
+          </div>
+          <div class="praat" aria-hidden="true"></div>
+          <div class="plaatnr">Aflevering 9 · wordt vervolgd</div>
+          <div class="strepen" aria-hidden="true" style="right:auto;left:var(--s3);top:34px">
+            <i style="background:#15161a"></i><i style="background:#7dafcd"></i>
+            <i style="background:#d2704a"></i><i style="background:#e2b45c"></i>
+          </div>
+          <div class="woord">Dag vier is een <em>plaatje</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 33</div>
+          <h3>Beeldverhaal</h3>
+          <p class="richting">Een instructie heeft geen hoofdpersoon; daarom kan ze de slechte dag
+            niet aan.</p>
+          <p class="rationale">Op een oefenkaart is de dag waarop het niet ging een leeg vakje, en
+            een leeg vakje leest als schuld. Op een plaat is het een kader met een bijschrift dat de
+            therapeut schreef vóórdat die dag er was: gaat het niet, doe dan alleen dit. De klare
+            lijn is precies de traditie die dat draagt — duidelijkheid boven expressie, één
+            lijndikte, vlakke kleur zonder schaduw — maar ze brengt ook een hoofdpersoon mee, en dat
+            tweede is hier het hele idee. Eén afspraak breekt met de traditie: geen handletter-
+            kapitalen, want oudere ogen lezen gewone zinnen sneller.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>de klare lijn van Hergé, in 1977 in Rotterdam door Joost Swarte "ligne claire"
+              gedoopt · het kader met de witte goot ertussen · de ballon met de staart naar wie
+              praat · het gele recitatiefkastje linksboven waarin de verteller spreekt · de
+              titelstrook boven aan een plaat · de regel onderaan: wordt vervolgd</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — titelstrook, vertellerskastje op 11 punt, drie oefenkaders met de
+              instructie in een ballon, zeven dagkaders onderaan en een slotregel; alle leestekst
+              staat zwart op wit of op het gele kastje, dus de vlakke kleuren mogen grijs worden</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-33-beeldverhaal.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-33-beeldverhaal.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>

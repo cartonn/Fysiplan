@@ -1,0 +1,995 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 33 — Beeldverhaal · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 33 — BEELDVERHAAL
+   ------------------------------------------------------------
+   De klare lijn: door Hergé in Brussel ontwikkeld en in 1977 in
+   Rotterdam door Joost Swarte "ligne claire" gedoopt. Eén regel
+   boven alles: duidelijkheid gaat vóór expressie. Lijnen van
+   gelijke dikte, vlakke kleur zonder verloop, geen schaduw, geen
+   arcering. De kleur dient de tekening, nooit andersom.
+
+   Het album levert de rest van de grammatica: het kader met de
+   witte goot ertussen, de ballon met de staart naar wie praat,
+   het gele recitatiefkastje in de linkerbovenhoek waarin de
+   verteller spreekt, de titelstrook boven aan de plaat, en de
+   regel onderaan: wordt vervolgd.
+
+   Toegepast op de oefenkaart: een instructie heeft geen
+   hoofdpersoon. Er staat wat er moet gebeuren, in de gebiedende
+   wijs, met een tekening van een lichaam dat niemand is. Een
+   verhaal heeft wél een hoofdpersoon — en daardoor kan de slechte
+   dag een plaatje worden in plaats van een leeg vinkvakje. Dag
+   vier staat op deze plaat getekend, met een eigen zin: vandaag
+   ging het niet, en dat hoort erbij.
+
+   De leesbaarheidsafspraak: geen handletter-kapitalen. Ballonnen
+   staan in gewone zinnen, groot gezet, zwart op wit. De kapitalen
+   blijven waar ze horen: in de titelstrook en de klanken.
+   ============================================================ */
+
+:root{
+  /* ── de lijn ── */
+  --lijn:#15161a;            /* één dikte, overal */
+  --lijn-2:#3a3d45;
+
+  /* ── het papier van het album ── */
+  --papier:#f7f2e4;
+  --papier-2:#fdfaf1;
+  --wit:#ffffff;
+
+  /* ── de vlakke kleuren ── */
+  --hemel:#7dafcd;
+  --hemel-licht:#c7e0ec;
+  --terra:#d2704a;
+  --terra-licht:#f0c4b0;
+  --mos:#6f8f62;
+  --mos-licht:#cadcc1;
+  --oker:#e2b45c;
+  --recitatief:#f3e3b0;      /* het gele vertellerskastje */
+
+  --grijs:#6d707a;
+
+  --letter:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:9px; --s3:16px; --s4:26px; --s5:42px; --s6:70px;
+
+  --kader:2.5px solid var(--lijn);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font:17px/1.65 var(--letter);color:var(--lijn-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--terra)}
+:focus-visible{outline:3px solid var(--terra);outline-offset:3px}
+
+.binnen{max-width:1160px;margin:0 auto;padding:0 24px}
+
+/* ============================================================
+   DE GRAMMATICA VAN DE PLAAT
+   ============================================================ */
+
+/* het kader: altijd dezelfde lijndikte, altijd een witte goot ernaast */
+.kader{border:var(--kader);background:var(--wit);position:relative;overflow:hidden}
+
+/* de ballon: wit, zwarte lijn, staart naar de spreker */
+.ballon{position:relative;background:var(--wit);border:2.5px solid var(--lijn);
+  border-radius:22px;padding:13px 17px;font:500 17px/1.42 var(--letter);color:var(--lijn);
+  max-width:34ch}
+.ballon strong{font-weight:700}
+.ballon::before,.ballon::after{content:"";position:absolute;width:0;height:0}
+/* staart linksonder */
+.ballon.sl::before{left:26px;bottom:-16px;border-left:14px solid transparent;
+  border-right:5px solid transparent;border-top:16px solid var(--lijn)}
+.ballon.sl::after{left:29px;bottom:-11px;border-left:10px solid transparent;
+  border-right:4px solid transparent;border-top:12px solid var(--wit)}
+/* staart linksboven */
+.ballon.bl::before{left:26px;top:-16px;border-left:14px solid transparent;
+  border-right:5px solid transparent;border-bottom:16px solid var(--lijn)}
+.ballon.bl::after{left:29px;top:-11px;border-left:10px solid transparent;
+  border-right:4px solid transparent;border-bottom:12px solid var(--wit)}
+/* de denkballon: geen staart maar bolletjes */
+.ballon.denk{border-radius:26px}
+.ballon.denk::before{left:24px;bottom:-13px;width:12px;height:12px;border-radius:50%;
+  background:var(--wit);border:2.5px solid var(--lijn)}
+.ballon.denk::after{left:12px;bottom:-27px;width:7px;height:7px;border-radius:50%;
+  background:var(--wit);border:2.5px solid var(--lijn)}
+
+/* het recitatiefkastje: de verteller, altijd linksboven */
+.recitatief{background:var(--recitatief);border:2.5px solid var(--lijn);padding:10px 14px;
+  font:600 15px/1.38 var(--letter);color:var(--lijn);max-width:40ch}
+.recitatief.hoek{position:absolute;left:0;top:0;border-left:0;border-top:0;max-width:60%;z-index:4}
+
+/* de klank: het enige waar kapitalen mogen staan */
+.klank{font:800 26px/1 var(--letter);letter-spacing:-.02em;color:var(--terra);
+  -webkit-text-stroke:1.5px var(--lijn);text-transform:uppercase;transform:rotate(-6deg);
+  display:inline-block}
+
+/* de titelstrook boven aan een plaat */
+.titelstrook{border:var(--kader);background:var(--oker);padding:15px 20px;display:flex;
+  justify-content:space-between;align-items:center;gap:var(--s3);flex-wrap:wrap}
+.titelstrook h2{font:800 clamp(24px,3.2vw,34px)/1 var(--letter);letter-spacing:-.03em;
+  text-transform:uppercase;color:var(--lijn)}
+.titelstrook .aflevering{font:700 12px/1 var(--letter);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--lijn);background:var(--wit);border:2px solid var(--lijn);padding:6px 10px}
+
+/* ── labbalk ─────────────────────────────────────────────── */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:18px;
+  background:var(--lijn);color:#c6cad3;padding:11px 22px;font:500 13px/1 var(--letter)}
+.labbalk .nr{font:700 10.5px/1 var(--letter);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--lijn);background:var(--oker);padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#c6cad3;text-decoration:none;padding:5px 2px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--oker)}
+.labbalk a.terug{color:#fff;font-weight:600}
+@media (max-width:820px){.labbalk{gap:12px;font-size:12px;flex-wrap:wrap}}
+
+/* ── schermkoppen ────────────────────────────────────────── */
+.scherm{padding:var(--s6) 0;border-top:2.5px solid var(--lijn)}
+.scherm.eerste{border-top:0;padding-top:var(--s5)}
+.schermkop{margin-bottom:var(--s5);max-width:70ch}
+.schermkop b{display:block;font:700 11px/1 var(--letter);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--terra);margin-bottom:11px}
+.schermkop h2{font:800 clamp(27px,3.3vw,38px)/1.1 var(--letter);color:var(--lijn);
+  letter-spacing:-.035em}
+.schermkop p{margin-top:11px;color:var(--grijs);font-size:16px;line-height:1.6}
+
+.kn{display:inline-block;font:700 15px/1 var(--letter);padding:15px 21px;text-decoration:none;
+  border:2.5px solid var(--lijn);background:var(--terra);color:var(--wit);cursor:pointer;
+  box-shadow:4px 4px 0 var(--lijn)}
+.kn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--lijn)}
+.kn.leeg{background:var(--wit);color:var(--lijn)}
+.kn.leeg:hover{background:var(--oker)}
+
+/* ============================================================
+   SCHERM 1 · LANDING — de openingsplaat
+   ============================================================ */
+.plaathoek{display:grid;grid-template-columns:1fr 470px;gap:var(--s5);align-items:start}
+@media (max-width:1020px){.plaathoek{grid-template-columns:1fr}}
+
+.held h1{font:800 clamp(31px,4.6vw,55px)/1.02 var(--letter);color:var(--lijn);
+  letter-spacing:-.045em;max-width:15ch}
+.held h1 em{font-style:normal;color:var(--terra)}
+.held .onder{margin-top:var(--s3);font-size:19px;line-height:1.6;max-width:52ch;color:var(--lijn-2)}
+.held .onder b{color:var(--lijn);font-weight:700}
+.held .knoppen{display:flex;flex-wrap:wrap;gap:14px;margin-top:var(--s4)}
+
+.drieregels{margin-top:var(--s5);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3)}
+@media (max-width:820px){.drieregels{grid-template-columns:1fr}}
+.drieregels .cel{border:var(--kader);background:var(--wit);padding:var(--s3)}
+.drieregels .cel .vlag{display:inline-block;font:700 10px/1 var(--letter);letter-spacing:.16em;
+  text-transform:uppercase;background:var(--lijn);color:var(--wit);padding:5px 8px;margin-bottom:11px}
+.drieregels .cel h4{font:700 17px/1.25 var(--letter);color:var(--lijn);letter-spacing:-.02em}
+.drieregels .cel p{font-size:15px;line-height:1.55;color:var(--grijs);margin-top:7px}
+
+/* de openingsstrook: vier kaders met een goot ertussen */
+.strook{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.strook .paneel{aspect-ratio:4/3;position:relative;display:flex;align-items:flex-end;
+  justify-content:center;padding:13px}
+.strook .paneel .lucht{position:absolute;inset:0;z-index:0}
+.strook .paneel .fig{position:relative;z-index:2;max-height:74%;width:auto;mix-blend-mode:multiply}
+.strook .paneel .grond{position:absolute;left:0;right:0;bottom:0;height:26%;z-index:1;
+  border-top:2.5px solid var(--lijn)}
+.strook .paneel .ballon{position:absolute;z-index:5;font-size:14.5px;padding:9px 12px;
+  border-radius:16px;max-width:78%}
+.strook .paneel .recitatief{font-size:12.5px;padding:6px 9px}
+
+/* ============================================================
+   SCHERM 2 · KIEZER — kiezen wie er in de plaat komt
+   ============================================================ */
+.zoekregel{display:flex;gap:12px;flex-wrap:wrap;align-items:center;border:var(--kader);
+  background:var(--wit);padding:13px 16px;margin-bottom:var(--s4)}
+.zoekregel .lbl{font:700 10.5px/1 var(--letter);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--grijs)}
+.zoekregel input{flex:1;min-width:190px;border:0;border-bottom:2.5px solid var(--lijn);
+  background:transparent;font:600 17px/1.4 var(--letter);color:var(--lijn);padding:4px 2px}
+.zoekregel .tel{font-size:14.5px;color:var(--grijs)}
+
+.rubrieken{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:var(--s4)}
+.rubrieken button{font:600 14.5px/1 var(--letter);padding:11px 15px;border:2.5px solid var(--lijn);
+  background:var(--wit);color:var(--lijn);cursor:pointer}
+.rubrieken button:hover{background:var(--hemel-licht)}
+.rubrieken button[aria-pressed="true"]{background:var(--lijn);color:var(--wit)}
+
+.kiezerraster{display:grid;grid-template-columns:1fr 350px;gap:var(--s5);align-items:start}
+@media (max-width:1060px){.kiezerraster{grid-template-columns:1fr}}
+.kiezerraster > *{min-width:0}
+
+.panelen{display:grid;grid-template-columns:repeat(auto-fill,minmax(252px,1fr));gap:11px}
+.paneelkeuze{border:2.5px solid var(--lijn);background:var(--wit);cursor:pointer;padding:0;
+  font:inherit;color:inherit;text-align:left;display:flex;flex-direction:column;position:relative}
+.paneelkeuze:hover{box-shadow:5px 5px 0 var(--lijn)}
+/* niet gekozen = alleen lijn. gekozen = vlakke kleur + dikker kader + vlag */
+.paneelkeuze[aria-pressed="true"]{border-width:5px;box-shadow:5px 5px 0 var(--terra)}
+.paneelkeuze .tekening{position:relative;aspect-ratio:5/4;display:flex;align-items:flex-end;
+  justify-content:center;padding:11px;background:var(--wit);border-bottom:2.5px solid var(--lijn)}
+.paneelkeuze[aria-pressed="true"] .tekening{background:var(--hemel-licht)}
+.paneelkeuze .tekening .grond{position:absolute;left:0;right:0;bottom:0;height:24%;
+  border-top:2.5px solid var(--lijn);background:transparent}
+.paneelkeuze[aria-pressed="true"] .tekening .grond{background:var(--mos-licht)}
+.paneelkeuze .tekening img{position:relative;z-index:2;max-height:82%;width:auto;
+  mix-blend-mode:multiply}
+.paneelkeuze .vlag{position:absolute;left:-5px;top:12px;z-index:6;font:700 10px/1 var(--letter);
+  letter-spacing:.14em;text-transform:uppercase;background:var(--terra);color:var(--wit);
+  border:2.5px solid var(--lijn);padding:6px 9px;display:none}
+.paneelkeuze[aria-pressed="true"] .vlag{display:block}
+.paneelkeuze .onderschrift{padding:13px 15px;flex:1}
+.paneelkeuze .onderschrift h4{font:700 17px/1.25 var(--letter);color:var(--lijn);letter-spacing:-.022em}
+.paneelkeuze .onderschrift p{font-size:14.5px;line-height:1.5;color:var(--grijs);margin-top:6px}
+.paneelkeuze .voet{border-top:2.5px solid var(--lijn);padding:9px 15px;display:flex;
+  justify-content:space-between;align-items:center;gap:10px;font:600 13.5px/1 var(--letter);
+  color:var(--lijn)}
+.paneelkeuze .voet .vak{width:24px;height:24px;border:2.5px solid var(--lijn);display:grid;
+  place-items:center;font:800 14px/1 var(--letter);color:transparent;background:var(--wit)}
+.paneelkeuze[aria-pressed="true"] .voet .vak{color:var(--lijn);background:var(--oker)}
+
+/* de plaat-in-opbouw rechts */
+.plaatopbouw{border:2.5px solid var(--lijn);background:var(--wit);position:sticky;top:74px;
+  box-shadow:6px 6px 0 var(--lijn)}
+@media (max-width:1060px){.plaatopbouw{position:static}}
+.plaatopbouw .kop{background:var(--lijn);color:var(--wit);padding:12px 16px;display:flex;
+  justify-content:space-between;gap:10px;font:700 10.5px/1.4 var(--letter);letter-spacing:.16em;
+  text-transform:uppercase}
+.plaatopbouw .kop i{font-style:normal;color:var(--oker)}
+.plaatopbouw .lijf{padding:var(--s3) 16px var(--s4)}
+.plaatopbouw .miniplaat{border:2.5px solid var(--lijn);display:grid;gap:4px;padding:4px;
+  background:var(--lijn)}
+.plaatopbouw .miniplaat .mp{background:var(--wit);height:40px;display:flex;align-items:center;
+  gap:9px;padding:0 9px;font:600 13.5px/1.2 var(--letter);color:var(--lijn)}
+.plaatopbouw .miniplaat .mp .bol{width:19px;height:19px;border:2px solid var(--lijn);
+  border-radius:50%;flex:none}
+.plaatopbouw .miniplaat .mp.gevuld .bol{background:var(--terra)}
+.plaatopbouw .miniplaat .mp.leeg{color:var(--grijs);border:2px dashed var(--lijn);
+  background:var(--papier)}
+.plaatopbouw .uit{margin-top:var(--s3);font-size:15px;line-height:1.58;color:var(--lijn-2)}
+.plaatopbouw .uit b{color:var(--lijn);font-weight:700}
+.plaatopbouw .kn{width:100%;text-align:center;margin-top:var(--s3)}
+
+.leegstaat{border:2.5px dashed var(--lijn);background:var(--wit);padding:var(--s4);
+  text-align:center;color:var(--grijs);font-size:15px;line-height:1.6}
+.leegstaat b{display:block;font:700 18px/1.25 var(--lijn);color:var(--lijn);margin-bottom:8px;
+  font-family:var(--letter)}
+
+/* ============================================================
+   SCHERM 3 · CLIËNTKAART — de week als plaat
+   ============================================================ */
+.album{border:2.5px solid var(--lijn);background:var(--papier-2);
+  box-shadow:10px 10px 0 var(--lijn)}
+.album .balk{background:var(--lijn);color:var(--wit);padding:14px 22px;display:flex;
+  justify-content:space-between;gap:18px;flex-wrap:wrap;font:700 11px/1.5 var(--letter);
+  letter-spacing:.16em;text-transform:uppercase}
+.album .balk i{font-style:normal;color:var(--oker)}
+.albumlijf{padding:var(--s4)}
+
+.albumkop{display:flex;justify-content:space-between;gap:var(--s4);flex-wrap:wrap;
+  align-items:flex-end;margin-bottom:var(--s4)}
+.albumkop h3{font:800 27px/1.1 var(--letter);color:var(--lijn);letter-spacing:-.035em}
+.albumkop .sub{margin-top:7px;font-size:15.5px;color:var(--grijs)}
+.albumkop .nrblok{font:600 13px/1.5 var(--mono);color:var(--grijs);text-align:right}
+.albumkop .nrblok b{display:block;font:700 15px/1.2 var(--mono);color:var(--lijn)}
+
+/* de dagenrij: zeven kaders met een goot ertussen */
+.dagenrij{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+@media (max-width:900px){.dagenrij{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:560px){.dagenrij{grid-template-columns:repeat(2,1fr)}}
+.dagpaneel{border:2.5px solid var(--lijn);background:var(--wit);position:relative;
+  display:flex;flex-direction:column;min-height:168px}
+.dagpaneel .dagkop{border-bottom:2.5px solid var(--lijn);padding:7px 9px;
+  font:700 11px/1 var(--letter);letter-spacing:.1em;text-transform:uppercase;color:var(--lijn);
+  display:flex;justify-content:space-between;gap:6px;align-items:center}
+.dagpaneel .dagkop span{font:500 10px/1 var(--mono);color:var(--grijs);letter-spacing:0}
+.dagpaneel .beeldvlak{flex:1;position:relative;display:flex;align-items:flex-end;
+  justify-content:center;padding:8px;overflow:hidden}
+.dagpaneel .beeldvlak .grond{position:absolute;left:0;right:0;bottom:0;height:28%;
+  border-top:2px solid var(--lijn)}
+.dagpaneel .beeldvlak img{position:relative;z-index:2;max-height:80%;width:auto;
+  mix-blend-mode:multiply}
+.dagpaneel .onder{border-top:2.5px solid var(--lijn);padding:8px 9px;font:600 12.5px/1.35 var(--letter);
+  color:var(--lijn);background:var(--wit)}
+.dagpaneel.vol .beeldvlak{background:var(--hemel-licht)}
+.dagpaneel.vol .beeldvlak .grond{background:var(--mos-licht)}
+.dagpaneel.half .beeldvlak{background:var(--wit)}
+.dagpaneel.half .beeldvlak .grond{background:var(--terra-licht)}
+.dagpaneel.niet .beeldvlak{background:var(--papier)}
+.dagpaneel.niet .onder{background:var(--recitatief)}
+.dagpaneel.open{border-style:dashed}
+.dagpaneel.open .onder{color:var(--grijs)}
+.dagpaneel .stip{position:absolute;right:7px;top:34px;z-index:5;width:17px;height:17px;
+  border:2.5px solid var(--lijn);border-radius:50%;background:var(--wit)}
+.dagpaneel.vol .stip{background:var(--lijn)}
+.dagpaneel.half .stip{background:linear-gradient(90deg,var(--lijn) 0 50%,var(--wit) 50% 100%)}
+
+/* de vertellersregel onder de week */
+.vertelregel{margin-top:var(--s4);display:grid;grid-template-columns:auto 1fr;gap:var(--s3);
+  align-items:start}
+@media (max-width:700px){.vertelregel{grid-template-columns:1fr}}
+.vertelregel .recitatief{max-width:none}
+
+.gesprek{margin-top:var(--s5);display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+@media (max-width:820px){.gesprek{grid-template-columns:1fr}}
+.gesprek .kolom h4{font:700 10.5px/1 var(--letter);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--grijs);border-bottom:2.5px solid var(--lijn);padding-bottom:8px;margin-bottom:var(--s3)}
+.gesprek .ballonrij{display:flex;flex-direction:column;gap:26px}
+.gesprek .ballon{font-size:16px}
+.gesprek .ballon.van-therapeut{background:var(--hemel-licht)}
+.gesprek .ballon.van-therapeut.sl::after{border-top-color:var(--hemel-licht)}
+.gesprek .bron{font:600 12px/1 var(--letter);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--grijs);margin-top:-16px;margin-left:52px}
+
+/* ============================================================
+   SCHERM 4 · HET PRINTBLAD — de plaat
+   ============================================================ */
+.bladhouder{display:grid;place-items:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){
+  .bladschaal{width:100%;overflow:hidden}
+  .blad{transform:scale(.62);transform-origin:top center;margin-bottom:-116mm !important}
+}
+@media (max-width:620px){.blad{transform:scale(.42);margin-bottom:-174mm !important}}
+
+.blad{position:relative;width:210mm;height:297mm;background:var(--papier-2);color:var(--lijn);
+  padding:9mm;box-shadow:0 30px 66px -34px rgba(21,22,26,.6);border:1px solid #ddd6c4;
+  display:flex;flex-direction:column;gap:2.6mm;font-family:var(--letter)}
+
+.wijzer{position:absolute;z-index:9;width:148px;font:400 12.5px/1.42 var(--letter);color:var(--grijs)}
+.wijzer::after{content:"";position:absolute;background:#c9c2b0;height:1px}
+.wijzer.r::after{left:-20px;top:50%;width:16px}
+.wijzer.l{text-align:right}
+.wijzer.l::after{right:-20px;top:50%;width:16px}
+@media (max-width:1180px){.wijzer{display:none}}
+
+/* de titelstrook van de plaat */
+.bv-titel{border:1.2pt solid var(--lijn);background:var(--oker);padding:3.4mm 4mm;
+  display:flex;justify-content:space-between;align-items:center;gap:4mm}
+.bv-titel h1{font:800 22pt/1 var(--letter);letter-spacing:-.035em;text-transform:uppercase;
+  color:var(--lijn)}
+.bv-titel .sub{font:600 8pt/1.3 var(--letter);color:var(--lijn);margin-top:1.4mm}
+.bv-titel .afl{font:700 7pt/1.25 var(--letter);letter-spacing:.14em;text-transform:uppercase;
+  background:#fff;border:1.2pt solid var(--lijn);padding:1.8mm 2.4mm;text-align:right;
+  white-space:nowrap}
+
+/* de vertellersstrook: hier leest de patiënt */
+.bv-verteller{border:1.2pt solid var(--lijn);background:var(--recitatief);padding:3.4mm 4mm}
+.bv-verteller .wie{font:700 6.6pt/1 var(--letter);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--lijn);opacity:.66;margin-bottom:1.8mm;display:block}
+.bv-verteller p{font:500 11pt/1.46 var(--letter);color:var(--lijn);max-width:64ch}
+.bv-verteller p b{font-weight:700}
+
+/* de drie oefenkaders */
+.bv-paneel{border:1.2pt solid var(--lijn);background:#fff;display:grid;
+  grid-template-columns:44mm 1fr;flex:1;min-height:0;position:relative;overflow:hidden}
+.bv-paneel .tekening{position:relative;border-right:1.2pt solid var(--lijn);
+  display:flex;align-items:flex-end;justify-content:center;padding:2.4mm;background:var(--hemel-licht)}
+.bv-paneel .tekening .grond{position:absolute;left:0;right:0;bottom:0;height:26%;
+  border-top:1.2pt solid var(--lijn);background:var(--mos-licht)}
+.bv-paneel .tekening img{position:relative;z-index:2;max-height:88%;width:auto;
+  mix-blend-mode:multiply}
+.bv-paneel .tekening .nr{position:absolute;left:0;top:0;z-index:5;font:800 9pt/1 var(--letter);
+  color:var(--lijn);background:var(--oker);border-right:1.2pt solid var(--lijn);
+  border-bottom:1.2pt solid var(--lijn);padding:1.6mm 2.4mm}
+.bv-paneel .tekst{padding:3.2mm 4mm;display:flex;flex-direction:column;justify-content:center;gap:2.4mm}
+.bv-paneel h2{font:800 15pt/1.06 var(--letter);letter-spacing:-.035em;color:var(--lijn)}
+.bv-paneel .prballon{position:relative;background:#fff;border:1.2pt solid var(--lijn);
+  border-radius:4mm;padding:2.6mm 3.2mm;font:500 10.5pt/1.42 var(--letter);color:var(--lijn);
+  max-width:58ch}
+.bv-paneel .prballon::before{content:"";position:absolute;left:-3.6mm;top:5mm;width:0;height:0;
+  border-top:1.8mm solid transparent;border-bottom:2.6mm solid transparent;
+  border-right:3.6mm solid var(--lijn)}
+.bv-paneel .prballon::after{content:"";position:absolute;left:-2.4mm;top:5.5mm;width:0;height:0;
+  border-top:1.4mm solid transparent;border-bottom:2mm solid transparent;
+  border-right:2.6mm solid #fff}
+.bv-paneel .prballon b{font-weight:700}
+.bv-paneel .dosstrook{display:flex;gap:3mm;align-items:center;flex-wrap:wrap}
+.bv-paneel .dosstrook .dos{font:800 13pt/1 var(--letter);letter-spacing:-.03em;color:var(--lijn);
+  background:var(--oker);border:1.2pt solid var(--lijn);padding:1.8mm 2.6mm}
+.bv-paneel .dosstrook .let{font:500 8.6pt/1.35 var(--letter);color:var(--lijn);flex:1;min-width:40mm}
+.bv-paneel .dosstrook .let b{font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+  font-size:6.6pt;color:var(--terra);display:block;margin-bottom:.8mm}
+
+/* de onderste strook: zeven dagkaders */
+.bv-week{display:grid;grid-template-columns:repeat(7,1fr);gap:1.6mm}
+.bv-dag{border:1.2pt solid var(--lijn);background:#fff;display:flex;flex-direction:column;
+  min-height:26mm}
+.bv-dag .dk{border-bottom:1.2pt solid var(--lijn);padding:1.4mm 1.6mm;font:700 7pt/1 var(--letter);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--lijn);display:flex;
+  justify-content:space-between;align-items:center;gap:1mm}
+.bv-dag .dk span{font:500 6pt/1 var(--mono);color:var(--grijs);letter-spacing:0}
+.bv-dag .vlak{flex:1;display:grid;place-items:center;padding:1.6mm}
+.bv-dag .bol{width:8mm;height:8mm;border:1.2pt solid var(--lijn);border-radius:50%;background:#fff}
+.bv-dag .bijschrift{border-top:1pt solid var(--lijn);padding:1.2mm 1.6mm;
+  font:500 6.2pt/1.25 var(--letter);color:var(--grijs);text-align:center}
+.bv-dag.dagvier{background:var(--recitatief)}
+.bv-dag.dagvier .bijschrift{color:var(--lijn);font-weight:700;background:var(--recitatief)}
+
+/* de slotregel */
+.bv-slot{border:1.2pt solid var(--lijn);background:#fff;padding:2.6mm 4mm;display:flex;
+  justify-content:space-between;gap:5mm;align-items:center;flex-wrap:wrap}
+.bv-slot .vervolg{font:800 11pt/1 var(--letter);letter-spacing:-.02em;text-transform:uppercase;
+  color:var(--terra);-webkit-text-stroke:.4pt var(--lijn);white-space:nowrap}
+.bv-slot .prk{font:500 7.4pt/1.42 var(--letter);color:var(--grijs);flex:1;min-width:80mm}
+.bv-slot .prk b{color:var(--lijn);font-weight:700}
+
+.printhulp{max-width:680px;margin:var(--s4) auto 0;text-align:center;font-size:16px;
+  color:var(--grijs);line-height:1.62}
+.printhulp .kn{margin-top:var(--s3)}
+
+/* ── voet ────────────────────────────────────────────────── */
+footer.uitleiding{background:var(--lijn);color:#b9bec7;padding:var(--s6) 24px;margin-top:var(--s6)}
+footer.uitleiding .binnen{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:700 10.5px/1 var(--letter);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--oker);margin-bottom:14px}
+footer.uitleiding p,footer.uitleiding li{font-size:15px;line-height:1.7}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:10px}
+footer.uitleiding li::before{content:"—";position:absolute;left:0;color:var(--oker)}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 33</span>
+  <strong style="font:800 16px/1 var(--letter);color:#fff;letter-spacing:-.03em">Beeldverhaal</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="binnen">
+    <div class="plaathoek">
+
+      <div class="held">
+        <p style="font:700 11px/1 var(--letter);letter-spacing:.2em;text-transform:uppercase;
+          color:var(--terra);margin-bottom:var(--s3)">Fysiplan · concept 33</p>
+        <h1>Een instructie heeft geen <em>hoofdpersoon</em>.</h1>
+        <p class="onder">Daarom kan een oefenkaart de slechte dag niet aan. Er is alleen een leeg
+          vakje waar een vinkje had moeten staan, en dat vakje zegt: dit was uw fout.
+          <b>Op een plaat is dag vier gewoon een plaatje</b> — met een zin eronder die de
+          therapeut heeft geschreven, vóórdat de dag er was.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk de plaat</a>
+          <a class="kn leeg" href="#clientkaart">De week als verhaal</a>
+        </div>
+
+        <div class="drieregels">
+          <div class="cel">
+            <span class="vlag">Kader</span>
+            <h4>Eén lijndikte</h4>
+            <p>De klare lijn kent geen schaduw en geen arcering. Alles wat u ziet is even
+              belangrijk getekend — dat is precies wat een instructie nodig heeft.</p>
+          </div>
+          <div class="cel">
+            <span class="vlag">Ballon</span>
+            <h4>Zwart op wit</h4>
+            <p>Geen handletter-kapitalen. Ballonnen staan in gewone zinnen, groot gezet, altijd op
+              wit. De kapitalen blijven in de titelstrook.</p>
+          </div>
+          <div class="cel">
+            <span class="vlag">Kastje</span>
+            <h4>De verteller</h4>
+            <p>Het gele kastje linksboven is de stem van de therapeut. Die spreekt niet in
+              opdrachten maar in zinnen, en hij weet dat er dagen tussen zitten.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="strook">
+        <div class="kader paneel" style="background:var(--hemel-licht)">
+          <span class="recitatief hoek">Maandag. De eerste dag van week negen.</span>
+          <span class="grond" style="background:var(--mos-licht)"></span>
+          <img class="fig" src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+            alt="Lijntekening: iemand zakt vanuit stand tot net boven een stoel en komt weer omhoog."/>
+        </div>
+        <div class="kader paneel" style="background:var(--papier-2)">
+          <span class="grond" style="background:var(--terra-licht)"></span>
+          <img class="fig" src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png"
+            alt="Lijntekening: iemand strekt zittend op een stoel het onderbeen tot horizontaal."/>
+          <span class="ballon sl" style="left:11px;top:11px">Twee tellen vasthouden. Rustig terug.</span>
+        </div>
+        <div class="kader paneel" style="background:var(--papier)">
+          <span class="recitatief hoek">Donderdag ging het niet.</span>
+          <span class="grond" style="background:#e6e2d6"></span>
+          <img class="fig" src="/images/onderste-extremiteit/been-pendelen-line-v1.png"
+            alt="Lijntekening: iemand laat staand met steun het been rustig pendelen."/>
+          <span class="ballon denk" style="right:11px;bottom:15px">Dan vandaag alleen dit.</span>
+        </div>
+        <div class="kader paneel" style="background:var(--hemel-licht)">
+          <span class="grond" style="background:var(--mos-licht)"></span>
+          <img class="fig" src="/images/onderste-extremiteit/kuitheffing-staand-met-steun-line-v1.png"
+            alt="Lijntekening: iemand komt staand met de handen aan een leuning op de tenen."/>
+          <span class="ballon bl" style="left:11px;bottom:13px">Vrijdag: gewoon verder waar u was.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>Elke oefening is een kader. Wat u niet kiest blijft lijntekening; wat u wél kiest wordt
+        ingekleurd, krijgt een dikker kader en een vlag in de hoek — drie signalen, zodat kleur
+        nooit het enige is.</p>
+    </div>
+
+    <div class="zoekregel">
+      <span class="lbl">Zoek een kader</span>
+      <input type="text" value="knie" aria-label="Zoek een oefening"/>
+      <span class="tel">31 kaders in deze rubriek · 215 in het album</span>
+    </div>
+
+    <div class="rubrieken">
+      <button type="button" aria-pressed="true">Onderste extremiteit</button>
+      <button type="button" aria-pressed="false">Rug</button>
+      <button type="button" aria-pressed="false">Balans</button>
+      <button type="button" aria-pressed="false">Nek</button>
+      <button type="button" aria-pressed="false">Core</button>
+    </div>
+
+    <div class="kiezerraster">
+      <div class="panelen">
+
+        <button class="paneelkeuze" type="button" aria-pressed="true">
+          <span class="vlag">In de plaat</span>
+          <span class="tekening">
+            <span class="grond"></span>
+            <img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+              alt="Lijntekening: vanuit stand tot net boven een stoel zakken en weer omhoog komen."/>
+          </span>
+          <span class="onderschrift">
+            <h4>Stoelsquat</h4>
+            <p>Zakken tot net boven de zitting, romp rechtop, knieën boven de voeten.</p>
+          </span>
+          <span class="voet"><span>Kader 1 · 3 × 10</span><span class="vak" aria-hidden="true">✓</span></span>
+        </button>
+
+        <button class="paneelkeuze" type="button" aria-pressed="true">
+          <span class="vlag">In de plaat</span>
+          <span class="tekening">
+            <span class="grond"></span>
+            <img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png"
+              alt="Lijntekening: zittend op een stoel het onderbeen strekken tot horizontaal."/>
+          </span>
+          <span class="onderschrift">
+            <h4>Knie strekken, zittend</h4>
+            <p>Strekken tot recht vooruit, twee tellen vasthouden, rustig laten zakken.</p>
+          </span>
+          <span class="voet"><span>Kader 2 · 3 × 12</span><span class="vak" aria-hidden="true">✓</span></span>
+        </button>
+
+        <button class="paneelkeuze" type="button" aria-pressed="true">
+          <span class="vlag">In de plaat</span>
+          <span class="tekening">
+            <span class="grond"></span>
+            <img src="/images/onderste-extremiteit/kuitheffing-staand-met-steun-line-v1.png"
+              alt="Lijntekening: staand met de handen aan een leuning op de tenen komen."/>
+          </span>
+          <span class="onderschrift">
+            <h4>Kuitheffing met steun</h4>
+            <p>Op de tenen komen en langzaam terugzakken tot de hielen de grond raken.</p>
+          </span>
+          <span class="voet"><span>Kader 3 · 3 × 12</span><span class="vak" aria-hidden="true">✓</span></span>
+        </button>
+
+        <button class="paneelkeuze" type="button" aria-pressed="false">
+          <span class="vlag">In de plaat</span>
+          <span class="tekening">
+            <span class="grond"></span>
+            <img src="/images/onderste-extremiteit/been-pendelen-line-v1.png"
+              alt="Lijntekening: staand met steun het gestrekte been rustig heen en weer laten pendelen."/>
+          </span>
+          <span class="onderschrift">
+            <h4>Been pendelen</h4>
+            <p>Laten zwaaien, geen kracht zetten. Het kader voor de dag dat het niet gaat.</p>
+          </span>
+          <span class="voet"><span>Reserve · 2 × 20</span><span class="vak" aria-hidden="true">✓</span></span>
+        </button>
+
+        <button class="paneelkeuze" type="button" aria-pressed="false">
+          <span class="vlag">In de plaat</span>
+          <span class="tekening">
+            <span class="grond"></span>
+            <img src="/images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png"
+              alt="Lijntekening: staand met de voeten achter elkaar op één lijn, hand aan de steun."/>
+          </span>
+          <span class="onderschrift">
+            <h4>Tandemstand met steun</h4>
+            <p>Voeten op één lijn, twintig tellen, hand licht aan de steun.</p>
+          </span>
+          <span class="voet"><span>Reserve · 4 × 20 tel</span><span class="vak" aria-hidden="true">✓</span></span>
+        </button>
+
+        <button class="paneelkeuze" type="button" aria-pressed="false">
+          <span class="vlag">In de plaat</span>
+          <span class="tekening">
+            <span class="grond"></span>
+            <img src="/images/onderste-extremiteit/step-up-staand-met-steun-line-v1.png"
+              alt="Lijntekening: met steun op een opstapje stappen en weer terug."/>
+          </span>
+          <span class="onderschrift">
+            <h4>Opstap met steun</h4>
+            <p>Opstapje van 15 cm, altijd hetzelfde been eerst. Nog niet aan de beurt.</p>
+          </span>
+          <span class="voet"><span>Volgende aflevering</span><span class="vak" aria-hidden="true">✓</span></span>
+        </button>
+
+      </div>
+
+      <aside class="plaatopbouw">
+        <div class="kop"><span>De plaat</span><i>Aflevering 9</i></div>
+        <div class="lijf">
+          <div class="miniplaat">
+            <div class="mp gevuld"><span class="bol"></span>Stoelsquat</div>
+            <div class="mp gevuld"><span class="bol"></span>Knie strekken, zittend</div>
+            <div class="mp gevuld"><span class="bol"></span>Kuitheffing met steun</div>
+            <div class="mp leeg"><span class="bol"></span>Vierde kader — leeg gelaten</div>
+          </div>
+          <p class="uit"><b>Drie kaders is een plaat.</b> Vier maakt hem druk en zeven maakt hem
+            onleesbaar. Het lege kader onderaan is met opzet leeg: daar staat straks de week zelf,
+            in zeven kleine kaders.</p>
+          <button class="kn" type="button">Plaat afdrukken</button>
+        </div>
+      </aside>
+    </div>
+
+    <div class="leegstaat" style="margin-top:var(--s4)">
+      <b>Lege staat</b>
+      Nog geen kader gekozen. Een lege plaat is niet hetzelfde als een lege week — er is nog niets
+      verteld, en dat is het enige wat hier staat.
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>De week als plaat: zeven kaders naast elkaar, ingekleurd naar wat er gebeurde. Donderdag
+        is een kader met een eigen zin — geen gat, geen rood kruis.</p>
+    </div>
+
+    <div class="album">
+      <div class="balk">
+        <span>Album · dossier 2026-0417</span>
+        <i>Bijgewerkt 21-08-2026 · 09:14 · J. Bakker</i>
+      </div>
+
+      <div class="albumlijf">
+        <div class="albumkop">
+          <div>
+            <h3>R. Veenstra — rechterknie, na artroscopie</h3>
+            <p class="sub">Aflevering 9 van 12 · herbeoordeling 31 augustus</p>
+          </div>
+          <div class="nrblok">
+            Plaat<b>9 / 12</b>
+            17 t/m 23 aug
+          </div>
+        </div>
+
+        <div class="titelstrook" style="margin-bottom:var(--s4)">
+          <h2>De week van de dinsdag</h2>
+          <span class="aflevering">Aflevering 9</span>
+        </div>
+
+        <div class="dagenrij">
+          <div class="dagpaneel vol">
+            <div class="dagkop">Ma <span>17-08</span></div>
+            <span class="stip" aria-hidden="true"></span>
+            <div class="beeldvlak"><span class="grond"></span>
+              <img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Alle drie de oefeningen gedaan."/></div>
+            <div class="onder">Alle drie</div>
+          </div>
+          <div class="dagpaneel vol">
+            <div class="dagkop">Di <span>18-08</span></div>
+            <span class="stip" aria-hidden="true"></span>
+            <div class="beeldvlak"><span class="grond"></span>
+              <img src="/images/onderste-extremiteit/step-up-staand-met-steun-line-v1.png" alt="Alle drie gedaan, plus traplopen op het werk."/></div>
+            <div class="onder">Alle drie + trap</div>
+          </div>
+          <div class="dagpaneel half">
+            <div class="dagkop">Wo <span>19-08</span></div>
+            <span class="stip" aria-hidden="true"></span>
+            <div class="beeldvlak"><span class="grond"></span>
+              <img src="/images/onderste-extremiteit/kuitheffing-staand-met-steun-line-v1.png" alt="Alleen de kuitheffing gedaan."/></div>
+            <div class="onder">Alleen kader 3</div>
+          </div>
+          <div class="dagpaneel niet">
+            <div class="dagkop">Do <span>20-08</span></div>
+            <span class="stip" aria-hidden="true"></span>
+            <div class="beeldvlak"><span class="grond"></span>
+              <img src="/images/onderste-extremiteit/been-pendelen-line-v1.png" alt="Alleen pendelen; het ging niet."/></div>
+            <div class="onder">Ging niet. Alleen pendelen.</div>
+          </div>
+          <div class="dagpaneel vol">
+            <div class="dagkop">Vr <span>21-08</span></div>
+            <span class="stip" aria-hidden="true"></span>
+            <div class="beeldvlak"><span class="grond"></span>
+              <img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png" alt="Alle drie de oefeningen gedaan."/></div>
+            <div class="onder">Alle drie</div>
+          </div>
+          <div class="dagpaneel open">
+            <div class="dagkop">Za <span>22-08</span></div>
+            <div class="beeldvlak"><span class="grond"></span></div>
+            <div class="onder">Nog niet getekend</div>
+          </div>
+          <div class="dagpaneel open">
+            <div class="dagkop">Zo <span>23-08</span></div>
+            <div class="beeldvlak"><span class="grond"></span></div>
+            <div class="onder">Nog niet getekend</div>
+          </div>
+        </div>
+
+        <div class="vertelregel">
+          <span class="recitatief">Donderdag is geen gat in de week. Het is het kader waarin
+            iemand besloot om alleen te pendelen — en vrijdag stonden er weer drie.</span>
+          <p style="font-size:16px;line-height:1.6;color:var(--lijn-2);max-width:60ch">
+            De therapeut ziet hier niet “4 van de 7”, maar een verloop: dinsdag was de zwaarste dag
+            (drie kaders plús de trap), woensdag zakte het in, donderdag stopte het, vrijdag stond
+            het er weer. <b style="color:var(--lijn)">De dip komt twee dagen ná de piek</b> — en dat
+            is een patroon dat je op een vinkjeslijst nooit ziet, omdat vinkjes geen volgorde hebben.
+          </p>
+        </div>
+
+        <div class="gesprek">
+          <div class="kolom">
+            <h4>Wat de patiënt schreef</h4>
+            <div class="ballonrij">
+              <div class="ballon sl">Donderdag was de knie ’s ochtends al dik. Ik heb alleen
+                gependeld en verder niks gedaan.</div>
+              <span class="bron">R. Veenstra · do 20-08, 21:40</span>
+              <div class="ballon sl">Vrijdag ging het weer gewoon. Voelde als een gewone dag.</div>
+              <span class="bron">R. Veenstra · vr 21-08, 08:15</span>
+            </div>
+          </div>
+          <div class="kolom">
+            <h4>Wat de therapeut terugtekende</h4>
+            <div class="ballonrij">
+              <div class="ballon van-therapeut sl">Goed gedaan dat u toen alleen gependeld hebt.
+                Dat is precies waar dat kader voor is.</div>
+              <span class="bron">J. Bakker · vr 21-08, 09:14</span>
+              <div class="ballon van-therapeut sl">De trap van dinsdag zetten we volgende
+                aflevering op twee dagen in plaats van vier. Dan komt de dip er niet.</div>
+              <span class="bron">J. Bakker · vr 21-08, 09:16</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>Eén plaat: titelstrook, het vertellerskastje waarin de therapeut spreekt, drie oefenkaders
+        met de dosering in de ballon, de zeven dagkaders onderaan en de slotregel. Donderdag heeft
+        zijn eigen bijschrift — geprint, vóórdat de week begon.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer r geen-print" style="top:18mm;left:calc(100% + 22px)">de titelstrook
+            is de enige plek met kapitalen op dit blad</span>
+          <span class="wijzer l geen-print" style="top:44mm;right:calc(100% + 22px)">het gele kastje:
+            de verteller, op 11 punt — hier leest de patiënt</span>
+          <span class="wijzer r geen-print" style="top:120mm;left:calc(100% + 22px)">de instructie
+            staat in een ballon, want een ballon dwingt tot korte zinnen</span>
+          <span class="wijzer l geen-print" style="top:252mm;right:calc(100% + 22px)">dag vier heeft
+            zijn eigen tekst, en die stond er al vóór de week begon</span>
+
+          <div class="bv-titel">
+            <div>
+              <h1>De week van de dinsdag</h1>
+              <p class="sub">R. Veenstra · rechterknie, na artroscopie · 17 t/m 23 augustus 2026</p>
+            </div>
+            <span class="afl">Aflevering<br/>9 van 12</span>
+          </div>
+
+          <div class="bv-verteller">
+            <span class="wie">De therapeut vertelt</span>
+            <p>Dit zijn uw drie oefeningen voor deze week. <b>Doe ze op de dagen dat het gaat, en
+              lees onderaan wat u doet op de dag dat het niet gaat.</b> Die dag staat er al op —
+              hij hoort erbij, hij is geen fout. Gaat het twee dagen achter elkaar niet, bel dan.</p>
+          </div>
+
+          <div class="bv-paneel">
+            <span class="tekening">
+              <span class="nr">1</span>
+              <span class="grond"></span>
+              <img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+                alt="Lijntekening: vanuit stand tot net boven een stoel zakken en weer omhoog komen."/>
+            </span>
+            <span class="tekst">
+              <h2>Stoelsquat</h2>
+              <span class="prballon">Ga voor een stoel staan, voeten op heupbreedte. Zak langzaam
+                tot u de zitting bijna raakt en kom weer omhoog. <b>Houd uw romp rechtop.</b></span>
+              <span class="dosstrook">
+                <span class="dos">3 × 10</span>
+                <span class="let"><b>Let op</b>Knieën boven de voeten. Doet het pijn? Ga minder
+                  diep — niet minder vaak.</span>
+              </span>
+            </span>
+          </div>
+
+          <div class="bv-paneel">
+            <span class="tekening">
+              <span class="nr">2</span>
+              <span class="grond"></span>
+              <img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png"
+                alt="Lijntekening: zittend op een stoel het onderbeen strekken tot horizontaal."/>
+            </span>
+            <span class="tekst">
+              <h2>Knie strekken, zittend</h2>
+              <span class="prballon">Zit rechtop op een stoel. Strek uw rechterbeen tot het recht
+                vooruit staat, houd <b>twee tellen</b> vast en laat het rustig zakken.</span>
+              <span class="dosstrook">
+                <span class="dos">3 × 12</span>
+                <span class="let"><b>Let op</b>Rustig terug is belangrijker dan hoog komen.</span>
+              </span>
+            </span>
+          </div>
+
+          <div class="bv-paneel">
+            <span class="tekening">
+              <span class="nr">3</span>
+              <span class="grond"></span>
+              <img src="/images/onderste-extremiteit/kuitheffing-staand-met-steun-line-v1.png"
+                alt="Lijntekening: staand met de handen aan een leuning op de tenen komen."/>
+            </span>
+            <span class="tekst">
+              <h2>Kuitheffing met steun</h2>
+              <span class="prballon">Sta bij het aanrecht, handen licht op de rand. Kom op uw tenen
+                en zak daarna <b>langzaam</b> terug tot uw hielen de grond raken.</span>
+              <span class="dosstrook">
+                <span class="dos">3 × 12</span>
+                <span class="let"><b>Let op</b>De steun blijft tot 31 augustus. Gaat traplopen
+                  eerder vlot, bel dan.</span>
+              </span>
+            </span>
+          </div>
+
+          <div class="bv-week">
+            <div class="bv-dag">
+              <div class="dk">Ma <span>17-08</span></div>
+              <div class="vlak"><span class="bol"></span></div>
+              <div class="bijschrift">Kleur de bol</div>
+            </div>
+            <div class="bv-dag">
+              <div class="dk">Di <span>18-08</span></div>
+              <div class="vlak"><span class="bol"></span></div>
+              <div class="bijschrift">Kleur de bol</div>
+            </div>
+            <div class="bv-dag">
+              <div class="dk">Wo <span>19-08</span></div>
+              <div class="vlak"><span class="bol"></span></div>
+              <div class="bijschrift">Half is ook goed</div>
+            </div>
+            <div class="bv-dag dagvier">
+              <div class="dk">Do <span>20-08</span></div>
+              <div class="vlak"><span class="bol"></span></div>
+              <div class="bijschrift">Gaat het niet? Alleen pendelen. Ook dit is een dag.</div>
+            </div>
+            <div class="bv-dag">
+              <div class="dk">Vr <span>21-08</span></div>
+              <div class="vlak"><span class="bol"></span></div>
+              <div class="bijschrift">Gewoon verder</div>
+            </div>
+            <div class="bv-dag">
+              <div class="dk">Za <span>22-08</span></div>
+              <div class="vlak"><span class="bol"></span></div>
+              <div class="bijschrift">Kleur de bol</div>
+            </div>
+            <div class="bv-dag">
+              <div class="dk">Zo <span>23-08</span></div>
+              <div class="vlak"><span class="bol"></span></div>
+              <div class="bijschrift">Kleur de bol</div>
+            </div>
+          </div>
+
+          <div class="bv-slot">
+            <span class="vervolg">Wordt vervolgd →</span>
+            <span class="prk"><b>Fysiplan fysiotherapie</b> · Kerkstraat 12, Deventer ·
+              0570 – 12 34 56 · werkdagen 8 tot 17 uur. Neem deze plaat mee op 31 augustus; dan
+              tekenen we aflevering 10.</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="printhulp geen-print">
+      <p>Eén A4 staand. Alle leestekst staat zwart op wit of op het gele vertellerskastje — de vlakke
+        kleuren zitten alleen áchter de tekeningen en dragen geen informatie. Uit een
+        zwart-witprinter komt dezelfde plaat, met grijstinten waar de kleur zat. De vertellerstekst
+        staat op 11 punt, de ballonnen op 10,5.</p>
+      <button class="kn" onclick="window.print()">Print deze plaat</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>De richting</h4>
+      <p>De klare lijn is de enige tekentraditie die duidelijkheid tot eerste regel heeft verheven —
+        en tegelijk de enige die een hoofdpersoon meebrengt. Dat tweede is hier het punt. Een
+        oefenkaart in de gebiedende wijs kan de slechte dag alleen als leeg vakje weergeven, en een
+        leeg vakje leest als schuld. Een plaat kan de slechte dag tekenen, met een bijschrift dat
+        de therapeut heeft geschreven vóórdat die dag er was. Het kader, de ballon en het gele
+        vertellerskastje zijn de drie stukken grammatica die dat mogelijk maken.</p>
+    </div>
+    <div class="kolom">
+      <h4>Waar het schuurt</h4>
+      <ul>
+        <li>Een strip over uw eigen lichaam kan kleineren. Voor een man van tachtig die net een
+          knieoperatie achter de rug heeft, is “aflevering 9” misschien precies het verkeerde
+          register — leuk bedoeld, en daardoor juist niet serieus.</li>
+        <li>Een verhaal belooft een afloop. Bij een chronische klacht of een herstel dat niet
+          doorzet, wordt “wordt vervolgd” een wrange regel; het concept heeft geen goede vorm voor
+          een verhaal dat niet ergens heen gaat.</li>
+        <li>Een ballon dwingt tot korte zinnen. Dat is de kracht en de prijs: nuance die niet in
+          twee regels past, verdwijnt van het blad in plaats van kleiner gezet te worden.</li>
+        <li>De klare lijn vraagt tekeningen die precies passen bij de kaders. Met bestaande
+          lijnillustraties op vlakke kleurvlakken kom je een heel eind, maar echt ligne claire
+          wordt het pas als de figuren voor deze plaat getekend zijn — dat is illustratiewerk,
+          geen CSS.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Verder</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

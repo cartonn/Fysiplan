@@ -1,0 +1,1146 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 31 — Grootboek · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 31 — GROOTBOEK
+   ------------------------------------------------------------
+   Het dubbel boekhouden zoals Pacioli het in 1494 opschreef:
+   niets wordt geboekt zonder tegenboeking. Elke post staat twee
+   keer in het boek — links wat eruit ging, rechts wat erin kwam —
+   en pas als beide kanten gelijk zijn, klopt de balans.
+
+   Materiaal: gelinieerd rekenpapier met blauwgroene liniatuur en
+   rode kolomlijnen, ijzergallusinkt die naar blauwzwart trekt,
+   rode inkt spaarzaam en uitsluitend voor saldi, de dubbele
+   streep onder een totaal, de duimindex langs de snede, en het
+   marmerpapier op het bord met een rode leren rugtitel.
+
+   Toegepast op de oefenkaart: elke oefenkaart in de zorg boekt
+   maar één kant. Er staat wat u moet dóen — nooit wat u al
+   ingebracht hebt. Zeven lege vinkvakjes per week zijn zeven
+   openstaande posten; wie er vier haalt, staat drie in het rood.
+   Dit concept opent de tweede kolom. Slaap, een rustdag, de
+   trap op het werk, de wandeling naar de bakker: het staat
+   rechts, het telt mee, en het weeksaldo is de som van beide.
+
+   En de praktijk boekt mee. Een afspraak die niet doorging, een
+   dosering die te hoog bleek: die posten staan in hetzelfde boek,
+   in dezelfde inkt. Een boek met één debiteur is geen grootboek.
+   ============================================================ */
+
+:root{
+  /* ── het papier ── */
+  --vel:#fbf7ec;             /* rekenpapier, ivoor */
+  --vel-2:#fffdf6;
+  --vel-3:#f2ebd9;
+  --rand:#ddd2ba;
+
+  /* ── de liniatuur ── */
+  --liniaal:#8fb3ae;         /* blauwgroene feint rules */
+  --liniaal-licht:#d3e2df;
+  --kolom:#d09a92;           /* rode kolomlijn, verbleekt */
+
+  /* ── de inkt ── */
+  --inkt:#1b2a33;            /* ijzergallus: zwart met blauw erin */
+  --inkt-2:#3d4d57;
+  --grijs:#7b8890;
+  --rood:#9d2a26;            /* saldo-inkt, spaarzaam */
+  --rood-licht:#f3e0dd;
+  --goud:#9d7c2c;
+
+  /* ── de band ── */
+  --bord:#2b4a46;            /* marmerbord */
+  --band:#752c25;            /* rode leren rug */
+  --bord-diep:#1c322f;
+
+  --serif:Charter,"Iowan Old Style",Georgia,"Times New Roman",serif;
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:9px; --s3:16px; --s4:26px; --s5:42px; --s6:70px;
+
+  /* de liniatuur van het rekenblad */
+  --liniatuur:repeating-linear-gradient(180deg,
+    transparent 0 28px, var(--liniaal-licht) 28px 29px);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font:17px/1.7 var(--serif);color:var(--inkt-2);background:var(--vel);
+  font-variant-numeric:tabular-nums lining-nums}
+img{max-width:100%;display:block}
+a{color:var(--rood)}
+:focus-visible{outline:3px solid var(--rood);outline-offset:3px}
+
+.binnen{max-width:1160px;margin:0 auto;padding:0 24px}
+
+/* getallen staan in een grootboek altijd onder elkaar */
+.cijfer{font-variant-numeric:tabular-nums lining-nums;letter-spacing:0}
+
+/* de dubbele streep onder een totaal — het oudste teken in het boek */
+.dubbel{border-bottom:3px double var(--inkt)}
+
+/* een saldo staat in rode inkt, en alleen een saldo */
+.saldo-in{color:var(--rood)}
+
+/* ── labbalk ─────────────────────────────────────────────── */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:18px;
+  background:var(--bord-diep);color:#b6c9c5;padding:11px 22px;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--bord-diep);background:#c9b98d;padding:5px 8px;border-radius:2px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#b6c9c5;text-decoration:none;padding:5px 2px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:#c9b98d}
+.labbalk a.terug{color:#fff;font-weight:600}
+@media (max-width:820px){.labbalk{gap:12px;font-size:12px;flex-wrap:wrap}}
+
+/* ── schermkoppen ────────────────────────────────────────── */
+.scherm{padding:var(--s6) 0;border-top:1px solid var(--rand)}
+.scherm.eerste{border-top:0;padding-top:var(--s5)}
+.schermkop{margin-bottom:var(--s5);max-width:70ch}
+.schermkop b{display:block;font:700 11px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--rood);margin-bottom:11px}
+.schermkop h2{font:600 clamp(27px,3.3vw,38px)/1.12 var(--serif);color:var(--inkt);
+  letter-spacing:-.02em}
+.schermkop p{margin-top:11px;color:var(--grijs);font-size:16px;line-height:1.62}
+
+/* de kolomkop zoals boven een rekening: klein, gespatieerd, met streep */
+.kolomtitel{font:600 10.5px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--grijs);border-bottom:1.5px solid var(--inkt);padding-bottom:7px;margin-bottom:var(--s3)}
+.kolomtitel.rd{color:var(--rood);border-color:var(--kolom)}
+
+.kn{display:inline-block;font:600 15px/1 var(--sans);letter-spacing:.01em;padding:15px 21px;
+  text-decoration:none;border:1.5px solid var(--inkt);background:var(--inkt);color:var(--vel-2);
+  cursor:pointer;border-radius:2px}
+.kn:hover{background:var(--rood);border-color:var(--rood)}
+.kn.leeg{background:transparent;color:var(--inkt)}
+.kn.leeg:hover{background:var(--inkt);color:var(--vel-2)}
+
+/* ============================================================
+   SCHERM 1 · LANDING — het boek op tafel
+   ============================================================ */
+.boekhoek{display:grid;grid-template-columns:290px 1fr;gap:var(--s5);align-items:start}
+@media (max-width:940px){.boekhoek{grid-template-columns:1fr;gap:var(--s4)}}
+
+/* het marmerbord met rode leren rug */
+.band{position:relative;aspect-ratio:3/4;border-radius:2px 5px 5px 2px;overflow:hidden;
+  box-shadow:0 26px 52px -26px rgba(27,42,51,.72), inset 0 0 0 1px rgba(0,0,0,.3);
+  background:
+    radial-gradient(120px 40px at 22% 18%, rgba(157,124,44,.5), transparent 70%),
+    radial-gradient(150px 34px at 74% 34%, rgba(117,44,37,.44), transparent 70%),
+    radial-gradient(100px 28px at 38% 58%, rgba(251,247,236,.34), transparent 70%),
+    radial-gradient(170px 40px at 62% 76%, rgba(157,124,44,.34), transparent 70%),
+    repeating-linear-gradient(114deg,
+      rgba(27,50,47,.55) 0 6px, rgba(43,74,70,.2) 6px 13px, rgba(117,44,37,.16) 13px 19px),
+    var(--bord)}
+.band .rug{position:absolute;left:0;top:0;bottom:0;width:52px;background:var(--band);
+  box-shadow:inset -7px 0 12px -8px rgba(0,0,0,.7), inset 2px 0 0 rgba(255,255,255,.13);
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  padding:22px 0}
+.band .rug .lijn{width:30px;height:2px;background:var(--goud);opacity:.75}
+.band .rug .titel{writing-mode:vertical-rl;transform:rotate(180deg);
+  font:700 12.5px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:#e2c987}
+.band .schild{position:absolute;left:82px;right:26px;top:56px;padding:15px 16px;
+  background:rgba(251,247,236,.93);border:1px solid rgba(27,42,51,.4);border-radius:2px;
+  box-shadow:0 8px 20px -12px rgba(0,0,0,.6)}
+.band .schild .wat{font:700 9.5px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;
+  color:var(--grijs)}
+.band .schild h3{font:600 21px/1.2 var(--serif);color:var(--inkt);margin-top:9px;
+  letter-spacing:-.015em}
+.band .schild .jaar{margin-top:9px;font:600 13px/1 var(--sans);color:var(--rood);letter-spacing:.06em}
+.band .snede{position:absolute;right:0;top:9px;bottom:9px;width:11px;
+  background:repeating-linear-gradient(180deg, #efe6cf 0 2px, #d9cba9 2px 4px)}
+
+.held h1{font:600 clamp(31px,4.5vw,53px)/1.08 var(--serif);color:var(--inkt);
+  letter-spacing:-.028em;max-width:17ch}
+.held h1 em{font-style:normal;color:var(--rood)}
+.held .onder{margin-top:var(--s3);font-size:19px;line-height:1.62;max-width:54ch;color:var(--inkt-2)}
+.held .onder b{color:var(--inkt);font-weight:600}
+.held .knoppen{display:flex;flex-wrap:wrap;gap:11px;margin-top:var(--s4)}
+
+/* de twee kolommen als belofte, meteen op de landing */
+.tegenboeking{margin-top:var(--s5);border-top:1.5px solid var(--inkt);
+  display:grid;grid-template-columns:1fr 1fr;gap:0}
+@media (max-width:700px){.tegenboeking{grid-template-columns:1fr}}
+.tegenboeking .zijde{padding:var(--s4) var(--s4) var(--s4) 0}
+.tegenboeking .zijde + .zijde{border-left:1.5px solid var(--kolom);padding-left:var(--s4)}
+@media (max-width:700px){
+  .tegenboeking .zijde + .zijde{border-left:0;border-top:1.5px solid var(--kolom);padding-left:0}
+  .tegenboeking .zijde{padding-right:0}
+}
+.tegenboeking h4{font:700 10.5px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--grijs);margin-bottom:var(--s3)}
+.tegenboeking .zijde.cr h4{color:var(--rood)}
+.tegenboeking ul{list-style:none}
+.tegenboeking li{display:flex;justify-content:space-between;gap:14px;padding:9px 0;
+  border-bottom:1px solid var(--liniaal-licht);font-size:16px}
+.tegenboeking li span{color:var(--inkt)}
+.tegenboeking li i{font-style:normal;color:var(--grijs);font-size:15px}
+.tegenboeking .slot{display:flex;justify-content:space-between;gap:14px;margin-top:var(--s3);
+  padding-top:10px;border-top:1.5px solid var(--inkt);font:600 17px/1 var(--serif);color:var(--inkt)}
+.tegenboeking p.uit{margin-top:var(--s3);font-size:15.5px;color:var(--grijs);line-height:1.6}
+
+/* ============================================================
+   SCHERM 2 · KIEZER — het journaal met duimindex
+   ============================================================ */
+.journaal{display:grid;grid-template-columns:1fr 62px 336px;gap:0;align-items:start}
+@media (max-width:1040px){.journaal{grid-template-columns:1fr;gap:var(--s4)}}
+.journaal > *{min-width:0}
+
+.zoekregel{display:flex;gap:12px;flex-wrap:wrap;align-items:center;
+  border:1px solid var(--rand);background:var(--vel-2);padding:13px 16px;margin-bottom:var(--s4)}
+.zoekregel .lbl{font:700 10.5px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--grijs)}
+.zoekregel input{flex:1;min-width:190px;border:0;border-bottom:1.5px solid var(--inkt);
+  background:transparent;font:400 17px/1.4 var(--serif);color:var(--inkt);padding:4px 2px}
+.zoekregel .tel{font-size:14.5px;color:var(--grijs)}
+
+.rubrieken{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:var(--s4)}
+.rubrieken button{font:500 14.5px/1 var(--sans);padding:10px 14px;border:1.5px solid var(--rand);
+  background:var(--vel-2);color:var(--inkt-2);cursor:pointer;border-radius:2px}
+.rubrieken button:hover{border-color:var(--inkt)}
+.rubrieken button[aria-pressed="true"]{background:var(--inkt);color:var(--vel-2);border-color:var(--inkt)}
+
+/* de posten als regels op rekenpapier */
+.posten{border:1px solid var(--rand);background:var(--vel-2);background-image:var(--liniatuur)}
+.posten .kop{display:grid;grid-template-columns:46px 54px 1fr 128px 76px 46px;gap:12px;
+  padding:10px 15px;border-bottom:1.5px solid var(--inkt);align-items:end;
+  font:700 10px/1.3 var(--sans);letter-spacing:.13em;text-transform:uppercase;color:var(--grijs)}
+.posten .kop .r{text-align:right}
+@media (max-width:820px){.posten .kop{display:none}}
+.regel{display:grid;grid-template-columns:46px 54px 1fr 128px 76px 46px;gap:12px;align-items:center;
+  padding:11px 15px;border-bottom:1px solid var(--liniaal-licht);cursor:pointer;
+  background:transparent;width:100%;text-align:left;font:inherit;color:inherit;border-left:0;
+  border-right:0;border-top:0}
+.regel:hover{background:#fff}
+.regel[aria-pressed="true"]{background:var(--rood-licht)}
+.regel .fol{font:500 13.5px/1 var(--mono);color:var(--grijs)}
+.regel .beeld{width:54px;height:54px;border:1px solid var(--rand);background:#fff;padding:3px;
+  display:flex;align-items:center;justify-content:center;overflow:hidden}
+.regel .beeld img{max-height:100%;max-width:100%;width:auto;height:auto;mix-blend-mode:multiply}
+.regel .naam b{display:block;font:600 17.5px/1.3 var(--serif);color:var(--inkt);letter-spacing:-.012em}
+.regel .naam span{display:block;font-size:14px;color:var(--grijs);margin-top:2px;line-height:1.45}
+.regel .dos{font-size:14.5px;color:var(--inkt-2)}
+.regel .waarde{text-align:right;font:600 17px/1 var(--serif);color:var(--inkt)}
+.regel .waarde i{display:block;font-style:normal;font:500 11px/1 var(--sans);color:var(--grijs);
+  margin-top:4px;letter-spacing:.1em;text-transform:uppercase}
+.regel .vink{width:27px;height:27px;border:1.5px solid var(--inkt);display:grid;place-items:center;
+  font:700 16px/1 var(--sans);color:transparent;justify-self:end;border-radius:2px;background:#fff}
+.regel[aria-pressed="true"] .vink{color:var(--rood);border-color:var(--rood);border-width:2px}
+@media (max-width:820px){
+  .regel{grid-template-columns:54px 1fr 46px;
+    grid-template-areas:"b n v" "b d d" ". w w";row-gap:5px}
+  .regel .fol{display:none}
+  .regel .beeld{grid-area:b} .regel .naam{grid-area:n} .regel .dos{grid-area:d}
+  .regel .waarde{grid-area:w;text-align:left}
+  .regel .waarde i{display:inline;margin-left:8px}
+  .regel .vink{grid-area:v}
+}
+
+/* de duimindex langs de snede */
+.duim{display:flex;flex-direction:column;gap:5px;padding:0 9px;position:sticky;top:74px}
+@media (max-width:1040px){.duim{flex-direction:row;flex-wrap:wrap;padding:0;position:static}}
+.duim a{display:block;text-align:center;text-decoration:none;padding:9px 5px;
+  background:var(--vel-3);border:1px solid var(--rand);border-left-width:4px;
+  border-left-color:var(--band);border-radius:0 3px 3px 0;
+  font:700 12px/1 var(--sans);color:var(--inkt-2);letter-spacing:.06em}
+.duim a:hover{background:var(--band);color:#f2e6cf;border-left-color:var(--inkt)}
+.duim a.nu{background:var(--inkt);color:var(--vel-2);border-left-color:var(--goud)}
+
+/* de balanskolom rechts */
+.balanskolom{border:1.5px solid var(--inkt);background:var(--vel-2);position:sticky;top:74px}
+@media (max-width:1040px){.balanskolom{position:static}}
+.balanskolom .kop{background:var(--inkt);color:var(--vel-2);padding:12px 16px;
+  font:700 10.5px/1.4 var(--sans);letter-spacing:.18em;text-transform:uppercase;
+  display:flex;justify-content:space-between;gap:10px}
+.balanskolom .kop i{font-style:normal;color:#c9b98d}
+.balanskolom .lijf{padding:var(--s3) 16px var(--s4)}
+.balanskolom ol{list-style:none;counter-reset:p}
+.balanskolom ol li{counter-increment:p;display:grid;grid-template-columns:24px 1fr auto;gap:10px;
+  padding:10px 0;border-bottom:1px solid var(--liniaal-licht);font-size:15px;align-items:baseline}
+.balanskolom ol li::before{content:counter(p);color:var(--grijs);font:500 13px/1 var(--mono)}
+.balanskolom ol li b{font:600 16px/1.35 var(--serif);color:var(--inkt);display:block}
+.balanskolom ol li span{display:block;color:var(--grijs);font-size:13.5px;margin-top:2px}
+.balanskolom ol li em{font-style:normal;font:600 16px/1 var(--serif);color:var(--inkt)}
+
+.balanskolom .leeg{padding:var(--s4) 0;text-align:center;color:var(--grijs);font-size:15px;
+  line-height:1.6;border-bottom:1px solid var(--liniaal-licht)}
+.balanskolom .leeg b{display:block;color:var(--inkt);font-weight:600;font-size:16.5px;
+  margin-bottom:6px}
+
+.somregel{display:flex;justify-content:space-between;gap:12px;padding:9px 0;font-size:15.5px}
+.somregel.tot{margin-top:6px;padding-top:10px;border-top:1.5px solid var(--inkt);
+  font:600 18px/1 var(--serif);color:var(--inkt)}
+.somregel.tot .cijfer{border-bottom:3px double var(--inkt);padding-bottom:4px}
+
+/* de waarschuwing als de week niet gedekt is */
+.ongedekt{margin-top:var(--s3);border:1.5px solid var(--rood);background:var(--rood-licht);
+  padding:13px 15px}
+.ongedekt b{display:block;font:700 10.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--rood);margin-bottom:7px}
+.ongedekt p{font-size:15px;line-height:1.6;color:var(--inkt-2)}
+
+/* ============================================================
+   SCHERM 3 · CLIËNTKAART — de rekening in T-vorm
+   ============================================================ */
+.rekening{border:1.5px solid var(--inkt);background:var(--vel-2);
+  box-shadow:0 24px 50px -34px rgba(27,42,51,.6)}
+.rekening .balk{background:var(--inkt);color:var(--vel-2);padding:14px 22px;display:flex;
+  justify-content:space-between;gap:18px;flex-wrap:wrap;
+  font:700 11px/1.5 var(--sans);letter-spacing:.16em;text-transform:uppercase}
+.rekening .balk i{font-style:normal;color:#c9b98d}
+
+.rekeningkop{padding:var(--s4) var(--s4) var(--s3);border-bottom:1.5px solid var(--inkt);
+  display:flex;justify-content:space-between;gap:var(--s4);flex-wrap:wrap;align-items:flex-end}
+.rekeningkop h3{font:600 27px/1.14 var(--serif);color:var(--inkt);letter-spacing:-.02em}
+.rekeningkop .sub{margin-top:7px;font-size:15.5px;color:var(--grijs)}
+.rekeningkop .folio{font:500 13px/1.5 var(--mono);color:var(--grijs);text-align:right}
+.rekeningkop .folio b{display:block;color:var(--inkt);font:600 15px/1 var(--mono)}
+
+/* de T: debet links, credit rechts, rode middenlijn */
+.tvorm{display:grid;grid-template-columns:1fr 1fr}
+@media (max-width:900px){.tvorm{grid-template-columns:1fr}}
+.tvorm > *{min-width:0}
+.zijde{padding:var(--s4);background-image:var(--liniatuur)}
+.zijde.cr{border-left:2px solid var(--kolom)}
+@media (max-width:900px){.zijde.cr{border-left:0;border-top:2px solid var(--kolom)}}
+.zijde > h4{font:700 10.5px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--grijs);margin-bottom:4px}
+.zijde.cr > h4{color:var(--rood)}
+.zijde > p.wat{font-size:14.5px;color:var(--grijs);margin-bottom:var(--s3);line-height:1.5}
+
+.boekingen{list-style:none}
+.boekingen li{display:grid;grid-template-columns:64px 1fr 62px;gap:12px;align-items:baseline;
+  padding:10px 0;border-bottom:1px solid var(--liniaal-licht);font-size:15.5px}
+.boekingen .dat{font:500 13px/1.5 var(--mono);color:var(--grijs)}
+.boekingen .om b{color:var(--inkt);font-weight:600;font-size:16.5px;display:block;line-height:1.35}
+.boekingen .om span{display:block;color:var(--grijs);font-size:13.5px;margin-top:3px;line-height:1.45}
+.boekingen .bed{text-align:right;font:600 17px/1 var(--serif);color:var(--inkt)}
+.boekingen li.praktijk .om b{color:var(--rood)}
+.boekingen li.praktijk .bed{color:var(--rood)}
+
+.zijtotaal{display:flex;justify-content:space-between;gap:12px;margin-top:var(--s3);
+  padding-top:11px;border-top:1.5px solid var(--inkt);font:600 19px/1 var(--serif);color:var(--inkt)}
+.zijtotaal .cijfer{border-bottom:3px double var(--inkt);padding-bottom:5px}
+
+/* de slotregel over de volle breedte */
+.slotbalk{border-top:1.5px solid var(--inkt);padding:var(--s4);display:grid;
+  grid-template-columns:1fr 260px;gap:var(--s4);align-items:center;background:var(--vel-3)}
+@media (max-width:760px){.slotbalk{grid-template-columns:1fr}}
+.slotbalk .zin{font-size:17px;line-height:1.6;color:var(--inkt-2);max-width:54ch}
+.slotbalk .zin b{color:var(--inkt);font-weight:600}
+.slotbalk .cijferblok{text-align:right}
+.slotbalk .cijferblok .lbl{font:700 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--grijs)}
+.slotbalk .cijferblok .groot{font:600 44px/1 var(--serif);color:var(--rood);letter-spacing:-.03em;
+  margin-top:9px;display:inline-block;border-bottom:3px double var(--rood);padding-bottom:6px}
+@media (max-width:760px){.slotbalk .cijferblok{text-align:left}}
+
+/* de weekstaat als kolommenbalans */
+.weekstaat{margin-top:var(--s5);border:1px solid var(--rand);background:var(--vel-2)}
+.weekstaat .kop{display:grid;grid-template-columns:96px repeat(3,1fr) 1fr 84px;gap:9px;
+  padding:10px 15px;border-bottom:1.5px solid var(--inkt);
+  font:700 10px/1.3 var(--sans);letter-spacing:.11em;text-transform:uppercase;color:var(--grijs)}
+.weekstaat .kop .r{text-align:right}
+.weekstaat .rij{display:grid;grid-template-columns:96px repeat(3,1fr) 1fr 84px;gap:9px;
+  padding:11px 15px;border-bottom:1px solid var(--liniaal-licht);align-items:center;font-size:15px}
+.weekstaat .rij.nu{background:#fff;box-shadow:inset 3px 0 0 var(--rood)}
+.weekstaat .rij .dag{font:600 15px/1.3 var(--serif);color:var(--inkt)}
+.weekstaat .rij .dag span{display:block;font:500 12.5px/1 var(--mono);color:var(--grijs);margin-top:3px}
+.weekstaat .vk{width:24px;height:24px;border:1.5px solid var(--rand);border-radius:2px;
+  display:grid;place-items:center;font:700 14px/1 var(--sans);color:transparent;background:#fff}
+.weekstaat .vk.af{border-color:var(--inkt);color:var(--inkt)}
+.weekstaat .vk.leeg{border-style:dashed}
+.weekstaat .cr{font-size:14.5px;color:var(--inkt-2)}
+.weekstaat .cr em{font-style:normal;color:var(--rood)}
+.weekstaat .sld{text-align:right;font:600 16px/1 var(--serif);color:var(--inkt)}
+.weekstaat .sld.min{color:var(--rood)}
+.weekstaat .voet{display:grid;grid-template-columns:96px repeat(3,1fr) 1fr 84px;gap:9px;
+  padding:12px 15px;border-top:1.5px solid var(--inkt);background:var(--vel-3);
+  font:600 16px/1 var(--serif);color:var(--inkt);align-items:center}
+.weekstaat .voet .sld{border-bottom:3px double var(--inkt);padding-bottom:4px}
+@media (max-width:820px){
+  .weekstaat{overflow-x:auto}
+  .weekstaat .kop,.weekstaat .rij,.weekstaat .voet{min-width:660px}
+}
+
+.notitie{margin-top:var(--s4);border-left:3px solid var(--rood);padding:4px 0 4px 15px;
+  font-size:16px;line-height:1.62;color:var(--inkt-2);max-width:62ch}
+.notitie b{display:block;font:700 10.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--rood);margin-bottom:8px}
+
+/* ============================================================
+   SCHERM 4 · HET PRINTBLAD
+   ============================================================ */
+.bladhouder{display:grid;place-items:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){
+  .bladschaal{width:100%;overflow:hidden}
+  .blad{transform:scale(.62);transform-origin:top center;margin-bottom:-116mm !important}
+}
+@media (max-width:620px){.blad{transform:scale(.42);margin-bottom:-174mm !important}}
+
+.blad{position:relative;width:210mm;height:297mm;background:#fffdf6;color:var(--inkt);
+  padding:11mm 13mm 9mm;box-shadow:0 30px 66px -34px rgba(27,42,51,.62);
+  border:1px solid var(--rand);display:flex;flex-direction:column;
+  font-family:var(--serif);font-variant-numeric:tabular-nums lining-nums}
+
+.wijzer{position:absolute;z-index:9;width:150px;font:400 12.5px/1.42 var(--sans);color:var(--grijs)}
+.wijzer::after{content:"";position:absolute;background:var(--rand);height:1px}
+.wijzer.r::after{left:-20px;top:50%;width:16px}
+.wijzer.l{text-align:right}
+.wijzer.l::after{right:-20px;top:50%;width:16px}
+@media (max-width:1180px){.wijzer{display:none}}
+
+/* kopveld van de rekening */
+.gb-kop{display:flex;justify-content:space-between;align-items:flex-end;gap:8mm;
+  border-bottom:1.6pt solid var(--inkt);padding-bottom:2.2mm}
+.gb-kop .org{font:700 7pt/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--grijs)}
+.gb-kop h1{font:600 21pt/1.04 var(--serif);letter-spacing:-.025em;margin-top:1.8mm;color:var(--inkt)}
+.gb-kop .rechts{text-align:right;font:500 8.5pt/1.6 var(--mono);color:var(--grijs);white-space:nowrap}
+.gb-kop .rechts b{display:block;font:600 11pt/1.2 var(--mono);color:var(--inkt)}
+
+.gb-velden{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2mm 6mm;
+  padding:2.2mm 0 2.4mm;border-bottom:.6pt solid var(--liniaal)}
+.gb-velden .v{display:flex;gap:2.5mm;align-items:baseline;font-size:9pt}
+.gb-velden .v .n{font:700 6.6pt/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--grijs);white-space:nowrap}
+.gb-velden .v .w{font-weight:600;color:var(--inkt);font-size:9.5pt}
+
+/* de leesregel: hier leest de patiënt, dus hier is het rustig en groot */
+.gb-lees{margin:2.6mm 0;padding:2.8mm 3.4mm;border:.8pt solid var(--liniaal);background:#fbf7ec}
+.gb-lees .lbl{font:700 6.8pt/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--rood);margin-bottom:1.6mm;display:block}
+.gb-lees p{font:400 11pt/1.5 var(--serif);color:var(--inkt);max-width:64ch}
+.gb-lees p b{font-weight:600}
+
+/* de drie posten */
+.gb-postenkop{display:grid;grid-template-columns:11mm 20mm 1fr 28mm 17mm;gap:3mm;
+  border-bottom:1.2pt solid var(--inkt);padding-bottom:1.4mm;margin-top:.4mm;
+  font:700 6.6pt/1.2 var(--sans);letter-spacing:.13em;text-transform:uppercase;color:var(--grijs)}
+.gb-postenkop .r{text-align:right}
+
+.gb-post{display:grid;grid-template-columns:11mm 20mm 1fr 28mm 17mm;gap:3mm;align-items:start;
+  padding:2.4mm 0;border-bottom:.6pt solid var(--liniaal)}
+.gb-post .fol{font:500 8.5pt/1.5 var(--mono);color:var(--grijs)}
+.gb-post .beeld{width:20mm;height:20mm;border:.6pt solid var(--rand);background:#fff;padding:1mm;
+  display:flex;align-items:center;justify-content:center;overflow:hidden}
+.gb-post .beeld img{max-height:100%;max-width:100%;width:auto;height:auto;mix-blend-mode:multiply}
+.gb-post h2{font:600 13.5pt/1.14 var(--serif);color:var(--inkt);letter-spacing:-.015em}
+.gb-post .hoe{margin-top:1.2mm;font:400 10.5pt/1.4 var(--serif);color:var(--inkt);max-width:56ch}
+.gb-post .let{margin-top:1.2mm;font:400 8.8pt/1.36 var(--serif);color:var(--inkt-2)}
+.gb-post .let b{font:700 6.6pt/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--rood);margin-right:1.5mm}
+.gb-post .dos{font:400 9.5pt/1.5 var(--serif);color:var(--inkt)}
+.gb-post .dos b{display:block;font:600 12pt/1.2 var(--serif);margin-bottom:1mm}
+.gb-post .wrd{text-align:right;font:600 15pt/1 var(--serif);color:var(--inkt)}
+.gb-post .wrd i{display:block;font-style:normal;font:500 6.4pt/1 var(--sans);color:var(--grijs);
+  margin-top:1.4mm;letter-spacing:.12em;text-transform:uppercase}
+
+/* de weekstaat op papier: debet, credit, saldo */
+.gb-staat{margin-top:3mm;border:.8pt solid var(--inkt)}
+.gb-staat .sk{display:grid;grid-template-columns:26mm 1fr 1fr 20mm;gap:0;
+  border-bottom:1.2pt solid var(--inkt);background:#f2ebd9}
+.gb-staat .sk > div{padding:1.1mm 2.5mm;font:700 6.8pt/1.25 var(--sans);letter-spacing:.13em;
+  text-transform:uppercase;color:var(--inkt)}
+.gb-staat .sk > div + div{border-left:.6pt solid var(--liniaal)}
+.gb-staat .sk .cr{color:var(--rood)}
+.gb-staat .sk .r{text-align:right}
+.gb-staat .sk small{display:block;font:400 6pt/1.3 var(--sans);letter-spacing:.02em;
+  text-transform:none;color:var(--grijs);margin-top:.8mm}
+
+.gb-staat .sr{display:grid;grid-template-columns:26mm 1fr 1fr 20mm;gap:0;
+  border-bottom:.5pt solid var(--liniaal);min-height:7.1mm;align-items:center}
+.gb-staat .sr > div{padding:1.1mm 2.5mm}
+.gb-staat .sr > div + div{border-left:.6pt solid var(--liniaal)}
+.gb-staat .sr .dag{font:600 9.5pt/1.2 var(--serif);color:var(--inkt)}
+.gb-staat .sr .dag span{display:block;font:500 7pt/1 var(--mono);color:var(--grijs);margin-top:1mm}
+.gb-staat .vakjes{display:flex;gap:2mm;align-items:center}
+.gb-staat .vk{width:5.2mm;height:5.2mm;border:.8pt solid var(--inkt);border-radius:.5mm;
+  background:#fff;flex:none}
+.gb-staat .vakjes .nr{font:500 6.4pt/1 var(--sans);color:var(--grijs);margin-left:.6mm}
+.gb-staat .crlijn{border-bottom:.5pt dotted var(--liniaal);height:3.2mm;margin-top:1.2mm}
+.gb-staat .crhint{font:400 7pt/1.2 var(--sans);color:var(--grijs)}
+.gb-staat .sld{border-left:.6pt solid var(--liniaal)}
+.gb-staat .sldvak{height:5.6mm;border:.8pt solid var(--liniaal);border-radius:.5mm;background:#fff}
+.gb-staat .sv{display:grid;grid-template-columns:26mm 1fr 1fr 20mm;gap:0;
+  border-top:1.2pt solid var(--inkt);background:#f2ebd9;align-items:center}
+.gb-staat .sv > div{padding:1.6mm 2.5mm;font:600 9.5pt/1.2 var(--serif);color:var(--inkt)}
+.gb-staat .sv > div + div{border-left:.6pt solid var(--liniaal)}
+.gb-staat .sv .dubbelvak{height:5.6mm;border:.8pt solid var(--inkt);border-bottom-width:2.4pt;
+  border-bottom-style:double;background:#fff;border-radius:.5mm}
+
+/* de voet van het blad */
+.gb-voet{margin-top:auto;padding-top:2.4mm;border-top:1.2pt solid var(--inkt);
+  display:grid;grid-template-columns:1fr 52mm;gap:6mm;align-items:end}
+.gb-voet .transport{font:400 8.6pt/1.45 var(--serif);color:var(--inkt-2);max-width:58ch}
+.gb-voet .transport b{color:var(--inkt);font-weight:600}
+.gb-voet .transport .prk{display:block;margin-top:1.8mm;font:500 7.4pt/1.45 var(--sans);
+  color:var(--grijs);letter-spacing:.02em}
+.gb-voet .tekenveld .lbl{font:700 6.4pt/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--grijs)}
+.gb-voet .tekenveld .lijn{margin-top:5mm;border-bottom:.8pt solid var(--inkt)}
+.gb-voet .tekenveld .onder{margin-top:1.4mm;font:400 7pt/1.3 var(--sans);color:var(--grijs)}
+
+.printhulp{max-width:680px;margin:var(--s4) auto 0;text-align:center;font-size:16px;
+  color:var(--grijs);line-height:1.62}
+.printhulp .kn{margin-top:var(--s3)}
+
+/* ── voet ────────────────────────────────────────────────── */
+footer.uitleiding{background:var(--bord-diep);color:#b3c5c1;padding:var(--s6) 24px;
+  margin-top:var(--s6)}
+footer.uitleiding .binnen{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:700 10.5px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  color:#c9b98d;margin-bottom:14px}
+footer.uitleiding p,footer.uitleiding li{font-size:15px;line-height:1.7}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:10px}
+footer.uitleiding li::before{content:"—";position:absolute;left:0;color:#c9b98d}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 31</span>
+  <strong style="font:600 16px/1 var(--serif);color:#fff;letter-spacing:-.01em">Grootboek</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="binnen">
+    <div class="boekhoek">
+
+      <div class="band" aria-hidden="true">
+        <div class="rug">
+          <span class="lijn"></span>
+          <span class="titel">Grootboek</span>
+          <span class="lijn"></span>
+        </div>
+        <div class="schild">
+          <span class="wat">Rekening</span>
+          <h3>R. Veenstra</h3>
+          <span class="jaar">Folio 12 · 2026</span>
+        </div>
+        <div class="snede"></div>
+      </div>
+
+      <div class="held">
+        <p style="font:700 11px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+          color:var(--rood);margin-bottom:var(--s3)">Fysiplan · concept 31</p>
+        <h1>Uw kaart boekt maar <em>één</em> kant.</h1>
+        <p class="onder">Zeven lege vinkvakjes per week zijn zeven openstaande posten. Haalt u er
+          vier, dan staat u drie in het rood — terwijl u die week ook drie keer de trap op ging,
+          twee nachten goed sliep en één dag verstandig rustte. <b>Dat staat nergens.</b> Dit
+          concept opent de tweede kolom, en telt hem mee.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk het printblad</a>
+          <a class="kn leeg" href="#clientkaart">De rekening van deze week</a>
+        </div>
+
+        <div class="tegenboeking">
+          <div class="zijde">
+            <h4>Debet · wat het kostte</h4>
+            <ul>
+              <li><span>Stoelsquat, 3 × 10</span><i>12</i></li>
+              <li><span>Knie strekken, zittend</span><i>8</i></li>
+              <li><span>Kuitheffing met steun</span><i>9</i></li>
+              <li><span>Trap op het werk, 4 ×</span><i>6</i></li>
+            </ul>
+            <div class="slot"><span>Totaal debet</span><span class="cijfer">35</span></div>
+          </div>
+          <div class="zijde cr">
+            <h4>Credit · wat het opbracht</h4>
+            <ul>
+              <li><span>Nachtrust, 7 u en 7 u</span><i>14</i></li>
+              <li><span>Rustdag, woensdag</span><i>10</i></li>
+              <li><span>Wandeling, rustig, 20 min</span><i>7</i></li>
+              <li><span>Afspraak praktijk vervallen</span><i>4</i></li>
+            </ul>
+            <div class="slot"><span>Totaal credit</span><span class="cijfer">35</span></div>
+          </div>
+        </div>
+        <p class="uit" style="margin-top:var(--s3);font-size:15.5px;color:var(--grijs);
+          line-height:1.62;max-width:62ch">De week sluit. Niet omdat er hard is getraind, maar
+          omdat er evenveel is teruggelegd als er is opgenomen. Dat is de enige definitie van een
+          goede week die dit boek kent.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>Het journaal: elke oefening is een post met een folionummer en een belastingswaarde.
+        Rechts loopt de balans mee, en die waarschuwt zodra de week meer opneemt dan hij teruglegt.</p>
+    </div>
+
+    <div class="zoekregel">
+      <span class="lbl">Zoek in het journaal</span>
+      <input type="text" value="knie" aria-label="Zoek een oefening"/>
+      <span class="tel">31 posten in deze rubriek · 215 in het boek</span>
+    </div>
+
+    <div class="rubrieken">
+      <button type="button" aria-pressed="true">Onderste extremiteit</button>
+      <button type="button" aria-pressed="false">Rug</button>
+      <button type="button" aria-pressed="false">Balans</button>
+      <button type="button" aria-pressed="false">Nek</button>
+      <button type="button" aria-pressed="false">Core</button>
+      <button type="button" aria-pressed="false">Met steun</button>
+    </div>
+
+    <div class="journaal">
+      <div class="posten">
+        <div class="kop">
+          <span>Folio</span><span></span><span>Omschrijving</span><span>Dosering</span>
+          <span class="r">Waarde</span><span></span>
+        </div>
+
+        <button class="regel" type="button" aria-pressed="true">
+          <span class="fol">114</span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+            alt="Lijntekening: vanuit stand tot net boven een stoel zakken en weer omhoog komen."/></span>
+          <span class="naam"><b>Stoelsquat</b><span>zakken tot net boven de zitting, romp rechtop</span></span>
+          <span class="dos">3 × 10 · dagelijks</span>
+          <span class="waarde">12<i>per dag</i></span>
+          <span class="vink" aria-hidden="true">✓</span>
+        </button>
+
+        <button class="regel" type="button" aria-pressed="true">
+          <span class="fol">126</span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png"
+            alt="Lijntekening: zittend op een stoel het onderbeen strekken tot horizontaal."/></span>
+          <span class="naam"><b>Knie strekken, zittend</b><span>rustig strekken, twee tellen vasthouden</span></span>
+          <span class="dos">3 × 12 · dagelijks</span>
+          <span class="waarde">8<i>per dag</i></span>
+          <span class="vink" aria-hidden="true">✓</span>
+        </button>
+
+        <button class="regel" type="button" aria-pressed="true">
+          <span class="fol">141</span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/kuitheffing-staand-met-steun-line-v1.png"
+            alt="Lijntekening: staand met de handen aan een leuning op de tenen komen."/></span>
+          <span class="naam"><b>Kuitheffing met steun</b><span>hand aan het aanrecht, langzaam zakken</span></span>
+          <span class="dos">3 × 12 · dagelijks</span>
+          <span class="waarde">9<i>per dag</i></span>
+          <span class="vink" aria-hidden="true">✓</span>
+        </button>
+
+        <button class="regel" type="button" aria-pressed="false">
+          <span class="fol">158</span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/bridges-kicker-line-v1.png"
+            alt="Lijntekening: op de rug met gebogen knieën het bekken optillen."/></span>
+          <span class="naam"><b>Bruggetje</b><span>op de rug, bekken optillen tot een rechte lijn</span></span>
+          <span class="dos">3 × 10 · om de dag</span>
+          <span class="waarde">11<i>per dag</i></span>
+          <span class="vink" aria-hidden="true">✓</span>
+        </button>
+
+        <button class="regel" type="button" aria-pressed="false">
+          <span class="fol">163</span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/been-pendelen-line-v1.png"
+            alt="Lijntekening: staand met steun het gestrekte been rustig heen en weer laten pendelen."/></span>
+          <span class="naam"><b>Been pendelen</b><span>ontspannen laten zwaaien, geen kracht zetten</span></span>
+          <span class="dos">2 × 20 · dagelijks</span>
+          <span class="waarde">4<i>per dag</i></span>
+          <span class="vink" aria-hidden="true">✓</span>
+        </button>
+
+        <button class="regel" type="button" aria-pressed="false">
+          <span class="fol">171</span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/step-up-staand-met-steun-line-v1.png"
+            alt="Lijntekening: met steun op een opstapje stappen en weer terug."/></span>
+          <span class="naam"><b>Opstap met steun</b><span>opstapje van 15 cm, altijd hetzelfde been eerst</span></span>
+          <span class="dos">3 × 8 · om de dag</span>
+          <span class="waarde">14<i>per dag</i></span>
+          <span class="vink" aria-hidden="true">✓</span>
+        </button>
+
+        <button class="regel" type="button" aria-pressed="false">
+          <span class="fol">188</span>
+          <span class="beeld"><img src="/images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png"
+            alt="Lijntekening: staand met de voeten achter elkaar op één lijn, hand aan de steun."/></span>
+          <span class="naam"><b>Tandemstand met steun</b><span>voeten op één lijn, 20 tellen</span></span>
+          <span class="dos">4 × 20 tel · dagelijks</span>
+          <span class="waarde">5<i>per dag</i></span>
+          <span class="vink" aria-hidden="true">✓</span>
+        </button>
+      </div>
+
+      <nav class="duim" aria-label="Duimindex per rubriek">
+        <a href="#kiezer" class="nu">O E</a>
+        <a href="#kiezer">Rug</a>
+        <a href="#kiezer">Bal</a>
+        <a href="#kiezer">Nek</a>
+        <a href="#kiezer">Cor</a>
+        <a href="#kiezer">Bov</a>
+      </nav>
+
+      <aside class="balanskolom">
+        <div class="kop"><span>Proefbalans</span><i>Week 33</i></div>
+        <div class="lijf">
+          <ol>
+            <li><span><b>Stoelsquat</b><span>3 × 10 · folio 114</span></span><em>12</em></li>
+            <li><span><b>Knie strekken, zittend</b><span>3 × 12 · folio 126</span></span><em>8</em></li>
+            <li><span><b>Kuitheffing met steun</b><span>3 × 12 · folio 141</span></span><em>9</em></li>
+          </ol>
+
+          <div class="somregel"><span>Debet per dag</span><span class="cijfer">29</span></div>
+          <div class="somregel"><span>Debet per week (7 dagen)</span><span class="cijfer">203</span></div>
+          <div class="somregel"><span>Credit uit rust en slaap</span><span class="cijfer saldo-in">168</span></div>
+          <div class="somregel tot"><span>Saldo</span><span class="cijfer saldo-in">− 35</span></div>
+
+          <div class="ongedekt">
+            <b>Week niet gedekt</b>
+            <p>Deze week neemt meer op dan hij teruglegt. Boek één rustdag bij, of haal de opstap
+              eruit — dan sluit het. Een ongedekte week is geen fout, maar hij mag er geen twee
+              achter elkaar worden.</p>
+          </div>
+
+          <button class="kn" style="width:100%;text-align:center;margin-top:var(--s3)"
+            type="button">Boeken en afdrukken</button>
+        </div>
+      </aside>
+    </div>
+
+    <p style="margin-top:var(--s4);font-size:15.5px;color:var(--grijs);max-width:70ch">
+      <b style="color:var(--inkt)">Lege staat.</b> Zolang er niets geboekt is, staat er in de
+      balanskolom geen nul maar een zin: “Nog geen posten. Een leeg boek is niet hetzelfde als een
+      boek dat op nul sluit.”
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>De rekening in T-vorm. Links wat het lichaam die week heeft opgenomen, rechts wat er is
+        teruggelegd — en de praktijk boekt in rode inkt mee, in hetzelfde boek.</p>
+    </div>
+
+    <div class="rekening">
+      <div class="balk">
+        <span>Grootboek · rekening 2026-0417</span>
+        <i>Bijgewerkt 21-08-2026 · 09:14 · J. Bakker</i>
+      </div>
+
+      <div class="rekeningkop">
+        <div>
+          <h3>R. Veenstra — rechterknie, na artroscopie</h3>
+          <p class="sub">Week 5 van 12 · herbeoordeling 31 augustus</p>
+        </div>
+        <div class="folio">
+          Folio<b>12 / 2026</b>
+          Overgebracht van blad 11
+        </div>
+      </div>
+
+      <div class="tvorm">
+        <div class="zijde">
+          <h4>Debet · opgenomen</h4>
+          <p class="wat">Alles wat deze week kracht heeft gekost — thuis, op het werk en in de praktijk.</p>
+          <ul class="boekingen">
+            <li><span class="dat">ma 17-08</span>
+              <span class="om"><b>Oefenblok volledig</b><span>3 posten, avond</span></span>
+              <span class="bed">29</span></li>
+            <li><span class="dat">di 18-08</span>
+              <span class="om"><b>Oefenblok volledig</b><span>3 posten, ochtend</span></span>
+              <span class="bed">29</span></li>
+            <li><span class="dat">di 18-08</span>
+              <span class="om"><b>Trap op het werk</b><span>vier keer, twee verdiepingen</span></span>
+              <span class="bed">6</span></li>
+            <li><span class="dat">wo 19-08</span>
+              <span class="om"><b>Alleen kuitheffing</b><span>knie stram bij het opstaan</span></span>
+              <span class="bed">9</span></li>
+            <li><span class="dat">do 20-08</span>
+              <span class="om"><b>Oefenblok volledig</b><span>3 posten, avond</span></span>
+              <span class="bed">29</span></li>
+            <li class="praktijk"><span class="dat">do 20-08</span>
+              <span class="om"><b>Praktijk: dosering te hoog gezet</b><span>opstap stond een week
+                te vroeg in het schema — teruggedraaid</span></span>
+              <span class="bed">14</span></li>
+            <li><span class="dat">vr 21-08</span>
+              <span class="om"><b>Oefenblok volledig</b><span>3 posten, ochtend</span></span>
+              <span class="bed">29</span></li>
+          </ul>
+          <div class="zijtotaal"><span>Totaal debet</span><span class="cijfer">145</span></div>
+        </div>
+
+        <div class="zijde cr">
+          <h4>Credit · teruggelegd</h4>
+          <p class="wat">Alles wat de week heeft ingebracht. Dit staat op geen enkele oefenkaart, en
+            het is de helft van het werk.</p>
+          <ul class="boekingen">
+            <li><span class="dat">ma–vr</span>
+              <span class="om"><b>Nachtrust</b><span>gemiddeld 7 u 10 · vijf nachten</span></span>
+              <span class="bed">70</span></li>
+            <li><span class="dat">wo 19-08</span>
+              <span class="om"><b>Rustdag, bewust genomen</b><span>zelf besloten, niet vergeten</span></span>
+              <span class="bed">18</span></li>
+            <li><span class="dat">do 20-08</span>
+              <span class="om"><b>Wandeling, rustig tempo</b><span>25 minuten, geen pijntoename</span></span>
+              <span class="bed">9</span></li>
+            <li><span class="dat">vr 21-08</span>
+              <span class="om"><b>Koelen na het blok</b><span>15 minuten, op advies</span></span>
+              <span class="bed">5</span></li>
+            <li class="praktijk"><span class="dat">do 20-08</span>
+              <span class="om"><b>Praktijk: correctie geboekt</b><span>opstap uit het schema,
+                tegenboeking van de post links</span></span>
+              <span class="bed">14</span></li>
+            <li><span class="dat">za 22-08</span>
+              <span class="om"><b>Gepland: vrije dag</b><span>staat vooruit geboekt</span></span>
+              <span class="bed">18</span></li>
+          </ul>
+          <div class="zijtotaal"><span>Totaal credit</span><span class="cijfer">134</span></div>
+        </div>
+      </div>
+
+      <div class="slotbalk">
+        <p class="zin">De week staat elf punten in het rood, en de reden staat er twee regels boven:
+          de opstap was te vroeg ingeboekt. <b>Dat is een post van de praktijk, niet van de
+          patiënt</b> — en hij staat daarom links én rechts, in rode inkt, met de correctie erbij.</p>
+        <div class="cijferblok">
+          <span class="lbl">Saldo week 33</span>
+          <span class="groot cijfer">− 11</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="weekstaat">
+      <div class="kop">
+        <span>Dag</span><span>Post 1</span><span>Post 2</span><span>Post 3</span>
+        <span>Credit</span><span class="r">Saldo</span>
+      </div>
+      <div class="rij">
+        <span class="dag">Maandag<span>17-08</span></span>
+        <span class="vk af">✓</span><span class="vk af">✓</span><span class="vk af">✓</span>
+        <span class="cr">slaap 7 u 20</span><span class="sld">+ 2</span>
+      </div>
+      <div class="rij">
+        <span class="dag">Dinsdag<span>18-08</span></span>
+        <span class="vk af">✓</span><span class="vk af">✓</span><span class="vk af">✓</span>
+        <span class="cr">slaap 6 u 40 · <em>trap 4 ×</em></span><span class="sld min">− 9</span>
+      </div>
+      <div class="rij">
+        <span class="dag">Woensdag<span>19-08</span></span>
+        <span class="vk"></span><span class="vk"></span><span class="vk af">✓</span>
+        <span class="cr">rustdag · slaap 7 u 50</span><span class="sld">+ 16</span>
+      </div>
+      <div class="rij">
+        <span class="dag">Donderdag<span>20-08</span></span>
+        <span class="vk af">✓</span><span class="vk af">✓</span><span class="vk af">✓</span>
+        <span class="cr">wandeling 25 min</span><span class="sld min">− 6</span>
+      </div>
+      <div class="rij nu">
+        <span class="dag">Vrijdag<span>21-08</span></span>
+        <span class="vk af">✓</span><span class="vk af">✓</span><span class="vk af">✓</span>
+        <span class="cr">koelen · slaap 7 u 05</span><span class="sld min">− 14</span>
+      </div>
+      <div class="rij">
+        <span class="dag">Zaterdag<span>22-08</span></span>
+        <span class="vk leeg"></span><span class="vk leeg"></span><span class="vk leeg"></span>
+        <span class="cr">vrije dag, vooruit geboekt</span><span class="sld">+ 18</span>
+      </div>
+      <div class="rij">
+        <span class="dag">Zondag<span>23-08</span></span>
+        <span class="vk leeg"></span><span class="vk leeg"></span><span class="vk leeg"></span>
+        <span class="cr">nog niet geboekt</span><span class="sld">—</span>
+      </div>
+      <div class="voet">
+        <span>Weeksaldo</span><span></span><span></span><span></span>
+        <span style="font:500 13px/1.4 var(--sans);color:var(--grijs)">twee dagen open</span>
+        <span class="sld saldo-in">− 11</span>
+      </div>
+    </div>
+
+    <div class="notitie">
+      <b>Wat de therapeut hier ziet</b>
+      Niet “vier van de zeven gehaald”, maar: dinsdag en vrijdag zijn de dagen waarop het saldo
+      wegloopt, en beide keren zat er werk of een extra post tegenover. Woensdag was de beste dag
+      van de week, en er is die dag níets geoefend. Dat is precies het gesprek dat een vinkjeslijst
+      onmogelijk maakt.
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>Eén blad uit het grootboek: kopveld, drie posten met hun waarde, en daaronder de weekstaat
+        met een debetkant om af te vinken, een creditkant om zelf in te vullen en een saldovak per
+        dag. Onderaan de transportregel naar volgende week.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer r geen-print" style="top:24mm;left:calc(100% + 22px)">het folionummer
+            loopt door: dit blad hoort in een boek, niet op een stapel</span>
+          <span class="wijzer l geen-print" style="top:62mm;right:calc(100% + 22px)">de leesregel op
+            11 punt met korte regels — hier leest de patiënt, dus hier is het rustig</span>
+          <span class="wijzer r geen-print" style="top:196mm;left:calc(100% + 22px)">de rechterkolom
+            is leeg en dat is de hele truc: die vult u zelf in</span>
+          <span class="wijzer l geen-print" style="top:272mm;right:calc(100% + 22px)">het saldo gaat
+            over naar het volgende blad — de week begint nooit weer op nul</span>
+
+          <div class="gb-kop">
+            <div>
+              <span class="org">Fysiplan · fysiotherapie · grootboek · rekening 2026-0417</span>
+              <h1>Weekstaat</h1>
+            </div>
+            <div class="rechts">
+              Folio<b>12 / 2026</b>
+              week 33 · 17 t/m 23 aug
+            </div>
+          </div>
+
+          <div class="gb-velden">
+            <div class="v"><span class="n">Naam</span><span class="w">R. Veenstra</span></div>
+            <div class="v"><span class="n">Behandelaar</span><span class="w">J. Bakker</span></div>
+            <div class="v"><span class="n">Fase</span><span class="w">week 5 van 12</span></div>
+            <div class="v"><span class="n">Rekening</span><span class="w">knie rechts, na artroscopie</span></div>
+            <div class="v"><span class="n">Overgebracht</span><span class="w">− 4 van blad 11</span></div>
+            <div class="v"><span class="n">Herbeoordeling</span><span class="w">31-08-2026</span></div>
+          </div>
+
+          <div class="gb-lees">
+            <span class="lbl">Hoe u dit blad leest</span>
+            <p>Links staat wat een dag u kost, rechts wat hij teruggeeft. <b>Vink links af wat u deed en
+              schrijf rechts op wat u sliep of rustte.</b> Links vol en rechts leeg is geen goede
+              dag; twee zulke dagen achter elkaar zijn een reden om te bellen.</p>
+          </div>
+
+          <div class="gb-postenkop">
+            <span>Folio</span><span></span><span>Post</span><span>Dosering</span><span class="r">Waarde</span>
+          </div>
+
+          <div class="gb-post">
+            <span class="fol">114</span>
+            <span class="beeld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+              alt="Lijntekening: vanuit stand tot net boven een stoel zakken en weer omhoog komen."/></span>
+            <span>
+              <h2>Stoelsquat</h2>
+              <p class="hoe">Ga voor een stoel staan, voeten op heupbreedte. Zak langzaam tot u de
+                zitting bijna raakt en kom weer omhoog, romp rechtop.</p>
+              <p class="let"><b>Let op</b>Knieën blijven boven de voeten. Doet het pijn, ga dan
+                minder diep — niet minder vaak.</p>
+            </span>
+            <span class="dos"><b>3 × 10</b>elke dag<br/>rust 1 min</span>
+            <span class="wrd">12<i>per dag</i></span>
+          </div>
+
+          <div class="gb-post">
+            <span class="fol">126</span>
+            <span class="beeld"><img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png"
+              alt="Lijntekening: zittend op een stoel het onderbeen strekken tot horizontaal."/></span>
+            <span>
+              <h2>Knie strekken, zittend</h2>
+              <p class="hoe">Zit rechtop op een stoel. Strek uw rechterbeen tot het recht vooruit
+                staat, houd twee tellen vast en laat het rustig zakken.</p>
+              <p class="let"><b>Let op</b>Rustig terug is belangrijker dan hoog komen.</p>
+            </span>
+            <span class="dos"><b>3 × 12</b>elke dag<br/>rust 45 sec</span>
+            <span class="wrd">8<i>per dag</i></span>
+          </div>
+
+          <div class="gb-post">
+            <span class="fol">141</span>
+            <span class="beeld"><img src="/images/onderste-extremiteit/kuitheffing-staand-met-steun-line-v1.png"
+              alt="Lijntekening: staand met de handen aan een leuning op de tenen komen."/></span>
+            <span>
+              <h2>Kuitheffing met steun</h2>
+              <p class="hoe">Sta bij het aanrecht, handen licht op de rand. Kom op uw tenen en zak
+                daarna langzaam terug tot uw hielen de grond raken.</p>
+              <p class="let"><b>Let op</b>De steun blijft tot 31 augustus. Gaat traplopen eerder
+                vlot, bel dan.</p>
+            </span>
+            <span class="dos"><b>3 × 12</b>elke dag<br/>rust 45 sec</span>
+            <span class="wrd">9<i>per dag</i></span>
+          </div>
+
+          <div class="gb-staat">
+            <div class="sk">
+              <div>Dag</div>
+              <div>Debet · afvinken<small>de drie posten hierboven</small></div>
+              <div class="cr">Credit · zelf invullen<small>slaap, rust, wandeling</small></div>
+              <div class="r">Saldo</div>
+            </div>
+
+            <div class="sr">
+              <div class="dag">Maandag<span>17-08</span></div>
+              <div class="vakjes"><span class="vk"></span><span class="nr">1</span>
+                <span class="vk"></span><span class="nr">2</span>
+                <span class="vk"></span><span class="nr">3</span></div>
+              <div><div class="crlijn"></div></div>
+              <div class="sld"><div class="sldvak"></div></div>
+            </div>
+            <div class="sr">
+              <div class="dag">Dinsdag<span>18-08</span></div>
+              <div class="vakjes"><span class="vk"></span><span class="nr">1</span>
+                <span class="vk"></span><span class="nr">2</span>
+                <span class="vk"></span><span class="nr">3</span></div>
+              <div><div class="crlijn"></div></div>
+              <div class="sld"><div class="sldvak"></div></div>
+            </div>
+            <div class="sr">
+              <div class="dag">Woensdag<span>19-08</span></div>
+              <div class="vakjes"><span class="vk"></span><span class="nr">1</span>
+                <span class="vk"></span><span class="nr">2</span>
+                <span class="vk"></span><span class="nr">3</span></div>
+              <div><div class="crlijn"></div></div>
+              <div class="sld"><div class="sldvak"></div></div>
+            </div>
+            <div class="sr">
+              <div class="dag">Donderdag<span>20-08</span></div>
+              <div class="vakjes"><span class="vk"></span><span class="nr">1</span>
+                <span class="vk"></span><span class="nr">2</span>
+                <span class="vk"></span><span class="nr">3</span></div>
+              <div><div class="crlijn"></div></div>
+              <div class="sld"><div class="sldvak"></div></div>
+            </div>
+            <div class="sr">
+              <div class="dag">Vrijdag<span>21-08</span></div>
+              <div class="vakjes"><span class="vk"></span><span class="nr">1</span>
+                <span class="vk"></span><span class="nr">2</span>
+                <span class="vk"></span><span class="nr">3</span></div>
+              <div><div class="crlijn"></div></div>
+              <div class="sld"><div class="sldvak"></div></div>
+            </div>
+            <div class="sr">
+              <div class="dag">Zaterdag<span>22-08</span></div>
+              <div class="vakjes"><span class="vk"></span><span class="nr">1</span>
+                <span class="vk"></span><span class="nr">2</span>
+                <span class="vk"></span><span class="nr">3</span></div>
+              <div><div class="crlijn"></div></div>
+              <div class="sld"><div class="sldvak"></div></div>
+            </div>
+            <div class="sr">
+              <div class="dag">Zondag<span>23-08</span></div>
+              <div class="vakjes"><span class="vk"></span><span class="nr">1</span>
+                <span class="vk"></span><span class="nr">2</span>
+                <span class="vk"></span><span class="nr">3</span></div>
+              <div><div class="crlijn"></div></div>
+              <div class="sld"><div class="sldvak"></div></div>
+            </div>
+
+            <div class="sv">
+              <div>Weeksaldo</div>
+              <div style="font:400 8pt/1.35 var(--serif);color:var(--grijs)">Een lege rechterkolom
+                is geen nul. Het is een week die niet is bijgehouden.</div>
+              <div style="font:400 8pt/1.35 var(--serif);color:var(--grijs)">Neem dit blad mee naar
+                de afspraak van 31 augustus.</div>
+              <div><div class="dubbelvak"></div></div>
+            </div>
+          </div>
+
+          <div class="gb-voet">
+            <div class="transport">
+              <b>Transport naar folio 13.</b> Wat er onderaan dit blad staat, staat volgende week
+              bovenaan het volgende. Een week begint nooit opnieuw op nul — daarom is een mindere
+              week geen streep door alles wat ervoor stond.
+              <span class="prk">Fysiplan fysiotherapie · Kerkstraat 12, Deventer · 0570 – 12 34 56 ·
+                bereikbaar op werkdagen van 8 tot 17 uur</span>
+            </div>
+            <div class="tekenveld">
+              <span class="lbl">Afgetekend door</span>
+              <div class="lijn"></div>
+              <div class="onder">u tekent zelf af — dit blad blijft van u</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="printhulp geen-print">
+      <p>Eén A4 staand, in één inkt te drukken. Het rood draagt geen informatie: in zwart-wit blijft
+        elke kolom, elk vakje en elke dubbele streep exact hetzelfde. De leestekst staat op 11 punt
+        met een regellengte van ruim zestig tekens.</p>
+      <button class="kn" onclick="window.print()">Print dit blad</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>De richting</h4>
+      <p>Het dubbel boekhouden kent één regel: geen boeking zonder tegenboeking. Elke oefenkaart in
+        de zorg overtreedt die regel — er staat alleen wat u moet inbrengen, nooit wat u al hebt
+        ingebracht. Zo wordt herstel een schuld die per week groeit. Dit concept opent de tweede
+        kolom, laat de praktijk in hetzelfde boek meeboeken, en maakt het weeksaldo — niet het
+        aantal vinkjes — tot de maat van de week.</p>
+    </div>
+    <div class="kolom">
+      <h4>Waar het schuurt</h4>
+      <ul>
+        <li>Boekhoudtaal is koud, en “in het rood staan” is een oordeel. Wie zijn lichaam al als een
+          tekortschietend project ziet, krijgt hier een rekening met een minteken op tafel.</li>
+        <li>De punten zijn verzonnen precisie. Twaalf voor een stoelsquat en achttien voor een
+          rustdag suggereren een meetbaarheid die er niet is; de getallen zijn een taal, geen
+          meting, en dat blijft uitleggen.</li>
+        <li>Een saldo nodigt uit tot sjoemelen met de eigen boekhouding — een half uur wandelen dat
+          drie kwartier wordt. Dat is menselijk, maar het maakt de cijfers voor de therapeut
+          minder waard dan ze lijken.</li>
+        <li>De open creditkolom vraagt schrijfwerk van de patiënt. Voor wie slecht ziet of beeft is
+          dat een echte drempel; het blad heeft ruime vakken, maar het blijft invulwerk.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Verder</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

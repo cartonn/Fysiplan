@@ -1,0 +1,1113 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 32 — Bodemprofiel · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 32 — BODEMPROFIEL
+   ------------------------------------------------------------
+   De boorstaat en het geologisch profiel: een kolom waarin de tijd
+   naar beneden loopt, elke laag getekend met zijn eigen arcering,
+   een dieptelat in centimeters langs de zijkant, veldnotities in de
+   kantlijn en een legenda onderaan. De arceringen komen uit de
+   traditie van de geologische kaart (FGDC-STD-013): stippen voor
+   zand, streepjes voor klei, blokjes voor veen. Ze zijn zwart op
+   wit ontworpen — kleur is er later bijgekomen en is nooit nodig
+   geweest.
+
+   Toegepast op de oefenkaart: elke kaart in de zorg kijkt vooruit
+   en wist wat erachter ligt. Volgende week zeven nieuwe vakjes,
+   vorige week weg. Daardoor voelt een mindere week als een gat.
+   Een profiel kent geen gaten. Wat er ligt, blijft liggen: een
+   week waarin het slecht ging is een dun laagje — dunner, niet
+   afwezig — en het draagt alles wat erna komt.
+
+   De grondwaterstand loopt als één horizontale lijn door het hele
+   profiel heen: de pijngrens. Lagen eronder zijn gevormd toen het
+   nog zeer deed. Dat je kunt zien waar die lijn zat, is het punt.
+   ============================================================ */
+
+:root{
+  /* ── het papier van de veldkaart ── */
+  --vel:#f6f2e7;
+  --vel-2:#fdfbf4;
+  --vel-3:#ece5d4;
+  --rand:#cfc5ac;
+  --raster:#e2dac6;
+
+  /* ── de grondsoorten ── */
+  --zand:#e6d5ab;
+  --leem:#d5c2a0;
+  --klei:#bda88b;
+  --veen:#8d7c60;
+  --grind:#cbc2ae;
+
+  /* ── de inkt van de veldopname ── */
+  --inkt:#211f1a;
+  --inkt-2:#494437;
+  --grijs:#7d7666;
+  --lijn:#57513f;
+  --water:#2f6885;          /* grondwaterstand = de pijngrens */
+  --water-licht:#dbe8ef;
+  --nu:#a8442c;             /* de lopende laag */
+
+  --sans:"Avenir Next","Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+  --serif:"Iowan Old Style",Charter,Georgia,"Times New Roman",serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:9px; --s3:16px; --s4:26px; --s5:42px; --s6:70px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font:17px/1.7 var(--serif);color:var(--inkt-2);background:var(--vel)}
+img{max-width:100%;display:block}
+a{color:var(--water)}
+:focus-visible{outline:3px solid var(--nu);outline-offset:3px}
+
+.binnen{max-width:1160px;margin:0 auto;padding:0 24px}
+
+/* ============================================================
+   DE ARCERINGEN — zwart op wit, kleur is toegift
+   ============================================================ */
+.h{background-color:#fff;background-repeat:repeat}
+
+/* zand: stippen in een verspringend raster */
+.h-zand{background-color:var(--zand);
+  background-image:
+    radial-gradient(currentColor 1.1px, transparent 1.2px),
+    radial-gradient(currentColor 1.1px, transparent 1.2px);
+  background-size:11px 11px, 11px 11px;
+  background-position:0 0, 5.5px 5.5px;
+  color:rgba(33,31,26,.62)}
+
+/* klei: korte horizontale streepjes, verspringend */
+.h-klei{background-color:var(--klei);
+  background-image:
+    repeating-linear-gradient(90deg, currentColor 0 8px, transparent 8px 18px),
+    repeating-linear-gradient(90deg, currentColor 0 8px, transparent 8px 18px);
+  background-size:18px 12px, 18px 12px;
+  background-position:0 3px, 9px 9px;
+  color:rgba(33,31,26,.5)}
+.h-klei::before{content:none}
+
+/* leem: fijne diagonale arcering */
+.h-leem{background-color:var(--leem);
+  background-image:repeating-linear-gradient(48deg,
+    rgba(33,31,26,.5) 0 1px, transparent 1px 7px)}
+
+/* veen: dikke horizontale balken met verticale tikjes */
+.h-veen{background-color:var(--veen);
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.34) 0 3px, transparent 3px 10px),
+    repeating-linear-gradient(90deg, rgba(20,18,14,.42) 0 1.4px, transparent 1.4px 9px)}
+
+/* grind: rondjes van verschillende maat */
+.h-grind{background-color:var(--grind);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(33,31,26,.55) 2.4px, transparent 2.6px),
+    radial-gradient(circle at 68% 62%, rgba(33,31,26,.55) 3.2px, transparent 3.4px),
+    radial-gradient(circle at 44% 84%, rgba(33,31,26,.45) 1.8px, transparent 2px);
+  background-size:26px 26px, 26px 26px, 26px 26px}
+
+/* kruisarcering: de weken waarin er iets bij kwam én iets afviel */
+.h-kruis{background-color:var(--vel-3);
+  background-image:
+    repeating-linear-gradient(48deg, rgba(33,31,26,.42) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(-48deg, rgba(33,31,26,.42) 0 1px, transparent 1px 8px)}
+
+/* de nog te vormen laag: open, gestippelde rand */
+.h-open{background:
+  repeating-linear-gradient(135deg, rgba(168,68,44,.11) 0 6px, transparent 6px 13px)}
+
+/* ── labbalk ─────────────────────────────────────────────── */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:18px;
+  background:#211f1a;color:#c2b8a0;padding:11px 22px;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:#211f1a;background:var(--zand);padding:5px 8px;border-radius:2px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#c2b8a0;text-decoration:none;padding:5px 2px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--zand)}
+.labbalk a.terug{color:#fff;font-weight:600}
+@media (max-width:820px){.labbalk{gap:12px;font-size:12px;flex-wrap:wrap}}
+
+/* ── schermkoppen ────────────────────────────────────────── */
+.scherm{padding:var(--s6) 0;border-top:1px solid var(--rand)}
+.scherm.eerste{border-top:0;padding-top:var(--s5)}
+.schermkop{margin-bottom:var(--s5);max-width:70ch}
+.schermkop b{display:block;font:700 11px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--nu);margin-bottom:11px}
+.schermkop h2{font:600 clamp(27px,3.3vw,38px)/1.12 var(--sans);color:var(--inkt);
+  letter-spacing:-.028em}
+.schermkop p{margin-top:11px;color:var(--grijs);font-size:16px;line-height:1.62}
+
+.kn{display:inline-block;font:600 15px/1 var(--sans);padding:15px 21px;text-decoration:none;
+  border:1.5px solid var(--inkt);background:var(--inkt);color:var(--vel-2);cursor:pointer;
+  border-radius:2px}
+.kn:hover{background:var(--water);border-color:var(--water)}
+.kn.leeg{background:transparent;color:var(--inkt)}
+.kn.leeg:hover{background:var(--inkt);color:var(--vel-2)}
+
+/* het veldkaart-label: klein, gespatieerd, met streep erboven */
+.veldlabel{font:700 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--grijs);border-top:1.5px solid var(--inkt);padding-top:8px;display:block}
+
+/* ============================================================
+   HET PROFIEL — de kolom zelf, op het scherm
+   ============================================================ */
+.profiel{display:grid;grid-template-columns:44px 96px 1fr;gap:0;align-items:stretch}
+.profiel.smal{grid-template-columns:38px 78px 1fr}
+
+/* de dieptelat */
+.lat{position:relative;border-right:1.5px solid var(--inkt)}
+.lat .tik{position:absolute;right:0;width:9px;border-top:1px solid var(--lijn)}
+.lat .tik.groot{width:16px;border-top-width:1.5px}
+.lat .tik span{position:absolute;right:20px;top:-8px;font:500 11px/1 var(--mono);
+  color:var(--grijs);white-space:nowrap}
+.lat .kop{position:absolute;top:-30px;right:0;font:700 9.5px/1 var(--sans);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--grijs);white-space:nowrap}
+
+/* de lagenkolom */
+.kolom{position:relative;border-right:1.5px solid var(--inkt);border-left:1.5px solid var(--inkt)}
+.laag{position:relative;border-bottom:1px solid var(--lijn);overflow:hidden}
+.laag:first-child{border-top:0}
+.laag .wk{position:absolute;left:5px;top:4px;font:700 10px/1 var(--sans);letter-spacing:.06em;
+  color:var(--inkt);background:rgba(255,255,255,.82);padding:2px 4px;border-radius:2px}
+.laag.dun .wk{top:2px;font-size:9px}
+.laag.lopend{border:2px dashed var(--nu);border-bottom-width:2px}
+.laag.lopend .wk{color:var(--nu);background:#fff}
+
+/* de grondwaterstand: de pijngrens dwars door alles heen */
+.waterlijn{position:absolute;left:0;right:0;height:0;border-top:2px solid var(--water);z-index:6;
+  pointer-events:none}
+.waterlijn::before{content:"";position:absolute;left:-7px;top:-6px;width:0;height:0;
+  border-left:7px solid var(--water);border-top:5px solid transparent;
+  border-bottom:5px solid transparent}
+.waterlijn .lbl{position:absolute;right:6px;top:-19px;font:700 9.5px/1 var(--sans);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--water);background:var(--water-licht);
+  padding:3px 6px;border-radius:2px}
+
+/* de veldnotities in de kantlijn */
+.notities{position:relative;padding-left:var(--s4)}
+.notitieregel{position:absolute;left:0;right:0;display:flex;gap:12px;align-items:flex-start;
+  padding-right:6px}
+.notitieregel::before{content:"";width:18px;height:1px;background:var(--lijn);flex:none;
+  margin-top:9px}
+.notitieregel .tekst{font-size:15px;line-height:1.5;color:var(--inkt-2)}
+.notitieregel .tekst b{display:block;color:var(--inkt);font:600 15.5px/1.35 var(--sans);
+  letter-spacing:-.01em}
+.notitieregel .tekst span{display:block;color:var(--grijs);font-size:13.5px;margin-top:3px}
+.notitieregel.rood .tekst b{color:var(--nu)}
+@media (max-width:760px){
+  .notitieregel{position:static;margin-bottom:var(--s2)}
+  .notities{padding-left:var(--s3)}
+}
+
+/* ============================================================
+   SCHERM 1 · LANDING
+   ============================================================ */
+.veldhoek{display:grid;grid-template-columns:1fr 400px;gap:var(--s5);align-items:start}
+@media (max-width:980px){.veldhoek{grid-template-columns:1fr}}
+
+.held h1{font:600 clamp(31px,4.5vw,54px)/1.06 var(--sans);color:var(--inkt);
+  letter-spacing:-.04em;max-width:16ch}
+.held h1 em{font-style:normal;color:var(--nu)}
+.held .onder{margin-top:var(--s3);font-size:19px;line-height:1.62;max-width:52ch;color:var(--inkt-2)}
+.held .onder b{color:var(--inkt);font-weight:600}
+.held .knoppen{display:flex;flex-wrap:wrap;gap:11px;margin-top:var(--s4)}
+
+.drieregels{margin-top:var(--s5);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:820px){.drieregels{grid-template-columns:1fr}}
+.drieregels .cel h4{font:600 17px/1.3 var(--sans);color:var(--inkt);margin:11px 0 7px;
+  letter-spacing:-.015em}
+.drieregels .cel p{font-size:15.5px;line-height:1.6;color:var(--inkt-2)}
+.drieregels .cel .staal{height:44px;border:1.5px solid var(--inkt)}
+
+/* de boorkaart-kop op de landing */
+.boorkaart{border:1.5px solid var(--inkt);background:var(--vel-2);padding:var(--s3) var(--s3) var(--s4)}
+.boorkaart .kaartkop{display:flex;justify-content:space-between;gap:12px;align-items:baseline;
+  border-bottom:1.5px solid var(--inkt);padding-bottom:9px;margin-bottom:var(--s4)}
+.boorkaart .kaartkop b{font:700 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--inkt)}
+.boorkaart .kaartkop span{font:500 12px/1 var(--mono);color:var(--grijs)}
+.boorkaart .profielhouder{height:430px;margin-top:30px}
+.boorkaart .onderschrift{margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid var(--rand);
+  font-size:14.5px;line-height:1.55;color:var(--grijs)}
+
+/* ============================================================
+   SCHERM 2 · KIEZER — lagen samenstellen
+   ============================================================ */
+.zoekregel{display:flex;gap:12px;flex-wrap:wrap;align-items:center;
+  border:1.5px solid var(--inkt);background:var(--vel-2);padding:13px 16px;margin-bottom:var(--s4)}
+.zoekregel .lbl{font:700 10px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--grijs)}
+.zoekregel input{flex:1;min-width:190px;border:0;border-bottom:1.5px solid var(--inkt);
+  background:transparent;font:400 17px/1.4 var(--serif);color:var(--inkt);padding:4px 2px}
+.zoekregel .tel{font-size:14.5px;color:var(--grijs)}
+
+.rubrieken{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:var(--s4)}
+.rubrieken button{font:500 14.5px/1 var(--sans);padding:10px 14px;border:1.5px solid var(--rand);
+  background:var(--vel-2);color:var(--inkt-2);cursor:pointer;border-radius:2px}
+.rubrieken button:hover{border-color:var(--inkt)}
+.rubrieken button[aria-pressed="true"]{background:var(--inkt);color:var(--vel-2);border-color:var(--inkt)}
+
+.kiezerraster{display:grid;grid-template-columns:1fr 340px;gap:var(--s5);align-items:start}
+@media (max-width:1040px){.kiezerraster{grid-template-columns:1fr}}
+.kiezerraster > *{min-width:0}
+
+.monsters{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:var(--s3)}
+.monster{border:1.5px solid var(--rand);background:var(--vel-2);cursor:pointer;text-align:left;
+  font:inherit;color:inherit;padding:0;display:flex;flex-direction:column}
+.monster:hover{border-color:var(--inkt)}
+.monster[aria-pressed="true"]{border-color:var(--inkt);border-width:2.5px;
+  box-shadow:0 8px 22px -14px rgba(33,31,26,.6)}
+.monster .staalband{height:34px;border-bottom:1.5px solid var(--inkt);position:relative}
+.monster .staalband .code{position:absolute;right:7px;top:7px;font:700 10px/1 var(--mono);
+  color:var(--inkt);background:rgba(255,255,255,.85);padding:3px 5px;border-radius:2px}
+.monster .lijf{padding:var(--s3);display:flex;gap:12px;align-items:flex-start;flex:1}
+.monster .beeld{width:58px;height:58px;border:1px solid var(--rand);background:#fff;padding:3px;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none}
+.monster .beeld img{max-height:100%;max-width:100%;width:auto;height:auto;mix-blend-mode:multiply}
+.monster h4{font:600 17px/1.25 var(--sans);color:var(--inkt);letter-spacing:-.018em}
+.monster p{font-size:14px;line-height:1.5;color:var(--grijs);margin-top:5px}
+.monster .voet{border-top:1px solid var(--rand);padding:9px var(--s3);display:flex;
+  justify-content:space-between;gap:10px;align-items:center;font:500 13px/1 var(--sans);
+  color:var(--inkt-2)}
+.monster .voet .dikte{font:600 13px/1 var(--mono);color:var(--inkt)}
+.monster .voet .vink{width:24px;height:24px;border:1.5px solid var(--inkt);border-radius:2px;
+  display:grid;place-items:center;font:700 14px/1 var(--sans);color:transparent;background:#fff}
+.monster[aria-pressed="true"] .voet .vink{color:var(--nu);border-color:var(--nu);border-width:2px}
+
+/* de opbouwkolom rechts: de laag-in-wording */
+.opbouw{border:1.5px solid var(--inkt);background:var(--vel-2);position:sticky;top:74px}
+@media (max-width:1040px){.opbouw{position:static}}
+.opbouw .kop{background:var(--inkt);color:var(--vel-2);padding:12px 16px;display:flex;
+  justify-content:space-between;gap:10px;font:700 10.5px/1.4 var(--sans);letter-spacing:.16em;
+  text-transform:uppercase}
+.opbouw .kop i{font-style:normal;color:var(--zand)}
+.opbouw .lijf{padding:var(--s3) 16px var(--s4)}
+.opbouw .nieuwelaag{border:2px dashed var(--nu);min-height:88px;display:flex;
+  flex-direction:column;justify-content:flex-end}
+.opbouw .nieuwelaag .strook{height:26px;border-top:1px solid var(--lijn);position:relative}
+.opbouw .nieuwelaag .strook b{position:absolute;left:7px;top:5px;font:600 11px/1 var(--sans);
+  color:var(--inkt);background:rgba(255,255,255,.84);padding:2px 5px;border-radius:2px}
+.opbouw .uit{margin-top:var(--s3);font-size:15px;line-height:1.6;color:var(--inkt-2)}
+.opbouw .uit b{color:var(--inkt);font-weight:600}
+.opbouw dl{margin-top:var(--s3);border-top:1px solid var(--rand)}
+.opbouw dl div{display:flex;justify-content:space-between;gap:12px;padding:9px 0;
+  border-bottom:1px solid var(--rand);font-size:15px}
+.opbouw dl dt{color:var(--grijs)}
+.opbouw dl dd{color:var(--inkt);font-weight:600}
+.opbouw .kn{width:100%;text-align:center;margin-top:var(--s3)}
+
+.leegstaat{border:1.5px dashed var(--rand);padding:var(--s4);text-align:center;
+  color:var(--grijs);font-size:15px;line-height:1.6}
+.leegstaat b{display:block;font:600 17px/1.3 var(--sans);color:var(--inkt);margin-bottom:7px}
+
+/* ============================================================
+   SCHERM 3 · CLIËNTKAART — de volledige boorstaat
+   ============================================================ */
+.boorstaat{border:1.5px solid var(--inkt);background:var(--vel-2);
+  box-shadow:0 24px 52px -34px rgba(33,31,26,.55)}
+.boorstaat .balk{background:var(--inkt);color:var(--vel-2);padding:14px 22px;display:flex;
+  justify-content:space-between;gap:18px;flex-wrap:wrap;font:700 11px/1.5 var(--sans);
+  letter-spacing:.16em;text-transform:uppercase}
+.boorstaat .balk i{font-style:normal;color:var(--zand)}
+.boorstaat .staatkop{padding:var(--s4) var(--s4) var(--s3);border-bottom:1.5px solid var(--inkt);
+  display:flex;justify-content:space-between;gap:var(--s4);flex-wrap:wrap;align-items:flex-end}
+.boorstaat .staatkop h3{font:600 27px/1.14 var(--sans);color:var(--inkt);letter-spacing:-.028em}
+.boorstaat .staatkop .sub{margin-top:7px;font-size:15.5px;color:var(--grijs)}
+.boorstaat .staatkop .coord{font:500 13px/1.6 var(--mono);color:var(--grijs);text-align:right}
+.boorstaat .staatkop .coord b{display:block;color:var(--inkt);font:600 15px/1.3 var(--mono)}
+.boorstaatlijf{padding:var(--s5) var(--s4) var(--s4)}
+.profielhouder-groot{height:560px}
+@media (max-width:760px){.profielhouder-groot{height:auto}}
+
+.legenda{margin-top:var(--s5);border-top:1.5px solid var(--inkt);padding-top:var(--s4)}
+.legenda h4{font:700 10.5px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--grijs);margin-bottom:var(--s3)}
+.legendaraster{display:grid;grid-template-columns:repeat(auto-fill,minmax(216px,1fr));gap:var(--s3)}
+.legenda .post{display:flex;gap:12px;align-items:flex-start}
+.legenda .post .staal{width:46px;height:32px;border:1.2px solid var(--inkt);flex:none}
+.legenda .post b{display:block;font:600 15px/1.3 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+.legenda .post span{display:block;font-size:13.5px;line-height:1.5;color:var(--grijs);margin-top:3px}
+
+.duiding{margin-top:var(--s4);border-left:3px solid var(--water);padding:4px 0 4px 15px;
+  font-size:16px;line-height:1.62;color:var(--inkt-2);max-width:64ch}
+.duiding b{display:block;font:700 10.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--water);margin-bottom:8px}
+
+/* ============================================================
+   SCHERM 4 · HET PRINTBLAD
+   ============================================================ */
+.bladhouder{display:grid;place-items:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){
+  .bladschaal{width:100%;overflow:hidden}
+  .blad{transform:scale(.62);transform-origin:top center;margin-bottom:-116mm !important}
+}
+@media (max-width:620px){.blad{transform:scale(.42);margin-bottom:-174mm !important}}
+
+.blad{position:relative;width:210mm;height:297mm;background:#fdfbf4;color:var(--inkt);
+  padding:12mm 13mm 10mm;box-shadow:0 30px 66px -34px rgba(33,31,26,.6);
+  border:1px solid var(--rand);display:flex;flex-direction:column;font-family:var(--serif)}
+
+.wijzer{position:absolute;z-index:9;width:148px;font:400 12.5px/1.42 var(--sans);color:var(--grijs)}
+.wijzer::after{content:"";position:absolute;background:var(--rand);height:1px}
+.wijzer.r::after{left:-20px;top:50%;width:16px}
+.wijzer.l{text-align:right}
+.wijzer.l::after{right:-20px;top:50%;width:16px}
+@media (max-width:1180px){.wijzer{display:none}}
+
+.bp-kop{display:flex;justify-content:space-between;align-items:flex-end;gap:8mm;
+  border-bottom:1.6pt solid var(--inkt);padding-bottom:3mm}
+.bp-kop .org{font:700 7pt/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--grijs)}
+.bp-kop h1{font:600 25pt/1.02 var(--sans);letter-spacing:-.04em;margin-top:2.5mm;color:var(--inkt)}
+.bp-kop .rechts{text-align:right;font:500 8pt/1.6 var(--mono);color:var(--grijs);white-space:nowrap}
+.bp-kop .rechts b{display:block;font:600 10.5pt/1.2 var(--mono);color:var(--inkt)}
+
+.bp-velden{display:grid;grid-template-columns:repeat(4,1fr);gap:1.6mm 6mm;padding:2.6mm 0 3mm;
+  border-bottom:.6pt solid var(--rand)}
+.bp-velden .v .n{display:block;font:700 6.4pt/1 var(--sans);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--grijs)}
+.bp-velden .v .w{display:block;font:600 9.5pt/1.3 var(--serif);color:var(--inkt);margin-top:1mm}
+
+.bp-lijf{display:grid;grid-template-columns:64mm 1fr;gap:6mm;padding-top:3.5mm;flex:1;min-height:0}
+
+/* de geprinte profielkolom */
+.bp-profiel{display:grid;grid-template-columns:11mm 26mm 1fr;gap:0;height:100%}
+.bp-lat{position:relative;border-right:.8pt solid var(--inkt)}
+.bp-lat .kop{position:absolute;top:-4mm;right:0;font:700 5.8pt/1 var(--sans);letter-spacing:.12em;
+  text-transform:uppercase;color:var(--grijs);white-space:nowrap}
+.bp-lat .tik{position:absolute;right:0;width:2mm;border-top:.5pt solid var(--lijn)}
+.bp-lat .tik.groot{width:3.4mm;border-top-width:.8pt}
+.bp-lat .tik span{position:absolute;right:4mm;top:-1.6mm;font:500 6.2pt/1 var(--mono);
+  color:var(--grijs);white-space:nowrap}
+.bp-kolom{position:relative;border-left:.8pt solid var(--inkt);border-right:.8pt solid var(--inkt)}
+.bp-laag{position:relative;border-bottom:.5pt solid var(--lijn);overflow:hidden}
+.bp-laag .wk{position:absolute;left:1mm;top:.6mm;font:700 6pt/1 var(--sans);color:var(--inkt);
+  background:rgba(255,255,255,.86);padding:.3mm 1mm}
+.bp-laag.lopend{border:.8pt dashed var(--nu)}
+.bp-laag.lopend .wk{color:var(--nu);background:#fff}
+.bp-water{position:absolute;left:0;right:0;border-top:1pt solid var(--water);z-index:6}
+.bp-water .lbl{position:absolute;right:.6mm;top:-3.6mm;font:700 5.6pt/1 var(--sans);
+  letter-spacing:.08em;text-transform:uppercase;color:var(--water);background:#fff;padding:.3mm 1mm}
+.bp-kant{position:relative;padding-left:2.4mm}
+.bp-kant .rg{position:absolute;left:0;right:0;font:400 6.6pt/1.3 var(--sans);color:var(--inkt-2)}
+.bp-kant .rg b{display:block;color:var(--inkt);font-weight:700;font-size:6.8pt}
+
+/* de rechterkolom: waar de patiënt leest */
+.bp-rechts{display:flex;flex-direction:column;min-height:0}
+.bp-lees{border:.8pt solid var(--lijn);background:#f6f2e7;padding:3mm 3.4mm;margin-bottom:3.4mm}
+.bp-lees .lbl{display:block;font:700 6.6pt/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--nu);margin-bottom:1.8mm}
+.bp-lees p{font:400 11pt/1.5 var(--serif);color:var(--inkt);max-width:56ch}
+.bp-lees p b{font-weight:600}
+
+.bp-oefkop{font:700 6.6pt/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--grijs);border-bottom:1.2pt solid var(--inkt);padding-bottom:1.4mm;margin-bottom:1mm}
+.bp-oef{display:grid;grid-template-columns:20mm 1fr 24mm;gap:3mm;align-items:start;
+  padding:3mm 0;border-bottom:.5pt solid var(--rand)}
+.bp-oef .beeld{width:20mm;height:20mm;border:.6pt solid var(--rand);background:#fff;padding:1mm;
+  display:flex;align-items:center;justify-content:center;overflow:hidden}
+.bp-oef .beeld img{max-height:100%;max-width:100%;width:auto;height:auto;mix-blend-mode:multiply}
+.bp-oef h2{font:600 13.5pt/1.14 var(--sans);color:var(--inkt);letter-spacing:-.025em}
+.bp-oef .hoe{margin-top:1.4mm;font:400 10.5pt/1.42 var(--serif);color:var(--inkt);max-width:46ch}
+.bp-oef .let{margin-top:1.4mm;font:400 8.8pt/1.38 var(--serif);color:var(--inkt-2)}
+.bp-oef .let b{font:700 6.4pt/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--nu);margin-right:1.4mm}
+.bp-oef .dos{font:400 9pt/1.45 var(--serif);color:var(--inkt);text-align:right}
+.bp-oef .dos b{display:block;font:600 12pt/1.2 var(--sans);letter-spacing:-.02em;margin-bottom:1mm}
+.bp-oef .dos .staal{margin-top:1.8mm;height:6mm;border:.6pt solid var(--inkt)}
+
+/* de week die u zelf afzet */
+.bp-week{margin-top:auto;padding-top:2.4mm}
+.bp-week .wkkop{font:700 6.6pt/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--grijs);margin-bottom:2mm}
+.bp-week .rij{display:grid;grid-template-columns:repeat(7,1fr);gap:1.6mm}
+.bp-week .d{border:.8pt solid var(--inkt);text-align:center;padding:1.6mm .6mm}
+.bp-week .d .dag{font:700 6.4pt/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--inkt)}
+.bp-week .d .dat{font:500 6pt/1 var(--mono);color:var(--grijs);margin-top:.8mm;display:block}
+.bp-week .d .vak{margin-top:1.4mm;height:7.6mm;border:.6pt solid var(--lijn);background:#fff}
+.bp-week .uitleg{margin-top:2mm;font:400 8.4pt/1.4 var(--serif);color:var(--inkt-2);max-width:62ch}
+.bp-week .uitleg b{color:var(--inkt);font-weight:600}
+
+/* de legenda onderaan het blad */
+.bp-legenda{margin-top:3mm;border-top:1.2pt solid var(--inkt);padding-top:2.4mm;
+  display:grid;grid-template-columns:repeat(5,1fr);gap:3mm}
+.bp-legenda .post{display:flex;gap:2mm;align-items:flex-start}
+.bp-legenda .post .staal{width:9mm;height:6.4mm;border:.6pt solid var(--inkt);flex:none}
+.bp-legenda .post b{display:block;font:700 6.6pt/1.2 var(--sans);color:var(--inkt)}
+.bp-legenda .post span{display:block;font:400 6.2pt/1.3 var(--sans);color:var(--grijs);margin-top:.6mm}
+
+.bp-voet{margin-top:2.6mm;padding-top:2mm;border-top:.6pt solid var(--rand);display:flex;
+  justify-content:space-between;gap:6mm;align-items:flex-end}
+.bp-voet .prk{font:400 7pt/1.45 var(--sans);color:var(--grijs);max-width:100mm}
+.bp-voet .prk b{color:var(--inkt);font-weight:700}
+.bp-voet .datum{font:500 6.6pt/1.4 var(--mono);color:var(--grijs);text-align:right;white-space:nowrap}
+
+.printhulp{max-width:680px;margin:var(--s4) auto 0;text-align:center;font-size:16px;
+  color:var(--grijs);line-height:1.62}
+.printhulp .kn{margin-top:var(--s3)}
+
+/* ── voet ────────────────────────────────────────────────── */
+footer.uitleiding{background:#211f1a;color:#b8ae97;padding:var(--s6) 24px;margin-top:var(--s6)}
+footer.uitleiding .binnen{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:700 10.5px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--zand);margin-bottom:14px}
+footer.uitleiding p,footer.uitleiding li{font-size:15px;line-height:1.7}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:10px}
+footer.uitleiding li::before{content:"—";position:absolute;left:0;color:var(--zand)}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 32</span>
+  <strong style="font:600 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Bodemprofiel</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="binnen">
+    <div class="veldhoek">
+
+      <div class="held">
+        <p style="font:700 11px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+          color:var(--nu);margin-bottom:var(--s3)">Fysiplan · concept 32</p>
+        <h1>Een mindere week is een <em>dun laagje</em>, geen gat.</h1>
+        <p class="onder">Elke oefenkaart kijkt vooruit en wist wat erachter ligt: volgende week
+          zeven nieuwe vakjes, vorige week weg. Daardoor voelt een week waarin het niet ging als
+          een gat in uw herstel. <b>Een profiel kent geen gaten.</b> Wat er ligt blijft liggen, en
+          draagt alles wat erna komt.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk het printblad</a>
+          <a class="kn leeg" href="#clientkaart">De volledige boorstaat</a>
+        </div>
+
+        <div class="drieregels">
+          <div class="cel">
+            <div class="staal h h-veen"></div>
+            <h4>De diepte is tijd</h4>
+            <p>Onderaan de eerste week na de operatie, bovenaan vandaag. De lat staat in weken, niet
+              in centimeters — maar hij leest hetzelfde.</p>
+          </div>
+          <div class="cel">
+            <div class="staal h h-zand"></div>
+            <h4>De arcering is de inhoud</h4>
+            <p>Elke soort werk heeft zijn eigen tekening. Stippen voor kracht, streepjes voor
+              mobiliteit, kruisarcering voor balans — herkenbaar zonder één kleur.</p>
+          </div>
+          <div class="cel">
+            <div class="staal" style="background:var(--water-licht);
+              background-image:linear-gradient(180deg,transparent 46%,var(--water) 46%,var(--water) calc(46% + 2px),transparent calc(46% + 2px))"></div>
+            <h4>De waterlijn is de pijn</h4>
+            <p>Eén horizontale lijn dwars door het profiel. Alles eronder is gevormd toen het nog
+              zeer deed. Dat u kunt zien waar die lijn zat, is het hele punt.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="boorkaart">
+        <div class="kaartkop">
+          <b>Boring 2026-0417</b>
+          <span>R. Veenstra · knie rechts</span>
+        </div>
+        <div class="profielhouder">
+          <div class="profiel smal" style="height:100%">
+            <div class="lat">
+              <span class="kop">Week</span>
+              <span class="tik groot" style="top:0"><span>9</span></span>
+              <span class="tik" style="top:11%"></span>
+              <span class="tik groot" style="top:22%"><span>7</span></span>
+              <span class="tik" style="top:33%"></span>
+              <span class="tik groot" style="top:45%"><span>5</span></span>
+              <span class="tik" style="top:57%"></span>
+              <span class="tik groot" style="top:69%"><span>3</span></span>
+              <span class="tik" style="top:81%"></span>
+              <span class="tik groot" style="top:93%"><span>1</span></span>
+            </div>
+            <div class="kolom">
+              <div class="laag lopend h h-open" style="height:11%"><span class="wk">9 · nu</span></div>
+              <div class="laag h h-zand" style="height:11%"><span class="wk">8</span></div>
+              <div class="laag h h-zand" style="height:11%"><span class="wk">7</span></div>
+              <div class="laag h h-kruis" style="height:11%"><span class="wk">6</span></div>
+              <div class="laag dun h h-klei" style="height:5%"><span class="wk">5</span></div>
+              <div class="laag h h-klei" style="height:12%"><span class="wk">4</span></div>
+              <div class="laag h h-leem" style="height:12%"><span class="wk">3</span></div>
+              <div class="laag h h-leem" style="height:12%"><span class="wk">2</span></div>
+              <div class="laag h h-veen" style="height:15%"><span class="wk">1</span></div>
+              <span class="waterlijn" style="top:50%"><span class="lbl">Pijngrens</span></span>
+            </div>
+            <div class="notities">
+              <div class="notitieregel rood" style="top:2%">
+                <span class="tekst"><b>Week 9 — nog open</b><span>deze laag zet u nu af</span></span>
+              </div>
+              <div class="notitieregel" style="top:24%">
+                <span class="tekst"><b>Kracht erbij</b><span>opstap toegevoegd, steun eraf</span></span>
+              </div>
+              <div class="notitieregel" style="top:47%">
+                <span class="tekst"><b>Dunne laag</b><span>griep, 2 van 7 dagen</span></span>
+              </div>
+              <div class="notitieregel" style="top:72%">
+                <span class="tekst"><b>Alleen mobiliteit</b><span>knie nog dik</span></span>
+              </div>
+              <div class="notitieregel" style="top:90%">
+                <span class="tekst"><b>Vaste bodem</b><span>eerste week na de ingreep</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="onderschrift">De dikte van een laag is het volume van die week — niet of hij
+          “gehaald” is. Week 5 is dun omdat er griep was. Hij is er wel, en week 6 ligt erbovenop.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>Elke oefening is een grondsoort met een eigen arcering en een eigen dikte per dag. Wat u
+        aanvinkt, bepaalt hoe de laag van de komende week eruit komt te zien — rechts groeit hij mee.</p>
+    </div>
+
+    <div class="zoekregel">
+      <span class="lbl">Zoek in de monsterkast</span>
+      <input type="text" value="knie" aria-label="Zoek een oefening"/>
+      <span class="tel">31 monsters in deze rubriek · 215 in de kast</span>
+    </div>
+
+    <div class="rubrieken">
+      <button type="button" aria-pressed="true">Onderste extremiteit</button>
+      <button type="button" aria-pressed="false">Rug</button>
+      <button type="button" aria-pressed="false">Balans</button>
+      <button type="button" aria-pressed="false">Nek</button>
+      <button type="button" aria-pressed="false">Core</button>
+    </div>
+
+    <div class="kiezerraster">
+      <div class="monsters">
+
+        <button class="monster" type="button" aria-pressed="true">
+          <span class="staalband h h-zand"><span class="code">ZA</span></span>
+          <span class="lijf">
+            <span class="beeld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+              alt="Lijntekening: vanuit stand tot net boven een stoel zakken en weer omhoog komen."/></span>
+            <span>
+              <h4>Stoelsquat</h4>
+              <p>Kracht in de bovenbenen. Zakken tot net boven de zitting, romp rechtop.</p>
+            </span>
+          </span>
+          <span class="voet"><span>Zand · kracht</span>
+            <span class="dikte">12 mm/dag</span><span class="vink" aria-hidden="true">✓</span></span>
+        </button>
+
+        <button class="monster" type="button" aria-pressed="true">
+          <span class="staalband h h-leem"><span class="code">LE</span></span>
+          <span class="lijf">
+            <span class="beeld"><img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png"
+              alt="Lijntekening: zittend op een stoel het onderbeen strekken tot horizontaal."/></span>
+            <span>
+              <h4>Knie strekken, zittend</h4>
+              <p>Mobiliteit en controle. Twee tellen vasthouden, rustig laten zakken.</p>
+            </span>
+          </span>
+          <span class="voet"><span>Leem · mobiliteit</span>
+            <span class="dikte">8 mm/dag</span><span class="vink" aria-hidden="true">✓</span></span>
+        </button>
+
+        <button class="monster" type="button" aria-pressed="true">
+          <span class="staalband h h-zand"><span class="code">ZA</span></span>
+          <span class="lijf">
+            <span class="beeld"><img src="/images/onderste-extremiteit/kuitheffing-staand-met-steun-line-v1.png"
+              alt="Lijntekening: staand met de handen aan een leuning op de tenen komen."/></span>
+            <span>
+              <h4>Kuitheffing met steun</h4>
+              <p>Kracht in de kuit. Langzaam zakken is belangrijker dan hoog komen.</p>
+            </span>
+          </span>
+          <span class="voet"><span>Zand · kracht</span>
+            <span class="dikte">9 mm/dag</span><span class="vink" aria-hidden="true">✓</span></span>
+        </button>
+
+        <button class="monster" type="button" aria-pressed="false">
+          <span class="staalband h h-kruis"><span class="code">KR</span></span>
+          <span class="lijf">
+            <span class="beeld"><img src="/images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png"
+              alt="Lijntekening: staand met de voeten achter elkaar op één lijn, hand aan de steun."/></span>
+            <span>
+              <h4>Tandemstand met steun</h4>
+              <p>Balans. Voeten op één lijn, twintig tellen, hand licht aan de steun.</p>
+            </span>
+          </span>
+          <span class="voet"><span>Kruis · balans</span>
+            <span class="dikte">5 mm/dag</span><span class="vink" aria-hidden="true">✓</span></span>
+        </button>
+
+        <button class="monster" type="button" aria-pressed="false">
+          <span class="staalband h h-klei"><span class="code">KL</span></span>
+          <span class="lijf">
+            <span class="beeld"><img src="/images/onderste-extremiteit/been-pendelen-line-v1.png"
+              alt="Lijntekening: staand met steun het gestrekte been rustig heen en weer laten pendelen."/></span>
+            <span>
+              <h4>Been pendelen</h4>
+              <p>Ontspanning en doorbloeding. Laten zwaaien, geen kracht zetten.</p>
+            </span>
+          </span>
+          <span class="voet"><span>Klei · ontlasten</span>
+            <span class="dikte">4 mm/dag</span><span class="vink" aria-hidden="true">✓</span></span>
+        </button>
+
+        <button class="monster" type="button" aria-pressed="false">
+          <span class="staalband h h-grind"><span class="code">GR</span></span>
+          <span class="lijf">
+            <span class="beeld"><img src="/images/onderste-extremiteit/step-up-staand-met-steun-line-v1.png"
+              alt="Lijntekening: met steun op een opstapje stappen en weer terug."/></span>
+            <span>
+              <h4>Opstap met steun</h4>
+              <p>Zware belasting. Grof materiaal: het draagt goed, maar niet op een dunne laag.</p>
+            </span>
+          </span>
+          <span class="voet"><span>Grind · zwaar</span>
+            <span class="dikte">14 mm/dag</span><span class="vink" aria-hidden="true">✓</span></span>
+        </button>
+
+      </div>
+
+      <aside class="opbouw">
+        <div class="kop"><span>Laag in wording</span><i>Week 9</i></div>
+        <div class="lijf">
+          <div class="nieuwelaag">
+            <div class="strook h h-zand" style="height:34px"><b>Zand · 12</b></div>
+            <div class="strook h h-leem" style="height:24px"><b>Leem · 8</b></div>
+            <div class="strook h h-zand" style="height:26px"><b>Zand · 9</b></div>
+          </div>
+          <p class="uit"><b>29 mm per dag, 203 mm over de week.</b> Dat is iets dikker dan week 8 en
+            veel dikker dan week 5. De opbouw loopt.</p>
+          <dl>
+            <div><dt>Vorige laag (wk 8)</dt><dd>186 mm</dd></div>
+            <div><dt>Dunste laag (wk 5)</dt><dd>52 mm</dd></div>
+            <div><dt>Totaal profiel</dt><dd>1 274 mm</dd></div>
+            <div><dt>Waterlijn nu</dt><dd>onder wk 5</dd></div>
+          </dl>
+          <button class="kn" type="button">Laag vastleggen en afdrukken</button>
+        </div>
+      </aside>
+    </div>
+
+    <div class="leegstaat" style="margin-top:var(--s4)">
+      <b>Lege staat</b>
+      Nog niets gekozen. Een laag van nul millimeter bestaat niet — maar een week zonder afzetting
+      is ook geen fout: dan noteert de boorstaat “geen opname”, en het profiel loopt gewoon door.
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>De volledige boorstaat: negen weken van onder naar boven, met de veldnotities in de
+        kantlijn, de waterlijn dwars door alles heen en de legenda eronder.</p>
+    </div>
+
+    <div class="boorstaat">
+      <div class="balk">
+        <span>Boorstaat · dossier 2026-0417</span>
+        <i>Opgenomen 21-08-2026 · J. Bakker</i>
+      </div>
+
+      <div class="staatkop">
+        <div>
+          <h3>R. Veenstra — rechterknie, na artroscopie</h3>
+          <p class="sub">Week 9 van 12 · herbeoordeling 31 augustus · profiel 1 274 mm</p>
+        </div>
+        <div class="coord">
+          Boring<b>2026-0417</b>
+          maaiveld 12-06-2026
+        </div>
+      </div>
+
+      <div class="boorstaatlijf">
+        <div class="profielhouder-groot">
+          <div class="profiel" style="height:100%">
+            <div class="lat">
+              <span class="kop">Week</span>
+              <span class="tik groot" style="top:0"><span>wk 9</span></span>
+              <span class="tik" style="top:10%"></span>
+              <span class="tik groot" style="top:20%"><span>wk 7</span></span>
+              <span class="tik" style="top:31%"></span>
+              <span class="tik groot" style="top:41%"><span>wk 5</span></span>
+              <span class="tik" style="top:48%"></span>
+              <span class="tik groot" style="top:61%"><span>wk 3</span></span>
+              <span class="tik" style="top:74%"></span>
+              <span class="tik groot" style="top:87%"><span>wk 1</span></span>
+              <span class="tik groot" style="top:100%"><span>0</span></span>
+            </div>
+
+            <div class="kolom">
+              <div class="laag lopend h h-open" style="height:10%"><span class="wk">9 · nu</span></div>
+              <div class="laag h h-zand" style="height:10%"><span class="wk">8</span></div>
+              <div class="laag h h-zand" style="height:11%"><span class="wk">7</span></div>
+              <div class="laag h h-kruis" style="height:10%"><span class="wk">6</span></div>
+              <div class="laag dun h h-klei" style="height:5%"><span class="wk">5</span></div>
+              <div class="laag h h-klei" style="height:11%"><span class="wk">4</span></div>
+              <div class="laag h h-leem" style="height:13%"><span class="wk">3</span></div>
+              <div class="laag h h-leem" style="height:13%"><span class="wk">2</span></div>
+              <div class="laag h h-veen" style="height:17%"><span class="wk">1</span></div>
+              <span class="waterlijn" style="top:46%"><span class="lbl">Pijngrens · tot wk 5</span></span>
+            </div>
+
+            <div class="notities">
+              <div class="notitieregel rood" style="top:1%">
+                <span class="tekst"><b>Week 9 · nog open</b>
+                  <span>3 posten, 203 mm gepland — twee dagen nog niet ingevuld</span></span>
+              </div>
+              <div class="notitieregel" style="top:12%">
+                <span class="tekst"><b>Week 8 · 186 mm</b>
+                  <span>zand: kracht domineert. Zes van zeven dagen, geen pijntoename</span></span>
+              </div>
+              <div class="notitieregel" style="top:23%">
+                <span class="tekst"><b>Week 7 · 191 mm</b>
+                  <span>opstap toegevoegd, steun eraf bij de kuitheffing</span></span>
+              </div>
+              <div class="notitieregel" style="top:34%">
+                <span class="tekst"><b>Week 6 · 168 mm</b>
+                  <span>balans erbij; eerste week waarin de knie ’s ochtends niet stram was</span></span>
+              </div>
+              <div class="notitieregel rood" style="top:44%">
+                <span class="tekst"><b>Week 5 · 52 mm — dunne laag</b>
+                  <span>griep, dinsdag t/m vrijdag niets gedaan. Bewust niet ingehaald</span></span>
+              </div>
+              <div class="notitieregel" style="top:54%">
+                <span class="tekst"><b>Week 4 · 147 mm</b>
+                  <span>klei: rustig materiaal, veel ontlasten. Pijn zakt onder de lijn</span></span>
+              </div>
+              <div class="notitieregel" style="top:67%">
+                <span class="tekst"><b>Week 3 · 129 mm</b>
+                  <span>alleen mobiliteit, knie nog dik na een halve dag staan</span></span>
+              </div>
+              <div class="notitieregel" style="top:80%">
+                <span class="tekst"><b>Week 2 · 118 mm</b>
+                  <span>eerste keer buiten gelopen, 200 meter</span></span>
+              </div>
+              <div class="notitieregel" style="top:93%">
+                <span class="tekst"><b>Week 1 · vaste bodem</b>
+                  <span>veen: alles nog nat en zwaar. Twee oefeningen, liggend</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="legenda">
+          <h4>Legenda</h4>
+          <div class="legendaraster">
+            <div class="post"><span class="staal h h-zand"></span>
+              <span><b>Zand — kracht</b><span>squats, kuitheffing, opstap. Draagt goed zodra er
+                genoeg van ligt.</span></span></div>
+            <div class="post"><span class="staal h h-leem"></span>
+              <span><b>Leem — mobiliteit</b><span>strekken, buigen, rekken. Bindt de lagen die
+                eronder liggen.</span></span></div>
+            <div class="post"><span class="staal h h-klei"></span>
+              <span><b>Klei — ontlasten</b><span>pendelen, liggend werk, koelen. Dicht en traag,
+                maar houdt vast.</span></span></div>
+            <div class="post"><span class="staal h h-kruis"></span>
+              <span><b>Kruis — balans</b><span>tandemstand, eenbeenstand. Vult op wat de andere
+                soorten laten liggen.</span></span></div>
+            <div class="post"><span class="staal h h-veen"></span>
+              <span><b>Veen — de eerste weken</b><span>alles nog nat en zwaar. Zakt in onder
+                gewicht, maar verdwijnt nooit.</span></span></div>
+            <div class="post"><span class="staal h h-grind"></span>
+              <span><b>Grind — zware belasting</b><span>traplopen, sport. Alleen op een laag die
+                dik genoeg is.</span></span></div>
+            <div class="post"><span class="staal" style="background:var(--water-licht);
+              background-image:linear-gradient(180deg,transparent 44%,var(--water) 44%,var(--water) calc(44% + 2px),transparent calc(44% + 2px))"></span>
+              <span><b>Waterlijn — pijngrens</b><span>alles eronder is gevormd toen het nog zeer
+                deed.</span></span></div>
+            <div class="post"><span class="staal h h-open" style="border-style:dashed;border-color:var(--nu)"></span>
+              <span><b>Open — nog te vormen</b><span>de week die loopt. Nog niet afgesloten, nog
+                niet te beoordelen.</span></span></div>
+          </div>
+        </div>
+
+        <div class="duiding">
+          <b>Wat de therapeut hier ziet</b>
+          Niet “week 5 gemist”, maar: onder week 5 ligt vier centimeter klei en veen, en daarboven
+          zeventien centimeter zand. De dunne laag heeft de opbouw niet gestopt — hij zit er
+          gewoon in. En de waterlijn is sinds week 5 niet meer gestegen: de pijn is onder het
+          maaiveld gebleven terwijl de belasting bijna verdubbelde. Dat is het gesprek.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>Links de geboorde kolom met de dieptelat en de veldnotities, rechts de drie oefeningen op
+        leesmaat, onderaan de legenda en de zeven dagvakken van de laag die u nu afzet. Volledig in
+        lijn getekend: de arceringen zijn ontworpen voor zwart-wit.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer l geen-print" style="top:64mm;right:calc(100% + 22px)">de kolom staat
+            op ware hoogte: negen weken op één blad, van onder naar boven gelezen</span>
+          <span class="wijzer r geen-print" style="top:82mm;left:calc(100% + 22px)">de leesregel op
+            11 punt — hier leest de patiënt, dus hier is niets getekend</span>
+          <span class="wijzer l geen-print" style="top:150mm;right:calc(100% + 22px)">de dunne laag
+            van week 5 blijft zichtbaar, en dat is een ontwerpkeuze, geen restant</span>
+          <span class="wijzer r geen-print" style="top:246mm;left:calc(100% + 22px)">zeven open
+            vakken: hierin tekent u zelf hoe dik de dag werd</span>
+
+          <div class="bp-kop">
+            <div>
+              <span class="org">Fysiplan · fysiotherapie · boorstaat · dossier 2026-0417</span>
+              <h1>Profiel week 9</h1>
+            </div>
+            <div class="rechts">
+              Boring<b>2026-0417</b>
+              opgenomen 21-08-2026
+            </div>
+          </div>
+
+          <div class="bp-velden">
+            <div class="v"><span class="n">Naam</span><span class="w">R. Veenstra</span></div>
+            <div class="v"><span class="n">Behandelaar</span><span class="w">J. Bakker</span></div>
+            <div class="v"><span class="n">Maaiveld</span><span class="w">12-06-2026</span></div>
+            <div class="v"><span class="n">Herbeoordeling</span><span class="w">31-08-2026</span></div>
+          </div>
+
+          <div class="bp-lijf">
+
+            <!-- de kolom -->
+            <div class="bp-profiel">
+              <div class="bp-lat">
+                <span class="kop">Week</span>
+                <span class="tik groot" style="top:0"><span>9</span></span>
+                <span class="tik" style="top:10%"></span>
+                <span class="tik groot" style="top:20%"><span>7</span></span>
+                <span class="tik" style="top:30%"></span>
+                <span class="tik groot" style="top:40%"><span>5</span></span>
+                <span class="tik" style="top:46%"></span>
+                <span class="tik groot" style="top:59%"><span>3</span></span>
+                <span class="tik" style="top:72%"></span>
+                <span class="tik groot" style="top:85%"><span>1</span></span>
+                <span class="tik groot" style="top:99.6%"><span>0</span></span>
+              </div>
+              <div class="bp-kolom">
+                <div class="bp-laag lopend h h-open" style="height:10%"><span class="wk">9</span></div>
+                <div class="bp-laag h h-zand" style="height:10%"><span class="wk">8</span></div>
+                <div class="bp-laag h h-zand" style="height:10%"><span class="wk">7</span></div>
+                <div class="bp-laag h h-kruis" style="height:10%"><span class="wk">6</span></div>
+                <div class="bp-laag h h-klei" style="height:5%"><span class="wk">5</span></div>
+                <div class="bp-laag h h-klei" style="height:11%"><span class="wk">4</span></div>
+                <div class="bp-laag h h-leem" style="height:13%"><span class="wk">3</span></div>
+                <div class="bp-laag h h-leem" style="height:13%"><span class="wk">2</span></div>
+                <div class="bp-laag h h-veen" style="height:18%"><span class="wk">1</span></div>
+                <span class="bp-water" style="top:46%"><span class="lbl">Pijngrens</span></span>
+              </div>
+              <div class="bp-kant">
+                <span class="rg" style="top:1%"><b>Nu</b>deze laag zet u af</span>
+                <span class="rg" style="top:12%"><b>186 mm</b>6 van 7 dagen</span>
+                <span class="rg" style="top:22%"><b>191 mm</b>opstap erbij</span>
+                <span class="rg" style="top:32%"><b>168 mm</b>balans erbij</span>
+                <span class="rg" style="top:41.5%"><b>52 mm</b>griep</span>
+                <span class="rg" style="top:50%"><b>147 mm</b>veel ontlasten</span>
+                <span class="rg" style="top:64%"><b>129 mm</b>mobiliteit</span>
+                <span class="rg" style="top:77%"><b>118 mm</b>200 m buiten</span>
+                <span class="rg" style="top:90%"><b>Vaste bodem</b>liggend werk</span>
+              </div>
+            </div>
+
+            <!-- waar de patiënt leest -->
+            <div class="bp-rechts">
+              <div class="bp-lees">
+                <span class="lbl">Hoe u dit blad leest</span>
+                <p>De kolom links is uw herstel tot nu toe: onderaan de eerste week, bovenaan deze
+                  week. <b>Week 5 is dun omdat u griep had. Die laag blijft er gewoon in staan.</b>
+                  U hoeft niets in te halen — u legt er alleen iets bovenop.</p>
+              </div>
+
+              <div class="bp-oefkop">Wat u deze week afzet — drie oefeningen</div>
+
+              <div class="bp-oef">
+                <span class="beeld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+                  alt="Lijntekening: vanuit stand tot net boven een stoel zakken en weer omhoog komen."/></span>
+                <span>
+                  <h2>Stoelsquat</h2>
+                  <p class="hoe">Ga voor een stoel staan, voeten op heupbreedte. Zak langzaam tot u
+                    de zitting bijna raakt en kom weer omhoog.</p>
+                  <p class="let"><b>Let op</b>Knieën boven de voeten. Doet het pijn, ga dan minder
+                    diep — niet minder vaak.</p>
+                </span>
+                <span class="dos"><b>3 × 10</b>elke dag<div class="staal h h-zand"></div>
+                  <span style="display:block;font:400 6.4pt/1.2 var(--sans);color:var(--grijs);
+                    margin-top:1mm">zand · 12 mm</span></span>
+              </div>
+
+              <div class="bp-oef">
+                <span class="beeld"><img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png"
+                  alt="Lijntekening: zittend op een stoel het onderbeen strekken tot horizontaal."/></span>
+                <span>
+                  <h2>Knie strekken, zittend</h2>
+                  <p class="hoe">Zit rechtop op een stoel. Strek uw rechterbeen, houd twee tellen
+                    vast en laat het rustig zakken.</p>
+                  <p class="let"><b>Let op</b>Rustig terug is belangrijker dan hoog komen.</p>
+                </span>
+                <span class="dos"><b>3 × 12</b>elke dag<div class="staal h h-leem"></div>
+                  <span style="display:block;font:400 6.4pt/1.2 var(--sans);color:var(--grijs);
+                    margin-top:1mm">leem · 8 mm</span></span>
+              </div>
+
+              <div class="bp-oef">
+                <span class="beeld"><img src="/images/onderste-extremiteit/kuitheffing-staand-met-steun-line-v1.png"
+                  alt="Lijntekening: staand met de handen aan een leuning op de tenen komen."/></span>
+                <span>
+                  <h2>Kuitheffing met steun</h2>
+                  <p class="hoe">Sta bij het aanrecht, handen op de rand. Kom op uw tenen en zak
+                    langzaam terug tot uw hielen de grond raken.</p>
+                  <p class="let"><b>Let op</b>De steun blijft tot 31 augustus. Gaat traplopen
+                    eerder vlot, bel dan.</p>
+                </span>
+                <span class="dos"><b>3 × 12</b>elke dag<div class="staal h h-zand"></div>
+                  <span style="display:block;font:400 6.4pt/1.2 var(--sans);color:var(--grijs);
+                    margin-top:1mm">zand · 9 mm</span></span>
+              </div>
+
+              <div class="bp-week">
+                <div class="wkkop">De laag van week 9 — teken zelf hoe dik de dag werd</div>
+                <div class="rij">
+                  <div class="d"><span class="dag">Ma</span><span class="dat">17-08</span><div class="vak"></div></div>
+                  <div class="d"><span class="dag">Di</span><span class="dat">18-08</span><div class="vak"></div></div>
+                  <div class="d"><span class="dag">Wo</span><span class="dat">19-08</span><div class="vak"></div></div>
+                  <div class="d"><span class="dag">Do</span><span class="dat">20-08</span><div class="vak"></div></div>
+                  <div class="d"><span class="dag">Vr</span><span class="dat">21-08</span><div class="vak"></div></div>
+                  <div class="d"><span class="dag">Za</span><span class="dat">22-08</span><div class="vak"></div></div>
+                  <div class="d"><span class="dag">Zo</span><span class="dat">23-08</span><div class="vak"></div></div>
+                </div>
+                <p class="uitleg">Kleur het vakje van onderaf vol: vol als alle drie lukten, half als er
+                  één bleef liggen, een streepje als het niet ging. <b>Een streepje is ook een
+                  laag.</b></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bp-legenda">
+            <div class="post"><span class="staal h h-zand"></span>
+              <span><b>Zand</b><span>kracht</span></span></div>
+            <div class="post"><span class="staal h h-leem"></span>
+              <span><b>Leem</b><span>mobiliteit</span></span></div>
+            <div class="post"><span class="staal h h-klei"></span>
+              <span><b>Klei</b><span>ontlasten</span></span></div>
+            <div class="post"><span class="staal h h-kruis"></span>
+              <span><b>Kruis</b><span>balans</span></span></div>
+            <div class="post"><span class="staal h h-veen"></span>
+              <span><b>Veen</b><span>de eerste weken</span></span></div>
+          </div>
+
+          <div class="bp-voet">
+            <p class="prk"><b>Fysiplan fysiotherapie</b> · Kerkstraat 12, Deventer · 0570 – 12 34 56 ·
+              werkdagen 8 tot 17 uur. Bel gerust tussendoor: een laag die anders loopt dan gepland
+              is informatie, geen probleem.</p>
+            <span class="datum">blad 1 van 1<br/>opname 21-08-2026</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="printhulp geen-print">
+      <p>Eén A4 staand. De arceringen zijn zwart-wit-tekeningen; de aardkleuren zijn een toegift en
+        dragen geen informatie. Uit een zwart-witprinter komt exact hetzelfde profiel. De leestekst
+        staat op 11 punt, de oefeninstructies op 10,5 punt met korte regels.</p>
+      <button class="kn" onclick="window.print()">Print dit blad</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>De richting</h4>
+      <p>Een geologisch profiel is de enige tekentraditie die tijd stapelt in plaats van hem te
+        wissen. Elke oefenkaart doet het omgekeerde: vooruitkijken, en het verleden per week
+        weggooien. Daardoor krijgt een mindere week de vorm van een gat. In een profiel bestaat
+        geen gat — hoogstens een dunne laag, die alles wat erna komt gewoon draagt. De arcering,
+        de dieptelat en de waterlijn zijn geen versiering: ze zijn de drie dingen die dat idee
+        leesbaar maken zonder één woord uitleg.</p>
+    </div>
+    <div class="kolom">
+      <h4>Waar het schuurt</h4>
+      <ul>
+        <li>Een profiel zegt: u komt nooit terug bij hoe het was, u bouwt eroverheen. Dat is eerlijk
+          en het is hard. Wie hoopt op “weer helemaal de oude” leest hier iets anders.</li>
+        <li>Millimeters per dag zijn verzonnen precisie. Het profiel ziet eruit als een meting
+          terwijl het een vertelling is — en juist de technische look maakt dat verschil
+          onzichtbaar.</li>
+        <li>Arceringen vragen een legenda, en een legenda is een cognitieve rekening. Voor een
+          patiënt van tachtig met een leesbril is “kruisarcering = balans” een extra ding om te
+          onthouden dat een woord niet nodig had gehad.</li>
+        <li>De veldopname-esthetiek is koel en onpersoonlijk. Het is een tekening van een grond, en
+          de grond bent u. Dat kan afstand geven op het moment dat iemand juist warmte zoekt.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Verder</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
