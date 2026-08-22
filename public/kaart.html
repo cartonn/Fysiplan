@@ -138,6 +138,24 @@
   .chip{font:600 12.5px/1 var(--disp);color:var(--grijs);background:var(--chip);border:1px solid var(--lijn);
     padding:5px 10px;border-radius:999px;white-space:nowrap}
   .chip b{color:var(--inkt)}
+  /* afvinken per oefening: een tik "gedaan vandaag" terwijl je je set afwerkt.
+     Lokaal per kaart per dag; vult zichzelf 's nachts weer leeg. Alle oefeningen
+     afgevinkt bevestigt automatisch de dag-teller ("ik heb vandaag geoefend"). */
+  .oefdone{display:flex;align-items:center;gap:10px;width:calc(100% - 28px);margin:0 14px 14px;
+    font:700 14.5px/1 var(--disp);color:var(--grijs);background:var(--chip);border:1px solid var(--lijn);
+    border-radius:14px;padding:12px 14px;cursor:pointer;text-align:left;
+    -webkit-tap-highlight-color:transparent;transition:background .12s,border-color .12s,color .12s}
+  .oefdone .odv{flex:0 0 22px;height:22px;border-radius:7px;border:2px solid var(--zacht);background:var(--vlak)}
+  .oefdone.aan{background:#eef6ef;border-color:#d7e8da;color:#3e7a52}
+  .oefdone.aan .odv{border-color:#3e8e5a;background:#3e8e5a}
+  .oefdone.aan .odv::after{content:"";display:block;width:6px;height:11px;margin:1px 0 0 6px;
+    border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(42deg)}
+  /* voortgangsbalk boven de oefeningen: hoeveel oefeningen vandaag afgevinkt */
+  .oefvoortgang{display:flex;align-items:center;gap:12px;margin:-4px 0 14px}
+  .ovbalk{flex:1;height:8px;border-radius:999px;background:var(--chip);border:1px solid var(--lijn);overflow:hidden}
+  .ovbalk i{display:block;height:100%;width:0;border-radius:999px;background:#3e8e5a;transition:width .28s ease}
+  .ovtekst{flex:0 0 auto;font:700 12.5px/1 var(--disp);color:var(--grijs);white-space:nowrap}
+  .oefvoortgang.klaar .ovtekst{color:#3e7a52}
   .vbtn{display:flex;align-items:center;justify-content:center;gap:9px;width:calc(100% - 28px);margin:0 14px 14px;
     font:600 15px/1 var(--disp);padding:13px 16px;border-radius:14px;cursor:pointer;
     border:1px solid var(--blauw-10);background:var(--blauw-05);color:var(--blauw);
@@ -328,7 +346,7 @@
     outline:3px solid rgba(36,86,166,.6);outline-offset:2px}
   @media print{
     body{background:#fff}
-    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,#metingkop,#agendakop,#vraagkop,.kopacties,.belknop,.appbanner,.demobadge,.infobadge{display:none !important}
+    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,#metingkop,#agendakop,#vraagkop,.kopacties,.belknop,.appbanner,.demobadge,.infobadge,.oefdone,.oefvoortgang{display:none !important}
     .kop,.oef,.schemakaart{box-shadow:none}
   }
 </style>
@@ -358,6 +376,7 @@
   <div class="veilig" id="veilig"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 16px"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18.1a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg><span id="veiligTxt"></span></div>
 
   <h2><span id="oefkop">Jouw oefeningen</span> <span class="tel" id="oeftel"></span></h2>
+  <div class="oefvoortgang" id="oefvoortgang" style="display:none"><span class="ovbalk" aria-hidden="true"><i id="ovvul"></i></span><span class="ovtekst" id="ovtekst"></span></div>
   <div id="oefs"></div>
 
   <h2 id="vraagkop" style="display:none">Vraag het aan je kaart</h2>
@@ -467,15 +486,15 @@
   function trq(k){var d=TQ[TAAL]||TQ.nl;return d[k]!=null?d[k]:TQ.nl[k];}
   // teksten voor het oefenvinkje en de oefenweek
   var TG={
-    nl:{vdaan:'Ik heb vandaag geoefend',vweek:'Jouw oefenweek',som0:'Nog geen keer deze week — pak je ritme weer op, één keer is genoeg om te beginnen.',som1:'Goed bezig — je oefende op {n} van de 7 dagen.',som3:'Sterk! Je oefende op {n} van de 7 dagen. Zo houd je het vol.',groter:'Grotere letters',print:'Print'},
-    en:{vdaan:'I did my exercises today',vweek:'Your exercise week',som0:'Not yet this week — pick your rhythm back up, once is enough to start.',som1:'Well done — you practised on {n} of the last 7 days.',som3:'Strong! You practised on {n} of the last 7 days. That’s how you keep it up.',groter:'Larger text',print:'Print'},
-    de:{vdaan:'Ich habe heute geübt',vweek:'Deine Übungswoche',som0:'Diese Woche noch nicht — nimm deinen Rhythmus wieder auf, einmal genügt zum Start.',som1:'Gut gemacht — du hast an {n} von 7 Tagen geübt.',som3:'Stark! Du hast an {n} von 7 Tagen geübt. So bleibst du dran.',groter:'Größere Schrift',print:'Drucken'},
-    fr:{vdaan:'J’ai fait mes exercices aujourd’hui',vweek:'Votre semaine d’exercices',som0:'Pas encore cette semaine — reprenez votre rythme, une fois suffit pour commencer.',som1:'Bravo — vous avez fait vos exercices {n} des 7 derniers jours.',som3:'Superbe ! Vous avez fait vos exercices {n} des 7 derniers jours. C’est comme ça qu’on tient.',groter:'Texte plus grand',print:'Imprimer'},
-    es:{vdaan:'Hoy he hecho mis ejercicios',vweek:'Tu semana de ejercicios',som0:'Aún no esta semana — retoma tu ritmo, una vez basta para empezar.',som1:'Bien hecho — hiciste ejercicio {n} de los últimos 7 días.',som3:'¡Genial! Hiciste ejercicio {n} de los últimos 7 días. Así se mantiene.',groter:'Texto más grande',print:'Imprimir'},
-    pl:{vdaan:'Ćwiczyłem(-am) dzisiaj',vweek:'Twój tydzień ćwiczeń',som0:'Jeszcze nie w tym tygodniu — wróć do rytmu, jeden raz wystarczy na początek.',som1:'Dobra robota — ćwiczyłeś(-aś) przez {n} z 7 dni.',som3:'Świetnie! Ćwiczyłeś(-aś) przez {n} z 7 dni. Tak się utrzymuje formę.',groter:'Większy tekst',print:'Drukuj'},
-    tr:{vdaan:'Bugün egzersiz yaptım',vweek:'Egzersiz haftan',som0:'Bu hafta henüz yok — ritmini yeniden yakala, başlamak için bir kez yeter.',som1:'Aferin — son 7 günün {n} gününde egzersiz yaptın.',som3:'Harika! Son 7 günün {n} gününde egzersiz yaptın. Böyle devam.',groter:'Daha büyük yazı',print:'Yazdır'},
-    ar:{vdaan:'تمرّنت اليوم',vweek:'أسبوع تمارينك',som0:'لم تتمرّن بعد هذا الأسبوع — استعد إيقاعك، مرّة واحدة تكفي للبدء.',som1:'أحسنت — تمرّنت في {n} من آخر 7 أيام.',som3:'رائع! تمرّنت في {n} من آخر 7 أيام. هكذا تحافظ على استمرارك.',groter:'خط أكبر',print:'طباعة'},
-    uk:{vdaan:'Сьогодні я тренувався(-лась)',vweek:'Твій тиждень вправ',som0:'Цього тижня ще ні — поверни свій ритм, одного разу досить, щоб почати.',som1:'Молодець — ти займався(-лась) {n} із 7 днів.',som3:'Чудово! Ти займався(-лась) {n} із 7 днів. Так і тримай.',groter:'Більший текст',print:'Друк'}
+    nl:{vdaan:'Ik heb vandaag geoefend',vweek:'Jouw oefenweek',som0:'Nog geen keer deze week — pak je ritme weer op, één keer is genoeg om te beginnen.',som1:'Goed bezig — je oefende op {n} van de 7 dagen.',som3:'Sterk! Je oefende op {n} van de 7 dagen. Zo houd je het vol.',groter:'Grotere letters',print:'Print',oefdaan:'Gedaan',oefvoor:'{n} van {t} vandaag gedaan',oefklaar:'Alle oefeningen vandaag gedaan — sterk!'},
+    en:{vdaan:'I did my exercises today',vweek:'Your exercise week',som0:'Not yet this week — pick your rhythm back up, once is enough to start.',som1:'Well done — you practised on {n} of the last 7 days.',som3:'Strong! You practised on {n} of the last 7 days. That’s how you keep it up.',groter:'Larger text',print:'Print',oefdaan:'Done',oefvoor:'{n} of {t} done today',oefklaar:'All exercises done today — strong!'},
+    de:{vdaan:'Ich habe heute geübt',vweek:'Deine Übungswoche',som0:'Diese Woche noch nicht — nimm deinen Rhythmus wieder auf, einmal genügt zum Start.',som1:'Gut gemacht — du hast an {n} von 7 Tagen geübt.',som3:'Stark! Du hast an {n} von 7 Tagen geübt. So bleibst du dran.',groter:'Größere Schrift',print:'Drucken',oefdaan:'Erledigt',oefvoor:'{n} von {t} heute erledigt',oefklaar:'Alle Übungen heute erledigt — stark!'},
+    fr:{vdaan:'J’ai fait mes exercices aujourd’hui',vweek:'Votre semaine d’exercices',som0:'Pas encore cette semaine — reprenez votre rythme, une fois suffit pour commencer.',som1:'Bravo — vous avez fait vos exercices {n} des 7 derniers jours.',som3:'Superbe ! Vous avez fait vos exercices {n} des 7 derniers jours. C’est comme ça qu’on tient.',groter:'Texte plus grand',print:'Imprimer',oefdaan:'Fait',oefvoor:'{n} sur {t} fait aujourd’hui',oefklaar:'Tous les exercices faits aujourd’hui — bravo !'},
+    es:{vdaan:'Hoy he hecho mis ejercicios',vweek:'Tu semana de ejercicios',som0:'Aún no esta semana — retoma tu ritmo, una vez basta para empezar.',som1:'Bien hecho — hiciste ejercicio {n} de los últimos 7 días.',som3:'¡Genial! Hiciste ejercicio {n} de los últimos 7 días. Así se mantiene.',groter:'Texto más grande',print:'Imprimir',oefdaan:'Hecho',oefvoor:'{n} de {t} hechos hoy',oefklaar:'Todos los ejercicios hechos hoy — ¡genial!'},
+    pl:{vdaan:'Ćwiczyłem(-am) dzisiaj',vweek:'Twój tydzień ćwiczeń',som0:'Jeszcze nie w tym tygodniu — wróć do rytmu, jeden raz wystarczy na początek.',som1:'Dobra robota — ćwiczyłeś(-aś) przez {n} z 7 dni.',som3:'Świetnie! Ćwiczyłeś(-aś) przez {n} z 7 dni. Tak się utrzymuje formę.',groter:'Większy tekst',print:'Drukuj',oefdaan:'Zrobione',oefvoor:'{n} z {t} zrobione dzisiaj',oefklaar:'Wszystkie ćwiczenia dziś zrobione — świetnie!'},
+    tr:{vdaan:'Bugün egzersiz yaptım',vweek:'Egzersiz haftan',som0:'Bu hafta henüz yok — ritmini yeniden yakala, başlamak için bir kez yeter.',som1:'Aferin — son 7 günün {n} gününde egzersiz yaptın.',som3:'Harika! Son 7 günün {n} gününde egzersiz yaptın. Böyle devam.',groter:'Daha büyük yazı',print:'Yazdır',oefdaan:'Yapıldı',oefvoor:'Bugün {t} egzersizden {n} tanesi yapıldı',oefklaar:'Bugün tüm egzersizler yapıldı — harika!'},
+    ar:{vdaan:'تمرّنت اليوم',vweek:'أسبوع تمارينك',som0:'لم تتمرّن بعد هذا الأسبوع — استعد إيقاعك، مرّة واحدة تكفي للبدء.',som1:'أحسنت — تمرّنت في {n} من آخر 7 أيام.',som3:'رائع! تمرّنت في {n} من آخر 7 أيام. هكذا تحافظ على استمرارك.',groter:'خط أكبر',print:'طباعة',oefdaan:'تمّ',oefvoor:'{n} من {t} اليوم',oefklaar:'أنجزت كل التمارين اليوم — رائع!'},
+    uk:{vdaan:'Сьогодні я тренувався(-лась)',vweek:'Твій тиждень вправ',som0:'Цього тижня ще ні — поверни свій ритм, одного разу досить, щоб почати.',som1:'Молодець — ти займався(-лась) {n} із 7 днів.',som3:'Чудово! Ти займався(-лась) {n} із 7 днів. Так і тримай.',groter:'Більший текст',print:'Друк',oefdaan:'Готово',oefvoor:'{n} з {t} сьогодні',oefklaar:'Усі вправи сьогодні виконано — чудово!'}
   };
   function trg(k){var d=TG[TAAL]||TG.nl;return d[k]!=null?d[k]:TG.nl[k];}
   // oefenvinkje + oefenweek tekenen (alleen registreren en tonen, geen oordeel)
@@ -507,6 +526,65 @@
       som.textContent=trg(sleutel).replace('{n}',nweek);
       som.classList.toggle('sterk',nweek>=3);
     }
+  }
+  // ---- afvinken per oefening (lokaal, per kaart, per dag) ----
+  // Een geheugensteun terwijl je je set afwerkt: elke oefening kan je afvinken,
+  // de balk bovenaan toont je voortgang. Blijft in de telefoon (localStorage) en
+  // vult 's nachts weer leeg. Als álle oefeningen af zijn, bevestigt dat vanzelf
+  // de dag-teller ("ik heb vandaag geoefend"), zodat de therapeut het meekrijgt.
+  function oefDaanSleutel(){return 'fp_oefdaan_'+(id||'x');}
+  function leesOefDaan(){
+    var vandaag=dagStr(Date.now());
+    try{
+      var s=JSON.parse(localStorage.getItem(oefDaanSleutel())||'{}');
+      if(s&&s.d===vandaag&&Array.isArray(s.done))return {d:vandaag,done:s.done};
+    }catch(e){}
+    return {d:vandaag,done:[]};
+  }
+  function bewaarOefDaan(st){try{localStorage.setItem(oefDaanSleutel(),JSON.stringify(st));}catch(e){}}
+  function tekenOefDaan(){
+    var st=leesOefDaan();
+    var knoppen=document.querySelectorAll('#oefs .oefdone');
+    var totaal=knoppen.length;
+    knoppen.forEach(function(b){
+      var idx=Number(b.dataset.idx);
+      var aan=st.done.indexOf(idx)>-1;
+      b.classList.toggle('aan',aan);
+      b.setAttribute('aria-pressed',aan?'true':'false');
+      var t=b.querySelector('.odt');if(t)t.textContent=trg('oefdaan');
+    });
+    var gedaanN=st.done.filter(function(i){return i<totaal;}).length;
+    var vp=document.getElementById('oefvoortgang');
+    if(!vp)return;
+    if(totaal<2){vp.style.display='none';return;}
+    vp.style.display='flex';
+    var klaar=gedaanN>=totaal;
+    document.getElementById('ovvul').style.width=Math.round(gedaanN/totaal*100)+'%';
+    document.getElementById('ovtekst').textContent=klaar?trg('oefklaar'):trg('oefvoor').replace('{n}',gedaanN).replace('{t}',totaal);
+    vp.classList.toggle('klaar',klaar);
+  }
+  function toggleOefDaan(idx){
+    var st=leesOefDaan();
+    var p=st.done.indexOf(idx);
+    if(p>-1)st.done.splice(p,1);else st.done.push(idx);
+    bewaarOefDaan(st);
+    tekenOefDaan();
+    // alle oefeningen af -> bevestig de dag-teller (idempotent; server telt één keer per dag)
+    var totaal=document.querySelectorAll('#oefs .oefdone').length;
+    if(totaal>0&&st.done.filter(function(i){return i<totaal;}).length>=totaal)bevestigGedaan();
+  }
+  // dag-teller bevestigen; slaat over als vandaag al geregistreerd is
+  function bevestigGedaan(){
+    if(!id||id==='demo')return;
+    var g=(K&&K.kaart&&K.kaart.gedaan)||[];
+    var vandaag=dagStr(Date.now());
+    if(g.some(function(x){return dagStr(x.t)===vandaag;}))return;
+    var knop=document.getElementById('gdaan');
+    if(knop&&knop.dataset.bezig)return;if(knop)knop.dataset.bezig='1';
+    fetch('/api/kaart/gedaan',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:id})})
+      .then(function(r){return r.json();})
+      .then(function(d){if(d&&d.ok){K.kaart.gedaan=d.gedaan||[];tekenGedaan();}if(knop)delete knop.dataset.bezig;})
+      .catch(function(){if(knop)delete knop.dataset.bezig;});
   }
   // de vraaghulp verschijnt alleen als de server een AI-sleutel heeft (K.ai)
   function tekenVraag(){
@@ -642,7 +720,8 @@
           badge+'</button>':'')+
         '<div class="oefinfo"><div class="naam">'+esc(vt(x.n))+'</div>'+
         (chips?'<div class="chips">'+chips+'</div>':'')+'</div></div>'+
-        knop+'<div class="vhouder"></div></div>';
+        knop+'<div class="vhouder"></div>'+
+        '<button type="button" class="oefdone" data-idx="'+idx+'" aria-pressed="false"><span class="odv" aria-hidden="true"></span><span class="odt"></span></button></div>';
     });
     document.getElementById('oefs').innerHTML=html||'<div class="oef"><div class="oefkop">'+esc(tr('geenoef'))+'</div></div>';
 
@@ -721,7 +800,7 @@
     }else{trend.style.display='none';}
   }
 
-  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();}
+  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();}
 
   // ---- taal wisselen: vaste teksten direct, kaartinhoud via de server (eenmalig per taal) ----
   function wisselTaal(t){
@@ -1012,6 +1091,9 @@
   function bindEens(){
     // video laden bij een tik; één tegelijk open, de rest pauzeert vanzelf
     document.getElementById('oefs').addEventListener('click',function(e){
+      // afvinken van een losse oefening ("gedaan vandaag")
+      var od=e.target.closest('.oefdone');
+      if(od){toggleOefDaan(Number(od.dataset.idx));return;}
       // tik (of Enter/Space, want de fotoknop is een echte knop) op de foto
       var fk=e.target.closest('.fotoknop');
       var foto=fk?fk.querySelector('img'):null;
