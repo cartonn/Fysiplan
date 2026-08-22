@@ -333,3 +333,31 @@ de schrijfroutes was tot nu toe volledig onbewaakt.
 **Volgende run — pak een ander gebied:** de statische bestandsroutes
 (`/uploads/`-randen, MIME-afhandeling, cache-headers) of een verse blik op
 de deeplinks/gedeelde kaarten (id-entropie, opsomming, delen-intrekken).
+
+### 2026-08-22 — statische bestandsroutes (traversal, bronlek, MIME/cache)
+**Geauditeerd:** de generieke statische handler, `/uploads/`, `/v2/images/`,
+de MIME-map en de cache-headers — adversarieel op path traversal en bronlek.
+
+**Bevindingen (geen codegat — de grenzen houden):**
+- Traversal: `urlPath` wordt één keer gedecodeerd; daarna dwingt
+  `normalize(join(publicDir,…))` + `startsWith(publicDir + sep)` de mapgrens
+  af. Acht vormen (`..`, `%2e%2e`, `..%2f`, `..%5c`, `....//`, dubbel-encode,
+  absolute) leveren 403 of de index-fallback op — nooit broncode. Servergeheimen
+  buiten `public/` (`server.js`, `package.json`, DATA_DIR-bestanden) lekken niet.
+- `/uploads/` dwingt de extensie-whitelist (`.jpg/.png/.mp4/.webm`) én de
+  mapgrens af (403 bij traversal of verkeerde extensie, 404 bij afwezig) en
+  draagt CORP `same-origin` + `noindex`. `/v2/images/` weert `..` apart.
+- MIME per extensie, onbekend → `application/octet-stream`, met globale
+  `nosniff` als vangnet tegen content-sniffing. Cache: afbeeldingen/fonts/video
+  publiek (`max-age=86400`, uploads hebben unieke namen), HTML/JSON `no-store`.
+- Misvormde percent-encoding (`/%c0%af`) geeft een nette 400 i.p.v. een crash.
+
+**Increment:** geen geforceerde codewijziging. Nieuwe regressiewacht
+`test-static-routes.mjs` (16 checks, rauwe HTTP zodat de exacte padbytes niet
+door de client genormaliseerd worden) die traversal-weerstand, het uitblijven
+van bronlek, de `/uploads`- en `/v2/images`-grenzen en de MIME/cache/nosniff-
+headers vergrendelt. Deze routes waren tot nu toe onbewaakt.
+
+**Volgende run — pak een ander gebied:** een verse blik op de deeplinks/
+gedeelde kaarten (id-entropie, opsomming, delen-intrekken) of de accountlaag
+opnieuw (nu met het wachtwoord-wijzig-endpoint erbij).
