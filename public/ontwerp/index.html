@@ -534,6 +534,57 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
 .staal.beeldverhaal .praat::after{content:"";position:absolute;left:7px;bottom:-9px;width:0;height:0;
   border-left:8px solid transparent;border-right:3px solid transparent;border-top:9px solid #15161a}
 
+/* — staal concept 34: Woordenboek — */
+.staal.woordenboek{background:#fbfaf6;color:#1a1815}
+.staal.woordenboek .plaatnr{color:#a01c2c;font-family:var(--mono)}
+.staal.woordenboek .woord{font-family:Charter,Georgia,serif;font-weight:700;letter-spacing:-.025em;
+  position:relative;z-index:2;max-width:calc(100% - 74px)}
+.staal.woordenboek .woord em{font-style:normal;font-weight:400;color:#a49c8d}
+.staal.woordenboek .kolom{position:absolute;right:52px;top:14px;bottom:14px;width:76px;
+  display:flex;flex-direction:column;gap:4px;z-index:1}
+.staal.woordenboek .kolom i{display:block;height:3px;background:#ddd7c9}
+.staal.woordenboek .kolom i.kort{width:56%}
+.staal.woordenboek .kolom i.tw{height:5px;background:#1a1815;width:70%}
+.staal.woordenboek .kolom i.rood{background:#a01c2c;width:26%;height:4px}
+.staal.woordenboek .duim{position:absolute;right:14px;top:14px;bottom:14px;width:26px;
+  display:flex;flex-direction:column;gap:3px}
+.staal.woordenboek .duim i{flex:1;background:#f3f0e7;border:1px solid #ddd7c9;border-right:0}
+.staal.woordenboek .duim i.aan{background:#a01c2c;border-color:#a01c2c}
+
+/* — staal concept 35: Medicijnrol — */
+.staal.medicijnrol{background:#eef1ef;color:#14181a}
+.staal.medicijnrol .plaatnr{color:#0d6a4e;font-family:var(--mono);position:relative;z-index:2}
+.staal.medicijnrol .woord{font-family:"Avenir Next",Seravek,system-ui,sans-serif;font-weight:700;
+  letter-spacing:-.035em;position:relative;z-index:2;max-width:calc(100% - 108px)}
+.staal.medicijnrol .woord em{font-style:normal;color:#0d6a4e}
+.staal.medicijnrol .zakjes{position:absolute;right:14px;top:12px;bottom:12px;width:96px;
+  display:flex;flex-direction:column;gap:0;z-index:1}
+.staal.medicijnrol .zakjes i{flex:1;background:#f8faf9;border:1px solid #ccd6d2;position:relative}
+.staal.medicijnrol .zakjes i + i{border-top:0}
+.staal.medicijnrol .zakjes i::before{content:"";position:absolute;left:6px;right:6px;top:6px;height:2px;
+  background:#14181a;opacity:.55}
+.staal.medicijnrol .zakjes i::after{content:"";position:absolute;left:6px;right:26px;top:13px;height:2px;
+  background:#0d6a4e;opacity:.6}
+.staal.medicijnrol .zakjes i.op{background:#e2e9e6}
+.staal.medicijnrol .perf{position:absolute;right:14px;width:96px;height:0;
+  border-top:2px dashed #9aa4a7;z-index:2}
+
+/* — staal concept 36: Wegdek — */
+.staal.wegdek{background:linear-gradient(180deg,#2b2f31,#232628);color:#f3f3ee}
+.staal.wegdek .plaatnr{color:#f2c31a;font-family:var(--mono);position:relative;z-index:2}
+.staal.wegdek .woord{font-family:"Avenir Next","Helvetica Neue",Helvetica,sans-serif;font-weight:800;
+  letter-spacing:-.04em;text-transform:uppercase;position:relative;z-index:2;max-width:calc(100% - 84px)}
+.staal.wegdek .woord em{font-style:normal;color:#f2c31a}
+.staal.wegdek .strepen i{border-color:rgba(243,243,238,.3)}
+.staal.wegdek .kant{position:absolute;top:0;bottom:0;width:5px;background:#f3f3ee;opacity:.85}
+.staal.wegdek .kant.l{left:9px}
+.staal.wegdek .kant.r{right:9px}
+.staal.wegdek .midden{position:absolute;left:22px;right:22px;top:50%;height:9px;
+  background:repeating-linear-gradient(90deg,#f3f3ee 0 26px,transparent 26px 46px);opacity:.5}
+.staal.wegdek .cijfer{position:absolute;right:22px;bottom:8px;font:800 46px/.8 "Avenir Next",
+  "Helvetica Neue",Helvetica,sans-serif;color:#f2c31a;transform:scaleY(1.5);transform-origin:bottom right;
+  letter-spacing:-.04em;z-index:2}
+
 .kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
 .kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
 .kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
@@ -593,8 +644,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>33</b> concepten</span>
-      <span>Laatste ronde <b>21 augustus 2026</b></span>
+      <span><b>36</b> concepten</span>
+      <span>Laatste ronde <b>22 augustus 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -1972,6 +2023,128 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-33-beeldverhaal.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-33-beeldverhaal.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 34 ─────────── -->
+      <article class="kaart">
+        <div class="staal woordenboek">
+          <div class="kolom" aria-hidden="true">
+            <i class="tw"></i><i></i><i class="kort"></i><i class="rood"></i>
+            <i></i><i class="tw"></i><i></i><i class="kort"></i>
+          </div>
+          <div class="duim" aria-hidden="true"><i></i><i class="aan"></i><i></i><i></i></div>
+          <div class="plaatnr">oe·fe·nen · ww.</div>
+          <div class="woord">Niet gelezen, <em>opgezocht</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 34</div>
+          <h3>Woordenboek</h3>
+          <p class="richting">Een oefenkaart wordt niet gelezen. Ze wordt opgezocht — en daar
+            bestaat al vierhonderd jaar een vorm voor.</p>
+          <p class="rationale">De kaart is opgemaakt als een brief: van boven naar beneden, één
+            keer. Maar zo gebruikt niemand hem. De patiënt slaat het blad dertig keer op in twaalf
+            weken en zoekt elke keer hetzelfde: hoe vaak ook alweer. Dat is opzoekgedrag, en het
+            lemma is de vorm die daarvoor gemaakt is — vast apparaat, vaste volgorde, alles altijd
+            op dezelfde plek. De omkering die dit concept maakt: een woordenboek is klein gezet
+            omdat je er één regel in leest. Hier blijft het apparaat klein en grijs, maar die ene
+            regel staat groot.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>het lemma met puntjes op de lettergrepen · de dosering op de plek van de uitspraak,
+              tussen haken · genummerde betekenissen, waarbij 2 altijd de variant voor de slechte
+              dag is · het gebruiksvoorbeeld cursief mét bron: wie het zei en wanneer · de
+              kolomtitel met het eerste en laatste trefwoord · de duimindex aan de snede · de
+              vervoegingstabel, hier de week</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — kolomtitel, leeswijzer, vier ingangen in twee kolommen met hangende
+              inspringing, en onderaan de vervoeging met zeven vakjes; het apparaat op 6 punt,
+              maar wat de patiënt dóet op 11½</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-34-woordenboek.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-34-woordenboek.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 35 ─────────── -->
+      <article class="kaart">
+        <div class="staal medicijnrol">
+          <div class="zakjes" aria-hidden="true"><i class="op"></i><i class="op"></i><i></i><i></i></div>
+          <div class="perf" style="top:44px" aria-hidden="true"></div>
+          <div class="perf" style="top:76px" aria-hidden="true"></div>
+          <div class="plaatnr">Zakje 4 van 7</div>
+          <div class="woord">Wat op is, <em>is op</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 35</div>
+          <h3>Medicijnrol</h3>
+          <p class="richting">De apotheek loste therapietrouw niet op met motivatie, maar met
+            verpakking.</p>
+          <p class="rationale">Op een medicijnrol staat niet wat u moet nemen — het zit al in het
+            zakje, met uw naam, de dag en het tijdstip erop. U scheurt er één af en de rest blijft
+            opgerold; het dagelijkse besluit is weggehaald. De oefenkaart doet het omgekeerde: die
+            legt de hele week open op tafel en vraagt elke ochtend opnieuw welke oefeningen, hoe
+            vaak, wanneer. Dus verpakken we de week: zeven zakjes, één per dag, vooraf gevuld door
+            de praktijk — inclusief een gedrukte rustdag, zodat één lege dag per week geen
+            overgeslagen dag is.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>de baxterrol oftewel geïndividualiseerde distributievorm · de gesealde rand met zijn
+              diagonale kartel · de perforatie tussen twee zakjes · de machineregel bovenaan in mono
+              met dag, tijd en volgnummer · de streepjescode · het volgnummer dat zichtbaar maakt
+              wat ontbreekt · en één afwijking van het origineel: de letter is groot</dd>
+            <dt>Print</dt>
+            <dd>A4 staand — acht cellen: linksboven het kopzakje met naam en gebruiksaanwijzing,
+              daarna zeven dagzakjes met streepjeslijnen om langs te knippen; oefeningsnamen op
+              10½ punt, waar een echt apotheekzakje 6 punt gebruikt</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-35-medicijnrol.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-35-medicijnrol.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 36 ─────────── -->
+      <article class="kaart">
+        <div class="staal wegdek">
+          <span class="kant l" aria-hidden="true"></span>
+          <span class="kant r" aria-hidden="true"></span>
+          <span class="midden" aria-hidden="true"></span>
+          <span class="cijfer" aria-hidden="true">3</span>
+          <div class="plaatnr">Route 7 · balans</div>
+          <div class="woord">Legt <em>niets</em> uit</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 36</div>
+          <h3>Wegdek</h3>
+          <p class="richting">Een streep op de weg legt niets uit, en juist daarom volgt iedereen
+            hem.</p>
+          <p class="rationale">Bij tachtig kilometer per uur, in de regen, ook door mensen die een
+            bijsluiter nooit lezen. Oefenkaarten doen het omgekeerde: die leggen alles uit en worden
+            niet gevolgd. Markering werkt om drie redenen die de oefenkaart alle drie mist — ze ligt
+            op de plek van de handeling, ze wijst in de richting van de beweging, en ze zegt alleen
+            wat er hierna komt. Vandaar de harde regel van dit concept: geen volzin langer dan één
+            regel. Wat niet in één regel past, hoort niet op het wegdek maar in het gesprek.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>de onderbroken streep waar je overheen mag: de dagen · de doorgetrokken kantstreep
+              die blijft staan: de pijngrens · haaientanden als het punt waarop je stopt terwijl het
+              nog gaat · de pijl in de rijrichting · het verticaal uitgerekte wegdekcijfer, gerekt
+              omdat je het onder een scherpe hoek leest · geel als tijdelijke markering ·
+              thermoplast dat millimeters boven het dek ligt: markering is reliëf</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>liggend</b> — een weg loopt opzij: drie rijstroken gescheiden door onderbroken
+              belijning, de dosering als uitgerekt cijfer, zeven dagblokken om af te strepen en een
+              haaientandenregel als afsluiting; op papier is de grond wit en de markering donker,
+              omgekeerd aan het scherm</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-36-wegdek.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-36-wegdek.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>

@@ -1,0 +1,826 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 36 — Wegdek · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 36 — WEGDEK
+   ------------------------------------------------------------
+   Een streep op de weg legt niets uit.
+
+   Er staat geen zin bij, geen reden, geen "let op uw houding".
+   En tóch volgt iedereen hem: bij tachtig kilometer per uur, in
+   de regen, zonder erover na te denken, ook mensen die de tekst
+   op een bijsluiter nooit hebben gelezen. Oefenkaarten doen het
+   omgekeerde — ze leggen alles uit, en worden niet gevolgd.
+
+   Markering werkt om drie redenen die een oefenkaart alle drie
+   mist. Ze ligt op de plek waar de handeling gebeurt. Ze wijst
+   in de richting van de beweging. En ze zegt altijd maar één
+   ding: wat er hierna komt.
+
+   De grammatica van het wegdek, vertaald:
+     · de onderbroken streep — de dagen; je mag eroverheen
+     · de doorgetrokken kantstreep — de pijngrens; die niet
+     · de haaientanden — hier stoppen, ook als het nog gaat
+     · de pijl — de volgorde, altijd in de rijrichting
+     · het cijfer op het asfalt — verticaal uitgerekt, want je
+       leest het onder een scherpe hoek
+     · geel — tijdelijke markering; dit is de weekversie
+     · thermoplast ligt millimeters bóven het wegdek: markering
+       is reliëf, geen plaatje
+
+   De harde regel van dit concept: geen enkele volzin op de kaart
+   is langer dan één regel. Wat niet in één regel past, hoort niet
+   op het wegdek maar in het gesprek.
+
+   Twee praktische keuzes:
+   1. Op het scherm is de grond asfalt en de markering wit. Op
+      papier draaien we het om — wit blad, markering in donkere
+      inkt — want een A4 vol zwarte inkt is geen kaart maar een
+      inktprobleem. De vórm blijft identiek.
+   2. De printkaart is A4 LIGGEND. Een weg loopt opzij.
+   ============================================================ */
+
+:root{
+  --asfalt:#26292b;
+  --asfalt-2:#1d2021;
+  --asfalt-3:#33383a;
+  --wit:#f3f3ee;             /* markeringswit */
+  --wit-zacht:#c9ccc8;
+  --geel:#f2c31a;            /* tijdelijke markering */
+  --geel-diep:#c99a00;
+  --rood:#d2452a;            /* alleen voor de grens */
+  --papier:#ffffff;
+  --inkt:#1a1c1d;
+  --inkt-2:#414749;
+  --grijs:#6f7679;
+  --grijs-2:#9aa1a3;
+  --lijn:#d6dad8;
+
+  --sans:"Avenir Next","Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:15px; --s4:25px; --s5:40px; --s6:66px;
+
+  /* het wegdek zelf: fijne korrel over een donkere grond */
+  --dek:
+    radial-gradient(circle at 18% 24%,rgba(255,255,255,.045) 0 1px,transparent 1px),
+    radial-gradient(circle at 62% 71%,rgba(255,255,255,.04) 0 1px,transparent 1px),
+    radial-gradient(circle at 84% 38%,rgba(0,0,0,.22) 0 1px,transparent 1px),
+    linear-gradient(180deg,#2b2f31,#232628);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.6 var(--sans);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--inkt)}
+:focus-visible{outline:3px solid var(--geel);outline-offset:3px}
+.binnen{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* het uitgerekte wegdekcijfer: je leest het onder een scherpe hoek */
+.rijcijfer{display:inline-block;font-weight:800;letter-spacing:-.02em;line-height:.86;
+  transform:scaleY(1.5);transform-origin:center bottom}
+
+/* ── labbalk ─────────────────────────────────────────────── */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  background:var(--asfalt-2);color:var(--wit-zacht);padding:11px 20px;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--asfalt);background:var(--geel);padding:6px 8px;border-radius:2px}
+.labbalk .rek{flex:1}
+.labbalk a{color:var(--wit-zacht);text-decoration:none;padding:4px 2px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--geel)}
+.labbalk a.terug{color:#fff}
+@media (max-width:760px){.labbalk a:not(.terug){display:none}}
+
+.scherm{border-top:1px solid var(--lijn);padding:var(--s6) 0}
+.scherm.eerste{border-top:0;padding:0}
+.schermkop{max-width:66ch;margin-bottom:var(--s5)}
+.schermkop > b{display:block;font:700 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--geel-diep);margin-bottom:12px}
+.schermkop h2{font:800 34px/1.1 var(--sans);color:var(--inkt);letter-spacing:-.04em}
+.schermkop p{margin-top:14px;color:var(--grijs);font-size:17px}
+.schermkop p b{color:var(--inkt);font-weight:700}
+
+/* ============================================================
+   1 · LANDING — de rijbaan
+   ============================================================ */
+.rijbaan{background:var(--dek);color:var(--wit);position:relative;overflow:hidden;
+  padding:var(--s6) 0 0}
+/* de doorgetrokken kantstrepen links en rechts van de baan */
+.rijbaan::before,.rijbaan::after{content:"";position:absolute;top:0;bottom:0;width:7px;background:var(--wit);opacity:.9}
+.rijbaan::before{left:14px}
+.rijbaan::after{right:14px}
+@media (max-width:700px){.rijbaan::before{left:6px}.rijbaan::after{right:6px}}
+
+.merkregel{display:flex;align-items:center;gap:12px;margin-bottom:var(--s5)}
+.merkregel .blok{width:26px;height:26px;background:var(--geel)}
+.merkregel .naam{font:800 15px/1 var(--sans);color:var(--wit);letter-spacing:-.02em}
+.merkregel .pad{font:700 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--wit-zacht)}
+
+.held h1{font:800 clamp(38px,6.4vw,78px)/.98 var(--sans);letter-spacing:-.045em;color:var(--wit);
+  max-width:15ch;text-transform:uppercase}
+.held h1 em{font-style:normal;color:var(--geel)}
+.held .onder{margin-top:var(--s4);font-size:20px;line-height:1.55;color:var(--wit-zacht);max-width:54ch}
+.held .onder b{color:var(--wit)}
+
+.knoppen{display:flex;flex-wrap:wrap;gap:12px;margin-top:var(--s4)}
+.kn{display:inline-block;background:var(--geel);color:var(--asfalt);text-decoration:none;
+  padding:16px 24px;font:800 15px/1 var(--sans);letter-spacing:.02em;text-transform:uppercase;
+  border:2px solid var(--geel)}
+.kn:hover{background:#ffd63f;border-color:#ffd63f}
+.kn.leeg{background:transparent;color:var(--wit);border-color:var(--wit)}
+.kn.leeg:hover{background:var(--wit);color:var(--asfalt)}
+
+/* de baan onder de kop: onderbroken belijning met een uitgerekt cijfer */
+.baanstrook{margin-top:var(--s6);position:relative;padding:var(--s5) 0 var(--s6)}
+.streeplijn{height:16px;background:repeating-linear-gradient(90deg,
+  var(--wit) 0 92px,transparent 92px 156px);opacity:.94}
+.streeplijn.smal{height:11px;background:repeating-linear-gradient(90deg,
+  var(--wit) 0 46px,transparent 46px 86px);opacity:.7}
+.baanvakken{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:var(--s4) 0}
+@media (max-width:820px){.baanvakken{grid-template-columns:1fr}}
+.baanvak{padding:var(--s3) var(--s4) var(--s4);border-left:4px solid rgba(243,243,238,.28)}
+.baanvak:first-child{border-left:0;padding-left:0}
+.baanvak .groot{color:var(--geel);font-size:62px}
+.baanvak h4{font:800 20px/1.2 var(--sans);color:var(--wit);letter-spacing:-.025em;
+  margin:22px 0 8px;text-transform:uppercase}
+.baanvak p{font-size:15.5px;line-height:1.6;color:var(--wit-zacht)}
+
+/* de haaientanden: een rij driehoeken met de punt naar de lezer */
+.tanden{display:flex;gap:9px;align-items:flex-start;margin-top:var(--s3)}
+.tanden i{width:0;height:0;border-left:13px solid transparent;border-right:13px solid transparent;
+  border-top:22px solid var(--wit)}
+.tanden.donker i{border-top-color:var(--inkt)}
+.tandregel{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s4);
+  border-top:5px solid var(--wit);padding-top:var(--s4);margin-top:var(--s5)}
+.tandregel p{font:800 22px/1.25 var(--sans);color:var(--wit);letter-spacing:-.025em;max-width:34ch;
+  text-transform:uppercase}
+.tandregel p em{font-style:normal;color:var(--geel)}
+
+/* ============================================================
+   2 · KIEZER — stroken kiezen
+   ============================================================ */
+.zoekbalk{background:var(--asfalt);color:var(--wit);padding:18px 20px;
+  display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+.zoekbalk .lbl{font:700 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--geel)}
+.zoekbalk input{flex:1;min-width:200px;font:700 21px/1.2 var(--sans);color:var(--wit);
+  border:0;border-bottom:3px solid var(--geel);padding:6px 2px;background:transparent}
+.zoekbalk .tel{font:700 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--wit-zacht)}
+
+.rubrieken{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 var(--s4)}
+.rubrieken button{font:700 13.5px/1 var(--sans);letter-spacing:.04em;text-transform:uppercase;
+  color:var(--inkt);background:var(--papier);border:2px solid var(--inkt);padding:11px 15px;cursor:pointer}
+.rubrieken button[aria-pressed="true"]{background:var(--inkt);color:var(--wit)}
+
+.strokenlijst{border-top:4px solid var(--inkt)}
+.strook{display:grid;grid-template-columns:74px 92px 1fr 168px 150px;gap:20px;align-items:center;
+  padding:18px 0;border-bottom:2px dashed var(--lijn)}
+@media (max-width:980px){
+  .strook{grid-template-columns:64px 1fr;gap:14px}
+  .strook .zin,.strook .doos,.strook .kiesknop{grid-column:2}
+}
+.strook .nrvak{font-size:44px;color:var(--lijn)}
+.strook.aan .nrvak{color:var(--inkt)}
+.strook .beeld{width:92px;height:70px;border:2px solid var(--lijn);background:#fafbfa;
+  display:flex;align-items:center;justify-content:center;padding:4px}
+.strook.aan .beeld{border-color:var(--inkt)}
+.strook .beeld img{max-height:100%;width:auto;mix-blend-mode:multiply}
+.strook h3{font:800 22px/1.15 var(--sans);color:var(--inkt);letter-spacing:-.03em;text-transform:uppercase}
+.strook .zin{font-size:15.5px;color:var(--grijs);margin-top:6px;line-height:1.45}
+.strook .doos{font:800 26px/1 var(--sans);color:var(--inkt);letter-spacing:-.03em;white-space:nowrap}
+.strook .doos em{display:block;font-style:normal;font:700 10px/1 var(--mono);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--grijs-2);margin-top:7px}
+.strook .kiesknop{justify-self:end}
+.strook .kiesknop button{font:800 13px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;
+  padding:13px 16px;cursor:pointer;border:2px solid var(--inkt);background:var(--papier);
+  color:var(--inkt);white-space:nowrap}
+.strook.aan .kiesknop button{background:var(--geel);border-color:var(--geel)}
+.strook.aan{background:linear-gradient(90deg,rgba(242,195,26,.16),rgba(242,195,26,0) 62%);
+  box-shadow:inset 6px 0 0 var(--geel)}
+
+.grensregel{margin-top:var(--s4);border-top:6px solid var(--rood);padding-top:18px;
+  display:flex;flex-wrap:wrap;gap:var(--s4);align-items:flex-start}
+.grensregel .kop{font:800 14px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--rood)}
+.grensregel p{font-size:16px;line-height:1.55;max-width:64ch;color:var(--inkt-2)}
+.grensregel p b{color:var(--inkt)}
+
+/* ============================================================
+   3 · CLIËNTKAART — de route van bovenaf
+   ============================================================ */
+.routekop{display:grid;grid-template-columns:1fr 320px;gap:var(--s5);align-items:end;
+  border-bottom:6px solid var(--inkt);padding-bottom:var(--s3);margin-bottom:var(--s4)}
+@media (max-width:900px){.routekop{grid-template-columns:1fr;gap:var(--s3)}}
+.routekop h2{font:800 38px/1.04 var(--sans);color:var(--inkt);letter-spacing:-.042em;text-transform:uppercase}
+.routekop .onder{margin-top:10px;color:var(--grijs);font-size:16px}
+.routekop .bord{background:var(--inkt);color:var(--wit);padding:16px 18px}
+.routekop .bord dt{font:700 9.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--geel);margin-bottom:4px}
+.routekop .bord dd{font-size:15px;margin-bottom:10px}
+.routekop .bord dd:last-child{margin-bottom:0}
+
+.wegvak{background:var(--dek);color:var(--wit);padding:var(--s5) var(--s4);position:relative}
+.wegvak .kantstreep{position:absolute;left:0;right:0;height:6px;background:var(--wit)}
+.wegvak .kantstreep.boven{top:0}
+.wegvak .kantstreep.onder{bottom:0}
+.dagenweg{display:grid;grid-template-columns:repeat(7,1fr);gap:0;margin:var(--s3) 0}
+@media (max-width:820px){.dagenweg{grid-template-columns:repeat(4,1fr);row-gap:var(--s3)}}
+@media (max-width:560px){.dagenweg{grid-template-columns:repeat(2,1fr)}}
+.dagvak{padding:0 12px;border-left:3px dashed rgba(243,243,238,.4);text-align:center}
+.dagvak:first-child{border-left:0}
+.dagvak b{display:block;font:800 15px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--wit)}
+.dagvak em{display:block;font-style:normal;font:600 11px/1 var(--mono);color:var(--wit-zacht);margin-top:6px}
+.dagvak .blok{display:block;margin-top:14px;height:52px;border:3px solid var(--wit);opacity:.55}
+.dagvak.gereden .blok{background:var(--wit);opacity:1}
+.dagvak.deels .blok{background:repeating-linear-gradient(135deg,var(--wit) 0 6px,transparent 6px 12px);opacity:1}
+.dagvak.geel .blok{background:var(--geel);border-color:var(--geel)}
+.dagvak .stand{display:block;margin-top:10px;font:700 10px/1.3 var(--mono);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--wit-zacht)}
+.dagvak.geel .stand{color:var(--geel)}
+
+.routeraster{display:grid;grid-template-columns:1fr 330px;gap:var(--s5);align-items:start;margin-top:var(--s5)}
+@media (max-width:1000px){.routeraster{grid-template-columns:1fr}}
+
+.rijstrook{display:grid;grid-template-columns:104px 1fr;gap:var(--s4);align-items:center;
+  padding:var(--s4) 0;border-bottom:3px dashed var(--lijn)}
+@media (max-width:620px){.rijstrook{grid-template-columns:1fr}}
+.rijstrook:last-child{border-bottom:0}
+.rijstrook .beeld{width:104px;height:84px;border:3px solid var(--inkt);background:#fafbfa;
+  display:flex;align-items:center;justify-content:center;padding:5px}
+.rijstrook .beeld img{max-height:100%;width:auto;mix-blend-mode:multiply}
+.rijstrook .regel{display:flex;flex-wrap:wrap;align-items:baseline;gap:16px}
+.rijstrook h3{font:800 27px/1.06 var(--sans);color:var(--inkt);letter-spacing:-.035em;text-transform:uppercase}
+.rijstrook .dos{font:800 30px/1 var(--sans);color:var(--inkt);letter-spacing:-.035em}
+.rijstrook .een{margin-top:9px;font-size:17px;line-height:1.45;color:var(--inkt-2);max-width:60ch}
+.rijstrook .pijlrij{margin-top:12px;display:flex;align-items:center;gap:10px;
+  font:700 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
+.rijstrook .pijl{width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;
+  border-left:14px solid var(--geel-diep)}
+
+.zijbord{background:var(--inkt);color:var(--wit);padding:22px;margin-bottom:var(--s3)}
+.zijbord h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--geel);margin-bottom:14px}
+.zijbord .groot{font-size:52px;color:var(--wit)}
+.zijbord p{font-size:15px;line-height:1.6;color:var(--wit-zacht);margin-top:14px}
+.zijbord p b{color:var(--wit)}
+.zijbord.licht{background:var(--papier);color:var(--inkt-2);border:3px solid var(--inkt)}
+.zijbord.licht h4{color:var(--geel-diep)}
+.zijbord.licht p{color:var(--inkt-2)}
+.zijbord.licht p b{color:var(--inkt)}
+
+/* ============================================================
+   4 · PRINTKAART — A4 LIGGEND
+   ============================================================ */
+.bladhouder{display:grid;place-items:center}
+.bladschaal{width:297mm;max-width:100%}
+@media (max-width:1200px){
+  .bladschaal{width:100%;overflow:hidden}
+  .blad{transform:scale(.62);transform-origin:top left;margin-bottom:-80mm !important;
+    margin-right:-113mm !important}
+}
+@media (max-width:760px){.blad{transform:scale(.38);margin-bottom:-130mm !important;margin-right:-184mm !important}}
+
+/* op papier is de grond wit en de markering donker — de vorm blijft identiek */
+.blad{position:relative;width:297mm;height:210mm;background:#fff;color:var(--inkt);
+  padding:7mm 8mm;box-shadow:0 30px 66px -34px rgba(26,28,29,.55);border:1px solid var(--lijn);
+  display:flex;flex-direction:column;font-family:var(--sans)}
+
+.wijzer{position:absolute;z-index:9;width:140px;font:400 12.5px/1.4 var(--sans);color:var(--grijs)}
+.wijzer::after{content:"";position:absolute;background:var(--grijs-2);height:1px}
+.wijzer.r::after{left:-18px;top:50%;width:14px}
+.wijzer.l{text-align:right}
+.wijzer.l::after{right:-18px;top:50%;width:14px}
+@media (max-width:1400px){.wijzer{display:none}}
+
+/* de kantstreep boven: doorgetrokken, dus de grens */
+.wd-kop{border-bottom:2.4mm solid var(--inkt);padding-bottom:2.4mm;display:flex;
+  justify-content:space-between;align-items:flex-end;gap:6mm}
+.wd-kop .titel{font:800 8pt/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--inkt)}
+.wd-kop h1{font:800 21pt/.96 var(--sans);letter-spacing:-.04em;text-transform:uppercase;margin-top:1.6mm}
+.wd-kop .wie{text-align:right;font:700 9pt/1.35 var(--sans)}
+.wd-kop .wie em{display:block;font-style:normal;font:600 7pt/1.5 var(--mono);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--grijs);margin-top:1mm}
+
+/* de drie rijstroken */
+.wd-banen{flex:1;display:flex;flex-direction:column;justify-content:space-between;
+  padding:2.6mm 0 0}
+.wd-baan{display:grid;grid-template-columns:16mm 26mm 1fr 34mm;gap:5mm;align-items:center;
+  padding:2.6mm 0}
+.wd-baan + .wd-baan{border-top:1.4mm dashed var(--inkt)}
+.wd-baan .nr{font-size:30pt;color:var(--inkt);text-align:center}
+.wd-baan .beeld{height:24mm;border:.8pt solid var(--lijn);background:#fbfbfa;
+  display:flex;align-items:center;justify-content:center;padding:1mm}
+.wd-baan .beeld img{max-height:100%;width:auto;mix-blend-mode:multiply}
+.wd-baan h2{font:800 17pt/1 var(--sans);letter-spacing:-.035em;text-transform:uppercase}
+.wd-baan .een{margin-top:1.8mm;font-size:11.5pt;line-height:1.28;color:var(--inkt)}
+.wd-baan .een b{font-weight:700}
+.wd-baan .pijlrij{margin-top:1.8mm;display:flex;align-items:center;gap:2.2mm;
+  font:700 6.6pt/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
+.wd-baan .pijl{width:0;height:0;border-top:1.4mm solid transparent;border-bottom:1.4mm solid transparent;
+  border-left:2.8mm solid var(--geel-diep)}
+.wd-baan .dos{text-align:right}
+.wd-baan .dos .cijfer{font-size:26pt;line-height:.9;letter-spacing:-.04em}
+.wd-baan .dos em{display:block;font-style:normal;font:700 6.6pt/1 var(--mono);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--grijs);margin-top:2.6mm}
+
+/* de dagen: blokmarkering met vakjes om af te strepen */
+.wd-dagen{border-top:2.4mm solid var(--inkt);padding-top:2.6mm;margin-top:1mm}
+.wd-dagen .kopregel{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2mm}
+.wd-dagen .kopregel span{font:800 7.4pt/1 var(--sans);letter-spacing:.18em;text-transform:uppercase}
+.wd-dagen .kopregel i{font-style:normal;font-size:8.4pt;color:var(--grijs)}
+.wd-dagen .rij{display:grid;grid-template-columns:repeat(7,1fr);gap:2.4mm}
+.wd-dagen .dag{text-align:center}
+.wd-dagen .dag b{font:800 9pt/1 var(--sans);letter-spacing:.08em;text-transform:uppercase}
+.wd-dagen .dag em{display:block;font-style:normal;font:600 6.6pt/1 var(--mono);color:var(--grijs);margin-top:1mm}
+.wd-dagen .dag .blok{display:block;margin-top:1.6mm;height:9mm;border:1pt solid var(--inkt);background:#fff}
+.wd-dagen .dag.geel .blok{background:var(--geel);border-color:var(--geel-diep)}
+.wd-dagen .dag.geel em{color:var(--geel-diep);font-weight:700}
+
+/* de stopregel onderaan: haaientanden en de grens */
+.wd-stop{margin-top:2.6mm;display:grid;grid-template-columns:auto 1fr auto;gap:5mm;align-items:center;
+  border-top:.8pt solid var(--lijn);padding-top:2.6mm}
+.wd-stop .tanden{display:flex;gap:1.6mm}
+.wd-stop .tanden i{width:0;height:0;border-left:2.4mm solid transparent;border-right:2.4mm solid transparent;
+  border-top:4.2mm solid var(--inkt)}
+.wd-stop p{font-size:10.5pt;line-height:1.3;color:var(--inkt)}
+.wd-stop p b{font-weight:800;text-transform:uppercase}
+.wd-stop .praktijk{text-align:right;font:600 7.4pt/1.45 var(--sans);color:var(--grijs);white-space:nowrap}
+.wd-stop .praktijk b{color:var(--inkt);font-weight:700}
+
+.printhulp{max-width:680px;margin:var(--s4) auto 0;text-align:center;color:var(--grijs);font-size:16px}
+.printhulp .kn{margin-top:var(--s3)}
+
+/* ── voet ────────────────────────────────────────────────── */
+footer.uitleiding{background:var(--asfalt-2);color:var(--wit-zacht);padding:var(--s6) 24px;margin-top:var(--s6)}
+footer.uitleiding .binnen{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--geel);margin-bottom:14px}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.7}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:10px}
+footer.uitleiding li::before{content:"—";position:absolute;left:0;color:var(--geel)}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT — A4 LIGGEND
+   ============================================================ */
+@media print{
+  @page{size:A4 landscape;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;height:auto !important;overflow:visible !important}
+  .blad{width:297mm;height:210mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 36</span>
+  <strong style="font:800 16px/1 var(--sans);color:#fff;letter-spacing:-.03em">Wegdek</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="rijbaan">
+    <div class="binnen">
+
+      <div class="merkregel">
+        <span class="blok" aria-hidden="true"></span>
+        <span class="naam">Fysiplan</span>
+        <span class="pad">Concept 36 · Wegdek</span>
+      </div>
+
+      <div class="held">
+        <h1>Een streep legt <em>niets</em> uit. En toch volgt iedereen hem.</h1>
+        <p class="onder">Bij tachtig kilometer per uur, in de regen, zonder erover na te denken —
+          ook door mensen die een bijsluiter nooit lezen. <b>Oefenkaarten doen het omgekeerde: die
+          leggen alles uit, en worden niet gevolgd.</b> Markering ligt op de plek waar de handeling
+          gebeurt, wijst in de richting van de beweging, en zegt maar één ding: wat er hierna komt.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk de kaart</a>
+          <a class="kn leeg" href="#clientkaart">De week van bovenaf</a>
+        </div>
+      </div>
+
+      <div class="baanstrook">
+        <div class="streeplijn" aria-hidden="true"></div>
+
+        <div class="baanvakken">
+          <div class="baanvak">
+            <span class="rijcijfer groot">3</span>
+            <h4>Onderbroken</h4>
+            <p>De dagstreep is onderbroken: u mag eroverheen. Een dag overslaan is een streep
+              passeren, geen overtreding.</p>
+          </div>
+          <div class="baanvak">
+            <span class="rijcijfer groot">1</span>
+            <h4>Doorgetrokken</h4>
+            <p>Eén lijn op dit blad is doorgetrokken, en dat is de pijngrens. Daar gaat u niet
+              overheen — niet vandaag, niet als het goed voelt.</p>
+          </div>
+          <div class="baanvak">
+            <span class="rijcijfer groot">7</span>
+            <h4>Uitgerekt</h4>
+            <p>Cijfers op het wegdek zijn verticaal opgerekt, omdat je ze onder een scherpe hoek
+              leest. Op een kaart op tafel geldt precies hetzelfde.</p>
+          </div>
+        </div>
+
+        <div class="streeplijn smal" aria-hidden="true"></div>
+
+        <div class="tandregel">
+          <div class="tanden" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <p>Haaientanden betekenen: <em>hier stoppen</em> — ook als het nog gaat.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>Kiezen is hier belijnen: elke oefening die de therapeut aanzet wordt een rijstrook op de
+        kaart, met een nummer dat de volgorde vastlegt. De harde regel van dit concept staat ook in
+        het invoerveld: <b>past de uitleg niet op één regel, dan hoort ze niet op het wegdek maar in
+        het gesprek.</b></p>
+    </div>
+
+    <div class="zoekbalk">
+      <span class="lbl">Zoek een strook</span>
+      <input type="text" value="balans" aria-label="Zoek een oefening"/>
+      <span class="tel">24 in deze rubriek · 500 totaal</span>
+    </div>
+
+    <div class="rubrieken">
+      <button type="button" aria-pressed="true">Balans en valpreventie</button>
+      <button type="button" aria-pressed="false">Heup en knie</button>
+      <button type="button" aria-pressed="false">Rug</button>
+      <button type="button" aria-pressed="false">Nek</button>
+      <button type="button" aria-pressed="false">Schouder</button>
+      <button type="button" aria-pressed="false">Werk en dagelijkse handelingen</button>
+    </div>
+
+    <div class="strokenlijst">
+
+      <div class="strook aan">
+        <span class="rijcijfer nrvak">1</span>
+        <span class="beeld"><img src="/images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-line-v1.png"
+          alt="Lijntekening: iemand verplaatst staand met steun het gewicht naar voren en naar achteren."/></span>
+        <div>
+          <h3>Gewicht verplaatsen</h3>
+          <p class="zin">Met twee handen aan de leuning: gewicht naar de tenen, dan naar de hielen.</p>
+        </div>
+        <span class="doos">2 × 10<em>heen en terug</em></span>
+        <span class="kiesknop"><button type="button">Op de baan ✓</button></span>
+      </div>
+
+      <div class="strook aan">
+        <span class="rijcijfer nrvak">2</span>
+        <span class="beeld"><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png"
+          alt="Lijntekening: iemand staat met steun van een stoelleuning op één been."/></span>
+        <div>
+          <h3>Eenbeenstand</h3>
+          <p class="zin">Één hand aan de leuning, één voet los. Tien tellen, dan wisselen.</p>
+        </div>
+        <span class="doos">3 × 10 sec.<em>per been</em></span>
+        <span class="kiesknop"><button type="button">Op de baan ✓</button></span>
+      </div>
+
+      <div class="strook aan">
+        <span class="rijcijfer nrvak">3</span>
+        <span class="beeld"><img src="/images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png"
+          alt="Lijntekening: iemand stapt met steun langs een aanrecht achterwaarts."/></span>
+        <div>
+          <h3>Achterwaarts stappen</h3>
+          <p class="zin">Langs het aanrecht tien stappen achteruit, dan tien terug.</p>
+        </div>
+        <span class="doos">2 × 10<em>stappen</em></span>
+        <span class="kiesknop"><button type="button">Op de baan ✓</button></span>
+      </div>
+
+      <div class="strook">
+        <span class="rijcijfer nrvak">4</span>
+        <span class="beeld"><img src="/images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-line-v1.png"
+          alt="Lijntekening: iemand draait met steun op de plaats om zijn as."/></span>
+        <div>
+          <h3>Draaien op de plaats</h3>
+          <p class="zin">Kleine stapjes, een halve draai, even stilstaan voor u terugdraait.</p>
+        </div>
+        <span class="doos">2 × 4<em>halve draaien</em></span>
+        <span class="kiesknop"><button type="button">Toevoegen</button></span>
+      </div>
+
+      <div class="strook">
+        <span class="rijcijfer nrvak">5</span>
+        <span class="beeld"><img src="/images/balans-en-valpreventie/eenbeenstand-met-hoofdbeweging-line-v1.png"
+          alt="Lijntekening: iemand staat op één been en draait tegelijk het hoofd."/></span>
+        <div>
+          <h3>Eenbeenstand met hoofdbeweging</h3>
+          <p class="zin">Nog niet deze week: eerst moeten de tien tellen zonder wiebelen gaan.</p>
+        </div>
+        <span class="doos">3 × 8 sec.<em>per been</em></span>
+        <span class="kiesknop"><button type="button">Toevoegen</button></span>
+      </div>
+
+    </div>
+
+    <div class="grensregel">
+      <span class="kop">Doorgetrokken</span>
+      <p><b>Eén regel op deze kaart is een doorgetrokken streep, en die staat er per patiënt anders
+        in.</b> Bij dhr. Wolthuis is het: nooit zonder iets om vast te pakken. Die regel wordt niet
+        onderin gezet als voetnoot maar bovenaan als lijn, want een kantstreep die je moet zoeken is
+        geen kantstreep.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>De week van bovenaf gezien: zeven blokken belijning op één baan. Wit blok is gereden,
+        gearceerd blok is half, geel is tijdelijke markering — de dag waarop de therapeut iets
+        anders heeft afgesproken. Er staat geen percentage bij en geen streak; een weg telt niet
+        hoe vaak u erover reed.</p>
+    </div>
+
+    <div class="routekop">
+      <div>
+        <h2>Route 7 — dhr. J. Wolthuis</h2>
+        <p class="onder">Valpreventie, drie maanden na een heupfractuur · 79 jaar ·
+          18 t/m 24 augustus 2026</p>
+      </div>
+      <dl class="bord">
+        <dt>Behandelaar</dt><dd>S. Kroon</dd>
+        <dt>Volgende afspraak</dt><dd>woensdag 27 aug., 09:00</dd>
+        <dt>Doorgetrokken streep</dt><dd>Nooit zonder steun</dd>
+      </dl>
+    </div>
+
+    <div class="wegvak">
+      <span class="kantstreep boven" aria-hidden="true"></span>
+      <span class="kantstreep onder" aria-hidden="true"></span>
+      <div class="dagenweg">
+        <div class="dagvak gereden"><b>ma</b><em>18 aug.</em><span class="blok"></span><span class="stand">Gereden</span></div>
+        <div class="dagvak gereden"><b>di</b><em>19 aug.</em><span class="blok"></span><span class="stand">Gereden</span></div>
+        <div class="dagvak deels"><b>wo</b><em>20 aug.</em><span class="blok"></span><span class="stand">Half</span></div>
+        <div class="dagvak gereden"><b>do</b><em>21 aug.</em><span class="blok"></span><span class="stand">Gereden</span></div>
+        <div class="dagvak"><b>vr</b><em>22 aug.</em><span class="blok"></span><span class="stand">Nog niet</span></div>
+        <div class="dagvak"><b>za</b><em>23 aug.</em><span class="blok"></span><span class="stand">Nog niet</span></div>
+        <div class="dagvak geel"><b>zo</b><em>24 aug.</em><span class="blok"></span><span class="stand">Alleen strook 1</span></div>
+      </div>
+    </div>
+
+    <div class="routeraster">
+      <div>
+
+        <div class="rijstrook">
+          <span class="beeld"><img src="/images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-line-v1.png"
+            alt="Lijntekening: iemand verplaatst staand met steun het gewicht naar voren en naar achteren."/></span>
+          <div>
+            <div class="regel">
+              <span class="rijcijfer" style="font-size:34px">1</span>
+              <h3>Gewicht verplaatsen</h3>
+              <span class="dos">2 × 10</span>
+            </div>
+            <p class="een">Twee handen aan de leuning: gewicht naar de tenen, dan naar de hielen.</p>
+            <div class="pijlrij"><span class="pijl" aria-hidden="true"></span>Eerste strook · altijd als opwarming</div>
+          </div>
+        </div>
+
+        <div class="rijstrook">
+          <span class="beeld"><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png"
+            alt="Lijntekening: iemand staat met steun van een stoelleuning op één been."/></span>
+          <div>
+            <div class="regel">
+              <span class="rijcijfer" style="font-size:34px">2</span>
+              <h3>Eenbeenstand</h3>
+              <span class="dos">3 × 10 sec.</span>
+            </div>
+            <p class="een">Één hand aan de leuning, één voet los. Tien tellen, dan het andere been.</p>
+            <div class="pijlrij"><span class="pijl" aria-hidden="true"></span>Wiebelt het? Twee handen erbij, niet minder tellen</div>
+          </div>
+        </div>
+
+        <div class="rijstrook">
+          <span class="beeld"><img src="/images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png"
+            alt="Lijntekening: iemand stapt met steun langs een aanrecht achterwaarts."/></span>
+          <div>
+            <div class="regel">
+              <span class="rijcijfer" style="font-size:34px">3</span>
+              <h3>Achterwaarts stappen</h3>
+              <span class="dos">2 × 10</span>
+            </div>
+            <p class="een">Langs het aanrecht tien stappen achteruit, dan tien stappen terug.</p>
+            <div class="pijlrij"><span class="pijl" aria-hidden="true"></span>Laatste strook · daarna zitten, niet doorgaan</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div>
+        <div class="zijbord">
+          <h4>Deze week</h4>
+          <span class="rijcijfer groot">4</span>
+          <p>Vier dagen gereden van de zeven. <b>Woensdag half: alleen strook 1.</b> Dat is geen gat
+            in de week — dat is een dag waarop de eerste streep gehaald werd en de rest niet.</p>
+        </div>
+
+        <div class="zijbord licht">
+          <h4>Tijdelijke markering</h4>
+          <p>Geel betekent op de weg: deze belijning geldt nu, niet altijd.
+            <b>Voor zondag staat alleen strook 1 gepland</b>, omdat er kleinkinderen komen. Dat is
+            afgesproken, niet toegegeven.</p>
+        </div>
+
+        <div class="zijbord licht">
+          <h4>Stoppen</h4>
+          <p>Duizelig, of het been dat wegzakt? <b>Stoppen en gaan zitten</b>, ook midden in een
+            strook. Twee keer in één week: bel 0592 — 31 09 55, wacht niet tot woensdag.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 liggend</h2>
+      <p>Een weg loopt opzij, dus dit blad ook. Drie rijstroken onder elkaar, gescheiden door
+        onderbroken belijning, met de dosering als uitgerekt wegdekcijfer rechts. Onderaan de zeven
+        dagblokken om af te strepen en de haaientandenregel. <b>Op papier is de grond wit en de
+        markering donker</b> — omgekeerd aan het scherm, want een A4 vol zwarte inkt is geen kaart
+        maar een inktprobleem. De vorm blijft identiek.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer l geen-print" style="top:16mm;right:calc(100% + 20px)">de kop staat op
+            een doorgetrokken streep: de enige regel die niet overschreden wordt</span>
+          <span class="wijzer r geen-print" style="top:78mm;left:calc(100% + 20px)">tussen de stroken
+            ligt onderbroken belijning — de volgorde is een advies, geen verbod</span>
+          <span class="wijzer l geen-print" style="top:150mm;right:calc(100% + 20px)">zeven blokken:
+            één streep per dag, het gele blok is een afspraak</span>
+          <span class="wijzer r geen-print" style="top:186mm;left:calc(100% + 20px)">haaientanden
+            sluiten het blad af: hier stoppen, ook als het nog gaat</span>
+
+          <div class="wd-kop">
+            <div>
+              <div class="titel">Fysiplan · weekroute</div>
+              <h1>Route 7 — balans</h1>
+            </div>
+            <div class="wie">Dhr. J. Wolthuis · 79 jaar
+              <em>Valpreventie na heupfractuur · 18 t/m 24 aug. 2026 · S. Kroon</em></div>
+          </div>
+
+          <div class="wd-banen">
+
+            <div class="wd-baan">
+              <span class="rijcijfer nr">1</span>
+              <span class="beeld"><img src="/images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-line-v1.png"
+                alt="Lijntekening: iemand verplaatst staand met steun aan een leuning het gewicht naar voren en naar achteren."/></span>
+              <div>
+                <h2>Gewicht verplaatsen</h2>
+                <p class="een"><b>Twee handen aan de leuning.</b> Gewicht rustig naar de tenen, dan
+                  naar de hielen.</p>
+                <div class="pijlrij"><span class="pijl"></span>Altijd eerst · dit is de opwarming</div>
+              </div>
+              <div class="dos"><span class="rijcijfer cijfer">2×10</span><em>heen en terug</em></div>
+            </div>
+
+            <div class="wd-baan">
+              <span class="rijcijfer nr">2</span>
+              <span class="beeld"><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png"
+                alt="Lijntekening: iemand staat met steun van een stoelleuning op één been."/></span>
+              <div>
+                <h2>Eenbeenstand</h2>
+                <p class="een">Eén hand aan de leuning, één voet los. Tien tellen, dan het andere been.</p>
+                <div class="pijlrij"><span class="pijl"></span>Wiebelt het? Twee handen erbij, niet minder tellen</div>
+              </div>
+              <div class="dos"><span class="rijcijfer cijfer">3×10</span><em>sec. per been</em></div>
+            </div>
+
+            <div class="wd-baan">
+              <span class="rijcijfer nr">3</span>
+              <span class="beeld"><img src="/images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png"
+                alt="Lijntekening: iemand stapt met steun langs een aanrecht achterwaarts."/></span>
+              <div>
+                <h2>Achterwaarts stappen</h2>
+                <p class="een">Langs het aanrecht tien stappen achteruit, dan tien stappen terug.</p>
+                <div class="pijlrij"><span class="pijl"></span>Laatste strook · daarna zitten, niet doorgaan</div>
+              </div>
+              <div class="dos"><span class="rijcijfer cijfer">2×10</span><em>stappen</em></div>
+            </div>
+
+          </div>
+
+          <div class="wd-dagen">
+            <div class="kopregel">
+              <span>De week</span>
+              <i>Zet een streep in het blok van de dag dat u de route gereden hebt.</i>
+            </div>
+            <div class="rij">
+              <div class="dag"><b>ma</b><em>18 aug.</em><span class="blok"></span></div>
+              <div class="dag"><b>di</b><em>19 aug.</em><span class="blok"></span></div>
+              <div class="dag"><b>wo</b><em>20 aug.</em><span class="blok"></span></div>
+              <div class="dag"><b>do</b><em>21 aug.</em><span class="blok"></span></div>
+              <div class="dag"><b>vr</b><em>22 aug.</em><span class="blok"></span></div>
+              <div class="dag"><b>za</b><em>23 aug.</em><span class="blok"></span></div>
+              <div class="dag geel"><b>zo</b><em>alleen strook 1</em><span class="blok"></span></div>
+            </div>
+          </div>
+
+          <div class="wd-stop">
+            <div class="tanden" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <p><b>Stoppen bij duizeligheid of een been dat wegzakt</b> — ook midden in een strook.
+              En nooit zonder iets om vast te pakken: dat is op deze kaart de doorgetrokken streep.</p>
+            <div class="praktijk"><b>Fysiotherapie Kroon</b><br/>Hoofdstraat 8, Assen<br/>
+              0592 — 31 09 55<br/>Afspraak wo 27 aug., 09:00</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="printhulp geen-print">
+      <p>Dit blad print zonder de omringende uitleg: alleen de kaart, op ware grootte,
+        <b>A4 liggend</b>.</p>
+      <a class="kn" href="javascript:window.print()">Print deze kaart</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>De richting</h4>
+      <p>Wegmarkering is het best gevolgde instructiesysteem dat we hebben, en het legt niets uit.
+        Het ligt op de plek van de handeling, wijst in de richting van de beweging en zegt alleen
+        wat er hierna komt. Dit concept leent die grammatica letterlijk: onderbroken streep voor de
+        dagen, doorgetrokken kantstreep voor de grens die blijft staan, haaientanden voor het punt
+        waarop je stopt terwijl het nog gaat, pijlen voor de volgorde en het verticaal uitgerekte
+        cijfer voor de dosering. De harde regel: geen volzin langer dan één regel. Wat niet in één
+        regel past, hoort in het gesprek.</p>
+    </div>
+    <div class="kolom">
+      <h4>Waar het schuurt</h4>
+      <ul>
+        <li>Wegmarkering werkt omdat iedereen dezelfde code kent. Die code is aangeleerd bij het
+          rijexamen — een patiënt die nooit gereden heeft, ziet strepen zonder betekenis, en juist
+          bij valpreventie is dat een reëel deel van de doelgroep.</li>
+        <li>Het verkeersregister is hard. Haaientanden en kantstrepen gaan over voorrang en verbod;
+          op een lichaam dat herstelt kan dat klinken als handhaving in plaats van als zorg.</li>
+        <li>Eén regel per instructie is een echte beperking. Nuance die niet in één regel past
+          verdwijnt van het blad — dat is hier bewust, maar het legt wel gewicht bij het gesprek in
+          de praktijk, en dat gesprek is niet altijd lang genoeg.</li>
+        <li>Scherm en papier zijn elkaars negatief: donker asfalt op het scherm, witte grond in
+          print. De vorm blijft gelijk, maar het is wel dezelfde kaart in twee gedaanten — en dat
+          moet uitgelegd worden aan wie het scherm eerst zag.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Verder</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
