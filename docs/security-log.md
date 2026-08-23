@@ -361,3 +361,44 @@ headers vergrendelt. Deze routes waren tot nu toe onbewaakt.
 **Volgende run — pak een ander gebied:** een verse blik op de deeplinks/
 gedeelde kaarten (id-entropie, opsomming, delen-intrekken) of de accountlaag
 opnieuw (nu met het wachtwoord-wijzig-endpoint erbij).
+
+### 2026-08-23 — accountlaag: het wachtwoord-wijzig-endpoint
+**Geauditeerd:** het nieuwe `/api/praktijk/wachtwoord` (POST, sinds commit
+`0a0c757`) en de invarianten eromheen — sessie-binding, brute-force-remming,
+sessie-rotatie en de authz-isolatie tegenover andere praktijken. De laag als
+geheel is op 08-18 al adversarieel bekeken; dit endpoint kwam er daarna bij.
+
+**Bevindingen (geen codegat — het endpoint is correct opgebouwd):**
+- **Volgorde van poorten:** `kruisSite` (CSRF, fail-open) → `schrijfLimiet` →
+  bestaanscheck (`acc`) → **sessie-binding** (`praktijkSessieVan(req) !== pk`
+  → 401) → per-praktijk-slot (`loginOpSlot`) → constant-tijd-check van het
+  huidige wachtwoord (`checkHash`). Doordat de sessie-binding vóór de
+  wachtwoordcheck zit, is dit **geen brute-force-achterdeur**: zonder geldige
+  sessie voor precies díé praktijk kom je niet eens bij `checkHash`, en de
+  teller (`loginMisTel`) loopt dan ook niet op — een niet-ingelogde aanvaller
+  kan de inlogrem van een praktijk hierlangs dus niet opstoken.
+- **Rotatie:** een geslaagde wijziging zet `acc.hash` opnieuw, wist **álle**
+  sessies van de praktijk (`for … if (s.pk === pk) delete`), maakt de
+  per-praktijk-teller schoon en munt één verse sessie voor de aanvrager.
+- **Isolatie:** `pk` komt uit de body maar moet gelijk zijn aan de sessie-pk;
+  een sessie van praktijk B kan het wachtwoord van A niet wijzigen, óók niet
+  met het juiste huidige wachtwoord van A (de binding gaat vóór de check).
+- **Geen lek:** audit noteert `wachtwoord-gewijzigd`/`-mislukt` met gemaskeerd
+  IP, nooit een wachtwoord of token; de opslag bewaart alleen scrypt-hashes.
+
+**Increment:** geen geforceerde codewijziging (het endpoint is dicht). De
+bestaande regressiewacht `test-wachtwoord.mjs` bewees de rotatie alleen via de
+**status-vlag** (`/api/praktijk/status` → `ingelogd:false`) — precies de "goede
+invariant, verkeerde laag"-zwakte die op 08-18 op het reset-pad werd gevonden.
+Test verhard (18 → 26 checks): na de wijziging wordt nu bewezen dat de oude
+sessie **echte datatoegang** verliest (401 op `GET`/`POST /api/kaarten` én
+`/api/kaarten/verwijder`) terwijl de verse sessie die toegang wél houdt, plus
+de authz-isolatie (sessie van B wijzigt A niet, ook niet met A's wachtwoord, en
+zonder A's inlogrem vals op slot te zetten). Geen gedragswijziging; v1
+onaangeraakt. Daarnaast de v2-flows gedraaid als regressie: accountlaag (49),
+sessie (15), v2-headers (35), csp-nonce (20), sjablonen (16) en kern (21,
+v1 onaangetast) — alles groen.
+
+**Volgende run — pak een ander gebied:** de deeplinks/gedeelde kaarten
+(id-entropie van `/k/<id>`, opsombaarheid via `kaartMisLimiet`, en of "delen
+intrekken" mogelijk/nodig is) of de rate-limiting op `/api/opname` opnieuw.
