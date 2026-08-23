@@ -1740,7 +1740,8 @@ async function afhandelen(request, response) {
     const list = Object.values(map)
       .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, aantal: (k.chosen || []).length,
         scores: (k.metingen || []).slice(-14), gedaan: (k.gedaan || []).slice(-14),
-        bekeken: k.bekeken ? k.bekeken.t : 0 }))
+        bekeken: k.bekeken ? k.bekeken.t : 0,
+        seintje: (k.seintje && k.seintje.soort) ? { t: k.seintje.t, soort: k.seintje.soort } : null }))
       .sort((a, b) => b.ts - a.ts);
     await sendJson(response, 200, list);
     return;
@@ -1789,10 +1790,16 @@ async function afhandelen(request, response) {
         }
       }
       const oudeVids = map[kk] ? Object.values(map[kk].vids || {}) : [];
-      // pijnscores van de patiënt blijven bewaard als de therapeut de kaart opnieuw opslaat
+      // door de patiënt gegenereerde gegevens blijven bewaard als de therapeut de kaart
+      // opnieuw opslaat: pijnscores, de oefen-geschiedenis, of/wanneer de kaart is
+      // bekeken, en een openstaand seintje. Zonder dit wist elke kleine kaartwijziging
+      // de voortgang van de patiënt.
       map[kk] = { id: map[kk] ? map[kk].id : randomBytes(6).toString("hex"),
         praktijk, naam, ts: Date.now(), client, chosen, rows, cells, vids,
-        metingen: map[kk] ? map[kk].metingen || [] : [] };
+        metingen: map[kk] ? map[kk].metingen || [] : [],
+        gedaan: map[kk] ? map[kk].gedaan || [] : [],
+        bekeken: map[kk] ? map[kk].bekeken || null : null,
+        seintje: map[kk] ? map[kk].seintje || null : null };
       await saveJson(kaartenPath, kaarten);
       await ruimKaartVideosOp(oudeVids.filter((p) => !Object.values(vids).includes(p)));
       // gebruiksranglijst: alleen namen uit de echte bibliotheek tellen mee, anders
@@ -1896,6 +1903,52 @@ async function afhandelen(request, response) {
       await saveJson(kaartenPath, kaarten);
       const d = dagStats(vandaagKey()); d.gedaan = (d.gedaan || 0) + 1; bewaarStats();
       await sendJson(response, 200, { ok: true, gedaan: found.gedaan });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
+  // seintje van de patiënt naar de praktijk: één tik, geen bericht typen, geen app.
+  // Bewust GEEN vrij tekstveld (dus geen persoonsgegevens/moderatie): alleen een
+  // vaste soort uit een whitelist. Overschrijft telkens het laatste seintje van de
+  // kaart; de therapeut ziet het in het overzicht en wist het daar. App-vrije
+  // tweerichting-terugkoppeling — precies wat concurrenten alleen mét app bieden.
+  if (urlPath === "/api/kaart/seintje" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const soort = String(b.soort || "");
+      if (!["vraag", "pijn", "goed"].includes(soort)) { await sendJson(response, 400, { ok: false, fout: "Onbekend seintje." }); return; }
+      const found = vindKaart(String(b.id || ""));
+      if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      found.seintje = { t: Date.now(), soort };
+      if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
+      await saveJson(kaartenPath, kaarten);
+      await sendJson(response, 200, { ok: true });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
+  // de therapeut wist een seintje (na afhandeling). Alleen de ingelogde praktijk
+  // mag dat; loopt via dezelfde accountpoort (eisPraktijk) als de andere
+  // praktijk-schrijfroutes, zodat een vreemde het seintje van een ander niet wist.
+  if (urlPath === "/api/kaart/seintje/gezien" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      if (await eisPraktijk(request, response, pk)) return;
+      const map = kaarten[pk] || {};
+      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      if (!kaart) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      kaart.seintje = null;
+      await saveJson(kaartenPath, kaarten);
+      await sendJson(response, 200, { ok: true });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }

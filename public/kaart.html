@@ -285,6 +285,19 @@
     color:#fff;background:var(--blauw);border-radius:999px;padding:9px 14px;text-decoration:none}
   .mnudge a:active{background:var(--blauw-d)}
   .mnoot{font:500 12.5px/1.5 var(--disp);color:var(--zacht);margin-top:12px}
+  /* seintje naar de praktijk: één tik, vaste soort, geen vrij tekstveld (dus geen
+     persoonsgegevens). App-vrije tweerichting-terugkoppeling. */
+  .skaart{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;box-shadow:var(--sh);padding:16px;margin-bottom:12px}
+  .sintro{font:500 14px/1.5 var(--disp);color:var(--grijs);margin-bottom:12px}
+  .sknoppen{display:flex;flex-wrap:wrap;gap:8px}
+  .sbtn{flex:1 1 auto;min-width:0;font:700 14.5px/1.2 var(--disp);color:var(--tekst);
+    background:var(--chip);border:1px solid var(--lijn);border-radius:12px;padding:13px 14px;
+    cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s,border-color .12s,color .12s}
+  .sbtn:active{background:var(--blauw-05)}
+  .sbtn.aan{background:var(--blauw);border-color:var(--blauw);color:#fff}
+  .sbtn.sgoed.aan{background:#3e8e5a;border-color:#3e8e5a}
+  .sdank{font:600 14px/1.4 var(--disp);color:#3e7a52;background:#eef6ef;border:1px solid #d7e8da;
+    border-radius:10px;padding:11px 13px;margin-top:12px}
   .mhist{margin-top:14px;padding-top:12px;border-top:1px solid var(--lijn2)}
   .mhist .mtitel{font:700 12px/1 var(--disp);letter-spacing:.08em;text-transform:uppercase;color:var(--grijs);margin-bottom:10px}
   .mbars{display:flex;align-items:flex-end;gap:6px;height:92px;padding:10px 10px 8px;
@@ -346,7 +359,7 @@
     outline:3px solid rgba(36,86,166,.6);outline-offset:2px}
   @media print{
     body{background:#fff}
-    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,#metingkop,#agendakop,#vraagkop,.kopacties,.belknop,.appbanner,.demobadge,.infobadge,.oefdone,.oefvoortgang{display:none !important}
+    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,.skaart,#metingkop,#agendakop,#vraagkop,#seinkop,.kopacties,.belknop,.appbanner,.demobadge,.infobadge,.oefdone,.oefvoortgang{display:none !important}
     .kop,.oef,.schemakaart{box-shadow:none}
   }
 </style>
@@ -404,6 +417,17 @@
       <div class="mtrend" id="mtrend" style="display:none"></div>
     </div>
     <p class="mnoot" id="mnoot">Je score wordt bij je kaart bewaard, zodat je fysiotherapeut je voortgang kan volgen. Er telt één score per dag; tik een ander cijfer aan om die te wijzigen.</p>
+  </div>
+
+  <h2 id="seinkop">Je fysiotherapeut iets laten weten</h2>
+  <div class="skaart" id="sein">
+    <p class="sintro" id="sintro">Eén tik en je fysiotherapeut ziet je seintje bij deze kaart. Geen bericht typen, geen app.</p>
+    <div class="sknoppen" id="sknoppen" role="group" aria-labelledby="seinkop">
+      <button type="button" class="sbtn" data-soort="vraag"><span id="s_vraag">Ik heb een vraag</span></button>
+      <button type="button" class="sbtn" data-soort="pijn"><span id="s_pijn">Het doet te veel pijn</span></button>
+      <button type="button" class="sbtn sgoed" data-soort="goed"><span id="s_goed">Het gaat goed</span></button>
+    </div>
+    <div class="sdank" id="sdank" role="status" aria-live="polite" style="display:none"></div>
   </div>
 
   <h2 id="agendakop">Herinnering in je agenda</h2>
@@ -471,6 +495,19 @@
   var VERT={};
   var K=null;
   function tr(k){var d=T[TAAL]||T.nl;return d[k]!=null?d[k]:T.nl[k];}
+  // teksten voor het seintje naar de praktijk (apart blokje; valt terug op Nederlands)
+  var TSN={
+    nl:{seinkop:'Je fysiotherapeut iets laten weten',sintro:'Eén tik en je fysiotherapeut ziet je seintje bij deze kaart. Geen bericht typen, geen app.',vraag:'Ik heb een vraag',pijn:'Het doet te veel pijn',goed:'Het gaat goed',dank:'Verstuurd — je fysiotherapeut ziet je seintje bij deze kaart.',fout:'Versturen lukte even niet; probeer het zo opnieuw.'},
+    en:{seinkop:'Let your physiotherapist know',sintro:'One tap and your physiotherapist sees your signal on this card. No message to type, no app.',vraag:'I have a question',pijn:'It hurts too much',goed:'It’s going well',dank:'Sent — your physiotherapist will see your signal on this card.',fout:'Sending did not work; please try again in a moment.'},
+    de:{seinkop:'Deinem Physiotherapeuten Bescheid geben',sintro:'Ein Tipp und dein Physiotherapeut sieht dein Signal auf dieser Karte. Keine Nachricht tippen, keine App.',vraag:'Ich habe eine Frage',pijn:'Es tut zu weh',goed:'Es läuft gut',dank:'Gesendet — dein Physiotherapeut sieht dein Signal auf dieser Karte.',fout:'Das Senden hat nicht geklappt; versuch es gleich noch einmal.'},
+    fr:{seinkop:'Prévenir votre kinésithérapeute',sintro:'Un geste et votre kinésithérapeute voit votre signal sur cette carte. Aucun message à taper, aucune application.',vraag:'J’ai une question',pijn:'J’ai trop mal',goed:'Ça va bien',dank:'Envoyé — votre kinésithérapeute verra votre signal sur cette carte.',fout:'L’envoi n’a pas fonctionné ; réessayez dans un instant.'},
+    es:{seinkop:'Avisar a tu fisioterapeuta',sintro:'Un toque y tu fisioterapeuta ve tu señal en esta tarjeta. Sin escribir mensajes, sin aplicación.',vraag:'Tengo una pregunta',pijn:'Me duele demasiado',goed:'Va bien',dank:'Enviado — tu fisioterapeuta verá tu señal en esta tarjeta.',fout:'El envío no ha funcionado; inténtalo de nuevo en un momento.'},
+    pl:{seinkop:'Daj znać fizjoterapeucie',sintro:'Jedno dotknięcie i fizjoterapeuta zobaczy Twój sygnał przy tej karcie. Bez pisania wiadomości, bez aplikacji.',vraag:'Mam pytanie',pijn:'Za bardzo boli',goed:'Idzie dobrze',dank:'Wysłano — fizjoterapeuta zobaczy Twój sygnał przy tej karcie.',fout:'Wysłanie się nie powiodło; spróbuj ponownie za chwilę.'},
+    tr:{seinkop:'Fizyoterapistine haber ver',sintro:'Tek dokunuşla fizyoterapistin bu kartta işaretini görür. Mesaj yazmak yok, uygulama yok.',vraag:'Bir sorum var',pijn:'Çok acıyor',goed:'İyi gidiyor',dank:'Gönderildi — fizyoterapistin bu kartta işaretini görecek.',fout:'Gönderme çalışmadı; birazdan tekrar dene.'},
+    ar:{seinkop:'أخبر أخصائي العلاج الطبيعي',sintro:'نقرة واحدة ويرى أخصائي العلاج الطبيعي إشارتك على هذه البطاقة. دون كتابة رسالة ودون تطبيق.',vraag:'لديّ سؤال',pijn:'الألم شديد جدًا',goed:'الأمور تسير جيدًا',dank:'تم الإرسال — سيرى أخصائي العلاج الطبيعي إشارتك على هذه البطاقة.',fout:'تعذّر الإرسال؛ حاول مرة أخرى بعد قليل.'},
+    uk:{seinkop:'Повідомити фізіотерапевта',sintro:'Один дотик — і фізіотерапевт побачить твій сигнал на цій картці. Без набору повідомлення, без застосунку.',vraag:'У мене є запитання',pijn:'Надто болить',goed:'Все йде добре',dank:'Надіслано — фізіотерапевт побачить твій сигнал на цій картці.',fout:'Не вдалося надіслати; спробуй ще раз за мить.'}
+  };
+  function trs(k){var d=TSN[TAAL]||TSN.nl;return d[k]!=null?d[k]:TSN.nl[k];}
   // teksten voor "vraag het aan je kaart" (apart blokje; valt terug op Nederlands)
   var TQ={
     nl:{kop:'Vraag het aan je kaart',intro:'De kaart legt alleen jouw eigen oefeningen uit en geeft geen medisch advies. Vragen worden niet bewaard.',ph:'Bijv. hoe diep moet ik zakken?',knop:'Vraag',bezig:'Even denken…',fout:'Dat lukte even niet; probeer het zo opnieuw.'},
@@ -616,6 +653,8 @@
     zet('agknopTxt',tr('agknop'));zet('aghint',tr('aghint'));
     zet('voet1',tr('voet1'));zet('gemaakt',tr('gemaakt'));
     zet('beltxt',tr('bel'));
+    zet('seinkop',trs('seinkop'));zet('sintro',trs('sintro'));
+    zet('s_vraag',trs('vraag'));zet('s_pijn',trs('pijn'));zet('s_goed',trs('goed'));
     if(!bezigLezen)zet('leesTxt',tr('lees'));
     var gb=document.getElementById('grootBtn');
     if(gb){gb.title=trg('groter');gb.setAttribute('aria-label',trg('groter'));}
@@ -1183,6 +1222,19 @@
         .then(function(r){return r.json();})
         .then(function(d){if(d.ok){K.kaart.gedaan=d.gedaan||[];tekenGedaan();}delete knop.dataset.bezig;})
         .catch(function(){delete knop.dataset.bezig;});
+    });
+    // seintje naar de praktijk: één tik stuurt een vaste soort, geen vrije tekst
+    document.getElementById('sknoppen').addEventListener('click',function(e){
+      var b=e.target.closest('.sbtn');if(!b||b.dataset.bezig)return;
+      var soort=b.dataset.soort;b.dataset.bezig='1';
+      var knoppen=document.querySelectorAll('#sknoppen .sbtn');
+      knoppen.forEach(function(k){k.classList.toggle('aan',k===b);});
+      var dank=document.getElementById('sdank');
+      fetch('/api/kaart/seintje',{method:'POST',headers:{'content-type':'application/json'},
+        body:JSON.stringify({id:id,soort:soort})})
+        .then(function(r){return r.json();})
+        .then(function(d){dank.style.display='block';dank.textContent=d&&d.ok?trs('dank'):trs('fout');if(!d||!d.ok)b.classList.remove('aan');delete b.dataset.bezig;})
+        .catch(function(){dank.style.display='block';dank.textContent=trs('fout');b.classList.remove('aan');delete b.dataset.bezig;});
     });
     document.getElementById('vraagform').addEventListener('submit',function(e){
       e.preventDefault();
