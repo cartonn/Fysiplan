@@ -2175,10 +2175,16 @@ bridge2.jpg</div>
         var actiefDezeWeek=function(c){return !!(c.gedaan&&c.gedaan.some(function(g){return nu-g.t<7*dag;}));};
         var sortModus=function(){var s=document.getElementById('k_srv_sort');return (s&&s.style.display!=='none'&&s.dataset.mode)||'nieuw';};
         var zoekTermVan=function(){var z=document.getElementById('k_srv_zoek');return (z&&z.style.display!=='none')?z.value.trim().toLowerCase():'';};
+        var filterAandacht=function(){var s=document.getElementById('k_srv_sort');return !!(s&&s.style.display!=='none'&&s.dataset.filter==='aandacht');};
         var toon=function(){
           var t=zoekTermVan();
           var items=t?l.filter(function(c){return String(c.naam||'').toLowerCase().indexOf(t)>=0;}):l.slice();
+          // triage-filter: toon in één tik alleen de kaarten die nu aandacht vragen
+          // (hoge pijn, openstaand seintje, lang stil of nooit geopend)
+          var fa=filterAandacht();
+          if(fa)items=items.filter(vraagtAandacht);
           if(sortModus()==='aandacht')items.sort(function(a,b){return aandacht(b)-aandacht(a)||(b.ts||0)-(a.ts||0);});
+          if(!items.length){el.innerHTML="<div class='hint'>"+(fa?'Op dit moment vraagt geen enkele kaart aandacht.':(t?'Geen kaart gevonden voor deze zoekterm.':'Nog geen gedeelde kaarten voor deze praktijk.'))+"</div>";return;}
           toonLijst(items);
         };
         // zoekveld bij een langere lijst: snel een cliënt vinden zonder te scrollen
@@ -2197,15 +2203,20 @@ bridge2.jpg</div>
         // sorteertoggle vanaf twee kaarten: nieuwste of "aandacht" bovenaan
         var sortEl=document.getElementById('k_srv_sort');
         var markeerSort=function(){if(!sortEl)return;var m=sortEl.dataset.mode||'nieuw';sortEl.querySelectorAll('[data-sort]').forEach(function(b){var aan=b.dataset.sort===m;b.style.background=aan?'var(--brand)':'';b.style.color=aan?'#fff':'';b.style.borderColor=aan?'var(--brand)':'';b.setAttribute('aria-pressed',aan?'true':'false');});};
+        var markeerFilter=function(){if(!sortEl)return;var f=sortEl.dataset.filter==='aandacht';var b=sortEl.querySelector('[data-filter="aandacht"]');if(b){b.style.background=f?'#a23f2c':'';b.style.color=f?'#fff':'';b.style.borderColor=f?'#a23f2c':'';b.setAttribute('aria-pressed',f?'true':'false');}};
         if(l.length>=2){
           if(!sortEl){
             sortEl=document.createElement('div');sortEl.id='k_srv_sort';sortEl.className='no-print';sortEl.dataset.mode='nieuw';
             sortEl.style.cssText='display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0 0 8px;font-size:12px;color:var(--muted)';
-            sortEl.innerHTML='<span>Sorteer:</span><button type="button" class="btn" data-sort="nieuw" style="font-size:11.5px;padding:3px 9px">Nieuwste</button><button type="button" class="btn" data-sort="aandacht" title="Hoge pijn, langer niet geoefend of nooit geopende kaart bovenaan" style="font-size:11.5px;padding:3px 9px">Aandacht</button>';
+            sortEl.innerHTML='<span>Sorteer:</span><button type="button" class="btn" data-sort="nieuw" style="font-size:11.5px;padding:3px 9px">Nieuwste</button><button type="button" class="btn" data-sort="aandacht" title="Hoge pijn, langer niet geoefend of nooit geopende kaart bovenaan" style="font-size:11.5px;padding:3px 9px">Aandacht</button><button type="button" class="btn" data-filter="aandacht" title="Toon alleen de kaarten die nu aandacht vragen — hoge pijn, een openstaand seintje, lang stil of nooit geopend" style="font-size:11.5px;padding:3px 9px;margin-left:8px">Alleen aandacht</button>';
             el.parentNode.insertBefore(sortEl,el);
           }
-          sortEl.style.display='flex';markeerSort();
-          sortEl.onclick=function(e){var b=e.target.closest('[data-sort]');if(!b)return;sortEl.dataset.mode=b.dataset.sort;markeerSort();toon();};
+          sortEl.style.display='flex';markeerSort();markeerFilter();
+          sortEl.onclick=function(e){
+            var s=e.target.closest('[data-sort]'),f=e.target.closest('[data-filter]');
+            if(s){sortEl.dataset.mode=s.dataset.sort;markeerSort();toon();}
+            else if(f){sortEl.dataset.filter=(sortEl.dataset.filter==='aandacht')?'':'aandacht';markeerFilter();toon();}
+          };
         }else if(sortEl)sortEl.style.display='none';
         // samenvatting bovenaan: één oogopslag op de praktijk (telt over álle kaarten,
         // niet de zoekfilter). De "aandacht"-teller zet met één tik de aandacht-sortering
