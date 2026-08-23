@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 39 — Vertrekstaat · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 39 — VERTREKSTAAT
+   ------------------------------------------------------------
+   "3× per dag" hangt aan niets.
+
+   Op elk Nederlands perron hing tot voor kort een groot geel
+   affiche: de vertrekstaat. Niemand kreeg er uitleg bij, en
+   iedereen kon hem lezen — kinderen, toeristen, mensen van
+   negentig. De reden is niet de typografie maar de belofte die
+   eronder ligt: een vertrekstaat noemt een tíjd en een pláats.
+   16:42, spoor 5. Daar kun je je aan hechten.
+
+   Een oefenkaart zegt "3× per dag" en hecht daarmee aan niets.
+   Er is geen moment, geen plek, geen aanleiding. De patiënt moet
+   zelf de dienstregeling verzinnen, elke dag opnieuw, en dat is
+   precies waar het misgaat — niet bij de oefening.
+
+   Drie dingen nemen we over:
+
+     · DE VERTREKTIJD HANGT AAN EEN GEWOONTE. Niet "ochtend" maar
+       08:10, en 08:10 is niet zomaar: dat is als het koffiezet-
+       apparaat klaar is. Elke tijd op dit blad wordt in overleg
+       vastgeklikt aan iets dat toch al gebeurt.
+
+     · HET PERRON IS EEN PLEK IN HUIS. Aanrecht, mat naast het
+       bed, de stoel bij het raam. Een oefening zonder plaats
+       wordt op de bank bedacht en niet gedaan.
+
+     · VERTRAGING IS GEEN ANNULERING. Dit is de zachtste en de
+       belangrijkste regel. Een gemist vertrek schuift op naar de
+       volgende; er vervalt niets, er breekt geen reeks. De NS
+       kondigt vertraging aan zonder verontschuldiging, en zo
+       hoort een oefenkaart het ook te doen.
+
+   Vorm: het gele affiche, zwarte inkt, één blauw signaal. Groot
+   gezet, want het hing op vier meter afstand. Op papier is geel
+   een band en geen vol vlak — een A4 die helemaal geel moet
+   worden is een inktprobleem, geen ontwerp. Op het scherm draait
+   het om: daar is het bord donker, zoals een perronbord 's
+   avonds, en staat de eerstvolgende oefening bovenaan.
+   ============================================================ */
+
+:root{
+  --geel:#f5c400;
+  --geel-licht:#ffe071;
+  --geel-diep:#d9a800;
+  --inkt:#111111;
+  --inkt-2:#3a3a38;
+  --inkt-3:#6d6d68;
+  --papier:#faf8f3;
+  --vlak:#ffffff;
+  --lijn:#dcd7c8;
+  --blauw:#0057c8;      /* het signaal: alleen voor afwijking en actie */
+  --bord:#14161a;       /* het perronbord 's avonds */
+  --bord-2:#1e2229;
+
+  --sans:"Avenir Next",Seravek,"Helvetica Neue",Helvetica,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:9px; --s3:17px; --s4:28px; --s5:46px; --s6:74px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.65 var(--sans);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--blauw)}
+:focus-visible{outline:3px solid var(--blauw);outline-offset:3px}
+.binnen{max-width:1200px;margin:0 auto;padding:0 22px}
+
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 22px;background:var(--inkt);color:#d8d5cc;font:600 13px/1 var(--sans);
+  border-bottom:4px solid var(--geel)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--geel)}
+.labbalk .rek{margin-left:auto}
+.labbalk a{color:#d8d5cc;text-decoration:none;padding:6px 9px}
+.labbalk a:hover{background:#ffffff18;color:#fff}
+.labbalk a.terug{color:var(--geel)}
+@media (max-width:760px){.labbalk{flex-wrap:wrap;gap:6px}.labbalk .rek{display:none}}
+
+.scherm{padding:var(--s6) 0}
+.schermkop{max-width:66ch;margin-bottom:var(--s5)}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--blauw);margin-bottom:12px}
+.schermkop h2{font:700 clamp(27px,3.2vw,38px)/1.1 var(--sans);letter-spacing:-.04em;color:var(--inkt)}
+.schermkop p{margin-top:var(--s3);font-size:17.5px;color:var(--inkt-2)}
+
+/* ============================================================
+   1 · LANDING — het gele affiche
+   ============================================================ */
+.eerste{background:var(--geel);color:var(--inkt);border-bottom:6px solid var(--inkt)}
+.merkregel{display:flex;align-items:center;gap:11px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:30px;height:30px;background:var(--inkt);color:var(--geel);
+  display:grid;place-items:center;font:800 16px/1 var(--sans)}
+.merkregel .naam{font:700 15px/1 var(--sans);color:var(--inkt);letter-spacing:-.02em}
+.merkregel .pad{font:700 11.5px/1 var(--mono);letter-spacing:.15em;color:#5c5000;text-transform:uppercase}
+
+.heldrij{display:grid;grid-template-columns:1.02fr .98fr;gap:var(--s6);align-items:center}
+.heldrij > *{min-width:0}
+@media (max-width:1020px){.heldrij{grid-template-columns:1fr;gap:var(--s5)}}
+.heldrij h1{font:800 clamp(36px,5.3vw,64px)/.98 var(--sans);letter-spacing:-.055em;color:var(--inkt);
+  max-width:14ch}
+.heldrij h1 em{font-style:normal;display:block;color:#4b4200}
+.heldrij p.onder{margin-top:var(--s4);font-size:19px;line-height:1.62;color:#3d3500;max-width:50ch}
+.heldrij p.onder b{color:var(--inkt);font-weight:700}
+.knoppen{display:flex;flex-wrap:wrap;gap:12px;margin-top:var(--s4)}
+.kn{display:inline-block;padding:15px 24px;background:var(--inkt);color:var(--geel);
+  font:700 15.5px/1 var(--sans);letter-spacing:-.01em;text-decoration:none;border:3px solid var(--inkt)}
+.kn:hover{background:#000}
+.kn.leeg{background:#0000;color:var(--inkt)}
+.kn.leeg:hover{background:var(--inkt);color:var(--geel)}
+
+/* het affiche in de hero */
+.affiche{background:var(--vlak);border:4px solid var(--inkt);box-shadow:16px 16px 0 #0000001f}
+.affiche .aff-kop{background:var(--inkt);color:var(--geel);padding:13px 18px;display:flex;
+  align-items:baseline;gap:12px;flex-wrap:wrap}
+.affiche .aff-kop b{font:800 19px/1 var(--sans);letter-spacing:-.02em}
+.affiche .aff-kop span{margin-left:auto;font:700 11.5px/1 var(--mono);letter-spacing:.11em;color:#fff}
+.vertrekrij{display:grid;grid-template-columns:92px 1fr auto;gap:16px;align-items:center;
+  padding:14px 18px;border-bottom:2px solid var(--lijn)}
+.vertrekrij:last-child{border-bottom:0}
+.vertrekrij .tijd{font:800 30px/1 var(--mono);letter-spacing:-.045em;color:var(--inkt);
+  background:var(--geel-licht);padding:7px 8px;text-align:center}
+.vertrekrij b{font:700 19px/1.18 var(--sans);letter-spacing:-.025em;color:var(--inkt);display:block}
+.vertrekrij em{font-style:normal;font:600 13px/1.35 var(--sans);color:var(--inkt-3);display:block;margin-top:3px}
+.vertrekrij .perron{font:800 15px/1 var(--sans);color:#fff;background:var(--inkt);padding:9px 11px;
+  text-align:center;white-space:nowrap}
+.vertrekrij > *{min-width:0}
+@media (max-width:560px){
+  .vertrekrij{grid-template-columns:78px 1fr;gap:12px;padding:13px 14px}
+  .vertrekrij .tijd{font-size:24px}
+  .vertrekrij .perron{grid-column:2;justify-self:start;font-size:13.5px;padding:7px 9px}
+}
+.vertrekrij.laat .tijd{background:var(--blauw);color:#fff}
+.vertrekrij.laat .melding{font:700 13px/1.3 var(--sans);color:var(--blauw);display:block;margin-top:4px}
+.affiche .aff-voet{background:var(--geel);padding:12px 18px;font:700 14px/1.45 var(--sans);color:var(--inkt);
+  border-top:4px solid var(--inkt)}
+
+.drieregels{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s6)}
+@media (max-width:880px){.drieregels{grid-template-columns:1fr}}
+.regelblok{background:var(--vlak);border:3px solid var(--inkt);padding:var(--s4)}
+.regelblok .nr{display:inline-block;background:var(--inkt);color:var(--geel);font:800 13px/1 var(--mono);
+  letter-spacing:.1em;padding:7px 10px;margin-bottom:14px}
+.regelblok h3{font:800 21px/1.18 var(--sans);letter-spacing:-.035em;color:var(--inkt);margin-bottom:9px}
+.regelblok p{font-size:15.5px;line-height:1.65;color:var(--inkt-2)}
+.regelblok p b{color:var(--inkt);font-weight:700}
+
+/* ============================================================
+   2 · KIEZER — de dienstregelaar
+   ============================================================ */
+#kiezer{background:var(--papier)}
+.regelaar{display:grid;grid-template-columns:1fr 360px;gap:var(--s4)}
+@media (max-width:1060px){.regelaar{grid-template-columns:1fr}}
+.rg{background:var(--vlak);border:3px solid var(--inkt);padding:var(--s4)}
+.rg h3{font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--inkt-3);
+  margin-bottom:var(--s3)}
+
+.zoekbalk{display:flex;align-items:center;gap:11px;border:3px solid var(--inkt);padding:12px 14px;
+  margin-bottom:var(--s3)}
+.zoekbalk span{font:700 10.5px/1 var(--mono);letter-spacing:.15em;color:var(--inkt-3)}
+.zoekbalk input{border:0;outline:0;background:#0000;font:600 16px/1 var(--sans);color:var(--inkt);width:100%}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--s4)}
+.fl{font:700 11.5px/1 var(--sans);letter-spacing:.02em;padding:9px 12px;border:2px solid var(--lijn);
+  color:var(--inkt-3);background:var(--vlak)}
+.fl.aan{background:var(--geel);border-color:var(--inkt);color:var(--inkt)}
+
+.dienstrij{display:grid;grid-template-columns:58px 1fr 118px 96px 110px;gap:13px;align-items:center;
+  padding:13px 0;border-bottom:2px solid var(--lijn)}
+@media (max-width:760px){.dienstrij{grid-template-columns:50px 1fr;row-gap:8px}
+  .dienstrij .tv,.dienstrij .pv,.dienstrij .av{grid-column:2}}
+.dienstrij img{height:50px;object-fit:contain;mix-blend-mode:multiply}
+.dienstrij b{font:700 16.5px/1.2 var(--sans);letter-spacing:-.02em;color:var(--inkt);display:block}
+.dienstrij em{font-style:normal;font:600 12.5px/1 var(--sans);color:var(--inkt-3)}
+.veldje{border:2px solid var(--inkt);padding:8px 9px;font:700 14px/1 var(--mono);color:var(--inkt);
+  background:var(--geel-licht);text-align:center}
+.veldje.plek{background:var(--vlak);font:600 12.5px/1.25 var(--sans);letter-spacing:0}
+.veldje.leeg{background:var(--vlak);border-style:dashed;color:var(--inkt-3);font-weight:600}
+.zetknop{font:700 12px/1 var(--sans);padding:10px 12px;border:2px solid var(--inkt);
+  background:var(--inkt);color:var(--geel);text-align:center;display:block}
+.zetknop.uit{background:var(--vlak);color:var(--inkt)}
+
+.dagbalk{margin-top:var(--s4);border:3px solid var(--inkt);padding:var(--s3)}
+.dagbalk .as{position:relative;height:56px;background:var(--geel-licht);border:2px solid var(--inkt)}
+.dagbalk .as .uur{position:absolute;top:0;bottom:0;border-left:1px solid #00000026;
+  font:700 10px/1 var(--mono);color:#5c5000;padding:4px 0 0 4px}
+.dagbalk .as .vertrek{position:absolute;top:8px;bottom:8px;background:var(--inkt);color:var(--geel);
+  font:700 11px/1 var(--mono);display:grid;place-items:center;padding:0 6px;white-space:nowrap}
+.dagbalk .as .vertrek.bots{background:var(--blauw);color:#fff}
+.dagbalk p{margin-top:12px;font-size:14.5px;line-height:1.55;color:var(--inkt-2)}
+.dagbalk p b{color:var(--blauw);font-weight:700}
+
+.staatvoorbeeld{border:3px solid var(--inkt)}
+.staatvoorbeeld .kop{background:var(--inkt);color:var(--geel);padding:11px 14px;
+  font:800 15px/1 var(--sans);letter-spacing:-.02em;display:flex;gap:10px;align-items:baseline}
+.staatvoorbeeld .kop span{margin-left:auto;font:700 10.5px/1 var(--mono);color:#fff;letter-spacing:.1em}
+.mini-vertrek{display:grid;grid-template-columns:66px 1fr;gap:11px;padding:11px 14px;
+  border-bottom:1px solid var(--lijn);align-items:center}
+.mini-vertrek:last-of-type{border-bottom:0}
+.mini-vertrek .t{font:800 20px/1 var(--mono);letter-spacing:-.04em;color:var(--inkt);
+  background:var(--geel-licht);padding:6px 0;text-align:center}
+.mini-vertrek b{font:700 14.5px/1.2 var(--sans);color:var(--inkt);display:block}
+.mini-vertrek em{font-style:normal;font:600 11.5px/1.3 var(--sans);color:var(--inkt-3)}
+.mededeling{background:var(--geel);border-top:3px solid var(--inkt);padding:12px 14px;
+  font:700 13.5px/1.45 var(--sans);color:var(--inkt)}
+.mededeling.blauw{background:var(--blauw);color:#fff;border-top-color:var(--inkt)}
+.knopbalk{display:flex;gap:11px;flex-wrap:wrap;margin-top:var(--s4)}
+
+/* ============================================================
+   3 · CLIËNTKAART — het perronbord
+   ============================================================ */
+#clientkaart{background:var(--bord);color:#cfd3d8}
+#clientkaart .schermkop b{color:var(--geel)}
+#clientkaart .schermkop h2{color:#fff}
+#clientkaart .schermkop p{color:#9aa1a9}
+
+.bordrij{display:grid;grid-template-columns:1.25fr .75fr;gap:var(--s5);align-items:start}
+@media (max-width:1020px){.bordrij{grid-template-columns:1fr}}
+
+.perronbord{background:var(--bord-2);border:3px solid #333a44;box-shadow:0 0 70px #f5c40018}
+.perronbord .bk{display:flex;align-items:baseline;gap:12px;padding:15px 20px;
+  border-bottom:2px solid #333a44;flex-wrap:wrap}
+.perronbord .bk h3{font:700 20px/1.1 var(--sans);letter-spacing:-.03em;color:#fff}
+.perronbord .bk span{margin-left:auto;font:700 12px/1 var(--mono);letter-spacing:.12em;color:var(--geel)}
+.bordvertrek{display:grid;grid-template-columns:104px 1fr 116px;gap:16px;align-items:center;
+  padding:18px 20px;border-bottom:1px solid #2b313a}
+@media (max-width:720px){.bordvertrek{grid-template-columns:88px 1fr;row-gap:9px}
+  .bordvertrek .sp{grid-column:2}}
+.bordvertrek .t{font:800 32px/1 var(--mono);letter-spacing:-.05em;color:var(--geel)}
+.bordvertrek b{font:700 20px/1.15 var(--sans);letter-spacing:-.025em;color:#fff;display:block}
+.bordvertrek em{font-style:normal;font:600 13.5px/1.4 var(--sans);color:#9aa1a9;display:block;margin-top:3px}
+.bordvertrek .sp{font:700 14px/1.2 var(--sans);color:#fff;border:2px solid #4a525d;padding:9px 10px;
+  text-align:center}
+.bordvertrek.nu{background:#f5c4000f}
+.bordvertrek.nu .sp{background:var(--geel);color:var(--inkt);border-color:var(--geel)}
+.bordvertrek.vertraagd .t{color:#fff}
+.bordvertrek.vertraagd .later{display:inline-block;background:var(--blauw);color:#fff;
+  font:700 12.5px/1 var(--sans);padding:6px 8px;margin-top:6px}
+.bordvertrek.gereden{opacity:.5}
+.bordvertrek.gereden .t{color:#7d858f}
+.loopband{background:var(--geel);color:var(--inkt);padding:12px 20px;font:700 14.5px/1.4 var(--sans);
+  border-top:3px solid var(--inkt)}
+
+.zijkolom{display:flex;flex-direction:column;gap:var(--s4)}
+.zijblok{background:var(--bord-2);border:2px solid #333a44;padding:var(--s4)}
+.zijblok h4{font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--geel);
+  margin-bottom:var(--s3)}
+.zijblok p{font-size:15px;line-height:1.65;color:#9aa1a9}
+.zijblok p b{color:#fff;font-weight:600}
+.weekstrook{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:var(--s3)}
+.weekstrook .d{text-align:center;padding:10px 0;border:2px solid #3a424d;
+  font:700 11px/1 var(--mono);letter-spacing:.06em;color:#9aa1a9}
+.weekstrook .d b{display:block;font:800 17px/1 var(--sans);color:#fff;margin-top:6px}
+.weekstrook .d.op{background:var(--geel);border-color:var(--geel);color:#5c5000}
+.weekstrook .d.op b{color:var(--inkt)}
+.weekstrook .d.deels{background:#f5c40026;border-color:var(--geel-diep)}
+.weekstrook .d.leeg b{color:#5b636d}
+.punctueel{display:flex;align-items:baseline;gap:11px;margin-top:var(--s3)}
+.punctueel b{font:800 34px/1 var(--mono);letter-spacing:-.04em;color:#fff}
+.punctueel span{font:600 13px/1.35 var(--sans);color:#9aa1a9}
+.omroep{border-left:4px solid var(--blauw);padding-left:14px;margin-top:var(--s3)}
+.omroep b{display:block;color:#fff;font-size:14.5px;margin-bottom:3px}
+.omroep em{font-style:italic;font-size:14.5px;color:#9aa1a9}
+
+/* ============================================================
+   4 · PRINTKAART — A4 STAAND
+   ============================================================ */
+#printkaart{background:#efeade}
+.bladhouder{display:grid;place-items:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){
+  .bladschaal{width:100%;overflow:hidden}
+  .blad{transform:scale(.78);transform-origin:top left;margin-bottom:-65mm !important;
+    margin-right:-46mm !important}
+}
+@media (max-width:760px){.blad{transform:scale(.45);margin-bottom:-163mm !important;margin-right:-116mm !important}}
+
+.blad{position:relative;width:210mm;height:297mm;background:#fff;color:#000;
+  box-shadow:0 24px 60px #0000002e;border:1px solid #d5cfbf;
+  display:flex;flex-direction:column;font-family:var(--sans)}
+
+.wijzer{position:absolute;width:44mm;font:600 11.5px/1.4 var(--sans);color:var(--inkt-3);
+  border-top:3px solid var(--geel-diep);padding-top:6px}
+@media (max-width:1240px){.wijzer{display:none}}
+
+.vs-kop{background:#000;color:#f5c400;padding:6mm 8mm 5mm;flex:0 0 auto}
+.vs-kop .regel{display:flex;align-items:baseline;gap:4mm}
+.vs-kop .merk{font:700 8pt/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:#f5c400}
+.vs-kop .geldig{margin-left:auto;font:700 8pt/1 var(--mono);letter-spacing:.13em;color:#fff}
+.vs-kop h1{font:800 31pt/.98 var(--sans);letter-spacing:-.05em;color:#fff;margin-top:3mm}
+.vs-kop .wie{display:flex;gap:6mm;flex-wrap:wrap;margin-top:3mm;font:600 10pt/1.3 var(--sans);color:#f5c400}
+.vs-kop .wie span{color:#fff;font-weight:400}
+
+.vs-latten{display:grid;grid-template-columns:26mm 1fr 34mm 26mm;gap:0;background:#f5c400;
+  border-bottom:1.4mm solid #000;flex:0 0 auto}
+.vs-latten div{padding:2.6mm 3mm;font:700 8pt/1 var(--mono);letter-spacing:.15em;text-transform:uppercase;
+  color:#000;border-right:.5mm solid #00000033}
+.vs-latten div:last-child{border-right:0}
+
+.vs-vertrekken{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
+.vs-vertrek{display:grid;grid-template-columns:26mm 1fr 34mm 26mm;gap:0;align-items:stretch;
+  border-bottom:.7mm solid #000;flex:1}
+.vs-vertrek .tijdvak{background:#f5c400;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:1.5mm;border-right:.7mm solid #000;padding:2mm}
+.vs-vertrek .tijdvak b{font:800 27pt/1 var(--mono);letter-spacing:-.055em;color:#000}
+.vs-vertrek .tijdvak em{font-style:normal;font:600 8pt/1.2 var(--sans);color:#000;text-align:center}
+.vs-vertrek .midden{padding:4mm 5mm;display:flex;gap:5mm;align-items:center}
+.vs-vertrek .midden img{height:27mm;object-fit:contain;mix-blend-mode:multiply;flex:0 0 auto}
+.vs-vertrek h2{font:800 18pt/1.05 var(--sans);letter-spacing:-.04em;color:#000}
+.vs-vertrek .hoe{font:400 10.5pt/1.4 var(--sans);color:#000;margin-top:1.8mm;max-width:92mm}
+.vs-vertrek .hoe b{font-weight:700}
+.vs-vertrek .perronvak{border-left:.7mm solid #000;border-right:.7mm solid #000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3mm 2mm;text-align:center}
+.vs-vertrek .perronvak b{font:700 12pt/1.15 var(--sans);letter-spacing:-.02em;color:#000}
+.vs-vertrek .perronvak em{font-style:normal;font:400 8.5pt/1.3 var(--sans);color:#333;margin-top:1.5mm}
+.vs-vertrek .dosvak{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:3mm 2mm;text-align:center}
+.vs-vertrek .dosvak b{font:800 20pt/1 var(--mono);letter-spacing:-.04em;color:#000}
+.vs-vertrek .dosvak em{font-style:normal;font:600 8.5pt/1.25 var(--sans);color:#000;margin-top:1.5mm}
+
+.vs-vertraging{background:#fff;border-bottom:1.4mm solid #000;padding:4mm 8mm;flex:0 0 auto;
+  display:flex;gap:5mm;align-items:center}
+.vs-vertraging .kop{background:#0057c8;color:#fff;font:700 9pt/1 var(--sans);letter-spacing:.04em;
+  padding:3mm 4mm;white-space:nowrap;flex:0 0 auto}
+.vs-vertraging p{font:600 11pt/1.42 var(--sans);color:#000}
+.vs-vertraging p b{font-weight:800}
+
+.vs-week{padding:4.5mm 8mm;border-bottom:1.4mm solid #000;flex:0 0 auto}
+.vs-week .wk{display:flex;align-items:baseline;gap:3mm;margin-bottom:2.8mm}
+.vs-week .wk b{font:700 8pt/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#000}
+.vs-week .wk i{font-style:normal;font:400 9.5pt/1.3 var(--sans);color:#000;margin-left:auto}
+.vs-weekrij{display:grid;grid-template-columns:repeat(7,1fr);gap:2mm}
+.vs-dag{border:.8mm solid #000;padding:2.4mm 1mm 3mm;text-align:center}
+.vs-dag b{display:block;font:700 9pt/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#000}
+.vs-dag em{display:block;font-style:normal;font:400 7.5pt/1 var(--sans);color:#333;margin-top:1mm}
+.vs-dag .hokjes{display:flex;gap:1.4mm;justify-content:center;margin-top:2.4mm}
+.vs-dag .hokjes i{width:4.6mm;height:4.6mm;border:.7mm solid #000;display:block}
+.vs-dag.rust{background:#f7f2df}
+.vs-dag.rust .hokjes i{width:6mm;height:5.4mm}
+
+.vs-voet{padding:4.5mm 8mm 5mm;display:flex;gap:6mm;align-items:flex-end;justify-content:space-between;
+  flex:0 0 auto}
+.vs-voet .stop{border-left:1.4mm solid #000;padding-left:4mm;font:600 10.5pt/1.4 var(--sans);color:#000;
+  max-width:112mm}
+.vs-voet .stop i{font-style:normal;display:block;font:700 7.5pt/1 var(--mono);letter-spacing:.17em;
+  text-transform:uppercase;margin-bottom:1.5mm}
+.vs-voet .praktijk{text-align:right;font:400 9pt/1.45 var(--sans);color:#333}
+.vs-voet .praktijk b{display:block;font-weight:700;color:#000;font-size:10pt}
+
+.printhulp{max-width:66ch;margin:var(--s5) auto 0;text-align:center}
+.printhulp p{font-size:15.5px;color:var(--inkt-2);margin-bottom:var(--s3)}
+
+footer.uitleiding{background:var(--inkt);color:#a3a39d;padding:var(--s6) 0;border-top:6px solid var(--geel)}
+footer.uitleiding .binnen{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--geel);margin-bottom:14px}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.7}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:10px}
+footer.uitleiding li::before{content:"→";position:absolute;left:0;color:var(--geel)}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT — A4 STAAND
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 39</span>
+  <strong style="font:800 16px/1 var(--sans);color:#fff;letter-spacing:-.04em">Vertrekstaat</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">Concept 39 · Vertrekstaat</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1>„3× per dag" hangt aan niets.<em>08:10 hangt aan het koffiezetapparaat.</em></h1>
+        <p class="onder">Op elk perron hing een groot geel affiche waar niemand uitleg bij kreeg en
+          dat iedereen kon lezen. <b>Niet vanwege de typografie, maar vanwege de belofte eronder:
+          een tijd en een plaats.</b> Een oefenkaart die „drie keer per dag" zegt, laat de patiënt
+          elke dag opnieuw de dienstregeling verzinnen — en daar gaat het mis, niet bij de oefening.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk de kaart</a>
+          <a class="kn leeg" href="#clientkaart">Het perronbord</a>
+        </div>
+      </div>
+
+      <div class="affiche" aria-hidden="true">
+        <div class="aff-kop"><b>Vertrek — dinsdag</b><span>GELDIG 17 T/M 23 AUG.</span></div>
+        <div class="vertrekrij">
+          <span class="tijd">08:10</span>
+          <span><b>Schouderbladen zakken</b><em>zodra de koffie doorloopt · 3 × 8</em></span>
+          <span class="perron">Aanrecht</span>
+        </div>
+        <div class="vertrekrij">
+          <span class="tijd">13:30</span>
+          <span><b>Nek zijwaarts rekken</b><em>na de lunch, vóór de eerste mail · 2 × 20 sec.</em></span>
+          <span class="perron">Bureaustoel</span>
+        </div>
+        <div class="vertrekrij laat">
+          <span class="tijd">21:00</span>
+          <span><b>Armen heffen</b><em>bij het journaal · 2 × 10</em>
+            <span class="melding">↳ Gisteren gemist — schuift door naar vanavond</span></span>
+          <span class="perron">Bank</span>
+        </div>
+        <div class="aff-voet">Vertraging is geen annulering. Een gemist vertrek schuift op; er
+          vervalt niets.</div>
+      </div>
+    </div>
+
+    <div class="drieregels">
+      <div class="regelblok">
+        <span class="nr">REGEL 1</span>
+        <h3>De tijd hangt aan een gewoonte</h3>
+        <p>Niet „ochtend" maar 08:10 — en 08:10 is niet willekeurig: dat is wanneer het
+          koffiezetapparaat klaar is. <b>Elke tijd op dit blad wordt in de behandelkamer
+          vastgeklikt aan iets dat toch al gebeurt.</b> Wie geen aanhechting kiest, kiest de dag
+          erna niets.</p>
+      </div>
+      <div class="regelblok">
+        <span class="nr">REGEL 2</span>
+        <h3>Het perron is een plek in huis</h3>
+        <p>Aanrecht, de mat naast het bed, de stoel bij het raam. Een oefening zonder plaats wordt
+          op de bank bedacht en niet gedaan. <b>Op de kaart staat de plek even groot als de
+          oefening</b>, want de plek is de helft van de afspraak.</p>
+      </div>
+      <div class="regelblok">
+        <span class="nr">REGEL 3</span>
+        <h3>Vertraging is geen annulering</h3>
+        <p>De zachtste regel, en de belangrijkste. Een gemist vertrek schuift op naar het volgende;
+          er vervalt niets en er breekt geen reeks. <b>De NS kondigt vertraging aan zonder
+          verontschuldiging</b> — precies de toon die een oefenkaart hoort te hebben.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>Een oefening kiezen is hier pas half werk: elke oefening moet een <b>vertrektijd</b> en een
+        <b>perron</b> krijgen voordat hij op de staat komt. De dagbalk eronder laat zien wat dat met
+        de dag doet — en waarschuwt bij twee vertrekken binnen tien minuten, want dat worden er in de
+        praktijk nul.</p>
+    </div>
+
+    <div class="regelaar">
+
+      <div class="rg">
+        <h3>Oefeningen · nek en schouder</h3>
+
+        <div class="zoekbalk">
+          <span>ZOEK</span>
+          <input type="text" value="nek/schouder — zittend, kantoor" aria-label="Zoek een oefening"/>
+        </div>
+
+        <div class="filters">
+          <span class="fl aan">ZITTEND</span>
+          <span class="fl aan">GEEN MATERIAAL</span>
+          <span class="fl">STAAND</span>
+          <span class="fl">≤ 2 MINUTEN</span>
+          <span class="fl">TIJDENS WERK</span>
+        </div>
+
+        <div class="dienstrij">
+          <img src="/images/nek/schouderblad-liften-en-ontspannen-functioneel-staand-line-v1.png"
+            alt="Lijntekening: staand de schouderbladen optrekken en laten zakken."/>
+          <span><b>Schouderbladen zakken</b><em>3 × 8 · rustig ademen</em></span>
+          <span class="tv veldje">08:10</span>
+          <span class="pv veldje plek">Aanrecht</span>
+          <span class="av zetknop">Op de staat</span>
+        </div>
+        <div class="dienstrij">
+          <img src="/images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png"
+            alt="Lijntekening: zittend de nek zijwaarts rekken met een hand op het hoofd."/>
+          <span><b>Nek zijwaarts rekken</b><em>2 × 20 sec. · per kant</em></span>
+          <span class="tv veldje">13:30</span>
+          <span class="pv veldje plek">Bureaustoel</span>
+          <span class="av zetknop">Op de staat</span>
+        </div>
+        <div class="dienstrij">
+          <img src="/images/bovenste-extremiteit/anteflexie-armen-line-v1.png"
+            alt="Lijntekening: beide armen naar voren en omhoog heffen."/>
+          <span><b>Armen heffen</b><em>2 × 10 · tot schouderhoogte</em></span>
+          <span class="tv veldje">21:00</span>
+          <span class="pv veldje plek">Bank</span>
+          <span class="av zetknop">Op de staat</span>
+        </div>
+        <div class="dienstrij">
+          <img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png"
+            alt="Lijntekening: zittend de kin intrekken."/>
+          <span><b>Kin intrekken</b><em>3 × 8 · zittend</em></span>
+          <span class="tv veldje leeg">— : —</span>
+          <span class="pv veldje leeg">geen perron</span>
+          <span class="av zetknop uit">Nog niet</span>
+        </div>
+
+        <div class="dagbalk">
+          <div class="as" aria-hidden="true">
+            <span class="uur" style="left:0%">06</span>
+            <span class="uur" style="left:12.5%">09</span>
+            <span class="uur" style="left:25%">12</span>
+            <span class="uur" style="left:37.5%">15</span>
+            <span class="uur" style="left:50%">18</span>
+            <span class="uur" style="left:62.5%">21</span>
+            <span class="uur" style="left:75%">00</span>
+            <span class="uur" style="left:87.5%">03</span>
+            <span class="vertrek" style="left:9%">08:10</span>
+            <span class="vertrek" style="left:31%">13:30</span>
+            <span class="vertrek bots" style="left:62%">21:00</span>
+          </div>
+          <p>Drie vertrekken, goed verdeeld. <b>Let op:</b> 21:00 valt binnen tien minuten van het
+            journaal-vertrek dat mevrouw zelf al had. Eén van de twee gaat niet rijden — kies welke.</p>
+        </div>
+      </div>
+
+      <div class="rg" style="padding:0;border:0">
+        <div class="staatvoorbeeld">
+          <div class="kop">De staat van dinsdag <span>3 VERTREKKEN</span></div>
+          <div class="mini-vertrek"><span class="t">08:10</span>
+            <span><b>Schouderbladen zakken</b><em>Aanrecht · zodra de koffie doorloopt</em></span></div>
+          <div class="mini-vertrek"><span class="t">13:30</span>
+            <span><b>Nek zijwaarts rekken</b><em>Bureaustoel · na de lunch</em></span></div>
+          <div class="mini-vertrek"><span class="t">21:00</span>
+            <span><b>Armen heffen</b><em>Bank · bij het journaal</em></span></div>
+          <div class="mededeling">Zaterdag en zondag rijdt alleen het vertrek van 08:10. Dat staat op
+            de kaart, zodat het weekend geen mislukking wordt.</div>
+          <div class="mededeling blauw">Vertraagd vertrek schuift automatisch door naar het
+            eerstvolgende. Er vervalt niets.</div>
+        </div>
+
+        <div class="knopbalk" style="padding:0 var(--s4)">
+          <a class="kn" href="#printkaart">Staat drukken →</a>
+          <a class="kn leeg" href="#clientkaart">Naar de cliënt</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>Op papier is het affiche geel; op het scherm is het bord donker, zoals een perronbord na
+        achten. <b>Het eerstvolgende vertrek staat bovenaan en is het enige dat groot is</b> — de
+        rest van de dag hoeft nu niet gelezen te worden. Wat gereden is, vervaagt; wat vertraagd is,
+        krijgt een blauwe regel en een nieuwe tijd.</p>
+    </div>
+
+    <div class="bordrij">
+
+      <div class="perronbord">
+        <div class="bk">
+          <h3>Mevr. T. de Ridder — 64 jaar</h3>
+          <span>DINSDAG 18 AUG. · 14:05</span>
+        </div>
+
+        <div class="bordvertrek gereden">
+          <span class="t">08:10</span>
+          <span><b>Schouderbladen zakken</b><em>Gereden om 08:14 · 3 × 8 afgemaakt</em></span>
+          <span class="sp">Aanrecht</span>
+        </div>
+
+        <div class="bordvertrek nu">
+          <span class="t">14:15</span>
+          <span><b>Nek zijwaarts rekken</b>
+            <em>Nu op het perron · 2 × 20 seconden, per kant. Hand licht op het hoofd, geen trekken —
+              het mag rekken, niet pijn doen.</em></span>
+          <span class="sp">Bureaustoel</span>
+        </div>
+
+        <div class="bordvertrek vertraagd">
+          <span class="t">21:00</span>
+          <span><b>Armen heffen</b>
+            <em>Gisteren niet gereden</em>
+            <span class="later">Rijdt vandaag om 21:00 · 2 × 10</span></span>
+          <span class="sp">Bank</span>
+        </div>
+
+        <div class="loopband">Vertraging is geen annulering. Wat u vandaag mist, staat morgen weer
+          op het bord — op dezelfde tijd, op hetzelfde perron.</div>
+      </div>
+
+      <div class="zijkolom">
+        <div class="zijblok">
+          <h4>Deze week gereden</h4>
+          <div class="weekstrook">
+            <span class="d op">ma<b>3</b></span>
+            <span class="d deels">di<b>1</b></span>
+            <span class="d leeg">wo<b>—</b></span>
+            <span class="d leeg">do<b>—</b></span>
+            <span class="d leeg">vr<b>—</b></span>
+            <span class="d leeg">za<b>—</b></span>
+            <span class="d leeg">zo<b>—</b></span>
+          </div>
+          <div class="punctueel"><b>4</b><span>van 4 vertrekken tot nu toe gereden<br/>
+            gemiddelde vertraging: 6 minuten</span></div>
+          <p style="margin-top:var(--s3)">Er staat geen percentage en geen reeks. <b>Vertraging
+            wordt geteld, want die is nuttig:</b> structureel twintig minuten te laat betekent dat
+            de tijd verkeerd gekozen is, niet dat de patiënt tekortschiet.</p>
+        </div>
+
+        <div class="zijblok">
+          <h4>Omroepbericht</h4>
+          <div class="omroep">
+            <b>Zondag 23 augustus</b>
+            <em>„Op zon- en feestdagen rijdt alleen het vertrek van 08:10. Dat is geen uitzondering
+              maar de dienstregeling."</em>
+          </div>
+          <p style="margin-top:var(--s3)">Een weekendregeling die vooraf op de kaart staat, maakt van
+            een rustige zondag geen gemiste dag. <b>Dat is het hele verschil met een streak.</b></p>
+        </div>
+
+        <div class="zijblok">
+          <h4>Nieuwe dienstregeling</h4>
+          <p><b>Maandag 24 augustus, 11:15</b><br/>
+            Fysiotherapie Kroon · Hoofdstraat 8, Assen<br/>
+            Neem de staat mee — ook de vertrekken die niet gereden zijn; juist die bepalen de
+            volgende tijden.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>Het affiche op A4: zwarte kop, gele tijdkolom, drie vertrekken met perron en aantal, en
+        onderaan de week om af te strepen. <b>Geel is hier een band en geen vol vlak</b> — een A4 die
+        helemaal geel moet worden is een inktprobleem, geen ontwerp. De tijd is het grootste
+        element op het blad, groter dan de oefeningsnaam, want de tijd is de afspraak.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer geen-print" style="top:18mm;right:calc(100% + 22px);text-align:right">
+            de kop is zwart en de geldigheidsduur staat erbij: een dienstregeling is altijd tijdelijk</span>
+          <span class="wijzer geen-print" style="top:88mm;left:calc(100% + 22px)">
+            de tijd staat op 27 punt in de gele kolom — het grootste element van het blad, want de
+            tijd is de afspraak</span>
+          <span class="wijzer geen-print" style="top:168mm;right:calc(100% + 22px);text-align:right">
+            het perron krijgt een eigen kolom: de plek in huis is de helft van de afspraak</span>
+          <span class="wijzer geen-print" style="top:236mm;left:calc(100% + 22px)">
+            de weekstrook: drie hokjes per dag, en het weekend heeft er bewust maar één</span>
+
+          <div class="vs-kop">
+            <div class="regel">
+              <span class="merk">Fysiplan · vertrekstaat</span>
+              <span class="geldig">GELDIG 17 T/M 23 AUGUSTUS 2026</span>
+            </div>
+            <h1>Nek en schouder — dagelijks vertrek</h1>
+            <div class="wie">
+              Mevr. T. de Ridder · 64 jaar
+              <span>Schouderklachten bij beeldschermwerk</span>
+              <span>S. Kroon, fysiotherapeut</span>
+            </div>
+          </div>
+
+          <div class="vs-latten">
+            <div>Vertrek</div><div>Oefening &amp; uitvoering</div><div>Perron</div><div>Aantal</div>
+          </div>
+
+          <div class="vs-vertrekken">
+
+            <div class="vs-vertrek">
+              <div class="tijdvak"><b>08:10</b><em>als de koffie<br/>doorloopt</em></div>
+              <div class="midden">
+                <img src="/images/nek/schouderblad-liften-en-ontspannen-functioneel-staand-line-v1.png"
+                  alt="Lijntekening: iemand trekt staand de schouderbladen op en laat ze weer zakken."/>
+                <div>
+                  <h2>Schouderbladen zakken</h2>
+                  <div class="hoe"><b>Trek de schouders op naar de oren, adem in.</b> Laat ze bij het
+                    uitademen zakken en houd ze daar. Vijf tellen, dan opnieuw.</div>
+                </div>
+              </div>
+              <div class="perronvak"><b>Aanrecht</b><em>staand, handen los</em></div>
+              <div class="dosvak"><b>3×8</b><em>rustig<br/>ademen</em></div>
+            </div>
+
+            <div class="vs-vertrek">
+              <div class="tijdvak"><b>13:30</b><em>na de lunch,<br/>vóór de mail</em></div>
+              <div class="midden">
+                <img src="/images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png"
+                  alt="Lijntekening: iemand rekt zittend de nek zijwaarts met een hand op het hoofd."/>
+                <div>
+                  <h2>Nek zijwaarts rekken</h2>
+                  <div class="hoe">Hand licht op het hoofd, oor naar de schouder. <b>Het mag rekken,
+                    het mag geen pijn doen</b> — niet trekken, alleen het gewicht van de hand.</div>
+                </div>
+              </div>
+              <div class="perronvak"><b>Bureaustoel</b><em>zittend, rug tegen de leuning</em></div>
+              <div class="dosvak"><b>2×20</b><em>seconden<br/>per kant</em></div>
+            </div>
+
+            <div class="vs-vertrek">
+              <div class="tijdvak"><b>21:00</b><em>bij het<br/>journaal</em></div>
+              <div class="midden">
+                <img src="/images/bovenste-extremiteit/anteflexie-armen-line-v1.png"
+                  alt="Lijntekening: iemand heft beide armen naar voren tot schouderhoogte."/>
+                <div>
+                  <h2>Armen heffen</h2>
+                  <div class="hoe">Beide armen naar voren tot schouderhoogte, dan langzaam zakken.
+                    <b>Blijft de schouder pijnlijk, hef dan tot waar het nog goed voelt</b> — dat
+                    telt gewoon mee.</div>
+                </div>
+              </div>
+              <div class="perronvak"><b>Bank</b><em>zittend, rug recht</em></div>
+              <div class="dosvak"><b>2×10</b><em>langzaam<br/>zakken</em></div>
+            </div>
+
+          </div>
+
+          <div class="vs-vertraging">
+            <span class="kop">Vertraging</span>
+            <p><b>Een gemist vertrek schuift op naar het volgende. Er vervalt niets.</b>
+              Twee dagen achter elkaar niets gereden? Dan is de tijd verkeerd gekozen — bel, dan
+              zetten we hem om.</p>
+          </div>
+
+          <div class="vs-week">
+            <div class="wk"><b>De week</b><i>Streep een hokje af zodra dat vertrek gereden is.</i></div>
+            <div class="vs-weekrij">
+              <div class="vs-dag"><b>ma</b><em>17 aug.</em>
+                <span class="hokjes"><i></i><i></i><i></i></span></div>
+              <div class="vs-dag"><b>di</b><em>18 aug.</em>
+                <span class="hokjes"><i></i><i></i><i></i></span></div>
+              <div class="vs-dag"><b>wo</b><em>19 aug.</em>
+                <span class="hokjes"><i></i><i></i><i></i></span></div>
+              <div class="vs-dag"><b>do</b><em>20 aug.</em>
+                <span class="hokjes"><i></i><i></i><i></i></span></div>
+              <div class="vs-dag"><b>vr</b><em>21 aug.</em>
+                <span class="hokjes"><i></i><i></i><i></i></span></div>
+              <div class="vs-dag rust"><b>za</b><em>alleen 08:10</em>
+                <span class="hokjes"><i></i></span></div>
+              <div class="vs-dag rust"><b>zo</b><em>alleen 08:10</em>
+                <span class="hokjes"><i></i></span></div>
+            </div>
+          </div>
+
+          <div class="vs-voet">
+            <div class="stop">
+              <i>U stapt niet in bij</i>
+              Uitstralende pijn tot in de hand, tintelingen die blijven, of duizeligheid bij het
+              draaien van het hoofd. Bel dezelfde dag de praktijk.
+            </div>
+            <div class="praktijk"><b>Fysiotherapie Kroon</b>
+              Hoofdstraat 8, Assen · 0592 — 31 09 55<br/>Nieuwe dienstregeling: ma 24 aug., 11:15</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="printhulp geen-print">
+      <p>Dit blad print zonder de omringende uitleg: alleen de kaart, op ware grootte,
+        <b>A4 staand</b>.</p>
+      <a class="kn" href="javascript:window.print()">Print deze kaart</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div>
+      <h4>Waarom dit schuurt</h4>
+      <p>Dit concept verplaatst het ontwerpprobleem. Alle andere kaarten in deze galerij maken de
+        oefening beter leesbaar; deze zegt dat de oefening niet het probleem is. Wat ontbreekt is een
+        moment en een plek — en die twee moeten in de behandelkamer worden afgesproken, niet thuis
+        bedacht. Dat vraagt iets van de therapeut: geen kaart meer uitdraaien in tien seconden, maar
+        drie keer vragen „en wanneer dan precies?". Het gele affiche is de plek waar dat antwoord
+        landt.</p>
+    </div>
+    <div>
+      <h4>Wat we lenen</h4>
+      <ul>
+        <li>De gele vertrekstaat: tijd en plaats, groot gezet, zonder uitleg</li>
+        <li>Het perron als vaste kolom — de plek is de halve afspraak</li>
+        <li>Vertraging aankondigen zonder verontschuldiging</li>
+        <li>Een weekendregeling die vooraf vaststaat, dus nooit een mislukking is</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Toetsen</h4>
+      <ul>
+        <li>Hang het blad op de koelkast: leest 08:10 vanaf drie meter?</li>
+        <li>Print in zwart-wit — de gele band wordt grijs, blijft alles staan?</li>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

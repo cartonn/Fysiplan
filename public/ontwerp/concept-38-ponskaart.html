@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 38 — Ponskaart · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 38 — PONSKAART
+   ------------------------------------------------------------
+   Eén rij weven laat niets zien.
+
+   In 1801 hing Jacquard een reeks geponste kaarten aan zijn
+   weefgetouw. De gaten bepaalden welke kettingdraden omhoog
+   gingen; de kaart beschreef het patroon niet, de kaart wás het
+   patroon. En dat is precies waarom een weefkaart een betere
+   metafoor voor oefentherapie is dan welke voortgangsbalk ook:
+
+     · Eén rij weven laat niets zien. Twintig rijen laten iets
+       vermoeden. Tweehonderd rijen laten een figuur zien. Zo
+       werkt herstel ook, en zo zegt geen enkele oefen-app het.
+
+     · Een gat is onomkeerbaar. Je ponst het of je ponst het
+       niet; er is geen "gedeeltelijk afgevinkt", geen streak die
+       breekt, geen 87 %. De week is een fysieke handeling die op
+       de keukentafel gebeurt, met een pen of een perforator.
+
+     · De kaart kán niet verkeerd om. De afgesneden hoek is geen
+       versiering: hij is de enige reden dat een stapel van
+       duizend kaarten nooit omgekeerd in de lezer belandt. Een
+       oefenkaart die op vier manieren op tafel kan liggen heeft
+       die vraag nooit gesteld.
+
+   De vorm is die van de Hollerith-kaart zoals IBM hem in 1928
+   vastlegde: 80 kolommen, 12 rijen, rechthoekige gaten, één
+   kleur inkt op manilakarton. Geen sier, geen grijstinten, geen
+   schaduw — een kaart die door een machine moest, en dus door
+   iedereen te lezen was. Wat wij eraan toevoegen is grootte: de
+   echte kaart zette alles in 6 punt, wij zetten de oefening in
+   16 en het aantal in 24, want deze kaart gaat door mensenogen.
+
+   Wat blijft: monospace, harde lijnen, één inkt, één signaal-
+   kleur. Wat verdwijnt: alles wat je niet kunt ponsen.
+   ============================================================ */
+
+:root{
+  --karton:#efe7d2;
+  --karton-2:#e3d8bd;
+  --karton-3:#f7f2e4;
+  --inkt:#161512;
+  --inkt-2:#3f3b32;
+  --inkt-3:#6f6857;
+  --lijn:#c4b795;
+  --lijn-2:#d8cdb1;
+  --pons:#b4331b;      /* signaalkleur: één, en alleen voor afwijkingen */
+  --machine:#15564a;   /* het groen van de drukinkt op echte kaarten */
+
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Courier New",monospace;
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+
+  --s1:4px; --s2:9px; --s3:17px; --s4:28px; --s5:46px; --s6:74px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:16.5px/1.65 var(--sans);color:var(--inkt-2);background:var(--karton)}
+img{max-width:100%;display:block}
+a{color:var(--machine)}
+:focus-visible{outline:3px solid var(--pons);outline-offset:3px}
+.binnen{max-width:1200px;margin:0 auto;padding:0 22px}
+
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 22px;background:var(--inkt);color:#cfc8b4;
+  font:600 13px/1 var(--sans);border-bottom:2px solid var(--machine)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:#9fd6c8}
+.labbalk .rek{margin-left:auto}
+.labbalk a{color:#cfc8b4;text-decoration:none;padding:6px 9px}
+.labbalk a:hover{background:#ffffff18;color:#fff}
+.labbalk a.terug{color:#9fd6c8}
+@media (max-width:760px){.labbalk{flex-wrap:wrap;gap:6px}.labbalk .rek{display:none}}
+
+.scherm{padding:var(--s6) 0;border-top:2px solid var(--inkt)}
+.scherm.eerste{border-top:0}
+.schermkop{max-width:66ch;margin-bottom:var(--s5)}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--pons);margin-bottom:12px}
+.schermkop h2{font:600 clamp(26px,3.1vw,36px)/1.14 var(--sans);letter-spacing:-.03em;color:var(--inkt)}
+.schermkop p{margin-top:var(--s3);font-size:17px;color:var(--inkt-2)}
+
+/* de gaatjesrand die overal terugkomt */
+.gatenrand{display:flex;gap:6px;flex-wrap:wrap}
+.gatenrand i{width:13px;height:8px;background:var(--inkt);display:block}
+.gatenrand i.leeg{background:#0000;box-shadow:inset 0 0 0 1.5px var(--lijn)}
+
+/* ============================================================
+   1 · LANDING
+   ============================================================ */
+.eerste{background:
+  repeating-linear-gradient(90deg,#0000 0 63px,#0000000a 63px 64px),
+  var(--karton)}
+.merkregel{display:flex;align-items:center;gap:11px;margin-bottom:var(--s5)}
+.merkregel .kaartje{width:34px;height:22px;background:var(--inkt);
+  clip-path:polygon(0 0,86% 0,100% 34%,100% 100%,0 100%);
+  display:flex;align-items:center;justify-content:center;gap:3px}
+.merkregel .kaartje span{width:4px;height:7px;background:var(--karton)}
+.merkregel .naam{font:600 15px/1 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+.merkregel .pad{font:600 11.5px/1 var(--mono);letter-spacing:.15em;color:var(--inkt-3);text-transform:uppercase}
+
+.heldrij{display:grid;grid-template-columns:1fr 1fr;gap:var(--s6);align-items:center}
+@media (max-width:1000px){.heldrij{grid-template-columns:1fr;gap:var(--s5)}}
+.heldrij h1{font:600 clamp(34px,4.7vw,55px)/1.05 var(--sans);letter-spacing:-.04em;color:var(--inkt);
+  max-width:16ch}
+.heldrij h1 em{font-style:normal;color:var(--pons)}
+.heldrij p.onder{margin-top:var(--s4);font-size:18px;line-height:1.7;color:var(--inkt-2);max-width:52ch}
+.heldrij p.onder b{color:var(--inkt);font-weight:600}
+.knoppen{display:flex;flex-wrap:wrap;gap:12px;margin-top:var(--s4)}
+.kn{display:inline-block;padding:14px 22px;background:var(--inkt);color:var(--karton-3);
+  font:700 14.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;
+  border:2px solid var(--inkt)}
+.kn:hover{background:var(--machine);border-color:var(--machine)}
+.kn.leeg{background:#0000;color:var(--inkt)}
+.kn.leeg:hover{background:var(--inkt);color:var(--karton-3)}
+
+/* de demokaart in de hero */
+.demokaart{background:var(--karton-3);border:2px solid var(--inkt);padding:18px 20px 20px;
+  clip-path:polygon(0 0,calc(100% - 26px) 0,100% 26px,100% 100%,0 100%);
+  box-shadow:14px 14px 0 #16151214}
+.demokaart .kaartkop{display:flex;align-items:baseline;gap:10px;
+  border-bottom:2px solid var(--inkt);padding-bottom:9px;margin-bottom:13px}
+.demokaart .kaartkop b{font:700 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--inkt)}
+.demokaart .kaartkop span{margin-left:auto;font:600 11px/1 var(--mono);letter-spacing:.1em;color:var(--inkt-3)}
+.kolomlat{display:flex;gap:2px;margin-bottom:14px}
+.kolomlat i{flex:1;height:9px;border:1px solid var(--lijn);background:#0000}
+.kolomlat i.vol{background:var(--inkt);border-color:var(--inkt)}
+.kanaal{display:grid;grid-template-columns:26px 1fr auto;gap:12px;align-items:center;
+  padding:11px 0;border-bottom:1px dotted var(--lijn)}
+.kanaal:last-of-type{border-bottom:0}
+.kanaal .nr{font:700 12px/1 var(--mono);color:var(--inkt-3)}
+.kanaal b{font:600 16.5px/1.2 var(--sans);color:var(--inkt);display:block}
+.kanaal em{font-style:normal;font:600 11.5px/1 var(--mono);letter-spacing:.05em;color:var(--inkt-3)}
+.kanaal .gaten{display:flex;gap:5px}
+.kanaal .gaten i{width:15px;height:22px;border:1.5px solid var(--inkt);display:block}
+.kanaal .gaten i.geponst{background:var(--inkt)}
+.kanaal .gaten i.fout{background:var(--pons);border-color:var(--pons)}
+.demokaart .onderregel{margin-top:14px;padding-top:11px;border-top:2px solid var(--inkt);
+  font:600 12px/1.4 var(--mono);letter-spacing:.03em;color:var(--inkt-3);
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+.driewet{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:var(--s6);
+  border:2px solid var(--inkt)}
+@media (max-width:860px){.driewet{grid-template-columns:1fr}}
+.wet{padding:var(--s4);border-right:2px solid var(--inkt);background:var(--karton-3)}
+.wet:last-child{border-right:0}
+@media (max-width:860px){.wet{border-right:0;border-bottom:2px solid var(--inkt)}
+  .wet:last-child{border-bottom:0}}
+.wet .nr{font:700 11px/1 var(--mono);letter-spacing:.2em;color:var(--pons);display:block;margin-bottom:12px}
+.wet h3{font:600 20px/1.25 var(--sans);letter-spacing:-.02em;color:var(--inkt);margin-bottom:9px}
+.wet p{font-size:15.5px;line-height:1.68;color:var(--inkt-2)}
+.wet p b{color:var(--inkt);font-weight:600}
+
+/* ============================================================
+   2 · KIEZER — de kaartponser
+   ============================================================ */
+#kiezer{background:var(--karton-3)}
+.ponser{display:grid;grid-template-columns:1fr 340px;gap:0;border:2px solid var(--inkt)}
+@media (max-width:1040px){.ponser{grid-template-columns:1fr}}
+.pn{padding:var(--s4)}
+.pn.links{border-right:2px solid var(--inkt)}
+@media (max-width:1040px){.pn.links{border-right:0;border-bottom:2px solid var(--inkt)}}
+.pn h3{font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--inkt-3);
+  margin-bottom:var(--s3)}
+
+.zoekbalk{display:flex;align-items:center;gap:11px;border:2px solid var(--inkt);padding:11px 13px;
+  background:var(--karton-3);margin-bottom:var(--s3)}
+.zoekbalk span{font:700 10.5px/1 var(--mono);letter-spacing:.15em;color:var(--inkt-3)}
+.zoekbalk input{border:0;outline:0;background:#0000;font:600 15.5px/1 var(--mono);color:var(--inkt);width:100%}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--s4)}
+.fl{font:700 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:8px 11px;
+  border:1.5px solid var(--lijn);color:var(--inkt-3);background:#0000}
+.fl.aan{background:var(--inkt);color:var(--karton-3);border-color:var(--inkt)}
+
+.rijenlijst{border-top:2px solid var(--inkt)}
+.oefrij{display:grid;grid-template-columns:64px 1fr 128px 92px;gap:14px;align-items:center;
+  padding:13px 0;border-bottom:1px solid var(--lijn-2)}
+@media (max-width:700px){.oefrij{grid-template-columns:52px 1fr;row-gap:8px}
+  .oefrij .dosis,.oefrij .actie{grid-column:2}}
+.oefrij img{height:52px;object-fit:contain;mix-blend-mode:multiply}
+.oefrij b{font:600 16.5px/1.25 var(--sans);color:var(--inkt);display:block}
+.oefrij em{font-style:normal;font:600 11.5px/1 var(--mono);letter-spacing:.06em;color:var(--inkt-3)}
+.oefrij .dosis{font:600 13px/1.3 var(--mono);color:var(--inkt-2)}
+.oefrij .actie{text-align:right}
+.mini{font:700 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:9px 12px;
+  border:2px solid var(--inkt);background:#0000;color:var(--inkt);cursor:default;display:inline-block}
+.mini.aan{background:var(--inkt);color:var(--karton-3)}
+.oefrij.gekozen{background:var(--karton-2)}
+
+.capaciteit{margin-top:var(--s4);border:2px solid var(--inkt);padding:var(--s3)}
+.capaciteit .balk{display:flex;gap:4px;margin-bottom:11px}
+.capaciteit .balk i{flex:1;height:16px;border:1.5px solid var(--inkt)}
+.capaciteit .balk i.vol{background:var(--inkt)}
+.capaciteit .balk i.over{background:var(--pons);border-color:var(--pons)}
+.capaciteit p{font:600 13.5px/1.5 var(--mono);color:var(--inkt-2)}
+.capaciteit p b{color:var(--pons)}
+
+.stapel{display:flex;flex-direction:column;gap:11px}
+.stapelkaart{border:2px solid var(--inkt);background:var(--karton-3);padding:12px 14px;
+  clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%)}
+.stapelkaart .top{display:flex;align-items:baseline;gap:9px;margin-bottom:8px}
+.stapelkaart .top i{font-style:normal;font:700 10.5px/1 var(--mono);letter-spacing:.13em;color:var(--inkt-3)}
+.stapelkaart .top span{margin-left:auto;font:600 10.5px/1 var(--mono);color:var(--inkt-3)}
+.stapelkaart b{font:600 16px/1.25 var(--sans);color:var(--inkt);display:block;margin-bottom:5px}
+.stapelkaart p{font:600 12px/1.4 var(--mono);color:var(--inkt-3)}
+.stapelkaart.leeg{border-style:dashed;opacity:.7}
+.stapelkaart.leeg b{color:var(--inkt-3)}
+.waarschuwing{border:2px solid var(--pons);background:#b4331b12;padding:13px 15px;margin-top:var(--s3);
+  font-size:14.5px;line-height:1.6;color:var(--inkt)}
+.waarschuwing b{color:var(--pons)}
+.knopbalk{display:flex;gap:11px;flex-wrap:wrap;margin-top:var(--s4)}
+
+/* ============================================================
+   3 · CLIËNTKAART — het weefbeeld
+   ============================================================ */
+#clientkaart{background:var(--inkt);color:#cfc8b4;border-top-color:var(--machine)}
+#clientkaart .schermkop b{color:#9fd6c8}
+#clientkaart .schermkop h2{color:#fff}
+#clientkaart .schermkop p{color:#a9a293}
+
+.clientrij{display:grid;grid-template-columns:1.2fr .8fr;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.clientrij{grid-template-columns:1fr}}
+
+.digikaart{background:var(--karton-3);color:var(--inkt);border:2px solid var(--inkt);
+  clip-path:polygon(0 0,calc(100% - 30px) 0,100% 30px,100% 100%,0 100%);padding:var(--s4)}
+.digikaart .dk-kop{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  border-bottom:2px solid var(--inkt);padding-bottom:13px;margin-bottom:var(--s3)}
+.digikaart .dk-kop h3{font:600 22px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt)}
+.digikaart .dk-kop span{margin-left:auto;font:700 11px/1 var(--mono);letter-spacing:.13em;color:var(--inkt-3)}
+
+.rooster{display:grid;grid-template-columns:1fr repeat(7,40px);gap:6px;align-items:center}
+@media (max-width:720px){.rooster{grid-template-columns:1fr repeat(7,1fr);gap:4px}}
+.rooster .dagkop{font:700 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--inkt-3);text-align:center}
+.rooster .rijnaam{padding:9px 0}
+.rooster .rijnaam b{font:600 15.5px/1.2 var(--sans);color:var(--inkt);display:block}
+.rooster .rijnaam em{font-style:normal;font:600 11px/1 var(--mono);color:var(--inkt-3)}
+.gat{height:38px;border:2px solid var(--inkt);background:#0000;display:grid;place-items:center;
+  font:700 11px/1 var(--mono);color:var(--inkt-3)}
+.gat.geponst{background:var(--inkt)}
+.gat.fout{background:var(--pons);border-color:var(--pons);color:#fff}
+.gat.wacht{border-style:dashed;border-color:var(--lijn)}
+.legenda{display:flex;gap:var(--s3);flex-wrap:wrap;margin-top:var(--s4);padding-top:var(--s3);
+  border-top:1px solid var(--lijn-2)}
+.legenda span{display:flex;align-items:center;gap:8px;font:600 12px/1 var(--mono);color:var(--inkt-3)}
+.legenda i{width:17px;height:17px;border:2px solid var(--inkt);display:block}
+.legenda i.geponst{background:var(--inkt)}
+.legenda i.fout{background:var(--pons);border-color:var(--pons)}
+.legenda i.wacht{border-style:dashed;border-color:var(--lijn)}
+
+.zijkolom{display:flex;flex-direction:column;gap:var(--s4)}
+.zijblok{border:2px solid #423d33;background:#1e1c18;padding:var(--s4)}
+.zijblok h4{font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:#9fd6c8;
+  margin-bottom:var(--s3)}
+.zijblok p{font-size:15px;line-height:1.66;color:#a9a293}
+.zijblok p b{color:#fff;font-weight:600}
+
+/* het weefbeeld: het patroon dat pas na weken leesbaar wordt */
+.weefsel{display:grid;grid-template-columns:repeat(14,1fr);gap:2px;margin-bottom:var(--s3)}
+.weefsel i{aspect-ratio:1;background:#2c2822}
+.weefsel i.d{background:#cfc8b4}
+.weefsel i.m{background:#6f6857}
+.weefsel i.p{background:var(--pons)}
+.weefonder{display:flex;justify-content:space-between;font:600 11px/1 var(--mono);
+  letter-spacing:.09em;color:#6f6857}
+.telrij{display:flex;align-items:baseline;gap:10px;margin-top:var(--s3)}
+.telrij b{font:600 30px/1 var(--mono);color:#fff}
+.telrij span{font:600 12.5px/1.35 var(--mono);color:#a9a293}
+.notitie{border-left:3px solid var(--pons);padding-left:13px;margin-top:var(--s3)}
+.notitie b{display:block;color:#fff;font-size:14.5px;margin-bottom:3px}
+.notitie em{font-style:italic;font-size:14.5px;color:#a9a293}
+
+/* ============================================================
+   4 · PRINTKAART — A4 STAAND
+   ============================================================ */
+#printkaart{background:var(--karton-2)}
+.bladhouder{display:grid;place-items:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){
+  .bladschaal{width:100%;overflow:hidden}
+  .blad{transform:scale(.78);transform-origin:top left;margin-bottom:-65mm !important;
+    margin-right:-46mm !important}
+}
+@media (max-width:760px){.blad{transform:scale(.45);margin-bottom:-163mm !important;margin-right:-116mm !important}}
+
+.blad{position:relative;width:210mm;height:297mm;background:#fff;color:#000;
+  box-shadow:0 24px 60px #0000002e;border:1px solid #cabd9c;
+  padding:11mm 11mm 9mm;display:flex;flex-direction:column;font-family:var(--sans)}
+
+.wijzer{position:absolute;width:44mm;font:600 11.5px/1.4 var(--sans);color:var(--inkt-3);
+  border-top:2px solid var(--pons);padding-top:6px}
+@media (max-width:1240px){.wijzer{display:none}}
+
+/* het kaartlichaam mét afgesneden hoek */
+.pk-kaart{flex:1;display:flex;flex-direction:column;background:#000;
+  clip-path:polygon(0 0,calc(100% - 16mm) 0,100% 16mm,100% 100%,0 100%);padding:1.3mm}
+.pk-binnen{flex:1;display:flex;flex-direction:column;background:#fff;
+  clip-path:polygon(0 0,calc(100% - 15mm) 0,100% 15mm,100% 100%,0 100%)}
+
+.pk-kop{padding:5mm 6mm 4mm;border-bottom:1.3mm solid #000}
+.pk-kop .regel1{display:flex;align-items:baseline;gap:4mm}
+.pk-kop .merk{font:700 8pt/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:#000}
+.pk-kop .kaartnr{margin-left:auto;font:700 8pt/1 var(--mono);letter-spacing:.14em;color:#000;
+  padding-right:14mm}
+.pk-kop h1{font:600 24pt/1.05 var(--sans);letter-spacing:-.035em;color:#000;margin-top:3mm}
+.pk-kop .wie{display:flex;gap:5mm;flex-wrap:wrap;margin-top:2.5mm;
+  font:600 10pt/1.35 var(--mono);color:#000}
+.pk-kop .wie span{color:#3a3a3a;font-weight:400}
+
+/* kolomlat 1–80, zoals op een echte kaart */
+.pk-lat{display:flex;gap:.6mm;padding:2.4mm 6mm;border-bottom:.6mm solid #000;align-items:flex-end}
+.pk-lat i{flex:1;height:2.6mm;border:.35mm solid #000}
+.pk-lat i.vol{background:#000}
+.pk-lat .latlabel{font:700 6.5pt/1 var(--mono);letter-spacing:.12em;color:#000;margin-right:2mm;
+  flex:0 0 auto;height:auto;border:0}
+
+/* de kanalen: één oefening per kanaal */
+.pk-kanalen{flex:1;display:flex;flex-direction:column;min-height:0}
+.pk-kanaal{flex:1;display:grid;grid-template-columns:11mm 34mm 1fr 30mm;gap:4mm;align-items:center;
+  padding:4.4mm 6mm;border-bottom:.6mm solid #000}
+.pk-kanaal .kanaalnr{font:700 9pt/1 var(--mono);letter-spacing:.1em;color:#000;
+  border:.8mm solid #000;padding:2mm 0;text-align:center}
+.pk-kanaal .beeld img{height:26mm;object-fit:contain;mix-blend-mode:multiply;margin:0 auto}
+.pk-kanaal h2{font:600 16pt/1.1 var(--sans);letter-spacing:-.02em;color:#000}
+.pk-kanaal .hoe{font:400 10.5pt/1.4 var(--sans);color:#000;margin-top:1.6mm}
+.pk-kanaal .hoe b{font-weight:700}
+.pk-kanaal .dos{text-align:right}
+.pk-kanaal .dos b{display:block;font:600 24pt/1 var(--mono);letter-spacing:-.03em;color:#000}
+.pk-kanaal .dos span{display:block;font:600 9pt/1.3 var(--sans);color:#000;margin-top:1mm}
+
+/* het ponsveld */
+.pk-veld{border-bottom:1.3mm solid #000;padding:4mm 6mm 5mm}
+.pk-veld .veldkop{display:flex;align-items:baseline;gap:3mm;margin-bottom:3mm}
+.pk-veld .veldkop b{font:700 8pt/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#000}
+.pk-veld .veldkop i{font-style:normal;font:400 9.5pt/1.3 var(--sans);color:#000;margin-left:auto}
+.pk-rooster{display:grid;grid-template-columns:32mm repeat(7,1fr);gap:1.6mm;align-items:center}
+.pk-rooster .kop{font:700 8pt/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  text-align:center;color:#000}
+.pk-rooster .kop em{display:block;font-style:normal;font-weight:400;font-size:6.5pt;color:#333;margin-top:.7mm}
+.pk-rooster .naam{font:600 10pt/1.2 var(--sans);color:#000}
+.pk-rooster .vak{height:11mm;border:.8mm solid #000}
+.pk-rooster .vak.zon{border-style:dashed}
+
+.pk-voet{display:flex;gap:5mm;align-items:flex-end;justify-content:space-between;padding:4mm 6mm 4mm}
+.pk-voet .stop{border-left:1.3mm solid #000;padding-left:3.5mm;font:600 10.5pt/1.4 var(--sans);
+  color:#000;max-width:100mm}
+.pk-voet .praktijk{flex:0 0 auto;white-space:nowrap}
+.pk-voet .stop i{font-style:normal;display:block;font:700 7.5pt/1 var(--mono);letter-spacing:.17em;
+  text-transform:uppercase;margin-bottom:1.4mm}
+.pk-voet .praktijk{text-align:right;font:400 9pt/1.45 var(--sans);color:#333}
+.pk-voet .praktijk b{display:block;font-weight:700;color:#000;font-size:10pt}
+
+.printhulp{max-width:66ch;margin:var(--s5) auto 0;text-align:center}
+.printhulp p{font-size:15.5px;color:var(--inkt-2);margin-bottom:var(--s3)}
+
+footer.uitleiding{background:var(--inkt);color:#a9a293;padding:var(--s6) 0;border-top:2px solid var(--machine)}
+footer.uitleiding .binnen{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:#9fd6c8;margin-bottom:14px}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.7}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:10px}
+footer.uitleiding li::before{content:"▪";position:absolute;left:0;color:#9fd6c8}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT — A4 STAAND
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border-top:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 38</span>
+  <strong style="font:700 16px/1 var(--sans);color:#fff;letter-spacing:-.03em">Ponskaart</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="kaartje" aria-hidden="true"><span></span><span></span></span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">Concept 38 · Ponskaart</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1>Eén rij weven laat <em>niets</em> zien.</h1>
+        <p class="onder">Jacquard hing in 1801 geponste kaarten aan zijn weefgetouw. De gaten
+          bepaalden welke draden omhoog gingen — <b>de kaart beschreef het patroon niet, de kaart
+          wás het patroon.</b> Twintig rijen laten iets vermoeden, tweehonderd rijen laten een
+          figuur zien. Zo werkt herstel ook, en zo zegt geen enkele oefen-app het.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk de kaart</a>
+          <a class="kn leeg" href="#clientkaart">Het weefbeeld</a>
+        </div>
+      </div>
+
+      <div class="demokaart" aria-hidden="true">
+        <div class="kaartkop"><b>Fysiplan · weekkaart</b><span>KAART 1 VAN 1 · WK 34</span></div>
+        <div class="kolomlat">
+          <i class="vol"></i><i></i><i class="vol"></i><i class="vol"></i><i></i><i></i>
+          <i class="vol"></i><i></i><i></i><i class="vol"></i><i></i><i class="vol"></i>
+          <i></i><i class="vol"></i><i></i><i></i><i class="vol"></i><i></i>
+        </div>
+        <div class="kanaal">
+          <span class="nr">01</span>
+          <span><b>Knie naar borst</b><em>2 × 10 · liggend</em></span>
+          <span class="gaten"><i class="geponst"></i><i class="geponst"></i><i></i><i class="geponst"></i><i></i><i></i><i></i></span>
+        </div>
+        <div class="kanaal">
+          <span class="nr">02</span>
+          <span><b>Bekken kantelen</b><em>3 × 8 · rustig</em></span>
+          <span class="gaten"><i class="geponst"></i><i class="geponst"></i><i class="geponst"></i><i class="fout"></i><i></i><i></i><i></i></span>
+        </div>
+        <div class="kanaal">
+          <span class="nr">03</span>
+          <span><b>Romp draaien</b><em>2 × 6 · per kant</em></span>
+          <span class="gaten"><i class="geponst"></i><i></i><i class="geponst"></i><i class="geponst"></i><i></i><i></i><i></i></span>
+        </div>
+        <div class="onderregel"><span>MA DI WO DO VR ZA ZO</span><span>9 VAN 21 GEPONST</span></div>
+      </div>
+    </div>
+
+    <div class="driewet">
+      <div class="wet">
+        <span class="nr">WET 01</span>
+        <h3>Een gat is onomkeerbaar</h3>
+        <p>Je ponst het of je ponst het niet. <b>Er is geen "gedeeltelijk afgevinkt", geen streak die
+          breekt, geen 87 %.</b> De week gebeurt op de keukentafel, met een pen of een perforator, en
+          wat er staat blijft staan — ook het gat dat er niet is.</p>
+      </div>
+      <div class="wet">
+        <span class="nr">WET 02</span>
+        <h3>De kaart kan niet verkeerd om</h3>
+        <p>De afgesneden hoek is geen versiering: hij is de enige reden dat een stapel van duizend
+          kaarten nooit omgekeerd in de lezer belandt. <b>Een oefenkaart die op vier manieren op
+          tafel kan liggen heeft die vraag nooit gesteld.</b> Deze ligt maar op één manier goed, en
+          dat ziet u zonder te lezen.</p>
+      </div>
+      <div class="wet">
+        <span class="nr">WET 03</span>
+        <h3>Het patroon komt na de herhaling</h3>
+        <p>Op het scherm groeit uit de geponste weken een weefsel: één week is ruis, vier weken zijn
+          een figuur. <b>Geen percentage, geen aanmoediging</b> — alleen het beeld dat langzaam
+          leesbaar wordt, en dat u bij de volgende afspraak samen bekijkt.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>Kiezen is hier kanalen toewijzen. Eén kaart heeft drie kanalen, niet vier — dat is geen
+        technische grens maar een ontwerpbesluit: <b>een vierde oefening kost een tweede kaart, en
+        de tweede kaart in een stapel wordt zelden gelezen.</b> Het blad zegt dat hardop, in plaats
+        van de rij stilletjes langer te laten worden.</p>
+    </div>
+
+    <div class="ponser">
+
+      <div class="pn links">
+        <h3>Oefeningen · lage rug</h3>
+
+        <div class="zoekbalk">
+          <span>ZOEK</span>
+          <input type="text" value="lage rug — liggend, zonder materiaal" aria-label="Zoek een oefening"/>
+        </div>
+
+        <div class="filters">
+          <span class="fl aan">LIGGEND</span>
+          <span class="fl aan">ZONDER MATERIAAL</span>
+          <span class="fl">STAAND</span>
+          <span class="fl">MET ELASTIEK</span>
+          <span class="fl">≤ 5 MINUTEN</span>
+        </div>
+
+        <div class="rijenlijst">
+          <div class="oefrij gekozen">
+            <img src="/images/rug/knie-naar-borst-liggend-line-v1.png"
+              alt="Lijntekening: liggend één knie naar de borst trekken."/>
+            <span><b>Knie naar borst</b><em>KANAAL 01 · LIGGEND</em></span>
+            <span class="dosis">2 × 10<br/>per been</span>
+            <span class="actie"><span class="mini aan">Geponst</span></span>
+          </div>
+          <div class="oefrij gekozen">
+            <img src="/images/core/bekken-kantelen-liggend-line-v1.png"
+              alt="Lijntekening: liggend het bekken kantelen."/>
+            <span><b>Bekken kantelen</b><em>KANAAL 02 · LIGGEND</em></span>
+            <span class="dosis">3 × 8<br/>rustig ademen</span>
+            <span class="actie"><span class="mini aan">Geponst</span></span>
+          </div>
+          <div class="oefrij gekozen">
+            <img src="/images/rug/romp-draaien-liggend-line-v1.png"
+              alt="Lijntekening: liggend de romp naar links en rechts draaien."/>
+            <span><b>Romp draaien</b><em>KANAAL 03 · LIGGEND</em></span>
+            <span class="dosis">2 × 6<br/>per kant</span>
+            <span class="actie"><span class="mini aan">Geponst</span></span>
+          </div>
+          <div class="oefrij">
+            <img src="/images/rug/open-boek-liggend-line-v1.png"
+              alt="Lijntekening: open boek in zijlig, arm draait open."/>
+            <span><b>Open boek</b><em>ZIJLIG · GEEN KANAAL VRIJ</em></span>
+            <span class="dosis">2 × 8<br/>per kant</span>
+            <span class="actie"><span class="mini">Kaart 2</span></span>
+          </div>
+          <div class="oefrij">
+            <img src="/images/rug/knie-naar-borst-staand-line-v1.png"
+              alt="Lijntekening: staand de knie optrekken."/>
+            <span><b>Knie optrekken, staand</b><em>STAAND · GEEN KANAAL VRIJ</em></span>
+            <span class="dosis">2 × 10<br/>met steun</span>
+            <span class="actie"><span class="mini">Kaart 2</span></span>
+          </div>
+        </div>
+
+        <div class="capaciteit">
+          <div class="balk"><i class="vol"></i><i class="vol"></i><i class="vol"></i><i class="over"></i></div>
+          <p>3 van 3 kanalen bezet. <b>Een vierde oefening opent kaart 2</b> — en kaart 2 komt in
+            een la terecht. Overweeg eerst of kanaal 03 nog nodig is.</p>
+        </div>
+      </div>
+
+      <div class="pn">
+        <h3>De stapel</h3>
+        <div class="stapel">
+          <div class="stapelkaart">
+            <div class="top"><i>KAART 1</i><span>3 KANALEN · VOL</span></div>
+            <b>Weekkaart 34</b>
+            <p>KNIE NAAR BORST · BEKKEN KANTELEN · ROMP DRAAIEN</p>
+          </div>
+          <div class="stapelkaart leeg">
+            <div class="top"><i>KAART 2</i><span>NIET AANGEMAAKT</span></div>
+            <b>Leeg</b>
+            <p>WORDT PAS GEDRUKT ALS ER ÉCHT EEN VIERDE OEFENING NODIG IS</p>
+          </div>
+        </div>
+
+        <div class="waarschuwing">
+          <b>Kanaal 02 is de zwaarste.</b> Zet hem niet als eerste op de kaart: het eerste kanaal
+          wordt het vaakst geponst, en dat hoort de makkelijkste te zijn.
+        </div>
+
+        <div class="waarschuwing" style="border-color:var(--inkt);background:#0000">
+          <b style="color:var(--inkt)">Vaste regel, kanaal 00:</b> „Stop bij uitstralende pijn in het
+          been. Bel dezelfde dag." Deze regel staat op elke kaart en is niet weg te klikken.
+        </div>
+
+        <div class="knopbalk">
+          <a class="kn" href="#printkaart">Kaart ponsen →</a>
+          <a class="kn leeg" href="#clientkaart">Naar de cliënt</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>Dezelfde kaart, maar dan met een geheugen. Elk vakje dat op papier geponst wordt, wordt hier
+        een zwart vlak; wat overgeslagen is blijft open; wat pijn deed wordt rood en <b>blijft
+        rood</b> — een weefpatroon met een fout erin is nog steeds een patroon. Onderaan groeit het
+        weefbeeld: het enige onderdeel dat pas na weken iets zegt.</p>
+    </div>
+
+    <div class="clientrij">
+
+      <div class="digikaart">
+        <div class="dk-kop">
+          <h3>Dhr. R. Talsma — 58 jaar</h3>
+          <span>WEEK 34 · 17 – 23 AUG. 2026</span>
+        </div>
+
+        <div class="rooster">
+          <span></span>
+          <span class="dagkop">ma</span><span class="dagkop">di</span><span class="dagkop">wo</span>
+          <span class="dagkop">do</span><span class="dagkop">vr</span><span class="dagkop">za</span>
+          <span class="dagkop">zo</span>
+
+          <span class="rijnaam"><b>Knie naar borst</b><em>KANAAL 01 · 2 × 10</em></span>
+          <span class="gat geponst"></span><span class="gat geponst"></span><span class="gat"></span>
+          <span class="gat geponst"></span><span class="gat geponst"></span><span class="gat wacht"></span>
+          <span class="gat wacht"></span>
+
+          <span class="rijnaam"><b>Bekken kantelen</b><em>KANAAL 02 · 3 × 8</em></span>
+          <span class="gat geponst"></span><span class="gat geponst"></span><span class="gat geponst"></span>
+          <span class="gat fout">!</span><span class="gat geponst"></span><span class="gat wacht"></span>
+          <span class="gat wacht"></span>
+
+          <span class="rijnaam"><b>Romp draaien</b><em>KANAAL 03 · 2 × 6</em></span>
+          <span class="gat geponst"></span><span class="gat"></span><span class="gat geponst"></span>
+          <span class="gat geponst"></span><span class="gat"></span><span class="gat wacht"></span>
+          <span class="gat wacht"></span>
+        </div>
+
+        <div class="legenda">
+          <span><i class="geponst"></i> geponst — gedaan</span>
+          <span><i></i> open — overgeslagen</span>
+          <span><i class="fout"></i> pijn gemeld</span>
+          <span><i class="wacht"></i> komt nog</span>
+        </div>
+      </div>
+
+      <div class="zijkolom">
+        <div class="zijblok">
+          <h4>Het weefbeeld · 4 weken</h4>
+          <div class="weefsel" aria-hidden="true">
+            <i class="d"></i><i class="d"></i><i></i><i class="d"></i><i class="d"></i><i class="m"></i><i></i>
+            <i class="d"></i><i class="d"></i><i class="d"></i><i></i><i class="d"></i><i class="m"></i><i></i>
+            <i class="d"></i><i></i><i class="d"></i><i class="d"></i><i class="d"></i><i></i><i class="m"></i>
+            <i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i></i><i class="m"></i><i></i>
+            <i class="d"></i><i class="d"></i><i class="d"></i><i class="p"></i><i class="d"></i><i></i><i class="m"></i>
+            <i class="d"></i><i class="d"></i><i></i><i class="d"></i><i class="d"></i><i class="m"></i><i></i>
+            <i class="d"></i><i></i><i class="d"></i><i class="d"></i><i></i><i></i><i class="m"></i>
+            <i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="m"></i><i></i>
+          </div>
+          <div class="weefonder"><span>WEEK 31</span><span>WEEK 34</span></div>
+          <div class="telrij"><b>63</b><span>van 84 vakjes geponst<br/>sinds 27 juli</span></div>
+          <p style="margin-top:var(--s3)">Eén week is ruis. Vier weken zijn een figuur — en in dit
+            weefsel is te zien wat geen cijfer laat zien: <b>het weekend is de losse draad</b>, niet
+            de oefening zelf.</p>
+        </div>
+
+        <div class="zijblok">
+          <h4>Wat de patiënt schreef</h4>
+          <div class="notitie">
+            <b>Donderdag · kanaal 02</b>
+            <em>„Bij het kantelen schoot het los in de rug. Verder afgemaakt op de mat."</em>
+          </div>
+          <p style="margin-top:var(--s3)">Eén rood vakje is een regel in het dossier. Twee rode in
+            hetzelfde kanaal zet de oefening automatisch op de agenda van de volgende afspraak —
+            <b>en dat staat er ook zo bij</b>, want wie niet weet wat er met zijn melding gebeurt,
+            meldt de volgende keer niets.</p>
+        </div>
+
+        <div class="zijblok">
+          <h4>Volgende afspraak</h4>
+          <p><b>Dinsdag 25 augustus, 16:40</b><br/>
+            Fysiotherapie Kroon · Hoofdstraat 8, Assen<br/>
+            Neem de kaart mee — juist als er gaten in zitten.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>Een Hollerith-kaart op A4-formaat: afgesneden hoek rechtsboven, kolomlat langs de kop, drie
+        kanalen eronder en een ponsveld van 3 × 7 vakjes onderin. <b>De echte kaart zette alles in
+        6 punt; wij zetten de oefening op 16 en het aantal op 24</b> — deze kaart gaat niet door een
+        machine maar door mensenogen, aan een keukentafel, misschien zonder bril.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer geen-print" style="top:16mm;right:calc(100% + 22px);text-align:right">
+            de afgesneden hoek: de kaart ligt maar op één manier goed, en dat ziet u zonder te lezen</span>
+          <span class="wijzer geen-print" style="top:58mm;left:calc(100% + 22px)">
+            de kolomlat is echt: de zwarte kolommen coderen weeknummer en kanaalbezetting</span>
+          <span class="wijzer geen-print" style="top:150mm;right:calc(100% + 22px);text-align:right">
+            drie kanalen, niet vier — een vierde oefening kost een tweede kaart, en die wordt niet
+            gelezen</span>
+          <span class="wijzer geen-print" style="top:232mm;left:calc(100% + 22px)">
+            21 vakjes: pons, kruis of kleur ze. Het weekend heeft een stippelrand — dat mag leeg
+            blijven</span>
+
+          <div class="pk-kaart">
+            <div class="pk-binnen">
+
+              <div class="pk-kop">
+                <div class="regel1">
+                  <span class="merk">Fysiplan · weekkaart</span>
+                  <span class="kaartnr">KAART 1 / 1 · WK 34</span>
+                </div>
+                <h1>Lage rug — thuisprogramma</h1>
+                <div class="wie">
+                  <span>Dhr. R. Talsma · 58 jaar</span>
+                  <span>17 t/m 23 augustus 2026</span>
+                  <span>S. Kroon, fysiotherapeut</span>
+                </div>
+              </div>
+
+              <div class="pk-lat" aria-hidden="true">
+                <span class="latlabel">KOL 1—18</span>
+                <i class="vol"></i><i></i><i class="vol"></i><i class="vol"></i><i></i><i></i>
+                <i class="vol"></i><i></i><i></i><i class="vol"></i><i></i><i class="vol"></i>
+                <i></i><i class="vol"></i><i></i><i></i><i class="vol"></i><i></i>
+              </div>
+
+              <div class="pk-kanalen">
+
+                <div class="pk-kanaal">
+                  <div class="kanaalnr">01</div>
+                  <div class="beeld">
+                    <img src="/images/rug/knie-naar-borst-liggend-line-v1.png"
+                      alt="Lijntekening: iemand ligt op de rug en trekt één knie naar de borst."/>
+                  </div>
+                  <div>
+                    <h2>Knie naar borst</h2>
+                    <div class="hoe"><b>Op de rug, knieën gebogen.</b> Trek één knie rustig naar de
+                      borst, tel tot vijf, laat los. Dan het andere been.</div>
+                  </div>
+                  <div class="dos"><b>2×10</b><span>per been<br/>ochtend</span></div>
+                </div>
+
+                <div class="pk-kanaal">
+                  <div class="kanaalnr">02</div>
+                  <div class="beeld">
+                    <img src="/images/core/bekken-kantelen-liggend-line-v1.png"
+                      alt="Lijntekening: iemand ligt op de rug en kantelt het bekken."/>
+                  </div>
+                  <div>
+                    <h2>Bekken kantelen</h2>
+                    <div class="hoe">Duw de onderrug zachtjes tegen de mat, laat weer los. <b>Adem
+                      gewoon door</b> — de beweging is klein, kleiner dan u denkt.</div>
+                  </div>
+                  <div class="dos"><b>3×8</b><span>rustig<br/>ochtend + avond</span></div>
+                </div>
+
+                <div class="pk-kanaal">
+                  <div class="kanaalnr">03</div>
+                  <div class="beeld">
+                    <img src="/images/rug/romp-draaien-liggend-line-v1.png"
+                      alt="Lijntekening: iemand ligt op de rug en laat de gebogen knieën naar links en rechts zakken."/>
+                  </div>
+                  <div>
+                    <h2>Romp draaien</h2>
+                    <div class="hoe">Knieën samen, laat ze naar één kant zakken tot het trekt — niet
+                      verder. Schouders blijven op de mat.</div>
+                  </div>
+                  <div class="dos"><b>2×6</b><span>per kant<br/>avond</span></div>
+                </div>
+
+              </div>
+
+              <div class="pk-veld">
+                <div class="veldkop">
+                  <b>Ponsveld</b>
+                  <i>Kruis het vakje af zodra het kanaal die dag gedaan is. Een gat blijft staan.</i>
+                </div>
+                <div class="pk-rooster">
+                  <span></span>
+                  <span class="kop">ma<em>17</em></span><span class="kop">di<em>18</em></span>
+                  <span class="kop">wo<em>19</em></span><span class="kop">do<em>20</em></span>
+                  <span class="kop">vr<em>21</em></span><span class="kop">za<em>22</em></span>
+                  <span class="kop">zo<em>23</em></span>
+
+                  <span class="naam">01 · Knie naar borst</span>
+                  <span class="vak"></span><span class="vak"></span><span class="vak"></span>
+                  <span class="vak"></span><span class="vak"></span><span class="vak"></span>
+                  <span class="vak zon"></span>
+
+                  <span class="naam">02 · Bekken kantelen</span>
+                  <span class="vak"></span><span class="vak"></span><span class="vak"></span>
+                  <span class="vak"></span><span class="vak"></span><span class="vak"></span>
+                  <span class="vak zon"></span>
+
+                  <span class="naam">03 · Romp draaien</span>
+                  <span class="vak"></span><span class="vak"></span><span class="vak"></span>
+                  <span class="vak"></span><span class="vak"></span><span class="vak"></span>
+                  <span class="vak zon"></span>
+                </div>
+              </div>
+
+              <div class="pk-voet">
+                <div class="stop">
+                  <i>Kanaal 00 — staat op elke kaart</i>
+                  Stop bij pijn die uitstraalt in het been, of bij een voet die doof aanvoelt. Bel
+                  dezelfde dag de praktijk.
+                </div>
+                <div class="praktijk"><b>Fysiotherapie Kroon</b>
+                  Hoofdstraat 8, Assen · 0592 — 31 09 55<br/>Afspraak di 25 aug., 16:40</div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="printhulp geen-print">
+      <p>Dit blad print zonder de omringende uitleg: alleen de kaart, op ware grootte,
+        <b>A4 staand</b>.</p>
+      <a class="kn" href="javascript:window.print()">Print deze kaart</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div>
+      <h4>Waarom dit schuurt</h4>
+      <p>Dit is de koudste kaart in de galerij: monospace, één inkt, geen troost. Dat is opzet. Elke
+        oefen-app probeert de patiënt te bemoedigen met percentages, vlammetjes en reeksen — en
+        precies die dingen maken van een gemiste dag een mislukking. Een geponste kaart oordeelt
+        niet. Hij registreert, en pas na vier weken laat hij een patroon zien dat je samen kunt
+        lezen. De warmte zit niet in het blad; die zit in het gesprek waarvoor het blad materiaal
+        levert.</p>
+    </div>
+    <div>
+      <h4>Wat we lenen</h4>
+      <ul>
+        <li>Jacquard 1801: de kaart ís het patroon, niet de beschrijving</li>
+        <li>De afgesneden hoek als oriëntatie zonder tekst</li>
+        <li>Hollerith / IBM 1928: 80 kolommen, rechthoekige gaten, één inkt</li>
+        <li>Het weefbeeld: betekenis pas na herhaling, nooit per dag</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Toetsen</h4>
+      <ul>
+        <li>Leg de kaart verkeerd om neer — ziet u het meteen?</li>
+        <li>Print in zwart-wit: het blad ís al zwart-wit</li>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

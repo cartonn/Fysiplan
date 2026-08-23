@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 37 — Glasraam · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 37 — GLASRAAM
+   ------------------------------------------------------------
+   Het raam onderwees wie niet lezen kon.
+
+   Eeuwenlang was het gebrandschilderde kerkraam de best gelezen
+   instructie van de Lage Landen — gelezen door mensen die geen
+   letter kenden. Biblia pauperum: de armenbijbel. Niemand vond
+   dat kinderlijk. Het werkte, en het werkte om drie redenen die
+   een oefenkaart alle drie kan lenen:
+
+     1. DE LOODSTRIP. Elk stuk glas zit in een zware, zwarte
+        H-strip. Die contour is geen versiering maar het hele
+        systeem: hij scheidt vlakken zó hard dat een oog met
+        staar, met een blauw filter, of vanaf acht meter afstand
+        de vorm nog vindt. Contrast zit hier in de líjn, niet in
+        de kleur. Daarom overleeft dit blad de zwart-witprinter.
+
+     2. KLEUR IS CODE, GEEN SFEER. In een middeleeuws raam is
+        blauw geen mooi blauw — het betekent iets, elke keer
+        hetzelfde. Hier ook: blauw is adem en rust, rood is
+        kracht, groen is lopen en balans, goud is de regel die
+        boven alles gaat. Vier kleuren, meer niet.
+
+     3. DE LEESRICHTING LIGT VAST. Een raam leest van onder naar
+        boven, per lancet, en het belangrijkste veld hangt op
+        ooghoogte. Een oefenkaart die zomaar begint bovenaan
+        heeft die keuze nooit gemaakt.
+
+   En dan de omkering waar dit concept om draait: op het scherm
+   valt licht dóór de kaart — donkere muur, oplichtende panelen.
+   Op papier draait dat om: wit blad, zwart lood, vlakke tinten.
+   Dezelfde tekening, ander licht. Wat blijft, is de loodstrip.
+
+   De roos onderaan is geen ornament: zeven segmenten, één per
+   dag, in te kleuren met wat er op tafel ligt. Aan het eind van
+   de week is het raam compleet — en dat is de enige voortgangs-
+   meter op dit blad.
+   ============================================================ */
+
+:root{
+  /* steen & lood */
+  --steen:#171310;
+  --steen-2:#211b16;
+  --steen-3:#2c241d;
+  --lood:#0c0a09;
+  --voeg:#3a3129;
+
+  /* glas */
+  --glas-wit:#f4f0e4;
+  --glas-wit-2:#e7e0cd;
+  --blauw:#1b46a8;
+  --blauw-licht:#5b86d8;
+  --rood:#a81f22;
+  --rood-licht:#d4655a;
+  --goud:#e2a613;
+  --goud-licht:#f2cf6a;
+  --groen:#1d6a41;
+  --groen-licht:#5aa579;
+
+  --inkt:#100e0c;
+  --inkt-2:#3c352d;
+  --inkt-3:#6b6157;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Charter,Georgia,serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:9px; --s3:17px; --s4:28px; --s5:46px; --s6:74px;
+  --loodlijn:3px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.65 var(--sans);color:var(--inkt-2);background:var(--glas-wit)}
+img{max-width:100%;display:block}
+a{color:var(--blauw)}
+:focus-visible{outline:3px solid var(--goud);outline-offset:3px}
+.binnen{max-width:1200px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 22px;background:var(--lood);color:#cfc6b6;
+  font:600 13px/1 var(--sans);border-bottom:var(--loodlijn) solid var(--goud)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.19em;text-transform:uppercase;
+  color:var(--goud-licht)}
+.labbalk .rek{margin-left:auto}
+.labbalk a{color:#cfc6b6;text-decoration:none;padding:6px 9px;border-radius:2px}
+.labbalk a:hover{background:#ffffff1a;color:#fff}
+.labbalk a.terug{color:var(--goud-licht)}
+@media (max-width:760px){.labbalk{flex-wrap:wrap;gap:6px}.labbalk .rek{display:none}}
+
+.scherm{padding:var(--s6) 0}
+.schermkop{max-width:66ch;margin-bottom:var(--s5)}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;
+  text-transform:uppercase;color:var(--rood);margin-bottom:12px}
+.schermkop h2{font:600 clamp(27px,3.2vw,38px)/1.12 var(--serif);letter-spacing:-.015em;color:var(--inkt)}
+.schermkop p{margin-top:var(--s3);font-size:17.5px;color:var(--inkt-2)}
+
+/* ============================================================
+   1 · LANDING — de donkere muur, het lichtgevende raam
+   ============================================================ */
+.muur{background:
+    radial-gradient(120% 90% at 50% 8%,#2d251d 0%,var(--steen) 62%),
+    var(--steen);
+  color:#ded5c4;position:relative;overflow:hidden}
+.muur::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,#0000 0 46px,#ffffff08 46px 47px),
+             repeating-linear-gradient(90deg,#0000 0 92px,#ffffff06 92px 93px)}
+.muur .binnen{position:relative;z-index:2;padding-top:var(--s6);padding-bottom:var(--s6)}
+
+.merkregel{display:flex;align-items:center;gap:11px;margin-bottom:var(--s5)}
+.merkregel .ruit{width:26px;height:30px;background:var(--goud);
+  clip-path:polygon(50% 0,100% 26%,100% 100%,0 100%,0 26%);
+  border:2px solid var(--lood)}
+.merkregel .naam{font:600 15px/1 var(--sans);color:#fff;letter-spacing:-.01em}
+.merkregel .pad{font:600 11.5px/1 var(--mono);letter-spacing:.13em;color:#9b9081;text-transform:uppercase}
+
+.heldrij{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--s6);align-items:center}
+.heldrij > *{min-width:0}
+@media (max-width:980px){.heldrij{grid-template-columns:1fr;gap:var(--s5)}}
+.heldrij h1{font:600 clamp(36px,5vw,60px)/1.04 var(--serif);letter-spacing:-.02em;color:#fff;
+  max-width:15ch}
+.heldrij h1 em{font-style:normal;color:var(--goud-licht)}
+.heldrij p.onder{margin-top:var(--s4);font-size:18.5px;line-height:1.72;color:#c9bfae;max-width:52ch}
+.heldrij p.onder b{color:#fff;font-weight:600}
+
+.knoppen{display:flex;flex-wrap:wrap;gap:13px;margin-top:var(--s4)}
+.kn{display:inline-block;padding:15px 24px;background:var(--goud);color:var(--lood);
+  font:700 15.5px/1 var(--sans);text-decoration:none;border:var(--loodlijn) solid var(--lood)}
+.kn:hover{background:var(--goud-licht)}
+.kn.leeg{background:#0000;color:#e6dcc9;border-color:#6b6053}
+.kn.leeg:hover{background:#ffffff12;color:#fff}
+
+/* het hero-raam */
+.raam{background:var(--lood);padding:var(--loodlijn);
+  box-shadow:0 0 90px #f0c96a2e, 0 30px 60px #0009}
+.raam .lancetten{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--loodlijn);
+  background:var(--lood)}
+.lancet{background:var(--glas-wit);display:flex;flex-direction:column;gap:var(--loodlijn);min-width:0}
+.veld{padding:16px 14px;background:var(--glas-wit);min-width:0;overflow-wrap:break-word}
+.lancet .veld.goud{margin-top:auto}
+@media (max-width:520px){.veld{padding:11px 9px}.veld h4{font-size:16px}.veld p{font-size:13px}
+  .veld .label{font-size:9px;letter-spacing:.1em}}
+.veld.boog{border-radius:100px 100px 0 0;min-height:74px;display:flex;align-items:flex-end;
+  justify-content:center;padding-bottom:12px}
+.veld.blauw{background:var(--blauw);color:#fff}
+.veld.rood{background:var(--rood);color:#fff}
+.veld.groen{background:var(--groen);color:#fff}
+.veld.goud{background:var(--goud);color:var(--lood)}
+.veld .label{font:700 10px/1.2 var(--mono);letter-spacing:.17em;text-transform:uppercase;
+  text-align:center}
+.veld h4{font:600 19px/1.2 var(--serif);color:var(--inkt);margin-bottom:6px}
+.veld p{font-size:14.5px;line-height:1.55;color:var(--inkt-2)}
+.veld .cijfer{font:600 32px/1 var(--serif);color:var(--inkt)}
+.veld figure img{width:100%;height:112px;object-fit:contain;mix-blend-mode:multiply}
+.raam .roosband{background:var(--lood);padding-top:var(--loodlijn)}
+.raam .roosband .in{background:var(--glas-wit-2);padding:14px;display:flex;align-items:center;gap:14px}
+.raam .roosband p{font:600 12.5px/1.45 var(--sans);color:var(--inkt-2)}
+
+/* roosvenster */
+.roos{--d:74px;width:var(--d);height:var(--d);border-radius:50%;flex:0 0 auto;position:relative;
+  background:var(--lood);display:grid;place-items:center}
+.roos i{position:absolute;inset:3px;border-radius:50%;
+  background:conic-gradient(
+    var(--blauw) 0 51.4deg, var(--lood) 51.4deg 54deg,
+    var(--rood) 54deg 102.8deg, var(--lood) 102.8deg 105.4deg,
+    var(--goud) 105.4deg 154.2deg, var(--lood) 154.2deg 156.8deg,
+    var(--groen) 156.8deg 205.7deg, var(--lood) 205.7deg 208.3deg,
+    var(--glas-wit) 208.3deg 360deg)}
+.roos b{position:relative;z-index:2;width:34%;height:34%;border-radius:50%;
+  background:var(--glas-wit);border:var(--loodlijn) solid var(--lood)}
+
+.driewet{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--loodlijn);
+  margin-top:var(--s6);background:var(--lood);border:var(--loodlijn) solid var(--lood)}
+@media (max-width:860px){.driewet{grid-template-columns:1fr}}
+.wet{background:var(--steen-2);padding:var(--s4)}
+.wet .nr{display:inline-flex;width:34px;height:34px;align-items:center;justify-content:center;
+  background:var(--goud);color:var(--lood);font:700 17px/1 var(--serif);
+  border:2px solid var(--lood);margin-bottom:14px}
+.wet h3{font:600 21px/1.25 var(--serif);color:#fff;margin-bottom:9px}
+.wet p{font-size:15.5px;line-height:1.68;color:#b8ae9e}
+.wet p b{color:var(--goud-licht);font-weight:600}
+
+/* ============================================================
+   2 · KIEZER — de werkbank van de glazenier
+   ============================================================ */
+#kiezer{background:var(--glas-wit)}
+.werkbank{display:grid;grid-template-columns:250px 1fr 300px;gap:var(--loodlijn);
+  background:var(--lood);border:var(--loodlijn) solid var(--lood)}
+@media (max-width:1060px){.werkbank{grid-template-columns:1fr}}
+.wb{background:#fff;padding:var(--s4)}
+.wb h3{font:700 10.5px/1 var(--mono);letter-spacing:.19em;text-transform:uppercase;
+  color:var(--inkt-3);margin-bottom:var(--s3)}
+
+.glasbak{display:flex;flex-direction:column;gap:9px}
+.tint{display:flex;align-items:center;gap:11px;padding:10px 12px;background:var(--glas-wit);
+  border:2px solid var(--lood);cursor:default}
+.tint .staal{width:26px;height:26px;border:2px solid var(--lood);flex:0 0 auto}
+.tint .staal.blauw{background:var(--blauw)} .tint .staal.rood{background:var(--rood)}
+.tint .staal.groen{background:var(--groen)} .tint .staal.goud{background:var(--goud)}
+.tint b{font:600 14.5px/1.2 var(--sans);color:var(--inkt);display:block}
+.tint em{font-style:normal;font-size:12.5px;color:var(--inkt-3)}
+.tint.aan{background:#fff;box-shadow:inset 0 0 0 var(--loodlijn) var(--goud)}
+
+.zoekveld{display:flex;align-items:center;gap:10px;border:var(--loodlijn) solid var(--lood);
+  padding:12px 14px;background:#fff;margin-bottom:var(--s3)}
+.zoekveld input{border:0;outline:0;font:400 16px/1 var(--sans);width:100%;color:var(--inkt);background:#0000}
+.zoekveld span{font:700 10.5px/1 var(--mono);letter-spacing:.14em;color:var(--inkt-3)}
+
+.stukken{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:13px}
+.stuk{border:var(--loodlijn) solid var(--lood);background:#fff;padding:12px;display:flex;
+  flex-direction:column;gap:9px;position:relative}
+.stuk .rand{position:absolute;left:0;top:0;bottom:0;width:9px}
+.stuk .rand.blauw{background:var(--blauw)} .stuk .rand.rood{background:var(--rood)}
+.stuk .rand.groen{background:var(--groen)} .stuk .rand.goud{background:var(--goud)}
+.stuk img{height:88px;object-fit:contain;margin-left:9px;mix-blend-mode:multiply}
+.stuk b{font:600 15px/1.25 var(--sans);color:var(--inkt);margin-left:9px}
+.stuk em{font-style:normal;font:600 12px/1 var(--mono);letter-spacing:.05em;color:var(--inkt-3);margin-left:9px}
+.stuk.gekozen{background:var(--goud-licht);box-shadow:0 0 0 var(--loodlijn) var(--goud)}
+.stuk .vink{position:absolute;right:8px;top:8px;width:24px;height:24px;background:var(--lood);
+  color:var(--goud);display:grid;place-items:center;font:700 13px/1 var(--sans)}
+
+.paneelrij{display:flex;flex-direction:column;gap:11px}
+.paneel{border:var(--loodlijn) solid var(--lood);padding:11px 13px;background:var(--glas-wit);
+  display:flex;align-items:center;gap:11px}
+.paneel .pos{font:600 15px/1 var(--serif);width:26px;height:26px;display:grid;place-items:center;
+  background:var(--lood);color:var(--glas-wit);flex:0 0 auto}
+.paneel b{font:600 14.5px/1.3 var(--sans);color:var(--inkt);display:block}
+.paneel em{font-style:normal;font:600 11.5px/1 var(--mono);color:var(--inkt-3)}
+.paneel .greep{margin-left:auto;color:var(--inkt-3);font:700 14px/1 var(--sans);letter-spacing:.1em}
+
+.melding{border:var(--loodlijn) solid var(--lood);padding:13px 15px;margin-top:var(--s3);
+  font-size:14.5px;line-height:1.6}
+.melding.goud{background:var(--goud-licht);color:var(--lood)}
+.melding.leeg{background:var(--glas-wit-2);color:var(--inkt-2)}
+.melding b{font-weight:700}
+.knopbalk{display:flex;gap:11px;margin-top:var(--s4);flex-wrap:wrap}
+.kn.donker{background:var(--lood);color:var(--goud-licht);border-color:var(--lood)}
+.kn.donker:hover{background:#241d17}
+.kn.licht{background:#fff;color:var(--inkt);border-color:var(--lood)}
+
+/* ============================================================
+   3 · CLIËNTKAART — het raam van achteren belicht
+   ============================================================ */
+#clientkaart{background:var(--steen);color:#ded5c4}
+#clientkaart .schermkop b{color:var(--goud-licht)}
+#clientkaart .schermkop h2{color:#fff}
+#clientkaart .schermkop p{color:#b8ae9e}
+
+.kaartraam{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--s5);align-items:start}
+@media (max-width:980px){.kaartraam{grid-template-columns:1fr}}
+
+.weekraam{background:var(--lood);padding:var(--loodlijn);
+  box-shadow:0 0 70px #f0c96a24,0 20px 50px #0007}
+.weekraam .kop{background:var(--blauw);color:#fff;padding:18px 20px;
+  display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.weekraam .kop h3{font:600 23px/1.15 var(--serif)}
+.weekraam .kop span{font:600 11.5px/1 var(--mono);letter-spacing:.11em;color:#cfe0ff;margin-left:auto}
+.weekdagen{display:grid;grid-template-columns:repeat(7,1fr);gap:var(--loodlijn);
+  background:var(--lood);margin-top:var(--loodlijn)}
+.dagruit{background:var(--glas-wit);padding:12px 6px;text-align:center;min-height:96px;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:6px}
+.dagruit b{font:700 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--inkt-3)}
+.dagruit .zon{width:34px;height:34px;border:var(--loodlijn) solid var(--lood);border-radius:50%;
+  background:var(--glas-wit-2)}
+.dagruit em{font-style:normal;font-size:11.5px;line-height:1.35;color:var(--inkt-3)}
+.dagruit.vol{background:var(--groen-licht)} .dagruit.vol .zon{background:var(--groen)}
+.dagruit.vol em,.dagruit.vol b{color:#123a24}
+.dagruit.half{background:var(--goud-licht)} .dagruit.half .zon{
+  background:linear-gradient(90deg,var(--goud) 50%,var(--glas-wit) 50%)}
+.dagruit.half em,.dagruit.half b{color:#4a3505}
+.dagruit.pijn{background:var(--rood-licht)} .dagruit.pijn .zon{background:var(--rood)}
+.dagruit.pijn em,.dagruit.pijn b{color:#4a1010}
+.dagruit.komt{opacity:.55}
+
+.weekraam .oefenveld{background:var(--lood);margin-top:var(--loodlijn);
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--loodlijn)}
+@media (max-width:760px){.weekraam .oefenveld{grid-template-columns:1fr}}
+.oefpaneel{background:var(--glas-wit);padding:15px 14px}
+.oefpaneel .band{height:9px;margin:-15px -14px 13px;background:var(--blauw)}
+.oefpaneel .band.rood{background:var(--rood)} .oefpaneel .band.groen{background:var(--groen)}
+.oefpaneel img{height:96px;object-fit:contain;margin:0 auto 10px;mix-blend-mode:multiply}
+.oefpaneel h4{font:600 17.5px/1.2 var(--serif);color:var(--inkt);margin-bottom:5px}
+.oefpaneel .dos{font:600 13px/1 var(--mono);letter-spacing:.04em;color:var(--inkt-2);margin-bottom:9px}
+.oefpaneel p{font-size:13.5px;line-height:1.55;color:var(--inkt-2)}
+.weekraam .voet{background:var(--goud);color:var(--lood);padding:14px 20px;margin-top:var(--loodlijn);
+  font:600 14.5px/1.5 var(--sans)}
+
+.zijkolom{display:flex;flex-direction:column;gap:var(--s4)}
+.zijblok{background:var(--steen-2);border:var(--loodlijn) solid var(--lood);padding:var(--s4)}
+.zijblok h4{font:700 10.5px/1 var(--mono);letter-spacing:.19em;text-transform:uppercase;
+  color:var(--goud-licht);margin-bottom:var(--s3)}
+.zijblok p{font-size:15px;line-height:1.65;color:#b8ae9e}
+.grootroos{--d:190px;margin:0 auto var(--s3)}
+.zijblok .telregel{display:flex;align-items:baseline;gap:9px;justify-content:center;
+  font:600 13px/1 var(--mono);letter-spacing:.09em;color:#9b9081}
+.zijblok .telregel b{font:600 27px/1 var(--serif);color:#fff}
+.bericht{border-left:var(--loodlijn) solid var(--rood);padding-left:14px;margin-top:var(--s3)}
+.bericht b{color:#fff;display:block;font-size:14.5px;margin-bottom:3px}
+.bericht em{font-style:italic;font-size:14.5px;color:#b8ae9e;font-family:var(--serif)}
+
+/* ============================================================
+   4 · PRINTKAART — A4 STAAND
+   ============================================================ */
+#printkaart{background:var(--glas-wit-2)}
+.bladhouder{display:grid;place-items:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){
+  .bladschaal{width:100%;overflow:hidden}
+  .blad{transform:scale(.78);transform-origin:top left;margin-bottom:-65mm !important;
+    margin-right:-46mm !important}
+}
+@media (max-width:760px){.blad{transform:scale(.45);margin-bottom:-163mm !important;margin-right:-116mm !important}}
+
+.blad{position:relative;width:210mm;height:297mm;background:#fff;color:#000;
+  box-shadow:0 24px 60px #00000026;border:1px solid #d9d2c2;
+  padding:12mm 11mm 10mm;display:flex;flex-direction:column;font-family:var(--sans)}
+
+.wijzer{position:absolute;width:44mm;font:600 11.5px/1.4 var(--sans);color:var(--inkt-3);
+  border-top:2px solid var(--goud);padding-top:6px}
+@media (max-width:1240px){.wijzer{display:none}}
+
+/* tympaan — de kop */
+.gl-kop{border:1.6mm solid #000;padding:5mm 6mm;display:flex;align-items:flex-end;
+  gap:6mm;flex:0 0 auto}
+.gl-kop .titelblok{flex:1}
+.gl-kop .merk{font:700 8pt/1 var(--mono);letter-spacing:.19em;text-transform:uppercase;color:#000}
+.gl-kop h1{font:600 25pt/1.03 var(--serif);letter-spacing:-.01em;color:#000;margin-top:2.5mm}
+.gl-kop .wie{text-align:right;font:600 10.5pt/1.4 var(--sans);color:#000;max-width:62mm}
+.gl-kop .wie em{display:block;font-style:normal;font-weight:400;font-size:9pt;line-height:1.45;
+  color:#333;margin-top:1.5mm}
+
+/* de lancetten — één raster, zodat de loodlijnen over alle drie de banen
+   op dezelfde hoogte doorlopen; dat is de hele grammatica van een raam */
+.gl-lancetten{display:grid;grid-template-columns:repeat(3,1fr);
+  grid-template-rows:auto 1fr auto auto auto;gap:1.6mm;background:#000;
+  border:1.6mm solid #000;border-top:0;flex:1 1 auto;min-height:0}
+.gl-cel{background:#fff;min-width:0}
+.gl-cel.boog{background:#000;color:#fff;padding:2.6mm 3mm;text-align:center;
+  font:700 8.5pt/1 var(--mono);letter-spacing:.15em;text-transform:uppercase}
+.gl-cel.boog.b{background:#1b46a8} .gl-cel.boog.r{background:#a81f22}
+.gl-cel.boog.g{background:#1d6a41}
+.gl-cel.beeld{padding:3mm;display:grid;place-items:center;overflow:hidden;min-height:0}
+.gl-cel.beeld img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
+  mix-blend-mode:multiply}
+.gl-cel.naam{padding:3.4mm}
+.gl-cel.naam h2{font:600 16pt/1.1 var(--serif);color:#000}
+.gl-cel.naam .dosis{display:flex;align-items:baseline;gap:2mm;margin-top:2.2mm}
+.gl-cel.naam .dosis b{font:600 21pt/1 var(--serif);color:#000}
+.gl-cel.naam .dosis span{font:600 9.5pt/1.25 var(--sans);color:#000}
+.gl-cel.hoe{padding:3.4mm;font:400 11.5pt/1.45 var(--sans);color:#000}
+.gl-cel.hoe b{font-weight:700}
+.gl-cel.let{background:#f2cf6a;padding:3mm 3.4mm;font:600 9.5pt/1.35 var(--sans);color:#000}
+.gl-cel.let i{font-style:normal;display:block;font:700 7.5pt/1 var(--mono);
+  letter-spacing:.16em;text-transform:uppercase;margin-bottom:1.4mm}
+
+/* predella — roos + regel */
+.gl-predella{border:1.6mm solid #000;border-top:0;display:grid;grid-template-columns:auto 1fr;
+  gap:5mm;padding:5mm 6mm;align-items:center;flex:0 0 auto}
+.gl-roos{width:38mm;height:38mm;position:relative;flex:0 0 auto}
+.gl-roos svg{width:100%;height:100%;display:block}
+.gl-predella .tekst h3{font:600 13pt/1.2 var(--serif);color:#000;margin-bottom:2mm}
+.gl-predella .tekst p{font:400 10.5pt/1.45 var(--sans);color:#000;max-width:96mm}
+.gl-predella .tekst p b{font-weight:700}
+.gl-voet{display:flex;gap:5mm;align-items:flex-end;justify-content:space-between;
+  padding-top:3.5mm;flex:0 0 auto}
+.gl-voet .veiligheid{border-left:1.6mm solid #000;padding-left:3.5mm;font:600 10.5pt/1.4 var(--sans);
+  color:#000;max-width:112mm}
+.gl-voet .praktijk{text-align:right;font:400 9pt/1.45 var(--sans);color:#333}
+.gl-voet .praktijk b{display:block;font-weight:700;color:#000;font-size:10pt}
+
+.printhulp{max-width:66ch;margin:var(--s5) auto 0;text-align:center}
+.printhulp p{font-size:15.5px;color:var(--inkt-2);margin-bottom:var(--s3)}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--lood);color:#b8ae9e;padding:var(--s6) 0;
+  border-top:var(--loodlijn) solid var(--goud)}
+footer.uitleiding .binnen{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.19em;text-transform:uppercase;
+  color:var(--goud-licht);margin-bottom:14px}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.7}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding-left:18px;position:relative;margin-bottom:10px}
+footer.uitleiding li::before{content:"◆";position:absolute;left:0;color:var(--goud);font-size:10px;top:4px}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT — A4 STAAND
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 37</span>
+  <strong style="font:600 16px/1 var(--serif);color:#fff">Glasraam</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste muur" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="ruit" aria-hidden="true"></span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">Concept 37 · Glasraam</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1>Het raam onderwees wie <em>niet lezen kon</em>.</h1>
+        <p class="onder">Eeuwenlang was het gebrandschilderde kerkraam de best gelezen instructie
+          van de Lage Landen — gelezen door mensen die geen letter kenden. <b>Niet omdat het mooi
+          was, maar omdat de loodstrip het werk deed:</b> een zware zwarte contour om elk vlak,
+          kleur die altijd hetzelfde betekent, en een leesrichting die vastligt. Precies wat een
+          oefenkaart nodig heeft, en precies wat ze nooit heeft.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk de kaart</a>
+          <a class="kn leeg" href="#clientkaart">De week als raam</a>
+        </div>
+      </div>
+
+      <div class="raam" aria-hidden="true">
+        <div class="lancetten">
+          <div class="lancet">
+            <div class="veld boog blauw"><span class="label">Adem</span></div>
+            <div class="veld"><figure><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png" alt=""/></figure></div>
+            <div class="veld"><h4>Kin intrekken</h4><p>Zittend, rug tegen de leuning.</p></div>
+            <div class="veld goud"><span class="label">3 × 8 · rustig</span></div>
+          </div>
+          <div class="lancet">
+            <div class="veld boog rood"><span class="label">Kracht</span></div>
+            <div class="veld"><figure><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt=""/></figure></div>
+            <div class="veld"><h4>Opstaan</h4><p>Vanaf de eetkamerstoel, armen los.</p></div>
+            <div class="veld goud"><span class="label">2 × 10 · met pauze</span></div>
+          </div>
+          <div class="lancet">
+            <div class="veld boog groen"><span class="label">Balans</span></div>
+            <div class="veld"><figure><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt=""/></figure></div>
+            <div class="veld"><h4>Eenbeenstand</h4><p>Aanrecht binnen handbereik.</p></div>
+            <div class="veld goud"><span class="label">3 × 10 sec.</span></div>
+          </div>
+        </div>
+        <div class="roosband">
+          <div class="in">
+            <span class="roos"><i></i><b></b></span>
+            <p>Zeven segmenten, één per dag.<br/>Kleur ze in met wat op tafel ligt.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="driewet">
+      <div class="wet">
+        <span class="nr">I</span>
+        <h3>De loodstrip doet het werk</h3>
+        <p>Elk stuk glas zit in een zware zwarte H-strip. Die contour is geen versiering maar het
+          hele systeem: hij scheidt vlakken zó hard dat een oog met staar, of vanaf acht meter, de
+          vorm nog vindt. <b>Contrast zit in de lijn, niet in de kleur</b> — daarom overleeft dit
+          blad de zwart-witprinter zonder één afspraak te verliezen.</p>
+      </div>
+      <div class="wet">
+        <span class="nr">II</span>
+        <h3>Kleur is code, geen sfeer</h3>
+        <p>In een middeleeuws raam betekent blauw iets, elke keer hetzelfde. Hier ook, en niet meer
+          dan vier: <b>blauw is adem en rust, rood is kracht, groen is lopen en balans, goud is de
+          regel die boven alles gaat.</b> Wie de kaart één keer uitgelegd krijgt, hoeft de legenda
+          daarna nooit meer te lezen.</p>
+      </div>
+      <div class="wet">
+        <span class="nr">III</span>
+        <h3>De leesrichting ligt vast</h3>
+        <p>Een raam leest per lancet, en het belangrijkste veld hangt op ooghoogte. Een oefenkaart
+          die zomaar bovenaan begint heeft die keuze nooit gemaakt. <b>Hier staat wat u vandaag doet
+          op de plek waar uw oog het eerst landt</b>, en staat het waarom eronder — niet andersom.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>Kiezen is hier glas snijden: elke oefening wordt een stuk, elk stuk krijgt een tint uit een
+        palet van vier, en de tinten zijn vastgelegd — de therapeut kiest de oefening, niet de kleur.
+        Rechts groeit het raam mee, van boven naar beneden in leesvolgorde. <b>Boven de vijf panelen
+        waarschuwt het blad</b>, want een raam met te veel lancetten leest niemand meer.</p>
+    </div>
+
+    <div class="werkbank">
+
+      <div class="wb">
+        <h3>Het glaspalet</h3>
+        <div class="glasbak">
+          <div class="tint aan"><span class="staal blauw"></span>
+            <span><b>Kobalt — adem &amp; rust</b><em>nek, ademhaling, ontspannen</em></span></div>
+          <div class="tint aan"><span class="staal rood"></span>
+            <span><b>Robijn — kracht</b><em>opstaan, tillen, weerstand</em></span></div>
+          <div class="tint aan"><span class="staal groen"></span>
+            <span><b>Gras — lopen &amp; balans</b><em>staan, stappen, valpreventie</em></span></div>
+          <div class="tint"><span class="staal goud"></span>
+            <span><b>Goud — de regel</b><em>niet te kiezen: staat altijd onderaan</em></span></div>
+        </div>
+        <div class="melding leeg">Goud is gereserveerd voor de veiligheidsregel. Er is geen vijfde
+          kleur, en dat is geen beperking maar de reden dat het werkt.</div>
+      </div>
+
+      <div class="wb">
+        <h3>Stukken snijden</h3>
+        <div class="zoekveld">
+          <span>ZOEK</span>
+          <input type="text" value="balans — staand, met steun" aria-label="Zoek een oefening"/>
+        </div>
+
+        <div class="stukken">
+          <div class="stuk gekozen"><span class="rand groen"></span><span class="vink">✓</span>
+            <img src="/images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-line-v1.png"
+              alt="Lijntekening: staand met steun het gewicht naar voren en achteren verplaatsen."/>
+            <b>Gewicht verplaatsen</b><em>GRAS · 2 × 10</em></div>
+          <div class="stuk gekozen"><span class="rand groen"></span><span class="vink">✓</span>
+            <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png"
+              alt="Lijntekening: eenbeenstand met steun van een leuning."/>
+            <b>Eenbeenstand</b><em>GRAS · 3 × 10 sec.</em></div>
+          <div class="stuk"><span class="rand groen"></span>
+            <img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png"
+              alt="Lijntekening: op de plaats marcheren met steun."/>
+            <b>Marcheren op de plaats</b><em>GRAS · 2 × 20</em></div>
+          <div class="stuk gekozen"><span class="rand rood"></span><span class="vink">✓</span>
+            <img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+              alt="Lijntekening: opstaan uit een stoel zonder handen."/>
+            <b>Opstaan uit de stoel</b><em>ROBIJN · 2 × 10</em></div>
+          <div class="stuk"><span class="rand rood"></span>
+            <img src="/images/onderste-extremiteit/calf-raises-line-v1.png"
+              alt="Lijntekening: op de tenen komen bij het aanrecht."/>
+            <b>Op de tenen</b><em>ROBIJN · 3 × 12</em></div>
+          <div class="stuk"><span class="rand blauw"></span>
+            <img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png"
+              alt="Lijntekening: zittend de kin intrekken."/>
+            <b>Kin intrekken</b><em>KOBALT · 3 × 8</em></div>
+        </div>
+
+        <div class="melding goud"><b>Vier panelen gekozen.</b> Nog één past er op het blad; daarna
+          moet er glas uit. Een raam met zes lancetten is geen raam meer maar een lijst.</div>
+      </div>
+
+      <div class="wb">
+        <h3>Het raam — leesvolgorde</h3>
+        <div class="paneelrij">
+          <div class="paneel"><span class="pos">1</span>
+            <span><b>Gewicht verplaatsen</b><em>GRAS · opwarming</em></span><span class="greep">⋮⋮</span></div>
+          <div class="paneel"><span class="pos">2</span>
+            <span><b>Eenbeenstand</b><em>GRAS · hoofdoefening</em></span><span class="greep">⋮⋮</span></div>
+          <div class="paneel"><span class="pos">3</span>
+            <span><b>Opstaan uit de stoel</b><em>ROBIJN · kracht</em></span><span class="greep">⋮⋮</span></div>
+          <div class="paneel" style="opacity:.6;border-style:dashed">
+            <span class="pos">4</span>
+            <span><b>Nog niet geplaatst</b><em>sleep een stuk hierheen</em></span></div>
+        </div>
+
+        <div class="melding leeg" style="margin-top:var(--s4)">
+          <b>Goudveld — staat op elk raam:</b><br/>
+          „Stoppen bij duizeligheid of een been dat wegzakt. Altijd iets om vast te pakken."
+        </div>
+
+        <div class="knopbalk">
+          <a class="kn donker" href="#printkaart">Raam zetten →</a>
+          <a class="kn licht" href="#clientkaart">Naar de cliënt</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>Op papier valt licht óp het blad; op het scherm valt het erdóór. Dat is het enige verschil
+        tussen deze twee kaarten — de tekening is dezelfde. <b>De week is de roos:</b> elke dag die
+        gelukt is, licht op; een dag met pijn kleurt robijn en blijft staan, want een raam waaruit
+        je scherven weghaalt vertelt niets meer.</p>
+    </div>
+
+    <div class="kaartraam">
+
+      <div class="weekraam">
+        <div class="kop">
+          <h3>Mevr. A. Buitenhuis — 71 jaar</h3>
+          <span>WEEK 34 · 17 – 23 AUG. 2026</span>
+        </div>
+
+        <div class="weekdagen">
+          <div class="dagruit vol"><b>ma</b><span class="zon"></span><em>alle drie</em></div>
+          <div class="dagruit vol"><b>di</b><span class="zon"></span><em>alle drie</em></div>
+          <div class="dagruit half"><b>wo</b><span class="zon"></span><em>twee van drie</em></div>
+          <div class="dagruit pijn"><b>do</b><span class="zon"></span><em>pijn gemeld</em></div>
+          <div class="dagruit vol"><b>vr</b><span class="zon"></span><em>alle drie</em></div>
+          <div class="dagruit komt"><b>za</b><span class="zon"></span><em>komt nog</em></div>
+          <div class="dagruit komt"><b>zo</b><span class="zon"></span><em>rustdag</em></div>
+        </div>
+
+        <div class="oefenveld">
+          <div class="oefpaneel">
+            <div class="band groen"></div>
+            <img src="/images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-line-v1.png"
+              alt="Lijntekening: staand met steun het gewicht naar voren en achteren verplaatsen."/>
+            <h4>Gewicht verplaatsen</h4>
+            <div class="dos">2 × 10 · heen en terug</div>
+            <p>Twee handen aan het aanrecht. Naar de tenen, dan naar de hielen — zo langzaam dat u
+              onderweg kunt stoppen.</p>
+          </div>
+          <div class="oefpaneel">
+            <div class="band groen"></div>
+            <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png"
+              alt="Lijntekening: eenbeenstand met steun van een leuning."/>
+            <h4>Eenbeenstand</h4>
+            <div class="dos">3 × 10 sec. per been</div>
+            <p>Eén hand aan de leuning, één voet los. Wiebelt het? Twee handen erbij — niet minder
+              tellen.</p>
+          </div>
+          <div class="oefpaneel">
+            <div class="band rood"></div>
+            <img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+              alt="Lijntekening: opstaan uit een stoel zonder handen."/>
+            <h4>Opstaan uit de stoel</h4>
+            <div class="dos">2 × 10 · met pauze</div>
+            <p>Neus boven de tenen, dan omhoog. Lukt het zonder handen niet, dan met — dat telt
+              gewoon mee.</p>
+          </div>
+        </div>
+
+        <div class="voet">Stoppen bij duizeligheid of een been dat wegzakt — ook halverwege.
+          Altijd iets om vast te pakken binnen handbereik.</div>
+      </div>
+
+      <div class="zijkolom">
+        <div class="zijblok">
+          <h4>De roos van deze week</h4>
+          <span class="roos grootroos" aria-hidden="true" style="--d:190px"><i></i><b></b></span>
+          <div class="telregel"><b>4</b> van 6 dagen gevuld</div>
+          <p style="margin-top:var(--s3)">De roos vult zich van links naar rechts. Vier segmenten
+            staan, één is halfvol, één is robijn. Er is geen percentage, geen streak en geen
+            aanmoediging: <b style="color:#fff">een raam dat niet af is, is nog steeds een raam.</b></p>
+        </div>
+
+        <div class="zijblok">
+          <h4>Wat de therapeut ziet</h4>
+          <div class="bericht">
+            <b>Donderdag — robijnen segment</b>
+            <em>„Been zakte weg bij de tweede set. Ben gestopt en gaan zitten."</em>
+          </div>
+          <p style="margin-top:var(--s3)">Eén robijn segment opent bij de therapeut een regel in het
+            dossier, geen alarm. Twee op rij belt de praktijk. Dat staat er ook zo bij, want een
+            patiënt die niet weet wanneer er gebeld wordt, meldt niets.</p>
+        </div>
+
+        <div class="zijblok">
+          <h4>Volgende afspraak</h4>
+          <p><b style="color:#fff">Woensdag 26 augustus, 09:20</b><br/>
+            Fysiotherapie Kroon · Hoofdstraat 8, Assen<br/>
+            Neem de kaart mee — ook als er segmenten leeg zijn.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>Hier keert het licht om: wit papier, zwart lood, vlakke tinten. Drie lancetten naast
+        elkaar, elk met beeld, naam, dosering en één instructie — en onderin de predella met de
+        roos van zeven dagen. <b>Print hem in zwart-wit en er gaat niets verloren</b>, want alle
+        scheiding zit in de loodlijn. De kleur is een gunst, geen voorwaarde.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer geen-print" style="top:14mm;right:calc(100% + 22px);text-align:right">
+            de kop staat in een gesloten kader: het tympaan boven de lancetten</span>
+          <span class="wijzer geen-print" style="top:96mm;left:calc(100% + 22px)">
+            elk lancet is één oefening, van boven naar beneden: kleurbaan, beeld, naam, dosering,
+            uitvoering, waarschuwing</span>
+          <span class="wijzer geen-print" style="top:206mm;right:calc(100% + 22px);text-align:right">
+            de dosering staat in cijferglas van 21 punt — leesbaar op armlengte zonder bril</span>
+          <span class="wijzer geen-print" style="top:252mm;left:calc(100% + 22px)">
+            de roos: zeven segmenten om in te kleuren, met een potlood, een pen, wat er ligt</span>
+
+          <div class="gl-kop">
+            <div class="titelblok">
+              <div class="merk">Fysiplan · weekraam</div>
+              <h1>Blijven staan — week 34</h1>
+            </div>
+            <div class="wie">Mevr. A. Buitenhuis · 71 jaar
+              <em>Valpreventie na duizeligheidsklachten<br/>17 t/m 23 augustus 2026 · S. Kroon</em></div>
+          </div>
+
+          <div class="gl-lancetten">
+
+            <!-- baan 1: de kleurbogen -->
+            <div class="gl-cel boog g">Gras · balans</div>
+            <div class="gl-cel boog g">Gras · balans</div>
+            <div class="gl-cel boog r">Robijn · kracht</div>
+
+            <!-- baan 2: het beeld -->
+            <div class="gl-cel beeld">
+              <img src="/images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-line-v1.png"
+                alt="Lijntekening: iemand verplaatst staand met steun het gewicht naar voren en naar achteren."/>
+            </div>
+            <div class="gl-cel beeld">
+              <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png"
+                alt="Lijntekening: iemand staat met steun van een leuning op één been."/>
+            </div>
+            <div class="gl-cel beeld">
+              <img src="/images/onderste-extremiteit/chair-squat-line-v1.png"
+                alt="Lijntekening: iemand staat op uit een stoel zonder de handen te gebruiken."/>
+            </div>
+
+            <!-- baan 3: naam en dosering -->
+            <div class="gl-cel naam"><h2>Gewicht verplaatsen</h2>
+              <div class="dosis"><b>2×10</b><span>heen en terug<br/>elke ochtend</span></div></div>
+            <div class="gl-cel naam"><h2>Eenbeenstand</h2>
+              <div class="dosis"><b>3×10</b><span>seconden<br/>per been</span></div></div>
+            <div class="gl-cel naam"><h2>Opstaan uit de stoel</h2>
+              <div class="dosis"><b>2×10</b><span>keer<br/>met pauze</span></div></div>
+
+            <!-- baan 4: de uitvoering -->
+            <div class="gl-cel hoe"><b>Twee handen aan het aanrecht.</b> Gewicht rustig naar de
+              tenen, dan naar de hielen. Zo langzaam dat u onderweg kunt stoppen.</div>
+            <div class="gl-cel hoe">Eén hand aan de leuning, één voet los van de grond. Tien tellen,
+              dan het andere been.</div>
+            <div class="gl-cel hoe">Neus boven de tenen, dan omhoog. Lukt het zonder handen niet,
+              dan mét — dat telt gewoon mee.</div>
+
+            <!-- baan 5: het goudveld -->
+            <div class="gl-cel let"><i>Eerste</i>Dit is de opwarming — begin hier, ook op een goede
+              dag.</div>
+            <div class="gl-cel let"><i>Wiebelt het?</i>Twee handen erbij — en níet minder tellen.</div>
+            <div class="gl-cel let"><i>Laatste</i>Daarna zitten blijven, niet doorgaan.</div>
+
+          </div>
+
+          <div class="gl-predella">
+            <div class="gl-roos">
+              <svg viewBox="0 0 100 100" role="img" aria-label="Roosvenster met zeven segmenten, één per dag, om in te kleuren.">
+                <circle cx="50" cy="50" r="48" fill="#fff" stroke="#000" stroke-width="4"/>
+                <g stroke="#000" stroke-width="3" fill="none">
+                  <path d="M50 50 L50 2"/><path d="M50 50 L87.5 20"/><path d="M50 50 L97.5 60"/>
+                  <path d="M50 50 L68 95"/><path d="M50 50 L28 94"/><path d="M50 50 L3 62"/>
+                  <path d="M50 50 L11 19"/>
+                </g>
+                <text x="64.3" y="26.3" font-family="Georgia,serif" font-size="9" text-anchor="middle" fill="#000">ma</text>
+                <text x="82.2" y="48.6" font-family="Georgia,serif" font-size="9" text-anchor="middle" fill="#000">di</text>
+                <text x="75.8" y="76.6" font-family="Georgia,serif" font-size="9" text-anchor="middle" fill="#000">wo</text>
+                <text x="50" y="89" font-family="Georgia,serif" font-size="9" text-anchor="middle" fill="#000">do</text>
+                <text x="24.2" y="76.6" font-family="Georgia,serif" font-size="9" text-anchor="middle" fill="#000">vr</text>
+                <text x="17.8" y="48.6" font-family="Georgia,serif" font-size="9" text-anchor="middle" fill="#000">za</text>
+                <text x="35.7" y="26.3" font-family="Georgia,serif" font-size="9" text-anchor="middle" fill="#000">zo</text>
+                <circle cx="50" cy="50" r="9" fill="#fff" stroke="#000" stroke-width="4"/>
+              </svg>
+            </div>
+            <div class="tekst">
+              <h3>Kleur het segment van de dag dat u de drie oefeningen gedaan hebt.</h3>
+              <p>Met een potlood, een pen, wat er op tafel ligt. Half gelukt is een half segment.
+                <b>Een raam dat niet af is, is nog steeds een raam</b> — neem hem woensdag mee zoals
+                hij is.</p>
+            </div>
+          </div>
+
+          <div class="gl-voet">
+            <div class="veiligheid">Stoppen bij duizeligheid of een been dat wegzakt — ook midden in
+              een oefening. Nooit oefenen zonder iets om vast te pakken.</div>
+            <div class="praktijk"><b>Fysiotherapie Kroon</b>
+              Hoofdstraat 8, Assen · 0592 — 31 09 55<br/>Afspraak wo 26 aug., 09:20</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="printhulp geen-print">
+      <p>Dit blad print zonder de omringende uitleg: alleen de kaart, op ware grootte,
+        <b>A4 staand</b>.</p>
+      <a class="kn" href="javascript:window.print()">Print deze kaart</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div>
+      <h4>Waarom dit schuurt</h4>
+      <p>Een oefenkaart die aan een kerkraam ontleend is, klinkt als een grap tot je bedenkt waar
+        het raam voor gemaakt was: instructie voor wie niet lezen kan. Dat is geen vroomheid maar
+        informatieontwerp met een testpubliek van zeven eeuwen. Het risico is kitsch; de rem is de
+        regel dat kleur nooit sfeer mag zijn — vier tinten, elk met één betekenis, en al het
+        contrast in de zwarte lijn.</p>
+    </div>
+    <div>
+      <h4>Wat we lenen</h4>
+      <ul>
+        <li>De loodstrip: contrast zit in de lijn, niet in de kleur</li>
+        <li>Biblia pauperum: beeld eerst, tekst als bijschrift</li>
+        <li>Vier tinten met vaste betekenis, plus goud voor de regel</li>
+        <li>De roos als voortgang zonder percentage of streak</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Toetsen</h4>
+      <ul>
+        <li>Print in zwart-wit — blijft elke scheiding staan?</li>
+        <li>Leg het blad op tafel: leest de dosering zonder bril?</li>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
