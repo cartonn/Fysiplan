@@ -1,0 +1,1058 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 41 — Kinetografie · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 41 — KINETOGRAFIE
+   ------------------------------------------------------------
+   De middenlijn is niet decoratief.
+
+   Rudolf Laban publiceerde in 1928 een schrift voor beweging.
+   Geen plaatjes, geen woorden: een verticale balk met drie lijnen,
+   van onder naar boven gelezen, en in het midden één lijn die
+   links van rechts scheidt. Elke kolom is een lichaamsdeel. De
+   vórm van het teken zegt de richting, de arcering zegt de hoogte,
+   en de lengte van het teken is de duur.
+
+   Twee eigenschappen van dat schrift zijn voor een oefenkaart
+   ongemakkelijk goed:
+
+     · JE KUNT NIETS OPSCHRIJVEN ZONDER EEN KANT TE KIEZEN. Er
+       bestaat in Laban geen zijdeloos teken. Een oefenkaart zegt
+       "3 × 10 heup zijwaarts heffen" en laat in het midden welk
+       been — terwijl na een knieprothese, een CVA of een
+       enkelband precies dát het hele werk is. De middenlijn maakt
+       de vraag onvermijdelijk.
+
+     · DUUR IS HOOGTE. Een teken van dertig seconden is tien keer
+       zo hoog als een teken van drie. Daardoor toont de balk de
+       wérkelijke lengte van de dag, vóórdat iemand begint. Geen
+       enkele oefenkaart doet dat: "3 × 10" en "4 × 20 sec." staan
+       er even groot, terwijl het tweede vier keer zo lang duurt.
+
+   En één cadeau van het systeem dat we niet hadden durven
+   verzinnen: de arcering voor hóógte klopt hier letterlijk. Op de
+   tenen komen is in Laban "hoog niveau" — gearceerd. Op de grond
+   blijven is "laag" — massief zwart. Het schrift tekent wat het
+   lichaam doet.
+
+   HET RISICO, EERLIJK: van onder naar boven lezen is vreemd. Dat
+   is de scherpste kant van dit concept en we halen hem er niet
+   uit. Wel staat onderaan het blad één woord op 30 punt met een
+   pijl: BEGIN HIER. En de leeskolom rechts is doodgewone,
+   grote Nederlandse taal — de balk is het skelet, niet de tekst.
+
+   ZWART-WIT: kant is plaats (links of rechts van de lijn), niveau
+   is arcering, duur is lengte. Rood is alleen een hulp. Alles
+   overleeft een zwart-wit-print.
+   ============================================================ */
+
+:root{
+  --kalk:#f3f0e9;
+  --kalk-2:#faf8f3;
+  --wit:#fffefb;
+  --inkt:#14171b;
+  --inkt-2:#3c444d;
+  --inkt-3:#5f6870;
+  --grijs:#8b9299;
+  --lijn:#d6d3c9;
+  --lijn-2:#e7e4db;
+  --rood:#bd2a17;
+  --rood-2:#f0dcd7;
+  --leisteen:#2c3742;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --serif:Charter,"Iowan Old Style",Georgia,serif;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:68px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font:17px/1.62 var(--sans);color:var(--inkt-2);background:var(--kalk)}
+img{max-width:100%;display:block}
+a{color:var(--rood)}
+:focus-visible{outline:2.5px solid var(--rood);outline-offset:3px}
+
+.binnen{max-width:1180px;margin:0 auto;padding:0 22px}
+.scherm{padding:var(--s6) 0}
+.scherm.eerste{padding-top:var(--s5)}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  background:var(--inkt);padding:9px 22px;font:600 12.5px/1 var(--sans);flex-wrap:wrap}
+.labbalk .nr{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--kalk);
+  border:1px solid #3d454d;padding:5px 7px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#a9b1b8;text-decoration:none}
+.labbalk a:hover{color:#fff}
+.labbalk a.terug{color:#fff;border-bottom:1px solid #3d454d}
+
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:27px;height:27px;background:var(--inkt);color:var(--kalk);
+  display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--serif)}
+.merkregel .naam{font:700 15px/1 var(--sans);color:var(--inkt);letter-spacing:-.02em}
+.merkregel .pad{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
+
+.schermkop{border-top:2px solid var(--inkt);padding-top:var(--s2);margin-bottom:var(--s5);max-width:70ch}
+.schermkop > b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--rood);margin-bottom:var(--s3)}
+.schermkop h2{font:700 clamp(25px,3vw,33px)/1.1 var(--sans);letter-spacing:-.035em;color:var(--inkt);
+  margin-bottom:var(--s3)}
+.schermkop p{font:400 17.5px/1.62 var(--serif);color:var(--inkt-2)}
+.schermkop p b{font-weight:700;color:var(--inkt)}
+
+/* ============================================================
+   DE BALK — herbruikbaar op scherm
+   ============================================================ */
+.balk{position:relative;background:var(--wit);border:1px solid var(--lijn)}
+.balk .staaf{position:relative;height:100%;width:100%}
+/* de drie lijnen van de balk + de middenlijn */
+.balk .staaf::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:2.5px;
+  transform:translateX(-50%);background:var(--rood)}
+.balk .zijlijn{position:absolute;top:0;bottom:0;width:1.5px;background:var(--inkt)}
+.balk .zijlijn.l{left:16%}
+.balk .zijlijn.r{right:16%}
+
+/* een teken op de balk: hoogte = duur, plaats = kant, arcering = niveau */
+.teken{position:absolute;border:1.6px solid var(--inkt);background:var(--wit)}
+.teken.laag{background:var(--inkt)}
+.teken.midden::after{content:"";position:absolute;left:50%;top:50%;width:7px;height:7px;
+  border-radius:50%;background:var(--inkt);transform:translate(-50%,-50%)}
+.teken.hoog{background:repeating-linear-gradient(-45deg,var(--inkt) 0 1.6px,transparent 1.6px 6px)}
+/* richtingsvorm — scheef = zijwaarts, recht = ter plaatse */
+.teken.zij{transform:skewY(-5deg)}
+.teken.zij.midden::after{transform:translate(-50%,-50%) skewY(5deg)}
+.teken.plaats{}
+.teken .lbl{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  font:700 10px/1 var(--mono);letter-spacing:.08em;color:var(--wit);white-space:nowrap}
+.teken.midden .lbl,.teken.hoog .lbl{color:var(--inkt);background:var(--wit);padding:2px 4px}
+
+/* ============================================================
+   1 · LANDING
+   ============================================================ */
+.heldrij{display:grid;grid-template-columns:1.06fr .94fr;gap:var(--s6);align-items:center}
+@media (max-width:980px){.heldrij{grid-template-columns:1fr;gap:var(--s5)}}
+
+h1.kop{font:700 clamp(35px,5.2vw,58px)/1.03 var(--sans);letter-spacing:-.05em;color:var(--inkt)}
+h1.kop em{display:block;font-style:normal;color:var(--rood)}
+p.onder{font:400 19px/1.6 var(--serif);color:var(--inkt-2);max-width:54ch;margin-top:var(--s4)}
+p.onder b{font-weight:700;color:var(--inkt)}
+
+.knoppen{display:flex;gap:12px;flex-wrap:wrap;margin-top:var(--s4)}
+.kn{display:inline-block;background:var(--inkt);color:var(--kalk);text-decoration:none;
+  padding:13px 22px;font:700 14px/1 var(--sans);border:1.5px solid var(--inkt)}
+.kn:hover{background:var(--rood);border-color:var(--rood);color:#fff}
+.kn.leeg{background:transparent;color:var(--inkt)}
+.kn.leeg:hover{background:var(--inkt);color:var(--kalk)}
+
+/* de demonstratiebalk op de landing */
+.demo{background:var(--kalk-2);border:1px solid var(--lijn);padding:var(--s4)}
+.demo .dkop{display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--lijn);
+  padding-bottom:var(--s2);margin-bottom:var(--s3);
+  font:700 10px/1 var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--grijs)}
+.demo .dkop b{color:var(--inkt)}
+.demo .dkop span{margin-left:auto;color:var(--rood)}
+
+.demorij{display:grid;grid-template-columns:54px 1fr;gap:var(--s3)}
+.tijdlat{position:relative;border-right:1px solid var(--lijn-2)}
+.tijdlat i{position:absolute;right:8px;font:600 10px/1 var(--mono);color:var(--grijs);
+  transform:translateY(50%)}
+.tijdlat i::after{content:"";position:absolute;right:-9px;top:50%;width:6px;height:1px;background:var(--lijn)}
+
+.demo .balk{height:300px}
+.demo .kolomnamen{display:flex;justify-content:space-between;margin-top:9px;
+  font:700 9px/1 var(--mono);letter-spacing:.1em;color:var(--grijs)}
+.demo .kolomnamen b{color:var(--rood)}
+.beginhier{display:flex;align-items:center;gap:8px;margin-top:var(--s3);
+  font:700 12px/1 var(--mono);letter-spacing:.13em;color:var(--rood)}
+
+.drieregels{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5);margin-top:var(--s6);
+  border-top:2px solid var(--inkt);padding-top:var(--s4)}
+@media (max-width:900px){.drieregels{grid-template-columns:1fr;gap:var(--s4)}}
+.regelblok .nr{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--rood);display:block;margin-bottom:10px}
+.regelblok h3{font:700 20px/1.2 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-bottom:10px}
+.regelblok p{font-size:16px}
+.regelblok p b{color:var(--inkt);font-weight:700}
+
+/* ============================================================
+   2 · KIEZER
+   ============================================================ */
+.regelaar{display:grid;grid-template-columns:1.3fr 1fr;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.regelaar{grid-template-columns:1fr}}
+
+.rg{background:var(--wit);border:1px solid var(--lijn);padding:var(--s4)}
+.rg h3{font:700 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--grijs);
+  border-bottom:1px solid var(--lijn);padding-bottom:var(--s2);margin-bottom:var(--s3)}
+
+.zoekbalk{display:flex;align-items:center;gap:10px;border:1.5px solid var(--inkt);padding:10px 12px;
+  margin-bottom:var(--s3);background:var(--kalk-2)}
+.zoekbalk span{font:700 9.5px/1 var(--mono);letter-spacing:.16em;color:var(--grijs)}
+.zoekbalk input{flex:1;border:0;background:transparent;font:600 15px/1.3 var(--sans);color:var(--inkt)}
+.zoekbalk input:focus{outline:0}
+
+.oef{border-bottom:1px solid var(--lijn-2);padding:var(--s3) 0;display:grid;
+  grid-template-columns:66px 1fr;gap:var(--s3);align-items:start}
+.oef:last-child{border-bottom:0}
+.oef .beeld{background:var(--kalk-2);border:1px solid var(--lijn-2);padding:5px;height:66px;
+  display:flex;align-items:center;justify-content:center}
+.oef .beeld img{max-height:100%;width:auto;mix-blend-mode:multiply}
+.oef h4{font:700 17.5px/1.25 var(--sans);letter-spacing:-.025em;color:var(--inkt)}
+.oef .col{font:600 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--grijs);margin-top:5px}
+
+/* de kantkeuze — verplicht, want de balk kan niet zonder */
+.kantkeuze{display:flex;gap:0;margin-top:12px;border:1.5px solid var(--inkt);width:max-content;
+  max-width:100%}
+.kantkeuze button{background:var(--wit);border:0;border-right:1px solid var(--lijn);
+  padding:8px 14px;cursor:pointer;font:700 12.5px/1 var(--sans);color:var(--inkt-3)}
+.kantkeuze button:last-child{border-right:0}
+.kantkeuze button[aria-pressed="true"]{background:var(--inkt);color:#fff}
+.kantkeuze button.beide[aria-pressed="true"]{background:var(--rood)}
+/* op smalle schermen mag de kantkeuze afbreken in plaats van het blok op te rekken */
+@media (max-width:620px){
+  .kantkeuze{width:auto;flex-wrap:wrap}
+  .kantkeuze button{flex:1 0 auto;border-bottom:1px solid var(--lijn)}
+}
+
+.duurregel{display:flex;align-items:center;gap:10px;margin-top:11px;flex-wrap:wrap}
+.duurregel .veld{border:1px solid var(--lijn);padding:6px 10px;font:600 13.5px/1 var(--sans);
+  background:var(--kalk-2);color:var(--inkt)}
+.duurregel .wordt{font:400 13.5px/1.4 var(--sans);color:var(--inkt-3)}
+.duurregel .wordt b{color:var(--rood);font-weight:700}
+
+.waarschuw{display:flex;gap:8px;margin-top:11px;font:400 13.5px/1.45 var(--sans);color:var(--rood)}
+.waarschuw b{font-weight:700}
+
+/* rechterkolom: de dag groeit mee */
+.dagbalk{background:var(--inkt);padding:var(--s4);position:sticky;top:56px;color:#c3cad1}
+.dagbalk h3{font:700 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#8e979f;
+  border-bottom:1px solid #333c45;padding-bottom:var(--s2);margin-bottom:var(--s3)}
+.dagbalk .balk{background:#1b1f25;border-color:#333c45;height:250px}
+.dagbalk .balk .zijlijn{background:#5d6771}
+.dagbalk .teken{border-color:#e5e9ec;background:#1b1f25}
+.dagbalk .teken.laag{background:#e5e9ec}
+.dagbalk .teken.midden::after{background:#e5e9ec}
+.dagbalk .teken.hoog{background:repeating-linear-gradient(-45deg,#e5e9ec 0 1.6px,transparent 1.6px 6px)}
+.dagbalk .totaal{margin-top:var(--s3);border-top:1px solid #333c45;padding-top:var(--s3)}
+.dagbalk .totaal b{font:700 34px/1 var(--sans);letter-spacing:-.045em;color:#fff;display:block}
+.dagbalk .totaal span{font:600 10.5px/1.5 var(--mono);letter-spacing:.11em;text-transform:uppercase;
+  color:#8e979f;display:block;margin-top:6px}
+.dagbalk .verdeling{margin-top:var(--s3);display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.dagbalk .verdeling div{padding:11px;background:#1b1f25}
+.dagbalk .verdeling b{display:block;font:700 20px/1 var(--sans);color:#fff;letter-spacing:-.03em}
+.dagbalk .verdeling span{font:600 9.5px/1.4 var(--mono);letter-spacing:.1em;color:#8e979f;
+  text-transform:uppercase;display:block;margin-top:5px}
+.dagbalk .verdeling div.zwaar{background:var(--rood)}
+.dagbalk .verdeling div.zwaar span{color:#f6ded9}
+.dagbalk .slot{margin-top:var(--s3);font:400 14.5px/1.55 var(--serif);color:#aab2b9}
+.dagbalk .slot b{color:#fff;font-weight:600}
+
+/* ============================================================
+   3 · CLIËNTKAART
+   ============================================================ */
+.kaartblad{background:var(--wit);border:1px solid var(--lijn);box-shadow:0 18px 44px rgba(20,23,27,.09)}
+.kb-kop{padding:var(--s4);border-bottom:2px solid var(--inkt);display:flex;flex-wrap:wrap;gap:var(--s3);
+  align-items:flex-end}
+.kb-kop h3{font:700 27px/1.1 var(--sans);letter-spacing:-.035em;color:var(--inkt)}
+.kb-kop p{font:400 15px/1.5 var(--sans);color:var(--inkt-3);margin-top:5px}
+.kb-kop .kant{margin-left:auto;text-align:right;border-left:1px solid var(--lijn);padding-left:var(--s3)}
+.kb-kop .kant b{display:block;font:700 11px/1 var(--mono);letter-spacing:.15em;color:var(--grijs)}
+.kb-kop .kant span{display:block;font:700 21px/1.15 var(--sans);color:var(--rood);margin-top:6px;
+  letter-spacing:-.03em}
+
+.kb-lijf{display:grid;grid-template-columns:1.45fr 1fr}
+@media (max-width:940px){.kb-lijf{grid-template-columns:1fr}}
+.kb-links{padding:var(--s4);border-right:1px solid var(--lijn-2)}
+@media (max-width:940px){.kb-links{border-right:0;border-bottom:1px solid var(--lijn-2)}}
+.kb-rechts{padding:var(--s4);background:var(--kalk-2)}
+.kb-titel{font:700 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs);
+  border-bottom:1px solid var(--lijn);padding-bottom:7px;margin-bottom:var(--s3)}
+
+/* de week als zeven smalle balken naast elkaar */
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:end}
+.week .dag .mini{height:150px;position:relative;background:var(--kalk-2);border:1px solid var(--lijn-2)}
+.week .dag .mini::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:1.5px;
+  transform:translateX(-50%);background:var(--rood);opacity:.65}
+.week .dag .mini i{position:absolute;border:1px solid var(--inkt);background:var(--wit);display:block}
+.week .dag .mini i.laag{background:var(--inkt)}
+.week .dag .mini i.hoog{background:repeating-linear-gradient(-45deg,var(--inkt) 0 1px,transparent 1px 4px)}
+.week .dag .naam{font:700 10px/1 var(--mono);letter-spacing:.08em;color:var(--grijs);
+  text-align:center;margin-top:8px}
+.week .dag.leeg .mini{background:repeating-linear-gradient(-45deg,#eeece5 0 4px,transparent 4px 9px)}
+.week .dag.vandaag .naam{color:var(--rood)}
+.week .dag.vandaag .mini{border-color:var(--rood);border-width:1.5px}
+
+.aflezing{margin-top:var(--s4);border-top:1px solid var(--lijn);padding-top:var(--s3)}
+.aflezing h5{font:700 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--grijs);margin-bottom:10px}
+.aflezing p{font:400 16px/1.6 var(--serif)}
+.aflezing p b{color:var(--inkt);font-weight:700}
+
+.balans{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--lijn);
+  border:1px solid var(--lijn);margin-top:var(--s3)}
+.balans div{background:var(--wit);padding:var(--s3)}
+.balans b{display:block;font:700 27px/1 var(--sans);letter-spacing:-.04em;color:var(--inkt)}
+.balans span{display:block;font:600 10px/1.4 var(--mono);letter-spacing:.11em;text-transform:uppercase;
+  color:var(--grijs);margin-top:6px}
+.balans div.meer b{color:var(--rood)}
+
+.notitie{border-left:3px solid var(--rood);padding:2px 0 2px var(--s3);margin-top:var(--s4)}
+.notitie p{font:400 15.5px/1.55 var(--serif);color:var(--inkt-2)}
+.notitie p b{color:var(--inkt)}
+.notitie .van{font:600 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--grijs);margin-top:9px;display:block}
+
+.legendaklein{margin-top:var(--s4)}
+.legendaklein .lr{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:center;
+  padding:9px 0;border-bottom:1px dotted var(--lijn)}
+.legendaklein .lr .vk{height:22px;border:1.5px solid var(--inkt);background:var(--wit)}
+.legendaklein .lr .vk.laag{background:var(--inkt)}
+.legendaklein .lr .vk.midden{position:relative}
+.legendaklein .lr .vk.midden::after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;
+  border-radius:50%;background:var(--inkt);transform:translate(-50%,-50%)}
+.legendaklein .lr .vk.hoog{background:repeating-linear-gradient(-45deg,var(--inkt) 0 1.5px,transparent 1.5px 5px)}
+.legendaklein .lr span{font-size:14.5px}
+.legendaklein .lr span b{color:var(--inkt);font-weight:700}
+
+.velvoet{padding:var(--s3) var(--s4);border-top:1px solid var(--lijn-2);display:flex;flex-wrap:wrap;
+  gap:var(--s3);align-items:center;background:var(--kalk-2)}
+.velvoet .los{font:600 10.5px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--grijs)}
+.velvoet .kn{margin-left:auto}
+
+/* ============================================================
+   4 · PRINTKAART — A4 STAAND
+   ============================================================ */
+.bladhouder{display:grid;place-items:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){
+  .bladschaal{width:100%;overflow:hidden}
+  .blad{transform:scale(.78);transform-origin:top left;margin-bottom:-65mm !important;
+    margin-right:-46mm !important}
+}
+@media (max-width:760px){.blad{transform:scale(.45);margin-bottom:-163mm !important;margin-right:-116mm !important}}
+
+.blad{position:relative;width:210mm;height:297mm;background:#fff;color:#000;
+  box-shadow:0 24px 60px #0000002e;border:1px solid var(--lijn);
+  display:flex;flex-direction:column;font-family:var(--sans);padding:8mm 9mm}
+
+.wijzer{position:absolute;width:44mm;font:600 11.5px/1.4 var(--sans);color:var(--inkt-3);
+  border-top:3px solid var(--rood);padding-top:6px}
+@media (max-width:1240px){.wijzer{display:none}}
+
+.kn-kop{display:flex;align-items:flex-end;gap:5mm;border-bottom:1.6pt solid #000;padding-bottom:3mm}
+.kn-kop h1{font:700 21pt/1.02 var(--sans);letter-spacing:-.042em}
+.kn-kop p{font:400 10pt/1.35 var(--sans);color:#3c444d;margin-top:1.4mm}
+.kn-kop .kantvak{margin-left:auto;text-align:right;border:1.4pt solid #bd2a17;padding:2mm 3mm}
+.kn-kop .kantvak b{display:block;font:700 7.5pt/1 var(--mono);letter-spacing:.13em;color:#bd2a17}
+.kn-kop .kantvak span{display:block;font:700 15pt/1 var(--sans);letter-spacing:-.03em;margin-top:1.4mm}
+
+/* kolomkoppen boven de balk */
+.kn-kolommen{display:grid;grid-template-columns:14mm 62mm 1fr;gap:4mm;padding:2.4mm 0 1.6mm;
+  border-bottom:.6pt solid #b9b6ac}
+.kn-kolommen .k2{display:flex;justify-content:space-between;
+  font:700 6.6pt/1 var(--mono);letter-spacing:.06em;color:#5f6870}
+.kn-kolommen .k2 b{color:#bd2a17}
+.kn-kolommen .k3{font:700 7pt/1 var(--mono);letter-spacing:.14em;color:#5f6870;align-self:center}
+.kn-kolommen .k1{font:700 7pt/1 var(--mono);letter-spacing:.1em;color:#5f6870;align-self:center;
+  text-align:right}
+
+/* het lijf: tijdlat | balk | leeskolom, alle drie 196mm hoog en uitgelijnd */
+.kn-lijf{display:grid;grid-template-columns:14mm 62mm 1fr;gap:4mm;height:196mm;padding-top:2mm}
+
+.kn-tijd{position:relative;border-right:.6pt solid #d6d3c9}
+.kn-tijd i{position:absolute;right:2mm;font:600 7.5pt/1 var(--mono);color:#5f6870;transform:translateY(50%)}
+.kn-tijd i::after{content:"";position:absolute;right:-2.6mm;top:50%;width:1.8mm;height:.4pt;background:#8b9299}
+
+.kn-balk{position:relative}
+.kn-balk::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:1.6pt;
+  transform:translateX(-50%);background:#bd2a17}
+.kn-balk .zl{position:absolute;top:0;bottom:0;width:.8pt;background:#000}
+.kn-balk .zl.l{left:15%}
+.kn-balk .zl.r{right:15%}
+.kn-balk .tk{position:absolute;border:1.2pt solid #000;background:#fff}
+.kn-balk .tk.laag{background:#000}
+.kn-balk .tk.midden::after{content:"";position:absolute;left:50%;top:50%;width:2.4mm;height:2.4mm;
+  border-radius:50%;background:#000;transform:translate(-50%,-50%)}
+.kn-balk .tk.hoog{background:repeating-linear-gradient(-45deg,#000 0 .9pt,transparent .9pt 2.2mm)}
+/* zijwaarts = scheve vorm. Skew in plaats van clip-path, zodat de omtreklijn
+   heel blijft — een geknipt kader laat alleen losse hoeken over. */
+.kn-balk .tk.zij{transform:skewY(-5deg)}
+.kn-balk .tk.zij.midden::after{transform:translate(-50%,-50%) skewY(5deg)}
+/* label boven de niveaustip, zodat ze elkaar niet overlappen */
+.kn-balk .tk.zij em{top:26%;transform:translate(-50%,-50%) skewY(5deg)}
+.kn-balk .tk em{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-style:normal;
+  font:700 8pt/1 var(--mono);letter-spacing:.06em;background:#fff;padding:.6mm 1.2mm;color:#000}
+.kn-balk .tk.laag em{background:#000;color:#fff}
+
+/* de leeskolom: gewone, grote taal, uitgelijnd op de tekens */
+.kn-lees{position:relative}
+.kn-lees .lr{position:absolute;left:0;right:0;display:grid;grid-template-columns:20mm 1fr;gap:3.4mm;
+  align-items:center;border-top:.6pt solid #d6d3c9;padding-top:2mm}
+.kn-lees .lr .prent{height:17mm;display:flex;align-items:center;justify-content:center;
+  border:.6pt solid #e2dfd6;background:#fbfaf6}
+.kn-lees .lr .prent img{max-height:15.4mm;width:auto;mix-blend-mode:multiply}
+.kn-lees .lr h3{font:700 14.5pt/1.08 var(--sans);letter-spacing:-.03em}
+.kn-lees .lr .doen{font:700 12.5pt/1.25 var(--sans);margin-top:1.2mm}
+.kn-lees .lr .doen u{text-decoration:none;color:#bd2a17}
+.kn-lees .lr .hoe{font:400 9.6pt/1.32 var(--sans);color:#3c444d;margin-top:1mm}
+.kn-lees .lr .kantje{display:inline-block;font:700 7.4pt/1 var(--mono);letter-spacing:.11em;
+  border:.9pt solid #000;padding:1mm 1.6mm;margin-right:1.6mm;vertical-align:2px}
+.kn-lees .lr .kantje.r{background:#000;color:#fff}
+.kn-lees .lr .kantje.beide{border-color:#bd2a17;color:#bd2a17}
+
+/* begin hier */
+.kn-begin{display:flex;align-items:center;gap:3mm;border-top:1.6pt solid #000;margin-top:2mm;
+  padding-top:2.6mm}
+.kn-begin .pijl{font:700 20pt/1 var(--sans);color:#bd2a17}
+.kn-begin b{display:block;font:700 17pt/1 var(--sans);letter-spacing:-.03em}
+.kn-begin em{display:block;font-style:normal;font:400 9.5pt/1.3 var(--sans);color:#3c444d;
+  max-width:88mm;margin-top:1.4mm}
+.kn-begin .legenda{margin-left:auto;display:flex;gap:3.4mm}
+.kn-begin .legenda div{text-align:center}
+.kn-begin .legenda i{display:block;width:9mm;height:5mm;border:1pt solid #000;background:#fff;
+  margin-bottom:1mm;position:relative}
+.kn-begin .legenda i.laag{background:#000}
+.kn-begin .legenda i.midden::after{content:"";position:absolute;left:50%;top:50%;width:1.8mm;height:1.8mm;
+  border-radius:50%;background:#000;transform:translate(-50%,-50%)}
+.kn-begin .legenda i.hoog{background:repeating-linear-gradient(-45deg,#000 0 .8pt,transparent .8pt 1.8mm)}
+.kn-begin .legenda b{font:700 6.6pt/1 var(--mono);letter-spacing:.07em;display:block}
+
+.kn-voet{border-top:.6pt solid #b9b6ac;margin-top:2.4mm;padding-top:2mm;display:flex;gap:4mm;
+  font:400 8.4pt/1.4 var(--sans);color:#5f6870}
+.kn-voet b{color:#000}
+.kn-voet .rechts{margin-left:auto;text-align:right;flex:0 0 64mm;white-space:nowrap}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#a8b0b7;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:#fff;border-top:2px solid #333c45;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.6}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding:5px 0}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT — A4 STAAND
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 41</span>
+  <strong style="font:800 16px/1 var(--sans);color:#fff;letter-spacing:-.04em">Kinetografie</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">Concept 41 · Kinetografie</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1 class="kop">„3 × 10" zegt niet welk been.<em>Deze balk kán dat niet verzwijgen.</em></h1>
+        <p class="onder">Rudolf Laban schreef in 1928 beweging op: een verticale balk met in het
+          midden één lijn die links van rechts scheidt. <b>In dat schrift bestaat geen zijdeloos
+          teken</b> — je kunt niets noteren zonder een kant te kiezen. En de lengte van een teken
+          is de duur, dus je ziet hoe lang de dag is voordat je begint.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk de kaart</a>
+          <a class="kn leeg" href="#kiezer">De kant kiezen</a>
+        </div>
+      </div>
+
+      <div class="demo">
+        <div class="dkop"><b>Balk 1</b> · dinsdag <span>14 minuten</span></div>
+        <div class="demorij">
+          <div class="tijdlat" aria-hidden="true">
+            <i style="bottom:0">0:00</i>
+            <i style="bottom:20%">2:00</i>
+            <i style="bottom:35%">4:30</i>
+            <i style="bottom:64%">9:00</i>
+            <i style="bottom:86%">12:00</i>
+            <i style="bottom:100%">14:00</i>
+          </div>
+          <div>
+            <div class="balk">
+              <div class="staaf">
+                <span class="zijlijn l" aria-hidden="true"></span>
+                <span class="zijlijn r" aria-hidden="true"></span>
+
+                <!-- 0:00–2:00 · beide · laag: gewicht verplaatsen -->
+                <span class="teken laag plaats" style="bottom:0;height:20%;left:26%;right:26%"
+                      title="Gewicht verplaatsen, beide kanten, 2 minuten"></span>
+
+                <!-- 2:00–4:30 · beide · hoog: op de tenen -->
+                <span class="teken hoog plaats" style="bottom:20%;height:15%;left:26%;right:26%"
+                      title="Op de tenen komen, beide, 2½ minuut"></span>
+
+                <!-- 4:30–7:30 · rechts · midden · zijwaarts -->
+                <span class="teken midden zij" style="bottom:35%;height:18%;left:56%;width:24%"
+                      title="Heup zijwaarts heffen rechts, 3 minuten"></span>
+                <!-- 7:30–9:00 · links · midden · zijwaarts (helft van rechts) -->
+                <span class="teken midden zij" style="bottom:53%;height:11%;left:20%;width:24%"
+                      title="Heup zijwaarts heffen links, 1½ minuut"></span>
+
+                <!-- 9:00–12:00 · rechts · midden · plaats -->
+                <span class="teken midden plaats" style="bottom:64%;height:22%;left:52%;width:22%"
+                      title="Op één been staan rechts, 3 minuten"></span>
+
+                <!-- 12:00–14:00 · beide · laag -->
+                <span class="teken laag plaats" style="bottom:86%;height:14%;left:30%;right:30%"
+                      title="Op de plaats marcheren, beide, 2 minuten"></span>
+              </div>
+            </div>
+            <div class="kolomnamen">
+              <span>LINKS</span><b>MIDDENLIJN</b><span>RECHTS</span>
+            </div>
+          </div>
+        </div>
+        <p class="beginhier"><span aria-hidden="true">↑</span> LEZEN VAN ONDER NAAR BOVEN</p>
+      </div>
+    </div>
+
+    <div class="drieregels">
+      <div class="regelblok">
+        <span class="nr">REGEL 1</span>
+        <h3>De middenlijn dwingt een kant af</h3>
+        <p>In Laban ligt elk teken links of rechts van de middenlijn; er is geen vak voor „maakt
+          niet uit". <b>Na een knieprothese, een CVA of een enkelband is de kant het hele werk</b>,
+          en juist die verdwijnt op een gewone kaart in het woord „beide". Symmetrisch mág — dan
+          staat het teken over de lijn heen, en dat is dan een besluit.</p>
+      </div>
+      <div class="regelblok">
+        <span class="nr">REGEL 2</span>
+        <h3>Duur is hoogte</h3>
+        <p>„3 × 10" en „4 × 20 sec." staan op elke kaart even groot, terwijl het tweede vier keer
+          zo lang duurt. Hier is een teken van drie minuten twee keer zo hoog als een van
+          anderhalf. <b>De dag heeft een echte lengte en u ziet hem vóórdat u begint</b> — dat
+          scheelt de teleurstelling halverwege.</p>
+      </div>
+      <div class="regelblok">
+        <span class="nr">REGEL 3</span>
+        <h3>De arcering klopt letterlijk</h3>
+        <p>Laban arceert naar niveau: laag is massief, midden krijgt een stip, hoog wordt
+          gestreept. Bij ons valt dat samen met het lichaam. <b>Op de tenen komen is gestreept
+          omdat het hóóg is</b>; marcheren op de vloer is massief. Het schrift tekent wat er
+          gebeurt — dat hoefden we niet te verzinnen.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>Een oefening is hier pas geplaatst als er een <b>kant</b> en een <b>duur</b> bij staat —
+        zonder die twee kan de balk het teken niet tekenen, en dat is geen technisch bezwaar maar
+        het punt. Rechts groeit de dag mee: hoogte is tijd, en de verdeling links/rechts staat er
+        onder de balk in twee getallen.</p>
+    </div>
+
+    <div class="regelaar">
+
+      <div class="rg">
+        <h3>Oefeningen · been en balans</h3>
+
+        <div class="zoekbalk">
+          <span>ZOEK</span>
+          <input type="text" value="been/balans — knieprothese rechts, week 7" aria-label="Zoek een oefening"/>
+        </div>
+
+        <div class="oef">
+          <div class="beeld">
+            <img src="/images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png"
+                 alt="Gewicht zijwaarts verplaatsen met steun"/>
+          </div>
+          <div>
+            <h4>Gewicht zijwaarts verplaatsen</h4>
+            <div class="col">Kolom: steun · niveau laag</div>
+            <div class="kantkeuze" role="group" aria-label="Kant voor gewicht verplaatsen">
+              <button type="button" aria-pressed="false">Links</button>
+              <button type="button" aria-pressed="false">Rechts</button>
+              <button type="button" class="beide" aria-pressed="true">Beide — over de lijn</button>
+            </div>
+            <div class="duurregel">
+              <span class="veld">2 × 10 · ± 2 min.</span>
+              <span class="wordt">wordt een teken van <b>2 minuten hoog</b>, massief</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="oef">
+          <div class="beeld">
+            <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen komen"/>
+          </div>
+          <div>
+            <h4>Op de tenen komen</h4>
+            <div class="col">Kolom: steun · niveau hoog</div>
+            <div class="kantkeuze" role="group" aria-label="Kant voor op de tenen komen">
+              <button type="button" aria-pressed="false">Links</button>
+              <button type="button" aria-pressed="false">Rechts</button>
+              <button type="button" class="beide" aria-pressed="true">Beide — over de lijn</button>
+            </div>
+            <div class="duurregel">
+              <span class="veld">2 × 15 · ± 2½ min.</span>
+              <span class="wordt">gestreept, want <b>hoog niveau</b> — u komt omhoog</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="oef">
+          <div class="beeld">
+            <img src="/images/onderste-extremiteit/heup-zijwaarts-heffen-staand-met-steun-line-v1.png"
+                 alt="Heup zijwaarts heffen met steun"/>
+          </div>
+          <div>
+            <h4>Heup zijwaarts heffen</h4>
+            <div class="col">Kolom: been · niveau midden · richting zijwaarts</div>
+            <div class="kantkeuze" role="group" aria-label="Kant voor heup zijwaarts heffen">
+              <button type="button" aria-pressed="true">Links</button>
+              <button type="button" aria-pressed="true">Rechts</button>
+              <button type="button" class="beide" aria-pressed="false">Beide — over de lijn</button>
+            </div>
+            <div class="duurregel">
+              <span class="veld">Rechts 3 × 10</span>
+              <span class="veld">Links 2 × 8</span>
+              <span class="wordt">twee tekens, <b>rechts twee keer zo hoog</b></span>
+            </div>
+            <p class="waarschuw"><span aria-hidden="true">▲</span>
+              <span><b>Ongelijk verdeeld en dat mag.</b> De balk laat het alleen niet stiekem
+                gebeuren — de therapeut heeft dit verschil zo ingevoerd, niet de gewoonte.</span></p>
+          </div>
+        </div>
+
+        <div class="oef">
+          <div class="beeld">
+            <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png"
+                 alt="Op één been staan met steun"/>
+          </div>
+          <div>
+            <h4>Op één been staan</h4>
+            <div class="col">Kolom: steun · niveau midden · richting ter plaatse</div>
+            <div class="kantkeuze" role="group" aria-label="Kant voor op één been staan">
+              <button type="button" aria-pressed="false">Links</button>
+              <button type="button" aria-pressed="true">Rechts</button>
+              <button type="button" class="beide" aria-pressed="false">Beide — over de lijn</button>
+            </div>
+            <div class="duurregel">
+              <span class="veld">4 × 20 sec. · 3 min.</span>
+              <span class="wordt">een <b>rechthoek</b>: er wordt niets verplaatst</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="dagbalk">
+        <h3>De dag tot nu toe</h3>
+        <div class="balk">
+          <div class="staaf">
+            <span class="zijlijn l" aria-hidden="true"></span>
+            <span class="zijlijn r" aria-hidden="true"></span>
+            <span class="teken laag plaats" style="bottom:0;height:20%;left:26%;right:26%"></span>
+            <span class="teken hoog plaats" style="bottom:20%;height:15%;left:26%;right:26%"></span>
+            <span class="teken midden zij" style="bottom:35%;height:18%;left:56%;width:24%"></span>
+            <span class="teken midden zij" style="bottom:53%;height:11%;left:20%;width:24%"></span>
+            <span class="teken midden plaats" style="bottom:64%;height:22%;left:52%;width:22%"></span>
+            <span class="teken laag plaats" style="bottom:86%;height:14%;left:30%;right:30%"></span>
+          </div>
+        </div>
+
+        <div class="totaal">
+          <b>14 min.</b>
+          <span>zo lang duurt deze dag,<br/>afgerond naar boven</span>
+        </div>
+
+        <div class="verdeling">
+          <div><b>4½ min.</b><span>alleen links</span></div>
+          <div class="zwaar"><b>6 min.</b><span>alleen rechts</span></div>
+        </div>
+
+        <p class="slot">Rechts krijgt vandaag <b>een derde meer</b> dan links. Dat is na een
+          knieprothese rechts precies de bedoeling — maar het staat er nu, in cijfers, en niet
+          verstopt in „3 × 10, beide kanten".</p>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>Zeven smalle balken naast elkaar, één per dag. Omdat elke balk dezelfde middenlijn heeft,
+        <b>ziet u de scheefheid van de week in één blik</b> — en dat is bij eenzijdig herstel de
+        enige grafiek die ertoe doet. Een lege dag is een lege dag: gearceerd, niet rood.</p>
+    </div>
+
+    <div class="kaartblad">
+      <div class="kb-kop">
+        <div>
+          <h3>Dhr. R. Okonkwo — 58 jaar</h3>
+          <p>Knieprothese rechts, week 7 · behandelaar: L. Verheij, fysiotherapeut</p>
+        </div>
+        <div class="kant">
+          <b>WERKKANT</b>
+          <span>Rechts</span>
+        </div>
+      </div>
+
+      <div class="kb-lijf">
+        <div class="kb-links">
+          <div class="kb-titel">Week 34 · zeven balken</div>
+
+          <div class="week">
+            <div class="dag">
+              <div class="mini" aria-label="maandag, 12 minuten">
+                <i class="laag" style="bottom:0;height:18%;left:22%;right:22%"></i>
+                <i class="hoog" style="bottom:18%;height:14%;left:22%;right:22%"></i>
+                <i style="bottom:32%;height:16%;left:56%;width:26%"></i>
+                <i style="bottom:48%;height:9%;left:18%;width:26%"></i>
+                <i style="bottom:57%;height:20%;left:52%;width:24%"></i>
+              </div>
+              <div class="naam">MA</div>
+            </div>
+            <div class="dag">
+              <div class="mini" aria-label="dinsdag, 14 minuten">
+                <i class="laag" style="bottom:0;height:20%;left:22%;right:22%"></i>
+                <i class="hoog" style="bottom:20%;height:15%;left:22%;right:22%"></i>
+                <i style="bottom:35%;height:18%;left:56%;width:26%"></i>
+                <i style="bottom:53%;height:11%;left:18%;width:26%"></i>
+                <i style="bottom:64%;height:22%;left:52%;width:24%"></i>
+                <i class="laag" style="bottom:86%;height:14%;left:26%;right:26%"></i>
+              </div>
+              <div class="naam">DI</div>
+            </div>
+            <div class="dag leeg">
+              <div class="mini" aria-label="woensdag, niets"></div>
+              <div class="naam">WO</div>
+            </div>
+            <div class="dag">
+              <div class="mini" aria-label="donderdag, 10 minuten">
+                <i class="laag" style="bottom:0;height:16%;left:22%;right:22%"></i>
+                <i style="bottom:16%;height:15%;left:56%;width:26%"></i>
+                <i style="bottom:31%;height:8%;left:18%;width:26%"></i>
+                <i style="bottom:39%;height:18%;left:52%;width:24%"></i>
+              </div>
+              <div class="naam">DO</div>
+            </div>
+            <div class="dag">
+              <div class="mini" aria-label="vrijdag, 13 minuten">
+                <i class="laag" style="bottom:0;height:19%;left:22%;right:22%"></i>
+                <i class="hoog" style="bottom:19%;height:14%;left:22%;right:22%"></i>
+                <i style="bottom:33%;height:17%;left:56%;width:26%"></i>
+                <i style="bottom:50%;height:10%;left:18%;width:26%"></i>
+                <i style="bottom:60%;height:21%;left:52%;width:24%"></i>
+              </div>
+              <div class="naam">VR</div>
+            </div>
+            <div class="dag">
+              <div class="mini" aria-label="zaterdag, 6 minuten">
+                <i class="laag" style="bottom:0;height:14%;left:22%;right:22%"></i>
+                <i style="bottom:14%;height:12%;left:56%;width:26%"></i>
+                <i style="bottom:26%;height:7%;left:18%;width:26%"></i>
+              </div>
+              <div class="naam">ZA</div>
+            </div>
+            <div class="dag vandaag">
+              <div class="mini" aria-label="zondag, vandaag, nog niets">
+                <i class="laag" style="bottom:0;height:18%;left:22%;right:22%"></i>
+              </div>
+              <div class="naam">ZO</div>
+            </div>
+          </div>
+
+          <div class="aflezing">
+            <h5>Wat de week zegt</h5>
+            <p>Zes van de zeven balken zijn rechts zwaarder — <b>dat is de bedoeling en het klopt.</b>
+              Wat opvalt is iets anders: op zaterdag verdween het bovenste teken, dat van de balans.
+              Niet de hele dag, alleen de top. <b>Bij weinig tijd sneuvelt steeds hetzelfde
+              stuk</b>, en dat is een gesprek waard.</p>
+          </div>
+
+          <div class="balans">
+            <div><b>29 min.</b><span>links, deze week</span></div>
+            <div class="meer"><b>41 min.</b><span>rechts, deze week</span></div>
+          </div>
+        </div>
+
+        <div class="kb-rechts">
+          <div class="kb-titel">Het schrift in het kort</div>
+          <div class="legendaklein">
+            <div class="lr"><span class="vk laag"></span>
+              <span><b>Laag</b> — massief. Voeten op de vloer, gewicht laag.</span></div>
+            <div class="lr"><span class="vk midden"></span>
+              <span><b>Midden</b> — met stip. Gewone stand, been beweegt.</span></div>
+            <div class="lr"><span class="vk hoog"></span>
+              <span><b>Hoog</b> — gestreept. U komt omhoog: op de tenen, reiken.</span></div>
+            <div class="lr"><span class="vk" style="clip-path:polygon(0 0,100% 12%,100% 100%,0 88%)"></span>
+              <span><b>Scheef</b> — zijwaarts. Recht = ter plaatse.</span></div>
+          </div>
+
+          <div class="notitie">
+            <p>„Ik ben op de balk gaan letten toen ik zag dat links maar half zo hoog was. Dat had
+              ik nooit gemerkt aan <b>drie keer tien, beide kanten</b>."</p>
+            <span class="van">R. Okonkwo · 21 aug.</span>
+          </div>
+
+          <div class="notitie" style="border-color:var(--lijn)">
+            <p><b>Waar we eerlijk over zijn:</b> van onder naar boven lezen is vreemd, en dat blijft
+              zo. Daarom staat het onderaan het blad in grote letters — en is de leeskolom ernaast
+              gewoon Nederlands op 14 punt. <b>De balk is het skelet, niet de tekst.</b></p>
+            <span class="van">Ontwerpnotitie</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="velvoet">
+        <span class="los">Balk 1 · dinsdag · 14 minuten · 6 tekens</span>
+        <a class="kn geen-print" href="#printkaart">Balk afdrukken op A4</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>De balk loopt over de volle hoogte van het blad en is <b>tijdgetrouw</b>: 196 millimeter
+        voor veertien minuten, dus een teken van drie minuten is echt twee keer zo hoog als een van
+        anderhalf. Rechts ernaast staat gewone Nederlandse taal op 14 punt, uitgelijnd op het teken
+        waar het bij hoort. Onderaan, waar het blad begint: <b>BEGIN HIER</b>, met een pijl omhoog.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer geen-print" style="top:20mm;right:calc(100% + 22px);text-align:right">
+            de werkkant staat rood omkaderd in de kop: dit blad weet welk been geopereerd is</span>
+          <span class="wijzer geen-print" style="top:96mm;left:calc(100% + 22px)">
+            de leeskolom is gewoon Nederlands op 14,5 punt — de balk ernaast is het skelet, niet
+            de tekst</span>
+          <span class="wijzer geen-print" style="top:150mm;right:calc(100% + 22px);text-align:right">
+            rechts drie minuten, links anderhalve: het verschil is hier hoogte en niet een
+            voetnoot</span>
+          <span class="wijzer geen-print" style="top:250mm;left:calc(100% + 22px)">
+            de enige plek waar dit blad hard schreeuwt: BEGIN HIER, onderaan, met een pijl omhoog</span>
+
+          <div class="kn-kop">
+            <div>
+              <h1>Been en balans — dinsdag</h1>
+              <p>Dhr. R. Okonkwo · 58 jaar · knieprothese rechts, week 7<br/>
+                L. Verheij, fysiotherapeut · Fysiotherapie Het Zand, Deventer</p>
+            </div>
+            <div class="kantvak">
+              <b>WERKKANT</b>
+              <span>RECHTS</span>
+            </div>
+          </div>
+
+          <div class="kn-kolommen">
+            <div class="k1">TIJD</div>
+            <div class="k2"><span>LINKS</span><b>MIDDEN</b><span>RECHTS</span></div>
+            <div class="k3">WAT U DOET</div>
+          </div>
+
+          <div class="kn-lijf">
+
+            <!-- tijdlat: 196mm = 14 minuten -->
+            <div class="kn-tijd" aria-hidden="true">
+              <i style="bottom:0">0:00</i>
+              <i style="bottom:14.3%">2:00</i>
+              <i style="bottom:32.1%">4:30</i>
+              <i style="bottom:64.3%">9:00</i>
+              <i style="bottom:85.7%">12:00</i>
+              <i style="bottom:100%">14:00</i>
+            </div>
+
+            <!-- de balk -->
+            <div class="kn-balk">
+              <span class="zl l" aria-hidden="true"></span>
+              <span class="zl r" aria-hidden="true"></span>
+
+              <span class="tk laag" style="bottom:0;height:14.3%;left:24%;right:24%">
+                <em>2 min.</em></span>
+              <span class="tk hoog" style="bottom:14.3%;height:17.8%;left:24%;right:24%">
+                <em>2½ min.</em></span>
+              <span class="tk midden zij" style="bottom:32.1%;height:21.4%;left:55%;width:26%">
+                <em>3 min.</em></span>
+              <span class="tk midden zij" style="bottom:53.5%;height:10.8%;left:19%;width:26%">
+                <em>1½ min.</em></span>
+              <span class="tk midden" style="bottom:64.3%;height:21.4%;left:52%;width:24%"></span>
+              <span class="tk laag" style="bottom:85.7%;height:14.3%;left:28%;right:28%">
+                <em>2 min.</em></span>
+            </div>
+
+            <!-- de leeskolom, uitgelijnd op de tekens -->
+            <div class="kn-lees">
+
+              <div class="lr" style="bottom:0;height:14.3%">
+                <div class="prent">
+                  <img src="/images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png"
+                       alt="Gewicht zijwaarts verplaatsen met steun"/>
+                </div>
+                <div>
+                  <h3>Gewicht zijwaarts verplaatsen</h3>
+                  <div class="doen"><span class="kantje beide">BEIDE</span>2 × 10 · rustig</div>
+                  <div class="hoe">Handen op het aanrecht. Gewicht naar links, even blijven, dan
+                    naar rechts.</div>
+                </div>
+              </div>
+
+              <div class="lr" style="bottom:14.3%;height:17.8%">
+                <div class="prent">
+                  <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen komen"/>
+                </div>
+                <div>
+                  <h3>Op de tenen komen</h3>
+                  <div class="doen"><span class="kantje beide">BEIDE</span>2 × 15</div>
+                  <div class="hoe">Omhoog, één tel stil, langzaam zakken. Aanrecht binnen
+                    handbereik.</div>
+                </div>
+              </div>
+
+              <div class="lr" style="bottom:32.1%;height:32.2%">
+                <div class="prent">
+                  <img src="/images/onderste-extremiteit/heup-zijwaarts-heffen-staand-met-steun-line-v1.png"
+                       alt="Heup zijwaarts heffen met steun"/>
+                </div>
+                <div>
+                  <h3>Heup zijwaarts heffen</h3>
+                  <div class="doen"><span class="kantje r">RECHTS</span>3 × 10 &nbsp;·&nbsp;
+                    <span class="kantje">LINKS</span>2 × 8</div>
+                  <div class="hoe">Rechts krijgt vandaag dubbel zoveel tijd als links — dat ziet u
+                    aan de hoogte van de twee tekens. Been gestrekt opzij, romp rechtop.</div>
+                </div>
+              </div>
+
+              <div class="lr" style="bottom:64.3%;height:21.4%">
+                <div class="prent">
+                  <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png"
+                       alt="Op één been staan met steun"/>
+                </div>
+                <div>
+                  <h3>Op één been staan</h3>
+                  <div class="doen"><span class="kantje r">RECHTS</span>4 × 20 sec.</div>
+                  <div class="hoe">Twee vingers aan het aanrecht, blik op een vast punt. Wordt het
+                    wiebelig: zet de voet gewoon neer.</div>
+                </div>
+              </div>
+
+              <div class="lr" style="bottom:85.7%;height:14.3%">
+                <div class="prent">
+                  <img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png"
+                       alt="Op de plaats marcheren met steun"/>
+                </div>
+                <div>
+                  <h3>Op de plaats marcheren</h3>
+                  <div class="doen"><span class="kantje beide">BEIDE</span>2 minuten · uitlopen</div>
+                  <div class="hoe">Rustig tempo, knieën niet hoog. Hiermee sluit u af.</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="kn-begin">
+            <span class="pijl" aria-hidden="true">↑</span>
+            <div>
+              <b>BEGIN HIER — ONDERAAN</b>
+              <em>De balk loopt van beneden naar boven, zoals u de dag doorkomt.</em>
+            </div>
+            <div class="legenda">
+              <div><i class="laag"></i><b>LAAG</b></div>
+              <div><i class="midden"></i><b>MIDDEN</b></div>
+              <div><i class="hoog"></i><b>HOOG</b></div>
+            </div>
+          </div>
+
+          <div class="kn-voet">
+            <span>Links van de middenlijn is <b>uw linkerbeen</b>, rechts is uw rechter — ook als u
+              het blad in de hand houdt.</span>
+            <span class="rechts"><b>Fysiotherapie Het Zand</b><br/>
+              Zandpoort 12, Deventer · 0570 — 61 20 44</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>Waarom dit schuurt</h4>
+      <p>Van onder naar boven lezen is vreemd, en we halen die vreemdheid er niet uit — het is de
+        prijs voor een blad waarop tijd echt hoogte is. Wie dat te veel vindt, moet dit concept
+        niet nemen. Wat wél overeind blijft, ook los van de balk: een kaart die niet kán zwijgen
+        over welke kant er traint.</p>
+    </div>
+    <div class="kolom">
+      <h4>Toetsen</h4>
+      <ul>
+        <li>Print in zwart-wit: kant is plaats, niveau is arcering, duur is lengte. Niets gaat weg.</li>
+        <li>Dek de balk af. Blijft rechts een gewone, grote, leesbare oefenkaart? Ja.</li>
+        <li>Leg maandag en zaterdag naast elkaar: welk teken verdween als eerste?</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Meer</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -626,6 +626,51 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
   font-style:normal;background:#fff;padding:3px 5px}
 .staal.vertrekstaat .tijden i.laat{background:#0057c8;color:#fff}
 
+/* — staal concept 40: Knipvel — */
+.staal.knipvel{background:#efece2;color:#1b1a16}
+.staal.knipvel .plaatnr{color:#b02a17;font-family:var(--mono);position:relative;z-index:2}
+.staal.knipvel .woord{font-family:"Avenir Next",Seravek,"Segoe UI",sans-serif;font-weight:700;
+  letter-spacing:-.04em;position:relative;z-index:2}
+.staal.knipvel .woord em{font-style:normal;color:#b02a17;text-decoration:underline;
+  text-decoration-thickness:2.5px;text-underline-offset:4px}
+.staal.knipvel .lijnen{position:absolute;inset:0;overflow:hidden}
+.staal.knipvel .lijnen i{position:absolute;left:-8%;right:-8%;height:0;
+  border-top:1.5px solid #a09a86;transform-origin:center}
+.staal.knipvel .lijnen i:nth-child(1){top:14px;border-top-style:dotted;transform:rotate(-6deg)}
+.staal.knipvel .lijnen i:nth-child(2){top:26px;border-top-style:dashed;transform:rotate(-3.5deg)}
+.staal.knipvel .lijnen i:nth-child(3){top:38px;transform:rotate(-1deg)}
+.staal.knipvel .lijnen i.uw{top:50px;border-top:3px solid #b02a17;transform:rotate(1.5deg)}
+.staal.knipvel .strepen i{border-color:rgba(27,26,22,.24)}
+
+/* — staal concept 41: Kinetografie — */
+.staal.kinetografie{background:#f3f0e9;color:#14171b}
+.staal.kinetografie .plaatnr{color:#bd2a17;font-family:var(--mono);position:relative;z-index:2}
+.staal.kinetografie .woord{font-family:"Avenir Next",Seravek,"Segoe UI",sans-serif;font-weight:700;
+  letter-spacing:-.04em;position:relative;z-index:2;padding-right:116px}
+.staal.kinetografie .woord em{font-style:normal;color:#bd2a17}
+.staal.kinetografie .staafje{position:absolute;right:16px;top:10px;bottom:10px;width:96px}
+.staal.kinetografie .staafje::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:2px;
+  transform:translateX(-50%);background:#bd2a17}
+.staal.kinetografie .staafje i{position:absolute;border:1.5px solid #14171b;background:#fff;display:block}
+.staal.kinetografie .staafje i.laag{background:#14171b}
+.staal.kinetografie .staafje i.hoog{background:repeating-linear-gradient(-45deg,#14171b 0 1.5px,transparent 1.5px 5px)}
+.staal.kinetografie .strepen i{border-color:rgba(20,23,27,.24)}
+
+/* — staal concept 42: Leesafstand — */
+.staal.leesafstand{background:#ffffff;color:#000}
+.staal.leesafstand .plaatnr{color:#0a655c;font-family:var(--mono)}
+.staal.leesafstand .woord{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;
+  letter-spacing:-.045em;padding-right:56px;font-size:25px}
+.staal.leesafstand .woord em{font-style:normal;color:#0a655c}
+.staal.leesafstand .trap{position:absolute;right:14px;top:30px;text-align:right;
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;color:#000;line-height:1}
+.staal.leesafstand .trap i{display:block;font-style:normal;margin-bottom:3px}
+.staal.leesafstand .trap i:nth-child(1){font-size:19px}
+.staal.leesafstand .trap i:nth-child(2){font-size:12px}
+.staal.leesafstand .trap i:nth-child(3){font-size:8px;color:#5a6465}
+.staal.leesafstand .trap i:nth-child(4){font-size:5px;color:#889192}
+.staal.leesafstand .strepen i{border-color:rgba(0,0,0,.22)}
+
 .kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
 .kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
 .kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
@@ -685,8 +730,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>39</b> concepten</span>
-      <span>Laatste ronde <b>23 augustus 2026</b></span>
+      <span><b>42</b> concepten</span>
+      <span>Laatste ronde <b>24 augustus 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -2315,6 +2360,146 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-39-vertrekstaat.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-39-vertrekstaat.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="galerijkop" style="margin-top:var(--s6)">
+      <h2>Ronde 10</h2>
+      <span>ronde 10 · 24 aug 2026</span>
+    </div>
+
+    <div class="raster">
+
+      <!-- ─────────── CONCEPT 40 ─────────── -->
+      <article class="kaart">
+        <div class="staal knipvel">
+          <div class="lijnen" aria-hidden="true"><i></i><i></i><i></i><i class="uw"></i></div>
+          <div class="plaatnr">4 maten · 1 blad</div>
+          <div class="woord">De volgende maat <em>ligt er al op</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 40</div>
+          <h3>Knipvel</h3>
+          <p class="richting">Alle maten staan al op het blad; u trekt alleen uw eigen lijn over.</p>
+          <p class="rationale">Midden in elke Burda zit een knipvel: één vel dundruk waarop álle
+            maten over elkaar heen gedrukt staan, elk in een eigen lijnsoort. Twee eigenschappen
+            daarvan ontbreken op elke oefenkaart in Nederland. <b>De volgende maat ligt er al op</b>,
+            een halve centimeter naast uw lijn — u hoeft niets aan te vragen om te zien wat er na
+            deze komt. En je mág tussen twee maten in: elke naaister loopt van 38 bij de schouder
+            naar 42 bij de heup, want één lichaam heeft meerdere maten tegelijk. Het bijzondere is
+            dat Fysiplan die maten al hééft: heup zijwaarts heffen staat vier keer in de bibliotheek,
+            van zijlig tot op één been. De uitdraai drukt er één af. Dit blad drukt ze alle vier,
+            zet de uwe massief, en drukt het knipteken erbij — het vooraf afgesproken moment waarop
+            u zelf opschuift. Terugknippen is geen terugval: op een knipvel is geen enkele lijn weg.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>het knipvel van Burda en Knipmode, met vier maten in vier lijnsoorten over elkaar ·
+              de regel dat tussen twee maten in gewoon mag · het knipje in de rand als oriëntatie
+              zonder tekst · de draadrichtingspijl die zegt hoe het deel op de stof moet liggen ·
+              overtrekpapier en potlood: het origineel blijft heel</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b> — kader met registerhoeken, lijnsoorten-legenda langs de kop, vier
+              patroondelen met de oefening op 15 punt, en rechts van elk deel de maatladder met
+              het knipteken eronder in blauw; maat is lijnsóórt en geen kleur, dus zwart-wit
+              verliest niets</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-40-knipvel.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-40-knipvel.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 41 ─────────── -->
+      <article class="kaart">
+        <div class="staal kinetografie">
+          <div class="staafje" aria-hidden="true">
+            <i class="laag" style="bottom:0;height:18%;left:24%;right:24%"></i>
+            <i class="hoog" style="bottom:18%;height:16%;left:24%;right:24%"></i>
+            <i style="bottom:34%;height:24%;left:55%;width:26%"></i>
+            <i style="bottom:58%;height:12%;left:19%;width:26%"></i>
+            <i style="bottom:70%;height:26%;left:52%;width:24%"></i>
+          </div>
+          <div class="plaatnr">Duur = hoogte</div>
+          <div class="woord">Welk <em>been</em> eigenlijk?</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 41</div>
+          <h3>Kinetografie</h3>
+          <p class="richting">De middenlijn is niet decoratief: links en rechts zijn niet dezelfde oefening.</p>
+          <p class="rationale">Rudolf Laban schreef in 1928 beweging op: een verticale balk, van
+            onder naar boven gelezen, met in het midden één lijn die links van rechts scheidt.
+            <b>In dat schrift bestaat geen zijdeloos teken</b> — je kunt niets noteren zonder een
+            kant te kiezen, terwijl na een knieprothese, een CVA of een enkelband juist dát het hele
+            werk is. Het tweede dat Laban meebrengt: de lengte van een teken ís de duur, dus een
+            oefening van drie minuten is twee keer zo hoog als een van anderhalf, en u ziet hoe lang
+            de dag is vóórdat u begint. „3 × 10" en „4 × 20 sec." staan op elke kaart even groot.
+            En één ding kregen we cadeau: Laban arceert naar niveau, en dat valt hier letterlijk
+            samen met het lichaam — op de tenen komen is gestreept omdat het hóóg is, marcheren op
+            de vloer is massief zwart. Het scherpste risico laten we staan: van onder naar boven
+            lezen is vreemd. Daarom staat onderaan in kapitalen BEGIN HIER, met een pijl omhoog.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>Labanotatie / Kinetografie Laban, 1928: drielijnige verticale balk, kolommen per
+              lichaamsdeel, vorm = richting, arcering = niveau, lengte = duur · de middenlijn die
+              links van rechts scheidt · muzieknotatie waarin een hele noot vier keer zo breed is
+              als een kwart · toneelplattegronden waarop de vloer de bladzijde is</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b> — de balk loopt over 196 mm en is tijdgetrouw (196 mm = 14
+              minuten), rechts ernaast gewone Nederlandse taal op 14,5 punt uitgelijnd op het teken
+              waar ze bij hoort, en onderaan BEGIN HIER op 17 punt; kant is plaats, niveau is
+              arcering, duur is lengte — alles overleeft zwart-wit</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-41-kinetografie.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-41-kinetografie.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 42 ─────────── -->
+      <article class="kaart">
+        <div class="staal leesafstand">
+          <div class="trap" aria-hidden="true">
+            <i>3 M</i><i>1,5 M</i><i>50 CM</i><i>25 CM</i>
+          </div>
+          <div class="plaatnr">Utrecht · 1862</div>
+          <div class="woord">Ontworpen op 40 cm,<br/>gelezen op <em>3 meter</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 42</div>
+          <h3>Leesafstand</h3>
+          <p class="richting">Elk element krijgt een afstand. Ook de kleinste.</p>
+          <p class="rationale">Herman Snellen hing in 1862 in Utrecht een kaart op waarvan elke regel
+            een getal kreeg: de afstand waarop een gezond oog hem nog leest. Wat hij uitvond is niet
+            „grote letters" maar iets preciezers — <b>grootte als functie van een bekende
+            afstand.</b> Bij een oefenkaart is die afstand ook bekend, alleen vraagt niemand ernaar:
+            drie meter vanuit de deuropening („heb ik het vandaag al gedaan?"), anderhalve meter
+            staand aan het aanrecht terwijl u op één been staat en dus níet kunt bukken, en vijftig
+            centimeter met het blad in de hand, één keer, aan tafel. Drie situaties, drie maten, en
+            een begroting die nee zegt: vier oefeningen op een A4 en geen zeven, omdat 21 punt
+            ruimte kost. De mooiste omkering komt van Snellen zelf — de onderste regel van zijn
+            kaart hoeft niemand te lezen. Daar staat hier de administratie, op 7 punt, met erboven:
+            DEZE REGEL HOEFT U NIET TE LEZEN.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>de Snellenkaart, Utrecht 1862, met per regel de afstand erbij · het optotype op een
+              raster van 5 × 5 met een streek van precies een vijfde · Snellens eis dat herkenning
+              alleen van de scherpte van het oog mag afhangen, „not upon its form or ornamentation" ·
+              de onderste regel die niemand hoeft te halen · de koelkastdeur als werkelijke
+              hangplek van elke oefenkaart</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b> — afstandslat in de kantlijn die bij elk element de bedoelde
+              leesafstand noemt, kopregel op 33 punt met vier afstreepbollen van 14 mm, oefening op
+              21 punt en aantal op 17 punt, uitvoering op 10 punt, en onderaan in twee kolommen op
+              7 punt de regel die u niet hoeft te lezen; geen grijstint in leestekst</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-42-leesafstand.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-42-leesafstand.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>

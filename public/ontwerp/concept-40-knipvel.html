@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 40 — Knipvel · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 40 — KNIPVEL
+   ------------------------------------------------------------
+   Alle maten staan al op het blad. U trekt alleen uw eigen lijn.
+
+   In het midden van een Burda ligt een knipvel: één groot vel
+   dundruk waarop álle maten over elkaar heen gedrukt staan, elk
+   in een eigen lijnsoort. Stippellijn is maat 36, streep-stip is
+   38, streepjes zijn 40. Je legt er overtrekpapier op en trekt
+   jóuw lijn over. De rest blijft staan.
+
+   Twee dingen maken dat vel bijzonder, en allebei ontbreken op
+   elke oefenkaart in Nederland:
+
+     · DE VOLGENDE MAAT LIGT ER AL OP. Je hoeft niets aan te
+       vragen om te zien wat er na deze maat komt. Hij ligt een
+       halve centimeter naast je lijn, in een andere lijnsoort,
+       en dat is de hele belofte van het vel: er is een maat na
+       deze.
+
+     · JE MAG TUSSEN TWEE MATEN IN. Elke naaister weet het en
+       elke handleiding zegt het: loop van maat 38 bij de schouder
+       naar 42 bij de heup. Eén lichaam heeft meerdere maten
+       tegelijk. Een oefenkaart geeft één niveau aan één mens,
+       terwijl een knie op maat 2 zit en een heup allang op 4.
+
+   En Fysiplan hééft die maten al. In de bibliotheek staat heup
+   zijwaarts heffen vier keer: zijlig, staand met steun, met
+   elastiek, functioneel op één been. Vier maten van hetzelfde
+   patroondeel. Toch drukt de uitdraai er één af, alsof de andere
+   drie niet bestaan, en is er een consult nodig om de volgende
+   te mogen zien.
+
+   Dit concept drukt ze alle vier af. Uw maat massief, de rest
+   fijn — en het knipteken erbij: het vooraf afgesproken moment
+   waarop u zelf een maat opschuift.
+
+   DE ZWART-WIT-TOETS ZIT IN HET IDEE. Maat is hier lijnsóórt,
+   geen kleur. Een knipvel is altijd in één inkt gedrukt en werkt
+   toch. Rood is op dit blad een gemak, nooit de drager.
+   ============================================================ */
+
+:root{
+  --vel:#efece2;        /* dundruk knipvel */
+  --vel-2:#f8f6f0;
+  --wit:#fffdf8;
+  --inkt:#1b1a16;
+  --inkt-2:#484439;
+  --inkt-3:#6d6857;
+  --grijs:#918b78;
+  --lijn:#d3cfbe;
+  --lijn-2:#e5e1d3;
+  --rood:#b02a17;       /* de overtreklijn — uw maat */
+  --rood-licht:#f2ded9;
+  --blauw:#27467e;      /* knipteken en aanwijzing */
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --serif:"Iowan Old Style",Charter,Palatino,Georgia,serif;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:68px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font:17px/1.62 var(--sans);color:var(--inkt-2);background:var(--vel)}
+img{max-width:100%;display:block}
+a{color:var(--rood)}
+:focus-visible{outline:2.5px solid var(--blauw);outline-offset:3px}
+
+.binnen{max-width:1180px;margin:0 auto;padding:0 22px}
+.scherm{padding:var(--s6) 0}
+.scherm.eerste{padding-top:var(--s5)}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  background:var(--inkt);padding:9px 22px;font:600 12.5px/1 var(--sans);flex-wrap:wrap}
+.labbalk .nr{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--vel);
+  border:1px solid #56513f;padding:5px 7px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#c9c3ae;text-decoration:none;letter-spacing:.02em}
+.labbalk a:hover{color:#fff}
+.labbalk a.terug{color:#fff;border-bottom:1px solid #56513f}
+
+/* ---------- merkregel ---------- */
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:27px;height:27px;background:var(--inkt);color:var(--vel);
+  display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--serif)}
+.merkregel .naam{font:700 15px/1 var(--sans);color:var(--inkt);letter-spacing:-.02em}
+.merkregel .pad{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
+
+/* ---------- schermkop ---------- */
+.schermkop{border-top:2px solid var(--inkt);padding-top:var(--s2);margin-bottom:var(--s5);max-width:70ch}
+.schermkop > b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--rood);margin-bottom:var(--s3)}
+.schermkop h2{font:700 clamp(25px,3vw,33px)/1.1 var(--sans);letter-spacing:-.035em;color:var(--inkt);
+  margin-bottom:var(--s3)}
+.schermkop p{font:400 17.5px/1.62 var(--serif);color:var(--inkt-2)}
+.schermkop p b{font-weight:700;color:var(--inkt)}
+
+/* ============================================================
+   1 · LANDING
+   ============================================================ */
+.heldrij{display:grid;grid-template-columns:1.02fr .98fr;gap:var(--s6);align-items:center}
+@media (max-width:980px){.heldrij{grid-template-columns:1fr;gap:var(--s5)}}
+
+h1.kop{font:700 clamp(35px,5.2vw,60px)/1.02 var(--sans);letter-spacing:-.05em;color:var(--inkt)}
+h1.kop em{display:block;font-style:normal;color:var(--rood);
+  /* de overtreklijn: één regel wordt letterlijk overgetrokken */
+  text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:7px;
+  text-decoration-color:var(--rood)}
+p.onder{font:400 19px/1.6 var(--serif);color:var(--inkt-2);max-width:54ch;margin-top:var(--s4)}
+p.onder b{font-weight:700;color:var(--inkt)}
+
+.knoppen{display:flex;gap:12px;flex-wrap:wrap;margin-top:var(--s4)}
+.kn{display:inline-block;background:var(--inkt);color:var(--vel);text-decoration:none;
+  padding:13px 22px;font:700 14px/1 var(--sans);letter-spacing:.01em;border:1.5px solid var(--inkt)}
+.kn:hover{background:var(--rood);border-color:var(--rood);color:#fff}
+.kn.leeg{background:transparent;color:var(--inkt)}
+.kn.leeg:hover{background:var(--inkt);color:var(--vel);border-color:var(--inkt)}
+
+/* --- het vel: overlappende maatlijnen met één overgetrokken lijn --- */
+.velbeeld{background:var(--vel-2);border:1px solid var(--lijn);padding:var(--s4);position:relative}
+.velbeeld .velkop{display:flex;align-items:baseline;gap:8px;
+  font:700 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--grijs);
+  border-bottom:1px solid var(--lijn);padding-bottom:var(--s2);margin-bottom:var(--s3)}
+.velbeeld .velkop b{color:var(--inkt)}
+.velbeeld .velkop span{margin-left:auto;color:var(--rood)}
+
+.tekening{position:relative;height:236px;background:
+  linear-gradient(to right,#e3dfd0 1px,transparent 1px) 0 0/28px 28px,
+  linear-gradient(to bottom,#e3dfd0 1px,transparent 1px) 0 0/28px 28px,
+  var(--wit);
+  border:1px solid var(--lijn-2)}
+.tekening svg{position:absolute;inset:0;width:100%;height:100%}
+.tekening .merk{position:absolute;left:12px;bottom:10px;font:600 9.5px/1.5 var(--mono);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--grijs)}
+
+.legenda{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s2);margin-top:var(--s3)}
+@media (max-width:520px){.legenda{grid-template-columns:repeat(2,1fr)}}
+.legenda .lg{border-top:1px solid var(--lijn);padding-top:7px}
+.legenda .lg i{display:block;height:0;margin-bottom:7px}
+.legenda .lg.m1 i{border-top:2px dotted var(--grijs)}
+.legenda .lg.m2 i{border-top:2px dashed var(--grijs)}
+.legenda .lg.m3 i{border-top:2px solid var(--grijs)}
+.legenda .lg.m4 i{border-top:3px solid var(--rood)}
+.legenda .lg span{font:600 10px/1.4 var(--mono);letter-spacing:.09em;text-transform:uppercase;
+  color:var(--grijs);display:block}
+.legenda .lg.m4 span{color:var(--rood)}
+.legenda .lg em{font-style:normal;font:400 12.5px/1.35 var(--sans);color:var(--inkt-2);display:block;margin-top:2px}
+
+/* --- drie regels --- */
+.drieregels{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5);margin-top:var(--s6);
+  border-top:2px solid var(--inkt);padding-top:var(--s4)}
+@media (max-width:900px){.drieregels{grid-template-columns:1fr;gap:var(--s4)}}
+.regelblok .nr{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--rood);display:block;margin-bottom:10px}
+.regelblok h3{font:700 20px/1.2 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-bottom:10px}
+.regelblok p{font-size:16px}
+.regelblok p b{color:var(--inkt);font-weight:700}
+
+/* ============================================================
+   2 · KIEZER
+   ============================================================ */
+.regelaar{display:grid;grid-template-columns:1.35fr .95fr;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.regelaar{grid-template-columns:1fr}}
+
+.rg{background:var(--wit);border:1px solid var(--lijn);padding:var(--s4)}
+.rg h3{font:700 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--grijs);
+  border-bottom:1px solid var(--lijn);padding-bottom:var(--s2);margin-bottom:var(--s3)}
+
+.zoekbalk{display:flex;align-items:center;gap:10px;border:1.5px solid var(--inkt);padding:10px 12px;
+  margin-bottom:var(--s3);background:var(--vel-2)}
+.zoekbalk span{font:700 9.5px/1 var(--mono);letter-spacing:.16em;color:var(--grijs)}
+.zoekbalk input{flex:1;border:0;background:transparent;font:600 15px/1.3 var(--sans);color:var(--inkt)}
+.zoekbalk input:focus{outline:0}
+
+/* een patroondeel in de kiezer */
+.deel{border-bottom:1px solid var(--lijn-2);padding:var(--s3) 0;display:grid;
+  grid-template-columns:70px 1fr;gap:var(--s3);align-items:start}
+.deel:last-child{border-bottom:0}
+.deel .beeld{background:var(--vel-2);border:1px solid var(--lijn-2);padding:5px;height:70px;
+  display:flex;align-items:center;justify-content:center}
+.deel .beeld img{max-height:100%;width:auto;mix-blend-mode:multiply}
+.deel h4{font:700 17.5px/1.25 var(--sans);letter-spacing:-.025em;color:var(--inkt)}
+.deel .spier{font:600 10.5px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;
+  color:var(--grijs);margin-top:5px}
+
+/* maatladder: vier lijnsoorten, één gekozen */
+.maatladder{display:flex;gap:0;margin-top:12px;border:1px solid var(--lijn)}
+.maatladder button{flex:1;background:var(--wit);border:0;border-right:1px solid var(--lijn-2);
+  padding:9px 4px 8px;cursor:pointer;font:inherit;text-align:center;position:relative}
+.maatladder button:last-child{border-right:0}
+.maatladder button i{display:block;height:0;margin:0 6px 7px}
+.maatladder button.m1 i{border-top:2px dotted var(--grijs)}
+.maatladder button.m2 i{border-top:2px dashed var(--grijs)}
+.maatladder button.m3 i{border-top:2px solid var(--grijs)}
+.maatladder button.m4 i{border-top:3px solid var(--inkt)}
+.maatladder button b{font:700 10px/1 var(--mono);letter-spacing:.1em;color:var(--grijs)}
+.maatladder button em{display:block;font-style:normal;font:400 11px/1.3 var(--sans);
+  color:var(--inkt-3);margin-top:4px}
+.maatladder button[aria-pressed="true"]{background:var(--rood-licht)}
+.maatladder button[aria-pressed="true"] i{border-color:var(--rood) !important}
+.maatladder button[aria-pressed="true"] b,
+.maatladder button[aria-pressed="true"] em{color:var(--rood)}
+.maatladder button[aria-pressed="true"]::after{content:"";position:absolute;left:0;right:0;bottom:0;
+  height:3px;background:var(--rood)}
+
+.knipregel{display:flex;align-items:flex-start;gap:8px;margin-top:10px;
+  font:400 13.5px/1.45 var(--sans);color:var(--blauw)}
+.knipregel .teken{flex:0 0 auto;font:700 13px/1 var(--sans)}
+.knipregel b{font-weight:700}
+
+/* rechterkolom: het maatprofiel */
+.profiel{background:var(--inkt);color:#e8e3d2;padding:var(--s4);position:sticky;top:56px}
+.profiel h3{font:700 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#a29a80;
+  border-bottom:1px solid #45402f;padding-bottom:var(--s2);margin-bottom:var(--s3)}
+.profiel .pr{display:grid;grid-template-columns:1fr 116px;gap:10px;align-items:center;
+  padding:11px 0;border-bottom:1px solid #35311f}
+.profiel .pr span{font:600 14px/1.25 var(--sans);color:#fff}
+.profiel .pr .staafje{display:flex;gap:3px}
+.profiel .pr .staafje i{flex:1;height:15px;background:#3c3726;display:block}
+.profiel .pr .staafje i.aan{background:#e8e3d2}
+.profiel .pr .staafje i.volgend{background:transparent;border:1px dashed #7d7660}
+.profiel .slot{margin-top:var(--s3);font:400 14.5px/1.55 var(--serif);color:#c6bfa8}
+.profiel .slot b{color:#fff;font-weight:600}
+.profiel .totaal{margin-top:var(--s3);border-top:1px solid #45402f;padding-top:var(--s3);
+  display:flex;align-items:baseline;gap:10px}
+.profiel .totaal b{font:700 30px/1 var(--sans);letter-spacing:-.04em;color:#fff}
+.profiel .totaal span{font:600 10.5px/1.4 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:#a29a80}
+
+/* ============================================================
+   3 · CLIËNTKAART
+   ============================================================ */
+.kaartblad{background:var(--wit);border:1px solid var(--lijn);
+  box-shadow:0 18px 44px rgba(27,26,22,.09)}
+.kb-kop{padding:var(--s4);border-bottom:2px solid var(--inkt);display:flex;flex-wrap:wrap;
+  gap:var(--s3);align-items:flex-end}
+.kb-kop .wie h3{font:700 27px/1.1 var(--sans);letter-spacing:-.035em;color:var(--inkt)}
+.kb-kop .wie p{font:400 15px/1.5 var(--sans);color:var(--inkt-3);margin-top:5px}
+.kb-kop .code{margin-left:auto;text-align:right}
+.kb-kop .code b{display:block;font:700 11px/1 var(--mono);letter-spacing:.16em;color:var(--grijs)}
+.kb-kop .code span{display:block;font:700 21px/1.15 var(--sans);color:var(--inkt);
+  letter-spacing:-.03em;margin-top:6px}
+
+.kb-lijf{display:grid;grid-template-columns:1.5fr 1fr}
+@media (max-width:940px){.kb-lijf{grid-template-columns:1fr}}
+.kb-links{padding:var(--s4);border-right:1px solid var(--lijn-2)}
+@media (max-width:940px){.kb-links{border-right:0;border-bottom:1px solid var(--lijn-2)}}
+.kb-rechts{padding:var(--s4);background:var(--vel-2)}
+.kb-titel{font:700 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs);
+  border-bottom:1px solid var(--lijn);padding-bottom:7px;margin-bottom:var(--s3)}
+
+/* de vier patroondelen als rijen met hun maatpositie */
+.pdeel{display:grid;grid-template-columns:46px 1fr 172px;gap:var(--s3);align-items:center;
+  padding:14px 0;border-bottom:1px solid var(--lijn-2)}
+@media (max-width:640px){.pdeel{grid-template-columns:46px 1fr;row-gap:10px}
+  .pdeel .ladderklein{grid-column:1/-1}}
+.pdeel .cirkel{width:36px;height:36px;border:1.5px solid var(--inkt);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font:700 16px/1 var(--sans);color:var(--inkt)}
+.pdeel h4{font:700 17px/1.25 var(--sans);letter-spacing:-.025em;color:var(--inkt)}
+.pdeel .uitv{font:400 13.5px/1.4 var(--sans);color:var(--inkt-3);margin-top:3px}
+.ladderklein{display:flex;gap:4px;align-items:flex-end}
+.ladderklein i{flex:1;display:block;position:relative;padding-top:16px}
+.ladderklein i::before{content:"";position:absolute;top:8px;left:0;right:0;border-top:2px solid var(--lijn)}
+.ladderklein i.m1::before{border-top-style:dotted}
+.ladderklein i.m2::before{border-top-style:dashed}
+.ladderklein i.aan::before{border-color:var(--rood);border-top-width:3px;border-top-style:solid}
+.ladderklein i em{font-style:normal;display:block;font:700 9px/1 var(--mono);color:var(--grijs);text-align:center}
+.ladderklein i.aan em{color:var(--rood)}
+
+.vermaakt{margin-top:var(--s3)}
+.vermaakt li{list-style:none;display:grid;grid-template-columns:96px 1fr;gap:12px;padding:9px 0;
+  border-bottom:1px dotted var(--lijn);font-size:14.5px}
+.vermaakt li b{font:600 11.5px/1.5 var(--mono);letter-spacing:.05em;color:var(--grijs)}
+.vermaakt li span b{color:var(--inkt)}
+
+.knipvak{border:1.5px solid var(--blauw);background:#eef1f7;padding:var(--s3);margin-top:var(--s4)}
+.knipvak h5{font:700 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--blauw);margin-bottom:10px}
+.knipvak p{font-size:15px;color:#2c3a55}
+.knipvak p b{color:var(--blauw)}
+
+.velvoet{padding:var(--s3) var(--s4);border-top:1px solid var(--lijn-2);display:flex;flex-wrap:wrap;
+  gap:var(--s3);align-items:center;background:var(--vel-2)}
+.velvoet .draad{display:flex;align-items:center;gap:9px;font:600 10.5px/1 var(--mono);
+  letter-spacing:.11em;text-transform:uppercase;color:var(--grijs)}
+.velvoet .kn{margin-left:auto}
+
+/* ============================================================
+   4 · PRINTKAART — A4 STAAND
+   ============================================================ */
+.bladhouder{display:grid;place-items:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){
+  .bladschaal{width:100%;overflow:hidden}
+  .blad{transform:scale(.78);transform-origin:top left;margin-bottom:-65mm !important;
+    margin-right:-46mm !important}
+}
+@media (max-width:760px){.blad{transform:scale(.45);margin-bottom:-163mm !important;margin-right:-116mm !important}}
+
+.blad{position:relative;width:210mm;height:297mm;background:#fff;color:#000;
+  box-shadow:0 24px 60px #0000002e;border:1px solid var(--lijn);
+  display:flex;flex-direction:column;font-family:var(--sans);padding:9mm}
+
+.wijzer{position:absolute;width:44mm;font:600 11.5px/1.4 var(--sans);color:var(--inkt-3);
+  border-top:3px solid var(--rood);padding-top:6px}
+@media (max-width:1240px){.wijzer{display:none}}
+
+/* het knipvel-kader met registermerken */
+.kader{flex:1;border:1.6pt solid #000;padding:6mm;display:flex;flex-direction:column;position:relative}
+.kader::before,.kader::after{content:"";position:absolute;width:6mm;height:6mm}
+.kader::before{top:-1.6pt;left:-1.6pt;border-top:1.6pt solid #000;border-left:1.6pt solid #000;
+  transform:translate(-2.4mm,-2.4mm)}
+.kader::after{bottom:-1.6pt;right:-1.6pt;border-bottom:1.6pt solid #000;border-right:1.6pt solid #000;
+  transform:translate(2.4mm,2.4mm)}
+
+.kv-kop{display:flex;align-items:flex-start;gap:5mm;border-bottom:1.4pt solid #000;padding-bottom:3.5mm}
+.kv-kop .vel{border:1pt solid #000;padding:1.6mm 2.6mm;font:700 8pt/1 var(--mono);letter-spacing:.16em}
+.kv-kop .titel h1{font:700 20pt/1.05 var(--sans);letter-spacing:-.04em}
+.kv-kop .titel p{font:400 10.5pt/1.35 var(--sans);color:#3a3a35;margin-top:1.6mm}
+.kv-kop .maatvak{margin-left:auto;text-align:right;border-left:1pt solid #000;padding-left:4mm}
+.kv-kop .maatvak b{display:block;font:700 7.5pt/1 var(--mono);letter-spacing:.14em;color:#5a564a}
+.kv-kop .maatvak span{display:block;font:700 26pt/1 var(--sans);letter-spacing:-.05em;margin-top:1.4mm}
+.kv-kop .maatvak em{display:block;font-style:normal;font:600 8pt/1.3 var(--sans);color:#5a564a;margin-top:1mm}
+
+/* de legenda van lijnsoorten, bovenaan het vel — zoals op een echt knipvel */
+.kv-legenda{display:flex;gap:4mm;padding:2.6mm 0 3.4mm;border-bottom:.6pt solid #b7b2a2}
+.kv-legenda .lg{flex:1}
+.kv-legenda .lg i{display:block;height:0;margin-bottom:1.4mm;border-top:1.2pt solid #7a7566}
+.kv-legenda .lg.m1 i{border-top-style:dotted}
+.kv-legenda .lg.m2 i{border-top-style:dashed}
+.kv-legenda .lg.m4 i{border-top:2.4pt solid #000}
+.kv-legenda .lg b{font:700 7.5pt/1 var(--mono);letter-spacing:.1em;color:#5a564a;display:block}
+.kv-legenda .lg em{font-style:normal;font:400 8pt/1.25 var(--sans);color:#5a564a;display:block;margin-top:.8mm}
+.kv-legenda .lg.uw b,.kv-legenda .lg.uw em{color:#000}
+.kv-legenda .lg.uw b::after{content:" ← UW LIJN";color:#a3200f}
+
+/* de patroondelen */
+.kv-delen{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding-top:2mm}
+.kv-deel{display:grid;grid-template-columns:12mm 30mm 1fr 42mm;gap:4mm;align-items:center;
+  padding:3.2mm 0;border-bottom:.6pt dotted #b7b2a2}
+.kv-deel:last-child{border-bottom:0}
+.kv-deel .nrcirkel{width:10mm;height:10mm;border:1.2pt solid #000;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font:700 13pt/1 var(--sans)}
+.kv-deel .prent{height:26mm;display:flex;align-items:center;justify-content:center;
+  border:.6pt solid #ddd8c8;background:#fcfbf6}
+.kv-deel .prent img{max-height:24mm;width:auto;mix-blend-mode:multiply}
+.kv-deel .tekst h3{font:700 15pt/1.1 var(--sans);letter-spacing:-.03em}
+.kv-deel .tekst .doen{font:600 13pt/1.3 var(--sans);margin-top:1.4mm}
+.kv-deel .tekst .hoe{font:400 10.5pt/1.35 var(--sans);color:#3a3a35;margin-top:1.2mm}
+
+/* de maatladder op het blad: alle maten zichtbaar, uw maat massief */
+.kv-ladder{border-left:.6pt solid #ddd8c8;padding-left:3.4mm}
+.kv-ladder .rij{display:grid;grid-template-columns:19mm 1fr;gap:2mm;align-items:center;padding:.9mm 0}
+.kv-ladder .rij b{font:700 6.4pt/1 var(--mono);letter-spacing:.04em;color:#7a7566;white-space:nowrap}
+.kv-ladder .rij i{display:block;height:0;border-top:1.1pt solid #9c9788}
+.kv-ladder .rij.m1 i{border-top-style:dotted}
+.kv-ladder .rij.m2 i{border-top-style:dashed}
+.kv-ladder .rij.uw b{color:#000;font-size:6.9pt}
+.kv-ladder .rij.uw i{border-top:2.6pt solid #000}
+.kv-ladder .rij.uw b::before{content:"▶ ";color:#a3200f}
+.kv-ladder .knip{font:600 8pt/1.3 var(--sans);color:#1f3a6b;margin-top:1.6mm;
+  border-top:.6pt solid #c3ccdd;padding-top:1.4mm}
+.kv-ladder .knip b{font-weight:700}
+
+/* voet */
+.kv-voet{border-top:1.4pt solid #000;padding-top:3mm;display:flex;gap:5mm;align-items:flex-start}
+.kv-voet .draadrichting{flex:0 0 34mm;text-align:center}
+.kv-voet .draadrichting .pijl{display:block;margin:0 auto 1mm}
+.kv-voet .draadrichting b{display:block;font:700 7pt/1.3 var(--mono);letter-spacing:.11em;
+  color:#5a564a;margin-top:1mm}
+.kv-voet .boodschap{flex:1}
+.kv-voet .boodschap p{font:600 11pt/1.35 var(--sans)}
+.kv-voet .boodschap em{display:block;font-style:normal;font:400 9.5pt/1.35 var(--sans);
+  color:#3a3a35;margin-top:1.4mm}
+.kv-voet .praktijk{flex:0 0 46mm;text-align:right;font:400 8.5pt/1.4 var(--sans);color:#5a564a}
+.kv-voet .praktijk b{display:block;color:#000;font-weight:700}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#bab3a0;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:#fff;border-top:2px solid #45402f;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.6}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding:5px 0}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT — A4 STAAND
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 40</span>
+  <strong style="font:800 16px/1 var(--sans);color:#fff;letter-spacing:-.04em">Knipvel</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">Concept 40 · Knipvel</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1 class="kop">Alle maten staan al op het blad.<em>U trekt alleen uw eigen lijn.</em></h1>
+        <p class="onder">Midden in elke Burda zit een knipvel: één vel dundruk waarop álle maten
+          over elkaar heen gedrukt staan, elk in een eigen lijnsoort. <b>De volgende maat ligt er
+          al op — een halve centimeter naast uw lijn.</b> U hoeft niets aan te vragen om te zien
+          wat er na deze komt. Een oefenkaart drukt er één af en doet alsof de rest niet bestaat.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk de kaart</a>
+          <a class="kn leeg" href="#kiezer">De maat kiezen</a>
+        </div>
+      </div>
+
+      <div class="velbeeld">
+        <div class="velkop"><b>Knipvel 4</b> · heup en knie <span>overtrek: maat 2</span></div>
+        <div class="tekening">
+          <svg viewBox="0 0 420 236" role="img"
+               aria-label="Vier patroonlijnen van hetzelfde deel, over elkaar heen; de tweede is met
+                           rood overgetrokken">
+            <!-- maat 1 — gestippeld -->
+            <path d="M60 196 C 60 120, 96 74, 150 62 C 214 48, 268 74, 296 118 C 316 150, 312 180, 296 196"
+                  fill="none" stroke="#918b78" stroke-width="1.6" stroke-dasharray="1.5 5"
+                  stroke-linecap="round"/>
+            <!-- maat 2 — de overgetrokken lijn -->
+            <path d="M50 200 C 50 114, 90 64, 150 50 C 222 34, 282 64, 312 114 C 334 150, 330 182, 312 200"
+                  fill="none" stroke="#b02a17" stroke-width="3.4" stroke-linecap="round"/>
+            <!-- maat 3 — streepjes -->
+            <path d="M40 204 C 40 108, 84 54, 150 38 C 230 20, 296 54, 328 110 C 352 150, 348 184, 328 204"
+                  fill="none" stroke="#918b78" stroke-width="1.6" stroke-dasharray="9 5"
+                  stroke-linecap="round"/>
+            <!-- maat 4 — massief grijs -->
+            <path d="M30 208 C 30 102, 78 44, 150 26 C 238 6, 310 44, 344 106 C 370 150, 366 186, 344 208"
+                  fill="none" stroke="#918b78" stroke-width="1.6" stroke-linecap="round"/>
+            <!-- knipteken: het inkeepje waar u een maat opschuift -->
+            <path d="M150 50 l -7 -13 M150 50 l 7 -13" stroke="#27467e" stroke-width="2.2"
+                  fill="none" stroke-linecap="round"/>
+            <circle cx="150" cy="50" r="4.2" fill="#27467e"/>
+            <text x="162" y="34" font-family="ui-monospace,Menlo,monospace" font-size="10"
+                  letter-spacing="1.4" fill="#27467e">KNIPTEKEN</text>
+            <!-- draadrichting -->
+            <path d="M186 214 L 292 214 M186 214 l 8 -5 M186 214 l 8 5 M292 214 l -8 -5 M292 214 l -8 5"
+                  stroke="#1b1a16" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <text x="186" y="230" font-family="ui-monospace,Menlo,monospace" font-size="9"
+                  letter-spacing="1.3" fill="#6d6857">DRAADRICHTING</text>
+          </svg>
+          <span class="merk">Deel 1 · heup zijwaarts heffen · 4 maten</span>
+        </div>
+        <div class="legenda">
+          <div class="lg m1"><i></i><span>Maat 1</span><em>zijlig</em></div>
+          <div class="lg m4"><i></i><span>Maat 2</span><em>staand met steun</em></div>
+          <div class="lg m2"><i></i><span>Maat 3</span><em>met elastiek</em></div>
+          <div class="lg m3"><i></i><span>Maat 4</span><em>op één been</em></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="drieregels">
+      <div class="regelblok">
+        <span class="nr">REGEL 1</span>
+        <h3>De volgende maat ligt er al op</h3>
+        <p>Niet als beloning, niet achter een consult — gewoon fijn gedrukt naast uw lijn.
+          <b>Fysiplan hééft die maten al</b>: heup zijwaarts heffen staat vier keer in de
+          bibliotheek, van zijlig tot op één been. De uitdraai drukt er één af. Dit blad drukt
+          ze alle vier, en zet de uwe massief.</p>
+      </div>
+      <div class="regelblok">
+        <span class="nr">REGEL 2</span>
+        <h3>U mag tussen twee maten in</h3>
+        <p>Elke naaister loopt van maat 38 bij de schouder naar 42 bij de heup, en geen handleiding
+          vindt dat vreemd. <b>Eén lichaam heeft meerdere maten tegelijk</b> — een knie op 2 en een
+          enkel allang op 4. Daarom draagt niet de kaart een niveau, maar elk patroondeel apart.</p>
+      </div>
+      <div class="regelblok">
+        <span class="nr">REGEL 3</span>
+        <h3>Het knipteken staat er vooraf op</h3>
+        <p>Een knipje in de rand markeert waar twee delen samenkomen. Hier markeert het het moment
+          waarop u zélf opschuift: <b>„twee dagen achter elkaar rustig gehaald — knip naar maat 3."</b>
+          Afgesproken in de behandelkamer, niet later per telefoon.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>Kiezen gebeurt hier twee keer: eerst het patroondeel, dan de maat. De maatladder onder elke
+        oefening is <b>de bibliotheek van Fysiplan zelf</b> — zijlig, staand met steun, met elastiek,
+        op één been zijn geen niveaus die iemand verzint, ze staan er al in. Het maatprofiel rechts
+        laat zien wat niemand anders laat zien: dat één mens zelden op één maat zit.</p>
+    </div>
+
+    <div class="regelaar">
+
+      <div class="rg">
+        <h3>Patroondelen · heup, knie en enkel</h3>
+
+        <div class="zoekbalk">
+          <span>ZOEK</span>
+          <input type="text" value="heup/knie — na knieprothese, week 7" aria-label="Zoek een oefening"/>
+        </div>
+
+        <div class="deel">
+          <div class="beeld">
+            <img src="/images/onderste-extremiteit/heup-zijwaarts-heffen-staand-met-steun-line-v1.png"
+                 alt="Heup zijwaarts heffen, staand met steun aan de rugleuning"/>
+          </div>
+          <div>
+            <h4>Heup zijwaarts heffen</h4>
+            <div class="spier">Deel 1 · m. gluteus medius · 4 maten</div>
+            <div class="maatladder" role="group" aria-label="Maat voor heup zijwaarts heffen">
+              <button class="m1" type="button" aria-pressed="false"><i></i><b>1</b><em>zijlig</em></button>
+              <button class="m2" type="button" aria-pressed="true"><i></i><b>2</b><em>met steun</em></button>
+              <button class="m3" type="button" aria-pressed="false"><i></i><b>3</b><em>elastiek</em></button>
+              <button class="m4" type="button" aria-pressed="false"><i></i><b>4</b><em>één been</em></button>
+            </div>
+            <p class="knipregel"><span class="teken">▽</span>
+              <span><b>Knipteken:</b> 2 dagen achter elkaar 3 × 10 rustig → maat 3.</span></p>
+          </div>
+        </div>
+
+        <div class="deel">
+          <div class="beeld">
+            <img src="/images/onderste-extremiteit/hamstring-curl-staand-met-steun-line-v1.png"
+                 alt="Hamstring curl, staand met steun"/>
+          </div>
+          <div>
+            <h4>Hiel naar de bil</h4>
+            <div class="spier">Deel 2 · hamstrings · 4 maten</div>
+            <div class="maatladder" role="group" aria-label="Maat voor hiel naar de bil">
+              <button class="m1" type="button" aria-pressed="false"><i></i><b>1</b><em>liggend</em></button>
+              <button class="m2" type="button" aria-pressed="false"><i></i><b>2</b><em>zittend</em></button>
+              <button class="m3" type="button" aria-pressed="true"><i></i><b>3</b><em>met steun</em></button>
+              <button class="m4" type="button" aria-pressed="false"><i></i><b>4</b><em>elastiek</em></button>
+            </div>
+            <p class="knipregel"><span class="teken">▽</span>
+              <span><b>Knipteken:</b> hiel raakt de bil zonder de rug hol te trekken → maat 4.</span></p>
+          </div>
+        </div>
+
+        <div class="deel">
+          <div class="beeld">
+            <img src="/images/onderste-extremiteit/calf-raises-line-v1.png"
+                 alt="Op de tenen komen, staand"/>
+          </div>
+          <div>
+            <h4>Op de tenen komen</h4>
+            <div class="spier">Deel 3 · kuit · 3 maten</div>
+            <div class="maatladder" role="group" aria-label="Maat voor op de tenen komen">
+              <button class="m1" type="button" aria-pressed="false"><i></i><b>1</b><em>zittend</em></button>
+              <button class="m2" type="button" aria-pressed="false"><i></i><b>2</b><em>met steun</em></button>
+              <button class="m3" type="button" aria-pressed="true"><i></i><b>3</b><em>los</em></button>
+              <button class="m4" type="button" aria-pressed="false" disabled
+                      style="opacity:.35;cursor:default"><i></i><b>4</b><em>—</em></button>
+            </div>
+            <p class="knipregel"><span class="teken">▽</span>
+              <span><b>Geen maat 4:</b> dit deel houdt bij drie op. Dat is geen tekort — sommige
+                patronen hebben nu eenmaal drie maten.</span></p>
+          </div>
+        </div>
+
+        <div class="deel">
+          <div class="beeld">
+            <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png"
+                 alt="Eenbeenstand met steun aan het aanrecht"/>
+          </div>
+          <div>
+            <h4>Op één been staan</h4>
+            <div class="spier">Deel 4 · balans · 3 maten</div>
+            <div class="maatladder" role="group" aria-label="Maat voor op één been staan">
+              <button class="m1" type="button" aria-pressed="true"><i></i><b>1</b><em>met steun</em></button>
+              <button class="m2" type="button" aria-pressed="false"><i></i><b>2</b><em>zonder</em></button>
+              <button class="m3" type="button" aria-pressed="false"><i></i><b>3</b><em>hoofd mee</em></button>
+              <button class="m4" type="button" aria-pressed="false" disabled
+                      style="opacity:.35;cursor:default"><i></i><b>4</b><em>—</em></button>
+            </div>
+            <p class="knipregel"><span class="teken">▽</span>
+              <span><b>Knipteken:</b> 20 seconden met één vinger aan het aanrecht → maat 2.</span></p>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="profiel">
+        <h3>Maatprofiel · mevr. Van Beek</h3>
+
+        <div class="pr">
+          <span>Heup zijwaarts</span>
+          <div class="staafje" aria-label="maat 2 van 4">
+            <i class="aan"></i><i class="aan"></i><i class="volgend"></i><i></i>
+          </div>
+        </div>
+        <div class="pr">
+          <span>Hiel naar de bil</span>
+          <div class="staafje" aria-label="maat 3 van 4">
+            <i class="aan"></i><i class="aan"></i><i class="aan"></i><i class="volgend"></i>
+          </div>
+        </div>
+        <div class="pr">
+          <span>Op de tenen</span>
+          <div class="staafje" aria-label="maat 3 van 3">
+            <i class="aan"></i><i class="aan"></i><i class="aan"></i><i style="opacity:.25"></i>
+          </div>
+        </div>
+        <div class="pr">
+          <span>Op één been</span>
+          <div class="staafje" aria-label="maat 1 van 3">
+            <i class="aan"></i><i class="volgend"></i><i></i><i style="opacity:.25"></i>
+          </div>
+        </div>
+
+        <p class="slot">Vier delen, vier verschillende maten. <b>Dat is geen slordigheid maar de
+          werkelijkheid</b> — en het is precies wat één cijfer voor „niveau" onzichtbaar maakt.</p>
+
+        <div class="totaal">
+          <b>1</b>
+          <span>deel staat op<br/>een knipteken</span>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>Een naaipatroon dat je een keer op maat hebt gemaakt, bewaar je — met de aantekeningen erop.
+        Deze kaart doet hetzelfde: <b>naast elk deel staat waar u nu zit, wat het knipteken is en
+        wanneer er voor het laatst vermaakt is.</b> Niet een reeks die kan breken, maar een vel dat
+        steeds beter past.</p>
+    </div>
+
+    <div class="kaartblad">
+      <div class="kb-kop">
+        <div class="wie">
+          <h3>Mevr. A. van Beek — 71 jaar</h3>
+          <p>Knieprothese rechts, week 7 · behandelaar: J. Molenaar, fysiotherapeut</p>
+        </div>
+        <div class="code">
+          <b>KNIPVEL</b>
+          <span>4 · heup en knie</span>
+        </div>
+      </div>
+
+      <div class="kb-lijf">
+        <div class="kb-links">
+          <div class="kb-titel">Patroondelen &amp; maten</div>
+
+          <div class="pdeel">
+            <span class="cirkel">1</span>
+            <div>
+              <h4>Heup zijwaarts heffen</h4>
+              <div class="uitv">Staand met steun · 3 × 10 · beide kanten</div>
+            </div>
+            <div class="ladderklein" aria-label="maat 2 van 4">
+              <i class="m1"><em>1</em></i><i class="aan"><em>2</em></i><i class="m2"><em>3</em></i><i><em>4</em></i>
+            </div>
+          </div>
+
+          <div class="pdeel">
+            <span class="cirkel">2</span>
+            <div>
+              <h4>Hiel naar de bil</h4>
+              <div class="uitv">Staand met steun · 3 × 12 · rechts</div>
+            </div>
+            <div class="ladderklein" aria-label="maat 3 van 4">
+              <i class="m1"><em>1</em></i><i class="m2"><em>2</em></i><i class="aan"><em>3</em></i><i><em>4</em></i>
+            </div>
+          </div>
+
+          <div class="pdeel">
+            <span class="cirkel">3</span>
+            <div>
+              <h4>Op de tenen komen</h4>
+              <div class="uitv">Los · 2 × 15 · aanrecht binnen handbereik</div>
+            </div>
+            <div class="ladderklein" aria-label="maat 3 van 3">
+              <i class="m1"><em>1</em></i><i class="m2"><em>2</em></i><i class="aan"><em>3</em></i>
+            </div>
+          </div>
+
+          <div class="pdeel">
+            <span class="cirkel">4</span>
+            <div>
+              <h4>Op één been staan</h4>
+              <div class="uitv">Met steun · 4 × 20 sec. · beide kanten</div>
+            </div>
+            <div class="ladderklein" aria-label="maat 1 van 3">
+              <i class="aan"><em>1</em></i><i class="m2"><em>2</em></i><i><em>3</em></i>
+            </div>
+          </div>
+
+          <div class="knipvak">
+            <h5>▽ Eén deel staat op een knipteken</h5>
+            <p><b>Deel 1 — heup zijwaarts heffen.</b> Twee dagen achter elkaar 3 × 10 rustig gehaald.
+              Het vel wacht niet op de volgende afspraak: u mag zelf naar maat 3, en als het
+              tegenvalt knipt u terug. <b>Terugknippen is geen terugval</b> — op een knipvel is
+              geen enkele lijn weg.</p>
+          </div>
+        </div>
+
+        <div class="kb-rechts">
+          <div class="kb-titel">Vermaakt op</div>
+          <ul class="vermaakt">
+            <li><b>19 AUG</b><span>Deel 2 van maat 2 naar <b>maat 3</b> — hiel raakt de bil zonder
+              hol te trekken.</span></li>
+            <li><b>12 AUG</b><span>Deel 3 van maat 2 naar <b>maat 3</b>, steun losgelaten.</span></li>
+            <li><b>9 AUG</b><span>Deel 4 <b>teruggeknipt</b> naar maat 1 na een onrustige week.
+              Op verzoek van mevrouw zelf.</span></li>
+            <li><b>2 AUG</b><span>Vel 4 aangelegd · vier delen, startmaten 1 – 2 – 2 – 1.</span></li>
+          </ul>
+
+          <div class="knipvak" style="border-color:var(--lijn);background:var(--wit)">
+            <h5 style="color:var(--grijs)">Wat hier niet staat</h5>
+            <p style="color:var(--inkt-2)">Geen percentage, geen reeks, geen dagen-op-rij. Een
+              knipvel houdt niet bij hoe vaak u genaaid heeft — <b style="color:var(--inkt)">het
+              houdt bij welke maat u nu draagt.</b></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="velvoet">
+        <span class="draad">
+          <svg width="86" height="10" aria-hidden="true">
+            <path d="M4 5 H82 M4 5 l6-4 M4 5 l6 4 M82 5 l-6-4 M82 5 l-6 4"
+                  stroke="#918b78" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+          </svg>
+          Draadrichting · staand, steun binnen handbereik
+        </span>
+        <a class="kn geen-print" href="#printkaart">Vel afdrukken op A4</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>Het knipvel zoals het uit de printer komt: kader met registerhoeken, de lijnsoorten-legenda
+        bovenaan, vier patroondelen groot, en rechts van elk deel de maatladder waarop <b>uw maat
+        massief staat en de andere drie fijn blijven meedrukken</b>. Maat is hier lijnsoort en geen
+        kleur — precies zoals een echt knipvel in één inkt gedrukt wordt. Print dit blad in
+        zwart-wit en er gaat niets verloren.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer geen-print" style="top:22mm;right:calc(100% + 22px);text-align:right">
+            velnummer en maat staan naast de titel: dit blad is er één uit een reeks, en dat mag
+            je zien</span>
+          <span class="wijzer geen-print" style="top:66mm;left:calc(100% + 22px)">
+            de legenda van lijnsoorten — vier maten, uw lijn is de massieve; zonder kleur nog
+            steeds te lezen</span>
+          <span class="wijzer geen-print" style="top:150mm;right:calc(100% + 22px);text-align:right">
+            de oefening op 15 punt en het aantal op 13 punt: dít is wat de patiënt op armlengte
+            leest, de rest is kantlijn</span>
+          <span class="wijzer geen-print" style="top:214mm;left:calc(100% + 22px)">
+            de maatladder per deel, met het knipteken eronder in blauw — het moment om op te
+            schuiven staat er vóóraf op</span>
+
+          <div class="kader">
+
+            <div class="kv-kop">
+              <span class="vel">VEL 4</span>
+              <div class="titel">
+                <h1>Heup, knie en enkel</h1>
+                <p>Mevr. A. van Beek · 71 jaar · knieprothese rechts, week 7<br/>
+                  J. Molenaar, fysiotherapeut · Praktijk De Meent, Zeist</p>
+              </div>
+              <div class="maatvak">
+                <b>UW MATEN</b>
+                <span>2·3·3·1</span>
+                <em>per deel apart</em>
+              </div>
+            </div>
+
+            <div class="kv-legenda">
+              <div class="lg m1"><i></i><b>MAAT 1</b><em>liggend of zijlig</em></div>
+              <div class="lg m2"><i></i><b>MAAT 2</b><em>zittend of met steun</em></div>
+              <div class="lg m3"><i></i><b>MAAT 3</b><em>los of met elastiek</em></div>
+              <div class="lg m4 uw"><i></i><b>MASSIEF</b><em>de maat van vandaag</em></div>
+            </div>
+
+            <div class="kv-delen">
+
+              <div class="kv-deel">
+                <span class="nrcirkel">1</span>
+                <div class="prent">
+                  <img src="/images/onderste-extremiteit/heup-zijwaarts-heffen-staand-met-steun-line-v1.png"
+                       alt="Heup zijwaarts heffen, staand met steun"/>
+                </div>
+                <div class="tekst">
+                  <h3>Heup zijwaarts heffen</h3>
+                  <div class="doen">3 × 10 · beide kanten</div>
+                  <div class="hoe">Sta achter een stoel, handen op de leuning. Been gestrekt opzij,
+                    romp rechtop. Rustig terug.</div>
+                </div>
+                <div class="kv-ladder">
+                  <div class="rij m1"><b>1 ZIJLIG</b><i></i></div>
+                  <div class="rij uw"><b>2 STEUN</b><i></i></div>
+                  <div class="rij m2"><b>3 ELASTIEK</b><i></i></div>
+                  <div class="rij m1"><b>4 ÉÉN BEEN</b><i></i></div>
+                  <div class="knip">▽ <b>Twee dagen rustig gehaald? Knip naar maat 3.</b></div>
+                </div>
+              </div>
+
+              <div class="kv-deel">
+                <span class="nrcirkel">2</span>
+                <div class="prent">
+                  <img src="/images/onderste-extremiteit/hamstring-curl-staand-met-steun-line-v1.png"
+                       alt="Hiel naar de bil, staand met steun"/>
+                </div>
+                <div class="tekst">
+                  <h3>Hiel naar de bil</h3>
+                  <div class="doen">3 × 12 · rechterbeen</div>
+                  <div class="hoe">Steun met één hand. Hiel rustig omhoog naar de bil, knieën naast
+                    elkaar houden. Laat langzaam zakken.</div>
+                </div>
+                <div class="kv-ladder">
+                  <div class="rij m1"><b>1 LIGGEND</b><i></i></div>
+                  <div class="rij m2"><b>2 ZITTEND</b><i></i></div>
+                  <div class="rij uw"><b>3 STEUN</b><i></i></div>
+                  <div class="rij m1"><b>4 ELASTIEK</b><i></i></div>
+                  <div class="knip">▽ <b>Bil raken zonder hol te trekken? Knip naar 4.</b></div>
+                </div>
+              </div>
+
+              <div class="kv-deel">
+                <span class="nrcirkel">3</span>
+                <div class="prent">
+                  <img src="/images/onderste-extremiteit/calf-raises-line-v1.png"
+                       alt="Op de tenen komen"/>
+                </div>
+                <div class="tekst">
+                  <h3>Op de tenen komen</h3>
+                  <div class="doen">2 × 15 · beide voeten</div>
+                  <div class="hoe">Voeten op heupbreedte, aanrecht binnen handbereik. Rustig omhoog,
+                    even stil, langzaam zakken.</div>
+                </div>
+                <div class="kv-ladder">
+                  <div class="rij m1"><b>1 ZITTEND</b><i></i></div>
+                  <div class="rij m2"><b>2 STEUN</b><i></i></div>
+                  <div class="rij uw"><b>3 LOS</b><i></i></div>
+                  <div class="rij m1" style="opacity:.32"><b>4 —</b><i></i></div>
+                  <div class="knip" style="color:#5a564a;border-color:#ddd8c8">Dit patroon heeft
+                    <b>drie maten</b>. Dat is de hele maatreeks, geen tekort.</div>
+                </div>
+              </div>
+
+              <div class="kv-deel">
+                <span class="nrcirkel">4</span>
+                <div class="prent">
+                  <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png"
+                       alt="Op één been staan met steun"/>
+                </div>
+                <div class="tekst">
+                  <h3>Op één been staan</h3>
+                  <div class="doen">4 × 20 sec. · beide kanten</div>
+                  <div class="hoe">Twee vingers aan het aanrecht. Kijk naar een vast punt vooruit.
+                    Wordt het wiebelig, zet dan gewoon de voet neer.</div>
+                </div>
+                <div class="kv-ladder">
+                  <div class="rij uw"><b>1 STEUN</b><i></i></div>
+                  <div class="rij m2"><b>2 ZONDER</b><i></i></div>
+                  <div class="rij m1"><b>3 HOOFD MEE</b><i></i></div>
+                  <div class="rij m1" style="opacity:.32"><b>4 —</b><i></i></div>
+                  <div class="knip">▽ <b>20 sec. met één vinger? Knip naar maat 2.</b></div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="kv-voet">
+              <div class="draadrichting">
+                <svg class="pijl" width="104" height="12" viewBox="0 0 104 12" aria-hidden="true">
+                  <path d="M8 6 H96 M8 6 l7-4.6 M8 6 l7 4.6 M96 6 l-7-4.6 M96 6 l-7 4.6"
+                        stroke="#000" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                </svg>
+                <b>DRAADRICHTING<br/>STAAND · STEUN BINNEN HANDBEREIK</b>
+              </div>
+              <div class="boodschap">
+                <p>Terugknippen is geen terugval. Op een knipvel is geen enkele lijn weg.</p>
+                <em>Gaat een deel een week lang zwaar? Volg dan de lijn eronder. Het vel blijft
+                  hetzelfde vel — u vermaakt alleen de maat.</em>
+              </div>
+              <div class="praktijk">
+                <b>Praktijk De Meent</b>
+                Slotlaan 84, Zeist<br/>
+                030 — 692 41 08<br/>
+                vel 4 · aangelegd 2 aug. 2026
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>Waarom dit schuurt</h4>
+      <p>Dit blad laat zien wat u nog niet kunt. Dat is een keuze en niet iedereen zal hem prettig
+        vinden — een fijn gestippelde maat 4 naast uw massieve maat 2 is een herinnering. Het
+        alternatief is echter erger: doen alsof er niets naast ligt, en de patiënt elke stap laten
+        aanvragen.</p>
+    </div>
+    <div class="kolom">
+      <h4>Toetsen</h4>
+      <ul>
+        <li>Print in zwart-wit: maat is lijnsoort, geen kleur — er gaat niets verloren.</li>
+        <li>Leg het blad op armlengte: oefening 15 punt, aantal 13 punt, kantlijn 7 punt.</li>
+        <li>Dek de maatladder af. Blijft het een gewone, rustige oefenkaart? Ja.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Meer</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
