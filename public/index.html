@@ -2141,6 +2141,10 @@ bridge2.jpg</div>
               "<a class='btn' data-dwa='"+esc(c.id)+"' href='"+esc(waHref)+"' target='_blank' rel='noopener' style='text-decoration:none'>WhatsApp</a>"+
               "<a class='btn' data-dmail='"+esc(c.id)+"' href='"+esc(mailHref)+"' target='_blank' rel='noopener' style='text-decoration:none'>E-mail</a>"+
             "</div>"+
+            "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;align-items:center'>"+
+              "<button class='btn' data-snieuwelink='"+esc(c.id)+"' title='Geef de kaart een nieuwe link; de oude werkt daarna niet meer. Alle voortgang blijft bij de kaart. Handig bij een verkeerd doorgestuurde link of een verloren telefoon.'>Nieuwe link (oude intrekken)</button>"+
+              "<small style='color:var(--muted)'>De oude link werkt daarna niet meer; de voortgang blijft.</small>"+
+            "</div>"+
             "<small style='color:var(--muted);display:block;margin-top:10px'>Voor het EPD-dossier (Intramed, FysioRoadmap, Incura, …):</small>"+
             "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px'>"+
               "<button class='btn' data-sdossier='"+esc(c.id)+"' title='Kopieer een platte-tekstsamenvatting (cliënt, doel, oefeningen met dosering, kaartlink) om in het dossier te plakken'>Kopieer samenvatting voor dossier</button>"+
@@ -2290,6 +2294,21 @@ bridge2.jpg</div>
       if(navigator.clipboard&&navigator.clipboard.writeText){
         navigator.clipboard.writeText(url).then(function(){toon('Gekopieerd ✓');}).catch(function(){window.prompt('Kopieer de patiëntlink:',url);});
       }else{window.prompt('Kopieer de patiëntlink:',url);}
+      return;
+    }
+    // nieuwe link (oude intrekken): de kaart krijgt een vers id, de oude /k-link
+    // sterft, de voortgang blijft. Alleen de ingelogde praktijk mag dit.
+    var nl=e.target.closest('[data-snieuwelink]');
+    if(nl){
+      if(!confirm('De kaart krijgt een nieuwe link en de oude werkt daarna niet meer — bijvoorbeeld op een verloren telefoon of bij een verkeerde ontvanger. Alle voortgang (pijnscores, oefenvinkjes) blijft bij de kaart. Doorgaan?'))return;
+      var oudN=nl.textContent;nl.textContent='Bezig…';
+      fetch('api/kaart/nieuwe-link',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:nl.dataset.snieuwelink})})
+        .then(function(r){return r.json();})
+        .then(function(d){
+          if(d.ok){toonSrvKaarten();}
+          else{nl.textContent=oudN;alert(d.fout||'Nieuwe link maken is niet gelukt.');}
+        })
+        .catch(function(){nl.textContent=oudN;alert('Nieuwe link maken is niet gelukt: geen verbinding.');});
       return;
     }
     // dossiersamenvatting kopiëren: kaart ophalen, platte tekst bouwen, klembord

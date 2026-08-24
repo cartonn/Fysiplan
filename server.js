@@ -1958,6 +1958,35 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // de deeplink van een kaart vernieuwen ("delen intrekken"): geeft de kaart een
+  // vers id, waardoor de oude /k/<id>-link niet meer werkt (vindKaart vindt hem
+  // niet) terwijl álle historie (pijnscores, oefenvinkjes, seintje) bij de kaart
+  // blijft. Voor een verkeerd doorgestuurde of op een verloren telefoon
+  // achtergebleven link. Alleen de ingelogde praktijk mag dit (eisPraktijk).
+  if (urlPath === "/api/kaart/nieuwe-link" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      if (await eisPraktijk(request, response, pk)) return;
+      const map = kaarten[pk] || {};
+      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      const bestaat = new Set();
+      for (const m of Object.values(kaarten)) for (const k of Object.values(m)) bestaat.add(k.id);
+      let nieuwId;
+      do { nieuwId = randomBytes(6).toString("hex"); } while (bestaat.has(nieuwId));
+      kaart.id = nieuwId;
+      await saveJson(kaartenPath, kaarten);
+      auditLog(pk, "kaart-link-vernieuwd", request);
+      await sendJson(response, 200, { ok: true, id: nieuwId });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
   // agenda-bestand (ICS) met herhalende oefenmomenten: werkt op elke telefoon,
   // zonder account of app. De patiënt kiest de dagen en het tijdstip op de kaart.
   if (urlPath === "/api/kaart/agenda" && request.method === "GET") {
