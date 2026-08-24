@@ -1964,6 +1964,18 @@ bridge2.jpg</div>
       }
       r.push('  '+(i+1)+'. '+x.n+(dos?' — '+dos:''));
     });
+    // uitkomst uit de pijn-zelfrapportage: een kant-en-klare regel voor het EPD.
+    // Fysiplan verzamelt de NPRS al app-vrij; dit maakt er een rapporteerbare
+    // uitkomst van (start -> laatst), zoals concurrenten met PROMs bieden.
+    var mt=(kaart.metingen||[]).filter(function(x){return x&&typeof x.s==='number';});
+    if(mt.length){
+      var dd=function(t){return new Date(t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});};
+      if(mt.length>=2){
+        var e=mt[0],l=mt[mt.length-1],delta=l.s-e.s;
+        var richting=delta<0?('afname van '+(-delta)):(delta>0?('toename van '+delta):'gelijk gebleven');
+        r.push('Pijn (zelfrapportage NPRS 0-10): gestart '+dd(e.t)+' op '+e.s+', laatst '+dd(l.t)+' op '+l.s+' — '+richting+' over '+mt.length+' metingen.');
+      }else r.push('Pijn (zelfrapportage NPRS 0-10): '+mt[0].s+' op '+dd(mt[0].t)+'.');
+    }
     if(kaart.id)r.push('Digitale kaart: '+location.origin+'/k/'+kaart.id);
     return r.join('\n');
   }
@@ -2042,8 +2054,14 @@ bridge2.jpg</div>
           if(c.scores&&c.scores.length){
             var lt=c.scores[c.scores.length-1];
             var kleur=function(s){return s<=3?'#3e8e5a':(s<=6?'#d98a2b':'#c94f36');};
-            vg="<button class='btn' data-mtoon='"+esc(c.id)+"' title='voortgang bekijken' style='font-size:11.5px;padding:4px 10px'>"+
-              "<span style='display:inline-block;width:8px;height:8px;border-radius:99px;background:"+kleur(lt.s)+";margin-right:5px'></span>pijn "+lt.s+"</button>";
+            // uitkomst in één oogopslag: het verloop "start→laatst" (recente reeks),
+            // zodat de therapeut de verandering ziet zonder de grafiek te openen
+            var eersteScore=c.scores[0].s;
+            var heeftVerloop=c.scores.length>=2&&eersteScore!==lt.s;
+            var pijnTxt=heeftVerloop?(eersteScore+'→'+lt.s):(''+lt.s);
+            var pijnTitel=heeftVerloop?('Pijn: van '+eersteScore+' naar '+lt.s+' (recent verloop) — tik voor de grafiek'):'Pijnverloop bekijken';
+            vg="<button class='btn' data-mtoon='"+esc(c.id)+"' title='"+esc(pijnTitel)+"' style='font-size:11.5px;padding:4px 10px'>"+
+              "<span style='display:inline-block;width:8px;height:8px;border-radius:99px;background:"+kleur(lt.s)+";margin-right:5px'></span>pijn "+pijnTxt+"</button>";
             vgBlok="<div id='mh_"+esc(c.id)+"' style='display:none;padding:8px 4px 10px;border-bottom:1px solid var(--line)'>"+
               "<small style='color:var(--muted)'>Pijnscore die de patiënt na het oefenen aantikt (0 = geen pijn, 10 = ergste pijn)</small>"+
               "<div style='display:flex;align-items:flex-end;gap:6px;height:56px;margin-top:8px'>"+
