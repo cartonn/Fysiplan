@@ -1945,7 +1945,10 @@ async function afhandelen(request, response) {
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
-      if (!kaart) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      // dezelfde enumeratierem als op de andere kaart-endpoints: bij een niet-geclaimde
+      // praktijk (waar eisPraktijk niet blokkeert) mag ook dit endpoint geen ongebreidelde
+      // hit/mis-orakel voor het raden van kaart-id's zijn
+      if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       kaart.seintje = null;
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true });

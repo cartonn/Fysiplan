@@ -402,3 +402,45 @@ v1 onaangetast) — alles groen.
 **Volgende run — pak een ander gebied:** de deeplinks/gedeelde kaarten
 (id-entropie van `/k/<id>`, opsombaarheid via `kaartMisLimiet`, en of "delen
 intrekken" mogelijk/nodig is) of de rate-limiting op `/api/opname` opnieuw.
+
+### 2026-08-24 — deeplinks / gedeelde kaarten (`/k/<id>`)
+**Geauditeerd:** het volledige capability-URL-oppervlak van de patiëntkaart —
+id-entropie, opsombaarheid van id's over álle id-nemende endpoints, hit/mis-
+orakels, id-vorm-afdwinging en de vraag of "delen intrekken" nodig is. Extra
+aandacht voor de twee seintje-endpoints die er gisteren bijkwamen.
+
+**Bevindingen (het oppervlak is stevig; één inconsistentie gedicht):**
+- **id-entropie:** kaart-id's zijn `randomBytes(6)` = 48 bit (12 hex). Tegen de
+  enumeratierem (30 missers/IP/5min) is zelfs met zware IP-rotatie de 2^48-ruimte
+  praktisch onbereikbaar; `vindKaart` dwingt bovendien de hex-vorm af (`[a-f0-9]{8,16}`),
+  dus rare/pad-achtige id's worden een nette misser — geen crash, geen bronlek.
+- **Consistente rem:** álle acht de openbare id-nemende endpoints (`/api/kaart`,
+  `/agenda`, `/vertaal`, `/manifest`, `/meting`, `/gedaan`, `/seintje`, `/vraag`)
+  draaien `kaartMisLimiet` op de misser-tak; de betaalde/schrijf-takken dragen
+  daarnaast `schrijfLimiet`/`aiLimiet`. De `/k`-pagina zelf lekt geen hit/mis:
+  bestaand én onbestaand id leveren exact dezelfde patiëntpagina (de data komt pas
+  via de afgeknepen API), met noindex, X-Frame DENY en een strikte nonce-CSP.
+- **Gat (klein, wél reëel):** `/api/kaart/seintje/gezien` (gisteren toegevoegd)
+  gaf op de misser-tak een 404 zónder `kaartMisLimiet`. Voor een geclaimde praktijk
+  dekt `eisPraktijk` dit af, maar bij een níét-geclaimde praktijk was dit het enige
+  kaart-endpoint waarvan de misser niet door de kaart-specifieke rem werd geknepen —
+  een klein, ongelijk enumeratie-orakel.
+
+**Increment:** `kaartMisLimiet` toegevoegd op de misser-tak van
+`/api/kaart/seintje/gezien`, zodat de enumeratierem nu uniform over het hele
+kaartoppervlak loopt. Geen gedragswijziging voor een legitieme therapeut (die
+raakt nooit de misser-tak); v1 onaangeraakt. Nieuwe regressiewacht
+`test-deeplinks.mjs` (17 checks) die de rem op álle negen endpoints vastzet,
+plus id-vorm-robuustheid (geen 5xx/bronlek), het uitblijven van een `/k`-hit/mis-
+lek en de securitykoppen. Regressie gedraaid: seintje (26), lees-API's (11) en
+kern (21, v1 onaangetast) — groen.
+
+**Observatie (geen fix — kandidaat voor een WERKING-run):** een gelekt/verkeerd
+doorgestuurd `/k/<id>` is de hele levensduur van de kaart geldig; de enige
+"intrekking" is de kaart verwijderen (verlies van historie). Id-rotatie met behoud
+van de kaart zou een echte privacyverbetering zijn, maar is een feature, geen
+security-fix — genoteerd voor de functionele routine.
+
+**Volgende run — pak een ander gebied:** de opname-/uploadketen opnieuw
+(`/api/opname`, videopaden) of een tweede blik op de rate-limiting van
+`/api/kaarten`/`/api/praktijken` POST onder IP-rotatie.
