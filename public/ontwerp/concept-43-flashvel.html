@@ -1,0 +1,1048 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 43 — Flashvel · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 43 — FLASHVEL
+   ------------------------------------------------------------
+   Ontworpen om te verslijten.
+
+   In een ouderwetse tattooshop hangen de wanden vol flashvellen:
+   vellen met genummerde ontwerpen, dik omlijnd, in hooguit vier
+   inkten. De klant loopt langs de muur en WIJST AAN. Hij leest
+   niets. Hij zegt een nummer.
+
+   Die vellen zijn getekend volgens één stelregel, al bijna een
+   eeuw: BOLD WILL HOLD. Dikke, gelijkmatige zwarte contouren
+   houden hun vorm terwijl de inkt onder de huid uitloopt — een
+   goed gezet traditioneel ontwerp is na veertig jaar nog te
+   lezen, waar een dunne lijn binnen tien jaar vervaagt. Alles
+   wat fijn is, verdwijnt. Dus teken je het niet.
+
+   EN NU DE OEFENKAART. Die wordt ontworpen op een scherm, vers,
+   op 100% zoom, en dan gaat hij de wereld in:
+
+     · met een magneet op de koelkast, zes weken in de zon
+     · in de broekzak mee naar de sportschool, en één keer door
+       de was
+     · gefotografeerd met een telefoon in een donkere gang, om
+       naar de dochter te sturen
+     · gekopieerd op het apparaat van de praktijk, dat al twee
+       jaar streept
+     · geprint op de inkjet thuis, waar de cyaan op is
+
+   Geen enkele oefenkaart in Nederland is ontworpen voor die vijf
+   situaties. Ze zijn ontworpen voor de eerste minuut.
+
+   Dit blad niet. Hier geldt de wet van het flashvel:
+     · geen lijn dunner dan 0,5 punt, nergens, ook niet in de kleine letter
+     · geen grijstint als drager van betekenis — grijs is de eerste
+       die de kopieermachine opeet
+     · de naam staat IN het beeld, op een lint, niet eronder;
+       een afgescheurde hoek neemt dan geen namen mee
+     · hooguit drie inkten, en zwart alleen moet volstaan
+     · elk ontwerp heeft een nummer, en kiezen is aanwijzen
+
+   Waarom dit schuurt: dit is geen nette zorgesthetiek. Dikke
+   contouren, linten, een rood dat schreeuwt. Wie een zachte,
+   geruststellende kaart wil, moet hier niet zijn. Maar het
+   ontwerpargument is niet romantisch — het is materieel. Een
+   kaart die na zes weken koelkast nog leesbaar is, is een betere
+   kaart dan een die op dag één mooi was.
+
+   Dit is niet concept 14 (Zeefdruk): dat ging over hoe iets
+   gedrukt wordt, met twee inkten en overdruk. Dit gaat over hoe
+   iets VERGAAT, en over kiezen door te wijzen.
+   ============================================================ */
+
+:root{
+  --papier:#efe3c8;      /* het vergeelde vel aan de muur */
+  --papier-2:#f7f0dd;
+  --vlak:#fffdf6;
+  --zwart:#100c08;
+  --inkt-2:#3a3129;
+  --inkt-3:#6b5f52;
+  --lijn:#c8b894;
+  --lijn-2:#ded0ae;
+  --rood:#bf2a1d;
+  --groen:#1d6440;
+  --geel:#dfa321;
+  --muur:#241d18;
+
+  --vet:"Arial Black","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --grot:"Helvetica Neue",Helvetica,Arial,"Liberation Sans",sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --serif:Charter,Georgia,"Times New Roman",serif;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:68px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font:17px/1.62 var(--grot);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--rood)}
+:focus-visible{outline:3px solid var(--rood);outline-offset:3px}
+
+.binnen{max-width:1180px;margin:0 auto;padding:0 22px}
+.scherm{padding:var(--s6) 0}
+.scherm.eerste{padding-top:var(--s5)}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  background:var(--zwart);padding:9px 22px;font:700 12.5px/1 var(--grot);flex-wrap:wrap}
+.labbalk .nr{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--papier);
+  border:2px solid var(--rood);padding:4px 7px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#a3968a;text-decoration:none}
+.labbalk a:hover{color:var(--geel)}
+.labbalk a.terug{color:#fff;border-bottom:2px solid var(--rood)}
+
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:29px;height:29px;background:var(--zwart);color:var(--papier);
+  display:flex;align-items:center;justify-content:center;font:900 16px/1 var(--vet);
+  box-shadow:3px 3px 0 var(--rood)}
+.merkregel .naam{font:900 16px/1 var(--vet);color:var(--zwart);letter-spacing:-.02em}
+.merkregel .pad{font:700 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--inkt-3)}
+
+.schermkop{border-top:4px solid var(--zwart);padding-top:var(--s2);margin-bottom:var(--s5);max-width:70ch}
+.schermkop > b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--rood);margin-bottom:var(--s3)}
+.schermkop h2{font:900 clamp(25px,3vw,34px)/1.06 var(--vet);letter-spacing:-.035em;color:var(--zwart);
+  margin-bottom:var(--s3)}
+.schermkop p{font:400 17.5px/1.62 var(--serif);color:var(--inkt-2)}
+.schermkop p b{font-weight:700;color:var(--zwart)}
+
+/* ---------- het lint: het handelsmerk van dit concept ----------
+   De naam hoort IN het beeld te staan. Een lint is de oudste
+   manier om tekst aan een tekening vast te maken zonder dat het
+   bijschrift wordt. Scheurt de hoek eraf, dan gaat de naam mee
+   met het beeld waar hij bij hoort. */
+.lint{position:relative;display:block;background:var(--zwart);color:var(--papier-2);
+  font:900 15px/1 var(--vet);letter-spacing:-.01em;text-transform:uppercase;
+  padding:9px 16px;text-align:center;
+  clip-path:polygon(0 0,100% 0,calc(100% - 11px) 50%,100% 100%,0 100%,11px 50%)}
+.lint.rood{background:var(--rood)}
+.lint.groen{background:var(--groen)}
+
+/* ============================================================
+   1 · LANDING
+   ============================================================ */
+.heldrij{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--s6);align-items:center}
+@media (max-width:980px){.heldrij{grid-template-columns:1fr;gap:var(--s5)}}
+
+h1.kop{font:900 clamp(35px,5.4vw,62px)/.98 var(--vet);letter-spacing:-.045em;color:var(--zwart);
+  text-transform:uppercase}
+h1.kop em{display:block;font-style:normal;color:var(--rood)}
+p.onder{font:400 19px/1.6 var(--serif);color:var(--inkt-2);max-width:54ch;margin-top:var(--s4)}
+p.onder b{font-weight:700;color:var(--zwart)}
+
+.knoppen{display:flex;gap:14px;flex-wrap:wrap;margin-top:var(--s4)}
+.kn{display:inline-block;background:var(--zwart);color:var(--papier-2);text-decoration:none;
+  padding:14px 24px;font:900 14px/1 var(--vet);text-transform:uppercase;letter-spacing:.02em;
+  border:3px solid var(--zwart);box-shadow:5px 5px 0 var(--rood)}
+.kn:hover{background:var(--rood);border-color:var(--rood);box-shadow:5px 5px 0 var(--zwart)}
+.kn.leeg{background:transparent;color:var(--zwart);box-shadow:5px 5px 0 var(--lijn)}
+.kn.leeg:hover{background:var(--zwart);color:var(--papier-2);box-shadow:5px 5px 0 var(--rood)}
+
+/* het vel aan de muur, als beeldmerk op de landing */
+.muurvel{background:var(--muur);padding:var(--s4);position:relative;
+  box-shadow:inset 0 0 90px rgba(0,0,0,.55)}
+.muurvel .vel{background:var(--vlak);border:4px solid var(--zwart);padding:var(--s3);
+  transform:rotate(-1.1deg);box-shadow:0 14px 34px rgba(0,0,0,.5)}
+.muurvel .velkop{display:flex;align-items:center;gap:10px;border-bottom:3px solid var(--zwart);
+  padding-bottom:9px;margin-bottom:var(--s3)}
+.muurvel .velkop b{font:900 18px/1 var(--vet);color:var(--zwart);text-transform:uppercase;
+  letter-spacing:-.02em}
+.muurvel .velkop span{margin-left:auto;font:700 10px/1 var(--mono);letter-spacing:.16em;color:var(--inkt-3)}
+.velraster{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.vp{border:3px solid var(--zwart);background:var(--papier-2);position:relative;padding:9px 7px 0}
+.vp .num{position:absolute;top:-13px;left:-13px;width:29px;height:29px;border-radius:50%;
+  background:var(--rood);color:#fff;border:3px solid var(--zwart);
+  display:flex;align-items:center;justify-content:center;font:900 12px/1 var(--vet)}
+.vp .beeld{height:66px;display:flex;align-items:center;justify-content:center}
+.vp .beeld img{max-height:64px;width:auto;mix-blend-mode:multiply}
+.vp .lint{font-size:9.5px;padding:5px 12px;margin:7px -7px 0;
+  clip-path:polygon(0 0,100% 0,calc(100% - 7px) 50%,100% 100%,0 100%,7px 50%)}
+.vp.gekozen{outline:4px solid var(--geel);outline-offset:3px}
+
+.wetten{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5);margin-top:var(--s6);
+  border-top:4px solid var(--zwart);padding-top:var(--s4)}
+@media (max-width:900px){.wetten{grid-template-columns:1fr;gap:var(--s4)}}
+.wet .nr{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--rood);display:block;margin-bottom:10px}
+.wet h3{font:900 21px/1.12 var(--vet);letter-spacing:-.03em;color:var(--zwart);margin-bottom:10px;
+  text-transform:uppercase}
+.wet p{font-size:16px}
+.wet p b{color:var(--zwart);font-weight:700}
+
+/* ---------- de slijtageproef ----------
+   Drie keer hetzelfde paneel: vers, twee keer gekopieerd, zes
+   weken zon. Dit is de eigenlijke bewering van het concept, dus
+   hij staat niet in een voetnoot maar op de landing. */
+.slijtage{margin-top:var(--s6);border-top:4px solid var(--zwart);padding-top:var(--s4)}
+.slijtage > h3{font:900 22px/1.1 var(--vet);text-transform:uppercase;letter-spacing:-.03em;
+  color:var(--zwart);margin-bottom:var(--s2)}
+.slijtage > p{font:400 17px/1.6 var(--serif);max-width:64ch;margin-bottom:var(--s4)}
+.proefrij{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:900px){.proefrij{grid-template-columns:1fr}}
+.pr{background:var(--vlak);border:3px solid var(--zwart)}
+.pr .kopje{background:var(--zwart);color:var(--papier);padding:8px 12px;
+  font:700 10px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+.pr .kopje em{font-style:normal;color:var(--geel)}
+.pr .doos{padding:var(--s3);display:flex;gap:13px;align-items:center}
+.pr .doos img{max-height:74px;width:auto;mix-blend-mode:multiply;flex:0 0 auto}
+.pr .naam{font:900 20px/1.02 var(--vet);color:var(--zwart);text-transform:uppercase;letter-spacing:-.03em}
+.pr .tel{font:900 16px/1.2 var(--vet);color:var(--rood);margin-top:4px}
+.pr .fijn{font:400 12px/1.35 var(--grot);color:var(--inkt-2);margin-top:6px}
+.pr.kopie .doos{filter:grayscale(1) contrast(1.75) brightness(1.06)}
+.pr.zon .doos{filter:sepia(.42) contrast(.72) brightness(1.14) saturate(.5)}
+.pr .oordeel{border-top:2px solid var(--zwart);padding:9px 12px;font:700 12.5px/1.4 var(--grot);
+  color:var(--groen)}
+
+/* de tegenproef: hetzelfde, maar dun getekend */
+.tegenproef{margin-top:var(--s4);background:var(--papier-2);border:3px dashed var(--lijn);
+  padding:var(--s3) var(--s4);display:grid;grid-template-columns:auto 1fr;gap:var(--s4);align-items:center}
+@media (max-width:760px){.tegenproef{grid-template-columns:1fr}}
+.tegenproef .dun{background:#fff;border:1px solid #e6e6e6;padding:13px 15px;min-width:210px;
+  filter:sepia(.42) contrast(.72) brightness(1.14) saturate(.5)}
+.tegenproef .dun .naam{font:300 19px/1.05 var(--grot);color:#8b8b8b;letter-spacing:-.02em}
+.tegenproef .dun .tel{font:300 14px/1.2 var(--grot);color:#a5a5a5;margin-top:4px}
+.tegenproef .dun .fijn{font:300 10px/1.35 var(--grot);color:#b8b8b8;margin-top:6px}
+.tegenproef p{font:400 16px/1.6 var(--serif)}
+.tegenproef p b{color:var(--zwart);font-weight:700}
+
+/* ============================================================
+   2 · KIEZER — de muur met genummerde ontwerpen
+   ============================================================ */
+.kiesrij{display:grid;grid-template-columns:1.45fr 1fr;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.kiesrij{grid-template-columns:1fr}}
+
+.wand{background:var(--muur);padding:var(--s4);box-shadow:inset 0 0 110px rgba(0,0,0,.55)}
+.wandkop{display:flex;align-items:baseline;gap:var(--s3);margin-bottom:var(--s4);flex-wrap:wrap}
+.wandkop h3{font:900 20px/1 var(--vet);color:var(--papier);text-transform:uppercase;letter-spacing:-.02em}
+.wandkop span{font:700 10px/1 var(--mono);letter-spacing:.16em;color:#8a7c6d}
+.wandkop .vellen{margin-left:auto;display:flex;gap:5px}
+.wandkop .vellen i{width:26px;height:20px;border:2px solid #56493d;display:flex;align-items:center;
+  justify-content:center;font:700 9px/1 var(--mono);color:#8a7c6d;font-style:normal}
+.wandkop .vellen i.aan{background:var(--papier);color:var(--zwart);border-color:var(--papier)}
+
+.flashraster{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3)}
+@media (max-width:700px){.flashraster{grid-template-columns:repeat(2,1fr)}}
+.fp{background:var(--vlak);border:3px solid var(--zwart);position:relative;padding:13px 10px 0;
+  cursor:default;transition:transform .14s}
+.fp:hover{transform:translateY(-3px)}
+.fp .num{position:absolute;top:-12px;left:-12px;width:32px;height:32px;border-radius:50%;
+  background:var(--vlak);color:var(--zwart);border:3px solid var(--zwart);
+  display:flex;align-items:center;justify-content:center;font:900 12px/1 var(--vet)}
+.fp .beeld{height:92px;display:flex;align-items:center;justify-content:center}
+.fp .beeld img{max-height:90px;width:auto;mix-blend-mode:multiply}
+.fp .lint{font-size:10.5px;padding:6px 13px;margin:9px -10px 0;
+  clip-path:polygon(0 0,100% 0,calc(100% - 8px) 50%,100% 100%,0 100%,8px 50%)}
+.fp .tel{background:var(--vlak);text-align:center;font:900 13px/1 var(--vet);color:var(--zwart);
+  padding:7px 0 9px;border-top:2px solid var(--zwart);margin:0 -10px}
+.fp.gekozen{outline:5px solid var(--geel);outline-offset:4px}
+.fp.gekozen .num{background:var(--geel)}
+.fp.uit{opacity:.42}
+.fp.uit .beeld{filter:grayscale(1)}
+
+.wandvoet{margin-top:var(--s4);border-top:2px solid #56493d;padding-top:var(--s3);
+  display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center}
+.wandvoet p{font:400 14.5px/1.5 var(--grot);color:#b7a897;max-width:52ch}
+.wandvoet p b{color:var(--papier);font-weight:700}
+
+/* het bonnetje rechts: de bestelling */
+.bestel{background:var(--vlak);border:4px solid var(--zwart);box-shadow:8px 8px 0 var(--zwart)}
+.bestel .bk{background:var(--zwart);color:var(--papier);padding:12px var(--s3);
+  font:900 14px/1 var(--vet);text-transform:uppercase;letter-spacing:.02em;
+  display:flex;align-items:center;gap:10px}
+.bestel .bk span{margin-left:auto;font:700 10px/1 var(--mono);letter-spacing:.12em;color:var(--geel)}
+.bestel .invoer{padding:var(--s3);border-bottom:3px solid var(--zwart)}
+.bestel .invoer label{display:block;font:700 9.5px/1 var(--mono);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--inkt-3);margin-bottom:8px}
+.bestel .nummervak{display:flex;gap:8px;flex-wrap:wrap}
+.bestel .nummervak input{min-width:0}
+.bestel .nummervak input{flex:1;border:3px solid var(--zwart);background:var(--papier-2);
+  padding:11px 12px;font:900 22px/1 var(--vet);color:var(--zwart);letter-spacing:.06em}
+.bestel .nummervak input:focus{outline:0;background:#fff;border-color:var(--rood)}
+.bestel .nummervak button{border:3px solid var(--zwart);background:var(--zwart);color:var(--papier);
+  font:900 13px/1 var(--vet);text-transform:uppercase;padding:0 15px;cursor:default}
+.bestel .hint{font:400 13px/1.45 var(--grot);color:var(--inkt-3);margin-top:9px}
+
+.gekozenlijst{list-style:none;padding:var(--s3) var(--s3) 0}
+.gekozenlijst li{display:grid;grid-template-columns:44px 1fr auto;gap:11px;align-items:center;
+  padding:11px 0;border-bottom:2px dotted var(--lijn)}
+.gekozenlijst li:last-child{border-bottom:0}
+.gekozenlijst .nr{font:900 13px/1 var(--vet);color:#fff;background:var(--zwart);
+  padding:7px 0;text-align:center}
+.gekozenlijst .nm{font:900 16px/1.08 var(--vet);color:var(--zwart);text-transform:uppercase;
+  letter-spacing:-.025em}
+.gekozenlijst .nm em{display:block;font:400 12.5px/1.35 var(--grot);color:var(--inkt-3);
+  font-style:normal;text-transform:none;letter-spacing:0;margin-top:3px}
+.gekozenlijst .tl{font:900 15px/1 var(--vet);color:var(--rood)}
+
+.velbudget{margin:var(--s3);border:3px solid var(--zwart);background:var(--papier-2);padding:var(--s3)}
+.velbudget h4{font:700 9.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--inkt-3);margin-bottom:10px}
+.velbudget .balk{height:22px;border:2px solid var(--zwart);background:#fff;display:flex}
+.velbudget .balk i{display:block;border-right:2px solid var(--zwart)}
+.velbudget .balk i:last-child{border-right:0}
+.velbudget .balk i.vol{background:var(--zwart)}
+.velbudget .balk i.leeg{background:repeating-linear-gradient(45deg,var(--lijn-2) 0 3px,#fff 3px 7px)}
+.velbudget p{font:400 13.5px/1.45 var(--grot);color:var(--inkt-2);margin-top:10px}
+.velbudget p b{color:var(--zwart);font-weight:700}
+
+.velvoet{padding:var(--s3);border-top:3px solid var(--zwart);display:flex;flex-wrap:wrap;gap:12px;
+  align-items:center;background:var(--papier-2)}
+.velvoet .los{font:700 10px/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--inkt-3)}
+.velvoet .kn{margin-left:auto;box-shadow:4px 4px 0 var(--rood)}
+
+/* ============================================================
+   3 · CLIËNTKAART
+   ============================================================ */
+.dossier{background:var(--vlak);border:4px solid var(--zwart);box-shadow:10px 10px 0 var(--zwart)}
+.doskop{background:var(--zwart);color:var(--papier);padding:var(--s4);display:grid;
+  grid-template-columns:1fr auto;gap:var(--s4);align-items:end}
+@media (max-width:760px){.doskop{grid-template-columns:1fr;gap:var(--s3)}}
+.doskop h3{font:900 clamp(26px,3.4vw,38px)/1 var(--vet);text-transform:uppercase;letter-spacing:-.04em;
+  color:var(--papier)}
+.doskop .sub{font:400 15px/1.5 var(--grot);color:#a3968a;margin-top:9px;max-width:48ch}
+.doskop .sub b{color:var(--geel);font-weight:700}
+.doskop .zegel{border:3px solid var(--rood);color:var(--rood);padding:9px 13px;text-align:center;
+  font:900 11px/1.35 var(--vet);text-transform:uppercase;letter-spacing:.06em;transform:rotate(-3deg)}
+.doskop .zegel b{display:block;font-size:19px;letter-spacing:-.02em}
+
+.dosrij{display:grid;grid-template-columns:1.4fr 1fr}
+@media (max-width:1000px){.dosrij{grid-template-columns:1fr}}
+.doslinks{border-right:3px solid var(--zwart);padding:var(--s4)}
+@media (max-width:1000px){.doslinks{border-right:0;border-bottom:3px solid var(--zwart)}}
+.dosrechts{padding:var(--s4);background:var(--papier-2)}
+
+.blokkop{font:700 9.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--inkt-3);
+  border-bottom:2px solid var(--zwart);padding-bottom:8px;margin-bottom:var(--s3)}
+
+.dagstrook{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin-bottom:var(--s4)}
+.dagstrook .dg{border:3px solid var(--zwart);text-align:center;padding:9px 3px;background:#fff}
+.dagstrook .dg b{display:block;font:700 9px/1 var(--mono);letter-spacing:.08em;color:var(--inkt-3);
+  margin-bottom:7px}
+.dagstrook .dg i{display:block;font:900 17px/1 var(--vet);font-style:normal;color:var(--lijn)}
+.dagstrook .dg.af{background:var(--zwart)}
+.dagstrook .dg.af b{color:#8a7c6d}
+.dagstrook .dg.af i{color:var(--geel)}
+.dagstrook .dg.vandaag{outline:4px solid var(--rood);outline-offset:2px}
+
+.oefkaart{border:3px solid var(--zwart);background:#fff;margin-bottom:var(--s3);display:grid;
+  grid-template-columns:104px 1fr;gap:0}
+@media (max-width:620px){.oefkaart{grid-template-columns:1fr}}
+.oefkaart .prent{border-right:3px solid var(--zwart);display:flex;align-items:center;
+  justify-content:center;padding:10px;background:var(--papier-2)}
+@media (max-width:620px){.oefkaart .prent{border-right:0;border-bottom:3px solid var(--zwart)}}
+.oefkaart .prent img{max-height:82px;width:auto;mix-blend-mode:multiply}
+.oefkaart .tekst{padding:13px var(--s3) 15px}
+.oefkaart .rij1{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap}
+.oefkaart .rij1 .nr{font:900 11px/1 var(--vet);background:var(--zwart);color:var(--papier);padding:5px 8px}
+.oefkaart h4{font:900 22px/1.04 var(--vet);color:var(--zwart);text-transform:uppercase;letter-spacing:-.035em}
+.oefkaart .tel{font:900 17px/1 var(--vet);color:var(--rood);margin-top:7px}
+.oefkaart .hoe{font:400 14px/1.45 var(--grot);color:var(--inkt-2);margin-top:8px;max-width:52ch}
+.oefkaart .status{margin-top:11px;display:flex;gap:7px;flex-wrap:wrap}
+.oefkaart .status span{font:700 9.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  border:2px solid var(--zwart);padding:5px 7px;color:var(--zwart)}
+.oefkaart .status span.aan{background:var(--groen);border-color:var(--groen);color:#fff}
+.oefkaart .status span.let{background:var(--geel);border-color:var(--zwart)}
+
+.notitie{border:3px solid var(--zwart);background:#fff;padding:var(--s3);margin-bottom:var(--s3)}
+.notitie h5{font:900 13px/1 var(--vet);text-transform:uppercase;color:var(--zwart);margin-bottom:8px}
+.notitie p{font:400 14.5px/1.5 var(--serif);color:var(--inkt-2)}
+.notitie p b{color:var(--zwart);font-weight:700}
+.notitie .datum{font:700 9.5px/1 var(--mono);letter-spacing:.12em;color:var(--inkt-3);margin-top:9px}
+
+.staat{list-style:none}
+.staat li{display:grid;grid-template-columns:1fr auto;gap:11px;padding:11px 0;
+  border-bottom:2px dotted var(--lijn);font-size:14.5px;align-items:baseline}
+.staat li:last-child{border-bottom:0}
+.staat li b{font:700 10px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--inkt-3)}
+.staat li span{font:900 15px/1 var(--vet);color:var(--zwart)}
+.staat li span.rood{color:var(--rood)}
+.staat li span.groen{color:var(--groen)}
+
+/* ============================================================
+   4 · PRINTKAART — A4 STAAND
+   ============================================================ */
+.bladhouder{display:grid;place-items:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){
+  .bladschaal{width:100%;overflow:hidden}
+  .blad{transform:scale(.78);transform-origin:top left;margin-bottom:-65mm !important;
+    margin-right:-46mm !important}
+}
+@media (max-width:760px){.blad{transform:scale(.45);margin-bottom:-163mm !important;margin-right:-116mm !important}}
+
+.blad{position:relative;width:210mm;height:297mm;background:#fff;color:#000;
+  box-shadow:0 24px 60px rgba(0,0,0,.34);border:1px solid var(--lijn);
+  display:flex;flex-direction:column;font-family:var(--grot);padding:8mm 9mm 6mm}
+
+.wijzer{position:absolute;width:44mm;font:600 11.5px/1.4 var(--grot);color:var(--inkt-3);
+  border-top:4px solid var(--rood);padding-top:6px}
+@media (max-width:1240px){.wijzer{display:none}}
+
+/* de velkop: het vel heeft een nummer, want er komen er meer */
+.fl-kop{border-bottom:2.4pt solid #000;padding-bottom:3.4mm;display:grid;
+  grid-template-columns:1fr auto;gap:6mm;align-items:end}
+.fl-kop h1{font:900 30pt/.9 var(--vet);letter-spacing:-.05em;text-transform:uppercase}
+.fl-kop .onderkop{font:700 11pt/1.15 var(--grot);color:#3a3129;margin-top:2.2mm}
+.fl-kop .velnr{border:2pt solid #000;padding:2mm 3mm;text-align:center;white-space:nowrap}
+.fl-kop .velnr b{display:block;font:900 15pt/1 var(--vet);letter-spacing:-.02em}
+.fl-kop .velnr span{display:block;font:700 6.6pt/1.5 var(--mono);letter-spacing:.14em;color:#3a3129}
+
+/* het lint op papier — zelfde vorm, in punten gemaat */
+.pl{display:block;background:#000;color:#fff;font:900 11.5pt/1 var(--vet);text-transform:uppercase;
+  letter-spacing:-.01em;padding:2.1mm 6mm;text-align:center;
+  clip-path:polygon(0 0,100% 0,calc(100% - 3mm) 50%,100% 100%,0 100%,3mm 50%)}
+.pl.rood{background:#bf2a1d}
+
+/* vier panelen, twee bij twee, elk met een dikke keerlijn */
+.fl-vel{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
+  gap:5mm;padding:5mm 0 4mm}
+.fl-p{border:2.4pt solid #000;display:flex;flex-direction:column;position:relative;
+  padding:4.6mm 4mm 0}
+.fl-p .num{position:absolute;top:-4.6mm;left:-3.2mm;width:11mm;height:11mm;border-radius:50%;
+  background:#fff;border:2.4pt solid #000;display:flex;align-items:center;justify-content:center;
+  font:900 13pt/1 var(--vet)}
+.fl-p .streep{position:absolute;top:-4.6mm;right:-2.4pt;display:flex;gap:1.6mm}
+.fl-p .streep i{width:6.4mm;height:6.4mm;border:1.6pt solid #000;background:#fff;display:block}
+.fl-p .prent{flex:1;display:flex;align-items:center;justify-content:center;padding:1mm 0 2mm;
+  min-height:0}
+.fl-p .prent img{max-height:46mm;max-width:100%;width:auto;mix-blend-mode:multiply}
+.fl-p .tel{text-align:center;font:900 19pt/1 var(--vet);letter-spacing:-.03em;margin-bottom:2.2mm}
+.fl-p .hoe{font:400 9.6pt/1.32 var(--grot);color:#1a1a1a;text-align:center;padding:0 1mm 2.6mm;
+  min-height:12mm}
+.fl-p .pl{margin:0 -4mm}
+
+/* de voet: één regel die het hele vel draagt, plus de administratie */
+.fl-voet{border-top:2.4pt solid #000;padding-top:2.6mm;display:grid;grid-template-columns:1fr 46mm;
+  gap:5mm;align-items:start}
+.fl-voet .regel{font:900 13pt/1.12 var(--vet);text-transform:uppercase;letter-spacing:-.03em}
+.fl-voet .regel em{font-style:normal;color:#bf2a1d}
+.fl-voet .toelicht{font:400 8.6pt/1.35 var(--grot);color:#1a1a1a;margin-top:2mm;max-width:120mm}
+.fl-voet .toelicht b{font-weight:700;color:#000}
+.fl-voet .admin{border:1.6pt solid #000;padding:2.2mm 2.6mm;font:400 7.4pt/1.4 var(--grot);color:#1a1a1a}
+.fl-voet .admin b{display:block;font:900 8.6pt/1.2 var(--vet);text-transform:uppercase;
+  letter-spacing:-.01em;color:#000;margin-bottom:1.4mm}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--zwart);color:#a3968a;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--geel);border-top:3px solid var(--rood);padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.6}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding:5px 0}
+footer.uitleiding a{color:#fff}
+
+/* ---------- smalle schermen ----------
+   Rastersporen van 1fr worden nooit smaller dan hun min-content;
+   min-width:0 geeft ze toestemming om dat wel te doen. Daarna
+   halveert het flashraster, want een paneel kleiner dan een duim
+   kan zijn dikke contour niet dragen. */
+@media (max-width:640px){
+  .heldrij > *,.kiesrij > *,.dosrij > *,.proefrij > *{min-width:0}
+  .flashraster,.velraster{grid-template-columns:repeat(2,1fr)}
+  .muurvel,.wand{padding:var(--s3)}
+  .wandkop .vellen{margin-left:0}
+  .dagstrook{grid-template-columns:repeat(4,1fr)}
+  .gekozenlijst li{grid-template-columns:40px 1fr auto}
+  .pr .doos{flex-wrap:wrap}
+  .bestel .nummervak button{flex:1 0 100%}
+}
+
+/* ============================================================
+   PRINT — A4 STAAND
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 43</span>
+  <strong style="font:900 16px/1 var(--vet);color:#fff;letter-spacing:-.03em">Flashvel</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">Concept 43 · Flashvel</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1 class="kop">Een oefenkaart wordt ontworpen voor de eerste minuut.<em>Hij wordt gelezen in week zes.</em></h1>
+        <p class="onder">In een ouderwetse tattooshop hangt de wand vol flashvellen: genummerde
+          ontwerpen, dik omlijnd, hooguit drie inkten. Ze zijn getekend volgens één stelregel —
+          <b>bold will hold.</b> Dikke, gelijkmatige zwarte contouren houden hun vorm terwijl de
+          inkt onder de huid uitloopt; een dunne lijn is binnen tien jaar weg. Alles wat fijn is
+          verdwijnt, dus teken je het niet. Een blad op de koelkast vergaat sneller dan een
+          tatoeage — en wordt ontworpen alsof het onder glas ligt.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk het vel</a>
+          <a class="kn leeg" href="#kiezer">Kiezen is aanwijzen</a>
+        </div>
+      </div>
+
+      <div class="muurvel">
+        <div class="vel">
+          <div class="velkop">
+            <b>Vel 3 · Staand</b>
+            <span>301 — 306</span>
+          </div>
+          <div class="velraster">
+            <div class="vp gekozen">
+              <span class="num">301</span>
+              <div class="beeld"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen komen"/></div>
+              <span class="lint">Op de tenen</span>
+            </div>
+            <div class="vp">
+              <span class="num">302</span>
+              <div class="beeld"><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Op één been staan met steun"/></div>
+              <span class="lint rood">Eén been</span>
+            </div>
+            <div class="vp">
+              <span class="num">303</span>
+              <div class="beeld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/></div>
+              <span class="lint">Uit de stoel</span>
+            </div>
+            <div class="vp">
+              <span class="num">304</span>
+              <div class="beeld"><img src="/images/balans-en-valpreventie/zijwaarts-stappen-met-steun-line-v1.png" alt="Zijwaarts stappen met steun"/></div>
+              <span class="lint groen">Zijwaarts</span>
+            </div>
+            <div class="vp">
+              <span class="num">305</span>
+              <div class="beeld"><img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" alt="Op de plaats marcheren met steun"/></div>
+              <span class="lint">Marcheren</span>
+            </div>
+            <div class="vp">
+              <span class="num">306</span>
+              <div class="beeld"><img src="/images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png" alt="Tandemstand met steun"/></div>
+              <span class="lint rood">Tandem</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wetten">
+      <div class="wet">
+        <span class="nr">WET 1</span>
+        <h3>Geen dunne lijn, nergens</h3>
+        <p>Op dit blad bestaat geen haarlijn en geen grijstint als drager van betekenis.
+          <b>Grijs is het eerste wat een kopieermachine opeet</b> en het laatste wat een
+          telefooncamera in een donkere gang oppikt. Wat betekenis heeft is zwart, dik en
+          gesloten — tot in de kleine letter onderaan.</p>
+      </div>
+      <div class="wet">
+        <span class="nr">WET 2</span>
+        <h3>De naam staat in het beeld</h3>
+        <p>Elke oefening zit in een paneel met een lint erdoorheen, en op dat lint staat zijn naam.
+          <b>Geen bijschrift eronder.</b> Scheurt er een hoek af, valt er koffie op de onderrand,
+          of knipt iemand één oefening uit om mee te nemen — dan gaat de naam altijd mee met het
+          plaatje waar hij bij hoort.</p>
+      </div>
+      <div class="wet">
+        <span class="nr">WET 3</span>
+        <h3>Kiezen is aanwijzen</h3>
+        <p>Aan de wand van een shop leest niemand. Men wijst, of noemt een nummer. Elke oefening
+          in Fysiplan krijgt hier een velnummer — <b>301, 302, 303</b> — en dat nummer staat op
+          het vel, in de app en in het dossier. Een patiënt die niet goed leest, kan nog steeds
+          precies zeggen welke oefening zwaar was.</p>
+      </div>
+    </div>
+
+    <div class="slijtage">
+      <h3>De slijtageproef</h3>
+      <p>Drie keer hetzelfde paneel. Links zoals het uit de printer komt. In het midden: twee keer
+        gekopieerd op het apparaat van de praktijk, dat streept. Rechts: zes weken op een koelkast
+        naast het keukenraam, op het zuiden. Er is niets aan het ontwerp veranderd — alleen aan de
+        wereld eromheen.</p>
+      <div class="proefrij">
+        <div class="pr">
+          <div class="kopje">Dag 1 · <em>vers uit de printer</em></div>
+          <div class="doos">
+            <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen komen"/>
+            <div>
+              <div class="naam">Op de tenen</div>
+              <div class="tel">2 × 15</div>
+              <div class="fijn">Aanrecht binnen handbereik. Rustig omhoog, één tel stil, langzaam zakken.</div>
+            </div>
+          </div>
+          <div class="oordeel">Leesbaar op armlengte.</div>
+        </div>
+        <div class="pr kopie">
+          <div class="kopje">Week 2 · <em>twee keer gekopieerd</em></div>
+          <div class="doos">
+            <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen komen, gekopieerde versie"/>
+            <div>
+              <div class="naam">Op de tenen</div>
+              <div class="tel">2 × 15</div>
+              <div class="fijn">Aanrecht binnen handbereik. Rustig omhoog, één tel stil, langzaam zakken.</div>
+            </div>
+          </div>
+          <div class="oordeel">Leesbaar op armlengte.</div>
+        </div>
+        <div class="pr zon">
+          <div class="kopje">Week 6 · <em>zon op de koelkast</em></div>
+          <div class="doos">
+            <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen komen, verbleekte versie"/>
+            <div>
+              <div class="naam">Op de tenen</div>
+              <div class="tel">2 × 15</div>
+              <div class="fijn">Aanrecht binnen handbereik. Rustig omhoog, één tel stil, langzaam zakken.</div>
+            </div>
+          </div>
+          <div class="oordeel">Leesbaar op armlengte.</div>
+        </div>
+      </div>
+
+      <div class="tegenproef">
+        <div class="dun">
+          <div class="naam">Op de tenen komen</div>
+          <div class="tel">2 × 15 herhalingen</div>
+          <div class="fijn">Aanrecht binnen handbereik. Rustig omhoog, één tel stil blijven staan,
+            langzaam zakken.</div>
+        </div>
+        <p><b>Dezelfde zes weken, maar dan dun gezet.</b> Lichte letters, veel grijs, een sierlijke
+          fijne uitvoeringsregel — precies wat een moderne oefenkaart doet, en op dag één ziet het
+          er beter uit dan het paneel hiernaast. Dit is dus geen smaakverschil. Het is het verschil
+          tussen een blad dat zes weken meegaat en een blad dat het niet doet.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>De bibliotheek hangt aan de wand, zes ontwerpen per vel, met een nummer per ontwerp.
+        De therapeut bladert of typt gewoon het nummer in — <b>301, enter</b> — want na twee weken
+        kent hij zijn eigen vellen uit zijn hoofd. En wat de therapeut kan, kan de patiënt aan de
+        telefoon ook: „doe 304 er nog maar bij."</p>
+    </div>
+
+    <div class="kiesrij">
+
+      <div class="wand">
+        <div class="wandkop">
+          <h3>Vel 3 — Staand, met steun</h3>
+          <span>301 — 306</span>
+          <div class="vellen" aria-hidden="true">
+            <i>1</i><i>2</i><i class="aan">3</i><i>4</i><i>5</i><i>6</i><i>7</i>
+          </div>
+        </div>
+
+        <div class="flashraster">
+          <div class="fp gekozen">
+            <span class="num">301</span>
+            <div class="beeld"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen komen"/></div>
+            <span class="lint">Op de tenen</span>
+            <div class="tel">2 × 15</div>
+          </div>
+          <div class="fp gekozen">
+            <span class="num">302</span>
+            <div class="beeld"><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Op één been staan met steun"/></div>
+            <span class="lint rood">Eén been</span>
+            <div class="tel">4 × 20 sec.</div>
+          </div>
+          <div class="fp">
+            <span class="num">303</span>
+            <div class="beeld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/></div>
+            <span class="lint">Uit de stoel</span>
+            <div class="tel">3 × 8</div>
+          </div>
+          <div class="fp gekozen">
+            <span class="num">304</span>
+            <div class="beeld"><img src="/images/balans-en-valpreventie/zijwaarts-stappen-met-steun-line-v1.png" alt="Zijwaarts stappen met steun"/></div>
+            <span class="lint groen">Zijwaarts</span>
+            <div class="tel">2 × 10</div>
+          </div>
+          <div class="fp gekozen">
+            <span class="num">305</span>
+            <div class="beeld"><img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" alt="Op de plaats marcheren met steun"/></div>
+            <span class="lint">Marcheren</span>
+            <div class="tel">2 × 30 sec.</div>
+          </div>
+          <div class="fp uit">
+            <span class="num">306</span>
+            <div class="beeld"><img src="/images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png" alt="Tandemstand met steun"/></div>
+            <span class="lint rood">Tandem</span>
+            <div class="tel">nog te vroeg</div>
+          </div>
+        </div>
+
+        <div class="wandvoet">
+          <p><b>306 staat uit</b>, niet verborgen. Wat nog niet mag, hoort zichtbaar te blijven —
+            anders weet niemand dat er nog iets ná deze week komt. Op een flashvel wordt ook nooit
+            iets van de muur gehaald.</p>
+        </div>
+      </div>
+
+      <div class="bestel">
+        <div class="bk">Bestelling <span>Mevr. R. de Wit</span></div>
+
+        <div class="invoer">
+          <label for="velnr">Velnummer</label>
+          <div class="nummervak">
+            <input id="velnr" type="text" value="305" readonly aria-label="Velnummer invoeren"/>
+            <button type="button" tabindex="-1">Zet erop</button>
+          </div>
+          <p class="hint">Of klik op de wand hiernaast. De nummers zijn vast: 301 blijft 301, ook
+            volgend jaar, ook als het beeld ooit opnieuw getekend wordt.</p>
+        </div>
+
+        <ul class="gekozenlijst">
+          <li>
+            <span class="nr">301</span>
+            <span class="nm">Op de tenen<em>Staand aan het aanrecht</em></span>
+            <span class="tl">2 × 15</span>
+          </li>
+          <li>
+            <span class="nr">302</span>
+            <span class="nm">Eén been<em>Twee vingers aan het aanrecht</em></span>
+            <span class="tl">4 × 20″</span>
+          </li>
+          <li>
+            <span class="nr">304</span>
+            <span class="nm">Zijwaarts<em>Voeten blijven op de vloer</em></span>
+            <span class="tl">2 × 10</span>
+          </li>
+          <li>
+            <span class="nr">305</span>
+            <span class="nm">Marcheren<em>Knieën tot heuphoogte</em></span>
+            <span class="tl">2 × 30″</span>
+          </li>
+        </ul>
+
+        <div class="velbudget">
+          <h4>Wat er op één vel past</h4>
+          <div class="balk" aria-label="Vier van de vier panelen gevuld">
+            <i class="vol" style="width:25%"></i>
+            <i class="vol" style="width:25%"></i>
+            <i class="vol" style="width:25%"></i>
+            <i class="vol" style="width:25%"></i>
+          </div>
+          <p><b>Vier panelen, en dan is het vel vol.</b> Niet omdat wij het rustig vinden staan,
+            maar omdat een paneel dat kleiner wordt dan een handpalm zijn dikke contour niet meer
+            kan dragen. Een vijfde oefening krijgt vel 2 — een tweede A4, geen kleiner raster.</p>
+        </div>
+
+        <div class="velvoet">
+          <span class="los">Vel 1 van 1 · zwart-wit voldoet</span>
+          <a class="kn" href="#printkaart">Vel drukken</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>Op het scherm blijft het vel een vel: dezelfde panelen, dezelfde nummers, dezelfde linten.
+        Wat erbij komt is wat papier niet kan — <b>de dagstrook die zich vult</b> en de aantekening
+        van de patiënt zelf. Wat er níet bij komt is een tweede vormtaal: wie de kaart op de
+        koelkast kent, herkent dit scherm zonder uitleg.</p>
+    </div>
+
+    <div class="dossier">
+      <div class="doskop">
+        <div>
+          <h3>R. de Wit · week 3</h3>
+          <p class="sub">Valpreventie na een heupfractuur links, februari. Vel 3 (staand, met steun).
+            <b>Vier ontwerpen: 301, 302, 304, 305.</b></p>
+        </div>
+        <div class="zegel">Vel<b>3</b>van 7</div>
+      </div>
+
+      <div class="dosrij">
+        <div class="doslinks">
+          <div class="blokkop">Deze week</div>
+          <div class="dagstrook">
+            <div class="dg af"><b>MA</b><i>✔</i></div>
+            <div class="dg af"><b>DI</b><i>✔</i></div>
+            <div class="dg"><b>WO</b><i>—</i></div>
+            <div class="dg af"><b>DO</b><i>✔</i></div>
+            <div class="dg af vandaag"><b>VR</b><i>✔</i></div>
+            <div class="dg"><b>ZA</b><i>·</i></div>
+            <div class="dg"><b>ZO</b><i>·</i></div>
+          </div>
+
+          <div class="blokkop">De vier ontwerpen</div>
+
+          <article class="oefkaart">
+            <div class="prent"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen komen"/></div>
+            <div class="tekst">
+              <div class="rij1"><span class="nr">301</span><h4>Op de tenen</h4></div>
+              <div class="tel">2 × 15</div>
+              <div class="hoe">Voeten op heupbreedte, aanrecht binnen handbereik. Rustig omhoog,
+                één tel stil blijven staan, langzaam zakken.</div>
+              <div class="status"><span class="aan">4 van 5 dagen</span><span>gaat goed</span></div>
+            </div>
+          </article>
+
+          <article class="oefkaart">
+            <div class="prent"><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Op één been staan met steun"/></div>
+            <div class="tekst">
+              <div class="rij1"><span class="nr">302</span><h4>Eén been</h4></div>
+              <div class="tel">4 × 20 sec.</div>
+              <div class="hoe">Twee vingers aan het aanrecht, blik op een vast punt vooruit. Wordt
+                het wiebelig? Zet de voet gewoon neer — dat hoort erbij.</div>
+              <div class="status"><span class="aan">4 van 5 dagen</span><span class="let">links zwaarder</span></div>
+            </div>
+          </article>
+
+          <article class="oefkaart">
+            <div class="prent"><img src="/images/balans-en-valpreventie/zijwaarts-stappen-met-steun-line-v1.png" alt="Zijwaarts stappen met steun"/></div>
+            <div class="tekst">
+              <div class="rij1"><span class="nr">304</span><h4>Zijwaarts</h4></div>
+              <div class="tel">2 × 10</div>
+              <div class="hoe">Handen op het aanrecht. Eén pas opzij, gewicht helemaal over, dan
+                terug. De voeten blijven laag bij de vloer.</div>
+              <div class="status"><span class="aan">3 van 5 dagen</span></div>
+            </div>
+          </article>
+
+          <article class="oefkaart">
+            <div class="prent"><img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" alt="Op de plaats marcheren met steun"/></div>
+            <div class="tekst">
+              <div class="rij1"><span class="nr">305</span><h4>Marcheren</h4></div>
+              <div class="tel">2 × 30 sec.</div>
+              <div class="hoe">Op de plaats, knieën tot heuphoogte. Eén hand los als het kan, twee
+                als het moet. Rustig ademen — niet tellen op de adem.</div>
+              <div class="status"><span class="aan">5 van 5 dagen</span><span>klaar voor 306</span></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="dosrechts">
+          <div class="blokkop">Wat de patiënt zelf noteerde</div>
+
+          <div class="notitie">
+            <h5>„302 is links veel zwaarder"</h5>
+            <p>Mevrouw De Wit belde donderdag en noemde meteen het nummer. <b>Niemand hoefde te
+              vragen welke oefening ze bedoelde.</b> Dat is het praktische nut van een vel met
+              nummers: aan de telefoon werkt het net zo goed als aan de keukentafel.</p>
+            <div class="datum">DO 20 AUG · TELEFONISCH</div>
+          </div>
+
+          <div class="notitie">
+            <h5>„Woensdag overgeslagen"</h5>
+            <p>Kleindochter jarig. Niet ingehaald op donderdag, en dat is precies goed:
+              <b>inhalen bestaat niet op dit vel.</b> Een overgeslagen dag blijft leeg staan en
+              telt gewoon niet mee.</p>
+            <div class="datum">WO 19 AUG · APP</div>
+          </div>
+
+          <div class="blokkop">Staat van het vel</div>
+          <ul class="staat">
+            <li><b>Vel gedrukt op</b><span>4 aug 2026</span></li>
+            <li><b>Dagen gedaan</b><span class="groen">16 van 21</span></li>
+            <li><b>Zwaarste ontwerp</b><span class="rood">302 links</span></li>
+            <li><b>Volgende vel</b><span>1 sep 2026</span></li>
+            <li><b>Klaar voor 306</b><span class="groen">ja, bespreken</span></li>
+          </ul>
+
+          <div class="notitie" style="margin-top:var(--s3)">
+            <h5>Vervangen, niet bijdrukken</h5>
+            <p>Een nieuw vel vervangt het oude van de koelkast. <b>Er hangen er nooit twee.</b>
+              Het oude vel gaat in de la bij de vorige — de patiënt houdt zo een stapeltje dat
+              precies laat zien hoeveel er in een half jaar veranderd is.</p>
+            <div class="datum">HUISREGEL</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>Vier panelen van elk ongeveer een handpalm groot, met een contour van 2,4 punt en een lint
+        met de naam erdoorheen. Rechtsboven elk paneel staan de vakjes om af te strepen — <b>zo dik
+        omlijnd dat een balpen ze niet kan doodmaken.</b> Er zit geen enkele grijstint op dit blad;
+        wat er staat, staat er zwart.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer geen-print" style="top:12mm;right:calc(100% + 22px);text-align:right">
+            de velkop, met het velnummer rechts: er komen er meer, en het oude gaat van de koelkast af</span>
+          <span class="wijzer geen-print" style="top:58mm;left:calc(100% + 22px)">
+            de contour is 2,4 punt en gesloten — dit is de lijn die de kopieermachine en zes weken
+            zon overleeft</span>
+          <span class="wijzer geen-print" style="top:120mm;right:calc(100% + 22px);text-align:right">
+            de naam staat op een lint ín het paneel; knipt iemand er één uit, dan gaat de naam mee</span>
+          <span class="wijzer geen-print" style="top:255mm;left:calc(100% + 22px)">
+            de voetregel draagt het hele vel en is even dik gezet als een oefening — een waarschuwing
+            in kleine letter is geen waarschuwing</span>
+
+          <div class="fl-kop">
+            <div>
+              <h1>Vel 3 — staand</h1>
+              <div class="onderkop">R. de Wit · elke dag, in de keuken · ongeveer 12 minuten</div>
+            </div>
+            <div class="velnr">
+              <b>301 · 302<br/>304 · 305</b>
+              <span>VEL 1 VAN 1</span>
+            </div>
+          </div>
+
+          <div class="fl-vel">
+
+            <div class="fl-p">
+              <span class="num">301</span>
+              <span class="streep" aria-hidden="true"><i></i><i></i></span>
+              <div class="prent">
+                <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen komen"/>
+              </div>
+              <div class="tel">2 × 15</div>
+              <div class="hoe">Voeten op heupbreedte, aanrecht binnen handbereik. Rustig omhoog,
+                één tel stil, langzaam zakken.</div>
+              <span class="pl">Op de tenen</span>
+            </div>
+
+            <div class="fl-p">
+              <span class="num">302</span>
+              <span class="streep" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+              <div class="prent">
+                <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Op één been staan met steun"/>
+              </div>
+              <div class="tel">4 × 20 sec.</div>
+              <div class="hoe">Twee vingers aan het aanrecht, blik vooruit op een vast punt.
+                Wiebelig? Voet neerzetten mag.</div>
+              <span class="pl rood">Eén been</span>
+            </div>
+
+            <div class="fl-p">
+              <span class="num">304</span>
+              <span class="streep" aria-hidden="true"><i></i><i></i></span>
+              <div class="prent">
+                <img src="/images/balans-en-valpreventie/zijwaarts-stappen-met-steun-line-v1.png" alt="Zijwaarts stappen met steun"/>
+              </div>
+              <div class="tel">2 × 10</div>
+              <div class="hoe">Handen op het aanrecht. Eén pas opzij, gewicht helemaal over,
+                dan terug. Voeten laag bij de vloer.</div>
+              <span class="pl">Zijwaarts</span>
+            </div>
+
+            <div class="fl-p">
+              <span class="num">305</span>
+              <span class="streep" aria-hidden="true"><i></i><i></i></span>
+              <div class="prent">
+                <img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" alt="Op de plaats marcheren met steun"/>
+              </div>
+              <div class="tel">2 × 30 sec.</div>
+              <div class="hoe">Op de plaats, knieën tot heuphoogte. Eén hand los als het kan,
+                twee als het moet.</div>
+              <span class="pl">Marcheren</span>
+            </div>
+
+          </div>
+
+          <div class="fl-voet">
+            <div>
+              <div class="regel">Doe wat u kunt. <em>Stop bij scherpe pijn.</em></div>
+              <div class="toelicht">Pijn die na een uur niet zakt, duizeligheid of een val:
+                <b>bel de praktijk, ook buiten de afspraak om.</b> Een dag overslaan hoeft u niet
+                in te halen — het vakje blijft gewoon leeg en dat telt niet tegen u.</div>
+            </div>
+            <div class="admin">
+              <b>Praktijk Boonstra</b>
+              Kerkstraat 3, Sneek · 0515 — 41 22 90 · G. Boonstra, fysiotherapeut ·
+              gedrukt 4 aug 2026 · geldig tot de afspraak van 1 sep · dossier 2026-0714 ·
+              Fysiplan
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>Waarom dit schuurt</h4>
+      <p>Dit is geen zachte zorgesthetiek. Dikke contouren, linten, een rood dat schreeuwt — een
+        praktijk die rust en discretie wil uitstralen, zal dit blad te luid vinden. Dat bezwaar is
+        echt. Maar het argument eronder is niet romantisch, het is materieel: een blad dat na zes
+        weken koelkast nog leesbaar is, is een beter blad dan een dat op dag één mooier was.</p>
+    </div>
+    <div class="kolom">
+      <h4>Inspiratie</h4>
+      <ul>
+        <li>„Bold will hold" — de stelregel van het Amerikaanse traditionele werk: dikke,
+          gelijkmatige contouren blijven veertig jaar leesbaar</li>
+        <li>Het flashvel aan de wand: genummerde ontwerpen, kiezen door te wijzen</li>
+        <li>Het beperkte palet — zwart, rood, groen — en de eis dat zwart alleen volstaat</li>
+        <li>Het lint met de naam ín de tekening, niet eronder</li>
+        <li>Emaillereclameborden, die vijftig jaar buiten hangen en niets fijns bevatten</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Print</h4>
+      <ul>
+        <li>A4 staand, vier panelen van een handpalm</li>
+        <li>Contour 2,4 punt · geen lijn dunner dan 0,5 punt</li>
+        <li>Geen grijstint als drager van betekenis</li>
+        <li>Naam op 11,5 punt in het lint, aantal op 19 punt</li>
+        <li><a href="/ontwerp/">← terug naar de galerij</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

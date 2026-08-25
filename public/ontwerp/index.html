@@ -671,6 +671,61 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
 .staal.leesafstand .trap i:nth-child(4){font-size:5px;color:#889192}
 .staal.leesafstand .strepen i{border-color:rgba(0,0,0,.22)}
 
+/* — staal concept 43: Flashvel — */
+.staal.flashvel{background:#efe3c8;color:#100c08}
+.staal.flashvel .plaatnr{color:#bf2a1d;font-family:var(--mono);position:relative;z-index:2}
+.staal.flashvel .woord{font-family:"Arial Black","Helvetica Neue",Helvetica,sans-serif;font-weight:900;
+  letter-spacing:-.045em;text-transform:uppercase;font-size:25px;position:relative;z-index:2;
+  padding-right:88px}
+.staal.flashvel .woord em{font-style:normal;color:#bf2a1d}
+.staal.flashvel .panelen{position:absolute;right:14px;top:26px;display:flex;gap:7px}
+.staal.flashvel .panelen i{width:31px;height:42px;border:3px solid #100c08;background:#fffdf6;
+  display:block;position:relative}
+.staal.flashvel .panelen i::after{content:"";position:absolute;left:-3px;right:-3px;bottom:6px;
+  height:9px;background:#100c08}
+.staal.flashvel .panelen i.r::after{background:#bf2a1d}
+.staal.flashvel .panelen i.g::after{background:#1d6440}
+.staal.flashvel .strepen i{border-color:rgba(16,12,8,.26)}
+
+/* — staal concept 44: Bonkaart — */
+.staal.bonkaart{color:#1b1a17;
+  background:
+    repeating-linear-gradient(63deg,rgba(38,56,107,.12) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(-63deg,rgba(157,59,38,.10) 0 1px,transparent 1px 6px),
+    #efe9db}
+.staal.bonkaart .plaatnr{color:#9d3b26;font-family:var(--mono);position:relative;z-index:2}
+.staal.bonkaart .woord{font-family:"Avenir Next Condensed","Avenir Next",Seravek,sans-serif;
+  font-weight:700;letter-spacing:-.02em;text-transform:uppercase;position:relative;z-index:2;
+  padding-right:96px;font-size:26px}
+.staal.bonkaart .woord em{font-style:normal;color:#9d3b26}
+.staal.bonkaart .bonnen{position:absolute;right:14px;top:22px;display:grid;
+  grid-template-columns:repeat(3,24px);gap:4px}
+.staal.bonkaart .bonnen i{height:22px;border:1px solid #26386b;background:#fdfbf5;display:block;
+  position:relative}
+.staal.bonkaart .bonnen i.op::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to bottom right,transparent calc(50% - 1px),#9d3b26 calc(50% - 1px),
+    #9d3b26 calc(50% + 1px),transparent calc(50% + 1px))}
+.staal.bonkaart .bonnen i.res{border-style:dashed;border-color:#5c6437}
+.staal.bonkaart .strepen i{border-color:rgba(27,26,23,.24)}
+
+/* — staal concept 45: Ware grootte — */
+.staal.waregrootte{background:#fdfcfa;color:#14161a}
+.staal.waregrootte .plaatnr{color:#12508f;font-family:var(--mono);position:relative;z-index:2;
+  padding-left:18px}
+.staal.waregrootte .woord{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;
+  letter-spacing:-.042em;position:relative;z-index:2;padding-left:18px;padding-right:14px;font-size:25px}
+.staal.waregrootte .woord em{font-style:normal;color:#12508f}
+.staal.waregrootte .rand{position:absolute;left:0;top:0;bottom:0;width:11px;
+  border-right:1.5px solid #14161a;
+  background:repeating-linear-gradient(to bottom,#14161a 0 1px,transparent 1px 6px)}
+.staal.waregrootte .lat{position:absolute;right:16px;bottom:16px;width:104px;height:16px;
+  border-left:2px solid #12508f;border-right:2px solid #12508f}
+.staal.waregrootte .lat::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;
+  background:#12508f}
+.staal.waregrootte .lat i{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  background:#fdfcfa;padding:0 5px;font:600 9px/1 var(--mono);color:#12508f;font-style:normal}
+.staal.waregrootte .strepen i{border-color:rgba(20,22,26,.2)}
+
 .kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
 .kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
 .kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
@@ -730,8 +785,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>42</b> concepten</span>
-      <span>Laatste ronde <b>24 augustus 2026</b></span>
+      <span><b>45</b> concepten</span>
+      <span>Laatste ronde <b>25 augustus 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -2500,6 +2555,154 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-42-leesafstand.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-42-leesafstand.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="galerijkop" style="margin-top:var(--s6)">
+      <h2>Ronde 11</h2>
+      <span>ronde 11 · 25 aug 2026</span>
+    </div>
+
+    <div class="raster">
+
+      <!-- ─────────── CONCEPT 43 ─────────── -->
+      <article class="kaart">
+        <div class="staal flashvel">
+          <div class="panelen" aria-hidden="true">
+            <i></i><i class="r"></i><i class="g"></i>
+          </div>
+          <div class="plaatnr">Bold will hold</div>
+          <div class="woord">Ontworpen om te <em>verslijten</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 43</div>
+          <h3>Flashvel</h3>
+          <p class="richting">Een oefenkaart wordt ontworpen voor de eerste minuut. Hij wordt gelezen in week zes.</p>
+          <p class="rationale">In een ouderwetse tattooshop hangt de wand vol flashvellen:
+            genummerde ontwerpen, dik omlijnd, in hooguit drie inkten. Ze zijn getekend volgens één
+            stelregel — <b>bold will hold.</b> Dikke, gelijkmatige zwarte contouren houden hun vorm
+            terwijl de inkt uitloopt; een dunne lijn is binnen tien jaar weg. Alles wat fijn is
+            verdwijnt, dus teken je het niet. En de oefenkaart? Die gaat met een magneet zes weken
+            de zon in, één keer door de was, twee keer door een kopieermachine die streept, en
+            wordt gefotografeerd in een donkere gang om naar de dochter te sturen. Geen enkele
+            kaart in Nederland is voor die vijf situaties ontworpen. Dit blad wel: geen haarlijn,
+            geen grijs als drager van betekenis, en <b>de naam op een lint ín het paneel</b>, zodat
+            een afgescheurde hoek geen namen meeneemt. Tweede erfstuk van de shop: aan de wand
+            leest niemand — men wijst. Elke oefening krijgt een velnummer, en een patiënt die
+            slecht leest kan aan de telefoon nog precies zeggen dat 302 links zwaarder was.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>„Bold will hold": de stelregel van het Amerikaanse traditionele werk, waarin een
+              goed gezet ontwerp na veertig jaar nog leesbaar is · het flashvel aan de muur met
+              genummerde ontwerpen · het beperkte palet zwart-rood-groen, en de eis dat zwart
+              alleen volstaat · het lint met de naam ín de tekening · emaillereclameborden, die
+              vijftig jaar buiten hangen en niets fijns bevatten</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b> — vier panelen van een handpalm met een contour van 2,4 punt,
+              elk met afstreepvakjes rechtsboven en een lint met de naam op 11,5 punt; aantal op
+              19 punt, voetregel even zwaar gezet als een oefening. Nergens een grijstint, dus
+              de kopieermachine kan niets weghalen</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-43-flashvel.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-43-flashvel.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 44 ─────────── -->
+      <article class="kaart">
+        <div class="staal bonkaart">
+          <div class="bonnen" aria-hidden="true">
+            <i class="op"></i><i class="op"></i><i class="op"></i>
+            <i></i><i></i><i class="res"></i>
+          </div>
+          <div class="plaatnr">21 eenheden · week 34</div>
+          <div class="woord">Er is geen <em>bon 22</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 44</div>
+          <h3>Bonkaart</h3>
+          <p class="richting">Elke oefenkaart noteert een ondergrens. Deze noteert een plafond.</p>
+          <p class="rationale">Doe dit minstens, haal dit ten minste, meer mag altijd. Voor een
+            grote groep patiënten is dat precies de verkeerde kant op: bij langdurige klachten na
+            COVID, bij ME/CVS en bij chronische pijn is de behandeling niet méér, maar doseren
+            binnen een grens. De richtlijn energiemanagement zegt het, de ergotherapie rekent al
+            jaren met de Activiteitenweger. <b>Alleen staat op geen enkele kaart een maximum</b> —
+            wie zich netjes aan het blad houdt kan er gewoon overheen gaan, want het blad kent geen
+            bovengrens. Dus wordt de kaart hier een bonkaart, de vorm die Nederland kende van de
+            distributiestamkaart van 1939 tot de koffie op 14 januari 1952 van de bon ging:
+            guilloche, serienummer, stempel, en eenentwintig genummerde vakjes. Twee regels doen
+            het werk. <b>Bonnen vervallen aan het eind van de dag</b>, want opsparen en dan inhalen
+            is exact het patroon van pieken en instorten. En de drie reservebonnen worden door de
+            praktijk vrijgegeven, niet door de patiënt op een dag dat het even goed voelt — precies
+            dán is een grens het hardst nodig.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>de Nederlandse distributiestamkaart (11 oktober 1939) en de bonkaarten die tot
+              januari 1952 in gebruik bleven · guillochewerk, serienummers en het stempel van de
+              distributiedienst · de RESERVE-bon waarvan pas later bekend werd of hij gold ·
+              pacing en energiemanagement uit de richtlijn na COVID-19 en de Activiteitenweger ·
+              de spaarkaart die juist niet vol hoeft</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b> — guilloche als achtergrondweefsel, een bonnenvel van 21 vakjes
+              van 13 mm die met een balpen doorstreepbaar zijn, drie oefeningen op 19 punt, en de
+              voorwaarden op 12,4 en 8,8 punt in plaats van in de kleine letter: „bonnen vervallen
+              aan het eind van de dag" is hier geen juridische opmerking maar de behandeling</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-44-bonkaart.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-44-bonkaart.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 45 ─────────── -->
+      <article class="kaart">
+        <div class="staal waregrootte">
+          <div class="rand" aria-hidden="true"></div>
+          <div class="lat" aria-hidden="true"><i>380 MM</i></div>
+          <div class="plaatnr">Schaal 1:1 · print op 100%</div>
+          <div class="woord">Leg het elastiek <em>hierlangs</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 45</div>
+          <h3>Ware grootte</h3>
+          <p class="richting">Het blad beschrijft de maat niet. Het ís de maat.</p>
+          <p class="rationale">„Rek het elastiek ongeveer een armlengte uit." „Ongeveer 20 cm
+            tussen de voeten." Vier keer „ongeveer" op één blad — en de patiënt heeft geen meetlint
+            in de keukenla. In een scheepswerf lossen ze dat al eeuwen op één manier op: de
+            tekening gaat naar de mallenvloer en wordt daar <b>op ware grootte uitgezet</b>, want
+            een lijn op schaal verbergt precies de fout die levensgroot eruit springt. Charles
+            Brannock deed in 1925 hetzelfde met de voet: niet vragen welke maat u denkt te hebben,
+            maar de voet ertegenaan. Dit blad draagt dus zijn eigen maten: een balk van 380 mm
+            waar het elastiek langs gaat, twee voetvormen op ware afstand, uitknipbare
+            vloermarkeringen voor wat níet op een A4 past, een pijnschaal zo breed als een hand,
+            en een liniaal langs de hele linkerrand. <b>De prijs is een harde eis: printen op
+            100%</b>, nooit „passend maken". Daarom staat bovenaan een ijkbalk met de opdracht hem
+            na te meten — een blad dat een instrument wil zijn, mag niet doen alsof het een plaatje
+            is. Anders dan concept 40 (Knipvel) gaat dit niet over welke maat er ná deze komt: er
+            is één maat, de uwe, vandaag, en die staat er levensgroot op.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>de mallenvloer van de scheepswerf, waar de tekening met krijt en latten op ware
+              grootte wordt uitgezet omdat 1:50 de fout verbergt · de Brannock (1925, patent 1927),
+              die de voet meet in plaats van ernaar te vragen · de kniplijn en draadrichting op een
+              naaipatroon: papier dat een instrument is · de VAS-pijnschaal van 100 mm, gemaakt om
+              aan te wijzen · de schaalbalk op een topografische kaart, die meeschaalt waar een
+              getal dat niet doet</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand, verplicht op 100%</b> — liniaal van 9 mm langs de volle linkerrand,
+              ijkbalk van 100 mm met controle-opdracht bovenaan, oefening op 19 punt en uitvoering
+              op 9,6 punt, elk instrument op ware grootte ín de regel, en onderaan een pijnschaal
+              van 105 mm: een handbreedte, om met een vinger aan te wijzen</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-45-ware-grootte.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-45-ware-grootte.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>

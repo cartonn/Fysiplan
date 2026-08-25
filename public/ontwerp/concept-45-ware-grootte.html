@@ -1,0 +1,1100 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 45 — Ware grootte · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 45 — WARE GROOTTE
+   ------------------------------------------------------------
+   Het blad beschrijft de maat niet. Het IS de maat.
+
+   In een scheepswerf bestaat een zaal die de mallenvloer heet.
+   Daar wordt de tekening van het schip niet op schaal gelezen
+   maar op de vloer uitgezet, op ware grootte, met krijt en
+   latten. De Engelsen noemen dat lofting, en het gaat terug tot
+   ver vóór de achttiende eeuw: de bouwtekening is nooit genoeg,
+   want een lijn van 1:50 verbergt precies de fout die er op ware
+   grootte uitspringt. Pas als het er levensgroot ligt, kun je er
+   een mal van maken die tegen het staal aan past.
+
+   Een schoenwinkel doet hetzelfde met de Brannock: Charles
+   Brannock bouwde in 1925 een instrument, patent aangevraagd in
+   1927, dat niet vraagt welke maat u denkt te hebben maar uw
+   voet ertegenaan legt.
+
+   EN NU DE OEFENKAART. Daar staat: "elastiek tot ongeveer een
+   armlengte uitrekken", "een pas van ongeveer 30 centimeter",
+   "houd 20 centimeter afstand tussen de voeten". Vier keer
+   "ongeveer" op één blad, en de patiënt heeft geen meetlint in
+   de keuken. Concept 11 (Bouwtekening) zette de maat erbij als
+   getal, met marge. Dat is beter dan niets — maar een getal moet
+   nog steeds vertaald worden door iemand die dat niet kan.
+
+   Dus doet dit blad het omgekeerde. Wat gemeten moet worden,
+   staat op ware grootte op het papier zelf:
+
+     · een balk van 180 mm waar u het elastiek langs legt: zóver,
+       niet verder
+     · een voetafstand op ware breedte waar u uw voeten
+       tegenaan zet
+     · twee uitknipbare vloermarkeringen die u met plakband op
+       het zeil plakt, precies zo ver uit elkaar als de pas moet
+       zijn
+     · een pijnschaal zo breed als een hand, om aan te wijzen in
+       plaats van te lezen
+     · en een liniaal langs de hele linkerrand, in millimeters
+
+   DE PRIJS: DIT BLAD MOET OP 100% GEPRINT WORDEN. Niet
+   "passend maken", niet "aanpassen aan papier". Daarom staat er
+   bovenaan een ijkbalk met de opdracht hem na te meten — is hij
+   geen 100 mm, dan is de kaart onbruikbaar en moet hij opnieuw.
+   Dat is een harde eis aan een praktijk, en die eis is het punt:
+   een blad dat een instrument wil zijn, mag niet doen alsof het
+   een plaatje is.
+
+   Dit is niet concept 40 (Knipvel). Dat vel legt alle maten
+   naast elkaar zodat je ziet wat er ná deze komt; het gaat over
+   opbouw. Dit blad heeft één maat — de uwe, vandaag — en die
+   staat er levensgroot op.
+   ============================================================ */
+
+:root{
+  --papier:#f3f1ec;
+  --vlak:#fdfcfa;
+  --inkt:#14161a;
+  --inkt-2:#3b4048;
+  --inkt-3:#666d78;
+  --grijs:#8b929c;
+  --lijn:#d3d6da;
+  --lijn-2:#e6e8ea;
+  --blauw:#12508f;      /* de maatvoering — alleen voor maten */
+  --blauw-licht:#e6eff8;
+  --rood:#b2352a;       /* alleen voor knippen en plakken */
+
+  --grot:"Helvetica Neue",Helvetica,Arial,"Liberation Sans",sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --serif:Charter,Georgia,"Times New Roman",serif;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:68px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font:17px/1.62 var(--grot);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--blauw)}
+:focus-visible{outline:2.5px solid var(--blauw);outline-offset:3px}
+
+.binnen{max-width:1180px;margin:0 auto;padding:0 22px}
+.scherm{padding:var(--s6) 0}
+.scherm.eerste{padding-top:var(--s5)}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  background:var(--inkt);padding:9px 22px;font:600 12.5px/1 var(--grot);flex-wrap:wrap}
+.labbalk .nr{font:700 10px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border:1px solid #363c44;padding:5px 7px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#99a1ac;text-decoration:none}
+.labbalk a:hover{color:#fff}
+.labbalk a.terug{color:#fff;border-bottom:1px solid #4d8fd6}
+
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:27px;height:27px;background:var(--inkt);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 15px/1 var(--grot)}
+.merkregel .naam{font:700 15px/1 var(--grot);color:var(--inkt);letter-spacing:-.02em}
+.merkregel .pad{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
+
+.schermkop{border-top:2px solid var(--inkt);padding-top:var(--s2);margin-bottom:var(--s5);max-width:70ch}
+.schermkop > b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--blauw);margin-bottom:var(--s3)}
+.schermkop h2{font:700 clamp(25px,3vw,34px)/1.08 var(--grot);letter-spacing:-.035em;color:var(--inkt);
+  margin-bottom:var(--s3)}
+.schermkop p{font:400 17.5px/1.62 var(--serif);color:var(--inkt-2)}
+.schermkop p b{font-weight:700;color:var(--inkt)}
+
+/* ---------- de maatlat: het handelsmerk van dit concept ----------
+   Een maat op dit blad is nooit alleen een getal. Hij heeft
+   altijd twee eindstreepjes en een lichaam ertussen dat de
+   werkelijke afstand overspant. */
+.maatlat{position:relative;height:34px;border-left:2px solid var(--blauw);
+  border-right:2px solid var(--blauw);margin:var(--s3) 0}
+.maatlat::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;
+  background:var(--blauw)}
+.maatlat span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  background:var(--vlak);padding:0 9px;font:700 12px/1 var(--mono);letter-spacing:.08em;
+  color:var(--blauw);z-index:1}
+
+/* de liniaal langs de rand — echte millimeters op het scherm zijn
+   een leugen, dus op het scherm heet hij "op papier" */
+.liniaal{position:relative;width:16px;flex:0 0 16px;border-right:1.5px solid var(--inkt);
+  background:repeating-linear-gradient(to bottom,
+    var(--inkt) 0 1px,transparent 1px 5mm),
+    repeating-linear-gradient(to bottom,transparent 0 1cm,var(--inkt) 1cm calc(1cm + 1px))}
+
+/* ============================================================
+   1 · LANDING
+   ============================================================ */
+.heldrij{display:grid;grid-template-columns:1.02fr .98fr;gap:var(--s6);align-items:center}
+@media (max-width:980px){.heldrij{grid-template-columns:1fr;gap:var(--s5)}}
+
+h1.kop{font:700 clamp(34px,5vw,56px)/1.02 var(--grot);letter-spacing:-.048em;color:var(--inkt)}
+h1.kop em{display:block;font-style:normal;color:var(--blauw)}
+p.onder{font:400 19px/1.6 var(--serif);color:var(--inkt-2);max-width:54ch;margin-top:var(--s4)}
+p.onder b{font-weight:700;color:var(--inkt)}
+
+.knoppen{display:flex;gap:12px;flex-wrap:wrap;margin-top:var(--s4)}
+.kn{display:inline-block;background:var(--inkt);color:#fff;text-decoration:none;
+  padding:13px 22px;font:700 14px/1 var(--grot);border:1.5px solid var(--inkt)}
+.kn:hover{background:var(--blauw);border-color:var(--blauw)}
+.kn.leeg{background:transparent;color:var(--inkt)}
+.kn.leeg:hover{background:var(--inkt);color:#fff}
+
+/* het proefstuk op de landing: een stuk blad op ware grootte */
+.proefstuk{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s4);
+  box-shadow:0 18px 44px rgba(20,22,26,.1)}
+.proefstuk .pkop{display:flex;align-items:baseline;gap:var(--s3);border-bottom:2px solid var(--inkt);
+  padding-bottom:var(--s2);margin-bottom:var(--s4)}
+.proefstuk .pkop b{font:700 14px/1 var(--grot);color:var(--inkt);letter-spacing:-.02em}
+.proefstuk .pkop span{margin-left:auto;font:700 10px/1 var(--mono);letter-spacing:.14em;color:var(--grijs)}
+
+.ijkbalk{border:2px solid var(--blauw);background:var(--blauw-licht);padding:11px 13px;
+  margin-bottom:var(--s4)}
+.ijkbalk .balk{height:15px;background:
+  repeating-linear-gradient(to right,var(--blauw) 0 1px,transparent 1px 10mm);
+  border-left:2px solid var(--blauw);border-right:2px solid var(--blauw);
+  border-bottom:2px solid var(--blauw);width:100mm;max-width:100%}
+.ijkbalk .tekst{font:700 11.5px/1.45 var(--mono);letter-spacing:.06em;color:var(--blauw);margin-top:9px}
+.ijkbalk .tekst em{font-style:normal;color:var(--inkt-2);font-weight:400;letter-spacing:0;
+  font-family:var(--grot);display:block;margin-top:4px;font-size:13px}
+
+.wr{display:grid;grid-template-columns:auto 1fr;gap:var(--s4);align-items:center;
+  padding:var(--s3) 0;border-bottom:1px solid var(--lijn-2)}
+@media (max-width:620px){.wr{grid-template-columns:1fr}}
+.wr:last-child{border-bottom:0}
+.wr .beeld{width:82px;display:flex;align-items:center;justify-content:center}
+.wr .beeld img{max-height:76px;width:auto;mix-blend-mode:multiply}
+.wr h4{font:700 18px/1.15 var(--grot);color:var(--inkt);letter-spacing:-.03em}
+.wr .oud{font:400 14px/1.45 var(--grot);color:var(--grijs);margin-top:5px}
+.wr .oud b{color:var(--rood);font-weight:700}
+.wr .nieuw{margin-top:9px}
+.wr .nieuw .bijschrift{font:600 12.5px/1.4 var(--grot);color:var(--blauw);margin-top:-6px}
+
+/* de voetafstand, op ware breedte */
+.voetmaat{display:flex;align-items:flex-end;gap:0;margin-top:9px}
+.voetmaat .vt{width:24mm;height:34px;border:2px solid var(--inkt);border-radius:12px 12px 4px 4px;
+  background:repeating-linear-gradient(45deg,var(--lijn-2) 0 3px,transparent 3px 7px)}
+.voetmaat .tussen{flex:0 0 20mm;height:34px;position:relative}
+.voetmaat .tussen::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:var(--blauw)}
+.voetmaat .tussen::after{content:"150 mm";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  background:var(--vlak);padding:0 5px;font:700 10px/1 var(--mono);color:var(--blauw)}
+
+.stellingen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5);margin-top:var(--s6);
+  border-top:2px solid var(--inkt);padding-top:var(--s4)}
+@media (max-width:900px){.stellingen{grid-template-columns:1fr;gap:var(--s4)}}
+.st .nr{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--blauw);display:block;margin-bottom:10px}
+.st h3{font:700 20px/1.16 var(--grot);letter-spacing:-.03em;color:var(--inkt);margin-bottom:10px}
+.st p{font-size:16px}
+.st p b{color:var(--inkt);font-weight:700}
+
+/* ============================================================
+   2 · KIEZER
+   ============================================================ */
+.kiesrij{display:grid;grid-template-columns:1.35fr 1fr;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.kiesrij{grid-template-columns:1fr}}
+
+.lijstvak{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s4)}
+.lijstvak h3{font:700 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--grijs);
+  border-bottom:1px solid var(--lijn);padding-bottom:var(--s2);margin-bottom:var(--s3)}
+
+.zoekbalk{display:flex;align-items:center;gap:10px;border:1.5px solid var(--inkt);padding:10px 12px;
+  margin-bottom:var(--s3)}
+.zoekbalk span{font:700 9.5px/1 var(--mono);letter-spacing:.16em;color:var(--grijs)}
+.zoekbalk input{flex:1;border:0;background:transparent;font:600 15px/1.3 var(--grot);color:var(--inkt)}
+.zoekbalk input:focus{outline:0}
+
+.oef{border-bottom:1px solid var(--lijn-2);padding:var(--s3) 0;display:grid;
+  grid-template-columns:62px 1fr;gap:var(--s3);align-items:start}
+.oef:last-child{border-bottom:0}
+.oef .beeld{background:#f7f8f9;border:1px solid var(--lijn-2);padding:5px;height:62px;
+  display:flex;align-items:center;justify-content:center}
+.oef .beeld img{max-height:100%;width:auto;mix-blend-mode:multiply}
+.oef h4{font:700 19px/1.15 var(--grot);letter-spacing:-.03em;color:var(--inkt)}
+.oef .tel{font:600 14.5px/1.2 var(--grot);color:var(--inkt-2);margin-top:4px}
+.oef .uitv{font:400 13px/1.4 var(--grot);color:var(--inkt-3);margin-top:5px;max-width:46ch}
+
+/* het maatveld: wat de kiezer erbij vraagt */
+.maatveld{margin-top:11px;border:1.5px solid var(--blauw);background:var(--blauw-licht);
+  padding:10px 12px;display:grid;grid-template-columns:1fr auto;gap:var(--s3);align-items:center}
+@media (max-width:600px){.maatveld{grid-template-columns:1fr}}
+.maatveld label{font:700 9.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--blauw);display:block;margin-bottom:7px}
+.maatveld .waarde{display:flex;align-items:center;gap:9px}
+.maatveld input{width:82px;border:1.5px solid var(--blauw);background:#fff;padding:8px 10px;
+  font:700 17px/1 var(--mono);color:var(--inkt);text-align:right}
+.maatveld input:focus{outline:0;border-width:2.5px}
+.maatveld .eenheid{font:700 13px/1 var(--mono);color:var(--blauw)}
+.maatveld .beslag{font:400 12.5px/1.4 var(--grot);color:var(--inkt-2);max-width:34ch}
+.maatveld .beslag b{color:var(--inkt);font-weight:700}
+.maatveld.leeg{border-style:dashed;background:transparent}
+.maatveld.leeg label{color:var(--inkt-3)}
+.maatveld.leeg .beslag{color:var(--inkt-3)}
+
+.opmerk{display:flex;gap:8px;margin-top:11px;font:400 13.5px/1.45 var(--grot);color:var(--blauw)}
+.opmerk b{font-weight:700}
+
+/* de begroting rechts: hoeveel millimeter er nog op het blad past */
+.begroting{background:var(--vlak);border:1px solid var(--lijn)}
+.begroting .bk{background:var(--inkt);color:#fff;padding:12px var(--s3);
+  font:700 13px/1 var(--grot);display:flex;align-items:center;gap:10px}
+.begroting .bk span{margin-left:auto;font:700 10px/1 var(--mono);letter-spacing:.12em;color:#99a1ac}
+.begroting .binnenin{padding:var(--s3)}
+
+.hoogte{display:flex;gap:var(--s3);align-items:stretch}
+.hoogtebalk{flex:0 0 34px;border:1.5px solid var(--inkt);background:#fff;display:flex;
+  flex-direction:column-reverse;overflow:hidden}
+.hoogtebalk i{display:block;border-top:1px solid #fff}
+.hoogtebalk i.kop{background:var(--inkt)}
+.hoogtebalk i.oefening{background:var(--blauw)}
+.hoogtebalk i.instrument{background:repeating-linear-gradient(45deg,var(--blauw) 0 3px,#7fa8d2 3px 7px)}
+.hoogtebalk i.vrij{background:#fff}
+.hoogte .uitleg h4{font:700 25px/1 var(--grot);color:var(--inkt);letter-spacing:-.03em}
+.hoogte .uitleg h4 em{font-style:normal;font-size:13px;color:var(--inkt-3);font-weight:600;
+  display:block;margin-top:5px;letter-spacing:0}
+.hoogte .uitleg ul{list-style:none;margin-top:var(--s3)}
+.hoogte .uitleg li{display:grid;grid-template-columns:15px 1fr auto;gap:9px;align-items:center;
+  padding:7px 0;border-bottom:1px dotted var(--lijn);font-size:13.5px}
+.hoogte .uitleg li:last-child{border-bottom:0}
+.hoogte .uitleg li i{width:13px;height:13px;border:1px solid var(--inkt);display:block}
+.hoogte .uitleg li i.a{background:var(--inkt)}
+.hoogte .uitleg li i.b{background:var(--blauw)}
+.hoogte .uitleg li i.c{background:repeating-linear-gradient(45deg,var(--blauw) 0 3px,#7fa8d2 3px 7px)}
+.hoogte .uitleg li i.d{background:#fff}
+.hoogte .uitleg li b{font:700 13px/1 var(--mono);color:var(--inkt)}
+
+.waarschuwing{margin:var(--s3);border:2px solid var(--rood);background:#fbf0ef;padding:var(--s3);
+  display:grid;grid-template-columns:auto 1fr;gap:var(--s3);align-items:start}
+.waarschuwing .let{width:30px;height:30px;border:2px solid var(--rood);color:var(--rood);
+  display:flex;align-items:center;justify-content:center;font:700 17px/1 var(--grot);flex:0 0 auto}
+.waarschuwing h4{font:700 15px/1.2 var(--grot);color:var(--rood);margin-bottom:6px}
+.waarschuwing p{font:400 14px/1.5 var(--grot);color:var(--inkt-2)}
+.waarschuwing p b{color:var(--inkt);font-weight:700}
+
+.velvoet{padding:var(--s3);border-top:1px solid var(--lijn);display:flex;flex-wrap:wrap;gap:12px;
+  align-items:center;background:#f7f8f9}
+.velvoet .los{font:600 10px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--grijs)}
+.velvoet .kn{margin-left:auto}
+
+/* ============================================================
+   3 · CLIËNTKAART
+   ============================================================ */
+.dossier{background:var(--vlak);border:1px solid var(--lijn)}
+.doskop{background:var(--inkt);color:#fff;padding:var(--s4);display:grid;
+  grid-template-columns:1fr auto;gap:var(--s4);align-items:end}
+@media (max-width:760px){.doskop{grid-template-columns:1fr;gap:var(--s3)}}
+.doskop h3{font:700 clamp(25px,3.2vw,35px)/1.04 var(--grot);letter-spacing:-.04em;color:#fff}
+.doskop .sub{font:400 15px/1.5 var(--grot);color:#99a1ac;margin-top:9px;max-width:50ch}
+.doskop .sub b{color:#fff;font-weight:700}
+.doskop .meetvak{border:1.5px solid #4d8fd6;padding:9px 13px;text-align:right;white-space:nowrap}
+.doskop .meetvak b{display:block;font:700 20px/1 var(--mono);color:#fff}
+.doskop .meetvak span{display:block;font:700 8.5px/1.6 var(--mono);letter-spacing:.14em;color:#7fa8d2}
+
+.dosrij{display:grid;grid-template-columns:1.35fr 1fr}
+@media (max-width:1000px){.dosrij{grid-template-columns:1fr}}
+.doslinks{border-right:1px solid var(--lijn);padding:var(--s4)}
+@media (max-width:1000px){.doslinks{border-right:0;border-bottom:1px solid var(--lijn)}}
+.dosrechts{padding:var(--s4);background:#f7f8f9}
+
+.blokkop{font:700 9.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs);
+  border-bottom:1.5px solid var(--inkt);padding-bottom:8px;margin-bottom:var(--s3)}
+
+.oefkaart{border:1px solid var(--lijn);background:#fff;margin-bottom:var(--s3);display:grid;
+  grid-template-columns:96px 1fr;gap:0}
+@media (max-width:640px){.oefkaart{grid-template-columns:1fr}}
+.oefkaart .prent{border-right:1px solid var(--lijn-2);display:flex;align-items:center;
+  justify-content:center;padding:10px;background:#f7f8f9}
+@media (max-width:640px){.oefkaart .prent{border-right:0;border-bottom:1px solid var(--lijn-2)}}
+.oefkaart .prent img{max-height:76px;width:auto;mix-blend-mode:multiply}
+.oefkaart .tekst{padding:13px var(--s3) 15px}
+.oefkaart h4{font:700 20px/1.1 var(--grot);color:var(--inkt);letter-spacing:-.03em}
+.oefkaart .tel{font:600 15px/1 var(--grot);color:var(--inkt-2);margin-top:6px}
+.oefkaart .hoe{font:400 13.5px/1.45 var(--grot);color:var(--inkt-3);margin-top:7px;max-width:50ch}
+.oefkaart .maatregel{margin-top:11px;border-top:1px solid var(--lijn-2);padding-top:10px;
+  display:flex;flex-wrap:wrap;gap:11px;align-items:center}
+.oefkaart .maatregel .lat{position:relative;height:20px;border-left:2px solid var(--blauw);
+  border-right:2px solid var(--blauw);flex:0 0 auto}
+.oefkaart .maatregel .lat::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;
+  background:var(--blauw)}
+.oefkaart .maatregel b{font:700 12px/1 var(--mono);letter-spacing:.06em;color:var(--blauw)}
+.oefkaart .maatregel span{font:400 12.5px/1.4 var(--grot);color:var(--inkt-3)}
+
+.geschiedenis{list-style:none;border:1px solid var(--lijn);background:#fff}
+.geschiedenis li{display:grid;grid-template-columns:78px 1fr auto;gap:12px;align-items:center;
+  padding:12px var(--s3);border-bottom:1px solid var(--lijn-2)}
+.geschiedenis li:last-child{border-bottom:0}
+.geschiedenis .dat{font:700 10px/1.4 var(--mono);letter-spacing:.08em;color:var(--grijs)}
+.geschiedenis .lat{position:relative;height:16px;border-left:2px solid var(--blauw);
+  border-right:2px solid var(--blauw)}
+.geschiedenis .lat::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:var(--blauw)}
+.geschiedenis .nm{font:700 13.5px/1 var(--mono);color:var(--inkt);text-align:right;white-space:nowrap}
+.geschiedenis li.nu{background:var(--blauw-licht)}
+.geschiedenis li.nu .nm{color:var(--blauw)}
+
+.notitie{border:1px solid var(--lijn);background:#fff;padding:var(--s3);margin-bottom:var(--s3)}
+.notitie h5{font:700 15px/1.2 var(--grot);color:var(--inkt);margin-bottom:8px}
+.notitie p{font:400 14.5px/1.55 var(--serif);color:var(--inkt-2)}
+.notitie p b{color:var(--inkt);font-weight:700}
+.notitie .datum{font:700 9.5px/1 var(--mono);letter-spacing:.12em;color:var(--grijs);margin-top:9px}
+
+/* ============================================================
+   4 · PRINTKAART — A4 STAAND
+   ============================================================ */
+.bladhouder{display:grid;place-items:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){
+  .bladschaal{width:100%;overflow:hidden}
+  .blad{transform:scale(.78);transform-origin:top left;margin-bottom:-65mm !important;
+    margin-right:-46mm !important}
+}
+@media (max-width:760px){.blad{transform:scale(.45);margin-bottom:-163mm !important;margin-right:-116mm !important}}
+
+.blad{position:relative;width:210mm;height:297mm;background:#fff;color:#000;
+  box-shadow:0 24px 60px rgba(20,22,26,.28);border:1px solid var(--lijn);
+  display:flex;font-family:var(--grot)}
+
+.wijzer{position:absolute;width:44mm;font:600 11.5px/1.4 var(--grot);color:var(--inkt-3);
+  border-top:3px solid var(--blauw);padding-top:6px}
+@media (max-width:1240px){.wijzer{display:none}}
+
+/* de liniaal langs de linkerrand — echte millimeters, want dit
+   blad wordt op 100% geprint en dus is dit een werkend instrument.
+   Drie lagen met hetzelfde nulpunt: mm, halve cm, hele cm. */
+.wg-liniaal{flex:0 0 9mm;border-right:.8pt solid #000;position:relative;overflow:hidden}
+.wg-liniaal i{position:absolute;left:0;top:16mm;bottom:5mm;display:block}
+.wg-liniaal i.mm1{width:1.8mm;background:repeating-linear-gradient(to bottom,#000 0 .22mm,transparent .22mm 1mm)}
+.wg-liniaal i.mm5{width:3.6mm;background:repeating-linear-gradient(to bottom,#000 0 .3mm,transparent .3mm 5mm)}
+.wg-liniaal i.mm10{width:6.4mm;background:repeating-linear-gradient(to bottom,#000 0 .35mm,transparent .35mm 10mm)}
+.wg-liniaal .lbl{position:absolute;left:1.4mm;top:2mm;font:700 5.6pt/1 var(--mono);letter-spacing:.14em;
+  writing-mode:vertical-rl;color:#12508f}
+
+.wg-lijf{flex:1;display:flex;flex-direction:column;padding:8mm 9mm 6mm 4mm;min-width:0}
+
+/* kop met ijkbalk */
+.wg-kop{border-bottom:2pt solid #000;padding-bottom:3.2mm}
+.wg-kop h1{font:700 27pt/.95 var(--grot);letter-spacing:-.048em}
+.wg-kop .naamregel{font:700 11.4pt/1.15 var(--grot);color:#3b4048;margin-top:2.2mm}
+.wg-ijk{border:1.2pt solid #12508f;padding:2mm 2.6mm;margin-top:3mm;display:grid;
+  grid-template-columns:100mm 1fr;gap:4mm;align-items:center}
+.wg-ijk .balk{height:5mm;border:1.2pt solid #12508f;border-top:0;
+  background:repeating-linear-gradient(to right,#12508f 0 .8pt,transparent .8pt 10mm)}
+.wg-ijk .tekst{font:700 8.4pt/1.3 var(--mono);letter-spacing:.04em;color:#12508f}
+.wg-ijk .tekst em{display:block;font:400 8pt/1.35 var(--grot);color:#1a1a1a;letter-spacing:0;
+  margin-top:1mm}
+
+/* de oefeningen, elk met zijn maat op ware grootte */
+.wg-oefs{flex:1;display:flex;flex-direction:column;padding-top:3mm}
+.wg-oef{display:grid;grid-template-columns:32mm 1fr;column-gap:4mm;padding:3.4mm 0;
+  border-bottom:.6pt solid #d3d6da;flex:1;align-content:center}
+.wg-oef:last-child{border-bottom:0}
+.wg-oef .prent{display:flex;align-items:center;justify-content:center;height:27mm;
+  border:.6pt solid #e6e8ea;background:#fdfcfa;padding:.6mm}
+.wg-oef .prent img{max-height:26mm;max-width:31mm;width:auto;mix-blend-mode:multiply}
+.wg-oef .kop{display:flex;align-items:baseline;gap:3.4mm;flex-wrap:wrap}
+.wg-oef .cijfer{font:700 13pt/1 var(--grot);border:1.2pt solid #000;width:7.6mm;height:7.6mm;
+  display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.wg-oef h3{font:700 19pt/1.02 var(--grot);letter-spacing:-.04em}
+.wg-oef .tel{font:700 14pt/1.1 var(--grot);margin-top:1.6mm}
+.wg-oef .hoe{font:400 9.6pt/1.34 var(--grot);color:#1a1a1a;margin-top:1.6mm;max-width:112mm}
+
+/* het instrument: de maat, op ware grootte, ín de regel.
+   Het loopt over de volle breedte van het blad, want dat is de
+   ruimte die er werkelijk is: 188 mm, en geen millimeter meer. */
+.wg-instr{grid-column:1/-1;margin-top:2.6mm;border-top:.6pt dotted #12508f;padding-top:2mm}
+.wg-instr .titel{font:700 6.8pt/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:#12508f;margin-bottom:1.6mm}
+.wg-lat{position:relative;height:6mm;border-left:1.2pt solid #12508f;border-right:1.2pt solid #12508f}
+.wg-lat::before{content:"";position:absolute;left:0;right:0;top:50%;height:1.2pt;background:#12508f}
+.wg-lat b{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;
+  padding:0 2mm;font:700 8pt/1 var(--mono);color:#12508f}
+.wg-instr .bij{font:400 8pt/1.3 var(--grot);color:#1a1a1a;margin-top:1.4mm}
+.wg-instr .bij b{font-weight:700;color:#000}
+
+/* de voetenmaat, op ware breedte: 150 mm tussen de binnenkanten */
+.wg-voeten{display:flex;align-items:flex-end;margin-top:1mm}
+.wg-voeten .vt{width:9mm;height:19mm;border:1.2pt solid #000;border-radius:4mm 4mm 1mm 1mm;flex:0 0 9mm}
+.wg-voeten .tussen{flex:0 0 150mm;height:19mm;position:relative}
+.wg-voeten .tussen::before{content:"";position:absolute;left:0;right:0;top:50%;height:1.2pt;background:#12508f}
+.wg-voeten .tussen b{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;
+  padding:0 1.4mm;font:700 7.4pt/1 var(--mono);color:#12508f}
+
+/* de uitknipbare vloermarkeringen */
+.wg-instr .wg-knip{margin-top:0}
+.wg-knip{border:1.2pt dashed #b2352a;padding:2.6mm 3mm;margin-top:2.6mm;display:grid;
+  grid-template-columns:1fr auto;gap:4mm;align-items:center}
+.wg-knip .tekst{font:400 8.4pt/1.35 var(--grot);color:#1a1a1a}
+.wg-knip .tekst > b:first-child{display:block;font:700 8pt/1 var(--mono);letter-spacing:.12em;
+  text-transform:uppercase;color:#b2352a;margin-bottom:1.4mm}
+.wg-knip .tekst strong{font-weight:700;color:#000}
+.wg-knip .merken{display:flex;gap:3mm}
+.wg-knip .merk{width:22mm;height:11mm;border:1.2pt solid #000;display:flex;align-items:center;
+  justify-content:center;font:700 9pt/1 var(--grot);
+  background:repeating-linear-gradient(45deg,#e6e8ea 0 1.4mm,#fff 1.4mm 3mm)}
+
+/* de pijnschaal, zo breed als een hand — aanwijzen, niet lezen */
+.wg-pijn{border-top:2pt solid #000;padding-top:2.6mm;margin-top:2mm}
+.wg-pijn .titel{font:700 10.4pt/1.2 var(--grot);margin-bottom:1.8mm}
+.wg-pijn .titel em{font-style:normal;font:400 8.4pt/1.3 var(--grot);color:#3b4048;display:block;
+  margin-top:1mm}
+.wg-pijn .schaal{display:flex;width:105mm;border:1.2pt solid #000}
+.wg-pijn .schaal i{flex:1;height:11mm;border-right:.8pt solid #000;display:flex;align-items:center;
+  justify-content:center;font:700 10pt/1 var(--grot);font-style:normal}
+.wg-pijn .schaal i:last-child{border-right:0}
+.wg-pijn .onder{display:flex;width:105mm;justify-content:space-between;margin-top:1.2mm;
+  font:700 7.4pt/1 var(--mono);letter-spacing:.06em;color:#3b4048}
+
+.wg-voet{border-top:.8pt solid #d3d6da;padding-top:2.2mm;margin-top:2.6mm;display:grid;
+  grid-template-columns:1fr 56mm;gap:5mm;align-items:start}
+.wg-voet .regel{font:700 10.4pt/1.2 var(--grot);letter-spacing:-.02em}
+.wg-voet .regel em{font-style:normal;color:#b2352a}
+.wg-voet .toelicht{font:400 8.2pt/1.35 var(--grot);color:#1a1a1a;margin-top:1.6mm}
+.wg-voet .admin{font:400 7pt/1.4 var(--grot);color:#3b4048}
+.wg-voet .admin b{color:#000}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#99a1ac;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:#fff;border-top:2px solid #4d8fd6;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.6}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding:5px 0}
+footer.uitleiding a{color:#fff}
+
+/* ---------- smalle schermen ----------
+   Op een telefoon klopt geen enkele millimeter toch al; de
+   proefstukken mogen daarom gewoon meeschalen. Wat blijft staan
+   is de bewering — de echte maat zit op het geprinte blad. */
+@media (max-width:640px){
+  .heldrij > *,.kiesrij > *,.dosrij > *,.hoogte > *{min-width:0}
+  .proefstuk{padding:var(--s3)}
+  .ijkbalk .balk{width:100%}
+  .voetmaat .vt{width:52px}
+  .voetmaat .tussen{flex:0 1 64px}
+  .wr{grid-template-columns:1fr}
+  .wr .beeld{width:auto}
+  .maatveld{grid-template-columns:1fr}
+  .geschiedenis li{grid-template-columns:62px 1fr auto;gap:9px}
+  .oefkaart{grid-template-columns:1fr}
+  .oefkaart .prent{border-right:0;border-bottom:1px solid var(--lijn-2)}
+  .oefkaart .maatregel .lat{max-width:100%}
+}
+
+/* ============================================================
+   PRINT — A4 STAAND, OP 100%
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 45</span>
+  <strong style="font:700 16px/1 var(--grot);color:#fff;letter-spacing:-.04em">Ware grootte</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">Concept 45 · Ware grootte</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1 class="kop">Op een oefenkaart staat vier keer „ongeveer".<em>De patiënt heeft geen meetlint.</em></h1>
+        <p class="onder">Ongeveer een armlengte elastiek. Een pas van ongeveer dertig centimeter.
+          Ongeveer twintig centimeter tussen de voeten. In een scheepswerf lossen ze dat al eeuwen
+          op één manier op: de tekening gaat naar de mallenvloer en wordt daar <b>op ware grootte
+          uitgezet</b>, want een lijn op schaal verbergt precies de fout die levensgroot eruit
+          springt. Dit blad doet hetzelfde. Wat gemeten moet worden, staat er zelf op — en u legt
+          uw elastiek, uw voet of uw stap er gewoon tegenaan.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk de kaart</a>
+          <a class="kn leeg" href="#kiezer">Hoe het gemeten wordt</a>
+        </div>
+      </div>
+
+      <div class="proefstuk">
+        <div class="pkop">
+          <b>Stuk van het blad</b>
+          <span>OP WARE GROOTTE — ALLEEN OP PAPIER</span>
+        </div>
+
+        <div class="ijkbalk">
+          <div class="balk" aria-hidden="true"></div>
+          <div class="tekst">MEET DEZE BALK NA — 100 MM
+            <em>Klopt dat niet, dan is de kaart geschaald geprint en zijn alle maten erop verkeerd.
+              Print opnieuw op 100%, zonder „passend maken".</em></div>
+        </div>
+
+        <div class="wr">
+          <div class="beeld"><img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt="Schouder naar buiten draaien met elastiek"/></div>
+          <div>
+            <h4>Schouder naar buiten draaien</h4>
+            <p class="oud">Op de gewone kaart: <b>„rek het elastiek ongeveer een armlengte uit"</b></p>
+            <div class="nieuw">
+              <div class="maatlat"><span>180 MM</span></div>
+              <p class="bijschrift">Leg het elastiek langs deze balk. Zóver — niet verder.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="wr">
+          <div class="beeld"><img src="/images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-steun-line-v1.png" alt="Voeten naast elkaar staan met steun"/></div>
+          <div>
+            <h4>Voeten naast elkaar</h4>
+            <p class="oud">Op de gewone kaart: <b>„zet uw voeten ongeveer 15 cm uit elkaar"</b></p>
+            <div class="voetmaat" aria-hidden="true">
+              <span class="vt"></span><span class="tussen"></span><span class="vt"></span>
+            </div>
+            <p class="bijschrift" style="font:600 12.5px/1.4 var(--grot);color:var(--blauw);margin-top:9px">
+              Zet uw voeten tegen de twee vormen. Dat is de afstand.</p>
+          </div>
+        </div>
+
+        <p style="font:400 13px/1.5 var(--grot);color:var(--inkt-3);border-top:1px solid var(--lijn);
+                  padding-top:11px;margin-top:var(--s3)">
+          <b style="color:var(--inkt)">Op dit scherm klopt geen van deze maten.</b> Elk beeldscherm
+          heeft zijn eigen millimeter, dus hierboven staat alleen het idee. Op de geprinte A4
+          — <a href="#printkaart">scherm 4</a> — klopt elke maat wel, en daar staat de ijkbalk
+          om dat te controleren.</p>
+      </div>
+    </div>
+
+    <div class="stellingen">
+      <div class="st">
+        <span class="nr">STELLING 1</span>
+        <h3>Een getal moet vertaald worden</h3>
+        <p>„30 cm" veronderstelt dat iemand 30 cm kan schatten of een meetlint in de keukenla heeft.
+          <b>Een balk van 30 cm veronderstelt alleen een elastiek en een hand.</b> Concept 11
+          (Bouwtekening) zette de maat erbij als getal — dit blad slaat de vertaling over.</p>
+      </div>
+      <div class="st">
+        <span class="nr">STELLING 2</span>
+        <h3>Het papier mag het instrument zijn</h3>
+        <p>Wie het blad al in handen heeft, heeft ook al een liniaal, twee vloermarkeringen en een
+          pijnschaal ter breedte van een hand. <b>Er hoeft niets besteld, gekocht of meegegeven te
+          worden.</b> Dat is niet zuinigheid — dat is het verschil tussen wél en niet gebruikt
+          worden.</p>
+      </div>
+      <div class="st">
+        <span class="nr">STELLING 3</span>
+        <h3>De prijs is een harde eis</h3>
+        <p>Dit blad moet op 100% geprint worden, niet „passend gemaakt". Daarom staat er bovenaan
+          een ijkbalk met de opdracht hem na te meten. <b>Klopt hij niet, dan is de kaart
+          onbruikbaar.</b> Een blad dat een instrument wil zijn, mag niet doen alsof het een
+          plaatje is.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>Zodra een oefening een maat kent, vraagt de kiezer erom — en pas dan mag hij op het blad.
+        <b>De therapeut vult geen „ongeveer" in, maar millimeters</b>, want daar wordt op papier
+        een balk van gemaakt. Rechts staat de begroting die er echt toe doet: niet hoeveel
+        oefeningen erop passen, maar hoeveel millimeter A4 er nog over is.</p>
+    </div>
+
+    <div class="kiesrij">
+
+      <div class="lijstvak">
+        <h3>Oefeningen · schouder na een frozen shoulder, thuis</h3>
+
+        <div class="zoekbalk">
+          <span>ZOEK</span>
+          <input type="text" value="elastiek · staand" readonly aria-label="Zoeken in de oefenbibliotheek"/>
+        </div>
+
+        <div class="oef">
+          <div class="beeld"><img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt="Schouder naar buiten draaien met elastiek"/></div>
+          <div>
+            <h4>Schouder naar buiten draaien</h4>
+            <div class="tel">3 × 10 per arm</div>
+            <div class="uitv">Elleboog tegen de zij, onderarm naar buiten draaien. Rustig terug,
+              niet laten schieten.</div>
+            <div class="maatveld">
+              <div>
+                <label for="m1">Uitrekking van het elastiek</label>
+                <div class="waarde">
+                  <input id="m1" type="text" value="180" readonly aria-label="Uitrekking in millimeters"/>
+                  <span class="eenheid">MM</span>
+                </div>
+              </div>
+              <p class="beslag"><b>Wordt een balk van 18 cm</b> op het blad. Kost 14 mm bladhoogte.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="oef">
+          <div class="beeld"><img src="/images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-steun-line-v1.png" alt="Voeten naast elkaar staan met steun"/></div>
+          <div>
+            <h4>Voeten naast elkaar, met steun</h4>
+            <div class="tel">3 × 20 sec. per kant</div>
+            <div class="uitv">Eén voet recht vóór de andere, hand aan het aanrecht. Blik vooruit
+              op een vast punt.</div>
+            <div class="maatveld">
+              <div>
+                <label for="m2">Afstand tussen de voeten</label>
+                <div class="waarde">
+                  <input id="m2" type="text" value="150" readonly aria-label="Afstand in millimeters"/>
+                  <span class="eenheid">MM</span>
+                </div>
+              </div>
+              <p class="beslag"><b>Wordt twee voetvormen</b> met 15 cm ertussen. Kost 26 mm.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="oef">
+          <div class="beeld"><img src="/images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-line-v1.png" alt="Over een obstakel stappen"/></div>
+          <div>
+            <h4>Over een streep stappen</h4>
+            <div class="tel">2 × 8 heen en terug</div>
+            <div class="uitv">Stap over de markering op de vloer, zet de voet helemaal neer voor u
+              de andere optilt.</div>
+            <div class="maatveld">
+              <div>
+                <label for="m3">Paslengte</label>
+                <div class="waarde">
+                  <input id="m3" type="text" value="450" readonly aria-label="Paslengte in millimeters"/>
+                  <span class="eenheid">MM</span>
+                </div>
+              </div>
+              <p class="beslag"><b>Past niet op ware grootte.</b> Wordt twee uitknipbare
+                vloermarkeringen met de afstand erbij.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="oef">
+          <div class="beeld"><img src="/images/bovenste-extremiteit/schouderblad-naar-achteren-actief-line-v1.png" alt="Schouderblad naar achteren"/></div>
+          <div>
+            <h4>Schouderbladen naar achteren</h4>
+            <div class="tel">3 × 8</div>
+            <div class="uitv">Zittend of staand. Schouderbladen naar elkaar toe, drie tellen
+              vasthouden, dan loslaten.</div>
+            <div class="maatveld leeg">
+              <div>
+                <label>Geen maat nodig</label>
+                <p class="beslag">Deze oefening kent geen afstand. Hij krijgt geen balk — <b>een
+                  instrument zonder functie is versiering.</b></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="opmerk"><b>450 mm past niet op een A4.</b> Wat breder is dan 190 mm kan niet op
+          ware grootte, en dan liegt het blad niet: het wordt een knipmarkering met de afstand
+          erbij, en dat staat er ook zo.</p>
+      </div>
+
+      <div class="begroting">
+        <div class="bk">Bladbegroting <span>A4 · 297 MM</span></div>
+
+        <div class="binnenin">
+          <div class="hoogte">
+            <div class="hoogtebalk" style="height:230px" aria-label="Verdeling van de bladhoogte">
+              <i class="kop" style="height:14%"></i>
+              <i class="oefening" style="height:46%"></i>
+              <i class="instrument" style="height:22%"></i>
+              <i class="vrij" style="height:18%"></i>
+            </div>
+            <div class="uitleg">
+              <h4>54 mm vrij<em>van de 297 mm bladhoogte</em></h4>
+              <ul>
+                <li><i class="a"></i><span>Kop en ijkbalk</span><b>41 mm</b></li>
+                <li><i class="b"></i><span>Drie oefeningen</span><b>137 mm</b></li>
+                <li><i class="c"></i><span>Instrumenten</span><b>65 mm</b></li>
+                <li><i class="d"></i><span>Vrij</span><b>54 mm</b></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="waarschuwing">
+          <span class="let" aria-hidden="true">!</span>
+          <div>
+            <h4>Een vierde oefening past niet</h4>
+            <p>De vierde oefening heeft 46 mm nodig en er is 54 mm vrij — dat lijkt te passen, maar
+              de pijnschaal onderaan is niet onderhandelbaar. <b>Instrumenten kosten ruimte, en dat
+              is de hele afspraak van dit concept.</b> Wie vier oefeningen wil, krijgt een tweede
+              blad.</p>
+          </div>
+        </div>
+
+        <div class="velvoet">
+          <span class="los">Print op 100% · ijkbalk 100 mm</span>
+          <a class="kn" href="#printkaart">Kaart drukken</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>Op een scherm is een centimeter een leugen: elk beeldscherm heeft zijn eigen maat. Dus
+        doet de cliëntkaart wat een scherm wél goed kan — <b>de maten van week tot week naast
+        elkaar zetten.</b> Dat is het tweede voordeel van meten in millimeters: 120 naar 180 is
+        vooruitgang die je kunt zien, waar „het gaat wel beter" dat niet is.</p>
+    </div>
+
+    <div class="dossier">
+      <div class="doskop">
+        <div>
+          <h3>A. Peters · week 6</h3>
+          <p class="sub">Schouder rechts, na een frozen shoulder. Elke oefening op de kaart heeft
+            een maat, en <b>die maat wordt bij elke afspraak opnieuw genoteerd</b> — niet
+            geschat.</p>
+        </div>
+        <div class="meetvak"><b>180 mm</b><span>ELASTIEK · 21 AUG</span></div>
+      </div>
+
+      <div class="dosrij">
+        <div class="doslinks">
+          <div class="blokkop">De drie oefeningen van deze kaart</div>
+
+          <article class="oefkaart">
+            <div class="prent"><img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt="Schouder naar buiten draaien met elastiek"/></div>
+            <div class="tekst">
+              <h4>Schouder naar buiten draaien</h4>
+              <div class="tel">3 × 10 per arm</div>
+              <div class="hoe">Elleboog tegen de zij, onderarm naar buiten draaien. Rustig terug,
+                niet laten schieten.</div>
+              <div class="maatregel">
+                <span class="lat" style="width:72px"></span>
+                <b>180 MM</b>
+                <span>was 150 mm bij de vorige afspraak</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="oefkaart">
+            <div class="prent"><img src="/images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-steun-line-v1.png" alt="Voeten naast elkaar staan met steun"/></div>
+            <div class="tekst">
+              <h4>Voeten naast elkaar, met steun</h4>
+              <div class="tel">3 × 20 sec. per kant</div>
+              <div class="hoe">Eén voet recht vóór de andere, hand aan het aanrecht. Blik vooruit
+                op een vast punt in de kamer.</div>
+              <div class="maatregel">
+                <span class="lat" style="width:60px"></span>
+                <b>150 MM</b>
+                <span>ongewijzigd — eerst stabiel, dan smaller</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="oefkaart">
+            <div class="prent"><img src="/images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-line-v1.png" alt="Over een obstakel stappen"/></div>
+            <div class="tekst">
+              <h4>Over een streep stappen</h4>
+              <div class="tel">2 × 8 heen en terug</div>
+              <div class="hoe">Stap over de markering op de vloer, zet de voet helemaal neer
+                voordat u de andere optilt.</div>
+              <div class="maatregel">
+                <span class="lat" style="width:180px"></span>
+                <b>450 MM</b>
+                <span>vloermarkeringen liggen sinds 10 aug in de gang</span>
+              </div>
+            </div>
+          </article>
+
+          <div class="blokkop" style="margin-top:var(--s4)">Het elastiek, zes weken lang</div>
+          <ul class="geschiedenis">
+            <li>
+              <span class="dat">14 JUL</span>
+              <span class="lat" style="width:36%"></span>
+              <span class="nm">90 mm</span>
+            </li>
+            <li>
+              <span class="dat">28 JUL</span>
+              <span class="lat" style="width:48%"></span>
+              <span class="nm">120 mm</span>
+            </li>
+            <li>
+              <span class="dat">11 AUG</span>
+              <span class="lat" style="width:60%"></span>
+              <span class="nm">150 mm</span>
+            </li>
+            <li class="nu">
+              <span class="dat">21 AUG</span>
+              <span class="lat" style="width:72%"></span>
+              <span class="nm">180 mm</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="dosrechts">
+          <div class="blokkop">Aantekeningen</div>
+
+          <div class="notitie">
+            <h5>„Ik dacht dat ik stil stond"</h5>
+            <p>Mevrouw Peters merkte in week vier zelf niets van vooruitgang. <b>Op de balken zag
+              ze het wel</b> — van 90 naar 150 in vier weken is twee derde erbij. Dat is de
+              enige keer in dit dossier dat een grafiek iets deed wat een zin niet deed.</p>
+            <div class="datum">MA 11 AUG · AFSPRAAK</div>
+          </div>
+
+          <div class="notitie">
+            <h5>De vloermarkeringen liggen er nog</h5>
+            <p>Uitgeknipt van de kaart van 10 augustus en met schilderstape op het zeil in de gang
+              geplakt. <b>Het blad is dus deels van de koelkast op de vloer beland</b> — precies
+              waar de oefening gedaan wordt.</p>
+            <div class="datum">10 AUG · GEMELD IN DE APP</div>
+          </div>
+
+          <div class="notitie">
+            <h5>De ijkbalk deed zijn werk</h5>
+            <p>De eerste kaart kwam er 6% te klein uit: de printer stond op „passend maken".
+              <b>De balk mat 94 mm in plaats van 100</b>, mevrouw Peters belde, en er ging een
+              nieuwe kaart mee. Zonder die balk had ze zes weken op een te kort elastiek gestaan
+              zonder dat iemand het wist.</p>
+            <div class="datum">14 JUL · TELEFONISCH</div>
+          </div>
+
+          <div class="notitie">
+            <h5>Volgende maat</h5>
+            <p>Bij 200 mm gaat het elastiek een kleur zwaarder en begint de balk weer bij ongeveer
+              140. <b>De maat hoort bij het elastiek</b>, niet bij de schouder — dat staat er
+              volgende keer bij.</p>
+            <div class="datum">AFSPRAAK 4 SEP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand, op 100%</h2>
+      <p>Langs de hele linkerrand loopt een liniaal in millimeters. Bovenaan staat de ijkbalk met
+        de opdracht hem na te meten. Elke oefening die een afstand kent, draagt die afstand op ware
+        grootte in de regel zelf, en onderaan staat een pijnschaal zo breed als een hand — <b>om
+        aan te wijzen, niet om te lezen.</b> Op het scherm hiernaast klopt geen enkele van die
+        maten; op papier alle.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer geen-print" style="top:10mm;right:calc(100% + 22px);text-align:right">
+            de liniaal loopt over de volle bladhoogte in millimeters — het blad is zelf het
+            meetinstrument</span>
+          <span class="wijzer geen-print" style="top:44mm;left:calc(100% + 22px)">
+            de ijkbalk: meet hem na. Geen 100 mm, dan is de kaart geschaald geprint en onbruikbaar</span>
+          <span class="wijzer geen-print" style="top:112mm;right:calc(100% + 22px);text-align:right">
+            de maat staat op ware grootte ín de regel: leg het elastiek langs de balk, zóver</span>
+          <span class="wijzer geen-print" style="top:252mm;left:calc(100% + 22px)">
+            de pijnschaal is 105 mm breed — een handbreedte, om met een vinger aan te wijzen</span>
+
+          <div class="wg-liniaal" aria-hidden="true">
+            <span class="lbl">MILLIMETER</span>
+            <i class="mm1"></i><i class="mm5"></i><i class="mm10"></i>
+          </div>
+
+          <div class="wg-lijf">
+
+            <div class="wg-kop">
+              <h1>Schouder rechts — week 6</h1>
+              <div class="naamregel">A. Peters · elke dag · ongeveer 10 minuten</div>
+              <div class="wg-ijk">
+                <div class="balk"></div>
+                <div class="tekst">MEET NA — 100 MM
+                  <em>Klopt dit niet, dan staat de printer op „passend maken" en zijn alle maten
+                    op dit blad verkeerd. Bel de praktijk voor een nieuwe kaart.</em></div>
+              </div>
+            </div>
+
+            <div class="wg-oefs">
+
+              <div class="wg-oef">
+                <div class="prent">
+                  <img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt="Schouder naar buiten draaien met elastiek"/>
+                </div>
+                <div>
+                  <div class="kop"><span class="cijfer">1</span><h3>Naar buiten draaien</h3></div>
+                  <div class="tel">3 × 10 per arm</div>
+                  <div class="hoe">Elleboog tegen de zij, onderarm naar buiten draaien. Rustig
+                    terug — niet laten schieten.</div>
+                </div>
+                <div class="wg-instr">
+                  <div class="titel">Leg het elastiek hierlangs</div>
+                  <div class="wg-lat" style="width:180mm"><b>180 MM</b></div>
+                  <div class="bij"><b>Zóver, niet verder.</b> Voelt het te licht? Bel de praktijk
+                    voor een zwaarder elastiek — rek het niet verder uit dan deze balk.</div>
+                </div>
+              </div>
+
+              <div class="wg-oef">
+                <div class="prent">
+                  <img src="/images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-steun-line-v1.png" alt="Voeten naast elkaar staan met steun"/>
+                </div>
+                <div>
+                  <div class="kop"><span class="cijfer">2</span><h3>Voeten naast elkaar</h3></div>
+                  <div class="tel">3 × 20 sec.</div>
+                  <div class="hoe">Beide voeten naast elkaar, hand aan het aanrecht. Blik vooruit
+                    op een vast punt.</div>
+                </div>
+                <div class="wg-instr">
+                  <div class="titel">Leg het blad op de vloer en zet uw hielen tegen de twee vormen</div>
+                  <div class="wg-voeten">
+                    <span class="vt"></span>
+                    <span class="tussen"><b>150 MM</b></span>
+                    <span class="vt"></span>
+                  </div>
+                  <div class="bij">Eén keer meten is genoeg — <b>onthoud waar uw hielen stonden</b>
+                    en leg het blad daarna weer op tafel. Kijken doet u vooruit, niet omlaag.</div>
+                </div>
+              </div>
+
+              <div class="wg-oef">
+                <div class="prent">
+                  <img src="/images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-line-v1.png" alt="Over een streep stappen"/>
+                </div>
+                <div>
+                  <div class="kop"><span class="cijfer">3</span><h3>Over een streep stappen</h3></div>
+                  <div class="tel">2 × 8 heen en terug</div>
+                  <div class="hoe">Stap over de markering, zet de voet helemaal neer voordat u de
+                    andere optilt.</div>
+                </div>
+                <div class="wg-instr">
+                  <div class="wg-knip">
+                    <div class="tekst"><b>Knip uit en plak op de vloer</b>
+                      450 mm is breder dan dit blad, dus staat het er niet op ware grootte op —
+                      dat zou liegen zijn. Knip deze twee vakjes uit, plak ze met schilderstape op
+                      het zeil, en meet er 45 cm tussen: <strong>vier en een halve liniaal van dit
+                      blad.</strong></div>
+                    <div class="merken">
+                      <span class="merk">A</span>
+                      <span class="merk">B</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="wg-pijn">
+              <div class="titel">Hoe zwaar was het? Wijs aan.
+                <em>Deze schaal is 105 mm breed: een handbreedte. Zet er een streepje bij en neem
+                  het blad mee naar de afspraak.</em></div>
+              <div class="schaal">
+                <i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>10</i>
+              </div>
+              <div class="onder"><span>GEEN PIJN</span><span>ERGST DENKBAAR</span></div>
+            </div>
+
+            <div class="wg-voet">
+              <div>
+                <div class="regel">Print dit blad op 100%. <em>Niet „passend maken".</em></div>
+                <div class="toelicht">Alle maten op dit blad zijn echt: de liniaal links, de balk
+                  van 180 mm, de voetafstand van 150 mm en de pijnschaal. Kopiëren mag, mits op
+                  100% — een kopie op 94% maakt van 180 mm stilletjes 169 mm.</div>
+              </div>
+              <div class="admin">
+                <b>Praktijk Boonstra, fysiotherapie</b> · Kerkstraat 3, 8601 CB Sneek ·
+                0515 — 41 22 90 · behandelaar G. Boonstra · kaart opgesteld 21 augustus 2026 ·
+                maten gemeten op die datum · volgende afspraak 4 september · dossier 2026-0688 ·
+                Fysiplan · zwart-wit voldoet.
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>Waarom dit schuurt</h4>
+      <p>Dit blad stelt een eis aan de praktijk die geen enkel ander concept stelt: printen op
+        100%, altijd, en de ijkbalk nameten. Eén printer die op „passend maken" staat maakt de
+        kaart stilzwijgend fout, en dat is erger dan geen maat. Het antwoord is niet de eis laten
+        vallen maar hem zichtbaar maken — daarom staat de ijkbalk bovenaan, met de opdracht erbij.</p>
+    </div>
+    <div class="kolom">
+      <h4>Inspiratie</h4>
+      <ul>
+        <li>De mallenvloer van de scheepswerf: de tekening op ware grootte uitgezet met krijt en
+          latten, omdat 1:50 de fout verbergt die levensgroot eruit springt</li>
+        <li>De Brannock, 1925/1927: niet vragen welke maat u denkt te hebben, maar de voet ertegenaan</li>
+        <li>De kniplijn en de draadrichting op een naaipatroon: papier dat een instrument is</li>
+        <li>De VAS-pijnschaal van 100 mm, ontworpen om aan te wijzen</li>
+        <li>De schaalbalk op een topografische kaart, die meeschaalt bij vergroten — anders dan
+          een getal</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Print</h4>
+      <ul>
+        <li>A4 staand · <b>verplicht op 100%</b></li>
+        <li>Liniaal van 9 mm langs de hele linkerrand</li>
+        <li>IJkbalk van 100 mm met controle-opdracht</li>
+        <li>Oefening op 19 punt, uitvoering op 9,6 punt</li>
+        <li>Pijnschaal 105 mm — een handbreedte</li>
+        <li><a href="/ontwerp/">← terug naar de galerij</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

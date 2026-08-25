@@ -1,0 +1,1170 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 44 — Bonkaart · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 44 — BONKAART
+   ------------------------------------------------------------
+   De eerste kaart met een plafond in plaats van een doel.
+
+   Elke oefenkaart ter wereld noteert een ONDERGRENS: doe dit
+   minstens, haal dit ten minste. Drie keer per dag. Tien
+   herhalingen. Meer mag altijd.
+
+   Voor een grote groep patiënten is dat precies de verkeerde
+   kant op. Bij langdurige klachten na COVID, bij ME/CVS, bij
+   chronische pijn en in de eerste weken na een operatie is de
+   behandeling niet "meer", maar PACING: bewust doseren binnen
+   een grens, zodat je de dag erna niet instort. De Nederlandse
+   richtlijn energiemanagement na COVID-19 en het KNGF-standpunt
+   zeggen het onomwonden; de ergotherapie werkt al jaren met de
+   Activiteitenweger, waarin activiteiten punten kosten en het
+   totaal op is als het op is.
+
+   Alleen: op geen enkele kaart staat een maximum. Wie zich aan
+   het blad houdt kan nog steeds over zijn grens gaan, want het
+   blad kent er geen.
+
+   Dus is de kaart hier een BONKAART.
+
+   Nederland kende die van 1939 tot 1952 — de distributiestamkaart
+   werd op 11 oktober 1939 ingevoerd, koffie ging als laatste
+   product op 14 januari 1952 van de bon. Een bonkaart was een vel
+   genummerde bonnen: één bon, één rantsoen. Op is op. En de vorm
+   was rijk: guillochewerk in twee tinten, een serienummer, een
+   stempel van de distributiedienst, en RESERVE-bonnen waarvan
+   pas later bekend werd gemaakt of ze geldig waren.
+
+   Wat die vorm hier komt doen:
+
+     · een week bevat een vast aantal eenheden — hier 21 — en dat
+       aantal staat gedrukt. Er is geen bon 22.
+     · elke oefening kost eenheden, en die prijs staat erbij.
+     · bonnen VERVALLEN. Wat u maandag niet gebruikt, kunt u
+       zaterdag niet opsparen. Dat is geen boekhoudkundige
+       gemeenheid maar de kern van pacing: opsparen en dan
+       inhalen is precies het patroon dat mensen ziek houdt.
+     · er zijn drie RESERVE-bonnen, en de fysiotherapeut verklaart
+       ze geldig bij de volgende afspraak — niet de patiënt zelf,
+       op een dag dat het even goed voelt.
+
+   WAAROM DIT SCHUURT. Een schaarste-esthetiek uit de oorlog
+   inzetten voor zorg is niet vrijblijvend, en "u mag niet meer"
+   voelt als straf. Twee dingen houden het staande. Het rantsoen
+   is niet klein maar EERLIJK VERDEELD: het geeft dinsdag terug
+   wat maandag anders had opgeslokt. En de kaart is de enige die
+   toestemming geeft om te stoppen — voor wie elke dag over zijn
+   grens gaat omdat niemand hem ooit een bovengrens gaf, is dat
+   geen inperking maar opluchting.
+
+   Dit is niet concept 17 (Poststempel). Daar telt u óp: een
+   gedane dag stempelt u af, en het vel is een verzameling. Hier
+   telt u AF, en het blad weigert de tweeëntwintigste bon.
+   ============================================================ */
+
+:root{
+  --papier:#efe9db;      /* het grauwe distributiepapier */
+  --papier-2:#f7f3e9;
+  --vlak:#fdfbf5;
+  --inkt:#1b1a17;
+  --inkt-2:#403c33;
+  --inkt-3:#6d675a;
+  --grijs:#8d8779;
+  --lijn:#cdc5b2;
+  --lijn-2:#e2dbc9;
+  --brique:#9d3b26;      /* de eerste distributiekleur */
+  --indigo:#26386b;      /* de tweede */
+  --olijf:#5c6437;
+  --oker:#b8862c;
+
+  --grot:"Helvetica Neue",Helvetica,Arial,"Liberation Sans",sans-serif;
+  --smal:"Avenir Next Condensed","Helvetica Neue",Haettenschweiler,Impact,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --serif:Charter,Georgia,"Times New Roman",serif;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:68px;
+
+  /* guilloche: het veiligheidsweefsel van een waardedocument,
+     hier met niets anders gemaakt dan gekruiste verlopen */
+  --guilloche:
+    repeating-linear-gradient(63deg,rgba(38,56,107,.10) 0 .5px,transparent .5px 5px),
+    repeating-linear-gradient(-63deg,rgba(157,59,38,.09) 0 .5px,transparent .5px 5px),
+    repeating-linear-gradient(0deg,rgba(38,56,107,.05) 0 .5px,transparent .5px 9px);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font:17px/1.62 var(--grot);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--brique)}
+:focus-visible{outline:2.5px solid var(--brique);outline-offset:3px}
+
+.binnen{max-width:1180px;margin:0 auto;padding:0 22px}
+.scherm{padding:var(--s6) 0}
+.scherm.eerste{padding-top:var(--s5)}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  background:var(--inkt);padding:9px 22px;font:600 12.5px/1 var(--grot);flex-wrap:wrap}
+.labbalk .nr{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--papier);
+  border:1px solid #454135;padding:5px 7px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#9c9686;text-decoration:none}
+.labbalk a:hover{color:#fff}
+.labbalk a.terug{color:#fff;border-bottom:1px solid var(--brique)}
+
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:28px;height:28px;background:var(--indigo);color:var(--papier-2);
+  display:flex;align-items:center;justify-content:center;font:700 15px/1 var(--grot)}
+.merkregel .naam{font:700 15px/1 var(--grot);color:var(--inkt);letter-spacing:-.02em}
+.merkregel .pad{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
+
+.schermkop{border-top:2.5px solid var(--indigo);padding-top:var(--s2);margin-bottom:var(--s5);max-width:70ch}
+.schermkop > b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--brique);margin-bottom:var(--s3)}
+.schermkop h2{font:700 clamp(25px,3vw,34px)/1.08 var(--grot);letter-spacing:-.035em;color:var(--inkt);
+  margin-bottom:var(--s3)}
+.schermkop p{font:400 17.5px/1.62 var(--serif);color:var(--inkt-2)}
+.schermkop p b{font-weight:700;color:var(--inkt)}
+
+/* ---------- de bon: het handelsmerk van dit concept ---------- */
+.bon{position:relative;background:var(--vlak);background-image:var(--guilloche);
+  border:1px solid var(--indigo);padding:9px 8px 8px;text-align:center;min-height:60px;
+  display:flex;flex-direction:column;justify-content:space-between}
+.bon .bnr{font:700 8px/1 var(--mono);letter-spacing:.12em;color:var(--indigo)}
+.bon .waarde{font:700 21px/1 var(--smal);color:var(--inkt);letter-spacing:-.02em}
+.bon .soort{font:700 8.5px/1.25 var(--mono);letter-spacing:.09em;text-transform:uppercase;
+  color:var(--inkt-3)}
+.bon.op{background:var(--lijn-2);background-image:none;border-style:solid;color:var(--grijs)}
+.bon.op .waarde,.bon.op .soort,.bon.op .bnr{color:var(--grijs)}
+.bon.op::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to bottom right,transparent calc(50% - 1.2px),var(--brique) calc(50% - 1.2px),
+    var(--brique) calc(50% + 1.2px),transparent calc(50% + 1.2px))}
+.bon.reserve{border-style:dashed;border-color:var(--olijf)}
+.bon.reserve .bnr,.bon.reserve .soort{color:var(--olijf)}
+.bon.vervallen{background:repeating-linear-gradient(45deg,var(--lijn-2) 0 4px,var(--papier-2) 4px 9px);
+  background-image:repeating-linear-gradient(45deg,var(--lijn-2) 0 4px,var(--papier-2) 4px 9px);
+  border-color:var(--lijn)}
+.bon.vervallen .waarde,.bon.vervallen .soort,.bon.vervallen .bnr{color:var(--grijs)}
+
+/* ============================================================
+   1 · LANDING
+   ============================================================ */
+.heldrij{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--s6);align-items:center}
+@media (max-width:980px){.heldrij{grid-template-columns:1fr;gap:var(--s5)}}
+
+h1.kop{font:700 clamp(34px,5vw,56px)/1.02 var(--grot);letter-spacing:-.048em;color:var(--inkt)}
+h1.kop em{display:block;font-style:normal;color:var(--brique)}
+p.onder{font:400 19px/1.6 var(--serif);color:var(--inkt-2);max-width:54ch;margin-top:var(--s4)}
+p.onder b{font-weight:700;color:var(--inkt)}
+
+.knoppen{display:flex;gap:12px;flex-wrap:wrap;margin-top:var(--s4)}
+.kn{display:inline-block;background:var(--indigo);color:#fff;text-decoration:none;
+  padding:13px 22px;font:700 14px/1 var(--grot);border:1.5px solid var(--indigo)}
+.kn:hover{background:var(--brique);border-color:var(--brique)}
+.kn.leeg{background:transparent;color:var(--indigo)}
+.kn.leeg:hover{background:var(--indigo);color:#fff}
+
+/* de kaart op de landing */
+.kaartbeeld{background:var(--vlak);background-image:var(--guilloche);
+  border:2px solid var(--indigo);padding:var(--s4);box-shadow:0 16px 40px rgba(27,26,23,.16)}
+.kbkop{display:grid;grid-template-columns:1fr auto;gap:var(--s3);align-items:start;
+  border-bottom:2px solid var(--indigo);padding-bottom:var(--s3);margin-bottom:var(--s3)}
+.kbkop h4{font:700 21px/1.05 var(--smal);letter-spacing:.01em;text-transform:uppercase;color:var(--inkt)}
+.kbkop .reeks{font:700 9.5px/1.5 var(--mono);letter-spacing:.12em;color:var(--indigo);margin-top:5px}
+.kbkop .stempel{border:2px solid var(--brique);color:var(--brique);border-radius:50%;
+  width:74px;height:74px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font:700 8px/1.3 var(--mono);letter-spacing:.08em;text-align:center;transform:rotate(-11deg);
+  opacity:.86;flex:0 0 auto}
+.kbkop .stempel b{font-size:13px;letter-spacing:0}
+
+.bonvel{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.bonvel .dagkop{font:700 8.5px/1 var(--mono);letter-spacing:.08em;text-align:center;
+  color:var(--inkt-3);padding-bottom:5px}
+.kbvoet{border-top:2px solid var(--indigo);margin-top:var(--s3);padding-top:var(--s3);
+  display:flex;flex-wrap:wrap;gap:var(--s3);align-items:baseline}
+.kbvoet .tot{font:700 26px/1 var(--smal);color:var(--inkt)}
+.kbvoet .tot em{font-style:normal;color:var(--brique)}
+.kbvoet .los{font:600 11px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--grijs)}
+
+.regels{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5);margin-top:var(--s6);
+  border-top:2.5px solid var(--indigo);padding-top:var(--s4)}
+@media (max-width:900px){.regels{grid-template-columns:1fr;gap:var(--s4)}}
+.rgl .nr{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--brique);display:block;margin-bottom:10px}
+.rgl h3{font:700 20px/1.16 var(--grot);letter-spacing:-.03em;color:var(--inkt);margin-bottom:10px}
+.rgl p{font-size:16px}
+.rgl p b{color:var(--inkt);font-weight:700}
+
+/* de tegenstelling: ondergrens versus bovengrens */
+.tweekaarten{margin-top:var(--s6);border-top:2.5px solid var(--indigo);padding-top:var(--s4)}
+.tweekaarten > h3{font:700 22px/1.15 var(--grot);letter-spacing:-.03em;color:var(--inkt);margin-bottom:var(--s2)}
+.tweekaarten > p{font:400 17px/1.6 var(--serif);max-width:66ch;margin-bottom:var(--s4)}
+.tkrij{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+@media (max-width:840px){.tkrij{grid-template-columns:1fr}}
+.tk{border:2px solid var(--lijn);background:var(--vlak);padding:var(--s4)}
+.tk.nieuw{border-color:var(--indigo)}
+.tk h5{font:700 10px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--grijs);margin-bottom:var(--s3)}
+.tk.nieuw h5{color:var(--indigo)}
+.tk .zin{font:700 27px/1.1 var(--smal);letter-spacing:.005em;color:var(--inkt);text-transform:uppercase}
+.tk.nieuw .zin{color:var(--brique)}
+.tk .uitleg{font:400 15.5px/1.55 var(--grot);color:var(--inkt-2);margin-top:var(--s3)}
+.tk .uitleg b{color:var(--inkt);font-weight:700}
+.tk .gevolg{margin-top:var(--s3);border-top:1px dotted var(--lijn);padding-top:11px;
+  font:400 14px/1.5 var(--serif);color:var(--inkt-3)}
+
+/* ============================================================
+   2 · KIEZER
+   ============================================================ */
+.kiesrij{display:grid;grid-template-columns:1.35fr 1fr;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.kiesrij{grid-template-columns:1fr}}
+
+.lijstvak{background:var(--vlak);border:2px solid var(--lijn);padding:var(--s4)}
+.lijstvak h3{font:700 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--grijs);
+  border-bottom:1px solid var(--lijn);padding-bottom:var(--s2);margin-bottom:var(--s3)}
+
+.zoekbalk{display:flex;align-items:center;gap:10px;border:1.5px solid var(--inkt);padding:10px 12px;
+  margin-bottom:var(--s3);background:var(--papier-2)}
+.zoekbalk span{font:700 9.5px/1 var(--mono);letter-spacing:.16em;color:var(--grijs)}
+.zoekbalk input{flex:1;border:0;background:transparent;font:600 15px/1.3 var(--grot);color:var(--inkt)}
+.zoekbalk input:focus{outline:0}
+
+.oef{border-bottom:1px solid var(--lijn-2);padding:var(--s3) 0;display:grid;
+  grid-template-columns:62px 1fr 78px;gap:var(--s3);align-items:center}
+.oef:last-child{border-bottom:0}
+.oef .beeld{background:var(--papier-2);border:1px solid var(--lijn-2);padding:5px;height:62px;
+  display:flex;align-items:center;justify-content:center}
+.oef .beeld img{max-height:100%;width:auto;mix-blend-mode:multiply}
+.oef h4{font:700 19px/1.15 var(--grot);letter-spacing:-.03em;color:var(--inkt)}
+.oef .tel{font:600 14.5px/1.2 var(--grot);color:var(--inkt-2);margin-top:4px}
+.oef .uitv{font:400 13px/1.4 var(--grot);color:var(--inkt-3);margin-top:5px;max-width:44ch}
+.oef .prijs{text-align:right}
+.oef .prijs b{display:block;font:700 24px/1 var(--smal);color:var(--indigo)}
+.oef .prijs span{display:block;font:700 8.5px/1.4 var(--mono);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--grijs);margin-top:3px}
+.oef.geweigerd{opacity:.55}
+.oef.geweigerd .prijs b{color:var(--brique)}
+
+.weigering{margin-top:var(--s3);border:2px solid var(--brique);background:#faf1ee;
+  padding:var(--s3);display:grid;grid-template-columns:auto 1fr;gap:var(--s3);align-items:start}
+.weigering .kruis{width:34px;height:34px;border:2px solid var(--brique);color:var(--brique);
+  display:flex;align-items:center;justify-content:center;font:700 19px/1 var(--grot);flex:0 0 auto}
+.weigering h4{font:700 16px/1.2 var(--grot);color:var(--brique);margin-bottom:6px}
+.weigering p{font:400 14.5px/1.5 var(--grot);color:var(--inkt-2)}
+.weigering p b{color:var(--inkt);font-weight:700}
+
+/* de rekening rechts */
+.rekening{background:var(--vlak);background-image:var(--guilloche);border:2px solid var(--indigo)}
+.rekening .rk{background:var(--indigo);color:var(--papier-2);padding:12px var(--s3);
+  font:700 13px/1 var(--grot);letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+.rekening .rk span{margin-left:auto;font:700 10px/1 var(--mono);letter-spacing:.12em;color:#b9c2dd}
+.rekening .binnenin{padding:var(--s3)}
+
+.meterkop{display:flex;align-items:baseline;gap:9px;margin-bottom:11px}
+.meterkop b{font:700 34px/1 var(--smal);color:var(--inkt)}
+.meterkop span{font:700 10px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--grijs)}
+.meter{height:26px;border:1.5px solid var(--inkt);background:var(--papier-2);display:flex;overflow:hidden}
+.meter i{display:block;border-right:1px solid var(--papier-2)}
+.meter i.gebruikt{background:var(--indigo)}
+.meter i.gepland{background:repeating-linear-gradient(45deg,var(--indigo) 0 3px,#8d99bd 3px 7px)}
+.meter i.vrij{background:transparent}
+.meterlegenda{display:flex;flex-wrap:wrap;gap:var(--s3);margin-top:10px;
+  font:600 11px/1.4 var(--mono);letter-spacing:.06em;color:var(--inkt-3)}
+.meterlegenda i{display:inline-block;width:12px;height:12px;margin-right:5px;vertical-align:-1px;
+  border:1px solid var(--inkt)}
+.meterlegenda i.a{background:var(--indigo)}
+.meterlegenda i.b{background:repeating-linear-gradient(45deg,var(--indigo) 0 3px,#8d99bd 3px 7px)}
+.meterlegenda i.c{background:var(--papier-2)}
+
+.gekozenlijst{list-style:none;margin-top:var(--s3);border-top:1px solid var(--lijn);padding-top:var(--s2)}
+.gekozenlijst li{display:grid;grid-template-columns:1fr auto auto;gap:11px;align-items:baseline;
+  padding:10px 0;border-bottom:1px dotted var(--lijn)}
+.gekozenlijst li:last-child{border-bottom:0}
+.gekozenlijst .nm{font:600 15px/1.2 var(--grot);color:var(--inkt)}
+.gekozenlijst .nm em{display:block;font:400 12px/1.4 var(--grot);color:var(--inkt-3);font-style:normal;
+  margin-top:2px}
+.gekozenlijst .aantal{font:600 13px/1 var(--mono);color:var(--inkt-3)}
+.gekozenlijst .kost{font:700 17px/1 var(--smal);color:var(--indigo);min-width:44px;text-align:right}
+
+.reservevak{margin:var(--s3);border:2px dashed var(--olijf);background:#f6f6ec;padding:var(--s3)}
+.reservevak h4{font:700 9.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--olijf);margin-bottom:9px}
+.reservevak .drie{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px}
+.reservevak p{font:400 13.5px/1.5 var(--grot);color:var(--inkt-2)}
+.reservevak p b{color:var(--inkt);font-weight:700}
+
+.velvoet{padding:var(--s3);border-top:2px solid var(--indigo);display:flex;flex-wrap:wrap;gap:12px;
+  align-items:center;background:var(--papier-2)}
+.velvoet .los{font:600 10px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--grijs)}
+.velvoet .kn{margin-left:auto}
+
+/* ============================================================
+   3 · CLIËNTKAART
+   ============================================================ */
+.dossier{background:var(--vlak);border:2px solid var(--indigo)}
+.doskop{background:var(--indigo);color:var(--papier-2);padding:var(--s4);display:grid;
+  grid-template-columns:1fr auto;gap:var(--s4);align-items:end}
+@media (max-width:760px){.doskop{grid-template-columns:1fr;gap:var(--s3)}}
+.doskop h3{font:700 clamp(25px,3.2vw,35px)/1.04 var(--grot);letter-spacing:-.04em;color:#fff}
+.doskop .sub{font:400 15px/1.5 var(--grot);color:#b9c2dd;margin-top:9px;max-width:50ch}
+.doskop .sub b{color:#fff;font-weight:700}
+.doskop .nrvak{border:1.5px solid #6b7aa8;padding:9px 13px;text-align:right;white-space:nowrap}
+.doskop .nrvak b{display:block;font:700 20px/1 var(--mono);color:#fff;letter-spacing:.04em}
+.doskop .nrvak span{display:block;font:700 8.5px/1.6 var(--mono);letter-spacing:.14em;color:#8f9cc4}
+
+.dosrij{display:grid;grid-template-columns:1.35fr 1fr}
+@media (max-width:1000px){.dosrij{grid-template-columns:1fr}}
+.doslinks{border-right:2px solid var(--lijn);padding:var(--s4)}
+@media (max-width:1000px){.doslinks{border-right:0;border-bottom:2px solid var(--lijn)}}
+.dosrechts{padding:var(--s4);background:var(--papier-2)}
+
+.blokkop{font:700 9.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs);
+  border-bottom:1.5px solid var(--inkt);padding-bottom:8px;margin-bottom:var(--s3)}
+
+/* de weekboekhouding: zeven kolommen bonnen */
+.weekboek{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:var(--s4)}
+.weekboek .kolom{display:flex;flex-direction:column;gap:5px}
+.weekboek .dagkop{font:700 8.5px/1.3 var(--mono);letter-spacing:.06em;text-align:center;
+  color:var(--inkt-3);border-bottom:1px solid var(--lijn);padding-bottom:5px;margin-bottom:2px}
+.weekboek .dagkop em{display:block;font-style:normal;font-size:7.5px;color:var(--grijs)}
+.weekboek .kolom.vandaag .dagkop{color:var(--brique);border-color:var(--brique)}
+.weekboek .bon{min-height:44px;padding:6px 4px 5px}
+.weekboek .bon .waarde{font-size:16px}
+.weekboek .bon .soort{font-size:7px}
+.weekboek .bon .bnr{font-size:6.5px}
+
+.uitleglijn{display:flex;flex-wrap:wrap;gap:var(--s3);margin-bottom:var(--s4);
+  font:600 11px/1.5 var(--mono);letter-spacing:.05em;color:var(--inkt-3)}
+.uitleglijn span{display:flex;align-items:center;gap:6px}
+.uitleglijn i{width:14px;height:14px;border:1px solid var(--indigo);display:block}
+.uitleglijn i.a{background:var(--vlak)}
+.uitleglijn i.b{background:var(--lijn-2);border-color:var(--lijn)}
+.uitleglijn i.c{background:repeating-linear-gradient(45deg,var(--lijn-2) 0 4px,var(--papier-2) 4px 9px);
+  border-color:var(--lijn)}
+.uitleglijn i.d{border-style:dashed;border-color:var(--olijf);background:#f6f6ec}
+
+.oefkaart{border:1.5px solid var(--lijn);background:#fff;margin-bottom:var(--s3);display:grid;
+  grid-template-columns:96px 1fr auto;gap:0}
+@media (max-width:640px){.oefkaart{grid-template-columns:1fr}}
+.oefkaart .prent{border-right:1px solid var(--lijn-2);display:flex;align-items:center;
+  justify-content:center;padding:10px;background:var(--papier-2)}
+@media (max-width:640px){.oefkaart .prent{border-right:0;border-bottom:1px solid var(--lijn-2)}}
+.oefkaart .prent img{max-height:74px;width:auto;mix-blend-mode:multiply}
+.oefkaart .tekst{padding:13px var(--s3)}
+.oefkaart h4{font:700 20px/1.1 var(--grot);color:var(--inkt);letter-spacing:-.03em}
+.oefkaart .tel{font:600 15px/1 var(--grot);color:var(--inkt-2);margin-top:6px}
+.oefkaart .hoe{font:400 13.5px/1.45 var(--grot);color:var(--inkt-3);margin-top:7px;max-width:48ch}
+.oefkaart .kosten{border-left:1px solid var(--lijn-2);padding:13px var(--s3);text-align:center;
+  display:flex;flex-direction:column;justify-content:center;min-width:92px;background:var(--papier-2)}
+@media (max-width:640px){.oefkaart .kosten{border-left:0;border-top:1px solid var(--lijn-2)}}
+.oefkaart .kosten b{font:700 27px/1 var(--smal);color:var(--indigo)}
+.oefkaart .kosten span{font:700 8px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--grijs);margin-top:4px}
+
+.notitie{border:1.5px solid var(--lijn);background:#fff;padding:var(--s3);margin-bottom:var(--s3)}
+.notitie h5{font:700 15px/1.2 var(--grot);color:var(--inkt);margin-bottom:8px}
+.notitie p{font:400 14.5px/1.55 var(--serif);color:var(--inkt-2)}
+.notitie p b{color:var(--inkt);font-weight:700}
+.notitie .datum{font:700 9.5px/1 var(--mono);letter-spacing:.12em;color:var(--grijs);margin-top:9px}
+
+.staat{list-style:none}
+.staat li{display:grid;grid-template-columns:1fr auto;gap:11px;padding:10px 0;
+  border-bottom:1px dotted var(--lijn);font-size:14.5px;align-items:baseline}
+.staat li:last-child{border-bottom:0}
+.staat li b{font:700 10px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--grijs)}
+.staat li span{font:700 16px/1 var(--smal);color:var(--inkt)}
+.staat li span.brique{color:var(--brique)}
+.staat li span.olijf{color:var(--olijf)}
+
+/* ============================================================
+   4 · PRINTKAART — A4 STAAND
+   ============================================================ */
+.bladhouder{display:grid;place-items:center}
+.bladschaal{width:210mm;max-width:100%}
+@media (max-width:1000px){
+  .bladschaal{width:100%;overflow:hidden}
+  .blad{transform:scale(.78);transform-origin:top left;margin-bottom:-65mm !important;
+    margin-right:-46mm !important}
+}
+@media (max-width:760px){.blad{transform:scale(.45);margin-bottom:-163mm !important;margin-right:-116mm !important}}
+
+.blad{position:relative;width:210mm;height:297mm;background:#fff;color:#000;
+  background-image:var(--guilloche);
+  box-shadow:0 24px 60px rgba(27,26,23,.3);border:1px solid var(--lijn);
+  display:flex;flex-direction:column;font-family:var(--grot);padding:8mm 9mm 6mm}
+
+.wijzer{position:absolute;width:44mm;font:600 11.5px/1.4 var(--grot);color:var(--inkt-3);
+  border-top:3px solid var(--indigo);padding-top:6px}
+@media (max-width:1240px){.wijzer{display:none}}
+
+/* kop van het waardedocument */
+.bk-kop{border-bottom:2pt solid #26386b;padding-bottom:3.2mm;display:grid;
+  grid-template-columns:1fr auto auto;gap:5mm;align-items:end}
+.bk-kop h1{font:700 27pt/.92 var(--smal);letter-spacing:.005em;text-transform:uppercase;color:#1b1a17}
+.bk-kop .naamregel{font:700 12pt/1.15 var(--grot);color:#1b1a17;margin-top:2.4mm}
+.bk-kop .reeks{font:700 7.4pt/1.5 var(--mono);letter-spacing:.12em;color:#26386b;margin-top:1.4mm}
+.bk-kop .stempel{border:1.6pt solid #9d3b26;color:#9d3b26;border-radius:50%;width:23mm;height:23mm;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font:700 5.6pt/1.3 var(--mono);letter-spacing:.06em;text-align:center;transform:rotate(-11deg)}
+.bk-kop .stempel b{font-size:9pt;letter-spacing:0}
+
+/* de balans: wat er deze week te besteden is */
+.bk-balans{display:grid;grid-template-columns:auto 1fr;gap:5mm;align-items:center;
+  border-bottom:.8pt solid #cdc5b2;padding:3.4mm 0}
+.bk-balans .groot{font:700 30pt/1 var(--smal);color:#26386b;white-space:nowrap}
+.bk-balans .groot em{font-style:normal;font-size:11pt;color:#1b1a17;margin-left:1.6mm}
+.bk-balans .zin{font:700 11.4pt/1.28 var(--grot);color:#1b1a17}
+.bk-balans .zin span{display:block;font:400 9.4pt/1.35 var(--grot);color:#403c33;margin-top:1.4mm}
+
+/* het bonnenvel */
+.bk-vel{padding:3.6mm 0 0}
+.bk-velkop{display:flex;align-items:baseline;gap:3mm;margin-bottom:2.4mm}
+.bk-velkop b{font:700 9.6pt/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#1b1a17}
+.bk-velkop span{font:400 8.4pt/1.3 var(--grot);color:#403c33}
+.bk-raster{display:grid;grid-template-columns:repeat(7,1fr);gap:1.6mm}
+.bk-raster .dagkop{font:700 7.4pt/1.3 var(--mono);letter-spacing:.06em;text-align:center;color:#403c33;
+  border-bottom:.8pt solid #1b1a17;padding-bottom:1mm;margin-bottom:1mm}
+.bk-raster .kolom{display:flex;flex-direction:column;gap:1.6mm}
+.pbon{border:.8pt solid #26386b;text-align:center;padding:1.6mm .8mm 1.4mm;min-height:13mm;
+  display:flex;flex-direction:column;justify-content:space-between;background:#fff}
+.pbon .bnr{font:700 5.6pt/1 var(--mono);letter-spacing:.1em;color:#26386b}
+.pbon .waarde{font:700 13pt/1 var(--smal);color:#000}
+.pbon .soort{font:700 6pt/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#403c33}
+.pbon.reserve{border-style:dashed;border-color:#5c6437}
+.pbon.reserve .bnr,.pbon.reserve .soort{color:#5c6437}
+
+/* de oefeningen, groot en rustig — dit is wat de patiënt leest */
+.bk-oefs{flex:1;display:flex;flex-direction:column;padding:3.4mm 0 0;border-top:2pt solid #26386b;
+  margin-top:3.4mm}
+.bk-oef{display:grid;grid-template-columns:32mm 1fr 22mm;column-gap:4mm;align-items:center;
+  padding:3.2mm 0;border-bottom:.6pt solid #cdc5b2;flex:1}
+.bk-oef:last-child{border-bottom:0}
+.bk-oef .prent{height:26mm;display:flex;align-items:center;justify-content:center;
+  border:.6pt solid #e2dbc9;background:#fdfbf5;padding:.6mm}
+.bk-oef .prent img{max-height:25mm;max-width:31mm;width:auto;mix-blend-mode:multiply}
+.bk-oef h3{font:700 19pt/1.02 var(--grot);letter-spacing:-.038em;color:#000}
+.bk-oef .tel{font:700 14pt/1.1 var(--grot);color:#000;margin-top:1.4mm}
+.bk-oef .hoe{font:400 9.6pt/1.34 var(--grot);color:#1a1a1a;margin-top:1.6mm;max-width:100mm}
+.bk-oef .kost{text-align:center;border:1.2pt solid #26386b;padding:1.8mm 1mm}
+.bk-oef .kost b{display:block;font:700 21pt/1 var(--smal);color:#26386b}
+.bk-oef .kost span{display:block;font:700 5.8pt/1.3 var(--mono);letter-spacing:.1em;
+  text-transform:uppercase;color:#403c33;margin-top:.8mm}
+
+/* de voorwaarden — even zwaar gezet als de rest, want ze zijn de kern */
+.bk-voorwaarden{border-top:2pt solid #26386b;padding-top:2.6mm;display:grid;
+  grid-template-columns:1fr 52mm;gap:5mm;align-items:start}
+.bk-voorwaarden .hoofdregel{font:700 12.4pt/1.16 var(--grot);letter-spacing:-.02em;color:#000}
+.bk-voorwaarden .hoofdregel em{font-style:normal;color:#9d3b26}
+.bk-voorwaarden ol{margin:2mm 0 0 4.4mm;padding:0}
+.bk-voorwaarden li{font:400 8.8pt/1.4 var(--grot);color:#1a1a1a;margin-bottom:1mm}
+.bk-voorwaarden li b{font-weight:700;color:#000}
+.bk-voorwaarden .admin{border:1pt solid #26386b;padding:2.2mm 2.6mm;font:400 7.2pt/1.42 var(--grot);
+  color:#1a1a1a}
+.bk-voorwaarden .admin b{display:block;font:700 8.4pt/1.2 var(--grot);color:#000;margin-bottom:1.2mm}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#9c9686;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:#fff;border-top:2px solid var(--brique);padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.6}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding:5px 0}
+footer.uitleiding a{color:#fff}
+
+/* ---------- smalle schermen ----------
+   Het bonnenvel is zeven kolommen en dat blijft zo — een week
+   heeft nu eenmaal zeven dagen. Wat wél mag krimpen is de tekst
+   in de bon; de soortaanduiding valt als eerste weg, want die
+   staat ook groot bij de oefening zelf. */
+@media (max-width:640px){
+  .heldrij > *,.kiesrij > *,.dosrij > *,.tkrij > *{min-width:0}
+  .bonvel,.weekboek{gap:3px}
+  .bon{padding:5px 2px 4px;min-height:44px}
+  .bon .waarde{font-size:15px}
+  .bon .soort{display:none}
+  .bon .bnr{font-size:7px;letter-spacing:.04em}
+  .weekboek .bon{min-height:34px}
+  .weekboek .dagkop em{display:none}
+  .kbkop .stempel{width:58px;height:58px;font-size:6.5px}
+  .kbkop .stempel b{font-size:10px}
+  .oef{grid-template-columns:48px 1fr 56px;gap:11px}
+  .oefkaart{grid-template-columns:1fr}
+  .oefkaart .prent{border-right:0;border-bottom:1px solid var(--lijn-2)}
+}
+
+/* ============================================================
+   PRINT — A4 STAAND
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 44</span>
+  <strong style="font:700 16px/1 var(--grot);color:#fff;letter-spacing:-.04em">Bonkaart</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">Concept 44 · Bonkaart</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1 class="kop">Elke oefenkaart noteert een ondergrens.<em>Deze noteert een plafond.</em></h1>
+        <p class="onder">Doe dit minstens, haal dit ten minste, meer mag altijd. Voor een grote
+          groep patiënten is dat precies de verkeerde kant op: bij langdurige klachten na COVID,
+          bij ME/CVS en bij chronische pijn is de behandeling niet méér, maar <b>doseren binnen een
+          grens</b> — pacing. De richtlijn zegt het, de ergotherapie werkt er al jaren mee. Alleen
+          staat op geen enkele kaart een maximum. Wie zich netjes aan het blad houdt, kan er
+          gewoon overheen gaan, want het blad kent geen bovengrens.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk de bonkaart</a>
+          <a class="kn leeg" href="#kiezer">Hoe het rekent</a>
+        </div>
+      </div>
+
+      <div class="kaartbeeld">
+        <div class="kbkop">
+          <div>
+            <h4>Bonkaart · week 34</h4>
+            <div class="reeks">SERIE KB · 2026-0819 · NIET OVERDRAAGBAAR</div>
+          </div>
+          <div class="stempel">FYSIO<b>BOONSTRA</b>SNEEK</div>
+        </div>
+
+        <div class="bonvel" aria-label="Zeven dagen met drie bonnen per dag">
+          <div class="dagkop">MA</div><div class="dagkop">DI</div><div class="dagkop">WO</div>
+          <div class="dagkop">DO</div><div class="dagkop">VR</div><div class="dagkop">ZA</div>
+          <div class="dagkop">ZO</div>
+
+          <div class="bon op"><span class="bnr">A1</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+          <div class="bon op"><span class="bnr">A2</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+          <div class="bon op"><span class="bnr">A3</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+          <div class="bon"><span class="bnr">A4</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+          <div class="bon"><span class="bnr">A5</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+          <div class="bon"><span class="bnr">A6</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+          <div class="bon"><span class="bnr">A7</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+
+          <div class="bon op"><span class="bnr">B1</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+          <div class="bon op"><span class="bnr">B2</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+          <div class="bon vervallen"><span class="bnr">B3</span><span class="waarde">1</span><span class="soort">Vervallen</span></div>
+          <div class="bon"><span class="bnr">B4</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+          <div class="bon"><span class="bnr">B5</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+          <div class="bon"><span class="bnr">B6</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+          <div class="bon"><span class="bnr">B7</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+
+          <div class="bon op"><span class="bnr">C1</span><span class="waarde">1</span><span class="soort">Lopen</span></div>
+          <div class="bon vervallen"><span class="bnr">C2</span><span class="waarde">1</span><span class="soort">Vervallen</span></div>
+          <div class="bon vervallen"><span class="bnr">C3</span><span class="waarde">1</span><span class="soort">Vervallen</span></div>
+          <div class="bon"><span class="bnr">C4</span><span class="waarde">1</span><span class="soort">Lopen</span></div>
+          <div class="bon"><span class="bnr">C5</span><span class="waarde">1</span><span class="soort">Lopen</span></div>
+          <div class="bon reserve"><span class="bnr">R1</span><span class="waarde">1</span><span class="soort">Reserve</span></div>
+          <div class="bon reserve"><span class="bnr">R2</span><span class="waarde">1</span><span class="soort">Reserve</span></div>
+        </div>
+
+        <div class="kbvoet">
+          <span class="tot">6 <em>van 21 verbruikt</em></span>
+          <span class="los">3 vervallen · 2 reserve</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="regels">
+      <div class="rgl">
+        <span class="nr">REGEL 1</span>
+        <h3>Er is geen bon 22</h3>
+        <p>De week bevat eenentwintig eenheden en dat aantal staat gedrukt op het blad, niet in een
+          instelling. <b>Wie meer wil, moet het volgende blad afwachten.</b> Een kaart die alles
+          toelaat wat de patiënt aankan op een goede dag, is precies de kaart die de slechte week
+          erna veroorzaakt.</p>
+      </div>
+      <div class="rgl">
+        <span class="nr">REGEL 2</span>
+        <h3>Bonnen vervallen aan het eind van de dag</h3>
+        <p>Wat u maandag niet gebruikt, kunt u zaterdag niet opsparen — het vakje krijgt een
+          arcering en telt niet meer mee. <b>Dat is geen boekhoudkundige gemeenheid.</b> Opsparen
+          en dan inhalen is exact het patroon van pieken en instorten dat mensen ziek houdt, en
+          een blad hoort dat niet aan te moedigen.</p>
+      </div>
+      <div class="rgl">
+        <span class="nr">REGEL 3</span>
+        <h3>Reserve wordt door de praktijk vrijgegeven</h3>
+        <p>Op de historische bonkaart stonden reservebonnen waarvan pas later bekend werd gemaakt
+          of ze geldig waren. Hier staan er drie, en <b>de fysiotherapeut verklaart ze geldig bij
+          de volgende afspraak</b> — niet de patiënt zelf, op een dag dat het even goed voelt.
+          Precies dán is een grens het meest nodig.</p>
+      </div>
+    </div>
+
+    <div class="tweekaarten">
+      <h3>Dezelfde week, twee kaarten</h3>
+      <p>Links wat elke oefenkaart in Nederland vandaag zegt. Rechts wat deze zegt. Het verschil is
+        niet de toon en niet de vormgeving — het is de richting van de grens, en die verandert wat
+        een goede dag betekent.</p>
+      <div class="tkrij">
+        <div class="tk">
+          <h5>De gewone kaart · ondergrens</h5>
+          <div class="zin">3 × per dag, 10 herhalingen</div>
+          <p class="uitleg">Een doel om te halen. <b>Wie meer doet, doet het goed.</b> Wie minder
+            doet, is achter. Er staat nergens waar de bovenkant zit, dus die bestaat niet.</p>
+          <p class="gevolg">Op een goede dag doet de patiënt vijf rondes. Woensdag ligt hij plat,
+            haalt niets, en heeft het gevoel dat hij faalt — twee keer.</p>
+        </div>
+        <div class="tk nieuw">
+          <h5>De bonkaart · bovengrens</h5>
+          <div class="zin">Vandaag drie bonnen. Niet meer.</div>
+          <p class="uitleg">Een plafond om onder te blijven. <b>Wie zijn drie bonnen op heeft, is
+            klaar</b> — ook als het goed gaat, ook als het pas half drie is. Minder mag altijd en
+          telt niet tegen u.</p>
+          <p class="gevolg">Op een goede dag doet de patiënt drie bonnen en houdt hij iets over.
+            Woensdag is er dan ook nog wat. Het blad geeft toestemming om te stoppen.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>Elke oefening heeft een prijs in eenheden, en de rekening rechts telt mee terwijl u kiest.
+        Het bijzondere gebeurt aan het eind: <b>de kiezer weigert.</b> Wie boven de eenentwintig
+        uitkomt, krijgt geen waarschuwing die je kunt wegklikken maar een blokkade, met de enige
+        twee uitwegen die er zijn — iets laten vallen, of het rantsoen zelf verhogen en dat
+        opschrijven.</p>
+    </div>
+
+    <div class="kiesrij">
+
+      <div class="lijstvak">
+        <h3>Oefeningen · post-COVID, zittend en liggend</h3>
+
+        <div class="zoekbalk">
+          <span>ZOEK</span>
+          <input type="text" value="rustig · zittend" readonly aria-label="Zoeken in de oefenbibliotheek"/>
+        </div>
+
+        <div class="oef">
+          <div class="beeld"><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png" alt="Kin intrekken, zittend"/></div>
+          <div>
+            <h4>Kin intrekken, zittend</h4>
+            <div class="tel">2 × 8, rustig</div>
+            <div class="uitv">Rechtop op een stoel met rugleuning. Kin naar de keel, niet omlaag.
+              Drie tellen vasthouden.</div>
+          </div>
+          <div class="prijs"><b>1</b><span>eenheid</span></div>
+        </div>
+
+        <div class="oef">
+          <div class="beeld"><img src="/images/rug/open-boek-zittend-line-v1.png" alt="Open boek, zittend"/></div>
+          <div>
+            <h4>Open boek, zittend</h4>
+            <div class="tel">2 × 6 per kant</div>
+            <div class="uitv">Armen voor u gekruist, draai langzaam open naar één kant. Adem uit
+              tijdens het draaien.</div>
+          </div>
+          <div class="prijs"><b>1</b><span>eenheid</span></div>
+        </div>
+
+        <div class="oef">
+          <div class="beeld"><img src="/images/core/bekken-kantelen-liggend-line-v1.png" alt="Bekken kantelen, liggend"/></div>
+          <div>
+            <h4>Bekken kantelen, liggend</h4>
+            <div class="tel">2 × 10</div>
+            <div class="uitv">Op de rug, knieën gebogen. Onderrug zachtjes naar de mat en weer
+              los. Geen kracht.</div>
+          </div>
+          <div class="prijs"><b>1</b><span>eenheid</span></div>
+        </div>
+
+        <div class="oef">
+          <div class="beeld"><img src="/images/bovenste-extremiteit/schouder-pendelen-actief-line-v1.png" alt="Schouder pendelen"/></div>
+          <div>
+            <h4>Schouder pendelen</h4>
+            <div class="tel">1 × 20 sec. per arm</div>
+            <div class="uitv">Steun met één hand op tafel, laat de andere arm los hangen en
+              rustig meebewegen.</div>
+          </div>
+          <div class="prijs"><b>1</b><span>eenheid</span></div>
+        </div>
+
+        <div class="oef geweigerd">
+          <div class="beeld"><img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" alt="Op de plaats marcheren met steun"/></div>
+          <div>
+            <h4>Marcheren met steun</h4>
+            <div class="tel">2 × 30 sec.</div>
+            <div class="uitv">Staand, hand aan de tafel. Knieën tot heuphoogte, rustig tempo.</div>
+          </div>
+          <div class="prijs"><b>3</b><span>eenheden</span></div>
+        </div>
+
+        <div class="weigering">
+          <span class="kruis" aria-hidden="true">✕</span>
+          <div>
+            <h4>Past niet binnen het rantsoen van deze week</h4>
+            <p>Marcheren kost 3 eenheden; er zijn er nog 2 vrij. <b>Deze melding is geen
+              waarschuwing die u kunt wegklikken.</b> U kunt één ding laten vallen, of het rantsoen
+              zelf van 21 naar 24 zetten — dat laatste vraagt een reden in het dossier, want een
+              verhoogd rantsoen is een behandelbeslissing en geen instelling.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rekening">
+        <div class="rk">Rantsoen week 34 <span>J. HENDRIKS · 41 JR</span></div>
+
+        <div class="binnenin">
+          <div class="meterkop">
+            <b>19</b><span>van 21 eenheden<br/>belegd</span>
+          </div>
+          <div class="meter" aria-label="Zes eenheden verbruikt, dertien gepland, twee vrij">
+            <i class="gebruikt" style="width:28.5%"></i>
+            <i class="gepland" style="width:62%"></i>
+            <i class="vrij" style="width:9.5%"></i>
+          </div>
+          <div class="meterlegenda">
+            <span><i class="a"></i>verbruikt · 6</span>
+            <span><i class="b"></i>gepland · 13</span>
+            <span><i class="c"></i>vrij · 2</span>
+          </div>
+
+          <ul class="gekozenlijst">
+            <li>
+              <span class="nm">Kin intrekken<em>7 dagen · elke ochtend</em></span>
+              <span class="aantal">7 ×</span>
+              <span class="kost">7</span>
+            </li>
+            <li>
+              <span class="nm">Open boek<em>7 dagen · na de middag</em></span>
+              <span class="aantal">7 ×</span>
+              <span class="kost">7</span>
+            </li>
+            <li>
+              <span class="nm">Bekken kantelen<em>5 dagen · voor het slapen</em></span>
+              <span class="aantal">5 ×</span>
+              <span class="kost">5</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="reservevak">
+          <h4>Reservebonnen</h4>
+          <div class="drie">
+            <div class="bon reserve"><span class="bnr">R1</span><span class="waarde">1</span><span class="soort">Vrij</span></div>
+            <div class="bon reserve"><span class="bnr">R2</span><span class="waarde">1</span><span class="soort">Vrij</span></div>
+            <div class="bon reserve" style="opacity:.45"><span class="bnr">R3</span><span class="waarde">1</span><span class="soort">Geblok.</span></div>
+          </div>
+          <p><b>Twee van de drie zijn vrijgegeven</b> tot en met zondag; R3 blijft dicht tot de
+            afspraak van 1 september. Reserve is bedoeld voor een dag met een bruiloft of een
+            ziekenhuisbezoek — niet voor een dag waarop het toevallig goed gaat.</p>
+        </div>
+
+        <div class="velvoet">
+          <span class="los">Rantsoen 21 · vastgesteld 18 aug</span>
+          <a class="kn" href="#printkaart">Bonkaart drukken</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>Op het scherm is de kaart een boekhouding: eenentwintig vakjes die vollopen, leeglopen of
+        vervallen. <b>De therapeut leest hier niet of iemand braaf is geweest, maar of het rantsoen
+        klopt.</b> Drie vervallen bonnen op dinsdag en woensdag zeggen iets anders dan drie
+        vervallen bonnen op zaterdag — en dat verschil is de hele behandeling.</p>
+    </div>
+
+    <div class="dossier">
+      <div class="doskop">
+        <div>
+          <h3>J. Hendriks · week 34</h3>
+          <p class="sub">Langdurige klachten na COVID-19, sinds januari. Doel is niet opbouw maar
+            <b>een week zonder terugval</b> — vier weken op rij binnen het rantsoen blijven, dán
+            pas verhogen.</p>
+        </div>
+        <div class="nrvak"><b>KB 2026-0819</b><span>SERIE · WEEK 34</span></div>
+      </div>
+
+      <div class="dosrij">
+        <div class="doslinks">
+          <div class="blokkop">De boekhouding van deze week</div>
+
+          <div class="weekboek">
+            <div class="kolom">
+              <div class="dagkop">MA<em>18 aug</em></div>
+              <div class="bon op"><span class="bnr">A1</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+              <div class="bon op"><span class="bnr">B1</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+              <div class="bon op"><span class="bnr">C1</span><span class="waarde">1</span><span class="soort">Bekken</span></div>
+            </div>
+            <div class="kolom">
+              <div class="dagkop">DI<em>19 aug</em></div>
+              <div class="bon op"><span class="bnr">A2</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+              <div class="bon op"><span class="bnr">B2</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+              <div class="bon vervallen"><span class="bnr">C2</span><span class="waarde">1</span><span class="soort">Verv.</span></div>
+            </div>
+            <div class="kolom">
+              <div class="dagkop">WO<em>20 aug</em></div>
+              <div class="bon op"><span class="bnr">A3</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+              <div class="bon vervallen"><span class="bnr">B3</span><span class="waarde">1</span><span class="soort">Verv.</span></div>
+              <div class="bon vervallen"><span class="bnr">C3</span><span class="waarde">1</span><span class="soort">Verv.</span></div>
+            </div>
+            <div class="kolom vandaag">
+              <div class="dagkop">DO<em>21 aug</em></div>
+              <div class="bon"><span class="bnr">A4</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+              <div class="bon"><span class="bnr">B4</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+              <div class="bon"><span class="bnr">C4</span><span class="waarde">1</span><span class="soort">Bekken</span></div>
+            </div>
+            <div class="kolom">
+              <div class="dagkop">VR<em>22 aug</em></div>
+              <div class="bon"><span class="bnr">A5</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+              <div class="bon"><span class="bnr">B5</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+              <div class="bon"><span class="bnr">C5</span><span class="waarde">1</span><span class="soort">Bekken</span></div>
+            </div>
+            <div class="kolom">
+              <div class="dagkop">ZA<em>23 aug</em></div>
+              <div class="bon"><span class="bnr">A6</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+              <div class="bon"><span class="bnr">B6</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+              <div class="bon reserve"><span class="bnr">R1</span><span class="waarde">1</span><span class="soort">Reserve</span></div>
+            </div>
+            <div class="kolom">
+              <div class="dagkop">ZO<em>24 aug</em></div>
+              <div class="bon"><span class="bnr">A7</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+              <div class="bon"><span class="bnr">B7</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+              <div class="bon reserve"><span class="bnr">R2</span><span class="waarde">1</span><span class="soort">Reserve</span></div>
+            </div>
+          </div>
+
+          <div class="uitleglijn">
+            <span><i class="a"></i>open</span>
+            <span><i class="b"></i>verbruikt</span>
+            <span><i class="c"></i>vervallen</span>
+            <span><i class="d"></i>reserve</span>
+          </div>
+
+          <div class="blokkop">Wat er op de bonnen staat</div>
+
+          <article class="oefkaart">
+            <div class="prent"><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png" alt="Kin intrekken, zittend"/></div>
+            <div class="tekst">
+              <h4>Kin intrekken, zittend</h4>
+              <div class="tel">2 × 8, rustig</div>
+              <div class="hoe">Rechtop op een stoel met rugleuning. Kin naar de keel, niet omlaag.
+                Drie tellen vasthouden, dan loslaten.</div>
+            </div>
+            <div class="kosten"><b>1</b><span>per keer</span></div>
+          </article>
+
+          <article class="oefkaart">
+            <div class="prent"><img src="/images/rug/open-boek-zittend-line-v1.png" alt="Open boek, zittend"/></div>
+            <div class="tekst">
+              <h4>Open boek, zittend</h4>
+              <div class="tel">2 × 6 per kant</div>
+              <div class="hoe">Armen voor u gekruist. Draai langzaam open naar één kant en adem
+                daarbij uit. Stop waar het spant.</div>
+            </div>
+            <div class="kosten"><b>1</b><span>per keer</span></div>
+          </article>
+
+          <article class="oefkaart">
+            <div class="prent"><img src="/images/core/bekken-kantelen-liggend-line-v1.png" alt="Bekken kantelen, liggend"/></div>
+            <div class="tekst">
+              <h4>Bekken kantelen, liggend</h4>
+              <div class="tel">2 × 10</div>
+              <div class="hoe">Op de rug, knieën gebogen, voeten plat. Onderrug zachtjes naar de mat
+                en weer los. Geen kracht zetten.</div>
+            </div>
+            <div class="kosten"><b>1</b><span>per keer</span></div>
+          </article>
+        </div>
+
+        <div class="dosrechts">
+          <div class="blokkop">Wat de therapeut hieruit leest</div>
+
+          <div class="notitie">
+            <h5>Drie vervallen bonnen — en waar ze staan</h5>
+            <p>Dinsdagavond één, woensdag twee. <b>Niet zaterdag, maar midden in de week.</b> Dat
+              past bij wat meneer Hendriks zelf noteerde: maandag was er een verjaardag. De
+              vervallen bonnen van woensdag zijn dus geen luiheid maar de rekening van maandag.</p>
+            <div class="datum">WO 20 AUG · AUTOMATISCH</div>
+          </div>
+
+          <div class="notitie">
+            <h5>„Ik wilde er donderdag twee inhalen"</h5>
+            <p>Dat kan niet, en dat is de bedoeling. <b>Inhalen bestaat niet op deze kaart.</b>
+              Wat maandag niet gebruikt is, is weg. Meneer Hendriks noemde dat eerst vervelend en
+              een week later „de eerste keer dat ik zonder schuldgevoel op de bank zat".</p>
+            <div class="datum">DO 21 AUG · APP</div>
+          </div>
+
+          <div class="notitie">
+            <h5>Nog niet verhogen</h5>
+            <p>Twee weken binnen het rantsoen is niet genoeg. <b>De afspraak is vier weken op rij</b>,
+              en dan van 21 naar 24 — drie eenheden erbij, niet meer. Verhogen na één goede week is
+              de klassieke manier om terug bij af te komen.</p>
+            <div class="datum">AFSPRAAK 1 SEP</div>
+          </div>
+
+          <div class="blokkop">Stand van de kaart</div>
+          <ul class="staat">
+            <li><b>Rantsoen</b><span>21 eenheden</span></li>
+            <li><b>Verbruikt</b><span>6</span></li>
+            <li><b>Vervallen</b><span class="brique">3</span></li>
+            <li><b>Reserve vrijgegeven</b><span class="olijf">2 van 3</span></li>
+            <li><b>Weken binnen grens</b><span>2 van 4</span></li>
+            <li><b>Overschreden</b><span class="olijf">nooit</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand</h2>
+      <p>Bovenaan het waardedocument: serienummer, stempel, en één zin die het hele blad draagt.
+        Daaronder het bonnenvel — eenentwintig genummerde vakjes, groot genoeg om met een balpen
+        door te strepen. <b>De voorwaarden staan niet in de kleine letter maar op 12,4 punt</b>,
+        want „bonnen vervallen aan het eind van de dag" is geen juridische opmerking maar de
+        behandeling zelf.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal">
+        <div class="blad">
+
+          <span class="wijzer geen-print" style="top:12mm;right:calc(100% + 22px);text-align:right">
+            serienummer en stempel: dit blad is persoonlijk en niet overdraagbaar, precies zoals
+            een rantsoen dat was</span>
+          <span class="wijzer geen-print" style="top:46mm;left:calc(100% + 22px)">
+            het plafond staat gedrukt, niet ingesteld — 21 eenheden, en er is geen bon 22</span>
+          <span class="wijzer geen-print" style="top:96mm;right:calc(100% + 22px);text-align:right">
+            drie reservebonnen met een gestippelde rand: pas geldig als de praktijk ze vrijgeeft</span>
+          <span class="wijzer geen-print" style="top:252mm;left:calc(100% + 22px)">
+            de voorwaarden op 12,4 en 8,8 punt — een grens in kleine letter is geen grens</span>
+
+          <div class="bk-kop">
+            <div>
+              <h1>Bonkaart week 34</h1>
+              <div class="naamregel">J. Hendriks · 18 t/m 24 augustus 2026</div>
+              <div class="reeks">SERIE KB · 2026-0819 · PERSOONLIJK, NIET OVERDRAAGBAAR</div>
+            </div>
+            <div class="stempel">FYSIO<b>BOONSTRA</b>SNEEK</div>
+          </div>
+
+          <div class="bk-balans">
+            <div class="groot">21<em>eenheden</em></div>
+            <div class="zin">Dit is uw rantsoen voor deze week. Niet meer.
+              <span>Minder mag altijd en telt niet tegen u. Meer is geen extra inzet maar een
+                voorschot op morgen — daarom staan er eenentwintig vakjes en geen tweeëntwintig.</span>
+            </div>
+          </div>
+
+          <div class="bk-vel">
+            <div class="bk-velkop">
+              <b>Bonnenvel</b>
+              <span>Streep een bon door zodra u de oefening gedaan heeft. Aan het eind van de dag
+                vervalt wat open bleef.</span>
+            </div>
+            <div class="bk-raster">
+              <div class="kolom">
+                <div class="dagkop">MA 18</div>
+                <div class="pbon"><span class="bnr">A1</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+                <div class="pbon"><span class="bnr">B1</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+                <div class="pbon"><span class="bnr">C1</span><span class="waarde">1</span><span class="soort">Bekken</span></div>
+              </div>
+              <div class="kolom">
+                <div class="dagkop">DI 19</div>
+                <div class="pbon"><span class="bnr">A2</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+                <div class="pbon"><span class="bnr">B2</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+                <div class="pbon"><span class="bnr">C2</span><span class="waarde">1</span><span class="soort">Bekken</span></div>
+              </div>
+              <div class="kolom">
+                <div class="dagkop">WO 20</div>
+                <div class="pbon"><span class="bnr">A3</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+                <div class="pbon"><span class="bnr">B3</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+                <div class="pbon"><span class="bnr">C3</span><span class="waarde">1</span><span class="soort">Bekken</span></div>
+              </div>
+              <div class="kolom">
+                <div class="dagkop">DO 21</div>
+                <div class="pbon"><span class="bnr">A4</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+                <div class="pbon"><span class="bnr">B4</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+                <div class="pbon"><span class="bnr">C4</span><span class="waarde">1</span><span class="soort">Bekken</span></div>
+              </div>
+              <div class="kolom">
+                <div class="dagkop">VR 22</div>
+                <div class="pbon"><span class="bnr">A5</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+                <div class="pbon"><span class="bnr">B5</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+                <div class="pbon"><span class="bnr">C5</span><span class="waarde">1</span><span class="soort">Bekken</span></div>
+              </div>
+              <div class="kolom">
+                <div class="dagkop">ZA 23</div>
+                <div class="pbon"><span class="bnr">A6</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+                <div class="pbon"><span class="bnr">B6</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+                <div class="pbon reserve"><span class="bnr">R1</span><span class="waarde">1</span><span class="soort">Reserve</span></div>
+              </div>
+              <div class="kolom">
+                <div class="dagkop">ZO 24</div>
+                <div class="pbon"><span class="bnr">A7</span><span class="waarde">1</span><span class="soort">Nek</span></div>
+                <div class="pbon"><span class="bnr">B7</span><span class="waarde">1</span><span class="soort">Romp</span></div>
+                <div class="pbon reserve"><span class="bnr">R2</span><span class="waarde">1</span><span class="soort">Reserve</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bk-oefs">
+            <div class="bk-oef">
+              <div class="prent">
+                <img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png" alt="Kin intrekken, zittend"/>
+              </div>
+              <div>
+                <h3>Kin intrekken, zittend</h3>
+                <div class="tel">2 × 8, rustig</div>
+                <div class="hoe">Rechtop op een stoel met rugleuning. Kin naar de keel, niet omlaag.
+                  Drie tellen vasthouden, dan loslaten.</div>
+              </div>
+              <div class="kost"><b>1</b><span>bon A</span></div>
+            </div>
+
+            <div class="bk-oef">
+              <div class="prent">
+                <img src="/images/rug/open-boek-zittend-line-v1.png" alt="Open boek, zittend"/>
+              </div>
+              <div>
+                <h3>Open boek, zittend</h3>
+                <div class="tel">2 × 6 per kant</div>
+                <div class="hoe">Armen voor u gekruist. Draai langzaam open naar één kant en adem
+                  daarbij uit. Stop waar het spant — niet doorduwen.</div>
+              </div>
+              <div class="kost"><b>1</b><span>bon B</span></div>
+            </div>
+
+            <div class="bk-oef">
+              <div class="prent">
+                <img src="/images/core/bekken-kantelen-liggend-line-v1.png" alt="Bekken kantelen, liggend"/>
+              </div>
+              <div>
+                <h3>Bekken kantelen, liggend</h3>
+                <div class="tel">2 × 10</div>
+                <div class="hoe">Op de rug, knieën gebogen, voeten plat. Onderrug zachtjes naar de
+                  mat en weer los. Geen kracht zetten.</div>
+              </div>
+              <div class="kost"><b>1</b><span>bon C</span></div>
+            </div>
+          </div>
+
+          <div class="bk-voorwaarden">
+            <div>
+              <div class="hoofdregel">Op is op. <em>En dat is niet erg — dat is de behandeling.</em></div>
+              <ol>
+                <li><b>Bonnen vervallen aan het eind van de dag.</b> Wat u maandag niet gebruikt,
+                  kunt u zaterdag niet opsparen. Inhalen bestaat op deze kaart niet.</li>
+                <li><b>Minder mag altijd.</b> Een lege dag is geen achterstand en telt niet tegen u;
+                  hij hoeft nergens goedgemaakt te worden.</li>
+                <li><b>Reserve (R1, R2) is vrijgegeven tot en met zondag.</b> Bedoeld voor een dag
+                  met een bruiloft of een ziekenhuisbezoek — niet voor een dag waarop het toevallig
+                  goed gaat.</li>
+                <li>Meer nodig dan eenentwintig? Dat is geen instelling maar een gesprek. Bel de
+                  praktijk, ook tussen twee afspraken door.</li>
+              </ol>
+            </div>
+            <div class="admin">
+              <b>Praktijk Boonstra, fysiotherapie</b>
+              Kerkstraat 3, 8601 CB Sneek · 0515 — 41 22 90 · behandelaar G. Boonstra ·
+              rantsoen vastgesteld 18 augustus 2026 · geldig t/m zondag 24 augustus ·
+              volgende afspraak 1 september · dossier 2026-0902 · Fysiplan ·
+              zwart-wit voldoet.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>Waarom dit schuurt</h4>
+      <p>Een schaarste-esthetiek uit de oorlog inzetten voor zorg is niet vrijblijvend, en „u mag
+        niet meer" voelt als straf. Twee dingen houden het staande. Het rantsoen is niet klein maar
+        eerlijk verdeeld: het geeft dinsdag terug wat maandag anders had opgeslokt. En dit is de
+        enige kaart die toestemming geeft om te stoppen — voor wie elke dag over zijn grens gaat
+        omdat niemand hem ooit een bovengrens gaf, is dat geen inperking maar opluchting.</p>
+    </div>
+    <div class="kolom">
+      <h4>Inspiratie</h4>
+      <ul>
+        <li>De Nederlandse distributiestamkaart (11 oktober 1939) en de bonkaarten die tot
+          14 januari 1952 in gebruik bleven — koffie ging als laatste van de bon</li>
+        <li>Guillochewerk, serienummers en het stempel van de distributiedienst</li>
+        <li>De RESERVE-bon, waarvan pas later werd bekendgemaakt of hij geldig was</li>
+        <li>Pacing en energiemanagement: de richtlijn na COVID-19, het KNGF-standpunt en de
+          Activiteitenweger uit de ergotherapie</li>
+        <li>De spaarkaart die juist níet vol hoeft</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Print</h4>
+      <ul>
+        <li>A4 staand · guilloche als achtergrondweefsel</li>
+        <li>21 bonnen van 13 mm, doorstreepbaar met een balpen</li>
+        <li>Oefening op 19 punt, uitvoering op 9,6 punt</li>
+        <li>Voorwaarden op 12,4 en 8,8 punt — niet in de kleine letter</li>
+        <li><a href="/ontwerp/">← terug naar de galerij</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
