@@ -1979,9 +1979,16 @@ bridge2.jpg</div>
     if(kaart.id)r.push('Digitale kaart: '+location.origin+'/k/'+kaart.id);
     return r.join('\n');
   }
+  // de patiëntlink draagt de gekozen taal mee (?taal=), zodat de kaart meteen in
+  // de taal van de patiënt opent — ook als diens telefoon op een andere taal staat.
+  // De patiënt kan op de kaart altijd nog zelf wisselen (die keuze wint daarna).
+  function kaartUrl(cid){
+    var t=deelTaalKeuze(cid);
+    return location.origin+'/k/'+cid+((t&&t!=='nl'&&DEELTAAL[t])?'?taal='+encodeURIComponent(t):'');
+  }
   function vulDeel(sjab,cid){
     var pr=(SET&&SET.praktijk?String(SET.praktijk).trim():'');
-    return sjab.replace('{pr}',pr).replace('{url}',location.origin+'/k/'+cid);
+    return sjab.replace('{pr}',pr).replace('{url}',kaartUrl(cid));
   }
   function deelBericht(cid,taal){return vulDeel(deelTaalVan(taal).deel,cid);}
   function herinnerBericht(cid,taal){return vulDeel(deelTaalVan(taal).her,cid);}
@@ -2288,7 +2295,7 @@ bridge2.jpg</div>
     // therapeut hem via WhatsApp/e-mail/portaal kan delen. Geen serveraanroep nodig.
     var lk=e.target.closest('[data-slink]');
     if(lk){
-      var url=location.origin+'/k/'+lk.dataset.slink;
+      var url=kaartUrl(lk.dataset.slink);
       var oud=lk.textContent;
       var toon=function(t){lk.textContent=t;setTimeout(function(){lk.textContent=oud;},1600);};
       if(navigator.clipboard&&navigator.clipboard.writeText){

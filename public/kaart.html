@@ -485,6 +485,11 @@
   // patiënt; anders Nederlands. Zo opent de kaart meteen in de taal van de patiënt,
   // zonder app of instelling — de taalkiezer laat hem altijd nog wisselen.
   var TAAL=(function(){
+    // 1) expliciete taal in de link (?taal=xx): de therapeut heeft die bewust
+    //    gekozen voor deze patiënt, dus die opent de kaart meteen in de juiste taal —
+    //    ook als de telefoon van de patiënt op een andere taal staat. De patiënt kan
+    //    daarna altijd zelf wisselen met de taalkiezer.
+    try{var q=new URLSearchParams(location.search).get('taal');if(q&&T[q])return q;}catch(e){}
     try{var t=localStorage.getItem('fp_taal');if(T[t])return t;}catch(e){}
     try{
       var voork=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||''];
