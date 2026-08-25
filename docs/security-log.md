@@ -444,3 +444,39 @@ security-fix — genoteerd voor de functionele routine.
 **Volgende run — pak een ander gebied:** de opname-/uploadketen opnieuw
 (`/api/opname`, videopaden) of een tweede blik op de rate-limiting van
 `/api/kaarten`/`/api/praktijken` POST onder IP-rotatie.
+
+### 2026-08-25 — injectie / opgeslagen-XSS in het THERAPEUT-overzicht
+**Geauditeerd:** de injectie-/opgeslagen-XSS-weerstand van het v2-oppervlak,
+met de focus op alles wat er sinds 16-08 aan renderende paden bij kwam — het hele
+therapeut-overzicht (`/v2/app`, dat kaartdata via string-concatenatie in
+`innerHTML` rendert) plus de nieuwe patiëntkaart-UI (afvinken, seintje). De
+16-08-audit dekte alleen `/k`.
+
+**Bevindingen (geen codegat — de uitvoer is overal geëscaped):**
+- **Overzicht:** elke server-gestuurde waarde gaat door `esc()` — kaartnaam
+  (`esc(c.naam)` op álle plekken, incl. `data-sdel`), id in elk data-attribuut
+  en elke href (`esc(c.id)`, plus `encodeURIComponent` in de WhatsApp/mail-links).
+  Getallen (pijnscores, aantallen, tijdstippen) zijn numeriek. De deel-/
+  herinnerteksten gaan via `encodeURIComponent` in de href en daarna nog door
+  `esc()`.
+- **seintje.soort:** wordt op de schrijfroute al tot `vraag|pijn|goed` gewhitelist
+  én wordt in het overzicht uitsluitend als sleutel in een lookup gebruikt
+  (`sMap[soort] || sMap.vraag`) — nooit in HTML geïnterpoleerd. Zelfs een direct
+  in de opslag geïnjecteerde, kwaadaardige `soort` valt terug op een veilig chip.
+- **Patiëntkaart-UI (nieuw):** afvinken en seintje renderen alleen statische
+  vertalingen (`trg`/`trs`) en getallen; oefening-/cliëntvelden blijven
+  `esc(vt(...))`. Tweede laag: de nonce-CSP (geen `unsafe-inline`) op zowel `/k`
+  als de v2-app blokkeert een eventueel doorgeglipte inline-handler alsnog.
+
+**Increment:** geen geforceerde codewijziging (de uitvoer is aantoonbaar veilig).
+`test-stored-xss.mjs` uitgebreid (8 → 13 checks) met een tweede fase tegen het
+therapeut-overzicht: een kwade kaartnaam én een corrupt `seintje.soort` worden
+**direct in de opslag** geïnjecteerd (buiten de invoer-sanitisatie om, zodat puur
+de uitvoerlaag wordt getoetst) en het bewijst dat niets draait, alles als tekst
+verschijnt, er geen `<img>` uit de payload ontstaat, het corrupte seintje veilig
+terugvalt en er geen CSP-overtreding nodig was. Daarnaast de v2-flows gedraaid:
+csp-nonce (20), v2-headers (35) en kern (21, v1 onaangetast) — groen.
+
+**Volgende run — pak een ander gebied:** de opname-/uploadketen (`/api/opname`,
+videopaden, quota) of de rate-limiting van `/api/kaarten`/`/api/praktijken` POST
+onder IP-rotatie.
