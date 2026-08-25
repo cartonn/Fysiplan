@@ -1741,7 +1741,8 @@ async function afhandelen(request, response) {
       .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, aantal: (k.chosen || []).length,
         scores: (k.metingen || []).slice(-14), gedaan: (k.gedaan || []).slice(-14),
         bekeken: k.bekeken ? k.bekeken.t : 0,
-        seintje: (k.seintje && k.seintje.soort) ? { t: k.seintje.t, soort: k.seintje.soort } : null }))
+        seintje: (k.seintje && k.seintje.soort) ? { t: k.seintje.t, soort: k.seintje.soort } : null,
+        doel: Number(k.doel) || 0 }))
       .sort((a, b) => b.ts - a.ts);
     await sendJson(response, 200, list);
     return;
@@ -1799,7 +1800,8 @@ async function afhandelen(request, response) {
         metingen: map[kk] ? map[kk].metingen || [] : [],
         gedaan: map[kk] ? map[kk].gedaan || [] : [],
         bekeken: map[kk] ? map[kk].bekeken || null : null,
-        seintje: map[kk] ? map[kk].seintje || null : null };
+        seintje: map[kk] ? map[kk].seintje || null : null,
+        doel: map[kk] ? Number(map[kk].doel) || 0 : 0 };
       await saveJson(kaartenPath, kaarten);
       await ruimKaartVideosOp(oudeVids.filter((p) => !Object.values(vids).includes(p)));
       // gebruiksranglijst: alleen namen uit de echte bibliotheek tellen mee, anders
@@ -1981,6 +1983,29 @@ async function afhandelen(request, response) {
       await saveJson(kaartenPath, kaarten);
       auditLog(pk, "kaart-link-vernieuwd", request);
       await sendJson(response, 200, { ok: true, id: nieuwId });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
+  // het wekelijkse oefendoel van een kaart zetten (0 = geen doel, 1..7 keer/week).
+  // De therapeut stelt het in; de patiëntkaart toont de voortgang ernaartoe en het
+  // overzicht kleurt "x/doel" mee. Alleen de ingelogde praktijk (eisPraktijk).
+  if (urlPath === "/api/kaart/doel" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      if (await eisPraktijk(request, response, pk)) return;
+      const map = kaarten[pk] || {};
+      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      const doel = Math.max(0, Math.min(7, Math.round(Number(b.doel) || 0)));
+      if (doel) kaart.doel = doel; else delete kaart.doel;
+      await saveJson(kaartenPath, kaarten);
+      await sendJson(response, 200, { ok: true, doel });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }

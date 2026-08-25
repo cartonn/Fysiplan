@@ -528,15 +528,15 @@
   function trq(k){var d=TQ[TAAL]||TQ.nl;return d[k]!=null?d[k]:TQ.nl[k];}
   // teksten voor het oefenvinkje en de oefenweek
   var TG={
-    nl:{vdaan:'Ik heb vandaag geoefend',vweek:'Jouw oefenweek',som0:'Nog geen keer deze week — pak je ritme weer op, één keer is genoeg om te beginnen.',som1:'Goed bezig — je oefende op {n} van de 7 dagen.',som3:'Sterk! Je oefende op {n} van de 7 dagen. Zo houd je het vol.',groter:'Grotere letters',print:'Print',oefdaan:'Gedaan',oefvoor:'{n} van {t} vandaag gedaan',oefklaar:'Alle oefeningen vandaag gedaan — sterk!'},
-    en:{vdaan:'I did my exercises today',vweek:'Your exercise week',som0:'Not yet this week — pick your rhythm back up, once is enough to start.',som1:'Well done — you practised on {n} of the last 7 days.',som3:'Strong! You practised on {n} of the last 7 days. That’s how you keep it up.',groter:'Larger text',print:'Print',oefdaan:'Done',oefvoor:'{n} of {t} done today',oefklaar:'All exercises done today — strong!'},
-    de:{vdaan:'Ich habe heute geübt',vweek:'Deine Übungswoche',som0:'Diese Woche noch nicht — nimm deinen Rhythmus wieder auf, einmal genügt zum Start.',som1:'Gut gemacht — du hast an {n} von 7 Tagen geübt.',som3:'Stark! Du hast an {n} von 7 Tagen geübt. So bleibst du dran.',groter:'Größere Schrift',print:'Drucken',oefdaan:'Erledigt',oefvoor:'{n} von {t} heute erledigt',oefklaar:'Alle Übungen heute erledigt — stark!'},
-    fr:{vdaan:'J’ai fait mes exercices aujourd’hui',vweek:'Votre semaine d’exercices',som0:'Pas encore cette semaine — reprenez votre rythme, une fois suffit pour commencer.',som1:'Bravo — vous avez fait vos exercices {n} des 7 derniers jours.',som3:'Superbe ! Vous avez fait vos exercices {n} des 7 derniers jours. C’est comme ça qu’on tient.',groter:'Texte plus grand',print:'Imprimer',oefdaan:'Fait',oefvoor:'{n} sur {t} fait aujourd’hui',oefklaar:'Tous les exercices faits aujourd’hui — bravo !'},
-    es:{vdaan:'Hoy he hecho mis ejercicios',vweek:'Tu semana de ejercicios',som0:'Aún no esta semana — retoma tu ritmo, una vez basta para empezar.',som1:'Bien hecho — hiciste ejercicio {n} de los últimos 7 días.',som3:'¡Genial! Hiciste ejercicio {n} de los últimos 7 días. Así se mantiene.',groter:'Texto más grande',print:'Imprimir',oefdaan:'Hecho',oefvoor:'{n} de {t} hechos hoy',oefklaar:'Todos los ejercicios hechos hoy — ¡genial!'},
-    pl:{vdaan:'Ćwiczyłem(-am) dzisiaj',vweek:'Twój tydzień ćwiczeń',som0:'Jeszcze nie w tym tygodniu — wróć do rytmu, jeden raz wystarczy na początek.',som1:'Dobra robota — ćwiczyłeś(-aś) przez {n} z 7 dni.',som3:'Świetnie! Ćwiczyłeś(-aś) przez {n} z 7 dni. Tak się utrzymuje formę.',groter:'Większy tekst',print:'Drukuj',oefdaan:'Zrobione',oefvoor:'{n} z {t} zrobione dzisiaj',oefklaar:'Wszystkie ćwiczenia dziś zrobione — świetnie!'},
-    tr:{vdaan:'Bugün egzersiz yaptım',vweek:'Egzersiz haftan',som0:'Bu hafta henüz yok — ritmini yeniden yakala, başlamak için bir kez yeter.',som1:'Aferin — son 7 günün {n} gününde egzersiz yaptın.',som3:'Harika! Son 7 günün {n} gününde egzersiz yaptın. Böyle devam.',groter:'Daha büyük yazı',print:'Yazdır',oefdaan:'Yapıldı',oefvoor:'Bugün {t} egzersizden {n} tanesi yapıldı',oefklaar:'Bugün tüm egzersizler yapıldı — harika!'},
-    ar:{vdaan:'تمرّنت اليوم',vweek:'أسبوع تمارينك',som0:'لم تتمرّن بعد هذا الأسبوع — استعد إيقاعك، مرّة واحدة تكفي للبدء.',som1:'أحسنت — تمرّنت في {n} من آخر 7 أيام.',som3:'رائع! تمرّنت في {n} من آخر 7 أيام. هكذا تحافظ على استمرارك.',groter:'خط أكبر',print:'طباعة',oefdaan:'تمّ',oefvoor:'{n} من {t} اليوم',oefklaar:'أنجزت كل التمارين اليوم — رائع!'},
-    uk:{vdaan:'Сьогодні я тренувався(-лась)',vweek:'Твій тиждень вправ',som0:'Цього тижня ще ні — поверни свій ритм, одного разу досить, щоб почати.',som1:'Молодець — ти займався(-лась) {n} із 7 днів.',som3:'Чудово! Ти займався(-лась) {n} із 7 днів. Так і тримай.',groter:'Більший текст',print:'Друк',oefdaan:'Готово',oefvoor:'{n} з {t} сьогодні',oefklaar:'Усі вправи сьогодні виконано — чудово!'}
+    nl:{vdaan:'Ik heb vandaag geoefend',vweek:'Jouw oefenweek',som0:'Nog geen keer deze week — pak je ritme weer op, één keer is genoeg om te beginnen.',som1:'Goed bezig — je oefende op {n} van de 7 dagen.',som3:'Sterk! Je oefende op {n} van de 7 dagen. Zo houd je het vol.',groter:'Grotere letters',print:'Print',oefdaan:'Gedaan',oefvoor:'{n} van {t} vandaag gedaan',oefklaar:'Alle oefeningen vandaag gedaan — sterk!',doel:'Je oefendoel: {d}× per week — deze week {n}× gedaan.',doelklaar:'Je haalde je oefendoel van {d}× deze week — sterk!'},
+    en:{vdaan:'I did my exercises today',vweek:'Your exercise week',som0:'Not yet this week — pick your rhythm back up, once is enough to start.',som1:'Well done — you practised on {n} of the last 7 days.',som3:'Strong! You practised on {n} of the last 7 days. That’s how you keep it up.',groter:'Larger text',print:'Print',oefdaan:'Done',oefvoor:'{n} of {t} done today',oefklaar:'All exercises done today — strong!',doel:'Your goal: {d}× per week — done {n}× this week.',doelklaar:'You reached your goal of {d}× this week — strong!'},
+    de:{vdaan:'Ich habe heute geübt',vweek:'Deine Übungswoche',som0:'Diese Woche noch nicht — nimm deinen Rhythmus wieder auf, einmal genügt zum Start.',som1:'Gut gemacht — du hast an {n} von 7 Tagen geübt.',som3:'Stark! Du hast an {n} von 7 Tagen geübt. So bleibst du dran.',groter:'Größere Schrift',print:'Drucken',oefdaan:'Erledigt',oefvoor:'{n} von {t} heute erledigt',oefklaar:'Alle Übungen heute erledigt — stark!',doel:'Dein Ziel: {d}× pro Woche — diese Woche {n}× geschafft.',doelklaar:'Du hast dein Ziel von {d}× diese Woche erreicht — stark!'},
+    fr:{vdaan:'J’ai fait mes exercices aujourd’hui',vweek:'Votre semaine d’exercices',som0:'Pas encore cette semaine — reprenez votre rythme, une fois suffit pour commencer.',som1:'Bravo — vous avez fait vos exercices {n} des 7 derniers jours.',som3:'Superbe ! Vous avez fait vos exercices {n} des 7 derniers jours. C’est comme ça qu’on tient.',groter:'Texte plus grand',print:'Imprimer',oefdaan:'Fait',oefvoor:'{n} sur {t} fait aujourd’hui',oefklaar:'Tous les exercices faits aujourd’hui — bravo !',doel:'Ton objectif : {d}× par semaine — {n}× cette semaine.',doelklaar:'Tu as atteint ton objectif de {d}× cette semaine — bravo !'},
+    es:{vdaan:'Hoy he hecho mis ejercicios',vweek:'Tu semana de ejercicios',som0:'Aún no esta semana — retoma tu ritmo, una vez basta para empezar.',som1:'Bien hecho — hiciste ejercicio {n} de los últimos 7 días.',som3:'¡Genial! Hiciste ejercicio {n} de los últimos 7 días. Así se mantiene.',groter:'Texto más grande',print:'Imprimir',oefdaan:'Hecho',oefvoor:'{n} de {t} hechos hoy',oefklaar:'Todos los ejercicios hechos hoy — ¡genial!',doel:'Tu meta: {d}× por semana — {n}× esta semana.',doelklaar:'¡Alcanzaste tu meta de {d}× esta semana — genial!'},
+    pl:{vdaan:'Ćwiczyłem(-am) dzisiaj',vweek:'Twój tydzień ćwiczeń',som0:'Jeszcze nie w tym tygodniu — wróć do rytmu, jeden raz wystarczy na początek.',som1:'Dobra robota — ćwiczyłeś(-aś) przez {n} z 7 dni.',som3:'Świetnie! Ćwiczyłeś(-aś) przez {n} z 7 dni. Tak się utrzymuje formę.',groter:'Większy tekst',print:'Drukuj',oefdaan:'Zrobione',oefvoor:'{n} z {t} zrobione dzisiaj',oefklaar:'Wszystkie ćwiczenia dziś zrobione — świetnie!',doel:'Twój cel: {d}× w tygodniu — w tym tygodniu {n}×.',doelklaar:'Osiągnąłeś(-aś) swój cel {d}× w tym tygodniu — świetnie!'},
+    tr:{vdaan:'Bugün egzersiz yaptım',vweek:'Egzersiz haftan',som0:'Bu hafta henüz yok — ritmini yeniden yakala, başlamak için bir kez yeter.',som1:'Aferin — son 7 günün {n} gününde egzersiz yaptın.',som3:'Harika! Son 7 günün {n} gününde egzersiz yaptın. Böyle devam.',groter:'Daha büyük yazı',print:'Yazdır',oefdaan:'Yapıldı',oefvoor:'Bugün {t} egzersizden {n} tanesi yapıldı',oefklaar:'Bugün tüm egzersizler yapıldı — harika!',doel:'Hedefin: haftada {d}× — bu hafta {n}×.',doelklaar:'Bu hafta {d}× hedefine ulaştın — harika!'},
+    ar:{vdaan:'تمرّنت اليوم',vweek:'أسبوع تمارينك',som0:'لم تتمرّن بعد هذا الأسبوع — استعد إيقاعك، مرّة واحدة تكفي للبدء.',som1:'أحسنت — تمرّنت في {n} من آخر 7 أيام.',som3:'رائع! تمرّنت في {n} من آخر 7 أيام. هكذا تحافظ على استمرارك.',groter:'خط أكبر',print:'طباعة',oefdaan:'تمّ',oefvoor:'{n} من {t} اليوم',oefklaar:'أنجزت كل التمارين اليوم — رائع!',doel:'هدفك: {d}× في الأسبوع — هذا الأسبوع {n}×.',doelklaar:'حققت هدفك {d}× هذا الأسبوع — رائع!'},
+    uk:{vdaan:'Сьогодні я тренувався(-лась)',vweek:'Твій тиждень вправ',som0:'Цього тижня ще ні — поверни свій ритм, одного разу досить, щоб почати.',som1:'Молодець — ти займався(-лась) {n} із 7 днів.',som3:'Чудово! Ти займався(-лась) {n} із 7 днів. Так і тримай.',groter:'Більший текст',print:'Друк',oefdaan:'Готово',oefvoor:'{n} з {t} сьогодні',oefklaar:'Усі вправи сьогодні виконано — чудово!',doel:'Твоя ціль: {d}× на тиждень — цього тижня {n}×.',doelklaar:'Ти досяг(ла) своєї цілі {d}× цього тижня — чудово!'}
   };
   function trg(k){var d=TG[TAAL]||TG.nl;return d[k]!=null?d[k]:TG.nl[k];}
   // oefenvinkje + oefenweek tekenen (alleen registreren en tonen, geen oordeel)
@@ -549,7 +549,9 @@
     knop.setAttribute('aria-pressed',aan?'true':'false');
     document.getElementById('gdaanTxt').textContent=trg('vdaan');
     var week=document.getElementById('gweek');
-    if(!g.length){week.style.display='none';return;}
+    // toon de oefenweek zodra er historie is, óf zodra de therapeut een oefendoel
+    // heeft gezet (dan zie je je doel meteen, ook vóór de eerste keer oefenen)
+    if(!g.length&&!(Number(K.kaart.doel)>0)){week.style.display='none';return;}
     week.style.display='flex';
     document.getElementById('gweekTitel').textContent=trg('vweek');
     var set={};g.forEach(function(x){set[dagStr(x.t)]=1;});
@@ -564,9 +566,17 @@
     // aanmoedigende samenvatting: inzet belonen, nooit een oordeel over pijn/herstel
     var som=document.getElementById('gweeksom');
     if(som){
-      var sleutel=nweek===0?'som0':(nweek>=3?'som3':'som1');
-      som.textContent=trg(sleutel).replace('{n}',nweek);
-      som.classList.toggle('sterk',nweek>=3);
+      var doel=Number(K.kaart.doel)||0;
+      if(doel>0){
+        // meet tegen het door de therapeut gezette oefendoel (motiverend, geen oordeel)
+        var haald=nweek>=doel;
+        som.textContent=(haald?trg('doelklaar'):trg('doel')).replace('{d}',doel).replace('{n}',nweek);
+        som.classList.toggle('sterk',haald);
+      }else{
+        var sleutel=nweek===0?'som0':(nweek>=3?'som3':'som1');
+        som.textContent=trg(sleutel).replace('{n}',nweek);
+        som.classList.toggle('sterk',nweek>=3);
+      }
     }
   }
   // ---- afvinken per oefening (lokaal, per kaart, per dag) ----

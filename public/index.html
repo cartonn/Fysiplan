@@ -2089,9 +2089,17 @@ bridge2.jpg</div>
             var week=c.gedaan.filter(function(g){return nuT-g.t<7*dag;}).length;
             var dSinds=Math.floor((nuT-c.gedaan[c.gedaan.length-1].t)/dag);
             var laatstTxt=dSinds<=0?'vandaag':(dSinds===1?'gisteren':dSinds+' dagen geleden');
-            var trk=week>=3?'#3e8e5a':(week>=1?'#d98a2b':'#9aa1ab');
-            trTxt=" · <span title='Dagen waarop de patiënt aantikte dat hij geoefend heeft (afgelopen 7 dagen). Laatst geoefend: "+laatstTxt+".' style='white-space:nowrap'>"+
-              "<span style='display:inline-block;width:7px;height:7px;border-radius:99px;background:"+trk+";vertical-align:middle;margin-right:3px'></span>"+week+"/7 geoefend</span>";
+            if(c.doel>0){
+              // meten tegen het door de therapeut gezette oefendoel (x keer per week)
+              var haald=week>=c.doel;
+              var trkD=haald?'#3e8e5a':(week>=1?'#d98a2b':'#9aa1ab');
+              trTxt=" · <span title='Oefendagen deze week tegenover het oefendoel ("+c.doel+"× per week). Laatst geoefend: "+laatstTxt+".' style='white-space:nowrap'>"+
+                "<span style='display:inline-block;width:7px;height:7px;border-radius:99px;background:"+trkD+";vertical-align:middle;margin-right:3px'></span>"+week+"/"+c.doel+" van het doel"+(haald?" ✓":"")+"</span>";
+            }else{
+              var trk=week>=3?'#3e8e5a':(week>=1?'#d98a2b':'#9aa1ab');
+              trTxt=" · <span title='Dagen waarop de patiënt aantikte dat hij geoefend heeft (afgelopen 7 dagen). Laatst geoefend: "+laatstTxt+".' style='white-space:nowrap'>"+
+                "<span style='display:inline-block;width:7px;height:7px;border-radius:99px;background:"+trk+";vertical-align:middle;margin-right:3px'></span>"+week+"/7 geoefend</span>";
+            }
           }
           // is de kaart überhaupt geopend? De patiënt die alleen kijkt (video's)
           // tikt niets aan; en wie de link nooit opende, verdient een nieuw duwtje.
@@ -2142,6 +2150,12 @@ bridge2.jpg</div>
               "<small style='color:var(--muted)'>De patiënt opent de kaart zonder app, gewoon in de browser.</small>"+
               "<label style='display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--muted)'>Taal van het bericht: "+
               "<select data-staal='"+esc(c.id)+"' style='font-size:11.5px;padding:2px 4px;border:1px solid var(--line);border-radius:6px'>"+taalOpties+"</select></label>"+
+            "</div>"+
+            "<div style='display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:7px'>"+
+              "<label style='display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--muted)'>Oefendoel per week: "+
+              "<select data-sdoel='"+esc(c.id)+"' title='Hoe vaak per week zou deze patiënt moeten oefenen? De patiëntkaart toont de voortgang naar dit doel en het overzicht kleurt mee.' style='font-size:11.5px;padding:2px 4px;border:1px solid var(--line);border-radius:6px'>"+
+                [0,1,2,3,4,5,6,7].map(function(n){return "<option value='"+n+"'"+((Number(c.doel)||0)===n?" selected":"")+">"+(n===0?'geen':n+'× per week')+"</option>";}).join("")+
+              "</select></label>"+
             "</div>"+
             "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px'>"+
               "<button class='btn' data-slink='"+esc(c.id)+"'>Kopieer link</button>"+
@@ -2283,7 +2297,16 @@ bridge2.jpg</div>
   // gekozen taal en onthoud die keuze voor deze kaart
   document.getElementById('k_srv_lijst').addEventListener('change',function(e){
     var s=e.target.closest('[data-staal]');
-    if(s){bewaarDeelTaal(s.dataset.staal,s.value);zetDeelLinks(s.dataset.staal);}
+    if(s){bewaarDeelTaal(s.dataset.staal,s.value);zetDeelLinks(s.dataset.staal);return;}
+    // oefendoel per week zetten (alleen de ingelogde praktijk)
+    var dl=e.target.closest('[data-sdoel]');
+    if(dl){
+      var sel=dl;sel.disabled=true;
+      fetch('api/kaart/doel',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:sel.dataset.sdoel,doel:Number(sel.value)||0})})
+        .then(function(r){return r.json();})
+        .then(function(d){sel.disabled=false;if(d.ok)toonSrvKaarten();else alert(d.fout||'Oefendoel opslaan is niet gelukt.');})
+        .catch(function(){sel.disabled=false;alert('Oefendoel opslaan is niet gelukt: geen verbinding.');});
+    }
   });
   document.getElementById('k_srv_lijst').addEventListener('click',function(e){
     var m=e.target.closest('[data-mtoon]');
