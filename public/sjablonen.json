@@ -13,7 +13,11 @@
    "Glute bridges",
    "Balans op 1 been",
    "Lunges"
-  ]
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
  },
  {
   "naam": "Heup na operatie",
@@ -28,7 +32,11 @@
    "Kick back",
    "Chair squat",
    "Step up"
-  ]
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
  },
  {
   "naam": "Schouderrevalidatie",
@@ -42,7 +50,11 @@
    "Reversed flyes",
    "Shoulder rotation (shrugs)",
    "Pully row"
-  ]
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
  },
  {
   "naam": "Lage rugklachten",
@@ -57,7 +69,11 @@
    "Superman",
    "Plank basis",
    "Back extension"
-  ]
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "15"
+  }
  },
  {
   "naam": "Valpreventie en balans",
@@ -71,7 +87,11 @@
    "Standing gluteus",
    "Wall sit",
    "Loopband"
-  ]
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
  },
  {
   "naam": "Algemene conditie",
@@ -85,7 +105,11 @@
    "Pully row",
    "Crunch",
    "Plank basis"
-  ]
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "15"
+  }
  },
  {
   "naam": "Enkel na verzwikking",
@@ -99,7 +123,11 @@
    "Single leg squat",
    "Wall sit",
    "Yoga hamstring stretch"
-  ]
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "12"
+  }
  },
  {
   "naam": "Nek en schoudergordel",
@@ -113,7 +141,11 @@
    "Mobilisatie rotatie rug",
    "Yoga cat tail",
    "Yoga cobra"
-  ]
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "12"
+  }
  },
  {
   "naam": "Artrose knie en heup",
@@ -128,7 +160,11 @@
    "Calf raises",
    "Step up",
    "Wall sit"
-  ]
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
  },
  {
   "naam": "Pols en onderarm",
@@ -140,7 +176,11 @@
    "Triceps push down",
    "Front raises",
    "One arm bent over row"
-  ]
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "12"
+  }
  },
  {
   "naam": "Soepel blijven (mobiliteit)",
@@ -154,7 +194,11 @@
    "Yoga hamstring stretch",
    "Yoga glute stretch",
    "Yoga butterfly stretch"
-  ]
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "15"
+  }
  },
  {
   "naam": "Kracht thuis zonder apparaten",
@@ -168,7 +212,11 @@
    "Dead bug",
    "Superman",
    "Calf raises"
-  ]
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "12"
+  }
  },
  {
   "naam": "Nekprogramma basis",
@@ -182,7 +230,11 @@
    "Nekrotatie met oogfixatie – zittend actief",
    "Bovenste trapezius rek – zittend actief",
    "Levator scapulae rek – zittend actief"
-  ]
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "12"
+  }
  },
  {
   "naam": "Rug soepel maken",
@@ -196,7 +248,11 @@
    "Thoracale extensie – zittend",
    "Romp zijwaarts buigen – staand",
    "Rug strekken – staand"
-  ]
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "15"
+  }
  },
  {
   "naam": "Valpreventie opbouw met steun",
@@ -210,7 +266,11 @@
    "Zijwaarts stappen – met steun",
    "Op de plaats marcheren – met steun",
    "Stoel opstaan en lopen – zonder steun"
-  ]
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
  },
  {
   "naam": "Duizeligheid (vestibulair)",
@@ -223,7 +283,11 @@
    "Blikstabilisatie horizontaal – staand langzaam",
    "Hoofd draaien in stand – staand langzaam",
    "Buigen en oprichten – staand langzaam"
-  ]
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
  },
  {
   "naam": "Neurologische revalidatie basis",
@@ -236,6 +300,10 @@
    "Stap initiëren – met visueel doel",
    "Ritmisch marcheren – met ritmische cue",
    "Brug met symmetrie – bilateraal"
-  ]
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
  }
 ]

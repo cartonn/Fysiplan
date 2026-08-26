@@ -1663,9 +1663,23 @@ bridge2.jpg</div>
     if(chosen.length&&!confirm('Je hebt al '+chosen.length+' oefening'+(chosen.length===1?'':'en')+' gekozen. Vervangen door het sjabloon "'+s.naam+'"?'))return;
     var missing=[];
     chosen=[];
+    // een sjabloon vervangt de héle kaart: begin met een schone dosering-grid
+    GRID={rows:{},cells:{}};
+    // startdosering uit het sjabloon: scheelt de therapeut het handmatig invullen
+    // van elke serie/herhaling. Het is een startpunt dat hij daarna zelf aanpast.
+    var dz=s.dosering||null;
     (s.oefeningen||[]).forEach(function(n){
       var id=byNorm[normEx(n)];
-      if(id!=null&&OEF[id]){if(chosen.length<12)chosen.push({o:id,i:0});}
+      if(id!=null&&OEF[id]){
+        if(chosen.length<12){
+          chosen.push({o:id,i:0});
+          if(dz){
+            if(dz.s)GRID.cells['e'+id+'.0|r0|S']=dz.s;
+            if(dz.h)GRID.cells['e'+id+'.0|r0|H']=dz.h;
+            if(dz.w)GRID.cells['e'+id+'.0|r0|W']=dz.w;
+          }
+        }
+      }
       else missing.push(n);
     });
     closeOv('ovSjab');render();
