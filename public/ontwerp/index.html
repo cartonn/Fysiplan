@@ -726,6 +726,50 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
   background:#fdfcfa;padding:0 5px;font:600 9px/1 var(--mono);color:#12508f;font-style:normal}
 .staal.waregrootte .strepen i{border-color:rgba(20,22,26,.2)}
 
+/* — staal concept 46: Tweespraak — */
+.staal.tweespraak{background:#faf7ef;color:#1a1714}
+.staal.tweespraak .plaatnr{color:#8f1d21;font-family:var(--mono);position:relative;z-index:2}
+.staal.tweespraak .woord{font-family:"Iowan Old Style",Charter,Palatino,Georgia,serif;font-weight:400;
+  position:relative;z-index:2;letter-spacing:-.015em}
+.staal.tweespraak .woord em{font-style:italic;color:#8f1d21}
+.staal.tweespraak .rug{position:absolute;left:50%;top:34px;bottom:14px;width:26px;
+  transform:translateX(-50%);border-left:1px solid #ddd5c6;border-right:1px solid #ddd5c6;
+  display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;
+  font:500 8.5px/1 var(--mono);color:#8d857a}
+.staal.tweespraak .filet{position:absolute;left:16px;right:16px;top:30px;display:flex;gap:26px}
+.staal.tweespraak .filet i{flex:1;height:2px;background:#8f1d21;display:block}
+.staal.tweespraak .filet i.g{background:#1d5540}
+.staal.tweespraak .strepen i{border-color:rgba(26,23,20,.18)}
+
+/* — staal concept 47: Noodprocedure — */
+.staal.noodprocedure{background:#ffffff;color:#0d0f10}
+.staal.noodprocedure .plaatnr{color:#b45f00;font-family:var(--mono);position:relative;z-index:2}
+.staal.noodprocedure .woord{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;
+  letter-spacing:-.045em;position:relative;z-index:2;padding-right:22px;font-size:26px}
+.staal.noodprocedure .woord em{font-style:normal;color:#b45f00}
+.staal.noodprocedure .leiders{position:absolute;left:16px;right:38px;top:46px;height:26px;
+  background:repeating-linear-gradient(to bottom,
+    transparent 0 5px,#c9ccce 5px 7px,transparent 7px 13px)}
+.staal.noodprocedure .tabjes{position:absolute;right:0;top:22px;display:flex;flex-direction:column;gap:4px}
+.staal.noodprocedure .tabjes i{width:19px;height:22px;background:#0d0f10;display:block}
+.staal.noodprocedure .tabjes i.a{background:#b45f00}
+.staal.noodprocedure .tabjes i.r{background:#bd1b18}
+.staal.noodprocedure .strepen{right:30px}
+.staal.noodprocedure .strepen i{border-color:rgba(13,15,16,.2)}
+
+/* — staal concept 48: Hanglabel — */
+.staal.hanglabel{background:#efe6d3;color:#16120e}
+.staal.hanglabel .plaatnr{color:#bf3d1d;font-family:var(--mono);position:relative;z-index:2;padding-left:24px}
+.staal.hanglabel .woord{font-family:"Avenir Next",Seravek,"Segoe UI",system-ui,sans-serif;font-weight:700;
+  letter-spacing:-.042em;position:relative;z-index:2;padding-left:24px;font-size:26px}
+.staal.hanglabel .woord em{font-style:normal;color:#bf3d1d}
+.staal.hanglabel .knip{position:absolute;left:8px;top:8px;right:8px;bottom:8px;
+  border:1.5px dashed #b6a685;
+  clip-path:polygon(0 15px,15px 0,100% 0,100% 100%,0 100%)}
+.staal.hanglabel .oog{position:absolute;left:15px;top:26px;width:13px;height:13px;border-radius:50%;
+  background:#faf7ef;border:2px solid #16120e;z-index:2}
+.staal.hanglabel .strepen i{border-color:rgba(22,18,14,.22)}
+
 .kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
 .kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
 .kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
@@ -785,8 +829,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>45</b> concepten</span>
-      <span>Laatste ronde <b>25 augustus 2026</b></span>
+      <span><b>48</b> concepten</span>
+      <span>Laatste ronde <b>26 augustus 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -2703,6 +2747,164 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-45-ware-grootte.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-45-ware-grootte.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="galerijkop" style="margin-top:var(--s6)">
+      <h2>Ronde 12</h2>
+      <span>ronde 12 · 26 aug 2026</span>
+    </div>
+
+    <div class="raster">
+
+      <!-- ─────────── CONCEPT 46 ─────────── -->
+      <article class="kaart">
+        <div class="staal tweespraak">
+          <div class="filet" aria-hidden="true"><i></i><i class="g"></i></div>
+          <div class="rug" aria-hidden="true"><span>1</span><span>2</span><span>3</span></div>
+          <div class="plaatnr">Nederlands · Türkçe</div>
+          <div class="woord">Wijs <em>regel 3</em> aan</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 46</div>
+          <h3>Tweespraak</h3>
+          <p class="richting">De vertaling hoort niet achterop. Ze hoort ernaast.</p>
+          <p class="rationale">In Nederland zijn 2,5 miljoen mensen laaggeletterd, en ongeveer een
+            derde daarvan heeft Nederlands als tweede taal; het KNGF en Pharos schrijven zonder
+            omhaal dat de behandeling bij een deel van de patiënten daarom niet aankomt. Wat de
+            praktijk daarop doet is bijna altijd hetzelfde: een vertaling achterop, in een aparte
+            pdf, of in kleinere letter eronder. <b>Dan is de tweede taal de kleine letter</b> — en
+            kleine letters worden niet gelezen. De boekdrukkunst loste dat al op: James Loeb zette
+            vanaf 1911 het Grieks links en de vertaling rechts, even groot en even zwaar, en
+            Virginia Woolf noemde het „a gift of freedom". Dit blad doet hetzelfde met Nederlands
+            en de taal van de patiënt. De vondst zit in de rug ertussen: <b>doorlopende
+            regelnummers die voor béide kolommen gelden</b>. Een therapeut die geen Turks spreekt
+            en een patiënt die weinig Nederlands leest hebben daarmee tóch één gedeelde taal — het
+            cijfer. „Regel 3", en allebei kijken ze naar dezelfde zin. Anders dan concept 22
+            (Woordloos), dat de taal juist wéghaalt en daardoor geen dosering of voorwaarde kan
+            uitdrukken, staat hier alles er twee keer volledig op.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>de Loeb Classical Library (James Loeb, 1911; eerste delen 1912), groen voor Grieks
+              en rood voor Latijn, met het origineel en de vertaling exact tegenover elkaar ·
+              interlineaire bijbels en tweetalige woordenboeken · de steen van Rosette, leesbaar
+              geworden dóórdat drie schriften onder elkaar stonden · versregelnummers in de marge
+              van een klassieke uitgave · Pharos en het KNGF over begrijpelijk communiceren</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b> — twee kolommen van 70 mm op 11,6 punt met 1,40 regelafstand
+              (± 42 tekens, de klassieke boekbreedte), gescheiden door een rug van 8 mm met de
+              regelnummers 1 t/m 11; drie oefeningen in plaats van zes, want leesbaarheid gaat
+              voor dichtheid. Rood en groen dragen geen informatie, dus een zwart-wit kopie
+              verliest niets. Bij Arabisch spiegelt het hele vel en blijft de rug in het midden</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-46-tweespraak.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-46-tweespraak.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 47 ─────────── -->
+      <article class="kaart">
+        <div class="staal noodprocedure">
+          <div class="leiders" aria-hidden="true"></div>
+          <div class="tabjes" aria-hidden="true"><i></i><i class="a"></i><i class="r"></i></div>
+          <div class="plaatnr">Afwijking B · rev 3</div>
+          <div class="woord">Halveer. <em>Niet stoppen.</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 47</div>
+          <h3>Noodprocedure</h3>
+          <p class="richting">Elke oefenkaart beschrijft de goede dag. Piloten schrijven eerst de andere op.</p>
+          <p class="rationale">Op 30 oktober 1935 stortte de Boeing Model 299 neer op Wright Field
+            met de roervergrendeling er nog op. Het toestel was niet te ingewikkeld om te vliegen,
+            maar te ingewikkeld om te ónthouden — en daaruit kwam de checklist. Minder bekend is
+            het tweede boekje: <b>het Quick Reference Handbook met de niet-normale procedures</b>,
+            met zwarte tabs langs de rand, de conditie als kopregel, genummerde handelingen, en
+            vooraan een omkaderd blok „memory items" dat je zónder boek doet. De pijnrevalidatie
+            kent exact dezelfde vorm onder een andere naam: het flare-up plan, dat volgens NHS
+            Lothian, de Australische ACI en de Amerikaanse VA gemaakt moet worden vóórdat het
+            misgaat, omdat je tijdens een opvlamming niet meer kunt nadenken. <b>Alleen staat het
+            op geen enkele oefenkaart.</b> Dus wordt er in de badkamer om half acht geïmproviseerd,
+            en de improvisatie is bijna altijd een van twee fouten: doorgaan alsof er niets is, of
+            helemaal stoppen. Dit blad zet het andere boekje op dezelfde A4. Anders dan concept 30
+            (Ganzenbord), dat tegenslag als speelveld afdrukt, en concept 33 (Beeldverhaal), dat er
+            een verhaal van maakt, vertelt dit blad niets: conditie, handeling, volgende handeling.
+            Geen troost, geen aanmoediging. Juist dat is de vriendelijkheid.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>de crash van de Boeing Model 299 op 30 oktober 1935 en de checklist die eruit
+              voortkwam · het Quick Reference Handbook met tabs, condities en memory items ·
+              challenge-and-response met stippelleiders, waarbij het antwoord in kapitalen staat ·
+              de ECAM-hiërarchie: rood is waarschuwing, amber is attentie, en verder geen kleur ·
+              het flare-up plan uit de pijnrevalidatie (NHS Lothian, ACI, VA) · het revisienummer
+              dat zegt welke versie er werkelijk in de cockpit ligt</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b> — bovenhelft de normale dag in challenge-and-response op 11 punt,
+              daaronder een omkaderd blok memory items van 1,8 punt lijndikte, en vier afwijkingen
+              met genummerde handelingen op 10 punt. Vier zwarte tabs steken tot aan de papierrand
+              door zodat het blad met één duim op de juiste conditie opengelegd wordt; ze zijn óók
+              geletterd, dus een zwart-wit kopie werkt net zo goed. Onderaan één rode balk die
+              geen oefening bevat maar een telefoonnummer</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-47-noodprocedure.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-47-noodprocedure.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 48 ─────────── -->
+      <article class="kaart">
+        <div class="staal hanglabel">
+          <div class="knip" aria-hidden="true"></div>
+          <div class="oog" aria-hidden="true"></div>
+          <div class="plaatnr">Label 02 / 06 · badkamer</div>
+          <div class="woord">Na het <em>tandenpoetsen</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 48</div>
+          <h3>Hanglabel</h3>
+          <p class="richting">Het blad hangt op de koelkast. De oefening gebeurt bij de trap.</p>
+          <p class="rationale">Alle 47 concepten hiervoor gaan ervan uit dat de kaart één ding is,
+            op één plek. Dat klopt met hoe hij gemaakt wordt, maar niet met hoe hij gebruikt wordt:
+            de schouderoefening hoort bij de stoel, het kinintrekken bij de spiegel, het marcheren
+            bij het aanrecht — en het blad ligt intussen op de stapel. Peter Gollwitzer publiceerde
+            in 1999 wat inmiddels de best onderbouwde gedragsingreep is die er bestaat: niet „ik ga
+            meer bewegen" maar <b>„wanneer ik mijn tanden heb gepoetst, dan doe ik acht keer kin
+            intrekken"</b>. Wie zo'n als-dan-plan maakt doet het twee tot drie keer zo vaak; het
+            werkzame bestanddeel is de aanleiding, niet de motivatie. Op een oefenkaart staat in
+            plaats daarvan „3× per week" — precies het soort voornemen dat het slechtst werkt. Dus
+            is dit blad geen blad maar <b>een vel van zes labels met een gaatje erin</b>, dat je
+            uitknipt en ophangt op de plek waar de beweging hoort te gebeuren; bovenaan in de
+            zwarte kop staat niet de oefening maar de aanleiding. <b>Het zesde label is leeg</b> —
+            de fysiotherapeut kent het huis niet, en waar de patiënt vanzelf langskomt (bij de
+            voerbak van de kat, naast de wasmachine) weet alleen de patiënt. De cliëntkaart meet
+            daardoor iets anders dan alle andere: niet wie gedisciplineerd is, maar wélke plek
+            werkt. Blijft de gang leeg terwijl de badkamer vol staat, dan wordt de aanleiding
+            herschreven en niet de patiënt aangesproken.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>het verzendlabel van E. W. Dennison, met het versterkte gaatje waarop hij op
+              9 juni 1863 patent aanvroeg en waarvan er in het eerste jaar tien miljoen verkocht
+              werden · het lockout-tagout-label aan een machine: dit ding mag niet aan, en hier
+              staat waarom · plantenlabels in een botanische tuin en objectlabels naast een
+              museumstuk, die informatie aan een plek vastmaken in plaats van aan een document ·
+              Gollwitzers implementation intention (American Psychologist, 1999) · de manilla
+              kleur, het gesperde stempelkapitaal en het inventarisnummer in de hoek</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b> — zes labels van 92 × 84 mm in twee kolommen, elk met kniplijn,
+              een aangegeven gaatje van 4,4 mm en een afgeschuinde hoek; de aanleiding in de zwarte
+              kop op 11,4 punt, de oefening op 12,4 punt en de uitvoering op 9,4 punt, met zeven
+              weekvakjes onderaan. Vermiljoen doet alleen mee bij wat afgestreept of ingevuld
+              wordt. Het zesde label is blanco, met schrijflijnen en een rode kop</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-48-hanglabel.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-48-hanglabel.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>

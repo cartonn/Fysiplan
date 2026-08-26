@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 46 — Tweespraak · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 46 — TWEESPRAAK
+   ------------------------------------------------------------
+   Op de kaart staat één taal. In de kamer staan er twee.
+
+   In Nederland zijn 2,5 miljoen mensen laaggeletterd, en
+   ongeveer een derde daarvan heeft een migratieachtergrond met
+   Nederlands als tweede taal (Pharos). Het KNGF, de VvOCM, de
+   Hanzehogeschool en Pharos schrijven het zonder omhaal op:
+   bij een deel van de patiënten komt de behandeling niet aan,
+   niet omdat de oefening verkeerd is maar omdat het blad niet
+   gelezen wordt.
+
+   Wat de praktijk daarop doet is bijna altijd hetzelfde. Er
+   komt een vertaling — achterop, of in een aparte pdf, of in
+   kleinere letter onder de Nederlandse tekst. De vertaling is
+   dan de bijlage. En een bijlage raakt kwijt.
+
+   De boekdrukkunst heeft dit probleem al opgelost, en veel
+   eleganter. James Loeb begon in 1911 aan de Loeb Classical
+   Library, eerste delen in 1912: Grieks of Latijn op de linker
+   bladzijde, Engels op de rechter, exact tegenover elkaar.
+   Groen voor Grieks, rood voor Latijn — nog steeds. Virginia
+   Woolf noemde het "a gift of freedom". Het punt van die vorm
+   is niet de vertaling; het punt is dat geen van beide kolommen
+   de kleine letter is. Ze zijn even groot, even zwaar, even
+   veel waard. Dezelfde traditie loopt via interlineaire bijbels
+   en tweetalige woordenboeken terug tot de steen van Rosette,
+   waar drie schriften onder elkaar staan en juist dáárdoor
+   leesbaar werden.
+
+   DUS: dit blad zet Nederlands en de taal van de patiënt naast
+   elkaar, in dezelfde graad, in dezelfde letter, op dezelfde
+   regelhoogte. Geen bijlage. Geen kleine letter. Twee kolommen
+   van gelijk gewicht met een dunne rug ertussen.
+
+   EN DAN DE VONDST, die uit de klassieke uitgave komt en niet
+   uit software: DE REGELNUMMERS IN DE RUG. Elke regel krijgt
+   een nummer, en dat nummer geldt voor beide kolommen tegelijk.
+   Een fysiotherapeut die geen Turks spreekt en een patiënt die
+   weinig Nederlands leest, hebben daarmee tóch één gedeelde
+   taal: het cijfer. "Regel 4." Allebei kijken ze naar regel 4,
+   en daar staat aan de ene kant "houd twee tellen vast" en aan
+   de andere kant "iki saniye tutun". Het gesprek loopt weer,
+   zonder tolk, zonder gebaren, zonder de dochter die vertaalt
+   wat ze denkt dat er staat.
+
+   Het product heeft de deellink met ?taal= al. Wat ontbrak was
+   een pápieren vorm waarin die tweede taal niet degradeert tot
+   voetnoot.
+
+   Dit is niet concept 22 (Woordloos). Dat blad haalt de taal
+   wég en vertrouwt op pictogrammen; het werkt voor wie niet
+   lezen kan, maar het kan geen dosering, geen voorwaarde en
+   geen "stop als" uitdrukken. Dit blad doet het omgekeerde: het
+   zet de taal er twee keer op, volledig, en gebruikt het cijfer
+   als brug.
+
+   BEELDTAAL: de Loeb-uitgave. Crèmekleurig papier, een echte
+   boekserif, een smalle rug met een dun filet, kapitaaltjes
+   voor de taalnaam, regelnummers per vijf in de marge — en de
+   twee seriekleuren, rood en groen, die hier niet Latijn en
+   Grieks aanduiden maar simpelweg: dit is de ene taal, dat is
+   de andere. Geen vlaggetjes. Vlaggen zijn landen; dit gaat
+   over talen.
+
+   Toegankelijkheid: 11 punt is te klein voor deze lezers, dus
+   het blad geeft drie oefeningen per A4 in plaats van zes, en
+   de kolommen krijgen 11,6 punt op 1,40 regelafstand — de
+   kolombreedte van ± 42 tekens is precies wat boektypografie
+   al eeuwen als comfortabel aanhoudt. Alles zwart op crème,
+   ruim boven de contrasteis; rood en groen doen alleen mee als
+   herkenning, nooit als drager van informatie (een zwart-wit
+   kopie verliest niets).
+   ============================================================ */
+
+:root{
+  --papier:#faf7ef;         /* crème, boekpapier */
+  --vlak:#fffdf8;
+  --inkt:#1a1714;
+  --inkt-2:#453f37;
+  --grijs:#7d766c;
+  --lijn:#ddd5c6;
+  --lijn-2:#ece5d8;
+  --rood:#8f1d21;           /* Loeb-rood */
+  --groen:#1d5540;          /* Loeb-groen */
+
+  --boek:"Iowan Old Style",Charter,Palatino,"Palatino Linotype",Georgia,"Times New Roman",serif;
+  --klein:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --cijfer:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:15px; --s4:25px; --s5:40px; --s6:64px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.62 var(--boek);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--rood)}
+:focus-visible{outline:2.5px solid var(--rood);outline-offset:3px}
+
+.binnen{max-width:1150px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:#1a1714;color:#e6ded0;
+  font:500 13px/1 var(--klein);letter-spacing:.01em}
+.labbalk .nr{font:600 10.5px/1 var(--cijfer);letter-spacing:.2em;text-transform:uppercase;
+  color:#b9ada0;border:1px solid #443c33;padding:5px 8px;border-radius:3px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#c8bdae;text-decoration:none;padding:5px 3px;border-bottom:1.5px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--rood)}
+.labbalk a.terug{color:#fff;border-bottom-color:#443c33}
+@media (max-width:760px){.labbalk a:not(.terug){display:none}}
+
+.scherm{padding:var(--s6) 0;border-bottom:1px solid var(--lijn)}
+.scherm.eerste{background:var(--vlak)}
+.schermkop{margin-bottom:var(--s5)}
+.schermkop b{display:block;font:600 10.5px/1 var(--cijfer);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--grijs);margin-bottom:var(--s2)}
+.schermkop h2{font:400 30px/1.16 var(--boek);color:var(--inkt);letter-spacing:-.012em}
+.schermkop p{max-width:66ch;margin-top:var(--s2);font-size:16.5px;color:var(--inkt-2)}
+
+/* ---------- 1 landing ---------- */
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:27px;height:34px;background:var(--rood);color:#fff;border-radius:2px;
+  display:flex;align-items:center;justify-content:center;font:400 17px/1 var(--boek)}
+.merkregel .naam{font:400 17px/1 var(--boek);color:var(--inkt);letter-spacing:.01em}
+.merkregel .pad{font:500 11px/1 var(--cijfer);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
+
+.heldrij{display:grid;grid-template-columns:1.04fr .96fr;gap:var(--s6);align-items:start}
+@media (max-width:940px){.heldrij{grid-template-columns:1fr;gap:var(--s5)}}
+
+h1.kop{font:400 clamp(31px,4.1vw,46px)/1.14 var(--boek);color:var(--inkt);letter-spacing:-.018em;max-width:17ch}
+h1.kop em{display:block;font-style:italic;color:var(--rood)}
+p.onder{margin-top:var(--s3);font-size:18px;line-height:1.66;max-width:52ch}
+p.onder b{font-weight:600;color:var(--inkt)}
+
+.knoppen{display:flex;flex-wrap:wrap;gap:11px;margin-top:var(--s4)}
+.kn{display:inline-block;padding:12px 21px;border-radius:2px;text-decoration:none;
+  font:500 15px/1 var(--klein);background:var(--rood);color:#fff;border:1px solid var(--rood)}
+.kn.leeg{background:transparent;color:var(--inkt);border-color:var(--lijn)}
+.kn:hover{opacity:.9}
+
+/* het proefstuk: een stukje tweespraak, als staal */
+.proefstuk{background:var(--vlak);border:1px solid var(--lijn);
+  box-shadow:0 1px 0 var(--lijn),14px 14px 0 -1px rgba(26,23,20,.045)}
+.pkop{display:flex;align-items:baseline;gap:var(--s2);padding:13px 17px;border-bottom:1px solid var(--lijn)}
+.pkop b{font:400 15px/1 var(--boek);color:var(--inkt)}
+.pkop span{margin-left:auto;font:500 9.5px/1 var(--cijfer);letter-spacing:.16em;text-transform:uppercase;color:var(--grijs)}
+
+/* ---------- de tweespraak-component (scherm) ---------- */
+.tweespraak{padding:var(--s3) 0}
+.tskop{display:grid;grid-template-columns:1fr 44px 1fr;align-items:end;padding:0 17px var(--s2)}
+.tskop .taal{font:600 10.5px/1 var(--klein);letter-spacing:.18em;text-transform:uppercase}
+.tskop .taal.a{color:var(--rood)}
+.tskop .taal.b{color:var(--groen)}
+.tskop .mid{text-align:center;font:500 9.5px/1 var(--cijfer);letter-spacing:.1em;color:var(--grijs)}
+.tsfilet{display:grid;grid-template-columns:1fr 44px 1fr}
+.tsfilet i{display:block;height:2px;background:var(--rood)}
+.tsfilet i.b{background:var(--groen)}
+.tsfilet span{display:block}
+
+.regels{padding:var(--s2) 0}
+.regel{display:grid;grid-template-columns:1fr 44px 1fr;align-items:baseline;
+  padding:0 17px}
+.regel > .nl{padding:4px 14px 4px 0}
+.regel > .xx{padding:4px 0 4px 14px}
+.regel > .nummer{text-align:center;font:500 11px/1 var(--cijfer);color:var(--grijs);
+  border-left:1px solid var(--lijn-2);border-right:1px solid var(--lijn-2);align-self:stretch;
+  display:flex;align-items:center;justify-content:center}
+.regel:hover > .nummer{color:var(--rood);background:#f4ece0}
+.regel.leeg > .nummer{color:transparent}
+.regel .nl,.regel .xx{font:400 16.5px/1.5 var(--boek);color:var(--inkt)}
+.regel .nl b,.regel .xx b{font-weight:600}
+
+/* ---------- 2 kiezer ---------- */
+.kiezerrij{display:grid;grid-template-columns:290px 1fr;gap:var(--s5);align-items:start}
+@media (max-width:940px){.kiezerrij{grid-template-columns:1fr}}
+
+.paneel{background:var(--vlak);border:1px solid var(--lijn)}
+.paneel > h3{font:600 10.5px/1 var(--klein);letter-spacing:.18em;text-transform:uppercase;color:var(--grijs);
+  padding:14px 16px;border-bottom:1px solid var(--lijn)}
+
+.taallijst{list-style:none;padding:var(--s2) 0}
+.taallijst li{display:flex;align-items:center;gap:11px;padding:10px 16px;cursor:default}
+.taallijst li + li{border-top:1px solid var(--lijn-2)}
+.taallijst .merk{width:22px;height:22px;border-radius:2px;flex:none;border:1px solid var(--lijn);
+  display:flex;align-items:center;justify-content:center;
+  font:600 9px/1 var(--cijfer);letter-spacing:.02em;color:var(--grijs);background:#fff}
+.taallijst .naam{font:400 17px/1.25 var(--boek);color:var(--inkt)}
+.taallijst .eigen{display:block;font:400 13.5px/1.3 var(--boek);color:var(--grijs)}
+.taallijst li.aan{background:#f5ece1}
+.taallijst li.aan .merk{background:var(--groen);border-color:var(--groen);color:#fff}
+.taallijst li.aan .naam{font-weight:600}
+.taallijst .vink{margin-left:auto;font:500 10px/1 var(--cijfer);letter-spacing:.12em;color:var(--groen)}
+
+.mededeling{margin:var(--s3) 16px var(--s3);padding:12px 14px;border-left:2.5px solid var(--rood);
+  background:#f8f0e6;font:400 14.5px/1.5 var(--boek);color:var(--inkt-2)}
+
+.oefenlijst{display:grid;gap:1px;background:var(--lijn-2)}
+.oefen{background:var(--vlak);display:grid;grid-template-columns:96px 1fr auto;gap:var(--s3);
+  align-items:center;padding:14px 16px}
+.oefen .beeld{background:#fff;border:1px solid var(--lijn-2);height:78px;display:flex;align-items:center;justify-content:center;padding:5px}
+.oefen .beeld img{max-height:100%;width:auto;mix-blend-mode:multiply}
+.oefen h4{font:400 19px/1.24 var(--boek);color:var(--inkt)}
+.oefen .vert{display:block;font:400 16px/1.3 var(--boek);color:var(--groen);margin-top:3px}
+.oefen .meta{font:500 11px/1 var(--cijfer);letter-spacing:.06em;color:var(--grijs);margin-top:7px}
+.oefen .knop{font:500 13px/1 var(--klein);color:var(--rood);border:1px solid var(--lijn);
+  padding:9px 13px;border-radius:2px;white-space:nowrap}
+.oefen.gekozen{background:#f6efe4}
+.oefen.gekozen .knop{background:var(--rood);color:#fff;border-color:var(--rood)}
+@media (max-width:620px){.oefen{grid-template-columns:70px 1fr}.oefen .knop{grid-column:2}}
+
+/* het spiegel-blok: uitleg over rechts-naar-links */
+.spiegel{margin-top:var(--s4);display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+@media (max-width:760px){.spiegel{grid-template-columns:1fr}}
+.spiegel figure{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s3)}
+.spiegel figcaption{font:500 10.5px/1 var(--cijfer);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--grijs);margin-bottom:var(--s2)}
+.mock{display:grid;grid-template-columns:1fr 26px 1fr;gap:0;align-items:stretch;height:104px}
+.mock .kol{padding:8px}
+.mock .kol i{display:block;height:5px;background:#cfc6b6;border-radius:1px;margin-bottom:7px}
+.mock .kol.a i{background:#d8bcbd}
+.mock .kol.b i{background:#bcd0c7}
+.mock .kol i:nth-child(1){width:78%}
+.mock .kol i:nth-child(2){width:92%}
+.mock .kol i:nth-child(3){width:64%}
+.mock .kol i:nth-child(4){width:86%}
+.mock .rug{border-left:1px solid var(--lijn);border-right:1px solid var(--lijn);
+  display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;
+  font:500 9px/1 var(--cijfer);color:var(--grijs)}
+.spiegel p{margin-top:var(--s2);font-size:15px;color:var(--inkt-2)}
+
+/* ---------- 3 cliëntkaart ---------- */
+.kaartblad{background:var(--vlak);border:1px solid var(--lijn);
+  box-shadow:16px 16px 0 -1px rgba(26,23,20,.045)}
+.kaartkop{padding:var(--s4) var(--s4) var(--s3);border-bottom:2px solid var(--inkt)}
+.kaartkop .rij{display:flex;align-items:baseline;gap:var(--s3);flex-wrap:wrap}
+.kaartkop h3{font:400 27px/1.15 var(--boek);color:var(--inkt)}
+.kaartkop .serie{margin-left:auto;font:500 10.5px/1 var(--cijfer);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--grijs)}
+.kaartkop .onderrij{display:flex;flex-wrap:wrap;gap:var(--s4);margin-top:var(--s3);
+  font:400 15px/1.35 var(--boek);color:var(--inkt-2)}
+.kaartkop .onderrij b{display:block;font:500 9.5px/1 var(--cijfer);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--grijs);margin-bottom:4px}
+
+.oefenblok{padding:var(--s4);border-bottom:1px solid var(--lijn-2)}
+.oefenblok:last-of-type{border-bottom:0}
+.blokkop{display:grid;grid-template-columns:1fr 44px 1fr;align-items:end;margin-bottom:var(--s2)}
+.blokkop .t{font:600 21px/1.2 var(--boek);color:var(--inkt)}
+.blokkop .t.b{color:var(--groen)}
+.blokkop .m{text-align:center;font:500 10px/1 var(--cijfer);letter-spacing:.1em;color:var(--grijs)}
+.blokprent{float:left;width:104px;margin:0 var(--s3) var(--s2) 0;border:1px solid var(--lijn-2);
+  background:#fff;padding:6px}
+.blokprent img{width:100%;mix-blend-mode:multiply}
+.blokvoet{clear:both;display:flex;flex-wrap:wrap;gap:var(--s3);padding-top:var(--s3);
+  margin-top:var(--s2);border-top:1px solid var(--lijn-2);
+  font:500 12px/1.3 var(--cijfer);letter-spacing:.04em;color:var(--grijs)}
+.blokvoet b{color:var(--inkt);font-weight:600}
+.streepjes{margin-left:auto;display:flex;gap:5px}
+.streepjes i{width:19px;height:19px;border:1.4px solid var(--lijn);border-radius:2px;display:block}
+.streepjes i.af{background:var(--rood);border-color:var(--rood);position:relative}
+.streepjes i.af::after{content:"";position:absolute;inset:4px 4px;
+  border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translate(1px,-1px)}
+
+.kaartvoet{padding:var(--s3) var(--s4);background:#f5efe4;display:flex;flex-wrap:wrap;
+  gap:var(--s3);align-items:center;font:400 14.5px/1.45 var(--boek);color:var(--inkt-2)}
+.kaartvoet .kn{margin-left:auto}
+
+/* ---------- 4 printkaart ---------- */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;position:relative;
+  transform-origin:top left;box-shadow:0 3px 34px rgba(26,23,20,.19);
+  border:1px solid var(--lijn);
+  font-family:var(--boek)}
+@media (max-width:860px){
+  .bladschaal{max-width:100%}
+}
+
+/* — inhoud van het A4 — */
+.blad .rand{position:absolute;inset:13mm 13mm 12mm 13mm;display:flex;flex-direction:column}
+
+.bkop{border-bottom:1.6pt solid #000;padding-bottom:2.6mm;display:flex;align-items:flex-end;gap:6mm}
+.bkop .titel{font:400 15.5pt/1.06 var(--boek);letter-spacing:-.01em}
+.bkop .titel em{font-style:italic;color:#8f1d21}
+.bkop .wie{margin-left:auto;text-align:right;font:400 9.6pt/1.32 var(--boek)}
+.bkop .wie b{display:block;font:600 6.6pt/1 var(--cijfer);letter-spacing:.14em;text-transform:uppercase;color:#5c564d}
+
+/* de kolomkoppen met de twee seriekleuren */
+.bhoofd{display:grid;grid-template-columns:24mm 6mm 70mm 8mm 70mm;margin-top:3.4mm}
+.bhoofd .taal{font:600 7.4pt/1 var(--klein);letter-spacing:.2em;text-transform:uppercase;
+  padding-bottom:1.5mm}
+.bhoofd .taal.a{color:#8f1d21;border-bottom:1.4pt solid #8f1d21}
+.bhoofd .taal.b{color:#1d5540;border-bottom:1.4pt solid #1d5540}
+.bhoofd .rugkop{text-align:center;font:500 5.6pt/1 var(--cijfer);letter-spacing:.04em;color:#6b655c;
+  padding-bottom:1.6mm;align-self:end}
+
+.bregel-uitleg{margin-top:1.8mm;font:400 8.2pt/1.35 var(--boek);color:#4a443b;
+  display:flex;gap:2mm;align-items:baseline}
+.bregel-uitleg b{font:600 6.4pt/1 var(--cijfer);letter-spacing:.12em;text-transform:uppercase;color:#8f1d21}
+
+.boefening{margin-top:6mm;padding-top:5mm;border-top:.5pt solid #b9b1a3;
+  display:flex;gap:6mm}
+.boefening:first-of-type{border-top:0;margin-top:4mm}
+.boefening .links{width:24mm;flex:none}
+.boefening .rechts{flex:1;min-width:0}
+.boefening .prent{border:.6pt solid #cdc6b8;background:#fff;padding:1mm;
+  display:flex;align-items:center;justify-content:center;height:26mm}
+.boefening .prent img{max-width:100%;max-height:100%;mix-blend-mode:multiply}
+.boefening .nrblok{margin-top:1.6mm;text-align:center;
+  font:600 6.2pt/1.25 var(--cijfer);letter-spacing:.06em;color:#5c564d}
+.boefening .nrblok b{display:block;font:400 11pt/1 var(--boek);color:#000;letter-spacing:0}
+
+/* de kopregel van een oefening: twee talen, zelfde rug */
+.bkoppen{display:grid;grid-template-columns:70mm 8mm 70mm;align-items:stretch;margin-bottom:1.8mm}
+.bkoppen h4{font:600 12.6pt/1.14 var(--boek);color:#000;align-self:end;padding-bottom:.6mm}
+.bkoppen h4.b{color:#1d5540;padding-left:3mm}
+.bkoppen .rug{border-left:.5pt solid #c9c2b4;border-right:.5pt solid #c9c2b4}
+
+/* de genummerde regels — het cijfer geldt voor beide kolommen */
+.blijn{display:grid;grid-template-columns:70mm 8mm 70mm;align-items:stretch}
+.blijn .t{font:400 11.6pt/1.4 var(--boek);padding:1.7mm 3mm 1.7mm 0}
+.blijn .t.tweede{padding:1.7mm 0 1.7mm 3mm}
+.blijn .n{border-left:.5pt solid #c9c2b4;border-right:.5pt solid #c9c2b4;
+  display:flex;align-items:center;justify-content:center;
+  font:500 7.4pt/1 var(--cijfer);color:#6b655c}
+.blijn.dik .t{font-weight:600}
+.blijn.stop .t{color:#8f1d21;font-weight:600}
+
+.bdosis{display:grid;grid-template-columns:70mm 8mm 70mm;
+  margin-top:2mm;border-top:.5pt solid #ddd7ca;padding-top:1.8mm}
+.bdosis .d{font:600 9.2pt/1.3 var(--cijfer);letter-spacing:.01em}
+.bdosis .d.tweede{padding-left:3mm}
+.bdosis .vakjes{border-left:.5pt solid #c9c2b4;border-right:.5pt solid #c9c2b4}
+
+.bafstrepen{margin-top:2mm;display:grid;grid-template-columns:repeat(4,1fr);gap:1.1mm}
+.bafstrepen i{display:block;height:4.6mm;border:.7pt solid #8a8377;border-radius:.5mm}
+
+.bvoet{margin-top:auto;padding-top:3mm;border-top:1.6pt solid #000;
+  display:grid;grid-template-columns:1fr 8mm 1fr;align-items:start}
+.bvoet .t{font:400 9pt/1.4 var(--boek)}
+.bvoet .t.tweede{padding-left:3mm}
+.bvoet .t b{font-weight:600}
+.bvoet .n{border-left:.5pt solid #c9c2b4;border-right:.5pt solid #c9c2b4}
+.bvoet .praktijk{grid-column:1 / -1;margin-top:2.6mm;display:flex;gap:5mm;align-items:baseline;
+  font:500 6.6pt/1 var(--cijfer);letter-spacing:.11em;text-transform:uppercase;color:#6b655c}
+.bvoet .praktijk .rek{flex:1;border-bottom:.5pt dotted #b0a99c}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:#1a1714;color:#cfc5b6;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:600 10.5px/1 var(--cijfer);letter-spacing:.18em;text-transform:uppercase;
+  color:#8d8375;border-top:1.5px solid #453c32;padding-top:var(--s2);margin-bottom:var(--s2)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.6}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:7px}
+footer.uitleiding a{color:#e2d7c6}
+
+/* ============================================================
+   PRINT — alleen het A4 gaat mee
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">Concept 46</span>
+  <strong style="font:400 17px/1 var(--boek);color:#fff">Tweespraak</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">Concept 46 · Tweespraak</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1 class="kop">De vertaling hoort niet achterop.<em>Ze hoort ernaast.</em></h1>
+        <p class="onder">Tweeënhalf miljoen Nederlanders zijn laaggeletterd, en ongeveer een derde
+          van hen heeft Nederlands als tweede taal. De praktijk lost dat meestal op met een
+          bijlage: een vertaling achterop, in een aparte pdf, of in kleinere letter eronder. Dan is
+          de tweede taal de <b>kleine letter</b> — en kleine letters worden niet gelezen.
+          De boekdrukkunst kent al ruim een eeuw een betere vorm. James Loeb zette in 1911 het
+          Grieks links en de vertaling rechts, <b>even groot, even zwaar, tegenover elkaar</b>.
+          Dit blad doet hetzelfde met Nederlands en de taal van de patiënt.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk de printkaart</a>
+          <a class="kn leeg" href="#kiezer">Hoe de taal gekozen wordt</a>
+        </div>
+      </div>
+
+      <div class="proefstuk">
+        <div class="pkop">
+          <b>Proef — schouder naar buiten draaien</b>
+          <span>Nederlands · Türkçe</span>
+        </div>
+        <div class="tweespraak">
+          <div class="tskop">
+            <span class="taal a">Nederlands</span>
+            <span class="mid">regel</span>
+            <span class="taal b">Türkçe</span>
+          </div>
+          <div class="tsfilet"><i></i><span></span><i class="b"></i></div>
+          <div class="regels">
+            <div class="regel">
+              <div class="nl">Ga rechtop zitten, ellebogen tegen uw zij.</div>
+              <div class="nummer">1</div>
+              <div class="xx" lang="tr">Dik oturun, dirsekleriniz gövdenize yaslı olsun.</div>
+            </div>
+            <div class="regel">
+              <div class="nl">Draai uw onderarmen naar buiten.</div>
+              <div class="nummer">2</div>
+              <div class="xx" lang="tr">Ön kollarınızı dışa doğru döndürün.</div>
+            </div>
+            <div class="regel">
+              <div class="nl"><b>Houd twee tellen vast.</b></div>
+              <div class="nummer">3</div>
+              <div class="xx" lang="tr"><b>İki saniye tutun.</b></div>
+            </div>
+            <div class="regel">
+              <div class="nl">Laat langzaam terugkomen.</div>
+              <div class="nummer">4</div>
+              <div class="xx" lang="tr">Yavaşça geri bırakın.</div>
+            </div>
+          </div>
+        </div>
+        <div class="mededeling" style="margin-top:0">
+          De fysiotherapeut spreekt geen Turks. De patiënt leest weinig Nederlands.
+          Ze hebben tóch één gedeelde taal: <b>„regel 3"</b>. Allebei wijzen ze naar hetzelfde
+          cijfer, en het gesprek loopt weer.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2</b><h2>De oefeningen-kiezer</h2>
+      <p>De taal is geen instelling ergens in een menu, maar de eerste keuze — want ze bepaalt
+        de vórm van het hele blad. Zodra er een tweede taal staat, verandert de kaart van één
+        kolom naar twee, en gaan er zes oefeningen naar drie. Dat is geen verlies: een blad dat
+        niet gelezen wordt, levert nul oefeningen op.</p>
+    </div>
+
+    <div class="kiezerrij">
+
+      <div class="paneel">
+        <h3>Taal van de patiënt</h3>
+        <ul class="taallijst">
+          <li><span class="merk">NL</span><span><span class="naam">Nederlands</span>
+            <span class="eigen">alleen — één kolom, zes oefeningen</span></span></li>
+          <li class="aan"><span class="merk">TR</span><span><span class="naam">Turks</span>
+            <span class="eigen" lang="tr">Türkçe</span></span><span class="vink">GEKOZEN</span></li>
+          <li><span class="merk">PL</span><span><span class="naam">Pools</span>
+            <span class="eigen" lang="pl">Polski</span></span></li>
+          <li><span class="merk">EN</span><span><span class="naam">Engels</span>
+            <span class="eigen" lang="en">English</span></span></li>
+          <li><span class="merk">AR</span><span><span class="naam">Arabisch</span>
+            <span class="eigen">rechts-naar-links · kolommen wisselen</span></span></li>
+          <li><span class="merk">UK</span><span><span class="naam">Oekraïens</span>
+            <span class="eigen" lang="uk">Українська</span></span></li>
+        </ul>
+        <div class="mededeling">
+          Geen vlaggetjes. Een vlag is een land, en een taal is dat niet — een Turkse patiënt kan
+          in Duitsland geboren zijn en een Oekraïense patiënt spreekt misschien Russisch.
+          Daarom staat er de taalnaam, twee keer: zoals wij hem noemen en zoals de lezer hem noemt.
+        </div>
+      </div>
+
+      <div>
+        <div class="paneel">
+          <h3>Gekozen voor deze kaart — 3 van 3</h3>
+          <div class="oefenlijst">
+
+            <div class="oefen gekozen">
+              <div class="beeld"><img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt="Schouder naar buiten draaien met elastiek"/></div>
+              <div>
+                <h4>Schouder naar buiten draaien met elastiek
+                  <span class="vert" lang="tr">Omuzu elastik bantla dışa döndürme</span></h4>
+                <div class="meta">4 REGELS · 10× · 2 SERIES · 3 DAGEN P/W</div>
+              </div>
+              <span class="knop">Op de kaart</span>
+            </div>
+
+            <div class="oefen gekozen">
+              <div class="beeld"><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png" alt="Kin intrekken, zittend"/></div>
+              <div>
+                <h4>Kin intrekken, zittend
+                  <span class="vert" lang="tr">Oturarak çeneyi içeri çekme</span></h4>
+                <div class="meta">4 REGELS · 8× · 5 TELLEN VAST · DAGELIJKS</div>
+              </div>
+              <span class="knop">Op de kaart</span>
+            </div>
+
+            <div class="oefen gekozen">
+              <div class="beeld"><img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" alt="Op de plaats marcheren met steun"/></div>
+              <div>
+                <h4>Op de plaats marcheren met steun
+                  <span class="vert" lang="tr">Destekli olarak yerinde yürüme</span></h4>
+                <div class="meta">3 REGELS · 20 STAPPEN · 2× PER DAG</div>
+              </div>
+              <span class="knop">Op de kaart</span>
+            </div>
+
+            <div class="oefen">
+              <div class="beeld"><img src="/images/rug/knie-naar-borst-liggend-line-v1.png" alt="Knie naar borst, liggend"/></div>
+              <div>
+                <h4>Knie naar borst, liggend
+                  <span class="vert" lang="tr">Sırtüstü dizi göğse çekme</span></h4>
+                <div class="meta">VERTALING GEREED · PAST NIET MEER OP DIT BLAD</div>
+              </div>
+              <span class="knop">Tweede blad</span>
+            </div>
+
+            <div class="oefen">
+              <div class="beeld"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen komen"/></div>
+              <div>
+                <h4>Op de tenen komen
+                  <span class="vert" style="color:var(--rood)">Vertaling nog niet nagekeken</span></h4>
+                <div class="meta">MACHINEVERTALING · NIET VRIJGEGEVEN VOOR PRINT</div>
+              </div>
+              <span class="knop">Laat nakijken</span>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="spiegel">
+          <figure>
+            <figcaption>Links-naar-rechts — NL · TR · PL · EN</figcaption>
+            <div class="mock">
+              <div class="kol a"><i></i><i></i><i></i><i></i></div>
+              <div class="rug"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+              <div class="kol b"><i></i><i></i><i></i><i></i></div>
+            </div>
+            <p>Nederlands links, de tweede taal rechts, de regelnummers in de rug ertussen.</p>
+          </figure>
+          <figure>
+            <figcaption>Rechts-naar-links — Arabisch</figcaption>
+            <div class="mock" dir="rtl">
+              <div class="kol b"><i></i><i></i><i></i><i></i></div>
+              <div class="rug"><span>١</span><span>٢</span><span>٣</span><span>٤</span></div>
+              <div class="kol a"><i></i><i></i><i></i><i></i></div>
+            </div>
+            <p>De hele kaart spiegelt: de tweede taal begint aan de kant waar de lezer begint.
+              De rug blijft in het midden en telt door — het cijfer werkt in beide richtingen.</p>
+          </figure>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3</b><h2>De digitale cliëntkaart</h2>
+      <p>Op het scherm valt de rug niet weg: dezelfde twee kolommen, dezelfde nummers. Wat de
+        patiënt op de telefoon ziet, is regel voor regel wat op het papier staat — zodat een
+        verwijzing over de telefoon (<em>„kijk eens naar regel 2"</em>) klopt, ongeacht welk van
+        de twee de patiënt in handen heeft.</p>
+    </div>
+
+    <div class="kaartblad">
+      <div class="kaartkop">
+        <div class="rij">
+          <h3>Oefenkaart — mevrouw A. Yıldız</h3>
+          <span class="serie">Serie 4 · week 3 van 8</span>
+        </div>
+        <div class="onderrij">
+          <div><b>Praktijk</b>Fysiotherapie De Wetering, Utrecht</div>
+          <div><b>Therapeut</b>M. de Groot</div>
+          <div><b>Talen op dit blad</b>Nederlands · Türkçe</div>
+          <div><b>Vertaling nagekeken</b>12 augustus · door tolk, niet door machine</div>
+        </div>
+      </div>
+
+      <div class="oefenblok">
+        <div class="blokkop">
+          <span class="t">Schouder naar buiten draaien</span>
+          <span class="m">regel</span>
+          <span class="t b" lang="tr">Omuzu dışa döndürme</span>
+        </div>
+        <div class="blokprent"><img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt="Schouder naar buiten draaien met elastiek"/></div>
+        <div class="regels" style="padding:0">
+          <div class="regel" style="padding:0">
+            <div class="nl">Ga rechtop zitten, ellebogen tegen uw zij.</div>
+            <div class="nummer">1</div>
+            <div class="xx" lang="tr">Dik oturun, dirsekleriniz gövdenize yaslı olsun.</div>
+          </div>
+          <div class="regel" style="padding:0">
+            <div class="nl">Draai uw onderarmen naar buiten.</div>
+            <div class="nummer">2</div>
+            <div class="xx" lang="tr">Ön kollarınızı dışa doğru döndürün.</div>
+          </div>
+          <div class="regel" style="padding:0">
+            <div class="nl"><b>Houd twee tellen vast.</b></div>
+            <div class="nummer">3</div>
+            <div class="xx" lang="tr"><b>İki saniye tutun.</b></div>
+          </div>
+          <div class="regel" style="padding:0">
+            <div class="nl">Laat langzaam terugkomen. Stop als de pijn boven de 5 komt.</div>
+            <div class="nummer">4</div>
+            <div class="xx" lang="tr">Yavaşça geri bırakın. Ağrı 5'in üzerine çıkarsa durun.</div>
+          </div>
+        </div>
+        <div class="blokvoet">
+          <span><b>10×</b> · 2 series · 3 dagen per week</span>
+          <span lang="tr"><b>10 tekrar</b> · 2 set · haftada 3 gün</span>
+          <span class="streepjes" aria-label="Twee van de drie keer gedaan deze week">
+            <i class="af"></i><i class="af"></i><i></i></span>
+        </div>
+      </div>
+
+      <div class="oefenblok">
+        <div class="blokkop">
+          <span class="t">Kin intrekken, zittend</span>
+          <span class="m">regel</span>
+          <span class="t b" lang="tr">Oturarak çeneyi içeri çekme</span>
+        </div>
+        <div class="blokprent"><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png" alt="Kin intrekken, zittend"/></div>
+        <div class="regels" style="padding:0">
+          <div class="regel" style="padding:0">
+            <div class="nl">Zit rechtop, rug tegen de leuning.</div>
+            <div class="nummer">5</div>
+            <div class="xx" lang="tr">Sırtınız arkalığa dayalı, dik oturun.</div>
+          </div>
+          <div class="regel" style="padding:0">
+            <div class="nl">Trek uw kin recht naar achteren.</div>
+            <div class="nummer">6</div>
+            <div class="xx" lang="tr">Çenenizi düz olarak geriye çekin.</div>
+          </div>
+          <div class="regel" style="padding:0">
+            <div class="nl"><b>Kijk daarbij niet omlaag.</b></div>
+            <div class="nummer">7</div>
+            <div class="xx" lang="tr"><b>Bu sırada aşağı bakmayın.</b></div>
+          </div>
+          <div class="regel" style="padding:0">
+            <div class="nl">Vijf tellen vasthouden, dan loslaten.</div>
+            <div class="nummer">8</div>
+            <div class="xx" lang="tr">Beş saniye tutun, sonra bırakın.</div>
+          </div>
+        </div>
+        <div class="blokvoet">
+          <span><b>8×</b> · elke dag</span>
+          <span lang="tr"><b>8 tekrar</b> · her gün</span>
+          <span class="streepjes" aria-label="Vier van de zeven dagen gedaan">
+            <i class="af"></i><i class="af"></i><i class="af"></i><i class="af"></i><i></i><i></i><i></i></span>
+        </div>
+      </div>
+
+      <div class="kaartvoet">
+        <span>Regel 7 is drie keer aangewezen tijdens de behandeling — daar zat de fout.
+          De vertaling van regel 7 is daarop herschreven.</span>
+        <a class="kn" href="#printkaart">Print deze kaart</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 4</b><h2>De printkaart — A4 staand, twee kolommen van gelijk gewicht</h2>
+      <p>Drie oefeningen in plaats van zes, want twee talen kosten ruimte en leesbaarheid gaat
+        voor. Elke kolom is 70 mm breed — ruim veertig tekens, de breedte die boektypografie al
+        eeuwen als comfortabel aanhoudt — en staat op 11,6 punt met 1,40 regelafstand. De
+        regelnummers lopen dóór over de hele kaart, van 1 tot 11, zodat er in de behandelkamer
+        naar één cijfer gewezen kan worden. Rood en groen dragen geen informatie: op een
+        zwart-wit kopie blijft alles overeind.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="bkop">
+              <div class="titel">Oefenkaart <em>· in twee talen</em></div>
+              <div class="wie">
+                <b>Voor</b>Mevrouw A. Yıldız — week 3 van 8<br/>
+                Fysiotherapie De Wetering, Utrecht · 030 - 244 18 90
+              </div>
+            </div>
+
+            <div class="bhoofd">
+              <span></span><span></span>
+              <span class="taal a">Nederlands</span>
+              <span class="rugkop">regel</span>
+              <span class="taal b" lang="tr">Türkçe</span>
+            </div>
+
+            <div class="bregel-uitleg">
+              <b>Zo werkt dit blad</b>
+              <span>Links en rechts staat hetzelfde. In het midden staan de regelnummers.
+                Wijs een nummer aan, dan kijkt u allebei naar dezelfde zin. ·
+                <span lang="tr">Solda ve sağda aynı şey yazıyor. Ortadaki numarayı gösterin;
+                ikiniz de aynı cümleye bakarsınız.</span></span>
+            </div>
+
+            <!-- ── oefening 1 ── -->
+            <div class="boefening">
+              <div class="links">
+                <div class="prent"><img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt=""/></div>
+                <div class="nrblok"><b>1</b>OEFENING</div>
+                <div class="bafstrepen" aria-hidden="true"><i></i><i></i><i></i></div>
+              </div>
+              <div class="rechts">
+              <div class="bkoppen">
+                <h4 class="a">Schouder naar buiten draaien</h4>
+                <span class="rug"></span>
+                <h4 class="b" lang="tr">Omuzu dışa döndürme</h4>
+              </div>
+
+              <div class="blijn">
+                <div class="t">Ga rechtop zitten, ellebogen tegen uw zij.</div>
+                <div class="n">1</div>
+                <div class="t tweede" lang="tr">Dik oturun, dirsekleriniz gövdenize yaslı olsun.</div>
+              </div>
+              <div class="blijn">
+                <div class="t">Draai uw onderarmen naar buiten.</div>
+                <div class="n">2</div>
+                <div class="t tweede" lang="tr">Ön kollarınızı dışa doğru döndürün.</div>
+              </div>
+              <div class="blijn dik">
+                <div class="t">Houd twee tellen vast.</div>
+                <div class="n">3</div>
+                <div class="t tweede" lang="tr">İki saniye tutun.</div>
+              </div>
+              <div class="blijn stop">
+                <div class="t">Stop als de pijn boven de 5 komt.</div>
+                <div class="n">4</div>
+                <div class="t tweede" lang="tr">Ağrı 5'in üzerine çıkarsa durun.</div>
+              </div>
+              <div class="bdosis">
+                <div class="d">10× · 2 SERIES · 3 DAGEN P/W</div>
+                <div class="vakjes"></div>
+                <div class="d tweede" lang="tr">10 TEKRAR · 2 SET · HAFTADA 3 GÜN</div>
+              </div>
+              </div>
+            </div>
+
+            <!-- ── oefening 2 ── -->
+            <div class="boefening">
+              <div class="links">
+                <div class="prent"><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png" alt=""/></div>
+                <div class="nrblok"><b>2</b>OEFENING</div>
+                <div class="bafstrepen" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+              <div class="rechts">
+              <div class="bkoppen">
+                <h4 class="a">Kin intrekken, zittend</h4>
+                <span class="rug"></span>
+                <h4 class="b" lang="tr">Oturarak çeneyi içeri çekme</h4>
+              </div>
+
+              <div class="blijn">
+                <div class="t">Zit rechtop, rug tegen de leuning.</div>
+                <div class="n">5</div>
+                <div class="t tweede" lang="tr">Sırtınız arkalığa dayalı, dik oturun.</div>
+              </div>
+              <div class="blijn">
+                <div class="t">Trek uw kin recht naar achteren.</div>
+                <div class="n">6</div>
+                <div class="t tweede" lang="tr">Çenenizi düz olarak geriye çekin.</div>
+              </div>
+              <div class="blijn dik">
+                <div class="t">Kijk daarbij niet omlaag.</div>
+                <div class="n">7</div>
+                <div class="t tweede" lang="tr">Bu sırada aşağı bakmayın.</div>
+              </div>
+              <div class="blijn">
+                <div class="t">Vijf tellen vasthouden, dan loslaten.</div>
+                <div class="n">8</div>
+                <div class="t tweede" lang="tr">Beş saniye tutun, sonra bırakın.</div>
+              </div>
+              <div class="bdosis">
+                <div class="d">8× · ELKE DAG</div>
+                <div class="vakjes"></div>
+                <div class="d tweede" lang="tr">8 TEKRAR · HER GÜN</div>
+              </div>
+              </div>
+            </div>
+
+            <!-- ── oefening 3 ── -->
+            <div class="boefening">
+              <div class="links">
+                <div class="prent"><img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" alt=""/></div>
+                <div class="nrblok"><b>3</b>OEFENING</div>
+                <div class="bafstrepen" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+              <div class="rechts">
+              <div class="bkoppen">
+                <h4 class="a">Op de plaats marcheren, met steun</h4>
+                <span class="rug"></span>
+                <h4 class="b" lang="tr">Destekli olarak yerinde yürüme</h4>
+              </div>
+
+              <div class="blijn">
+                <div class="t">Houd de rugleuning van een stoel vast.</div>
+                <div class="n">9</div>
+                <div class="t tweede" lang="tr">Bir sandalyenin arkalığından tutun.</div>
+              </div>
+              <div class="blijn">
+                <div class="t">Til uw knieën om de beurt op.</div>
+                <div class="n">10</div>
+                <div class="t tweede" lang="tr">Dizlerinizi sırayla kaldırın.</div>
+              </div>
+              <div class="blijn dik">
+                <div class="t">Twintig stappen, rustig tempo.</div>
+                <div class="n">11</div>
+                <div class="t tweede" lang="tr">Yirmi adım, sakin tempoda.</div>
+              </div>
+              <div class="bdosis">
+                <div class="d">2× PER DAG · OCHTEND EN AVOND</div>
+                <div class="vakjes"></div>
+                <div class="d tweede" lang="tr">GÜNDE 2 KEZ · SABAH VE AKŞAM</div>
+              </div>
+              </div>
+            </div>
+
+            <div class="bvoet">
+              <div class="t"><b>Vraag bij het volgende bezoek naar een regelnummer.</b>
+                Kloppen de woorden niet met wat u doet, dan wordt die ene regel herschreven —
+                niet het hele blad.</div>
+              <div class="n"></div>
+              <div class="t tweede" lang="tr"><b>Bir sonraki randevunuzda satır numarasını sorun.</b>
+                Yazılanlar yaptığınızla uyuşmuyorsa, sadece o satır yeniden yazılır —
+                tüm sayfa değil.</div>
+              <div class="praktijk">
+                <span>Nagekeken door tolk · 12 augustus</span>
+                <span class="rek"></span>
+                <span>Fysiplan · blad 1 van 1</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>Waar het vandaan komt</h4>
+      <p>De Loeb Classical Library (James Loeb, 1911; eerste delen 1912) zet het origineel links
+        en de vertaling rechts, groen voor Grieks en rood voor Latijn. Virginia Woolf noemde het
+        „a gift of freedom". Dezelfde vorm loopt via interlineaire bijbels en tweetalige
+        woordenboeken terug tot de steen van Rosette. Wat die traditie oplost is niet de vertaling
+        maar de <em>rangorde</em>: geen van beide kolommen is de bijlage.</p>
+    </div>
+    <div class="kolom">
+      <h4>Wat het blad doet</h4>
+      <ul>
+        <li>Twee talen, gelijke graad, gelijke regelhoogte — geen kleine letter.</li>
+        <li>Regelnummers in de rug, doorlopend over de hele kaart: één gedeeld cijfer.</li>
+        <li>Drie oefeningen per A4 in plaats van zes; leesbaarheid gaat voor dichtheid.</li>
+        <li>Bij Arabisch spiegelt de hele kaart; de rug blijft in het midden.</li>
+        <li>Machinevertalingen komen niet op papier zonder dat iemand ze nakeek.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>Verder</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/ontwerp/concept-22-woordloos.html">Concept 22 — Woordloos (taal weghalen)</a></li>
+        <li><a href="/ontwerp/concept-15-grootletter.html">Concept 15 — Grootletter</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Het A4 op ware verhouding in beeld passen. Alleen schermweergave;
+   bij printen wordt de transform weer weggehaald door de print-CSS. */
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var breed=schaal.clientWidth, eigen=blad.offsetWidth;
+    var f=Math.min(1,breed/eigen);
+    blad.style.transform='scale('+f+')';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

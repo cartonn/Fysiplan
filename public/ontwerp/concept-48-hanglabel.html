@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 48 — Hanglabel · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 48 — HANGLABEL
+   ------------------------------------------------------------
+   Het blad hangt op de koelkast.
+   De oefening gebeurt bij de trap.
+
+   Alle 47 concepten hiervoor gaan ervan uit dat de kaart één
+   ding is, op één plek. Dat klopt met hoe hij gemaakt wordt —
+   één A4 uit één printer — maar niet met hoe hij gebruikt
+   wordt. De oefeningen op zo'n blad gebeuren namelijk niet op
+   één plek. De schouderoefening hoort bij de stoel in de kamer,
+   het kinintrekken bij de spiegel in de badkamer, het marcheren
+   bij het aanrecht. Het blad ligt intussen op de eettafel, of
+   op de stapel, of in de la.
+
+   Peter Gollwitzer publiceerde in 1999 in American Psychologist
+   wat inmiddels de best onderbouwde gedragsingreep is die er
+   bestaat: de implementation intention. Niet "ik ga meer
+   bewegen" maar "WANNEER ik mijn tanden heb gepoetst, DAN doe
+   ik acht keer kin intrekken." Wie zo'n als-dan-plan maakt,
+   doet het twee tot drie keer zo vaak — over tientallen
+   domeinen heen, van bewegen tot medicatietrouw. Het werkzame
+   bestanddeel is niet de motivatie maar de AANLEIDING: een
+   concrete situatie die het gedrag opstart zonder dat er nog
+   een besluit aan te pas komt.
+
+   Een oefenkaart bevat die aanleiding nergens. Er staat een
+   frequentie ("3× per week") en dat is precies het soort
+   voornemen waarvan Gollwitzer aantoonde dat het het minst
+   werkt.
+
+   DUS: dit blad is geen blad. Het is een VEL LABELS. Zes
+   kartonnen kaartjes met een gaatje erin, die uit de printer
+   komen, uitgeknipt worden en OPGEHANGEN op de plek waar de
+   beweging hoort te gebeuren. Elk label draagt bovenaan, in de
+   zwarte kop, niet de naam van de oefening maar de aanleiding:
+   NA HET TANDENPOETSEN. VOOR DE KOFFIE. ALS HET JOURNAAL BEGINT.
+   De oefening staat eronder. Het papier verhuist naar de plek
+   waar het nodig is, in plaats van te wachten tot iemand eraan
+   denkt.
+
+   De vorm komt uit een lange, onopgesmukte traditie. E. W.
+   Dennison vroeg op 9 juni 1863 patent aan op het versterkte
+   gaatje in het verzendlabel — dat kleine ringetje waardoor een
+   kaartje aan een touwtje niet uitscheurt — en verkocht er in
+   het eerste jaar tien miljoen van. Dezelfde vorm hangt sindsdien
+   aan machines (het lockout-tagout-label: dit ding mag niet aan,
+   en dit staat er waarom), aan planten in een botanische tuin,
+   en naast museumstukken. Al die labels doen hetzelfde: ze
+   plakken informatie vast aan een PLEK in plaats van aan een
+   document.
+
+   HET ZESDE LABEL IS LEEG. Dat is geen slordigheid maar het
+   scherpste onderdeel: de fysiotherapeut kent het huis niet.
+   Waar de patiënt vanzelf langskomt — bij de voerbak van de
+   kat, naast de wasmachine, aan de kapstok — weet alleen de
+   patiënt. Dus wordt één label niet ingevuld, met de opdracht
+   het zelf te beschrijven. Wat daar komt te staan, komt op de
+   volgende ronde terug in het gesprek.
+
+   Dit is niet concept 3 (Vouwblad), dat één kaart rechtop op
+   het aanrecht zet, en niet concept 40 (Knipvel), waar geknipt
+   wordt om de juiste maat te kiezen. Hier wordt geknipt om het
+   plan uit elkaar te halen en over het huis te verdelen. De
+   kaart houdt op één ding te zijn.
+
+   BEELDTAAL: het industriële label. Manillakarton, een zware
+   zwarte kop, gestempelde plaatsnamen in gesperde kapitalen,
+   een geperforeerd gaatje met versterkingsring, een
+   inventarisnummer in de hoek, en één signaalkleur —
+   vermiljoen — voor wat afgestreept en ingevuld wordt. Grote
+   letter, want deze kaartjes worden gelezen in een halletje
+   zonder bril, in het voorbijgaan.
+   ============================================================ */
+
+:root{
+  --kraft:#efe6d3;
+  --kraft-2:#e3d5b8;
+  --kraft-3:#d3c3a1;
+  --papier:#f6f2e9;
+  --wit:#fffdf8;
+  --inkt:#16120e;
+  --inkt-2:#413830;
+  --grijs:#7b7063;
+  --lijn:#cfc2a6;
+  --lijn-2:#e5dbc6;
+  --verm:#bf3d1d;
+  --touw:#9a8763;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --smal:"Arial Narrow","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+
+  --s1:4px; --s2:8px; --s3:15px; --s4:25px; --s5:40px; --s6:62px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.58 var(--sans);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--verm)}
+:focus-visible{outline:3px solid var(--verm);outline-offset:2px}
+
+.binnen{max-width:1150px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--inkt);color:#ded3c0;
+  font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#a99b88;
+  border:1px solid #3d342b;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#bdb09c;text-decoration:none;padding:5px 3px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--verm)}
+.labbalk a.terug{color:#fff;border-bottom-color:#3d342b}
+@media (max-width:760px){.labbalk a:not(.terug){display:none}}
+
+.scherm{padding:var(--s6) 0;border-bottom:1px solid var(--lijn)}
+.scherm.eerste{background:var(--wit)}
+.schermkop{margin-bottom:var(--s5)}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;
+  color:var(--grijs);margin-bottom:var(--s2)}
+.schermkop h2{font:700 30px/1.14 var(--sans);color:var(--inkt);letter-spacing:-.035em}
+.schermkop p{max-width:68ch;margin-top:var(--s2);font-size:16.5px}
+
+/* ---------- 1 landing ---------- */
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:29px;height:29px;background:var(--inkt);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 15px/1 var(--sans)}
+.merkregel .naam{font:700 16px/1 var(--sans);color:var(--inkt);letter-spacing:-.03em}
+.merkregel .pad{font:700 10.5px/1 var(--mono);letter-spacing:.16em;color:var(--grijs)}
+
+.heldrij{display:grid;grid-template-columns:1.06fr .94fr;gap:var(--s6);align-items:start}
+@media (max-width:940px){.heldrij{grid-template-columns:1fr;gap:var(--s5)}}
+
+h1.kop{font:700 clamp(32px,4.4vw,50px)/1.05 var(--sans);color:var(--inkt);letter-spacing:-.045em;max-width:16ch}
+h1.kop em{display:block;font-style:normal;color:var(--verm)}
+p.onder{margin-top:var(--s3);font-size:18px;line-height:1.62;max-width:53ch}
+p.onder b{font-weight:700;color:var(--inkt)}
+
+.knoppen{display:flex;flex-wrap:wrap;gap:10px;margin-top:var(--s4)}
+.kn{display:inline-block;padding:13px 22px;text-decoration:none;
+  font:600 14.5px/1 var(--sans);background:var(--inkt);color:#fff;border:2px solid var(--inkt)}
+.kn.leeg{background:transparent;color:var(--inkt)}
+.kn:hover{background:var(--verm);border-color:var(--verm);color:#fff}
+
+/* ---------- het label zelf (herbruikbaar op scherm) ---------- */
+.labelhouder{display:flex;justify-content:center;padding-top:var(--s3)}
+.label{width:100%;max-width:330px;background:var(--kraft);position:relative;
+  border:1.5px solid var(--kraft-3);
+  clip-path:polygon(0 26px,26px 0,100% 0,100% 100%,0 100%);
+  box-shadow:9px 11px 0 -2px rgba(22,18,14,.13)}
+.label .oog{position:absolute;left:13px;top:34px;width:22px;height:22px;border-radius:50%;
+  background:var(--papier);border:2.5px solid var(--kraft-3);z-index:2}
+.label .kop{background:var(--inkt);color:#fff;padding:13px 16px 12px 44px;margin-top:26px}
+.label .kop .aanleiding{font:700 17.5px/1.15 var(--sans);letter-spacing:-.02em}
+.label .kop .plek{display:block;font:700 10px/1 var(--mono);letter-spacing:.2em;
+  color:#a99b88;margin-bottom:6px}
+.label .lijf{padding:var(--s3) 16px var(--s2)}
+.label .lijf h3{font:700 21px/1.16 var(--sans);color:var(--inkt);letter-spacing:-.03em}
+.label .lijf .prent{float:right;width:82px;margin:0 0 6px 12px;
+  border:1px solid var(--kraft-3);background:var(--wit);padding:4px}
+.label .lijf .prent img{width:100%;mix-blend-mode:multiply}
+.label .lijf ol{list-style:none;counter-reset:x;margin-top:var(--s2);clear:none}
+.label .lijf ol li{counter-increment:x;position:relative;padding-left:19px;
+  font:400 15.5px/1.42 var(--sans);color:var(--inkt);margin-top:5px}
+.label .lijf ol li::before{content:counter(x);position:absolute;left:0;top:1px;
+  font:700 11px/1.5 var(--mono);color:var(--verm)}
+.label .voet{clear:both;display:flex;align-items:center;gap:10px;
+  padding:11px 16px 14px;border-top:1.5px dashed var(--kraft-3);margin-top:var(--s2)}
+.label .voet .dosis{font:700 14px/1.25 var(--mono);letter-spacing:.02em;color:var(--inkt)}
+.label .voet .vakjes{margin-left:auto;display:flex;gap:4px}
+.label .voet .vakjes i{width:17px;height:17px;border:1.6px solid var(--touw);display:block;position:relative}
+.label .voet .vakjes i.af{background:var(--verm);border-color:var(--verm)}
+.label .voet .vakjes i.af::after{content:"";position:absolute;inset:3px;
+  border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translate(1px,-1px)}
+.label .nrhoek{position:absolute;right:9px;bottom:6px;
+  font:700 9px/1 var(--mono);letter-spacing:.14em;color:var(--touw)}
+
+.bijschrift{max-width:330px;margin:var(--s3) auto 0;font:400 14.5px/1.5 var(--sans);color:var(--grijs);
+  text-align:center}
+
+/* ---------- 2 kiezer ---------- */
+.kiezerrij{display:grid;grid-template-columns:1fr 360px;gap:var(--s5);align-items:start}
+@media (max-width:980px){.kiezerrij{grid-template-columns:1fr}}
+
+.paneel{background:var(--wit);border:1px solid var(--lijn)}
+.paneel > h3{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:var(--inkt);
+  padding:14px 16px;background:var(--kraft);border-bottom:1px solid var(--lijn)}
+
+.koppel{display:grid;gap:1px;background:var(--lijn-2)}
+.rij{background:var(--wit);display:grid;grid-template-columns:80px 1fr 1fr;gap:var(--s3);
+  align-items:center;padding:13px 16px}
+.rij .beeld{background:var(--wit);border:1px solid var(--lijn-2);height:68px;
+  display:flex;align-items:center;justify-content:center;padding:4px}
+.rij .beeld img{max-height:100%;width:auto;mix-blend-mode:multiply}
+.rij h4{font:700 17px/1.2 var(--inkt);color:var(--inkt);letter-spacing:-.025em;font-family:var(--sans)}
+.rij .dos{font:700 11px/1.4 var(--mono);letter-spacing:.05em;color:var(--grijs);margin-top:5px}
+.rij .anker{border-left:3px solid var(--verm);padding-left:11px}
+.rij .anker b{display:block;font:700 9.5px/1 var(--mono);letter-spacing:.16em;color:var(--grijs);margin-bottom:4px}
+.rij .anker span{font:600 15.5px/1.3 var(--sans);color:var(--inkt)}
+.rij .anker small{display:block;font:400 13px/1.35 var(--sans);color:var(--grijs);margin-top:3px}
+.rij.leeg .anker{border-left-color:var(--lijn)}
+.rij.leeg .anker span{color:var(--verm)}
+@media (max-width:700px){.rij{grid-template-columns:64px 1fr}.rij .anker{grid-column:1 / -1}}
+
+/* plattegrond */
+.plattegrond{padding:var(--s3) 16px var(--s4)}
+.plan{position:relative;border:2px solid var(--inkt);background:var(--kraft);
+  aspect-ratio:1 / .82;display:grid;grid-template-columns:1.25fr 1fr;grid-template-rows:1fr 1fr}
+.plan .kamer{border:1px solid var(--lijn);margin:-1px;position:relative;padding:9px}
+.plan .kamer b{font:700 9.5px/1 var(--mono);letter-spacing:.14em;color:var(--grijs)}
+.speld{position:absolute;width:26px;height:26px;border-radius:50%;background:var(--verm);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font:700 12px/1 var(--mono);box-shadow:0 2px 0 rgba(22,18,14,.22)}
+.speld.leeg{background:var(--wit);color:var(--verm);border:2.5px dashed var(--verm)}
+.planvoet{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s3);margin-top:var(--s3);
+  font:400 13.5px/1.4 var(--sans);color:var(--inkt-2)}
+.planvoet span{display:flex;align-items:center;gap:6px}
+.planvoet i{width:18px;height:18px;border-radius:50%;background:var(--verm);color:#fff;flex:none;
+  display:flex;align-items:center;justify-content:center;font:700 9px/1 var(--mono)}
+.planvoet i.leeg{background:var(--wit);color:var(--verm);border:2px dashed var(--verm)}
+
+.notitie{margin:var(--s3) 16px var(--s3);padding:12px 14px;border-left:3px solid var(--inkt);
+  background:var(--kraft);font:400 14.5px/1.5 var(--sans);color:var(--inkt-2)}
+.notitie b{font-weight:700;color:var(--inkt)}
+
+/* ---------- 3 cliëntkaart ---------- */
+.kaartblad{background:var(--wit);border:2px solid var(--inkt)}
+.kaartkop{background:var(--inkt);color:#fff;padding:var(--s3) var(--s4);
+  display:flex;align-items:baseline;flex-wrap:wrap;gap:var(--s3)}
+.kaartkop h3{font:700 22px/1.1 var(--sans);letter-spacing:-.035em}
+.kaartkop .serie{margin-left:auto;font:700 10.5px/1.5 var(--mono);letter-spacing:.14em;color:#a99b88}
+
+.plekrij{display:grid;grid-template-columns:34px 1fr 168px 128px;gap:var(--s3);align-items:center;
+  padding:15px var(--s4);border-bottom:1px solid var(--lijn-2)}
+.plekrij .nr{width:30px;height:30px;border-radius:50%;background:var(--inkt);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 13px/1 var(--mono)}
+.plekrij.geen .nr{background:var(--wit);color:var(--verm);border:2.5px dashed var(--verm)}
+.plekrij .wat b{display:block;font:700 9.5px/1 var(--mono);letter-spacing:.16em;color:var(--grijs);margin-bottom:4px}
+.plekrij .wat span{font:600 17px/1.25 var(--sans);color:var(--inkt)}
+.plekrij .wat small{display:block;font:400 14px/1.35 var(--sans);color:var(--grijs);margin-top:3px}
+.plekrij .staaf{height:11px;background:var(--lijn-2);position:relative}
+.plekrij .staaf i{position:absolute;left:0;top:0;bottom:0;background:var(--inkt);display:block}
+.plekrij .staaf.laag i{background:var(--verm)}
+.plekrij .cijfer{font:700 13px/1.3 var(--mono);letter-spacing:.03em;color:var(--inkt);text-align:right}
+.plekrij .cijfer small{display:block;font:400 11.5px/1.3 var(--mono);color:var(--grijs);letter-spacing:.06em}
+@media (max-width:820px){
+  .plekrij{grid-template-columns:34px 1fr;gap:var(--s2) var(--s3)}
+  .plekrij .staaf,.plekrij .cijfer{grid-column:2}
+  .plekrij .cijfer{text-align:left}
+}
+
+.kaartvoet{padding:var(--s4);background:var(--kraft);display:grid;
+  grid-template-columns:1fr 300px;gap:var(--s4);align-items:start}
+@media (max-width:820px){.kaartvoet{grid-template-columns:1fr}}
+.kaartvoet h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:var(--inkt);
+  border-bottom:2px solid var(--inkt);padding-bottom:8px;margin-bottom:var(--s3)}
+.kaartvoet p{font:400 15.5px/1.55 var(--sans);color:var(--inkt-2)}
+.kaartvoet p + p{margin-top:var(--s2)}
+.kaartvoet b{color:var(--inkt)}
+
+/* ---------- 4 printkaart ---------- */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;position:relative;
+  transform-origin:top left;box-shadow:0 3px 34px rgba(22,18,14,.2);
+  font-family:var(--sans);overflow:hidden}
+@media (max-width:860px){.bladschaal{max-width:100%}}
+
+.blad .rand{position:absolute;inset:9mm 9mm 8mm 9mm;display:flex;flex-direction:column}
+
+.bkop{display:flex;align-items:flex-end;gap:5mm;border-bottom:1.6pt solid #000;padding-bottom:2.2mm}
+.bkop .t{font:700 14.5pt/1 var(--sans);letter-spacing:-.04em}
+.bkop .t em{font-style:normal;color:#bf3d1d}
+.bkop .wie{margin-left:auto;text-align:right;font:400 8.6pt/1.3 var(--sans)}
+.bkop .wie b{display:block;font:700 6pt/1 var(--mono);letter-spacing:.14em;color:#6b6154}
+
+.bhoe{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin:2.4mm 0 3mm}
+.bhoe div{display:flex;gap:1.8mm;align-items:baseline}
+.bhoe span.n{font:700 7.6pt/1.25 var(--mono);color:#bf3d1d;flex:none}
+.bhoe span.t{font:400 8.2pt/1.28 var(--sans);color:#231d17}
+
+/* het vel labels: 2 kolommen × 3 rijen */
+.bvel{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr);
+  gap:4mm;flex:1}
+.blabel{position:relative;border:1.1pt dashed #8c8172;padding:2.2mm}
+.binnenlabel{height:100%;border:1.3pt solid #000;background:#f4ecdc;position:relative;
+  display:flex;flex-direction:column;overflow:hidden}
+/* de afgeschuinde hoek van een verzendlabel: een wit driehoekje dekt de
+   hoek af, en een gedraaide lijn maakt de schuine kant van de omtrek af */
+.binnenlabel::before{content:"";position:absolute;left:0;top:0;z-index:4;
+  width:0;height:0;border-top:7mm solid #fff;border-right:7mm solid transparent}
+.binnenlabel::after{content:"";position:absolute;left:0;top:7mm;z-index:5;
+  width:9.9mm;height:0;border-top:1.3pt solid #000;
+  transform:rotate(-45deg);transform-origin:left top}
+.bgat{position:absolute;left:4.2mm;top:9.5mm;width:4.4mm;height:4.4mm;border-radius:50%;
+  background:#fff;border:1pt solid #000;z-index:3}
+.bgat::after{content:"";position:absolute;inset:1.1mm;border-radius:50%;border:.6pt solid #8c8172}
+
+.blabelkop{background:#000;color:#fff;padding:1.8mm 2.4mm 1.8mm 11mm;margin-top:7mm;min-height:12mm;
+  display:flex;flex-direction:column;justify-content:center}
+.blabelkop .plek{font:700 6pt/1 var(--mono);letter-spacing:.2em;color:#b0a493;margin-bottom:1mm}
+.blabelkop .aanl{font:700 11.4pt/1.1 var(--sans);letter-spacing:-.03em}
+
+.blabellijf{padding:2.2mm 2.6mm 0;flex:1;display:flex;gap:2.4mm}
+.blabellijf .tekst{flex:1;min-width:0}
+.blabellijf h4{font:700 12.4pt/1.1 var(--sans);letter-spacing:-.035em;color:#000;margin-bottom:1.2mm}
+.blabellijf ol{list-style:none;counter-reset:z}
+.blabellijf ol li{counter-increment:z;position:relative;padding-left:4mm;
+  font:400 9.4pt/1.28 var(--sans);color:#000;margin-top:.9mm}
+.blabellijf ol li::before{content:counter(z);position:absolute;left:0;top:.2mm;
+  font:700 7pt/1.5 var(--mono);color:#bf3d1d}
+.blabellijf .prent{width:17mm;flex:none;border:.7pt solid #b6ab99;background:#fff;padding:.7mm;
+  height:17mm;display:flex;align-items:center;justify-content:center}
+.blabellijf .prent img{max-width:100%;max-height:100%;mix-blend-mode:multiply}
+
+.blabelvoet{margin-top:auto;display:flex;align-items:center;gap:2mm;
+  padding:1.6mm 2.6mm 2mm;border-top:.8pt dashed #8c8172}
+.blabelvoet .d{font:700 8.4pt/1.15 var(--mono);letter-spacing:.01em}
+.blabelvoet .v{margin-left:auto;display:flex;gap:1mm}
+.blabelvoet .v i{width:3.6mm;height:3.6mm;border:.8pt solid #6b6154;display:block}
+.blabelnr{position:absolute;right:2.4mm;top:2.1mm;z-index:3;font:700 5.6pt/1 var(--mono);
+  letter-spacing:.12em;color:#8c8172}
+
+/* het lege label */
+.binnenlabel.blanco{background:#fff}
+.binnenlabel.blanco .blabelkop{background:#bf3d1d}
+.binnenlabel.blanco .blabelkop .plek{color:#f2c6ba}
+.blanco .schrijflijn{display:block;height:0;border-bottom:.9pt solid #000;margin:3.4mm 0 0}
+.blanco .schrijflijn.kort{width:62%}
+.blanco .uitleg{font:400 8.2pt/1.3 var(--sans);color:#3a322a;margin-top:2mm}
+
+.bvoetregel{margin-top:3mm;padding-top:2.2mm;border-top:1.6pt solid #000;
+  display:flex;align-items:baseline;gap:4mm}
+.bvoetregel .l{font:400 8.4pt/1.35 var(--sans);max-width:118mm}
+.bvoetregel .l b{font-weight:700}
+.bvoetregel .r{margin-left:auto;text-align:right;font:700 6.2pt/1.5 var(--mono);
+  letter-spacing:.11em;color:#6b6154}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#c9bda9;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;
+  color:#8b8072;border-top:2px solid #362e26;padding-top:var(--s2);margin-bottom:var(--s2)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.6}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:7px}
+footer.uitleiding a{color:#e8dfd0}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 48</span>
+  <strong style="font:700 16px/1 var(--sans);color:#fff;letter-spacing:-.04em">Hanglabel</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 48 · HANGLABEL</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1 class="kop">Het blad hangt op de koelkast.<em>De oefening gebeurt bij de trap.</em></h1>
+        <p class="onder">Peter Gollwitzer liet in 1999 zien wat inmiddels de best onderbouwde
+          gedragsingreep is die er bestaat: niet „ik ga meer bewegen", maar <b>„wanneer ik mijn
+          tanden heb gepoetst, dan doe ik acht keer kin intrekken"</b>. Wie zo'n als-dan-plan
+          maakt, doet het twee tot drie keer zo vaak. Het werkzame bestanddeel is de aanleiding,
+          niet de motivatie. En juist die aanleiding staat op geen enkele oefenkaart — daar staat
+          „3× per week", precies het soort voornemen dat het slechtst werkt. Dus is dit blad geen
+          blad. Het is <b>een vel labels dat u uitknipt en ophangt op de plek waar de beweging
+          hoort te gebeuren</b>.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk het vel</a>
+          <a class="kn leeg" href="#kiezer">Hoe de plekken gekozen worden</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="labelhouder">
+          <div class="label">
+            <span class="oog" aria-hidden="true"></span>
+            <div class="kop">
+              <span class="plek">BADKAMER · AAN DE SPIEGEL</span>
+              <span class="aanleiding">Na het tandenpoetsen</span>
+            </div>
+            <div class="lijf">
+              <div class="prent"><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png" alt="Kin intrekken"/></div>
+              <h3>Kin intrekken</h3>
+              <ol>
+                <li>Sta rechtop, schouders laag.</li>
+                <li>Trek uw kin recht naar achteren.</li>
+                <li>Kijk daarbij niet omlaag.</li>
+                <li>Vijf tellen vast, dan los.</li>
+              </ol>
+            </div>
+            <div class="voet">
+              <span class="dosis">8× · ELKE DAG</span>
+              <span class="vakjes" aria-label="Vier van de zeven dagen afgestreept">
+                <i class="af"></i><i class="af"></i><i class="af"></i><i class="af"></i><i></i><i></i><i></i></span>
+            </div>
+            <span class="nrhoek">02 / 06</span>
+          </div>
+        </div>
+        <p class="bijschrift">Bovenaan staat niet de oefening maar de aanleiding.
+          De oefening staat eronder, want die zoekt u pas op als u er al staat.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 2</b><h2>De oefeningen-kiezer</h2>
+      <p>Een oefening kiezen is hier maar de helft. De andere helft is de <em>aanleiding</em>:
+        een handeling die deze patiënt sowieso elke dag doet, op een plek waar een kaartje kan
+        hangen. Dat gesprek duurt twee minuten en is de enige plek in het hele product waar de
+        fysiotherapeut iets moet vragen dat niet over het lichaam gaat.</p>
+    </div>
+
+    <div class="kiezerrij">
+
+      <div class="paneel">
+        <h3>OEFENING + AANLEIDING — 6 LABELS</h3>
+        <div class="koppel">
+
+          <div class="rij">
+            <div class="beeld"><img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt="Schouder naar buiten draaien met elastiek"/></div>
+            <div><h4>Schouder naar buiten draaien</h4>
+              <div class="dos">10× · 2 SERIES · ELASTIEK</div></div>
+            <div class="anker"><b>AANLEIDING</b><span>Voor de koffie</span>
+              <small>Keuken, aan de kastdeur. Het elastiek hangt aan hetzelfde haakje.</small></div>
+          </div>
+
+          <div class="rij">
+            <div class="beeld"><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png" alt="Kin intrekken"/></div>
+            <div><h4>Kin intrekken</h4>
+              <div class="dos">8× · 5 TELLEN VAST · DAGELIJKS</div></div>
+            <div class="anker"><b>AANLEIDING</b><span>Na het tandenpoetsen</span>
+              <small>Badkamer, aan de spiegel. Twee keer per dag, vanzelf.</small></div>
+          </div>
+
+          <div class="rij">
+            <div class="beeld"><img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" alt="Op de plaats marcheren met steun"/></div>
+            <div><h4>Op de plaats marcheren</h4>
+              <div class="dos">20 STAPPEN · 2× PER DAG</div></div>
+            <div class="anker"><b>AANLEIDING</b><span>Terwijl het water kookt</span>
+              <small>Aanrecht, hand aan het blad. De ketel is de timer.</small></div>
+          </div>
+
+          <div class="rij">
+            <div class="beeld"><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Eenbeenstand met steun"/></div>
+            <div><h4>Eenbeenstand, met steun</h4>
+              <div class="dos">3× 20 TELLEN PER BEEN</div></div>
+            <div class="anker"><b>AANLEIDING</b><span>Bij de trapleuning, onderaan</span>
+              <small>Gang. Hand blijft aan de leuning — dat is de steun én de plek.</small></div>
+          </div>
+
+          <div class="rij">
+            <div class="beeld"><img src="/images/rug/knie-naar-borst-liggend-line-v1.png" alt="Knie naar borst, liggend"/></div>
+            <div><h4>Knie naar borst, liggend</h4>
+              <div class="dos">5× PER BEEN · 20 TELLEN</div></div>
+            <div class="anker"><b>AANLEIDING</b><span>Voor het opstaan, in bed</span>
+              <small>Slaapkamer, aan de bedrand. Nog vóór de voeten op de vloer staan.</small></div>
+          </div>
+
+          <div class="rij leeg">
+            <div class="beeld" style="border-style:dashed;border-color:var(--verm)">
+              <span style="font:700 22px/1 var(--mono);color:var(--verm)">?</span></div>
+            <div><h4>Leeg label</h4>
+              <div class="dos">DOOR DE PATIËNT IN TE VULLEN</div></div>
+            <div class="anker"><b>AANLEIDING</b><span>Dat weet u zelf beter</span>
+              <small>Wij kennen uw huis niet. Hang dit waar u tóch elke dag langskomt,
+                en schrijf erop wat u daar doet.</small></div>
+          </div>
+
+        </div>
+
+        <div class="notitie">
+          <b>Waarom „3× per week" hier niet meer voorkomt.</b> Een frequentie beschrijft hoe vaak
+          iets moet gebeuren, maar niet wanneer — en daarmee blijft er elke dag opnieuw een besluit
+          te nemen. Een aanleiding neemt dat besluit weg. De frequentie staat er nog wel, kleiner,
+          onderaan het label, als controle achteraf in plaats van als opdracht vooraf.
+        </div>
+      </div>
+
+      <div class="paneel">
+        <h3>WAAR DE LABELS KOMEN TE HANGEN</h3>
+        <div class="plattegrond">
+          <div class="plan">
+            <div class="kamer"><b>KEUKEN</b>
+              <span class="speld" style="left:22%;top:44%">1</span>
+              <span class="speld" style="left:58%;top:66%">3</span>
+            </div>
+            <div class="kamer"><b>BADKAMER</b>
+              <span class="speld" style="left:44%;top:48%">2</span>
+            </div>
+            <div class="kamer"><b>GANG · TRAP</b>
+              <span class="speld" style="left:30%;top:52%">4</span>
+              <span class="speld leeg" style="left:66%;top:30%">6</span>
+            </div>
+            <div class="kamer"><b>SLAAPKAMER</b>
+              <span class="speld" style="left:46%;top:54%">5</span>
+            </div>
+          </div>
+          <div class="planvoet">
+            <span><i>1</i> Kastdeur, keuken</span>
+            <span><i>2</i> Spiegel, badkamer</span>
+            <span><i>3</i> Aanrecht</span>
+            <span><i>4</i> Trapleuning</span>
+            <span><i>5</i> Bedrand</span>
+            <span><i class="leeg">6</i> Zelf te kiezen</span>
+          </div>
+        </div>
+        <div class="notitie">
+          Deze plattegrond wordt niet ingevoerd en niet opgeslagen — hij wordt in het gesprek
+          getekend, op de achterkant van het vel. Het punt is niet de kaart van het huis, maar dat
+          er hardop is uitgesproken <b>waar</b> elk kaartje komt te hangen. Wie dat niet kan
+          benoemen, hangt het niet op.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 3</b><h2>De digitale cliëntkaart</h2>
+      <p>De cliëntkaart houdt niet bij wie er gedisciplineerd is, maar <em>welke plek werkt</em>.
+        Dat is een andere vraag, en een veel bruikbaardere: als het label in de gang vier weken
+        lang leeg blijft terwijl dat in de badkamer vol staat, ligt het niet aan de patiënt maar
+        aan de aanleiding. Dan wordt de aanleiding vervangen, niet de patiënt aangesproken.</p>
+    </div>
+
+    <div class="kaartblad">
+      <div class="kaartkop">
+        <h3>Zes labels — mevrouw J. Bakker</h3>
+        <span class="serie">OPGEHANGEN 4 AUG · WEEK 3 VAN 8</span>
+      </div>
+
+      <div class="plekrij">
+        <span class="nr">1</span>
+        <div class="wat"><b>KEUKEN · KASTDEUR</b><span>Voor de koffie</span>
+          <small>Schouder naar buiten draaien, 10× · 2 series</small></div>
+        <span class="staaf"><i style="width:95%"></i></span>
+        <span class="cijfer">20 / 21<small>DAGEN AFGESTREEPT</small></span>
+      </div>
+
+      <div class="plekrij">
+        <span class="nr">2</span>
+        <div class="wat"><b>BADKAMER · SPIEGEL</b><span>Na het tandenpoetsen</span>
+          <small>Kin intrekken, 8× · 5 tellen vast</small></div>
+        <span class="staaf"><i style="width:100%"></i></span>
+        <span class="cijfer">21 / 21<small>DAGEN AFGESTREEPT</small></span>
+      </div>
+
+      <div class="plekrij">
+        <span class="nr">3</span>
+        <div class="wat"><b>KEUKEN · AANRECHT</b><span>Terwijl het water kookt</span>
+          <small>Op de plaats marcheren, 20 stappen</small></div>
+        <span class="staaf"><i style="width:81%"></i></span>
+        <span class="cijfer">17 / 21<small>DAGEN AFGESTREEPT</small></span>
+      </div>
+
+      <div class="plekrij">
+        <span class="nr">4</span>
+        <div class="wat"><b>GANG · TRAPLEUNING</b><span>Bij de trapleuning, onderaan</span>
+          <small>Eenbeenstand met steun, 3× 20 tellen</small></div>
+        <span class="staaf laag"><i style="width:14%"></i></span>
+        <span class="cijfer">3 / 21<small>DAGEN AFGESTREEPT</small></span>
+      </div>
+
+      <div class="plekrij">
+        <span class="nr">5</span>
+        <div class="wat"><b>SLAAPKAMER · BEDRAND</b><span>Voor het opstaan</span>
+          <small>Knie naar borst liggend, 5× per been</small></div>
+        <span class="staaf"><i style="width:86%"></i></span>
+        <span class="cijfer">18 / 21<small>DAGEN AFGESTREEPT</small></span>
+      </div>
+
+      <div class="plekrij geen">
+        <span class="nr">6</span>
+        <div class="wat"><b>ZELF GEKOZEN · BIJGESCHREVEN 6 AUG</b>
+          <span>„Als ik de kat voer, 's ochtends"</span>
+          <small>Bijkeuken, bij de voerbak. In het gesprek nooit ter sprake gekomen.</small></div>
+        <span class="staaf"><i style="width:100%"></i></span>
+        <span class="cijfer">21 / 21<small>DAGEN AFGESTREEPT</small></span>
+      </div>
+
+      <div class="kaartvoet">
+        <div>
+          <h4>WAT HIER TE ZIEN IS</h4>
+          <p>Vijf van de zes plekken werken. De trapleuning werkt niet — drie van de eenentwintig
+            dagen — en dat is geen motivatieprobleem: <b>„bij de trapleuning" is geen handeling
+            maar een meubelstuk</b>. Er is geen moment waarop het gebeurt. De vier andere labels
+            hangen allemaal aan iets dat de patiënt sowieso doet: koffiezetten, tandenpoetsen,
+            water opzetten, opstaan.</p>
+          <p>Bij de volgende afspraak wordt label 4 dus niet aangemoedigd maar <b>herschreven</b>:
+            de aanleiding wordt „als ik boven de was heb opgehangen", en het label verhuist mee
+            naar de overloop.</p>
+        </div>
+        <div>
+          <h4>HET LEGE LABEL</h4>
+          <p>Label 6 stond blanco toen het vel uit de printer kwam. De patiënt heeft er zelf
+            <b>„als ik de kat voer"</b> op geschreven en het bij de voerbak gehangen — en dat is
+            meteen de plek met het hoogste percentage van allemaal.</p>
+          <p>Geen enkele fysiotherapeut had die aanleiding kunnen bedenken, want geen enkele
+            fysiotherapeut kent dat huis. Daarom blijft dat label leeg.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 4</b><h2>De printkaart — A4 staand, zes labels om uit te knippen</h2>
+      <p>Eén vel, zes kaartjes van 92 × 84 mm, met een kniplijn eromheen en een geperforeerd
+        gaatje aangegeven. De zwarte kop draagt de aanleiding, de plaatsnaam staat erboven in
+        gesperde kapitalen, de oefening staat eronder op 12,4 punt en de uitvoering op 9,4 punt.
+        Rechtsonder een inventarisnummer, zoals op een museumlabel: <em>02 / 06</em> — zodat de
+        patiënt aan één kaartje kan zien dat er nog vijf zijn. Het zesde label is leeg en heeft
+        schrijflijnen. Vermiljoen doet alleen mee bij wat afgestreept of ingevuld wordt; op een
+        zwart-wit kopie verandert er niets aan de leesbaarheid.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="bkop">
+              <span class="t">Zes labels <em>· knippen en ophangen</em></span>
+              <span class="wie"><b>VOOR</b>Mevrouw J. Bakker — week 3 van 8<br/>
+                Fysiotherapie De Wetering, Utrecht · 030 - 244 18 90</span>
+            </div>
+
+            <div class="bhoe">
+              <div><span class="n">1</span><span class="t">Knip de zes kaartjes uit langs de
+                stippellijn.</span></div>
+              <div><span class="n">2</span><span class="t">Prik een gaatje op het rondje en haal
+                er touw of een elastiekje door.</span></div>
+              <div><span class="n">3</span><span class="t">Hang elk kaartje op de plek die
+                bovenaan staat — vandaag nog.</span></div>
+              <div><span class="n">4</span><span class="t">Kaartje 6 is leeg. Schrijf er zelf op
+                wat u waar doet.</span></div>
+            </div>
+
+            <div class="bvel">
+
+              <!-- label 1 -->
+              <div class="blabel">
+                <div class="binnenlabel">
+                  <span class="bgat" aria-hidden="true"></span>
+                  <div class="blabelkop">
+                    <span class="plek">KEUKEN · KASTDEUR</span>
+                    <span class="aanl">Voor de koffie</span>
+                  </div>
+                  <div class="blabellijf">
+                    <div class="tekst">
+                      <h4>Schouder naar buiten draaien</h4>
+                      <ol>
+                        <li>Ellebogen tegen uw zij.</li>
+                        <li>Onderarmen naar buiten draaien.</li>
+                        <li>Twee tellen vast, rustig terug.</li>
+                      </ol>
+                    </div>
+                    <div class="prent"><img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt=""/></div>
+                  </div>
+                  <div class="blabelvoet">
+                    <span class="d">10× · 2 SERIES</span>
+                    <span class="v"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                  </div>
+                  <span class="blabelnr">01 / 06</span>
+                </div>
+              </div>
+
+              <!-- label 2 -->
+              <div class="blabel">
+                <div class="binnenlabel">
+                  <span class="bgat" aria-hidden="true"></span>
+                  <div class="blabelkop">
+                    <span class="plek">BADKAMER · SPIEGEL</span>
+                    <span class="aanl">Na het tandenpoetsen</span>
+                  </div>
+                  <div class="blabellijf">
+                    <div class="tekst">
+                      <h4>Kin intrekken</h4>
+                      <ol>
+                        <li>Sta rechtop, schouders laag.</li>
+                        <li>Kin recht naar achteren, niet omlaag.</li>
+                        <li>Vijf tellen vast, dan los.</li>
+                      </ol>
+                    </div>
+                    <div class="prent"><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png" alt=""/></div>
+                  </div>
+                  <div class="blabelvoet">
+                    <span class="d">8× · ELKE DAG</span>
+                    <span class="v"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                  </div>
+                  <span class="blabelnr">02 / 06</span>
+                </div>
+              </div>
+
+              <!-- label 3 -->
+              <div class="blabel">
+                <div class="binnenlabel">
+                  <span class="bgat" aria-hidden="true"></span>
+                  <div class="blabelkop">
+                    <span class="plek">KEUKEN · AANRECHT</span>
+                    <span class="aanl">Terwijl het water kookt</span>
+                  </div>
+                  <div class="blabellijf">
+                    <div class="tekst">
+                      <h4>Op de plaats marcheren</h4>
+                      <ol>
+                        <li>Hand aan het aanrechtblad.</li>
+                        <li>Knieën om de beurt optillen.</li>
+                        <li>Rustig tempo, blijf ademen.</li>
+                      </ol>
+                    </div>
+                    <div class="prent"><img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" alt=""/></div>
+                  </div>
+                  <div class="blabelvoet">
+                    <span class="d">20 STAPPEN · 2× P/D</span>
+                    <span class="v"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                  </div>
+                  <span class="blabelnr">03 / 06</span>
+                </div>
+              </div>
+
+              <!-- label 4 -->
+              <div class="blabel">
+                <div class="binnenlabel">
+                  <span class="bgat" aria-hidden="true"></span>
+                  <div class="blabelkop">
+                    <span class="plek">OVERLOOP · WASREK</span>
+                    <span class="aanl">Als de was hangt</span>
+                  </div>
+                  <div class="blabellijf">
+                    <div class="tekst">
+                      <h4>Eenbeenstand, met steun</h4>
+                      <ol>
+                        <li>Eén hand aan de leuning of de muur.</li>
+                        <li>Til één voet net van de vloer.</li>
+                        <li>Twintig tellen, dan het andere been.</li>
+                      </ol>
+                    </div>
+                    <div class="prent"><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt=""/></div>
+                  </div>
+                  <div class="blabelvoet">
+                    <span class="d">3× 20 TELLEN P/BEEN</span>
+                    <span class="v"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                  </div>
+                  <span class="blabelnr">04 / 06</span>
+                </div>
+              </div>
+
+              <!-- label 5 -->
+              <div class="blabel">
+                <div class="binnenlabel">
+                  <span class="bgat" aria-hidden="true"></span>
+                  <div class="blabelkop">
+                    <span class="plek">SLAAPKAMER · BEDRAND</span>
+                    <span class="aanl">Voor het opstaan</span>
+                  </div>
+                  <div class="blabellijf">
+                    <div class="tekst">
+                      <h4>Knie naar borst, liggend</h4>
+                      <ol>
+                        <li>Blijf liggen, één knie optrekken.</li>
+                        <li>Handen om het scheenbeen.</li>
+                        <li>Twintig tellen, dan het andere been.</li>
+                      </ol>
+                    </div>
+                    <div class="prent"><img src="/images/rug/knie-naar-borst-liggend-line-v1.png" alt=""/></div>
+                  </div>
+                  <div class="blabelvoet">
+                    <span class="d">5× PER BEEN</span>
+                    <span class="v"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                  </div>
+                  <span class="blabelnr">05 / 06</span>
+                </div>
+              </div>
+
+              <!-- label 6 — leeg -->
+              <div class="blabel">
+                <div class="binnenlabel blanco">
+                  <span class="bgat" aria-hidden="true"></span>
+                  <div class="blabelkop">
+                    <span class="plek">DIT KAARTJE IS VAN U</span>
+                    <span class="aanl">Als ik . . . . . . . . . . . . . . . .</span>
+                  </div>
+                  <div class="blabellijf">
+                    <div class="tekst">
+                      <h4 style="color:#bf3d1d">Dan doe ik:</h4>
+                      <span class="schrijflijn"></span>
+                      <span class="schrijflijn"></span>
+                      <span class="schrijflijn kort"></span>
+                      <p class="uitleg">Wij kennen uw huis niet. Hang dit kaartje op een plek waar
+                        u tóch elke dag langskomt, en schrijf erop wat u daar gaat doen.</p>
+                    </div>
+                  </div>
+                  <div class="blabelvoet">
+                    <span class="d" style="color:#bf3d1d">. . . × PER DAG</span>
+                    <span class="v"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                  </div>
+                  <span class="blabelnr">06 / 06</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="bvoetregel">
+              <span class="l"><b>Hangt een kaartje na een week nog steeds op dezelfde plek,
+                zonder streepjes?</b> Dan klopt de plek niet, en niet u. Neem het mee naar de
+                volgende afspraak — dan schrijven we er een andere aanleiding op.</span>
+              <span class="r">FYSIPLAN<br/>VEL 1 VAN 1 · 6 LABELS<br/>OPGEHANGEN OP . . . . . . .</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>WAAR HET VANDAAN KOMT</h4>
+      <p>E. W. Dennison vroeg op 9 juni 1863 patent aan op het versterkte gaatje in het
+        verzendlabel — het ringetje waardoor een kaartje aan een touwtje niet uitscheurt — en
+        verkocht er in het eerste jaar tien miljoen. Dezelfde vorm hangt sindsdien aan machines
+        (het lockout-tagout-label), aan planten in een botanische tuin en naast museumstukken.
+        Al die labels doen hetzelfde: ze plakken informatie aan een <em>plek</em> in plaats van
+        aan een document. Daarnaast staat Gollwitzers implementation intention (American
+        Psychologist, 1999): een als-dan-plan dat het gedrag twee tot drie keer zo waarschijnlijk
+        maakt, mits de aanleiding concreet is.</p>
+    </div>
+    <div class="kolom">
+      <h4>WAT HET VEL DOET</h4>
+      <ul>
+        <li>De aanleiding staat bovenaan in de zwarte kop, de oefening eronder.</li>
+        <li>Zes kaartjes met kniplijn, gaatje en inventarisnummer (02 / 06).</li>
+        <li>De frequentie staat kleiner onderaan: controle achteraf, geen opdracht vooraf.</li>
+        <li>Het zesde label is leeg — de therapeut kent het huis niet.</li>
+        <li>De cliëntkaart meet welke plek werkt, niet wie gedisciplineerd is.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>VERDER</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/ontwerp/concept-3-vouwblad.html">Concept 3 — Vouwblad (één plek)</a></li>
+        <li><a href="/ontwerp/concept-27-schaduwbord.html">Concept 27 — Schaduwbord</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var breed=schaal.clientWidth, eigen=blad.offsetWidth;
+    var f=Math.min(1,breed/eigen);
+    blad.style.transform='scale('+f+')';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

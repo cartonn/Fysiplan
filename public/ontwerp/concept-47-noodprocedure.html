@@ -1,0 +1,975 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 47 — Noodprocedure · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 47 — NOODPROCEDURE
+   ------------------------------------------------------------
+   Elke oefenkaart beschrijft de goede dag.
+   De luchtvaart schrijft eerst de andere op.
+
+   Op 30 oktober 1935 stortte de Boeing Model 299 neer op Wright
+   Field, het prototype van wat de B-17 zou worden. De
+   roervergrendeling stond er nog op. Twee doden. Het toestel
+   was niet te ingewikkeld om te vliegen — het was te
+   ingewikkeld om te ONTHOUDEN. Wat Boeing daarna deed is
+   bekend: geen extra training, geen betere piloten, maar een
+   kaart met de kritieke handelingen erop. De checklist.
+
+   Wat minder bekend is, is het tweede boekje. Naast de normale
+   checklist groeide het Quick Reference Handbook: de
+   niet-normale procedures. Motorbrand. Drukverlies. Uitval van
+   een systeem. Dat boek wordt gemaakt voor het moment waarop
+   iemand geschrokken, met trillende handen en te weinig tijd
+   iets moet opzoeken — en daarom ziet het eruit zoals het
+   eruitziet: zwarte tabs langs de rand, de conditie als vetgezette
+   kopregel, genummerde handelingen, en vóór alles een klein
+   omkaderd blok met de handelingen die je ZONDER BOEK doet.
+   Memory items. Ze staan er alleen omdat er situaties zijn
+   waarin bladeren te lang duurt.
+
+   EN NU DE OEFENKAART. Die beschrijft alleen de normale dag.
+   Drie oefeningen, tien herhalingen, drie keer per week. Maar
+   de dag waarop het misgaat is niet zeldzaam — bij aanhoudende
+   klachten is de opvlamming de regel, niet de uitzondering. De
+   pijnrevalidatie werkt daarom al jaren met een flare-up plan:
+   NHS Lothian, de Australische ACI, de Amerikaanse VA — allemaal
+   met dezelfde nadruk, namelijk dat je zo'n plan MAAKT ALS HET
+   GOED GAAT, want tijdens een opvlamming kun je niet meer
+   nadenken. Precies het argument van het QRH.
+
+   Alleen: op het blad dat de patiënt meekrijgt staat het niet.
+   Daar staat de goede dag, en verder niets. Dus wordt er in de
+   badkamer om half acht 's ochtends geïmproviseerd, en de
+   improvisatie is bijna altijd dezelfde twee fouten: doorgaan
+   alsof er niets is, of helemaal stoppen en niet meer beginnen.
+
+   DIT BLAD ZET HET ANDERE BOEKJE OP DEZELFDE A4. Bovenaan de
+   normale procedure, in challenge-and-response: links wat er
+   gecontroleerd wordt, stippellijn, rechts het antwoord in
+   kapitalen. Daaronder, met zwarte tabs langs de rechterrand,
+   vier afwijkingen die deze patiënt echt kan tegenkomen, elk
+   met een conditie en genummerde handelingen. Een omkaderd blok
+   met de drie dingen die zonder opzoeken gebeuren. En onderaan,
+   in rood, de enige regels die géén oefening zijn maar een
+   telefoonnummer.
+
+   Dit is niet concept 30 (Ganzenbord), dat de tegenslag vóóraf
+   afdrukt als speelveld, en niet concept 33 (Beeldverhaal), dat
+   er een verhaal met een hoofdpersoon van maakt. Dit blad
+   vertelt niets. Het is een procedure: conditie, handeling,
+   volgende handeling. Geen troost, geen aanmoediging, geen
+   emoji. Juist dat is de vriendelijkheid — wie in de knel zit
+   heeft geen verhaal nodig maar een regel om te volgen.
+
+   BEELDTAAL: het QRH en de ECAM-hiërarchie. Eén schreefloze
+   letter, zwaar gezet. Zwart op wit, met exact twee signaalkleuren:
+   AMBER voor "let op, handel", ROOD voor "stop, bel". Geen grijs
+   dat op een kopieermachine wegvalt, geen fijne lijnen, geen
+   decoratie. Stippelleiders omdat het oog dan van links naar
+   rechts blijft sporen. Alles staat op 10 tot 12,5 punt: dit
+   blad wordt gelezen door iemand die niet lekker is, misschien
+   zonder bril, in slecht licht.
+   ============================================================ */
+
+:root{
+  --wit:#ffffff;
+  --blad:#f2f2f0;
+  --inkt:#0d0f10;
+  --inkt-2:#3a3e41;
+  --grijs:#6f7478;
+  --lijn:#c9ccce;
+  --lijn-2:#e2e4e5;
+  --amber:#b45f00;
+  --amber-vlak:#fbf0dd;
+  --rood:#bd1b18;
+  --rood-vlak:#fbe9e8;
+  --groen:#186b47;
+
+  --sans:"Helvetica Neue",Helvetica,Arial,"Liberation Sans",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+
+  --s1:4px; --s2:8px; --s3:15px; --s4:24px; --s5:38px; --s6:60px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:16.5px/1.55 var(--sans);color:var(--inkt-2);background:var(--blad);
+  -webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:var(--inkt)}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+
+.binnen{max-width:1150px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--inkt);color:#dfe2e4;
+  font:600 13px/1 var(--sans);letter-spacing:.02em}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#9aa0a4;
+  border:1px solid #33383b;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#b8bec2;text-decoration:none;padding:5px 3px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--amber)}
+.labbalk a.terug{color:#fff;border-bottom-color:#33383b}
+@media (max-width:760px){.labbalk a:not(.terug){display:none}}
+
+.scherm{padding:var(--s6) 0;border-bottom:1px solid var(--lijn)}
+.scherm.eerste{background:var(--wit)}
+.schermkop{margin-bottom:var(--s5)}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;
+  color:var(--grijs);margin-bottom:var(--s2)}
+.schermkop h2{font:700 30px/1.14 var(--sans);color:var(--inkt);letter-spacing:-.035em}
+.schermkop p{max-width:68ch;margin-top:var(--s2);font-size:16.5px}
+
+/* ---------- 1 landing ---------- */
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:30px;height:30px;background:var(--inkt);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 15px/1 var(--sans)}
+.merkregel .naam{font:700 16px/1 var(--sans);color:var(--inkt);letter-spacing:-.03em}
+.merkregel .pad{font:700 10.5px/1 var(--mono);letter-spacing:.16em;color:var(--grijs)}
+
+.heldrij{display:grid;grid-template-columns:1.02fr .98fr;gap:var(--s6);align-items:start}
+@media (max-width:940px){.heldrij{grid-template-columns:1fr;gap:var(--s5)}}
+
+h1.kop{font:700 clamp(32px,4.4vw,50px)/1.05 var(--sans);color:var(--inkt);letter-spacing:-.045em;max-width:16ch}
+h1.kop em{display:block;font-style:normal;color:var(--amber)}
+p.onder{margin-top:var(--s3);font-size:18px;line-height:1.62;max-width:53ch}
+p.onder b{font-weight:700;color:var(--inkt)}
+
+.knoppen{display:flex;flex-wrap:wrap;gap:10px;margin-top:var(--s4)}
+.kn{display:inline-block;padding:13px 22px;text-decoration:none;
+  font:700 14.5px/1 var(--sans);letter-spacing:.01em;
+  background:var(--inkt);color:#fff;border:2px solid var(--inkt)}
+.kn.leeg{background:transparent;color:var(--inkt)}
+.kn:hover{background:var(--amber);border-color:var(--amber);color:#fff}
+
+/* het proefstuk: een echte niet-normale procedure */
+.proefstuk{background:var(--wit);border:2px solid var(--inkt)}
+.pkop{display:flex;align-items:center;gap:var(--s2);padding:11px 16px;background:var(--inkt);color:#fff}
+.pkop b{font:700 14px/1 var(--sans);letter-spacing:.02em}
+.pkop span{margin-left:auto;font:700 9.5px/1 var(--mono);letter-spacing:.16em;color:#a9afb3}
+
+/* ---------- procedure-component ---------- */
+.proc{padding:var(--s3) 16px var(--s4)}
+.conditie{font:700 11px/1 var(--mono);letter-spacing:.16em;color:var(--grijs);margin-bottom:5px}
+.proc h3{font:700 21px/1.12 var(--sans);color:var(--inkt);letter-spacing:-.035em;margin-bottom:var(--s3)}
+.proc h3.amber{color:var(--amber)}
+.proc h3.rood{color:var(--rood)}
+
+ol.stappen{list-style:none;counter-reset:st}
+ol.stappen > li{counter-increment:st;display:grid;grid-template-columns:22px 1fr;gap:11px;
+  padding:9px 0;border-top:1px solid var(--lijn-2);align-items:baseline}
+ol.stappen > li::before{content:counter(st);font:700 13px/1.35 var(--mono);color:var(--grijs);
+  text-align:right}
+.cr{display:flex;align-items:baseline;gap:6px;width:100%}
+.cr .vraag{font:400 16.5px/1.4 var(--sans);color:var(--inkt)}
+.cr .leider{flex:1;min-width:18px;border-bottom:2px dotted var(--lijn);transform:translateY(-4px)}
+.cr .antwoord{font:700 15px/1.4 var(--mono);letter-spacing:.04em;color:var(--inkt);
+  text-align:right;white-space:nowrap}
+.cr .antwoord.amber{color:var(--amber)}
+.cr .antwoord.rood{color:var(--rood)}
+@media (max-width:520px){
+  .cr{flex-wrap:wrap}.cr .leider{display:none}
+  .cr .antwoord{text-align:left;width:100%}
+}
+.tussen{padding:8px 0 8px 33px;font:400 14.5px/1.45 var(--sans);color:var(--inkt-2)}
+
+.uithethoofd{border:3px solid var(--inkt);padding:var(--s3);margin:var(--s3) 0}
+.uithethoofd .kop{display:flex;align-items:center;gap:var(--s2);margin-bottom:var(--s2)}
+.uithethoofd .kop b{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:var(--inkt)}
+.uithethoofd .kop span{margin-left:auto;font:400 12.5px/1 var(--sans);color:var(--grijs)}
+.uithethoofd ol.stappen > li:first-child{border-top:0}
+
+.melding{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;
+  padding:12px 14px;margin-top:var(--s3);border-left:5px solid var(--amber);background:var(--amber-vlak)}
+.melding.rood{border-left-color:var(--rood);background:var(--rood-vlak)}
+.melding b{font:700 10.5px/1.5 var(--mono);letter-spacing:.14em;color:var(--amber)}
+.melding.rood b{color:var(--rood)}
+.melding p{font:400 15px/1.45 var(--sans);color:var(--inkt)}
+
+/* ---------- 2 kiezer ---------- */
+.kiezerrij{display:grid;grid-template-columns:1fr 330px;gap:var(--s5);align-items:start}
+@media (max-width:960px){.kiezerrij{grid-template-columns:1fr}}
+
+.paneel{background:var(--wit);border:1px solid var(--lijn)}
+.paneel > h3{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:var(--inkt);
+  padding:14px 16px;background:var(--lijn-2);border-bottom:1px solid var(--lijn)}
+
+.oefenlijst{display:grid;gap:1px;background:var(--lijn-2)}
+.oefen{background:var(--wit);display:grid;grid-template-columns:88px 1fr auto;gap:var(--s3);
+  align-items:center;padding:13px 16px}
+.oefen .beeld{background:#fff;border:1px solid var(--lijn-2);height:72px;
+  display:flex;align-items:center;justify-content:center;padding:4px}
+.oefen .beeld img{max-height:100%;width:auto;mix-blend-mode:multiply}
+.oefen h4{font:700 17.5px/1.2 var(--sans);color:var(--inkt);letter-spacing:-.025em}
+.oefen .meta{font:700 11px/1.35 var(--mono);letter-spacing:.05em;color:var(--grijs);margin-top:6px}
+.oefen .meta em{font-style:normal;color:var(--amber)}
+.oefen .knop{font:700 12px/1 var(--mono);letter-spacing:.1em;color:var(--inkt);
+  border:2px solid var(--inkt);padding:9px 11px;white-space:nowrap}
+.oefen.gekozen .knop{background:var(--inkt);color:#fff}
+@media (max-width:620px){.oefen{grid-template-columns:64px 1fr}.oefen .knop{grid-column:2}}
+
+/* de afwijkingenlijst met tabs */
+.tabs{display:grid;gap:1px;background:var(--lijn-2)}
+.tab{background:var(--wit);display:grid;grid-template-columns:34px 1fr;align-items:stretch}
+.tab .letter{background:var(--inkt);color:#fff;display:flex;align-items:center;justify-content:center;
+  font:700 14px/1 var(--mono);letter-spacing:.02em}
+.tab.amber .letter{background:var(--amber)}
+.tab.rood .letter{background:var(--rood)}
+.tab .tekst{padding:12px 14px}
+.tab .tekst h5{font:700 15.5px/1.2 var(--sans);color:var(--inkt);letter-spacing:-.02em}
+.tab .tekst p{font:400 14px/1.45 var(--sans);color:var(--inkt-2);margin-top:4px}
+.tab.uit{opacity:.45}
+.tab .tekst .staat{display:block;font:700 10px/1 var(--mono);letter-spacing:.14em;
+  color:var(--grijs);margin-top:7px}
+
+.herzie{margin-top:var(--s3);padding:13px 15px;background:var(--wit);border:1px solid var(--lijn);
+  font:400 14.5px/1.5 var(--sans)}
+.herzie b{font:700 10.5px/1 var(--mono);letter-spacing:.14em;color:var(--grijs);
+  display:block;margin-bottom:6px}
+
+/* ---------- 3 cliëntkaart ---------- */
+.kaartblad{background:var(--wit);border:2px solid var(--inkt)}
+.kaartkop{background:var(--inkt);color:#fff;padding:var(--s3) var(--s4);
+  display:flex;align-items:baseline;flex-wrap:wrap;gap:var(--s3)}
+.kaartkop h3{font:700 22px/1.1 var(--sans);letter-spacing:-.035em}
+.kaartkop .serie{margin-left:auto;font:700 10.5px/1.5 var(--mono);letter-spacing:.14em;color:#a9afb3}
+
+.kaartbalk{display:flex;flex-wrap:wrap;gap:0;border-bottom:1px solid var(--lijn)}
+.kaartbalk div{flex:1;min-width:160px;padding:13px var(--s4);border-right:1px solid var(--lijn-2)}
+.kaartbalk div:last-child{border-right:0}
+.kaartbalk b{display:block;font:700 9.5px/1 var(--mono);letter-spacing:.14em;color:var(--grijs);margin-bottom:5px}
+.kaartbalk span{font:400 15.5px/1.3 var(--sans);color:var(--inkt)}
+.kaartbalk span.amber{color:var(--amber);font-weight:700}
+
+.kaartlijf{display:grid;grid-template-columns:1fr 1fr}
+@media (max-width:900px){.kaartlijf{grid-template-columns:1fr}}
+.kaartlijf > div{padding:var(--s4);border-right:1px solid var(--lijn-2)}
+.kaartlijf > div:last-child{border-right:0;background:#faf9f7}
+.kaartlijf h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:var(--inkt);
+  border-bottom:2px solid var(--inkt);padding-bottom:8px;margin-bottom:var(--s3)}
+.kaartlijf h4.amber{color:var(--amber);border-bottom-color:var(--amber)}
+
+.dagrij{display:grid;grid-template-columns:1fr auto;gap:var(--s3);align-items:center;
+  padding:11px 0;border-bottom:1px solid var(--lijn-2)}
+.dagrij .naam{font:400 16.5px/1.3 var(--sans);color:var(--inkt)}
+.dagrij .naam small{display:block;font:700 11px/1.4 var(--mono);letter-spacing:.05em;color:var(--grijs)}
+.dagrij .vak{width:26px;height:26px;border:2px solid var(--lijn);display:block;position:relative}
+.dagrij .vak.af{background:var(--inkt);border-color:var(--inkt)}
+.dagrij .vak.af::after{content:"";position:absolute;inset:6px 6px;
+  border-left:2.5px solid #fff;border-bottom:2.5px solid #fff;transform:rotate(-45deg) translate(1px,-1px)}
+.dagrij .vak.aangepast{background:var(--amber);border-color:var(--amber)}
+
+.logregel{display:grid;grid-template-columns:74px 1fr;gap:11px;padding:10px 0;
+  border-bottom:1px solid var(--lijn-2);align-items:baseline}
+.logregel .wanneer{font:700 11.5px/1.4 var(--mono);letter-spacing:.04em;color:var(--grijs)}
+.logregel .wat{font:400 15px/1.45 var(--sans);color:var(--inkt)}
+.logregel .wat b{font-weight:700}
+.logregel .wat em{font-style:normal;color:var(--amber);font-weight:700}
+
+/* ---------- 4 printkaart ---------- */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;position:relative;
+  transform-origin:top left;box-shadow:0 3px 34px rgba(13,15,16,.22);
+  font-family:var(--sans);overflow:hidden}
+@media (max-width:860px){.bladschaal{max-width:100%}}
+
+/* — inhoud van het A4 — */
+.blad .rand{position:absolute;inset:11mm 20mm 10mm 12mm;display:flex;flex-direction:column}
+
+.bkop{background:#000;color:#fff;padding:2.6mm 4mm;display:flex;align-items:baseline;gap:4mm}
+.bkop .t{font:700 14pt/1 var(--sans);letter-spacing:-.03em}
+.bkop .s{font:700 7pt/1 var(--mono);letter-spacing:.14em;color:#b4b9bc}
+.bkop .r{margin-left:auto;font:700 7pt/1 var(--mono);letter-spacing:.12em;color:#b4b9bc}
+
+.bwie{display:flex;gap:6mm;padding:2mm 4mm;border-bottom:1.4pt solid #000;flex-wrap:wrap}
+.bwie div b{display:block;font:700 5.8pt/1 var(--mono);letter-spacing:.14em;color:#5b6165}
+.bwie div span{font:400 9pt/1.25 var(--sans);color:#000}
+
+/* — normale procedure — */
+.babschnitt{margin-top:3.2mm}
+.bhoofd{display:flex;align-items:center;gap:2.5mm;border-bottom:1.2pt solid #000;padding-bottom:1.2mm}
+.bhoofd .nr{background:#000;color:#fff;font:700 7pt/1 var(--mono);letter-spacing:.1em;padding:1.1mm 1.8mm}
+.bhoofd .t{font:700 10.5pt/1 var(--sans);letter-spacing:-.02em}
+.bhoofd .u{margin-left:auto;font:700 6.4pt/1 var(--mono);letter-spacing:.12em;color:#5b6165}
+.bhoofd.amber{border-bottom-color:#b45f00}
+.bhoofd.amber .nr{background:#b45f00}
+.bhoofd.amber .t{color:#b45f00}
+.bhoofd.rood{border-bottom-color:#bd1b18}
+.bhoofd.rood .nr{background:#bd1b18}
+.bhoofd.rood .t{color:#bd1b18}
+
+.bnormaal{margin-top:1.8mm}
+/* de drie prenten liggen als strook ónder de checklist: elke prent draagt
+   het nummer van de regel waar hij bij hoort */
+.bnormaal .prentrij{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm;margin-top:2.6mm}
+.bnormaal .prentrij span{border:.6pt solid #bfc3c6;height:26mm;position:relative;
+  display:flex;align-items:center;justify-content:center;padding:1.4mm;min-height:0;overflow:hidden}
+.bnormaal .prentrij span::after{content:attr(data-nr);position:absolute;left:1.6mm;top:1.2mm;
+  font:700 7.4pt/1 var(--mono);color:#5b6165}
+.bnormaal .prentrij img{max-width:100%;max-height:100%;width:auto;height:auto;
+  object-fit:contain;min-height:0;mix-blend-mode:multiply}
+
+.blijn{display:flex;align-items:baseline;gap:1.6mm;padding:1.5mm 0;border-top:.4pt solid #d5d8da}
+.blijn:first-child{border-top:0}
+.blijn .v{font:400 11pt/1.22 var(--sans);color:#000}
+.blijn .l{flex:1;min-width:5mm;border-bottom:1.1pt dotted #9aa0a4;transform:translateY(-1mm)}
+.blijn .a{font:700 10pt/1.22 var(--mono);letter-spacing:.03em;white-space:nowrap}
+.blijn .a.amber{color:#b45f00}
+.blijn .a.rood{color:#bd1b18}
+.blijn .n{font:700 8pt/1.3 var(--mono);color:#5b6165;width:4mm;flex:none}
+
+/* — uit het hoofd — */
+.buithoofd{border:1.8pt solid #000;padding:2.2mm 3mm;margin-top:3mm}
+.buithoofd .k{display:flex;align-items:baseline;gap:2mm;margin-bottom:1mm}
+.buithoofd .k b{font:700 6.8pt/1 var(--mono);letter-spacing:.16em}
+.buithoofd .k span{margin-left:auto;font:400 7.4pt/1 var(--sans);color:#4a4f52}
+.buithoofd .blijn{padding:1.1mm 0}
+.buithoofd .blijn .v{font-size:10.4pt}
+
+/* — afwijkingen met tabs — */
+.bafw{margin-top:3mm;display:grid;gap:1.6mm}
+.bproc{border-left:1.4pt solid #000;padding-left:2.6mm;position:relative}
+.bproc.amber{border-left-color:#b45f00}
+.bproc.rood{border-left-color:#bd1b18}
+.bproc .c{font:700 10.2pt/1.15 var(--sans);letter-spacing:-.02em;margin-bottom:.8mm}
+.bproc.amber .c{color:#b45f00}
+.bproc.rood .c{color:#bd1b18}
+.bproc .blijn{padding:1.1mm 0}
+.bproc .blijn .v{font-size:10pt}
+.bproc .blijn .a{font-size:9.2pt}
+
+/* de zwarte tabs langs de rechterrand van het vel */
+.btabs{position:absolute;right:0;top:52mm;display:flex;flex-direction:column;gap:1.6mm;width:14mm}
+.btab{background:#000;color:#fff;padding:2.4mm 1mm;
+  font:700 6.6pt/1 var(--mono);letter-spacing:.1em;text-align:center;
+  writing-mode:vertical-rl;text-orientation:mixed;height:34mm;white-space:nowrap;
+  display:flex;align-items:center;justify-content:center}
+.btab.amber{background:#b45f00}
+.btab.rood{background:#bd1b18}
+
+/* — voet — */
+.bvoet{margin-top:auto;padding-top:2.4mm;border-top:1.4pt solid #000;
+  display:flex;align-items:flex-start;gap:4mm}
+.bvoet .l{font:400 8.4pt/1.35 var(--sans);max-width:104mm}
+.bvoet .l b{font-weight:700}
+.bvoet .r{margin-left:auto;text-align:right;font:700 6.4pt/1.5 var(--mono);letter-spacing:.11em;color:#5b6165}
+
+.bbel{background:#bd1b18;color:#fff;padding:2.4mm 3mm;margin-top:2.6mm;
+  display:flex;align-items:center;gap:3mm}
+.bbel b{font:700 7.4pt/1 var(--mono);letter-spacing:.16em}
+.bbel span{font:400 9.6pt/1.3 var(--sans)}
+.bbel strong{margin-left:auto;font:700 13pt/1 var(--mono);letter-spacing:.02em;white-space:nowrap}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#c6ccd0;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;
+  color:#868d92;border-top:2px solid #32373a;padding-top:var(--s2);margin-bottom:var(--s2)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.6}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:7px}
+footer.uitleiding a{color:#e5eaed}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 47</span>
+  <strong style="font:700 16px/1 var(--sans);color:#fff;letter-spacing:-.04em">Noodprocedure</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 47 · NOODPROCEDURE</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1 class="kop">Uw kaart beschrijft alleen de goede dag.<em>Piloten schrijven eerst de andere op.</em></h1>
+        <p class="onder">Op 30 oktober 1935 stortte de Boeing Model 299 neer met de
+          roervergrendeling er nog op. Het antwoord was niet betere piloten maar de checklist —
+          en daarnaast, minder bekend, een tweede boekje: <b>het Quick Reference Handbook met de
+          niet-normale procedures</b>. Motorbrand, drukverlies, uitval. Dat boek wordt geschreven
+          voor het moment waarop niemand meer helder nadenkt. De pijnrevalidatie zegt precies
+          hetzelfde over een opvlamming: <b>maak het plan als het góed gaat</b>. Alleen staat het
+          op geen enkele oefenkaart. Dit blad zet het er wél op — op dezelfde A4, met tabs langs
+          de rand.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk de printkaart</a>
+          <a class="kn leeg" href="#kiezer">Welke afwijkingen erop komen</a>
+        </div>
+      </div>
+
+      <div class="proefstuk">
+        <div class="pkop">
+          <b>AFWIJKING B</b>
+          <span>NIET-NORMALE PROCEDURE · REV 3</span>
+        </div>
+        <div class="proc">
+          <div class="conditie">CONDITIE</div>
+          <h3 class="amber">Meer pijn dan gisteren, en het zakt niet binnen een uur.</h3>
+
+          <div class="uithethoofd">
+            <div class="kop">
+              <b>UIT HET HOOFD</b>
+              <span>doe deze drie zonder iets op te zoeken</span>
+            </div>
+            <ol class="stappen">
+              <li><span class="cr"><span class="vraag">Aantal herhalingen</span>
+                <span class="leider"></span><span class="antwoord amber">HALVEER</span></span></li>
+              <li><span class="cr"><span class="vraag">Weerstand of gewicht</span>
+                <span class="leider"></span><span class="antwoord amber">ERAF</span></span></li>
+              <li><span class="cr"><span class="vraag">De oefening zelf</span>
+                <span class="leider"></span><span class="antwoord">DOORGAAN</span></span></li>
+            </ol>
+          </div>
+
+          <ol class="stappen">
+            <li><span class="cr"><span class="vraag">Oefening 1 — schouder</span>
+              <span class="leider"></span><span class="antwoord">5× · 1 SERIE</span></span></li>
+            <li><span class="cr"><span class="vraag">Oefening 2 — kin intrekken</span>
+              <span class="leider"></span><span class="antwoord">ONGEWIJZIGD</span></span></li>
+            <li><span class="cr"><span class="vraag">Oefening 3 — marcheren</span>
+              <span class="leider"></span><span class="antwoord">ZITTEND</span></span></li>
+            <li><span class="cr"><span class="vraag">Morgen</span>
+              <span class="leider"></span><span class="antwoord">ZELFDE, NIET MINDER</span></span></li>
+          </ol>
+
+          <div class="melding">
+            <b>LET OP</b>
+            <p>Twee dagen op de halve dosis is de procedure. Op dag drie terug naar vol,
+              ook als het nog niet helemaal weg is — anders wordt de halve dosis de nieuwe dosis.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 2</b><h2>De oefeningen-kiezer</h2>
+      <p>Er worden twee dingen gekozen, niet één. Links de oefeningen voor de normale dag.
+        Rechts de afwijkingen die op dit blad passen — en dat zijn er hooguit vier, want een
+        boekje van twintig procedures wordt in een opvlamming niet doorgebladerd. De keuze
+        beperken ís het ontwerp.</p>
+    </div>
+
+    <div class="kiezerrij">
+
+      <div class="paneel">
+        <h3>NORMALE PROCEDURE — 3 OEFENINGEN</h3>
+        <div class="oefenlijst">
+
+          <div class="oefen gekozen">
+            <div class="beeld"><img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt="Schouder naar buiten draaien met elastiek"/></div>
+            <div>
+              <h4>Schouder naar buiten draaien met elastiek</h4>
+              <div class="meta">10× · 2 SERIES · 3 DAGEN P/W · <em>AANGEPAST IN B EN C</em></div>
+            </div>
+            <span class="knop">OP KAART</span>
+          </div>
+
+          <div class="oefen gekozen">
+            <div class="beeld"><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png" alt="Kin intrekken, zittend"/></div>
+            <div>
+              <h4>Kin intrekken, zittend</h4>
+              <div class="meta">8× · 5 TELLEN VAST · DAGELIJKS · <em>BLIJFT IN ALLE AFWIJKINGEN</em></div>
+            </div>
+            <span class="knop">OP KAART</span>
+          </div>
+
+          <div class="oefen gekozen">
+            <div class="beeld"><img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" alt="Op de plaats marcheren met steun"/></div>
+            <div>
+              <h4>Op de plaats marcheren, met steun</h4>
+              <div class="meta">20 STAPPEN · 2× P/D · <em>HEEFT EEN ZITTENDE VARIANT</em></div>
+            </div>
+            <span class="knop">OP KAART</span>
+          </div>
+
+          <div class="oefen">
+            <div class="beeld"><img src="/images/rug/knie-naar-borst-liggend-line-v1.png" alt="Knie naar borst, liggend"/></div>
+            <div>
+              <h4>Knie naar borst, liggend</h4>
+              <div class="meta">GEEN AANGEPASTE VARIANT VASTGELEGD</div>
+            </div>
+            <span class="knop">LEG VAST</span>
+          </div>
+
+        </div>
+
+        <div class="herzie">
+          <b>WAAROM ELKE OEFENING EEN VARIANT NODIG HEEFT</b>
+          Een afwijking die alleen zegt „doe minder" laat de patiënt zelf uitrekenen wát er
+          minder moet. Daarom legt de therapeut per oefening één aangepaste uitvoering vast —
+          zittend, halve dosis, zonder weerstand. Pas dan kan een procedure een antwoord in
+          kapitalen geven in plaats van een advies.
+        </div>
+      </div>
+
+      <div class="paneel">
+        <h3>AFWIJKINGEN — 4 VAN MAXIMAAL 4</h3>
+        <div class="tabs">
+
+          <div class="tab">
+            <span class="letter">A</span>
+            <div class="tekst">
+              <h5>Twee dagen niets gedaan</h5>
+              <p>De vaakst gemiste afwijking. Zonder procedure wordt hier gestopt, niet hervat.</p>
+              <span class="staat">3× GEBRUIKT SINDS WEEK 1</span>
+            </div>
+          </div>
+
+          <div class="tab amber">
+            <span class="letter">B</span>
+            <div class="tekst">
+              <h5>Meer pijn dan gisteren</h5>
+              <p>Halveren, doorgaan, en na twee dagen terug naar vol. Niet stoppen.</p>
+              <span class="staat">1× GEBRUIKT · 14 AUGUSTUS</span>
+            </div>
+          </div>
+
+          <div class="tab amber">
+            <span class="letter">C</span>
+            <div class="tekst">
+              <h5>Duizelig bij opstaan</h5>
+              <p>Alles zittend, steun verplicht, en het balansdeel gaat er die dag helemaal af.</p>
+              <span class="staat">NOG NIET GEBRUIKT</span>
+            </div>
+          </div>
+
+          <div class="tab rood">
+            <span class="letter">D</span>
+            <div class="tekst">
+              <h5>Stop en bel</h5>
+              <p>Uitval, gevoelloosheid, koorts, een val, of pijn die 's nachts wakker maakt.
+                Dit is geen oefenafwijking maar een telefoonnummer.</p>
+              <span class="staat">STAAT ALTIJD OP DE KAART</span>
+            </div>
+          </div>
+
+          <div class="tab uit">
+            <span class="letter">E</span>
+            <div class="tekst">
+              <h5>Op reis / geen elastiek</h5>
+              <p>Past niet meer op dit blad. Wordt afgewogen bij de volgende herziening.</p>
+              <span class="staat">NIET OP DIT BLAD</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="herzie">
+          <b>REVISIE</b>
+          Een QRH heeft een revisienummer, en dat is geen administratie: het zegt welke versie er
+          in de cockpit ligt. Hier ook. <b>REV 3 · 12 AUG</b> — afwijking B is herschreven nadat
+          de patiënt tijdens de opvlamming van 14 augustus vier dagen halveerde in plaats van twee.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 3</b><h2>De digitale cliëntkaart</h2>
+      <p>Het scherm registreert niet alleen wat er gedaan is, maar <em>onder welke procedure</em>.
+        Een dag die op de halve dosis is gedraaid, is geen gemiste dag en geen volle dag — het is
+        een dag onder afwijking B. Dat onderscheid is voor de therapeut het waardevolste wat er
+        van een oefenweek terugkomt, en het gaat op elke andere kaart verloren.</p>
+    </div>
+
+    <div class="kaartblad">
+      <div class="kaartkop">
+        <h3>Oefenkaart — dhr. R. Vermeulen</h3>
+        <span class="serie">SERIE 2 · WEEK 5 VAN 8 · REV 3</span>
+      </div>
+
+      <div class="kaartbalk">
+        <div><b>PRAKTIJK</b><span>Fysiotherapie De Wetering, Utrecht</span></div>
+        <div><b>THERAPEUT</b><span>M. de Groot</span></div>
+        <div><b>NORMALE DAGEN DEZE WEEK</b><span>4 van 5</span></div>
+        <div><b>ACTIEVE PROCEDURE</b><span class="amber">B — meer pijn dan gisteren</span></div>
+      </div>
+
+      <div class="kaartlijf">
+        <div>
+          <h4 class="amber">VANDAAG — ONDER AFWIJKING B</h4>
+
+          <div class="dagrij">
+            <span class="naam">Schouder naar buiten draaien
+              <small>5× · 1 SERIE · NORMAAL 10× · 2 SERIES</small></span>
+            <span class="vak aangepast" aria-label="Gedaan in aangepaste vorm"></span>
+          </div>
+          <div class="dagrij">
+            <span class="naam">Kin intrekken, zittend
+              <small>8× · ONGEWIJZIGD</small></span>
+            <span class="vak af" aria-label="Gedaan"></span>
+          </div>
+          <div class="dagrij">
+            <span class="naam">Op de plaats marcheren
+              <small>ZITTEND · 20 STAPPEN</small></span>
+            <span class="vak aangepast" aria-label="Gedaan in aangepaste vorm"></span>
+          </div>
+
+          <div class="melding">
+            <b>DAG 2 VAN 2</b>
+            <p>Morgen terug naar de volle dosis. Staat de pijn dan nog steeds hoger,
+              dan is dat geen reden om te blijven halveren — dan is het een reden om te bellen.</p>
+          </div>
+
+          <div class="melding rood">
+            <b>ALTIJD</b>
+            <p>Uitval, gevoelloosheid, koorts, een val, of pijn die 's nachts wakker maakt:
+              niet oefenen, wél bellen. <b>030 - 244 18 90</b></p>
+          </div>
+        </div>
+
+        <div>
+          <h4>LOGBOEK</h4>
+
+          <div class="logregel">
+            <span class="wanneer">DI 26 AUG</span>
+            <span class="wat"><em>Afwijking B, dag 2.</em> Twee oefeningen aangepast, één ongewijzigd.</span>
+          </div>
+          <div class="logregel">
+            <span class="wanneer">MA 25 AUG</span>
+            <span class="wat"><em>Afwijking B ingeschakeld</em> om 07:40 — pijn zakte niet binnen een uur.</span>
+          </div>
+          <div class="logregel">
+            <span class="wanneer">ZO 24 AUG</span>
+            <span class="wat">Normale procedure, volledig.</span>
+          </div>
+          <div class="logregel">
+            <span class="wanneer">ZA 23 AUG</span>
+            <span class="wat">Normale procedure, volledig.</span>
+          </div>
+          <div class="logregel">
+            <span class="wanneer">VR 22 AUG</span>
+            <span class="wat"><b>Niets gedaan.</b> Geen procedure ingeschakeld.</span>
+          </div>
+          <div class="logregel">
+            <span class="wanneer">DO 21 AUG</span>
+            <span class="wat">Normale procedure, volledig.</span>
+          </div>
+
+          <div class="herzie" style="margin-top:var(--s4)">
+            <b>WAT DE THERAPEUT HIERAAN HEEFT</b>
+            Vrijdag staat er als lege dag, terwijl er wél een afwijking beschikbaar was — de
+            patiënt heeft hem niet gebruikt. Dat is een ontwerpprobleem, geen motivatieprobleem:
+            afwijking A („twee dagen niets gedaan") staat te laag op het blad en wordt pas gezien
+            als het al drie dagen is. In REV 4 gaat A naar boven.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 4</b><h2>De printkaart — A4 staand, met tabs langs de rechterrand</h2>
+      <p>De bovenste helft is de normale dag, in challenge-and-response: links wat er gedaan
+        wordt, een stippelleider, rechts het antwoord in kapitalen. De onderste helft zijn de
+        afwijkingen, elk met een conditie en genummerde handelingen. De tabs steken tot aan de
+        papierrand door, zodat het blad met één duim op de juiste conditie opengelegd wordt —
+        de reden dat een QRH tabs heeft. Twee signaalkleuren en verder niets: amber betekent
+        handel, rood betekent stop en bel. Alles blijft leesbaar op een zwart-wit kopie, want
+        de tabs zijn óók geletterd.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+
+          <div class="btabs" aria-hidden="true">
+            <span class="btab">A · NIETS GEDAAN</span>
+            <span class="btab amber">B · MEER PIJN</span>
+            <span class="btab amber">C · DUIZELIG</span>
+            <span class="btab rood">D · STOP EN BEL</span>
+          </div>
+
+          <div class="rand">
+
+            <div class="bkop">
+              <span class="t">Oefenkaart</span>
+              <span class="s">NORMALE EN NIET-NORMALE PROCEDURES</span>
+              <span class="r">REV 3 · 12 AUG</span>
+            </div>
+
+            <div class="bwie">
+              <div><b>VOOR</b><span>Dhr. R. Vermeulen — week 5 van 8</span></div>
+              <div><b>PRAKTIJK</b><span>Fysiotherapie De Wetering, Utrecht</span></div>
+              <div><b>THERAPEUT</b><span>M. de Groot</span></div>
+            </div>
+
+            <!-- ── normale procedure ── -->
+            <div class="babschnitt">
+              <div class="bhoofd">
+                <span class="nr">N</span>
+                <span class="t">NORMALE DAG</span>
+                <span class="u">DRIE OEFENINGEN · IN DEZE VOLGORDE</span>
+              </div>
+              <div class="bnormaal">
+                <div>
+                  <div class="blijn">
+                    <span class="n">1</span>
+                    <span class="v">Schouder naar buiten draaien, met elastiek</span>
+                    <span class="l"></span>
+                    <span class="a">10× · 2 SERIES</span>
+                  </div>
+                  <div class="blijn">
+                    <span class="n">2</span>
+                    <span class="v">Kin intrekken, zittend, vijf tellen vast</span>
+                    <span class="l"></span>
+                    <span class="a">8×</span>
+                  </div>
+                  <div class="blijn">
+                    <span class="n">3</span>
+                    <span class="v">Op de plaats marcheren, hand aan de stoel</span>
+                    <span class="l"></span>
+                    <span class="a">20 STAPPEN</span>
+                  </div>
+                  <div class="blijn">
+                    <span class="n">4</span>
+                    <span class="v">Pijn tijdens of vlak na het oefenen</span>
+                    <span class="l"></span>
+                    <span class="a">TOT 5 IS GOED</span>
+                  </div>
+                </div>
+                <div class="prentrij">
+                  <span data-nr="1"><img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt=""/></span>
+                  <span data-nr="2"><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png" alt=""/></span>
+                  <span data-nr="3"><img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" alt=""/></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── memory items ── -->
+            <div class="buithoofd">
+              <div class="k">
+                <b>UIT HET HOOFD</b>
+                <span>deze drie doet u zonder dit blad erbij te pakken</span>
+              </div>
+              <div class="blijn">
+                <span class="v">Meer pijn dan gisteren, langer dan een uur</span>
+                <span class="l"></span>
+                <span class="a amber">HALVEER, NIET STOPPEN</span>
+              </div>
+              <div class="blijn">
+                <span class="v">Duizelig of onvast bij het opstaan</span>
+                <span class="l"></span>
+                <span class="a amber">GA ZITTEN, HAND VAST</span>
+              </div>
+              <div class="blijn">
+                <span class="v">Een dag overgeslagen</span>
+                <span class="l"></span>
+                <span class="a">MORGEN GEWOON VERDER</span>
+              </div>
+            </div>
+
+            <!-- ── afwijkingen ── -->
+            <div class="babschnitt">
+              <div class="bhoofd">
+                <span class="nr">A–D</span>
+                <span class="t">ALS HET ANDERS LOOPT</span>
+                <span class="u">ZOEK DE TAB OP · LEG HET BLAD DAAR OPEN</span>
+              </div>
+
+              <div class="bafw">
+
+                <div class="bproc">
+                  <div class="c">A · Twee dagen niets gedaan.</div>
+                  <div class="blijn">
+                    <span class="n">1</span>
+                    <span class="v">Inhalen of dubbel doen</span>
+                    <span class="l"></span><span class="a">NIET DOEN</span>
+                  </div>
+                  <div class="blijn">
+                    <span class="n">2</span>
+                    <span class="v">Vandaag, alleen oefening 2</span>
+                    <span class="l"></span><span class="a">8×</span>
+                  </div>
+                  <div class="blijn">
+                    <span class="n">3</span>
+                    <span class="v">Morgen, alle drie</span>
+                    <span class="l"></span><span class="a">HALVE DOSIS</span>
+                  </div>
+                  <div class="blijn">
+                    <span class="n">4</span>
+                    <span class="v">Overmorgen</span>
+                    <span class="l"></span><span class="a">NORMALE DAG</span>
+                  </div>
+                </div>
+
+                <div class="bproc amber">
+                  <div class="c">B · Meer pijn dan gisteren, en het zakt niet binnen een uur.</div>
+                  <div class="blijn">
+                    <span class="n">1</span>
+                    <span class="v">Herhalingen en series</span>
+                    <span class="l"></span><span class="a amber">HALVEER</span>
+                  </div>
+                  <div class="blijn">
+                    <span class="n">2</span>
+                    <span class="v">Elastiek</span>
+                    <span class="l"></span><span class="a amber">ERAF</span>
+                  </div>
+                  <div class="blijn">
+                    <span class="n">3</span>
+                    <span class="v">Oefening 3</span>
+                    <span class="l"></span><span class="a">ZITTEND</span>
+                  </div>
+                  <div class="blijn">
+                    <span class="n">4</span>
+                    <span class="v">Zo twee dagen, dán terug naar vol</span>
+                    <span class="l"></span><span class="a">OOK ALS HET NOG ZEURT</span>
+                  </div>
+                </div>
+
+                <div class="bproc amber">
+                  <div class="c">C · Duizelig of onvast bij het opstaan.</div>
+                  <div class="blijn">
+                    <span class="n">1</span>
+                    <span class="v">Oefening 1 en 2</span>
+                    <span class="l"></span><span class="a">ZITTEND, ONGEWIJZIGD</span>
+                  </div>
+                  <div class="blijn">
+                    <span class="n">2</span>
+                    <span class="v">Oefening 3, het balansdeel</span>
+                    <span class="l"></span><span class="a amber">VANDAAG ERAF</span>
+                  </div>
+                  <div class="blijn">
+                    <span class="n">3</span>
+                    <span class="v">Twee dagen achter elkaar duizelig</span>
+                    <span class="l"></span><span class="a rood">BEL DE PRAKTIJK</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="bbel">
+              <b>D · STOP EN BEL</b>
+              <span>Uitval of gevoelloosheid · koorts · een val · pijn die 's nachts wakker maakt.
+                Vandaag niet oefenen.</span>
+              <strong>030 - 244 18 90</strong>
+            </div>
+
+            <div class="bvoet">
+              <div class="l"><b>Dit blad is geen waarschuwing.</b> Het is de reden dat u
+                niet hoeft te bedenken wat u moet doen op het moment dat bedenken het lastigst is.
+                Klopt een procedure niet met hoe het bij u loopt, meld dat — dan komt er een REV 4.</div>
+              <div class="r">FYSIPLAN<br/>BLAD 1 VAN 1<br/>REV 3 · 12 AUG</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>WAAR HET VANDAAN KOMT</h4>
+      <p>De crash van de Boeing Model 299 op 30 oktober 1935 leverde de checklist op — het toestel
+        was niet te ingewikkeld om te vliegen, maar te ingewikkeld om te onthouden. Daarnaast
+        groeide het Quick Reference Handbook: de niet-normale procedures, met tabs, condities,
+        genummerde handelingen en een omkaderd blok memory items. De pijnrevalidatie kent dezelfde
+        vorm onder een andere naam — het flare-up plan, dat volgens NHS Lothian, de Australische
+        ACI en de Amerikaanse VA gemaakt moet worden vóórdat het misgaat.</p>
+    </div>
+    <div class="kolom">
+      <h4>WAT HET BLAD DOET</h4>
+      <ul>
+        <li>Challenge-and-response: geen advies, maar een antwoord in kapitalen.</li>
+        <li>Memory items apart omkaderd — drie handelingen zonder opzoeken.</li>
+        <li>Hooguit vier afwijkingen; een boekje wordt niet doorgebladerd.</li>
+        <li>Amber betekent handel, rood betekent stop en bel. Verder geen kleur.</li>
+        <li>Tabs zijn óók geletterd, dus een zwart-wit kopie werkt net zo goed.</li>
+        <li>Een revisienummer, zodat duidelijk is welk blad er thuis ligt.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>VERDER</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/ontwerp/concept-30-ganzenbord.html">Concept 30 — Ganzenbord (tegenslag als speelveld)</a></li>
+        <li><a href="/ontwerp/concept-44-bonkaart.html">Concept 44 — Bonkaart (een plafond)</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var breed=schaal.clientWidth, eigen=blad.offsetWidth;
+    var f=Math.min(1,breed/eigen);
+    blad.style.transform='scale('+f+')';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>
