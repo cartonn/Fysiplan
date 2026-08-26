@@ -470,7 +470,7 @@ bridge2.jpg</div>
       gewoon aan te passen. Cli&euml;ntgegevens en ingevulde vakjes blijven staan.
     </div>
     <div id="sj_lijst" style="max-height:340px;overflow:auto"></div>
-    <div class="acts"><button class="btn" id="sj_close">Sluiten</button></div>
+    <div class="acts"><button class="btn" id="sj_bewaar" title="Bewaar de oefeningen en dosering van de huidige kaart als je eigen sjabloon (alleen op dit apparaat)">Huidige kaart als sjabloon</button><button class="btn" id="sj_close">Sluiten</button></div>
   </div>
 </div>
 
@@ -1626,19 +1626,27 @@ bridge2.jpg</div>
   }
   function renderSjabLijst(){
     var el=document.getElementById('sj_lijst');
-    if(!SJABLONEN.length){el.innerHTML="<div class='hint'>Geen sjablonen gevonden.</div>";return;}
-    el.innerHTML=SJABLONEN.map(function(s,i){
-      // alleen oefeningen die nog écht in de bibliotheek staan; die namen tonen we
-      // vooraf, zodat de therapeut ziet wat hij krijgt vóór hij op "Gebruik" tikt
-      var namen=(s.oefeningen||[]).filter(function(n){return byNorm[normEx(n)]!=null;});
+    // één rij per sjabloon; toont vooraf de oefeningnamen die nog écht in de
+    // bibliotheek staan, zodat de therapeut ziet wat hij krijgt vóór "Gebruik".
+    var rij=function(s,attr){
+      var namen=(s.oefeningen||[]).map(sjabNaam).filter(function(nm){return byNorm[normEx(nm)]!=null;});
       var besch=namen.length;
       return "<div style='display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--line)'>"+
         "<div style='flex:1;min-width:0'><b>"+esc(s.naam)+"</b> <small style='color:var(--muted)'>&middot; "+besch+" oefeningen</small>"+
         "<br/><small style='color:var(--muted)'>"+esc(s.sub||'')+"</small>"+
         (besch?"<br/><small style='color:var(--muted);opacity:.85'>"+namen.map(esc).join(' &middot; ')+"</small>":"")+
-        "</div>"+
-        "<button class='btn primary' data-sjab='"+i+"'>Gebruik</button></div>";
-    }).join("");
+        "</div>"+attr+"</div>";
+    };
+    var eigen=leesEigenSjab();
+    var h='';
+    if(eigen.length){
+      h+="<div style='font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:2px 0 4px'>Jouw sjablonen</div>";
+      h+=eigen.map(function(s,i){return rij(s,"<button class='btn primary' data-esjab='"+i+"'>Gebruik</button><button class='btn' data-edel='"+i+"' title='verwijderen' aria-label='verwijderen'>&times;</button>");}).join("");
+      h+="<div style='font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:12px 0 4px'>Standaardsjablonen</div>";
+    }
+    if(!SJABLONEN.length&&!eigen.length){el.innerHTML="<div class='hint'>Geen sjablonen gevonden.</div>";return;}
+    h+=SJABLONEN.map(function(s,i){return rij(s,"<button class='btn primary' data-sjab='"+i+"'>Gebruik</button>");}).join("");
+    el.innerHTML=h;
   }
   document.getElementById('sjabBtn').addEventListener('click',function(){renderSjabLijst();openOv('ovSjab');});
   // eenmalig welkom (v2): wie vers van de landing komt, landt niet koud in de app
@@ -1655,9 +1663,12 @@ bridge2.jpg</div>
     document.getElementById('welkom_sjab').addEventListener('click',function(){closeOv('ovWelkom');renderSjabLijst();openOv('ovSjab');});
   }
   document.getElementById('sj_close').addEventListener('click',function(){closeOv('ovSjab');});
-  document.getElementById('sj_lijst').addEventListener('click',function(e){
-    var b=e.target.closest('[data-sjab]');if(!b)return;
-    var s=SJABLONEN[+b.dataset.sjab];if(!s)return;
+  // een oefening-item in een sjabloon is óf een naam (string) óf een object met een
+  // eigen dosering {n,s,h,w} — dat laatste bij eigen sjablonen die de exacte
+  // dosering meenemen. sjabNaam/sjabDos halen naam en dosering er veilig uit.
+  function sjabNaam(n){return (typeof n==='string')?n:(n&&n.n)||'';}
+  function pasSjabloonToe(s){
+    if(!s)return;
     // een sjabloon vervangt de hele selectie; had de therapeut al oefeningen gekozen,
     // vraag dan eerst — anders raakt dat werk stil kwijt
     if(chosen.length&&!confirm('Je hebt al '+chosen.length+' oefening'+(chosen.length===1?'':'en')+' gekozen. Vervangen door het sjabloon "'+s.naam+'"?'))return;
@@ -1665,25 +1676,55 @@ bridge2.jpg</div>
     chosen=[];
     // een sjabloon vervangt de héle kaart: begin met een schone dosering-grid
     GRID={rows:{},cells:{}};
-    // startdosering uit het sjabloon: scheelt de therapeut het handmatig invullen
-    // van elke serie/herhaling. Het is een startpunt dat hij daarna zelf aanpast.
+    // startdosering: per oefening (eigen sjabloon) of de sjabloon-default. Scheelt de
+    // therapeut het handmatig invullen van elke serie/herhaling — een startpunt.
     var dz=s.dosering||null;
     (s.oefeningen||[]).forEach(function(n){
-      var id=byNorm[normEx(n)];
+      var naam=sjabNaam(n),od=(n&&typeof n==='object')?n:null;
+      var id=byNorm[normEx(naam)];
       if(id!=null&&OEF[id]){
         if(chosen.length<12){
           chosen.push({o:id,i:0});
-          if(dz){
-            if(dz.s)GRID.cells['e'+id+'.0|r0|S']=dz.s;
-            if(dz.h)GRID.cells['e'+id+'.0|r0|H']=dz.h;
-            if(dz.w)GRID.cells['e'+id+'.0|r0|W']=dz.w;
-          }
+          var sv=(od&&od.s)||(dz&&dz.s)||'',hv=(od&&od.h)||(dz&&dz.h)||'',wv=(od&&od.w)||(dz&&dz.w)||'';
+          if(sv)GRID.cells['e'+id+'.0|r0|S']=sv;
+          if(hv)GRID.cells['e'+id+'.0|r0|H']=hv;
+          if(wv)GRID.cells['e'+id+'.0|r0|W']=wv;
         }
       }
-      else missing.push(n);
+      else missing.push(naam);
     });
     closeOv('ovSjab');render();
     if(missing.length)alert('Niet meer in de oefeningenlijst (overgeslagen): '+missing.join(', '));
+  }
+  // eigen sjablonen van de therapeut (alleen op dit apparaat, localStorage)
+  function leesEigenSjab(){try{var m=JSON.parse(localStorage.getItem('fysiplan_eigen_sjablonen')||'[]');return Array.isArray(m)?m:[];}catch(e){return [];}}
+  function bewaarEigenSjab(l){try{localStorage.setItem('fysiplan_eigen_sjablonen',JSON.stringify(l.slice(0,50)));}catch(e){}}
+  function huidigAlsSjabloon(naam){
+    var oef=chosen.map(function(c){var o=OEF[c.o];if(!o)return null;
+      var pre='e'+c.o+'.'+c.i,it={n:o.naam};
+      var s=GRID.cells[pre+'|r0|S'],h=GRID.cells[pre+'|r0|H'],w=GRID.cells[pre+'|r0|W'];
+      if(s)it.s=s;if(h)it.h=h;if(w)it.w=w;
+      return it;
+    }).filter(Boolean);
+    return {naam:naam,sub:'Jouw sjabloon (alleen op dit apparaat)',oefeningen:oef,persoonlijk:true};
+  }
+  document.getElementById('sj_lijst').addEventListener('click',function(e){
+    var eb=e.target.closest('[data-edel]');
+    if(eb){var lst=leesEigenSjab();lst.splice(+eb.dataset.edel,1);bewaarEigenSjab(lst);renderSjabLijst();return;}
+    var pb=e.target.closest('[data-esjab]');
+    if(pb){pasSjabloonToe(leesEigenSjab()[+pb.dataset.esjab]);return;}
+    var b=e.target.closest('[data-sjab]');if(!b)return;
+    pasSjabloonToe(SJABLONEN[+b.dataset.sjab]);
+  });
+  document.getElementById('sj_bewaar').addEventListener('click',function(){
+    if(!chosen.length){alert('Kies eerst oefeningen (en vul eventueel de dosering in) om ze als eigen sjabloon te bewaren.');return;}
+    var naam=(window.prompt('Naam voor je eigen sjabloon:','')||'').trim();
+    if(!naam)return;
+    var lst=leesEigenSjab();
+    var idx=lst.findIndex(function(x){return String(x.naam||'').toLowerCase()===naam.toLowerCase();});
+    var sj=huidigAlsSjabloon(naam);
+    if(idx>-1)lst[idx]=sj;else lst.unshift(sj);
+    bewaarEigenSjab(lst);renderSjabLijst();
   });
 
   // ---- AI-kaartassistent (v2): klacht omschrijven, voorstel beoordelen, op de kaart zetten ----
