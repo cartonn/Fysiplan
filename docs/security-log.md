@@ -480,3 +480,36 @@ csp-nonce (20), v2-headers (35) en kern (21, v1 onaangetast) — groen.
 **Volgende run — pak een ander gebied:** de opname-/uploadketen (`/api/opname`,
 videopaden, quota) of de rate-limiting van `/api/kaarten`/`/api/praktijken` POST
 onder IP-rotatie.
+
+### 2026-08-26 — schrijfroutes onder IP-rotatie, mét de vier nieuwe endpoints
+**Geauditeerd:** de rem- en groei-weerstand van álle muterende endpoints onder
+IP-rotatie, met de nadruk op wat er sinds de vorige schrijfroute-audit (21-08)
+bijkwam: `/api/kaart/seintje`, `/api/kaart/seintje/gezien`,
+`/api/kaart/nieuwe-link` en `/api/kaart/doel`.
+
+**Bevindingen (geen codegat — de verdediging is consistent):**
+- **Poorten:** elk van de 8 muterende v2-endpoints draait `schrijfLimiet`
+  (40/IP/5min) + `kruisSite`; de id-nemende bovendien `kaartMisLimiet` op de
+  misser-tak. De vier nieuwe volgen exact dit patroon.
+- **IP-rotatie:** `schrijfLimiet` is per-IP, dus de échte verdediging zijn de
+  IP-onafhankelijke plafonds (100 kaarten/praktijk, 200 profielen, 300 praktijken,
+  1000 accounts) én de per-kaart-opslaggrenzen. Die tweede laag is doorslaggevend
+  voor de nieuwe endpoints: `meting`/`gedaan` dedupliceren op de serverdag (één
+  entry/dag, gecapt op 366) en `seintje`/`doel` zijn enkelvoudige velden die
+  worden overschreven — geen array-groei. Een aanvaller die van IP wisselt kan de
+  opslag dus niet laten zwellen.
+- **Authz:** de drie nieuwe schrijfacties die praktijkdata muteren
+  (`doel`, `nieuwe-link`, `seintje/gezien`) eisen `eisPraktijk` op een geclaimde
+  praktijk; zonder sessie is het altijd 401, ongeacht het IP — IP-rotatie opent
+  geen achterdeur. `seintje` (patiënt) volgt het open patiëntmodel als de
+  meting/vinkje-routes.
+
+**Increment:** geen geforceerde codewijziging. `test-schrijflimieten.mjs`
+uitgebreid (8 → 12 checks): 60× same-day `meting`/`gedaan`/`seintje` over
+roterende IP's bewijst dat de opslag niet groeit (één meting-entry, ≤1
+gedaan-entry, één seintje-object), en `doel`/`nieuwe-link`/`seintje-gezien`
+zonder sessie geven vanaf elk IP 401. Daarnaast de v2-flows gedraaid:
+accountlaag (49), nieuwe-link (13) en kern (21, v1 onaangetast) — groen.
+
+**Volgende run — pak een ander gebied:** de opname-/uploadketen (`/api/opname`,
+videopaden, quota) of een verse blik op de sjablonen/logo-flow.
