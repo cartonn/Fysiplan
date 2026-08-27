@@ -1,0 +1,1021 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 49 — Groeicurve · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 49 — GROEICURVE
+   ------------------------------------------------------------
+   Herstel is een band, geen lijn.
+
+   Elke oefenkaart in dit product — en elke oefenkaart daarbuiten
+   — noteert wat de patiënt MOET halen. Drie keer per week. Tien
+   herhalingen. In week zes negentig graden. Het is een opdracht,
+   en een opdracht kent maar twee uitkomsten: gehaald of niet
+   gehaald. Wie langzamer herstelt dan het schema, leest elke week
+   op zijn eigen papier dat hij achterloopt — terwijl langzamer
+   herstellen bij een knieprothese van 68 jaar volstrekt gewoon is.
+
+   Nederland heeft voor precies dit probleem al zeventig jaar een
+   oplossing liggen, en die ligt bij het consultatiebureau. Het
+   groeiboekje toont geen doellijn maar een SPREIDING: de P3, de
+   P10, de P50, de P90, de P97, gebaseerd op de metingen van
+   duizenden Nederlandse kinderen (in Nederland de TNO-curves, die
+   sinds de jaren vijftig elke twintig jaar opnieuw gemeten
+   worden). Een kind dat op de P15 loopt is niet te klein. Het
+   loopt op de P15. Ouders begrijpen dat binnen één consult, en
+   het is waarschijnlijk het best begrepen statistische begrip van
+   het land: „hij zit netjes op zijn eigen lijn."
+
+   Twee dingen maken het groeiboekje sterk, en allebei ontbreken
+   ze op een oefenkaart.
+
+   1. DE BAND. Niet één streep maar een gebied. Onder het midden
+      zitten is geen achterstand — de helft van alle mensen zit
+      onder het midden. Pas ONDER de onderste rand, en dan nog
+      drie metingen achter elkaar, gebeurt er iets: dan belt u.
+      Dat is geen falen maar informatie, en het staat zo op het
+      blad.
+
+   2. DE EIGEN STIP. De ouder tekent zelf. Het boekje komt leeg
+      uit de drukkerij en wordt gevuld met een balpen, thuis en op
+      het bureau. Daardoor is het van de ouder en niet van de
+      instelling. Dus komt deze kaart óók half leeg uit de
+      printer: de band is gedrukt, de weken tot nu zijn gedrukt,
+      en de weken die nog moeten komen zijn zeven lege lijnen met
+      een hokje eronder.
+
+   En dan het derde, dat het geheel pas laat werken: een MEETBAAR
+   GETAL dat thuis, zonder apparaat, herhaalbaar is. Het
+   consultatiebureau heeft een weegschaal en een meetlat. De
+   fysiotherapie heeft een goniometer die de patiënt niet heeft.
+   Dus meet dit blad iets anders: de hielafstand. Ga op een gewone
+   keukenstoel zitten, schuif uw hiel zo ver mogelijk naar
+   achteren, en meet met de LINIAAL DIE OP DIT BLAD GEDRUKT STAAT
+   hoeveel centimeter uw hiel voorbij de stoelpoot komt. Eén
+   centimeter is ongeveer twee graden kniebuiging. Het meetgerei
+   is het papier zelf — dat kan alleen op papier, en het is
+   precies waarom deze richting op een A4 hoort en niet op een
+   scherm.
+
+   VORM. De sfeer van het boekje: warm wit papier, dunne
+   millimeterruit in potloodgrijs, de spreidingsband in twee
+   tinten zacht groen (de brede band en de kern), de mediaan als
+   dunne doorgetrokken lijn, en de metingen in BALPENBLAUW —
+   want dat is de kleur waarmee er in zo'n boekje geschreven
+   wordt. Koppen in een boekletter, alle getallen in een
+   tabellarische letter, want kolommen cijfers horen recht onder
+   elkaar te staan. Rood komt maar op één plek voor: de onderste
+   rand van de band en de zin die erbij hoort.
+   ============================================================ */
+
+:root{
+  --papier:#f6f6f1;
+  --wit:#ffffff;
+  --inkt:#17201f;
+  --inkt-2:#3f4c49;
+  --grijs:#78837f;
+  --lijn:#dee2dc;
+  --lijn-2:#eceee9;
+
+  --band:#dfeada;
+  --kern:#bdd7b5;
+  --mid:#4d7c4a;
+  --mid-2:#2f5a2d;
+
+  --pen:#1e3f9e;         /* balpenblauw — alles wat gemeten is */
+  --pen-l:#dbe2f4;
+  --sein:#b5432c;        /* alleen de ondergrens en wat daarbij hoort */
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,Helvetica,sans-serif;
+  --boek:Charter,"Iowan Old Style",Georgia,"Times New Roman",serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+
+  --s1:4px; --s2:8px; --s3:15px; --s4:25px; --s5:40px; --s6:62px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.6 var(--sans);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--pen)}
+:focus-visible{outline:3px solid var(--pen);outline-offset:2px}
+
+.binnen{max-width:1150px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--inkt);color:#c7d2cd;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#8fa39c;
+  border:1px solid #2e3b39;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#aebbb6;text-decoration:none;padding:5px 3px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:#8fbb86}
+.labbalk a.terug{color:#fff;border-bottom-color:#2e3b39}
+@media (max-width:760px){.labbalk a:not(.terug){display:none}}
+
+.scherm{padding:var(--s6) 0;border-bottom:1px solid var(--lijn)}
+.scherm.eerste{background:var(--wit)}
+.schermkop{margin-bottom:var(--s5)}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;
+  color:var(--grijs);margin-bottom:var(--s2)}
+.schermkop h2{font:600 31px/1.14 var(--boek);color:var(--inkt);letter-spacing:-.015em}
+.schermkop p{max-width:68ch;margin-top:var(--s2);font-size:16.5px}
+.schermkop p em{font-style:italic;color:var(--inkt)}
+
+/* ---------- 1 landing ---------- */
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:29px;height:29px;background:var(--mid-2);color:#fff;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font:700 15px/1 var(--sans)}
+.merkregel .naam{font:600 17px/1 var(--boek);color:var(--inkt);letter-spacing:0}
+.merkregel .pad{font:700 10.5px/1 var(--mono);letter-spacing:.16em;color:var(--grijs)}
+
+.heldrij{display:grid;grid-template-columns:.92fr 1.08fr;gap:var(--s5);align-items:start}
+@media (max-width:940px){.heldrij{grid-template-columns:1fr;gap:var(--s5)}}
+
+h1.kop{font:600 clamp(33px,4.5vw,52px)/1.08 var(--boek);color:var(--inkt);letter-spacing:-.02em;max-width:15ch}
+h1.kop em{display:block;font-style:italic;color:var(--mid-2)}
+p.onder{margin-top:var(--s3);font-size:18px;line-height:1.62;max-width:52ch}
+p.onder b{font-weight:600;color:var(--inkt)}
+
+.knoppen{display:flex;flex-wrap:wrap;gap:10px;margin-top:var(--s4)}
+.kn{display:inline-block;padding:13px 22px;text-decoration:none;border-radius:2px;
+  font:600 14.5px/1 var(--sans);background:var(--mid-2);color:#fff;border:2px solid var(--mid-2)}
+.kn.leeg{background:transparent;color:var(--inkt);border-color:var(--inkt)}
+.kn:hover{background:var(--inkt);border-color:var(--inkt);color:#fff}
+
+/* de kaart met de grafiek op het scherm */
+.grafiekkaart{background:var(--wit);border:1px solid var(--lijn);
+  box-shadow:0 2px 0 var(--lijn-2),0 18px 40px rgba(23,32,31,.07)}
+.grafiekkaart > header{display:flex;align-items:baseline;gap:var(--s3);flex-wrap:wrap;
+  padding:var(--s3) var(--s4);border-bottom:1px solid var(--lijn)}
+.grafiekkaart > header h3{font:600 19px/1.2 var(--boek);color:var(--inkt)}
+.grafiekkaart > header .wie{margin-left:auto;font:600 11px/1.5 var(--mono);
+  letter-spacing:.09em;color:var(--grijs);text-transform:uppercase}
+.grafiekvlak{padding:var(--s3) var(--s3) var(--s2)}
+
+/* ruitjespapier onder de grafiek */
+.ruit{background:
+  linear-gradient(to right,#e7eae4 1px,transparent 1px) 0 0/12px 12px,
+  linear-gradient(to bottom,#e7eae4 1px,transparent 1px) 0 0/12px 12px,
+  var(--wit)}
+
+svg.curve{display:block;width:100%;height:auto}
+svg.curve text{font-family:var(--mono);fill:#78837f}
+
+.aflezing{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--lijn);
+  border-top:1px solid var(--lijn)}
+.aflezing div{background:var(--wit);padding:var(--s3) var(--s4)}
+.aflezing b{display:block;font:700 9.5px/1 var(--mono);letter-spacing:.16em;color:var(--grijs);
+  margin-bottom:6px}
+.aflezing span{font:600 24px/1 var(--boek);color:var(--inkt);font-variant-numeric:tabular-nums}
+.aflezing span i{font-style:normal;font-size:14px;color:var(--grijs)}
+.aflezing small{display:block;font:400 13.5px/1.4 var(--sans);color:var(--inkt-2);margin-top:5px}
+@media (max-width:640px){.aflezing{grid-template-columns:1fr}}
+
+.duiding{margin-top:var(--s3);padding:14px 16px;background:var(--band);
+  border-left:4px solid var(--mid);font:400 15.5px/1.55 var(--sans);color:var(--inkt)}
+.duiding b{font-weight:700}
+
+/* ---------- 2 kiezer ---------- */
+.kiezerrij{display:grid;grid-template-columns:1fr 372px;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.kiezerrij{grid-template-columns:1fr}}
+
+.paneel{background:var(--wit);border:1px solid var(--lijn)}
+.paneel > h3{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:var(--inkt);
+  padding:14px 16px;background:var(--lijn-2);border-bottom:1px solid var(--lijn);
+  display:flex;align-items:center;gap:10px}
+.paneel > h3 span{margin-left:auto;font-weight:600;color:var(--grijs);letter-spacing:.08em}
+
+.zoek{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--lijn-2)}
+.zoek .veld{flex:1;border:1.5px solid var(--lijn);background:var(--papier);padding:10px 12px;
+  font:400 15px/1 var(--sans);color:var(--inkt-2)}
+.zoek .veld i{font-style:normal;color:var(--grijs)}
+.zoek .tel{font:600 12px/1 var(--mono);letter-spacing:.06em;color:var(--grijs)}
+
+.oefrij{display:grid;grid-template-columns:26px 74px 1fr 132px;gap:var(--s3);align-items:center;
+  padding:12px 16px;border-bottom:1px solid var(--lijn-2)}
+.oefrij:last-child{border-bottom:0}
+.oefrij .vink{width:22px;height:22px;border:2px solid var(--grijs);border-radius:3px;position:relative;background:var(--wit)}
+.oefrij.aan .vink{background:var(--mid-2);border-color:var(--mid-2)}
+.oefrij.aan .vink::after{content:"";position:absolute;left:6px;top:2px;width:6px;height:12px;
+  border-right:2.5px solid #fff;border-bottom:2.5px solid #fff;transform:rotate(42deg)}
+.oefrij .beeld{height:62px;border:1px solid var(--lijn-2);background:var(--wit);
+  display:flex;align-items:center;justify-content:center;padding:3px}
+.oefrij .beeld img{max-height:100%;width:auto;mix-blend-mode:multiply}
+.oefrij h4{font:600 17px/1.2 var(--sans);color:var(--inkt);letter-spacing:-.015em}
+.oefrij .sub{font:400 13.5px/1.4 var(--sans);color:var(--grijs);margin-top:3px}
+.oefrij .dos{font:600 12.5px/1.4 var(--mono);color:var(--inkt-2);text-align:right;
+  font-variant-numeric:tabular-nums}
+.oefrij .dos b{display:block;font:700 9.5px/1 var(--mono);letter-spacing:.14em;color:var(--grijs);margin-bottom:4px}
+.oefrij.uit{opacity:.62}
+@media (max-width:720px){
+  .oefrij{grid-template-columns:26px 62px 1fr}
+  .oefrij .dos{grid-column:3;text-align:left}
+}
+
+/* de bandkiezer rechts */
+.bandkiezer{padding:var(--s3) 16px var(--s4)}
+.bandkiezer > p{font:400 14.5px/1.5 var(--sans);color:var(--inkt-2);margin-bottom:var(--s3)}
+.keuze{display:block;border:1.5px solid var(--lijn);padding:12px 14px;margin-bottom:9px;position:relative}
+.keuze.aan{border-color:var(--mid-2);border-width:2px;background:#f4f9f1;padding:11px 13px}
+.keuze .rondje{position:absolute;right:13px;top:13px;width:18px;height:18px;border-radius:50%;
+  border:2px solid var(--grijs);background:var(--wit)}
+.keuze.aan .rondje{border-color:var(--mid-2)}
+.keuze.aan .rondje::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--mid-2)}
+.keuze b{display:block;font:600 15.5px/1.25 var(--sans);color:var(--inkt);padding-right:26px}
+.keuze small{display:block;font:400 13px/1.45 var(--sans);color:var(--grijs);margin-top:4px}
+.keuze .n{font:700 10px/1 var(--mono);letter-spacing:.13em;color:var(--mid);margin-top:7px;display:block}
+
+.mini{margin-top:var(--s3);border:1px solid var(--lijn);padding:10px}
+.mini svg{display:block;width:100%;height:auto}
+.minibij{font:400 12.5px/1.45 var(--sans);color:var(--grijs);margin-top:7px}
+
+.waarschuwing{margin:var(--s3) 16px var(--s3);padding:12px 14px;border-left:4px solid var(--sein);
+  background:#fbf1ee;font:400 14.5px/1.5 var(--sans);color:var(--inkt-2)}
+.waarschuwing b{color:var(--sein);font-weight:700}
+
+/* ---------- 3 cliëntkaart ---------- */
+.kaartblad{background:var(--wit);border:1px solid var(--lijn);
+  box-shadow:0 2px 0 var(--lijn-2),0 18px 40px rgba(23,32,31,.07)}
+.kaartkop{padding:var(--s4);border-bottom:2px solid var(--inkt);
+  display:flex;align-items:flex-end;flex-wrap:wrap;gap:var(--s3)}
+.kaartkop h3{font:600 25px/1.1 var(--boek);color:var(--inkt)}
+.kaartkop .sub{font:400 14.5px/1.4 var(--sans);color:var(--grijs);width:100%;margin-top:-6px}
+.kaartkop .stat{margin-left:auto;display:flex;gap:var(--s4);text-align:right}
+.kaartkop .stat div b{display:block;font:700 9.5px/1 var(--mono);letter-spacing:.14em;color:var(--grijs);margin-bottom:5px}
+.kaartkop .stat div span{font:600 20px/1 var(--boek);color:var(--inkt);font-variant-numeric:tabular-nums}
+
+.kaartlijf{display:grid;grid-template-columns:1fr 330px}
+@media (max-width:1000px){.kaartlijf{grid-template-columns:1fr}}
+.kaartlinks{padding:var(--s4);border-right:1px solid var(--lijn);min-width:0}
+@media (max-width:1000px){.kaartlinks{border-right:0;border-bottom:1px solid var(--lijn)}}
+.kaartrechts{padding:var(--s4);background:var(--papier);min-width:0}
+
+.tabelkop{font:700 10px/1 var(--mono);letter-spacing:.17em;color:var(--grijs);
+  border-bottom:1.5px solid var(--inkt);padding-bottom:7px;margin-bottom:var(--s2)}
+
+.tabelrol{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.metingen{width:100%;min-width:440px;border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.metingen th{font:700 9.5px/1 var(--mono);letter-spacing:.12em;color:var(--grijs);
+  text-align:right;padding:8px 6px;border-bottom:1px solid var(--lijn)}
+table.metingen th:first-child{text-align:left}
+table.metingen td{font:400 14.5px/1.35 var(--sans);color:var(--inkt);
+  text-align:right;padding:9px 6px;border-bottom:1px solid var(--lijn-2)}
+table.metingen td:first-child{text-align:left;font-weight:600}
+table.metingen td.pen{color:var(--pen);font-weight:700;font-family:var(--mono);font-size:14px}
+table.metingen td.leeg{color:var(--grijs);font-style:italic}
+table.metingen tr.gemist td{background:#fbf1ee}
+table.metingen tr.gemist td.pen{color:var(--sein)}
+table.metingen .plek{font:600 11px/1 var(--mono);letter-spacing:.06em;color:var(--grijs)}
+
+.oefstand{margin-top:var(--s5)}
+.standrij{display:grid;grid-template-columns:1fr 150px 74px;gap:var(--s3);align-items:center;
+  padding:11px 0;border-bottom:1px solid var(--lijn-2)}
+.standrij h5{font:600 16px/1.25 var(--sans);color:var(--inkt)}
+.standrij small{display:block;font:400 13px/1.35 var(--sans);color:var(--grijs);margin-top:2px}
+.standrij .weekjes{display:flex;gap:4px}
+.standrij .weekjes i{width:17px;height:17px;border:1.4px solid var(--lijn);background:var(--wit);display:block}
+.standrij .weekjes i.af{background:var(--mid);border-color:var(--mid)}
+.standrij .weekjes i.half{background:linear-gradient(135deg,var(--mid) 50%,#fff 50%);border-color:var(--mid)}
+.standrij .pct{text-align:right;font:600 14px/1 var(--mono);color:var(--inkt);font-variant-numeric:tabular-nums}
+@media (max-width:640px){.standrij{grid-template-columns:1fr auto}.standrij .pct{grid-column:2}}
+
+.rechtskop{font:700 10px/1 var(--mono);letter-spacing:.17em;color:var(--grijs);
+  border-bottom:1.5px solid var(--inkt);padding-bottom:7px;margin-bottom:var(--s3)}
+.signaal{border:1.5px solid var(--sein);background:#fbf1ee;padding:14px;margin-bottom:var(--s3)}
+.signaal b{display:block;font:700 10px/1 var(--mono);letter-spacing:.14em;color:var(--sein);margin-bottom:7px}
+.signaal p{font:400 14.5px/1.5 var(--sans);color:var(--inkt)}
+.rust{border:1.5px solid var(--lijn);background:var(--wit);padding:14px;margin-bottom:var(--s3)}
+.rust b{display:block;font:700 10px/1 var(--mono);letter-spacing:.14em;color:var(--mid);margin-bottom:7px}
+.rust p{font:400 14.5px/1.5 var(--sans);color:var(--inkt-2)}
+.rust p + p{margin-top:7px}
+
+/* ---------- 4 printkaart ---------- */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;position:relative;
+  transform-origin:top left;box-shadow:0 3px 34px rgba(23,32,31,.2);
+  font-family:var(--sans);overflow:hidden}
+@media (max-width:860px){.bladschaal{max-width:100%}}
+
+.blad .rand{position:absolute;inset:9mm 10mm 7mm 10mm;display:flex;flex-direction:column}
+
+.bkop{display:flex;align-items:flex-end;gap:5mm;border-bottom:1.4pt solid #17201f;padding-bottom:2mm}
+.bkop .t{font:600 15pt/1.05 var(--boek);color:#17201f;letter-spacing:-.01em}
+.bkop .t em{font-style:italic;color:#2f5a2d}
+.bkop .wie{margin-left:auto;text-align:right;font:400 8.4pt/1.32 var(--sans);color:#17201f}
+.bkop .wie b{display:block;font:700 5.9pt/1 var(--mono);letter-spacing:.14em;color:#78837f}
+
+.bmeet{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4mm;margin:2.2mm 0 2.6mm}
+.bmeet div{display:flex;gap:1.7mm;align-items:baseline}
+.bmeet .n{font:700 7.4pt/1.2 var(--mono);color:#2f5a2d;flex:none}
+.bmeet .t{font:400 8.1pt/1.28 var(--sans);color:#17201f}
+.bmeet .t b{font-weight:700}
+
+/* de grafiek op het blad */
+.bgrafiek{border:.9pt solid #17201f;padding:1.6mm 2mm 1mm;background:#fff}
+.bgrafiek svg{display:block;width:100%;height:auto}
+.blegenda{display:flex;flex-wrap:wrap;gap:1.5mm 5mm;margin:1.6mm 0 0;align-items:center}
+.blegenda span{display:flex;align-items:center;gap:1.6mm;font:400 7.4pt/1.2 var(--sans);color:#17201f}
+.blegenda i{display:block;width:7mm;height:2.6mm;flex:none;border:.5pt solid #9aa79f}
+.blegenda i.band{background:#dfeada}
+.blegenda i.kern{background:#bdd7b5}
+.blegenda i.mid{height:0;border:0;border-top:1pt solid #4d7c4a}
+.blegenda i.stip{width:2.6mm;height:2.6mm;border-radius:50%;background:#1e3f9e;border:0}
+.blegenda i.onder{height:0;border:0;border-top:1.1pt dashed #b5432c}
+
+/* invulstrook onder de grafiek */
+.binvul{display:grid;grid-template-columns:14mm repeat(13,1fr);margin-top:1.4mm;
+  border:.8pt solid #17201f}
+.binvul div{border-left:.5pt solid #c9cfc8;padding:1mm .4mm;text-align:center;min-width:0}
+.binvul div:first-child{border-left:0;text-align:left;padding-left:1.4mm;
+  display:flex;flex-direction:column;justify-content:center}
+.binvul .kop{display:block;font:700 5.6pt/1.15 var(--mono);letter-spacing:.06em;color:#78837f}
+.binvul .wk{display:block;font:700 6.2pt/1 var(--mono);color:#17201f}
+.binvul .waarde{display:block;font:700 8.4pt/1 var(--mono);color:#1e3f9e;margin-top:1.1mm}
+.binvul .open{display:block;margin:1.1mm 1mm 0;height:3.4mm;border-bottom:.7pt solid #17201f}
+.binvul div.nu{background:#eef4ea}
+
+/* oefeningen op het blad */
+.boefkop{display:flex;align-items:baseline;gap:3mm;margin:3.4mm 0 1.6mm;
+  border-bottom:1.2pt solid #17201f;padding-bottom:1.4mm}
+.boefkop b{font:600 11pt/1 var(--boek);color:#17201f}
+.boefkop span{margin-left:auto;font:700 6.2pt/1 var(--mono);letter-spacing:.14em;color:#78837f}
+
+.boefrij{display:grid;grid-template-columns:18mm 1fr 30mm 34mm;gap:3mm;align-items:center;
+  padding:2.2mm 0;border-bottom:.5pt solid #c9cfc8}
+.boefrij:last-of-type{border-bottom:0}
+.boefrij .prent{height:16mm;border:.6pt solid #c9cfc8;background:#fff;
+  display:flex;align-items:center;justify-content:center;padding:.6mm}
+.boefrij .prent img{max-height:100%;max-width:100%;mix-blend-mode:multiply}
+.boefrij h4{font:700 11.6pt/1.12 var(--sans);color:#000;letter-spacing:-.02em}
+.boefrij p{font:400 9.2pt/1.3 var(--sans);color:#17201f;margin-top:.8mm;max-width:88mm}
+.boefrij .dos{font:700 9.6pt/1.25 var(--mono);color:#000;font-variant-numeric:tabular-nums}
+.boefrij .dos small{display:block;font:400 7.4pt/1.3 var(--sans);color:#4b5651;letter-spacing:0;margin-top:.7mm}
+.boefrij .vakjes{display:flex;gap:1.2mm;justify-content:flex-end}
+.boefrij .vakjes i{width:4mm;height:4mm;border:.8pt solid #17201f;display:block}
+
+/* de gedrukte liniaal onderaan */
+.bliniaal{margin-top:auto;padding-top:2.4mm}
+.bliniaalkop{display:flex;align-items:baseline;gap:3mm;margin-bottom:1.2mm}
+.bliniaalkop b{font:700 6.4pt/1 var(--mono);letter-spacing:.15em;color:#17201f}
+.bliniaalkop span{font:400 7.6pt/1.25 var(--sans);color:#4b5651}
+.lat{position:relative;height:9mm;border:.9pt solid #17201f;border-top-width:0;overflow:hidden}
+.lat .tik{position:absolute;bottom:0;width:0;border-left:.6pt solid #17201f;height:2.4mm}
+.lat .tik.vijf{height:4mm}
+.lat .tik.tien{height:6.4mm;border-left-width:.9pt}
+.lat .cijf{position:absolute;top:.6mm;font:700 6.6pt/1 var(--mono);color:#17201f;transform:translateX(-50%)}
+
+.bvoet{display:flex;align-items:flex-start;gap:4mm;margin-top:2.2mm;padding-top:1.8mm;
+  border-top:1.2pt solid #17201f}
+.bvoet .l{font:400 8.2pt/1.34 var(--sans);color:#17201f;max-width:112mm}
+.bvoet .l b{font-weight:700;color:#b5432c}
+.bvoet .r{margin-left:auto;text-align:right;font:700 6pt/1.5 var(--mono);letter-spacing:.11em;color:#78837f}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#a9b8b3;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:#7c908a;
+  border-top:2px solid #2b3634;padding-top:var(--s2);margin-bottom:var(--s2)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.6}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:7px}
+footer.uitleiding a{color:#d5e2dd}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;
+    height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 49</span>
+  <strong style="font:600 17px/1 var(--boek);color:#fff">Groeicurve</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 49 · GROEICURVE</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1 class="kop">Herstel is een band,<em>geen lijn.</em></h1>
+        <p class="onder">Een oefenkaart zegt wat u moet halen, en dus zegt hij elke week dat u
+          achterloopt. Het consultatiebureau doet dat al zeventig jaar niet. Daar staat geen
+          doellijn maar een <b>spreiding</b>: waar de meeste mensen zaten, in welke week. Een kind
+          op de P15 is niet te klein — het zit op de P15, en dat weet elke ouder in Nederland.
+          Deze kaart tekent diezelfde band om uw herstel heen, en laat u zelf de stip zetten.
+          <b>Onder het midden zitten is niet achterlopen.</b> De helft van alle mensen zit onder
+          het midden.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk het blad</a>
+          <a class="kn leeg" href="#kiezer">Hoe de band gekozen wordt</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="grafiekkaart">
+          <header>
+            <h3>Hielafstand — knieprothese rechts</h3>
+            <span class="wie">Week 5 van 12</span>
+          </header>
+          <div class="grafiekvlak ruit">
+            <svg class="curve" viewBox="0 0 620 342" role="img"
+                 aria-label="Grafiek: de hielafstand van mevrouw Verhoeven loopt vanaf week 0 op van 3 tot 13,5 centimeter en blijft daarmee binnen de spreidingsband, net onder het midden.">
+              <!-- spreidingsband P10–P90 -->
+              <polygon points="64,283.4 107.3,266.8 150.7,250.2 194,233.6 237.3,217.1 280.7,204.6 324,192.2 367.3,183.9 410.7,175.6 454,167.3 497.3,163.1 540.7,159 584,154.9 584,51.2 540.7,55.3 497.3,59.5 454,67.8 410.7,76.1 367.3,88.5 324,100.9 280.7,117.5 237.3,138.3 194,163.1 150.7,192.2 107.3,217.1 64,241.9"
+                       fill="#dfeada"/>
+              <!-- kern P25–P75 -->
+              <polygon points="64,275.1 107.3,254.4 150.7,233.6 194,212.9 237.3,194.3 280.7,179.7 324,165.2 367.3,154.9 410.7,146.6 454,138.3 497.3,132 540.7,127.9 584,123.8 584,71.9 540.7,76.1 497.3,80.2 454,88.5 410.7,96.8 367.3,107.2 324,119.6 280.7,136.2 237.3,154.9 194,177.7 150.7,204.6 107.3,229.5 64,254.4"
+                       fill="#bdd7b5"/>
+              <!-- mediaan -->
+              <polyline points="64,266.8 107.3,241.9 150.7,217.1 194,192.2 237.3,171.4 280.7,154.9 324,138.3 367.3,125.8 410.7,117.5 454,109.2 497.3,100.9 540.7,96.8 584,92.6"
+                        fill="none" stroke="#4d7c4a" stroke-width="1.6"/>
+              <!-- onderrand -->
+              <polyline points="64,283.4 107.3,266.8 150.7,250.2 194,233.6 237.3,217.1 280.7,204.6 324,192.2 367.3,183.9 410.7,175.6 454,167.3 497.3,163.1 540.7,159 584,154.9"
+                        fill="none" stroke="#b5432c" stroke-width="1.3" stroke-dasharray="5 3"/>
+              <!-- assen -->
+              <line x1="64" y1="18" x2="64" y2="300" stroke="#17201f" stroke-width="1.4"/>
+              <line x1="64" y1="300" x2="596" y2="300" stroke="#17201f" stroke-width="1.4"/>
+              <!-- y-ticks -->
+              <g font-size="11">
+                <text x="56" y="304" text-anchor="end">0</text>
+                <text x="56" y="262.5" text-anchor="end">5</text>
+                <text x="56" y="221.1" text-anchor="end">10</text>
+                <text x="56" y="179.6" text-anchor="end">15</text>
+                <text x="56" y="138.1" text-anchor="end">20</text>
+                <text x="56" y="96.6" text-anchor="end">25</text>
+                <text x="56" y="55.2" text-anchor="end">30</text>
+              </g>
+              <g stroke="#c9cfc8" stroke-width=".7">
+                <line x1="64" y1="258.5" x2="596" y2="258.5"/><line x1="64" y1="217.1" x2="596" y2="217.1"/>
+                <line x1="64" y1="175.6" x2="596" y2="175.6"/><line x1="64" y1="134.1" x2="596" y2="134.1"/>
+                <line x1="64" y1="92.6" x2="596" y2="92.6"/><line x1="64" y1="51.2" x2="596" y2="51.2"/>
+              </g>
+              <!-- x-ticks -->
+              <g font-size="11" text-anchor="middle">
+                <text x="64" y="318">0</text><text x="107.3" y="318">1</text><text x="150.7" y="318">2</text>
+                <text x="194" y="318">3</text><text x="237.3" y="318">4</text><text x="280.7" y="318">5</text>
+                <text x="324" y="318">6</text><text x="367.3" y="318">7</text><text x="410.7" y="318">8</text>
+                <text x="454" y="318">9</text><text x="497.3" y="318">10</text><text x="540.7" y="318">11</text>
+                <text x="584" y="318">12</text>
+              </g>
+              <text x="64" y="12" font-size="10.5" fill="#78837f">CM</text>
+              <text x="596" y="337" font-size="10.5" fill="#78837f" text-anchor="end">WEEK</text>
+              <!-- bandlabels -->
+              <text x="590" y="48" font-size="10.5" fill="#4d7c4a" text-anchor="end">P90</text>
+              <text x="590" y="89" font-size="10.5" fill="#2f5a2d" text-anchor="end">MIDDEN</text>
+              <text x="590" y="168" font-size="10.5" fill="#b5432c" text-anchor="end">P10</text>
+              <!-- meting -->
+              <polyline points="64,275.1 107.3,250.2 150.7,229.5 194,208.8 237.3,196.3 280.7,188"
+                        fill="none" stroke="#1e3f9e" stroke-width="2"/>
+              <g fill="#1e3f9e">
+                <circle cx="64" cy="275.1" r="4.4"/><circle cx="107.3" cy="250.2" r="4.4"/>
+                <circle cx="150.7" cy="229.5" r="4.4"/><circle cx="194" cy="208.8" r="4.4"/>
+                <circle cx="237.3" cy="196.3" r="4.4"/>
+              </g>
+              <circle cx="280.7" cy="188" r="7" fill="#fff" stroke="#1e3f9e" stroke-width="3"/>
+              <text x="292" y="172" font-size="12" font-weight="700" fill="#1e3f9e">13,5 cm vandaag</text>
+            </svg>
+          </div>
+          <div class="aflezing">
+            <div>
+              <b>UW METING</b>
+              <span>13,5<i> cm</i></span>
+              <small>Gemeten op zondag 23 augustus, thuis op de keukenstoel.</small>
+            </div>
+            <div>
+              <b>DE BAND IN WEEK 5</b>
+              <span>11,5 – 22<i> cm</i></span>
+              <small>Waar acht van de tien mensen zaten, vijf weken na dezelfde operatie.</small>
+            </div>
+            <div>
+              <b>UW PLEK</b>
+              <span>Binnen</span>
+              <small>Onder het midden, ruim boven de onderrand. Twee op de tien zitten hier.</small>
+            </div>
+          </div>
+        </div>
+        <p class="duiding"><b>Wat er níet staat:</b> een streefwaarde voor volgende week. De band
+          loopt vanzelf omhoog; u hoeft alleen uw eigen stip te blijven zetten. Pas als die stip
+          drie weken achter elkaar ónder de rode onderrand valt, vraagt het blad u te bellen.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 2</b><h2>De oefeningen-kiezer</h2>
+      <p>Links kiest de fysiotherapeut de oefeningen zoals altijd. Rechts kiest hij iets wat
+        nergens anders in dit product bestaat: <em>welke band</em> om deze patiënt heen komt te
+        staan. Een band hoort bij een diagnose, een leeftijdsgroep en een operatiedatum — niet bij
+        een gemiddelde patiënt. Kiest u de verkeerde band, dan liegt de kaart, en dat is erger dan
+        geen band.</p>
+    </div>
+
+    <div class="kiezerrij">
+
+      <div class="paneel">
+        <h3>OEFENINGEN <span>4 van 215 gekozen</span></h3>
+        <div class="zoek">
+          <div class="veld">knie <i>— knieprothese, week 5</i></div>
+          <span class="tel">31 treffers</span>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/knie-buigen-zittend-line-v1.png" alt="Knie buigen, zittend"/></span>
+          <div><h4>Knie buigen — zittend</h4><div class="sub">De oefening waarmee ook gemeten wordt</div></div>
+          <div class="dos"><b>DOSERING</b>3 × 10<br/>2× per dag</div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/quadriceps-aanspannen-liggend-line-v1.png" alt="Quadriceps aanspannen, liggend"/></span>
+          <div><h4>Quadriceps aanspannen</h4><div class="sub">Liggend, hiel op een handdoek</div></div>
+          <div class="dos"><b>DOSERING</b>3 × 8<br/>5 tellen vast</div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/sit-to-stand-zittend-line-v1.png" alt="Opstaan uit de stoel"/></span>
+          <div><h4>Opstaan uit de stoel</h4><div class="sub">Zonder handen als het lukt</div></div>
+          <div class="dos"><b>DOSERING</b>2 × 6<br/>1× per dag</div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png" alt="Knie strekken, zittend"/></span>
+          <div><h4>Knie strekken — zittend</h4><div class="sub">Rustig neerlaten, niet ploffen</div></div>
+          <div class="dos"><b>DOSERING</b>3 × 10<br/>2× per dag</div>
+        </div>
+
+        <div class="oefrij uit">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen staan"/></span>
+          <div><h4>Op de tenen staan</h4><div class="sub">Past bij week 8 en verder</div></div>
+          <div class="dos"><b>DOSERING</b>—</div>
+        </div>
+
+        <div class="oefrij uit">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Hurken bij de stoel"/></span>
+          <div><h4>Hurken bij de stoel</h4><div class="sub">Past bij week 8 en verder</div></div>
+          <div class="dos"><b>DOSERING</b>—</div>
+        </div>
+
+        <div class="waarschuwing"><b>Let op:</b> één van de gekozen oefeningen is tegelijk de
+          meting. Haalt u die uit het schema, dan verdwijnt ook de stip — de band blijft dan wel
+          staan, maar er valt niets meer in te tekenen.</div>
+      </div>
+
+      <div class="paneel">
+        <h3>WELKE BAND?</h3>
+        <div class="bandkiezer">
+          <p>De spreiding komt uit de eigen metingen van de praktijk, per aandoening en
+            leeftijdsgroep. Onder de honderd metingen wordt er geen band getekend — dan is het
+            geen spreiding maar een gok.</p>
+
+          <div class="keuze aan">
+            <span class="rondje" aria-hidden="true"></span>
+            <b>Knieprothese · 65 – 80 jaar</b>
+            <small>Hielafstand op de keukenstoel, week 0 tot 12, gemeten vanaf de operatiedatum.</small>
+            <span class="n">1.243 METINGEN · 214 PATIËNTEN</span>
+          </div>
+
+          <div class="keuze">
+            <span class="rondje" aria-hidden="true"></span>
+            <b>Knieprothese · tot 65 jaar</b>
+            <small>Zelfde meting, andere spreiding: sneller omhoog, en hoger eindpunt.</small>
+            <span class="n">468 METINGEN · 79 PATIËNTEN</span>
+          </div>
+
+          <div class="keuze">
+            <span class="rondje" aria-hidden="true"></span>
+            <b>Voorste kruisband — na reconstructie</b>
+            <small>Loopt over 40 weken en past niet op één blad; wordt per kwartaal geprint.</small>
+            <span class="n">302 METINGEN · 41 PATIËNTEN</span>
+          </div>
+
+          <div class="keuze" style="opacity:.55">
+            <span class="rondje" aria-hidden="true"></span>
+            <b>Meniscus — conservatief</b>
+            <small>Te weinig metingen voor een band. Deze patiënt krijgt een blad zonder grafiek,
+              met alleen de meetlat en de weekhokjes.</small>
+            <span class="n">37 METINGEN — GEEN BAND</span>
+          </div>
+
+          <div class="mini">
+            <svg viewBox="0 0 300 120" role="img" aria-label="Klein voorbeeld van de gekozen band met de vijf metingen erin.">
+              <polygon points="10,104 58,96 106,88 154,80 202,74 250,70 290,67 290,26 250,29 202,34 154,42 106,54 58,70 10,86" fill="#dfeada"/>
+              <polyline points="10,95 58,83 106,71 154,61 202,54 250,49 290,46" fill="none" stroke="#4d7c4a" stroke-width="1.4"/>
+              <polyline points="10,99 58,88 106,79 154,71 202,66" fill="none" stroke="#1e3f9e" stroke-width="1.8"/>
+              <g fill="#1e3f9e"><circle cx="10" cy="99" r="3"/><circle cx="58" cy="88" r="3"/><circle cx="106" cy="79" r="3"/><circle cx="154" cy="71" r="3"/><circle cx="202" cy="66" r="3"/></g>
+              <line x1="10" y1="110" x2="290" y2="110" stroke="#17201f" stroke-width="1"/>
+            </svg>
+            <p class="minibij">Voorbeeld met de vijf metingen die deze patiënt al heeft. Wie
+              wisselt van band, ziet de stippen meeverhuizen — en meestal ergens anders uitkomen.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 3</b><h2>De digitale cliëntkaart</h2>
+      <p>Wat de fysiotherapeut ziet. Niet één percentage therapietrouw, maar twee kolommen die
+        los van elkaar staan: <em>gemeten</em> en <em>geoefend</em>. Ze horen bij elkaar en ze zijn
+        niet hetzelfde — iemand kan trouw oefenen en toch onder de rand zakken, en dat is precies
+        het geval dat u wilt zien.</p>
+    </div>
+
+    <div class="kaartblad">
+      <div class="kaartkop">
+        <div>
+          <h3>Mevrouw A. Verhoeven — 68 jaar</h3>
+          <div class="sub">Knieprothese rechts · geopereerd 19 juli · week 5 van 12 ·
+            band: knieprothese 65–80 jaar</div>
+        </div>
+        <div class="stat">
+          <div><b>LAATSTE METING</b><span>13,5 cm</span></div>
+          <div><b>BAND</b><span>Binnen</span></div>
+          <div><b>GEOEFEND</b><span>24 / 30</span></div>
+        </div>
+      </div>
+
+      <div class="kaartlijf">
+        <div class="kaartlinks">
+          <div class="tabelkop">METINGEN — HIELAFSTAND IN CM</div>
+          <div class="tabelrol">
+          <table class="metingen">
+            <thead>
+              <tr><th>Week</th><th>Gemeten</th><th>Onderrand</th><th>Midden</th><th>Plek</th><th>Waar</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Week 0</td><td class="pen">3,0</td><td>2,0</td><td>4,0</td><td>onder midden</td><td class="plek">PRAKTIJK</td></tr>
+              <tr><td>Week 1</td><td class="pen">6,0</td><td>4,0</td><td>7,0</td><td>onder midden</td><td class="plek">THUIS</td></tr>
+              <tr><td>Week 2</td><td class="pen">8,5</td><td>6,0</td><td>10,0</td><td>onder midden</td><td class="plek">THUIS</td></tr>
+              <tr><td>Week 3</td><td class="pen">11,0</td><td>8,0</td><td>13,0</td><td>onder midden</td><td class="plek">PRAKTIJK</td></tr>
+              <tr class="gemist"><td>Week 4</td><td class="pen">12,5</td><td>10,0</td><td>15,5</td><td>dichter bij de rand</td><td class="plek">THUIS</td></tr>
+              <tr class="gemist"><td>Week 5</td><td class="pen">13,5</td><td>11,5</td><td>17,5</td><td>dichter bij de rand</td><td class="plek">THUIS</td></tr>
+              <tr><td>Week 6</td><td class="leeg">—</td><td>13,0</td><td>19,5</td><td class="leeg">nog te meten</td><td class="plek">PRAKTIJK</td></tr>
+            </tbody>
+          </table>
+          </div>
+
+          <div class="oefstand">
+            <div class="tabelkop">GEOEFEND — PER OEFENING, LAATSTE ZES WEKEN</div>
+            <div class="standrij">
+              <div><h5>Knie buigen — zittend</h5><small>Tegelijk de meting</small></div>
+              <div class="weekjes" aria-label="Zes weken: vijf volledig, één half">
+                <i class="af"></i><i class="af"></i><i class="af"></i><i class="af"></i><i class="af"></i><i class="half"></i></div>
+              <div class="pct">92%</div>
+            </div>
+            <div class="standrij">
+              <div><h5>Quadriceps aanspannen</h5><small>Liggend, 5 tellen vast</small></div>
+              <div class="weekjes" aria-label="Zes weken: vier volledig, twee half">
+                <i class="af"></i><i class="af"></i><i class="half"></i><i class="af"></i><i class="af"></i><i class="half"></i></div>
+              <div class="pct">83%</div>
+            </div>
+            <div class="standrij">
+              <div><h5>Opstaan uit de stoel</h5><small>Zonder handen als het lukt</small></div>
+              <div class="weekjes" aria-label="Zes weken: drie volledig, drie leeg">
+                <i class="af"></i><i class="af"></i><i class="af"></i><i></i><i></i><i></i></div>
+              <div class="pct">50%</div>
+            </div>
+            <div class="standrij">
+              <div><h5>Knie strekken — zittend</h5><small>Rustig neerlaten</small></div>
+              <div class="weekjes" aria-label="Zes weken: allemaal volledig">
+                <i class="af"></i><i class="af"></i><i class="af"></i><i class="af"></i><i class="af"></i><i class="af"></i></div>
+              <div class="pct">100%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kaartrechts">
+          <div class="rechtskop">WAT HET BLAD ZELF ZEGT</div>
+
+          <div class="signaal">
+            <b>TWEE WEKEN DICHTER BIJ DE RAND</b>
+            <p>Week 4 en 5 liggen dichter bij de onderrand dan de weken ervoor. Bij drie zulke
+              weken achter elkaar vraagt het blad de patiënt te bellen. Dat is nú nog niet zo, en
+              het staat er ook nog niet.</p>
+          </div>
+
+          <div class="rust">
+            <b>WAARSCHIJNLIJK GEEN KNIE</b>
+            <p>„Opstaan uit de stoel" is de enige oefening die is teruggelopen — van elke dag naar
+              de helft — en juist die vraagt om een lage stoel. Mevrouw Verhoeven meldde in week 4
+              dat ze bij haar dochter logeert.</p>
+            <p>De buigoefening loopt gewoon door. De curve die afvlakt en de oefening die wegvalt
+              wijzen dus niet naar hetzelfde probleem.</p>
+          </div>
+
+          <div class="rust">
+            <b>VOLGENDE BLAD</b>
+            <p>Bij week 6 rolt er een nieuw blad uit met de band tot week 12, de zes gezette
+              stippen voorgedrukt en zeven lege lijnen. De patiënt houdt het oude blad —
+              er staat handschrift op.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>SCHERM 4</b><h2>De printkaart — A4 staand, half gedrukt en half leeg</h2>
+      <p>De band is gedrukt, de weken tot nu zijn gedrukt, en de weken die nog komen zijn zeven
+        lege lijnen met een hokje eronder. Onderaan staat de <em>liniaal</em>: het meetgerei is
+        het papier zelf. Vier kleuren, waarvan er drie alleen in de grafiek voorkomen — de rest
+        van het blad is zwart op wit en blijft in zwart-wit volledig leesbaar. Print dit blad
+        gerust: de band verandert in grijs, de gedrukte stippen blijven zwart, en de rode
+        onderrand is ook zonder kleur nog steeds de gestreepte lijn onderaan.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="bkop">
+              <span class="t">Uw knie, <em>week voor week</em></span>
+              <span class="wie"><b>VOOR</b>Mevrouw A. Verhoeven — week 5 van 12<br/>
+                Fysiotherapie De Wetering, Utrecht · 030 - 244 18 90</span>
+            </div>
+
+            <div class="bmeet">
+              <div><span class="n">1</span><span class="t">Ga op een gewone keukenstoel zitten,
+                <b>voeten plat</b> op de grond.</span></div>
+              <div><span class="n">2</span><span class="t">Schuif uw hiel zo ver mogelijk naar
+                achteren. <b>Niet doorduwen bij pijn.</b></span></div>
+              <div><span class="n">3</span><span class="t">Meet met de liniaal onderaan hoeveel cm
+                uw hiel <b>voorbij de stoelpoot</b> komt.</span></div>
+            </div>
+
+            <div class="bgrafiek">
+              <svg viewBox="0 0 620 330" role="img"
+                   aria-label="Grafiek met de spreidingsband van week 0 tot 12; de eerste zes weken zijn ingevuld, de weken 6 tot 12 zijn leeg om zelf in te tekenen.">
+                <polygon points="64,283.4 107.3,266.8 150.7,250.2 194,233.6 237.3,217.1 280.7,204.6 324,192.2 367.3,183.9 410.7,175.6 454,167.3 497.3,163.1 540.7,159 584,154.9 584,51.2 540.7,55.3 497.3,59.5 454,67.8 410.7,76.1 367.3,88.5 324,100.9 280.7,117.5 237.3,138.3 194,163.1 150.7,192.2 107.3,217.1 64,241.9"
+                         fill="#dfeada"/>
+                <polygon points="64,275.1 107.3,254.4 150.7,233.6 194,212.9 237.3,194.3 280.7,179.7 324,165.2 367.3,154.9 410.7,146.6 454,138.3 497.3,132 540.7,127.9 584,123.8 584,71.9 540.7,76.1 497.3,80.2 454,88.5 410.7,96.8 367.3,107.2 324,119.6 280.7,136.2 237.3,154.9 194,177.7 150.7,204.6 107.3,229.5 64,254.4"
+                         fill="#bdd7b5"/>
+                <polyline points="64,266.8 107.3,241.9 150.7,217.1 194,192.2 237.3,171.4 280.7,154.9 324,138.3 367.3,125.8 410.7,117.5 454,109.2 497.3,100.9 540.7,96.8 584,92.6"
+                          fill="none" stroke="#4d7c4a" stroke-width="1.5"/>
+                <polyline points="64,283.4 107.3,266.8 150.7,250.2 194,233.6 237.3,217.1 280.7,204.6 324,192.2 367.3,183.9 410.7,175.6 454,167.3 497.3,163.1 540.7,159 584,154.9"
+                          fill="none" stroke="#b5432c" stroke-width="1.3" stroke-dasharray="5 3"/>
+                <!-- hulplijnen voor de weken die nog moeten komen -->
+                <g stroke="#8c9a92" stroke-width=".8" stroke-dasharray="2 3">
+                  <line x1="324" y1="24" x2="324" y2="300"/><line x1="367.3" y1="24" x2="367.3" y2="300"/>
+                  <line x1="410.7" y1="24" x2="410.7" y2="300"/><line x1="454" y1="24" x2="454" y2="300"/>
+                  <line x1="497.3" y1="24" x2="497.3" y2="300"/><line x1="540.7" y1="24" x2="540.7" y2="300"/>
+                  <line x1="584" y1="24" x2="584" y2="300"/>
+                </g>
+                <g stroke="#b8c1ba" stroke-width=".7">
+                  <line x1="64" y1="258.5" x2="596" y2="258.5"/><line x1="64" y1="217.1" x2="596" y2="217.1"/>
+                  <line x1="64" y1="175.6" x2="596" y2="175.6"/><line x1="64" y1="134.1" x2="596" y2="134.1"/>
+                  <line x1="64" y1="92.6" x2="596" y2="92.6"/><line x1="64" y1="51.2" x2="596" y2="51.2"/>
+                </g>
+                <line x1="64" y1="18" x2="64" y2="300" stroke="#17201f" stroke-width="1.4"/>
+                <line x1="64" y1="300" x2="596" y2="300" stroke="#17201f" stroke-width="1.4"/>
+                <g font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12" fill="#3f4c49">
+                  <text x="56" y="304" text-anchor="end">0</text>
+                  <text x="56" y="262.5" text-anchor="end">5</text>
+                  <text x="56" y="221.1" text-anchor="end">10</text>
+                  <text x="56" y="179.6" text-anchor="end">15</text>
+                  <text x="56" y="138.1" text-anchor="end">20</text>
+                  <text x="56" y="96.6" text-anchor="end">25</text>
+                  <text x="56" y="55.2" text-anchor="end">30</text>
+                  <text x="64" y="12" font-size="10">CENTIMETER</text>
+                </g>
+                <g font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11" fill="#2f5a2d" text-anchor="end">
+                  <text x="590" y="47">8 VAN DE 10 ZATEN HIERBOVEN</text>
+                </g>
+                <text x="590" y="88" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11"
+                      fill="#2f5a2d" text-anchor="end">MIDDEN</text>
+                <text x="590" y="169" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11"
+                      fill="#b5432c" text-anchor="end">ONDERRAND</text>
+                <polyline points="64,275.1 107.3,250.2 150.7,229.5 194,208.8 237.3,196.3 280.7,188"
+                          fill="none" stroke="#1e3f9e" stroke-width="2"/>
+                <g fill="#1e3f9e">
+                  <circle cx="64" cy="275.1" r="4.6"/><circle cx="107.3" cy="250.2" r="4.6"/>
+                  <circle cx="150.7" cy="229.5" r="4.6"/><circle cx="194" cy="208.8" r="4.6"/>
+                  <circle cx="237.3" cy="196.3" r="4.6"/><circle cx="280.7" cy="188" r="4.6"/>
+                </g>
+                <text x="292" y="171" font-family="ui-monospace,Menlo,Consolas,monospace"
+                      font-size="11.5" font-weight="700" fill="#1e3f9e">HIER STAAT U NU</text>
+              </svg>
+
+              <div class="blegenda">
+                <span><i class="band"></i>waar 8 van de 10 mensen zaten</span>
+                <span><i class="kern"></i>waar de helft zat</span>
+                <span><i class="mid"></i>het midden</span>
+                <span><i class="stip"></i>uw meting</span>
+                <span><i class="onder"></i>onderrand — hieronder belt u</span>
+              </div>
+
+              <div class="binvul">
+                <div><span class="kop">WEEK</span><span class="kop" style="margin-top:1.4mm">CM</span></div>
+                <div><span class="wk">0</span><span class="waarde">3,0</span></div>
+                <div><span class="wk">1</span><span class="waarde">6,0</span></div>
+                <div><span class="wk">2</span><span class="waarde">8,5</span></div>
+                <div><span class="wk">3</span><span class="waarde">11,0</span></div>
+                <div><span class="wk">4</span><span class="waarde">12,5</span></div>
+                <div class="nu"><span class="wk">5</span><span class="waarde">13,5</span></div>
+                <div><span class="wk">6</span><span class="open"></span></div>
+                <div><span class="wk">7</span><span class="open"></span></div>
+                <div><span class="wk">8</span><span class="open"></span></div>
+                <div><span class="wk">9</span><span class="open"></span></div>
+                <div><span class="wk">10</span><span class="open"></span></div>
+                <div><span class="wk">11</span><span class="open"></span></div>
+                <div><span class="wk">12</span><span class="open"></span></div>
+              </div>
+            </div>
+
+            <div class="boefkop">
+              <b>En dit doet u er elke dag voor</b>
+              <span>VIER OEFENINGEN · KRUIS DE DAG AAN</span>
+            </div>
+
+            <div class="boefrij">
+              <span class="prent"><img src="/images/onderste-extremiteit/knie-buigen-zittend-line-v1.png" alt="Knie buigen, zittend"/></span>
+              <div>
+                <h4>Knie buigen — zittend</h4>
+                <p>Zit op een stoel, schuif uw hiel naar achteren tot het spant. Vijf tellen
+                  houden, dan los. Dit is ook de oefening waarmee u meet.</p>
+              </div>
+              <div class="dos">3 × 10<small>twee keer per dag</small></div>
+              <div class="vakjes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+
+            <div class="boefrij">
+              <span class="prent"><img src="/images/onderste-extremiteit/quadriceps-aanspannen-liggend-line-v1.png" alt="Quadriceps aanspannen, liggend"/></span>
+              <div>
+                <h4>Bovenbeen aanspannen</h4>
+                <p>Lig op bed, been gestrekt, hiel op een opgerolde handdoek. Span uw bovenbeen
+                  aan en duw uw knie omlaag. Vijf tellen vast.</p>
+              </div>
+              <div class="dos">3 × 8<small>vijf tellen vast</small></div>
+              <div class="vakjes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+
+            <div class="boefrij">
+              <span class="prent"><img src="/images/onderste-extremiteit/sit-to-stand-zittend-line-v1.png" alt="Opstaan uit de stoel"/></span>
+              <div>
+                <h4>Opstaan uit de stoel</h4>
+                <p>Ga rustig staan zonder uw handen te gebruiken. Lukt dat niet, gebruik dan één
+                  hand. Even rechtop blijven staan, dan langzaam terug.</p>
+              </div>
+              <div class="dos">2 × 6<small>één keer per dag</small></div>
+              <div class="vakjes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+
+            <div class="boefrij">
+              <span class="prent"><img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png" alt="Knie strekken, zittend"/></span>
+              <div>
+                <h4>Knie strekken — zittend</h4>
+                <p>Strek uw knie tot het been recht is, twee tellen vasthouden, en laat hem
+                  <b>rustig</b> zakken. Niet laten ploffen.</p>
+              </div>
+              <div class="dos">3 × 10<small>twee keer per dag</small></div>
+              <div class="vakjes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+
+            <div class="bliniaal">
+              <div class="bliniaalkop">
+                <b>MEETLAT</b>
+                <span>Leg de rand van dit blad tegen de stoelpoot. Eén centimeter is ongeveer twee
+                  graden kniebuiging.</span>
+              </div>
+              <div class="lat">
+                <span class="tik tien" style="left:0"></span><span class="cijf" style="left:0;transform:translateX(0)">0</span>
+                <span class="tik" style="left:5%"></span><span class="tik" style="left:10%"></span>
+                <span class="tik" style="left:15%"></span><span class="tik" style="left:20%"></span>
+                <span class="tik vijf" style="left:25%"></span><span class="cijf" style="left:25%">5</span>
+                <span class="tik" style="left:30%"></span><span class="tik" style="left:35%"></span>
+                <span class="tik" style="left:40%"></span><span class="tik" style="left:45%"></span>
+                <span class="tik tien" style="left:50%"></span><span class="cijf" style="left:50%">10</span>
+                <span class="tik" style="left:55%"></span><span class="tik" style="left:60%"></span>
+                <span class="tik" style="left:65%"></span><span class="tik" style="left:70%"></span>
+                <span class="tik vijf" style="left:75%"></span><span class="cijf" style="left:75%">15</span>
+                <span class="tik" style="left:80%"></span><span class="tik" style="left:85%"></span>
+                <span class="tik" style="left:90%"></span><span class="tik" style="left:95%"></span>
+                <span class="tik tien" style="right:0"></span><span class="cijf" style="left:100%;transform:translateX(-100%)">20</span>
+              </div>
+            </div>
+
+            <div class="bvoet">
+              <span class="l">Zet elke zondag één stip op de lijn van die week en schrijf het
+                getal in het hokje. <b>Valt uw stip drie weken achter elkaar onder de gestreepte
+                onderrand, bel dan de praktijk.</b> Dat is geen slecht rapport — dat is precies
+                waarvoor deze lijn er staat.</span>
+              <span class="r">FYSIPLAN<br/>CONCEPT 49<br/>GROEICURVE</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>WAAR HET VANDAAN KOMT</h4>
+      <p>Het Nederlandse groeiboekje van het consultatiebureau, met de TNO-percentiellijnen die
+        sinds de jaren vijftig elke twintig jaar opnieuw gemeten worden. Verder: de dunne
+        millimeterruit van ruitjespapier, de balpen waarmee er in zulke boekjes geschreven wordt,
+        en de gedrukte liniaal op de achterflap van een schrift.</p>
+    </div>
+    <div class="kolom">
+      <h4>WAT HET RISICO IS</h4>
+      <ul>
+        <li>Een band die op te weinig metingen rust, is een verzonnen band. Onder de honderd
+          metingen drukt dit blad geen grafiek.</li>
+        <li>Een grafiek kan bang maken. Daarom staat de onderrand er niet als grens maar als
+          telefoonnummer.</li>
+        <li>Wie niet meet, houdt een leeg blad over. De meting moet daarom thuis kunnen, met
+          niets.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>MEER</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var breed=schaal.clientWidth, eigen=blad.offsetWidth;
+    var f=Math.min(1,breed/eigen);
+    blad.style.transform='scale('+f+')';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1079 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="dark light"/>
+<title>Concept 51 — Testbeeld · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 51 — TESTBEELD
+   ------------------------------------------------------------
+   Voor u begint, stelt u zichzelf scherp.
+
+   Elke oefenkaart begint bij de eerste oefening. Dat lijkt logisch
+   en het is het niet, want de kaart weet niets: niet of het
+   vandaag een goede dag is, niet hoeveel pijn er staat, niet of
+   de patiënt het blad überhaupt kan lezen. Alle vier de dingen
+   die bepalen of dit uur zin heeft, zijn onbekend op het moment
+   dat de kaart begint te commanderen.
+
+   Er bestaat een ontwerp dat dat probleem al vijftig jaar
+   fatsoenlijk oplost, en de doelgroep van dit product heeft er
+   duizenden uren naar gekeken. Het testbeeld. In 1966-67 tekende
+   Finn Hendil in het Philips-laboratorium in Kopenhagen het
+   patroon dat als PM5544 de hele wereld over ging: de grote
+   cirkel, het ruitenraster, het identificatievak in het midden,
+   de grijstrap, de kleurbalken, de fijne lijnenbundels. Elk
+   onderdeel doet iets. De cirkel controleert of het beeld rond
+   is en niet uitgerekt. De grijstrap of de tinten uit elkaar te
+   houden zijn. De lijnenbundels of de fijnste details nog
+   doorkomen. Het vak in het midden zegt wie er zendt.
+
+   En daarvóór — bij de BBC's Test Card C, bij Nederland in de
+   jaren vijftig — was het testbeeld letterlijk een GEDRUKTE
+   KAART, op karton, waar een camera in een lege studio naar
+   stond te kijken. Het testbeeld is dus geen schermding dat naar
+   papier vertaald moet worden. Het komt van papier.
+
+   DUS: dit blad begint niet met een oefening maar met een
+   INSTELBLOK, dat elke dag hetzelfde is en dertig seconden kost.
+     · DE CIRKEL — draai naar links, draai naar rechts. Komt u aan
+       beide kanten even ver? Twee halve cirkels met graden erop.
+       Scheef is geen fout, scheef is de meting.
+     · DE GRIJSTRAP — hoeveel pijn staat er vandaag? Elf treden
+       van wit naar zwart, aanwijzen in plaats van een getal
+       verzinnen.
+     · DE KLOK — het tempo. Drie tellen heen, drie tellen terug.
+       Bijna elke thuisoefening gaat te snel, en tempo is het
+       enige doseringsgetal dat op geen enkele kaart staat.
+     · DE LIJNEN — kunt u de dunste regel nog lezen? Zo niet, dan
+       is het blad verkeerd gedrukt voor deze patiënt en hoort er
+       een grootletterversie uit de printer te komen. Een
+       oefenblad dat zijn eigen leesbaarheid controleert.
+
+   Pas ná het instelblok komen de oefeningen — in een strak
+   raster, met bij elk vak dezelfde vier tekens uit het instelblok
+   terug, zodat de patiënt niet hoeft te onthouden wat er
+   afgesproken was.
+
+   VORM. Op het scherm is dit het enige donkere concept van de
+   galerij, en dat is geen mode maar het onderwerp: een testbeeld
+   staat op een monitor in een verder donkere regiekamer. Op
+   PAPIER draait alles om: wit vel, zwarte geometrie, één
+   signaalrood. Want inkt is geen licht, en een patiënt van 71
+   leest geen witte letters uit een zwart vlak op een A4.
+   Dezelfde taal, omgekeerde polariteit — precies zoals het
+   testbeeld zelf ooit van karton naar buis ging.
+   ============================================================ */
+
+:root{
+  --zwart:#0a0c0d;
+  --vlak:#14181a;
+  --vlak-2:#1d2225;
+  --lijn:#2c3438;
+  --lijn-2:#3d474c;
+  --licht:#eef3f3;
+  --licht-2:#c3cdcf;
+  --grijs:#8c9799;
+
+  --geel:#ddd04a;
+  --cyaan:#4fb6c6;
+  --groen:#57ad6a;
+  --magenta:#c2609b;
+  --rood:#d1453c;
+  --blauw:#4a71c8;
+
+  --grot:"Helvetica Neue",Helvetica,Arial,system-ui,-apple-system,sans-serif;
+  --smal:"Arial Narrow","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+
+  --s1:4px; --s2:8px; --s3:15px; --s4:25px; --s5:40px; --s6:62px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.6 var(--grot);color:var(--licht-2);background:var(--zwart)}
+img{max-width:100%;display:block}
+a{color:var(--cyaan)}
+:focus-visible{outline:3px solid var(--geel);outline-offset:2px}
+
+.binnen{max-width:1150px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:#000;color:var(--licht-2);font:500 13px/1 var(--grot);
+  border-bottom:1px solid var(--lijn)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--geel);
+  border:1px solid var(--lijn-2);padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:var(--licht-2);text-decoration:none;padding:5px 3px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--cyaan)}
+.labbalk a.terug{color:#fff;border-bottom-color:var(--lijn-2)}
+@media (max-width:760px){.labbalk a:not(.terug){display:none}}
+
+.scherm{padding:var(--s6) 0;border-bottom:1px solid var(--lijn)}
+.scherm.eerste{background:var(--zwart)}
+.scherm.grijs{background:var(--vlak)}
+.schermkop{margin-bottom:var(--s5)}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;
+  color:var(--geel);margin-bottom:var(--s2)}
+.schermkop h2{font:700 31px/1.1 var(--grot);color:var(--licht);letter-spacing:-.04em}
+.schermkop p{max-width:68ch;margin-top:var(--s2);font-size:16.5px;color:var(--licht-2)}
+.schermkop p em{font-style:normal;font-weight:700;color:var(--licht)}
+
+/* ---------- 1 landing ---------- */
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:29px;height:29px;border:2px solid var(--licht);color:var(--licht);
+  display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--grot)}
+.merkregel .naam{font:700 16px/1 var(--grot);color:var(--licht);letter-spacing:-.04em}
+.merkregel .pad{font:700 10.5px/1 var(--mono);letter-spacing:.16em;color:var(--grijs)}
+
+.heldrij{display:grid;grid-template-columns:.95fr 1.05fr;gap:var(--s5);align-items:start}
+@media (max-width:960px){.heldrij{grid-template-columns:1fr}}
+
+h1.kop{font:700 clamp(33px,4.5vw,52px)/1 var(--grot);color:var(--licht);letter-spacing:-.05em;max-width:15ch}
+h1.kop em{display:block;font-style:normal;color:var(--geel)}
+p.onder{margin-top:var(--s3);font-size:18px;line-height:1.62;max-width:52ch;color:var(--licht-2)}
+p.onder b{font-weight:700;color:var(--licht)}
+
+.knoppen{display:flex;flex-wrap:wrap;gap:10px;margin-top:var(--s4)}
+.kn{display:inline-block;padding:14px 22px;text-decoration:none;
+  font:700 14.5px/1 var(--grot);letter-spacing:-.02em;background:var(--licht);color:var(--zwart);
+  border:2px solid var(--licht)}
+.kn.leeg{background:transparent;color:var(--licht)}
+.kn:hover{background:var(--geel);border-color:var(--geel);color:#0a0c0d}
+
+/* het testbeeld zelf */
+.beeldkast{border:2px solid var(--lijn-2);background:#000;padding:var(--s3)}
+.beeldkast svg{display:block;width:100%;height:auto}
+.beeldbij{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4);margin-top:var(--s3);
+  padding-top:var(--s3);border-top:1px solid var(--lijn)}
+.beeldbij span{font:600 12.5px/1.4 var(--mono);letter-spacing:.04em;color:var(--grijs)}
+.beeldbij span b{color:var(--licht);font-weight:700}
+
+.vierdelen{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--lijn);
+  border:1px solid var(--lijn);margin-top:var(--s4)}
+@media (max-width:520px){.vierdelen{grid-template-columns:1fr}}
+.deel{background:var(--vlak);padding:var(--s3) var(--s3) var(--s4)}
+.deel b{display:block;font:700 9.5px/1.35 var(--mono);letter-spacing:.14em;margin-bottom:9px}
+.deel h4{font:700 17px/1.15 var(--grot);color:var(--licht);letter-spacing:-.035em;margin-bottom:6px}
+.deel p{font:400 14.5px/1.45 var(--grot);color:var(--licht-2)}
+.deel.a b{color:var(--geel)} .deel.b b{color:var(--cyaan)}
+.deel.c b{color:var(--groen)} .deel.d b{color:var(--magenta)}
+
+/* ---------- 2 kiezer ---------- */
+.kiezerrij{display:grid;grid-template-columns:1fr 370px;gap:var(--s5);align-items:start}
+@media (max-width:1020px){.kiezerrij{grid-template-columns:1fr}}
+
+.paneel{background:var(--vlak);border:1px solid var(--lijn)}
+.paneel > h3{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:var(--zwart);
+  padding:13px 16px;background:var(--licht);display:flex;align-items:center;gap:10px}
+.paneel > h3 span{margin-left:auto;font-weight:700;color:#4a5457;letter-spacing:.1em}
+
+.zoek{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--lijn)}
+.zoek .veld{flex:1;border:1.5px solid var(--lijn-2);background:var(--zwart);padding:10px 12px;
+  font:400 15px/1 var(--grot);color:var(--licht)}
+.zoek .veld i{font-style:normal;color:var(--grijs)}
+.zoek .tel{font:700 12px/1 var(--mono);letter-spacing:.06em;color:var(--grijs)}
+
+.oefrij{display:grid;grid-template-columns:24px 66px 1fr 130px;gap:var(--s3);align-items:center;
+  padding:12px 16px;border-bottom:1px solid var(--lijn)}
+.oefrij:last-child{border-bottom:0}
+.oefrij .vink{width:21px;height:21px;border:2px solid var(--grijs);position:relative;background:transparent}
+.oefrij.aan .vink{background:var(--geel);border-color:var(--geel)}
+.oefrij.aan .vink::after{content:"";position:absolute;left:6px;top:2px;width:5px;height:11px;
+  border-right:2.5px solid #0a0c0d;border-bottom:2.5px solid #0a0c0d;transform:rotate(42deg)}
+.oefrij .beeld{height:58px;border:1px solid var(--lijn-2);background:#fff;
+  display:flex;align-items:center;justify-content:center;padding:3px}
+.oefrij .beeld img{max-height:100%;width:auto}
+.oefrij h4{font:700 16.5px/1.15 var(--grot);color:var(--licht);letter-spacing:-.035em}
+.oefrij .sub{font:400 13px/1.35 var(--grot);color:var(--grijs);margin-top:3px}
+.oefrij .tekens{display:flex;gap:7px;justify-content:flex-end}
+.oefrij .tekens i{width:24px;height:24px;border:1.5px solid var(--lijn-2);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font:700 10px/1 var(--mono);
+  color:var(--licht-2);font-style:normal}
+.oefrij .tekens i.aan{border-color:var(--geel);color:var(--geel)}
+.oefrij.uit{opacity:.5}
+@media (max-width:720px){.oefrij{grid-template-columns:24px 56px 1fr}.oefrij .tekens{grid-column:3;justify-content:flex-start}}
+
+.instelbouw{padding:var(--s3) 16px var(--s4)}
+.instelbouw > p{font:400 14.5px/1.5 var(--grot);color:var(--licht-2);margin-bottom:var(--s3)}
+.schuif{border-top:1px solid var(--lijn);padding:var(--s3) 0}
+.schuif b{display:block;font:700 9.5px/1 var(--mono);letter-spacing:.15em;color:var(--geel);margin-bottom:8px}
+.schuif .rij{display:flex;gap:4px;align-items:flex-end}
+.schuif .rij span{flex:1;text-align:center;font:700 11px/1 var(--mono);color:var(--grijs);
+  border-bottom:2px solid var(--lijn-2);padding-bottom:7px}
+.schuif .rij span.aan{color:var(--zwart);background:var(--geel);border-bottom-color:var(--geel);padding:7px 0}
+.schuif small{display:block;font:400 13px/1.45 var(--grot);color:var(--grijs);margin-top:9px}
+
+.melding{margin:0 16px var(--s4);border:1.5px solid var(--rood);padding:13px 15px;background:#1e1315}
+.melding b{display:block;font:700 10px/1 var(--mono);letter-spacing:.14em;color:var(--rood);margin-bottom:7px}
+.melding p{font:400 14.5px/1.5 var(--grot);color:var(--licht-2)}
+
+/* ---------- 3 cliëntkaart ---------- */
+.kaartblad{background:var(--vlak);border:1px solid var(--lijn-2)}
+.kaartkop{padding:var(--s4);border-bottom:1px solid var(--lijn-2);display:flex;
+  align-items:flex-end;flex-wrap:wrap;gap:var(--s3);background:var(--vlak-2)}
+.kaartkop h3{font:700 25px/1.05 var(--grot);color:var(--licht);letter-spacing:-.045em}
+.kaartkop .sub{width:100%;font:400 14.5px/1.4 var(--grot);color:var(--grijs);margin-top:-4px}
+.kaartkop .stat{margin-left:auto;display:flex;gap:var(--s4);text-align:right}
+.kaartkop .stat div b{display:block;font:700 9.5px/1 var(--mono);letter-spacing:.14em;color:var(--grijs);margin-bottom:6px}
+.kaartkop .stat div span{font:700 21px/1 var(--grot);color:var(--licht);letter-spacing:-.04em}
+.kaartkop .stat div span.let{color:var(--geel)}
+
+.metingblok{padding:var(--s4);display:grid;grid-template-columns:1fr 1fr;gap:var(--s5)}
+@media (max-width:920px){.metingblok{grid-template-columns:1fr;gap:var(--s4)}}
+.metingblok h4{font:700 10px/1 var(--mono);letter-spacing:.16em;color:var(--licht);
+  border-bottom:1px solid var(--lijn-2);padding-bottom:8px;margin-bottom:var(--s3)}
+
+/* het verloop van de instelmetingen als strookjes */
+.strookrij{display:grid;grid-template-columns:96px 1fr 58px;gap:var(--s3);align-items:center;
+  padding:10px 0;border-bottom:1px solid var(--lijn)}
+.strookrij:last-child{border-bottom:0}
+.strookrij .naam{font:600 14px/1.25 var(--grot);color:var(--licht)}
+.strookrij .naam small{display:block;font:400 12px/1.3 var(--mono);color:var(--grijs);margin-top:2px}
+.strookrij .balk{display:flex;gap:3px;height:26px}
+.strookrij .balk i{flex:1;display:block;background:var(--lijn);position:relative}
+.strookrij .balk i em{position:absolute;left:0;right:0;bottom:0;display:block;background:var(--cyaan)}
+.strookrij .balk i.hoog em{background:var(--rood)}
+.strookrij .balk i.geen{background:repeating-linear-gradient(45deg,#22282b 0 4px,#1a1f22 4px 8px)}
+.strookrij .cijf{text-align:right;font:700 14px/1 var(--mono);color:var(--licht)}
+.strookrij .cijf.let{color:var(--rood)}
+
+.duidingblok{border:1px solid var(--lijn-2);padding:var(--s3);margin-bottom:var(--s3);background:var(--zwart)}
+.duidingblok b{display:block;font:700 10px/1 var(--mono);letter-spacing:.14em;margin-bottom:8px}
+.duidingblok p{font:400 15px/1.55 var(--grot);color:var(--licht-2)}
+.duidingblok p + p{margin-top:8px}
+.duidingblok.geel{border-color:var(--geel)} .duidingblok.geel b{color:var(--geel)}
+.duidingblok.cyaan{border-color:var(--cyaan)} .duidingblok.cyaan b{color:var(--cyaan)}
+.duidingblok.stil b{color:var(--grijs)}
+
+/* ---------- 4 printkaart ---------- */
+.scherm#printkaart{background:var(--vlak)}
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;position:relative;
+  transform-origin:top left;box-shadow:0 3px 40px rgba(0,0,0,.55);
+  font-family:var(--grot);overflow:hidden}
+@media (max-width:860px){.bladschaal{max-width:100%}}
+
+.blad .rand{position:absolute;inset:9mm 10mm 7mm 10mm;display:flex;flex-direction:column}
+
+/* kartelrand boven en onder — het testbeeld heeft er twee */
+.kartel{display:grid;grid-template-columns:repeat(28,1fr);height:3mm}
+.kartel i{display:block}
+.kartel i:nth-child(odd){background:#000}
+.kartel i:nth-child(even){background:#fff}
+
+.bkop{display:flex;align-items:flex-end;gap:5mm;padding:2mm 0 2mm;
+  border-bottom:1.6pt solid #000}
+.bkop .t{font:700 15pt/1 var(--grot);letter-spacing:-.05em;color:#000}
+.bkop .t em{font-style:normal;color:#c2352b}
+.bkop .wie{margin-left:auto;text-align:right;font:400 8.4pt/1.32 var(--grot);color:#000}
+.bkop .wie b{display:block;font:700 5.9pt/1 var(--mono);letter-spacing:.14em;color:#5d6669}
+
+/* het instelblok */
+.binstelkop{display:flex;align-items:baseline;gap:3mm;margin:2.6mm 0 1.6mm}
+.binstelkop b{font:700 10.6pt/1 var(--grot);letter-spacing:-.03em;color:#000}
+.binstelkop span{font:400 8.2pt/1.25 var(--grot);color:#2a3134}
+.binstelkop em{margin-left:auto;font-style:normal;font:700 6.2pt/1 var(--mono);letter-spacing:.15em;color:#5d6669}
+
+.binstel{display:grid;grid-template-columns:repeat(4,1fr);border:1.2pt solid #000}
+.bcel{padding:2mm 2.2mm 2.4mm;border-right:.8pt solid #000;display:flex;flex-direction:column;min-width:0}
+.bcel:last-child{border-right:0}
+.bcel .n{display:flex;align-items:center;gap:1.6mm;margin-bottom:1.4mm}
+.bcel .n i{width:4.6mm;height:4.6mm;border:1pt solid #000;border-radius:50%;flex:none;
+  display:flex;align-items:center;justify-content:center;font:700 6pt/1 var(--mono);font-style:normal}
+.bcel .n b{font:700 8.8pt/1.05 var(--grot);letter-spacing:-.03em;color:#000}
+.bcel .fig{flex:1;display:flex;align-items:center;justify-content:center;padding:.8mm 0}
+.bcel .fig svg{display:block;width:100%;height:auto}
+.bcel .u{font:400 7.4pt/1.26 var(--grot);color:#000;margin-top:1.4mm}
+.bcel .u b{font-weight:700}
+
+/* de grijstrap */
+.trap{display:grid;grid-template-columns:repeat(11,1fr);height:14mm;border:.8pt solid #000;width:100%}
+.trap div{position:relative}
+.trap div span{position:absolute;left:0;right:0;bottom:.6mm;text-align:center;
+  font:700 5.4pt/1 var(--mono)}
+.trap div:nth-child(-n+6) span{color:#000}
+.trap div:nth-child(n+7) span{color:#fff}
+.trap .k{position:absolute;left:0;right:0;top:-3.4mm;text-align:center;
+  font:700 5.2pt/1 var(--mono);color:#000}
+
+/* de leesbaarheidstest */
+.leesregels div{border-bottom:.4pt solid #c9cfd0;padding-bottom:.7mm;margin-bottom:.9mm}
+.leesregels div:last-child{border-bottom:0}
+.leesregels .l1{font:400 8.6pt/1.05 var(--grot);color:#000}
+.leesregels .l2{font:400 7pt/1.05 var(--grot);color:#000}
+.leesregels .l3{font:400 5.6pt/1.05 var(--grot);color:#000}
+.leesregels .l4{font:400 4.4pt/1.05 var(--grot);color:#000}
+
+/* oefeningen in een raster */
+.braster{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1.2pt solid #000;
+  margin-top:3mm;flex:1}
+.bvak{border-right:.8pt solid #000;border-bottom:.8pt solid #000;padding:2.4mm 2.6mm;
+  display:flex;flex-direction:column;min-width:0}
+.bvak:nth-child(2n){border-right:0}
+.bvak:nth-child(n+3){border-bottom:0}
+.bvakkop{display:flex;align-items:flex-start;gap:2.4mm}
+.bvakkop .cijfer{width:6.4mm;height:6.4mm;background:#000;color:#fff;flex:none;
+  display:flex;align-items:center;justify-content:center;font:700 9pt/1 var(--mono)}
+.bvakkop h4{font:700 12.4pt/1.06 var(--grot);letter-spacing:-.04em;color:#000;flex:1}
+.bvakkop .prent{width:19mm;height:19mm;flex:none;border:.6pt solid #b7bdbe;background:#fff;
+  display:flex;align-items:center;justify-content:center;padding:.6mm}
+.bvakkop .prent img{max-width:100%;max-height:100%;mix-blend-mode:multiply}
+.bvak ol{list-style:none;counter-reset:s;margin-top:1.8mm}
+.bvak ol li{counter-increment:s;position:relative;padding-left:4.4mm;
+  font:400 9.4pt/1.3 var(--grot);color:#000;margin-top:1mm}
+.bvak ol li::before{content:counter(s);position:absolute;left:0;top:.2mm;
+  font:700 7pt/1.6 var(--mono);color:#c2352b}
+.bvak ol li b{font-weight:700}
+
+.binstelling{display:flex;gap:2mm;margin-top:auto;padding-top:2.2mm;flex-wrap:wrap;
+  border-top:.5pt solid #b7bdbe}
+.binstelling span{display:flex;align-items:center;gap:1.4mm;border:.8pt solid #000;
+  padding:1mm 1.8mm;font:700 7.2pt/1.15 var(--mono);letter-spacing:.02em;color:#000}
+.binstelling span i{width:3.6mm;height:3.6mm;border:.9pt solid #000;border-radius:50%;flex:none;
+  display:flex;align-items:center;justify-content:center;font:700 5pt/1 var(--mono);font-style:normal}
+
+.bdagen{display:flex;align-items:center;gap:1.4mm;margin-top:2mm}
+.bdagen b{font:700 5.8pt/1 var(--mono);letter-spacing:.14em;color:#5d6669;margin-right:.6mm}
+.bdagen i{width:4.4mm;height:4.4mm;border:.8pt solid #000;display:block}
+
+/* identificatievak en voet */
+.bident{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:4mm;
+  border:1.2pt solid #000;border-top:0;padding:2mm 3mm;background:#000;color:#fff}
+.bident .l{font:400 8pt/1.3 var(--grot);color:#fff}
+.bident .l b{font-weight:700;color:#f2d94a}
+.bident .m{font:700 11pt/1 var(--grot);letter-spacing:.06em;text-align:center;
+  border:1pt solid #fff;padding:1.6mm 4mm}
+.bident .r{text-align:right;font:700 6pt/1.55 var(--mono);letter-spacing:.11em;color:#a9b3b5}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:#000;color:var(--licht-2);padding:var(--s6) 0;border-top:1px solid var(--lijn)}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:var(--geel);
+  border-top:2px solid var(--lijn);padding-top:var(--s2);margin-bottom:var(--s2)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.6}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:7px}
+footer.uitleiding a{color:var(--cyaan)}
+
+/* ============================================================
+   PRINT — omgekeerde polariteit: wit vel, zwarte geometrie
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000 !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border:0 !important;background:#fff !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;
+    height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 51</span>
+  <strong style="font:700 16px/1 var(--grot);color:#fff;letter-spacing:-.045em">Testbeeld</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 51 · TESTBEELD</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1 class="kop">Voor u begint,<em>stelt u zichzelf scherp.</em></h1>
+        <p class="onder">Elke oefenkaart begint bij oefening één. De kaart weet dan nog niet of
+          het vandaag een goede dag is, hoeveel pijn er staat, hoe snel u gaat bewegen, of u het
+          blad überhaupt kunt lezen. Vier onbekenden — en die bepalen samen of dit kwartier iets
+          oplevert.<br/><br/>
+          Het testbeeld loste dat vijftig jaar geleden op, en uw patiënten van boven de zestig
+          hebben er duizend avonden naar gekeken. <b>Cirkel, grijstrap, klok, fijne lijnen.</b>
+          Elk onderdeel controleert één ding voordat de uitzending begint. Dit blad begint
+          daarmee: <b>dertig seconden instellen</b>, dan pas oefenen.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk het blad</a>
+          <a class="kn leeg" href="#kiezer">Hoe het ingesteld wordt</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="beeldkast">
+          <svg viewBox="0 0 640 480" role="img"
+               aria-label="Testbeeld: een raster met een grote cirkel, in het midden een vak met de praktijknaam, links en rechts kleurbalken, onderin een grijstrap en fijne lijnenbundels.">
+            <rect width="640" height="480" fill="#0a0c0d"/>
+            <!-- kartelrand boven en onder -->
+            <g fill="#eef3f3">
+              <rect x="0" y="0" width="640" height="10" fill="#14181a"/>
+              <rect x="0" y="470" width="640" height="10" fill="#14181a"/>
+            </g>
+            <g fill="#eef3f3">
+              <rect x="20" y="0" width="20" height="10"/><rect x="60" y="0" width="20" height="10"/>
+              <rect x="100" y="0" width="20" height="10"/><rect x="140" y="0" width="20" height="10"/>
+              <rect x="180" y="0" width="20" height="10"/><rect x="220" y="0" width="20" height="10"/>
+              <rect x="260" y="0" width="20" height="10"/><rect x="300" y="0" width="20" height="10"/>
+              <rect x="340" y="0" width="20" height="10"/><rect x="380" y="0" width="20" height="10"/>
+              <rect x="420" y="0" width="20" height="10"/><rect x="460" y="0" width="20" height="10"/>
+              <rect x="500" y="0" width="20" height="10"/><rect x="540" y="0" width="20" height="10"/>
+              <rect x="580" y="0" width="20" height="10"/>
+              <rect x="20" y="470" width="20" height="10"/><rect x="60" y="470" width="20" height="10"/>
+              <rect x="100" y="470" width="20" height="10"/><rect x="140" y="470" width="20" height="10"/>
+              <rect x="180" y="470" width="20" height="10"/><rect x="220" y="470" width="20" height="10"/>
+              <rect x="260" y="470" width="20" height="10"/><rect x="300" y="470" width="20" height="10"/>
+              <rect x="340" y="470" width="20" height="10"/><rect x="380" y="470" width="20" height="10"/>
+              <rect x="420" y="470" width="20" height="10"/><rect x="460" y="470" width="20" height="10"/>
+              <rect x="500" y="470" width="20" height="10"/><rect x="540" y="470" width="20" height="10"/>
+              <rect x="580" y="470" width="20" height="10"/>
+            </g>
+            <!-- raster -->
+            <g stroke="#2c3438" stroke-width="1">
+              <line x1="40" y1="10" x2="40" y2="470"/><line x1="100" y1="10" x2="100" y2="470"/>
+              <line x1="160" y1="10" x2="160" y2="470"/><line x1="220" y1="10" x2="220" y2="470"/>
+              <line x1="280" y1="10" x2="280" y2="470"/><line x1="340" y1="10" x2="340" y2="470"/>
+              <line x1="400" y1="10" x2="400" y2="470"/><line x1="460" y1="10" x2="460" y2="470"/>
+              <line x1="520" y1="10" x2="520" y2="470"/><line x1="580" y1="10" x2="580" y2="470"/>
+              <line x1="10" y1="60" x2="630" y2="60"/><line x1="10" y1="120" x2="630" y2="120"/>
+              <line x1="10" y1="180" x2="630" y2="180"/><line x1="10" y1="240" x2="630" y2="240"/>
+              <line x1="10" y1="300" x2="630" y2="300"/><line x1="10" y1="360" x2="630" y2="360"/>
+              <line x1="10" y1="420" x2="630" y2="420"/>
+            </g>
+            <!-- de grote cirkel: het bereik -->
+            <circle cx="320" cy="240" r="205" fill="none" stroke="#eef3f3" stroke-width="2.5"/>
+            <circle cx="320" cy="240" r="205" fill="none" stroke="#ddd04a" stroke-width="2.5"
+                    stroke-dasharray="322 966" transform="rotate(-90 320 240)"/>
+            <!-- gradenmarkeringen -->
+            <g stroke="#8c9799" stroke-width="1.6">
+              <line x1="320" y1="35" x2="320" y2="52"/>
+              <line x1="525" y1="240" x2="508" y2="240"/><line x1="115" y1="240" x2="132" y2="240"/>
+              <line x1="465" y1="95" x2="453" y2="107"/><line x1="175" y1="95" x2="187" y2="107"/>
+            </g>
+            <g font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#8c9799">
+              <text x="320" y="28" text-anchor="middle">0°</text>
+              <text x="536" y="244">90°</text><text x="86" y="244">90°</text>
+              <text x="470" y="88">45°</text><text x="150" y="88">45°</text>
+            </g>
+            <!-- kleurbalken links en rechts -->
+            <g>
+              <rect x="10" y="150" width="26" height="36" fill="#ddd04a"/>
+              <rect x="10" y="186" width="26" height="36" fill="#4fb6c6"/>
+              <rect x="10" y="222" width="26" height="36" fill="#57ad6a"/>
+              <rect x="10" y="258" width="26" height="36" fill="#c2609b"/>
+              <rect x="10" y="294" width="26" height="36" fill="#d1453c"/>
+              <rect x="604" y="150" width="26" height="36" fill="#4a71c8"/>
+              <rect x="604" y="186" width="26" height="36" fill="#d1453c"/>
+              <rect x="604" y="222" width="26" height="36" fill="#c2609b"/>
+              <rect x="604" y="258" width="26" height="36" fill="#57ad6a"/>
+              <rect x="604" y="294" width="26" height="36" fill="#4fb6c6"/>
+            </g>
+            <!-- identificatievak -->
+            <rect x="200" y="196" width="240" height="88" fill="#0a0c0d" stroke="#eef3f3" stroke-width="2"/>
+            <text x="320" y="228" text-anchor="middle" font-family="Helvetica,Arial" font-size="25"
+                  font-weight="700" fill="#eef3f3" letter-spacing="1">FYSIPLAN</text>
+            <text x="320" y="252" text-anchor="middle" font-family="ui-monospace,Menlo,monospace"
+                  font-size="12" fill="#8c9799" letter-spacing="2">DE WETERING · UTRECHT</text>
+            <text x="320" y="272" text-anchor="middle" font-family="ui-monospace,Menlo,monospace"
+                  font-size="12.5" fill="#ddd04a" letter-spacing="2">DINSDAG 26 AUG · 09:40</text>
+            <!-- grijstrap onderin -->
+            <g>
+              <rect x="200" y="330" width="26" height="34" fill="#ffffff"/>
+              <rect x="226" y="330" width="26" height="34" fill="#e2e6e6"/>
+              <rect x="252" y="330" width="26" height="34" fill="#c3c9ca"/>
+              <rect x="278" y="330" width="26" height="34" fill="#a4abac"/>
+              <rect x="304" y="330" width="26" height="34" fill="#858d8f"/>
+              <rect x="330" y="330" width="26" height="34" fill="#676f71"/>
+              <rect x="356" y="330" width="26" height="34" fill="#4c5355"/>
+              <rect x="382" y="330" width="26" height="34" fill="#343a3c"/>
+              <rect x="408" y="330" width="26" height="34" fill="#1f2426"/>
+              <rect x="434" y="330" width="6" height="34" fill="#0f1314"/>
+              <rect x="200" y="330" width="240" height="34" fill="none" stroke="#8c9799" stroke-width="1"/>
+              <text x="204" y="380" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#8c9799">PIJN 0</text>
+              <text x="436" y="380" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#8c9799">10</text>
+              <polygon points="330,326 324,318 336,318" fill="#ddd04a"/>
+              <text x="333" y="312" text-anchor="middle" font-family="ui-monospace,Menlo,monospace"
+                    font-size="11.5" fill="#ddd04a">VANDAAG 5</text>
+            </g>
+            <!-- lijnenbundels -->
+            <g stroke="#eef3f3">
+              <g stroke-width="3">
+                <line x1="76" y1="330" x2="76" y2="364"/><line x1="86" y1="330" x2="86" y2="364"/>
+                <line x1="96" y1="330" x2="96" y2="364"/><line x1="106" y1="330" x2="106" y2="364"/>
+              </g>
+              <g stroke-width="1.6">
+                <line x1="122" y1="330" x2="122" y2="364"/><line x1="127" y1="330" x2="127" y2="364"/>
+                <line x1="132" y1="330" x2="132" y2="364"/><line x1="137" y1="330" x2="137" y2="364"/>
+                <line x1="142" y1="330" x2="142" y2="364"/><line x1="147" y1="330" x2="147" y2="364"/>
+              </g>
+              <g stroke-width=".8">
+                <line x1="160" y1="330" x2="160" y2="364"/><line x1="163" y1="330" x2="163" y2="364"/>
+                <line x1="166" y1="330" x2="166" y2="364"/><line x1="169" y1="330" x2="169" y2="364"/>
+                <line x1="172" y1="330" x2="172" y2="364"/><line x1="175" y1="330" x2="175" y2="364"/>
+                <line x1="178" y1="330" x2="178" y2="364"/>
+              </g>
+            </g>
+            <text x="76" y="380" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#8c9799">LEESBAARHEID</text>
+            <!-- tempoklok rechts -->
+            <g>
+              <circle cx="520" cy="347" r="34" fill="none" stroke="#eef3f3" stroke-width="2"/>
+              <path d="M520 347 L520 313 A34 34 0 0 1 549 364 Z" fill="#4fb6c6" opacity=".55"/>
+              <line x1="520" y1="347" x2="549" y2="364" stroke="#eef3f3" stroke-width="2.5"/>
+              <text x="520" y="398" text-anchor="middle" font-family="ui-monospace,Menlo,monospace"
+                    font-size="11" fill="#8c9799">TEMPO 3 SEC</text>
+            </g>
+          </svg>
+        </div>
+
+        <div class="beeldbij">
+          <span><b>CIRKEL</b> — bereik links / rechts</span>
+          <span><b>GRIJSTRAP</b> — pijn vandaag</span>
+          <span><b>KLOK</b> — drie tellen heen, drie terug</span>
+          <span><b>LIJNEN</b> — leest u de dunste nog?</span>
+        </div>
+
+        <div class="vierdelen">
+          <div class="deel a">
+            <b>1 · DE CIRKEL</b>
+            <h4>Rond of scheef?</h4>
+            <p>Draai naar links, draai naar rechts. Komt u aan beide kanten even ver? Scheef is
+              geen fout — scheef is de meting.</p>
+          </div>
+          <div class="deel b">
+            <b>2 · DE GRIJSTRAP</b>
+            <h4>Aanwijzen, niet verzinnen</h4>
+            <p>Elf treden van wit naar zwart. Een tint aanwijzen kan iedereen; een cijfer bedenken
+              tussen nul en tien is verrassend moeilijk.</p>
+          </div>
+          <div class="deel c">
+            <b>3 · DE KLOK</b>
+            <h4>Bijna iedereen gaat te snel</h4>
+            <p>Drie tellen heen, drie tellen terug. Tempo is het enige doseringsgetal dat op geen
+              enkele oefenkaart staat.</p>
+          </div>
+          <div class="deel d">
+            <b>4 · DE LIJNEN</b>
+            <h4>Het blad test zichzelf</h4>
+            <p>Kunt u de dunste regel niet lezen, dan is dit het verkeerde blad voor u — en hoort
+              er een grootletterversie uit de printer te komen.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm grijs" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 2</b><h2>De oefeningen-kiezer</h2>
+      <p>Links de oefeningen. Rechts wordt het <em>instelblok</em> geijkt: welke vier tekens
+        krijgt deze patiënt, en waar staan ze vandaag. Dat instelblok is elke dag hetzelfde — dat
+        is het hele punt. Een test die per dag verandert, meet niets.</p>
+    </div>
+
+    <div class="kiezerrij">
+
+      <div class="paneel">
+        <h3>OEFENINGEN <span>4 GEKOZEN · 215 BESCHIKBAAR</span></h3>
+        <div class="zoek">
+          <div class="veld">balans <i>— duizeligheid, valpreventie</i></div>
+          <span class="tel">34 treffers</span>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" alt="Op de plaats marcheren met steun"/></span>
+          <div><h4>Op de plaats marcheren</h4><div class="sub">Met steun van het aanrecht</div></div>
+          <div class="tekens" aria-label="Tekens: klok actief">
+            <i>◯</i><i>▤</i><i class="aan">◷</i><i>≡</i></div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/vestibulair/blikstabilisatie-horizontaal-zittend-langzaam-line-v1.png" alt="Blikstabilisatie zittend"/></span>
+          <div><h4>Blik op één punt houden</h4><div class="sub">Zittend, hoofd langzaam draaien</div></div>
+          <div class="tekens" aria-label="Tekens: cirkel en klok actief">
+            <i class="aan">◯</i><i>▤</i><i class="aan">◷</i><i>≡</i></div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png" alt="Tandemstand met steun"/></span>
+          <div><h4>Hak-teen staan</h4><div class="sub">Bij de muur, één hand vrij</div></div>
+          <div class="tekens" aria-label="Tekens: grijstrap en klok actief">
+            <i>◯</i><i class="aan">▤</i><i class="aan">◷</i><i>≡</i></div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png" alt="Kin intrekken, zittend"/></span>
+          <div><h4>Kin intrekken</h4><div class="sub">Zittend, schouders laag</div></div>
+          <div class="tekens" aria-label="Tekens: cirkel actief">
+            <i class="aan">◯</i><i>▤</i><i>◷</i><i>≡</i></div>
+        </div>
+
+        <div class="oefrij uit">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/balans-en-valpreventie/eenbeenstand-zonder-steun-line-v1.png" alt="Eenbeenstand zonder steun"/></span>
+          <div><h4>Eenbeenstand zonder steun</h4><div class="sub">Pas bij pijnscore onder de 4</div></div>
+          <div class="tekens" style="opacity:.5" aria-hidden="true"><i>◯</i><i>▤</i><i>◷</i><i>≡</i></div>
+        </div>
+
+        <div class="melding">
+          <b>HET INSTELBLOK BLOKKEERT ÉÉN OEFENING</b>
+          <p>„Eenbeenstand zonder steun" is afgesproken vanaf pijnscore 3 of lager. De laatste vier
+            metingen staan op 5 en 6, dus komt hij niet op het blad. Dat is geen slot dat de
+            software dichtdoet — het staat als voorwaarde in het instelblok, en de patiënt kan het
+            zelf nalezen.</p>
+        </div>
+      </div>
+
+      <div class="paneel">
+        <h3>HET INSTELBLOK IJKEN</h3>
+        <div class="instelbouw">
+          <p>Vier tekens, elke dag dezelfde. Wat hier ingesteld wordt, staat straks bovenaan het
+            blad én in elk oefeningsvak terug — zodat er niets te onthouden valt.</p>
+
+          <div class="schuif">
+            <b>◯ CIRKEL — HOEVER DRAAIT U?</b>
+            <div class="rij" aria-label="Bereik: 60 graden">
+              <span>30°</span><span>45°</span><span class="aan">60°</span><span>75°</span><span>90°</span>
+            </div>
+            <small>Het gedrukte bereik waartegen de patiënt zichzelf legt. Gemeten in de praktijk,
+              niet thuis geschat.</small>
+          </div>
+
+          <div class="schuif">
+            <b>▤ GRIJSTRAP — TOT WELKE TREE MAG HET?</b>
+            <div class="rij" aria-label="Bovengrens pijn: tree 6">
+              <span>3</span><span>4</span><span>5</span><span class="aan">6</span><span>7</span>
+            </div>
+            <small>Boven deze tree slaat de patiënt de zware oefeningen over. Dat staat op het
+              blad in gewone woorden, niet als grens in een systeem.</small>
+          </div>
+
+          <div class="schuif">
+            <b>◷ KLOK — HOEVEEL TELLEN?</b>
+            <div class="rij" aria-label="Tempo: drie tellen">
+              <span>2</span><span class="aan">3</span><span>4</span><span>5</span><span>6</span>
+            </div>
+            <small>Drie tellen heen, drie tellen terug. Op het blad staat een wijzerplaat met zes
+              vakken, geen metronoomgetal.</small>
+          </div>
+
+          <div class="schuif">
+            <b>≡ LIJNEN — WELK KORPS?</b>
+            <div class="rij" aria-label="Leesbaarheid: 11 punt">
+              <span>9 pt</span><span>10 pt</span><span class="aan">11 pt</span><span>14 pt</span><span>18 pt</span>
+            </div>
+            <small>Bij de vorige afspraak las meneer Bruinsma regel 3 nog. Zakt dat, dan schuift
+              deze schuif en wordt het hele blad groter gezet.</small>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 3</b><h2>De digitale cliëntkaart</h2>
+      <p>Het instelblok levert iets op wat geen enkel afvinkschema oplevert: <em>vier korte
+        metingen per dag</em>, altijd op dezelfde manier gedaan, allemaal vóór het oefenen. Daardoor
+      zijn ze te vergelijken. En daardoor is te zien dat hier twee dingen tegelijk gebeuren die
+      elkaar niets aandoen.</p>
+    </div>
+
+    <div class="kaartblad">
+      <div class="kaartkop">
+        <div>
+          <h3>Meneer T. Bruinsma — 71 jaar</h3>
+          <div class="sub">Duizeligheid en onzeker lopen · sinds 14 juli · week 6 · instelblok elke ochtend</div>
+        </div>
+        <div class="stat">
+          <div><b>INGESTELD</b><span>24 / 28</span></div>
+          <div><b>PIJN GEM.</b><span class="let">5,2</span></div>
+          <div><b>BEREIK L/R</b><span>60° / 40°</span></div>
+        </div>
+      </div>
+
+      <div class="metingblok">
+        <div>
+          <h4>VIER WEKEN INSTELBLOK — PER WEEK SAMENGEVAT</h4>
+
+          <div class="strookrij">
+            <div class="naam">Pijn<small>grijstrap 0-10</small></div>
+            <div class="balk" aria-label="Pijn per week: 6, 6, 5, 5, 5, 5">
+              <i class="hoog"><em style="height:60%"></em></i><i class="hoog"><em style="height:60%"></em></i>
+              <i><em style="height:50%"></em></i><i><em style="height:50%"></em></i>
+              <i><em style="height:50%"></em></i><i><em style="height:50%"></em></i>
+            </div>
+            <div class="cijf">5,2</div>
+          </div>
+
+          <div class="strookrij">
+            <div class="naam">Bereik links<small>cirkel, graden</small></div>
+            <div class="balk" aria-label="Bereik links per week: gestaag omhoog naar 60 graden">
+              <i><em style="height:55%"></em></i><i><em style="height:60%"></em></i>
+              <i><em style="height:70%"></em></i><i><em style="height:80%"></em></i>
+              <i><em style="height:88%"></em></i><i><em style="height:92%"></em></i>
+            </div>
+            <div class="cijf">60°</div>
+          </div>
+
+          <div class="strookrij">
+            <div class="naam">Bereik rechts<small>cirkel, graden</small></div>
+            <div class="balk" aria-label="Bereik rechts per week: nauwelijks vooruitgang, blijft rond 40 graden">
+              <i><em style="height:50%"></em></i><i><em style="height:52%"></em></i>
+              <i><em style="height:54%"></em></i><i><em style="height:53%"></em></i>
+              <i><em style="height:56%"></em></i><i><em style="height:55%"></em></i>
+            </div>
+            <div class="cijf let">40°</div>
+          </div>
+
+          <div class="strookrij">
+            <div class="naam">Leesregel<small>fijnste gelezen</small></div>
+            <div class="balk" aria-label="Leesregel per week: regel 3, één week overgeslagen, daarna regel 2">
+              <i><em style="height:75%"></em></i><i><em style="height:75%"></em></i>
+              <i class="geen"></i><i><em style="height:75%"></em></i>
+              <i><em style="height:50%"></em></i><i><em style="height:50%"></em></i>
+            </div>
+            <div class="cijf let">R2</div>
+          </div>
+
+          <div class="strookrij">
+            <div class="naam">Tempo gehaald<small>eigen oordeel</small></div>
+            <div class="balk" aria-label="Tempo gehaald per week: vier van de zes weken goed">
+              <i><em style="height:40%"></em></i><i><em style="height:65%"></em></i>
+              <i><em style="height:80%"></em></i><i><em style="height:85%"></em></i>
+              <i><em style="height:90%"></em></i><i><em style="height:88%"></em></i>
+            </div>
+            <div class="cijf">88%</div>
+          </div>
+        </div>
+
+        <div>
+          <h4>WAT ER OPVALT</h4>
+
+          <div class="duidingblok geel">
+            <b>DE CIRKEL IS SCHEEF GEBLEVEN</b>
+            <p>Links loopt in zes weken van 40 naar 60 graden. Rechts staat al die tijd rond de
+              40. Zonder instelblok was dit onzichtbaar geweest: de oefeningen worden trouw
+              gedaan, de patiënt voelt vooruitgang, en de helft die niet meebeweegt heeft niemand
+              geteld.</p>
+          </div>
+
+          <div class="duidingblok cyaan">
+            <b>DE LEESREGEL IS TWEE WEKEN GELEDEN GEZAKT</b>
+            <p>Van regel 3 naar regel 2. Dat is geen fysiotherapie — dat is een oog, of een bril
+              die niet meer klopt. Het blad kan het niet oplossen, maar het merkt het wel op, en
+              het volgende blad wordt automatisch groter gezet.</p>
+          </div>
+
+          <div class="duidingblok stil">
+            <b>WAT HET INSTELBLOK NIET IS</b>
+            <p>Geen dagboek en geen vragenlijst. Vier tekens, dertig seconden, altijd hetzelfde,
+              altijd vóór het oefenen. Wie er meer omheen bouwt, krijgt het niet ingevuld.</p>
+            <p>Vier van de achtentwintig ochtenden zijn overgeslagen. Dat wordt op deze kaart niet
+              rood: een gemiste meting is geen gemiste oefening.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>SCHERM 4</b><h2>De printkaart — A4 staand, omgekeerde polariteit</h2>
+      <p>Op het scherm is dit het enige donkere concept van de galerij, want een testbeeld hoort
+        op een monitor in een donkere regiekamer. Op papier draait alles om: <em>wit vel, zwarte
+        geometrie, één signaalrood</em>. Inkt is geen licht, en een patiënt van 71 leest geen witte
+        letters uit een zwart vlak. Precies zoals het testbeeld ooit andersom ging: de eerste
+        testbeelden waren gedrukte kartons waar een camera in een lege studio naar keek.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="kartel" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+
+            <div class="bkop">
+              <span class="t">Eerst instellen, <em>dan oefenen</em></span>
+              <span class="wie"><b>VOOR</b>Meneer T. Bruinsma — week 6<br/>
+                Fysiotherapie De Wetering, Utrecht · 030 - 244 18 90</span>
+            </div>
+
+            <div class="binstelkop">
+              <b>Het instelblok</b>
+              <span>Vier controles, elke ochtend dezelfde, samen ongeveer een halve minuut.</span>
+              <em>DOE DIT VÓÓR OEFENING 1</em>
+            </div>
+
+            <div class="binstel">
+              <div class="bcel">
+                <div class="n"><i>◯</i><b>De cirkel</b></div>
+                <div class="fig">
+                  <svg viewBox="0 0 120 96" role="img" aria-label="Halve cirkel met graden van 0 tot 90 naar links en naar rechts.">
+                    <path d="M12 84 A48 48 0 0 1 108 84" fill="none" stroke="#000" stroke-width="1.6"/>
+                    <path d="M12 84 A48 48 0 0 1 26.1 50.1" fill="none" stroke="#c2352b" stroke-width="3.4"/>
+                    <path d="M108 84 A48 48 0 0 0 84 42.4" fill="none" stroke="#c2352b" stroke-width="3.4"/>
+                    <line x1="60" y1="84" x2="60" y2="30" stroke="#000" stroke-width=".8" stroke-dasharray="3 2"/>
+                    <line x1="12" y1="84" x2="108" y2="84" stroke="#000" stroke-width="1.2"/>
+                    <g font-family="ui-monospace,Menlo,monospace" font-size="8" fill="#000">
+                      <text x="4" y="80">90</text><text x="106" y="80">90</text>
+                      <text x="54" y="26">0°</text>
+                      <text x="18" y="44" fill="#c2352b">L</text><text x="94" y="36" fill="#c2352b">R</text>
+                    </g>
+                    <circle cx="60" cy="84" r="2.4" fill="#000"/>
+                  </svg>
+                </div>
+                <div class="u">Draai naar links, dan naar rechts. <b>Komt u even ver?</b>
+                  Afgesproken bereik: 60°. Scheef is geen fout — noteer het.</div>
+              </div>
+
+              <div class="bcel">
+                <div class="n"><i>▤</i><b>De grijstrap</b></div>
+                <div class="fig" style="flex-direction:column;justify-content:center;width:100%">
+                  <div class="trap" aria-label="Elf treden van wit naar zwart, nul tot tien.">
+                    <div style="background:#ffffff"><span>0</span></div>
+                    <div style="background:#eceeee"><span>1</span></div>
+                    <div style="background:#d8dcdc"><span>2</span></div>
+                    <div style="background:#c0c5c6"><span>3</span></div>
+                    <div style="background:#a6acad"><span>4</span></div>
+                    <div style="background:#8b9294"><span>5</span></div>
+                    <div style="background:#70787a"><span>6</span></div>
+                    <div style="background:#565e60"><span>7</span></div>
+                    <div style="background:#3d4446"><span>8</span></div>
+                    <div style="background:#242a2c"><span>9</span></div>
+                    <div style="background:#0d1112"><span>10</span></div>
+                  </div>
+                </div>
+                <div class="u">Wijs de tint aan die bij vandaag hoort. <b>Boven tree 6</b> slaat u
+                  oefening 3 over en doet u de rest rustiger.</div>
+              </div>
+
+              <div class="bcel">
+                <div class="n"><i>◷</i><b>De klok</b></div>
+                <div class="fig">
+                  <svg viewBox="0 0 96 96" role="img" aria-label="Wijzerplaat met zes vakken: drie tellen heen, drie tellen terug.">
+                    <circle cx="48" cy="48" r="34" fill="none" stroke="#000" stroke-width="1.6"/>
+                    <path d="M48 48 L48 14 A34 34 0 0 1 77.4 65 Z" fill="#000" opacity=".12"/>
+                    <g stroke="#000" stroke-width="1.1">
+                      <line x1="48" y1="48" x2="48" y2="14"/>
+                      <line x1="48" y1="48" x2="77.4" y2="31"/>
+                      <line x1="48" y1="48" x2="77.4" y2="65"/>
+                      <line x1="48" y1="48" x2="48" y2="82"/>
+                      <line x1="48" y1="48" x2="18.6" y2="65"/>
+                      <line x1="48" y1="48" x2="18.6" y2="31"/>
+                    </g>
+                    <line x1="48" y1="48" x2="77.4" y2="65" stroke="#c2352b" stroke-width="3"/>
+                    <g font-family="ui-monospace,Menlo,monospace" font-size="8" fill="#000">
+                      <text x="60" y="26">1</text><text x="82" y="50">2</text><text x="60" y="76">3</text>
+                      <text x="30" y="76">2</text><text x="8" y="50">1</text><text x="30" y="26">0</text>
+                    </g>
+                    <circle cx="48" cy="48" r="2.6" fill="#000"/>
+                  </svg>
+                </div>
+                <div class="u"><b>Drie tellen heen, drie tellen terug.</b> Tel hardop mee. Bijna
+                  iedereen gaat thuis te snel — dat is het gewoonste euvel dat er is.</div>
+              </div>
+
+              <div class="bcel">
+                <div class="n"><i>≡</i><b>De lijnen</b></div>
+                <div class="fig" style="align-items:flex-start;width:100%">
+                  <div class="leesregels" style="width:100%">
+                    <div class="l1">1 · Rustig blijven ademen</div>
+                    <div class="l2">2 · Rustig blijven ademen</div>
+                    <div class="l3">3 · Rustig blijven ademen</div>
+                    <div class="l4">4 · Rustig blijven ademen</div>
+                  </div>
+                </div>
+                <div class="u">Welke regel leest u nog zonder moeite? <b>Onder regel 3</b>: vraag
+                  om het grote blad. Dat kost één druk op de knop.</div>
+              </div>
+            </div>
+
+            <div class="braster">
+              <div class="bvak">
+                <div class="bvakkop">
+                  <span class="cijfer">1</span>
+                  <h4>Op de plaats marcheren</h4>
+                  <span class="prent"><img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" alt="Op de plaats marcheren met steun"/></span>
+                </div>
+                <ol>
+                  <li>Sta bij het aanrecht, <b>één hand aan de rand</b>.</li>
+                  <li>Til uw knie op tot heuphoogte en zet hem rustig neer.</li>
+                  <li>Tel: één-twee-drie omhoog, één-twee-drie omlaag.</li>
+                </ol>
+                <div class="binstelling">
+                  <span><i>◷</i>3 TELLEN</span>
+                  <span>2 × 20 STAPPEN</span>
+                </div>
+                <div class="bdagen"><b>DAGEN</b><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+
+              <div class="bvak">
+                <div class="bvakkop">
+                  <span class="cijfer">2</span>
+                  <h4>Blik op één punt houden</h4>
+                  <span class="prent"><img src="/images/vestibulair/blikstabilisatie-horizontaal-zittend-langzaam-line-v1.png" alt="Blik op één punt houden"/></span>
+                </div>
+                <ol>
+                  <li>Zit rechtop. Kies een punt op de muur, <b>op ooghoogte</b>.</li>
+                  <li>Blijf ernaar kijken en draai uw hoofd langzaam heen en weer.</li>
+                  <li>Wordt u duizelig: stop, kijk stil naar het punt tot het zakt.</li>
+                </ol>
+                <div class="binstelling">
+                  <span><i>◯</i>TOT 60°</span>
+                  <span><i>◷</i>3 TELLEN</span>
+                  <span>2 × 30 SEC</span>
+                </div>
+                <div class="bdagen"><b>DAGEN</b><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+
+              <div class="bvak">
+                <div class="bvakkop">
+                  <span class="cijfer">3</span>
+                  <h4>Hak-teen staan</h4>
+                  <span class="prent"><img src="/images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png" alt="Hak-teen staan met steun"/></span>
+                </div>
+                <ol>
+                  <li>Ga <b>naast de muur</b> staan, één hand los ertegen.</li>
+                  <li>Zet uw ene voet recht vóór de andere, hak tegen teen.</li>
+                  <li>Twintig seconden staan, dan wisselen van voet.</li>
+                </ol>
+                <div class="binstelling">
+                  <span><i>▤</i>TOT TREE 6</span>
+                  <span>2 × 20 SEC</span>
+                </div>
+                <div class="bdagen"><b>DAGEN</b><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+
+              <div class="bvak">
+                <div class="bvakkop">
+                  <span class="cijfer">4</span>
+                  <h4>Kin intrekken</h4>
+                  <span class="prent"><img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png" alt="Kin intrekken, zittend"/></span>
+                </div>
+                <ol>
+                  <li>Zit rechtop, schouders laag, <b>kijk recht vooruit</b>.</li>
+                  <li>Trek uw kin recht naar achteren — niet omlaag kijken.</li>
+                  <li>Vijf tellen vasthouden, dan rustig los.</li>
+                </ol>
+                <div class="binstelling">
+                  <span><i>◯</i>TOT 60°</span>
+                  <span>3 × 8</span>
+                </div>
+                <div class="bdagen"><b>DAGEN</b><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+            </div>
+
+            <div class="bident">
+              <span class="l">Klopt het beeld niet? <b>Duizelig na tien minuten, pijn boven tree 6,
+                of de cirkel plots veel schever</b> — dan stopt u en belt u de praktijk.</span>
+              <span class="m">FYSIPLAN</span>
+              <span class="r">CONCEPT 51 · TESTBEELD<br/>INSTELBLOK 4 TEKENS<br/>BLAD 11 PT</span>
+            </div>
+
+            <div class="kartel" style="margin-top:1.4mm" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>WAAR HET VANDAAN KOMT</h4>
+      <p>Het Philips-testbeeld PM5544, in 1966-67 getekend door Finn Hendil in Kopenhagen: cirkel,
+        raster, identificatievak, grijstrap, kleurbalken, lijnenbundels. Daarvóór de gedrukte
+        kartons van de BBC's Test Card C, waar een camera in een lege studio naar keek — het
+        testbeeld kómt van papier. En verder: de Snellen-kaart bij de oogarts, en de
+        controlestrook van de drukker.</p>
+    </div>
+    <div class="kolom">
+      <h4>WAT HET RISICO IS</h4>
+      <ul>
+        <li>Nostalgie is geen argument. Het instelblok moet dertig seconden kosten en vier dingen
+          meten die iets veranderen; lukt dat niet, dan is het decor.</li>
+        <li>Vier metingen per dag is veel gevraagd. Daarom wordt een gemiste meting hier nergens
+          rood — een gemiste meting is geen gemiste oefening.</li>
+        <li>Het donkere scherm mag nooit naar het papier lekken. Wit vel, zwarte inkt, één rood.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>MEER</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var breed=schaal.clientWidth, eigen=blad.offsetWidth;
+    var f=Math.min(1,breed/eigen);
+    blad.style.transform='scale('+f+')';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

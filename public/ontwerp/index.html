@@ -770,6 +770,49 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
   background:#faf7ef;border:2px solid #16120e;z-index:2}
 .staal.hanglabel .strepen i{border-color:rgba(22,18,14,.22)}
 
+/* — staal concept 49: Groeicurve — */
+.staal.groeicurve{background:#f6f6f1;color:#17201f;padding-bottom:58px}
+.staal.groeicurve .plaatnr{color:#2f5a2d;font-family:var(--mono);position:relative;z-index:2}
+.staal.groeicurve .woord{font-family:Charter,"Iowan Old Style",Georgia,serif;font-weight:400;
+  position:relative;z-index:2}
+.staal.groeicurve .woord em{font-style:italic;color:#1e3f9e}
+.staal.groeicurve .curve{position:absolute;left:0;right:0;bottom:0;height:54px;
+  border-top:1px solid #dfe2dc}
+.staal.groeicurve .curve svg{width:100%;height:100%;display:block}
+.staal.groeicurve .strepen i{border-color:rgba(23,32,31,.2)}
+
+/* — staal concept 50: Stalenkaart — */
+.staal.stalenkaart{background:#f2f0ea;color:#131110;padding-bottom:50px}
+.staal.stalenkaart .plaatnr{color:#8a381e;font-family:var(--mono)}
+.staal.stalenkaart .woord{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;
+  letter-spacing:-.052em}
+.staal.stalenkaart .woord em{font-style:normal;color:#8a381e}
+.staal.stalenkaart .ladder{position:absolute;left:0;right:0;bottom:0;height:36px;display:flex}
+.staal.stalenkaart .ladder i{flex:1;display:block;position:relative}
+.staal.stalenkaart .ladder i b{position:absolute;left:0;right:0;top:11px;text-align:center;
+  font:700 9px/1 var(--mono);letter-spacing:.08em}
+.staal.stalenkaart .ladder i.nu{outline:3px solid #131110;outline-offset:-3px;z-index:2}
+.staal.stalenkaart .strepen i{border-color:rgba(19,17,16,.2)}
+
+/* — staal concept 51: Testbeeld — */
+.staal.testbeeld{background:#0a0c0d;color:#eef3f3}
+.staal.testbeeld .plaatnr{color:#ddd04a;font-family:var(--mono);position:relative;z-index:3}
+.staal.testbeeld .woord{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;
+  letter-spacing:-.052em;position:relative;z-index:3}
+.staal.testbeeld .woord em{font-style:normal;color:#ddd04a}
+.staal.testbeeld .raster{position:absolute;inset:0;
+  background:
+    linear-gradient(to right,#232a2d 1px,transparent 1px) 0 0/26px 26px,
+    linear-gradient(to bottom,#232a2d 1px,transparent 1px) 0 0/26px 26px}
+.staal.testbeeld .cirkel{position:absolute;right:-34px;top:-26px;width:154px;height:154px;
+  border-radius:50%;border:2.5px solid #46514f;z-index:2}
+.staal.testbeeld .cirkel::after{content:"";position:absolute;left:-2.5px;top:-2.5px;
+  width:159px;height:159px;border-radius:50%;border:2.5px solid transparent;border-top-color:#ddd04a;
+  transform:rotate(28deg)}
+.staal.testbeeld .balken{position:absolute;right:14px;bottom:13px;display:flex;gap:3px;z-index:3}
+.staal.testbeeld .balken i{width:9px;height:16px;display:block}
+.staal.testbeeld .strepen i{border-color:rgba(238,243,243,.3)}
+
 .kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
 .kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
 .kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
@@ -829,8 +872,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>48</b> concepten</span>
-      <span>Laatste ronde <b>26 augustus 2026</b></span>
+      <span><b>51</b> concepten</span>
+      <span>Laatste ronde <b>27 augustus 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -2905,6 +2948,180 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-48-hanglabel.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-48-hanglabel.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="galerijkop" style="margin-top:var(--s6)">
+      <h2>Ronde 13</h2>
+      <span>ronde 13 · 27 aug 2026</span>
+    </div>
+
+    <div class="raster">
+
+      <!-- ─────────── CONCEPT 49 ─────────── -->
+      <article class="kaart">
+        <div class="staal groeicurve">
+          <div class="curve" aria-hidden="true">
+            <svg viewBox="0 0 320 82" preserveAspectRatio="none">
+              <polygon points="0,79 53,73 107,66 160,60 213,56 267,52 320,49 320,10 267,13 213,18 160,25 107,34 53,48 0,60" fill="#dfeada"/>
+              <polygon points="0,73 53,66 107,58 160,52 213,47 267,43 320,40 320,24 267,28 213,33 160,39 107,47 53,57 0,66" fill="#bdd7b5"/>
+              <polyline points="0,69 53,61 107,52 160,45 213,40 267,36 320,32" fill="none" stroke="#4d7c4a" stroke-width="1.6"/>
+              <polyline points="0,76 53,70 107,63 160,57 213,53" fill="none" stroke="#1e3f9e" stroke-width="2.2"/>
+              <g fill="#1e3f9e"><circle cx="2" cy="76" r="3.6"/><circle cx="53" cy="70" r="3.6"/>
+                <circle cx="107" cy="63" r="3.6"/><circle cx="160" cy="57" r="3.6"/><circle cx="213" cy="53" r="3.6"/></g>
+            </svg>
+          </div>
+          <div class="plaatnr">Week 5 van 12 · 13,5 cm</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#f6f6f1"></i><i style="background:#bdd7b5"></i>
+            <i style="background:#1e3f9e"></i><i style="background:#b5432c"></i>
+          </div>
+          <div class="woord">Binnen <em>de band</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 49</div>
+          <h3>Groeicurve</h3>
+          <p class="richting">Herstel is een band, geen lijn.</p>
+          <p class="rationale">Een oefenkaart noteert wat er gehaald moet worden, en zegt daarmee
+            elke week tegen wie langzamer herstelt dat hij achterloopt — terwijl langzamer
+            herstellen na een knieprothese op je achtenzestigste volstrekt gewoon is. Het
+            consultatiebureau lost dat al zeventig jaar op: geen doellijn maar een <b>spreiding</b>,
+            en „hij zit netjes op zijn eigen lijn" is waarschijnlijk het best begrepen statistische
+            begrip van Nederland. Dus tekent dit blad de band waarin acht van de tien mensen zaten,
+            en <b>zet de patiënt zelf de stip</b> — het blad komt half leeg uit de printer, precies
+            zoals het groeiboekje half leeg uit de drukkerij komt. Onder het midden zitten is geen
+            achterstand; pas drie weken achter elkaar ónder de gestreepte onderrand vraagt het blad
+            u te bellen, en dat staat er als informatie en niet als cijfer. Het derde probleem —
+            een getal dat thuis zonder apparaat te meten is — wordt opgelost door het papier zelf:
+            <b>onderaan het blad staat een gedrukte liniaal</b>, en u meet hoeveel centimeter uw
+            hiel voorbij de stoelpoot komt.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>het Nederlandse groeiboekje van het consultatiebureau, met de TNO-percentiellijnen
+              P3 tot P97 · de balpen waarmee ouders zelf de stip zetten · ruitjespapier en de
+              millimeterruit · de gedrukte liniaal op de achterflap van een schoolschrift</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b> — de spreidingsband in twee tinten groen over week 0 tot 12, de
+              zes gezette metingen in balpenblauw en zeven lege lijnen met een invulhokje eronder;
+              daaronder vier oefeningen met dagvakjes, en onderaan een liniaal van 20 cm met
+              millimeterverdeling. Rood komt op één plek voor: de onderrand en de zin die erbij
+              hoort</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-49-groeicurve.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-49-groeicurve.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 50 ─────────── -->
+      <article class="kaart">
+        <div class="staal stalenkaart">
+          <div class="plaatnr">FP 41 · trap 3 van 5</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#f4e2da"></i><i style="background:#d17f65"></i>
+            <i style="background:#b45333"></i><i style="background:#8a381e"></i>
+          </div>
+          <div class="woord">Eén trapje <em>donkerder</em></div>
+          <div class="ladder" aria-hidden="true">
+            <i style="background:#f4e2da"><b style="color:#131110">1</b></i>
+            <i style="background:#e6b4a1"><b style="color:#131110">2</b></i>
+            <i class="nu" style="background:#d17f65"><b style="color:#131110">3</b></i>
+            <i style="background:#b45333"><b style="color:#fff">4</b></i>
+            <i style="background:#8a381e"><b style="color:#fff">5</b></i>
+          </div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 50</div>
+          <h3>Stalenkaart</h3>
+          <p class="richting">Het werkzame bestanddeel is opbouw — en die staat op geen enkele kaart.</p>
+          <p class="rationale">Er staat „3 × 10", acht weken lang, en wat er daarna moet gebeuren
+            zit in het hoofd van de fysiotherapeut of nergens. Wie het braaf doet, traint in week
+            acht nog precies even zwaar als in week één. De verfhandel legt tinten van één kleur
+            al sinds 1927 op één strook met een code onder elk vlak, en de fysiotherapie heeft die
+            ladder trouwens al aan de muur hangen: <b>geel, rood, groen, blauw, zwart</b> — alleen
+            laat niemand hem ooit als reeks zien. Hier is elke oefening <b>vijf trapjes</b> met in
+            elk vlak de echte dosering van dat trapje; de patiënt staat op één ervan, dik omkaderd,
+            en de regel om op te schuiven is van hem: twee keer achter elkaar de laatste herhaling
+            makkelijk én de ochtend erna geen napijn. De pijl staat er in twee richtingen, want een
+            trapje terug is een gewone zet. En het inktprobleem wordt eerlijk opgelost: op het
+            scherm een kleurenwaaier, op papier een <b>rasterladder</b> van 8 tot 80 procent van
+            één inkt — met onderaan de controlestrook van de drukker, die vraagt of de vijf vlakjes
+            wel uit elkaar te houden zijn.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>de verfwaaier: RAL sinds 1927, NCS sinds 1960 · de rasterstrook langs de rand van
+              een drukvel, waarop de drukker in één blik ziet of de pers goed staat · de
+              kleurcodering van het oefenelastiek, die in elke praktijk hangt en op geen enkele
+              oefenkaart als ladder verschijnt</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b> — vier ladders van vijf vlakken in rastertinten van één inkt (8,
+              20, 36, 56, 80 procent), elk vlak met trapnummer en dosering in woorden, het huidige
+              trapje met een zwart kader en het woord VANDAAG; onderaan de controlestrook met de
+              vraag of de tinten te onderscheiden zijn. Blijft volledig leesbaar op een
+              zwart-witkopie</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-50-stalenkaart.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-50-stalenkaart.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 51 ─────────── -->
+      <article class="kaart">
+        <div class="staal testbeeld">
+          <div class="raster" aria-hidden="true"></div>
+          <div class="cirkel" aria-hidden="true"></div>
+          <div class="plaatnr">Instelblok · 4 tekens</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#0a0c0d"></i><i style="background:#ddd04a"></i>
+            <i style="background:#4fb6c6"></i><i style="background:#eef3f3"></i>
+          </div>
+          <div class="woord">Eerst <em>scherpstellen</em></div>
+          <div class="balken" aria-hidden="true">
+            <i style="background:#ddd04a"></i><i style="background:#4fb6c6"></i>
+            <i style="background:#57ad6a"></i><i style="background:#c2609b"></i>
+            <i style="background:#d1453c"></i>
+          </div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 51</div>
+          <h3>Testbeeld</h3>
+          <p class="richting">De kaart begint bij oefening één en weet dan nog niets.</p>
+          <p class="rationale">Niet of het vandaag een goede dag is, niet hoeveel pijn er staat,
+            niet hoe snel er bewogen wordt, en niet of de patiënt het blad überhaupt kan lezen —
+            vier onbekenden die samen bepalen of dit kwartier iets oplevert. Het testbeeld loste
+            dat vijftig jaar geleden op, en de doelgroep boven de zestig heeft er duizend avonden
+            naar gekeken. Dus begint dit blad met een <b>instelblok</b> van dertig seconden:
+            de <b>cirkel</b> (draait u links en rechts even ver? scheef is geen fout, scheef is de
+            meting), de <b>grijstrap</b> (pijn aanwijzen in plaats van een getal verzinnen), de
+            <b>klok</b> (drie tellen heen, drie terug — tempo is het enige doseringsgetal dat
+            nergens staat) en de <b>lijnenbundel</b> (leest u de dunste regel nog? zo niet, dan is
+            dit het verkeerde blad en hoort er een grootletterversie uit de printer te komen).
+            Op het scherm is dit het enige donkere concept van de galerij; op papier draait de
+            polariteit om, want inkt is geen licht — <b>wit vel, zwarte geometrie, één rood</b>.
+            Precies zoals het testbeeld ooit andersom ging: de eerste waren gedrukte kartons waar
+            een camera in een lege studio naar keek.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>het Philips-testbeeld PM5544, in 1966-67 getekend door Finn Hendil in Kopenhagen ·
+              de gedrukte kartons van de BBC's Test Card C, waar een camera naar keek · de
+              Snellen-kaart bij de oogarts · de controlestrook van de drukker · het
+              identificatievak dat zegt wie er zendt</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b>, omgekeerde polariteit — kartelranden boven en onder, daarna het
+              instelblok in vier cellen (halve gradenboog, elf grijstreden van 0 tot 10, wijzerplaat
+              met zes vakken, vier leesregels van 10 tot 5 punt), dan vier oefeningen in een strak
+              2 × 2-raster die dezelfde vier tekens herhalen, en onderaan het identificatievak met
+              de zin over wanneer u stopt en belt</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-51-testbeeld.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-51-testbeeld.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>

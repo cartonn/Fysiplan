@@ -1,0 +1,904 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 50 — Stalenkaart · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 50 — STALENKAART
+   ------------------------------------------------------------
+   Niet "volgende week twaalf". Eén trapje donkerder.
+
+   Het werkzame bestanddeel van fysiotherapie is opbouw. Niet de
+   oefening — de oefening is de vorm — maar het feit dat de
+   belasting elke paar weken een stapje omhoog gaat. Op geen enkel
+   oefenblad ter wereld staat die opbouw. Er staat "3 × 10", acht
+   weken lang, en wat er daarna moet gebeuren zit in het hoofd van
+   de fysiotherapeut of nergens. De patiënt die het goed doet,
+   blijft daardoor precies even zwaar trainen als in week één, en
+   merkt na een maand dat er niets meer verandert.
+
+   Twee vakgebieden hebben "hetzelfde ding, in stappen" al
+   opgelost, en allebei met hetzelfde voorwerp: de STALENKAART.
+   De verfhandel legt de tinten van één kleur op één strook naast
+   elkaar, met een code onder elk vlak — RAL doet dat sinds 1927,
+   NCS sinds 1960, en iedereen die ooit een muur heeft geverfd kan
+   zo'n waaier lezen zonder uitleg. En de drukkerij doet
+   hetzelfde met inkt: de rasterstrook langs de rand van elk
+   drukvel, 10-20-40-60-80 procent, waarop de drukker in één blik
+   ziet of de pers goed staat.
+
+   De fysiotherapie heeft die ladder óók al — hij hangt aan de
+   muur van elke praktijk. Het oefenelastiek is kleurgecodeerd:
+   geel, rood, groen, blauw, zwart. Een bestaande, begrepen,
+   oplopende reeks, die op geen enkele oefenkaart als reeks wordt
+   getoond. De patiënt krijgt één kleur te horen en ziet nooit dat
+   er een ladder onder ligt.
+
+   DUS: elke oefening op deze kaart is geen dosering maar een
+   LADDER VAN VIJF TRAPJES, van licht naar donker, met in elk
+   vlak de concrete dosering van dat trapje. De patiënt staat op
+   één trapje — dik omkaderd, met het woord VANDAAG erboven — en
+   ziet links waar hij vandaan komt en rechts waar hij heen gaat.
+   De regel om op te schuiven staat op het blad en is van de
+   patiënt, niet van de therapeut: twee keer achter elkaar de
+   laatste herhaling nog makkelijk, en de ochtend erna geen
+   napijn. Dan één trapje donkerder. De pijl staat er in twee
+   richtingen: een trapje terug is een gewone zet.
+
+   HET INKTPROBLEEM, EERLIJK OPGELOST. Een kleurenwaaier op papier
+   betekent vijf volvlakken inkt per oefening, en dat is precies
+   wat een A4 uit een praktijkprinter niet moet zijn. Dus: op het
+   SCHERM is de ladder een kleurenwaaier, op het BLAD is hij een
+   RASTERLADDER — tinten van één inkt, 8-20-36-56-80 procent,
+   zoals de controlestrook van de drukker. Zuinig, en op een
+   zwart-witkopie verandert er niets. Kleur draagt bovendien nooit
+   in zijn eentje betekenis: elk trapje heeft een nummer, een
+   dosering in woorden, en het huidige trapje een zwart kader.
+
+   En onderaan het blad staat de controlestrook zelf, met de vraag
+   erbij: zijn deze vijf vlakjes van elkaar te onderscheiden? Zo
+   niet, dan staat de printer te licht — en dan klopt de hele
+   kaart niet meer. Een oefenblad dat zijn eigen druk controleert.
+   ============================================================ */
+
+:root{
+  --papier:#f2f0ea;
+  --wit:#ffffff;
+  --inkt:#131110;
+  --inkt-2:#403b35;
+  --grijs:#7c766c;
+  --lijn:#d8d3ca;
+  --lijn-2:#e8e4dc;
+
+  /* hue-families: één familie per lichaamsgebied */
+  --t1:#f4e2da; --t2:#e6b4a1; --t3:#d17f65; --t4:#b45333; --t5:#8a381e;  /* terracotta — schouder */
+  --p1:#dfe9e8; --p2:#a9c9c7; --p3:#5fa09e; --p4:#2b7573; --p5:#134f4f;  /* petrol — romp    */
+  --o1:#f3e7cd; --o2:#e2c887; --o3:#c9a13c; --o4:#a37c1c; --o5:#75590f;  /* oker — been      */
+
+  --grot:"Helvetica Neue",Helvetica,"Arial",system-ui,-apple-system,sans-serif;
+  --smal:"Arial Narrow","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+
+  --s1:4px; --s2:8px; --s3:15px; --s4:25px; --s5:40px; --s6:62px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.55 var(--grot);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--t5)}
+:focus-visible{outline:3px solid var(--inkt);outline-offset:2px}
+
+.binnen{max-width:1150px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--inkt);color:#cfc8bf;font:500 13px/1 var(--grot)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#9c948a;
+  border:1px solid #35302b;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#b6ada3;text-decoration:none;padding:5px 3px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--t3)}
+.labbalk a.terug{color:#fff;border-bottom-color:#35302b}
+@media (max-width:760px){.labbalk a:not(.terug){display:none}}
+
+.scherm{padding:var(--s6) 0;border-bottom:1px solid var(--lijn)}
+.scherm.eerste{background:var(--wit)}
+.schermkop{margin-bottom:var(--s5)}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;
+  color:var(--grijs);margin-bottom:var(--s2)}
+.schermkop h2{font:700 31px/1.1 var(--grot);color:var(--inkt);letter-spacing:-.045em}
+.schermkop p{max-width:68ch;margin-top:var(--s2);font-size:16.5px}
+.schermkop p em{font-style:normal;font-weight:700;color:var(--inkt)}
+
+/* ---------- 1 landing ---------- */
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:29px;height:29px;background:var(--inkt);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 15px/1 var(--grot)}
+.merkregel .naam{font:700 16px/1 var(--grot);color:var(--inkt);letter-spacing:-.045em}
+.merkregel .pad{font:700 10.5px/1 var(--mono);letter-spacing:.16em;color:var(--grijs)}
+
+.heldrij{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);align-items:start}
+@media (max-width:940px){.heldrij{grid-template-columns:1fr}}
+
+h1.kop{font:700 clamp(34px,4.7vw,56px)/.98 var(--grot);color:var(--inkt);letter-spacing:-.055em;max-width:14ch}
+h1.kop em{display:block;font-style:normal;color:var(--t5)}
+p.onder{margin-top:var(--s3);font-size:18px;line-height:1.6;max-width:52ch}
+p.onder b{font-weight:700;color:var(--inkt)}
+
+.knoppen{display:flex;flex-wrap:wrap;gap:10px;margin-top:var(--s4)}
+.kn{display:inline-block;padding:14px 22px;text-decoration:none;
+  font:700 14.5px/1 var(--grot);letter-spacing:-.02em;background:var(--inkt);color:#fff;
+  border:2px solid var(--inkt)}
+.kn.leeg{background:transparent;color:var(--inkt)}
+.kn:hover{background:var(--t5);border-color:var(--t5);color:#fff}
+
+/* de waaier op het scherm */
+.waaier{display:flex;flex-direction:column;gap:0;border:2px solid var(--inkt);background:var(--wit)}
+.waaierkop{display:flex;align-items:baseline;gap:var(--s3);padding:13px 16px;
+  background:var(--inkt);color:#fff}
+.waaierkop b{font:700 15px/1 var(--grot);letter-spacing:-.035em}
+.waaierkop span{margin-left:auto;font:700 10px/1 var(--mono);letter-spacing:.16em;color:#a79e93}
+
+.staalrij{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:2px solid var(--inkt)}
+.staalrij:last-child{border-bottom:0}
+.staal{padding:14px 12px 12px;min-height:118px;display:flex;flex-direction:column;
+  border-right:1px solid rgba(255,255,255,.35);position:relative}
+.staal:last-child{border-right:0}
+.staal .code{font:700 9px/1 var(--mono);letter-spacing:.14em;opacity:.78}
+.staal .trap{font:700 26px/1 var(--grot);letter-spacing:-.05em;margin-top:6px}
+.staal .dos{font:700 14px/1.2 var(--grot);letter-spacing:-.02em;margin-top:auto}
+.staal .bij{font:400 12px/1.3 var(--grot);opacity:.85;margin-top:3px}
+.staal.nu{outline:4px solid var(--inkt);outline-offset:-4px;z-index:2;padding-top:36px}
+.staal .vandaag{position:absolute;left:-2px;top:-2px;background:var(--inkt);color:#fff;
+  font:700 9px/1 var(--mono);letter-spacing:.16em;padding:5px 7px}
+
+/* kleurtoekenning */
+.t1{background:var(--t1);color:var(--inkt)} .t2{background:var(--t2);color:var(--inkt)}
+.t3{background:var(--t3);color:var(--inkt)} .t4{background:var(--t4);color:#fff}
+.t5{background:var(--t5);color:#fff}
+.p1{background:var(--p1);color:var(--inkt)} .p2{background:var(--p2);color:var(--inkt)}
+.p3{background:var(--p3);color:var(--inkt)} .p4{background:var(--p4);color:#fff}
+.p5{background:var(--p5);color:#fff}
+.o1{background:var(--o1);color:var(--inkt)} .o2{background:var(--o2);color:var(--inkt)}
+.o3{background:var(--o3);color:var(--inkt)} .o4{background:var(--o4);color:#fff}
+.o5{background:var(--o5);color:#fff}
+
+.regelbalk{margin-top:var(--s3);border:2px solid var(--inkt);background:var(--wit);
+  display:grid;grid-template-columns:1fr 1fr;gap:0}
+@media (max-width:640px){.regelbalk{grid-template-columns:1fr}}
+.regelbalk div{padding:16px 18px}
+.regelbalk div + div{border-left:2px solid var(--inkt)}
+@media (max-width:640px){.regelbalk div + div{border-left:0;border-top:2px solid var(--inkt)}}
+.regelbalk b{display:block;font:700 10px/1 var(--mono);letter-spacing:.16em;color:var(--grijs);margin-bottom:8px}
+.regelbalk p{font:400 15.5px/1.5 var(--grot);color:var(--inkt)}
+.regelbalk p strong{font-weight:700}
+
+.waaierbij{margin-top:var(--s3);font:400 14.5px/1.5 var(--grot);color:var(--grijs);max-width:56ch;
+  border-left:3px solid var(--lijn);padding-left:14px}
+
+/* ---------- 2 kiezer ---------- */
+.kiezerrij{display:grid;grid-template-columns:1fr 400px;gap:var(--s5);align-items:start}
+@media (max-width:1020px){.kiezerrij{grid-template-columns:1fr}}
+
+.paneel{background:var(--wit);border:2px solid var(--inkt)}
+.paneel > h3{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:#fff;
+  padding:13px 16px;background:var(--inkt);display:flex;align-items:center;gap:10px}
+.paneel > h3 span{margin-left:auto;font-weight:600;color:#a79e93;letter-spacing:.1em}
+
+.zoek{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--lijn)}
+.zoek .veld{flex:1;border:1.5px solid var(--lijn);background:var(--papier);padding:10px 12px;
+  font:400 15px/1 var(--grot);color:var(--inkt-2)}
+.zoek .veld i{font-style:normal;color:var(--grijs)}
+.zoek .tel{font:700 12px/1 var(--mono);letter-spacing:.06em;color:var(--grijs)}
+
+.oefrij{display:grid;grid-template-columns:24px 66px 1fr 150px;gap:var(--s3);align-items:center;
+  padding:12px 16px;border-bottom:1px solid var(--lijn-2)}
+.oefrij:last-child{border-bottom:0}
+.oefrij .vink{width:21px;height:21px;border:2px solid var(--grijs);position:relative;background:var(--wit)}
+.oefrij.aan .vink{background:var(--inkt);border-color:var(--inkt)}
+.oefrij.aan .vink::after{content:"";position:absolute;left:6px;top:2px;width:5px;height:11px;
+  border-right:2.5px solid #fff;border-bottom:2.5px solid #fff;transform:rotate(42deg)}
+.oefrij .beeld{height:58px;border:1px solid var(--lijn-2);background:var(--wit);
+  display:flex;align-items:center;justify-content:center;padding:3px}
+.oefrij .beeld img{max-height:100%;width:auto;mix-blend-mode:multiply}
+.oefrij h4{font:700 16.5px/1.15 var(--grot);color:var(--inkt);letter-spacing:-.035em}
+.oefrij .sub{font:400 13px/1.35 var(--grot);color:var(--grijs);margin-top:3px}
+.oefrij .ladder{display:flex;gap:2px}
+.oefrij .ladder i{flex:1;height:22px;display:block;border:1px solid rgba(19,17,16,.14)}
+.oefrij .ladder i.nu{outline:2.5px solid var(--inkt);outline-offset:-2px;z-index:2}
+.oefrij.uit{opacity:.6}
+@media (max-width:720px){
+  .oefrij{grid-template-columns:24px 56px 1fr}
+  .oefrij .ladder{grid-column:3}
+}
+
+/* de ladder-instelling rechts */
+.ladderbouw{padding:var(--s3) 16px var(--s4)}
+.ladderbouw > p{font:400 14.5px/1.5 var(--grot);color:var(--inkt-2);margin-bottom:var(--s3)}
+.trapregel{display:grid;grid-template-columns:34px 1fr 96px;gap:11px;align-items:center;
+  padding:9px 0;border-bottom:1px solid var(--lijn-2)}
+.trapregel .vlak{height:34px;border:1px solid rgba(19,17,16,.16);
+  display:flex;align-items:center;justify-content:center;font:700 13px/1 var(--mono)}
+.trapregel .wat{font:600 15px/1.3 var(--grot);color:var(--inkt)}
+.trapregel .wat small{display:block;font:400 12.5px/1.35 var(--grot);color:var(--grijs);margin-top:2px}
+.trapregel .knop{font:700 10px/1 var(--mono);letter-spacing:.1em;text-align:right;color:var(--grijs)}
+.trapregel.hier{background:var(--papier);box-shadow:inset 3px 0 0 var(--inkt);padding-left:9px}
+.trapregel.hier .knop{color:var(--inkt)}
+
+.attentie{margin:var(--s3) 16px;padding:12px 14px;border:2px solid var(--t5);background:#fbf0ec}
+.attentie b{display:block;font:700 10px/1 var(--mono);letter-spacing:.14em;color:var(--t5);margin-bottom:6px}
+.attentie p{font:400 14.5px/1.5 var(--grot);color:var(--inkt)}
+
+.elastiek{margin:0 16px var(--s4);border-top:2px solid var(--inkt);padding-top:var(--s3)}
+.elastiek h5{font:700 10px/1 var(--mono);letter-spacing:.16em;color:var(--inkt);margin-bottom:10px}
+.elastiek .rij{display:flex;gap:6px}
+.elastiek .rij span{flex:1;text-align:center;font:700 10px/1 var(--mono);letter-spacing:.05em;
+  padding:9px 2px;border:1.5px solid var(--inkt);color:var(--inkt)}
+.elastiek .rij span i{display:block;width:100%;height:9px;margin-bottom:6px;border:1px solid rgba(19,17,16,.2)}
+.elastiek p{font:400 13px/1.45 var(--grot);color:var(--grijs);margin-top:10px}
+
+/* ---------- 3 cliëntkaart ---------- */
+.kaartblad{background:var(--wit);border:2px solid var(--inkt)}
+.kaartkop{padding:var(--s4);border-bottom:2px solid var(--inkt);display:flex;
+  align-items:flex-end;flex-wrap:wrap;gap:var(--s3)}
+.kaartkop h3{font:700 25px/1.05 var(--grot);color:var(--inkt);letter-spacing:-.045em}
+.kaartkop .sub{width:100%;font:400 14.5px/1.4 var(--grot);color:var(--grijs);margin-top:-4px}
+.kaartkop .stat{margin-left:auto;display:flex;gap:var(--s4)}
+.kaartkop .stat div b{display:block;font:700 9.5px/1 var(--mono);letter-spacing:.14em;color:var(--grijs);margin-bottom:6px}
+.kaartkop .stat div span{font:700 21px/1 var(--grot);color:var(--inkt);letter-spacing:-.04em}
+
+.verloop{padding:var(--s4)}
+.verloopkop{display:grid;grid-template-columns:1fr 300px 120px;gap:var(--s3);
+  font:700 9.5px/1 var(--mono);letter-spacing:.14em;color:var(--grijs);
+  border-bottom:2px solid var(--inkt);padding-bottom:8px;margin-bottom:var(--s2)}
+@media (max-width:860px){.verloopkop{grid-template-columns:1fr}.verloopkop span:not(:first-child){display:none}}
+.vrij{display:grid;grid-template-columns:1fr 300px 120px;gap:var(--s3);align-items:center;
+  padding:13px 0;border-bottom:1px solid var(--lijn-2)}
+@media (max-width:860px){.vrij{grid-template-columns:1fr;gap:var(--s2)}}
+.vrij h5{font:700 17px/1.2 var(--grot);color:var(--inkt);letter-spacing:-.035em}
+.vrij small{display:block;font:400 13px/1.4 var(--grot);color:var(--grijs);margin-top:3px}
+.vrij .ladder{display:flex;gap:3px}
+.vrij .ladder i{flex:1;height:30px;display:block;border:1px solid rgba(19,17,16,.14);position:relative}
+.vrij .ladder i.nu{outline:3px solid var(--inkt);outline-offset:-3px;z-index:2}
+.vrij .ladder i em{position:absolute;left:0;right:0;bottom:-15px;text-align:center;
+  font:700 8.5px/1 var(--mono);color:var(--grijs);font-style:normal}
+.vrij .duiding{font:600 12.5px/1.35 var(--mono);color:var(--inkt);text-align:right}
+.vrij .duiding.stil{color:var(--t5)}
+@media (max-width:860px){.vrij .duiding{text-align:left}}
+
+.kaartvoet{display:grid;grid-template-columns:1fr 1fr;border-top:2px solid var(--inkt)}
+@media (max-width:860px){.kaartvoet{grid-template-columns:1fr}}
+.kaartvoet > div{padding:var(--s4)}
+.kaartvoet > div + div{border-left:2px solid var(--inkt);background:var(--papier)}
+@media (max-width:860px){.kaartvoet > div + div{border-left:0;border-top:2px solid var(--inkt)}}
+.kaartvoet h4{font:700 10px/1 var(--mono);letter-spacing:.16em;color:var(--inkt);
+  border-bottom:2px solid var(--inkt);padding-bottom:8px;margin-bottom:var(--s3)}
+.kaartvoet p{font:400 15.5px/1.55 var(--grot);color:var(--inkt-2)}
+.kaartvoet p + p{margin-top:9px}
+.kaartvoet b{color:var(--inkt)}
+
+/* ---------- 4 printkaart ---------- */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;position:relative;
+  transform-origin:top left;box-shadow:0 3px 34px rgba(19,17,16,.2);
+  font-family:var(--grot);overflow:hidden}
+@media (max-width:860px){.bladschaal{max-width:100%}}
+
+.blad .rand{position:absolute;inset:9mm 10mm 7mm 10mm;display:flex;flex-direction:column}
+
+.bkop{display:flex;align-items:flex-end;gap:5mm;border-bottom:1.6pt solid #000;padding-bottom:2mm}
+.bkop .t{font:700 15.5pt/1 var(--grot);letter-spacing:-.05em;color:#000}
+.bkop .t em{font-style:normal;color:#8a381e}
+.bkop .wie{margin-left:auto;text-align:right;font:400 8.4pt/1.32 var(--grot);color:#000}
+.bkop .wie b{display:block;font:700 5.9pt/1 var(--mono);letter-spacing:.14em;color:#7c766c}
+
+/* de regel bovenaan */
+.bregel{display:grid;grid-template-columns:1.35fr 1fr;gap:4mm;margin:2.4mm 0 3mm;
+  border:1.1pt solid #000}
+.bregel > div{padding:2.2mm 3mm}
+.bregel > div + div{border-left:1.1pt solid #000;background:#f0eee9}
+.bregel b{display:block;font:700 6.2pt/1 var(--mono);letter-spacing:.15em;color:#57514a;margin-bottom:1.4mm}
+.bregel p{font:400 8.6pt/1.34 var(--grot);color:#000}
+.bregel p strong{font-weight:700}
+
+/* een oefening met zijn rasterladder */
+.boef{border-top:.7pt solid #b8b2a8;padding:2.6mm 0 2.2mm;
+  flex:1;display:flex;flex-direction:column;justify-content:center}
+.boef:first-of-type{border-top:1.1pt solid #000}
+.boefkop{display:grid;grid-template-columns:17mm 1fr 26mm;gap:3mm;align-items:start}
+.boefkop .prent{height:16mm;border:.6pt solid #b8b2a8;background:#fff;
+  display:flex;align-items:center;justify-content:center;padding:.6mm}
+.boefkop .prent img{max-height:100%;max-width:100%;mix-blend-mode:multiply}
+.boefkop h4{font:700 12.2pt/1.08 var(--grot);letter-spacing:-.04em;color:#000}
+.boefkop p{font:400 8.8pt/1.3 var(--grot);color:#000;margin-top:.9mm;max-width:110mm}
+.boefkop .code{text-align:right;font:700 6.2pt/1.45 var(--mono);letter-spacing:.1em;color:#57514a}
+.boefkop .code em{display:block;font-style:normal;font-size:8.6pt;color:#000;letter-spacing:.02em;margin-top:.8mm}
+
+.bladder{display:grid;grid-template-columns:repeat(5,1fr);margin-top:2mm;border:1pt solid #000}
+.bvak{padding:1.8mm 1.8mm 2mm;min-height:16.5mm;position:relative;
+  border-right:.5pt solid rgba(0,0,0,.28);display:flex;flex-direction:column}
+.bvak:last-child{border-right:0}
+.bvak .n{font:700 6pt/1 var(--mono);letter-spacing:.12em;opacity:.7}
+.bvak .d{font:700 9.4pt/1.12 var(--grot);letter-spacing:-.02em;margin-top:1.4mm}
+.bvak .b{font:400 7.6pt/1.22 var(--grot);margin-top:.7mm;opacity:.92}
+.bvak.hier{outline:1.9pt solid #000;outline-offset:-1.9pt;z-index:2}
+.bvak .nu{position:absolute;right:0;top:0;background:#000;color:#fff;
+  font:700 5.6pt/1 var(--mono);letter-spacing:.13em;padding:1.1mm 1.4mm}
+
+/* rasterladder — tinten van één inkt, ook in zwart-wit correct */
+.r1{background:#efedE8;color:#000} .r2{background:#dbd6cc;color:#000}
+.r3{background:#b6afa2;color:#000} .r4{background:#7f7869;color:#fff}
+.r5{background:#413b32;color:#fff}
+
+.bnaar{display:flex;align-items:center;gap:2mm;margin-top:1.4mm}
+.bnaar .pijl{font:700 8.4pt/1 var(--mono);color:#000}
+.bnaar .tekst{font:400 7.8pt/1.25 var(--grot);color:#2b2621}
+.bnaar .datum{margin-left:auto;display:flex;align-items:center;gap:1.6mm;
+  font:700 6pt/1 var(--mono);letter-spacing:.12em;color:#57514a}
+.bnaar .datum span{display:block;width:19mm;border-bottom:.8pt solid #000;height:3.6mm}
+
+/* controlestrook onderaan */
+.bstrook{margin-top:auto;padding-top:2.6mm;border-top:1.6pt solid #000}
+.bstrookkop{display:flex;align-items:baseline;gap:3mm;margin-bottom:1.4mm}
+.bstrookkop b{font:700 6.4pt/1 var(--mono);letter-spacing:.15em;color:#000}
+.bstrookkop span{font:400 7.8pt/1.25 var(--grot);color:#2b2621}
+.strook{display:grid;grid-template-columns:repeat(5,1fr) 1.7fr;border:.9pt solid #000}
+.strook div{height:8mm;display:flex;align-items:center;justify-content:center;
+  font:700 6pt/1 var(--mono);letter-spacing:.1em;border-right:.5pt solid rgba(0,0,0,.3)}
+.strook div:last-child{border-right:0;background:#fff;color:#000;font-weight:400;
+  font-family:var(--grot);font-size:7.4pt;letter-spacing:0;padding:0 2mm;text-align:center;line-height:1.2}
+
+.bvoet{display:flex;align-items:flex-start;gap:4mm;margin-top:2.2mm}
+.bvoet .l{font:400 8.2pt/1.34 var(--grot);color:#000;max-width:118mm}
+.bvoet .l b{font-weight:700}
+.bvoet .r{margin-left:auto;text-align:right;font:700 6pt/1.5 var(--mono);letter-spacing:.11em;color:#7c766c}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#b3aaa0;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:#8b8177;
+  border-top:2px solid #302b26;padding-top:var(--s2);margin-bottom:var(--s2)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.6}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:7px}
+footer.uitleiding a{color:#e2d9cf}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;
+    height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 50</span>
+  <strong style="font:700 16px/1 var(--grot);color:#fff;letter-spacing:-.045em">Stalenkaart</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm eerste" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 50 · STALENKAART</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1 class="kop">Niet volgende week twaalf.<em>Eén trapje donkerder.</em></h1>
+        <p class="onder">Het werkzame bestanddeel van fysiotherapie is opbouw — en op geen enkel
+          oefenblad staat die opbouw. Er staat „3 × 10", acht weken lang. Wie het braaf doet,
+          traint in week acht nog precies even zwaar als in week één.<br/><br/>
+          De verfhandel legt tinten van één kleur al sinds 1927 naast elkaar op één strook, met
+          een code onder elk vlak, en iedereen kan zo'n waaier lezen zonder uitleg. De
+          fysiotherapie heeft die ladder trouwens al aan de muur hangen: <b>geel, rood, groen,
+          blauw, zwart</b> — alleen laat niemand hem ooit als ladder zien. Hier is elke oefening
+          <b>vijf trapjes</b>, u staat op één ervan, en de regel om op te schuiven is van u.</p>
+        <div class="knoppen">
+          <a class="kn" href="#printkaart">Bekijk het blad</a>
+          <a class="kn leeg" href="#kiezer">Hoe een ladder gemaakt wordt</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="waaier">
+          <div class="waaierkop">
+            <b>Schouder naar buiten draaien</b>
+            <span>FP 41 · TRAP 3 VAN 5</span>
+          </div>
+          <div class="staalrij">
+            <div class="staal t1"><span class="code">FP 41-1</span><span class="trap">1</span>
+              <span class="dos">2 × 8</span><span class="bij">zonder elastiek</span></div>
+            <div class="staal t2"><span class="code">FP 41-2</span><span class="trap">2</span>
+              <span class="dos">2 × 8</span><span class="bij">geel elastiek</span></div>
+            <div class="staal t3 nu"><span class="vandaag">VANDAAG</span><span class="code">FP 41-3</span>
+              <span class="trap">3</span><span class="dos">3 × 10</span><span class="bij">geel elastiek</span></div>
+            <div class="staal t4"><span class="code">FP 41-4</span><span class="trap">4</span>
+              <span class="dos">3 × 10</span><span class="bij">rood elastiek</span></div>
+            <div class="staal t5"><span class="code">FP 41-5</span><span class="trap">5</span>
+              <span class="dos">3 × 12</span><span class="bij">rood elastiek</span></div>
+          </div>
+        </div>
+
+        <div class="regelbalk">
+          <div>
+            <b>WANNEER SCHUIFT U OP?</b>
+            <p><strong>Twee keer achter elkaar</strong> de laatste herhaling nog makkelijk, én de
+              ochtend erna geen napijn. Dan één trapje donkerder. Niet eerder, en u hoeft er
+              niemand voor te bellen.</p>
+          </div>
+          <div>
+            <b>EN TERUG?</b>
+            <p>Een trapje terug is <strong>een gewone zet</strong>. Na een griep, een drukke week
+              of een dag met veel pijn schuift u links en bouwt u opnieuw op. De pijl staat er in
+              twee richtingen.</p>
+          </div>
+        </div>
+
+        <p class="waaierbij">De vijf vlakken zijn het hele plan. Wat u vandaag doet staat in het
+          omkaderde vlak; wat daarna komt hoeft niemand u meer te vertellen — en de code onder
+          elk vlak is dezelfde die de fysiotherapeut in het dossier ziet staan.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 2</b><h2>De oefeningen-kiezer</h2>
+      <p>De fysiotherapeut kiest links de oefening en rechts de <em>ladder</em>: vijf trapjes van
+        licht naar donker, en op welk trapje deze patiënt vandaag begint. Dat is één handeling
+        meer dan een dosering invullen, en het scheelt de zes telefoontjes van „en nu?".
+        Een oefening zonder ladder kan ook — die krijgt één vlak, en dat is dan een bewuste keuze.</p>
+    </div>
+
+    <div class="kiezerrij">
+
+      <div class="paneel">
+        <h3>OEFENINGEN <span>4 GEKOZEN · 215 BESCHIKBAAR</span></h3>
+        <div class="zoek">
+          <div class="veld">schouder <i>— rotator cuff, opbouwfase</i></div>
+          <span class="tel">26 treffers</span>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt="Schouder naar buiten draaien met elastiek"/></span>
+          <div><h4>Schouder naar buiten draaien</h4><div class="sub">Elleboog tegen de zij · FP 41</div></div>
+          <div class="ladder" aria-label="Ladder van vijf trapjes, nu op trap 3">
+            <i class="t1"></i><i class="t2"></i><i class="t3 nu"></i><i class="t4"></i><i class="t5"></i></div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/bovenste-extremiteit/schouder-zijwaarts-heffen-actief-line-v1.png" alt="Schouder zijwaarts heffen"/></span>
+          <div><h4>Arm zijwaarts heffen</h4><div class="sub">Tot ooghoogte, duim omhoog · FP 44</div></div>
+          <div class="ladder" aria-label="Ladder van vijf trapjes, nu op trap 2">
+            <i class="t1"></i><i class="t2 nu"></i><i class="t3"></i><i class="t4"></i><i class="t5"></i></div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/bovenste-extremiteit/schouderblad-naar-achteren-met-elastiek-line-v1.png" alt="Schouderbladen naar achteren"/></span>
+          <div><h4>Schouderbladen naar achteren</h4><div class="sub">Zittend, borst open · FP 47</div></div>
+          <div class="ladder" aria-label="Ladder van vijf trapjes, nu op trap 4">
+            <i class="p1"></i><i class="p2"></i><i class="p3"></i><i class="p4 nu"></i><i class="p5"></i></div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/bovenste-extremiteit/hand-achter-de-rug-brengen-actief-line-v1.png" alt="Hand achter de rug brengen"/></span>
+          <div><h4>Hand achter de rug brengen</h4><div class="sub">Rekoefening — ladder in seconden · FP 52</div></div>
+          <div class="ladder" aria-label="Ladder van vijf trapjes, nu op trap 1">
+            <i class="o1 nu"></i><i class="o2"></i><i class="o3"></i><i class="o4"></i><i class="o5"></i></div>
+        </div>
+
+        <div class="oefrij uit">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/bovenste-extremiteit/schouder-voorwaarts-heffen-met-stok-line-v1.png" alt="Schouder voorwaarts heffen met stok"/></span>
+          <div><h4>Voorwaarts heffen met stok</h4><div class="sub">Hoort bij de eerste fase — nu te licht</div></div>
+          <div class="ladder" style="opacity:.45" aria-hidden="true">
+            <i class="t1"></i><i class="t2"></i><i class="t3"></i><i class="t4"></i><i class="t5"></i></div>
+        </div>
+
+        <div class="attentie">
+          <b>LADDER TE STEIL</b>
+          <p>Bij „Arm zijwaarts heffen" springt trap 4 van 1 kg naar 3 kg. Dat is meer dan een
+            verdubbeling in één zet; de meeste patiënten blijven dan op trap 3 hangen zonder te
+            weten waarom. Voorstel: 1 — 1,5 — 2 — 3 kg over vijf trapjes.</p>
+        </div>
+      </div>
+
+      <div class="paneel">
+        <h3>LADDER — FP 41 SCHOUDER NAAR BUITEN</h3>
+        <div class="ladderbouw">
+          <p>Vijf trapjes, en één ervan is de start. Wat erin staat is de dosering van dát trapje
+            — niet een percentage, niet een RPE-getal, maar wat de patiënt letterlijk doet.</p>
+
+          <div class="trapregel">
+            <span class="vlak t1">1</span>
+            <span class="wat">2 × 8 zonder elastiek<small>Alleen de beweging, langzaam terug</small></span>
+            <span class="knop">GEHAALD · WK 2</span>
+          </div>
+          <div class="trapregel">
+            <span class="vlak t2">2</span>
+            <span class="wat">2 × 8 met geel<small>Geel is het lichtste elastiek</small></span>
+            <span class="knop">GEHAALD · WK 3</span>
+          </div>
+          <div class="trapregel hier">
+            <span class="vlak t3">3</span>
+            <span class="wat">3 × 10 met geel<small>Sinds 12 augustus — twee weken</small></span>
+            <span class="knop">VANDAAG</span>
+          </div>
+          <div class="trapregel">
+            <span class="vlak t4">4</span>
+            <span class="wat">3 × 10 met rood<small>Rood is de volgende sterkte</small></span>
+            <span class="knop">VOLGENDE</span>
+          </div>
+          <div class="trapregel">
+            <span class="vlak t5">5</span>
+            <span class="wat">3 × 12 met rood<small>Einde van deze ladder</small></span>
+            <span class="knop">DOEL</span>
+          </div>
+        </div>
+
+        <div class="elastiek">
+          <h5>DE LADDER DIE AL BESTOND</h5>
+          <div class="rij">
+            <span><i style="background:#f2d34a"></i>GEEL</span>
+            <span><i style="background:#c94b3f"></i>ROOD</span>
+            <span><i style="background:#4d8d52"></i>GROEN</span>
+            <span><i style="background:#3d6bb0"></i>BLAUW</span>
+            <span><i style="background:#2b2b2b"></i>ZWART</span>
+          </div>
+          <p>Het oefenelastiek is al vijftig jaar kleurgecodeerd en oplopend. Op oefenkaarten
+            staat alleen de kleur van vandaag — nooit de reeks. Deze kaart drukt de reeks af,
+            met de kleurnaam er altijd in letters bij, want kleur alleen is geen informatie.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 3</b><h2>De digitale cliëntkaart</h2>
+      <p>Eén blik: op welk trapje staat deze patiënt, en <em>hoe lang al</em>. Niet het aantal
+        afgevinkte dagen — dat zegt weinig — maar de beweging over de ladder. Een oefening die vijf
+        weken op hetzelfde trapje staat terwijl de rest doorschuift, is de enige regel op dit
+        scherm die om een gesprek vraagt.</p>
+    </div>
+
+    <div class="kaartblad">
+      <div class="kaartkop">
+        <div>
+          <h3>Meneer R. Okhuizen — 57 jaar</h3>
+          <div class="sub">Schouderklachten rechts · sinds 2 juli · week 8 · vier ladders in gebruik</div>
+        </div>
+        <div class="stat">
+          <div><b>OPGESCHOVEN</b><span>6 ×</span></div>
+          <div><b>TERUG</b><span>1 ×</span></div>
+          <div><b>STILSTAND</b><span>1 ladder</span></div>
+        </div>
+      </div>
+
+      <div class="verloop">
+        <div class="verloopkop">
+          <span>OEFENING</span><span>LADDER — DE STIPPEN ZIJN DE WEKEN</span><span>STAND</span>
+        </div>
+
+        <div class="vrij">
+          <div><h5>Schouder naar buiten draaien</h5><small>FP 41 · gestart op trap 1</small></div>
+          <div class="ladder" aria-label="Trap 3 van 5; twee weken op dit trapje">
+            <i class="t1"><em>wk 1-2</em></i><i class="t2"><em>wk 3-5</em></i>
+            <i class="t3 nu"><em>wk 6-8</em></i><i class="t4"></i><i class="t5"></i></div>
+          <div class="duiding">3 / 5<br/>2 weken</div>
+        </div>
+
+        <div class="vrij">
+          <div><h5>Arm zijwaarts heffen</h5><small>FP 44 · ladder aangepast in week 5</small></div>
+          <div class="ladder" aria-label="Trap 2 van 5; vijf weken op hetzelfde trapje">
+            <i class="t1"><em>wk 1-3</em></i><i class="t2 nu"><em>wk 4-8</em></i>
+            <i class="t3"></i><i class="t4"></i><i class="t5"></i></div>
+          <div class="duiding stil">2 / 5<br/>5 weken</div>
+        </div>
+
+        <div class="vrij">
+          <div><h5>Schouderbladen naar achteren</h5><small>FP 47 · in week 6 een trapje terug na griep</small></div>
+          <div class="ladder" aria-label="Trap 4 van 5; drie weken op dit trapje">
+            <i class="p1"><em>wk 1</em></i><i class="p2"><em>wk 2</em></i><i class="p3"><em>wk 3 · 6</em></i>
+            <i class="p4 nu"><em>wk 4-5 · 7-8</em></i><i class="p5"></i></div>
+          <div class="duiding">4 / 5<br/>2 weken</div>
+        </div>
+
+        <div class="vrij">
+          <div><h5>Hand achter de rug brengen</h5><small>FP 52 · rekladder in seconden</small></div>
+          <div class="ladder" aria-label="Trap 1 van 5; acht weken op het eerste trapje">
+            <i class="o1 nu"><em>wk 1-8</em></i><i class="o2"></i><i class="o3"></i><i class="o4"></i><i class="o5"></i></div>
+          <div class="duiding stil">1 / 5<br/>8 weken</div>
+        </div>
+      </div>
+
+      <div class="kaartvoet">
+        <div>
+          <h4>WAT DE LADDERS VERTELLEN</h4>
+          <p><b>Twee stilstaanders, twee verschillende zaken.</b> „Arm zijwaarts heffen" staat vijf
+            weken stil op een ladder waarvan de vierde trap van 1 naar 3 kilo springt. Dat is een
+            ontwerpfout in de ladder, geen patiënt die niet wil.</p>
+          <p>„Hand achter de rug" staat acht weken op trap 1, terwijl alles eromheen beweegt. Bij
+            een rekoefening die niet opschuift is de vraag niet „doet u hem wel?" maar „waar loopt
+            u tegenaan?" — meestal pijn bij het eindpunt, en dat hoort in de behandeling en niet
+            in dit vakje.</p>
+        </div>
+        <div>
+          <h4>WAT ER NIET GEMETEN WORDT</h4>
+          <p>Therapietrouw in procenten. Wie elke dag oefent maar nooit opschuift, staat op deze
+            kaart als iemand die stilstaat — en dat is de eerlijke lezing, ook al voelt hij zich
+            trouw. Wie twee weken overslaat maar daarna twee trapjes opschuift, staat er goed op.</p>
+          <p><b>De ladder is de maat, niet het vinkje.</b> Dat is een keuze met een prijs: de
+            patiënt die zichzelf te hoog inschat, schuift te snel op. Daarom staat de napijn-regel
+            als tweede voorwaarde op het blad, en niet als voetnoot.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>SCHERM 4</b><h2>De printkaart — A4 staand, vier ladders in rastertinten</h2>
+      <p>Op het scherm is de ladder een kleurenwaaier; op papier zou dat twintig volvlakken inkt
+        betekenen. Dus wordt hij hier wat hij in de drukkerij altijd al was: een
+        <em>rasterladder</em> van één inkt — 8, 20, 36, 56 en 80 procent. Zuinig, en op een
+        zwart-witkopie verandert er niets. Elk trapje draagt bovendien een nummer en een dosering
+        in woorden, zodat de tint nooit in zijn eentje iets hoeft te betekenen. Onderaan staat de
+        controlestrook van de drukker, met de vraag erbij: zijn deze vijf vlakjes van elkaar te
+        onderscheiden? Zo niet, dan staat de printer te licht — en dan klopt de kaart niet meer.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="bkop">
+              <span class="t">Uw ladders — <em>schouder rechts</em></span>
+              <span class="wie"><b>VOOR</b>Meneer R. Okhuizen — week 8<br/>
+                Fysiotherapie De Wetering, Utrecht · 030 - 244 18 90</span>
+            </div>
+
+            <div class="bregel">
+              <div>
+                <b>DE ENIGE REGEL OP DIT BLAD</b>
+                <p>Ging de <strong>laatste herhaling twee keer achter elkaar makkelijk</strong>, en
+                  had u de ochtend erna <strong>geen napijn</strong>? Dan schuift u één trapje naar
+                  rechts en schrijft u de datum in het hokje. Niet eerder — en u hoeft er niemand
+                  voor te bellen.</p>
+              </div>
+              <div>
+                <b>EN TERUG</b>
+                <p>Een trapje naar <strong>links</strong> is een gewone zet: na een griep, een
+                  drukke week of een dag met veel pijn. Daarna bouwt u gewoon weer op.</p>
+              </div>
+            </div>
+
+            <!-- ladder 1 -->
+            <div class="boef">
+              <div class="boefkop">
+                <span class="prent"><img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt="Schouder naar buiten draaien met elastiek"/></span>
+                <div>
+                  <h4>Schouder naar buiten draaien</h4>
+                  <p>Elleboog tegen uw zij, onderarm langzaam naar buiten draaien en <b>rustig</b>
+                    terug. Schouder laag houden.</p>
+                </div>
+                <span class="code">FP 41<em>trap 3 / 5</em></span>
+              </div>
+              <div class="bladder">
+                <div class="bvak r1"><span class="n">TRAP 1</span><span class="d">2 × 8</span><span class="b">zonder elastiek</span></div>
+                <div class="bvak r2"><span class="n">TRAP 2</span><span class="d">2 × 8</span><span class="b">geel elastiek</span></div>
+                <div class="bvak r3 hier"><span class="nu">VANDAAG</span><span class="n">TRAP 3</span><span class="d">3 × 10</span><span class="b">geel elastiek</span></div>
+                <div class="bvak r4"><span class="n">TRAP 4</span><span class="d">3 × 10</span><span class="b">rood elastiek</span></div>
+                <div class="bvak r5"><span class="n">TRAP 5</span><span class="d">3 × 12</span><span class="b">rood elastiek</span></div>
+              </div>
+              <div class="bnaar">
+                <span class="pijl">←→</span>
+                <span class="tekst">Opgeschoven op 12 augustus. Volgende trap: hetzelfde aantal, maar met het rode elastiek.</span>
+                <span class="datum">OPGESCHOVEN OP<span></span></span>
+              </div>
+            </div>
+
+            <!-- ladder 2 -->
+            <div class="boef">
+              <div class="boefkop">
+                <span class="prent"><img src="/images/bovenste-extremiteit/schouder-zijwaarts-heffen-actief-line-v1.png" alt="Arm zijwaarts heffen"/></span>
+                <div>
+                  <h4>Arm zijwaarts heffen</h4>
+                  <p>Duim omhoog, arm zijwaarts tot <b>ooghoogte</b> — niet hoger. Drie tellen
+                    omhoog, drie tellen terug.</p>
+                </div>
+                <span class="code">FP 44<em>trap 2 / 5</em></span>
+              </div>
+              <div class="bladder">
+                <div class="bvak r1"><span class="n">TRAP 1</span><span class="d">2 × 8</span><span class="b">zonder gewicht</span></div>
+                <div class="bvak r2 hier"><span class="nu">VANDAAG</span><span class="n">TRAP 2</span><span class="d">2 × 10</span><span class="b">zonder gewicht</span></div>
+                <div class="bvak r3"><span class="n">TRAP 3</span><span class="d">2 × 10</span><span class="b">met 1 kg</span></div>
+                <div class="bvak r4"><span class="n">TRAP 4</span><span class="d">3 × 10</span><span class="b">met 1,5 kg</span></div>
+                <div class="bvak r5"><span class="n">TRAP 5</span><span class="d">3 × 12</span><span class="b">met 2 kg</span></div>
+              </div>
+              <div class="bnaar">
+                <span class="pijl">←→</span>
+                <span class="tekst">Deze ladder is in week 5 minder steil gemaakt: van 1 naar 1,5 naar 2 kilo,
+                  in plaats van in één keer naar 3.</span>
+                <span class="datum">OPGESCHOVEN OP<span></span></span>
+              </div>
+            </div>
+
+            <!-- ladder 3 -->
+            <div class="boef">
+              <div class="boefkop">
+                <span class="prent"><img src="/images/bovenste-extremiteit/schouderblad-naar-achteren-met-elastiek-line-v1.png" alt="Schouderbladen naar achteren"/></span>
+                <div>
+                  <h4>Schouderbladen naar achteren</h4>
+                  <p>Zit rechtop, borst open. Trek uw schouderbladen naar elkaar toe, vijf tellen
+                    vast, dan los. Schouders <b>niet</b> optrekken.</p>
+                </div>
+                <span class="code">FP 47<em>trap 4 / 5</em></span>
+              </div>
+              <div class="bladder">
+                <div class="bvak r1"><span class="n">TRAP 1</span><span class="d">2 × 6</span><span class="b">zonder elastiek</span></div>
+                <div class="bvak r2"><span class="n">TRAP 2</span><span class="d">3 × 8</span><span class="b">zonder elastiek</span></div>
+                <div class="bvak r3"><span class="n">TRAP 3</span><span class="d">3 × 8</span><span class="b">geel elastiek</span></div>
+                <div class="bvak r4 hier"><span class="nu">VANDAAG</span><span class="n">TRAP 4</span><span class="d">3 × 10</span><span class="b">rood elastiek</span></div>
+                <div class="bvak r5"><span class="n">TRAP 5</span><span class="d">3 × 12</span><span class="b">groen elastiek</span></div>
+              </div>
+              <div class="bnaar">
+                <span class="pijl">←→</span>
+                <span class="tekst">In week 6 ging u tijdelijk een trapje terug na een griep, en in week 7
+                  weer vooruit. Precies zoals het hoort.</span>
+                <span class="datum">OPGESCHOVEN OP<span></span></span>
+              </div>
+            </div>
+
+            <!-- ladder 4 -->
+            <div class="boef">
+              <div class="boefkop">
+                <span class="prent"><img src="/images/bovenste-extremiteit/hand-achter-de-rug-brengen-actief-line-v1.png" alt="Hand achter de rug brengen"/></span>
+                <div>
+                  <h4>Hand achter de rug brengen</h4>
+                  <p>Breng uw hand achter uw rug tot u rek voelt — <b>geen pijn</b> — en houd vast.
+                    Deze ladder loopt in seconden, niet in gewicht.</p>
+                </div>
+                <span class="code">FP 52<em>trap 1 / 5</em></span>
+              </div>
+              <div class="bladder">
+                <div class="bvak r1 hier"><span class="nu">VANDAAG</span><span class="n">TRAP 1</span><span class="d">3 × 10 sec</span><span class="b">hand op de bil</span></div>
+                <div class="bvak r2"><span class="n">TRAP 2</span><span class="d">3 × 15 sec</span><span class="b">hand op de bil</span></div>
+                <div class="bvak r3"><span class="n">TRAP 3</span><span class="d">3 × 20 sec</span><span class="b">hand tot de broekband</span></div>
+                <div class="bvak r4"><span class="n">TRAP 4</span><span class="d">3 × 25 sec</span><span class="b">hand tot de taille</span></div>
+                <div class="bvak r5"><span class="n">TRAP 5</span><span class="d">3 × 30 sec</span><span class="b">hand tot het schouderblad</span></div>
+              </div>
+              <div class="bnaar">
+                <span class="pijl">←→</span>
+                <span class="tekst">Deze staat al acht weken op trap 1. Bespreek hem bij de volgende afspraak.</span>
+                <span class="datum">OPGESCHOVEN OP<span></span></span>
+              </div>
+            </div>
+
+            <div class="bstrook">
+              <div class="bstrookkop">
+                <b>CONTROLESTROOK</b>
+                <span>Zijn de vijf vlakjes hieronder van elkaar te onderscheiden?</span>
+              </div>
+              <div class="strook">
+                <div class="r1">8 %</div><div class="r2">20 %</div><div class="r3">36 %</div>
+                <div class="r4">56 %</div><div class="r5">80 %</div>
+                <div>Zo niet, dan staat de printer te licht — vraag om een nieuw blad.</div>
+              </div>
+            </div>
+
+            <div class="bvoet">
+              <span class="l">Elk trapje op dit blad is een echte dosering, geen percentage.
+                <b>Donkerder is zwaarder</b>, en waar dat uitmaakt staat de kleur van het elastiek
+                er in letters bij — geel, rood, groen — zodat u niets aan de tint hoeft af te lezen.</span>
+              <span class="r">FYSIPLAN<br/>CONCEPT 50<br/>STALENKAART</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>WAAR HET VANDAAN KOMT</h4>
+      <p>De verfwaaier: RAL sinds 1927, NCS sinds 1960 — tinten van één kleur op één strook, met
+        een code onder elk vlak. De rasterstrook langs de rand van een drukvel, waarop de drukker
+        in één blik ziet of de pers goed staat. En de kleurcodering van het oefenelastiek, die in
+        elke praktijk aan de muur hangt en op geen enkele oefenkaart als reeks te zien is.</p>
+    </div>
+    <div class="kolom">
+      <h4>WAT HET RISICO IS</h4>
+      <ul>
+        <li>Kleur mag nooit alleen betekenis dragen. Elk trapje heeft daarom een nummer, een
+          dosering in woorden en — waar het om elastiek gaat — de kleurnaam in letters.</li>
+        <li>Een te steile ladder laat de patiënt stilstaan zonder dat iemand weet waarom. Het is
+          de nieuwe ontwerpfout die dit concept mogelijk maakt.</li>
+        <li>Zelf opschuiven vraagt vertrouwen. Daarom staat de napijn-regel als harde tweede
+          voorwaarde, en niet als voetnoot.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>MEER</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var breed=schaal.clientWidth, eigen=blad.offsetWidth;
+    var f=Math.min(1,breed/eigen);
+    blad.style.transform='scale('+f+')';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>
