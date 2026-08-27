@@ -2076,6 +2076,7 @@ bridge2.jpg</div>
     zet('hwa','https://wa.me/?text='+encodeURIComponent(her));
     zet('hmail','mailto:?subject='+encodeURIComponent(vulDeel(d.sh,cid))+'&body='+encodeURIComponent(her));
   }
+  var srvArchiefView=false; // toont de gearchiveerde kaarten i.p.v. de actuele
   function toonSrvKaarten(){
     var blok=document.getElementById('k_srv');
     var knop=document.getElementById('k_save_srv');
@@ -2109,6 +2110,13 @@ bridge2.jpg</div>
       .then(function(l){
         var zoekEl=document.getElementById('k_srv_zoek');
         if(!Array.isArray(l)||!l.length){if(zoekEl)zoekEl.style.display='none';el.innerHTML="<div class='hint'>Nog geen gedeelde kaarten voor deze praktijk.</div>";return;}
+        // archiveren: afgeronde kaarten uit het hoofdoverzicht, zonder dataverlies.
+        // lArch = gearchiveerd, l = actueel (de standaardweergave).
+        var lArch=l.filter(function(c){return c.gearchiveerd;});
+        l=l.filter(function(c){return !c.gearchiveerd;});
+        // is het archief leeg (bijv. de laatste kaart net teruggehaald)? val terug
+        // naar de actuele weergave, anders staart de therapeut naar een leeg archief
+        if(srvArchiefView&&!lArch.length)srvArchiefView=false;
         var rendRij=function(c){
           var dt=c.ts?new Date(c.ts).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}):'';
           // pijnscores die de patiënt op de digitale kaart aantikt (alleen tonen, duiding blijft bij de therapeut)
@@ -2221,6 +2229,10 @@ bridge2.jpg</div>
               "<button class='btn' data-snieuwelink='"+esc(c.id)+"' title='Geef de kaart een nieuwe link; de oude werkt daarna niet meer. Alle voortgang blijft bij de kaart. Handig bij een verkeerd doorgestuurde link of een verloren telefoon.'>Nieuwe link (oude intrekken)</button>"+
               "<small style='color:var(--muted)'>De oude link werkt daarna niet meer; de voortgang blijft.</small>"+
             "</div>"+
+            "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;align-items:center'>"+
+              "<button class='btn' data-sarch='"+esc(c.id)+"' title='Zet een afgeronde kaart uit het hoofdoverzicht. Alle voortgang blijft bewaard en de patiëntlink blijft werken; je vindt de kaart terug onder “Gearchiveerd”.'>Archiveer deze kaart</button>"+
+              "<small style='color:var(--muted)'>Uit het overzicht, niets gaat verloren.</small>"+
+            "</div>"+
             "<small style='color:var(--muted);display:block;margin-top:10px'>Voor het EPD-dossier (Intramed, FysioRoadmap, Incura, …):</small>"+
             "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px'>"+
               "<button class='btn' data-sdossier='"+esc(c.id)+"' title='Kopieer een platte-tekstsamenvatting (cliënt, doel, oefeningen met dosering, kaartlink) om in het dossier te plakken'>Kopieer samenvatting voor dossier</button>"+
@@ -2231,6 +2243,15 @@ bridge2.jpg</div>
               "<a class='btn' data-hwa='"+esc(c.id)+"' href='"+esc(waHref2)+"' target='_blank' rel='noopener' style='text-decoration:none'>WhatsApp</a>"+
               "<a class='btn' data-hmail='"+esc(c.id)+"' href='"+esc(mailHref2)+"' target='_blank' rel='noopener' style='text-decoration:none'>E-mail</a>"+
             "</div></div>";
+          if(c.gearchiveerd){
+            // gearchiveerde kaart: gedempt, met "terughalen" en openen; de patiëntlink
+            // blijft gewoon werken, maar de kaart staat uit het hoofdoverzicht.
+            return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line);opacity:.72'>"+
+              "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b> <small style='color:var(--muted)'>&middot; gearchiveerd</small><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+"</small></div>"+
+              "<button class='btn' data-sherstel='"+esc(c.id)+"' title='Terug naar het actuele overzicht'>Terughalen</button>"+
+              "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
+              "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>";
+          }
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
             "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+"</small></div>"+seinChip+vg+
             "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
@@ -2274,20 +2295,23 @@ bridge2.jpg</div>
         var sortModus=function(){var s=document.getElementById('k_srv_sort');return (s&&s.style.display!=='none'&&s.dataset.mode)||'nieuw';};
         var zoekTermVan=function(){var z=document.getElementById('k_srv_zoek');return (z&&z.style.display!=='none')?z.value.trim().toLowerCase():'';};
         var filterAandacht=function(){var s=document.getElementById('k_srv_sort');return !!(s&&s.style.display!=='none'&&s.dataset.filter==='aandacht');};
+        var huidigeBasis=function(){return srvArchiefView?lArch:l;};
         var toon=function(){
+          var base=huidigeBasis();
           var t=zoekTermVan();
-          var items=t?l.filter(function(c){return String(c.naam||'').toLowerCase().indexOf(t)>=0;}):l.slice();
+          var items=t?base.filter(function(c){return String(c.naam||'').toLowerCase().indexOf(t)>=0;}):base.slice();
           // triage-filter: toon in één tik alleen de kaarten die nu aandacht vragen
           // (hoge pijn, openstaand seintje, lang stil of nooit geopend)
           var fa=filterAandacht();
           if(fa)items=items.filter(vraagtAandacht);
           if(sortModus()==='aandacht')items.sort(function(a,b){return aandacht(b)-aandacht(a)||(b.ts||0)-(a.ts||0);});
-          if(!items.length){el.innerHTML="<div class='hint'>"+(fa?'Op dit moment vraagt geen enkele kaart aandacht.':(t?'Geen kaart gevonden voor deze zoekterm.':'Nog geen gedeelde kaarten voor deze praktijk.'))+"</div>";return;}
+          if(!items.length){el.innerHTML="<div class='hint'>"+(srvArchiefView?'Geen gearchiveerde kaarten.':(fa?'Op dit moment vraagt geen enkele kaart aandacht.':(t?'Geen kaart gevonden voor deze zoekterm.':(lArch.length?'Alle kaarten zijn gearchiveerd — tik op “Gearchiveerd” om ze te zien.':'Nog geen gedeelde kaarten voor deze praktijk.'))))+"</div>";return;}
           toonLijst(items);
         };
+        var huidig=huidigeBasis();
         // zoekveld bij een langere lijst: snel een cliënt vinden zonder te scrollen
         var zoek=document.getElementById('k_srv_zoek');
-        if(l.length>6){
+        if(huidig.length>6){
           if(!zoek){
             zoek=document.createElement('input');
             zoek.id='k_srv_zoek';zoek.type='search';zoek.className='no-print';
@@ -2302,7 +2326,7 @@ bridge2.jpg</div>
         var sortEl=document.getElementById('k_srv_sort');
         var markeerSort=function(){if(!sortEl)return;var m=sortEl.dataset.mode||'nieuw';sortEl.querySelectorAll('[data-sort]').forEach(function(b){var aan=b.dataset.sort===m;b.style.background=aan?'var(--brand)':'';b.style.color=aan?'#fff':'';b.style.borderColor=aan?'var(--brand)':'';b.setAttribute('aria-pressed',aan?'true':'false');});};
         var markeerFilter=function(){if(!sortEl)return;var f=sortEl.dataset.filter==='aandacht';var b=sortEl.querySelector('[data-filter="aandacht"]');if(b){b.style.background=f?'#a23f2c':'';b.style.color=f?'#fff':'';b.style.borderColor=f?'#a23f2c':'';b.setAttribute('aria-pressed',f?'true':'false');}};
-        if(l.length>=2){
+        if(huidig.length>=2){
           if(!sortEl){
             sortEl=document.createElement('div');sortEl.id='k_srv_sort';sortEl.className='no-print';sortEl.dataset.mode='nieuw';
             sortEl.style.cssText='display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0 0 8px;font-size:12px;color:var(--muted)';
@@ -2316,24 +2340,34 @@ bridge2.jpg</div>
             else if(f){sortEl.dataset.filter=(sortEl.dataset.filter==='aandacht')?'':'aandacht';markeerFilter();toon();}
           };
         }else if(sortEl)sortEl.style.display='none';
+        // een archief-teller/knop verschijnt zodra er gearchiveerde kaarten zijn
         // samenvatting bovenaan: één oogopslag op de praktijk (telt over álle kaarten,
         // niet de zoekfilter). De "aandacht"-teller zet met één tik de aandacht-sortering
         // aan. Alleen tellen en tonen; de duiding blijft bij de therapeut.
         var samEl=document.getElementById('k_srv_sam');
-        if(l.length>=2){
-          var actiefN=l.filter(actiefDezeWeek).length;
-          var aandN=l.filter(vraagtAandacht).length;
+        if(huidig.length>=2||lArch.length){
           if(!samEl){
             samEl=document.createElement('div');samEl.id='k_srv_sam';samEl.className='no-print';
             samEl.style.cssText='display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0 0 8px;font-size:12px';
             el.parentNode.insertBefore(samEl,zoek||sortEl||el);
           }
           var chip=function(t,st){return "<span style='background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;"+(st||'')+"'>"+t+"</span>";};
-          var h=chip('<b>'+l.length+'</b> kaart'+(l.length===1?'':'en'))+chip('<b>'+actiefN+'</b> deze week actief');
-          h+=aandN?"<button type='button' id='k_srv_sam_aand' class='no-print' title='Hoge pijn, langer niet geoefend of nooit geopend: zet die kaarten bovenaan' style='cursor:pointer;background:#fbecea;border:1px solid #e7c3bc;color:#a23f2c;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+aandN+"</b> "+(aandN===1?'vraagt':'vragen')+" aandacht</button>":chip('<b>0</b> vragen aandacht');
+          var archKnop=function(txt,aan){return "<button type='button' id='k_srv_arch' class='no-print' aria-pressed='"+(aan?'true':'false')+"' style='cursor:pointer;background:"+(aan?'var(--brand)':'var(--chip,#f1f3f5)')+";color:"+(aan?'#fff':'inherit')+";border:1px solid "+(aan?'var(--brand)':'var(--line)')+";border-radius:99px;padding:3px 10px;font-size:12px'>"+txt+"</button>";};
+          var h;
+          if(srvArchiefView){
+            h=chip('<b>'+lArch.length+'</b> gearchiveerd')+archKnop('&larr; Terug naar actueel',true);
+          }else{
+            var actiefN=l.filter(actiefDezeWeek).length;
+            var aandN=l.filter(vraagtAandacht).length;
+            h=chip('<b>'+l.length+'</b> kaart'+(l.length===1?'':'en'))+chip('<b>'+actiefN+'</b> deze week actief');
+            h+=aandN?"<button type='button' id='k_srv_sam_aand' class='no-print' title='Hoge pijn, langer niet geoefend of nooit geopend: zet die kaarten bovenaan' style='cursor:pointer;background:#fbecea;border:1px solid #e7c3bc;color:#a23f2c;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+aandN+"</b> "+(aandN===1?'vraagt':'vragen')+" aandacht</button>":chip('<b>0</b> vragen aandacht');
+            if(lArch.length)h+=archKnop('Gearchiveerd ('+lArch.length+')',false);
+          }
           samEl.innerHTML=h;samEl.style.display='flex';
           var ab=document.getElementById('k_srv_sam_aand');
           if(ab)ab.onclick=function(){if(sortEl){sortEl.dataset.mode='aandacht';markeerSort();}toon();};
+          var arb=document.getElementById('k_srv_arch');
+          if(arb)arb.onclick=function(){srvArchiefView=!srvArchiefView;toonSrvKaarten();};
         }else if(samEl)samEl.style.display='none';
         toon();
       })
@@ -2394,6 +2428,17 @@ bridge2.jpg</div>
           else{nl.textContent=oudN;alert(d.fout||'Nieuwe link maken is niet gelukt.');}
         })
         .catch(function(){nl.textContent=oudN;alert('Nieuwe link maken is niet gelukt: geen verbinding.');});
+      return;
+    }
+    // archiveren / terughalen: een afgeronde kaart uit (of terug in) het overzicht
+    var arch=e.target.closest('[data-sarch]'),herstel=e.target.closest('[data-sherstel]');
+    if(arch||herstel){
+      var knop=arch||herstel,id=knop.dataset.sarch||knop.dataset.sherstel,naarArchief=!!arch;
+      var oudA=knop.textContent;knop.textContent='Bezig…';
+      fetch('api/kaart/archief',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:id,archief:naarArchief})})
+        .then(function(r){return r.json();})
+        .then(function(d){if(d.ok)toonSrvKaarten();else{knop.textContent=oudA;alert(d.fout||'Archiveren is niet gelukt.');}})
+        .catch(function(){knop.textContent=oudA;alert('Archiveren is niet gelukt: geen verbinding.');});
       return;
     }
     // dossiersamenvatting kopiëren: kaart ophalen, platte tekst bouwen, klembord

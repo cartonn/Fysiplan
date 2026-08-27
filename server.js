@@ -1742,7 +1742,7 @@ async function afhandelen(request, response) {
         scores: (k.metingen || []).slice(-14), gedaan: (k.gedaan || []).slice(-14),
         bekeken: k.bekeken ? k.bekeken.t : 0,
         seintje: (k.seintje && k.seintje.soort) ? { t: k.seintje.t, soort: k.seintje.soort } : null,
-        doel: Number(k.doel) || 0 }))
+        doel: Number(k.doel) || 0, gearchiveerd: !!k.gearchiveerd }))
       .sort((a, b) => b.ts - a.ts);
     await sendJson(response, 200, list);
     return;
@@ -1801,7 +1801,8 @@ async function afhandelen(request, response) {
         gedaan: map[kk] ? map[kk].gedaan || [] : [],
         bekeken: map[kk] ? map[kk].bekeken || null : null,
         seintje: map[kk] ? map[kk].seintje || null : null,
-        doel: map[kk] ? Number(map[kk].doel) || 0 : 0 };
+        doel: map[kk] ? Number(map[kk].doel) || 0 : 0,
+        gearchiveerd: map[kk] ? !!map[kk].gearchiveerd : false };
       await saveJson(kaartenPath, kaarten);
       await ruimKaartVideosOp(oudeVids.filter((p) => !Object.values(vids).includes(p)));
       // gebruiksranglijst: alleen namen uit de echte bibliotheek tellen mee, anders
@@ -2006,6 +2007,29 @@ async function afhandelen(request, response) {
       if (doel) kaart.doel = doel; else delete kaart.doel;
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, doel });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
+  // een kaart archiveren of terughalen: een afgeronde kaart verdwijnt uit het
+  // hoofdoverzicht zonder dat er iets verloren gaat (pijnhistorie, oefenvinkjes) —
+  // handig voor een drukke praktijk die niet elke oude kaart wil verwijderen. De
+  // patiëntlink blijft gewoon werken. Alleen de ingelogde praktijk (eisPraktijk).
+  if (urlPath === "/api/kaart/archief" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      if (await eisPraktijk(request, response, pk)) return;
+      const map = kaarten[pk] || {};
+      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      if (b.archief) kaart.gearchiveerd = true; else delete kaart.gearchiveerd;
+      await saveJson(kaartenPath, kaarten);
+      await sendJson(response, 200, { ok: true, gearchiveerd: !!kaart.gearchiveerd });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }
