@@ -513,3 +513,41 @@ accountlaag (49), nieuwe-link (13) en kern (21, v1 onaangetast) — groen.
 
 **Volgende run — pak een ander gebied:** de opname-/uploadketen (`/api/opname`,
 videopaden, quota) of een verse blik op de sjablonen/logo-flow.
+
+### 2026-08-27 — logo-upload en het serveren van `/uploads/`
+**Geauditeerd:** de praktijklogo-upload (`/api/praktijken` POST) van dataURL tot
+opgeslagen bestand, en het terugserveren van alles onder `/uploads/` (logo's én
+patiënt-/opnamevideo's).
+
+**Bevindingen — de upload zelf is dicht:**
+- CSRF (`kruisSite`) + `schrijfLimiet` + een body-cap van 1 MB (`readBody`); een
+  geclaimde praktijk kan alleen door de eigen sessie worden bijgewerkt
+  (`eisPraktijk`); plafond 200 profielen.
+- Strikte dataURL-regex (uitsluitend `image/jpeg|png` + base64-alfabet), grootte
+  100 B – 400 kB, én een **magic-byte-check** (`echteAfbeelding`: PNG-signatuur of
+  `FF D8 FF`) — svg/gif of een verkeerd-gevulde png worden 400.
+- **Padveiligheid:** de bestandsnaam is `logo-${slug(praktijk)}-${ts}.ext`, en
+  `slug` vervangt élk niet-alfanumeriek teken door `-`. Een naam als `../../etc/x`
+  wordt `-etc-x`; geen enkel bestand ontsnapt `uploads/`. Een nieuw logo ruimt het
+  oude op (opslag begrensd op 200 × 400 kB).
+
+**Gat + fix (hét increment):** het terugserveren van `/uploads/` zette wél
+`cross-origin-resource-policy: same-origin` + `x-robots-tag: noindex`, maar de
+**gestreamde bestand-respons miste `x-content-type-options: nosniff`** — de
+`send()`-helper zet die kop op JSON/HTML, maar de bestand-stream gaat rechtstreeks
+via `writeHead` en sloeg hem over. Naast de extensie-whitelist (`.jpg/.png/.mp4/.webm`)
+en de juiste MIME was dit klein, maar nosniff is precies de kop die content-sniffing
+van een geüpload bestand sluit. Nu op de hele `/uploads/`-handler gezet
+(`setHeader` vóór de stream-`writeHead`), dus op zowel beelden als video's. Zuiver
+verhardend, geen gedrag- of uiterlijkwijziging voor v1.
+
+**Regressietest:** `test-logo.mjs` (15 checks) — geldige PNG/JPEG geaccepteerd en
+pad-veilig opgeslagen (óók bij padtekens in de naam, niets ontsnapt), svg/gif/
+verkeerde-magic/te-klein/te-groot geweigerd, het geserveerde logo draagt nu
+image/png + **nosniff** + CORP, geclaimde praktijk alleen met eigen sessie, en het
+oude logo wordt opgeruimd. Regressie gedraaid: static-routes (16), v2-headers (35),
+opname-upload (20, video-serve via `/uploads/` ongewijzigd) en kern (21, v1
+onaangetast) — groen.
+
+**Volgende run — pak een ander gebied:** de opname-/uploadketen (`/api/opname/start`,
+tokens, quota) opnieuw, of de accountlaag (claim/login-flow) met verse ogen.

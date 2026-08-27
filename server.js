@@ -2295,6 +2295,12 @@ async function afhandelen(request, response) {
     // andere websites mogen ze niet insluiten of hotlinken
     response.setHeader("x-robots-tag", "noindex, noarchive");
     response.setHeader("cross-origin-resource-policy", "same-origin");
+    // nosniff óók op de gestreamde bestanden: de send()-helper zet dit al op JSON/HTML,
+    // maar de bestand-stream hieronder gaat rechtstreeks via writeHead. Zonder deze kop
+    // zou een browser een geüpload bestand alsnog kunnen content-sniffen (naast de
+    // extensie-whitelist en de juiste MIME al aanwezig zijn). setHeader vóór writeHead
+    // wordt meegenomen in de stream-respons.
+    response.setHeader("x-content-type-options", "nosniff");
     const file = normalize(join(uploadsDir, urlPath.slice("/uploads/".length)));
     const ext = extname(file);
     if (!file.startsWith(uploadsDir + sep) || ![".jpg", ".png", ".mp4", ".webm"].includes(ext)) {
