@@ -551,3 +551,35 @@ onaangetast) — groen.
 
 **Volgende run — pak een ander gebied:** de opname-/uploadketen (`/api/opname/start`,
 tokens, quota) opnieuw, of de accountlaag (claim/login-flow) met verse ogen.
+
+### 2026-08-28 — cross-praktijk data-isolatie over het hele geauthenticeerde oppervlak
+**Geauditeerd:** het kroonjuweel van de accountlaag — kan een geclaimde praktijk B
+met een geldige eigen sessie bij de data van praktijk A? Definitief bekeken over
+álle praktijk-scoped endpoints, mét de vijf die deze week bijkwamen
+(`seintje/gezien`, `nieuwe-link`, `doel`, `archief`) naast profiel, brief en de
+kaartroutes.
+
+**Bevindingen (geen codegat — de poort staat overal):**
+- Alle negen praktijk-scoped routes draaien `eisPraktijk(pk)`: `/api/praktijk/brief`
+  (GET), `/api/praktijken` (POST profiel), `/api/kaarten` (GET+POST),
+  `/api/kaarten/verwijder`, en de vier kaart-mutaties `seintje/gezien`,
+  `nieuwe-link`, `doel`, `archief`. `eisPraktijk` blokkeert (401) tenzij de meegestuurde
+  sessie exact bij díé praktijk hoort. Een sessie van B geeft dus overal 401 op A.
+- De sessie zit in de header `x-praktijk-sessie` (geen cookie) — cross-site niet te
+  zetten zonder CORS-preflight, dus deze routes zijn óók CSRF-veilig los van de
+  fail-open `kruisSite`.
+- De patiënt-endpoints (`/api/kaart`, `/meting`, `/gedaan`, `/seintje`, `/agenda`,
+  `/vertaal`, `/vraag`, `/manifest`) werken bewust op het **kaart-id** (capability-URL,
+  het app-vrije model) en horen dus NIET achter `eisPraktijk`; alleen de praktijk-
+  scoped routes wel. Dit onderscheid is expliciet vastgelegd.
+
+**Increment:** geen geforceerde codewijziging (de isolatie is aantoonbaar dicht).
+Nieuwe regressiewacht `test-praktijk-isolatie.mjs` (19 checks) die met twee
+geclaimde praktijken bewijst dat B's sessie op álle negen routes 401 krijgt op A,
+dat er zonder sessie niets kan, dat A's eigen sessie wél mag, en dat de
+patiënt-capability (pijnscore via kaart-id) juist los van de praktijk-poort staat.
+Daarnaast de v2-flows gedraaid: accountlaag (49), archief (19) en kern (21, v1
+onaangetast) — groen.
+
+**Volgende run — pak een ander gebied:** de opname-/uploadketen (`/api/opname`,
+tokens, quota) opnieuw, of injectie/opgeslagen-XSS op een verse renderplek.
