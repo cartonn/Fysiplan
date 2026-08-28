@@ -148,6 +148,12 @@ function nieuweSessie(pk) {
   praktijkSessies.set(token, { pk, t: nu });
   return token;
 }
+// leesbare herstelcode (vier blokken van vijf): sterk genoeg om niet te raden,
+// kort genoeg om over te schrijven in de praktijkmap
+function maakHerstelcode() {
+  const hex = randomBytes(10).toString("hex");
+  return "FP-" + [hex.slice(0, 5), hex.slice(5, 10), hex.slice(10, 15), hex.slice(15, 20)].join("-");
+}
 const praktijkGeclaimd = (pk) => !!praktijkAccounts[pk];
 function praktijkSessieVan(req) {
   const token = String(req.headers["x-praktijk-sessie"] || "").trim();
@@ -1206,11 +1212,14 @@ async function afhandelen(request, response) {
       if (ww.length < 8) { await sendJson(response, 400, { ok: false, fout: "Kies een wachtwoord van minstens 8 tekens." }); return; }
       if (praktijkGeclaimd(pk)) { await sendJson(response, 409, { ok: false, fout: "Deze praktijk is al beveiligd. Log in.", login: true }); return; }
       if (Object.keys(praktijkAccounts).length >= 1000) { await sendJson(response, 400, { ok: false, fout: "Maximum bereikt." }); return; }
-      praktijkAccounts[pk] = { hash: maakHash(ww), gemaakt: Date.now() };
+      // herstelcode: eenmalig getoond bij het claimen; er is geen e-mail in het
+      // systeem, dus dit is de enige zelfbedieningsroute bij een vergeten wachtwoord
+      const herstelcode = maakHerstelcode();
+      praktijkAccounts[pk] = { hash: maakHash(ww), herstel: maakHash(herstelcode), gemaakt: Date.now() };
       await saveJson(accountsPath, praktijkAccounts);
       auditLog(pk, "geclaimd", request);
       const token = nieuweSessie(pk);
-      await sendJson(response, 200, { ok: true, sessie: token });
+      await sendJson(response, 200, { ok: true, sessie: token, herstelcode });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }
@@ -1280,12 +1289,59 @@ async function afhandelen(request, response) {
       if (nieuw.length < 8) { await sendJson(response, 400, { ok: false, fout: "Kies een nieuw wachtwoord van minstens 8 tekens." }); return; }
       acc.hash = maakHash(nieuw);
       acc.gewijzigd = Date.now();
+      // accounts van vóór de herstelcode krijgen er hier alsnog één (eenmalig getoond)
+      let herstelcode;
+      if (!acc.herstel) { herstelcode = maakHerstelcode(); acc.herstel = maakHash(herstelcode); }
       await saveJson(accountsPath, praktijkAccounts);
       for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
       loginMisPraktijk.delete(pk);
       const token = nieuweSessie(pk);
       auditLog(pk, "wachtwoord-gewijzigd", request);
-      await sendJson(response, 200, { ok: true, sessie: token });
+      await sendJson(response, 200, { ok: true, sessie: token, ...(herstelcode ? { herstelcode } : {}) });
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+    return;
+  }
+
+  // wachtwoord vergeten: met de herstelcode (eenmalig getoond bij het claimen)
+  // een nieuw wachtwoord zetten. Zelfde remmen als inloggen: de rem-per-IP en de
+  // rem-per-praktijk tellen elke foute code mee, zodat dit endpoint geen
+  // brute-force-achterdeur op het account wordt. Bij succes vervallen alle
+  // sessies, wordt de gebruikte code vervangen en komt de nieuwe code één keer mee.
+  if (urlPath === "/api/praktijk/herstel" && request.method === "POST") {
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    if (schrijfLimiet(request, response)) return;
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const acc = praktijkAccounts[pk];
+      if (pk && loginOpSlot(pk)) {
+        await send429(response, 900, { ok: false, fout: "Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw." });
+        return;
+      }
+      if (!pk || !acc) { loginMisTel(pk || "?"); await denied(request, response, "praktijk-herstel"); return; }
+      if (!acc.herstel) {
+        await sendJson(response, 404, { ok: false, fout: "Voor dit account is nog geen herstelcode ingesteld. Wijzig ingelogd het wachtwoord om er één te krijgen." });
+        return;
+      }
+      const code = String(b.herstelcode || "").trim();
+      if (!code || !checkHash(code, acc.herstel)) {
+        loginMisTel(pk);
+        auditLog(pk, "herstel-mislukt", request);
+        await denied(request, response, "praktijk-herstel");
+        return;
+      }
+      const nieuw = String(b.nieuw || "");
+      if (nieuw.length < 8) { await sendJson(response, 400, { ok: false, fout: "Kies een nieuw wachtwoord van minstens 8 tekens." }); return; }
+      const herstelcode = maakHerstelcode();
+      acc.hash = maakHash(nieuw);
+      acc.herstel = maakHash(herstelcode);
+      acc.gewijzigd = Date.now();
+      await saveJson(accountsPath, praktijkAccounts);
+      for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
+      loginMisPraktijk.delete(pk);
+      const token = nieuweSessie(pk);
+      auditLog(pk, "wachtwoord-hersteld", request);
+      await sendJson(response, 200, { ok: true, sessie: token, herstelcode });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }

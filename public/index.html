@@ -1895,6 +1895,10 @@ bridge2.jpg</div>
       "<div id='ps_form' style='display:none;gap:6px;align-items:center;flex-wrap:wrap'>"+
         "<input id='ps_ww' type='password' autocomplete='current-password' placeholder='Wachtwoord' style='flex:1;min-width:130px'/>"+
         "<button class='btn' id='ps_do' type='button'></button></div>"+
+      "<div id='ps_herstel' style='display:none;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px'>"+
+        "<input id='ps_hcode' type='text' autocomplete='one-time-code' placeholder='Herstelcode (FP-…)' style='flex:1;min-width:150px'/>"+
+        "<input id='ps_hnieuw' type='password' autocomplete='new-password' placeholder='Nieuw wachtwoord (min. 8 tekens)' style='flex:1;min-width:150px'/>"+
+        "<button class='btn' id='ps_hdo' type='button'>Herstel</button></div>"+
       "<div id='ps_wijzig' style='display:none;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px'>"+
         "<input id='ps_huidig' type='password' autocomplete='current-password' placeholder='Huidig wachtwoord' style='flex:1;min-width:130px'/>"+
         "<input id='ps_nieuw' type='password' autocomplete='new-password' placeholder='Nieuw wachtwoord (min. 8 tekens)' style='flex:1;min-width:150px'/>"+
@@ -1904,6 +1908,7 @@ bridge2.jpg</div>
     document.getElementById('ps_do').addEventListener('click',prakSlotActie);
     document.getElementById('ps_ww').addEventListener('keydown',function(e){if(e.key==='Enter')prakSlotActie();});
     document.getElementById('ps_wdo').addEventListener('click',prakWachtwoord);
+    document.getElementById('ps_hdo').addEventListener('click',prakHerstel);
   }
   var PRAKSLOT={geclaimd:false,ingelogd:false,pr:''};
   function toonPrakSlot(pr){
@@ -1928,9 +1933,37 @@ bridge2.jpg</div>
       var wt=document.getElementById('ps_wtoon');if(wt)wt.addEventListener('click',function(e){e.preventDefault();var f=document.getElementById('ps_wijzig');f.style.display=f.style.display==='none'?'flex':'none';});
     }else{
       document.getElementById('ps_wijzig').style.display='none';
-      st.innerHTML="🔒 Deze praktijk is beveiligd. Log in om de gedeelde kaarten te zien.";
+      st.innerHTML="🔒 Deze praktijk is beveiligd. Log in om de gedeelde kaarten te zien. <a href='#' id='ps_vergeten'>Wachtwoord vergeten?</a>";
       form.style.display='flex';ww.placeholder='Wachtwoord';ww.autocomplete='current-password';knop.textContent='Inloggen';knop.dataset.act='login';
+      var vg=document.getElementById('ps_vergeten');
+      if(vg)vg.addEventListener('click',function(e){e.preventDefault();var f=document.getElementById('ps_herstel');f.style.display=f.style.display==='none'?'flex':'none';if(f.style.display==='flex')toonPsMsg('Vul de herstelcode in die je bij het beveiligen hebt bewaard, en kies een nieuw wachtwoord.');});
     }
+  }
+  // de herstelcode wordt maar één keer getoond; laat hem nadrukkelijk bewaren
+  function toonHerstelcode(code,intro){
+    var msg=document.getElementById('ps_msg');
+    if(!msg||!code)return;
+    msg.style.display='';
+    msg.innerHTML=esc(intro||'Bewaar deze herstelcode op een veilige plek (bijvoorbeeld de praktijkmap). Hiermee zet je een nieuw wachtwoord als het huidige kwijt is. Hij wordt maar één keer getoond:')+
+      "<div style='font:700 15px/1.6 ui-monospace,monospace;user-select:all;margin-top:4px'>"+esc(code)+"</div>";
+  }
+  function prakHerstel(){
+    var code=document.getElementById('ps_hcode'),nw=document.getElementById('ps_hnieuw'),knop=document.getElementById('ps_hdo');
+    if(!code.value.trim()){toonPsMsg('Vul je herstelcode in.');return;}
+    if(nw.value.length<8){toonPsMsg('Kies een nieuw wachtwoord van minstens 8 tekens.');return;}
+    knop.disabled=true;
+    fetch('api/praktijk/herstel',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({praktijk:PRAKSLOT.pr,herstelcode:code.value.trim(),nieuw:nw.value})})
+      .then(function(r){return r.json().catch(function(){return{ok:false};});})
+      .then(function(d){
+        knop.disabled=false;
+        if(!d.ok){toonPsMsg(d.fout||'Dat lukte niet. Controleer de herstelcode.');return;}
+        setPrakSes(d.sessie);code.value='';nw.value='';
+        document.getElementById('ps_herstel').style.display='none';
+        PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;rendPrakSlot();toonSrvKaarten();
+        toonHerstelcode(d.herstelcode,'Je wachtwoord is vernieuwd. Dit is je nieuwe herstelcode (de oude werkt niet meer); bewaar hem op een veilige plek:');
+      })
+      .catch(function(){knop.disabled=false;toonPsMsg('Geen verbinding.');});
   }
   function prakSlotActie(){
     var knop=document.getElementById('ps_do'),ww=document.getElementById('ps_ww'),msg=document.getElementById('ps_msg');
@@ -1946,6 +1979,7 @@ bridge2.jpg</div>
         if(!d.ok){toonPsMsg(d.fout||'Dat lukte niet.');return;}
         setPrakSes(d.sessie);ww.value='';document.getElementById('ps_msg').style.display='none';
         PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;rendPrakSlot();toonSrvKaarten();
+        if(d.herstelcode)toonHerstelcode(d.herstelcode);
       })
       .catch(function(){knop.disabled=false;toonPsMsg('Geen verbinding.');});
   }
@@ -1964,7 +1998,8 @@ bridge2.jpg</div>
         if(!d.ok){toonPsMsg(d.fout||'Wijzigen is niet gelukt.');return;}
         setPrakSes(d.sessie);hu.value='';nw.value='';
         document.getElementById('ps_wijzig').style.display='none';
-        toonPsMsg('Wachtwoord gewijzigd. Andere apparaten zijn uitgelogd.');
+        if(d.herstelcode)toonHerstelcode(d.herstelcode,'Wachtwoord gewijzigd. Dit account had nog geen herstelcode; bewaar deze op een veilige plek (hij wordt maar één keer getoond):');
+        else toonPsMsg('Wachtwoord gewijzigd. Andere apparaten zijn uitgelogd.');
       })
       .catch(function(){knop.disabled=false;toonPsMsg('Geen verbinding.');});
   }
