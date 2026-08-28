@@ -813,6 +813,43 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
 .staal.testbeeld .balken i{width:9px;height:16px;display:block}
 .staal.testbeeld .strepen i{border-color:rgba(238,243,243,.3)}
 
+/* — staal concept 52: Beeldstatistiek — */
+.staal.beeldstatistiek{background:#f2efe6;color:#17181a}
+.staal.beeldstatistiek .plaatnr{color:#c33224;font-family:var(--mono)}
+.staal.beeldstatistiek .woord{font-family:Futura,"Century Gothic","Avenir Next",Avenir,"Trebuchet MS",sans-serif;
+  font-weight:700;letter-spacing:-.035em}
+.staal.beeldstatistiek .woord em{font-style:normal;color:#c33224}
+.staal.beeldstatistiek .poppen{position:absolute;left:var(--s3);top:46px;display:flex;
+  align-items:flex-end;gap:4px}
+.staal.beeldstatistiek .poppen i{width:11px;height:23px;display:block;
+  background:linear-gradient(#17181a,#17181a) center/100% 100% no-repeat;
+  clip-path:polygon(35% 0,65% 0,72% 22%,88% 26%,88% 60%,72% 60%,72% 100%,58% 100%,58% 66%,42% 66%,42% 100%,28% 100%,28% 60%,12% 60%,12% 26%,28% 22%)}
+.staal.beeldstatistiek .poppen i.op{background:#c9c5b8}
+.staal.beeldstatistiek .poppen i.half{clip-path:polygon(35% 0,50% 0,50% 100%,28% 100%,28% 60%,12% 60%,12% 26%,28% 22%)}
+.staal.beeldstatistiek .poppen .kloof{width:9px}
+
+/* — staal concept 53: Kop aan kop — */
+.staal.kopaankop{background:#f6f3ec;color:#1a1c22}
+.staal.kopaankop .plaatnr{color:#2f6b4f;font-family:var(--mono)}
+.staal.kopaankop .woord{position:absolute;left:var(--s3);right:var(--s3);top:36px;
+  font:400 25px/1.08 Charter,"Iowan Old Style",Georgia,serif;letter-spacing:-.02em}
+.staal.kopaankop .woord em{font-style:italic;color:#2f6b4f}
+.staal.kopaankop .as{position:absolute;left:0;right:0;top:50%;border-top:1px dashed #9a9689}
+.staal.kopaankop .om{position:absolute;left:var(--s3);right:var(--s3);top:76px;
+  transform:rotate(180deg);font:400 14px/1.2 Charter,Georgia,serif;color:#2f6b4f;text-align:left}
+.staal.kopaankop .om b{font-weight:400;color:#7a7f88;font-size:10px;
+  font-family:var(--mono);letter-spacing:.12em;display:block;margin-bottom:3px}
+
+/* — staal concept 54: Klimroute — */
+.staal.klimroute{background:#eceeec;color:#12161a}
+.staal.klimroute .plaatnr{color:#dd3a1c;font-family:var(--mono);position:relative;z-index:3}
+.staal.klimroute .woord{font-family:"Arial Narrow","Helvetica Neue",Helvetica,sans-serif;
+  font-weight:700;text-transform:uppercase;letter-spacing:.005em;position:relative;z-index:3;
+  max-width:58%;font-size:24px;line-height:1.02}
+.staal.klimroute .woord em{font-style:normal;color:#dd3a1c}
+.staal.klimroute .lijn{position:absolute;inset:0;z-index:1}
+.staal.klimroute .lijn svg{width:100%;height:100%;display:block}
+
 .kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
 .kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
 .kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
@@ -872,8 +909,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>51</b> concepten</span>
-      <span>Laatste ronde <b>27 augustus 2026</b></span>
+      <span><b>54</b> concepten</span>
+      <span>Laatste ronde <b>28 augustus 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -3122,6 +3159,183 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-51-testbeeld.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-51-testbeeld.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="galerijkop" style="margin-top:var(--s6)">
+      <h2>Ronde 14</h2>
+      <span>ronde 14 · 28 aug 2026</span>
+    </div>
+
+    <div class="raster">
+
+      <!-- ─────────── CONCEPT 52 ─────────── -->
+      <article class="kaart">
+        <div class="staal beeldstatistiek">
+          <div class="plaatnr">Geen getallen · 10 tekens</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#f2efe6"></i><i style="background:#c33224"></i>
+            <i style="background:#28518f"></i><i style="background:#d99a24"></i>
+          </div>
+          <div class="poppen" aria-hidden="true">
+            <i></i><i></i><i></i><i class="half"></i><span class="kloof"></span>
+            <i class="op"></i><i class="op"></i>
+          </div>
+          <div class="woord">Meer is <em>meer tekens</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 52</div>
+          <h3>Beeldstatistiek</h3>
+          <p class="richting">Een getal wordt gelezen én omgerekend. Een rij wordt alleen gezien.</p>
+          <p class="rationale">Op elke oefenkaart ter wereld staat „3 × 10", en dat is geen
+            instructie maar een som — op te lossen door iemand die op de rand van zijn bed zit met
+            de bril beneden. Voor wie slecht is met cijfers, en dat zijn er meer dan het ontwerp
+            aanneemt, is het getal het minst betrouwbare teken op het blad. Otto Neurath bedacht in
+            1925 de tegenoplossing, Gerd Arntz sneed er vierduizend tekens voor, en de hoofdregel is
+            één zin: <b>een grotere hoeveelheid krijgt niet een groter teken maar méér tekens van
+            dezelfde grootte</b> — want een teken van dubbele hoogte beslaat vier keer zoveel vlak
+            en is dus onvergelijkbaar. Dus staat er hier geen enkel doseringsgetal: tien keer is
+            tien blokjes in groepjes van vijf, de week is een rij poppetjes, en een halve dag is een
+            half poppetje. De vergelijking — afgesproken bovenaan, gehaald eronder, precies even
+            grote tekens — is de enige plek waar het blad iets over gedrag zegt, en het zegt niets:
+            het legt de twee rijen neer en houdt zijn mond. Er is een Nederlandse staart aan het
+            verhaal, want Arntz kwam in 1934 naar Den Haag en werkte daar de rest van zijn leven
+            aan Nederlandse beeldstatistiek.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>de Weense Methode van Otto Neurath, vanaf 1925, later ISOTYPE · de houtsneetekens
+              van Gerd Arntz, gemaakt in Wenen en na 1934 in Den Haag · Futura, de letter waarin
+              Neurath zijn kaarten liet zetten · het halve teken, dat ISOTYPE als enige
+              beeldtaal netjes oplost</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b>, twee inkten — vier oefeningen met de dosis als rijen blokjes in
+              groepjes van vijf, daaronder een weekrooster met in te kleuren poppetjes en een
+              ingetekende rustdag, en onderaan de vergelijking van vorige week. Gedaan tegenover
+              niet-gedaan zit in <b>gevuld tegenover open</b>, nooit in kleur: op een
+              zwart-witkopie gaat er niets verloren</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-52-beeldstatistiek.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-52-beeldstatistiek.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 53 ─────────── -->
+      <article class="kaart">
+        <div class="staal kopaankop">
+          <div class="plaatnr">Eén vel · twee lezers</div>
+          <div class="strepen" aria-hidden="true">
+            <i style="background:#f6f3ec"></i><i style="background:#1a1c22"></i>
+            <i style="background:#2f6b4f"></i><i style="background:#a8342a"></i>
+          </div>
+          <div class="woord">Knie tot <em>heuphoogte</em></div>
+          <div class="as" aria-hidden="true"></div>
+          <div class="om" aria-hidden="true"><b>U KIJKT ALLEEN</b>Niet meetellen — hij telt zelf.</div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 53</div>
+          <h3>Kop aan kop</h3>
+          <p class="richting">De helft van het blad staat ondersteboven. Dat is geen fout.</p>
+          <p class="rationale">Elke oefenkaart is geschreven aan één lezer, en bij de patiënten die
+            haar het hardst nodig hebben staat er een tweede in de kamer: de partner die meetelt,
+            de dochter die drie avonden per week langskomt, de thuiszorg van half negen. Die tweede
+            persoon krijgt <b>geen woord</b> — niet waar ze naar kijkt, niet wat ze zegt, en vooral
+            niet wat ze beter kan láten. Dus doet ze wat iedereen doet die niets te lezen krijgt:
+            harder meetellen, de arm vasthouden, „kom op, nog drie" roepen; alle drie verkeerd,
+            alle drie uit liefde. De drukkerij kent dit al eeuwen als <b>tête-bêche</b> — twee
+            teksten op één vel, de tweede 180 graden gedraaid — en de bekendste toepassing ligt bij
+            iedereen in de kast, want een speelkaart klopt ook vanaf beide kanten van de tafel. De
+            bovenste helft is een complete oefenkaart voor wie oefent; de onderste staat op zijn kop
+            en dus goed voor wie tegenover hem zit, met per oefening vier zinnen: wat u ziet, wat u
+            zegt, <b>wat u niet doet</b>, wanneer u stopt. De middenstrook is van hen samen en als
+            enige rotatiesymmetrisch. Wie alleen oefent vouwt het vel over de middenlijn en merkt
+            van de rest niets.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>tête-bêche drukwerk en de dos-à-dos gebonden bijbel met psalter · de Ace Doubles
+              uit de jaren vijftig, twee romans in één band · de speelkaart, het meest gebruikte
+              rotatiesymmetrische ontwerp op aarde · de marginalia-zetspiegel, want wat de meelezer
+              leest is commentaar bij andermans handeling</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b>, kop aan kop — bovenhelft vier oefeningen met beeld en dosering,
+              onderhelft 180° gedraaid met de vier zinnen per oefening in een smallere zetspiegel
+              met marge-lijn, en daartussen een strook met de dagvakjes precies in het hart van het
+              vel en het vouwopschrift in twee richtingen. De rode veiligheidsregel staat op
+              <b>beide</b> helften — dat is de enige zin die niemand mag missen, ook niet als het
+              vel verkeerd om ligt</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-53-kop-aan-kop.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-53-kop-aan-kop.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 54 ─────────── -->
+      <article class="kaart">
+        <div class="staal klimroute">
+          <div class="lijn" aria-hidden="true">
+            <svg viewBox="0 0 330 132" preserveAspectRatio="none">
+              <path d="M152 116 C196 120 244 112 300 96" fill="none" stroke="#8e9a9e"
+                stroke-width="4" stroke-dasharray="9 7" stroke-linecap="round"/>
+              <path d="M152 112 C196 102 230 84 258 66 C276 54 292 48 302 46"
+                fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+              <path d="M152 112 C196 102 230 84 258 66 C276 54 292 48 302 46"
+                fill="none" stroke="#dd3a1c" stroke-width="4.5" stroke-linecap="round"/>
+              <circle cx="152" cy="112" r="8" fill="#dd3a1c" stroke="#fff" stroke-width="2"/>
+              <circle cx="204" cy="90" r="6.5" fill="#fff" stroke="#1c6fb8" stroke-width="3.5"/>
+              <polygon points="250,44 265,70 235,70" fill="#f0a800" stroke="#fff" stroke-width="2"/>
+              <circle cx="302" cy="46" r="8" fill="#2f7d4f" stroke="#fff" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="plaatnr">Route 2 · crux vooraan</div>
+          <div class="strepen" aria-hidden="true" style="z-index:3">
+            <i style="background:#dd3a1c"></i><i style="background:#f0a800"></i>
+            <i style="background:#1c6fb8"></i><i style="background:#8e9a9e"></i>
+          </div>
+          <div class="woord">Hier wordt <em>het zwaar</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 54</div>
+          <h3>Klimroute</h3>
+          <p class="richting">Elke kaart zegt wat u moet doen. Geen enkele zegt waar het zwaar wordt.</p>
+          <p class="rationale">Wie bij de vierde herhaling voelt dat het echt begint te trekken,
+            denkt één van twee dingen: „dit hoort zo, hier komt het aan" — of „ik doe iets fout, of
+            ik ben achteruitgegaan". Welke van de twee het wordt hangt af van één zin die op geen
+            enkele oefenkaart staat, en staat er niets, dan kiest bijna iedereen de tweede. De
+            bergsport loste dat vijftig jaar geleden op met een tekening: de <b>topo</b>, de
+            routelijn over een foto van de wand, met de <b>crux</b> erin gemarkeerd, de
+            standplaatsen waar je mag stilstaan, en de makkelijke variant in stippellijn ernaast.
+            Hier is elke oefening een route: de lijn loopt over de beweging heen, de crux staat er
+            vóórdat je hem tegenkomt, het <b>rustpunt</b> geeft toestemming om stil te staan
+            (zonder die toestemming gaan mensen door tot ze móéten stoppen, en dan stoppen ze op de
+            verkeerde plek), en de <b>sluiproute</b> tekent hoe het lichaam vals speelt — een fout
+            die je kunt aanwijzen hoeft geen alinea. Het gevolg reikt verder dan het papier: wie
+            afhaakt meldt niet „niet gedaan" maar <b>„tot punt 3"</b>, en dat is voor het eerst
+            bruikbare informatie uit een mislukte oefensessie. Uitstappen krijgt een naam en
+            daarmee een plek.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>de klimtopo zoals SuperTopo en Rockfax hem eind jaren negentig op een echte foto
+              van de wand legden · de UIAA-topotekens en de gestippelde variant · het woord
+              <em>crux</em>, dat een moeilijkste passage benoemt zonder er een oordeel van te maken
+              · het routelogboek waarin staat tot waar je kwam · de veldeditie van een gids, die
+              zijn foto's inruilt voor lijnen zodra hij nat en gevouwen moet overleven</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b> — vier routes in twee kolommen, elk met de lijntekening en de
+              routelijn eroverheen, drie tot vier genummerde punten met één zin per punt, en een
+              uitstapregel eronder; daarboven de sleutel met de vier tekens, daaronder „de
+              afdaling" als veiligheidsregel. Op het scherm ligt de lijn over de foto, op papier
+              over de lijntekening — <b>een grijze foto wordt op een thuisprinter modder, en een
+              route over modder is geen route meer</b></dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-54-klimroute.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-54-klimroute.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>

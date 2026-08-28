@@ -1,0 +1,941 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 53 — Kop aan kop · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 53 — KOP AAN KOP
+   ------------------------------------------------------------
+   De helft van het blad staat ondersteboven. Dat is geen fout.
+
+   Elke oefenkaart ter wereld is geschreven aan één lezer. En bij
+   heel veel patiënten staat er een tweede in de kamer: de
+   partner die meetelt, de dochter die drie avonden per week
+   langskomt, de thuiszorg die om half negen binnenloopt. Die
+   tweede persoon krijgt niets. Geen woord over waar je naar
+   kijkt, wat je zegt, wanneer je ingrijpt en — het moeilijkste —
+   wat je vooral níét doet. Dus doet zij wat iedereen doet die
+   niets te lezen krijgt: harder meetellen, de arm vasthouden,
+   „kom op, nog drie" zeggen. Alle drie verkeerd, alle drie uit
+   liefde.
+
+   De drukkerij kent dit probleem al eeuwen en heeft er een woord
+   voor: TÊTE-BÊCHE — kop aan staart. Twee teksten op één vel,
+   de tweede 180 graden gedraaid. Je leest de ene, je draait het
+   geheel om, je leest de andere. Bekend van de Ace Doubles uit
+   de jaren vijftig, van de dos-à-dos gebonden bijbel met psalter
+   ernaast, en van het meest gebruikte tête-bêche ontwerp op
+   aarde: de speelkaart, die vanaf beide kanten van de tafel
+   klopt.
+
+   DUS: dit blad ligt tussen twee mensen in op de keukentafel.
+     · DE BOVENSTE HELFT staat goed voor wie oefent.
+     · DE ONDERSTE HELFT staat op de kop en dus goed voor wie
+       tegenover hem zit. Zelfde vier oefeningen, andere tekst:
+       wat u ziet, wat u zegt, wat u niet doet, wanneer u stopt.
+     · DE MIDDENSTROOK is van hen samen. Die is rotatie-
+       symmetrisch: de afvinkhokjes staan in het hart van het
+       vel, en het opschrift staat er twee keer, in twee
+       richtingen — precies zoals de indexhoek van een speelkaart.
+     · WIE ALLEEN OEFENT vouwt het blad over de middenlijn. Dan
+       is de bovenste helft een gewone, complete oefenkaart en
+       ligt de meelezer-helft netjes aan de achterkant.
+
+   VORM. Boekwerk, geen software: een leesbare schreefletter voor
+   alles wat een mens moet lezen, een smalle grotesk voor de
+   etiketten, en één enkele haarlijn als middenas. De twee
+   stemmen verschillen ook zonder kleur: de patiënt krijgt
+   rechtopstaande tekst met foto's, de meelezer krijgt een
+   smallere zetspiegel met een verticale marge-lijn — de
+   marginalia-traditie, want wat de meelezer leest is commentaar
+   bij andermans handeling. Kleur bevestigt dat alleen: gedempt
+   groen voor de meelezer, zwart voor de patiënt, één rood voor
+   de veiligheidsregel die op BEIDE helften staat. Want dat is de
+   enige zin die niemand mag missen, ook niet als het vel
+   verkeerd om ligt.
+   ============================================================ */
+
+:root{
+  --papier:#f6f3ec;
+  --vel:#fdfcf9;
+  --inkt:#1a1c22;
+  --inkt-2:#3f434b;
+  --grijs:#7a7f88;
+  --lijn:#d5d0c4;
+  --lijn-2:#e8e4da;
+
+  --hulp:#2f6b4f;
+  --hulp-licht:#e6efe8;
+  --rood:#a8342a;
+  --oker:#b8873a;
+
+  --serif:Charter,"Iowan Old Style",Georgia,"Times New Roman",serif;
+  --sans:"Helvetica Neue",Helvetica,Arial,system-ui,-apple-system,sans-serif;
+  --smal:"Arial Narrow","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:66px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17.5px/1.66 var(--serif);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--hulp)}
+:focus-visible{outline:3px solid var(--hulp);outline-offset:3px}
+
+.binnen{max-width:1150px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--inkt);color:#d3d0c8;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border:1px solid #4a4e57;padding:5px 8px}
+.labbalk .nr em{font-style:normal;display:inline-block;transform:rotate(180deg)}
+.labbalk .rek{flex:1}
+.labbalk a{color:#d3d0c8;text-decoration:none;padding:5px 3px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:#6fae8c}
+.labbalk a.terug{color:#fff;border-bottom-color:#4a4e57}
+@media (max-width:760px){.labbalk a:not(.terug){display:none}}
+
+.scherm{padding:var(--s6) 0;border-bottom:1px solid var(--lijn)}
+.scherm.vel{background:var(--vel)}
+.schermkop{margin-bottom:var(--s5);max-width:70ch}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--hulp);
+  margin-bottom:var(--s2)}
+.schermkop h2{font:400 clamp(27px,3.3vw,36px)/1.16 var(--serif);letter-spacing:-.015em;color:var(--inkt)}
+.schermkop p{margin-top:var(--s3);font-size:17px}
+.schermkop em{font-style:italic;color:var(--inkt)}
+
+/* ---------- landing ---------- */
+.merkregel{display:flex;align-items:center;gap:11px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:28px;height:28px;background:var(--inkt);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 15px/1 var(--sans)}
+.merkregel .naam{font:600 16px/1 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+.merkregel .pad{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--grijs)}
+
+.heldrij{display:grid;grid-template-columns:1.1fr .9fr;gap:var(--s5);align-items:center}
+@media (max-width:960px){.heldrij{grid-template-columns:1fr;gap:var(--s4)}}
+h1.kop{font:400 clamp(36px,5.6vw,60px)/1.06 var(--serif);letter-spacing:-.022em;color:var(--inkt)}
+h1.kop em{display:block;font-style:italic;color:var(--hulp);transform:rotate(180deg);
+  transform-origin:center}
+.onder{margin-top:var(--s4);font-size:18.5px;max-width:56ch}
+.onder b{color:var(--inkt);font-weight:600}
+
+/* het tafelbeeld: twee mensen, één vel */
+.tafel{background:var(--inkt);padding:var(--s5) var(--s4);color:#cfd4d0}
+.tafel .op{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#8fc3a8;margin-bottom:var(--s4)}
+.tafelbeeld{display:grid;grid-template-columns:1fr;gap:14px;justify-items:center}
+.tafelbeeld .persoon{font:700 10px/1 var(--mono);letter-spacing:.18em;color:#9aa09c}
+.tafelbeeld .velletje{width:100%;max-width:290px;background:#fdfcf9;color:#1a1c22;
+  border:1px solid #575c62}
+.tafelbeeld .helft{padding:11px 13px}
+.tafelbeeld .helft.om{transform:rotate(180deg)}
+.tafelbeeld .helft h5{font:600 13px/1.2 var(--sans);letter-spacing:-.01em}
+.tafelbeeld .helft p{font:400 11.5px/1.4 var(--serif);color:#54585f;margin-top:3px}
+.tafelbeeld .helft.om h5{color:#2f6b4f}
+.tafelbeeld .as{height:0;border-top:1px dashed #9a9689;position:relative}
+.tafelbeeld .as span{position:absolute;left:50%;top:-7px;transform:translateX(-50%);
+  background:#fdfcf9;padding:0 7px;font:700 8px/1 var(--mono);letter-spacing:.14em;color:#8b8778}
+.tafel .bij{margin-top:var(--s4);font:400 14px/1.55 var(--serif);color:#9aa09c;text-align:center}
+
+/* het argument in drie */
+.drie{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s6)}
+@media (max-width:880px){.drie{grid-template-columns:1fr}}
+.drie div{border-top:2px solid var(--inkt);padding-top:var(--s3)}
+.drie div.h{border-top-color:var(--hulp)}
+.drie h3{font:700 10.5px/1 var(--mono);letter-spacing:.16em;color:var(--inkt);margin-bottom:var(--s2)}
+.drie div.h h3{color:var(--hulp)}
+.drie p{font-size:16px;line-height:1.6}
+.drie p b{color:var(--inkt);font-weight:600}
+
+/* ---------- kiezer ---------- */
+.kiezerrij{display:grid;grid-template-columns:1.2fr .8fr;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.kiezerrij{grid-template-columns:1fr}}
+.paneel{background:var(--vel);border:1px solid var(--lijn)}
+.paneel > h3{font:700 11px/1 var(--mono);letter-spacing:.16em;color:#fff;background:var(--inkt);
+  padding:12px 15px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.paneel > h3 span{color:#8fc3a8}
+.paneel.hulp > h3{background:var(--hulp)}
+
+.schakel{display:flex;align-items:center;gap:13px;padding:13px 15px;background:var(--hulp-licht);
+  border-bottom:1px solid var(--lijn)}
+.schakel .sw{width:46px;height:25px;border-radius:13px;background:var(--hulp);position:relative;flex:none}
+.schakel .sw::after{content:"";position:absolute;right:3px;top:3px;width:19px;height:19px;
+  border-radius:50%;background:#fff}
+.schakel b{font:600 15px/1.3 var(--sans);color:var(--inkt)}
+.schakel small{display:block;font:400 13.5px/1.45 var(--serif);color:var(--inkt-2);margin-top:2px}
+
+.zoek{display:flex;align-items:center;gap:12px;padding:13px 15px;border-bottom:1px solid var(--lijn)}
+.zoek .veld{flex:1;border:1px solid var(--lijn);background:#fff;padding:9px 11px;
+  font:600 15px/1 var(--sans);color:var(--inkt)}
+.zoek .veld i{font-style:normal;font-weight:400;color:var(--grijs)}
+.zoek .tel{font:700 11px/1 var(--mono);letter-spacing:.09em;color:var(--hulp)}
+
+.oefrij{display:grid;grid-template-columns:20px 60px 1fr;gap:13px;align-items:center;
+  padding:12px 15px;border-bottom:1px solid var(--lijn-2)}
+.oefrij .vink{width:17px;height:17px;border:1.5px solid var(--inkt);background:#fff}
+.oefrij.aan .vink{background:var(--inkt);position:relative}
+.oefrij.aan .vink::after{content:"";position:absolute;left:4px;top:1px;width:5px;height:10px;
+  border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg)}
+.oefrij .beeld{background:#fff;border:1px solid var(--lijn);padding:2px}
+.oefrij h4{font:600 16px/1.2 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+.oefrij .sub{font-size:13.5px;color:var(--grijs);margin-top:2px;font-family:var(--serif)}
+.oefrij.uit{opacity:.5}
+.rolrij{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;
+  padding-left:33px;border-left:2px solid var(--hulp);margin-left:0}
+.rolrij .lab{font:700 9.5px/1.9 var(--mono);letter-spacing:.14em;color:var(--hulp);width:100%}
+.rolrij span{border:1px solid var(--lijn);background:#fff;padding:5px 9px;
+  font:500 13px/1 var(--sans);color:var(--inkt-2)}
+.rolrij span.aan{background:var(--hulp);border-color:var(--hulp);color:#fff;font-weight:600}
+
+.melding{margin:var(--s3) 15px;border-left:3px solid var(--rood);background:#fbf2f0;padding:13px 15px}
+.melding b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.13em;color:var(--rood);margin-bottom:8px}
+.melding p{font-size:15px;line-height:1.55}
+
+.hulpbouw{padding:var(--s3) 15px var(--s4)}
+.hulpbouw > p{font-size:15px;line-height:1.6;margin-bottom:var(--s3)}
+.zinvak{border-top:1px solid var(--lijn);padding-top:12px;margin-top:14px}
+.zinvak b{display:block;font:700 10px/1 var(--mono);letter-spacing:.13em;color:var(--hulp);margin-bottom:8px}
+.zinvak .zin{background:#fff;border:1px solid var(--lijn);padding:11px 13px;
+  font:400 16px/1.5 var(--serif);color:var(--inkt)}
+.zinvak .zin.niet{border-left:3px solid var(--rood);color:var(--inkt-2)}
+.zinvak small{display:block;margin-top:8px;font:400 13.5px/1.5 var(--serif);color:var(--grijs)}
+
+/* ---------- cliëntkaart ---------- */
+.kaartblad{background:var(--vel);border:1px solid var(--lijn)}
+.kaartkop{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:baseline;
+  padding:var(--s4);background:var(--inkt);color:#fff}
+.kaartkop h3{font:400 24px/1.16 var(--serif);letter-spacing:-.015em}
+.kaartkop .wk{font:700 11px/1 var(--mono);letter-spacing:.13em;color:#8fc3a8;margin-left:auto}
+.kaartkop .sub{font-size:15px;color:#b0b4ae;width:100%;font-family:var(--serif)}
+
+.kaartlijf{padding:var(--s4)}
+.twee{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--lijn);background:#fff}
+@media (max-width:820px){.twee{grid-template-columns:1fr}}
+.kolomkop{padding:12px 16px;font:700 10.5px/1 var(--mono);letter-spacing:.15em;color:#fff;background:var(--inkt)}
+.kolomkop.h{background:var(--hulp)}
+.blok{padding:var(--s3) 16px;border-bottom:1px solid var(--lijn-2)}
+.blok h5{font:600 15px/1.3 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+.blok p{font-size:15px;line-height:1.6;margin-top:5px}
+.blok .stem{font:700 9.5px/1 var(--mono);letter-spacing:.14em;color:var(--grijs);margin-bottom:6px;display:block}
+.rechts{border-left:1px solid var(--lijn)}
+@media (max-width:820px){.rechts{border-left:0;border-top:2px solid var(--hulp)}}
+.rechts .blok{background:#fbfdfb}
+.rechts .blok p{padding-left:12px;border-left:1px solid var(--hulp)}
+
+.verschil{margin-top:var(--s4);border:1px solid var(--inkt);background:#fff}
+.verschil h4{font:700 10.5px/1 var(--mono);letter-spacing:.15em;color:#fff;background:var(--inkt);padding:11px 16px}
+.verschil .lijf{padding:var(--s3) 16px var(--s4)}
+.vrij{display:grid;grid-template-columns:1fr 88px 1fr;gap:var(--s3);align-items:center;
+  padding:13px 0;border-bottom:1px solid var(--lijn-2)}
+@media (max-width:760px){.vrij{grid-template-columns:1fr;gap:6px}}
+.vrij .p{font-size:15.5px;line-height:1.5}
+.vrij .p b{display:block;font:700 9.5px/1 var(--mono);letter-spacing:.13em;color:var(--grijs);margin-bottom:5px}
+.vrij .h{text-align:right}
+.vrij .h b{color:var(--hulp)}
+@media (max-width:760px){.vrij .h{text-align:left}}
+.vrij .mid{text-align:center;font:700 10px/1.3 var(--mono);letter-spacing:.1em;color:var(--rood);
+  border:1px solid var(--rood);padding:6px 4px}
+.vrij .mid.eens{color:var(--grijs);border-color:var(--lijn)}
+.verschil .slot{margin-top:var(--s3);font-size:15.5px;line-height:1.62;color:var(--inkt-2)}
+.verschil .slot b{color:var(--inkt);font-weight:600}
+
+/* ---------- A4 ---------- */
+.draaibalk{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:var(--s4);
+  border:1px solid var(--lijn);background:#fff;padding:13px 16px}
+.draaibalk p{font-size:15px;line-height:1.5;flex:1;min-width:240px}
+.draaiknop{border:1px solid var(--inkt);background:var(--inkt);color:#fff;cursor:pointer;
+  font:600 14px/1 var(--sans);padding:11px 16px;display:flex;align-items:center;gap:9px}
+.draaiknop:hover{background:var(--hulp);border-color:var(--hulp)}
+.draaiknop span{display:inline-block;font-size:16px}
+.wieleest{font:700 10.5px/1 var(--mono);letter-spacing:.14em;color:var(--hulp)}
+
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden;perspective:1600px}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;position:relative;
+  transform-origin:top left;box-shadow:0 3px 34px rgba(26,28,34,.28);
+  font-family:var(--serif);overflow:hidden;transition:transform .65s cubic-bezier(.4,0,.2,1)}
+@media (max-width:860px){.bladschaal{max-width:100%}}
+.blad .rand{position:absolute;inset:0;display:flex;flex-direction:column}
+
+/* — een helft — */
+.helft{flex:1 1 0;min-height:0;overflow:hidden;padding:7mm 11mm;
+  display:flex;flex-direction:column;position:relative}
+.helft.om{transform:rotate(180deg)}
+
+.hkop{display:flex;align-items:flex-end;gap:4mm;border-bottom:1.4pt solid #000;padding-bottom:1.6mm}
+.hkop .t{font:400 13.4pt/1.05 var(--serif);letter-spacing:-.018em;color:#000;flex:1}
+.hkop .t em{font-style:italic}
+.hkop .wie{text-align:right;font:400 7.2pt/1.4 var(--serif);color:#2a2c30;white-space:nowrap}
+.hkop .wie b{display:block;font:700 5.8pt/1 var(--mono);letter-spacing:.16em;color:#7a7f88;margin-bottom:.8mm}
+.helft.om .hkop{border-bottom-color:#2f6b4f}
+.helft.om .hkop .t{color:#2f6b4f}
+
+.hlead{font:400 7.4pt/1.36 var(--serif);color:#2a2c30;margin:1.6mm 0 1.8mm;max-width:150mm}
+.hlead b{font-weight:700}
+
+/* patiëntkant: vier oefeningen met beeld */
+.poef{display:grid;grid-template-columns:14mm 1fr;gap:2.6mm;align-items:flex-start;
+  padding:1.2mm 0;border-top:.5pt solid #c6c1b4}
+.poef .bld{border:.7pt solid #000;background:#fff;padding:.4mm}
+.poef .bld img{width:100%;height:auto;display:block}
+.poef .tk{display:flex;flex-direction:column;gap:.6mm}
+.poef .tk .rg{display:flex;align-items:baseline;gap:2.4mm}
+.poef .tk h3{font:700 10.4pt/1.08 var(--sans);letter-spacing:-.02em;color:#000}
+.poef .tk .ds{font:700 6.8pt/1 var(--mono);letter-spacing:.06em;color:#000;
+  border:.8pt solid #000;padding:.7mm 1.4mm;white-space:nowrap}
+.poef .tk p{font:400 7.6pt/1.32 var(--serif);color:#1a1c22;max-width:118mm}
+.poef .tk p b{font-weight:700}
+
+/* meelezerkant: marginalia-zetspiegel */
+.moef{display:grid;grid-template-columns:24mm 1fr;gap:2.6mm;align-items:flex-start;
+  padding:1.4mm 0;border-top:.5pt solid #b9cdc1}
+.moef .nm{font:700 8pt/1.14 var(--sans);color:#2f6b4f;letter-spacing:-.015em;text-align:right}
+.moef .nm i{display:block;font-style:normal;font:700 5.4pt/1.3 var(--mono);letter-spacing:.13em;
+  color:#7a8f83;margin-top:.7mm}
+.moef .kl{border-left:.8pt solid #2f6b4f;padding-left:2.6mm;display:flex;flex-direction:column;gap:.7mm}
+.moef .zin{display:grid;grid-template-columns:14mm 1fr;gap:2mm;align-items:baseline}
+.moef .zin b{font:700 5.6pt/1.32 var(--mono);letter-spacing:.11em;color:#2f6b4f}
+.moef .zin p{font:400 7.4pt/1.3 var(--serif);color:#14161a}
+.moef .zin p em{font-style:italic}
+.moef .zin.niet b{color:#a8342a}
+.moef .zin.niet p{color:#3f434b}
+
+/* middenstrook — van hen samen, leest van twee kanten */
+.midden{flex:none;border-top:1.4pt solid #000;border-bottom:1.4pt solid #000;
+  background:#f4f1ea;padding:1.8mm 11mm;display:grid;
+  grid-template-columns:auto 1fr auto;gap:5mm;align-items:center}
+.midden .zij{font:700 5.6pt/1.25 var(--mono);letter-spacing:.16em;color:#5c6167;white-space:nowrap}
+.midden .zij.om{transform:rotate(180deg)}
+.midden .kern{display:flex;align-items:center;justify-content:center;gap:3mm;flex-wrap:wrap}
+.midden .dag{text-align:center}
+.midden .dag i{display:block;font-style:normal;font:700 5.4pt/1 var(--mono);letter-spacing:.1em;
+  color:#5c6167;margin-bottom:1mm}
+.midden .dag .hok{width:8mm;height:8mm;border:.9pt solid #000;background:#fff;
+  display:flex;align-items:center;justify-content:center}
+.midden .dag .hok b{font:700 6pt/1 var(--mono);color:#7a7f88}
+.midden .dag .hok.samen{border-color:#2f6b4f;border-width:1.4pt}
+
+/* de rode regel — staat op beide helften */
+.hveilig{margin-top:auto;border:1pt solid #a8342a;padding:1.5mm 2.2mm;
+  display:grid;grid-template-columns:auto 1fr;gap:2.6mm;align-items:center}
+.hveilig > b{font:700 5.8pt/1.2 var(--mono);letter-spacing:.14em;color:#a8342a;white-space:nowrap}
+.hveilig p{font:400 7.4pt/1.3 var(--serif);color:#000}
+.hveilig p b{display:inline;font-family:var(--serif);font-size:7.4pt;font-weight:700;
+  letter-spacing:0;color:#000}
+
+.hvoet{display:flex;justify-content:space-between;align-items:baseline;gap:4mm;
+  margin-top:1.8mm;font:400 6pt/1.3 var(--mono);letter-spacing:.11em;color:#7a7f88}
+.hvoet b{color:#000}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#c2c6c1;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:#8fc3a8;
+  border-top:1px solid #454951;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:9px}
+footer.uitleiding a{color:#8fc3a8}
+
+/* ============================================================
+   PRINT — het vel gaat altijd rechtop naar de printer; de
+   onderste helft is in de opmaak al gedraaid, niet in de driver.
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000 !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border:0 !important;background:#fff !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;
+    height:auto !important;perspective:none !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;transition:none !important;
+    break-inside:avoid;page-break-inside:avoid}
+  .helft.om{transform:rotate(180deg) !important}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 53</span>
+  <strong style="font:600 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Kop aan kop</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 53 · KOP AAN KOP</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1 class="kop">Er zit iemand tegenover&nbsp;u.<em>Zij krijgt niets te lezen.</em></h1>
+        <p class="onder">De oefenkaart is geschreven aan één lezer. Maar bij de mensen die haar het
+          hardst nodig hebben staat er een tweede in de kamer: de partner die meetelt, de dochter
+          die drie avonden per week langskomt, de thuiszorg van half negen. Die tweede persoon
+          krijgt <b>geen woord</b> — niet waar ze naar kijkt, niet wat ze zegt, niet wanneer ze
+          ingrijpt, en vooral niet wat ze beter kan láten.<br/><br/>
+          Dus doet ze wat iedereen doet die niets te lezen heeft: harder meetellen, de arm
+          vasthouden, „kom op, nog drie" roepen. Alle drie verkeerd. Alle drie uit liefde.
+          Dit blad geeft haar een eigen helft — <b>ondersteboven gedrukt</b>, want ze zit aan de
+          andere kant van de tafel.</p>
+      </div>
+
+      <div class="tafel">
+        <div class="op">HET VEL OP DE KEUKENTAFEL</div>
+        <div class="tafelbeeld">
+          <div class="persoon">↓ MENEER RAVENSBERGEN ZIT HIER</div>
+          <div class="velletje" aria-hidden="true">
+            <div class="helft">
+              <h5>3 · Op de plaats marcheren</h5>
+              <p>Bij het aanrecht, één hand op het blad. Til uw knie tot heuphoogte.</p>
+            </div>
+            <div class="as"><span>VOUW</span></div>
+            <div class="helft om">
+              <h5>3 · Marcheren — u kijkt naar de knie</h5>
+              <p>Zeg: „mooi hoog." Niet meetellen — hij telt zelf.</p>
+            </div>
+          </div>
+          <div class="persoon">↑ MARLOES ZIT HIER</div>
+        </div>
+        <div class="bij">Eén vel, twee leesrichtingen. De drukkerij noemt het <em>tête-bêche</em>
+          en doet het al eeuwen; de bekendste toepassing ligt bij u in de kast, want een speelkaart
+          klopt ook vanaf beide kanten van de tafel.</div>
+      </div>
+    </div>
+
+    <div class="drie">
+      <div>
+        <h3>DE BOVENSTE HELFT</h3>
+        <p>Voor wie oefent. Vier oefeningen met beeld, de dosering in een kader, en niets meer dan
+          dat. <b>Dit is een complete oefenkaart</b> — wie alleen oefent, vouwt het vel over de
+          middenlijn en merkt van de rest niets.</p>
+      </div>
+      <div class="h">
+        <h3>DE ONDERSTE HELFT</h3>
+        <p>Voor wie meekijkt. Dezelfde vier oefeningen, andere tekst: <b>wat u ziet, wat u zegt,
+          wat u niet doet, wanneer u stopt.</b> Smaller gezet, met een marge-lijn — het is
+          commentaar bij andermans handeling, en zo hoort het er ook uit te zien.</p>
+      </div>
+      <div>
+        <h3>DE STROOK IN HET MIDDEN</h3>
+        <p>Van hen samen, en als enige rotatiesymmetrisch: de afvinkhokjes staan precies in het
+          hart van het vel en het opschrift staat er twee keer, in twee richtingen. <b>Het
+          middelste hokje van elke dag zetten ze samen.</b></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm vel" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 2</b><h2>De oefeningen-kiezer</h2>
+      <p>De therapeut kiest de oefeningen zoals altijd, en zet er per oefening één ding bij dat nu
+        nergens wordt vastgelegd: <em>welke rol de meelezer heeft.</em> Meekijken is iets anders
+        dan vasthouden, en vasthouden is iets heel anders dan niets doen — dat laatste is
+        bovendien de moeilijkste rol en verdient dus het meeste tekst.</p>
+    </div>
+
+    <div class="kiezerrij">
+
+      <div class="paneel">
+        <h3>OEFENINGEN <span>4 GEKOZEN · 215 BESCHIKBAAR</span></h3>
+
+        <div class="schakel">
+          <span class="sw" aria-hidden="true"></span>
+          <div>
+            <b>Er is een meelezer: Marloes (dochter)</b>
+            <small>Staat deze schakelaar uit, dan rolt er een gewone enkelzijdige kaart uit de
+              printer en verandert er niets aan het product. Kop aan kop is geen stand, het is een
+              antwoord op een vraag die eerst gesteld moet worden.</small>
+          </div>
+        </div>
+
+        <div class="zoek">
+          <div class="veld">na CVA <i>— linkerarm, evenwicht, week 7</i></div>
+          <span class="tel">52 TREFFERS</span>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/bovenste-extremiteit/duim-oppositie-actief-line-v1.png" alt="Duim naar de vingers brengen"/></span>
+          <div><h4>Duim naar elke vinger</h4><div class="sub">Aan tafel, elleboog gesteund</div></div>
+          <div class="rolrij">
+            <span class="lab">ROL VAN DE MEELEZER</span>
+            <span class="aan">alleen kijken</span><span>meetellen</span><span>vasthouden</span><span>klaarzetten</span>
+          </div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/bovenste-extremiteit/anteflexie-armen-line-v1.png" alt="Armen naar voren heffen"/></span>
+          <div><h4>Armen naar voren heffen</h4><div class="sub">Zittend, beide armen gelijk op</div></div>
+          <div class="rolrij">
+            <span class="lab">ROL VAN DE MEELEZER</span>
+            <span>alleen kijken</span><span>meetellen</span><span class="aan">vasthouden</span><span>klaarzetten</span>
+          </div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" alt="Op de plaats marcheren met steun"/></span>
+          <div><h4>Op de plaats marcheren</h4><div class="sub">Bij het aanrecht, één hand steun</div></div>
+          <div class="rolrij">
+            <span class="lab">ROL VAN DE MEELEZER</span>
+            <span class="aan">alleen kijken</span><span>meetellen</span><span>vasthouden</span><span>klaarzetten</span>
+          </div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/></span>
+          <div><h4>Opstaan uit de stoel</h4><div class="sub">Zonder handen, stoel tegen de muur</div></div>
+          <div class="rolrij">
+            <span class="lab">ROL VAN DE MEELEZER</span>
+            <span>alleen kijken</span><span>meetellen</span><span>vasthouden</span><span class="aan">klaarzetten</span>
+          </div>
+        </div>
+
+        <div class="oefrij uit">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/balans-en-valpreventie/eenbeenstand-zonder-steun-line-v1.png" alt="Eenbeenstand zonder steun"/></span>
+          <div><h4>Eenbeenstand zonder steun</h4><div class="sub">Niet zonder toezicht — en toezicht is geen rol</div></div>
+        </div>
+
+        <div class="melding">
+          <b>ÉÉN OEFENING KRIJGT GEEN MEELEZER</b>
+          <p>Bij „eenbeenstand zonder steun" is de tweede persoon geen meelezer maar een
+            <b>vangnet</b>, en dat is geen taak die je op een vel papier uitlegt aan een dochter
+            van tweeënveertig. Deze oefening blijft in de praktijk, onder toezicht van de
+            therapeut, en komt niet op het thuisvel. De kiezer zegt dat met zoveel woorden in
+            plaats van er een waarschuwingsdriehoekje bij te zetten.</p>
+        </div>
+      </div>
+
+      <div class="paneel hulp">
+        <h3>DE ONDERSTE HELFT SCHRIJVEN</h3>
+        <div class="hulpbouw">
+          <p>Elke oefening levert de meelezer vier zinnen op, en niet meer dan vier. De vierde is
+            de belangrijkste en de moeilijkste om te schrijven, want die gaat over niets doen.</p>
+
+          <div class="zinvak">
+            <b>WAT U ZIET</b>
+            <div class="zin">Kijk naar zijn <em>schouder</em>, niet naar zijn hand. Blijft die laag
+              en gelijk met de andere?</div>
+            <small>Eén ding om naar te kijken. Twee dingen is geen aandacht meer, dat is toezicht.</small>
+          </div>
+
+          <div class="zinvak">
+            <b>WAT U ZEGT</b>
+            <div class="zin">„Mooi laag, die schouder."</div>
+            <small>Letterlijk uitgeschreven. Niet „geef positieve feedback" — een zin die je kunt
+              voorlezen, want dat is wat er om acht uur 's avonds gebeurt.</small>
+          </div>
+
+          <div class="zinvak">
+            <b>WAT U NIET DOET</b>
+            <div class="zin niet">Niet meetellen. Hij telt zelf, en dat tellen ís een deel van de
+              oefening.</div>
+            <small>De moeilijkste zin van het hele blad, en de enige die met een rode marge
+              gedrukt wordt. Wie meetelt neemt het tempo over, en wie het tempo overneemt neemt
+              de oefening over.</small>
+          </div>
+
+          <div class="zinvak">
+            <b>WANNEER U STOPT</b>
+            <div class="zin">Bij scheeftrekken van de romp, of als hij zijn adem gaat inhouden.
+              Dan zegt u: <em>„laten we hier stoppen"</em> — niet: „gaat het nog?"</div>
+            <small>Een vraag verplicht de patiënt om „ja" te zeggen. Een besluit haalt die last
+              bij hem weg. Dat verschil staat in geen enkel oefenprogramma en het is het hele
+              verschil.</small>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 3</b><h2>De digitale cliëntkaart</h2>
+      <p>Twee kolommen, twee stemmen. En daaronder het enige dat een tweede lezer oplevert wat een
+        app nooit alleen kan verzinnen: <em>het verschil tussen wat hij voelde en wat zij zag.</em>
+        Daar staat de klinische informatie, niet in het gemiddelde van de twee.</p>
+    </div>
+
+    <div class="kaartblad">
+      <div class="kaartkop">
+        <div><h3>Meneer J. Ravensbergen — 68 jaar</h3></div>
+        <span class="wk">WEEK 7 VAN 16</span>
+        <div class="sub">Herseninfarct links, 4 juli · linkerarm en evenwicht ·
+          Fysiotherapie Het Havenhuis, Zaandam · meelezer: Marloes (dochter), ma/wo/vr</div>
+      </div>
+
+      <div class="kaartlijf">
+
+        <div class="twee">
+          <div>
+            <div class="kolomkop">WAT MENEER RAVENSBERGEN LEEST</div>
+            <div class="blok">
+              <span class="stem">OEFENING 2</span>
+              <h5>Armen naar voren heffen</h5>
+              <p>Zit rechtop, voeten plat. Breng beide armen naar voren tot schouderhoogte en laat
+                ze rustig zakken. Uw linkerarm gaat minder ver — dat mag, hij gaat mee zo ver als
+                hij gaat. <b>8 keer, twee rondes.</b></p>
+            </div>
+            <div class="blok">
+              <span class="stem">OEFENING 3</span>
+              <h5>Op de plaats marcheren</h5>
+              <p>Bij het aanrecht, één hand licht op het blad. Til uw knie tot heuphoogte, links
+                en rechts om beurten. <b>20 stappen, twee rondes.</b></p>
+            </div>
+          </div>
+
+          <div class="rechts">
+            <div class="kolomkop h">WAT MARLOES LEEST</div>
+            <div class="blok">
+              <span class="stem">OEFENING 2 · U HOUDT VAST</span>
+              <h5>Uw hand onder zijn elleboog, niet onder zijn pols</h5>
+              <p>Kijk naar zijn <b>schouder</b>: blijft die laag? Zeg „mooi laag." Til de arm niet
+                op — u steunt alleen het gewicht, hij doet de beweging. Stoppen als de schouder
+                omhoog kruipt of hij zijn adem inhoudt.</p>
+            </div>
+            <div class="blok">
+              <span class="stem">OEFENING 3 · U KIJKT ALLEEN</span>
+              <h5>Ga naast hem staan, niet achter hem</h5>
+              <p>Kijk of hij op beide benen even lang staat. <b>Niet meetellen</b> — hij telt zelf,
+                en dat tellen hoort bij de oefening. Zeg pas iets als hij klaar is.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="verschil">
+          <h4>WOENSDAGAVOND — TWEE WAARNEMINGEN VAN DEZELFDE TWINTIG MINUTEN</h4>
+          <div class="lijf">
+            <div class="vrij">
+              <div class="p"><b>HIJ NOTEERDE</b>„Ging goed, arm voelde losser dan maandag."</div>
+              <div class="mid eens">EENS</div>
+              <div class="p h"><b>ZIJ NOTEERDE</b>„Arm kwam duidelijk hoger dan maandag."</div>
+            </div>
+            <div class="vrij">
+              <div class="p"><b>HIJ NOTEERDE</b>„Marcheren was makkelijk."</div>
+              <div class="mid">VERSCHIL</div>
+              <div class="p h"><b>ZIJ NOTEERDE</b>„Hij stond bijna niet op links. Ik heb niets
+                gezegd, want dat stond er."</div>
+            </div>
+            <div class="vrij">
+              <div class="p"><b>HIJ NOTEERDE</b>„Geen pijn."</div>
+              <div class="mid eens">EENS</div>
+              <div class="p h"><b>ZIJ NOTEERDE</b>„Geen pijn gezien."</div>
+            </div>
+            <p class="slot">Regel twee is de reden dat dit concept bestaat. Een patiënt kan niet
+              zien dat hij zijn aangedane been overslaat — <b>dat is precies wat een halfzijdige
+              verwaarlozing is</b> — en een app kan het al helemaal niet zien. Marloes zag het,
+              zei er niets over omdat haar helft van het blad haar dat vroeg, en schreef het op.
+              De therapeut leest donderdagochtend één regel en weet wat de afspraak van vrijdag
+              gaat worden. <b>Er wordt niets gemiddeld:</b> twee waarnemingen die verschillen zijn
+              waardevoller dan één die klopt.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm vel" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>SCHERM 4</b><h2>De printkaart — A4 staand, tête-bêche</h2>
+      <p>Eén vel, twee leesrichtingen, één keer door de printer. De onderste helft staat in de
+        <em>opmaak</em> op zijn kop en niet in de printerinstellingen — er valt dus niets verkeerd
+        te zetten. Draai het vel hieronder om, zoals Marloes het aan de andere kant van de tafel
+        ziet liggen.</p>
+    </div>
+
+    <div class="draaibalk geen-print">
+      <p>Het vel ligt nu goed voor <b class="wieleest" id="wie">MENEER RAVENSBERGEN</b> — de
+        onderste helft staat vanaf deze kant op zijn kop, precies zoals het hoort.</p>
+      <button class="draaiknop" id="draai" type="button">
+        <span aria-hidden="true">⟳</span> Draai het vel om
+      </button>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <!-- ─────── BOVENSTE HELFT · DE PATIËNT ─────── -->
+            <div class="helft">
+              <div class="hkop">
+                <span class="t">Uw oefeningen<em> — week 7</em></span>
+                <span class="wie"><b>VOOR U</b>Meneer J. Ravensbergen<br/>
+                  Fysiotherapie Het Havenhuis, Zaandam<br/>075 - 614 82 30</span>
+              </div>
+
+              <div class="hlead">Twee rondes per keer, drie keer per week. Wat niet lukt slaat u
+                over; <b>er hoeft niets ingehaald te worden.</b></div>
+
+              <div class="poef">
+                <div class="bld"><img src="/images/bovenste-extremiteit/duim-oppositie-actief-line-v1.png" alt="Duim om beurten naar elke vingertop brengen."/></div>
+                <div class="tk">
+                  <div class="rg"><h3>1 · Duim naar elke vinger</h3><span class="ds">2 × heen en terug</span></div>
+                  <p>Zit aan tafel met uw elleboog gesteund. Breng uw duim om beurten naar de top
+                    van elke vinger, en dan terug. <b>Rustig gaat beter dan ver</b> — een halve
+                    aanraking telt gewoon mee.</p>
+                </div>
+              </div>
+
+              <div class="poef">
+                <div class="bld"><img src="/images/bovenste-extremiteit/anteflexie-armen-line-v1.png" alt="Beide armen naar voren heffen tot schouderhoogte."/></div>
+                <div class="tk">
+                  <div class="rg"><h3>2 · Armen naar voren heffen</h3><span class="ds">2 × 8</span></div>
+                  <p>Rechtop zitten, voeten plat. Beide armen naar voren tot schouderhoogte, dan
+                    rustig laten zakken. Uw linkerarm gaat minder ver — <b>dat mag</b>, hij gaat
+                    mee zo ver als hij gaat.</p>
+                </div>
+              </div>
+
+              <div class="poef">
+                <div class="bld"><img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" alt="Op de plaats marcheren met één hand aan het aanrecht."/></div>
+                <div class="tk">
+                  <div class="rg"><h3>3 · Op de plaats marcheren</h3><span class="ds">2 × 20 stappen</span></div>
+                  <p>Bij het aanrecht, <b>één hand licht op het blad</b>. Knie tot heuphoogte,
+                    links en rechts om beurten. U telt zelf hardop mee.</p>
+                </div>
+              </div>
+
+              <div class="poef">
+                <div class="bld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel zonder handen."/></div>
+                <div class="tk">
+                  <div class="rg"><h3>4 · Opstaan uit de stoel</h3><span class="ds">1 × 6</span></div>
+                  <p>Stoel met de rug tegen de muur, voeten onder uw knieën. Opstaan
+                    <b>zonder handen</b> en rustig weer zakken. Lukt het niet, doe dan één hand op
+                    de leuning — dat is geen mislukking maar een andere oefening.</p>
+                </div>
+              </div>
+
+              <div class="hveilig">
+                <b>STOP EN BEL</b>
+                <p>Stop bij duizeligheid, bij pijn op de borst, of als uw arm plotseling zwaarder
+                  aanvoelt dan anders. Bel <b>075 - 614 82 30</b>; buiten kantooruren
+                  <b>de huisartsenpost, 075 - 653 30 00</b>.</p>
+              </div>
+
+              <div class="hvoet">
+                <span><b>FYSIPLAN</b> · blad van 28 augustus · week 7 van 16</span>
+                <span>DEZE KANT IS VOOR U — DE ANDERE KANT IS VOOR MARLOES</span>
+              </div>
+            </div>
+
+            <!-- ─────── DE MIDDENSTROOK · VAN HEN SAMEN ─────── -->
+            <div class="midden">
+              <div class="zij om">HIER VOUWEN ALS U ALLEEN OEFENT ▸</div>
+              <div class="kern">
+                <div class="dag"><i>MA</i><div class="hok samen"><b></b></div></div>
+                <div class="dag"><i>DI</i><div class="hok"><b></b></div></div>
+                <div class="dag"><i>WO</i><div class="hok samen"><b></b></div></div>
+                <div class="dag"><i>DO</i><div class="hok"><b></b></div></div>
+                <div class="dag"><i>VR</i><div class="hok samen"><b></b></div></div>
+                <div class="dag"><i>ZA</i><div class="hok"><b></b></div></div>
+                <div class="dag"><i>ZO</i><div class="hok"><b></b></div></div>
+              </div>
+              <div class="zij">◂ HIER VOUWEN ALS U ALLEEN OEFENT</div>
+            </div>
+
+            <!-- ─────── ONDERSTE HELFT · DE MEELEZER (180°) ─────── -->
+            <div class="helft om">
+              <div class="hkop">
+                <span class="t">Voor wie meekijkt<em> — Marloes</em></span>
+                <span class="wie"><b>VOOR U</b>Maandag, woensdag, vrijdag<br/>
+                  Vier oefeningen, ongeveer twintig minuten<br/>Vragen? 075 - 614 82 30</span>
+              </div>
+
+              <div class="hlead">U doet niets van de oefening. U kijkt naar <b>één ding per
+                oefening</b>, u zegt <b>één zin</b>, en u weet wanneer u stopt. Dat is alles, en
+                het is meer dan genoeg.</div>
+
+              <div class="moef">
+                <div class="nm">1 · Duim naar elke vinger<i>U KIJKT ALLEEN</i></div>
+                <div class="kl">
+                  <div class="zin"><b>U ZIET</b><p>Of zijn pols op tafel blijft liggen. Kruipt de
+                    hele hand mee omhoog, dan doet de arm het werk in plaats van de duim.</p></div>
+                  <div class="zin"><b>U ZEGT</b><p><em>„Je pols mag blijven liggen."</em></p></div>
+                  <div class="zin niet"><b>U NIET</b><p>Zijn vingers voordoen. Hij kijkt dan naar
+                    uw hand in plaats van naar zijn eigen.</p></div>
+                  <div class="zin"><b>U STOPT</b><p>Als de duim drie keer achter elkaar niet komt.
+                    Verder gaan levert niets meer op.</p></div>
+                </div>
+              </div>
+
+              <div class="moef">
+                <div class="nm">2 · Armen naar voren<i>U HOUDT VAST</i></div>
+                <div class="kl">
+                  <div class="zin"><b>U ZIET</b><p>Zijn <em>schouder</em>, niet zijn hand. Blijft
+                    die laag en gelijk met de rechter?</p></div>
+                  <div class="zin"><b>U ZEGT</b><p><em>„Mooi laag, die schouder."</em></p></div>
+                  <div class="zin niet"><b>U NIET</b><p>De arm optillen. Uw hand ligt <em>onder de
+                    elleboog</em> en draagt alleen gewicht — de beweging is van hem.</p></div>
+                  <div class="zin"><b>U STOPT</b><p>Als de schouder omhoog kruipt of hij zijn adem
+                    inhoudt.</p></div>
+                </div>
+              </div>
+
+              <div class="moef">
+                <div class="nm">3 · Op de plaats marcheren<i>U KIJKT ALLEEN</i></div>
+                <div class="kl">
+                  <div class="zin"><b>U ZIET</b><p>Of hij op beide benen even lang staat. Ga
+                    <em>naast</em> hem staan, niet achter hem.</p></div>
+                  <div class="zin"><b>U ZEGT</b><p>Niets, tot hij klaar is. Dan: <em>„twintig,
+                    netjes."</em></p></div>
+                  <div class="zin niet"><b>U NIET</b><p>Meetellen. Hij telt zelf, en dat tellen is
+                    een deel van de oefening — wie het tempo overneemt, neemt de oefening over.</p></div>
+                  <div class="zin"><b>U STOPT</b><p>Als hij zwaar op het aanrecht gaat leunen, of
+                    bij duizeligheid.</p></div>
+                </div>
+              </div>
+
+              <div class="moef">
+                <div class="nm">4 · Opstaan uit de stoel<i>U ZET KLAAR</i></div>
+                <div class="kl">
+                  <div class="zin"><b>U ZIET</b><p>Of de stoel écht tegen de muur staat en de
+                    vloer droog is. Dat is uw hele taak vóórdat hij begint.</p></div>
+                  <div class="zin"><b>U ZEGT</b><p><em>„Neem de tijd voor het zakken."</em></p></div>
+                  <div class="zin niet"><b>U NIET</b><p>Hem omhoog trekken. Lukt het niet, dan mag
+                    één hand op de leuning — dat is een andere oefening, geen mislukte.</p></div>
+                  <div class="zin"><b>U STOPT</b><p>Na zes keer, ook als het goed gaat. Vooral als
+                    het goed gaat.</p></div>
+                </div>
+              </div>
+
+              <div class="hveilig">
+                <b>U BELT</b>
+                <p>Bij duizeligheid die niet zakt, pijn op de borst, of een arm die plotseling
+                  zwaarder is: <b>075 - 614 82 30</b>, buiten kantooruren de huisartsenpost
+                  <b>075 - 653 30 00</b>. Bij een scheve mond of onverstaanbare spraak: <b>112</b>.</p>
+              </div>
+
+              <div class="hvoet">
+                <span><b>FYSIPLAN</b> · blad van 28 augustus · week 7 van 16</span>
+                <span>DEZE KANT IS VOOR U — DE ANDERE KANT IS VAN HEM</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>WAAROM HET WERKT</h4>
+      <ul>
+        <li>De tweede persoon bestaat al; ze krijgt alleen nooit iets te lezen. Dit is geen nieuwe
+          functie, het is een lezer die al aan tafel zat.</li>
+        <li>„Wat u niet doet" is de zin die het verschil maakt en die nergens staat. Meetellen,
+          voordoen en optillen zijn precies de dingen die een liefhebbende meelezer vanzelf doet.</li>
+        <li>Twee waarnemingen van dezelfde twintig minuten zijn klinisch waardevoller dan één.
+          Waar ze verschillen, staat de informatie.</li>
+        <li>Eén vel, één keer door de printer, geen dubbelzijdig gedoe. En wie alleen oefent
+          vouwt het gewoon dubbel.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>WAT HET RISICO IS</h4>
+      <ul>
+        <li>Een halve A4 is een halve A4. De patiëntenhelft mag daardoor nooit kleiner gezet
+          worden dan een gewone kaart — liever drie oefeningen groot dan zes klein.</li>
+        <li>Ondersteboven gedrukte tekst leest als een fout. Het vel moet dat zélf uitleggen, in
+          de middenstrook, in twee richtingen — anders belt de eerste patiënt de praktijk.</li>
+        <li>Niet elke meelezer wil een rol. Wie zich verantwoordelijk voelt gemaakt voor het
+          herstel van haar vader, krijgt er een last bij. Daarom staat er nergens „u zorgt dat",
+          en eindigt haar helft met wanneer ze mag stoppen.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>MEER</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad'),
+      knop=document.getElementById('draai'), wie=document.getElementById('wie'), om=false, f=1;
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transition='none';
+    blad.style.transform='none';
+    var breed=schaal.clientWidth, eigen=blad.offsetWidth;
+    f=Math.min(1,breed/eigen);
+    zet();
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+    setTimeout(function(){blad.style.transition='';},30);
+  }
+  function zet(){
+    blad.style.transform='scale('+f+')'+(om?' rotate(180deg)':'');
+    blad.style.transformOrigin=om?'center center':'top left';
+    if(om){
+      var h=blad.offsetHeight, b=blad.offsetWidth;
+      blad.style.transform='translate('+(-b*(1-f)/2)+'px,'+(-h*(1-f)/2)+'px) scale('+f+') rotate(180deg)';
+      blad.style.transformOrigin='center center';
+    }
+  }
+  if(knop){
+    knop.addEventListener('click',function(){
+      om=!om; zet();
+      knop.innerHTML='<span aria-hidden="true">⟳</span> '+(om?'Draai terug':'Draai het vel om');
+      if(wie) wie.textContent = om ? 'MARLOES' : 'MENEER RAVENSBERGEN';
+    });
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

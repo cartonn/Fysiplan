@@ -1,0 +1,1007 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 52 — Beeldstatistiek · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 52 — BEELDSTATISTIEK
+   ------------------------------------------------------------
+   Meer is meer tekens. Nooit een groter teken.
+
+   Op elke oefenkaart ter wereld staat "3 × 10". Dat is een
+   afkorting, en een afkorting moet gelezen én omgerekend worden
+   door iemand die op dat moment op de rand van zijn bed zit met
+   zijn bril beneden. Er is een deel van de doelgroep dat cijfers
+   ronduit slecht verwerkt — laaggeletterdheid, dyscalculie, een
+   beroerte, gewoon de leeftijd — en voor hen is "3 × 10" geen
+   instructie maar een som.
+
+   In Wenen bedacht Otto Neurath vanaf 1925 een oplossing die
+   nooit voor de zorg is gebruikt: de Weense Methode, later
+   ISOTYPE. Gerd Arntz sneed er zo'n vierduizend tekens voor.
+   De hoofdregel is één zin lang en radicaal:
+
+       EEN GROTERE HOEVEELHEID WORDT NIET GETOOND MET EEN GROTER
+       TEKEN, MAAR MET MEER TEKENS VAN DEZELFDE GROOTTE.
+
+   Want een teken dat twee keer zo groot is, ziet er vier keer zo
+   groot uit — daar kan niemand mee vergelijken. Tekens op rij
+   kun je tellen, en wie niet wil tellen ziet de lengte van de rij
+   en weet genoeg. Twee rijen onder elkaar zijn af te lezen zonder
+   één getal.
+
+   En er is een Nederlandse staart aan het verhaal: Arntz kwam in
+   1934 naar Den Haag, werkte daar in het Mundaneum en na de
+   oorlog jarenlang voor het Nederlandse statistiekwerk. Zijn
+   archief ligt in Den Haag. Dit is dus geen import — dit is een
+   Haagse traditie die niemand aan een patiënt heeft gegeven.
+
+   DUS: op dit blad staat geen enkel doseringsgetal.
+     · DE DOSIS is een rij blokjes, in groepjes van vijf, dus
+       "3 × 10" is drie rijen van tien. Je telt ze of je ziet ze.
+     · DE WEEK is een rij poppetjes: gevuld = gedaan, open = nog
+       niet. Een halve dag is een half poppetje, want ISOTYPE
+       kent halve tekens.
+     · DE VERGELIJKING — afgesproken bovenaan, gehaald eronder,
+       precies even grote tekens — is de enige plek waar het blad
+       iets over gedrag zegt. Het zegt niets. Het laat de twee
+       rijen zien en houdt zijn mond.
+
+   VORM. Alles plat: geen verloop, geen schaduw, geen ronde hoek,
+   geen perspectief. Futura-achtige geometrie, want dat is de
+   letter waarin Neurath zijn kaarten zette. Op het scherm vier
+   vlakke inkten (zwart, rood, blauw, oker), op papier twee:
+   ZWART EN ROOD, met het onderscheid gedaan/niet-gedaan in
+   GEVULD tegenover OPEN — zodat een zwart-witkopie niets
+   verliest. Kleur mag nooit de drager van de betekenis zijn;
+   dat is bij Arntz ook zo, zijn tekens werken als silhouet.
+   ============================================================ */
+
+:root{
+  --papier:#f2efe6;
+  --vel:#fbfaf6;
+  --inkt:#17181a;
+  --inkt-2:#3c3e42;
+  --grijs:#7b7d80;
+  --lijn:#c9c5b8;
+  --lijn-2:#e2ded1;
+
+  --rood:#c33224;
+  --blauw:#28518f;
+  --oker:#d99a24;
+
+  --geo:Futura,"Century Gothic","Avenir Next",Avenir,"Trebuchet MS",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:66px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.62 var(--geo);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--rood)}
+:focus-visible{outline:3px solid var(--blauw);outline-offset:2px}
+
+.binnen{max-width:1150px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--inkt);color:#ded9cc;font:500 13px/1 var(--geo)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  background:var(--rood);padding:6px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#ded9cc;text-decoration:none;padding:5px 3px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--rood)}
+.labbalk a.terug{color:#fff;border-bottom-color:#4a4c50}
+@media (max-width:760px){.labbalk a:not(.terug){display:none}}
+
+.scherm{padding:var(--s6) 0;border-bottom:2px solid var(--inkt)}
+.scherm.vel{background:var(--vel)}
+.schermkop{margin-bottom:var(--s5);max-width:70ch}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--rood);
+  margin-bottom:var(--s2)}
+.schermkop h2{font:700 clamp(26px,3.2vw,34px)/1.12 var(--geo);letter-spacing:-.02em;color:var(--inkt)}
+.schermkop p{margin-top:var(--s3);font-size:17px}
+.schermkop em{font-style:normal;background:var(--oker);padding:0 3px}
+
+/* ---------- landing ---------- */
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:28px;height:28px;background:var(--inkt);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 15px/1 var(--geo)}
+.merkregel .naam{font:700 16px/1 var(--geo);color:var(--inkt);letter-spacing:-.01em}
+.merkregel .pad{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--grijs)}
+
+.heldrij{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--s5);align-items:start}
+@media (max-width:940px){.heldrij{grid-template-columns:1fr;gap:var(--s4)}}
+h1.kop{font:700 clamp(38px,6.2vw,68px)/1.02 var(--geo);letter-spacing:-.035em;color:var(--inkt)}
+h1.kop em{display:block;font-style:normal;color:var(--rood)}
+.onder{margin-top:var(--s4);font-size:18.5px;max-width:56ch}
+.onder b{color:var(--inkt);font-weight:700}
+
+/* de regel, als plakkaat */
+.regelplaat{background:var(--inkt);color:var(--papier);padding:var(--s4)}
+.regelplaat .op{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--oker);margin-bottom:var(--s3)}
+.regelplaat p{font:700 21px/1.28 var(--geo);color:#fff;letter-spacing:-.015em}
+.regelplaat p span{color:var(--oker)}
+.regelplaat .bron{margin-top:var(--s3);font:400 13px/1.5 var(--geo);color:#a9a79f}
+
+/* het bewijsblokje: fout tegenover goed */
+.bewijs{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-top:var(--s5)}
+@media (max-width:760px){.bewijs{grid-template-columns:1fr}}
+.bewijsvak{border:2px solid var(--inkt);background:var(--vel);padding:var(--s3)}
+.bewijsvak.fout{border-color:var(--rood)}
+.bewijsvak h3{font:700 10.5px/1 var(--mono);letter-spacing:.16em;margin-bottom:var(--s3)}
+.bewijsvak.fout h3{color:var(--rood)}
+.bewijsvak p{font-size:14.5px;line-height:1.5;margin-top:var(--s3);color:var(--inkt-2)}
+.groeirij{display:flex;align-items:flex-end;gap:18px;height:96px}
+.groeirij svg{display:block}
+
+/* ---------- telrijen (het hart van de taal) ---------- */
+.telrij{display:flex;flex-wrap:wrap;align-items:flex-end;gap:3px}
+.telrij .kloof{width:11px}
+.telrij svg{display:block;flex:none}
+
+.legenda{display:flex;flex-wrap:wrap;gap:var(--s4);margin-top:var(--s5);
+  border-top:2px solid var(--inkt);padding-top:var(--s3)}
+.legenda div{display:flex;align-items:center;gap:9px;font:700 12px/1.3 var(--mono);
+  letter-spacing:.06em;color:var(--inkt)}
+.legenda div span{font-weight:400;font-family:var(--geo);letter-spacing:0;color:var(--inkt-2);
+  font-size:14px;text-transform:none}
+
+/* ---------- kiezer ---------- */
+.kiezerrij{display:grid;grid-template-columns:1.25fr .75fr;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.kiezerrij{grid-template-columns:1fr}}
+.paneel{background:var(--vel);border:2px solid var(--inkt)}
+.paneel > h3{font:700 11px/1 var(--mono);letter-spacing:.16em;color:#fff;background:var(--inkt);
+  padding:11px 14px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.paneel > h3 span{color:var(--oker)}
+
+.zoek{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--lijn)}
+.zoek .veld{flex:1;border:1.5px solid var(--inkt);background:#fff;padding:9px 11px;
+  font:700 15px/1 var(--geo);color:var(--inkt)}
+.zoek .veld i{font-style:normal;font-weight:400;color:var(--grijs)}
+.zoek .tel{font:700 11px/1 var(--mono);letter-spacing:.09em;color:var(--rood)}
+
+.oefrij{display:grid;grid-template-columns:22px 62px 1fr auto;gap:13px;align-items:center;
+  padding:11px 14px;border-bottom:1px solid var(--lijn-2)}
+.oefrij .vink{width:18px;height:18px;border:2px solid var(--inkt);background:#fff}
+.oefrij.aan .vink{background:var(--inkt);position:relative}
+.oefrij.aan .vink::after{content:"";position:absolute;left:4px;top:1px;width:6px;height:11px;
+  border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(42deg)}
+.oefrij .beeld{background:#fff;border:1px solid var(--lijn);padding:2px}
+.oefrij h4{font:700 16px/1.2 var(--geo);color:var(--inkt)}
+.oefrij .sub{font-size:13.5px;color:var(--grijs);margin-top:2px}
+.oefrij.uit{opacity:.5}
+.oefrij .dosis{display:flex;flex-direction:column;gap:3px;align-items:flex-end}
+.oefrij .dosis .r{display:flex;gap:2.5px}
+.oefrij .dosis .r i{width:7px;height:7px;background:var(--inkt);display:block}
+.oefrij .dosis .r .k{width:5px;background:none}
+.oefrij .dosis b{font:700 9.5px/1 var(--mono);letter-spacing:.12em;color:var(--grijs)}
+
+.melding{margin:var(--s3) 14px var(--s3);border:2px solid var(--rood);padding:13px}
+.melding b{display:block;font:700 11px/1 var(--mono);letter-spacing:.13em;color:var(--rood);margin-bottom:7px}
+.melding p{font-size:14.5px;line-height:1.55}
+
+.bouwer{padding:var(--s3) 14px var(--s4)}
+.bouwer > p{font-size:14.5px;line-height:1.55;margin-bottom:var(--s3)}
+.stelrij{border-top:2px solid var(--inkt);padding-top:11px;margin-top:var(--s3)}
+.stelrij b{display:block;font:700 11px/1 var(--mono);letter-spacing:.11em;color:var(--inkt);margin-bottom:9px}
+.stelrij .knopjes{display:flex;flex-wrap:wrap;gap:5px}
+.stelrij .knopjes span{border:1.5px solid var(--lijn);background:#fff;padding:6px 10px;
+  font:700 13px/1 var(--geo);color:var(--inkt-2)}
+.stelrij .knopjes span.aan{background:var(--inkt);border-color:var(--inkt);color:#fff}
+.stelrij small{display:block;margin-top:9px;font-size:13px;line-height:1.5;color:var(--grijs)}
+.stelrij .voorbeeld{margin-top:11px;background:#fff;border:1.5px solid var(--lijn);padding:11px}
+.stelrij .voorbeeld em{display:block;font-style:normal;font:700 9.5px/1 var(--mono);
+  letter-spacing:.14em;color:var(--grijs);margin-bottom:8px}
+
+/* ---------- cliëntkaart ---------- */
+.kaartblad{background:var(--vel);border:2px solid var(--inkt)}
+.kaartkop{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:baseline;
+  padding:var(--s3) var(--s4);background:var(--inkt);color:#fff}
+.kaartkop h3{font:700 22px/1.15 var(--geo);letter-spacing:-.02em}
+.kaartkop .wk{font:700 11px/1 var(--mono);letter-spacing:.13em;color:var(--oker);margin-left:auto}
+.kaartkop .sub{font-size:14.5px;color:#b9b6ad;width:100%}
+
+.kaartlijf{padding:var(--s4)}
+.vergelijk{border:2px solid var(--inkt);background:#fff;padding:var(--s4)}
+.vergelijk .kop{font:700 11px/1 var(--mono);letter-spacing:.15em;color:var(--rood);margin-bottom:var(--s3)}
+.vergelijk h4{font:700 25px/1.15 var(--geo);letter-spacing:-.022em;color:var(--inkt);max-width:26ch}
+.vgrij{display:grid;grid-template-columns:132px 1fr;gap:var(--s3);align-items:center;
+  margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid var(--lijn-2)}
+@media (max-width:700px){.vgrij{grid-template-columns:1fr;gap:6px}}
+.vgrij .et{font:700 11px/1.3 var(--mono);letter-spacing:.1em;color:var(--inkt)}
+.vgrij .et i{display:block;font-style:normal;font-weight:400;font-family:var(--geo);
+  letter-spacing:0;font-size:13px;color:var(--grijs);margin-top:3px}
+
+.weekraster{margin-top:var(--s4);border:2px solid var(--inkt);background:#fff}
+.weekraster .wkop{display:grid;grid-template-columns:1fr repeat(7,42px);gap:0;
+  background:var(--inkt);color:#fff}
+.weekraster .wkop div{padding:8px 6px;font:700 10.5px/1 var(--mono);letter-spacing:.1em;text-align:center}
+.weekraster .wkop div:first-child{text-align:left;padding-left:14px}
+.weekrij{display:grid;grid-template-columns:1fr repeat(7,42px);align-items:center;
+  border-top:1px solid var(--lijn-2)}
+.weekrij .naam{padding:9px 14px;font:700 15px/1.25 var(--geo);color:var(--inkt)}
+.weekrij .naam i{display:block;font-style:normal;font-weight:400;font-size:12.5px;color:var(--grijs)}
+.weekrij .cel{display:flex;align-items:center;justify-content:center;padding:7px 0;
+  border-left:1px solid var(--lijn-2);min-height:52px}
+.weekrij .cel.rust{background:repeating-linear-gradient(45deg,#f4f2ea 0 4px,#fff 4px 8px)}
+
+.tweekolom{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-top:var(--s4)}
+@media (max-width:860px){.tweekolom{grid-template-columns:1fr}}
+.notitie{border:2px solid var(--inkt);padding:var(--s3);background:#fff}
+.notitie b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.14em;color:var(--rood);margin-bottom:9px}
+.notitie p{font-size:15px;line-height:1.58}
+.notitie p + p{margin-top:9px}
+.notitie.stil{background:var(--papier);border-style:dashed}
+
+/* ---------- A4 ---------- */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;position:relative;
+  transform-origin:top left;box-shadow:0 3px 34px rgba(23,24,26,.3);
+  font-family:var(--geo);overflow:hidden}
+@media (max-width:860px){.bladschaal{max-width:100%}}
+.blad .rand{position:absolute;inset:10mm 11mm 8mm 11mm;display:flex;flex-direction:column}
+
+/* kop van het blad */
+.bkop{display:flex;align-items:flex-end;gap:5mm;border-bottom:1.6pt solid #000;padding-bottom:2.4mm}
+.bkop .t{font:700 20pt/1.02 var(--geo);letter-spacing:-.028em;color:#000;flex:1}
+.bkop .t em{font-style:normal;color:#b32d20;display:block}
+.bkop .wie{text-align:right;font:400 7.6pt/1.42 var(--geo);color:#2a2c2e;white-space:nowrap}
+.bkop .wie b{display:block;font:700 6pt/1 var(--mono);letter-spacing:.16em;color:#7b7d80;margin-bottom:1mm}
+
+/* de sleutel */
+.bsleutel{display:flex;flex-wrap:wrap;gap:4.5mm;padding:1.8mm 0 2.2mm;
+  border-bottom:.6pt solid #000;margin-bottom:3mm}
+.bsleutel div{display:flex;align-items:center;gap:1.6mm;font:700 6.4pt/1 var(--mono);
+  letter-spacing:.09em;color:#000}
+.bsleutel div i{font-style:normal;font-weight:400;font-family:var(--geo);letter-spacing:0;
+  font-size:7.4pt;color:#3c3e42;text-transform:none}
+.bsleutel .mk{width:3mm;height:3mm;flex:none;display:block;background:#000}
+.bsleutel .mk.op{background:#fff;border:.8pt solid #000}
+.bsleutel .mk.rust{background:repeating-linear-gradient(45deg,#d9d5c8 0 .7mm,#fff .7mm 1.4mm);
+  border:.5pt solid #b9b5a8}
+.bsleutel .mk.half{background:linear-gradient(to right,#000 0 50%,#fff 50% 100%);
+  border:.8pt solid #000}
+.bsleutel .los{width:100%;justify-content:flex-end;color:#b32d20;margin-top:1.4mm}
+
+/* oefeningsblokken */
+.boef{display:grid;grid-template-columns:20mm 1fr 46mm;gap:3.4mm;align-items:center;
+  padding:2.6mm 0;border-bottom:.6pt solid #b9b5a8}
+.boef:first-of-type{border-top:.6pt solid #b9b5a8}
+.boef .bld{border:.8pt solid #000;background:#fff;padding:.5mm}
+.boef .bld img{width:100%;height:auto;display:block}
+.boef .tk h3{font:700 12.4pt/1.1 var(--geo);letter-spacing:-.018em;color:#000}
+.boef .tk p{font:400 8.4pt/1.34 var(--geo);color:#26282a;margin-top:1.1mm;max-width:52ch}
+.boef .tk p b{font-weight:700}
+.boef .dz{display:flex;flex-direction:column;gap:1.5mm;align-items:flex-start}
+.boef .dz .et{font:700 5.8pt/1 var(--mono);letter-spacing:.15em;color:#7b7d80}
+.brij{display:flex;align-items:center;gap:1mm}
+.brij .kloof{width:2.4mm}
+.brij i{width:2.6mm;height:2.6mm;background:#000;display:block;flex:none}
+.brij i.op{background:#fff;border:.7pt solid #000}
+.brij i.rd{background:#b32d20}
+
+/* de week */
+.bweek{margin-top:3mm;border:1.2pt solid #000}
+.bweek .wk{display:grid;grid-template-columns:1fr repeat(7,12.5mm);background:#000;color:#fff}
+.bweek .wk div{padding:1.2mm 0;text-align:center;font:700 6pt/1 var(--mono);letter-spacing:.1em}
+.bweek .wk div:first-child{text-align:left;padding-left:2.5mm}
+.bwr{display:grid;grid-template-columns:1fr repeat(7,12.5mm);align-items:center;
+  border-top:.6pt solid #b9b5a8}
+.bwr .n{padding:1.4mm 2.5mm;font:700 8.4pt/1.2 var(--geo);color:#000}
+.bwr .c{display:flex;align-items:center;justify-content:center;padding:1.2mm 0;
+  border-left:.5pt solid #d5d1c4;min-height:9mm}
+.bwr .c.rust{background:repeating-linear-gradient(45deg,#eeece4 0 1.1mm,#fff 1.1mm 2.2mm)}
+
+/* de vergelijking */
+.bverg{margin-top:3mm;border:1.2pt solid #000;padding:2.6mm 3mm}
+.bverg .k{font:700 6.2pt/1 var(--mono);letter-spacing:.15em;color:#b32d20;margin-bottom:2mm}
+.bvr{display:grid;grid-template-columns:30mm 1fr;gap:2.5mm;align-items:center;margin-top:1.8mm}
+.bvr .e{font:700 6.4pt/1.25 var(--mono);letter-spacing:.09em;color:#000}
+.bvr .e i{display:block;font-style:normal;font-weight:400;font-family:var(--geo);
+  letter-spacing:0;font-size:7pt;color:#7b7d80;margin-top:.5mm}
+
+/* voet */
+.bvoet{margin-top:auto;padding-top:2.6mm;border-top:1.6pt solid #000;
+  display:grid;grid-template-columns:1fr auto;gap:4mm;align-items:end}
+.bvoet .veilig{border:1.2pt solid #b32d20;padding:2mm 2.6mm;max-width:118mm}
+.bvoet .veilig > b{display:block;font:700 6.2pt/1 var(--mono);letter-spacing:.15em;color:#b32d20;margin-bottom:1.2mm}
+.bvoet .veilig p{font:400 8.2pt/1.36 var(--geo);color:#000}
+.bvoet .veilig p b{display:inline;font:700 8.2pt/1.36 var(--geo);letter-spacing:0;color:#000;margin:0}
+.bvoet .prk{text-align:right;font:400 7pt/1.45 var(--geo);color:#3c3e42}
+.bvoet .prk b{display:block;font:700 8.6pt/1.1 var(--geo);color:#000}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#c8c5bb;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:var(--oker);
+  border-top:2px solid #45474b;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:9px}
+footer.uitleiding a{color:#f0b04a}
+
+/* ============================================================
+   PRINT — twee inkten: zwart en rood. Gevuld tegenover open
+   draagt de betekenis, zodat een zwart-witkopie niets verliest.
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000 !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border:0 !important;background:#fff !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════ Arntz-achtige tekens: plat silhouet, geen perspectief ══════ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="fig-staand" viewBox="0 0 20 42">
+    <circle cx="10" cy="5.4" r="4.6"/>
+    <path d="M4.6 12h10.8l-1.2 13H5.8z"/>
+    <rect x="5.6" y="26.4" width="3.4" height="14.4"/>
+    <rect x="11" y="26.4" width="3.4" height="14.4"/>
+  </symbol>
+  <symbol id="fig-zit" viewBox="0 0 20 42">
+    <circle cx="8" cy="5.4" r="4.6"/>
+    <path d="M2.8 12h10.4l-1 13H3.6z"/>
+    <rect x="3.4" y="25.6" width="13.6" height="3.6"/>
+    <rect x="13.4" y="29.2" width="3.6" height="11.6"/>
+  </symbol>
+  <symbol id="fig-loop" viewBox="0 0 20 42">
+    <circle cx="10" cy="5.4" r="4.6"/>
+    <path d="M4.8 12h10.4l-1.2 13H6z"/>
+    <path d="M6.6 26h3.5l-3.4 14.8H2.9z"/>
+    <path d="M11.2 26h3.5l2.6 14.8h-3.6z"/>
+  </symbol>
+  <symbol id="fig-lig" viewBox="0 0 42 20">
+    <circle cx="5.2" cy="10" r="4.8"/>
+    <path d="M11.8 4.6h13.4v10.8H11.8z"/>
+    <rect x="26.6" y="5.2" width="14.6" height="4.2"/>
+    <rect x="26.6" y="10.6" width="14.6" height="4.2"/>
+  </symbol>
+</svg>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 52</span>
+  <strong style="font:700 16px/1 var(--geo);color:#fff;letter-spacing:-.04em">Beeldstatistiek</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 52 · BEELDSTATISTIEK</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1 class="kop">Geen enkel getal<em>op het hele blad.</em></h1>
+        <p class="onder">Op elke oefenkaart ter wereld staat <b>3 × 10</b>. Dat is geen instructie,
+          dat is een som — en die moet worden opgelost door iemand die op de rand van zijn bed zit,
+          met zijn bril beneden, op dag vier na een heupoperatie. Voor een flink deel van de mensen
+          boven de zeventig, en voor iedereen met dyscalculie, een beroerte of beperkte
+          leesvaardigheid, is een getal het minst betrouwbare teken op de kaart.<br/><br/>
+          Dus staat er hier geen. <b>Tien keer</b> is tien blokjes, in groepjes van vijf. U telt ze,
+          of u ziet de lengte van de rij en weet genoeg. En wat u deze week deed staat eronder in
+          dezelfde tekens, precies even groot — daarom is het te vergelijken zonder dat er iemand
+          iets van vindt.</p>
+      </div>
+
+      <div class="regelplaat">
+        <div class="op">DE ENIGE REGEL</div>
+        <p>Een grotere hoeveelheid wordt niet getoond met een <span>groter teken</span>,
+          maar met <span>meer tekens</span> van dezelfde grootte.</p>
+        <div class="bron">Otto Neurath, Wenen 1925 — de Weense Methode, later ISOTYPE.
+          Gerd Arntz sneed er zo'n vierduizend tekens voor, kwam in 1934 naar Den Haag en werkte
+          daar de rest van zijn leven aan Nederlandse beeldstatistiek. Zijn archief ligt er nog.</div>
+      </div>
+    </div>
+
+    <div class="bewijs">
+      <div class="bewijsvak fout">
+        <h3>ZO NIET — HET GROTERE TEKEN</h3>
+        <div class="groeirij" aria-hidden="true">
+          <svg width="24" height="50" viewBox="0 0 20 42" fill="#c33224"><use href="#fig-staand"/></svg>
+          <svg width="48" height="100" viewBox="0 0 20 42" fill="#c33224" style="height:96px"><use href="#fig-staand"/></svg>
+        </div>
+        <p>Twee keer zoveel, getekend als een teken van dubbele hoogte. Alleen: het beslaat vier
+          keer zoveel vlak, en dat is wat het oog leest. Niemand vergelijkt dit goed — ook u niet,
+          en u weet wat er staat.</p>
+      </div>
+      <div class="bewijsvak">
+        <h3>ZO WEL — MEER TEKENS</h3>
+        <div class="groeirij" aria-hidden="true" style="align-items:flex-end">
+          <div class="telrij" style="max-width:60px">
+            <svg width="17" height="36" viewBox="0 0 20 42" fill="#17181a"><use href="#fig-staand"/></svg>
+          </div>
+          <div class="telrij" style="max-width:180px">
+            <svg width="17" height="36" viewBox="0 0 20 42" fill="#17181a"><use href="#fig-staand"/></svg>
+            <svg width="17" height="36" viewBox="0 0 20 42" fill="#17181a"><use href="#fig-staand"/></svg>
+          </div>
+        </div>
+        <p>Dezelfde verhouding, tellbaar. Wie wil telt; wie niet wil ziet twee rijen en leest de
+          lengte af. Er valt niets te schatten, dus er valt niets fout te schatten.</p>
+      </div>
+    </div>
+
+    <div class="legenda">
+      <div><svg width="15" height="32" viewBox="0 0 20 42" fill="#17181a"><use href="#fig-staand"/></svg>
+        <span>Eén poppetje is één keer oefenen — nooit meer, nooit minder.</span></div>
+      <div><svg width="15" height="32" viewBox="0 0 20 42" fill="#17181a" style="clip-path:inset(0 50% 0 0)"><use href="#fig-staand"/></svg>
+        <span>Een half poppetje is een halve keer. ISOTYPE kent halve tekens; een halve dag bestaat.</span></div>
+      <div><svg width="15" height="32" viewBox="0 0 20 42" fill="none" stroke="#17181a" stroke-width="1.6"><use href="#fig-staand"/></svg>
+        <span>Een open poppetje is nog niet gedaan. Open blijft open — het wordt nooit rood.</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm vel" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 2</b><h2>De oefeningen-kiezer</h2>
+      <p>De therapeut kiest zoals altijd. Wat verandert is de rechterkolom: de dosering wordt niet
+        getypt maar <em>opgebouwd in tekens</em>, en de kiezer laat meteen zien hoe lang die rij op
+        papier wordt. Een oefening van vijftien herhalingen is drie regels blokjes; dat is een
+        ontwerpbeslissing, geen invoerveld.</p>
+    </div>
+
+    <div class="kiezerrij">
+
+      <div class="paneel">
+        <h3>OEFENINGEN <span>4 GEKOZEN · 215 BESCHIKBAAR</span></h3>
+        <div class="zoek">
+          <div class="veld">heup <i>— na prothese, week 4 tot 8</i></div>
+          <span class="tel">41 TREFFERS</span>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/glute-bridges-line-v1.png" alt="Glute bridges"/></span>
+          <div><h4>Bruggetje</h4><div class="sub">Op bed, voeten plat, bekken optillen</div></div>
+          <div class="dosis" aria-label="Dosering: twee rijen van tien">
+            <b>2 × 10</b>
+            <div class="r"><i></i><i></i><i></i><i></i><i></i><span class="k"></span><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="r"><i></i><i></i><i></i><i></i><i></i><span class="k"></span><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/></span>
+          <div><h4>Opstaan uit de stoel</h4><div class="sub">Zonder handen, keukenstoel</div></div>
+          <div class="dosis" aria-label="Dosering: één rij van acht">
+            <b>1 × 8</b>
+            <div class="r"><i></i><i></i><i></i><i></i><i></i><span class="k"></span><i></i><i></i><i></i></div>
+          </div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png" alt="Gewicht verplaatsen zijwaarts"/></span>
+          <div><h4>Gewicht zijwaarts verplaatsen</h4><div class="sub">Met steun van het aanrecht</div></div>
+          <div class="dosis" aria-label="Dosering: twee rijen van zes">
+            <b>2 × 6</b>
+            <div class="r"><i></i><i></i><i></i><i></i><i></i><span class="k"></span><i></i></div>
+            <div class="r"><i></i><i></i><i></i><i></i><i></i><span class="k"></span><i></i></div>
+          </div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen komen"/></span>
+          <div><h4>Op de tenen komen</h4><div class="sub">Bij het aanrecht, rustig zakken</div></div>
+          <div class="dosis" aria-label="Dosering: twee rijen van tien">
+            <b>2 × 10</b>
+            <div class="r"><i></i><i></i><i></i><i></i><i></i><span class="k"></span><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="r"><i></i><i></i><i></i><i></i><i></i><span class="k"></span><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+
+        <div class="oefrij uit">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/balans-en-valpreventie/eenbeenstand-zonder-steun-line-v1.png" alt="Eenbeenstand zonder steun"/></span>
+          <div><h4>Eenbeenstand zonder steun</h4><div class="sub">Wordt in seconden gedoseerd</div></div>
+          <div class="dosis"><b style="color:#c33224">NIET TELBAAR</b></div>
+        </div>
+
+        <div class="melding">
+          <b>ÉÉN OEFENING PAST NIET IN DEZE TAAL</b>
+          <p>„Eenbeenstand" wordt in seconden voorgeschreven, en een seconde is geen ding dat je
+            kunt neerleggen. De kiezer zegt dat eerlijk in plaats van er stilletjes blokjes van te
+            maken. Wie hem tóch op het blad wil, krijgt hem als <b>tijdbalk</b> met een gedrukte
+            secondeverdeling — een andere taal voor een ander soort hoeveelheid, en dat mag,
+            zolang het niet doet alsof het hetzelfde is.</p>
+        </div>
+      </div>
+
+      <div class="paneel">
+        <h3>DE DOSIS OPBOUWEN</h3>
+        <div class="bouwer">
+          <p>Er wordt niets ingetypt. De therapeut legt blokjes neer en ziet de rij groeien —
+            precies de rij die straks uit de printer komt.</p>
+
+          <div class="stelrij">
+            <b>HOEVEEL PER RONDE?</b>
+            <div class="knopjes">
+              <span>6</span><span>8</span><span class="aan">10</span><span>12</span><span>15</span>
+            </div>
+            <small>Boven de twaalf wordt de rij op A4 te lang om nog in één blik te vatten. De
+              kiezer waarschuwt daar, hij verbiedt niets.</small>
+            <div class="voorbeeld">
+              <em>ZO KOMT HET UIT DE PRINTER</em>
+              <div style="display:flex;align-items:center;gap:4px">
+                <span style="display:flex;gap:3px">
+                  <i style="width:9px;height:9px;background:#17181a;display:block"></i>
+                  <i style="width:9px;height:9px;background:#17181a;display:block"></i>
+                  <i style="width:9px;height:9px;background:#17181a;display:block"></i>
+                  <i style="width:9px;height:9px;background:#17181a;display:block"></i>
+                  <i style="width:9px;height:9px;background:#17181a;display:block"></i>
+                </span>
+                <span style="width:9px"></span>
+                <span style="display:flex;gap:3px">
+                  <i style="width:9px;height:9px;background:#17181a;display:block"></i>
+                  <i style="width:9px;height:9px;background:#17181a;display:block"></i>
+                  <i style="width:9px;height:9px;background:#17181a;display:block"></i>
+                  <i style="width:9px;height:9px;background:#17181a;display:block"></i>
+                  <i style="width:9px;height:9px;background:#17181a;display:block"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stelrij">
+            <b>HOEVEEL RONDES?</b>
+            <div class="knopjes">
+              <span>1</span><span class="aan">2</span><span>3</span><span>4</span>
+            </div>
+            <small>Elke ronde is een eigen regel. Drie regels blokjes is nog te lezen; vier
+              regels wordt een raster en een raster telt niemand meer.</small>
+          </div>
+
+          <div class="stelrij">
+            <b>HOEVEEL DAGEN PER WEEK?</b>
+            <div class="knopjes">
+              <span>3</span><span>4</span><span class="aan">5</span><span>6</span><span>7</span>
+            </div>
+            <small>Vijf poppetjes in de weekrij, twee dagen gearceerd als rustdag. Een rustdag is
+              hier zichtbaar ingetekend en niet weggelaten — anders leest een lege dag als een
+              gemiste dag.</small>
+            <div class="voorbeeld">
+              <em>DE WEEKRIJ</em>
+              <div class="telrij">
+                <svg width="15" height="32" viewBox="0 0 20 42" fill="none" stroke="#17181a" stroke-width="1.6"><use href="#fig-staand"/></svg>
+                <svg width="15" height="32" viewBox="0 0 20 42" fill="none" stroke="#17181a" stroke-width="1.6"><use href="#fig-staand"/></svg>
+                <svg width="15" height="32" viewBox="0 0 20 42" fill="none" stroke="#17181a" stroke-width="1.6"><use href="#fig-staand"/></svg>
+                <span style="width:15px;height:32px;background:repeating-linear-gradient(45deg,#e2ded1 0 3px,#fff 3px 6px);display:block"></span>
+                <svg width="15" height="32" viewBox="0 0 20 42" fill="none" stroke="#17181a" stroke-width="1.6"><use href="#fig-staand"/></svg>
+                <svg width="15" height="32" viewBox="0 0 20 42" fill="none" stroke="#17181a" stroke-width="1.6"><use href="#fig-staand"/></svg>
+                <span style="width:15px;height:32px;background:repeating-linear-gradient(45deg,#e2ded1 0 3px,#fff 3px 6px);display:block"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stelrij">
+            <b>WELK TEKEN HOORT BIJ DEZE OEFENING?</b>
+            <div class="knopjes">
+              <span class="aan">liggend</span><span>zittend</span><span>staand</span><span>lopend</span>
+            </div>
+            <small>Het poppetje neemt de houding van de oefening aan. Vier tekens is genoeg —
+              Arntz hield het bij een handvol per onderwerp, want een teken dat je moet opzoeken
+              is geen teken meer.</small>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 3</b><h2>De digitale cliëntkaart</h2>
+      <p>Twee rijen, even grote tekens, onder elkaar. Dit is de enige plek in het hele product waar
+        iets over gedrag wordt gezegd — en er wordt <em>niets</em> gezegd. De rijen liggen naast
+        elkaar en de patiënt trekt zelf de conclusie, want dat is precies wat een beeldstatistiek
+        doet: ze legt neer en zwijgt.</p>
+    </div>
+
+    <div class="kaartblad">
+      <div class="kaartkop">
+        <div>
+          <h3>Mevrouw R. Okkema — 74 jaar</h3>
+        </div>
+        <span class="wk">WEEK 5 VAN 12</span>
+        <div class="sub">Rechter heupprothese, geopereerd 21 juli · Fysiotherapie De Bogaard, Deventer</div>
+      </div>
+
+      <div class="kaartlijf">
+
+        <div class="vergelijk">
+          <div class="kop">DE VERGELIJKING</div>
+          <h4>Afgesproken: vijf keer per week. Gehaald: drie en een halve.</h4>
+          <div class="vgrij">
+            <div class="et">AFGESPROKEN<i>vijf keer</i></div>
+            <div class="telrij" aria-label="Afgesproken: vijf keer">
+              <svg width="21" height="44" viewBox="0 0 20 42" fill="none" stroke="#17181a" stroke-width="1.5"><use href="#fig-staand"/></svg>
+              <svg width="21" height="44" viewBox="0 0 20 42" fill="none" stroke="#17181a" stroke-width="1.5"><use href="#fig-staand"/></svg>
+              <svg width="21" height="44" viewBox="0 0 20 42" fill="none" stroke="#17181a" stroke-width="1.5"><use href="#fig-staand"/></svg>
+              <svg width="21" height="44" viewBox="0 0 20 42" fill="none" stroke="#17181a" stroke-width="1.5"><use href="#fig-staand"/></svg>
+              <svg width="21" height="44" viewBox="0 0 20 42" fill="none" stroke="#17181a" stroke-width="1.5"><use href="#fig-staand"/></svg>
+            </div>
+          </div>
+          <div class="vgrij">
+            <div class="et">GEHAALD<i>drie en een halve</i></div>
+            <div class="telrij" aria-label="Gehaald: drie en een halve keer">
+              <svg width="21" height="44" viewBox="0 0 20 42" fill="#17181a"><use href="#fig-staand"/></svg>
+              <svg width="21" height="44" viewBox="0 0 20 42" fill="#17181a"><use href="#fig-staand"/></svg>
+              <svg width="21" height="44" viewBox="0 0 20 42" fill="#17181a"><use href="#fig-staand"/></svg>
+              <svg width="21" height="44" viewBox="0 0 20 42" fill="#17181a" style="clip-path:inset(0 50% 0 0)"><use href="#fig-staand"/></svg>
+            </div>
+          </div>
+          <div class="vgrij">
+            <div class="et">VORIGE WEEK<i>twee keer</i></div>
+            <div class="telrij" aria-label="Vorige week: twee keer">
+              <svg width="21" height="44" viewBox="0 0 20 42" fill="#a9a79f"><use href="#fig-staand"/></svg>
+              <svg width="21" height="44" viewBox="0 0 20 42" fill="#a9a79f"><use href="#fig-staand"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="weekraster">
+          <div class="wkop">
+            <div>DEZE WEEK</div>
+            <div>MA</div><div>DI</div><div>WO</div><div>DO</div><div>VR</div><div>ZA</div><div>ZO</div>
+          </div>
+
+          <div class="weekrij">
+            <div class="naam">Bruggetje<i>2 rondes van 10</i></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 42 20" fill="#17181a" style="width:34px;height:17px"><use href="#fig-lig"/></svg></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 42 20" fill="#17181a" style="width:34px;height:17px"><use href="#fig-lig"/></svg></div>
+            <div class="cel rust"></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 42 20" fill="#17181a" style="width:34px;height:17px;clip-path:inset(0 50% 0 0)"><use href="#fig-lig"/></svg></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 42 20" fill="none" stroke="#17181a" stroke-width="1.4" style="width:34px;height:17px"><use href="#fig-lig"/></svg></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 42 20" fill="none" stroke="#17181a" stroke-width="1.4" style="width:34px;height:17px"><use href="#fig-lig"/></svg></div>
+            <div class="cel rust"></div>
+          </div>
+
+          <div class="weekrij">
+            <div class="naam">Opstaan uit de stoel<i>1 ronde van 8</i></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 20 42" fill="#17181a"><use href="#fig-zit"/></svg></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 20 42" fill="#17181a"><use href="#fig-zit"/></svg></div>
+            <div class="cel rust"></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 20 42" fill="#17181a"><use href="#fig-zit"/></svg></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 20 42" fill="none" stroke="#17181a" stroke-width="1.6"><use href="#fig-zit"/></svg></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 20 42" fill="none" stroke="#17181a" stroke-width="1.6"><use href="#fig-zit"/></svg></div>
+            <div class="cel rust"></div>
+          </div>
+
+          <div class="weekrij">
+            <div class="naam">Gewicht zijwaarts<i>2 rondes van 6</i></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 20 42" fill="#17181a"><use href="#fig-staand"/></svg></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 20 42" fill="#17181a"><use href="#fig-staand"/></svg></div>
+            <div class="cel rust"></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 20 42" fill="#17181a" style="clip-path:inset(0 50% 0 0)"><use href="#fig-staand"/></svg></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 20 42" fill="none" stroke="#17181a" stroke-width="1.6"><use href="#fig-staand"/></svg></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 20 42" fill="none" stroke="#17181a" stroke-width="1.6"><use href="#fig-staand"/></svg></div>
+            <div class="cel rust"></div>
+          </div>
+
+          <div class="weekrij">
+            <div class="naam">Op de tenen komen<i>2 rondes van 10</i></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 20 42" fill="#17181a"><use href="#fig-loop"/></svg></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 20 42" fill="#17181a"><use href="#fig-loop"/></svg></div>
+            <div class="cel rust"></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 20 42" fill="#17181a"><use href="#fig-loop"/></svg></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 20 42" fill="none" stroke="#17181a" stroke-width="1.6"><use href="#fig-loop"/></svg></div>
+            <div class="cel"><svg width="17" height="36" viewBox="0 0 20 42" fill="none" stroke="#17181a" stroke-width="1.6"><use href="#fig-loop"/></svg></div>
+            <div class="cel rust"></div>
+          </div>
+        </div>
+
+        <div class="tweekolom">
+          <div class="notitie">
+            <b>WAT DE THERAPEUT ZIET, WAT DE PATIËNT ZIET</b>
+            <p>De therapeut ziet dat woensdag geen gemiste dag is maar een ingeplande rustdag, dat
+              donderdag half is en dat het bruggetje de enige oefening is die op halve dagen
+              overeind blijft. Dat is klinisch bruikbaar.</p>
+            <p>Mevrouw Okkema ziet drieënhalf poppetje tegen vijf. Dat is genoeg. Er staat geen
+              percentage, geen kleur, geen duimpje en geen aanmoediging — die zouden alle vier
+              iets vinden van een week waarin ze twee dagen griep had.</p>
+          </div>
+          <div class="notitie stil">
+            <b>WAT ER MET OPZET NIET STAAT</b>
+            <p><b>Geen streak.</b> Een reeks die breekt, straft de zieke dag en niet het gedrag.
+              Hier begint elke week opnieuw met zeven open tekens.</p>
+            <p><b>Geen rood.</b> Rood is op dit blad gereserveerd voor de veiligheidsregel
+              onderaan. Wie rood gebruikt voor „niet gedaan" heeft geen inkt meer over voor
+              „bel uw fysiotherapeut".</p>
+            <p><b>Geen totaal.</b> Optellen over twaalf weken maakt van een herstel een score.
+              De vergelijking gaat over deze week en de vorige, meer niet.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm vel" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>SCHERM 4</b><h2>De printkaart — A4 staand, twee inkten</h2>
+      <p>Zwart en één rood. Het verschil tussen <em>gedaan</em> en <em>nog niet</em> zit in gevuld
+        tegenover open, nooit in kleur — zodat een zwart-witkopie, een fax bij de thuiszorg en een
+        toner die op is allemaal hetzelfde blad opleveren. Arntz' tekens werken als silhouet;
+        dat is geen stijl maar een garantie.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="bkop">
+              <span class="t">Uw week<em>in tekens</em></span>
+              <span class="wie"><b>VOOR</b>Mevrouw R. Okkema — week 5 van 12<br/>
+                Rechter heup, geopereerd 21 juli<br/>
+                Fysiotherapie De Bogaard, Deventer · 0570 - 61 24 08</span>
+            </div>
+
+            <div class="bsleutel">
+              <div><span class="mk"></span><i>= één keer</i></div>
+              <div><span class="mk op"></span><i>= nog niet gedaan</i></div>
+              <div><span class="mk rust"></span><i>= rustdag, hoort erbij</i></div>
+              <div><span class="mk half"></span><i>= half gedaan telt half</i></div>
+              <div class="los">GEEN GETALLEN — <i style="color:#b32d20">u telt de blokjes, of u ziet de rij</i></div>
+            </div>
+
+            <div class="boef">
+              <div class="bld"><img src="/images/onderste-extremiteit/glute-bridges-line-v1.png" alt="Bruggetje: op de rug, voeten plat, bekken optillen."/></div>
+              <div class="tk">
+                <h3>Bruggetje</h3>
+                <p>Op uw rug op bed, voeten plat, knieën gebogen. Til uw bekken op tot uw
+                  bovenbenen en romp <b>één lijn</b> maken. Rustig laten zakken. Twee rondes,
+                  even pauze ertussen.</p>
+              </div>
+              <div class="dz">
+                <span class="et">EERSTE RONDE</span>
+                <div class="brij">
+                  <i></i><i></i><i></i><i></i><i></i><span class="kloof"></span><i></i><i></i><i></i><i></i><i></i>
+                </div>
+                <span class="et">TWEEDE RONDE</span>
+                <div class="brij">
+                  <i></i><i></i><i></i><i></i><i></i><span class="kloof"></span><i></i><i></i><i></i><i></i><i></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="boef">
+              <div class="bld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel zonder handen."/></div>
+              <div class="tk">
+                <h3>Opstaan uit de stoel</h3>
+                <p>Keukenstoel, voeten onder uw knieën, armen over elkaar. Sta op <b>zonder uw
+                  handen</b> te gebruiken en ga rustig weer zitten — het zakken is het zware deel,
+                  neem er de tijd voor.</p>
+              </div>
+              <div class="dz">
+                <span class="et">ÉÉN RONDE</span>
+                <div class="brij">
+                  <i></i><i></i><i></i><i></i><i></i><span class="kloof"></span><i></i><i></i><i></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="boef">
+              <div class="bld"><img src="/images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png" alt="Gewicht zijwaarts verplaatsen met steun van het aanrecht."/></div>
+              <div class="tk">
+                <h3>Gewicht zijwaarts verplaatsen</h3>
+                <p>Sta bij het aanrecht, voeten op heupbreedte, <b>één hand licht op het blad</b>.
+                  Breng uw gewicht naar links, dan naar rechts. Niet stappen — alleen leunen.</p>
+              </div>
+              <div class="dz">
+                <span class="et">EERSTE RONDE</span>
+                <div class="brij"><i></i><i></i><i></i><i></i><i></i><span class="kloof"></span><i></i></div>
+                <span class="et">TWEEDE RONDE</span>
+                <div class="brij"><i></i><i></i><i></i><i></i><i></i><span class="kloof"></span><i></i></div>
+              </div>
+            </div>
+
+            <div class="boef">
+              <div class="bld"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen komen bij het aanrecht."/></div>
+              <div class="tk">
+                <h3>Op de tenen komen</h3>
+                <p>Bij het aanrecht, beide handen los erop. Kom op uw tenen en <b>zak langzaam
+                  terug</b> — tel bij het zakken tot drie. Dat langzame zakken is de oefening.</p>
+              </div>
+              <div class="dz">
+                <span class="et">EERSTE RONDE</span>
+                <div class="brij"><i></i><i></i><i></i><i></i><i></i><span class="kloof"></span><i></i><i></i><i></i><i></i><i></i></div>
+                <span class="et">TWEEDE RONDE</span>
+                <div class="brij"><i></i><i></i><i></i><i></i><i></i><span class="kloof"></span><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+            </div>
+
+            <div class="bweek">
+              <div class="wk">
+                <div>KLEUR IN WAT U GEDAAN HEEFT</div>
+                <div>MA</div><div>DI</div><div>WO</div><div>DO</div><div>VR</div><div>ZA</div><div>ZO</div>
+              </div>
+              <div class="bwr">
+                <div class="n">Bruggetje</div>
+                <div class="c"><svg width="30" height="15" viewBox="0 0 42 20" fill="none" stroke="#000" stroke-width="1.3"><use href="#fig-lig"/></svg></div>
+                <div class="c"><svg width="30" height="15" viewBox="0 0 42 20" fill="none" stroke="#000" stroke-width="1.3"><use href="#fig-lig"/></svg></div>
+                <div class="c rust"></div>
+                <div class="c"><svg width="30" height="15" viewBox="0 0 42 20" fill="none" stroke="#000" stroke-width="1.3"><use href="#fig-lig"/></svg></div>
+                <div class="c"><svg width="30" height="15" viewBox="0 0 42 20" fill="none" stroke="#000" stroke-width="1.3"><use href="#fig-lig"/></svg></div>
+                <div class="c"><svg width="30" height="15" viewBox="0 0 42 20" fill="none" stroke="#000" stroke-width="1.3"><use href="#fig-lig"/></svg></div>
+                <div class="c rust"></div>
+              </div>
+              <div class="bwr">
+                <div class="n">Opstaan uit de stoel</div>
+                <div class="c"><svg width="15" height="31" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-zit"/></svg></div>
+                <div class="c"><svg width="15" height="31" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-zit"/></svg></div>
+                <div class="c rust"></div>
+                <div class="c"><svg width="15" height="31" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-zit"/></svg></div>
+                <div class="c"><svg width="15" height="31" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-zit"/></svg></div>
+                <div class="c"><svg width="15" height="31" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-zit"/></svg></div>
+                <div class="c rust"></div>
+              </div>
+              <div class="bwr">
+                <div class="n">Gewicht zijwaarts</div>
+                <div class="c"><svg width="15" height="31" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-staand"/></svg></div>
+                <div class="c"><svg width="15" height="31" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-staand"/></svg></div>
+                <div class="c rust"></div>
+                <div class="c"><svg width="15" height="31" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-staand"/></svg></div>
+                <div class="c"><svg width="15" height="31" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-staand"/></svg></div>
+                <div class="c"><svg width="15" height="31" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-staand"/></svg></div>
+                <div class="c rust"></div>
+              </div>
+              <div class="bwr">
+                <div class="n">Op de tenen komen</div>
+                <div class="c"><svg width="15" height="31" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-loop"/></svg></div>
+                <div class="c"><svg width="15" height="31" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-loop"/></svg></div>
+                <div class="c rust"></div>
+                <div class="c"><svg width="15" height="31" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-loop"/></svg></div>
+                <div class="c"><svg width="15" height="31" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-loop"/></svg></div>
+                <div class="c"><svg width="15" height="31" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-loop"/></svg></div>
+                <div class="c rust"></div>
+              </div>
+            </div>
+
+            <div class="bverg">
+              <div class="k">VORIGE WEEK — GEDRUKT, NIET IN TE VULLEN</div>
+              <div class="bvr">
+                <div class="e">AFGESPROKEN<i>vijf keer</i></div>
+                <div class="brij" style="gap:1.6mm">
+                  <svg width="13" height="27" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-staand"/></svg>
+                  <svg width="13" height="27" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-staand"/></svg>
+                  <svg width="13" height="27" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-staand"/></svg>
+                  <svg width="13" height="27" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-staand"/></svg>
+                  <svg width="13" height="27" viewBox="0 0 20 42" fill="none" stroke="#000" stroke-width="1.5"><use href="#fig-staand"/></svg>
+                </div>
+              </div>
+              <div class="bvr">
+                <div class="e">GEHAALD<i>drie en een halve</i></div>
+                <div class="brij" style="gap:1.6mm">
+                  <svg width="13" height="27" viewBox="0 0 20 42" fill="#000"><use href="#fig-staand"/></svg>
+                  <svg width="13" height="27" viewBox="0 0 20 42" fill="#000"><use href="#fig-staand"/></svg>
+                  <svg width="13" height="27" viewBox="0 0 20 42" fill="#000"><use href="#fig-staand"/></svg>
+                  <svg width="13" height="27" viewBox="0 0 20 42" fill="#000" style="clip-path:inset(0 50% 0 0)"><use href="#fig-staand"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="bvoet">
+              <div class="veilig">
+                <b>WANNEER U STOPT EN BELT</b>
+                <p>Stop als de pijn in uw heup tijdens het oefenen <b>scherp</b> wordt, of als hij
+                  de volgende ochtend erger is dan de dag ervoor. Bel dan De Bogaard —
+                  <b>0570 - 61 24 08</b>. Een dag overslaan is geen probleem en hoeft u niet in
+                  te halen.</p>
+              </div>
+              <div class="prk">
+                <b>Fysiplan</b>
+                blad gemaakt op 28 augustus<br/>
+                één poppetje = één keer
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>WAAROM HET WERKT</h4>
+      <ul>
+        <li>Een rij tekens is te tellen én af te lezen op lengte. Wie geen zin heeft om te tellen,
+          leest hem toch goed — dat kan een getal niet.</li>
+        <li>Twee rijen van dezelfde grootte onder elkaar zijn de eerlijkste vergelijking die er
+          bestaat. Geen schaal, geen as, geen percentage om verkeerd te begrijpen.</li>
+        <li>Gevuld tegenover open draagt de betekenis. Kleur is versiering en mag wegvallen:
+          op een zwart-witkopie blijft het blad compleet.</li>
+        <li>De rustdag is ingetekend. Een lege dag leest als een gemiste dag; een gearceerde dag
+          leest als een dag die zo hoort.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>WAT HET RISICO IS</h4>
+      <ul>
+        <li>Niet elke dosering is een aantal. Seconden, meters en „tot het trekt" passen niet in
+          deze taal, en de kiezer moet dat hardop zeggen in plaats van er blokjes van te maken.</li>
+        <li>Boven de twaalf blokjes per rij is de rij niet meer in één blik te vatten. Dan is
+          tellen weer werk en heeft een getal gewonnen.</li>
+        <li>Het gevaar van tekens is schattigheid. Arntz sneed geen poppetjes om aardig te zijn;
+          zodra dit blad vertederend wordt, is het geen statistiek meer maar decoratie.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>MEER</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var breed=schaal.clientWidth, eigen=blad.offsetWidth;
+    var f=Math.min(1,breed/eigen);
+    blad.style.transform='scale('+f+')';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

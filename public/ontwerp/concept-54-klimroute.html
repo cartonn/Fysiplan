@@ -1,0 +1,1012 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 54 — Klimroute · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 54 — KLIMROUTE
+   ------------------------------------------------------------
+   Elke oefenkaart zegt wat u moet doen. Geen enkele zegt waar
+   het zwaar wordt.
+
+   Dat is geen detail, dat is het hele verschil tussen volhouden
+   en stoppen. Een patiënt die bij de vierde herhaling voelt dat
+   het echt begint te trekken, heeft twee mogelijke gedachten.
+   Ofwel: "dit hoort zo, hier komt het aan" — ofwel: "ik doe het
+   verkeerd, of ik ben achteruitgegaan." Welke van de twee het
+   wordt, hangt af van één zin die op geen enkele oefenkaart
+   staat. En als er niets staat, kiest bijna iedereen de tweede.
+
+   De bergsport heeft dit probleem al vijftig jaar geleden
+   opgelost, en het antwoord is een ontwerp: de TOPO. Een foto
+   van de rotswand met de route eroverheen getekend, met de
+   moeilijke passage — de CRUX — er expliciet in gemarkeerd, met
+   de standplaatsen waar je mag stilstaan, en met de VARIANT er
+   in stippellijn naast: de makkelijkere weg, die iedereen
+   vanzelf neemt en die niet dezelfde route is. Sinds SuperTopo
+   en Rockfax in de late jaren negentig de lijn op een echte foto
+   van de wand legden, ziet de topo eruit als wat je voor je
+   ziet, en niet als een schema dat je eerst moet vertalen.
+
+   DUS: op dit blad is elke oefening een route.
+     · DE LIJN loopt over de foto van de beweging heen — van
+       standplaats 1 naar de top, precies waar het lichaamsdeel
+       langsgaat.
+     · DE CRUX staat er als driehoek in, met de zin erbij die
+       nergens staat: hier wordt het zwaar, dat is de bedoeling,
+       en het duurt drie tellen.
+     · HET RUSTPUNT staat er ook. Een oefenkaart die niet vertelt
+       waar je even mag stilstaan, laat mensen doorgaan tot ze
+       moeten stoppen — en dan stoppen ze op de verkeerde plek.
+     · DE SLUIPROUTE is de stippellijn: de manier waarop het
+       lichaam vals speelt (de rug erbij, de armen erbij, het
+       goede been erbij). Getekend, niet beschreven, want een
+       fout die je kunt aanwijzen hoeft niet uitgelegd.
+     · DE UITSTAP: waar u eruit kunt zonder dat er iets mislukt
+       is. Dat woord bestaat in de bergsport en niet in de zorg.
+
+   EN ÉÉN GEVOLG DAT VERDER GAAT DAN PAPIER: wie afhaakt heeft
+   nu iets te melden. Niet "niet gedaan", maar "tot punt 3".
+   Dat is voor het eerst bruikbare informatie uit een mislukte
+   oefensessie.
+
+   VORM. De gids, niet het scherm: helder papier, zware smalle
+   koppen, en de vier topo-kleuren die in elke klimgids zitten —
+   rood voor de route, geel voor de crux, blauw voor rust,
+   grijs-gestippeld voor de variant. Op het SCHERM ligt de lijn
+   over de foto. Op PAPIER over de lijntekening, want een
+   grijze foto wordt op een thuisprinter modder en een lijn over
+   modder is geen lijn meer. Zelfde taal, ander substraat —
+   precies wat een gids doet als hij van glossy naar veldeditie
+   gaat.
+   ============================================================ */
+
+:root{
+  --papier:#eceeec;
+  --vel:#ffffff;
+  --inkt:#12161a;
+  --inkt-2:#39424a;
+  --steen:#6a767d;
+  --lijn:#ccd2d1;
+  --lijn-2:#e3e7e6;
+
+  --route:#dd3a1c;
+  --crux:#f0a800;
+  --rust:#1c6fb8;
+  --variant:#8e9a9e;
+  --top:#2f7d4f;
+
+  --smal:"Arial Narrow","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --sans:"Helvetica Neue",Helvetica,Arial,system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:66px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.62 var(--sans);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--route)}
+:focus-visible{outline:3px solid var(--rust);outline-offset:3px}
+
+.binnen{max-width:1160px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--inkt);color:#c6cdcc;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  background:var(--route);padding:6px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#c6cdcc;text-decoration:none;padding:5px 3px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--crux)}
+.labbalk a.terug{color:#fff;border-bottom-color:#3d474d}
+@media (max-width:760px){.labbalk a:not(.terug){display:none}}
+
+.scherm{padding:var(--s6) 0;border-bottom:1px solid var(--lijn)}
+.scherm.vel{background:var(--vel)}
+.schermkop{margin-bottom:var(--s5);max-width:70ch}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--route);
+  margin-bottom:var(--s2)}
+.schermkop h2{font:700 clamp(28px,3.6vw,40px)/1.06 var(--smal);letter-spacing:.005em;
+  text-transform:uppercase;color:var(--inkt)}
+.schermkop p{margin-top:var(--s3);font-size:17px}
+.schermkop em{font-style:normal;font-weight:700;color:var(--inkt)}
+
+/* ---------- landing ---------- */
+.merkregel{display:flex;align-items:center;gap:11px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:28px;height:28px;background:var(--inkt);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 15px/1 var(--sans)}
+.merkregel .naam{font:700 16px/1 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+.merkregel .pad{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--steen)}
+
+.heldrij{display:grid;grid-template-columns:1fr 340px;gap:var(--s5);align-items:start}
+@media (max-width:980px){.heldrij{grid-template-columns:1fr;gap:var(--s4)}}
+h1.kop{font:700 clamp(40px,6.6vw,74px)/.94 var(--smal);letter-spacing:.004em;
+  text-transform:uppercase;color:var(--inkt)}
+h1.kop em{display:block;font-style:normal;color:var(--route)}
+.onder{margin-top:var(--s4);font-size:18.5px;max-width:56ch}
+.onder b{color:var(--inkt);font-weight:700}
+
+/* het topo-blok */
+.topo{position:relative;background:var(--vel);border:1px solid var(--lijn);aspect-ratio:2/3}
+.topo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.topo svg{position:absolute;inset:0;width:100%;height:100%}
+.toponaam{position:absolute;left:0;top:0;background:var(--inkt);color:#fff;
+  font:700 11px/1 var(--mono);letter-spacing:.14em;padding:7px 10px;z-index:2}
+
+.demoblok{border:1px solid var(--lijn);background:var(--vel)}
+.demoblok .kp{background:var(--inkt);color:#fff;padding:11px 13px;
+  font:700 10.5px/1 var(--mono);letter-spacing:.15em}
+.demoblok .tekst{padding:var(--s3);font-size:15px;line-height:1.58}
+.demoblok .tekst b{color:var(--inkt)}
+
+/* legenda van de tekens */
+.tekens{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4);margin-top:var(--s6)}
+@media (max-width:900px){.tekens{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.tekens{grid-template-columns:1fr}}
+.teken{border-top:3px solid var(--inkt);padding-top:var(--s3)}
+.teken.c{border-top-color:var(--crux)}
+.teken.r{border-top-color:var(--rust)}
+.teken.v{border-top-color:var(--variant)}
+.teken .rij{display:flex;align-items:center;gap:10px;margin-bottom:var(--s2)}
+.teken h3{font:700 12px/1 var(--mono);letter-spacing:.15em;color:var(--inkt)}
+.teken p{font-size:15.5px;line-height:1.58}
+.teken p b{color:var(--inkt);font-weight:700}
+
+/* ---------- kiezer ---------- */
+.kiezerrij{display:grid;grid-template-columns:.9fr 1.1fr;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.kiezerrij{grid-template-columns:1fr}}
+.paneel{background:var(--vel);border:1px solid var(--lijn)}
+.paneel > h3{font:700 11px/1 var(--mono);letter-spacing:.16em;color:#fff;background:var(--inkt);
+  padding:12px 15px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.paneel > h3 span{color:var(--crux)}
+
+.zoek{display:flex;align-items:center;gap:12px;padding:13px 15px;border-bottom:1px solid var(--lijn)}
+.zoek .veld{flex:1;border:1px solid var(--lijn);background:#fff;padding:9px 11px;
+  font:600 15px/1 var(--sans);color:var(--inkt)}
+.zoek .veld i{font-style:normal;font-weight:400;color:var(--steen)}
+.zoek .tel{font:700 11px/1 var(--mono);letter-spacing:.09em;color:var(--route)}
+
+.oefrij{display:grid;grid-template-columns:20px 54px 1fr auto;gap:12px;align-items:center;
+  padding:12px 15px;border-bottom:1px solid var(--lijn-2)}
+.oefrij .vink{width:17px;height:17px;border:1.5px solid var(--inkt);background:#fff}
+.oefrij.aan .vink{background:var(--inkt);position:relative}
+.oefrij.aan .vink::after{content:"";position:absolute;left:4px;top:1px;width:5px;height:10px;
+  border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg)}
+.oefrij .beeld{background:#fff;border:1px solid var(--lijn);padding:2px}
+.oefrij h4{font:700 15.5px/1.2 var(--sans);color:var(--inkt);letter-spacing:-.012em}
+.oefrij .sub{font-size:13.5px;color:var(--steen);margin-top:2px}
+.oefrij .graad{font:700 12px/1 var(--mono);letter-spacing:.06em;color:#fff;background:var(--inkt);
+  padding:6px 8px;white-space:nowrap}
+.oefrij .graad.zwaar{background:var(--route)}
+.oefrij.uit{opacity:.5}
+
+.melding{margin:var(--s3) 15px;border-left:3px solid var(--crux);background:#fdf6e3;padding:13px 15px}
+.melding b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.13em;color:#a97600;margin-bottom:8px}
+.melding p{font-size:15px;line-height:1.55}
+
+/* de tekentafel */
+.tekentafel{padding:var(--s3) 15px var(--s4)}
+.tekentafel > p{font-size:15px;line-height:1.6;margin-bottom:var(--s3)}
+.ttrij{display:grid;grid-template-columns:210px 1fr;gap:var(--s4);align-items:start}
+@media (max-width:720px){.ttrij{grid-template-columns:1fr}}
+.gereedschap{display:flex;flex-direction:column;gap:8px}
+.gereedschap button{all:unset;display:flex;align-items:center;gap:10px;border:1px solid var(--lijn);
+  background:#fff;padding:9px 11px;font:600 14px/1.2 var(--sans);color:var(--inkt-2);cursor:default}
+.gereedschap button.aan{border-color:var(--inkt);background:var(--inkt);color:#fff}
+.gereedschap button i{width:20px;height:20px;flex:none;display:flex;align-items:center;justify-content:center}
+.gereedschap .hint{font-size:13px;line-height:1.5;color:var(--steen);margin-top:6px}
+
+.puntenlijst{border:1px solid var(--lijn)}
+.puntenlijst .kp{background:var(--lijn-2);padding:9px 12px;font:700 10px/1 var(--mono);
+  letter-spacing:.14em;color:var(--inkt-2)}
+.punt{display:grid;grid-template-columns:26px 1fr;gap:11px;padding:11px 12px;
+  border-top:1px solid var(--lijn-2);align-items:start}
+.punt .bol{width:24px;height:24px;border-radius:50%;background:var(--route);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 12px/1 var(--mono)}
+.punt .bol.crux{background:var(--crux);color:var(--inkt);border-radius:0;
+  clip-path:polygon(50% 0,100% 100%,0 100%)}
+.punt .bol.rust{background:var(--rust)}
+.punt .bol.top{background:var(--top)}
+.punt b{display:block;font:700 14.5px/1.25 var(--sans);color:var(--inkt)}
+.punt p{font-size:14.5px;line-height:1.5;margin-top:3px}
+.punt .veld{margin-top:7px;border:1px dashed var(--lijn);background:#fafbfb;padding:8px 10px;
+  font-size:14px;line-height:1.45;color:var(--inkt-2)}
+.punt .veld em{font-style:normal;font:700 9.5px/1 var(--mono);letter-spacing:.13em;
+  color:var(--steen);display:block;margin-bottom:5px}
+
+/* ---------- cliëntkaart ---------- */
+.kaartblad{background:var(--vel);border:1px solid var(--lijn)}
+.kaartkop{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:baseline;
+  padding:var(--s4);background:var(--inkt);color:#fff}
+.kaartkop h3{font:700 24px/1.14 var(--sans);letter-spacing:-.02em}
+.kaartkop .wk{font:700 11px/1 var(--mono);letter-spacing:.13em;color:var(--crux);margin-left:auto}
+.kaartkop .sub{font-size:15px;color:#a6aeae;width:100%}
+
+.kaartlijf{padding:var(--s4)}
+.logkop{font:700 11px/1 var(--mono);letter-spacing:.15em;color:var(--route);margin-bottom:var(--s3)}
+.logblad{border:1px solid var(--lijn);background:#fff}
+.logrij{display:grid;grid-template-columns:150px 1fr 108px;gap:var(--s3);align-items:center;
+  padding:13px 16px;border-bottom:1px solid var(--lijn-2)}
+@media (max-width:800px){.logrij{grid-template-columns:1fr;gap:9px}}
+.logrij .dg{font:700 12px/1.3 var(--mono);letter-spacing:.08em;color:var(--inkt)}
+.logrij .dg i{display:block;font-style:normal;font-weight:400;font-family:var(--sans);
+  letter-spacing:0;font-size:13.5px;color:var(--steen);margin-top:3px}
+.balk{display:flex;align-items:center;gap:3px;height:26px}
+.balk .st{flex:1;height:100%;display:flex;align-items:center;justify-content:center;
+  font:700 10px/1 var(--mono);color:#fff;background:var(--route)}
+.balk .st.crux{background:var(--crux);color:var(--inkt)}
+.balk .st.leeg{background:var(--lijn-2);color:var(--steen)}
+.balk .st.top{background:var(--top)}
+.logrij .uit{font:700 11px/1.3 var(--mono);letter-spacing:.08em;text-align:right;color:var(--inkt)}
+.logrij .uit.half{color:var(--crux)}
+@media (max-width:800px){.logrij .uit{text-align:left}}
+
+.gevolg{margin-top:var(--s4);display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+@media (max-width:860px){.gevolg{grid-template-columns:1fr}}
+.gevolg div{border:1px solid var(--lijn);background:#fff;padding:var(--s3)}
+.gevolg div.oud{background:var(--papier);border-style:dashed}
+.gevolg h4{font:700 10.5px/1 var(--mono);letter-spacing:.14em;color:var(--route);margin-bottom:var(--s2)}
+.gevolg div.oud h4{color:var(--steen)}
+.gevolg p{font-size:15.5px;line-height:1.6}
+.gevolg p + p{margin-top:9px}
+.gevolg b{color:var(--inkt);font-weight:700}
+.gevolg .cit{font:400 17px/1.5 var(--sans);color:var(--inkt);border-left:3px solid var(--route);
+  padding-left:12px;margin-top:var(--s3)}
+
+/* ---------- A4 ---------- */
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;position:relative;
+  transform-origin:top left;box-shadow:0 3px 34px rgba(18,22,26,.3);
+  font-family:var(--sans);overflow:hidden}
+@media (max-width:860px){.bladschaal{max-width:100%}}
+.blad .rand{position:absolute;inset:9mm 10mm 7mm 10mm;display:flex;flex-direction:column}
+
+.bkop{display:flex;align-items:flex-end;gap:5mm;border-bottom:1.6pt solid #000;padding-bottom:2.2mm}
+.bkop .t{flex:1;font:700 21pt/.94 var(--smal);letter-spacing:.004em;text-transform:uppercase;color:#000}
+.bkop .t em{font-style:normal;color:#c4321a;display:block}
+.bkop .wie{text-align:right;font:400 7.4pt/1.4 var(--sans);color:#2a3036;white-space:nowrap}
+.bkop .wie b{display:block;font:700 5.8pt/1 var(--mono);letter-spacing:.16em;color:#6a767d;margin-bottom:1mm}
+
+.bsleutel{display:flex;flex-wrap:wrap;gap:4mm;padding:1.8mm 0;border-bottom:.6pt solid #000;
+  margin-bottom:2.4mm}
+.bsleutel div{display:flex;align-items:center;gap:1.4mm;font:700 6.2pt/1 var(--mono);
+  letter-spacing:.09em;color:#000}
+.bsleutel div i{font-style:normal;font-weight:400;font-family:var(--sans);letter-spacing:0;
+  font-size:7.2pt;color:#39424a;text-transform:none}
+.bsleutel .mk{width:3.4mm;height:3.4mm;flex:none;border-radius:50%}
+
+/* routes op het blad */
+.broutes{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
+  gap:3.4mm 4mm;flex:1;min-height:0}
+.broute{border:.8pt solid #000;display:flex;flex-direction:column;background:#fff;min-height:0}
+.brkop{display:flex;align-items:center;gap:2mm;background:#000;color:#fff;padding:1.5mm 2mm}
+.brkop .nr{font:700 8.4pt/1 var(--mono);letter-spacing:.06em;background:#c4321a;padding:1mm 1.6mm}
+.brkop h3{flex:1;font:700 11.6pt/1 var(--smal);letter-spacing:.01em;text-transform:uppercase}
+.brkop .gr{font:700 7.4pt/1 var(--mono);letter-spacing:.08em;border:.7pt solid #fff;padding:.9mm 1.4mm}
+
+.brlijf{display:grid;grid-template-columns:40mm 1fr;gap:2.8mm;padding:2mm;flex:1;min-height:0}
+.brbeeld{position:relative;border:.5pt solid #b9c0bf;background:#fff;aspect-ratio:2/3;
+  align-self:center;width:100%}
+.brbeeld img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.brbeeld svg{position:absolute;inset:0;width:100%;height:100%}
+
+.brpunten{display:flex;flex-direction:column;justify-content:center;gap:1.6mm}
+.brp{display:grid;grid-template-columns:5mm 1fr;gap:1.8mm;align-items:start}
+.brp .mk{width:4.6mm;height:4.6mm;border-radius:50%;background:#c4321a;color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 6pt/1 var(--mono);margin-top:.3mm}
+.brp .mk.crux{background:#e0a000;color:#000;border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%);
+  align-items:flex-end;padding-bottom:.2mm}
+.brp .mk.rust{background:#17608f}
+.brp .mk.top{background:#2a6f47}
+.brp .tx > b{font:700 8.4pt/1.16 var(--sans);color:#000;display:block}
+.brp .tx p{font:400 7.8pt/1.28 var(--sans);color:#22282d;margin-top:.4mm}
+.brp .tx p b{font-weight:700;color:#000}
+.brp.iscrux .tx > b{color:#8a6400}
+
+.brvoet{border-top:.5pt solid #cfd5d4;margin:0 2mm 2mm;padding-top:1.5mm;
+  display:flex;gap:2mm;align-items:baseline}
+.brvoet b{font:700 6pt/1.2 var(--mono);letter-spacing:.13em;color:#6a767d;white-space:nowrap}
+.brvoet p{font:400 7.6pt/1.3 var(--sans);color:#22282d}
+
+/* de afdaling = de veiligheidsregel */
+.bafdaling{margin-top:2.6mm;border:1.2pt solid #c4321a;display:grid;
+  grid-template-columns:auto 1fr auto;gap:3mm;align-items:center;padding:2mm 2.6mm}
+.bafdaling .lb{font:700 6.2pt/1.25 var(--mono);letter-spacing:.14em;color:#c4321a;white-space:nowrap}
+.bafdaling p{font:400 7.8pt/1.32 var(--sans);color:#000}
+.bafdaling p b{font-weight:700}
+.bafdaling .prk{text-align:right;font:400 6.6pt/1.4 var(--sans);color:#39424a;white-space:nowrap}
+.bafdaling .prk b{display:block;font:700 8pt/1.1 var(--sans);color:#000}
+
+.bvoetregel{display:flex;justify-content:space-between;gap:4mm;margin-top:1.8mm;
+  font:700 5.8pt/1.3 var(--mono);letter-spacing:.12em;color:#6a767d}
+.bvoetregel b{color:#000}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#bdc5c4;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:var(--crux);
+  border-top:1px solid #3d474d;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:9px}
+footer.uitleiding a{color:var(--crux)}
+
+/* ============================================================
+   PRINT — de lijn ligt op papier over de LIJNTEKENING, niet
+   over de foto: een grijze foto wordt op een thuisprinter
+   modder, en een route over modder is geen route meer.
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000 !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border:0 !important;background:#fff !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    border:0 !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 54</span>
+  <strong style="font:700 16px/1 var(--sans);color:#fff;letter-spacing:-.03em">Klimroute</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm vel" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 54 · KLIMROUTE</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1 class="kop">Elke kaart zegt wat u moet doen.<em>Geen enkele zegt waar het zwaar wordt.</em></h1>
+        <p class="onder">Dat lijkt een detail en het is het verschil tussen doorgaan en stoppen.
+          Wie bij de vierde herhaling voelt dat het echt begint te trekken, denkt één van twee
+          dingen. <b>„Dit hoort zo, hier komt het aan"</b> — of <b>„ik doe iets fout, of ik ben
+          achteruitgegaan."</b> Welke van de twee het wordt, hangt af van één zin die op geen
+          enkele oefenkaart staat. Staat er niets, dan kiest bijna iedereen de tweede.<br/><br/>
+          De bergsport loste dit vijftig jaar geleden op met een tekening: de <b>topo</b>. De lijn
+          van de route over een foto van de wand, met de <b>crux</b> erin gemarkeerd — de plek waar
+          het moeilijk wordt — de standplaatsen waar je mag stilstaan, en de makkelijke variant er
+          in stippellijn naast. Hier is elke oefening een route.</p>
+
+        <div class="tekens">
+          <div class="teken">
+            <div class="rij">
+              <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+                <circle cx="13" cy="13" r="11" fill="#dd3a1c"/>
+                <text x="13" y="17.5" text-anchor="middle" font-family="ui-monospace,Menlo,monospace"
+                  font-size="11" font-weight="700" fill="#fff">2</text>
+              </svg>
+              <h3>STANDPLAATS</h3>
+            </div>
+            <p>Een genummerd punt op de lijn. Geen herhaling, maar een <b>plek in de beweging</b> —
+              en bij elk punt één zin over wat u daar voelt.</p>
+          </div>
+          <div class="teken c">
+            <div class="rij">
+              <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+                <polygon points="13,2 25,24 1,24" fill="#f0a800"/>
+                <text x="13" y="21" text-anchor="middle" font-family="ui-monospace,Menlo,monospace"
+                  font-size="10" font-weight="700" fill="#12161a">!</text>
+              </svg>
+              <h3>DE CRUX</h3>
+            </div>
+            <p>Het zwaarste punt, en het staat er <b>vóórdat u het tegenkomt</b>. Wat de crux van
+              een verrassing tot een afspraak maakt is één zin: hier hoort het zwaar te zijn.</p>
+          </div>
+          <div class="teken r">
+            <div class="rij">
+              <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+                <circle cx="13" cy="13" r="10.5" fill="none" stroke="#1c6fb8" stroke-width="3.4"/>
+              </svg>
+              <h3>HET RUSTPUNT</h3>
+            </div>
+            <p>Waar u mag stilstaan zonder dat de oefening afgelopen is. Een kaart die dat niet
+              zegt, laat mensen doorgaan tot ze <b>moeten</b> stoppen — op de verkeerde plek.</p>
+          </div>
+          <div class="teken v">
+            <div class="rij">
+              <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+                <path d="M2 21 C9 13 12 8 24 5" fill="none" stroke="#8e9a9e" stroke-width="3"
+                  stroke-dasharray="4 3.5" stroke-linecap="round"/>
+              </svg>
+              <h3>DE SLUIPROUTE</h3>
+            </div>
+            <p>De stippellijn: hoe het lichaam vals speelt — de rug erbij, de armen erbij, het
+              goede been erbij. <b>Getekend, niet uitgelegd.</b> Een fout die je kunt aanwijzen
+              hoeft geen alinea.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="topo">
+          <span class="toponaam">ROUTE 1 · KNIE STREKKEN</span>
+          <img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png" alt="Knie strekken vanuit zit: van gebogen naar gestrekt."/>
+          <svg viewBox="0 0 800 1200" aria-hidden="true">
+            <!-- sluiproute: het bekken kantelt mee, de rug helpt -->
+            <path d="M286 866 C430 892 570 866 690 786" fill="none" stroke="#8e9a9e"
+              stroke-width="7" stroke-dasharray="16 13" stroke-linecap="round" opacity=".85"/>
+            <!-- de route: de voet van hangend naar gestrekt -->
+            <path d="M286 862 C420 852 556 796 654 722 C692 696 722 686 744 682"
+              fill="none" stroke="#fff" stroke-width="17" stroke-linecap="round"/>
+            <path d="M286 862 C420 852 556 796 654 722 C692 696 722 686 744 682"
+              fill="none" stroke="#dd3a1c" stroke-width="9" stroke-linecap="round"/>
+            <!-- standplaatsen -->
+            <g font-family="ui-monospace,Menlo,monospace" font-size="26" font-weight="700">
+              <circle cx="286" cy="862" r="24" fill="#dd3a1c" stroke="#fff" stroke-width="4"/>
+              <text x="286" y="872" text-anchor="middle" fill="#fff">1</text>
+              <polygon points="620,704 654,762 586,762" fill="#f0a800" stroke="#fff" stroke-width="4"/>
+              <text x="620" y="756" text-anchor="middle" fill="#12161a" font-size="24">!</text>
+              <circle cx="748" cy="682" r="24" fill="#2f7d4f" stroke="#fff" stroke-width="4"/>
+              <text x="748" y="692" text-anchor="middle" fill="#fff">3</text>
+            </g>
+          </svg>
+        </div>
+        <div class="demoblok" style="margin-top:16px">
+          <div class="kp">WAT ER BIJ PUNT ▲ STAAT</div>
+          <div class="tekst">„<b>Hier wordt het zwaar</b> — de laatste tien graden strekken kosten
+            de meeste kracht en dat is bij iedereen zo. Houd hem drie tellen vast. Trilt uw been?
+            Dat mag. Trekt het scherp aan de binnenkant? Dan stopt u."</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 2</b><h2>De oefeningen-kiezer</h2>
+      <p>Links kiest de therapeut de routes. Rechts <em>tekent</em> hij ze: de lijn ligt al klaar
+        per oefening, hij verschuift alleen de crux en het rustpunt naar waar ze bij déze patiënt
+        zitten — want de crux van een knie met artrose ligt ergens anders dan die van een knie na
+        een operatie. Eén zin per punt, en de kaart is af.</p>
+    </div>
+
+    <div class="kiezerrij">
+
+      <div class="paneel">
+        <h3>ROUTES <span>4 GEKOZEN · 215 BESCHIKBAAR</span></h3>
+        <div class="zoek">
+          <div class="veld">knie <i>— artrose, doel: trap en bos</i></div>
+          <span class="tel">63 TREFFERS</span>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png" alt="Knie strekken zittend"/></span>
+          <div><h4>Knie strekken vanuit zit</h4><div class="sub">Crux bij de laatste tien graden</div></div>
+          <span class="graad">KORT</span>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/knie-naar-voren-over-voet-staand-met-steun-line-v1.png" alt="Knie naar voren over de voet"/></span>
+          <div><h4>Knie naar voren over de voet</h4><div class="sub">Crux ligt vooraan — de bekende</div></div>
+          <span class="graad zwaar">ZWAAR</span>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/kuitheffing-op-een-verhoging-line-v1.png" alt="Kuitheffing op een verhoging"/></span>
+          <div><h4>Kuitheffing op de traptrede</h4><div class="sub">Crux bij het zakken, niet bij het heffen</div></div>
+          <span class="graad">LANG</span>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/heupscharnier-staand-met-steun-line-v1.png" alt="Heupscharnier staand met steun"/></span>
+          <div><h4>Heupscharnier</h4><div class="sub">Sluiproute: de rug neemt het over</div></div>
+          <span class="graad">KORT</span>
+        </div>
+
+        <div class="oefrij uit">
+          <span class="vink" aria-hidden="true"></span>
+          <span class="beeld"><img src="/images/onderste-extremiteit/been-pendelen-line-v1.png" alt="Been pendelen"/></span>
+          <div><h4>Been pendelen</h4><div class="sub">Geen crux — dit is een afdaling</div></div>
+          <span class="graad" style="background:#6a767d">GEEN</span>
+        </div>
+
+        <div class="melding">
+          <b>NIET ELKE OEFENING IS EEN ROUTE</b>
+          <p>„Been pendelen" heeft geen zwaarste punt en dat is precies de bedoeling: het is een
+            losmaker. De kiezer weigert er een crux in te tekenen. Wie overal een moeilijkste punt
+            aanwijst, heeft binnen twee weken een blad waar het woord <b>crux</b> niets meer
+            betekent — en dan is de enige zin die telt kapotgemaakt door herhaling.</p>
+        </div>
+      </div>
+
+      <div class="paneel">
+        <h3>DE ROUTE TEKENEN <span>KNIE NAAR VOREN OVER DE VOET</span></h3>
+        <div class="tekentafel">
+          <p>De lijn zit al bij de oefening; hij is één keer getekend en geldt voor iedereen. Wat
+            de therapeut per patiënt verzet, zijn de <b>markeringen</b> en de zinnen eronder.</p>
+
+          <div class="ttrij">
+            <div>
+              <div class="topo" style="margin-bottom:14px">
+                <img src="/images/onderste-extremiteit/knie-naar-voren-over-voet-staand-met-steun-line-v1.png" alt="Knie naar voren over de voet, met steun."/>
+                <svg viewBox="0 0 800 1200" aria-hidden="true">
+                  <path d="M236 764 C300 806 400 830 520 800" fill="none" stroke="#8e9a9e"
+                    stroke-width="7" stroke-dasharray="16 13" stroke-linecap="round" opacity=".8"/>
+                  <path d="M236 762 C320 768 420 774 500 760 C540 752 556 742 566 732"
+                    fill="none" stroke="#fff" stroke-width="17" stroke-linecap="round"/>
+                  <path d="M236 762 C320 768 420 774 500 760 C540 752 556 742 566 732"
+                    fill="none" stroke="#dd3a1c" stroke-width="9" stroke-linecap="round"/>
+                  <g font-family="ui-monospace,Menlo,monospace" font-size="26" font-weight="700">
+                    <circle cx="236" cy="762" r="24" fill="#dd3a1c" stroke="#fff" stroke-width="4"/>
+                    <text x="236" y="772" text-anchor="middle" fill="#fff">1</text>
+                    <circle cx="392" cy="774" r="22" fill="none" stroke="#1c6fb8" stroke-width="8"/>
+                    <polygon points="502,712 536,770 468,770" fill="#f0a800" stroke="#fff" stroke-width="4"/>
+                    <text x="502" y="764" text-anchor="middle" fill="#12161a" font-size="24">!</text>
+                    <circle cx="566" cy="732" r="24" fill="#2f7d4f" stroke="#fff" stroke-width="4"/>
+                    <text x="566" y="742" text-anchor="middle" fill="#fff">4</text>
+                  </g>
+                </svg>
+              </div>
+              <div class="gereedschap">
+                <button type="button"><i aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11" fill="#dd3a1c"/></svg>
+                </i>Standplaats zetten</button>
+                <button type="button" class="aan"><i aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 26 26"><polygon points="13,2 25,24 1,24" fill="#f0a800"/></svg>
+                </i>Crux verplaatsen</button>
+                <button type="button"><i aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 26 26"><circle cx="13" cy="13" r="9" fill="none" stroke="#1c6fb8" stroke-width="4"/></svg>
+                </i>Rustpunt zetten</button>
+                <button type="button"><i aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 26 26"><path d="M2 20 C9 12 12 8 24 5" fill="none" stroke="#8e9a9e" stroke-width="3.4" stroke-dasharray="4 3.5"/></svg>
+                </i>Sluiproute kiezen</button>
+                <p class="hint">Eén crux per route. Wie er twee zet, krijgt de vraag welke van de
+                  twee er echt toe doet — en dat is meestal een goed gesprek.</p>
+              </div>
+            </div>
+
+            <div class="puntenlijst">
+              <div class="kp">DE PUNTEN VAN DEZE ROUTE</div>
+
+              <div class="punt">
+                <span class="bol">1</span>
+                <div>
+                  <b>Start — beide voeten plat</b>
+                  <p>Hand licht op de rugleuning. Voeten op heupbreedte, knieën los.</p>
+                </div>
+              </div>
+
+              <div class="punt">
+                <span class="bol rust"></span>
+                <div>
+                  <b>Rustpunt — halverwege</b>
+                  <p>Hier mag u blijven staan zolang u wilt. De oefening is niet afgelopen als u
+                    stilstaat.</p>
+                </div>
+              </div>
+
+              <div class="punt">
+                <span class="bol crux"></span>
+                <div>
+                  <b>De crux — knie voorbij de tenen</b>
+                  <p>Het laatste stuk naar voren. Hier komt het aan.</p>
+                  <div class="veld">
+                    <em>DE ZIN DIE OP HET BLAD KOMT</em>
+                    Hier wordt het zwaar, en dat hoort. U voelt een doffe druk vóór in de knie —
+                    dat mag. Voelt u een scherpe steek aan de binnenkant, dan gaat u terug naar
+                    het rustpunt en is dat het einde van deze route voor vandaag.
+                  </div>
+                </div>
+              </div>
+
+              <div class="punt">
+                <span class="bol top">4</span>
+                <div>
+                  <b>De top — drie tellen vasthouden</b>
+                  <p>Dan rustig terug. Het teruggaan is geen bijzaak; op de terugweg gebeurt het
+                    halve werk.</p>
+                </div>
+              </div>
+
+              <div class="punt">
+                <span class="bol" style="background:#8e9a9e"></span>
+                <div>
+                  <b>De sluiproute — de hiel komt los</b>
+                  <p>Bijna iedereen tilt de hiel op zodra het zwaar wordt. Dan is de route korter
+                    en makkelijker, en traint hij niets van wat u nodig heeft op de trap.</p>
+                  <div class="veld">
+                    <em>OP HET BLAD ALS STIPPELLIJN, MET DRIE WOORDEN ERBIJ</em>
+                    „Hiel blijft plat."
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm vel" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 3</b><h2>De digitale cliëntkaart</h2>
+      <p>Hier komt het gevolg dat verder gaat dan papier. Wie afhaakt, heeft nu <em>iets te
+        melden</em>. Niet „niet gedaan", maar <em>„tot punt 3"</em> — en dat is voor het eerst
+        bruikbare informatie uit een mislukte oefensessie.</p>
+    </div>
+
+    <div class="kaartblad">
+      <div class="kaartkop">
+        <div><h3>Mevrouw H. de Ruiter — 61 jaar</h3></div>
+        <span class="wk">WEEK 3 VAN 12</span>
+        <div class="sub">Artrose rechterknie · doel: de trap zonder leuning en een uur in het bos ·
+          Fysiotherapie Het Kruispunt, Tilburg</div>
+      </div>
+
+      <div class="kaartlijf">
+
+        <div class="logkop">HET LOGBOEK — ROUTE 2, „KNIE NAAR VOREN OVER DE VOET"</div>
+        <div class="logblad">
+          <div class="logrij">
+            <div class="dg">MA 24 AUG<i>'s ochtends, na de koffie</i></div>
+            <div class="balk" aria-label="Tot en met de top">
+              <span class="st">1</span><span class="st">rust</span><span class="st crux">crux</span><span class="st top">top</span>
+            </div>
+            <div class="uit">HELEMAAL</div>
+          </div>
+          <div class="logrij">
+            <div class="dg">WO 26 AUG<i>'s avonds, na het tuinieren</i></div>
+            <div class="balk" aria-label="Tot aan de crux, daar gestopt">
+              <span class="st">1</span><span class="st">rust</span><span class="st crux">crux</span><span class="st leeg">—</span>
+            </div>
+            <div class="uit half">TOT DE CRUX</div>
+          </div>
+          <div class="logrij">
+            <div class="dg">DO 27 AUG<i>'s ochtends</i></div>
+            <div class="balk" aria-label="Tot en met de top">
+              <span class="st">1</span><span class="st">rust</span><span class="st crux">crux</span><span class="st top">top</span>
+            </div>
+            <div class="uit">HELEMAAL</div>
+          </div>
+          <div class="logrij">
+            <div class="dg">VR 28 AUG<i>'s avonds</i></div>
+            <div class="balk" aria-label="Tot het rustpunt, daar uitgestapt">
+              <span class="st">1</span><span class="st">rust</span><span class="st leeg">—</span><span class="st leeg">—</span>
+            </div>
+            <div class="uit half">UITGESTAPT</div>
+          </div>
+        </div>
+
+        <div class="gevolg">
+          <div class="oud">
+            <h4>WAT DE THERAPEUT VROEGER LAS</h4>
+            <p>Twee vinkjes en twee lege vakjes. Vier dagen, half gedaan. Daar valt maar één
+              gesprek uit te voeren en dat begint met <b>„het is niet helemaal gelukt hè?"</b> —
+              een vraag waar niemand iets aan heeft, en waarop het eerlijke antwoord meestal
+              wordt ingeslikt.</p>
+            <p>Een gemiste sessie was informatieloos. Een halve sessie werd nergens opgeslagen,
+              want het formulier kende geen half.</p>
+          </div>
+          <div>
+            <h4>WAT ER NU STAAT</h4>
+            <p>Woensdag <b>tot de crux</b>, vrijdag <b>uitgestapt bij het rustpunt</b>. Twee keer
+              afgehaakt op twee verschillende plekken — en dat zijn twee verschillende dingen.
+              Woensdag was na het tuinieren: de knie was al op. Vrijdag stopte ze eerder dan de
+              crux, en dat is de dag om na te vragen.</p>
+            <p><b>Uitstappen is een handeling met een naam geworden</b>, geen mislukking. Wie een
+              woord heeft voor stoppen, stopt op de goede plek en komt de volgende dag terug.</p>
+            <p class="cit">„Ik ben er woensdag tot de driehoek gekomen." — een zin die een patiënt
+              zelf kan zeggen, over haar eigen been, met een woord van het blad.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop geen-print">
+      <b>SCHERM 4</b><h2>De printkaart — A4 staand, vier routes</h2>
+      <p>Op het scherm ligt de lijn over de foto, zoals in een moderne klimgids. Op papier ligt hij
+        over de <em>lijntekening</em>: een grijze foto wordt op een thuisprinter modder, en een
+        route over modder is geen route meer. Zelfde taal, ander substraat — precies wat een gids
+        doet als hij van glossy naar veldeditie gaat.</p>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="bkop">
+              <span class="t">Vier routes<em>week 3 · de trap en het bos</em></span>
+              <span class="wie"><b>VOOR</b>Mevrouw H. de Ruiter<br/>
+                Rechterknie, artrose<br/>
+                Fysiotherapie Het Kruispunt, Tilburg · 013 - 542 76 11</span>
+            </div>
+
+            <div class="bsleutel">
+              <div><span class="mk" style="background:#dd3a1c"></span> <i>standplaats — een punt in de beweging</i></div>
+              <div><span class="mk" style="background:#f0a800;border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%)"></span> <i>de crux — hier hoort het zwaar te zijn</i></div>
+              <div><span class="mk" style="background:#fff;border:1.1pt solid #17608f"></span> <i>rustpunt — hier mag u stilstaan</i></div>
+              <div><span class="mk" style="background:#8e9a9e"></span> <i>sluiproute — zo speelt het lichaam vals</i></div>
+            </div>
+
+            <div class="broutes">
+
+              <!-- ROUTE 1 -->
+              <div class="broute">
+                <div class="brkop"><span class="nr">1</span><h3>Knie strekken vanuit zit</h3><span class="gr">2 × 10</span></div>
+                <div class="brlijf">
+                  <div class="brbeeld">
+                    <img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png" alt="Knie strekken vanuit zit."/>
+                    <svg viewBox="0 0 800 1200" aria-hidden="true">
+                      <path d="M286 862 C420 852 556 796 654 722 C692 696 722 686 744 682"
+                        fill="none" stroke="#fff" stroke-width="19" stroke-linecap="round"/>
+                      <path d="M286 862 C420 852 556 796 654 722 C692 696 722 686 744 682"
+                        fill="none" stroke="#c4321a" stroke-width="10" stroke-linecap="round"/>
+                      <g font-family="ui-monospace,Menlo,monospace" font-size="30" font-weight="700">
+                        <circle cx="286" cy="862" r="27" fill="#c4321a" stroke="#fff" stroke-width="5"/>
+                        <text x="286" y="873" text-anchor="middle" fill="#fff">1</text>
+                        <polygon points="620,700 658,766 582,766" fill="#e0a000" stroke="#fff" stroke-width="5"/>
+                        <text x="620" y="759" text-anchor="middle" fill="#000" font-size="27">!</text>
+                        <circle cx="748" cy="682" r="27" fill="#2a6f47" stroke="#fff" stroke-width="5"/>
+                        <text x="748" y="693" text-anchor="middle" fill="#fff">3</text>
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="brpunten">
+                    <div class="brp"><span class="mk">1</span><div class="tx"><b>Zit rechtop, voet los van de vloer</b>
+                      <p>Rug tegen de leuning, handen op de zitting.</p></div></div>
+                    <div class="brp iscrux"><span class="mk crux">!</span><div class="tx"><b>De crux — de laatste tien graden</b>
+                      <p>Hier wordt het zwaar, bij iedereen. Trillen mag. Een scherpe steek aan de
+                        binnenkant niet: dan stopt u.</p></div></div>
+                    <div class="brp"><span class="mk top">3</span><div class="tx"><b>Drie tellen vasthouden</b>
+                      <p>Dan langzaam zakken — tel ook bij het zakken tot drie.</p></div></div>
+                  </div>
+                </div>
+                <div class="brvoet"><b>UITSTAP</b><p>Kunt u de knie niet strekken? Doe hem zonder
+                  vasthouden, tien keer. Dat is een gewone route, geen mindere.</p></div>
+              </div>
+
+              <!-- ROUTE 2 -->
+              <div class="broute">
+                <div class="brkop"><span class="nr">2</span><h3>Knie over de voet</h3><span class="gr">2 × 8</span></div>
+                <div class="brlijf">
+                  <div class="brbeeld">
+                    <img src="/images/onderste-extremiteit/knie-naar-voren-over-voet-staand-met-steun-line-v1.png" alt="Knie naar voren over de voet, met steun."/>
+                    <svg viewBox="0 0 800 1200" aria-hidden="true">
+                      <path d="M236 764 C300 806 400 830 520 800" fill="none" stroke="#8e9a9e"
+                        stroke-width="8" stroke-dasharray="17 14" stroke-linecap="round"/>
+                      <path d="M236 762 C320 768 420 774 500 760 C540 752 556 742 566 732"
+                        fill="none" stroke="#fff" stroke-width="19" stroke-linecap="round"/>
+                      <path d="M236 762 C320 768 420 774 500 760 C540 752 556 742 566 732"
+                        fill="none" stroke="#c4321a" stroke-width="10" stroke-linecap="round"/>
+                      <g font-family="ui-monospace,Menlo,monospace" font-size="30" font-weight="700">
+                        <circle cx="236" cy="762" r="27" fill="#c4321a" stroke="#fff" stroke-width="5"/>
+                        <text x="236" y="773" text-anchor="middle" fill="#fff">1</text>
+                        <circle cx="392" cy="774" r="24" fill="#fff" stroke="#17608f" stroke-width="9"/>
+                        <polygon points="502,706 540,772 464,772" fill="#e0a000" stroke="#fff" stroke-width="5"/>
+                        <text x="502" y="765" text-anchor="middle" fill="#000" font-size="27">!</text>
+                        <circle cx="566" cy="732" r="27" fill="#2a6f47" stroke="#fff" stroke-width="5"/>
+                        <text x="566" y="743" text-anchor="middle" fill="#fff">4</text>
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="brpunten">
+                    <div class="brp"><span class="mk">1</span><div class="tx"><b>Hand licht op de leuning</b>
+                      <p>Voeten plat, op heupbreedte.</p></div></div>
+                    <div class="brp"><span class="mk rust"></span><div class="tx"><b>Rustpunt — halverwege</b>
+                      <p>Hier mag u blijven staan. Stilstaan is geen stoppen.</p></div></div>
+                    <div class="brp iscrux"><span class="mk crux">!</span><div class="tx"><b>De crux — knie voorbij de tenen</b>
+                      <p>Doffe druk vóór in de knie: goed. Scherpe steek binnenin: terug naar het
+                        rustpunt, en dat was hem voor vandaag.</p></div></div>
+                    <div class="brp"><span class="mk" style="background:#8e9a9e"></span><div class="tx"><b>Sluiproute: de hiel komt los</b>
+                      <p><b>Hiel blijft plat.</b></p></div></div>
+                  </div>
+                </div>
+                <div class="brvoet"><b>UITSTAP</b><p>Stoppen bij het rustpunt telt als gedaan.
+                  Noteer op de achterkant tot waar u kwam.</p></div>
+              </div>
+
+              <!-- ROUTE 3 -->
+              <div class="broute">
+                <div class="brkop"><span class="nr">3</span><h3>Kuitheffing op de trede</h3><span class="gr">2 × 12</span></div>
+                <div class="brlijf">
+                  <div class="brbeeld">
+                    <img src="/images/onderste-extremiteit/kuitheffing-op-een-verhoging-line-v1.png" alt="Kuitheffing op een verhoging."/>
+                    <svg viewBox="0 0 800 1200" aria-hidden="true">
+                      <path d="M228 972 C300 986 420 986 552 958" fill="none" stroke="#8e9a9e"
+                        stroke-width="8" stroke-dasharray="17 14" stroke-linecap="round"/>
+                      <path d="M228 968 C310 950 420 930 498 912 C536 902 556 898 566 896"
+                        fill="none" stroke="#fff" stroke-width="19" stroke-linecap="round"/>
+                      <path d="M228 968 C310 950 420 930 498 912 C536 902 556 898 566 896"
+                        fill="none" stroke="#c4321a" stroke-width="10" stroke-linecap="round"/>
+                      <g font-family="ui-monospace,Menlo,monospace" font-size="30" font-weight="700">
+                        <circle cx="228" cy="968" r="27" fill="#c4321a" stroke="#fff" stroke-width="5"/>
+                        <text x="228" y="979" text-anchor="middle" fill="#fff">1</text>
+                        <circle cx="566" cy="896" r="27" fill="#2a6f47" stroke="#fff" stroke-width="5"/>
+                        <text x="566" y="907" text-anchor="middle" fill="#fff">2</text>
+                        <polygon points="400,872 438,938 362,938" fill="#e0a000" stroke="#fff" stroke-width="5"/>
+                        <text x="400" y="931" text-anchor="middle" fill="#000" font-size="27">!</text>
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="brpunten">
+                    <div class="brp"><span class="mk">1</span><div class="tx"><b>Op de trede, hielen vrij</b>
+                      <p>Beide handen los op de leuning. Voorvoeten op de rand.</p></div></div>
+                    <div class="brp"><span class="mk top">2</span><div class="tx"><b>Zo hoog als u komt</b>
+                      <p>Even stil, dan begint het echte werk.</p></div></div>
+                    <div class="brp iscrux"><span class="mk crux">!</span><div class="tx"><b>De crux zit in het ZAKKEN</b>
+                      <p>Vijf tellen naar beneden, hielen tot onder de trede. Dit is het langzaamste
+                        stuk van uw hele blad — en het belangrijkste.</p></div></div>
+                    <div class="brp"><span class="mk" style="background:#8e9a9e"></span><div class="tx"><b>Sluiproute: laten vallen</b>
+                      <p><b>Zakken duurt langer dan heffen.</b></p></div></div>
+                  </div>
+                </div>
+                <div class="brvoet"><b>UITSTAP</b><p>Te zwaar? Doe hem op de vlakke vloer in plaats
+                  van op de trede. Zelfde route, kortere wand.</p></div>
+              </div>
+
+              <!-- ROUTE 4 -->
+              <div class="broute">
+                <div class="brkop"><span class="nr">4</span><h3>Heupscharnier</h3><span class="gr">2 × 10</span></div>
+                <div class="brlijf">
+                  <div class="brbeeld">
+                    <img src="/images/onderste-extremiteit/heupscharnier-staand-met-steun-line-v1.png" alt="Heupscharnier, staand met steun."/>
+                    <svg viewBox="0 0 800 1200" aria-hidden="true">
+                      <!-- sluiproute: de rug rondt over de wervelkolom van de gekantelde figuur -->
+                      <path d="M462 540 C512 442 566 388 616 372" fill="none" stroke="#8e9a9e"
+                        stroke-width="8" stroke-dasharray="17 14" stroke-linecap="round"/>
+                      <!-- de route: de heup gaat naar achteren -->
+                      <path d="M216 572 C300 564 380 556 452 550"
+                        fill="none" stroke="#fff" stroke-width="19" stroke-linecap="round"/>
+                      <path d="M216 572 C300 564 380 556 452 550"
+                        fill="none" stroke="#c4321a" stroke-width="10" stroke-linecap="round"/>
+                      <g font-family="ui-monospace,Menlo,monospace" font-size="30" font-weight="700">
+                        <circle cx="216" cy="572" r="27" fill="#c4321a" stroke="#fff" stroke-width="5"/>
+                        <text x="216" y="583" text-anchor="middle" fill="#fff">1</text>
+                        <polygon points="340,528 378,594 302,594" fill="#e0a000" stroke="#fff" stroke-width="5"/>
+                        <text x="340" y="587" text-anchor="middle" fill="#000" font-size="27">!</text>
+                        <circle cx="452" cy="550" r="27" fill="#2a6f47" stroke="#fff" stroke-width="5"/>
+                        <text x="452" y="561" text-anchor="middle" fill="#fff">3</text>
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="brpunten">
+                    <div class="brp"><span class="mk">1</span><div class="tx"><b>Rechtop, knieën licht los</b>
+                      <p>Handen op de rugleuning, voeten op heupbreedte.</p></div></div>
+                    <div class="brp iscrux"><span class="mk crux">!</span><div class="tx"><b>De crux — de rug blijft recht</b>
+                      <p>Duw uw billen naar achteren alsof u een deur dichtdoet. U voelt het
+                        <b>achter in de bovenbenen</b> trekken. Dat is de goede plek.</p></div></div>
+                    <div class="brp"><span class="mk top">3</span><div class="tx"><b>Terug omhoog</b>
+                      <p>Rustig, zonder te schieten.</p></div></div>
+                    <div class="brp"><span class="mk" style="background:#8e9a9e"></span><div class="tx"><b>Sluiproute: de rug rondt</b>
+                      <p><b>Billen naar achteren, niet hoofd naar beneden.</b></p></div></div>
+                  </div>
+                </div>
+                <div class="brvoet"><b>UITSTAP</b><p>Voelt u het in de onderrug in plaats van in de
+                  bovenbenen, dan stopt u — dat is de sluiproute, niet de route.</p></div>
+              </div>
+
+            </div>
+
+            <div class="bafdaling">
+              <span class="lb">DE AFDALING</span>
+              <p>Stoppen mag altijd en telt gewoon mee: <b>noteer tot welk punt u kwam</b>. Bel
+                Het Kruispunt bij een knie die dik wordt, bij pijn die 's nachts wakker maakt, of
+                bij een been dat wegzakt — <b>013 - 542 76 11</b>.</p>
+              <div class="prk"><b>Fysiplan</b>blad van 28 augustus<br/>week 3 van 12</div>
+            </div>
+
+            <div class="bvoetregel">
+              <span><b>VIER ROUTES</b> · ONGEVEER 20 MINUTEN · DRIE KEER PER WEEK</span>
+              <span>EEN GRAAD BESCHRIJFT DE ROUTE, NIET DE KLIMMER</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div class="kolom">
+      <h4>WAAROM HET WERKT</h4>
+      <ul>
+        <li>De zin „hier wordt het zwaar, dat hoort" staat op geen enkele oefenkaart en verandert
+          wat een patiënt denkt op het moment dat het zwaar wordt. Dat moment komt bij iedereen.</li>
+        <li>Een rustpunt intekenen geeft mensen toestemming om stil te staan. Zonder die
+          toestemming gaan ze door tot ze móéten stoppen — en dan stoppen ze op de verkeerde plek.</li>
+        <li>De sluiproute is een tekening, geen alinea. Een fout die je kunt aanwijzen hoeft niet
+          uitgelegd te worden, en dat scheelt op elk blad drie zinnen.</li>
+        <li>„Tot punt 3" is bruikbare informatie uit een sessie die vroeger als leeg vakje in het
+          dossier verdween. Uitstappen krijgt een naam en daarmee een plek.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>WAT HET RISICO IS</h4>
+      <ul>
+        <li>Eén crux per route, anders betekent het woord binnen twee weken niets meer. De kiezer
+          moet daar streng in zijn, ook tegen een enthousiaste therapeut.</li>
+        <li>De lijn moet op de tekening kloppen. Een route die ergens langs de knie zweeft in plaats
+          van eroverheen, is erger dan geen lijn: dan wordt het decoratie en gelooft niemand de
+          rest van het blad nog.</li>
+        <li>Bergsporttaal kan opschepperig worden. „Crux" en „uitstap" mogen blijven omdat ze iets
+          benoemen wat geen Nederlands woord heeft; „projecteren", „redpoint" en graden in cijfers
+          horen hier niet — dit is geen prestatie.</li>
+        <li>Vier routes op één A4 met beeld én punten is krap. Liever drie routes met leesbare
+          zinnen dan vier met 6 punts tekst.</li>
+      </ul>
+    </div>
+    <div class="kolom">
+      <h4>MEER</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var breed=schaal.clientWidth, eigen=blad.offsetWidth;
+    var f=Math.min(1,breed/eigen);
+    blad.style.transform='scale('+f+')';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>
