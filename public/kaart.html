@@ -48,6 +48,7 @@
       --chip:#2a2721; --veilig-bg:#2b2517; --veilig-rand:#4a3f26; --veilig-tekst:#d9bf82;
       --sh:0 1px 2px rgba(0,0,0,.35),0 6px 24px rgba(0,0,0,.4);
     }
+    .agrij input[type=time]::-webkit-calendar-picker-indicator{filter:invert(.85)}
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{-webkit-text-size-adjust:100%}
@@ -329,7 +330,7 @@
   .agrij{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   .agrij label{font:600 13.5px/1 var(--disp);color:var(--grijs)}
   .agrij input[type=time]{font:600 15px/1 var(--disp);color:var(--inkt);padding:9px 10px;
-    border:1px solid var(--lijn);border-radius:10px;background:#fffefa}
+    border:1px solid var(--lijn);border-radius:10px;background:var(--vlak)}
   .agbtn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;margin-top:12px;
     font:600 15px/1 var(--disp);padding:13px 16px;border-radius:14px;cursor:pointer;
     border:1px solid var(--blauw);background:var(--blauw);color:#fff;
