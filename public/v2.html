@@ -279,6 +279,35 @@
     .plannen{grid-template-columns:1fr}
     .plan+.plan{border-left:none;border-top:1px solid var(--lijn)}
   }
+  /* narekenschuif: kies je teamgrootte en zie waar de vaste praktijkprijs per
+     behandelaar op neerkomt. Bewust zonder script (de landing blijft scriptloos):
+     verborgen radio's sturen via sibling-selectors het gemarkeerde blokje en de
+     bijbehorende uitkomst aan. Zonder CSS tonen alle uitkomsten gewoon onder elkaar. */
+  .reken{margin-top:34px;border:1px solid var(--lijn);background:var(--papier);padding:26px 30px 28px}
+  .reken .etiket{display:block;margin-bottom:8px}
+  .reken .rvraag{font:700 19px/1.3 var(--serif);color:var(--inkt)}
+  .reken input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+  .liniaal{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+  .liniaal label{min-width:46px;text-align:center;font:600 14px/1 var(--disp);color:var(--demp);
+    border:1px solid var(--lijn);background:var(--bg);padding:11px 8px;cursor:pointer;
+    font-variant-numeric:tabular-nums;transition:background .12s,color .12s,border-color .12s}
+  .liniaal label:hover{border-color:var(--zacht);color:var(--inkt)}
+  #rb1:checked~.liniaal label[for=rb1],#rb2:checked~.liniaal label[for=rb2],#rb3:checked~.liniaal label[for=rb3],
+  #rb4:checked~.liniaal label[for=rb4],#rb5:checked~.liniaal label[for=rb5],#rb6:checked~.liniaal label[for=rb6],
+  #rb8:checked~.liniaal label[for=rb8],#rb10:checked~.liniaal label[for=rb10],#rb12:checked~.liniaal label[for=rb12]{
+    background:var(--inkt);border-color:var(--inkt);color:var(--bg)}
+  #rb1:focus-visible~.liniaal label[for=rb1],#rb2:focus-visible~.liniaal label[for=rb2],#rb3:focus-visible~.liniaal label[for=rb3],
+  #rb4:focus-visible~.liniaal label[for=rb4],#rb5:focus-visible~.liniaal label[for=rb5],#rb6:focus-visible~.liniaal label[for=rb6],
+  #rb8:focus-visible~.liniaal label[for=rb8],#rb10:focus-visible~.liniaal label[for=rb10],#rb12:focus-visible~.liniaal label[for=rb12]{
+    outline:2px solid var(--blauw);outline-offset:2px}
+  .ruit{margin-top:20px}
+  .ru{display:none;align-items:baseline;gap:16px;flex-wrap:wrap}
+  #rb1:checked~.ruit .ru1,#rb2:checked~.ruit .ru2,#rb3:checked~.ruit .ru3,#rb4:checked~.ruit .ru4,
+  #rb5:checked~.ruit .ru5,#rb6:checked~.ruit .ru6,#rb8:checked~.ruit .ru8,#rb10:checked~.ruit .ru10,
+  #rb12:checked~.ruit .ru12{display:flex}
+  .ru .bedrag{font:700 40px/1 var(--serif);letter-spacing:-.02em;color:var(--inkt);font-variant-numeric:tabular-nums}
+  .ru .per{font:italic 15px/1.4 var(--serif);color:var(--demp)}
+  .reken .rnoot{font:400 13.5px/1.6 var(--disp);color:var(--demp);margin-top:14px}
   .rekenregel{font:italic 15.5px/1.65 var(--serif);color:var(--demp);max-width:72ch;margin-top:30px}
   .beloften{display:grid;grid-template-columns:1fr 1fr 1fr;margin-top:40px;border-top:1px solid var(--lijn)}
   .belofte{padding:20px 26px 4px;border-left:1px solid var(--lijn)}
@@ -546,7 +575,14 @@
         <a class="knop oranje" href="/v2/app">Word oprichter</a>
       </div>
     </div>
-    <p class="rekenregel">E&eacute;n vaste prijs voor de hele locatie, hoe groot je team ook is. Met vier behandelaars is dat 39 euro per maand, oftewel 9,75 per behandelaar; met acht is het 4,88. Een nieuwe collega kost altijd nul euro extra, printen en kaarten blijven onbeperkt.</p>
+    <div class="reken">
+      <span class="etiket">Reken het na</span>
+      <p class="rvraag">Hoeveel behandelaars heeft je praktijk?</p>
+      <input type="radio" name="rb" id="rb1"/><input type="radio" name="rb" id="rb2"/><input type="radio" name="rb" id="rb3"/><input type="radio" name="rb" id="rb4" checked/><input type="radio" name="rb" id="rb5"/><input type="radio" name="rb" id="rb6"/><input type="radio" name="rb" id="rb8"/><input type="radio" name="rb" id="rb10"/><input type="radio" name="rb" id="rb12"/>
+      <div class="liniaal" role="radiogroup" aria-label="Aantal behandelaars"><label for="rb1">1</label><label for="rb2">2</label><label for="rb3">3</label><label for="rb4">4</label><label for="rb5">5</label><label for="rb6">6</label><label for="rb8">8</label><label for="rb10">10</label><label for="rb12">12+</label></div>
+      <div class="ruit"><div class="ru ru1"><span class="bedrag">&euro;&thinsp;12,00</span><span class="per">per behandelaar per maand. Solo: 12 euro per maand voor &eacute;&eacute;n therapeut, alle functies.</span></div><div class="ru ru2"><span class="bedrag">&euro;&thinsp;19,50</span><span class="per">per behandelaar per maand. Praktijk: 39 euro per maand, vast, voor de hele locatie.</span></div><div class="ru ru3"><span class="bedrag">&euro;&thinsp;13,00</span><span class="per">per behandelaar per maand. Praktijk: 39 euro per maand, vast, voor de hele locatie.</span></div><div class="ru ru4"><span class="bedrag">&euro;&thinsp;9,75</span><span class="per">per behandelaar per maand. Praktijk: 39 euro per maand, vast, voor de hele locatie.</span></div><div class="ru ru5"><span class="bedrag">&euro;&thinsp;7,80</span><span class="per">per behandelaar per maand. Praktijk: 39 euro per maand, vast, voor de hele locatie.</span></div><div class="ru ru6"><span class="bedrag">&euro;&thinsp;6,50</span><span class="per">per behandelaar per maand. Praktijk: 39 euro per maand, vast, voor de hele locatie.</span></div><div class="ru ru8"><span class="bedrag">&euro;&thinsp;4,88</span><span class="per">per behandelaar per maand. Praktijk: 39 euro per maand, vast, voor de hele locatie.</span></div><div class="ru ru10"><span class="bedrag">&euro;&thinsp;3,90</span><span class="per">per behandelaar per maand. Praktijk: 39 euro per maand, vast, voor de hele locatie.</span></div><div class="ru ru12"><span class="bedrag">&euro;&thinsp;3,25</span><span class="per">per behandelaar per maand. Praktijk: 39 euro per maand, vast, of minder per behandelaar.</span></div></div>
+      <p class="rnoot">E&eacute;n vaste prijs voor de hele locatie, hoe groot je team ook is. Een nieuwe collega kost nul euro extra, printen en kaarten blijven onbeperkt.</p>
+    </div>
     <div class="beloften">
       <div class="belofte"><b>De prijsbelofte</b><p>Je prijs staat minstens 24 maanden vast.</p></div>
       <div class="belofte"><b>Printen blijft gratis</b><p>Kaarten maken en printen kost nooit iets.</p></div>
