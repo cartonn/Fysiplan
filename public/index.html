@@ -2691,6 +2691,23 @@ bridge2.jpg</div>
     else if(t.dataset.k){GRID.cells[t.dataset.k]=t.value;}
     saveState();
   });
+  // v2: onboarding-deeplink — /v2/app?praktijk=Naam zet de praktijknaam alvast
+  // klaar en opent direct het beveiligingsblok, zodat een nieuwe praktijk alleen
+  // nog een wachtwoord hoeft te kiezen. Handig bij het uitrollen van meerdere
+  // vestigingen: per vestiging een eigen klaargezette link. v1 negeert dit.
+  if(IS_V2){
+    try{
+      var qpr=new URLSearchParams(location.search).get('praktijk');
+      if(qpr&&qpr.trim()){
+        SET.praktijk=qpr.trim().slice(0,80);saveSettings();
+        if(elPraktijk)elPraktijk.value=SET.praktijk;
+        setTimeout(function(){
+          var kb=document.getElementById('kaartenBtn');if(kb)kb.click();
+          setTimeout(function(){var ps=document.getElementById('prakslot');if(ps)ps.scrollIntoView({block:'center'});},450);
+        },250);
+      }
+    }catch(e){}
+  }
   applySettings();
   loadState();
   var printTextTrimmed=setupPrintableTextLimits();
