@@ -100,11 +100,13 @@
 
   /* ---- hero: redactionele asymmetrie — tekst links, het product rechts ---- */
   .hero{padding:76px 0 84px}
-  .hero .twee{display:grid;grid-template-columns:minmax(0,26fr) minmax(0,21fr);gap:56px;align-items:center}
+  .hero .twee{display:grid;grid-template-columns:minmax(0,21fr) minmax(0,24fr);gap:48px;align-items:center}
   .hero .kicker{margin-bottom:26px}
-  .hero h1{font:700 clamp(40px,4.9vw,66px)/1.06 var(--serif);letter-spacing:-.022em;color:var(--inkt)}
+  .hero h1{font:700 clamp(40px,4.2vw,58px)/1.07 var(--serif);letter-spacing:-.022em;color:var(--inkt)}
   .hero .sub{font-size:19px;line-height:1.66;color:var(--demp);max-width:52ch;margin-top:24px}
-  .hero .cta{display:flex;align-items:center;gap:26px;margin-top:34px;flex-wrap:wrap}
+  .hero .cta{display:flex;align-items:center;gap:22px;margin-top:34px;flex-wrap:wrap}
+  .hero .cta .knop{font-size:15.5px;padding:14px 26px}
+  .hero .cta .tl{font-size:15.5px}
   .hero .noot{font:italic 14.5px/1.5 var(--serif);color:var(--zacht);margin-top:18px}
   @media (max-width:560px){
     .hero{padding:52px 0 64px}
@@ -114,8 +116,8 @@
   }
 
   /* het product zelf: de A4 als drukwerk, de telefoon er half voor */
-  .toon{position:relative;min-height:584px}
-  .a4{position:absolute;right:0;top:6px;width:min(400px,100%);aspect-ratio:1/1.3;background:var(--papier);
+  .toon{position:relative;min-height:648px}
+  .a4{position:absolute;right:0;top:2px;width:min(452px,100%);aspect-ratio:1/1.3;background:var(--papier);
     border:1px solid var(--lijn);transform:rotate(.8deg);padding:22px 24px;
     box-shadow:0 1px 2px rgba(60,50,20,.06),0 12px 24px -8px rgba(60,50,20,.14),0 44px 80px -24px rgba(60,50,20,.3)}
   .a4 .kophol{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid var(--inkt);padding-bottom:10px}
@@ -136,7 +138,7 @@
   .a4 .voetje{margin-top:12px}
   .a4 .voetje span{font:italic 8.5px/1.4 var(--serif);color:var(--zacht)}
 
-  .tel{position:absolute;left:-24px;bottom:-8px;width:198px;aspect-ratio:198/408;background:#0d1526;
+  .tel{position:absolute;left:-20px;bottom:-10px;width:218px;aspect-ratio:198/408;background:#0d1526;
     border-radius:32px;padding:8px;transform:rotate(-2deg);
     box-shadow:0 2px 4px rgba(20,20,40,.25),0 34px 64px -18px rgba(20,25,50,.5)}
   .tel .scherm{background:var(--bg);border-radius:26px;height:100%;overflow:hidden;padding:14px 12px;position:relative}
@@ -163,12 +165,13 @@
   .tel .pijn i.aan{background:var(--blauw);border-color:var(--blauw);color:#fff}
   .tel .taal{font:400 7.5px/1.4 var(--disp);color:var(--zacht);text-align:center;margin-top:8px}
 
-  .demoqr{position:absolute;right:-14px;bottom:-34px;background:var(--papier);border:1px solid var(--lijn);
-    padding:10px;width:124px;text-align:center;transform:rotate(2deg);
+  .demoqr{position:absolute;right:-16px;bottom:-38px;background:var(--papier);border:1px solid var(--lijn);
+    padding:11px;width:136px;text-align:center;transform:rotate(2deg);
     box-shadow:0 10px 28px -10px rgba(60,50,20,.3)}
   .demoqr svg{width:100%;height:auto;display:block}
   .demoqr span{display:block;font:italic 10.5px/1.4 var(--serif);color:var(--demp);margin-top:7px}
 
+  @media (max-width:1180px){.demoqr{right:0;bottom:-30px}}
   @media (max-width:980px){
     .hero .twee{grid-template-columns:1fr;gap:24px}
     .toon{min-height:0;margin-top:34px}
