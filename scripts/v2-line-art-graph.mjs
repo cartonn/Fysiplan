@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { graphLayers, runDag } from "../lib/dag-runner.js";
@@ -23,6 +24,23 @@ if (command === "run" && !executeApproved) throw new Error("Gebruik run --execut
 if (!["status", "plan", "run"].includes(command)) throw new Error(`Onbekend commando: ${command}`);
 
 const catalogue = JSON.parse(await readFile(cataloguePath, "utf8"));
+// handgetekende illustraties (scripts/lijn-illustratie-graph.mjs) vervangen de
+// deterministische contour op hetzelfde pad; die mag deze graph nooit terugdraaien
+// zolang de onderliggende kleurkaart (colorSha) ongewijzigd is — ook niet met --force
+const registryPath = join(root, "content", "lijn-illustraties.json");
+let illustratieRegister = new Map();
+try {
+  const register = JSON.parse(await readFile(registryPath, "utf8"));
+  illustratieRegister = new Map((register.illustraties || []).map((entry) => [entry.naam, entry]));
+} catch {}
+async function isGeillustreerd(exercise, colorPath) {
+  const entry = illustratieRegister.get(exercise.naam);
+  if (!entry) return false;
+  try {
+    const sha = createHash("sha256").update(await readFile(colorPath)).digest("hex");
+    return sha === entry.colorSha;
+  } catch { return false; }
+}
 const selected = catalogue.slice(0, limit || undefined);
 const pairNodes = selected.map((exercise, index) => ({
   id: `pair:${String(index + 1).padStart(3, "0")}`,
@@ -56,7 +74,8 @@ async function execute(node, results) {
       };
     }
     const hadLine = await assetExists(linePath);
-    if (command === "run" && (!hadLine || force)) await createBinaryLineArt(colorPath, linePath);
+    const geillustreerd = hadLine && await isGeillustreerd(node.exercise, colorPath);
+    if (command === "run" && !geillustreerd && (!hadLine || force)) await createBinaryLineArt(colorPath, linePath);
     const lineReady = await assetExists(linePath);
     const qa = lineReady ? await analyzeBinaryLineArt(linePath) : null;
     return {

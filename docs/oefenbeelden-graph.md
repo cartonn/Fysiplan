@@ -90,3 +90,37 @@ image-work/background-env/bin/python scripts/normalize-exercise-backgrounds.py \
   --model-home image-work/rembg-models \
   --output-root image-work/exact-white-v7
 ```
+
+## Lijn-illustraties in vaste stijl (nátekenen)
+
+De deterministische contourdetectie is gratis en pose-exact, maar tekent gezichten
+schetsmatig. Daarom bestaat er een tweede, generatieve stap die elke goedgekeurde
+kleurkaart via Runway (`gpt_image_2`, referentie = de kleurkaart zelf) volledig
+nátekent in één vaste illustratiestijl: rustige contourlijnen van één gewicht, een
+eenvoudig vriendelijk gezicht, spaarzame plooilijnen, geen arcering of grijstinten.
+Na generatie volgt dezelfde harde poort als altijd: 800×1200, Fysiplan-branding
+linksboven, binarisatie naar uitsluitend `#000000` op `#FFFFFF`, en de bestaande QA.
+
+```mermaid
+flowchart LR
+  C["Goedgekeurde kleurkaart"] --> G["Runway: nátekenen in vaste stijl"]
+  G --> F["Logo + harde binarisatie"] --> Q["QA: puur zwart-wit"] --> V["Vervangt -line-v1.png"]
+  V --> R["content/lijn-illustraties.json (register)"]
+```
+
+Het register bewaart per oefening de `colorSha` van de kleurkaart waarop de
+illustratie is gebaseerd. `scripts/v2-line-art-graph.mjs` slaat geregistreerde
+illustraties over — ook met `--force` — zolang die sha klopt; wijzigt de
+kleurkaart, dan vervalt de bescherming vanzelf en herstelt de deterministische
+lijn zich tot er opnieuw geïllustreerd is.
+
+```bash
+# Inventariseren (schrijft niets, geen API nodig)
+npm run images:lijn-illustraties
+
+# Batch genereren (5 credits per kaart; herstart veilig, batchgrootte instelbaar)
+RUNWAYML_API_SECRET='...' npm run images:lijn-illustraties:generate -- --max-batch 6
+
+# Eén oefening gericht (bijvoorbeeld voor een stijlpilot)
+RUNWAYML_API_SECRET='...' node scripts/lijn-illustratie-graph.mjs run --execute --alleen "Lunges"
+```
