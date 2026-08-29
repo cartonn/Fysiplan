@@ -699,10 +699,17 @@
     tekenDagen();
   }
   var DAGCODES=['MO','TU','WE','TH','FR','SA','SU'];
+  // standaard voorgeselecteerde oefendagen, gespreid en werkdag-gericht. Sluit aan
+  // op het oefendoel dat de therapeut zette (x keer per week), zodat de app-vrije
+  // agenda-herinnering meteen de voorgeschreven frequentie volgt; de patiënt past
+  // het naar smaak aan. Zonder doel: het rustige Ma/Wo/Vr-ritme.
+  var DOELDAGEN={1:['WE'],2:['MO','TH'],3:['MO','WE','FR'],4:['MO','TU','TH','FR'],
+    5:['MO','TU','WE','TH','FR'],6:['MO','TU','WE','TH','FR','SA'],7:['MO','TU','WE','TH','FR','SA','SU']};
   var agInit=false;
   function tekenDagen(){
     var houder=document.getElementById('agdagen');
-    var sel=['MO','WE','FR'];
+    var doel=Number(K.kaart&&K.kaart.doel)||0;
+    var sel=(doel>=1&&doel<=7)?DOELDAGEN[doel].slice():['MO','WE','FR'];
     if(agInit){sel=[];houder.querySelectorAll('button.aan').forEach(function(b){sel.push(b.dataset.dag);});}
     agInit=true;
     houder.setAttribute('role','group');
