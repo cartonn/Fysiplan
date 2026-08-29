@@ -686,7 +686,10 @@ bridge2.jpg</div>
     }
     return svgStr(im.key,im.m,size);
   }
-  function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  // escapet álle vijf HTML-gevoelige tekens, óók beide quotes: veel waarden komen
+  // in single-quoted attributen (data-sdel, title, value) terecht en een niet-
+  // geëscapete quote zou daaruit kunnen breken. Gelijk aan de esc() van kaart.html.
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];});}
   function normEx(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');}
 
   var BASE=[

@@ -583,3 +583,37 @@ onaangetast) — groen.
 
 **Volgende run — pak een ander gebied:** de opname-/uploadketen (`/api/opname`,
 tokens, quota) opnieuw, of injectie/opgeslagen-XSS op een verse renderplek.
+
+## 2026-08-29 — Injectie/opgeslagen-XSS op het therapeutoverzicht
+
+**Geauditeerd:** de renderketen van de gedeelde kaartenlijst in de v2-app
+(`public/index.html`), plus de opname-/uploadketen (`/api/opname/*`) uit de vorige
+rotatiepointer. De opnameketen bleek al dicht (admin-gate op start, token-gebonden
+upload met magic-byte- en groottecontrole, cross-site-weigering, quota; 20
+regressiechecks bestaand) — geen wijziging nodig.
+
+**Bevinding (gefixt):** de `esc()` van de therapeut-app escapete alleen `& < >`,
+niet de beide quotes, terwijl `esc()` van kaart.html dat wél doet. Diverse waarden
+komen in de app in single-quoted attributen terecht (`data-sdel='…'`, `title='…'`),
+waaronder de kaartnaam. In een gedeelde praktijk zien alle therapeuten elkaars
+kaarten, dus een kaartnaam met een quote brak uit het attribuut — een cross-user
+opgeslagen-injectie op een verse renderplek (extra relevant nu er meerdere
+accounts per praktijk aankomen, en nu de onboarding-deeplink `?praktijk=` een
+aanvaller-beïnvloedbare naam introduceerde). Het per-antwoord script-nonce (CSP)
+ving de scriptuitvoering nog op als tweede laag, maar correcte escaping hoort de
+eerste laag te zijn.
+
+**Increment:** `esc()` in `public/index.html` gelijkgetrokken met die van
+kaart.html — escapet nu alle vijf HTML-gevoelige tekens (`& < > " '`). Alle
+esc()-gebruik in de app is HTML-context (geverifieerd); dataset-terugkoppeling
+decodeert entiteiten, dus verwijderen-op-naam blijft exact werken. Nieuwe
+regressiewacht `test-overzicht-xss.mjs` (7 checks) bewijst met een
+attribuut-breakout-payload als kaartnaam dat het overzicht inert rendert en dat
+`data-sdel` na DOM-decodering exact de originele naam teruggeeft; de tegenproef
+(zwakke esc terug) laat die wacht falen. Bestaande v2-flows groen: stored-xss (13),
+kern (21, v1 onaangetast), aandacht-filter (11), deeplinks (17), kaartzoek (10),
+archief (19).
+
+**Volgende run — pak een ander gebied:** de leeslimieten en open GET-API's
+(`/api/kaart/*`, `/api/kaarten`, `/vertaal`, `/manifest`) op enumeratie/rate-limits,
+of de AI-`/vraag`-keten (promptinjectie, kosten-/quotarem).
