@@ -2069,6 +2069,24 @@ bridge2.jpg</div>
         r.push('Pijn (zelfrapportage NPRS 0-10): gestart '+dd(e.t)+' op '+e.s+', laatst '+dd(l.t)+' op '+l.s+' — '+richting+' over '+mt.length+' metingen.');
       }else r.push('Pijn (zelfrapportage NPRS 0-10): '+mt[0].s+' op '+dd(mt[0].t)+'.');
     }
+    // oefentrouw uit het app-vrije "ik heb geoefend": een rapporteerbare regel voor
+    // het EPD. Dit inzicht bieden concurrenten alleen mét patiënt-app; hier telt de
+    // patiënt zonder account. Distinct oefendagen over de laatste 4 weken, en waar
+    // de therapeut een doel zette ook de gemiddelde frequentie tegenover dat doel.
+    var gd=(kaart.gedaan||[]).filter(function(x){return x&&x.t;});
+    if(gd.length){
+      var ddd=function(t){return new Date(t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});};
+      var dagKey=function(t){var d=new Date(t);return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();};
+      var nuG=Date.now(),win=28*864e5;
+      var recent=gd.filter(function(x){return nuG-x.t<win;});
+      var dgn=new Set(recent.map(function(x){return dagKey(x.t);})).size;
+      var laatst=gd.reduce(function(m,x){return x.t>m?x.t:m;},0);
+      var doelG=Number(kaart.doel)||0;
+      var regel='Oefentrouw (app-vrij aangetikt): '+dgn+' oefendag'+(dgn===1?'':'en')+' in de afgelopen 4 weken';
+      if(doelG>0){var gem=Math.round(dgn/4*10)/10;regel+=', doel '+doelG+'x/week — gemiddeld '+gem+'x/week';}
+      if(laatst)regel+=', laatst geoefend '+ddd(laatst);
+      r.push(regel+'.');
+    }
     if(kaart.id)r.push('Digitale kaart: '+location.origin+'/k/'+kaart.id);
     return r.join('\n');
   }
