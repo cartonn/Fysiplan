@@ -1,0 +1,945 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 57 — Zaaltekst · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 57 — ZAALTEKST
+   ------------------------------------------------------------
+   Niemand leest alles. Een museum rekent daarop; een oefenkaart
+   nog niet.
+
+   In een goed ingerichte zaal staat de tekst in drie lagen. Aan
+   de muur hangt de zaaltekst: één grote regel plus een korte
+   alinea, leesbaar op twee meter afstand. Bij het object hangt
+   het objectlabel: naam, herkomst, één zin. En wie meer wil,
+   pakt de zaalkaart of de gids. Drie lagen, en — dit is het
+   ontwerp — ELKE LAAG IS OP ZICHZELF AF. Wie na de eerste regel
+   doorloopt heeft niets gemist dat hij nodig had. Wie alles
+   leest, krijgt geen herhaling maar verdieping.
+
+   De oefenkaart doet iets anders. Die zet alles op één niveau:
+   de naam van de oefening, de dosering, de uitvoering, de
+   waarschuwing, de variant — allemaal in ongeveer hetzelfde
+   corps, in ongeveer dezelfde grijstint, allemaal even
+   belangrijk. En als alles even belangrijk is, moet de lezer
+   zelf gaan rangschikken. Een 78-jarige met een leesbril op de
+   keukentafel doet dat niet. Die leest de eerste regel, denkt
+   „ja, dat weet ik wel", en legt het vel neer.
+
+   DUS: drie lagen, hard gerangschikt.
+     · LAAG 1 — DE REGEL. Maximaal zeven woorden, groot genoeg
+       om vanaf de andere kant van de kamer te lezen. „Sta tien
+       keer op uit de stoel." Wie hier stopt, doet de oefening
+       goed.
+     · LAAG 2 — DE UITLEG. Maximaal vijfendertig woorden. Voeten,
+       handen, tempo. Wie hier stopt, doet hem beter.
+     · LAAG 3 — DE VERDIEPING. Waarom, wanneer niet, en wat de
+       variant is. In een schreefletter, kleiner, en bewust
+       ondergeschikt — dit is de gids, niet de muur.
+
+   En één museumgewoonte erbij: de zalen. Een tentoonstelling
+   deelt op in ruimtes met een eigen wandkleur, zodat je weet
+   waar je bent zonder het te lezen. Hier zijn de zalen momenten
+   van de dag — ochtend, overdag, avond — elk met een eigen
+   kleur. De patiënt loopt een route, geen lijst.
+
+   VORM. Museale wand: veel rust, brede marges, één humanistische
+   schreefloze voor wat de bezoeker moet lezen, een schreefletter
+   alleen voor de derde laag. Contrast ruim boven de norm,
+   geen kapitaal in de broodtekst, geen smalle snit — precies de
+   dingen die toegankelijkheidsrichtlijnen van musea al jaren
+   voorschrijven en die op oefenkaarten stelselmatig ontbreken.
+   Op papier krimpt het corps mee (een zaaltekst is voor twee
+   meter, dit vel voor veertig centimeter: 15 / 10,4 / 8,2 pt)
+   maar de RANGORDE blijft exact gelijk. Dat is het hele concept: de verhouding,
+   niet de grootte.
+   ============================================================ */
+
+:root{
+  --wand:#eceae4;
+  --wand-2:#f5f4f0;
+  --label:#fffdf8;
+  --inkt:#14161a;
+  --inkt-2:#42474e;
+  --grijs:#7b8189;
+  --lijn:#d7d5cd;
+  --lijn-2:#e6e4dd;
+
+  --zaal-1:#7d4a3c;   /* ochtend — klei */
+  --zaal-2:#3b566d;   /* overdag — leisteen */
+  --zaal-3:#57603a;   /* avond — olijf */
+  --let:#a03328;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",Frutiger,system-ui,-apple-system,sans-serif;
+  --serif:Charter,"Iowan Old Style",Georgia,"Times New Roman",serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:44px; --s6:72px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17.5px/1.62 var(--sans);color:var(--inkt-2);background:var(--wand)}
+img{max-width:100%;display:block}
+a{color:var(--zaal-2)}
+:focus-visible{outline:3px solid var(--zaal-2);outline-offset:3px}
+
+.binnen{max-width:1140px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--inkt);color:#c8ccd2;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border:1px solid #3d434b;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#c8ccd2;text-decoration:none;padding:5px 3px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:#c08e7e}
+.labbalk a.terug{color:#fff;border-bottom-color:#3d434b}
+@media (max-width:760px){.labbalk a:not(.terug){display:none}}
+
+.scherm{padding:var(--s6) 0;border-bottom:1px solid var(--lijn)}
+.scherm.licht{background:var(--wand-2)}
+.schermkop{margin-bottom:var(--s5);max-width:64ch}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--zaal-1);
+  margin-bottom:var(--s2)}
+.schermkop h2{font:600 clamp(28px,3.4vw,38px)/1.12 var(--sans);letter-spacing:-.03em;color:var(--inkt)}
+.schermkop p{margin-top:var(--s3);font-size:17.5px}
+.schermkop em{font-style:italic;color:var(--inkt)}
+
+/* ---------- 1 landing ---------- */
+.merkregel{display:flex;align-items:center;gap:11px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:28px;height:28px;background:var(--inkt);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:600 14px/1 var(--sans)}
+.merkregel .naam{font:600 16px/1 var(--sans);color:var(--inkt);letter-spacing:-.015em}
+.merkregel .pad{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--grijs)}
+
+h1.kop{font:600 clamp(34px,5vw,54px)/1.08 var(--sans);letter-spacing:-.035em;color:var(--inkt);max-width:19ch}
+h1.kop em{font-style:normal;color:var(--zaal-1)}
+.onder{margin-top:var(--s4);font-size:19px;max-width:56ch}
+.onder b{color:var(--inkt);font-weight:600}
+.onder + .onder{margin-top:var(--s3)}
+
+/* de wand met de drie lagen */
+.wandbeeld{margin-top:var(--s6);background:var(--zaal-1);padding:var(--s6) var(--s5);color:#fff}
+@media (max-width:620px){.wandbeeld{padding:var(--s5) var(--s4)}}
+.wandbeeld .zaalnaam{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#e8c6ba;margin-bottom:var(--s4)}
+.wandbeeld .laag1{font:600 clamp(30px,4.6vw,50px)/1.1 var(--sans);letter-spacing:-.035em;max-width:16ch}
+.wandbeeld .laag2{margin-top:var(--s4);font:400 clamp(18px,2vw,21px)/1.55 var(--sans);max-width:48ch;color:#f4e3dd}
+.wandbeeld .laag3{margin-top:var(--s4);border-top:1px solid rgba(255,255,255,.28);padding-top:var(--s3);
+  font:400 15.5px/1.6 var(--serif);max-width:60ch;color:#e0c8c0}
+.wandbeeld .merken{display:flex;gap:var(--s4);margin-top:var(--s5);flex-wrap:wrap}
+.wandbeeld .merken span{font:700 9.5px/1.5 var(--mono);letter-spacing:.14em;color:#e8c6ba;
+  border-top:2px solid #e8c6ba;padding-top:7px}
+.wandbeeld .merken span i{display:block;font-style:normal;color:#fff;font-weight:400;
+  font-family:var(--sans);font-size:13.5px;letter-spacing:0;margin-top:3px}
+
+.vergelijk{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);margin-top:var(--s6);align-items:start}
+@media (max-width:880px){.vergelijk{grid-template-columns:1fr;gap:var(--s4)}}
+.vergelijk h3{font:700 10.5px/1 var(--mono);letter-spacing:.16em;padding-bottom:9px;
+  border-bottom:2px solid;margin-bottom:var(--s3)}
+.vergelijk .oud h3{color:var(--grijs);border-color:var(--grijs)}
+.vergelijk .nieuw h3{color:var(--zaal-1);border-color:var(--zaal-1)}
+.plat{background:var(--label);border:1px solid var(--lijn);padding:var(--s3) 18px}
+.plat p{font:400 14.5px/1.55 var(--sans);color:#5a6068;margin-bottom:6px}
+.plat p:last-child{margin-bottom:0}
+.rang{background:var(--label);border:1px solid var(--lijn);padding:var(--s4) 18px}
+.rang .r1{font:600 25px/1.18 var(--sans);letter-spacing:-.028em;color:var(--inkt)}
+.rang .r2{margin-top:11px;font:400 16.5px/1.5 var(--sans);color:var(--inkt-2)}
+.rang .r3{margin-top:13px;padding-top:11px;border-top:1px solid var(--lijn-2);
+  font:400 14px/1.55 var(--serif);color:#6c7279}
+.vergelijk .bij{margin-top:var(--s3);font-size:15.5px;line-height:1.6;color:var(--inkt-2)}
+.vergelijk .bij b{color:var(--inkt);font-weight:600}
+
+/* ---------- 2 kiezer ---------- */
+.kiezerrij{display:grid;grid-template-columns:1.1fr .9fr;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.kiezerrij{grid-template-columns:1fr}}
+.paneel{background:var(--label);border:1px solid var(--lijn)}
+.paneel > h3{font:700 11px/1 var(--mono);letter-spacing:.16em;color:#fff;background:var(--inkt);
+  padding:13px 16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.paneel > h3 span{font-weight:500;color:#b7bcc3}
+
+.zalenbalk{display:flex;border-bottom:1px solid var(--lijn)}
+.zalenbalk div{flex:1;padding:13px 14px;border-right:1px solid var(--lijn)}
+.zalenbalk div:last-child{border-right:0}
+.zalenbalk div b{display:block;font:700 9.5px/1 var(--mono);letter-spacing:.13em;margin-bottom:6px}
+.zalenbalk div i{font-style:normal;font:400 14px/1.4 var(--sans);color:var(--inkt-2)}
+.zalenbalk .z1{border-top:4px solid var(--zaal-1)} .zalenbalk .z1 b{color:var(--zaal-1)}
+.zalenbalk .z2{border-top:4px solid var(--zaal-2)} .zalenbalk .z2 b{color:var(--zaal-2)}
+.zalenbalk .z3{border-top:4px solid var(--zaal-3)} .zalenbalk .z3 b{color:var(--zaal-3)}
+
+.zoek{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--lijn)}
+.zoek .veld{flex:1;border:1px solid var(--lijn);background:#fff;padding:10px 12px;
+  font:500 15.5px/1 var(--sans);color:var(--inkt)}
+.zoek .veld i{font-style:normal;font-weight:400;color:var(--grijs)}
+.zoek .tel{font:700 11px/1 var(--mono);letter-spacing:.08em;color:var(--zaal-2);white-space:nowrap}
+
+.oefrij{display:grid;grid-template-columns:20px 56px 1fr;gap:13px;align-items:start;
+  padding:13px 16px;border-bottom:1px solid var(--lijn-2)}
+.oefrij .vink{width:17px;height:17px;border:1.5px solid var(--inkt);background:#fff;margin-top:3px}
+.oefrij.aan .vink{background:var(--zaal-2);border-color:var(--zaal-2);position:relative}
+.oefrij.aan .vink::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;
+  border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg)}
+.oefrij .beeld{background:#fff;border:1px solid var(--lijn);padding:2px}
+.oefrij h4{font:600 16px/1.2 var(--sans);color:var(--inkt);letter-spacing:-.018em}
+.oefrij .zaalmerk{display:inline-block;font:700 9px/1 var(--mono);letter-spacing:.12em;color:#fff;
+  padding:4px 7px;margin-top:7px}
+.oefrij .zaalmerk.z1{background:var(--zaal-1)}
+.oefrij .zaalmerk.z2{background:var(--zaal-2)}
+.oefrij .zaalmerk.z3{background:var(--zaal-3)}
+.oefrij .sub{font:400 13.5px/1.45 var(--serif);color:var(--grijs);margin-top:5px}
+.oefrij.uit{opacity:.5}
+
+/* de tekstredactie met tellers */
+.redactie{padding:var(--s4) 18px}
+.redactie > p{font-size:15.5px;line-height:1.6;margin-bottom:var(--s4)}
+.redactie > p b{color:var(--inkt);font-weight:600}
+.laagvak{border-top:1px solid var(--lijn-2);padding-top:var(--s3);margin-top:var(--s3)}
+.laagvak .lk{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:10px}
+.laagvak .lk b{font:700 9.5px/1 var(--mono);letter-spacing:.14em;color:var(--grijs)}
+.laagvak .lk .teller{font:700 10px/1 var(--mono);letter-spacing:.06em;color:var(--zaal-3)}
+.laagvak .lk .teller.vol{color:var(--let)}
+.laagvak .veldtekst{background:#fff;border:1px solid var(--lijn);padding:13px 15px}
+.laagvak.l1 .veldtekst{font:600 23px/1.2 var(--sans);letter-spacing:-.028em;color:var(--inkt)}
+.laagvak.l2 .veldtekst{font:400 16.5px/1.5 var(--sans);color:var(--inkt-2)}
+.laagvak.l3 .veldtekst{font:400 14.5px/1.6 var(--serif);color:#6c7279}
+.laagvak .balk{height:6px;background:var(--lijn-2);margin-top:9px;position:relative}
+.laagvak .balk i{display:block;height:100%;background:var(--zaal-3)}
+.laagvak .balk i.vol{background:var(--let)}
+.laagvak small{display:block;margin-top:9px;font:400 14px/1.5 var(--sans);color:var(--grijs)}
+.laagvak small b{color:var(--inkt-2);font-weight:600}
+
+.regelvak{margin:var(--s4) 18px var(--s4);border-left:3px solid var(--let);background:#fbeeec;padding:14px 16px}
+.regelvak b{display:block;font:700 10px/1 var(--mono);letter-spacing:.13em;color:var(--let);margin-bottom:8px}
+.regelvak p{font-size:15.5px;line-height:1.58}
+
+/* ---------- 3 cliëntkaart ---------- */
+.expo{background:var(--label);border:1px solid var(--lijn)}
+.expokop{padding:var(--s4);background:var(--inkt);color:#fff;display:flex;flex-wrap:wrap;
+  gap:var(--s3);align-items:baseline}
+.expokop h3{font:600 24px/1.16 var(--sans);letter-spacing:-.028em}
+.expokop .wk{margin-left:auto;font:700 11px/1 var(--mono);letter-spacing:.13em;color:#c08e7e}
+.expokop .sub{width:100%;font-size:15.5px;color:#aeb3ba}
+
+.plattegrond{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--lijn);
+  border-bottom:1px solid var(--lijn)}
+@media (max-width:760px){.plattegrond{grid-template-columns:1fr}}
+.plattegrond .zaal{padding:var(--s3) 17px;background:#fff}
+.plattegrond .zaal b{display:block;font:700 9.5px/1 var(--mono);letter-spacing:.14em;margin-bottom:7px}
+.plattegrond .zaal h4{font:600 18px/1.2 var(--sans);color:var(--inkt);letter-spacing:-.022em}
+.plattegrond .zaal p{font:400 14px/1.5 var(--sans);color:var(--grijs);margin-top:6px}
+.plattegrond .zaal .streep{height:6px;margin-bottom:12px}
+.plattegrond .z1 .streep{background:var(--zaal-1)} .plattegrond .z1 b{color:var(--zaal-1)}
+.plattegrond .z2 .streep{background:var(--zaal-2)} .plattegrond .z2 b{color:var(--zaal-2)}
+.plattegrond .z3 .streep{background:var(--zaal-3)} .plattegrond .z3 b{color:var(--zaal-3)}
+
+.zaalblok{padding:var(--s5) var(--s4)}
+@media (max-width:620px){.zaalblok{padding:var(--s4) var(--s3)}}
+.zaalhoofd{display:flex;align-items:baseline;gap:var(--s3);border-bottom:2px solid;padding-bottom:10px;
+  margin-bottom:var(--s4);flex-wrap:wrap}
+.zaalhoofd b{font:700 10.5px/1 var(--mono);letter-spacing:.16em}
+.zaalhoofd h4{font:600 21px/1.2 var(--sans);letter-spacing:-.025em;color:var(--inkt)}
+.zaalhoofd span{margin-left:auto;font:400 14.5px/1 var(--sans);color:var(--grijs)}
+.zaalblok.z1 .zaalhoofd{border-color:var(--zaal-1)} .zaalblok.z1 .zaalhoofd b{color:var(--zaal-1)}
+.zaalblok.z2 .zaalhoofd{border-color:var(--zaal-2)} .zaalblok.z2 .zaalhoofd b{color:var(--zaal-2)}
+.zaalblok.z3 .zaalhoofd{border-color:var(--zaal-3)} .zaalblok.z3 .zaalhoofd b{color:var(--zaal-3)}
+
+.object{display:grid;grid-template-columns:96px 1fr 240px;gap:var(--s4);align-items:start;
+  padding:var(--s4) 0;border-top:1px solid var(--lijn-2)}
+.object:first-of-type{border-top:0;padding-top:0}
+@media (max-width:960px){.object{grid-template-columns:80px 1fr;gap:var(--s3)}}
+.object .bld{border:1px solid var(--lijn);background:#fff;padding:3px}
+.object .l1{font:600 clamp(21px,2.3vw,26px)/1.18 var(--sans);letter-spacing:-.028em;color:var(--inkt)}
+.object .l2{margin-top:11px;font:400 17px/1.55 var(--sans);color:var(--inkt-2);max-width:52ch}
+.object .l3{margin-top:14px;padding-top:12px;border-top:1px solid var(--lijn-2);
+  font:400 14.5px/1.6 var(--serif);color:#6c7279;max-width:56ch}
+.object .l3 b{color:var(--inkt-2);font-weight:600}
+.objectlabel{background:#fff;border:1px solid var(--lijn);padding:14px 15px}
+.objectlabel dt{font:700 9px/1 var(--mono);letter-spacing:.14em;color:var(--grijs);margin-bottom:5px}
+.objectlabel dd{font:500 15px/1.4 var(--sans);color:var(--inkt);margin-bottom:11px}
+.objectlabel dd:last-child{margin-bottom:0}
+.objectlabel dd i{font-style:normal;color:var(--inkt-2);font-weight:400}
+.objectlabel .streepje{height:4px;margin:-14px -15px 13px}
+.zaalblok.z1 .objectlabel .streepje{background:var(--zaal-1)}
+.zaalblok.z2 .objectlabel .streepje{background:var(--zaal-2)}
+.zaalblok.z3 .objectlabel .streepje{background:var(--zaal-3)}
+
+.gidsblok{margin-top:var(--s5);border:1px solid var(--lijn);background:var(--wand-2)}
+.gidsblok h4{font:700 10.5px/1 var(--mono);letter-spacing:.15em;color:#fff;background:var(--inkt);padding:12px 17px}
+.gidsblok .lijf{padding:var(--s4) 17px;display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+@media (max-width:820px){.gidsblok .lijf{grid-template-columns:1fr;gap:var(--s3)}}
+.gidsblok p{font-size:16.5px;line-height:1.62}
+.gidsblok p b{color:var(--inkt);font-weight:600}
+
+/* ---------- 4 printkaart ---------- */
+.printbalk{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:var(--s4);
+  border:1px solid var(--lijn);background:var(--label);padding:14px 17px}
+.printbalk p{font-size:16px;line-height:1.55;flex:1;min-width:250px}
+.printbalk p b{color:var(--inkt);font-weight:600}
+.printknop{border:1px solid var(--inkt);background:var(--inkt);color:#fff;cursor:pointer;
+  font:600 14.5px/1 var(--sans);padding:12px 17px}
+.printknop:hover{background:var(--zaal-1);border-color:var(--zaal-1)}
+
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;position:relative;
+  transform-origin:top left;box-shadow:0 3px 34px rgba(20,22,26,.24);
+  font-family:var(--sans);overflow:hidden}
+@media (max-width:860px){.bladschaal{max-width:100%}}
+.blad .rand{position:absolute;inset:0;padding:12mm 14mm 10mm;display:flex;flex-direction:column}
+
+.zkop{display:flex;justify-content:space-between;align-items:flex-end;gap:6mm;
+  border-bottom:1.4pt solid #000;padding-bottom:2mm}
+.zkop .t{font:600 15pt/1.05 var(--sans);letter-spacing:-.03em;color:#000}
+.zkop .t i{display:block;font-style:normal;font:400 8.4pt/1.35 var(--sans);color:#42474e;margin-top:1.2mm}
+.zkop .wie{text-align:right;font:400 7.2pt/1.4 var(--sans);color:#42474e;white-space:nowrap}
+.zkop .wie b{display:block;font:700 5.8pt/1 var(--mono);letter-spacing:.16em;color:#7b8189;margin-bottom:.8mm}
+
+.zlead{margin-top:2.8mm;font:400 9pt/1.42 var(--sans);color:#000;max-width:160mm}
+.zlead b{font-weight:600}
+
+/* zaalstrook */
+.zaalkop{margin-top:4.4mm;display:flex;align-items:baseline;gap:3mm;padding-bottom:1.2mm;
+  border-bottom:1.1pt solid}
+.zaalkop b{font:700 6pt/1 var(--mono);letter-spacing:.16em}
+.zaalkop h3{font:600 11.4pt/1 var(--sans);letter-spacing:-.025em;color:#000}
+.zaalkop span{margin-left:auto;font:400 6.6pt/1 var(--sans);color:#5a6068}
+.z1 .zaalkop{border-color:#7d4a3c} .z1 .zaalkop b{color:#7d4a3c}
+.z2 .zaalkop{border-color:#3b566d} .z2 .zaalkop b{color:#3b566d}
+.z3 .zaalkop{border-color:#57603a} .z3 .zaalkop b{color:#57603a}
+
+.pobject{display:grid;grid-template-columns:23mm 1fr;gap:4.2mm;align-items:start;
+  padding:3.2mm 0;border-bottom:.4pt solid #cfccc4}
+.pobject:last-child{border-bottom:0}
+.pobject .bld{border:.7pt solid #000;background:#fff;padding:.4mm}
+.pobject .kern{min-width:0}
+.pl1{display:flex;align-items:baseline;gap:3mm;justify-content:space-between}
+.pl1 h4{font:600 15pt/1.08 var(--sans);letter-spacing:-.03em;color:#000}
+.pl1 .ds{font:700 7pt/1 var(--mono);letter-spacing:.05em;color:#000;border:.8pt solid #000;
+  padding:.8mm 1.6mm;white-space:nowrap}
+.pl2{margin-top:1.6mm;font:400 10.4pt/1.42 var(--sans);color:#000;max-width:148mm}
+.pl3{margin-top:1.6mm;font:400 8.2pt/1.36 var(--serif);color:#3f444b;max-width:152mm}
+.pl3 b{font-weight:700;color:#000}
+
+.zvoet{margin-top:auto;padding-top:2.4mm}
+.zlet{border:1.1pt solid #a03328;padding:1.6mm 2.4mm;display:grid;grid-template-columns:auto 1fr;
+  gap:3mm;align-items:center}
+.zlet > b{font:700 6pt/1.2 var(--mono);letter-spacing:.13em;color:#a03328;white-space:nowrap}
+.zlet p{font:400 8.2pt/1.34 var(--sans);color:#000}
+.zlet p b{font-weight:700}
+.zregel{margin-top:1.8mm;display:flex;justify-content:space-between;gap:5mm;
+  font:400 6.2pt/1.35 var(--mono);letter-spacing:.1em;color:#7b8189}
+.zregel b{color:#000}
+
+.uitleg{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s5)}
+@media (max-width:880px){.uitleg{grid-template-columns:1fr}}
+.uitleg div{border-top:1px solid var(--lijn);padding-top:var(--s3)}
+.uitleg h4{font:700 10px/1 var(--mono);letter-spacing:.15em;color:var(--zaal-1);margin-bottom:9px}
+.uitleg p{font-size:16px;line-height:1.6}
+.uitleg p b{color:var(--inkt);font-weight:600}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#b8bcc3;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:#c08e7e;
+  border-top:1px solid #3d434b;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:16px;line-height:1.64}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:9px}
+footer.uitleiding a{color:#c08e7e}
+
+/* ============================================================
+   PRINT — het corps zakt (twee meter wordt veertig centimeter),
+   de rangorde blijft: 13,4 pt tegen 9,2 pt tegen 7,2 pt. De
+   wandkleur krimpt tot een lijn, zodat de zalen ook zwart-wit
+   herkenbaar blijven aan hun plek en hun kop.
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000 !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  .schermkop,.uitleg{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border:0 !important;background:#fff !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 57</span>
+  <strong style="font:600 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Zaaltekst</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm licht" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 57 · ZAALTEKST</span>
+    </div>
+
+    <h1 class="kop">Niemand leest alles.<br/><em>Een museum rekent daarop.</em></h1>
+    <p class="onder">In een goed ingerichte zaal staat de tekst in drie lagen: één grote regel aan
+      de muur, een korte alinea eronder, en de gids voor wie meer wil. En het beslissende ontwerp
+      zit hierin — <b>elke laag is op zichzelf af</b>. Wie na de eerste regel doorloopt, heeft niets
+      gemist dat hij nodig had.</p>
+    <p class="onder">De oefenkaart zet alles op één niveau. Naam, dosering, uitvoering, waarschuwing,
+      variant: hetzelfde corps, dezelfde grijstint, allemaal even belangrijk. En als alles even
+      belangrijk is, moet de lezer zelf gaan rangschikken. <b>Een mens van 78 met een leesbril aan
+      de keukentafel doet dat niet.</b> Die leest de eerste regel en legt het vel neer.</p>
+
+    <div class="wandbeeld">
+      <div class="zaalnaam">ZAAL 1 · OCHTEND — DE EERSTE TIEN MINUTEN</div>
+      <div class="laag1">Trek uw knie naar uw borst. Tien keer.</div>
+      <div class="laag2">Nog in bed, op uw rug. Pak met beide handen onder uw knie en trek hem
+        rustig naar u toe, tot u het in de onderrug voelt meegeven. Vijf tellen vasthouden,
+        dan het andere been.</div>
+      <div class="laag3">Waarom eerst dit: na een nacht liggen is de onderrug het stijfst, en
+        rekken werkt beter dan meteen opstaan en doorlopen. Lukt het niet met twee handen,
+        gebruik dan een handdoek achter uw knie. Bij pijn die naar uw voet uitstraalt: overslaan
+        en het vandaag melden.</div>
+      <div class="merken">
+        <span>LAAG 1 — DE REGEL<i>7 woorden · leesbaar op 2 meter</i></span>
+        <span>LAAG 2 — DE UITLEG<i>35 woorden · wie hem beter wil doen</i></span>
+        <span>LAAG 3 — DE VERDIEPING<i>waarom, wanneer niet, variant</i></span>
+      </div>
+    </div>
+
+    <div class="vergelijk">
+      <div class="oud">
+        <h3>ZOALS HET NU IS</h3>
+        <div class="plat">
+          <p>Knie naar borst (liggend) — 2 series × 10 herhalingen, 5 sec vasthouden, 1× per dag,
+            ochtend</p>
+          <p>Uitvoering: rugligging, beide handen onder de knie, rustig aantrekken tot lichte rek
+            in de lumbale regio, contralateraal been gestrekt houden.</p>
+          <p>Let op: staken bij radiculaire uitstraling. Alternatief: handdoek. Progressie week 3.</p>
+        </div>
+        <p class="bij">Alles waar. Alles even groot. <b>Er is geen ingang</b>, dus er is geen
+          moment waarop de lezer denkt: dit stuk is voor mij.</p>
+      </div>
+      <div class="nieuw">
+        <h3>ZOALS EEN ZAAL HET DOET</h3>
+        <div class="rang">
+          <div class="r1">Trek uw knie naar uw borst. Tien keer.</div>
+          <div class="r2">Nog in bed, op uw rug. Beide handen onder uw knie, rustig naar u toe
+            tot de onderrug meegeeft. Vijf tellen. Dan het andere been.</div>
+          <div class="r3">Waarom eerst dit: na een nacht liggen is de onderrug het stijfst.
+            Lukt het niet met twee handen, gebruik een handdoek. Bij uitstraling naar de voet:
+            overslaan en melden.</div>
+        </div>
+        <p class="bij">Zelfde inhoud, geen woord meer. <b>Alleen een rangorde</b> — en daarmee
+          drie mogelijke lezers in plaats van één.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 2</b>
+      <h2>De oefeningen-kiezer</h2>
+      <p>Samenstellen is hier <em>inrichten</em>: elke oefening krijgt een zaal — ochtend, overdag,
+        avond — en drie tekstlagen. De tellers zijn geen suggestie maar een grens: zeven woorden
+        voor de regel, vijfendertig voor de uitleg. Loopt de teller rood, dan hoort de zin een
+        laag lager.</p>
+    </div>
+
+    <div class="kiezerrij">
+
+      <div class="paneel">
+        <h3>DE OPSTELLING <span>rugprogramma · 215 oefeningen beschikbaar</span></h3>
+
+        <div class="zalenbalk">
+          <div class="z1"><b>ZAAL 1 · OCHTEND</b><i>2 objecten · 6 minuten</i></div>
+          <div class="z2"><b>ZAAL 2 · OVERDAG</b><i>2 objecten · bij het werk</i></div>
+          <div class="z3"><b>ZAAL 3 · AVOND</b><i>1 object · 4 minuten</i></div>
+        </div>
+
+        <div class="zoek">
+          <span class="veld">rug <i>— aspecifieke lage rugklachten, week 3</i></span>
+          <span class="tel">5 GEKOZEN</span>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <img class="beeld" src="/images/rug/knie-naar-borst-liggend-line-v1.png" alt="Knie naar borst, liggend"/>
+          <div>
+            <h4>Knie naar borst, liggend</h4>
+            <span class="zaalmerk z1">ZAAL 1 · OCHTEND</span>
+            <p class="sub">„Trek uw knie naar uw borst. Tien keer." — 7 woorden</p>
+          </div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <img class="beeld" src="/images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png" alt="Rug bol en hol"/>
+          <div>
+            <h4>Rug bol en hol maken</h4>
+            <span class="zaalmerk z1">ZAAL 1 · OCHTEND</span>
+            <p class="sub">„Maak uw rug bol, dan hol. Acht keer." — 7 woorden</p>
+          </div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <img class="beeld" src="/images/rug/romp-draaien-zittend-line-v1.png" alt="Romp draaien, zittend"/>
+          <div>
+            <h4>Romp draaien, zittend</h4>
+            <span class="zaalmerk z2">ZAAL 2 · OVERDAG</span>
+            <p class="sub">„Draai op uw stoel naar links en rechts." — 7 woorden</p>
+          </div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <img class="beeld" src="/images/rug/rug-strekken-staand-line-v1.png" alt="Rug strekken, staand"/>
+          <div>
+            <h4>Rug strekken, staand</h4>
+            <span class="zaalmerk z2">ZAAL 2 · OVERDAG</span>
+            <p class="sub">„Handen in uw zij, buig licht achterover." — 7 woorden</p>
+          </div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <img class="beeld" src="/images/core/bekken-kantelen-liggend-line-v1.png" alt="Bekken kantelen, liggend"/>
+          <div>
+            <h4>Bekken kantelen, liggend</h4>
+            <span class="zaalmerk z3">ZAAL 3 · AVOND</span>
+            <p class="sub">„Kantel uw bekken. Twaalf keer, heel klein." — 7 woorden</p>
+          </div>
+        </div>
+
+        <div class="oefrij uit">
+          <span class="vink" aria-hidden="true"></span>
+          <img class="beeld" src="/images/rug/thoracale-extensie-zittend-line-v1.png" alt="Thoracale extensie, zittend"/>
+          <div>
+            <h4>Bovenrug strekken, zittend</h4>
+            <p class="sub">Niet opgesteld — vijf objecten in drie zalen is een route van twintig
+              minuten. Zes wordt een middag.</p>
+          </div>
+        </div>
+
+        <div class="regelvak">
+          <b>DE ZAAL BEPAALT DE WANDKLEUR, NIET DE OEFENING</b>
+          <p>Kleur staat hier voor <em>wanneer</em>, niet voor <em>hoe zwaar</em> of <em>welk
+            lichaamsdeel</em>. Wie de kaart openslaat ziet in één blik hoeveel er vóór het ontbijt
+            moet gebeuren. Dat is de vraag die mensen 's ochtends echt stellen.</p>
+        </div>
+      </div>
+
+      <div class="paneel">
+        <h3>DE TEKST VAN DIT OBJECT <span>knie naar borst, liggend</span></h3>
+        <div class="redactie">
+          <p>Drie velden, drie grenzen. Wat niet in laag 1 past, gaat naar laag 2; wat niet in
+            laag 2 past, gaat naar laag 3. <b>Er is geen laag 4</b> — wat daar terecht zou komen,
+            hoort in het gesprek in de praktijk.</p>
+
+          <div class="laagvak l1">
+            <div class="lk"><b>LAAG 1 — DE REGEL</b><span class="teller">7 / 7 WOORDEN</span></div>
+            <div class="veldtekst">Trek uw knie naar uw borst. Tien keer.</div>
+            <div class="balk" aria-hidden="true"><i style="width:100%"></i></div>
+            <small>Moet leesbaar zijn <b>vanaf de andere kant van de kamer</b>. Bevat altijd een
+              werkwoord en een aantal — dat is samen een complete opdracht.</small>
+          </div>
+
+          <div class="laagvak l2">
+            <div class="lk"><b>LAAG 2 — DE UITLEG</b><span class="teller">33 / 35 WOORDEN</span></div>
+            <div class="veldtekst">Nog in bed, op uw rug. Pak met beide handen onder uw knie en trek
+              hem rustig naar u toe, tot u het in de onderrug voelt meegeven. Vijf tellen, dan het
+              andere been.</div>
+            <div class="balk" aria-hidden="true"><i style="width:94%"></i></div>
+            <small>Houding, handen, tempo. Geen waarom, geen uitzondering — <b>die horen een laag
+              lager</b>.</small>
+          </div>
+
+          <div class="laagvak l3">
+            <div class="lk"><b>LAAG 3 — DE VERDIEPING</b><span class="teller vol">61 WOORDEN · VRIJ</span></div>
+            <div class="veldtekst">Waarom eerst dit: na een nacht liggen is de onderrug het stijfst,
+              en rekken werkt dan beter dan meteen opstaan en doorlopen. Lukt het niet met twee
+              handen, gebruik dan een handdoek achter uw knie. Bij pijn die naar uw voet uitstraalt:
+              overslaan en het vandaag melden — dat is geen terugval, dat is informatie.</div>
+            <div class="balk" aria-hidden="true"><i class="vol" style="width:100%"></i></div>
+            <small>Schreefletter, kleiner, en met opzet ondergeschikt. <b>Dit is de gids, niet de
+              muur.</b> Wie hem niet leest, doet de oefening nog steeds goed.</small>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm licht" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 3</b>
+      <h2>De digitale cliëntkaart</h2>
+      <p>Het programma is een tentoonstelling: drie zalen, vijf objecten, één route. Bovenaan de
+        plattegrond — <em>waar sta ik, wat komt er nog</em> — en daaronder per zaal de objecten met
+        hun drie lagen en het objectlabel ernaast.</p>
+    </div>
+
+    <article class="expo">
+      <div class="expokop">
+        <h3>Meneer T. Aliyev — lage rug</h3>
+        <span class="wk">WEEK 3 VAN 6</span>
+        <span class="sub">Fysiotherapie De Boskant · Nadia Terpstra · opstelling gewijzigd op 26 augustus</span>
+      </div>
+
+      <div class="plattegrond">
+        <div class="zaal z1">
+          <div class="streep" aria-hidden="true"></div>
+          <b>ZAAL 1</b>
+          <h4>Ochtend</h4>
+          <p>2 objecten · 6 minuten · nog in bed en op de grond</p>
+        </div>
+        <div class="zaal z2">
+          <div class="streep" aria-hidden="true"></div>
+          <b>ZAAL 2</b>
+          <h4>Overdag</h4>
+          <p>2 objecten · op de werkstoel, tussendoor</p>
+        </div>
+        <div class="zaal z3">
+          <div class="streep" aria-hidden="true"></div>
+          <b>ZAAL 3</b>
+          <h4>Avond</h4>
+          <p>1 object · 4 minuten · voor het slapen</p>
+        </div>
+      </div>
+
+      <div class="zaalblok z1">
+        <div class="zaalhoofd">
+          <b>ZAAL 1</b><h4>Ochtend — de eerste tien minuten</h4><span>6 minuten</span>
+        </div>
+
+        <div class="object">
+          <img class="bld" src="/images/rug/knie-naar-borst-liggend-line-v1.png" alt="Knie naar borst, liggend"/>
+          <div>
+            <p class="l1">Trek uw knie naar uw borst. Tien keer.</p>
+            <p class="l2">Nog in bed, op uw rug. Pak met beide handen onder uw knie en trek hem
+              rustig naar u toe, tot u het in de onderrug voelt meegeven. Vijf tellen, dan het
+              andere been.</p>
+            <p class="l3">Waarom eerst dit: na een nacht liggen is de onderrug het stijfst, en rekken
+              werkt dan beter dan meteen opstaan. Lukt het niet met twee handen, gebruik dan een
+              handdoek achter uw knie. <b>Bij pijn die naar uw voet uitstraalt: overslaan en melden.</b></p>
+          </div>
+          <dl class="objectlabel">
+            <div class="streepje" aria-hidden="true"></div>
+            <dt>OBJECT</dt><dd>1 van 5</dd>
+            <dt>DOSERING</dt><dd>10 × per been <i>· 5 tellen vast</i></dd>
+            <dt>OPGENOMEN</dt><dd>4 augustus <i>· week 1</i></dd>
+            <dt>UIT DE REEKS</dt><dd>Lage rug — mobiliteit</dd>
+          </dl>
+        </div>
+
+        <div class="object">
+          <img class="bld" src="/images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png" alt="Rug bol en hol maken"/>
+          <div>
+            <p class="l1">Maak uw rug bol, dan hol. Acht keer.</p>
+            <p class="l2">Op handen en knieën op een kleed. Duw uw rug langzaam bol als een kat,
+              en laat hem daarna rustig doorzakken. Adem door; het gaat om de beweging, niet
+              om het uiterste.</p>
+            <p class="l3">Deze oefening is er om het scharnier los te maken vóór u gaat lopen. Doet
+              uw pols pijn op handen en knieën, doe hem dan op de onderarmen — dat werkt even goed.
+              <b>Nieuw sinds 26 augustus</b>, ter vervanging van de rekoefening tegen de muur.</p>
+          </div>
+          <dl class="objectlabel">
+            <div class="streepje" aria-hidden="true"></div>
+            <dt>OBJECT</dt><dd>2 van 5</dd>
+            <dt>DOSERING</dt><dd>8 × <i>· rustig tempo</i></dd>
+            <dt>OPGENOMEN</dt><dd>26 augustus <i>· week 3</i></dd>
+            <dt>UIT DE REEKS</dt><dd>Lage rug — mobiliteit</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="zaalblok z2">
+        <div class="zaalhoofd">
+          <b>ZAAL 2</b><h4>Overdag — bij het werk</h4><span>tussendoor, 2 × per dagdeel</span>
+        </div>
+
+        <div class="object">
+          <img class="bld" src="/images/rug/romp-draaien-zittend-line-v1.png" alt="Romp draaien, zittend"/>
+          <div>
+            <p class="l1">Draai op uw stoel naar links en rechts.</p>
+            <p class="l2">Voeten plat op de grond, handen los op uw bovenbenen. Draai uw schouders
+              rustig naar één kant, kijk mee, en kom terug. Zes keer elke kant.</p>
+            <p class="l3">Het doel is niet rekken maar onderbreken: een rug die twee uur dezelfde
+              stand houdt, wordt stijf van het stilzitten en niet van het zitten zelf.
+              Zet er desnoods een wekker voor.</p>
+          </div>
+          <dl class="objectlabel">
+            <div class="streepje" aria-hidden="true"></div>
+            <dt>OBJECT</dt><dd>3 van 5</dd>
+            <dt>DOSERING</dt><dd>6 × per kant <i>· 2 × per dagdeel</i></dd>
+            <dt>OPGENOMEN</dt><dd>11 augustus <i>· week 2</i></dd>
+            <dt>UIT DE REEKS</dt><dd>Lage rug — onderbreking</dd>
+          </dl>
+        </div>
+      </div>
+    </article>
+
+    <div class="gidsblok">
+      <h4>WAT DE RANGORDE OPLEVERT</h4>
+      <div class="lijf">
+        <div>
+          <p><b>Drie lezers in plaats van één.</b> De haastige leest vijf regels en is klaar in
+            veertig seconden. De twijfelaar leest laag 2 erbij. De partner die zich zorgen maakt,
+            leest laag 3 — en vindt daar precies de zin over wanneer níét.</p>
+        </div>
+        <div>
+          <p><b>En een redactieregel die het hele programma bewaakt.</b> Past een oefening niet in
+            zeven woorden, dan is ze te ingewikkeld voor thuis. Die grens haalt stilletjes de
+            onuitvoerbare oefeningen uit het programma — <b>voordat de patiënt ze thuis niet doet</b>.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 4</b>
+      <h2>De printkaart — A4 staand, de zaalkaart</h2>
+      <p>Dit is het gratis vel uit de houder bij de ingang: drie zalen onder elkaar, vijf objecten,
+        en per object dezelfde drie lagen. <em>Het corps zakt mee — een zaaltekst is voor twee meter,
+        dit vel voor veertig centimeter — maar de verhouding blijft precies gelijk.</em></p>
+    </div>
+
+    <div class="printbalk geen-print">
+      <p>Druk <b>Ctrl/⌘+P</b>. Laag 1 staat op <b>15 pt vet</b>, laag 2 op 10,4 pt, laag 3 op
+        8,2 pt schreef: de eerste regel is bijna twee keer zo groot als de derde laag, zoals aan
+        een museumwand. De wandkleur krimpt tot een lijn onder de zaalkop.</p>
+      <button class="printknop" onclick="window.print()">Print de zaalkaart</button>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="zkop">
+              <div class="t">Uw oefeningen — drie zalen
+                <i>Lees de grote regel. Wilt u meer weten, lees dan door. Alle drie de lagen kloppen op zichzelf.</i></div>
+              <div class="wie"><b>DHR. T. ALIYEV · WEEK 3 VAN 6</b>
+                Fysiotherapie De Boskant<br/>Nadia Terpstra · 0512 — 44 19 06</div>
+            </div>
+
+            <p class="zlead">De zalen zijn <b>momenten van de dag</b>, geen lichaamsdelen. Boven elke
+              zaal staat hoeveel tijd hij kost. Doet u alleen zaal 1, dan heeft u de belangrijkste
+              zes minuten gedaan — <b>en dat is een geldige dag</b>.</p>
+
+            <div class="z1">
+              <div class="zaalkop"><b>ZAAL 1</b><h3>Ochtend — de eerste tien minuten</h3>
+                <span>2 oefeningen · 6 minuten</span></div>
+
+              <div class="pobject">
+                <img class="bld" src="/images/rug/knie-naar-borst-liggend-line-v1.png" alt="Knie naar borst, liggend"/>
+                <div class="kern">
+                  <div class="pl1"><h4>Trek uw knie naar uw borst. Tien keer.</h4>
+                    <span class="ds">10 × PER BEEN</span></div>
+                  <p class="pl2">Nog in bed, op uw rug. Pak met beide handen onder uw knie en trek hem
+                    rustig naar u toe, tot u het in de onderrug voelt meegeven. Vijf tellen, dan het
+                    andere been.</p>
+                  <p class="pl3">Waarom eerst dit: na een nacht liggen is de onderrug het stijfst, en
+                    rekken werkt dan beter dan meteen opstaan en doorlopen. Lukt het niet met twee
+                    handen, gebruik dan een handdoek achter uw knie. <b>Bij pijn die naar uw voet
+                    uitstraalt: overslaan en vandaag nog melden.</b></p>
+                </div>
+              </div>
+
+              <div class="pobject">
+                <img class="bld" src="/images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png" alt="Rug bol en hol maken"/>
+                <div class="kern">
+                  <div class="pl1"><h4>Maak uw rug bol, dan hol. Acht keer.</h4>
+                    <span class="ds">8 ×</span></div>
+                  <p class="pl2">Op handen en knieën op een kleed. Duw uw rug langzaam bol als een kat
+                    en laat hem daarna rustig doorzakken. Adem door; het gaat om de beweging, niet
+                    om het uiterste.</p>
+                  <p class="pl3">Deze oefening maakt het scharnier los vóór u gaat lopen. Doet uw pols
+                    pijn op handen en knieën, steun dan op uw onderarmen — dat werkt even goed.
+                    <b>Nieuw sinds 26 augustus</b>, in plaats van de rekoefening tegen de muur.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="z2">
+              <div class="zaalkop"><b>ZAAL 2</b><h3>Overdag — bij het werk</h3>
+                <span>2 oefeningen · tussendoor</span></div>
+
+              <div class="pobject">
+                <img class="bld" src="/images/rug/romp-draaien-zittend-line-v1.png" alt="Romp draaien, zittend"/>
+                <div class="kern">
+                  <div class="pl1"><h4>Draai op uw stoel naar links en rechts.</h4>
+                    <span class="ds">6 × PER KANT</span></div>
+                  <p class="pl2">Voeten plat op de grond, handen los op uw bovenbenen. Draai uw
+                    schouders rustig naar één kant, kijk mee, en kom terug.</p>
+                  <p class="pl3">Het doel is niet rekken maar onderbreken: een rug wordt stijf van
+                    twee uur dezelfde stand, niet van zitten op zich. Zet er desnoods een wekker voor.</p>
+                </div>
+              </div>
+
+              <div class="pobject">
+                <img class="bld" src="/images/rug/rug-strekken-staand-line-v1.png" alt="Rug strekken, staand"/>
+                <div class="kern">
+                  <div class="pl1"><h4>Handen in uw zij, buig licht achterover.</h4>
+                    <span class="ds">5 × · 3 TELLEN</span></div>
+                  <p class="pl2">Staand, voeten op heupbreedte, handen in uw zij. Buig een klein stukje
+                    naar achteren en kom terug. Klein is genoeg — verder is niet beter.</p>
+                  <p class="pl3">Doe deze na lang zitten of na het tillen, als tegenbeweging.
+                    Wordt u er duizelig van, buig dan minder ver en kijk recht vooruit
+                    in plaats van omhoog.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="z3">
+              <div class="zaalkop"><b>ZAAL 3</b><h3>Avond — voor het slapen</h3>
+                <span>1 oefening · 4 minuten</span></div>
+
+              <div class="pobject">
+                <img class="bld" src="/images/core/bekken-kantelen-liggend-line-v1.png" alt="Bekken kantelen, liggend"/>
+                <div class="kern">
+                  <div class="pl1"><h4>Kantel uw bekken. Twaalf keer, heel klein.</h4>
+                    <span class="ds">12 × · KLEIN</span></div>
+                  <p class="pl2">Op uw rug, knieën gebogen, voeten plat. Duw uw onderrug zachtjes
+                    tegen het matras en laat weer los. De beweging is een paar millimeter; niemand
+                    hoeft het te zien.</p>
+                  <p class="pl3">Dit is de enige oefening van de dag die bedoeld is om <b>rustiger</b>
+                    te worden, niet sterker. Tel bij het aanspannen tot drie en bij het loslaten tot
+                    vijf; dat langere loslaten is het werkzame deel.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="zvoet">
+              <div class="zlet">
+                <b>NIET DOEN</b>
+                <p>Stop en bel de praktijk bij <b>uitstraling tot in uw voet</b>, bij een doof gevoel
+                  of krachtverlies in een been, of bij plotselinge problemen met plassen. Deze regel
+                  staat op elke kaart die u van ons krijgt, op dezelfde plek.</p>
+              </div>
+              <div class="zregel">
+                <span>ZAALKAART · OPSTELLING VAN <b>26 AUGUSTUS 2026</b></span>
+                <span>VOLGENDE AFSPRAAK <b>9 SEPT · 14.00 UUR</b></span>
+                <span>BLAD 1 VAN 1</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="uitleg">
+      <div>
+        <h4>DE VERHOUDING, NIET DE GROOTTE</h4>
+        <p>Aan een wand is laag 1 dertig keer zo groot als hier. Op dit vel is hij nog altijd
+          <b>bijna anderhalf keer laag 2 en bijna twee keer laag 3</b>. Diezelfde sprong maakt het
+          verschil: het oog vindt vanzelf de ingang, ook zonder kleur en ook zonder bril.</p>
+      </div>
+      <div>
+        <h4>WAT DE KLEUR MAG DOEN</h4>
+        <p>Wandkleur is hier een <b>oriëntatiemiddel, geen betekenisdrager</b>. Op papier krimpt hij
+          tot één lijn onder de zaalkop, en de zaal blijft herkenbaar aan zijn kop en zijn plek.
+          Zwart-wit uit de printer verandert er niets aan het gebruik.</p>
+      </div>
+      <div>
+        <h4>„EEN GELDIGE DAG"</h4>
+        <p>De regel boven de zalen — <b>alleen zaal 1 is ook goed</b> — is de museale gedachte in
+          één zin. Wie halverwege stopt, heeft niet gefaald maar een kortere route gelopen.
+          Dat staat er met opzet vóór de oefeningen, niet erna.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div>
+      <h4>WAT DIT CONCEPT BEWEERT</h4>
+      <p>Dat de oefenkaart geen tekstprobleem heeft maar een rangordeprobleem. Alles wat erop staat
+        is nuttig; niets ervan is als eerste bedoeld. Musea hebben die vraag honderd jaar geleden
+        beantwoord met drie lagen die ieder op zichzelf af zijn — en de zorg heeft dat antwoord
+        nooit overgenomen.</p>
+    </div>
+    <div>
+      <h4>WAAR HET SCHUURT</h4>
+      <ul>
+        <li>Zeven woorden is streng. Sommige oefeningen passen er niet in — en dat is bedoeld
+          als signaal, niet als beperking van het ontwerp.</li>
+        <li>Laag 3 wordt bewust klein gezet. Dat is een keuze tegen de reflex om alles even
+          groot te maken „voor de zekerheid"; hij is er voor wie hem zoekt.</li>
+        <li>Zalen op tijdstip in plaats van lichaamsdeel botst met hoe praktijken hun
+          programma's ordenen. De patiënt leeft echter in dagdelen, niet in spiergroepen.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>INSPIRATIE</h4>
+      <ul>
+        <li>De zaaltekst / objectlabel / gids-hiërarchie van museale tentoonstellingen</li>
+        <li>Toegankelijkheidsrichtlijnen voor exposities: ruim contrast, geen smalle snit,
+          geen kapitaal in broodtekst, minimale corpsgrootte op leesafstand</li>
+        <li>Wandkleur als oriëntatie in een opstelling — je weet waar je bent zonder te lezen</li>
+        <li>De gratis zaalkaart uit de houder bij de ingang: één vel, één route</li>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad'), f=1;
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var breed=schaal.clientWidth, eigen=blad.offsetWidth;
+    f=Math.min(1,breed/eigen);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

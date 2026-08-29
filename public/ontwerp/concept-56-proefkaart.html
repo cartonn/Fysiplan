@@ -1,0 +1,1034 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 56 — Proefkaart · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 56 — PROEFKAART
+   ------------------------------------------------------------
+   Elke oefenkaart zegt wat u moet dóén. Geen enkele geeft u
+   woorden voor wat u vóélt.
+
+   Vraag een patiënt na drie weken hoe het gaat en je krijgt
+   „ja, goed" of „het doet nog wel wat". Niet omdat hij het niet
+   weet, maar omdat hij geen woorden heeft. Een gewaarwording
+   zonder naam is niet te melden, niet te vergelijken en niet te
+   volgen. En dus wordt het enige dat op de kaart te noteren
+   valt het enige dat we meten: aantallen. Terwijl het verschil
+   tussen spierrek en zenuwpijn — het verschil tussen doorgaan
+   en meteen stoppen — helemaal niet in aantallen zit.
+
+   TWEE VAKGEBIEDEN LOSTEN DIT AL OP.
+     · De pijnvragenlijst van McGill (1975) deed één radicaal
+       ding: hij gaf mensen een woordenlijst. Kloppend, stekend,
+       zeurend, brandend, schietend. Zodra de woorden er lagen,
+       bleek pijn wél te beschrijven — en bleken verschillende
+       aandoeningen verschillende woorden te kiezen.
+     · De koffie- en wijnwereld deed hetzelfde met het
+       smaakwiel: een vaste, gedeelde woordenschat, zodat
+       „steenfruit" bij twee mensen hetzelfde betekent. Het
+       cupping-formulier zet die woorden naast een schaal, en
+       vraagt niet „was het lekker" maar „wat, waar, hoe sterk".
+
+   DUS: de trainingskaart als proefkaart. Bij elke oefening
+   staan drie woorden die u HOORT te voelen, en drie die u NIET
+   hoort te voelen — vooraf gekozen door de therapeut uit een
+   vast rek. Daaronder een schaal van 0 tot 10 met een
+   gemarkeerd werkbereik, en één vraag waar het zit: in de
+   spier, aan het gewricht, of verderop. U omcirkelt. Meer niet.
+
+   Wat dat oplevert is geen gevoelsdagboek maar een meetreeks
+   die de patiënt zelf kan invullen — en waarvan de bewéging het
+   bewijs is: als de gekozen woorden in vijf weken van de rode
+   kolom naar de groene schuiven, herstelt er iets. Dat is een
+   uitkomstmaat die geen enkele oefenkaart nu registreert.
+
+   VORM. Een keurmeestersformulier, geen app. Roomkleurig
+   kaartkarton, één diepe inkt, twee oordeelskleuren die ook in
+   grijstinten uit elkaar te houden zijn (donkergroen = massief,
+   vermiljoen = omlijnd). De woorden zelf staan in een
+   schreefletter en groot — ze zijn het onderwerp, niet het
+   label. Op het scherm mag de woordenschat een wiel zijn; op
+   papier wordt hij een rechte strook, want een wiel van 40 mm
+   op een thuisprinter is een vlek en oudere ogen lezen geen
+   tekst die om een middelpunt draait.
+   ============================================================ */
+
+:root{
+  --papier:#eae5d8;
+  --karton:#f6f2e9;
+  --vel:#fdfbf5;
+  --inkt:#241f22;
+  --inkt-2:#4a4348;
+  --grijs:#867d80;
+  --lijn:#d5cdbd;
+  --lijn-2:#e7e1d3;
+
+  --goed:#2f5d52;
+  --goed-licht:#e4ede9;
+  --mis:#a33a22;
+  --mis-licht:#f7ebe5;
+  --pruim:#6b3b57;
+
+  --serif:"Iowan Old Style",Charter,Palatino,Georgia,"Times New Roman",serif;
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --smal:"Avenir Next Condensed","Arial Narrow","Helvetica Neue",Helvetica,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:66px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17.5px/1.66 var(--serif);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--goed)}
+:focus-visible{outline:3px solid var(--goed);outline-offset:3px}
+
+.binnen{max-width:1140px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--inkt);color:#cdc5c8;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border:1px solid #4d4448;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#cdc5c8;text-decoration:none;padding:5px 3px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:#7fae9f}
+.labbalk a.terug{color:#fff;border-bottom-color:#4d4448}
+@media (max-width:760px){.labbalk a:not(.terug){display:none}}
+
+.scherm{padding:var(--s6) 0;border-bottom:1px solid var(--lijn)}
+.scherm.karton{background:var(--karton)}
+.schermkop{margin-bottom:var(--s5);max-width:68ch}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--goed);
+  margin-bottom:var(--s2)}
+.schermkop h2{font:400 clamp(28px,3.4vw,37px)/1.14 var(--serif);letter-spacing:-.015em;color:var(--inkt)}
+.schermkop p{margin-top:var(--s3);font-size:17px}
+.schermkop em{font-style:italic;color:var(--inkt)}
+
+/* ---------- 1 landing ---------- */
+.merkregel{display:flex;align-items:center;gap:11px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:28px;height:28px;background:var(--inkt);color:var(--karton);
+  display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--sans)}
+.merkregel .naam{font:600 16px/1 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+.merkregel .pad{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--grijs)}
+
+.heldrij{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--s5);align-items:center}
+@media (max-width:980px){.heldrij{grid-template-columns:1fr;gap:var(--s5)}}
+h1.kop{font:400 clamp(34px,5.2vw,56px)/1.09 var(--serif);letter-spacing:-.02em;color:var(--inkt)}
+h1.kop em{font-style:italic;color:var(--goed)}
+.onder{margin-top:var(--s4);font-size:18.5px;max-width:54ch}
+.onder b{color:var(--inkt);font-weight:600}
+.onder + .onder{margin-top:var(--s3)}
+
+/* het woordbeeld: twee kolommen woorden */
+.woordbeeld{background:var(--vel);border:1px solid var(--lijn);padding:var(--s4)}
+.woordbeeld .op{font:700 10px/1 var(--mono);letter-spacing:.18em;color:var(--grijs);margin-bottom:var(--s4)}
+.wkol{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+@media (max-width:520px){.wkol{grid-template-columns:1fr;gap:var(--s3)}}
+.wkol h3{font:700 10px/1 var(--mono);letter-spacing:.14em;padding-bottom:8px;margin-bottom:12px}
+.wkol .g h3{color:var(--goed);border-bottom:2px solid var(--goed)}
+.wkol .m h3{color:var(--mis);border-bottom:2px solid var(--mis)}
+.wkol ul{list-style:none}
+.wkol li{font:400 21px/1.45 var(--serif);color:var(--inkt)}
+.wkol .m li{font-style:italic}
+.wkol li small{display:block;font:400 13.5px/1.4 var(--serif);color:var(--grijs);margin:-2px 0 7px}
+.woordbeeld .slot{margin-top:var(--s4);border-top:1px solid var(--lijn-2);padding-top:var(--s3);
+  font-size:16px;line-height:1.6}
+.woordbeeld .slot b{color:var(--inkt);font-weight:600}
+
+.drie{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s6)}
+@media (max-width:880px){.drie{grid-template-columns:1fr}}
+.drie section{border-top:2px solid var(--inkt);padding-top:var(--s3)}
+.drie section.g{border-top-color:var(--goed)}
+.drie section.p{border-top-color:var(--pruim)}
+.drie h3{font:700 10.5px/1 var(--mono);letter-spacing:.16em;color:var(--inkt);margin-bottom:var(--s2)}
+.drie section.g h3{color:var(--goed)}
+.drie section.p h3{color:var(--pruim)}
+.drie p{font-size:16.5px;line-height:1.62}
+.drie p b{color:var(--inkt);font-weight:600}
+
+/* ---------- 2 kiezer ---------- */
+.kiezerrij{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.kiezerrij{grid-template-columns:1fr}}
+.paneel{background:var(--vel);border:1px solid var(--lijn)}
+.paneel > h3{font:700 11px/1 var(--mono);letter-spacing:.16em;color:var(--karton);background:var(--inkt);
+  padding:13px 16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.paneel > h3 span{color:#9dc0b4;font-weight:500}
+.paneel.g > h3{background:var(--goed)}
+
+.zoek{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--lijn)}
+.zoek .veld{flex:1;border:1px solid var(--lijn);background:#fff;padding:10px 12px;
+  font:400 16px/1 var(--serif);color:var(--inkt)}
+.zoek .veld i{font-style:normal;color:var(--grijs)}
+.zoek .tel{font:700 11px/1 var(--mono);letter-spacing:.08em;color:var(--goed);white-space:nowrap}
+
+.oefrij{display:grid;grid-template-columns:20px 56px 1fr;gap:13px;align-items:start;
+  padding:13px 16px;border-bottom:1px solid var(--lijn-2)}
+.oefrij .vink{width:17px;height:17px;border:1.5px solid var(--inkt);background:#fff;margin-top:3px}
+.oefrij.aan .vink{background:var(--goed);border-color:var(--goed);position:relative}
+.oefrij.aan .vink::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;
+  border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg)}
+.oefrij .beeld{background:#fff;border:1px solid var(--lijn);padding:2px}
+.oefrij h4{font:600 16px/1.2 var(--sans);color:var(--inkt);letter-spacing:-.012em}
+.oefrij .sub{font:400 13.5px/1.45 var(--serif);color:var(--grijs);margin-top:3px}
+.oefrij .gekozen{grid-column:2/-1;margin-top:9px;display:flex;flex-wrap:wrap;gap:6px}
+.oefrij .gekozen span{font:400 14.5px/1 var(--serif);padding:6px 10px;border:1px solid var(--goed);
+  color:var(--goed);background:var(--goed-licht)}
+.oefrij .gekozen span.m{border-color:var(--mis);color:var(--mis);background:var(--mis-licht);font-style:italic}
+.oefrij.uit{opacity:.5}
+
+/* het woordenrek */
+.rek{padding:var(--s3) 16px var(--s4)}
+.rek > p{font-size:15.5px;line-height:1.6;margin-bottom:var(--s3)}
+.rek > p b{color:var(--inkt);font-weight:600}
+.familie{border-top:1px solid var(--lijn-2);padding-top:12px;margin-top:14px}
+.familie b{display:block;font:700 9.5px/1 var(--mono);letter-spacing:.14em;color:var(--pruim);margin-bottom:9px}
+.familie .rij{display:flex;flex-wrap:wrap;gap:6px}
+.familie .rij span{border:1px solid var(--lijn);background:#fff;padding:7px 11px;
+  font:400 16px/1 var(--serif);color:var(--inkt-2)}
+.familie .rij span.g{background:var(--goed);border-color:var(--goed);color:#fff}
+.familie .rij span.m{background:#fff;border:1.5px solid var(--mis);color:var(--mis);font-style:italic}
+.familie .rij span.stop{background:var(--mis);border-color:var(--mis);color:#fff;font-weight:600;
+  font-style:normal;font-family:var(--smal);letter-spacing:.02em}
+
+.wiel{padding:var(--s4) 16px;border-top:1px solid var(--lijn);display:flex;gap:var(--s4);
+  align-items:center;flex-wrap:wrap}
+.wiel .schijf{width:186px;height:186px;border-radius:50%;flex:none;position:relative;
+  background:conic-gradient(
+    var(--goed) 0 16.66%,
+    #4f7f66 16.66% 33.33%,
+    #6f8f6a 33.33% 50%,
+    var(--pruim) 50% 66.66%,
+    #b0662f 66.66% 83.33%,
+    var(--mis) 83.33% 100%);
+  display:flex;align-items:center;justify-content:center}
+.wiel .schijf::after{content:"";position:absolute;inset:34px;border-radius:50%;background:var(--vel)}
+.wiel .schijf b{position:relative;z-index:2;font:700 9.5px/1.4 var(--mono);letter-spacing:.12em;
+  color:var(--inkt);text-align:center;max-width:96px}
+.wiel .bij{flex:1;min-width:230px;font-size:16px;line-height:1.62}
+.wiel .bij b{color:var(--inkt);font-weight:600}
+.wiel .bij .let{display:block;margin-top:12px;border-left:3px solid var(--mis);padding-left:13px;
+  font-size:15.5px;color:var(--inkt-2)}
+
+.melding{margin:var(--s3) 16px var(--s4);border-left:3px solid var(--pruim);background:#f4eef2;padding:14px 16px}
+.melding b{display:block;font:700 10px/1 var(--mono);letter-spacing:.13em;color:var(--pruim);margin-bottom:8px}
+.melding p{font-size:15.5px;line-height:1.58}
+
+/* ---------- 3 cliëntkaart ---------- */
+.kaartblad{background:var(--vel);border:1px solid var(--lijn)}
+.kaartkop{padding:var(--s4);background:var(--inkt);color:var(--karton);
+  display:flex;flex-wrap:wrap;gap:var(--s3);align-items:baseline}
+.kaartkop h3{font:400 25px/1.16 var(--serif);letter-spacing:-.015em;color:#fff}
+.kaartkop .wk{margin-left:auto;font:700 11px/1 var(--mono);letter-spacing:.13em;color:#9dc0b4}
+.kaartkop .sub{width:100%;font-size:15.5px;color:#b3a9ac}
+
+.kaartlijf{padding:var(--s4)}
+.proefrij{display:grid;grid-template-columns:74px 1fr 250px;gap:var(--s4);align-items:start;
+  padding:var(--s4) 0;border-top:1px solid var(--lijn)}
+.proefrij:first-child{border-top:0;padding-top:0}
+@media (max-width:960px){.proefrij{grid-template-columns:64px 1fr;gap:var(--s3)}}
+.proefrij .bld{border:1px solid var(--lijn);background:#fff;padding:3px}
+.proefrij h4{font:600 19px/1.2 var(--sans);color:var(--inkt);letter-spacing:-.018em}
+.proefrij .ds{font:700 10.5px/1 var(--mono);letter-spacing:.08em;color:var(--grijs);margin-top:6px}
+
+.paar{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-top:var(--s3)}
+@media (max-width:620px){.paar{grid-template-columns:1fr}}
+.paar .vak b{display:block;font:700 9.5px/1 var(--mono);letter-spacing:.13em;margin-bottom:9px}
+.paar .vak.g b{color:var(--goed)}
+.paar .vak.m b{color:var(--mis)}
+.paar .vak ul{list-style:none}
+.paar .vak li{font:400 18px/1.5 var(--serif);color:var(--inkt);padding-left:15px;position:relative}
+.paar .vak.g li::before{content:"";position:absolute;left:0;top:11px;width:7px;height:7px;
+  background:var(--goed);border-radius:50%}
+.paar .vak.m li{font-style:italic}
+.paar .vak.m li::before{content:"";position:absolute;left:0;top:11px;width:7px;height:7px;
+  border:1.5px solid var(--mis);border-radius:50%}
+
+.schaalrij{margin-top:var(--s3);display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.schaalrij .lab{font:700 9.5px/1 var(--mono);letter-spacing:.13em;color:var(--grijs);width:100%}
+.schaalrij .hok{width:30px;height:30px;border:1px solid var(--lijn);background:#fff;
+  display:flex;align-items:center;justify-content:center;font:600 14px/1 var(--mono);color:var(--inkt-2)}
+.schaalrij .hok.band{background:var(--goed-licht);border-color:#a9c4bb}
+.schaalrij .hok.nu{border:2.5px solid var(--inkt);color:var(--inkt);font-weight:700;background:#fff}
+.schaalrij small{width:100%;font:400 14.5px/1.5 var(--serif);color:var(--grijs);margin-top:3px}
+
+/* het verloop over de weken */
+.verloop{background:var(--karton);border:1px solid var(--lijn);padding:var(--s3) 15px}
+.verloop b.kop{display:block;font:700 9.5px/1 var(--mono);letter-spacing:.13em;color:var(--pruim);
+  margin-bottom:12px}
+.verloop .wk{display:grid;grid-template-columns:52px 1fr 30px;gap:10px;align-items:baseline;
+  padding:8px 0;border-bottom:1px solid var(--lijn-2)}
+.verloop .wk i{font-style:normal;font:700 9.5px/1 var(--mono);letter-spacing:.1em;color:var(--grijs)}
+.verloop .wk .w{font:400 16.5px/1.35 var(--serif);color:var(--mis);font-style:italic}
+.verloop .wk .w.g{color:var(--goed);font-style:normal}
+.verloop .wk .n{font:700 14px/1 var(--mono);color:var(--inkt);text-align:right}
+.verloop p{margin-top:12px;font-size:15px;line-height:1.55;color:var(--inkt-2)}
+.verloop p b{color:var(--inkt);font-weight:600}
+
+.lezing{margin-top:var(--s5);border:1.5px solid var(--goed);background:var(--goed-licht)}
+.lezing h4{font:700 10.5px/1 var(--mono);letter-spacing:.15em;color:#fff;background:var(--goed);padding:12px 17px}
+.lezing .lijf{padding:var(--s4) 17px;display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+@media (max-width:820px){.lezing .lijf{grid-template-columns:1fr;gap:var(--s3)}}
+.lezing p{font-size:16.5px;line-height:1.62}
+.lezing p b{color:var(--inkt);font-weight:600}
+.lezing .cit{font:italic 400 19px/1.5 var(--serif);color:var(--goed)}
+
+/* ---------- 4 printkaart ---------- */
+.printbalk{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:var(--s4);
+  border:1px solid var(--lijn);background:var(--vel);padding:14px 17px}
+.printbalk p{font-size:16px;line-height:1.55;flex:1;min-width:250px}
+.printbalk p b{color:var(--inkt);font-weight:600}
+.printknop{border:1px solid var(--inkt);background:var(--inkt);color:#fff;cursor:pointer;
+  font:600 14.5px/1 var(--sans);padding:12px 17px}
+.printknop:hover{background:var(--goed);border-color:var(--goed)}
+
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;position:relative;
+  transform-origin:top left;box-shadow:0 3px 34px rgba(36,31,34,.26);
+  font-family:var(--serif);overflow:hidden}
+@media (max-width:860px){.bladschaal{max-width:100%}}
+.blad .rand{position:absolute;inset:0;padding:11mm 12mm 9mm;display:flex;flex-direction:column}
+
+.bkop{display:flex;justify-content:space-between;align-items:flex-end;gap:6mm;
+  border-bottom:1.4pt solid #000;padding-bottom:1.8mm}
+.bkop .t{font:400 15pt/1.05 var(--serif);letter-spacing:-.015em;color:#000}
+.bkop .t i{display:block;font-style:italic;font-size:8.4pt;color:#4a4348;margin-top:1mm}
+.bkop .wie{text-align:right;font:400 7.2pt/1.4 var(--serif);color:#4a4348;white-space:nowrap}
+.bkop .wie b{display:block;font:700 5.8pt/1 var(--mono);letter-spacing:.16em;color:#867d80;margin-bottom:.8mm}
+
+/* de woordenstrook — op papier recht, niet rond */
+.strook{margin-top:2.6mm;border:.7pt solid #000;display:grid;grid-template-columns:16mm 1fr}
+.strook .lb{background:#000;color:#fff;font:700 5.6pt/1.2 var(--mono);letter-spacing:.1em;
+  display:flex;align-items:center;justify-content:center;text-align:center;padding:1mm}
+.strook .banden{display:flex}
+.strook .band{flex:1;padding:1.4mm 2mm;border-left:.5pt solid #000}
+.strook .band:first-child{border-left:0}
+.strook .band b{display:block;font:700 5.4pt/1.2 var(--mono);letter-spacing:.1em;color:#4a4348;
+  margin-bottom:.9mm}
+.strook .band p{font:400 7.4pt/1.32 var(--serif);color:#000}
+.strook .band.g{background:#e4ede9}
+.strook .band.g b{color:#2f5d52}
+.strook .band.m p{font-style:italic}
+.strook .band.stop{background:#a33a22}
+.strook .band.stop b,.strook .band.stop p{color:#fff}
+
+.blead{margin-top:2.4mm;font:400 8pt/1.4 var(--serif);color:#000;max-width:168mm}
+.blead b{font-weight:700}
+
+/* vier proefblokken */
+.blokken{margin-top:2.8mm;display:flex;flex-direction:column;gap:3.4mm}
+.pblok{border:.7pt solid #000;display:grid;grid-template-columns:22mm 1fr;min-height:0}
+.pblok .bld{border-right:.7pt solid #000;padding:1.2mm;display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-start;gap:1mm}
+.pblok .bld img{width:100%}
+.pblok .bld .nr{font:700 8.4pt/1 var(--mono);color:#000}
+.pblok .kern{padding:2.4mm 3mm 2.8mm}
+.pblok .titelrij{display:flex;align-items:baseline;gap:3mm;justify-content:space-between}
+.pblok h3{font:700 12.4pt/1.06 var(--sans);letter-spacing:-.022em;color:#000}
+.pblok .ds{font:700 7pt/1 var(--mono);letter-spacing:.05em;color:#000;border:.8pt solid #000;
+  padding:.8mm 1.6mm;white-space:nowrap}
+.pblok .doen{margin-top:1.4mm;font:400 9.4pt/1.36 var(--serif);color:#000;max-width:150mm}
+
+.voel{margin-top:1.6mm;display:grid;grid-template-columns:1fr 1fr;gap:3mm}
+.voel .kol b{display:block;font:700 6pt/1.2 var(--mono);letter-spacing:.12em;margin-bottom:1mm}
+.voel .kol.g b{color:#2f5d52}
+.voel .kol.m b{color:#a33a22}
+.voel .kol .ws{display:flex;flex-wrap:wrap;gap:1.4mm}
+.voel .kol .ws span{font:400 9.6pt/1.1 var(--serif);color:#000;padding:1.1mm 2mm;border:.6pt solid #2f5d52;
+  background:#e4ede9}
+.voel .kol.m .ws span{border:.7pt solid #a33a22;background:#fff;font-style:italic;color:#7d2c1a}
+
+.meet{margin-top:1.8mm;display:grid;grid-template-columns:auto 1fr;gap:3mm;align-items:center;
+  border-top:.5pt solid #b9b0a0;padding-top:1.6mm}
+.meet .vr{font:700 5.6pt/1.3 var(--mono);letter-spacing:.11em;color:#4a4348;white-space:nowrap}
+.meet .vr i{display:block;font-style:normal;color:#867d80;font-weight:400;margin-top:.5mm}
+.meet .ladder{display:flex;gap:1mm}
+.meet .ladder u{width:7.6mm;height:7.6mm;border:.7pt solid #000;text-decoration:none;
+  display:flex;align-items:center;justify-content:center;font:600 7.6pt/1 var(--mono);color:#241f22}
+.meet .ladder u.band{background:#e4ede9}
+.meet .ladder u.veel{background:#f7ebe5;border-color:#a33a22;color:#7d2c1a}
+.meet .waar{display:flex;gap:2mm;align-items:center;margin-left:auto}
+.meet .waar span{font:400 8.4pt/1 var(--serif);border:.6pt solid #000;padding:1.4mm 2.2mm;white-space:nowrap}
+.meet .waar span.let{border-color:#a33a22;color:#a33a22}
+
+.bvoet{margin-top:auto;padding-top:2mm}
+.bstop{border:1.1pt solid #a33a22;padding:1.6mm 2.4mm;display:grid;grid-template-columns:auto 1fr;
+  gap:3mm;align-items:center}
+.bstop > b{font:700 6pt/1.2 var(--mono);letter-spacing:.13em;color:#a33a22;white-space:nowrap}
+.bstop p{font:400 8pt/1.32 var(--serif);color:#000}
+.bstop p b{font-weight:700}
+.bregel{margin-top:1.8mm;display:flex;justify-content:space-between;gap:5mm;
+  font:400 6.2pt/1.35 var(--mono);letter-spacing:.1em;color:#867d80}
+.bregel b{color:#000}
+
+.uitleg{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s5)}
+@media (max-width:880px){.uitleg{grid-template-columns:1fr}}
+.uitleg div{border-top:1px solid var(--lijn);padding-top:var(--s3)}
+.uitleg h4{font:700 10px/1 var(--mono);letter-spacing:.15em;color:var(--goed);margin-bottom:9px}
+.uitleg p{font-size:16px;line-height:1.6}
+.uitleg p b{color:var(--inkt);font-weight:600}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#bcb2b6;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:#9dc0b4;
+  border-top:1px solid #4d4448;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:16px;line-height:1.64}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:9px}
+footer.uitleiding a{color:#9dc0b4}
+
+/* ============================================================
+   PRINT — het wiel wordt een strook, de kleur wordt vorm:
+   groen is gevuld, rood is omlijnd en cursief. Ook in
+   grijstinten blijven de twee kolommen uit elkaar te houden.
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000 !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  .schermkop,.uitleg{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border:0 !important;background:#fff !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 56</span>
+  <strong style="font:600 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Proefkaart</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm karton" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 56 · PROEFKAART</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1 class="kop">Uw kaart zegt wat u moet doen.<br/><em>Niet wat u hoort te voelen.</em></h1>
+        <p class="onder">Vraag iemand na drie weken hoe het gaat en u krijgt „ja, goed" of „het doet
+          nog wel wat". Niet omdat hij het niet weet — <b>omdat hij er geen woorden voor heeft</b>.
+          Een gewaarwording zonder naam valt niet te melden, niet te vergelijken en niet te volgen.</p>
+        <p class="onder">Dus meten we het enige dat wél op de kaart past: aantallen. Terwijl het
+          verschil tussen <b>spierrek en zenuwpijn</b> — tussen doorgaan en meteen stoppen —
+          helemaal niet in aantallen zit.</p>
+      </div>
+
+      <div class="woordbeeld">
+        <div class="op">BIJ ÉÉN OEFENING: OP DE TENEN KOMEN</div>
+        <div class="wkol">
+          <div class="g">
+            <h3>DIT HOORT U TE VOELEN</h3>
+            <ul>
+              <li>trekkend<small>achter in de kuit, tijdens</small></li>
+              <li>warm<small>de spier wordt warm, niet heet</small></li>
+              <li>moe<small>na tien à twaalf keer</small></li>
+            </ul>
+          </div>
+          <div class="m">
+            <h3>DIT HOORT U NIET TE VOELEN</h3>
+            <ul>
+              <li>schietend<small>omlaag, tot in de voetzool</small></li>
+              <li>tintelend<small>alsof de voet slaapt</small></li>
+              <li>scherp<small>puntig, in het gewricht zelf</small></li>
+            </ul>
+          </div>
+        </div>
+        <p class="slot">Zes woorden. Meer heeft een patiënt niet nodig om <b>zelf</b> te bepalen of
+          hij doorgaat, minder doet, of belt. En zes woorden zijn genoeg om er over drie weken
+          een antwoord op te geven dat iets betekent.</p>
+      </div>
+    </div>
+
+    <div class="drie">
+      <section>
+        <h3>DIT IS AL EENS OPGELOST</h3>
+        <p>De pijnvragenlijst van McGill deed in 1975 één radicaal ding: hij <b>gaf mensen een
+          woordenlijst</b>. Kloppend, stekend, zeurend, brandend, schietend. Zodra de woorden er
+          lagen bleek pijn wél te beschrijven — en bleken verschillende aandoeningen stelselmatig
+          andere woorden te kiezen.</p>
+      </section>
+      <section class="g">
+        <h3>EN NOG EENS, BUITEN DE ZORG</h3>
+        <p>Het smaakwiel van de koffiewereld en het keurmeestersformulier doen hetzelfde:
+          een <b>vaste, gedeelde woordenschat</b> plus een schaal. Het formulier vraagt niet
+          „was het lekker", maar wát, wáár en hoe sterk. Twee mensen die hetzelfde wiel
+          gebruiken, bedoelen hetzelfde woord.</p>
+      </section>
+      <section class="p">
+        <h3>DE UITKOMST IS DE VERSCHUIVING</h3>
+        <p>Wat dit oplevert is geen gevoelsdagboek maar een reeks. Schuiven de omcirkelde woorden
+          in vijf weken <b>van de rode kolom naar de groene</b>, dan herstelt er iets — ook als het
+          aantal herhalingen gelijk bleef. Geen enkele oefenkaart registreert dat nu.</p>
+      </section>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 2</b>
+      <h2>De oefeningen-kiezer</h2>
+      <p>Een oefening kiezen is hier <em>twee</em> keuzes: de beweging, en de woorden die erbij horen.
+        Elke oefening komt met een voorstel uit het woordenrek — drie groene, drie rode — dat de
+        therapeut in één blik kan bijstellen. Wat blijft staan, staat straks op het vel.</p>
+    </div>
+
+    <div class="kiezerrij">
+
+      <div class="paneel">
+        <h3>OEFENINGEN <span>schouderprogramma · 215 beschikbaar</span></h3>
+        <div class="zoek">
+          <span class="veld">schouder <i>— na een vastzittende schouder, fase 2</i></span>
+          <span class="tel">4 GEKOZEN</span>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <img class="beeld" src="/images/bovenste-extremiteit/schouder-pendelen-actief-line-v1.png" alt="Schouder pendelen"/>
+          <div>
+            <h4>Schouder pendelen</h4>
+            <p class="sub">2× per dag · 1 minuut · voorovergebogen, arm los</p>
+          </div>
+          <div class="gekozen">
+            <span>zwaar</span><span>los</span><span>trekkend</span>
+            <span class="m">brandend</span><span class="m">tintelend</span><span class="m">duizelig</span>
+          </div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <img class="beeld" src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt="Schouder naar buiten draaien met elastiek"/>
+          <div>
+            <h4>Naar buiten draaien met elastiek</h4>
+            <p class="sub">1× per dag · 3 × 10 · elleboog tegen de zij</p>
+          </div>
+          <div class="gekozen">
+            <span>spannend</span><span>warm</span><span>moe</span>
+            <span class="m">schietend</span><span class="m">scherp</span><span class="m">klikkend</span>
+          </div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <img class="beeld" src="/images/bovenste-extremiteit/hand-achter-de-rug-brengen-actief-line-v1.png" alt="Hand achter de rug brengen"/>
+          <div>
+            <h4>Hand achter de rug brengen</h4>
+            <p class="sub">3× per dag · 5 × 5 tellen · tot waar het net trekt</p>
+          </div>
+          <div class="gekozen">
+            <span>rekkend</span><span>strak</span><span>zeurend</span>
+            <span class="m">stekend</span><span class="m">uitstralend</span><span class="m">wegschietend</span>
+          </div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <img class="beeld" src="/images/bovenste-extremiteit/schouder-voorwaarts-heffen-actief-line-v1.png" alt="Schouder voorwaarts heffen"/>
+          <div>
+            <h4>Arm naar voren heffen</h4>
+            <p class="sub">2× per dag · 12 × · duim naar boven</p>
+          </div>
+          <div class="gekozen">
+            <span>zwaar</span><span>warm</span><span>trillend</span>
+            <span class="m">knijpend</span><span class="m">scherp</span><span class="m">nachtpijn</span>
+          </div>
+        </div>
+
+        <div class="oefrij uit">
+          <span class="vink" aria-hidden="true"></span>
+          <img class="beeld" src="/images/bovenste-extremiteit/schouder-extensie-met-elastiek-line-v1.png" alt="Schouder extensie met elastiek"/>
+          <div>
+            <h4>Arm naar achteren, met elastiek</h4>
+            <p class="sub">Niet gekozen — vier blokken is wat op één vel past met de woorden erbij.</p>
+          </div>
+        </div>
+
+        <div class="melding">
+          <b>WOORDEN ZIJN GEEN DIAGNOSE</b>
+          <p>Het rek bevat geen medische termen en geen cijfers over ernst. „Tintelend" is geen
+            uitspraak over een zenuw — het is een melding die de therapeut hoort te krijgen.
+            Wat de patiënt omcirkelt is een waarneming, geen oordeel over zichzelf.</p>
+        </div>
+      </div>
+
+      <div class="paneel g">
+        <h3>HET WOORDENREK <span>42 woorden · 6 families</span></h3>
+        <div class="rek">
+          <p>Eén vaste woordenschat voor de hele praktijk, zodat <b>„zeurend" bij twee therapeuten
+            en drie patiënten hetzelfde betekent</b>. Groen gevuld = hoort erbij. Rood omlijnd =
+            melden. Rood gevuld = nu stoppen.</p>
+
+          <div class="familie">
+            <b>REK EN SPANNING</b>
+            <div class="rij">
+              <span class="g">trekkend</span><span class="g">rekkend</span><span class="g">strak</span>
+              <span class="g">spannend</span><span>gespannen</span><span>stijf</span>
+            </div>
+          </div>
+          <div class="familie">
+            <b>WARMTE EN MOEHEID</b>
+            <div class="rij">
+              <span class="g">warm</span><span class="g">moe</span><span class="g">zwaar</span>
+              <span class="g">trillend</span><span>slap</span><span class="m">brandend</span>
+            </div>
+          </div>
+          <div class="familie">
+            <b>ZEUR EN DOF</b>
+            <div class="rij">
+              <span class="g">zeurend</span><span>kloppend</span><span>dof</span><span>drukkend</span>
+              <span class="m">nachtpijn</span>
+            </div>
+          </div>
+          <div class="familie">
+            <b>SCHERP EN PUNTIG</b>
+            <div class="rij">
+              <span class="m">scherp</span><span class="m">stekend</span><span class="m">knijpend</span>
+              <span class="m">klikkend</span><span>happerig</span>
+            </div>
+          </div>
+          <div class="familie">
+            <b>ELEKTRISCH EN VERDER WEG</b>
+            <div class="rij">
+              <span class="m">tintelend</span><span class="m">uitstralend</span>
+              <span class="stop">schietend</span><span class="stop">doof gevoel</span>
+            </div>
+          </div>
+          <div class="familie">
+            <b>NIET VAN DE SCHOUDER</b>
+            <div class="rij">
+              <span class="stop">duizelig</span><span class="stop">kortademig</span>
+              <span class="stop">misselijk</span><span class="stop">op de borst</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="wiel">
+          <div class="schijf" aria-hidden="true"><b>6 FAMILIES<br/>42 WOORDEN</b></div>
+          <div class="bij">
+            Op het scherm is het rek een <b>wiel</b>: de zes families liggen als taartpunten om een
+            kern, en dat werkt — het toont in één beeld dat er families zijn en waar de grens ligt.
+            <span class="let">Op papier gaat het wiel eruit. Een schijf van veertig millimeter uit een
+              thuisprinter is een vlek, en tekst die om een middelpunt draait leest niemand van
+              vierenzeventig. <b>Op het vel wordt het een rechte strook</b> — zelfde families,
+              zelfde volgorde, horizontaal.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm karton" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 3</b>
+      <h2>De digitale cliëntkaart</h2>
+      <p>Dezelfde vier oefeningen, met bij elk de twee woordkolommen en de schaal. Wat de patiënt
+        omcirkelt komt hier terug als reeks — en die reeks is <em>de eigenlijke uitkomstmaat</em>:
+        niet hoeveel er geoefend is, maar met welke woorden.</p>
+    </div>
+
+    <article class="kaartblad">
+      <div class="kaartkop">
+        <h3>Mevrouw R. Bekkers — schouder rechts</h3>
+        <span class="wk">WEEK 5 VAN 8</span>
+        <span class="sub">Fysiotherapie Het Wilgenhof · Joris Damen · proefkaart bijgewerkt op 27 augustus</span>
+      </div>
+
+      <div class="kaartlijf">
+
+        <div class="proefrij">
+          <img class="bld" src="/images/bovenste-extremiteit/hand-achter-de-rug-brengen-actief-line-v1.png" alt="Hand achter de rug brengen"/>
+          <div>
+            <h4>Hand achter de rug brengen</h4>
+            <div class="ds">3× PER DAG · 5 × 5 TELLEN</div>
+            <div class="paar">
+              <div class="vak g">
+                <b>HOORT U TE VOELEN</b>
+                <ul><li>rekkend</li><li>strak</li><li>zeurend</li></ul>
+              </div>
+              <div class="vak m">
+                <b>HOORT U NIET TE VOELEN</b>
+                <ul><li>stekend</li><li>uitstralend</li><li>wegschietend</li></ul>
+              </div>
+            </div>
+            <div class="schaalrij">
+              <span class="lab">HOE STERK, DEZE WEEK — WERKBEREIK 3 TOT 5</span>
+              <span class="hok">0</span><span class="hok">1</span><span class="hok">2</span>
+              <span class="hok band">3</span><span class="hok band nu">4</span><span class="hok band">5</span>
+              <span class="hok">6</span><span class="hok">7</span><span class="hok">8</span>
+              <span class="hok">9</span><span class="hok">10</span>
+              <small>Boven de 5 doet u er minder; onder de 3 mag er een herhaling bij.
+                Het getal is geen cijfer voor uzelf.</small>
+            </div>
+          </div>
+          <div class="verloop">
+            <b class="kop">WAT U OMCIRKELDE</b>
+            <div class="wk"><i>WK 1</i><span class="w">stekend</span><span class="n">7</span></div>
+            <div class="wk"><i>WK 2</i><span class="w">stekend</span><span class="n">6</span></div>
+            <div class="wk"><i>WK 3</i><span class="w g">zeurend</span><span class="n">6</span></div>
+            <div class="wk"><i>WK 4</i><span class="w g">zeurend</span><span class="n">5</span></div>
+            <div class="wk"><i>WK 5</i><span class="w g">rekkend</span><span class="n">4</span></div>
+            <p>Het aantal herhalingen bleef vijf weken gelijk. <b>Het woord veranderde drie keer.</b>
+              Dat is de winst.</p>
+          </div>
+        </div>
+
+        <div class="proefrij">
+          <img class="bld" src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt="Naar buiten draaien met elastiek"/>
+          <div>
+            <h4>Naar buiten draaien met elastiek</h4>
+            <div class="ds">1× PER DAG · 3 × 10 · GEEL ELASTIEK</div>
+            <div class="paar">
+              <div class="vak g">
+                <b>HOORT U TE VOELEN</b>
+                <ul><li>spannend</li><li>warm</li><li>moe</li></ul>
+              </div>
+              <div class="vak m">
+                <b>HOORT U NIET TE VOELEN</b>
+                <ul><li>schietend</li><li>scherp</li><li>klikkend</li></ul>
+              </div>
+            </div>
+            <div class="schaalrij">
+              <span class="lab">HOE STERK, DEZE WEEK — WERKBEREIK 3 TOT 5</span>
+              <span class="hok">0</span><span class="hok">1</span><span class="hok nu">2</span>
+              <span class="hok band">3</span><span class="hok band">4</span><span class="hok band">5</span>
+              <span class="hok">6</span><span class="hok">7</span><span class="hok">8</span>
+              <span class="hok">9</span><span class="hok">10</span>
+              <small>Twee is onder het werkbereik: het gele elastiek doet niets meer.
+                Joris zet er donderdag een rood voor in de plaats.</small>
+            </div>
+          </div>
+          <div class="verloop">
+            <b class="kop">WAT U OMCIRKELDE</b>
+            <div class="wk"><i>WK 1</i><span class="w g">spannend</span><span class="n">5</span></div>
+            <div class="wk"><i>WK 2</i><span class="w g">spannend</span><span class="n">4</span></div>
+            <div class="wk"><i>WK 3</i><span class="w g">warm</span><span class="n">4</span></div>
+            <div class="wk"><i>WK 4</i><span class="w g">warm</span><span class="n">3</span></div>
+            <div class="wk"><i>WK 5</i><span class="w g">warm</span><span class="n">2</span></div>
+            <p>Alle vijf de weken groen, maar de schaal zakt uit het bereik. <b>Te licht geworden</b> —
+              ook dat is een signaal dat een afvinkhokje nooit geeft.</p>
+          </div>
+        </div>
+
+      </div>
+    </article>
+
+    <div class="lezing">
+      <h4>HOE DE THERAPEUT DIT LEEST</h4>
+      <div class="lijf">
+        <div>
+          <p class="cit">„U schreef in week twee <b>stekend</b>. Vorige week <b>zeurend</b>.
+            Zegt u dat nu nog?"</p>
+          <p style="margin-top:14px">Het gesprek begint niet meer bij „en, hoe ging het" maar bij
+            een woord dat de patiënt zelf koos. Dat scheelt de eerste vijf minuten van elke
+            afspraak — en het levert een antwoord op dat te vergelijken valt met de vorige keer.</p>
+        </div>
+        <div>
+          <p><b>Twee regels sturen de behandeling automatisch:</b></p>
+          <p style="margin-top:10px">Een rood woord dat drie weken blijft staan, is een reden om de
+            oefening te veranderen — niet om harder aan te moedigen. En een groen woord dat onder
+            de 3 zakt, betekent dat de oefening te licht is geworden. <b>De kaart vraagt zelf om
+            bijstelling</b>, in plaats van te wachten tot iemand het meldt.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 4</b>
+      <h2>De printkaart — A4 staand, vier proefblokken</h2>
+      <p>Bovenaan de woordenstrook: de hele woordenschat, recht uitgevouwen. Daaronder vier blokken,
+        elk met de beweging, de twee woordrijen, de schaal om te omcirkelen en de vraag wáár.
+        <em>Onderaan de enige regel die niets met woorden te maken heeft: wanneer u stopt.</em></p>
+    </div>
+
+    <div class="printbalk geen-print">
+      <p>Druk <b>Ctrl/⌘+P</b>. Het vel is ontworpen om <b>met een pen</b> gebruikt te worden:
+        omcirkelen kost minder dan schrijven, en wat omcirkeld is, is over vijf weken nog leesbaar.</p>
+      <button class="printknop" onclick="window.print()">Print de proefkaart</button>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="bkop">
+              <div class="t">Proefkaart — schouder rechts
+                <i>Wat u doet, wat u hoort te voelen, en hoe sterk</i></div>
+              <div class="wie"><b>MEVR. R. BEKKERS · WEEK 5</b>
+                Fysiotherapie Het Wilgenhof<br/>Joris Damen · 026 — 355 12 40</div>
+            </div>
+
+            <div class="strook">
+              <div class="lb">DE<br/>WOORDEN</div>
+              <div class="banden">
+                <div class="band g"><b>REK EN SPANNING</b><p>trekkend · rekkend · strak · spannend</p></div>
+                <div class="band g"><b>WARMTE EN MOEHEID</b><p>warm · moe · zwaar · trillend</p></div>
+                <div class="band"><b>ZEUR EN DOF</b><p>zeurend · kloppend · dof · drukkend</p></div>
+                <div class="band m"><b>SCHERP</b><p>scherp · stekend · knijpend · klikkend</p></div>
+                <div class="band stop"><b>METEEN STOPPEN</b><p>schietend · doof · duizelig · kortademig</p></div>
+              </div>
+            </div>
+
+            <p class="blead">Omcirkel bij elke oefening <b>het woord dat er het dichtst bij komt</b> en
+              het getal dat erbij hoort. Staat uw woord er niet bij? Schrijf het erboven — dat is de
+              nuttigste regel op dit hele vel. Neem de kaart mee op <b>17 september, 9.30 uur</b>.</p>
+
+            <div class="blokken">
+
+              <div class="pblok">
+                <div class="bld">
+                  <img src="/images/bovenste-extremiteit/schouder-pendelen-actief-line-v1.png" alt="Schouder pendelen"/>
+                  <span class="nr">1</span>
+                </div>
+                <div class="kern">
+                  <div class="titelrij">
+                    <h3>Schouder pendelen</h3>
+                    <span class="ds">2× PER DAG · 1 MIN</span>
+                  </div>
+                  <p class="doen">Voorovergebogen, de andere hand op de tafel. Laat de arm hangen en
+                    beweeg met uw romp, niet met de schouder. De arm slingert; u doet niets.</p>
+                  <div class="voel">
+                    <div class="kol g"><b>DIT HOORT U TE VOELEN</b>
+                      <div class="ws"><span>zwaar</span><span>los</span><span>trekkend</span></div></div>
+                    <div class="kol m"><b>DIT HOORT U NIET TE VOELEN</b>
+                      <div class="ws"><span>brandend</span><span>tintelend</span><span>duizelig</span></div></div>
+                  </div>
+                  <div class="meet">
+                    <span class="vr">HOE STERK?<i>WERKBEREIK 3–5</i></span>
+                    <span class="ladder"><u>0</u><u>1</u><u>2</u><u class="band">3</u><u class="band">4</u>
+                      <u class="band">5</u><u>6</u><u>7</u><u class="veel">8</u><u class="veel">9</u><u class="veel">10</u></span>
+                    <span class="waar"><span>in de spier</span><span>aan het gewricht</span>
+                      <span class="let">verder weg</span></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pblok">
+                <div class="bld">
+                  <img src="/images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png" alt="Naar buiten draaien met elastiek"/>
+                  <span class="nr">2</span>
+                </div>
+                <div class="kern">
+                  <div class="titelrij">
+                    <h3>Naar buiten draaien met elastiek</h3>
+                    <span class="ds">1× PER DAG · 3 × 10</span>
+                  </div>
+                  <p class="doen">Elleboog tegen uw zij, een opgerolde handdoek ertussen. Draai de
+                    onderarm naar buiten en laat langzaam terugkomen — het terugkomen telt mee.</p>
+                  <div class="voel">
+                    <div class="kol g"><b>DIT HOORT U TE VOELEN</b>
+                      <div class="ws"><span>spannend</span><span>warm</span><span>moe</span></div></div>
+                    <div class="kol m"><b>DIT HOORT U NIET TE VOELEN</b>
+                      <div class="ws"><span>schietend</span><span>scherp</span><span>klikkend</span></div></div>
+                  </div>
+                  <div class="meet">
+                    <span class="vr">HOE STERK?<i>WERKBEREIK 3–5</i></span>
+                    <span class="ladder"><u>0</u><u>1</u><u>2</u><u class="band">3</u><u class="band">4</u>
+                      <u class="band">5</u><u>6</u><u>7</u><u class="veel">8</u><u class="veel">9</u><u class="veel">10</u></span>
+                    <span class="waar"><span>in de spier</span><span>aan het gewricht</span>
+                      <span class="let">verder weg</span></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pblok">
+                <div class="bld">
+                  <img src="/images/bovenste-extremiteit/hand-achter-de-rug-brengen-actief-line-v1.png" alt="Hand achter de rug brengen"/>
+                  <span class="nr">3</span>
+                </div>
+                <div class="kern">
+                  <div class="titelrij">
+                    <h3>Hand achter de rug brengen</h3>
+                    <span class="ds">3× PER DAG · 5 × 5 TELLEN</span>
+                  </div>
+                  <p class="doen">Breng uw hand achter uw rug tot waar het <em>net</em> trekt en houd
+                    daar vijf tellen. Niet doorduwen met de andere hand — de rek moet van uzelf komen.</p>
+                  <div class="voel">
+                    <div class="kol g"><b>DIT HOORT U TE VOELEN</b>
+                      <div class="ws"><span>rekkend</span><span>strak</span><span>zeurend</span></div></div>
+                    <div class="kol m"><b>DIT HOORT U NIET TE VOELEN</b>
+                      <div class="ws"><span>stekend</span><span>uitstralend</span><span>wegschietend</span></div></div>
+                  </div>
+                  <div class="meet">
+                    <span class="vr">HOE STERK?<i>WERKBEREIK 3–5</i></span>
+                    <span class="ladder"><u>0</u><u>1</u><u>2</u><u class="band">3</u><u class="band">4</u>
+                      <u class="band">5</u><u>6</u><u>7</u><u class="veel">8</u><u class="veel">9</u><u class="veel">10</u></span>
+                    <span class="waar"><span>in de spier</span><span>aan het gewricht</span>
+                      <span class="let">verder weg</span></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pblok">
+                <div class="bld">
+                  <img src="/images/bovenste-extremiteit/schouder-voorwaarts-heffen-actief-line-v1.png" alt="Arm naar voren heffen"/>
+                  <span class="nr">4</span>
+                </div>
+                <div class="kern">
+                  <div class="titelrij">
+                    <h3>Arm naar voren heffen</h3>
+                    <span class="ds">2× PER DAG · 12 ×</span>
+                  </div>
+                  <p class="doen">Duim naar boven, arm gestrekt naar voren tot schouderhoogte.
+                    Blijft de schouder laag? Zo ja: één keer hoger. Zo nee: dit is hoog genoeg.</p>
+                  <div class="voel">
+                    <div class="kol g"><b>DIT HOORT U TE VOELEN</b>
+                      <div class="ws"><span>zwaar</span><span>warm</span><span>trillend</span></div></div>
+                    <div class="kol m"><b>DIT HOORT U NIET TE VOELEN</b>
+                      <div class="ws"><span>knijpend</span><span>scherp</span><span>nachtpijn</span></div></div>
+                  </div>
+                  <div class="meet">
+                    <span class="vr">HOE STERK?<i>WERKBEREIK 3–5</i></span>
+                    <span class="ladder"><u>0</u><u>1</u><u>2</u><u class="band">3</u><u class="band">4</u>
+                      <u class="band">5</u><u>6</u><u>7</u><u class="veel">8</u><u class="veel">9</u><u class="veel">10</u></span>
+                    <span class="waar"><span>in de spier</span><span>aan het gewricht</span>
+                      <span class="let">verder weg</span></span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="bvoet">
+              <div class="bstop">
+                <b>NU STOPPEN</b>
+                <p>Bij <b>schietend</b> of een <b>doof gevoel</b> in de arm of hand, en bij duizelig,
+                  kortademig of druk op de borst: stoppen en bellen. Dat is geen terugval —
+                  dat is precies waarvoor deze woorden op het vel staan.</p>
+              </div>
+              <div class="bregel">
+                <span>PROEFKAART · WEEK 5 VAN 8 · INGEVULD DOOR <b>MEVR. R. BEKKERS</b></span>
+                <span>MEENEMEN OP <b>17 SEPT · 9.30 UUR</b></span>
+                <span>BLAD 1 VAN 1</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="uitleg">
+      <div>
+        <h4>OMCIRKELEN, NIET SCHRIJVEN</h4>
+        <p>Schrijven vraagt een pen die schrijft, een tafel en een zin. Omcirkelen vraagt een streep.
+          Dat is het verschil tussen <b>een kaart die vijf weken wordt bijgehouden</b> en een dagboek
+          dat na drie dagen leeg blijft — en het scheelt voor stramme handen ook echt iets.</p>
+      </div>
+      <div>
+        <h4>KLEUR IS EEN VORM</h4>
+        <p>Groen is gevuld, rood is omlijnd én cursief, „nu stoppen" is massief zwartrood met een
+          dikke kaderlijn. Print u zwart-wit, dan blijven de drie niveaus uit elkaar te houden
+          <b>zonder één kleur</b>. Dat is geen extraatje: de meeste kaarten komen zwart-wit uit
+          de printer.</p>
+      </div>
+      <div>
+        <h4>DE LEGE REGEL BOVENAAN</h4>
+        <p>„Staat uw woord er niet bij? Schrijf het erboven." De woordenschat is vast genoeg om
+          te kunnen vergelijken en open genoeg om niet te liegen. <b>Elk woord dat een patiënt
+          zelf toevoegt, is een kandidaat voor het rek</b> — zo groeit de lijst uit de praktijk
+          en niet uit een vergadering.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div>
+      <h4>WAT DIT CONCEPT BEWEERT</h4>
+      <p>Dat de oefenkaart een halve kaart is. Ze schrijft de opdracht voor en laat de
+        waarneming weg — terwijl juist de waarneming bepaalt of iemand doorgaat, minder doet of
+        belt. Woorden geven is geen extra service; het is het ontbrekende deel van de instructie.</p>
+    </div>
+    <div>
+      <h4>WAAR HET SCHUURT</h4>
+      <ul>
+        <li>Een vaste woordenlijst stuurt wat mensen rapporteren. Daarom staat de regel
+          „schrijf uw eigen woord erboven" bovenaan en niet in de kleine letters.</li>
+        <li>Een kaart die naar gevoel vraagt, kan aandacht richten op klachten. Het werkbereik
+          en de groene kolom zijn er om het omgekeerde te doen: <em>dit hoort erbij</em>.</li>
+        <li>Dit is geen diagnostisch instrument en doet niet alsof. Het is een gespreksopening
+          met een datum eraan.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>INSPIRATIE</h4>
+      <ul>
+        <li>De McGill-pijnvragenlijst (1975) — de vondst dat een woordenlijst pijn beschrijfbaar maakt</li>
+        <li>Het cupping-formulier en het smaakwiel van de koffiewereld: gedeelde woordenschat plus schaal</li>
+        <li>Keurmeesterkaarten uit de land- en tuinbouw, waar één blad een oordeel én de reden bevat</li>
+        <li>Wijnetiketten en proefnotities: woorden groot, cijfers klein</li>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad'), f=1;
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var breed=schaal.clientWidth, eigen=blad.offsetWidth;
+    f=Math.min(1,breed/eigen);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,942 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 55 — Brief · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 55 — BRIEF
+   ------------------------------------------------------------
+   Een tabel voert u uit. Een brief leest u.
+
+   Elke oefenkaart op aarde heeft dezelfde vorm: een raster.
+   Kolom oefening, kolom series, kolom herhalingen, kolom
+   frequentie, hokje om af te vinken. Dat raster is niet
+   ontworpen voor de patiënt — het is ontworpen voor de invoer.
+   Het is een formulier dat toevallig meegaat naar huis.
+
+   En een formulier doet iets met een mens. Het zegt: hier is
+   uw opgave, teken af. Niemand leest een formulier twee keer.
+   Niemand vouwt een formulier op en bewaart het in de la met
+   de belangrijke papieren. Een brief wél.
+
+   DUS: geen schema, maar correspondentie. De fysiotherapeut
+   schríjft de patiënt. Aanhef, vier alinea's, groet, echte
+   handtekening. Elke oefening is een alinea in de stem van de
+   behandelaar: „Ik zou graag zien dat u drie keer per dag uit
+   de keukenstoel opstaat." Geen imperatief van een systeem,
+   maar een wens van een mens die u kent.
+
+   DRIE DINGEN DIE DE BRIEFVORM VERDIENT:
+     · DE KANTLIJN. Wie proza afdrukt, verliest de vindbaarheid
+       van een tabel — tenzij de getallen in de kantlijn gaan
+       staan, zoals de marginalia in een middeleeuws handschrift
+       en in ieder juridisch stuk sinds. De brief leest als
+       proza; de kantlijn is de tabel. Beide kloppen.
+     · DE POST-SCRIPTUM. In de directmailwereld is het een
+       vuistregel dat de P.S. na de aanhef de best gelezen regel
+       van een brief is: hij staat los, hij is kort, en het oog
+       valt er als vanzelf op. Dáár hoort de veiligheidsregel,
+       niet in een grijs kadertje onderaan een schema.
+     · DE ARCHIEFLA. Wie brieven schrijft, bouwt een dossier dat
+       de patiënt zélf kan lezen. De behandelreeks wordt een
+       briefwisseling: vier brieven, vier data, en er kan
+       teruggeschreven worden.
+
+   VORM. Briefpapier, geen interface. Een boekschreef voor alles
+   wat een mens leest, in een royale corpsgrootte — een brief
+   heeft geen tabelhaast en mag daarom groot gezet worden, wat
+   voor oudere ogen het hele punt is. Twee inkten: vulpenblauw
+   voor wat de behandelaar zelf schrijft, zegellak-rood voor de
+   P.S. Ruime witmarge, ongelijke rechterkant, regellengte onder
+   de 66 tekens. De handtekening is de enige plek waar de vorm
+   los mag.
+   ============================================================ */
+
+:root{
+  --papier:#efece4;
+  --vel:#fdfbf6;
+  --inkt:#1b1f27;
+  --inkt-2:#3d434e;
+  --grijs:#7d838d;
+  --lijn:#d8d3c7;
+  --lijn-2:#e9e5db;
+
+  --pen:#26406e;
+  --pen-licht:#e8edf5;
+  --zegel:#8f2f2a;
+  --zegel-licht:#f6ece9;
+
+  --serif:"Iowan Old Style",Charter,Palatino,Georgia,"Times New Roman",serif;
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --hand:"Snell Roundhand","Apple Chancery","Segoe Script","Brush Script MT",cursive;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:66px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:18px/1.68 var(--serif);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--pen)}
+:focus-visible{outline:3px solid var(--pen);outline-offset:3px}
+
+.binnen{max-width:1120px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--inkt);color:#cfd3da;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border:1px solid #454b57;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#cfd3da;text-decoration:none;padding:5px 3px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:#8aa6d4}
+.labbalk a.terug{color:#fff;border-bottom-color:#454b57}
+@media (max-width:760px){.labbalk a:not(.terug){display:none}}
+
+.scherm{padding:var(--s6) 0;border-bottom:1px solid var(--lijn)}
+.scherm.vel{background:var(--vel)}
+.schermkop{margin-bottom:var(--s5);max-width:68ch}
+.schermkop b{display:block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--pen);
+  margin-bottom:var(--s2)}
+.schermkop h2{font:400 clamp(28px,3.4vw,37px)/1.14 var(--serif);letter-spacing:-.015em;color:var(--inkt)}
+.schermkop p{margin-top:var(--s3);font-size:17.5px}
+.schermkop em{font-style:italic;color:var(--inkt)}
+
+/* ---------- 1 landing ---------- */
+.merkregel{display:flex;align-items:center;gap:11px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:30px;height:30px;background:var(--pen);color:#fff;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font:400 17px/1 var(--serif)}
+.merkregel .naam{font:600 16px/1 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+.merkregel .pad{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--grijs)}
+
+.heldrij{display:grid;grid-template-columns:1.02fr .98fr;gap:var(--s6);align-items:center}
+@media (max-width:980px){.heldrij{grid-template-columns:1fr;gap:var(--s5)}}
+h1.kop{font:400 clamp(35px,5.4vw,58px)/1.08 var(--serif);letter-spacing:-.02em;color:var(--inkt)}
+h1.kop em{font-style:italic;color:var(--pen)}
+.onder{margin-top:var(--s4);font-size:19px;max-width:54ch}
+.onder b{color:var(--inkt);font-weight:600}
+.onder + .onder{margin-top:var(--s3)}
+
+/* het beeld: twee documenten naast elkaar */
+.tegenover{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);align-items:stretch}
+.doc{background:#fff;border:1px solid var(--lijn);padding:16px 15px;position:relative;
+  box-shadow:0 2px 16px rgba(27,31,39,.07)}
+.doc .merk{font:700 8.5px/1 var(--mono);letter-spacing:.18em;color:var(--grijs);margin-bottom:12px}
+.doc.form .rij{display:grid;grid-template-columns:1fr 26px 26px 16px;gap:5px;align-items:center;
+  padding:7px 0;border-bottom:1px solid var(--lijn-2)}
+.doc.form .rij i{display:block;height:7px;background:#d9d5cb;border-radius:1px}
+.doc.form .rij i.k{background:#e6e2d8}
+.doc.form .rij u{display:block;height:11px;width:11px;border:1px solid #b6b1a5;text-decoration:none}
+.doc.form .kop{font:700 8.5px/1 var(--mono);letter-spacing:.1em;color:#9a958a;
+  display:grid;grid-template-columns:1fr 26px 26px 16px;gap:5px;padding-bottom:6px;
+  border-bottom:1.5px solid #b6b1a5}
+.doc.brief .lijnen i{display:block;height:6px;background:#dfdbd0;border-radius:1px;margin-bottom:9px}
+.doc.brief .lijnen i.kort{width:64%}
+.doc.brief .lijnen i.aanhef{width:44%;background:var(--pen);opacity:.55;height:8px;margin-bottom:14px}
+.doc.brief .hand{font-family:var(--hand);font-size:26px;color:var(--pen);margin-top:14px;
+  transform:rotate(-2.5deg);transform-origin:left}
+.doc .stempel{position:absolute;right:-9px;bottom:16px;font:700 8.5px/1 var(--mono);
+  letter-spacing:.14em;background:var(--inkt);color:#fff;padding:6px 9px}
+.doc.brief .stempel{background:var(--zegel)}
+.tegenover + .bijschrift{margin-top:var(--s3);font-size:15.5px;color:var(--grijs);text-align:center}
+
+.drie{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s6)}
+@media (max-width:880px){.drie{grid-template-columns:1fr}}
+.drie section{border-top:2px solid var(--inkt);padding-top:var(--s3)}
+.drie section.p{border-top-color:var(--pen)}
+.drie section.z{border-top-color:var(--zegel)}
+.drie h3{font:700 10.5px/1 var(--mono);letter-spacing:.16em;color:var(--inkt);margin-bottom:var(--s2)}
+.drie section.p h3{color:var(--pen)}
+.drie section.z h3{color:var(--zegel)}
+.drie p{font-size:16.5px;line-height:1.62}
+.drie p b{color:var(--inkt);font-weight:600}
+
+/* ---------- 2 kiezer ---------- */
+.kiezerrij{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.kiezerrij{grid-template-columns:1fr}}
+.paneel{background:var(--vel);border:1px solid var(--lijn)}
+.paneel > h3{font:700 11px/1 var(--mono);letter-spacing:.16em;color:#fff;background:var(--inkt);
+  padding:13px 16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.paneel > h3 span{color:#9db4d8;font-weight:500}
+.paneel.pen > h3{background:var(--pen)}
+
+.zoek{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--lijn)}
+.zoek .veld{flex:1;border:1px solid var(--lijn);background:#fff;padding:10px 12px;
+  font:400 16px/1 var(--serif);color:var(--inkt)}
+.zoek .veld i{font-style:normal;color:var(--grijs)}
+.zoek .tel{font:700 11px/1 var(--mono);letter-spacing:.09em;color:var(--pen);white-space:nowrap}
+
+.oefrij{display:grid;grid-template-columns:20px 58px 1fr;gap:14px;align-items:start;
+  padding:14px 16px;border-bottom:1px solid var(--lijn-2)}
+.oefrij .vink{width:17px;height:17px;border:1.5px solid var(--inkt);background:#fff;margin-top:3px}
+.oefrij.aan .vink{background:var(--pen);border-color:var(--pen);position:relative}
+.oefrij.aan .vink::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;
+  border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg)}
+.oefrij .beeld{background:#fff;border:1px solid var(--lijn);padding:2px}
+.oefrij h4{font:600 16.5px/1.22 var(--sans);color:var(--inkt);letter-spacing:-.012em}
+.oefrij .zin{margin-top:6px;font:400 15.5px/1.5 var(--serif);color:var(--inkt-2);
+  border-left:2px solid var(--pen);padding-left:11px}
+.oefrij .zin b{font-weight:600;color:var(--inkt)}
+.oefrij.uit{opacity:.52}
+.oefrij.uit .zin{border-left-color:var(--lijn);font-style:italic;color:var(--grijs)}
+.oefrij .varianten{grid-column:2/-1;display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.oefrij .varianten b{width:100%;font:700 9.5px/1.8 var(--mono);letter-spacing:.14em;color:var(--grijs)}
+.oefrij .varianten span{border:1px solid var(--lijn);background:#fff;padding:6px 10px;
+  font:400 14.5px/1 var(--serif);color:var(--inkt-2)}
+.oefrij .varianten span.aan{background:var(--pen-licht);border-color:var(--pen);color:var(--pen);font-weight:600}
+
+/* rechterkant: de brief die groeit */
+.briefdraft{padding:var(--s4) 22px var(--s3)}
+.briefdraft .hoofd{font:700 9.5px/1 var(--mono);letter-spacing:.18em;color:var(--grijs);
+  padding-bottom:9px;border-bottom:1px solid var(--lijn);margin-bottom:var(--s3)}
+.briefdraft .aanhef{font:400 18px/1.5 var(--serif);color:var(--inkt);margin-bottom:var(--s3)}
+.briefdraft p.al{font-size:16.5px;line-height:1.66;margin-bottom:13px;position:relative;padding-left:14px}
+.briefdraft p.al::before{content:"";position:absolute;left:0;top:5px;bottom:5px;width:2px;background:var(--pen-licht)}
+.briefdraft p.al.nieuw::before{background:var(--pen)}
+.briefdraft p.al b{color:var(--inkt);font-weight:600}
+.briefdraft .ps{margin-top:var(--s3);border-top:1px solid var(--lijn);padding-top:var(--s3);
+  font-size:16px;line-height:1.6;color:var(--zegel)}
+.briefdraft .ps b{font:700 10px/1 var(--mono);letter-spacing:.14em;display:block;margin-bottom:7px}
+
+.meter{display:flex;align-items:center;gap:13px;padding:14px 22px;background:var(--pen-licht);
+  border-top:1px solid var(--lijn);flex-wrap:wrap}
+.meter .balk{flex:1;min-width:150px;height:8px;background:#fff;border:1px solid #c2cee2;position:relative}
+.meter .balk i{display:block;height:100%;background:var(--pen);width:71%}
+.meter .balk u{position:absolute;top:-5px;bottom:-5px;left:88%;width:2px;background:var(--zegel);text-decoration:none}
+.meter .cijf{font:700 11px/1 var(--mono);letter-spacing:.08em;color:var(--pen)}
+.meter small{width:100%;font:400 14.5px/1.5 var(--serif);color:var(--inkt-2)}
+.meter small b{color:var(--inkt);font-weight:600}
+
+.toon{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--lijn);
+  background:#fff;flex-wrap:wrap}
+.toon b{font:700 9.5px/1 var(--mono);letter-spacing:.14em;color:var(--grijs)}
+.toon .keus{display:flex;border:1px solid var(--lijn)}
+.toon .keus span{padding:8px 14px;font:400 15px/1 var(--serif);color:var(--inkt-2);background:#fff}
+.toon .keus span.aan{background:var(--inkt);color:#fff;font-weight:600}
+.toon small{font:400 14.5px/1.45 var(--serif);color:var(--grijs);flex:1;min-width:180px}
+
+.waarschuw{margin:var(--s3) 16px var(--s4);border-left:3px solid var(--zegel);
+  background:var(--zegel-licht);padding:14px 16px}
+.waarschuw b{display:block;font:700 10px/1 var(--mono);letter-spacing:.13em;color:var(--zegel);margin-bottom:8px}
+.waarschuw p{font-size:15.5px;line-height:1.58}
+
+/* ---------- 3 cliëntkaart ---------- */
+.kaartrij{display:grid;grid-template-columns:1fr 330px;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.kaartrij{grid-template-columns:1fr}}
+.schermbrief{background:var(--vel);border:1px solid var(--lijn);padding:var(--s5) var(--s5) var(--s4)}
+@media (max-width:620px){.schermbrief{padding:var(--s4) var(--s3)}}
+.briefhoofd{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--s3);
+  border-bottom:1.5px solid var(--inkt);padding-bottom:11px;flex-wrap:wrap}
+.briefhoofd .prak{font:600 16px/1.25 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+.briefhoofd .prak i{display:block;font-style:normal;font:400 14px/1.4 var(--serif);color:var(--grijs);margin-top:3px}
+.briefhoofd .dat{font:400 15px/1.4 var(--serif);color:var(--inkt-2);text-align:right}
+.betreft{margin-top:var(--s4);font:600 15.5px/1.4 var(--sans);color:var(--inkt)}
+.betreft i{font-style:normal;font:700 9.5px/1 var(--mono);letter-spacing:.15em;color:var(--grijs);
+  display:block;margin-bottom:6px}
+.schermbrief .aan{margin-top:var(--s4);font:400 19px/1.5 var(--serif);color:var(--inkt)}
+.schermbrief p.tekst{margin-top:var(--s3);font-size:17.5px;line-height:1.7;max-width:64ch}
+.schermbrief p.tekst b{color:var(--inkt);font-weight:600}
+
+.alinea{display:grid;grid-template-columns:96px 1fr;gap:var(--s4);margin-top:var(--s4);
+  padding-top:var(--s4);border-top:1px solid var(--lijn-2);align-items:start}
+@media (max-width:620px){.alinea{grid-template-columns:66px 1fr;gap:var(--s3)}}
+.alinea .kant{text-align:right}
+.alinea .kant img{border:1px solid var(--lijn);background:#fff;padding:2px;margin-left:auto}
+.alinea .kant .dosis{margin-top:9px;font:700 10.5px/1.5 var(--mono);letter-spacing:.06em;color:var(--inkt)}
+.alinea .kant .dosis i{display:block;font-style:normal;color:var(--grijs);font-weight:400}
+.alinea .kant .hokjes{display:flex;gap:4px;justify-content:flex-end;margin-top:10px}
+.alinea .kant .hokjes u{width:13px;height:13px;border:1.2px solid var(--inkt);text-decoration:none;display:block}
+.alinea .kant .hokjes u.af{background:var(--pen);border-color:var(--pen);position:relative}
+.alinea .kant .hokjes u.af::after{content:"";position:absolute;left:4px;top:1px;width:3px;height:7px;
+  border:solid #fff;border-width:0 1.6px 1.6px 0;transform:rotate(42deg)}
+.alinea p{font-size:17.5px;line-height:1.7;max-width:60ch}
+.alinea p b{color:var(--inkt);font-weight:600}
+.alinea p em{font-style:italic;color:var(--pen)}
+
+.groet{margin-top:var(--s5);font-size:17.5px;color:var(--inkt-2)}
+.groet .naam{font-family:var(--hand);font-size:38px;line-height:1;color:var(--pen);
+  margin:14px 0 8px;transform:rotate(-2deg);transform-origin:left;display:inline-block}
+.groet .func{font:400 15px/1.5 var(--serif);color:var(--grijs)}
+.psblok{margin-top:var(--s4);border:1.5px solid var(--zegel);padding:var(--s3) 18px;background:var(--zegel-licht)}
+.psblok b{font:700 10.5px/1 var(--mono);letter-spacing:.16em;color:var(--zegel);display:block;margin-bottom:9px}
+.psblok p{font-size:17px;line-height:1.62;color:var(--inkt)}
+
+/* archiefla */
+.la{background:var(--inkt);color:#c9cdd5;padding:var(--s4) var(--s3)}
+.la h3{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:#9db4d8;
+  border-bottom:1px solid #454b57;padding-bottom:10px;margin-bottom:var(--s3)}
+.la .item{padding:13px 0;border-bottom:1px solid #2f343d}
+.la .item .d{font:700 9.5px/1 var(--mono);letter-spacing:.12em;color:#8d93a0}
+.la .item h4{font:400 17px/1.35 var(--serif);color:#fff;margin-top:6px}
+.la .item p{font-size:14.5px;line-height:1.55;margin-top:5px;color:#a9aeb8}
+.la .item.nu{border-left:2px solid #9db4d8;padding-left:12px;margin-left:-12px}
+.la .item.nu .d{color:#9db4d8}
+.la .antwoord{margin-top:var(--s3);background:#252a33;border:1px dashed #4d5460;padding:14px}
+.la .antwoord b{display:block;font:700 9.5px/1 var(--mono);letter-spacing:.13em;color:#9db4d8;margin-bottom:9px}
+.la .antwoord p{font:italic 400 16px/1.55 var(--serif);color:#e2e5ea}
+.la .antwoord small{display:block;margin-top:9px;font:400 13.5px/1.45 var(--serif);color:#8d93a0}
+
+/* ---------- 4 printkaart ---------- */
+.printbalk{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:var(--s4);
+  border:1px solid var(--lijn);background:#fff;padding:14px 17px}
+.printbalk p{font-size:16px;line-height:1.55;flex:1;min-width:250px}
+.printbalk p b{color:var(--inkt);font-weight:600}
+.printknop{border:1px solid var(--inkt);background:var(--inkt);color:#fff;cursor:pointer;
+  font:600 14.5px/1 var(--sans);padding:12px 17px}
+.printknop:hover{background:var(--pen);border-color:var(--pen)}
+
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;position:relative;
+  transform-origin:top left;box-shadow:0 3px 34px rgba(27,31,39,.26);
+  font-family:var(--serif);overflow:hidden}
+@media (max-width:860px){.bladschaal{max-width:100%}}
+.blad .rand{position:absolute;inset:0;padding:14mm 17mm 10mm;display:flex;flex-direction:column}
+
+/* briefhoofd op papier */
+.pkop{display:flex;justify-content:space-between;align-items:flex-end;gap:8mm;
+  border-bottom:1.2pt solid #000;padding-bottom:2mm}
+.pkop .prak{font:600 11pt/1.2 var(--sans);letter-spacing:-.01em;color:#000}
+.pkop .prak i{display:block;font-style:normal;font:400 7.4pt/1.4 var(--serif);color:#3d434e;margin-top:.8mm}
+.pkop .adres{text-align:right;font:400 7.2pt/1.42 var(--serif);color:#3d434e}
+
+.pdat{display:flex;justify-content:space-between;align-items:baseline;gap:6mm;margin-top:3.4mm;
+  font:400 8pt/1.3 var(--serif);color:#1b1f27}
+.pdat .betr b{font:700 5.8pt/1 var(--mono);letter-spacing:.16em;color:#7d838d;margin-right:2mm}
+
+.paanhef{margin-top:5mm;font:400 11.4pt/1.35 var(--serif);color:#000}
+.popening{margin-top:2.4mm;font:400 9.8pt/1.5 var(--serif);color:#000;max-width:152mm}
+.popening b{font-weight:600}
+
+/* de vier alinea's, met de kantlijn ernaast */
+.palinea{display:grid;grid-template-columns:24mm 1fr;gap:5mm;align-items:start;
+  margin-top:2.8mm;padding-top:2.2mm;border-top:.4pt solid #cdc8bb}
+.palinea .kant{text-align:right}
+.palinea .kant img{width:18mm;border:.6pt solid #000;background:#fff;padding:.4mm;margin-left:auto}
+.palinea .kant .ds{margin-top:1.4mm;font:700 7.4pt/1.35 var(--mono);letter-spacing:.02em;color:#000}
+.palinea .kant .ds i{display:block;font-style:normal;font-weight:400;color:#4a505b;font-size:6.4pt;
+  letter-spacing:.06em;margin-top:.5mm}
+.palinea .kant .hok{display:flex;gap:1mm;justify-content:flex-end;margin-top:1.6mm}
+.palinea .kant .hok u{width:3.6mm;height:3.6mm;border:.7pt solid #000;display:block;text-decoration:none}
+.palinea p{font:400 9.8pt/1.5 var(--serif);color:#000;max-width:118mm}
+.palinea p b{font-weight:600}
+.palinea p em{font-style:italic}
+.palinea p .num{font:700 8pt/1 var(--mono);color:#26406e;margin-right:1.6mm}
+
+.pslot{margin-top:4mm;font:400 9.8pt/1.5 var(--serif);color:#000}
+.pgroet{margin-top:3.6mm;display:flex;align-items:flex-end;gap:8mm;justify-content:space-between}
+.pgroet .links{font:400 9.8pt/1.45 var(--serif);color:#000}
+.pgroet .hand{font-family:var(--hand);font-size:19pt;line-height:1;color:#26406e;
+  transform:rotate(-2deg);transform-origin:left;margin:1.6mm 0 1mm;display:block}
+.pgroet .func{font:400 7.4pt/1.4 var(--serif);color:#4a505b}
+.pgroet .zegel{width:15mm;height:15mm;border:1pt solid #8f2f2a;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  color:#8f2f2a;flex:none}
+.pgroet .zegel b{font:700 5.4pt/1.2 var(--mono);letter-spacing:.1em}
+.pgroet .zegel i{font-style:normal;font:400 9pt/1.1 var(--serif);margin-top:.6mm}
+
+.pps{margin-top:auto;border-top:1.2pt solid #8f2f2a;padding-top:2.4mm;
+  display:grid;grid-template-columns:auto 1fr;gap:4mm;align-items:start}
+.pps > b{font:700 9.6pt/1.2 var(--serif);color:#8f2f2a;white-space:nowrap}
+.pps p{font:400 9.4pt/1.45 var(--serif);color:#000}
+.pps p b{font-weight:700}
+
+.pvoet{margin-top:2.6mm;border-top:.4pt solid #cdc8bb;padding-top:1.6mm;
+  display:flex;justify-content:space-between;gap:5mm;font:400 6.2pt/1.35 var(--mono);
+  letter-spacing:.1em;color:#7d838d}
+.pvoet b{color:#000}
+
+/* uitleg onder het blad */
+.uitleg{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s5)}
+@media (max-width:880px){.uitleg{grid-template-columns:1fr}}
+.uitleg div{border-top:1px solid var(--lijn);padding-top:var(--s3)}
+.uitleg h4{font:700 10px/1 var(--mono);letter-spacing:.15em;color:var(--pen);margin-bottom:9px}
+.uitleg p{font-size:16px;line-height:1.6}
+.uitleg p b{color:var(--inkt);font-weight:600}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#bfc4cc;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:#9db4d8;
+  border-top:1px solid #454b57;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:16px;line-height:1.64}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:9px}
+footer.uitleiding a{color:#9db4d8}
+
+/* ============================================================
+   PRINT — één vel, staand. Een brief kent geen tweede pagina:
+   past hij niet, dan zijn het te veel oefeningen.
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000 !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  .schermkop,.uitleg{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .scherm{padding:0 !important;border:0 !important;background:#fff !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 55</span>
+  <strong style="font:600 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Brief</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm vel" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 55 · BRIEF</span>
+    </div>
+
+    <div class="heldrij">
+      <div>
+        <h1 class="kop">Wij sturen u geen schema.<br/><em>Wij schrijven u.</em></h1>
+        <p class="onder">Elke oefenkaart ter wereld heeft dezelfde vorm: een raster. Kolom oefening,
+          kolom series, kolom herhalingen, hokje om af te vinken. Dat raster is nooit ontworpen
+          voor de patiënt — het is <b>een invoerformulier dat toevallig meegaat naar huis</b>.</p>
+        <p class="onder">En een formulier doet iets met een mens. Het zegt: hier is uw opgave, teken af.
+          Niemand leest een formulier twee keer. Niemand bewaart een formulier in de la bij de
+          belangrijke papieren. <b>Een brief wel.</b></p>
+      </div>
+
+      <div>
+        <div class="tegenover">
+          <div class="doc form" aria-hidden="true">
+            <div class="merk">HET SCHEMA</div>
+            <div class="kop"><span>OEFENING</span><span>×</span><span>SER</span><span></span></div>
+            <div class="rij"><i></i><i class="k"></i><i class="k"></i><u></u></div>
+            <div class="rij"><i></i><i class="k"></i><i class="k"></i><u></u></div>
+            <div class="rij"><i></i><i class="k"></i><i class="k"></i><u></u></div>
+            <div class="rij"><i></i><i class="k"></i><i class="k"></i><u></u></div>
+            <div class="rij"><i></i><i class="k"></i><i class="k"></i><u></u></div>
+            <div class="stempel">1× GELEZEN</div>
+          </div>
+          <div class="doc brief" aria-hidden="true">
+            <div class="merk">DE BRIEF</div>
+            <div class="lijnen">
+              <i class="aanhef"></i>
+              <i></i><i></i><i class="kort"></i>
+              <i></i><i></i><i class="kort"></i>
+            </div>
+            <div class="hand">A. Wielenga</div>
+            <div class="stempel">BEWAARD</div>
+          </div>
+        </div>
+        <p class="bijschrift">Zelfde vier oefeningen. Andere vorm, ander gedrag.</p>
+      </div>
+    </div>
+
+    <div class="drie">
+      <section>
+        <h3>DE KANTLIJN IS DE TABEL</h3>
+        <p>Proza verliest de vindbaarheid van een raster — tenzij de getallen ernaast gaan staan.
+          De <b>marginalia</b> uit het middeleeuwse handschrift, en uit ieder juridisch stuk sindsdien:
+          de brief leest als proza, de kantlijn levert in één blik <b>hoe vaak, hoe veel, en welke dag
+          u al af hebt</b>. Beide kloppen tegelijk.</p>
+      </section>
+      <section class="p">
+        <h3>DE STEM IS VAN EEN MENS</h3>
+        <p>„3× daags, 10 herhalingen" is de stem van een systeem. <b>„Ik zou graag zien dat u drie keer
+          per dag uit de keukenstoel opstaat"</b> is de stem van iemand die u kent, die uw keuken heeft
+          gezien en weet waarom die stoel er staat. Dezelfde dosering. Een heel ander verzoek.</p>
+      </section>
+      <section class="z">
+        <h3>DE P.S. WORDT GELEZEN</h3>
+        <p>Van alle regels in een brief wordt de P.S. bijna altijd meegenomen: hij staat los,
+          hij is kort, het oog valt erop. Daarom staat <b>de veiligheidsregel daar</b> — en niet in
+          een grijs kadertje onder aan een schema, waar hij al dertig jaar niet gelezen wordt.</p>
+      </section>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 2</b>
+      <h2>De oefeningen-kiezer</h2>
+      <p>Aanvinken voegt geen rij toe aan een tabel, maar <em>een alinea aan een brief</em>. Elke oefening
+        heeft één voorgeschreven zin in de stem van de praktijk, met twee of drie varianten voor
+        toon en context. De therapeut kiest; wat rechts staat, gaat straks zo de envelop in.</p>
+    </div>
+
+    <div class="kiezerrij">
+
+      <div class="paneel">
+        <h3>OEFENINGEN <span>knieprogramma · 215 beschikbaar</span></h3>
+        <div class="zoek">
+          <span class="veld">knie <i>— stoel, staand, zonder apparatuur</i></span>
+          <span class="tel">4 GEKOZEN</span>
+        </div>
+
+        <div class="toon">
+          <b>AANSPREEKVORM</b>
+          <span class="keus"><span class="aan">u</span><span>je</span></span>
+          <small>Mevrouw De Wit is 74. De praktijk schrijft haar met <b>u</b>; bij jongere cliënten
+            draait de hele brief mee.</small>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <img class="beeld" src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit een stoel"/>
+          <div>
+            <h4>Opstaan uit de stoel</h4>
+            <p class="zin">„Ik zou graag zien dat u <b>drie keer per dag uit de keukenstoel opstaat</b> —
+              tien keer achter elkaar, met de armen over elkaar als dat lukt."</p>
+            <div class="varianten">
+              <b>VARIANT VAN DE ZIN</b>
+              <span class="aan">met de armen over elkaar</span>
+              <span>met steun van de leuning</span>
+              <span>en meteen weer gaan zitten</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <img class="beeld" src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png" alt="Knie strekken, zittend"/>
+          <div>
+            <h4>Knie strekken, zittend</h4>
+            <p class="zin">„Als u toch zit — bij de televisie, bij de koffie — <b>strek dan uw knie en houd
+              hem drie tellen recht</b>. Twaalf keer, twee keer per dag."</p>
+            <div class="varianten">
+              <b>VARIANT VAN DE ZIN</b>
+              <span>zonder aanleiding te noemen</span>
+              <span class="aan">gekoppeld aan koffie/televisie</span>
+              <span>met een gewichtje aan de enkel</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <img class="beeld" src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" alt="Op de plaats marcheren met steun"/>
+          <div>
+            <h4>Marcheren op de plaats</h4>
+            <p class="zin">„Aan het aanrecht, één hand op het blad: <b>til uw knie tot heuphoogte, om en om,
+              een minuut lang</b>. Twee keer per dag; het water hoeft er niet voor te koken."</p>
+            <div class="varianten">
+              <b>VARIANT VAN DE ZIN</b>
+              <span class="aan">terwijl het water kookt</span>
+              <span>bij het tandenpoetsen</span>
+              <span>zonder plaatsbepaling</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="oefrij aan">
+          <span class="vink" aria-hidden="true"></span>
+          <img class="beeld" src="/images/onderste-extremiteit/kuitheffing-op-een-verhoging-line-v1.png" alt="Kuitheffing"/>
+          <div>
+            <h4>Op de tenen komen</h4>
+            <p class="zin">„En tot slot: <b>vijftien keer op uw tenen, met twee handen aan het aanrecht</b>.
+              Dit is de oefening waar u de trap in terugziet."</p>
+            <div class="varianten">
+              <b>VARIANT VAN DE ZIN</b>
+              <span>zakelijk, zonder doel</span>
+              <span class="aan">met het doel erbij (trap)</span>
+              <span>met het doel erbij (fiets)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="oefrij uit">
+          <span class="vink" aria-hidden="true"></span>
+          <img class="beeld" src="/images/onderste-extremiteit/been-pendelen-line-v1.png" alt="Been pendelen"/>
+          <div>
+            <h4>Been pendelen</h4>
+            <p class="zin">Niet gekozen — een brief van vijf alinea's past niet op één vel,
+              en een tweede vel wordt niet gelezen.</p>
+          </div>
+        </div>
+
+        <div class="waarschuw">
+          <b>DE PRAKTIJK SCHRIJFT NIET ALLES ZELF</b>
+          <p>De zinnen zijn vooraf geschreven en getoetst op leesniveau (B1), zodat een brief
+            binnen een minuut klaar is. De therapeut kan elke zin aanpassen, maar begint nooit
+            bij een leeg vel: dát is precies waarom niemand ooit brieven schreef.</p>
+        </div>
+      </div>
+
+      <div class="paneel pen">
+        <h3>DE BRIEF <span>meegroeiend</span></h3>
+        <div class="briefdraft">
+          <div class="hoofd">CONCEPT · 29 AUGUSTUS 2026 · NOG NIET VERZONDEN</div>
+          <p class="aanhef">Beste mevrouw De&nbsp;Wit,</p>
+          <p class="al">Vorige week liep u de gang uit zonder aan de muur te steunen. Dat is precies
+            waar we in juni voor begonnen zijn. Voor de komende drie weken vraag ik u vier dingen.</p>
+          <p class="al">Ik zou graag zien dat u <b>drie keer per dag uit de keukenstoel opstaat</b> —
+            tien keer achter elkaar, met de armen over elkaar als dat lukt.</p>
+          <p class="al">Als u toch zit, bij de televisie of bij de koffie: <b>strek uw knie en houd hem
+            drie tellen recht</b>. Twaalf keer, twee keer per dag.</p>
+          <p class="al">Aan het aanrecht, één hand op het blad: <b>til uw knie tot heuphoogte, om en om,
+            een minuut lang</b>. Het water hoeft er niet voor te koken.</p>
+          <p class="al nieuw">En tot slot: <b>vijftien keer op uw tenen</b>, met twee handen aan het
+            aanrecht. Dit is de oefening waar u de trap in terugziet.</p>
+          <div class="ps">
+            <b>P.S. — VAST, WORDT NIET WEGGELATEN</b>
+            Kortademig, duizelig, of pijn die uitstraalt tot in uw kuit? Dan stopt u, en belt u mij.
+            Dat is geen terugval; dat is informatie.
+          </div>
+        </div>
+        <div class="meter">
+          <span class="cijf">247 W</span>
+          <span class="balk" aria-hidden="true"><i></i><u></u></span>
+          <span class="cijf">MAX 310</span>
+          <small>Een brief die op <b>één vel</b> past is ongeveer 310 woorden. De meter is geen
+            stijlregel maar een <b>papierregel</b>: het rode streepje is de onderkant van het vel.</small>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm vel" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 3</b>
+      <h2>De digitale cliëntkaart</h2>
+      <p>Op het scherm is de kaart dezelfde brief — alleen zijn de vakjes in de kantlijn nu
+        aan te tikken. Ernaast staat wat een schema nooit kan hebben: <em>de la met de vorige
+        brieven</em>. Een behandelreeks wordt een briefwisseling, en er kan teruggeschreven worden.</p>
+    </div>
+
+    <div class="kaartrij">
+
+      <article class="schermbrief">
+        <div class="briefhoofd">
+          <div class="prak">Fysiotherapie De Vijverberg
+            <i>Anouk Wielenga · knie- en heuprevalidatie</i></div>
+          <div class="dat">Zwolle, 29 augustus 2026</div>
+        </div>
+        <p class="betreft"><i>BETREFT</i>Uw oefeningen tot 19 september</p>
+
+        <p class="aan">Beste mevrouw De&nbsp;Wit,</p>
+        <p class="tekst">Vorige week liep u de gang uit zonder aan de muur te steunen. Dat is precies
+          waar we in juni voor begonnen zijn. Voor de komende drie weken vraag ik u <b>vier dingen</b>.
+          Ze staan hieronder, met in de kantlijn hoe vaak.</p>
+
+        <div class="alinea">
+          <div class="kant">
+            <img src="/images/onderste-extremiteit/chair-squat-line-v1.png" width="72" alt="Opstaan uit een stoel"/>
+            <div class="dosis">3× per dag<i>10 keer</i></div>
+            <div class="hokjes" aria-label="dagen afgevinkt">
+              <u class="af"></u><u class="af"></u><u class="af"></u><u></u><u></u><u></u><u></u>
+            </div>
+          </div>
+          <p><em>1.</em> Ik zou graag zien dat u <b>drie keer per dag uit de keukenstoel opstaat</b> —
+            tien keer achter elkaar, met de armen over elkaar als dat lukt. Lukt dat niet, dan mag
+            één hand op de leuning; dat telt gewoon mee.</p>
+        </div>
+
+        <div class="alinea">
+          <div class="kant">
+            <img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png" width="72" alt="Knie strekken, zittend"/>
+            <div class="dosis">2× per dag<i>12 keer</i></div>
+            <div class="hokjes" aria-label="dagen afgevinkt">
+              <u class="af"></u><u class="af"></u><u class="af"></u><u></u><u></u><u></u><u></u>
+            </div>
+          </div>
+          <p><em>2.</em> Als u toch zit — bij de televisie, bij de koffie — <b>strek dan uw knie en houd
+            hem drie tellen recht</b>. Twaalf keer. U voelt het aan de voorkant van uw bovenbeen;
+            dat hoort.</p>
+        </div>
+
+        <div class="alinea">
+          <div class="kant">
+            <img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" width="72" alt="Marcheren op de plaats"/>
+            <div class="dosis">2× per dag<i>1 minuut</i></div>
+            <div class="hokjes" aria-label="dagen afgevinkt">
+              <u class="af"></u><u class="af"></u><u></u><u></u><u></u><u></u><u></u>
+            </div>
+          </div>
+          <p><em>3.</em> Aan het aanrecht, één hand op het blad: <b>til uw knie tot heuphoogte, om en om,
+            een minuut lang</b>. Het water hoeft er niet voor te koken — als het lukt terwijl u wacht,
+            is dat mooi meegenomen.</p>
+        </div>
+
+        <div class="alinea">
+          <div class="kant">
+            <img src="/images/onderste-extremiteit/kuitheffing-op-een-verhoging-line-v1.png" width="72" alt="Op de tenen komen"/>
+            <div class="dosis">1× per dag<i>15 keer</i></div>
+            <div class="hokjes" aria-label="dagen afgevinkt">
+              <u class="af"></u><u class="af"></u><u></u><u></u><u></u><u></u><u></u>
+            </div>
+          </div>
+          <p><em>4.</em> En tot slot: <b>vijftien keer op uw tenen</b>, met twee handen aan het aanrecht.
+            Dit is de oefening waar u de trap in terugziet — niet deze week, wel over drie.</p>
+        </div>
+
+        <p class="groet">Als er iets niet lukt, is dat geen slecht nieuws maar een gegeven. Schrijft
+          u het op, dan bespreken we het op 19 september.<br/>
+          Met vriendelijke groet,
+          <span class="naam">A. Wielenga</span>
+          <span class="func">Anouk Wielenga, fysiotherapeut · 038 — 421 76 08</span>
+        </p>
+
+        <div class="psblok">
+          <b>P.S.</b>
+          <p>Kortademig, duizelig, of pijn die uitstraalt tot in uw kuit? Dan stopt u, en belt u mij.
+            Dat is geen terugval; dat is informatie.</p>
+        </div>
+      </article>
+
+      <aside class="la">
+        <h3>DE LA — UW BRIEFWISSELING</h3>
+        <div class="item nu">
+          <div class="d">29 AUG 2026 · NU</div>
+          <h4>Vier oefeningen tot 19 september</h4>
+          <p>Opbouw naar de trap. Marcheren nieuw erbij.</p>
+        </div>
+        <div class="item">
+          <div class="d">8 AUG 2026</div>
+          <h4>Drie oefeningen, en één die verdween</h4>
+          <p>Been pendelen eruit — deed niets meer voor u. Stoel omhoog van 8 naar 10.</p>
+        </div>
+        <div class="item">
+          <div class="d">4 JUL 2026</div>
+          <h4>De eerste drie weken na de knie</h4>
+          <p>Alles zittend. „Het is nu nog te vroeg om te staan, en dat is met opzet."</p>
+        </div>
+        <div class="item">
+          <div class="d">20 JUN 2026</div>
+          <h4>Wat u van mij kunt verwachten</h4>
+          <p>Kennismaking, doel, en de afspraak dat u mag bellen.</p>
+        </div>
+        <div class="antwoord">
+          <b>UW ANTWOORD — 24 AUGUSTUS</b>
+          <p>„De trap gaat beter. De nacht nog niet: rond een uur of drie word ik wakker
+            van de knie. Marcheren vergeet ik steeds 's avonds."</p>
+          <small>Eén regel terugschrijven kan altijd. Anouk las het op 25 augustus —
+            daarom staat marcheren in deze brief aan het aanrecht en niet in de slaapkamer.</small>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 4</b>
+      <h2>De printkaart — A4 staand, één brief</h2>
+      <p>Eén vel. Briefhoofd, aanhef, vier alinea's met de kantlijn ernaast, groet, handtekening,
+        P.S. Geen tabel, geen logo-balk, geen QR-code. <em>Het is een brief; dat is de hele truc.</em></p>
+    </div>
+
+    <div class="printbalk geen-print">
+      <p>Druk <b>Ctrl/⌘+P</b> — er komt precies dit ene vel uit, op ware grootte.
+        Corps 9,8&nbsp;pt met ruime interlinie: <b>groter dan elk oefenschema</b>, omdat proza
+        de ruimte heeft die een tabel opsoupeert aan kolommen.</p>
+      <button class="printknop" onclick="window.print()">Print deze brief</button>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="pkop">
+              <div class="prak">Fysiotherapie De Vijverberg
+                <i>Anouk Wielenga · knie- en heuprevalidatie</i></div>
+              <div class="adres">Vijverlaan 12, 8012 CJ Zwolle<br/>
+                038 — 421 76 08 · praktijk@devijverberg.nl</div>
+            </div>
+
+            <div class="pdat">
+              <span class="betr"><b>BETREFT</b>Uw oefeningen tot 19 september 2026</span>
+              <span>Zwolle, 29 augustus 2026</span>
+            </div>
+
+            <p class="paanhef">Beste mevrouw De&nbsp;Wit,</p>
+            <p class="popening">Vorige week liep u de gang uit zonder aan de muur te steunen. Dat is
+              precies waar we in juni voor begonnen zijn. Voor de komende drie weken vraag ik u
+              <b>vier dingen</b>; hoe vaak en hoe veel staat telkens in de kantlijn.</p>
+
+            <div class="palinea">
+              <div class="kant">
+                <img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit een stoel"/>
+                <div class="ds">3× per dag<i>10 KEER</i></div>
+                <div class="hok" aria-hidden="true"><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
+              </div>
+              <p><span class="num">1</span>Ik zou graag zien dat u <b>drie keer per dag uit de keukenstoel
+                opstaat</b> — tien keer achter elkaar, met de armen over elkaar als dat lukt. Lukt dat
+                niet, dan mag één hand op de leuning; dat telt gewoon mee. Ga rustig zitten, niet
+                ploffen: het zakken is het halve werk.</p>
+            </div>
+
+            <div class="palinea">
+              <div class="kant">
+                <img src="/images/onderste-extremiteit/knie-strekken-zittend-line-v1.png" alt="Knie strekken, zittend"/>
+                <div class="ds">2× per dag<i>12 KEER</i></div>
+                <div class="hok" aria-hidden="true"><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
+              </div>
+              <p><span class="num">2</span>Als u toch zit — bij de televisie, bij de koffie — <b>strek dan
+                uw knie en houd hem drie tellen recht</b>. Twaalf keer. U voelt het aan de voorkant van
+                uw bovenbeen; dat hoort erbij. Voelt u het achter de knie steken, dan doet u er één
+                minder en zegt u het mij.</p>
+            </div>
+
+            <div class="palinea">
+              <div class="kant">
+                <img src="/images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png" alt="Marcheren op de plaats"/>
+                <div class="ds">2× per dag<i>1 MINUUT</i></div>
+                <div class="hok" aria-hidden="true"><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
+              </div>
+              <p><span class="num">3</span>Aan het aanrecht, één hand op het blad: <b>til uw knie tot
+                heuphoogte, om en om, een minuut lang</b>. U schreef dat u het 's avonds vergeet —
+                daarom staat het nu in de keuken en niet in de slaapkamer. Het water hoeft er niet
+                voor te koken.</p>
+            </div>
+
+            <div class="palinea">
+              <div class="kant">
+                <img src="/images/onderste-extremiteit/kuitheffing-op-een-verhoging-line-v1.png" alt="Op de tenen komen"/>
+                <div class="ds">1× per dag<i>15 KEER</i></div>
+                <div class="hok" aria-hidden="true"><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
+              </div>
+              <p><span class="num">4</span>En tot slot: <b>vijftien keer op uw tenen</b>, met twee handen
+                aan het aanrecht. Dit is de oefening waar u de trap in terugziet — niet deze week,
+                wel over drie.</p>
+            </div>
+
+            <p class="pslot">Lukt er iets niet, schrijft u het dan op de achterkant — dan bespreken we
+              het op <b>19 september om 10.15 uur</b>.</p>
+
+            <div class="pgroet">
+              <div class="links">Met vriendelijke groet,
+                <span class="hand">A. Wielenga</span>
+                <span class="func">Anouk Wielenga, fysiotherapeut<br/>038 — 421 76 08</span>
+              </div>
+              <div class="zegel" aria-hidden="true"><b>BRIEF</b><i>4</i><b>VAN DE REEKS</b></div>
+            </div>
+
+            <div class="pps">
+              <b>P.S.</b>
+              <p>Kortademig, duizelig, of pijn die <b>uitstraalt tot in uw kuit</b>? Dan stopt u, en
+                belt u mij — ook buiten de afspraak om. Dat is geen terugval; dat is informatie.</p>
+            </div>
+
+            <div class="pvoet">
+              <span>FYSIOTHERAPIE DE VIJVERBERG · ZWOLLE</span>
+              <span><b>MEVR. G. DE WIT</b> · DOSSIER 40 118</span>
+              <span>BLAD 1 VAN 1</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="uitleg">
+      <div>
+        <h4>WAAROM DE KANTLIJN</h4>
+        <p>Wie op maandag alleen wil weten <b>hoe vaak</b>, leest de kantlijn en legt het vel weg.
+          Wie twijfelt, leest de alinea ernaast. De brief bedient beide lezers zonder er twee
+          documenten van te maken — precies wat marginalia al achthonderd jaar doen.</p>
+      </div>
+      <div>
+        <h4>WAAROM GEEN TWEEDE VEL</h4>
+        <p>De woordenmeter in de kiezer stopt bij ongeveer 310 woorden. Dat is geen stijlvoorschrift
+          maar de onderkant van het papier. <b>Past de brief niet, dan zijn het te veel oefeningen</b> —
+          een grens waar het schema nooit tegenaan loopt, en de patiënt altijd.</p>
+      </div>
+      <div>
+        <h4>ZWART-WIT, THUISPRINTER</h4>
+        <p>Twee inkten, allebei donker genoeg om als grijs nog te werken: vulpenblauw voor
+          nummering en handtekening, zegelrood voor de P.S. Zet u de printer op zwart-wit, dan
+          blijft de P.S. herkenbaar aan <b>de dikke streep erboven</b>, niet aan zijn kleur.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div>
+      <h4>WAT DIT CONCEPT BEWEERT</h4>
+      <p>Dat de vorm van het oefenschema nooit gekozen is, maar overgenomen uit de administratie.
+        Zet dezelfde vier oefeningen in een brief en er verandert iets aan de kant van de lezer:
+        er is een afzender, er is een aanleiding, en er is iemand aan wie je kunt terugschrijven.</p>
+    </div>
+    <div>
+      <h4>WAAR HET SCHUURT</h4>
+      <ul>
+        <li>Proza is trager te scannen dan een tabel. De kantlijn vangt dat op, maar wie
+          alleen getallen wil, moet één blik verder kijken.</li>
+        <li>Vier oefeningen is het plafond. Voor een programma van tien werkt deze vorm niet —
+          en dat is een eerlijke grens, geen bug.</li>
+        <li>Een brief in de verkeerde toon is erger dan een neutraal schema. De vaste
+          zinnen en de u/je-schakelaar houden de toon binnen de praktijk.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>INSPIRATIE</h4>
+      <ul>
+        <li>Marginalia in het middeleeuwse handschrift en in juridische stukken</li>
+        <li>Briefpapier-typografie: ruime marge, ongelijke rechterkant, korte regel</li>
+        <li>De vuistregel uit de directmail dat de P.S. het best gelezen wordt</li>
+        <li>De doktersbrief en de notariële brief — documenten die mensen bewáren</li>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad'), f=1;
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var breed=schaal.clientWidth, eigen=blad.offsetWidth;
+    f=Math.min(1,breed/eigen);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>
