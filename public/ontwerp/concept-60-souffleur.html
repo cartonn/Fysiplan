@@ -1,0 +1,910 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 60 — Souffleur · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 60 — SOUFFLEUR
+   ------------------------------------------------------------
+   De kaart hoeft niet alles te zeggen. Alleen het eerste
+   woord, één tel te vroeg.
+
+   In de opera zit iemand in een bak in de vloer, met een
+   partituur en een lampje, en die geeft de zanger de EERSTE
+   WOORDEN van elke zin — een paar tellen voordat ze klinken
+   moeten. Niet de hele regel. De aanzet. Wie de rol kent heeft
+   aan drie woorden genoeg; wie hem kwijt is, vindt hem terug
+   op de enige plek waar dat nog kan: net vóór de inzet.
+
+   Een oefenkaart doet precies het omgekeerde. Die zet de hele
+   tekst neer, in week één, en gaat ervan uit dat de patiënt
+   hem elke keer opnieuw van voren af aan leest. Dat gebeurt
+   niet. In week één leest hij alles, in week twee de helft, en
+   vanaf week drie kijkt hij alleen nog op als hij iets kwijt
+   is. Precies dán staat er op het vel een alinea van veertig
+   woorden — en dat is te veel om te zoeken terwijl je op één
+   been staat.
+
+   DUS: elke oefening heeft twee lagen die verschillend werken.
+     · DE INZET. Maximaal zes woorden, gebroken op ademhaling,
+       groot genoeg om vanaf een armlengte tijdens de beweging
+       te lezen. „Hakken zakken — / langzaam." Dat is alles.
+     · DE TEKST. De volledige uitleg, klein, eronder. Voor week
+       één, voor de dochter die het uitlegt, en voor de dag dat
+       het toch niet meer klopt.
+
+   EN HET SOUFFLEURSBOEK HEEFT NOG IETS: potloodstrepen. Op de
+   plekken waar de acteur het altijd kwijtraakt staat een
+   merkteken, jaar in jaar uit, want daar gaat het bij iedereen
+   mis. Die plekken bestaan bij oefeningen ook, en ze zijn
+   bekend: bij de derde week, als het niet meer pijn doet. Bij
+   het zakken, niet bij het heffen. Bij de tweede set. Op deze
+   kaart staan ze in de kantlijn, met een driehoekje — als
+   voorwaarschuwing, niet als verwijt.
+
+   EN ÉÉN ROLBEZETTING. Bovenaan staat wie leest. De patiënt
+   zelf, of de dochter, of de thuiszorg. Een kaart die weet dat
+   hij hardop gelezen wordt, is anders geschreven: korte zinnen,
+   tweede persoon, en regels die eindigen waar je adem eindigt.
+
+   VORM. Een souffleursboek: bleek papier, een smalle kolom aan
+   de buitenrand (de bak staat aan de rand van het toneel), forse
+   regelafstand, en potloodgrijs voor alles wat aantekening is.
+   Eén kleur rood, uitsluitend voor merktekens — nooit voor tekst
+   die iemand moet lezen.
+   ============================================================ */
+
+:root{
+  --papier:#fbfaf6;
+  --papier-2:#f2f0e9;
+  --toneel:#1a1b1f;
+  --toneel-2:#24262b;
+  --inkt:#16171a;
+  --inkt-2:#3f4247;
+  --potlood:#7b7d85;
+  --potlood-licht:#a9abb2;
+  --lijn:#dedbd2;
+  --lijn-2:#eceae2;
+  --rood:#ab2f28;
+  --rood-licht:#e8d3d0;
+  --licht:#f5e6c8;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --serif:Charter,Georgia,"Times New Roman",serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:44px; --s6:74px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.66 var(--sans);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+:focus-visible{outline:2.5px solid var(--rood);outline-offset:3px}
+
+.binnen{max-width:1160px;margin:0 auto;padding:0 22px}
+.scherm{padding:var(--s6) 0}
+.scherm.donker{background:var(--toneel);color:#c9cbd1}
+.scherm.zacht{background:var(--papier-2)}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--toneel);color:#c9cbd1;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border:1px solid #3a3d44;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#c9cbd1;text-decoration:none;padding:5px 3px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--rood)}
+.labbalk a.terug{color:#fff;border-bottom-color:#3a3d44}
+@media (max-width:760px){.labbalk a:not(.terug){display:none}}
+
+/* ---------- gedeeld ---------- */
+.kolomlabel{font:600 10px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--potlood)}
+.ademteken{color:var(--rood);font-weight:400;padding:0 .18em;opacity:.85}
+
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:26px;height:26px;background:var(--licht);color:var(--toneel);
+  display:flex;align-items:center;justify-content:center;font:700 13px/1 var(--sans)}
+.merkregel .naam{font:600 15px/1 var(--sans);letter-spacing:-.01em;color:#fff}
+.merkregel .pad{font:500 11px/1 var(--mono);letter-spacing:.18em;color:#8b8e96}
+
+/* ---------- 1 landing ---------- */
+.landkop{display:grid;grid-template-columns:1.08fr .92fr;gap:var(--s5);align-items:start}
+@media (max-width:980px){.landkop{grid-template-columns:1fr}}
+.landkop h1{font:600 clamp(34px,4.8vw,58px)/1.08 var(--sans);letter-spacing:-.033em;color:#fff}
+.landkop h1 em{font-style:normal;color:var(--licht);display:block}
+.landkop p{margin-top:var(--s4);font-size:18px;line-height:1.66;color:#b3b6bd;max-width:54ch}
+.landkop p b{color:#fff;font-weight:600}
+
+/* de bak */
+.bak{background:var(--toneel-2);border:1px solid #34373e;padding:var(--s4)}
+.bak h3{font:600 10px/1 var(--mono);letter-spacing:.2em;color:var(--licht);margin-bottom:var(--s4)}
+.inzetdemo{border-left:3px solid var(--rood);padding-left:var(--s3)}
+.inzetdemo .rol{font:600 10.5px/1 var(--mono);letter-spacing:.18em;color:var(--potlood-licht);margin-bottom:11px}
+.inzetdemo .inzet{font:600 clamp(28px,3.6vw,40px)/1.16 var(--sans);letter-spacing:-.028em;color:#fff}
+.inzetdemo .tekst{margin-top:var(--s3);font:400 15.5px/1.6 var(--serif);color:#9fa2a9;max-width:44ch}
+.bak .verschil{margin-top:var(--s4);border-top:1px solid #34373e;padding-top:var(--s3);
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--s3)}
+@media (max-width:520px){.bak .verschil{grid-template-columns:1fr}}
+.bak .verschil div .k{font:600 9.5px/1 var(--mono);letter-spacing:.15em;color:var(--potlood);margin-bottom:8px}
+.bak .verschil div p{font-size:14.5px;line-height:1.55;color:#9fa2a9}
+.bak .verschil div.nu{opacity:.75}
+
+/* driewegvergelijking */
+.weken{margin-top:var(--s6);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:940px){.weken{grid-template-columns:1fr}}
+.weken div{border-top:2px solid #34373e;padding-top:var(--s3)}
+.weken h4{font:600 10px/1 var(--mono);letter-spacing:.16em;color:var(--licht);margin-bottom:11px}
+.weken p{font-size:15.5px;line-height:1.6;color:#b3b6bd}
+.weken p b{color:#fff}
+.weken div:last-child{border-top-color:var(--rood)}
+.weken div:last-child h4{color:var(--rood-licht)}
+
+/* ---------- schermkop ---------- */
+.schermkop{max-width:74ch;margin-bottom:var(--s5)}
+.schermkop b{display:inline-block;font:600 10px/1 var(--mono);letter-spacing:.2em;
+  color:#fff;background:var(--toneel);padding:6px 9px;margin-bottom:var(--s3)}
+.schermkop h2{font:600 clamp(28px,3.6vw,42px)/1.1 var(--sans);letter-spacing:-.032em;color:var(--inkt)}
+.schermkop p{margin-top:var(--s3);font-size:17px}
+.schermkop p em{font-style:italic;color:var(--rood)}
+
+/* ---------- 2 kiezer ---------- */
+.souffleren{display:grid;grid-template-columns:1fr 380px;gap:var(--s5);align-items:start}
+@media (max-width:1020px){.souffleren{grid-template-columns:1fr}}
+
+.regelkaart{background:#fff;border:1px solid var(--lijn);margin-bottom:var(--s3);
+  display:grid;grid-template-columns:78px 1fr}
+.regelkaart .marge{border-right:1px solid var(--lijn-2);padding:var(--s3) 11px;
+  display:flex;flex-direction:column;align-items:center;gap:9px;background:var(--papier)}
+.regelkaart .marge .nr{font:600 10px/1 var(--mono);letter-spacing:.12em;color:var(--potlood)}
+.regelkaart .marge img{width:46px;height:40px;object-fit:contain;mix-blend-mode:multiply}
+.regelkaart .marge .haper{color:var(--rood);font-size:15px;line-height:1}
+.regelkaart .kern{padding:var(--s3) var(--s4) var(--s3) var(--s3)}
+.regelkaart .rol{font:600 10px/1 var(--mono);letter-spacing:.16em;color:var(--potlood);margin-bottom:10px}
+.regelkaart .inzet{font:600 27px/1.18 var(--sans);letter-spacing:-.026em;color:var(--inkt)}
+.regelkaart .tekst{margin-top:11px;font:400 15px/1.58 var(--serif);color:var(--inkt-2);max-width:62ch}
+.regelkaart .voet{margin-top:var(--s3);border-top:1px solid var(--lijn-2);padding-top:11px;
+  display:flex;flex-wrap:wrap;gap:11px;align-items:center}
+.regelkaart .telling{font:600 10.5px/1 var(--mono);letter-spacing:.1em;color:var(--potlood);
+  border:1px solid var(--lijn);padding:6px 8px}
+.regelkaart .telling.goed{color:#2e6a4f;border-color:#a9cbb9}
+.regelkaart .telling.fout{color:var(--rood);border-color:var(--rood)}
+.regelkaart button{font:600 12px/1 var(--sans);border:1px solid var(--inkt);background:transparent;
+  color:var(--inkt);padding:8px 10px;cursor:pointer}
+.regelkaart button:hover{background:var(--inkt);color:#fff}
+.regelkaart .potloodregel{margin-left:auto;font:italic 400 13.5px/1.4 var(--serif);color:var(--potlood)}
+.regelkaart.aandacht{border-color:var(--rood);box-shadow:inset 3px 0 0 var(--rood)}
+.regelkaart.leeg{border-style:dashed;background:var(--papier)}
+.regelkaart.leeg .inzet{color:var(--potlood-licht);font-weight:500}
+
+/* het souffleurspaneel */
+.paneel{position:sticky;top:64px;display:grid;gap:var(--s4)}
+.kader{background:#fff;border:1px solid var(--lijn);padding:var(--s4)}
+.kader.zwart{background:var(--toneel);color:#c9cbd1;border-color:var(--toneel)}
+.kader h3{font:600 10px/1 var(--mono);letter-spacing:.2em;color:var(--rood);margin-bottom:var(--s3)}
+.kader.zwart h3{color:var(--licht)}
+.kader p{font-size:15px;line-height:1.58}
+.kader.zwart p{color:#a4a7ae}
+.kader p + p{margin-top:11px}
+.kader b{color:var(--inkt);font-weight:600}
+.kader.zwart b{color:#fff}
+
+.leesproef{border:1px solid var(--lijn);background:var(--papier);padding:var(--s3);margin-top:var(--s3)}
+.leesproef .l{font:600 9.5px/1 var(--mono);letter-spacing:.14em;color:var(--potlood);margin-bottom:10px}
+.leesproef .groot{font:600 22px/1.2 var(--sans);letter-spacing:-.024em;color:var(--inkt)}
+.leesproef .maat{margin-top:10px;font:500 12px/1.4 var(--mono);color:var(--potlood)}
+
+.rolkeuze{display:grid;gap:9px;margin-top:var(--s2)}
+.rolkeuze label{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--lijn);
+  padding:11px 13px;cursor:pointer;background:#fff}
+.rolkeuze label.aan{border-color:var(--inkt);box-shadow:inset 2px 0 0 var(--inkt)}
+.rolkeuze input{margin-top:3px}
+.rolkeuze .t{font:600 15px/1.3 var(--sans);color:var(--inkt)}
+.rolkeuze .u{font-size:13.5px;line-height:1.45;color:var(--potlood);margin-top:4px}
+
+/* ---------- 3 cliëntkaart ---------- */
+.boekspread{display:grid;grid-template-columns:1fr 330px;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.boekspread{grid-template-columns:1fr}}
+
+.boek{background:#fff;border:1px solid var(--lijn);box-shadow:0 18px 40px rgba(22,23,26,.08)}
+.boekkop{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--s3);
+  padding:var(--s4);border-bottom:2px solid var(--inkt)}
+.boekkop .l .t{font:600 10px/1 var(--mono);letter-spacing:.2em;color:var(--potlood)}
+.boekkop .l h3{font:600 26px/1.14 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:9px}
+.boekkop .l .wie{font:italic 400 15px/1.4 var(--serif);color:var(--potlood);margin-top:6px}
+.boekkop .r{text-align:right;font:600 10px/1.8 var(--mono);letter-spacing:.1em;color:var(--potlood);white-space:nowrap}
+
+.regels{padding:var(--s2) 0}
+.rgl{display:grid;grid-template-columns:96px 1fr;border-bottom:1px solid var(--lijn-2)}
+.rgl:last-child{border-bottom:0}
+.rgl .kant{padding:var(--s3) 11px;border-right:1px solid var(--lijn-2);background:var(--papier);
+  display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.rgl .kant .moment{font:600 9.5px/1.3 var(--mono);letter-spacing:.12em;color:var(--potlood)}
+.rgl .kant .cijfer{font:600 21px/1 var(--sans);color:var(--inkt)}
+.rgl .kant .merk{color:var(--rood);font-size:14px;line-height:1}
+.rgl .kant img{width:52px;height:44px;object-fit:contain;mix-blend-mode:multiply}
+.rgl .inh{padding:var(--s3) var(--s4) var(--s3) var(--s3)}
+.rgl .inzet{font:600 25px/1.2 var(--sans);letter-spacing:-.026em;color:var(--inkt)}
+.rgl .tekst{margin-top:9px;font:400 15px/1.56 var(--serif);color:var(--inkt-2);max-width:60ch}
+.rgl .potlood{margin-top:11px;font:italic 400 14px/1.45 var(--serif);color:var(--potlood);
+  border-left:2px solid var(--rood-licht);padding-left:11px}
+.rgl.nu{background:#fffdf6;box-shadow:inset 4px 0 0 var(--rood)}
+.rgl.nu .kant{background:#fffdf6}
+.rgl.gedaan{opacity:.55}
+.rgl.gedaan .inzet{text-decoration:line-through;text-decoration-color:var(--potlood-licht);text-decoration-thickness:1px}
+.rgl .klaar{margin-top:11px;font:600 10px/1 var(--mono);letter-spacing:.14em;color:var(--potlood)}
+
+.regievak{display:grid;gap:var(--s4)}
+.knopgroep{display:flex;gap:8px;flex-wrap:wrap;margin-top:var(--s3)}
+.knopgroep span{font:600 12px/1 var(--sans);border:1px solid var(--lijn);padding:9px 11px;color:var(--inkt-2);cursor:pointer}
+.knopgroep span.aan{background:var(--inkt);border-color:var(--inkt);color:#fff}
+.tijdlijn{display:grid;gap:7px;margin-top:var(--s2)}
+.tijdlijn .d{display:flex;align-items:center;gap:11px;font:500 13.5px/1 var(--sans)}
+.tijdlijn .d i{width:14px;height:14px;flex:0 0 14px;border:1.5px solid var(--lijn);display:block}
+.tijdlijn .d i.vol{background:var(--inkt);border-color:var(--inkt)}
+.tijdlijn .d i.deels{background:linear-gradient(to right,var(--inkt) 0 50%,transparent 50%)}
+.tijdlijn .d span{margin-left:auto;font:500 12px/1 var(--mono);color:var(--potlood)}
+
+/* ---------- 4 printkaart ---------- */
+.printbalk{display:flex;align-items:center;gap:var(--s4);flex-wrap:wrap;
+  border:1px solid var(--inkt);background:#fff;padding:var(--s3) var(--s4);margin-bottom:var(--s4)}
+.printbalk p{font-size:15.5px;max-width:66ch}
+.printbalk b{color:var(--inkt);font-weight:600}
+.printknop{margin-left:auto;font:600 14px/1 var(--sans);background:var(--inkt);color:#fff;
+  border:0;padding:13px 20px;cursor:pointer}
+.printknop:hover{background:#2c2f35}
+
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;position:relative;
+  box-shadow:0 24px 56px rgba(22,23,26,.2);transform-origin:top left}
+@media (max-width:860px){.bladschaal{max-width:100%}}
+.blad .rand{position:absolute;inset:0;padding:12mm 12mm 9mm;display:flex;flex-direction:column}
+
+.s-kop{display:flex;justify-content:space-between;align-items:flex-start;
+  border-bottom:.7mm solid #000;padding-bottom:3mm}
+.s-kop .t{font:600 2.6mm/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:#5b5d63}
+.s-kop h1{font:600 7.6mm/1.06 var(--sans);letter-spacing:-.03em;margin-top:2.4mm}
+.s-kop .wie{font:italic 400 3.6mm/1.35 var(--serif);color:#4a4d53;margin-top:2mm}
+.s-kop .r{text-align:right;font:600 2.6mm/1.7 var(--mono);letter-spacing:.1em;color:#5b5d63;white-space:nowrap}
+
+.s-hoe{margin:2.6mm 0 2.6mm;border:.3mm solid #000;padding:1.8mm 3.2mm;display:grid;
+  grid-template-columns:1fr 1fr 1fr;gap:4mm}
+.s-hoe div .l{font:600 2.4mm/1 var(--mono);letter-spacing:.14em;color:#5b5d63}
+.s-hoe div p{font:400 3.2mm/1.4 var(--serif);margin-top:1.4mm}
+.s-hoe div p b{font-weight:700}
+
+.s-regel{display:grid;grid-template-columns:22mm 1fr;border-bottom:.2mm solid #cfccc4;
+  padding:2.2mm 0;break-inside:avoid}
+.s-regel:last-of-type{border-bottom:0}
+.s-kant{border-right:.2mm solid #cfccc4;padding-right:3mm;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:1.6mm}
+.s-kant .moment{font:600 2.4mm/1.3 var(--mono);letter-spacing:.1em;color:#5b5d63}
+.s-kant .cijfer{font:600 6mm/1 var(--sans)}
+.s-kant img{width:18mm;height:15mm;object-fit:contain;mix-blend-mode:multiply}
+.s-kant .merk{font:700 3.4mm/1 var(--sans);color:#ab2f28}
+.s-inh{padding-left:4mm}
+.s-inzet{font:600 7.6mm/1.14 var(--sans);letter-spacing:-.03em}
+.s-inzet .adem{color:#ab2f28;font-weight:400;padding:0 .1em}
+.s-tekst{margin-top:2mm;font:400 3.6mm/1.46 var(--serif);color:#26282c;max-width:126mm}
+.s-dos{margin-top:2mm;font:600 2.9mm/1 var(--mono);letter-spacing:.08em;color:#4a4d53}
+.s-haper{margin-top:2.2mm;border-left:.7mm solid #ab2f28;padding-left:2.6mm;
+  font:400 3.4mm/1.44 var(--serif);color:#26282c}
+.s-haper b{font:700 2.5mm/1 var(--mono);letter-spacing:.14em;color:#ab2f28;display:block;margin-bottom:1.2mm}
+
+.s-voet{margin-top:auto;padding-top:2.8mm;border-top:.7mm solid #000;
+  display:grid;grid-template-columns:1fr 1fr;gap:6mm}
+.s-voet h4{font:600 2.5mm/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#5b5d63;margin-bottom:2mm}
+.s-voet p{font:400 3.2mm/1.46 var(--serif);color:#26282c}
+.s-voet .lijnen{margin-top:2mm}
+.s-voet .lijnen .l{border-bottom:.2mm solid #cfccc4;height:3.8mm}
+.s-voet .prak b{font-weight:700}
+.s-voet .prak .code{margin-top:2mm;font:600 2.5mm/1.5 var(--mono);letter-spacing:.08em;color:#5b5d63}
+
+/* ---------- uitleg ---------- */
+.uitleg{margin-top:var(--s5);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:940px){.uitleg{grid-template-columns:1fr}}
+.uitleg div{border-top:2px solid var(--inkt);padding-top:var(--s2)}
+.uitleg h4{font:600 10px/1 var(--mono);letter-spacing:.18em;color:var(--rood);margin-bottom:9px}
+.uitleg p{font-size:15.5px;line-height:1.58}
+.uitleg b{color:var(--inkt);font-weight:600}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--toneel);color:#9fa2a9;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:600 10.5px/1 var(--mono);letter-spacing:.18em;color:var(--licht);
+  border-top:1px solid #3a3d44;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:9px}
+footer.uitleiding a{color:var(--licht)}
+
+/* ============================================================
+   PRINT — het vel is het souffleursboek. De inzet blijft groot
+   (23 pt), de tekst 10,2 pt schreef, en rood wordt uitsluitend
+   gebruikt voor merktekens: valt de kleur weg, dan verdwijnt er
+   geen woord dat gelezen moet worden.
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .schermkop,.uitleg{display:none !important}
+  .scherm{padding:0 !important;background:#fff !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 60</span>
+  <strong style="font:600 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Souffleur</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm donker" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 60 · SOUFFLEUR</span>
+    </div>
+
+    <div class="landkop">
+      <div>
+        <h1>Niet de hele zin.<em>Het eerste woord, één tel te vroeg.</em></h1>
+        <p>In de opera zit iemand in een bak in de vloer, met een partituur en een lampje, en die
+          geeft de zanger <b>de eerste woorden van elke zin</b> — een paar tellen voordat ze moeten
+          klinken. Niet de regel. De aanzet. Wie zijn rol kent heeft aan drie woorden genoeg; wie
+          hem kwijt is, vindt hem terug op de enige plek waar dat nog kan: net vóór de inzet.</p>
+        <p>Een oefenkaart doet het omgekeerde. Die zet de hele tekst neer in week één, en gaat
+          ervan uit dat u hem elke keer opnieuw van voren af aan leest. <b>Dat doet niemand.</b> In
+          week drie kijkt u alleen nog op als u iets kwijt bent — en juist dan staat er een alinea
+          van veertig woorden, terwijl u op één been staat.</p>
+      </div>
+
+      <div class="bak">
+        <h3>DE BAK — WAT DE SOUFFLEUR GEEFT</h3>
+        <div class="inzetdemo">
+          <div class="rol">U — STAAND, BIJ HET AANRECHT</div>
+          <div class="inzet">Op uw tenen<span class="ademteken">·</span><br/>en langzaam zakken.</div>
+          <p class="tekst">Handen licht op het aanrecht, niet leunen. Kom rustig omhoog op uw tenen,
+            en laat de hakken daarna langzaam zakken tot ze onder het aanrecht door gaan. Vijftien
+            keer, elke ochtend.</p>
+        </div>
+
+        <div class="verschil">
+          <div class="nu">
+            <div class="k">WAT ER NU STAAT</div>
+            <p>Eén blok van veertig woorden. In week één precies goed. In week zes een muur waar
+              u langs kijkt.</p>
+          </div>
+          <div>
+            <div class="k">WAT ER HIER STAAT</div>
+            <p>Vijf woorden groot, veertig woorden klein. <b>U kiest per keer welke van de twee u
+              nodig heeft</b> — en dat kost geen seconde.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="weken">
+      <div>
+        <h4>WEEK 1 — U LEEST ALLES</h4>
+        <p>De volledige tekst staat er, in een schreefletter, rustig gezet. <b>Niets is
+          weggelaten</b>; het staat alleen niet in de weg.</p>
+      </div>
+      <div>
+        <h4>WEEK 3 — U LEEST DE INZET</h4>
+        <p>Vijf woorden, gebroken waar uw adem breekt. Leesbaar op een armlengte, tijdens de
+          beweging, met een leesbril op tafel in plaats van op uw neus.</p>
+      </div>
+      <div>
+        <h4>WEEK 6 — U LEEST DE KANTLIJN</h4>
+        <p>Alleen nog de <b>merktekens</b>: de plekken waar het bij iedereen misgaat. „Hier laten
+          de meeste mensen de hakken vallen." Dat is precies wat u dan nog nodig heeft.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 2</b>
+      <h2>De kiezer is een souffleursboek in wording</h2>
+      <p>De therapeut kiest de oefening én <em>schrijft de inzet</em>: maximaal zes woorden,
+        gebroken op ademhaling. De volledige tekst blijft staan — die wordt niet korter gemaakt,
+        die wordt alleen kleiner gezet. En in de kantlijn zet u het merkteken op de plek waar het
+        bij deze patiënt misgaat.</p>
+    </div>
+
+    <div class="souffleren">
+      <div>
+
+        <div class="regelkaart">
+          <div class="marge">
+            <span class="nr">1</span>
+            <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Kuiten heffen"/>
+            <span class="haper" title="Merkteken in de kantlijn">▲</span>
+          </div>
+          <div class="kern">
+            <div class="rol">U — STAAND, BIJ HET AANRECHT · OCHTEND</div>
+            <div class="inzet">Op uw tenen<span class="ademteken">·</span> en langzaam zakken.</div>
+            <p class="tekst">Handen licht op het aanrecht, niet leunen. Kom rustig omhoog op uw
+              tenen en laat de hakken daarna langzaam zakken tot onder het aanrecht door.
+              Vijftien keer.</p>
+            <div class="voet">
+              <span class="telling goed">INZET · 5 VAN 6 WOORDEN</span>
+              <button type="button">Merkteken verzetten</button>
+              <span class="potloodregel">„acht van de tien laten de hakken vallen bij het zakken"</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="regelkaart aandacht">
+          <div class="marge">
+            <span class="nr">2</span>
+            <img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/>
+            <span class="haper">▲</span>
+          </div>
+          <div class="kern">
+            <div class="rol">U — VANAF DE EETKAMERSTOEL · OCHTEND EN AVOND</div>
+            <div class="inzet">Armen over elkaar en rustig omhoog komen zonder te duwen.</div>
+            <p class="tekst">Stoel met een rechte rug, voeten plat en iets naar achteren. Kom
+              omhoog zonder uw handen te gebruiken, en ga net zo langzaam weer zitten.</p>
+            <div class="voet">
+              <span class="telling fout">INZET · 10 VAN 6 WOORDEN</span>
+              <button type="button">Inkorten</button>
+              <span class="potloodregel">voorstel: „Armen over elkaar<span class="ademteken">·</span> en opstaan."</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="regelkaart">
+          <div class="marge">
+            <span class="nr">3</span>
+            <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Eenbeenstand met steun"/>
+          </div>
+          <div class="kern">
+            <div class="rol">U — IN DE BADKAMER, BIJ HET TANDENPOETSEN</div>
+            <div class="inzet">Eén been op<span class="ademteken">·</span> tot de mond schoon is.</div>
+            <p class="tekst">Eén vinger aan de wastafel, niet de hele hand. Twintig seconden per
+              been; wissel als u van kant wisselt met de tandenborstel.</p>
+            <div class="voet">
+              <span class="telling goed">INZET · 6 VAN 6 WOORDEN</span>
+              <button type="button">Merkteken zetten</button>
+              <span class="potloodregel">nog geen haperpunt bekend</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="regelkaart leeg">
+          <div class="marge">
+            <span class="nr">4</span>
+            <img src="/images/rug/rug-strekken-staand-line-v1.png" alt="Rug strekken, staand"/>
+          </div>
+          <div class="kern">
+            <div class="rol">U — NA LANG ZITTEN</div>
+            <div class="inzet">Nog geen inzet geschreven</div>
+            <p class="tekst">Handen in de zij, kijk recht vooruit en buig rustig iets achterover.
+              Stop bij de eerste weerstand; vijf tellen, vijf keer.</p>
+            <div class="voet">
+              <span class="telling">INZET ONTBREEKT</span>
+              <button type="button">Inzet schrijven</button>
+              <span class="potloodregel">zonder inzet komt deze regel niet op het vel</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="paneel">
+        <div class="kader">
+          <h3>DE LEESPROEF</h3>
+          <p>Zo groot staat de inzet op het vel, gemeten op <b>een armlengte</b> — de afstand
+            waarop u leest terwijl u de beweging al doet, niet de afstand waarop u aan tafel zit.</p>
+          <div class="leesproef">
+            <div class="l">OP 60 CM, 23 PT</div>
+            <div class="groot">Op uw tenen<span class="ademteken">·</span><br/>en langzaam zakken.</div>
+            <div class="maat">5 woorden · 2 regels · breekt op de ademhaling</div>
+          </div>
+        </div>
+
+        <div class="kader">
+          <h3>WIE LEEST DIT VEL VOOR?</h3>
+          <p>Een kaart die hardop gelezen wordt, is anders geschreven. De aanspreekvorm staat
+            bovenaan en verandert alle regels mee.</p>
+          <div class="rolkeuze">
+            <label class="aan"><input type="radio" name="lezer" checked/>
+              <span><span class="t">De patiënt zelf</span>
+              <span class="u">Tweede persoon, korte zinnen: „Op uw tenen."</span></span></label>
+            <label><input type="radio" name="lezer"/>
+              <span><span class="t">Iemand leest voor</span>
+              <span class="u">Naam bovenaan, en een regel erbij: wat de voorlezer moet zien
+                gebeuren.</span></span></label>
+            <label><input type="radio" name="lezer"/>
+              <span><span class="t">Thuiszorg, wisselende mensen</span>
+              <span class="u">Geen „u weet nog wel". Elke regel staat op zichzelf.</span></span></label>
+          </div>
+        </div>
+
+        <div class="kader zwart">
+          <h3>WAT DE SOUFFLEUR NOOIT DOET</h3>
+          <p>De hele zin voorzeggen. Wie het weet, wordt daar juist onzeker van — en wie het niet
+            weet, is halverwege de zin de beweging al kwijt.</p>
+          <p><b>De inzet is nooit langer dan zes woorden. Kan het niet in zes, dan is het geen
+            inzet maar uitleg</b> — en die hoort klein, eronder.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm zacht" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 3</b>
+      <h2>De digitale cliëntkaart is een opengeslagen boek</h2>
+      <p>Eén dag per opening, de regels in de volgorde van de dag. De regel die nu aan de beurt is
+        staat opgelicht; wat geweest is, is doorgehaald en blijft staan. <em>Het boek slaat niet om
+        — u leest gewoon door.</em></p>
+    </div>
+
+    <div class="boekspread">
+      <div class="boek">
+        <div class="boekkop">
+          <div class="l">
+            <div class="t">SOUFFLEURSBOEK · DONDERDAG 3 SEPTEMBER</div>
+            <h3>Mevrouw H. Bosma, 81 jaar</h3>
+            <p class="wie">Voorgelezen door: Ria (dochter) op dinsdag en donderdag —
+              overige dagen leest mevrouw zelf.</p>
+          </div>
+          <div class="r">WEEK 5 VAN 8<br/>4 REGELS<br/>2 GEDAAN</div>
+        </div>
+
+        <div class="regels">
+          <div class="rgl gedaan">
+            <div class="kant">
+              <span class="moment">OCHTEND</span>
+              <span class="cijfer">1</span>
+              <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Kuiten heffen"/>
+            </div>
+            <div class="inh">
+              <div class="inzet">Op uw tenen<span class="ademteken">·</span> en langzaam zakken.</div>
+              <p class="tekst">Handen licht op het aanrecht, niet leunen. Vijftien keer.</p>
+              <div class="klaar">GEDAAN OM 08:12 · 15 VAN 15</div>
+            </div>
+          </div>
+
+          <div class="rgl gedaan">
+            <div class="kant">
+              <span class="moment">OCHTEND</span>
+              <span class="cijfer">2</span>
+              <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Eenbeenstand"/>
+            </div>
+            <div class="inh">
+              <div class="inzet">Eén been op<span class="ademteken">·</span> tot de mond schoon is.</div>
+              <p class="tekst">Eén vinger aan de wastafel, niet de hele hand.</p>
+              <div class="klaar">GEDAAN OM 08:20 · BEIDE BENEN</div>
+            </div>
+          </div>
+
+          <div class="rgl nu">
+            <div class="kant">
+              <span class="moment">NU</span>
+              <span class="cijfer">3</span>
+              <img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/>
+              <span class="merk">▲</span>
+            </div>
+            <div class="inh">
+              <div class="inzet">Armen over elkaar<span class="ademteken">·</span> en opstaan.</div>
+              <p class="tekst">Stoel met een rechte rug, voeten plat en iets naar achteren. Kom
+                omhoog zonder uw handen, en ga net zo langzaam weer zitten. Twaalf keer.</p>
+              <p class="potlood">Merkteken: bij u gaat het mis op de zesde — dan komt de hand
+                erbij. Zes rustige zijn meer waard dan twaalf met steun.</p>
+            </div>
+          </div>
+
+          <div class="rgl">
+            <div class="kant">
+              <span class="moment">AVOND</span>
+              <span class="cijfer">4</span>
+              <img src="/images/rug/rug-strekken-staand-line-v1.png" alt="Rug strekken"/>
+            </div>
+            <div class="inh">
+              <div class="inzet">Handen in de zij<span class="ademteken">·</span> en achterover kijken.</div>
+              <p class="tekst">Stop bij de eerste weerstand. Vijf tellen, vijf keer — na het
+                journaal, voor u naar boven gaat.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="regievak">
+        <div class="kader">
+          <h3>DE STAND VAN DE WEEK</h3>
+          <div class="tijdlijn">
+            <div class="d"><i class="vol"></i>maandag<span>4 van 4</span></div>
+            <div class="d"><i class="vol"></i>dinsdag<span>4 van 4 · Ria</span></div>
+            <div class="d"><i class="deels"></i>woensdag<span>2 van 4</span></div>
+            <div class="d"><i class="deels"></i>donderdag<span>2 van 4 · bezig</span></div>
+            <div class="d"><i></i>vrijdag<span>—</span></div>
+            <div class="d"><i></i>zaterdag<span>rustdag</span></div>
+            <div class="d"><i></i>zondag<span>—</span></div>
+          </div>
+          <p style="margin-top:16px">De ochtendregels lopen vol, de avondregel niet. <b>Dat is geen
+            motivatieprobleem — dat is een regel op het verkeerde moment.</b></p>
+        </div>
+
+        <div class="kader">
+          <h3>DE KANTLIJN VAN DEZE PATIËNT</h3>
+          <p>Merktekens komen uit twee bronnen: wat bij iedereen misgaat, en wat bij <b>deze</b>
+            patiënt misgaat. Het tweede weegt zwaarder.</p>
+          <p style="border-left:2px solid var(--rood-licht);padding-left:11px;font-family:var(--serif);
+            font-style:italic;color:var(--potlood)">„Ik tel hardop, dan vergeet ik de adem." —
+            mevrouw Bosma, 26 augustus</p>
+          <div class="knopgroep">
+            <span class="aan">Merktekens aan</span>
+            <span>Alleen inzetten</span>
+            <span>Volledige tekst</span>
+          </div>
+        </div>
+
+        <div class="kader">
+          <h3>WAT DE THERAPEUT ZIET</h3>
+          <p>Niet of het gedaan is, maar <b>welke laag gelezen wordt</b>. Mevrouw Bosma opent de
+            volledige tekst nog twee keer per week, altijd bij regel 3.</p>
+          <p>Dat is geen achterstand. <b>Dat is de regel die nog niet af is</b> — en dus de regel
+            waar de volgende afspraak over gaat.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 4</b>
+      <h2>De printkaart — A4 staand, het souffleursboek</h2>
+      <p>Vier regels onder elkaar in de volgorde van de dag. Links de smalle kolom — de bak staat
+        aan de rand van het toneel — met het moment, het nummer en het merkteken. Rechts de inzet
+        op 23 punt, en de volledige tekst eronder op 10,2 punt schreef.
+        <em>Rood is uitsluitend merkteken: valt de kleur weg, dan verdwijnt er geen woord.</em></p>
+    </div>
+
+    <div class="printbalk geen-print">
+      <p>Druk <b>Ctrl/⌘+P</b>. Het vel is gemaakt om <b>op een armlengte</b> gelezen te worden,
+        rechtop tegen de suikerpot of plat op het aanrecht — niet om aan tafel doorgenomen te
+        worden. Daarom staat er per regel maar één zin groot.</p>
+      <button class="printknop" onclick="window.print()">Print het souffleursboek</button>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="s-kop">
+              <div>
+                <div class="t">Souffleursboek · Fysiotherapie de Boskant</div>
+                <h1>Mevrouw H. Bosma</h1>
+                <p class="wie">Voorgelezen door Ria (dochter) op dinsdag en donderdag.
+                  Overige dagen leest mevrouw zelf.</p>
+              </div>
+              <div class="r">WEEK 5 VAN 8<br/>4 REGELS<br/>CONTROLE 16.09</div>
+            </div>
+
+            <div class="s-hoe">
+              <div>
+                <div class="l">DE GROTE REGEL</div>
+                <p>Dat is de <b>inzet</b>. Meer hoeft u niet te lezen als u weet hoe het gaat.</p>
+              </div>
+              <div>
+                <div class="l">DE KLEINE REGELS</div>
+                <p>De volledige uitleg. Voor de eerste weken, en voor wie voorleest.</p>
+              </div>
+              <div>
+                <div class="l">HET DRIEHOEKJE ▲</div>
+                <p>Hier gaat het meestal mis. <b>Geen verwijt — een waarschuwing vooraf.</b></p>
+              </div>
+            </div>
+
+            <div class="s-regel">
+              <div class="s-kant">
+                <span class="moment">OCHTEND</span>
+                <span class="cijfer">1</span>
+                <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Kuiten heffen bij het aanrecht"/>
+                <span class="merk">▲</span>
+              </div>
+              <div class="s-inh">
+                <div class="s-inzet">Op uw tenen<span class="adem">·</span><br/>en langzaam zakken.</div>
+                <p class="s-tekst">Handen licht op het aanrecht, niet leunen. Kom rustig omhoog op
+                  uw tenen en laat de hakken daarna langzaam zakken, tot ze onder het aanrecht
+                  door gaan.</p>
+                <div class="s-dos">15 × · ELKE OCHTEND · BIJ HET AANRECHT</div>
+                <div class="s-haper">
+                  <b>HIER GAAT HET MEESTAL MIS</b>
+                  Bij het zakken. De meeste mensen laten de hakken vallen, omdat omhoog gaan het
+                  „echte" deel lijkt. Juist het zakken maakt de pees sterker: tel er rustig tot
+                  drie bij.
+                </div>
+              </div>
+            </div>
+
+            <div class="s-regel">
+              <div class="s-kant">
+                <span class="moment">OCHTEND</span>
+                <span class="cijfer">2</span>
+                <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Eenbeenstand met steun"/>
+              </div>
+              <div class="s-inh">
+                <div class="s-inzet">Eén been op<span class="adem">·</span><br/>tot de mond schoon is.</div>
+                <p class="s-tekst">Bij de wastafel, één vinger aan de rand — niet de hele hand.
+                  Wissel van been als u van kant wisselt met de tandenborstel.</p>
+                <div class="s-dos">2 × 20 SEC PER BEEN · BIJ HET TANDENPOETSEN</div>
+              </div>
+            </div>
+
+            <div class="s-regel">
+              <div class="s-kant">
+                <span class="moment">MIDDAG</span>
+                <span class="cijfer">3</span>
+                <img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/>
+                <span class="merk">▲</span>
+              </div>
+              <div class="s-inh">
+                <div class="s-inzet">Armen over elkaar<span class="adem">·</span><br/>en opstaan.</div>
+                <p class="s-tekst">Eetkamerstoel met een rechte rug, voeten plat en iets naar
+                  achteren. Kom omhoog zonder uw handen te gebruiken en ga net zo langzaam weer
+                  zitten.</p>
+                <div class="s-dos">12 × · NA DE KOFFIE · EETKAMERSTOEL</div>
+                <div class="s-haper">
+                  <b>BIJ U GAAT HET MIS OP DE ZESDE</b>
+                  Dan komt de hand erbij. Zes rustige keren zonder handen zijn meer waard dan
+                  twaalf met steun. Stop dus gerust bij zes en zet dat erbij.
+                </div>
+              </div>
+            </div>
+
+            <div class="s-regel">
+              <div class="s-kant">
+                <span class="moment">AVOND</span>
+                <span class="cijfer">4</span>
+                <img src="/images/rug/rug-strekken-staand-line-v1.png" alt="Rug strekken, staand"/>
+              </div>
+              <div class="s-inh">
+                <div class="s-inzet">Handen in de zij<span class="adem">·</span><br/>en achterover kijken.</div>
+                <p class="s-tekst">Kijk recht vooruit en buig rustig iets achterover. Stop bij de
+                  eerste weerstand — dit is rekken, geen krachtoefening.</p>
+                <div class="s-dos">5 × 5 TELLEN · NA HET JOURNAAL</div>
+              </div>
+            </div>
+
+            <div class="s-voet">
+              <div>
+                <h4>Wat u zelf in de kantlijn zet</h4>
+                <p>Merkte u iets? Zet het erbij, met de dag. Uw regels zijn de volgende keer
+                  het eerste wat we lezen.</p>
+                <div class="lijnen">
+                  <div class="l"></div><div class="l"></div>
+                </div>
+              </div>
+              <div class="prak">
+                <h4>De souffleur</h4>
+                <p><b>Fysiotherapie de Boskant</b><br/>
+                  Nadia Terpstra, fysiotherapeut<br/>
+                  Beukenlaan 14, Drachten · 0512 — 44 19 06</p>
+                <p style="margin-top:2mm">Kwijt tijdens het oefenen? Bel gerust. Daar zit een
+                  souffleur voor in de bak.</p>
+                <div class="code">WEEK 5 VAN 8 · VEL GEDRUKT 28.08.2026 · CONTROLE 16.09 OM 09:40<br/>
+                  INZET 23 PT · TEKST 10,2 PT · ROOD IS UITSLUITEND MERKTEKEN</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="uitleg">
+      <div>
+        <h4>TWEE LAGEN, GEEN SAMENVATTING</h4>
+        <p>De inzet is geen verkorte tekst — het is een <b>aanzet</b>. Vijf woorden die de beweging
+          op gang brengen bij wie hem al kent. De volledige tekst blijft er ongeschonden onder
+          staan, want de eerste week bestaat ook nog.</p>
+      </div>
+      <div>
+        <h4>BREKEN OP DE ADEM</h4>
+        <p>De regels eindigen waar uw adem eindigt, niet waar de kolom vol is. <b>Zo leest een
+          zin zichzelf voor</b> — ook door een dochter die de oefening niet kent.</p>
+      </div>
+      <div>
+        <h4>DE KANTLIJN IS VOORKENNIS</h4>
+        <p>Een souffleursboek staat vol potlood op de plekken waar het al twintig jaar misgaat.
+          Die plekken bestaan bij oefeningen ook. <b>Ze vooraf noemen is geen wantrouwen; het
+          scheelt drie weken verkeerd oefenen.</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div>
+      <h4>DE RICHTING</h4>
+      <p>De kaart als souffleursboek: niet de hele tekst, maar de inzet — maximaal zes woorden,
+        gebroken op de ademhaling, groot genoeg om tijdens de beweging te lezen. De volledige
+        uitleg blijft eronder staan voor wie hem nodig heeft, en in de kantlijn staan de plekken
+        waar het bij iedereen misgaat.</p>
+    </div>
+    <div>
+      <h4>WAT DIT OPLOST</h4>
+      <p>De kaart is ontworpen voor de eerste lezing en wordt gebruikt bij de vijftigste. Vanaf
+        week drie zoekt de patiënt niet naar uitleg maar naar een aanzet, en die staat nergens.
+        Hier staat hij bovenaan elke regel — en de uitleg is niet weggehaald, alleen kleiner
+        gezet.</p>
+    </div>
+    <div>
+      <h4>INSPIRATIE</h4>
+      <ul>
+        <li>De operasouffleur in de bak: geeft alleen de eerste woorden van elke frase, een paar
+          tellen te vroeg</li>
+        <li>Het souffleursboek met potloodmerktekens op de plekken waar het altijd misgaat</li>
+        <li>Lectionaria en autocue: regels breken op ademhaling en betekenis, niet op kolombreedte</li>
+        <li>„Breaking for sense" uit de fijntypografie — de regelval bepaalt hoe een zin klinkt</li>
+        <li>De rolnaam boven de regel in een toneeltekst: wie spreekt, en waar hij staat</li>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var f=Math.min(1,schaal.clientWidth/blad.offsetWidth);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

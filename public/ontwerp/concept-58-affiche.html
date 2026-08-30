@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 58 — Affiche · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 58 — AFFICHE
+   ------------------------------------------------------------
+   Een oefenkaart zet alles even groot. Een affiche moet kiezen.
+
+   Op een filmaffiche is de rangorde geen smaak maar een
+   afspraak. Wie boven de titel staat, wie erin, wie in het
+   blok onderaan: het is contractueel vastgelegd — tot en met
+   de verhoudingen. De schrijvers- en regisseursvakbonden
+   bedongen dat hun namen in het credit block minstens
+   VIJFTIEN PROCENT van de titelhoogte moeten meten. Dat is
+   geen decoratie. Dat is een ONDERGRENS, afgedwongen door
+   mensen die wisten dat hun naam anders zou verdampen.
+
+   Op een oefenkaart bestaat die afspraak niet. Daar mag alles
+   krimpen. De dosering wordt 7 punt omdat er nog een vierde
+   oefening bij moest. De waarschuwing wordt lichtgrijs omdat
+   het anders „druk" oogt. En de patiënt van 74 leest precies
+   de helft.
+
+   DUS: we lenen de regel, maar we draaien hem om.
+
+   Hollywood rekent van boven naar beneden: eerst de titel,
+   de rest is een percentage daarvan. Wij beginnen ONDERAAN.
+   Eerst de ondergrens — 10,5 punt, bepaald door de leesafstand
+   aan een keukentafel — en de titel is daar een veelvoud van.
+   Zes keer de ondergrens voor de titelrol, twee keer voor de
+   namen, één keer voor het blok. Wil de therapeut een zevende
+   oefening kwijt, dan zakt niet het corps; dan zakt de TITEL.
+   Het vel geeft geen letters op. Het geeft ruimte op, en als
+   de ruimte op is, moet er een naam af.
+
+   Er is één rol per week. Niet omdat de rest niet telt, maar
+   omdat een patiënt die zes dingen even belangrijk vindt er
+   nul doet. De titelrol is de oefening waarvan de therapeut
+   zegt: als u deze week maar één ding doet, doe dan dit.
+
+   VORM. Twee inkten op affichepapier: dooddrukzwart en
+   vermiljoen. Een vette smalle kapitaal voor het affichewerk,
+   een gewone schreefloze voor alles wat een mens echt moet
+   lezen. Geen foto's, geen verloop, geen schaduw — een affiche
+   uit de tijd dat het met twee gangen door de pers moest.
+   En het beslissende detail: het vel klopt óók als de printer
+   de achtergrondkleur weglaat. Zwart en vermiljoen doen al
+   het werk; het papier mag wit zijn.
+   ============================================================ */
+
+:root{
+  --papier:#f6f1e6;
+  --papier-2:#efe8d9;
+  --inkt:#15120f;
+  --wand:#171412;
+  --wand-2:#221d19;
+  --creme:#f0e9db;
+  --grijs:#6f6a62;
+  --grijs-licht:#a9a29a;
+  --verm:#d33f1e;
+  --verm-diep:#a52d13;
+  --lijn:#d6cdba;
+
+  --smal:"Haettenschweiler","Arial Narrow","HelveticaNeue-CondensedBold",Impact,"Liberation Sans Narrow","DejaVu Sans Condensed","Franklin Gothic Medium",sans-serif;
+  --sans:"Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:70px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.62 var(--sans);color:var(--inkt);background:var(--papier)}
+img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--verm);outline-offset:3px}
+
+.binnen{max-width:1180px;margin:0 auto;padding:0 22px}
+.scherm{padding:var(--s6) 0}
+.scherm.wand{background:var(--wand);color:var(--creme)}
+.scherm.licht{background:var(--papier)}
+.scherm.stof{background:var(--papier-2)}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--inkt);color:#cfc7bb;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border:1px solid #3a332c;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#cfc7bb;text-decoration:none;padding:5px 3px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--verm)}
+.labbalk a.terug{color:#fff;border-bottom-color:#3a332c}
+@media (max-width:760px){.labbalk a:not(.terug){display:none}}
+
+/* ---------- affichetypografie ---------- */
+.affiche-kop{font-family:var(--smal);font-weight:700;text-transform:uppercase;
+  letter-spacing:-.005em;line-height:.9}
+.klein-kap{font:700 11px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase}
+
+/* ---------- 1 landing ---------- */
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:26px;height:26px;background:var(--verm);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--smal)}
+.merkregel .naam{font:600 15px/1 var(--sans);letter-spacing:-.01em;color:var(--creme)}
+.merkregel .pad{font:500 11px/1 var(--mono);letter-spacing:.18em;color:#8d857b}
+
+.landkop{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--s5);align-items:start}
+@media (max-width:940px){.landkop{grid-template-columns:1fr;gap:var(--s4)}}
+.landkop h1{font-family:var(--smal);font-weight:700;text-transform:uppercase;
+  font-size:clamp(46px,7.4vw,104px);line-height:.86;letter-spacing:-.01em;color:var(--creme)}
+.landkop h1 em{font-style:normal;color:var(--verm);display:block}
+.landkop .lead{margin-top:var(--s4);font-size:18px;line-height:1.62;color:#c6bdb1;max-width:52ch}
+.landkop .lead + .lead{margin-top:var(--s3)}
+.landkop .lead b{color:var(--creme);font-weight:600}
+
+/* de regel als kader */
+.regelkader{border:2px solid var(--verm);padding:var(--s4);background:#1d1916}
+.regelkader h3{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--verm);margin-bottom:var(--s3)}
+.regelkader p{font-size:16px;line-height:1.6;color:#c6bdb1}
+.regelkader p + p{margin-top:var(--s2)}
+.regelkader b{color:var(--creme)}
+.trap{margin-top:var(--s4);border-top:1px solid #38312a;padding-top:var(--s3);display:grid;gap:10px}
+.trap .rij{display:flex;align-items:baseline;gap:var(--s3);border-bottom:1px dotted #3d362e;padding-bottom:9px}
+.trap .rij:last-child{border-bottom:0}
+.trap .maat{font:700 11px/1 var(--mono);color:var(--verm);letter-spacing:.1em;flex:0 0 62px}
+.trap .voorb{font-family:var(--smal);text-transform:uppercase;color:var(--creme);line-height:1}
+.trap .rij:nth-child(1) .voorb{font-size:38px}
+.trap .rij:nth-child(2) .voorb{font-size:19px}
+.trap .rij:nth-child(3) .voorb{font-size:13px;font-family:var(--sans);font-weight:600;letter-spacing:.06em}
+.trap .wat{margin-left:auto;flex:0 0 96px;font:500 11.5px/1.35 var(--mono);color:#8d857b;text-align:right}
+
+/* de wand met het affiche */
+.wandvak{margin-top:var(--s6);display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);align-items:center}
+@media (max-width:940px){.wandvak{grid-template-columns:1fr}}
+.mini{background:var(--papier);color:var(--inkt);padding:22px 20px 16px;box-shadow:0 22px 44px rgba(0,0,0,.42);
+  max-width:420px;width:100%;justify-self:center}
+.mini .boven{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--verm-diep);text-align:center}
+.mini .ster{font-family:var(--smal);text-transform:uppercase;font-size:20px;line-height:1;
+  text-align:center;margin-top:9px;letter-spacing:.02em}
+.mini .titel{font-family:var(--smal);text-transform:uppercase;font-size:clamp(40px,7vw,62px);
+  line-height:.84;text-align:center;margin:11px 0 9px}
+.mini .titel span{color:var(--verm)}
+.mini .onder{text-align:center;font:600 12.5px/1.35 var(--sans);letter-spacing:.02em;color:#2c2620}
+.mini .streep{height:3px;background:var(--inkt);margin:14px 0 10px}
+.mini .cast{font:700 9.6px/1.42 var(--sans);letter-spacing:.03em;text-transform:uppercase;
+  text-align:center;color:#3a332c}
+.mini .blok{font:400 7.4px/1.34 var(--sans);letter-spacing:.02em;text-transform:uppercase;
+  text-align:center;color:#5c554d;margin-top:9px;transform:scaleX(.9);transform-origin:center}
+.wandvak .bij h3{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--verm);margin-bottom:var(--s3)}
+.wandvak .bij p{color:#c6bdb1;font-size:16.5px}
+.wandvak .bij p + p{margin-top:var(--s3)}
+.wandvak .bij b{color:var(--creme)}
+
+/* ---------- schermkop ---------- */
+.schermkop{max-width:74ch;margin-bottom:var(--s5)}
+.schermkop b{display:inline-block;font:700 10.5px/1 var(--mono);letter-spacing:.2em;
+  color:#fff;background:var(--inkt);padding:6px 9px;margin-bottom:var(--s3)}
+.schermkop h2{font-family:var(--smal);text-transform:uppercase;font-size:clamp(30px,4vw,46px);
+  line-height:.94;letter-spacing:-.005em}
+.schermkop p{margin-top:var(--s3);font-size:17px;color:#4a443c}
+.schermkop p em{font-style:italic;color:var(--verm-diep)}
+
+/* ---------- 2 kiezer ---------- */
+.rolverdeling{display:grid;grid-template-columns:1.5fr 1fr;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.rolverdeling{grid-template-columns:1fr}}
+
+.rolgroep{border-top:3px solid var(--inkt);padding-top:var(--s2);margin-bottom:var(--s4)}
+.rolgroep > h3{font:700 10.5px/1 var(--mono);letter-spacing:.2em;margin-bottom:var(--s1)}
+.rolgroep > .uitleg{font-size:13.5px;color:var(--grijs);margin-bottom:var(--s3)}
+.rolgroep.figuratie{border-top-color:var(--grijs-licht)}
+.rolgroep.figuratie > h3{color:var(--grijs)}
+
+.rol{display:flex;align-items:center;gap:var(--s3);background:#fff;border:1px solid var(--lijn);
+  padding:12px 14px;margin-bottom:9px}
+.rol img{width:56px;height:48px;object-fit:contain;mix-blend-mode:multiply;flex:0 0 56px}
+.rol .naam{font:600 16.5px/1.25 var(--sans);letter-spacing:-.01em}
+.rol .dos{font:500 12.5px/1 var(--mono);color:var(--grijs);margin-top:5px;letter-spacing:.04em}
+.rol .rechts{margin-left:auto;display:flex;align-items:center;gap:12px}
+.rol .corps{font:700 10.5px/1 var(--mono);letter-spacing:.08em;color:var(--verm-diep);
+  border:1px solid var(--verm);padding:5px 7px;white-space:nowrap}
+.rol button{font:600 12px/1 var(--sans);border:1px solid var(--inkt);background:transparent;
+  color:var(--inkt);padding:8px 10px;cursor:pointer;letter-spacing:.03em}
+.rol button:hover{background:var(--inkt);color:#fff}
+.rol.titelrol{border:2px solid var(--verm);background:#fffaf7;padding:16px 14px}
+.rol.titelrol .naam{font-family:var(--smal);text-transform:uppercase;font-size:30px;line-height:.94;letter-spacing:0}
+.rol.titelrol .corps{background:var(--verm);color:#fff;border-color:var(--verm)}
+.rol.boventitel{border-left:6px solid var(--inkt)}
+.rol.grijs{background:var(--papier-2);border-style:dashed;color:var(--grijs)}
+.rol.grijs .naam{font-weight:500;color:#4a443c}
+.rol.grijs img{opacity:.55}
+
+/* de meter */
+.meter{position:sticky;top:64px;background:var(--inkt);color:var(--creme);padding:var(--s4)}
+.meter h3{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--verm);margin-bottom:var(--s3)}
+.meter .groot{font-family:var(--smal);text-transform:uppercase;font-size:52px;line-height:.88;color:var(--creme)}
+.meter .groot small{display:block;font:500 11px/1 var(--mono);letter-spacing:.14em;color:#8d857b;margin-top:9px}
+.meter dl{margin-top:var(--s4);border-top:1px solid #38312a;padding-top:var(--s3);
+  display:grid;grid-template-columns:auto 1fr;gap:9px var(--s3);font:500 13px/1.35 var(--mono)}
+.meter dt{color:#8d857b;letter-spacing:.06em}
+.meter dd{color:var(--creme);text-align:right}
+.meter .waarschuwing{margin-top:var(--s4);border:2px solid var(--verm);padding:var(--s3);
+  font-size:14.5px;line-height:1.55;color:#eadfd3}
+.meter .waarschuwing b{color:var(--verm);display:block;font:700 10.5px/1 var(--mono);
+  letter-spacing:.16em;margin-bottom:8px}
+.meter .keuzes{display:flex;gap:9px;margin-top:var(--s3);flex-wrap:wrap}
+.meter .keuzes span{font:600 11.5px/1 var(--sans);border:1px solid #4a423a;padding:8px 9px;color:#cfc7bb}
+.meter .keuzes span.aan{background:var(--verm);border-color:var(--verm);color:#fff}
+
+/* ---------- 3 cliëntkaart ---------- */
+.speelvlak{display:grid;grid-template-columns:1fr 340px;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.speelvlak{grid-template-columns:1fr}}
+
+.clientaffiche{background:var(--papier);color:var(--inkt);padding:var(--s5) var(--s4) var(--s4)}
+.clientaffiche .presenteert{font:700 10px/1 var(--mono);letter-spacing:.24em;color:var(--verm-diep);text-align:center}
+.clientaffiche .ster{font-family:var(--smal);text-transform:uppercase;font-size:clamp(20px,3vw,27px);
+  line-height:1;text-align:center;margin-top:12px;letter-spacing:.02em}
+.clientaffiche .titel{font-family:var(--smal);text-transform:uppercase;
+  font-size:clamp(50px,9vw,96px);line-height:.82;text-align:center;margin:14px 0 12px}
+.clientaffiche .titel span{color:var(--verm)}
+.clientaffiche .tagline{text-align:center;font:600 15px/1.4 var(--sans);color:#332c26;max-width:36ch;margin:0 auto}
+.clientaffiche .vandaag{margin:var(--s4) auto 0;max-width:420px;border:2px solid var(--inkt);
+  display:flex;align-items:stretch}
+.clientaffiche .vandaag .l{padding:14px 16px;flex:1}
+.clientaffiche .vandaag .l b{display:block;font:700 10px/1 var(--mono);letter-spacing:.18em;color:var(--grijs);margin-bottom:7px}
+.clientaffiche .vandaag .l span{font:600 16px/1.3 var(--sans)}
+.clientaffiche .vandaag button{border:0;background:var(--verm);color:#fff;font-family:var(--smal);
+  text-transform:uppercase;font-size:22px;letter-spacing:.02em;padding:0 20px;cursor:pointer}
+.clientaffiche .vandaag button:hover{background:var(--verm-diep)}
+
+.rolzaal{margin-top:var(--s5);border-top:3px solid var(--inkt);padding-top:var(--s3)}
+.rolzaal h4{font:700 10.5px/1 var(--mono);letter-spacing:.2em;margin-bottom:var(--s3)}
+.spelers{display:grid;gap:11px}
+.speler{display:flex;align-items:center;gap:14px;border-bottom:1px dotted var(--lijn);padding-bottom:11px}
+.speler img{width:52px;height:46px;object-fit:contain;mix-blend-mode:multiply;flex:0 0 52px}
+.speler .n{font:600 16px/1.25 var(--sans)}
+.speler .d{font:500 12px/1 var(--mono);color:var(--grijs);margin-top:5px;letter-spacing:.04em}
+.speler .st{margin-left:auto;font:700 10.5px/1 var(--mono);letter-spacing:.14em;padding:7px 9px;white-space:nowrap}
+.speler .st.gedaan{background:var(--inkt);color:#fff}
+.speler .st.open{border:1px solid var(--lijn);color:var(--grijs)}
+.speler .st.overgeslagen{border:1px solid var(--verm);color:var(--verm-diep)}
+.speler.dim{opacity:.62}
+
+.zijkolom{display:grid;gap:var(--s4)}
+.paneel{background:#fff;border:1px solid var(--lijn);padding:var(--s4)}
+.paneel.donker{background:var(--inkt);color:var(--creme);border-color:var(--inkt)}
+.paneel h4{font:700 10.5px/1 var(--mono);letter-spacing:.2em;margin-bottom:var(--s3);color:var(--verm-diep)}
+.paneel.donker h4{color:var(--verm)}
+.paneel p{font-size:15.5px;line-height:1.58;color:#4a443c}
+.paneel.donker p{color:#c6bdb1}
+.paneel p + p{margin-top:11px}
+.speellijst{display:grid;gap:8px;margin-top:var(--s2)}
+.speellijst .v{display:flex;align-items:center;gap:11px;font:500 13.5px/1 var(--sans)}
+.speellijst .v i{width:15px;height:15px;flex:0 0 15px;border:1.5px solid var(--lijn);display:block}
+.speellijst .v i.vol{background:var(--inkt);border-color:var(--inkt)}
+.speellijst .v i.half{background:linear-gradient(135deg,var(--inkt) 0 50%,transparent 50% 100%)}
+.speellijst .v i.leeg{border-style:dashed}
+.speellijst .v span{color:var(--grijs);margin-left:auto;font:500 12px/1 var(--mono)}
+.wissel{margin-top:var(--s3);border-top:1px solid var(--lijn);padding-top:var(--s3);font-size:14.5px;color:#4a443c}
+.paneel.donker .wissel{border-top-color:#38312a;color:#c6bdb1}
+.wissel b{font-family:var(--smal);text-transform:uppercase;font-size:22px;display:block;
+  line-height:1;margin-top:6px;color:var(--verm)}
+
+/* ---------- 4 printkaart ---------- */
+.printbalk{display:flex;align-items:center;gap:var(--s4);flex-wrap:wrap;
+  border:2px solid var(--inkt);padding:var(--s3) var(--s4);margin-bottom:var(--s4);background:#fff}
+.printbalk p{font-size:15px;color:#4a443c;max-width:66ch}
+.printbalk b{color:var(--inkt)}
+.printknop{margin-left:auto;font-family:var(--smal);text-transform:uppercase;font-size:22px;
+  letter-spacing:.03em;background:var(--verm);color:#fff;border:0;padding:12px 22px;cursor:pointer}
+.printknop:hover{background:var(--verm-diep)}
+
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden}
+.blad{width:210mm;height:297mm;background:var(--papier);color:var(--inkt);position:relative;
+  box-shadow:0 26px 60px rgba(21,18,15,.26);transform-origin:top left}
+@media (max-width:860px){.bladschaal{max-width:100%}}
+.blad .rand{position:absolute;inset:0;padding:11mm 13mm 9mm;display:flex;flex-direction:column}
+
+/* affiche-onderdelen op het vel */
+.a-presenteert{text-align:center;font:700 2.5mm/1 var(--mono);letter-spacing:.26em;
+  text-transform:uppercase;color:var(--verm-diep)}
+.a-boventitel{text-align:center;margin-top:3mm;font-family:var(--smal);text-transform:uppercase;
+  font-size:7mm;line-height:1;letter-spacing:.02em}
+.a-titel{text-align:center;font-family:var(--smal);text-transform:uppercase;
+  font-size:22mm;line-height:.82;margin:3mm 0 2.5mm;letter-spacing:-.01em}
+.a-titel span{color:var(--verm)}
+.a-tagline{text-align:center;font:600 4.4mm/1.32 var(--sans);max-width:150mm;margin:0 auto;color:#2c2620}
+.a-hoofdrol{margin-top:4mm;display:flex;align-items:center;gap:6mm;
+  border-top:1.2mm solid var(--inkt);border-bottom:.4mm solid var(--inkt);padding:4mm 0}
+.a-hoofdrol img{width:36mm;height:30mm;object-fit:contain;mix-blend-mode:multiply;flex:0 0 36mm}
+.a-hoofdrol .tekst h3{font-family:var(--smal);text-transform:uppercase;font-size:8mm;line-height:.94}
+.a-hoofdrol .tekst .dos{font:700 3.6mm/1 var(--mono);letter-spacing:.1em;color:var(--verm-diep);margin-top:2.4mm}
+.a-hoofdrol .tekst p{font:400 3.7mm/1.44 var(--sans);margin-top:2.6mm;max-width:96mm;color:#2c2620}
+
+.a-kop{font:700 2.6mm/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;
+  margin:5mm 0 3mm;color:var(--inkt);display:flex;align-items:center;gap:3mm}
+.a-kop:after{content:"";flex:1;height:.3mm;background:var(--inkt)}
+
+.a-cast{display:grid;grid-template-columns:1fr 1fr;gap:3.4mm 7mm}
+.a-cast .c{display:flex;gap:3.6mm;align-items:flex-start;border-bottom:.2mm dotted #b9ae99;padding-bottom:3mm}
+.a-cast img{width:20mm;height:17mm;object-fit:contain;mix-blend-mode:multiply;flex:0 0 20mm}
+.a-cast h4{font-family:var(--smal);text-transform:uppercase;font-size:5.2mm;line-height:1}
+.a-cast .dos{font:700 3mm/1 var(--mono);letter-spacing:.08em;color:var(--verm-diep);margin-top:1.8mm}
+.a-cast p{font:400 3.4mm/1.42 var(--sans);margin-top:1.8mm;color:#37302a}
+
+.a-let{margin-top:3.4mm;border:.5mm solid var(--verm);padding:2.8mm 3.4mm;display:flex;gap:3.4mm;align-items:flex-start}
+.a-let b{font:700 2.6mm/1 var(--mono);letter-spacing:.16em;color:var(--verm-diep);flex:0 0 26mm;padding-top:.4mm}
+.a-let p{font:400 3.4mm/1.42 var(--sans);color:#2c2620}
+
+.a-voet{margin-top:auto;padding-top:3.4mm;border-top:1.2mm solid var(--inkt)}
+.a-blok{font:400 2.9mm/1.34 var(--sans);letter-spacing:.02em;text-transform:uppercase;
+  text-align:center;color:#453e37;transform:scaleX(.92);transform-origin:center}
+.a-blok b{font-weight:700;color:var(--inkt)}
+.a-onderregel{margin-top:2.6mm;display:flex;justify-content:space-between;align-items:baseline;
+  font:400 2.9mm/1 var(--sans);color:var(--grijs);letter-spacing:.04em}
+.a-onderregel b{font:700 2.9mm/1 var(--mono);letter-spacing:.1em;color:var(--verm-diep)}
+
+/* ---------- uitleg onder het vel ---------- */
+.uitleg{margin-top:var(--s5);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:940px){.uitleg{grid-template-columns:1fr}}
+.uitleg div{border-top:2px solid var(--inkt);padding-top:var(--s2)}
+.uitleg h4{font:700 10px/1 var(--mono);letter-spacing:.18em;color:var(--verm-diep);margin-bottom:9px}
+.uitleg p{font-size:15.5px;line-height:1.58;color:#4a443c}
+.uitleg b{color:var(--inkt)}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--wand);color:#a9a29a;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.18em;color:var(--verm);
+  border-top:1px solid #3a332c;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.6}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:9px}
+footer.uitleiding a{color:var(--verm)}
+
+/* ============================================================
+   PRINT — het vel gaat als affiche door de printer. Het papier
+   wordt wit: de compositie moet kloppen op twee inkten, ook als
+   de browser achtergrondkleuren weglaat. De ondergrens blijft
+   10,5 pt (2,9 mm); de titel is daar een veelvoud van.
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .schermkop,.uitleg{display:none !important}
+  .scherm{padding:0 !important;background:#fff !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;background:#fff !important;transform:none !important;
+    box-shadow:none !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 58</span>
+  <strong style="font:600 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Affiche</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm wand" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 58 · AFFICHE</span>
+    </div>
+
+    <div class="landkop">
+      <div>
+        <h1>Alles even<br/>groot is<em>niemand groot.</em></h1>
+        <p class="lead">Op een filmaffiche is de rangorde geen smaak maar een afspraak. Wie boven de
+          titel staat, wie erin, wie in het blok onderaan — het staat in de contracten, tot en met
+          de verhoudingen. De vakbonden van schrijvers en regisseurs bedongen zelfs een
+          <b>ondergrens</b>: hun namen moeten minstens vijftien procent van de titelhoogte meten.</p>
+        <p class="lead">Op een oefenkaart bestaat die afspraak niet. Daar mag alles krimpen. De
+          dosering wordt zeven punt omdat er nog een vierde oefening bij moest, de waarschuwing
+          wordt lichtgrijs omdat het anders „druk" oogt. <b>En de patiënt van 74 leest precies de
+          helft.</b></p>
+      </div>
+
+      <div class="regelkader">
+        <h3>DE REGEL, OMGEKEERD</h3>
+        <p>Hollywood rekent van boven naar beneden: eerst de titel, de rest is een percentage
+          daarvan. <b>Wij beginnen onderaan.</b></p>
+        <p>Eerst de ondergrens — 10,5 punt, bepaald door de leesafstand aan een keukentafel. Al
+          het andere op het vel is daar een veelvoud van.</p>
+        <div class="trap">
+          <div class="rij">
+            <span class="maat">6 ×</span>
+            <span class="voorb">Opstaan</span>
+            <span class="wat">titelrol<br/>63 pt</span>
+          </div>
+          <div class="rij">
+            <span class="maat">2 ×</span>
+            <span class="voorb">Kuiten heffen</span>
+            <span class="wat">de rolverdeling<br/>21 pt</span>
+          </div>
+          <div class="rij">
+            <span class="maat">1 ×</span>
+            <span class="voorb">Praktijk · therapeut · telefoon</span>
+            <span class="wat">het blok<br/>10,5 pt</span>
+          </div>
+        </div>
+        <p style="margin-top:16px"><b>Wil er een zevende oefening bij, dan zakt niet het corps —
+          dan zakt de titel.</b> En is de ruimte op, dan moet er een naam af.</p>
+      </div>
+    </div>
+
+    <div class="wandvak">
+      <div class="mini" aria-label="Affiche in het klein">
+        <div class="boven">FYSIOTHERAPIE DE BOSKANT PRESENTEERT</div>
+        <div class="ster">Mevrouw J. Veldkamp</div>
+        <div class="titel">Opstaan<br/><span>zonder handen</span></div>
+        <div class="onder">Tien keer, twee keer per dag.<br/>Als u deze week één ding doet, doe dan dit.</div>
+        <div class="streep"></div>
+        <div class="cast">Kuiten heffen · Eenbeenstand bij het aanrecht<br/>Achterwaarts stappen · Rug strekken</div>
+        <div class="blok">Fysiotherapie de Boskant · Nadia Terpstra, fysiotherapeut · 0512 — 44 19 06 ·
+          week 3 van 6 · volgende afspraak dinsdag 9 september 10:20 · kleinste letter op dit vel 10,5 pt</div>
+      </div>
+
+      <div class="bij">
+        <h3>ÉÉN ROL PER WEEK</h3>
+        <p>Niet omdat de rest niet telt, maar omdat een patiënt die zes dingen even belangrijk
+          vindt er <b>nul</b> doet. De titelrol is de oefening waarvan de therapeut zegt: als u
+          deze week maar één ding doet, doe dan dit.</p>
+        <p>De rest speelt mee — met naam, dosering en één zin — maar niet in dezelfde hoogte.
+          <b>Rangorde is hier geen esthetiek. Het is een klinische keuze die zichtbaar wordt
+          gemaakt.</b></p>
+        <p>En omdat de ondergrens vastligt, kan het vel niet stiekem dichtslibben. Een affiche
+          dat te vol raakt, wordt niet kleiner. Het wordt <b>korter</b>.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm licht" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 2</b>
+      <h2>De kiezer is een rolverdeling</h2>
+      <p>Samenstellen betekent hier <em>casten</em>: één titelrol, een handvol namen, en alles wat
+        daarbuiten valt is figuratie — het staat er wel, maar niet op het vel. De meter rechts
+        rekent live door wat de keuze met het corps doet.</p>
+    </div>
+
+    <div class="rolverdeling">
+      <div>
+
+        <div class="rolgroep">
+          <h3>BOVEN DE TITEL</h3>
+          <p class="uitleg">De naam van de patiënt staat boven de titel. Niet de praktijk, niet de
+            diagnose, niet het dossiernummer.</p>
+          <div class="rol boventitel">
+            <div>
+              <div class="naam">Mevrouw J. Veldkamp</div>
+              <div class="dos">74 JAAR · KNIEPROTHESE LINKS · WEEK 3 VAN 6</div>
+            </div>
+            <div class="rechts"><span class="corps">28 pt</span></div>
+          </div>
+        </div>
+
+        <div class="rolgroep">
+          <h3>TITELROL — ÉÉN PER WEEK</h3>
+          <p class="uitleg">De oefening die het verschil maakt. Kiest u een andere, dan wisselt de
+            titel; de oude schuift terug naar de rolverdeling.</p>
+          <div class="rol titelrol">
+            <img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/>
+            <div>
+              <div class="naam">Opstaan zonder handen</div>
+              <div class="dos">10 × · 2 KEER PER DAG · STOEL MET RECHTE RUG</div>
+            </div>
+            <div class="rechts">
+              <span class="corps">63 pt</span>
+              <button type="button">Wissel titel</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="rolgroep">
+          <h3>IN VOLGORDE VAN OPKOMST — 4 VAN MAXIMAAL 5</h3>
+          <p class="uitleg">Naam op twee keer de ondergrens, dosering en één zin. De volgorde is de
+            volgorde van de dag, niet van het lichaam.</p>
+
+          <div class="rol">
+            <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Kuiten heffen"/>
+            <div>
+              <div class="naam">Kuiten heffen</div>
+              <div class="dos">15 × · BIJ HET AANRECHT · OCHTEND</div>
+            </div>
+            <div class="rechts"><span class="corps">21 pt</span><button type="button">Naar figuratie</button></div>
+          </div>
+
+          <div class="rol">
+            <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Eenbeenstand met steun"/>
+            <div>
+              <div class="naam">Eenbeenstand, met steun</div>
+              <div class="dos">3 × 20 SEC PER BEEN · TIJDENS TANDENPOETSEN</div>
+            </div>
+            <div class="rechts"><span class="corps">21 pt</span><button type="button">Naar figuratie</button></div>
+          </div>
+
+          <div class="rol">
+            <img src="/images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png" alt="Achterwaarts stappen met steun"/>
+            <div>
+              <div class="naam">Achterwaarts stappen</div>
+              <div class="dos">10 STAPPEN HEEN EN TERUG · LANGS DE GANG</div>
+            </div>
+            <div class="rechts"><span class="corps">21 pt</span><button type="button">Naar figuratie</button></div>
+          </div>
+
+          <div class="rol">
+            <img src="/images/rug/rug-strekken-staand-line-v1.png" alt="Rug strekken, staand"/>
+            <div>
+              <div class="naam">Rug strekken, staand</div>
+              <div class="dos">5 × 5 TELLEN · NA HET ZITTEN</div>
+            </div>
+            <div class="rechts"><span class="corps">21 pt</span><button type="button">Naar figuratie</button></div>
+          </div>
+        </div>
+
+        <div class="rolgroep figuratie">
+          <h3>FIGURATIE — WEL IN HET DOSSIER, NIET OP HET VEL</h3>
+          <p class="uitleg">Deze oefeningen blijven in het dossier staan en komen terug zodra er
+            ruimte is. Ze halen het affiche niet, en dat is een besluit — geen vergetelheid.</p>
+
+          <div class="rol grijs">
+            <img src="/images/onderste-extremiteit/clamshell-zijlig-line-v1.png" alt="Clamshell zijlig"/>
+            <div>
+              <div class="naam">Clamshell, zijlig</div>
+              <div class="dos">UIT WEEK 2 · TERUG IN WEEK 5</div>
+            </div>
+            <div class="rechts"><button type="button">Naar het vel</button></div>
+          </div>
+
+          <div class="rol grijs">
+            <img src="/images/core/bekken-kantelen-liggend-line-v1.png" alt="Bekken kantelen, liggend"/>
+            <div>
+              <div class="naam">Bekken kantelen, liggend</div>
+              <div class="dos">AFGEROND IN WEEK 2 · GEEN HERHALING NODIG</div>
+            </div>
+            <div class="rechts"><button type="button">Naar het vel</button></div>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="meter">
+        <h3>DE CORPSMETER</h3>
+        <div class="groot">63 pt
+          <small>TITELHOOGTE BIJ 5 NAMEN</small>
+        </div>
+        <dl>
+          <dt>ondergrens</dt><dd>10,5 pt</dd>
+          <dt>titelrol</dt><dd>6 × = 63 pt</dd>
+          <dt>rolverdeling</dt><dd>2 × = 21 pt</dd>
+          <dt>blok onderaan</dt><dd>1 × = 10,5 pt</dd>
+          <dt>vrije hoogte</dt><dd>18 mm</dd>
+        </dl>
+
+        <div class="waarschuwing">
+          <b>ALS ER EEN ZESDE BIJ KOMT</b>
+          Dan past de titel niet meer op 6 ×. Het corps van de tekst blijft staan — dat is de
+          afspraak. U kiest zelf wat er wijkt:
+          <div class="keuzes">
+            <span class="aan">Titel naar 4 × (42 pt)</span>
+            <span>Eén naam naar figuratie</span>
+            <span>Tweede vel</span>
+          </div>
+        </div>
+
+        <div class="waarschuwing" style="border-color:#4a423a">
+          <b style="color:#8d857b">WAT NOOIT MAG</b>
+          De tekst onder 10,5 punt zetten. Die knop bestaat niet in dit ontwerp, ook niet als
+          verstopte optie. Er is geen vel dat het waard is.
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm wand" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop" style="color:#c6bdb1">
+      <b style="background:var(--verm)">SCHERM 3</b>
+      <h2 style="color:var(--creme)">De digitale cliëntkaart</h2>
+      <p style="color:#a9a29a">Het scherm is de wand: het affiche hangt erop, en eronder hangt de
+        <em style="color:var(--verm)">speellijst</em> — welke voorstelling deze week doorging en welke
+        niet. Afvinken is hier „gespeeld", niet „gelukt".</p>
+    </div>
+
+    <div class="speelvlak">
+      <div class="clientaffiche">
+        <div class="presenteert">DEZE WEEK OP DE KEUKENTAFEL</div>
+        <div class="ster">Mevrouw J. Veldkamp</div>
+        <div class="titel">Opstaan<br/><span>zonder handen</span></div>
+        <p class="tagline">Tien keer, twee keer per dag. Als u vandaag maar één ding doet,
+          doe dan dit.</p>
+
+        <div class="vandaag">
+          <div class="l">
+            <b>VANDAAG — DONDERDAG</b>
+            <span>Ochtendronde nog open · avondronde gedaan</span>
+          </div>
+          <button type="button">Gespeeld</button>
+        </div>
+
+        <div class="rolzaal">
+          <h4>IN VOLGORDE VAN OPKOMST</h4>
+          <div class="spelers">
+            <div class="speler">
+              <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Kuiten heffen"/>
+              <div>
+                <div class="n">Kuiten heffen</div>
+                <div class="d">15 × · BIJ HET AANRECHT</div>
+              </div>
+              <span class="st gedaan">GESPEELD</span>
+            </div>
+            <div class="speler">
+              <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Eenbeenstand met steun"/>
+              <div>
+                <div class="n">Eenbeenstand, met steun</div>
+                <div class="d">3 × 20 SEC · BIJ HET TANDENPOETSEN</div>
+              </div>
+              <span class="st gedaan">GESPEELD</span>
+            </div>
+            <div class="speler">
+              <img src="/images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png" alt="Achterwaarts stappen met steun"/>
+              <div>
+                <div class="n">Achterwaarts stappen</div>
+                <div class="d">10 STAPPEN HEEN EN TERUG · LANGS DE GANG</div>
+              </div>
+              <span class="st open">NOG OPEN</span>
+            </div>
+            <div class="speler dim">
+              <img src="/images/rug/rug-strekken-staand-line-v1.png" alt="Rug strekken, staand"/>
+              <div>
+                <div class="n">Rug strekken, staand</div>
+                <div class="d">5 × 5 TELLEN · NA HET ZITTEN</div>
+              </div>
+              <span class="st overgeslagen">OVERGESLAGEN</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="zijkolom">
+        <div class="paneel">
+          <h4>DE SPEELLIJST — WEEK 3</h4>
+          <div class="speellijst">
+            <div class="v"><i class="vol"></i>maandag<span>2 van 2</span></div>
+            <div class="v"><i class="vol"></i>dinsdag<span>2 van 2</span></div>
+            <div class="v"><i class="half"></i>woensdag<span>1 van 2</span></div>
+            <div class="v"><i class="half"></i>donderdag<span>1 van 2</span></div>
+            <div class="v"><i class="leeg"></i>vrijdag<span>—</span></div>
+            <div class="v"><i class="leeg"></i>zaterdag<span>rustdag</span></div>
+            <div class="v"><i class="leeg"></i>zondag<span>—</span></div>
+          </div>
+          <p class="wissel">Een halve dag is een gespeelde dag. <b style="color:var(--verm-diep);font-family:var(--sans);
+            font-size:15px;text-transform:none;display:inline">De titelrol telt dubbel</b> — die
+            haalt u vaker dan de rest, en dat is precies de bedoeling.</p>
+        </div>
+
+        <div class="paneel donker">
+          <h4>VOLGENDE WEEK WISSELT DE TITEL</h4>
+          <p>Nadia heeft de wissel al klaargezet. U ziet hem nu, zodat het volgende affiche geen
+            verrassing is.</p>
+          <div class="wissel">
+            WEEK 4 — DE NIEUWE TITELROL
+            <b>Traplopen, één trede per keer</b>
+          </div>
+          <p style="margin-top:16px">Opstaan zonder handen verdwijnt niet: die schuift naar de
+            rolverdeling en blijft in beeld tot week 6.</p>
+        </div>
+
+        <div class="paneel">
+          <h4>WAT DE THERAPEUT ZIET</h4>
+          <p>Niet een percentage, maar de vraag die telt: <b>haalt de titelrol het?</b> Bij
+            mevrouw Veldkamp wel — 11 van de 14 rondes. De rug strekt ze structureel niet, drie
+            weken op rij.</p>
+          <p>Dat is geen therapietrouwprobleem. Dat is een <b>castingprobleem</b>: die oefening
+            hoort niet op het vel.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm stof" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 4</b>
+      <h2>De printkaart — A4 staand, het affiche</h2>
+      <p>Dit is het vel dat op de koelkast komt. Eén titel die je vanaf de deur leest, vier namen
+        die je aan tafel leest, en een blok onderaan dat je pakt als je moet bellen.
+        <em>De kleinste letter op dit vel is 10,5 punt — dat staat er ook op.</em></p>
+    </div>
+
+    <div class="printbalk geen-print">
+      <p>Druk <b>Ctrl/⌘+P</b>. Het vel is ontworpen op twee inkten: <b>zwart en vermiljoen</b>. Laat
+        uw printer de achtergrondkleuren weg, dan blijft de compositie exact staan — alleen het
+        papier wordt wit. Er is niets op dit vel dat afhangt van een vlak.</p>
+      <button class="printknop" onclick="window.print()">Print het affiche</button>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="a-presenteert">Fysiotherapie de Boskant presenteert</div>
+            <div class="a-boventitel">Mevrouw J. Veldkamp</div>
+            <div class="a-titel">Opstaan<br/><span>zonder handen</span></div>
+            <p class="a-tagline">Tien keer, twee keer per dag. Als u deze week maar één ding doet,
+              doe dan dit.</p>
+
+            <div class="a-hoofdrol">
+              <img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel zonder handen"/>
+              <div class="tekst">
+                <h3>De titelrol</h3>
+                <div class="dos">10 × · TWEE KEER PER DAG · OCHTEND EN AVOND</div>
+                <p>Ga op een stoel met een rechte rug zitten, voeten plat op de vloer, iets naar
+                  achteren. Armen over elkaar. Kom rustig omhoog zonder uw handen te gebruiken en
+                  ga net zo rustig weer zitten — het zakken is het zware deel. Lukt het niet
+                  zonder handen, gebruik dan één hand en tel dat gewoon mee.</p>
+              </div>
+            </div>
+
+            <div class="a-kop">In volgorde van opkomst</div>
+
+            <div class="a-cast">
+              <div class="c">
+                <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Kuiten heffen"/>
+                <div>
+                  <h4>Kuiten heffen</h4>
+                  <div class="dos">15 × · BIJ HET AANRECHT</div>
+                  <p>Handen licht op het aanrecht, kom op uw tenen en zak langzaam terug.
+                    Vasthouden mag; leunen niet.</p>
+                </div>
+              </div>
+              <div class="c">
+                <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Eenbeenstand met steun"/>
+                <div>
+                  <h4>Eenbeenstand</h4>
+                  <div class="dos">3 × 20 SEC PER BEEN</div>
+                  <p>Tijdens het tandenpoetsen, één vinger aan de wastafel. Wordt het makkelijk:
+                    kijk naar links en rechts.</p>
+                </div>
+              </div>
+              <div class="c">
+                <img src="/images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png" alt="Achterwaarts stappen met steun"/>
+                <div>
+                  <h4>Achterwaarts stappen</h4>
+                  <div class="dos">10 STAPPEN HEEN EN TERUG</div>
+                  <p>Langs de gang, met de muur binnen handbereik. Kleine stappen, hakken eerst
+                    neerzetten.</p>
+                </div>
+              </div>
+              <div class="c">
+                <img src="/images/rug/rug-strekken-staand-line-v1.png" alt="Rug strekken, staand"/>
+                <div>
+                  <h4>Rug strekken</h4>
+                  <div class="dos">5 × 5 TELLEN · NA HET ZITTEN</div>
+                  <p>Handen in de zij, kijk recht vooruit en buig rustig iets achterover. Stop bij
+                    de eerste weerstand.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="a-let">
+              <b>WANNEER NIET</b>
+              <p>Bij een dikke, warme knie of nieuwe pijn die 's nachts doorgaat: sla de titelrol
+                over en bel de praktijk. Dat is geen mislukte week — dat is de reden dat het
+                nummer op dit vel staat.</p>
+            </div>
+
+            <div class="a-voet">
+              <div class="a-blok">
+                <b>Fysiotherapie de Boskant</b> · Nadia Terpstra, fysiotherapeut · Beukenlaan 14, Drachten<br/>
+                0512 — 44 19 06 · week 3 van 6 · opgesteld 28 augustus 2026 · volgende afspraak dinsdag 9 september 10:20<br/>
+                controle knieprothese links · bij twijfel eerst bellen, dan oefenen
+              </div>
+              <div class="a-onderregel">
+                <span>Fysiplan · concept 58 — Affiche</span>
+                <b>KLEINSTE LETTER OP DIT VEL: 10,5 PT</b>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="uitleg">
+      <div>
+        <h4>DE ONDERGRENS EERST</h4>
+        <p>Alles op dit vel is een veelvoud van 10,5 punt. De titel is 6 ×, de namen 2 ×, het blok
+          1 ×. <b>Er is geen corps dat kan wegzakken</b>, want er is geen tekst die niet aan de
+          rekensom vastzit.</p>
+      </div>
+      <div>
+        <h4>TWEE INKTEN, GEEN VLAKKEN</h4>
+        <p>Zwart en vermiljoen. Geen grijstinten voor tekst, geen kleurvlak waar iets in staat.
+          <b>Zet de printer op zwart-wit en het vel werkt nog steeds</b> — dan is vermiljoen
+          donkergrijs, en de rangorde staat in het corps.</p>
+      </div>
+      <div>
+        <h4>WAT ER NIET OP STAAT</h4>
+        <p>Geen logo groter dan de patiëntnaam, geen QR-code in de hoek, geen motiverende zin van
+          de praktijk. <b>Een affiche dat zichzelf aanprijst, verkoopt de voorstelling niet.</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div>
+      <h4>DE RICHTING</h4>
+      <p>Rangorde als afspraak, niet als smaak. Eén titelrol per week, een vaste ondergrens van
+        10,5 punt, en een titel die krimpt zodra het vel te vol wordt. Het affiche kan niet
+        dichtslibben, want het geeft geen letters op — het geeft namen op.</p>
+    </div>
+    <div>
+      <h4>WAT DIT OPLOST</h4>
+      <p>De oefenkaart die stilletjes verschraalt: zeven oefeningen, zeven punt, en een patiënt die
+        de helft leest en daarom niets doet. Hier is „te vol" een zichtbaar besluit van de
+        therapeut in plaats van een onzichtbaar gevolg van de opmaak.</p>
+    </div>
+    <div>
+      <h4>INSPIRATIE</h4>
+      <ul>
+        <li>Het billing block van het filmaffiche: de credits-piramide in ultra-smalle kapitaal,
+          onderaan het vel</li>
+        <li>De vakbondsregel dat credits minstens 15% van de titelhoogte meten — een afgedwongen
+          ondergrens, hier omgekeerd toegepast</li>
+        <li>Het tweekleuren-theateraffiche: dooddrukzwart en vermiljoen, één gang extra door de pers</li>
+        <li>„Boven de titel" als contractuele eer — hier voor de patiënt, niet voor de praktijk</li>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var f=Math.min(1,schaal.clientWidth/blad.offsetWidth);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

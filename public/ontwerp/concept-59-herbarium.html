@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 59 — Herbarium · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 59 — HERBARIUM
+   ------------------------------------------------------------
+   Een oefenkaart wordt overschreven. Een herbariumvel wordt
+   bijgeschreven.
+
+   Als een botanicus in 1954 een plant verkeerd op naam bracht
+   en iemand het in 1988 beter weet, dan gaat er geen gum over
+   het etiket. Er komt een strookje bij: een DETERMINAVIT-
+   strook, met de nieuwe naam, de datum en de naam van degene
+   die het bepaalde. Die strook wordt maar aan één kant
+   vastgeplakt, boven het oude etiket, in de lege ruimte. Het
+   oude etiket blijft leesbaar. Het vel wordt dikker, niet
+   schoner.
+
+   Dat is precies wat een oefenkaart niet doet. Bij elke
+   controle print de praktijk een nieuw vel. De oude dosering
+   verdwijnt, de eerste versie verdwijnt, de reden waarom er
+   iets veranderde verdwijnt. In week zes heeft de patiënt een
+   vel dat doet alsof het altijd zo geweest is — en daarmee is
+   het bewijs weg dat er íets veranderd is. Terwijl dat het
+   enige is wat herstel aantoonbaar maakt.
+
+   DUS: het vel is een collectie, geen opdracht.
+     · Elke oefening is een EXEMPLAAR: opgeplakt, genummerd,
+       met een etiket rechtsonder.
+     · Op het etiket staat wat een herbariumetiket altijd zegt:
+       WAT, WAAR, WANNEER, DOOR WIE. Vindplaats is hier geen
+       hooiland maar „de trap in de eigen woning".
+     · Verandert de dosering, dan komt er een strook bij. Het
+       oude etiket blijft staan, doorgestreept noch verstopt.
+     · Datums in Romeinse maandcijfers — 4.vii.2026 — zoals op
+       elk etiket, omdat 4-7 in twee landen twee dingen betekent.
+
+   EN ÉÉN OMKERING. Op een herbariumetiket staat de Latijnse
+   naam groot en de volksnaam klein. Hier is het andersom: de
+   naam die de patiënt gebruikt („opstaan uit de stoel") staat
+   groot, de klinische aanduiding klein eronder. Op elke andere
+   oefenkaart is dat precies verkeerd om.
+
+   VORM. Zwaar rag-papier, sepia inkt, haarlijnen. De opplak-
+   stroken zijn echt: smalle linnen strookjes die het beeld op
+   het vel houden. Eén stempel in gedempt inktblauw, want elk
+   herbarium heeft er één. Veel wit — een herbariumvel is voor
+   negentig procent papier, en dat is geen verspilling maar de
+   ruimte waar de volgende hand in schrijft.
+   ============================================================ */
+
+:root{
+  --vel:#faf7f0;
+  --vel-2:#f3eee2;
+  --karton:#e8e0cd;
+  --inkt:#2b2620;
+  --inkt-2:#4d463c;
+  --sepia:#7a6a52;
+  --grijs:#8b8375;
+  --lijn:#ded5c2;
+  --lijn-2:#ece5d6;
+  --stempel:#3a6070;
+  --stempel-licht:#7fa0ad;
+  --gom:#cbb896;
+  --potlood:#6f6a60;
+  --revisie:#8c4a2f;
+
+  --serif:Charter,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:44px; --s6:74px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.66 var(--serif);color:var(--inkt-2);background:var(--vel)}
+img{max-width:100%;display:block}
+:focus-visible{outline:2.5px solid var(--stempel);outline-offset:3px}
+
+.binnen{max-width:1140px;margin:0 auto;padding:0 22px}
+.scherm{padding:var(--s6) 0}
+.scherm.karton{background:var(--karton)}
+.scherm.zacht{background:var(--vel-2)}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--inkt);color:#cdc4b4;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border:1px solid #4a4237;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#cdc4b4;text-decoration:none;padding:5px 3px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--stempel-licht)}
+.labbalk a.terug{color:#fff;border-bottom-color:#4a4237}
+@media (max-width:760px){.labbalk a:not(.terug){display:none}}
+
+/* ---------- gedeelde elementen ---------- */
+.etiketkop{font:600 10px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--sepia)}
+.hand{font-family:var(--serif);font-style:italic;color:var(--potlood)}
+
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:26px;height:26px;border:1.5px solid var(--stempel);color:var(--stempel);
+  display:flex;align-items:center;justify-content:center;font:600 13px/1 var(--serif)}
+.merkregel .naam{font:600 15px/1 var(--sans);letter-spacing:-.01em;color:var(--inkt)}
+.merkregel .pad{font:500 11px/1 var(--mono);letter-spacing:.18em;color:var(--grijs)}
+
+/* ---------- 1 landing ---------- */
+.landkop{max-width:64ch}
+.landkop h1{font:400 clamp(36px,5.2vw,60px)/1.06 var(--serif);letter-spacing:-.02em;color:var(--inkt)}
+.landkop h1 em{font-style:italic;color:var(--revisie)}
+.landkop p{margin-top:var(--s4);font-size:18.5px;line-height:1.68}
+.landkop p b{color:var(--inkt);font-weight:600}
+
+.veldvak{margin-top:var(--s6);display:grid;grid-template-columns:1.05fr .95fr;gap:var(--s5);align-items:start}
+@media (max-width:980px){.veldvak{grid-template-columns:1fr;gap:var(--s5)}}
+
+/* het vel met exemplaar */
+.exemplaar{background:var(--vel);border:1px solid var(--lijn);padding:var(--s4);
+  box-shadow:0 16px 40px rgba(43,38,32,.09);position:relative}
+.exemplaar .nummer{position:absolute;top:14px;left:16px;font:600 10px/1 var(--mono);
+  letter-spacing:.18em;color:var(--grijs)}
+.exemplaar .stempel{position:absolute;top:12px;right:16px;border:1.5px solid var(--stempel-licht);
+  color:var(--stempel);font:600 8.5px/1.3 var(--mono);letter-spacing:.13em;text-align:center;
+  padding:7px 9px;opacity:.85;transform:rotate(-2.2deg)}
+.plakvlak{position:relative;margin:36px auto 0;max-width:330px}
+.plakvlak img{width:100%;height:210px;object-fit:contain;mix-blend-mode:multiply}
+.strook{position:absolute;background:var(--gom);opacity:.62;box-shadow:0 1px 0 rgba(43,38,32,.14)}
+.strook.a{width:52px;height:11px;left:8%;top:24px;transform:rotate(-4deg)}
+.strook.b{width:52px;height:11px;right:10%;top:38px;transform:rotate(3deg)}
+.strook.c{width:52px;height:11px;left:18%;bottom:22px;transform:rotate(2deg)}
+.strook.d{width:52px;height:11px;right:16%;bottom:12px;transform:rotate(-3deg)}
+
+/* etiket */
+.etiket{border:1px solid var(--sepia);background:#fdfbf6;padding:14px 16px;margin-top:var(--s4);
+  max-width:400px;margin-left:auto}
+.etiket .instelling{font:600 9px/1.3 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--sepia);border-bottom:1px solid var(--lijn);padding-bottom:7px;margin-bottom:10px}
+.etiket .volksnaam{font:400 25px/1.1 var(--serif);color:var(--inkt);letter-spacing:-.015em}
+.etiket .systeem{font:400 13px/1.35 var(--serif);font-style:italic;color:var(--sepia);margin-top:4px}
+.etiket dl{margin-top:11px;display:grid;grid-template-columns:auto 1fr;gap:5px 12px;
+  font-size:14.5px;line-height:1.42}
+.etiket dt{font:600 9.5px/1.5 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--grijs)}
+.etiket dd{color:var(--inkt-2)}
+.etiket dd i{font-style:italic;color:var(--potlood)}
+
+/* determinavit-strook */
+.detstrook{background:#fdfbf5;border:1px solid var(--revisie);border-left:5px solid var(--revisie);
+  padding:11px 14px;max-width:400px;margin:0 0 -6px auto;position:relative;z-index:2;
+  box-shadow:0 4px 10px rgba(43,38,32,.09)}
+.detstrook b{display:block;font:600 9.5px/1 var(--mono);letter-spacing:.16em;color:var(--revisie);margin-bottom:6px}
+.detstrook p{font-size:15px;line-height:1.45;color:var(--inkt-2)}
+.detstrook .ondertek{margin-top:7px;font-size:13.5px;font-style:italic;color:var(--potlood)}
+
+.veldvak .bij h3{font:600 10px/1 var(--mono);letter-spacing:.2em;color:var(--revisie);
+  border-top:2px solid var(--inkt);padding-top:var(--s2);margin-bottom:var(--s3)}
+.veldvak .bij p + p{margin-top:var(--s3)}
+.veldvak .bij b{color:var(--inkt);font-weight:600}
+.regels{margin-top:var(--s4);display:grid;gap:var(--s3)}
+.regels div{border-left:2px solid var(--lijn);padding-left:var(--s3)}
+.regels h4{font:600 9.5px/1 var(--mono);letter-spacing:.15em;color:var(--sepia);margin-bottom:6px}
+.regels p{font-size:15.5px;line-height:1.55}
+
+/* ---------- schermkop ---------- */
+.schermkop{max-width:72ch;margin-bottom:var(--s5)}
+.schermkop b{display:inline-block;font:600 10px/1 var(--mono);letter-spacing:.2em;
+  color:var(--vel);background:var(--inkt);padding:6px 9px;margin-bottom:var(--s3)}
+.schermkop h2{font:400 clamp(28px,3.6vw,40px)/1.1 var(--serif);letter-spacing:-.02em;color:var(--inkt)}
+.schermkop p{margin-top:var(--s3);font-size:17px}
+.schermkop p em{font-style:italic;color:var(--revisie)}
+
+/* ---------- 2 kiezer ---------- */
+.determineer{display:grid;grid-template-columns:1fr 400px;gap:var(--s5);align-items:start}
+@media (max-width:1020px){.determineer{grid-template-columns:1fr}}
+
+.kast{border-top:2px solid var(--inkt);padding-top:var(--s3)}
+.kast h3{font:600 10px/1 var(--mono);letter-spacing:.2em;margin-bottom:var(--s3);color:var(--sepia)}
+.zoekregel{display:flex;gap:var(--s2);margin-bottom:var(--s4);flex-wrap:wrap}
+.zoekregel input{flex:1;min-width:200px;border:1px solid var(--lijn);background:#fff;
+  padding:11px 13px;font:400 16px/1 var(--serif);color:var(--inkt)}
+.zoekregel span{border:1px solid var(--lijn);background:var(--vel);padding:11px 13px;
+  font:600 12px/1 var(--sans);color:var(--sepia);cursor:pointer}
+.zoekregel span.aan{background:var(--inkt);color:var(--vel);border-color:var(--inkt)}
+
+.vondsten{display:grid;grid-template-columns:repeat(auto-fill,minmax(216px,1fr));gap:var(--s3)}
+.vondst{background:#fff;border:1px solid var(--lijn);padding:14px;position:relative}
+.vondst .nr{font:600 9px/1 var(--mono);letter-spacing:.16em;color:var(--grijs)}
+.vondst img{height:104px;width:100%;object-fit:contain;mix-blend-mode:multiply;margin:10px 0}
+.vondst h4{font:400 19px/1.16 var(--serif);color:var(--inkt)}
+.vondst .sys{font:italic 400 12.5px/1.3 var(--serif);color:var(--sepia);margin-top:3px}
+.vondst .status{margin-top:10px;font:600 9px/1 var(--mono);letter-spacing:.14em;
+  border-top:1px solid var(--lijn-2);padding-top:9px;display:flex;justify-content:space-between;align-items:center}
+.vondst .status em{font-style:normal;color:var(--grijs)}
+.vondst.opgeplakt{border-color:var(--stempel);box-shadow:inset 0 0 0 1px rgba(58,96,112,.18)}
+.vondst.opgeplakt .status em{color:var(--stempel)}
+.vondst.herzien{border-color:var(--revisie)}
+.vondst.herzien .status em{color:var(--revisie)}
+.vondst .knop{border:1px solid var(--inkt);background:transparent;color:var(--inkt);
+  font:600 11px/1 var(--sans);padding:7px 9px;cursor:pointer}
+.vondst .knop:hover{background:var(--inkt);color:var(--vel)}
+.vondst.onbepaald{background:repeating-linear-gradient(45deg,#fbf8f1 0 8px,#f5f0e5 8px 16px);
+  border-style:dashed}
+.vondst.onbepaald h4{color:var(--sepia)}
+
+/* het etiketformulier */
+.formulier{position:sticky;top:64px;background:#fdfbf6;border:1px solid var(--sepia);padding:var(--s4)}
+.formulier > h3{font:600 10px/1 var(--mono);letter-spacing:.2em;color:var(--sepia);
+  border-bottom:1px solid var(--lijn);padding-bottom:10px;margin-bottom:var(--s3)}
+.formulier label{display:block;margin-bottom:var(--s3)}
+.formulier label .l{display:block;font:600 9.5px/1 var(--mono);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--grijs);margin-bottom:6px}
+.formulier label .v{border-bottom:1px solid var(--lijn);padding-bottom:6px;font-size:16.5px;color:var(--inkt)}
+.formulier label .v.leeg{color:var(--grijs);font-style:italic}
+.formulier .dubbel{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3)}
+.formulier .hint{font-size:13.5px;line-height:1.5;color:var(--sepia);font-style:italic;
+  border-left:2px solid var(--gom);padding-left:11px;margin-bottom:var(--s3)}
+.formulier .knoppen{display:flex;gap:var(--s2);margin-top:var(--s3);flex-wrap:wrap}
+.formulier button{font:600 12.5px/1 var(--sans);padding:11px 14px;cursor:pointer;border:1px solid var(--inkt)}
+.formulier button.primair{background:var(--inkt);color:var(--vel)}
+.formulier button.rand{background:transparent;color:var(--inkt)}
+.formulier .verbod{margin-top:var(--s3);border-top:1px solid var(--lijn);padding-top:var(--s3);
+  font-size:14px;line-height:1.55;color:var(--sepia)}
+.formulier .verbod b{color:var(--revisie);display:block;font:600 9.5px/1 var(--mono);
+  letter-spacing:.14em;margin-bottom:6px}
+
+/* ---------- 3 cliëntkaart ---------- */
+.collectie{display:grid;grid-template-columns:300px 1fr;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.collectie{grid-template-columns:1fr}}
+
+.lade{background:#fff;border:1px solid var(--lijn);padding:var(--s4)}
+.lade h3{font:600 10px/1 var(--mono);letter-spacing:.2em;color:var(--sepia);margin-bottom:var(--s3)}
+.lade ol{list-style:none;counter-reset:v}
+.lade li{border-bottom:1px solid var(--lijn-2);padding:11px 0;display:flex;gap:11px;align-items:baseline;cursor:pointer}
+.lade li:last-child{border-bottom:0}
+.lade li .n{font:600 10px/1 var(--mono);color:var(--grijs);letter-spacing:.1em;flex:0 0 44px}
+.lade li .t{font:400 16px/1.3 var(--serif);color:var(--inkt-2)}
+.lade li .d{margin-left:auto;font:400 12px/1 var(--mono);color:var(--grijs)}
+.lade li.open{background:var(--vel-2);margin:0 -12px;padding-left:12px;padding-right:12px;
+  border-left:3px solid var(--stempel)}
+.lade li.open .t{color:var(--inkt);font-weight:600}
+.lade .totaal{margin-top:var(--s3);border-top:2px solid var(--inkt);padding-top:11px;
+  font:600 10px/1.5 var(--mono);letter-spacing:.1em;color:var(--sepia)}
+
+.velblad{background:var(--vel);border:1px solid var(--lijn);padding:var(--s5) var(--s4) var(--s4);
+  box-shadow:0 18px 44px rgba(43,38,32,.1);position:relative}
+.velblad .velkop{display:flex;justify-content:space-between;align-items:flex-start;
+  border-bottom:1px solid var(--lijn);padding-bottom:var(--s3);margin-bottom:var(--s4)}
+.velblad .velkop .l .instelling{font:600 9.5px/1 var(--mono);letter-spacing:.2em;color:var(--sepia)}
+.velblad .velkop .l h3{font:400 27px/1.12 var(--serif);color:var(--inkt);margin-top:9px;letter-spacing:-.02em}
+.velblad .velkop .l .sys{font:italic 400 14px/1.3 var(--serif);color:var(--sepia);margin-top:5px}
+.velblad .velkop .r{text-align:right;font:600 9.5px/1.7 var(--mono);letter-spacing:.1em;color:var(--grijs)}
+
+.velbody{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+@media (max-width:760px){.velbody{grid-template-columns:1fr}}
+.velbody .beeldvak{position:relative;background:#fff;border:1px solid var(--lijn-2);padding:var(--s3)}
+.velbody .beeldvak img{width:100%;height:230px;object-fit:contain;mix-blend-mode:multiply}
+.stapel{display:grid;gap:0}
+.stapel .strookje{border:1px solid var(--lijn);background:#fdfbf6;padding:12px 14px;margin-top:-1px}
+.stapel .strookje.eerste{border-color:var(--sepia)}
+.stapel .strookje.det{border-color:var(--revisie);border-left-width:4px}
+.stapel .strookje.conf{border-color:var(--stempel);border-left-width:4px}
+.stapel .strookje .kop{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+.stapel .strookje .kop b{font:600 9.5px/1 var(--mono);letter-spacing:.15em}
+.stapel .strookje.eerste .kop b{color:var(--sepia)}
+.stapel .strookje.det .kop b{color:var(--revisie)}
+.stapel .strookje.conf .kop b{color:var(--stempel)}
+.stapel .strookje .kop span{font:400 12px/1 var(--mono);color:var(--grijs)}
+.stapel .strookje p{font-size:15.5px;line-height:1.5;color:var(--inkt-2)}
+.stapel .strookje .wie{margin-top:6px;font:italic 400 13.5px/1.4 var(--serif);color:var(--potlood)}
+.stapel .strookje.dof{opacity:.72}
+
+.aantekening{margin-top:var(--s4);border-top:2px solid var(--inkt);padding-top:var(--s3)}
+.aantekening h4{font:600 10px/1 var(--mono);letter-spacing:.18em;color:var(--sepia);margin-bottom:11px}
+.aantekening .regel{border-bottom:1px solid var(--lijn);padding:9px 0;display:flex;gap:14px;align-items:baseline}
+.aantekening .regel .dt{font:400 12px/1 var(--mono);color:var(--grijs);flex:0 0 78px}
+.aantekening .regel .tx{font:italic 400 16px/1.45 var(--serif);color:var(--potlood)}
+.aantekening .leegregel{border-bottom:1px solid var(--lijn);height:30px}
+.aantekening .bij{margin-top:11px;font-size:14px;color:var(--sepia);font-style:italic}
+
+/* ---------- 4 printkaart ---------- */
+.printbalk{display:flex;align-items:center;gap:var(--s4);flex-wrap:wrap;
+  border:1px solid var(--sepia);background:#fdfbf6;padding:var(--s3) var(--s4);margin-bottom:var(--s4)}
+.printbalk p{font-size:15.5px;max-width:66ch}
+.printbalk b{color:var(--inkt);font-weight:600}
+.printknop{margin-left:auto;font:600 14px/1 var(--sans);background:var(--inkt);color:var(--vel);
+  border:0;padding:13px 20px;cursor:pointer;letter-spacing:.02em}
+.printknop:hover{background:#413a31}
+
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fdfbf5;color:var(--inkt);position:relative;
+  box-shadow:0 24px 56px rgba(43,38,32,.2);transform-origin:top left}
+@media (max-width:860px){.bladschaal{max-width:100%}}
+.blad .rand{position:absolute;inset:0;padding:12mm 13mm 10mm;display:flex;flex-direction:column}
+
+.h-kop{display:flex;justify-content:space-between;align-items:flex-start;
+  border-bottom:.5mm solid var(--inkt);padding-bottom:3mm}
+.h-kop .instelling{font:600 2.7mm/1.5 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--sepia)}
+.h-kop h1{font:400 7mm/1.06 var(--serif);color:var(--inkt);margin-top:2.4mm;letter-spacing:-.02em}
+.h-kop .onder{font:400 3.5mm/1.4 var(--serif);font-style:italic;color:var(--sepia);margin-top:1.8mm}
+.h-kop .zegel{border:.4mm solid var(--stempel-licht);color:var(--stempel);text-align:center;
+  font:600 2.4mm/1.5 var(--mono);letter-spacing:.14em;padding:2.6mm 3mm;transform:rotate(-2deg);flex:0 0 auto}
+
+.h-vangst{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin:3mm 0 3.4mm;
+  border-bottom:.2mm solid var(--lijn);padding-bottom:2.6mm}
+.h-vangst div .l{font:600 2.4mm/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
+.h-vangst div .v{font:400 3.5mm/1.35 var(--serif);color:var(--inkt);margin-top:1.4mm}
+
+.h-raster{display:grid;grid-template-columns:1fr 1fr;gap:3.4mm 6mm}
+.h-exemplaar{display:flex;flex-direction:column}
+.h-plak{position:relative;text-align:center;padding:.6mm 0;width:42mm;margin:0 auto}
+.h-plak img{height:22mm;width:100%;object-fit:contain;mix-blend-mode:multiply}
+.h-plak .st{position:absolute;background:var(--gom);opacity:.6;height:2.2mm;width:8mm}
+.h-plak .st.p1{left:4%;top:1.6mm;transform:rotate(-4deg)}
+.h-plak .st.p2{right:4%;top:2.6mm;transform:rotate(3deg)}
+.h-plak .st.p3{left:9%;bottom:1.2mm;transform:rotate(2deg)}
+.h-plak .st.p4{right:8%;bottom:2mm;transform:rotate(-3deg)}
+.h-etiket{border:.25mm solid var(--sepia);background:#fffdf8;padding:2.2mm 3mm;margin-top:1.2mm}
+.h-etiket .nr{font:600 2.4mm/1 var(--mono);letter-spacing:.16em;color:var(--grijs)}
+.h-etiket h3{font:400 5.4mm/1.06 var(--serif);color:var(--inkt);margin-top:1.6mm;letter-spacing:-.015em}
+.h-etiket .sys{font:italic 400 2.9mm/1.3 var(--serif);color:var(--sepia);margin-top:1mm}
+.h-etiket .dos{font:600 3mm/1 var(--mono);letter-spacing:.06em;color:var(--inkt);margin-top:1.6mm}
+.h-etiket p{font:400 3.4mm/1.42 var(--serif);color:var(--inkt-2);margin-top:1.6mm}
+.h-etiket dl{margin-top:1.8mm;border-top:.2mm solid var(--lijn);padding-top:1.4mm;
+  display:grid;grid-template-columns:auto 1fr;gap:.9mm 2.6mm}
+.h-etiket dt{font:600 2.4mm/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--grijs)}
+.h-etiket dd{font:400 2.9mm/1.3 var(--serif);color:var(--inkt-2)}
+.h-det{border:.25mm solid var(--revisie);border-left:1mm solid var(--revisie);background:#fffdf7;
+  padding:1.6mm 2.6mm;margin-top:1.2mm}
+.h-det b{font:600 2.4mm/1 var(--mono);letter-spacing:.14em;color:var(--revisie)}
+.h-det p{font:400 3.1mm/1.36 var(--serif);color:var(--inkt-2);margin-top:1.2mm}
+
+.h-voet{margin-top:auto;padding-top:2.4mm;border-top:.5mm solid var(--inkt);
+  display:grid;grid-template-columns:1.25fr .75fr;gap:6mm}
+.h-voet h4{font:600 2.5mm/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--sepia);margin-bottom:2mm}
+.h-strookjes .lijn{border-bottom:.2mm solid var(--lijn);height:4.2mm;display:flex;align-items:flex-end;gap:3mm}
+.h-strookjes .lijn .dat{font:400 2.5mm/1 var(--mono);color:#b3aa98;padding-bottom:1.2mm;flex:0 0 27mm;white-space:nowrap}
+.h-strookjes .bij{font:italic 400 2.9mm/1.4 var(--serif);color:var(--sepia);margin-top:1.8mm}
+.h-praktijk{font:400 3.1mm/1.5 var(--serif);color:var(--inkt-2)}
+.h-praktijk b{font-weight:600;color:var(--inkt)}
+.h-praktijk .code{margin-top:2mm;font:600 2.5mm/1.4 var(--mono);letter-spacing:.1em;color:var(--grijs)}
+
+/* ---------- uitleg ---------- */
+.uitleg{margin-top:var(--s5);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:940px){.uitleg{grid-template-columns:1fr}}
+.uitleg div{border-top:2px solid var(--inkt);padding-top:var(--s2)}
+.uitleg h4{font:600 10px/1 var(--mono);letter-spacing:.18em;color:var(--sepia);margin-bottom:9px}
+.uitleg p{font-size:15.5px;line-height:1.58}
+.uitleg b{color:var(--inkt);font-weight:600}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#b7ae9e;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:600 10.5px/1 var(--mono);letter-spacing:.18em;color:var(--stempel-licht);
+  border-top:1px solid #4a4237;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:9px}
+footer.uitleiding a{color:var(--stempel-licht)}
+
+/* ============================================================
+   PRINT — het vel is al papier; er verandert vrijwel niets.
+   De opplakstroken en het zegel drukken mee (ze zijn licht
+   genoeg), en de annotatiestrook onderaan blijft leeg: die is
+   voor de hand van de patiënt.
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .schermkop,.uitleg{display:none !important}
+  .scherm{padding:0 !important;background:#fff !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 59</span>
+  <strong style="font:600 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Herbarium</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 59 · HERBARIUM</span>
+    </div>
+
+    <div class="landkop">
+      <h1>Een oefenkaart wordt overschreven.<br/><em>Een herbariumvel wordt bijgeschreven.</em></h1>
+      <p>Brengt een botanicus in 1954 een plant verkeerd op naam, en weet iemand het in 1988 beter,
+        dan gaat er geen gum over het etiket. Er komt een strookje bij — naam, datum, en wie het
+        bepaalde — <b>aan één kant vastgeplakt, boven het oude etiket</b>. Het oude blijft leesbaar.
+        Het vel wordt dikker, niet schoner.</p>
+      <p>De oefenkaart doet het omgekeerde. Bij elke controle rolt er een nieuw vel uit de printer.
+        De oude dosering verdwijnt, de eerste versie verdwijnt, en de reden waarom er iets
+        veranderde verdwijnt mee. In week zes heeft de patiënt een vel dat doet alsof het altijd zo
+        geweest is. <b>Daarmee is precies het bewijs weg dat er iets vooruitging.</b></p>
+    </div>
+
+    <div class="veldvak">
+      <div class="exemplaar">
+        <span class="nummer">FYS 0142 · EXEMPLAAR 3</span>
+        <span class="stempel">HERBARIUM<br/>PHYSIOTHERAPICUM<br/>DE BOSKANT</span>
+
+        <div class="plakvlak">
+          <span class="strook a" aria-hidden="true"></span>
+          <span class="strook b" aria-hidden="true"></span>
+          <span class="strook c" aria-hidden="true"></span>
+          <span class="strook d" aria-hidden="true"></span>
+          <img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/>
+        </div>
+
+        <div class="detstrook">
+          <b>DETERMINAVIT — 26.viii.2026</b>
+          <p>Van 8 naar 12 herhalingen. Reden: drie weken op rij volledig gehaald, geen napijn
+            gemeld.</p>
+          <p class="ondertek">det. N. Terpstra, fysiotherapeut</p>
+        </div>
+
+        <div class="etiket">
+          <div class="instelling">Herbarium Physiotherapicum · Fysiotherapie de Boskant</div>
+          <div class="volksnaam">Opstaan uit de stoel</div>
+          <div class="systeem">sit-to-stand, zonder armsteun · quadriceps, gluteus maximus</div>
+          <dl>
+            <dt>Vindplaats</dt><dd>eigen woning — de eetkamerstoel bij het raam</dd>
+            <dt>Datum</dt><dd>4.vii.2026</dd>
+            <dt>Leg.</dt><dd>N. Terpstra, fysiotherapeut</dd>
+            <dt>Dosering</dt><dd>8 × · twee keer per dag <i>(zie strook hierboven)</i></dd>
+            <dt>Opmerking</dt><dd><i>„Gaat het best vlak na de koffie" — patiënt, 11.vii.2026</i></dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="bij">
+        <h3>WAT EEN ETIKET ALTIJD ZEGT</h3>
+        <p>Wat, waar, wanneer, door wie. Vier vragen, al twee eeuwen dezelfde vier, en op elk
+          herbariumvel ter wereld op dezelfde plek: <b>rechtsonder</b>. Zo hoeft niemand te zoeken,
+          ook niet in een la die hij nog nooit heeft opengetrokken.</p>
+        <p>Op een oefenkaart staat van die vier meestal alleen de eerste. Wat u moet doen. Niet
+          waar het gebeurt, niet sinds wanneer het op uw vel staat, niet wie het erop zette.
+          <b>En dus is er niets om op terug te kijken.</b></p>
+
+        <div class="regels">
+          <div>
+            <h4>VINDPLAATS</h4>
+            <p>Geen hooiland maar „de trap in de eigen woning", „het aanrecht", „de bank bij de
+              televisie". De plek hoort bij de oefening zoals de standplaats bij de plant.</p>
+          </div>
+          <div>
+            <h4>DATUM IN ROMEINSE MAANDCIJFERS</h4>
+            <p>4.vii.2026. Op etiketten gebruikelijk omdat 4-7 in twee landen twee verschillende
+              dagen betekent. Hier houdt het bovendien de <b>volgorde</b> zichtbaar: het vel is een
+              tijdlijn, geen momentopname.</p>
+          </div>
+          <div>
+            <h4>DE OMKERING</h4>
+            <p>Op een echt etiket staat de Latijnse naam groot en de volksnaam klein. Hier
+              andersom: <b>„opstaan uit de stoel" groot, de klinische aanduiding klein</b>. Op elke
+              andere oefenkaart is dat precies verkeerd om.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm karton" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 2</b>
+      <h2>De kiezer is een determineertafel</h2>
+      <p>Een oefening kiezen is hier <em>opplakken en bepalen</em>. U kiest het exemplaar, en vult
+        het etiket: vindplaats, datum, dosering, en uw eigen naam. Zonder etiket komt er niets op
+        het vel — een exemplaar zonder gegevens is in elk herbarium waardeloos.</p>
+    </div>
+
+    <div class="determineer">
+      <div class="kast">
+        <h3>DE KAST — 215 EXEMPLAREN, GESORTEERD OP REGIO</h3>
+        <div class="zoekregel">
+          <input type="text" value="knie · staand" aria-label="Zoek in de kast"/>
+          <span class="aan">Onderste extremiteit</span>
+          <span>Balans</span>
+          <span>Rug</span>
+          <span>Nek</span>
+        </div>
+
+        <div class="vondsten">
+          <div class="vondst opgeplakt">
+            <div class="nr">FYS 0142</div>
+            <img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/>
+            <h4>Opstaan uit de stoel</h4>
+            <div class="sys">sit-to-stand, zonder armsteun</div>
+            <div class="status"><em>OPGEPLAKT · 4.vii</em><button class="knop" type="button">Etiket</button></div>
+          </div>
+
+          <div class="vondst herzien">
+            <div class="nr">FYS 0088</div>
+            <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Kuiten heffen"/>
+            <h4>Kuiten heffen</h4>
+            <div class="sys">calf raise, bilateraal · m. triceps surae</div>
+            <div class="status"><em>HERZIEN · 26.viii</em><button class="knop" type="button">Etiket</button></div>
+          </div>
+
+          <div class="vondst opgeplakt">
+            <div class="nr">FYS 0311</div>
+            <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Eenbeenstand met steun"/>
+            <h4>Eenbeenstand, met steun</h4>
+            <div class="sys">single leg stance, ondersteund</div>
+            <div class="status"><em>OPGEPLAKT · 18.vii</em><button class="knop" type="button">Etiket</button></div>
+          </div>
+
+          <div class="vondst">
+            <div class="nr">FYS 0407</div>
+            <img src="/images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png" alt="Achterwaarts stappen"/>
+            <h4>Achterwaarts stappen</h4>
+            <div class="sys">retro walking, met handsteun</div>
+            <div class="status"><em>IN DE KAST</em><button class="knop" type="button">Opplakken</button></div>
+          </div>
+
+          <div class="vondst">
+            <div class="nr">FYS 0519</div>
+            <img src="/images/onderste-extremiteit/clamshell-zijlig-line-v1.png" alt="Clamshell zijlig"/>
+            <h4>Clamshell, zijlig</h4>
+            <div class="sys">clamshell · m. gluteus medius</div>
+            <div class="status"><em>IN DE KAST</em><button class="knop" type="button">Opplakken</button></div>
+          </div>
+
+          <div class="vondst onbepaald">
+            <div class="nr">ZONDER NUMMER</div>
+            <img src="/images/rug/rug-strekken-staand-line-v1.png" alt="Onbepaald exemplaar"/>
+            <h4>Door patiënt aangedragen</h4>
+            <div class="sys">„die rekoefening van de buurvrouw" — 22.viii.2026</div>
+            <div class="status"><em style="color:var(--revisie)">ONBEPAALD</em><button class="knop" type="button">Bepalen</button></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="formulier">
+        <h3>ETIKET — FYS 0088 · KUITEN HEFFEN</h3>
+
+        <p class="hint">Dit exemplaar heeft al een etiket uit week 1. U schrijft daar niet in.
+          U voegt een strook toe.</p>
+
+        <label>
+          <span class="l">Volksnaam — zoals de patiënt het noemt</span>
+          <span class="v">Kuiten heffen</span>
+        </label>
+        <label>
+          <span class="l">Systematische aanduiding</span>
+          <span class="v">calf raise, bilateraal · m. triceps surae</span>
+        </label>
+        <label>
+          <span class="l">Vindplaats</span>
+          <span class="v">eigen woning — bij het aanrecht</span>
+        </label>
+        <div class="dubbel">
+          <label>
+            <span class="l">Datum</span>
+            <span class="v">26.viii.2026</span>
+          </label>
+          <label>
+            <span class="l">Det.</span>
+            <span class="v">N. Terpstra</span>
+          </label>
+        </div>
+        <label>
+          <span class="l">Nieuwe dosering</span>
+          <span class="v">15 × · elke ochtend</span>
+        </label>
+        <label>
+          <span class="l">Reden van herziening — komt op de strook</span>
+          <span class="v leeg">drie weken volledig gehaald, geen napijn</span>
+        </label>
+
+        <div class="knoppen">
+          <button class="primair" type="button">Strook toevoegen</button>
+          <button class="rand" type="button">Alleen bevestigen (conf.)</button>
+        </div>
+
+        <div class="verbod">
+          <b>WAT DIT SCHERM NIET KAN</b>
+          Een etiket wijzigen of weghalen. Er is geen knop voor, ook niet voor de praktijkhouder.
+          Een fout wordt rechtgezet met een nieuwe strook waarop staat dat het een fout was —
+          <b style="display:inline;font:inherit;color:var(--inkt)">met datum en naam</b>.
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 3</b>
+      <h2>De digitale cliëntkaart is een collectie</h2>
+      <p>Links de lade met alle vellen van deze patiënt, rechts het geopende vel. Onder elk beeld
+        ligt de <em>stapel</em>: het eerste etiket onderop, elke herziening erbovenop. Zes weken
+        herstel zijn hier geen grafiek maar <em>vier stroken papier</em>.</p>
+    </div>
+
+    <div class="collectie">
+      <aside class="lade">
+        <h3>LADE — DHR. T. ALIYEV, 68 JAAR</h3>
+        <ol>
+          <li><span class="n">FYS 0142</span><span class="t">Opstaan uit de stoel</span><span class="d">4.vii</span></li>
+          <li class="open"><span class="n">FYS 0088</span><span class="t">Kuiten heffen</span><span class="d">4.vii</span></li>
+          <li><span class="n">FYS 0311</span><span class="t">Eenbeenstand</span><span class="d">18.vii</span></li>
+          <li><span class="n">FYS 0407</span><span class="t">Achterwaarts stappen</span><span class="d">18.vii</span></li>
+          <li><span class="n">FYS 0519</span><span class="t">Clamshell, zijlig</span><span class="d">1.viii</span></li>
+          <li><span class="n">—</span><span class="t">Onbepaald exemplaar</span><span class="d">22.viii</span></li>
+        </ol>
+        <div class="totaal">6 VELLEN · 11 STROKEN<br/>EERSTE OPNAME 4.vii.2026<br/>LAATSTE HERZIENING 26.viii.2026</div>
+      </aside>
+
+      <div class="velblad">
+        <div class="velkop">
+          <div class="l">
+            <div class="instelling">Herbarium Physiotherapicum · vel FYS 0088</div>
+            <h3>Kuiten heffen</h3>
+            <div class="sys">calf raise, bilateraal · m. triceps surae · achillespeesbelasting fase 2</div>
+          </div>
+          <div class="r">DHR. T. ALIYEV<br/>68 JAAR<br/>WEEK 8 VAN 12</div>
+        </div>
+
+        <div class="velbody">
+          <div class="beeldvak">
+            <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Kuiten heffen bij het aanrecht"/>
+          </div>
+
+          <div class="stapel">
+            <div class="strookje conf">
+              <div class="kop"><b>CONFIRMAVIT</b><span>26.viii.2026</span></div>
+              <p>Uitvoering gezien in de praktijk en goed bevonden: hakken zakken nu volledig door
+                onder het aanrecht. Dosering blijft.</p>
+              <p class="wie">conf. N. Terpstra, fysiotherapeut</p>
+            </div>
+
+            <div class="strookje det">
+              <div class="kop"><b>DETERMINAVIT</b><span>12.viii.2026</span></div>
+              <p>Van 10 naar 15 herhalingen, en van tweebenig naar afwisselend één been aanhouden
+                bij het zakken.</p>
+              <p class="wie">det. N. Terpstra — reden: pijnvrij bij 10, drie weken achtereen</p>
+            </div>
+
+            <div class="strookje det dof">
+              <div class="kop"><b>DETERMINAVIT</b><span>24.vii.2026</span></div>
+              <p>Van 6 naar 10 herhalingen. Steun mag van twee handen naar één hand.</p>
+              <p class="wie">det. R. Duinkerken, waarnemend</p>
+            </div>
+
+            <div class="strookje eerste dof">
+              <div class="kop"><b>EERSTE ETIKET</b><span>4.vii.2026</span></div>
+              <p>6 × · één keer per dag · beide handen op het aanrecht. Vindplaats: eigen woning,
+                bij het aanrecht.</p>
+              <p class="wie">leg. N. Terpstra — na verwijzing huisarts, achillespees rechts</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="aantekening">
+          <h4>ANNOTATIESTROOK — DE HAND VAN DE PATIËNT</h4>
+          <div class="regel">
+            <span class="dt">9.viii.2026</span>
+            <span class="tx">Ochtend gaat beter dan avond. 's Avonds trekt de pees.</span>
+          </div>
+          <div class="regel">
+            <span class="dt">19.viii.2026</span>
+            <span class="tx">Vandaag 15 gehaald zonder te tellen — ik was het vergeten.</span>
+          </div>
+          <div class="leegregel"></div>
+          <p class="bij">Deze regels gaan mee naar de volgende afspraak en staan onder de stroken
+            van de therapeut, niet erboven. Beide handen schrijven op hetzelfde vel; ze schrijven
+            niet over elkaar heen.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm zacht" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>SCHERM 4</b>
+      <h2>De printkaart — A4 staand, een vel uit de collectie</h2>
+      <p>Vier exemplaren op één blad, elk met zijn eigen etiket rechtsonder in het vak, en de
+        herzieningen als strook eronder. Onderaan een <em>lege annotatiestrook</em>: die is niet
+        vergeten, die is gereserveerd — voor de hand van de patiënt en de datum erbij.</p>
+    </div>
+
+    <div class="printbalk geen-print">
+      <p>Druk <b>Ctrl/⌘+P</b>. Het vel is bewust rustig: veel papier, één stempelkleur, en tekst op
+        <b>10,5 tot 12 punt schreef</b>. De opplakstroken drukken licht mee; laat uw printer de
+        achtergrondkleuren weg en er verdwijnt niets dat u moet lezen.</p>
+      <button class="printknop" onclick="window.print()">Print het vel</button>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="h-kop">
+              <div>
+                <div class="instelling">Herbarium Physiotherapicum · Fysiotherapie de Boskant</div>
+                <h1>Dhr. T. Aliyev — vel 3</h1>
+                <div class="onder">Vier exemplaren, opgenomen tussen 4.vii en 26.viii.2026.
+                  De datums zijn geen versiering: ze laten zien wat er veranderd is.</div>
+              </div>
+              <div class="zegel">HERB.<br/>DE BOSKANT<br/>0512—441906</div>
+            </div>
+
+            <div class="h-vangst">
+              <div><div class="l">Vindplaats</div><div class="v">Eigen woning<br/>Drachten</div></div>
+              <div><div class="l">Leg.</div><div class="v">N. Terpstra<br/>fysiotherapeut</div></div>
+              <div><div class="l">Periode</div><div class="v">week 8 van 12<br/>controle 9.ix.2026</div></div>
+              <div><div class="l">Vel gedrukt</div><div class="v">28.viii.2026<br/>vervangt niets</div></div>
+            </div>
+
+            <div class="h-raster">
+
+              <div class="h-exemplaar">
+                <div class="h-plak">
+                  <span class="st p1"></span><span class="st p2"></span><span class="st p3"></span><span class="st p4"></span>
+                  <img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/>
+                </div>
+                <div class="h-etiket">
+                  <div class="nr">FYS 0142 · EXEMPLAAR 1</div>
+                  <h3>Opstaan uit de stoel</h3>
+                  <div class="sys">sit-to-stand, zonder armsteun</div>
+                  <div class="dos">12 × · TWEE KEER PER DAG</div>
+                  <p>Eetkamerstoel, voeten plat en iets naar achteren, armen over elkaar. Rustig
+                    omhoog, en net zo rustig terug — het zakken is het zware deel.</p>
+                  <dl>
+                    <dt>Vindplaats</dt><dd>de stoel bij het raam</dd>
+                    <dt>Sinds</dt><dd>4.vii.2026</dd>
+                  </dl>
+                </div>
+                <div class="h-det">
+                  <b>DET. 26.viii.2026 — N. TERPSTRA</b>
+                  <p>Van 8 naar 12. Drie weken volledig gehaald, geen napijn gemeld.</p>
+                </div>
+              </div>
+
+              <div class="h-exemplaar">
+                <div class="h-plak">
+                  <span class="st p1"></span><span class="st p2"></span><span class="st p3"></span><span class="st p4"></span>
+                  <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Kuiten heffen"/>
+                </div>
+                <div class="h-etiket">
+                  <div class="nr">FYS 0088 · EXEMPLAAR 2</div>
+                  <h3>Kuiten heffen</h3>
+                  <div class="sys">calf raise, bilateraal</div>
+                  <div class="dos">15 × · ELKE OCHTEND</div>
+                  <p>Handen licht op het aanrecht. Kom op uw tenen, en laat de hakken langzaam
+                    door tot onder het aanrecht zakken.</p>
+                  <dl>
+                    <dt>Vindplaats</dt><dd>bij het aanrecht</dd>
+                    <dt>Sinds</dt><dd>4.vii.2026</dd>
+                  </dl>
+                </div>
+                <div class="h-det">
+                  <b>CONF. 26.viii.2026 — N. TERPSTRA</b>
+                  <p>Uitvoering gezien en goed bevonden. Dosering blijft staan.</p>
+                </div>
+              </div>
+
+              <div class="h-exemplaar">
+                <div class="h-plak">
+                  <span class="st p1"></span><span class="st p2"></span><span class="st p3"></span><span class="st p4"></span>
+                  <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Eenbeenstand met steun"/>
+                </div>
+                <div class="h-etiket">
+                  <div class="nr">FYS 0311 · EXEMPLAAR 3</div>
+                  <h3>Eenbeenstand</h3>
+                  <div class="sys">single leg stance, ondersteund</div>
+                  <div class="dos">3 × 20 SEC PER BEEN</div>
+                  <p>Tijdens het tandenpoetsen, één vinger aan de wastafel. Gaat het makkelijk,
+                    kijk dan langzaam naar links en naar rechts.</p>
+                  <dl>
+                    <dt>Vindplaats</dt><dd>de badkamer</dd>
+                    <dt>Sinds</dt><dd>18.vii.2026</dd>
+                  </dl>
+                </div>
+                <div class="h-det">
+                  <b>DET. 12.viii.2026 — N. TERPSTRA</b>
+                  <p>Van 10 naar 20 seconden. Steun van twee vingers naar één.</p>
+                </div>
+              </div>
+
+              <div class="h-exemplaar">
+                <div class="h-plak">
+                  <span class="st p1"></span><span class="st p2"></span><span class="st p3"></span><span class="st p4"></span>
+                  <img src="/images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png" alt="Achterwaarts stappen"/>
+                </div>
+                <div class="h-etiket">
+                  <div class="nr">FYS 0407 · EXEMPLAAR 4</div>
+                  <h3>Achterwaarts stappen</h3>
+                  <div class="sys">retro walking, met handsteun</div>
+                  <div class="dos">10 STAPPEN HEEN EN TERUG</div>
+                  <p>Langs de gang, met de muur binnen handbereik. Kleine stappen, en zet de hak
+                    het eerst neer.</p>
+                  <dl>
+                    <dt>Vindplaats</dt><dd>de gang</dd>
+                    <dt>Sinds</dt><dd>18.vii.2026</dd>
+                  </dl>
+                </div>
+                <div class="h-det">
+                  <b>NOG GEEN HERZIENING</b>
+                  <p>Staat sinds week 3 ongewijzigd. Bespreken op 9.ix: te makkelijk of te eng?</p>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="h-voet">
+              <div class="h-strookjes">
+                <h4>Annotatiestrook — uw eigen hand, met datum</h4>
+                <div class="lijn"><span class="dat">__ . __ . 2026</span></div>
+                <div class="lijn"><span class="dat">__ . __ . 2026</span></div>
+                <p class="bij">Wat u opviel, wat niet lukte, wat ineens wél ging. Neem dit vel mee
+                  naar 9 september — uw regels gaan dan mee de collectie in.</p>
+              </div>
+              <div>
+                <h4>Herkomst van dit vel</h4>
+                <div class="h-praktijk">
+                  <b>Fysiotherapie de Boskant</b><br/>
+                  Nadia Terpstra, fysiotherapeut<br/>
+                  Beukenlaan 14, Drachten · 0512 — 44 19 06<br/>
+                  <span class="code">VEL 3 · GEDRUKT 28.viii.2026 · 4 EXEMPLAREN · 3 STROKEN<br/>
+                  DIT VEL VERVANGT DE VORIGE NIET — BEWAAR ZE SAMEN</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="uitleg">
+      <div>
+        <h4>NIETS WORDT UITGEGUMD</h4>
+        <p>Elke wijziging is een strook met datum en naam. Na twaalf weken heeft de patiënt geen
+          schone kaart maar een <b>dossier van zijn eigen vooruitgang</b> — en dat is het enige
+          bewijs dat er iets veranderd is.</p>
+      </div>
+      <div>
+        <h4>DE VINDPLAATS DOET MEE</h4>
+        <p>„Bij het aanrecht", „de stoel bij het raam", „de gang". Een oefening zonder plek wordt
+          een oefening zonder moment. <b>De plek is de helft van de afspraak.</b></p>
+      </div>
+      <div>
+        <h4>RUIMTE ALS ONTWERP</h4>
+        <p>Een herbariumvel is voor het grootste deel papier. Dat is geen verspilling: het is de
+          ruimte waar de volgende hand in schrijft. <b>Deze kaart is met opzet niet vol.</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div>
+      <h4>DE RICHTING</h4>
+      <p>De kaart als collectie in plaats van als opdracht. Elk exemplaar heeft een etiket met wat,
+        waar, wanneer en door wie; elke herziening is een strook die erbij komt in plaats van een
+        versie die eroverheen gaat. Rustig papier, sepia inkt, één stempel — en veel wit, omdat het
+        vel nog niet af is.</p>
+    </div>
+    <div>
+      <h4>WAT DIT OPLOST</h4>
+      <p>De verdwijnende geschiedenis. Bij elke controle rolt er nu een nieuw vel uit de printer en
+        is de vorige versie weg — inclusief de reden van de wijziging en de vraag of iemand het
+        gezien heeft. Hier staat die reden er, met een naam en een datum, en kan niemand hem
+        stilletjes weghalen.</p>
+    </div>
+    <div>
+      <h4>INSPIRATIE</h4>
+      <ul>
+        <li>Het herbariumetiket rechtsonder: wat, waar, wanneer, leg. — al twee eeuwen op dezelfde plek</li>
+        <li>Determinavit- en confirmavit-stroken: aan één kant opgeplakt, boven het oude etiket,
+          nooit eroverheen</li>
+        <li>Datums met Romeinse maandcijfers (4.vii.2026) tegen verwarring tussen dag en maand</li>
+        <li>Linnen opplakstroken en zwaar rag-papier; het instellingsstempel in gedempt inktblauw</li>
+        <li>De omkering: volksnaam groot, systematische naam klein</li>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var f=Math.min(1,schaal.clientWidth/blad.offsetWidth);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>
