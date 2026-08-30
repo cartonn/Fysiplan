@@ -2348,6 +2348,10 @@ bridge2.jpg</div>
           return (laatstePijn!==null&&laatstePijn>=7)||dagenStil>=10||nooitGeopend(c)||seinOpen;
         };
         var actiefDezeWeek=function(c){return !!(c.gedaan&&c.gedaan.some(function(g){return nu-g.t<7*dag;}));};
+        // een openstaand seintje: de patiënt tikte actief "vraag" of "pijn" aan (het
+        // positieve "gaat goed" vraagt geen actie). Dit is direct inkomend contact —
+        // de app-vrije tegenhanger van de tweerichtingsberichten van concurrent-apps.
+        var seintjeOpen=function(c){return !!(c.seintje&&(c.seintje.soort==='vraag'||c.seintje.soort==='pijn'));};
         var sortModus=function(){var s=document.getElementById('k_srv_sort');return (s&&s.style.display!=='none'&&s.dataset.mode)||'nieuw';};
         var zoekTermVan=function(){var z=document.getElementById('k_srv_zoek');return (z&&z.style.display!=='none')?z.value.trim().toLowerCase():'';};
         var filterAandacht=function(){var s=document.getElementById('k_srv_sort');return !!(s&&s.style.display!=='none'&&s.dataset.filter==='aandacht');};
@@ -2356,12 +2360,14 @@ bridge2.jpg</div>
           var base=huidigeBasis();
           var t=zoekTermVan();
           var items=t?base.filter(function(c){return String(c.naam||'').toLowerCase().indexOf(t)>=0;}):base.slice();
-          // triage-filter: toon in één tik alleen de kaarten die nu aandacht vragen
-          // (hoge pijn, openstaand seintje, lang stil of nooit geopend)
-          var fa=filterAandacht();
-          if(fa)items=items.filter(vraagtAandacht);
+          // triage-filter: toon in één tik alleen de kaarten met een openstaand
+          // seintje, of alle kaarten die aandacht vragen (hoge pijn, seintje, lang
+          // stil of nooit geopend)
+          var fmode=(sortEl&&sortEl.style.display!=='none')?(sortEl.dataset.filter||''):(filterAandacht()?'aandacht':'');
+          if(fmode==='aandacht')items=items.filter(vraagtAandacht);
+          else if(fmode==='seintje')items=items.filter(seintjeOpen);
           if(sortModus()==='aandacht')items.sort(function(a,b){return aandacht(b)-aandacht(a)||(b.ts||0)-(a.ts||0);});
-          if(!items.length){el.innerHTML="<div class='hint'>"+(srvArchiefView?'Geen gearchiveerde kaarten.':(fa?'Op dit moment vraagt geen enkele kaart aandacht.':(t?'Geen kaart gevonden voor deze zoekterm.':(lArch.length?'Alle kaarten zijn gearchiveerd — tik op “Gearchiveerd” om ze te zien.':'Nog geen gedeelde kaarten voor deze praktijk.'))))+"</div>";return;}
+          if(!items.length){el.innerHTML="<div class='hint'>"+(srvArchiefView?'Geen gearchiveerde kaarten.':(fmode==='seintje'?'Geen openstaande seintjes op dit moment.':(fmode==='aandacht'?'Op dit moment vraagt geen enkele kaart aandacht.':(t?'Geen kaart gevonden voor deze zoekterm.':(lArch.length?'Alle kaarten zijn gearchiveerd — tik op “Gearchiveerd” om ze te zien.':'Nog geen gedeelde kaarten voor deze praktijk.')))))+"</div>";return;}
           toonLijst(items);
         };
         var huidig=huidigeBasis();
@@ -2415,13 +2421,25 @@ bridge2.jpg</div>
           }else{
             var actiefN=l.filter(actiefDezeWeek).length;
             var aandN=l.filter(vraagtAandacht).length;
+            var seinN=l.filter(seintjeOpen).length;
             h=chip('<b>'+l.length+'</b> kaart'+(l.length===1?'':'en'))+chip('<b>'+actiefN+'</b> deze week actief');
+            // openstaande seintjes eerst: direct inkomend contact van de patiënt dat
+            // meestal een reactie vraagt, apart van de bredere aandacht-bak
+            if(seinN)h+="<button type='button' id='k_srv_sam_sein' class='no-print' title='Patiënten die een seintje stuurden (vraag of pijn): toon alleen die kaarten' style='cursor:pointer;background:#eaf1fb;border:1px solid #c3d4ee;color:#2456a6;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+seinN+"</b> "+(seinN===1?'seintje':'seintjes')+"</button>";
             h+=aandN?"<button type='button' id='k_srv_sam_aand' class='no-print' title='Hoge pijn, langer niet geoefend of nooit geopend: zet die kaarten bovenaan' style='cursor:pointer;background:#fbecea;border:1px solid #e7c3bc;color:#a23f2c;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+aandN+"</b> "+(aandN===1?'vraagt':'vragen')+" aandacht</button>":chip('<b>0</b> vragen aandacht');
             if(lArch.length)h+=archKnop('Gearchiveerd ('+lArch.length+')',false);
           }
           samEl.innerHTML=h;samEl.style.display='flex';
           var ab=document.getElementById('k_srv_sam_aand');
-          if(ab)ab.onclick=function(){if(sortEl){sortEl.dataset.mode='aandacht';markeerSort();}toon();};
+          if(ab)ab.onclick=function(){if(sortEl){sortEl.dataset.filter='';sortEl.dataset.mode='aandacht';markeerSort();markeerFilter();}toon();};
+          // seintje-telling: filter met één tik op alleen de openstaande seintjes
+          // (nogmaals tikken toont weer alles)
+          var sb=document.getElementById('k_srv_sam_sein');
+          if(sb){
+            var markSein=function(){var aan=sortEl&&sortEl.dataset.filter==='seintje';sb.style.background=aan?'#2456a6':'#eaf1fb';sb.style.color=aan?'#fff':'#2456a6';sb.setAttribute('aria-pressed',aan?'true':'false');};
+            markSein();
+            sb.onclick=function(){if(sortEl){sortEl.dataset.filter=(sortEl.dataset.filter==='seintje')?'':'seintje';markeerFilter();}markSein();toon();};
+          }
           var arb=document.getElementById('k_srv_arch');
           if(arb)arb.onclick=function(){srvArchiefView=!srvArchiefView;toonSrvKaarten();};
         }else if(samEl)samEl.style.display='none';
