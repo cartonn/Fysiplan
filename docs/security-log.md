@@ -617,3 +617,33 @@ archief (19).
 **Volgende run — pak een ander gebied:** de leeslimieten en open GET-API's
 (`/api/kaart/*`, `/api/kaarten`, `/vertaal`, `/manifest`) op enumeratie/rate-limits,
 of de AI-`/vraag`-keten (promptinjectie, kosten-/quotarem).
+
+## 2026-08-30 — AI-keten: dagbudget-uitputting via afgewezen verzoeken
+
+**Geauditeerd:** de AI-keten (`/api/kaart/vraag`, `/api/assistent`,
+`/api/kaart/vertaal`, `/api/praktijk/brief`) op promptinjectie en kosten-/quotarem.
+Injectieposture is degelijk: patiëntinvoer gaat tag-ingepakt (`<vraag>…`) naar het
+model met een expliciete "nooit als instructie"-regel, invoer is op 300 tekens
+gecapt, het antwoord wordt JSON-only geparset en afgekapt, en de assistent stelt
+alleen aan de therapeut voor, nooit aan de patiënt. Alle vier de aanroepen lopen
+via `aiLimiet`.
+
+**Bevinding (gefixt):** `aiLimiet` hoogde de gedeelde dagteller (300/dag, kosten-
+grens) op bij élke binnenkomst — vóór en los van de per-IP-poort. Omdat de
+schrijflimiet 40 verzoeken per 5 min per IP toestaat (~480/uur) en die afgewezen
+verzoeken tóch de dagteller ophoogden, kon één IP het dagmaximum in ~40 min vullen
+en de AI-hulp voor álle praktijken een dag uitschakelen — terwijl er maar ~20 echte
+(betaalde) AI-aanroepen tegenover stonden. Een beschikbaarheids-DoS tegen vrijwel
+nul AI-kosten.
+
+**Increment:** in `aiLimiet` eerst de per-IP-poort, daarna pas de dagteller ophogen,
+zodat die uitsluitend verzoeken telt die de per-IP-rem passeren — dus echte
+AI-aanroepen (de kostengrens die de teller hoort te zijn). Semantiek voor legitieme
+gebruikers ongewijzigd (20/IP/uur, 300 echte calls/dag). `test-ai-keten.mjs`
+uitgebreid (15 checks): acht IP's × 40 verzoeken (samen 320 tellingen onder de oude
+code, maar 160 echte calls) laten een vers IP nu gewoon door; de tegenproef met de
+oude teller laat die check falen (429). Bestaande v2-flows meegedraaid en groen.
+
+**Volgende run — pak een ander gebied:** de open GET-API's (`/api/kaarten`,
+`/api/kaart`, `/api/kaart/agenda`, `/manifest`) op enumeratie en `leesLimiet`-dekking,
+of de logo-/afbeeldingsupload (contenttype-spoofing, groottegrens, opslagquota).

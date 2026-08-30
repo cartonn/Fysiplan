@@ -456,22 +456,28 @@ let aiDag = { dag: "", n: 0 };
 function aiLimiet(req, res) {
   const dag = vandaagKey();
   if (aiDag.dag !== dag) aiDag = { dag, n: 0 };
-  if (++aiDag.n > 300) {
-    send429(res, 3600, { ok: false, fout: "De AI-hulp heeft het dagmaximum bereikt; probeer het morgen opnieuw." });
-    return true;
-  }
   const nu = Date.now();
   if (aiTeller.size > 5000) {
     for (const [k, v] of aiTeller) if (nu - v.start > 3600e3) aiTeller.delete(k);
   }
+  // Eerst de per-IP-poort, dan pas de gedeelde dagteller ophogen. Zou de dagteller
+  // (zoals eerder) op elke aanroep ophogen, dan kon één IP met 300 goedkope, door de
+  // per-IP-rem afgewezen verzoeken het dagmaximum vullen en de AI-hulp voor álle
+  // praktijken een dag uitschakelen — tegen nul AI-kosten. Nu telt de dagteller
+  // uitsluitend verzoeken die de per-IP-poort passeren, dus echte AI-aanroepen (kosten).
   const ip = clientIp(req);
   const t = aiTeller.get(ip);
-  if (!t || nu - t.start > 3600e3) { aiTeller.set(ip, { start: nu, n: 1 }); return false; }
-  if (++t.n > 20) {
+  if (!t || nu - t.start > 3600e3) aiTeller.set(ip, { start: nu, n: 1 });
+  else if (++t.n > 20) {
     if (t.n === 21) logGeweigerd(req, "ai-limiet");
     send429(res, 3600, { ok: false, fout: "Even te veel AI-verzoeken; probeer het over een uur opnieuw." });
     return true;
   }
+  if (aiDag.n >= 300) {
+    send429(res, 3600, { ok: false, fout: "De AI-hulp heeft het dagmaximum bereikt; probeer het morgen opnieuw." });
+    return true;
+  }
+  aiDag.n++;
   return false;
 }
 
