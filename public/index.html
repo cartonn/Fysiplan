@@ -2282,6 +2282,10 @@ bridge2.jpg</div>
               "<a class='btn' data-dmail='"+esc(c.id)+"' href='"+esc(mailHref)+"' target='_blank' rel='noopener' style='text-decoration:none'>E-mail</a>"+
             "</div>"+
             "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;align-items:center'>"+
+              "<button class='btn' data-shernoem='"+esc(c.id)+"' data-hnaam='"+esc(c.naam)+"' title='Wijzig de naam van deze kaart (bijvoorbeeld een typefout in de cliëntnaam). De patiëntlink en alle voortgang blijven behouden.'>Naam wijzigen</button>"+
+              "<small style='color:var(--muted)'>Link en voortgang blijven behouden.</small>"+
+            "</div>"+
+            "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;align-items:center'>"+
               "<button class='btn' data-snieuwelink='"+esc(c.id)+"' title='Geef de kaart een nieuwe link; de oude werkt daarna niet meer. Alle voortgang blijft bij de kaart. Handig bij een verkeerd doorgestuurde link of een verloren telefoon.'>Nieuwe link (oude intrekken)</button>"+
               "<small style='color:var(--muted)'>De oude link werkt daarna niet meer; de voortgang blijft.</small>"+
             "</div>"+
@@ -2487,6 +2491,25 @@ bridge2.jpg</div>
       if(navigator.clipboard&&navigator.clipboard.writeText){
         navigator.clipboard.writeText(url).then(function(){toon('Gekopieerd ✓');}).catch(function(){window.prompt('Kopieer de patiëntlink:',url);});
       }else{window.prompt('Kopieer de patiëntlink:',url);}
+      return;
+    }
+    // naam wijzigen: dezelfde kaart (zelfde id en patiëntlink, zelfde voortgang)
+    // onder een nieuwe naam. Alleen de ingelogde praktijk mag dit.
+    var hn=e.target.closest('[data-shernoem]');
+    if(hn){
+      var huidig=hn.dataset.hnaam||'';
+      var nieuw=prompt('Nieuwe naam voor deze kaart:',huidig);
+      if(nieuw===null)return;
+      nieuw=nieuw.trim();
+      if(!nieuw||nieuw===huidig)return;
+      var oudH=hn.textContent;hn.textContent='Bezig…';
+      fetch('api/kaart/naam',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:hn.dataset.shernoem,naam:nieuw})})
+        .then(function(r){return r.json();})
+        .then(function(d){
+          if(d.ok){toonSrvKaarten();}
+          else{hn.textContent=oudH;alert(d.fout||'Naam wijzigen is niet gelukt.');}
+        })
+        .catch(function(){hn.textContent=oudH;alert('Naam wijzigen is niet gelukt: geen verbinding.');});
       return;
     }
     // nieuwe link (oude intrekken): de kaart krijgt een vers id, de oude /k-link

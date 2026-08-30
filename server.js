@@ -2098,6 +2098,36 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // een gedeelde kaart hernoemen (bijvoorbeeld een typefout in de cliëntnaam). De
+  // kaart houdt hetzelfde id, dus de patiëntlink /k/<id> en álle voortgang (pijn,
+  // oefenhistorie, seintje, doel) blijven behouden; alleen de map-sleutel verhuist.
+  // Alleen de ingelogde praktijk (eisPraktijk).
+  if (urlPath === "/api/kaart/naam" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      if (await eisPraktijk(request, response, pk)) return;
+      const map = kaarten[pk] || {};
+      const oudeSleutel = Object.keys(map).find((k) => map[k].id === String(b.id || ""));
+      if (!oudeSleutel) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      const nieuw = cleanName(b.naam, 60);
+      if (!nieuw) { await sendJson(response, 400, { ok: false, fout: "Geef een kaartnaam op." }); return; }
+      const nk = nieuw.toLowerCase();
+      if (nk !== oudeSleutel && map[nk]) { await sendJson(response, 409, { ok: false, fout: "Er bestaat al een kaart met die naam in deze praktijk." }); return; }
+      const kaart = map[oudeSleutel];
+      kaart.naam = nieuw;
+      if (nk !== oudeSleutel) { delete map[oudeSleutel]; map[nk] = kaart; }
+      await saveJson(kaartenPath, kaarten);
+      auditLog(pk, "kaart-hernoemd", request);
+      await sendJson(response, 200, { ok: true, naam: nieuw });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
   // agenda-bestand (ICS) met herhalende oefenmomenten: werkt op elke telefoon,
   // zonder account of app. De patiënt kiest de dagen en het tijdstip op de kaart.
   if (urlPath === "/api/kaart/agenda" && request.method === "GET") {
