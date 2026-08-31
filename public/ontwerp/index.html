@@ -924,6 +924,56 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
 .staal.souffleur .fijn{font:400 9.5px/1.4 Charter,Georgia,serif;color:#3f4247;max-width:96%}
 .staal.souffleur .strepen i{border-color:rgba(22,23,26,.2)}
 
+/* — staal concept 61: Reliëf — */
+.staal.relief{background:#f2efe9;color:#14130f;padding-right:34px}
+.staal.relief .plaatnr{color:#76736b}
+.staal.relief .kuil{position:absolute;left:16px;top:46px;width:34px;height:34px;
+  background:#e7e3da;box-shadow:0 1px 3px rgba(20,19,15,.24) inset,0 -1px 0 rgba(255,255,255,.9);
+  display:flex;align-items:center;justify-content:center;font:700 17px/1 "Avenir Next",Seravek,system-ui,sans-serif}
+.staal.relief .woord{font-family:"Avenir Next",Seravek,system-ui,sans-serif;font-weight:600;
+  font-size:19px;line-height:1.18;letter-spacing:-.03em;margin-left:46px;max-width:none}
+.staal.relief .rib{position:absolute;left:16px;right:34px;top:36px;height:5px;
+  background:linear-gradient(to bottom,#e7e3da 0 1px,#fff 1px 3px,#e7e3da 3px 5px);
+  box-shadow:0 1px 2px rgba(20,19,15,.16)}
+.staal.relief .kerven{position:absolute;right:0;top:22px;bottom:16px;width:14px;
+  display:flex;flex-direction:column;justify-content:space-between}
+.staal.relief .kerven i{height:16px;background:#e7e3da;border-radius:4px 0 0 4px;
+  box-shadow:-1px 0 3px rgba(20,19,15,.2) inset}
+.staal.relief .kerven i.aan{background:#14130f}
+.staal.relief .strepen{display:none}
+
+/* — staal concept 62: Weefsel — */
+.staal.weefsel{background:#efe9dc;color:#211c16}
+.staal.weefsel .plaatnr{color:#7d7264}
+.staal.weefsel .woord{font-family:"Avenir Next",Seravek,system-ui,sans-serif;font-weight:600;
+  font-size:23px;line-height:1.14;letter-spacing:-.03em;max-width:58%}
+.staal.weefsel .woord em{font-style:normal;color:#a34331}
+.staal.weefsel .draad{position:absolute;right:16px;top:16px;bottom:16px;width:74px;
+  display:grid;grid-template-columns:repeat(5,1fr);grid-auto-rows:1fr;
+  border-top:1px solid #cfc4ae;border-left:1px solid #cfc4ae}
+.staal.weefsel .draad i{border-right:1px solid #ded5c2;border-bottom:1px solid #ded5c2}
+.staal.weefsel .draad i.s{background:#24354f}
+.staal.weefsel .draad i.m{background:#a34331}
+.staal.weefsel .draad i.h{background:repeating-linear-gradient(45deg,#a34331 0 1.5px,transparent 1.5px 4px)}
+.staal.weefsel .strepen{display:none}
+
+/* — staal concept 63: Peilschaal — */
+.staal.peilschaal{background:#f6f4ee;color:#2f3336;padding-left:58px}
+.staal.peilschaal .plaatnr{color:#7b8084}
+.staal.peilschaal .as{position:absolute;left:16px;top:0;bottom:0;width:34px;
+  border-right:2px solid #14457c}
+.staal.peilschaal .as i{position:absolute;right:0;width:9px;border-top:1px solid rgba(20,69,124,.5)}
+.staal.peilschaal .as i.d{width:15px;border-top-width:2px;border-color:#14457c}
+.staal.peilschaal .as b{position:absolute;left:1px;font:700 11px/1 "Avenir Next",Seravek,system-ui,sans-serif;
+  color:#14457c;transform:translateY(-50%)}
+.staal.peilschaal .band{position:absolute;left:52px;right:0;background:#dbe4ef}
+.staal.peilschaal .stand{position:absolute;left:52px;right:16px;border-top:3px solid #2f3336}
+.staal.peilschaal .woord{font-family:"Avenir Next",Seravek,system-ui,sans-serif;font-weight:600;
+  font-size:22px;line-height:1.14;letter-spacing:-.03em;max-width:88%;position:relative}
+.staal.peilschaal .woord em{font-style:normal;color:#14457c}
+.staal.peilschaal .plaatnr,.staal.peilschaal .woord{position:relative;z-index:2}
+.staal.peilschaal .strepen i{border-color:rgba(47,51,54,.2)}
+
 .kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
 .kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
 .kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
@@ -983,8 +1033,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>60</b> concepten</span>
-      <span>Laatste ronde <b>30 augustus 2026</b></span>
+      <span><b>63</b> concepten</span>
+      <span>Laatste ronde <b>31 augustus 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -3687,6 +3737,138 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-60-souffleur.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-60-souffleur.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 61 ─────────── -->
+      <article class="kaart">
+        <div class="staal relief">
+          <div class="plaatnr">RELIËF · NUL KLEUR</div>
+          <div class="kuil">2</div>
+          <div class="rib" aria-hidden="true"></div>
+          <div class="woord">Op uw tenen.<br/>Langzaam zakken.</div>
+          <div class="kerven" aria-hidden="true">
+            <i></i><i class="aan"></i><i></i><i></i>
+          </div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 61</div>
+          <h3>Reliëf</h3>
+          <p class="richting">Eerst voelen. Dan pas lezen.</p>
+          <p class="rationale">De kaart wordt niet gelezen zoals een brief gelezen wordt — hij wordt
+            <em>gezocht</em>, met één hand, om zeven uur 's ochtends, zonder bril. Dus draagt hier
+            alles wat betekenis heeft een verschil in <em>hoogte</em> in plaats van in kleur: het
+            nummer ligt in een kuil, de scheiding is een ribbel die je voelt, en rechts steken vier
+            duimkerven uit het vel zodat oefening drie altijd op een derde zit. Er zit geen enkele
+            kleur in — niet uit soberheid, maar als bewijs: er is geen versie van deze kaart die
+            minder werkt, ook niet als vierde generatie fotokopie.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>braillematen van de Braille Authority of North America — punt Ø 1,44 mm, 2,34 mm
+              binnen de cel, 6,2 mm ertussen · zwelpapier en thermovorm · duimregisters in
+              woordenboeken en bijbels · intaglio op bankbiljetten, dat de duim eerder herkent dan
+              het oog · reliëfstempels in medicijndoosjes en noppen in tactiele bestrating</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b>, één inkt — reliëf wordt lijndikte: 0,9 mm om het nummer, 0,3 mm
+              tussen de oefeningen, een massieve ribbel onder de kop. Vier gestippelde kerven aan de
+              rechterrand, met een schaar in tien seconden los. Braille op ware maat naast elk
+              nummer; koppen op 5,4 mm, tekst op 3,7 mm schreef</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-61-relief.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-61-relief.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 62 ─────────── -->
+      <article class="kaart">
+        <div class="staal weefsel">
+          <div class="plaatnr">WEEFSEL · SCHERING &amp; INSLAG</div>
+          <div class="woord">Uw week is<br/>geen lijst.<em> Het is een lap.</em></div>
+          <div class="draad" aria-hidden="true">
+            <i class="s"></i><i class="s"></i><i class="s"></i><i class="s"></i><i class="s"></i>
+            <i class="m"></i><i class="m"></i><i class="m"></i><i class="m"></i><i class="m"></i>
+            <i class="m"></i><i class="m"></i><i class="h"></i><i class="m"></i><i></i>
+            <i class="m"></i><i class="m"></i><i></i><i></i><i class="m"></i>
+            <i></i><i></i><i></i><i></i><i></i>
+            <i class="m"></i><i class="m"></i><i class="h"></i><i></i><i class="m"></i>
+          </div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 62</div>
+          <h3>Weefsel</h3>
+          <p class="richting">Een lijst zegt wat u moet doen. Een lap zegt wat u gemaakt hebt.</p>
+          <p class="rationale">Een weefschema heeft al twee eeuwen vier delen, en een
+            oefenprogramma past er griezelig precies in: de oefeningen zijn de <em>schering</em> —
+            één keer opgezet door de fysiotherapeut, staand voor de hele lap — en de dagen zijn de
+            <em>inslag</em>, die er één voor één bijkomen en waarvan er geen is over te slaan zonder
+            dat het zichtbaar wordt. Wat volloopt is geen afvinklijst maar stof met een structuur.
+            En de weverswet erbij: een fout gaat er niet meer uit, dus <em>de open baan blijft
+            staan en u weeft verder</em> — de eerste oefenkaart die dat hardop durft te zeggen.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>het weefschema zelf: insnoering, binding, trapvolgorde en weefbeeld · Anni Albers en
+              de weefwerkplaats van het Bauhaus, het raster als taal en niet als decor · Haarlems en
+              Fries damast · ikat, waar de fout in de draad het patroon máákt · jacquardkaarten ·
+              ongebleekt linnen, indigo en meekrap</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b>, in tweeën: links vijf oefeningen in gewone grote zinnen (4,6 mm
+              koppen, 3,4 mm schreef) — wie het raster nooit snapt mist niets. Rechts 28 regels ×
+              5 kolommen, 7 mm per dag, met een zware regel tussen de weken. Twee merken die
+              <b>ook in vorm verschillen</b>: vol vlak tegenover schuine arcering</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-62-weefsel.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-62-weefsel.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 63 ─────────── -->
+      <article class="kaart">
+        <div class="staal peilschaal">
+          <div class="as" aria-hidden="true">
+            <i class="d" style="top:18%"></i><b style="top:18%">60</b>
+            <i style="top:32%"></i>
+            <i class="d" style="top:46%"></i><b style="top:46%">48</b>
+            <i style="top:60%"></i>
+            <i class="d" style="top:74%"></i><b style="top:74%">35</b>
+          </div>
+          <div class="band" style="top:18%;bottom:26%" aria-hidden="true"></div>
+          <div class="stand" style="top:38%" aria-hidden="true"></div>
+          <div class="plaatnr">PEILSCHAAL · 35 — 60</div>
+          <div class="woord">Niet hoeveel.<em> Hoe hoog.</em></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 63</div>
+          <h3>Peilschaal</h3>
+          <p class="richting">Niet hoeveel u deed. Hoe hoog het water staat.</p>
+          <p class="rationale">Elke oefenkaart telt handelingen, terwijl een fysiotherapeut in
+            <em>belasting tegenover belastbaarheid</em> denkt — een vraag die een afvinklijst niet
+            eens kan stellen. Aan een Nederlandse kade hangt daarvoor al twee eeuwen het juiste
+            instrument: een lat met een streefpeil, een bovengrens en een ondergrens, waar het werk
+            uit bestaat ertussen te blijven. Te hoog is overstroming, te laag is óók schade. Dus
+            krijgt deze kaart een <em>plafond en een vloer</em> in plaats van een streefaantal — wat
+            te zwaar is staat er wél op, met erbij dat het nog niet aan de beurt is, en onderin
+            hangt de bodem die op elke dag mag.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>geëmailleerde peilschalen aan kades: email op gietijzer, decimeterstrepen,
+              boutgaten · het Normaal Amsterdams Peil en de ruim 35.000 peilmerken, tot op de vaste
+              zandlaag · streefpeil en grenzen uit het waterschapsbeheer — het water is nooit klaar ·
+              negentiende-eeuwse grotesken op sluis- en gemaalborden</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b> — links één lat met vijf peilen op 7 mm, rechts de oefening die op
+              die hoogte hangt (4,8 mm kop, 3,5 mm schreef). Onderaan veertien lege latjes van
+              7 × 26 mm: elke dag één streep op de hoogte waar het water stond, geen vinkje.
+              <b>Blauw is nergens de enige drager</b> — elke regel heeft ook een eigen balkvorm en
+              een woord</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-63-peilschaal.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-63-peilschaal.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>

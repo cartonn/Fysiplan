@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 63 — Peilschaal · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 63 — PEILSCHAAL
+   ------------------------------------------------------------
+   Niet hoeveel u deed. Hoe hoog het water staat.
+
+   Elke oefenkaart die bestaat telt HANDELINGEN. Vijftien keer,
+   drie series, zeven vinkjes. Maar een fysiotherapeut denkt
+   niet in handelingen — die denkt in BELASTING tegenover
+   BELASTBAARHEID. Hoeveel kan dit lichaam vandaag hebben, en
+   zitten we daaronder of daarboven? Een afvinklijst kan die
+   vraag niet eens stellen. Een peilschaal stelt hem als enige
+   vraag.
+
+   In Nederland hangt aan elke kade een geëmailleerde lat met
+   een schaal erop, en daarnaast zit een bout in de muur: het
+   peilmerk. Ruim vijfendertigduizend van die merken liggen
+   verspreid over het land, verankerd in huizen en bruggen, en
+   ondergronds gaan ze door tot op een zandlaag die niet zakt.
+   Ze meten allemaal hetzelfde: hoe hoog het water staat ten
+   opzichte van één afgesproken nul.
+
+   En dan het beslissende: het water is nooit KLAAR. Er is geen
+   dag waarop een waterschap zegt dat het gelukt is. Er is een
+   STREEFPEIL, er is een bovengrens en er is een ondergrens, en
+   het werk bestaat eruit ertussen te blijven. Te hoog is
+   overstroming. Te laag is óók schade — dan zakt de veenbodem
+   in en droogt de polder uit. Een knie is precies hetzelfde
+   ding. Te veel is overbelasting. Te weinig is óók schade.
+
+   DUS: op deze kaart staat geen lijst maar een LAT. Elke
+   oefening hangt op zijn eigen hoogte. Deze week werkt u
+   tussen 35 en 60. Wat daarboven hangt staat er wél op, zwart
+   op wit, met de mededeling dat het nog boven het peil is —
+   want een patiënt die niet weet wat er straks komt, gelooft
+   niet dat er iets komt. Wat eronder hangt is de bodem: dat
+   mag altijd, ook op de slechtste dag. DAT IS DE HELE
+   VERNIEUWING: een kaart met een PLAFOND en een VLOER in
+   plaats van een streefaantal.
+
+   EN DE DAGELIJKSE AFLEZING IS GEEN VINKJE. Onderaan staan
+   veertien smalle latjes, één per dag, en u zet een streep op
+   de hoogte waar het water die dag stond. Na twee weken ligt
+   er een waterstandsgrafiek op tafel in plaats van veertien
+   hokjes — en daar kan een fysiotherapeut iets mee.
+
+   VORM. Geëmailleerde peilschalen: room-witte email op
+   gietijzer, één diep peilblauw, zware decimeterstrepen en
+   fijne centimeterstreepjes, cijfers in een stevige
+   negentiende-eeuwse grotesk. Boutgaten in de hoeken. Roest
+   waar de lat het water raakt.
+
+   HET ANKER. Blauw is nooit de enige drager: de band staat óók
+   als beugel in de kantlijn, de grenzen staan óók in woorden
+   ("boven het peil", "de bodem"), en de oefenteksten staan op
+   4,6 mm schreef. Print in zwart-wit en er gaat geen enkele
+   betekenis verloren.
+   ============================================================ */
+
+:root{
+  --email:#f4f1e8;
+  --email-2:#e9e4d6;
+  --vlak:#fbf9f3;
+  --ijzer:#2f3336;
+  --ijzer-2:#4d5357;
+  --grijs:#7b8084;
+  --lijn:#cdc7b6;
+  --peil:#14457c;
+  --peil-diep:#0d2f57;
+  --peil-licht:#dbe4ef;
+  --roest:#8a4a2c;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --serif:Charter,"Iowan Old Style",Georgia,serif;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:70px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.66 var(--sans);color:var(--ijzer-2);background:var(--email)}
+img{max-width:100%;display:block}
+a{color:var(--peil)}
+:focus-visible{outline:3px solid var(--peil);outline-offset:3px}
+.binnen{max-width:1180px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--ijzer);color:#aeb4b8;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border:1px solid #545a5e;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#aeb4b8;text-decoration:none;padding:5px 2px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:#7ea6d8}
+.labbalk a.terug{color:#fff}
+@media (max-width:720px){.labbalk{flex-wrap:wrap;gap:10px}.labbalk .rek{display:none}}
+
+/* ---------- secties ---------- */
+.scherm{padding:var(--s6) 0;border-top:1px solid var(--lijn)}
+.scherm.diep{background:var(--email-2)}
+.scherm.wit{background:var(--vlak)}
+.schermkop{margin-bottom:var(--s5);max-width:74ch}
+.schermkop b{display:inline-block;font:700 10px/1 var(--mono);letter-spacing:.24em;
+  text-transform:uppercase;color:var(--peil);margin-bottom:var(--s3)}
+.schermkop h2{font:600 clamp(27px,3.5vw,41px)/1.1 var(--sans);letter-spacing:-.032em;color:var(--ijzer)}
+.schermkop p{margin-top:var(--s3);font:400 18px/1.62 var(--serif);color:var(--ijzer-2);max-width:64ch}
+
+/* emailplaat: room-wit email met keerlijn en boutgaten */
+.plaat{background:var(--vlak);position:relative;
+  box-shadow:0 0 0 1px var(--lijn), 0 3px 10px rgba(47,51,54,.10)}
+.plaat:before{content:"";position:absolute;inset:6px;border:1.5px solid var(--peil);
+  opacity:.28;pointer-events:none}
+.plaat .bout{position:absolute;width:9px;height:9px;border-radius:50%;
+  background:var(--email-2);box-shadow:0 0 0 1.5px var(--ijzer-2) inset}
+.plaat .bout.lb{left:11px;bottom:11px} .plaat .bout.rb{right:11px;bottom:11px}
+.plaat .bout.lo{left:11px;top:11px}   .plaat .bout.ro{right:11px;top:11px}
+
+/* ---------- 1 · landing ---------- */
+#landing{background:var(--peil-diep);color:#c3d0e0;border-top:0;
+  background-image:linear-gradient(to bottom,var(--peil-diep) 0%,#123a68 62%,#16457a 100%)}
+.merkregel{display:flex;align-items:center;gap:11px;margin-bottom:var(--s5)}
+.merkregel .vlag{width:30px;height:30px;background:var(--vlak);color:var(--peil);
+  display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--sans)}
+.merkregel .naam{font:600 15px/1 var(--sans);color:#fff;letter-spacing:-.01em}
+.merkregel .pad{font:600 11px/1 var(--mono);letter-spacing:.2em;color:#8ba3c2}
+
+.landkop{display:grid;grid-template-columns:1.1fr 330px;gap:var(--s6);align-items:start}
+@media (max-width:1000px){.landkop{grid-template-columns:1fr;gap:var(--s5)}}
+.landkop h1{font:600 clamp(35px,5vw,60px)/1.05 var(--sans);letter-spacing:-.036em;color:#fff}
+.landkop h1 em{display:block;font-style:normal;color:#8ba3c2;margin-top:.16em}
+.landkop p{margin-top:var(--s4);font:400 18.5px/1.66 var(--serif);color:#c3d0e0;max-width:54ch}
+.landkop p b{font-weight:700;color:#fff}
+
+/* de lat zelf */
+.lat{background:var(--vlak);position:relative;height:460px;
+  box-shadow:0 0 0 1px #0a2646, 0 18px 40px rgba(6,22,42,.5)}
+.lat .schaal{position:absolute;left:0;top:0;bottom:0;width:64px;border-right:2px solid var(--peil)}
+.lat .tik{position:absolute;left:0;height:0;border-top:1px solid rgba(20,69,124,.45);width:16px}
+.lat .tik.dec{width:64px;border-top-width:2.5px;border-color:var(--peil)}
+.lat .tik.dec b{position:absolute;left:6px;top:-19px;font:700 14px/1 var(--sans);
+  letter-spacing:-.02em;color:var(--peil)}
+.lat .band{position:absolute;left:64px;right:0;background:var(--peil-licht)}
+.lat .band .rand{position:absolute;left:0;right:0;border-top:2px dashed var(--peil)}
+.lat .beugel{position:absolute;left:70px;width:14px;border:2px solid var(--peil);border-left:0}
+.lat .beugel b{position:absolute;left:22px;top:8px;
+  font:700 10px/1.3 var(--mono);letter-spacing:.12em;color:var(--peil);white-space:nowrap}
+.lat .merk{position:absolute;left:64px;right:0;display:flex;align-items:center;gap:9px;
+  padding-left:34px}
+.lat .merk i{width:11px;height:11px;background:var(--roest);border-radius:50%;flex:none}
+.lat .merk span{font:700 11px/1.2 var(--mono);letter-spacing:.1em;color:var(--roest)}
+.lat .stand{position:absolute;left:64px;right:0;height:0;border-top:4px solid var(--ijzer)}
+.lat .stand b{position:absolute;right:10px;top:-27px;background:var(--ijzer);color:#fff;
+  font:700 12px/1 var(--mono);letter-spacing:.1em;padding:6px 8px}
+.lat .water{position:absolute;left:64px;right:0;bottom:0;
+  background:linear-gradient(to bottom,rgba(20,69,124,.16),rgba(20,69,124,.32))}
+.landkop .latbij{margin-top:var(--s3);font:400 14.5px/1.55 var(--serif);color:#8ba3c2}
+
+/* drie stellingen */
+.stellingen{margin-top:var(--s6);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:960px){.stellingen{grid-template-columns:1fr}}
+.stellingen div{border-top:3px solid #4d7cb3;padding-top:14px}
+.stellingen h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:#8ba3c2;margin-bottom:11px}
+.stellingen strong{display:block;font:600 21px/1.22 var(--sans);letter-spacing:-.024em;color:#fff;margin-bottom:10px}
+.stellingen p{font-size:15.5px;line-height:1.58;color:#c3d0e0}
+
+/* ---------- 2 · kiezer ---------- */
+.kiezerhoofd{display:grid;grid-template-columns:1fr 320px;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.kiezerhoofd{grid-template-columns:1fr}}
+.peillijst{display:flex;flex-direction:column}
+.peilrij{display:grid;grid-template-columns:78px 1fr 150px;gap:var(--s4);align-items:center;
+  padding:var(--s3) var(--s4);background:var(--vlak);border:1px solid var(--lijn);position:relative}
+.peilrij + .peilrij{margin-top:9px}
+.peilrij.inband{border-left:6px solid var(--peil)}
+.peilrij.boven{background:var(--email-2);border-left:6px dashed var(--roest)}
+.peilrij.onder{border-left:6px solid var(--ijzer-2)}
+.peilcijfer{text-align:center}
+.peilcijfer b{display:block;font:700 34px/1 var(--sans);letter-spacing:-.045em;color:var(--peil)}
+.peilcijfer span{display:block;margin-top:4px;font:700 9px/1.2 var(--mono);letter-spacing:.14em;color:var(--grijs)}
+.peilrij.boven .peilcijfer b{color:var(--roest)}
+.peilrij.onder .peilcijfer b{color:var(--ijzer-2)}
+.peilrij h5{font:600 19px/1.24 var(--sans);letter-spacing:-.022em;color:var(--ijzer)}
+.peilrij .hoe{margin-top:5px;font:400 15px/1.5 var(--serif);color:var(--ijzer-2);max-width:56ch}
+.peilrij .status{text-align:right}
+.peilrij .status em{display:block;font-style:normal;font:700 10px/1.35 var(--mono);
+  letter-spacing:.12em;color:var(--grijs);margin-bottom:8px}
+.peilrij button{border:1px solid var(--peil);background:var(--peil);color:#fff;cursor:pointer;
+  padding:9px 13px;font:600 13px/1 var(--sans);width:100%}
+.peilrij.boven button{background:transparent;color:var(--roest);border-color:var(--roest)}
+.peilrij .beeldje{position:absolute;right:170px;top:50%;transform:translateY(-50%);opacity:.5}
+.peilrij .beeldje img{height:60px;width:auto;mix-blend-mode:multiply}
+@media (max-width:900px){
+  .peilrij{grid-template-columns:64px 1fr}
+  .peilrij .status{grid-column:1/-1;text-align:left}
+  .peilrij .beeldje{display:none}
+}
+
+.bandkiezer{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s4)}
+.bandkiezer h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--grijs);margin-bottom:var(--s3)}
+.bandkiezer .schuif{height:200px;position:relative;border-left:2px solid var(--peil);margin:var(--s3) 0 var(--s4) 30px}
+.bandkiezer .schuif .vlak{position:absolute;left:0;right:0;background:var(--peil-licht);
+  border-top:2px solid var(--peil);border-bottom:2px solid var(--peil)}
+.bandkiezer .schuif .greep{position:absolute;left:-9px;width:16px;height:16px;background:var(--peil);border-radius:50%}
+.bandkiezer .schuif .cij{position:absolute;left:-30px;font:700 12px/1 var(--mono);color:var(--peil)}
+.bandkiezer p{font:400 15px/1.55 var(--serif);color:var(--ijzer-2)}
+.bandkiezer p b{color:var(--ijzer);font-weight:700}
+.knoprij{display:flex;gap:10px;flex-wrap:wrap;margin-top:var(--s4)}
+.kn{border:1px solid var(--peil);background:var(--peil);color:#fff;cursor:pointer;text-decoration:none;
+  display:inline-block;padding:12px 18px;font:600 14px/1 var(--sans)}
+.kn.leeg{background:transparent;color:var(--peil)}
+
+/* ---------- 3 · cliëntkaart ---------- */
+.kaartlay{display:grid;grid-template-columns:1fr 330px;gap:var(--s5);align-items:start}
+@media (max-width:1020px){.kaartlay{grid-template-columns:1fr}}
+.dossier{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s4)}
+.dossierkop{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--s3);
+  flex-wrap:wrap;padding-bottom:var(--s3);border-bottom:3px solid var(--peil);margin-bottom:var(--s4)}
+.dossierkop h3{font:600 26px/1.14 var(--sans);letter-spacing:-.028em;color:var(--ijzer)}
+.dossierkop .sub{margin-top:6px;font:400 15.5px/1.5 var(--serif);color:var(--grijs)}
+.dossierkop .code{font:600 12px/1.7 var(--mono);letter-spacing:.1em;color:var(--grijs);text-align:right}
+
+/* de waterstandsgrafiek: veertien latjes */
+.reeks{display:grid;grid-template-columns:repeat(14,1fr);gap:5px;height:190px;align-items:end;
+  border-bottom:2px solid var(--ijzer);padding-bottom:0;position:relative}
+.reeks .lijn{position:absolute;left:0;right:0;border-top:2px dashed var(--peil);pointer-events:none}
+.reeks .lijn b{position:absolute;right:0;top:-17px;font:700 10px/1 var(--mono);letter-spacing:.1em;color:var(--peil);background:var(--vlak);padding:0 4px}
+.reeks .lat14{background:var(--email-2);width:100%;position:relative;height:100%}
+.reeks .lat14 i{position:absolute;left:0;right:0;bottom:0;background:var(--peil)}
+.reeks .lat14.geen i{background:repeating-linear-gradient(45deg,var(--grijs) 0 2px,transparent 2px 5px);height:6px}
+.reeks .lat14.over i{background:var(--roest)}
+.reekslabels{display:grid;grid-template-columns:repeat(14,1fr);gap:5px;margin-top:8px}
+.reekslabels span{font:600 10px/1.3 var(--mono);color:var(--grijs);text-align:center}
+
+.lezing{margin-top:var(--s4);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:760px){.lezing{grid-template-columns:1fr}}
+.lezing div{border-top:2px solid var(--lijn);padding-top:11px}
+.lezing h4{font:700 9.5px/1 var(--mono);letter-spacing:.18em;color:var(--grijs);margin-bottom:9px}
+.lezing p{font:400 15px/1.55 var(--serif)}
+.lezing b{color:var(--ijzer);font-weight:700}
+
+.zijkolom > div{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s4)}
+.zijkolom > div + div{margin-top:var(--s3)}
+.zijkolom h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--grijs);margin-bottom:var(--s3)}
+.zijkolom p{font-size:15.5px;line-height:1.58}
+.zijkolom b{color:var(--ijzer);font-weight:700}
+.zijkolom .merkbout{margin-top:var(--s3);display:flex;gap:11px;align-items:flex-start;
+  padding:13px;background:var(--email-2);border-left:4px solid var(--roest)}
+.zijkolom .merkbout i{width:14px;height:14px;background:var(--roest);border-radius:50%;flex:none;margin-top:3px}
+.zijkolom .merkbout p{font:400 14.5px/1.5 var(--serif)}
+
+.toestanden{margin-top:var(--s5);display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3)}
+@media (max-width:960px){.toestanden{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.toestanden{grid-template-columns:1fr}}
+.toestanden div{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s3) var(--s4) var(--s4)}
+.toestanden h5{font:700 9.5px/1 var(--mono);letter-spacing:.18em;color:var(--peil);margin-bottom:10px}
+.toestanden p{font-size:14.5px;line-height:1.5}
+
+/* ---------- 4 · printkaart ---------- */
+.printuitleg{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-bottom:var(--s5)}
+@media (max-width:940px){.printuitleg{grid-template-columns:1fr}}
+.printuitleg div{border-top:3px solid var(--peil);padding-top:12px}
+.printuitleg h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--grijs);margin-bottom:10px}
+.printuitleg p{font-size:15.5px;line-height:1.58}
+.printuitleg b{color:var(--ijzer);font-weight:700}
+
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;position:relative;
+  box-shadow:0 24px 60px rgba(47,51,54,.26);transform-origin:top left}
+@media (max-width:860px){.bladschaal{max-width:100%}}
+.blad .rand{position:absolute;inset:0;padding:11mm 12mm 8mm;display:flex;flex-direction:column}
+
+.q-kop{display:flex;justify-content:space-between;align-items:flex-start;gap:6mm;
+  border-bottom:1mm solid #14457c;padding-bottom:3mm}
+.q-kop h1{font:600 8mm/1.04 var(--sans);letter-spacing:-.032em;color:#14457c}
+.q-kop .wie{margin-top:2mm;font:400 3.6mm/1.4 var(--serif);color:#33383b}
+.q-kop .r{text-align:right;font:600 2.5mm/1.75 var(--mono);letter-spacing:.1em;color:#5f6468;white-space:nowrap}
+
+.q-peilregel{display:flex;justify-content:space-between;align-items:baseline;
+  margin-top:2.6mm;font:700 2.8mm/1 var(--mono);letter-spacing:.12em;color:#14457c}
+.q-peilregel span{color:#5f6468}
+
+/* het middenblok: de lat met de oefeningen eraan */
+.q-lay{flex:1;display:grid;grid-template-columns:22mm 1fr;gap:0;margin-top:3.4mm}
+.q-as{border-right:.8mm solid #14457c;display:flex;flex-direction:column;position:relative}
+.q-as .vak{flex:1;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;
+  padding-right:2.2mm;position:relative}
+.q-as .vak:after{content:"";position:absolute;right:0;width:5mm;border-top:.5mm solid #14457c;top:50%}
+.q-as .vak b{font:700 7mm/1 var(--sans);letter-spacing:-.045em;color:#14457c}
+.q-as .vak.uit b{color:#8a4a2c}
+.q-as .vak.bodem b{color:#33383b}
+.q-as .vak small{font:700 2.2mm/1.2 var(--mono);letter-spacing:.1em;color:#5f6468;margin-top:.8mm}
+.q-as .grens{position:absolute;right:0;left:-2mm;border-top:.5mm dashed #14457c;z-index:2}
+.q-as .grens b{position:absolute;left:-1mm;top:-3.4mm;font:700 2.2mm/1 var(--mono);
+  letter-spacing:.1em;color:#14457c;background:#fff;padding:0 1mm}
+
+.q-oefs{display:flex;flex-direction:column}
+.q-oef{flex:1;display:grid;grid-template-columns:1fr 26mm;gap:5mm;align-items:center;
+  padding:3mm 3mm 3mm 5mm;border-bottom:.25mm solid #cdc7b6;position:relative}
+.q-oef:last-child{border-bottom:0}
+.q-oef.inband{background:#eef2f7}
+.q-oef.inband:before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.2mm;background:#14457c}
+.q-oef.boven:before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.2mm;
+  background:repeating-linear-gradient(to bottom,#8a4a2c 0 1.2mm,#fff 1.2mm 2.4mm)}
+.q-oef.bodem:before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.2mm;background:#33383b}
+.q-oef h3{font:600 4.8mm/1.14 var(--sans);letter-spacing:-.024em;color:#151719}
+.q-oef p{margin-top:1.5mm;font:400 3.5mm/1.42 var(--serif);color:#25292c;max-width:110mm}
+.q-oef .merkregel2{margin-top:1.6mm;font:700 2.5mm/1 var(--mono);letter-spacing:.1em;color:#14457c}
+.q-oef.boven .merkregel2{color:#8a4a2c}
+.q-oef.bodem .merkregel2{color:#33383b}
+.q-oef .dos{text-align:right}
+.q-oef .dos b{font:700 6mm/1 var(--sans);letter-spacing:-.035em;color:#151719}
+.q-oef .dos span{display:block;margin-top:1.2mm;font:700 2.4mm/1.3 var(--mono);letter-spacing:.11em;color:#5f6468}
+
+/* onderaan: veertien latjes om af te lezen */
+.q-reeks{border-top:1mm solid #14457c;padding-top:3mm;margin-top:2.5mm}
+.q-reeks .titel{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2.4mm}
+.q-reeks .titel h4{font:700 2.6mm/1 var(--mono);letter-spacing:.16em;color:#14457c}
+.q-reeks .titel span{font:400 3mm/1.3 var(--serif);color:#33383b}
+.q-latjes{display:grid;grid-template-columns:14mm repeat(14,1fr);gap:1mm;height:26mm}
+.q-latjes .as{position:relative;border-right:.4mm solid #14457c}
+.q-latjes .as i{position:absolute;right:0;width:2.5mm;border-top:.35mm solid #14457c}
+.q-latjes .as b{position:absolute;right:3.4mm;font:700 2.2mm/1 var(--mono);color:#14457c;transform:translateY(-50%)}
+.q-latjes .l{border:.3mm solid #9aa0a4;position:relative;background:#fff}
+.q-latjes .l .b1{position:absolute;left:0;right:0;border-top:.3mm dashed #14457c;opacity:.5}
+.q-latjes .l b{position:absolute;left:0;right:0;bottom:-4.2mm;text-align:center;
+  font:600 2.1mm/1 var(--mono);color:#5f6468}
+.q-latjes .l.vb{background:#eef2f7}
+
+.q-voet{border-top:.4mm solid #cdc7b6;padding-top:2.6mm;margin-top:5.6mm;
+  display:grid;grid-template-columns:1.5fr 1fr;gap:6mm;align-items:end}
+.q-voet h4{font:700 2.4mm/1 var(--mono);letter-spacing:.16em;color:#5f6468;margin-bottom:1.6mm}
+.q-voet p{font:400 3.2mm/1.42 var(--serif);color:#25292c}
+.q-voet .prak{text-align:right;font:600 2.5mm/1.7 var(--mono);letter-spacing:.08em;color:#5f6468}
+.q-voet .prak b{display:block;font:600 3.5mm/1.3 var(--sans);color:#151719;letter-spacing:-.01em}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--ijzer);color:#a2a8ac;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border-top:2px solid #545a5e;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:9px}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT — de lat staat links, de oefeningen hangen eraan. Blauw
+   is nooit de enige drager: elke oefening heeft óók een balk in
+   de kantlijn met een eigen VORM (vol, gestreept, donker) en
+   óók een woord ("boven het peil", "de bodem"). Zwart-wit
+   printen kost hier niets.
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .schermkop,.printuitleg{display:none !important}
+  .scherm{padding:0 !important;background:#fff !important;border:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 63</span>
+  <strong style="font:600 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Peilschaal</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="vlag" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 63 · PEILSCHAAL</span>
+    </div>
+
+    <div class="landkop">
+      <div>
+        <h1>Niet hoeveel u deed.<em>Hoe hoog het water staat.</em></h1>
+        <p>Elke oefenkaart die bestaat telt handelingen: vijftien keer, drie series, zeven vinkjes.
+          Maar een fysiotherapeut denkt niet in handelingen. Die denkt in <b>belasting tegenover
+          belastbaarheid</b> — hoeveel kan dit lichaam vandaag hebben, en zitten we daaronder of
+          daarboven? Een afvinklijst kan die vraag niet eens stellen.</p>
+        <p>Aan elke Nederlandse kade hangt een geëmailleerde lat, en in de muur ernaast zit een
+          bout: het peilmerk. Ruim <b>vijfendertigduizend</b> van die merken liggen verankerd in
+          huizen en bruggen, tot op een zandlaag die niet zakt. Ze meten allemaal hetzelfde ding —
+          hoe hoog het water staat ten opzichte van één afgesproken nul.</p>
+        <p>En het beslissende: <b>het water is nooit klaar</b>. Er is een streefpeil, een bovengrens
+          en een ondergrens, en het werk bestaat eruit ertussen te blijven. Te hoog is
+          overstroming. Te laag is óók schade: dan zakt de veenbodem in. Een knie is precies
+          hetzelfde ding.</p>
+      </div>
+
+      <div>
+        <div class="lat">
+          <div class="schaal" aria-hidden="true">
+            <span class="tik dec" style="top:8%"><b>80</b></span>
+            <span class="tik" style="top:14%"></span>
+            <span class="tik" style="top:20%"></span>
+            <span class="tik dec" style="top:26%"><b>60</b></span>
+            <span class="tik" style="top:32%"></span>
+            <span class="tik" style="top:38%"></span>
+            <span class="tik dec" style="top:44%"><b>48</b></span>
+            <span class="tik" style="top:50%"></span>
+            <span class="tik" style="top:56%"></span>
+            <span class="tik dec" style="top:62%"><b>35</b></span>
+            <span class="tik" style="top:70%"></span>
+            <span class="tik" style="top:78%"></span>
+            <span class="tik dec" style="top:86%"><b>20</b></span>
+          </div>
+
+          <div class="band" style="top:26%;bottom:38%" aria-hidden="true"></div>
+          <div class="water" style="height:14%" aria-hidden="true"></div>
+
+          <div class="beugel" style="top:26%;height:36%">
+            <b>UW BAND<br/>DEZE WEEK</b>
+          </div>
+
+          <div class="merk" style="top:44%">
+            <i aria-hidden="true"></i><span>STREEFPEIL 48</span>
+          </div>
+
+          <div class="stand" style="top:34%">
+            <b>VANDAAG 54</b>
+          </div>
+        </div>
+        <p class="latbij">De lat is één schaal van nul tot honderd. Elke oefening hangt op zijn
+          eigen hoogte, en deze week werkt u tussen 35 en 60.</p>
+      </div>
+    </div>
+
+    <div class="stellingen">
+      <div>
+        <h4>HET PLAFOND</h4>
+        <strong>Wat te hoog is, staat er wél op</strong>
+        <p>Opstaan zonder handen hangt op 64 — boven uw band. Het blijft zwart op wit staan, met
+          erbij dat het nog niet aan de beurt is. Een patiënt die niet weet wat er straks komt,
+          gelooft niet dat er iets komt.</p>
+      </div>
+      <div>
+        <h4>DE VLOER</h4>
+        <strong>Wat altijd mag, ook op de slechtste dag</strong>
+        <p>Onder de band ligt de bodem: één oefening die op elke dag kan, ook met griep, ook na een
+          slechte nacht. Er is geen dag waarop deze kaart nul zegt.</p>
+      </div>
+      <div>
+        <h4>DE AFLEZING</h4>
+        <strong>Een streep op hoogte, geen vinkje</strong>
+        <p>Onderaan het vel staan veertien smalle latjes, één per dag. U zet een streep waar het
+          water stond. Na twee weken ligt er een waterstand op tafel in plaats van veertien hokjes.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm diep" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2 · de oefeningen-kiezer</b>
+      <h2>Kiezen is oefeningen aan de lat hangen</h2>
+      <p>Elke oefening in Fysiplan heeft een peil: een getal tussen 0 en 100 dat zegt hoeveel hij
+        van een lichaam vraagt. De fysiotherapeut kiest niet los van elkaar maar zet <b>een band</b>
+        — bovengrens, streefpeil, ondergrens — en ziet meteen wat daarbinnen valt, wat er nog boven
+        hangt en wat de bodem wordt.</p>
+    </div>
+
+    <div class="kiezerhoofd">
+      <div class="peillijst">
+
+        <div class="peilrij boven">
+          <div class="peilcijfer"><b>64</b><span>PEIL</span></div>
+          <div>
+            <h5>Opstaan zonder handen</h5>
+            <p class="hoe">Van een gewone keukenstoel, zonder de leuning te gebruiken. Vraagt veel
+              van de heup en het evenwicht tegelijk.</p>
+          </div>
+          <div class="beeldje" aria-hidden="true">
+            <img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt=""/>
+          </div>
+          <div class="status">
+            <em>BOVEN HET PEIL</em>
+            <button>Toch op de kaart</button>
+          </div>
+        </div>
+
+        <div class="peilrij inband">
+          <div class="peilcijfer"><b>55</b><span>PEIL</span></div>
+          <div>
+            <h5>Eén been, tellen tot tien</h5>
+            <p class="hoe">Bij het aanrecht, met één vinger aan het blad. Zit net onder de
+              bovengrens: dit is de oefening die deze week het zwaarst mag zijn.</p>
+          </div>
+          <div class="beeldje" aria-hidden="true">
+            <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt=""/>
+          </div>
+          <div class="status">
+            <em>IN DE BAND</em>
+            <button>Op de kaart</button>
+          </div>
+        </div>
+
+        <div class="peilrij inband">
+          <div class="peilcijfer"><b>46</b><span>PEIL</span></div>
+          <div>
+            <h5>Op uw tenen en langzaam zakken</h5>
+            <p class="hoe">Handen licht op het aanrecht. Ligt vrijwel op het streefpeil van 48 —
+              de oefening die de week draagt.</p>
+          </div>
+          <div class="beeldje" aria-hidden="true">
+            <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt=""/>
+          </div>
+          <div class="status">
+            <em>OP HET STREEFPEIL</em>
+            <button>Op de kaart</button>
+          </div>
+        </div>
+
+        <div class="peilrij inband">
+          <div class="peilcijfer"><b>38</b><span>PEIL</span></div>
+          <div>
+            <h5>Open boek, zittend</h5>
+            <p class="hoe">Op de rand van een stoel, armen gekruist, bovenlichaam rustig
+              meedraaien. Onderin de band: mag ook op een matige dag.</p>
+          </div>
+          <div class="beeldje" aria-hidden="true">
+            <img src="/images/rug/open-boek-zittend-line-v1.png" alt=""/>
+          </div>
+          <div class="status">
+            <em>IN DE BAND</em>
+            <button>Op de kaart</button>
+          </div>
+        </div>
+
+        <div class="peilrij onder">
+          <div class="peilcijfer"><b>30</b><span>PEIL</span></div>
+          <div>
+            <h5>Knie naar de borst, liggend</h5>
+            <p class="hoe">Op bed, vóór het opstaan. Onder de ondergrens — en dat is precies waarom
+              hij op de kaart moet: dit is wat er op de slechtste dag nog kan.</p>
+          </div>
+          <div class="beeldje" aria-hidden="true">
+            <img src="/images/rug/knie-naar-borst-liggend-line-v1.png" alt=""/>
+          </div>
+          <div class="status">
+            <em>DE BODEM</em>
+            <button>Op de kaart</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="bandkiezer">
+        <h4>DE BAND VOOR WEEK 3</h4>
+        <div class="schuif" aria-hidden="true">
+          <span class="vlak" style="top:22%;bottom:26%"></span>
+          <span class="greep" style="top:19%"></span>
+          <span class="cij" style="top:17%">60</span>
+          <span class="greep" style="top:71%"></span>
+          <span class="cij" style="top:69%">35</span>
+          <span class="cij" style="top:43%;color:var(--roest)">48</span>
+        </div>
+        <p><b>Bovengrens 60, streefpeil 48, ondergrens 35.</b> Twee grepen en een merkpunt — meer
+          instelt de fysiotherapeut niet.</p>
+        <p style="margin-top:14px">De band schuift mee met de behandeling. Gaat het goed, dan gaat
+          hij een week later omhoog en valt „opstaan zonder handen" er vanzelf in.
+          <b>De kaart verandert dan niet van vorm, alleen van hoogte.</b></p>
+        <div class="knoprij">
+          <a class="kn" href="#printkaart">Naar de printkaart</a>
+          <a class="kn leeg" href="#clientkaart">Cliëntkaart</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm wit" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3 · de digitale cliëntkaart</b>
+      <h2>Veertien aflezingen — en wat de fysiotherapeut eruit haalt</h2>
+      <p>Dit is geen nalevingspercentage. Het is een waterstand. U ziet de dagen dat het hoog stond,
+        de dag dat het over de bovengrens ging, en de twee dagen dat er alleen de bodem was. <b>Elke
+        vorm van „u heeft 64% gehaald" is hier onmogelijk</b> — en dat is de bedoeling.</p>
+    </div>
+
+    <div class="kaartlay">
+      <div class="dossier">
+        <div class="dossierkop">
+          <div>
+            <h3>Mevrouw H. Bosma</h3>
+            <p class="sub">Week 3 · band 35 – 60 · streefpeil 48</p>
+          </div>
+          <div class="code">PEILMERK 63-0447<br/>GEZET 10.08.2026</div>
+        </div>
+
+        <div class="reeks" role="img" aria-label="Veertien dagaflezingen tussen peil 20 en 70, twee dagen alleen de bodem en één dag boven de bovengrens">
+          <span class="lijn" style="top:14%"><b>BOVENGRENS 60</b></span>
+          <span class="lijn" style="top:38%;border-top-style:solid;border-color:var(--roest)"><b style="color:var(--roest)">STREEFPEIL 48</b></span>
+          <span class="lijn" style="top:60%"><b>ONDERGRENS 35</b></span>
+
+          <span class="lat14"><i style="height:52%"></i></span>
+          <span class="lat14"><i style="height:60%"></i></span>
+          <span class="lat14"><i style="height:47%"></i></span>
+          <span class="lat14 geen"><i></i></span>
+          <span class="lat14"><i style="height:58%"></i></span>
+          <span class="lat14"><i style="height:64%"></i></span>
+          <span class="lat14 over"><i style="height:92%"></i></span>
+          <span class="lat14"><i style="height:30%"></i></span>
+          <span class="lat14"><i style="height:34%"></i></span>
+          <span class="lat14"><i style="height:55%"></i></span>
+          <span class="lat14"><i style="height:61%"></i></span>
+          <span class="lat14 geen"><i></i></span>
+          <span class="lat14"><i style="height:57%"></i></span>
+          <span class="lat14"><i style="height:63%"></i></span>
+        </div>
+        <div class="reekslabels">
+          <span>ma</span><span>di</span><span>wo</span><span>do</span><span>vr</span><span>za</span><span>zo</span>
+          <span>ma</span><span>di</span><span>wo</span><span>do</span><span>vr</span><span>za</span><span>zo</span>
+        </div>
+
+        <div class="lezing">
+          <div>
+            <h4>DE ZATERDAG</h4>
+            <p>Peil <b>78</b> — ruim boven de bovengrens. Een kleindochter, een tuin, en de dag
+              erna twee dagen op de bodem. <b>Dat is geen ongehoorzaamheid, dat is een golf</b>, en
+              die zie je alleen als je hoogtes meet in plaats van vinkjes.</p>
+          </div>
+          <div>
+            <h4>DE TWEE GESTREEPTE LATJES</h4>
+            <p>Donderdag en vrijdag: alleen de bodem. Geen leeg vakje, geen nul. Er is <b>iets
+              gedaan</b>, en de kaart weet welk peil dat was.</p>
+          </div>
+          <div>
+            <h4>DE TWEEDE WEEK</h4>
+            <p>Vlakker en dichter bij het streefpeil. De golf is eruit. Dit is precies het beeld dat
+              een fysiotherapeut wil zien voordat de band <b>een trap omhoog</b> gaat.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="zijkolom">
+        <div>
+          <h4>HET PEILMERK</h4>
+          <p>Eén afgesproken nul, gezet bij de eerste afspraak, en daarna verandert die niet meer.
+            Alles wordt daaraan gemeten. <b>Wie het nulpunt verschuift, kan niets meer vergelijken</b> —
+            dat is waarom Nederland er vijfendertigduizend in de grond heeft zitten.</p>
+          <div class="merkbout">
+            <i aria-hidden="true"></i>
+            <p>Ondergrondse peilmerken staan op een zandlaag die nauwelijks zakt, en worden elke
+              tien tot vijftien jaar nagemeten. Bij Fysiplan gebeurt dat bij elke controle.</p>
+          </div>
+        </div>
+        <div>
+          <h4>WAT DIT NIET IS</h4>
+          <p>Geen score, geen percentage, geen streak. Er valt niets te winnen en niets te
+            verliezen. <b>Een peil is een waarneming</b>, en een waarneming kun je niet mislukken.</p>
+        </div>
+        <div>
+          <h4>DE BAND VERSCHUIVEN</h4>
+          <p>Bij de volgende afspraak gaat de band mogelijk naar 42–68. De kaart blijft dezelfde
+            kaart; alleen de getallen op de lat schuiven. <b>Eén vel, één minuut.</b></p>
+          <div class="knoprij">
+            <a class="kn" href="#printkaart">Nieuwe kaart uitdraaien</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toestanden">
+      <div>
+        <h5>EERSTE WEEK</h5>
+        <p>Nog geen band: alleen het peilmerk en een brede grijze zone. De grenzen worden pas gezet
+          als er drie aflezingen liggen.</p>
+      </div>
+      <div>
+        <h5>DRIE DAGEN BOVEN</h5>
+        <p>De lat kleurt niet rood en er komt geen waarschuwing. Er verschijnt één regel: <em>„drie
+          dagen boven de grens — bespreek dit even."</em></p>
+      </div>
+      <div>
+        <h5>ALLES OP DE BODEM</h5>
+        <p>Een week alleen bodem is een geldige week. De kaart telt hem mee en zet er geen enkel
+          oordeel bij; de fysiotherapeut ziet het vanzelf.</p>
+      </div>
+      <div>
+        <h5>BAND VERSCHOVEN</h5>
+        <p>Op de dag van de wijziging staat een dwarsstreep in de reeks. De oude aflezingen houden
+          hun oude hoogte — <b>het nulpunt beweegt nooit mee</b>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 4 · de A4-printkaart</b>
+      <h2>Het vel — A4 staand, de lat links, de oefeningen eraan</h2>
+      <p>Links staat één schaal met vijf getallen erop, groot genoeg om van een meter afstand te
+        lezen. Rechts hangt bij elk getal de oefening waar het bij hoort, op <b>4,8 mm koppen en
+        3,5 mm schreeftekst</b>. En onderaan veertien lege latjes met een balpen te vullen. Blauw
+        is nergens de enige drager: elke regel heeft ook een eigen balkvorm in de kantlijn en ook
+        een woord.</p>
+    </div>
+
+    <div class="printuitleg">
+      <div>
+        <h4>WAAROM DE LAT LINKS STAAT</h4>
+        <p>Wij lezen van links naar rechts, dus komt eerst de <b>hoogte</b> en dan pas wat er op die
+          hoogte hangt. Wie alleen de lat leest, weet al waar de dag ongeveer moet uitkomen.</p>
+      </div>
+      <div>
+        <h4>WAAROM ÉÉN OEFENING ONBEREIKBAAR IS</h4>
+        <p>Boven de streeplijn staat opstaan zonder handen, met erbij dat het nog niet aan de beurt
+          is. <b>Een kaart zonder toekomst is een kaart zonder reden.</b></p>
+      </div>
+      <div>
+        <h4>WAAROM VEERTIEN LATJES</h4>
+        <p>Twee weken: lang genoeg voor een golf, kort genoeg om het vel niet vol te maken. Elk
+          latje is <b>7 mm breed en 26 mm hoog</b> — genoeg voor een streep met een balpen.</p>
+      </div>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="q-kop">
+              <div>
+                <h1>Uw peil — week 3</h1>
+                <p class="wie">Mevrouw H. Bosma · vijf oefeningen aan één lat</p>
+              </div>
+              <div class="r">FYSIOTHERAPIE DE BOSKANT<br/>PEILMERK 63-0447<br/>24.08.2026</div>
+            </div>
+
+            <div class="q-peilregel">
+              <span>BOVENGRENS <b style="color:#14457c">60</b></span>
+              <span>STREEFPEIL <b style="color:#14457c">48</b></span>
+              <span>ONDERGRENS <b style="color:#14457c">35</b></span>
+              <span>BLIJF ERTUSSEN — DE BODEM MAG ALTIJD</span>
+            </div>
+
+            <div class="q-lay">
+              <div class="q-as">
+                <span class="grens" style="top:20%"><b>BOVENGRENS 60</b></span>
+                <span class="grens" style="top:80%"><b>ONDERGRENS 35</b></span>
+                <div class="vak uit"><b>64</b><small>PEIL</small></div>
+                <div class="vak"><b>55</b><small>PEIL</small></div>
+                <div class="vak"><b>46</b><small>PEIL</small></div>
+                <div class="vak"><b>38</b><small>PEIL</small></div>
+                <div class="vak bodem"><b>30</b><small>PEIL</small></div>
+              </div>
+
+              <div class="q-oefs">
+                <div class="q-oef boven">
+                  <div>
+                    <h3>Opstaan zonder handen</h3>
+                    <p>Van een gewone keukenstoel: voeten naar achteren, neus boven de knieën, en
+                      dan omhoog zonder de leuning te gebruiken.</p>
+                    <div class="merkregel2">BOVEN HET PEIL — NOG NIET DEZE WEEK</div>
+                  </div>
+                  <div class="dos"><b>—</b><span>WEEK 5<br/>OF LATER</span></div>
+                </div>
+
+                <div class="q-oef inband">
+                  <div>
+                    <h3>Eén been, tellen tot tien</h3>
+                    <p>Sta bij het aanrecht met één vinger aan het blad. Til één voet los en tel
+                      rustig tot tien. Daarna het andere been.</p>
+                    <div class="merkregel2">IN DE BAND — HET ZWAARSTE VAN DEZE WEEK</div>
+                  </div>
+                  <div class="dos"><b>3 + 3</b><span>LINKS<br/>RECHTS</span></div>
+                </div>
+
+                <div class="q-oef inband">
+                  <div>
+                    <h3>Op uw tenen en langzaam zakken</h3>
+                    <p>Handen licht op het aanrecht, niet leunen. Kom rustig omhoog en laat de
+                      hakken daarna langzaam zakken. Het zakken is de oefening.</p>
+                    <div class="merkregel2">OP HET STREEFPEIL — DRAAGT DE WEEK</div>
+                  </div>
+                  <div class="dos"><b>15×</b><span>ELKE<br/>OCHTEND</span></div>
+                </div>
+
+                <div class="q-oef inband">
+                  <div>
+                    <h3>Open boek, zittend</h3>
+                    <p>Op de rand van een stoel, armen gekruist voor de borst. Draai uw
+                      bovenlichaam rustig naar één kant en kom weer terug.</p>
+                    <div class="merkregel2">ONDERIN DE BAND — MAG OP EEN MATIGE DAG</div>
+                  </div>
+                  <div class="dos"><b>6×</b><span>PER<br/>KANT</span></div>
+                </div>
+
+                <div class="q-oef bodem">
+                  <div>
+                    <h3>Knie naar de borst, liggend</h3>
+                    <p>Op bed, vóór u opstaat. Trek één knie rustig naar u toe, tel tot vijf, en
+                      daarna het andere been.</p>
+                    <div class="merkregel2">DE BODEM — DIT KAN OP ELKE DAG, OOK DE SLECHTSTE</div>
+                  </div>
+                  <div class="dos"><b>8×</b><span>PER<br/>BEEN</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="q-reeks">
+              <div class="titel">
+                <h4>UW AFLEZING — VEERTIEN DAGEN</h4>
+                <span>Zet elke dag één streep op de hoogte waar het water stond.</span>
+              </div>
+              <div class="q-latjes">
+                <div class="as" aria-hidden="true">
+                  <i style="top:8%"></i><b style="top:8%">70</b>
+                  <i style="top:30%"></i><b style="top:30%">60</b>
+                  <i style="top:56%"></i><b style="top:56%">48</b>
+                  <i style="top:78%"></i><b style="top:78%">35</b>
+                </div>
+                <div class="l vb"><span class="b1" style="top:30%"></span><span class="b1" style="top:78%"></span><b>ma</b></div>
+                <div class="l vb"><span class="b1" style="top:30%"></span><span class="b1" style="top:78%"></span><b>di</b></div>
+                <div class="l vb"><span class="b1" style="top:30%"></span><span class="b1" style="top:78%"></span><b>wo</b></div>
+                <div class="l vb"><span class="b1" style="top:30%"></span><span class="b1" style="top:78%"></span><b>do</b></div>
+                <div class="l vb"><span class="b1" style="top:30%"></span><span class="b1" style="top:78%"></span><b>vr</b></div>
+                <div class="l vb"><span class="b1" style="top:30%"></span><span class="b1" style="top:78%"></span><b>za</b></div>
+                <div class="l vb"><span class="b1" style="top:30%"></span><span class="b1" style="top:78%"></span><b>zo</b></div>
+                <div class="l vb"><span class="b1" style="top:30%"></span><span class="b1" style="top:78%"></span><b>ma</b></div>
+                <div class="l vb"><span class="b1" style="top:30%"></span><span class="b1" style="top:78%"></span><b>di</b></div>
+                <div class="l vb"><span class="b1" style="top:30%"></span><span class="b1" style="top:78%"></span><b>wo</b></div>
+                <div class="l vb"><span class="b1" style="top:30%"></span><span class="b1" style="top:78%"></span><b>do</b></div>
+                <div class="l vb"><span class="b1" style="top:30%"></span><span class="b1" style="top:78%"></span><b>vr</b></div>
+                <div class="l vb"><span class="b1" style="top:30%"></span><span class="b1" style="top:78%"></span><b>za</b></div>
+                <div class="l vb"><span class="b1" style="top:30%"></span><span class="b1" style="top:78%"></span><b>zo</b></div>
+              </div>
+            </div>
+
+            <div class="q-voet">
+              <div>
+                <h4>ALS HET DRIE DAGEN TE HOOG STAAT</h4>
+                <p>Dat is geen fout — een golf hoort erbij. Blijft het staan, bel dan gerust; dan
+                  gaat de band omlaag in plaats van u. En staat er een week lang alleen de bodem:
+                  ook dat is een geldige week, en ook die neemt u gewoon mee.</p>
+              </div>
+              <div class="prak">
+                <b>Fysiotherapie de Boskant</b>
+                RIETLAAN 12 · 3812 AB<br/>
+                TELEFOON 033 — 461 22 08<br/>
+                VOLGENDE AFLEZING 07.09.2026
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div>
+      <h4>DE GEDACHTE</h4>
+      <p>Een lijst vraagt of u het gedaan heeft. Een lat vraagt hoe hoog het stond. Alleen de tweede
+        vraag kent een antwoord dat te hoog kan zijn — en dat is precies de vraag die een
+        fysiotherapeut wil stellen.</p>
+    </div>
+    <div>
+      <h4>WAAR HET VANDAAN KOMT</h4>
+      <ul>
+        <li>Geëmailleerde peilschalen aan Nederlandse kades: email op gietijzer, decimeterstrepen, boutgaten</li>
+        <li>Het Normaal Amsterdams Peil en de ruim 35.000 peilmerken, tot op de vaste zandlaag</li>
+        <li>Streefpeil, bovengrens en ondergrens uit het waterschapsbeheer — het water is nooit klaar</li>
+        <li>Negentiende-eeuwse grotesken op sluis- en gemaalborden</li>
+        <li>Belasting tegenover belastbaarheid: het enige model waarin te weinig óók schade is</li>
+      </ul>
+    </div>
+    <div>
+      <h4>NAAST DE KAART</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de ontwerpgalerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var f=Math.min(1,schaal.clientWidth/blad.offsetWidth);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

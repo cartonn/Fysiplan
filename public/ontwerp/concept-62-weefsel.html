@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 62 — Weefsel · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 62 — WEEFSEL
+   ------------------------------------------------------------
+   Uw week is geen lijst. Het is een weefsel.
+
+   Een wever begint niet met een lijst handelingen. Hij begint
+   met een PATROON — een weefschema — en dat schema heeft al
+   twee eeuwen dezelfde vier delen:
+
+     · DE INSNOERING (threading), bovenaan: welke draad door
+       welke schacht loopt. Dat wordt één keer ingesteld en
+       verandert daarna niet meer. Dat is de SCHERING.
+     · DE BINDING (tie-up), rechtsboven: welke schachten samen
+       omhoog gaan als je één trapper indrukt. Combinaties.
+     · DE TRAPVOLGORDE (treadling), in de rechterkolom: in
+       welke volgorde je die trappers indrukt. Dat is de TIJD.
+     · HET WEEFBEELD (drawdown), het grote veld: wat er
+       feitelijk ontstaat als je dat doet.
+
+   Leg daar een oefenprogramma naast en het past griezelig
+   precies. De oefeningen zijn de schering: één keer gekozen
+   door de fysiotherapeut, staand voor de hele lap. De dagen
+   zijn de inslag: die komen er één voor één bij, altijd van
+   boven naar beneden, en je kunt er geen overslaan zonder dat
+   het zichtbaar wordt. De ochtend- en avondronde zijn de
+   binding. En het weefbeeld — het grote veld dat langzaam
+   volloopt — dat is de behandeling zelf.
+
+   WAAROM DIT BETER IS DAN EEN AFVINKLIJST. Een lijst vertelt
+   je wat je moet doen. Een lap vertelt je wat je gemaakt hebt.
+   Dat is een ander gesprek. Na drie weken kijkt de patiënt niet
+   naar zeven vinkjes maar naar een stuk stof met een eigen
+   structuur — en naar de plek waar drie dagen niets gebeurde,
+   die daar als een open baan in ligt.
+
+   EN DAT IS PRECIES DE JUISTE TOON. In het weven wordt een
+   fout niet uitgegumd. Je kunt niet terug: de inslag zit vast
+   onder tweehonderd andere draden. Je weeft door, en de fout
+   blijft in de lap, en dat is normaal — elke handgeweven lap
+   heeft ze. Geen enkele oefenkaart durft dat te zeggen. Deze
+   wel: DE OPEN BAAN BLIJFT STAAN, EN U WEEFT VERDER.
+
+   VORM. Ongebleekt linnen als grond, indigo voor wat de
+   fysiotherapeut zet, meekraprood voor wat de patiënt zelf
+   invult. Twee kleuren, allebei donker genoeg om in zwart-wit
+   te overleven — en het onderscheid ligt bovendien in de VORM
+   van het merk (vol vlak tegenover schuine arcering), niet
+   alleen in de kleur.
+
+   HET ANKER. Een raster is geen leesbare tekst. Daarom staat
+   links een gewone, rustige kolom: vijf oefeningen, groot
+   gezet, in normale zinnen. Het raster staat rechts en heeft
+   geen woord nodig. Wie het schema niet snapt, mist niets —
+   die leest gewoon de linkerkolom.
+   ============================================================ */
+
+:root{
+  --linnen:#efe9dc;
+  --linnen-diep:#e4dccb;
+  --vlak:#faf7f0;
+  --inkt:#211c16;
+  --inkt-2:#4a4136;
+  --grijs:#7d7264;
+  --lijn:#cfc4ae;
+  --lijn-fijn:#ded5c2;
+  --indigo:#24354f;
+  --indigo-licht:#4a6188;
+  --meekrap:#a34331;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --serif:Charter,"Iowan Old Style",Georgia,serif;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:70px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.66 var(--sans);color:var(--inkt-2);background:var(--linnen)}
+img{max-width:100%;display:block}
+a{color:var(--indigo)}
+:focus-visible{outline:3px solid var(--indigo);outline-offset:3px}
+.binnen{max-width:1180px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--indigo);color:#b3bccb;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border:1px solid #46587a;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#b3bccb;text-decoration:none;padding:5px 2px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--meekrap)}
+.labbalk a.terug{color:#fff}
+@media (max-width:720px){.labbalk{flex-wrap:wrap;gap:10px}.labbalk .rek{display:none}}
+
+/* ---------- secties ---------- */
+.scherm{padding:var(--s6) 0;border-top:1px solid var(--lijn)}
+.scherm.linnen{background:var(--linnen-diep)}
+.scherm.wit{background:var(--vlak)}
+.schermkop{margin-bottom:var(--s5);max-width:74ch}
+.schermkop b{display:inline-block;font:700 10px/1 var(--mono);letter-spacing:.24em;
+  text-transform:uppercase;color:var(--meekrap);margin-bottom:var(--s3)}
+.schermkop h2{font:600 clamp(27px,3.5vw,41px)/1.1 var(--sans);letter-spacing:-.032em;color:var(--inkt)}
+.schermkop p{margin-top:var(--s3);font:400 18px/1.62 var(--serif);color:var(--inkt-2);max-width:64ch}
+
+/* ---------- raster-primitieven ---------- */
+.vak{width:100%;min-width:0;aspect-ratio:1;border-right:1px solid var(--lijn-fijn);
+  border-bottom:1px solid var(--lijn-fijn);background:transparent}
+.vak.schering{background:var(--indigo)}
+.vak.inslag{background:repeating-linear-gradient(45deg,var(--meekrap) 0 2px,transparent 2px 5px);
+  box-shadow:0 0 0 1px rgba(163,67,49,.35) inset}
+.vak.vol{background:var(--meekrap)}
+
+/* ---------- 1 · landing ---------- */
+#landing{background:var(--linnen);border-top:0}
+.merkregel{display:flex;align-items:center;gap:11px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:30px;height:30px;background:var(--indigo);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--sans)}
+.merkregel .naam{font:600 15px/1 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+.merkregel .pad{font:600 11px/1 var(--mono);letter-spacing:.2em;color:var(--grijs)}
+
+.landkop{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--s6);align-items:start}
+.landkop > *,.schemalay > *{min-width:0}
+@media (max-width:980px){.landkop{grid-template-columns:1fr;gap:var(--s5)}}
+.landkop h1{font:600 clamp(35px,5vw,60px)/1.05 var(--sans);letter-spacing:-.036em;color:var(--inkt)}
+.landkop h1 em{display:block;font-style:normal;color:var(--meekrap);margin-top:.16em}
+.landkop p{margin-top:var(--s4);font:400 18.5px/1.66 var(--serif);color:var(--inkt-2);max-width:52ch}
+.landkop p b{font-weight:700;color:var(--inkt)}
+
+/* het schema in het klein: de vier delen van een weefschema */
+.schema{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s4)}
+.schema h3{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--grijs);margin-bottom:var(--s4)}
+.schemalay{display:grid;grid-template-columns:1fr 78px;grid-template-rows:auto 1fr;gap:6px;
+  align-items:start}
+.strook{display:grid;grid-template-columns:repeat(12,1fr);border-top:1px solid var(--lijn);
+  border-left:1px solid var(--lijn)}
+.binding{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--lijn);
+  border-left:1px solid var(--lijn)}
+.veld{display:grid;grid-template-columns:repeat(12,1fr);border-top:1px solid var(--lijn);
+  border-left:1px solid var(--lijn)}
+.trap{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--lijn);
+  border-left:1px solid var(--lijn)}
+.schemalabels{display:grid;grid-template-columns:1fr 78px;gap:6px;margin-top:10px}
+.schemalabels span{font:600 9px/1.3 var(--mono);letter-spacing:.12em;color:var(--grijs)}
+.schema .leg{margin-top:var(--s4);display:grid;gap:12px}
+.schema .leg div{display:flex;gap:11px;align-items:flex-start}
+.schema .leg i{width:22px;height:22px;display:block;flex:none;margin-top:2px}
+.schema .leg i.a{background:var(--indigo)}
+.schema .leg i.b{background:repeating-linear-gradient(45deg,var(--meekrap) 0 2px,transparent 2px 5px);
+  box-shadow:0 0 0 1px rgba(163,67,49,.4) inset}
+.schema .leg p{margin:0;font-size:14.5px;line-height:1.5}
+.schema .leg b{color:var(--inkt);font-weight:700}
+
+/* vier delen */
+.vierdelen{margin-top:var(--s6);display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3)}
+@media (max-width:1000px){.vierdelen{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:580px){.vierdelen{grid-template-columns:1fr}}
+.vierdelen div{background:var(--vlak);border-top:3px solid var(--indigo);padding:var(--s3) var(--s4) var(--s4)}
+.vierdelen h4{font:700 9.5px/1.3 var(--mono);letter-spacing:.16em;color:var(--meekrap);margin-bottom:10px}
+.vierdelen strong{display:block;font:600 19px/1.24 var(--sans);letter-spacing:-.02em;color:var(--inkt);margin-bottom:9px}
+.vierdelen p{font-size:15px;line-height:1.56}
+
+/* ---------- 2 · kiezer ---------- */
+.kiezerhoofd{display:grid;grid-template-columns:1fr 300px;gap:var(--s5);align-items:start}
+@media (max-width:980px){.kiezerhoofd{grid-template-columns:1fr}}
+.rooster{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3)}
+@media (max-width:1040px){.rooster{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.rooster{grid-template-columns:1fr}}
+.oef{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s3);
+  display:flex;flex-direction:column;gap:11px}
+.oef.gekozen{border-color:var(--indigo);box-shadow:inset 4px 0 0 var(--indigo)}
+.oef .beeld{background:var(--linnen);display:flex;align-items:center;justify-content:center;padding:9px}
+.oef .beeld img{height:112px;width:auto;mix-blend-mode:multiply}
+.oef .draadletter{display:flex;align-items:center;gap:9px}
+.oef .draadletter b{width:26px;height:26px;background:var(--indigo);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--sans)}
+.oef .draadletter span{font:600 10px/1 var(--mono);letter-spacing:.16em;color:var(--grijs)}
+.oef h5{font:600 18px/1.24 var(--sans);letter-spacing:-.02em;color:var(--inkt)}
+.oef .maat{font:600 12px/1 var(--mono);letter-spacing:.07em;color:var(--grijs)}
+.oef button{border:1px solid var(--inkt);background:transparent;cursor:pointer;
+  padding:10px 12px;font:600 13.5px/1 var(--sans);color:var(--inkt)}
+.oef.gekozen button{background:var(--indigo);border-color:var(--indigo);color:#fff}
+
+.scheringbalk{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s4)}
+.scheringbalk h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--grijs);margin-bottom:var(--s3)}
+.scheringbalk .draden{display:flex;gap:5px;margin-bottom:var(--s3)}
+.scheringbalk .draden i{flex:1;height:56px;background:var(--indigo);position:relative}
+.scheringbalk .draden i.leeg{background:var(--linnen-diep);
+  box-shadow:0 0 0 1px var(--lijn) inset}
+.scheringbalk .draden i b{position:absolute;left:0;right:0;bottom:-19px;text-align:center;
+  font:700 11px/1 var(--mono);color:var(--grijs)}
+.scheringbalk p{margin-top:26px;font:400 15px/1.55 var(--serif);color:var(--inkt-2)}
+.scheringbalk p b{color:var(--inkt);font-weight:700}
+.knoprij{display:flex;gap:10px;flex-wrap:wrap;margin-top:var(--s4)}
+.kn{border:1px solid var(--indigo);background:var(--indigo);color:#fff;cursor:pointer;
+  text-decoration:none;display:inline-block;padding:12px 18px;font:600 14px/1 var(--sans)}
+.kn.leeg{background:transparent;color:var(--indigo)}
+
+/* ---------- 3 · cliëntkaart ---------- */
+.kaartlay{display:grid;grid-template-columns:1fr 330px;gap:var(--s5);align-items:start}
+@media (max-width:1020px){.kaartlay{grid-template-columns:1fr}}
+.lap{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s4)}
+.lapkop{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--s3);
+  flex-wrap:wrap;padding-bottom:var(--s3);border-bottom:2px solid var(--inkt);margin-bottom:var(--s4)}
+.lapkop h3{font:600 26px/1.14 var(--sans);letter-spacing:-.028em;color:var(--inkt)}
+.lapkop .sub{margin-top:6px;font:400 15.5px/1.5 var(--serif);color:var(--grijs)}
+.lapkop .code{font:600 12px/1.7 var(--mono);letter-spacing:.1em;color:var(--grijs);text-align:right}
+
+/* het weefbeeld op het scherm */
+.weefbeeld{display:grid;grid-template-columns:78px repeat(5,1fr);gap:0;
+  border-top:1px solid var(--lijn);border-left:1px solid var(--lijn)}
+.weefbeeld .kop{border-right:1px solid var(--lijn);border-bottom:2px solid var(--inkt);
+  padding:9px 6px;text-align:center;font:700 15px/1 var(--sans);color:var(--indigo);background:var(--linnen)}
+.weefbeeld .kop.dag{font:700 9.5px/1.2 var(--mono);letter-spacing:.1em;color:var(--grijs);text-align:left}
+.weefbeeld .dagcel{border-right:1px solid var(--lijn);border-bottom:1px solid var(--lijn-fijn);
+  padding:0 8px;display:flex;align-items:center;font:600 11.5px/1 var(--mono);
+  letter-spacing:.05em;color:var(--grijs);background:var(--linnen);height:30px}
+.weefbeeld .cel{border-right:1px solid var(--lijn-fijn);border-bottom:1px solid var(--lijn-fijn);height:30px}
+.weefbeeld .cel.gedaan{background:var(--meekrap)}
+.weefbeeld .cel.half{background:repeating-linear-gradient(45deg,var(--meekrap) 0 2px,transparent 2px 5px)}
+.weefbeeld .weekrand{border-bottom:2px solid var(--inkt)}
+.weefbeeld .dagcel.open{color:var(--meekrap)}
+
+.lapvoet{margin-top:var(--s4);display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+@media (max-width:700px){.lapvoet{grid-template-columns:1fr}}
+.lapvoet h4{font:700 9.5px/1 var(--mono);letter-spacing:.18em;color:var(--grijs);margin-bottom:9px}
+.lapvoet p{font:400 15px/1.55 var(--serif)}
+.lapvoet b{color:var(--inkt);font-weight:700}
+
+.zijkolom > div{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s4)}
+.zijkolom > div + div{margin-top:var(--s3)}
+.zijkolom h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--grijs);margin-bottom:var(--s3)}
+.zijkolom p{font-size:15.5px;line-height:1.58}
+.zijkolom b{color:var(--inkt);font-weight:700}
+.zijkolom .openbaan{margin-top:var(--s3);padding:14px;background:var(--linnen);
+  border-left:4px solid var(--meekrap);font:400 15px/1.55 var(--serif)}
+
+.toestanden{margin-top:var(--s5);display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3)}
+@media (max-width:960px){.toestanden{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.toestanden{grid-template-columns:1fr}}
+.toestanden div{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s3) var(--s4) var(--s4)}
+.toestanden h5{font:700 9.5px/1 var(--mono);letter-spacing:.18em;color:var(--meekrap);margin-bottom:10px}
+.toestanden p{font-size:14.5px;line-height:1.5}
+
+/* ---------- 4 · printkaart ---------- */
+.printuitleg{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-bottom:var(--s5)}
+@media (max-width:940px){.printuitleg{grid-template-columns:1fr}}
+.printuitleg div{border-top:3px solid var(--meekrap);padding-top:12px}
+.printuitleg h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--grijs);margin-bottom:10px}
+.printuitleg p{font-size:15.5px;line-height:1.58}
+.printuitleg b{color:var(--inkt);font-weight:700}
+
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;position:relative;
+  box-shadow:0 24px 60px rgba(33,28,22,.24);transform-origin:top left}
+@media (max-width:860px){.bladschaal{max-width:100%}}
+.blad .rand{position:absolute;inset:0;padding:11mm 12mm 8mm;display:flex;flex-direction:column}
+
+.w-kop{display:flex;justify-content:space-between;align-items:flex-start;gap:6mm;
+  border-bottom:.8mm solid #24354f;padding-bottom:3mm}
+.w-kop h1{font:600 8mm/1.04 var(--sans);letter-spacing:-.032em;color:#24354f}
+.w-kop .wie{margin-top:2mm;font:400 3.6mm/1.4 var(--serif);color:#3a3229}
+.w-kop .r{text-align:right;font:600 2.5mm/1.75 var(--mono);letter-spacing:.1em;color:#6b6053;white-space:nowrap}
+
+.w-lay{flex:1;display:grid;grid-template-columns:84mm 1fr;gap:6mm;margin-top:4mm}
+
+/* linkerkolom: gewone leesbare tekst */
+.w-schering{display:flex;flex-direction:column}
+.w-schering .titel{font:700 2.6mm/1 var(--mono);letter-spacing:.16em;color:#6b6053;margin-bottom:2.6mm}
+.w-draad{display:grid;grid-template-columns:9mm 1fr;gap:3.4mm;padding:3mm 0;
+  border-bottom:.25mm solid #cfc4ae;flex:1}
+.w-draad:last-child{border-bottom:0}
+.w-draad .let{width:9mm;height:9mm;background:#24354f;color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 5.2mm/1 var(--sans)}
+.w-draad h3{font:600 4.6mm/1.16 var(--sans);letter-spacing:-.022em;color:#151310}
+.w-draad p{margin-top:1.4mm;font:400 3.4mm/1.4 var(--serif);color:#2b251e}
+.w-draad .dos{margin-top:1.6mm;font:700 3.4mm/1 var(--mono);letter-spacing:.06em;color:#a34331}
+
+/* rechterkolom: het weefschema */
+.w-raster{display:flex;flex-direction:column}
+.w-raster .titel{font:700 2.6mm/1 var(--mono);letter-spacing:.16em;color:#6b6053;margin-bottom:2.6mm;
+  display:flex;justify-content:space-between}
+.w-grid{flex:1;display:grid;grid-template-columns:11mm repeat(5,1fr);
+  border-top:.35mm solid #24354f;border-left:.35mm solid #24354f}
+.w-grid .hk{border-right:.35mm solid #24354f;border-bottom:.6mm solid #24354f;
+  text-align:center;font:700 4mm/1 var(--sans);color:#24354f;padding:1.6mm 0;background:#eef0f4}
+.w-grid .hk.d{font:700 2.3mm/1.2 var(--mono);letter-spacing:.08em;color:#6b6053;
+  display:flex;align-items:flex-end;justify-content:flex-start;padding-left:1.2mm}
+.w-grid .dg{border-right:.35mm solid #24354f;border-bottom:.2mm solid #cfc4ae;
+  display:flex;align-items:center;padding-left:1.6mm;font:600 2.6mm/1 var(--mono);
+  letter-spacing:.04em;color:#4a4136}
+.w-grid .cl{border-right:.2mm solid #ded5c2;border-bottom:.2mm solid #cfc4ae}
+.w-grid .wk{border-bottom:.6mm solid #24354f !important}
+.w-grid .cl.g{background:#a34331}
+.w-grid .cl.h{background:repeating-linear-gradient(45deg,#a34331 0 .5mm,#fff .5mm 1.3mm)}
+
+.w-voet{border-top:.8mm solid #24354f;padding-top:3mm;margin-top:3mm;
+  display:grid;grid-template-columns:1fr .95fr 1.05fr;gap:5mm}
+.w-voet h4{font:700 2.4mm/1 var(--mono);letter-spacing:.16em;color:#6b6053;margin-bottom:1.8mm}
+.w-voet p{font:400 3.3mm/1.44 var(--serif);color:#211f1b}
+.w-voet .merk{display:flex;gap:2.6mm;align-items:center;margin-top:2mm}
+.w-voet .merk i{width:4.6mm;height:4.6mm;border:.3mm solid #a34331;display:block}
+.w-voet .merk i.g{background:#a34331}
+.w-voet .merk i.h{background:repeating-linear-gradient(45deg,#a34331 0 .5mm,#fff .5mm 1.3mm)}
+.w-voet .merk span{font:600 2.5mm/1.35 var(--mono);letter-spacing:.06em;color:#4a4136}
+.w-voet .prak{text-align:right;font:600 2.6mm/1.7 var(--mono);letter-spacing:.08em;color:#6b6053}
+.w-voet .prak b{display:block;font:600 3.6mm/1.3 var(--sans);color:#151310;letter-spacing:-.01em}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--indigo);color:#a7b1c2;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border-top:2px solid #46587a;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:9px}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT — links de leesbare kolom, rechts het weefschema. De
+   twee merken verschillen niet alleen in kleur maar ook in
+   VORM: vol vlak tegenover schuine arcering. Wie zwart-wit
+   print houdt dus twee onderscheidbare merken over.
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .schermkop,.printuitleg{display:none !important}
+  .scherm{padding:0 !important;background:#fff !important;border:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 62</span>
+  <strong style="font:600 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Weefsel</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 62 · WEEFSEL</span>
+    </div>
+
+    <div class="landkop">
+      <div>
+        <h1>Uw week is geen lijst.<em>Het is een weefsel.</em></h1>
+        <p>Een wever begint niet met een lijstje handelingen maar met een <b>weefschema</b>. Daarin
+          staat wat vastligt — welke draad door welke schacht loopt — en wat er dag na dag
+          bijkomt. De draden die vastliggen heten de schering. Die worden één keer opgezet en
+          veranderen niet meer.</p>
+        <p>Uw oefeningen zijn de schering: <b>één keer gekozen, staand voor de hele lap</b>. De
+          dagen zijn de inslag; die komen er één voor één bij, altijd van boven naar beneden, en er
+          is er geen over te slaan zonder dat het te zien is. Wat eronder ontstaat is geen
+          afvinklijst maar <b>een stuk stof met een eigen structuur</b>.</p>
+      </div>
+
+      <div class="schema">
+        <h3>EEN WEEFSCHEMA — DE VIER DELEN, ZOALS ZE AL TWEE EEUWEN STAAN</h3>
+        <div class="schemalay">
+          <div class="strook" aria-hidden="true">
+            <span class="vak schering"></span><span class="vak"></span><span class="vak"></span><span class="vak schering"></span>
+            <span class="vak"></span><span class="vak schering"></span><span class="vak"></span><span class="vak"></span>
+            <span class="vak schering"></span><span class="vak"></span><span class="vak schering"></span><span class="vak"></span>
+          </div>
+          <div class="binding" aria-hidden="true">
+            <span class="vak schering"></span><span class="vak"></span><span class="vak schering"></span>
+            <span class="vak"></span><span class="vak schering"></span><span class="vak"></span>
+          </div>
+          <div class="veld" aria-hidden="true">
+            <span class="vak vol"></span><span class="vak"></span><span class="vak inslag"></span><span class="vak vol"></span>
+            <span class="vak"></span><span class="vak vol"></span><span class="vak"></span><span class="vak inslag"></span>
+            <span class="vak vol"></span><span class="vak"></span><span class="vak vol"></span><span class="vak"></span>
+
+            <span class="vak"></span><span class="vak vol"></span><span class="vak"></span><span class="vak inslag"></span>
+            <span class="vak vol"></span><span class="vak"></span><span class="vak vol"></span><span class="vak"></span>
+            <span class="vak"></span><span class="vak vol"></span><span class="vak"></span><span class="vak vol"></span>
+
+            <span class="vak vol"></span><span class="vak"></span><span class="vak vol"></span><span class="vak"></span>
+            <span class="vak inslag"></span><span class="vak vol"></span><span class="vak"></span><span class="vak vol"></span>
+            <span class="vak"></span><span class="vak"></span><span class="vak vol"></span><span class="vak"></span>
+
+            <span class="vak"></span><span class="vak"></span><span class="vak"></span><span class="vak"></span>
+            <span class="vak"></span><span class="vak"></span><span class="vak"></span><span class="vak"></span>
+            <span class="vak"></span><span class="vak"></span><span class="vak"></span><span class="vak"></span>
+
+            <span class="vak vol"></span><span class="vak"></span><span class="vak vol"></span><span class="vak inslag"></span>
+            <span class="vak"></span><span class="vak vol"></span><span class="vak"></span><span class="vak vol"></span>
+            <span class="vak vol"></span><span class="vak"></span><span class="vak vol"></span><span class="vak"></span>
+          </div>
+          <div class="trap" aria-hidden="true">
+            <span class="vak inslag"></span><span class="vak"></span><span class="vak"></span>
+            <span class="vak"></span><span class="vak inslag"></span><span class="vak"></span>
+            <span class="vak"></span><span class="vak"></span><span class="vak inslag"></span>
+            <span class="vak"></span><span class="vak"></span><span class="vak"></span>
+            <span class="vak inslag"></span><span class="vak"></span><span class="vak"></span>
+          </div>
+        </div>
+        <div class="schemalabels">
+          <span>INSNOERING — WAT VASTLIGT</span>
+          <span>BINDING</span>
+        </div>
+        <div class="schemalabels">
+          <span>WEEFBEELD — WAT ERUIT KOMT</span>
+          <span>TRAPVOLGORDE</span>
+        </div>
+
+        <div class="leg">
+          <div>
+            <i class="a" aria-hidden="true"></i>
+            <p><b>Indigo — wat de fysiotherapeut zet.</b> De schering. Ligt vast tot de volgende
+              afspraak en verandert niet halverwege de week.</p>
+          </div>
+          <div>
+            <i class="b" aria-hidden="true"></i>
+            <p><b>Meekrap — wat u zelf inslaat.</b> Eén vakje per oefening per dag. Vol als het
+              helemaal lukte, gearceerd als het half ging.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vierdelen">
+      <div>
+        <h4>INSNOERING</h4>
+        <strong>De oefeningen</strong>
+        <p>Vijf draden, één keer opgezet. Ze staan in de linkerkolom in gewone zinnen, groot
+          genoeg om zonder bril te lezen. Wie het raster nooit begrijpt, mist niets.</p>
+      </div>
+      <div>
+        <h4>BINDING</h4>
+        <strong>De rondes</strong>
+        <p>Welke oefeningen samen één ronde zijn: de ochtend bij het aanrecht, de avond op bed.
+          Combinaties, geen losse taken.</p>
+      </div>
+      <div>
+        <h4>TRAPVOLGORDE</h4>
+        <strong>De dagen</strong>
+        <p>Achtentwintig regels, van boven naar beneden. De tijd loopt hier maar één kant op —
+          precies zoals op een weefgetouw.</p>
+      </div>
+      <div>
+        <h4>WEEFBEELD</h4>
+        <strong>De behandeling</strong>
+        <p>Het veld dat volloopt. Na drie weken is dat geen lijst met vinkjes meer maar een lap
+          met een structuur die van niemand anders is.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm linnen" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2 · de oefeningen-kiezer</b>
+      <h2>Kiezen is de schering opzetten</h2>
+      <p>De fysiotherapeut zet draden op, geen taken. Elke gekozen oefening krijgt een letter — A
+        tot en met E — en die letter blijft van hem, de hele behandeling lang. Boven de vijf draden
+        wordt de lap te dicht: dan is er geen dag meer waarop het allemaal past, en dat zegt de
+        balk rechts eerlijk.</p>
+    </div>
+
+    <div class="kiezerhoofd">
+      <div>
+        <div class="rooster">
+          <article class="oef gekozen">
+            <div class="beeld"><img src="/images/rug/knie-naar-borst-liggend-line-v1.png" alt="Lijntekening: knie naar borst, liggend"/></div>
+            <div class="draadletter"><b>A</b><span>DRAAD 1 · OCHTEND</span></div>
+            <h5>Knie naar de borst, liggend</h5>
+            <span class="maat">8× PER BEEN · OP BED</span>
+            <button>In de schering</button>
+          </article>
+
+          <article class="oef gekozen">
+            <div class="beeld"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Lijntekening: op de tenen komen"/></div>
+            <div class="draadletter"><b>B</b><span>DRAAD 2 · OCHTEND</span></div>
+            <h5>Op uw tenen en langzaam zakken</h5>
+            <span class="maat">15× · BIJ HET AANRECHT</span>
+            <button>In de schering</button>
+          </article>
+
+          <article class="oef gekozen">
+            <div class="beeld"><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Lijntekening: eenbeenstand met steun"/></div>
+            <div class="draadletter"><b>C</b><span>DRAAD 3 · OCHTEND</span></div>
+            <h5>Eén been, tellen tot tien</h5>
+            <span class="maat">3× LINKS · 3× RECHTS</span>
+            <button>In de schering</button>
+          </article>
+
+          <article class="oef gekozen">
+            <div class="beeld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Lijntekening: opstaan vanaf een stoel"/></div>
+            <div class="draadletter"><b>D</b><span>DRAAD 4 · MIDDAG</span></div>
+            <h5>Opstaan zonder handen</h5>
+            <span class="maat">10× · KEUKENSTOEL</span>
+            <button>In de schering</button>
+          </article>
+
+          <article class="oef gekozen">
+            <div class="beeld"><img src="/images/rug/open-boek-zittend-line-v1.png" alt="Lijntekening: open boek, zittend"/></div>
+            <div class="draadletter"><b>E</b><span>DRAAD 5 · AVOND</span></div>
+            <h5>Open boek, zittend</h5>
+            <span class="maat">6× PER KANT · RUSTIG</span>
+            <button>In de schering</button>
+          </article>
+
+          <article class="oef">
+            <div class="beeld"><img src="/images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png" alt="Lijntekening: achterwaarts stappen met steun"/></div>
+            <div class="draadletter"><b style="background:var(--linnen-diep);color:var(--grijs)">·</b><span>NOG GEEN DRAAD</span></div>
+            <h5>Achterwaarts stappen met steun</h5>
+            <span class="maat">10 STAPPEN · GANG</span>
+            <button>Toevoegen — wordt draad F</button>
+          </article>
+        </div>
+      </div>
+
+      <div class="scheringbalk">
+        <h4>DE SCHERING — 5 VAN 6</h4>
+        <div class="draden" aria-hidden="true">
+          <i><b>A</b></i><i><b>B</b></i><i><b>C</b></i><i><b>D</b></i><i><b>E</b></i><i class="leeg"><b>F</b></i>
+        </div>
+        <p>Zes draden is de grens. Niet omdat het scherm vol is, maar omdat <b>een dag met zeven
+          oefeningen geen dag meer is</b> — dan slaat de patiënt er stilzwijgend twee over en weet
+          niemand welke.</p>
+        <p style="margin-top:14px">De letters liggen vast zolang de behandeling loopt. Verandert de
+          dosering van draad C, dan blijft het draad C: <b>de lap moet één lap blijven</b>.</p>
+        <div class="knoprij">
+          <a class="kn" href="#printkaart">Naar het schema</a>
+          <a class="kn leeg" href="#clientkaart">Cliëntkaart</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm wit" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3 · de digitale cliëntkaart</b>
+      <h2>De lap tot hier — en de open baan die erin zit</h2>
+      <p>Dit is geen voortgangsbalk. Een balk vat samen; een lap laat zien. U ziet in één blik dat
+        draad B bijna elke ochtend gehaald wordt, dat draad D het slechter doet zodra de week
+        begint, en dat er in week 2 drie dagen niets gebeurd is. <b>Die open baan wordt niet
+        weggepoetst.</b> Hij hoort bij de lap, zoals in elke handgeweven stof.</p>
+    </div>
+
+    <div class="kaartlay">
+      <div class="lap">
+        <div class="lapkop">
+          <div>
+            <h3>Mevrouw H. Bosma</h3>
+            <p class="sub">Lap 3 · week 1 tot en met 3 van de acht</p>
+          </div>
+          <div class="code">SCHERING 62-0447<br/>OPGEZET 10.08.2026</div>
+        </div>
+
+        <div class="weefbeeld">
+          <span class="kop dag">DAG</span>
+          <span class="kop">A</span><span class="kop">B</span><span class="kop">C</span>
+          <span class="kop">D</span><span class="kop">E</span>
+
+          <span class="dagcel">ma 10</span>
+          <span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel gedaan"></span>
+          <span class="dagcel">di 11</span>
+          <span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel half"></span><span class="cel gedaan"></span><span class="cel"></span>
+          <span class="dagcel">wo 12</span>
+          <span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel"></span><span class="cel gedaan"></span>
+          <span class="dagcel">do 13</span>
+          <span class="cel"></span><span class="cel gedaan"></span><span class="cel half"></span><span class="cel"></span><span class="cel gedaan"></span>
+          <span class="dagcel">vr 14</span>
+          <span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel gedaan"></span>
+          <span class="dagcel">za 15</span>
+          <span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel"></span><span class="cel"></span><span class="cel half"></span>
+          <span class="dagcel weekrand">zo 16</span>
+          <span class="cel gedaan weekrand"></span><span class="cel gedaan weekrand"></span><span class="cel weekrand"></span><span class="cel weekrand"></span><span class="cel gedaan weekrand"></span>
+
+          <span class="dagcel">ma 17</span>
+          <span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel half"></span><span class="cel"></span><span class="cel gedaan"></span>
+          <span class="dagcel open">di 18</span>
+          <span class="cel"></span><span class="cel"></span><span class="cel"></span><span class="cel"></span><span class="cel"></span>
+          <span class="dagcel open">wo 19</span>
+          <span class="cel"></span><span class="cel"></span><span class="cel"></span><span class="cel"></span><span class="cel"></span>
+          <span class="dagcel open">do 20</span>
+          <span class="cel"></span><span class="cel"></span><span class="cel"></span><span class="cel"></span><span class="cel"></span>
+          <span class="dagcel">vr 21</span>
+          <span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel"></span><span class="cel"></span><span class="cel half"></span>
+          <span class="dagcel">za 22</span>
+          <span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel half"></span><span class="cel gedaan"></span>
+          <span class="dagcel weekrand">zo 23</span>
+          <span class="cel gedaan weekrand"></span><span class="cel gedaan weekrand"></span><span class="cel gedaan weekrand"></span><span class="cel weekrand"></span><span class="cel gedaan weekrand"></span>
+
+          <span class="dagcel">ma 24</span>
+          <span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel gedaan"></span>
+          <span class="dagcel">di 25</span>
+          <span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel half"></span><span class="cel gedaan"></span>
+          <span class="dagcel">wo 26</span>
+          <span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel half"></span><span class="cel gedaan"></span><span class="cel gedaan"></span>
+          <span class="dagcel">do 27</span>
+          <span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel half"></span>
+          <span class="dagcel">vr 28</span>
+          <span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel gedaan"></span><span class="cel"></span><span class="cel gedaan"></span>
+          <span class="dagcel">za 29</span>
+          <span class="cel"></span><span class="cel"></span><span class="cel"></span><span class="cel"></span><span class="cel"></span>
+          <span class="dagcel weekrand">zo 30</span>
+          <span class="cel weekrand"></span><span class="cel weekrand"></span><span class="cel weekrand"></span><span class="cel weekrand"></span><span class="cel weekrand"></span>
+        </div>
+
+        <div class="lapvoet">
+          <div>
+            <h4>WAT DE LAP LAAT ZIEN</h4>
+            <p>Draad <b>B</b> loopt zonder onderbreking door — die zit in de ochtendroutine en gaat
+              vanzelf. Draad <b>D</b> valt weg zodra de week begint: opstaan zonder handen gebeurt
+              alleen in het weekend.</p>
+          </div>
+          <div>
+            <h4>DE OPEN BAAN, 18 TOT 20 AUGUSTUS</h4>
+            <p>Drie dagen niets. Die blijven leeg — <b>er is niets in te halen</b> en niemand vraagt
+              erom. In de lap is het een baan van drie regels, en daaronder loopt alles gewoon door.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="zijkolom">
+        <div>
+          <h4>WAT DE WEVER WEET</h4>
+          <p>Een fout gaat er niet meer uit. De inslagdraad zit vast onder tweehonderd andere; je
+            kunt niet terug, je weeft door. <b>Elke handgeweven lap heeft die plekken</b> — dat is
+            hoe je ziet dat hij met de hand gemaakt is.</p>
+          <div class="openbaan">Geen enkele oefenkaart durft dat te zeggen. Deze wel: de open baan
+            blijft staan, en u weeft verder.</div>
+        </div>
+        <div>
+          <h4>MEEKRAP EN INDIGO</h4>
+          <p>Twee kleuren, allebei donker genoeg voor een zwart-witprinter. En het verschil zit niet
+            alléén in de kleur: <b>vol vlak tegenover schuine arcering</b>. Wie geen kleur ziet,
+            ziet nog steeds twee merken.</p>
+        </div>
+        <div>
+          <h4>DE VOLGENDE LAP</h4>
+          <p>Elke vier weken wordt de lap afgeknipt en gaat hij mee naar de praktijk. De schering
+            blijft staan of wordt opnieuw opgezet — <b>en de oude lap wordt niet weggegooid</b>.</p>
+          <div class="knoprij">
+            <a class="kn" href="#printkaart">Nieuwe lap uitdraaien</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toestanden">
+      <div>
+        <h5>LEGE LAP</h5>
+        <p>Achtentwintig lege regels en vijf letters. De vorm staat er al voordat er iets in staat —
+          en dat is precies wat een opgezet getouw ook is.</p>
+      </div>
+      <div>
+        <h5>ÉÉN DRAAD</h5>
+        <p>Bij één oefening is het raster één kolom breed. Het schema verdwijnt niet, het wordt
+          smal: de linkerkolom draagt de kaart dan alleen.</p>
+      </div>
+      <div>
+        <h5>DOSERING GEWIJZIGD</h5>
+        <p>De letter blijft, de tekst verandert, en op de dag van de wijziging staat een dwarsstreep
+          in de kolom. De lap houdt zijn geschiedenis vast.</p>
+      </div>
+      <div>
+        <h5>AFGEKNIPT</h5>
+        <p>Vier weken vol: de lap wordt gesloten en krijgt een datum. De volgende begint schoon —
+          onder, niet over de vorige heen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 4 · de A4-printkaart</b>
+      <h2>Het schema — A4 staand, links leesbaar, rechts te weven</h2>
+      <p>Links vijf oefeningen in gewone, grote zinnen: <b>4,6 mm koppen, 3,4 mm schreeftekst</b>.
+        Rechts het weefbeeld — achtentwintig regels, één per dag, vijf kolommen, met een zware
+        regel tussen de weken. Er is niets in te vullen dan een streep met een pen, en dat is de
+        bedoeling: <b>het vel moet werken op een keukentafel, niet op een bureau</b>.</p>
+    </div>
+
+    <div class="printuitleg">
+      <div>
+        <h4>WAAROM 28 REGELS</h4>
+        <p>Vier weken. Korter en er ontstaat geen patroon; langer en het vakje wordt te klein voor
+          een pen. <b>Zeven millimeter per dag</b> is de ondergrens die een balpen aankan.</p>
+      </div>
+      <div>
+        <h4>WAAROM GEEN DATUMS VOORGEDRUKT</h4>
+        <p>De dagkolom is leeg op de eerste twee letters na. <b>De lap begint wanneer u begint</b> —
+          en niet op de maandag waarop hij toevallig uit de printer kwam.</p>
+      </div>
+      <div>
+        <h4>WAAROM TWEE MERKEN</h4>
+        <p>Vol vlak = helemaal gelukt, schuine streep = half. Meer soorten heeft niemand nodig, en
+          twee blijven ook <b>in zwart-wit uit elkaar te houden</b>.</p>
+      </div>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="w-kop">
+              <div>
+                <h1>Uw lap — vier weken</h1>
+                <p class="wie">Mevrouw H. Bosma · vijf oefeningen, A tot en met E</p>
+              </div>
+              <div class="r">FYSIOTHERAPIE DE BOSKANT<br/>SCHERING 62-0447<br/>OPGEZET 10.08.2026</div>
+            </div>
+
+            <div class="w-lay">
+
+              <div class="w-schering">
+                <div class="titel">DE SCHERING — WAT VASTLIGT</div>
+
+                <div class="w-draad">
+                  <span class="let">A</span>
+                  <div>
+                    <h3>Knie naar de borst, liggend</h3>
+                    <p>Op bed, vóór u opstaat. Trek één knie rustig naar u toe, tel tot vijf, en
+                      daarna het andere been.</p>
+                    <div class="dos">8× PER BEEN · OCHTEND</div>
+                  </div>
+                </div>
+
+                <div class="w-draad">
+                  <span class="let">B</span>
+                  <div>
+                    <h3>Op uw tenen en langzaam zakken</h3>
+                    <p>Handen licht op het aanrecht, niet leunen. Kom omhoog en laat de hakken
+                      daarna langzaam zakken.</p>
+                    <div class="dos">15× · OCHTEND</div>
+                  </div>
+                </div>
+
+                <div class="w-draad">
+                  <span class="let">C</span>
+                  <div>
+                    <h3>Eén been, tellen tot tien</h3>
+                    <p>Bij het aanrecht, met één vinger aan het blad. Til één voet los en tel
+                      rustig tot tien.</p>
+                    <div class="dos">3× LINKS · 3× RECHTS</div>
+                  </div>
+                </div>
+
+                <div class="w-draad">
+                  <span class="let">D</span>
+                  <div>
+                    <h3>Opstaan zonder handen</h3>
+                    <p>Van een gewone keukenstoel. Voeten naar achteren, neus boven de knieën, en
+                      dan omhoog zonder de leuning.</p>
+                    <div class="dos">10× · MIDDAG</div>
+                  </div>
+                </div>
+
+                <div class="w-draad">
+                  <span class="let">E</span>
+                  <div>
+                    <h3>Open boek, zittend</h3>
+                    <p>Op de rand van een stoel, armen gekruist. Draai uw bovenlichaam rustig naar
+                      één kant en kom weer terug.</p>
+                    <div class="dos">6× PER KANT · AVOND</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-raster">
+                <div class="titel"><span>DE INSLAG — WAT U ZELF INVULT</span><span>HIER MET DE HAND INGEVULD T/M WEEK 3</span></div>
+                <div class="w-grid">
+                  <span class="hk d">DAG</span>
+                  <span class="hk">A</span><span class="hk">B</span><span class="hk">C</span>
+                  <span class="hk">D</span><span class="hk">E</span>
+
+                  <span class="dg">ma</span><span class="cl g"></span><span class="cl g"></span><span class="cl g"></span><span class="cl g"></span><span class="cl g"></span>
+                  <span class="dg">di</span><span class="cl g"></span><span class="cl g"></span><span class="cl h"></span><span class="cl g"></span><span class="cl"></span>
+                  <span class="dg">wo</span><span class="cl g"></span><span class="cl g"></span><span class="cl g"></span><span class="cl"></span><span class="cl g"></span>
+                  <span class="dg">do</span><span class="cl"></span><span class="cl g"></span><span class="cl h"></span><span class="cl"></span><span class="cl g"></span>
+                  <span class="dg">vr</span><span class="cl g"></span><span class="cl g"></span><span class="cl g"></span><span class="cl g"></span><span class="cl g"></span>
+                  <span class="dg">za</span><span class="cl g"></span><span class="cl g"></span><span class="cl"></span><span class="cl"></span><span class="cl h"></span>
+                  <span class="dg wk">zo</span><span class="cl g wk"></span><span class="cl g wk"></span><span class="cl wk"></span><span class="cl wk"></span><span class="cl g wk"></span>
+
+                  <span class="dg">ma</span><span class="cl g"></span><span class="cl g"></span><span class="cl h"></span><span class="cl"></span><span class="cl g"></span>
+                  <span class="dg">di</span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span>
+                  <span class="dg">wo</span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span>
+                  <span class="dg">do</span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span>
+                  <span class="dg">vr</span><span class="cl g"></span><span class="cl g"></span><span class="cl"></span><span class="cl"></span><span class="cl h"></span>
+                  <span class="dg">za</span><span class="cl g"></span><span class="cl g"></span><span class="cl g"></span><span class="cl h"></span><span class="cl g"></span>
+                  <span class="dg wk">zo</span><span class="cl g wk"></span><span class="cl g wk"></span><span class="cl g wk"></span><span class="cl wk"></span><span class="cl g wk"></span>
+
+                  <span class="dg">ma</span><span class="cl g"></span><span class="cl g"></span><span class="cl g"></span><span class="cl g"></span><span class="cl g"></span>
+                  <span class="dg">di</span><span class="cl g"></span><span class="cl g"></span><span class="cl g"></span><span class="cl h"></span><span class="cl g"></span>
+                  <span class="dg">wo</span><span class="cl g"></span><span class="cl g"></span><span class="cl h"></span><span class="cl g"></span><span class="cl g"></span>
+                  <span class="dg">do</span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span>
+                  <span class="dg">vr</span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span>
+                  <span class="dg">za</span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span>
+                  <span class="dg wk">zo</span><span class="cl wk"></span><span class="cl wk"></span><span class="cl wk"></span><span class="cl wk"></span><span class="cl wk"></span>
+
+                  <span class="dg">ma</span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span>
+                  <span class="dg">di</span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span>
+                  <span class="dg">wo</span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span>
+                  <span class="dg">do</span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span>
+                  <span class="dg">vr</span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span>
+                  <span class="dg">za</span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span><span class="cl"></span>
+                  <span class="dg wk">zo</span><span class="cl wk"></span><span class="cl wk"></span><span class="cl wk"></span><span class="cl wk"></span><span class="cl wk"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="w-voet">
+              <div>
+                <h4>HOE U INVULT</h4>
+                <p>Eén streep per oefening per dag. Meer hoeft niet — de lap telt zichzelf.</p>
+                <div class="merk">
+                  <i class="g" aria-hidden="true"></i><span>HELEMAAL<br/>GELUKT</span>
+                  <i class="h" aria-hidden="true"></i><span>HALF<br/>GEDAAN</span>
+                  <i aria-hidden="true"></i><span>NIETS —<br/>BLIJFT LEEG</span>
+                </div>
+              </div>
+              <div>
+                <h4>EEN LEGE REGEL BLIJFT LEEG</h4>
+                <p>Wat er niet in zit, komt er niet meer in. Dat is geen strafregel maar de gewoonste
+                  zaak van het weven: je kunt niet terug, en dus weef je verder. Neem de lap mee naar
+                  de volgende afspraak, ook — juist — als er banen open staan.</p>
+              </div>
+              <div class="prak">
+                <b>Fysiotherapie de Boskant</b>
+                RIETLAAN 12 · 3812 AB<br/>
+                TELEFOON 033 — 461 22 08<br/>
+                VOLGENDE AFSPRAAK 07.09.2026
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div>
+      <h4>DE GEDACHTE</h4>
+      <p>Een lijst vertelt u wat u moet doen. Een lap vertelt u wat u gemaakt hebt. Dat is een ander
+        gesprek — en het maakt van drie gemiste dagen een baan in de stof in plaats van drie
+        ontbrekende vinkjes.</p>
+    </div>
+    <div>
+      <h4>WAAR HET VANDAAN KOMT</h4>
+      <ul>
+        <li>Het weefschema: insnoering, binding, trapvolgorde en weefbeeld</li>
+        <li>Anni Albers en de weefwerkplaats van het Bauhaus — het raster als taal, niet als decor</li>
+        <li>Haarlems en Fries damast; ikat, waar de fout in de draad het patroon máákt</li>
+        <li>Jacquardkaarten: een patroon dat opgeslagen wordt vóór het geweven wordt</li>
+        <li>Ongebleekt linnen, indigo en meekrap — de drie oudste dingen in een Nederlandse weverij</li>
+      </ul>
+    </div>
+    <div>
+      <h4>NAAST DE KAART</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de ontwerpgalerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var f=Math.min(1,schaal.clientWidth/blad.offsetWidth);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

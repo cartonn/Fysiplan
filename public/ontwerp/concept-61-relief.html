@@ -1,0 +1,891 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 61 — Reliëf · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 61 — RELIËF
+   ------------------------------------------------------------
+   Eerst voelen. Dan pas lezen.
+
+   Een oefenkaart wordt niet gelezen zoals een brief gelezen
+   wordt. Hij wordt GEZOCHT. Hij ligt op het aanrecht onder de
+   post, hij wordt met één hand opgepakt terwijl de andere hand
+   aan de rugleuning hangt, en er wordt op gekeken in het
+   halfdonker van een slaapkamer om zeven uur 's ochtends —
+   zonder bril, want die ligt beneden.
+
+   Elk ontwerp dat uitgaat van een geconcentreerde lezer met
+   goed licht is dan al verloren. Deze kaart gaat uit van een
+   HAND.
+
+   DE REGEL VAN DIT CONCEPT: alles wat betekenis draagt, is een
+   verschil in HOOGTE — niet in kleur. Kleur kun je niet voelen,
+   kleur verdwijnt in de zwart-witprinter van de praktijk, kleur
+   verdwijnt bij staar en bij kleurenblindheid en bij een lamp
+   van 40 watt. Hoogte blijft. Dus:
+
+     · DE RANDEN ZIJN HET REGISTER. Rechts steken duimkerfjes
+       uit het vel: één per oefening, van boven naar beneden op
+       vaste hoogte. Oefening drie zit altijd op één derde. Uw
+       duim vindt hem zonder dat u kijkt — en uw oog dus ook,
+       want positie is de snelste index die er is.
+     · REGELS ZIJN RIBBELS. De scheiding tussen twee oefeningen
+       is geen streepje van 0,25 pt, maar een balk die je in het
+       papier voelt als je eroverheen strijkt.
+     · HET NUMMER LIGT IN EEN KUIL. Verdiept, niet verhoogd:
+       wat je zoekt is een gat, geen bult. Dat is sneller.
+     · EN ER STAAT BRAILLE. Niet decoratief: op ware maat.
+       Puntbasis 1,44 mm, hart-op-hart 2,34 mm binnen de cel,
+       6,2 mm tussen de cellen — de maat die de Braille
+       Authority of North America vastlegt en die elke
+       zwelpapier-printer aanhoudt. Alleen de nummers, want dat
+       is wat je zoekt. Wie het niet leest, ziet zes stippen.
+       Wie het wél leest, heeft eindelijk een kaart.
+
+   NUL KLEUR. Niet uit soberheid maar uit bewijsdrang: als
+   niets kleur nodig heeft, kan er ook niets kapot aan een
+   printer, een kopie van een kopie, of een oog. De hele kaart
+   is één inkt op één papier. Wat op het scherm reliëf lijkt,
+   is op papier een verschil in lijndikte — en dat werkt op
+   allebei.
+
+   TYPOGRAFIE. Groot en humanistisch waar de patiënt leest
+   (4,8 mm ≈ 13,6 pt op de A4, ruim boven de 12 pt die de
+   praktijk gewend is), strak en klein waar alleen de
+   fysiotherapeut leest. De kaart is niet gezet voor een
+   ontwerper op een breed scherm; hij is gezet voor een
+   armlengte en een keukenlamp.
+   ============================================================ */
+
+:root{
+  --papier:#f2efe9;
+  --papier-diep:#e7e3da;
+  --vlak:#faf8f4;
+  --inkt:#14130f;
+  --inkt-2:#3c3a34;
+  --grijs:#76736b;
+  --grijs-licht:#a6a29a;
+  --lijn:#d3cec3;
+  --schaduw:rgba(20,19,15,.20);
+  --licht:rgba(255,255,255,.92);
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --serif:Charter,"Iowan Old Style",Georgia,serif;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:70px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.66 var(--sans);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--inkt)}
+:focus-visible{outline:3px solid var(--inkt);outline-offset:3px}
+.binnen{max-width:1160px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--inkt);color:#b8b4ac;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border:1px solid #4a473f;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#b8b4ac;text-decoration:none;padding:5px 2px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:#fff}
+.labbalk a.terug{color:#fff}
+@media (max-width:720px){.labbalk{flex-wrap:wrap;gap:10px}.labbalk .rek{display:none}}
+
+/* ---------- reliëfprimitieven ----------
+   Alles hieronder is licht en schaduw, nooit kleur. Op papier
+   wordt hetzelfde onderscheid gedragen door lijndikte.        */
+.op{background:var(--vlak);
+  box-shadow:0 1px 0 var(--licht) inset, 0 -1px 0 rgba(20,19,15,.07) inset,
+             0 2px 5px rgba(20,19,15,.09)}
+.in{background:var(--papier-diep);
+  box-shadow:0 1px 3px rgba(20,19,15,.20) inset, 0 -1px 0 var(--licht)}
+.ribbel{height:6px;background:linear-gradient(to bottom,var(--papier-diep) 0 1px,#fff 1px 3px,var(--papier-diep) 3px 6px);
+  box-shadow:0 1px 2px rgba(20,19,15,.14)}
+
+/* ---------- secties ---------- */
+.scherm{padding:var(--s6) 0;border-top:1px solid var(--lijn)}
+.scherm.diep{background:var(--papier-diep)}
+.scherm.wit{background:var(--vlak)}
+.schermkop{margin-bottom:var(--s5);max-width:74ch}
+.schermkop b{display:inline-block;font:700 10px/1 var(--mono);letter-spacing:.24em;
+  text-transform:uppercase;color:var(--grijs);margin-bottom:var(--s3)}
+.schermkop h2{font:600 clamp(27px,3.5vw,41px)/1.1 var(--sans);letter-spacing:-.032em;color:var(--inkt)}
+.schermkop p{margin-top:var(--s3);font:400 18px/1.62 var(--serif);color:var(--inkt-2);max-width:64ch}
+
+/* ---------- 1 · landing ---------- */
+#landing{background:var(--papier);padding-top:var(--s6);border-top:0}
+.merkregel{display:flex;align-items:center;gap:11px;margin-bottom:var(--s5)}
+.merkregel .plaat{width:30px;height:30px;background:var(--vlak);color:var(--inkt);
+  display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--sans)}
+.merkregel .naam{font:600 15px/1 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+.merkregel .pad{font:600 11px/1 var(--mono);letter-spacing:.2em;color:var(--grijs)}
+
+.landkop{display:grid;grid-template-columns:1.08fr .92fr;gap:var(--s6);align-items:start}
+@media (max-width:960px){.landkop{grid-template-columns:1fr;gap:var(--s5)}}
+.landkop h1{font:600 clamp(35px,5vw,60px)/1.05 var(--sans);letter-spacing:-.036em;color:var(--inkt)}
+.landkop h1 em{display:block;font-style:normal;color:var(--grijs);margin-top:.18em}
+.landkop p{margin-top:var(--s4);font:400 18.5px/1.66 var(--serif);color:var(--inkt-2);max-width:52ch}
+.landkop p b{font-weight:700;color:var(--inkt)}
+
+/* de voelproef: een stukje kaart dat je zou kunnen aanraken */
+.voelproef{padding:var(--s4);position:relative}
+.voelproef h3{font:700 10px/1 var(--mono);letter-spacing:.22em;color:var(--grijs);margin-bottom:var(--s4)}
+.voelrij{display:grid;grid-template-columns:52px 1fr;gap:var(--s3);align-items:start;padding:var(--s3) 0}
+.voelrij + .voelrij{border-top:0}
+.kuil{width:52px;height:52px;display:flex;align-items:center;justify-content:center;
+  font:700 25px/1 var(--sans);color:var(--inkt);letter-spacing:-.03em;border-radius:2px}
+.voelrij .titel{font:600 22px/1.24 var(--sans);letter-spacing:-.022em;color:var(--inkt)}
+.voelrij .maat{margin-top:6px;font:600 13px/1 var(--mono);letter-spacing:.08em;color:var(--grijs)}
+.voelproef .ribbel{margin:var(--s2) 0}
+.voelproef .bijschrift{margin-top:var(--s4);font:400 14.5px/1.55 var(--serif);color:var(--grijs)}
+
+/* braillecel op ware maat — 1,44 mm punt, 2,34 mm hart-op-hart */
+.braille{display:inline-flex;gap:4.5mm;vertical-align:middle}
+.cel{display:grid;grid-template-columns:repeat(2,1.44mm);grid-template-rows:repeat(3,1.44mm);
+  gap:.9mm;width:3.78mm}
+.cel i{width:1.44mm;height:1.44mm;border-radius:50%;background:transparent;
+  box-shadow:0 0 0 .12mm rgba(20,19,15,.22) inset}
+.cel i.p{background:var(--inkt);box-shadow:0 .25mm .3mm rgba(255,255,255,.6)}
+
+/* drie beloftes */
+.beloftes{margin-top:var(--s6);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:940px){.beloftes{grid-template-columns:1fr}}
+.beloftes div{padding:var(--s4)}
+.beloftes h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--grijs);margin-bottom:12px}
+.beloftes p{font-size:15.5px;line-height:1.6}
+.beloftes b{color:var(--inkt);font-weight:700}
+
+/* ---------- 2 · kiezer ---------- */
+.kiezerhoofd{display:grid;grid-template-columns:250px 1fr;gap:var(--s5);align-items:start}
+@media (max-width:900px){.kiezerhoofd{grid-template-columns:1fr}}
+.filterkolom h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--grijs);
+  margin-bottom:var(--s3);padding-bottom:8px;border-bottom:2px solid var(--inkt)}
+.filterlijst{list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:var(--s4)}
+.filterlijst button{width:100%;text-align:left;border:0;cursor:pointer;
+  padding:11px 13px;font:500 15.5px/1.2 var(--sans);color:var(--inkt-2);border-radius:2px}
+.filterlijst button:hover{color:var(--inkt)}
+.filterlijst button[aria-pressed="true"]{font-weight:700;color:var(--inkt)}
+.filterlijst .tel{float:right;font:600 12px/1.3 var(--mono);color:var(--grijs)}
+
+.rooster{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3)}
+@media (max-width:1040px){.rooster{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:620px){.rooster{grid-template-columns:1fr}}
+.oef{padding:var(--s3);display:flex;flex-direction:column;gap:12px;border-radius:2px}
+.oef .beeldkuil{padding:10px;border-radius:2px;display:flex;align-items:center;justify-content:center}
+.oef .beeldkuil img{height:118px;width:auto;mix-blend-mode:multiply;filter:grayscale(1) contrast(1.12)}
+.oef h5{font:600 18px/1.24 var(--sans);letter-spacing:-.02em;color:var(--inkt)}
+.oef .regel{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.oef .maat{font:600 12px/1 var(--mono);letter-spacing:.07em;color:var(--grijs)}
+.oef .kerf{display:flex;gap:3px;align-items:center}
+.oef .kerf i{width:7px;height:14px;background:var(--papier-diep);
+  box-shadow:0 1px 2px rgba(20,19,15,.2) inset;border-radius:0 3px 3px 0}
+.oef .kerf i.aan{background:var(--inkt)}
+.oef button.kies{border:0;cursor:pointer;padding:10px 12px;border-radius:2px;
+  font:700 13.5px/1 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+.oef.gekozen{outline:3px solid var(--inkt);outline-offset:-3px}
+.oef.gekozen button.kies{background:var(--inkt);color:var(--vlak);
+  box-shadow:0 2px 4px rgba(20,19,15,.28)}
+
+.selectiebalk{margin-top:var(--s5);padding:var(--s4);display:flex;flex-wrap:wrap;
+  align-items:center;gap:var(--s3);justify-content:space-between;border-radius:2px}
+.selectiebalk .tel{font:600 15px/1.3 var(--sans);color:var(--inkt)}
+.selectiebalk .tel span{display:block;font:400 14px/1.4 var(--serif);color:var(--grijs);margin-top:3px}
+.knoprij{display:flex;gap:10px;flex-wrap:wrap}
+.kn{border:0;cursor:pointer;text-decoration:none;display:inline-block;padding:13px 20px;
+  font:700 14px/1 var(--sans);letter-spacing:-.01em;border-radius:2px;
+  background:var(--inkt);color:var(--vlak);box-shadow:0 3px 6px rgba(20,19,15,.28)}
+.kn.leeg{background:var(--vlak);color:var(--inkt);
+  box-shadow:0 1px 0 var(--licht) inset,0 2px 5px rgba(20,19,15,.12)}
+
+/* ---------- 3 · cliëntkaart ---------- */
+.kaartlay{display:grid;grid-template-columns:1fr 340px;gap:var(--s5);align-items:start}
+@media (max-width:980px){.kaartlay{grid-template-columns:1fr}}
+.dossier{padding:var(--s4) var(--s4) var(--s4) 0;border-radius:2px;overflow:hidden}
+.dossierkop{padding:0 var(--s4) var(--s4) var(--s4);display:flex;justify-content:space-between;
+  align-items:flex-start;gap:var(--s3);flex-wrap:wrap}
+.dossierkop h3{font:600 27px/1.14 var(--sans);letter-spacing:-.028em;color:var(--inkt)}
+.dossierkop .sub{margin-top:7px;font:400 15.5px/1.5 var(--serif);color:var(--grijs)}
+.dossierkop .code{font:600 12px/1.7 var(--mono);letter-spacing:.1em;color:var(--grijs);text-align:right}
+
+/* de duimregisterrij: het hart van het scherm */
+.register{list-style:none}
+.regrij{display:grid;grid-template-columns:56px 1fr 92px;gap:var(--s3);align-items:center;
+  padding:var(--s3) var(--s4);position:relative}
+.regrij .greep{position:absolute;right:0;top:50%;transform:translateY(-50%);
+  width:14px;height:38px;background:var(--papier-diep);border-radius:4px 0 0 4px;
+  box-shadow:-1px 0 3px rgba(20,19,15,.18) inset}
+.regrij.nu .greep{background:var(--inkt)}
+.regrij h4{font:600 20px/1.28 var(--sans);letter-spacing:-.022em;color:var(--inkt)}
+.regrij .hoe{margin-top:5px;font:400 15px/1.52 var(--serif);color:var(--inkt-2);max-width:52ch}
+.regrij .stand{text-align:right;font:600 12px/1.5 var(--mono);letter-spacing:.06em;color:var(--grijs)}
+.regrij .stand b{display:block;font:700 21px/1.1 var(--sans);color:var(--inkt);letter-spacing:-.02em}
+.zijkolom > div{padding:var(--s4);border-radius:2px}
+.zijkolom > div + div{margin-top:var(--s3)}
+.zijkolom h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--grijs);margin-bottom:var(--s3)}
+.zijkolom p{font-size:15.5px;line-height:1.58}
+.zijkolom b{color:var(--inkt);font-weight:700}
+.staafje{display:flex;gap:4px;margin-top:12px}
+.staafje i{flex:1;height:26px;background:var(--papier-diep);border-radius:1px;
+  box-shadow:0 1px 2px rgba(20,19,15,.16) inset}
+.staafje i.vol{background:var(--inkt);box-shadow:0 2px 3px rgba(20,19,15,.25)}
+.staafje i.half{background:linear-gradient(to top,var(--inkt) 0 50%,var(--papier-diep) 50% 100%)}
+
+/* toestanden */
+.toestanden{margin-top:var(--s5);display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3)}
+@media (max-width:940px){.toestanden{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.toestanden{grid-template-columns:1fr}}
+.toestanden div{padding:var(--s3) var(--s4);border-radius:2px}
+.toestanden h5{font:700 9.5px/1 var(--mono);letter-spacing:.18em;color:var(--grijs);margin-bottom:10px}
+.toestanden p{font-size:14.5px;line-height:1.5}
+
+/* ---------- 4 · printkaart ---------- */
+.printuitleg{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-bottom:var(--s5)}
+@media (max-width:940px){.printuitleg{grid-template-columns:1fr}}
+.printuitleg div{border-top:3px solid var(--inkt);padding-top:12px}
+.printuitleg h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--grijs);margin-bottom:10px}
+.printuitleg p{font-size:15.5px;line-height:1.58}
+.printuitleg b{color:var(--inkt);font-weight:700}
+
+.bladhouder{display:flex;justify-content:center}
+.bladschaal{width:100%;max-width:794px;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;position:relative;
+  box-shadow:0 24px 60px var(--schaduw);transform-origin:top left}
+@media (max-width:860px){.bladschaal{max-width:100%}}
+.blad .rand{position:absolute;inset:0;padding:11mm 13mm 8mm 12mm;display:flex;flex-direction:column}
+
+/* de duimkerven aan de rechterrand van het vel */
+.kerfrand{position:absolute;right:2.5mm;top:47mm;bottom:44mm;width:7mm;
+  display:flex;flex-direction:column;justify-content:space-around}
+.kerfrand .k{height:15mm;border:.35mm dashed #000;border-right:0;border-radius:3mm 0 0 3mm;
+  display:flex;align-items:center;justify-content:center}
+.kerfrand .k b{font:700 3.4mm/1 var(--sans);transform:rotate(90deg)}
+
+.p-kop{display:flex;justify-content:space-between;align-items:flex-start;gap:6mm}
+.p-kop h1{font:600 8.4mm/1.04 var(--sans);letter-spacing:-.032em}
+.p-kop .wie{margin-top:2.2mm;font:400 3.6mm/1.4 var(--serif);color:#3a3833}
+.p-kop .r{text-align:right;font:600 2.5mm/1.75 var(--mono);letter-spacing:.1em;color:#5c594f;white-space:nowrap}
+.p-ribbel{height:2.2mm;margin:4mm 0 0;
+  background:linear-gradient(to bottom,#000 0 1.2mm,#fff 1.2mm 1.5mm,#000 1.5mm 2.2mm)}
+.p-hint{margin-top:2.4mm;font:600 2.6mm/1.4 var(--mono);letter-spacing:.1em;color:#5c594f;
+  display:flex;justify-content:space-between;gap:4mm}
+
+.p-lijst{flex:1;display:flex;flex-direction:column;margin-top:2mm}
+.p-oef{flex:1;display:grid;grid-template-columns:15mm 1fr 30mm;gap:5mm;align-items:center;
+  padding:3.4mm 0;border-bottom:.3mm solid #b9b5ab}
+.p-oef:last-of-type{border-bottom:0}
+.p-oef .nrvak{height:15mm;border:.9mm solid #000;border-radius:1mm;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1mm}
+.p-oef .nrvak b{font:700 7.2mm/1 var(--sans);letter-spacing:-.04em}
+.p-oef .midden h3{font:600 5.4mm/1.16 var(--sans);letter-spacing:-.022em}
+.p-oef .midden p{margin-top:1.6mm;font:400 3.7mm/1.42 var(--serif);color:#211f1b;max-width:104mm}
+.p-oef .rechts{text-align:right}
+.p-oef .rechts .dosis{font:700 5.6mm/1.05 var(--sans);letter-spacing:-.03em}
+.p-oef .rechts .eenh{font:600 2.5mm/1.4 var(--mono);letter-spacing:.11em;color:#5c594f;margin-top:1mm}
+.p-oef .rechts .hokjes{display:flex;gap:1.2mm;justify-content:flex-end;margin-top:2.4mm}
+.p-oef .rechts .hokjes i{width:4.4mm;height:4.4mm;border:.4mm solid #000;border-radius:.6mm}
+.p-oef .beeld{display:none}
+
+.p-voet{border-top:.9mm solid #000;padding-top:3mm;margin-top:1mm;
+  display:grid;grid-template-columns:1.5fr 1fr;gap:6mm;align-items:end}
+.p-voet h4{font:700 2.5mm/1 var(--mono);letter-spacing:.16em;color:#5c594f;margin-bottom:1.8mm}
+.p-voet p{font:400 3.3mm/1.44 var(--serif);color:#211f1b}
+.p-voet .prak{text-align:right;font:600 2.6mm/1.7 var(--mono);letter-spacing:.08em;color:#5c594f}
+.p-voet .prak b{display:block;font:600 3.6mm/1.3 var(--sans);color:#000;letter-spacing:-.01em}
+.p-braille{display:flex;gap:4.5mm;margin-top:2.6mm;align-items:center}
+.p-braille .let{font:600 2.3mm/1 var(--mono);letter-spacing:.14em;color:#7a766c}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#a5a199;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border-top:2px solid #46433c;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:9px}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT — het reliëf wordt lijndikte. Op papier bestaat geen
+   schaduw; wat op het scherm hoogte was, is hier een zware of
+   juist haarfijne regel. Geen enkele kleur, dus geen enkel
+   verschil tussen deze print en een fotokopie van een fotokopie.
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .schermkop,.printuitleg{display:none !important}
+  .scherm{padding:0 !important;background:#fff !important;border:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladhouder{display:block !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 61</span>
+  <strong style="font:600 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Reliëf</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="plaat op" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 61 · RELIËF</span>
+    </div>
+
+    <div class="landkop">
+      <div>
+        <h1>Eerst voelen.<em>Dan pas lezen.</em></h1>
+        <p>Een oefenkaart wordt niet gelezen zoals een brief gelezen wordt. Hij wordt <b>gezocht</b>.
+          Onder de post op het aanrecht, met één hand, terwijl de andere aan de rugleuning hangt.
+          Om zeven uur 's ochtends in een halfdonkere slaapkamer — zonder bril, want die ligt beneden.</p>
+        <p>Elk ontwerp dat uitgaat van een geconcentreerde lezer met goed licht is dan al verloren.
+          Deze kaart gaat uit van <b>een hand</b>. Alles wat hier betekenis draagt is een verschil in
+          hóógte, nooit in kleur: kleur kun je niet voelen, en kleur overleeft de zwart-witprinter
+          van de praktijk niet. <b>Hoogte blijft.</b></p>
+      </div>
+
+      <div class="voelproef op">
+        <h3>DE VOELPROEF — ÉÉN OEFENING, ZOALS DE HAND HEM VINDT</h3>
+
+        <div class="voelrij">
+          <span class="kuil in">2</span>
+          <div>
+            <div class="titel">Op uw tenen en langzaam zakken</div>
+            <div class="maat">15× · ELKE OCHTEND · BIJ HET AANRECHT</div>
+          </div>
+        </div>
+
+        <div class="ribbel" aria-hidden="true"></div>
+
+        <div class="voelrij">
+          <span class="kuil in">3</span>
+          <div>
+            <div class="titel">Eén been, tellen tot tien</div>
+            <div class="maat">3× LINKS · 3× RECHTS · MET STEUN</div>
+          </div>
+        </div>
+
+        <p class="bijschrift">Het nummer ligt in een <b>kuil</b>, niet op een bult: wat je zoekt is
+          een gat, en een gat vindt een vingertop sneller. De scheiding is een <b>ribbel</b> die je
+          voelt als je eroverheen strijkt — geen streepje van een kwart punt.</p>
+
+        <div class="p-braille" style="margin-top:22px">
+          <span class="braille" aria-hidden="true">
+            <span class="cel"><i></i><i class="p"></i><i></i><i class="p"></i><i class="p"></i><i class="p"></i></span>
+            <span class="cel"><i class="p"></i><i></i><i class="p"></i><i></i><i></i><i></i></span>
+          </span>
+          <span style="font:600 11px/1.4 var(--mono);letter-spacing:.1em;color:var(--grijs)">
+            CIJFERTEKEN + 2 · BRAILLE OP WARE MAAT<br/>Ø 1,44 MM · 2,34 MM IN DE CEL · 6,2 MM ERTUSSEN
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="beloftes">
+      <div class="op">
+        <h4>HET REGISTER ZIT AAN DE RAND</h4>
+        <p>Rechts steken <b>duimkerfjes</b> uit het vel, één per oefening, op vaste hoogte. Oefening
+          drie zit altijd op een derde. Uw duim vindt hem zonder te kijken — en <b>uw oog dus ook</b>,
+          want positie is de snelste index die er is.</p>
+      </div>
+      <div class="op">
+        <h4>NUL KLEUR, EN DAT IS EEN BEWIJS</h4>
+        <p>Er zit geen enkele kleur in deze kaart. Niet uit soberheid: als niets kleur nódig heeft,
+          kan er ook niets stukgaan aan een lege toner, een <b>kopie van een kopie</b>, staar of
+          kleurenblindheid. Eén inkt op één papier.</p>
+      </div>
+      <div class="op">
+        <h4>GROOT WAAR U LEEST</h4>
+        <p>De oefeningen staan op <b>4,8 mm</b> (ruim 13 pt) in een humanistische letter met open
+          vormen. De praktijkgegevens staan klein — die zijn niet voor u. Elke millimeter gaat naar
+          de regel die u om zeven uur nodig heeft.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm diep" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2 · de oefeningen-kiezer</b>
+      <h2>Kiezen is stapelen — en de stapel voelt u groeien</h2>
+      <p>De fysiotherapeut kiest niet uit een lijst maar bouwt een reliëf op. Rechts van elke
+        gekozen oefening verschijnt de kerf die straks op het vel staat: u ziet meteen wat de hand
+        van de patiënt straks tegenkomt. Boven de zeven kerven wordt het vel onleesbaar met de
+        vingers — dan zegt de balk dat ook.</p>
+    </div>
+
+    <div class="kiezerhoofd">
+      <div class="filterkolom">
+        <h4>REGIO</h4>
+        <ul class="filterlijst">
+          <li><button class="op" aria-pressed="true">Onderste extremiteit <span class="tel">61</span></button></li>
+          <li><button class="op" aria-pressed="false">Balans en valpreventie <span class="tel">34</span></button></li>
+          <li><button class="op" aria-pressed="false">Rug <span class="tel">48</span></button></li>
+          <li><button class="op" aria-pressed="false">Nek <span class="tel">27</span></button></li>
+          <li><button class="op" aria-pressed="false">Core <span class="tel">45</span></button></li>
+        </ul>
+        <h4>ZONDER MATERIAAL</h4>
+        <ul class="filterlijst">
+          <li><button class="op" aria-pressed="true">Staand bij het aanrecht <span class="tel">22</span></button></li>
+          <li><button class="op" aria-pressed="false">Zittend op een keukenstoel <span class="tel">19</span></button></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="rooster">
+          <article class="oef op gekozen">
+            <div class="beeldkuil in">
+              <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Lijntekening: op de tenen komen en langzaam zakken"/>
+            </div>
+            <h5>Op uw tenen en langzaam zakken</h5>
+            <div class="regel">
+              <span class="maat">15× · KUIT</span>
+              <span class="kerf" aria-hidden="true"><i class="aan"></i><i class="aan"></i></span>
+            </div>
+            <button class="kies">Op de kaart — kerf 2</button>
+          </article>
+
+          <article class="oef op gekozen">
+            <div class="beeldkuil in">
+              <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Lijntekening: eenbeenstand met steun"/>
+            </div>
+            <h5>Eén been, tellen tot tien</h5>
+            <div class="regel">
+              <span class="maat">3× LINKS · 3× RECHTS</span>
+              <span class="kerf" aria-hidden="true"><i class="aan"></i><i class="aan"></i><i class="aan"></i></span>
+            </div>
+            <button class="kies">Op de kaart — kerf 3</button>
+          </article>
+
+          <article class="oef op">
+            <div class="beeldkuil in">
+              <img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Lijntekening: opstaan vanaf een stoel"/>
+            </div>
+            <h5>Opstaan zonder handen</h5>
+            <div class="regel">
+              <span class="maat">10× · BOVENBEEN</span>
+              <span class="kerf" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            </div>
+            <button class="kies">Op de kaart zetten</button>
+          </article>
+
+          <article class="oef op gekozen">
+            <div class="beeldkuil in">
+              <img src="/images/rug/knie-naar-borst-liggend-line-v1.png" alt="Lijntekening: knie naar borst, liggend"/>
+            </div>
+            <h5>Knie naar de borst, liggend</h5>
+            <div class="regel">
+              <span class="maat">8× · PER BEEN</span>
+              <span class="kerf" aria-hidden="true"><i class="aan"></i></span>
+            </div>
+            <button class="kies">Op de kaart — kerf 1</button>
+          </article>
+
+          <article class="oef op">
+            <div class="beeldkuil in">
+              <img src="/images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png" alt="Lijntekening: achterwaarts stappen met steun"/>
+            </div>
+            <h5>Achterwaarts stappen met steun</h5>
+            <div class="regel">
+              <span class="maat">10 STAPPEN</span>
+              <span class="kerf" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            </div>
+            <button class="kies">Op de kaart zetten</button>
+          </article>
+
+          <article class="oef op gekozen">
+            <div class="beeldkuil in">
+              <img src="/images/nek/kin-intrekken-zittend-actief-line-v1.png" alt="Lijntekening: kin intrekken, zittend"/>
+            </div>
+            <h5>Kin rustig intrekken</h5>
+            <div class="regel">
+              <span class="maat">10× · 5 TELLEN</span>
+              <span class="kerf" aria-hidden="true"><i class="aan"></i><i class="aan"></i><i class="aan"></i><i class="aan"></i></span>
+            </div>
+            <button class="kies">Op de kaart — kerf 4</button>
+          </article>
+        </div>
+
+        <div class="selectiebalk op">
+          <div class="tel">4 oefeningen op de kaart — vier kerven
+            <span>Vanaf acht kerven liggen ze te dicht op elkaar om met de duim uit elkaar te
+              houden. Fysiplan waarschuwt bij zeven en weigert bij negen.</span></div>
+          <div class="knoprij">
+            <a class="kn" href="#printkaart">Kaart bekijken</a>
+            <a class="kn leeg" href="#clientkaart">Naar de cliëntkaart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm wit" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3 · de digitale cliëntkaart</b>
+      <h2>Het scherm is het vel — met dezelfde greep aan de rand</h2>
+      <p>Wie de papieren kaart in de hand heeft gehad, moet het scherm herkennen zonder na te
+        denken. Dezelfde volgorde, dezelfde kuilen, dezelfde greep rechts. Wat op papier een
+        uitsparing is, is hier een donkere greep op precies dezelfde hoogte — zodat „de derde van
+        boven" op beide dragers hetzelfde ding betekent.</p>
+    </div>
+
+    <div class="kaartlay">
+      <div class="dossier op">
+        <div class="dossierkop">
+          <div>
+            <h3>Mevrouw H. Bosma</h3>
+            <p class="sub">Week 3 van 8 · thuisprogramma na een heupoperatie</p>
+          </div>
+          <div class="code">KAART 61-0447<br/>HERZIEN 24.08.2026</div>
+        </div>
+
+        <ul class="register">
+          <li class="regrij">
+            <span class="kuil in">1</span>
+            <div>
+              <h4>Knie naar de borst, liggend</h4>
+              <p class="hoe">Op bed, vóór het opstaan. Trek één knie rustig naar u toe en houd hem
+                daar terwijl u tot vijf telt.</p>
+            </div>
+            <div class="stand"><b>8×</b>per been</div>
+            <span class="greep" aria-hidden="true"></span>
+          </li>
+          <li class="regrij nu">
+            <span class="kuil in">2</span>
+            <div>
+              <h4>Op uw tenen en langzaam zakken</h4>
+              <p class="hoe">Handen licht op het aanrecht, niet leunen. Kom omhoog, en laat de
+                hakken daarna <b>langzaam</b> zakken.</p>
+            </div>
+            <div class="stand"><b>15×</b>ochtend</div>
+            <span class="greep" aria-hidden="true"></span>
+          </li>
+          <li class="regrij">
+            <span class="kuil in">3</span>
+            <div>
+              <h4>Eén been, tellen tot tien</h4>
+              <p class="hoe">Met een vinger aan het aanrecht. Als het tien tellen lukt zonder de
+                vinger, zegt u dat volgende week.</p>
+            </div>
+            <div class="stand"><b>3+3</b>links/rechts</div>
+            <span class="greep" aria-hidden="true"></span>
+          </li>
+          <li class="regrij">
+            <span class="kuil in">4</span>
+            <div>
+              <h4>Kin rustig intrekken</h4>
+              <p class="hoe">Zittend, rug tegen de leuning. Schuif uw kin recht naar achteren —
+                niet naar beneden — en houd vijf tellen vast.</p>
+            </div>
+            <div class="stand"><b>10×</b>5 tellen</div>
+            <span class="greep" aria-hidden="true"></span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="zijkolom">
+        <div class="op">
+          <h4>DEZE WEEK</h4>
+          <p><b>Vier van de zeven ochtenden.</b> Dat is genoeg om vooruit te gaan; het hoeft er geen
+            zeven te worden.</p>
+          <div class="staafje" aria-label="Vier volle dagen, één halve, twee lege">
+            <i class="vol"></i><i class="vol"></i><i class="half"></i><i class="vol"></i>
+            <i></i><i class="vol"></i><i></i>
+          </div>
+        </div>
+        <div class="op">
+          <h4>WAT DE HAND ZEGT</h4>
+          <p>Mevrouw Bosma legt de kaart altijd met de kerven naar zich toe. Bij de controle bleek
+            oefening&nbsp;3 de meest versleten kerf te zijn — <b>de rand slijt waar het moeilijk is</b>,
+            en dat is bruikbaardere informatie dan een afvinkhokje.</p>
+        </div>
+        <div class="op">
+          <h4>OPNIEUW UITDRAAIEN</h4>
+          <p>Eén vel, één minuut, zwart-wit. De kaart is nooit een bestand dat later wel wordt
+            bekeken — hij is <b>papier dat op het aanrecht ligt</b>.</p>
+          <div class="knoprij" style="margin-top:16px">
+            <a class="kn" href="#printkaart">Naar de printkaart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toestanden">
+      <div class="op">
+        <h5>LEGE KAART</h5>
+        <p>Vier lege kuilen en vier lege grepen, in dezelfde maat. De vorm van de kaart staat er al
+          voordat er iets in staat — u ziet wat u aan het vullen bent.</p>
+      </div>
+      <div class="op">
+        <h5>TE VEEL</h5>
+        <p>Vanaf zeven oefeningen krimpen de grepen zichtbaar. De kaart laat zien dat hij vol raakt
+          in plaats van het te melden.</p>
+      </div>
+      <div class="op">
+        <h5>GEWIJZIGD</h5>
+        <p>Een aangepaste regel houdt zijn nummer en zijn plaats. Wat verandert is de tekst, nooit
+          de volgorde: de hand mag zijn geheugen niet kwijtraken.</p>
+      </div>
+      <div class="op">
+        <h5>GESTOPT</h5>
+        <p>Een gestopte oefening wordt vlak — geen kuil, geen greep, wel de regel, doorgestreept.
+          Hij verdwijnt pas bij de volgende uitdraai.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 4 · de A4-printkaart</b>
+      <h2>Het vel — A4 staand, één inkt, vier kerven</h2>
+      <p>Hier moet het gebeuren. Op papier bestaat geen schaduw, dus wordt het reliëf iets anders:
+        <b>lijndikte</b>. Een 0,9 mm kader om het nummer, een 0,3 mm haarlijn tussen de oefeningen,
+        en een ribbel van massief zwart onder de kop. Rechts staan vier gestippelde kerven —
+        met een schaar in tien seconden geknipt, en daarna vindt de duim ze in het donker.</p>
+    </div>
+
+    <div class="printuitleg">
+      <div>
+        <h4>WAAROM GEEN KLEUR</h4>
+        <p>Deze kaart is identiek in kleur, in grijstinten, en als vierde generatie fotokopie.
+          <b>Er is geen versie die minder werkt.</b> Dat is de hele reden dat er niets gekleurd is.</p>
+      </div>
+      <div>
+        <h4>WAAROM GEEN PLAATJES</h4>
+        <p>De lijntekeningen staan in de kiezer en op het scherm, maar niet op het vel: vier
+          oefeningen met beeld erbij dwingen de tekst terug naar 9&nbsp;pt. <b>Hier wint de letter</b> —
+          en op het scherm wint het beeld.</p>
+      </div>
+      <div>
+        <h4>WAT DE HOKJES ZIJN</h4>
+        <p>Zeven hokjes per oefening, één per dag, 4,4&nbsp;mm — groot genoeg voor een balpen in een
+          hand die trilt. Geen weeknummers, geen datums: <b>de week begint wanneer u begint</b>.</p>
+      </div>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="p-kop">
+              <div>
+                <h1>Uw vier oefeningen</h1>
+                <p class="wie">Mevrouw H. Bosma · week 3 tot en met week 5</p>
+              </div>
+              <div class="r">FYSIOTHERAPIE DE BOSKANT<br/>KAART 61-0447<br/>24.08.2026</div>
+            </div>
+
+            <div class="p-ribbel" aria-hidden="true"></div>
+            <div class="p-hint">
+              <span>VOEL DE KERVEN RECHTS — 1 BOVEN, 4 ONDER · KNIP ZE LOS</span>
+              <span>ÉÉN HOKJE PER DAG</span>
+            </div>
+
+            <div class="p-lijst">
+
+              <div class="p-oef">
+                <div class="nrvak">
+                  <b>1</b>
+                  <span class="braille" aria-hidden="true">
+                    <span class="cel"><i class="p"></i><i></i><i></i><i></i><i></i><i></i></span>
+                  </span>
+                </div>
+                <div class="midden">
+                  <h3>Knie naar de borst, liggend</h3>
+                  <p>Op bed, vóór u opstaat. Trek één knie rustig naar u toe en houd hem daar
+                    terwijl u tot vijf telt. Daarna het andere been.</p>
+                </div>
+                <div class="rechts">
+                  <div class="dosis">8×</div>
+                  <div class="eenh">PER BEEN</div>
+                  <div class="hokjes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                </div>
+              </div>
+
+              <div class="p-oef">
+                <div class="nrvak">
+                  <b>2</b>
+                  <span class="braille" aria-hidden="true">
+                    <span class="cel"><i class="p"></i><i></i><i class="p"></i><i></i><i></i><i></i></span>
+                  </span>
+                </div>
+                <div class="midden">
+                  <h3>Op uw tenen en langzaam zakken</h3>
+                  <p>Handen licht op het aanrecht, niet leunen. Kom rustig omhoog op uw tenen en
+                    laat de hakken daarna langzaam zakken. Het zakken is de oefening.</p>
+                </div>
+                <div class="rechts">
+                  <div class="dosis">15×</div>
+                  <div class="eenh">ELKE OCHTEND</div>
+                  <div class="hokjes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                </div>
+              </div>
+
+              <div class="p-oef">
+                <div class="nrvak">
+                  <b>3</b>
+                  <span class="braille" aria-hidden="true">
+                    <span class="cel"><i class="p"></i><i class="p"></i><i></i><i></i><i></i><i></i></span>
+                  </span>
+                </div>
+                <div class="midden">
+                  <h3>Eén been, tellen tot tien</h3>
+                  <p>Sta bij het aanrecht met één vinger aan het blad. Til één voet los en tel tot
+                    tien. Lukt het zonder die vinger, zeg dat dan bij de volgende afspraak.</p>
+                </div>
+                <div class="rechts">
+                  <div class="dosis">3 + 3</div>
+                  <div class="eenh">LINKS / RECHTS</div>
+                  <div class="hokjes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                </div>
+              </div>
+
+              <div class="p-oef">
+                <div class="nrvak">
+                  <b>4</b>
+                  <span class="braille" aria-hidden="true">
+                    <span class="cel"><i class="p"></i><i class="p"></i><i></i><i class="p"></i><i></i><i></i></span>
+                  </span>
+                </div>
+                <div class="midden">
+                  <h3>Kin rustig intrekken</h3>
+                  <p>Zittend, rug tegen de leuning. Schuif uw kin recht naar achteren — niet naar
+                    beneden — en houd vijf tellen vast. Rustig ademen.</p>
+                </div>
+                <div class="rechts">
+                  <div class="dosis">10×</div>
+                  <div class="eenh">5 TELLEN</div>
+                  <div class="hokjes"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="p-voet">
+              <div>
+                <h4>ALS IETS PIJN DOET</h4>
+                <p>Even stoppen mag altijd. Napijn die de volgende ochtend weg is, hoort erbij;
+                  pijn die blijft, niet. Bel dan gerust — daar is de praktijk voor.</p>
+                <div class="p-braille">
+                  <span class="braille" aria-hidden="true">
+                    <span class="cel"><i></i><i class="p"></i><i></i><i class="p"></i><i class="p"></i><i class="p"></i></span>
+                    <span class="cel"><i class="p"></i><i></i><i></i><i></i><i></i><i></i></span>
+                    <span class="cel"><i class="p"></i><i></i><i class="p"></i><i></i><i></i><i></i></span>
+                    <span class="cel"><i class="p"></i><i class="p"></i><i></i><i></i><i></i><i></i></span>
+                    <span class="cel"><i class="p"></i><i class="p"></i><i></i><i class="p"></i><i></i><i></i></span>
+                  </span>
+                  <span class="let">CIJFERTEKEN + 1 2 3 4, OP WARE MAAT</span>
+                </div>
+              </div>
+              <div class="prak">
+                <b>Fysiotherapie de Boskant</b>
+                RIETLAAN 12 · 3812 AB<br/>
+                TELEFOON 033 — 461 22 08<br/>
+                MAAK EEN NIEUWE KAART BIJ ELKE WIJZIGING
+              </div>
+            </div>
+
+          </div>
+
+          <div class="kerfrand" aria-hidden="true">
+            <div class="k"><b>1</b></div>
+            <div class="k"><b>2</b></div>
+            <div class="k"><b>3</b></div>
+            <div class="k"><b>4</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div>
+      <h4>DE REGEL</h4>
+      <p>Alles wat betekenis draagt is een verschil in hoogte, nooit in kleur. Op het scherm is dat
+        licht en schaduw; op papier is het lijndikte en een geknipte rand. Wie deze kaart in
+        grijstinten print, is niets kwijt — want er was niets te verliezen.</p>
+    </div>
+    <div>
+      <h4>WAAR HET VANDAAN KOMT</h4>
+      <ul>
+        <li>Braillematen van de Braille Authority of North America — punt Ø 1,44 mm, 2,34 mm binnen de cel, 6,2 mm ertussen</li>
+        <li>Zwelpapier en thermovorm: tastbare grafiek zonder één druppel kleur</li>
+        <li>Duimregisters in woordenboeken en bijbels; randponskaarten uit het archief</li>
+        <li>Intaglio op bankbiljetten — het reliëf dat de duim eerder herkent dan het oog</li>
+        <li>Reliëfstempels in medicijndoosjes; noppen op tactiele bestrating</li>
+      </ul>
+    </div>
+    <div>
+      <h4>NAAST DE KAART</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de ontwerpgalerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var f=Math.min(1,schaal.clientWidth/blad.offsetWidth);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>
