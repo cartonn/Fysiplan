@@ -2303,7 +2303,7 @@ bridge2.jpg</div>
             var sm=sMap[c.seintje.soort]||sMap.vraag;
             var sdg=Math.floor((Date.now()-c.seintje.t)/864e5);
             var swan=sdg<=0?'vandaag':(sdg===1?'gisteren':sdg+' dagen geleden');
-            seinChip="<button class='btn' data-sein='"+esc(c.id)+"' title='Seintje van de patiënt ("+swan+") — tik om af te handelen en weg te halen' "+
+            seinChip="<button class='btn' data-sein='"+esc(c.id)+"' title='Seintje van de patiënt ("+swan+") — tik om te beantwoorden of af te handelen' "+
               "style='font-size:11.5px;padding:4px 10px;background:"+sm.bg+";border:1px solid "+sm.br+";color:"+sm.fg+"'>"+
               "<span style='display:inline-block;width:8px;height:8px;border-radius:99px;background:"+sm.fg+";margin-right:5px'></span>seintje: "+sm.t+"</button>";
           }
@@ -2648,12 +2648,18 @@ bridge2.jpg</div>
     }
     var sn=e.target.closest('[data-sein]');
     if(sn){
-      // seintje afgehandeld: weghalen (alleen de ingelogde praktijk mag dit)
-      if(!confirm('Seintje van de patiënt afhandelen en weghalen?'))return;
-      fetch('api/kaart/seintje/gezien',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:sn.dataset.sein})})
+      // seintje beantwoorden met een kort bericht op de kaart van de patiënt,
+      // of leeg laten om alleen af te handelen (alleen de ingelogde praktijk)
+      var at=prompt('Antwoord voor de patiënt — komt op de kaart te staan (max 300 tekens).\nLeeg laten en OK = seintje alleen afhandelen, zonder antwoord.','');
+      if(at===null)return;
+      at=at.trim().slice(0,300);
+      var sUrl=at?'api/kaart/antwoord':'api/kaart/seintje/gezien';
+      var sBody={praktijk:SET.praktijk||'',id:sn.dataset.sein};
+      if(at)sBody.tekst=at;
+      fetch(sUrl,{method:'POST',headers:PJSON(),body:JSON.stringify(sBody)})
         .then(function(r){return r.json();})
-        .then(function(d){if(d.ok)toonSrvKaarten();else alert(d.fout||'Weghalen is niet gelukt.');})
-        .catch(function(){alert('Weghalen is niet gelukt: geen verbinding.');});
+        .then(function(d){if(d.ok)toonSrvKaarten();else alert(d.fout||'Dat is niet gelukt.');})
+        .catch(function(){alert('Dat is niet gelukt: geen verbinding.');});
       return;
     }
     var o=e.target.closest('[data-sopen]'),x=e.target.closest('[data-sdel]');

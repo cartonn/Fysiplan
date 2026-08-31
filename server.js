@@ -2097,6 +2097,54 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // de therapeut beantwoordt een seintje met een kort bericht dat op de kaart van
+  // de patiënt verschijnt ("Bel ons even", "Goed bezig, ga zo door"). Alleen de
+  // ingelogde praktijk (eisPraktijk); het antwoord handelt het openstaande seintje
+  // meteen af. Bewust kort, plat en éénmalig — terugkoppeling, geen chatkanaal.
+  if (urlPath === "/api/kaart/antwoord" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      if (await eisPraktijk(request, response, pk)) return;
+      const map = kaarten[pk] || {};
+      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      // zelfde enumeratierem als op de andere kaart-endpoints
+      if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      // besturingstekens eruit en begrensd; de kaartpagina rendert het als tekst
+      const tekst = String(b.tekst || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 300);
+      if (!tekst) { await sendJson(response, 400, { ok: false, fout: "Antwoord is leeg." }); return; }
+      kaart.antwoord = { t: Date.now(), tekst };
+      kaart.seintje = null;
+      await saveJson(kaartenPath, kaarten);
+      auditLog(pk, "kaart-antwoord", request);
+      await sendJson(response, 200, { ok: true });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
+  // de patiënt haalt het gelezen antwoord van de kaart (één tik). Zelfde open
+  // toegang als het seintje zelf: wie de kaartlink heeft, ís de patiënt.
+  if (urlPath === "/api/kaart/antwoord/gezien" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const found = vindKaart(String(b.id || ""));
+      if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      found.antwoord = null;
+      if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
+      await saveJson(kaartenPath, kaarten);
+      await sendJson(response, 200, { ok: true });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
   // de deeplink van een kaart vernieuwen ("delen intrekken"): geeft de kaart een
   // vers id, waardoor de oude /k/<id>-link niet meer werkt (vindKaart vindt hem
   // niet) terwijl álle historie (pijnscores, oefenvinkjes, seintje) bij de kaart

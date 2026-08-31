@@ -295,6 +295,12 @@
   /* seintje naar de praktijk: één tik, vaste soort, geen vrij tekstveld (dus geen
      persoonsgegevens). App-vrije tweerichting-terugkoppeling. */
   .skaart{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;box-shadow:var(--sh);padding:16px;margin-bottom:12px}
+  /* antwoord van de therapeut op een seintje: valt op, maar print niet mee */
+  .akaart{background:var(--blauw-05,#f0f5fd);border:1px solid var(--blauw,#7aa4e8);border-radius:18px;box-shadow:var(--sh);padding:16px;margin-bottom:12px}
+  .akaart .akop{font-weight:700;font-size:14px;letter-spacing:.02em;margin-bottom:6px}
+  .akaart .atekst{margin:0 0 8px;white-space:pre-wrap}
+  .akaart .adatum{font-size:12.5px;color:var(--zacht);margin-bottom:10px}
+  .akaart .aweg{font:inherit;font-size:14px;padding:8px 14px;border-radius:99px;border:1px solid var(--lijn);background:var(--vlak);color:var(--tekst);cursor:pointer}
   .sintro{font:500 14px/1.5 var(--disp);color:var(--grijs);margin-bottom:12px}
   .sknoppen{display:flex;flex-wrap:wrap;gap:8px}
   .sbtn{flex:1 1 auto;min-width:0;font:700 14.5px/1.2 var(--disp);color:var(--tekst);
@@ -366,7 +372,7 @@
     outline:3px solid rgba(36,86,166,.6);outline-offset:2px}
   @media print{
     body{background:#fff}
-    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,.skaart,#metingkop,#agendakop,#vraagkop,#seinkop,.kopacties,.belknop,.appbanner,.demobadge,.infobadge,.oefdone,.oefvoortgang{display:none !important}
+    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,.skaart,.akaart,#metingkop,#agendakop,#vraagkop,#seinkop,.kopacties,.belknop,.appbanner,.demobadge,.infobadge,.oefdone,.oefvoortgang{display:none !important}
     .kop,.oef,.schemakaart{box-shadow:none}
   }
 </style>
@@ -424,6 +430,13 @@
       <div class="mtrend" id="mtrend" style="display:none"></div>
     </div>
     <p class="mnoot" id="mnoot">Je score wordt bij je kaart bewaard, zodat je fysiotherapeut je voortgang kan volgen. Er telt één score per dag; tik een ander cijfer aan om die te wijzigen.</p>
+  </div>
+
+  <div class="akaart" id="antwoordblok" style="display:none" role="status" aria-live="polite">
+    <div class="akop" id="akop">Bericht van je fysiotherapeut</div>
+    <p class="atekst" id="atekst"></p>
+    <div class="adatum" id="adatum"></div>
+    <button type="button" class="aweg" id="aweg">Begrepen, haal weg</button>
   </div>
 
   <h2 id="seinkop">Je fysiotherapeut iets laten weten</h2>
@@ -509,15 +522,15 @@
   function tr(k){var d=T[TAAL]||T.nl;return d[k]!=null?d[k]:T.nl[k];}
   // teksten voor het seintje naar de praktijk (apart blokje; valt terug op Nederlands)
   var TSN={
-    nl:{seinkop:'Je fysiotherapeut iets laten weten',sintro:'Eén tik en je fysiotherapeut ziet je seintje bij deze kaart. Geen bericht typen, geen app.',vraag:'Ik heb een vraag',pijn:'Het doet te veel pijn',goed:'Het gaat goed',dank:'Verstuurd — je fysiotherapeut ziet je seintje bij deze kaart.',fout:'Versturen lukte even niet; probeer het zo opnieuw.'},
-    en:{seinkop:'Let your physiotherapist know',sintro:'One tap and your physiotherapist sees your signal on this card. No message to type, no app.',vraag:'I have a question',pijn:'It hurts too much',goed:'It’s going well',dank:'Sent — your physiotherapist will see your signal on this card.',fout:'Sending did not work; please try again in a moment.'},
-    de:{seinkop:'Deinem Physiotherapeuten Bescheid geben',sintro:'Ein Tipp und dein Physiotherapeut sieht dein Signal auf dieser Karte. Keine Nachricht tippen, keine App.',vraag:'Ich habe eine Frage',pijn:'Es tut zu weh',goed:'Es läuft gut',dank:'Gesendet — dein Physiotherapeut sieht dein Signal auf dieser Karte.',fout:'Das Senden hat nicht geklappt; versuch es gleich noch einmal.'},
-    fr:{seinkop:'Prévenir votre kinésithérapeute',sintro:'Un geste et votre kinésithérapeute voit votre signal sur cette carte. Aucun message à taper, aucune application.',vraag:'J’ai une question',pijn:'J’ai trop mal',goed:'Ça va bien',dank:'Envoyé — votre kinésithérapeute verra votre signal sur cette carte.',fout:'L’envoi n’a pas fonctionné ; réessayez dans un instant.'},
-    es:{seinkop:'Avisar a tu fisioterapeuta',sintro:'Un toque y tu fisioterapeuta ve tu señal en esta tarjeta. Sin escribir mensajes, sin aplicación.',vraag:'Tengo una pregunta',pijn:'Me duele demasiado',goed:'Va bien',dank:'Enviado — tu fisioterapeuta verá tu señal en esta tarjeta.',fout:'El envío no ha funcionado; inténtalo de nuevo en un momento.'},
-    pl:{seinkop:'Daj znać fizjoterapeucie',sintro:'Jedno dotknięcie i fizjoterapeuta zobaczy Twój sygnał przy tej karcie. Bez pisania wiadomości, bez aplikacji.',vraag:'Mam pytanie',pijn:'Za bardzo boli',goed:'Idzie dobrze',dank:'Wysłano — fizjoterapeuta zobaczy Twój sygnał przy tej karcie.',fout:'Wysłanie się nie powiodło; spróbuj ponownie za chwilę.'},
-    tr:{seinkop:'Fizyoterapistine haber ver',sintro:'Tek dokunuşla fizyoterapistin bu kartta işaretini görür. Mesaj yazmak yok, uygulama yok.',vraag:'Bir sorum var',pijn:'Çok acıyor',goed:'İyi gidiyor',dank:'Gönderildi — fizyoterapistin bu kartta işaretini görecek.',fout:'Gönderme çalışmadı; birazdan tekrar dene.'},
-    ar:{seinkop:'أخبر أخصائي العلاج الطبيعي',sintro:'نقرة واحدة ويرى أخصائي العلاج الطبيعي إشارتك على هذه البطاقة. دون كتابة رسالة ودون تطبيق.',vraag:'لديّ سؤال',pijn:'الألم شديد جدًا',goed:'الأمور تسير جيدًا',dank:'تم الإرسال — سيرى أخصائي العلاج الطبيعي إشارتك على هذه البطاقة.',fout:'تعذّر الإرسال؛ حاول مرة أخرى بعد قليل.'},
-    uk:{seinkop:'Повідомити фізіотерапевта',sintro:'Один дотик — і фізіотерапевт побачить твій сигнал на цій картці. Без набору повідомлення, без застосунку.',vraag:'У мене є запитання',pijn:'Надто болить',goed:'Все йде добре',dank:'Надіслано — фізіотерапевт побачить твій сигнал на цій картці.',fout:'Не вдалося надіслати; спробуй ще раз за мить.'}
+    nl:{seinkop:'Je fysiotherapeut iets laten weten',sintro:'Eén tik en je fysiotherapeut ziet je seintje bij deze kaart. Geen bericht typen, geen app.',vraag:'Ik heb een vraag',akop:'Bericht van je fysiotherapeut',adank:'Weggehaald.',aweg:'Begrepen, haal weg',pijn:'Het doet te veel pijn',goed:'Het gaat goed',dank:'Verstuurd — je fysiotherapeut ziet je seintje bij deze kaart.',fout:'Versturen lukte even niet; probeer het zo opnieuw.'},
+    en:{seinkop:'Let your physiotherapist know',sintro:'One tap and your physiotherapist sees your signal on this card. No message to type, no app.',vraag:'I have a question',akop:'Message from your physiotherapist',adank:'Dismissed.',aweg:'Got it, dismiss',pijn:'It hurts too much',goed:'It’s going well',dank:'Sent — your physiotherapist will see your signal on this card.',fout:'Sending did not work; please try again in a moment.'},
+    de:{seinkop:'Deinem Physiotherapeuten Bescheid geben',sintro:'Ein Tipp und dein Physiotherapeut sieht dein Signal auf dieser Karte. Keine Nachricht tippen, keine App.',vraag:'Ich habe eine Frage',akop:'Nachricht von deinem Physiotherapeuten',adank:'Entfernt.',aweg:'Verstanden, entfernen',pijn:'Es tut zu weh',goed:'Es läuft gut',dank:'Gesendet — dein Physiotherapeut sieht dein Signal auf dieser Karte.',fout:'Das Senden hat nicht geklappt; versuch es gleich noch einmal.'},
+    fr:{seinkop:'Prévenir votre kinésithérapeute',sintro:'Un geste et votre kinésithérapeute voit votre signal sur cette carte. Aucun message à taper, aucune application.',vraag:'J’ai une question',akop:'Message de votre kinésithérapeute',adank:'Retiré.',aweg:'Compris, retirer',pijn:'J’ai trop mal',goed:'Ça va bien',dank:'Envoyé — votre kinésithérapeute verra votre signal sur cette carte.',fout:'L’envoi n’a pas fonctionné ; réessayez dans un instant.'},
+    es:{seinkop:'Avisar a tu fisioterapeuta',sintro:'Un toque y tu fisioterapeuta ve tu señal en esta tarjeta. Sin escribir mensajes, sin aplicación.',vraag:'Tengo una pregunta',akop:'Mensaje de tu fisioterapeuta',adank:'Quitado.',aweg:'Entendido, quitar',pijn:'Me duele demasiado',goed:'Va bien',dank:'Enviado — tu fisioterapeuta verá tu señal en esta tarjeta.',fout:'El envío no ha funcionado; inténtalo de nuevo en un momento.'},
+    pl:{seinkop:'Daj znać fizjoterapeucie',sintro:'Jedno dotknięcie i fizjoterapeuta zobaczy Twój sygnał przy tej karcie. Bez pisania wiadomości, bez aplikacji.',vraag:'Mam pytanie',akop:'Wiadomość od fizjoterapeuty',adank:'Usunięto.',aweg:'Rozumiem, usuń',pijn:'Za bardzo boli',goed:'Idzie dobrze',dank:'Wysłano — fizjoterapeuta zobaczy Twój sygnał przy tej karcie.',fout:'Wysłanie się nie powiodło; spróbuj ponownie za chwilę.'},
+    tr:{seinkop:'Fizyoterapistine haber ver',sintro:'Tek dokunuşla fizyoterapistin bu kartta işaretini görür. Mesaj yazmak yok, uygulama yok.',vraag:'Bir sorum var',akop:'Fizyoterapistinden mesaj',adank:'Kaldırıldı.',aweg:'Anladım, kaldır',pijn:'Çok acıyor',goed:'İyi gidiyor',dank:'Gönderildi — fizyoterapistin bu kartta işaretini görecek.',fout:'Gönderme çalışmadı; birazdan tekrar dene.'},
+    ar:{seinkop:'أخبر أخصائي العلاج الطبيعي',sintro:'نقرة واحدة ويرى أخصائي العلاج الطبيعي إشارتك على هذه البطاقة. دون كتابة رسالة ودون تطبيق.',vraag:'لديّ سؤال',akop:'رسالة من أخصائي العلاج الطبيعي',adank:'أُزيلت.',aweg:'فهمت، أزل الرسالة',pijn:'الألم شديد جدًا',goed:'الأمور تسير جيدًا',dank:'تم الإرسال — سيرى أخصائي العلاج الطبيعي إشارتك على هذه البطاقة.',fout:'تعذّر الإرسال؛ حاول مرة أخرى بعد قليل.'},
+    uk:{seinkop:'Повідомити фізіотерапевта',sintro:'Один дотик — і фізіотерапевт побачить твій сигнал на цій картці. Без набору повідомлення, без застосунку.',vraag:'У мене є запитання',akop:'Повідомлення від фізіотерапевта',adank:'Прибрано.',aweg:'Зрозуміло, прибрати',pijn:'Надто болить',goed:'Все йде добре',dank:'Надіслано — фізіотерапевт побачить твій сигнал на цій картці.',fout:'Не вдалося надіслати; спробуй ще раз за мить.'}
   };
   function trs(k){var d=TSN[TAAL]||TSN.nl;return d[k]!=null?d[k]:TSN.nl[k];}
   // teksten voor "vraag het aan je kaart" (apart blokje; valt terug op Nederlands)
@@ -691,6 +704,7 @@
     zet('beltxt',tr('bel'));
     zet('seinkop',trs('seinkop'));zet('sintro',trs('sintro'));
     zet('s_vraag',trs('vraag'));zet('s_pijn',trs('pijn'));zet('s_goed',trs('goed'));
+    zet('akop',trs('akop'));zet('aweg',trs('aweg'));
     if(!bezigLezen)zet('leesTxt',tr('lees'));
     var gb=document.getElementById('grootBtn');
     if(gb){gb.title=trg('groter');gb.setAttribute('aria-label',trg('groter'));}
@@ -882,7 +896,18 @@
     }else{trend.style.display='none';}
   }
 
-  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();}
+  // antwoord van de therapeut op een seintje: tonen tot de patiënt het wegtikt
+  function tekenAntwoord(){
+    var blok=document.getElementById('antwoordblok');if(!blok)return;
+    var a=K&&K.kaart&&K.kaart.antwoord;
+    if(!a||!a.tekst){blok.style.display='none';return;}
+    document.getElementById('atekst').textContent=a.tekst;
+    var d=new Date(a.t||Date.now());
+    document.getElementById('adatum').textContent=d.toLocaleDateString(TAAL==='nl'?'nl-NL':TAAL,{day:'numeric',month:'long',year:'numeric'});
+    blok.style.display='block';
+  }
+
+  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();}
 
   // ---- taal wisselen: vaste teksten direct, kaartinhoud via de server (eenmalig per taal) ----
   function wisselTaal(t){
@@ -1278,6 +1303,15 @@
         .then(function(r){return r.json();})
         .then(function(d){dank.style.display='block';dank.textContent=d&&d.ok?trs('dank'):trs('fout');if(!d||!d.ok)b.classList.remove('aan');delete b.dataset.bezig;})
         .catch(function(){dank.style.display='block';dank.textContent=trs('fout');b.classList.remove('aan');delete b.dataset.bezig;});
+    });
+    // het gelezen therapeut-antwoord wegtikken
+    document.getElementById('aweg').addEventListener('click',function(){
+      var knop=this;if(knop.dataset.bezig)return;knop.dataset.bezig='1';
+      fetch('/api/kaart/antwoord/gezien',{method:'POST',headers:{'content-type':'application/json'},
+        body:JSON.stringify({id:id})})
+        .then(function(r){return r.json();})
+        .then(function(d){delete knop.dataset.bezig;if(d&&d.ok){if(K&&K.kaart)K.kaart.antwoord=null;tekenAntwoord();}})
+        .catch(function(){delete knop.dataset.bezig;});
     });
     document.getElementById('vraagform').addEventListener('submit',function(e){
       e.preventDefault();
