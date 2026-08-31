@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="color-scheme" content="light"/>
+<meta name="robots" content="noindex,noarchive"/>
+<title>Fysiplan — inloggen</title>
+<style>
+  :root{--bg:#f6f2e9;--papier:#fffdf7;--inkt:#232019;--tekst:#3d3a31;--demp:#6b6557;--zacht:#a39c8a;
+    --lijn:#e3dbc6;--blauw:#2456a6;--blauw-d:#193c78;--oranje:#d4501f;--groen:#2e6b45;--rood:#a23f2c;
+    --serif:Charter,'Iowan Old Style','Palatino Linotype',Georgia,serif;
+    --sans:'Avenir Next',Seravek,'Segoe UI',system-ui,-apple-system,sans-serif}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--tekst);font:16px/1.6 var(--serif);
+    min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;-webkit-font-smoothing:antialiased}
+  .kaart{width:100%;max-width:420px;background:var(--papier);border:1px solid var(--lijn);border-radius:14px;
+    box-shadow:0 1px 2px rgba(60,50,20,.06),0 18px 44px -20px rgba(60,50,20,.3);padding:30px 28px 26px}
+  .merk{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+  .merk .mark{width:30px;height:30px;border-radius:8px;background:var(--blauw);display:flex;align-items:center;justify-content:center;flex:0 0 30px}
+  .merk b{font:700 19px/1 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+  h1{font:700 22px/1.25 var(--serif);color:var(--inkt);letter-spacing:-.015em}
+  .sub{font-size:14.5px;color:var(--demp);margin-top:6px}
+  .tabs{display:flex;gap:4px;margin:20px 0 18px;background:var(--bg);border:1px solid var(--lijn);border-radius:10px;padding:4px}
+  .tabs button{flex:1;font:600 14px/1 var(--sans);color:var(--demp);background:none;border:0;border-radius:7px;padding:10px;cursor:pointer}
+  .tabs button.aan{background:var(--papier);color:var(--inkt);box-shadow:0 1px 2px rgba(60,50,20,.12)}
+  label{display:block;font:600 12.5px/1 var(--sans);color:var(--inkt);margin:14px 0 6px}
+  input{width:100%;font:400 15.5px/1.3 var(--sans);color:var(--inkt);background:var(--papier);
+    border:1px solid var(--lijn);border-radius:9px;padding:11px 12px}
+  input:focus{outline:2px solid var(--blauw);outline-offset:1px;border-color:var(--blauw)}
+  .knop{width:100%;margin-top:20px;font:600 15.5px/1 var(--sans);color:#fff;background:var(--blauw);
+    border:0;border-radius:9px;padding:13px;cursor:pointer;transition:background .15s}
+  .knop:hover{background:var(--blauw-d)}
+  .knop:disabled{opacity:.6;cursor:default}
+  .mini{margin-top:14px;text-align:center}
+  .mini a{color:var(--blauw);font:500 13.5px/1 var(--sans);text-decoration:none;cursor:pointer}
+  .mini a:hover{text-decoration:underline}
+  .melding{margin-top:14px;font:500 13.5px/1.5 var(--sans);padding:10px 12px;border-radius:9px;display:none}
+  .melding.fout{display:block;background:#fbecea;border:1px solid #e7c3bc;color:var(--rood)}
+  .melding.goed{display:block;background:#eef6ef;border:1px solid #cfe4d4;color:var(--groen)}
+  .hcode{margin-top:14px;padding:14px;border:1px dashed var(--zacht);border-radius:10px;background:var(--bg);display:none}
+  .hcode.aan{display:block}
+  .hcode p{font-size:13px;color:var(--demp)}
+  .hcode b{display:block;font:700 18px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--inkt);
+    user-select:all;letter-spacing:.02em;margin-top:4px;word-break:break-all}
+  .voet{margin-top:20px;font:italic 12.5px/1.5 var(--serif);color:var(--zacht);text-align:center}
+  form{display:none}
+  form.aan{display:block}
+  .hint{font:400 12px/1.5 var(--sans);color:var(--zacht);margin-top:6px}
+</style>
+</head>
+<body>
+  <main class="kaart" role="main">
+    <div class="merk">
+      <span class="mark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg></span>
+      <b>Fysiplan</b>
+    </div>
+    <h1 id="kop">Inloggen bij Fysiplan</h1>
+    <p class="sub" id="subkop">Log in met je e-mailadres om je oefenkaarten te maken.</p>
+
+    <div class="tabs" role="tablist">
+      <button type="button" id="tab_in" class="aan" role="tab">Inloggen</button>
+      <button type="button" id="tab_reg" role="tab">Account aanmaken</button>
+    </div>
+
+    <form id="form_in" class="aan" autocomplete="on">
+      <label for="in_email">E-mailadres</label>
+      <input type="email" id="in_email" autocomplete="username" placeholder="naam@praktijk.nl"/>
+      <label for="in_ww">Wachtwoord</label>
+      <input type="password" id="in_ww" autocomplete="current-password" placeholder="Je wachtwoord"/>
+      <button type="submit" class="knop" id="in_knop">Inloggen</button>
+      <div class="mini"><a id="naar_vergeten">Wachtwoord vergeten?</a></div>
+    </form>
+
+    <form id="form_reg" autocomplete="on">
+      <label for="reg_email">E-mailadres</label>
+      <input type="email" id="reg_email" autocomplete="username" placeholder="naam@praktijk.nl"/>
+      <label for="reg_ww">Kies een wachtwoord</label>
+      <input type="password" id="reg_ww" autocomplete="new-password" placeholder="Minstens 8 tekens"/>
+      <label for="reg_code">Registratiecode van de praktijk</label>
+      <input type="text" id="reg_code" autocomplete="off" placeholder="Code van je praktijk"/>
+      <p class="hint">Deze code krijg je van je praktijk. Zo kan alleen jullie team een account aanmaken.</p>
+      <button type="submit" class="knop" id="reg_knop">Account aanmaken</button>
+    </form>
+
+    <form id="form_vergeten" autocomplete="off">
+      <label for="v_email">E-mailadres</label>
+      <input type="email" id="v_email" autocomplete="username" placeholder="naam@praktijk.nl"/>
+      <label for="v_code">Herstelcode</label>
+      <input type="text" id="v_code" autocomplete="one-time-code" placeholder="FP-…"/>
+      <p class="hint">De herstelcode die je bij het aanmaken van je account hebt bewaard.</p>
+      <label for="v_ww">Nieuw wachtwoord</label>
+      <input type="password" id="v_ww" autocomplete="new-password" placeholder="Minstens 8 tekens"/>
+      <button type="submit" class="knop" id="v_knop">Nieuw wachtwoord instellen</button>
+      <div class="mini"><a id="naar_inloggen">Terug naar inloggen</a></div>
+    </form>
+
+    <div class="melding" id="melding"></div>
+    <div class="hcode" id="hcode">
+      <p id="hcode_uitleg">Bewaar deze herstelcode op een veilige plek. Hiermee stel je een nieuw wachtwoord in als je het huidige kwijt bent. Je ziet hem maar één keer:</p>
+      <b id="hcode_waarde"></b>
+      <button type="button" class="knop" id="hcode_ga">Ga naar Fysiplan</button>
+    </div>
+
+    <p class="voet">Fysiplan — trainingskaarten voor je praktijk.</p>
+  </main>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  var melding=$('melding'),hcode=$('hcode');
+  function toon(vorm){
+    ['form_in','form_reg','form_vergeten'].forEach(function(f){$(f).classList.toggle('aan',f===vorm);});
+    $('tab_in').classList.toggle('aan',vorm==='form_in');
+    $('tab_reg').classList.toggle('aan',vorm==='form_reg');
+    melding.className='melding';melding.textContent='';hcode.className='hcode';
+    if(vorm==='form_reg'){$('kop').textContent='Account aanmaken';$('subkop').textContent='Maak met je e-mailadres een eigen account voor je praktijk.';}
+    else if(vorm==='form_vergeten'){$('kop').textContent='Wachtwoord vergeten';$('subkop').textContent='Stel met je herstelcode een nieuw wachtwoord in.';}
+    else{$('kop').textContent='Inloggen bij Fysiplan';$('subkop').textContent='Log in met je e-mailadres om je oefenkaarten te maken.';}
+  }
+  function fout(t){melding.className='melding fout';melding.textContent=t||'Er ging iets mis. Probeer het opnieuw.';}
+  function goed(t){melding.className='melding goed';melding.textContent=t;}
+  function toonHerstelcode(code){
+    $('hcode_waarde').textContent=code;hcode.className='hcode aan';
+  }
+  $('tab_in').addEventListener('click',function(){toon('form_in');});
+  $('tab_reg').addEventListener('click',function(){toon('form_reg');});
+  $('naar_vergeten').addEventListener('click',function(){toon('form_vergeten');});
+  $('naar_inloggen').addEventListener('click',function(){toon('form_in');});
+  $('hcode_ga').addEventListener('click',function(){location.href='/';});
+
+  function post(pad,body,knop,klaar){
+    knop.disabled=true;var oud=knop.textContent;knop.textContent='Even geduld…';
+    fetch(pad,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)})
+      .then(function(r){return r.json().catch(function(){return{ok:false};});})
+      .then(function(d){knop.disabled=false;knop.textContent=oud;klaar(d);})
+      .catch(function(){knop.disabled=false;knop.textContent=oud;fout('Geen verbinding. Probeer het opnieuw.');});
+  }
+
+  $('form_in').addEventListener('submit',function(e){e.preventDefault();
+    melding.className='melding';
+    post('/api/v1/login',{email:$('in_email').value.trim(),wachtwoord:$('in_ww').value},$('in_knop'),function(d){
+      if(d.ok){location.href='/';}
+      else fout(d.fout||'Inloggen is niet gelukt. Controleer je e-mail en wachtwoord.');
+    });
+  });
+  $('form_reg').addEventListener('submit',function(e){e.preventDefault();
+    melding.className='melding';
+    post('/api/v1/registreer',{email:$('reg_email').value.trim(),wachtwoord:$('reg_ww').value,code:$('reg_code').value.trim()},$('reg_knop'),function(d){
+      if(d.ok){goed('Je account is aangemaakt.');toonHerstelcode(d.herstelcode);}
+      else if(d.login){fout(d.fout||'Er bestaat al een account met dit e-mailadres. Log in.');}
+      else fout(d.fout||'Account aanmaken is niet gelukt.');
+    });
+  });
+  $('form_vergeten').addEventListener('submit',function(e){e.preventDefault();
+    melding.className='melding';
+    post('/api/v1/herstel',{email:$('v_email').value.trim(),herstelcode:$('v_code').value.trim(),nieuw:$('v_ww').value},$('v_knop'),function(d){
+      if(d.ok){goed('Je wachtwoord is vernieuwd.');toonHerstelcode(d.herstelcode);
+        $('hcode_uitleg').textContent='Dit is je nieuwe herstelcode (de oude werkt niet meer). Bewaar hem op een veilige plek:';}
+      else fout(d.fout||'Herstellen is niet gelukt. Controleer je herstelcode.');
+    });
+  });
+})();
+</script>
+</body>
+</html>
