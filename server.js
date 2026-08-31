@@ -284,9 +284,11 @@ function v1SessieVan(req) {
   if (Date.now() - s.t > 30 * 86400000) { v1Sessies.delete(m[1]); return null; }
   return s.email;
 }
-function v1CookieHeader(token, weg) {
+function v1CookieHeader(token, weg, request) {
   // Secure alleen op https (achter de Railway-proxy); op localhost tijdens ontwikkeling niet
-  const veilig = true; // productie draait op https; de proxy zet x-forwarded-proto
+  const proxyProto = String(request?.headers?.["x-forwarded-proto"] || "")
+    .split(",", 1)[0].trim().toLowerCase();
+  const veilig = proxyProto === "https" || !!request?.socket?.encrypted;
   const basis = "fp1=" + (weg ? "" : token) + "; Path=/; HttpOnly; SameSite=Lax" + (veilig ? "; Secure" : "");
   return basis + (weg ? "; Max-Age=0" : "; Max-Age=" + (30 * 86400));
 }
@@ -1647,7 +1649,7 @@ async function afhandelen(request, response) {
       for (const [tok, s] of v1Sessies) if (s.email === email) v1Sessies.delete(tok);
       v1LoginMis.delete(email);
       const sessie = maakV1Sessie(email);
-      response.setHeader("set-cookie", v1CookieHeader(sessie));
+      response.setHeader("set-cookie", v1CookieHeader(sessie, false, request));
       auditLog(V1_PRAKTIJK, bestond ? "v1-wachtwoord-vernieuwd" : "v1-account-geactiveerd", request);
       await sendJson(response, 200, { ok: true, email });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
@@ -1674,7 +1676,7 @@ async function afhandelen(request, response) {
       }
       v1LoginMis.delete(email);
       const token = maakV1Sessie(email);
-      response.setHeader("set-cookie", v1CookieHeader(token));
+      response.setHeader("set-cookie", v1CookieHeader(token, false, request));
       auditLog(V1_PRAKTIJK, "v1-ingelogd", request);
       await sendJson(response, 200, { ok: true, email });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
@@ -1685,7 +1687,7 @@ async function afhandelen(request, response) {
     const rauw = String(request.headers.cookie || "");
     const m = rauw.match(/(?:^|;\s*)fp1=([a-f0-9]{48})(?:;|$)/);
     if (m) v1Sessies.delete(m[1]);
-    response.setHeader("set-cookie", v1CookieHeader("", true));
+    response.setHeader("set-cookie", v1CookieHeader("", true, request));
     await sendJson(response, 200, { ok: true });
     return;
   }
