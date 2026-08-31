@@ -207,6 +207,12 @@ function weekFeiten(pk) {
 
 // oprichterstarief: hoeveel van de honderd plekken zijn vergeven; de teller staat
 // live op de landingspagina en wordt door beheer bijgewerkt zodra praktijken instappen
+// sjablonen van de praktijk (v2): protocollen die één therapeut deelt en waar
+// alle collega's van de praktijk vervolgens mee werken, op elk apparaat
+const praktijkSjablonenPath = join(dataDir, "praktijk-sjablonen.json");
+let praktijkSjablonen = {}; // { pkLower: [ { naam, oefeningen:[{n,s?,h?,w?}], t } ] }
+try { praktijkSjablonen = JSON.parse(await readFile(praktijkSjablonenPath, "utf8")); } catch {}
+
 const oprichtersPath = join(dataDir, "oprichters.json");
 let oprichters = { vergeven: 0 };
 try { oprichters = { ...oprichters, ...JSON.parse(await readFile(oprichtersPath, "utf8")) }; } catch {}
@@ -525,7 +531,7 @@ function leesLimiet(req, res) {
 
 // dagelijkse reservekopie van alle databestanden (laatste 7 dagen): vangnet tegen
 // beschadigde schrijfacties of een bug die een bestand leegtrekt
-const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, vertalingenPath, oprichtersPath];
+const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath];
 async function maakBackup() {
   try {
     const dag = new Date().toISOString().slice(0, 10);
@@ -1406,6 +1412,69 @@ async function afhandelen(request, response) {
     } catch {
       await sendJson(response, 502, { ok: false, fout: "De weekbrief is even niet beschikbaar; probeer het zo opnieuw." });
     }
+    return;
+  }
+
+  // ---- sjablonen van de praktijk (v2): gedeelde protocollen voor het hele team ----
+  // lezen: alleen de ingelogde praktijk (de protocollen zijn praktijk-eigen werk)
+  if (urlPath === "/api/praktijk/sjablonen" && request.method === "GET") {
+    if (leesLimiet(request, response)) return;
+    const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    const pk = String(q.get("praktijk") || "").trim().toLowerCase();
+    if (!pk) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam op." }); return; }
+    if (await eisPraktijk(request, response, pk)) return;
+    await sendJson(response, 200, { ok: true, sjablonen: praktijkSjablonen[pk] || [] });
+    return;
+  }
+  // delen/bijwerken: een sjabloon (naam + oefeningen met startdosering) bij de
+  // praktijk bewaren; dezelfde naam overschrijft. Alleen de ingelogde praktijk.
+  if (urlPath === "/api/praktijk/sjablonen" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request, 64 * 1024));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      if (await eisPraktijk(request, response, pk)) return;
+      if (!praktijkGeclaimd(pk)) { await sendJson(response, 401, { ok: false, fout: "Beveilig eerst de praktijk (wachtwoord) om sjablonen te delen.", login: true }); return; }
+      const naam = cleanName(b.naam, 60);
+      if (!naam) { await sendJson(response, 400, { ok: false, fout: "Geef het sjabloon een naam." }); return; }
+      const oefeningen = (Array.isArray(b.oefeningen) ? b.oefeningen : []).slice(0, 12)
+        .map((x) => {
+          const it = { n: cleanName(x && x.n, 80) };
+          for (const k of ["s", "h", "w"]) { const v = String((x && x[k]) || "").slice(0, 10); if (v) it[k] = v; }
+          return it;
+        })
+        .filter((x) => x.n);
+      if (!oefeningen.length) { await sendJson(response, 400, { ok: false, fout: "Een sjabloon heeft minstens één oefening nodig." }); return; }
+      const lijst = (praktijkSjablonen[pk] = praktijkSjablonen[pk] || []);
+      const idx = lijst.findIndex((s) => String(s.naam || "").toLowerCase() === naam.toLowerCase());
+      if (idx === -1 && lijst.length >= 30) { await sendJson(response, 400, { ok: false, fout: "Maximum van 30 praktijksjablonen bereikt; verwijder er eerst één." }); return; }
+      const sjabloon = { naam, oefeningen, t: Date.now() };
+      if (idx > -1) lijst[idx] = sjabloon; else lijst.unshift(sjabloon);
+      await saveJson(praktijkSjablonenPath, praktijkSjablonen);
+      auditLog(pk, "sjabloon-gedeeld", request);
+      await sendJson(response, 200, { ok: true, sjablonen: lijst });
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+    return;
+  }
+  // verwijderen: alleen de ingelogde praktijk
+  if (urlPath === "/api/praktijk/sjablonen/verwijder" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      if (await eisPraktijk(request, response, pk)) return;
+      const naam = cleanName(b.naam, 60).toLowerCase();
+      const lijst = praktijkSjablonen[pk] || [];
+      const idx = lijst.findIndex((s) => String(s.naam || "").toLowerCase() === naam);
+      if (idx === -1) { await sendJson(response, 404, { ok: false, fout: "Sjabloon niet gevonden." }); return; }
+      lijst.splice(idx, 1);
+      if (!lijst.length) delete praktijkSjablonen[pk];
+      await saveJson(praktijkSjablonenPath, praktijkSjablonen);
+      auditLog(pk, "sjabloon-verwijderd", request);
+      await sendJson(response, 200, { ok: true, sjablonen: praktijkSjablonen[pk] || [] });
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }
 

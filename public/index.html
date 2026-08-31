@@ -1641,17 +1641,45 @@ bridge2.jpg</div>
         "</div>"+attr+"</div>";
     };
     var eigen=leesEigenSjab();
+    // v2: gedeelde praktijksjablonen — protocollen die één collega deelt en waar
+    // het hele team op elk apparaat mee werkt (concurrenten noemen dit "vaste
+    // protocollen per klacht", maar dan mét app en account)
+    var vanPraktijk=(IS_V2&&Array.isArray(PRAKSJAB))?PRAKSJAB:[];
     var h='';
     if(eigen.length){
       h+="<div style='font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:2px 0 4px'>Jouw sjablonen</div>";
-      h+=eigen.map(function(s,i){return rij(s,"<button class='btn primary' data-esjab='"+i+"'>Gebruik</button><button class='btn' data-edel='"+i+"' title='verwijderen' aria-label='verwijderen'>&times;</button>");}).join("");
+      h+=eigen.map(function(s,i){return rij(s,"<button class='btn primary' data-esjab='"+i+"'>Gebruik</button>"+
+        (IS_V2&&(SET.praktijk||'').trim()?"<button class='btn' data-edeel='"+i+"' title='Deel dit sjabloon met de hele praktijk: elke collega kan het dan op elk apparaat gebruiken'>Deel</button>":"")+
+        "<button class='btn' data-edel='"+i+"' title='verwijderen' aria-label='verwijderen'>&times;</button>");}).join("");
+    }
+    if(vanPraktijk.length){
+      h+="<div style='font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:"+(eigen.length?12:2)+"px 0 4px'>Sjablonen van de praktijk</div>";
+      h+=vanPraktijk.map(function(s,i){return rij({naam:s.naam,sub:'Gedeeld met de hele praktijk',oefeningen:s.oefeningen||[]},
+        "<button class='btn primary' data-psjab='"+i+"'>Gebruik</button><button class='btn' data-pdel='"+i+"' title='verwijderen voor de hele praktijk' aria-label='verwijderen'>&times;</button>");}).join("");
+    }
+    if(eigen.length||vanPraktijk.length){
       h+="<div style='font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:12px 0 4px'>Standaardsjablonen</div>";
     }
-    if(!SJABLONEN.length&&!eigen.length){el.innerHTML="<div class='hint'>Geen sjablonen gevonden.</div>";return;}
+    if(!SJABLONEN.length&&!eigen.length&&!vanPraktijk.length){el.innerHTML="<div class='hint'>Geen sjablonen gevonden.</div>";return;}
     h+=SJABLONEN.map(function(s,i){return rij(s,"<button class='btn primary' data-sjab='"+i+"'>Gebruik</button>");}).join("");
     el.innerHTML=h;
   }
-  document.getElementById('sjabBtn').addEventListener('click',function(){renderSjabLijst();openOv('ovSjab');});
+  // gedeelde praktijksjablonen: cache + laden zodra het sjablonenvenster opent.
+  // Zonder ingelogde praktijk geeft de server 401 en blijft de sectie gewoon weg.
+  var PRAKSJAB=null;
+  function laadPrakSjab(){
+    if(!IS_V2)return;
+    var pr=(SET.praktijk||'').trim();
+    if(!pr){PRAKSJAB=null;return;}
+    fetch('api/praktijk/sjablonen?praktijk='+encodeURIComponent(pr),PGET())
+      .then(function(r){return r.ok?r.json():null;})
+      .then(function(d){
+        var nieuw=(d&&d.ok&&Array.isArray(d.sjablonen))?d.sjablonen:null;
+        if(JSON.stringify(nieuw)!==JSON.stringify(PRAKSJAB)){PRAKSJAB=nieuw;renderSjabLijst();}
+      })
+      .catch(function(){});
+  }
+  document.getElementById('sjabBtn').addEventListener('click',function(){renderSjabLijst();laadPrakSjab();openOv('ovSjab');});
   // eenmalig welkom (v2): wie vers van de landing komt, landt niet koud in de app
   // maar krijgt de kaart-in-één-minuut-route. Eén keer ooit, daarna nooit meer;
   // bestaande gebruikers (met opgeslagen kaartstaat) zien hem ook niet.
@@ -1714,6 +1742,37 @@ bridge2.jpg</div>
   document.getElementById('sj_lijst').addEventListener('click',function(e){
     var eb=e.target.closest('[data-edel]');
     if(eb){var lst=leesEigenSjab();lst.splice(+eb.dataset.edel,1);bewaarEigenSjab(lst);renderSjabLijst();return;}
+    // eigen sjabloon delen met de hele praktijk (v2)
+    var dl=e.target.closest('[data-edeel]');
+    if(dl){
+      var sj=leesEigenSjab()[+dl.dataset.edeel];
+      if(!sj)return;
+      dl.disabled=true;dl.textContent='Bezig…';
+      fetch('api/praktijk/sjablonen',{method:'POST',headers:PJSON(),
+        body:JSON.stringify({praktijk:SET.praktijk||'',naam:sj.naam,oefeningen:sj.oefeningen||[]})})
+        .then(function(r){return r.json();})
+        .then(function(d){
+          if(d.ok){PRAKSJAB=d.sjablonen;renderSjabLijst();}
+          else{dl.disabled=false;dl.textContent='Deel';alert(d.fout||'Delen is niet gelukt.'+(d.login?' Log eerst in bij de praktijk (via Kaarten).':''));}
+        })
+        .catch(function(){dl.disabled=false;dl.textContent='Deel';alert('Delen is niet gelukt: geen verbinding.');});
+      return;
+    }
+    // gedeeld praktijksjabloon gebruiken of (voor iedereen) verwijderen
+    var pg=e.target.closest('[data-psjab]');
+    if(pg){var ps=(PRAKSJAB||[])[+pg.dataset.psjab];if(ps)pasSjabloonToe({naam:ps.naam,oefeningen:ps.oefeningen||[]});return;}
+    var pd=e.target.closest('[data-pdel]');
+    if(pd){
+      var wp=(PRAKSJAB||[])[+pd.dataset.pdel];
+      if(!wp)return;
+      if(!confirm('Sjabloon "'+wp.naam+'" voor de hele praktijk verwijderen?'))return;
+      fetch('api/praktijk/sjablonen/verwijder',{method:'POST',headers:PJSON(),
+        body:JSON.stringify({praktijk:SET.praktijk||'',naam:wp.naam})})
+        .then(function(r){return r.json();})
+        .then(function(d){if(d.ok){PRAKSJAB=d.sjablonen;renderSjabLijst();}else alert(d.fout||'Verwijderen is niet gelukt.');})
+        .catch(function(){alert('Verwijderen is niet gelukt: geen verbinding.');});
+      return;
+    }
     var pb=e.target.closest('[data-esjab]');
     if(pb){pasSjabloonToe(leesEigenSjab()[+pb.dataset.esjab]);return;}
     var b=e.target.closest('[data-sjab]');if(!b)return;
