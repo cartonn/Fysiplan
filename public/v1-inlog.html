@@ -8,7 +8,7 @@
 <title>Fysiplan — inloggen</title>
 <style>
   :root{--bg:#f6f2e9;--papier:#fffdf7;--inkt:#232019;--tekst:#3d3a31;--demp:#6b6557;--zacht:#a39c8a;
-    --lijn:#e3dbc6;--blauw:#2456a6;--blauw-d:#193c78;--oranje:#d4501f;--groen:#2e6b45;--rood:#a23f2c;
+    --lijn:#e3dbc6;--blauw:#2456a6;--blauw-d:#193c78;--groen:#2e6b45;--rood:#a23f2c;
     --serif:Charter,'Iowan Old Style','Palatino Linotype',Georgia,serif;
     --sans:'Avenir Next',Seravek,'Segoe UI',system-ui,-apple-system,sans-serif}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -38,15 +38,14 @@
   .melding{margin-top:14px;font:500 13.5px/1.5 var(--sans);padding:10px 12px;border-radius:9px;display:none}
   .melding.fout{display:block;background:#fbecea;border:1px solid #e7c3bc;color:var(--rood)}
   .melding.goed{display:block;background:#eef6ef;border:1px solid #cfe4d4;color:var(--groen)}
-  .hcode{margin-top:14px;padding:14px;border:1px dashed var(--zacht);border-radius:10px;background:var(--bg);display:none}
-  .hcode.aan{display:block}
-  .hcode p{font-size:13px;color:var(--demp)}
-  .hcode b{display:block;font:700 18px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--inkt);
-    user-select:all;letter-spacing:.02em;margin-top:4px;word-break:break-all}
   .voet{margin-top:20px;font:italic 12.5px/1.5 var(--serif);color:var(--zacht);text-align:center}
   form{display:none}
   form.aan{display:block}
   .hint{font:400 12px/1.5 var(--sans);color:var(--zacht);margin-top:6px}
+  .gestuurd{display:none;margin-top:16px;padding:16px;border:1px dashed var(--zacht);border-radius:10px;background:var(--bg)}
+  .gestuurd.aan{display:block}
+  .gestuurd b{font:700 15px/1.4 var(--serif);color:var(--inkt);display:block}
+  .gestuurd p{font-size:13.5px;color:var(--demp);margin-top:6px}
 </style>
 </head>
 <body>
@@ -75,31 +74,24 @@
     <form id="form_reg" autocomplete="on">
       <label for="reg_email">E-mailadres</label>
       <input type="email" id="reg_email" autocomplete="username" placeholder="naam@praktijk.nl"/>
-      <label for="reg_ww">Kies een wachtwoord</label>
-      <input type="password" id="reg_ww" autocomplete="new-password" placeholder="Minstens 8 tekens"/>
       <label for="reg_code">Registratiecode van de praktijk</label>
       <input type="text" id="reg_code" autocomplete="off" placeholder="Code van je praktijk"/>
-      <p class="hint">Deze code krijg je van je praktijk. Zo kan alleen jullie team een account aanmaken.</p>
-      <button type="submit" class="knop" id="reg_knop">Account aanmaken</button>
+      <p class="hint">Deze code krijg je van je praktijk. Je ontvangt daarna een e-mail met een link om je wachtwoord te kiezen.</p>
+      <button type="submit" class="knop" id="reg_knop">Stuur mij de bevestigingsmail</button>
     </form>
 
     <form id="form_vergeten" autocomplete="off">
       <label for="v_email">E-mailadres</label>
       <input type="email" id="v_email" autocomplete="username" placeholder="naam@praktijk.nl"/>
-      <label for="v_code">Herstelcode</label>
-      <input type="text" id="v_code" autocomplete="one-time-code" placeholder="FP-…"/>
-      <p class="hint">De herstelcode die je bij het aanmaken van je account hebt bewaard.</p>
-      <label for="v_ww">Nieuw wachtwoord</label>
-      <input type="password" id="v_ww" autocomplete="new-password" placeholder="Minstens 8 tekens"/>
-      <button type="submit" class="knop" id="v_knop">Nieuw wachtwoord instellen</button>
+      <p class="hint">Je ontvangt een e-mail met een link om een nieuw wachtwoord te kiezen.</p>
+      <button type="submit" class="knop" id="v_knop">Stuur mij de herstelmail</button>
       <div class="mini"><a id="naar_inloggen">Terug naar inloggen</a></div>
     </form>
 
     <div class="melding" id="melding"></div>
-    <div class="hcode" id="hcode">
-      <p id="hcode_uitleg">Bewaar deze herstelcode op een veilige plek. Hiermee stel je een nieuw wachtwoord in als je het huidige kwijt bent. Je ziet hem maar één keer:</p>
-      <b id="hcode_waarde"></b>
-      <button type="button" class="knop" id="hcode_ga">Ga naar Fysiplan</button>
+    <div class="gestuurd" id="gestuurd">
+      <b>Kijk in je mail</b>
+      <p id="gestuurd_tekst">We hebben je een e-mail gestuurd met een link om je wachtwoord te kiezen. De link is 24 uur geldig. Zie je niets? Kijk ook in je spammap.</p>
     </div>
 
     <p class="voet">Fysiplan — trainingskaarten voor je praktijk.</p>
@@ -108,26 +100,21 @@
 <script>
 (function(){
   var $=function(id){return document.getElementById(id);};
-  var melding=$('melding'),hcode=$('hcode');
+  var melding=$('melding'),gestuurd=$('gestuurd');
   function toon(vorm){
     ['form_in','form_reg','form_vergeten'].forEach(function(f){$(f).classList.toggle('aan',f===vorm);});
     $('tab_in').classList.toggle('aan',vorm==='form_in');
     $('tab_reg').classList.toggle('aan',vorm==='form_reg');
-    melding.className='melding';melding.textContent='';hcode.className='hcode';
-    if(vorm==='form_reg'){$('kop').textContent='Account aanmaken';$('subkop').textContent='Maak met je e-mailadres een eigen account voor je praktijk.';}
-    else if(vorm==='form_vergeten'){$('kop').textContent='Wachtwoord vergeten';$('subkop').textContent='Stel met je herstelcode een nieuw wachtwoord in.';}
+    melding.className='melding';melding.textContent='';gestuurd.className='gestuurd';
+    if(vorm==='form_reg'){$('kop').textContent='Account aanmaken';$('subkop').textContent='Vul je e-mailadres in; je kiest je wachtwoord via de bevestigingsmail.';}
+    else if(vorm==='form_vergeten'){$('kop').textContent='Wachtwoord vergeten';$('subkop').textContent='We sturen je een e-mail om een nieuw wachtwoord te kiezen.';}
     else{$('kop').textContent='Inloggen bij Fysiplan';$('subkop').textContent='Log in met je e-mailadres om je oefenkaarten te maken.';}
   }
   function fout(t){melding.className='melding fout';melding.textContent=t||'Er ging iets mis. Probeer het opnieuw.';}
-  function goed(t){melding.className='melding goed';melding.textContent=t;}
-  function toonHerstelcode(code){
-    $('hcode_waarde').textContent=code;hcode.className='hcode aan';
-  }
   $('tab_in').addEventListener('click',function(){toon('form_in');});
   $('tab_reg').addEventListener('click',function(){toon('form_reg');});
   $('naar_vergeten').addEventListener('click',function(){toon('form_vergeten');});
   $('naar_inloggen').addEventListener('click',function(){toon('form_in');});
-  $('hcode_ga').addEventListener('click',function(){location.href='/';});
 
   function post(pad,body,knop,klaar){
     knop.disabled=true;var oud=knop.textContent;knop.textContent='Even geduld…';
@@ -146,18 +133,16 @@
   });
   $('form_reg').addEventListener('submit',function(e){e.preventDefault();
     melding.className='melding';
-    post('/api/v1/registreer',{email:$('reg_email').value.trim(),wachtwoord:$('reg_ww').value,code:$('reg_code').value.trim()},$('reg_knop'),function(d){
-      if(d.ok){goed('Je account is aangemaakt.');toonHerstelcode(d.herstelcode);}
-      else if(d.login){fout(d.fout||'Er bestaat al een account met dit e-mailadres. Log in.');}
-      else fout(d.fout||'Account aanmaken is niet gelukt.');
+    post('/api/v1/registreer',{email:$('reg_email').value.trim(),code:$('reg_code').value.trim()},$('reg_knop'),function(d){
+      if(d.ok){gestuurd.className='gestuurd aan';}
+      else fout(d.fout||'De mail versturen is niet gelukt. Controleer je e-mailadres en de registratiecode.');
     });
   });
   $('form_vergeten').addEventListener('submit',function(e){e.preventDefault();
     melding.className='melding';
-    post('/api/v1/herstel',{email:$('v_email').value.trim(),herstelcode:$('v_code').value.trim(),nieuw:$('v_ww').value},$('v_knop'),function(d){
-      if(d.ok){goed('Je wachtwoord is vernieuwd.');toonHerstelcode(d.herstelcode);
-        $('hcode_uitleg').textContent='Dit is je nieuwe herstelcode (de oude werkt niet meer). Bewaar hem op een veilige plek:';}
-      else fout(d.fout||'Herstellen is niet gelukt. Controleer je herstelcode.');
+    post('/api/v1/wachtwoord-vergeten',{email:$('v_email').value.trim()},$('v_knop'),function(d){
+      if(d.ok){$('gestuurd_tekst').textContent='Als dit adres bij ons bekend is, staat er nu een e-mail voor je klaar met een link om een nieuw wachtwoord te kiezen (24 uur geldig). Zie je niets? Kijk ook in je spammap.';gestuurd.className='gestuurd aan';}
+      else fout(d.fout);
     });
   });
 })();

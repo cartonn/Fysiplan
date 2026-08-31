@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="color-scheme" content="light"/>
+<meta name="robots" content="noindex,noarchive"/>
+<title>Fysiplan — wachtwoord kiezen</title>
+<style>
+  :root{--bg:#f6f2e9;--papier:#fffdf7;--inkt:#232019;--tekst:#3d3a31;--demp:#6b6557;--zacht:#a39c8a;
+    --lijn:#e3dbc6;--blauw:#2456a6;--blauw-d:#193c78;--groen:#2e6b45;--rood:#a23f2c;
+    --serif:Charter,'Iowan Old Style','Palatino Linotype',Georgia,serif;
+    --sans:'Avenir Next',Seravek,'Segoe UI',system-ui,-apple-system,sans-serif}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--tekst);font:16px/1.6 var(--serif);
+    min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;-webkit-font-smoothing:antialiased}
+  .kaart{width:100%;max-width:420px;background:var(--papier);border:1px solid var(--lijn);border-radius:14px;
+    box-shadow:0 1px 2px rgba(60,50,20,.06),0 18px 44px -20px rgba(60,50,20,.3);padding:30px 28px 26px}
+  .merk{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+  .merk .mark{width:30px;height:30px;border-radius:8px;background:var(--blauw);display:flex;align-items:center;justify-content:center;flex:0 0 30px}
+  .merk b{font:700 19px/1 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+  h1{font:700 22px/1.25 var(--serif);color:var(--inkt);letter-spacing:-.015em}
+  .sub{font-size:14.5px;color:var(--demp);margin-top:6px}
+  label{display:block;font:600 12.5px/1 var(--sans);color:var(--inkt);margin:16px 0 6px}
+  input{width:100%;font:400 15.5px/1.3 var(--sans);color:var(--inkt);background:var(--papier);
+    border:1px solid var(--lijn);border-radius:9px;padding:11px 12px}
+  input:focus{outline:2px solid var(--blauw);outline-offset:1px;border-color:var(--blauw)}
+  .knop{width:100%;margin-top:20px;font:600 15.5px/1 var(--sans);color:#fff;background:var(--blauw);
+    border:0;border-radius:9px;padding:13px;cursor:pointer;transition:background .15s}
+  .knop:hover{background:var(--blauw-d)}
+  .knop:disabled{opacity:.6;cursor:default}
+  .melding{margin-top:14px;font:500 13.5px/1.5 var(--sans);padding:10px 12px;border-radius:9px;display:none}
+  .melding.fout{display:block;background:#fbecea;border:1px solid #e7c3bc;color:var(--rood)}
+  .melding.goed{display:block;background:#eef6ef;border:1px solid #cfe4d4;color:var(--groen)}
+  .mini{margin-top:14px;text-align:center}
+  .mini a{color:var(--blauw);font:500 13.5px/1 var(--sans);text-decoration:none}
+  .mini a:hover{text-decoration:underline}
+  .hint{font:400 12px/1.5 var(--sans);color:var(--zacht);margin-top:6px}
+  .voet{margin-top:20px;font:italic 12.5px/1.5 var(--serif);color:var(--zacht);text-align:center}
+  #klaar{display:none}
+</style>
+</head>
+<body>
+  <main class="kaart" role="main">
+    <div class="merk">
+      <span class="mark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg></span>
+      <b>Fysiplan</b>
+    </div>
+    <div id="stel">
+      <h1>Kies je wachtwoord</h1>
+      <p class="sub">Je bent er bijna: kies het wachtwoord waarmee je voortaan inlogt bij Fysiplan.</p>
+      <form id="form" autocomplete="on">
+        <label for="ww">Nieuw wachtwoord</label>
+        <input type="password" id="ww" autocomplete="new-password" placeholder="Minstens 8 tekens"/>
+        <label for="ww2">Herhaal je wachtwoord</label>
+        <input type="password" id="ww2" autocomplete="new-password" placeholder="Nog een keer"/>
+        <p class="hint">Tip: gebruik een zin of een wachtwoordmanager.</p>
+        <button type="submit" class="knop" id="knop">Wachtwoord instellen</button>
+      </form>
+      <div class="mini"><a href="/">Terug naar inloggen</a></div>
+    </div>
+    <div id="klaar">
+      <h1>Je wachtwoord staat klaar</h1>
+      <p class="sub">Je bent meteen ingelogd. Voortaan log je in met je e-mailadres en dit wachtwoord.</p>
+      <button type="button" class="knop" id="ga">Naar Fysiplan</button>
+    </div>
+    <div class="melding" id="melding"></div>
+    <p class="voet">Fysiplan — trainingskaarten voor je praktijk.</p>
+  </main>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  var melding=$('melding');
+  function fout(t){melding.className='melding fout';melding.textContent=t||'Er ging iets mis. Probeer het opnieuw.';}
+  var token=(new URLSearchParams(location.search).get('token')||'').trim();
+  if(!/^[a-f0-9]{48}$/.test(token)){
+    $('form').style.display='none';
+    fout('Deze link is niet compleet. Open de link uit de e-mail opnieuw, of vraag een nieuwe aan via de inlogpagina.');
+  }
+  $('ga').addEventListener('click',function(){location.href='/';});
+  $('form').addEventListener('submit',function(e){e.preventDefault();
+    melding.className='melding';
+    var ww=$('ww').value,ww2=$('ww2').value;
+    if(ww.length<8){fout('Kies een wachtwoord van minstens 8 tekens.');return;}
+    if(ww!==ww2){fout('De twee wachtwoorden zijn niet gelijk.');return;}
+    var knop=$('knop');knop.disabled=true;knop.textContent='Even geduld…';
+    fetch('/api/v1/wachtwoord-zetten',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({token:token,wachtwoord:ww})})
+      .then(function(r){return r.json().catch(function(){return{ok:false};});})
+      .then(function(d){
+        knop.disabled=false;knop.textContent='Wachtwoord instellen';
+        if(d.ok){$('stel').style.display='none';$('klaar').style.display='block';melding.className='melding';}
+        else if(d.verlopen){$('form').style.display='none';fout(d.fout);}
+        else fout(d.fout);
+      })
+      .catch(function(){knop.disabled=false;knop.textContent='Wachtwoord instellen';fout('Geen verbinding. Probeer het opnieuw.');});
+  });
+})();
+</script>
+</body>
+</html>
