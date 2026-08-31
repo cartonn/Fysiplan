@@ -178,6 +178,100 @@ function auditLog(pk, actie, req) {
   saveJson(auditPath, praktijkAudit).catch(() => {});
 }
 
+// ---- v1-accountlaag: e-mail + zelfgekozen wachtwoord, alleen voor FysioTotaal ----
+// De v1-app op fysiplan.nl zit achter een inlog: alleen ingelogde medewerkers zien
+// de app. Registreren kan uitsluitend met de registratiecode van de praktijk
+// (V1_REGISTRATIE_CODE), zodat niet zomaar iedereen een account maakt. Er is geen
+// e-mailverzending: het e-mailadres is de gebruikersnaam, en een vergeten wachtwoord
+// herstel je met de herstelcode die eenmalig bij het registreren wordt getoond.
+const v1AccountsPath = join(dataDir, "v1-accounts.json");
+let v1Accounts = {}; // { emailLower: { email, hash, herstel, praktijk, gemaakt } }
+try { v1Accounts = JSON.parse(await readFile(v1AccountsPath, "utf8")); } catch {}
+const V1_REGISTRATIE_CODE = String(process.env.V1_REGISTRATIE_CODE || "");
+const V1_PRAKTIJK = "FysioTotaal";
+const v1Sessies = new Map(); // token -> { email, t }
+const v1LoginMis = new Map(); // emailLower -> { start, n }
+const geldigEmail = (s) => /^[^\s@]{1,64}@[^\s@]{1,255}\.[a-z]{2,}$/i.test(String(s || ""));
+function v1LoginOpSlot(em) {
+  const nu = Date.now();
+  if (v1LoginMis.size > 5000) for (const [k, v] of v1LoginMis) if (nu - v.start > 15 * 60000) v1LoginMis.delete(k);
+  const t = v1LoginMis.get(em);
+  return !!t && nu - t.start <= 15 * 60000 && t.n >= 10;
+}
+function v1LoginMisTel(em) {
+  const nu = Date.now();
+  const t = v1LoginMis.get(em);
+  if (!t || nu - t.start > 15 * 60000) v1LoginMis.set(em, { start: nu, n: 1 });
+  else t.n++;
+}
+function maakV1Sessie(email) {
+  const nu = Date.now();
+  if (v1Sessies.size > 5000) {
+    for (const [tok, s] of v1Sessies) if (nu - s.t > 30 * 86400000) v1Sessies.delete(tok);
+    if (v1Sessies.size > 50000) {
+      const oud = [...v1Sessies.entries()].sort((a, b) => a[1].t - b[1].t).slice(0, v1Sessies.size - 50000);
+      for (const [tok] of oud) v1Sessies.delete(tok);
+    }
+  }
+  const token = randomBytes(24).toString("hex");
+  v1Sessies.set(token, { email, t: nu });
+  return token;
+}
+// sessie uit de HttpOnly-cookie halen (v1 gate't de HTML server-side, dus geen header)
+function v1SessieVan(req) {
+  const rauw = String(req.headers.cookie || "");
+  const m = rauw.match(/(?:^|;\s*)fp1=([a-f0-9]{48})(?:;|$)/);
+  if (!m) return null;
+  const s = v1Sessies.get(m[1]);
+  if (!s) return null;
+  if (Date.now() - s.t > 30 * 86400000) { v1Sessies.delete(m[1]); return null; }
+  return s.email;
+}
+function v1CookieHeader(token, weg) {
+  // Secure alleen op https (achter de Railway-proxy); op localhost tijdens ontwikkeling niet
+  const veilig = true; // productie draait op https; de proxy zet x-forwarded-proto
+  const basis = "fp1=" + (weg ? "" : token) + "; Path=/; HttpOnly; SameSite=Lax" + (veilig ? "; Secure" : "");
+  return basis + (weg ? "; Max-Age=0" : "; Max-Age=" + (30 * 86400));
+}
+const v1Ingelogd = (req) => !!v1SessieVan(req);
+// de inloggate is opt-in: pas actief zodra de eigenaar een registratiecode heeft
+// gezet óf er al accounts bestaan. Zonder dat blijft de v1-app precies zoals hij
+// was (geen login), zodat deployen nooit per ongeluk de praktijk buitensluit.
+const v1InlogActief = () => !!V1_REGISTRATIE_CODE || Object.keys(v1Accounts).length > 0;
+// de inlogpagina die de v1-app afschermt; zelfstandige pagina met één inline script
+// (nonce), geen externe bronnen nodig zodat ze los van de gated app-assets werkt
+async function serveerV1Inlog(response) {
+  const nonce = scriptNonce();
+  response.setHeader("x-frame-options", "DENY");
+  response.setHeader("cache-control", "no-store");
+  response.setHeader("content-security-policy",
+    "default-src 'none'; script-src 'nonce-" + nonce + "'; style-src 'unsafe-inline'; " +
+    "img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
+  try {
+    const html = nonceInlineScripts(await readFile(join(publicDir, "v1-inlog.html"), "utf8"), nonce);
+    await send(response, 200, "text/html; charset=utf-8", html);
+  } catch { await send(response, 500, "text/plain; charset=utf-8", "Inlogpagina niet beschikbaar."); }
+}
+// de ingelogde v1-app met een discrete uitlogknop rechtsboven (het ingelogde
+// e-mailadres + Uitloggen). De rest van de app blijft ongewijzigd.
+async function serveerV1App(response, email) {
+  response.setHeader("cache-control", "no-store");
+  const veiligEmail = String(email).replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+  const balk = '<div id="fp1uit" style="position:fixed;top:8px;right:10px;z-index:99999;display:flex;gap:8px;align-items:center;'
+    + 'font:12px/1.2 system-ui,-apple-system,sans-serif;background:rgba(255,255,255,.92);border:1px solid #e3dbc6;'
+    + 'border-radius:999px;padding:5px 6px 5px 12px;box-shadow:0 2px 8px rgba(60,50,20,.12)">'
+    + '<span style="color:#6b6557;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + veiligEmail + '</span>'
+    + '<button type="button" id="fp1uitknop" style="cursor:pointer;border:1px solid #232019;background:#232019;color:#fff;'
+    + 'border-radius:999px;padding:5px 12px;font:600 12px/1 system-ui">Uitloggen</button></div>'
+    + '<script>document.getElementById("fp1uitknop").addEventListener("click",function(){'
+    + 'fetch("/api/v1/logout",{method:"POST"}).then(function(){location.reload();}).catch(function(){location.reload();});});</script>';
+  try {
+    let html = await readFile(join(publicDir, "index.html"), "utf8");
+    html = html.includes("</body>") ? html.replace("</body>", balk + "</body>") : html + balk;
+    await send(response, 200, "text/html; charset=utf-8", html);
+  } catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
+}
+
 // maandagbrief: één AI-samenvatting per praktijk per dag (daarna uit de cache)
 const briefCache = new Map(); // pk -> { dag, brief }
 // weekfeiten per kaart, deterministisch berekend: de AI krijgt alleen deze
@@ -1481,6 +1575,116 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // ---- v1-inlog (e-mail + wachtwoord, alleen FysioTotaal) ----
+  // status: gebruikt de inlogpagina om te weten of iemand al ingelogd is
+  if (urlPath === "/api/v1/status" && request.method === "GET") {
+    if (leesLimiet(request, response)) return;
+    const email = v1SessieVan(request);
+    await sendJson(response, 200, { ok: true, ingelogd: !!email, email: email || "", registratieOpen: !!V1_REGISTRATIE_CODE });
+    return;
+  }
+  // registreren: e-mail + zelfgekozen wachtwoord + de registratiecode van de praktijk.
+  // Bij succes komt er eenmalig een herstelcode mee (er is geen e-mailverzending).
+  if (urlPath === "/api/v1/registreer" && request.method === "POST") {
+    // geen dagplafond-per-IP: een praktijk registreert zijn ~10 medewerkers vaak vanaf
+    // één kantoor-IP. De registratiecode (alleen de praktijk heeft die), de schrijf-
+    // limiet en het 200-accountplafond begrenzen misbruik.
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const email = String(b.email || "").trim().toLowerCase().slice(0, 200);
+      const ww = String(b.wachtwoord || "");
+      const code = String(b.code || "");
+      if (!V1_REGISTRATIE_CODE) { await sendJson(response, 503, { ok: false, fout: "Registreren staat nog uit op deze server." }); return; }
+      if (!geldigEmail(email)) { await sendJson(response, 400, { ok: false, fout: "Vul een geldig e-mailadres in." }); return; }
+      if (ww.length < 8) { await sendJson(response, 400, { ok: false, fout: "Kies een wachtwoord van minstens 8 tekens." }); return; }
+      const codeOk = code.length === V1_REGISTRATIE_CODE.length
+        && timingSafeEqual(Buffer.from(code), Buffer.from(V1_REGISTRATIE_CODE));
+      if (!codeOk) { await denied(request, response, "v1-registratiecode"); return; }
+      if (v1Accounts[email]) { await sendJson(response, 409, { ok: false, fout: "Er bestaat al een account met dit e-mailadres. Log in.", login: true }); return; }
+      if (Object.keys(v1Accounts).length >= 200) { await sendJson(response, 400, { ok: false, fout: "Maximum bereikt." }); return; }
+      const herstelcode = maakHerstelcode();
+      v1Accounts[email] = { email, hash: maakHash(ww), herstel: maakHash(herstelcode), praktijk: V1_PRAKTIJK, gemaakt: Date.now() };
+      await saveJson(v1AccountsPath, v1Accounts);
+      auditLog(V1_PRAKTIJK, "v1-account-gemaakt", request);
+      const token = maakV1Sessie(email);
+      response.setHeader("set-cookie", v1CookieHeader(token));
+      await sendJson(response, 200, { ok: true, email, herstelcode });
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+    return;
+  }
+  // inloggen
+  if (urlPath === "/api/v1/login" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const email = String(b.email || "").trim().toLowerCase().slice(0, 200);
+      const ww = String(b.wachtwoord || "");
+      if (email && v1LoginOpSlot(email)) {
+        if ((v1LoginMis.get(email) || {}).n === 10) { v1LoginMisTel(email); auditLog(V1_PRAKTIJK, "v1-login-op-slot", request); }
+        await send429(response, 900, { ok: false, fout: "Te veel inlogpogingen; probeer het over een kwartier opnieuw." });
+        return;
+      }
+      const acc = v1Accounts[email];
+      if (!acc || !checkHash(ww, acc.hash)) {
+        v1LoginMisTel(email || "?");
+        await denied(request, response, "v1-login");
+        return;
+      }
+      v1LoginMis.delete(email);
+      const token = maakV1Sessie(email);
+      response.setHeader("set-cookie", v1CookieHeader(token));
+      auditLog(V1_PRAKTIJK, "v1-ingelogd", request);
+      await sendJson(response, 200, { ok: true, email });
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+    return;
+  }
+  // uitloggen: de eigen sessie en cookie ongeldig maken
+  if (urlPath === "/api/v1/logout" && request.method === "POST") {
+    const rauw = String(request.headers.cookie || "");
+    const m = rauw.match(/(?:^|;\s*)fp1=([a-f0-9]{48})(?:;|$)/);
+    if (m) v1Sessies.delete(m[1]);
+    response.setHeader("set-cookie", v1CookieHeader("", true));
+    await sendJson(response, 200, { ok: true });
+    return;
+  }
+  // wachtwoord vergeten: met de herstelcode een nieuw wachtwoord zetten. Zelfde remmen
+  // als inloggen; bij succes vervallen alle sessies en roteert de herstelcode.
+  if (urlPath === "/api/v1/herstel" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const email = String(b.email || "").trim().toLowerCase().slice(0, 200);
+      const acc = v1Accounts[email];
+      if (email && v1LoginOpSlot(email)) { await send429(response, 900, { ok: false, fout: "Te veel pogingen; probeer het over een kwartier opnieuw." }); return; }
+      if (!acc || !acc.herstel) { v1LoginMisTel(email || "?"); await denied(request, response, "v1-herstel"); return; }
+      const hcode = String(b.herstelcode || "").trim();
+      if (!hcode || !checkHash(hcode, acc.herstel)) {
+        v1LoginMisTel(email);
+        auditLog(V1_PRAKTIJK, "v1-herstel-mislukt", request);
+        await denied(request, response, "v1-herstel");
+        return;
+      }
+      const nieuw = String(b.nieuw || "");
+      if (nieuw.length < 8) { await sendJson(response, 400, { ok: false, fout: "Kies een nieuw wachtwoord van minstens 8 tekens." }); return; }
+      const herstelcode = maakHerstelcode();
+      acc.hash = maakHash(nieuw);
+      acc.herstel = maakHash(herstelcode);
+      acc.gewijzigd = Date.now();
+      await saveJson(v1AccountsPath, v1Accounts);
+      for (const [tok, s] of v1Sessies) if (s.email === email) v1Sessies.delete(tok);
+      v1LoginMis.delete(email);
+      const token = maakV1Sessie(email);
+      response.setHeader("set-cookie", v1CookieHeader(token));
+      auditLog(V1_PRAKTIJK, "v1-wachtwoord-hersteld", request);
+      await sendJson(response, 200, { ok: true, email, herstelcode });
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+    return;
+  }
+
   // praktijkprofielen: ophalen en opslaan/bijwerken (gedeeld over alle apparaten)
   if (urlPath === "/api/praktijken" && request.method === "GET") {
     // de praktijkenlijst voedt de keuzelijst in de app; de leeslimiet houdt normaal
@@ -2700,7 +2904,19 @@ async function afhandelen(request, response) {
     return;
   }
 
-  if (urlPath === "/") { telBezoek(request, false); urlPath = "/index.html"; }
+  // v1-inloggate: de app op / (en direct /index.html) zit achter de e-maillogin.
+  // Wie niet is ingelogd, krijgt de inlogpagina. /admin88 houdt zijn eigen
+  // beheersleutel-beveiliging; /v2, /k, /o en de API's zijn hierboven al afgehandeld.
+  if (urlPath === "/" || urlPath === "/index.html") {
+    telBezoek(request, false);
+    if (v1InlogActief()) {
+      const email = v1SessieVan(request);
+      if (!email) { await serveerV1Inlog(response); return; }
+      await serveerV1App(response, email);
+      return;
+    }
+    urlPath = "/index.html"; // login staat uit: de app zoals vanouds
+  }
   else if (urlPath === "/admin88") telBezoek(request, true);
 
   // onbekende API-paden krijgen een echte 404 in plaats van de startpagina met status 200
@@ -2755,6 +2971,9 @@ async function afhandelen(request, response) {
     const data = await readFile(filePath);
     await send(response, 200, MIME[extname(filePath)] || "application/octet-stream", data);
   } catch {
+    // SPA-vangnet: onbekende paden serveren de v1-app. Als de inloggate actief is,
+    // zit ook dit erachter (behalve /admin88, dat zijn eigen beheersleutel houdt).
+    if (v1InlogActief() && urlPath !== "/admin88" && !v1Ingelogd(request)) { await serveerV1Inlog(response); return; }
     try {
       const index = await readFile(join(publicDir, "index.html"));
       await send(response, 200, "text/html; charset=utf-8", index);
