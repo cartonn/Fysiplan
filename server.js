@@ -178,17 +178,74 @@ function auditLog(pk, actie, req) {
   saveJson(auditPath, praktijkAudit).catch(() => {});
 }
 
-// ---- v1-accountlaag: e-mail + zelfgekozen wachtwoord, alleen voor FysioTotaal ----
-// De v1-app op fysiplan.nl zit achter een inlog: alleen ingelogde medewerkers zien
-// de app. Registreren kan uitsluitend met de registratiecode van de praktijk
-// (V1_REGISTRATIE_CODE), zodat niet zomaar iedereen een account maakt. Er is geen
-// e-mailverzending: het e-mailadres is de gebruikersnaam, en een vergeten wachtwoord
-// herstel je met de herstelcode die eenmalig bij het registreren wordt getoond.
+// ---- v1-accountlaag: e-mail + wachtwoord, alleen voor FysioTotaal ----
+// De v1-app op fysiplan.nl zit ALTIJD achter een inlog. Een account aanmaken gaat
+// via een bevestigingsmail: e-mailadres (plus de registratiecode van de praktijk)
+// intikken -> mail met een instel-link -> wachtwoord kiezen -> inloggen. Wachtwoord
+// vergeten gaat via dezelfde maillink. Mail loopt via een HTTP-mail-API (Resend);
+// zonder MAIL_API_SLEUTEL/MAIL_AFZENDER melden registreren en vergeten netjes dat
+// het nog uit staat (inloggen met een bestaand account blijft dan gewoon werken).
 const v1AccountsPath = join(dataDir, "v1-accounts.json");
-let v1Accounts = {}; // { emailLower: { email, hash, herstel, praktijk, gemaakt } }
+let v1Accounts = {}; // { emailLower: { email, hash, praktijk, gemaakt, gewijzigd } }
 try { v1Accounts = JSON.parse(await readFile(v1AccountsPath, "utf8")); } catch {}
+// instel-tokens (activatie en reset): op schijf zodat een herstart een verstuurde
+// maillink niet ongeldig maakt; alleen de sha256-hash van het token wordt bewaard
+const v1TokensPath = join(dataDir, "v1-insteltokens.json");
+let v1Tokens = {}; // { sha256(token): { email, verloopt } }
+try { v1Tokens = JSON.parse(await readFile(v1TokensPath, "utf8")); } catch {}
 const V1_REGISTRATIE_CODE = String(process.env.V1_REGISTRATIE_CODE || "");
+const MAIL_API_SLEUTEL = String(process.env.MAIL_API_SLEUTEL || "");
+const MAIL_AFZENDER = String(process.env.MAIL_AFZENDER || "");
+const MAIL_API_BASIS = String(process.env.MAIL_API_BASIS || "https://api.resend.com");
 const V1_PRAKTIJK = "FysioTotaal";
+const mailIngesteld = () => !!(MAIL_API_SLEUTEL && MAIL_AFZENDER);
+async function stuurMail(naar, onderwerp, tekst) {
+  const r = await fetch(MAIL_API_BASIS + "/emails", {
+    method: "POST",
+    headers: { authorization: "Bearer " + MAIL_API_SLEUTEL, "content-type": "application/json" },
+    body: JSON.stringify({ from: MAIL_AFZENDER, to: [naar], subject: onderwerp, text: tekst }),
+    signal: AbortSignal.timeout(15 * 1000)
+  });
+  if (!r.ok) throw new Error("mail-api " + r.status);
+}
+// mailrem per adres: hooguit drie instel-mails per uur, zodat dit endpoint geen
+// spampomp richting een willekeurig adres kan worden (naast de rem per IP)
+const mailTeller = new Map(); // emailLower -> { start, n }
+function mailOpSlot(em) {
+  const nu = Date.now();
+  if (mailTeller.size > 5000) for (const [k, v] of mailTeller) if (nu - v.start > 3600e3) mailTeller.delete(k);
+  const t = mailTeller.get(em);
+  if (!t || nu - t.start > 3600e3) { mailTeller.set(em, { start: nu, n: 1 }); return false; }
+  return ++t.n > 3;
+}
+const tokenHash = (t) => createHash("sha256").update(String(t)).digest("hex");
+async function maakInstelToken(email) {
+  const nu = Date.now();
+  // opschonen + plafond: verlopen tokens weg, en nooit meer dan 500 open links
+  for (const [h, t] of Object.entries(v1Tokens)) if (!t || t.verloopt < nu) delete v1Tokens[h];
+  if (Object.keys(v1Tokens).length >= 500) throw new Error("tokenplafond");
+  const token = randomBytes(24).toString("hex");
+  v1Tokens[tokenHash(token)] = { email, verloopt: nu + 24 * 3600e3 };
+  await saveJson(v1TokensPath, v1Tokens);
+  return token;
+}
+async function verbruikInstelToken(token) {
+  const h = tokenHash(token);
+  const t = v1Tokens[h];
+  if (!t || t.verloopt < Date.now()) return null;
+  delete v1Tokens[h];
+  await saveJson(v1TokensPath, v1Tokens);
+  return t.email;
+}
+// alleen het eigen domein mag in de maillink staan (zelfde host-pinning als de
+// ICS-agenda en de demo-QR); elke andere Host-header valt terug op fysiplan.nl
+function eigenHost(request) {
+  const rawHost = String(request.headers.host || "");
+  const netjes = /^[a-z0-9.-]+(:\d+)?$/i.test(rawHost) ? rawHost : "";
+  const kaal = netjes.split(":")[0].toLowerCase();
+  const eigen = kaal === "fysiplan.nl" || kaal.endsWith(".fysiplan.nl") || kaal === "localhost" || kaal === "127.0.0.1";
+  return eigen ? netjes : "fysiplan.nl";
+}
 const v1Sessies = new Map(); // token -> { email, t }
 const v1LoginMis = new Map(); // emailLower -> { start, n }
 const geldigEmail = (s) => /^[^\s@]{1,64}@[^\s@]{1,255}\.[a-z]{2,}$/i.test(String(s || ""));
@@ -234,10 +291,12 @@ function v1CookieHeader(token, weg) {
   return basis + (weg ? "; Max-Age=0" : "; Max-Age=" + (30 * 86400));
 }
 const v1Ingelogd = (req) => !!v1SessieVan(req);
-// de inloggate is opt-in: pas actief zodra de eigenaar een registratiecode heeft
-// gezet óf er al accounts bestaan. Zonder dat blijft de v1-app precies zoals hij
-// was (geen login), zodat deployen nooit per ongeluk de praktijk buitensluit.
-const v1InlogActief = () => !!V1_REGISTRATIE_CODE || Object.keys(v1Accounts).length > 0;
+function instelLink(request, token) {
+  const host = eigenHost(request);
+  const kaal = host.split(":")[0].toLowerCase();
+  const proto = (kaal === "localhost" || kaal === "127.0.0.1") ? "http" : "https";
+  return proto + "://" + host + "/v1-wachtwoord?token=" + token;
+}
 // de inlogpagina die de v1-app afschermt; zelfstandige pagina met één inline script
 // (nonce), geen externe bronnen nodig zodat ze los van de gated app-assets werkt
 async function serveerV1Inlog(response) {
@@ -1580,37 +1639,89 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/v1/status" && request.method === "GET") {
     if (leesLimiet(request, response)) return;
     const email = v1SessieVan(request);
-    await sendJson(response, 200, { ok: true, ingelogd: !!email, email: email || "", registratieOpen: !!V1_REGISTRATIE_CODE });
+    await sendJson(response, 200, { ok: true, ingelogd: !!email, email: email || "", registratieOpen: !!V1_REGISTRATIE_CODE && mailIngesteld() });
     return;
   }
-  // registreren: e-mail + zelfgekozen wachtwoord + de registratiecode van de praktijk.
-  // Bij succes komt er eenmalig een herstelcode mee (er is geen e-mailverzending).
+  // registreren: e-mailadres + de registratiecode van de praktijk. De server stuurt
+  // een bevestigingsmail met een instel-link (24 uur geldig); pas na het kiezen van
+  // een wachtwoord via die link bestaat het account en kan er worden ingelogd.
+  // Bestaat het adres al, dan gaat er dezelfde instel-link heen (bewijs van
+  // e-mailbezit is de echte controle) — het antwoord verklapt dus nooit of een
+  // adres al een account heeft.
   if (urlPath === "/api/v1/registreer" && request.method === "POST") {
     // geen dagplafond-per-IP: een praktijk registreert zijn ~10 medewerkers vaak vanaf
     // één kantoor-IP. De registratiecode (alleen de praktijk heeft die), de schrijf-
-    // limiet en het 200-accountplafond begrenzen misbruik.
+    // limiet, de mailrem per adres en het 200-accountplafond begrenzen misbruik.
     if (schrijfLimiet(request, response)) return;
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
       const email = String(b.email || "").trim().toLowerCase().slice(0, 200);
-      const ww = String(b.wachtwoord || "");
       const code = String(b.code || "");
-      if (!V1_REGISTRATIE_CODE) { await sendJson(response, 503, { ok: false, fout: "Registreren staat nog uit op deze server." }); return; }
+      if (!V1_REGISTRATIE_CODE || !mailIngesteld()) { await sendJson(response, 503, { ok: false, fout: "Registreren staat nog uit op deze server. Vraag je praktijk om hulp." }); return; }
       if (!geldigEmail(email)) { await sendJson(response, 400, { ok: false, fout: "Vul een geldig e-mailadres in." }); return; }
-      if (ww.length < 8) { await sendJson(response, 400, { ok: false, fout: "Kies een wachtwoord van minstens 8 tekens." }); return; }
       const codeOk = code.length === V1_REGISTRATIE_CODE.length
         && timingSafeEqual(Buffer.from(code), Buffer.from(V1_REGISTRATIE_CODE));
       if (!codeOk) { await denied(request, response, "v1-registratiecode"); return; }
-      if (v1Accounts[email]) { await sendJson(response, 409, { ok: false, fout: "Er bestaat al een account met dit e-mailadres. Log in.", login: true }); return; }
-      if (Object.keys(v1Accounts).length >= 200) { await sendJson(response, 400, { ok: false, fout: "Maximum bereikt." }); return; }
-      const herstelcode = maakHerstelcode();
-      v1Accounts[email] = { email, hash: maakHash(ww), herstel: maakHash(herstelcode), praktijk: V1_PRAKTIJK, gemaakt: Date.now() };
+      if (!v1Accounts[email] && Object.keys(v1Accounts).length >= 200) { await sendJson(response, 400, { ok: false, fout: "Maximum bereikt." }); return; }
+      if (mailOpSlot(email)) { await send429(response, 3600, { ok: false, fout: "Er zijn al meerdere mails naar dit adres gestuurd; kijk in je inbox (ook spam) of probeer het over een uur opnieuw." }); return; }
+      const token = await maakInstelToken(email);
+      await stuurMail(email, "Je Fysiplan-wachtwoord instellen",
+        "Welkom bij Fysiplan.\n\nKies via deze link je wachtwoord (24 uur geldig):\n" + instelLink(request, token) +
+        "\n\nDaarna log je in met je e-mailadres en dit wachtwoord.\nVroeg je dit niet aan? Negeer deze mail; er verandert dan niets.");
+      auditLog(V1_PRAKTIJK, "v1-instelmail-gestuurd", request);
+      await sendJson(response, 200, { ok: true, gestuurd: true });
+    } catch { await sendJson(response, 502, { ok: false, fout: "De mail versturen is niet gelukt; probeer het zo opnieuw." }); }
+    return;
+  }
+  // wachtwoord vergeten: alleen een e-mailadres. Bestaat er een account, dan gaat
+  // dezelfde instel-link erheen; het antwoord is altijd hetzelfde (geen enumeratie).
+  if (urlPath === "/api/v1/wachtwoord-vergeten" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const email = String(b.email || "").trim().toLowerCase().slice(0, 200);
+      if (!mailIngesteld()) { await sendJson(response, 503, { ok: false, fout: "Wachtwoord herstellen staat nog uit op deze server. Vraag je praktijk om hulp." }); return; }
+      if (!geldigEmail(email)) { await sendJson(response, 400, { ok: false, fout: "Vul een geldig e-mailadres in." }); return; }
+      if (v1Accounts[email] && !mailOpSlot(email)) {
+        const token = await maakInstelToken(email);
+        await stuurMail(email, "Je Fysiplan-wachtwoord opnieuw instellen",
+          "Kies via deze link een nieuw wachtwoord voor Fysiplan (24 uur geldig):\n" + instelLink(request, token) +
+          "\n\nVroeg je dit niet aan? Negeer deze mail; je huidige wachtwoord blijft dan gewoon werken.");
+        auditLog(V1_PRAKTIJK, "v1-herstelmail-gestuurd", request);
+      }
+      await sendJson(response, 200, { ok: true, gestuurd: true });
+    } catch { await sendJson(response, 502, { ok: false, fout: "De mail versturen is niet gelukt; probeer het zo opnieuw." }); }
+    return;
+  }
+  // wachtwoord zetten: de link uit de mail verzilveren. Het token is eenmalig en
+  // 24 uur geldig; bij succes ontstaat (of vernieuwt) het account, vervallen alle
+  // bestaande sessies van dat adres en is de gebruiker meteen ingelogd.
+  if (urlPath === "/api/v1/wachtwoord-zetten" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const token = String(b.token || "").trim();
+      const ww = String(b.wachtwoord || "");
+      if (!/^[a-f0-9]{48}$/.test(token)) { await denied(request, response, "v1-insteltoken"); return; }
+      if (ww.length < 8) { await sendJson(response, 400, { ok: false, fout: "Kies een wachtwoord van minstens 8 tekens." }); return; }
+      const email = await verbruikInstelToken(token);
+      if (!email) {
+        await sendJson(response, 410, { ok: false, fout: "Deze link is verlopen of al gebruikt. Vraag een nieuwe aan via de inlogpagina.", verlopen: true });
+        return;
+      }
+      const bestond = !!v1Accounts[email];
+      v1Accounts[email] = { email, hash: maakHash(ww), praktijk: V1_PRAKTIJK,
+        gemaakt: bestond ? v1Accounts[email].gemaakt : Date.now(), gewijzigd: Date.now() };
       await saveJson(v1AccountsPath, v1Accounts);
-      auditLog(V1_PRAKTIJK, "v1-account-gemaakt", request);
-      const token = maakV1Sessie(email);
-      response.setHeader("set-cookie", v1CookieHeader(token));
-      await sendJson(response, 200, { ok: true, email, herstelcode });
+      for (const [tok, s] of v1Sessies) if (s.email === email) v1Sessies.delete(tok);
+      v1LoginMis.delete(email);
+      const sessie = maakV1Sessie(email);
+      response.setHeader("set-cookie", v1CookieHeader(sessie));
+      auditLog(V1_PRAKTIJK, bestond ? "v1-wachtwoord-vernieuwd" : "v1-account-geactiveerd", request);
+      await sendJson(response, 200, { ok: true, email });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }
@@ -1650,41 +1761,6 @@ async function afhandelen(request, response) {
     await sendJson(response, 200, { ok: true });
     return;
   }
-  // wachtwoord vergeten: met de herstelcode een nieuw wachtwoord zetten. Zelfde remmen
-  // als inloggen; bij succes vervallen alle sessies en roteert de herstelcode.
-  if (urlPath === "/api/v1/herstel" && request.method === "POST") {
-    if (schrijfLimiet(request, response)) return;
-    if (kruisSite(request)) { await weigerKruis(response); return; }
-    try {
-      const b = JSON.parse(await readBody(request));
-      const email = String(b.email || "").trim().toLowerCase().slice(0, 200);
-      const acc = v1Accounts[email];
-      if (email && v1LoginOpSlot(email)) { await send429(response, 900, { ok: false, fout: "Te veel pogingen; probeer het over een kwartier opnieuw." }); return; }
-      if (!acc || !acc.herstel) { v1LoginMisTel(email || "?"); await denied(request, response, "v1-herstel"); return; }
-      const hcode = String(b.herstelcode || "").trim();
-      if (!hcode || !checkHash(hcode, acc.herstel)) {
-        v1LoginMisTel(email);
-        auditLog(V1_PRAKTIJK, "v1-herstel-mislukt", request);
-        await denied(request, response, "v1-herstel");
-        return;
-      }
-      const nieuw = String(b.nieuw || "");
-      if (nieuw.length < 8) { await sendJson(response, 400, { ok: false, fout: "Kies een nieuw wachtwoord van minstens 8 tekens." }); return; }
-      const herstelcode = maakHerstelcode();
-      acc.hash = maakHash(nieuw);
-      acc.herstel = maakHash(herstelcode);
-      acc.gewijzigd = Date.now();
-      await saveJson(v1AccountsPath, v1Accounts);
-      for (const [tok, s] of v1Sessies) if (s.email === email) v1Sessies.delete(tok);
-      v1LoginMis.delete(email);
-      const token = maakV1Sessie(email);
-      response.setHeader("set-cookie", v1CookieHeader(token));
-      auditLog(V1_PRAKTIJK, "v1-wachtwoord-hersteld", request);
-      await sendJson(response, 200, { ok: true, email, herstelcode });
-    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
-    return;
-  }
-
   // praktijkprofielen: ophalen en opslaan/bijwerken (gedeeld over alle apparaten)
   if (urlPath === "/api/praktijken" && request.method === "GET") {
     // de praktijkenlijst voedt de keuzelijst in de app; de leeslimiet houdt normaal
@@ -2907,15 +2983,28 @@ async function afhandelen(request, response) {
   // v1-inloggate: de app op / (en direct /index.html) zit achter de e-maillogin.
   // Wie niet is ingelogd, krijgt de inlogpagina. /admin88 houdt zijn eigen
   // beheersleutel-beveiliging; /v2, /k, /o en de API's zijn hierboven al afgehandeld.
+  // de wachtwoord-instelpagina uit de bevestigingsmail: uiteraard bereikbaar
+  // zónder inlog (daar stel je juist je wachtwoord in)
+  if (urlPath === "/v1-wachtwoord") {
+    const nonce = scriptNonce();
+    response.setHeader("x-frame-options", "DENY");
+    response.setHeader("cache-control", "no-store");
+    response.setHeader("x-robots-tag", "noindex, noarchive");
+    response.setHeader("content-security-policy",
+      "default-src 'none'; script-src 'nonce-" + nonce + "'; style-src 'unsafe-inline'; " +
+      "img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
+    try {
+      const html = nonceInlineScripts(await readFile(join(publicDir, "v1-wachtwoord.html"), "utf8"), nonce);
+      await send(response, 200, "text/html; charset=utf-8", html);
+    } catch { await send(response, 500, "text/plain; charset=utf-8", "Pagina niet beschikbaar."); }
+    return;
+  }
   if (urlPath === "/" || urlPath === "/index.html") {
     telBezoek(request, false);
-    if (v1InlogActief()) {
-      const email = v1SessieVan(request);
-      if (!email) { await serveerV1Inlog(response); return; }
-      await serveerV1App(response, email);
-      return;
-    }
-    urlPath = "/index.html"; // login staat uit: de app zoals vanouds
+    const email = v1SessieVan(request);
+    if (!email) { await serveerV1Inlog(response); return; }
+    await serveerV1App(response, email);
+    return;
   }
   else if (urlPath === "/admin88") telBezoek(request, true);
 
@@ -2971,9 +3060,9 @@ async function afhandelen(request, response) {
     const data = await readFile(filePath);
     await send(response, 200, MIME[extname(filePath)] || "application/octet-stream", data);
   } catch {
-    // SPA-vangnet: onbekende paden serveren de v1-app. Als de inloggate actief is,
-    // zit ook dit erachter (behalve /admin88, dat zijn eigen beheersleutel houdt).
-    if (v1InlogActief() && urlPath !== "/admin88" && !v1Ingelogd(request)) { await serveerV1Inlog(response); return; }
+    // SPA-vangnet: onbekende paden serveren de v1-app. Ook dit zit achter de
+    // inloggate (behalve /admin88, dat zijn eigen beheersleutel houdt).
+    if (urlPath !== "/admin88" && !v1Ingelogd(request)) { await serveerV1Inlog(response); return; }
     try {
       const index = await readFile(join(publicDir, "index.html"));
       await send(response, 200, "text/html; charset=utf-8", index);
