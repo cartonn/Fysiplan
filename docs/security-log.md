@@ -647,3 +647,33 @@ oude teller laat die check falen (429). Bestaande v2-flows meegedraaid en groen.
 **Volgende run — pak een ander gebied:** de open GET-API's (`/api/kaarten`,
 `/api/kaart`, `/api/kaart/agenda`, `/manifest`) op enumeratie en `leesLimiet`-dekking,
 of de logo-/afbeeldingsupload (contenttype-spoofing, groottegrens, opslagquota).
+
+## 2026-08-31 — Open GET-API's en logo-/profielupload
+
+**Geauditeerd:** de open GET-API's (`/api/kaarten`, `/api/kaart`, `/api/kaart/agenda`,
+`/api/kaart/vertaal`, `/api/kaart/manifest`) op leeslimiet-dekking en enumeratie, en
+de logo-/afbeeldingsupload (`/api/praktijken` POST). GET-dekking is compleet: elke
+open GET draagt `leesLimiet` (en `/api/opname/status` een eigen poll-rem); kaart-id's
+zijn 48-bit random en `kaartMisLimiet` (30 missers/IP/5min) maakt enumeratie
+onhaalbaar; de admin-GET's zitten achter `isAdmin`. De logo-upload is dicht:
+kruisSite, schrijfLimiet, 1 MB-bodycap, `eisPraktijk`, dataURL-regex die alleen
+jpeg/png toelaat (geen SVG), 100 kB–400 kB-grens, magic-byte-check, `slug()` die
+pad-traversal onmogelijk maakt, en opruiming van het oude logo bij vervanging.
+
+**Bevinding (gefixt):** het dagplafond op nieuwe praktijken (`nieuwePraktijkLimiet`,
+5/dag/IP) zat wél op de claim- en kaarten-route, maar niet op de praktijkprofiel-
+route (`/api/praktijken` POST). Die was daarmee de onbewaakte weg om de
+200-praktijken-namespace vol te zetten: één IP kon binnen de schrijflimiet (40/5min)
+in ~25 min 200 profielen aanmaken, elk met een 400 kB-logo (~80 MB schijf), en zo
+echte praktijken buiten de namespace sluiten.
+
+**Increment:** `nieuwePraktijkLimiet` toegevoegd op `/api/praktijken` POST bij het
+aanmaken van een níeuw profiel (bestaande profielen bijwerken telt niet mee, net als
+op de kaarten-route). Nieuwe regressietest `test-praktijk-profiel-limiet.mjs` (5
+checks): 6e nieuw profiel per IP → 429, bestaand bijwerken blijft mogelijk, ander IP
+eigen budget. `test-logo.mjs` bijgewerkt zodat de negatieve logo-cases elk een vers
+IP gebruiken (de limiet mag de format-validatie niet maskeren) — 15 groen. Accountlaag
+(49), praktijk-isolatie (20), welkom (7), kern (21, v1 onaangetast) groen.
+
+**Volgende run — pak een ander gebied:** de opname-token-levenscyclus en poll-rem
+(`/api/opname/status`, `/o/<token>`), of security-headers en CSP-nonce op de v2-pagina's.

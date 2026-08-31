@@ -1437,6 +1437,11 @@ async function afhandelen(request, response) {
       const key = p.praktijk.toLowerCase();
       // een geclaimde praktijk kan alleen door de ingelogde praktijk zelf worden bijgewerkt
       if (await eisPraktijk(request, response, key)) return;
+      // hetzelfde dagplafond op níeuwe praktijken als op de kaarten- en claim-route:
+      // zonder dit is dit profiel-endpoint de onbewaakte route waarlangs één IP de
+      // 200-praktijken-namespace kan volzetten (elk met een 400 kB-logo) en zo echte
+      // praktijken buitensluit. Bestaande profielen bijwerken telt niet mee.
+      if (!praktijken[key] && nieuwePraktijkLimiet(request, response)) return;
       if (!praktijken[key] && Object.keys(praktijken).length >= 200) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal praktijken bereikt." }); return; }
       // praktijklogo: meegestuurd als dataURL, opgeslagen als bestand; zonder nieuw
       // logo blijft het bestaande logo van deze praktijk gewoon staan
