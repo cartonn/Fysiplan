@@ -30,6 +30,7 @@ const mailServer = createServer(async (request, response) => {
       frequentie: "2× per week",
       trainingsnotitie: "Evalueer de techniek na twee weken.",
       toelichting: "Voorstel ter beoordeling door de fysiotherapeut.",
+      waarschuwing: "Controleer de belastbaarheid voor de eerste sessie.",
       oefeningen: [{
         naam: "Abdominal (apparaat)", series: "3", herhalingen: "8", gewicht: "licht",
         borg: "4", xrm: "12RM", rust: "60 sec", tempo: "2-1-2", waarom: "Rustige startdosering."
@@ -225,13 +226,19 @@ try {
   assert.equal(assistent.response.status, 200);
   assert.equal(assistent.body.trainingsdoel, "Werp-ABC");
   assert.equal(assistent.body.frequentie, "2× per week");
+  assert.equal(assistent.body.waarschuwing, "Controleer de belastbaarheid voor de eerste sessie.");
   assert.deepEqual(assistent.body.oefeningen[0], {
     naam: "Abdominal (apparaat)", series: "3", herhalingen: "8", gewicht: "licht",
     borg: "4", xrm: "12RM", rust: "60 sec", tempo: "2-1-2", waarom: "Rustige startdosering."
   });
   assert.equal(aiCalls.length, 1);
   assert.equal(aiCalls[0].workspaceId, "test-workspace-id");
-  assert.match(aiCalls[0].body.system, /BORG, XRM, rust en tempo/);
+  assert.equal(aiCalls[0].body.max_tokens, 1200);
+  assert.equal(aiCalls[0].body.output_config.effort, "medium");
+  assert.equal(aiCalls[0].body.output_config.format.type, "json_schema");
+  assert.equal(aiCalls[0].body.output_config.format.schema.properties.oefeningen.maxItems, 6);
+  assert.equal(aiCalls[0].body.system[0].cache_control.type, "ephemeral");
+  assert.match(aiCalls[0].body.system[0].text, /BORG, XRM, rust en tempo/);
   assert.equal(aiCalls[0].body.messages[0].content,
     "<trainingsdoel>Werp-ABC</trainingsdoel>\n<klacht>opbouw werpbelasting na een schouderklacht</klacht>");
 

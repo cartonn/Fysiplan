@@ -1925,6 +1925,7 @@ bridge2.jpg</div>
         AI_VOORSTEL=d;
         var plan=[d.trainingsdoel,d.frequentie].filter(Boolean).map(function(t){return "<span class='ai-dos'>"+esc(t)+"</span>";}).join('');
         uit.innerHTML=(plan?"<div class='ai-plan'>"+plan+(d.trainingsnotitie?"<span class='ai-plan-note'>"+esc(d.trainingsnotitie)+"</span>":"")+"</div>":"")+
+          (d.waarschuwing?"<div class='ai-waarschuwing'><b>Eerst controleren</b> "+esc(d.waarschuwing)+"</div>":"")+
           (d.toelichting?"<div class='ai-toel'>"+esc(d.toelichting)+"</div>":"")+
           d.oefeningen.map(function(o,i){
             var dos=[o.series&&o.series+' series',o.herhalingen&&o.herhalingen+' herhalingen',o.gewicht,
