@@ -13,6 +13,7 @@
     "images:line-pairs": "node scripts/v2-line-art-graph.mjs plan",
     "images:line-pairs:status": "node scripts/v2-line-art-graph.mjs status",
     "images:line-pairs:generate": "node scripts/v2-line-art-graph.mjs run --execute",
+    "images:v2-audit": "node scripts/audit-v2-contact-sheets.mjs",
     "images:lijn-illustraties": "node scripts/lijn-illustratie-graph.mjs plan",
     "images:lijn-illustraties:status": "node scripts/lijn-illustratie-graph.mjs status",
     "images:lijn-illustraties:generate": "node scripts/lijn-illustratie-graph.mjs run --execute",
