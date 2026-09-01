@@ -139,7 +139,7 @@ html.v2 .v2badge{background:linear-gradient(150deg,#2f66bd,#1c4487);color:#fff;
   margin-left:8px;align-self:center}
 
 /* ---- mobiel en smalle tablet: de app blijft bruikbaar op één kolom ---- */
-@media (max-width:920px){
+@media screen and (max-width:920px){
   html.v2 header.topbar{flex-wrap:wrap;gap:8px;padding:10px 12px}
   html.v2 header.topbar .brand{margin-right:auto}
   html.v2 header.topbar .menu,html.v2 header.topbar .spacer{display:none}
@@ -163,6 +163,8 @@ html.v2 .v2badge{background:linear-gradient(150deg,#2f66bd,#1c4487);color:#fff;
 }
 
 /* AI-kaartassistent: het voorstel als verzorgde kaartjes met doseringchips */
+html.v2 .ai-plan{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin:8px 0}
+html.v2 .ai-plan-note{flex:1 1 100%;font-size:11.5px;line-height:1.45;color:var(--muted);margin-top:2px}
 html.v2 .ai-denken{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:13px;padding:14px 4px}
 html.v2 .ai-denken i{width:7px;height:7px;border-radius:99px;background:var(--brand);animation:aiblink 1.2s infinite}
 html.v2 .ai-denken i:nth-child(2){animation-delay:.2s}
@@ -190,6 +192,12 @@ html.v2 #a4::after{content:"Neem pijn serieus: stop bij toenemende pijn en overl
 
 /* ---- nieuwe printvarianten (alleen v2) ---- */
 @media print{
+  /* De schermcontainer mag in print nooit een eigen scrollvlak worden. De
+     mobiele overflow-regel is screen-only; deze extra grendel voorkomt dat
+     browser-/systeemscrollbalken rechts of onder op de A4 terechtkomen. */
+  html.v2 #a4wrap{overflow:visible!important;scrollbar-width:none!important}
+  html.v2 #a4wrap::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
+
   /* Groot lettertype: beter leesbaar voor oudere patienten */
   html.v2.print-groot #a4 table.mon{font-size:11px}
   html.v2.print-groot #a4 table.mon input{font-size:11.5px;height:22px}

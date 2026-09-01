@@ -49,6 +49,7 @@
   .chip{font-size:12px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--panel);cursor:pointer;color:var(--muted);transition:.15s}
   .chip:hover{border-color:#cdd3db}
   .chip.on{background:var(--brand-50);border-color:var(--brand-100);color:var(--brand-700);font-weight:600}
+  button.chip.cat-add{font-family:inherit;font-weight:700;color:var(--brand-700);border-style:dashed;white-space:nowrap}
   input[type=text],input.fld{width:100%;height:36px;border:1px solid var(--line);border-radius:9px;padding:0 11px;font:inherit;background:var(--panel);color:var(--text);transition:.15s}
   input[type=text]:focus,input.fld:focus{outline:none;border-color:var(--brand);box-shadow:var(--ring)}
   #search{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2398a2b3' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:11px center;background-size:15px;padding-left:34px}
@@ -479,11 +480,28 @@ bridge2.jpg</div>
   <div class="modal">
     <h3>AI-kaartassistent</h3>
     <div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;line-height:1.5">
-      Omschrijf de klacht en het niveau van de cli&euml;nt. De assistent stelt een kaart voor
-      uit je eigen oefeningenlijst, met een voorzichtige startdosering. Het blijft een voorstel:
-      jij beoordeelt, past aan en beslist wat op de kaart komt.
+      Kies het trainingsdoel en omschrijf de klacht en het niveau van de cli&euml;nt. De assistent
+      stelt passende oefeningen en trainingsvariabelen voor. Het blijft een voorstel: jij
+      beoordeelt, past aan en beslist wat op de kaart komt.
     </div>
-    <textarea id="ai_klacht" rows="3" style="width:100%;resize:vertical;font-family:inherit;font-size:13px" placeholder="bijv. artrose knie links, vrouw van 68, kan 10 minuten lopen, doel: weer traplopen"></textarea>
+    <label for="ai_doel">Trainingsdoel</label>
+    <select id="ai_doel" style="width:100%;margin-bottom:7px">
+      <option value="">Kies een trainingsdoel…</option>
+      <option>Krachtuithoudingsvermogen</option>
+      <option>Mobiliteit</option>
+      <option>Coördinatie en balans</option>
+      <option>Hypertrofie</option>
+      <option>Maximale kracht</option>
+      <option>Snelkracht en explosiviteit</option>
+      <option>Aeroob uithoudingsvermogen</option>
+      <option>Loop-ABC</option>
+      <option>Sprong-ABC</option>
+      <option>Werp-ABC</option>
+      <option value="anders">Anders…</option>
+    </select>
+    <input type="text" id="ai_doel_anders" maxlength="80" style="display:none;margin-bottom:7px" placeholder="Omschrijf het trainingsdoel"/>
+    <label for="ai_klacht">Klacht en niveau</label>
+    <textarea id="ai_klacht" rows="3" style="width:100%;resize:vertical;font-family:inherit;font-size:13px" placeholder="bijv. artrose knie links, vrouw van 68, kan 10 minuten lopen"></textarea>
     <div id="ai_dicteer" style="display:none;align-items:center;gap:9px;margin-top:6px">
       <button type="button" class="btn" id="ai_mic" aria-pressed="false" title="Spreek de klacht in; de tekst verschijnt hierboven"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 19v3"/></svg><span>Inspreken</span></button>
       <span id="ai_mic_status" style="font-size:12px;color:var(--muted)" aria-live="polite"></span>
@@ -544,6 +562,23 @@ bridge2.jpg</div>
     <div class="acts">
       <button class="btn" id="vc_cancel">Annuleren</button>
       <button class="btn primary" id="vc_ok">Opslaan</button>
+    </div>
+  </div>
+</div>
+
+<!-- losse categorie toevoegen (beheer) -->
+<div class="ov" id="ovCategorieNieuw">
+  <div class="modal">
+    <h3>Categorie toevoegen</h3>
+    <div style="font-size:12.5px;color:var(--muted);margin:2px 0 10px;line-height:1.5">
+      De categorie verschijnt direct in de bibliotheek en in de keuzelijsten. Daarna kun je er oefeningen aan koppelen.
+    </div>
+    <label for="cat_nieuw_naam">Naam van de categorie</label>
+    <input type="text" id="cat_nieuw_naam" maxlength="40" placeholder="bijv. Werp-ABC" style="width:100%"/>
+    <div id="cat_nieuw_melding" style="display:none;font-size:12.5px;color:#b3261e;margin-top:8px"></div>
+    <div class="acts">
+      <button class="btn" id="cat_nieuw_cancel">Annuleren</button>
+      <button class="btn primary" id="cat_nieuw_ok">Toevoegen</button>
     </div>
   </div>
 </div>
@@ -953,6 +988,7 @@ bridge2.jpg</div>
   var CHIP_LABELS={all:'alle groepen',boven:'bovenste extr.',onder:'onderste extr.',romp:'romp',divers:'divers'};
   function updateChipCounts(){
     document.querySelectorAll('.chip').forEach(function(c){
+      if(c.dataset.catAdd)return;
       var g=c.dataset.g;
       if(CUSTOMLIB){c.style.display=(g==='all')?'':'none';if(g==='all')c.textContent='alle oefeningen ('+OEF.length+')';return;}
       c.style.display='';
@@ -1008,9 +1044,11 @@ bridge2.jpg</div>
   function renderChips(){
     var f=document.getElementById('filters');
     if(!f||!GROUPS)return;
-    f.innerHTML=GROUPS.map(function(x){
+    var html=GROUPS.map(function(x){
       return "<span class='chip"+(curG===x.g?" on":"")+"' data-g=\""+esc(x.g)+"\">"+esc(x.label)+"</span>";
     }).join("");
+    if(IS_ADMIN)html+="<button type='button' class='chip cat-add' data-cat-add='1' title='Categorie toevoegen' aria-label='Categorie toevoegen'>+ categorie</button>";
+    f.innerHTML=html;
   }
 
   function renderList(){
@@ -1033,7 +1071,10 @@ bridge2.jpg</div>
     elList.innerHTML=f.map(function(o,index){
       var has=chosen.some(function(c){return c.o===o.id;});
       var np=o.imgs.filter(function(im){return im.type==='img';}).length;
-      var rich=[o.region&&o.region!==o.groep?o.region:o.groep,(o.equipment||[]).slice(0,2).join(', '),o.difficulty].filter(Boolean).join(' · ');
+      // V1 blijft visueel bevroren; de uitgebreide categorie-aanduiding hoort bij
+      // beheer en v2. Daar tonen we elke gekoppelde categorie met een slash.
+      var categorieen=(IS_V2||IS_ADMIN)?[o.groep].concat(o.ook||[]).filter(Boolean).join('/'):o.groep;
+      var rich=[categorieen,o.region&&o.region!==o.groep?o.region:'',(o.equipment||[]).slice(0,2).join(', '),o.difficulty].filter(Boolean).join(' · ');
       var sub=rich||((o.bron==='carla')?(np+' plaatje'+(np===1?'':'s')):(o.s+" × "+o.h+(o.h==1?" (statisch/cardio)":"")+(o.bron=='eigen'?" · eigen":"")));
       var metVideo=hasVideo(o);
       var videoConcept=!!(o.video&&((o.video.eigenMeta&&o.video.eigenMeta.reviewStatus==='concept')||(o.video.stream&&o.video.stream.reviewStatus==='concept')));
@@ -1313,6 +1354,31 @@ bridge2.jpg</div>
     startOpname('oefening',o.naam,function(pad){o.video=o.video||{};o.video.eigen=pad;delete o.video.stream;renderList();openVideoManager(o.id);document.getElementById('vup_status').style.color='#287a4b';document.getElementById('vup_status').textContent='De opname is gekoppeld aan deze oefening.';});
   });
 
+  // Een lege categorie los kunnen aanmaken; de server bewaart hem totdat er
+  // oefeningen aan worden gekoppeld.
+  function openNieuweCategorie(){
+    var naam=document.getElementById('cat_nieuw_naam'),melding=document.getElementById('cat_nieuw_melding');
+    naam.value='';melding.style.display='none';melding.textContent='';
+    openOv('ovCategorieNieuw');setTimeout(function(){naam.focus();},0);
+  }
+  document.getElementById('cat_nieuw_cancel').addEventListener('click',function(){closeOv('ovCategorieNieuw');});
+  document.getElementById('cat_nieuw_naam').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();document.getElementById('cat_nieuw_ok').click();}});
+  document.getElementById('cat_nieuw_ok').addEventListener('click',function(){
+    var naam=document.getElementById('cat_nieuw_naam').value.trim();
+    var knop=document.getElementById('cat_nieuw_ok'),melding=document.getElementById('cat_nieuw_melding');
+    if(!naam){melding.textContent='Geef de categorie een naam.';melding.style.display='block';return;}
+    knop.disabled=true;knop.textContent='Toevoegen…';melding.style.display='none';
+    fetch('/api/oefeningen/categorieen',{method:'POST',headers:Object.assign({'content-type':'application/json'},ADMIN_HDR),body:JSON.stringify({naam:naam})})
+      .then(function(r){return r.json().catch(function(){return {ok:false};});})
+      .then(function(d){
+        knop.disabled=false;knop.textContent='Toevoegen';
+        if(!d.ok){melding.textContent=d.fout||'Categorie toevoegen is niet gelukt.';melding.style.display='block';return;}
+        GROUPS=[{g:'all',label:'alle oefeningen'}].concat((d.categorieen||[]).map(function(c){return {g:c,label:c};}));
+        curG=d.naam;closeOv('ovCategorieNieuw');renderChips();updateChipCounts();renderList();
+      })
+      .catch(function(){knop.disabled=false;knop.textContent='Toevoegen';melding.textContent='Geen verbinding met de server.';melding.style.display='block';});
+  });
+
   // categorie verplaatsen en/of op een 2e plek tonen (beheer)
   var pendingCat=null,pendingCatId=null;
   function toonEigenVideoInfo(o){
@@ -1435,6 +1501,7 @@ bridge2.jpg</div>
     var r=e.target.closest('.row');if(!r)return;toggleExercise(+r.dataset.id);
   });
   document.getElementById('filters').addEventListener('click',function(e){
+    if(e.target.closest('[data-cat-add]')){openNieuweCategorie();return;}
     var b=e.target.closest('.chip');if(!b)return;
     document.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');});
     b.classList.add('on');curG=b.dataset.g;renderList();
@@ -1794,6 +1861,15 @@ bridge2.jpg</div>
   var VIDEO_ICOON="<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M8 6l10 6-10 6z'/></svg>";
   document.getElementById('aiBtn').addEventListener('click',function(){openOv('ovAi');});
   document.getElementById('ai_close').addEventListener('click',function(){closeOv('ovAi');});
+  document.getElementById('ai_doel').addEventListener('change',function(){
+    var anders=document.getElementById('ai_doel_anders');
+    anders.style.display=this.value==='anders'?'block':'none';
+    if(this.value==='anders')anders.focus();
+  });
+  function gekozenAiDoel(){
+    var keuze=document.getElementById('ai_doel').value;
+    return keuze==='anders'?document.getElementById('ai_doel_anders').value.trim():keuze;
+  }
   // klacht inspreken i.p.v. typen: spraakherkenning in de browser (Web Speech API).
   // Alleen de herkende TEKST komt in het veld; er gaat niets extra's naar de server —
   // pas bij "Stel een kaart voor" wordt die tekst (zoals altijd) verstuurd. Wordt de
@@ -1834,20 +1910,25 @@ bridge2.jpg</div>
   })();
   document.getElementById('ai_go').addEventListener('click',function(){
     var kl=document.getElementById('ai_klacht').value.trim();
+    var doel=gekozenAiDoel();
     var uit=document.getElementById('ai_result');
+    if(!doel){alert('Kies eerst het trainingsdoel.');return;}
     if(kl.length<3){alert('Omschrijf eerst de klacht.');return;}
     var go=document.getElementById('ai_go');
     go.disabled=true;go.textContent='Bezig met nadenken...';
     uit.innerHTML="<div class='ai-denken'><i></i><i></i><i></i>De assistent stelt een kaart samen; dit duurt een paar tellen.</div>";
-    fetch('api/assistent',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({klacht:kl})})
+    fetch('api/assistent',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({klacht:kl,doel:doel})})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
       .then(function(d){
         go.disabled=false;go.textContent='Stel een kaart voor';
         if(!d.ok){uit.innerHTML="<div class='hint'>"+esc(d.fout||'De AI-hulp is even niet bereikbaar.')+"</div>";return;}
         AI_VOORSTEL=d;
-        uit.innerHTML=(d.toelichting?"<div class='ai-toel'>"+esc(d.toelichting)+"</div>":"")+
+        var plan=[d.trainingsdoel,d.frequentie].filter(Boolean).map(function(t){return "<span class='ai-dos'>"+esc(t)+"</span>";}).join('');
+        uit.innerHTML=(plan?"<div class='ai-plan'>"+plan+(d.trainingsnotitie?"<span class='ai-plan-note'>"+esc(d.trainingsnotitie)+"</span>":"")+"</div>":"")+
+          (d.toelichting?"<div class='ai-toel'>"+esc(d.toelichting)+"</div>":"")+
           d.oefeningen.map(function(o,i){
-            var dos=[o.series&&o.series+' series',o.herhalingen&&o.herhalingen+' herhalingen',o.gewicht]
+            var dos=[o.series&&o.series+' series',o.herhalingen&&o.herhalingen+' herhalingen',o.gewicht,
+              o.borg&&'BORG '+o.borg,o.xrm&&'XRM '+o.xrm,o.rust&&'rust '+o.rust,o.tempo&&'tempo '+o.tempo]
               .filter(Boolean).map(function(t){return "<span class='ai-dos'>"+esc(t)+"</span>";}).join('');
             // laat zien welke voorgestelde oefeningen een instructievideo meekrijgen,
             // zodat de therapeut ziet dat de patiënt die oefening ook op beeld krijgt
@@ -1870,12 +1951,15 @@ bridge2.jpg</div>
     if(!gekozen.length){alert('Vink minstens één oefening aan.');return;}
     if(chosen.length&&!confirm('De huidige oefeningen op de kaart vervangen door het voorstel?'))return;
     var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
+    if(!client.c_doel){client.c_doel=[AI_VOORSTEL.trainingsdoel,AI_VOORSTEL.frequentie].filter(Boolean).join(' · ');}
     var cells={};
     gekozen.forEach(function(o){
       var nk=normEx(o.naam);
       if(o.series)cells['n'+nk+'.0|r0|S']=o.series;
       if(o.herhalingen)cells['n'+nk+'.0|r0|H']=o.herhalingen;
       if(o.gewicht)cells['n'+nk+'.0|r0|W']=o.gewicht;
+      if(o.borg)cells['n'+nk+'.0|borg0|V']=o.borg;
+      if(o.xrm)cells['n'+nk+'.0|xrm|V']=o.xrm;
     });
     openCard({client:client,chosen:gekozen.map(function(o){return {n:o.naam,i:0};}),rows:{},cells:cells,vids:VIDS});
     closeOv('ovAi');
@@ -2904,10 +2988,12 @@ bridge2.jpg</div>
     OEF.forEach(function(o){var n=NOTES[o.naam];if(n){o.starthouding=n.s||'';o.uitvoering=n.u||'';o.opmerking=n.o||'';}});
   }
   // v1 en beheer krijgen de vaste lijntekeningen; alleen v2 krijgt de fotocatalogus.
-  function buildServerLibrary(entries){
+  function buildServerLibrary(entries,serverCategories){
     var cats=[];
+    function voegCatToe(c){if(c&&cats.indexOf(c)<0)cats.push(c);}
+    (serverCategories||[]).forEach(voegCatToe);
     OEF=entries.map(function(e,i){
-      if(cats.indexOf(e.groep)<0)cats.push(e.groep);
+      voegCatToe(e.groep);(e.ook||[]).forEach(voegCatToe);
       var lineSrc=e.img;
       var colorSrc=e.kaartImg||e.img;
       return {id:i,naam:e.naam,groep:e.groep,ook:e.ook||null,s:3,h:12,bron:'server',
@@ -2921,9 +3007,16 @@ bridge2.jpg</div>
   }
   // laadt de standaardbibliotheek: eerst de server-bibliotheek, anders de placeholders
   function loadDefaultLibrary(){
-    return fetch(USE_V2_LIBRARY?'/v2/oefeningen.json':'/oefeningen.json',{cache:'no-cache'})
-      .then(function(r){return r.ok?r.json():null;})
-      .then(function(data){if(data&&data.length){buildServerLibrary(data);}else{buildDefault();}})
+    var bibliotheek=fetch(USE_V2_LIBRARY?'/v2/oefeningen.json':'/oefeningen.json',{cache:'no-cache'})
+      .then(function(r){return r.ok?r.json():null;});
+    // Los aangemaakte (nog lege) categorieën horen alleen bij beheer/v2; V1
+    // blijft behalve de accountlaag ongewijzigd.
+    var categorieen=(IS_V2||IS_ADMIN)?fetch('/api/oefeningen/categorieen',{cache:'no-cache'})
+      .then(function(r){return r.ok?r.json():{categorieen:[]};})
+      .then(function(d){return d&&Array.isArray(d.categorieen)?d.categorieen:[];})
+      .catch(function(){return [];}):Promise.resolve([]);
+    return Promise.all([bibliotheek,categorieen])
+      .then(function(data){if(data[0]&&data[0].length){buildServerLibrary(data[0],data[1]);}else{buildDefault();}})
       .catch(function(){buildDefault();});
   }
   function buildDefault(){

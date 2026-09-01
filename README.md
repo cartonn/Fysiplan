@@ -116,6 +116,9 @@ De gewone URL is voor het maken en printen van kaarten. Bibliotheekbeheer gebeur
   een vrij veld met suggesties: een bestaande naam (ook bij ander hoofdlettergebruik) hergebruikt
   die categorie, een onbekende naam **maakt automatisch een nieuwe categorie** aan. Tijdens het
   typen van de oefeningnaam wordt een logische categorie voorgesteld (bv. "TRX …" → TRX).
+- **Categorie toevoegen** via de `+ categorie`-knop naast de categoriefilters. Een lege categorie
+  blijft server-side bewaard en kan daarna als eerste of extra categorie aan oefeningen worden
+  gekoppeld. Bij meerdere categorieën toont de lijst ze met een `/` ertussen.
 - **Oefening hernoemen** (potloodje ✎) — `POST /api/hernoem` (`naam-wijzigingen.json`).
 - **Categorie wijzigen** (pijltjes ⇄) — `POST /api/oefeningen/categorie`
   (`categorie-wijzigingen.json`): verplaats een oefening naar een andere categorie en/of toon hem
@@ -134,6 +137,25 @@ basisbestand + hernoemingen − verwijderd + toegevoegd. `/health` toont de tell
 De mutatie-API's eisen een sleutel-header die alleen de beheerpagina meestuurt
 (instelbaar via `ADMIN_KEY`, standaard `admin88`). Let op: dit is afscherming-door-verhulling —
 wie de beheer-URL kent, kan beheren. Echte authenticatie is bewust buiten scope gehouden.
+
+## V1-account en bevestigingsmail
+
+De app op `/` (V1) staat altijd achter een e-mail/wachtwoordlogin. Een medewerker kiest
+**Account aanmaken**, vult het e-mailadres en de gedeelde registratiecode van FysioTotaal in,
+ontvangt een eenmalige link en kiest via die link zelf een wachtwoord. Dezelfde mailroute verzorgt
+**Wachtwoord vergeten**. Instellinks zijn 24 uur geldig en kunnen maar één keer worden gebruikt.
+
+Stel op de server in:
+
+- `V1_REGISTRATIE_CODE` — de registratiecode die FysioTotaal aan medewerkers geeft;
+- `MAIL_API_SLEUTEL` — API-sleutel van Resend;
+- `MAIL_AFZENDER` — geverifieerde afzender, bijvoorbeeld `Fysiplan <account@fysiplan.nl>`;
+- optioneel `MAIL_API_BASIS` — standaard `https://api.resend.com`, alleen nodig voor een andere
+  compatibele mail-API of een lokale testserver.
+
+V2 (`/v2/app`) en beheer (`/admin88`) houden hun eigen toegangsmodel. Draai
+`npm run test:ahmed-notities` voor een lokale end-to-endtest met een nagebootste maildienst;
+de test verstuurt geen echte e-mail.
 
 > **Blijvend bewaren op Railway:** de containerschijf wordt bij elke redeploy gewist. Voeg in
 > Railway een **Volume** toe met mount path `/data` (service → rechtsklik → Attach volume) —

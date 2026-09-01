@@ -29,6 +29,7 @@
     "videos:upload-batch": "node scripts/video-upload-batch.mjs",
     "core1000:check": "node scripts/core1000.mjs",
     "core1000:write": "node scripts/core1000.mjs --write",
+    "test:ahmed-notities": "node scripts/test-ahmed-notities.mjs",
     "videos:languages": "node scripts/video-language-plan.mjs",
     "start": "node server.js"
   },
