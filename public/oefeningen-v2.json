@@ -4224,61 +4224,67 @@
   "naam": "Med ball slams",
   "groep": "Medicine Ball",
   "img": "images/medicine-ball/medicine-ball-slams-line-v1.png",
-  "kaartImg": "images/medicine-ball/medicine-ball-slams-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-slams-avatar-v8.jpg",
   "uitleg": "Sta stabiel met de medicine ball boven je hoofd. Span je romp aan, breng de bal krachtig recht naar beneden en vang hem gecontroleerd op.",
   "exerciseId": "fp_3e21b7d2e6b650f9",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Med ball wall throw",
   "groep": "Medicine Ball",
   "img": "images/medicine-ball/medicine-ball-wall-throw-line-v1.png",
-  "kaartImg": "images/medicine-ball/medicine-ball-wall-throw-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-wall-throw-avatar-v8.jpg",
   "uitleg": "Sta recht voor een vrije muur en houd de medicine ball voor je borst. Duw de bal met beide handen naar de muur en vang hem zacht op.",
   "exerciseId": "fp_61f517b18e97eead",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Med ball chest press",
   "groep": "Medicine Ball",
   "img": "images/medicine-ball/medicine-ball-chest-press-line-v1.png",
-  "kaartImg": "images/medicine-ball/medicine-ball-chest-press-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-chest-press-avatar-v8.jpg",
   "uitleg": "Lig op je rug met gebogen knieën en houd de medicine ball boven je borst. Strek je armen rustig uit en laat de bal gecontroleerd terugzakken.",
   "exerciseId": "fp_4744640504bedb24",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Med ball floor press",
   "groep": "Medicine Ball",
   "img": "images/medicine-ball/medicine-ball-floor-press-line-v1.png",
-  "kaartImg": "images/medicine-ball/medicine-ball-floor-press-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-floor-press-avatar-v8.jpg",
   "uitleg": "Lig op je rug met gebogen knieën en houd de medicine ball dicht bij je borst. Duw hem recht omhoog en buig je ellebogen rustig terug.",
   "exerciseId": "fp_72446d182c8eb06b",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Med ball rotation passes",
   "groep": "Medicine Ball",
   "img": "images/medicine-ball/medicine-ball-rotation-passes-line-v1.png",
-  "kaartImg": "images/medicine-ball/medicine-ball-rotation-passes-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-rotation-passes-avatar-v8.jpg",
   "uitleg": "Sta zijwaarts bij een vrije muur met de medicine ball voor je borst. Draai vanuit je romp naar de muur, pas de bal gecontroleerd en vang hem op.",
   "exerciseId": "fp_0c4b960f97f1d61f",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Med ball rotation passes knee",
   "groep": "Medicine Ball",
   "img": "images/medicine-ball/medicine-ball-rotation-passes-knee-line-v1.png",
-  "kaartImg": "images/medicine-ball/medicine-ball-rotation-passes-knee-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-rotation-passes-knee-avatar-v8.jpg",
   "uitleg": "Neem een stabiele halfknielende stand zijwaarts bij een vrije muur. Draai je romp en pas de medicine ball gecontroleerd naar de muur.",
   "exerciseId": "fp_b852517e00a4148f",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Med ball push up one arm",
