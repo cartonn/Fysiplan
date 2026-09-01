@@ -16,7 +16,8 @@ Live Railway URL: https://fysiplan-production.up.railway.app
 - Klik een oefening en het bijbehorende plaatje komt direct genummerd op de A4.
 - Heeft de oefening een praktijk- of Fysiplan-video, dan gaat die met dezelfde klik automatisch
   mee naar de digitale kaart. De videobadge maakt dat al vóór het kiezen zichtbaar.
-- Eén A4-trainingskaart met cliëntvelden (Naam, Leeftijd, max. HF, Trainingszone) en
+- Eén A4-trainingskaart met een pseudonieme patiëntcode (bijvoorbeeld `CM77`), max. HF,
+  Trainingszone en
   monitoring-grid.
 - Printen + opslaan als PDF (via het printvenster van de browser).
 - Eigen oefening toevoegen met een eigen plaatje (blijft lokaal bewaard via `localStorage`).
@@ -49,6 +50,7 @@ Live Railway URL: https://fysiplan-production.up.railway.app
   (vereist Python + Pillow).
 - `npm run videos:check` — controleert IDs, reviewstatus en veilige Stream-URL's van de videotheek.
 - `npm run videos:export` — schrijft de actuele productiewachtrij als CSV naar standaarduitvoer.
+- `npm run test:patient-privacy` — test patiëntcode, API-sanitatie en migratie van oude kaarten.
 - `npm run start` — start de webserver op `PORT` (Railway) of lokaal op `3000`.
 
 Lokaal draaien: `npm run build && npm run start`, daarna http://localhost:3000
@@ -68,10 +70,10 @@ terug naar de gedeelde server-lijst.
 - **Praktijken (gedeeld):** vul je op de A4 een praktijknaam + adres in, dan wordt dat profiel via
   `POST /api/praktijken` op de server bewaard (`praktijken.json`) en is het op elk apparaat te
   kiezen via het keuzemenu boven de praktijknaam. `GET /api/praktijken` levert de lijst.
-- **Kaarten (lokaal):** via de knop **Kaarten** sla je de huidige kaart onder een naam op en open
-  of verwijder je eerder opgeslagen kaarten. Kaarten bevatten cliëntgegevens en blijven daarom
-  bewust **lokaal in de browser** (`localStorage`, sleutel `fysiplan_kaarten`). Oefeningen worden
-  op naam bewaard, zodat een kaart blijft werken als de bibliotheek verandert.
+- **Kaarten (lokaal):** via de knop **Kaarten** sla je de huidige kaart onder de patiëntcode op en
+  open of verwijder je eerder opgeslagen kaarten (`localStorage`, sleutel `fysiplan_kaarten`).
+  Naam en geboortedatum worden nooit in de kaartstaat geschreven. Oefeningen worden op naam
+  bewaard, zodat een kaart blijft werken als de bibliotheek verandert.
 
 ## Fysiplan v2 (/v2 en /v2/app)
 
@@ -82,8 +84,9 @@ terug naar de gedeelde server-lijst.
 - **Praktijklogo:** upload bij het praktijkprofiel (`POST /api/praktijken` met `logo`-dataURL,
   bewaard in `uploads/`), print mee op elke kaart.
 - **Gedeelde kaarten per praktijk:** `GET/POST /api/kaarten` en `POST /api/kaarten/verwijder`
-  (opslag `kaarten.json`, sleutel praktijk + kaartnaam, max. 100 per praktijk). Let op: zo'n
-  kaart staat mét cliëntgegevens op de server — de app meldt dat in het deelvenster.
+  (opslag `kaarten.json`, sleutel praktijk + patiëntcode, max. 100 per praktijk). De server
+  weigert volledige naam, leeftijd en geboortedatum en accepteert alleen een code als `CM77`.
+  Kaartinhoud en patiëntvoortgang staan wel op de server en blijven gezondheidsgegevens.
 - **QR-code op de print:** aanvinkbaar in het printvenster. De kaart wordt dan bij de praktijk
   bewaard en krijgt een QR (eigen encoder, `public/qr.js`, geen dependencies) naar
   **/k/&lt;id&gt;** (`public/kaart.html`): een mobielvriendelijke, alleen-lezen weergave die de
@@ -218,7 +221,14 @@ krijgt:
 ## Data & privacy
 
 De **oefening-plaatjes** staan op de server en zijn dus gedeeld/openbaar via de URL — dat is de
-bedoeling (het zijn geen persoonsgegevens). Alle **cliëntgegevens** (naam, leeftijd, kaart-inhoud,
-eigen oefeningen) blijven **lokaal in de browser** (`localStorage`/IndexedDB); daarvan gaat niets
-naar een server. Voor een toekomstige gedeelde/multi-praktijk versie met centrale opslag van
-cliëntdata moeten AVG / NEN 7510 worden ingericht (nu buiten scope).
+bedoeling (het zijn geen persoonsgegevens). De app vraagt naam en geboortedatum alleen tijdelijk
+om lokaal een patiëntcode te maken (`Carla Mastenbroek` + `04-10-1977` → `CM77`); de invoer wordt
+niet in `localStorage`, API-payloads, `kaarten.json`, back-ups of het kaartmanifest gezet.
+
+Gedeelde kaarten bewaren wél de patiëntcode, oefeningen, behandelnotities, doelen, pijnscores,
+oefenhistorie en eventuele persoonlijke video op de server. Een patiëntcode is daarom
+**pseudonimisering, geen anonimisering**: de kaartdata blijft persoons-/gezondheidsgegevens en
+vereist passende AVG- en beveiligingsmaatregelen. Vrije tekst toont expliciet de instructie om
+geen naam of volledige geboortedatum in te voeren; volledige datumpatronen worden voor opslag
+verwijderd en door de API geweigerd. Bij de eerste start na deze wijziging worden oude browser-
+en serverkaarten plus bestaande kaartback-ups naar patiëntcodes gemigreerd.
