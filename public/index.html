@@ -817,6 +817,18 @@ bridge2.jpg</div>
     }
     return value.slice(0,low);
   }
+  function fittingPrintableText(el,value){
+    value=String(value||'').trim();
+    var fitted=fittingPrintablePrefix(el,value);
+    if(fitted===value)return fitted;
+    var rest=value.slice(fitted.length);
+    // Bij inkorten nooit een half woord in het geprinte vak laten staan.
+    if(/[0-9A-Za-zÀ-ÿ]$/.test(fitted)&&/^[0-9A-Za-zÀ-ÿ]/.test(rest)){
+      var heel=fitted.replace(/\s+\S*$/,'').trim();
+      if(heel)fitted=heel;
+    }
+    return fitted.replace(/[\s,;:–-]+$/,'').trim();
+  }
   function syncPrintableText(el){
     var proxy=document.querySelector('[data-print-for="'+el.id+'"]');
     if(proxy)proxy.textContent=el.value;
@@ -850,7 +862,7 @@ bridge2.jpg</div>
   function normalizePrintableTextFields(){
     var changed=false;
     document.querySelectorAll('#c_opm,#c_cave').forEach(function(el){
-      var fitted=fittingPrintablePrefix(el,el.value);
+      var fitted=fittingPrintableText(el,el.value);
       if(fitted!==el.value){el.value=fitted;changed=true;}
       el._lastPrintableValue=el.value;
       syncPrintableText(el);
@@ -1953,6 +1965,8 @@ bridge2.jpg</div>
     if(chosen.length&&!confirm('De huidige oefeningen op de kaart vervangen door het voorstel?'))return;
     var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
     if(!client.c_doel){client.c_doel=[AI_VOORSTEL.trainingsdoel,AI_VOORSTEL.frequentie].filter(Boolean).join(' · ');}
+    if(!client.c_opm&&AI_VOORSTEL.opmerking){client.c_opm=fittingPrintableText(document.getElementById('c_opm'),AI_VOORSTEL.opmerking);}
+    if(!client.c_cave&&AI_VOORSTEL.casus){client.c_cave=fittingPrintableText(document.getElementById('c_cave'),AI_VOORSTEL.casus);}
     var cells={};
     gekozen.forEach(function(o){
       var nk=normEx(o.naam);
@@ -1964,6 +1978,7 @@ bridge2.jpg</div>
     });
     openCard({client:client,chosen:gekozen.map(function(o){return {n:o.naam,i:0};}),rows:{},cells:cells,vids:VIDS});
     closeOv('ovAi');
+    setTimeout(function(){var opm=document.getElementById('c_opm');if(opm)opm.focus();},0);
   });
 
   // ---- kaarten opslaan/openen: lokaal in deze browser (cliëntgegevens blijven lokaal) ----
