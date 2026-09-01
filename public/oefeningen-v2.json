@@ -4114,21 +4114,23 @@
   "naam": "Foam roller hamstring",
   "groep": "Foam Roller",
   "img": "images/foam-roller/foam-roller-hamstring-line-v1.png",
-  "kaartImg": "images/foam-roller/foam-roller-hamstring-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-hamstring-avatar-v8.jpg",
   "uitleg": "Zit met gestrekte benen en plaats de foamroller onder je bovenbenen. Til je heupen licht op met steun van je handen en rol rustig heen en weer.",
   "exerciseId": "fp_4c76bb5ec2f5750b",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Foam roller calf",
   "groep": "Foam Roller",
   "img": "images/foam-roller/foam-roller-calf-line-v1.png",
-  "kaartImg": "images/foam-roller/foam-roller-calf-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-calf-avatar-v8.jpg",
   "uitleg": "Zit met één onderbeen op de foamroller en steun met je handen achter je. Rol langzaam over de kuit en wissel daarna van been.",
   "exerciseId": "fp_8fb77da919f771d2",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Foam roller tractus",
