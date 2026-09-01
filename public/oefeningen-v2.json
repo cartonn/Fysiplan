@@ -4180,41 +4180,45 @@
   "naam": "Foam roller fore arm",
   "groep": "Foam Roller",
   "img": "images/foam-roller/foam-roller-fore-arm-line-v1.png",
-  "kaartImg": "images/foam-roller/foam-roller-fore-arm-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-fore-arm-avatar-v8.jpg",
   "uitleg": "Zit comfortabel en leg je onderarm met de handpalm omlaag op de foamroller. Gebruik je andere hand om de druk te doseren en rol langzaam heen en weer.",
   "exerciseId": "fp_b5842218c2acd8d0",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Foam roller back lower cross",
   "groep": "Foam Roller",
   "img": "images/foam-roller/foam-roller-back-lower-cross-line-v1.png",
-  "kaartImg": "images/foam-roller/foam-roller-back-lower-cross-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-back-lower-cross-avatar-v8.jpg",
   "uitleg": "Lig met gebogen knieën op je rug en de foamroller onder je lage rug. Houd je armen ontspannen wijd en beweeg alleen klein en gecontroleerd.",
   "exerciseId": "fp_7a80af282e5365f5",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Foam roller back lower",
   "groep": "Foam Roller",
   "img": "images/foam-roller/foam-roller-back-lower-line-v1.png",
-  "kaartImg": "images/foam-roller/foam-roller-back-lower-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-back-lower-avatar-v8.jpg",
   "uitleg": "Lig op je rug met gebogen knieën en de foamroller onder je lage rug. Houd je bekken stabiel en rol slechts rustig over een klein gebied.",
   "exerciseId": "fp_3fd0ad562e93e587",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Foam roller back extension",
   "groep": "Foam Roller",
   "img": "images/foam-roller/foam-roller-back-extension-line-v1.png",
-  "kaartImg": "images/foam-roller/foam-roller-back-extension-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-back-extension-avatar-v8.jpg",
   "uitleg": "Lig met de foamroller onder je middenrug en je knieën gebogen. Ondersteun je hoofd licht, open je borst rustig over de roller en kom gecontroleerd terug.",
   "exerciseId": "fp_e9358123e578e29b",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Med ball slams",
