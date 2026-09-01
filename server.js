@@ -322,7 +322,7 @@ async function serveerV1App(response, email) {
   const account = '<span id="fp1uit" style="display:inline-flex;gap:7px;align-items:center;margin-left:5px;padding-left:10px;'
     + 'border-left:1px solid #e4e7ec;font:12px/1.2 system-ui,-apple-system,sans-serif">'
     + '<span style="color:#667085;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + veiligEmail + '</span>'
-    + '<button type="button" id="fp1uitknop" style="cursor:pointer;border:1px solid #d0d5dd;background:#fff;color:#344054;'
+    + '<button type="button" id="fp1uitknop" style="cursor:pointer;border:1px solid #1f6feb;background:#1f6feb;color:#fff;'
     + 'border-radius:8px;padding:5px 9px;font:600 12px/1 system-ui;box-shadow:0 1px 2px rgba(16,24,40,.06)">Uitloggen</button></span>';
   const script = '<script>document.getElementById("fp1uitknop").addEventListener("click",function(){'
     + 'fetch("/api/v1/logout",{method:"POST"}).then(function(){location.reload();}).catch(function(){location.reload();});});</script>';

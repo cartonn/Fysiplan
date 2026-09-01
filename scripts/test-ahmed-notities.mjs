@@ -148,6 +148,7 @@ try {
   assert.match(appHtml, /id="fp1uit"/);
   assert.match(appHtml, /therapeut@example\.nl/);
   assert.doesNotMatch(appHtml, /id="fp1uit"[^>]*position:fixed/);
+  assert.match(appHtml, /id="fp1uitknop"[^>]*background:#1f6feb;color:#fff/);
   assert.ok(appHtml.indexOf('id="menuHelp"') < appHtml.indexOf('id="fp1uit"'));
   assert.ok(appHtml.indexOf('id="fp1uit"') < appHtml.indexOf('class="spacer"'));
 
