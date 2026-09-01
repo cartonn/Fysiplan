@@ -127,7 +127,7 @@ try {
 
   const registratie = await post("/api/v1/registreer", {
     email: "therapeut@example.nl",
-    code: "  TEST–REGISTRATIECODE  "
+    code: "  TEST–REGISTRATIE–CODE  "
   });
   assert.equal(registratie.response.status, 200);
   assert.equal(registratie.body.gestuurd, true);

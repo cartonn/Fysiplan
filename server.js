@@ -198,7 +198,7 @@ const normaliseerRegistratiecode = (waarde) => String(waarde || "")
   .normalize("NFKC")
   .trim()
   .replace(/[\u2010-\u2015\u2212]/g, "-")
-  .replace(/\s+/g, "")
+  .replace(/[-_\s]+/g, "")
   .toLowerCase();
 const V1_REGISTRATIE_CODE = String(process.env.V1_REGISTRATIE_CODE || "");
 const V1_REGISTRATIE_CODE_NORM = normaliseerRegistratiecode(V1_REGISTRATIE_CODE);
