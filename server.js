@@ -226,9 +226,12 @@ try { vertalingen = JSON.parse(await readFile(vertalingenPath, "utf8")); } catch
 // ermee en het beeldscherm ziet via polling dat de video binnen is
 const opnames = new Map();
 let lopendeUploads = 0;
+// levensduur van een opnametoken; via env instelbaar zodat tests het verlopen
+// zonder wachttijd kunnen bewijzen
+const OPNAME_TTL_MS = Math.max(1000, Number(process.env.OPNAME_TTL_MS) || 15 * 60 * 1000);
 function opnameOpschonen() {
   const nu = Date.now();
-  for (const [t, o] of opnames) if (nu - o.made > 15 * 60 * 1000) opnames.delete(t);
+  for (const [t, o] of opnames) if (nu - o.made > OPNAME_TTL_MS) opnames.delete(t);
 }
 // persoonlijke videobestanden weggooien zodra geen enkele kaart (of oefening) ze nog gebruikt;
 // juist bij beelden van cliënten hoort er niets achter te blijven
@@ -1788,6 +1791,10 @@ async function afhandelen(request, response) {
     // pagina mag zelfs met een bekend token geen video wegschrijven. Fail-open.
     if (kruisSite(request)) { await weigerKruis(response); return; }
     if (schrijfLimiet(request, response)) return;
+    // ook hier eerst opschonen: zonder deze regel bleef een verlopen token bruikbaar
+    // zolang geen andere route de opschoning aanstootte — wie ooit een scherm-QR
+    // fotografeerde kon dan veel later alsnog een oefenvideo overschrijven
+    opnameOpschonen();
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const token = String(q.get("token") || "");
     const o = opnames.get(token);

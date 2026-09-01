@@ -677,3 +677,33 @@ IP gebruiken (de limiet mag de format-validatie niet maskeren) — 15 groen. Acc
 
 **Volgende run — pak een ander gebied:** de opname-token-levenscyclus en poll-rem
 (`/api/opname/status`, `/o/<token>`), of security-headers en CSP-nonce op de v2-pagina's.
+
+## 2026-09-01 — Opname-token-levenscyclus en poll-rem
+
+**Geauditeerd:** de opnameketen (`/api/opname/start`, `/api/opname/status`,
+`/api/opname/upload`, `/o/<token>`) en — als bijvangst van de rotatie-optie —
+de security-headers op de v2-pagina's. De keten staat er goed voor: tokens munten
+is beheer-only (constant-time sleutelvergelijking) met een plafond van 200
+gelijktijdige opnames; het token is 48-bit random en eenmalig; upload eist
+zelfde-origine (kruisSite), valideert mime én magic bytes, begrenst op 60 MB en
+4 gelijktijdige uploads en respecteert het opslagplafond; de statusroute draagt
+een eigen poll-rem (1800/IP/5min). De headers op /k, /o, /v2 en /v2/app zijn
+compleet: strakke CSP met nonce, frame-ancestors 'none', COOP, permissions-policy
+per pagina op maat, HSTS + nosniff + sobere referrer-policy overal.
+
+**Bevinding (gefixt):** de 15-minuten-levensduur werd alleen afgedwongen doordat
+`opnameOpschonen()` op de start- en statusroute draaide — de úploadroute schoonde
+niet op. Stopte het scherm met pollen (venster dicht), dan bleef een verlopen
+token onbeperkt bruikbaar tot een andere route toevallig opschoonde. Wie ooit een
+scherm-QR fotografeerde kon zo veel later alsnog een video van 60 MB plaatsen en
+— bij doel "oefening" — de echte oefenvideo overschrijven.
+
+**Increment:** `opnameOpschonen()` draait nu ook op de uploadroute, en de
+levensduur is een constante (`OPNAME_TTL_MS`, env-instelbaar zodat de test het
+verlopen zonder kwartier wachten bewijst). Nieuwe regressietest
+`test-opname-token.mjs` (12 checks, met tegenbewijs: zonder de fix faalt de
+verlopen-token-check aantoonbaar). Kern (21) en overige suites groen.
+
+**Volgende run — pak een ander gebied:** injectie en path-traversal op de
+sjabloon- en kaartroutes (praktijk-sjablonen, kaart-hernoemen, antwoord), of de
+accountlaag opnieuw (sessieverloop, herstelcode-flow, wachtwoord-wijzigen).
