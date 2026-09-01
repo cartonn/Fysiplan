@@ -4136,41 +4136,45 @@
   "naam": "Foam roller tractus",
   "groep": "Foam Roller",
   "img": "images/foam-roller/foam-roller-tractus-line-v1.png",
-  "kaartImg": "images/foam-roller/foam-roller-tractus-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-tractus-avatar-v8.jpg",
   "uitleg": "Ga op je zij liggen met de foamroller onder de buitenzijde van je bovenbeen. Steun op je onderarm en rol gecontroleerd over een klein traject.",
   "exerciseId": "fp_1475d9e5ff7c119b",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Foam roller back upper",
   "groep": "Foam Roller",
   "img": "images/foam-roller/foam-roller-back-upper-line-v1.png",
-  "kaartImg": "images/foam-roller/foam-roller-back-upper-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-back-upper-avatar-v8.jpg",
   "uitleg": "Lig op je rug met gebogen knieën en plaats de foamroller onder je bovenrug. Ondersteun je hoofd licht met je handen en rol rustig een klein stuk.",
   "exerciseId": "fp_84154b2578401c90",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Foam roller lat stretch",
   "groep": "Foam Roller",
   "img": "images/foam-roller/foam-roller-lat-stretch-line-v1.png",
-  "kaartImg": "images/foam-roller/foam-roller-lat-stretch-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-lat-stretch-avatar-v8.jpg",
   "uitleg": "Ga op je zij liggen met de foamroller onder de zijkant van je bovenrug. Strek de onderste arm boven je hoofd en rol langzaam over het gebied.",
   "exerciseId": "fp_459a21a001379ff4",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Foam roller adductoren",
   "groep": "Foam Roller",
   "img": "images/foam-roller/foam-roller-adductoren-line-v1.png",
-  "kaartImg": "images/foam-roller/foam-roller-adductoren-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-adductoren-avatar-v8.jpg",
   "uitleg": "Ga op je buik liggen en plaats de foamroller onder de binnenzijde van één bovenbeen. Steun op je onderarmen en rol langzaam over een klein traject.",
   "exerciseId": "fp_d1a9f14ec236926a",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Foam roller fore arm",
