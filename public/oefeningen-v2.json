@@ -3960,21 +3960,23 @@
   "naam": "Swiss ball rollout",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-rollout-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-rollout-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-rollout-avatar-v8.jpg",
   "uitleg": "Knie voor de oefenbal met je onderarmen erop. Rol de bal rustig naar voren terwijl je romp lang blijft en trek hem gecontroleerd weer terug.",
   "exerciseId": "fp_ca69fe932ac4e333",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball abs",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-abs-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-abs-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-abs-avatar-v8.jpg",
   "uitleg": "Lig met je onderrug op de oefenbal en je voeten stevig op de grond. Span je buik aan en maak een kleine gecontroleerde rompbuiging, zonder aan je nek te trekken.",
   "exerciseId": "fp_390ca950f198eaf7",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball back ext",
