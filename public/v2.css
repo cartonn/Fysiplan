@@ -21,8 +21,9 @@ html.v2 .btn{border-radius:999px;border-color:var(--line)}
 html.v2 .btn:hover{border-color:#cfc6ad}
 html.v2 .btn.primary{background:var(--brand);border-color:var(--brand)}
 html.v2 .btn.primary:hover{background:var(--brand-700)}
-html.v2 .chip{border-radius:999px;background:#fbf8f1}
-html.v2 .chip.on{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:600}
+/* Categorieën gebruiken dezelfde rustige chips als beheer en V1. */
+html.v2 .chip{border-radius:999px;background:var(--panel)}
+html.v2 .chip.on{background:var(--brand-50);border-color:var(--brand-100);color:var(--brand-700);font-weight:600}
 html.v2 .card{border-radius:var(--r-lg)}
 html.v2 .card .hd{background:#fbf8f0;color:var(--muted)}
 html.v2 .row{border-radius:12px}
@@ -55,31 +56,21 @@ html.v2 .beeldkeuze-kop b{font-size:12px;color:var(--ink)}
 html.v2 .beeldkeuze-kop small{font-size:10.5px;color:var(--muted)}
 html.v2 .beeldkeuze-qr{font-size:10px;font-weight:650;color:var(--brand);background:var(--brand-50);
   border:1px solid var(--brand-100);border-radius:999px;padding:4px 7px;white-space:nowrap}
-/* Twee keuzekaartjes met een echt voorbeeldpoppetje, precies zoals de schets:
-   je ziet de gekozen oefening naast elkaar in lijntekening én in kleur. */
-html.v2 .beeldsegment{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0;border:0;background:transparent}
-html.v2 .beeldsegment button{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;
-  border:1.5px solid var(--line);border-radius:12px;padding:8px 6px;background:#fffefa;color:var(--muted);
-  font:inherit;font-size:11.5px;font-weight:650;line-height:1.2;cursor:pointer;
-  transition:border-color .15s,color .15s,box-shadow .15s,background .15s}
-html.v2 .beeldsegment button:hover{border-color:var(--brand-100);color:var(--brand)}
-html.v2 .beeldsegment button.aan{border-color:var(--brand);color:var(--brand);background:var(--brand-50);
-  box-shadow:0 1px 3px rgba(36,86,166,.14)}
-html.v2 .beeldsegment button.aan::after{content:'✓';position:absolute;top:5px;right:8px;font-size:11px;font-weight:800;color:var(--brand)}
+/* Zelfde compacte keuzevorm als Inloggen / Account aanmaken. De labels houden
+   bewust hun betekenisvolle kleur, ook als de andere optie geselecteerd is. */
+html.v2 .beeldsegment{display:flex;gap:4px;padding:4px;border:1px solid var(--line);
+  border-radius:10px;background:var(--bg)}
+html.v2 .beeldsegment button{flex:1;border:0;border-radius:7px;padding:10px;background:transparent;
+  font:600 12px/1 var(--sans);cursor:pointer;transition:background .15s,box-shadow .15s}
+html.v2 .beeldsegment button[data-v2-beeld="lijn"]{color:var(--ink)}
+html.v2 .beeldsegment button[data-v2-beeld="kleur"]{color:var(--brand)}
+html.v2 .beeldsegment button:hover{background:rgba(255,254,250,.72)}
+html.v2 .beeldsegment button.aan{background:var(--panel);box-shadow:0 1px 2px rgba(60,50,20,.12)}
 html.v2 .beeldsegment button:focus-visible{outline:none;box-shadow:var(--ring)}
-html.v2 .beeldkeuze-vb{width:100%;max-width:80px;aspect-ratio:1;object-fit:contain;border-radius:8px;
-  background:#fff;border:1px solid var(--line);padding:3px}
-html.v2 .beeldsegment button.aan .beeldkeuze-vb{border-color:var(--brand-100)}
-html.v2 .beeldkeuze-vb:not([src]){visibility:hidden}
 
-/* Houd de bibliotheek ruim: categorieën staan in één veegbare rij in plaats van
-   meerdere regels die de oefeningen en hun plus/min-knoppen uit beeld drukken. */
-html.v2 .filters{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;flex:0 0 auto;
-  margin-right:-4px;padding:0 4px 6px 0;scrollbar-width:thin;overscroll-behavior-x:contain;
-  -webkit-overflow-scrolling:touch}
-html.v2 .filters .chip{flex:0 0 auto;white-space:nowrap}
-html.v2 .filters::-webkit-scrollbar{height:5px}
-html.v2 .filters::-webkit-scrollbar-thumb{background:#ddd4bd;border-radius:99px}
+/* V2 toont categorieën net als V1/beheer: in meerdere regels, zonder veegbalk. */
+html.v2 .filters{flex-wrap:wrap;overflow:visible;flex:initial;margin-right:0;padding:0}
+html.v2 .filters .chip{flex:initial;white-space:normal}
 html.v2 .row .nm{min-width:0;overflow-wrap:anywhere}
 
 /* praktijklogo op de kaart: hoort bij het praktijkprofiel, print mee op elke kaart */
