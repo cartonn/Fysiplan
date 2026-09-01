@@ -4081,31 +4081,34 @@
   "naam": "Foam roller glute med.",
   "groep": "Foam Roller",
   "img": "images/foam-roller/foam-roller-glute-med-line-v1.png",
-  "kaartImg": "images/foam-roller/foam-roller-glute-med-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-glute-med-avatar-v8.jpg",
   "uitleg": "Ga zijwaarts op de foamroller zitten en plaats hem onder de buitenzijde van je bil. Rol langzaam een klein stuk heen en weer en steun met je handen voor balans.",
   "exerciseId": "fp_90e9eb8d9522510c",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Foam roller glute",
   "groep": "Foam Roller",
   "img": "images/foam-roller/foam-roller-glute-line-v1.png",
-  "kaartImg": "images/foam-roller/foam-roller-glute-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-glute-avatar-v8.jpg",
   "uitleg": "Ga op de foamroller zitten met één enkel over de andere knie. Verplaats je gewicht naar de bilspier en rol rustig heen en weer.",
   "exerciseId": "fp_6c0fe3bba04367bd",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Foam roller quadriceps",
   "groep": "Foam Roller",
   "img": "images/foam-roller/foam-roller-quadriceps-line-v1.png",
-  "kaartImg": "images/foam-roller/foam-roller-quadriceps-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-quadriceps-avatar-v8.jpg",
   "uitleg": "Ga op je buik liggen met de foamroller onder de voorkant van je bovenbenen. Steun op je onderarmen en rol langzaam van boven de knie richting heup en terug.",
   "exerciseId": "fp_8b295cf8d4352450",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Foam roller hamstring",
