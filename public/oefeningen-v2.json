@@ -3861,21 +3861,23 @@
   "naam": "Snap jumps",
   "groep": "Agility",
   "img": "images/cardio/snap-jumps-line-v1.png",
-  "kaartImg": "images/cardio/snap-jumps-line-v1.png",
+  "kaartImg": "images/cardio/snap-jumps-avatar-v8.jpg",
   "uitleg": "Zak licht door je knieen en maak een kleine, snelle sprong recht omhoog. Land veerkrachtig met je knieen licht gebogen en herhaal gecontroleerd.",
   "exerciseId": "fp_4c70180e5dd7d865",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Rope jumping",
   "groep": "Agility",
   "img": "images/cardio/rope-jumping-line-v1.png",
-  "kaartImg": "images/cardio/rope-jumping-line-v1.png",
+  "kaartImg": "images/cardio/rope-jumping-avatar-v8.jpg",
   "uitleg": "Houd de uiteinden van het springtouw vast en spring licht met beide voeten terwijl het touw onder je voeten doorgaat. Land zacht en houd je romp rechtop.",
   "exerciseId": "fp_7a9033fd674310f4",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball wall squat",
