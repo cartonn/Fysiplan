@@ -603,14 +603,20 @@ function kaartMisLimiet(req, res) {
 // Werkt alleen als de eigenaar ANTHROPIC_API_KEY op de server heeft ingesteld;
 // zonder sleutel geven de endpoints een nette melding en verandert er niets.
 const AI_KEY = process.env.ANTHROPIC_API_KEY || "";
+const AI_WORKSPACE_ID = process.env.ANTHROPIC_WORKSPACE_ID || "";
 const AI_BASIS = process.env.ANTHROPIC_BASE_URL || "https://api.anthropic.com";
 const AI_MODEL = process.env.AI_MODEL || "claude-sonnet-5";
 const AI_MODEL_VERTAAL = process.env.AI_MODEL_VERTAAL || "claude-haiku-4-5-20251001";
 const normEx = (s) => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
 async function vraagClaude(model, maxTokens, system, user) {
+  const headers = { "content-type": "application/json", "x-api-key": AI_KEY, "anthropic-version": "2023-06-01" };
+  // Nieuwe persoonlijke Anthropic-sleutels werken over meerdere workspaces en
+  // vereisen daarom expliciet de workspace waarop de aanvraag wordt geboekt.
+  // Voor bestaande workspace-sleutels blijft deze optionele header achterwege.
+  if (AI_WORKSPACE_ID) headers["anthropic-workspace-id"] = AI_WORKSPACE_ID;
   const r = await fetch(AI_BASIS + "/v1/messages", {
     method: "POST",
-    headers: { "content-type": "application/json", "x-api-key": AI_KEY, "anthropic-version": "2023-06-01" },
+    headers,
     body: JSON.stringify({ model, max_tokens: maxTokens, system, messages: [{ role: "user", content: user }] }),
     signal: AbortSignal.timeout(60 * 1000)
   });

@@ -20,7 +20,10 @@ const mailServer = createServer(async (request, response) => {
     return;
   }
   if (request.method === "POST" && request.url === "/v1/messages") {
-    aiCalls.push(JSON.parse(body));
+    aiCalls.push({
+      body: JSON.parse(body),
+      workspaceId: request.headers["anthropic-workspace-id"]
+    });
     response.writeHead(200, { "content-type": "application/json" });
     response.end(JSON.stringify({ content: [{ text: JSON.stringify({
       trainingsdoel: "Werp-ABC",
@@ -58,6 +61,7 @@ const app = spawn(process.execPath, ["server.js"], {
     MAIL_AFZENDER: "Fysiplan <account@fysiplan.nl>",
     MAIL_API_BASIS: `http://127.0.0.1:${mailPort}`,
     ANTHROPIC_API_KEY: "test-ai-key",
+    ANTHROPIC_WORKSPACE_ID: "test-workspace-id",
     ANTHROPIC_BASE_URL: `http://127.0.0.1:${mailPort}`
   },
   stdio: ["ignore", "pipe", "pipe"]
@@ -222,8 +226,9 @@ try {
     borg: "4", xrm: "12RM", rust: "60 sec", tempo: "2-1-2", waarom: "Rustige startdosering."
   });
   assert.equal(aiCalls.length, 1);
-  assert.match(aiCalls[0].system, /BORG, XRM, rust en tempo/);
-  assert.equal(aiCalls[0].messages[0].content,
+  assert.equal(aiCalls[0].workspaceId, "test-workspace-id");
+  assert.match(aiCalls[0].body.system, /BORG, XRM, rust en tempo/);
+  assert.equal(aiCalls[0].body.messages[0].content,
     "<trainingsdoel>Werp-ABC</trainingsdoel>\n<klacht>opbouw werpbelasting na een schouderklacht</klacht>");
 
   console.log("OK: V1 account/mail/login, V2 categoriebeheer en AI-trainingsdoel werken end-to-end.");
