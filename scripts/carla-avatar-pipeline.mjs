@@ -6,6 +6,7 @@
  *
  * Usage:
  *   node scripts/carla-avatar-pipeline.mjs status
+ *   node scripts/carla-avatar-pipeline.mjs plan --batch 1 --batch-size 50
  *   node scripts/carla-avatar-pipeline.mjs import --name "Box jumps" --source /absolute/generated.png
  *   node scripts/carla-avatar-pipeline.mjs check
  */
@@ -21,6 +22,8 @@ const valueAfter = (flag) => {
   return index === -1 ? "" : String(process.argv[index + 1] || "");
 };
 const avatarPath = (exercise) => String(exercise.img).replace(/-line-v1\.png$/, "-avatar-v8.jpg");
+const batchSize = Math.max(1, Math.min(50, Number(valueAfter('--batch-size') || 50)));
+const batch = Math.max(1, Number(valueAfter('--batch') || 1));
 
 async function readCatalogue() {
   const catalogue = JSON.parse(await fs.readFile(cataloguePath, "utf8"));
@@ -57,7 +60,7 @@ async function writeCatalogue(catalogue) {
   await fs.writeFile(cataloguePath, `${JSON.stringify(catalogue, null, 1)}\n`);
 }
 
-if (!['status', 'import', 'check'].includes(command)) throw new Error('Gebruik status, import of check');
+if (!['status', 'plan', 'import', 'check'].includes(command)) throw new Error('Gebruik status, plan, import of check');
 const { catalogue, carla } = await readCatalogue();
 
 if (command === 'import') {
@@ -90,5 +93,23 @@ const byGroup = Object.fromEntries([...new Set(entries.map((entry) => entry.grou
   ready: ready.filter((entry) => entry.group === group).length,
   remaining: invalid.filter((entry) => entry.group === group).length,
 }]));
+if (command === 'plan') {
+  const start = (batch - 1) * batchSize;
+  const selected = invalid.slice(start, start + batchSize);
+  console.log(JSON.stringify({
+    total: entries.length,
+    ready: ready.length,
+    remaining: invalid.length,
+    batch,
+    batchSize,
+    selected: selected.length,
+    nextBatch: start + batchSize < invalid.length ? batch + 1 : null,
+    exercises: selected.map(({ name, group, relative }) => {
+      const exercise = carla.find((entry) => entry.naam === name);
+      return { name, group, movementReference: exercise.img, output: relative, instruction: exercise.uitleg };
+    }),
+  }, null, 2));
+  process.exit(0);
+}
 console.log(JSON.stringify({ total: entries.length, ready: ready.length, remaining: invalid.length, byGroup, pending: invalid.map(({ name, group, relative, missing, linked }) => ({ name, group, output: relative, missing: !!missing, linked })) }, null, 2));
 if (command === 'check' && invalid.length) process.exitCode = 1;
