@@ -3883,21 +3883,23 @@
   "naam": "Swiss ball wall squat",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-wall-squat-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-wall-squat-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-wall-squat-avatar-v8.jpg",
   "uitleg": "Plaats de oefenbal tussen je onderrug en de muur. Zak rustig door je knieen terwijl de bal langs de muur rolt, houd je knieen boven je voeten en kom weer omhoog.",
   "exerciseId": "fp_f26c61999ac184bd",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball plank",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-plank-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-plank-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-plank-avatar-v8.jpg",
   "uitleg": "Steun met je onderarmen op de oefenbal. Begin eventueel op je knieen en strek daarna je benen tot je lichaam een rechte lijn vormt van schouders tot hielen.",
   "exerciseId": "fp_11f9dbbabfc572e5",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball hip raise",
