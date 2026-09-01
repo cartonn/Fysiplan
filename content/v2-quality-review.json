@@ -10,15 +10,22 @@
     "sourceEntries": 285,
     "readyPairsReviewed": 264,
     "pendingPairs": 21,
-    "approvedPairs": 216,
-    "rejectedPairs": 48
+    "approvedPairs": 179,
+    "rejectedPairs": 85
   },
-  "publishedPairCountAfterReview": 431,
+  "publishedPairCountAfterReview": 394,
+  "strictPrintReview": {
+    "protectedLegacyPairs": 215,
+    "extensionPairsRechecked": 216,
+    "additionalRejectedPairs": 37,
+    "rule": "De vaste V1-set blijft onaangeraakt; alleen uitbreidingsbeelden die ook in een van twaalf A4-kaartvakken direct leesbaar zijn blijven in V2."
+  },
   "criteria": [
     "De kleurfoto en lijntekening tonen dezelfde oefening en dezelfde fasen.",
     "De beweging, houding en het onderscheidende hulpmiddel zijn herkenbaar en klinisch niet misleidend.",
     "Geen vervormde, rommelige of in print onleesbare composities.",
-    "Een variant die visueel een andere oefening toont of niet van de basisvariant te onderscheiden is, wordt afgekeurd."
+    "Een variant die visueel een andere oefening toont of niet van de basisvariant te onderscheiden is, wordt afgekeurd.",
+    "De start- en eindfase moeten in de kleine V2-printweergave herkenbaar blijven; subtiele details, losse beeldruis en overheersend meubilair zijn afkeurgronden."
   ],
   "rejected": [
     { "catalogIndex": 218, "name": "Schouder voorwaarts heffen – isometrisch tegen de muur", "reason": "Toont een actieve armheffing met een los zwevend steunblok, niet isometrisch duwen tegen een muur." },
@@ -68,6 +75,43 @@
     { "catalogIndex": 470, "name": "Ogen naar doelen – staand langzaam", "reason": "Het hoofd draait mee en de twee visuele doelen ontbreken, terwijl het hoofd stil moet blijven." },
     { "catalogIndex": 471, "name": "Doel volgen – zittend langzaam", "reason": "Er is geen bewegend visueel doel zichtbaar; de afbeelding toont alleen het hoofd draaien." },
     { "catalogIndex": 477, "name": "Boven schouderhoogte plaatsen – ergonomische basis", "reason": "Het voorwerp wordt op een lage tafel geplaatst en komt niet boven schouderhoogte." },
-    { "catalogIndex": 478, "name": "Boven schouderhoogte plaatsen – licht en dichtbij", "reason": "Het voorwerp blijft op schouderhoogte vooruit en wordt niet boven schouderhoogte geplaatst." }
+    { "catalogIndex": 478, "name": "Boven schouderhoogte plaatsen – licht en dichtbij", "reason": "Het voorwerp blijft op schouderhoogte vooruit en wordt niet boven schouderhoogte geplaatst." },
+    { "catalogIndex": 231, "name": "Schouder naar binnen draaien – met elastiek", "reason": "De twee fasen zijn op kaartformaat vrijwel gelijk; de binnenrotatie is niet herkenbaar." },
+    { "catalogIndex": 232, "name": "Schouderblad naar achteren – actief", "reason": "Het intrekken van de schouderbladen is in kleur en lijn niet zichtbaar genoeg om de fasen te onderscheiden." },
+    { "catalogIndex": 254, "name": "Onderarm naar handpalm boven – actief", "reason": "De onderarmrotatie verdwijnt in de kleine printweergave en het behandelmeubel overheerst." },
+    { "catalogIndex": 255, "name": "Onderarm naar handpalm onder – actief", "reason": "De onderarmrotatie is op kaartformaat niet leesbaar en het behandelmeubel trekt de aandacht weg." },
+    { "catalogIndex": 256, "name": "Pols omhoog – actief", "reason": "De polsbeweging is te klein en wordt afgedekt door een groot behandelmeubel." },
+    { "catalogIndex": 258, "name": "Pols omlaag – actief", "reason": "De polsbeweging is op printformaat nauwelijks zichtbaar tussen stoel en tafel." },
+    { "catalogIndex": 259, "name": "Pols naar duimzijde – actief", "reason": "Het verschil tussen de fasen zit alleen in een te klein handdetail en blijft niet leesbaar in print." },
+    { "catalogIndex": 260, "name": "Pols naar pinkzijde – actief", "reason": "Het verschil tussen de fasen zit alleen in een te klein handdetail en blijft niet leesbaar in print." },
+    { "catalogIndex": 263, "name": "Peesglijden hand – actief", "reason": "Toont alleen openen en sluiten en niet de herkenbare opeenvolgende peesglijposities." },
+    { "catalogIndex": 283, "name": "Heup naar binnen draaien – staand met steun", "reason": "Toont vooral het been kruisen/adduceren; de heup-binnenrotatie is niet herkenbaar." },
+    { "catalogIndex": 292, "name": "Knie buigen – zittend", "reason": "Toont het onderbeen naar voren strekken in plaats van de knie zittend buigen." },
+    { "catalogIndex": 295, "name": "Knie strekken – liggend", "reason": "De behandeltafel domineert de lijntekening en maakt de twee fasen in het kaartvak te druk." },
+    { "catalogIndex": 299, "name": "Quadriceps aanspannen – liggend", "reason": "De twee fasen zijn visueel gelijk; de quadricepsaanspanning is niet afleesbaar." },
+    { "catalogIndex": 300, "name": "Quadriceps aanspannen – zittend", "reason": "Toont een zichtbare kniestrekking in plaats van een isometrische quadricepsaanspanning." },
+    { "catalogIndex": 321, "name": "Enkel optrekken – zittend actief", "reason": "De enkelbeweging is in de volledige zittende compositie te klein voor de printkaart." },
+    { "catalogIndex": 324, "name": "Enkel wegduwen – zittend actief", "reason": "Toont hoofdzakelijk een kniestrekking; de enkelbeweging is niet herkenbaar." },
+    { "catalogIndex": 325, "name": "Enkel wegduwen – staand met steun", "reason": "De twee staande fasen zijn vrijwel gelijk; plantarflexie is niet zichtbaar." },
+    { "catalogIndex": 327, "name": "Voet naar binnen – zittend actief", "reason": "De voetinversie blijft als klein detail onleesbaar op printformaat." },
+    { "catalogIndex": 329, "name": "Voet naar buiten – zittend actief", "reason": "De voeteversie blijft als klein detail onleesbaar op printformaat." },
+    { "catalogIndex": 331, "name": "Kuitheffing – staand met steun", "reason": "De fasen tonen geen duidelijke hielheffing en de lijntekening bevat losse beeldruis rond de voeten." },
+    { "catalogIndex": 340, "name": "Tenen heffen – zittend actief", "reason": "De teenbeweging is niet zichtbaar in de volledige zittende compositie." },
+    { "catalogIndex": 341, "name": "Tenen heffen – staand met steun", "reason": "De twee fasen zijn op kaartformaat gelijk; het heffen van de tenen is niet zichtbaar." },
+    { "catalogIndex": 342, "name": "Korte voet – zittend actief", "reason": "De korte-voetactivatie is niet visueel afleesbaar en de fasen zijn vrijwel identiek." },
+    { "catalogIndex": 343, "name": "Korte voet – staand met steun", "reason": "De korte-voetactivatie is niet visueel afleesbaar en de fasen zijn vrijwel identiek." },
+    { "catalogIndex": 344, "name": "Korte voet – op één been", "reason": "Toont vooral eenbeenstand; de korte-voetactivatie wordt niet zichtbaar gemaakt." },
+    { "catalogIndex": 345, "name": "Tenen spreiden – zittend actief", "reason": "Toont een verplaatsing van voet en onderbeen in plaats van herkenbaar spreiden van de tenen." },
+    { "catalogIndex": 346, "name": "Bekken kantelen – liggend", "reason": "Toont een brug met duidelijke heupheffing in plaats van een kleine bekkenkanteling." },
+    { "catalogIndex": 348, "name": "Bekken kantelen – zittend", "reason": "De afgebeelde houdingsverschuiving maakt de bekkenkanteling niet begrijpelijk op kaartformaat." },
+    { "catalogIndex": 349, "name": "Bekken kantelen – staand", "reason": "Toont vooral zijwaartse rompverplaatsing; een voor- of achterwaartse bekkenkanteling is niet herkenbaar." },
+    { "catalogIndex": 374, "name": "Kin intrekken – zittend actief", "reason": "De kinbeweging is te subtiel voor het kaartvak en de lijntekening bevat losse ruis onder de stoel." },
+    { "catalogIndex": 375, "name": "Kin intrekken – liggend ondersteund", "reason": "Het hoofd wordt opgetild; dit toont geen zuivere kinintrekking met ondersteund hoofd." },
+    { "catalogIndex": 384, "name": "Diepe nekflexoren activeren – zittend actief", "reason": "Toont een grote voorwaartse nekbuiging in plaats van een kleine diepe-nekflexoractivatie." },
+    { "catalogIndex": 418, "name": "Thoracale extensie – staand", "reason": "De behandeltafel en het onderstel domineren de lijntekening en maken de printkaart te druk." },
+    { "catalogIndex": 441, "name": "Achterwaarts stappen – met steun", "reason": "De steunconstructie overheerst en het verschil tussen staan en achterwaarts stappen blijft op kaartformaat onvoldoende duidelijk." },
+    { "catalogIndex": 443, "name": "Over een obstakel stappen – met steun", "reason": "Tafel, obstakel en losse lijnruis leveren een te druk en slecht leesbaar kaartbeeld op." },
+    { "catalogIndex": 450, "name": "Reiken met aangedane arm – functionele combinatie", "reason": "De gedetailleerde trolley overheerst de persoon en het reikdoel in de kleine lijnkaart." },
+    { "catalogIndex": 472, "name": "Hoofd draaien in stand – staand langzaam", "reason": "Afgesneden meubeldelen en losse vormen rond de benen maken de lijntekening rommelig in print." }
   ]
 }
