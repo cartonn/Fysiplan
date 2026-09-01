@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 64 — Molentaal · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 64 — MOLENTAAL
+   ------------------------------------------------------------
+   De kaart hangt niet voor u. Hij hangt voor het dorp.
+
+   Elke oefenkaart die bestaat is een gesprek tussen twee
+   partijen: de fysiotherapeut schrijft, de patiënt vinkt af.
+   De derde partij — de partner, de dochter, de buurvrouw die
+   twee keer per week langskomt — heeft geen enkele manier om
+   te zien hoe het gaat. Dus vraagt die het. "Heb je nog
+   geoefend?" Er is geen zin in de revalidatie die vaker gesteld
+   wordt en geen zin die minder oplevert.
+
+   In Nederland hangt daarvoor al vierhonderd jaar een oplossing
+   boven het landschap. Een molenaar zet de wieken stil in een
+   STAND, en het hele dorp leest van een kilometer afstand hoe
+   het met de molen — en met de molenaar — gaat. Niemand hoeft
+   iets te vragen. Niemand hoeft iets uit te leggen.
+
+   DE STANDEN. Recht overeind (het rustkruis) is KORTE RUST:
+   morgen draait hij weer. Schuin, als een andreaskruis, is
+   LANGE RUST: hij staat langer stil, en dat is aangekondigd,
+   niet stiekem. Een wiek nét vóór het hoogste punt is de
+   KOMENDE STAND — vreugde. Nét eráchter is de GAANDE STAND —
+   rouw. (Welke van de twee links staat en welke rechts,
+   verschilt per streek; molenaars ruziën daar al eeuwen over.
+   Wij kiezen één richting en zetten hem op het vel.)
+
+   HET BESLISSENDE: TWEE VAN DE VIJF STANDEN ZIJN RUST. Niet
+   "geen stand". Niet een leeg hokje. Rust is een positie die je
+   AANNEEMT en die je LAAT ZIEN, met evenveel recht als draaien.
+   Er bestaat geen oefenkaart waarop een rustdag iets anders is
+   dan een gat. Hier is het een kruis met een betekenis.
+
+   EN ER IS EEN STAND VOOR ROUW. Een lichaam heeft weken waarin
+   het tegenzit, en geen enkel zorgformulier heeft daar een
+   vakje voor. De molen wel.
+
+   DE NOTATIE. Op het vel staan veertien lege ringen, één per
+   dag. Draaide de molen — deed u het programma — dan trekt u de
+   RING na: één beweging, de cirkel rond. Stond hij stil, dan
+   zet u er een KRUIS in, onder de hoek die zegt waarom. Van de
+   andere kant van de keuken ziet iedereen het verschil tussen
+   een ring en een kruis, zonder bril, zonder lezen. Dat is de
+   hele kaart.
+
+   VORM. Zwart geteerd hout, loodwit, molengroen en één kraplak
+   rood van de wiekborden. Zware geometrie: het kruis is het
+   enige beeldmerk dat deze kaart nodig heeft. De kop van het
+   vel is een BAARD — het geschilderde naambord boven de
+   molendeur, met de naam en het jaartal erop.
+
+   HET ANKER. Alles wat de patiënt leest staat op 3,6 mm
+   schreef of groter, de standnamen op 5 mm. Kleur draagt
+   nergens betekenis: de standen verschillen in HOEK, en de
+   hoek overleeft elke fotokopie.
+   ============================================================ */
+
+:root{
+  --papier:#efeade;
+  --papier-2:#e4ddcc;
+  --vlak:#faf7f0;
+  --teer:#15161a;
+  --teer-2:#3b3f45;
+  --grijs:#787169;
+  --lijn:#cbc2ad;
+  --groen:#27452f;
+  --groen-2:#3d6448;
+  --kraplak:#a5331d;
+  --loodwit:#fdfcf8;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --serif:Charter,"Iowan Old Style",Georgia,serif;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:70px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.66 var(--sans);color:var(--teer-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--groen)}
+:focus-visible{outline:3px solid var(--kraplak);outline-offset:3px}
+.binnen{max-width:1180px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--teer);color:#a9a49b;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border:1px solid #4a4d53;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#a9a49b;text-decoration:none;padding:5px 2px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--kraplak)}
+.labbalk a.terug{color:#fff}
+@media (max-width:720px){.labbalk{flex-wrap:wrap;gap:10px}.labbalk .rek{display:none}}
+
+/* ---------- secties ---------- */
+.scherm{padding:var(--s6) 0;border-top:1px solid var(--lijn)}
+.scherm.diep{background:var(--papier-2)}
+.scherm.wit{background:var(--vlak)}
+.schermkop{margin-bottom:var(--s5);max-width:74ch}
+.schermkop b{display:inline-block;font:700 10px/1 var(--mono);letter-spacing:.24em;
+  text-transform:uppercase;color:var(--kraplak);margin-bottom:var(--s3)}
+.schermkop h2{font:600 clamp(27px,3.5vw,41px)/1.1 var(--sans);letter-spacing:-.032em;color:var(--teer)}
+.schermkop p{margin-top:var(--s3);font:400 18px/1.62 var(--serif);color:var(--teer-2);max-width:64ch}
+
+/* ============================================================
+   HET KRUIS — het enige beeldmerk van dit concept.
+   Twee balken over elkaar; de hele wiekenstand zit in één
+   rotatie van de houder. Geen kleur nodig: de hoek is de
+   betekenis.
+   ============================================================ */
+.kruis{position:relative;width:100%;aspect-ratio:1;display:block}
+.kruis i{position:absolute;left:50%;top:50%;background:var(--teer);
+  transform-origin:center center}
+.kruis i.a{width:6.5%;height:96%;transform:translate(-50%,-50%)}
+.kruis i.b{width:96%;height:6.5%;transform:translate(-50%,-50%)}
+.kruis .as{position:absolute;left:50%;top:50%;width:13%;height:13%;border-radius:50%;
+  background:var(--vlak);border:2px solid var(--teer);transform:translate(-50%,-50%);z-index:2}
+/* de vier standen zijn niets anders dan vier rotaties */
+.kruis.rust    {transform:rotate(0deg)}
+.kruis.lang    {transform:rotate(45deg)}
+.kruis.vreugd  {transform:rotate(-17deg)}
+.kruis.rouw    {transform:rotate(17deg)}
+.kruis.gang    {transform:rotate(-8deg)}
+/* draaiende molen: de veeg van de wieken */
+.kruis .veeg{position:absolute;inset:-2%;border-radius:50%;
+  border:3px dashed rgba(21,22,26,.34)}
+.kruis.licht i{background:var(--loodwit)}
+.kruis.licht .as{background:var(--groen);border-color:var(--loodwit)}
+.kruis.licht .veeg{border-color:rgba(253,252,248,.5)}
+.kruis.rood i{background:var(--kraplak)}
+
+/* ---------- 1 · landing ---------- */
+#landing{background:var(--teer);color:#b4afa5;border-top:0;
+  background-image:radial-gradient(120% 90% at 78% 8%,#242730 0%,#15161a 62%)}
+.merkregel{display:flex;align-items:center;gap:11px;margin-bottom:var(--s5)}
+.merkregel .vlag{width:30px;height:30px;background:var(--loodwit);color:var(--groen);
+  display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--sans)}
+.merkregel .naam{font:600 15px/1 var(--sans);color:#fff;letter-spacing:-.01em}
+.merkregel .pad{font:700 11px/1 var(--mono);letter-spacing:.2em;color:#8b857a}
+
+.landkop{display:grid;grid-template-columns:1.15fr 320px;gap:var(--s6);align-items:start}
+@media (max-width:1000px){.landkop{grid-template-columns:1fr;gap:var(--s5)}}
+.landkop h1{font:600 clamp(35px,5vw,60px)/1.04 var(--sans);letter-spacing:-.038em;color:#fff}
+.landkop h1 em{display:block;font-style:normal;color:#8b857a;margin-top:.16em}
+.landkop p{margin-top:var(--s4);font:400 18.5px/1.66 var(--serif);color:#c6c0b5;max-width:54ch}
+.landkop p b{font-weight:700;color:#fff}
+
+.molenblok{background:#1d1f25;padding:var(--s4);border:1px solid #34373d}
+.molenblok .kruishouder{width:190px;margin:6px auto var(--s3)}
+.molenblok .onder{border-top:1px solid #34373d;padding-top:var(--s3);text-align:center}
+.molenblok .onder b{display:block;font:700 12px/1 var(--mono);letter-spacing:.18em;color:#fff}
+.molenblok .onder span{display:block;margin-top:8px;font:400 14.5px/1.5 var(--serif);color:#8b857a}
+.landkop .bijschrift{margin-top:var(--s3);font:400 14.5px/1.55 var(--serif);color:#8b857a}
+
+.stellingen{margin-top:var(--s6);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:960px){.stellingen{grid-template-columns:1fr}}
+.stellingen div{border-top:3px solid var(--groen-2);padding-top:14px}
+.stellingen h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:#8b857a;margin-bottom:11px}
+.stellingen strong{display:block;font:600 21px/1.22 var(--sans);letter-spacing:-.024em;color:#fff;margin-bottom:10px}
+.stellingen p{font-size:15.5px;line-height:1.58;color:#c6c0b5}
+
+/* de vijf standen als rij — ook op de landing */
+.standenrij{margin-top:var(--s6);display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s3);
+  border-top:1px solid #34373d;padding-top:var(--s4)}
+@media (max-width:860px){.standenrij{grid-template-columns:repeat(2,1fr);gap:var(--s4)}}
+.stand-i{text-align:center}
+.stand-i .kruishouder{width:76px;margin:0 auto 14px}
+.stand-i b{display:block;font:600 17px/1.2 var(--sans);letter-spacing:-.02em;color:#fff}
+.stand-i span{display:block;margin-top:6px;font:400 14px/1.45 var(--serif);color:#8b857a}
+
+/* ---------- 2 · kiezer ---------- */
+.kiezerhoofd{display:grid;grid-template-columns:1fr 300px;gap:var(--s5);align-items:start}
+@media (max-width:1000px){.kiezerhoofd{grid-template-columns:1fr}}
+
+.oefrij{display:grid;grid-template-columns:64px 92px 1fr 148px;gap:var(--s3);align-items:center;
+  padding:var(--s3) var(--s4);background:var(--vlak);border:1px solid var(--lijn)}
+.oefrij + .oefrij{margin-top:9px}
+.oefrij.gekozen{border-left:7px solid var(--groen)}
+.oefrij.altijd{border-left:7px solid var(--kraplak)}
+.oefrij .kruishouder{width:44px;margin:0 auto}
+.oefrij .beeld{background:var(--papier);border:1px solid var(--lijn);padding:5px;height:74px;
+  display:flex;align-items:center;justify-content:center}
+.oefrij .beeld img{max-height:64px;width:auto;mix-blend-mode:multiply}
+.oefrij h5{font:600 19px/1.24 var(--sans);letter-spacing:-.022em;color:var(--teer)}
+.oefrij .hoe{margin-top:5px;font:400 15px/1.5 var(--serif);color:var(--teer-2);max-width:52ch}
+.oefrij .vanaf{margin-top:8px;display:inline-block;font:700 10px/1 var(--mono);letter-spacing:.13em;
+  color:var(--groen);border:1px solid var(--groen);padding:5px 7px}
+.oefrij.altijd .vanaf{color:var(--kraplak);border-color:var(--kraplak)}
+.oefrij .knopkant{text-align:right}
+.oefrij .knopkant em{display:block;font-style:normal;font:700 10px/1.35 var(--mono);
+  letter-spacing:.12em;color:var(--grijs);margin-bottom:8px}
+.oefrij button{border:1px solid var(--groen);background:var(--groen);color:#fff;cursor:pointer;
+  padding:9px 13px;font:600 13px/1 var(--sans);width:100%}
+.oefrij button.leeg{background:transparent;color:var(--groen)}
+@media (max-width:900px){
+  .oefrij{grid-template-columns:52px 1fr;gap:var(--s3)}
+  .oefrij .beeld{display:none}
+  .oefrij .knopkant{grid-column:1/-1;text-align:left}
+}
+
+.zijpaneel{background:var(--teer);color:#b4afa5;padding:var(--s4);position:sticky;top:64px}
+.zijpaneel h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border-bottom:1px solid #3d4046;padding-bottom:11px;margin-bottom:var(--s3)}
+.zijpaneel .telrij{display:flex;justify-content:space-between;align-items:baseline;
+  padding:10px 0;border-bottom:1px solid #2a2d33;font-size:14.5px}
+.zijpaneel .telrij b{color:#fff;font:700 14px/1 var(--mono)}
+.zijpaneel p{margin-top:var(--s3);font:400 14.5px/1.55 var(--serif);color:#8b857a}
+.zijpaneel .drukknop{margin-top:var(--s3);width:100%;border:0;background:var(--kraplak);color:#fff;
+  padding:14px;font:600 15px/1 var(--sans);cursor:pointer}
+
+/* ---------- 3 · cliëntkaart ---------- */
+.kaartkop{display:grid;grid-template-columns:1fr 300px;gap:var(--s5);align-items:end;
+  border-bottom:3px solid var(--teer);padding-bottom:var(--s3);margin-bottom:var(--s4)}
+@media (max-width:900px){.kaartkop{grid-template-columns:1fr;gap:var(--s3)}}
+.kaartkop h3{font:600 30px/1.1 var(--sans);letter-spacing:-.032em;color:var(--teer)}
+.kaartkop .sub{margin-top:7px;font:400 16px/1.5 var(--serif);color:var(--grijs)}
+.kaartkop .rechts{text-align:right;font:700 11px/1.7 var(--mono);letter-spacing:.1em;color:var(--grijs)}
+@media (max-width:900px){.kaartkop .rechts{text-align:left}}
+
+/* de veertien dagen als ringen en kruisen */
+.dagenband{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s4)}
+.dagenband h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--grijs);margin-bottom:var(--s4)}
+.dagen{display:grid;grid-template-columns:repeat(7,1fr);gap:var(--s3)}
+@media (max-width:760px){.dagen{grid-template-columns:repeat(4,1fr)}}
+.dag{text-align:center}
+.dag .ring{position:relative;width:100%;aspect-ratio:1;border-radius:50%;
+  border:2px solid var(--lijn);display:flex;align-items:center;justify-content:center}
+.dag.draaide .ring{border:7px solid var(--groen)}
+.dag .kruishouder{width:62%}
+.dag b{display:block;margin-top:9px;font:700 11px/1 var(--mono);letter-spacing:.09em;color:var(--teer)}
+.dag span{display:block;margin-top:5px;font:400 12.5px/1.35 var(--serif);color:var(--grijs)}
+
+.leesuit{margin-top:var(--s5);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:900px){.leesuit{grid-template-columns:1fr}}
+.leesuit div{background:var(--papier-2);padding:var(--s4);border-top:3px solid var(--teer)}
+.leesuit h5{font:700 10px/1 var(--mono);letter-spacing:.18em;color:var(--kraplak);margin-bottom:11px}
+.leesuit strong{display:block;font:600 20px/1.25 var(--sans);letter-spacing:-.022em;color:var(--teer);margin-bottom:9px}
+.leesuit p{font-size:15.5px;line-height:1.58}
+
+/* ---------- 4 · printkaart ---------- */
+.printuitleg{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-bottom:var(--s5)}
+@media (max-width:900px){.printuitleg{grid-template-columns:1fr}}
+.printuitleg h4{font:700 10px/1 var(--mono);letter-spacing:.18em;color:var(--kraplak);
+  border-top:2px solid var(--teer);padding-top:11px;margin-bottom:10px}
+.printuitleg p{font-size:15.5px;line-height:1.58}
+
+.bladhouder{background:var(--papier-2);padding:var(--s4);border:1px solid var(--lijn)}
+.bladschaal{width:100%;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;position:relative;
+  box-shadow:0 10px 40px rgba(21,22,26,.2)}
+
+/* ---- inhoud van het vel: alles in mm ---- */
+.blad .rand{position:absolute;inset:13mm 12mm 11mm 12mm;display:flex;flex-direction:column}
+
+/* de baard: het geschilderde naambord boven de molendeur */
+.b-baard{border:1.1mm solid #000;padding:3.4mm 4mm;text-align:center;position:relative}
+.b-baard:before{content:"";position:absolute;inset:1.1mm;border:.3mm solid #000}
+.b-baard h1{font:400 8.2mm/1 var(--serif);letter-spacing:-.01em;color:#000;position:relative}
+.b-baard .jaar{margin-top:2mm;font:700 2.7mm/1 var(--mono);letter-spacing:.28em;color:#000;position:relative}
+.b-baard .wie{margin-top:1.6mm;font:400 3.6mm/1.3 var(--serif);color:#000;position:relative}
+
+/* de legenda: vijf standen op ware grootte */
+.b-legenda{margin-top:4.2mm;display:grid;grid-template-columns:repeat(5,1fr);gap:3mm;
+  border-top:.6mm solid #000;border-bottom:.6mm solid #000;padding:4mm 0}
+.b-stand{text-align:center}
+.b-stand .kruishouder{width:15.5mm;margin:0 auto 2.2mm}
+.b-stand b{display:block;font:700 3.5mm/1.15 var(--sans);letter-spacing:-.01em;color:#000}
+.b-stand span{display:block;margin-top:1.2mm;font:400 2.9mm/1.28 var(--serif);color:#000}
+.b-stand.hoofd b{border-bottom:.8mm solid #000;display:inline-block;padding-bottom:.8mm}
+
+.b-uitleg{margin-top:3.4mm;font:400 3.5mm/1.42 var(--serif);color:#000;text-align:center;
+  max-width:150mm;margin-left:auto;margin-right:auto}
+.b-uitleg b{font-weight:700}
+
+/* de oefeningen */
+.b-oefkop{margin-top:5mm;display:flex;align-items:baseline;gap:3mm;
+  border-bottom:.8mm solid #000;padding-bottom:1.4mm}
+.b-oefkop h2{font:700 4.4mm/1 var(--sans);letter-spacing:-.015em;color:#000}
+.b-oefkop span{margin-left:auto;font:700 2.6mm/1 var(--mono);letter-spacing:.16em;color:#000}
+
+.b-oefs{margin-top:2.6mm}
+.b-oef{display:grid;grid-template-columns:19mm 1fr 26mm;gap:3.4mm;align-items:center;
+  padding:2.6mm 0;border-bottom:.25mm solid #000}
+.b-oef .bld{border:.3mm solid #000;padding:.8mm;height:17mm;display:flex;align-items:center;justify-content:center}
+.b-oef .bld img{max-height:15mm;width:auto}
+.b-oef h3{font:700 4.4mm/1.12 var(--sans);letter-spacing:-.018em;color:#000}
+.b-oef p{margin-top:1.1mm;font:400 3.5mm/1.34 var(--serif);color:#000}
+.b-oef .altijdmerk{margin-top:1.6mm;display:inline-block;font:700 2.7mm/1 var(--mono);
+  letter-spacing:.11em;color:#000;border:.4mm solid #000;padding:1.1mm 1.6mm}
+.b-oef .dos{text-align:right}
+.b-oef .dos b{display:block;font:700 6.2mm/1 var(--sans);letter-spacing:-.03em;color:#000}
+.b-oef .dos span{display:block;margin-top:1mm;font:700 2.6mm/1.25 var(--mono);letter-spacing:.09em;color:#000}
+
+/* de veertien ringen */
+.b-reeks{margin-top:auto;padding-top:4mm;border-top:.8mm solid #000}
+.b-reeks .titel{display:flex;align-items:baseline;gap:3mm;margin-bottom:3mm}
+.b-reeks h4{font:700 3.4mm/1 var(--sans);letter-spacing:.02em;color:#000}
+.b-reeks .titel span{margin-left:auto;font:400 3.1mm/1.3 var(--serif);color:#000;text-align:right}
+.b-ringen{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:1.8mm}
+.b-ring{text-align:center}
+.b-ring i{display:block;width:100%;aspect-ratio:1;border-radius:50%;border:.4mm solid #000;
+  position:relative}
+.b-ring b{display:block;margin-top:1.1mm;font:700 2.5mm/1 var(--mono);letter-spacing:.04em;color:#000}
+
+.b-voet{margin-top:4mm;padding-top:2.6mm;border-top:.8mm solid #000;
+  display:grid;grid-template-columns:1fr 52mm;gap:5mm;align-items:start}
+.b-voet h4{font:700 2.7mm/1 var(--mono);letter-spacing:.15em;color:#000;margin-bottom:1.6mm}
+.b-voet p{font:400 3.2mm/1.42 var(--serif);color:#000}
+.b-voet .prak{text-align:right;font:600 2.6mm/1.7 var(--mono);letter-spacing:.07em;color:#000}
+.b-voet .prak b{display:block;font:700 3.6mm/1.3 var(--sans);letter-spacing:-.01em;color:#000}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--teer);color:#a19b91;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border-top:2px solid #4a4d53;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:9px}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT — één inkt. De standen verschillen in HOEK, nooit in
+   kleur, dus een vierde-generatie fotokopie verliest niets.
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .schermkop,.printuitleg{display:none !important}
+  .scherm{padding:0 !important;background:#fff !important;border:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  .bladhouder{background:#fff !important;border:0 !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+  .kruis i{background:#000 !important}
+  .kruis .as{background:#fff !important;border-color:#000 !important}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 64</span>
+  <strong style="font:600 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Molentaal</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="vlag" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 64 · MOLENTAAL</span>
+    </div>
+
+    <div class="landkop">
+      <div>
+        <h1>De kaart hangt niet voor u.<em>Hij hangt voor het dorp.</em></h1>
+        <p>Een oefenkaart is een gesprek tussen twee partijen: de fysiotherapeut schrijft, de
+          patiënt vinkt af. De derde partij — de partner, de dochter, de buurvrouw die twee keer
+          per week langskomt — kan niets zien. Dus vraagt die het. <b>“Heb je nog geoefend?”</b> Er
+          is geen zin in de revalidatie die vaker gesteld wordt en geen zin die minder oplevert.</p>
+        <p>Boven het Nederlandse landschap hangt daar al vierhonderd jaar een antwoord op. De
+          molenaar zet de wieken stil in een <b>stand</b>, en het hele dorp leest van een kilometer
+          afstand hoe het met de molen gaat. Niemand hoeft iets te vragen. Niemand hoeft iets uit
+          te leggen.</p>
+        <p>En het beslissende: <b>twee van de vijf standen zijn rust</b>. Niet “geen stand”, niet
+          een leeg hokje — een positie die je aanneemt en die je laat zien, met evenveel recht als
+          draaien. Er is bovendien een stand voor rouw. Geen enkel zorgformulier heeft daar een
+          vakje voor. De molen wel.</p>
+      </div>
+
+      <div>
+        <div class="molenblok">
+          <div class="kruishouder">
+            <div class="kruis gang licht" aria-hidden="true">
+              <span class="veeg"></span><i class="a"></i><i class="b"></i><span class="as"></span>
+            </div>
+          </div>
+          <div class="onder">
+            <b>VANDAAG · VOLLE GANG</b>
+            <span>De molen draait. Het hele programma is gedaan, en dat is van de overkant van de
+              keuken te zien.</span>
+          </div>
+        </div>
+        <p class="bijschrift">Eén beeldmerk, vijf rotaties. Meer heeft deze kaart niet nodig.</p>
+      </div>
+    </div>
+
+    <div class="standenrij">
+      <div class="stand-i">
+        <div class="kruishouder">
+          <div class="kruis gang licht" aria-hidden="true">
+            <span class="veeg"></span><i class="a"></i><i class="b"></i><span class="as"></span>
+          </div>
+        </div>
+        <b>Volle gang</b>
+        <span>Alles gedaan. De ring rond.</span>
+      </div>
+      <div class="stand-i">
+        <div class="kruishouder">
+          <div class="kruis vreugd licht" aria-hidden="true">
+            <i class="a"></i><i class="b"></i><span class="as"></span>
+          </div>
+        </div>
+        <b>Komende stand</b>
+        <span>Vreugde: iets ging beter dan het ging.</span>
+      </div>
+      <div class="stand-i">
+        <div class="kruishouder">
+          <div class="kruis rouw licht" aria-hidden="true">
+            <i class="a"></i><i class="b"></i><span class="as"></span>
+          </div>
+        </div>
+        <b>Gaande stand</b>
+        <span>Rouw: een zware dag, en dat mag er staan.</span>
+      </div>
+      <div class="stand-i">
+        <div class="kruishouder">
+          <div class="kruis rust licht" aria-hidden="true">
+            <i class="a"></i><i class="b"></i><span class="as"></span>
+          </div>
+        </div>
+        <b>Korte rust</b>
+        <span>Stil, maar morgen draait hij weer.</span>
+      </div>
+      <div class="stand-i">
+        <div class="kruishouder">
+          <div class="kruis lang licht" aria-hidden="true">
+            <i class="a"></i><i class="b"></i><span class="as"></span>
+          </div>
+        </div>
+        <b>Lange rust</b>
+        <span>Langer stil — en aangekondigd, niet stiekem.</span>
+      </div>
+    </div>
+
+    <div class="stellingen">
+      <div>
+        <h4>DE DERDE PARTIJ</h4>
+        <strong>Het huis leest mee zonder te vragen</strong>
+        <p>Het vel hangt op de koelkast. Ring is draaien, kruis is stilstaan, en de hoek zegt
+          waarom. Dat leest iedereen van vier meter afstand — en de vraag die niemand graag stelt
+          hoeft niet meer gesteld.</p>
+      </div>
+      <div>
+        <h4>RUST IS EEN POSITIE</h4>
+        <strong>Stilstaan is niet hetzelfde als niets</strong>
+        <p>Een molen die stilstaat heeft een stand aangenomen. Op deze kaart heeft een rustdag
+          daarom een teken en geen gat — en een aangekondigde lange rust is een geldige week.</p>
+      </div>
+      <div>
+        <h4>ER IS EEN STAND VOOR ROUW</h4>
+        <strong>De tegenslag hoort op het vel</strong>
+        <p>Weken waarin het tegenzit bestaan. Wie ze niet kan opschrijven, schrijft niets op — en
+          stopt met de kaart. Hier heeft de slechte dag een eigen hoek.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm diep" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2 · de oefeningen-kiezer</b>
+      <h2>Kiezen is bepalen wat er bij welke stand nog overblijft</h2>
+      <p>De fysiotherapeut stelt niet één programma samen maar <b>drie</b>, en die zitten in
+        elkaar: wat bij volle gang gedaan wordt, wat er bij een gaande stand van overblijft, en het
+        ene ding dat bij korte rust nog steeds mag. Elke oefening krijgt daarom bij het kiezen
+        meteen de laagste stand waarop ze nog geldt.</p>
+    </div>
+
+    <div class="kiezerhoofd">
+      <div>
+
+        <div class="oefrij gekozen">
+          <div class="kruishouder">
+            <div class="kruis gang" aria-hidden="true">
+              <span class="veeg"></span><i class="a"></i><i class="b"></i><span class="as"></span>
+            </div>
+          </div>
+          <div class="beeld">
+            <img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit een stoel"/>
+          </div>
+          <div>
+            <h5>Opstaan uit de stoel</h5>
+            <p class="hoe">Van een gewone keukenstoel: voeten naar achteren, neus boven de knieën,
+              en omhoog zonder de leuning te gebruiken.</p>
+            <span class="vanaf">ALLEEN BIJ VOLLE GANG</span>
+          </div>
+          <div class="knopkant">
+            <em>8× · 2 ronden</em>
+            <button type="button">Op de kaart</button>
+          </div>
+        </div>
+
+        <div class="oefrij gekozen">
+          <div class="kruishouder">
+            <div class="kruis vreugd" aria-hidden="true">
+              <i class="a"></i><i class="b"></i><span class="as"></span>
+            </div>
+          </div>
+          <div class="beeld">
+            <img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Eenbeenstand met steun"/>
+          </div>
+          <div>
+            <h5>Eén been, tellen tot tien</h5>
+            <p class="hoe">Bij het aanrecht, één vinger aan het blad. Til één voet los en tel
+              rustig tot tien. Daarna het andere been.</p>
+            <span class="vanaf">VANAF DE KOMENDE STAND</span>
+          </div>
+          <div class="knopkant">
+            <em>3 + 3 · links en rechts</em>
+            <button type="button">Op de kaart</button>
+          </div>
+        </div>
+
+        <div class="oefrij gekozen">
+          <div class="kruishouder">
+            <div class="kruis rouw" aria-hidden="true">
+              <i class="a"></i><i class="b"></i><span class="as"></span>
+            </div>
+          </div>
+          <div class="beeld">
+            <img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen komen"/>
+          </div>
+          <div>
+            <h5>Op uw tenen en langzaam zakken</h5>
+            <p class="hoe">Handen licht op het aanrecht, niet leunen. Rustig omhoog, en de hakken
+              daarna langzaam laten zakken. Het zakken is de oefening.</p>
+            <span class="vanaf">GELDT OOK OP EEN GAANDE DAG</span>
+          </div>
+          <div class="knopkant">
+            <em>15× · elke ochtend</em>
+            <button type="button">Op de kaart</button>
+          </div>
+        </div>
+
+        <div class="oefrij altijd">
+          <div class="kruishouder">
+            <div class="kruis rust" aria-hidden="true">
+              <i class="a"></i><i class="b"></i><span class="as"></span>
+            </div>
+          </div>
+          <div class="beeld">
+            <img src="/images/rug/knie-naar-borst-liggend-line-v1.png" alt="Knie naar de borst, liggend"/>
+          </div>
+          <div>
+            <h5>Knie naar de borst, liggend</h5>
+            <p class="hoe">Op bed, vóór u opstaat. Trek één knie rustig naar u toe, tel tot vijf,
+              daarna het andere been.</p>
+            <span class="vanaf">MAG OOK BIJ KORTE RUST</span>
+          </div>
+          <div class="knopkant">
+            <em>8× · per been</em>
+            <button type="button" class="leeg">Staat vast</button>
+          </div>
+        </div>
+
+        <div class="oefrij">
+          <div class="kruishouder">
+            <div class="kruis lang" aria-hidden="true">
+              <i class="a"></i><i class="b"></i><span class="as"></span>
+            </div>
+          </div>
+          <div class="beeld">
+            <img src="/images/rug/open-boek-zittend-line-v1.png" alt="Open boek, zittend"/>
+          </div>
+          <div>
+            <h5>Open boek, zittend</h5>
+            <p class="hoe">Op de rand van een stoel, armen gekruist voor de borst. Draai uw
+              bovenlichaam rustig naar één kant en kom terug.</p>
+            <span class="vanaf">NOG NIET GEKOZEN — WEEK 5</span>
+          </div>
+          <div class="knopkant">
+            <em>6× · per kant</em>
+            <button type="button" class="leeg">Toevoegen</button>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="zijpaneel">
+        <h4>DE DRIE PROGRAMMA'S</h4>
+        <div class="telrij"><span>Bij volle gang</span><b>4 oef.</b></div>
+        <div class="telrij"><span>Bij komende stand</span><b>3 oef.</b></div>
+        <div class="telrij"><span>Bij gaande stand</span><b>2 oef.</b></div>
+        <div class="telrij"><span>Bij korte rust</span><b>1 oef.</b></div>
+        <div class="telrij"><span>Bij lange rust</span><b>0 oef.</b></div>
+        <p>Elke stand heeft een programma, en het kleinste is nooit leeg behalve bij een lange rust
+          — die spreekt u samen af, met een datum waarop de molen weer draait.</p>
+        <button class="drukknop" type="button">Kaart drukken · A4</button>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm wit" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3 · de digitale cliëntkaart</b>
+      <h2>Veertien standen naast elkaar — de vorm van een maand</h2>
+      <p>Wat de fysiotherapeut terugkrijgt is geen rij vinkjes maar een <b>rij hoeken</b>. Twee
+        gaande dagen achter elkaar zeggen iets anders dan twee losse; een aangekondigde lange rust
+        is iets anders dan een gat. Het gesprek begint niet meer bij “hoe vaak”, maar bij een
+        beeld dat er al ligt.</p>
+    </div>
+
+    <div class="kaartkop">
+      <div>
+        <h3>Mevrouw H. Bosma — knie, week 3 en 4</h3>
+        <p class="sub">Veertien dagen, zelf ingevuld met een balpen op het vel van 24 augustus.</p>
+      </div>
+      <div class="rechts">FYSIOTHERAPIE DE BOSKANT<br/>MOLEN “DE VOLHARDING” 64<br/>OPGEHAALD 07.09.2026</div>
+    </div>
+
+    <div class="dagenband">
+      <h4>DE AFGELOPEN VEERTIEN DAGEN</h4>
+      <div class="dagen">
+
+        <div class="dag draaide">
+          <div class="ring"></div><b>MA 25</b><span>Volle gang</span>
+        </div>
+        <div class="dag draaide">
+          <div class="ring"></div><b>DI 26</b><span>Volle gang</span>
+        </div>
+        <div class="dag">
+          <div class="ring">
+            <div class="kruishouder"><div class="kruis rouw" aria-hidden="true"><i class="a"></i><i class="b"></i><span class="as"></span></div></div>
+          </div>
+          <b>WO 27</b><span>Gaande — knie dik</span>
+        </div>
+        <div class="dag">
+          <div class="ring">
+            <div class="kruishouder"><div class="kruis rust" aria-hidden="true"><i class="a"></i><i class="b"></i><span class="as"></span></div></div>
+          </div>
+          <b>DO 28</b><span>Korte rust</span>
+        </div>
+        <div class="dag draaide">
+          <div class="ring"></div><b>VR 29</b><span>Volle gang</span>
+        </div>
+        <div class="dag">
+          <div class="ring">
+            <div class="kruishouder"><div class="kruis vreugd" aria-hidden="true"><i class="a"></i><i class="b"></i><span class="as"></span></div></div>
+          </div>
+          <b>ZA 30</b><span>Komende — traplopen!</span>
+        </div>
+        <div class="dag draaide">
+          <div class="ring"></div><b>ZO 31</b><span>Volle gang</span>
+        </div>
+
+        <div class="dag">
+          <div class="ring">
+            <div class="kruishouder"><div class="kruis lang" aria-hidden="true"><i class="a"></i><i class="b"></i><span class="as"></span></div></div>
+          </div>
+          <b>MA 01</b><span>Lange rust — bruiloft</span>
+        </div>
+        <div class="dag">
+          <div class="ring">
+            <div class="kruishouder"><div class="kruis lang" aria-hidden="true"><i class="a"></i><i class="b"></i><span class="as"></span></div></div>
+          </div>
+          <b>DI 02</b><span>Lange rust</span>
+        </div>
+        <div class="dag">
+          <div class="ring">
+            <div class="kruishouder"><div class="kruis lang" aria-hidden="true"><i class="a"></i><i class="b"></i><span class="as"></span></div></div>
+          </div>
+          <b>WO 03</b><span>Lange rust</span>
+        </div>
+        <div class="dag draaide">
+          <div class="ring"></div><b>DO 04</b><span>Volle gang</span>
+        </div>
+        <div class="dag draaide">
+          <div class="ring"></div><b>VR 05</b><span>Volle gang</span>
+        </div>
+        <div class="dag">
+          <div class="ring">
+            <div class="kruishouder"><div class="kruis rouw" aria-hidden="true"><i class="a"></i><i class="b"></i><span class="as"></span></div></div>
+          </div>
+          <b>ZA 06</b><span>Gaande — slecht geslapen</span>
+        </div>
+        <div class="dag draaide">
+          <div class="ring"></div><b>ZO 07</b><span>Volle gang</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="leesuit">
+      <div>
+        <h5>WAT DE RIJ ZEGT</h5>
+        <strong>Zeven ringen, drie aangekondigde dagen</strong>
+        <p>De lange rust staat er met een reden bij en is vooraf afgesproken. Dat is geen uitval
+          maar een pauze — en na de bruiloft draaide de molen meteen weer, twee dagen achter
+          elkaar. Dat is het beeld van iemand die de kaart vasthoudt.</p>
+      </div>
+      <div>
+        <h5>WAT OPVALT</h5>
+        <strong>Beide gaande dagen liggen op een zaterdag-ritme</strong>
+        <p>Woensdag 27 en zaterdag 6: allebei ná een dag met veel staan. Geen toeval, wel iets om
+          te bespreken — en zichtbaar zónder dat er één cijfer is ingevuld.</p>
+      </div>
+      <div>
+        <h5>WAT ER NIET IN STAAT</h5>
+        <strong>Geen aantallen, geen percentages</strong>
+        <p>De kaart meet niets. Ze <em>toont</em> alleen. Wie een cijfer nodig heeft, vraagt het in
+          de behandelkamer — dat is precies de plek waar die vraag hoort.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 4 · de A4-printkaart</b>
+      <h2>Het vel — één inkt, vijf hoeken, veertien ringen</h2>
+      <p>Bovenaan een baard: het geschilderde naambord van de molen, met de naam van de patiënt
+        erin. Daaronder de vijf standen op ware grootte, dan de oefeningen op <b>4,4 mm koppen en
+        3,5 mm schreeftekst</b>, en onderaan veertien lege ringen. Kleur draagt nergens betekenis
+        — de standen verschillen in hoek.</p>
+    </div>
+
+    <div class="printuitleg">
+      <div>
+        <h4>WAAROM EEN RING EN GEEN VINKJE</h4>
+        <p>Een vinkje is klein en persoonlijk. Een <b>volgetrokken ring</b> is groot, rond en van
+          vier meter afstand te zien — precies de afstand waarop de rest van het huis kijkt.</p>
+      </div>
+      <div>
+        <h4>WAAROM DE LEGENDA BOVENAAN STAAT</h4>
+        <p>Een notatie die je moet leren, hoort op hetzelfde vel als waar je hem gebruikt. De vijf
+          standen staan daarom <b>op ware grootte</b> afgedrukt, niet in een handleiding.</p>
+      </div>
+      <div>
+        <h4>WAAROM DE HOEK EN NIET DE KLEUR</h4>
+        <p>Dit vel wordt gekopieerd, gefaxt, met een blauwe balpen ingevuld en op een grijze
+          koelkast geplakt. Een hoek van 45° overleeft dat allemaal. Een kleurcode niet.</p>
+      </div>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="b-baard">
+              <h1>De Volharding</h1>
+              <div class="jaar">ANNO 2026 · WEEK 3 EN 4</div>
+              <p class="wie">Mevrouw H. Bosma · knie rechts · Fysiotherapie de Boskant</p>
+            </div>
+
+            <div class="b-legenda">
+              <div class="b-stand hoofd">
+                <div class="kruishouder">
+                  <div class="kruis gang" aria-hidden="true">
+                    <span class="veeg"></span><i class="a"></i><i class="b"></i><span class="as"></span>
+                  </div>
+                </div>
+                <b>VOLLE GANG</b>
+                <span>Alles gedaan.<br/>Trek de ring rond.</span>
+              </div>
+              <div class="b-stand">
+                <div class="kruishouder">
+                  <div class="kruis vreugd" aria-hidden="true">
+                    <i class="a"></i><i class="b"></i><span class="as"></span>
+                  </div>
+                </div>
+                <b>KOMENDE STAND</b>
+                <span>Vreugde: iets ging<br/>beter dan het ging.</span>
+              </div>
+              <div class="b-stand">
+                <div class="kruishouder">
+                  <div class="kruis rouw" aria-hidden="true">
+                    <i class="a"></i><i class="b"></i><span class="as"></span>
+                  </div>
+                </div>
+                <b>GAANDE STAND</b>
+                <span>Zware dag. Alleen<br/>de vaste oefening.</span>
+              </div>
+              <div class="b-stand">
+                <div class="kruishouder">
+                  <div class="kruis rust" aria-hidden="true">
+                    <i class="a"></i><i class="b"></i><span class="as"></span>
+                  </div>
+                </div>
+                <b>KORTE RUST</b>
+                <span>Stil. Morgen draait<br/>hij weer.</span>
+              </div>
+              <div class="b-stand">
+                <div class="kruishouder">
+                  <div class="kruis lang" aria-hidden="true">
+                    <i class="a"></i><i class="b"></i><span class="as"></span>
+                  </div>
+                </div>
+                <b>LANGE RUST</b>
+                <span>Langer stil, van<br/>tevoren afgesproken.</span>
+              </div>
+            </div>
+
+            <p class="b-uitleg">Draaide de molen, dan trekt u de ring na. Stond hij stil, dan zet u
+              er een kruis in onder de hoek die zegt waarom. <b>Er is geen dag zonder teken.</b></p>
+
+            <div class="b-oefkop">
+              <h2>Wat u doet als de molen draait</h2>
+              <span>VIER OEFENINGEN</span>
+            </div>
+
+            <div class="b-oefs">
+
+              <div class="b-oef">
+                <div class="bld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt=""/></div>
+                <div>
+                  <h3>Opstaan uit de stoel</h3>
+                  <p>Van een gewone keukenstoel: voeten naar achteren, neus boven de knieën, en
+                    omhoog zonder de leuning te gebruiken.</p>
+                </div>
+                <div class="dos"><b>8×</b><span>TWEE<br/>RONDEN</span></div>
+              </div>
+
+              <div class="b-oef">
+                <div class="bld"><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt=""/></div>
+                <div>
+                  <h3>Eén been, tellen tot tien</h3>
+                  <p>Bij het aanrecht, één vinger aan het blad. Til één voet los en tel rustig tot
+                    tien. Daarna het andere been.</p>
+                </div>
+                <div class="dos"><b>3 + 3</b><span>LINKS<br/>RECHTS</span></div>
+              </div>
+
+              <div class="b-oef">
+                <div class="bld"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt=""/></div>
+                <div>
+                  <h3>Op uw tenen en langzaam zakken</h3>
+                  <p>Handen licht op het aanrecht, niet leunen. Rustig omhoog, en de hakken daarna
+                    langzaam laten zakken. Het zakken is de oefening.</p>
+                  <span class="altijdmerk">GELDT OOK OP EEN GAANDE DAG</span>
+                </div>
+                <div class="dos"><b>15×</b><span>ELKE<br/>OCHTEND</span></div>
+              </div>
+
+              <div class="b-oef">
+                <div class="bld"><img src="/images/rug/knie-naar-borst-liggend-line-v1.png" alt=""/></div>
+                <div>
+                  <h3>Knie naar de borst, liggend</h3>
+                  <p>Op bed, vóór u opstaat. Trek één knie rustig naar u toe, tel tot vijf, daarna
+                    het andere been.</p>
+                  <span class="altijdmerk">MAG OOK BIJ KORTE RUST — DIT VERVALT NOOIT</span>
+                </div>
+                <div class="dos"><b>8×</b><span>PER<br/>BEEN</span></div>
+              </div>
+
+            </div>
+
+            <div class="b-reeks">
+              <div class="titel">
+                <h4>VEERTIEN DAGEN — RING OF KRUIS</h4>
+                <span>Eén teken per dag, met een balpen. Van vier meter afstand te lezen.</span>
+              </div>
+              <div class="b-ringen">
+                <div class="b-ring"><i></i><b>MA</b></div>
+                <div class="b-ring"><i></i><b>DI</b></div>
+                <div class="b-ring"><i></i><b>WO</b></div>
+                <div class="b-ring"><i></i><b>DO</b></div>
+                <div class="b-ring"><i></i><b>VR</b></div>
+                <div class="b-ring"><i></i><b>ZA</b></div>
+                <div class="b-ring"><i></i><b>ZO</b></div>
+                <div class="b-ring"><i></i><b>MA</b></div>
+                <div class="b-ring"><i></i><b>DI</b></div>
+                <div class="b-ring"><i></i><b>WO</b></div>
+                <div class="b-ring"><i></i><b>DO</b></div>
+                <div class="b-ring"><i></i><b>VR</b></div>
+                <div class="b-ring"><i></i><b>ZA</b></div>
+                <div class="b-ring"><i></i><b>ZO</b></div>
+              </div>
+            </div>
+
+            <div class="b-voet">
+              <div>
+                <h4>ALS DE MOLEN LANGER STILSTAAT</h4>
+                <p>Drie kruisen achter elkaar is geen mislukking en hoeft ook niet ingehaald. Zet
+                  ze gewoon neer en bel als u wilt; dan spreken we een dag af waarop hij weer
+                  draait. Een week met alleen de vaste oefening is een geldige week, en die telt
+                  net zo goed mee als een week vol ringen.</p>
+              </div>
+              <div class="prak">
+                <b>Fysiotherapie de Boskant</b>
+                RIETLAAN 12 · 3812 AB<br/>
+                TELEFOON 033 — 461 22 08<br/>
+                VOLGENDE AFSPRAAK 07.09.2026
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div>
+      <h4>DE GEDACHTE</h4>
+      <p>Een afvinklijst is privé en meet alleen. Een molenstand is openbaar en zegt iets. Wie zijn
+        toestand kan tónen zonder erover te praten, hoeft er ook niet meer naar gevraagd te worden
+        — en dát is wat therapietrouw in een huishouden vooral in de weg zit.</p>
+    </div>
+    <div>
+      <h4>WAAR HET VANDAAN KOMT</h4>
+      <ul>
+        <li>Molentaal: rustkruis, schrankstand, komende en gaande stand — vier eeuwen seinen boven het landschap</li>
+        <li>De baard: het geschilderde naambord boven de molendeur, met naam en jaartal</li>
+        <li>Zwart geteerd hout, loodwit en molengroen; kraplak op de wiekborden</li>
+        <li>Seinsystemen die op afstand werken: vlaggenlijnen, semafoorarmen, het sluisbord</li>
+        <li>Regionale verschillen in de standen — molenaars zijn het er nog altijd niet over eens</li>
+      </ul>
+    </div>
+    <div>
+      <h4>NAAST DE KAART</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de ontwerpgalerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var f=Math.min(1,schaal.clientWidth/blad.offsetWidth);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

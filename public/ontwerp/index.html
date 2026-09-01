@@ -974,6 +974,56 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
 .staal.peilschaal .plaatnr,.staal.peilschaal .woord{position:relative;z-index:2}
 .staal.peilschaal .strepen i{border-color:rgba(47,51,54,.2)}
 
+/* — staal concept 64: Molentaal — */
+.staal.molentaal{background:#15161a;color:#fff}
+.staal.molentaal .plaatnr{color:#8b857a}
+.staal.molentaal .woord{font-family:"Avenir Next",Seravek,system-ui,sans-serif;font-weight:600;
+  letter-spacing:-.035em;font-size:23px;max-width:56%;position:relative;z-index:2}
+.staal.molentaal .woord em{font-style:normal;color:#8b857a}
+.staal.molentaal .kruisjes{position:absolute;right:14px;bottom:16px;
+  display:flex;gap:10px;align-items:center}
+.staal.molentaal .kruisjes i{position:relative;width:25px;height:25px;display:block}
+.staal.molentaal .kruisjes i:before,.staal.molentaal .kruisjes i:after{content:"";position:absolute;
+  left:50%;top:50%;background:#fdfcf8}
+.staal.molentaal .kruisjes i:before{width:2.5px;height:100%;transform:translate(-50%,-50%)}
+.staal.molentaal .kruisjes i:after{width:100%;height:2.5px;transform:translate(-50%,-50%)}
+.staal.molentaal .kruisjes i.x{transform:rotate(45deg)}
+.staal.molentaal .kruisjes i.v{transform:rotate(-17deg)}
+.staal.molentaal .kruisjes i.r{transform:rotate(17deg)}
+.staal.molentaal .kruisjes i.g{border-radius:50%;box-shadow:0 0 0 2.5px #a5331d inset}
+.staal.molentaal .kruisjes i.g:before,.staal.molentaal .kruisjes i.g:after{display:none}
+.staal.molentaal .strepen{display:none}
+
+/* — staal concept 65: Variantenboek — */
+.staal.variantenboek{background:#fbf9f2;color:#1b1a17}
+.staal.variantenboek .plaatnr{color:#8c2018;font-family:var(--mono)}
+.staal.variantenboek .woord{font-family:"Iowan Old Style",Charter,Palatino,Georgia,serif;
+  font-weight:400;font-size:27px;max-width:76%;position:relative;z-index:2}
+.staal.variantenboek .woord em{font-style:italic;color:#8c2018}
+.staal.variantenboek .tekens{position:absolute;right:15px;top:30px;text-align:right;
+  font:700 22px/1.5 ui-monospace,Menlo,monospace;color:#8c2018;letter-spacing:.12em}
+.staal.variantenboek .tekens b{display:block;color:#1b1a17}
+.staal.variantenboek .strepen i{border-color:rgba(27,26,23,.22)}
+
+/* — staal concept 66: Afmijnen — */
+.staal.afmijnen{background:#152220;color:#fff}
+.staal.afmijnen .plaatnr{color:#7f8f88}
+.staal.afmijnen .woord{font-family:"Avenir Next",Seravek,system-ui,sans-serif;font-weight:600;
+  letter-spacing:-.035em;font-size:25px;max-width:62%;position:relative;z-index:2}
+.staal.afmijnen .woord em{font-style:normal;color:#7f8f88}
+.staal.afmijnen .wijzer{position:absolute;right:16px;top:50%;transform:translateY(-50%);
+  width:88px;height:88px;border-radius:50%;background:#f7f3e7;border:5px solid #1f4d40}
+.staal.afmijnen .wijzer b{position:absolute;left:50%;top:50%;width:26px;height:26px;
+  margin:-13px 0 0 -13px;border-radius:50%;background:#1f4d40;color:#fff;
+  font:700 11px/26px "Avenir Next",Seravek,system-ui,sans-serif;text-align:center}
+.staal.afmijnen .wijzer i{position:absolute;left:50%;top:50%;width:13px;height:13px;
+  margin:-6.5px 0 0 -6.5px;border-radius:50%;background:#c62c17;
+  transform:rotate(144deg) translateY(-30px)}
+.staal.afmijnen .wijzer s{position:absolute;left:50%;top:50%;width:8px;height:8px;
+  margin:-4px 0 0 -4px;border-radius:50%;background:#1b4d86;
+  transform:rotate(288deg) translateY(-30px)}
+.staal.afmijnen .strepen{display:none}
+
 .kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
 .kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
 .kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
@@ -1033,8 +1083,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>63</b> concepten</span>
-      <span>Laatste ronde <b>31 augustus 2026</b></span>
+      <span><b>66</b> concepten</span>
+      <span>Laatste ronde <b>1 september 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -3741,6 +3791,15 @@ footer li{padding:4px 0}
         </div>
       </article>
 
+    </div>
+
+    <div class="galerijkop" style="margin-top:var(--s6)">
+      <h2>Ronde 17</h2>
+      <span>ronde 17 · 31 aug 2026</span>
+    </div>
+
+    <div class="raster">
+
       <!-- ─────────── CONCEPT 61 ─────────── -->
       <article class="kaart">
         <div class="staal relief">
@@ -3869,6 +3928,136 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-63-peilschaal.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-63-peilschaal.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="galerijkop" style="margin-top:var(--s6)">
+      <h2>Ronde 18</h2>
+      <span>ronde 18 · 1 sep 2026</span>
+    </div>
+
+    <div class="raster">
+
+      <!-- ─────────── CONCEPT 64 ─────────── -->
+      <article class="kaart">
+        <div class="staal molentaal">
+          <div class="plaatnr">MOLENTAAL · VIJF STANDEN</div>
+          <div class="woord">Hij hangt niet<br/>voor u.<em> Voor het dorp.</em></div>
+          <div class="kruisjes" aria-hidden="true">
+            <i class="g"></i><i class="v"></i><i></i><i class="x"></i>
+          </div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 64</div>
+          <h3>Molentaal</h3>
+          <p class="richting">De kaart hangt niet voor u. Hij hangt voor het dorp.</p>
+          <p class="rationale">Een oefenkaart is een gesprek tussen twee partijen; de derde — de
+            partner, de dochter — kan niets zien en vraagt het dus: <em>“heb je nog geoefend?”</em>
+            Boven het Nederlandse landschap hangt daar al vier eeuwen een antwoord op. De molenaar
+            zet de wieken in een <em>stand</em> en het hele dorp leest van een kilometer afstand hoe
+            het gaat. Twee van de vijf standen zijn rust — geen leeg hokje maar een positie die je
+            aanneemt — en er is een stand voor <em>rouw</em>, waar geen enkel zorgformulier een
+            vakje voor heeft. Draaide de molen, dan trekt u de ring na; stond hij stil, dan zet u er
+            een kruis in onder de hoek die zegt waarom.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>molentaal: rustkruis, schrankstand, komende en gaande stand — en de streekruzie over
+              welke kant vreugde is · de baard, het geschilderde naambord boven de molendeur · zwart
+              geteerd hout, loodwit en molengroen, kraplak op de wiekborden · seinsystemen die op
+              afstand moeten werken: vlaggenlijnen, semafoorarmen, het sluisbord</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b>, één inkt. Bovenaan de baard met de naam erin, dan de vijf standen
+              op ware grootte (17 mm), vier oefeningen op 4,4 mm koppen en 3,5 mm schreef, en
+              veertien lege ringen. <b>Kleur draagt nergens betekenis</b> — de standen verschillen
+              in hoek, en 45° overleeft elke fotokopie</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-64-molentaal.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-64-molentaal.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 65 ─────────── -->
+      <article class="kaart">
+        <div class="staal variantenboek">
+          <div class="plaatnr">VARIANTENBOEK · K-04</div>
+          <div class="woord">De dag waarop niets<br/><em>volgens plan gaat.</em></div>
+          <div class="tekens" aria-hidden="true">
+            <b>□</b>+= ∞
+          </div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 65</div>
+          <h3>Variantenboek</h3>
+          <p class="richting">Elke kaart beschrijft de dag waarop alles meezit. Dit boek beschrijft
+            de andere.</p>
+          <p class="rationale">Er bestaat geen oefenkaart met een afslag: één rij, één volgorde, één
+            dosering. Wat te doen als de knie 's ochtends stijf staat, staat er niet — en dus
+            verzint de patiënt iets, meestal niets. Een schaakopeningsboek loste dat op: hoofdvariant
+            vet, daaronder de <em>zijvarianten</em>, want de afwijking ís het boek. Hier krijgt de
+            week twee takken in dezelfde letter, en één oefening draagt <em>□</em> — het teken voor
+            de enige zet, de oefening die in álle varianten terugkomt. Dat is een uitspraak die geen
+            enkele oefenkaart durft te doen.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>de schaakopeningstheorie: hoofdvariant vet, zijvarianten ingesprongen · het taalloze
+              tekenstelsel van Chess Informant (1966), in de ASCII-vorm — +=, ±, ∞, □, ! · de ECO-codering: elk
+              repertoire een code en een uitgavenummer · het diagram dat alleen bij de kritieke
+              stelling staat, nooit bij elke zet · boektypografie op roomkleurig papier</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b>. Op papier draait de dichtheid óm: vijf zetten ruim gezet op 4,5 mm
+              koppen en 3,5 mm schreef, twee takken in een kader van <b>gelijke zwaarte</b>, en
+              slechts twee diagrammen — op de twee plekken waar het misgaat. Bij elk teken staat het
+              Nederlandse woord; wie de notatie negeert en het woord omcirkelt, doet het goed</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-65-variantenboek.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-65-variantenboek.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────── CONCEPT 66 ─────────── -->
+      <article class="kaart">
+        <div class="staal afmijnen">
+          <div class="plaatnr">AFMIJNEN · 100 → 20</div>
+          <div class="woord">De klok zakt tot<em> u ja kunt zeggen.</em></div>
+          <div class="wijzer" aria-hidden="true">
+            <i></i><s></s><b>60</b>
+          </div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 66</div>
+          <h3>Afmijnen</h3>
+          <p class="richting">De klok zakt tot u ja kunt zeggen — en wie vroeg drukt, betaalt de
+            hoogste prijs.</p>
+          <p class="rationale">Een oefenkaart doet één bod, gedaan in de behandelkamer door iemand
+            anders dan wie het moet uitvoeren, en dat bod staat er veertien dagen onveranderd. Op de
+            dagen dat het te hoog is gebeurt er niet iets kleiners: er gebeurt niets. In Aalsmeer
+            draait sinds 1903 het omgekeerde apparaat — bij een veiling bij afslag begint de klok
+            hoog en <em>zakt</em> de wijzer tot iemand ja zegt. Dus heeft elke oefening hier vijf
+            treden met een échte zin erbij, een <em>bodemprijs</em>, en de regel dat wachten de
+            prijs verlaagt — precies wat uitstellen doet.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>de veiling bij afslag en het elektrische afmijntoestel, sinds 1903 op de Nederlandse
+              veilingen · de klok van Aalsmeer: dalende wijzer, één drukknop per koper, het blauwe
+              stipje van de minimumprijs · <em>doordraaien</em>: de partij die de bodem niet haalt ·
+              donkergroen zaalstaal en roomwit email · opbouwladders waarin steun en hoogte treden
+              zijn in plaats van percentages</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b>. De klok wordt een drukmerk in de kop; wat blijft is de ladder —
+              vier kavels van vijf treden, elke trede een volledige zin op 3,1 mm schreef met het
+              getal op 6 mm. De bodem heeft <b>0,9 mm lijn in plaats van een kleurvlak</b>. Onderaan
+              veertien hokjes voor het getal waarop u drukte: veertien dagen worden een lijn</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-66-afmijnen.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-66-afmijnen.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>

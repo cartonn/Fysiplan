@@ -1,0 +1,908 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 66 — Afmijnen · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 66 — AFMIJNEN
+   ------------------------------------------------------------
+   De klok zakt tot u ja kunt zeggen.
+
+   Elke oefenkaart doet één bod. "Acht keer opstaan uit de
+   stoel." Dat bod is gedaan op de dag van het consult, in de
+   behandelkamer, door iemand anders dan degene die het moet
+   uitvoeren — en het staat er daarna veertien dagen
+   onveranderd. Op de dagen dat het bod te hoog is, gebeurt er
+   niet iets kleiners. Er gebeurt niets. Alles of niets is
+   ingebakken in de vorm van het document.
+
+   In Aalsmeer staat sinds 1903 het apparaat dat dit probleem
+   heeft opgelost, en het is exact het omgekeerde van een
+   prijskaartje. Bij een veiling bij afslag begint de klok op de
+   hoogst denkbare prijs, en dan ZAKT de wijzer. De koper kijkt,
+   wacht, en drukt op het moment dat hij ja kan zeggen. Het bod
+   past zich aan de zaal aan, niet andersom.
+
+   DUS: op deze kaart heeft elke oefening geen dosering maar een
+   AFSLAG. Vijf treden, van hoog naar laag, met bij elke trede
+   een echte instructie — niet "60%" maar "acht keer, met één
+   hand aan het aanrecht". De klok begint bovenaan. U leest naar
+   beneden tot u bij het getal komt dat vandaag kan, en dáár
+   mijnt u af: één cirkel om het getal. Er is geen dag waarop
+   deze kaart nul oplevert.
+
+   DE BODEMPRIJS. Onder aan elke afslag hangt een bodem, en
+   daaronder gebeurt wat op de veiling DOORDRAAIEN heet: de
+   partij wordt niet verkocht. Dat is geen schande maar een
+   registratie — met een regel eraan vast: twee keer
+   doordraaien in één week en u belt, want dan klopt de klok
+   niet meer.
+
+   DE REGEL DIE NIEMAND VERWACHT. Op een afslagveiling geldt:
+   WIE HET EERST DRUKT, BETAALT DE HOOGSTE PRIJS. Wachten
+   verlaagt de prijs — en dat is precies wat er met uitstellen
+   gebeurt. Wie 's ochtends drukt, mijnt af op honderd. Wie tot
+   negen uur 's avonds wacht, krijgt de bodem, en dat is geen
+   moralisme maar de mechaniek van de klok zelf.
+
+   VORM. De veilingzaal: donkergroen geschilderd staal, een
+   roomwitte wijzerplaat, zware cijfers, één rode lamp, en het
+   blauwe stipje van de minimumprijs. Op papier verdwijnt de
+   kleur en blijft de LADDER over — vijf treden onder elkaar,
+   met de bodem in een zwaar kader.
+
+   HET ANKER. Elke trede is een volledige zin in gewoon
+   Nederlands op 3,5 mm schreef, de getallen op 6 mm. Wie de
+   klok niet snapt, leest gewoon de bovenste regel en doet die.
+   ============================================================ */
+
+:root{
+  --hal:#152220;
+  --hal-2:#1e2f2b;
+  --plaat:#f7f3e7;
+  --plaat-2:#ece5d2;
+  --inkt:#16191a;
+  --inkt-2:#3d4446;
+  --grijs:#7a7d74;
+  --lijn:#c9c3ae;
+  --groen:#1f4d40;
+  --lamp:#c62c17;
+  --blauw:#1b4d86;
+  --messing:#9c7a34;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --serif:Charter,"Iowan Old Style",Georgia,serif;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:70px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.66 var(--sans);color:var(--inkt-2);background:var(--plaat)}
+img{max-width:100%;display:block}
+a{color:var(--groen)}
+:focus-visible{outline:3px solid var(--lamp);outline-offset:3px}
+.binnen{max-width:1180px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--hal);color:#9daaa4;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border:1px solid #3a4a45;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#9daaa4;text-decoration:none;padding:5px 2px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--lamp)}
+.labbalk a.terug{color:#fff}
+@media (max-width:720px){.labbalk{flex-wrap:wrap;gap:10px}.labbalk .rek{display:none}}
+
+/* ---------- secties ---------- */
+.scherm{padding:var(--s6) 0;border-top:1px solid var(--lijn)}
+.scherm.diep{background:var(--plaat-2)}
+.scherm.wit{background:#fbf9f2}
+.schermkop{margin-bottom:var(--s5);max-width:74ch}
+.schermkop b{display:inline-block;font:700 10px/1 var(--mono);letter-spacing:.24em;
+  text-transform:uppercase;color:var(--lamp);margin-bottom:var(--s3)}
+.schermkop h2{font:600 clamp(27px,3.5vw,41px)/1.1 var(--sans);letter-spacing:-.032em;color:var(--inkt)}
+.schermkop p{margin-top:var(--s3);font:400 18px/1.62 var(--serif);color:var(--inkt-2);max-width:64ch}
+
+/* ============================================================
+   DE KLOK — roomwitte wijzerplaat, honderd bovenaan, met de
+   klok mee naar beneden. Eén rode bal, één blauw stipje.
+   ============================================================ */
+.klok{position:relative;width:284px;height:284px;border-radius:50%;background:var(--plaat);
+  border:9px solid var(--groen);box-shadow:0 0 0 3px #0e1a17, 0 20px 46px rgba(6,14,12,.5)}
+.klok .tik{position:absolute;left:132px;top:7px;width:2px;height:11px;background:#9aa39a;
+  transform-origin:1px 126px}
+.klok .tik.groot{height:18px;width:3px;left:131.5px;background:var(--inkt);transform-origin:1.5px 126px}
+.klok .getal{position:absolute;left:50%;top:50%;width:42px;height:22px;margin:-11px 0 0 -21px;
+  text-align:center;font:700 15px/22px var(--sans);letter-spacing:-.02em;color:var(--inkt)}
+.klok .bal{position:absolute;left:50%;top:50%;width:22px;height:22px;margin:-11px 0 0 -11px;
+  border-radius:50%;background:var(--lamp);box-shadow:0 0 0 3px rgba(198,44,23,.28), 0 0 16px rgba(198,44,23,.6)}
+.klok .stip{position:absolute;left:50%;top:50%;width:13px;height:13px;margin:-6.5px 0 0 -6.5px;
+  border-radius:50%;background:var(--blauw)}
+.klok .naaf{position:absolute;left:50%;top:50%;width:74px;height:74px;margin:-37px 0 0 -37px;
+  border-radius:50%;background:var(--groen);color:#fff;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center}
+.klok .naaf b{font:700 22px/1 var(--sans);letter-spacing:-.03em}
+.klok .naaf span{margin-top:4px;font:700 7.5px/1 var(--mono);letter-spacing:.14em;color:#9ec3b4}
+
+/* ---------- 1 · landing ---------- */
+#landing{background:var(--hal);color:#a9b6b0;border-top:0;
+  background-image:radial-gradient(110% 80% at 74% 12%,#213330 0%,#152220 64%)}
+.merkregel{display:flex;align-items:center;gap:11px;margin-bottom:var(--s5)}
+.merkregel .vlag{width:30px;height:30px;background:var(--plaat);color:var(--groen);
+  display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--sans)}
+.merkregel .naam{font:600 15px/1 var(--sans);color:#fff;letter-spacing:-.01em}
+.merkregel .pad{font:700 11px/1 var(--mono);letter-spacing:.2em;color:#7f8f88}
+
+.landkop{display:grid;grid-template-columns:1.1fr 320px;gap:var(--s6);align-items:start}
+@media (max-width:1020px){.landkop{grid-template-columns:1fr;gap:var(--s5)}}
+.landkop h1{font:600 clamp(35px,5vw,60px)/1.04 var(--sans);letter-spacing:-.038em;color:#fff}
+.landkop h1 em{display:block;font-style:normal;color:#7f8f88;margin-top:.16em}
+.landkop p{margin-top:var(--s4);font:400 18.5px/1.66 var(--serif);color:#bcc7c1;max-width:54ch}
+.landkop p b{font-weight:700;color:#fff}
+.klokhouder{display:flex;justify-content:center}
+.landkop .bijschrift{margin-top:var(--s4);font:400 14.5px/1.55 var(--serif);color:#7f8f88;text-align:center}
+
+.stellingen{margin-top:var(--s6);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:960px){.stellingen{grid-template-columns:1fr}}
+.stellingen div{border-top:3px solid #35564c;padding-top:14px}
+.stellingen h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:#7f8f88;margin-bottom:11px}
+.stellingen strong{display:block;font:600 21px/1.22 var(--sans);letter-spacing:-.024em;color:#fff;margin-bottom:10px}
+.stellingen p{font-size:15.5px;line-height:1.58}
+
+/* de afslag als ladder — het hoofdbeeld op elk scherm */
+.afslag{margin-top:var(--s6);background:var(--hal-2);border:1px solid #35564c;padding:var(--s4)}
+.afslag h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border-bottom:1px solid #35564c;padding-bottom:12px;margin-bottom:var(--s3)}
+.trede{display:grid;grid-template-columns:74px 1fr 130px;gap:var(--s3);align-items:center;
+  padding:13px 0;border-bottom:1px solid #26403a}
+.trede .getal{font:700 32px/1 var(--sans);letter-spacing:-.045em;color:#fff;text-align:right}
+.trede .wat{font:400 16px/1.5 var(--serif);color:#bcc7c1}
+.trede .wat b{color:#fff;font-weight:700}
+.trede .merk{text-align:right;font:700 10px/1.3 var(--mono);letter-spacing:.12em;color:#7f8f88}
+.trede.gedrukt{background:rgba(198,44,23,.16);margin:0 -14px;padding-left:14px;padding-right:14px;
+  border-bottom-color:var(--lamp)}
+.trede.gedrukt .getal{color:#ff8f7c}
+.trede.gedrukt .merk{color:#ff8f7c}
+.trede.bodem{border-bottom:0}
+.trede.bodem .getal{color:#8fb7ff}
+.trede.bodem .merk{color:#8fb7ff}
+
+/* ---------- 2 · kiezer ---------- */
+.kiezerhoofd{display:grid;grid-template-columns:1fr 310px;gap:var(--s5);align-items:start}
+@media (max-width:1020px){.kiezerhoofd{grid-template-columns:1fr}}
+
+.kavel{background:#fbf9f2;border:1px solid var(--lijn);padding:var(--s4)}
+.kavel + .kavel{margin-top:var(--s3)}
+.kavelkop{display:grid;grid-template-columns:84px 1fr 120px;gap:var(--s3);align-items:center;
+  border-bottom:2px solid var(--inkt);padding-bottom:var(--s3);margin-bottom:var(--s3)}
+.kavelkop .beeld{background:var(--plaat);border:1px solid var(--lijn);padding:5px;height:76px;
+  display:flex;align-items:center;justify-content:center}
+.kavelkop .beeld img{max-height:66px;width:auto;mix-blend-mode:multiply}
+.kavelkop h5{font:600 21px/1.2 var(--sans);letter-spacing:-.024em;color:var(--inkt)}
+.kavelkop .nrs{margin-top:5px;font:700 10px/1 var(--mono);letter-spacing:.14em;color:var(--grijs)}
+.kavelkop button{border:1px solid var(--groen);background:var(--groen);color:#fff;cursor:pointer;
+  padding:10px 12px;font:600 13px/1 var(--sans);width:100%}
+.kavelkop button.leeg{background:transparent;color:var(--groen)}
+@media (max-width:820px){
+  .kavelkop{grid-template-columns:1fr}
+  .kavelkop .beeld{display:none}
+}
+
+.ladder{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+@media (max-width:820px){.ladder{grid-template-columns:repeat(2,1fr)}}
+.lt{border:1px solid var(--lijn);background:var(--plaat);padding:13px 11px}
+.lt b{display:block;font:700 26px/1 var(--sans);letter-spacing:-.04em;color:var(--inkt)}
+.lt span{display:block;margin-top:8px;font:400 14px/1.42 var(--serif);color:var(--inkt-2)}
+.lt.bodem{border:2px solid var(--blauw)}
+.lt.bodem b{color:var(--blauw)}
+.lt em{display:block;margin-top:8px;font-style:normal;font:700 9px/1.2 var(--mono);
+  letter-spacing:.12em;color:var(--blauw)}
+
+.zijpaneel{background:var(--hal);color:#a9b6b0;padding:var(--s4);position:sticky;top:64px}
+.zijpaneel h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border-bottom:1px solid #2d4640;padding-bottom:11px;margin-bottom:var(--s3)}
+.zijpaneel .telrij{display:flex;justify-content:space-between;align-items:baseline;
+  padding:10px 0;border-bottom:1px solid #21332f;font-size:14.5px}
+.zijpaneel .telrij b{color:#fff;font:700 14px/1 var(--mono)}
+.zijpaneel p{margin-top:var(--s3);font:400 14.5px/1.55 var(--serif);color:#7f8f88}
+.zijpaneel .drukknop{margin-top:var(--s3);width:100%;border:0;background:var(--lamp);color:#fff;
+  padding:14px;font:600 15px/1 var(--sans);cursor:pointer}
+
+/* ---------- 3 · cliëntkaart ---------- */
+.kaartkop{display:grid;grid-template-columns:1fr 300px;gap:var(--s5);align-items:end;
+  border-bottom:3px solid var(--inkt);padding-bottom:var(--s3);margin-bottom:var(--s4)}
+@media (max-width:900px){.kaartkop{grid-template-columns:1fr;gap:var(--s3)}}
+.kaartkop h3{font:600 30px/1.1 var(--sans);letter-spacing:-.032em;color:var(--inkt)}
+.kaartkop .sub{margin-top:7px;font:400 16px/1.5 var(--serif);color:var(--grijs)}
+.kaartkop .rechts{text-align:right;font:700 11px/1.7 var(--mono);letter-spacing:.1em;color:var(--grijs)}
+@media (max-width:900px){.kaartkop .rechts{text-align:left}}
+
+/* de prijscurve: veertien dagen, de hoogte is het gemijnde getal */
+.curve{background:#fbf9f2;border:1px solid var(--lijn);padding:var(--s4)}
+.curve h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--grijs);margin-bottom:var(--s4)}
+.grafiek{position:relative;height:260px;border-left:2px solid var(--inkt);border-bottom:2px solid var(--inkt);
+  margin-left:44px;display:grid;grid-template-columns:repeat(14,1fr);align-items:end;gap:5px;padding:0 6px}
+.grafiek .as{position:absolute;left:-44px;width:40px;text-align:right;
+  font:700 11px/1 var(--mono);color:var(--grijs);transform:translateY(-50%)}
+.grafiek .hulp{position:absolute;left:0;right:0;border-top:1px dashed var(--lijn)}
+.grafiek .hulp.bodemlijn{border-top:2px solid var(--blauw)}
+.staaf{position:relative;background:var(--groen);min-height:3px}
+.staaf.bodemgehaald{background:var(--blauw)}
+.staaf.door{background:repeating-linear-gradient(45deg,var(--lamp) 0 4px,transparent 4px 8px);
+  border:1px solid var(--lamp);height:100% !important;opacity:.85}
+.staaf b{position:absolute;left:50%;top:-20px;transform:translateX(-50%);
+  font:700 11px/1 var(--mono);color:var(--inkt)}
+.dagas{margin-left:44px;display:grid;grid-template-columns:repeat(14,1fr);gap:5px;padding:8px 6px 0}
+.dagas span{text-align:center;font:700 10px/1.3 var(--mono);letter-spacing:.02em;color:var(--grijs)}
+
+.leesuit{margin-top:var(--s5);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:900px){.leesuit{grid-template-columns:1fr}}
+.leesuit div{background:var(--plaat-2);padding:var(--s4);border-top:3px solid var(--inkt)}
+.leesuit h5{font:700 10px/1 var(--mono);letter-spacing:.18em;color:var(--lamp);margin-bottom:11px}
+.leesuit strong{display:block;font:600 20px/1.25 var(--sans);letter-spacing:-.022em;color:var(--inkt);margin-bottom:9px}
+.leesuit p{font-size:15.5px;line-height:1.58}
+
+/* ---------- 4 · printkaart ---------- */
+.printuitleg{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-bottom:var(--s5)}
+@media (max-width:900px){.printuitleg{grid-template-columns:1fr}}
+.printuitleg h4{font:700 10px/1 var(--mono);letter-spacing:.18em;color:var(--lamp);
+  border-top:2px solid var(--inkt);padding-top:11px;margin-bottom:10px}
+.printuitleg p{font-size:15.5px;line-height:1.58}
+
+.bladhouder{background:var(--plaat-2);padding:var(--s4);border:1px solid var(--lijn)}
+.bladschaal{width:100%;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;position:relative;
+  box-shadow:0 10px 40px rgba(22,25,26,.2)}
+.blad .rand{position:absolute;inset:10mm 10mm 9mm 10mm;display:flex;flex-direction:column}
+
+.b-kop{display:grid;grid-template-columns:1fr 26mm;gap:5mm;align-items:center;
+  border-bottom:1mm solid #000;padding-bottom:2.4mm}
+.b-kop h1{font:700 7.4mm/1.02 var(--sans);letter-spacing:-.03em;color:#000}
+.b-kop .wie{margin-top:1.8mm;font:400 3.7mm/1.32 var(--serif);color:#000}
+/* de klok als drukmerk, één inkt */
+.b-klok{width:24mm;height:24mm;border-radius:50%;border:.9mm solid #000;position:relative}
+.b-klok .n{position:absolute;left:50%;top:50%;width:9mm;height:3.4mm;margin:-1.7mm 0 0 -4.5mm;
+  text-align:center;font:700 3mm/4mm var(--mono);color:#000}
+.b-klok .b{position:absolute;left:50%;top:50%;width:3.4mm;height:3.4mm;margin:-1.7mm 0 0 -1.7mm;
+  border-radius:50%;background:#000}
+.b-klok .o{position:absolute;left:50%;top:50%;width:3mm;height:3mm;margin:-1.5mm 0 0 -1.5mm;
+  border-radius:50%;border:.5mm solid #000}
+
+.b-regels{margin-top:2.6mm;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4mm;
+  border-bottom:.6mm solid #000;padding-bottom:2.6mm}
+.b-regel{display:grid;grid-template-columns:6mm 1fr;gap:2.2mm}
+.b-regel i{font:700 4.6mm/1 var(--sans);font-style:normal;color:#000}
+.b-regel p{font:400 3.3mm/1.36 var(--serif);color:#000}
+.b-regel p b{font-weight:700}
+
+.b-kavels{margin-top:2.8mm}
+.b-kavel{border-bottom:.5mm solid #000;padding-bottom:2.2mm;margin-bottom:2.2mm}
+.b-kavel:last-child{border-bottom:0}
+.b-kavelkop{display:grid;grid-template-columns:15mm 1fr 20mm;gap:2.6mm;align-items:center;margin-bottom:1.8mm}
+.b-kavelkop .bld{border:.3mm solid #000;padding:.7mm;height:13mm;display:flex;align-items:center;justify-content:center}
+.b-kavelkop .bld img{max-height:11.6mm;width:auto}
+.b-kavelkop h3{font:700 4.6mm/1.1 var(--sans);letter-spacing:-.02em;color:#000}
+.b-kavelkop p{margin-top:1mm;font:400 3.3mm/1.32 var(--serif);color:#000}
+.b-kavelkop .knr{text-align:right;font:700 2.6mm/1.3 var(--mono);letter-spacing:.1em;color:#000}
+
+.b-ladder{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1.8mm}
+.b-tr{border:.35mm solid #000;padding:1.6mm 1.5mm}
+.b-tr b{display:block;font:700 5.4mm/1 var(--sans);letter-spacing:-.04em;color:#000}
+.b-tr span{display:block;margin-top:1.4mm;font:400 3.1mm/1.3 var(--serif);color:#000}
+.b-tr.bodem{border-width:.9mm}
+.b-tr.bodem em{display:block;margin-top:1.4mm;font-style:normal;font:700 2.5mm/1.2 var(--mono);
+  letter-spacing:.1em;color:#000}
+
+.b-reeks{margin-top:auto;padding-top:2.6mm;border-top:.8mm solid #000}
+.b-reeks .titel{display:flex;align-items:baseline;gap:3mm;margin-bottom:2.4mm}
+.b-reeks h4{font:700 3.3mm/1 var(--sans);letter-spacing:.02em;color:#000}
+.b-reeks .titel span{margin-left:auto;font:400 3.1mm/1.3 var(--serif);color:#000;text-align:right}
+.b-dagen{display:grid;grid-template-columns:repeat(14,1fr);gap:1.4mm}
+.b-dag{border:.3mm solid #000;text-align:center}
+.b-dag b{display:block;font:700 2.4mm/1 var(--mono);letter-spacing:.03em;color:#000;
+  border-bottom:.3mm solid #000;padding:1.2mm 0}
+.b-dag i{display:block;height:7.5mm}
+
+.b-voet{margin-top:2.6mm;padding-top:2mm;border-top:.8mm solid #000;
+  display:grid;grid-template-columns:1fr 52mm;gap:5mm;align-items:start}
+.b-voet h4{font:700 2.7mm/1 var(--mono);letter-spacing:.15em;color:#000;margin-bottom:1.5mm}
+.b-voet p{font:400 3.2mm/1.4 var(--serif);color:#000}
+.b-voet .prak{text-align:right;font:600 2.6mm/1.68 var(--mono);letter-spacing:.07em;color:#000}
+.b-voet .prak b{display:block;font:700 3.6mm/1.3 var(--sans);letter-spacing:-.01em;color:#000}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--hal);color:#98a59f;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border-top:2px solid #3a4a45;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:9px}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT — de klok verdwijnt, de ladder blijft. Vijf treden
+   onder elkaar in één inkt; de bodem heeft een zwaar kader in
+   plaats van een kleur.
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .schermkop,.printuitleg{display:none !important}
+  .scherm{padding:0 !important;background:#fff !important;border:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  .bladhouder{background:#fff !important;border:0 !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 66</span>
+  <strong style="font:600 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Afmijnen</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="vlag" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 66 · AFMIJNEN</span>
+    </div>
+
+    <div class="landkop">
+      <div>
+        <h1>De klok zakt tot u ja kunt zeggen.<em>Wie vroeg drukt, betaalt de hoogste prijs.</em></h1>
+        <p>Een oefenkaart doet één bod: “acht keer opstaan uit de stoel”. Dat bod is gedaan in de
+          behandelkamer, op een andere dag, door iemand anders dan degene die het moet doen — en
+          het staat er daarna veertien dagen onveranderd. Op de dagen dat het te hoog is, gebeurt
+          er niet iets kleiners. <b>Er gebeurt niets.</b> Alles of niets zit in de vorm van het
+          document ingebakken.</p>
+        <p>In Aalsmeer draait sinds 1903 het apparaat dat dat probleem oplost, en het is het
+          omgekeerde van een prijskaartje. Bij een veiling bij afslag begint de klok op de hoogst
+          denkbare prijs, en dan <b>zakt de wijzer</b>. De koper kijkt, wacht, en drukt op het
+          moment dat hij ja kan zeggen. Het bod past zich aan de zaal aan, niet andersom.</p>
+        <p>Dus heeft elke oefening hier geen dosering maar een <b>afslag</b>: vijf treden van hoog
+          naar laag, elk met een echte instructie. U leest naar beneden tot het getal dat vandaag
+          kan, en daar mijnt u af — één cirkel om het getal.</p>
+      </div>
+
+      <div>
+        <div class="klokhouder">
+          <div class="klok" role="img" aria-label="Veilingklok, wijzer op 60, bodemprijs 20">
+            <span class="tik groot" style="transform:rotate(0deg)"></span>
+            <span class="tik" style="transform:rotate(36deg)"></span>
+            <span class="tik groot" style="transform:rotate(72deg)"></span>
+            <span class="tik" style="transform:rotate(108deg)"></span>
+            <span class="tik groot" style="transform:rotate(144deg)"></span>
+            <span class="tik" style="transform:rotate(180deg)"></span>
+            <span class="tik groot" style="transform:rotate(216deg)"></span>
+            <span class="tik" style="transform:rotate(252deg)"></span>
+            <span class="tik groot" style="transform:rotate(288deg)"></span>
+            <span class="tik" style="transform:rotate(324deg)"></span>
+
+            <span class="getal" style="transform:rotate(0deg) translateY(-97px) rotate(0deg)">100</span>
+            <span class="getal" style="transform:rotate(72deg) translateY(-97px) rotate(-72deg)">80</span>
+            <span class="getal" style="transform:rotate(144deg) translateY(-97px) rotate(-144deg)">60</span>
+            <span class="getal" style="transform:rotate(216deg) translateY(-97px) rotate(-216deg)">40</span>
+            <span class="getal" style="transform:rotate(288deg) translateY(-97px) rotate(-288deg)">20</span>
+
+            <span class="stip" style="transform:rotate(288deg) translateY(-84px)"></span>
+            <span class="bal" style="transform:rotate(144deg) translateY(-84px)"></span>
+
+            <span class="naaf"><b>60</b><span>GEMIJND</span></span>
+          </div>
+        </div>
+        <p class="bijschrift">Rood is waar u drukte. Het blauwe stipje is de bodem — daaronder
+          draait de partij door.</p>
+      </div>
+    </div>
+
+    <div class="afslag">
+      <h4>ÉÉN KAVEL — OPSTAAN UIT DE STOEL, VIJF TREDEN</h4>
+
+      <div class="trede">
+        <div class="getal">100</div>
+        <div class="wat"><b>Acht keer, zonder handen.</b> Van een gewone keukenstoel, armen voor de
+          borst gekruist.</div>
+        <div class="merk">VOLLE PRIJS</div>
+      </div>
+      <div class="trede">
+        <div class="getal">80</div>
+        <div class="wat"><b>Acht keer, één hand los.</b> De andere hand licht op de knie, niet
+          duwen.</div>
+        <div class="merk">—</div>
+      </div>
+      <div class="trede gedrukt">
+        <div class="getal">60</div>
+        <div class="wat"><b>Zes keer, twee handen op de knieën.</b> Rustig omhoog, rustig terug
+          zitten.</div>
+        <div class="merk">HIER GEDRUKT</div>
+      </div>
+      <div class="trede">
+        <div class="getal">40</div>
+        <div class="wat"><b>Vier keer, van een hogere stoel</b> — of met een kussen erop.</div>
+        <div class="merk">—</div>
+      </div>
+      <div class="trede bodem">
+        <div class="getal">20</div>
+        <div class="wat"><b>Twee keer, met de leuning erbij.</b> Ook dit is een verkochte dag.</div>
+        <div class="merk">BODEMPRIJS</div>
+      </div>
+    </div>
+
+    <div class="stellingen">
+      <div>
+        <h4>DE AFSLAG</h4>
+        <strong>Het bod daalt tot het past</strong>
+        <p>Geen enkele dag levert nul op. Wie de honderd niet haalt, komt vanzelf bij een trede die
+          wél kan — en die trede staat er als volledige zin, niet als percentage.</p>
+      </div>
+      <div>
+        <h4>DE BODEMPRIJS</h4>
+        <strong>Doordraaien mag, twee keer is een telefoontje</strong>
+        <p>Lukt ook de bodem niet, dan draait de partij door: een streep en verder niets. Gebeurt
+          dat twee keer in een week, dan klopt de klok niet meer en wordt hij opnieuw gezet.</p>
+      </div>
+      <div>
+        <h4>DE VEILINGREGEL</h4>
+        <strong>Wie het eerst drukt, betaalt het meest</strong>
+        <p>Op een afslagveiling verlaagt wachten de prijs. Precies dat gebeurt met uitstellen: 's
+          ochtends mijnt u af op honderd, om negen uur 's avonds op de bodem. Geen moralisme — de
+          mechaniek van de klok.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm diep" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2 · de oefeningen-kiezer</b>
+      <h2>Kiezen is een klok zetten, geen dosering invullen</h2>
+      <p>De fysiotherapeut kiest een oefening en zet daar <b>vijf treden</b> onder: de volle prijs
+        bovenaan, de bodem onderaan. Fysiplan stelt de treden voor uit de opbouw die bij de
+        oefening hoort — steun erbij, hoogte erbij, herhalingen eraf — en de therapeut schrijft ze
+        in gewone zinnen om. Een trede zonder zin wordt niet gedrukt.</p>
+    </div>
+
+    <div class="kiezerhoofd">
+      <div>
+
+        <div class="kavel">
+          <div class="kavelkop">
+            <div class="beeld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit een stoel"/></div>
+            <div>
+              <h5>Opstaan uit de stoel</h5>
+              <div class="nrs">KAVEL 1 · VOLLE PRIJS 100 · BODEM 20</div>
+            </div>
+            <button type="button">Klok gezet</button>
+          </div>
+          <div class="ladder">
+            <div class="lt"><b>100</b><span>Acht keer, zonder handen.</span></div>
+            <div class="lt"><b>80</b><span>Acht keer, één hand los.</span></div>
+            <div class="lt"><b>60</b><span>Zes keer, twee handen op de knieën.</span></div>
+            <div class="lt"><b>40</b><span>Vier keer, van een hogere stoel.</span></div>
+            <div class="lt bodem"><b>20</b><span>Twee keer, met de leuning erbij.</span><em>BODEMPRIJS</em></div>
+          </div>
+        </div>
+
+        <div class="kavel">
+          <div class="kavelkop">
+            <div class="beeld"><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Eenbeenstand met steun"/></div>
+            <div>
+              <h5>Eén been, tellen</h5>
+              <div class="nrs">KAVEL 2 · VOLLE PRIJS 100 · BODEM 20</div>
+            </div>
+            <button type="button">Klok gezet</button>
+          </div>
+          <div class="ladder">
+            <div class="lt"><b>100</b><span>Drie keer tien tellen, handen los.</span></div>
+            <div class="lt"><b>80</b><span>Drie keer tien tellen, één vinger aan het blad.</span></div>
+            <div class="lt"><b>60</b><span>Drie keer vijf tellen, één hand aan het blad.</span></div>
+            <div class="lt"><b>40</b><span>Twee keer vijf tellen, twee handen.</span></div>
+            <div class="lt bodem"><b>20</b><span>Voeten achter elkaar, tien tellen stilstaan.</span><em>BODEMPRIJS</em></div>
+          </div>
+        </div>
+
+        <div class="kavel">
+          <div class="kavelkop">
+            <div class="beeld"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Hakken langzaam laten zakken"/></div>
+            <div>
+              <h5>Op uw tenen en langzaam zakken</h5>
+              <div class="nrs">KAVEL 3 · VOLLE PRIJS 100 · BODEM 20</div>
+            </div>
+            <button type="button">Klok gezet</button>
+          </div>
+          <div class="ladder">
+            <div class="lt"><b>100</b><span>Vijftien keer, in vier tellen omlaag.</span></div>
+            <div class="lt"><b>80</b><span>Twaalf keer, in drie tellen omlaag.</span></div>
+            <div class="lt"><b>60</b><span>Tien keer, gewoon tempo.</span></div>
+            <div class="lt"><b>40</b><span>Tien keer zittend, voeten plat.</span></div>
+            <div class="lt bodem"><b>20</b><span>Vijf keer zittend, rustig aan.</span><em>BODEMPRIJS</em></div>
+          </div>
+        </div>
+
+        <div class="kavel">
+          <div class="kavelkop">
+            <div class="beeld"><img src="/images/rug/knie-naar-borst-liggend-line-v1.png" alt="Knie naar de borst, liggend"/></div>
+            <div>
+              <h5>Knie naar de borst, liggend</h5>
+              <div class="nrs">KAVEL 4 · VOLLE PRIJS 100 · BODEM 20 · DRAAIT NOOIT DOOR</div>
+            </div>
+            <button type="button" class="leeg">Vaste kavel</button>
+          </div>
+          <div class="ladder">
+            <div class="lt"><b>100</b><span>Acht keer per been, tel tot vijf.</span></div>
+            <div class="lt"><b>80</b><span>Zes keer per been, tel tot vijf.</span></div>
+            <div class="lt"><b>60</b><span>Vier keer per been, tel tot drie.</span></div>
+            <div class="lt"><b>40</b><span>Twee keer per been, met een handdoek om de knie.</span></div>
+            <div class="lt bodem"><b>20</b><span>Eén keer per been, in bed.</span><em>DEZE BODEM STAAT VAST</em></div>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="zijpaneel">
+        <h4>DE KLOK VAN DEZE WEEK</h4>
+        <div class="telrij"><span>Kavels op het vel</span><b>4</b></div>
+        <div class="telrij"><span>Treden per kavel</span><b>5</b></div>
+        <div class="telrij"><span>Volle prijs, alles</span><b>± 22 min.</b></div>
+        <div class="telrij"><span>Alles op de bodem</span><b>± 4 min.</b></div>
+        <div class="telrij"><span>Kavel die nooit doordraait</span><b>nr. 4</b></div>
+        <p>Vier minuten is de kortst mogelijke dag. Dat getal is met opzet klein: een kaart waarvan
+          de slechtste dag nog een kwartier kost, wordt op de slechtste dag weggelegd.</p>
+        <button class="drukknop" type="button">Vel drukken · A4</button>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm wit" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3 · de digitale cliëntkaart</b>
+      <h2>Veertien afmijnprijzen — en de lijn die eronder zit</h2>
+      <p>Wat er terugkomt is geen streeplijst maar een <b>prijscurve</b>: op welk getal er elke dag
+        gedrukt is. Een curve die stijgt is opbouw. Een curve die schommelt tussen 100 en 40 zegt
+        dat de klok te hoog staat. En één doorgedraaide dag is een gegeven, geen gat.</p>
+    </div>
+
+    <div class="kaartkop">
+      <div>
+        <h3>Mevrouw H. Bosma — knie rechts, week 3 en 4</h3>
+        <p class="sub">Kavel 1, opstaan uit de stoel. Veertien dagen, met een balpen gemijnd.</p>
+      </div>
+      <div class="rechts">FYSIOTHERAPIE DE BOSKANT<br/>KLOK K-04 · GEZET 24.08.2026<br/>OPGEHAALD 07.09.2026</div>
+    </div>
+
+    <div class="curve">
+      <h4>AFMIJNPRIJS PER DAG — KAVEL 1</h4>
+
+      <div class="grafiek">
+        <span class="as" style="top:0%">100</span>
+        <span class="as" style="top:25%">80</span>
+        <span class="as" style="top:50%">60</span>
+        <span class="as" style="top:75%">40</span>
+        <span class="as" style="top:100%">20</span>
+        <span class="hulp" style="top:25%"></span>
+        <span class="hulp" style="top:50%"></span>
+        <span class="hulp" style="top:75%"></span>
+        <span class="hulp bodemlijn" style="top:100%"></span>
+
+        <div class="staaf" style="height:50%"><b>60</b></div>
+        <div class="staaf" style="height:50%"><b>60</b></div>
+        <div class="staaf bodemgehaald" style="height:12%"><b>20</b></div>
+        <div class="staaf door"><b>D</b></div>
+        <div class="staaf" style="height:50%"><b>60</b></div>
+        <div class="staaf" style="height:75%"><b>80</b></div>
+        <div class="staaf" style="height:75%"><b>80</b></div>
+        <div class="staaf bodemgehaald" style="height:12%"><b>20</b></div>
+        <div class="staaf" style="height:31%"><b>40</b></div>
+        <div class="staaf" style="height:75%"><b>80</b></div>
+        <div class="staaf" style="height:75%"><b>80</b></div>
+        <div class="staaf" style="height:100%"><b>100</b></div>
+        <div class="staaf" style="height:75%"><b>80</b></div>
+        <div class="staaf" style="height:100%"><b>100</b></div>
+      </div>
+      <div class="dagas">
+        <span>MA 25</span><span>DI 26</span><span>WO 27</span><span>DO 28</span><span>VR 29</span>
+        <span>ZA 30</span><span>ZO 31</span><span>MA 01</span><span>DI 02</span><span>WO 03</span>
+        <span>DO 04</span><span>VR 05</span><span>ZA 06</span><span>ZO 07</span>
+      </div>
+    </div>
+
+    <div class="leesuit">
+      <div>
+        <h5>WAT DE CURVE ZEGT</h5>
+        <strong>Van 60 naar 100 in veertien dagen</strong>
+        <p>De tweede week ligt structureel boven de eerste, met twee dagen op de volle prijs. Dat
+          is opbouw, en het staat er zonder dat iemand een score heeft moeten berekenen.</p>
+      </div>
+      <div>
+        <h5>DE DOORGEDRAAIDE DAG</h5>
+        <strong>Donderdag 28 leverde niets op — één keer</strong>
+        <p>Eén doorgedraaide dag in veertien is normaal en vraagt niets. Twee in dezelfde week
+          zou het telefoontje uitlokken dat op het vel staat. Belangrijker: 27 en 28 liggen naast
+          elkaar, en op 27 was de bodem al nodig.</p>
+      </div>
+      <div>
+        <h5>WAT ER VERANDERT</h5>
+        <strong>De klok gaat omhoog, de bodem blijft</strong>
+        <p>Volle prijs wordt tien keer zonder handen; de treden 80 en 60 schuiven mee. De bodem
+          blijft precies waar hij staat — een bodem die meestijgt is geen bodem meer.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 4 · de A4-printkaart</b>
+      <h2>Het vel — vier kavels, elk vijf treden, één cirkel per dag</h2>
+      <p>De klok zelf is op papier een drukmerk in de kop; wat blijft is de <b>ladder</b>. Vier
+        kavels onder elkaar, elke trede een volledige zin op <b>3,1 mm schreef</b> met het getal op
+        <b>6 mm</b>, de bodem in een zwaar kader in plaats van in een kleur. Onderaan veertien
+        hokjes voor het getal waarop u drukte.</p>
+    </div>
+
+    <div class="printuitleg">
+      <div>
+        <h4>WAAROM ELKE TREDE EEN ZIN IS</h4>
+        <p>“60%” is niet uit te voeren. <b>“Zes keer, twee handen op de knieën”</b> wel. Een trede
+          zonder concrete zin wordt door de kiezer geweigerd en komt niet op het vel.</p>
+      </div>
+      <div>
+        <h4>WAAROM DE BODEM EEN KADER HEEFT</h4>
+        <p>De bodem is de belangrijkste regel van het vel: hij bepaalt hoe klein de slechtste dag
+          mag zijn. Dus krijgt hij <b>0,9 mm lijn</b> in plaats van een kleurvlak — dat overleeft
+          elke fotokopie.</p>
+      </div>
+      <div>
+        <h4>WAAROM U EEN GETAL SCHRIJFT</h4>
+        <p>Een vinkje bewaart niets. Een getal maakt van veertien dagen een <b>lijn</b> die de
+          fysiotherapeut in twee seconden leest — en die de patiënt zelf ook ziet oplopen.</p>
+      </div>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="b-kop">
+              <div>
+                <h1>De klok — week 3 en 4</h1>
+                <p class="wie">Mevrouw H. Bosma · knie rechts · Fysiotherapie de Boskant ·
+                  gezet op 24 augustus 2026</p>
+              </div>
+              <div class="b-klok" aria-hidden="true">
+                <span class="n" style="transform:rotate(0deg) translateY(-8.6mm) rotate(0deg)">100</span>
+                <span class="n" style="transform:rotate(144deg) translateY(-8.6mm) rotate(-144deg)">60</span>
+                <span class="n" style="transform:rotate(288deg) translateY(-8.6mm) rotate(-288deg)">20</span>
+                <span class="b" style="transform:rotate(144deg) translateY(-5.2mm)"></span>
+                <span class="o" style="transform:rotate(288deg) translateY(-5.2mm)"></span>
+              </div>
+            </div>
+
+            <div class="b-regels">
+              <div class="b-regel">
+                <i>1</i>
+                <p>Begin bovenaan bij <b>100</b> en lees naar beneden tot het getal dat u vandaag
+                  aankunt. Zet daar een <b>cirkel</b> omheen.</p>
+              </div>
+              <div class="b-regel">
+                <i>2</i>
+                <p>Doe wat er bij dat getal staat, en verder niets. <b>Elke trede is een volledige
+                  dag</b> — ook de onderste.</p>
+              </div>
+              <div class="b-regel">
+                <i>3</i>
+                <p>Lukt de bodem ook niet, zet dan een <b>streep</b>. Gebeurt dat twee keer in een
+                  week, belt u — dan staat de klok te hoog.</p>
+              </div>
+            </div>
+
+            <div class="b-kavels">
+
+              <div class="b-kavel">
+                <div class="b-kavelkop">
+                  <div class="bld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt=""/></div>
+                  <div>
+                    <h3>Opstaan uit de stoel</h3>
+                    <p>Een gewone keukenstoel, voeten naar achteren, neus boven de knieën.</p>
+                  </div>
+                  <div class="knr">KAVEL 1</div>
+                </div>
+                <div class="b-ladder">
+                  <div class="b-tr"><b>100</b><span>Acht keer, zonder handen.</span></div>
+                  <div class="b-tr"><b>80</b><span>Acht keer, één hand los.</span></div>
+                  <div class="b-tr"><b>60</b><span>Zes keer, twee handen op de knieën.</span></div>
+                  <div class="b-tr"><b>40</b><span>Vier keer, van een hogere stoel.</span></div>
+                  <div class="b-tr bodem"><b>20</b><span>Twee keer, met de leuning erbij.</span><em>BODEM</em></div>
+                </div>
+              </div>
+
+              <div class="b-kavel">
+                <div class="b-kavelkop">
+                  <div class="bld"><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt=""/></div>
+                  <div>
+                    <h3>Eén been, tellen</h3>
+                    <p>Bij het aanrecht. Steun mag altijd — steun is een trede, geen fout.</p>
+                  </div>
+                  <div class="knr">KAVEL 2</div>
+                </div>
+                <div class="b-ladder">
+                  <div class="b-tr"><b>100</b><span>Drie keer tien tellen, handen los.</span></div>
+                  <div class="b-tr"><b>80</b><span>Drie keer tien tellen, één vinger aan het blad.</span></div>
+                  <div class="b-tr"><b>60</b><span>Drie keer vijf tellen, één hand aan het blad.</span></div>
+                  <div class="b-tr"><b>40</b><span>Twee keer vijf tellen, twee handen.</span></div>
+                  <div class="b-tr bodem"><b>20</b><span>Voeten achter elkaar, tien tellen stilstaan.</span><em>BODEM</em></div>
+                </div>
+              </div>
+
+              <div class="b-kavel">
+                <div class="b-kavelkop">
+                  <div class="bld"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt=""/></div>
+                  <div>
+                    <h3>Op uw tenen en langzaam zakken</h3>
+                    <p>Het zakken is de oefening — hoe langzamer, hoe hoger de prijs.</p>
+                  </div>
+                  <div class="knr">KAVEL 3</div>
+                </div>
+                <div class="b-ladder">
+                  <div class="b-tr"><b>100</b><span>Vijftien keer, in vier tellen omlaag.</span></div>
+                  <div class="b-tr"><b>80</b><span>Twaalf keer, in drie tellen omlaag.</span></div>
+                  <div class="b-tr"><b>60</b><span>Tien keer, in gewoon tempo.</span></div>
+                  <div class="b-tr"><b>40</b><span>Tien keer zittend, voeten plat.</span></div>
+                  <div class="b-tr bodem"><b>20</b><span>Vijf keer zittend, rustig aan.</span><em>BODEM</em></div>
+                </div>
+              </div>
+
+              <div class="b-kavel">
+                <div class="b-kavelkop">
+                  <div class="bld"><img src="/images/rug/knie-naar-borst-liggend-line-v1.png" alt=""/></div>
+                  <div>
+                    <h3>Knie naar de borst, liggend</h3>
+                    <p>In bed, vóór u opstaat. Deze kavel draait nooit door.</p>
+                  </div>
+                  <div class="knr">KAVEL 4</div>
+                </div>
+                <div class="b-ladder">
+                  <div class="b-tr"><b>100</b><span>Acht keer per been, tel tot vijf.</span></div>
+                  <div class="b-tr"><b>80</b><span>Zes keer per been, tel tot vijf.</span></div>
+                  <div class="b-tr"><b>60</b><span>Vier keer per been, tel tot drie.</span></div>
+                  <div class="b-tr"><b>40</b><span>Twee keer per been, met handdoek.</span></div>
+                  <div class="b-tr bodem"><b>20</b><span>Eén keer per been, in bed.</span><em>BODEM · STAAT VAST</em></div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="b-reeks">
+              <div class="titel">
+                <h4>VEERTIEN DAGEN — SCHRIJF HET GETAL WAAROP U DRUKTE</h4>
+                <span>Kavel 1. Eén getal per dag, of een streep bij doordraaien.</span>
+              </div>
+              <div class="b-dagen">
+                <div class="b-dag"><b>MA</b><i></i></div>
+                <div class="b-dag"><b>DI</b><i></i></div>
+                <div class="b-dag"><b>WO</b><i></i></div>
+                <div class="b-dag"><b>DO</b><i></i></div>
+                <div class="b-dag"><b>VR</b><i></i></div>
+                <div class="b-dag"><b>ZA</b><i></i></div>
+                <div class="b-dag"><b>ZO</b><i></i></div>
+                <div class="b-dag"><b>MA</b><i></i></div>
+                <div class="b-dag"><b>DI</b><i></i></div>
+                <div class="b-dag"><b>WO</b><i></i></div>
+                <div class="b-dag"><b>DO</b><i></i></div>
+                <div class="b-dag"><b>VR</b><i></i></div>
+                <div class="b-dag"><b>ZA</b><i></i></div>
+                <div class="b-dag"><b>ZO</b><i></i></div>
+              </div>
+            </div>
+
+            <div class="b-voet">
+              <div>
+                <h4>WIE HET EERST DRUKT, BETAALT DE HOOGSTE PRIJS</h4>
+                <p>Dat is geen aansporing maar hoe de klok werkt: 's ochtends kunt u meestal boven
+                  in de ladder drukken, 's avonds bijna altijd alleen onderin. Doe het daarom vroeg
+                  — en als het toch avond wordt, mijnt u gewoon lager af. Ook dat is een verkochte
+                  dag.</p>
+              </div>
+              <div class="prak">
+                <b>Fysiotherapie de Boskant</b>
+                RIETLAAN 12 · 3812 AB<br/>
+                TELEFOON 033 — 461 22 08<br/>
+                KLOK OPNIEUW GEZET 07.09.2026
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div>
+      <h4>DE GEDACHTE</h4>
+      <p>Een oefenkaart doet één bod en houdt dat veertien dagen vol. Een afslagklok doet elke dag
+        opnieuw een bod, en zakt tot iemand ja zegt. Alleen de tweede vorm kan op een slechte dag
+        nog iets opleveren — en juist die dagen bepalen of een kaart in gebruik blijft.</p>
+    </div>
+    <div>
+      <h4>WAAR HET VANDAAN KOMT</h4>
+      <ul>
+        <li>De veiling bij afslag en het elektrische afmijntoestel, sinds 1903 op de Nederlandse groente- en bloemenveilingen</li>
+        <li>De veilingklok van Aalsmeer: wijzerplaat, dalende wijzer, één drukknop per koper</li>
+        <li>Doordraaien: de partij die de minimumprijs niet haalt en niet verkocht wordt</li>
+        <li>Donkergroen geschilderd zaalstaal, roomwitte emailplaat, één rode lamp</li>
+        <li>Opbouwladders uit de oefentherapie: steun, hoogte en tempo als treden in plaats van percentages</li>
+      </ul>
+    </div>
+    <div>
+      <h4>NAAST DE KAART</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de ontwerpgalerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var f=Math.min(1,schaal.clientWidth/blad.offsetWidth);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

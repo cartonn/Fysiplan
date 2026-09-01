@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 65 — Variantenboek · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 65 — VARIANTENBOEK
+   ------------------------------------------------------------
+   Elke oefenkaart beschrijft de dag waarop alles meezit.
+
+   Er bestaat geen oefenkaart met een AFSLAG. Er staat één rij
+   oefeningen op, in één volgorde, met één dosering, en dat is
+   het hele document. Wat er moet gebeuren als de knie 's
+   ochtends stijf staat, als er slecht geslapen is, als er
+   bezoek komt — daar zwijgt het vel over. En omdat het vel
+   zwijgt, verzint de patiënt zelf iets. Meestal: niets.
+
+   Er is één vakgebied dat dit probleem tweehonderd jaar
+   geleden heeft opgelost, en dat is de schaakopeningstheorie.
+   Een openingsboek geeft nooit één partij. Het geeft een
+   HOOFDVARIANT, vetgedrukt, en daaronder de ZIJVARIANTEN: wat
+   te doen als de tegenstander iets anders speelt dan u had
+   gehoopt. Dat is de hele vorm van het boek. De afwijking
+   staat er niet als uitzondering bij — de afwijking IS het
+   boek.
+
+   Een lichaam is precies zo'n tegenstander. Het speelt de
+   hoofdvariant niet elke dag mee.
+
+   DUS: deze kaart is een repertoire. Bovenaan de hoofdvariant
+   in vijf zetten. Daaronder twee zijvarianten met hun eigen
+   nummering, ingesprongen, met de voorwaarde erboven: "als de
+   knie 's ochtends stijf staat". Geen enkele daarvan is een
+   noodgeval of een tweede keus. Ze staan in hetzelfde boek,
+   op hetzelfde vel, in dezelfde letter.
+
+   DE ENIGE ZET. In de schaaknotatie staat □ voor de enige zet
+   die de stelling houdt — elke andere verliest. Op deze kaart
+   staat □ bij de ene oefening die in álle varianten terugkomt.
+   Dat is een uitspraak die geen enkele oefenkaart durft te
+   doen: dit is het ding dat niet mag vervallen, en de rest mag
+   wijken.
+
+   DE TEKENS. Chess Informant bedacht in 1966 een stelsel
+   tekens dat in elke taal hetzelfde betekent, juist omdat de
+   lezers geen gemeenschappelijke taal hadden. "+=" is "iets
+   zwaarder", "∞" is "niet te zeggen", ! is "beter dan gedacht".
+   Zes tekens zijn genoeg om een dag te noteren zonder een zin
+   te hoeven schrijven — en op deze kaart staat bij elk teken
+   ook het Nederlandse woord, want een patiënt van
+   drieëntachtig hoeft geen notatie te leren.
+
+   DE DIAGRAMMEN. Een theorieboek zet geen plaatje bij elke
+   zet: alleen bij de KRITIEKE STELLING. Elke andere oefenkaart
+   drukt een foto bij elke regel af en maakt daarmee alles even
+   belangrijk. Hier staan twee diagrammen op het vel, op de
+   twee plekken waar het misgaat. De rest is tekst — en dat
+   leest sneller.
+
+   VORM. Het schaakboek: roomkleurig papier, een klassieke
+   schreef, ingesprongen varianten met een haarlijn ervoor,
+   kapitaaltjes voor de codes, en één donkerrood voor de
+   tekens. Dicht en geleerd op het scherm; ruim en groot op
+   papier, want daar zit de patiënt.
+   ============================================================ */
+
+:root{
+  --papier:#f4f0e5;
+  --papier-2:#e9e3d3;
+  --vlak:#fbf9f2;
+  --inkt:#1b1a17;
+  --inkt-2:#413e37;
+  --grijs:#7a7469;
+  --lijn:#cec6b1;
+  --lijn-2:#e2dbc9;
+  --rood:#8c2018;
+  --rood-licht:#f0e0dc;
+  --blauw:#2a4a72;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --serif:"Iowan Old Style",Charter,Palatino,Georgia,serif;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:70px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.66 var(--sans);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--rood)}
+:focus-visible{outline:3px solid var(--rood);outline-offset:3px}
+.binnen{max-width:1180px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--inkt);color:#a8a296;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border:1px solid #4b483f;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#a8a296;text-decoration:none;padding:5px 2px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--rood)}
+.labbalk a.terug{color:#fff}
+@media (max-width:720px){.labbalk{flex-wrap:wrap;gap:10px}.labbalk .rek{display:none}}
+
+/* ---------- secties ---------- */
+.scherm{padding:var(--s6) 0;border-top:1px solid var(--lijn)}
+.scherm.diep{background:var(--papier-2)}
+.scherm.wit{background:var(--vlak)}
+.schermkop{margin-bottom:var(--s5);max-width:74ch}
+.schermkop b{display:inline-block;font:700 10px/1 var(--mono);letter-spacing:.24em;
+  text-transform:uppercase;color:var(--rood);margin-bottom:var(--s3)}
+.schermkop h2{font:400 clamp(28px,3.6vw,43px)/1.12 var(--serif);letter-spacing:-.018em;color:var(--inkt)}
+.schermkop h2 em{font-style:italic;color:var(--rood)}
+.schermkop p{margin-top:var(--s3);font:400 18px/1.62 var(--serif);color:var(--inkt-2);max-width:64ch}
+
+/* ---------- het tekenstelsel ---------- */
+.tk{display:inline-block;font:700 .96em/1 var(--mono);color:var(--rood);
+  padding:0 .1em;vertical-align:baseline}
+.tk.zw{color:var(--inkt)}
+
+/* ---------- 1 · landing ---------- */
+#landing{background:var(--vlak);border-top:0;
+  background-image:linear-gradient(to bottom,#fbf9f2 0%,#f4f0e5 100%)}
+.merkregel{display:flex;align-items:center;gap:11px;margin-bottom:var(--s5)}
+.merkregel .vlag{width:30px;height:30px;background:var(--inkt);color:var(--vlak);
+  display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--sans)}
+.merkregel .naam{font:600 15px/1 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+.merkregel .pad{font:700 11px/1 var(--mono);letter-spacing:.2em;color:var(--grijs)}
+
+.landkop{display:grid;grid-template-columns:1.06fr 380px;gap:var(--s6);align-items:start}
+@media (max-width:1020px){.landkop{grid-template-columns:1fr;gap:var(--s5)}}
+.landkop h1{font:400 clamp(36px,5.1vw,62px)/1.06 var(--serif);letter-spacing:-.022em;color:var(--inkt)}
+.landkop h1 em{display:block;font-style:italic;color:var(--rood);margin-top:.1em}
+.landkop p{margin-top:var(--s4);font:400 18.5px/1.68 var(--serif);color:var(--inkt-2);max-width:54ch}
+.landkop p b{font-weight:700;color:var(--inkt)}
+
+/* het boekfragment — dicht gezet, zoals een theorieboek */
+.boek{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s4) var(--s4) var(--s3);
+  box-shadow:0 2px 0 var(--lijn-2), 0 14px 34px rgba(27,26,23,.09)}
+.boek .eco{display:flex;align-items:baseline;gap:10px;border-bottom:2px solid var(--inkt);
+  padding-bottom:9px;margin-bottom:var(--s3)}
+.boek .eco b{font:700 12px/1 var(--mono);letter-spacing:.14em;color:var(--inkt)}
+.boek .eco span{margin-left:auto;font:400 13px/1 var(--serif);font-style:italic;color:var(--grijs)}
+.boek .hoofd{font:400 16.5px/1.58 var(--serif);color:var(--inkt)}
+.boek .hoofd b{font-weight:700}
+.boek .zij{margin-top:12px;padding-left:14px;border-left:2px solid var(--lijn);
+  font:400 14.5px/1.55 var(--serif);color:var(--inkt-2)}
+.boek .zij em{font-style:italic;color:var(--rood);font-weight:600}
+.boek .noot{margin-top:var(--s3);padding-top:11px;border-top:1px solid var(--lijn-2);
+  font:400 13.5px/1.5 var(--serif);font-style:italic;color:var(--grijs)}
+.landkop .bijschrift{margin-top:var(--s3);font:400 14.5px/1.55 var(--serif);color:var(--grijs)}
+
+.stellingen{margin-top:var(--s6);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:960px){.stellingen{grid-template-columns:1fr}}
+.stellingen div{border-top:2px solid var(--inkt);padding-top:14px}
+.stellingen h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--rood);margin-bottom:11px}
+.stellingen strong{display:block;font:400 22px/1.24 var(--serif);letter-spacing:-.014em;color:var(--inkt);margin-bottom:10px}
+.stellingen p{font-size:15.5px;line-height:1.58}
+
+/* tekenlegenda */
+.legenda{margin-top:var(--s6);border:1px solid var(--lijn);background:var(--vlak);padding:var(--s4)}
+.legenda h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--grijs);
+  border-bottom:1px solid var(--lijn-2);padding-bottom:11px;margin-bottom:var(--s3)}
+.legenda .rij{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--s3)}
+@media (max-width:900px){.legenda .rij{grid-template-columns:repeat(2,1fr);gap:var(--s4)}}
+.legenda .t{text-align:center}
+.legenda .t i{display:block;font:700 30px/1 var(--mono);font-style:normal;color:var(--rood);margin-bottom:9px}
+.legenda .t b{display:block;font:600 15px/1.2 var(--sans);letter-spacing:-.015em;color:var(--inkt)}
+.legenda .t span{display:block;margin-top:5px;font:400 13.5px/1.4 var(--serif);color:var(--grijs)}
+
+/* ---------- 2 · kiezer ---------- */
+.kiezerhoofd{display:grid;grid-template-columns:1fr 310px;gap:var(--s5);align-items:start}
+@media (max-width:1020px){.kiezerhoofd{grid-template-columns:1fr}}
+
+.boom{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s4)}
+.boomkop{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--inkt);
+  padding-bottom:10px;margin-bottom:var(--s4)}
+.boomkop h4{font:700 11px/1 var(--mono);letter-spacing:.16em;color:var(--inkt)}
+.boomkop span{margin-left:auto;font:400 14px/1 var(--serif);font-style:italic;color:var(--grijs)}
+
+.zet{display:grid;grid-template-columns:34px 78px 1fr 130px;gap:var(--s3);align-items:center;
+  padding:13px 0;border-bottom:1px solid var(--lijn-2)}
+.zet .nr{font:700 17px/1 var(--serif);color:var(--inkt);text-align:right}
+.zet .beeld{background:var(--papier);border:1px solid var(--lijn);padding:4px;height:66px;
+  display:flex;align-items:center;justify-content:center}
+.zet .beeld img{max-height:57px;width:auto;mix-blend-mode:multiply}
+.zet h5{font:600 18px/1.24 var(--sans);letter-spacing:-.02em;color:var(--inkt)}
+.zet .hoe{margin-top:4px;font:400 14.5px/1.48 var(--serif);color:var(--inkt-2);max-width:52ch}
+.zet .dos{text-align:right;font:700 13px/1.4 var(--mono);letter-spacing:.05em;color:var(--grijs)}
+.zet .dos b{display:block;font:700 20px/1.1 var(--sans);color:var(--inkt);letter-spacing:-.025em}
+.zet.enige{background:var(--rood-licht);margin:0 -12px;padding-left:12px;padding-right:12px}
+.zet.enige .nr{color:var(--rood)}
+@media (max-width:860px){
+  .zet{grid-template-columns:30px 1fr;gap:12px}
+  .zet .beeld{display:none}
+  .zet .dos{grid-column:2;text-align:left}
+}
+
+.vartak{margin-top:var(--s4);padding-left:18px;border-left:3px solid var(--rood)}
+.vartak .voorwaarde{font:600 15px/1.4 var(--serif);font-style:italic;color:var(--rood);margin-bottom:12px}
+.vartak .voorwaarde b{font-style:normal;font:700 10px/1 var(--mono);letter-spacing:.16em;
+  border:1px solid var(--rood);padding:4px 6px;margin-right:9px;vertical-align:middle}
+.vartak .zet{grid-template-columns:34px 1fr 130px}
+.vartak .zet .nr{color:var(--rood)}
+@media (max-width:860px){.vartak .zet{grid-template-columns:30px 1fr}}
+
+.zijpaneel{background:var(--inkt);color:#a8a296;padding:var(--s4);position:sticky;top:64px}
+.zijpaneel h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border-bottom:1px solid #3a382f;padding-bottom:11px;margin-bottom:var(--s3)}
+.zijpaneel .telrij{display:flex;justify-content:space-between;align-items:baseline;
+  padding:10px 0;border-bottom:1px solid #2a2822;font-size:14.5px}
+.zijpaneel .telrij b{color:#fff;font:700 14px/1 var(--mono)}
+.zijpaneel p{margin-top:var(--s3);font:400 14.5px/1.55 var(--serif);color:#8b8578}
+.zijpaneel .drukknop{margin-top:var(--s3);width:100%;border:0;background:var(--rood);color:#fff;
+  padding:14px;font:600 15px/1 var(--sans);cursor:pointer}
+
+/* ---------- 3 · cliëntkaart ---------- */
+.kaartkop{display:grid;grid-template-columns:1fr 300px;gap:var(--s5);align-items:end;
+  border-bottom:2px solid var(--inkt);padding-bottom:var(--s3);margin-bottom:var(--s4)}
+@media (max-width:900px){.kaartkop{grid-template-columns:1fr;gap:var(--s3)}}
+.kaartkop h3{font:400 30px/1.16 var(--serif);letter-spacing:-.016em;color:var(--inkt)}
+.kaartkop .sub{margin-top:7px;font:400 16px/1.5 var(--serif);color:var(--grijs)}
+.kaartkop .rechts{text-align:right;font:700 11px/1.7 var(--mono);letter-spacing:.1em;color:var(--grijs)}
+@media (max-width:900px){.kaartkop .rechts{text-align:left}}
+
+.partij{background:var(--vlak);border:1px solid var(--lijn);padding:var(--s4)}
+.partij h4{font:700 10px/1 var(--mono);letter-spacing:.2em;color:var(--grijs);margin-bottom:var(--s4)}
+.dagenrij{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+@media (max-width:820px){.dagenrij{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:540px){.dagenrij{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.dagenrij + .dagenrij{margin-top:10px}
+.dg{border:1px solid var(--lijn);background:var(--papier);padding:11px 9px;text-align:center}
+.dg b{display:block;font:700 10px/1 var(--mono);letter-spacing:.1em;color:var(--grijs)}
+.dg i{display:block;margin:10px 0 8px;font:700 27px/1 var(--mono);font-style:normal;color:var(--rood)}
+.dg span{display:block;font:400 12.5px/1.34 var(--serif);color:var(--inkt-2)}
+.dg.tak{background:var(--rood-licht);border-color:var(--rood);border-left-width:1px;padding-left:9px}
+.dg.tak .lijn{display:block;margin-top:6px;font:700 9px/1 var(--mono);letter-spacing:.12em;color:var(--rood)}
+.dg.leeg i{color:var(--lijn)}
+
+.leesuit{margin-top:var(--s5);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:900px){.leesuit{grid-template-columns:1fr}}
+.leesuit div{background:var(--papier-2);padding:var(--s4);border-top:2px solid var(--inkt)}
+.leesuit h5{font:700 10px/1 var(--mono);letter-spacing:.18em;color:var(--rood);margin-bottom:11px}
+.leesuit strong{display:block;font:400 21px/1.28 var(--serif);color:var(--inkt);margin-bottom:9px}
+.leesuit p{font-size:15.5px;line-height:1.58}
+
+/* ---------- 4 · printkaart ---------- */
+.printuitleg{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-bottom:var(--s5)}
+@media (max-width:900px){.printuitleg{grid-template-columns:1fr}}
+.printuitleg h4{font:700 10px/1 var(--mono);letter-spacing:.18em;color:var(--rood);
+  border-top:2px solid var(--inkt);padding-top:11px;margin-bottom:10px}
+.printuitleg p{font-size:15.5px;line-height:1.58}
+
+.bladhouder{background:var(--papier-2);padding:var(--s4);border:1px solid var(--lijn)}
+.bladschaal{width:100%;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;position:relative;
+  box-shadow:0 10px 40px rgba(27,26,23,.2)}
+
+/* ---- het vel: ruim gezet, want hier zit de patiënt ---- */
+.blad .rand{position:absolute;inset:10mm 11mm 9mm 11mm;display:flex;flex-direction:column}
+
+.b-kop{display:grid;grid-template-columns:1fr 54mm;gap:6mm;align-items:end;
+  border-bottom:1mm solid #000;padding-bottom:2.6mm}
+.b-kop h1{font:400 7mm/1.04 var(--serif);letter-spacing:-.015em;color:#000}
+.b-kop .wie{margin-top:1.8mm;font:400 3.7mm/1.32 var(--serif);color:#000}
+.b-kop .code{text-align:right;font:700 2.7mm/1.55 var(--mono);letter-spacing:.1em;color:#000}
+.b-kop .code b{display:block;font:700 4.6mm/1.2 var(--mono);letter-spacing:.06em}
+
+.b-inl{margin-top:1.8mm;font:400 3.6mm/1.4 var(--serif);color:#000;max-width:158mm}
+.b-inl b{font-weight:700}
+
+.b-secknop{margin-top:2.8mm;display:flex;align-items:baseline;gap:3mm;
+  border-bottom:.7mm solid #000;padding-bottom:1.3mm}
+.b-secknop h2{font:700 4.6mm/1 var(--sans);letter-spacing:-.018em;color:#000}
+.b-secknop span{margin-left:auto;font:700 2.6mm/1 var(--mono);letter-spacing:.15em;color:#000}
+
+/* de hoofdvariant: genummerde zetten, ruim */
+.b-lijn{display:grid;grid-template-columns:7mm 1fr 24mm;gap:3mm;align-items:baseline;
+  padding:1.6mm 0;border-bottom:.2mm solid #000}
+.b-lijn .n{font:700 5mm/1.05 var(--serif);color:#000}
+.b-lijn h3{font:700 4.5mm/1.14 var(--sans);letter-spacing:-.018em;color:#000}
+.b-lijn p{margin-top:.9mm;font:400 3.5mm/1.3 var(--serif);color:#000}
+.b-lijn .d{text-align:right}
+.b-lijn .d b{display:block;font:700 5.6mm/1 var(--sans);letter-spacing:-.03em;color:#000}
+.b-lijn .d span{display:block;margin-top:.9mm;font:700 2.5mm/1.24 var(--mono);letter-spacing:.08em;color:#000}
+.b-lijn.enige{border-left:1.2mm solid #000;padding-left:2.4mm;margin-left:-3.6mm}
+.b-lijn .enigemerk{display:inline-block;margin-top:1.4mm;font:700 2.7mm/1 var(--mono);
+  letter-spacing:.1em;color:#000;border:.4mm solid #000;padding:1mm 1.5mm}
+
+/* de twee diagrammen — alleen op de kritieke stellingen */
+.b-diagrammen{margin-top:2.2mm;display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.b-diag{display:grid;grid-template-columns:22mm 1fr;gap:2.6mm;align-items:center;
+  border:.5mm solid #000;padding:2mm}
+.b-diag .bld{border:.3mm solid #000;padding:1mm;height:16.5mm;display:flex;align-items:center;justify-content:center}
+.b-diag .bld img{max-height:14.5mm;width:auto}
+.b-diag h4{font:700 3.4mm/1.15 var(--sans);letter-spacing:-.01em;color:#000}
+.b-diag p{margin-top:1.2mm;font:400 3.2mm/1.32 var(--serif);color:#000}
+.b-diag .bij{margin-top:1.4mm;font:700 2.5mm/1 var(--mono);letter-spacing:.1em;color:#000}
+
+/* de zijvarianten */
+.b-takken{margin-top:2.4mm;display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.b-tak{border:.5mm solid #000;padding:2.4mm}
+.b-tak .als{font:700 3.6mm/1.28 var(--sans);letter-spacing:-.012em;color:#000;
+  border-bottom:.4mm solid #000;padding-bottom:1.4mm;margin-bottom:1.8mm}
+.b-tak .als i{display:block;font:700 2.5mm/1 var(--mono);font-style:normal;letter-spacing:.16em;
+  color:#000;margin-bottom:1.4mm}
+.b-tak ol{list-style:none;counter-reset:z}
+.b-tak li{counter-increment:z;position:relative;padding-left:6.5mm;
+  font:400 3.4mm/1.36 var(--serif);color:#000}
+.b-tak li + li{margin-top:1.4mm}
+.b-tak li:before{content:counter(z) "."; position:absolute;left:0;top:0;
+  font:700 3.4mm/1.36 var(--serif);color:#000}
+.b-tak li b{font-weight:700}
+.b-tak .slot{margin-top:1.8mm;padding-top:1.4mm;border-top:.2mm solid #000;
+  font:400 3.1mm/1.34 var(--serif);font-style:italic;color:#000}
+
+/* de tekens + veertien dagen */
+.b-reeks{margin-top:auto;padding-top:2.4mm;border-top:.8mm solid #000}
+.b-tekens{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:2.2mm;margin-bottom:2.2mm}
+.b-teken{text-align:center;border:.3mm solid #000;padding:1.4mm 1mm}
+.b-teken i{display:block;font:700 4.8mm/1 var(--mono);font-style:normal;color:#000}
+.b-teken b{display:block;margin-top:1.2mm;font:700 2.9mm/1.15 var(--sans);color:#000}
+.b-teken span{display:block;margin-top:.7mm;font:400 2.6mm/1.2 var(--serif);color:#000}
+
+.b-reeks .titel{display:flex;align-items:baseline;gap:3mm;margin-bottom:2.2mm}
+.b-reeks h4{font:700 3.2mm/1 var(--sans);letter-spacing:.02em;color:#000}
+.b-reeks .titel span{margin-left:auto;font:400 3mm/1.3 var(--serif);color:#000}
+.b-dagen{display:grid;grid-template-columns:repeat(14,1fr);gap:1.4mm}
+.b-dag{border:.3mm solid #000;text-align:center;padding:1.4mm .5mm}
+.b-dag b{display:block;font:700 2.4mm/1 var(--mono);letter-spacing:.04em;color:#000}
+.b-dag i{display:block;margin-top:1.1mm;height:5mm;border-top:.2mm dotted #000}
+
+.b-voet{margin-top:2.8mm;padding-top:2mm;border-top:.8mm solid #000;
+  display:grid;grid-template-columns:1fr 52mm;gap:5mm;align-items:start}
+.b-voet h4{font:700 2.7mm/1 var(--mono);letter-spacing:.15em;color:#000;margin-bottom:1.5mm}
+.b-voet p{font:400 3.2mm/1.4 var(--serif);color:#000}
+.b-voet .prak{text-align:right;font:600 2.6mm/1.68 var(--mono);letter-spacing:.07em;color:#000}
+.b-voet .prak b{display:block;font:700 3.6mm/1.3 var(--sans);letter-spacing:-.01em;color:#000}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#9d9789;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border-top:2px solid #4b483f;padding-top:var(--s2);margin-bottom:var(--s3)}
+footer.uitleiding p,footer.uitleiding li{font-size:15.5px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li + li{margin-top:9px}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT — één inkt. De zijvarianten zijn omkaderd, niet
+   gekleurd; de enige zet heeft een zware kantlijn, geen vlak.
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .schermkop,.printuitleg{display:none !important}
+  .scherm{padding:0 !important;background:#fff !important;border:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  .bladhouder{background:#fff !important;border:0 !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 65</span>
+  <strong style="font:600 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Variantenboek</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="vlag" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 65 · VARIANTENBOEK</span>
+    </div>
+
+    <div class="landkop">
+      <div>
+        <h1>Elke kaart beschrijft de dag waarop alles meezit.<em>Dit boek beschrijft de andere.</em></h1>
+        <p>Op een oefenkaart staat één rij oefeningen, in één volgorde, met één dosering. Wat er
+          moet gebeuren als de knie 's ochtends stijf staat, als er slecht geslapen is, als er
+          bezoek komt — daar zwijgt het vel over. En omdat het vel zwijgt, <b>verzint de patiënt
+          zelf iets</b>. Meestal: niets.</p>
+        <p>Eén vakgebied heeft dat probleem lang geleden opgelost. Een schaakopeningsboek geeft
+          nooit één partij. Het geeft een <b>hoofdvariant</b>, vetgedrukt, en daaronder de
+          <b>zijvarianten</b>: wat te doen als de tegenstander iets anders speelt dan u hoopte. De
+          afwijking staat er niet als uitzondering bij — de afwijking ís het boek.</p>
+        <p>Een lichaam is precies zo'n tegenstander. Het speelt de hoofdvariant niet elke dag mee.</p>
+      </div>
+
+      <div>
+        <div class="boek">
+          <div class="eco">
+            <b>K-04 · KNIE, FASE 2</b>
+            <span>hoofdvariant</span>
+          </div>
+          <p class="hoofd">
+            <b>1.</b> Knie naar de borst 8× <span class="tk zw">□</span> &nbsp;
+            <b>2.</b> Hakken zakken 15× <span class="tk">=</span> &nbsp;
+            <b>3.</b> Eén been, 10 tellen 3+3 &nbsp;
+            <b>4.</b> Opstaan uit de stoel 8× <span class="tk">+=</span> &nbsp;
+            <b>5.</b> Wandelen 12 min.
+          </p>
+          <p class="zij">
+            <em>a)</em> Bij ochtendstijfheid: <b>2.</b> Hakken zakken zittend 15× &nbsp;
+            <b>3.</b> Wandelen 6 min. — en 4 vervalt <span class="tk">∞</span>
+          </p>
+          <p class="zij">
+            <em>b)</em> Bij een slechte nacht: alleen <b>1.</b> <span class="tk zw">□</span> — dit
+            is een volledige dag, geen halve.
+          </p>
+          <p class="noot">□ enige zet · = zoals bedacht · += iets zwaarder · ∞ niet te zeggen</p>
+        </div>
+        <p class="bijschrift">Vier regels theorie. De hele week zit erin, inclusief de dagen
+          waarop er niets van klopt.</p>
+      </div>
+    </div>
+
+    <div class="stellingen">
+      <div>
+        <h4>DE ZIJVARIANT</h4>
+        <strong>De afwijking staat in dezelfde letter</strong>
+        <p>Niet kleiner, niet achterop, niet als “tip”. Wie de zijvariant wegstopt, zegt dat de
+          slechte dag minder echt is dan de goede — en dat is precies de dag waarop de kaart
+          gebruikt wordt.</p>
+      </div>
+      <div>
+        <h4>DE ENIGE ZET</h4>
+        <strong><span class="tk zw">□</span> — dit vervalt nooit</strong>
+        <p>In de schaaknotatie staat □ voor de zet die als enige de stelling houdt. Op deze kaart
+          staat het teken bij de ene oefening die in álle varianten terugkomt. Geen enkele
+          oefenkaart durft zo'n uitspraak te doen.</p>
+      </div>
+      <div>
+        <h4>HET DIAGRAM</h4>
+        <strong>Alleen op de kritieke stelling</strong>
+        <p>Een theorieboek zet geen plaatje bij elke zet. Wie bij elke regel een foto drukt, maakt
+          alles even belangrijk. Op dit vel staan twee beelden — op de twee plekken waar het
+          misgaat.</p>
+      </div>
+    </div>
+
+    <div class="legenda">
+      <h4>ZES TEKENS — HET HELE STELSEL</h4>
+      <div class="rij">
+        <div class="t"><i>□</i><b>Enige zet</b><span>Dit vervalt nooit</span></div>
+        <div class="t"><i>=</i><b>Gelijk</b><span>Ging zoals bedacht</span></div>
+        <div class="t"><i>+=</i><b>Iets zwaarder</b><span>Gedaan, maar het kostte moeite</span></div>
+        <div class="t"><i>±</i><b>Duidelijk zwaarder</b><span>Ingekort of gestopt</span></div>
+        <div class="t"><i>!</i><b>Meevaller</b><span>Beter dan verwacht</span></div>
+        <div class="t"><i>∞</i><b>Onduidelijk</b><span>Niet te zeggen — ook een antwoord</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm diep" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 2 · de oefeningen-kiezer</b>
+      <h2>Kiezen is een <em>repertoire</em> samenstellen, geen lijst</h2>
+      <p>De fysiotherapeut zet eerst de hoofdvariant, en hangt daar takken aan: één voor de stijve
+        ochtend, één voor de slechte nacht. De kiezer laat bij elke tak zien wat er <b>vervalt</b>
+        en wat er <b>blijft</b> — en bewaakt dat de <span class="tk zw">□</span>-oefening in elke
+        tak terugkomt, want anders is het geen variant maar een tweede programma.</p>
+    </div>
+
+    <div class="kiezerhoofd">
+      <div class="boom">
+        <div class="boomkop">
+          <h4>HOOFDVARIANT — K-04 · KNIE, FASE 2</h4>
+          <span>vijf zetten · ± 22 minuten</span>
+        </div>
+
+        <div class="zet enige">
+          <div class="nr">1.</div>
+          <div class="beeld"><img src="/images/rug/knie-naar-borst-liggend-line-v1.png" alt="Knie naar de borst, liggend"/></div>
+          <div>
+            <h5>Knie naar de borst, liggend <span class="tk zw">□</span></h5>
+            <p class="hoe">Op bed, vóór u opstaat. Eén knie rustig naar u toe, tel tot vijf, daarna
+              het andere been. Komt in élke variant terug.</p>
+          </div>
+          <div class="dos"><b>8×</b>PER BEEN</div>
+        </div>
+
+        <div class="zet">
+          <div class="nr">2.</div>
+          <div class="beeld"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Hakken langzaam laten zakken"/></div>
+          <div>
+            <h5>Op uw tenen en langzaam zakken</h5>
+            <p class="hoe">Handen licht op het aanrecht, niet leunen. Het zakken is de oefening.</p>
+          </div>
+          <div class="dos"><b>15×</b>OCHTEND</div>
+        </div>
+
+        <div class="zet">
+          <div class="nr">3.</div>
+          <div class="beeld"><img src="/images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png" alt="Eenbeenstand met steun"/></div>
+          <div>
+            <h5>Eén been, tellen tot tien</h5>
+            <p class="hoe">Bij het aanrecht, één vinger aan het blad. Til één voet los en tel
+              rustig tot tien.</p>
+          </div>
+          <div class="dos"><b>3 + 3</b>L / R</div>
+        </div>
+
+        <div class="zet">
+          <div class="nr">4.</div>
+          <div class="beeld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit een stoel"/></div>
+          <div>
+            <h5>Opstaan uit de stoel <span class="tk">+=</span></h5>
+            <p class="hoe">Zonder de leuning te gebruiken. De zwaarste zet van de week — en de
+              eerste die in beide takken vervalt.</p>
+          </div>
+          <div class="dos"><b>8×</b>2 RONDEN</div>
+        </div>
+
+        <div class="zet">
+          <div class="nr">5.</div>
+          <div class="beeld"><img src="/images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png" alt="Gewicht verplaatsen zijwaarts"/></div>
+          <div>
+            <h5>Wandelen, buiten om</h5>
+            <p class="hoe">Twaalf minuten in één stuk, tempo naar eigen keuze. Onderweg mag alles.</p>
+          </div>
+          <div class="dos"><b>12′</b>DAGELIJKS</div>
+        </div>
+
+        <div class="vartak">
+          <p class="voorwaarde"><b>TAK A</b> als de knie 's ochtends stijf staat</p>
+          <div class="zet enige">
+            <div class="nr">1.</div>
+            <div><h5>Knie naar de borst, liggend <span class="tk zw">□</span></h5>
+              <p class="hoe">Ongewijzigd. Dit is de zet die de stelling houdt.</p></div>
+            <div class="dos"><b>8×</b>PER BEEN</div>
+          </div>
+          <div class="zet">
+            <div class="nr">2.</div>
+            <div><h5>Hakken zakken — nu <em>zittend</em></h5>
+              <p class="hoe">Dezelfde beweging op een stoel, zonder het eigen gewicht erbij.</p></div>
+            <div class="dos"><b>15×</b>OCHTEND</div>
+          </div>
+          <div class="zet">
+            <div class="nr">3.</div>
+            <div><h5>Wandelen, korter <span class="tk">∞</span></h5>
+              <p class="hoe">Zes minuten. Zet 3 en 4 vervallen — dat is de variant, niet een halve
+                dag.</p></div>
+            <div class="dos"><b>6′</b>DAGELIJKS</div>
+          </div>
+        </div>
+
+        <div class="vartak">
+          <p class="voorwaarde"><b>TAK B</b> na een slechte nacht, of bij griep</p>
+          <div class="zet enige">
+            <div class="nr">1.</div>
+            <div><h5>Knie naar de borst, liggend <span class="tk zw">□</span></h5>
+              <p class="hoe">Alleen dit. En dit is een volledige dag — er valt niets in te halen.</p></div>
+            <div class="dos"><b>8×</b>PER BEEN</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="zijpaneel">
+        <h4>HET REPERTOIRE</h4>
+        <div class="telrij"><span>Hoofdvariant</span><b>5 zetten</b></div>
+        <div class="telrij"><span>Tak A · stijve ochtend</span><b>3 zetten</b></div>
+        <div class="telrij"><span>Tak B · slechte nacht</span><b>1 zet</b></div>
+        <div class="telrij"><span>Enige zet <span class="tk zw">□</span></span><b>in alle 3</b></div>
+        <div class="telrij"><span>Diagrammen op het vel</span><b>2</b></div>
+        <p>De kiezer weigert een tak zonder de <span class="tk zw">□</span>-oefening: dan is het
+          geen variant maar een ander programma, en dat hoort niet op hetzelfde vel.</p>
+        <button class="drukknop" type="button">Vel drukken · A4</button>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm wit" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 3 · de digitale cliëntkaart</b>
+      <h2>Niet hoe vaak — <em>welke variant</em></h2>
+      <p>Wat er terugkomt is geen percentage maar een <b>partijverloop</b>: welke tak op welke dag
+        gespeeld is, en met welk teken erbij. Vier dagen tak A op rij is een ander gesprek dan vier
+        losse. En een dag met <span class="tk">∞</span> — “niet te zeggen” — is een geldig
+        antwoord dat op geen enkel formulier past.</p>
+    </div>
+
+    <div class="kaartkop">
+      <div>
+        <h3>Mevrouw H. Bosma — K-04, knie rechts, week 3 en 4</h3>
+        <p class="sub">Veertien dagen, met een balpen genoteerd op het vel van 24 augustus.</p>
+      </div>
+      <div class="rechts">FYSIOTHERAPIE DE BOSKANT<br/>REPERTOIRE K-04 · UITGAVE 2<br/>OPGEHAALD 07.09.2026</div>
+    </div>
+
+    <div class="partij">
+      <h4>HET VERLOOP — VEERTIEN DAGEN</h4>
+
+      <div class="dagenrij">
+        <div class="dg"><b>MA 25</b><i>=</i><span>Hoofdvariant</span></div>
+        <div class="dg"><b>DI 26</b><i>=</i><span>Hoofdvariant</span></div>
+        <div class="dg tak"><b>WO 27</b><i>±</i><span>Knie dik na het staan</span><span class="lijn">TAK A</span></div>
+        <div class="dg tak"><b>DO 28</b><i>∞</i><span>Niet te zeggen</span><span class="lijn">TAK A</span></div>
+        <div class="dg"><b>VR 29</b><i>+=</i><span>Gedaan, kostte moeite</span></div>
+        <div class="dg"><b>ZA 30</b><i>!</i><span>Trap zonder leuning</span></div>
+        <div class="dg"><b>ZO 31</b><i>=</i><span>Hoofdvariant</span></div>
+      </div>
+
+      <div class="dagenrij">
+        <div class="dg tak"><b>MA 01</b><i>=</i><span>Bruiloft geweest</span><span class="lijn">TAK B</span></div>
+        <div class="dg tak"><b>DI 02</b><i>=</i><span>Nog moe</span><span class="lijn">TAK B</span></div>
+        <div class="dg"><b>WO 03</b><i>+=</i><span>Weer volledig</span></div>
+        <div class="dg"><b>DO 04</b><i>=</i><span>Hoofdvariant</span></div>
+        <div class="dg"><b>VR 05</b><i>=</i><span>Hoofdvariant</span></div>
+        <div class="dg tak"><b>ZA 06</b><i>±</i><span>Slecht geslapen</span><span class="lijn">TAK A</span></div>
+        <div class="dg"><b>ZO 07</b><i>!</i><span>Twaalf minuten vlot</span></div>
+      </div>
+    </div>
+
+    <div class="leesuit">
+      <div>
+        <h5>WAT HET VERLOOP ZEGT</h5>
+        <strong>Nul overgeslagen dagen in veertien</strong>
+        <p>Er is geen enkele dag zonder zet. Vier keer werd er uitgeweken, en dat staat er als
+          uitwijken — niet als gemis. Op een gewone kaart hadden hier vier lege hokjes gestaan en
+          was het beeld een programma dat maar half gehaald werd.</p>
+      </div>
+      <div>
+        <h5>WAT OPVALT</h5>
+        <strong>Tak A hangt aan het staan, niet aan de knie</strong>
+        <p>27 augustus en 6 september volgen allebei op een dag met veel staan. De tak zelf werkt;
+          de <em>voorwaarde</em> moet worden bijgesteld — “na een dag met veel staan” is
+          bruikbaarder dan “bij ochtendstijfheid”.</p>
+      </div>
+      <div>
+        <h5>WAT ER VERANDERT</h5>
+        <strong>Zet 4 gaat omhoog, tak A blijft</strong>
+        <p>Opstaan uit de stoel staat drie keer op <span class="tk">=</span> en één keer op
+          <span class="tk">!</span>: de <span class="tk">+=</span> van uitgave 1 klopt niet meer.
+          Uitgave 3 verhoogt die zet en laat de takken ongemoeid.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Scherm 4 · de A4-printkaart</b>
+      <h2>Het vel — hoofdvariant boven, twee takken eronder, in dezelfde letter</h2>
+      <p>Op papier draait de dichtheid om: de theorie is geleerd op het scherm, het vel is
+        <b>ruim</b>. Zetten op 4,5 mm koppen en 3,5 mm schreeftekst, de takken in een kader van
+        gelijke zwaarte, twee diagrammen op de kritieke stellingen, en onderaan zes tekens met het
+        Nederlandse woord erbij — niemand hoeft een notatie te leren.</p>
+    </div>
+
+    <div class="printuitleg">
+      <div>
+        <h4>WAAROM DE TAKKEN NIET KLEINER ZIJN</h4>
+        <p>Een zijvariant in kleine letter zegt: dit telt half. Op dit vel hebben de takken
+          <b>hetzelfde kader en dezelfde korpsgrootte</b> als de hoofdvariant. Alleen de kop
+          verschilt.</p>
+      </div>
+      <div>
+        <h4>WAAROM SLECHTS TWEE BEELDEN</h4>
+        <p>Bij vijf beelden is geen enkele belangrijk. De twee diagrammen staan op de plek waar het
+          fout gaat: de <b>houding bij het zakken</b> en de <b>stoelhoogte</b> bij het opstaan.</p>
+      </div>
+      <div>
+        <h4>WAAROM DE TEKENS MET WOORDEN</h4>
+        <p><b>+=</b> betekent niets voor wie het nooit zag. Naast elk teken staat één woord in gewoon
+          Nederlands, op <b>2,9 mm</b> — en wie de tekens negeert en het woord omcirkelt, doet het
+          goed.</p>
+      </div>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="b-kop">
+              <div>
+                <h1>Uw repertoire</h1>
+                <p class="wie">Mevrouw H. Bosma · knie rechts · Fysiotherapie de Boskant ·
+                  week 3 en 4</p>
+              </div>
+              <div class="code">
+                <b>K-04</b>
+                KNIE · FASE 2<br/>
+                UITGAVE 2 · 24.08.2026
+              </div>
+            </div>
+
+            <p class="b-inl">Bovenaan staat de hoofdvariant: wat u doet op een gewone dag.
+              Daaronder staan twee takken, in dezelfde letter en hetzelfde kader.
+              <b>Een tak is geen halve dag — het is de dag.</b></p>
+
+            <div class="b-secknop">
+              <h2>Hoofdvariant — een gewone dag</h2>
+              <span>VIJF ZETTEN · ± 22 MINUTEN</span>
+            </div>
+
+            <div class="b-lijn enige">
+              <div class="n">1.</div>
+              <div>
+                <h3>Knie naar de borst, liggend &nbsp;□</h3>
+                <p>Op bed, vóór u opstaat. Trek één knie rustig naar u toe, tel tot vijf, daarna
+                  het andere been.</p>
+                <span class="enigemerk">□ ENIGE ZET — DEZE VERVALT NOOIT, IN GEEN ENKELE TAK</span>
+              </div>
+              <div class="d"><b>8×</b><span>PER<br/>BEEN</span></div>
+            </div>
+
+            <div class="b-lijn">
+              <div class="n">2.</div>
+              <div>
+                <h3>Op uw tenen en langzaam zakken</h3>
+                <p>Handen licht op het aanrecht, niet leunen. Kom rustig omhoog en laat de hakken
+                  daarna langzaam zakken. Het zakken is de oefening.</p>
+              </div>
+              <div class="d"><b>15×</b><span>ELKE<br/>OCHTEND</span></div>
+            </div>
+
+            <div class="b-lijn">
+              <div class="n">3.</div>
+              <div>
+                <h3>Eén been, tellen tot tien</h3>
+                <p>Bij het aanrecht, één vinger aan het blad. Til één voet los en tel rustig tot
+                  tien. Daarna het andere been.</p>
+              </div>
+              <div class="d"><b>3 + 3</b><span>LINKS<br/>RECHTS</span></div>
+            </div>
+
+            <div class="b-lijn">
+              <div class="n">4.</div>
+              <div>
+                <h3>Opstaan uit de stoel</h3>
+                <p>Van een gewone keukenstoel: voeten naar achteren, neus boven de knieën, en
+                  omhoog zonder de leuning te gebruiken.</p>
+              </div>
+              <div class="d"><b>8×</b><span>TWEE<br/>RONDEN</span></div>
+            </div>
+
+            <div class="b-lijn">
+              <div class="n">5.</div>
+              <div>
+                <h3>Wandelen, buiten om</h3>
+                <p>Twaalf minuten in één stuk, tempo naar eigen keuze.</p>
+              </div>
+              <div class="d"><b>12′</b><span>ELKE<br/>DAG</span></div>
+            </div>
+
+            <div class="b-diagrammen">
+              <div class="b-diag">
+                <div class="bld"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt=""/></div>
+                <div>
+                  <h4>Kritieke stelling bij zet 2</h4>
+                  <p>De hakken gaan in vier tellen omlaag, niet in één. Wie hier valt in plaats van
+                    zakt, doet de oefening niet.</p>
+                  <div class="bij">DIAGRAM 1</div>
+                </div>
+              </div>
+              <div class="b-diag">
+                <div class="bld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt=""/></div>
+                <div>
+                  <h4>Kritieke stelling bij zet 4</h4>
+                  <p>De stoel is een keukenstoel, geen fauteuil. Te laag maakt de zet zwaarder dan
+                    bedoeld — en dan klopt het teken niet meer.</p>
+                  <div class="bij">DIAGRAM 2</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="b-takken">
+              <div class="b-tak">
+                <div class="als"><i>TAK A</i>Als de knie 's ochtends stijf staat</div>
+                <ol>
+                  <li><b>Knie naar de borst, liggend □</b> — ongewijzigd, 8× per been.</li>
+                  <li><b>Hakken zakken, zittend</b> — dezelfde beweging op een stoel, 15×, zonder
+                    uw eigen gewicht erbij.</li>
+                  <li><b>Wandelen 6 minuten</b> in plaats van twaalf.</li>
+                </ol>
+                <p class="slot">Zet 3 en 4 vervallen vandaag. Dat is de tak — niet een halve dag.</p>
+              </div>
+              <div class="b-tak">
+                <div class="als"><i>TAK B</i>Na een slechte nacht, of bij griep</div>
+                <ol>
+                  <li><b>Knie naar de borst, liggend □</b> — 8× per been, en verder niets.</li>
+                </ol>
+                <p class="slot">Dit is een volledige dag. Er valt morgen niets in te halen, en de
+                  week telt gewoon door.</p>
+              </div>
+            </div>
+
+            <div class="b-reeks">
+              <div class="b-tekens">
+                <div class="b-teken"><i>□</i><b>Enige zet</b><span>vervalt nooit</span></div>
+                <div class="b-teken"><i>=</i><b>Gelijk</b><span>ging zoals bedacht</span></div>
+                <div class="b-teken"><i>+=</i><b>Zwaarder</b><span>gedaan, kostte moeite</span></div>
+                <div class="b-teken"><i>±</i><b>Veel zwaarder</b><span>ingekort of gestopt</span></div>
+                <div class="b-teken"><i>!</i><b>Meevaller</b><span>beter dan verwacht</span></div>
+                <div class="b-teken"><i>∞</i><b>Onduidelijk</b><span>niet te zeggen</span></div>
+              </div>
+
+              <div class="titel">
+                <h4>VEERTIEN DAGEN — ZET ER ÉÉN TEKEN OF ÉÉN WOORD BIJ</h4>
+                <span>Noteer ook de tak: A, B of niets.</span>
+              </div>
+              <div class="b-dagen">
+                <div class="b-dag"><b>MA</b><i></i></div>
+                <div class="b-dag"><b>DI</b><i></i></div>
+                <div class="b-dag"><b>WO</b><i></i></div>
+                <div class="b-dag"><b>DO</b><i></i></div>
+                <div class="b-dag"><b>VR</b><i></i></div>
+                <div class="b-dag"><b>ZA</b><i></i></div>
+                <div class="b-dag"><b>ZO</b><i></i></div>
+                <div class="b-dag"><b>MA</b><i></i></div>
+                <div class="b-dag"><b>DI</b><i></i></div>
+                <div class="b-dag"><b>WO</b><i></i></div>
+                <div class="b-dag"><b>DO</b><i></i></div>
+                <div class="b-dag"><b>VR</b><i></i></div>
+                <div class="b-dag"><b>ZA</b><i></i></div>
+                <div class="b-dag"><b>ZO</b><i></i></div>
+              </div>
+            </div>
+
+            <div class="b-voet">
+              <div>
+                <h4>ALS U DRIE DAGEN IN TAK B ZIT</h4>
+                <p>Dan is de hoofdvariant te zwaar geworden, en dat is informatie — geen falen.
+                  Bel gerust; dan komt er een nieuwe uitgave met een lichtere hoofdvariant. En als
+                  u een dag helemáál niets kunt: zet er een streep, en begin morgen weer bij zet 1.
+                  Het boek loopt niet weg.</p>
+              </div>
+              <div class="prak">
+                <b>Fysiotherapie de Boskant</b>
+                RIETLAAN 12 · 3812 AB<br/>
+                TELEFOON 033 — 461 22 08<br/>
+                VOLGENDE UITGAVE 07.09.2026
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen">
+    <div>
+      <h4>DE GEDACHTE</h4>
+      <p>Een oefenkaart is geen partij maar een repertoire. Wie alleen de hoofdvariant afdrukt,
+        laat de patiënt improviseren op precies de dagen waarop improviseren het slechtst gaat —
+        en krijgt dan een leeg hokje terug in plaats van een zet.</p>
+    </div>
+    <div>
+      <h4>WAAR HET VANDAAN KOMT</h4>
+      <ul>
+        <li>De schaakopeningstheorie: hoofdvariant vet, zijvarianten ingesprongen, de afwijking als hoofdzaak</li>
+        <li>Chess Informant (1966) en zijn taalloze tekenstelsel, hier in de ASCII-vorm die de schaakliteratuur zelf ook gebruikt — <b>+=</b>, ±, ∞, □, !</li>
+        <li>De ECO-codering: elke opening een korte code, elk repertoire een uitgave met een nummer</li>
+        <li>Het diagram alleen bij de kritieke stelling, nooit bij elke zet</li>
+        <li>Boektypografie: roomkleurig papier, klassieke schreef, haarlijnen langs de varianten</li>
+      </ul>
+    </div>
+    <div>
+      <h4>NAAST DE KAART</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de ontwerpgalerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var f=Math.min(1,schaal.clientWidth/blad.offsetWidth);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>
