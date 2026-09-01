@@ -147,6 +147,9 @@ try {
   const appHtml = await appPagina.text();
   assert.match(appHtml, /id="fp1uit"/);
   assert.match(appHtml, /therapeut@example\.nl/);
+  assert.doesNotMatch(appHtml, /id="fp1uit"[^>]*position:fixed/);
+  assert.ok(appHtml.indexOf('id="menuHelp"') < appHtml.indexOf('id="fp1uit"'));
+  assert.ok(appHtml.indexOf('id="fp1uit"') < appHtml.indexOf('class="spacer"'));
 
   const uitgelogd = await fetch(origin + "/api/v1/logout", {
     method: "POST",

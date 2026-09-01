@@ -314,22 +314,23 @@ async function serveerV1Inlog(response) {
     await send(response, 200, "text/html; charset=utf-8", html);
   } catch { await send(response, 500, "text/plain; charset=utf-8", "Inlogpagina niet beschikbaar."); }
 }
-// de ingelogde v1-app met een discrete uitlogknop rechtsboven (het ingelogde
-// e-mailadres + Uitloggen). De rest van de app blijft ongewijzigd.
+// de ingelogde v1-app met accountbediening linksboven, direct naast Help. Zo
+// blijft de actiewerkbalk rechts (waaronder Print) vrij en in zijn vaste volgorde.
 async function serveerV1App(response, email) {
   response.setHeader("cache-control", "no-store");
   const veiligEmail = String(email).replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
-  const balk = '<div id="fp1uit" style="position:fixed;top:8px;right:10px;z-index:99999;display:flex;gap:8px;align-items:center;'
-    + 'font:12px/1.2 system-ui,-apple-system,sans-serif;background:rgba(255,255,255,.92);border:1px solid #e3dbc6;'
-    + 'border-radius:999px;padding:5px 6px 5px 12px;box-shadow:0 2px 8px rgba(60,50,20,.12)">'
-    + '<span style="color:#6b6557;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + veiligEmail + '</span>'
-    + '<button type="button" id="fp1uitknop" style="cursor:pointer;border:1px solid #232019;background:#232019;color:#fff;'
-    + 'border-radius:999px;padding:5px 12px;font:600 12px/1 system-ui">Uitloggen</button></div>'
-    + '<script>document.getElementById("fp1uitknop").addEventListener("click",function(){'
+  const account = '<span id="fp1uit" style="display:inline-flex;gap:7px;align-items:center;margin-left:5px;padding-left:10px;'
+    + 'border-left:1px solid #e4e7ec;font:12px/1.2 system-ui,-apple-system,sans-serif">'
+    + '<span style="color:#667085;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + veiligEmail + '</span>'
+    + '<button type="button" id="fp1uitknop" style="cursor:pointer;border:1px solid #d0d5dd;background:#fff;color:#344054;'
+    + 'border-radius:8px;padding:5px 9px;font:600 12px/1 system-ui;box-shadow:0 1px 2px rgba(16,24,40,.06)">Uitloggen</button></span>';
+  const script = '<script>document.getElementById("fp1uitknop").addEventListener("click",function(){'
     + 'fetch("/api/v1/logout",{method:"POST"}).then(function(){location.reload();}).catch(function(){location.reload();});});</script>';
   try {
     let html = await readFile(join(publicDir, "index.html"), "utf8");
-    html = html.includes("</body>") ? html.replace("</body>", balk + "</body>") : html + balk;
+    const help = '<div class="menu"><button type="button" class="mi" id="menuHelp">Help</button>';
+    html = html.replace(help, help + account);
+    html = html.includes("</body>") ? html.replace("</body>", script + "</body>") : html + script;
     await send(response, 200, "text/html; charset=utf-8", html);
   } catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
 }
