@@ -3806,51 +3806,56 @@
   "naam": "Alternating lunge jumps",
   "groep": "Agility",
   "img": "images/cardio/alternating-lunge-jumps-line-v1.png",
-  "kaartImg": "images/cardio/alternating-lunge-jumps-line-v1.png",
+  "kaartImg": "images/cardio/alternating-lunge-jumps-avatar-v8.jpg",
   "uitleg": "Kom gecontroleerd in een uitvalspas en wissel tijdens een kleine sprong van voorste been. Land zacht in de uitvalspas en houd je romp rechtop.",
   "exerciseId": "fp_027779ceb994b08e",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Box jumps",
   "groep": "Agility",
   "img": "images/cardio/box-jumps-line-v1.png",
-  "kaartImg": "images/cardio/box-jumps-line-v1.png",
+  "kaartImg": "images/cardio/box-jumps-avatar-v8.jpg",
   "uitleg": "Zak licht door je knieen voor een stabiele opstapbox. Spring gecontroleerd op de box, land zacht met beide voeten en kom rustig weer af.",
   "exerciseId": "fp_3f0d4e80a394619a",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Long jumps",
   "groep": "Agility",
   "img": "images/cardio/long-jumps-line-v1.png",
-  "kaartImg": "images/cardio/long-jumps-line-v1.png",
+  "kaartImg": "images/cardio/long-jumps-avatar-v8.jpg",
   "uitleg": "Zak licht door je knieen, zwaai je armen naar achteren en spring met beide voeten gecontroleerd naar voren. Land zacht met gebogen knieen en je voeten naast elkaar.",
   "exerciseId": "fp_efc6b34c568c21b4",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Skate jumps",
   "groep": "Agility",
   "img": "images/cardio/skate-jumps-line-v1.png",
-  "kaartImg": "images/cardio/skate-jumps-line-v1.png",
+  "kaartImg": "images/cardio/skate-jumps-avatar-v8.jpg",
   "uitleg": "Spring zijwaarts van het ene been naar het andere. Land zacht met een licht gebogen knie en breng het vrije been schuin achter het standbeen langs.",
   "exerciseId": "fp_896e36079b2d4562",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Sprints",
   "groep": "Agility",
   "img": "images/cardio/sprints-line-v1.png",
-  "kaartImg": "images/cardio/sprints-line-v1.png",
+  "kaartImg": "images/cardio/sprints-avatar-v8.jpg",
   "uitleg": "Vertrek vanuit een lichte vooroverhelling en versnel met korte krachtige passen. Houd je romp stabiel en gebruik je armen in tegengestelde richting van je benen.",
   "exerciseId": "fp_3b9e14e7264e71a4",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Snap jumps",
