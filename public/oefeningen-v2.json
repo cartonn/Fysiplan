@@ -3982,21 +3982,23 @@
   "naam": "Swiss ball back ext",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-back-ext-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-back-ext-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-back-ext-avatar-v8.jpg",
   "uitleg": "Lig met je buik op de oefenbal en houd je voeten stevig op de grond. Hef je romp rustig tot hij in lijn is met je benen en zak gecontroleerd terug.",
   "exerciseId": "fp_9b53e6f12f136603",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball push up",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-push-up-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-push-up-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-push-up-avatar-v8.jpg",
   "uitleg": "Neem een hoge plank aan met je schenen op de oefenbal. Buig je ellebogen gecontroleerd voor een push-up, houd je lichaam lang en druk weer omhoog.",
   "exerciseId": "fp_237e203f85cb96f8",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball leg lifts",
