@@ -10,15 +10,22 @@
     "sourceEntries": 285,
     "readyPairsReviewed": 264,
     "pendingPairs": 21,
-    "approvedPairs": 179,
-    "rejectedPairs": 85
+    "approvedPairs": 0,
+    "rejectedPairs": 264
   },
-  "publishedPairCountAfterReview": 394,
+  "publishedPairCountAfterReview": 215,
   "strictPrintReview": {
     "protectedLegacyPairs": 215,
-    "extensionPairsRechecked": 216,
-    "additionalRejectedPairs": 37,
-    "rule": "De vaste V1-set blijft onaangeraakt; alleen uitbreidingsbeelden die ook in een van twaalf A4-kaartvakken direct leesbaar zijn blijven in V2."
+    "extensionPairsRechecked": 264,
+    "additionalRejectedPairs": 216,
+    "rule": "De vaste V1-set blijft onaangeraakt; alle V2-uitbreidingsbeelden zijn verwijderd zodat V2 uitsluitend de 215 V1-oefeningen publiceert."
+  },
+  "bulkRemoval": {
+    "individuallyDocumentedRejectedPairs": 85,
+    "remainingPairsRemoved": 179,
+    "unpublishedSourceEntries": 21,
+    "totalExtensionEntriesBlocked": 285,
+    "reason": "Productbesluit: verwijder alles behalve de 215 oefeningen die op V1 staan."
   },
   "criteria": [
     "De kleurfoto en lijntekening tonen dezelfde oefening en dezelfde fasen.",

@@ -513,41 +513,114 @@
   ],
   "catalogueCount": 500,
   "selectedCount": 500,
-  "colorReady": 394,
-  "lineReady": 394,
-  "pairReady": 394,
+  "colorReady": 215,
+  "lineReady": 215,
+  "pairReady": 215,
   "generated": 0,
   "pendingColor": [
+    "Schouder voorwaarts heffen – met stok",
+    "Schouder voorwaarts heffen – actief",
     "Schouder voorwaarts heffen – isometrisch tegen de muur",
+    "Schouder voorwaarts heffen – met elastiek",
+    "Schouder voorwaarts heffen – functioneel reikend",
+    "Schouder zijwaarts heffen – met stok",
+    "Schouder zijwaarts heffen – actief",
     "Schouder zijwaarts heffen – isometrisch tegen de muur",
+    "Schouder zijwaarts heffen – met elastiek",
+    "Schouder zijwaarts heffen – functioneel reikend",
+    "Schouder naar buiten draaien – actief",
     "Schouder naar buiten draaien – isometrisch tegen de muur",
+    "Schouder naar buiten draaien – met elastiek",
+    "Schouder naar binnen draaien – actief",
     "Schouder naar binnen draaien – isometrisch tegen de muur",
     "Schouder naar binnen draaien – met elastiek",
     "Schouderblad naar achteren – actief",
     "Schouderblad naar achteren – isometrisch tegen de muur",
+    "Schouderblad naar achteren – met elastiek",
+    "Schouderblad omhoog draaien – actief",
+    "Schouderblad omhoog draaien – met elastiek",
+    "Schouderblad omhoog draaien – functioneel reikend",
+    "Serratus punch – actief",
+    "Serratus punch – met elastiek",
+    "Serratus punch – functioneel reikend",
+    "Schouder extensie – actief",
+    "Schouder extensie – met elastiek",
+    "Schouder extensie – functioneel reikend",
+    "Horizontaal openen – actief",
+    "Horizontaal openen – met elastiek",
+    "Onderste trapezius heffen – actief",
+    "Onderste trapezius heffen – functioneel reikend",
+    "Schouder pendelen – actief",
+    "Hand achter de rug brengen – actief",
+    "Hand achter de rug brengen – functioneel reikend",
+    "Elleboog buigen – actief",
+    "Elleboog buigen – met lichte weerstand",
+    "Elleboog strekken – actief",
     "Onderarm naar handpalm boven – actief",
     "Onderarm naar handpalm onder – actief",
     "Pols omhoog – actief",
+    "Pols omhoog – met lichte weerstand",
     "Pols omlaag – actief",
     "Pols naar duimzijde – actief",
     "Pols naar pinkzijde – actief",
+    "Vingers openen en sluiten – actief",
+    "Duim oppositie – actief",
     "Peesglijden hand – actief",
+    "Knijpkracht – actief",
+    "Knijpkracht – met lichte weerstand",
+    "Heup buigen – liggend ondersteund",
+    "Heup buigen – staand met steun",
+    "Heup buigen – met elastiek",
+    "Heup strekken – staand met steun",
     "Heup strekken – met elastiek",
+    "Heup strekken – functioneel op één been",
+    "Heup zijwaarts heffen – zijlig",
+    "Heup zijwaarts heffen – staand met steun",
+    "Heup zijwaarts heffen – met elastiek",
+    "Heup zijwaarts heffen – functioneel op één been",
     "Heup naar binnen bewegen – liggend ondersteund",
+    "Heup naar binnen bewegen – staand met steun",
     "Heup naar binnen bewegen – met elastiek",
+    "Heup naar buiten draaien – liggend ondersteund",
     "Heup naar buiten draaien – zijlig",
     "Heup naar buiten draaien – met elastiek",
     "Heup naar binnen draaien – liggend ondersteund",
     "Heup naar binnen draaien – staand met steun",
+    "Clamshell – zijlig",
+    "Clamshell – met elastiek",
+    "Heupscharnier – staand met steun",
+    "Heupscharnier – functioneel op één been",
+    "Monster walk – met elastiek",
+    "Heupflexor rek – staand met steun",
+    "Piriformis rek – liggend ondersteund",
+    "Knie buigen – liggend",
     "Knie buigen – zittend",
     "Knie buigen – staand met steun",
     "Knie buigen – met elastiek",
     "Knie strekken – liggend",
+    "Knie strekken – zittend",
+    "Knie strekken – staand met steun",
+    "Knie strekken – met elastiek",
     "Quadriceps aanspannen – liggend",
     "Quadriceps aanspannen – zittend",
+    "Straight leg raise – liggend",
     "Straight leg raise – met elastiek",
+    "Mini-squat – staand met steun",
+    "Mini-squat – met elastiek",
+    "Sit-to-stand – zittend",
+    "Sit-to-stand – staand met steun",
+    "Sit-to-stand – met elastiek",
+    "Step-up – staand met steun",
+    "Step-up – op verhoging",
+    "Step-down – staand met steun",
+    "Step-down – met elastiek",
+    "Step-down – op verhoging",
+    "Split squat – staand met steun",
+    "Split squat – op verhoging",
     "Hamstring curl – liggend",
     "Hamstring curl – zittend",
+    "Hamstring curl – staand met steun",
+    "Hamstring curl – met elastiek",
     "Terminal knee extension – staand met steun",
     "Terminal knee extension – met elastiek",
     "Enkel optrekken – zittend actief",
@@ -561,7 +634,11 @@
     "Voet naar buiten – zittend actief",
     "Voet naar buiten – met elastiek",
     "Kuitheffing – staand met steun",
+    "Kuitheffing – op een verhoging",
+    "Kuitheffing – op één been",
+    "Kuitrek gestrekte knie – staand met steun",
     "Kuitrek gestrekte knie – op een verhoging",
+    "Kuitrek gebogen knie – staand met steun",
     "Kuitrek gebogen knie – op een verhoging",
     "Knie naar voren over voet – staand met steun",
     "Knie naar voren over voet – op een verhoging",
@@ -572,37 +649,139 @@
     "Korte voet – op één been",
     "Tenen spreiden – zittend actief",
     "Bekken kantelen – liggend",
+    "Bekken kantelen – op handen en knieën",
     "Bekken kantelen – zittend",
     "Bekken kantelen – staand",
     "Bekken kantelen – met lichte weerstand",
+    "Brug – liggend",
     "Brug – met lichte weerstand",
+    "Bird dog – op handen en knieën",
+    "Bird dog – staand",
+    "Bird dog – met lichte weerstand",
+    "Dead bug – liggend",
+    "Dead bug – staand",
+    "Dead bug – met lichte weerstand",
+    "Romp heupscharnier – op handen en knieën",
     "Romp heupscharnier – zittend",
+    "Romp heupscharnier – staand",
+    "Romp heupscharnier – met lichte weerstand",
+    "Romp draaien – met lichte weerstand",
     "Romp zijwaarts buigen – met lichte weerstand",
+    "Rug strekken – met lichte weerstand",
+    "Diafragma-ademhaling – zittend",
+    "Lippenremademhaling – zittend",
     "Armen en adem koppelen – met armtaak",
+    "Marcheren – interval kort",
+    "Marcheren – interval langer",
+    "Opstaan herhalen – interval kort",
+    "Thorax openen – met armtaak",
+    "Zijwaarts stappen – interval kort",
     "Kin intrekken – zittend actief",
     "Kin intrekken – liggend ondersteund",
+    "Nek buigen – zittend actief",
+    "Nek buigen – liggend ondersteund",
+    "Nek strekken – zittend actief",
+    "Nek strekken – functioneel staand",
+    "Nek draaien – zittend actief",
+    "Nek draaien – functioneel staand",
+    "Nek zijwaarts buigen – zittend actief",
+    "Nek zijwaarts buigen – isometrisch",
     "Diepe nekflexoren activeren – zittend actief",
     "Diepe nekflexoren activeren – liggend ondersteund",
+    "Nekrotatie met oogfixatie – zittend actief",
+    "Nekrotatie met oogfixatie – functioneel staand",
+    "Schouderblad liften en ontspannen – zittend actief",
+    "Schouderblad liften en ontspannen – functioneel staand",
+    "Levator scapulae rek – zittend actief",
+    "Levator scapulae rek – functioneel staand",
+    "Bovenste trapezius rek – zittend actief",
+    "Bovenste trapezius rek – functioneel staand",
+    "Rug bol en hol – op handen en knieën",
+    "Rug bol en hol – zittend",
+    "Rug bol en hol – staand",
     "Rug bol en hol – met lichte weerstand",
+    "Romp draaien – liggend",
+    "Romp draaien – op handen en knieën",
+    "Romp draaien – zittend",
+    "Romp draaien – staand",
     "Romp zijwaarts buigen – liggend",
+    "Romp zijwaarts buigen – zittend",
+    "Romp zijwaarts buigen – staand",
     "Rug strekken – liggend",
+    "Rug strekken – op handen en knieën",
     "Rug strekken – zittend",
     "Rug strekken – staand",
+    "Knie naar borst – liggend",
+    "Knie naar borst – zittend",
+    "Knie naar borst – staand",
+    "Open boek – liggend",
+    "Open boek – op handen en knieën",
+    "Open boek – zittend",
+    "Thoracale extensie – liggend",
+    "Thoracale extensie – op handen en knieën",
+    "Thoracale extensie – zittend",
     "Thoracale extensie – staand",
     "Voeten naast elkaar staan – met steun",
     "Voeten naast elkaar staan – zonder steun",
+    "Voeten naast elkaar staan – met hoofdbeweging",
+    "Semi-tandemstand – met steun",
+    "Semi-tandemstand – zonder steun",
+    "Semi-tandemstand – met hoofdbeweging",
+    "Tandemstand – met steun",
     "Tandemstand – zonder steun",
+    "Tandemstand – met hoofdbeweging",
+    "Eenbeenstand – met steun",
+    "Eenbeenstand – zonder steun",
+    "Eenbeenstand – met hoofdbeweging",
+    "Gewicht verplaatsen voor-achter – met steun",
+    "Gewicht verplaatsen voor-achter – zonder steun",
+    "Gewicht verplaatsen zijwaarts – met steun",
+    "Gewicht verplaatsen zijwaarts – zonder steun",
+    "Reiken in stand – met steun",
+    "Reiken in stand – zonder steun",
+    "Op de plaats marcheren – met steun",
+    "Op de plaats marcheren – zonder steun",
+    "Zijwaarts stappen – met steun",
+    "Zijwaarts stappen – zonder steun",
     "Achterwaarts stappen – met steun",
     "Achterwaarts stappen – zonder steun",
     "Over een obstakel stappen – met steun",
+    "Over een obstakel stappen – zonder steun",
+    "Draaien op de plaats – met steun",
     "Draaien op de plaats – zonder steun",
+    "Stoel opstaan en lopen – zonder steun",
+    "Dubbele taak lopen – met cognitieve taak",
+    "Reiken met aangedane arm – met visueel doel",
     "Reiken met aangedane arm – functionele combinatie",
+    "Hand openen na grijpen – bilateraal",
+    "Romp rotatie in zit – bilateraal",
+    "Symmetrisch opstaan – met fysieke steun",
+    "Symmetrisch opstaan – met ritmische cue",
+    "Stap initiëren – met visueel doel",
+    "Stap initiëren – met ritmische cue",
+    "Zijwaarts verplaatsen in zit – met visueel doel",
+    "Hiel plaatsen – met visueel doel",
+    "Voet naar marker – met visueel doel",
+    "Ritmisch marcheren – met ritmische cue",
+    "Grote stappen – met ritmische cue",
+    "Grote stappen – functionele combinatie",
+    "Brug met symmetrie – bilateraal",
+    "Blikstabilisatie horizontaal – zittend langzaam",
+    "Blikstabilisatie horizontaal – staand langzaam",
+    "Blikstabilisatie horizontaal – tijdens lopen",
+    "Blikstabilisatie verticaal – zittend langzaam",
+    "Blikstabilisatie verticaal – staand langzaam",
     "Ogen naar doelen – zittend langzaam",
     "Ogen naar doelen – staand langzaam",
     "Doel volgen – zittend langzaam",
     "Hoofd draaien in stand – staand langzaam",
+    "Buigen en oprichten – staand langzaam",
+    "Voorwerp van vloer tillen – ergonomische basis",
+    "Voorwerp van vloer tillen – licht en dichtbij",
+    "Voorwerp van tafel pakken – licht en dichtbij",
     "Boven schouderhoogte plaatsen – ergonomische basis",
     "Boven schouderhoogte plaatsen – licht en dichtbij",
+    "Duwen – licht en dichtbij",
     "Duwen – met stapverplaatsing",
     "Trekken – licht en dichtbij",
     "Draaien en plaatsen – met stapverplaatsing",
@@ -4931,41 +5110,17 @@
       "name": "Schouder voorwaarts heffen – met stok",
       "colorSource": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-met-stok-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-met-stok-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 47794,
-        "whitePixels": 912206,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.049785,
-        "whiteRatio": 0.950215,
-        "pureBinary": true,
-        "sha256": "158c7c444cbecd7a0c5db70162a99912aec5212a237674d68621f11ebb60a77e",
-        "sizeBytes": 10380
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouder voorwaarts heffen – actief",
       "colorSource": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-actief-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40267,
-        "whitePixels": 919733,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.041945,
-        "whiteRatio": 0.958055,
-        "pureBinary": true,
-        "sha256": "ccdbbd0bb651c19b63e77e63f64883347129005d4e0a9d722712ffb3cade46ad",
-        "sizeBytes": 9167
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouder voorwaarts heffen – isometrisch tegen de muur",
@@ -4979,81 +5134,33 @@
       "name": "Schouder voorwaarts heffen – met elastiek",
       "colorSource": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-met-elastiek-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-met-elastiek-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 47305,
-        "whitePixels": 912695,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.049276,
-        "whiteRatio": 0.950724,
-        "pureBinary": true,
-        "sha256": "7a04d3d9339088f9c063aff20efbfc8e2fb8973d6b71d52f2556077880ccfe5e",
-        "sizeBytes": 9648
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouder voorwaarts heffen – functioneel reikend",
       "colorSource": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-functioneel-reikend-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouder-voorwaarts-heffen-functioneel-reikend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40680,
-        "whitePixels": 919320,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.042375,
-        "whiteRatio": 0.957625,
-        "pureBinary": true,
-        "sha256": "aa103f1da3ded6a53c1b1ffbf4124ae8ff4f59d556c71c9b6ab4bac5a190e9c3",
-        "sizeBytes": 9394
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouder zijwaarts heffen – met stok",
       "colorSource": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-met-stok-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-met-stok-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 28251,
-        "whitePixels": 931749,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.029428,
-        "whiteRatio": 0.970572,
-        "pureBinary": true,
-        "sha256": "d5c2ef3b44a448b181e386223177562a1b4fc44378ba67d13fdabfe0456b64de",
-        "sizeBytes": 6156
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouder zijwaarts heffen – actief",
       "colorSource": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-actief-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 39022,
-        "whitePixels": 920978,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.040648,
-        "whiteRatio": 0.959352,
-        "pureBinary": true,
-        "sha256": "b58af0e363a6420554566f619fe8b3b000d4af9d2b8e5322794c2d3fcf2c63e8",
-        "sizeBytes": 8189
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouder zijwaarts heffen – isometrisch tegen de muur",
@@ -5067,61 +5174,25 @@
       "name": "Schouder zijwaarts heffen – met elastiek",
       "colorSource": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-met-elastiek-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-met-elastiek-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 47298,
-        "whitePixels": 912702,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.049269,
-        "whiteRatio": 0.950731,
-        "pureBinary": true,
-        "sha256": "c7b5a9d94541cf50473dd01ba40d23c1b2a43a29339ced690072684c633b5be4",
-        "sizeBytes": 11206
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouder zijwaarts heffen – functioneel reikend",
       "colorSource": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-functioneel-reikend-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouder-zijwaarts-heffen-functioneel-reikend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 54229,
-        "whitePixels": 905771,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.056489,
-        "whiteRatio": 0.943511,
-        "pureBinary": true,
-        "sha256": "0e7888088e40c6229d3aabdaef1b42dab05cd5b1013cf563f51fa2c57cebeb1f",
-        "sizeBytes": 9765
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouder naar buiten draaien – actief",
       "colorSource": "images/bovenste-extremiteit/schouder-naar-buiten-draaien-actief-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouder-naar-buiten-draaien-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42469,
-        "whitePixels": 917531,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.044239,
-        "whiteRatio": 0.955761,
-        "pureBinary": true,
-        "sha256": "03f61f4124faf006ba4cdbadc64cd00ae53f430421540019e3a7f636d70238dd",
-        "sizeBytes": 9117
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouder naar buiten draaien – isometrisch tegen de muur",
@@ -5135,41 +5206,17 @@
       "name": "Schouder naar buiten draaien – met elastiek",
       "colorSource": "images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouder-naar-buiten-draaien-met-elastiek-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36285,
-        "whitePixels": 923715,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.037797,
-        "whiteRatio": 0.962203,
-        "pureBinary": true,
-        "sha256": "7533a299c6b0808b6692299ed6621bf152b2e144eec270199b750ac8bb064a90",
-        "sizeBytes": 7854
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouder naar binnen draaien – actief",
       "colorSource": "images/bovenste-extremiteit/schouder-naar-binnen-draaien-actief-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouder-naar-binnen-draaien-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 47073,
-        "whitePixels": 912927,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.049034,
-        "whiteRatio": 0.950966,
-        "pureBinary": true,
-        "sha256": "4639627fc770e0749fccd479d46ee97653e418b5bd50ec00233446630d1fe86f",
-        "sizeBytes": 9807
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouder naar binnen draaien – isometrisch tegen de muur",
@@ -5207,401 +5254,161 @@
       "name": "Schouderblad naar achteren – met elastiek",
       "colorSource": "images/bovenste-extremiteit/schouderblad-naar-achteren-met-elastiek-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouderblad-naar-achteren-met-elastiek-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40344,
-        "whitePixels": 919656,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.042025,
-        "whiteRatio": 0.957975,
-        "pureBinary": true,
-        "sha256": "ae2a05b5eaff4def215c4853ae2279df69dff938eebd6bd0baeb5438ebfa84d5",
-        "sizeBytes": 8383
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouderblad omhoog draaien – actief",
       "colorSource": "images/bovenste-extremiteit/schouderblad-omhoog-draaien-actief-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouderblad-omhoog-draaien-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 39449,
-        "whitePixels": 920551,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.041093,
-        "whiteRatio": 0.958907,
-        "pureBinary": true,
-        "sha256": "9921372d38421b569b25e128ddaa1f1d4f5d8cab3a0a1e3454b8b611d060f4e3",
-        "sizeBytes": 8830
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouderblad omhoog draaien – met elastiek",
       "colorSource": "images/bovenste-extremiteit/schouderblad-omhoog-draaien-met-elastiek-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouderblad-omhoog-draaien-met-elastiek-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40312,
-        "whitePixels": 919688,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.041992,
-        "whiteRatio": 0.958008,
-        "pureBinary": true,
-        "sha256": "dd1a4561ccedef746cad8ef1e6601fd26225b0ac5b9436b59c34fd2e821c7440",
-        "sizeBytes": 10293
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouderblad omhoog draaien – functioneel reikend",
       "colorSource": "images/bovenste-extremiteit/schouderblad-omhoog-draaien-functioneel-reikend-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouderblad-omhoog-draaien-functioneel-reikend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 57411,
-        "whitePixels": 902589,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.059803,
-        "whiteRatio": 0.940197,
-        "pureBinary": true,
-        "sha256": "749e880b8e1b98b26dd1e95d0e2f4f5f5100a1d8fe4741b6aef2bd5af0a09c44",
-        "sizeBytes": 10369
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Serratus punch – actief",
       "colorSource": "images/bovenste-extremiteit/serratus-punch-actief-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/serratus-punch-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36681,
-        "whitePixels": 923319,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038209,
-        "whiteRatio": 0.961791,
-        "pureBinary": true,
-        "sha256": "caae85a96b23a57747fc195eae24093d8cef405dab9dc5924a4ff37f6f136412",
-        "sizeBytes": 7686
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Serratus punch – met elastiek",
       "colorSource": "images/bovenste-extremiteit/serratus-punch-met-elastiek-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/serratus-punch-met-elastiek-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37679,
-        "whitePixels": 922321,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.039249,
-        "whiteRatio": 0.960751,
-        "pureBinary": true,
-        "sha256": "78d5b829c31e512cd0f7c3b0fc10e658fea854e8944889f0ff5451665b5200fc",
-        "sizeBytes": 8836
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Serratus punch – functioneel reikend",
       "colorSource": "images/bovenste-extremiteit/serratus-punch-functioneel-reikend-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/serratus-punch-functioneel-reikend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 43526,
-        "whitePixels": 916474,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.04534,
-        "whiteRatio": 0.95466,
-        "pureBinary": true,
-        "sha256": "28942702f17e0b1664093ea8f64f086011181f8b83db74d4253d1a4d8aef0660",
-        "sizeBytes": 9315
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouder extensie – actief",
       "colorSource": "images/bovenste-extremiteit/schouder-extensie-actief-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouder-extensie-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40421,
-        "whitePixels": 919579,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.042105,
-        "whiteRatio": 0.957895,
-        "pureBinary": true,
-        "sha256": "38f84c15a4f22e5386843ca49c280118d4ecfd8fe56392bcb91590a7094d053c",
-        "sizeBytes": 8940
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouder extensie – met elastiek",
       "colorSource": "images/bovenste-extremiteit/schouder-extensie-met-elastiek-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouder-extensie-met-elastiek-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36203,
-        "whitePixels": 923797,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.037711,
-        "whiteRatio": 0.962289,
-        "pureBinary": true,
-        "sha256": "d0a07d130dae5a3700ddab953726beca8f2d6f018b3f079dfeba974b487a4c2a",
-        "sizeBytes": 8669
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouder extensie – functioneel reikend",
       "colorSource": "images/bovenste-extremiteit/schouder-extensie-functioneel-reikend-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouder-extensie-functioneel-reikend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 38927,
-        "whitePixels": 921073,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.040549,
-        "whiteRatio": 0.959451,
-        "pureBinary": true,
-        "sha256": "230bb414451df187b5d6ac7fc373f55a799b3d4cf8ee13b39012a68d8de0a9db",
-        "sizeBytes": 8857
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Horizontaal openen – actief",
       "colorSource": "images/bovenste-extremiteit/horizontaal-openen-actief-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/horizontaal-openen-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 35169,
-        "whitePixels": 924831,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.036634,
-        "whiteRatio": 0.963366,
-        "pureBinary": true,
-        "sha256": "7982d9b22a273d4966e8d6eac53ff20c5763d7ad4493ba0c72c807129dccfb6a",
-        "sizeBytes": 7528
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Horizontaal openen – met elastiek",
       "colorSource": "images/bovenste-extremiteit/horizontaal-openen-met-elastiek-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/horizontaal-openen-met-elastiek-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 33284,
-        "whitePixels": 926716,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.034671,
-        "whiteRatio": 0.965329,
-        "pureBinary": true,
-        "sha256": "cb7d37610d3d793a533070227290ba7a37f910846e2b8e722ad26298c0e31f33",
-        "sizeBytes": 7041
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Onderste trapezius heffen – actief",
       "colorSource": "images/bovenste-extremiteit/onderste-trapezius-heffen-actief-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/onderste-trapezius-heffen-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 35339,
-        "whitePixels": 924661,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.036811,
-        "whiteRatio": 0.963189,
-        "pureBinary": true,
-        "sha256": "3381fd5a3074ccdc2843a3a269bbcec2c6f1500d2ed49c878fdc4c3bfe4f36d6",
-        "sizeBytes": 8333
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Onderste trapezius heffen – functioneel reikend",
       "colorSource": "images/bovenste-extremiteit/onderste-trapezius-heffen-functioneel-reikend-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/onderste-trapezius-heffen-functioneel-reikend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 46857,
-        "whitePixels": 913143,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.048809,
-        "whiteRatio": 0.951191,
-        "pureBinary": true,
-        "sha256": "7b66894377cdb4c3222d31463764848df1ae4c3afc839972909924bdb20c562d",
-        "sizeBytes": 9043
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouder pendelen – actief",
       "colorSource": "images/bovenste-extremiteit/schouder-pendelen-actief-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/schouder-pendelen-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 44766,
-        "whitePixels": 915234,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.046631,
-        "whiteRatio": 0.953369,
-        "pureBinary": true,
-        "sha256": "60156e5296d1967f06801027fcb9f796ce7c458f78be0aa58566d23377476ce6",
-        "sizeBytes": 10006
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Hand achter de rug brengen – actief",
       "colorSource": "images/bovenste-extremiteit/hand-achter-de-rug-brengen-actief-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/hand-achter-de-rug-brengen-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42459,
-        "whitePixels": 917541,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.044228,
-        "whiteRatio": 0.955772,
-        "pureBinary": true,
-        "sha256": "a79d1c3030759581fafb07866917a1ef269a42f984bee6e8af3c51d226776a6d",
-        "sizeBytes": 9605
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Hand achter de rug brengen – functioneel reikend",
       "colorSource": "images/bovenste-extremiteit/hand-achter-de-rug-brengen-functioneel-reikend-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/hand-achter-de-rug-brengen-functioneel-reikend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40253,
-        "whitePixels": 919747,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.04193,
-        "whiteRatio": 0.95807,
-        "pureBinary": true,
-        "sha256": "698bd160fc3d9bd97b833892e4d388667064c2fa7dddb012a3063daa3c9d890f",
-        "sizeBytes": 9845
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Elleboog buigen – actief",
       "colorSource": "images/bovenste-extremiteit/elleboog-buigen-actief-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/elleboog-buigen-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 54812,
-        "whitePixels": 905188,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.057096,
-        "whiteRatio": 0.942904,
-        "pureBinary": true,
-        "sha256": "4e73ed86988d3f71d2fa07703e563226696cb17fee545575f092d2111b825584",
-        "sizeBytes": 13671
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Elleboog buigen – met lichte weerstand",
       "colorSource": "images/bovenste-extremiteit/elleboog-buigen-met-lichte-weerstand-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/elleboog-buigen-met-lichte-weerstand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 49084,
-        "whitePixels": 910916,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.051129,
-        "whiteRatio": 0.948871,
-        "pureBinary": true,
-        "sha256": "2eb2d80d07f9bbf8740ecc8edd27c5c5dd7d2c9018749037a7923f33526a7055",
-        "sizeBytes": 10904
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Elleboog strekken – actief",
       "colorSource": "images/bovenste-extremiteit/elleboog-strekken-actief-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/elleboog-strekken-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 54542,
-        "whitePixels": 905458,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.056815,
-        "whiteRatio": 0.943185,
-        "pureBinary": true,
-        "sha256": "5b1cb7960fb3725b912d9261bd95be17f78fc2e5b712e81eb8518336b9c825b7",
-        "sizeBytes": 11546
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Onderarm naar handpalm boven – actief",
@@ -5631,21 +5438,9 @@
       "name": "Pols omhoog – met lichte weerstand",
       "colorSource": "images/bovenste-extremiteit/pols-omhoog-met-lichte-weerstand-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/pols-omhoog-met-lichte-weerstand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 55521,
-        "whitePixels": 904479,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.057834,
-        "whiteRatio": 0.942166,
-        "pureBinary": true,
-        "sha256": "d08798b611eb8989e82052919be03edf3922fb5d23fb1d2c529010b992a2d468",
-        "sizeBytes": 11753
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Pols omlaag – actief",
@@ -5675,41 +5470,17 @@
       "name": "Vingers openen en sluiten – actief",
       "colorSource": "images/bovenste-extremiteit/vingers-openen-en-sluiten-actief-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/vingers-openen-en-sluiten-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 59882,
-        "whitePixels": 900118,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.062377,
-        "whiteRatio": 0.937623,
-        "pureBinary": true,
-        "sha256": "d758096d2330d80fd03d5940f896b86e3733694b587b9fbd969842bcc28ddf63",
-        "sizeBytes": 15103
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Duim oppositie – actief",
       "colorSource": "images/bovenste-extremiteit/duim-oppositie-actief-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/duim-oppositie-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 49148,
-        "whitePixels": 910852,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.051196,
-        "whiteRatio": 0.948804,
-        "pureBinary": true,
-        "sha256": "aca7bf8cd2949069907ea209fc8860f234e2509536c7ada4c5a91b7cda744eb5",
-        "sizeBytes": 12040
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Peesglijden hand – actief",
@@ -5723,121 +5494,49 @@
       "name": "Knijpkracht – actief",
       "colorSource": "images/bovenste-extremiteit/knijpkracht-actief-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/knijpkracht-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 55647,
-        "whitePixels": 904353,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.057966,
-        "whiteRatio": 0.942034,
-        "pureBinary": true,
-        "sha256": "bcbee40fc9435a172a2b48dfe358208c7d2b01a814d4b74919f3b2507449908d",
-        "sizeBytes": 12308
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Knijpkracht – met lichte weerstand",
       "colorSource": "images/bovenste-extremiteit/knijpkracht-met-lichte-weerstand-avatar-v8.jpg",
       "lineSource": "images/bovenste-extremiteit/knijpkracht-met-lichte-weerstand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 51073,
-        "whitePixels": 908927,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.053201,
-        "whiteRatio": 0.946799,
-        "pureBinary": true,
-        "sha256": "5612be728f7ac9cdaae24daf2cf4c104ff7bd442b8d1492128898a25534f2807",
-        "sizeBytes": 12006
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Heup buigen – liggend ondersteund",
       "colorSource": "images/onderste-extremiteit/heup-buigen-liggend-ondersteund-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/heup-buigen-liggend-ondersteund-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37363,
-        "whitePixels": 922637,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.03892,
-        "whiteRatio": 0.96108,
-        "pureBinary": true,
-        "sha256": "a0ba1536e90aa6331dbc4cbd7ac90092b09812be5ba387e9df642b040f8355dd",
-        "sizeBytes": 9493
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Heup buigen – staand met steun",
       "colorSource": "images/onderste-extremiteit/heup-buigen-staand-met-steun-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/heup-buigen-staand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37679,
-        "whitePixels": 922321,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.039249,
-        "whiteRatio": 0.960751,
-        "pureBinary": true,
-        "sha256": "9fc684b12777dece1a810c909696023e24ad41514a98e10e79ca689ed1773a5b",
-        "sizeBytes": 8271
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Heup buigen – met elastiek",
       "colorSource": "images/onderste-extremiteit/heup-buigen-met-elastiek-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/heup-buigen-met-elastiek-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 43036,
-        "whitePixels": 916964,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.044829,
-        "whiteRatio": 0.955171,
-        "pureBinary": true,
-        "sha256": "c17c89a6e1c59c48bcb2ce8bf5930b189af78cdb48f26ae93dc8f5930dd575d2",
-        "sizeBytes": 10449
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Heup strekken – staand met steun",
       "colorSource": "images/onderste-extremiteit/heup-strekken-staand-met-steun-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/heup-strekken-staand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 52370,
-        "whitePixels": 907630,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.054552,
-        "whiteRatio": 0.945448,
-        "pureBinary": true,
-        "sha256": "c5e0519d758f896d49672a45b1b62ac26543246bd90f9f5ea1ad2a2fd2750445",
-        "sizeBytes": 9875
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Heup strekken – met elastiek",
@@ -5851,101 +5550,41 @@
       "name": "Heup strekken – functioneel op één been",
       "colorSource": "images/onderste-extremiteit/heup-strekken-functioneel-op-een-been-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/heup-strekken-functioneel-op-een-been-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 46151,
-        "whitePixels": 913849,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.048074,
-        "whiteRatio": 0.951926,
-        "pureBinary": true,
-        "sha256": "35163a34f10938173d666021f2a03fb502892cb87d0a747de2c7de215ab6077b",
-        "sizeBytes": 10267
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Heup zijwaarts heffen – zijlig",
       "colorSource": "images/onderste-extremiteit/heup-zijwaarts-heffen-zijlig-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/heup-zijwaarts-heffen-zijlig-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 38464,
-        "whitePixels": 921536,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.040067,
-        "whiteRatio": 0.959933,
-        "pureBinary": true,
-        "sha256": "ecc20d07c7c21212d9ebbf6be5159576ee791c5f4a87b97513670d34d4183a0d",
-        "sizeBytes": 8671
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Heup zijwaarts heffen – staand met steun",
       "colorSource": "images/onderste-extremiteit/heup-zijwaarts-heffen-staand-met-steun-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/heup-zijwaarts-heffen-staand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 53913,
-        "whitePixels": 906087,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.056159,
-        "whiteRatio": 0.943841,
-        "pureBinary": true,
-        "sha256": "2593698ccb25be2193dd194b8d78346b690edea069a2c1ee39762a0540be6b7b",
-        "sizeBytes": 9537
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Heup zijwaarts heffen – met elastiek",
       "colorSource": "images/onderste-extremiteit/heup-zijwaarts-heffen-met-elastiek-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/heup-zijwaarts-heffen-met-elastiek-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42462,
-        "whitePixels": 917538,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.044231,
-        "whiteRatio": 0.955769,
-        "pureBinary": true,
-        "sha256": "cb3c08a32bc41afe04fff41a5eb66ab395bac6333658478b698b11fe37425eec",
-        "sizeBytes": 9605
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Heup zijwaarts heffen – functioneel op één been",
       "colorSource": "images/onderste-extremiteit/heup-zijwaarts-heffen-functioneel-op-een-been-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/heup-zijwaarts-heffen-functioneel-op-een-been-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 49858,
-        "whitePixels": 910142,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.051935,
-        "whiteRatio": 0.948065,
-        "pureBinary": true,
-        "sha256": "a77578fe2f35233f5de59376e93a13450bd3950c08a3e26392c18184eb68b645",
-        "sizeBytes": 9225
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Heup naar binnen bewegen – liggend ondersteund",
@@ -5959,21 +5598,9 @@
       "name": "Heup naar binnen bewegen – staand met steun",
       "colorSource": "images/onderste-extremiteit/heup-naar-binnen-bewegen-staand-met-steun-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/heup-naar-binnen-bewegen-staand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 48750,
-        "whitePixels": 911250,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.050781,
-        "whiteRatio": 0.949219,
-        "pureBinary": true,
-        "sha256": "78659153a534d1fb0614e4a8e4ba167a8f2d23fa67528789a3b14924f03b460f",
-        "sizeBytes": 9968
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Heup naar binnen bewegen – met elastiek",
@@ -5987,21 +5614,9 @@
       "name": "Heup naar buiten draaien – liggend ondersteund",
       "colorSource": "images/onderste-extremiteit/heup-naar-buiten-draaien-liggend-ondersteund-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/heup-naar-buiten-draaien-liggend-ondersteund-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40690,
-        "whitePixels": 919310,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.042385,
-        "whiteRatio": 0.957615,
-        "pureBinary": true,
-        "sha256": "b69e33ceda1ac1494879ff117d347b52027b2d6e5418701f06d2bc3d86c90687",
-        "sizeBytes": 8878
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Heup naar buiten draaien – zijlig",
@@ -6039,161 +5654,65 @@
       "name": "Clamshell – zijlig",
       "colorSource": "images/onderste-extremiteit/clamshell-zijlig-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/clamshell-zijlig-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37089,
-        "whitePixels": 922911,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038634,
-        "whiteRatio": 0.961366,
-        "pureBinary": true,
-        "sha256": "41456c98132ec0e82f11e286a068c9f04332ec90c4fc15b9656341cd7227aa20",
-        "sizeBytes": 9945
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Clamshell – met elastiek",
       "colorSource": "images/onderste-extremiteit/clamshell-met-elastiek-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/clamshell-met-elastiek-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42843,
-        "whitePixels": 917157,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.044628,
-        "whiteRatio": 0.955372,
-        "pureBinary": true,
-        "sha256": "5e16bf6ebaec4883414c5a8ba19fb3d116f894234af3c6bab34e3dacff860651",
-        "sizeBytes": 11541
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Heupscharnier – staand met steun",
       "colorSource": "images/onderste-extremiteit/heupscharnier-staand-met-steun-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/heupscharnier-staand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 45269,
-        "whitePixels": 914731,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.047155,
-        "whiteRatio": 0.952845,
-        "pureBinary": true,
-        "sha256": "74d67f1733e3ee2eaa4e17941cd82093da6ef247f4ffa071ab22f67aa93debf7",
-        "sizeBytes": 9515
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Heupscharnier – functioneel op één been",
       "colorSource": "images/onderste-extremiteit/heupscharnier-functioneel-op-een-been-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/heupscharnier-functioneel-op-een-been-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 39192,
-        "whitePixels": 920808,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.040825,
-        "whiteRatio": 0.959175,
-        "pureBinary": true,
-        "sha256": "9655bceed44cd042ae43ea2a092fadcf6572244eb23a1ebd38b0be739aebcd4f",
-        "sizeBytes": 9512
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Monster walk – met elastiek",
       "colorSource": "images/onderste-extremiteit/monster-walk-met-elastiek-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/monster-walk-met-elastiek-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36604,
-        "whitePixels": 923396,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038129,
-        "whiteRatio": 0.961871,
-        "pureBinary": true,
-        "sha256": "4975010da04c1fee0bec71aa65b5c5bfb0db631e0547e3570bb398aeeb216139",
-        "sizeBytes": 8662
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Heupflexor rek – staand met steun",
       "colorSource": "images/onderste-extremiteit/heupflexor-rek-staand-met-steun-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/heupflexor-rek-staand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 44957,
-        "whitePixels": 915043,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.04683,
-        "whiteRatio": 0.95317,
-        "pureBinary": true,
-        "sha256": "5d2a5ae992786f5cde03d9ed4a606ecadc0f2c2532095a0f630c7c3bace71f41",
-        "sizeBytes": 10651
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Piriformis rek – liggend ondersteund",
       "colorSource": "images/onderste-extremiteit/piriformis-rek-liggend-ondersteund-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/piriformis-rek-liggend-ondersteund-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36392,
-        "whitePixels": 923608,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.037908,
-        "whiteRatio": 0.962092,
-        "pureBinary": true,
-        "sha256": "749060b112388e2a543b525b63d6de5b89df8d7f684bced07c0adfcce1150c5f",
-        "sizeBytes": 9654
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Knie buigen – liggend",
       "colorSource": "images/onderste-extremiteit/knie-buigen-liggend-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/knie-buigen-liggend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 34222,
-        "whitePixels": 925778,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.035648,
-        "whiteRatio": 0.964352,
-        "pureBinary": true,
-        "sha256": "c3746d361d45d0d8baf0852e9418e1c8b20670e980d2c17e4b3d1efa3bc12cee",
-        "sizeBytes": 6724
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Knie buigen – zittend",
@@ -6231,61 +5750,25 @@
       "name": "Knie strekken – zittend",
       "colorSource": "images/onderste-extremiteit/knie-strekken-zittend-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/knie-strekken-zittend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 50148,
-        "whitePixels": 909852,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.052237,
-        "whiteRatio": 0.947762,
-        "pureBinary": true,
-        "sha256": "288dad7b30e6face77e8691022ac5d37cf8572ba9ac1b0a2d7c60c483e6f4be2",
-        "sizeBytes": 10046
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Knie strekken – staand met steun",
       "colorSource": "images/onderste-extremiteit/knie-strekken-staand-met-steun-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/knie-strekken-staand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 46570,
-        "whitePixels": 913430,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.04851,
-        "whiteRatio": 0.95149,
-        "pureBinary": true,
-        "sha256": "2f94fbc990d4a230821e3fb9c1e75a24da1dd1f1ff4e191f7e69afdd32fdeef0",
-        "sizeBytes": 9968
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Knie strekken – met elastiek",
       "colorSource": "images/onderste-extremiteit/knie-strekken-met-elastiek-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/knie-strekken-met-elastiek-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 38577,
-        "whitePixels": 921423,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.040184,
-        "whiteRatio": 0.959816,
-        "pureBinary": true,
-        "sha256": "dfb682da82bc955044cd48c4cbf93c4d4ac69e2f9a91bafea542b02f0ef7a8b5",
-        "sizeBytes": 9499
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Quadriceps aanspannen – liggend",
@@ -6307,21 +5790,9 @@
       "name": "Straight leg raise – liggend",
       "colorSource": "images/onderste-extremiteit/straight-leg-raise-liggend-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/straight-leg-raise-liggend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 43485,
-        "whitePixels": 916515,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.045297,
-        "whiteRatio": 0.954703,
-        "pureBinary": true,
-        "sha256": "983dff6f7a783cad677f9055c526573996c034e955971928678d8f24f994cfbf",
-        "sizeBytes": 10015
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Straight leg raise – met elastiek",
@@ -6335,241 +5806,97 @@
       "name": "Mini-squat – staand met steun",
       "colorSource": "images/onderste-extremiteit/mini-squat-staand-met-steun-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/mini-squat-staand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 56426,
-        "whitePixels": 903574,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.058777,
-        "whiteRatio": 0.941223,
-        "pureBinary": true,
-        "sha256": "663c6bf2fdf511b4e3867b6b2ef2d7d2f1320f1922d4e836e3dc0e2136a1e7ce",
-        "sizeBytes": 11054
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Mini-squat – met elastiek",
       "colorSource": "images/onderste-extremiteit/mini-squat-met-elastiek-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/mini-squat-met-elastiek-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40452,
-        "whitePixels": 919548,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.042138,
-        "whiteRatio": 0.957862,
-        "pureBinary": true,
-        "sha256": "44e11ea0e993227b8c21e8c2b49743db0d316c36cbe3f4d272b3fb7cb77ae200",
-        "sizeBytes": 10433
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Sit-to-stand – zittend",
       "colorSource": "images/onderste-extremiteit/sit-to-stand-zittend-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/sit-to-stand-zittend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 49650,
-        "whitePixels": 910350,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.051719,
-        "whiteRatio": 0.948281,
-        "pureBinary": true,
-        "sha256": "b2e3541977b8b36063077096ec3f40e98cee9d1ff6c0e36171d663967668b30d",
-        "sizeBytes": 11110
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Sit-to-stand – staand met steun",
       "colorSource": "images/onderste-extremiteit/sit-to-stand-staand-met-steun-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/sit-to-stand-staand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 59157,
-        "whitePixels": 900843,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.061622,
-        "whiteRatio": 0.938378,
-        "pureBinary": true,
-        "sha256": "5d4971858798b2871f0983211cd98529fd8a7b450b03b8175f1ff2376f87bb81",
-        "sizeBytes": 11975
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Sit-to-stand – met elastiek",
       "colorSource": "images/onderste-extremiteit/sit-to-stand-met-elastiek-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/sit-to-stand-met-elastiek-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 52396,
-        "whitePixels": 907604,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.054579,
-        "whiteRatio": 0.945421,
-        "pureBinary": true,
-        "sha256": "0058edbb7e80dd23bd9620c8ff40226176fa7dd91ef1efe388d154ad478c59fa",
-        "sizeBytes": 10616
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Step-up – staand met steun",
       "colorSource": "images/onderste-extremiteit/step-up-staand-met-steun-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/step-up-staand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 57274,
-        "whitePixels": 902726,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.05966,
-        "whiteRatio": 0.94034,
-        "pureBinary": true,
-        "sha256": "7eba826467346167a25664adcaaa3a21e59d5180f1b9d48e7d0868011ae46034",
-        "sizeBytes": 11046
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Step-up – op verhoging",
       "colorSource": "images/onderste-extremiteit/step-up-op-verhoging-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/step-up-op-verhoging-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42602,
-        "whitePixels": 917398,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.044377,
-        "whiteRatio": 0.955623,
-        "pureBinary": true,
-        "sha256": "f449ced565e3360588dcf87743fb8cd2df1610b344b8984a5a425d36ee7c5e1e",
-        "sizeBytes": 10356
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Step-down – staand met steun",
       "colorSource": "images/onderste-extremiteit/step-down-staand-met-steun-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/step-down-staand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 55218,
-        "whitePixels": 904782,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.057519,
-        "whiteRatio": 0.942481,
-        "pureBinary": true,
-        "sha256": "bae65aef00f0cad5540d3586e9a152f68594d9be0c88390abdc9fd7893cc6b87",
-        "sizeBytes": 11403
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Step-down – met elastiek",
       "colorSource": "images/onderste-extremiteit/step-down-met-elastiek-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/step-down-met-elastiek-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 53114,
-        "whitePixels": 906886,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.055327,
-        "whiteRatio": 0.944673,
-        "pureBinary": true,
-        "sha256": "15d68be7666643888652bfa111fe8803c8a43cc439184db9fc98107ae634a7b9",
-        "sizeBytes": 11722
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Step-down – op verhoging",
       "colorSource": "images/onderste-extremiteit/step-down-op-verhoging-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/step-down-op-verhoging-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 48851,
-        "whitePixels": 911149,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.050886,
-        "whiteRatio": 0.949114,
-        "pureBinary": true,
-        "sha256": "29cb6b3df38f719a2393439b15b4ddf4ff1a5253aa738f9ac786dfc70f74a944",
-        "sizeBytes": 10691
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Split squat – staand met steun",
       "colorSource": "images/onderste-extremiteit/split-squat-staand-met-steun-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/split-squat-staand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 50079,
-        "whitePixels": 909921,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.052166,
-        "whiteRatio": 0.947834,
-        "pureBinary": true,
-        "sha256": "9cb7cc958bc9967f51da0e8c52e8d8d95670f5299d2e663f10d2c106a40a2903",
-        "sizeBytes": 9244
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Split squat – op verhoging",
       "colorSource": "images/onderste-extremiteit/split-squat-op-verhoging-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/split-squat-op-verhoging-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 38465,
-        "whitePixels": 921535,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.040068,
-        "whiteRatio": 0.959932,
-        "pureBinary": true,
-        "sha256": "69d08255d1b70158e54349647869c2fb930d6e3f463cdecffd42ed3d6aacf979",
-        "sizeBytes": 9330
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Hamstring curl – liggend",
@@ -6591,41 +5918,17 @@
       "name": "Hamstring curl – staand met steun",
       "colorSource": "images/onderste-extremiteit/hamstring-curl-staand-met-steun-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/hamstring-curl-staand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 45516,
-        "whitePixels": 914484,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.047413,
-        "whiteRatio": 0.952588,
-        "pureBinary": true,
-        "sha256": "685658783a840f5a39ed82b6d7137f0ba49b43d416515cc541bd16aba381adcb",
-        "sizeBytes": 9580
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Hamstring curl – met elastiek",
       "colorSource": "images/onderste-extremiteit/hamstring-curl-met-elastiek-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/hamstring-curl-met-elastiek-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 38528,
-        "whitePixels": 921472,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.040133,
-        "whiteRatio": 0.959867,
-        "pureBinary": true,
-        "sha256": "9e636b01f1ae7d1d62ade5edab5e5e2df09c42360948c240eb32000aada9b61b",
-        "sizeBytes": 9937
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Terminal knee extension – staand met steun",
@@ -6735,61 +6038,25 @@
       "name": "Kuitheffing – op een verhoging",
       "colorSource": "images/onderste-extremiteit/kuitheffing-op-een-verhoging-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/kuitheffing-op-een-verhoging-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 50855,
-        "whitePixels": 909145,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.052974,
-        "whiteRatio": 0.947026,
-        "pureBinary": true,
-        "sha256": "3708e6816448fa3b9ebf1e75705ee5db0731e65de24b56e878e1b4e84b77ba64",
-        "sizeBytes": 11422
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Kuitheffing – op één been",
       "colorSource": "images/onderste-extremiteit/kuitheffing-op-een-been-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/kuitheffing-op-een-been-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 46145,
-        "whitePixels": 913855,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.048068,
-        "whiteRatio": 0.951932,
-        "pureBinary": true,
-        "sha256": "b4e2aea73668404f5c03a804299c9111dd816fc4e244b7591a260ae3009a6e2e",
-        "sizeBytes": 10074
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Kuitrek gestrekte knie – staand met steun",
       "colorSource": "images/onderste-extremiteit/kuitrek-gestrekte-knie-staand-met-steun-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/kuitrek-gestrekte-knie-staand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 33650,
-        "whitePixels": 926350,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.035052,
-        "whiteRatio": 0.964948,
-        "pureBinary": true,
-        "sha256": "413e7987fa8da7eb587b42b302c622d4ea826333da432bb6fe98266c186681c7",
-        "sizeBytes": 8235
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Kuitrek gestrekte knie – op een verhoging",
@@ -6803,21 +6070,9 @@
       "name": "Kuitrek gebogen knie – staand met steun",
       "colorSource": "images/onderste-extremiteit/kuitrek-gebogen-knie-staand-met-steun-avatar-v8.jpg",
       "lineSource": "images/onderste-extremiteit/kuitrek-gebogen-knie-staand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41812,
-        "whitePixels": 918188,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043554,
-        "whiteRatio": 0.956446,
-        "pureBinary": true,
-        "sha256": "b8a791dc8807b5c26e23721f095afea3f98f28bc3ed8f6b8614f8b3920ceedd1",
-        "sizeBytes": 9110
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Kuitrek gebogen knie – op een verhoging",
@@ -6903,21 +6158,9 @@
       "name": "Bekken kantelen – op handen en knieën",
       "colorSource": "images/core/bekken-kantelen-op-handen-en-knieen-avatar-v8.jpg",
       "lineSource": "images/core/bekken-kantelen-op-handen-en-knieen-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 33355,
-        "whitePixels": 926645,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.034745,
-        "whiteRatio": 0.965255,
-        "pureBinary": true,
-        "sha256": "4730fcd321b473d12e2acdc861f2ad968994e56e45e558e0d1a59b24e5a9caa5",
-        "sizeBytes": 7871
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Bekken kantelen – zittend",
@@ -6947,21 +6190,9 @@
       "name": "Brug – liggend",
       "colorSource": "images/core/brug-liggend-avatar-v8.jpg",
       "lineSource": "images/core/brug-liggend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 49151,
-        "whitePixels": 910849,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.051199,
-        "whiteRatio": 0.948801,
-        "pureBinary": true,
-        "sha256": "212f0855fed5b984682e61cb24732ab40019ead4071fb69bbe2c6665b9e686ca",
-        "sizeBytes": 11365
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Brug – met lichte weerstand",
@@ -6975,141 +6206,57 @@
       "name": "Bird dog – op handen en knieën",
       "colorSource": "images/core/bird-dog-op-handen-en-knieen-avatar-v8.jpg",
       "lineSource": "images/core/bird-dog-op-handen-en-knieen-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 35809,
-        "whitePixels": 924191,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.037301,
-        "whiteRatio": 0.962699,
-        "pureBinary": true,
-        "sha256": "8c44622c4ee2c95c9876e86c1f67674b151699d72babbf497c45f5ce8f3daae9",
-        "sizeBytes": 9596
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Bird dog – staand",
       "colorSource": "images/core/bird-dog-staand-avatar-v8.jpg",
       "lineSource": "images/core/bird-dog-staand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 33765,
-        "whitePixels": 926235,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.035172,
-        "whiteRatio": 0.964828,
-        "pureBinary": true,
-        "sha256": "982269053a45944d10bde8ce873d266a42ed95aa94fd4ec9a4995c020700b8a7",
-        "sizeBytes": 8204
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Bird dog – met lichte weerstand",
       "colorSource": "images/core/bird-dog-met-lichte-weerstand-avatar-v8.jpg",
       "lineSource": "images/core/bird-dog-met-lichte-weerstand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 31063,
-        "whitePixels": 928937,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.032357,
-        "whiteRatio": 0.967643,
-        "pureBinary": true,
-        "sha256": "8610eb7f16b4d6465ff8d11b70b1495b8d11ccb98ceb5bc0437f212e14a7a7df",
-        "sizeBytes": 8008
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Dead bug – liggend",
       "colorSource": "images/core/dead-bug-liggend-avatar-v8.jpg",
       "lineSource": "images/core/dead-bug-liggend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36535,
-        "whitePixels": 923465,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038057,
-        "whiteRatio": 0.961943,
-        "pureBinary": true,
-        "sha256": "d9a8e8eb9707d6628e36fe7214d9648da559e8977723c84b3a0b7cbd406fc22a",
-        "sizeBytes": 7626
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Dead bug – staand",
       "colorSource": "images/core/dead-bug-staand-avatar-v8.jpg",
       "lineSource": "images/core/dead-bug-staand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 27117,
-        "whitePixels": 932883,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.028247,
-        "whiteRatio": 0.971753,
-        "pureBinary": true,
-        "sha256": "42f20f0bcec230e9aca6ac86ef75cbba3064260401dd60b0a8d437a16da4ddb5",
-        "sizeBytes": 6755
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Dead bug – met lichte weerstand",
       "colorSource": "images/core/dead-bug-met-lichte-weerstand-avatar-v8.jpg",
       "lineSource": "images/core/dead-bug-met-lichte-weerstand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 28419,
-        "whitePixels": 931581,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.029603,
-        "whiteRatio": 0.970397,
-        "pureBinary": true,
-        "sha256": "003b2041255fed14c72dce61d62b6df48640ff2dc09f21e1f55ff7042c7f5552",
-        "sizeBytes": 7298
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Romp heupscharnier – op handen en knieën",
       "colorSource": "images/core/romp-heupscharnier-op-handen-en-knieen-avatar-v8.jpg",
       "lineSource": "images/core/romp-heupscharnier-op-handen-en-knieen-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 35682,
-        "whitePixels": 924318,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.037169,
-        "whiteRatio": 0.962831,
-        "pureBinary": true,
-        "sha256": "5f0ffec482311400037481075804751abcab69cc7ee5403cd626cb91f6abb23d",
-        "sizeBytes": 9511
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Romp heupscharnier – zittend",
@@ -7123,61 +6270,25 @@
       "name": "Romp heupscharnier – staand",
       "colorSource": "images/core/romp-heupscharnier-staand-avatar-v8.jpg",
       "lineSource": "images/core/romp-heupscharnier-staand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 46936,
-        "whitePixels": 913064,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.048892,
-        "whiteRatio": 0.951108,
-        "pureBinary": true,
-        "sha256": "c303066bf20990414cc67668bb26a2c897beaba56400243385c6f9d6f7e3b195",
-        "sizeBytes": 11254
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Romp heupscharnier – met lichte weerstand",
       "colorSource": "images/core/romp-heupscharnier-met-lichte-weerstand-avatar-v8.jpg",
       "lineSource": "images/core/romp-heupscharnier-met-lichte-weerstand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 46258,
-        "whitePixels": 913742,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.048185,
-        "whiteRatio": 0.951815,
-        "pureBinary": true,
-        "sha256": "d624fbcfce88f7156cd9115278a92e3fadad44d8ae9b97cb043e6ae2326aed4e",
-        "sizeBytes": 10588
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Romp draaien – met lichte weerstand",
       "colorSource": "images/core/romp-draaien-met-lichte-weerstand-avatar-v8.jpg",
       "lineSource": "images/core/romp-draaien-met-lichte-weerstand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 43831,
-        "whitePixels": 916169,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.045657,
-        "whiteRatio": 0.954343,
-        "pureBinary": true,
-        "sha256": "d1d99130031219cd78411bfbaa1d1c36e945d8d36f65588dc4e33cc7adc633db",
-        "sizeBytes": 10133
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Romp zijwaarts buigen – met lichte weerstand",
@@ -7191,61 +6302,25 @@
       "name": "Rug strekken – met lichte weerstand",
       "colorSource": "images/core/rug-strekken-met-lichte-weerstand-avatar-v8.jpg",
       "lineSource": "images/core/rug-strekken-met-lichte-weerstand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 52300,
-        "whitePixels": 907700,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.054479,
-        "whiteRatio": 0.945521,
-        "pureBinary": true,
-        "sha256": "b294bbac79289beae74e4b1886cec7e75f3a50c0b5bd133f4ec37f093e9c8865",
-        "sizeBytes": 10744
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Diafragma-ademhaling – zittend",
       "colorSource": "images/cardio/diafragma-ademhaling-zittend-avatar-v8.jpg",
       "lineSource": "images/cardio/diafragma-ademhaling-zittend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 48639,
-        "whitePixels": 911361,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.050666,
-        "whiteRatio": 0.949334,
-        "pureBinary": true,
-        "sha256": "ed9f554b9bbb977cd61ac5df785bfc4a211ee2bf2687f73ebff8bdcd22c05c08",
-        "sizeBytes": 10950
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Lippenremademhaling – zittend",
       "colorSource": "images/cardio/lippenremademhaling-zittend-avatar-v8.jpg",
       "lineSource": "images/cardio/lippenremademhaling-zittend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 60744,
-        "whitePixels": 899256,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.063275,
-        "whiteRatio": 0.936725,
-        "pureBinary": true,
-        "sha256": "16937f42fe422206948e7bd4d30c0769b350dde07d13f82f7016d5cae2cf8942",
-        "sizeBytes": 12200
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Armen en adem koppelen – met armtaak",
@@ -7259,101 +6334,41 @@
       "name": "Marcheren – interval kort",
       "colorSource": "images/cardio/marcheren-interval-kort-avatar-v8.jpg",
       "lineSource": "images/cardio/marcheren-interval-kort-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41361,
-        "whitePixels": 918639,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043084,
-        "whiteRatio": 0.956916,
-        "pureBinary": true,
-        "sha256": "e056a3e4c83f41c105a7063cd380bc89006b6063d8610830b112cbf7242398f8",
-        "sizeBytes": 10256
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Marcheren – interval langer",
       "colorSource": "images/cardio/marcheren-interval-langer-avatar-v8.jpg",
       "lineSource": "images/cardio/marcheren-interval-langer-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 50247,
-        "whitePixels": 909753,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.052341,
-        "whiteRatio": 0.947659,
-        "pureBinary": true,
-        "sha256": "6cdddf9492c7ef2f98612435f84ef919e946e6be9b626a1717195d92312c0c4c",
-        "sizeBytes": 10334
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Opstaan herhalen – interval kort",
       "colorSource": "images/cardio/opstaan-herhalen-interval-kort-avatar-v8.jpg",
       "lineSource": "images/cardio/opstaan-herhalen-interval-kort-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 54710,
-        "whitePixels": 905290,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.05699,
-        "whiteRatio": 0.94301,
-        "pureBinary": true,
-        "sha256": "041e57df5928022a4fe4484384e5923a004fb61b0074e99479f693df45bb3f53",
-        "sizeBytes": 11769
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Thorax openen – met armtaak",
       "colorSource": "images/cardio/thorax-openen-met-armtaak-avatar-v8.jpg",
       "lineSource": "images/cardio/thorax-openen-met-armtaak-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 38328,
-        "whitePixels": 921672,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.039925,
-        "whiteRatio": 0.960075,
-        "pureBinary": true,
-        "sha256": "004254e5457122b10beae90a65ec34bdf39a4773ebf834004f38ae994f60f7a5",
-        "sizeBytes": 8751
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Zijwaarts stappen – interval kort",
       "colorSource": "images/cardio/zijwaarts-stappen-interval-kort-avatar-v8.jpg",
       "lineSource": "images/cardio/zijwaarts-stappen-interval-kort-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41008,
-        "whitePixels": 918992,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.042717,
-        "whiteRatio": 0.957283,
-        "pureBinary": true,
-        "sha256": "3d4fa26f41d0c6759f3a15ff75f5d29d3dde686fa72e09ae85dc98244eb23fda",
-        "sizeBytes": 10283
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Kin intrekken – zittend actief",
@@ -7375,161 +6390,65 @@
       "name": "Nek buigen – zittend actief",
       "colorSource": "images/nek/nek-buigen-zittend-actief-avatar-v8.jpg",
       "lineSource": "images/nek/nek-buigen-zittend-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 52451,
-        "whitePixels": 907549,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.054636,
-        "whiteRatio": 0.945364,
-        "pureBinary": true,
-        "sha256": "26098622c1922721991ce501c64492fba3625562425a0899c9d4f2a68cd63c9b",
-        "sizeBytes": 10823
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Nek buigen – liggend ondersteund",
       "colorSource": "images/nek/nek-buigen-liggend-ondersteund-avatar-v8.jpg",
       "lineSource": "images/nek/nek-buigen-liggend-ondersteund-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 29630,
-        "whitePixels": 930370,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.030865,
-        "whiteRatio": 0.969135,
-        "pureBinary": true,
-        "sha256": "18ca9acc98f98f210c29af602cc5f85512e5e82e477b480556bff6dc8fd1f9f2",
-        "sizeBytes": 7668
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Nek strekken – zittend actief",
       "colorSource": "images/nek/nek-strekken-zittend-actief-avatar-v8.jpg",
       "lineSource": "images/nek/nek-strekken-zittend-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 57115,
-        "whitePixels": 902885,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.059495,
-        "whiteRatio": 0.940505,
-        "pureBinary": true,
-        "sha256": "72b7650c951669ea178eee07c2329278ffdc06974156e303f266b5eed65f8eff",
-        "sizeBytes": 11656
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Nek strekken – functioneel staand",
       "colorSource": "images/nek/nek-strekken-functioneel-staand-avatar-v8.jpg",
       "lineSource": "images/nek/nek-strekken-functioneel-staand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40888,
-        "whitePixels": 919112,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.042592,
-        "whiteRatio": 0.957408,
-        "pureBinary": true,
-        "sha256": "c9c7ff4c65f5d4a96e8fc23133b7ec2c88b4b6d9bafc566c94f2ad79051d67db",
-        "sizeBytes": 8601
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Nek draaien – zittend actief",
       "colorSource": "images/nek/nek-draaien-zittend-actief-avatar-v8.jpg",
       "lineSource": "images/nek/nek-draaien-zittend-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 63337,
-        "whitePixels": 896663,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.065976,
-        "whiteRatio": 0.934024,
-        "pureBinary": true,
-        "sha256": "9e7ed1c1db18adf0ed6da78041d3d6b01a5ea6d2ff39e0c38a92b04d66c8215b",
-        "sizeBytes": 12463
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Nek draaien – functioneel staand",
       "colorSource": "images/nek/nek-draaien-functioneel-staand-avatar-v8.jpg",
       "lineSource": "images/nek/nek-draaien-functioneel-staand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 43624,
-        "whitePixels": 916376,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.045442,
-        "whiteRatio": 0.954558,
-        "pureBinary": true,
-        "sha256": "c721c33364a142c90f9bc293272f9a13ac12802f1b1b4a0790d0c7d536b38a88",
-        "sizeBytes": 10299
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Nek zijwaarts buigen – zittend actief",
       "colorSource": "images/nek/nek-zijwaarts-buigen-zittend-actief-avatar-v8.jpg",
       "lineSource": "images/nek/nek-zijwaarts-buigen-zittend-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 48053,
-        "whitePixels": 911947,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.050055,
-        "whiteRatio": 0.949945,
-        "pureBinary": true,
-        "sha256": "c60320d7dc2f1122bcad441f4d59522361f3d6ab43cb7631e5278a92a4f05f9f",
-        "sizeBytes": 10257
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Nek zijwaarts buigen – isometrisch",
       "colorSource": "images/nek/nek-zijwaarts-buigen-isometrisch-avatar-v8.jpg",
       "lineSource": "images/nek/nek-zijwaarts-buigen-isometrisch-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42209,
-        "whitePixels": 917791,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043968,
-        "whiteRatio": 0.956032,
-        "pureBinary": true,
-        "sha256": "e426d3c875f8e3e1019640b7ab1644334ef61ef2e4384c316eb88e0539f8b9ed",
-        "sizeBytes": 9579
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Diepe nekflexoren activeren – zittend actief",
@@ -7551,221 +6470,89 @@
       "name": "Nekrotatie met oogfixatie – zittend actief",
       "colorSource": "images/nek/nekrotatie-met-oogfixatie-zittend-actief-avatar-v8.jpg",
       "lineSource": "images/nek/nekrotatie-met-oogfixatie-zittend-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 56000,
-        "whitePixels": 904000,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.058333,
-        "whiteRatio": 0.941667,
-        "pureBinary": true,
-        "sha256": "c3033a76f95f45f452525cfa8b669b4a4217d8d34408cf85baa24301e3b2a7eb",
-        "sizeBytes": 10609
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Nekrotatie met oogfixatie – functioneel staand",
       "colorSource": "images/nek/nekrotatie-met-oogfixatie-functioneel-staand-avatar-v8.jpg",
       "lineSource": "images/nek/nekrotatie-met-oogfixatie-functioneel-staand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 46466,
-        "whitePixels": 913534,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.048402,
-        "whiteRatio": 0.951598,
-        "pureBinary": true,
-        "sha256": "20dd5c9372e08c91e8c83953e8d24a8b2f7f0ea443a1220a09f2905fb36a0797",
-        "sizeBytes": 10027
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouderblad liften en ontspannen – zittend actief",
       "colorSource": "images/nek/schouderblad-liften-en-ontspannen-zittend-actief-avatar-v8.jpg",
       "lineSource": "images/nek/schouderblad-liften-en-ontspannen-zittend-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 49588,
-        "whitePixels": 910412,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.051654,
-        "whiteRatio": 0.948346,
-        "pureBinary": true,
-        "sha256": "fe2dc5c64cf1dfd71e313cc9f06e0384980d7878b416bf08923103f0f26dc152",
-        "sizeBytes": 9606
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Schouderblad liften en ontspannen – functioneel staand",
       "colorSource": "images/nek/schouderblad-liften-en-ontspannen-functioneel-staand-avatar-v8.jpg",
       "lineSource": "images/nek/schouderblad-liften-en-ontspannen-functioneel-staand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 45059,
-        "whitePixels": 914941,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.046936,
-        "whiteRatio": 0.953064,
-        "pureBinary": true,
-        "sha256": "d42fa2d94650ee51f25a0d32d2a09d258d95f41dc2468e585f4bc74e262143e8",
-        "sizeBytes": 10106
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Levator scapulae rek – zittend actief",
       "colorSource": "images/nek/levator-scapulae-rek-zittend-actief-avatar-v8.jpg",
       "lineSource": "images/nek/levator-scapulae-rek-zittend-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 53124,
-        "whitePixels": 906876,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.055337,
-        "whiteRatio": 0.944662,
-        "pureBinary": true,
-        "sha256": "a3ec630bf159aad813cc1db8a40dcadc86cf21dadbb956d02a262d25d939b677",
-        "sizeBytes": 10965
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Levator scapulae rek – functioneel staand",
       "colorSource": "images/nek/levator-scapulae-rek-functioneel-staand-avatar-v8.jpg",
       "lineSource": "images/nek/levator-scapulae-rek-functioneel-staand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 44220,
-        "whitePixels": 915780,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.046062,
-        "whiteRatio": 0.953937,
-        "pureBinary": true,
-        "sha256": "cc841591949f1c0f233ee0dcc14032c5f8dfcc4a973b264f1f4f9b4ff3d77e42",
-        "sizeBytes": 10265
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Bovenste trapezius rek – zittend actief",
       "colorSource": "images/nek/bovenste-trapezius-rek-zittend-actief-avatar-v8.jpg",
       "lineSource": "images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 55088,
-        "whitePixels": 904912,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.057383,
-        "whiteRatio": 0.942617,
-        "pureBinary": true,
-        "sha256": "ff1137c838460a5c6a95ebf4270e613fa00432624945af82abb9647d66869e02",
-        "sizeBytes": 10327
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Bovenste trapezius rek – functioneel staand",
       "colorSource": "images/nek/bovenste-trapezius-rek-functioneel-staand-avatar-v8.jpg",
       "lineSource": "images/nek/bovenste-trapezius-rek-functioneel-staand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41550,
-        "whitePixels": 918450,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043281,
-        "whiteRatio": 0.956719,
-        "pureBinary": true,
-        "sha256": "44436a7b11e93c06a257b6bd632612e81355bef34f1fd35aa0cbd022abfdf0ed",
-        "sizeBytes": 9059
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Rug bol en hol – op handen en knieën",
       "colorSource": "images/rug/rug-bol-en-hol-op-handen-en-knieen-avatar-v8.jpg",
       "lineSource": "images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 38557,
-        "whitePixels": 921443,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.040164,
-        "whiteRatio": 0.959836,
-        "pureBinary": true,
-        "sha256": "168235b0b0ada6abd28e08c8f835a35faac459e39dd6abc6f4011f1c95c683f5",
-        "sizeBytes": 9564
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Rug bol en hol – zittend",
       "colorSource": "images/rug/rug-bol-en-hol-zittend-avatar-v8.jpg",
       "lineSource": "images/rug/rug-bol-en-hol-zittend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 48668,
-        "whitePixels": 911332,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.050696,
-        "whiteRatio": 0.949304,
-        "pureBinary": true,
-        "sha256": "0b2893eb4512053b810cf3d66a62d89aa9609fc7e8ffd64d29bf3d7a18a7b344",
-        "sizeBytes": 11847
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Rug bol en hol – staand",
       "colorSource": "images/rug/rug-bol-en-hol-staand-avatar-v8.jpg",
       "lineSource": "images/rug/rug-bol-en-hol-staand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 39655,
-        "whitePixels": 920345,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.041307,
-        "whiteRatio": 0.958693,
-        "pureBinary": true,
-        "sha256": "7b59bdfd6ddac6254b549732f20b01d9aef088d27634beec4bbc4ff9d9fb7139",
-        "sizeBytes": 9141
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Rug bol en hol – met lichte weerstand",
@@ -7779,81 +6566,33 @@
       "name": "Romp draaien – liggend",
       "colorSource": "images/rug/romp-draaien-liggend-avatar-v8.jpg",
       "lineSource": "images/rug/romp-draaien-liggend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 34244,
-        "whitePixels": 925756,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.035671,
-        "whiteRatio": 0.964329,
-        "pureBinary": true,
-        "sha256": "ac2ce2e178bc1fd1a7533151ea26e2c297270f78e5f34a94f808714509540086",
-        "sizeBytes": 8378
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Romp draaien – op handen en knieën",
       "colorSource": "images/rug/romp-draaien-op-handen-en-knieen-avatar-v8.jpg",
       "lineSource": "images/rug/romp-draaien-op-handen-en-knieen-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37300,
-        "whitePixels": 922700,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038854,
-        "whiteRatio": 0.961146,
-        "pureBinary": true,
-        "sha256": "8730898764b652214ca794684556b0b81647b53102c34c4f9f7af7b446b1aea8",
-        "sizeBytes": 9654
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Romp draaien – zittend",
       "colorSource": "images/rug/romp-draaien-zittend-avatar-v8.jpg",
       "lineSource": "images/rug/romp-draaien-zittend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 57764,
-        "whitePixels": 902236,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.060171,
-        "whiteRatio": 0.939829,
-        "pureBinary": true,
-        "sha256": "a234675bd56c84d2800d804d3cc13413cc7d7b2a1288c1dddc5955a8fc6f842f",
-        "sizeBytes": 12153
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Romp draaien – staand",
       "colorSource": "images/rug/romp-draaien-staand-avatar-v8.jpg",
       "lineSource": "images/rug/romp-draaien-staand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40721,
-        "whitePixels": 919279,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.042418,
-        "whiteRatio": 0.957582,
-        "pureBinary": true,
-        "sha256": "5a9100c5a8e0cb375e8473a3dd34746c75709147f66f532eac27ad02074d64c7",
-        "sizeBytes": 8982
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Romp zijwaarts buigen – liggend",
@@ -7867,41 +6606,17 @@
       "name": "Romp zijwaarts buigen – zittend",
       "colorSource": "images/rug/romp-zijwaarts-buigen-zittend-avatar-v8.jpg",
       "lineSource": "images/rug/romp-zijwaarts-buigen-zittend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 50784,
-        "whitePixels": 909216,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.0529,
-        "whiteRatio": 0.9471,
-        "pureBinary": true,
-        "sha256": "ee2032b6b1296f0c968c18615ed47122dc3afb13704ddfe0f418607944ae2f79",
-        "sizeBytes": 9855
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Romp zijwaarts buigen – staand",
       "colorSource": "images/rug/romp-zijwaarts-buigen-staand-avatar-v8.jpg",
       "lineSource": "images/rug/romp-zijwaarts-buigen-staand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 45497,
-        "whitePixels": 914503,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.047393,
-        "whiteRatio": 0.952607,
-        "pureBinary": true,
-        "sha256": "d513ef5e5f383beec325f84b589fcd134e3116ff1ddb6617a2756889e8c8de0f",
-        "sizeBytes": 10687
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Rug strekken – liggend",
@@ -7915,21 +6630,9 @@
       "name": "Rug strekken – op handen en knieën",
       "colorSource": "images/rug/rug-strekken-op-handen-en-knieen-avatar-v8.jpg",
       "lineSource": "images/rug/rug-strekken-op-handen-en-knieen-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 30749,
-        "whitePixels": 929251,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.03203,
-        "whiteRatio": 0.96797,
-        "pureBinary": true,
-        "sha256": "99e3e9fa93bd8b04c0fad393655d9a8fa1aaf0e9f6b7bb105b9c7a3bd4a8387c",
-        "sizeBytes": 7420
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Rug strekken – zittend",
@@ -7951,181 +6654,73 @@
       "name": "Knie naar borst – liggend",
       "colorSource": "images/rug/knie-naar-borst-liggend-avatar-v8.jpg",
       "lineSource": "images/rug/knie-naar-borst-liggend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37399,
-        "whitePixels": 922601,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038957,
-        "whiteRatio": 0.961043,
-        "pureBinary": true,
-        "sha256": "c8f6c0c5e8e3051864bb86574ed176ee28a88abaa2acc67e94ef2b2ce3c81e17",
-        "sizeBytes": 7820
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Knie naar borst – zittend",
       "colorSource": "images/rug/knie-naar-borst-zittend-avatar-v8.jpg",
       "lineSource": "images/rug/knie-naar-borst-zittend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37834,
-        "whitePixels": 922166,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.03941,
-        "whiteRatio": 0.96059,
-        "pureBinary": true,
-        "sha256": "b357c228fc6f190bb064701758fcb9886fa822e5e2623c4cae2075ce17aaa667",
-        "sizeBytes": 7875
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Knie naar borst – staand",
       "colorSource": "images/rug/knie-naar-borst-staand-avatar-v8.jpg",
       "lineSource": "images/rug/knie-naar-borst-staand-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 23889,
-        "whitePixels": 936111,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.024884,
-        "whiteRatio": 0.975116,
-        "pureBinary": true,
-        "sha256": "593592cd14b1a5ece8485ed2b2a2d34cdd97685d67fe0d8754c12e2688f45039",
-        "sizeBytes": 5548
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Open boek – liggend",
       "colorSource": "images/rug/open-boek-liggend-avatar-v8.jpg",
       "lineSource": "images/rug/open-boek-liggend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 35055,
-        "whitePixels": 924945,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.036516,
-        "whiteRatio": 0.963484,
-        "pureBinary": true,
-        "sha256": "07bc6a866ccfc981ba66725cb484b6986836716bba211648de57a0e8ad1b12f8",
-        "sizeBytes": 9330
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Open boek – op handen en knieën",
       "colorSource": "images/rug/open-boek-op-handen-en-knieen-avatar-v8.jpg",
       "lineSource": "images/rug/open-boek-op-handen-en-knieen-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 28368,
-        "whitePixels": 931632,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.02955,
-        "whiteRatio": 0.97045,
-        "pureBinary": true,
-        "sha256": "30ecc21c63267d48a953c97dd0eb026a5fd15424abeedf985b959bee4855bc51",
-        "sizeBytes": 7738
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Open boek – zittend",
       "colorSource": "images/rug/open-boek-zittend-avatar-v8.jpg",
       "lineSource": "images/rug/open-boek-zittend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 53457,
-        "whitePixels": 906543,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.055684,
-        "whiteRatio": 0.944316,
-        "pureBinary": true,
-        "sha256": "2a6159bede5a6dfdf2a1b07b2e70b3b06e96bcba4b0ab9148db42cdb55dd5455",
-        "sizeBytes": 11710
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Thoracale extensie – liggend",
       "colorSource": "images/rug/thoracale-extensie-liggend-avatar-v8.jpg",
       "lineSource": "images/rug/thoracale-extensie-liggend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 35487,
-        "whitePixels": 924513,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.036966,
-        "whiteRatio": 0.963034,
-        "pureBinary": true,
-        "sha256": "9ee07aa675afdec19e97a76b6215bec49386892f4e93091e1c12afb290f3d021",
-        "sizeBytes": 8138
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Thoracale extensie – op handen en knieën",
       "colorSource": "images/rug/thoracale-extensie-op-handen-en-knieen-avatar-v8.jpg",
       "lineSource": "images/rug/thoracale-extensie-op-handen-en-knieen-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41756,
-        "whitePixels": 918244,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043496,
-        "whiteRatio": 0.956504,
-        "pureBinary": true,
-        "sha256": "98ecdc8c3746f2157d5400635c5d408bcbe5c348623bffd844c1c137d14784b5",
-        "sizeBytes": 10162
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Thoracale extensie – zittend",
       "colorSource": "images/rug/thoracale-extensie-zittend-avatar-v8.jpg",
       "lineSource": "images/rug/thoracale-extensie-zittend-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 46839,
-        "whitePixels": 913161,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.048791,
-        "whiteRatio": 0.951209,
-        "pureBinary": true,
-        "sha256": "55cb71fc91fb73ab27cf8ce90ccceb5393fdea17bff259360c4e19367e6dedf3",
-        "sizeBytes": 10823
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Thoracale extensie – staand",
@@ -8155,101 +6750,41 @@
       "name": "Voeten naast elkaar staan – met hoofdbeweging",
       "colorSource": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-hoofdbeweging-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-hoofdbeweging-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 55141,
-        "whitePixels": 904859,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.057439,
-        "whiteRatio": 0.942561,
-        "pureBinary": true,
-        "sha256": "01059f8046477e2f44f048214830e288ffcf560f41c163bd0cbcddecdbb02623",
-        "sizeBytes": 10987
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Semi-tandemstand – met steun",
       "colorSource": "images/balans-en-valpreventie/semi-tandemstand-met-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/semi-tandemstand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36697,
-        "whitePixels": 923303,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038226,
-        "whiteRatio": 0.961774,
-        "pureBinary": true,
-        "sha256": "8170b9b51c7fec9a1f280ed8765bfecd25d3781cab4605a890914833afd9db18",
-        "sizeBytes": 9192
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Semi-tandemstand – zonder steun",
       "colorSource": "images/balans-en-valpreventie/semi-tandemstand-zonder-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/semi-tandemstand-zonder-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 46951,
-        "whitePixels": 913049,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.048907,
-        "whiteRatio": 0.951093,
-        "pureBinary": true,
-        "sha256": "2eb8bd8c01c82339cc53b0933733caf792aa867a03a2cd020f44b0ea59a64081",
-        "sizeBytes": 10370
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Semi-tandemstand – met hoofdbeweging",
       "colorSource": "images/balans-en-valpreventie/semi-tandemstand-met-hoofdbeweging-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/semi-tandemstand-met-hoofdbeweging-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 49789,
-        "whitePixels": 910211,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.051864,
-        "whiteRatio": 0.948136,
-        "pureBinary": true,
-        "sha256": "f91bcd1a251c198d1a13ad5751d5b8d25c5e22facbbaf68a8d00e125e84849dc",
-        "sizeBytes": 9976
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Tandemstand – met steun",
       "colorSource": "images/balans-en-valpreventie/tandemstand-met-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41028,
-        "whitePixels": 918972,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.042737,
-        "whiteRatio": 0.957263,
-        "pureBinary": true,
-        "sha256": "a2d82f66554c8cc3acefc651a6ae41f971b883d4d9e30d4430019e2c4d551480",
-        "sizeBytes": 9457
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Tandemstand – zonder steun",
@@ -8263,281 +6798,113 @@
       "name": "Tandemstand – met hoofdbeweging",
       "colorSource": "images/balans-en-valpreventie/tandemstand-met-hoofdbeweging-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/tandemstand-met-hoofdbeweging-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 47342,
-        "whitePixels": 912658,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.049315,
-        "whiteRatio": 0.950685,
-        "pureBinary": true,
-        "sha256": "6b33225eb413378f4017b51bc7be5ecc4434eb362d35f43e7585f5b49cad9be0",
-        "sizeBytes": 9333
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Eenbeenstand – met steun",
       "colorSource": "images/balans-en-valpreventie/eenbeenstand-met-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41649,
-        "whitePixels": 918351,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043384,
-        "whiteRatio": 0.956616,
-        "pureBinary": true,
-        "sha256": "be710b399e2b91c1057a7ad71f0d21a25302c3f6d828b9d9ad9bcc136b0750ef",
-        "sizeBytes": 10507
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Eenbeenstand – zonder steun",
       "colorSource": "images/balans-en-valpreventie/eenbeenstand-zonder-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/eenbeenstand-zonder-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 49781,
-        "whitePixels": 910219,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.051855,
-        "whiteRatio": 0.948145,
-        "pureBinary": true,
-        "sha256": "2d1428fda78bc6ca59f6a68d0b2fbe787b6a5203fe423d62cf9de49b63b6e470",
-        "sizeBytes": 10443
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Eenbeenstand – met hoofdbeweging",
       "colorSource": "images/balans-en-valpreventie/eenbeenstand-met-hoofdbeweging-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/eenbeenstand-met-hoofdbeweging-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 44355,
-        "whitePixels": 915645,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.046203,
-        "whiteRatio": 0.953797,
-        "pureBinary": true,
-        "sha256": "6465dd9e15a4d6344ed093b7cc7b9a94d7026d59430810fc26865554be532c31",
-        "sizeBytes": 10473
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Gewicht verplaatsen voor-achter – met steun",
       "colorSource": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 33829,
-        "whitePixels": 926171,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.035239,
-        "whiteRatio": 0.964761,
-        "pureBinary": true,
-        "sha256": "00b63cd8a7f90318152afb84af8abaa2aefde91c332a2dded9687026c95b8c20",
-        "sizeBytes": 9377
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Gewicht verplaatsen voor-achter – zonder steun",
       "colorSource": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-zonder-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-zonder-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 50602,
-        "whitePixels": 909398,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.05271,
-        "whiteRatio": 0.94729,
-        "pureBinary": true,
-        "sha256": "77beafcc53957709f766d1b688cc065e2f48e5677ea6613d36e786a853a6dbbd",
-        "sizeBytes": 9688
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Gewicht verplaatsen zijwaarts – met steun",
       "colorSource": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 46153,
-        "whitePixels": 913847,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.048076,
-        "whiteRatio": 0.951924,
-        "pureBinary": true,
-        "sha256": "b24a963638c7ee44c7f48d11c81f2c9b3faa6f414de54a9274b771250a363a8b",
-        "sizeBytes": 10053
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Gewicht verplaatsen zijwaarts – zonder steun",
       "colorSource": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-zonder-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-zonder-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 47812,
-        "whitePixels": 912188,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.049804,
-        "whiteRatio": 0.950196,
-        "pureBinary": true,
-        "sha256": "c2e76784044c68a9a1a973f363cf58fdc288fb120c7e73d5037498bdd0d3c278",
-        "sizeBytes": 9954
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Reiken in stand – met steun",
       "colorSource": "images/balans-en-valpreventie/reiken-in-stand-met-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/reiken-in-stand-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 35157,
-        "whitePixels": 924843,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.036622,
-        "whiteRatio": 0.963378,
-        "pureBinary": true,
-        "sha256": "b1c36397f12902335e769f99e7adfa6b9ce6173f340621440473cdb7c5c2c338",
-        "sizeBytes": 8475
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Reiken in stand – zonder steun",
       "colorSource": "images/balans-en-valpreventie/reiken-in-stand-zonder-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/reiken-in-stand-zonder-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 44942,
-        "whitePixels": 915058,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.046815,
-        "whiteRatio": 0.953185,
-        "pureBinary": true,
-        "sha256": "65f6cfd02d84050c2974be12a954f6a5d44c4142e4f2c318776ae6d751a1f4f4",
-        "sizeBytes": 9943
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Op de plaats marcheren – met steun",
       "colorSource": "images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42020,
-        "whitePixels": 917980,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043771,
-        "whiteRatio": 0.956229,
-        "pureBinary": true,
-        "sha256": "f8d2f11fb2b760bb171c8118816f1b28e35ce240fb70969726438534e7f8a4c7",
-        "sizeBytes": 9243
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Op de plaats marcheren – zonder steun",
       "colorSource": "images/balans-en-valpreventie/op-de-plaats-marcheren-zonder-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/op-de-plaats-marcheren-zonder-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 38711,
-        "whitePixels": 921289,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.040324,
-        "whiteRatio": 0.959676,
-        "pureBinary": true,
-        "sha256": "21b192394c5d41b78f5c437edf433de63fd1958a37a5daf4f01404bff1ed21ba",
-        "sizeBytes": 9576
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Zijwaarts stappen – met steun",
       "colorSource": "images/balans-en-valpreventie/zijwaarts-stappen-met-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/zijwaarts-stappen-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41326,
-        "whitePixels": 918674,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043048,
-        "whiteRatio": 0.956952,
-        "pureBinary": true,
-        "sha256": "76d180f981a681ac80d8335bfab5798c9186eccd242bef17df731c9febcd4910",
-        "sizeBytes": 9067
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Zijwaarts stappen – zonder steun",
       "colorSource": "images/balans-en-valpreventie/zijwaarts-stappen-zonder-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/zijwaarts-stappen-zonder-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36090,
-        "whitePixels": 923910,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.037594,
-        "whiteRatio": 0.962406,
-        "pureBinary": true,
-        "sha256": "4589a9e2b8df37ec624b4e6a7f27dbaebf3a5a05be67aad27a57078175086326",
-        "sizeBytes": 8318
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Achterwaarts stappen – met steun",
@@ -8567,41 +6934,17 @@
       "name": "Over een obstakel stappen – zonder steun",
       "colorSource": "images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41986,
-        "whitePixels": 918014,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043735,
-        "whiteRatio": 0.956265,
-        "pureBinary": true,
-        "sha256": "4690e56c7e0302b8bdae2f1b2673db549605b0045f4b14b50119f685620ece8c",
-        "sizeBytes": 9559
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Draaien op de plaats – met steun",
       "colorSource": "images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41571,
-        "whitePixels": 918429,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043303,
-        "whiteRatio": 0.956697,
-        "pureBinary": true,
-        "sha256": "1d2b538e84776f9597f0800a2d4567bb164c6de7ada1bee88fbe91b2e83af186",
-        "sizeBytes": 10259
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Draaien op de plaats – zonder steun",
@@ -8615,61 +6958,25 @@
       "name": "Stoel opstaan en lopen – zonder steun",
       "colorSource": "images/balans-en-valpreventie/stoel-opstaan-en-lopen-zonder-steun-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/stoel-opstaan-en-lopen-zonder-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 48551,
-        "whitePixels": 911449,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.050574,
-        "whiteRatio": 0.949426,
-        "pureBinary": true,
-        "sha256": "161cc2b6b7683224229bd34530cca725ee5740955317710d03435f9ac6997c9d",
-        "sizeBytes": 10818
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Dubbele taak lopen – met cognitieve taak",
       "colorSource": "images/balans-en-valpreventie/dubbele-taak-lopen-met-cognitieve-taak-avatar-v8.jpg",
       "lineSource": "images/balans-en-valpreventie/dubbele-taak-lopen-met-cognitieve-taak-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 34956,
-        "whitePixels": 925044,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.036413,
-        "whiteRatio": 0.963588,
-        "pureBinary": true,
-        "sha256": "b32b04edcc8ae8cc450a24c7d71cf5d345a14575173f19cbc988e9b2bf70b153",
-        "sizeBytes": 8869
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Reiken met aangedane arm – met visueel doel",
       "colorSource": "images/neurologische-revalidatie/reiken-met-aangedane-arm-met-visueel-doel-avatar-v8.jpg",
       "lineSource": "images/neurologische-revalidatie/reiken-met-aangedane-arm-met-visueel-doel-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 35123,
-        "whitePixels": 924877,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.036586,
-        "whiteRatio": 0.963414,
-        "pureBinary": true,
-        "sha256": "1e28817f74f494984c8133024c48c44755fbe203a250c963b27fdb52b6ab3312",
-        "sizeBytes": 7793
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Reiken met aangedane arm – functionele combinatie",
@@ -8683,361 +6990,145 @@
       "name": "Hand openen na grijpen – bilateraal",
       "colorSource": "images/neurologische-revalidatie/hand-openen-na-grijpen-bilateraal-avatar-v8.jpg",
       "lineSource": "images/neurologische-revalidatie/hand-openen-na-grijpen-bilateraal-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 43521,
-        "whitePixels": 916479,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.045334,
-        "whiteRatio": 0.954666,
-        "pureBinary": true,
-        "sha256": "cdebf0df44b382e8fa8a214cdbc319c9ae4957a3d699d8fabcfff73ffc7edbd9",
-        "sizeBytes": 9842
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Romp rotatie in zit – bilateraal",
       "colorSource": "images/neurologische-revalidatie/romp-rotatie-in-zit-bilateraal-avatar-v8.jpg",
       "lineSource": "images/neurologische-revalidatie/romp-rotatie-in-zit-bilateraal-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 51868,
-        "whitePixels": 908132,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.054029,
-        "whiteRatio": 0.945971,
-        "pureBinary": true,
-        "sha256": "6ff6b3c2fa974e758249afbcb73441ba9a1feddbadae0cb76e34bc09b3ace755",
-        "sizeBytes": 9877
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Symmetrisch opstaan – met fysieke steun",
       "colorSource": "images/neurologische-revalidatie/symmetrisch-opstaan-met-fysieke-steun-avatar-v8.jpg",
       "lineSource": "images/neurologische-revalidatie/symmetrisch-opstaan-met-fysieke-steun-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 53584,
-        "whitePixels": 906416,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.055817,
-        "whiteRatio": 0.944183,
-        "pureBinary": true,
-        "sha256": "55b2b0d4942c21cf88ffcdf8176482b25fcbfdff13ed13fbe3f9fac587b675a5",
-        "sizeBytes": 11449
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Symmetrisch opstaan – met ritmische cue",
       "colorSource": "images/neurologische-revalidatie/symmetrisch-opstaan-met-ritmische-cue-avatar-v8.jpg",
       "lineSource": "images/neurologische-revalidatie/symmetrisch-opstaan-met-ritmische-cue-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 47954,
-        "whitePixels": 912046,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.049952,
-        "whiteRatio": 0.950048,
-        "pureBinary": true,
-        "sha256": "31ea5fba6c1b426d103d839c4746df1cccdf7018ae8f5734e0c457b0fbf0aa49",
-        "sizeBytes": 11333
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Stap initiëren – met visueel doel",
       "colorSource": "images/neurologische-revalidatie/stap-initieren-met-visueel-doel-avatar-v8.jpg",
       "lineSource": "images/neurologische-revalidatie/stap-initieren-met-visueel-doel-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36633,
-        "whitePixels": 923367,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038159,
-        "whiteRatio": 0.961841,
-        "pureBinary": true,
-        "sha256": "7199f7fd5b4dcc3909a5196e50d34e2ce05c7f034834d0c75f65fc9e75dd9f65",
-        "sizeBytes": 9121
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Stap initiëren – met ritmische cue",
       "colorSource": "images/neurologische-revalidatie/stap-initieren-met-ritmische-cue-avatar-v8.jpg",
       "lineSource": "images/neurologische-revalidatie/stap-initieren-met-ritmische-cue-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42080,
-        "whitePixels": 917920,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043833,
-        "whiteRatio": 0.956167,
-        "pureBinary": true,
-        "sha256": "d24bcc4ed3dd5b28d0eaebc5c50616cfd5cbbef0aea3d34202f1d34ef94299c4",
-        "sizeBytes": 10156
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Zijwaarts verplaatsen in zit – met visueel doel",
       "colorSource": "images/neurologische-revalidatie/zijwaarts-verplaatsen-in-zit-met-visueel-doel-avatar-v8.jpg",
       "lineSource": "images/neurologische-revalidatie/zijwaarts-verplaatsen-in-zit-met-visueel-doel-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 44588,
-        "whitePixels": 915412,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.046446,
-        "whiteRatio": 0.953554,
-        "pureBinary": true,
-        "sha256": "ceb8bbd15af076b710c361c2a9472f1a8805a0b10f0d08a18cc8ce79e939227e",
-        "sizeBytes": 10027
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Hiel plaatsen – met visueel doel",
       "colorSource": "images/neurologische-revalidatie/hiel-plaatsen-met-visueel-doel-avatar-v8.jpg",
       "lineSource": "images/neurologische-revalidatie/hiel-plaatsen-met-visueel-doel-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 39791,
-        "whitePixels": 920209,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.041449,
-        "whiteRatio": 0.958551,
-        "pureBinary": true,
-        "sha256": "7322bce829c7918aa94e07fb42a0b7977ea21fa4a501830b2d65364cb24c4044",
-        "sizeBytes": 9380
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Voet naar marker – met visueel doel",
       "colorSource": "images/neurologische-revalidatie/voet-naar-marker-met-visueel-doel-avatar-v8.jpg",
       "lineSource": "images/neurologische-revalidatie/voet-naar-marker-met-visueel-doel-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 35661,
-        "whitePixels": 924339,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.037147,
-        "whiteRatio": 0.962853,
-        "pureBinary": true,
-        "sha256": "bcea7cafc553a14e40cf59cee8bcd7aaf96bc7d62d36cf707a1b03e2445ef1a6",
-        "sizeBytes": 9132
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Ritmisch marcheren – met ritmische cue",
       "colorSource": "images/neurologische-revalidatie/ritmisch-marcheren-met-ritmische-cue-avatar-v8.jpg",
       "lineSource": "images/neurologische-revalidatie/ritmisch-marcheren-met-ritmische-cue-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 38914,
-        "whitePixels": 921086,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.040535,
-        "whiteRatio": 0.959465,
-        "pureBinary": true,
-        "sha256": "0794aec5d064e621ca08404f2a3d78a83bc30eee2cb494fb7c83561d8b082c25",
-        "sizeBytes": 9103
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Grote stappen – met ritmische cue",
       "colorSource": "images/neurologische-revalidatie/grote-stappen-met-ritmische-cue-avatar-v8.jpg",
       "lineSource": "images/neurologische-revalidatie/grote-stappen-met-ritmische-cue-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 34642,
-        "whitePixels": 925358,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.036085,
-        "whiteRatio": 0.963915,
-        "pureBinary": true,
-        "sha256": "bfbc5b497b6a2541454cc3a914256a23df383f9a9886fff51beb7dc68d6378d1",
-        "sizeBytes": 9578
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Grote stappen – functionele combinatie",
       "colorSource": "images/neurologische-revalidatie/grote-stappen-functionele-combinatie-avatar-v8.jpg",
       "lineSource": "images/neurologische-revalidatie/grote-stappen-functionele-combinatie-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 45929,
-        "whitePixels": 914071,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.047843,
-        "whiteRatio": 0.952157,
-        "pureBinary": true,
-        "sha256": "2fe207fb0edb81e22f69994c41822b861113512090b7a222092a4a55d3b4ede1",
-        "sizeBytes": 10666
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Brug met symmetrie – bilateraal",
       "colorSource": "images/neurologische-revalidatie/brug-met-symmetrie-bilateraal-avatar-v8.jpg",
       "lineSource": "images/neurologische-revalidatie/brug-met-symmetrie-bilateraal-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41811,
-        "whitePixels": 918189,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043553,
-        "whiteRatio": 0.956447,
-        "pureBinary": true,
-        "sha256": "f99988913bd92c7774e163c7c3af0e1e7069c9831d59d47a1b2a194e2e6862a8",
-        "sizeBytes": 9677
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Blikstabilisatie horizontaal – zittend langzaam",
       "colorSource": "images/vestibulair/blikstabilisatie-horizontaal-zittend-langzaam-avatar-v8.jpg",
       "lineSource": "images/vestibulair/blikstabilisatie-horizontaal-zittend-langzaam-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 48192,
-        "whitePixels": 911808,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.0502,
-        "whiteRatio": 0.9498,
-        "pureBinary": true,
-        "sha256": "d772ade59424d61f8ddd262c83e0da760f9ddaa4e7da754651363fda41e0b3b5",
-        "sizeBytes": 9596
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Blikstabilisatie horizontaal – staand langzaam",
       "colorSource": "images/vestibulair/blikstabilisatie-horizontaal-staand-langzaam-avatar-v8.jpg",
       "lineSource": "images/vestibulair/blikstabilisatie-horizontaal-staand-langzaam-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 43110,
-        "whitePixels": 916890,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.044906,
-        "whiteRatio": 0.955094,
-        "pureBinary": true,
-        "sha256": "c95060ce49e97bd1cc2a9d8a35a84319857842e257b62b992bfb6c24fa26a003",
-        "sizeBytes": 8596
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Blikstabilisatie horizontaal – tijdens lopen",
       "colorSource": "images/vestibulair/blikstabilisatie-horizontaal-tijdens-lopen-avatar-v8.jpg",
       "lineSource": "images/vestibulair/blikstabilisatie-horizontaal-tijdens-lopen-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 44066,
-        "whitePixels": 915934,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.045902,
-        "whiteRatio": 0.954098,
-        "pureBinary": true,
-        "sha256": "dbe74d09f5251bb2b8d336f653e2525e4a51f3d0a51a971e6812fe381c991138",
-        "sizeBytes": 9688
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Blikstabilisatie verticaal – zittend langzaam",
       "colorSource": "images/vestibulair/blikstabilisatie-verticaal-zittend-langzaam-avatar-v8.jpg",
       "lineSource": "images/vestibulair/blikstabilisatie-verticaal-zittend-langzaam-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 53677,
-        "whitePixels": 906323,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.055914,
-        "whiteRatio": 0.944086,
-        "pureBinary": true,
-        "sha256": "2d402ecbcf0ebec2a7d37083367b22b8909f2462b1c637cc8944b8336c481f40",
-        "sizeBytes": 11059
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Blikstabilisatie verticaal – staand langzaam",
       "colorSource": "images/vestibulair/blikstabilisatie-verticaal-staand-langzaam-avatar-v8.jpg",
       "lineSource": "images/vestibulair/blikstabilisatie-verticaal-staand-langzaam-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 50276,
-        "whitePixels": 909724,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.052371,
-        "whiteRatio": 0.947629,
-        "pureBinary": true,
-        "sha256": "ba8bcd4683761fd6ee805101ea2efdff50ab9326b0eaebf6a89df278ec37a81f",
-        "sizeBytes": 10817
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Ogen naar doelen – zittend langzaam",
@@ -9075,81 +7166,33 @@
       "name": "Buigen en oprichten – staand langzaam",
       "colorSource": "images/vestibulair/buigen-en-oprichten-staand-langzaam-avatar-v8.jpg",
       "lineSource": "images/vestibulair/buigen-en-oprichten-staand-langzaam-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 47028,
-        "whitePixels": 912972,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.048988,
-        "whiteRatio": 0.951013,
-        "pureBinary": true,
-        "sha256": "9035e36a6e7114772a3945da826d574fc493694872f0104b51c5a56a589267a1",
-        "sizeBytes": 10855
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Voorwerp van vloer tillen – ergonomische basis",
       "colorSource": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-ergonomische-basis-avatar-v8.jpg",
       "lineSource": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-ergonomische-basis-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40412,
-        "whitePixels": 919588,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.042096,
-        "whiteRatio": 0.957904,
-        "pureBinary": true,
-        "sha256": "c831a8f47962069f4cc04832635c469e839029ba7d98714f9390ea102833011e",
-        "sizeBytes": 10281
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Voorwerp van vloer tillen – licht en dichtbij",
       "colorSource": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-licht-en-dichtbij-avatar-v8.jpg",
       "lineSource": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-licht-en-dichtbij-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41652,
-        "whitePixels": 918348,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043388,
-        "whiteRatio": 0.956612,
-        "pureBinary": true,
-        "sha256": "6f00635672bd9e6d1726aff044cab395f7ee154be3c0204fb8c7d7070ad68eab",
-        "sizeBytes": 10157
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Voorwerp van tafel pakken – licht en dichtbij",
       "colorSource": "images/werk-en-dagelijkse-handelingen/voorwerp-van-tafel-pakken-licht-en-dichtbij-avatar-v8.jpg",
       "lineSource": "images/werk-en-dagelijkse-handelingen/voorwerp-van-tafel-pakken-licht-en-dichtbij-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 56665,
-        "whitePixels": 903335,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.059026,
-        "whiteRatio": 0.940974,
-        "pureBinary": true,
-        "sha256": "965f639939de01aeb7901a6571d565a2806d1fbe3c8385da063d7399272e9009",
-        "sizeBytes": 12845
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Boven schouderhoogte plaatsen – ergonomische basis",
@@ -9171,21 +7214,9 @@
       "name": "Duwen – licht en dichtbij",
       "colorSource": "images/werk-en-dagelijkse-handelingen/duwen-licht-en-dichtbij-avatar-v8.jpg",
       "lineSource": "images/werk-en-dagelijkse-handelingen/duwen-licht-en-dichtbij-line-v1.png",
-      "status": "ready",
-      "colorReady": true,
-      "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42773,
-        "whitePixels": 917227,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.044555,
-        "whiteRatio": 0.955445,
-        "pureBinary": true,
-        "sha256": "5608142ea179f6ba10b47786d47b7972bd98bbb8af3def6b3bacc822c05586ec",
-        "sizeBytes": 10199
-      }
+      "status": "pending-color",
+      "colorReady": false,
+      "lineReady": false
     },
     {
       "name": "Duwen – met stapverplaatsing",
