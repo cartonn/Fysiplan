@@ -240,7 +240,7 @@ try {
   assert.equal(aiCalls.length, 1);
   assert.equal(aiCalls[0].workspaceId, "test-workspace-id");
   assert.equal(aiCalls[0].body.max_tokens, 2400);
-  assert.equal(aiCalls[0].body.output_config.effort, "medium");
+  assert.equal(aiCalls[0].body.output_config.effort, "low");
   assert.equal(aiCalls[0].body.output_config.format.type, "json_schema");
   assert.match(aiCalls[0].body.output_config.format.schema.properties.oefeningen.description, /4 tot 6/);
   assert.equal(aiCalls[0].body.system[0].cache_control.type, "ephemeral");

@@ -2742,13 +2742,13 @@ async function afhandelen(request, response) {
         "\n\nBibliotheek (naam | categorie):\n" + lijst;
       const uit = await vraagClaude(AI_MODEL, 2400, sys,
         "<trainingsdoel>" + doel + "</trainingsdoel>\n<klacht>" + klacht + "</klacht>",
-        { schema: AI_KAART_SCHEMA, effort: "medium", cacheSystem: true });
+        { schema: AI_KAART_SCHEMA, effort: "low", cacheSystem: true });
       const byNorm = new Map(manifest.map((e) => [normEx(e.naam), e.naam]));
       const kort = (v, m) => String(v == null ? "" : v).trim().slice(0, m);
       const oefeningen = (Array.isArray(uit.oefeningen) ? uit.oefeningen : []).slice(0, 6)
         .map((o) => ({ naam: byNorm.get(normEx(o && o.naam)) || "", series: kort(o && o.series, 12),
-          herhalingen: kort(o && o.herhalingen, 16), gewicht: kort(o && o.gewicht, 20), borg: kort(o && o.borg, 12),
-          xrm: kort(o && o.xrm, 12), rust: kort(o && o.rust, 20), tempo: kort(o && o.tempo, 20), waarom: kort(o && o.waarom, 160) }))
+          herhalingen: kort(o && o.herhalingen, 32), gewicht: kort(o && o.gewicht, 40), borg: kort(o && o.borg, 12),
+          xrm: kort(o && o.xrm, 12), rust: kort(o && o.rust, 24), tempo: kort(o && o.tempo, 40), waarom: kort(o && o.waarom, 200) }))
         .filter((o) => o.naam);
       if (oefeningen.length < 4) {
         await sendJson(response, 502, { ok: false, fout: "De assistent gaf geen volledig bruikbaar voorstel; omschrijf de klacht iets anders en probeer opnieuw." });
@@ -2756,8 +2756,8 @@ async function afhandelen(request, response) {
       }
       const d = dagStats(vandaagKey()); d.ai = (d.ai || 0) + 1; bewaarStats();
       await sendJson(response, 200, { ok: true, trainingsdoel: kort(uit.trainingsdoel, 80) || doel,
-        frequentie: kort(uit.frequentie, 30), trainingsnotitie: kort(uit.trainingsnotitie, 240),
-        toelichting: kort(uit.toelichting, 400), waarschuwing: kort(uit.waarschuwing, 360), oefeningen });
+        frequentie: kort(uit.frequentie, 60), trainingsnotitie: kort(uit.trainingsnotitie, 360),
+        toelichting: kort(uit.toelichting, 500), waarschuwing: kort(uit.waarschuwing, 480), oefeningen });
     } catch (fout) {
       console.error("AI-kaartassistent:", fout && fout.message ? fout.message : "onbekende fout");
       await sendJson(response, fout && fout.message === "ai-tegoed" ? 503 : 502, { ok: false,
