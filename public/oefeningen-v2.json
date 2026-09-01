@@ -4004,31 +4004,34 @@
   "naam": "Swiss ball leg lifts",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-leg-lifts-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-leg-lifts-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-leg-lifts-avatar-v8.jpg",
   "uitleg": "Lig op je rug met de oefenbal tussen je onderbenen. Til je gestrekte benen met de bal gecontroleerd omhoog en laat ze langzaam terugzakken zonder je onderrug hol te trekken.",
   "exerciseId": "fp_dd9dd39c7f234cad",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball core",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-core-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-core-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-core-avatar-v8.jpg",
   "uitleg": "Zit rechtop op de oefenbal met je voeten stevig op de grond. Span je romp aan en til gecontroleerd een voet op terwijl je balans behoudt.",
   "exerciseId": "fp_573ddb9f0d931790",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball leg curl one leg",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-leg-curl-one-leg-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-leg-curl-one-leg-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-leg-curl-one-leg-avatar-v8.jpg",
   "uitleg": "Lig op je rug met een hiel op de oefenbal en het andere been gestrekt omhoog. Houd je heupen op en trek de bal met je standbeen naar je toe, strek daarna weer.",
   "exerciseId": "fp_8b276d90443725c9",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball dumbbell flyes",
