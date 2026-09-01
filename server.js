@@ -2279,6 +2279,7 @@ async function afhandelen(request, response) {
         scores: (k.metingen || []).slice(-14), gedaan: (k.gedaan || []).slice(-14),
         bekeken: k.bekeken ? k.bekeken.t : 0,
         seintje: (k.seintje && k.seintje.soort) ? { t: k.seintje.t, soort: k.seintje.soort } : null,
+        ervaring: (k.ervaring || []).slice(-1),
         doel: Number(k.doel) || 0, gearchiveerd: !!k.gearchiveerd }))
       .sort((a, b) => b.ts - a.ts);
     await sendJson(response, 200, list);
@@ -2338,6 +2339,8 @@ async function afhandelen(request, response) {
         gedaan: map[kk] ? map[kk].gedaan || [] : [],
         bekeken: map[kk] ? map[kk].bekeken || null : null,
         seintje: map[kk] ? map[kk].seintje || null : null,
+        ervaring: map[kk] ? map[kk].ervaring || [] : [],
+        antwoord: map[kk] ? map[kk].antwoord || null : null,
         doel: map[kk] ? Number(map[kk].doel) || 0 : 0,
         gearchiveerd: map[kk] ? !!map[kk].gearchiveerd : false };
       await saveJson(kaartenPath, kaarten);
