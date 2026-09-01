@@ -4037,41 +4037,45 @@
   "naam": "Swiss ball dumbbell flyes",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-dumbbell-flyes-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-dumbbell-flyes-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-dumbbell-flyes-avatar-v8.jpg",
   "uitleg": "Steun met je bovenrug op de oefenbal en houd je heupen hoog. Open je armen met de dumbbells zijwaarts met licht gebogen ellebogen en breng ze gecontroleerd boven je borst samen.",
   "exerciseId": "fp_55b80e4f630bccda",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball dumbbell chest press",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-dumbbell-chest-press-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-dumbbell-chest-press-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-dumbbell-chest-press-avatar-v8.jpg",
   "uitleg": "Steun met je bovenrug op de oefenbal en houd je heupen hoog. Druk de dumbbells vanuit gebogen ellebogen rustig recht omhoog boven je borst en laat gecontroleerd terugzakken.",
   "exerciseId": "fp_725683c0e7847634",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball dumbbell biceps curl",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-dumbbell-biceps-curl-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-dumbbell-biceps-curl-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-dumbbell-biceps-curl-avatar-v8.jpg",
   "uitleg": "Zit rechtop op de oefenbal met de dumbbells naast je lichaam. Buig je ellebogen om de gewichten naar je schouders te brengen en laat ze rustig zakken.",
   "exerciseId": "fp_5ac0b1004fa007a4",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball russian twist",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-russian-twist-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-russian-twist-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-russian-twist-avatar-v8.jpg",
   "uitleg": "Zit stabiel op de oefenbal met je handen voor je borst. Draai je romp rustig afwisselend naar links en rechts zonder je bekken mee te draaien.",
   "exerciseId": "fp_1fcb2074c32b694e",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Foam roller glute med.",
