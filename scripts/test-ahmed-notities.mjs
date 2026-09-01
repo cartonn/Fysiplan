@@ -121,11 +121,13 @@ try {
 
   const foutCode = await post("/api/v1/registreer", { email: "therapeut@example.nl", code: "fout" });
   assert.equal(foutCode.response.status, 403);
+  assert.match(foutCode.body.fout, /praktijkcode klopt niet/i);
+  assert.doesNotMatch(foutCode.body.fout, /beheer/i);
   assert.equal(mail.length, 0);
 
   const registratie = await post("/api/v1/registreer", {
     email: "therapeut@example.nl",
-    code: "test-registratiecode"
+    code: "  TEST–REGISTRATIECODE  "
   });
   assert.equal(registratie.response.status, 200);
   assert.equal(registratie.body.gestuurd, true);

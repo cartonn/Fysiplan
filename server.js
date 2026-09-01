@@ -194,7 +194,14 @@ try { v1Accounts = JSON.parse(await readFile(v1AccountsPath, "utf8")); } catch {
 const v1TokensPath = join(dataDir, "v1-insteltokens.json");
 let v1Tokens = {}; // { sha256(token): { email, verloopt } }
 try { v1Tokens = JSON.parse(await readFile(v1TokensPath, "utf8")); } catch {}
+const normaliseerRegistratiecode = (waarde) => String(waarde || "")
+  .normalize("NFKC")
+  .trim()
+  .replace(/[\u2010-\u2015\u2212]/g, "-")
+  .replace(/\s+/g, "")
+  .toLowerCase();
 const V1_REGISTRATIE_CODE = String(process.env.V1_REGISTRATIE_CODE || "");
+const V1_REGISTRATIE_CODE_NORM = normaliseerRegistratiecode(V1_REGISTRATIE_CODE);
 const MAIL_API_SLEUTEL = String(process.env.MAIL_API_SLEUTEL || "");
 const MAIL_AFZENDER = String(process.env.MAIL_AFZENDER || "");
 const MAIL_API_BASIS = String(process.env.MAIL_API_BASIS || "https://api.resend.com");
@@ -1075,7 +1082,7 @@ function statsEventLimiet(req, res) {
 // per IP volgt 429 in plaats van 403. Met de juiste sleutel verandert er niets, ook
 // niet voor v1-beheer; alleen wie sleutels zit te proberen loopt vast.
 const adminMisTeller = new Map();
-const denied = (req, res, pad) => {
+const denied = (req, res, pad, melding = "Alleen beschikbaar voor beheer.") => {
   logGeweigerd(req, pad);
   const nu = Date.now();
   if (adminMisTeller.size > 5000) {
@@ -1085,7 +1092,7 @@ const denied = (req, res, pad) => {
   const t = adminMisTeller.get(ip);
   if (!t || nu - t.start > 5 * 60 * 1000) adminMisTeller.set(ip, { start: nu, n: 1 });
   else if (++t.n > 20) return send429(res, 300, { ok: false, fout: "Even te veel verzoeken; probeer het over een paar minuten opnieuw." });
-  return sendJson(res, 403, { ok: false, fout: "Alleen beschikbaar voor beheer." });
+  return sendJson(res, 403, { ok: false, fout: melding });
 };
 
 // Elk verzoek loopt door dit vangnet: één kapotte aanvraag (bot, rare URL, afgebroken
@@ -1760,12 +1767,16 @@ async function afhandelen(request, response) {
     try {
       const b = JSON.parse(await readBody(request));
       const email = String(b.email || "").trim().toLowerCase().slice(0, 200);
-      const code = String(b.code || "");
+      const code = normaliseerRegistratiecode(b.code);
       if (!V1_REGISTRATIE_CODE || !mailIngesteld()) { await sendJson(response, 503, { ok: false, fout: "Registreren staat nog uit op deze server. Vraag je praktijk om hulp." }); return; }
       if (!geldigEmail(email)) { await sendJson(response, 400, { ok: false, fout: "Vul een geldig e-mailadres in." }); return; }
-      const codeOk = code.length === V1_REGISTRATIE_CODE.length
-        && timingSafeEqual(Buffer.from(code), Buffer.from(V1_REGISTRATIE_CODE));
-      if (!codeOk) { await denied(request, response, "v1-registratiecode"); return; }
+      const codeOk = code.length === V1_REGISTRATIE_CODE_NORM.length
+        && timingSafeEqual(Buffer.from(code), Buffer.from(V1_REGISTRATIE_CODE_NORM));
+      if (!codeOk) {
+        await denied(request, response, "v1-registratiecode",
+          "De praktijkcode klopt niet. Kopieer de volledige code van je praktijk en probeer opnieuw.");
+        return;
+      }
       if (!v1Accounts[email] && Object.keys(v1Accounts).length >= 200) { await sendJson(response, 400, { ok: false, fout: "Maximum bereikt." }); return; }
       if (mailOpSlot(email)) { await send429(response, 3600, { ok: false, fout: "Er zijn al meerdere mails naar dit adres gestuurd; kijk in je inbox (ook spam) of probeer het over een uur opnieuw." }); return; }
       const token = await maakInstelToken(email);
