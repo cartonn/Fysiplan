@@ -297,8 +297,7 @@
           </div>
         </div>
         <div class="client">
-          <div class="cr"><label>Naam</label><input id="c_naam" aria-label="Naam"/></div>
-          <div class="cr"><label>Leeftijd</label><input id="c_leeftijd" aria-label="Leeftijd"/></div>
+          <div class="cr"><label>Pati&euml;ntcode</label><input id="c_code" aria-label="Patiëntcode" placeholder="CM77" readonly autocomplete="off"/><button type="button" class="btn no-print" id="c_code_maak" style="font-size:10.5px;padding:3px 6px">Code maken</button></div>
           <div class="cr"><label>max. HF</label><input id="c_hf" aria-label="max. HF"/></div>
           <div class="cr"><label>Trainingszone</label><input id="c_zone" aria-label="Trainingszone"/></div>
         </div>
@@ -439,6 +438,26 @@ bridge2.jpg</div>
   </div>
 </div>
 
+<!-- tijdelijke patiëntcodegenerator: de ruwe invoer hoort nooit bij de kaartstaat -->
+<div class="ov" id="ovCode">
+  <div class="modal">
+    <h3>Pati&euml;ntcode maken</h3>
+    <div style="font-size:12.5px;color:var(--muted);line-height:1.5;margin-bottom:9px">
+      De naam en geboortedatum worden alleen nu gebruikt om de code te berekenen. Ze worden niet
+      opgeslagen of naar de server gestuurd en worden direct na sluiten gewist.
+    </div>
+    <label for="code_naam">Volledige naam</label>
+    <input type="text" id="code_naam" autocomplete="off" spellcheck="false" maxlength="120" placeholder="bijv. Carla Mastenbroek"/>
+    <label for="code_geboorte" style="margin-top:8px;display:block">Geboortedatum</label>
+    <input type="date" id="code_geboorte" autocomplete="off" min="1900-01-01"/>
+    <div id="code_fout" style="font-size:12px;color:#b42318;margin-top:7px" aria-live="polite"></div>
+    <div class="acts">
+      <button class="btn" id="code_cancel">Annuleren</button>
+      <button class="btn primary" id="code_do">Maak code</button>
+    </div>
+  </div>
+</div>
+
 <!-- eenmalig welkom voor de eerste-keer-bezoeker (v2): van landingsklik naar eerste kaart -->
 <div class="ov" id="ovWelkom">
   <div class="modal">
@@ -447,7 +466,7 @@ bridge2.jpg</div>
       Je eerste trainingskaart staat in ongeveer een minuut:
       <ol style="margin:8px 0 0 18px;padding:0">
         <li>Kies een <b>sjabloon</b> per klacht, of klik links oefeningen aan.</li>
-        <li>Vul de <b>cli&euml;ntnaam</b> in &mdash; de QR-code naar de digitale kaart komt er vanzelf op.</li>
+        <li>Maak een <b>pati&euml;ntcode</b> &mdash; naam en geboortedatum worden niet bewaard.</li>
         <li><b>Print</b> de A4 of deel de link via WhatsApp.</li>
       </ol>
     </div>
@@ -498,6 +517,7 @@ bridge2.jpg</div>
     <input type="text" id="ai_doel_anders" maxlength="80" style="display:none;margin-bottom:7px" placeholder="Omschrijf het trainingsdoel"/>
     <label for="ai_klacht">Klacht en niveau</label>
     <textarea id="ai_klacht" rows="3" style="width:100%;resize:vertical;font-family:inherit;font-size:13px" placeholder="bijv. artrose knie links, vrouw van 68, kan 10 minuten lopen"></textarea>
+    <div style="font-size:11.5px;color:var(--muted);margin-top:4px">Gebruik hier geen naam of volledige geboortedatum.</div>
     <div id="ai_dicteer" style="display:none;align-items:center;gap:9px;margin-top:6px">
       <button type="button" class="btn" id="ai_mic" aria-pressed="false" title="Spreek de klacht in; de tekst verschijnt hierboven"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 19v3"/></svg><span>Inspreken</span></button>
       <span id="ai_mic_status" style="font-size:12px;color:var(--muted)" aria-live="polite"></span>
@@ -609,9 +629,9 @@ bridge2.jpg</div>
 <div class="ov" id="ovKaarten">
   <div class="modal">
     <h3>Kaarten</h3>
-    <label>Huidige kaart opslaan als</label>
+    <label>Huidige kaart opslaan met pati&euml;ntcode</label>
     <div style="display:flex;gap:8px">
-      <input type="text" id="k_naam" placeholder="bijv. cliëntnaam of programmanaam" style="flex:1"/>
+      <input type="text" id="k_naam" placeholder="bijv. CM77" readonly style="flex:1"/>
       <button class="btn primary" id="k_save">Opslaan</button>
       <button class="btn" id="k_save_srv" style="display:none">In de praktijk</button>
     </div>
@@ -620,7 +640,7 @@ bridge2.jpg</div>
     <div id="k_lijst" style="max-height:220px;overflow:auto"></div>
     <div id="k_srv" style="display:none">
       <label style="margin-top:14px;display:block">Kaarten van de praktijk <span id="k_srv_naam" style="font-weight:400;color:var(--muted)"></span></label>
-      <div style="font-size:12px;color:var(--muted);margin:2px 0 4px">Gedeeld met collega's: iedereen die deze praktijk kiest ziet deze kaarten, op elk apparaat. Let op: de kaart (inclusief cli&euml;ntgegevens) staat dan op de server.</div>
+      <div style="font-size:12px;color:var(--muted);margin:2px 0 4px">Gedeeld met collega's: iedereen die deze praktijk kiest ziet deze kaarten, op elk apparaat. Alleen de pati&euml;ntcode en kaartinhoud staan op de server; naam en geboortedatum niet.</div>
       <div id="k_srv_lijst" style="max-height:200px;overflow:auto"></div>
     </div>
     <div class="acts"><button class="btn" id="k_close">Sluiten</button></div>
@@ -775,10 +795,67 @@ bridge2.jpg</div>
   var SET={praktijk:'FysioTotaal'};
   try{SET=Object.assign(SET,JSON.parse(localStorage.getItem('fysiplan_settings')||'{}'));}catch(e){}
   function saveSettings(){try{localStorage.setItem('fysiplan_settings',JSON.stringify(SET));}catch(e){}}
-  var CLIENTKEYS=['c_naam','c_leeftijd','c_hf','c_zone','c_opm','c_cave','c_doel'];
+  var PATIENT_CODE=/^[A-Z]{2}\d{2}(?:-[2-9]|-[1-9]\d{1,2})?$/;
+  var FULL_DATE=/\b(?:0?[1-9]|[12]\d|3[01])[-\/.](?:0?[1-9]|1[0-2])[-\/.](?:19|20)\d{2}\b/g;
+  var CLIENTKEYS=['c_code','c_hf','c_zone','c_opm','c_cave','c_doel'];
+  var ACTIVE_CARD_ID='';
+  function normalizePatientCode(value){var code=String(value||'').normalize('NFKC').trim().toUpperCase().replace(/\s+/g,'');return PATIENT_CODE.test(code)?code:'';}
+  function nameLetters(value){return String(value||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toUpperCase().match(/[A-Z]+/g)||[];}
+  function codeFromNameAndBirthDate(name,birthDate){
+    var parts=nameLetters(name);if(!parts.length)return'';
+    var initialen=parts.length===1?parts[0].slice(0,2).padEnd(2,parts[0][0]):parts[0][0]+parts[parts.length-1][0];
+    var raw=String(birthDate||'').trim(),m=raw.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.]((?:19|20)\d{2})$/),d,mo,y;
+    if(m){d=+m[1];mo=+m[2];y=+m[3];}else{m=raw.match(/^((?:19|20)\d{2})-(\d{1,2})-(\d{1,2})$/);if(m){y=+m[1];mo=+m[2];d=+m[3];}}
+    if(!m)return'';
+    var check=new Date(Date.UTC(y,mo-1,d));
+    if(y<1900||y>new Date().getUTCFullYear()||check.getUTCFullYear()!==y||check.getUTCMonth()!==mo-1||check.getUTCDate()!==d)return'';
+    return initialen+String(y).slice(-2);
+  }
+  function legacyPatientCode(card,index){
+    var cl=(card&&card.client&&typeof card.client==='object')?card.client:{};
+    var existing=normalizePatientCode(cl.c_code)||normalizePatientCode(card&&card.naam);if(existing)return existing;
+    var parts=nameLetters(cl.c_naam||(card&&card.naam));
+    if(parts.length){var ini=parts.length===1?parts[0].slice(0,2).padEnd(2,parts[0][0]):parts[0][0]+parts[parts.length-1][0];var age=parseInt(String(cl.c_leeftijd||'').replace(/\D/g,''),10);return ini+((isFinite(age)&&age>=0&&age<=99)?String(age).padStart(2,'0'):'00');}
+    return 'FP'+String((index+1)%100).padStart(2,'0');
+  }
+  function sanitizeClient(client,code){
+    var src=(client&&typeof client==='object')?client:{},out={c_code:normalizePatientCode(code)};
+    ['c_hf','c_zone','c_opm','c_cave','c_doel'].forEach(function(k){var v=String(src[k]||'').replace(FULL_DATE,'[datum verwijderd]').slice(0,500);FULL_DATE.lastIndex=0;if(v)out[k]=v;});
+    return out;
+  }
+  function sanitizeLocalCard(card,index,used){
+    if(!card||typeof card!=='object')return null;
+    var base=legacyPatientCode(card,index),code=base,suffix=2;
+    while(used[code.toLowerCase()])code=base+'-'+suffix++;
+    used[code.toLowerCase()]=true;
+    var out=Object.assign({},card,{naam:code,client:sanitizeClient(card.client,code)});
+    delete out.geboortedatum;delete out.birthDate;return out;
+  }
+  // Eenmalige migratie van oudere browserstaat. Ruwe naam/leeftijd worden meteen
+  // overschreven; oude opgeslagen kaarten houden hun oefeningen, maar krijgen alleen
+  // initialen + leeftijd (of 00 als die ontbrak) als patiëntcode.
+  function migratePrivacyStorage(){
+    try{
+      var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');
+      if(st&&typeof st==='object'){
+        var sc=legacyPatientCode({naam:'',client:st.client||{}},0);
+        st.client=sanitizeClient(st.client,sc==='FP01'?'':sc);
+        localStorage.setItem('fysiplan_state',JSON.stringify(st));
+      }
+    }catch(e){try{localStorage.removeItem('fysiplan_state');}catch(x){}}
+    try{
+      var list=JSON.parse(localStorage.getItem('fysiplan_kaarten')||'[]');
+      if(Array.isArray(list)){
+        var used={};list=list.map(function(card,i){return sanitizeLocalCard(card,i,used);}).filter(Boolean);
+        localStorage.setItem('fysiplan_kaarten',JSON.stringify(list));
+      }
+    }catch(e){try{localStorage.removeItem('fysiplan_kaarten');}catch(x){}}
+  }
+  migratePrivacyStorage();
   function saveState(){
     try{
       var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
+      client=sanitizeClient(client,client.c_code);
       localStorage.setItem('fysiplan_state',JSON.stringify({chosen:chosen,client:client,grid:GRID,vids:VIDS}));
     }catch(e){}
     planAutoDeel();
@@ -787,11 +864,24 @@ bridge2.jpg</div>
     try{
       var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');
       if(Array.isArray(st.chosen))chosen=st.chosen.filter(function(c){return OEF[c.o]&&OEF[c.o].imgs[c.i];});
-      if(st.client)CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el&&st.client[k]!=null)el.value=st.client[k];});
+      if(st.client){st.client=sanitizeClient(st.client,st.client.c_code);CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el&&st.client[k]!=null)el.value=st.client[k];});}
       if(st.grid&&typeof st.grid==='object'){GRID={rows:st.grid.rows||{},cells:st.grid.cells||{}};}
       if(st.vids&&typeof st.vids==='object')VIDS=st.vids;
     }catch(e){}
   }
+  function wisCodeInvoer(){document.getElementById('code_naam').value='';document.getElementById('code_geboorte').value='';document.getElementById('code_fout').textContent='';}
+  document.getElementById('c_code_maak').addEventListener('click',function(){wisCodeInvoer();openOv('ovCode');document.getElementById('code_naam').focus();});
+  document.getElementById('code_cancel').addEventListener('click',function(){wisCodeInvoer();closeOv('ovCode');});
+  document.getElementById('code_do').addEventListener('click',function(){
+    var naamEl=document.getElementById('code_naam'),geboorteEl=document.getElementById('code_geboorte');
+    var code=codeFromNameAndBirthDate(naamEl.value,geboorteEl.value);
+    if(!code){document.getElementById('code_fout').textContent='Vul een geldige volledige naam en geboortedatum in.';return;}
+    var used={};loadCards().forEach(function(c){used[String(c.naam||'').toLowerCase()]=true;});
+    var base=code,suffix=2;while(used[code.toLowerCase()])code=base+'-'+suffix++;
+    var el=document.getElementById('c_code');el.value=code;
+    document.getElementById('k_naam').value=code;
+    ACTIVE_CARD_ID='';laatsteDeel='';QR_UIT_VOOR=null;verbergQr();wisCodeInvoer();closeOv('ovCode');saveState();
+  });
 
   // Opm. en Casus mogen nooit meer tekst bevatten dan fysiek in het printvak past.
   // De vakken hebben op scherm en papier exact dezelfde maat en het grote printlettertype
@@ -1543,11 +1633,11 @@ bridge2.jpg</div>
     b.style.display='flex';
     return true;
   }
-  // ---- v2: de QR staat er standaard op zodra de kaart een cliëntnaam heeft ----
+  // ---- v2: de QR staat er standaard op zodra de kaart een patiëntcode heeft ----
   // De kaart wordt na een korte pauze stil met de praktijk gedeeld; de link (en dus de
   // geprinte QR-code) blijft bij elke latere bewerking dezelfde, alleen de inhoud vernieuwt.
   var autoDeelTimer=null,laatsteDeel='',QR_UIT_VOOR=null;
-  function huidigeKaartNaam(){var el=document.getElementById('c_naam');return el?el.value.trim():'';}
+  function huidigeKaartNaam(){var el=document.getElementById('c_code');return el?normalizePatientCode(el.value):'';}
   function planAutoDeel(){
     if(!IS_V2)return;
     clearTimeout(autoDeelTimer);
@@ -1573,7 +1663,8 @@ bridge2.jpg</div>
     fetch('api/kaarten',{method:'POST',headers:PJSON(),body:JSON.stringify(c)})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
       .then(function(d){
-        if(!d.ok)return;
+        if(!d.ok){if(d.fout&&d.fout.indexOf('patiëntcode bestaat al')>-1){laatsteDeel=afdruk;alert(d.fout);}return;}
+        ACTIVE_CARD_ID=d.id||ACTIVE_CARD_ID;
         laatsteDeel=afdruk;
         ensureQr(function(){toonQr(d.id);});
       })
@@ -1598,8 +1689,9 @@ bridge2.jpg</div>
     QR_UIT_VOOR=null;
     // QR: kaart eerst bij de praktijk bewaren, dan de code op de kaart zetten en printen
     if(!(SET.praktijk||'').trim()){alert('Vul eerst de praktijknaam op de kaart in — de digitale kaart hoort bij de praktijk.');return;}
-    var cn=document.getElementById('c_naam');
-    var naam=(cn&&cn.value.trim())||('Kaart '+new Date().toLocaleDateString('nl-NL'));
+    var cn=document.getElementById('c_code');
+    var naam=(cn&&normalizePatientCode(cn.value))||'';
+    if(!naam){alert('Maak eerst een patiëntcode, bijvoorbeeld CM77.');return;}
     saveServerCard(naam,function(d){
       if(!d.ok){alert(d.fout||'De kaart bewaren voor de QR-code is niet gelukt.');return;}
       if(!toonQr(d.id)){alert('De QR-code maken is niet gelukt.');return;}
@@ -1964,6 +2056,7 @@ bridge2.jpg</div>
   function persistCards(l){try{localStorage.setItem('fysiplan_kaarten',JSON.stringify(l));return true;}catch(e){alert('Kaart opslaan is niet gelukt (opslagruimte vol?).');return false;}}
   function currentCard(naam){
     var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
+    naam=normalizePatientCode(naam||client.c_code);client=sanitizeClient(client,naam);
     var ch=chosen.map(function(c){return OEF[c.o]?{n:OEF[c.o].naam,id:OEF[c.o].exerciseId||'',i:c.i}:null;}).filter(Boolean);
     var cells={};
     Object.keys(GRID.cells).forEach(function(k){
@@ -1977,9 +2070,12 @@ bridge2.jpg</div>
     // alleen persoonlijke video's van oefeningen die nu op de kaart staan
     var vids={};
     chosen.forEach(function(c){var o=OEF[c.o];if(o){var k=normEx(o.naam);if(VIDS[k])vids[k]=VIDS[k];}});
-    return {naam:naam,ts:Date.now(),client:client,chosen:ch,rows:GRID.rows,cells:cells,vids:vids};
+    return {id:ACTIVE_CARD_ID||undefined,naam:naam,ts:Date.now(),client:client,chosen:ch,rows:GRID.rows,cells:cells,vids:vids};
   }
   function openCard(c){
+    c=(c&&typeof c==='object')?c:{};
+    var openCode=normalizePatientCode(c.client&&c.client.c_code)||normalizePatientCode(c.naam);
+    c=Object.assign({},c,{naam:openCode,client:sanitizeClient(c.client,openCode)});ACTIVE_CARD_ID=c.id||'';
     var missing=[];
     chosen=[];
     (c.chosen||[]).forEach(function(x){
@@ -2015,8 +2111,8 @@ bridge2.jpg</div>
     }).join("");
   }
   document.getElementById('kaartenBtn').addEventListener('click',function(){
-    var nm=document.getElementById('c_naam');
-    document.getElementById('k_naam').value=(nm&&nm.value.trim())||'';
+    var nm=document.getElementById('c_code');
+    document.getElementById('k_naam').value=(nm&&normalizePatientCode(nm.value))||'';
     document.getElementById('k_result').textContent='';
     renderCardList();
     if(IS_V2)toonSrvKaarten();
@@ -2150,11 +2246,13 @@ bridge2.jpg</div>
 
   // ---- gedeelde kaarten van de praktijk (v2): server-side, voor alle collega's ----
   function saveServerCard(naam,cb){
+    naam=normalizePatientCode(naam);
+    if(!naam){cb({ok:false,fout:'Maak eerst een geldige patiëntcode, bijvoorbeeld CM77.'});return;}
     var c=currentCard(naam);
     c.praktijk=(SET.praktijk||'').trim();
     fetch('api/kaarten',{method:'POST',headers:PJSON(),body:JSON.stringify(c)})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
-      .then(function(d){cb(d);})
+      .then(function(d){if(d.ok)ACTIVE_CARD_ID=d.id||ACTIVE_CARD_ID;cb(d);})
       .catch(function(){cb({ok:false,fout:'Geen verbinding met de server.'});});
   }
   // deel- en herinnerberichten in de taal van de patiënt: de kaart zelf is al
@@ -2427,7 +2525,7 @@ bridge2.jpg</div>
               "<a class='btn' data-dmail='"+esc(c.id)+"' href='"+esc(mailHref)+"' target='_blank' rel='noopener' style='text-decoration:none'>E-mail</a>"+
             "</div>"+
             "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;align-items:center'>"+
-              "<button class='btn' data-shernoem='"+esc(c.id)+"' data-hnaam='"+esc(c.naam)+"' title='Wijzig de naam van deze kaart (bijvoorbeeld een typefout in de cliëntnaam). De patiëntlink en alle voortgang blijven behouden.'>Naam wijzigen</button>"+
+              "<button class='btn' data-shernoem='"+esc(c.id)+"' data-hnaam='"+esc(c.naam)+"' title='Wijzig de patiëntcode. De patiëntlink en alle voortgang blijven behouden.'>Code wijzigen</button>"+
               "<small style='color:var(--muted)'>Link en voortgang blijven behouden.</small>"+
             "</div>"+
             "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;align-items:center'>"+
@@ -2597,8 +2695,8 @@ bridge2.jpg</div>
       .catch(function(){el.innerHTML="<div class='hint'>Kaarten laden is niet gelukt.</div>";});
   }
   document.getElementById('k_save_srv').addEventListener('click',function(){
-    var naam=document.getElementById('k_naam').value.trim();
-    if(!naam){alert('Geef de kaart een naam.');return;}
+    var naam=normalizePatientCode(document.getElementById('k_naam').value);
+    if(!naam){alert('Maak eerst een patiëntcode, bijvoorbeeld CM77.');return;}
     saveServerCard(naam,function(d){
       if(!d.ok){alert(d.fout||'Kaart delen is niet gelukt.');return;}
       document.getElementById('k_result').textContent='Kaart “'+naam+'” gedeeld met de praktijk.';
@@ -2638,23 +2736,27 @@ bridge2.jpg</div>
       }else{window.prompt('Kopieer de patiëntlink:',url);}
       return;
     }
-    // naam wijzigen: dezelfde kaart (zelfde id en patiëntlink, zelfde voortgang)
-    // onder een nieuwe naam. Alleen de ingelogde praktijk mag dit.
+    // patiëntcode wijzigen: dezelfde kaart (zelfde id en patiëntlink, zelfde voortgang).
+    // Alleen de ingelogde praktijk mag dit.
     var hn=e.target.closest('[data-shernoem]');
     if(hn){
       var huidig=hn.dataset.hnaam||'';
-      var nieuw=prompt('Nieuwe naam voor deze kaart:',huidig);
+      var nieuw=prompt('Nieuwe patiëntcode (initialen + laatste twee cijfers van het geboortejaar):',huidig);
       if(nieuw===null)return;
-      nieuw=nieuw.trim();
+      nieuw=normalizePatientCode(nieuw);
+      if(!nieuw){alert('Gebruik een patiëntcode zoals CM77. Vul geen naam of geboortedatum in.');return;}
       if(!nieuw||nieuw===huidig)return;
       var oudH=hn.textContent;hn.textContent='Bezig…';
       fetch('api/kaart/naam',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:hn.dataset.shernoem,naam:nieuw})})
         .then(function(r){return r.json();})
         .then(function(d){
-          if(d.ok){toonSrvKaarten();}
-          else{hn.textContent=oudH;alert(d.fout||'Naam wijzigen is niet gelukt.');}
+          if(d.ok){
+            if(ACTIVE_CARD_ID===hn.dataset.shernoem){document.getElementById('c_code').value=d.naam;document.getElementById('k_naam').value=d.naam;saveState();}
+            toonSrvKaarten();
+          }
+          else{hn.textContent=oudH;alert(d.fout||'Code wijzigen is niet gelukt.');}
         })
-        .catch(function(){hn.textContent=oudH;alert('Naam wijzigen is niet gelukt: geen verbinding.');});
+        .catch(function(){hn.textContent=oudH;alert('Code wijzigen is niet gelukt: geen verbinding.');});
       return;
     }
     // nieuwe link (oude intrekken): de kaart krijgt een vers id, de oude /k-link
@@ -2713,7 +2815,7 @@ bridge2.jpg</div>
     }
     // Kopie: dezelfde oefeningen en hetzelfde schema, maar een nieuwe cliënt.
     // Scheelt de therapeut werk als meerdere patiënten een vergelijkbaar programma
-    // krijgen. De cliëntvelden worden geleegd; zodra er een nieuwe naam staat, deelt
+    // krijgen. De cliëntvelden worden geleegd; zodra er een nieuwe code staat, deelt
     // de app het als een níeuwe kaart (de originele kaart blijft ongemoeid).
     var kp=e.target.closest('[data-skopie]');
     if(kp){
@@ -2727,7 +2829,7 @@ bridge2.jpg</div>
           laatsteDeel='';QR_UIT_VOOR=null;verbergQr();render();
           closeOv('ovKaarten');
           document.getElementById('k_result').textContent='';
-          var cn=document.getElementById('c_naam');if(cn)cn.focus();
+          ACTIVE_CARD_ID='';var cm=document.getElementById('c_code_maak');if(cm)cm.focus();
         })
         .catch(function(){alert('Kaart kopiëren is niet gelukt: geen verbinding.');});
       return;
@@ -2773,8 +2875,8 @@ bridge2.jpg</div>
   });
   document.getElementById('k_close').addEventListener('click',function(){closeOv('ovKaarten');});
   document.getElementById('k_save').addEventListener('click',function(){
-    var naam=document.getElementById('k_naam').value.trim();
-    if(!naam){alert('Geef de kaart een naam.');return;}
+    var naam=normalizePatientCode(document.getElementById('k_naam').value);
+    if(!naam){alert('Maak eerst een patiëntcode, bijvoorbeeld CM77.');return;}
     var lijst=loadCards();
     var idx=lijst.findIndex(function(c){return c.naam.toLowerCase()===naam.toLowerCase();});
     var kaart=currentCard(naam);
@@ -2791,7 +2893,7 @@ bridge2.jpg</div>
       if(chosen.length&&!confirm('Huidige kaart vervangen door “'+c.naam+'”?'))return;
       openCard(c);verbergQr();closeOv('ovKaarten');
       // lokale kaart heeft nog geen server-id: meteen delen zodat de QR er
-      // direct op komt (lukt alleen met cliëntnaam — dezelfde regel als altijd)
+      // direct op komt (lukt alleen met een patiëntcode — dezelfde regel als altijd)
       QR_UIT_VOOR=null;laatsteDeel='';deelNu();
     }else if(x){
       var c2=lijst[+x.dataset.kdel];if(!c2)return;
@@ -2809,6 +2911,7 @@ bridge2.jpg</div>
   });
   document.getElementById('wis_alles').addEventListener('click',function(){
     chosen=[];GRID={rows:{},cells:{}};VIDS={};
+    ACTIVE_CARD_ID='';laatsteDeel='';QR_UIT_VOOR=null;
     CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value='';});
     normalizePrintableTextFields();
     verbergQr();closeOv('ovWis');render();

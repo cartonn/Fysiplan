@@ -781,7 +781,7 @@
     else bel.style.display='none';
     var cl=kaart.client||{};
     var regels=[];
-    if(cl.c_naam)regels.push('<div class="rij"><b>'+esc(tr('voor'))+'</b><span>'+esc(cl.c_naam)+'</span></div>');
+    if(cl.c_code)regels.push('<div class="rij"><b>'+esc(tr('voor'))+'</b><span>'+esc(cl.c_code)+'</span></div>');
     if(cl.c_doel)regels.push('<div class="rij"><b>'+esc(tr('doel'))+'</b><span>'+esc(vt(cl.c_doel))+'</span></div>');
     if(cl.c_opm)regels.push('<div class="rij"><b>'+esc(tr('letop'))+'</b><span>'+esc(vt(cl.c_opm))+'</span></div>');
     var cb=document.getElementById('clientblok');

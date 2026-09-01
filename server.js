@@ -5,6 +5,13 @@ import { createHash, randomBytes, timingSafeEqual, scryptSync } from "node:crypt
 import { join, extname, normalize, sep } from "node:path";
 import { exerciseId } from "./lib/exercise-id.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
+import {
+  containsFullDate,
+  hasForbiddenDirectIdentifiers,
+  migratePatientCardStore,
+  normalizePatientCode,
+  sanitizePatientClient
+} from "./lib/patient-privacy.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -768,6 +775,29 @@ function leesLimiet(req, res) {
 // dagelijkse reservekopie van alle databestanden (laatste 7 dagen): vangnet tegen
 // beschadigde schrijfacties of een bug die een bestand leegtrekt
 const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath];
+const manifestStores = new Set([renamesPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath]);
+// Privacy-migratie vóór de dagelijkse back-up: oude kaarten met een volledige naam
+// en leeftijd worden naar een patiëntcode omgezet. Dezelfde omzetting loopt over
+// bestaande reservekopieën, zodat directe identificatoren daar niet nog zeven dagen
+// achterblijven. Id, QR-link, voortgang en kaartinhoud blijven behouden.
+async function migreerPatientgegevens() {
+  const huidig = migratePatientCardStore(kaarten);
+  kaarten = huidig.cards;
+  if (huidig.changed) await saveJson(kaartenPath, kaarten);
+  try {
+    const backupRoot = join(dataDir, "backups");
+    for (const dag of await readdir(backupRoot)) {
+      const pad = join(backupRoot, dag, "kaarten.json");
+      try {
+        const oud = JSON.parse(await readFile(pad, "utf8"));
+        const uit = migratePatientCardStore(oud);
+        if (uit.changed) await saveJson(pad, uit.cards);
+      } catch {}
+    }
+  } catch {}
+}
+await migreerPatientgegevens();
+
 async function maakBackup() {
   try {
     const dag = new Date().toISOString().slice(0, 10);
@@ -815,7 +845,6 @@ const wisManifestCache = () => {
   manifestArrV2 = { t: 0, arr: null };
   healthTelling = { t: 0, v1: null, v2: null };
 };
-const manifestStores = new Set([renamesPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath]);
 // het opgebouwde v2-manifest kort vasthouden voor interne lezers (vertaal, per-kaart
 // manifest): zo kost hameren op die publieke routes geen 500-oefeningen-opbouw per keer.
 // Elke beheermutatie leegt de cache via wisManifestCache, dus wijzigingen blijven direct zichtbaar.
@@ -2285,15 +2314,25 @@ async function afhandelen(request, response) {
     return;
   }
 
-  // kaart opslaan of bijwerken (sleutel: praktijk + kaartnaam); geeft het kaart-id terug
+  // kaart opslaan of bijwerken (sleutel: praktijk + patiëntcode); geeft het kaart-id terug.
+  // Volledige naam, leeftijd en geboortedatum worden ook bij rechtstreekse API-aanroepen
+  // geweigerd; een oude of aangepaste client kan ze dus niet terug de opslag in schrijven.
   if (urlPath === "/api/kaarten" && request.method === "POST") {
     if (schrijfLimiet(request, response)) return;
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request, 256 * 1024));
       const praktijk = cleanName(b.praktijk, 80);
-      const naam = cleanName(b.naam, 60);
-      if (!praktijk || !naam) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam en een kaartnaam op." }); return; }
+      const naam = normalizePatientCode(b.naam || (b.client && b.client.c_code));
+      if (!praktijk || !naam) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam en een geldige patiëntcode op, bijvoorbeeld CM77." }); return; }
+      if (hasForbiddenDirectIdentifiers(b.client)) {
+        await sendJson(response, 400, { ok: false, fout: "Naam, leeftijd en geboortedatum mogen niet worden opgeslagen; gebruik alleen de patiëntcode." });
+        return;
+      }
+      if ([b.client && b.client.c_opm, b.client && b.client.c_cave, b.client && b.client.c_doel].some(containsFullDate)) {
+        await sendJson(response, 400, { ok: false, fout: "Zet geen volledige geboortedatum in de vrije tekst; gebruik alleen de patiëntcode." });
+        return;
+      }
       const pk = praktijk.toLowerCase();
       if (await eisPraktijk(request, response, pk)) return;
       const kk = naam.toLowerCase();
@@ -2301,6 +2340,10 @@ async function afhandelen(request, response) {
       if (!kaarten[pk] && nieuwePraktijkLimiet(request, response)) return;
       const map = (kaarten[pk] = kaarten[pk] || {});
       if (!map[kk] && Object.keys(map).length >= 100) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal kaarten voor deze praktijk bereikt." }); return; }
+      if (map[kk] && String(b.id || "") !== String(map[kk].id || "")) {
+        await sendJson(response, 409, { ok: false, fout: "Deze patiëntcode bestaat al in de praktijk. Maak een unieke code, bijvoorbeeld met -2 erachter." });
+        return;
+      }
       const sanStr = (v, m) => String(v == null ? "" : v).slice(0, m);
       const cells = {};
       if (b.cells && typeof b.cells === "object") {
@@ -2310,10 +2353,7 @@ async function afhandelen(request, response) {
       if (b.rows && typeof b.rows === "object") {
         for (const k of Object.keys(b.rows).slice(0, 40)) { const v = sanStr(b.rows[k], 20); if (v) rows[sanStr(k, 12)] = v; }
       }
-      const client = {};
-      for (const k of ["c_naam", "c_leeftijd", "c_hf", "c_zone", "c_opm", "c_cave", "c_doel"]) {
-        if (b.client && b.client[k]) client[k] = sanStr(b.client[k], 500);
-      }
+      const client = sanitizePatientClient(b.client, naam, 500);
       const chosen = (Array.isArray(b.chosen) ? b.chosen : []).slice(0, 12)
         .map((x) => ({ n: sanStr(x && x.n, 80),
           id: /^fp_[a-f0-9]{16}$/.test(String(x && x.id || "")) ? String(x.id) : "",
@@ -2653,7 +2693,7 @@ async function afhandelen(request, response) {
     return;
   }
 
-  // een gedeelde kaart hernoemen (bijvoorbeeld een typefout in de cliëntnaam). De
+  // de patiëntcode van een gedeelde kaart wijzigen. De
   // kaart houdt hetzelfde id, dus de patiëntlink /k/<id> en álle voortgang (pijn,
   // oefenhistorie, seintje, doel) blijven behouden; alleen de map-sleutel verhuist.
   // Alleen de ingelogde praktijk (eisPraktijk).
@@ -2667,12 +2707,13 @@ async function afhandelen(request, response) {
       const map = kaarten[pk] || {};
       const oudeSleutel = Object.keys(map).find((k) => map[k].id === String(b.id || ""));
       if (!oudeSleutel) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
-      const nieuw = cleanName(b.naam, 60);
-      if (!nieuw) { await sendJson(response, 400, { ok: false, fout: "Geef een kaartnaam op." }); return; }
+      const nieuw = normalizePatientCode(b.naam);
+      if (!nieuw) { await sendJson(response, 400, { ok: false, fout: "Geef een geldige patiëntcode op, bijvoorbeeld CM77." }); return; }
       const nk = nieuw.toLowerCase();
       if (nk !== oudeSleutel && map[nk]) { await sendJson(response, 409, { ok: false, fout: "Er bestaat al een kaart met die naam in deze praktijk." }); return; }
       const kaart = map[oudeSleutel];
       kaart.naam = nieuw;
+      kaart.client = sanitizePatientClient(kaart.client, nieuw, 500);
       if (nk !== oudeSleutel) { delete map[oudeSleutel]; map[nk] = kaart; }
       await saveJson(kaartenPath, kaarten);
       auditLog(pk, "kaart-hernoemd", request);
@@ -2774,6 +2815,7 @@ async function afhandelen(request, response) {
       const doel = cleanName(b.doel, 80).replace(/[<>]/g, "");
       if (!doel) { await sendJson(response, 400, { ok: false, fout: "Kies eerst het trainingsdoel." }); return; }
       if (klacht.length < 3) { await sendJson(response, 400, { ok: false, fout: "Omschrijf de klacht in een paar woorden." }); return; }
+      if (containsFullDate(klacht)) { await sendJson(response, 400, { ok: false, fout: "Gebruik in de AI-hulp geen volledige geboortedatum." }); return; }
       const manifest = await buildManifest();
       const lijst = manifest.map((e) => e.naam + " | " + e.groep + (e.ook && e.ook.length ? "/" + e.ook.join("/") : "")).join("\n");
       const sys = "Je bent de kaartassistent van Fysiplan, een hulp voor fysiotherapeuten die een trainingskaart samenstellen. " +
@@ -2926,7 +2968,7 @@ async function afhandelen(request, response) {
     if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     response.setHeader("x-robots-tag", "noindex, noarchive");
     await send(response, 200, "application/manifest+json; charset=utf-8", JSON.stringify({
-      name: ("Trainingskaart " + (found.client && found.client.c_naam ? found.client.c_naam : found.naam)).slice(0, 60),
+      name: ("Trainingskaart " + (found.client && found.client.c_code ? found.client.c_code : found.naam)).slice(0, 60),
       short_name: "Trainingskaart",
       start_url: "/k/" + found.id,
       scope: "/k/",
