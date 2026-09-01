@@ -640,7 +640,9 @@ async function vraagClaude(model, maxTokens, system, user, opties = {}) {
   if (!r.ok) {
     const fouttekst = await r.text().catch(() => "");
     if (/credit balance|purchase credits|billing/i.test(fouttekst)) throw new Error("ai-tegoed");
-    throw new Error("api " + r.status);
+    let apiFout = "";
+    try { apiFout = String(JSON.parse(fouttekst).error?.message || "").slice(0, 240); } catch {}
+    throw new Error("api " + r.status + (apiFout ? ": " + apiFout : ""));
   }
   const d = await r.json();
   const tekst = (d.content || []).map((c) => c.text || "").join("");
@@ -660,8 +662,7 @@ const AI_KAART_SCHEMA = {
     waarschuwing: { type: "string" },
     oefeningen: {
       type: "array",
-      minItems: 4,
-      maxItems: 6,
+      description: "Geef 4 tot 6 verschillende oefeningen in logische uitvoervolgorde.",
       items: {
         type: "object",
         additionalProperties: false,
@@ -2744,13 +2745,13 @@ async function afhandelen(request, response) {
         { schema: AI_KAART_SCHEMA, effort: "medium", cacheSystem: true });
       const byNorm = new Map(manifest.map((e) => [normEx(e.naam), e.naam]));
       const kort = (v, m) => String(v == null ? "" : v).trim().slice(0, m);
-      const oefeningen = (Array.isArray(uit.oefeningen) ? uit.oefeningen : []).slice(0, 10)
+      const oefeningen = (Array.isArray(uit.oefeningen) ? uit.oefeningen : []).slice(0, 6)
         .map((o) => ({ naam: byNorm.get(normEx(o && o.naam)) || "", series: kort(o && o.series, 12),
           herhalingen: kort(o && o.herhalingen, 16), gewicht: kort(o && o.gewicht, 20), borg: kort(o && o.borg, 12),
           xrm: kort(o && o.xrm, 12), rust: kort(o && o.rust, 20), tempo: kort(o && o.tempo, 20), waarom: kort(o && o.waarom, 160) }))
         .filter((o) => o.naam);
-      if (!oefeningen.length) {
-        await sendJson(response, 502, { ok: false, fout: "De assistent gaf geen bruikbaar voorstel; omschrijf de klacht iets anders en probeer opnieuw." });
+      if (oefeningen.length < 4) {
+        await sendJson(response, 502, { ok: false, fout: "De assistent gaf geen volledig bruikbaar voorstel; omschrijf de klacht iets anders en probeer opnieuw." });
         return;
       }
       const d = dagStats(vandaagKey()); d.ai = (d.ai || 0) + 1; bewaarStats();

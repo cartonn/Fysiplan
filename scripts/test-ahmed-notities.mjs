@@ -31,10 +31,16 @@ const mailServer = createServer(async (request, response) => {
       trainingsnotitie: "Evalueer de techniek na twee weken.",
       toelichting: "Voorstel ter beoordeling door de fysiotherapeut.",
       waarschuwing: "Controleer de belastbaarheid voor de eerste sessie.",
-      oefeningen: [{
-        naam: "Abdominal (apparaat)", series: "3", herhalingen: "8", gewicht: "licht",
-        borg: "4", xrm: "12RM", rust: "60 sec", tempo: "2-1-2", waarom: "Rustige startdosering."
-      }]
+      oefeningen: [
+        { naam: "Abdominal (apparaat)", series: "3", herhalingen: "8", gewicht: "licht",
+          borg: "4", xrm: "12RM", rust: "60 sec", tempo: "2-1-2", waarom: "Rustige startdosering." },
+        { naam: "Abroller", series: "2", herhalingen: "6", gewicht: "lichaamsgewicht",
+          borg: "3", xrm: "", rust: "60 sec", tempo: "3-1-3", waarom: "Gecontroleerde rompopbouw." },
+        { naam: "Alternate heel touchers", series: "2", herhalingen: "8 per zijde", gewicht: "lichaamsgewicht",
+          borg: "3", xrm: "", rust: "45 sec", tempo: "rustig", waarom: "Gedoseerde laterale rompcontrole." },
+        { naam: "Anteflexie armen", series: "2", herhalingen: "8", gewicht: "zonder weerstand",
+          borg: "2", xrm: "", rust: "45 sec", tempo: "2-1-2", waarom: "Rustige schouderactivatie." }
+      ]
     }) }] }));
     return;
   }
@@ -236,7 +242,7 @@ try {
   assert.equal(aiCalls[0].body.max_tokens, 1200);
   assert.equal(aiCalls[0].body.output_config.effort, "medium");
   assert.equal(aiCalls[0].body.output_config.format.type, "json_schema");
-  assert.equal(aiCalls[0].body.output_config.format.schema.properties.oefeningen.maxItems, 6);
+  assert.match(aiCalls[0].body.output_config.format.schema.properties.oefeningen.description, /4 tot 6/);
   assert.equal(aiCalls[0].body.system[0].cache_control.type, "ephemeral");
   assert.match(aiCalls[0].body.system[0].text, /BORG, XRM, rust en tempo/);
   assert.equal(aiCalls[0].body.messages[0].content,
