@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "architecture": "V2 color card -> deterministic binary line companion -> hard QA",
+  "architecture": "V2 legacy -> exact V1 image reuse; extension -> deterministic binary line companion -> hard QA",
   "layers": [
     [
       "catalog:v2"
@@ -809,4302 +809,2152 @@
     {
       "name": "Anteflexie armen",
       "colorSource": "images/bovenste-extremiteit/anteflexie-armen-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/anteflexie-armen-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/anteflexie-armen.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 51464,
-        "whitePixels": 908536,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.053608,
-        "whiteRatio": 0.946392,
-        "pureBinary": true,
-        "sha256": "36c7e885e4cd6679508f36bf1d6ce3bb9b9b3e949c1b30b415d98d127f869c4c",
-        "sizeBytes": 11681
-      }
+      "qa": null
     },
     {
       "name": "Barbell front press",
       "colorSource": "images/bovenste-extremiteit/barbell-front-press-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/barbell-front-press-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/barbell-front-press.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41050,
-        "whitePixels": 918950,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.04276,
-        "whiteRatio": 0.95724,
-        "pureBinary": true,
-        "sha256": "79d0f834aeecba19fb700fbeefca4dc23dfa9a6f69329377c5deaafc533ad28f",
-        "sizeBytes": 9613
-      }
+      "qa": null
     },
     {
       "name": "Barbell neck press",
       "colorSource": "images/bovenste-extremiteit/barbell-neck-press-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/barbell-neck-press-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/barbell-neck-press.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 67540,
-        "whitePixels": 892460,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.070354,
-        "whiteRatio": 0.929646,
-        "pureBinary": true,
-        "sha256": "e864a7245cd17aeb7b6efa30c5eb72176361679a26d645dcb229228c50032868",
-        "sizeBytes": 12371
-      }
+      "qa": null
     },
     {
       "name": "Barbell pull over",
       "colorSource": "images/bovenste-extremiteit/barbell-pull-over-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/barbell-pull-over-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/barbell-pull-over.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42893,
-        "whitePixels": 917107,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.04468,
-        "whiteRatio": 0.95532,
-        "pureBinary": true,
-        "sha256": "0684556dc75de5305db3942a650d78069687686494d5470ef87a94bc2409216a",
-        "sizeBytes": 9954
-      }
+      "qa": null
     },
     {
       "name": "Bench press",
       "colorSource": "images/bovenste-extremiteit/bench-press-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/bench-press-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/bench-press.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 65005,
-        "whitePixels": 894995,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.067714,
-        "whiteRatio": 0.932286,
-        "pureBinary": true,
-        "sha256": "64c76fc291f832d6e7e8e38c61c8fc01826ccbb06aeae0462a7bbcf556e4e40b",
-        "sizeBytes": 13893
-      }
+      "qa": null
     },
     {
       "name": "Biceps alternate dumbell",
       "colorSource": "images/bovenste-extremiteit/biceps-alternate-dumbell-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/biceps-alternate-dumbell-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/biceps-alternate-dumbell.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40910,
-        "whitePixels": 919090,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.042615,
-        "whiteRatio": 0.957385,
-        "pureBinary": true,
-        "sha256": "dab62f548491d95ef30d199c9bf653f6820fcc7eb7a155b8d110a2f655ebf461",
-        "sizeBytes": 9681
-      }
+      "qa": null
     },
     {
       "name": "Biceps curl",
       "colorSource": "images/bovenste-extremiteit/biceps-curl-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/biceps-curl-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/biceps-curl.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 50851,
-        "whitePixels": 909149,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.05297,
-        "whiteRatio": 0.94703,
-        "pureBinary": true,
-        "sha256": "6736443754b7d5767d30c72e420e630bf97cc43359765ddf769b699ffd710472",
-        "sizeBytes": 11563
-      }
+      "qa": null
     },
     {
       "name": "Biceps pull",
       "colorSource": "images/bovenste-extremiteit/biceps-pull-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/biceps-pull-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/biceps-pull.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 68788,
-        "whitePixels": 891212,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.071654,
-        "whiteRatio": 0.928346,
-        "pureBinary": true,
-        "sha256": "f57afcb87606484bc7a4603a6c59d88bbc41fa0ec0820cbe5027b0a4de9e1faf",
-        "sizeBytes": 13924
-      }
+      "qa": null
     },
     {
       "name": "Dips",
       "colorSource": "images/bovenste-extremiteit/dips-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/dips-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/dips.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 64818,
-        "whitePixels": 895182,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.067519,
-        "whiteRatio": 0.932481,
-        "pureBinary": true,
-        "sha256": "61b6d638c487d992d7a7d45a807d2f45342b16871488bf60bf4c5f2e2f62bf87",
-        "sizeBytes": 11430
-      }
+      "qa": null
     },
     {
       "name": "Dumbell bench press",
       "colorSource": "images/bovenste-extremiteit/dumbell-bench-press-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/dumbell-bench-press-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/dumbell-bench-press.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 47011,
-        "whitePixels": 912989,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.04897,
-        "whiteRatio": 0.95103,
-        "pureBinary": true,
-        "sha256": "6b864b299e9cf5be4e62949a73bf7dbe1c85bf89c585105cdb4027a9e89e82c1",
-        "sizeBytes": 11191
-      }
+      "qa": null
     },
     {
       "name": "Dumbell front press",
       "colorSource": "images/bovenste-extremiteit/dumbell-front-press-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/dumbell-front-press-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/dumbell-front-press.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 51987,
-        "whitePixels": 908013,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.054153,
-        "whiteRatio": 0.945847,
-        "pureBinary": true,
-        "sha256": "d26616f8d73648b46a5058fe3569332cf2e34102a069e3feeeb77d2a73886b72",
-        "sizeBytes": 11458
-      }
+      "qa": null
     },
     {
       "name": "Dumbell neck press",
       "colorSource": "images/bovenste-extremiteit/dumbell-neck-press-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/dumbell-neck-press-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/dumbell-neck-press.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42698,
-        "whitePixels": 917302,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.044477,
-        "whiteRatio": 0.955523,
-        "pureBinary": true,
-        "sha256": "8a30d29d0d0eb1d8c7e7295896b91bd5fd27dd0c0d34a75b02bd275b84f85531",
-        "sizeBytes": 10742
-      }
+      "qa": null
     },
     {
       "name": "Dumbell pull over",
       "colorSource": "images/bovenste-extremiteit/dumbell-pull-over-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/dumbell-pull-over-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/dumbell-pull-over.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 55868,
-        "whitePixels": 904132,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.058196,
-        "whiteRatio": 0.941804,
-        "pureBinary": true,
-        "sha256": "826ccdb3d7f60557cdfcba551c3faddd27b893d9fabffa172cbf2d14a32f8cb0",
-        "sizeBytes": 11485
-      }
+      "qa": null
     },
     {
       "name": "Duplex pull",
       "colorSource": "images/bovenste-extremiteit/duplex-pull-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/duplex-pull-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/duplex-pull.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 52855,
-        "whitePixels": 907145,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.055057,
-        "whiteRatio": 0.944943,
-        "pureBinary": true,
-        "sha256": "4fa145a449b46c026b0455635493e451093d54df802954fa296be63ac1898552",
-        "sizeBytes": 11448
-      }
+      "qa": null
     },
     {
       "name": "Endo pull",
       "colorSource": "images/bovenste-extremiteit/endo-pull-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/endo-pull-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/endo-pull.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 57068,
-        "whitePixels": 902932,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.059446,
-        "whiteRatio": 0.940554,
-        "pureBinary": true,
-        "sha256": "0008ae40ab33717edeaf80c68e2df430152014114b37ba674e9ab8bd58811fb5",
-        "sizeBytes": 13170
-      }
+      "qa": null
     },
     {
       "name": "Exo pull",
       "colorSource": "images/bovenste-extremiteit/exo-pull-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/exo-pull-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/exo-pull.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 53581,
-        "whitePixels": 906419,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.055814,
-        "whiteRatio": 0.944186,
-        "pureBinary": true,
-        "sha256": "d2efb284003f8bf4cd53964b63a2494c2e345b4767dc23f8c4327357d31efbf1",
-        "sizeBytes": 12111
-      }
+      "qa": null
     },
     {
       "name": "Flyes",
       "colorSource": "images/bovenste-extremiteit/flyes-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/flyes-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/flyes.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 49852,
-        "whitePixels": 910148,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.051929,
-        "whiteRatio": 0.948071,
-        "pureBinary": true,
-        "sha256": "c4b029e0b5b20a69fd6713738782c7b3a7ded11db7e1262b515ffbf912f064c8",
-        "sizeBytes": 12376
-      }
+      "qa": null
     },
     {
       "name": "French press",
       "colorSource": "images/bovenste-extremiteit/french-press-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/french-press-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/french-press.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 39929,
-        "whitePixels": 920071,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.041593,
-        "whiteRatio": 0.958407,
-        "pureBinary": true,
-        "sha256": "9fb16807d0447a7609e7e1eac27765578a189d22fbc86c13599bcd03bd8bb29c",
-        "sizeBytes": 9029
-      }
+      "qa": null
     },
     {
       "name": "Front pully row",
       "colorSource": "images/bovenste-extremiteit/front-pully-row-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/front-pully-row-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/front-pully-row.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 45280,
-        "whitePixels": 914720,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.047167,
-        "whiteRatio": 0.952833,
-        "pureBinary": true,
-        "sha256": "f8bce768c1e032590fd8961642141c929a974dae66047f35ca5ce68ac6fdfb0f",
-        "sizeBytes": 11434
-      }
+      "qa": null
     },
     {
       "name": "Front raises",
       "colorSource": "images/bovenste-extremiteit/front-raises-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/front-raises-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/front-raises.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 67945,
-        "whitePixels": 892055,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.070776,
-        "whiteRatio": 0.929224,
-        "pureBinary": true,
-        "sha256": "7fb01ae48532411f7b85714258e0af6c055eb263d06a1468190d3e1c42fe5ab0",
-        "sizeBytes": 15267
-      }
+      "qa": null
     },
     {
       "name": "Incline bench press",
       "colorSource": "images/bovenste-extremiteit/incline-bench-press-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/incline-bench-press-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/incline-bench-press.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 48171,
-        "whitePixels": 911829,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.050178,
-        "whiteRatio": 0.949822,
-        "pureBinary": true,
-        "sha256": "9dccc7466120f1dd4ebd6b419bb965eec5c75aa42dfd56ff3fa3d2b61ebd1f9a",
-        "sizeBytes": 11071
-      }
+      "qa": null
     },
     {
       "name": "Incline flyes",
       "colorSource": "images/bovenste-extremiteit/incline-flyes-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/incline-flyes-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/incline-flyes.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 46511,
-        "whitePixels": 913489,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.048449,
-        "whiteRatio": 0.951551,
-        "pureBinary": true,
-        "sha256": "9031cc865b12ea1f33315c901100ce9dbcdcf6921820942a6ffa3329db313133",
-        "sizeBytes": 11702
-      }
+      "qa": null
     },
     {
       "name": "Lat pull front",
       "colorSource": "images/bovenste-extremiteit/lat-pull-front-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/lat-pull-front-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/lat-pull-front.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 66151,
-        "whitePixels": 893849,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.068907,
-        "whiteRatio": 0.931093,
-        "pureBinary": true,
-        "sha256": "527469e90abb13ed9a79a85a5433985fc6b758c8f85dc6cfdb25de87485cbe5e",
-        "sizeBytes": 14670
-      }
+      "qa": null
     },
     {
       "name": "Lateral raises",
       "colorSource": "images/bovenste-extremiteit/lateral-raises-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/lateral-raises-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/lateral-raises.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 44626,
-        "whitePixels": 915374,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.046485,
-        "whiteRatio": 0.953515,
-        "pureBinary": true,
-        "sha256": "36d181fd17c9105cc288966867b95a23bf5695f2a9c84f82aa30513e8951ba2e",
-        "sizeBytes": 10577
-      }
+      "qa": null
     },
     {
       "name": "Military press",
       "colorSource": "images/bovenste-extremiteit/military-press-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/military-press-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/military-press.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 48766,
-        "whitePixels": 911234,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.050798,
-        "whiteRatio": 0.949202,
-        "pureBinary": true,
-        "sha256": "3189b235662b0a7b6c79c22e303e4afeffed5382bb99581652e04caee57803b6",
-        "sizeBytes": 10240
-      }
+      "qa": null
     },
     {
       "name": "Nose breakers",
       "colorSource": "images/bovenste-extremiteit/nose-breakers-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/nose-breakers-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/nose-breakers.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 47880,
-        "whitePixels": 912120,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.049875,
-        "whiteRatio": 0.950125,
-        "pureBinary": true,
-        "sha256": "823cb7eecaebb266b7bf22d79b3495c5f6442ff33e6dc2112aaf6794d4955b33",
-        "sizeBytes": 11115
-      }
+      "qa": null
     },
     {
       "name": "One arm bent over row",
       "colorSource": "images/bovenste-extremiteit/one-arm-bent-over-row-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/one-arm-bent-over-row-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/one-arm-bent-over-row.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 49722,
-        "whitePixels": 910278,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.051794,
-        "whiteRatio": 0.948206,
-        "pureBinary": true,
-        "sha256": "8e34eca81dc3a45f2ac3d9d077e7ccdaab643a01a8d1be9842080f2287254edc",
-        "sizeBytes": 11802
-      }
+      "qa": null
     },
     {
       "name": "Pully cross down",
       "colorSource": "images/bovenste-extremiteit/pully-cross-down-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/pully-cross-down-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/pully-cross-down.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41287,
-        "whitePixels": 918713,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043007,
-        "whiteRatio": 0.956993,
-        "pureBinary": true,
-        "sha256": "7a89f6ddf7136800d1f94d932047f99892079248d93fad1e0237ac500a4159ec",
-        "sizeBytes": 10508
-      }
+      "qa": null
     },
     {
       "name": "Pully cross over",
       "colorSource": "images/bovenste-extremiteit/pully-cross-over-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/pully-cross-over-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/pully-cross-over.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 34998,
-        "whitePixels": 925002,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.036456,
-        "whiteRatio": 0.963544,
-        "pureBinary": true,
-        "sha256": "6e9bec1599c916398216b465a3979915dd94df951e76de1514ae9f8fe1159415",
-        "sizeBytes": 8541
-      }
+      "qa": null
     },
     {
       "name": "Pully cross up",
       "colorSource": "images/bovenste-extremiteit/pully-cross-up-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/pully-cross-up-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/pully-cross-up.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 49490,
-        "whitePixels": 910510,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.051552,
-        "whiteRatio": 0.948448,
-        "pureBinary": true,
-        "sha256": "cfd5b6b42acfbe6eac930c028343ffa871b2b8cd8dd513b1ab34979899f1722b",
-        "sizeBytes": 12304
-      }
+      "qa": null
     },
     {
       "name": "Pully dips",
       "colorSource": "images/bovenste-extremiteit/pully-dips-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/pully-dips-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/pully-dips.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 44714,
-        "whitePixels": 915286,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.046577,
-        "whiteRatio": 0.953423,
-        "pureBinary": true,
-        "sha256": "681be21208894a45440444f1b9a223b17117f1f4e335799d66ec28ea539a9380",
-        "sizeBytes": 10966
-      }
+      "qa": null
     },
     {
       "name": "Pully down",
       "colorSource": "images/bovenste-extremiteit/pully-down-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/pully-down-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/pully-down.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 49352,
-        "whitePixels": 910648,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.051408,
-        "whiteRatio": 0.948592,
-        "pureBinary": true,
-        "sha256": "0c5cab566e8e5a5b157a6a2ec744acd9e1661b8ba9bc7b5a32eb5e289efa839b",
-        "sizeBytes": 12077
-      }
+      "qa": null
     },
     {
       "name": "Pully press double",
       "colorSource": "images/bovenste-extremiteit/pully-press-double-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/pully-press-double-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/pully-press-double.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37295,
-        "whitePixels": 922705,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038849,
-        "whiteRatio": 0.961151,
-        "pureBinary": true,
-        "sha256": "5a3290c34e6b88407b2863cff5cc2cd003357c60480af0416bf375d82c2e0cb4",
-        "sizeBytes": 8861
-      }
+      "qa": null
     },
     {
       "name": "Pully press single",
       "colorSource": "images/bovenste-extremiteit/pully-press-single-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/pully-press-single-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/pully-press-single.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 32523,
-        "whitePixels": 927477,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.033878,
-        "whiteRatio": 0.966122,
-        "pureBinary": true,
-        "sha256": "d637f3b238cd83dc97a5d57ffe5e1daaf1404132b87d4d5bd788a69410aeb850",
-        "sizeBytes": 8496
-      }
+      "qa": null
     },
     {
       "name": "Pully pull over",
       "colorSource": "images/bovenste-extremiteit/pully-pull-over-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/pully-pull-over-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/pully-pull-over.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 26693,
-        "whitePixels": 933307,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.027805,
-        "whiteRatio": 0.972195,
-        "pureBinary": true,
-        "sha256": "22835f4cf9b7035771cd064ab82328c9bd63481a3d48484631824870bc30c348",
-        "sizeBytes": 7208
-      }
+      "qa": null
     },
     {
       "name": "Pully row",
       "colorSource": "images/bovenste-extremiteit/pully-row-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/pully-row-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/pully-row.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 54355,
-        "whitePixels": 905645,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.05662,
-        "whiteRatio": 0.94338,
-        "pureBinary": true,
-        "sha256": "e4b8038cb15f77ab60d5e3e041a473e44c5ac6c1c4ee4895da29f3dac6127b46",
-        "sizeBytes": 14251
-      }
+      "qa": null
     },
     {
       "name": "Push up",
       "colorSource": "images/bovenste-extremiteit/push-up-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/push-up-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/push-up.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 35849,
-        "whitePixels": 924151,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.037343,
-        "whiteRatio": 0.962657,
-        "pureBinary": true,
-        "sha256": "0fe21aa8ec21707a621eb83380447a3f6ee5aeb2c587afcf3e2f3ce468485da6",
-        "sizeBytes": 9903
-      }
+      "qa": null
     },
     {
       "name": "Reversed flyes",
       "colorSource": "images/bovenste-extremiteit/reversed-flyes-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/reversed-flyes-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/reversed-flyes.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36538,
-        "whitePixels": 923462,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.03806,
-        "whiteRatio": 0.96194,
-        "pureBinary": true,
-        "sha256": "4bd59773ff12deadba216fc5be69e6f48cb95e5460b0a6ffd7899bc98943afb8",
-        "sizeBytes": 9076
-      }
+      "qa": null
     },
     {
       "name": "Shoulder rotation (shrugs)",
       "colorSource": "images/bovenste-extremiteit/shoulder-rotation-shrugs-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/shoulder-rotation-shrugs-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/shoulder-rotation-shrugs.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 69375,
-        "whitePixels": 890625,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.072266,
-        "whiteRatio": 0.927734,
-        "pureBinary": true,
-        "sha256": "441c628708ba4ade706ea9a6ef3e0caef387f213133ad32685fb7701a517369c",
-        "sizeBytes": 15244
-      }
+      "qa": null
     },
     {
       "name": "Triceps dips",
       "colorSource": "images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/triceps-dips-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/triceps-dips.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 31566,
-        "whitePixels": 928434,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.032881,
-        "whiteRatio": 0.967119,
-        "pureBinary": true,
-        "sha256": "327e8d26068bf6f9b29794551d665a4cdf2c03f58989acb6944e836441b181ed",
-        "sizeBytes": 8585
-      }
+      "qa": null
     },
     {
       "name": "Triceps dumbell kickbacks",
       "colorSource": "images/bovenste-extremiteit/triceps-dumbell-kickbacks-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/triceps-dumbell-kickbacks-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/triceps-dumbell-kickbacks.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 28352,
-        "whitePixels": 931648,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.029533,
-        "whiteRatio": 0.970467,
-        "pureBinary": true,
-        "sha256": "3154caf11b420fe83adffff4b5f393fd5e0c9f46343066afe8759880b3dcca71",
-        "sizeBytes": 7688
-      }
+      "qa": null
     },
     {
       "name": "Triceps push down",
       "colorSource": "images/bovenste-extremiteit/triceps-push-down-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/triceps-push-down-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/triceps-push-down.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 57520,
-        "whitePixels": 902480,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.059917,
-        "whiteRatio": 0.940083,
-        "pureBinary": true,
-        "sha256": "88a542aad6e55d4f0117721a667c6861573c251d987caeee325805c6abcbcc1e",
-        "sizeBytes": 12672
-      }
+      "qa": null
     },
     {
       "name": "Upright row",
       "colorSource": "images/bovenste-extremiteit/upright-row-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/upright-row-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/upright-row.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 56882,
-        "whitePixels": 903118,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.059252,
-        "whiteRatio": 0.940748,
-        "pureBinary": true,
-        "sha256": "33a568445ac02bc848662d18b54fb62138d02bf98dbe30dbf15d7861473adb5b",
-        "sizeBytes": 12058
-      }
+      "qa": null
     },
     {
       "name": "Wrist extension",
       "colorSource": "images/bovenste-extremiteit/wrist-extension-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/wrist-extension-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/wrist-extension.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 67565,
-        "whitePixels": 892435,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.07038,
-        "whiteRatio": 0.92962,
-        "pureBinary": true,
-        "sha256": "705d6913db057ba4a6c30b0011cb39dbe2150f47205025900bc2f5b45a161bc9",
-        "sizeBytes": 15776
-      }
+      "qa": null
     },
     {
       "name": "Wrist flexion",
       "colorSource": "images/bovenste-extremiteit/wrist-flexion-avatar-v7.jpg",
-      "lineSource": "images/bovenste-extremiteit/wrist-flexion-line-v1.png",
+      "lineSource": "images/bovenste-extremiteit/wrist-flexion.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 50512,
-        "whitePixels": 909488,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.052617,
-        "whiteRatio": 0.947383,
-        "pureBinary": true,
-        "sha256": "dbf6c3b0ed7c3595c08761871191a46ce78aed355fbcb780c4ca40afc3933079",
-        "sizeBytes": 13177
-      }
+      "qa": null
     },
     {
       "name": "Been pendelen",
       "colorSource": "images/onderste-extremiteit/been-pendelen-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/been-pendelen-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/been-pendelen.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 43544,
-        "whitePixels": 916456,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.045358,
-        "whiteRatio": 0.954642,
-        "pureBinary": true,
-        "sha256": "b6f71410e518abd0e7cfe20dd9083bd059e73e0b92e3ae43ce3c6ae4dbd8bbb9",
-        "sizeBytes": 9944
-      }
+      "qa": null
     },
     {
       "name": "Bridges kicker",
       "colorSource": "images/onderste-extremiteit/bridges-kicker-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/bridges-kicker-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/bridges-kicker.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 31224,
-        "whitePixels": 928776,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.032525,
-        "whiteRatio": 0.967475,
-        "pureBinary": true,
-        "sha256": "88e73bd0ab2d29e99a61222dfb03e2ef9e4c8caeac9ae454253f22680a5aa648",
-        "sizeBytes": 8493
-      }
+      "qa": null
     },
     {
       "name": "Calf raises",
       "colorSource": "images/onderste-extremiteit/calf-raises-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/calf-raises-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/calf-raises.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40694,
-        "whitePixels": 919306,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.04239,
-        "whiteRatio": 0.95761,
-        "pureBinary": true,
-        "sha256": "038aa7e1cd697dff7dcacdb84fc1ed8f40598d6ea318482dcfde8e6be89fe02d",
-        "sizeBytes": 10585
-      }
+      "qa": null
     },
     {
       "name": "Chair squat",
       "colorSource": "images/onderste-extremiteit/chair-squat-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/chair-squat-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/chair-squat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 39265,
-        "whitePixels": 920735,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.040901,
-        "whiteRatio": 0.959099,
-        "pureBinary": true,
-        "sha256": "1db99e476fb0ee1ba0e2a09888ba0510d0eaef69952d723b681577b1f2ca0b90",
-        "sizeBytes": 9607
-      }
+      "qa": null
     },
     {
       "name": "Crabwalk",
       "colorSource": "images/onderste-extremiteit/crabwalk-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/crabwalk-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/crabwalk.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 43948,
-        "whitePixels": 916052,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.045779,
-        "whiteRatio": 0.954221,
-        "pureBinary": true,
-        "sha256": "1c0e85cf6aa65793b3a4ee2af362840e02a78e886b7fa1f2ec9ca1076a1f2458",
-        "sizeBytes": 11779
-      }
+      "qa": null
     },
     {
       "name": "Dead lift",
       "colorSource": "images/onderste-extremiteit/dead-lift-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/dead-lift-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/dead-lift.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 51516,
-        "whitePixels": 908484,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.053663,
-        "whiteRatio": 0.946338,
-        "pureBinary": true,
-        "sha256": "8893f8c389669748160052e1da0e6b8ede3e2493ee64c1e8eb2634a73feb754a",
-        "sizeBytes": 12957
-      }
+      "qa": null
     },
     {
       "name": "Extension squat",
       "colorSource": "images/onderste-extremiteit/extension-squat-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/extension-squat-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/extension-squat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 43087,
-        "whitePixels": 916913,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.044882,
-        "whiteRatio": 0.955118,
-        "pureBinary": true,
-        "sha256": "97fd830842ceffc0814c53c8c4e14fa2ac2aadb6f695331efdfc4fdadd2f95cb",
-        "sizeBytes": 10924
-      }
+      "qa": null
     },
     {
       "name": "Front squat",
       "colorSource": "images/onderste-extremiteit/front-squat-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/front-squat-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/front-squat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 43859,
-        "whitePixels": 916141,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.045686,
-        "whiteRatio": 0.954314,
-        "pureBinary": true,
-        "sha256": "1a955968ba1794015f173e1719fa8a27fd341b45edcbcf2fc99854281456d483",
-        "sizeBytes": 11025
-      }
+      "qa": null
     },
     {
       "name": "Glute bridges",
       "colorSource": "images/onderste-extremiteit/glute-bridges-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/glute-bridges-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/glute-bridges.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36624,
-        "whitePixels": 923376,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.03815,
-        "whiteRatio": 0.96185,
-        "pureBinary": true,
-        "sha256": "640dd2da0ac4f2107fa05838b03fd21f35a7c9f993b90984e41970a8943c9a2a",
-        "sizeBytes": 10296
-      }
+      "qa": null
     },
     {
       "name": "Hack squat",
       "colorSource": "images/onderste-extremiteit/hack-squat-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/hack-squat-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/hack-squat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 81486,
-        "whitePixels": 878514,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.084881,
-        "whiteRatio": 0.915119,
-        "pureBinary": true,
-        "sha256": "435b5d4dba4ba5ed0aadfb6e04550fee01ef94358d4948189cbd542aa17449bf",
-        "sizeBytes": 19618
-      }
+      "qa": null
     },
     {
       "name": "Jefferson squat",
       "colorSource": "images/onderste-extremiteit/jefferson-squat-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/jefferson-squat-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/jefferson-squat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 52717,
-        "whitePixels": 907283,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.054914,
-        "whiteRatio": 0.945086,
-        "pureBinary": true,
-        "sha256": "3a14c0d4e10852342e9336e8d6460b223a411f47b8daadc0baadb244085b7173",
-        "sizeBytes": 11658
-      }
+      "qa": null
     },
     {
       "name": "Kick back",
       "colorSource": "images/onderste-extremiteit/kick-back-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/kick-back-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/kick-back.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 34720,
-        "whitePixels": 925280,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.036167,
-        "whiteRatio": 0.963833,
-        "pureBinary": true,
-        "sha256": "07e1d0916740278aba28849d0f27b3d456ffff9e678ab34a10614798a4586662",
-        "sizeBytes": 9296
-      }
+      "qa": null
     },
     {
       "name": "Leg curl",
       "colorSource": "images/onderste-extremiteit/leg-curl-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/leg-curl-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/leg-curl.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 35289,
-        "whitePixels": 924711,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.036759,
-        "whiteRatio": 0.963241,
-        "pureBinary": true,
-        "sha256": "7a0bcdae9df747667a5401f4150fa79e758f683b5e2cbb55af1da71f67dc667c",
-        "sizeBytes": 9726
-      }
+      "qa": null
     },
     {
       "name": "Leg extension",
       "colorSource": "images/onderste-extremiteit/leg-extension-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/leg-extension-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/leg-extension.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 48962,
-        "whitePixels": 911038,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.051002,
-        "whiteRatio": 0.948998,
-        "pureBinary": true,
-        "sha256": "098d678640b9b0c81752a8724aab0690ed18239e2dad8deb88560a6dab103a1e",
-        "sizeBytes": 11270
-      }
+      "qa": null
     },
     {
       "name": "Leg press",
       "colorSource": "images/onderste-extremiteit/leg-press-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/leg-press-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/leg-press.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 82776,
-        "whitePixels": 877224,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.086225,
-        "whiteRatio": 0.913775,
-        "pureBinary": true,
-        "sha256": "a48b6e2e2cb104b5e4d3f75efc18ab608b8d1de47ebeeb99bb074dddf4d1fa99",
-        "sizeBytes": 18930
-      }
+      "qa": null
     },
     {
       "name": "Lunges",
       "colorSource": "images/onderste-extremiteit/lunges-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/lunges-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/lunges.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40624,
-        "whitePixels": 919376,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.042317,
-        "whiteRatio": 0.957683,
-        "pureBinary": true,
-        "sha256": "3fe6097134459678d4e1c52726475cbbdab0134d29aadeffd8b07fa9c32bf820",
-        "sizeBytes": 9701
-      }
+      "qa": null
     },
     {
       "name": "Lunges curtsy alt",
       "colorSource": "images/onderste-extremiteit/lunges-curtsy-alt-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/lunges-curtsy-alt-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/lunges-curtsy-alt.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42957,
-        "whitePixels": 917043,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.044747,
-        "whiteRatio": 0.955253,
-        "pureBinary": true,
-        "sha256": "abc0522755dc295c10b9965db819b801c6b186926bc4a91a818fb9a16b1e9284",
-        "sizeBytes": 11422
-      }
+      "qa": null
     },
     {
       "name": "Lying abduction",
       "colorSource": "images/onderste-extremiteit/lying-abduction-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/lying-abduction-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/lying-abduction.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 33454,
-        "whitePixels": 926546,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.034848,
-        "whiteRatio": 0.965152,
-        "pureBinary": true,
-        "sha256": "46e279c00f7dd315d4708c87264920f75cb6a88ed453c16908322333d83d0a58",
-        "sizeBytes": 8682
-      }
+      "qa": null
     },
     {
       "name": "Lying adduction",
       "colorSource": "images/onderste-extremiteit/lying-adduction-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/lying-adduction-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/lying-adduction.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 31601,
-        "whitePixels": 928399,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.032918,
-        "whiteRatio": 0.967082,
-        "pureBinary": true,
-        "sha256": "3a4ad3dec5b331122fce071f0c069cd370fb394939297c3f6780fcd912141ed6",
-        "sizeBytes": 8505
-      }
+      "qa": null
     },
     {
       "name": "Single leg squat",
       "colorSource": "images/onderste-extremiteit/single-leg-squat-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/single-leg-squat-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/single-leg-squat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 38452,
-        "whitePixels": 921548,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.040054,
-        "whiteRatio": 0.959946,
-        "pureBinary": true,
-        "sha256": "933b78a47f585a5145efa2767e6fb43bbf3c66cd7827a15981fb1af0b55a2f30",
-        "sizeBytes": 10118
-      }
+      "qa": null
     },
     {
       "name": "Squat",
       "colorSource": "images/onderste-extremiteit/squat-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/squat-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/squat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 48592,
-        "whitePixels": 911408,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.050617,
-        "whiteRatio": 0.949383,
-        "pureBinary": true,
-        "sha256": "a39064d2e98a08cd344da8ee6053d12a20ef72ac0932c85ca71e59f274030441",
-        "sizeBytes": 12681
-      }
+      "qa": null
     },
     {
       "name": "Squat lunges",
       "colorSource": "images/onderste-extremiteit/squat-lunges-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/squat-lunges-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/squat-lunges.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 56962,
-        "whitePixels": 903038,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.059335,
-        "whiteRatio": 0.940665,
-        "pureBinary": true,
-        "sha256": "0e41eb46d01fca63eba43fb4da048f692f5cd536e796c69694ec45169d8998bf",
-        "sizeBytes": 14227
-      }
+      "qa": null
     },
     {
       "name": "Standing abduction",
       "colorSource": "images/onderste-extremiteit/standing-abduction-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/standing-abduction-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/standing-abduction.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 32969,
-        "whitePixels": 927031,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.034343,
-        "whiteRatio": 0.965657,
-        "pureBinary": true,
-        "sha256": "f6899e9bb21f192bc131e1578666a04aaf446deaca3bd6624bcfdbb0b3b26e4e",
-        "sizeBytes": 7679
-      }
+      "qa": null
     },
     {
       "name": "Standing adduction",
       "colorSource": "images/onderste-extremiteit/standing-adduction-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/standing-adduction-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/standing-adduction.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 29737,
-        "whitePixels": 930263,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.030976,
-        "whiteRatio": 0.969024,
-        "pureBinary": true,
-        "sha256": "c805aaf8a3a83e07d00e9125aab520ee416341f04e957bc03a8c8893408569b6",
-        "sizeBytes": 8006
-      }
+      "qa": null
     },
     {
       "name": "Standing gluteus",
       "colorSource": "images/onderste-extremiteit/standing-gluteus-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/standing-gluteus-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/standing-gluteus.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 27953,
-        "whitePixels": 932047,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.029118,
-        "whiteRatio": 0.970882,
-        "pureBinary": true,
-        "sha256": "7d5742e13f12599a4a83469d5817a6d2c252bccdf20df59ef875e4b7b8d0c846",
-        "sizeBytes": 7282
-      }
+      "qa": null
     },
     {
       "name": "Step up",
       "colorSource": "images/onderste-extremiteit/step-up-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/step-up-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/step-up.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41517,
-        "whitePixels": 918483,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043247,
-        "whiteRatio": 0.956753,
-        "pureBinary": true,
-        "sha256": "4f3c4eb9ecfc55816545e545dc822742c02a3993431f99ae829b40332835cc0f",
-        "sizeBytes": 10635
-      }
+      "qa": null
     },
     {
       "name": "Step up tempo",
       "colorSource": "images/onderste-extremiteit/step-up-tempo-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/step-up-tempo-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/step-up-tempo.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 57064,
-        "whitePixels": 902936,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.059442,
-        "whiteRatio": 0.940558,
-        "pureBinary": true,
-        "sha256": "1b2f625621a7e5687e183639b3078ba5e16ff439b32be15b0bca1da8939b191f",
-        "sizeBytes": 14448
-      }
+      "qa": null
     },
     {
       "name": "Step up with knee raise",
       "colorSource": "images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/step-up-with-knee-raise-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/step-up-with-knee-raise.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 45173,
-        "whitePixels": 914827,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.047055,
-        "whiteRatio": 0.952945,
-        "pureBinary": true,
-        "sha256": "a89617b51cfd13e315837ca205a32c928f391c05bc4e3907b3f2c5cd4ef0b0d7",
-        "sizeBytes": 11164
-      }
+      "qa": null
     },
     {
       "name": "Surrenders",
       "colorSource": "images/onderste-extremiteit/surrenders-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/surrenders-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/surrenders.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41544,
-        "whitePixels": 918456,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043275,
-        "whiteRatio": 0.956725,
-        "pureBinary": true,
-        "sha256": "b0a8899a6e10ea57c3990fc789183db6924d4bec276425ec69e5d23547a5ae07",
-        "sizeBytes": 10064
-      }
+      "qa": null
     },
     {
       "name": "Wall sit",
       "colorSource": "images/onderste-extremiteit/wall-sit-avatar-v7.jpg",
-      "lineSource": "images/onderste-extremiteit/wall-sit-line-v1.png",
+      "lineSource": "images/onderste-extremiteit/wall-sit.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 43990,
-        "whitePixels": 916010,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.045823,
-        "whiteRatio": 0.954177,
-        "pureBinary": true,
-        "sha256": "733368e868b3d07a2c8d339e18a01bc501a2329e329a3ca3abf13f46be2dad18",
-        "sizeBytes": 9514
-      }
+      "qa": null
     },
     {
       "name": "Abroller",
       "colorSource": "images/core/abroller-avatar-v7.jpg",
-      "lineSource": "images/core/abroller-line-v1.png",
+      "lineSource": "images/core/abroller.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42894,
-        "whitePixels": 917106,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.044681,
-        "whiteRatio": 0.955319,
-        "pureBinary": true,
-        "sha256": "aa4eff65b83f5cf21075e241e7efd760197b34b86dccfc45f89920df32acf3b7",
-        "sizeBytes": 12377
-      }
+      "qa": null
     },
     {
       "name": "Alternate heel touchers",
       "colorSource": "images/core/alternate-heel-touchers-avatar-v7.jpg",
-      "lineSource": "images/core/alternate-heel-touchers-line-v1.png",
+      "lineSource": "images/core/alternate-heel-touchers.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 34775,
-        "whitePixels": 925225,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.036224,
-        "whiteRatio": 0.963776,
-        "pureBinary": true,
-        "sha256": "50c2e1aa72dbb1113bff4a95ca236257a326e438ce9ffaf5d7a7f8290f837b73",
-        "sizeBytes": 10374
-      }
+      "qa": null
     },
     {
       "name": "Back extension",
       "colorSource": "images/core/back-extension-avatar-v7.jpg",
-      "lineSource": "images/core/back-extension-line-v1.png",
+      "lineSource": "images/core/back-extension.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 43752,
-        "whitePixels": 916248,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.045575,
-        "whiteRatio": 0.954425,
-        "pureBinary": true,
-        "sha256": "9527e04f5dea702e101543a14073f50472e86108477672a231753ee114df2d55",
-        "sizeBytes": 10725
-      }
+      "qa": null
     },
     {
       "name": "Barbell rotation",
       "colorSource": "images/core/barbell-rotation-avatar-v7.jpg",
-      "lineSource": "images/core/barbell-rotation-line-v1.png",
+      "lineSource": "images/core/barbell-rotation.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 47215,
-        "whitePixels": 912785,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.049182,
-        "whiteRatio": 0.950818,
-        "pureBinary": true,
-        "sha256": "6d2c4241946d49cf05d57c18bac7488e287f098368354ba59a1225d941b5db00",
-        "sizeBytes": 11880
-      }
+      "qa": null
     },
     {
       "name": "Barbell twist",
       "colorSource": "images/core/barbell-twist-avatar-v7.jpg",
-      "lineSource": "images/core/barbell-twist-line-v1.png",
+      "lineSource": "images/core/barbell-twist.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 43346,
-        "whitePixels": 916654,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.045152,
-        "whiteRatio": 0.954848,
-        "pureBinary": true,
-        "sha256": "e0a4d07a245ee2b804f6cf3c5feef789d8f72f47ee2b30a435efc88e66a67dba",
-        "sizeBytes": 10333
-      }
+      "qa": null
     },
     {
       "name": "Bear crawls",
       "colorSource": "images/core/bear-crawls-avatar-v7.jpg",
-      "lineSource": "images/core/bear-crawls-line-v1.png",
+      "lineSource": "images/core/bear-crawls.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36776,
-        "whitePixels": 923224,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038308,
-        "whiteRatio": 0.961692,
-        "pureBinary": true,
-        "sha256": "e0a57677fe91f020b3135e8af8a2fe89851300482efac0085e787cac001db789",
-        "sizeBytes": 10206
-      }
+      "qa": null
     },
     {
       "name": "Benen laten zakken",
       "colorSource": "images/core/benen-laten-zakken-avatar-v7.jpg",
-      "lineSource": "images/core/benen-laten-zakken-line-v1.png",
+      "lineSource": "images/core/benen-laten-zakken.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 28239,
-        "whitePixels": 931761,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.029416,
-        "whiteRatio": 0.970584,
-        "pureBinary": true,
-        "sha256": "6375cf820d9495db937f92465309fa75fa9026d1822f25ca1f6dd201ea65c69a",
-        "sizeBytes": 7417
-      }
+      "qa": null
     },
     {
       "name": "Bicycles buik",
       "colorSource": "images/core/bicycles-buik-avatar-v7.jpg",
-      "lineSource": "images/core/bicycles-buik-line-v1.png",
+      "lineSource": "images/core/bicycles-buik.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 35132,
-        "whitePixels": 924868,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.036596,
-        "whiteRatio": 0.963404,
-        "pureBinary": true,
-        "sha256": "f1a9c066a988a6dfd0409628f89327dcd76eaef48cf376a0e6ee40e403ab4de7",
-        "sizeBytes": 9702
-      }
+      "qa": null
     },
     {
       "name": "Bruggen 1 been liften",
       "colorSource": "images/core/bruggen-1-been-liften-avatar-v7.jpg",
-      "lineSource": "images/core/bruggen-1-been-liften-line-v1.png",
+      "lineSource": "images/core/bruggen-1-been-liften.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 35598,
-        "whitePixels": 924402,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.037081,
-        "whiteRatio": 0.962919,
-        "pureBinary": true,
-        "sha256": "b4f36e39e1e5da2ed2e2ab2d91a75599144390d096df1e6765966c65f53c2925",
-        "sizeBytes": 9234
-      }
+      "qa": null
     },
     {
       "name": "Bruggen beginner",
       "colorSource": "images/core/bruggen-beginner-avatar-v7.jpg",
-      "lineSource": "images/core/bruggen-beginner-line-v1.png",
+      "lineSource": "images/core/bruggen-beginner.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36087,
-        "whitePixels": 923913,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.037591,
-        "whiteRatio": 0.962409,
-        "pureBinary": true,
-        "sha256": "7bc46d90a9e6fe7b1616c23d24aa847c11558c742e1d1bbc1a263286f8c8d31d",
-        "sizeBytes": 9471
-      }
+      "qa": null
     },
     {
       "name": "Bruggen met halter",
       "colorSource": "images/core/bruggen-met-halter-avatar-v7.jpg",
-      "lineSource": "images/core/bruggen-met-halter-line-v1.png",
+      "lineSource": "images/core/bruggen-met-halter.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37366,
-        "whitePixels": 922634,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038923,
-        "whiteRatio": 0.961077,
-        "pureBinary": true,
-        "sha256": "719e9f792b27eb141d92d410401bb809c6f42a68f1467390c35cff3a41c2f833",
-        "sizeBytes": 10348
-      }
+      "qa": null
     },
     {
       "name": "Bruggen met halter op bank",
       "colorSource": "images/core/bruggen-met-halter-op-bank-avatar-v7.jpg",
-      "lineSource": "images/core/bruggen-met-halter-op-bank-line-v1.png",
+      "lineSource": "images/core/bruggen-met-halter-op-bank.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 57197,
-        "whitePixels": 902803,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.05958,
-        "whiteRatio": 0.94042,
-        "pureBinary": true,
-        "sha256": "fa3f28723618da3a781b6cd709c51821316ac989e78404db477638b66c9545d2",
-        "sizeBytes": 12344
-      }
+      "qa": null
     },
     {
       "name": "Bruggen op bal",
       "colorSource": "images/core/bruggen-op-bal-avatar-v7.jpg",
-      "lineSource": "images/core/bruggen-op-bal-line-v1.png",
+      "lineSource": "images/core/bruggen-op-bal.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 32749,
-        "whitePixels": 927251,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.034114,
-        "whiteRatio": 0.965886,
-        "pureBinary": true,
-        "sha256": "52389edb77c9fd7eaf1e544166c2b706d2fdb851c99a7634e78cc2f9c0b053ea",
-        "sizeBytes": 8952
-      }
+      "qa": null
     },
     {
       "name": "Crunch",
       "colorSource": "images/core/crunch-avatar-v7.jpg",
-      "lineSource": "images/core/crunch-line-v1.png",
+      "lineSource": "images/core/crunch.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 31330,
-        "whitePixels": 928670,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.032635,
-        "whiteRatio": 0.967365,
-        "pureBinary": true,
-        "sha256": "9ac61e5749f5f232f88cfa0c40850b368e33f1f92f64e0ab564090b6694574c9",
-        "sizeBytes": 9120
-      }
+      "qa": null
     },
     {
       "name": "Curl up",
       "colorSource": "images/core/curl-up-avatar-v7.jpg",
-      "lineSource": "images/core/curl-up-line-v1.png",
+      "lineSource": "images/core/curl-up.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 28388,
-        "whitePixels": 931612,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.029571,
-        "whiteRatio": 0.970429,
-        "pureBinary": true,
-        "sha256": "08ac14670c62d39e171448a68965b66373bca9e9f78b6d318918febb962615be",
-        "sizeBytes": 8088
-      }
+      "qa": null
     },
     {
       "name": "Dead bug",
       "colorSource": "images/core/dead-bug-avatar-v7.jpg",
-      "lineSource": "images/core/dead-bug-line-v1.png",
+      "lineSource": "images/core/dead-bug.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 31960,
-        "whitePixels": 928040,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.033292,
-        "whiteRatio": 0.966708,
-        "pureBinary": true,
-        "sha256": "c8e01f847d5d6f3dab5bf022e98a20c754256044e1680125cefbb10adb0c93a2",
-        "sizeBytes": 7834
-      }
+      "qa": null
     },
     {
       "name": "Good mornings",
       "colorSource": "images/core/good-mornings-avatar-v7.jpg",
-      "lineSource": "images/core/good-mornings-line-v1.png",
+      "lineSource": "images/core/good-mornings.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37826,
-        "whitePixels": 922174,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.039402,
-        "whiteRatio": 0.960598,
-        "pureBinary": true,
-        "sha256": "6e76b4d83a670aaf52dd193199da3dde75562332abb4a7d0536a9e99cd9f9b4b",
-        "sizeBytes": 9047
-      }
+      "qa": null
     },
     {
       "name": "Knee elbow",
       "colorSource": "images/core/knee-elbow-avatar-v7.jpg",
-      "lineSource": "images/core/knee-elbow-line-v1.png",
+      "lineSource": "images/core/knee-elbow.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 34659,
-        "whitePixels": 925341,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.036103,
-        "whiteRatio": 0.963897,
-        "pureBinary": true,
-        "sha256": "ddf115fe4c77f4afaa029cb7e8295beff415300c4791e974ae3063de1279cfbc",
-        "sizeBytes": 9951
-      }
+      "qa": null
     },
     {
       "name": "Leg raises",
       "colorSource": "images/core/leg-raises-avatar-v7.jpg",
-      "lineSource": "images/core/leg-raises-line-v1.png",
+      "lineSource": "images/core/leg-raises.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 27506,
-        "whitePixels": 932494,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.028652,
-        "whiteRatio": 0.971348,
-        "pureBinary": true,
-        "sha256": "cd4474380d1a9bf853a52f9f02907f0179d54b9df4ed23310563d63bc042009a",
-        "sizeBytes": 7105
-      }
+      "qa": null
     },
     {
       "name": "Mobilisatie rotatie rug",
       "colorSource": "images/core/mobilisatie-rotatie-rug-avatar-v7.jpg",
-      "lineSource": "images/core/mobilisatie-rotatie-rug-line-v1.png",
+      "lineSource": "images/core/mobilisatie-rotatie-rug.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 29162,
-        "whitePixels": 930838,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.030377,
-        "whiteRatio": 0.969623,
-        "pureBinary": true,
-        "sha256": "d8f1bb226d4837c86207efbe2a2b89be79f580ff0cf28e0a0d40bc24852c5cf1",
-        "sizeBytes": 8182
-      }
+      "qa": null
     },
     {
       "name": "Mountain climber",
       "colorSource": "images/core/mountain-climber-avatar-v7.jpg",
-      "lineSource": "images/core/mountain-climber-line-v1.png",
+      "lineSource": "images/core/mountain-climber.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 44152,
-        "whitePixels": 915848,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.045992,
-        "whiteRatio": 0.954008,
-        "pureBinary": true,
-        "sha256": "5a852c33dd0c732c8fee870042cefe8f32f5349675c8744221531afa78c973b2",
-        "sizeBytes": 12157
-      }
+      "qa": null
     },
     {
       "name": "Mountain climber x",
       "colorSource": "images/core/mountain-climber-x-avatar-v7.jpg",
-      "lineSource": "images/core/mountain-climber-x-line-v1.png",
+      "lineSource": "images/core/mountain-climber-x.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 38149,
-        "whitePixels": 921851,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.039739,
-        "whiteRatio": 0.960261,
-        "pureBinary": true,
-        "sha256": "be2e11f9d3156cf7920a6941bf3b0234aefd2da28ada36631cf948647cb88233",
-        "sizeBytes": 10394
-      }
+      "qa": null
     },
     {
       "name": "Plank basis",
       "colorSource": "images/core/plank-basis-avatar-v7.jpg",
-      "lineSource": "images/core/plank-basis-line-v1.png",
+      "lineSource": "images/core/plank-basis.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 34136,
-        "whitePixels": 925864,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.035558,
-        "whiteRatio": 0.964442,
-        "pureBinary": true,
-        "sha256": "6d364d6a514ccd48a836b3cfb308b80bd07e85d217e8dbefe266ba69db0ddd7a",
-        "sizeBytes": 8993
-      }
+      "qa": null
     },
     {
       "name": "Plank high",
       "colorSource": "images/core/plank-high-avatar-v7.jpg",
-      "lineSource": "images/core/plank-high-line-v1.png",
+      "lineSource": "images/core/plank-high.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37498,
-        "whitePixels": 922502,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.03906,
-        "whiteRatio": 0.96094,
-        "pureBinary": true,
-        "sha256": "87bde683dd5c403553a26e438846f0e624892022b5f659ad558bde2f466388ef",
-        "sizeBytes": 10656
-      }
+      "qa": null
     },
     {
       "name": "Plank jacks",
       "colorSource": "images/core/plank-jacks-avatar-v7.jpg",
-      "lineSource": "images/core/plank-jacks-line-v1.png",
+      "lineSource": "images/core/plank-jacks.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37481,
-        "whitePixels": 922519,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.039043,
-        "whiteRatio": 0.960957,
-        "pureBinary": true,
-        "sha256": "d684bff430d912519db8130b60d12d554fa1ecfb4d6ebc325676716b1f51002f",
-        "sizeBytes": 10394
-      }
+      "qa": null
     },
     {
       "name": "Plank voorwaarts",
       "colorSource": "images/core/plank-voorwaarts-avatar-v7.jpg",
-      "lineSource": "images/core/plank-voorwaarts-line-v1.png",
+      "lineSource": "images/core/plank-voorwaarts.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 33029,
-        "whitePixels": 926971,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.034405,
-        "whiteRatio": 0.965595,
-        "pureBinary": true,
-        "sha256": "b774f5b6b2b5eeaffe78b2030b1709e70e80c69cb0482a5c659fa0c43f9a9c83",
-        "sizeBytes": 8173
-      }
+      "qa": null
     },
     {
       "name": "Reversed crunch",
       "colorSource": "images/core/reversed-crunch-avatar-v7.jpg",
-      "lineSource": "images/core/reversed-crunch-line-v1.png",
+      "lineSource": "images/core/reversed-crunch.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 27605,
-        "whitePixels": 932395,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.028755,
-        "whiteRatio": 0.971245,
-        "pureBinary": true,
-        "sha256": "066363e33aaa16755e41ad593a2e0dd0d7c40996d3203a296078945e396060af",
-        "sizeBytes": 7679
-      }
+      "qa": null
     },
     {
       "name": "Rug extensie",
       "colorSource": "images/core/rug-extensie-avatar-v7.jpg",
-      "lineSource": "images/core/rug-extensie-line-v1.png",
+      "lineSource": "images/core/rug-extensie.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 24440,
-        "whitePixels": 935560,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.025458,
-        "whiteRatio": 0.974542,
-        "pureBinary": true,
-        "sha256": "17cc4563a269364426eb41b67986b3421d66c0b0fa25c64f3433cd5a93a134b7",
-        "sizeBytes": 6825
-      }
+      "qa": null
     },
     {
       "name": "Rusian twist",
       "colorSource": "images/core/rusian-twist-avatar-v7.jpg",
-      "lineSource": "images/core/rusian-twist-line-v1.png",
+      "lineSource": "images/core/rusian-twist.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36481,
-        "whitePixels": 923519,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038001,
-        "whiteRatio": 0.961999,
-        "pureBinary": true,
-        "sha256": "23913711a701cfdfe18891663ab9f575506a5ada30d7a3a7f714d993a889208e",
-        "sizeBytes": 11016
-      }
+      "qa": null
     },
     {
       "name": "Scissors 1",
       "colorSource": "images/core/scissors-1-avatar-v7.jpg",
-      "lineSource": "images/core/scissors-1-line-v1.png",
+      "lineSource": "images/core/scissors-1.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 29362,
-        "whitePixels": 930638,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.030585,
-        "whiteRatio": 0.969415,
-        "pureBinary": true,
-        "sha256": "bbca17a45050cdab02d7c4117f6a10f9b8b082c3e4c671b51bbe4b9f9636f00c",
-        "sizeBytes": 7932
-      }
+      "qa": null
     },
     {
       "name": "Scissors 2",
       "colorSource": "images/core/scissors-2-avatar-v7.jpg",
-      "lineSource": "images/core/scissors-2-line-v1.png",
+      "lineSource": "images/core/scissors-2.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 34368,
-        "whitePixels": 925632,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.0358,
-        "whiteRatio": 0.9642,
-        "pureBinary": true,
-        "sha256": "c4c21f16679d7fc8a364b9b637423a348d1bede99d0771e1a989b16e43553803",
-        "sizeBytes": 9706
-      }
+      "qa": null
     },
     {
       "name": "Side bents",
       "colorSource": "images/core/side-bents-avatar-v7.jpg",
-      "lineSource": "images/core/side-bents-line-v1.png",
+      "lineSource": "images/core/side-bents.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 48007,
-        "whitePixels": 911993,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.050007,
-        "whiteRatio": 0.949993,
-        "pureBinary": true,
-        "sha256": "aeb8e8d656b958008a3ae9fd93fb8c989c91d387454a1edb83dba4d27d80831f",
-        "sizeBytes": 11593
-      }
+      "qa": null
     },
     {
       "name": "Stick twist",
       "colorSource": "images/core/stick-twist-avatar-v7.jpg",
-      "lineSource": "images/core/stick-twist-line-v1.png",
+      "lineSource": "images/core/stick-twist.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 44374,
-        "whitePixels": 915626,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.046223,
-        "whiteRatio": 0.953777,
-        "pureBinary": true,
-        "sha256": "8f6b3cadff13530a42eac6e4d29057cee9e1bead2779064c6cf1ff65fb1d8036",
-        "sizeBytes": 10815
-      }
+      "qa": null
     },
     {
       "name": "Superman",
       "colorSource": "images/core/superman-avatar-v7.jpg",
-      "lineSource": "images/core/superman-line-v1.png",
+      "lineSource": "images/core/superman.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 29652,
-        "whitePixels": 930348,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.030887,
-        "whiteRatio": 0.969113,
-        "pureBinary": true,
-        "sha256": "c37270a9fb40bd47154369d08fc700ba35d067971beaaa1a7d78e94379b2d5eb",
-        "sizeBytes": 8047
-      }
+      "qa": null
     },
     {
       "name": "Fiets",
       "colorSource": "images/cardio/fiets-avatar-v7.jpg",
-      "lineSource": "images/cardio/fiets-line-v1.png",
+      "lineSource": "images/cardio/fiets.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 60239,
-        "whitePixels": 899761,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.062749,
-        "whiteRatio": 0.937251,
-        "pureBinary": true,
-        "sha256": "d1dd6ba202cdee0b1d24a5a94619f6da05fedcb88d0ff9f0e8b19931cbac8827",
-        "sizeBytes": 14208
-      }
+      "qa": null
     },
     {
       "name": "Jumping jacks",
       "colorSource": "images/cardio/jumping-jacks-avatar-v7.jpg",
-      "lineSource": "images/cardio/jumping-jacks-line-v1.png",
+      "lineSource": "images/cardio/jumping-jacks.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 38461,
-        "whitePixels": 921539,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.040064,
-        "whiteRatio": 0.959936,
-        "pureBinary": true,
-        "sha256": "2f0b664ee280db9099cc4f918c9c18f681207737ba8916478ba21b7b67cae89c",
-        "sizeBytes": 10325
-      }
+      "qa": null
     },
     {
       "name": "Loopband",
       "colorSource": "images/cardio/loopband-avatar-v7.jpg",
-      "lineSource": "images/cardio/loopband-line-v1.png",
+      "lineSource": "images/cardio/loopband.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 64015,
-        "whitePixels": 895985,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.066682,
-        "whiteRatio": 0.933318,
-        "pureBinary": true,
-        "sha256": "169ca241956631283685f8ec1b030442051766d08eb5a66d9430c22238eca3b9",
-        "sizeBytes": 16411
-      }
+      "qa": null
     },
     {
       "name": "Roeier",
       "colorSource": "images/cardio/roeier-avatar-v7.jpg",
-      "lineSource": "images/cardio/roeier-line-v1.png",
+      "lineSource": "images/cardio/roeier.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 59236,
-        "whitePixels": 900764,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.061704,
-        "whiteRatio": 0.938296,
-        "pureBinary": true,
-        "sha256": "c5ae48ba9cf27f5e9efa18432ccd7d5e9dc9c28f6abe93b2ed819ad3932f9f86",
-        "sizeBytes": 13866
-      }
+      "qa": null
     },
     {
       "name": "Squat jumps",
       "colorSource": "images/cardio/squat-jumps-avatar-v7.jpg",
-      "lineSource": "images/cardio/squat-jumps-line-v1.png",
+      "lineSource": "images/cardio/squat-jumps.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 47551,
-        "whitePixels": 912449,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.049532,
-        "whiteRatio": 0.950468,
-        "pureBinary": true,
-        "sha256": "b6e4af3bf353b35323aba569c39037030b53f6fc48b8d68bb8f89101a4a9667b",
-        "sizeBytes": 12217
-      }
+      "qa": null
     },
     {
       "name": "Stairs",
       "colorSource": "images/cardio/stairs-avatar-v7.jpg",
-      "lineSource": "images/cardio/stairs-line-v1.png",
+      "lineSource": "images/cardio/stairs.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 61228,
-        "whitePixels": 898772,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.063779,
-        "whiteRatio": 0.936221,
-        "pureBinary": true,
-        "sha256": "78f682e3f13ab69608223ca92216c774ce1e4f16ada6d691b1129e3bcb5a77bd",
-        "sizeBytes": 13429
-      }
+      "qa": null
     },
     {
       "name": "Balans op 1 been",
       "colorSource": "images/bosu/balans-op-1-been-avatar-v7.jpg",
-      "lineSource": "images/bosu/balans-op-1-been-line-v1.png",
+      "lineSource": "images/bosu/balans-op-1-been.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 45042,
-        "whitePixels": 914958,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.046919,
-        "whiteRatio": 0.953081,
-        "pureBinary": true,
-        "sha256": "241f0a599c4d8481e137c4cedb9528914ed671c90a32d2cbdb256f9c7972eb2f",
-        "sizeBytes": 10941
-      }
+      "qa": null
     },
     {
       "name": "Bosu brigdes",
       "colorSource": "images/bosu/bosu-brigdes-avatar-v7.jpg",
-      "lineSource": "images/bosu/bosu-brigdes-line-v1.png",
+      "lineSource": "images/bosu/bosu-brigdes.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42919,
-        "whitePixels": 917081,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.044707,
-        "whiteRatio": 0.955293,
-        "pureBinary": true,
-        "sha256": "6b3b6fae3c0906519fa6076e2a0cff9d176317d3be74750858d24e6768829300",
-        "sizeBytes": 10881
-      }
+      "qa": null
     },
     {
       "name": "Bosu brigdes single leg",
       "colorSource": "images/bosu/bosu-brigdes-single-leg-avatar-v7.jpg",
-      "lineSource": "images/bosu/bosu-brigdes-single-leg-line-v1.png",
+      "lineSource": "images/bosu/bosu-brigdes-single-leg.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 32687,
-        "whitePixels": 927313,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.034049,
-        "whiteRatio": 0.965951,
-        "pureBinary": true,
-        "sha256": "2f65d9cc8fc352bff5e4c8a90d79942a39f990d03ef6e7e0b724c299054769b4",
-        "sizeBytes": 9046
-      }
+      "qa": null
     },
     {
       "name": "Bosu chest press dumbell",
       "colorSource": "images/bosu/bosu-chest-press-dumbell-avatar-v7.jpg",
-      "lineSource": "images/bosu/bosu-chest-press-dumbell-line-v1.png",
+      "lineSource": "images/bosu/bosu-chest-press-dumbell.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 31974,
-        "whitePixels": 928026,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.033306,
-        "whiteRatio": 0.966694,
-        "pureBinary": true,
-        "sha256": "6f5455a94d1c742e6de6c8d281775f89e5e7f48bb0d567e634488700d1c2a90b",
-        "sizeBytes": 8306
-      }
+      "qa": null
     },
     {
       "name": "Bosu leg pull in",
       "colorSource": "images/bosu/bosu-leg-pull-in-avatar-v7.jpg",
-      "lineSource": "images/bosu/bosu-leg-pull-in-line-v1.png",
+      "lineSource": "images/bosu/bosu-leg-pull-in.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 38673,
-        "whitePixels": 921327,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.040284,
-        "whiteRatio": 0.959716,
-        "pureBinary": true,
-        "sha256": "83e1083d65b819d1ff3f90d8857094293b9eed2df6011091c6b3f63dc9e4b997",
-        "sizeBytes": 11428
-      }
+      "qa": null
     },
     {
       "name": "Bosu mountain climber",
       "colorSource": "images/bosu/bosu-mountain-climber-avatar-v7.jpg",
-      "lineSource": "images/bosu/bosu-mountain-climber-line-v1.png",
+      "lineSource": "images/bosu/bosu-mountain-climber.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 39683,
-        "whitePixels": 920317,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.041336,
-        "whiteRatio": 0.958664,
-        "pureBinary": true,
-        "sha256": "74618ab15046f0f303477cd55af1fe33a3e745ddbdcb4d1b11a8790bd8a01042",
-        "sizeBytes": 11266
-      }
+      "qa": null
     },
     {
       "name": "Bosu plank",
       "colorSource": "images/bosu/bosu-plank-avatar-v7.jpg",
-      "lineSource": "images/bosu/bosu-plank-line-v1.png",
+      "lineSource": "images/bosu/bosu-plank.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37717,
-        "whitePixels": 922283,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.039289,
-        "whiteRatio": 0.960711,
-        "pureBinary": true,
-        "sha256": "98dc1bf79c93378e40f3a9b80381c86dd70af6e990ad7f756f482b1eef9e4c6f",
-        "sizeBytes": 10822
-      }
+      "qa": null
     },
     {
       "name": "Bosu plank leg lift",
       "colorSource": "images/bosu/bosu-plank-leg-lift-avatar-v7.jpg",
-      "lineSource": "images/bosu/bosu-plank-leg-lift-line-v1.png",
+      "lineSource": "images/bosu/bosu-plank-leg-lift.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37922,
-        "whitePixels": 922078,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.039502,
-        "whiteRatio": 0.960498,
-        "pureBinary": true,
-        "sha256": "88915f75c3f12814e0b43b2a88e7adbf63feb4464b77ef263b3e8e9a64924013",
-        "sizeBytes": 10281
-      }
+      "qa": null
     },
     {
       "name": "Bosu squat",
       "colorSource": "images/bosu/bosu-squat-avatar-v7.jpg",
-      "lineSource": "images/bosu/bosu-squat-line-v1.png",
+      "lineSource": "images/bosu/bosu-squat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40632,
-        "whitePixels": 919368,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.042325,
-        "whiteRatio": 0.957675,
-        "pureBinary": true,
-        "sha256": "4b833d4c0406b788a095910ed970a1a0748b7c935db3bcdcfa39c3ec72dddb40",
-        "sizeBytes": 10968
-      }
+      "qa": null
     },
     {
       "name": "Bosu v ups",
       "colorSource": "images/bosu/bosu-v-ups-avatar-v7.jpg",
-      "lineSource": "images/bosu/bosu-v-ups-line-v1.png",
+      "lineSource": "images/bosu/bosu-v-ups.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 33432,
-        "whitePixels": 926568,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.034825,
-        "whiteRatio": 0.965175,
-        "pureBinary": true,
-        "sha256": "1b7f72243e3bc5105085e42703d5d53b9dc1d9913ae1c1e10ec8116bec32826d",
-        "sizeBytes": 10239
-      }
+      "qa": null
     },
     {
       "name": "Bosu zijw plank",
       "colorSource": "images/bosu/bosu-zijw-plank-avatar-v7.jpg",
-      "lineSource": "images/bosu/bosu-zijw-plank-line-v1.png",
+      "lineSource": "images/bosu/bosu-zijw-plank.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36594,
-        "whitePixels": 923406,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038119,
-        "whiteRatio": 0.961881,
-        "pureBinary": true,
-        "sha256": "52f6e04521be31b15a8ee4eba53000b574c6e4a6fbac49d757b243e482641dbb",
-        "sizeBytes": 10356
-      }
+      "qa": null
     },
     {
       "name": "TRX ab roll out",
       "colorSource": "images/trx/trx-ab-roll-out-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-ab-roll-out-line-v1.png",
+      "lineSource": "images/trx/trx-ab-roll-out.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 46359,
-        "whitePixels": 913641,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.048291,
-        "whiteRatio": 0.951709,
-        "pureBinary": true,
-        "sha256": "6ae938ac7c242775fadbbb4d3c50d4da12c43fb9c9a16446b49a54e7c25907db",
-        "sizeBytes": 12658
-      }
+      "qa": null
     },
     {
       "name": "TRX biceps curl",
       "colorSource": "images/trx/trx-biceps-curl-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-biceps-curl-line-v1.png",
+      "lineSource": "images/trx/trx-biceps-curl.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 48070,
-        "whitePixels": 911930,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.050073,
-        "whiteRatio": 0.949927,
-        "pureBinary": true,
-        "sha256": "60e33bcef7ada6a8e64444f4f859c72c4c33e4dece38a863c4687117560faacf",
-        "sizeBytes": 12775
-      }
+      "qa": null
     },
     {
       "name": "TRX chest press",
       "colorSource": "images/trx/trx-chest-press-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-chest-press-line-v1.png",
+      "lineSource": "images/trx/trx-chest-press.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 54647,
-        "whitePixels": 905353,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.056924,
-        "whiteRatio": 0.943076,
-        "pureBinary": true,
-        "sha256": "87575a168997b202573f0cb3e855e71efdc44aacc536384f87d8ebc1ab573e46",
-        "sizeBytes": 13417
-      }
+      "qa": null
     },
     {
       "name": "TRX flyes I",
       "colorSource": "images/trx/trx-flyes-i-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-flyes-i-line-v1.png",
+      "lineSource": "images/trx/trx-flyes-i.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42576,
-        "whitePixels": 917424,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.04435,
-        "whiteRatio": 0.95565,
-        "pureBinary": true,
-        "sha256": "de9fa633b6e3a1c7997053202373f5f65a72db9173b79560cae666a676373752",
-        "sizeBytes": 11374
-      }
+      "qa": null
     },
     {
       "name": "TRX flyes II",
       "colorSource": "images/trx/trx-flyes-ii-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-flyes-ii-line-v1.png",
+      "lineSource": "images/trx/trx-flyes-ii.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42730,
-        "whitePixels": 917270,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.04451,
-        "whiteRatio": 0.95549,
-        "pureBinary": true,
-        "sha256": "cd1e643422420eaf37b25c4c0af5f39a2e46d1fc5571a2641fff17ed858f7d57",
-        "sizeBytes": 10411
-      }
+      "qa": null
     },
     {
       "name": "TRX glute bridge",
       "colorSource": "images/trx/trx-glute-bridge-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-glute-bridge-line-v1.png",
+      "lineSource": "images/trx/trx-glute-bridge.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 49981,
-        "whitePixels": 910019,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.052064,
-        "whiteRatio": 0.947936,
-        "pureBinary": true,
-        "sha256": "8027f35abf1c95281c74262dda83909091ad23e074923835e7afaf29230fe11f",
-        "sizeBytes": 12418
-      }
+      "qa": null
     },
     {
       "name": "TRX lunge",
       "colorSource": "images/trx/trx-lunge-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-lunge-line-v1.png",
+      "lineSource": "images/trx/trx-lunge.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 56098,
-        "whitePixels": 903902,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.058435,
-        "whiteRatio": 0.941565,
-        "pureBinary": true,
-        "sha256": "53d5668871cdc75b551029a03accb815b3bc5a0e63d345bda116aa5886ce26ac",
-        "sizeBytes": 13414
-      }
+      "qa": null
     },
     {
       "name": "TRX lunge lateral high",
       "colorSource": "images/trx/trx-lunge-lateral-high-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-lunge-lateral-high-line-v1.png",
+      "lineSource": "images/trx/trx-lunge-lateral-high.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 55622,
-        "whitePixels": 904378,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.05794,
-        "whiteRatio": 0.94206,
-        "pureBinary": true,
-        "sha256": "cc2bce1594626a70584049e8c22bed0cf9fa2bf88289c59d1054edad87a416b6",
-        "sizeBytes": 12563
-      }
+      "qa": null
     },
     {
       "name": "TRX lunge lateral low",
       "colorSource": "images/trx/trx-lunge-lateral-low-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-lunge-lateral-low-line-v1.png",
+      "lineSource": "images/trx/trx-lunge-lateral-low.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 52522,
-        "whitePixels": 907478,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.05471,
-        "whiteRatio": 0.94529,
-        "pureBinary": true,
-        "sha256": "57173f5c8fa4abc12d29d8d1915a88f95e32fa3ff0723340ef8af9b133d1285f",
-        "sizeBytes": 12513
-      }
+      "qa": null
     },
     {
       "name": "TRX lunge reverse",
       "colorSource": "images/trx/trx-lunge-reverse-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-lunge-reverse-line-v1.png",
+      "lineSource": "images/trx/trx-lunge-reverse.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 55471,
-        "whitePixels": 904529,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.057782,
-        "whiteRatio": 0.942218,
-        "pureBinary": true,
-        "sha256": "4c9cb9f3caac6a93d8b6837a5ac9b978c0c59441b6c1035d21ecd6811b51055e",
-        "sizeBytes": 13340
-      }
+      "qa": null
     },
     {
       "name": "TRX mountain climber",
       "colorSource": "images/trx/trx-mountain-climber-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-mountain-climber-line-v1.png",
+      "lineSource": "images/trx/trx-mountain-climber.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 50803,
-        "whitePixels": 909197,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.05292,
-        "whiteRatio": 0.94708,
-        "pureBinary": true,
-        "sha256": "ad640892327060e2da9c8f38d7bd5a7f1d86c8b1900c48b2ac8811cbe6048f08",
-        "sizeBytes": 12240
-      }
+      "qa": null
     },
     {
       "name": "TRX plank",
       "colorSource": "images/trx/trx-plank-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-plank-line-v1.png",
+      "lineSource": "images/trx/trx-plank.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 46527,
-        "whitePixels": 913473,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.048466,
-        "whiteRatio": 0.951534,
-        "pureBinary": true,
-        "sha256": "f1fe6e799e9f42b1b047674344ae50a58cc45e7918a28bdebaa6a82c94411a53",
-        "sizeBytes": 10504
-      }
+      "qa": null
     },
     {
       "name": "TRX plank side",
       "colorSource": "images/trx/trx-plank-side-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-plank-side-line-v1.png",
+      "lineSource": "images/trx/trx-plank-side.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 50690,
-        "whitePixels": 909310,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.052802,
-        "whiteRatio": 0.947198,
-        "pureBinary": true,
-        "sha256": "d7008b003031ce7d0e3107d3c35205ef84c8d7e480b287c595cbd030e5bb2774",
-        "sizeBytes": 12071
-      }
+      "qa": null
     },
     {
       "name": "TRX pull up",
       "colorSource": "images/trx/trx-pull-up-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-pull-up-line-v1.png",
+      "lineSource": "images/trx/trx-pull-up.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 53778,
-        "whitePixels": 906222,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.056019,
-        "whiteRatio": 0.943981,
-        "pureBinary": true,
-        "sha256": "d3783499206b6d8dc859dd0a280fdcd6b62b311ac283371879ac15087687ca0b",
-        "sizeBytes": 14283
-      }
+      "qa": null
     },
     {
       "name": "TRX row",
       "colorSource": "images/trx/trx-row-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-row-line-v1.png",
+      "lineSource": "images/trx/trx-row.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 48104,
-        "whitePixels": 911896,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.050108,
-        "whiteRatio": 0.949892,
-        "pureBinary": true,
-        "sha256": "bdef3237b21fedc386f479c39fe6d9855232376c2c05f79b25482a973206d653",
-        "sizeBytes": 13258
-      }
+      "qa": null
     },
     {
       "name": "TRX saw pikes",
       "colorSource": "images/trx/trx-saw-pikes-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-saw-pikes-line-v1.png",
+      "lineSource": "images/trx/trx-saw-pikes.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 46589,
-        "whitePixels": 913411,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.04853,
-        "whiteRatio": 0.95147,
-        "pureBinary": true,
-        "sha256": "e8eabf1ba79ae0e1a504a6a1fedda6c18ae88b696600b94b55c080162f56a744",
-        "sizeBytes": 11064
-      }
+      "qa": null
     },
     {
       "name": "TRX squat",
       "colorSource": "images/trx/trx-squat-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-squat-line-v1.png",
+      "lineSource": "images/trx/trx-squat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 51835,
-        "whitePixels": 908165,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.053995,
-        "whiteRatio": 0.946005,
-        "pureBinary": true,
-        "sha256": "0e22b0ba5436041fc20eca4ecb1022fda356ec75ad7e4cd7764f5d162ad9ff47",
-        "sizeBytes": 12159
-      }
+      "qa": null
     },
     {
       "name": "TRX squat overhead",
       "colorSource": "images/trx/trx-squat-overhead-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-squat-overhead-line-v1.png",
+      "lineSource": "images/trx/trx-squat-overhead.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 44023,
-        "whitePixels": 915977,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.045857,
-        "whiteRatio": 0.954143,
-        "pureBinary": true,
-        "sha256": "47f32a1c737853d193ac49c110e8240846e6a6d7a9dd531bec1d68345d4e3dab",
-        "sizeBytes": 10509
-      }
+      "qa": null
     },
     {
       "name": "TRX squat pistol",
       "colorSource": "images/trx/trx-squat-pistol-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-squat-pistol-line-v1.png",
+      "lineSource": "images/trx/trx-squat-pistol.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 49576,
-        "whitePixels": 910424,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.051642,
-        "whiteRatio": 0.948358,
-        "pureBinary": true,
-        "sha256": "3edb264b93e662eb366c988f04846dc7b302e3c508874ac639c8e0557842e2e4",
-        "sizeBytes": 12877
-      }
+      "qa": null
     },
     {
       "name": "TRX triceps extension",
       "colorSource": "images/trx/trx-triceps-extension-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-triceps-extension-line-v1.png",
+      "lineSource": "images/trx/trx-triceps-extension.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 51408,
-        "whitePixels": 908592,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.05355,
-        "whiteRatio": 0.94645,
-        "pureBinary": true,
-        "sha256": "0e3f28626a4598ccb68617f30b7932bb0554cc37a4d23ac2e8dcf4c250e80db7",
-        "sizeBytes": 13585
-      }
+      "qa": null
     },
     {
       "name": "TRX triceps extension II",
       "colorSource": "images/trx/trx-triceps-extension-ii-avatar-v7.jpg",
-      "lineSource": "images/trx/trx-triceps-extension-ii-line-v1.png",
+      "lineSource": "images/trx/trx-triceps-extension-ii.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42959,
-        "whitePixels": 917041,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.044749,
-        "whiteRatio": 0.955251,
-        "pureBinary": true,
-        "sha256": "3f92b80ed0b713533b3176eee0c1f8dad01ed3c0c800f387e63b17d7a4fff509",
-        "sizeBytes": 11486
-      }
+      "qa": null
     },
     {
       "name": "Yoga butterfly stretch",
       "colorSource": "images/yoga/yoga-butterfly-stretch-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-butterfly-stretch-line-v1.png",
+      "lineSource": "images/yoga/yoga-butterfly-stretch.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 32915,
-        "whitePixels": 927085,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.034286,
-        "whiteRatio": 0.965714,
-        "pureBinary": true,
-        "sha256": "df343d843cc823cf81f3c4a17cb59acbcc4b21c6b55aed4120a368cd48e991cb",
-        "sizeBytes": 9023
-      }
+      "qa": null
     },
     {
       "name": "Yoga camel",
       "colorSource": "images/yoga/yoga-camel-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-camel-line-v1.png",
+      "lineSource": "images/yoga/yoga-camel.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36488,
-        "whitePixels": 923512,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038008,
-        "whiteRatio": 0.961992,
-        "pureBinary": true,
-        "sha256": "07c3a6fdff32810cb72b7f76edefe0a923a1e6cac623a8e9675259c065008333",
-        "sizeBytes": 10182
-      }
+      "qa": null
     },
     {
       "name": "Yoga cat tail",
       "colorSource": "images/yoga/yoga-cat-tail-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-cat-tail-line-v1.png",
+      "lineSource": "images/yoga/yoga-cat-tail.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 46373,
-        "whitePixels": 913627,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.048305,
-        "whiteRatio": 0.951695,
-        "pureBinary": true,
-        "sha256": "d58993b992ba07c75673e4e050506c34d4e416e2dfd34097a3888658d162d898",
-        "sizeBytes": 12517
-      }
+      "qa": null
     },
     {
       "name": "Yoga cobra",
       "colorSource": "images/yoga/yoga-cobra-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-cobra-line-v1.png",
+      "lineSource": "images/yoga/yoga-cobra.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 34602,
-        "whitePixels": 925398,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.036044,
-        "whiteRatio": 0.963956,
-        "pureBinary": true,
-        "sha256": "990f18c206c6ea2789112f9eadeda4af06da1ff13f7909227e5ced2b19135a08",
-        "sizeBytes": 9108
-      }
+      "qa": null
     },
     {
       "name": "Yoga deep squat",
       "colorSource": "images/yoga/yoga-deep-squat-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-deep-squat-line-v1.png",
+      "lineSource": "images/yoga/yoga-deep-squat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40078,
-        "whitePixels": 919922,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.041748,
-        "whiteRatio": 0.958252,
-        "pureBinary": true,
-        "sha256": "bcbbb4ea470b50d68f4fa377a95839ebc22db3847cbebac9d7201047b1d605bd",
-        "sizeBytes": 9859
-      }
+      "qa": null
     },
     {
       "name": "Yoga downward dog",
       "colorSource": "images/yoga/yoga-downward-dog-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-downward-dog-line-v1.png",
+      "lineSource": "images/yoga/yoga-downward-dog.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 33417,
-        "whitePixels": 926583,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.034809,
-        "whiteRatio": 0.965191,
-        "pureBinary": true,
-        "sha256": "4656c7e7312414e8df95225f9751527b1085e8eacbaafeca3e4145ece45ae6ad",
-        "sizeBytes": 9969
-      }
+      "qa": null
     },
     {
       "name": "Yoga ear pressure",
       "colorSource": "images/yoga/yoga-ear-pressure-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-ear-pressure-line-v1.png",
+      "lineSource": "images/yoga/yoga-ear-pressure.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 35361,
-        "whitePixels": 924639,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.036834,
-        "whiteRatio": 0.963166,
-        "pureBinary": true,
-        "sha256": "488a3758e9f37fd514698e9c68743eafe71b7420e7a98d5af810e123dca7ba04",
-        "sizeBytes": 9820
-      }
+      "qa": null
     },
     {
       "name": "Yoga extended child's pose",
       "colorSource": "images/yoga/yoga-extended-child-s-pose-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-extended-child-s-pose-line-v1.png",
+      "lineSource": "images/yoga/yoga-extended-child-s-pose.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42044,
-        "whitePixels": 917956,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043796,
-        "whiteRatio": 0.956204,
-        "pureBinary": true,
-        "sha256": "a200e6e7ee538e9231bef6295dcd8201ec4a38ed555cfd49580c7d3aef18dbbe",
-        "sizeBytes": 11675
-      }
+      "qa": null
     },
     {
       "name": "Yoga extended puppy",
       "colorSource": "images/yoga/yoga-extended-puppy-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-extended-puppy-line-v1.png",
+      "lineSource": "images/yoga/yoga-extended-puppy.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37403,
-        "whitePixels": 922597,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038961,
-        "whiteRatio": 0.961039,
-        "pureBinary": true,
-        "sha256": "f981de83b6c8cabcd3f9426fd264e40b09cae022682e727538a4814da2029597",
-        "sizeBytes": 10012
-      }
+      "qa": null
     },
     {
       "name": "Yoga extended triangle",
       "colorSource": "images/yoga/yoga-extended-triangle-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-extended-triangle-line-v1.png",
+      "lineSource": "images/yoga/yoga-extended-triangle.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 30018,
-        "whitePixels": 929982,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.031269,
-        "whiteRatio": 0.968731,
-        "pureBinary": true,
-        "sha256": "47cb6f045831cf57fc22a72ed3a3f3bf63d9febef67994d7b40c8cd44fd29a37",
-        "sizeBytes": 8149
-      }
+      "qa": null
     },
     {
       "name": "Yoga frog",
       "colorSource": "images/yoga/yoga-frog-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-frog-line-v1.png",
+      "lineSource": "images/yoga/yoga-frog.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42163,
-        "whitePixels": 917837,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.04392,
-        "whiteRatio": 0.95608,
-        "pureBinary": true,
-        "sha256": "612c8f8329c3871ce5f811b8d2f0327d8bc15541a167f1be28dc69239fce1277",
-        "sizeBytes": 11360
-      }
+      "qa": null
     },
     {
       "name": "Yoga full boat",
       "colorSource": "images/yoga/yoga-full-boat-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-full-boat-line-v1.png",
+      "lineSource": "images/yoga/yoga-full-boat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37910,
-        "whitePixels": 922090,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.03949,
-        "whiteRatio": 0.96051,
-        "pureBinary": true,
-        "sha256": "7439de7003ff33948324e6d178c24fb704c59997155bcaf9608e76d4d5c73f0e",
-        "sizeBytes": 11688
-      }
+      "qa": null
     },
     {
       "name": "Yoga glute stretch",
       "colorSource": "images/yoga/yoga-glute-stretch-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-glute-stretch-line-v1.png",
+      "lineSource": "images/yoga/yoga-glute-stretch.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 39907,
-        "whitePixels": 920093,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.04157,
-        "whiteRatio": 0.95843,
-        "pureBinary": true,
-        "sha256": "2d0eaa908a0a5f87aa4a28e60b028535ce6df863b415b7cefb8d7c5b95a6427a",
-        "sizeBytes": 11363
-      }
+      "qa": null
     },
     {
       "name": "Yoga half monkey",
       "colorSource": "images/yoga/yoga-half-monkey-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-half-monkey-line-v1.png",
+      "lineSource": "images/yoga/yoga-half-monkey.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36652,
-        "whitePixels": 923348,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038179,
-        "whiteRatio": 0.961821,
-        "pureBinary": true,
-        "sha256": "453b4f939ae0baf2e1efced1b4f6be60397074c5de5f88b5dbc87043a2999eb7",
-        "sizeBytes": 10335
-      }
+      "qa": null
     },
     {
       "name": "Yoga hamstring stretch",
       "colorSource": "images/yoga/yoga-hamstring-stretch-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-hamstring-stretch-line-v1.png",
+      "lineSource": "images/yoga/yoga-hamstring-stretch.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 42875,
-        "whitePixels": 917125,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.044661,
-        "whiteRatio": 0.955339,
-        "pureBinary": true,
-        "sha256": "2f00cf7ce052010885c1743e81000509c18bb8a40d8bcffd54f3d9b6aa8afad0",
-        "sizeBytes": 10946
-      }
+      "qa": null
     },
     {
       "name": "Yoga happy baby",
       "colorSource": "images/yoga/yoga-happy-baby-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-happy-baby-line-v1.png",
+      "lineSource": "images/yoga/yoga-happy-baby.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37053,
-        "whitePixels": 922947,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038597,
-        "whiteRatio": 0.961403,
-        "pureBinary": true,
-        "sha256": "94df0fc692d09182ca9a8de8040144bd0aa990f2117af3a643af0ff64075c77a",
-        "sizeBytes": 10637
-      }
+      "qa": null
     },
     {
       "name": "Yoga hip flexor stretch",
       "colorSource": "images/yoga/yoga-hip-flexor-stretch-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-hip-flexor-stretch-line-v1.png",
+      "lineSource": "images/yoga/yoga-hip-flexor-stretch.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 33989,
-        "whitePixels": 926011,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.035405,
-        "whiteRatio": 0.964595,
-        "pureBinary": true,
-        "sha256": "00656238d54c404d888210cde9e3babd806a5ef0bc808b9b9e2a4f0a05fe604c",
-        "sizeBytes": 9171
-      }
+      "qa": null
     },
     {
       "name": "Yoga knee to chest hip stretch",
       "colorSource": "images/yoga/yoga-knee-to-chest-hip-stretch-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-knee-to-chest-hip-stretch-line-v1.png",
+      "lineSource": "images/yoga/yoga-knee-to-chest-hip-stretch.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 29984,
-        "whitePixels": 930016,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.031233,
-        "whiteRatio": 0.968767,
-        "pureBinary": true,
-        "sha256": "1df933fc60bda48aa7c77faa102958dd15c73dd9db96a95a486fa2154ba5b83c",
-        "sizeBytes": 8466
-      }
+      "qa": null
     },
     {
       "name": "Yoga Marichi’s III",
       "colorSource": "images/yoga/yoga-marichi-s-iii-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-marichi-s-iii-line-v1.png",
+      "lineSource": "images/yoga/yoga-marichi-s-iii.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 33862,
-        "whitePixels": 926138,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.035273,
-        "whiteRatio": 0.964727,
-        "pureBinary": true,
-        "sha256": "789316adf2a660b515b4aa2bb2265a75128e18bbcb363bfc2a3fc1d7ae1b7b4a",
-        "sizeBytes": 10540
-      }
+      "qa": null
     },
     {
       "name": "Yoga noose",
       "colorSource": "images/yoga/yoga-noose-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-noose-line-v1.png",
+      "lineSource": "images/yoga/yoga-noose.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 39134,
-        "whitePixels": 920866,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.040765,
-        "whiteRatio": 0.959235,
-        "pureBinary": true,
-        "sha256": "e6c95b973820afcc78b3a6ac39737dd346b8d72cb2bd6cbabc62e191d05fec21",
-        "sizeBytes": 11720
-      }
+      "qa": null
     },
     {
       "name": "Yoga pigeon",
       "colorSource": "images/yoga/yoga-pigeon-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-pigeon-line-v1.png",
+      "lineSource": "images/yoga/yoga-pigeon.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 39607,
-        "whitePixels": 920393,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.041257,
-        "whiteRatio": 0.958743,
-        "pureBinary": true,
-        "sha256": "c249c312737f8c4173e9a84698c65f3ce5a97cf35a45ae00349af9762e6b5eaa",
-        "sizeBytes": 10272
-      }
+      "qa": null
     },
     {
       "name": "Yoga plow",
       "colorSource": "images/yoga/yoga-plow-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-plow-line-v1.png",
+      "lineSource": "images/yoga/yoga-plow.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 31530,
-        "whitePixels": 928470,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.032844,
-        "whiteRatio": 0.967156,
-        "pureBinary": true,
-        "sha256": "8b7fc1f395db4dfe3f850ab0fd97bedcb060ed3693ff5d0bbe4d45a312895259",
-        "sizeBytes": 8381
-      }
+      "qa": null
     },
     {
       "name": "Yoga reverse warrior",
       "colorSource": "images/yoga/yoga-reverse-warrior-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-reverse-warrior-line-v1.png",
+      "lineSource": "images/yoga/yoga-reverse-warrior.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 31918,
-        "whitePixels": 928082,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.033248,
-        "whiteRatio": 0.966752,
-        "pureBinary": true,
-        "sha256": "3b17810421752feb166a71493181f181d58cd000ff175ba9b5cdfc1d7db88a4c",
-        "sizeBytes": 8993
-      }
+      "qa": null
     },
     {
       "name": "Yoga revolved downward facing dog",
       "colorSource": "images/yoga/yoga-revolved-downward-facing-dog-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-revolved-downward-facing-dog-line-v1.png",
+      "lineSource": "images/yoga/yoga-revolved-downward-facing-dog.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 31911,
-        "whitePixels": 928089,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.033241,
-        "whiteRatio": 0.966759,
-        "pureBinary": true,
-        "sha256": "3efdc7ebb87903fc3a001a498b73c72f4f4f0a7ea3fa3233a2caf5b8219c3b7f",
-        "sizeBytes": 8904
-      }
+      "qa": null
     },
     {
       "name": "Yoga snake",
       "colorSource": "images/yoga/yoga-snake-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-snake-line-v1.png",
+      "lineSource": "images/yoga/yoga-snake.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 26715,
-        "whitePixels": 933285,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.027828,
-        "whiteRatio": 0.972172,
-        "pureBinary": true,
-        "sha256": "c8e0a796d3e0bd8e951c7d6e7262be0d36abcf7e530f6b85e9203a013caec446",
-        "sizeBytes": 6800
-      }
+      "qa": null
     },
     {
       "name": "Yoga warrior II",
       "colorSource": "images/yoga/yoga-warrior-ii-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-warrior-ii-line-v1.png",
+      "lineSource": "images/yoga/yoga-warrior-ii.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37379,
-        "whitePixels": 922621,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038936,
-        "whiteRatio": 0.961064,
-        "pureBinary": true,
-        "sha256": "69dd7c69dc8e7d4761380baf24cd97b34f6d54047014121a6982015b7a22f91a",
-        "sizeBytes": 9535
-      }
+      "qa": null
     },
     {
       "name": "Yoga warrior III",
       "colorSource": "images/yoga/yoga-warrior-iii-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-warrior-iii-line-v1.png",
+      "lineSource": "images/yoga/yoga-warrior-iii.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 30860,
-        "whitePixels": 929140,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.032146,
-        "whiteRatio": 0.967854,
-        "pureBinary": true,
-        "sha256": "bdbab9a7565a7cc0abdd422156158dc626aa8f770b20f8fd7d8c25f56ba3c48a",
-        "sizeBytes": 6890
-      }
+      "qa": null
     },
     {
       "name": "Yoga wide angle seated forward bend",
       "colorSource": "images/yoga/yoga-wide-angle-seated-forward-bend-avatar-v7.jpg",
-      "lineSource": "images/yoga/yoga-wide-angle-seated-forward-bend-line-v1.png",
+      "lineSource": "images/yoga/yoga-wide-angle-seated-forward-bend.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41585,
-        "whitePixels": 918415,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043318,
-        "whiteRatio": 0.956682,
-        "pureBinary": true,
-        "sha256": "04c7eaabc4092903d6fbb8bf2ab0c81f8231e16d7a936e242cfa22ecbfc03e44",
-        "sizeBytes": 11564
-      }
+      "qa": null
     },
     {
       "name": "Kettlebell swing",
       "colorSource": "images/kettlebell/kettlebell-swing-avatar-v7.jpg",
-      "lineSource": "images/kettlebell/kettlebell-swing-line-v1.png",
+      "lineSource": "images/kettlebell/kettlebell-swing.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 44343,
-        "whitePixels": 915657,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.046191,
-        "whiteRatio": 0.953809,
-        "pureBinary": true,
-        "sha256": "dc72db173a61158e2b88d1ae4c0cfdcfdd74eac0913251c086fe998ef4a60241",
-        "sizeBytes": 11771
-      }
+      "qa": null
     },
     {
       "name": "Kettlebelle swing one arm",
       "colorSource": "images/kettlebell/kettlebelle-swing-one-arm-avatar-v7.jpg",
-      "lineSource": "images/kettlebell/kettlebelle-swing-one-arm-line-v1.png",
+      "lineSource": "images/kettlebell/kettlebelle-swing-one-arm.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 37941,
-        "whitePixels": 922059,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.039522,
-        "whiteRatio": 0.960478,
-        "pureBinary": true,
-        "sha256": "19c7fa48acd2d25ad28f3f78148445dc8034cb05e2233edb37fad7dd8fb569eb",
-        "sizeBytes": 10270
-      }
+      "qa": null
     },
     {
       "name": "Bodyblade back",
       "colorSource": "images/bodyblade/bodyblade-back-avatar-v7.jpg",
-      "lineSource": "images/bodyblade/bodyblade-back-line-v1.png",
+      "lineSource": "images/bodyblade/bodyblade-back.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 41812,
-        "whitePixels": 918188,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.043554,
-        "whiteRatio": 0.956446,
-        "pureBinary": true,
-        "sha256": "6b6d5b52f05d5e0542d622964679d8b0bb3b45f80cbd8137e01ab1e7c9e30a24",
-        "sizeBytes": 9589
-      }
+      "qa": null
     },
     {
       "name": "Bodyblade diagonaal",
       "colorSource": "images/bodyblade/bodyblade-diagonaal-avatar-v7.jpg",
-      "lineSource": "images/bodyblade/bodyblade-diagonaal-line-v1.png",
+      "lineSource": "images/bodyblade/bodyblade-diagonaal.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40018,
-        "whitePixels": 919982,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.041685,
-        "whiteRatio": 0.958315,
-        "pureBinary": true,
-        "sha256": "53275ec8c8b1bee4742f3ea51613078087cec01cbf5efddd57814f2944c35e10",
-        "sizeBytes": 10743
-      }
+      "qa": null
     },
     {
       "name": "Bodyblade front bovengreep",
       "colorSource": "images/bodyblade/bodyblade-front-bovengreep-avatar-v7.jpg",
-      "lineSource": "images/bodyblade/bodyblade-front-bovengreep-line-v1.png",
+      "lineSource": "images/bodyblade/bodyblade-front-bovengreep.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 38579,
-        "whitePixels": 921421,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.040186,
-        "whiteRatio": 0.959814,
-        "pureBinary": true,
-        "sha256": "53b1b5c64f0a070107138b5aaf5bef827487ed16fabf933ad13211afdd37940c",
-        "sizeBytes": 8541
-      }
+      "qa": null
     },
     {
       "name": "Bodyblade front ondergreep",
       "colorSource": "images/bodyblade/bodyblade-front-ondergreep-avatar-v7.jpg",
-      "lineSource": "images/bodyblade/bodyblade-front-ondergreep-line-v1.png",
+      "lineSource": "images/bodyblade/bodyblade-front-ondergreep.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 38361,
-        "whitePixels": 921639,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.039959,
-        "whiteRatio": 0.960041,
-        "pureBinary": true,
-        "sha256": "03d39096ad70ea901b24914deae60ba955e7a93d53d042a586dc2820088608fa",
-        "sizeBytes": 7932
-      }
+      "qa": null
     },
     {
       "name": "Bodyblade front squat",
       "colorSource": "images/bodyblade/bodyblade-front-squat-avatar-v7.jpg",
-      "lineSource": "images/bodyblade/bodyblade-front-squat-line-v1.png",
+      "lineSource": "images/bodyblade/bodyblade-front-squat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 40463,
-        "whitePixels": 919537,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.042149,
-        "whiteRatio": 0.957851,
-        "pureBinary": true,
-        "sha256": "71dd4dc7da677ac80181993cede797d52a02384427f8627c1c5e4d9b375226d4",
-        "sizeBytes": 9879
-      }
+      "qa": null
     },
     {
       "name": "Bodyblade front uitstap",
       "colorSource": "images/bodyblade/bodyblade-front-uitstap-avatar-v7.jpg",
-      "lineSource": "images/bodyblade/bodyblade-front-uitstap-line-v1.png",
+      "lineSource": "images/bodyblade/bodyblade-front-uitstap.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 44938,
-        "whitePixels": 915062,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.04681,
-        "whiteRatio": 0.95319,
-        "pureBinary": true,
-        "sha256": "5e4ed2d6f0438ca25326a9b2ab62546ee38cf0d35a11366eb1114de9197cd738",
-        "sizeBytes": 10280
-      }
+      "qa": null
     },
     {
       "name": "Bodyblade high",
       "colorSource": "images/bodyblade/bodyblade-high-avatar-v7.jpg",
-      "lineSource": "images/bodyblade/bodyblade-high-line-v1.png",
+      "lineSource": "images/bodyblade/bodyblade-high.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 39512,
-        "whitePixels": 920488,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.041158,
-        "whiteRatio": 0.958842,
-        "pureBinary": true,
-        "sha256": "6cbfd66af83dcbd01ae7dbe123e007d27ad775f241fbaf93f67047ced8eb51a0",
-        "sizeBytes": 9418
-      }
+      "qa": null
     },
     {
       "name": "Foam rol glutes stretch",
       "colorSource": "images/foam-roller/foam-rol-glutes-stretch-avatar-v7.jpg",
-      "lineSource": "images/foam-roller/foam-rol-glutes-stretch-line-v1.png",
+      "lineSource": "images/foam-roller/foam-rol-glutes-stretch.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 38202,
-        "whitePixels": 921798,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.039794,
-        "whiteRatio": 0.960206,
-        "pureBinary": true,
-        "sha256": "9496bdff20455945b6f11532886634ca2399751aab76542a95fbd7cbc1f302b0",
-        "sizeBytes": 11554
-      }
+      "qa": null
     },
     {
       "name": "Foam rol quat stretch",
       "colorSource": "images/foam-roller/foam-rol-quat-stretch-avatar-v7.jpg",
-      "lineSource": "images/foam-roller/foam-rol-quat-stretch-line-v1.png",
+      "lineSource": "images/foam-roller/foam-rol-quat-stretch.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 36736,
-        "whitePixels": 923264,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.038267,
-        "whiteRatio": 0.961733,
-        "pureBinary": true,
-        "sha256": "a5420f3e7f4c16e51e41febd1f0de04ba4954fb33dbbc5c5dc5904a4e196d1c5",
-        "sizeBytes": 10429
-      }
+      "qa": null
     },
     {
       "name": "Foam rol upper back stretch",
       "colorSource": "images/foam-roller/foam-rol-upper-back-stretch-avatar-v7.jpg",
-      "lineSource": "images/foam-roller/foam-rol-upper-back-stretch-line-v1.png",
+      "lineSource": "images/foam-roller/foam-rol-upper-back-stretch.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 38577,
-        "whitePixels": 921423,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.040184,
-        "whiteRatio": 0.959816,
-        "pureBinary": true,
-        "sha256": "55bc3964e13618040ca71e1cfdfdee5a49e2f90dda0d604a54d40a9c136615ae",
-        "sizeBytes": 11644
-      }
+      "qa": null
     },
     {
       "name": "Voor zijwaarts",
       "colorSource": "images/speedladder/voor-zijwaarts-avatar-v7.jpg",
-      "lineSource": "images/speedladder/voor-zijwaarts-line-v1.png",
+      "lineSource": "images/speedladder/voor-zijwaarts.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 33484,
-        "whitePixels": 926516,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.034879,
-        "whiteRatio": 0.965121,
-        "pureBinary": true,
-        "sha256": "fb4a9d07aa99ac35742dc8fb0a78a4f489f84acbc15190d8d18739b1579662a7",
-        "sizeBytes": 9268
-      }
+      "qa": null
     },
     {
       "name": "Abdominal (apparaat)",
       "colorSource": "images/apparaten/abdominal-apparaat-avatar-v7.jpg",
-      "lineSource": "images/apparaten/abdominal-apparaat-line-v1.png",
+      "lineSource": "images/apparaten/abdominal-apparaat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 81739,
-        "whitePixels": 878261,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.085145,
-        "whiteRatio": 0.914855,
-        "pureBinary": true,
-        "sha256": "909809b586ddf4705062cf85dfd9c3362cf2782301558735b2a7a99c33fef92a",
-        "sizeBytes": 14823
-      }
+      "qa": null
     },
     {
       "name": "Back (apparaat)",
       "colorSource": "images/apparaten/back-apparaat-avatar-v7.jpg",
-      "lineSource": "images/apparaten/back-apparaat-line-v1.png",
+      "lineSource": "images/apparaten/back-apparaat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 76100,
-        "whitePixels": 883900,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.079271,
-        "whiteRatio": 0.920729,
-        "pureBinary": true,
-        "sha256": "b9dc1283d37e8f374edacfbd5de9031d4689decfd57a0adb57b7a229ed58dd83",
-        "sizeBytes": 14887
-      }
+      "qa": null
     },
     {
       "name": "Backextensie (apparaat)",
       "colorSource": "images/apparaten/backextensie-apparaat-avatar-v7.jpg",
-      "lineSource": "images/apparaten/backextensie-apparaat-line-v1.png",
+      "lineSource": "images/apparaten/backextensie-apparaat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 44796,
-        "whitePixels": 915204,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.046663,
-        "whiteRatio": 0.953337,
-        "pureBinary": true,
-        "sha256": "4e5fd86eefcf2a07705d4f429d7b3970707ebcdcca843afabb449c155cdf8d86",
-        "sizeBytes": 11406
-      }
+      "qa": null
     },
     {
       "name": "Chest press (apparaat)",
       "colorSource": "images/apparaten/chest-press-apparaat-avatar-v7.jpg",
-      "lineSource": "images/apparaten/chest-press-apparaat-line-v1.png",
+      "lineSource": "images/apparaten/chest-press-apparaat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 88841,
-        "whitePixels": 871159,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.092543,
-        "whiteRatio": 0.907457,
-        "pureBinary": true,
-        "sha256": "59f5d60737300191c45dbeb01b3e1f9fd56bce302690625f934c36e1aa8bfc85",
-        "sizeBytes": 17230
-      }
+      "qa": null
     },
     {
       "name": "Chin-dip (apparaat)",
       "colorSource": "images/apparaten/chin-dip-apparaat-avatar-v7.jpg",
-      "lineSource": "images/apparaten/chin-dip-apparaat-line-v1.png",
+      "lineSource": "images/apparaten/chin-dip-apparaat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 62812,
-        "whitePixels": 897188,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.065429,
-        "whiteRatio": 0.934571,
-        "pureBinary": true,
-        "sha256": "717ac2b652972529cab3bb99a1c790ea997b64839ed5635685fb83509b39c686",
-        "sizeBytes": 10857
-      }
+      "qa": null
     },
     {
       "name": "Circle (apparaat)",
       "colorSource": "images/apparaten/circle-apparaat-avatar-v7.jpg",
-      "lineSource": "images/apparaten/circle-apparaat-line-v1.png",
+      "lineSource": "images/apparaten/circle-apparaat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 55629,
-        "whitePixels": 904371,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.057947,
-        "whiteRatio": 0.942053,
-        "pureBinary": true,
-        "sha256": "28995e3be6e2b4b00ab73fcab558240dbe664e791286d6de32ee1b8d0482d15a",
-        "sizeBytes": 12774
-      }
+      "qa": null
     },
     {
       "name": "Crosstrainer (apparaat)",
       "colorSource": "images/apparaten/crosstrainer-apparaat-avatar-v7.jpg",
-      "lineSource": "images/apparaten/crosstrainer-apparaat-line-v1.png",
+      "lineSource": "images/apparaten/crosstrainer-apparaat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 66726,
-        "whitePixels": 893274,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.069506,
-        "whiteRatio": 0.930494,
-        "pureBinary": true,
-        "sha256": "32a841ca220941b7f61a8fa7fe39dcf7b2e1c9976c52657c6482c9fd32e5c14a",
-        "sizeBytes": 14201
-      }
+      "qa": null
     },
     {
       "name": "Dorsi-pecto (apparaat)",
       "colorSource": "images/apparaten/dorsi-pecto-apparaat-avatar-v7.jpg",
-      "lineSource": "images/apparaten/dorsi-pecto-apparaat-line-v1.png",
+      "lineSource": "images/apparaten/dorsi-pecto-apparaat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 71819,
-        "whitePixels": 888181,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.074811,
-        "whiteRatio": 0.925189,
-        "pureBinary": true,
-        "sha256": "10f0f09f3b6872467a7ebf6b6a59bcae39c5581700dee498c95e3195a28bb1c1",
-        "sizeBytes": 12704
-      }
+      "qa": null
     },
     {
       "name": "Endy Armstrekker",
       "colorSource": "images/apparaten/endy-armstrekker-avatar-v7.jpg",
-      "lineSource": "images/apparaten/endy-armstrekker-line-v1.png",
+      "lineSource": "images/apparaten/endy-armstrekker.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 50591,
-        "whitePixels": 909409,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.052699,
-        "whiteRatio": 0.947301,
-        "pureBinary": true,
-        "sha256": "f06c13e36d38021725341fafcd93c366db54030f02f11638c5b0fe80572fd844",
-        "sizeBytes": 12271
-      }
+      "qa": null
     },
     {
       "name": "Endy Beenstrekker",
       "colorSource": "images/apparaten/endy-beenstrekker-avatar-v7.jpg",
-      "lineSource": "images/apparaten/endy-beenstrekker-line-v1.png",
+      "lineSource": "images/apparaten/endy-beenstrekker.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 68332,
-        "whitePixels": 891668,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.071179,
-        "whiteRatio": 0.928821,
-        "pureBinary": true,
-        "sha256": "cf5fb48c1a4b9495fda2803cbb25b3bb046754a63aa620320187818f7dd5bbe2",
-        "sizeBytes": 14957
-      }
+      "qa": null
     },
     {
       "name": "Endy Buikmachine",
       "colorSource": "images/apparaten/endy-buikmachine-avatar-v7.jpg",
-      "lineSource": "images/apparaten/endy-buikmachine-line-v1.png",
+      "lineSource": "images/apparaten/endy-buikmachine.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 51520,
-        "whitePixels": 908480,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.053667,
-        "whiteRatio": 0.946333,
-        "pureBinary": true,
-        "sha256": "59b31d9368b4df3c16498ac5d90ca489336a5959a8464198e0b2605c13de503c",
-        "sizeBytes": 13449
-      }
+      "qa": null
     },
     {
       "name": "Endy Fly",
       "colorSource": "images/apparaten/endy-fly-avatar-v7.jpg",
-      "lineSource": "images/apparaten/endy-fly-line-v1.png",
+      "lineSource": "images/apparaten/endy-fly.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 80699,
-        "whitePixels": 879301,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.084061,
-        "whiteRatio": 0.915939,
-        "pureBinary": true,
-        "sha256": "c30bd210fdd7aafd87267bf4aab79f8e0eff7a8c2bc27ffb7dd5c5486972c89d",
-        "sizeBytes": 14799
-      }
+      "qa": null
     },
     {
       "name": "Endy Heup abductie",
       "colorSource": "images/apparaten/endy-heup-abductie-avatar-v7.jpg",
-      "lineSource": "images/apparaten/endy-heup-abductie-line-v1.png",
+      "lineSource": "images/apparaten/endy-heup-abductie.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 74598,
-        "whitePixels": 885402,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.077706,
-        "whiteRatio": 0.922294,
-        "pureBinary": true,
-        "sha256": "45c4bf44196a5310bf4688913f67d40d68aa0ef2af8c87cee7adbfcf9c22345a",
-        "sizeBytes": 15068
-      }
+      "qa": null
     },
     {
       "name": "Endy Leg curl",
       "colorSource": "images/apparaten/endy-leg-curl-avatar-v7.jpg",
-      "lineSource": "images/apparaten/endy-leg-curl-line-v1.png",
+      "lineSource": "images/apparaten/endy-leg-curl.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 86236,
-        "whitePixels": 873764,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.089829,
-        "whiteRatio": 0.910171,
-        "pureBinary": true,
-        "sha256": "42958bb0628a7a764c8adda9047c3727e3ddab80df514b19cb62fbb5e1490d7e",
-        "sizeBytes": 16649
-      }
+      "qa": null
     },
     {
       "name": "Endy Leg ext",
       "colorSource": "images/apparaten/endy-leg-ext-avatar-v7.jpg",
-      "lineSource": "images/apparaten/endy-leg-ext-line-v1.png",
+      "lineSource": "images/apparaten/endy-leg-ext.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 67617,
-        "whitePixels": 892383,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.070434,
-        "whiteRatio": 0.929566,
-        "pureBinary": true,
-        "sha256": "312dad936ba5fabf7839f65ba7eeb7b2b77c2eea2fc2d8e6950cd911aaba8267",
-        "sizeBytes": 14379
-      }
+      "qa": null
     },
     {
       "name": "Endy Pulldown",
       "colorSource": "images/apparaten/endy-pulldown-avatar-v7.jpg",
-      "lineSource": "images/apparaten/endy-pulldown-line-v1.png",
+      "lineSource": "images/apparaten/endy-pulldown.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 76217,
-        "whitePixels": 883783,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.079393,
-        "whiteRatio": 0.920607,
-        "pureBinary": true,
-        "sha256": "eddcb0647509f3fcf445bf3d212ecc0771fe1bfc7e6b298932629b29499d77ae",
-        "sizeBytes": 12152
-      }
+      "qa": null
     },
     {
       "name": "Endy Rotator",
       "colorSource": "images/apparaten/endy-rotator-avatar-v7.jpg",
-      "lineSource": "images/apparaten/endy-rotator-line-v1.png",
+      "lineSource": "images/apparaten/endy-rotator.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 53823,
-        "whitePixels": 906177,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.056066,
-        "whiteRatio": 0.943934,
-        "pureBinary": true,
-        "sha256": "99c56c3ffb1e35a50feeb8acee93f359f441e3dadb75dbcbfa127d157bec606c",
-        "sizeBytes": 13170
-      }
+      "qa": null
     },
     {
       "name": "Endy Rugmachine",
       "colorSource": "images/apparaten/endy-rugmachine-avatar-v7.jpg",
-      "lineSource": "images/apparaten/endy-rugmachine-line-v1.png",
+      "lineSource": "images/apparaten/endy-rugmachine.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 76520,
-        "whitePixels": 883480,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.079708,
-        "whiteRatio": 0.920292,
-        "pureBinary": true,
-        "sha256": "25407927d28448aca8e40cffb483d1011b12225a7d28a2d486f655edda10850b",
-        "sizeBytes": 14280
-      }
+      "qa": null
     },
     {
       "name": "Endy Triceps dips",
       "colorSource": "images/apparaten/endy-triceps-dips-avatar-v7.jpg",
-      "lineSource": "images/apparaten/endy-triceps-dips-line-v1.png",
+      "lineSource": "images/apparaten/endy-triceps-dips.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 62409,
-        "whitePixels": 897591,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.065009,
-        "whiteRatio": 0.934991,
-        "pureBinary": true,
-        "sha256": "039df0652321bf843a0b4bcb963a1152cac3009c7b00d165e676436704bf6cec",
-        "sizeBytes": 11454
-      }
+      "qa": null
     },
     {
       "name": "Fiets (apparaat)",
       "colorSource": "images/apparaten/fiets-apparaat-avatar-v7.jpg",
-      "lineSource": "images/apparaten/fiets-apparaat-line-v1.png",
+      "lineSource": "images/apparaten/fiets-apparaat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 49388,
-        "whitePixels": 910612,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.051446,
-        "whiteRatio": 0.948554,
-        "pureBinary": true,
-        "sha256": "8a3d563abdd7abc23d313f6d145ed4fa9c423e379a5e1aeaa012e90f03422001",
-        "sizeBytes": 11579
-      }
+      "qa": null
     },
     {
       "name": "Gluteus kick (apparaat)",
       "colorSource": "images/apparaten/gluteus-kick-apparaat-avatar-v7.jpg",
-      "lineSource": "images/apparaten/gluteus-kick-apparaat-line-v1.png",
+      "lineSource": "images/apparaten/gluteus-kick-apparaat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 95041,
-        "whitePixels": 864959,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.099001,
-        "whiteRatio": 0.900999,
-        "pureBinary": true,
-        "sha256": "bc65007397aef0daee85a00087eb02d169292f29c7fc259d1763f9d978c3ea9e",
-        "sizeBytes": 15931
-      }
+      "qa": null
     },
     {
       "name": "Leg press (apparaat)",
       "colorSource": "images/apparaten/leg-press-apparaat-avatar-v7.jpg",
-      "lineSource": "images/apparaten/leg-press-apparaat-line-v1.png",
+      "lineSource": "images/apparaten/leg-press-apparaat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 90302,
-        "whitePixels": 869698,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.094065,
-        "whiteRatio": 0.905935,
-        "pureBinary": true,
-        "sha256": "1274cc4949ba119ccacf527630bdd8623b96e4a67a421d9b4946c81aada0f395",
-        "sizeBytes": 18425
-      }
+      "qa": null
     },
     {
       "name": "Loopband (apparaat)",
       "colorSource": "images/apparaten/loopband-apparaat-avatar-v7.jpg",
-      "lineSource": "images/apparaten/loopband-apparaat-line-v1.png",
+      "lineSource": "images/apparaten/loopband-apparaat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 58667,
-        "whitePixels": 901333,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.061111,
-        "whiteRatio": 0.938889,
-        "pureBinary": true,
-        "sha256": "839eed46fb2cf38ac1a73cd1e1d6bf4b36dd475c4ce9d7b3dc3b4d6f9129a87e",
-        "sizeBytes": 13691
-      }
+      "qa": null
     },
     {
       "name": "Roeier (apparaat)",
       "colorSource": "images/apparaten/roeier-apparaat-avatar-v7.jpg",
-      "lineSource": "images/apparaten/roeier-apparaat-line-v1.png",
+      "lineSource": "images/apparaten/roeier-apparaat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 71637,
-        "whitePixels": 888363,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.074622,
-        "whiteRatio": 0.925378,
-        "pureBinary": true,
-        "sha256": "ec275e95e88d68cd46e0b77c73f3cb51e49ec0e27861dffffa95b2969aad0ec9",
-        "sizeBytes": 17520
-      }
+      "qa": null
     },
     {
       "name": "Rotator (apparaat)",
       "colorSource": "images/apparaten/rotator-apparaat-avatar-v7.jpg",
-      "lineSource": "images/apparaten/rotator-apparaat-line-v1.png",
+      "lineSource": "images/apparaten/rotator-apparaat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 81491,
-        "whitePixels": 878509,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.084886,
-        "whiteRatio": 0.915114,
-        "pureBinary": true,
-        "sha256": "76964025f6cf632c2de986c5eed94764879934025058b3ff0bf1e66af7544cb5",
-        "sizeBytes": 15516
-      }
+      "qa": null
     },
     {
       "name": "Stairs (apparaat)",
       "colorSource": "images/apparaten/stairs-apparaat-avatar-v7.jpg",
-      "lineSource": "images/apparaten/stairs-apparaat-line-v1.png",
+      "lineSource": "images/apparaten/stairs-apparaat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 57077,
-        "whitePixels": 902923,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.059455,
-        "whiteRatio": 0.940545,
-        "pureBinary": true,
-        "sha256": "942273dfa4bd8f767b0b84fa012d9a8eac0ee893bdef685effb80640aff6055b",
-        "sizeBytes": 12238
-      }
+      "qa": null
     },
     {
       "name": "Vertical row (apparaat)",
       "colorSource": "images/apparaten/vertical-row-apparaat-avatar-v7.jpg",
-      "lineSource": "images/apparaten/vertical-row-apparaat-line-v1.png",
+      "lineSource": "images/apparaten/vertical-row-apparaat.jpg",
+      "source": "exact-v1",
       "status": "ready",
       "colorReady": true,
       "lineReady": true,
-      "qa": {
-        "width": 800,
-        "height": 1200,
-        "blackPixels": 93543,
-        "whitePixels": 866457,
-        "nonBinaryPixels": 0,
-        "blackRatio": 0.097441,
-        "whiteRatio": 0.902559,
-        "pureBinary": true,
-        "sha256": "716b553ef60e13e6281546e969257acac6be91f72fa089dccad7b429415b55bb",
-        "sizeBytes": 14917
-      }
+      "qa": null
     },
     {
       "name": "Schouder voorwaarts heffen – met stok",

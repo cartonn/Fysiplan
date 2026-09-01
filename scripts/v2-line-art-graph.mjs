@@ -13,6 +13,7 @@ import {
 const root = resolve(new URL("../", import.meta.url).pathname);
 const publicDir = join(root, "public");
 const cataloguePath = join(publicDir, "oefeningen-v2.json");
+const v1CataloguePath = join(publicDir, "oefeningen.json");
 const reportPath = join(root, "content", "v2-image-pair-report.json");
 const args = process.argv.slice(2);
 const command = args.find((arg) => !arg.startsWith("--")) || "status";
@@ -24,6 +25,8 @@ if (command === "run" && !executeApproved) throw new Error("Gebruik run --execut
 if (!["status", "plan", "run"].includes(command)) throw new Error(`Onbekend commando: ${command}`);
 
 const catalogue = JSON.parse(await readFile(cataloguePath, "utf8"));
+const v1Catalogue = JSON.parse(await readFile(v1CataloguePath, "utf8"));
+const v1ByName = new Map(v1Catalogue.map((exercise) => [exercise.naam, exercise]));
 // handgetekende illustraties (scripts/lijn-illustratie-graph.mjs) vervangen de
 // deterministische contour op hetzelfde pad; die mag deze graph nooit terugdraaien
 // zolang de onderliggende kleurkaart (colorSha) ongewijzigd is — ook niet met --force
@@ -59,10 +62,24 @@ async function execute(node, results) {
   if (node.kind === "catalog") return { count: catalogue.length, selected: selected.length };
   if (node.kind === "pair") {
     const colorSource = node.exercise.kaartImg || "";
-    const lineSource = linePathForColor(colorSource);
+    const isLegacy = !node.exercise.coreExerciseId;
+    const lineSource = isLegacy ? (v1ByName.get(node.exercise.naam)?.img || "") : linePathForColor(colorSource);
     const colorPath = publicAssetPath(publicDir, colorSource);
     const linePath = publicAssetPath(publicDir, lineSource);
     const colorReady = await assetExists(colorPath);
+    const lineReadyBeforeRun = lineSource ? await assetExists(linePath) : false;
+    if (isLegacy) {
+      return {
+        name: node.exercise.naam,
+        colorSource,
+        lineSource,
+        source: "exact-v1",
+        status: colorReady && lineReadyBeforeRun ? "ready" : (!colorReady ? "pending-color" : "pending-line"),
+        colorReady,
+        lineReady: lineReadyBeforeRun,
+        qa: null,
+      };
+    }
     if (!colorReady) {
       return {
         name: node.exercise.naam,
@@ -70,10 +87,10 @@ async function execute(node, results) {
         lineSource,
         status: "pending-color",
         colorReady: false,
-        lineReady: await assetExists(linePath),
+        lineReady: lineReadyBeforeRun,
       };
     }
-    const hadLine = await assetExists(linePath);
+    const hadLine = lineReadyBeforeRun;
     const geillustreerd = hadLine && await isGeillustreerd(node.exercise, colorPath);
     if (command === "run" && !geillustreerd && (!hadLine || force)) await createBinaryLineArt(colorPath, linePath);
     const lineReady = await assetExists(linePath);
@@ -92,7 +109,7 @@ async function execute(node, results) {
   const pairs = pairNodes.map((pairNode) => results.get(pairNode.id));
   const summary = {
     schemaVersion: 1,
-    architecture: "V2 color card -> deterministic binary line companion -> hard QA",
+    architecture: "V2 legacy -> exact V1 image reuse; extension -> deterministic binary line companion -> hard QA",
     layers: graphLayers(nodes).map((layer) => layer.map((entry) => entry.id)),
     catalogueCount: catalogue.length,
     selectedCount: selected.length,

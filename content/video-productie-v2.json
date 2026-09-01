@@ -31,11 +31,11 @@
   "exercises": [
     {
       "order": 1,
-      "exerciseId": "fp_82bf133916a05332",
+      "exerciseId": "fp_ff306042c93f0900",
       "sourceName": "Anteflexie armen",
       "titleNl": "armen voorwaarts heffen",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/anteflexie-armen-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/anteflexie-armen.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop met ontspannen schouders en de armen langs het lichaam.",
@@ -92,11 +92,11 @@
     },
     {
       "order": 2,
-      "exerciseId": "fp_646f45ed23dd7687",
+      "exerciseId": "fp_be27be5fb5c3c30a",
       "sourceName": "Barbell front press",
       "titleNl": "front press met halterstang",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/barbell-front-press-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/barbell-front-press.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta of zit stevig en houd de halterstang voor de bovenkant van de borst.",
@@ -153,11 +153,11 @@
     },
     {
       "order": 3,
-      "exerciseId": "fp_c732f0d380050c20",
+      "exerciseId": "fp_1828d3579aacc5bc",
       "sourceName": "Barbell neck press",
       "titleNl": "nekpress met halterstang",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/barbell-neck-press-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/barbell-neck-press.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Gebruik alleen het door je fysiotherapeut gekozen gewicht en houd de stang breed vast.",
@@ -214,11 +214,11 @@
     },
     {
       "order": 4,
-      "exerciseId": "fp_66baa46f18861cb8",
+      "exerciseId": "fp_5db16db1c4b85956",
       "sourceName": "Barbell pull over",
       "titleNl": "pullover met halterstang",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/barbell-pull-over-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/barbell-pull-over.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig met je hoofd en rug gesteund en houd de stang boven de borst met licht gebogen ellebogen.",
@@ -275,11 +275,11 @@
     },
     {
       "order": 5,
-      "exerciseId": "fp_737be758aa96ed7e",
+      "exerciseId": "fp_23ffdd3956aecfb4",
       "sourceName": "Bench press",
       "titleNl": "bankdrukken met halterstang",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/bench-press-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/bench-press.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig stabiel op de bank met de voeten stevig op de vloer en de stang boven de borst.",
@@ -336,11 +336,11 @@
     },
     {
       "order": 6,
-      "exerciseId": "fp_a394a3b306f683bf",
+      "exerciseId": "fp_366b2ef8d0e55ab9",
       "sourceName": "Biceps alternate dumbell",
       "titleNl": "afwisselende bicepscurl met dumbbells",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/biceps-alternate-dumbell-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/biceps-alternate-dumbell.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop met in elke hand een dumbbell en de armen langs het lichaam.",
@@ -397,11 +397,11 @@
     },
     {
       "order": 7,
-      "exerciseId": "fp_f634927338aee339",
+      "exerciseId": "fp_ffdd7a98ee2ba5cc",
       "sourceName": "Biceps curl",
       "titleNl": "bicepscurl",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/biceps-curl-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/biceps-curl.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta stevig met de ellebogen langs je zij en houd de gekozen weerstand vast.",
@@ -458,11 +458,11 @@
     },
     {
       "order": 8,
-      "exerciseId": "fp_15606688d72bba53",
+      "exerciseId": "fp_996436b03b60975c",
       "sourceName": "Biceps pull",
       "titleNl": "biceps pull met kabel of elastiek",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/biceps-pull-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/biceps-pull.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta stevig met de kabel of band op spanning en de ellebogen laag naast je romp.",
@@ -519,11 +519,11 @@
     },
     {
       "order": 9,
-      "exerciseId": "fp_dc103c3526b1dbdd",
+      "exerciseId": "fp_013ba6ad937cc9d9",
       "sourceName": "Dips",
       "titleNl": "dips",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/dips-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/dips.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Steun stabiel op de handgrepen met de schouders laag en de romp lang.",
@@ -580,11 +580,11 @@
     },
     {
       "order": 10,
-      "exerciseId": "fp_86eb4b9e80cf1d37",
+      "exerciseId": "fp_4bc24b8993e02443",
       "sourceName": "Dumbell bench press",
       "titleNl": "bankdrukken met dumbbells",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/dumbell-bench-press-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/dumbell-bench-press.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig stabiel op de bank met de voeten op de vloer en de dumbbells naast de borst.",
@@ -641,11 +641,11 @@
     },
     {
       "order": 11,
-      "exerciseId": "fp_87a8da526a509c5d",
+      "exerciseId": "fp_2ab4d4051bcadf29",
       "sourceName": "Dumbell front press",
       "titleNl": "front press met dumbbells",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/dumbell-front-press-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/dumbell-front-press.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta of zit rechtop en houd de dumbbells op schouderhoogte.",
@@ -702,11 +702,11 @@
     },
     {
       "order": 12,
-      "exerciseId": "fp_962b14ec0e7ea7a5",
+      "exerciseId": "fp_7f4ce1cc338c328f",
       "sourceName": "Dumbell neck press",
       "titleNl": "nekpress met dumbbells",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/dumbell-neck-press-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/dumbell-neck-press.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Gebruik lichte gewichten en neem alleen de door je fysiotherapeut gekozen armpositie aan.",
@@ -763,11 +763,11 @@
     },
     {
       "order": 13,
-      "exerciseId": "fp_c898c4f668732f6e",
+      "exerciseId": "fp_7808749387b6f081",
       "sourceName": "Dumbell pull over",
       "titleNl": "pullover met dumbbell",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/dumbell-pull-over-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/dumbell-pull-over.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig gesteund en houd één dumbbell met beide handen boven de borst.",
@@ -824,11 +824,11 @@
     },
     {
       "order": 14,
-      "exerciseId": "fp_084952af3bdb1a30",
+      "exerciseId": "fp_105dddb40395ec70",
       "sourceName": "Duplex pull",
       "titleNl": "dubbele pull met elastiek",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/duplex-pull-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/duplex-pull.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop met in iedere hand een uiteinde van het elastiek en houd lichte voorspanning.",
@@ -885,11 +885,11 @@
     },
     {
       "order": 15,
-      "exerciseId": "fp_98bd1a9b6ba317d8",
+      "exerciseId": "fp_a879769a3b3317e5",
       "sourceName": "Endo pull",
       "titleNl": "endorotatie van de schouder",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/endo-pull-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/endo-pull.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Houd de elleboog negentig graden gebogen tegen je zij en plaats de weerstand aan de buitenkant.",
@@ -946,11 +946,11 @@
     },
     {
       "order": 16,
-      "exerciseId": "fp_c642eb85e4e9e3cd",
+      "exerciseId": "fp_5423a6beaa5b75b7",
       "sourceName": "Exo pull",
       "titleNl": "exorotatie van de schouder",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/exo-pull-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/exo-pull.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Houd de elleboog negentig graden gebogen tegen je zij en plaats de weerstand aan de binnenkant.",
@@ -1007,11 +1007,11 @@
     },
     {
       "order": 17,
-      "exerciseId": "fp_4988d583957360d7",
+      "exerciseId": "fp_7b22cceae60e6805",
       "sourceName": "Flyes",
       "titleNl": "dumbbell fly",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/flyes-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/flyes.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op een bank met de gewichten boven de borst en houd de ellebogen licht gebogen.",
@@ -1068,11 +1068,11 @@
     },
     {
       "order": 18,
-      "exerciseId": "fp_052ced1d85b2a8f5",
+      "exerciseId": "fp_2b06a69981dc6f70",
       "sourceName": "French press",
       "titleNl": "French press voor de triceps",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/french-press-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/french-press.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta of zit rechtop en houd het gewicht boven het hoofd met gebogen ellebogen.",
@@ -1129,11 +1129,11 @@
     },
     {
       "order": 19,
-      "exerciseId": "fp_a6880ad4ee81b4d1",
+      "exerciseId": "fp_c71a4e146ca47ccb",
       "sourceName": "Front pully row",
       "titleNl": "zittende kabelrow",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/front-pully-row-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/front-pully-row.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Zit rechtop met de voeten gesteund, knieën licht gebogen en de kabel in beide handen.",
@@ -1190,11 +1190,11 @@
     },
     {
       "order": 20,
-      "exerciseId": "fp_a49385932062fcce",
+      "exerciseId": "fp_4e2e2902d6482607",
       "sourceName": "Front raises",
       "titleNl": "voorwaarts heffen met gewichten",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/front-raises-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/front-raises.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop met de gewichten voor de bovenbenen en licht gebogen ellebogen.",
@@ -1251,11 +1251,11 @@
     },
     {
       "order": 21,
-      "exerciseId": "fp_261f684a473eea14",
+      "exerciseId": "fp_e1f92ebe56d44e0a",
       "sourceName": "Incline bench press",
       "titleNl": "schuin bankdrukken met halterstang",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/incline-bench-press-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/incline-bench-press.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig stevig op een schuin ingestelde bank met de voeten op de vloer en de stang boven de bovenborst.",
@@ -1312,11 +1312,11 @@
     },
     {
       "order": 22,
-      "exerciseId": "fp_5ac0f52b6c3619f8",
+      "exerciseId": "fp_d61a6fa943e5ba21",
       "sourceName": "Incline flyes",
       "titleNl": "dumbbell fly op schuine bank",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/incline-flyes-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/incline-flyes.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op een schuin ingestelde bank met de dumbbells boven de borst en de ellebogen licht gebogen.",
@@ -1373,11 +1373,11 @@
     },
     {
       "order": 23,
-      "exerciseId": "fp_36e8a95535a72d41",
+      "exerciseId": "fp_b3c08cf3e8344649",
       "sourceName": "Lat pull front",
       "titleNl": "lat pulldown voorlangs",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/lat-pull-front-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/lat-pull-front.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Zit stevig met de bovenbenen gefixeerd en pak de stang iets breder dan schouderbreedte.",
@@ -1434,11 +1434,11 @@
     },
     {
       "order": 24,
-      "exerciseId": "fp_75c44e8a8a47ad2f",
+      "exerciseId": "fp_adffa09aec44d449",
       "sourceName": "Lateral raises",
       "titleNl": "zijwaarts heffen met gewichten",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/lateral-raises-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/lateral-raises.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop met de gewichten langs het lichaam en licht gebogen ellebogen.",
@@ -1495,11 +1495,11 @@
     },
     {
       "order": 25,
-      "exerciseId": "fp_352fee44932e510a",
+      "exerciseId": "fp_d49b76635c4c0073",
       "sourceName": "Military press",
       "titleNl": "military press",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/military-press-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/military-press.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta stevig met de halterstang voor de bovenkant van de borst en de handen iets breder dan de schouders.",
@@ -1556,11 +1556,11 @@
     },
     {
       "order": 26,
-      "exerciseId": "fp_63bf209195a6bcf5",
+      "exerciseId": "fp_aad16f83f94a6a9a",
       "sourceName": "Nose breakers",
       "titleNl": "liggende tricepsextensie",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/nose-breakers-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/nose-breakers.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig stabiel en houd de gewichten met gestrekte armen boven de schouders.",
@@ -1617,11 +1617,11 @@
     },
     {
       "order": 27,
-      "exerciseId": "fp_9e95592619bab97b",
+      "exerciseId": "fp_f926cb9ff106963d",
       "sourceName": "One arm bent over row",
       "titleNl": "voorovergebogen roeien met één arm",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/one-arm-bent-over-row-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/one-arm-bent-over-row.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Steun met één hand en knie op een bank en houd de rug lang met het gewicht in de andere hand.",
@@ -1678,11 +1678,11 @@
     },
     {
       "order": 28,
-      "exerciseId": "fp_3d749076bdddc367",
+      "exerciseId": "fp_64335f975c24312b",
       "sourceName": "Pully cross down",
       "titleNl": "kabel crossover omlaag",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/pully-cross-down-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/pully-cross-down.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta tussen de hoge kabels in een stabiele spreidstand met licht gebogen ellebogen.",
@@ -1739,11 +1739,11 @@
     },
     {
       "order": 29,
-      "exerciseId": "fp_a0d163a452d630fa",
+      "exerciseId": "fp_4c31183cce345882",
       "sourceName": "Pully cross over",
       "titleNl": "kabel crossover",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/pully-cross-over-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/pully-cross-over.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta stabiel tussen de kabels met de armen zijwaarts en de ellebogen licht gebogen.",
@@ -1800,11 +1800,11 @@
     },
     {
       "order": 30,
-      "exerciseId": "fp_b3579d53b5760d32",
+      "exerciseId": "fp_77def39d4ae09ef9",
       "sourceName": "Pully cross up",
       "titleNl": "kabel crossover omhoog",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/pully-cross-up-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/pully-cross-up.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Pak de lage kabels vast en sta stabiel met de armen laag naast het lichaam.",
@@ -1861,11 +1861,11 @@
     },
     {
       "order": 31,
-      "exerciseId": "fp_2950af46f7ca547f",
+      "exerciseId": "fp_6d1cc89ca3f2d07a",
       "sourceName": "Pully dips",
       "titleNl": "staande kabeldips",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/pully-dips-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/pully-dips.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta stevig met de kabelgrepen naast de romp en de ellebogen gebogen.",
@@ -1922,11 +1922,11 @@
     },
     {
       "order": 32,
-      "exerciseId": "fp_7c59f23949f2b4d0",
+      "exerciseId": "fp_39587ab625e7f5ce",
       "sourceName": "Pully down",
       "titleNl": "kabel pulldown",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/pully-down-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/pully-down.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta of zit rechtop met de kabel boven je en houd de handgreep stevig vast.",
@@ -1983,11 +1983,11 @@
     },
     {
       "order": 33,
-      "exerciseId": "fp_fe0785383c8de329",
+      "exerciseId": "fp_ac9ca23eb3a905fa",
       "sourceName": "Pully press double",
       "titleNl": "dubbele kabelpress",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/pully-press-double-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/pully-press-double.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta in een stabiele stapstand met in beide handen een kabelgreep op borsthoogte.",
@@ -2044,11 +2044,11 @@
     },
     {
       "order": 34,
-      "exerciseId": "fp_c05943736d34c5e1",
+      "exerciseId": "fp_338eb9bf2c26dda3",
       "sourceName": "Pully press single",
       "titleNl": "enkelzijdige kabelpress",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/pully-press-single-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/pully-press-single.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta in een stabiele stapstand met één kabelgreep naast de borst.",
@@ -2105,11 +2105,11 @@
     },
     {
       "order": 35,
-      "exerciseId": "fp_97256f103814f643",
+      "exerciseId": "fp_26b908445759c575",
       "sourceName": "Pully pull over",
       "titleNl": "staande kabelpullover",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/pully-pull-over-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/pully-pull-over.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta licht voorover met gestrekte armen aan een hoge kabel en houd de romp stevig.",
@@ -2166,11 +2166,11 @@
     },
     {
       "order": 36,
-      "exerciseId": "fp_197a79b08a8dec99",
+      "exerciseId": "fp_7cad1ed08189f651",
       "sourceName": "Pully row",
       "titleNl": "kabelrow",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/pully-row-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/pully-row.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Zit of sta rechtop met de kabel voor je en de armen gestrekt.",
@@ -2227,11 +2227,11 @@
     },
     {
       "order": 37,
-      "exerciseId": "fp_f900aaf90ea81fb1",
+      "exerciseId": "fp_ef7637bcf7123024",
       "sourceName": "Push up",
       "titleNl": "opdrukken",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/push-up-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/push-up.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Plaats de handen iets breder dan de schouders en maak een rechte lijn van hoofd tot hielen.",
@@ -2288,11 +2288,11 @@
     },
     {
       "order": 38,
-      "exerciseId": "fp_1d49098038eb9609",
+      "exerciseId": "fp_8db93020a49ad7cc",
       "sourceName": "Reversed flyes",
       "titleNl": "reverse fly",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/reversed-flyes-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/reversed-flyes.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Buig vanuit de heupen voorover met een lange rug en houd de gewichten onder de schouders.",
@@ -2349,11 +2349,11 @@
     },
     {
       "order": 39,
-      "exerciseId": "fp_c4c6d935c1b2f1a9",
+      "exerciseId": "fp_2851dfd52f89d4e1",
       "sourceName": "Shoulder rotation (shrugs)",
       "titleNl": "schouderheffen",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/shoulder-rotation-shrugs-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/shoulder-rotation-shrugs.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop met de armen langs het lichaam en eventueel lichte gewichten in de handen.",
@@ -2410,11 +2410,11 @@
     },
     {
       "order": 40,
-      "exerciseId": "fp_2b6582ecfdf9765a",
+      "exerciseId": "fp_f227db5fcf245d9c",
       "sourceName": "Triceps dips",
       "titleNl": "tricepsdip aan bank",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/triceps-dips-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/triceps-dips.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Plaats de handen op een stevige bank achter je en zet de voeten stabiel neer.",
@@ -2471,11 +2471,11 @@
     },
     {
       "order": 41,
-      "exerciseId": "fp_d362340f6651051f",
+      "exerciseId": "fp_cf942a78afe9385d",
       "sourceName": "Triceps dumbell kickbacks",
       "titleNl": "triceps kickback met dumbbell",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/triceps-dumbell-kickbacks-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/triceps-dumbell-kickbacks.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Buig voorover met een lange rug en houd de bovenarm naast de romp.",
@@ -2532,11 +2532,11 @@
     },
     {
       "order": 42,
-      "exerciseId": "fp_a0190c7f74aef417",
+      "exerciseId": "fp_787a29402aa1bb26",
       "sourceName": "Triceps push down",
       "titleNl": "triceps pushdown",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/triceps-push-down-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/triceps-push-down.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop bij de hoge kabel met de ellebogen gebogen en tegen je zij.",
@@ -2593,11 +2593,11 @@
     },
     {
       "order": 43,
-      "exerciseId": "fp_48b461e745ccb3db",
+      "exerciseId": "fp_de780f5f74664177",
       "sourceName": "Upright row",
       "titleNl": "upright row",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/upright-row-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/upright-row.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop met de stang of gewichten voor de bovenbenen en de handen op de afgesproken breedte.",
@@ -2654,11 +2654,11 @@
     },
     {
       "order": 44,
-      "exerciseId": "fp_98785cd7a436578a",
+      "exerciseId": "fp_ca78db68bfc2ce5e",
       "sourceName": "Wrist extension",
       "titleNl": "polsstrekking",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/wrist-extension-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/wrist-extension.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Steun de onderarm op tafel of bovenbeen met de hand over de rand en de handpalm omlaag.",
@@ -2715,11 +2715,11 @@
     },
     {
       "order": 45,
-      "exerciseId": "fp_5a3047c5594e9605",
+      "exerciseId": "fp_13599cee44c7a8cd",
       "sourceName": "Wrist flexion",
       "titleNl": "polsbuiging",
       "category": "Bovenste extremiteit",
-      "referenceImage": "images/bovenste-extremiteit/wrist-flexion-line-v1.png",
+      "referenceImage": "images/bovenste-extremiteit/wrist-flexion.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Steun de onderarm met de handpalm omhoog en laat de hand over de rand rusten.",
@@ -2776,11 +2776,11 @@
     },
     {
       "order": 46,
-      "exerciseId": "fp_9271420ea9af2faa",
+      "exerciseId": "fp_0365d2775d7d9d99",
       "sourceName": "Been pendelen",
       "titleNl": "been pendelen",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/been-pendelen-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/been-pendelen.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta naast een stevige steun en houd de romp rechtop.",
@@ -2837,11 +2837,11 @@
     },
     {
       "order": 47,
-      "exerciseId": "fp_41e22d80d04ef059",
+      "exerciseId": "fp_96e6c0f98c85f90d",
       "sourceName": "Bridges kicker",
       "titleNl": "brug met beenstrekking",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/bridges-kicker-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/bridges-kicker.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met gebogen knieën en hef het bekken tot een stabiele brug.",
@@ -2898,11 +2898,11 @@
     },
     {
       "order": 48,
-      "exerciseId": "fp_0f73a2526fcb3199",
+      "exerciseId": "fp_ebda8f78ad5807d0",
       "sourceName": "Calf raises",
       "titleNl": "kuitheffen",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/calf-raises-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/calf-raises.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop met de voeten op heupbreedte en houd zo nodig een steun vast.",
@@ -2959,11 +2959,11 @@
     },
     {
       "order": 49,
-      "exerciseId": "fp_30c013d70b532f79",
+      "exerciseId": "fp_295fd35a63d44ef8",
       "sourceName": "Chair squat",
       "titleNl": "stoel-squat",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/chair-squat-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/chair-squat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta voor een stevige stoel met de voeten op heupbreedte.",
@@ -3020,11 +3020,11 @@
     },
     {
       "order": 50,
-      "exerciseId": "fp_06da836bccd3973e",
+      "exerciseId": "fp_de81d7b6a30acef2",
       "sourceName": "Crabwalk",
       "titleNl": "zijwaartse crabwalk",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/crabwalk-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/crabwalk.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Plaats een elastiek op de afgesproken hoogte en zak licht door heupen en knieën.",
@@ -3081,11 +3081,11 @@
     },
     {
       "order": 51,
-      "exerciseId": "fp_26bfa52fdb5f5d35",
+      "exerciseId": "fp_713c574ba173ed20",
       "sourceName": "Dead lift",
       "titleNl": "deadlift",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/dead-lift-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/dead-lift.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta met de voeten op heupbreedte en houd het gewicht dicht voor de benen.",
@@ -3142,11 +3142,11 @@
     },
     {
       "order": 52,
-      "exerciseId": "fp_a02c57b6b832f487",
+      "exerciseId": "fp_4dec0874589408c6",
       "sourceName": "Extension squat",
       "titleNl": "squat met armstrekking",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/extension-squat-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/extension-squat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta stevig met de voeten op de afgesproken breedte en houd het hulpmiddel voor je.",
@@ -3203,11 +3203,11 @@
     },
     {
       "order": 53,
-      "exerciseId": "fp_e77431b037024970",
+      "exerciseId": "fp_97db6b7c4ee71185",
       "sourceName": "Front squat",
       "titleNl": "front squat",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/front-squat-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/front-squat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Houd de halterstang of gewichten voor de schouders met de ellebogen naar voren.",
@@ -3264,11 +3264,11 @@
     },
     {
       "order": 54,
-      "exerciseId": "fp_d74e5c28740da699",
+      "exerciseId": "fp_349fdd1a494341cc",
       "sourceName": "Glute bridges",
       "titleNl": "bilbrug",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/glute-bridges-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/glute-bridges.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met gebogen knieën, voeten op heupbreedte en armen ontspannen.",
@@ -3325,11 +3325,11 @@
     },
     {
       "order": 55,
-      "exerciseId": "fp_46f5e65d11ede390",
+      "exerciseId": "fp_918ae38b193310b8",
       "sourceName": "Hack squat",
       "titleNl": "hack squat",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/hack-squat-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/hack-squat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Neem de getoonde stand aan met de weerstand veilig geplaatst en de voeten stabiel.",
@@ -3386,11 +3386,11 @@
     },
     {
       "order": 56,
-      "exerciseId": "fp_c28b0e7403be8d82",
+      "exerciseId": "fp_99e5838f4bff098d",
       "sourceName": "Jefferson squat",
       "titleNl": "Jefferson squat",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/jefferson-squat-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/jefferson-squat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Plaats de voeten aan weerszijden van de stang en neem de door je fysiotherapeut gekozen asymmetrische greep.",
@@ -3447,11 +3447,11 @@
     },
     {
       "order": 57,
-      "exerciseId": "fp_1aef93234bd3d213",
+      "exerciseId": "fp_45b5c1982fd01cae",
       "sourceName": "Kick back",
       "titleNl": "heupextensie achterwaarts",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/kick-back-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/kick-back.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop met steun en houd het werkende been licht gestrekt.",
@@ -3508,11 +3508,11 @@
     },
     {
       "order": 58,
-      "exerciseId": "fp_1b43109839e854ca",
+      "exerciseId": "fp_28bde22bdbe17bda",
       "sourceName": "Leg curl",
       "titleNl": "hamstringcurl",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/leg-curl-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/leg-curl.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Neem de aangegeven liggende of staande positie in en houd de heupen stabiel.",
@@ -3569,11 +3569,11 @@
     },
     {
       "order": 59,
-      "exerciseId": "fp_7a09bd57060bb993",
+      "exerciseId": "fp_0ba32cc051f02ca6",
       "sourceName": "Leg extension",
       "titleNl": "knie-extensie",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/leg-extension-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/leg-extension.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Zit rechtop met de knie-as goed uitgelijnd en de rol boven de enkels.",
@@ -3630,11 +3630,11 @@
     },
     {
       "order": 60,
-      "exerciseId": "fp_c23c7df4de032ef8",
+      "exerciseId": "fp_0a6eb2ccb03c6b59",
       "sourceName": "Leg press",
       "titleNl": "leg press",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/leg-press-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/leg-press.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Plaats de voeten stabiel op het platform en houd rug en bekken tegen de steun.",
@@ -3691,11 +3691,11 @@
     },
     {
       "order": 61,
-      "exerciseId": "fp_44c79cbf0b818e57",
+      "exerciseId": "fp_deaa2d4e662b5d69",
       "sourceName": "Lunges",
       "titleNl": "uitvalspas",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/lunges-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/lunges.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop en zet één ruime stap naar voren.",
@@ -3752,11 +3752,11 @@
     },
     {
       "order": 62,
-      "exerciseId": "fp_33a8c78d9c12bcde",
+      "exerciseId": "fp_5e0985b787386cf8",
       "sourceName": "Lunges curtsy alt",
       "titleNl": "afwisselende curtsy lunge",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/lunges-curtsy-alt-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/lunges-curtsy-alt.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop met de voeten op heupbreedte.",
@@ -3813,11 +3813,11 @@
     },
     {
       "order": 63,
-      "exerciseId": "fp_20ea1ab899d91470",
+      "exerciseId": "fp_7a8b6aab62835573",
       "sourceName": "Lying abduction",
       "titleNl": "heupabductie in zijlig",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/lying-abduction-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/lying-abduction.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de zij met het onderste been gebogen en het bovenste been lang in het verlengde van de romp.",
@@ -3874,11 +3874,11 @@
     },
     {
       "order": 64,
-      "exerciseId": "fp_87d23bb7cb3b1474",
+      "exerciseId": "fp_e81265b2a67f7c8f",
       "sourceName": "Lying adduction",
       "titleNl": "heupadductie in zijlig",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/lying-adduction-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/lying-adduction.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de zij met het bovenste been gebogen en voor je geplaatst; het onderste been blijft gestrekt.",
@@ -3935,11 +3935,11 @@
     },
     {
       "order": 65,
-      "exerciseId": "fp_8d416f9d2b5a39cc",
+      "exerciseId": "fp_0d8160777275f1d9",
       "sourceName": "Single leg squat",
       "titleNl": "squat op één been",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/single-leg-squat-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/single-leg-squat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta op één been met zo nodig lichte steun en houd het andere been vrij.",
@@ -3996,11 +3996,11 @@
     },
     {
       "order": 66,
-      "exerciseId": "fp_6ed8f541b5d6909c",
+      "exerciseId": "fp_341afb721db82139",
       "sourceName": "Squat",
       "titleNl": "squat",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/squat-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/squat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta met de voeten ongeveer op schouderbreedte en verdeel het gewicht over de hele voet.",
@@ -4057,11 +4057,11 @@
     },
     {
       "order": 67,
-      "exerciseId": "fp_f89d3c07ac837e26",
+      "exerciseId": "fp_12da2b17ebb73174",
       "sourceName": "Squat lunges",
       "titleNl": "squat met afwisselende lunge",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/squat-lunges-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/squat-lunges.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta stevig met de voeten op heup- tot schouderbreedte.",
@@ -4118,11 +4118,11 @@
     },
     {
       "order": 68,
-      "exerciseId": "fp_764dbcd7b8575289",
+      "exerciseId": "fp_4c10edce131cd639",
       "sourceName": "Standing abduction",
       "titleNl": "staande heupabductie",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/standing-abduction-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/standing-abduction.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop naast een steun met het gewicht op één been.",
@@ -4179,11 +4179,11 @@
     },
     {
       "order": 69,
-      "exerciseId": "fp_4e4a944daa146377",
+      "exerciseId": "fp_9b415aabe5c1e9db",
       "sourceName": "Standing adduction",
       "titleNl": "staande heupadductie",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/standing-adduction-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/standing-adduction.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta naast een steun met de weerstand aan de buitenzijde van het werkende been.",
@@ -4240,11 +4240,11 @@
     },
     {
       "order": 70,
-      "exerciseId": "fp_b483643b94b2e066",
+      "exerciseId": "fp_bc88ab3065e27c10",
       "sourceName": "Standing gluteus",
       "titleNl": "staande heupextensie",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/standing-gluteus-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/standing-gluteus.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop met steun en houd de knie van het werkende been licht gebogen.",
@@ -4301,11 +4301,11 @@
     },
     {
       "order": 71,
-      "exerciseId": "fp_ddd00b236d2c6de5",
+      "exerciseId": "fp_47c285e34bf280aa",
       "sourceName": "Step up",
       "titleNl": "opstappen",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/step-up-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/step-up.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta dicht voor een stevige verhoging en plaats één voet volledig op de trede.",
@@ -4362,11 +4362,11 @@
     },
     {
       "order": 72,
-      "exerciseId": "fp_40e1633aaf5a905e",
+      "exerciseId": "fp_9d79923cecf2d059",
       "sourceName": "Step up tempo",
       "titleNl": "opstappen in tempo",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/step-up-tempo-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/step-up-tempo.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta voor een stabiele trede met de hele voet van het werkende been op de verhoging.",
@@ -4423,11 +4423,11 @@
     },
     {
       "order": 73,
-      "exerciseId": "fp_982d850c053e8247",
+      "exerciseId": "fp_7dc1478e2b3c17b0",
       "sourceName": "Step up with knee raise",
       "titleNl": "opstappen met kniehef",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/step-up-with-knee-raise-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/step-up-with-knee-raise.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Plaats één voet volledig op een stevige trede en sta lang.",
@@ -4484,11 +4484,11 @@
     },
     {
       "order": 74,
-      "exerciseId": "fp_9859cc27026e92a2",
+      "exerciseId": "fp_55680ba401a2a464",
       "sourceName": "Surrenders",
       "titleNl": "surrenders",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/surrenders-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/surrenders.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Begin rechtop of op de knieën volgens de afgesproken variant en gebruik zo nodig een zachte mat.",
@@ -4545,11 +4545,11 @@
     },
     {
       "order": 75,
-      "exerciseId": "fp_43fa079f536b83a7",
+      "exerciseId": "fp_aa4875e4fee8ce61",
       "sourceName": "Wall sit",
       "titleNl": "muurzit",
       "category": "Onderste extremiteit",
-      "referenceImage": "images/onderste-extremiteit/wall-sit-line-v1.png",
+      "referenceImage": "images/onderste-extremiteit/wall-sit.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Plaats de rug tegen de muur en zet de voeten een stap naar voren.",
@@ -4606,11 +4606,11 @@
     },
     {
       "order": 76,
-      "exerciseId": "fp_cd700265a7878595",
+      "exerciseId": "fp_ba8ecef1edfecd32",
       "sourceName": "Abroller",
       "titleNl": "uitrollen met de abroller",
       "category": "Core",
-      "referenceImage": "images/core/abroller-line-v1.png",
+      "referenceImage": "images/core/abroller.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Kniel op een mat met de abroller onder de schouders en span buik en billen aan.",
@@ -4666,11 +4666,11 @@
     },
     {
       "order": 77,
-      "exerciseId": "fp_f1ff87a933396bf7",
+      "exerciseId": "fp_2f526ecb5cf4bda8",
       "sourceName": "Alternate heel touchers",
       "titleNl": "afwisselend de hielen aantikken",
       "category": "Core",
-      "referenceImage": "images/core/alternate-heel-touchers-line-v1.png",
+      "referenceImage": "images/core/alternate-heel-touchers.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met gebogen knieën, voeten op de vloer en de schouders licht geheven.",
@@ -4726,11 +4726,11 @@
     },
     {
       "order": 78,
-      "exerciseId": "fp_eb125633317c5f89",
+      "exerciseId": "fp_a0a18c0c13673d38",
       "sourceName": "Back extension",
       "titleNl": "rugextensie",
       "category": "Core",
-      "referenceImage": "images/core/back-extension-line-v1.png",
+      "referenceImage": "images/core/back-extension.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Neem de getoonde buiklig- of bankpositie in met het bekken stevig ondersteund.",
@@ -4786,11 +4786,11 @@
     },
     {
       "order": 79,
-      "exerciseId": "fp_fc719d00061202ce",
+      "exerciseId": "fp_6396f903b345b223",
       "sourceName": "Barbell rotation",
       "titleNl": "romprotatie met halterstang",
       "category": "Core",
-      "referenceImage": "images/core/barbell-rotation-line-v1.png",
+      "referenceImage": "images/core/barbell-rotation.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta stabiel met de halterstang veilig geplaatst en de knieën licht gebogen.",
@@ -4846,11 +4846,11 @@
     },
     {
       "order": 80,
-      "exerciseId": "fp_2e9d55025a58a8b2",
+      "exerciseId": "fp_8d10922d5111266a",
       "sourceName": "Barbell twist",
       "titleNl": "romptwist met halterstang",
       "category": "Core",
-      "referenceImage": "images/core/barbell-twist-line-v1.png",
+      "referenceImage": "images/core/barbell-twist.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop met een lichte stang over de schouders en de voeten stevig op de vloer.",
@@ -4906,11 +4906,11 @@
     },
     {
       "order": 81,
-      "exerciseId": "fp_e32704dd0f8a7140",
+      "exerciseId": "fp_5a19e68676d98488",
       "sourceName": "Bear crawls",
       "titleNl": "bear crawl",
       "category": "Core",
-      "referenceImage": "images/core/bear-crawls-line-v1.png",
+      "referenceImage": "images/core/bear-crawls.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Start op handen en knieën met de handen onder de schouders en til de knieën enkele centimeters op.",
@@ -4966,11 +4966,11 @@
     },
     {
       "order": 82,
-      "exerciseId": "fp_44e3221525866ae5",
+      "exerciseId": "fp_3505e7566c93c6f2",
       "sourceName": "Benen laten zakken",
       "titleNl": "gestrekte benen laten zakken",
       "category": "Core",
-      "referenceImage": "images/core/benen-laten-zakken-line-v1.png",
+      "referenceImage": "images/core/benen-laten-zakken.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met de benen omhoog en druk de onderrug zacht tegen de ondergrond.",
@@ -5026,11 +5026,11 @@
     },
     {
       "order": 83,
-      "exerciseId": "fp_abd0634408458e6f",
+      "exerciseId": "fp_fb1193202722364f",
       "sourceName": "Bicycles buik",
       "titleNl": "bicycle crunch",
       "category": "Core",
-      "referenceImage": "images/core/bicycles-buik-line-v1.png",
+      "referenceImage": "images/core/bicycles-buik.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met de handen licht achter het hoofd en de heupen en knieën gebogen.",
@@ -5086,11 +5086,11 @@
     },
     {
       "order": 84,
-      "exerciseId": "fp_c30364fa5641bcc4",
+      "exerciseId": "fp_0cb78de12c46c100",
       "sourceName": "Bruggen 1 been liften",
       "titleNl": "bilbrug met één been heffen",
       "category": "Core",
-      "referenceImage": "images/core/bruggen-1-been-liften-line-v1.png",
+      "referenceImage": "images/core/bruggen-1-been-liften.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met gebogen knieën en hef het bekken naar een stabiele brug.",
@@ -5146,11 +5146,11 @@
     },
     {
       "order": 85,
-      "exerciseId": "fp_63ebc6af6ad7194c",
+      "exerciseId": "fp_688499fde71e7575",
       "sourceName": "Bruggen beginner",
       "titleNl": "bilbrug voor beginners",
       "category": "Core",
-      "referenceImage": "images/core/bruggen-beginner-line-v1.png",
+      "referenceImage": "images/core/bruggen-beginner.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met de voeten dicht bij de billen en de armen ontspannen naast je.",
@@ -5206,11 +5206,11 @@
     },
     {
       "order": 86,
-      "exerciseId": "fp_744ffafe15dbb1a2",
+      "exerciseId": "fp_bc62a3231122b1c7",
       "sourceName": "Bruggen met halter",
       "titleNl": "bilbrug met halter",
       "category": "Core",
-      "referenceImage": "images/core/bruggen-met-halter-line-v1.png",
+      "referenceImage": "images/core/bruggen-met-halter.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met gebogen knieën en leg de halter veilig en zacht ondersteund over het bekken.",
@@ -5266,11 +5266,11 @@
     },
     {
       "order": 87,
-      "exerciseId": "fp_10fa3f805f97fcdb",
+      "exerciseId": "fp_f38dfb43485d83a8",
       "sourceName": "Bruggen met halter op bank",
       "titleNl": "hip thrust met halter",
       "category": "Core",
-      "referenceImage": "images/core/bruggen-met-halter-op-bank-line-v1.png",
+      "referenceImage": "images/core/bruggen-met-halter-op-bank.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Steun de bovenrug op een stevige bank, plaats de voeten stabiel en leg de halter beschermd over het bekken.",
@@ -5326,11 +5326,11 @@
     },
     {
       "order": 88,
-      "exerciseId": "fp_5a6da6c289fe92b6",
+      "exerciseId": "fp_f6dc0d01ba3f6b53",
       "sourceName": "Bruggen op bal",
       "titleNl": "bilbrug op een bal",
       "category": "Core",
-      "referenceImage": "images/core/bruggen-op-bal-line-v1.png",
+      "referenceImage": "images/core/bruggen-op-bal.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met de onderbenen of voeten op een stabiele oefenbal.",
@@ -5386,11 +5386,11 @@
     },
     {
       "order": 89,
-      "exerciseId": "fp_e68d826665c642bd",
+      "exerciseId": "fp_ac1e71ae22379299",
       "sourceName": "Crunch",
       "titleNl": "crunch",
       "category": "Core",
-      "referenceImage": "images/core/crunch-line-v1.png",
+      "referenceImage": "images/core/crunch.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met gebogen knieën en plaats de handen licht bij het hoofd of over de borst.",
@@ -5446,11 +5446,11 @@
     },
     {
       "order": 90,
-      "exerciseId": "fp_1d93eb5d7d1693ab",
+      "exerciseId": "fp_1bc0bc9af43abbfc",
       "sourceName": "Curl up",
       "titleNl": "curl-up",
       "category": "Core",
-      "referenceImage": "images/core/curl-up-line-v1.png",
+      "referenceImage": "images/core/curl-up.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met één of beide knieën gebogen volgens de afgesproken variant en houd de rug neutraal.",
@@ -5506,11 +5506,11 @@
     },
     {
       "order": 91,
-      "exerciseId": "fp_0fee1315019de0d7",
+      "exerciseId": "fp_11df1ef5264f349b",
       "sourceName": "Dead bug",
       "titleNl": "dead bug",
       "category": "Core",
-      "referenceImage": "images/core/dead-bug-line-v1.png",
+      "referenceImage": "images/core/dead-bug.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met heupen en knieën negentig graden gebogen en de armen omhoog.",
@@ -5566,11 +5566,11 @@
     },
     {
       "order": 92,
-      "exerciseId": "fp_6a4007e0d85c11f7",
+      "exerciseId": "fp_fb6057fd32aa3d8d",
       "sourceName": "Good mornings",
       "titleNl": "good morning",
       "category": "Core",
-      "referenceImage": "images/core/good-mornings-line-v1.png",
+      "referenceImage": "images/core/good-mornings.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta met de voeten op heupbreedte en plaats de lichte stang veilig over de schouders.",
@@ -5626,11 +5626,11 @@
     },
     {
       "order": 93,
-      "exerciseId": "fp_9c01ddcdb56f06eb",
+      "exerciseId": "fp_1fd24c381f81dc30",
       "sourceName": "Knee elbow",
       "titleNl": "knie naar elleboog",
       "category": "Core",
-      "referenceImage": "images/core/knee-elbow-line-v1.png",
+      "referenceImage": "images/core/knee-elbow.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Neem de getoonde plank- of staande startpositie in en span de romp aan.",
@@ -5686,11 +5686,11 @@
     },
     {
       "order": 94,
-      "exerciseId": "fp_3421dc14d7af20d8",
+      "exerciseId": "fp_63ae62c389c88fb3",
       "sourceName": "Leg raises",
       "titleNl": "gestrekte beenheffing",
       "category": "Core",
-      "referenceImage": "images/core/leg-raises-line-v1.png",
+      "referenceImage": "images/core/leg-raises.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met de benen gestrekt en houd de onderrug rustig tegen de ondergrond.",
@@ -5746,11 +5746,11 @@
     },
     {
       "order": 95,
-      "exerciseId": "fp_52906ae4dac11e94",
+      "exerciseId": "fp_f17c3675b48db1ae",
       "sourceName": "Mobilisatie rotatie rug",
       "titleNl": "liggende rugrotatie",
       "category": "Core",
-      "referenceImage": "images/core/mobilisatie-rotatie-rug-line-v1.png",
+      "referenceImage": "images/core/mobilisatie-rotatie-rug.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met gebogen knieën en de armen ontspannen zijwaarts.",
@@ -5806,11 +5806,11 @@
     },
     {
       "order": 96,
-      "exerciseId": "fp_7268b626b09f4a27",
+      "exerciseId": "fp_70914158247cadac",
       "sourceName": "Mountain climber",
       "titleNl": "mountain climber",
       "category": "Core",
-      "referenceImage": "images/core/mountain-climber-line-v1.png",
+      "referenceImage": "images/core/mountain-climber.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Start in een hoge plank met de handen onder de schouders en het lichaam in één lijn.",
@@ -5866,11 +5866,11 @@
     },
     {
       "order": 97,
-      "exerciseId": "fp_dd721d82c4019d13",
+      "exerciseId": "fp_fe98b2d044efabd4",
       "sourceName": "Mountain climber x",
       "titleNl": "gekruiste mountain climber",
       "category": "Core",
-      "referenceImage": "images/core/mountain-climber-x-line-v1.png",
+      "referenceImage": "images/core/mountain-climber-x.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Start in een stabiele hoge plank met de buik aangespannen.",
@@ -5926,11 +5926,11 @@
     },
     {
       "order": 98,
-      "exerciseId": "fp_94a6f7d36f17618a",
+      "exerciseId": "fp_176c55da0b474e7f",
       "sourceName": "Plank basis",
       "titleNl": "onderarmplank",
       "category": "Core",
-      "referenceImage": "images/core/plank-basis-line-v1.png",
+      "referenceImage": "images/core/plank-basis.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Plaats de onderarmen onder de schouders en steun op knieën of tenen volgens de gekozen variant.",
@@ -5986,11 +5986,11 @@
     },
     {
       "order": 99,
-      "exerciseId": "fp_3e0770037d4a2427",
+      "exerciseId": "fp_13852626c3058b7f",
       "sourceName": "Plank high",
       "titleNl": "hoge plank",
       "category": "Core",
-      "referenceImage": "images/core/plank-high-line-v1.png",
+      "referenceImage": "images/core/plank-high.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Plaats de handen onder de schouders en strek het lichaam van hoofd tot hielen of knieën.",
@@ -6046,11 +6046,11 @@
     },
     {
       "order": 100,
-      "exerciseId": "fp_8bb630f263b794a8",
+      "exerciseId": "fp_f89ae55ceb5d335c",
       "sourceName": "Plank jacks",
       "titleNl": "plank jacks",
       "category": "Core",
-      "referenceImage": "images/core/plank-jacks-line-v1.png",
+      "referenceImage": "images/core/plank-jacks.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Start in een hoge plank met de voeten naast elkaar en de romp stevig aangespannen.",
@@ -6106,11 +6106,11 @@
     },
     {
       "order": 101,
-      "exerciseId": "fp_8aac54ed19e1ab87",
+      "exerciseId": "fp_aad8db78145f62e5",
       "sourceName": "Plank voorwaarts",
       "titleNl": "voorwaartse plankbeweging",
       "category": "Core",
-      "referenceImage": "images/core/plank-voorwaarts-line-v1.png",
+      "referenceImage": "images/core/plank-voorwaarts.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Neem een stabiele onderarm- of hoge plank aan volgens het voorbeeld.",
@@ -6166,11 +6166,11 @@
     },
     {
       "order": 102,
-      "exerciseId": "fp_a71a72276d792a16",
+      "exerciseId": "fp_54c449d0c14df0ab",
       "sourceName": "Reversed crunch",
       "titleNl": "reverse crunch",
       "category": "Core",
-      "referenceImage": "images/core/reversed-crunch-line-v1.png",
+      "referenceImage": "images/core/reversed-crunch.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met de heupen en knieën gebogen en de armen naast je.",
@@ -6226,11 +6226,11 @@
     },
     {
       "order": 103,
-      "exerciseId": "fp_1da1b4c3926c22a8",
+      "exerciseId": "fp_7b07f346644f9c17",
       "sourceName": "Rug extensie",
       "titleNl": "rugstrekking in buiklig",
       "category": "Core",
-      "referenceImage": "images/core/rug-extensie-line-v1.png",
+      "referenceImage": "images/core/rug-extensie.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de buik met de handen volgens de gekozen variant en houd de benen ontspannen.",
@@ -6286,11 +6286,11 @@
     },
     {
       "order": 104,
-      "exerciseId": "fp_7df8d3160beb1c85",
+      "exerciseId": "fp_2ba4343f0f5b8cb2",
       "sourceName": "Rusian twist",
       "titleNl": "Russian twist",
       "category": "Core",
-      "referenceImage": "images/core/rusian-twist-line-v1.png",
+      "referenceImage": "images/core/rusian-twist.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Zit met gebogen knieën, een lange rug en eventueel de voeten op de vloer.",
@@ -6346,11 +6346,11 @@
     },
     {
       "order": 105,
-      "exerciseId": "fp_e5ef4fc99af35fcc",
+      "exerciseId": "fp_c6ad4534859e4283",
       "sourceName": "Scissors 1",
       "titleNl": "scissor kicks variant één",
       "category": "Core",
-      "referenceImage": "images/core/scissors-1-line-v1.png",
+      "referenceImage": "images/core/scissors-1.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met de benen gestrekt en houd de onderrug tegen de ondergrond.",
@@ -6406,11 +6406,11 @@
     },
     {
       "order": 106,
-      "exerciseId": "fp_08dc8ab314087d02",
+      "exerciseId": "fp_1872b3e4056e1ce9",
       "sourceName": "Scissors 2",
       "titleNl": "scissor kicks variant twee",
       "category": "Core",
-      "referenceImage": "images/core/scissors-2-line-v1.png",
+      "referenceImage": "images/core/scissors-2.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig stabiel op de rug met de benen van de grond in de afgesproken positie.",
@@ -6466,11 +6466,11 @@
     },
     {
       "order": 107,
-      "exerciseId": "fp_7c998bf905f5df9e",
+      "exerciseId": "fp_bc3b0b60f215fddc",
       "sourceName": "Side bents",
       "titleNl": "zijwaartse rompbuiging",
       "category": "Core",
-      "referenceImage": "images/core/side-bents-line-v1.png",
+      "referenceImage": "images/core/side-bents.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop met het gewicht aan één zijde en de voeten stevig op de vloer.",
@@ -6526,11 +6526,11 @@
     },
     {
       "order": 108,
-      "exerciseId": "fp_9da8f8d15a154393",
+      "exerciseId": "fp_d1811e5d7803c2b9",
       "sourceName": "Stick twist",
       "titleNl": "romprotatie met stok",
       "category": "Core",
-      "referenceImage": "images/core/stick-twist-line-v1.png",
+      "referenceImage": "images/core/stick-twist.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta of zit rechtop met een lichte stok over de schouders en de buik aangespannen.",
@@ -6586,11 +6586,11 @@
     },
     {
       "order": 109,
-      "exerciseId": "fp_c6fc9b4984f97cbc",
+      "exerciseId": "fp_47b443eb0a58aa05",
       "sourceName": "Superman",
       "titleNl": "superman",
       "category": "Core",
-      "referenceImage": "images/core/superman-line-v1.png",
+      "referenceImage": "images/core/superman.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de buik met de armen voorwaarts en de nek in het verlengde van de rug.",
@@ -6646,11 +6646,11 @@
     },
     {
       "order": 110,
-      "exerciseId": "fp_ac28b0ca41e76985",
+      "exerciseId": "fp_2ad8c8663cd70aae",
       "sourceName": "Fiets",
       "titleNl": "fietsen",
       "category": "Cardio",
-      "referenceImage": "images/cardio/fiets-line-v1.png",
+      "referenceImage": "images/cardio/fiets.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel zadel en weerstand zo in dat je comfortabel kunt trappen en houd de handen ontspannen.",
@@ -6704,11 +6704,11 @@
     },
     {
       "order": 111,
-      "exerciseId": "fp_cada11cca0b948f1",
+      "exerciseId": "fp_378d931f5e0fe313",
       "sourceName": "Jumping jacks",
       "titleNl": "jumping jacks",
       "category": "Cardio",
-      "referenceImage": "images/cardio/jumping-jacks-line-v1.png",
+      "referenceImage": "images/cardio/jumping-jacks.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop met de voeten bij elkaar en de armen langs het lichaam.",
@@ -6762,11 +6762,11 @@
     },
     {
       "order": 112,
-      "exerciseId": "fp_4b295e2e9d35e709",
+      "exerciseId": "fp_342c96abc2273515",
       "sourceName": "Loopband",
       "titleNl": "lopen op de loopband",
       "category": "Cardio",
-      "referenceImage": "images/cardio/loopband-line-v1.png",
+      "referenceImage": "images/cardio/loopband.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stap op de stilstaande band, bevestig zo nodig de veiligheidsclip en start op lage snelheid.",
@@ -6820,11 +6820,11 @@
     },
     {
       "order": 113,
-      "exerciseId": "fp_0f7e59cd56dd0221",
+      "exerciseId": "fp_6c3dd765218031ce",
       "sourceName": "Roeier",
       "titleNl": "roeien op de ergometer",
       "category": "Cardio",
-      "referenceImage": "images/cardio/roeier-line-v1.png",
+      "referenceImage": "images/cardio/roeier.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Zit met de voeten vast, knieën gebogen, armen gestrekt en de rug lang.",
@@ -6878,11 +6878,11 @@
     },
     {
       "order": 114,
-      "exerciseId": "fp_8d73b99240a1ba09",
+      "exerciseId": "fp_a897d84ff30d4993",
       "sourceName": "Squat jumps",
       "titleNl": "squat jumps",
       "category": "Cardio",
-      "referenceImage": "images/cardio/squat-jumps-line-v1.png",
+      "referenceImage": "images/cardio/squat-jumps.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta op schouderbreedte en zak gecontroleerd in een kleine squat.",
@@ -6936,11 +6936,11 @@
     },
     {
       "order": 115,
-      "exerciseId": "fp_d96575f338930733",
+      "exerciseId": "fp_d0732c32eba3094b",
       "sourceName": "Stairs",
       "titleNl": "traplopen",
       "category": "Cardio",
-      "referenceImage": "images/cardio/stairs-line-v1.png",
+      "referenceImage": "images/cardio/stairs.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop voor de trap of step en gebruik zo nodig de leuning.",
@@ -6994,11 +6994,11 @@
     },
     {
       "order": 116,
-      "exerciseId": "fp_d9ea1f3d608b42a7",
+      "exerciseId": "fp_9e8d5fbff3a0f1f8",
       "sourceName": "Balans op 1 been",
       "titleNl": "éénbeenstand op de Bosu",
       "category": "Bosu",
-      "referenceImage": "images/bosu/balans-op-1-been-line-v1.png",
+      "referenceImage": "images/bosu/balans-op-1-been.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Plaats één voet centraal op de Bosu en houd een stevige steun binnen handbereik.",
@@ -7054,11 +7054,11 @@
     },
     {
       "order": 117,
-      "exerciseId": "fp_422c43c22f8f7736",
+      "exerciseId": "fp_388e93b3e48c1e6f",
       "sourceName": "Bosu brigdes",
       "titleNl": "bilbrug met voeten op de Bosu",
       "category": "Bosu",
-      "referenceImage": "images/bosu/bosu-brigdes-line-v1.png",
+      "referenceImage": "images/bosu/bosu-brigdes.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met beide voeten stabiel op de Bosu en de knieën gebogen.",
@@ -7114,11 +7114,11 @@
     },
     {
       "order": 118,
-      "exerciseId": "fp_fb438391acf36c14",
+      "exerciseId": "fp_2a13707cf78cf938",
       "sourceName": "Bosu brigdes single leg",
       "titleNl": "éénbenige bilbrug op de Bosu",
       "category": "Bosu",
-      "referenceImage": "images/bosu/bosu-brigdes-single-leg-line-v1.png",
+      "referenceImage": "images/bosu/bosu-brigdes-single-leg.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met één voet op de Bosu en houd het andere been in de gekozen positie.",
@@ -7174,11 +7174,11 @@
     },
     {
       "order": 119,
-      "exerciseId": "fp_3489d4ffa0a2d6b5",
+      "exerciseId": "fp_18b5017624ed40cb",
       "sourceName": "Bosu chest press dumbell",
       "titleNl": "dumbbell chest press op de Bosu",
       "category": "Bosu",
-      "referenceImage": "images/bosu/bosu-chest-press-dumbell-line-v1.png",
+      "referenceImage": "images/bosu/bosu-chest-press-dumbell.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Steun met de bovenrug stabiel op de Bosu, zet de voeten breed neer en houd de gewichten naast de borst.",
@@ -7234,11 +7234,11 @@
     },
     {
       "order": 120,
-      "exerciseId": "fp_2c1c66b64531edf0",
+      "exerciseId": "fp_f2ffe5657555b655",
       "sourceName": "Bosu leg pull in",
       "titleNl": "leg pull-in op de Bosu",
       "category": "Bosu",
-      "referenceImage": "images/bosu/bosu-leg-pull-in-line-v1.png",
+      "referenceImage": "images/bosu/bosu-leg-pull-in.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Steun met de handen op de Bosu en neem een stabiele plankpositie aan.",
@@ -7294,11 +7294,11 @@
     },
     {
       "order": 121,
-      "exerciseId": "fp_29b79b4045c98ba2",
+      "exerciseId": "fp_7c3ccd22529e3fc0",
       "sourceName": "Bosu mountain climber",
       "titleNl": "mountain climber met Bosu",
       "category": "Bosu",
-      "referenceImage": "images/bosu/bosu-mountain-climber-line-v1.png",
+      "referenceImage": "images/bosu/bosu-mountain-climber.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Plaats de handen stevig op de Bosu en maak een lange hoge plank.",
@@ -7354,11 +7354,11 @@
     },
     {
       "order": 122,
-      "exerciseId": "fp_fa9e3b2b38f48147",
+      "exerciseId": "fp_1079cf5eae872bbe",
       "sourceName": "Bosu plank",
       "titleNl": "plank op de Bosu",
       "category": "Bosu",
-      "referenceImage": "images/bosu/bosu-plank-line-v1.png",
+      "referenceImage": "images/bosu/bosu-plank.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Plaats onderarmen of handen stabiel op de Bosu en strek het lichaam vanuit knieën of tenen.",
@@ -7414,11 +7414,11 @@
     },
     {
       "order": 123,
-      "exerciseId": "fp_de60914247892820",
+      "exerciseId": "fp_586975703456464c",
       "sourceName": "Bosu plank leg lift",
       "titleNl": "plank op de Bosu met beenheffing",
       "category": "Bosu",
-      "referenceImage": "images/bosu/bosu-plank-leg-lift-line-v1.png",
+      "referenceImage": "images/bosu/bosu-plank-leg-lift.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Neem een stabiele plank aan met de handen of onderarmen op de Bosu.",
@@ -7474,11 +7474,11 @@
     },
     {
       "order": 124,
-      "exerciseId": "fp_a8a8261ed5efa6b5",
+      "exerciseId": "fp_42617c1127625d33",
       "sourceName": "Bosu squat",
       "titleNl": "squat op de Bosu",
       "category": "Bosu",
-      "referenceImage": "images/bosu/bosu-squat-line-v1.png",
+      "referenceImage": "images/bosu/bosu-squat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Ga centraal en stabiel op de afgesproken zijde van de Bosu staan met steun binnen bereik.",
@@ -7534,11 +7534,11 @@
     },
     {
       "order": 125,
-      "exerciseId": "fp_2667ec9b04ef9ab6",
+      "exerciseId": "fp_fb2f2dd6579feaaa",
       "sourceName": "Bosu v ups",
       "titleNl": "V-up op de Bosu",
       "category": "Bosu",
-      "referenceImage": "images/bosu/bosu-v-ups-line-v1.png",
+      "referenceImage": "images/bosu/bosu-v-ups.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Zit met het bekken stabiel op de Bosu en steun zo nodig licht met de handen.",
@@ -7594,11 +7594,11 @@
     },
     {
       "order": 126,
-      "exerciseId": "fp_bf7fb6ee70270951",
+      "exerciseId": "fp_9fd92f65b1df6b45",
       "sourceName": "Bosu zijw plank",
       "titleNl": "zijplank op de Bosu",
       "category": "Bosu",
-      "referenceImage": "images/bosu/bosu-zijw-plank-line-v1.png",
+      "referenceImage": "images/bosu/bosu-zijw-plank.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Plaats de onderarm stabiel op de Bosu en zet knieën of voeten volgens de gekozen variant neer.",
@@ -7654,11 +7654,11 @@
     },
     {
       "order": 127,
-      "exerciseId": "fp_15a3b9e977fc9f73",
+      "exerciseId": "fp_0583cc25fb6882d7",
       "sourceName": "TRX ab roll out",
       "titleNl": "TRX buikspier-roll-out",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-ab-roll-out-line-v1.png",
+      "referenceImage": "images/trx/trx-ab-roll-out.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta met de grepen voor de schouders, armen gestrekt en het lichaam licht voorover.",
@@ -7713,11 +7713,11 @@
     },
     {
       "order": 128,
-      "exerciseId": "fp_2e79440f27eb6126",
+      "exerciseId": "fp_e13686b64cf3495d",
       "sourceName": "TRX biceps curl",
       "titleNl": "TRX bicepscurl",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-biceps-curl-line-v1.png",
+      "referenceImage": "images/trx/trx-biceps-curl.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Leun achterover met gestrekte armen, handpalmen omhoog en het lichaam in één rechte lijn.",
@@ -7772,11 +7772,11 @@
     },
     {
       "order": 129,
-      "exerciseId": "fp_5a61fa1d75f4cda0",
+      "exerciseId": "fp_0e47c8da4f3accdd",
       "sourceName": "TRX chest press",
       "titleNl": "TRX chest press",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-chest-press-line-v1.png",
+      "referenceImage": "images/trx/trx-chest-press.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta van het anker af, leun voorover in de banden en houd het lichaam lang.",
@@ -7831,11 +7831,11 @@
     },
     {
       "order": 130,
-      "exerciseId": "fp_6fa3220153c56f73",
+      "exerciseId": "fp_c2ae0e94f5738a77",
       "sourceName": "TRX flyes I",
       "titleNl": "TRX fly variant één",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-flyes-i-line-v1.png",
+      "referenceImage": "images/trx/trx-flyes-i.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta van het anker af met de armen voor je en leun gecontroleerd voorover.",
@@ -7890,11 +7890,11 @@
     },
     {
       "order": 131,
-      "exerciseId": "fp_9e2ec144308641b2",
+      "exerciseId": "fp_ff018299959429f0",
       "sourceName": "TRX flyes II",
       "titleNl": "TRX fly variant twee",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-flyes-ii-line-v1.png",
+      "referenceImage": "images/trx/trx-flyes-ii.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Neem de getoonde schuine lichaamshouding aan met spanning op beide banden.",
@@ -7949,11 +7949,11 @@
     },
     {
       "order": 132,
-      "exerciseId": "fp_d36e256cce15298d",
+      "exerciseId": "fp_e8cefa0cdc89c222",
       "sourceName": "TRX glute bridge",
       "titleNl": "TRX bilbrug",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-glute-bridge-line-v1.png",
+      "referenceImage": "images/trx/trx-glute-bridge.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met de hielen in de voetlussen en de knieën gebogen.",
@@ -8008,11 +8008,11 @@
     },
     {
       "order": 133,
-      "exerciseId": "fp_43c5102c0aae657b",
+      "exerciseId": "fp_df71e90dec476183",
       "sourceName": "TRX lunge",
       "titleNl": "TRX uitvalspas",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-lunge-line-v1.png",
+      "referenceImage": "images/trx/trx-lunge.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Houd beide grepen licht vast en zet één voet voor de andere.",
@@ -8067,11 +8067,11 @@
     },
     {
       "order": 134,
-      "exerciseId": "fp_b3b737d69dc8fd4b",
+      "exerciseId": "fp_f514c597315a9093",
       "sourceName": "TRX lunge lateral high",
       "titleNl": "hoge laterale TRX-lunge",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-lunge-lateral-high-line-v1.png",
+      "referenceImage": "images/trx/trx-lunge-lateral-high.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Houd de grepen vast en plaats de voeten breed met de romp rechtop.",
@@ -8126,11 +8126,11 @@
     },
     {
       "order": 135,
-      "exerciseId": "fp_07eb39592ca286a5",
+      "exerciseId": "fp_d161eef7eff818ad",
       "sourceName": "TRX lunge lateral low",
       "titleNl": "lage laterale TRX-lunge",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-lunge-lateral-low-line-v1.png",
+      "referenceImage": "images/trx/trx-lunge-lateral-low.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta breed met spanning op de TRX en houd de voeten volledig aan de grond.",
@@ -8185,11 +8185,11 @@
     },
     {
       "order": 136,
-      "exerciseId": "fp_f84c856f88937d01",
+      "exerciseId": "fp_c7a30e5ff9d85248",
       "sourceName": "TRX lunge reverse",
       "titleNl": "achterwaartse TRX-lunge",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-lunge-reverse-line-v1.png",
+      "referenceImage": "images/trx/trx-lunge-reverse.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Houd de grepen licht vast en sta rechtop met de voeten naast elkaar.",
@@ -8244,11 +8244,11 @@
     },
     {
       "order": 137,
-      "exerciseId": "fp_df16ecbf35d4c12c",
+      "exerciseId": "fp_0cecaa7a248c97f4",
       "sourceName": "TRX mountain climber",
       "titleNl": "TRX mountain climber",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-mountain-climber-line-v1.png",
+      "referenceImage": "images/trx/trx-mountain-climber.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Plaats de voeten in de lussen en neem een hoge plank met de handen onder de schouders aan.",
@@ -8303,11 +8303,11 @@
     },
     {
       "order": 138,
-      "exerciseId": "fp_007de3ae82f371dd",
+      "exerciseId": "fp_65c52063d3076d21",
       "sourceName": "TRX plank",
       "titleNl": "TRX plank",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-plank-line-v1.png",
+      "referenceImage": "images/trx/trx-plank.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Plaats de voeten in de lussen en steun op onderarmen of handen volgens de gekozen variant.",
@@ -8362,11 +8362,11 @@
     },
     {
       "order": 139,
-      "exerciseId": "fp_2ba989c9af710948",
+      "exerciseId": "fp_d62104514b8a2ca3",
       "sourceName": "TRX plank side",
       "titleNl": "TRX zijplank",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-plank-side-line-v1.png",
+      "referenceImage": "images/trx/trx-plank-side.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Plaats de voeten in de lussen en draai gecontroleerd naar zijlig op één onderarm.",
@@ -8421,11 +8421,11 @@
     },
     {
       "order": 140,
-      "exerciseId": "fp_34d0ffae6f7aba08",
+      "exerciseId": "fp_8d71ff2915e8691a",
       "sourceName": "TRX pull up",
       "titleNl": "TRX pull-up",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-pull-up-line-v1.png",
+      "referenceImage": "images/trx/trx-pull-up.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Ga onder het anker zitten of hangen met de grepen vast en de voeten stevig geplaatst.",
@@ -8480,11 +8480,11 @@
     },
     {
       "order": 141,
-      "exerciseId": "fp_fec302fd9ff5a4f0",
+      "exerciseId": "fp_e28894b278170b61",
       "sourceName": "TRX row",
       "titleNl": "TRX row",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-row-line-v1.png",
+      "referenceImage": "images/trx/trx-row.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Leun achterover met gestrekte armen en houd het lichaam van hoofd tot hielen in één lijn.",
@@ -8539,11 +8539,11 @@
     },
     {
       "order": 142,
-      "exerciseId": "fp_44039432eda59b05",
+      "exerciseId": "fp_c2db68d9f54ced18",
       "sourceName": "TRX saw pikes",
       "titleNl": "TRX saw-pike",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-saw-pikes-line-v1.png",
+      "referenceImage": "images/trx/trx-saw-pikes.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Plaats de voeten in de lussen en start in een stabiele plank.",
@@ -8598,11 +8598,11 @@
     },
     {
       "order": 143,
-      "exerciseId": "fp_d11933139852aad0",
+      "exerciseId": "fp_220ad8ffe4242701",
       "sourceName": "TRX squat",
       "titleNl": "TRX squat",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-squat-line-v1.png",
+      "referenceImage": "images/trx/trx-squat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Houd de grepen licht vast, zet de voeten op de afgesproken breedte en sta rechtop.",
@@ -8657,11 +8657,11 @@
     },
     {
       "order": 144,
-      "exerciseId": "fp_25da8dd0dbec1142",
+      "exerciseId": "fp_68ae89731bef4b5d",
       "sourceName": "TRX squat overhead",
       "titleNl": "TRX squat met armen boven het hoofd",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-squat-overhead-line-v1.png",
+      "referenceImage": "images/trx/trx-squat-overhead.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta naar het anker gericht en houd spanning op de banden met de armen hoog.",
@@ -8716,11 +8716,11 @@
     },
     {
       "order": 145,
-      "exerciseId": "fp_8935ea15fc834f12",
+      "exerciseId": "fp_e06bebd7b7358c90",
       "sourceName": "TRX squat pistol",
       "titleNl": "TRX pistol squat",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-squat-pistol-line-v1.png",
+      "referenceImage": "images/trx/trx-squat-pistol.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Houd de grepen vast, sta op één been en strek het andere been voorwaarts.",
@@ -8775,11 +8775,11 @@
     },
     {
       "order": 146,
-      "exerciseId": "fp_f9069dbb76f91885",
+      "exerciseId": "fp_c4b190023bce96e1",
       "sourceName": "TRX triceps extension",
       "titleNl": "TRX tricepsextensie",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-triceps-extension-line-v1.png",
+      "referenceImage": "images/trx/trx-triceps-extension.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta van het anker af met gestrekte armen voor je en leun als één lijn voorover.",
@@ -8834,11 +8834,11 @@
     },
     {
       "order": 147,
-      "exerciseId": "fp_3a104be4af95d7b4",
+      "exerciseId": "fp_513b46bb55b9f908",
       "sourceName": "TRX triceps extension II",
       "titleNl": "TRX tricepsextensie variant twee",
       "category": "TRX",
-      "referenceImage": "images/trx/trx-triceps-extension-ii-line-v1.png",
+      "referenceImage": "images/trx/trx-triceps-extension-ii.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Neem de getoonde voetstand en schuine lichaamshouding aan met spanning op beide banden.",
@@ -8893,11 +8893,11 @@
     },
     {
       "order": 148,
-      "exerciseId": "fp_c1c3048b10c44e8d",
+      "exerciseId": "fp_6363eb3d095af9ff",
       "sourceName": "Yoga butterfly stretch",
       "titleNl": "vlinderhouding",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-butterfly-stretch-line-v1.png",
+      "referenceImage": "images/yoga/yoga-butterfly-stretch.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Zit op de grond, plaats de voetzolen tegen elkaar en maak de rug lang.",
@@ -8954,11 +8954,11 @@
     },
     {
       "order": 149,
-      "exerciseId": "fp_2dc2517b1495fbfc",
+      "exerciseId": "fp_11b523666112a7f1",
       "sourceName": "Yoga camel",
       "titleNl": "kameelhouding",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-camel-line-v1.png",
+      "referenceImage": "images/yoga/yoga-camel.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Kniel met de knieën op heupbreedte en plaats de handen eerst op het bekken.",
@@ -9015,11 +9015,11 @@
     },
     {
       "order": 150,
-      "exerciseId": "fp_759e160dfaeffd67",
+      "exerciseId": "fp_c93fd76791053a6f",
       "sourceName": "Yoga cat tail",
       "titleNl": "cat-tailhouding",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-cat-tail-line-v1.png",
+      "referenceImage": "images/yoga/yoga-cat-tail.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Ga in de getoonde zijlig, buig het bovenste been achter je en houd de voet vast; breng het onderste been gebogen voor je.",
@@ -9076,11 +9076,11 @@
     },
     {
       "order": 151,
-      "exerciseId": "fp_28e011fb7d4b53c1",
+      "exerciseId": "fp_8d46db911b2e6f09",
       "sourceName": "Yoga cobra",
       "titleNl": "cobrahouding",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-cobra-line-v1.png",
+      "referenceImage": "images/yoga/yoga-cobra.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de buik met de handen naast de borst en de ellebogen dicht bij het lichaam.",
@@ -9137,11 +9137,11 @@
     },
     {
       "order": 152,
-      "exerciseId": "fp_39821b4a51ba3cd8",
+      "exerciseId": "fp_f6a4e38230c49a26",
       "sourceName": "Yoga deep squat",
       "titleNl": "diepe yogasquat",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-deep-squat-line-v1.png",
+      "referenceImage": "images/yoga/yoga-deep-squat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta iets breder dan heupbreedte met de voeten licht naar buiten gedraaid.",
@@ -9198,11 +9198,11 @@
     },
     {
       "order": 153,
-      "exerciseId": "fp_60aabb5cbda38d51",
+      "exerciseId": "fp_71f64a1c9517ccf2",
       "sourceName": "Yoga downward dog",
       "titleNl": "neerwaartse hond",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-downward-dog-line-v1.png",
+      "referenceImage": "images/yoga/yoga-downward-dog.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Start op handen en knieën met de handen stevig gespreid.",
@@ -9259,11 +9259,11 @@
     },
     {
       "order": 154,
-      "exerciseId": "fp_de69f93165f8b84d",
+      "exerciseId": "fp_45eb69b02317733b",
       "sourceName": "Yoga ear pressure",
       "titleNl": "oordrukhouding",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-ear-pressure-line-v1.png",
+      "referenceImage": "images/yoga/yoga-ear-pressure.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Voer deze gevorderde omgekeerde houding alleen uit na persoonlijke toestemming en begin vanuit de ploeg met steun voor de schouders.",
@@ -9320,11 +9320,11 @@
     },
     {
       "order": 155,
-      "exerciseId": "fp_fc364e699dc61394",
+      "exerciseId": "fp_0c813648b61d0a57",
       "sourceName": "Yoga extended child's pose",
       "titleNl": "verlengde kindhouding",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-extended-child-s-pose-line-v1.png",
+      "referenceImage": "images/yoga/yoga-extended-child-s-pose.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Start op handen en knieën, breng de heupen richting de hielen en loop de handen voorwaarts.",
@@ -9381,11 +9381,11 @@
     },
     {
       "order": 156,
-      "exerciseId": "fp_d4622f5cbc546d6c",
+      "exerciseId": "fp_8f9900125a43804c",
       "sourceName": "Yoga extended puppy",
       "titleNl": "verlengde puppyhouding",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-extended-puppy-line-v1.png",
+      "referenceImage": "images/yoga/yoga-extended-puppy.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Start op handen en knieën met de heupen boven de knieën.",
@@ -9442,11 +9442,11 @@
     },
     {
       "order": 157,
-      "exerciseId": "fp_248fd9814eee1e7f",
+      "exerciseId": "fp_a97c7ce2c7899d0f",
       "sourceName": "Yoga extended triangle",
       "titleNl": "gestrekte driehoek",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-extended-triangle-line-v1.png",
+      "referenceImage": "images/yoga/yoga-extended-triangle.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta breed, draai de voorste voet naar buiten en strek de armen zijwaarts.",
@@ -9503,11 +9503,11 @@
     },
     {
       "order": 158,
-      "exerciseId": "fp_ad7008bd3e651c14",
+      "exerciseId": "fp_8462e52d2da7bf79",
       "sourceName": "Yoga frog",
       "titleNl": "kikkerhouding",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-frog-line-v1.png",
+      "referenceImage": "images/yoga/yoga-frog.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Start op handen en knieën en schuif de knieën alleen zover uiteen als comfortabel, met steun onder de knieën.",
@@ -9564,11 +9564,11 @@
     },
     {
       "order": 159,
-      "exerciseId": "fp_ccc382efcdc65433",
+      "exerciseId": "fp_8434579cd7154b6d",
       "sourceName": "Yoga full boat",
       "titleNl": "volledige boothouding",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-full-boat-line-v1.png",
+      "referenceImage": "images/yoga/yoga-full-boat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Zit op de zitbotten, buig de knieën en maak de rug lang.",
@@ -9625,11 +9625,11 @@
     },
     {
       "order": 160,
-      "exerciseId": "fp_dfd7aee58b0cea3f",
+      "exerciseId": "fp_f0ffe06d178fa2d7",
       "sourceName": "Yoga glute stretch",
       "titleNl": "bilspierrek",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-glute-stretch-line-v1.png",
+      "referenceImage": "images/yoga/yoga-glute-stretch.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig of zit in de getoonde houding en plaats één enkel over het andere bovenbeen.",
@@ -9686,11 +9686,11 @@
     },
     {
       "order": 161,
-      "exerciseId": "fp_ea089ec54a97f6d9",
+      "exerciseId": "fp_6303ba477869424f",
       "sourceName": "Yoga half monkey",
       "titleNl": "halve aaphouding",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-half-monkey-line-v1.png",
+      "referenceImage": "images/yoga/yoga-half-monkey.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Start in een lage uitvalspas en breng daarna de heupen achterwaarts boven de achterste knie.",
@@ -9747,11 +9747,11 @@
     },
     {
       "order": 162,
-      "exerciseId": "fp_5658df0358370e8a",
+      "exerciseId": "fp_a945485354c52fec",
       "sourceName": "Yoga hamstring stretch",
       "titleNl": "yoga-hamstringrek",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-hamstring-stretch-line-v1.png",
+      "referenceImage": "images/yoga/yoga-hamstring-stretch.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Neem de getoonde zit- of rugligpositie aan met één been ondersteund.",
@@ -9808,11 +9808,11 @@
     },
     {
       "order": 163,
-      "exerciseId": "fp_289087205fb3d478",
+      "exerciseId": "fp_7311181dcd90c5d7",
       "sourceName": "Yoga happy baby",
       "titleNl": "happy baby",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-happy-baby-line-v1.png",
+      "referenceImage": "images/yoga/yoga-happy-baby.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug, breng de knieën richting oksels en pak bovenbenen, onderbenen of buitenranden van de voeten vast.",
@@ -9869,11 +9869,11 @@
     },
     {
       "order": 164,
-      "exerciseId": "fp_556d20f428a096de",
+      "exerciseId": "fp_beec6b1b9cc51005",
       "sourceName": "Yoga hip flexor stretch",
       "titleNl": "heupbuigerrek",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-hip-flexor-stretch-line-v1.png",
+      "referenceImage": "images/yoga/yoga-hip-flexor-stretch.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Kom in een halve knielstand met de voorste voet stevig geplaatst en het bekken recht vooruit.",
@@ -9930,11 +9930,11 @@
     },
     {
       "order": 165,
-      "exerciseId": "fp_74e24875f543ea64",
+      "exerciseId": "fp_bbb40b64d7bd2bf7",
       "sourceName": "Yoga knee to chest hip stretch",
       "titleNl": "knie-naar-borstheuprek",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-knee-to-chest-hip-stretch-line-v1.png",
+      "referenceImage": "images/yoga/yoga-knee-to-chest-hip-stretch.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de rug met beide benen ontspannen en pak één bovenbeen of knie vast.",
@@ -9991,11 +9991,11 @@
     },
     {
       "order": 166,
-      "exerciseId": "fp_20a8ff403ecc34dd",
+      "exerciseId": "fp_e19ecd2f1a8dd183",
       "sourceName": "Yoga Marichi’s III",
       "titleNl": "Marichi-draaiing drie",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-marichi-s-iii-line-v1.png",
+      "referenceImage": "images/yoga/yoga-marichi-s-iii.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Zit lang, buig één knie met de voet naast het gestrekte been en plaats de tegenovergestelde arm bij de knie.",
@@ -10052,11 +10052,11 @@
     },
     {
       "order": 167,
-      "exerciseId": "fp_99d241abdcc47c87",
+      "exerciseId": "fp_56265637371590fd",
       "sourceName": "Yoga noose",
       "titleNl": "lushouding",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-noose-line-v1.png",
+      "referenceImage": "images/yoga/yoga-noose.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Voer deze gevorderde hurk-draaiing alleen uit na persoonlijke instructie en gebruik een blok of steun indien nodig.",
@@ -10113,11 +10113,11 @@
     },
     {
       "order": 168,
-      "exerciseId": "fp_b8004d4e82868a34",
+      "exerciseId": "fp_437dcd0650b51b31",
       "sourceName": "Yoga pigeon",
       "titleNl": "duifhouding",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-pigeon-line-v1.png",
+      "referenceImage": "images/yoga/yoga-pigeon.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Breng vanuit handen en knieën één knie naar voren en strek het andere been achterwaarts, met steun onder het bekken.",
@@ -10174,11 +10174,11 @@
     },
     {
       "order": 169,
-      "exerciseId": "fp_39c918d53cbece6d",
+      "exerciseId": "fp_8bba7765b70f6078",
       "sourceName": "Yoga plow",
       "titleNl": "ploeg-houding",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-plow-line-v1.png",
+      "referenceImage": "images/yoga/yoga-plow.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Voer deze gevorderde omgekeerde houding alleen uit na persoonlijke toestemming en ondersteun de schouders, niet het hoofd.",
@@ -10235,11 +10235,11 @@
     },
     {
       "order": 170,
-      "exerciseId": "fp_3fca99c23c3334a6",
+      "exerciseId": "fp_2a949cd1df2e6b73",
       "sourceName": "Yoga reverse warrior",
       "titleNl": "omgekeerde krijger",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-reverse-warrior-line-v1.png",
+      "referenceImage": "images/yoga/yoga-reverse-warrior.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta in krijger twee met de voorste knie gebogen en de achterste voet stevig geaard.",
@@ -10296,11 +10296,11 @@
     },
     {
       "order": 171,
-      "exerciseId": "fp_f9a1b5e804bf3d3f",
+      "exerciseId": "fp_091229d871a15a3f",
       "sourceName": "Yoga revolved downward facing dog",
       "titleNl": "gedraaide neerwaartse hond",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-revolved-downward-facing-dog-line-v1.png",
+      "referenceImage": "images/yoga/yoga-revolved-downward-facing-dog.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Start in neerwaartse hond en houd beide handen eerst stevig op de grond.",
@@ -10357,11 +10357,11 @@
     },
     {
       "order": 172,
-      "exerciseId": "fp_ff70e2c4edcd6738",
+      "exerciseId": "fp_ebdaa4f42e2bd3df",
       "sourceName": "Yoga snake",
       "titleNl": "slangenhouding",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-snake-line-v1.png",
+      "referenceImage": "images/yoga/yoga-snake.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de buik met de benen lang en breng de handen of armen volgens de gekozen variant naast of achter het lichaam.",
@@ -10418,11 +10418,11 @@
     },
     {
       "order": 173,
-      "exerciseId": "fp_fa9fb5c1ba948cfe",
+      "exerciseId": "fp_d9318269f3119cd9",
       "sourceName": "Yoga warrior II",
       "titleNl": "krijger twee",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-warrior-ii-line-v1.png",
+      "referenceImage": "images/yoga/yoga-warrior-ii.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta breed, draai de voorste voet naar buiten en strek de armen horizontaal.",
@@ -10479,11 +10479,11 @@
     },
     {
       "order": 174,
-      "exerciseId": "fp_a66cb47c6e26f2b5",
+      "exerciseId": "fp_b6211651490bf955",
       "sourceName": "Yoga warrior III",
       "titleNl": "krijger drie",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-warrior-iii-line-v1.png",
+      "referenceImage": "images/yoga/yoga-warrior-iii.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta op één been met een steun binnen bereik en maak de romp lang.",
@@ -10540,11 +10540,11 @@
     },
     {
       "order": 175,
-      "exerciseId": "fp_6c1b959a4e1fe0c7",
+      "exerciseId": "fp_16f898a6e2bda15a",
       "sourceName": "Yoga wide angle seated forward bend",
       "titleNl": "wijdbeense zittende vooroverbuiging",
       "category": "Yoga",
-      "referenceImage": "images/yoga/yoga-wide-angle-seated-forward-bend-line-v1.png",
+      "referenceImage": "images/yoga/yoga-wide-angle-seated-forward-bend.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Zit met de benen comfortabel wijd, knieën en tenen omhoog en de rug lang.",
@@ -10601,11 +10601,11 @@
     },
     {
       "order": 176,
-      "exerciseId": "fp_017fc4abc863a6b6",
+      "exerciseId": "fp_02d03991093aed8e",
       "sourceName": "Kettlebell swing",
       "titleNl": "kettlebell swing",
       "category": "Kettlebell",
-      "referenceImage": "images/kettlebell/kettlebell-swing-line-v1.png",
+      "referenceImage": "images/kettlebell/kettlebell-swing.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta iets breder dan heupbreedte met de kettlebell voor je en maak een heupscharnier met een lange rug.",
@@ -10660,11 +10660,11 @@
     },
     {
       "order": 177,
-      "exerciseId": "fp_05c08764b565fa4c",
+      "exerciseId": "fp_f117287ee864c49b",
       "sourceName": "Kettlebelle swing one arm",
       "titleNl": "éénarmige kettlebell swing",
       "category": "Kettlebell",
-      "referenceImage": "images/kettlebell/kettlebelle-swing-one-arm-line-v1.png",
+      "referenceImage": "images/kettlebell/kettlebelle-swing-one-arm.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta stabiel met de kettlebell in één hand en maak een heupscharnier met de schouders recht vooruit.",
@@ -10719,11 +10719,11 @@
     },
     {
       "order": 178,
-      "exerciseId": "fp_91f356ce30f9ea79",
+      "exerciseId": "fp_eb0cc687438a6ec9",
       "sourceName": "Bodyblade back",
       "titleNl": "Bodyblade achter de rug",
       "category": "Bodyblade",
-      "referenceImage": "images/bodyblade/bodyblade-back-line-v1.png",
+      "referenceImage": "images/bodyblade/bodyblade-back.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop en houd de Bodyblade volgens de getoonde greep achter het lichaam met ontspannen knieën.",
@@ -10778,11 +10778,11 @@
     },
     {
       "order": 179,
-      "exerciseId": "fp_728da8ec3ec5523d",
+      "exerciseId": "fp_da63729ba577a91a",
       "sourceName": "Bodyblade diagonaal",
       "titleNl": "Bodyblade diagonaal",
       "category": "Bodyblade",
-      "referenceImage": "images/bodyblade/bodyblade-diagonaal-line-v1.png",
+      "referenceImage": "images/bodyblade/bodyblade-diagonaal.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta stabiel en houd de Bodyblade diagonaal voor het lichaam in de afgesproken richting.",
@@ -10837,11 +10837,11 @@
     },
     {
       "order": 180,
-      "exerciseId": "fp_18372d47138fd14a",
+      "exerciseId": "fp_b3530be1854740eb",
       "sourceName": "Bodyblade front bovengreep",
       "titleNl": "Bodyblade voorwaarts met bovengreep",
       "category": "Bodyblade",
-      "referenceImage": "images/bodyblade/bodyblade-front-bovengreep-line-v1.png",
+      "referenceImage": "images/bodyblade/bodyblade-front-bovengreep.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta rechtop en houd de Bodyblade voor het lichaam met de afgesproken bovengreep.",
@@ -10896,11 +10896,11 @@
     },
     {
       "order": 181,
-      "exerciseId": "fp_3270d53fcc11aec2",
+      "exerciseId": "fp_c474501e9dd014a2",
       "sourceName": "Bodyblade front ondergreep",
       "titleNl": "Bodyblade voorwaarts met ondergreep",
       "category": "Bodyblade",
-      "referenceImage": "images/bodyblade/bodyblade-front-ondergreep-line-v1.png",
+      "referenceImage": "images/bodyblade/bodyblade-front-ondergreep.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta stabiel en houd de Bodyblade voor je met de handpalm volgens de ondergreep.",
@@ -10955,11 +10955,11 @@
     },
     {
       "order": 182,
-      "exerciseId": "fp_ed0daabc01699df7",
+      "exerciseId": "fp_a1ed4dbb403e0c6d",
       "sourceName": "Bodyblade front squat",
       "titleNl": "Bodyblade squat",
       "category": "Bodyblade",
-      "referenceImage": "images/bodyblade/bodyblade-front-squat-line-v1.png",
+      "referenceImage": "images/bodyblade/bodyblade-front-squat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Houd de trillende Bodyblade voor de romp en zet de voeten op de afgesproken breedte.",
@@ -11014,11 +11014,11 @@
     },
     {
       "order": 183,
-      "exerciseId": "fp_116fe820e793824b",
+      "exerciseId": "fp_2f3099fbfc466f4d",
       "sourceName": "Bodyblade front uitstap",
       "titleNl": "Bodyblade uitvalspas",
       "category": "Bodyblade",
-      "referenceImage": "images/bodyblade/bodyblade-front-uitstap-line-v1.png",
+      "referenceImage": "images/bodyblade/bodyblade-front-uitstap.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Houd de Bodyblade voor de romp en neem een stabiele stapstand aan.",
@@ -11073,11 +11073,11 @@
     },
     {
       "order": 184,
-      "exerciseId": "fp_a486956b0468985d",
+      "exerciseId": "fp_d69c5ab01bdacc7b",
       "sourceName": "Bodyblade high",
       "titleNl": "Bodyblade hoog",
       "category": "Bodyblade",
-      "referenceImage": "images/bodyblade/bodyblade-high-line-v1.png",
+      "referenceImage": "images/bodyblade/bodyblade-high.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta stabiel en breng de Bodyblade alleen binnen je pijnvrije bereik boven schouderhoogte.",
@@ -11132,11 +11132,11 @@
     },
     {
       "order": 185,
-      "exerciseId": "fp_15e6f5c105c0b702",
+      "exerciseId": "fp_b1b55b86c4100e54",
       "sourceName": "Foam rol glutes stretch",
       "titleNl": "foamrollen van de bilspieren",
       "category": "Foam roller",
-      "referenceImage": "images/foam-roller/foam-rol-glutes-stretch-line-v1.png",
+      "referenceImage": "images/foam-roller/foam-rol-glutes-stretch.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Zit met één bil op de foamroller, plaats de handen als steun en kruis eventueel de enkel over het andere been.",
@@ -11191,11 +11191,11 @@
     },
     {
       "order": 186,
-      "exerciseId": "fp_9a780bdddab0d1d9",
+      "exerciseId": "fp_2d6e73df45117d68",
       "sourceName": "Foam rol quat stretch",
       "titleNl": "foamrollen van de bovenbenen",
       "category": "Foam roller",
-      "referenceImage": "images/foam-roller/foam-rol-quat-stretch-line-v1.png",
+      "referenceImage": "images/foam-roller/foam-rol-quat-stretch.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig op de buik met de foamroller onder de voorzijde van één of beide bovenbenen en steun op de onderarmen.",
@@ -11250,11 +11250,11 @@
     },
     {
       "order": 187,
-      "exerciseId": "fp_5433288dcab91b9a",
+      "exerciseId": "fp_f53ce2065fb49eb2",
       "sourceName": "Foam rol upper back stretch",
       "titleNl": "foamrollen van de bovenrug",
       "category": "Foam roller",
-      "referenceImage": "images/foam-roller/foam-rol-upper-back-stretch-line-v1.png",
+      "referenceImage": "images/foam-roller/foam-rol-upper-back-stretch.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Lig met de foamroller dwars onder de bovenrug, steun het hoofd en houd de heupen laag of licht geheven.",
@@ -11309,11 +11309,11 @@
     },
     {
       "order": 188,
-      "exerciseId": "fp_11957ee293a75b49",
+      "exerciseId": "fp_344aafa86e08d049",
       "sourceName": "Voor zijwaarts",
       "titleNl": "voorwaarts-zijwaarts door de speedladder",
       "category": "Speedladder",
-      "referenceImage": "images/speedladder/voor-zijwaarts-line-v1.png",
+      "referenceImage": "images/speedladder/voor-zijwaarts.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Sta licht op de voorvoeten voor de ladder met knieën en heupen ontspannen.",
@@ -11368,11 +11368,11 @@
     },
     {
       "order": 189,
-      "exerciseId": "fp_4e8a957ff1c87d1e",
+      "exerciseId": "fp_5af0270a5fedd83b",
       "sourceName": "Abdominal (apparaat)",
       "titleNl": "buikmachine",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/abdominal-apparaat-line-v1.png",
+      "referenceImage": "images/apparaten/abdominal-apparaat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel stoel, steunpunten en gewicht samen met je fysiotherapeut in en plaats de romp stevig tegen de kussens.",
@@ -11426,11 +11426,11 @@
     },
     {
       "order": 190,
-      "exerciseId": "fp_aececf92e5d46be4",
+      "exerciseId": "fp_3e7c08184ca73fae",
       "sourceName": "Back (apparaat)",
       "titleNl": "rugmachine",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/back-apparaat-line-v1.png",
+      "referenceImage": "images/apparaten/back-apparaat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel zitting, rugsteun en gewicht passend in en plaats de voeten stabiel.",
@@ -11484,11 +11484,11 @@
     },
     {
       "order": 191,
-      "exerciseId": "fp_8374e73a3f0e852c",
+      "exerciseId": "fp_b5725b610192706a",
       "sourceName": "Backextensie (apparaat)",
       "titleNl": "rugextensieapparaat",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/backextensie-apparaat-line-v1.png",
+      "referenceImage": "images/apparaten/backextensie-apparaat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel de steun ter hoogte van het bekken in, fixeer de voeten en maak de rug lang.",
@@ -11542,11 +11542,11 @@
     },
     {
       "order": 192,
-      "exerciseId": "fp_b9a5a2afa5671067",
+      "exerciseId": "fp_19e07e01294c64b5",
       "sourceName": "Chest press (apparaat)",
       "titleNl": "chest-pressapparaat",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/chest-press-apparaat-line-v1.png",
+      "referenceImage": "images/apparaten/chest-press-apparaat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel de zitting zo in dat de handgrepen rond borsthoogte staan en kies het afgesproken gewicht.",
@@ -11600,11 +11600,11 @@
     },
     {
       "order": 193,
-      "exerciseId": "fp_36a674d39bcb4f49",
+      "exerciseId": "fp_382e423d4a8ed6d2",
       "sourceName": "Chin-dip (apparaat)",
       "titleNl": "ondersteunde chin-up of dip",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/chin-dip-apparaat-line-v1.png",
+      "referenceImage": "images/apparaten/chin-dip-apparaat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Kies met je fysiotherapeut de chin-up- of dipvariant, stel de ondersteuning in en stap veilig op het kniekussen.",
@@ -11658,11 +11658,11 @@
     },
     {
       "order": 194,
-      "exerciseId": "fp_c3e83194dcd5525f",
+      "exerciseId": "fp_96f6c41e9dba6b01",
       "sourceName": "Circle (apparaat)",
       "titleNl": "armcirkelapparaat",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/circle-apparaat-line-v1.png",
+      "referenceImage": "images/apparaten/circle-apparaat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel zitting en weerstand in zodat je rechtop bij de handgrepen zit.",
@@ -11716,11 +11716,11 @@
     },
     {
       "order": 195,
-      "exerciseId": "fp_17abc092b95c1a8e",
+      "exerciseId": "fp_b9345bde5c635878",
       "sourceName": "Crosstrainer (apparaat)",
       "titleNl": "crosstrainer",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/crosstrainer-apparaat-line-v1.png",
+      "referenceImage": "images/apparaten/crosstrainer-apparaat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stap op de stilstaande pedalen, pak de handgrepen vast en start met lage weerstand.",
@@ -11774,11 +11774,11 @@
     },
     {
       "order": 196,
-      "exerciseId": "fp_e3fe597ae3919b90",
+      "exerciseId": "fp_ece0666d1342d4d2",
       "sourceName": "Dorsi-pecto (apparaat)",
       "titleNl": "dorsi-pectomachine",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/dorsi-pecto-apparaat-line-v1.png",
+      "referenceImage": "images/apparaten/dorsi-pecto-apparaat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Laat je fysiotherapeut zitting, bewegingsarmen en gewicht instellen voor de gekozen borst- of rugvariant.",
@@ -11832,11 +11832,11 @@
     },
     {
       "order": 197,
-      "exerciseId": "fp_838d88e0c459327e",
+      "exerciseId": "fp_5993a1f1bdfba6c0",
       "sourceName": "Endy Armstrekker",
       "titleNl": "Endy armstrekker",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/endy-armstrekker-line-v1.png",
+      "referenceImage": "images/apparaten/endy-armstrekker.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel zitting, handgrepen en weerstand samen met je fysiotherapeut in en zit rechtop.",
@@ -11890,11 +11890,11 @@
     },
     {
       "order": 198,
-      "exerciseId": "fp_f0509b729e223aef",
+      "exerciseId": "fp_85417b4c30175526",
       "sourceName": "Endy Beenstrekker",
       "titleNl": "Endy beenstrekker",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/endy-beenstrekker-line-v1.png",
+      "referenceImage": "images/apparaten/endy-beenstrekker.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel de zitting en beensteun zo in dat knie en draaipunt aansluiten en kies het afgesproken gewicht.",
@@ -11948,11 +11948,11 @@
     },
     {
       "order": 199,
-      "exerciseId": "fp_322c5b55d52d72dc",
+      "exerciseId": "fp_aaabb27f28a34f46",
       "sourceName": "Endy Buikmachine",
       "titleNl": "Endy buikmachine",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/endy-buikmachine-line-v1.png",
+      "referenceImage": "images/apparaten/endy-buikmachine.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel de zitting en rompsteun passend in en houd de voeten stabiel.",
@@ -12006,11 +12006,11 @@
     },
     {
       "order": 200,
-      "exerciseId": "fp_afec8805d79deacd",
+      "exerciseId": "fp_30830a11e5af1242",
       "sourceName": "Endy Fly",
       "titleNl": "Endy fly",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/endy-fly-line-v1.png",
+      "referenceImage": "images/apparaten/endy-fly.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel de zitting zo in dat de bewegingsarmen bij borsthoogte staan en houd de rug tegen de steun.",
@@ -12064,11 +12064,11 @@
     },
     {
       "order": 201,
-      "exerciseId": "fp_6f210be2a4931811",
+      "exerciseId": "fp_3cb155e4c77ec502",
       "sourceName": "Endy Heup abductie",
       "titleNl": "Endy heupabductie",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/endy-heup-abductie-line-v1.png",
+      "referenceImage": "images/apparaten/endy-heup-abductie.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel zitting, beensteunen en gewicht passend in en zit met het bekken stabiel.",
@@ -12122,11 +12122,11 @@
     },
     {
       "order": 202,
-      "exerciseId": "fp_563c4cceb9bfe630",
+      "exerciseId": "fp_9c9150323706dcba",
       "sourceName": "Endy Leg curl",
       "titleNl": "Endy leg curl",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/endy-leg-curl-line-v1.png",
+      "referenceImage": "images/apparaten/endy-leg-curl.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel zitting en rollen zo in dat het kniegewricht bij het draaipunt ligt en fixeer het bovenbeen.",
@@ -12180,11 +12180,11 @@
     },
     {
       "order": 203,
-      "exerciseId": "fp_3cd25c939e74a83f",
+      "exerciseId": "fp_2f97b7fe3943057f",
       "sourceName": "Endy Leg ext",
       "titleNl": "Endy leg extension",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/endy-leg-ext-line-v1.png",
+      "referenceImage": "images/apparaten/endy-leg-ext.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel zitting en enkelrol passend in en kies het door je fysiotherapeut bepaalde gewicht.",
@@ -12238,11 +12238,11 @@
     },
     {
       "order": 204,
-      "exerciseId": "fp_ef86e5b803b97b81",
+      "exerciseId": "fp_6ce6924b44bf9a90",
       "sourceName": "Endy Pulldown",
       "titleNl": "Endy pulldown",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/endy-pulldown-line-v1.png",
+      "referenceImage": "images/apparaten/endy-pulldown.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel zitting en bovenbeensteun in, pak de handgrepen symmetrisch en maak de romp lang.",
@@ -12296,11 +12296,11 @@
     },
     {
       "order": 205,
-      "exerciseId": "fp_504a854d56d31c59",
+      "exerciseId": "fp_04ace7e010dfef2e",
       "sourceName": "Endy Rotator",
       "titleNl": "Endy rotator",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/endy-rotator-line-v1.png",
+      "referenceImage": "images/apparaten/endy-rotator.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Laat je fysiotherapeut zitting, steunpunten, draairichting en weerstand voor dit specifieke apparaat instellen.",
@@ -12354,11 +12354,11 @@
     },
     {
       "order": 206,
-      "exerciseId": "fp_b36b731fe2d90932",
+      "exerciseId": "fp_521e3cd46404d3ac",
       "sourceName": "Endy Rugmachine",
       "titleNl": "Endy rugmachine",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/endy-rugmachine-line-v1.png",
+      "referenceImage": "images/apparaten/endy-rugmachine.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel zitting, rompsteun en weerstand in en plaats voeten en bekken stabiel.",
@@ -12412,11 +12412,11 @@
     },
     {
       "order": 207,
-      "exerciseId": "fp_16c6a6bfe70b58a8",
+      "exerciseId": "fp_ab63ca4dd9bb1d14",
       "sourceName": "Endy Triceps dips",
       "titleNl": "Endy triceps-dip",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/endy-triceps-dips-line-v1.png",
+      "referenceImage": "images/apparaten/endy-triceps-dips.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel de zitting en handgrepen in zodat de schouders ontspannen blijven en kies een passend gewicht.",
@@ -12470,11 +12470,11 @@
     },
     {
       "order": 208,
-      "exerciseId": "fp_49829d42d7eacf81",
+      "exerciseId": "fp_762433eae97df9e5",
       "sourceName": "Fiets (apparaat)",
       "titleNl": "fietsergometer",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/fiets-apparaat-line-v1.png",
+      "referenceImage": "images/apparaten/fiets-apparaat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel het zadel zo in dat de knie onderaan licht gebogen blijft en start met lage weerstand.",
@@ -12528,11 +12528,11 @@
     },
     {
       "order": 209,
-      "exerciseId": "fp_7be373ce0cfd289c",
+      "exerciseId": "fp_3121ef64b91c35d3",
       "sourceName": "Gluteus kick (apparaat)",
       "titleNl": "gluteus-kickapparaat",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/gluteus-kick-apparaat-line-v1.png",
+      "referenceImage": "images/apparaten/gluteus-kick-apparaat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel borst- of heupsteun en voetplaat passend in en plaats het standbeen stabiel.",
@@ -12586,11 +12586,11 @@
     },
     {
       "order": 210,
-      "exerciseId": "fp_cd9e87e58aeb4a17",
+      "exerciseId": "fp_a283bcb81ae6eb31",
       "sourceName": "Leg press (apparaat)",
       "titleNl": "leg-pressapparaat",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/leg-press-apparaat-line-v1.png",
+      "referenceImage": "images/apparaten/leg-press-apparaat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel zitting en voetpositie in zodat knieën en heupen comfortabel buigen en kies het afgesproken gewicht.",
@@ -12644,11 +12644,11 @@
     },
     {
       "order": 211,
-      "exerciseId": "fp_63da6fbe622c0bc5",
+      "exerciseId": "fp_f2e38bb5f7abf0b2",
       "sourceName": "Loopband (apparaat)",
       "titleNl": "loopband",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/loopband-apparaat-line-v1.png",
+      "referenceImage": "images/apparaten/loopband-apparaat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stap op de stilstaande band, bevestig zo nodig de veiligheidsclip en start op lage snelheid.",
@@ -12702,11 +12702,11 @@
     },
     {
       "order": 212,
-      "exerciseId": "fp_cf013ebf9c42d8c3",
+      "exerciseId": "fp_7137128c5f498677",
       "sourceName": "Roeier (apparaat)",
       "titleNl": "roeiergometer",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/roeier-apparaat-line-v1.png",
+      "referenceImage": "images/apparaten/roeier-apparaat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Zet de voeten vast, zit met gebogen knieën en houd de rug lang en de armen gestrekt.",
@@ -12760,11 +12760,11 @@
     },
     {
       "order": 213,
-      "exerciseId": "fp_245fa00226a407ac",
+      "exerciseId": "fp_8596981989aa3408",
       "sourceName": "Rotator (apparaat)",
       "titleNl": "romprotatieapparaat",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/rotator-apparaat-line-v1.png",
+      "referenceImage": "images/apparaten/rotator-apparaat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel zitting, beensteunen en draaibereik samen met je fysiotherapeut in en fixeer het bekken.",
@@ -12818,11 +12818,11 @@
     },
     {
       "order": 214,
-      "exerciseId": "fp_13729618a85d2141",
+      "exerciseId": "fp_143594f21492f955",
       "sourceName": "Stairs (apparaat)",
       "titleNl": "traploopapparaat",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/stairs-apparaat-line-v1.png",
+      "referenceImage": "images/apparaten/stairs-apparaat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stap met de handgrepen als steun op het stilstaande apparaat en start op het laagste tempo.",
@@ -12876,11 +12876,11 @@
     },
     {
       "order": 215,
-      "exerciseId": "fp_a10593062358d6aa",
+      "exerciseId": "fp_e082af3a36965a68",
       "sourceName": "Vertical row (apparaat)",
       "titleNl": "vertical-rowapparaat",
       "category": "Apparaten",
-      "referenceImage": "images/apparaten/vertical-row-apparaat-line-v1.png",
+      "referenceImage": "images/apparaten/vertical-row-apparaat.jpg",
       "script": {
         "language": "nl-NL",
         "setup": "Stel zitting en borststeun zo in dat de handgrepen comfortabel bereikbaar zijn en kies het afgesproken gewicht.",

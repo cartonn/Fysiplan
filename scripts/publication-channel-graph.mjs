@@ -52,7 +52,12 @@ async function execute(node, results) {
     assert(v1.every((entry) => v2Names.has(entry.naam)), "v2 bevat niet de volledige stabiele v1-set");
     const extension = v2.filter((entry) => entry.coreExerciseId);
     assert(extension.length === 285, `v2-uitbreiding moet 285 oefeningen bevatten; gevonden ${extension.length}`);
-    const pathErrors = v2.filter((entry) => !entry.kaartImg || entry.img !== linePathForColor(entry.kaartImg));
+    const v1ByName = new Map(v1.map((entry) => [entry.naam, entry]));
+    const pathErrors = v2.filter((entry) => {
+      if (!entry.kaartImg) return true;
+      if (!entry.coreExerciseId) return entry.img !== v1ByName.get(entry.naam)?.img;
+      return entry.img !== linePathForColor(entry.kaartImg);
+    });
     assert(pathErrors.length === 0, `v2 bevat ${pathErrors.length} onjuiste kleur/lijn-koppelingen: ${pathErrors.slice(0, 5).map((entry) => entry.naam).join(", ")}`);
     const pairs = await Promise.all(v2.map(async (entry) => {
       const [colorReady, lineReady] = await Promise.all([
@@ -70,7 +75,7 @@ async function execute(node, results) {
       lineDrawingsReady: pairs.filter((pair) => pair.lineReady).length,
       pairsReady: pairs.filter((pair) => pair.pairReady).length,
       pendingCount: pairs.filter((pair) => !pair.pairReady).length,
-      lineRule: "black-only contours on pure #FFFFFF",
+      lineRule: "legacy reuses exact V1 images; extensions use black-only contours on pure #FFFFFF",
     };
   }
 

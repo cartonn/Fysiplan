@@ -124,6 +124,7 @@ function generatedEntry(oefening, position, previous = {}) {
 
 function buildManifest(previous) {
   const prior = new Map((previous?.exercises || []).map((entry) => [entry.exerciseId, entry]));
+  const priorByName = new Map((previous?.exercises || []).map((entry) => [entry.sourceName, entry]));
   return {
     schemaVersion: MANIFEST_VERSION,
     collection: "Fysiplan uitlegvideo's — top 500",
@@ -154,7 +155,7 @@ function buildManifest(previous) {
         "Bestand doorstaat technische controle en heeft geen zwarte frames, clipping of zichtbare motion-capturefouten.",
       ],
     },
-    exercises: oefeningen.map((o, i) => generatedEntry(o, i, prior.get(exerciseId(o)))),
+    exercises: oefeningen.map((o, i) => generatedEntry(o, i, prior.get(exerciseId(o)) || priorByName.get(o.naam))),
   };
 }
 

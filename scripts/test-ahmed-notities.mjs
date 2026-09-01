@@ -208,8 +208,12 @@ try {
   const dubbel = await post("/api/oefeningen/categorieen", { naam: "werp-abc" }, headers);
   assert.equal(dubbel.response.status, 409);
 
+  const v1Manifest = await (await fetch(origin + "/oefeningen.json")).json();
   const manifestResponse = await fetch(origin + "/v2/oefeningen.json");
   const manifest = await manifestResponse.json();
+  const v1Images = new Map(v1Manifest.map((entry) => [entry.naam, entry.img]));
+  assert.equal(manifest.length, v1Manifest.length);
+  assert.ok(manifest.every((entry) => entry.img.replace(/^\/v2\//, "") === v1Images.get(entry.naam)));
   const oefening = manifest.find((entry) => entry.groep && entry.groep !== "Werp-ABC");
   assert.ok(oefening);
   const tweedeCategorie = await post("/api/oefeningen/categorie", {
