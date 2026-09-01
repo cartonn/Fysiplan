@@ -770,6 +770,20 @@
   "uitleg": "Stel het zadel zo in dat je knie licht gebogen blijft als je trapper onderaan staat. Fiets in een rustig en gelijkmatig tempo."
  },
  {
+  "naam": "Alternating lunge jumps",
+  "groep": "Agility",
+  "img": "images/cardio/alternating-lunge-jumps-line-v1.png",
+  "kaartImg": "images/cardio/alternating-lunge-jumps-line-v1.png",
+  "uitleg": "Kom gecontroleerd in een uitvalspas en wissel tijdens een kleine sprong van voorste been. Land zacht in de uitvalspas en houd je romp rechtop."
+ },
+ {
+  "naam": "Box jumps",
+  "groep": "Agility",
+  "img": "images/cardio/box-jumps-line-v1.png",
+  "kaartImg": "images/cardio/box-jumps-line-v1.png",
+  "uitleg": "Zak licht door je knieen voor een stabiele opstapbox. Spring gecontroleerd op de box, land zacht met beide voeten en kom rustig weer af."
+ },
+ {
   "naam": "Jumping jacks",
   "groep": "Cardio",
   "img": "images/cardio/jumping-jacks.jpg",
@@ -784,11 +798,46 @@
   "uitleg": "Ga op de band staan en kies een rustig tempo. Loop rechtop met je blik naar voren en gebruik de leuning alleen als dat nodig is."
  },
  {
+  "naam": "Long jumps",
+  "groep": "Agility",
+  "img": "images/cardio/long-jumps-line-v1.png",
+  "kaartImg": "images/cardio/long-jumps-line-v1.png",
+  "uitleg": "Zak licht door je knieen, zwaai je armen naar achteren en spring met beide voeten gecontroleerd naar voren. Land zacht met gebogen knieen en je voeten naast elkaar."
+ },
+ {
+  "naam": "Skate jumps",
+  "groep": "Agility",
+  "img": "images/cardio/skate-jumps-line-v1.png",
+  "kaartImg": "images/cardio/skate-jumps-line-v1.png",
+  "uitleg": "Spring zijwaarts van het ene been naar het andere. Land zacht met een licht gebogen knie en breng het vrije been schuin achter het standbeen langs."
+ },
+ {
+  "naam": "Sprints",
+  "groep": "Agility",
+  "img": "images/cardio/sprints-line-v1.png",
+  "kaartImg": "images/cardio/sprints-line-v1.png",
+  "uitleg": "Vertrek vanuit een lichte vooroverhelling en versnel met korte krachtige passen. Houd je romp stabiel en gebruik je armen in tegengestelde richting van je benen."
+ },
+ {
+  "naam": "Snap jumps",
+  "groep": "Agility",
+  "img": "images/cardio/snap-jumps-line-v1.png",
+  "kaartImg": "images/cardio/snap-jumps-line-v1.png",
+  "uitleg": "Zak licht door je knieen en maak een kleine, snelle sprong recht omhoog. Land veerkrachtig met je knieen licht gebogen en herhaal gecontroleerd."
+ },
+ {
   "naam": "Roeier",
   "groep": "Cardio",
   "img": "images/cardio/roeier.jpg",
   "kaartImg": "images/cardio/roeier-avatar-v7.jpg",
   "uitleg": "Zet je voeten vast in de steunen en pak het handvat met gestrekte armen. Duw je benen uit en trek daarna het handvat naar je buik, kom rustig terug."
+ },
+ {
+  "naam": "Rope jumping",
+  "groep": "Agility",
+  "img": "images/cardio/rope-jumping-line-v1.png",
+  "kaartImg": "images/cardio/rope-jumping-line-v1.png",
+  "uitleg": "Houd de uiteinden van het springtouw vast en spring licht met beide voeten terwijl het touw onder je voeten doorgaat. Land zacht en houd je romp rechtop."
  },
  {
   "naam": "Squat jumps",
@@ -803,6 +852,132 @@
   "img": "images/cardio/stairs.jpg",
   "kaartImg": "images/cardio/stairs-avatar-v7.jpg",
   "uitleg": "Ga op de traptreden van het apparaat staan en pak eventueel de leuning licht vast. Stap in een rustig tempo omhoog en blijf rechtop staan."
+ },
+ {
+  "naam": "Swiss ball wall squat",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-wall-squat-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-wall-squat-line-v1.png",
+  "uitleg": "Plaats de oefenbal tussen je onderrug en de muur. Zak rustig door je knieen terwijl de bal langs de muur rolt, houd je knieen boven je voeten en kom weer omhoog."
+ },
+ {
+  "naam": "Swiss ball plank",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-plank-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-plank-line-v1.png",
+  "uitleg": "Steun met je onderarmen op de oefenbal. Begin eventueel op je knieen en strek daarna je benen tot je lichaam een rechte lijn vormt van schouders tot hielen."
+ },
+ {
+  "naam": "Swiss ball hip raise",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-hip-raise-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-hip-raise-line-v1.png",
+  "uitleg": "Lig op je rug met je onderbenen op de oefenbal. Span je buik en bilspieren aan, til je heupen op tot je lichaam een rechte lijn vormt en zak rustig terug."
+ },
+ {
+  "naam": "Swiss ball leg curl hip raise",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-leg-curl-hip-raise-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-leg-curl-hip-raise-line-v1.png",
+  "uitleg": "Lig op je rug met je hielen op de oefenbal en houd je heupen omhoog. Trek de bal naar je toe door je knieen te buigen en strek je benen daarna weer gecontroleerd."
+ },
+ {
+  "naam": "Swiss ball squeezes adductoren",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-squeezes-adductoren-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-squeezes-adductoren-line-v1.png",
+  "uitleg": "Lig op je rug met je knieen gebogen en een bal tussen je knieen. Knijp de bal rustig samen vanuit je bovenbenen, houd kort vast en ontspan weer."
+ },
+ {
+  "naam": "Swiss ball feet to chest",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-feet-to-chest-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-feet-to-chest-line-v1.png",
+  "uitleg": "Neem een hoge plank aan met je voeten op de oefenbal. Houd je benen gestrekt en rol de bal naar je toe door je heupen omhoog te tillen; keer rustig terug naar plank."
+ },
+ {
+  "naam": "Swiss ball knee to chest",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-knee-to-chest-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-knee-to-chest-line-v1.png",
+  "uitleg": "Neem een hoge plank aan met je voeten op de oefenbal. Buig je knieen en trek de bal gecontroleerd richting je borst, strek daarna je benen weer."
+ },
+ {
+  "naam": "Swiss ball rollout",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-rollout-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-rollout-line-v1.png",
+  "uitleg": "Knie voor de oefenbal met je onderarmen erop. Rol de bal rustig naar voren terwijl je romp lang blijft en trek hem gecontroleerd weer terug."
+ },
+ {
+  "naam": "Swiss ball abs",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-abs-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-abs-line-v1.png",
+  "uitleg": "Lig met je onderrug op de oefenbal en je voeten stevig op de grond. Span je buik aan en maak een kleine gecontroleerde rompbuiging, zonder aan je nek te trekken."
+ },
+ {
+  "naam": "Swiss ball back ext",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-back-ext-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-back-ext-line-v1.png",
+  "uitleg": "Lig met je buik op de oefenbal en houd je voeten stevig op de grond. Hef je romp rustig tot hij in lijn is met je benen en zak gecontroleerd terug."
+ },
+ {
+  "naam": "Swiss ball push up",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-push-up-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-push-up-line-v1.png",
+  "uitleg": "Neem een hoge plank aan met je schenen op de oefenbal. Buig je ellebogen gecontroleerd voor een push-up, houd je lichaam lang en druk weer omhoog."
+ },
+ {
+  "naam": "Swiss ball leg lifts",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-leg-lifts-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-leg-lifts-line-v1.png",
+  "uitleg": "Lig op je rug met de oefenbal tussen je onderbenen. Til je gestrekte benen met de bal gecontroleerd omhoog en laat ze langzaam terugzakken zonder je onderrug hol te trekken."
+ },
+ {
+  "naam": "Swiss ball core",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-core-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-core-line-v1.png",
+  "uitleg": "Zit rechtop op de oefenbal met je voeten stevig op de grond. Span je romp aan en til gecontroleerd een voet op terwijl je balans behoudt."
+ },
+ {
+  "naam": "Swiss ball leg curl one leg",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-leg-curl-one-leg-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-leg-curl-one-leg-line-v1.png",
+  "uitleg": "Lig op je rug met een hiel op de oefenbal en het andere been gestrekt omhoog. Houd je heupen op en trek de bal met je standbeen naar je toe, strek daarna weer."
+ },
+ {
+  "naam": "Swiss ball dumbbell flyes",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-dumbbell-flyes-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-dumbbell-flyes-line-v1.png",
+  "uitleg": "Steun met je bovenrug op de oefenbal en houd je heupen hoog. Open je armen met de dumbbells zijwaarts met licht gebogen ellebogen en breng ze gecontroleerd boven je borst samen."
+ },
+ {
+  "naam": "Swiss ball dumbbell chest press",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-dumbbell-chest-press-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-dumbbell-chest-press-line-v1.png",
+  "uitleg": "Steun met je bovenrug op de oefenbal en houd je heupen hoog. Druk de dumbbells vanuit gebogen ellebogen rustig recht omhoog boven je borst en laat gecontroleerd terugzakken."
+ },
+ {
+  "naam": "Swiss ball dumbbell biceps curl",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-dumbbell-biceps-curl-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-dumbbell-biceps-curl-line-v1.png",
+  "uitleg": "Zit rechtop op de oefenbal met de dumbbells naast je lichaam. Buig je ellebogen om de gewichten naar je schouders te brengen en laat ze rustig zakken."
+ },
+ {
+  "naam": "Swiss ball russian twist",
+  "groep": "Exercise Ball",
+  "img": "images/exercise-ball/swiss-ball-russian-twist-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-russian-twist-line-v1.png",
+  "uitleg": "Zit stabiel op de oefenbal met je handen voor je borst. Draai je romp rustig afwisselend naar links en rechts zonder je bekken mee te draaien."
  },
  {
   "naam": "Balans op 1 been",
@@ -1521,5 +1696,558 @@
   "img": "images/apparaten/vertical-row-apparaat.jpg",
   "kaartImg": "images/apparaten/vertical-row-apparaat-avatar-v7.jpg",
   "uitleg": "Ga zitten met je borst tegen het steunkussen en pak de handgrepen. Trek de grepen rustig naar je toe met je ellebogen langs je lichaam en kom daarna gecontroleerd terug."
+ },
+ {
+  "naam": "Foam roller glute med.",
+  "groep": "Foam Roller",
+  "img": "images/foam-roller/foam-roller-glute-med-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-glute-med-line-v1.png",
+  "uitleg": "Ga zijwaarts op de foamroller zitten en plaats hem onder de buitenzijde van je bil. Rol langzaam een klein stuk heen en weer en steun met je handen voor balans."
+ },
+ {
+  "naam": "Foam roller glute",
+  "groep": "Foam Roller",
+  "img": "images/foam-roller/foam-roller-glute-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-glute-line-v1.png",
+  "uitleg": "Ga op de foamroller zitten met één enkel over de andere knie. Verplaats je gewicht naar de bilspier en rol rustig heen en weer."
+ },
+ {
+  "naam": "Foam roller quadriceps",
+  "groep": "Foam Roller",
+  "img": "images/foam-roller/foam-roller-quadriceps-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-quadriceps-line-v1.png",
+  "uitleg": "Ga op je buik liggen met de foamroller onder de voorkant van je bovenbenen. Steun op je onderarmen en rol langzaam van boven de knie richting heup en terug."
+ },
+ {
+  "naam": "Foam roller hamstring",
+  "groep": "Foam Roller",
+  "img": "images/foam-roller/foam-roller-hamstring-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-hamstring-line-v1.png",
+  "uitleg": "Zit met gestrekte benen en plaats de foamroller onder je bovenbenen. Til je heupen licht op met steun van je handen en rol rustig heen en weer."
+ },
+ {
+  "naam": "Foam roller calf",
+  "groep": "Foam Roller",
+  "img": "images/foam-roller/foam-roller-calf-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-calf-line-v1.png",
+  "uitleg": "Zit met één onderbeen op de foamroller en steun met je handen achter je. Rol langzaam over de kuit en wissel daarna van been."
+ },
+ {
+  "naam": "Foam roller tractus",
+  "groep": "Foam Roller",
+  "img": "images/foam-roller/foam-roller-tractus-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-tractus-line-v1.png",
+  "uitleg": "Ga op je zij liggen met de foamroller onder de buitenzijde van je bovenbeen. Steun op je onderarm en rol gecontroleerd over een klein traject."
+ },
+ {
+  "naam": "Foam roller back upper",
+  "groep": "Foam Roller",
+  "img": "images/foam-roller/foam-roller-back-upper-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-back-upper-line-v1.png",
+  "uitleg": "Lig op je rug met gebogen knieën en plaats de foamroller onder je bovenrug. Ondersteun je hoofd licht met je handen en rol rustig een klein stuk."
+ },
+ {
+  "naam": "Foam roller lat stretch",
+  "groep": "Foam Roller",
+  "img": "images/foam-roller/foam-roller-lat-stretch-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-lat-stretch-line-v1.png",
+  "uitleg": "Ga op je zij liggen met de foamroller onder de zijkant van je bovenrug. Strek de onderste arm boven je hoofd en rol langzaam over het gebied."
+ },
+ {
+  "naam": "Foam roller adductoren",
+  "groep": "Foam Roller",
+  "img": "images/foam-roller/foam-roller-adductoren-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-adductoren-line-v1.png",
+  "uitleg": "Ga op je buik liggen en plaats de foamroller onder de binnenzijde van één bovenbeen. Steun op je onderarmen en rol langzaam over een klein traject."
+ },
+ {
+  "naam": "Foam roller fore arm",
+  "groep": "Foam Roller",
+  "img": "images/foam-roller/foam-roller-fore-arm-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-fore-arm-line-v1.png",
+  "uitleg": "Zit comfortabel en leg je onderarm met de handpalm omlaag op de foamroller. Gebruik je andere hand om de druk te doseren en rol langzaam heen en weer."
+ },
+ {
+  "naam": "Foam roller back lower cross",
+  "groep": "Foam Roller",
+  "img": "images/foam-roller/foam-roller-back-lower-cross-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-back-lower-cross-line-v1.png",
+  "uitleg": "Lig met gebogen knieën op je rug en de foamroller onder je lage rug. Houd je armen ontspannen wijd en beweeg alleen klein en gecontroleerd."
+ },
+ {
+  "naam": "Foam roller back lower",
+  "groep": "Foam Roller",
+  "img": "images/foam-roller/foam-roller-back-lower-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-back-lower-line-v1.png",
+  "uitleg": "Lig op je rug met gebogen knieën en de foamroller onder je lage rug. Houd je bekken stabiel en rol slechts rustig over een klein gebied."
+ },
+ {
+  "naam": "Foam roller back extension",
+  "groep": "Foam Roller",
+  "img": "images/foam-roller/foam-roller-back-extension-line-v1.png",
+  "kaartImg": "images/foam-roller/foam-roller-back-extension-line-v1.png",
+  "uitleg": "Lig met de foamroller onder je middenrug en je knieën gebogen. Ondersteun je hoofd licht, open je borst rustig over de roller en kom gecontroleerd terug."
+ },
+ {
+  "naam": "Med ball slams",
+  "groep": "Medicine Ball",
+  "img": "images/medicine-ball/medicine-ball-slams-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-slams-line-v1.png",
+  "uitleg": "Sta stabiel met de medicine ball boven je hoofd. Span je romp aan, breng de bal krachtig recht naar beneden en vang hem gecontroleerd op."
+ },
+ {
+  "naam": "Med ball wall throw",
+  "groep": "Medicine Ball",
+  "img": "images/medicine-ball/medicine-ball-wall-throw-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-wall-throw-line-v1.png",
+  "uitleg": "Sta recht voor een vrije muur en houd de medicine ball voor je borst. Duw de bal met beide handen naar de muur en vang hem zacht op."
+ },
+ {
+  "naam": "Med ball chest press",
+  "groep": "Medicine Ball",
+  "img": "images/medicine-ball/medicine-ball-chest-press-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-chest-press-line-v1.png",
+  "uitleg": "Lig op je rug met gebogen knieën en houd de medicine ball boven je borst. Strek je armen rustig uit en laat de bal gecontroleerd terugzakken."
+ },
+ {
+  "naam": "Med ball floor press",
+  "groep": "Medicine Ball",
+  "img": "images/medicine-ball/medicine-ball-floor-press-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-floor-press-line-v1.png",
+  "uitleg": "Lig op je rug met gebogen knieën en houd de medicine ball dicht bij je borst. Duw hem recht omhoog en buig je ellebogen rustig terug."
+ },
+ {
+  "naam": "Med ball rotation passes",
+  "groep": "Medicine Ball",
+  "img": "images/medicine-ball/medicine-ball-rotation-passes-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-rotation-passes-line-v1.png",
+  "uitleg": "Sta zijwaarts bij een vrije muur met de medicine ball voor je borst. Draai vanuit je romp naar de muur, pas de bal gecontroleerd en vang hem op."
+ },
+ {
+  "naam": "Med ball rotation passes knee",
+  "groep": "Medicine Ball",
+  "img": "images/medicine-ball/medicine-ball-rotation-passes-knee-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-rotation-passes-knee-line-v1.png",
+  "uitleg": "Neem een stabiele halfknielende stand zijwaarts bij een vrije muur. Draai je romp en pas de medicine ball gecontroleerd naar de muur."
+ },
+ {
+  "naam": "Med ball push up one arm",
+  "groep": "Medicine Ball",
+  "img": "images/medicine-ball/medicine-ball-push-up-one-arm-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-push-up-one-arm-line-v1.png",
+  "uitleg": "Neem een hoge plank met één hand op de medicine ball en de andere op de vloer. Houd je romp recht, buig rustig door je armen en duw terug."
+ },
+ {
+  "naam": "Med ball push up two arms",
+  "groep": "Medicine Ball",
+  "img": "images/medicine-ball/medicine-ball-push-up-two-arms-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-push-up-two-arms-line-v1.png",
+  "uitleg": "Neem een hoge plank met beide handen op de medicine ball. Houd je lichaam in één lijn, buig gecontroleerd door je armen en duw terug."
+ },
+ {
+  "naam": "Med. Ball - Alt. Side slam",
+  "groep": "Medicine Ball",
+  "img": "images/medicine-ball/medicine-ball-alt-side-slam-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-alt-side-slam-line-v1.png",
+  "uitleg": "Sta breed en stabiel met de medicine ball. Breng hem gecontroleerd schuin naar de buitenzijde van één voet en wissel daarna van kant."
+ },
+ {
+  "naam": "Med ball obliques cross",
+  "groep": "Medicine Ball",
+  "img": "images/medicine-ball/medicine-ball-obliques-cross-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-obliques-cross-line-v1.png",
+  "uitleg": "Lig op je rug met gebogen knieën en houd de medicine ball met beide handen boven één schouder. Span je buik aan en beweeg gecontroleerd diagonaal terug."
+ },
+ {
+  "naam": "Med ball throw and jog",
+  "groep": "Medicine Ball",
+  "img": "images/medicine-ball/medicine-ball-throw-and-jog-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-throw-and-jog-line-v1.png",
+  "uitleg": "Maak een lichte voorwaartse stap met de medicine ball voor je borst. Stoot de bal gecontroleerd vooruit en hervat daarna rustig je pas."
+ },
+ {
+  "naam": "Med ball swing",
+  "groep": "Medicine Ball",
+  "img": "images/medicine-ball/medicine-ball-swing-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-swing-line-v1.png",
+  "uitleg": "Sta met voeten op heupbreedte, buig licht door je knieën en kantel vanuit je heupen. Houd je rug neutraal terwijl je de medicine ball tussen je benen brengt."
+ },
+ {
+  "naam": "Med ball overhead circles",
+  "groep": "Medicine Ball",
+  "img": "images/medicine-ball/medicine-ball-overhead-circles-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-overhead-circles-line-v1.png",
+  "uitleg": "Sta rechtop en houd de medicine ball met beide handen boven je hoofd. Maak rustig kleine cirkels zonder je onderrug hol te trekken."
+ },
+ {
+  "naam": "Med ball lunge overhead press",
+  "groep": "Medicine Ball",
+  "img": "images/medicine-ball/medicine-ball-lunge-overhead-press-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-lunge-overhead-press-line-v1.png",
+  "uitleg": "Stap in een stabiele uitvalspas en houd de medicine ball recht boven je hoofd. Houd je romp recht en duw via je voorste voet terug."
+ },
+ {
+  "naam": "Med ball V-ups",
+  "groep": "Medicine Ball",
+  "img": "images/medicine-ball/medicine-ball-v-ups-line-v1.png",
+  "kaartImg": "images/medicine-ball/medicine-ball-v-ups-line-v1.png",
+  "uitleg": "Lig op je rug en houd de medicine ball met beide handen vast. Trek je knieën richting borst terwijl je de bal gecontroleerd omhoog brengt."
+ },
+ {
+  "naam": "Mob Hip flexion/extension",
+  "groep": "Mobility",
+  "img": "images/mobility/mob-hip-flexion-extension-line-v1.png",
+  "kaartImg": "images/mobility/mob-hip-flexion-extension-line-v1.png",
+  "uitleg": "Neem een halfknielende uitvalspas met je romp rechtop. Kantel je bekken licht naar achteren en beweeg rustig naar voren tot je rek voor in de heup voelt."
+ },
+ {
+  "naam": "Mob Hip opener",
+  "groep": "Mobility",
+  "img": "images/mobility/mob-hip-opener-line-v1.png",
+  "kaartImg": "images/mobility/mob-hip-opener-line-v1.png",
+  "uitleg": "Zit in een 90-90-positie met beide knieën gebogen. Draai je heupen rustig van de ene naar de andere kant zonder je voeten ver te verplaatsen."
+ },
+ {
+  "naam": "Mob thoracaal",
+  "groep": "Mobility",
+  "img": "images/mobility/mob-thoracaal-line-v1.png",
+  "kaartImg": "images/mobility/mob-thoracaal-line-v1.png",
+  "uitleg": "Kom op handen en knieën en plaats één hand achter je hoofd. Draai je borstkas rustig open richting plafond zonder je onderrug mee te draaien."
+ },
+ {
+  "naam": "Mob adductoren",
+  "groep": "Mobility",
+  "img": "images/mobility/mob-adductoren-line-v1.png",
+  "kaartImg": "images/mobility/mob-adductoren-line-v1.png",
+  "uitleg": "Kom op één knie en strek het andere been opzij met de voet plat op de vloer. Beweeg je heupen rustig naar achteren voor rek aan de binnenzijde van het bovenbeen."
+ },
+ {
+  "naam": "Adductoren stretch",
+  "groep": "Mobility",
+  "img": "images/mobility/adductoren-stretch-line-v1.png",
+  "kaartImg": "images/mobility/adductoren-stretch-line-v1.png",
+  "uitleg": "Zit rechtop met je benen wijd en gestrekt. Buig rustig vanuit je heupen naar voren, zonder je rug te forceren."
+ },
+ {
+  "naam": "Mob lower back",
+  "groep": "Mobility",
+  "img": "images/mobility/mob-lower-back-line-v1.png",
+  "kaartImg": "images/mobility/mob-lower-back-line-v1.png",
+  "uitleg": "Lig op je rug en trek beide knieën rustig richting borst. Houd je schenen vast en laat je lage rug ontspannen."
+ },
+ {
+  "naam": "Mob back cat/cow",
+  "groep": "Mobility",
+  "img": "images/mobility/mob-back-cat-cow-line-v1.png",
+  "kaartImg": "images/mobility/mob-back-cat-cow-line-v1.png",
+  "uitleg": "Kom op handen en knieën. Maak je rug rustig bol en beweeg daarna gecontroleerd terug naar een neutrale stand."
+ },
+ {
+  "naam": "Mob back left/right",
+  "groep": "Mobility",
+  "img": "images/mobility/mob-back-left-right-line-v1.png",
+  "kaartImg": "images/mobility/mob-back-left-right-line-v1.png",
+  "uitleg": "Lig op je rug met je armen wijd en je knieën gebogen. Laat beide knieën rustig naar één zijde zakken terwijl je schouders op de vloer blijven."
+ },
+ {
+  "naam": "Mob Hip circles",
+  "groep": "Mobility",
+  "img": "images/mobility/mob-hip-circles-line-v1.png",
+  "kaartImg": "images/mobility/mob-hip-circles-line-v1.png",
+  "uitleg": "Sta lang op één been en hef de andere knie tot heuphoogte. Maak rustig kleine cirkels vanuit je heup en houd je bekken stabiel."
+ },
+ {
+  "naam": "Gluteal stretch",
+  "groep": "Mobility",
+  "img": "images/mobility/gluteal-stretch-line-v1.png",
+  "kaartImg": "images/mobility/gluteal-stretch-line-v1.png",
+  "uitleg": "Lig op je rug, leg één enkel op de andere knie en trek het onderste been rustig naar je toe. Houd je schouders ontspannen."
+ },
+ {
+  "naam": "Hamstring stretch",
+  "groep": "Mobility",
+  "img": "images/mobility/hamstring-stretch-line-v1.png",
+  "kaartImg": "images/mobility/hamstring-stretch-line-v1.png",
+  "uitleg": "Zit met gestrekte benen en buig rustig vanuit je heupen naar voren. Houd je rug zo lang mogelijk en forceer de rek niet."
+ },
+ {
+  "naam": "Hamstring stretch one leg",
+  "groep": "Mobility",
+  "img": "images/mobility/hamstring-stretch-one-leg-line-v1.png",
+  "kaartImg": "images/mobility/hamstring-stretch-one-leg-line-v1.png",
+  "uitleg": "Zit met één been gestrekt en de andere voetzool tegen je bovenbeen. Buig rustig vanuit je heupen richting het gestrekte been."
+ },
+ {
+  "naam": "Quadriceps stretch",
+  "groep": "Mobility",
+  "img": "images/mobility/quadriceps-stretch-line-v1.png",
+  "kaartImg": "images/mobility/quadriceps-stretch-line-v1.png",
+  "uitleg": "Sta stabiel en houd zo nodig licht steun vast. Pak één enkel achter je, houd je knieën bij elkaar en trek de hiel rustig richting bil."
+ },
+ {
+  "naam": "Back stretch",
+  "groep": "Mobility",
+  "img": "images/mobility/back-stretch-line-v1.png",
+  "kaartImg": "images/mobility/back-stretch-line-v1.png",
+  "uitleg": "Kom op knieën en handen, breng je heupen rustig naar je hielen en strek je armen voor je uit. Ontspan je rug en adem rustig door."
+ },
+ {
+  "naam": "Abs stretch",
+  "groep": "Mobility",
+  "img": "images/mobility/abs-stretch-line-v1.png",
+  "kaartImg": "images/mobility/abs-stretch-line-v1.png",
+  "uitleg": "Lig op je buik en duw jezelf rustig op via je handen. Houd je heupen laag, schouders ontspannen en stop bij een comfortabele rek."
+ },
+ {
+  "naam": "Seated side leans",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-side-leans-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-side-leans-line-v1.png",
+  "uitleg": "Zit rechtop met beide voeten plat. Reik met één arm boven je hoofd en buig rustig zijwaarts; wissel daarna van kant."
+ },
+ {
+  "naam": "Seated lat stretch",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-lat-stretch-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-lat-stretch-line-v1.png",
+  "uitleg": "Zit rechtop en vouw je handen boven je hoofd. Buig je romp rustig opzij en houd beide zitbotten op de stoel."
+ },
+ {
+  "naam": "Seated lumbar rotations",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-lumbar-rotations-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-lumbar-rotations-line-v1.png",
+  "uitleg": "Zit rechtop met je voeten plat. Draai je romp rustig naar één zijde en gebruik de rugleuning alleen als lichte steun."
+ },
+ {
+  "naam": "Seated cat-cow",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-cat-cow-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-cat-cow-line-v1.png",
+  "uitleg": "Zit voor op de stoel met je handen op je knieën. Maak je bovenrug rustig bol en kom gecontroleerd terug naar een lange neutrale rug."
+ },
+ {
+  "naam": "Seated foreward reach",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-forward-reach-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-forward-reach-line-v1.png",
+  "uitleg": "Zit rechtop met je voeten plat. Reik één arm rustig naar voren op schouderhoogte en houd je romp lang."
+ },
+ {
+  "naam": "Seated ankle rotations",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-ankle-rotations-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-ankle-rotations-line-v1.png",
+  "uitleg": "Zit rechtop en til één voet iets van de vloer. Maak gecontroleerde cirkels vanuit je enkel en wissel daarna van voet."
+ },
+ {
+  "naam": "Seated calfs raises",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-calf-raises-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-calf-raises-line-v1.png",
+  "uitleg": "Zit rechtop met beide voeten plat. Til je hielen rustig op en laat ze gecontroleerd terugzakken."
+ },
+ {
+  "naam": "Seated knee lift",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-knee-lift-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-knee-lift-line-v1.png",
+  "uitleg": "Zit rechtop en til één knie gecontroleerd op richting borst. Houd je romp stabiel en wissel daarna van zijde."
+ },
+ {
+  "naam": "Seated leg extension",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-leg-extension-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-leg-extension-line-v1.png",
+  "uitleg": "Zit rechtop en strek één knie rustig voor je uit. Houd je bovenbeen op de stoel en laat je voet gecontroleerd terugzakken."
+ },
+ {
+  "naam": "Seated band abduction",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-band-abduction-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-band-abduction-line-v1.png",
+  "uitleg": "Zit rechtop met een weerstandsband boven je knieën. Duw je knieën rustig uit elkaar en kom langzaam terug."
+ },
+ {
+  "naam": "Seated band leg curl",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-band-leg-curl-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-band-leg-curl-line-v1.png",
+  "uitleg": "Zit rechtop met een weerstandsband rond één enkel. Buig je knie gecontroleerd naar achteren tegen de bandweerstand en kom rustig terug."
+ },
+ {
+  "naam": "Seated hamstring stretch",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-hamstring-stretch-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-hamstring-stretch-line-v1.png",
+  "uitleg": "Zit voor op de stoel met één hiel op de vloer en je knie gestrekt. Buig rustig vanuit je heupen naar voren zonder je rug te forceren."
+ },
+ {
+  "naam": "Seated ab contractions",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-ab-contractions-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-ab-contractions-line-v1.png",
+  "uitleg": "Zit lang op de stoel en plaats je handen op je onderbuik. Span je buikspieren rustig aan zonder je adem vast te houden en ontspan weer."
+ },
+ {
+  "naam": "Seated chair crunches",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-chair-crunches-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-chair-crunches-line-v1.png",
+  "uitleg": "Zit rechtop met je handen licht achter je hoofd. Leun gecontroleerd een klein stuk achterover, span je buik aan en kom rustig terug."
+ },
+ {
+  "naam": "Seated knee to elbow",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-knee-to-elbow-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-knee-to-elbow-line-v1.png",
+  "uitleg": "Zit rechtop, breng één knie omhoog en draai je romp rustig richting de tegenoverliggende elleboog. Wissel daarna gecontroleerd van kant."
+ },
+ {
+  "naam": "Seated chair squats",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-chair-squats-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-chair-squats-line-v1.png",
+  "uitleg": "Sta voor de stoel met je voeten op heupbreedte. Duw je heupen naar achteren richting de zitting en kom gecontroleerd weer omhoog."
+ },
+ {
+  "naam": "Seated shoulder stretch",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-shoulder-stretch-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-shoulder-stretch-line-v1.png",
+  "uitleg": "Zit rechtop, breng één arm gestrekt voor je borst en trek die met je andere arm zacht naar je toe. Wissel daarna van kant."
+ },
+ {
+  "naam": "Seated shoulder roll",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-shoulder-roll-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-shoulder-roll-line-v1.png",
+  "uitleg": "Zit lang op de stoel en rol beide schouders rustig omhoog, naar achteren en omlaag. Houd je nek ontspannen."
+ },
+ {
+  "naam": "Seated arm circles",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-arm-circles-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-arm-circles-line-v1.png",
+  "uitleg": "Zit rechtop met je armen zijwaarts op schouderhoogte. Maak kleine, gecontroleerde cirkels en wissel daarna van richting."
+ },
+ {
+  "naam": "Seated marching",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-marching-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-marching-line-v1.png",
+  "uitleg": "Zit rechtop en til afwisselend één knie op alsof je marcheert. Houd je romp stabiel en beweeg rustig."
+ },
+ {
+  "naam": "Seated chest opener",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-chest-opener-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-chest-opener-line-v1.png",
+  "uitleg": "Zit rechtop en breng je handen achter je rug samen. Trek je schouderbladen zacht naar elkaar toe zonder je onderrug te forceren."
+ },
+ {
+  "naam": "Standing chair leg curl",
+  "groep": "Standing Chair",
+  "img": "images/seated-chair/standing-chair-leg-curl-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-leg-curl-line-v1.png",
+  "uitleg": "Houd de stoel vast voor steun. Buig één knie zodat je hiel richting bil beweegt en laat het been gecontroleerd terugzakken."
+ },
+ {
+  "naam": "Seated cervical stretch",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-cervical-stretch-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-cervical-stretch-line-v1.png",
+  "uitleg": "Zit rechtop, laat je hoofd rustig naar één schouder zakken en geef met je hand slechts lichte begeleiding. Wissel daarna van kant."
+ },
+ {
+  "naam": "Seated ankle stretches",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-ankle-stretches-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-ankle-stretches-line-v1.png",
+  "uitleg": "Zit rechtop en strek één been voor je uit. Trek de tenen rustig naar je toe om de enkel en kuit te rekken, en wissel daarna."
+ },
+ {
+  "naam": "Seated leg press – resistance band",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-leg-press-resistance-band-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-leg-press-resistance-band-line-v1.png",
+  "uitleg": "Zit rechtop met de band om één voet en houd de uiteinden vast. Strek je knie gecontroleerd tegen de bandweerstand en kom rustig terug."
+ },
+ {
+  "naam": "Standing chair calfs raises",
+  "groep": "Standing Chair",
+  "img": "images/seated-chair/standing-chair-calf-raises-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-calf-raises-line-v1.png",
+  "uitleg": "Houd de stoel vast voor steun. Til beide hielen op zodat je op de voorvoeten staat en laat ze gecontroleerd zakken."
+ },
+ {
+  "naam": "Standing chair heel/toe",
+  "groep": "Standing Chair",
+  "img": "images/seated-chair/standing-chair-heel-toe-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-heel-toe-line-v1.png",
+  "uitleg": "Houd de stoel vast en beweeg gecontroleerd van platte voet naar opgetilde hielen en terug. Houd je romp rechtop."
+ },
+ {
+  "naam": "Standing chair half squat",
+  "groep": "Standing Chair",
+  "img": "images/seated-chair/standing-chair-half-squat-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-half-squat-line-v1.png",
+  "uitleg": "Zak met je heupen rustig naar achteren richting de stoel tot een kleine halve squat. Houd je knieën boven je voeten en kom weer omhoog."
+ },
+ {
+  "naam": "Standing chair abductie",
+  "groep": "Standing Chair",
+  "img": "images/seated-chair/standing-chair-abduction-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-abduction-line-v1.png",
+  "uitleg": "Houd de stoel vast voor steun. Til één gestrekt been zijwaarts op zonder je romp mee te bewegen en laat rustig terugzakken."
+ },
+ {
+  "naam": "Standing chair hip extension",
+  "groep": "Standing Chair",
+  "img": "images/seated-chair/standing-chair-hip-extension-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-hip-extension-line-v1.png",
+  "uitleg": "Houd de stoel vast voor steun. Beweeg één gestrekt been rustig naar achteren vanuit de heup en kom gecontroleerd terug."
+ },
+ {
+  "naam": "Standing chair back leg raise",
+  "groep": "Standing Chair",
+  "img": "images/seated-chair/standing-chair-back-leg-raise-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-back-leg-raise-line-v1.png",
+  "uitleg": "Steun licht op de stoel en til één been achterwaarts op. Houd je bekken recht en laat het been rustig terugkomen."
+ },
+ {
+  "naam": "Standing chair knee lift",
+  "groep": "Standing Chair",
+  "img": "images/seated-chair/standing-chair-knee-lift-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-knee-lift-line-v1.png",
+  "uitleg": "Houd de stoel vast voor steun en breng één knie gecontroleerd omhoog. Houd je romp lang en wissel daarna van been."
+ },
+ {
+  "naam": "One leg standing",
+  "groep": "Standing Chair",
+  "img": "images/seated-chair/one-leg-standing-line-v1.png",
+  "kaartImg": "images/seated-chair/one-leg-standing-line-v1.png",
+  "uitleg": "Sta op één been naast de stoel en houd de rugleuning licht vast als dat nodig is. Houd je bekken recht en wissel daarna van zijde."
+ },
+ {
+  "naam": "Standing chair shoulder rotations",
+  "groep": "Standing Chair",
+  "img": "images/seated-chair/standing-chair-shoulder-rotations-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-shoulder-rotations-line-v1.png",
+  "uitleg": "Sta rechtop met je ellebogen gebogen langs je lichaam. Draai je onderarmen rustig naar buiten en houd je schouders laag."
+ },
+ {
+  "naam": "Seated dumbell press up",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-dumbbell-press-up-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-dumbbell-press-up-line-v1.png",
+  "uitleg": "Zit rechtop met een dumbbell in elke hand. Druk de gewichten gecontroleerd boven je hoofd en laat ze rustig terugzakken."
+ },
+ {
+  "naam": "Seated biceps curl",
+  "groep": "Seated Chair",
+  "img": "images/seated-chair/seated-biceps-curl-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-biceps-curl-line-v1.png",
+  "uitleg": "Zit rechtop met een dumbbell in elke hand. Buig je ellebogen om de gewichten richting schouders te brengen en laat gecontroleerd zakken."
  }
 ]

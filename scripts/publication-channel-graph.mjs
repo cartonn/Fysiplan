@@ -34,7 +34,7 @@ async function execute(node, results) {
 
   if (node.kind === "v1-gate") {
     const { entries } = results.get("catalog:v1");
-    assert(entries.length === 215, `v1 moet exact 215 oefeningen bevatten; gevonden ${entries.length}`);
+    assert(entries.length === 319, `v1 moet exact 319 oefeningen bevatten; gevonden ${entries.length}`);
     assert(new Set(entries.map((entry) => entry.naam)).size === entries.length, "v1 bevat dubbele oefeningnamen");
     const invalid = entries.filter((entry) => !entry.img || /avatar|v8/i.test(entry.img));
     assert(invalid.length === 0, `v1 verwijst niet uitsluitend naar lijntekeningen: ${invalid.map((entry) => entry.naam).join(", ")}`);
@@ -49,7 +49,9 @@ async function execute(node, results) {
     assert(v2.length === 500, `v2-broncatalogus moet exact 500 oefeningen bevatten; gevonden ${v2.length}`);
     assert(new Set(v2.map((entry) => entry.naam)).size === v2.length, "v2 bevat dubbele oefeningnamen");
     const v2Names = new Set(v2.map((entry) => entry.naam));
-    assert(v1.every((entry) => v2Names.has(entry.naam)), "v2 bevat niet de volledige stabiele v1-set");
+    const v1Core = v1.filter((entry) => !String(entry.img || "").endsWith("-line-v1.png"));
+    assert(v1Core.length === 215, `v1-kern moet 215 oefeningen bevatten; gevonden ${v1Core.length}`);
+    assert(v1Core.every((entry) => v2Names.has(entry.naam)), "v2 bevat niet de volledige stabiele v1-kernset");
     const extension = v2.filter((entry) => entry.coreExerciseId);
     assert(extension.length === 285, `v2-uitbreiding moet 285 oefeningen bevatten; gevonden ${extension.length}`);
     const v1ByName = new Map(v1.map((entry) => [entry.naam, entry]));
