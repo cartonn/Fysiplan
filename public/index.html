@@ -2246,6 +2246,15 @@ bridge2.jpg</div>
       if(laatst)regel+=', laatst geoefend '+ddd(laatst);
       r.push(regel+'.');
     }
+    // ervaren herstel (GROC-achtig, -2..+2): de app-vrije één-tik-PROM van de kaart
+    var ev=(kaart.ervaring||[]).filter(function(x){return x&&typeof x.s==='number';});
+    if(ev.length){
+      var lv=ev[ev.length-1];
+      var lbl={'-2':'veel slechter','-1':'iets slechter','0':'hetzelfde','1':'iets beter','2':'veel beter'}[String(lv.s)]||String(lv.s);
+      var sTxt=(lv.s>0?'+':'')+lv.s;
+      var de=new Date(lv.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});
+      r.push('Ervaren herstel t.o.v. start (GROC-achtig, app-vrij aangetikt): '+lbl+' ('+sTxt+'), laatst '+de+'.');
+    }
     if(kaart.id)r.push('Digitale kaart: '+location.origin+'/k/'+kaart.id);
     return r.join('\n');
   }

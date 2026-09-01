@@ -2422,6 +2422,38 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // ervaren herstel van de patiënt (GROC-achtig, -2..+2): één tik op de kaart
+  // beantwoordt "hoe gaat het vergeleken met de start?". App-vrij alternatief voor
+  // de PROM-vragenlijsten die concurrenten alleen mét patiënt-app bieden; één
+  // antwoord per dag telt (nieuwe tik vervangt die van vandaag), de duiding
+  // blijft bij de fysiotherapeut.
+  if (urlPath === "/api/kaart/ervaring" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const found = vindKaart(String(b.id || ""));
+      if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      const score = b.score;
+      if (typeof score !== "number" || !Number.isInteger(score) || score < -2 || score > 2) {
+        await sendJson(response, 400, { ok: false, fout: "Geef een score van -2 tot en met 2." });
+        return;
+      }
+      const e = (found.ervaring = found.ervaring || []);
+      const nu = Date.now();
+      const laatste = e[e.length - 1];
+      if (laatste && nlDag(laatste.t) === nlDag(nu)) laatste.s = score;
+      else e.push({ t: nu, s: score });
+      found.ervaring = e.slice(-120);
+      if (found.demo) { await sendJson(response, 200, { ok: true, ervaring: found.ervaring }); return; }
+      await saveJson(kaartenPath, kaarten);
+      await sendJson(response, 200, { ok: true, ervaring: found.ervaring });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
   // oefenvinkje: één tik "ik heb vandaag geoefend"; nogmaals tikken haalt de
   // aantekening voor vandaag weer weg. Alleen registreren en tonen — de duiding
   // blijft bij de fysiotherapeut. Dit is de app-vrije therapietrouw waarvoor de

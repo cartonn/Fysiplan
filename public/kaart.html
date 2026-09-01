@@ -372,7 +372,7 @@
     outline:3px solid rgba(36,86,166,.6);outline-offset:2px}
   @media print{
     body{background:#fff}
-    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,.skaart,.akaart,#metingkop,#agendakop,#vraagkop,#seinkop,.kopacties,.belknop,.appbanner,.demobadge,.infobadge,.oefdone,.oefvoortgang{display:none !important}
+    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,.skaart,.akaart,#metingkop,#agendakop,#vraagkop,#seinkop,#hskop,.kopacties,.belknop,.appbanner,.demobadge,.infobadge,.oefdone,.oefvoortgang{display:none !important}
     .kop,.oef,.schemakaart{box-shadow:none}
   }
 </style>
@@ -430,6 +430,20 @@
       <div class="mtrend" id="mtrend" style="display:none"></div>
     </div>
     <p class="mnoot" id="mnoot">Je score wordt bij je kaart bewaard, zodat je fysiotherapeut je voortgang kan volgen. Er telt één score per dag; tik een ander cijfer aan om die te wijzigen.</p>
+  </div>
+
+  <h2 id="hskop">Hoe gaat het nu vergeleken met de start?</h2>
+  <div class="mkaart" id="hsblok">
+    <p class="sintro" id="hsintro">Eén tik — zo ziet je fysiotherapeut hoe je herstel voelt.</p>
+    <div class="sknoppen" id="hsknoppen" role="group" aria-labelledby="hskop">
+      <button type="button" class="sbtn" data-hs="-2"><span id="hs_m2">Veel slechter</span></button>
+      <button type="button" class="sbtn" data-hs="-1"><span id="hs_m1">Iets slechter</span></button>
+      <button type="button" class="sbtn" data-hs="0"><span id="hs_z0">Hetzelfde</span></button>
+      <button type="button" class="sbtn sgoed" data-hs="1"><span id="hs_p1">Iets beter</span></button>
+      <button type="button" class="sbtn sgoed" data-hs="2"><span id="hs_p2">Veel beter</span></button>
+    </div>
+    <div class="mdank" id="hsdank" role="status" aria-live="polite" style="display:none"></div>
+    <p class="mnoot" id="hsnoot">Eén antwoord per dag telt; tik een andere knop om het te wijzigen.</p>
   </div>
 
   <div class="akaart" id="antwoordblok" style="display:none" role="status" aria-live="polite">
@@ -533,6 +547,19 @@
     uk:{seinkop:'Повідомити фізіотерапевта',sintro:'Один дотик — і фізіотерапевт побачить твій сигнал на цій картці. Без набору повідомлення, без застосунку.',vraag:'У мене є запитання',akop:'Повідомлення від фізіотерапевта',adank:'Прибрано.',aweg:'Зрозуміло, прибрати',pijn:'Надто болить',goed:'Все йде добре',dank:'Надіслано — фізіотерапевт побачить твій сигнал на цій картці.',fout:'Не вдалося надіслати; спробуй ще раз за мить.'}
   };
   function trs(k){var d=TSN[TAAL]||TSN.nl;return d[k]!=null?d[k]:TSN.nl[k];}
+  // teksten voor het ervaren herstel (GROC-achtig; apart blokje, valt terug op Nederlands)
+  var THS={
+    nl:{hskop:'Hoe gaat het nu vergeleken met de start?',hsintro:'Eén tik — zo ziet je fysiotherapeut hoe je herstel voelt.',m2:'Veel slechter',m1:'Iets slechter',z0:'Hetzelfde',p1:'Iets beter',p2:'Veel beter',dank:'Genoteerd, dank je wel. Je fysiotherapeut ziet je herstel bij deze kaart.',fout:'Opslaan lukte even niet; probeer het zo opnieuw.',hsnoot:'Eén antwoord per dag telt; tik een andere knop om het te wijzigen.'},
+    en:{hskop:'How are you doing compared to the start?',hsintro:'One tap — this shows your physiotherapist how your recovery feels.',m2:'Much worse',m1:'A bit worse',z0:'The same',p1:'A bit better',p2:'Much better',dank:'Saved, thank you. Your physiotherapist can see your recovery on this card.',fout:'Saving did not work; please try again in a moment.',hsnoot:'One answer per day counts; tap another button to change it.'},
+    de:{hskop:'Wie geht es dir im Vergleich zum Start?',hsintro:'Ein Tipp — so sieht dein Physiotherapeut, wie sich deine Genesung anfühlt.',m2:'Viel schlechter',m1:'Etwas schlechter',z0:'Gleich',p1:'Etwas besser',p2:'Viel besser',dank:'Gespeichert, danke. Dein Physiotherapeut sieht deine Genesung auf dieser Karte.',fout:'Speichern hat nicht geklappt; versuch es gleich noch einmal.',hsnoot:'Eine Antwort pro Tag zählt; tippe eine andere Taste, um sie zu ändern.'},
+    fr:{hskop:'Comment ça va par rapport au début ?',hsintro:'Un geste — votre kinésithérapeute voit comment se passe votre rétablissement.',m2:'Bien pire',m1:'Un peu pire',z0:'Pareil',p1:'Un peu mieux',p2:'Bien mieux',dank:'Enregistré, merci. Votre kinésithérapeute voit votre rétablissement sur cette carte.',fout:'L’enregistrement n’a pas fonctionné ; réessayez dans un instant.',hsnoot:'Une réponse par jour compte ; touchez un autre bouton pour la modifier.'},
+    es:{hskop:'¿Cómo estás comparado con el inicio?',hsintro:'Un toque — así tu fisioterapeuta ve cómo va tu recuperación.',m2:'Mucho peor',m1:'Algo peor',z0:'Igual',p1:'Algo mejor',p2:'Mucho mejor',dank:'Guardado, gracias. Tu fisioterapeuta ve tu recuperación en esta tarjeta.',fout:'No se pudo guardar; inténtalo de nuevo en un momento.',hsnoot:'Cuenta una respuesta por día; toca otro botón para cambiarla.'},
+    pl:{hskop:'Jak się czujesz w porównaniu z początkiem?',hsintro:'Jedno dotknięcie — fizjoterapeuta widzi, jak przebiega twój powrót do zdrowia.',m2:'Dużo gorzej',m1:'Trochę gorzej',z0:'Tak samo',p1:'Trochę lepiej',p2:'Dużo lepiej',dank:'Zapisano, dziękujemy. Fizjoterapeuta widzi twój powrót do zdrowia przy tej karcie.',fout:'Zapis się nie udał; spróbuj ponownie za chwilę.',hsnoot:'Liczy się jedna odpowiedź dziennie; dotknij innego przycisku, aby ją zmienić.'},
+    tr:{hskop:'Başlangıca göre nasılsın?',hsintro:'Tek dokunuş — fizyoterapistin iyileşmenin nasıl hissettirdiğini görür.',m2:'Çok daha kötü',m1:'Biraz daha kötü',z0:'Aynı',p1:'Biraz daha iyi',p2:'Çok daha iyi',dank:'Kaydedildi, teşekkürler. Fizyoterapistin bu kartta iyileşmeni görebilir.',fout:'Kaydetme başarısız oldu; birazdan tekrar dene.',hsnoot:'Günde bir cevap sayılır; değiştirmek için başka bir düğmeye dokun.'},
+    ar:{hskop:'كيف حالك مقارنة بالبداية؟',hsintro:'نقرة واحدة — هكذا يرى أخصائي العلاج الطبيعي كيف يسير تعافيك.',m2:'أسوأ بكثير',m1:'أسوأ قليلًا',z0:'كما هو',p1:'أفضل قليلًا',p2:'أفضل بكثير',dank:'تم الحفظ، شكرًا لك. يرى معالجك تعافيك في هذه البطاقة.',fout:'تعذّر الحفظ؛ حاول مرة أخرى بعد قليل.',hsnoot:'تُحتسب إجابة واحدة في اليوم؛ اضغط على زر آخر لتغييرها.'},
+    uk:{hskop:'Як ти почуваєшся порівняно з початком?',hsintro:'Один дотик — і фізіотерапевт бачить, як іде твоє одужання.',m2:'Набагато гірше',m1:'Трохи гірше',z0:'Так само',p1:'Трохи краще',p2:'Набагато краще',dank:'Збережено, дякуємо. Фізіотерапевт бачить твоє одужання на цій картці.',fout:'Не вдалося зберегти; спробуй ще раз за мить.',hsnoot:'Зараховується одна відповідь на день; натисни іншу кнопку, щоб змінити її.'}
+  };
+  function trh(k){var d=THS[TAAL]||THS.nl;return d[k]!=null?d[k]:THS.nl[k];}
   // teksten voor "vraag het aan je kaart" (apart blokje; valt terug op Nederlands)
   var TQ={
     nl:{kop:'Vraag het aan je kaart',intro:'De kaart legt alleen jouw eigen oefeningen uit en geeft geen medisch advies. Vragen worden niet bewaard.',ph:'Bijv. hoe diep moet ik zakken?',knop:'Vraag',bezig:'Even denken…',fout:'Dat lukte even niet; probeer het zo opnieuw.'},
@@ -705,6 +732,8 @@
     zet('seinkop',trs('seinkop'));zet('sintro',trs('sintro'));
     zet('s_vraag',trs('vraag'));zet('s_pijn',trs('pijn'));zet('s_goed',trs('goed'));
     zet('akop',trs('akop'));zet('aweg',trs('aweg'));
+    zet('hskop',trh('hskop'));zet('hsintro',trh('hsintro'));zet('hsnoot',trh('hsnoot'));
+    zet('hs_m2',trh('m2'));zet('hs_m1',trh('m1'));zet('hs_z0',trh('z0'));zet('hs_p1',trh('p1'));zet('hs_p2',trh('p2'));
     if(!bezigLezen)zet('leesTxt',tr('lees'));
     var gb=document.getElementById('grootBtn');
     if(gb){gb.title=trg('groter');gb.setAttribute('aria-label',trg('groter'));}
@@ -896,6 +925,16 @@
     }else{trend.style.display='none';}
   }
 
+  // ervaren herstel: de knop van vandaag (of de laatste keuze) licht op
+  function tekenHerstel(){
+    var e=(K&&K.kaart&&K.kaart.ervaring)||[];
+    var laatste=e.length?e[e.length-1]:null;
+    var vandaag=laatste&&new Date(laatste.t).toDateString()===new Date().toDateString();
+    document.querySelectorAll('#hsknoppen .sbtn').forEach(function(b){
+      b.classList.toggle('aan',!!(vandaag&&Number(b.dataset.hs)===laatste.s));
+    });
+  }
+
   // antwoord van de therapeut op een seintje: tonen tot de patiënt het wegtikt
   function tekenAntwoord(){
     var blok=document.getElementById('antwoordblok');if(!blok)return;
@@ -907,7 +946,7 @@
     blok.style.display='block';
   }
 
-  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();}
+  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenHerstel();}
 
   // ---- taal wisselen: vaste teksten direct, kaartinhoud via de server (eenmalig per taal) ----
   function wisselTaal(t){
@@ -1303,6 +1342,21 @@
         .then(function(r){return r.json();})
         .then(function(d){dank.style.display='block';dank.textContent=d&&d.ok?trs('dank'):trs('fout');if(!d||!d.ok)b.classList.remove('aan');delete b.dataset.bezig;})
         .catch(function(){dank.style.display='block';dank.textContent=trs('fout');b.classList.remove('aan');delete b.dataset.bezig;});
+    });
+    // ervaren herstel: één tik stuurt de score (-2..+2), vandaag opnieuw tikken wijzigt
+    document.getElementById('hsknoppen').addEventListener('click',function(e){
+      var b=e.target.closest('.sbtn');if(!b||b.dataset.bezig)return;
+      var score=Number(b.dataset.hs);b.dataset.bezig='1';
+      var dank=document.getElementById('hsdank');
+      fetch('/api/kaart/ervaring',{method:'POST',headers:{'content-type':'application/json'},
+        body:JSON.stringify({id:id,score:score})})
+        .then(function(r){return r.json();})
+        .then(function(d){
+          delete b.dataset.bezig;dank.style.display='block';
+          if(d&&d.ok){K.kaart.ervaring=d.ervaring||[];tekenHerstel();dank.textContent=trh('dank');}
+          else dank.textContent=trh('fout');
+        })
+        .catch(function(){delete b.dataset.bezig;dank.style.display='block';dank.textContent=trh('fout');});
     });
     // het gelezen therapeut-antwoord wegtikken
     document.getElementById('aweg').addEventListener('click',function(){
