@@ -7,6 +7,7 @@ const root = new URL("../", import.meta.url);
 const libraryUrl = new URL("public/oefeningen-v2.json", root);
 const manifestUrl = new URL("content/video-productie-v2.json", root);
 const oefeningen = JSON.parse(await readFile(libraryUrl, "utf8"));
+const productieOefeningen = oefeningen.filter((oefening) => oefening.v1Source !== "carla");
 const core1000 = JSON.parse(await readFile(new URL("content/core-1000.json", root), "utf8"));
 const coreById = new Map((core1000.exercises || []).map((entry) => [entry.exerciseId, entry]));
 const SAFETY = "Stop bij scherpe of toenemende pijn en volg de dosering van je fysiotherapeut.";
@@ -155,19 +156,19 @@ function buildManifest(previous) {
         "Bestand doorstaat technische controle en heeft geen zwarte frames, clipping of zichtbare motion-capturefouten.",
       ],
     },
-    exercises: oefeningen.map((o, i) => generatedEntry(o, i, prior.get(exerciseId(o)) || priorByName.get(o.naam))),
+    exercises: productieOefeningen.map((o, i) => generatedEntry(o, i, prior.get(exerciseId(o)) || priorByName.get(o.naam))),
   };
 }
 
 function validateSource() {
   const errors = [];
-  const sourceNames = new Set(oefeningen.map((o) => o.naam));
+  const sourceNames = new Set(productieOefeningen.map((o) => o.naam));
   const guidanceNames = new Set(Object.keys(GUIDANCE_NL));
-  if (oefeningen.length !== 500) errors.push(`verwacht 500 oefeningen, gevonden ${oefeningen.length}`);
-  if (sourceNames.size !== oefeningen.length) errors.push("de oefenbibliotheek bevat dubbele namen");
-  const ids = oefeningen.map(exerciseId);
+  if (productieOefeningen.length !== 500) errors.push(`verwacht 500 oefeningen, gevonden ${productieOefeningen.length}`);
+  if (sourceNames.size !== productieOefeningen.length) errors.push("de oefenbibliotheek bevat dubbele namen");
+  const ids = productieOefeningen.map(exerciseId);
   if (new Set(ids).size !== ids.length) errors.push("de oefenbibliotheek bevat dubbele stabiele exerciseId's");
-  for (const oefening of oefeningen) {
+  for (const oefening of productieOefeningen) {
     if (oefening.coreExerciseId) {
       if (!coreById.has(oefening.coreExerciseId)) errors.push(`core-conceptscript ontbreekt: ${oefening.naam}`);
     } else if (!guidanceNames.has(oefening.naam)) errors.push(`conceptscript ontbreekt: ${oefening.naam}`);

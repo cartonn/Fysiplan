@@ -46,14 +46,14 @@ async function execute(node, results) {
   if (node.kind === "v2-gate") {
     const v1 = results.get("catalog:v1").entries;
     const v2 = results.get("catalog:v2").entries;
-    assert(v2.length === 500, `v2-broncatalogus moet exact 500 oefeningen bevatten; gevonden ${v2.length}`);
+    assert(v2.length === 604, `v2-broncatalogus moet exact 604 oefeningen bevatten; gevonden ${v2.length}`);
     assert(new Set(v2.map((entry) => entry.naam)).size === v2.length, "v2 bevat dubbele oefeningnamen");
     const v2Names = new Set(v2.map((entry) => entry.naam));
     const v1Core = v1.filter((entry) => !String(entry.img || "").endsWith("-line-v1.png"));
     assert(v1Core.length === 215, `v1-kern moet 215 oefeningen bevatten; gevonden ${v1Core.length}`);
     assert(v1Core.every((entry) => v2Names.has(entry.naam)), "v2 bevat niet de volledige stabiele v1-kernset");
     const extension = v2.filter((entry) => entry.coreExerciseId);
-    assert(extension.length === 285, `v2-uitbreiding moet 285 oefeningen bevatten; gevonden ${extension.length}`);
+    assert(extension.length === 285, `v2-Core-uitbreiding moet 285 oefeningen bevatten; gevonden ${extension.length}`);
     const v1ByName = new Map(v1.map((entry) => [entry.naam, entry]));
     const pathErrors = v2.filter((entry) => {
       if (!entry.kaartImg) return true;

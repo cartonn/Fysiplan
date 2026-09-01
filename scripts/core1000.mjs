@@ -525,13 +525,14 @@ const [legacyLibrary, legacyProduction] = await Promise.all([
 const productionByName = new Map(legacyProduction.exercises.map((entry) => [entry.sourceName, entry]));
 const expansionBlueprint = buildExpansion();
 const expansionById = new Map(expansionBlueprint.map((entry) => [entry.exerciseId, entry]));
-const publicEntries = legacyLibrary.map((exercise, index) => {
+const coreLibrary = legacyLibrary.filter((exercise) => exercise.v1Source !== "carla");
+const publicEntries = coreLibrary.map((exercise, index) => {
   if (!exercise.coreExerciseId) return legacyEntry(exercise, productionByName, index);
   const source = expansionById.get(exercise.coreExerciseId);
   if (!source) throw new Error(`Core-bron ontbreekt voor publieke oefening: ${exercise.naam}`);
   return selectedPublicEntry(exercise, source, index);
 });
-const selectedIds = new Set(legacyLibrary.map((entry) => entry.coreExerciseId).filter(Boolean));
+const selectedIds = new Set(coreLibrary.map((entry) => entry.coreExerciseId).filter(Boolean));
 const expansion = expansionBlueprint.filter((entry) => !selectedIds.has(entry.exerciseId));
 const exercises = [...publicEntries, ...expansion].map((entry, index) => ({ ...entry, order: index + 1 }));
 const catalog = {

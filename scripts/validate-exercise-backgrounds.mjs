@@ -12,14 +12,18 @@ const report = JSON.parse(await readFile(join(root, "content", "oefenbeeld-backg
 if (report.schemaVersion !== 1 || report.assetVersion !== 7 || report.background !== "#FFFFFF") {
   throw new Error("Oefenbeeldrapport heeft een onbekende versie of achtergrond");
 }
-const legacyCatalogue = catalogue.filter((exercise) => !exercise.coreExerciseId);
+const carlaCatalogue = catalogue.filter((exercise) => !exercise.coreExerciseId && String(exercise.img || "").endsWith("-line-v1.png"));
+const legacyCatalogue = catalogue.filter((exercise) => !exercise.coreExerciseId && !String(exercise.img || "").endsWith("-line-v1.png"));
 const top500Expansion = catalogue.filter((exercise) => exercise.coreExerciseId);
 const v1ByName = new Map(v1Catalogue.map((exercise) => [exercise.naam, exercise]));
 if (legacyCatalogue.length !== 215 || report.cards.length !== legacyCatalogue.length) {
   throw new Error(`Verwacht 215 vaste legacykaarten; catalogus=${legacyCatalogue.length}, rapport=${report.cards.length}`);
 }
-if (top500Expansion.length !== 285 || catalogue.length !== 500) {
-  throw new Error(`Verwacht 285 uitbreidingskaarten en 500 totaal; uitbreiding=${top500Expansion.length}, totaal=${catalogue.length}`);
+if (carlaCatalogue.length !== 104) {
+  throw new Error(`Verwacht 104 Carla-kaarten met V1-lijnreferentie; gevonden ${carlaCatalogue.length}`);
+}
+if (top500Expansion.length !== 285 || catalogue.length !== 604) {
+  throw new Error(`Verwacht 285 Core-uitbreidingskaarten en 604 totaal; uitbreiding=${top500Expansion.length}, totaal=${catalogue.length}`);
 }
 
 const reportByName = new Map(report.cards.map((entry) => [entry.name, entry]));
