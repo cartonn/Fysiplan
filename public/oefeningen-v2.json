@@ -3905,51 +3905,56 @@
   "naam": "Swiss ball hip raise",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-hip-raise-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-hip-raise-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-hip-raise-avatar-v8.jpg",
   "uitleg": "Lig op je rug met je onderbenen op de oefenbal. Span je buik en bilspieren aan, til je heupen op tot je lichaam een rechte lijn vormt en zak rustig terug.",
   "exerciseId": "fp_2cd13067f375afc5",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball leg curl hip raise",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-leg-curl-hip-raise-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-leg-curl-hip-raise-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-leg-curl-hip-raise-avatar-v8.jpg",
   "uitleg": "Lig op je rug met je hielen op de oefenbal en houd je heupen omhoog. Trek de bal naar je toe door je knieen te buigen en strek je benen daarna weer gecontroleerd.",
   "exerciseId": "fp_8dfe2f55da994cbb",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball squeezes adductoren",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-squeezes-adductoren-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-squeezes-adductoren-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-squeezes-adductoren-avatar-v8.jpg",
   "uitleg": "Lig op je rug met je knieen gebogen en een bal tussen je knieen. Knijp de bal rustig samen vanuit je bovenbenen, houd kort vast en ontspan weer.",
   "exerciseId": "fp_0e06ee3270c9952a",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball feet to chest",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-feet-to-chest-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-feet-to-chest-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-feet-to-chest-avatar-v8.jpg",
   "uitleg": "Neem een hoge plank aan met je voeten op de oefenbal. Houd je benen gestrekt en rol de bal naar je toe door je heupen omhoog te tillen; keer rustig terug naar plank.",
   "exerciseId": "fp_e027a1232263ffbd",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball knee to chest",
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-knee-to-chest-line-v1.png",
-  "kaartImg": "images/exercise-ball/swiss-ball-knee-to-chest-line-v1.png",
+  "kaartImg": "images/exercise-ball/swiss-ball-knee-to-chest-avatar-v8.jpg",
   "uitleg": "Neem een hoge plank aan met je voeten op de oefenbal. Buig je knieen en trek de bal gecontroleerd richting je borst, strek daarna je benen weer.",
   "exerciseId": "fp_3fd7f65263a2279b",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Swiss ball rollout",
