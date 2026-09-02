@@ -4785,11 +4785,12 @@
   "naam": "Standing chair leg curl",
   "groep": "Standing Chair",
   "img": "images/seated-chair/standing-chair-leg-curl-line-v1.png",
-  "kaartImg": "images/seated-chair/standing-chair-leg-curl-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-leg-curl-avatar-v8.jpg",
   "uitleg": "Houd de stoel vast voor steun. Buig één knie zodat je hiel richting bil beweegt en laat het been gecontroleerd terugzakken.",
   "exerciseId": "fp_98820ba98a6ef8a4",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated cervical stretch",
@@ -4828,91 +4829,100 @@
   "naam": "Standing chair calfs raises",
   "groep": "Standing Chair",
   "img": "images/seated-chair/standing-chair-calf-raises-line-v1.png",
-  "kaartImg": "images/seated-chair/standing-chair-calf-raises-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-calf-raises-avatar-v8.jpg",
   "uitleg": "Houd de stoel vast voor steun. Til beide hielen op zodat je op de voorvoeten staat en laat ze gecontroleerd zakken.",
   "exerciseId": "fp_5d408b649789eb5c",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Standing chair heel/toe",
   "groep": "Standing Chair",
   "img": "images/seated-chair/standing-chair-heel-toe-line-v1.png",
-  "kaartImg": "images/seated-chair/standing-chair-heel-toe-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-heel-toe-avatar-v8.jpg",
   "uitleg": "Houd de stoel vast en beweeg gecontroleerd van platte voet naar opgetilde hielen en terug. Houd je romp rechtop.",
   "exerciseId": "fp_03be7dd54cccd997",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Standing chair half squat",
   "groep": "Standing Chair",
   "img": "images/seated-chair/standing-chair-half-squat-line-v1.png",
-  "kaartImg": "images/seated-chair/standing-chair-half-squat-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-half-squat-avatar-v8.jpg",
   "uitleg": "Zak met je heupen rustig naar achteren richting de stoel tot een kleine halve squat. Houd je knieën boven je voeten en kom weer omhoog.",
   "exerciseId": "fp_e718055869c6c0ab",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Standing chair abductie",
   "groep": "Standing Chair",
   "img": "images/seated-chair/standing-chair-abduction-line-v1.png",
-  "kaartImg": "images/seated-chair/standing-chair-abduction-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-abduction-avatar-v8.jpg",
   "uitleg": "Houd de stoel vast voor steun. Til één gestrekt been zijwaarts op zonder je romp mee te bewegen en laat rustig terugzakken.",
   "exerciseId": "fp_5461e59354073db8",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Standing chair hip extension",
   "groep": "Standing Chair",
   "img": "images/seated-chair/standing-chair-hip-extension-line-v1.png",
-  "kaartImg": "images/seated-chair/standing-chair-hip-extension-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-hip-extension-avatar-v8.jpg",
   "uitleg": "Houd de stoel vast voor steun. Beweeg één gestrekt been rustig naar achteren vanuit de heup en kom gecontroleerd terug.",
   "exerciseId": "fp_514654a0d4181742",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Standing chair back leg raise",
   "groep": "Standing Chair",
   "img": "images/seated-chair/standing-chair-back-leg-raise-line-v1.png",
-  "kaartImg": "images/seated-chair/standing-chair-back-leg-raise-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-back-leg-raise-avatar-v8.jpg",
   "uitleg": "Steun licht op de stoel en til één been achterwaarts op. Houd je bekken recht en laat het been rustig terugkomen.",
   "exerciseId": "fp_d5e159ca1d7436ac",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Standing chair knee lift",
   "groep": "Standing Chair",
   "img": "images/seated-chair/standing-chair-knee-lift-line-v1.png",
-  "kaartImg": "images/seated-chair/standing-chair-knee-lift-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-knee-lift-avatar-v8.jpg",
   "uitleg": "Houd de stoel vast voor steun en breng één knie gecontroleerd omhoog. Houd je romp lang en wissel daarna van been.",
   "exerciseId": "fp_5319c4700561725d",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "One leg standing",
   "groep": "Standing Chair",
   "img": "images/seated-chair/one-leg-standing-line-v1.png",
-  "kaartImg": "images/seated-chair/one-leg-standing-line-v1.png",
+  "kaartImg": "images/seated-chair/one-leg-standing-avatar-v8.jpg",
   "uitleg": "Sta op één been naast de stoel en houd de rugleuning licht vast als dat nodig is. Houd je bekken recht en wissel daarna van zijde.",
   "exerciseId": "fp_14c75a700561d59f",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Standing chair shoulder rotations",
   "groep": "Standing Chair",
   "img": "images/seated-chair/standing-chair-shoulder-rotations-line-v1.png",
-  "kaartImg": "images/seated-chair/standing-chair-shoulder-rotations-line-v1.png",
+  "kaartImg": "images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg",
   "uitleg": "Sta rechtop met je ellebogen gebogen langs je lichaam. Draai je onderarmen rustig naar buiten en houd je schouders laag.",
   "exerciseId": "fp_4b99c5f11b42a30d",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated dumbell press up",
