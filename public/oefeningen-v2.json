@@ -4411,61 +4411,67 @@
   "naam": "Mob thoracaal",
   "groep": "Mobility",
   "img": "images/mobility/mob-thoracaal-line-v1.png",
-  "kaartImg": "images/mobility/mob-thoracaal-line-v1.png",
+  "kaartImg": "images/mobility/mob-thoracaal-avatar-v8.jpg",
   "uitleg": "Kom op handen en knieën en plaats één hand achter je hoofd. Draai je borstkas rustig open richting plafond zonder je onderrug mee te draaien.",
   "exerciseId": "fp_cd1a6657d1158157",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Mob adductoren",
   "groep": "Mobility",
   "img": "images/mobility/mob-adductoren-line-v1.png",
-  "kaartImg": "images/mobility/mob-adductoren-line-v1.png",
+  "kaartImg": "images/mobility/mob-adductoren-avatar-v8.jpg",
   "uitleg": "Kom op één knie en strek het andere been opzij met de voet plat op de vloer. Beweeg je heupen rustig naar achteren voor rek aan de binnenzijde van het bovenbeen.",
   "exerciseId": "fp_69601bcfcf25b2d7",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Adductoren stretch",
   "groep": "Mobility",
   "img": "images/mobility/adductoren-stretch-line-v1.png",
-  "kaartImg": "images/mobility/adductoren-stretch-line-v1.png",
+  "kaartImg": "images/mobility/adductoren-stretch-avatar-v8.jpg",
   "uitleg": "Zit rechtop met je benen wijd en gestrekt. Buig rustig vanuit je heupen naar voren, zonder je rug te forceren.",
   "exerciseId": "fp_4f11e7b699d13a42",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Mob lower back",
   "groep": "Mobility",
   "img": "images/mobility/mob-lower-back-line-v1.png",
-  "kaartImg": "images/mobility/mob-lower-back-line-v1.png",
+  "kaartImg": "images/mobility/mob-lower-back-avatar-v8.jpg",
   "uitleg": "Lig op je rug en trek beide knieën rustig richting borst. Houd je schenen vast en laat je lage rug ontspannen.",
   "exerciseId": "fp_37cafb9b8739b834",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Mob back cat/cow",
   "groep": "Mobility",
   "img": "images/mobility/mob-back-cat-cow-line-v1.png",
-  "kaartImg": "images/mobility/mob-back-cat-cow-line-v1.png",
+  "kaartImg": "images/mobility/mob-back-cat-cow-avatar-v8.jpg",
   "uitleg": "Kom op handen en knieën. Maak je rug rustig bol en beweeg daarna gecontroleerd terug naar een neutrale stand.",
   "exerciseId": "fp_fb18dd6c8b2b3a16",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Mob back left/right",
   "groep": "Mobility",
   "img": "images/mobility/mob-back-left-right-line-v1.png",
-  "kaartImg": "images/mobility/mob-back-left-right-line-v1.png",
+  "kaartImg": "images/mobility/mob-back-left-right-avatar-v8.jpg",
   "uitleg": "Lig op je rug met je armen wijd en je knieën gebogen. Laat beide knieën rustig naar één zijde zakken terwijl je schouders op de vloer blijven.",
   "exerciseId": "fp_c0ed244cbd142ccd",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Mob Hip circles",
