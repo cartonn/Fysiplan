@@ -3194,6 +3194,15 @@ async function afhandelen(request, response) {
     await send(response, 403, "text/plain; charset=utf-8", "Forbidden");
     return;
   }
+  // de v1-inloggate bewaakt "/" en "/index.html", maar pad-aliassen die op
+  // hetzelfde bestand uitkomen (//index.html, /./index.html, /x/../index.html)
+  // liepen hier langs de gate heen de app in. Elk alias gaat terug naar de
+  // kanonieke route, waar de gate zit; voor ingelogde gebruikers verandert er niets.
+  if (filePath === join(publicDir, "index.html")) {
+    response.writeHead(302, { location: "/" });
+    response.end();
+    return;
+  }
 
   // v1: vaste lijntekeningen. v2: foto's, nieuwe categorieën en beheerwijzigingen.
   if (urlPath === "/oefeningen.json") {
