@@ -92,9 +92,9 @@ async function execute(node, results) {
       'urlPath === "/v2/oefeningen.json"',
       'urlPath.startsWith("/v2/images/")',
     ].forEach((token) => assert(server.includes(token), `server-routecontract mist ${token}`));
-    assert(client.includes("var USE_V2_LIBRARY=IS_V2;"), "alleen de v2-route mag de v2-bibliotheek activeren");
+    assert(client.includes("var USE_V2_LIBRARY=IS_V2||IS_ADMIN;"), "v2 en beheer moeten de v2-bibliotheek expliciet activeren");
     assert(client.includes("USE_V2_LIBRARY?'/v2/oefeningen.json':'/oefeningen.json'"), "client kiest niet expliciet tussen v1 en v2");
-    return { root: "/oefeningen.json", admin: "/oefeningen.json", v2: "/v2/oefeningen.json", v2Assets: "/v2/images/*" };
+    return { root: "/oefeningen.json", admin: "/v2/oefeningen.json", v2: "/v2/oefeningen.json", v2Assets: "/v2/images/*" };
   }
 
   if (node.kind === "generator-gate") {

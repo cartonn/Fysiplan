@@ -896,8 +896,8 @@ bridge2.jpg</div>
     return changed;
   }
 
-  // beheer-weergave: /admin88 toont dezelfde lijntekeningencatalogus als de root.
-  // Nieuwe beeldcontent wordt via de productiegraph uitsluitend in v2 gepubliceerd.
+  // Beheer toont de V2-catalogus, zodat gekoppelde avatars en lijntekeningen
+  // daar direct gecontroleerd kunnen worden. De V1-root blijft onaangeraakt.
   var IS_ADMIN=/^\/admin88\/?$/.test(location.pathname);
   var ADMIN_HDR={'x-admin-sleutel':'admin88'};
   // anonieme gebruiksteller voor het eigenaars-dashboard (alleen aantallen, geen inhoud)
@@ -911,9 +911,9 @@ bridge2.jpg</div>
   function setPrakSes(t){try{if(t)localStorage.setItem('fp_praksessie',t);else localStorage.removeItem('fp_praksessie');}catch(e){}}
   function PJSON(){var h={'content-type':'application/json'};var s=prakSes();if(s)h['x-praktijk-sessie']=s;return h;}
   function PGET(){var o={cache:'no-cache'};var s=prakSes();if(s)o.headers={'x-praktijk-sessie':s};return o;}
-  // Alleen /v2/app gebruikt de nieuwe fotobibliotheek. Ook /admin88 blijft op
-  // de vertrouwde 215 lijntekeningen werken.
-  var USE_V2_LIBRARY=IS_V2;
+  // V2 en beheer gebruiken de gekoppelde avatarlibrary; de V1-root gebruikt
+  // uitsluitend de bevroren lijntekeningenbibliotheek.
+  var USE_V2_LIBRARY=IS_V2||IS_ADMIN;
   // Deze keuze geldt alleen voor de v2-editor en PDF. De digitale kaart haalt
   // altijd kaartImg uit de v2-catalogus en blijft daardoor onafhankelijk in kleur.
   var V2_BEELD=SET.v2Beeld==='kleur'?'kleur':'lijn';

@@ -18,8 +18,8 @@ flowchart LR
 
 ## Contract
 
-- `/oefeningen.json` levert de 215 historische oefeningen aan zowel `/` als `/admin88` en verwijst alleen naar het lijntekeningveld `img`.
-- `/v2/oefeningen.json` levert de v2-catalogus met beheerwijzigingen, zoekmetadata, video's en alleen kaartbeelden die werkelijk op schijf staan.
+- `/oefeningen.json` levert de historische lijntekeningen alleen aan `/`.
+- `/v2/oefeningen.json` levert de v2-catalogus aan `/v2/app` én `/admin88`, met beheerwijzigingen, zoekmetadata, video's en alleen kaartbeelden die werkelijk op schijf staan.
 - v2-kaartbeelden hebben in de browser een `/v2/images/...`-URL. De fysieke beeldmap wordt gedeeld om de 215 bestaande kaarten niet te dupliceren.
 - `public/oefeningen.json` is read-only voor de productiegraphs.
 - De top-500-, Runway- en achtergrondgraphs lezen en schrijven uitsluitend `public/oefeningen-v2.json`.
