@@ -1,0 +1,954 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 67 — Stembiljet · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 67 — STEMBILJET
+   ------------------------------------------------------------
+   Uw oefenkaart geeft bevelen. Dit biljet vraagt iets.
+
+   Elke oefenkaart in de fysiotherapie is grammaticaal een
+   gebiedende wijs. "Doe acht keer." "Houd tien tellen vast."
+   Er staat nergens een vraag op, en er is nergens plaats voor
+   een antwoord. Het document is eenrichtingsverkeer, en dan
+   verbazen we ons dat de helft van de mensen na drie weken
+   niet meer meedoet.
+
+   Nederland heeft één papieren document waar het omgekeerde
+   in gebakken zit, en iedereen boven de achttien kent het.
+   Het stembiljet vraagt. Het legt de keuze naast elkaar, het
+   drukt alles even zwaar af, en het levert de inkt niet mee:
+   het rode potlood komt van de andere kant van de tafel.
+
+   DUS: dit blad wordt geleverd als een lijst met kandidaten.
+   Elke oefening is een kandidaat, met een lijstnummer en een
+   volledige zin. De praktijk bepaalt wie op de lijst staat —
+   dat is de vakkennis. Wie er vandaag doorkomt, bepaalt u.
+
+   DE REGEL DIE ALLES DRAAGT. Het vel wordt in ÉÉN INKT
+   gedrukt: zwart. Er staat geen millimeter rood op. Alle rode
+   inkt op dit document is door de patiënt zelf aangebracht.
+   Dat is geen esthetische gril maar de hele stelling in
+   materiaalvorm: het blad is pas af als er iemand anders aan
+   gewerkt heeft dan de praktijk. Wat op het scherm rood is, is
+   altijd van de patiënt; wat zwart is, is van ons.
+
+   BLANCO IS EEN GELDIGE STEM. Op een echt stembiljet mag je
+   blanco stemmen, en zo'n stem wordt geteld — je was er. Dus
+   heeft dit blad een blancorij. Een dag waarop het niet ging
+   is geen gat in de kaart en geen mislukking: het is één rood
+   vakje in de blancorij, en het telt mee voor de opkomst.
+   Wij tellen niet hoeveel u deed. Wij tellen of u kwam.
+
+   HET STEMHOKJE. Onder de vouwlijn staat een strook die van
+   niemand is behalve van u. Pijn, slaap, humeur, of niets. De
+   praktijk vraagt er niet naar en het hoort niet in een
+   dossier. Elk zorgformulier verzamelt; dit formulier laat
+   uitdrukkelijk één deel ONgelezen, en zegt dat erbij.
+
+   VORM. Het staatsdrukwerk van de kieskring: zware grotesk in
+   kapitalen, haarlijnen, genummerde vakken, alles op één
+   rasterlijn, papier dat naar bureau ruikt. Geen kleurvlak,
+   geen schaduw, geen ronde hoek — het formulier ontleent zijn
+   gezag aan strengheid, en juist dat maakt de rode kras erin
+   een daad.
+
+   HET ANKER. Kandidaatnamen op 5 mm kapitaal, de zin eronder
+   op 3,4 mm schreef, stemvakken van 10 × 10 mm — een vakje dat
+   met artritische vingers en een stomp potlood te raken is.
+   Wie de metafoor niet begrijpt leest gewoon vier regels met
+   vakjes ernaast, en doet het goed.
+   ============================================================ */
+
+:root{
+  --papier:#f2f0e9;
+  --papier-2:#e7e4da;
+  --vel:#fbfaf6;
+  --inkt:#14161a;
+  --inkt-2:#3c4147;
+  --grijs:#767b81;
+  --lijn:#c8c5ba;
+  --lijn-2:#dedbd1;
+  --rood:#cf1f26;          /* het stempotlood — nooit door ons gedrukt */
+  --rood-diep:#9c1017;
+
+  --sans:"Helvetica Neue",Inter,"Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --serif:Charter,"Iowan Old Style",Georgia,"Times New Roman",serif;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:70px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.65 var(--sans);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--rood-diep)}
+:focus-visible{outline:3px solid var(--rood);outline-offset:3px}
+.binnen{max-width:1180px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--inkt);color:#a6abb1;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border:1px solid #40454b;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#a6abb1;text-decoration:none;padding:5px 2px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--rood)}
+.labbalk a.terug{color:#fff}
+@media (max-width:720px){.labbalk{flex-wrap:wrap;gap:10px}.labbalk .rek{display:none}}
+
+/* ---------- secties ---------- */
+.scherm{padding:var(--s6) 0;border-top:1px solid var(--lijn)}
+.scherm.diep{background:var(--papier-2)}
+.scherm.wit{background:var(--vel)}
+.schermkop{margin-bottom:var(--s5);max-width:76ch}
+.schermkop b{display:inline-block;font:700 10px/1 var(--mono);letter-spacing:.24em;
+  text-transform:uppercase;color:var(--rood-diep);margin-bottom:var(--s3)}
+.schermkop h2{font:700 clamp(27px,3.5vw,41px)/1.08 var(--sans);letter-spacing:-.03em;color:var(--inkt)}
+.schermkop p{margin-top:var(--s3);font:400 18px/1.62 var(--serif);color:var(--inkt-2);max-width:64ch}
+
+/* ============================================================
+   1 · LANDING
+   ============================================================ */
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .vlag{width:26px;height:26px;background:var(--inkt);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 13px/1 var(--sans)}
+.merkregel .naam{font:700 15px/1 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+.merkregel .pad{font:500 12px/1 var(--mono);color:var(--grijs);letter-spacing:.08em}
+
+.hero{display:grid;grid-template-columns:1.08fr .92fr;gap:var(--s6);align-items:start}
+@media (max-width:980px){.hero{grid-template-columns:1fr;gap:var(--s5)}}
+.hero h1{font:700 clamp(38px,5.6vw,66px)/1.02 var(--sans);letter-spacing:-.042em;color:var(--inkt)}
+.hero h1 em{font-style:normal;color:var(--rood-diep);
+  border-bottom:6px solid var(--rood);padding-bottom:2px}
+.hero .lead{margin-top:var(--s4);font:400 20px/1.6 var(--serif);color:var(--inkt-2);max-width:52ch}
+.hero .lead b{font-weight:600;color:var(--inkt)}
+
+.stellingen{margin-top:var(--s5);display:grid;gap:0;border-top:2px solid var(--inkt)}
+.stelling{display:grid;grid-template-columns:38px 1fr;gap:var(--s3);
+  padding:var(--s3) 0;border-bottom:1px solid var(--lijn)}
+.stelling i{font:700 12px/1 var(--mono);font-style:normal;color:var(--grijs);padding-top:5px}
+.stelling h3{font:700 16px/1.35 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+.stelling p{margin-top:5px;font-size:15.5px;line-height:1.55}
+
+/* het proefbiljet in de hero */
+.proefbiljet{background:#fff;border:1.5px solid var(--inkt);padding:26px 24px 22px;
+  box-shadow:14px 14px 0 rgba(20,22,26,.07)}
+.proefbiljet .bk{border-bottom:2px solid var(--inkt);padding-bottom:10px;margin-bottom:16px}
+.proefbiljet .bk .t{font:700 25px/1 var(--sans);letter-spacing:.14em;color:var(--inkt);text-transform:uppercase}
+.proefbiljet .bk .o{margin-top:7px;font:500 11.5px/1.4 var(--mono);letter-spacing:.07em;color:var(--grijs)}
+.pblok{border-bottom:1px solid var(--lijn-2);padding:12px 0;display:grid;
+  grid-template-columns:26px 1fr auto;gap:13px;align-items:center}
+.pblok:last-of-type{border-bottom:0}
+.pblok .nr{font:700 15px/1 var(--mono);color:var(--inkt)}
+.pblok .nm{font:700 14.5px/1.25 var(--sans);color:var(--inkt);text-transform:uppercase;letter-spacing:.02em}
+.pblok .zn{margin-top:3px;font:400 13.5px/1.4 var(--serif);color:var(--inkt-2)}
+.vak{width:30px;height:30px;border:1.5px solid var(--inkt);background:#fff;flex:none}
+.vak.gekleurd{background:var(--rood);border-color:var(--rood-diep);
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.28)}
+.proefbiljet .voet{margin-top:16px;border-top:2px solid var(--inkt);padding-top:11px;
+  font:500 11.5px/1.5 var(--mono);letter-spacing:.05em;color:var(--grijs)}
+.proefbiljet .voet b{color:var(--rood-diep)}
+
+/* ============================================================
+   2 · KIEZER — de lijst samenstellen
+   ============================================================ */
+.lijstbalk{display:flex;flex-wrap:wrap;gap:var(--s4);border-top:2px solid var(--inkt);
+  border-bottom:1px solid var(--lijn);padding:var(--s3) 0;margin-bottom:var(--s5)}
+.lijstbalk div{font:500 12.5px/1.4 var(--mono);letter-spacing:.05em;color:var(--grijs)}
+.lijstbalk b{display:block;font:700 17px/1.3 var(--sans);color:var(--inkt);letter-spacing:-.01em;margin-top:4px}
+
+.kandidaten{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s4)}
+@media (max-width:900px){.kandidaten{grid-template-columns:1fr}}
+.kandidaat{background:#fff;border:1.5px solid var(--inkt);display:grid;
+  grid-template-columns:104px 1fr;gap:var(--s3);padding:16px}
+.kandidaat.buiten{border:1.5px dashed var(--lijn);background:transparent;opacity:.72}
+.kandidaat .beeld{background:var(--papier);border:1px solid var(--lijn-2);
+  aspect-ratio:1;display:flex;align-items:center;justify-content:center;padding:6px}
+.kandidaat .beeld img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.kandidaat .kop{display:flex;align-items:baseline;gap:9px}
+.kandidaat .kop .lnr{font:700 12px/1 var(--mono);color:#fff;background:var(--inkt);padding:5px 6px;letter-spacing:.06em}
+.kandidaat.buiten .kop .lnr{background:var(--grijs)}
+.kandidaat h3{font:700 17px/1.2 var(--sans);color:var(--inkt);text-transform:uppercase;letter-spacing:.01em}
+.kandidaat p.zin{margin-top:9px;font:400 15.5px/1.5 var(--serif);color:var(--inkt-2)}
+.kandidaat .merken{margin-top:11px;display:flex;flex-wrap:wrap;gap:7px}
+.merk{font:600 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid var(--inkt);color:var(--inkt);padding:5px 7px}
+.merk.trekker{background:var(--inkt);color:#fff}
+.merk.uit{border-color:var(--lijn);color:var(--grijs)}
+.kandidaat .waarom{margin-top:11px;padding-top:9px;border-top:1px solid var(--lijn-2);
+  font:400 13.5px/1.5 var(--sans);color:var(--grijs)}
+.kandidaat .waarom b{color:var(--inkt);font-weight:600}
+
+.kiezersnoot{margin-top:var(--s4);border:1.5px solid var(--inkt);background:#fff;padding:20px 22px;
+  display:grid;grid-template-columns:auto 1fr;gap:var(--s3);align-items:start}
+.kiezersnoot .pot{width:16px;height:74px;background:linear-gradient(180deg,var(--rood) 0 62%,#e8dfc4 62% 100%);
+  border:1px solid var(--inkt);position:relative}
+.kiezersnoot .pot::after{content:"";position:absolute;left:-1px;bottom:-9px;width:16px;height:9px;
+  background:var(--rood-diep);clip-path:polygon(0 0,100% 0,50% 100%)}
+.kiezersnoot h4{font:700 15px/1.3 var(--sans);color:var(--inkt)}
+.kiezersnoot p{margin-top:6px;font-size:15.5px;line-height:1.55;max-width:70ch}
+
+/* ============================================================
+   3 · CLIËNTKAART — het proces-verbaal
+   ============================================================ */
+.pv{background:#fff;border:1.5px solid var(--inkt)}
+.pv .pvkop{display:grid;grid-template-columns:1fr auto;gap:var(--s3);align-items:center;
+  padding:20px 22px;border-bottom:2px solid var(--inkt)}
+.pv .pvkop h3{font:700 20px/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--inkt)}
+.pv .pvkop p{margin-top:5px;font:500 12px/1.4 var(--mono);letter-spacing:.05em;color:var(--grijs)}
+.opkomst{text-align:right}
+.opkomst .g{font:700 40px/1 var(--sans);letter-spacing:-.03em;color:var(--inkt)}
+.opkomst .l{font:600 10.5px/1 var(--mono);letter-spacing:.16em;color:var(--grijs);margin-top:6px}
+
+/* op smalle schermen rolt de tabel binnen zijn eigen kader — de pagina zelf niet */
+.pvrol{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.pvtabel{width:100%;min-width:680px;border-collapse:collapse}
+.pvtabel th,.pvtabel td{border-bottom:1px solid var(--lijn-2);text-align:left;padding:11px 10px}
+.pvtabel th{font:600 10.5px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;
+  color:var(--grijs);border-bottom:1px solid var(--lijn)}
+.pvtabel th:first-child,.pvtabel td:first-child{padding-left:22px}
+.pvtabel th:last-child,.pvtabel td:last-child{padding-right:22px;text-align:right}
+.pvtabel td .nm{font:700 14.5px/1.25 var(--sans);text-transform:uppercase;color:var(--inkt);letter-spacing:.01em}
+.pvtabel td .zn{margin-top:3px;font:400 13.5px/1.4 var(--serif);color:var(--grijs)}
+.pvtabel td.lnr{font:700 14px/1 var(--mono);color:var(--inkt);vertical-align:top}
+.strook{display:flex;gap:3px}
+.strook span{width:17px;height:17px;border:1.2px solid var(--inkt);background:#fff;flex:none}
+.strook span.rood{background:var(--rood);border-color:var(--rood-diep)}
+.strook span.blanco{border-style:dashed;border-color:var(--grijs)}
+.telling{font:700 15px/1 var(--mono);color:var(--inkt)}
+
+.pvvoet{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);padding:22px;
+  border-top:2px solid var(--inkt);background:var(--papier)}
+@media (max-width:820px){.pvvoet{grid-template-columns:1fr}
+  .pv .pvkop{grid-template-columns:1fr}.opkomst{text-align:left}}
+.pvvoet h5{font:700 10.5px/1 var(--mono);letter-spacing:.15em;color:var(--rood-diep);margin-bottom:8px}
+.pvvoet p{font-size:15px;line-height:1.55}
+.pvvoet p b{color:var(--inkt)}
+
+.hokje{margin-top:var(--s4);border:1.5px dashed var(--inkt);padding:20px 22px;background:var(--papier-2)}
+.hokje h4{font:700 15px/1.3 var(--sans);color:var(--inkt)}
+.hokje p{margin-top:7px;font-size:15.5px;line-height:1.58;max-width:76ch}
+.hokje .slot{margin-top:12px;font:600 11.5px/1 var(--mono);letter-spacing:.1em;color:var(--grijs)}
+
+/* ============================================================
+   4 · PRINTKAART
+   ============================================================ */
+.printuitleg{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-bottom:var(--s5)}
+@media (max-width:900px){.printuitleg{grid-template-columns:1fr}}
+.printuitleg h4{font:700 10px/1 var(--mono);letter-spacing:.18em;color:var(--rood-diep);
+  border-top:2px solid var(--inkt);padding-top:11px;margin-bottom:10px}
+.printuitleg p{font-size:15.5px;line-height:1.58}
+.printuitleg p b{color:var(--inkt)}
+
+.bladhouder{background:var(--papier-2);padding:var(--s4);border:1px solid var(--lijn)}
+.bladschaal{width:100%;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;position:relative;
+  box-shadow:0 10px 40px rgba(20,22,26,.2)}
+.blad .rand{position:absolute;inset:11mm 10mm 9mm 10mm;display:flex;flex-direction:column}
+
+/* kop van het biljet */
+.b-kop{border-bottom:1.2mm solid #000;padding-bottom:2.6mm}
+.b-kop .rij{display:flex;align-items:flex-end;justify-content:space-between;gap:6mm}
+.b-kop h1{font:700 9.6mm/.94 var(--sans);letter-spacing:.1em;color:#000;text-transform:uppercase}
+.b-kop .kring{text-align:right;font:600 2.9mm/1.45 var(--mono);letter-spacing:.06em;color:#000}
+.b-kop .wie{margin-top:2.4mm;display:flex;justify-content:space-between;gap:6mm;
+  font:400 3.6mm/1.3 var(--serif);color:#000}
+.b-kop .wie b{font-weight:700}
+
+/* instructiebalk */
+.b-inst{margin-top:2.6mm;border:.5mm solid #000;padding:2.4mm 3mm;display:grid;
+  grid-template-columns:1fr auto;gap:4mm;align-items:center}
+.b-inst p{font:700 4.1mm/1.28 var(--sans);color:#000}
+.b-inst p span{display:block;margin-top:1.2mm;font:400 3.3mm/1.35 var(--serif)}
+.b-inst .vb{display:flex;gap:2mm;align-items:center}
+.b-inst .vb i{width:8mm;height:8mm;border:.5mm solid #000;display:block}
+.b-inst .vb i.vol{background:#000}
+.b-inst .vb u{font:600 2.6mm/1.2 var(--mono);text-decoration:none;letter-spacing:.04em;color:#000}
+
+/* de lijsten */
+.b-lijsten{margin-top:3mm;flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.b-lijst{flex:1;display:grid;grid-template-columns:9mm 26mm 1fr 76mm;gap:3.4mm;
+  border-bottom:.35mm solid #000;padding:4mm 0;align-items:center}
+.b-lijst:first-child{border-top:.35mm solid #000}
+.b-lijst .lnr{font:700 8mm/1 var(--mono);color:#000;text-align:center;
+  border-right:.35mm solid #000;padding-right:1mm}
+.b-lijst .bld{border:.3mm solid #000;height:26mm;display:flex;align-items:center;
+  justify-content:center;padding:.8mm}
+.b-lijst .bld img{max-width:100%;max-height:100%;object-fit:contain;mix-blend-mode:multiply}
+.b-lijst h2{font:700 5mm/1.08 var(--sans);color:#000;text-transform:uppercase;letter-spacing:.015em}
+.b-lijst .zin{margin-top:1.4mm;font:400 3.4mm/1.34 var(--serif);color:#000}
+.b-lijst .bij{margin-top:1.4mm;font:600 2.7mm/1.25 var(--mono);letter-spacing:.05em;color:#000}
+
+/* de veertien stemvakken */
+.b-vakken{display:grid;grid-template-columns:repeat(7,1fr);gap:1.2mm}
+.b-vak{position:relative;height:10mm;border:.45mm solid #000}
+.b-vak u{position:absolute;left:.5mm;top:.3mm;font:600 2.1mm/1 var(--mono);
+  text-decoration:none;color:#000}
+/* de rode kras: door de patiënt aangebracht, NOOIT door de printer */
+.b-vak .kras{position:absolute;inset:.5mm;background:var(--rood)}
+
+/* blancorij */
+.b-blanco{margin-top:2.6mm;border:.5mm solid #000;padding:2.4mm 3mm;
+  display:grid;grid-template-columns:1fr 72mm;gap:3mm;align-items:center}
+.b-blanco h3{font:700 4.2mm/1.2 var(--sans);color:#000;text-transform:uppercase;letter-spacing:.03em}
+.b-blanco p{margin-top:1.2mm;font:400 3.3mm/1.34 var(--serif);color:#000;max-width:82mm}
+.b-blanco .b-vak{height:7.4mm}
+
+/* vouwlijn + stemhokje */
+.b-vouw{margin-top:3mm;border-top:.35mm dashed #000;padding-top:1.4mm;
+  font:600 2.6mm/1.2 var(--mono);letter-spacing:.12em;color:#000;text-align:center}
+.b-hok{margin-top:1.8mm;display:grid;grid-template-columns:auto 1fr;gap:3mm;align-items:start}
+.b-hok .tt{font:700 3.4mm/1.25 var(--sans);color:#000;text-transform:uppercase;letter-spacing:.03em;width:38mm}
+.b-hok .tt span{display:block;margin-top:1mm;font:400 2.9mm/1.3 var(--serif);text-transform:none;letter-spacing:0}
+.b-hok .lijnen{display:grid;gap:4.4mm;padding-top:1mm}
+.b-hok .lijnen i{display:block;border-bottom:.3mm solid #000}
+
+.b-voet{margin-top:2.6mm;border-top:.8mm solid #000;padding-top:1.8mm;
+  display:flex;justify-content:space-between;gap:4mm;
+  font:600 2.6mm/1.3 var(--mono);letter-spacing:.05em;color:#000}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#a6abb1;padding:var(--s6) 0}
+footer.uitleiding h3{font:700 22px/1.25 var(--sans);color:#fff;letter-spacing:-.02em;margin-bottom:var(--s3)}
+footer.uitleiding .kols{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .kols{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10px/1 var(--mono);letter-spacing:.18em;color:var(--rood);margin-bottom:10px}
+footer.uitleiding p,footer.uitleiding li{font-size:15px;line-height:1.6}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding:6px 0;border-bottom:1px solid #2a2e33}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT — één inkt: zwart. De rode kras is van de patiënt en
+   wordt door de printer nooit meegeleverd.
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .schermkop,.printuitleg{display:none !important}
+  .scherm{padding:0 !important;background:#fff !important;border:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  .bladhouder{background:#fff !important;border:0 !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+  .b-vak .kras{display:none !important}   /* rood komt van het potlood, niet van ons */
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 67</span>
+  <strong style="font:700 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Stembiljet</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="vlag" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 67 · STEMBILJET</span>
+    </div>
+
+    <div class="hero">
+      <div>
+        <h1>Uw oefenkaart geeft bevelen. Dit biljet <em>vraagt</em>.</h1>
+        <p class="lead">Elke regel op een gewone oefenkaart staat in de gebiedende wijs, en nergens
+          op het blad is plaats voor een antwoord. Wij drukken dit vel af zoals de kieskring dat
+          doet: <b>in één inkt, zwart</b>, met alle keuzes even zwaar naast elkaar. Het rode
+          potlood leveren wij niet mee. Dat is van u.</p>
+
+        <div class="stellingen">
+          <div class="stelling">
+            <i>01</i>
+            <div>
+              <h3>Alle rode inkt op dit blad is van de patiënt</h3>
+              <p>De praktijk drukt zwart. Wat rood is, heeft iemand zelf aangebracht — één vakje
+                per dag, geheel ingekleurd. Het blad is pas af als er van twee kanten aan gewerkt is.</p>
+            </div>
+          </div>
+          <div class="stelling">
+            <i>02</i>
+            <div>
+              <h3>Blanco is een geldige stem</h3>
+              <p>Een dag waarop het niet ging is geen gat in de kaart. Het is één rood vakje in de
+                blancorij, en het telt mee voor de opkomst. Wij tellen niet hoeveel u deed —
+                wij tellen of u er was.</p>
+            </div>
+          </div>
+          <div class="stelling">
+            <i>03</i>
+            <div>
+              <h3>Onder de vouwlijn kijkt niemand mee</h3>
+              <p>De onderste strook is het stemhokje: pijn, slaap, humeur, of niets. Die regels
+                komen niet in het dossier en er wordt niet naar gevraagd. Dat staat er ook zo op.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="proefbiljet" aria-label="Voorbeeld van het biljet">
+        <div class="bk">
+          <div class="t">Stembiljet</div>
+          <div class="o">OEFENINGEN · LIJST VAN 2 SEPTEMBER 2026<br/>FYSIOTHERAPIE WILHELMINAPARK · UTRECHT</div>
+        </div>
+
+        <div class="pblok">
+          <span class="nr">1</span>
+          <div>
+            <div class="nm">Opstaan uit de stoel</div>
+            <div class="zn">Acht keer opstaan en gaan zitten, armen over elkaar.</div>
+          </div>
+          <span class="vak gekleurd" aria-label="ingekleurd vakje"></span>
+        </div>
+        <div class="pblok">
+          <span class="nr">2</span>
+          <div>
+            <div class="nm">Hakken heffen</div>
+            <div class="zn">Twee handen aan het aanrecht, tien keer langzaam zakken.</div>
+          </div>
+          <span class="vak" aria-label="leeg vakje"></span>
+        </div>
+        <div class="pblok">
+          <span class="nr">3</span>
+          <div>
+            <div class="nm">Been zijwaarts</div>
+            <div class="zn">Hand op de stoelleuning, tien keer per kant.</div>
+          </div>
+          <span class="vak" aria-label="leeg vakje"></span>
+        </div>
+        <div class="pblok">
+          <span class="nr">B</span>
+          <div>
+            <div class="nm">Blanco</div>
+            <div class="zn">Vandaag ging het niet. Ook dit is een geldige stem.</div>
+          </div>
+          <span class="vak" aria-label="leeg vakje"></span>
+        </div>
+
+        <div class="voet">GEDRUKT IN ZWART · <b>ROOD IS VAN U</b></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm diep" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Kiezer</b>
+      <h2>De praktijk stelt de lijst samen. Wie er doorkomt, bepaalt de patiënt</h2>
+      <p>Een kandidaat komt alleen op de lijst met een volledige Nederlandse zin erbij — geen
+        “3×10”, geen percentage. Precies één oefening is lijsttrekker: die staat bovenaan en is de
+        oefening die telt als er maar tijd is voor één. Alles wat afvalt blijft zichtbaar, met de
+        reden erbij.</p>
+    </div>
+
+    <div class="lijstbalk">
+      <div>CLIËNT<b>Mevr. A. Doornbos, 74</b></div>
+      <div>REDEN<b>Artrose linkerknie, na val in juni</b></div>
+      <div>LIJST GELDIG<b>2 t/m 15 september 2026</b></div>
+      <div>OPGESTELD DOOR<b>J. Meppelink, fysiotherapeut</b></div>
+    </div>
+
+    <div class="kandidaten">
+
+      <article class="kandidaat">
+        <div class="beeld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/></div>
+        <div>
+          <div class="kop"><span class="lnr">LIJST 1</span></div>
+          <h3 style="margin-top:9px">Opstaan uit de stoel</h3>
+          <p class="zin">Acht keer opstaan en weer gaan zitten, met de armen over elkaar. Lukt dat
+            niet: duw één keer mee met de leuning.</p>
+          <div class="merken">
+            <span class="merk trekker">Lijsttrekker</span>
+            <span class="merk">Stoel met leuning</span>
+            <span class="merk">± 3 minuten</span>
+          </div>
+          <p class="waarom"><b>Waarom bovenaan:</b> dit is de beweging waar mevrouw Doornbos het
+            hardst op achteruitging na de val. Als er één ding lukt vandaag, dan dit.</p>
+        </div>
+      </article>
+
+      <article class="kandidaat">
+        <div class="beeld"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Hakken heffen aan het aanrecht"/></div>
+        <div>
+          <div class="kop"><span class="lnr">LIJST 2</span></div>
+          <h3 style="margin-top:9px">Hakken heffen</h3>
+          <p class="zin">Twee handen aan het aanrecht. Tien keer op de tenen, en dan langzaam
+            zakken — tellen tot drie op de weg naar beneden.</p>
+          <div class="merken">
+            <span class="merk">Aanrecht</span>
+            <span class="merk">± 2 minuten</span>
+          </div>
+          <p class="waarom"><b>Waarom op de lijst:</b> de kuit draagt mee bij het opstaan; dit
+            maakt lijst&nbsp;1 over twee weken makkelijker.</p>
+        </div>
+      </article>
+
+      <article class="kandidaat">
+        <div class="beeld"><img src="/images/seated-chair/standing-chair-abduction-line-v1.png" alt="Been zijwaarts heffen bij de stoel"/></div>
+        <div>
+          <div class="kop"><span class="lnr">LIJST 3</span></div>
+          <h3 style="margin-top:9px">Been zijwaarts</h3>
+          <p class="zin">Hand op de stoelleuning, rug recht. Tien keer het been opzij en rustig
+            terug — per kant. De romp blijft stil staan.</p>
+          <div class="merken">
+            <span class="merk">Stoel met leuning</span>
+            <span class="merk">Beide kanten</span>
+            <span class="merk">± 3 minuten</span>
+          </div>
+          <p class="waarom"><b>Waarom op de lijst:</b> zijwaartse stabiliteit is wat bij de val
+            tekortschoot. Deze staat er voor de balans, niet voor de kracht.</p>
+        </div>
+      </article>
+
+      <article class="kandidaat buiten">
+        <div class="beeld"><img src="/images/onderste-extremiteit/been-pendelen-line-v1.png" alt="Been pendelen"/></div>
+        <div>
+          <div class="kop"><span class="lnr">NIET OP DE LIJST</span></div>
+          <h3 style="margin-top:9px">Been pendelen</h3>
+          <p class="zin">Los slingeren van het been, hangend aan de tafelrand.</p>
+          <div class="merken">
+            <span class="merk uit">Afgevallen</span>
+            <span class="merk uit">Terug bij controle</span>
+          </div>
+          <p class="waarom"><b>Waarom niet:</b> vier kandidaten is één te veel voor een biljet dat
+            in één blik te overzien moet zijn. Deze staat op de reservelijst voor 16 september.</p>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="kiezersnoot">
+      <div class="pot" aria-hidden="true"></div>
+      <div>
+        <h4>De kiezer weigert twee dingen</h4>
+        <p>Een kandidaat zonder volledige zin komt niet op het biljet — “3×10 quadriceps” is geen
+          instructie maar een afkorting van de praktijk voor zichzelf. En een lijst met meer dan
+          vier kandidaten wordt geweigerd: op een biljet dat je elke ochtend in één blik moet
+          kunnen lezen, is de vijfde regel de regel die niemand meer haalt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm wit" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Cliëntkaart</b>
+      <h2>Geen therapietrouw van 64 procent, maar een opkomst van elf op veertien</h2>
+      <p>De digitale kaart is het proces-verbaal: wat er is uitgebracht, wat blanco was, en wat er
+        niet is teruggekomen. Blanco telt mee in de opkomst — dat is precies waarom mensen het
+        durven invullen, en waarom de therapeut voor het eerst ziet <em>welke</em> dagen leeg waren
+        in plaats van hoeveel.</p>
+    </div>
+
+    <div class="pv">
+      <div class="pvkop">
+        <div>
+          <h3>Proces-verbaal</h3>
+          <p>MEVR. A. DOORNBOS · LIJST VAN 2 SEPT · DAG 14 VAN 14 · UTRECHT</p>
+        </div>
+        <div class="opkomst">
+          <div class="g">11<span style="color:var(--grijs)">/14</span></div>
+          <div class="l">OPKOMST</div>
+        </div>
+      </div>
+
+      <div class="pvrol">
+      <table class="pvtabel">
+        <thead>
+          <tr>
+            <th style="width:9%">Lijst</th>
+            <th style="width:40%">Kandidaat</th>
+            <th style="width:33%">Veertien dagen</th>
+            <th style="width:18%">Uitgebracht</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="lnr">1</td>
+            <td>
+              <div class="nm">Opstaan uit de stoel</div>
+              <div class="zn">Acht keer, armen over elkaar</div>
+            </td>
+            <td>
+              <div class="strook" aria-label="9 van 14 dagen ingekleurd">
+                <span class="rood"></span><span class="rood"></span><span></span><span class="rood"></span>
+                <span class="rood"></span><span class="rood"></span><span class="rood"></span>
+                <span></span><span class="rood"></span><span class="rood"></span><span></span>
+                <span class="rood"></span><span class="rood"></span><span></span>
+              </div>
+            </td>
+            <td><span class="telling">9×</span></td>
+          </tr>
+          <tr>
+            <td class="lnr">2</td>
+            <td>
+              <div class="nm">Hakken heffen</div>
+              <div class="zn">Tien keer, langzaam zakken</div>
+            </td>
+            <td>
+              <div class="strook" aria-label="7 van 14 dagen ingekleurd">
+                <span class="rood"></span><span></span><span></span><span class="rood"></span>
+                <span class="rood"></span><span></span><span class="rood"></span>
+                <span></span><span class="rood"></span><span></span><span></span>
+                <span class="rood"></span><span class="rood"></span><span></span>
+              </div>
+            </td>
+            <td><span class="telling">7×</span></td>
+          </tr>
+          <tr>
+            <td class="lnr">3</td>
+            <td>
+              <div class="nm">Been zijwaarts</div>
+              <div class="zn">Tien keer per kant, hand aan de leuning</div>
+            </td>
+            <td>
+              <div class="strook" aria-label="5 van 14 dagen ingekleurd">
+                <span class="rood"></span><span></span><span></span><span></span>
+                <span class="rood"></span><span></span><span class="rood"></span>
+                <span></span><span></span><span class="rood"></span><span></span>
+                <span></span><span class="rood"></span><span></span>
+              </div>
+            </td>
+            <td><span class="telling">5×</span></td>
+          </tr>
+          <tr>
+            <td class="lnr">B</td>
+            <td>
+              <div class="nm">Blanco</div>
+              <div class="zn">Geldig uitgebracht — u was er, het ging niet</div>
+            </td>
+            <td>
+              <div class="strook" aria-label="2 blanco dagen">
+                <span></span><span></span><span class="blanco"></span><span></span>
+                <span></span><span></span><span></span>
+                <span class="blanco"></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+              </div>
+            </td>
+            <td><span class="telling">2×</span></td>
+          </tr>
+          <tr>
+            <td class="lnr">—</td>
+            <td>
+              <div class="nm">Niet teruggekomen</div>
+              <div class="zn">Dag 11 en dag 14 — geen enkel vakje, ook geen blanco</div>
+            </td>
+            <td>
+              <div class="strook" aria-label="2 dagen zonder stem">
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span><span style="border-width:2.4px"></span>
+                <span></span><span></span><span style="border-width:2.4px"></span>
+              </div>
+            </td>
+            <td><span class="telling">2 dagen</span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="pvvoet">
+        <div>
+          <h5>WAT DE THERAPEUT ZIET</h5>
+          <p>Niet één percentage, maar een <b>patroon</b>: lijst 3 zakt weg in de tweede week, en
+            beide lege dagen vallen op een woensdag. Dat is een gesprek waard, en het staat er
+            zonder dat iemand het hoefde uit te leggen.</p>
+        </div>
+        <div>
+          <h5>WAT ER NIET STAAT</h5>
+          <p>Geen streak, geen badge, geen groene ring die breekt. Een biljet feliciteert niet en
+            berispt niet — het <b>registreert</b>. Dat is wat het draaglijk maakt om veertien dagen
+            vol te houden.</p>
+        </div>
+        <div>
+          <h5>DE VOLGENDE LIJST</h5>
+          <p>Op 16 september wordt een nieuwe lijst opgesteld. Lijst 3 gaat terug naar drie dagen
+            per week, en <b>Been pendelen</b> komt van de reservelijst binnen. Het oude biljet gaat
+            niet weg: het gaat in de map.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hokje">
+      <h4>Het stemhokje — de enige regels op dit blad die van niemand anders zijn</h4>
+      <p>Onder de vouwlijn staan drie lege regels zonder kopje, zonder vraag en zonder vakje. Wat
+        daar staat wordt niet overgetypt, niet gescand en niet besproken tenzij de patiënt er zelf
+        over begint. Dat een zorgformulier uitdrukkelijk een deel van zichzelf ongelezen laat, is
+        zeldzaam genoeg om het er met zoveel woorden op te zetten — en juist die belofte maakt dat
+        er iets komt te staan.</p>
+      <div class="slot">VOUW HIER · WAT HIERONDER STAAT LEEST NIEMAND</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Printkaart</b>
+      <h2>A4 staand, één inkt, veertien vakken per kandidaat</h2>
+      <p>Dit is het hart van het concept: een vel dat er streng en officieel uitziet, en dat pas
+        werkt als iemand het beschadigt. Hieronder staat het blad zoals het uit de printer komt,
+        met de rode krassen van vier dagen erop — die krassen verdwijnen als u dit
+        <em>daadwerkelijk</em> print, want de printer levert geen rood.</p>
+    </div>
+
+    <div class="printuitleg">
+      <div>
+        <h4>ÉÉN INKT — EN DAT IS EEN ONTWERPREGEL</h4>
+        <p>Niets op dit vel hangt aan kleur. Alle betekenis zit in <b>positie, kader en woord</b>.
+          Een fotokopie van een ingevuld biljet blijft leesbaar; de kras wordt grijs, maar staat
+          nog steeds in het goede vakje.</p>
+      </div>
+      <div>
+        <h4>VAKKEN VAN TIEN MILLIMETER</h4>
+        <p>Groot genoeg voor een stomp potlood en een hand die trilt. De dagnummers staan
+          <b>binnen</b> het vakje in de linkerbovenhoek, zodat de kras ze mag overschrijven —
+          een doorgestreept nummer is nog steeds een leesbare dag.</p>
+      </div>
+      <div>
+        <h4>DE BLANCORIJ STAAT ER ALTIJD</h4>
+        <p>Ook op een biljet van iemand die het veertien dagen volhoudt. Een rij die alleen
+          verschijnt als het misgaat, is een <b>aanklacht</b>; een rij die er vanaf dag één
+          staat, is een mogelijkheid.</p>
+      </div>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="b-kop">
+              <div class="rij">
+                <h1>Stembiljet</h1>
+                <div class="kring">
+                  OEFENINGEN<br/>
+                  LIJST VAN 2 SEPTEMBER 2026<br/>
+                  GELDIG T/M 15 SEPTEMBER
+                </div>
+              </div>
+              <div class="wie">
+                <span><b>Mevr. A. Doornbos</b> · artrose linkerknie</span>
+                <span>Fysiotherapie Wilhelminapark, Utrecht · J. Meppelink · 030 – 232 41 08</span>
+              </div>
+            </div>
+
+            <div class="b-inst">
+              <p>Kleur per dag één vakje geheel rood.
+                <span>Eén vakje per regel per dag. Ging het vandaag niet? Kleur dan een vakje in de
+                  blancorij — dat is een geldige stem en die telt gewoon mee.</span></p>
+              <div class="vb">
+                <i></i><i class="vol"></i><u>ZO</u>
+              </div>
+            </div>
+
+            <div class="b-lijsten">
+
+              <div class="b-lijst">
+                <div class="lnr">1</div>
+                <div class="bld"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt=""/></div>
+                <div>
+                  <h2>Opstaan uit de stoel</h2>
+                  <p class="zin">Acht keer opstaan en weer gaan zitten, armen over elkaar. Lukt dat
+                    niet: duw één keer mee met de leuning.</p>
+                  <p class="bij">LIJSTTREKKER · ALS ER MAAR TIJD IS VOOR ÉÉN, DAN DEZE</p>
+                </div>
+                <div class="b-vakken">
+                  <span class="b-vak"><u>1</u><i class="kras"></i></span>
+                  <span class="b-vak"><u>2</u><i class="kras"></i></span>
+                  <span class="b-vak"><u>3</u></span>
+                  <span class="b-vak"><u>4</u><i class="kras"></i></span>
+                  <span class="b-vak"><u>5</u></span>
+                  <span class="b-vak"><u>6</u></span>
+                  <span class="b-vak"><u>7</u></span>
+                  <span class="b-vak"><u>8</u></span>
+                  <span class="b-vak"><u>9</u></span>
+                  <span class="b-vak"><u>10</u></span>
+                  <span class="b-vak"><u>11</u></span>
+                  <span class="b-vak"><u>12</u></span>
+                  <span class="b-vak"><u>13</u></span>
+                  <span class="b-vak"><u>14</u></span>
+                </div>
+              </div>
+
+              <div class="b-lijst">
+                <div class="lnr">2</div>
+                <div class="bld"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt=""/></div>
+                <div>
+                  <h2>Hakken heffen</h2>
+                  <p class="zin">Twee handen aan het aanrecht. Tien keer op de tenen, en dan
+                    langzaam zakken — tel tot drie op de weg naar beneden.</p>
+                  <p class="bij">AANRECHT · ONGEVEER TWEE MINUTEN</p>
+                </div>
+                <div class="b-vakken">
+                  <span class="b-vak"><u>1</u><i class="kras"></i></span>
+                  <span class="b-vak"><u>2</u></span>
+                  <span class="b-vak"><u>3</u></span>
+                  <span class="b-vak"><u>4</u><i class="kras"></i></span>
+                  <span class="b-vak"><u>5</u></span>
+                  <span class="b-vak"><u>6</u></span>
+                  <span class="b-vak"><u>7</u></span>
+                  <span class="b-vak"><u>8</u></span>
+                  <span class="b-vak"><u>9</u></span>
+                  <span class="b-vak"><u>10</u></span>
+                  <span class="b-vak"><u>11</u></span>
+                  <span class="b-vak"><u>12</u></span>
+                  <span class="b-vak"><u>13</u></span>
+                  <span class="b-vak"><u>14</u></span>
+                </div>
+              </div>
+
+              <div class="b-lijst">
+                <div class="lnr">3</div>
+                <div class="bld"><img src="/images/seated-chair/standing-chair-abduction-line-v1.png" alt=""/></div>
+                <div>
+                  <h2>Been zijwaarts</h2>
+                  <p class="zin">Hand op de stoelleuning, rug recht. Tien keer het been opzij en
+                    rustig terug, per kant. De romp blijft stil staan.</p>
+                  <p class="bij">BEIDE KANTEN · ONGEVEER DRIE MINUTEN</p>
+                </div>
+                <div class="b-vakken">
+                  <span class="b-vak"><u>1</u><i class="kras"></i></span>
+                  <span class="b-vak"><u>2</u></span>
+                  <span class="b-vak"><u>3</u></span>
+                  <span class="b-vak"><u>4</u></span>
+                  <span class="b-vak"><u>5</u></span>
+                  <span class="b-vak"><u>6</u></span>
+                  <span class="b-vak"><u>7</u></span>
+                  <span class="b-vak"><u>8</u></span>
+                  <span class="b-vak"><u>9</u></span>
+                  <span class="b-vak"><u>10</u></span>
+                  <span class="b-vak"><u>11</u></span>
+                  <span class="b-vak"><u>12</u></span>
+                  <span class="b-vak"><u>13</u></span>
+                  <span class="b-vak"><u>14</u></span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="b-blanco">
+              <div>
+                <h3>Blanco — ook dit is een geldige stem</h3>
+                <p>Vandaag ging het niet: te veel pijn, geen tijd, geen zin. Kleur hier één vakje.
+                  U bent gekomen, en dat is wat wij tellen.</p>
+              </div>
+              <div class="b-vakken">
+                <span class="b-vak"><u>1</u></span>
+                <span class="b-vak"><u>2</u></span>
+                <span class="b-vak"><u>3</u><i class="kras"></i></span>
+                <span class="b-vak"><u>4</u></span>
+                <span class="b-vak"><u>5</u></span>
+                <span class="b-vak"><u>6</u></span>
+                <span class="b-vak"><u>7</u></span>
+                <span class="b-vak"><u>8</u></span>
+                <span class="b-vak"><u>9</u></span>
+                <span class="b-vak"><u>10</u></span>
+                <span class="b-vak"><u>11</u></span>
+                <span class="b-vak"><u>12</u></span>
+                <span class="b-vak"><u>13</u></span>
+                <span class="b-vak"><u>14</u></span>
+              </div>
+            </div>
+
+            <div class="b-vouw">VOUW HIER · WAT HIERONDER STAAT LEEST NIEMAND</div>
+
+            <div class="b-hok">
+              <div class="tt">Stemhokje
+                <span>Voor uzelf. Deze regels worden niet overgenomen in het dossier en er wordt
+                  niet naar gevraagd.</span>
+              </div>
+              <div class="lijnen">
+                <i></i><i></i><i></i>
+              </div>
+            </div>
+
+            <div class="b-voet">
+              <span>FYSIPLAN · LIJST 2 SEPT 2026 · MEEBRENGEN NAAR DE CONTROLE OP 16 SEPTEMBER</span>
+              <span>GEDRUKT IN ZWART — ROOD IS VAN U</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen kols">
+    <div>
+      <h3>Wat dit concept wint, en wat het kost</h3>
+      <p>Het wint een document dat om een antwoord vraagt in plaats van een opdracht te geven, en
+        een manier om een slechte dag te registreren die niet als falen leest. Het kost strengheid:
+        een biljet dat te vriendelijk wordt vormgegeven verliest precies het gezag waaraan de rode
+        kras zijn betekenis ontleent.</p>
+    </div>
+    <div>
+      <h4>DE DRIE REGELS</h4>
+      <ul>
+        <li>De praktijk drukt zwart; rood komt van de patiënt</li>
+        <li>Blanco is geldig en telt mee voor de opkomst</li>
+        <li>Onder de vouwlijn leest niemand mee</li>
+      </ul>
+    </div>
+    <div>
+      <h4>ELDERS</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var f=Math.min(1,schaal.clientWidth/blad.offsetWidth);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

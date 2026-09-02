@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 68 — Staten · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 68 — STATEN
+   ------------------------------------------------------------
+   Uw oefenkaart wordt vervangen. Een koperplaat wordt bijgewerkt.
+
+   Bij elke controle print de praktijk een nieuwe kaart, en de
+   oude gaat bij het oud papier. Zes weken herstel laten geen
+   spoor na: er is altijd maar één vel, het vel van vandaag, en
+   dat vel doet alsof het er altijd zo uitzag. De patiënt heeft
+   daardoor geen enkel bewijsstuk van vooruitgang in handen —
+   alleen een gevoel, en gevoel is in week vier onbetrouwbaar.
+
+   Rembrandt werkte een plaat soms jaren door. Elke keer dat hij
+   er iets aan veranderde ontstond een nieuwe STAAT, en musea
+   bewaren ze allemaal: eerste staat, tweede staat, vijfde staat
+   van dezelfde ets. Je ziet de lucht donkerder worden, een
+   figuur verdwijnen, een arm bijgezet. Het punt is niet dat de
+   laatste staat de beste is. Het punt is dat je de vórige nog
+   hebt, en dat de verandering dáárdoor zichtbaar is.
+
+   DUS: deze kaart is geen document maar een STAAT van een
+   plaat. Ze draagt haar nummer in de ondermarge — STAAT III —
+   met de datum, de vorige staat, en in de kantlijn precies wat
+   er ten opzichte van staat II veranderd is: bijgewerkt,
+   toegevoegd, weggekrast. De patiënt gooit niets weg. Drie
+   vellen naast elkaar op de keukentafel zijn het herstel, in
+   een vorm die niet te bepraten valt.
+
+   WEGKRASSEN IS EEN HANDELING. Op een plaat verdwijnt een lijn
+   niet vanzelf; de etser polijst hem weg, en in de afdruk blijft
+   vaak een spookje staan. Zo ook hier: een oefening die eruit
+   gaat wordt niet stilletjes verwijderd maar zichtbaar
+   WEGGEKRAST, met de reden en de staat waarin het gebeurde. Wat
+   je niet meer hoeft te doen is een resultaat, geen weglating.
+
+   VORM. De intagliotraditie: roomkleurig papier met de warme
+   grijzen van drukinkt, een echte PLAATRAND rond het beeld, een
+   boekschreef met brede marges, kapitaaltjes met spatiëring in
+   de onderrand, en cursieve aantekeningen in de kantlijn zoals
+   een conservator ze zet. Geen enkel vlak kleur. De enige
+   "kleur" is de warmte van de inkt zelf.
+
+   HET ANKER. Binnen de plaatrand is alles groot en rustig:
+   oefeningnaam op 5,2 mm, de zin op 3,6 mm schreef met ruime
+   regelafstand, en niet meer dan drie oefeningen op het vel. De
+   staat-notatie leeft in de ONDERMARGE, buiten de plaatrand —
+   precies zoals bij een ets — dus wie alleen het beeld leest,
+   mist niets van de instructie.
+   ============================================================ */
+
+:root{
+  --papier:#efe9dc;
+  --papier-2:#e5ddcb;
+  --vel:#faf6ec;
+  --inkt:#1c1814;          /* warme drukinkt, geen zuiver zwart */
+  --inkt-2:#463d33;
+  --grijs:#7d7263;
+  --lijn:#c7bba3;
+  --lijn-2:#ded4be;
+  --sepia:#6d4b2a;
+  --rood-krijt:#9b3b2a;    /* het rode krijt van de conservator */
+
+  --serif:"Iowan Old Style",Charter,"Hoefler Text",Georgia,"Times New Roman",serif;
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:44px; --s6:74px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17.5px/1.7 var(--serif);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--sepia)}
+:focus-visible{outline:3px solid var(--rood-krijt);outline-offset:3px}
+.binnen{max-width:1160px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--inkt);color:#a99c8a;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border:1px solid #443a30;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#a99c8a;text-decoration:none;padding:5px 2px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--rood-krijt)}
+.labbalk a.terug{color:#fff}
+@media (max-width:720px){.labbalk{flex-wrap:wrap;gap:10px}.labbalk .rek{display:none}}
+
+/* ---------- secties ---------- */
+.scherm{padding:var(--s6) 0;border-top:1px solid var(--lijn)}
+.scherm.diep{background:var(--papier-2)}
+.scherm.wit{background:var(--vel)}
+.schermkop{margin-bottom:var(--s5);max-width:74ch}
+.schermkop b{display:inline-block;font:600 10.5px/1 var(--sans);letter-spacing:.28em;
+  text-transform:uppercase;color:var(--sepia);margin-bottom:var(--s3)}
+.schermkop h2{font:400 clamp(28px,3.6vw,43px)/1.14 var(--serif);letter-spacing:-.012em;color:var(--inkt)}
+.schermkop p{margin-top:var(--s3);font-size:18px;line-height:1.68;max-width:64ch}
+.schermkop p em{font-style:italic;color:var(--inkt)}
+
+/* ============================================================
+   1 · LANDING
+   ============================================================ */
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .vlag{width:26px;height:26px;background:var(--inkt);color:var(--vel);
+  display:flex;align-items:center;justify-content:center;font:400 14px/1 var(--serif)}
+.merkregel .naam{font:600 15px/1 var(--sans);color:var(--inkt);letter-spacing:.02em}
+.merkregel .pad{font:500 12px/1 var(--mono);color:var(--grijs);letter-spacing:.08em}
+
+.hero h1{font:400 clamp(36px,5.2vw,62px)/1.08 var(--serif);letter-spacing:-.018em;color:var(--inkt);max-width:17ch}
+.hero h1 em{font-style:italic;color:var(--sepia)}
+.hero .lead{margin-top:var(--s4);font-size:20px;line-height:1.66;max-width:56ch}
+.hero .lead b{font-weight:600;color:var(--inkt)}
+
+/* drie staten naast elkaar — dezelfde plaat, dieper geëtst */
+.statenrij{margin-top:var(--s6);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:900px){.statenrij{grid-template-columns:1fr;gap:var(--s4)}}
+.staat{text-align:center}
+.staat .plaat{position:relative;background:var(--vel);padding:22px;
+  box-shadow:0 2px 0 rgba(28,24,20,.09), 0 16px 34px rgba(28,24,20,.13)}
+.staat .plaat::before{content:"";position:absolute;inset:11px;
+  border:1.5px solid rgba(28,24,20,.42);pointer-events:none}
+.staat .plaat::after{content:"";position:absolute;inset:13px;
+  border:.5px solid rgba(28,24,20,.14);pointer-events:none}
+.staat .beeld{position:relative;padding:16px 10px 10px}
+.staat .beeld img{width:100%;max-width:190px;margin:0 auto;mix-blend-mode:multiply}
+.staat .arcering{height:9px;margin:14px auto 0;max-width:200px;
+  background-image:repeating-linear-gradient(70deg,var(--inkt) 0 1px,transparent 1px 5px)}
+.staat.s1 .beeld img{opacity:.5}
+.staat.s1 .arcering{opacity:.3}
+.staat.s2 .beeld img{opacity:.75}
+.staat.s2 .arcering{opacity:.62}
+.staat .onder{margin-top:16px;font:600 10.5px/1.5 var(--sans);letter-spacing:.22em;
+  text-transform:uppercase;color:var(--grijs)}
+.staat .onder b{display:block;color:var(--inkt);font-size:12px;letter-spacing:.2em;margin-bottom:5px}
+.staat .bijschrift{margin-top:10px;font:italic 400 15px/1.55 var(--serif);color:var(--inkt-2)}
+
+.beginsel{margin-top:var(--s6);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5);
+  border-top:1px solid var(--inkt);padding-top:var(--s4)}
+@media (max-width:900px){.beginsel{grid-template-columns:1fr;gap:var(--s4)}}
+.beginsel h3{font:600 11px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--sepia);margin-bottom:11px}
+.beginsel p{font-size:16.5px;line-height:1.6}
+.beginsel p b{color:var(--inkt);font-weight:600}
+
+/* ============================================================
+   2 · KIEZER — werken op de plaat
+   ============================================================ */
+.werkbank{display:grid;grid-template-columns:1fr 300px;gap:var(--s5);align-items:start}
+@media (max-width:960px){.werkbank{grid-template-columns:1fr}}
+
+.regel{background:var(--vel);border:1px solid var(--lijn);padding:20px 22px;margin-bottom:var(--s3);
+  display:grid;grid-template-columns:96px 1fr;gap:var(--s3);position:relative}
+.regel .bd{border:1px solid var(--lijn-2);background:var(--papier);padding:8px;
+  aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+.regel .bd img{max-width:100%;max-height:100%;object-fit:contain;mix-blend-mode:multiply}
+.regel h3{font:400 21px/1.22 var(--serif);color:var(--inkt)}
+.regel p.zin{margin-top:8px;font-size:16.5px;line-height:1.58}
+.regel .herkomst{margin-top:12px;padding-top:10px;border-top:1px solid var(--lijn-2);
+  font:italic 400 15px/1.5 var(--serif);color:var(--grijs)}
+.regel .herkomst b{font-style:normal;font-weight:600;color:var(--inkt)}
+
+.handeling{position:absolute;top:-1px;right:-1px;font:600 9.5px/1 var(--sans);
+  letter-spacing:.18em;text-transform:uppercase;padding:7px 10px;
+  border:1px solid var(--inkt);background:var(--inkt);color:var(--vel)}
+.handeling.bijgewerkt{background:var(--sepia);border-color:var(--sepia)}
+.handeling.ongewijzigd{background:transparent;color:var(--grijs);border-color:var(--lijn)}
+
+/* weggekrast: de lijn is gepolijst, het spookje blijft */
+.regel.weggekrast{background:transparent;border-style:dashed;border-color:var(--lijn)}
+.regel.weggekrast .bd img{opacity:.22}
+.regel.weggekrast h3{color:var(--grijs);text-decoration:line-through;text-decoration-thickness:1px}
+.regel.weggekrast p.zin{color:var(--grijs)}
+.regel.weggekrast .handeling{background:transparent;color:var(--rood-krijt);border-color:var(--rood-krijt)}
+
+.kantlijn{background:var(--vel);border:1px solid var(--lijn);padding:22px}
+.kantlijn h4{font:600 10.5px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--sepia);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--lijn-2)}
+.kantlijn ul{list-style:none}
+.kantlijn li{padding:11px 0;border-bottom:1px solid var(--lijn-2);
+  font:italic 400 15.5px/1.5 var(--serif);color:var(--inkt-2)}
+.kantlijn li:last-child{border-bottom:0}
+.kantlijn li b{font-style:normal;font-weight:600;color:var(--inkt);display:block;
+  font-family:var(--sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:5px}
+.kantlijn .som{margin-top:16px;padding-top:14px;border-top:1px solid var(--inkt);
+  font:600 12px/1.5 var(--sans);letter-spacing:.08em;color:var(--inkt)}
+
+/* ============================================================
+   3 · CLIËNTKAART — het plaatboek
+   ============================================================ */
+.plaatboek{background:var(--vel);border:1px solid var(--lijn);padding:0}
+.pbkop{padding:24px 26px;border-bottom:1px solid var(--inkt);display:grid;
+  grid-template-columns:1fr auto;gap:var(--s3);align-items:end}
+@media (max-width:760px){.pbkop{grid-template-columns:1fr}}
+.pbkop h3{font:400 26px/1.15 var(--serif);color:var(--inkt)}
+.pbkop p{margin-top:7px;font:500 12px/1.5 var(--mono);letter-spacing:.06em;color:var(--grijs)}
+.pbkop .huidig{text-align:right;font:600 10.5px/1 var(--sans);letter-spacing:.2em;color:var(--grijs)}
+.pbkop .huidig b{display:block;font:400 34px/1 var(--serif);letter-spacing:0;color:var(--inkt);margin-bottom:6px}
+@media (max-width:760px){.pbkop .huidig{text-align:left}}
+
+.tijdlijn{padding:8px 26px 26px}
+.gebeurtenis{display:grid;grid-template-columns:118px 1fr;gap:var(--s4);
+  padding:22px 0;border-bottom:1px solid var(--lijn-2)}
+@media (max-width:700px){.gebeurtenis{grid-template-columns:1fr;gap:10px}}
+.gebeurtenis:last-child{border-bottom:0}
+.gebeurtenis .merk{font:600 11px/1.5 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--grijs)}
+.gebeurtenis .merk b{display:block;font:400 25px/1 var(--serif);letter-spacing:0;color:var(--inkt);margin-bottom:6px}
+.gebeurtenis h4{font:400 20px/1.3 var(--serif);color:var(--inkt)}
+.gebeurtenis .veranderingen{margin-top:12px;display:grid;gap:8px}
+.ver{display:grid;grid-template-columns:112px 1fr;gap:14px;align-items:baseline;
+  font-size:16px;line-height:1.5}
+@media (max-width:560px){.ver{grid-template-columns:1fr;gap:2px}}
+.ver i{font:600 9.5px/1.6 var(--sans);font-style:normal;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--inkt);border-bottom:1.5px solid var(--inkt);justify-self:start}
+.ver i.kras{color:var(--rood-krijt);border-bottom-color:var(--rood-krijt);border-bottom-style:dashed}
+.ver i.stil{color:var(--grijs);border-bottom-color:var(--lijn)}
+.gebeurtenis .noot{margin-top:12px;font:italic 400 15.5px/1.55 var(--serif);color:var(--grijs);max-width:72ch}
+
+.pbvoet{padding:24px 26px;border-top:1px solid var(--inkt);background:var(--papier);
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+@media (max-width:760px){.pbvoet{grid-template-columns:1fr}}
+.pbvoet h5{font:600 10.5px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--sepia);margin-bottom:9px}
+.pbvoet p{font-size:16px;line-height:1.6}
+.pbvoet p b{color:var(--inkt);font-weight:600}
+
+/* ============================================================
+   4 · PRINTKAART
+   ============================================================ */
+.printuitleg{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-bottom:var(--s5)}
+@media (max-width:900px){.printuitleg{grid-template-columns:1fr}}
+.printuitleg h4{font:600 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--sepia);border-top:1.5px solid var(--inkt);padding-top:11px;margin-bottom:10px}
+.printuitleg p{font-size:16px;line-height:1.6}
+.printuitleg p b{color:var(--inkt);font-weight:600}
+
+.bladhouder{background:var(--papier-2);padding:var(--s4);border:1px solid var(--lijn)}
+.bladschaal{width:100%;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fdfaf2;position:relative;
+  box-shadow:0 10px 40px rgba(28,24,20,.2)}
+.blad .rand{position:absolute;inset:12mm 14mm 10mm 14mm;display:flex;flex-direction:column}
+
+/* de plaatrand: op papier een gedrukte facsimile van de indruk */
+.b-plaat{flex:1;position:relative;border:.7mm solid #17130f;padding:7mm 8mm 6mm;
+  display:flex;flex-direction:column}
+.b-plaat::after{content:"";position:absolute;inset:1.1mm;border:.18mm solid #17130f;
+  opacity:.45;pointer-events:none}
+
+.b-kop{border-bottom:.3mm solid #17130f;padding-bottom:4mm}
+.b-kop h1{font:400 8.2mm/1.02 var(--serif);color:#17130f;letter-spacing:-.01em}
+.b-kop .onder{margin-top:2.6mm;display:flex;justify-content:space-between;gap:5mm;
+  font:400 3.5mm/1.35 var(--serif);color:#17130f}
+.b-kop .onder b{font-weight:600}
+.b-kop .onder span:first-child{max-width:78mm}
+.b-kop .onder span:last-child{white-space:nowrap;text-align:right}
+
+.b-regels{margin-top:5mm;display:flex;flex-direction:column;gap:5mm;flex:1;
+  justify-content:space-between}
+.b-regel{flex:1;display:grid;grid-template-columns:34mm 1fr 30mm;gap:5.4mm;align-items:center;
+  padding-bottom:5mm;border-bottom:.18mm solid #17130f}
+.b-regel:last-child{border-bottom:0}
+.b-regel .bd{border:.25mm solid #17130f;height:34mm;display:flex;align-items:center;
+  justify-content:center;padding:1.2mm}
+.b-regel .bd img{max-width:100%;max-height:100%;object-fit:contain;mix-blend-mode:multiply}
+.b-regel h2{font:400 5.2mm/1.1 var(--serif);color:#17130f}
+.b-regel .zin{margin-top:2mm;font:400 3.6mm/1.42 var(--serif);color:#17130f;max-width:104mm}
+.b-regel .maat{margin-top:2.4mm;font:600 2.9mm/1.3 var(--sans);letter-spacing:.14em;
+  text-transform:uppercase;color:#17130f}
+/* de kantlijnnotitie: woord én streep, nooit kleur alleen */
+.b-regel .kant{font:400 2.9mm/1.4 var(--serif);color:#17130f;font-style:italic;
+  border-left:.5mm solid #17130f;padding-left:2.4mm}
+.b-regel .kant b{display:block;font:600 2.6mm/1.3 var(--sans);letter-spacing:.14em;
+  text-transform:uppercase;font-style:normal;margin-bottom:1.2mm}
+.b-regel.nieuw .kant{border-left-width:1.1mm}
+.b-regel.stil .kant{border-left-style:dotted;color:#5c5347}
+
+/* de weggekraste regel — zichtbaar, niet verdwenen */
+.b-kras{margin-top:auto;border-top:.3mm solid #17130f;padding-top:3.4mm;
+  display:grid;grid-template-columns:26mm 1fr;gap:5mm;align-items:baseline}
+.b-kras .tt{font:600 2.8mm/1.35 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#17130f}
+.b-kras p{font:400 3.3mm/1.4 var(--serif);color:#17130f}
+.b-kras p s{text-decoration-thickness:.25mm}
+.b-kras p em{font-style:italic}
+
+/* de ondermarge, BUITEN de plaatrand — daar leeft de staat */
+.b-marge{margin-top:3.4mm;display:grid;grid-template-columns:1fr auto;gap:6mm;align-items:end}
+.b-marge .staatregel{font:600 3.2mm/1.4 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#17130f}
+.b-marge .staatregel span{display:block;margin-top:1.4mm;font:400 3mm/1.4 var(--serif);
+  letter-spacing:0;text-transform:none;font-style:italic;color:#3a332b}
+.b-marge .drukker{text-align:right;font:400 2.8mm/1.45 var(--serif);color:#3a332b}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#a99c8a;padding:var(--s6) 0}
+footer.uitleiding h3{font:400 24px/1.3 var(--serif);color:var(--vel);margin-bottom:var(--s3)}
+footer.uitleiding .kols{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .kols{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:600 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+  color:#c99b6a;margin-bottom:10px}
+footer.uitleiding p,footer.uitleiding li{font-size:16px;line-height:1.62}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding:7px 0;border-bottom:1px solid #322b23}
+footer.uitleiding a{color:var(--vel)}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .schermkop,.printuitleg{display:none !important}
+  .scherm{padding:0 !important;background:#fff !important;border:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  .bladhouder{background:#fff !important;border:0 !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;background:#fff !important;transform:none !important;
+    box-shadow:none !important;margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 68</span>
+  <strong style="font:600 16px/1 var(--sans);color:#fff;letter-spacing:.01em">Staten</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="vlag" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 68 · STATEN</span>
+    </div>
+
+    <div class="hero">
+      <h1>Uw kaart wordt vervangen. Een plaat wordt <em>bijgewerkt</em>.</h1>
+      <p class="lead">Bij elke controle rolt er een nieuw vel uit de printer en gaat het oude weg.
+        Zes weken herstel laten zo geen enkel spoor na. Een etser doet het omgekeerde: hij werkt
+        dezelfde plaat door en <b>bewaart elke staat</b>. Niet omdat de laatste de mooiste is, maar
+        omdat je zonder de vorige niets ziet veranderen.</p>
+
+      <div class="statenrij">
+        <div class="staat s1">
+          <div class="plaat">
+            <div class="beeld">
+              <img src="/images/seated-chair/seated-arm-circles-line-v1.png" alt="Schouder, zittend, kleine cirkels"/>
+              <div class="arcering" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="onder"><b>Staat I</b>14 juli 2026</div>
+          <p class="bijschrift">Twee oefeningen, allebei zittend. De arm komt niet boven
+            schouderhoogte.</p>
+        </div>
+        <div class="staat s2">
+          <div class="plaat">
+            <div class="beeld">
+              <img src="/images/bovenste-extremiteit/anteflexie-armen-line-v1.png" alt="Armen voorwaarts heffen"/>
+              <div class="arcering" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="onder"><b>Staat II</b>4 augustus 2026</div>
+          <p class="bijschrift">Staand erbij. De cirkels zijn weggekrast — die hoefden niet meer.</p>
+        </div>
+        <div class="staat s3">
+          <div class="plaat">
+            <div class="beeld">
+              <img src="/images/bovenste-extremiteit/exo-pull-line-v1.png" alt="Exorotatie met elastiek"/>
+              <div class="arcering" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="onder"><b>Staat III</b>2 september 2026</div>
+          <p class="bijschrift">Weerstand toegevoegd. Dit is het vel dat vandaag op de koelkast
+            hangt — met twee voorgangers ernaast.</p>
+        </div>
+      </div>
+
+      <div class="beginsel">
+        <div>
+          <h3>De staat staat in de ondermarge</h3>
+          <p>Zoals bij een ets leeft de administratie <b>buiten de plaatrand</b>: staatnummer,
+            datum, vorige staat. Wie alleen het beeld leest mist geen enkele instructie.</p>
+        </div>
+        <div>
+          <h3>Wegkrassen is een handeling</h3>
+          <p>Een oefening die eruit gaat verdwijnt niet stilletjes. Ze wordt <b>zichtbaar
+            weggekrast</b>, met de reden en de staat erbij. Wat u niet meer hoeft te doen is een
+            resultaat.</p>
+        </div>
+        <div>
+          <h3>U gooit niets weg</h3>
+          <p>Drie vellen naast elkaar op de keukentafel zijn het herstel. Dat is een bewijsstuk
+            dat in week vier <b>zwaarder weegt dan een gevoel</b>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm diep" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Kiezer</b>
+      <h2>De therapeut kiest geen oefeningen, maar handelingen op de plaat</h2>
+      <p>Er zijn er vier: <em>toevoegen</em>, <em>bijwerken</em>, <em>wegkrassen</em> en — de
+        belangrijkste — <em>laten staan</em>. Elke handeling vraagt een reden in één zin, en die
+        zin belandt letterlijk in de kantlijn van het vel. Een kaart die niets verandert is geen
+        vergissing: dat is de derde staat die bewust gelijk blijft aan de tweede.</p>
+    </div>
+
+    <div class="werkbank">
+      <div>
+
+        <article class="regel">
+          <span class="handeling ongewijzigd">Laten staan</span>
+          <div class="bd"><img src="/images/bovenste-extremiteit/anteflexie-armen-line-v1.png" alt="Armen voorwaarts heffen"/></div>
+          <div>
+            <h3>Armen voorwaarts heffen</h3>
+            <p class="zin">Staand, beide armen tegelijk naar voren omhoog tot schouderhoogte.
+              Tien keer, rustig laten zakken — het zakken is het werk.</p>
+            <p class="herkomst"><b>Sinds staat II</b> — ongewijzigd overgenomen. Deze regel is
+              precies goed; hem “verbeteren” zou de enige vaste factor van de afgelopen maand
+              weghalen.</p>
+          </div>
+        </article>
+
+        <article class="regel">
+          <span class="handeling bijgewerkt">Bijgewerkt</span>
+          <div class="bd"><img src="/images/bovenste-extremiteit/exo-pull-line-v1.png" alt="Exorotatie met elastiek"/></div>
+          <div>
+            <h3>Naar buiten draaien met elastiek</h3>
+            <p class="zin">Elleboog tegen de zij, onderarm naar buiten draaien tegen het elastiek
+              in. Twaalf keer. <b>Nieuw in deze staat:</b> het rode elastiek in plaats van het gele.</p>
+            <p class="herkomst"><b>Bijgewerkt in staat III</b> — de heer Vermaas haalde twaalf
+              herhalingen zonder moeite. Alleen de weerstand is veranderd; de beweging bleef
+              hetzelfde, zodat er niets opnieuw geleerd hoeft te worden.</p>
+          </div>
+        </article>
+
+        <article class="regel">
+          <span class="handeling">Toegevoegd</span>
+          <div class="bd"><img src="/images/mobility/mob-thoracaal-line-v1.png" alt="Rug draaien, borstwervelkolom"/></div>
+          <div>
+            <h3>Bovenrug draaien</h3>
+            <p class="zin">Op de zij, knieën opgetrokken, bovenste arm langzaam open naar achteren
+              en het hoofd mee. Vijf keer per kant, en blijf bij de eindstand twee tellen liggen.</p>
+            <p class="herkomst"><b>Nieuw in staat III</b> — de schouder komt nu hoog genoeg om de
+              beperking een etage lager te voelen. Deze regel is toegevoegd omdat de vorige
+              slaagde, niet omdat er iets misging.</p>
+          </div>
+        </article>
+
+        <article class="regel weggekrast">
+          <span class="handeling">Weggekrast</span>
+          <div class="bd"><img src="/images/seated-chair/seated-arm-circles-line-v1.png" alt="Zittend armcirkels"/></div>
+          <div>
+            <h3>Zittend cirkels draaien</h3>
+            <p class="zin">Kleine cirkels met de gestrekte arm, zittend op een stoel zonder
+              leuning.</p>
+            <p class="herkomst"><b>Weggekrast in staat II</b> — deze oefening was er om de schouder
+              in beweging te hóuden toen bewegen nog pijn deed. Dat probleem bestaat niet meer.
+              De regel blijft op het vel staan, doorgestreept: het is de duidelijkste maat voor
+              zes weken.</p>
+          </div>
+        </article>
+
+      </div>
+
+      <aside class="kantlijn">
+        <h4>De vier handelingen</h4>
+        <ul>
+          <li><b>Toevoegen</b>Alleen wanneer iets anders slaagde. Een nieuwe regel is een beloning,
+            geen reparatie.</li>
+          <li><b>Bijwerken</b>Eén ding tegelijk: de maat óf de beweging, nooit allebei — anders
+            weet niemand wat er werkte.</li>
+          <li><b>Wegkrassen</b>De regel blijft leesbaar op het vel staan, doorgestreept, met de
+            staat waarin het gebeurde.</li>
+          <li><b>Laten staan</b>De handeling die het vaakst de juiste is en in software vrijwel
+            nooit een knop heeft.</li>
+        </ul>
+        <div class="som">STAAT III · 3 REGELS ACTIEF · 1 WEGGEKRAST<br/>VORIGE STAAT: 4 AUGUSTUS 2026</div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm wit" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Cliëntkaart</b>
+      <h2>Het plaatboek: niet wat er nu geldt, maar wat er veranderd is</h2>
+      <p>De digitale kaart toont geen actuele lijst met een bewerkgeschiedenis eronder verstopt.
+        Ze toont de <em>staten</em> — en elke staat toont zijn eigen mutaties in gewone woorden.
+        Wie hier scrollt, leest geen dossier maar een verhaal met drie hoofdstukken, en ziet
+        halverwege een oefening verdwijnen omdat het beter ging.</p>
+    </div>
+
+    <div class="plaatboek">
+      <div class="pbkop">
+        <div>
+          <h3>De heer R. Vermaas, 68</h3>
+          <p>SCHOUDER RECHTS · SINDS 14 JULI 2026 · FYSIOTHERAPIE WILHELMINAPARK, UTRECHT</p>
+        </div>
+        <div class="huidig"><b>III</b>HUIDIGE STAAT</div>
+      </div>
+
+      <div class="tijdlijn">
+
+        <div class="gebeurtenis">
+          <div class="merk"><b>III</b>2 september 2026</div>
+          <div>
+            <h4>Weerstand erbij, en de bovenrug erin</h4>
+            <div class="veranderingen">
+              <div class="ver"><i>Bijgewerkt</i><span>Naar buiten draaien — <b>rood elastiek</b> in
+                plaats van geel. Zelfde beweging, zwaardere veer.</span></div>
+              <div class="ver"><i>Toegevoegd</i><span>Bovenrug draaien, vijf keer per kant. Kan
+                nu, omdat de schouder hoog genoeg komt.</span></div>
+              <div class="ver"><i class="stil">Laten staan</i><span>Armen voorwaarts heffen —
+                ongewijzigd sinds staat II.</span></div>
+            </div>
+            <p class="noot">Staat II blijft geldig tot dit vel op de koelkast hangt. Beide vellen
+              bewaren: de heer Vermaas legt ze naast elkaar bij de controle van 30 september.</p>
+          </div>
+        </div>
+
+        <div class="gebeurtenis">
+          <div class="merk"><b>II</b>4 augustus 2026</div>
+          <div>
+            <h4>Staand erbij, cirkels eruit</h4>
+            <div class="veranderingen">
+              <div class="ver"><i>Toegevoegd</i><span>Armen voorwaarts heffen, staand — de eerste
+                oefening buiten de stoel.</span></div>
+              <div class="ver"><i class="kras">Weggekrast</i><span>Zittend cirkels draaien. Stond
+                er om beweging te behouden tijdens de pijnlijke weken; dat is niet meer nodig.</span></div>
+            </div>
+            <p class="noot">De weggekraste regel is niet uit het plaatboek verwijderd en staat ook
+              doorgestreept op het vel van staat III. Wat je niet meer hoeft te doen, is de
+              duidelijkste vooruitgang die er is.</p>
+          </div>
+        </div>
+
+        <div class="gebeurtenis">
+          <div class="merk"><b>I</b>14 juli 2026</div>
+          <div>
+            <h4>De eerste staat</h4>
+            <div class="veranderingen">
+              <div class="ver"><i>Toegevoegd</i><span>Zittend cirkels draaien, twee keer per
+                dag.</span></div>
+              <div class="ver"><i>Toegevoegd</i><span>Naar buiten draaien met geel elastiek,
+                tien keer.</span></div>
+            </div>
+            <p class="noot">Het vel van staat I is het armste van de drie, en juist daarom bewaart
+              de heer Vermaas het: het is de enige vaste maat voor waar hij begon.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pbvoet">
+        <div>
+          <h5>WAT DE THERAPEUT HIERAAN HEEFT</h5>
+          <p>Een dossierregel als <b>“progressie conform verwachting”</b> is niet controleerbaar.
+            Drie staten met elk hun mutatie in gewone zinnen zijn dat wel — ook voor de waarnemend
+            collega die deze mevrouw of meneer nooit eerder zag.</p>
+        </div>
+        <div>
+          <h5>WAT DE PATIËNT HIERAAN HEEFT</h5>
+          <p>Een reden om het oude vel niet weg te gooien. Wie in week zes twijfelt of er iets
+            opschiet, legt drie vellen naast elkaar en ziet een oefening dóórgestreept staan die
+            in juli nog nodig was. <b>Dat is niet te bepraten.</b></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Printkaart</b>
+      <h2>A4 staand, één plaatrand, drie regels — en een vierde die doorgestreept is</h2>
+      <p>Alles wat de patiënt moet uitvoeren staat binnen de plaatrand, groot en rustig. Alles wat
+        de kaart over zichzelf te zeggen heeft — welke staat, van wanneer, wat er veranderde —
+        staat in de kantlijn en de ondermarge, waar drukwerk zijn administratie hoort te voeren.</p>
+    </div>
+
+    <div class="printuitleg">
+      <div>
+        <h4>DE PLAATRAND IS GEDRUKT, NIET GEPERST</h4>
+        <p>Een echte plaatindruk komt van een pers. Op een kantoorprinter is dat een leugen, dus is
+          het hier eerlijk een <b>gedrukte dubbele lijn</b> — die tegelijk het leesveld afbakent:
+          binnen de lijn staat wat u doet, erbuiten wat wij administreren.</p>
+      </div>
+      <div>
+        <h4>DE KANTLIJN ZEGT HET IN WOORDEN</h4>
+        <p>“Bijgewerkt”, “nieuw in deze staat”, “ongewijzigd” — voluit, met een <b>streep van
+          verschillende zwaarte</b> ernaast. Niets hangt aan kleur, dus een fotokopie of een
+          zwart-witprint verliest geen betekenis.</p>
+      </div>
+      <div>
+        <h4>DE DOORGESTREEPTE REGEL BLIJFT STAAN</h4>
+        <p>Onderaan, buiten de rij actieve oefeningen, in kleinere letter maar leesbaar. Voor de
+          patiënt is dat de <b>enige plek op het hele vel waar vooruitgang zichtbaar is</b> zonder
+          dat iemand het hoeft te beweren.</p>
+      </div>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="b-plaat">
+
+              <div class="b-kop">
+                <h1>Schouder rechts — drie oefeningen</h1>
+                <div class="onder">
+                  <span><b>De heer R. Vermaas</b> · dagelijks, ’s ochtends na het aankleden</span>
+                  <span>Fysiotherapie Wilhelminapark, Utrecht · 030 – 232 41 08</span>
+                </div>
+              </div>
+
+              <div class="b-regels">
+
+                <div class="b-regel stil">
+                  <div class="bd"><img src="/images/bovenste-extremiteit/anteflexie-armen-line-v1.png" alt=""/></div>
+                  <div>
+                    <h2>Armen voorwaarts heffen</h2>
+                    <p class="zin">Staand, beide armen tegelijk naar voren omhoog tot
+                      schouderhoogte. Tien keer, en laat ze dan langzaam zakken — het zakken is
+                      het eigenlijke werk.</p>
+                    <p class="maat">Tien keer · één keer per dag</p>
+                  </div>
+                  <div class="kant"><b>Ongewijzigd</b>Staat sinds 4 augustus onveranderd op uw
+                    vel.</div>
+                </div>
+
+                <div class="b-regel">
+                  <div class="bd"><img src="/images/bovenste-extremiteit/exo-pull-line-v1.png" alt=""/></div>
+                  <div>
+                    <h2>Naar buiten draaien met elastiek</h2>
+                    <p class="zin">Elleboog tegen de zij, onderarm naar buiten draaien tegen het
+                      elastiek in en rustig terug. Twaalf keer. Vanaf nu met het <b>rode</b>
+                      elastiek.</p>
+                    <p class="maat">Twaalf keer · rood elastiek · één keer per dag</p>
+                  </div>
+                  <div class="kant"><b>Bijgewerkt</b>Was geel elastiek. Alleen de weerstand is
+                    veranderd, de beweging niet.</div>
+                </div>
+
+                <div class="b-regel nieuw">
+                  <div class="bd"><img src="/images/mobility/mob-thoracaal-line-v1.png" alt=""/></div>
+                  <div>
+                    <h2>Bovenrug draaien</h2>
+                    <p class="zin">Op de zij liggen met de knieën opgetrokken. De bovenste arm
+                      langzaam open naar achteren, het hoofd gaat mee. Vijf keer per kant, en blijf
+                      aan het eind twee tellen liggen.</p>
+                    <p class="maat">Vijf keer per kant · ’s avonds op bed</p>
+                  </div>
+                  <div class="kant"><b>Nieuw in staat III</b>Toegevoegd omdat de schouder nu hoog
+                    genoeg komt.</div>
+                </div>
+
+              </div>
+
+              <div class="b-kras">
+                <div class="tt">Weggekrast<br/>in staat II</div>
+                <p><s>Zittend cirkels draaien met de gestrekte arm, twee keer per dag.</s>
+                  <em>Deze oefening stond er om de schouder in beweging te houden toen bewegen pijn
+                  deed. Dat is niet meer nodig — daarom staat ze doorgestreept en niet
+                  verdwenen.</em></p>
+              </div>
+
+            </div>
+
+            <div class="b-marge">
+              <div class="staatregel">Staat III · 2 september 2026
+                <span>Vorige staat: II, 4 augustus 2026 — bewaar dat vel erbij en neem beide mee
+                  naar de controle op 30 september.</span>
+              </div>
+              <div class="drukker">Fysiplan<br/>J. Meppelink, fysiotherapeut</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen kols">
+    <div>
+      <h3>Wat dit concept wint, en wat het kost</h3>
+      <p>Het wint een kaart die haar eigen geschiedenis draagt, en een patiënt die het oude vel
+        bewaart in plaats van weggooit. Het kost discipline bij de therapeut: elke staat vraagt een
+        reden in één zin, en een praktijk die dat niet volhoudt houdt een mooi vel over met een
+        lege kantlijn.</p>
+    </div>
+    <div>
+      <h4>DE DRIE REGELS</h4>
+      <ul>
+        <li>Binnen de plaatrand staat wat u doet, erbuiten wat wij administreren</li>
+        <li>Wegkrassen is zichtbaar — de regel blijft doorgestreept staan</li>
+        <li>Elke staat noemt de vorige, en die bewaart u</li>
+      </ul>
+    </div>
+    <div>
+      <h4>ELDERS</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var f=Math.min(1,schaal.clientWidth/blad.offsetWidth);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

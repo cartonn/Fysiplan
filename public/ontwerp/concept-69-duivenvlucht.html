@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 69 — Duivenvlucht · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 69 — DUIVENVLUCHT
+   ------------------------------------------------------------
+   Iedereen vliegt naar een ander hok. Daarom telt de tijd niet.
+
+   Een oefenkaart zet er een getal op — acht keer, tien tellen,
+   drie series — en dat getal is een norm. Voor de een is het
+   een warming-up, voor de ander de zwaarste minuut van de dag.
+   Twee patiënten met hetzelfde getal op hun kaart doen niet
+   dezelfde inspanning, en toch worden ze aan hetzelfde blad
+   afgemeten. Dat is niet streng; dat is onnauwkeurig.
+
+   De duivensport heeft dit probleem in 1900 al opgelost, en de
+   oplossing is het mooiste stuk rekenwerk in de Nederlandse
+   volkscultuur. Duiven van honderd melkers worden op één plek
+   samen gelost, maar ze vliegen naar honderd verschillende
+   hokken — de een woont dertig kilometer dichterbij dan de
+   ander. Dus wordt de winnaar NIET bepaald op aankomsttijd.
+   Elk hok is tot op de meter ingemeten, en de uitslag rekent
+   in METERS PER MINUUT: snelheid vanaf je eigen hok. Iedereen
+   vliegt zijn eigen afstand, en de vergelijking is eerlijk.
+
+   DUS: op deze kaart staat bij elke oefening geen norm maar
+   een HOKAFSTAND — het getal dat op de dag van het consult bij
+   déze patiënt gemeten is. Vier keer opstaan uit de stoel. Dat
+   is geen doel en geen minimum: dat is waar zijn hok staat. De
+   veertien vakjes eronder vullen zich met getallen, en onder
+   de rij loopt een schaal waarop de hokafstand als vaste streep
+   gedrukt staat. Er wordt nergens vergeleken met een norm, met
+   een leeftijdsgroep of met de vorige patiënt. Alleen met de
+   streep die van u is.
+
+   INKORVEN. Op woensdagavond gaan de duiven in de manden; wat
+   niet ingekorfd is, vliegt niet mee, en dat is geen verzuim
+   maar een keuze. Op deze kaart kiest de patiënt bij het
+   consult zélf welke oefeningen de komende veertien dagen
+   meegaan. De rest heet THUISBLIJVERS, staat met naam op het
+   vel, en hoeft niet. Een niet-ingekorfde oefening kan niet
+   mislukken — dat is precies waarom er drie in de mand gaan en
+   geen zes.
+
+   CONSTATEREN. Je vinkt niet af, je CONSTATEERT: het getal
+   gaat in het vakje. Een vinkje bewaart geen informatie; een
+   getal wel, en veertien getallen naast een gedrukte streep
+   zijn een grafiek die niemand hoefde te tekenen.
+
+   VORM. Het hok en de zaal: geëmailleerd blauwgrijs, eikenhout
+   en zink, de roomwitte wijzerplaat van de constateur, de
+   genummerde gummiringen, en de poulebrief — die smalle
+   kolommenlijst in typemachineletter die in elke vereniging op
+   tafel ligt. Warm okerpapier, blauwzwarte inkt, één rode
+   wijzer.
+
+   HET ANKER. Op papier verdwijnt de blauwe emaille: één inkt,
+   oefeningnamen op 5 mm, de zin op 3,5 mm schreef, en
+   invulvakken van ruim 12 × 10 mm — groot genoeg om met een balpen
+   een getal in te schrijven zonder bril. De hokafstand staat
+   als dik gedrukt cijfer in de kantlijn, en als streep op de
+   schaal. Wie de duiven niet snapt, ziet drie oefeningen met
+   veertien vakjes en zijn eigen getal ernaast, en doet het goed.
+   ============================================================ */
+
+:root{
+  --papier:#e9e3d5;
+  --papier-2:#ded6c4;
+  --vel:#f7f2e6;
+  --hok:#2c4553;          /* geëmailleerd blauwgrijs */
+  --hok-2:#1d2f39;
+  --inkt:#161c20;
+  --inkt-2:#3f4b52;
+  --grijs:#77786f;
+  --lijn:#bfb6a0;
+  --lijn-2:#d9d1bd;
+  --zink:#8d9196;
+  --oker:#a8762a;
+  --wijzer:#b8331f;       /* de rode wijzer van de constateur */
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --serif:Charter,"Iowan Old Style",Georgia,"Times New Roman",serif;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:26px; --s5:42px; --s6:70px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:17px/1.65 var(--sans);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--hok)}
+:focus-visible{outline:3px solid var(--wijzer);outline-offset:3px}
+.binnen{max-width:1180px;margin:0 auto;padding:0 22px}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  padding:11px 20px;background:var(--hok-2);color:#9fb0b9;font:500 13px/1 var(--sans)}
+.labbalk .nr{font:700 10.5px/1 var(--mono);letter-spacing:.2em;color:#fff;
+  border:1px solid #3d545f;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#9fb0b9;text-decoration:none;padding:5px 2px;border-bottom:2px solid transparent}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--wijzer)}
+.labbalk a.terug{color:#fff}
+@media (max-width:720px){.labbalk{flex-wrap:wrap;gap:10px}.labbalk .rek{display:none}}
+
+/* ---------- secties ---------- */
+.scherm{padding:var(--s6) 0;border-top:1px solid var(--lijn)}
+.scherm.diep{background:var(--papier-2)}
+.scherm.wit{background:var(--vel)}
+.schermkop{margin-bottom:var(--s5);max-width:76ch}
+.schermkop b{display:inline-block;font:700 10px/1 var(--mono);letter-spacing:.24em;
+  text-transform:uppercase;color:var(--oker);margin-bottom:var(--s3)}
+.schermkop h2{font:600 clamp(27px,3.5vw,41px)/1.1 var(--sans);letter-spacing:-.03em;color:var(--inkt)}
+.schermkop p{margin-top:var(--s3);font:400 18px/1.62 var(--serif);color:var(--inkt-2);max-width:64ch}
+.schermkop p em{font-style:italic;color:var(--inkt)}
+
+/* ============================================================
+   1 · LANDING
+   ============================================================ */
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .vlag{width:26px;height:26px;background:var(--hok);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 13px/1 var(--sans)}
+.merkregel .naam{font:700 15px/1 var(--sans);color:var(--inkt);letter-spacing:-.01em}
+.merkregel .pad{font:500 12px/1 var(--mono);color:var(--grijs);letter-spacing:.08em}
+
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:var(--s6);align-items:center}
+@media (max-width:980px){.hero{grid-template-columns:1fr;gap:var(--s5)}}
+.hero h1{font:600 clamp(36px,5.2vw,60px)/1.04 var(--sans);letter-spacing:-.04em;color:var(--inkt)}
+.hero h1 em{font-style:normal;color:var(--hok);text-decoration:underline;
+  text-decoration-thickness:5px;text-underline-offset:7px;text-decoration-color:var(--oker)}
+.hero .lead{margin-top:var(--s4);font:400 19.5px/1.62 var(--serif);color:var(--inkt-2);max-width:54ch}
+.hero .lead b{font-weight:600;color:var(--inkt)}
+
+/* de constateur */
+.constateur{background:var(--hok);padding:34px;position:relative;
+  box-shadow:inset 0 0 0 3px rgba(255,255,255,.06), 0 22px 48px rgba(22,28,32,.32)}
+.wijzerplaat{width:100%;max-width:290px;aspect-ratio:1;margin:0 auto;border-radius:50%;
+  background:var(--vel);border:9px solid var(--hok-2);position:relative;
+  box-shadow:inset 0 3px 12px rgba(22,28,32,.22)}
+.wijzerplaat .tik{position:absolute;left:50%;top:6px;width:2px;height:12px;background:var(--inkt-2);
+  transform-origin:1px 128px}
+.wijzerplaat .tik.groot{height:19px;width:3px;background:var(--inkt)}
+.wijzerplaat .naaf{position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;
+  border-radius:50%;background:var(--inkt)}
+.wijzerplaat .arm{position:absolute;left:50%;top:50%;width:3px;height:104px;margin:-104px 0 0 -1.5px;
+  background:var(--wijzer);transform-origin:1.5px 104px;transform:rotate(126deg)}
+/* boven het midden, buiten de baan van de wijzer */
+.wijzerplaat .merk{position:absolute;left:0;right:0;top:25%;text-align:center;
+  font:700 10px/1.5 var(--mono);letter-spacing:.22em;color:var(--grijs)}
+.wijzerplaat .merk b{display:block;font:600 15px/1.2 var(--sans);letter-spacing:.04em;color:var(--inkt)}
+.constateur .strook{margin-top:26px;display:flex;gap:7px;justify-content:center;flex-wrap:wrap}
+.ring{width:46px;height:26px;border-radius:13px;border:2px solid #7f93a0;color:#dfe8ec;
+  display:flex;align-items:center;justify-content:center;font:700 11px/1 var(--mono);letter-spacing:.04em}
+.ring.gezet{background:var(--oker);border-color:#cf9a45;color:#20160a}
+.constateur .bijschrift{margin-top:20px;text-align:center;font:400 14.5px/1.55 var(--serif);color:#b9c6cd}
+.constateur .bijschrift b{color:#fff;font-weight:600}
+
+.pijlers{margin-top:var(--s6);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5);
+  border-top:2px solid var(--inkt);padding-top:var(--s4)}
+@media (max-width:900px){.pijlers{grid-template-columns:1fr;gap:var(--s4)}}
+.pijlers h3{font:700 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--oker);margin-bottom:11px}
+.pijlers h4{font:700 18px/1.28 var(--sans);color:var(--inkt);letter-spacing:-.015em;margin-bottom:8px}
+.pijlers p{font-size:16px;line-height:1.58}
+.pijlers p b{color:var(--inkt);font-weight:600}
+
+/* ============================================================
+   2 · KIEZER — inkorven
+   ============================================================ */
+.mand{background:var(--vel);border:2px solid var(--inkt);margin-bottom:var(--s4)}
+.mandkop{display:flex;flex-wrap:wrap;gap:var(--s3);justify-content:space-between;align-items:center;
+  padding:16px 20px;background:var(--hok);color:#fff}
+.mandkop h3{font:700 17px/1.2 var(--sans);letter-spacing:.02em}
+.mandkop p{font:500 11.5px/1 var(--mono);letter-spacing:.1em;color:#a9bcc5}
+.mandinhoud{padding:20px}
+
+.duif{display:grid;grid-template-columns:52px 92px 1fr 128px;gap:var(--s3);align-items:center;
+  padding:16px 0;border-bottom:1px solid var(--lijn-2)}
+@media (max-width:860px){.duif{grid-template-columns:52px 92px 1fr;row-gap:12px}
+  .duif .hokmaat{grid-column:2/4}}
+.duif:last-child{border-bottom:0}
+.duif .ringnr{font:700 12px/1 var(--mono);color:#fff;background:var(--inkt);padding:8px 6px;
+  text-align:center;letter-spacing:.04em}
+.duif .bd{border:1px solid var(--lijn);background:var(--papier);padding:7px;aspect-ratio:1;
+  display:flex;align-items:center;justify-content:center}
+.duif .bd img{max-width:100%;max-height:100%;object-fit:contain;mix-blend-mode:multiply}
+.duif h4{font:700 18px/1.22 var(--sans);color:var(--inkt);letter-spacing:-.015em}
+.duif p{margin-top:6px;font:400 15.5px/1.5 var(--serif);color:var(--inkt-2)}
+.hokmaat{border-left:3px solid var(--inkt);padding-left:12px}
+.hokmaat .g{font:700 30px/1 var(--sans);letter-spacing:-.03em;color:var(--inkt)}
+.hokmaat .l{margin-top:5px;font:600 10px/1.4 var(--mono);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--grijs)}
+
+.thuis{background:transparent;border:2px dashed var(--lijn)}
+.thuis .mandkop{background:transparent;color:var(--inkt);border-bottom:1px dashed var(--lijn)}
+.thuis .mandkop p{color:var(--grijs)}
+.thuis .duif{opacity:.62}
+.thuis .duif .ringnr{background:var(--grijs)}
+.thuis .hokmaat{border-left-color:var(--lijn)}
+
+.lossing{margin-top:var(--s4);background:var(--hok-2);color:#cfdae0;padding:24px 26px;
+  display:grid;grid-template-columns:auto 1fr;gap:var(--s4);align-items:center}
+@media (max-width:720px){.lossing{grid-template-columns:1fr}}
+.lossing .tijd{font:700 44px/1 var(--mono);color:#fff;letter-spacing:-.02em}
+.lossing .tijd span{display:block;margin-top:8px;font:600 10px/1 var(--sans);letter-spacing:.2em;color:#8fa4ae}
+.lossing p{font:400 16.5px/1.6 var(--serif);max-width:74ch}
+.lossing p b{color:#fff;font-weight:600}
+
+/* ============================================================
+   3 · CLIËNTKAART — de uitslag
+   ============================================================ */
+.uitslag{background:var(--vel);border:2px solid var(--inkt)}
+.ukop{padding:22px 24px;border-bottom:2px solid var(--inkt);display:grid;
+  grid-template-columns:1fr auto;gap:var(--s3);align-items:end}
+@media (max-width:760px){.ukop{grid-template-columns:1fr}}
+.ukop h3{font:700 22px/1.2 var(--sans);letter-spacing:-.02em;color:var(--inkt)}
+.ukop p{margin-top:6px;font:500 11.5px/1.5 var(--mono);letter-spacing:.07em;color:var(--grijs)}
+.ukop .vlucht{text-align:right;font:600 10px/1 var(--mono);letter-spacing:.18em;color:var(--grijs)}
+.ukop .vlucht b{display:block;font:700 17px/1.2 var(--sans);letter-spacing:.02em;color:var(--inkt);margin-bottom:6px}
+@media (max-width:760px){.ukop .vlucht{text-align:left}}
+
+.vlucht-regel{padding:22px 24px;border-bottom:1px solid var(--lijn-2)}
+.vlucht-regel:last-of-type{border-bottom:0}
+.vr-kop{display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;justify-content:space-between}
+.vr-kop h4{font:700 18px/1.2 var(--sans);color:var(--inkt);letter-spacing:-.015em}
+.vr-kop .snel{font:600 13px/1 var(--mono);letter-spacing:.06em;color:var(--inkt);
+  border:1.5px solid var(--inkt);padding:7px 9px}
+.vr-kop .snel.terug{border-style:dashed;color:var(--grijs);border-color:var(--grijs)}
+
+/* de baan: veertien getallen boven de eigen streep */
+.baan{margin-top:16px;position:relative;height:96px;border-bottom:2px solid var(--inkt);
+  display:grid;grid-template-columns:repeat(14,1fr);gap:4px;align-items:end}
+.baan .hoklijn{position:absolute;left:0;right:0;border-top:2px dashed var(--inkt);
+  display:flex;justify-content:flex-end}
+.baan .hoklijn u{transform:translateY(-100%);font:700 9.5px/1.6 var(--mono);letter-spacing:.1em;
+  color:var(--inkt);text-decoration:none;background:var(--vel);padding:0 5px}
+.baan i{background:var(--hok);display:block;position:relative;min-height:3px}
+.baan i.leeg{background:repeating-linear-gradient(45deg,var(--lijn) 0 2px,transparent 2px 5px);
+  height:8px !important}
+.baan i u{position:absolute;left:0;right:0;top:-16px;text-align:center;text-decoration:none;
+  font:700 11px/1 var(--mono);color:var(--inkt)}
+.baandagen{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:6px}
+.baandagen span{text-align:center;font:500 9.5px/1 var(--mono);color:var(--grijs)}
+
+.uvoet{padding:22px 24px;border-top:2px solid var(--inkt);background:var(--papier);
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media (max-width:860px){.uvoet{grid-template-columns:1fr}}
+.uvoet h5{font:700 10px/1 var(--mono);letter-spacing:.16em;color:var(--oker);margin-bottom:9px}
+.uvoet p{font-size:15.5px;line-height:1.58}
+.uvoet p b{color:var(--inkt);font-weight:600}
+
+.nietvergelijken{margin-top:var(--s4);border:2px solid var(--inkt);background:var(--vel);
+  padding:22px 24px}
+.nietvergelijken h4{font:700 17px/1.3 var(--sans);color:var(--inkt);letter-spacing:-.015em}
+.nietvergelijken p{margin-top:8px;font:400 16.5px/1.6 var(--serif);max-width:80ch}
+.nietvergelijken p b{font-weight:600;color:var(--inkt)}
+
+/* ============================================================
+   4 · PRINTKAART
+   ============================================================ */
+.printuitleg{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-bottom:var(--s5)}
+@media (max-width:900px){.printuitleg{grid-template-columns:1fr}}
+.printuitleg h4{font:700 10px/1 var(--mono);letter-spacing:.18em;color:var(--oker);
+  border-top:2px solid var(--inkt);padding-top:11px;margin-bottom:10px}
+.printuitleg p{font-size:15.5px;line-height:1.58}
+.printuitleg p b{color:var(--inkt);font-weight:600}
+
+.bladhouder{background:var(--papier-2);padding:var(--s4);border:1px solid var(--lijn)}
+.bladschaal{width:100%;overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;position:relative;
+  box-shadow:0 10px 40px rgba(22,28,32,.22)}
+.blad .rand{position:absolute;inset:11mm 11mm 9mm 11mm;display:flex;flex-direction:column}
+
+.b-kop{display:grid;grid-template-columns:1fr 46mm;gap:5mm;align-items:end;
+  border-bottom:1.1mm solid #000;padding-bottom:2.6mm}
+.b-kop h1{font:700 8.4mm/1 var(--sans);letter-spacing:-.02em;color:#000;text-transform:uppercase}
+.b-kop .sub{margin-top:2mm;font:400 3.6mm/1.34 var(--serif);color:#000}
+.b-kop .sub b{font-weight:700}
+.b-kop .los{border:.5mm solid #000;padding:2mm 2.4mm;text-align:center}
+.b-kop .los u{display:block;font:700 2.5mm/1.3 var(--mono);letter-spacing:.16em;
+  text-decoration:none;color:#000}
+.b-kop .los b{display:block;margin-top:1.2mm;font:700 6mm/1 var(--mono);color:#000}
+.b-kop .los span{display:block;margin-top:1.2mm;font:400 2.7mm/1.3 var(--serif);color:#000}
+
+.b-uitleg{margin-top:2.6mm;border:.4mm solid #000;padding:2.4mm 3mm}
+.b-uitleg p{font:700 4mm/1.3 var(--sans);color:#000}
+.b-uitleg p span{display:block;margin-top:1.2mm;font:400 3.3mm/1.36 var(--serif)}
+
+.b-duiven{margin-top:3mm;flex:1;display:flex;flex-direction:column;gap:3mm;
+  justify-content:space-between}
+.b-duif{flex:1;display:flex;flex-direction:column;justify-content:center;gap:2.4mm;
+  border-bottom:.35mm solid #000;padding-bottom:3mm}
+.b-duif:last-child{border-bottom:0}
+.b-duifkop{display:grid;grid-template-columns:28mm 1fr 28mm;gap:4mm;align-items:center}
+.b-duifkop .bd{border:.3mm solid #000;height:28mm;display:flex;align-items:center;
+  justify-content:center;padding:1mm}
+.b-duifkop .bd img{max-width:100%;max-height:100%;object-fit:contain;mix-blend-mode:multiply}
+.b-duifkop h2{font:700 5mm/1.06 var(--sans);color:#000;letter-spacing:-.01em}
+.b-duifkop .zin{margin-top:1.6mm;font:400 3.5mm/1.36 var(--serif);color:#000;max-width:112mm}
+.b-hok{border:.5mm solid #000;padding:1.6mm 1mm;text-align:center}
+.b-hok b{display:block;font:700 9mm/1 var(--sans);color:#000}
+.b-hok u{display:block;margin-top:1.4mm;font:700 2.2mm/1.25 var(--mono);letter-spacing:.1em;
+  text-decoration:none;color:#000}
+
+/* veertien invulvakken voor een GETAL, met de eigen streep eronder */
+.b-vakken{margin-top:2.4mm;display:grid;grid-template-columns:repeat(14,1fr);gap:1mm}
+.b-vak{height:10mm;border:.4mm solid #000;position:relative}
+.b-vak u{position:absolute;left:.6mm;top:.3mm;font:600 2mm/1 var(--mono);
+  text-decoration:none;color:#000}
+.b-dagen{margin-top:.8mm;display:grid;grid-template-columns:repeat(14,1fr);gap:1mm}
+.b-dagen span{text-align:center;font:500 2mm/1.2 var(--mono);color:#000}
+
+.b-thuis{margin-top:2.6mm;border:.4mm dashed #000;padding:2.4mm 3mm;
+  display:grid;grid-template-columns:32mm 1fr;gap:3.4mm;align-items:baseline}
+.b-thuis .tt{font:700 3.2mm/1.3 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:#000}
+.b-thuis p{font:400 3.2mm/1.38 var(--serif);color:#000}
+.b-thuis p b{font-weight:700}
+
+.b-voet{margin-top:2.6mm;border-top:.8mm solid #000;padding-top:1.8mm;
+  display:flex;justify-content:space-between;gap:4mm;
+  font:600 2.6mm/1.35 var(--mono);letter-spacing:.05em;color:#000}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--hok-2);color:#9fb0b9;padding:var(--s6) 0}
+footer.uitleiding h3{font:700 22px/1.25 var(--sans);color:#fff;letter-spacing:-.02em;margin-bottom:var(--s3)}
+footer.uitleiding .kols{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:var(--s5)}
+@media (max-width:900px){footer.uitleiding .kols{grid-template-columns:1fr;gap:var(--s4)}}
+footer.uitleiding h4{font:700 10px/1 var(--mono);letter-spacing:.18em;color:#d3a259;margin-bottom:10px}
+footer.uitleiding p,footer.uitleiding li{font-size:15px;line-height:1.6}
+footer.uitleiding ul{list-style:none}
+footer.uitleiding li{padding:6px 0;border-bottom:1px solid #2b3f49}
+footer.uitleiding a{color:#fff}
+
+/* ============================================================
+   PRINT — de emaille verdwijnt, de vluchtbrief blijft
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .schermkop,.printuitleg{display:none !important}
+  .scherm{padding:0 !important;background:#fff !important;border:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  .bladhouder{background:#fff !important;border:0 !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 69</span>
+  <strong style="font:700 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Duivenvlucht</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="vlag" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 69 · DUIVENVLUCHT</span>
+    </div>
+
+    <div class="hero">
+      <div>
+        <h1>Iedereen vliegt naar een <em>ander hok</em>. Daarom telt de tijd niet.</h1>
+        <p class="lead">Duiven van honderd melkers worden op één plek samen gelost, maar ze vliegen
+          naar honderd verschillende hokken. Daarom wint niet wie het eerst thuis is: elk hok is
+          tot op de meter ingemeten en de uitslag rekent in <b>meters per minuut</b> — snelheid
+          vanaf je eigen hok. Op deze kaart staat bij elke oefening geen norm, maar de afstand van
+          úw hok.</p>
+      </div>
+
+      <div class="constateur" aria-label="Constateur — de duivenklok">
+        <div class="wijzerplaat">
+          <i class="tik groot" style="transform:rotate(0deg)"></i>
+          <i class="tik" style="transform:rotate(30deg)"></i>
+          <i class="tik" style="transform:rotate(60deg)"></i>
+          <i class="tik groot" style="transform:rotate(90deg)"></i>
+          <i class="tik" style="transform:rotate(120deg)"></i>
+          <i class="tik" style="transform:rotate(150deg)"></i>
+          <i class="tik groot" style="transform:rotate(180deg)"></i>
+          <i class="tik" style="transform:rotate(210deg)"></i>
+          <i class="tik" style="transform:rotate(240deg)"></i>
+          <i class="tik groot" style="transform:rotate(270deg)"></i>
+          <i class="tik" style="transform:rotate(300deg)"></i>
+          <i class="tik" style="transform:rotate(330deg)"></i>
+          <span class="arm"></span>
+          <span class="naaf"></span>
+          <span class="merk"><b>Uw hok</b>INGEMETEN OP 2 SEPT</span>
+        </div>
+        <div class="strook">
+          <span class="ring gezet">1</span>
+          <span class="ring gezet">2</span>
+          <span class="ring gezet">3</span>
+          <span class="ring">4</span>
+          <span class="ring">5</span>
+        </div>
+        <p class="bijschrift">Drie ringen in de mand, twee blijven thuis.<br/>
+          <b>Wat niet ingekorfd is, kan ook niet mislukken.</b></p>
+      </div>
+    </div>
+
+    <div class="pijlers">
+      <div>
+        <h3>Pijler 01</h3>
+        <h4>Uw hokafstand in plaats van een norm</h4>
+        <p>“Acht keer opstaan” is voor de een een warming-up en voor de ander de zwaarste minuut van
+          de dag. Op deze kaart staat het getal dat op de dag van het consult bij <b>u</b> gemeten
+          is. Het is geen doel en geen minimum — het is de streep waar u vandaan vliegt.</p>
+      </div>
+      <div>
+        <h3>Pijler 02</h3>
+        <h4>U constateert, u vinkt niet af</h4>
+        <p>In het vakje komt geen vinkje maar een <b>getal</b>. Een vinkje bewaart niets; veertien
+          getallen naast een gedrukte streep zijn een grafiek die niemand hoefde te tekenen — en
+          die u zelf kunt lezen zonder dat er iets wordt uitgerekend.</p>
+      </div>
+      <div>
+        <h3>Pijler 03</h3>
+        <h4>Inkorven is kiezen, thuisblijven is geen verzuim</h4>
+        <p>Op de avond voor de vlucht gaan de duiven in de mand. Wat niet meegaat, vliegt niet — en
+          dat is een besluit, geen fout. De thuisblijvers staan <b>met naam op het vel</b>, zodat
+          niemand hoeft te doen alsof ze vergeten zijn.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm diep" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Kiezer</b>
+      <h2>Inkorven: drie in de mand, en van elke duif wordt eerst het hok ingemeten</h2>
+      <p>De therapeut kiest de kandidaten, maar het <em>inkorven</em> gebeurt samen en hardop: welke
+        drie gaan de komende veertien dagen mee? Voor elke oefening die in de mand gaat, wordt ter
+        plekke geteld hoeveel er vandaag lukt. Dat getal is de hokafstand, en het wordt op het vel
+        gedrukt — niet als opdracht, maar als vertrekpunt.</p>
+    </div>
+
+    <div class="mand">
+      <div class="mandkop">
+        <h3>In de mand — vlucht van 2 t/m 15 september</h3>
+        <p>DE HEER T. BERGSMA, 71 · LAGE RUG · HOK: KANAALWEG 118, UTRECHT</p>
+      </div>
+      <div class="mandinhoud">
+
+        <div class="duif">
+          <span class="ringnr">RING<br/>01</span>
+          <div class="bd"><img src="/images/mobility/mob-back-cat-cow-line-v1.png" alt="Rug hol en bol maken"/></div>
+          <div>
+            <h4>Rug hol en bol maken</h4>
+            <p>Op handen en knieën. Rustig de rug bol maken en weer hol, op het tempo van uw
+              ademhaling. Vandaag samen geteld: acht keer, zonder dat het aantrok.</p>
+          </div>
+          <div class="hokmaat"><div class="g">8×</div><div class="l">Uw hokafstand</div></div>
+        </div>
+
+        <div class="duif">
+          <span class="ringnr">RING<br/>02</span>
+          <div class="bd"><img src="/images/onderste-extremiteit/bridges-kicker-line-v1.png" alt="Bruggetje maken"/></div>
+          <div>
+            <h4>Bruggetje maken</h4>
+            <p>Op de rug, knieën gebogen, voeten plat. Til de billen van de grond tot uw lichaam
+              een schuine lijn maakt, en zak rustig terug. Vandaag lukten er zes.</p>
+          </div>
+          <div class="hokmaat"><div class="g">6×</div><div class="l">Uw hokafstand</div></div>
+        </div>
+
+        <div class="duif">
+          <span class="ringnr">RING<br/>03</span>
+          <div class="bd"><img src="/images/seated-chair/one-leg-standing-line-v1.png" alt="Op één been staan bij de stoel"/></div>
+          <div>
+            <h4>Op één been staan</h4>
+            <p>Achter een stoel, vingertoppen op de leuning. Hoe lang blijft het rustig staan?
+              Vandaag gemeten: twaalf tellen links, negen rechts. Het laagste getal telt.</p>
+          </div>
+          <div class="hokmaat"><div class="g">9 tel</div><div class="l">Uw hokafstand</div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="mand thuis">
+      <div class="mandkop">
+        <h3>Thuisblijvers — deze vlucht niet</h3>
+        <p>STAAN MET NAAM OP HET VEL · GEEN VERZUIM · OPNIEUW BESPREKEN OP 16 SEPTEMBER</p>
+      </div>
+      <div class="mandinhoud">
+
+        <div class="duif">
+          <span class="ringnr">—</span>
+          <div class="bd"><img src="/images/mobility/mob-lower-back-line-v1.png" alt="Onderrug mobiliseren"/></div>
+          <div>
+            <h4>Onderrug draaien op de rug</h4>
+            <p>Blijft thuis omdat de heer Bergsma er ’s ochtends duizelig van wordt. Niet omdat het
+              een slechte oefening is — omdat drie duiven die aankomen meer waard zijn dan vier
+              die halverwege omkeren.</p>
+          </div>
+          <div class="hokmaat"><div class="g">—</div><div class="l">Niet ingekorfd</div></div>
+        </div>
+
+        <div class="duif">
+          <span class="ringnr">—</span>
+          <div class="bd"><img src="/images/core/superman-line-v1.png" alt="Arm en been heffen liggend"/></div>
+          <div>
+            <h4>Arm en been heffen, liggend</h4>
+            <p>Staat klaar voor de volgende vlucht. Wordt pas ingekorfd als ring 02 boven de eigen
+              streep blijft — een nieuwe duif erbij is een <b>gevolg</b> van een geslaagde vlucht,
+              nooit een reparatie van een mislukte.</p>
+          </div>
+          <div class="hokmaat"><div class="g">—</div><div class="l">Volgende vlucht</div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="lossing">
+      <div class="tijd">08:00<span>LOSSINGSTIJD</span></div>
+      <p><b>Woensdag 2 september, acht uur ’s ochtends.</b> Eén gedeeld startmoment, ook al doet
+        iedereen het thuis in zijn eentje. Een vlucht die begint is iets anders dan een kaart die
+        meegegeven wordt: er is een dag waarop het losgaat, en dat staat op het vel gedrukt.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm wit" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Cliëntkaart</b>
+      <h2>De uitslag rekent alleen tegen uw eigen streep</h2>
+      <p>Elke regel is één duif. De stippellijn is de hokafstand van 2 september; de staafjes zijn
+        de getallen die de heer Bergsma zelf in de vakjes schreef. Er staat nergens een percentage,
+        geen gemiddelde van de praktijk en geen leeftijdsgroep — <em>alleen de streep die van hem
+        is</em>. Wat eronder blijft is geen mislukking maar informatie: ring 03 vliegt korter dan
+        zijn hok, en dat is precies het gesprek dat op 16 september gevoerd moet worden.</p>
+    </div>
+
+    <div class="uitslag">
+      <div class="ukop">
+        <div>
+          <h3>Vluchtbrief — 2 t/m 15 september</h3>
+          <p>DE HEER T. BERGSMA · HOK KANAALWEG 118 · GELOST 2 SEPT 08:00 · DAG 14 VAN 14</p>
+        </div>
+        <div class="vlucht"><b>3 duiven</b>2 THUISBLIJVERS</div>
+      </div>
+
+      <div class="vlucht-regel">
+        <div class="vr-kop">
+          <h4>Ring 01 — Rug hol en bol maken</h4>
+          <span class="snel">BOVEN UW STREEP OP 11 VAN DE 12 DAGEN</span>
+        </div>
+        <div class="baan" aria-label="Veertien dagen, hokafstand 8">
+          <div class="hoklijn" style="bottom:53%"><u>UW HOK · 8×</u></div>
+          <i style="height:53%"><u>8</u></i>
+          <i style="height:60%"><u>9</u></i>
+          <i style="height:60%"><u>9</u></i>
+          <i class="leeg"></i>
+          <i style="height:66%"><u>10</u></i>
+          <i style="height:60%"><u>9</u></i>
+          <i style="height:66%"><u>10</u></i>
+          <i style="height:73%"><u>11</u></i>
+          <i style="height:66%"><u>10</u></i>
+          <i class="leeg"></i>
+          <i style="height:73%"><u>11</u></i>
+          <i style="height:80%"><u>12</u></i>
+          <i style="height:73%"><u>11</u></i>
+          <i style="height:80%"><u>12</u></i>
+        </div>
+        <div class="baandagen" aria-hidden="true">
+          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+          <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+          <span>13</span><span>14</span>
+        </div>
+      </div>
+
+      <div class="vlucht-regel">
+        <div class="vr-kop">
+          <h4>Ring 02 — Bruggetje maken</h4>
+          <span class="snel">BOVEN UW STREEP OP 8 VAN DE 10 DAGEN</span>
+        </div>
+        <div class="baan" aria-label="Veertien dagen, hokafstand 6">
+          <div class="hoklijn" style="bottom:46%"><u>UW HOK · 6×</u></div>
+          <i style="height:46%"><u>6</u></i>
+          <i class="leeg"></i>
+          <i style="height:53%"><u>7</u></i>
+          <i class="leeg"></i>
+          <i style="height:53%"><u>7</u></i>
+          <i style="height:38%"><u>5</u></i>
+          <i style="height:60%"><u>8</u></i>
+          <i class="leeg"></i>
+          <i style="height:60%"><u>8</u></i>
+          <i class="leeg"></i>
+          <i style="height:53%"><u>7</u></i>
+          <i style="height:66%"><u>9</u></i>
+          <i style="height:38%"><u>5</u></i>
+          <i style="height:66%"><u>9</u></i>
+        </div>
+        <div class="baandagen" aria-hidden="true">
+          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+          <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+          <span>13</span><span>14</span>
+        </div>
+      </div>
+
+      <div class="vlucht-regel">
+        <div class="vr-kop">
+          <h4>Ring 03 — Op één been staan</h4>
+          <span class="snel terug">ONDER UW STREEP OP 6 VAN DE 9 DAGEN</span>
+        </div>
+        <div class="baan" aria-label="Veertien dagen, hokafstand 9 tellen">
+          <div class="hoklijn" style="bottom:60%"><u>UW HOK · 9 TEL</u></div>
+          <i style="height:60%"><u>9</u></i>
+          <i style="height:53%"><u>8</u></i>
+          <i class="leeg"></i>
+          <i style="height:40%"><u>6</u></i>
+          <i class="leeg"></i>
+          <i style="height:46%"><u>7</u></i>
+          <i class="leeg"></i>
+          <i style="height:40%"><u>6</u></i>
+          <i class="leeg"></i>
+          <i style="height:66%"><u>10</u></i>
+          <i class="leeg"></i>
+          <i style="height:46%"><u>7</u></i>
+          <i style="height:53%"><u>8</u></i>
+          <i class="leeg"></i>
+        </div>
+        <div class="baandagen" aria-hidden="true">
+          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+          <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+          <span>13</span><span>14</span>
+        </div>
+      </div>
+
+      <div class="uvoet">
+        <div>
+          <h5>WAT DE THERAPEUT LEEST</h5>
+          <p>Ring 01 en 02 klimmen boven hun eigen streep; ring 03 zakt eronder én wordt het vaakst
+            overgeslagen. Dat is geen gebrek aan motivatie maar <b>een hokafstand die te ruim
+            gemeten is</b> — negen tellen was op de goede dag gemeten. De volgende vlucht begint
+            op zes.</p>
+        </div>
+        <div>
+          <h5>WAT ER NIET STAAT</h5>
+          <p>Geen percentage therapietrouw, geen vergelijking met leeftijdsgenoten, geen groene of
+            rode dagen. De lege dagen staan er als <b>arcering</b>, niet als gat: er is niets
+            geconstateerd, en dat is een feit en geen oordeel.</p>
+        </div>
+        <div>
+          <h5>DE VOLGENDE VLUCHT</h5>
+          <p>Op 16 september wordt opnieuw ingekorfd en opnieuw ingemeten. Ring 01 krijgt een
+            hokafstand van elf, ring 03 gaat naar zes, en <b>arm en been heffen</b> komt als vierde
+            duif in de mand — omdat ring 02 aankwam, niet omdat ring 03 tegenviel.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="nietvergelijken">
+      <h4>Waarom de uitslagenlijst van de vereniging hier ontbreekt</h4>
+      <p>In de duivensport is de uitslag openbaar: honderd melkers op één lijst. Dat is precies het
+        deel dat hier <b>niet</b> is overgenomen. De rekenmethode is geleend — snelheid vanaf je
+        eigen hok — en de ranglijst is bewust thuisgelaten. Een patiënt hoort te vliegen tegen de
+        streep van 2 september, en tegen niemand anders.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Printkaart</b>
+      <h2>De vluchtbrief: A4 staand, drie duiven, veertien getallen per regel</h2>
+      <p>Op papier verdwijnt het blauwe emaille en blijft de vluchtbrief over — het formulier dat in
+        elke vereniging op tafel ligt. Eén inkt, grote invulvakken, en bij elke oefening één dik
+        gedrukt cijfer: de afstand van uw eigen hok.</p>
+    </div>
+
+    <div class="printuitleg">
+      <div>
+        <h4>VAKKEN VOOR EEN GETAL, NIET VOOR EEN VINKJE</h4>
+        <p>Ruim 12 bij 10 millimeter — genoeg voor twee cijfers met een balpen, zonder bril. Het
+          dagnummer staat klein in de hoek, zodat het <b>overschreven mag worden</b> door het
+          getal dat u erin zet.</p>
+      </div>
+      <div>
+        <h4>DE HOKAFSTAND STAAT ER TWEE KEER</h4>
+        <p>Als groot cijfer in het kader rechts, en in de zin eronder in gewone woorden. Wie het
+          kader niet begrijpt, leest <b>“vandaag lukten er acht”</b> en snapt precies genoeg om te
+          beginnen.</p>
+      </div>
+      <div>
+        <h4>DE THUISBLIJVERS STAAN OP HET VEL</h4>
+        <p>Met naam, onder een stippellijn. Een oefening die niet meedoet en tóch genoemd wordt,
+          verdwijnt niet uit het gesprek — en de patiënt hoeft zich niet af te vragen of ze
+          <b>vergeten</b> is.</p>
+      </div>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="b-kop">
+              <div>
+                <h1>Vluchtbrief</h1>
+                <p class="sub"><b>De heer T. Bergsma</b> · hok: Kanaalweg 118, Utrecht · lage rug<br/>
+                  Fysiotherapie Wilhelminapark, Utrecht · J. Meppelink · 030 – 232 41 08</p>
+              </div>
+              <div class="los">
+                <u>LOSSING</u>
+                <b>08:00</b>
+                <span>woensdag 2 september<br/>t/m dinsdag 15 september</span>
+              </div>
+            </div>
+
+            <div class="b-uitleg">
+              <p>Schrijf elke dag het getal in het vakje — geen vinkje.
+                <span>Bij elke oefening staat rechts uw eigen hokafstand: het aantal dat op
+                  2 september samen geteld is. Dat is geen opdracht en geen minimum, maar de streep
+                  waar u vandaan vliegt. Meer is mooi, minder is een getal — allebei zijn ze
+                  informatie, en allebei mogen ze op het vel.</span></p>
+            </div>
+
+            <div class="b-duiven">
+
+              <div class="b-duif">
+                <div class="b-duifkop">
+                  <div class="bd"><img src="/images/mobility/mob-back-cat-cow-line-v1.png" alt=""/></div>
+                  <div>
+                    <h2>Ring 01 · Rug hol en bol maken</h2>
+                    <p class="zin">Op handen en knieën. Maak de rug rustig bol en dan weer hol, op
+                      het tempo van uw ademhaling. Op 2 september lukten er acht zonder dat het
+                      aantrok.</p>
+                  </div>
+                  <div class="b-hok"><b>8×</b><u>UW HOK</u></div>
+                </div>
+                <div class="b-vakken">
+                  <span class="b-vak"><u>1</u></span><span class="b-vak"><u>2</u></span>
+                  <span class="b-vak"><u>3</u></span><span class="b-vak"><u>4</u></span>
+                  <span class="b-vak"><u>5</u></span><span class="b-vak"><u>6</u></span>
+                  <span class="b-vak"><u>7</u></span><span class="b-vak"><u>8</u></span>
+                  <span class="b-vak"><u>9</u></span><span class="b-vak"><u>10</u></span>
+                  <span class="b-vak"><u>11</u></span><span class="b-vak"><u>12</u></span>
+                  <span class="b-vak"><u>13</u></span><span class="b-vak"><u>14</u></span>
+                </div>
+              </div>
+
+              <div class="b-duif">
+                <div class="b-duifkop">
+                  <div class="bd"><img src="/images/onderste-extremiteit/bridges-kicker-line-v1.png" alt=""/></div>
+                  <div>
+                    <h2>Ring 02 · Bruggetje maken</h2>
+                    <p class="zin">Op de rug, knieën gebogen, voeten plat op de grond. Til de billen
+                      omhoog tot uw lichaam een schuine lijn maakt en zak rustig terug. Op
+                      2 september lukten er zes.</p>
+                  </div>
+                  <div class="b-hok"><b>6×</b><u>UW HOK</u></div>
+                </div>
+                <div class="b-vakken">
+                  <span class="b-vak"><u>1</u></span><span class="b-vak"><u>2</u></span>
+                  <span class="b-vak"><u>3</u></span><span class="b-vak"><u>4</u></span>
+                  <span class="b-vak"><u>5</u></span><span class="b-vak"><u>6</u></span>
+                  <span class="b-vak"><u>7</u></span><span class="b-vak"><u>8</u></span>
+                  <span class="b-vak"><u>9</u></span><span class="b-vak"><u>10</u></span>
+                  <span class="b-vak"><u>11</u></span><span class="b-vak"><u>12</u></span>
+                  <span class="b-vak"><u>13</u></span><span class="b-vak"><u>14</u></span>
+                </div>
+              </div>
+
+              <div class="b-duif">
+                <div class="b-duifkop">
+                  <div class="bd"><img src="/images/seated-chair/one-leg-standing-line-v1.png" alt=""/></div>
+                  <div>
+                    <h2>Ring 03 · Op één been staan</h2>
+                    <p class="zin">Ga achter een stevige stoel staan met uw vingertoppen op de
+                      leuning. Til één voet los en tel rustig. Schrijf het laagste van links en
+                      rechts op. Op 2 september was dat negen tellen.</p>
+                  </div>
+                  <div class="b-hok"><b>9</b><u>TELLEN · UW HOK</u></div>
+                </div>
+                <div class="b-vakken">
+                  <span class="b-vak"><u>1</u></span><span class="b-vak"><u>2</u></span>
+                  <span class="b-vak"><u>3</u></span><span class="b-vak"><u>4</u></span>
+                  <span class="b-vak"><u>5</u></span><span class="b-vak"><u>6</u></span>
+                  <span class="b-vak"><u>7</u></span><span class="b-vak"><u>8</u></span>
+                  <span class="b-vak"><u>9</u></span><span class="b-vak"><u>10</u></span>
+                  <span class="b-vak"><u>11</u></span><span class="b-vak"><u>12</u></span>
+                  <span class="b-vak"><u>13</u></span><span class="b-vak"><u>14</u></span>
+                </div>
+                <div class="b-dagen">
+                  <span>ma</span><span>di</span><span>wo</span><span>do</span><span>vr</span>
+                  <span>za</span><span>zo</span><span>ma</span><span>di</span><span>wo</span>
+                  <span>do</span><span>vr</span><span>za</span><span>zo</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="b-thuis">
+              <div class="tt">Thuisblijvers</div>
+              <p><b>Onderrug draaien op de rug</b> — blijft deze vlucht thuis vanwege de
+                duizeligheid ’s ochtends. <b>Arm en been heffen, liggend</b> — staat klaar voor de
+                volgende vlucht. Deze twee hoeft u niet te doen, en ze worden op 16 september
+                opnieuw besproken.</p>
+            </div>
+
+            <div class="b-voet">
+              <span>FYSIPLAN · VLUCHT 2 T/M 15 SEPT 2026 · MEENEMEN NAAR HET INKORVEN OP 16 SEPTEMBER</span>
+              <span>NIETS OP DIT VEL WORDT MET IEMAND ANDERS VERGELEKEN</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding">
+  <div class="binnen kols">
+    <div>
+      <h3>Wat dit concept wint, en wat het kost</h3>
+      <p>Het wint een kaart waarop niemand tegen een norm wordt afgemeten, en een startgetal dat de
+        patiënt zelf heeft zien ontstaan. Het kost tijd in de behandelkamer: elke hokafstand moet
+        ter plekke geteld worden, en een praktijk die dat overslaat houdt een vluchtbrief over met
+        een verzonnen streep erop — precies de norm die het concept wilde afschaffen.</p>
+    </div>
+    <div>
+      <h4>DE DRIE REGELS</h4>
+      <ul>
+        <li>De streep is gemeten, niet gekozen</li>
+        <li>In het vakje komt een getal, geen vinkje</li>
+        <li>Thuisblijvers staan met naam op het vel</li>
+      </ul>
+    </div>
+    <div>
+      <h4>ELDERS</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var f=Math.min(1,schaal.clientWidth/blad.offsetWidth);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>
