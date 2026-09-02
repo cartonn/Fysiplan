@@ -4685,51 +4685,56 @@
   "naam": "Seated ab contractions",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-ab-contractions-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-ab-contractions-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-ab-contractions-avatar-v8.jpg",
   "uitleg": "Zit lang op de stoel en plaats je handen op je onderbuik. Span je buikspieren rustig aan zonder je adem vast te houden en ontspan weer.",
   "exerciseId": "fp_e367c9af96d7ae60",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated chair crunches",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-chair-crunches-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-chair-crunches-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-chair-crunches-avatar-v8.jpg",
   "uitleg": "Zit rechtop met je handen licht achter je hoofd. Leun gecontroleerd een klein stuk achterover, span je buik aan en kom rustig terug.",
   "exerciseId": "fp_963efaf95eb9ea70",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated knee to elbow",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-knee-to-elbow-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-knee-to-elbow-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-knee-to-elbow-avatar-v8.jpg",
   "uitleg": "Zit rechtop, breng één knie omhoog en draai je romp rustig richting de tegenoverliggende elleboog. Wissel daarna gecontroleerd van kant.",
   "exerciseId": "fp_92cd0d5fd88b53b7",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated chair squats",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-chair-squats-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-chair-squats-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-chair-squats-avatar-v8.jpg",
   "uitleg": "Sta voor de stoel met je voeten op heupbreedte. Duw je heupen naar achteren richting de zitting en kom gecontroleerd weer omhoog.",
   "exerciseId": "fp_d288ca26f5c3c5b1",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated shoulder stretch",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-shoulder-stretch-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-shoulder-stretch-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-shoulder-stretch-avatar-v8.jpg",
   "uitleg": "Zit rechtop, breng één arm gestrekt voor je borst en trek die met je andere arm zacht naar je toe. Wissel daarna van kant.",
   "exerciseId": "fp_e6de47880afff3c3",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated shoulder roll",
