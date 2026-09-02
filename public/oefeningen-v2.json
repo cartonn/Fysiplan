@@ -4675,11 +4675,12 @@
   "naam": "Seated hamstring stretch",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-hamstring-stretch-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-hamstring-stretch-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-hamstring-stretch-avatar-v8.jpg",
   "uitleg": "Zit voor op de stoel met één hiel op de vloer en je knie gestrekt. Buig rustig vanuit je heupen naar voren zonder je rug te forceren.",
   "exerciseId": "fp_0df1add1de9ff580",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated ab contractions",
@@ -4917,20 +4918,22 @@
   "naam": "Seated dumbell press up",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-dumbbell-press-up-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-dumbbell-press-up-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-dumbbell-press-up-avatar-v8.jpg",
   "uitleg": "Zit rechtop met een dumbbell in elke hand. Druk de gewichten gecontroleerd boven je hoofd en laat ze rustig terugzakken.",
   "exerciseId": "fp_08fffade39257e4f",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated biceps curl",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-biceps-curl-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-biceps-curl-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-biceps-curl-avatar-v8.jpg",
   "uitleg": "Zit rechtop met een dumbbell in elke hand. Buig je ellebogen om de gewichten richting schouders te brengen en laat gecontroleerd zakken.",
   "exerciseId": "fp_5405dc499ab6f482",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  }
 ]
