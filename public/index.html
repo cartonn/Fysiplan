@@ -2247,6 +2247,42 @@ bridge2.jpg</div>
     if(kaart.id)r.push('Digitale kaart: '+location.origin+'/k/'+kaart.id);
     return r.join('\n');
   }
+  // praktijkrapport: alle app-vrij gemeten uitkomsten (pijn, oefentrouw, ervaren
+  // herstel, seintjes) over de actieve kaarten samengevat tot een plakklare tekst
+  // voor kwaliteitsverantwoording of teamoverleg. Bewust geaggregeerd en zonder
+  // cliëntnamen; de duiding blijft bij de praktijk.
+  function praktijkRapport(lijst){
+    var nu=Date.now(),dag=864e5;
+    var r=[];
+    r.push('Praktijkrapport '+(SET.praktijk||'')+' — '+new Date().toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}));
+    r.push('Uitkomsten app-vrij gemeten via de digitale trainingskaarten van Fysiplan (zonder patiënt-app of account).');
+    r.push('');
+    var geopend=lijst.filter(function(c){return c.bekeken>0;}).length;
+    var weekActief=lijst.filter(function(c){return c.gedaan&&c.gedaan.some(function(g){return nu-g.t<7*dag;});}).length;
+    r.push('Kaarten: '+lijst.length+' actief; '+geopend+' door de patiënt geopend; '+weekActief+' deze week geoefend.');
+    var metPijn=lijst.filter(function(c){return c.scores&&c.scores.length>=2;});
+    if(metPijn.length){
+      var deltas=metPijn.map(function(c){return c.scores[c.scores.length-1].s-c.scores[0].s;});
+      var som=deltas.reduce(function(a,b){return a+b;},0);
+      var gem=Math.round(som/deltas.length*10)/10;
+      var beter=deltas.filter(function(d){return d<0;}).length,gelijk=deltas.filter(function(d){return d===0;}).length;
+      r.push('Pijn (zelfrapportage NPRS, recent verloop): '+metPijn.length+' kaarten met 2+ metingen — gemiddeld '+(gem>0?'+':'')+gem+' punt; '+beter+' verbeterd, '+gelijk+' gelijk, '+(deltas.length-beter-gelijk)+' verslechterd.');
+    }
+    var metDoel=lijst.filter(function(c){return c.doel>0;});
+    if(metDoel.length){
+      var haalden=metDoel.filter(function(c){return (c.gedaan||[]).filter(function(g){return nu-g.t<7*dag;}).length>=c.doel;}).length;
+      r.push('Oefentrouw: '+haalden+' van de '+metDoel.length+' kaarten met een oefendoel haalde het doel deze week.');
+    }
+    var metHerstel=lijst.filter(function(c){return c.ervaring&&c.ervaring.length;});
+    if(metHerstel.length){
+      var hb=0,hg=0,hs=0;
+      metHerstel.forEach(function(c){var s=c.ervaring[c.ervaring.length-1].s;if(s>0)hb++;else if(s===0)hg++;else hs++;});
+      r.push('Ervaren herstel t.o.v. start (GROC-achtig, laatste antwoord per kaart): '+hb+' beter, '+hg+' hetzelfde, '+hs+' slechter (van '+metHerstel.length+' kaarten met een antwoord).');
+    }
+    var seinN=lijst.filter(function(c){return c.seintje&&(c.seintje.soort==='vraag'||c.seintje.soort==='pijn');}).length;
+    if(seinN)r.push('Openstaande seintjes van patiënten: '+seinN+'.');
+    return r.join('\n');
+  }
   // de patiëntlink draagt de gekozen taal mee (?taal=), zodat de kaart meteen in
   // de taal van de patiënt opent — ook als diens telefoon op een andere taal staat.
   // De patiënt kan op de kaart altijd nog zelf wisselen (die keuze wint daarna).
@@ -2603,6 +2639,9 @@ bridge2.jpg</div>
             if(seinN)h+="<button type='button' id='k_srv_sam_sein' class='no-print' title='Patiënten die een seintje stuurden (vraag of pijn): toon alleen die kaarten' style='cursor:pointer;background:#eaf1fb;border:1px solid #c3d4ee;color:#2456a6;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+seinN+"</b> "+(seinN===1?'seintje':'seintjes')+"</button>";
             h+=aandN?"<button type='button' id='k_srv_sam_aand' class='no-print' title='Hoge pijn, langer niet geoefend of nooit geopend: zet die kaarten bovenaan' style='cursor:pointer;background:#fbecea;border:1px solid #e7c3bc;color:#a23f2c;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+aandN+"</b> "+(aandN===1?'vraagt':'vragen')+" aandacht</button>":chip('<b>0</b> vragen aandacht');
             if(lArch.length)h+=archKnop('Gearchiveerd ('+lArch.length+')',false);
+            // praktijkrapport: de app-vrij gemeten uitkomsten in één klik als
+            // plakklare tekst (kwaliteitsverantwoording, teamoverleg)
+            h+="<button type='button' id='k_srv_rap' class='no-print' title='Kopieer een geaggregeerd uitkomstenrapport van alle actieve kaarten (pijnverloop, oefentrouw, ervaren herstel, seintjes) — zonder cliëntnamen' style='cursor:pointer;background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:12px'>Rapport</button>";
           }
           samEl.innerHTML=h;samEl.style.display='flex';
           var ab=document.getElementById('k_srv_sam_aand');
@@ -2617,6 +2656,15 @@ bridge2.jpg</div>
           }
           var arb=document.getElementById('k_srv_arch');
           if(arb)arb.onclick=function(){srvArchiefView=!srvArchiefView;toonSrvKaarten();};
+          var rb=document.getElementById('k_srv_rap');
+          if(rb)rb.onclick=function(){
+            var tekst=praktijkRapport(l);
+            var oudR=rb.textContent;
+            var toonR=function(t){rb.textContent=t;setTimeout(function(){rb.textContent=oudR;},1600);};
+            if(navigator.clipboard&&navigator.clipboard.writeText){
+              navigator.clipboard.writeText(tekst).then(function(){toonR('Gekopieerd ✓');}).catch(function(){window.prompt('Kopieer het praktijkrapport:',tekst);});
+            }else{window.prompt('Kopieer het praktijkrapport:',tekst);}
+          };
         }else if(samEl)samEl.style.display='none';
         toon();
       })
