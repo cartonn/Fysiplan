@@ -1024,6 +1024,52 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
   transform:rotate(288deg) translateY(-30px)}
 .staal.afmijnen .strepen{display:none}
 
+/* — staal concept 67: Stembiljet — */
+.staal.stembiljet{background:#fbfaf6;color:#14161a}
+.staal.stembiljet .plaatnr{color:#767b81}
+.staal.stembiljet .woord{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;
+  letter-spacing:-.04em;font-size:25px;max-width:60%;position:relative;z-index:2}
+.staal.stembiljet .woord em{font-style:normal;color:#cf1f26}
+.staal.stembiljet .vakjes{position:absolute;right:16px;top:50%;transform:translateY(-50%);
+  display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.staal.stembiljet .vakjes i{width:30px;height:30px;border:2px solid #14161a;display:block}
+.staal.stembiljet .vakjes i.vol{background:#cf1f26;border-color:#9c1017;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.3)}
+.staal.stembiljet .strepen{display:none}
+
+/* — staal concept 68: Staten — */
+.staal.staten{background:#faf6ec;color:#1c1814}
+.staal.staten .plaatnr{color:#6d4b2a}
+.staal.staten .woord{font-family:"Iowan Old Style",Charter,Palatino,Georgia,serif;font-weight:400;
+  font-size:26px;max-width:62%;position:relative;z-index:2;letter-spacing:-.01em}
+.staal.staten .woord em{font-style:italic;color:#6d4b2a}
+.staal.staten .platen{position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  display:flex;gap:9px;align-items:center}
+.staal.staten .platen i{width:26px;height:36px;border:1.5px solid rgba(28,24,20,.5);display:block;
+  position:relative;background:#fffdf6}
+.staal.staten .platen i:after{content:"";position:absolute;inset:4px;
+  background-image:repeating-linear-gradient(66deg,#1c1814 0 1px,transparent 1px 4px)}
+.staal.staten .platen i.i:after{opacity:.28}
+.staal.staten .platen i.ii:after{opacity:.6}
+.staal.staten .platen i.iii{border-width:2.5px}
+.staal.staten .strepen{display:none}
+
+/* — staal concept 69: Duivenvlucht — */
+.staal.duivenvlucht{background:#2c4553;color:#f7f2e6}
+.staal.duivenvlucht .plaatnr{color:#9fb0b9}
+.staal.duivenvlucht .woord{font-family:"Avenir Next",Seravek,system-ui,sans-serif;font-weight:600;
+  letter-spacing:-.035em;font-size:24px;max-width:58%;position:relative;z-index:2}
+.staal.duivenvlucht .woord em{font-style:normal;color:#d3a259}
+.staal.duivenvlucht .klok{position:absolute;right:18px;top:50%;transform:translateY(-50%);
+  width:82px;height:82px;border-radius:50%;background:#f7f2e6;border:5px solid #1d2f39}
+.staal.duivenvlucht .klok b{position:absolute;left:50%;top:50%;width:9px;height:9px;
+  margin:-4.5px 0 0 -4.5px;border-radius:50%;background:#161c20}
+.staal.duivenvlucht .klok i{position:absolute;left:50%;top:50%;width:2.5px;height:30px;
+  margin:-30px 0 0 -1.25px;background:#b8331f;transform-origin:1.25px 30px;transform:rotate(126deg)}
+.staal.duivenvlucht .klok s{position:absolute;left:50%;top:9px;width:2px;height:7px;
+  margin-left:-1px;background:#77786f}
+.staal.duivenvlucht .strepen{display:none}
+
 .kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
 .kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
 .kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
@@ -1083,8 +1129,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>66</b> concepten</span>
-      <span>Laatste ronde <b>1 september 2026</b></span>
+      <span><b>69</b> concepten</span>
+      <span>Laatste ronde <b>2 september 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -4058,6 +4104,131 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-66-afmijnen.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-66-afmijnen.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="kaart">
+        <div class="staal stembiljet">
+          <div class="plaatnr">STEMBILJET · ÉÉN INKT</div>
+          <div class="woord">Wij drukken zwart.<em> Rood is van u.</em></div>
+          <div class="vakjes" aria-hidden="true">
+            <i class="vol"></i><i></i><i></i><i></i>
+          </div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 67</div>
+          <h3>Stembiljet</h3>
+          <p class="richting">Elke oefenkaart staat in de gebiedende wijs. Een stembiljet vraagt —
+            en levert de inkt niet mee.</p>
+          <p class="rationale">Nergens op een gewone oefenkaart is plaats voor een antwoord, en dan
+            verbazen we ons dat de helft na drie weken afhaakt. Dit vel wordt geleverd als een
+            <em>lijst met kandidaten</em>: de praktijk stelt de lijst samen, de patiënt bepaalt wie
+            er vandaag doorkomt. De dragende regel is materieel — het blad wordt in één inkt gedrukt,
+            zwart, en alle rode inkt erop is door de patiënt zelf aangebracht. Blanco is een geldige
+            stem die meetelt voor de <em>opkomst</em>, en onder de vouwlijn staat een strook die
+            niemand leest.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>het Nederlandse stembiljet en het stempotlood, sinds 1921 rood omdat een zwarte
+              markering tussen zwarte letters onvindbaar bleek · staatsdrukwerk van de kieskring:
+              zware grotesk in kapitalen, haarlijnen, genummerde vakken · het stemhokje als
+              architectuur van privacy · opkomstcijfers in plaats van uitslagen</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b>, één inkt. Drie kandidaten met naam op 5 mm kapitaal en een
+              volledige zin op 3,4 mm schreef, elk met veertien stemvakken van 10 × 10 mm — groot
+              genoeg voor een stomp potlood en een trillende hand. Onderaan de blancorij, dan de
+              vouwlijn en het stemhokje. <b>Niets op het vel hangt aan kleur</b>: een fotokopie
+              blijft volledig leesbaar</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-67-stembiljet.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-67-stembiljet.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="kaart">
+        <div class="staal staten">
+          <div class="plaatnr">STATEN · I · II · III</div>
+          <div class="woord">Dezelfde plaat,<em> dieper geëtst.</em></div>
+          <div class="platen" aria-hidden="true">
+            <i class="i"></i><i class="ii"></i><i class="iii"></i>
+          </div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 68</div>
+          <h3>Staten</h3>
+          <p class="richting">Uw kaart wordt vervangen. Een koperplaat wordt bijgewerkt — en elke
+            staat blijft bestaan.</p>
+          <p class="rationale">Bij elke controle rolt er een nieuw vel uit de printer en gaat het
+            oude bij het oud papier; zes weken herstel laten zo geen enkel spoor na. Rembrandt
+            werkte een plaat jaren door en musea bewaren élke staat — niet omdat de laatste de
+            beste is, maar omdat je zonder de vorige niets ziet veranderen. Deze kaart draagt haar
+            staatnummer in de ondermarge, met in de kantlijn wat er sinds de vorige staat is
+            <em>bijgewerkt, toegevoegd of weggekrast</em>. Een oefening die eruit gaat verdwijnt
+            niet stilletjes maar blijft doorgestreept staan: wat u niet meer hoeft te doen is een
+            resultaat, geen weglating.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>de statenleer uit de prentkunst — eerste staat, tweede staat, vijfde staat van
+              dezelfde ets · Rembrandts doorgewerkte platen en het polijsten van een lijn, waarbij
+              in de afdruk een spookje achterblijft · de plaatrand als grens tussen beeld en
+              administratie · boektypografie op roomkleurig papier, kapitaaltjes in de ondermarge,
+              cursieve conservatorsaantekeningen</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b>, warme inkt, brede marges. Binnen de gedrukte plaatrand drie
+              oefeningen op 5,2 mm kop en 3,6 mm schreef; ernaast een kantlijnnotitie die voluit
+              <em>“bijgewerkt”</em> of <em>“nieuw in deze staat”</em> zegt met een streep van
+              verschillende zwaarte — <b>nooit kleur alleen</b>. Onderaan de doorgestreepte regel,
+              en buiten de plaatrand de staatregel met de vorige datum</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-68-staten.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-68-staten.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="kaart">
+        <div class="staal duivenvlucht">
+          <div class="plaatnr">DUIVENVLUCHT · UW HOK</div>
+          <div class="woord">Iedereen vliegt<em> een andere afstand.</em></div>
+          <div class="klok" aria-hidden="true">
+            <s></s><i></i><b></b>
+          </div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 69</div>
+          <h3>Duivenvlucht</h3>
+          <p class="richting">Geen norm maar een hokafstand: het getal dat bij ú gemeten is, gedrukt
+            als streep om vanaf te vertrekken.</p>
+          <p class="rationale">“Acht keer opstaan” is voor de een een warming-up en voor de ander de
+            zwaarste minuut van de dag — twee patiënten aan hetzelfde getal afmeten is niet streng
+            maar onnauwkeurig. De duivensport loste dat rond 1900 al op: duiven worden samen gelost
+            maar vliegen naar honderd verschillende hokken, dus wint niet wie het eerst thuis is —
+            elk hok is ingemeten en de uitslag rekent in <em>meters per minuut vanaf je eigen hok</em>.
+            Hier krijgt elke oefening een hokafstand die in de behandelkamer geteld is, komt er een
+            getal in het vakje in plaats van een vinkje, en heten de oefeningen die deze twee weken
+            niet meedoen <em>thuisblijvers</em> — met naam op het vel, want wat niet ingekorfd is
+            kan ook niet mislukken. De ranglijst van de vereniging is bewust thuisgelaten.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>de duivensport: inkorven, constateren, de gummiring en de roomwitte wijzerplaat van
+              de constateur · het ingemeten hok en de uitslag in meters per minuut · de poulebrief
+              als smalle kolommenlijst in typemachineletter · geëmailleerd blauwgrijs, eikenhout en
+              zink uit het duivenhok · nulmetingen die van de patiënt zijn in plaats van van een
+              normtabel</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b>, één inkt: de vluchtbrief. Kop met lossingstijd, dan drie
+              oefeningen op 5 mm kop en 3,5 mm schreef, elk met de hokafstand als dik gedrukt cijfer
+              én in gewone woorden in de zin. Veertien invulvakken van ruim 12 × 10 mm <b>voor een getal,
+              niet voor een vinkje</b>, met het dagnummer klein in de hoek zodat het overschreven
+              mag worden. Onderaan de thuisblijvers onder een stippellijn</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-69-duivenvlucht.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-69-duivenvlucht.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>

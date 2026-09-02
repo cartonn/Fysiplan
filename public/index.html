@@ -2344,6 +2344,20 @@ bridge2.jpg</div>
                   "<small style='color:var(--muted);font-size:9px'>"+('0'+d.getDate()).slice(-2)+'-'+('0'+(d.getMonth()+1)).slice(-2)+"</small></div>";
               }).join("")+"</div></div>";
           }
+          // ervaren herstel (GROC-achtig): het laatste één-tik-antwoord van de patiënt
+          // op "hoe gaat het vergeleken met de start?" (alleen tonen, duiding bij de therapeut)
+          var hsChip='';
+          if(c.ervaring&&c.ervaring.length){
+            var hv=c.ervaring[c.ervaring.length-1];
+            var hsLbl={'-2':'veel slechter','-1':'iets slechter','0':'hetzelfde','1':'iets beter','2':'veel beter'}[String(hv.s)];
+            if(hsLbl){
+              var hsKl=hv.s>0?'#3e8e5a':(hv.s<0?'#c94f36':'#9aa1ab');
+              var hsDg=Math.floor((Date.now()-hv.t)/864e5);
+              var hsWan=hsDg<=0?'vandaag':(hsDg===1?'gisteren':hsDg+' dagen geleden');
+              hsChip="<span class='btn' title='Ervaren herstel t.o.v. de start, door de patiënt aangetikt ("+hsWan+")' style='font-size:11.5px;padding:4px 10px;cursor:default'>"+
+                "<span style='display:inline-block;width:8px;height:8px;border-radius:99px;background:"+hsKl+";margin-right:5px'></span>herstel: "+hsLbl+"</span>";
+            }
+          }
           // therapietrouw zonder patiënt-app: hoe vaak de patiënt de afgelopen week
           // "ik heb geoefend" aantikte op de digitale kaart (alleen tonen; de duiding
           // blijft bij de therapeut). Dit inzicht hebben concurrenten alleen mét app.
@@ -2458,7 +2472,7 @@ bridge2.jpg</div>
               "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>";
           }
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
-            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+"</small></div>"+seinChip+vg+
+            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+"</small></div>"+seinChip+vg+hsChip+
             "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
             "<button class='btn' data-skopie='"+esc(c.id)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+

@@ -707,3 +707,31 @@ verlopen-token-check aantoonbaar). Kern (21) en overige suites groen.
 **Volgende run — pak een ander gebied:** injectie en path-traversal op de
 sjabloon- en kaartroutes (praktijk-sjablonen, kaart-hernoemen, antwoord), of de
 accountlaag opnieuw (sessieverloop, herstelcode-flow, wachtwoord-wijzigen).
+
+## 2026-09-02 — Injectie/path-traversal op sjabloon- en kaartroutes; v1-gate-aliassen
+
+**Geauditeerd:** de sanitatie- en renderketen van de kaart- en sjabloonroutes
+(`/api/kaarten` POST: cells/rows/client/chosen via sanStr-lengtecaps;
+praktijk-sjablonen; kaart-antwoord; AI-voorstel) en de statische serving.
+De renderketen is dicht: kaart.html escapet álle patiëntzichtbare velden (ook in
+attribuutcontext, esc dekt alle vijf tekens), renderSjabLijst en het AI-resultaat
+in de app escapen consequent, videopaden zijn regex-gewhitelist, en de statische
+routes zijn traversal-veilig (normalize + prefix-check op public/ en uploads/,
+extensie-whitelist op uploads). `/uploads` draagt noindex + CORP + nosniff.
+
+**Bevinding (gefixt):** de v1-inloggate dekte alleen exact "/" en "/index.html".
+Pad-aliassen die na normalisatie op hetzelfde bestand uitkomen — //index.html,
+/./index.html, /x/../index.html en URL-gecodeerde varianten — liepen via de
+statische route om de gate heen en serveerden de volledige v1-app zonder login.
+Fix in de gedeelde statische route, aantoonbaar zonder gedragswijziging voor v1:
+elk pad dat op public/index.html uitkomt krijgt een 302 naar de kanonieke "/",
+waar de gate (en voor ingelogden de app mét uitlogbalk) al zat.
+
+**Increment:** nieuwe regressietest `test-gate-alias.mjs` (16 checks: zes
+aliassen geblokkeerd, /v2, /v2/app, /k, /o-familie, /admin88, /v1-wachtwoord en
+statische bestanden onaangeroerd, traversal blijft 403; tegenbewijs: zonder de
+fix falen precies de zes alias-checks). Kern en overige suites groen.
+
+**Volgende run — pak een ander gebied:** de accountlaag opnieuw (sessieverloop,
+herstelcode-flow, wachtwoord-wijzigen, v1-accountroutes na de merge), of de
+rate limiting op /api/kaarten en de AI-routes onder gelijktijdige praktijken.

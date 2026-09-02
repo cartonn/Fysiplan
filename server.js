@@ -2279,6 +2279,7 @@ async function afhandelen(request, response) {
         scores: (k.metingen || []).slice(-14), gedaan: (k.gedaan || []).slice(-14),
         bekeken: k.bekeken ? k.bekeken.t : 0,
         seintje: (k.seintje && k.seintje.soort) ? { t: k.seintje.t, soort: k.seintje.soort } : null,
+        ervaring: (k.ervaring || []).slice(-1),
         doel: Number(k.doel) || 0, gearchiveerd: !!k.gearchiveerd }))
       .sort((a, b) => b.ts - a.ts);
     await sendJson(response, 200, list);
@@ -2338,6 +2339,8 @@ async function afhandelen(request, response) {
         gedaan: map[kk] ? map[kk].gedaan || [] : [],
         bekeken: map[kk] ? map[kk].bekeken || null : null,
         seintje: map[kk] ? map[kk].seintje || null : null,
+        ervaring: map[kk] ? map[kk].ervaring || [] : [],
+        antwoord: map[kk] ? map[kk].antwoord || null : null,
         doel: map[kk] ? Number(map[kk].doel) || 0 : 0,
         gearchiveerd: map[kk] ? !!map[kk].gearchiveerd : false };
       await saveJson(kaartenPath, kaarten);
@@ -3189,6 +3192,15 @@ async function afhandelen(request, response) {
   const filePath = normalize(join(publicDir, urlPath));
   if (filePath !== publicDir && !filePath.startsWith(publicDir + sep)) {
     await send(response, 403, "text/plain; charset=utf-8", "Forbidden");
+    return;
+  }
+  // de v1-inloggate bewaakt "/" en "/index.html", maar pad-aliassen die op
+  // hetzelfde bestand uitkomen (//index.html, /./index.html, /x/../index.html)
+  // liepen hier langs de gate heen de app in. Elk alias gaat terug naar de
+  // kanonieke route, waar de gate zit; voor ingelogde gebruikers verandert er niets.
+  if (filePath === join(publicDir, "index.html")) {
+    response.writeHead(302, { location: "/" });
+    response.end();
     return;
   }
 
