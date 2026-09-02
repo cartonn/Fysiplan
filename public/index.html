@@ -2492,6 +2492,14 @@ bridge2.jpg</div>
               "<button class='btn' data-shernoem='"+esc(c.id)+"' data-hnaam='"+esc(c.naam)+"' title='Wijzig de naam van deze kaart (bijvoorbeeld een typefout in de cliëntnaam). De patiëntlink en alle voortgang blijven behouden.'>Naam wijzigen</button>"+
               "<small style='color:var(--muted)'>Link en voortgang blijven behouden.</small>"+
             "</div>"+
+            // privé werknotitie: alleen voor de praktijk, komt nooit op de patiëntkaart
+            "<div style='margin-top:7px'>"+
+              "<small style='color:var(--muted)'>Werknotitie (alleen zichtbaar voor de praktijk, nooit voor de patiënt)</small>"+
+              "<div style='display:flex;gap:6px;margin-top:3px'>"+
+                "<input data-snotitie='"+esc(c.id)+"' value='"+esc(c.notitie||'')+"' maxlength='500' placeholder='Bijv. volgende keer zwaarder; linkerknie ontzien' style='flex:1;min-width:0;font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
+                "<button class='btn' data-snotitieopslaan='"+esc(c.id)+"'>Bewaar</button>"+
+              "</div>"+
+            "</div>"+
             "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;align-items:center'>"+
               "<button class='btn' data-snieuwelink='"+esc(c.id)+"' title='Geef de kaart een nieuwe link; de oude werkt daarna niet meer. Alle voortgang blijft bij de kaart. Handig bij een verkeerd doorgestuurde link of een verloren telefoon.'>Nieuwe link (oude intrekken)</button>"+
               "<small style='color:var(--muted)'>De oude link werkt daarna niet meer; de voortgang blijft.</small>"+
@@ -2520,7 +2528,7 @@ bridge2.jpg</div>
               "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>";
           }
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
-            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+"</small></div>"+seinChip+vg+hsChip+
+            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+"</small></div>"+seinChip+vg+hsChip+
             "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
             "<button class='btn' data-skopie='"+esc(c.id)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+
@@ -2758,6 +2766,19 @@ bridge2.jpg</div>
       return;
     }
     // dossiersamenvatting kopiëren: kaart ophalen, platte tekst bouwen, klembord
+    // privé werknotitie opslaan (leeg = wissen); alleen de ingelogde praktijk
+    var nt=e.target.closest('[data-snotitieopslaan]');
+    if(nt){
+      var veldN=document.querySelector("[data-snotitie='"+nt.dataset.snotitieopslaan+"']");
+      if(!veldN)return;
+      var oudN=nt.textContent;
+      var toonN=function(t){nt.textContent=t;setTimeout(function(){nt.textContent=oudN;},1600);};
+      fetch('api/kaart/notitie',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:nt.dataset.snotitieopslaan,tekst:veldN.value})})
+        .then(function(r){return r.json();})
+        .then(function(d){if(d.ok)toonN('Bewaard ✓');else toonN(d.fout||'Mislukt');})
+        .catch(function(){toonN('Geen verbinding');});
+      return;
+    }
     var ds=e.target.closest('[data-sdossier]');
     if(ds){
       var oudD=ds.textContent;
