@@ -4477,51 +4477,56 @@
   "naam": "Mob Hip circles",
   "groep": "Mobility",
   "img": "images/mobility/mob-hip-circles-line-v1.png",
-  "kaartImg": "images/mobility/mob-hip-circles-line-v1.png",
+  "kaartImg": "images/mobility/mob-hip-circles-avatar-v8.jpg",
   "uitleg": "Sta lang op één been en hef de andere knie tot heuphoogte. Maak rustig kleine cirkels vanuit je heup en houd je bekken stabiel.",
   "exerciseId": "fp_1169ad7f2a3ea56c",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Gluteal stretch",
   "groep": "Mobility",
   "img": "images/mobility/gluteal-stretch-line-v1.png",
-  "kaartImg": "images/mobility/gluteal-stretch-line-v1.png",
+  "kaartImg": "images/mobility/gluteal-stretch-avatar-v8.jpg",
   "uitleg": "Lig op je rug, leg één enkel op de andere knie en trek het onderste been rustig naar je toe. Houd je schouders ontspannen.",
   "exerciseId": "fp_793dbfaf2845eb08",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Hamstring stretch",
   "groep": "Mobility",
   "img": "images/mobility/hamstring-stretch-line-v1.png",
-  "kaartImg": "images/mobility/hamstring-stretch-line-v1.png",
+  "kaartImg": "images/mobility/hamstring-stretch-avatar-v8.jpg",
   "uitleg": "Zit met gestrekte benen en buig rustig vanuit je heupen naar voren. Houd je rug zo lang mogelijk en forceer de rek niet.",
   "exerciseId": "fp_31aecb8b4d9b172e",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Hamstring stretch one leg",
   "groep": "Mobility",
   "img": "images/mobility/hamstring-stretch-one-leg-line-v1.png",
-  "kaartImg": "images/mobility/hamstring-stretch-one-leg-line-v1.png",
+  "kaartImg": "images/mobility/hamstring-stretch-one-leg-avatar-v8.jpg",
   "uitleg": "Zit met één been gestrekt en de andere voetzool tegen je bovenbeen. Buig rustig vanuit je heupen richting het gestrekte been.",
   "exerciseId": "fp_da024ca505e981eb",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Quadriceps stretch",
   "groep": "Mobility",
   "img": "images/mobility/quadriceps-stretch-line-v1.png",
-  "kaartImg": "images/mobility/quadriceps-stretch-line-v1.png",
+  "kaartImg": "images/mobility/quadriceps-stretch-avatar-v8.jpg",
   "uitleg": "Sta stabiel en houd zo nodig licht steun vast. Pak één enkel achter je, houd je knieën bij elkaar en trek de hiel rustig richting bil.",
   "exerciseId": "fp_3265101a912475f3",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Back stretch",
