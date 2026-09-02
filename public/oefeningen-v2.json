@@ -4532,61 +4532,67 @@
   "naam": "Back stretch",
   "groep": "Mobility",
   "img": "images/mobility/back-stretch-line-v1.png",
-  "kaartImg": "images/mobility/back-stretch-line-v1.png",
+  "kaartImg": "images/mobility/back-stretch-avatar-v8.jpg",
   "uitleg": "Kom op knieën en handen, breng je heupen rustig naar je hielen en strek je armen voor je uit. Ontspan je rug en adem rustig door.",
   "exerciseId": "fp_0fd67f9b622d7724",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Abs stretch",
   "groep": "Mobility",
   "img": "images/mobility/abs-stretch-line-v1.png",
-  "kaartImg": "images/mobility/abs-stretch-line-v1.png",
+  "kaartImg": "images/mobility/abs-stretch-avatar-v8.jpg",
   "uitleg": "Lig op je buik en duw jezelf rustig op via je handen. Houd je heupen laag, schouders ontspannen en stop bij een comfortabele rek.",
   "exerciseId": "fp_9798f76661bf3c67",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated side leans",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-side-leans-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-side-leans-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-side-leans-avatar-v8.jpg",
   "uitleg": "Zit rechtop met beide voeten plat. Reik met één arm boven je hoofd en buig rustig zijwaarts; wissel daarna van kant.",
   "exerciseId": "fp_4da50270005b421f",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated lat stretch",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-lat-stretch-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-lat-stretch-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-lat-stretch-avatar-v8.jpg",
   "uitleg": "Zit rechtop en vouw je handen boven je hoofd. Buig je romp rustig opzij en houd beide zitbotten op de stoel.",
   "exerciseId": "fp_7e0445b070d4aa84",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated lumbar rotations",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-lumbar-rotations-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-lumbar-rotations-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-lumbar-rotations-avatar-v8.jpg",
   "uitleg": "Zit rechtop met je voeten plat. Draai je romp rustig naar één zijde en gebruik de rugleuning alleen als lichte steun.",
   "exerciseId": "fp_063e61e846384264",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated cat-cow",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-cat-cow-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-cat-cow-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-cat-cow-avatar-v8.jpg",
   "uitleg": "Zit voor op de stoel met je handen op je knieën. Maak je bovenrug rustig bol en kom gecontroleerd terug naar een lange neutrale rug.",
   "exerciseId": "fp_47ff49c27d46e275",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated foreward reach",
