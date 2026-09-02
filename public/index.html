@@ -36,6 +36,16 @@
   .btn:focus-visible{outline:none;box-shadow:var(--ring)}
   .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
   .btn.primary:hover{background:var(--brand-700);border-color:var(--brand-700)}
+  .beeldkeuze-v2{margin:0 0 12px;padding:11px;border:1px solid var(--brand-100);border-radius:10px;background:var(--brand-50)}
+  .beeldkeuze-kop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin:0 0 9px;color:var(--ink)}
+  .beeldkeuze-kop b{display:block;font-size:12.5px}
+  .beeldkeuze-kop small{display:block;margin-top:2px;color:var(--muted);font-size:11px;line-height:1.35}
+  .beeldkeuze-qr{color:var(--brand-700);font-size:10.5px;font-weight:650;white-space:nowrap}
+  .beeldsegment{display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:3px;border:1px solid var(--brand-100);border-radius:9px;background:#fff}
+  .beeldsegment button{min-height:34px;border:0;border-radius:6px;background:transparent;color:#101828;font:inherit;font-size:12px;font-weight:650;cursor:pointer;transition:.15s}
+  .beeldsegment button:hover{background:var(--brand-50);color:var(--brand-700)}
+  .beeldsegment button.aan{background:var(--brand);color:#fff;box-shadow:var(--sh-sm)}
+  .beeldsegment button.aan:hover{background:var(--brand-700);color:#fff}
   .wrap{display:grid;grid-template-columns:390px minmax(0,1fr);gap:16px;padding:18px;align-items:start}
   /* kies-oefening blok: plakt onder de balk en loopt door tot de onderkant van het scherm */
   .col-controls{position:sticky;top:76px;display:flex;flex-direction:column;height:calc(100vh - 94px)}
@@ -914,7 +924,7 @@ bridge2.jpg</div>
   // V2 en beheer gebruiken de gekoppelde avatarlibrary; de V1-root gebruikt
   // uitsluitend de bevroren lijntekeningenbibliotheek.
   var USE_V2_LIBRARY=IS_V2||IS_ADMIN;
-  // Deze keuze geldt alleen voor de v2-editor en PDF. De digitale kaart haalt
+  // Deze keuze geldt voor V2 en beheer, inclusief de PDF. De digitale kaart haalt
   // altijd kaartImg uit de v2-catalogus en blijft daardoor onafhankelijk in kleur.
   var V2_BEELD=SET.v2Beeld==='kleur'?'kleur':'lijn';
   function syncV2Beeldkeuze(){
@@ -935,6 +945,8 @@ bridge2.jpg</div>
     document.querySelector('.brand').appendChild(_v2b);
     document.getElementById('sjabBtn').style.display='';
     document.getElementById('aiBtn').style.display='';
+  }
+  if(USE_V2_LIBRARY){
     var _beeldKeuze=document.getElementById('beeldKeuze');
     _beeldKeuze.hidden=false;
     syncV2Beeldkeuze();
