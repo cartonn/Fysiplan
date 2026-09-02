@@ -56,17 +56,8 @@ html.v2 .beeldkeuze-kop b{font-size:12px;color:var(--ink)}
 html.v2 .beeldkeuze-kop small{font-size:10.5px;color:var(--muted)}
 html.v2 .beeldkeuze-qr{font-size:10px;font-weight:650;color:var(--brand);background:var(--brand-50);
   border:1px solid var(--brand-100);border-radius:999px;padding:4px 7px;white-space:nowrap}
-/* Zelfde compacte keuzevorm als Inloggen / Account aanmaken. De labels houden
-   bewust hun betekenisvolle kleur, ook als de andere optie geselecteerd is. */
-html.v2 .beeldsegment{display:flex;gap:4px;padding:4px;border:1px solid var(--line);
-  border-radius:10px;background:var(--bg)}
-html.v2 .beeldsegment button{flex:1;border:0;border-radius:7px;padding:10px;background:transparent;
-  font:600 12px/1 var(--sans);cursor:pointer;transition:background .15s,box-shadow .15s}
-html.v2 .beeldsegment button[data-v2-beeld="lijn"]{color:var(--ink)}
-html.v2 .beeldsegment button[data-v2-beeld="kleur"]{color:var(--brand)}
-html.v2 .beeldsegment button:hover{background:rgba(255,254,250,.72)}
-html.v2 .beeldsegment button.aan{background:var(--panel);box-shadow:0 1px 2px rgba(60,50,20,.12)}
-html.v2 .beeldsegment button:focus-visible{outline:none;box-shadow:var(--ring)}
+/* De keuze Lijntekeningen/Avatar gebruikt bewust de gedeelde basiscomponent
+   uit index.html, zodat V2 visueel exact gelijk blijft aan admin. */
 
 /* V2 toont categorieën net als V1/beheer: in meerdere regels, zonder veegbalk. */
 html.v2 .filters{flex-wrap:wrap;overflow:visible;flex:initial;margin-right:0;padding:0}
