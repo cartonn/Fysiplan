@@ -4598,71 +4598,78 @@
   "naam": "Seated foreward reach",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-forward-reach-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-forward-reach-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-forward-reach-avatar-v8.jpg",
   "uitleg": "Zit rechtop met je voeten plat. Reik één arm rustig naar voren op schouderhoogte en houd je romp lang.",
   "exerciseId": "fp_aea0bdac883b00f0",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated ankle rotations",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-ankle-rotations-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-ankle-rotations-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-ankle-rotations-avatar-v8.jpg",
   "uitleg": "Zit rechtop en til één voet iets van de vloer. Maak gecontroleerde cirkels vanuit je enkel en wissel daarna van voet.",
   "exerciseId": "fp_16a477f3bf50b61c",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated calfs raises",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-calf-raises-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-calf-raises-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-calf-raises-avatar-v8.jpg",
   "uitleg": "Zit rechtop met beide voeten plat. Til je hielen rustig op en laat ze gecontroleerd terugzakken.",
   "exerciseId": "fp_074bfa82f6175277",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated knee lift",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-knee-lift-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-knee-lift-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-knee-lift-avatar-v8.jpg",
   "uitleg": "Zit rechtop en til één knie gecontroleerd op richting borst. Houd je romp stabiel en wissel daarna van zijde.",
   "exerciseId": "fp_9da74a2655c001f9",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated leg extension",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-leg-extension-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-leg-extension-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-leg-extension-avatar-v8.jpg",
   "uitleg": "Zit rechtop en strek één knie rustig voor je uit. Houd je bovenbeen op de stoel en laat je voet gecontroleerd terugzakken.",
   "exerciseId": "fp_583a7b6ccf5e390b",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated band abduction",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-band-abduction-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-band-abduction-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-band-abduction-avatar-v8.jpg",
   "uitleg": "Zit rechtop met een weerstandsband boven je knieën. Duw je knieën rustig uit elkaar en kom langzaam terug.",
   "exerciseId": "fp_5c9bbb42568e066c",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated band leg curl",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-band-leg-curl-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-band-leg-curl-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-band-leg-curl-avatar-v8.jpg",
   "uitleg": "Zit rechtop met een weerstandsband rond één enkel. Buig je knie gecontroleerd naar achteren tegen de bandweerstand en kom rustig terug.",
   "exerciseId": "fp_940a12dcf63225d8",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated hamstring stretch",
