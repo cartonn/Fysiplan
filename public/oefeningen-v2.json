@@ -4740,41 +4740,45 @@
   "naam": "Seated shoulder roll",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-shoulder-roll-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-shoulder-roll-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-shoulder-roll-avatar-v8.jpg",
   "uitleg": "Zit lang op de stoel en rol beide schouders rustig omhoog, naar achteren en omlaag. Houd je nek ontspannen.",
   "exerciseId": "fp_55f82056b64addb5",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated arm circles",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-arm-circles-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-arm-circles-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-arm-circles-avatar-v8.jpg",
   "uitleg": "Zit rechtop met je armen zijwaarts op schouderhoogte. Maak kleine, gecontroleerde cirkels en wissel daarna van richting.",
   "exerciseId": "fp_cf809350cb39e408",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated marching",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-marching-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-marching-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-marching-avatar-v8.jpg",
   "uitleg": "Zit rechtop en til afwisselend één knie op alsof je marcheert. Houd je romp stabiel en beweeg rustig.",
   "exerciseId": "fp_992e4cd0badbf045",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated chest opener",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-chest-opener-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-chest-opener-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-chest-opener-avatar-v8.jpg",
   "uitleg": "Zit rechtop en breng je handen achter je rug samen. Trek je schouderbladen zacht naar elkaar toe zonder je onderrug te forceren.",
   "exerciseId": "fp_01640004c8145a9a",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Standing chair leg curl",
@@ -4790,31 +4794,34 @@
   "naam": "Seated cervical stretch",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-cervical-stretch-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-cervical-stretch-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-cervical-stretch-avatar-v8.jpg",
   "uitleg": "Zit rechtop, laat je hoofd rustig naar één schouder zakken en geef met je hand slechts lichte begeleiding. Wissel daarna van kant.",
   "exerciseId": "fp_d4e49eb464ca42bc",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated ankle stretches",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-ankle-stretches-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-ankle-stretches-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-ankle-stretches-avatar-v8.jpg",
   "uitleg": "Zit rechtop en strek één been voor je uit. Trek de tenen rustig naar je toe om de enkel en kuit te rekken, en wissel daarna.",
   "exerciseId": "fp_23208818a88487c7",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Seated leg press – resistance band",
   "groep": "Seated Chair",
   "img": "images/seated-chair/seated-leg-press-resistance-band-line-v1.png",
-  "kaartImg": "images/seated-chair/seated-leg-press-resistance-band-line-v1.png",
+  "kaartImg": "images/seated-chair/seated-leg-press-resistance-band-avatar-v8.jpg",
   "uitleg": "Zit rechtop met de band om één voet en houd de uiteinden vast. Strek je knie gecontroleerd tegen de bandweerstand en kom rustig terug.",
   "exerciseId": "fp_538a5caf7b161fb0",
   "lineStatus": "verified-v1",
-  "v1Source": "carla"
+  "v1Source": "carla",
+  "avatarStatus": "generated-v8"
  },
  {
   "naam": "Standing chair calfs raises",
