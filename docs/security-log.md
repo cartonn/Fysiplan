@@ -735,3 +735,30 @@ fix falen precies de zes alias-checks). Kern en overige suites groen.
 **Volgende run — pak een ander gebied:** de accountlaag opnieuw (sessieverloop,
 herstelcode-flow, wachtwoord-wijzigen, v1-accountroutes na de merge), of de
 rate limiting op /api/kaarten en de AI-routes onder gelijktijdige praktijken.
+
+## 2026-09-03 — Accountlaag opnieuw (sessieverloop, herstelcode, v1-routes) + back-updekking
+
+**Geauditeerd:** de v2-accountlaag (sessieverloop 30 dagen met opruiming en harde
+bovengrens, wachtwoord-wijzigen eist sessie + huidig wachtwoord + lockout en laat
+alle sessies vervallen, herstelcode-rotatie) en de v1-accountroutes nu die live
+staan (mailflow, eenmalige tokens met verloop, per-e-mail-inlogrem, cookie-vlaggen
+HttpOnly/SameSite/Secure-op-https). De routes zelf staan er goed voor.
+
+**Bevinding (gefixt):** de dagelijkse back-up (backupBestanden) miste precies de
+twee accountbestanden: praktijk-accounts.json (v2-wachtwoord- en herstelcode-
+hashes) en v1-accounts.json. Een restore uit back-up leverde daardoor een server
+op waar élke geclaimde praktijk stilletjes ont-claimd was — de accountlaag valt
+weg en alle gedeelde kaarten staan weer open zonder sessie — en waar alle
+v1-inlogs verdwenen waren. De insteltokens blijven bewust buiten de back-up
+(kortlevend).
+
+**Increment:** accountsPath en v1AccountsPath toegevoegd aan backupBestanden.
+Nieuwe regressietest test-account-backup.mjs (13 checks): dagback-up bevat beide
+bestanden, en een volledige restore-oefening bewijst dat de claim daarna nog
+afdwingt, het gewijzigde wachtwoord nog werkt en de v1-login intact is; het
+tegenbewijs (zonder de fix) laat exact het ont-claim-scenario zien. Plus
+sessieverloop-regressie: wachtwoord-wijzigen laat de oude sessie vervallen.
+
+**Volgende run — pak een ander gebied:** rate limiting op /api/kaarten en de
+AI-routes onder gelijktijdige praktijken, of de deeplinks/gedeelde kaarten
+(nieuwe-link-flow, kaartMisLimiet-dekking op de nieuwere routes).

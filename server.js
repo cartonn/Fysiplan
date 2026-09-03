@@ -767,7 +767,12 @@ function leesLimiet(req, res) {
 
 // dagelijkse reservekopie van alle databestanden (laatste 7 dagen): vangnet tegen
 // beschadigde schrijfacties of een bug die een bestand leegtrekt
-const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath];
+// let op: de accountbestanden horen hier expliciet bij — zonder praktijk-accounts.json
+// zou een restore uit back-up geclaimde praktijken stilletjes ont-claimen (de hele
+// accountlaag valt dan weg en de kaarten staan weer open), en zonder v1-accounts.json
+// verliezen de v1-gebruikers hun inlog. De insteltokens zijn bewust kortlevend en
+// blijven buiten de back-up.
+const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath, accountsPath, v1AccountsPath];
 async function maakBackup() {
   try {
     const dag = new Date().toISOString().slice(0, 10);
