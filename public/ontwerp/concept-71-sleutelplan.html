@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 71 — Sleutelplan · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 71 — SLEUTELPLAN
+   ------------------------------------------------------------
+   Niemand wil oefeningen. Mensen willen deuren open.
+
+   Een slotenmaker verkoopt geen sloten. Hij tekent een
+   SLUITPLAN: een kruiskaart waarin per sleutel staat welke deur
+   hij opent. Rijen zijn sleutels, kolommen zijn deuren, en op
+   het kruispunt staat een kruis. Er is één hoofdsleutel die
+   alles opent, en er zijn deuren waar bewust geen sleutel voor
+   is. Het document is niet mooi bedoeld en het is toch het
+   helderste stuk papier in de bouw: iedereen begrijpt in tien
+   seconden wat hij wel en niet open krijgt.
+
+   Elke oefenkaart ter wereld doet de helft daarvan. Ze noemt de
+   sleutels — bruggetje, tenenstand, één been — en verzwijgt de
+   deuren. De patiënt krijgt drie sleutels in de hand en mag
+   zelf raden welke sloten erbij horen. Dan is “therapietrouw”
+   geen karaktereigenschap meer maar een ontwerpfout: niemand
+   draagt sleutels bij zich waarvan hij de deur niet kent.
+
+   DUS: op deze kaart staan eerst de DEUREN, met de woorden van
+   de patiënt zelf. De trap naar boven. Op de fiets stappen. De
+   kleinzoon van veertien kilo optillen. Pas daarna komen de
+   sleutels, en elke sleutel draagt zijn eigen BAARD — het
+   getande profiel dat een sleutel herkenbaar maakt zonder dat
+   er een woord bij hoeft. Onderaan staat de kruiskaart: welke
+   sleutel opent welke deur.
+
+   DE HOOFDSLEUTEL. In elk sluitplan zit er één die alles opent.
+   Hier is dat de oefening die onder alle deuren ligt, en die
+   krijgt de meeste beurten — niet omdat hij het zwaarst is,
+   maar omdat hij het meeste opent.
+
+   DE DEUR ZONDER KRUIS. Er staat één deur op het vel waar nog
+   geen enkele sleutel bij past. Die blijft gedrukt, met een
+   lege kolom. Een deur die je nog niet open krijgt is geen
+   verzwegen deur — het is de reden dat er over zes weken een
+   nieuwe sleutel bij komt.
+
+   VORM. De werkbank van de slotenmaker: geborsteld staal,
+   nikkel, blauwzwart, meetlijnen en boorpunten. Eén kleur die
+   niet van metaal is — het vermiljoen van het kruis op de
+   kruiskaart, want het kruis is het enige dat er echt toe doet.
+
+   HET ANKER. Op papier wordt alles zwart op wit. De baarden
+   staan in lijn getekend op 18 mm hoog, de deuren in 5,5 mm
+   vet, de zinnen in 3,8 mm schreef, en de kruiskaart onderaan
+   heeft vakjes van 9 mm — leesbaar op armlengte, ook als het
+   kruis met een balpen bijgezet wordt.
+   ============================================================ */
+
+:root{
+  --staal:#10161a;
+  --staal-2:#19232a;
+  --staal-3:#243138;
+  --lijn-d:#31404a;
+  --licht:#e9eef0;
+  --nikkel:#9fadb5;
+  --nikkel-d:#6d7c85;
+  --papier:#eef1f2;
+  --papier-2:#e0e6e8;
+  --wit:#fff;
+  --inkt:#101619;
+  --inkt-2:#3a464c;
+  --grijs:#697881;
+  --vuur:#cf3b21;          /* het kruis */
+  --vuur-l:#e8613f;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --serif:Charter,"Iowan Old Style",Georgia,serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:15px; --s4:26px; --s5:44px; --s6:74px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font:17px/1.62 var(--sans);color:var(--inkt-2);background:var(--papier)}
+img{max-width:100%;display:block}
+a{color:var(--vuur)}
+:focus-visible{outline:2.5px solid var(--vuur);outline-offset:3px}
+
+.binnen{max-width:1140px;margin:0 auto;padding:0 22px}
+.scherm{padding:var(--s6) 0}
+.scherm.diep{background:var(--papier-2);border-top:1px solid #d2dade;border-bottom:1px solid #d2dade}
+.scherm.wit{background:var(--wit);border-bottom:1px solid #d2dade}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  background:var(--staal);color:var(--licht);padding:11px 22px;
+  border-bottom:2px solid var(--vuur);font:500 13.5px/1 var(--sans)}
+.labbalk .nr{font:600 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--vuur-l);
+  border:1px solid var(--lijn-d);padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:var(--nikkel);text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--vuur)}
+.labbalk a.terug{color:var(--vuur-l)}
+@media (max-width:720px){.labbalk{flex-wrap:wrap;gap:10px;font-size:12.5px}}
+
+/* ---------- de sleutel: bow + baard ---------- */
+.sleutel{display:flex;align-items:center;gap:0}
+.sl-bow{width:44px;height:44px;border:3px solid currentColor;border-radius:50%;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  font:700 16px/1 var(--sans);position:relative;z-index:2}
+.sl-hals{width:16px;height:13px;background:currentColor;flex:none;margin-left:-3px}
+.sl-baard{height:30px;flex:1;background:currentColor;min-width:90px}
+/* elk profiel is een eigen baard — herkenbaar zonder woorden */
+.baard-1{clip-path:polygon(0 0,100% 0,100% 55%,86% 55%,86% 100%,72% 100%,72% 42%,
+  58% 42%,58% 88%,44% 88%,44% 50%,30% 50%,30% 100%,0 100%)}
+.baard-2{clip-path:polygon(0 0,100% 0,100% 88%,86% 88%,86% 45%,72% 45%,72% 72%,
+  58% 72%,58% 38%,44% 38%,44% 95%,30% 95%,30% 100%,0 100%)}
+.baard-3{clip-path:polygon(0 0,100% 0,100% 42%,86% 42%,86% 78%,72% 78%,72% 95%,
+  58% 95%,58% 52%,44% 52%,44% 46%,30% 46%,30% 100%,0 100%)}
+.baard-h{clip-path:polygon(0 0,100% 0,100% 62%,90% 62%,90% 100%,80% 100%,80% 62%,
+  70% 62%,70% 100%,60% 100%,60% 62%,50% 62%,50% 100%,40% 100%,40% 62%,
+  30% 62%,30% 100%,0 100%)}
+
+/* ---------- 1 · landing ---------- */
+#landing{background:var(--staal);color:#b9c6cd;
+  background-image:linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+  background-size:34px 100%}
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .vlag{width:27px;height:27px;background:var(--vuur);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--sans)}
+.merkregel .naam{font:600 15px/1 var(--sans);color:#fff}
+.merkregel .pad{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--nikkel-d)}
+
+#landing h1{font:700 clamp(36px,5.3vw,62px)/1.02 var(--sans);color:#fff;letter-spacing:-.042em;max-width:16ch}
+#landing h1 em{font-style:normal;color:var(--vuur-l)}
+#landing .lead{font-size:18.5px;line-height:1.66;color:#a9b7bf;margin-top:var(--s4);max-width:56ch}
+#landing .lead b{color:#fff;font-weight:600}
+
+.deurenrij{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);margin-top:var(--s5)}
+@media (max-width:900px){.deurenrij{grid-template-columns:1fr}}
+.deur{background:var(--staal-2);border:1px solid var(--lijn-d);border-left:4px solid var(--vuur);
+  padding:var(--s3) var(--s3) var(--s4)}
+.deur u{display:block;text-decoration:none;font:600 10px/1 var(--mono);letter-spacing:.17em;color:var(--nikkel-d)}
+.deur b{display:block;font:600 20px/1.22 var(--sans);color:#fff;letter-spacing:-.025em;margin-top:10px}
+.deur span{display:block;font:400 15px/1.5 var(--serif);color:#93a3ab;margin-top:9px}
+.deur.dicht{border-left-color:var(--nikkel-d);opacity:.72}
+.deur.dicht b{color:var(--nikkel)}
+
+.sleutelbord{margin-top:var(--s6);border-top:1px solid var(--lijn-d);padding-top:var(--s5);
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:900px){.sleutelbord{grid-template-columns:1fr;gap:var(--s4)}}
+.sleutelbord .kop{color:var(--nikkel);margin-bottom:var(--s3)}
+.sleutelbord h3{font:600 10.5px/1 var(--mono);letter-spacing:.19em;color:var(--vuur-l)}
+.sleutelbord h4{font:600 21px/1.22 var(--sans);color:#fff;margin:11px 0 9px;letter-spacing:-.027em}
+.sleutelbord p{font-size:16px;color:#9dabb3}
+.sleutelbord p b{color:#e2e9ec;font-weight:600}
+
+/* ---------- schermkoppen ---------- */
+.schermkop{max-width:72ch;margin-bottom:var(--s5)}
+.schermkop b{display:inline-block;font:600 10.5px/1 var(--mono);letter-spacing:.2em;
+  color:var(--vuur);border-bottom:2px solid var(--vuur);padding-bottom:6px;margin-bottom:var(--s3)}
+.schermkop h2{font:700 clamp(25px,3.3vw,36px)/1.13 var(--sans);color:var(--inkt);letter-spacing:-.035em}
+.schermkop p{margin-top:var(--s3);font-size:17px;color:var(--inkt-2)}
+.schermkop p em{font-style:italic;color:var(--vuur)}
+
+/* ---------- 2 · kiezer: eerst de deur, dan de sleutel ---------- */
+.werkbank{background:var(--wit);border:1px solid #d2dade;border-top:3px solid var(--staal)}
+.wbkop{padding:var(--s4);border-bottom:1px solid #d2dade;display:flex;flex-wrap:wrap;
+  align-items:baseline;gap:var(--s3)}
+.wbkop h3{font:700 19px/1.2 var(--sans);color:var(--inkt);letter-spacing:-.028em}
+.wbkop p{font:500 11.5px/1 var(--mono);letter-spacing:.11em;color:var(--grijs);margin-left:auto}
+
+.paar{display:grid;grid-template-columns:1fr 1.15fr;gap:var(--s4);
+  padding:var(--s4);border-bottom:1px solid var(--papier-2);align-items:center}
+@media (max-width:900px){.paar{grid-template-columns:1fr;gap:var(--s3)}}
+.paar:last-child{border-bottom:0}
+.paar .vraag{border-left:4px solid var(--vuur);padding-left:var(--s3)}
+.paar .vraag u{display:block;text-decoration:none;font:600 10px/1 var(--mono);
+  letter-spacing:.16em;color:var(--grijs)}
+.paar .vraag b{display:block;font:700 24px/1.18 var(--sans);color:var(--inkt);
+  letter-spacing:-.032em;margin-top:9px}
+.paar .vraag span{display:block;font:400 16px/1.5 var(--serif);color:var(--inkt-2);margin-top:9px}
+
+.sleutelkaart{background:var(--papier);border:1px solid #d2dade;padding:var(--s3)}
+.sleutelkaart .sleutel{color:var(--staal);margin-bottom:var(--s3)}
+.skkop{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.skkop h4{font:600 18.5px/1.22 var(--sans);color:var(--inkt);letter-spacing:-.024em}
+.skkop .dosis{margin-left:auto;font:600 11px/1 var(--mono);letter-spacing:.1em;
+  color:var(--vuur);border:1px solid var(--vuur);padding:5px 8px}
+.sleutelkaart .zin{font-size:15.5px;color:var(--inkt-2);margin-top:9px}
+.sleutelkaart .bd{width:74px;flex:none;background:#fff;border:1px solid #d2dade;padding:5px}
+.skbody{display:flex;gap:var(--s3);align-items:flex-start}
+@media (max-width:560px){.skbody .bd{display:none}}
+
+.hoofdsleutel{background:var(--staal);color:#c3d0d6;padding:var(--s4);margin-top:var(--s5);
+  display:grid;grid-template-columns:auto 1fr;gap:var(--s4);align-items:center}
+@media (max-width:760px){.hoofdsleutel{grid-template-columns:1fr}}
+.hoofdsleutel .sleutel{color:var(--vuur-l);width:230px}
+.hoofdsleutel h3{font:700 22px/1.2 var(--sans);color:#fff;letter-spacing:-.03em;margin-bottom:10px}
+.hoofdsleutel p{font-size:16.5px;max-width:62ch}
+.hoofdsleutel p b{color:#fff;font-weight:600}
+
+/* ---------- 3 · cliëntkaart: de kruiskaart ---------- */
+.kruiskaart{border:1px solid #d2dade;background:var(--wit);overflow-x:auto}
+table.kk{border-collapse:collapse;width:100%;min-width:720px}
+table.kk th,table.kk td{border:1px solid #d2dade;padding:0}
+table.kk thead th{background:var(--staal);color:#fff;vertical-align:bottom;
+  padding:var(--s3) 10px;font:600 13.5px/1.28 var(--sans);letter-spacing:-.012em;
+  text-align:left;width:118px}
+table.kk thead th.hoek{width:290px;background:var(--staal-2);
+  font:600 10.5px/1.4 var(--mono);letter-spacing:.13em;color:var(--nikkel)}
+table.kk thead th u{display:block;text-decoration:none;font:600 10px/1 var(--mono);
+  letter-spacing:.14em;color:var(--nikkel-d);margin-bottom:7px}
+table.kk thead th.leeg{background:var(--staal-3)}
+table.kk thead th.leeg span{display:block;font:400 11.5px/1.35 var(--serif);
+  color:var(--nikkel);margin-top:6px}
+
+table.kk tbody th{text-align:left;padding:var(--s3);background:var(--papier);vertical-align:middle}
+.rijnaam{display:flex;align-items:center;gap:12px}
+.rijnaam .sleutel{color:var(--staal);width:96px;flex:none}
+.rijnaam .sl-bow{width:30px;height:30px;border-width:2px;font-size:12px}
+.rijnaam .sl-hals{width:9px;height:9px}
+.rijnaam .sl-baard{height:20px;min-width:44px}
+.rijnaam b{font:600 16px/1.25 var(--sans);color:var(--inkt);letter-spacing:-.022em}
+.rijnaam b span{display:block;font:500 11px/1 var(--mono);letter-spacing:.1em;
+  color:var(--grijs);margin-top:5px}
+table.kk tbody td{text-align:center;height:62px;font:700 26px/1 var(--sans);color:var(--vuur)}
+table.kk tbody td.geen{color:#c9d2d6;font-size:19px}
+table.kk tr.master th{background:var(--staal);color:#fff}
+table.kk tr.master .rijnaam{color:var(--vuur-l)}
+table.kk tr.master .rijnaam b{color:#fff}
+table.kk tr.master .rijnaam b span{color:var(--nikkel)}
+table.kk tr.master td{background:#fdf3f0}
+
+.kkvoet{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-top:var(--s4)}
+@media (max-width:820px){.kkvoet{grid-template-columns:1fr}}
+.kkvoet div{border-top:2px solid var(--staal);padding-top:var(--s3)}
+.kkvoet.rood div:last-child{border-top-color:var(--vuur)}
+.kkvoet h4{font:700 18px/1.25 var(--sans);color:var(--inkt);letter-spacing:-.025em;margin-bottom:9px}
+.kkvoet p{font-size:16px}
+.kkvoet p b{color:var(--inkt);font-weight:600}
+
+/* ---------- 4 · printkaart ---------- */
+.printuitleg{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-bottom:var(--s5)}
+@media (max-width:900px){.printuitleg{grid-template-columns:1fr}}
+.printuitleg h4{font:600 10.5px/1.35 var(--mono);letter-spacing:.13em;color:var(--inkt);
+  border-top:2px solid var(--staal);padding-top:9px;margin-bottom:8px}
+.printuitleg p{font-size:15.5px}
+.printuitleg p b{color:var(--inkt);font-weight:600}
+
+.bladhouder{background:var(--staal);padding:var(--s5) var(--s4)}
+.bladschaal{overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;
+  box-shadow:0 24px 60px rgba(0,0,0,.5);transform-origin:top left}
+.blad .rand{padding:10mm 12mm 6mm}
+
+.b-kop{display:flex;justify-content:space-between;align-items:flex-start;gap:8mm;
+  border-bottom:1.5mm solid #000;padding-bottom:2.4mm}
+.b-kop h1{font:700 9.2mm/1 var(--sans);letter-spacing:-.04em;color:#000}
+.b-kop .sub{font:400 3.5mm/1.4 var(--sans);margin-top:2mm}
+.b-kop .sub b{font-weight:700}
+.b-nr{border:.5mm solid #000;padding:2.2mm 3mm;text-align:right;flex:none}
+.b-nr u{display:block;text-decoration:none;font:700 2.6mm/1 var(--sans);letter-spacing:.15em}
+.b-nr b{display:block;font:700 5.4mm/1 var(--sans);margin-top:1.4mm;letter-spacing:-.02em}
+
+.b-deuren{margin-top:2.4mm;padding-bottom:2.2mm;border-bottom:.3mm solid #000}
+.b-deuren u{display:block;text-decoration:none;font:700 2.9mm/1 var(--sans);
+  letter-spacing:.15em;margin-bottom:2.2mm}
+.b-deurrij{display:grid;grid-template-columns:repeat(5,1fr);gap:3mm}
+.b-deur{border-left:.8mm solid #000;padding-left:2.2mm}
+.b-deur i{display:block;font-style:normal;font:700 4mm/1 var(--sans)}
+.b-deur b{display:block;font:700 4mm/1.2 var(--sans);letter-spacing:-.022em;margin-top:1.3mm}
+.b-deur.leeg{border-left-style:dashed}
+.b-deur.leeg b{font-weight:400;font-style:italic;font-family:var(--serif)}
+
+.b-sleutels{margin-top:3mm}
+.b-sl{border-bottom:.3mm solid #000;padding-bottom:2.4mm;margin-bottom:2.4mm}
+.b-slkop{display:grid;grid-template-columns:18mm 26mm 1fr 26mm;gap:3.5mm;align-items:start}
+.b-slkop .bd{border:.4mm solid #000;padding:.8mm}
+.b-slkop .bd img{width:100%;filter:grayscale(1) contrast(1.4)}
+.b-baard{color:#000;height:15mm}
+.b-baard .sl-bow{width:11mm;height:11mm;border-width:.9mm;font:700 4.4mm/1 var(--sans)}
+.b-baard .sl-hals{width:3.4mm;height:3.4mm;margin-left:-.9mm}
+.b-baard .sl-baard{height:8mm;min-width:11mm}
+.b-slkop h2{font:700 5.3mm/1.13 var(--sans);letter-spacing:-.026em}
+.b-slkop .zin{font:400 3.8mm/1.4 var(--serif);margin-top:1.6mm}
+.b-slkop .opent{font:700 3.1mm/1.3 var(--sans);margin-top:1.5mm}
+.b-dosis{border:.5mm solid #000;text-align:center;padding:1.8mm 1mm}
+.b-dosis b{display:block;font:700 6.4mm/1 var(--sans)}
+.b-dosis u{display:block;text-decoration:none;font:700 2.5mm/1.2 var(--sans);letter-spacing:.09em;margin-top:1.2mm}
+.b-vakken{display:flex;gap:1.6mm;margin-top:2.6mm}
+.b-vak{width:8.6mm;height:8.6mm;border:.4mm solid #000;position:relative;flex:none}
+.b-vak u{position:absolute;left:.7mm;top:.4mm;text-decoration:none;
+  font:400 2.3mm/1 var(--sans);color:#555}
+
+/* de gedrukte kruiskaart */
+.b-kruis{margin-top:1.6mm}
+.b-kruis u{display:block;text-decoration:none;font:700 2.9mm/1 var(--sans);
+  letter-spacing:.15em;margin-bottom:2mm}
+table.b-kk{border-collapse:collapse;width:100%}
+table.b-kk th,table.b-kk td{border:.3mm solid #000;padding:1.1mm}
+table.b-kk thead th{font:700 3.1mm/1.15 var(--sans);text-align:center;width:16%}
+table.b-kk thead th.hoek{text-align:left;font:700 2.7mm/1.2 var(--sans);letter-spacing:.1em;width:20%}
+table.b-kk tbody th{text-align:left;font:700 3.4mm/1.15 var(--sans)}
+table.b-kk tbody td{text-align:center;font:700 5mm/1 var(--sans);height:7.6mm}
+table.b-kk tbody td.geen{font-weight:400;font-size:3.4mm}
+table.b-kk tr.master th,table.b-kk tr.master td{background:#000;color:#fff}
+
+.b-voet{border-top:1.5mm solid #000;padding-top:2mm;margin-top:2mm;
+  display:grid;grid-template-columns:1fr 48mm;gap:5mm}
+.b-voet p{font:400 3.4mm/1.42 var(--serif)}
+.b-voet p b{font-weight:700}
+.b-praktijk{text-align:right;font:400 3.1mm/1.42 var(--sans)}
+.b-praktijk b{display:block;font-weight:700;font-size:3.5mm}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--staal);color:#93a3ab;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer h4{font:600 10.5px/1 var(--mono);letter-spacing:.18em;color:var(--vuur-l);margin-bottom:var(--s3)}
+footer p{font-size:15.5px}
+footer ul{list-style:none;font-size:15.5px}
+footer li{padding:7px 0;border-bottom:1px solid var(--lijn-d)}
+footer a{color:#c8d3d8}
+
+/* ============================================================
+   PRINT — A4 staand, zwart op wit
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .schermkop,.printuitleg{display:none !important}
+  .scherm{padding:0 !important;background:#fff !important;border:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  .bladhouder{background:#fff !important;border:0 !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 71</span>
+  <strong style="font:700 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Sleutelplan</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="vlag" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 71 · SLEUTELPLAN</span>
+    </div>
+
+    <h1>Niemand wil oefeningen. Mensen willen <em>deuren open</em>.</h1>
+    <p class="lead">Een slotenmaker verkoopt geen sloten; hij tekent een <b>sluitplan</b> — een
+      kruiskaart waarop per sleutel staat welke deur hij opent. Elke oefenkaart doet daar de helft
+      van: ze noemt de sleutels en verzwijgt de sloten. Op dit blad staan eerst de deuren, in de
+      woorden van de patiënt, en pas daarna de sleutels die erbij horen.</p>
+
+    <div class="deurenrij">
+      <div class="deur">
+        <u>DEUR 1</u>
+        <b>De trap naar boven, zonder aan de leuning te hangen</b>
+        <span>“Ik kom er wel, maar ik trek mezelf omhoog aan die leuning en boven moet ik even
+          staan.”</span>
+      </div>
+      <div class="deur">
+        <u>DEUR 3</u>
+        <b>De kleinzoon van veertien kilo optillen</b>
+        <span>“Hij steekt zijn armen omhoog en ik zeg dat oma even moet zitten. Dat is de deur die
+          ik terug wil.”</span>
+      </div>
+      <div class="deur dicht">
+        <u>DEUR 5 · GEEN SLEUTEL</u>
+        <b>Fietsen naar de markt op zaterdag</b>
+        <span>Hier past voorlopig geen enkele sleutel. Die deur blijft toch gedrukt: hij is de reden
+          dat er over zes weken een sleutel bij komt.</span>
+      </div>
+    </div>
+
+    <div class="sleutelbord">
+      <div>
+        <div class="kop"><div class="sleutel" style="color:var(--vuur-l);max-width:190px">
+          <span class="sl-bow">1</span><span class="sl-hals"></span><span class="sl-baard baard-1"></span>
+        </div></div>
+        <h3>Pijler 01</h3>
+        <h4>De deur staat boven de sleutel</h4>
+        <p>Eerst wat er weer open moet — de trap, de fiets, het kleinkind — en dan pas de oefening.
+          <b>Therapietrouw is geen karaktereigenschap maar een ontwerpfout</b>: niemand draagt
+          sleutels bij zich waarvan hij de deur niet kent.</p>
+      </div>
+      <div>
+        <div class="kop"><div class="sleutel" style="color:var(--nikkel);max-width:190px">
+          <span class="sl-bow">2</span><span class="sl-hals"></span><span class="sl-baard baard-2"></span>
+        </div></div>
+        <h3>Pijler 02</h3>
+        <h4>Elke oefening krijgt een baard</h4>
+        <p>Een getand profiel dat u herkent zonder te lezen — op het scherm, op het blad en op het
+          strookje bij de trap. <b>Drie sleutels blijven uit elkaar te houden ook als de naam
+          vervaagt</b>, en dat is precies wat een sleutelbos moet kunnen.</p>
+      </div>
+      <div>
+        <div class="kop"><div class="sleutel" style="color:var(--nikkel);max-width:190px">
+          <span class="sl-bow">✳</span><span class="sl-hals"></span><span class="sl-baard baard-h"></span>
+        </div></div>
+        <h3>Pijler 03</h3>
+        <h4>Eén hoofdsleutel, en één lege kolom</h4>
+        <p>In elk sluitplan zit er één die alles opent; die krijgt de meeste beurten — niet omdat hij
+          het zwaarst is, maar omdat hij het <b>meeste opent</b>. En er is één deur zonder kruis,
+          zichtbaar leeg, want een gesloten deur verzwijgen is erger dan hem noemen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm diep" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Kiezer</b>
+      <h2>Het gesprek loopt van rechts naar links: eerst het slot, dan de sleutel</h2>
+      <p>De therapeut begint niet bij de oefeningenlijst maar bij de vraag <em>welke deur zit dicht?</em>
+        Mevrouw Ferwerda noemt er vijf; ze worden opgeschreven in haar eigen woorden, want “functionele
+        mobiliteit” opent geen enkele deur. Pas daarna zoekt de therapeut het passende profiel — en bij
+        één deur past er vandaag niets, en dat wordt hardop gezegd.</p>
+    </div>
+
+    <div class="werkbank">
+      <div class="wbkop">
+        <h3>Sluitplan 44-108 — mevrouw G. Ferwerda, 74 · heup rechts, zes weken na de operatie</h3>
+        <p>OPGEMAAKT 2 SEPT · FYSIOTHERAPIE WILHELMINAPARK</p>
+      </div>
+
+      <div class="paar">
+        <div class="vraag">
+          <u>DEUR 1</u>
+          <b>De trap naar boven, zonder aan de leuning te hangen</b>
+          <span>“Ik kom er wel, maar ik trek mezelf omhoog aan die leuning en boven moet ik even
+            staan.”</span>
+        </div>
+        <div class="sleutelkaart">
+          <div class="sleutel" style="max-width:210px">
+            <span class="sl-bow">1</span><span class="sl-hals"></span><span class="sl-baard baard-1"></span>
+          </div>
+          <div class="skkop">
+            <h4>Sleutel 1 · Opstaan uit de stoel, zonder handen</h4>
+            <span class="dosis">6× · 2 KEER PER DAG</span>
+          </div>
+          <div class="skbody">
+            <div class="bd"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/></div>
+            <p class="zin">Dezelfde beweging als de eerste trede, alleen zonder trede. Voeten plat,
+              armen gekruist, rustig omhoog en rustig terug. Wie zes keer los uit een stoel komt, hoeft
+              zich boven aan de trap niet meer op te trekken.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="paar">
+        <div class="vraag">
+          <u>DEUR 2</u>
+          <b>Met de boodschappentas van de auto naar de voordeur</b>
+          <span>“Twintig meter, en halverwege zet ik hem neer. Niet omdat hij zwaar is — omdat ik
+            scheef ga lopen.”</span>
+        </div>
+        <div class="sleutelkaart">
+          <div class="sleutel" style="max-width:210px">
+            <span class="sl-bow">2</span><span class="sl-hals"></span><span class="sl-baard baard-2"></span>
+          </div>
+          <div class="skkop">
+            <h4>Sleutel 2 · Op één been staan, hand bij de leuning</h4>
+            <span class="dosis">9 TEL · 3 KEER PER DAG</span>
+          </div>
+          <div class="skbody">
+            <div class="bd"><img src="/images/seated-chair/one-leg-standing-line-v1.png" alt="Op één been staan"/></div>
+            <p class="zin">Lopen met een tas is een reeks van korte momenten op één been. Sta achter
+              een stoel, vingertoppen los op de leuning, en houd de heup stil. Als het staan rustig
+              wordt, wordt het lopen recht.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="paar">
+        <div class="vraag">
+          <u>DEUR 3</u>
+          <b>De kleinzoon van veertien kilo optillen</b>
+          <span>“Hij steekt zijn armen omhoog en ik zeg dat oma even moet zitten. Dat is de deur die
+            ik terug wil.”</span>
+        </div>
+        <div class="sleutelkaart">
+          <div class="sleutel" style="max-width:210px">
+            <span class="sl-bow">3</span><span class="sl-hals"></span><span class="sl-baard baard-3"></span>
+          </div>
+          <div class="skkop">
+            <h4>Sleutel 3 · Bruggetje maken op de grond</h4>
+            <span class="dosis">8× · 1 KEER PER DAG</span>
+          </div>
+          <div class="skbody">
+            <div class="bd"><img src="/images/onderste-extremiteit/glute-bridges-line-v1.png" alt="Bruggetje maken"/></div>
+            <p class="zin">Tillen begint niet in de armen maar in de bilspieren en de romp. Op de rug,
+              knieën gebogen, billen omhoog tot uw lichaam een schuine lijn maakt. Dit is de sleutel
+              die het langst duurt en het meest oplevert.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="paar">
+        <div class="vraag" style="border-left-color:var(--grijs)">
+          <u>DEUR 5 · VANDAAG GEEN SLEUTEL</u>
+          <b>Fietsen naar de markt op zaterdag</b>
+          <span>“Opstappen durf ik niet. Dat is niet de spier, dat is het opzwaaien van dat been over
+            het zadel.”</span>
+        </div>
+        <div class="sleutelkaart" style="background:var(--wit);border-style:dashed">
+          <div class="sleutel" style="max-width:210px;color:#c3ccd0">
+            <span class="sl-bow">?</span><span class="sl-hals"></span><span class="sl-baard baard-h"></span>
+          </div>
+          <div class="skkop">
+            <h4 style="color:var(--grijs)">Nog geen passend profiel</h4>
+            <span class="dosis" style="color:var(--grijs);border-color:var(--grijs)">HERZIEN 14 OKT</span>
+          </div>
+          <p class="zin">Het opzwaaien van het been vraagt meer heupbeweging dan er zes weken na de
+            operatie is. Er wordt vandaag geen sleutel bijgemaakt die tóch niet past — de deur blijft
+            gedrukt <b>mét lege kolom</b>, en op 14 oktober wordt hij opnieuw geprobeerd.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hoofdsleutel">
+      <div class="sleutel">
+        <span class="sl-bow">✳</span><span class="sl-hals"></span><span class="sl-baard baard-h"></span>
+      </div>
+      <div>
+        <h3>Sleutel 1 is de hoofdsleutel: hij opent er vier van de vijf</h3>
+        <p>Opstaan uit de stoel zit onder de trap, onder de tas, onder het tillen en onder het uit bad
+          komen. Daarom staat hij bovenaan en krijgt hij twee beurten per dag. <b>Niet omdat hij het
+          zwaarst is — omdat hij het meeste opent.</b> Als er van de drie sleutels maar één gebruikt
+          wordt, laat het deze zijn; dat staat er met zoveel woorden bij, want een sluitplan dat
+          verzwijgt welke sleutel de belangrijkste is, is geen plan maar een sleutelbos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm wit" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Cliëntkaart</b>
+      <h2>De kruiskaart: rijen zijn sleutels, kolommen zijn deuren</h2>
+      <p>Dit is het document van de slotenmaker, één op één overgenomen. Niet mooi bedoeld en toch
+        het helderste papier in de bouw: <em>in tien seconden weet u wat u open krijgt.</em> De laatste
+        kolom heeft geen enkel kruis, en dat is geen fout in de tabel — dat is de eerlijkste kolom
+        van het blad.</p>
+    </div>
+
+    <div class="kruiskaart">
+      <table class="kk">
+        <thead>
+          <tr>
+            <th class="hoek">SLUITPLAN 44-108<br/>MEVR. G. FERWERDA</th>
+            <th><u>DEUR 1</u>De trap naar boven</th>
+            <th><u>DEUR 2</u>Tas van de auto naar de deur</th>
+            <th><u>DEUR 3</u>Kleinzoon optillen</th>
+            <th><u>DEUR 4</u>In en uit bad stappen</th>
+            <th class="leeg"><u>DEUR 5</u>Fietsen naar de markt
+              <span>Nog geen sleutel. Opnieuw proberen op 14 oktober.</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="master">
+            <th><div class="rijnaam">
+              <span class="sleutel"><span class="sl-bow">1</span><span class="sl-hals"></span><span class="sl-baard baard-1"></span></span>
+              <b>Opstaan uit de stoel<span>HOOFDSLEUTEL · 6× · 2×/DAG</span></b>
+            </div></th>
+            <td>✕</td><td>✕</td><td>✕</td><td>✕</td><td class="geen">—</td>
+          </tr>
+          <tr>
+            <th><div class="rijnaam">
+              <span class="sleutel"><span class="sl-bow">2</span><span class="sl-hals"></span><span class="sl-baard baard-2"></span></span>
+              <b>Op één been staan<span>9 TEL · 3×/DAG</span></b>
+            </div></th>
+            <td>✕</td><td>✕</td><td class="geen">—</td><td>✕</td><td class="geen">—</td>
+          </tr>
+          <tr>
+            <th><div class="rijnaam">
+              <span class="sleutel"><span class="sl-bow">3</span><span class="sl-hals"></span><span class="sl-baard baard-3"></span></span>
+              <b>Bruggetje maken<span>8× · 1×/DAG</span></b>
+            </div></th>
+            <td class="geen">—</td><td>✕</td><td>✕</td><td class="geen">—</td><td class="geen">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="kkvoet rood">
+      <div>
+        <h4>Een streepje is geen mislukking, een lege kolom wel een gesprek</h4>
+        <p>Deur 4 heeft twee kruisen en gaat waarschijnlijk het eerst open; deur 3 heeft er ook twee,
+          maar de zwaarste sleutel zit erbij. <b>Wat de tabel niet doet, is scoren.</b> Er staat geen
+          percentage, geen voortgangsbalk en geen vinkje bij een deur — een deur is open of niet, en
+          dat merkt mevrouw Ferwerda zelf eerder dan het blad.</p>
+      </div>
+      <div>
+        <h4>De lege kolom blijft gedrukt tot er een sleutel voor is</h4>
+        <p>Fietsen staat op het blad zonder dat er iets bij past. Dat voelt onaf en is het ook —
+          <b>daarom staat het er</b>. Een deur die je verzwijgt komt in geen enkel consult meer terug;
+          een deur met een lege kolom is de eerste vraag op 14 oktober, en dat is precies wat een
+          sluitplan hoort te doen: laten zien wat er nog niet open is.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Printkaart</b>
+      <h2>Het sluitplan op A4: deuren boven, sleutels in het midden, kruiskaart onderaan</h2>
+      <p>Zwart op wit, geen enkele kleur nodig. De baarden zijn in lijn getekend en blijven op
+        armlengte herkenbaar; de kruiskaart onderaan heeft vakjes van negen millimeter, groot genoeg
+        om er met een balpen zelf een kruis bij te zetten als er een deur opengaat.</p>
+    </div>
+
+    <div class="printuitleg">
+      <div>
+        <h4>DE DEUREN STAAN BOVENAAN</h4>
+        <p>Vijf stuks, in de woorden van mevrouw Ferwerda zelf, met een dikke streep ervoor. Wie
+          alleen de bovenste vier centimeter leest, heeft <b>het belangrijkste al gelezen</b>: dit
+          blad gaat over de trap, de tas, het kleinkind en het bad.</p>
+      </div>
+      <div>
+        <h4>DE BAARD IS DE HERKENNING</h4>
+        <p>Elke sleutel heeft zijn eigen getande profiel, 18 mm hoog. Op het blad, op het scherm en
+          op het strookje bij de trap is het dezelfde vorm — <b>u herkent hem zonder te lezen</b>,
+          ook als de naam u even ontschiet.</p>
+      </div>
+      <div>
+        <h4>DE LEGE KOLOM WORDT MEEGEDRUKT</h4>
+        <p>Deur 5 staat er met een gestippelde streep en vijf keer een liggend streepje in de tabel.
+          Geen enkel vakje is weggelaten. <b>Onaf is de eerlijkste stand van zaken</b> en hoort dus
+          gewoon uit de printer te komen.</p>
+      </div>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="b-kop">
+              <div>
+                <h1>Sluitplan</h1>
+                <p class="sub"><b>Mevrouw G. Ferwerda</b> · heup rechts, zes weken na de operatie<br/>
+                  Drie sleutels, vijf deuren. Zet een streepje in het vakje als u een sleutel gebruikt
+                  hebt.</p>
+              </div>
+              <div class="b-nr">
+                <u>SLUITPLAN</u>
+                <b>44-108</b>
+              </div>
+            </div>
+
+            <div class="b-deuren">
+              <u>DE DEUREN DIE OPEN MOETEN</u>
+              <div class="b-deurrij">
+                <div class="b-deur"><i>1</i><b>De trap naar boven, zonder aan de leuning te hangen</b></div>
+                <div class="b-deur"><i>2</i><b>De boodschappentas van de auto naar de voordeur</b></div>
+                <div class="b-deur"><i>3</i><b>De kleinzoon van veertien kilo optillen</b></div>
+                <div class="b-deur"><i>4</i><b>In en uit bad stappen</b></div>
+                <div class="b-deur leeg"><i>5</i><b>Fietsen naar de markt — hier past nog geen sleutel</b></div>
+              </div>
+            </div>
+
+            <div class="b-sleutels">
+
+              <div class="b-sl">
+                <div class="b-slkop">
+                  <div class="bd"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt=""/></div>
+                  <div class="sleutel b-baard">
+                    <span class="sl-bow">1</span><span class="sl-hals"></span><span class="sl-baard baard-1"></span>
+                  </div>
+                  <div>
+                    <h2>Opstaan uit de stoel, zonder handen</h2>
+                    <p class="zin">Voeten plat op de grond, armen gekruist voor uw borst. Sta rustig
+                      op en ga rustig weer zitten. Stop als het zwaar wordt, niet als het pijn doet.</p>
+                    <p class="opent">HOOFDSLEUTEL — OPENT DEUR 1, 2, 3 EN 4</p>
+                  </div>
+                  <div class="b-dosis"><b>6×</b><u>TWEE KEER<br/>PER DAG</u></div>
+                </div>
+                <div class="b-vakken">
+                  <span class="b-vak"><u>ma</u></span><span class="b-vak"><u>di</u></span>
+                  <span class="b-vak"><u>wo</u></span><span class="b-vak"><u>do</u></span>
+                  <span class="b-vak"><u>vr</u></span><span class="b-vak"><u>za</u></span>
+                  <span class="b-vak"><u>zo</u></span><span class="b-vak"><u>ma</u></span>
+                  <span class="b-vak"><u>di</u></span><span class="b-vak"><u>wo</u></span>
+                  <span class="b-vak"><u>do</u></span><span class="b-vak"><u>vr</u></span>
+                  <span class="b-vak"><u>za</u></span><span class="b-vak"><u>zo</u></span>
+                </div>
+              </div>
+
+              <div class="b-sl">
+                <div class="b-slkop">
+                  <div class="bd"><img src="/images/seated-chair/one-leg-standing-line-v1.png" alt=""/></div>
+                  <div class="sleutel b-baard">
+                    <span class="sl-bow">2</span><span class="sl-hals"></span><span class="sl-baard baard-2"></span>
+                  </div>
+                  <div>
+                    <h2>Op één been staan, hand bij de leuning</h2>
+                    <p class="zin">Achter een stoel, vingertoppen los op de leuning. Sta op uw
+                      rechterbeen en tel rustig tot negen. Stop zodra de heup gaat wiebelen.</p>
+                    <p class="opent">OPENT DEUR 1, 2 EN 4</p>
+                  </div>
+                  <div class="b-dosis"><b>9</b><u>TELLEN<br/>3×&nbsp;PER DAG</u></div>
+                </div>
+                <div class="b-vakken">
+                  <span class="b-vak"><u>ma</u></span><span class="b-vak"><u>di</u></span>
+                  <span class="b-vak"><u>wo</u></span><span class="b-vak"><u>do</u></span>
+                  <span class="b-vak"><u>vr</u></span><span class="b-vak"><u>za</u></span>
+                  <span class="b-vak"><u>zo</u></span><span class="b-vak"><u>ma</u></span>
+                  <span class="b-vak"><u>di</u></span><span class="b-vak"><u>wo</u></span>
+                  <span class="b-vak"><u>do</u></span><span class="b-vak"><u>vr</u></span>
+                  <span class="b-vak"><u>za</u></span><span class="b-vak"><u>zo</u></span>
+                </div>
+              </div>
+
+              <div class="b-sl">
+                <div class="b-slkop">
+                  <div class="bd"><img src="/images/onderste-extremiteit/glute-bridges-line-v1.png" alt=""/></div>
+                  <div class="sleutel b-baard">
+                    <span class="sl-bow">3</span><span class="sl-hals"></span><span class="sl-baard baard-3"></span>
+                  </div>
+                  <div>
+                    <h2>Bruggetje maken op de grond</h2>
+                    <p class="zin">Op de rug, knieën gebogen, voeten plat. Til de billen op tot uw
+                      lichaam een schuine lijn maakt en zak rustig terug. Rustig telt zwaarder dan hoog.</p>
+                    <p class="opent">OPENT DEUR 2 EN 3 — DE ZWAARSTE SLEUTEL</p>
+                  </div>
+                  <div class="b-dosis"><b>8×</b><u>EEN KEER<br/>PER DAG</u></div>
+                </div>
+                <div class="b-vakken">
+                  <span class="b-vak"><u>ma</u></span><span class="b-vak"><u>di</u></span>
+                  <span class="b-vak"><u>wo</u></span><span class="b-vak"><u>do</u></span>
+                  <span class="b-vak"><u>vr</u></span><span class="b-vak"><u>za</u></span>
+                  <span class="b-vak"><u>zo</u></span><span class="b-vak"><u>ma</u></span>
+                  <span class="b-vak"><u>di</u></span><span class="b-vak"><u>wo</u></span>
+                  <span class="b-vak"><u>do</u></span><span class="b-vak"><u>vr</u></span>
+                  <span class="b-vak"><u>za</u></span><span class="b-vak"><u>zo</u></span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="b-kruis">
+              <u>KRUISKAART — WELKE SLEUTEL OPENT WELKE DEUR</u>
+              <table class="b-kk">
+                <thead>
+                  <tr>
+                    <th class="hoek">SLEUTEL \ DEUR</th>
+                    <th>1 · Trap</th><th>2 · Tas</th><th>3 · Tillen</th>
+                    <th>4 · Bad</th><th>5 · Fiets</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="master">
+                    <th>1 · Opstaan</th>
+                    <td>✕</td><td>✕</td><td>✕</td><td>✕</td><td class="geen">—</td>
+                  </tr>
+                  <tr>
+                    <th>2 · Eén been</th>
+                    <td>✕</td><td>✕</td><td class="geen">—</td><td>✕</td><td class="geen">—</td>
+                  </tr>
+                  <tr>
+                    <th>3 · Bruggetje</th>
+                    <td class="geen">—</td><td>✕</td><td>✕</td><td class="geen">—</td><td class="geen">—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="b-voet">
+              <p><b>Krijgt u een deur open? Zet er zelf een kruis bij, met de datum.</b> Dat is het
+                enige wat op dit blad bijgehouden hoeft te worden. Deur 5 heeft nog geen sleutel; die
+                proberen we opnieuw op 14 oktober. Pijn die na een uur niet zakt: niet doorzetten,
+                wel bellen.</p>
+              <div class="b-praktijk">
+                <b>Fysiotherapie Wilhelminapark</b>
+                J. Meppelink · Utrecht<br/>
+                030 – 232 41 08<br/>
+                Volgende afspraak: di 14 okt, 09:20
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div>
+      <h4>DE RICHTING</h4>
+      <p>Het sluitplan van de slotenmaker koppelt sleutels aan sloten en zegt hardop welke deur nog
+        dicht blijft. Een oefenkaart noemt alleen de sleutels. Dit concept draait de volgorde om: de
+        deur staat boven de oefening, de hoofdsleutel wordt aangewezen, en de deur zonder sleutel
+        wordt meegedrukt.</p>
+    </div>
+    <div>
+      <h4>WAT DIT CONCEPT VASTHOUDT</h4>
+      <ul>
+        <li>Deuren in de woorden van de patiënt, bovenaan</li>
+        <li>Elke oefening een eigen baard om aan te herkennen</li>
+        <li>Eén hoofdsleutel, met zoveel woorden aangewezen</li>
+        <li>De lege kolom wordt nooit weggelaten</li>
+      </ul>
+    </div>
+    <div>
+      <h4>ELDERS</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var f=Math.min(1,schaal.clientWidth/blad.offsetWidth);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,794 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 72 — Verjaardagskalender · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 72 — VERJAARDAGSKALENDER
+   ------------------------------------------------------------
+   De best gelezen kalender van Nederland heeft geen jaartal.
+
+   In bijna de helft van de Nederlandse huishoudens hangt hij op
+   dezelfde plek: het kleinste kamertje. Hij is de populairste
+   wanddecoratie van die ruimte, en hij is er om precies twee
+   redenen. Ten eerste heeft hij GEEN JAARTAL — daarom wordt hij
+   nooit weggegooid, alleen bijgeschreven, in de pen die op dat
+   moment toevallig in huis was. Ten tweede hangt hij op de enige
+   plek waar iedereen elke dag komt en niets anders te doen heeft.
+   Je leest hem zonder het van plan te zijn. Twintig jaar lang.
+
+   Elke oefenkaart doet het omgekeerde. Hij is gedateerd (“week
+   1 t/m 2”), hij heeft precies veertien vakjes, en op dag
+   vijftien is hij afval — ook als de oefening nog twee jaar
+   nodig heeft. Hij ligt bovendien op de keukentafel, tussen de
+   post, en verdwijnt binnen een week onder de rest. Dat is geen
+   therapietrouwprobleem. Dat is een houdbaarheidsprobleem en een
+   plaatsingsprobleem, en allebei zijn ze op te lossen met papier.
+
+   DUS: op dit vel staat NERGENS een datum. Geen startdag, geen
+   einddatum, geen weeknummers, geen jaartal. Er staan drie
+   oefeningen in rust op het bovenste tweederde — groot genoeg om
+   op anderhalve meter te lezen, want zo ver staat u ervan af —
+   en daaronder een kolom genummerde regels, 1 tot en met 31,
+   precies zoals de verjaardagskalender ze heeft. Geen maand
+   erbij. U schrijft er zelf in, met welke pen dan ook, en als de
+   maand om is begint u gewoon opnieuw op regel 1. Het vel raakt
+   nooit op en verloopt nooit.
+
+   DE NAMENKOLOM. Op een verjaardagskalender staan geen taken
+   maar mensen. Daarom staat rechts een smalle kolom waar de
+   patiënt zelf de namen schrijft van wie hier iets aan heeft —
+   de kleindochter, de hond, de dinsdagclub. Het is de enige
+   plek op het vel waar het woord “waarom” beantwoord wordt, en
+   het is niet door ons ingevuld.
+
+   HET SPIJKERTJE. Er zit een perforatiegat in de bovenrand, met
+   een gedrukt kruisje eromheen, en bij de balie ligt een doosje
+   kalenderspijkertjes. Een kaart die niet opgehangen KAN worden,
+   wordt niet opgehangen.
+
+   VORM. De huiskamer en het kleinste kamertje: roomwit papier,
+   gebroken bloemen in oud-roze, olijf en oker, een dikke
+   sierrand, en letters met een ronde, vriendelijke schreef. Geen
+   klinische typografie — dit vel moet er twintig jaar tegen
+   kunnen hangen zonder dat iemand er iets aan wil veranderen.
+
+   HET ANKER. Alles wat gelezen moet worden staat in zwart op
+   room: oefeningnamen op 7 mm, zinnen op 4,2 mm, regelnummers op
+   4 mm. De kleuren zitten uitsluitend in de sierrand en de
+   bloemen; wie het vel in zwart-wit print, mist geen woord.
+   ============================================================ */
+
+:root{
+  --room:#faf4e6;
+  --room-2:#f2e9d3;
+  --room-3:#e6d9bd;
+  --wit:#fffdf7;
+  --inkt:#292115;
+  --inkt-2:#544733;
+  --grijs:#8a7c65;
+  --roze:#b4636b;
+  --roze-l:#dba0a3;
+  --olijf:#6c7a44;
+  --olijf-l:#a3ac74;
+  --oker:#c68e30;
+  --oker-l:#e3bf72;
+  --blauw:#4a6a79;
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --serif:"Iowan Old Style",Charter,Palatino,Georgia,"Times New Roman",serif;
+  --schrijf:"Snell Roundhand","Apple Chancery","Segoe Script",cursive,serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:15px; --s4:26px; --s5:44px; --s6:74px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font:17px/1.65 var(--serif);color:var(--inkt-2);background:var(--room)}
+img{max-width:100%;display:block}
+a{color:var(--roze)}
+:focus-visible{outline:2.5px solid var(--olijf);outline-offset:3px}
+
+.binnen{max-width:1140px;margin:0 auto;padding:0 22px}
+.scherm{padding:var(--s6) 0}
+.scherm.diep{background:var(--room-2);border-top:1px solid var(--room-3);border-bottom:1px solid var(--room-3)}
+.scherm.wit{background:var(--wit);border-bottom:1px solid var(--room-3)}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  background:var(--inkt);color:var(--room);padding:11px 22px;
+  border-bottom:3px solid var(--roze);font:500 13.5px/1 var(--sans)}
+.labbalk .nr{font:600 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--oker-l);
+  border:1px solid #5a4c37;padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#c6b8a0;text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--roze-l)}
+.labbalk a.terug{color:var(--roze-l)}
+@media (max-width:720px){.labbalk{flex-wrap:wrap;gap:10px;font-size:12.5px}}
+
+/* ---------- bloemen, met divs getekend ---------- */
+.bloem{position:relative;width:46px;height:46px;flex:none}
+.bloem i{position:absolute;left:50%;top:50%;width:17px;height:23px;margin:-23px 0 0 -8.5px;
+  border-radius:50% 50% 50% 50%/60% 60% 40% 40%;transform-origin:50% 100%;background:currentColor}
+.bloem i:nth-child(1){transform:rotate(0deg)}
+.bloem i:nth-child(2){transform:rotate(72deg)}
+.bloem i:nth-child(3){transform:rotate(144deg)}
+.bloem i:nth-child(4){transform:rotate(216deg)}
+.bloem i:nth-child(5){transform:rotate(288deg)}
+.bloem b{position:absolute;left:50%;top:50%;width:15px;height:15px;margin:-7.5px 0 0 -7.5px;
+  border-radius:50%;background:var(--oker)}
+.bloem.klein{width:30px;height:30px}
+.bloem.klein i{width:11px;height:15px;margin:-15px 0 0 -5.5px}
+.bloem.klein b{width:10px;height:10px;margin:-5px 0 0 -5px}
+
+.sierrand{display:flex;align-items:center;justify-content:center;gap:14px;
+  padding:var(--s3) 0;color:var(--roze-l)}
+.sierrand .streep{height:2px;flex:1;max-width:190px;
+  background:repeating-linear-gradient(90deg,currentColor 0 9px,transparent 9px 15px)}
+
+/* ---------- 1 · landing ---------- */
+#landing{background:var(--room);
+  background-image:radial-gradient(circle at 12% 18%,rgba(180,99,107,.07) 0 26%,transparent 26%),
+    radial-gradient(circle at 88% 72%,rgba(108,122,68,.07) 0 22%,transparent 22%)}
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .vlag{width:28px;height:28px;background:var(--roze);color:#fff;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--sans)}
+.merkregel .naam{font:600 15px/1 var(--sans);color:var(--inkt)}
+.merkregel .pad{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--grijs)}
+
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--s6);align-items:center}
+@media (max-width:960px){.hero{grid-template-columns:1fr;gap:var(--s5)}}
+#landing h1{font:400 clamp(35px,4.9vw,58px)/1.08 var(--serif);color:var(--inkt);letter-spacing:-.02em}
+#landing h1 em{font-style:italic;color:var(--roze)}
+#landing .lead{font-size:19px;line-height:1.68;color:var(--inkt-2);margin-top:var(--s4);max-width:52ch}
+#landing .lead b{color:var(--inkt);font-weight:600}
+
+/* het vel aan de muur */
+.muur{background:#e9e2d2;padding:var(--s5) var(--s4);position:relative;
+  box-shadow:inset 0 0 60px rgba(90,70,40,.09)}
+.tegels{position:absolute;inset:0;opacity:.5;
+  background:linear-gradient(90deg,#dfd7c3 1px,transparent 1px) 0 0/46px 46px,
+    linear-gradient(180deg,#dfd7c3 1px,transparent 1px) 0 0/46px 46px}
+.velmini{position:relative;background:var(--wit);border:1px solid var(--room-3);
+  box-shadow:0 12px 30px rgba(70,55,30,.16);padding:var(--s4) var(--s3) var(--s3);
+  max-width:330px;margin:0 auto}
+.spijker{position:absolute;left:50%;top:-9px;width:15px;height:15px;border-radius:50%;
+  background:#8d8371;transform:translateX(-50%);box-shadow:0 2px 4px rgba(0,0,0,.35)}
+.velmini .gat{position:absolute;left:50%;top:11px;width:9px;height:9px;border-radius:50%;
+  background:#e9e2d2;transform:translateX(-50%);border:1px solid var(--room-3)}
+.velmini h3{text-align:center;font:400 26px/1.15 var(--serif);color:var(--inkt);
+  letter-spacing:-.015em;margin-top:var(--s2)}
+.velmini .zonder{text-align:center;font:500 10px/1 var(--mono);letter-spacing:.19em;
+  color:var(--roze);margin-top:10px}
+.velmini ol{list-style:none;margin-top:var(--s3);border-top:1.5px solid var(--inkt)}
+.velmini li{display:flex;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--room-2)}
+.velmini li span{font:600 12px/1 var(--mono);color:var(--grijs);width:16px;flex:none}
+.velmini li b{font:600 16px/1.25 var(--sans);color:var(--inkt);letter-spacing:-.02em}
+.velmini .regels{margin-top:var(--s3);border-top:1.5px solid var(--inkt);padding-top:9px}
+.velmini .regels i{display:block;height:15px;border-bottom:1px solid var(--room-3)}
+.velmini .regels i:nth-child(2)::after{content:"di — traplopen ging!";display:block;
+  font:400 13px/15px var(--schrijf);color:var(--blauw);padding-left:20px}
+.velmini .regels i:nth-child(4)::after{content:"weer 8×";display:block;
+  font:400 13px/15px var(--schrijf);color:var(--roze);padding-left:20px}
+.bijschrift{margin-top:var(--s3);text-align:center;font:400 14.5px/1.5 var(--serif);color:var(--grijs)}
+
+.pijlers{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5);margin-top:var(--s6);
+  border-top:2px solid var(--room-3);padding-top:var(--s5)}
+@media (max-width:900px){.pijlers{grid-template-columns:1fr;gap:var(--s4)}}
+.pijlers .kop{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.pijlers h3{font:600 10.5px/1 var(--mono);letter-spacing:.19em;color:var(--roze)}
+.pijlers h4{font:400 23px/1.2 var(--serif);color:var(--inkt);margin-bottom:9px;letter-spacing:-.015em}
+.pijlers p{font-size:16.5px}
+.pijlers p b{color:var(--inkt);font-weight:600}
+
+/* ---------- schermkoppen ---------- */
+.schermkop{max-width:70ch;margin-bottom:var(--s5)}
+.schermkop b{display:inline-block;font:600 10.5px/1 var(--mono);letter-spacing:.2em;
+  color:var(--roze);border-bottom:2px solid var(--roze-l);padding-bottom:6px;margin-bottom:var(--s3)}
+.schermkop h2{font:400 clamp(26px,3.3vw,37px)/1.16 var(--serif);color:var(--inkt);letter-spacing:-.02em}
+.schermkop p{margin-top:var(--s3);font-size:17.5px}
+.schermkop p em{font-style:italic;color:var(--roze)}
+
+/* ---------- 2 · kiezer ---------- */
+.keukentafel{background:var(--wit);border:1px solid var(--room-3);
+  border-top:5px double var(--roze)}
+.ktkop{padding:var(--s4);border-bottom:1px solid var(--room-3);display:flex;
+  align-items:baseline;gap:var(--s3);flex-wrap:wrap}
+.ktkop h3{font:400 23px/1.2 var(--serif);color:var(--inkt);letter-spacing:-.015em}
+.ktkop p{font:500 11.5px/1 var(--mono);letter-spacing:.11em;color:var(--grijs);margin-left:auto}
+
+.keus{display:grid;grid-template-columns:auto 104px 1fr;gap:var(--s4);
+  padding:var(--s4);border-bottom:1px solid var(--room-2);align-items:start}
+@media (max-width:820px){.keus{grid-template-columns:auto 1fr;gap:var(--s3)}.keus .bd{display:none}}
+.keus:last-child{border-bottom:0}
+.keus .bloem{color:var(--roze-l)}
+.keus:nth-child(3) .bloem{color:var(--olijf-l)}
+.keus:nth-child(4) .bloem{color:var(--oker-l)}
+.keus .bd{background:var(--room);border:1px solid var(--room-3);padding:8px}
+.keus h4{font:600 21px/1.22 var(--sans);color:var(--inkt);letter-spacing:-.026em}
+.keus .zin{font-size:16.5px;margin-top:8px;max-width:62ch}
+.keus .altijd{display:inline-block;margin-top:12px;font:600 11px/1 var(--mono);
+  letter-spacing:.11em;color:var(--olijf);border:1px solid var(--olijf-l);padding:6px 9px}
+
+.geendatum{margin-top:var(--s5);background:var(--inkt);color:#e2d8c4;padding:var(--s5) var(--s4);
+  text-align:center}
+.geendatum h3{font:400 clamp(24px,3vw,32px)/1.22 var(--serif);color:#fff;letter-spacing:-.018em;
+  max-width:24ch;margin:0 auto}
+.geendatum h3 em{font-style:italic;color:var(--roze-l)}
+.geendatum p{margin:var(--s3) auto 0;font-size:16.5px;max-width:60ch}
+.geendatum p b{color:#fff;font-weight:600}
+.doorgestreept{position:relative;display:inline-block;color:#a89880}
+.doorgestreept::after{content:"";position:absolute;left:-4px;right:-4px;top:52%;height:2px;
+  background:var(--roze-l);transform:rotate(-2deg)}
+
+/* ---------- 3 · cliëntkaart ---------- */
+.namenblad{display:grid;grid-template-columns:1.5fr 1fr;gap:var(--s5);align-items:start}
+@media (max-width:900px){.namenblad{grid-template-columns:1fr;gap:var(--s4)}}
+.dagboek{background:var(--wit);border:1px solid var(--room-3);padding:var(--s4)}
+.dagboek h3{font:400 24px/1.2 var(--serif);color:var(--inkt);letter-spacing:-.015em;
+  border-bottom:2px solid var(--inkt);padding-bottom:11px;margin-bottom:var(--s3)}
+.dagboek .maandloos{font:500 10.5px/1 var(--mono);letter-spacing:.17em;color:var(--grijs);
+  display:block;margin-bottom:var(--s3)}
+.regel{display:flex;gap:14px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--room-2)}
+.regel span{font:600 13px/1 var(--mono);color:var(--grijs);width:22px;flex:none;text-align:right}
+.regel em{font:400 19px/1.35 var(--schrijf);font-style:normal;color:var(--blauw);flex:1}
+.regel em.roze{color:var(--roze)}
+.regel em.olijf{color:var(--olijf)}
+.regel.leeg em{color:var(--room-3)}
+
+.namen{background:var(--room-2);border:1px solid var(--room-3);padding:var(--s4)}
+.namen h3{font:400 22px/1.2 var(--serif);color:var(--inkt);letter-spacing:-.015em}
+.namen .uitleg{font-size:15.5px;margin-top:10px;color:var(--inkt-2)}
+.namen ul{list-style:none;margin-top:var(--s3);border-top:1.5px solid var(--inkt)}
+.namen li{padding:11px 0;border-bottom:1px solid var(--room-3);
+  font:400 21px/1.25 var(--schrijf);color:var(--blauw);display:flex;gap:11px;align-items:baseline}
+.namen li u{text-decoration:none;font:500 10px/1 var(--mono);letter-spacing:.13em;
+  color:var(--grijs);flex:none;width:34px}
+.namen li:last-child{color:var(--room-3);font-style:italic}
+
+.verschil{margin-top:var(--s5);display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+@media (max-width:820px){.verschil{grid-template-columns:1fr}}
+.verschil div{padding:var(--s4);background:var(--room);border-left:5px solid var(--olijf)}
+.verschil div:last-child{border-left-color:var(--roze)}
+.verschil h4{font:400 21px/1.25 var(--serif);color:var(--inkt);margin-bottom:9px;letter-spacing:-.015em}
+.verschil p{font-size:16px}
+.verschil p b{color:var(--inkt);font-weight:600}
+
+/* ---------- 4 · printkaart ---------- */
+.printuitleg{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-bottom:var(--s5)}
+@media (max-width:900px){.printuitleg{grid-template-columns:1fr}}
+.printuitleg h4{font:600 10.5px/1.35 var(--mono);letter-spacing:.13em;color:var(--inkt);
+  border-top:2px solid var(--roze);padding-top:9px;margin-bottom:8px}
+.printuitleg p{font-size:15.5px}
+.printuitleg p b{color:var(--inkt);font-weight:600}
+
+.bladhouder{background:#e9e2d2;padding:var(--s5) var(--s4);
+  background-image:linear-gradient(90deg,#dfd7c3 1px,transparent 1px) ,
+    linear-gradient(180deg,#dfd7c3 1px,transparent 1px);
+  background-size:46px 46px,46px 46px}
+.bladschaal{overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;
+  box-shadow:0 20px 50px rgba(70,55,30,.3);transform-origin:top left;position:relative}
+.blad .rand{padding:9mm 11mm 7mm;height:calc(100% - 12mm);
+  border:1.2mm solid #000;margin:6mm;border-radius:2mm;position:relative;
+  display:flex;flex-direction:column}
+
+/* ophangen */
+.b-gat{position:absolute;left:50%;top:1.5mm;transform:translateX(-50%);text-align:center}
+.b-gat i{display:block;width:5mm;height:5mm;border:.4mm solid #000;border-radius:50%;
+  margin:0 auto}
+.b-gat u{display:block;text-decoration:none;font:400 2.4mm/1 var(--sans);margin-top:.8mm}
+
+.b-kop{text-align:center;padding:7mm 0 2.4mm;border-bottom:.6mm solid #000}
+.b-kop .bloemrij{display:flex;align-items:center;justify-content:center;gap:2.5mm;margin-bottom:2.5mm}
+.b-kop .bl{width:7mm;height:7mm;border:.4mm solid #000;border-radius:50%;position:relative;flex:none}
+.b-kop .bl::before{content:"";position:absolute;inset:1.8mm;border-radius:50%;background:#000}
+.b-kop .lijn{height:.4mm;width:26mm;background:#000}
+.b-kop h1{font:400 9.4mm/1 var(--serif);letter-spacing:-.02em}
+.b-kop .zonder{font:700 3mm/1 var(--sans);letter-spacing:.2em;margin-top:2.4mm}
+.b-kop .voor{font:400 4mm/1.35 var(--serif);margin-top:2.4mm}
+.b-kop .voor b{font-weight:700}
+
+.b-oefeningen{padding:1.5mm 0 1mm}
+.b-oef{display:grid;grid-template-columns:20mm 1fr 23mm;gap:4mm;align-items:start;
+  padding-bottom:1.8mm;margin-bottom:1.8mm;border-bottom:.3mm dashed #000}
+.b-oef:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
+.b-oef .bd{border:.4mm solid #000;padding:.8mm}
+.b-oef .bd img{width:100%;filter:grayscale(1) contrast(1.4)}
+.b-oef h2{font:700 6.4mm/1.1 var(--sans);letter-spacing:-.03em}
+.b-oef .zin{font:400 3.9mm/1.34 var(--serif);margin-top:1.5mm}
+.b-oef .hoevaak{border:.5mm solid #000;border-radius:1.5mm;text-align:center;padding:2mm 1mm}
+.b-oef .hoevaak b{display:block;font:700 7mm/1 var(--sans)}
+.b-oef .hoevaak u{display:block;text-decoration:none;font:700 2.6mm/1.2 var(--sans);
+  letter-spacing:.08em;margin-top:1.2mm}
+
+/* de kolom genummerde regels — 1 t/m 31, zonder maand */
+.b-onder{display:grid;grid-template-columns:1fr 52mm;gap:6mm;border-top:.6mm solid #000;
+  padding-top:2mm;flex:1}
+.b-regels u{display:block;text-decoration:none;font:700 3mm/1 var(--sans);letter-spacing:.16em}
+.b-regels .toel{font:400 3.3mm/1.3 var(--serif);margin:1mm 0 1.4mm}
+.b-kolommen{display:grid;grid-template-columns:1fr 1fr;gap:0 6mm}
+.b-regel{display:flex;align-items:flex-end;gap:1.8mm;height:5.5mm;
+  border-bottom:.25mm solid #000}
+.b-regel span{font:700 4mm/1 var(--sans);width:6mm;flex:none;padding-bottom:1.1mm}
+
+.b-namen{border-left:.5mm solid #000;padding-left:5mm}
+.b-namen u{display:block;text-decoration:none;font:700 3mm/1 var(--sans);letter-spacing:.16em}
+.b-namen .toel{font:400 3.3mm/1.3 var(--serif);margin:1.2mm 0 2mm}
+.b-naamregel{height:7mm;border-bottom:.25mm solid #000}
+
+.b-voet{border-top:.6mm solid #000;padding-top:2.2mm;margin-top:2.4mm;
+  display:grid;grid-template-columns:1fr 46mm;gap:5mm;align-items:end}
+.b-voet p{font:400 3.4mm/1.4 var(--serif)}
+.b-voet p b{font-weight:700}
+.b-praktijk{text-align:right;font:400 3.1mm/1.4 var(--sans)}
+.b-praktijk b{display:block;font-weight:700;font-size:3.5mm}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--inkt);color:#c1b49c;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer h4{font:600 10.5px/1 var(--mono);letter-spacing:.18em;color:var(--roze-l);margin-bottom:var(--s3)}
+footer p{font-size:15.5px}
+footer ul{list-style:none;font-size:15.5px}
+footer li{padding:7px 0;border-bottom:1px solid #4a3f2d}
+footer a{color:#e0d5bf}
+
+/* ============================================================
+   PRINT — A4 staand, zwart op wit, nergens een datum
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .schermkop,.printuitleg{display:none !important}
+  .scherm{padding:0 !important;background:#fff !important;border:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  .bladhouder{background:#fff !important;background-image:none !important;
+    border:0 !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 72</span>
+  <strong style="font:700 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Verjaardagskalender</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="vlag" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 72 · VERJAARDAGSKALENDER</span>
+    </div>
+
+    <div class="hero">
+      <div>
+        <h1>De best gelezen kalender van Nederland heeft <em>geen jaartal</em>.</h1>
+        <p class="lead">Hij hangt in bijna de helft van de huishoudens, altijd op dezelfde plek, en
+          hij wordt nooit weggegooid — alleen bijgeschreven, in de pen die op dat moment toevallig in
+          huis was. Een oefenkaart is het tegenovergestelde: <b>gedateerd, veertien vakjes, op dag
+          vijftien afval</b>. Dit vel heeft nergens een datum, raakt nooit op, en hangt op de enige
+          plek waar u elke dag komt en niets anders te doen hebt.</p>
+      </div>
+
+      <div class="muur">
+        <div class="tegels" aria-hidden="true"></div>
+        <div class="velmini" aria-label="Het vel zoals het aan de muur hangt">
+          <span class="spijker" aria-hidden="true"></span>
+          <span class="gat" aria-hidden="true"></span>
+          <h3>Voor mevrouw Bakker</h3>
+          <div class="zonder">GEEN JAARTAL · GEEN EINDDATUM</div>
+          <ol>
+            <li><span>1</span><b>Opstaan uit de stoel</b></li>
+            <li><span>2</span><b>Op de tenen komen</b></li>
+            <li><span>3</span><b>Op één been staan</b></li>
+          </ol>
+          <div class="regels" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i>
+          </div>
+        </div>
+        <p class="bijschrift">Eén spijkertje, ooghoogte, het kleinste kamertje.<br/>
+          Twintig jaar dezelfde plek.</p>
+      </div>
+    </div>
+
+    <div class="pijlers">
+      <div>
+        <div class="kop">
+          <span class="bloem klein" style="color:var(--roze-l)" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span>
+          <h3>Pijler 01</h3>
+        </div>
+        <h4>Nergens een datum</h4>
+        <p>Geen startdag, geen einddatum, geen weeknummers en geen jaartal. Een kaart die verloopt
+          wordt weggegooid op het moment dat de oefening juist gewoonte begint te worden.
+          <b>Dit vel kan twee jaar mee</b> en dat staat er niet bij, want dat hoort ook nergens te
+          staan.</p>
+      </div>
+      <div>
+        <div class="kop">
+          <span class="bloem klein" style="color:var(--olijf-l)" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span>
+          <h3>Pijler 02</h3>
+        </div>
+        <h4>Eenendertig regels, zonder maand</h4>
+        <p>Precies zoals op de verjaardagskalender: genummerd 1 tot en met 31, en welke maand het is
+          weet u zelf wel. Is de maand om, dan begint u weer bij 1 — <b>onder wat er al staat, of er
+          gewoon overheen</b>. Het vel raakt nooit vol en wordt nooit ongeldig.</p>
+      </div>
+      <div>
+        <div class="kop">
+          <span class="bloem klein" style="color:var(--oker-l)" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span>
+          <h3>Pijler 03</h3>
+        </div>
+        <h4>Een kolom voor namen</h4>
+        <p>Op een verjaardagskalender staan geen taken maar mensen. Rechts is daarom een smalle kolom
+          waarin de patiënt zelf schrijft voor wie hij dit doet. <b>Het is de enige plek waar “waarom”
+          beantwoord wordt</b> — en de enige die wij leeg laten.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm diep" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Kiezer</b>
+      <h2>Kiezen voor de lange duur: welke drie mogen hier twee jaar hangen?</h2>
+      <p>Omdat het vel niet verloopt, verandert de vraag in de behandelkamer. Niet <em>wat doen we de
+        komende twee weken</em>, maar <em>welke drie bewegingen wilt u over twee jaar nog steeds
+        kunnen</em>. Dat is een andere lijst: minder oefeningen die iets herstellen, meer bewegingen
+        die iets vasthouden. Wat tijdelijk is, komt op een los briefje — niet op het vel dat blijft
+        hangen.</p>
+    </div>
+
+    <div class="keukentafel">
+      <div class="ktkop">
+        <h3>Voor mevrouw H. Bakker, 79 — balans en beenkracht</h3>
+        <p>DRIE BLIJVERS · GEEN EINDDATUM AFGESPROKEN</p>
+      </div>
+
+      <div class="keus">
+        <span class="bloem" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span>
+        <div class="bd"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/></div>
+        <div>
+          <h4>Opstaan uit de stoel, zonder handen</h4>
+          <p class="zin">De beweging die het verschil maakt tussen zelfstandig wonen en niet. Zes keer
+            achter elkaar, twee keer per dag, en over twee jaar nog steeds — <b>dit is er een om te
+            houden, niet om af te ronden</b>.</p>
+          <span class="altijd">BLIJVER · MAG HIER JAREN HANGEN</span>
+        </div>
+      </div>
+
+      <div class="keus">
+        <span class="bloem" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span>
+        <div class="bd"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen komen"/></div>
+        <div>
+          <h4>Op de tenen komen bij het aanrecht</h4>
+          <p class="zin">Past bij het aanrecht, dus bij de dag: tijdens het wachten op de waterkoker.
+            Wie zijn kuiten houdt, struikelt minder over drempels en stoepranden.</p>
+          <span class="altijd">BLIJVER · MAG HIER JAREN HANGEN</span>
+        </div>
+      </div>
+
+      <div class="keus">
+        <span class="bloem" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span>
+        <div class="bd"><img src="/images/seated-chair/one-leg-standing-line-v1.png" alt="Op één been staan"/></div>
+        <div>
+          <h4>Op één been staan, hand bij de leuning</h4>
+          <p class="zin">Negen tellen links, negen rechts, bij het tandenpoetsen. Balans is geen
+            kuur maar een onderhoudspost: <b>zodra u ermee stopt, is hij binnen een maand weg</b>,
+            en juist daarom hoort hij op een vel zonder einddatum.</p>
+          <span class="altijd">BLIJVER · MAG HIER JAREN HANGEN</span>
+        </div>
+      </div>
+
+      <div class="keus" style="background:var(--room);opacity:.95">
+        <span class="bloem" style="color:var(--room-3)" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span>
+        <div class="bd"><img src="/images/mobility/mob-lower-back-line-v1.png" alt="Onderrug mobiliseren"/></div>
+        <div>
+          <h4 style="color:var(--grijs)">Onderrug losdraaien op de rug — op een los briefje</h4>
+          <p class="zin">Nodig zolang de rug stijf is na de val van juli, en waarschijnlijk over zes
+            weken niet meer. Dat is precies waarom hij <b>niet</b> op dit vel komt: wat tijdelijk is
+            hoort op iets tijdelijks, anders hangt er over een jaar een instructie aan de muur die
+            allang niet meer klopt — en dan gelooft niemand de andere drie nog.</p>
+          <span class="altijd" style="color:var(--grijs);border-color:var(--room-3)">TIJDELIJK · LOS BRIEFJE</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="geendatum">
+      <h3>Er staat <span class="doorgestreept">week 1 t/m 2</span> <em>niets</em> op dit vel</h3>
+      <p>Geen begindatum, geen einddatum, geen jaartal en geen veertien vakjes. Alles wat een kaart
+        laat verlopen is weggelaten, en wat overblijft is een vel dat nog klopt op de dag dat de
+        oefening eindelijk gewoonte is geworden. <b>Papier is niet het probleem; een houdbaarheidsdatum
+        is het.</b></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm wit" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Cliëntkaart</b>
+      <h2>Wat de patiënt zelf schreef, in de pen die er lag</h2>
+      <p>De digitale kant is geen dashboard maar een <em>afschrift</em>: precies wat er op het vel aan
+        de muur staat, zodat de dochter in Groningen het ook kan lezen en de therapeut het bij het
+        volgende consult naast zich legt. Er wordt niets uitgerekend en niets beoordeeld. Er staat
+        wat er staat, inclusief de weken waarin er niets staat.</p>
+    </div>
+
+    <div class="namenblad">
+      <div class="dagboek">
+        <h3>De regels van deze maand</h3>
+        <span class="maandloos">GENUMMERD 1 T/M 31 · WELKE MAAND WEET U ZELF</span>
+
+        <div class="regel"><span>1</span><em>alle drie gedaan</em></div>
+        <div class="regel"><span>2</span><em class="roze">stoel 8× !!</em></div>
+        <div class="regel"><span>3</span><em>—</em></div>
+        <div class="regel"><span>4</span><em>alleen tenen, druk met Ria</em></div>
+        <div class="regel"><span>5</span><em class="olijf">traplopen ging zonder leuning</em></div>
+        <div class="regel leeg"><span>6</span><em>·</em></div>
+        <div class="regel leeg"><span>7</span><em>·</em></div>
+        <div class="regel"><span>8</span><em>weer begonnen</em></div>
+        <div class="regel"><span>9</span><em>alle drie</em></div>
+        <div class="regel"><span>10</span><em class="roze">Joep opgetild!</em></div>
+        <div class="regel leeg"><span>11</span><em>·</em></div>
+        <div class="regel"><span>12</span><em>alle drie, rug wat stijf</em></div>
+        <div class="regel leeg"><span>13</span><em>·</em></div>
+        <div class="regel leeg"><span>14</span><em>·</em></div>
+      </div>
+
+      <div class="namen">
+        <h3>Voor wie</h3>
+        <p class="uitleg">Deze kolom vullen wij niet in. Hij staat er omdat een verjaardagskalender
+          geen taken bevat maar mensen — en omdat dit de enige regel op het vel is die antwoord geeft
+          op de vraag waaróm.</p>
+        <ul>
+          <li><u>1</u>Joep — 14 kilo</li>
+          <li><u>2</u>de dinsdagclub</li>
+          <li><u>3</u>Ria, elke donderdag</li>
+          <li><u>4</u>de trap naar zolder</li>
+          <li><u>5</u>Bas (hond, trekt)</li>
+          <li><u>6</u>—</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="verschil">
+      <div>
+        <h4>Lege regels zijn geen gaten in de behandeling</h4>
+        <p>Op 6, 7, 11, 13 en 14 staat niets. Dat is geen therapieontrouw en het wordt ook niet zo
+          genoemd: het is <b>een maand van een mens van negenenzeventig</b>. Een vel zonder einddatum
+          kan zich lege regels permitteren — er komt vanzelf een volgende 1.</p>
+      </div>
+      <div>
+        <h4>Het handschrift is het dossier</h4>
+        <p>“Joep opgetild!” zegt meer dan veertien vinkjes, en het staat er in haar eigen pen. Wat
+          hier gelezen wordt is geen naleving maar een leven — <b>en dat is precies de informatie
+          waar de volgende afspraak over hoort te gaan</b>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Printkaart</b>
+      <h2>Het wandvel: A4 staand, een gat in de bovenrand, nergens een datum</h2>
+      <p>Bovenaan drie oefeningen op zeven millimeter — leesbaar vanaf anderhalve meter, want zo ver
+        staat u ervan af. Onderaan eenendertig genummerde regels zonder maand, en rechts de smalle
+        namenkolom die wij leeg laten. In het midden van de bovenrand zit een <em>gat met een gedrukt
+        kruisje</em>, en bij de balie ligt een doosje kalenderspijkertjes.</p>
+    </div>
+
+    <div class="printuitleg">
+      <div>
+        <h4>NERGENS EEN DATUM</h4>
+        <p>Geen week, geen startdag, geen jaartal, geen “geldig tot”. Het vel dat u vandaag print,
+          klopt over anderhalf jaar nog — en dat is precies het moment waarop deze drie oefeningen
+          hun werk doen. <b>Wat verloopt, wordt weggegooid.</b></p>
+      </div>
+      <div>
+        <h4>EENENDERTIG REGELS, TWEE KOLOMMEN</h4>
+        <p>6,6 mm hoog, genummerd in vet op 4 mm. Ruim genoeg voor een balpen en een beverig
+          handschrift. Is de maand om, dan begint u weer bij 1 — <b>eroverheen mag</b>, want de
+          verjaardagskalender doet niet anders.</p>
+      </div>
+      <div>
+        <h4>HET GAT ZIT ER AL</h4>
+        <p>Een cirkel van 5 mm met “hier een spijkertje” eronder. Een kaart die niet opgehangen kán
+          worden, wordt op de keukentafel gelegd en is binnen een week onder de post verdwenen.
+          <b>Ophangbaarheid is een ontwerpeis</b>, geen bijzaak.</p>
+      </div>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="b-gat" aria-hidden="true">
+              <i></i>
+              <u>hier een spijkertje</u>
+            </div>
+
+            <div class="b-kop">
+              <div class="bloemrij" aria-hidden="true">
+                <span class="lijn"></span>
+                <span class="bl"></span><span class="bl"></span><span class="bl"></span>
+                <span class="lijn"></span>
+              </div>
+              <h1>Voor mevrouw Bakker</h1>
+              <div class="zonder">GEEN JAARTAL · GEEN EINDDATUM · HANGT TOT U ANDERS HOORT</div>
+              <p class="voor">Drie bewegingen om te <b>houden</b>. Doe wat er die dag in zit en schrijf
+                het onderaan op — met welke pen dan ook.</p>
+            </div>
+
+            <div class="b-oefeningen">
+
+              <div class="b-oef">
+                <div class="bd"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt=""/></div>
+                <div>
+                  <h2>Opstaan uit de stoel</h2>
+                  <p class="zin">Voeten plat op de grond, armen gekruist voor uw borst. Sta rustig op
+                    en ga rustig weer zitten. Zonder handen als het kan, mét als het moet.</p>
+                </div>
+                <div class="hoevaak"><b>6×</b><u>TWEE KEER<br/>PER DAG</u></div>
+              </div>
+
+              <div class="b-oef">
+                <div class="bd"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt=""/></div>
+                <div>
+                  <h2>Op de tenen komen</h2>
+                  <p class="zin">Bij het aanrecht, vingertoppen erop maar niet leunen. Kom op de tenen
+                    en laat de hielen langzaam zakken. Mooi bij het wachten op de waterkoker.</p>
+                </div>
+                <div class="hoevaak"><b>11×</b><u>EEN KEER<br/>PER DAG</u></div>
+              </div>
+
+              <div class="b-oef">
+                <div class="bd"><img src="/images/seated-chair/one-leg-standing-line-v1.png" alt=""/></div>
+                <div>
+                  <h2>Op één been staan</h2>
+                  <p class="zin">Achter een stoel of bij de wastafel, vingertoppen los op de rand.
+                    Negen tellen links, negen tellen rechts. Bij het tandenpoetsen gaat het vanzelf.</p>
+                </div>
+                <div class="hoevaak"><b>9</b><u>TELLEN<br/>PER BEEN</u></div>
+              </div>
+
+            </div>
+
+            <div class="b-onder">
+              <div class="b-regels">
+                <u>SCHRIJF HIER WAT U DEED</u>
+                <p class="toel">Genummerd 1 tot en met 31. Welke maand het is, weet u zelf. Is de maand
+                  om, begin dan weer bij 1 — er hoeft niets weggegooid.</p>
+                <div class="b-kolommen">
+                  <div>
+                    <div class="b-regel"><span>1</span></div><div class="b-regel"><span>2</span></div>
+                    <div class="b-regel"><span>3</span></div><div class="b-regel"><span>4</span></div>
+                    <div class="b-regel"><span>5</span></div><div class="b-regel"><span>6</span></div>
+                    <div class="b-regel"><span>7</span></div><div class="b-regel"><span>8</span></div>
+                    <div class="b-regel"><span>9</span></div><div class="b-regel"><span>10</span></div>
+                    <div class="b-regel"><span>11</span></div><div class="b-regel"><span>12</span></div>
+                    <div class="b-regel"><span>13</span></div><div class="b-regel"><span>14</span></div>
+                    <div class="b-regel"><span>15</span></div><div class="b-regel"><span>16</span></div>
+                  </div>
+                  <div>
+                    <div class="b-regel"><span>17</span></div><div class="b-regel"><span>18</span></div>
+                    <div class="b-regel"><span>19</span></div><div class="b-regel"><span>20</span></div>
+                    <div class="b-regel"><span>21</span></div><div class="b-regel"><span>22</span></div>
+                    <div class="b-regel"><span>23</span></div><div class="b-regel"><span>24</span></div>
+                    <div class="b-regel"><span>25</span></div><div class="b-regel"><span>26</span></div>
+                    <div class="b-regel"><span>27</span></div><div class="b-regel"><span>28</span></div>
+                    <div class="b-regel"><span>29</span></div><div class="b-regel"><span>30</span></div>
+                    <div class="b-regel"><span>31</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="b-namen">
+                <u>VOOR WIE</u>
+                <p class="toel">Deze kolom vullen wij niet in. Schrijf hier zelf op voor wie u dit
+                  doet — dat leest u elke dag mee.</p>
+                <div class="b-naamregel"></div><div class="b-naamregel"></div>
+                <div class="b-naamregel"></div><div class="b-naamregel"></div>
+                <div class="b-naamregel"></div><div class="b-naamregel"></div>
+              </div>
+            </div>
+
+            <div class="b-voet">
+              <p><b>Een lege regel is geen mislukking; het is een dag.</b> Er staat met opzet geen
+                einddatum op dit vel: deze drie bewegingen zijn er om te houden. Pijn die na een uur
+                niet zakt, of een val: niet doorzetten, wél bellen.</p>
+              <div class="b-praktijk">
+                <b>Fysiotherapie Wilhelminapark</b>
+                J. Meppelink · Utrecht<br/>
+                030 – 232 41 08
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div>
+      <h4>DE RICHTING</h4>
+      <p>De verjaardagskalender wordt in bijna de helft van de Nederlandse huishoudens elke dag
+        gelezen zonder dat iemand dat van plan is, en hij gaat decennia mee omdat hij geen jaartal
+        heeft. Een oefenkaart mist precies die twee eigenschappen. Dit concept haalt ze op: geen
+        datum, een gat om op te hangen, en een namenkolom die wij leeg laten.</p>
+    </div>
+    <div>
+      <h4>WAT DIT CONCEPT VASTHOUDT</h4>
+      <ul>
+        <li>Nergens een datum, een week of een jaartal</li>
+        <li>31 genummerde regels zonder maand — nooit vol</li>
+        <li>Een geperforeerd gat, en spijkertjes bij de balie</li>
+        <li>Alleen blijvers op het vel; tijdelijks op een los briefje</li>
+      </ul>
+    </div>
+    <div>
+      <h4>ELDERS</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var f=Math.min(1,schaal.clientWidth/blad.offsetWidth);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow, noarchive"/>
+<meta name="color-scheme" content="light"/>
+<title>Concept 70 — Unster · Fysiplan ontwerpgalerij</title>
+<style>
+/* ============================================================
+   CONCEPT 70 — UNSTER
+   ------------------------------------------------------------
+   Geen twee schalen. Eén arm, en het gewicht schuift.
+
+   Elke fysiotherapeut tekent hetzelfde plaatje op hetzelfde
+   kladblaadje: een weegschaal met twee schalen. Links belasting,
+   rechts belastbaarheid. Wordt links te zwaar, dan krijgt u
+   klachten. Het is het meest getekende plaatje van het vak — en
+   het is als instrument onjuist. Een balans met twee schalen
+   suggereert dat belastbaarheid iets is dat je erbíj legt: meer
+   slaap, meer rust, meer training, tot het weer gelijk hangt.
+
+   De unster werkt anders, en de unster is ouder. Hij ligt sinds
+   de eerste eeuw in de Nederlandse bodem — er is er een uit de
+   Rijn bij Doorwerth gebaggerd — en hij heeft géén twee schalen.
+   Hij heeft één arm met twee ongelijke helften, één haak voor de
+   last, en één gewicht dat over de lange arm SCHUIFT. Je legt er
+   niets bij. Je verschuift het punt tot de arm kantelt, en dan
+   lees je op de kerf af hoe zwaar het was. De weegkunde van de
+   markt is geen optelsom maar een zoektocht naar het kantelpunt.
+
+   DUS: op deze kaart staat bij elke oefening geen doel en geen
+   maximum, maar een KERF — het punt waarop het vandaag kantelde.
+   De patiënt telt niets op. Hij schuift, elke dag opnieuw, en
+   zet een streepje op de balk waar het die dag omsloeg. Na twee
+   weken staan er veertien streepjes op één balk, en die balk is
+   het dossier: geen grafiek die iemand moest tekenen, maar het
+   meetinstrument zélf, beschreven.
+
+   HET IJKMERK. Een unster mag in de handel niet gebruikt worden
+   zonder ijkmerk. De ijkmeester trok van dorp naar dorp, sloeg
+   zijn teken in het koper, en dat teken verliep: na verloop van
+   tijd moest er herijkt worden, want een instrument verloopt en
+   een verlopen instrument liegt met gezag. Daarom draagt deze
+   kaart een IJKDATUM en een GELDIG TOT. Niet als deadline en
+   niet als dreigement — als eerlijkheid. Uw belastbaarheid van
+   2 september is niet die van 30 september, en een kaart die
+   doet alsof van wel, weegt vals.
+
+   VORM. Het instrument, niet de winkel: geslagen koper op lood
+   en leisteen, gegraveerde cijfers, haarlijnen, en het rode
+   ijkmerk als enige kleur die niet van metaal is. Op scherm mag
+   het donker en zwaar zijn; op papier verdwijnt al het metaal.
+
+   HET ANKER. De print is één inkt op wit. De balk is 150 mm
+   breed met kerven om de 15 mm, cijfers op 5 mm, oefeningnamen
+   op 5,5 mm en de zin op 3,8 mm schreef. Wie van kantelpunten
+   niets wil weten, ziet drie oefeningen met een liniaal eronder
+   en zet een streepje bij het getal van vandaag. Dat is genoeg.
+   ============================================================ */
+
+:root{
+  --lei:#22282b;           /* leisteen, de donkere schermen */
+  --lei-2:#171c1e;
+  --lood:#4d565b;          /* lood */
+  --lood-l:#79858b;
+  --koper:#a8762c;         /* geslagen koper */
+  --koper-l:#d6a648;
+  --koper-d:#7a5417;
+  --vel:#f5f3ed;           /* papier */
+  --vel-2:#e8e4d9;
+  --vel-3:#d9d3c4;
+  --inkt:#171a1b;
+  --inkt-2:#3e474b;
+  --grijs:#6f7a7f;
+  --ijk:#93281c;           /* het ijkmerk — de enige niet-metalen kleur */
+
+  --sans:"Avenir Next",Seravek,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --serif:Charter,"Iowan Old Style",Georgia,"Times New Roman",serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+
+  --s1:4px; --s2:8px; --s3:15px; --s4:26px; --s5:44px; --s6:74px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font:17px/1.62 var(--sans);color:var(--inkt-2);background:var(--vel)}
+img{max-width:100%;display:block}
+a{color:var(--koper-d)}
+:focus-visible{outline:2.5px solid var(--koper);outline-offset:3px}
+
+.binnen{max-width:1140px;margin:0 auto;padding:0 22px}
+.scherm{padding:var(--s6) 0}
+.scherm.diep{background:var(--vel-2);border-top:1px solid var(--vel-3);border-bottom:1px solid var(--vel-3)}
+.scherm.wit{background:#fff;border-bottom:1px solid var(--vel-3)}
+.scherm.donker{background:var(--lei);color:#cfd6d9}
+
+/* ---------- labbalk ---------- */
+.labbalk{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);
+  background:var(--lei-2);color:#e7ebec;padding:11px 22px;
+  border-bottom:2px solid var(--koper);font:500 13.5px/1 var(--sans)}
+.labbalk .nr{font:600 10.5px/1 var(--mono);letter-spacing:.2em;color:var(--koper-l);
+  border:1px solid var(--koper-d);padding:5px 8px}
+.labbalk .rek{flex:1}
+.labbalk a{color:#aeb8bc;text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px}
+.labbalk a:hover{color:#fff;border-bottom-color:var(--koper)}
+.labbalk a.terug{color:var(--koper-l)}
+@media (max-width:720px){.labbalk{flex-wrap:wrap;gap:10px;font-size:12.5px}}
+
+/* ---------- 1 · landing ---------- */
+#landing{background:var(--lei);color:#c8d0d3;padding-bottom:var(--s6)}
+.merkregel{display:flex;align-items:center;gap:10px;margin-bottom:var(--s5)}
+.merkregel .vlag{width:27px;height:27px;background:var(--koper);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--sans)}
+.merkregel .naam{font:600 15px/1 var(--sans);color:#fff;letter-spacing:-.01em}
+.merkregel .pad{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--lood-l)}
+
+.hero{display:grid;grid-template-columns:1.08fr .92fr;gap:var(--s6);align-items:center}
+@media (max-width:960px){.hero{grid-template-columns:1fr;gap:var(--s5)}}
+#landing h1{font:400 clamp(36px,5.1vw,60px)/1.04 var(--serif);color:#fff;letter-spacing:-.02em}
+#landing h1 em{font-style:italic;color:var(--koper-l)}
+#landing .lead{font-size:18.5px;line-height:1.66;color:#b3bcc0;margin-top:var(--s4);max-width:52ch}
+#landing .lead b{color:#fff;font-weight:600}
+
+/* het instrument, met divs getekend */
+.instrument{padding:var(--s4) 0}
+.balkhouder{position:relative;height:190px}
+.juk{position:absolute;left:22%;top:0;width:2px;height:44px;background:var(--lood-l)}
+.juk::before{content:"";position:absolute;left:-9px;top:-10px;width:20px;height:12px;
+  border:2px solid var(--lood-l);border-bottom:0;border-radius:11px 11px 0 0}
+.balk{position:absolute;left:0;right:0;top:44px;height:15px;
+  background:linear-gradient(#d6a648,#a8762c 42%,#7a5417);border-radius:2px;
+  box-shadow:0 3px 0 rgba(0,0,0,.35)}
+.kerven{position:absolute;left:22%;right:0;top:44px;height:15px}
+.kerven i{position:absolute;top:0;width:2px;height:8px;background:rgba(0,0,0,.55)}
+.kerven i.h{height:15px;background:rgba(0,0,0,.72)}
+.kerfcijfers{position:absolute;left:22%;right:0;top:64px;height:18px}
+.kerfcijfers span{position:absolute;transform:translateX(-50%);
+  font:600 12px/1 var(--mono);color:var(--lood-l)}
+.loper{position:absolute;top:20px;width:38px;height:62px;
+  background:linear-gradient(#8d8f8e,#5b6165 45%,#3a4044);
+  clip-path:polygon(20% 0,80% 0,100% 100%,0 100%);
+  box-shadow:0 4px 12px rgba(0,0,0,.5)}
+.loper::after{content:"";position:absolute;left:50%;top:-14px;width:2px;height:16px;
+  background:var(--lood-l);transform:translateX(-50%)}
+.loperlabel{position:absolute;top:92px;transform:translateX(-50%);text-align:center;
+  font:600 10.5px/1.3 var(--mono);letter-spacing:.12em;color:var(--koper-l)}
+.haak{position:absolute;left:6%;top:59px;width:2px;height:34px;background:var(--lood-l)}
+.last{position:absolute;left:calc(6% - 47px);top:93px;width:96px;padding:12px 8px;
+  background:#2c3336;border:1px solid var(--lood);text-align:center}
+.last b{display:block;font:600 15px/1.15 var(--sans);color:#fff}
+.last u{display:block;text-decoration:none;font:600 9.5px/1.3 var(--mono);
+  letter-spacing:.13em;color:var(--lood-l);margin-top:4px}
+.bijschrift{margin-top:var(--s3);font:400 15px/1.55 var(--serif);color:#96a1a6;max-width:44ch}
+.bijschrift b{color:var(--koper-l);font-weight:600}
+
+/* het ijkmerk */
+.ijkmerk{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;
+  width:112px;height:112px;border:2.5px solid var(--ijk);border-radius:50%;
+  color:var(--ijk);text-align:center;transform:rotate(-7deg);flex:none}
+.ijkmerk b{font:700 13px/1.1 var(--sans);letter-spacing:.04em}
+.ijkmerk span{font:600 9px/1.35 var(--mono);letter-spacing:.11em;margin-top:5px}
+.ijkmerk u{text-decoration:none;font:700 17px/1 var(--serif);margin-top:6px}
+
+.pijlers{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5);margin-top:var(--s6);
+  border-top:1px solid #364043;padding-top:var(--s5)}
+@media (max-width:900px){.pijlers{grid-template-columns:1fr;gap:var(--s4)}}
+.pijlers h3{font:600 10.5px/1 var(--mono);letter-spacing:.19em;color:var(--koper-l)}
+.pijlers h4{font:400 22px/1.22 var(--serif);color:#fff;margin:11px 0 9px;letter-spacing:-.01em}
+.pijlers p{font-size:16px;color:#a3adb1}
+.pijlers p b{color:#e3e8ea;font-weight:600}
+
+/* ---------- schermkoppen ---------- */
+.schermkop{max-width:72ch;margin-bottom:var(--s5)}
+.schermkop b{display:inline-block;font:600 10.5px/1 var(--mono);letter-spacing:.2em;
+  color:var(--koper-d);border-bottom:2px solid var(--koper);padding-bottom:6px;margin-bottom:var(--s3)}
+.schermkop h2{font:400 clamp(25px,3.2vw,35px)/1.16 var(--serif);color:var(--inkt);letter-spacing:-.018em}
+.schermkop p{margin-top:var(--s3);font-size:17px;color:var(--inkt-2)}
+.schermkop p em{font-style:italic;color:var(--koper-d)}
+
+/* ---------- 2 · kiezer ---------- */
+.weegtafel{background:#fff;border:1px solid var(--vel-3);border-top:3px solid var(--lei)}
+.wtkop{padding:var(--s4);border-bottom:1px solid var(--vel-3);display:flex;
+  align-items:baseline;gap:var(--s3);flex-wrap:wrap}
+.wtkop h3{font:600 19px/1.2 var(--sans);color:var(--inkt);letter-spacing:-.02em}
+.wtkop p{font:500 11.5px/1 var(--mono);letter-spacing:.11em;color:var(--grijs);margin-left:auto}
+
+.weging{display:grid;grid-template-columns:64px 96px 1fr;gap:var(--s4);
+  padding:var(--s4);border-bottom:1px solid var(--vel-2);align-items:start}
+@media (max-width:820px){.weging{grid-template-columns:52px 1fr;gap:var(--s3)}
+  .weging .bd{display:none}}
+.weging:last-child{border-bottom:0}
+.wnr{font:400 34px/1 var(--serif);color:var(--koper);border-top:2px solid var(--koper);padding-top:8px}
+.weging .bd{background:var(--vel);border:1px solid var(--vel-3);padding:7px}
+.weging h4{font:600 19.5px/1.25 var(--sans);color:var(--inkt);letter-spacing:-.022em}
+.weging .zin{font-size:16px;color:var(--inkt-2);margin-top:7px;max-width:60ch}
+
+/* de schaalbalk op scherm */
+.schaalbalk{position:relative;margin-top:var(--s4);height:74px;
+  border-top:1px solid var(--vel-3);padding-top:var(--s3)}
+.sb-lijn{position:absolute;left:0;right:0;top:26px;height:6px;background:var(--lei);border-radius:1px}
+.sb-kerf{position:absolute;top:26px;width:1.5px;height:6px;background:var(--vel)}
+.sb-cijfer{position:absolute;top:40px;transform:translateX(-50%);
+  font:600 12px/1 var(--mono);color:var(--grijs)}
+.sb-loper{position:absolute;top:6px;width:26px;height:44px;transform:translateX(-50%);
+  background:linear-gradient(#8d8f8e,#5b6165 45%,#3a4044);
+  clip-path:polygon(22% 0,78% 0,100% 100%,0 100%)}
+.sb-loper::after{content:attr(data-kerf);position:absolute;left:50%;top:-22px;transform:translateX(-50%);
+  font:700 15px/1 var(--serif);color:var(--inkt);white-space:nowrap}
+.sb-label{position:absolute;right:0;top:0;font:600 10.5px/1 var(--mono);
+  letter-spacing:.13em;color:var(--koper-d)}
+
+.weging.afgekeurd{background:var(--vel);opacity:.94}
+.weging.afgekeurd .wnr{color:var(--grijs);border-top-color:var(--grijs)}
+.afkeur{margin-top:var(--s3);border-left:3px solid var(--ijk);padding:2px 0 2px 14px;
+  font-size:15.5px;color:var(--inkt-2)}
+.afkeur b{color:var(--ijk);font-weight:600}
+
+.ijkregel{display:flex;gap:var(--s4);align-items:center;flex-wrap:wrap;
+  margin-top:var(--s5);padding:var(--s4);background:var(--lei);color:#b9c2c6}
+.ijkregel p{font-size:16.5px;max-width:60ch}
+.ijkregel p b{color:#fff;font-weight:600}
+
+/* ---------- 3 · cliëntkaart ---------- */
+.dossier{border:1px solid var(--vel-3);background:#fff}
+.dosskop{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:baseline;
+  padding:var(--s4);background:var(--lei);color:#fff}
+.dosskop h3{font:400 24px/1.15 var(--serif);letter-spacing:-.015em}
+.dosskop .who{font:500 12px/1.5 var(--mono);letter-spacing:.08em;color:var(--lood-l);margin-left:auto;text-align:right}
+
+.reeks{padding:var(--s4);border-bottom:1px solid var(--vel-2)}
+.reeks:last-child{border-bottom:0}
+.reekskop{display:flex;align-items:baseline;gap:var(--s3);flex-wrap:wrap;margin-bottom:var(--s4)}
+.reekskop h4{font:600 18.5px/1.2 var(--sans);color:var(--inkt);letter-spacing:-.02em}
+.reekskop .kerfnu{font:400 15px/1 var(--serif);color:var(--koper-d);margin-left:auto}
+.reekskop .kerfnu b{font-weight:700;font-size:19px;color:var(--inkt)}
+
+/* de beschreven balk: veertien streepjes op één instrument */
+.beschreven{position:relative;height:96px;margin-top:var(--s2)}
+.bs-lijn{position:absolute;left:0;right:0;top:52px;height:5px;background:var(--lei)}
+.bs-kerf{position:absolute;top:52px;width:1.5px;height:5px;background:#fff}
+.bs-cijfer{position:absolute;top:64px;transform:translateX(-50%);font:600 11.5px/1 var(--mono);color:var(--grijs)}
+.bs-streep{position:absolute;top:26px;width:2px;height:22px;background:var(--inkt);transform:translateX(-50%)}
+.bs-streep.vroeg{background:var(--lood-l)}
+.bs-ijk{position:absolute;top:16px;width:2px;height:46px;background:var(--ijk);transform:translateX(-50%)}
+.bs-ijk::after{content:"IJK";position:absolute;left:50%;top:-16px;transform:translateX(-50%);
+  font:700 9.5px/1 var(--mono);letter-spacing:.1em;color:var(--ijk)}
+.bs-uitleg{position:absolute;left:0;top:80px;font-size:14.5px;color:var(--inkt-2)}
+.bs-uitleg b{color:var(--inkt);font-weight:600}
+
+.geldigheid{display:grid;grid-template-columns:1fr auto;gap:var(--s4);align-items:center;
+  padding:var(--s4);background:var(--vel-2);border-top:2px solid var(--ijk)}
+@media (max-width:720px){.geldigheid{grid-template-columns:1fr}}
+.geldigheid h4{font:400 22px/1.25 var(--serif);color:var(--inkt);letter-spacing:-.015em}
+.geldigheid p{margin-top:9px;font-size:16px;max-width:64ch}
+.geldigheid p b{color:var(--ijk);font-weight:600}
+
+/* ---------- 4 · printkaart ---------- */
+.printuitleg{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-bottom:var(--s5)}
+@media (max-width:900px){.printuitleg{grid-template-columns:1fr}}
+.printuitleg h4{font:600 10.5px/1.35 var(--mono);letter-spacing:.13em;color:var(--inkt);
+  border-top:2px solid var(--lei);padding-top:9px;margin-bottom:8px}
+.printuitleg p{font-size:15.5px}
+.printuitleg p b{color:var(--inkt);font-weight:600}
+
+.bladhouder{background:var(--lei);padding:var(--s5) var(--s4);border:1px solid var(--lei-2)}
+.bladschaal{overflow:hidden}
+.blad{width:210mm;height:297mm;background:#fff;color:#000;
+  box-shadow:0 24px 60px rgba(0,0,0,.45);transform-origin:top left}
+.blad .rand{padding:11mm 13mm 7mm}
+
+/* — de gedrukte kaart: één inkt — */
+.b-kop{display:flex;justify-content:space-between;align-items:flex-start;gap:8mm;
+  border-bottom:1.6mm solid #000;padding-bottom:2.4mm}
+.b-kop h1{font:700 9.4mm/1 var(--sans);letter-spacing:-.03em;color:#000}
+.b-kop .sub{font:400 3.5mm/1.42 var(--sans);color:#1c1c1c;margin-top:2.2mm}
+.b-kop .sub b{font-weight:700}
+.b-ijkblok{border:.5mm solid #000;padding:2.4mm 3mm;text-align:center;flex:none;min-width:44mm}
+.b-ijkblok u{display:block;text-decoration:none;font:700 2.7mm/1 var(--sans);letter-spacing:.16em}
+.b-ijkblok b{display:block;font:700 6mm/1 var(--sans);margin-top:1.6mm;letter-spacing:-.02em}
+.b-ijkblok span{display:block;font:400 3mm/1.35 var(--sans);margin-top:1.6mm}
+
+.b-uitleg{border-bottom:.3mm solid #000;padding:2.6mm 0;margin-bottom:3mm}
+.b-uitleg p{font:700 4.6mm/1.35 var(--sans);color:#000}
+.b-uitleg p span{display:block;font:400 3.7mm/1.5 var(--serif);margin-top:1.8mm;max-width:170mm}
+
+.b-oef{border-bottom:.3mm solid #000;padding-bottom:3mm;margin-bottom:3mm}
+.b-oef:last-of-type{border-bottom:0}
+.b-oefkop{display:grid;grid-template-columns:24mm 1fr 26mm;gap:5mm;align-items:start}
+.b-oefkop .bd{border:.3mm solid #000;padding:1mm}
+.b-oefkop .bd img{width:100%;filter:grayscale(1) contrast(1.35)}
+.b-oefkop h2{font:700 5.5mm/1.16 var(--sans);color:#000;letter-spacing:-.02em}
+.b-oefkop .zin{font:400 3.8mm/1.42 var(--serif);color:#000;margin-top:1.8mm}
+.b-kerf{border:.5mm solid #000;text-align:center;padding:2mm 1mm}
+.b-kerf b{display:block;font:700 8mm/1 var(--sans)}
+.b-kerf u{display:block;text-decoration:none;font:700 2.5mm/1.25 var(--sans);letter-spacing:.1em;margin-top:1.4mm}
+
+/* de gedrukte balk met kerven: 150 mm, elke 15 mm een kerf */
+.b-balk{position:relative;height:16mm;margin-top:3.4mm}
+.b-b-lijn{position:absolute;left:0;width:150mm;top:6mm;height:1.4mm;background:#000}
+.b-b-kerf{position:absolute;top:3.4mm;width:.5mm;height:4mm;background:#000}
+.b-b-cijfer{position:absolute;top:8.8mm;transform:translateX(-50%);font:700 4.6mm/1 var(--sans)}
+.b-b-punt{position:absolute;top:2.6mm;transform:translateX(-50%);
+  width:0;height:0;border-left:2.6mm solid transparent;border-right:2.6mm solid transparent;
+  border-top:3mm solid #000}
+.b-b-punt::after{content:"VANDAAG BEGONNEN WE HIER";position:absolute;left:50%;top:-4.8mm;
+  transform:translateX(-50%);white-space:nowrap;font:700 2.5mm/1 var(--sans);letter-spacing:.08em}
+.b-b-eind{position:absolute;left:156mm;top:2.6mm;font:400 3mm/1.3 var(--serif);width:26mm}
+
+.b-voet{border-top:1.6mm solid #000;padding-top:2.4mm;display:grid;
+  grid-template-columns:1fr 52mm;gap:6mm}
+.b-voet p{font:400 3.5mm/1.45 var(--serif);color:#000}
+.b-voet p b{font-weight:700}
+.b-praktijk{text-align:right;font:400 3.2mm/1.45 var(--sans)}
+.b-praktijk b{display:block;font-weight:700;font-size:3.6mm}
+
+/* ---------- uitleiding ---------- */
+footer.uitleiding{background:var(--lei);color:#9aa4a8;padding:var(--s6) 0}
+footer.uitleiding .binnen{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
+@media (max-width:880px){footer.uitleiding .binnen{grid-template-columns:1fr;gap:var(--s4)}}
+footer h4{font:600 10.5px/1 var(--mono);letter-spacing:.18em;color:var(--koper-l);margin-bottom:var(--s3)}
+footer p{font-size:15.5px}
+footer ul{list-style:none;font-size:15.5px}
+footer li{padding:7px 0;border-bottom:1px solid #303a3d}
+footer a{color:#cdd5d8}
+
+/* ============================================================
+   PRINT — alleen de kaart, één inkt, A4 staand
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff !important;color:#000;margin:0;padding:0}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .geen-print{display:none !important}
+  main > section:not(#printkaart){display:none !important}
+  .schermkop,.printuitleg{display:none !important}
+  .scherm{padding:0 !important;background:#fff !important;border:0 !important}
+  .binnen{max-width:none !important;padding:0 !important}
+  .bladhouder{background:#fff !important;border:0 !important;padding:0 !important}
+  footer.uitleiding{display:none !important}
+  .bladschaal{width:auto !important;max-width:none !important;overflow:visible !important;height:auto !important}
+  .blad{width:210mm;height:297mm;transform:none !important;box-shadow:none !important;
+    margin:0 !important;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="labbalk geen-print">
+  <span class="nr">CONCEPT 70</span>
+  <strong style="font:700 16px/1 var(--sans);color:#fff;letter-spacing:-.02em">Unster</strong>
+  <span class="rek"></span>
+  <a href="#landing">Landing</a>
+  <a href="#kiezer">Kiezer</a>
+  <a href="#clientkaart">Cliëntkaart</a>
+  <a href="#printkaart">Printkaart</a>
+  <a class="terug" href="/ontwerp/">← Galerij</a>
+</div>
+
+<main>
+
+<!-- ══════════════════ 1 · LANDING ══════════════════ -->
+<section class="scherm" id="landing">
+  <div class="binnen">
+
+    <div class="merkregel">
+      <span class="vlag" aria-hidden="true">F</span>
+      <span class="naam">Fysiplan</span>
+      <span class="pad">CONCEPT 70 · UNSTER</span>
+    </div>
+
+    <div class="hero">
+      <div>
+        <h1>Geen twee schalen.<br/>Eén arm, en het <em>gewicht schuift</em>.</h1>
+        <p class="lead">Elke fysiotherapeut tekent hetzelfde plaatje: een weegschaal met belasting
+          links en belastbaarheid rechts. Alsof belastbaarheid iets is dat je erbíj legt. De unster —
+          het weeginstrument dat hier al sinds de Romeinen in de grond zit — heeft geen twee schalen.
+          Hij heeft <b>één arm en één gewicht dat schuift</b>, en je leest af waar het kantelt.
+          Op deze kaart staat daarom geen doel, maar een <b>kerf</b>.</p>
+      </div>
+
+      <div class="instrument" aria-label="Een unster: één arm, een haak met de last en een schuivend gewicht">
+        <div class="balkhouder">
+          <div class="juk"></div>
+          <div class="balk"></div>
+          <div class="kerven" aria-hidden="true">
+            <i class="h" style="left:0%"></i><i style="left:12.5%"></i>
+            <i class="h" style="left:25%"></i><i style="left:37.5%"></i>
+            <i class="h" style="left:50%"></i><i style="left:62.5%"></i>
+            <i class="h" style="left:75%"></i><i style="left:87.5%"></i>
+            <i class="h" style="left:100%"></i>
+          </div>
+          <div class="kerfcijfers" aria-hidden="true">
+            <span style="left:0%">1</span><span style="left:25%">3</span>
+            <span style="left:50%">5</span><span style="left:75%">7</span>
+            <span style="left:100%">9</span>
+          </div>
+          <div class="loper" style="left:calc(22% + 41%)"></div>
+          <div class="loperlabel" style="left:calc(22% + 41% + 19px)">KANTELT<br/>OP KERF 6</div>
+          <div class="haak"></div>
+          <div class="last">
+            <b>Uw dag</b>
+            <u>DE LAST</u>
+          </div>
+        </div>
+        <p class="bijschrift">De last hangt vast aan de korte arm. Alleen de <b>loper</b> beweegt —
+          u legt er niets bij, u zoekt het punt.</p>
+      </div>
+    </div>
+
+    <div class="pijlers">
+      <div>
+        <h3>Pijler 01</h3>
+        <h4>Een kerf, geen doel</h4>
+        <p>Bij elke oefening staat het getal waarop het vandaag <b>kantelde</b> — het punt waar het
+          nog net goed voelde. Dat is geen minimum om te halen en geen maximum om onder te blijven.
+          Het is een aflezing, en aflezingen kunnen niet mislukken.</p>
+      </div>
+      <div>
+        <h3>Pijler 02</h3>
+        <h4>De balk is het dossier</h4>
+        <p>Elke dag zet u één streepje op dezelfde balk, op de kerf van die dag. Na twee weken staan
+          er veertien streepjes op één liniaal. <b>Niemand hoefde een grafiek te tekenen</b> — het
+          instrument zelf is beschreven, en u leest het zonder uitleg.</p>
+      </div>
+      <div>
+        <h3>Pijler 03</h3>
+        <h4>De kaart verloopt met opzet</h4>
+        <p>Een unster mocht in de handel niet zonder ijkmerk, en dat merk verliep: elk instrument
+          moest herijkt. Deze kaart draagt een <b>ijkdatum en een geldig tot</b>. Uw belastbaarheid
+          van vandaag is over vier weken niet meer waar, en een kaart die doet alsof weegt vals.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · KIEZER ══════════════════ -->
+<section class="scherm diep" id="kiezer">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Kiezer</b>
+      <h2>IJken doe je samen: de loper schuift tot de arm kantelt</h2>
+      <p>Kiezen is hier hetzelfde als wegen. Voor elke oefening die op de kaart komt, schuift de
+        therapeut in de behandelkamer de loper op — vier, vijf, zes — tot mevrouw De Wit zegt: <em>hier
+        wordt het zwaar, maar het trekt nog niet.</em> Dát getal wordt gedrukt. Niet een norm uit een
+        tabel, niet het aantal van de vorige patiënt: het kantelpunt van vandaag, van haar.</p>
+    </div>
+
+    <div class="weegtafel">
+      <div class="wtkop">
+        <h3>Weging van 2 september — mevrouw A. de Wit, 68 · knieklachten links</h3>
+        <p>IJKMEESTER: J. MEPPELINK, FYSIOTHERAPIE WILHELMINAPARK</p>
+      </div>
+
+      <div class="weging">
+        <div class="wnr">I</div>
+        <div class="bd"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt="Opstaan uit de stoel"/></div>
+        <div>
+          <h4>Opstaan uit de stoel, zonder handen</h4>
+          <p class="zin">Voeten plat, armen gekruist voor de borst. Sta rustig op en ga rustig weer
+            zitten. Bij zes keer werd het zwaar in de linkerknie, bij zeven trok het na afloop nog na.
+            De loper blijft op zes staan.</p>
+          <div class="schaalbalk">
+            <div class="sb-lijn"></div>
+            <div class="sb-label">KERF VAN VANDAAG</div>
+            <span class="sb-kerf" style="left:10%"></span><span class="sb-kerf" style="left:20%"></span>
+            <span class="sb-kerf" style="left:30%"></span><span class="sb-kerf" style="left:40%"></span>
+            <span class="sb-kerf" style="left:50%"></span><span class="sb-kerf" style="left:60%"></span>
+            <span class="sb-kerf" style="left:70%"></span><span class="sb-kerf" style="left:80%"></span>
+            <span class="sb-kerf" style="left:90%"></span>
+            <span class="sb-cijfer" style="left:0%">1</span><span class="sb-cijfer" style="left:20%">3</span>
+            <span class="sb-cijfer" style="left:40%">5</span><span class="sb-cijfer" style="left:60%">7</span>
+            <span class="sb-cijfer" style="left:80%">9</span><span class="sb-cijfer" style="left:100%">11</span>
+            <div class="sb-loper" style="left:50%" data-kerf="6 keer"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="weging">
+        <div class="wnr">II</div>
+        <div class="bd"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt="Op de tenen komen"/></div>
+        <div>
+          <h4>Op de tenen komen bij het aanrecht</h4>
+          <p class="zin">Vingertoppen op het aanrecht, niet leunen. Kom rustig op de tenen en laat de
+            hielen langzaam zakken. Tien ging vlot, bij twaalf begon het onderbeen te branden en werd
+            het zakken slordig. Het kantelpunt ligt op elf.</p>
+          <div class="schaalbalk">
+            <div class="sb-lijn"></div>
+            <div class="sb-label">KERF VAN VANDAAG</div>
+            <span class="sb-kerf" style="left:10%"></span><span class="sb-kerf" style="left:20%"></span>
+            <span class="sb-kerf" style="left:30%"></span><span class="sb-kerf" style="left:40%"></span>
+            <span class="sb-kerf" style="left:50%"></span><span class="sb-kerf" style="left:60%"></span>
+            <span class="sb-kerf" style="left:70%"></span><span class="sb-kerf" style="left:80%"></span>
+            <span class="sb-kerf" style="left:90%"></span>
+            <span class="sb-cijfer" style="left:0%">3</span><span class="sb-cijfer" style="left:20%">5</span>
+            <span class="sb-cijfer" style="left:40%">7</span><span class="sb-cijfer" style="left:60%">9</span>
+            <span class="sb-cijfer" style="left:80%">11</span><span class="sb-cijfer" style="left:100%">13</span>
+            <div class="sb-loper" style="left:80%" data-kerf="11 keer"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="weging">
+        <div class="wnr">III</div>
+        <div class="bd"><img src="/images/seated-chair/one-leg-standing-line-v1.png" alt="Op één been staan"/></div>
+        <div>
+          <h4>Op één been staan, hand bij de leuning</h4>
+          <p class="zin">Achter een stoel, vingertoppen los op de leuning. Hoe lang blijft het rustig?
+            Rechts vijftien tellen, links negen — en bij twaalf ging links de heup wiebelen. Het laagste
+            kantelpunt telt, dus de loper staat op negen.</p>
+          <div class="schaalbalk">
+            <div class="sb-lijn"></div>
+            <div class="sb-label">KERF VAN VANDAAG</div>
+            <span class="sb-kerf" style="left:10%"></span><span class="sb-kerf" style="left:20%"></span>
+            <span class="sb-kerf" style="left:30%"></span><span class="sb-kerf" style="left:40%"></span>
+            <span class="sb-kerf" style="left:50%"></span><span class="sb-kerf" style="left:60%"></span>
+            <span class="sb-kerf" style="left:70%"></span><span class="sb-kerf" style="left:80%"></span>
+            <span class="sb-kerf" style="left:90%"></span>
+            <span class="sb-cijfer" style="left:0%">3</span><span class="sb-cijfer" style="left:20%">6</span>
+            <span class="sb-cijfer" style="left:40%">9</span><span class="sb-cijfer" style="left:60%">12</span>
+            <span class="sb-cijfer" style="left:80%">15</span><span class="sb-cijfer" style="left:100%">18</span>
+            <div class="sb-loper" style="left:40%" data-kerf="9 tellen"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="weging afgekeurd">
+        <div class="wnr">—</div>
+        <div class="bd"><img src="/images/mobility/hamstring-stretch-line-v1.png" alt="Hamstring rekken"/></div>
+        <div>
+          <h4>Hamstring rekken met de voet op een krukje</h4>
+          <p class="zin">Zou goed passen bij de knie, maar er is vandaag geen kantelpunt gevonden:
+            mevrouw De Wit voelde bij elke stand hetzelfde en kon niet aanwijzen waar het omsloeg.</p>
+          <p class="afkeur"><b>Niet geijkt, dus niet gedrukt.</b> Een oefening zonder afleesbaar
+            kantelpunt is een oefening zonder maat, en die hoort niet op een kaart die zich voordoet
+            als een instrument. Hij komt terug bij de herijking op 30 september.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ijkregel">
+      <div class="ijkmerk" aria-label="IJkmerk">
+        <b>GEIJKT</b>
+        <u>02·IX</u>
+        <span>WILHELMINAPARK</span>
+      </div>
+      <p><b>Drie oefeningen geijkt, één afgekeurd.</b> Het ijkmerk is geen versiering: het zegt wie
+        gewogen heeft, op welke dag, en tot wanneer de aflezing geldt. Wat niet geijkt is, staat niet
+        op de kaart — en dat is geen strengheid maar het verschil tussen een meetinstrument en een
+        lijstje goede voornemens.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · CLIËNTKAART ══════════════════ -->
+<section class="scherm wit" id="clientkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Cliëntkaart</b>
+      <h2>Veertien streepjes op één balk, en de rode kerf van de ijkdag</h2>
+      <p>Er is geen grafiek, geen percentage en geen weekgemiddelde. Er is één balk per oefening,
+        met de <em>rode kerf</em> van de ijkdag en de streepjes die mevrouw De Wit zelf zette. Waar
+        de streepjes naar rechts kruipen is de arm zwaarder gaan dragen; waar ze links van de rode
+        kerf blijven, is er iets te bespreken. Beide zijn aflezingen — <em>geen van beide is een cijfer
+        voor haar</em>.</p>
+    </div>
+
+    <div class="dossier">
+      <div class="dosskop">
+        <h3>Wegingen 2 t/m 15 september</h3>
+        <span class="who">MEVR. A. DE WIT, 68 · KNIE LINKS<br/>IJKDATUM 02·IX · GELDIG TOT 30·IX</span>
+      </div>
+
+      <div class="reeks">
+        <div class="reekskop">
+          <h4>I · Opstaan uit de stoel</h4>
+          <span class="kerfnu">Kerf op de ijkdag: <b>6</b> · laatste drie dagen: <b>9</b></span>
+        </div>
+        <div class="beschreven">
+          <div class="bs-lijn"></div>
+          <span class="bs-kerf" style="left:10%"></span><span class="bs-kerf" style="left:20%"></span>
+          <span class="bs-kerf" style="left:30%"></span><span class="bs-kerf" style="left:40%"></span>
+          <span class="bs-kerf" style="left:50%"></span><span class="bs-kerf" style="left:60%"></span>
+          <span class="bs-kerf" style="left:70%"></span><span class="bs-kerf" style="left:80%"></span>
+          <span class="bs-kerf" style="left:90%"></span>
+          <span class="bs-cijfer" style="left:0%">1</span><span class="bs-cijfer" style="left:20%">3</span>
+          <span class="bs-cijfer" style="left:40%">5</span><span class="bs-cijfer" style="left:60%">7</span>
+          <span class="bs-cijfer" style="left:80%">9</span><span class="bs-cijfer" style="left:100%">11</span>
+          <span class="bs-ijk" style="left:50%"></span>
+          <span class="bs-streep vroeg" style="left:44%"></span><span class="bs-streep vroeg" style="left:50%"></span>
+          <span class="bs-streep vroeg" style="left:52%"></span><span class="bs-streep vroeg" style="left:56%"></span>
+          <span class="bs-streep" style="left:60%"></span><span class="bs-streep" style="left:62%"></span>
+          <span class="bs-streep" style="left:66%"></span><span class="bs-streep" style="left:70%"></span>
+          <span class="bs-streep" style="left:72%"></span><span class="bs-streep" style="left:78%"></span>
+          <span class="bs-streep" style="left:80%"></span><span class="bs-streep" style="left:80%"></span>
+          <p class="bs-uitleg">Twaalf streepjes, en ze schuiven op. <b>De arm draagt meer voordat hij
+            kantelt</b> — dat is precies wat trainen betekent.</p>
+        </div>
+      </div>
+
+      <div class="reeks">
+        <div class="reekskop">
+          <h4>II · Op de tenen komen</h4>
+          <span class="kerfnu">Kerf op de ijkdag: <b>11</b> · laatste drie dagen: <b>12</b></span>
+        </div>
+        <div class="beschreven">
+          <div class="bs-lijn"></div>
+          <span class="bs-kerf" style="left:10%"></span><span class="bs-kerf" style="left:20%"></span>
+          <span class="bs-kerf" style="left:30%"></span><span class="bs-kerf" style="left:40%"></span>
+          <span class="bs-kerf" style="left:50%"></span><span class="bs-kerf" style="left:60%"></span>
+          <span class="bs-kerf" style="left:70%"></span><span class="bs-kerf" style="left:80%"></span>
+          <span class="bs-kerf" style="left:90%"></span>
+          <span class="bs-cijfer" style="left:0%">3</span><span class="bs-cijfer" style="left:20%">5</span>
+          <span class="bs-cijfer" style="left:40%">7</span><span class="bs-cijfer" style="left:60%">9</span>
+          <span class="bs-cijfer" style="left:80%">11</span><span class="bs-cijfer" style="left:100%">13</span>
+          <span class="bs-ijk" style="left:80%"></span>
+          <span class="bs-streep vroeg" style="left:78%"></span><span class="bs-streep vroeg" style="left:80%"></span>
+          <span class="bs-streep vroeg" style="left:84%"></span><span class="bs-streep vroeg" style="left:80%"></span>
+          <span class="bs-streep" style="left:86%"></span><span class="bs-streep" style="left:84%"></span>
+          <span class="bs-streep" style="left:88%"></span><span class="bs-streep" style="left:90%"></span>
+          <span class="bs-streep" style="left:86%"></span><span class="bs-streep" style="left:90%"></span>
+          <span class="bs-streep" style="left:92%"></span>
+          <p class="bs-uitleg">Elf streepjes, dicht op elkaar rond de ijkkerf. <b>Rustig, en dat mag</b> —
+            een balk die stilstaat is geen stilstand, het is een maat die klopt.</p>
+        </div>
+      </div>
+
+      <div class="reeks">
+        <div class="reekskop">
+          <h4>III · Op één been staan</h4>
+          <span class="kerfnu">Kerf op de ijkdag: <b>9</b> · laatste drie dagen: <b>7</b></span>
+        </div>
+        <div class="beschreven">
+          <div class="bs-lijn"></div>
+          <span class="bs-kerf" style="left:10%"></span><span class="bs-kerf" style="left:20%"></span>
+          <span class="bs-kerf" style="left:30%"></span><span class="bs-kerf" style="left:40%"></span>
+          <span class="bs-kerf" style="left:50%"></span><span class="bs-kerf" style="left:60%"></span>
+          <span class="bs-kerf" style="left:70%"></span><span class="bs-kerf" style="left:80%"></span>
+          <span class="bs-kerf" style="left:90%"></span>
+          <span class="bs-cijfer" style="left:0%">3</span><span class="bs-cijfer" style="left:20%">6</span>
+          <span class="bs-cijfer" style="left:40%">9</span><span class="bs-cijfer" style="left:60%">12</span>
+          <span class="bs-cijfer" style="left:80%">15</span><span class="bs-cijfer" style="left:100%">18</span>
+          <span class="bs-ijk" style="left:40%"></span>
+          <span class="bs-streep vroeg" style="left:40%"></span><span class="bs-streep vroeg" style="left:44%"></span>
+          <span class="bs-streep vroeg" style="left:38%"></span><span class="bs-streep vroeg" style="left:42%"></span>
+          <span class="bs-streep" style="left:34%"></span><span class="bs-streep" style="left:30%"></span>
+          <span class="bs-streep" style="left:32%"></span><span class="bs-streep" style="left:28%"></span>
+          <span class="bs-streep" style="left:26%"></span>
+          <p class="bs-uitleg">Deze balk loopt terug, en dat is geen slechte wil. <b>Er is iets
+            veranderd sinds de ijkdag</b> — dat is de vraag voor 30 september, niet een verwijt.</p>
+        </div>
+      </div>
+
+      <div class="geldigheid">
+        <div>
+          <h4>Deze kaart verloopt op 30 september, en dat is de bedoeling</h4>
+          <p>Een ijkmerk is geen keurmerk voor altijd; het is een verklaring over één moment. Wat op
+            2 september bij mevrouw De Wit gemeten is, is over vier weken vermoedelijk niet meer waar —
+            en <b>een verlopen instrument liegt met gezag</b>. Daarom staat er geen “blijf dit doen”
+            op deze kaart, maar een datum waarop hij ophoudt te gelden en er opnieuw gewogen wordt.</p>
+        </div>
+        <div class="ijkmerk"><b>GEIJKT</b><u>02·IX</u><span>GELDIG T/M 30·IX</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · PRINTKAART ══════════════════ -->
+<section class="scherm" id="printkaart">
+  <div class="binnen">
+    <div class="schermkop">
+      <b>Printkaart</b>
+      <h2>De weegbrief: A4 staand, drie balken, één inkt</h2>
+      <p>Op papier verdwijnt al het metaal. Wat overblijft is een liniaal onder elke oefening —
+        150 millimeter, een kerf om de 15 — en het gedrukte driehoekje op het kantelpunt van de ijkdag.
+        Elke dag zet u er één streepje bij, met de pen die naast de kaart ligt.</p>
+    </div>
+
+    <div class="printuitleg">
+      <div>
+        <h4>EEN LINIAAL, GEEN VAKJES</h4>
+        <p>Geen veertien hokjes om af te vinken maar één balk die veertien keer beschreven wordt.
+          De kerven staan 15 mm uit elkaar: <b>ruim genoeg voor een balpenstreepje zonder bril</b>,
+          en na twee weken leest u de reeks in één blik.</p>
+      </div>
+      <div>
+        <h4>HET DRIEHOEKJE STAAT AL GEDRUKT</h4>
+        <p>Op de kerf van de ijkdag, met het zinnetje <b>“vandaag begonnen we hier”</b> erboven. Wie
+          niets van kantelpunten begrijpt, ziet een liniaal met een pijltje en zet zijn streepje
+          ernaast — precies genoeg om goed te beginnen.</p>
+      </div>
+      <div>
+        <h4>DE GELDIGHEID STAAT IN DE KOP</h4>
+        <p>IJkdatum en <b>geldig tot</b> in een kader rechtsboven, even groot als de naam van de
+          praktijk. Geen kleine lettertjes onderaan: als de kaart een instrument wil zijn, hoort
+          zijn houdbaarheid boven te staan.</p>
+      </div>
+    </div>
+
+    <div class="bladhouder">
+      <div class="bladschaal" id="schaal">
+        <div class="blad" id="blad">
+          <div class="rand">
+
+            <div class="b-kop">
+              <div>
+                <h1>Weegbrief</h1>
+                <p class="sub"><b>Mevrouw A. de Wit</b> · knieklachten links · drie oefeningen<br/>
+                  Elke dag één streepje op de balk, op het getal van vandaag.</p>
+              </div>
+              <div class="b-ijkblok">
+                <u>GEIJKT OP</u>
+                <b>2 SEPT</b>
+                <span>Geldig tot <b>30 september</b><br/>Daarna opnieuw wegen</span>
+              </div>
+            </div>
+
+            <div class="b-uitleg">
+              <p>Doe de oefening tot het zwaar wordt, maar niet tot het natrekt.
+                <span>Zet dan een streepje op de balk bij het getal dat u haalde. Het driehoekje is
+                  waar we samen begonnen op 2 september. Hoger is winst, lager is informatie — schrijf
+                  op wat er wás, niet wat er had gemoeten.</span></p>
+            </div>
+
+            <div class="b-oef">
+              <div class="b-oefkop">
+                <div class="bd"><img src="/images/onderste-extremiteit/chair-squat-line-v1.png" alt=""/></div>
+                <div>
+                  <h2>1 · Opstaan uit de stoel, zonder handen</h2>
+                  <p class="zin">Voeten plat op de grond, armen gekruist voor uw borst. Sta rustig op
+                    en ga rustig weer zitten. Stop wanneer het zwaar wordt in de linkerknie.</p>
+                </div>
+                <div class="b-kerf"><b>6</b><u>KEER<br/>OP 2 SEPT</u></div>
+              </div>
+              <div class="b-balk">
+                <div class="b-b-lijn"></div>
+                <span class="b-b-kerf" style="left:0mm"></span><span class="b-b-kerf" style="left:15mm"></span>
+                <span class="b-b-kerf" style="left:30mm"></span><span class="b-b-kerf" style="left:45mm"></span>
+                <span class="b-b-kerf" style="left:60mm"></span><span class="b-b-kerf" style="left:75mm"></span>
+                <span class="b-b-kerf" style="left:90mm"></span><span class="b-b-kerf" style="left:105mm"></span>
+                <span class="b-b-kerf" style="left:120mm"></span><span class="b-b-kerf" style="left:135mm"></span>
+                <span class="b-b-kerf" style="left:150mm"></span>
+                <span class="b-b-cijfer" style="left:0mm">1</span><span class="b-b-cijfer" style="left:15mm">2</span>
+                <span class="b-b-cijfer" style="left:30mm">3</span><span class="b-b-cijfer" style="left:45mm">4</span>
+                <span class="b-b-cijfer" style="left:60mm">5</span><span class="b-b-cijfer" style="left:75mm">6</span>
+                <span class="b-b-cijfer" style="left:90mm">7</span><span class="b-b-cijfer" style="left:105mm">8</span>
+                <span class="b-b-cijfer" style="left:120mm">9</span><span class="b-b-cijfer" style="left:135mm">10</span>
+                <span class="b-b-cijfer" style="left:150mm">11</span>
+                <span class="b-b-punt" style="left:75mm"></span>
+                <span class="b-b-eind">Meer dan 11? Zet uw streepje hier en schrijf het getal erbij.</span>
+              </div>
+            </div>
+
+            <div class="b-oef">
+              <div class="b-oefkop">
+                <div class="bd"><img src="/images/onderste-extremiteit/calf-raises-line-v1.png" alt=""/></div>
+                <div>
+                  <h2>2 · Op de tenen komen bij het aanrecht</h2>
+                  <p class="zin">Vingertoppen los op het aanrecht, niet leunen. Kom rustig op de tenen
+                    en laat de hielen langzaam zakken. Stop zodra het zakken slordig wordt.</p>
+                </div>
+                <div class="b-kerf"><b>11</b><u>KEER<br/>OP 2 SEPT</u></div>
+              </div>
+              <div class="b-balk">
+                <div class="b-b-lijn"></div>
+                <span class="b-b-kerf" style="left:0mm"></span><span class="b-b-kerf" style="left:15mm"></span>
+                <span class="b-b-kerf" style="left:30mm"></span><span class="b-b-kerf" style="left:45mm"></span>
+                <span class="b-b-kerf" style="left:60mm"></span><span class="b-b-kerf" style="left:75mm"></span>
+                <span class="b-b-kerf" style="left:90mm"></span><span class="b-b-kerf" style="left:105mm"></span>
+                <span class="b-b-kerf" style="left:120mm"></span><span class="b-b-kerf" style="left:135mm"></span>
+                <span class="b-b-kerf" style="left:150mm"></span>
+                <span class="b-b-cijfer" style="left:0mm">5</span><span class="b-b-cijfer" style="left:15mm">6</span>
+                <span class="b-b-cijfer" style="left:30mm">7</span><span class="b-b-cijfer" style="left:45mm">8</span>
+                <span class="b-b-cijfer" style="left:60mm">9</span><span class="b-b-cijfer" style="left:75mm">10</span>
+                <span class="b-b-cijfer" style="left:90mm">11</span><span class="b-b-cijfer" style="left:105mm">12</span>
+                <span class="b-b-cijfer" style="left:120mm">13</span><span class="b-b-cijfer" style="left:135mm">14</span>
+                <span class="b-b-cijfer" style="left:150mm">15</span>
+                <span class="b-b-punt" style="left:90mm"></span>
+                <span class="b-b-eind">Minder dan 5? Zet uw streepje hier links en schrijf het getal erbij.</span>
+              </div>
+            </div>
+
+            <div class="b-oef">
+              <div class="b-oefkop">
+                <div class="bd"><img src="/images/seated-chair/one-leg-standing-line-v1.png" alt=""/></div>
+                <div>
+                  <h2>3 · Op één been staan, hand bij de leuning</h2>
+                  <p class="zin">Achter een stoel, vingertoppen los op de leuning. Sta op uw linkerbeen
+                    en tel rustig. Stop zodra de heup gaat wiebelen — het gaat om rustig staan, niet om
+                    lang staan.</p>
+                </div>
+                <div class="b-kerf"><b>9</b><u>TELLEN<br/>OP 2 SEPT</u></div>
+              </div>
+              <div class="b-balk">
+                <div class="b-b-lijn"></div>
+                <span class="b-b-kerf" style="left:0mm"></span><span class="b-b-kerf" style="left:15mm"></span>
+                <span class="b-b-kerf" style="left:30mm"></span><span class="b-b-kerf" style="left:45mm"></span>
+                <span class="b-b-kerf" style="left:60mm"></span><span class="b-b-kerf" style="left:75mm"></span>
+                <span class="b-b-kerf" style="left:90mm"></span><span class="b-b-kerf" style="left:105mm"></span>
+                <span class="b-b-kerf" style="left:120mm"></span><span class="b-b-kerf" style="left:135mm"></span>
+                <span class="b-b-kerf" style="left:150mm"></span>
+                <span class="b-b-cijfer" style="left:0mm">3</span><span class="b-b-cijfer" style="left:15mm">5</span>
+                <span class="b-b-cijfer" style="left:30mm">7</span><span class="b-b-cijfer" style="left:45mm">9</span>
+                <span class="b-b-cijfer" style="left:60mm">11</span><span class="b-b-cijfer" style="left:75mm">13</span>
+                <span class="b-b-cijfer" style="left:90mm">15</span><span class="b-b-cijfer" style="left:105mm">17</span>
+                <span class="b-b-cijfer" style="left:120mm">19</span><span class="b-b-cijfer" style="left:135mm">21</span>
+                <span class="b-b-cijfer" style="left:150mm">23</span>
+                <span class="b-b-punt" style="left:45mm"></span>
+                <span class="b-b-eind">Tel in gewone tellen: eenentwintig, tweeëntwintig.</span>
+              </div>
+            </div>
+
+            <div class="b-voet">
+              <p><b>Een streepje links van het driehoekje is geen mislukking.</b> Het is een aflezing,
+                en aflezingen hoeven niet mooi te zijn om waar te zijn. Neem dit blad mee op
+                30 september — dan wegen we opnieuw en krijgt u een nieuwe balk. Bij pijn die na een
+                uur niet zakt: niet doorzetten, wél bellen.</p>
+              <div class="b-praktijk">
+                <b>Fysiotherapie Wilhelminapark</b>
+                J. Meppelink · Utrecht<br/>
+                030 – 232 41 08<br/>
+                Herijking: di 30 sept, 10:40
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="uitleiding geen-print">
+  <div class="binnen">
+    <div>
+      <h4>DE RICHTING</h4>
+      <p>Het balansplaatje van het vak klopt niet als instrument: belastbaarheid is geen schaal die
+        je bijvult. De unster kent één arm en één schuivend gewicht — je zoekt het kantelpunt en
+        leest de kerf af. Dat is eerlijker, en het maakt van de kaart een meetinstrument in plaats
+        van een lijst voornemens.</p>
+    </div>
+    <div>
+      <h4>WAT DIT CONCEPT VASTHOUDT</h4>
+      <ul>
+        <li>Een kerf in plaats van een doel</li>
+        <li>Streepjes op de balk, geen vakjes om af te vinken</li>
+        <li>Een ijkdatum én een geldig tot, groot in de kop</li>
+        <li>Wat niet te wegen is, wordt niet gedrukt</li>
+      </ul>
+    </div>
+    <div>
+      <h4>ELDERS</h4>
+      <ul>
+        <li><a href="/ontwerp/">← Terug naar de galerij</a></li>
+        <li><a href="/">Fysiplan v1 — de app</a></li>
+        <li><a href="/v2">Fysiplan v2 — de landing</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var schaal=document.getElementById('schaal'), blad=document.getElementById('blad');
+  function pas(){
+    if(!schaal||!blad) return;
+    blad.style.transform='none';
+    var f=Math.min(1,schaal.clientWidth/blad.offsetWidth);
+    blad.style.transform='scale('+f+')';
+    blad.style.transformOrigin='top left';
+    schaal.style.height=(blad.offsetHeight*f)+'px';
+  }
+  window.addEventListener('resize',pas);
+  window.addEventListener('load',pas);
+  pas();
+})();
+</script>
+
+</body>
+</html>

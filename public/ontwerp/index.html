@@ -1070,6 +1070,59 @@ main .binnen{padding-top:var(--s6);padding-bottom:var(--s6)}
   margin-left:-1px;background:#77786f}
 .staal.duivenvlucht .strepen{display:none}
 
+/* — staal concept 70: Unster — */
+.staal.unster{background:#22282b;color:#f5f3ed}
+.staal.unster .plaatnr{color:#d6a648;font-family:var(--mono)}
+.staal.unster .woord{font-family:Charter,Georgia,serif;font-weight:400;font-size:26px;
+  max-width:64%;position:relative;z-index:2;letter-spacing:-.02em}
+.staal.unster .woord em{font-style:italic;color:#d6a648}
+.staal.unster .arm{position:absolute;left:0;right:0;top:96px;height:7px;
+  background:linear-gradient(#d6a648,#a8762c 45%,#7a5417)}
+.staal.unster .arm i{position:absolute;top:0;width:1.5px;height:7px;background:rgba(0,0,0,.55)}
+.staal.unster .loper{position:absolute;left:64%;top:84px;width:19px;height:31px;
+  background:linear-gradient(#8d8f8e,#5b6165 45%,#3a4044);
+  clip-path:polygon(22% 0,78% 0,100% 100%,0 100%)}
+.staal.unster .strepen{display:none}
+
+/* — staal concept 71: Sleutelplan — */
+.staal.sleutelplan{background:#10161a;color:#e9eef0;
+  background-image:linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:26px 100%}
+.staal.sleutelplan .plaatnr{color:#e8613f;font-family:var(--mono)}
+.staal.sleutelplan .woord{font-family:"Avenir Next",Seravek,system-ui,sans-serif;font-weight:700;
+  font-size:25px;letter-spacing:-.042em;max-width:60%;position:relative;z-index:2}
+.staal.sleutelplan .woord em{font-style:normal;color:#e8613f}
+.staal.sleutelplan .sl{position:absolute;right:16px;top:50%;transform:translateY(-50%);
+  display:flex;align-items:center;color:#9fadb5}
+.staal.sleutelplan .sl b{width:26px;height:26px;border:3px solid currentColor;border-radius:50%;flex:none}
+.staal.sleutelplan .sl s{width:10px;height:8px;background:currentColor;margin-left:-3px}
+.staal.sleutelplan .sl i{width:62px;height:19px;background:currentColor;
+  clip-path:polygon(0 0,100% 0,100% 52%,84% 52%,84% 100%,66% 100%,66% 40%,
+    48% 40%,48% 88%,30% 88%,30% 100%,0 100%)}
+.staal.sleutelplan .strepen{display:none}
+
+/* — staal concept 72: Verjaardagskalender — */
+.staal.verjaardagskalender{background:#faf4e6;color:#292115}
+.staal.verjaardagskalender .plaatnr{color:#b4636b;font-family:var(--mono)}
+.staal.verjaardagskalender .woord{font-family:"Iowan Old Style",Charter,Palatino,Georgia,serif;
+  font-weight:400;font-size:26px;max-width:62%;position:relative;z-index:2;letter-spacing:-.02em}
+.staal.verjaardagskalender .woord em{font-style:italic;color:#b4636b}
+.staal.verjaardagskalender .bl{position:absolute;right:22px;top:22px;width:46px;height:46px;
+  color:#dba0a3}
+.staal.verjaardagskalender .bl i{position:absolute;left:50%;top:50%;width:17px;height:23px;
+  margin:-23px 0 0 -8.5px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+  transform-origin:50% 100%;background:currentColor}
+.staal.verjaardagskalender .bl i:nth-child(1){transform:rotate(0deg)}
+.staal.verjaardagskalender .bl i:nth-child(2){transform:rotate(72deg)}
+.staal.verjaardagskalender .bl i:nth-child(3){transform:rotate(144deg)}
+.staal.verjaardagskalender .bl i:nth-child(4){transform:rotate(216deg)}
+.staal.verjaardagskalender .bl i:nth-child(5){transform:rotate(288deg)}
+.staal.verjaardagskalender .bl b{position:absolute;left:50%;top:50%;width:15px;height:15px;
+  margin:-7.5px 0 0 -7.5px;border-radius:50%;background:#c68e30}
+.staal.verjaardagskalender .gaatje{position:absolute;left:50%;top:11px;width:9px;height:9px;
+  margin-left:-4.5px;border-radius:50%;border:1.5px solid #b4636b}
+.staal.verjaardagskalender .strepen{display:none}
+
 .kaart .body{padding:var(--s3) var(--s3) var(--s4);display:flex;flex-direction:column;flex:1}
 .kaart .nrlabel{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grijs)}
 .kaart h3{font:600 23px/1.15 var(--sans);letter-spacing:-.03em;color:var(--inkt);margin-top:6px}
@@ -1129,8 +1182,8 @@ footer li{padding:4px 0}
       is het hart: één rustig vel dat in een minuut uit de printer rolt en leesbaar is voor
       patiënten van elke leeftijd.</p>
     <div class="meta">
-      <span><b>69</b> concepten</span>
-      <span>Laatste ronde <b>2 september 2026</b></span>
+      <span><b>72</b> concepten</span>
+      <span>Laatste ronde <b>3 september 2026</b></span>
       <span>Niets hiervan raakt de live app</span>
       <span>noindex</span>
     </div>
@@ -4229,6 +4282,145 @@ footer li{padding:4px 0}
           <div class="knoppen">
             <a class="kn" href="/ontwerp/concept-69-duivenvlucht.html">Bekijk concept</a>
             <a class="kn leeg" href="/ontwerp/concept-69-duivenvlucht.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="galerijkop" style="margin-top:var(--s6)">
+      <h2>Ronde 19</h2>
+      <span>ronde 19 · 3 sep 2026</span>
+    </div>
+
+    <div class="raster">
+
+      <article class="kaart">
+        <div class="staal unster">
+          <div class="plaatnr">UNSTER · KERF 6</div>
+          <div class="woord">Het gewicht<em> schuift.</em></div>
+          <div class="arm" aria-hidden="true">
+            <i style="left:22%"></i><i style="left:32%"></i><i style="left:42%"></i>
+            <i style="left:52%"></i><i style="left:62%"></i><i style="left:72%"></i>
+            <i style="left:82%"></i><i style="left:92%"></i>
+          </div>
+          <div class="loper" aria-hidden="true"></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 70</div>
+          <h3>Unster</h3>
+          <p class="richting">Geen twee schalen. Eén arm, en het gewicht schuift — tot het kantelt.</p>
+          <p class="rationale">Het meest getekende plaatje van het vak is de balans met belasting
+            links en belastbaarheid rechts, alsof belastbaarheid iets is dat je erbíj legt. De unster
+            — het weeginstrument dat hier al sinds de Romeinen in de grond ligt — heeft geen twee
+            schalen maar één arm met een <em>schuivende loper</em>: je legt niets bij, je zoekt het
+            punt waar het kantelt en leest de kerf af. Op deze kaart staat bij elke oefening dus geen
+            doel maar het kantelpunt van de ijkdag, en de patiënt zet elke dag één streepje op
+            diezelfde balk — na twee weken is het instrument zélf het dossier. En omdat een unster in
+            de handel niet zonder geldig ijkmerk gebruikt mocht worden, draagt dit blad een ijkdatum
+            én een <em>geldig tot</em>: het verloopt met opzet, want een verlopen instrument liegt
+            met gezag.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>de unster uit de Rijn bij Doorwerth: twee ongelijke armen, één haak, één schuivend
+              gewicht · het Nederlandse ijkwezen, de rondtrekkende ijkmeester en het ingeslagen
+              ijkmerk dat verloopt · gegraveerde schaalverdelingen en haarlijnen op koper · lood,
+              leisteen en geslagen metaal · de weegkunde van de markt als zoektocht naar een
+              kantelpunt in plaats van een optelsom</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b>, één inkt: de weegbrief. Onder elke oefening een gedrukte liniaal van
+              150 mm met een kerf om de 15 mm en cijfers op 5 mm; op het kantelpunt van de ijkdag
+              staat een driehoekje met “vandaag begonnen we hier”. Geen vakjes om af te vinken —
+              <b>elke dag één balpenstreepje op dezelfde balk</b>. IJkdatum en “geldig tot” staan in
+              een kader rechtsboven, even groot als de praktijknaam</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-70-unster.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-70-unster.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="kaart">
+        <div class="staal sleutelplan">
+          <div class="plaatnr">SLUITPLAN 44-108</div>
+          <div class="woord">Mensen willen<em> deuren open.</em></div>
+          <div class="sl" aria-hidden="true"><b></b><s></s><i></i></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 71</div>
+          <h3>Sleutelplan</h3>
+          <p class="richting">Niemand wil oefeningen. Elke kaart noemt de sleutels en verzwijgt de sloten.</p>
+          <p class="rationale">Een slotenmaker verkoopt geen sloten, hij tekent een sluitplan: een
+            <em>kruiskaart</em> waarin rijen sleutels zijn, kolommen deuren, en een kruis op het
+            kruispunt staat. Niet mooi bedoeld, en toch het helderste papier in de bouw — in tien
+            seconden weet je wat je open krijgt. Elke oefenkaart doet daar de helft van. Hier staan
+            eerst de deuren, in de woorden van de patiënt zelf (de trap, de boodschappentas, de
+            kleinzoon van veertien kilo), en pas daarna de oefeningen die erbij passen; elke oefening
+            draagt een eigen <em>baard</em>, het getande profiel waaraan u haar herkent zonder te
+            lezen. Eén sleutel wordt hardop de hoofdsleutel genoemd omdat hij het meeste opent, en er
+            staat één deur op het blad waar nog geen enkele sleutel bij past — met een zichtbaar lege
+            kolom, want een gesloten deur verzwijgen is erger dan hem noemen.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>het sluit- of sleutelplan van de slotenmaker en de kruiskaart met hoofdsleutel ·
+              sleutelbaarden en insteekprofielen als vormtaal die zonder woorden werkt · de werkbank:
+              geborsteld staal, nikkel, blauwzwart, boorpunten en meetlijnen · het rode kruis van het
+              formulier als enige niet-metalen kleur · toegangsbeheer in scholen en zorgcentra, waar
+              zwart op wit staat wie waar niet binnenkomt</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b>, zwart op wit. Bovenaan vijf deuren in de woorden van de patiënt, met
+              dikke streep; in het midden drie sleutels met hun baard in lijn getekend (18 mm hoog),
+              naam op 5,5 mm, zin op 3,8 mm schreef en veertien invulvakjes van 9 mm; onderaan de
+              <b>kruiskaart</b> als tabel met vakjes van 9 mm, zodat er zelf een kruis bijgezet kan
+              worden als een deur opengaat. De lege kolom wordt volledig meegedrukt</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-71-sleutelplan.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-71-sleutelplan.html#printkaart">Direct naar de printkaart</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="kaart">
+        <div class="staal verjaardagskalender">
+          <div class="gaatje" aria-hidden="true"></div>
+          <div class="plaatnr">GEEN JAARTAL</div>
+          <div class="woord">Hangt er<em> nog steeds.</em></div>
+          <div class="bl" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></div>
+        </div>
+        <div class="body">
+          <div class="nrlabel">Concept 72</div>
+          <h3>Verjaardagskalender</h3>
+          <p class="richting">De best gelezen kalender van Nederland heeft geen jaartal — en hangt op de wc.</p>
+          <p class="rationale">In bijna de helft van de Nederlandse huishoudens hangt hij op dezelfde
+            plek, en hij werkt om twee redenen: hij heeft <em>geen jaartal</em>, dus hij wordt nooit
+            weggegooid maar bijgeschreven in de pen die er toevallig lag, en hij hangt op de enige
+            plek waar iedereen elke dag komt en niets anders te doen heeft. Een oefenkaart doet
+            precies het omgekeerde: gedateerd, veertien vakjes, op dag vijftien afval — ook als de
+            oefening nog twee jaar nodig heeft. Dit vel draagt daarom nergens een datum, week of
+            jaartal, maar eenendertig genummerde regels zónder maand: is de maand om, dan begint u
+            weer bij 1. Rechts staat een smalle namenkolom die wij bewust leeg laten — op een
+            verjaardagskalender staan geen taken maar mensen — en in de bovenrand zit een gat met een
+            gedrukt kruisje, want een kaart die niet opgehangen kán worden ligt binnen een week onder
+            de post. Het is de tegenpool van concept 70: dat blad verloopt met opzet, dit blad nooit.</p>
+          <dl>
+            <dt>Inspiratie</dt>
+            <dd>de Nederlandse verjaardagskalender op het kleinste kamertje: geen jaartal, decennia
+              in gebruik, namen in vier verschillende pennen · huishoudelijk drukwerk met sierranden
+              en gebroken bloemen in oud-roze, olijf en oker · het spijkertje en het perforatiegat als
+              ontwerpeis · handschrift als dossier — “Joep opgetild!” zegt meer dan veertien vinkjes ·
+              onderhoud in plaats van kuur: balans is binnen een maand weg als je stopt</dd>
+            <dt>Print</dt>
+            <dd>A4 <b>staand</b>, zwart op wit, kleur alleen in de sierrand. Gat van 5 mm in de
+              bovenrand met “hier een spijkertje”. Drie oefeningen op 7 mm kop en 4,2 mm schreef —
+              <b>leesbaar vanaf anderhalve meter</b>, want zo ver staat u ervan af. Onderaan 31
+              regels van 6,6 mm in twee kolommen met vette nummers op 4 mm, en rechts zes brede
+              naamregels van 8 mm. Nergens een datum, ook niet klein</dd>
+          </dl>
+          <div class="knoppen">
+            <a class="kn" href="/ontwerp/concept-72-verjaardagskalender.html">Bekijk concept</a>
+            <a class="kn leeg" href="/ontwerp/concept-72-verjaardagskalender.html#printkaart">Direct naar de printkaart</a>
           </div>
         </div>
       </article>
