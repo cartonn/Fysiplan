@@ -2283,6 +2283,12 @@ bridge2.jpg</div>
     if(seinN)r.push('Openstaande seintjes van patiënten: '+seinN+'.');
     return r.join('\n');
   }
+  // afspraak-tijd naar de waarde van een datetime-local-veld (lokale kloktijd)
+  function afspraakInput(c){
+    if(!c.afspraak||!c.afspraak.t)return '';
+    var d=new Date(c.afspraak.t),p=function(n){return ('0'+n).slice(-2);};
+    return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'T'+p(d.getHours())+':'+p(d.getMinutes());
+  }
   // de patiëntlink draagt de gekozen taal mee (?taal=), zodat de kaart meteen in
   // de taal van de patiënt opent — ook als diens telefoon op een andere taal staat.
   // De patiënt kan op de kaart altijd nog zelf wisselen (die keuze wint daarna).
@@ -2492,6 +2498,14 @@ bridge2.jpg</div>
               "<button class='btn' data-shernoem='"+esc(c.id)+"' data-hnaam='"+esc(c.naam)+"' title='Wijzig de naam van deze kaart (bijvoorbeeld een typefout in de cliëntnaam). De patiëntlink en alle voortgang blijven behouden.'>Naam wijzigen</button>"+
               "<small style='color:var(--muted)'>Link en voortgang blijven behouden.</small>"+
             "</div>"+
+            // volgende afspraak: komt op de patiëntkaart met een agenda-knop (mét alarm)
+            "<div style='margin-top:7px'>"+
+              "<small style='color:var(--muted)'>Volgende afspraak (komt op de patiëntkaart met een agenda-knop; leeg = weghalen)</small>"+
+              "<div style='display:flex;gap:6px;margin-top:3px'>"+
+                "<input type='datetime-local' data-safspraak='"+esc(c.id)+"' value='"+esc(afspraakInput(c))+"' style='font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
+                "<button class='btn' data-safspraakopslaan='"+esc(c.id)+"'>Bewaar</button>"+
+              "</div>"+
+            "</div>"+
             // privé werknotitie: alleen voor de praktijk, komt nooit op de patiëntkaart
             "<div style='margin-top:7px'>"+
               "<small style='color:var(--muted)'>Werknotitie (alleen zichtbaar voor de praktijk, nooit voor de patiënt)</small>"+
@@ -2528,7 +2542,7 @@ bridge2.jpg</div>
               "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>";
           }
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
-            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+"</small></div>"+seinChip+vg+hsChip+
+            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.afspraak&&c.afspraak.t>Date.now()-2*3600000?" · <span title='Volgende afspraak op de patiëntkaart' style='white-space:nowrap'>afspraak "+new Date(c.afspraak.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+"</span>":"")+"</small></div>"+seinChip+vg+hsChip+
             "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
             "<button class='btn' data-skopie='"+esc(c.id)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+
@@ -2766,6 +2780,21 @@ bridge2.jpg</div>
       return;
     }
     // dossiersamenvatting kopiëren: kaart ophalen, platte tekst bouwen, klembord
+    // volgende afspraak opslaan (leeg veld = weghalen); alleen de ingelogde praktijk
+    var af=e.target.closest('[data-safspraakopslaan]');
+    if(af){
+      var veldA=document.querySelector("[data-safspraak='"+af.dataset.safspraakopslaan+"']");
+      if(!veldA)return;
+      var tA=veldA.value?new Date(veldA.value).getTime():0;
+      if(veldA.value&&(!tA||isNaN(tA))){alert('Kies een geldige datum en tijd.');return;}
+      var oudA=af.textContent;
+      var toonA=function(t){af.textContent=t;setTimeout(function(){af.textContent=oudA;},1600);};
+      fetch('api/kaart/afspraak',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:af.dataset.safspraakopslaan,t:tA})})
+        .then(function(r){return r.json();})
+        .then(function(d){if(d.ok)toonA('Bewaard ✓');else toonA(d.fout||'Mislukt');})
+        .catch(function(){toonA('Geen verbinding');});
+      return;
+    }
     // privé werknotitie opslaan (leeg = wissen); alleen de ingelogde praktijk
     var nt=e.target.closest('[data-snotitieopslaan]');
     if(nt){

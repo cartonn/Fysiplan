@@ -432,6 +432,12 @@
     <p class="mnoot" id="mnoot">Je score wordt bij je kaart bewaard, zodat je fysiotherapeut je voortgang kan volgen. Er telt één score per dag; tik een ander cijfer aan om die te wijzigen.</p>
   </div>
 
+  <div class="akaart" id="afspraakblok" style="display:none">
+    <div class="akop" id="afkop">Je volgende afspraak</div>
+    <p class="atekst" id="aftekst"></p>
+    <a class="aweg" id="afics" href="#" style="text-decoration:none;display:inline-block">Zet in mijn agenda</a>
+  </div>
+
   <h2 id="hskop">Hoe gaat het nu vergeleken met de start?</h2>
   <div class="mkaart" id="hsblok">
     <p class="sintro" id="hsintro">Eén tik — zo ziet je fysiotherapeut hoe je herstel voelt.</p>
@@ -560,6 +566,8 @@
     uk:{hskop:'Як ти почуваєшся порівняно з початком?',hsintro:'Один дотик — і фізіотерапевт бачить, як іде твоє одужання.',m2:'Набагато гірше',m1:'Трохи гірше',z0:'Так само',p1:'Трохи краще',p2:'Набагато краще',dank:'Збережено, дякуємо. Фізіотерапевт бачить твоє одужання на цій картці.',fout:'Не вдалося зберегти; спробуй ще раз за мить.',hsnoot:'Зараховується одна відповідь на день; натисни іншу кнопку, щоб змінити її.'}
   };
   function trh(k){var d=THS[TAAL]||THS.nl;return d[k]!=null?d[k]:THS.nl[k];}
+  // kop voor de volgende afspraak (de agenda-knop hergebruikt tr('agknop'))
+  var TAF={nl:'Je volgende afspraak',en:'Your next appointment',de:'Dein nächster Termin',fr:'Votre prochain rendez-vous',es:'Tu próxima cita',pl:'Twoja następna wizyta',tr:'Bir sonraki randevun',ar:'موعدك القادم',uk:'Твій наступний візит'};
   // teksten voor "vraag het aan je kaart" (apart blokje; valt terug op Nederlands)
   var TQ={
     nl:{kop:'Vraag het aan je kaart',intro:'De kaart legt alleen jouw eigen oefeningen uit en geeft geen medisch advies. Vragen worden niet bewaard.',ph:'Bijv. hoe diep moet ik zakken?',knop:'Vraag',bezig:'Even denken…',fout:'Dat lukte even niet; probeer het zo opnieuw.'},
@@ -925,6 +933,20 @@
     }else{trend.style.display='none';}
   }
 
+  // volgende afspraak: tonen zolang hij niet ruim voorbij is, met agenda-knop (.ics)
+  function tekenAfspraak(){
+    var blok=document.getElementById('afspraakblok');if(!blok)return;
+    var a=K&&K.kaart&&K.kaart.afspraak;
+    if(!a||!a.t||a.t<Date.now()-2*3600000){blok.style.display='none';return;}
+    document.getElementById('afkop').textContent=TAF[TAAL]||TAF.nl;
+    var d=new Date(a.t);
+    document.getElementById('aftekst').textContent=d.toLocaleString(TAAL==='nl'?'nl-NL':TAAL,{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
+    var ics=document.getElementById('afics');
+    ics.textContent=tr('agknop');
+    ics.href='/api/kaart/afspraak.ics?id='+encodeURIComponent(id)+'&taal='+encodeURIComponent(TAAL);
+    blok.style.display='block';
+  }
+
   // ervaren herstel: de knop van vandaag (of de laatste keuze) licht op
   function tekenHerstel(){
     var e=(K&&K.kaart&&K.kaart.ervaring)||[];
@@ -946,7 +968,7 @@
     blok.style.display='block';
   }
 
-  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenHerstel();}
+  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenHerstel();tekenAfspraak();}
 
   // ---- taal wisselen: vaste teksten direct, kaartinhoud via de server (eenmalig per taal) ----
   function wisselTaal(t){

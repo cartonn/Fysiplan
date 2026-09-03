@@ -2286,6 +2286,7 @@ async function afhandelen(request, response) {
         seintje: (k.seintje && k.seintje.soort) ? { t: k.seintje.t, soort: k.seintje.soort } : null,
         ervaring: (k.ervaring || []).slice(-1),
         notitie: k.notitie || null,
+        afspraak: k.afspraak || null,
         doel: Number(k.doel) || 0, gearchiveerd: !!k.gearchiveerd }))
       .sort((a, b) => b.ts - a.ts);
     await sendJson(response, 200, list);
@@ -2348,6 +2349,7 @@ async function afhandelen(request, response) {
         ervaring: map[kk] ? map[kk].ervaring || [] : [],
         antwoord: map[kk] ? map[kk].antwoord || null : null,
         notitie: map[kk] ? map[kk].notitie || null : null,
+        afspraak: map[kk] ? map[kk].afspraak || null : null,
         doel: map[kk] ? Number(map[kk].doel) || 0 : 0,
         gearchiveerd: map[kk] ? !!map[kk].gearchiveerd : false };
       await saveJson(kaartenPath, kaarten);
@@ -2613,6 +2615,91 @@ async function afhandelen(request, response) {
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }
+    return;
+  }
+
+  // volgende afspraak op de kaart: de therapeut zet datum en tijd, de patiënt ziet
+  // hem op /k en zet hem met één tik (mét alarm vooraf) in de eigen telefoonagenda —
+  // het app-vrije antwoord op de afspraakherinneringen die concurrenten alleen mét
+  // patiënt-app en account bieden. t = 0 of leeg wist de afspraak.
+  if (urlPath === "/api/kaart/afspraak" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      if (await eisPraktijk(request, response, pk)) return;
+      const map = kaarten[pk] || {};
+      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      // zelfde enumeratierem als op de andere kaart-endpoints
+      if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      const t = Number(b.t) || 0;
+      if (t) {
+        if (!Number.isFinite(t) || t < Date.now() - 3600000 || t > Date.now() + 366 * 864e5) {
+          await sendJson(response, 400, { ok: false, fout: "Kies een moment in de komende twaalf maanden." });
+          return;
+        }
+        kaart.afspraak = { t: Math.round(t) };
+      } else kaart.afspraak = null;
+      await saveJson(kaartenPath, kaarten);
+      await sendJson(response, 200, { ok: true, afspraak: kaart.afspraak });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
+  // de afspraak als eenmalige agenda-uitnodiging (.ics) met alarm één dag en twee
+  // uur vooraf; zelfde host-pinning en taalaanpak als de oefenmomenten-agenda
+  if (urlPath === "/api/kaart/afspraak.ics" && request.method === "GET") {
+    if (leesLimiet(request, response)) return;
+    const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    const found = vindKaart(String(q.get("id") || ""));
+    if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+    if (!found.afspraak || !found.afspraak.t) { await sendJson(response, 404, { ok: false, fout: "Er staat geen afspraak op deze kaart." }); return; }
+    const AFSPRAAK_TAAL = {
+      nl: { sum: "Afspraak fysiotherapie", alarm1: "Morgen: afspraak bij je fysiotherapeut", alarm2: "Straks: afspraak bij je fysiotherapeut", desc: "Je afspraak. Je trainingskaart: " },
+      en: { sum: "Physiotherapy appointment", alarm1: "Tomorrow: physiotherapy appointment", alarm2: "Soon: physiotherapy appointment", desc: "Your appointment. Your training card: " },
+      de: { sum: "Physiotherapie-Termin", alarm1: "Morgen: Termin beim Physiotherapeuten", alarm2: "Gleich: Termin beim Physiotherapeuten", desc: "Dein Termin. Deine Trainingskarte: " },
+      fr: { sum: "Rendez-vous kinésithérapie", alarm1: "Demain : rendez-vous chez le kiné", alarm2: "Bientôt : rendez-vous chez le kiné", desc: "Votre rendez-vous. Votre carte d'entraînement : " },
+      es: { sum: "Cita de fisioterapia", alarm1: "Mañana: cita con tu fisioterapeuta", alarm2: "Pronto: cita con tu fisioterapeuta", desc: "Tu cita. Tu tarjeta de entrenamiento: " },
+      pl: { sum: "Wizyta u fizjoterapeuty", alarm1: "Jutro: wizyta u fizjoterapeuty", alarm2: "Wkrótce: wizyta u fizjoterapeuty", desc: "Twoja wizyta. Twoja karta treningowa: " },
+      tr: { sum: "Fizyoterapi randevusu", alarm1: "Yarın: fizyoterapist randevun", alarm2: "Birazdan: fizyoterapist randevun", desc: "Randevun. Antrenman kartın: " },
+      ar: { sum: "موعد العلاج الطبيعي", alarm1: "غدًا: موعدك مع أخصائي العلاج الطبيعي", alarm2: "قريبًا: موعدك مع أخصائي العلاج الطبيعي", desc: "موعدك. بطاقة تمارينك: " },
+      uk: { sum: "Візит до фізіотерапевта", alarm1: "Завтра: візит до фізіотерапевта", alarm2: "Скоро: візит до фізіотерапевта", desc: "Твій візит. Твоя картка вправ: " }
+    };
+    const taalT = AFSPRAAK_TAAL[String(q.get("taal") || "").toLowerCase()] || AFSPRAAK_TAAL.nl;
+    const d = new Date(found.afspraak.t);
+    // zwevende lokale tijd in Nederlandse klok, net als de oefenmomenten-agenda
+    const datum = d.toLocaleDateString("sv-SE", { timeZone: "Europe/Amsterdam" });
+    const uur = d.toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Europe/Amsterdam" });
+    const dtStart = datum.replace(/-/g, "") + "T" + uur.replace(":", "") + "00";
+    const stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
+    const icsTekst = (s) => String(s).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/[\r\n]+/g, "\\n");
+    const rawHost = String(request.headers.host || "");
+    const netjes = /^[a-z0-9.-]+(:\d+)?$/i.test(rawHost) ? rawHost : "";
+    const kaalHost = netjes.split(":")[0].toLowerCase();
+    const eigenDomein = kaalHost === "fysiplan.nl" || kaalHost.endsWith(".fysiplan.nl")
+      || kaalHost === "localhost" || kaalHost === "127.0.0.1";
+    const veiligeHost = eigenDomein ? netjes : "fysiplan.nl";
+    const link = "https://" + veiligeHost + "/k/" + found.id;
+    const ics = [
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Fysiplan//Trainingskaart//NL", "CALSCALE:GREGORIAN",
+      "BEGIN:VEVENT",
+      "UID:fysiplan-afspraak-" + found.id + "-" + found.afspraak.t + "@fysiplan.nl",
+      "DTSTAMP:" + stamp,
+      "DTSTART:" + dtStart,
+      "DURATION:PT30M",
+      "SUMMARY:" + icsTekst(taalT.sum + (found.praktijk ? " (" + found.praktijk + ")" : "")),
+      "DESCRIPTION:" + icsTekst(taalT.desc + link),
+      "URL:" + icsTekst(link),
+      "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsTekst(taalT.alarm1), "TRIGGER:-P1D", "END:VALARM",
+      "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsTekst(taalT.alarm2), "TRIGGER:-PT2H", "END:VALARM",
+      "END:VEVENT", "END:VCALENDAR", ""
+    ].join("\r\n");
+    response.setHeader("content-disposition", 'attachment; filename="afspraak.ics"');
+    response.setHeader("x-robots-tag", "noindex, noarchive");
+    await send(response, 200, "text/calendar; charset=utf-8", ics);
     return;
   }
 
