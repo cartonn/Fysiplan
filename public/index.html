@@ -2566,11 +2566,19 @@ bridge2.jpg</div>
           var dagenStil=Math.min(60,Math.floor((nu-Math.max.apply(null,acts))/dag));
           // een openstaand seintje (vraag of pijn) weegt zwaar: de patiënt reikt actief
           var seinAandacht=(c.seintje&&(c.seintje.soort==='vraag'||c.seintje.soort==='pijn'))?900:0;
-          return (laatstePijn!==null&&laatstePijn>=7?1000:0)+seinAandacht+(nooitGeopend(c)?500:0)+dagenStil;
+          // recent aangetikt "slechter" op de herstelvraag is een rode vlag
+          var herstelSlecht=herstelVerslechterd(c)?700:0;
+          return (laatstePijn!==null&&laatstePijn>=7?1000:0)+seinAandacht+herstelSlecht+(nooitGeopend(c)?500:0)+dagenStil;
         };
-        // vraagt deze kaart aandacht? hoge laatste pijn (>=7), >=10 dagen stil,
-        // of een kaart die nooit is geopend. Puur beschrijvend tellen; de duiding
-        // en het handelen blijven bij de therapeut.
+        // een recent (laatste 14 dagen) aangetikt "slechter" op de herstelvraag:
+        // de patiënt zegt zelf dat het achteruitgaat — dat hoort in de triage-bak
+        var herstelVerslechterd=function(c){
+          var hv=(c.ervaring&&c.ervaring.length)?c.ervaring[c.ervaring.length-1]:null;
+          return !!(hv&&hv.s<0&&nu-hv.t<14*dag);
+        };
+        // vraagt deze kaart aandacht? hoge laatste pijn (>=7), verslechterd ervaren
+        // herstel, >=10 dagen stil, of een kaart die nooit is geopend. Puur
+        // beschrijvend tellen; de duiding en het handelen blijven bij de therapeut.
         var vraagtAandacht=function(c){
           var laatstePijn=(c.scores&&c.scores.length)?c.scores[c.scores.length-1].s:null;
           var acts=[c.ts||0];
@@ -2578,7 +2586,7 @@ bridge2.jpg</div>
           if(c.scores&&c.scores.length)acts.push(c.scores[c.scores.length-1].t);
           var dagenStil=Math.floor((nu-Math.max.apply(null,acts))/dag);
           var seinOpen=!!(c.seintje&&(c.seintje.soort==='vraag'||c.seintje.soort==='pijn'));
-          return (laatstePijn!==null&&laatstePijn>=7)||dagenStil>=10||nooitGeopend(c)||seinOpen;
+          return (laatstePijn!==null&&laatstePijn>=7)||herstelVerslechterd(c)||dagenStil>=10||nooitGeopend(c)||seinOpen;
         };
         var actiefDezeWeek=function(c){return !!(c.gedaan&&c.gedaan.some(function(g){return nu-g.t<7*dag;}));};
         // een openstaand seintje: de patiënt tikte actief "vraag" of "pijn" aan (het
@@ -2659,7 +2667,7 @@ bridge2.jpg</div>
             // openstaande seintjes eerst: direct inkomend contact van de patiënt dat
             // meestal een reactie vraagt, apart van de bredere aandacht-bak
             if(seinN)h+="<button type='button' id='k_srv_sam_sein' class='no-print' title='Patiënten die een seintje stuurden (vraag of pijn): toon alleen die kaarten' style='cursor:pointer;background:#eaf1fb;border:1px solid #c3d4ee;color:#2456a6;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+seinN+"</b> "+(seinN===1?'seintje':'seintjes')+"</button>";
-            h+=aandN?"<button type='button' id='k_srv_sam_aand' class='no-print' title='Hoge pijn, langer niet geoefend of nooit geopend: zet die kaarten bovenaan' style='cursor:pointer;background:#fbecea;border:1px solid #e7c3bc;color:#a23f2c;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+aandN+"</b> "+(aandN===1?'vraagt':'vragen')+" aandacht</button>":chip('<b>0</b> vragen aandacht');
+            h+=aandN?"<button type='button' id='k_srv_sam_aand' class='no-print' title='Hoge pijn, verslechterd ervaren herstel, langer niet geoefend of nooit geopend: zet die kaarten bovenaan' style='cursor:pointer;background:#fbecea;border:1px solid #e7c3bc;color:#a23f2c;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+aandN+"</b> "+(aandN===1?'vraagt':'vragen')+" aandacht</button>":chip('<b>0</b> vragen aandacht');
             if(lArch.length)h+=archKnop('Gearchiveerd ('+lArch.length+')',false);
             // praktijkrapport: de app-vrij gemeten uitkomsten in één klik als
             // plakklare tekst (kwaliteitsverantwoording, teamoverleg)
