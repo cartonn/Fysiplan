@@ -2600,7 +2600,9 @@ bridge2.jpg</div>
         var toon=function(){
           var base=huidigeBasis();
           var t=zoekTermVan();
-          var items=t?base.filter(function(c){return String(c.naam||'').toLowerCase().indexOf(t)>=0;}):base.slice();
+          // zoeken op cliëntnaam óf op de werknotitie: "linkerknie" vindt de kaart
+          // ook als de naam je even ontschiet (de notitie is toch al praktijk-intern)
+          var items=t?base.filter(function(c){return String(c.naam||'').toLowerCase().indexOf(t)>=0||String(c.notitie||'').toLowerCase().indexOf(t)>=0;}):base.slice();
           // triage-filter: toon in één tik alleen de kaarten met een openstaand
           // seintje, of alle kaarten die aandacht vragen (hoge pijn, seintje, lang
           // stil of nooit geopend)
@@ -2614,12 +2616,12 @@ bridge2.jpg</div>
         var huidig=huidigeBasis();
         // zoekveld bij een langere lijst: snel een cliënt vinden zonder te scrollen
         var zoek=document.getElementById('k_srv_zoek');
-        if(huidig.length>6){
+        if(huidig.length>3){
           if(!zoek){
             zoek=document.createElement('input');
             zoek.id='k_srv_zoek';zoek.type='search';zoek.className='no-print';
-            zoek.setAttribute('placeholder','Zoek een kaart of cliënt…');
-            zoek.setAttribute('aria-label','Zoek een gedeelde kaart');
+            zoek.setAttribute('placeholder','Zoek op cliënt of werknotitie…');
+            zoek.setAttribute('aria-label','Zoek een gedeelde kaart op cliëntnaam of werknotitie');
             zoek.style.cssText='width:100%;margin:2px 0 8px;font-size:13px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff';
             el.parentNode.insertBefore(zoek,el);
           }
