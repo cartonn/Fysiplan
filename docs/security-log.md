@@ -762,3 +762,32 @@ sessieverloop-regressie: wachtwoord-wijzigen laat de oude sessie vervallen.
 **Volgende run — pak een ander gebied:** rate limiting op /api/kaarten en de
 AI-routes onder gelijktijdige praktijken, of de deeplinks/gedeelde kaarten
 (nieuwe-link-flow, kaartMisLimiet-dekking op de nieuwere routes).
+
+## 2026-09-04 — Deeplinks/gedeelde kaarten + de per-IP-remmen zelf
+
+**Geauditeerd:** de deeplink-laag (alle twaalf kaart-id-routes dragen de
+kaart-raden-rem, alle GET's een leeslimiet, de nieuwe-link-flow roteert met
+botsingscontrole onder eisPraktijk) en — als tweede rotatie-optie — de remmen
+onder gelijktijdig gebruik. De demo-kaart bleek al stateless (demoKaart() bouwt
+per verzoek een vers object, dus geen cross-bezoeker-lek).
+
+**Bevinding (gefixt, gedeelde servercode wegens security-gat):** clientIp nam
+het EERSTE element van x-forwarded-for — precies het deel dat de client zelf
+verzint. Achter de Railway-proxy (die het echte client-IP achteraan toevoegt)
+kon een aanvaller met een vers nep-IP per verzoek élke per-IP-rem omzeilen:
+schrijflimiet, leeslimiet, kaart-raden-rem, het AI-per-IP-slot (en daarmee het
+AI-dagbudget van iedereen), het dagplafond op nieuwe praktijken en de poll-rem.
+clientIp neemt nu het LAATSTE element — dat van de vertrouwde proxy — met de
+oude terugval op het socket-adres. Voor legitieme gebruikers en voor v1
+verandert er niets; alleen wie spoofte verliest zijn omzeiling.
+
+**Increment:** nieuwe regressietest test-xff-rem.mjs (4 checks: roterende
+nep-IP's vooraan botsen tóch op de schrijflimiet én de kaart-raden-rem, een
+echt ander laatste-element-IP houdt een eigen budget, een enkelvoudige header
+blijft gewoon dat ene IP; tegenbewijs: onder de oude code komt er nooit een
+429). Brede regressiebatterij groen: kern (21), v1-inlog (35), logo (15),
+praktijk-profiel-limiet (5), AI-keten (15), opname-token (12), isolatie (20).
+
+**Volgende run — pak een ander gebied:** security-headers en CSP-nonce opnieuw
+(na alle nieuwe blokken op /k), of de opname-/videoketen met Cloudflare Stream
+aan (STREAM_ENABLED-pad).

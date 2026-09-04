@@ -530,7 +530,13 @@ function dagStats(d) {
   return stats.dagen[d];
 }
 function clientIp(req) {
-  const fwd = String(req.headers["x-forwarded-for"] || "").split(",")[0].trim();
+  // neem het LAATSTE element van x-forwarded-for, niet het eerste: de proxy vóór
+  // ons (Railway) voegt het echte client-IP achteraan toe, terwijl alles wat de
+  // client zelf in de header meestuurt vooraan staat. Wie het eerste element
+  // vertrouwt, geeft aanvallers een vers nep-IP per verzoek — en daarmee een
+  // volledige omzeiling van alle per-IP-remmen (schrijf/lees/mis/AI/praktijken).
+  const delen = String(req.headers["x-forwarded-for"] || "").split(",");
+  const fwd = delen[delen.length - 1].trim();
   return fwd || req.socket.remoteAddress || "?";
 }
 function telBezoek(req, isAdminPagina) {
