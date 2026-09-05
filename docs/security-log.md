@@ -791,3 +791,25 @@ praktijk-profiel-limiet (5), AI-keten (15), opname-token (12), isolatie (20).
 **Volgende run — pak een ander gebied:** security-headers en CSP-nonce opnieuw
 (na alle nieuwe blokken op /k), of de opname-/videoketen met Cloudflare Stream
 aan (STREAM_ENABLED-pad).
+
+## 2026-09-05 — Security-headers en CSP-nonce, na alle nieuwe blokken op /k
+
+**Geauditeerd:** het volledige headeroppervlak van v2 — CSP per route (landing
+scriptloos met default-src 'none'; app, /k en /o met per-antwoord-nonce),
+nonce-kwaliteit (16 random bytes, wisselt per antwoord), de nonce-injectie op
+élk inline script (ook na de nieuwe herstel-, antwoord- en afspraakblokken op
+/k), COOP/XFO/permissions-policy, noindex op de patiëntpaden en de .ics-routes,
+HSTS achter de https-proxy (en bewust uit op kaal http voor lokaal werk),
+no-store op patiëntdata-JSON en de verhardende koppen op de uploads-route.
+
+**Bevinding: geen gat.** Alles wat de vorige rotaties optuigden staat er nog en
+dekt ook de nieuwe blokken; HSTS bleek al aanwezig (lowercase, per proxy-check).
+
+**Increment:** nieuwe regressietest test-headers.mjs (15 checks) die de hele
+headerdekking vastklikt — een routewijziging die een kop of de nonce verliest
+valt voortaan direct om. E2E-regressies groen: kern (21), afspraak (20),
+ervaren-herstel (18).
+
+**Volgende run — pak een ander gebied:** de opname-/videoketen met Cloudflare
+Stream aan (STREAM_ENABLED-pad), of de accountlaag opnieuw (sessieverloop,
+inlogrem, herstelcode-flow) nu die een paar weken meedraait.
