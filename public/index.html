@@ -2486,6 +2486,18 @@ bridge2.jpg</div>
           var waHref2='https://wa.me/?text='+encodeURIComponent(herinnerTekst);
           var mailHref2='mailto:?subject='+encodeURIComponent(vulDeel(kT.sh,c.id))+'&body='+encodeURIComponent(herinnerTekst);
           var taalOpties=Object.keys(DEELTAAL).map(function(k){return "<option value='"+k+"'"+(k===kTaal?" selected":"")+">"+esc(DEELTAAL[k].naam)+"</option>";}).join("");
+          // therapietrouw op oefenniveau in één oogopslag: afvinkdagen per oefening
+          // van de patiëntkaart, meest gedaan eerst — wat laag blijft, blijft mogelijk
+          // liggen. Alleen tonen; de duiding blijft bij de therapeut.
+          var otr='';
+          if(c.oefTrouw){
+            var otn=Object.keys(c.oefTrouw).filter(function(k2){return c.oefTrouw[k2]&&Number(c.oefTrouw[k2].n)>0;});
+            if(otn.length){
+              otn.sort(function(a,b){return (c.oefTrouw[b].n||0)-(c.oefTrouw[a].n||0);});
+              otr="<div style='margin-top:10px'><small style='color:var(--muted)'>Oefentrouw per oefening (afvinkdagen op de kaart, meest gedaan eerst):</small><br/><small>"+
+                otn.map(function(k2){return esc(k2)+" "+c.oefTrouw[k2].n+"&times;";}).join(" &middot; ")+"</small></div>";
+            }
+          }
           var deelBlok="<div id='deel_"+esc(c.id)+"' style='display:none;padding:8px 4px 10px;border-bottom:1px solid var(--line)'>"+
             "<div style='display:flex;align-items:center;gap:7px;flex-wrap:wrap'>"+
               "<small style='color:var(--muted)'>De patiënt opent de kaart zonder app, gewoon in de browser.</small>"+
@@ -2531,6 +2543,7 @@ bridge2.jpg</div>
               "<button class='btn' data-sarch='"+esc(c.id)+"' title='Zet een afgeronde kaart uit het hoofdoverzicht. Alle voortgang blijft bewaard en de patiëntlink blijft werken; je vindt de kaart terug onder “Gearchiveerd”.'>Archiveer deze kaart</button>"+
               "<small style='color:var(--muted)'>Uit het overzicht, niets gaat verloren.</small>"+
             "</div>"+
+            otr+
             "<small style='color:var(--muted);display:block;margin-top:10px'>Voor het EPD-dossier (Intramed, FysioRoadmap, Incura, …):</small>"+
             "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px'>"+
               "<button class='btn' data-sdossier='"+esc(c.id)+"' title='Kopieer een platte-tekstsamenvatting (cliënt, doel, oefeningen met dosering, kaartlink) om in het dossier te plakken'>Kopieer samenvatting voor dossier</button>"+

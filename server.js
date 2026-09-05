@@ -2293,6 +2293,7 @@ async function afhandelen(request, response) {
         ervaring: (k.ervaring || []).slice(-1),
         notitie: k.notitie || null,
         afspraak: k.afspraak || null,
+        oefTrouw: k.oefTrouw || null,
         doel: Number(k.doel) || 0, gearchiveerd: !!k.gearchiveerd }))
       .sort((a, b) => b.ts - a.ts);
     await sendJson(response, 200, list);
