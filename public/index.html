@@ -2235,6 +2235,15 @@ bridge2.jpg</div>
       if(laatst)regel+=', laatst geoefend '+ddd(laatst);
       r.push(regel+'.');
     }
+    // therapietrouw op oefenniveau: welke oefening wordt gedaan en welke blijft
+    // liggen, uit de afvinkjes per oefening op de kaart. Concurrenten meten dit
+    // alleen mét verplichte patiënt-app; hier app-vrij, en direct plakbaar.
+    var tw=kaart.oefTrouw||{};
+    var twN=Object.keys(tw).filter(function(k2){return tw[k2]&&Number(tw[k2].n)>0;});
+    if(twN.length){
+      twN.sort(function(a,b){return (tw[b].n||0)-(tw[a].n||0);});
+      r.push('Oefentrouw per oefening (afvinkdagen): '+twN.map(function(k2){return k2+' '+tw[k2].n+'x';}).join(', ')+'.');
+    }
     // ervaren herstel (GROC-achtig, -2..+2): de app-vrije één-tik-PROM van de kaart
     var ev=(kaart.ervaring||[]).filter(function(x){return x&&typeof x.s==='number';});
     if(ev.length){

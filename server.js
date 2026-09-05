@@ -2356,6 +2356,7 @@ async function afhandelen(request, response) {
         antwoord: map[kk] ? map[kk].antwoord || null : null,
         notitie: map[kk] ? map[kk].notitie || null : null,
         afspraak: map[kk] ? map[kk].afspraak || null : null,
+        oefTrouw: map[kk] ? map[kk].oefTrouw || null : null,
         doel: map[kk] ? Number(map[kk].doel) || 0 : 0,
         gearchiveerd: map[kk] ? !!map[kk].gearchiveerd : false };
       await saveJson(kaartenPath, kaarten);
@@ -2495,6 +2496,38 @@ async function afhandelen(request, response) {
       await saveJson(kaartenPath, kaarten);
       const d = dagStats(vandaagKey()); d.gedaan = (d.gedaan || 0) + 1; bewaarStats();
       await sendJson(response, 200, { ok: true, gedaan: found.gedaan });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
+  // therapietrouw op oefenniveau, app-vrij: elk afvinkje per oefening telt mee,
+  // zodat de praktijk ziet welke oefening blijft liggen — het inzicht waarvoor de
+  // concurrentie een verplichte patiënt-app nodig heeft. Bewust alleen tellingen
+  // (afvinkdagen per oefening, gededupliceerd per dag): geen tijdstippen per
+  // vinkje, geen vrije tekst. De oefening wordt via de index op de kaart zelf
+  // opgezocht; de client kan dus nooit een verzonnen naam laten registreren.
+  if (urlPath === "/api/kaart/oefening" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const found = vindKaart(String(b.id || ""));
+      if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      const oef = Array.isArray(found.chosen) ? found.chosen[Number(b.oef)] : null;
+      const naam = oef ? String(oef.n || "").slice(0, 80) : "";
+      if (!naam) { await sendJson(response, 400, { ok: false, fout: "Onbekende oefening." }); return; }
+      const trouw = (found.oefTrouw = found.oefTrouw || {});
+      // plafond tegen opblazen als een kaart vaak van oefeningen wisselt
+      if (!trouw[naam] && Object.keys(trouw).length >= 60) { await sendJson(response, 200, { ok: true }); return; }
+      const rec = (trouw[naam] = trouw[naam] || { n: 0, d: "" });
+      const vandaag = nlDag(Date.now());
+      if (b.aan !== false) { if (rec.d !== vandaag) { rec.n = Math.min(9999, (rec.n || 0) + 1); rec.d = vandaag; } }
+      else if (rec.d === vandaag) { rec.n = Math.max(0, (rec.n || 0) - 1); rec.d = ""; }
+      if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
+      await saveJson(kaartenPath, kaarten);
+      await sendJson(response, 200, { ok: true });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }

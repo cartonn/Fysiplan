@@ -690,6 +690,12 @@
     if(p>-1)st.done.splice(p,1);else st.done.push(idx);
     bewaarOefDaan(st);
     tekenOefDaan();
+    // telling per oefening naar de praktijk (best effort, alleen aantallen):
+    // zo ziet de therapeut welke oefening blijft liggen — zonder patiënt-app
+    if(id&&id!=='demo'){
+      try{fetch('/api/kaart/oefening',{method:'POST',headers:{'content-type':'application/json'},
+        body:JSON.stringify({id:id,oef:idx,aan:p===-1})}).catch(function(){});}catch(e){}
+    }
     // alle oefeningen af -> bevestig de dag-teller (idempotent; server telt één keer per dag)
     var totaal=document.querySelectorAll('#oefs .oefdone').length;
     if(totaal>0&&st.done.filter(function(i){return i<totaal;}).length>=totaal)bevestigGedaan();
