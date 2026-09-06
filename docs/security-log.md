@@ -813,3 +813,30 @@ ervaren-herstel (18).
 **Volgende run — pak een ander gebied:** de opname-/videoketen met Cloudflare
 Stream aan (STREAM_ENABLED-pad), of de accountlaag opnieuw (sessieverloop,
 inlogrem, herstelcode-flow) nu die een paar weken meedraait.
+
+## 2026-09-06 — Accountlaag opnieuw: sessieverloop, inlogrem, herstelcode-flow
+
+**Geauditeerd:** de hele praktijk-accountlaag nu die enkele weken meedraait —
+wachtwoordopslag (scrypt + timingSafeEqual), de per-praktijk-inlogrem (10
+missers/kwartier, IP-onafhankelijk, gedeeld tussen login, wachtwoord-wijzigen
+en herstel), sessielevenscyclus (sterke tokens, 30 dagen, opruiming + plafond,
+intrekking bij wijziging/herstel), rotatie van de herstelcode na gebruik, en
+of ergens hashes of codes richting een response lekken (nergens).
+
+**Bevinding: geen uitbuitbaar gat.** Eén consistentieverharding aangebracht:
+/api/praktijk/logout was de enige schrijfroute zonder cross-site-check. Het
+tegenbewijs relativeerde de ernst — de sessieheader is cross-origin toch al
+niet mee te sturen zonder preflight — dus dit is verdediging in lagen, geen
+gedicht lek. Gedragsneutraal voor legitiem gebruik.
+
+**Increment:** nieuwe regressietest test-accountlaag-rem.mjs (17 checks,
+adversarieel): verdeeld raden over tien "IP's" loopt op de praktijkrem vast,
+het juiste wachtwoord én de herstelroute wachten mee op het slot (geen orakel,
+geen achterdeur), herstel-missers tellen in dezelfde rem, wijziging/herstel
+trekken alle oude sessies in, de gebruikte herstelcode is dood, logout is
+cross-site dicht en maakt de sessie echt ongeldig, sessies zijn praktijkgebonden.
+Regressies groen: kern (21), praktijk-isolatie (20), v1-inlog (35).
+
+**Volgende run — pak een ander gebied:** de opname-/videoketen met Cloudflare
+Stream aan (STREAM_ENABLED-pad), of rate limiting op /api/kaarten en /api/opname
+onder gelijktijdige praktijken.

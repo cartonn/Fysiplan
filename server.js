@@ -1543,8 +1543,11 @@ async function afhandelen(request, response) {
     return;
   }
 
-  // uitloggen: de eigen sessie ongeldig maken
+  // uitloggen: de eigen sessie ongeldig maken. De cross-site-check staat hier
+  // voor consistentie met alle andere schrijfroutes (verdediging in lagen); de
+  // sessieheader zelf is cross-origin toch al niet mee te sturen zonder preflight
   if (urlPath === "/api/praktijk/logout" && request.method === "POST") {
+    if (kruisSite(request)) { await weigerKruis(response); return; }
     const token = String(request.headers["x-praktijk-sessie"] || "").trim();
     if (token) praktijkSessies.delete(token);
     await sendJson(response, 200, { ok: true });
