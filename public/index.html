@@ -2527,6 +2527,14 @@ bridge2.jpg</div>
                 "<button class='btn' data-safspraakopslaan='"+esc(c.id)+"'>Bewaar</button>"+
               "</div>"+
             "</div>"+
+            // behandelaar: één praktijk-login, heel het team — wie beheert deze kaart?
+            "<div style='margin-top:7px'>"+
+              "<small style='color:var(--muted)'>Behandelaar (voor het team-overzicht; komt niet op de patiëntkaart)</small>"+
+              "<div style='display:flex;gap:6px;margin-top:3px'>"+
+                "<input data-sbeh='"+esc(c.id)+"' value='"+esc(c.behandelaar||'')+"' maxlength='40' placeholder='Bijv. Sanne' style='flex:1;min-width:0;font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
+                "<button class='btn' data-sbehopslaan='"+esc(c.id)+"'>Bewaar</button>"+
+              "</div>"+
+            "</div>"+
             // privé werknotitie: alleen voor de praktijk, komt nooit op de patiëntkaart
             "<div style='margin-top:7px'>"+
               "<small style='color:var(--muted)'>Werknotitie (alleen zichtbaar voor de praktijk, nooit voor de patiënt)</small>"+
@@ -2564,7 +2572,7 @@ bridge2.jpg</div>
               "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>";
           }
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
-            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.afspraak&&c.afspraak.t>Date.now()-2*3600000?" · <span title='Volgende afspraak op de patiëntkaart' style='white-space:nowrap'>afspraak "+new Date(c.afspraak.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+"</span>":"")+"</small></div>"+seinChip+vg+hsChip+
+            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.afspraak&&c.afspraak.t>Date.now()-2*3600000?" · <span title='Volgende afspraak op de patiëntkaart' style='white-space:nowrap'>afspraak "+new Date(c.afspraak.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+"</span>":"")+"</small></div>"+seinChip+vg+hsChip+
             "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
             "<button class='btn' data-skopie='"+esc(c.id)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+
@@ -2624,7 +2632,7 @@ bridge2.jpg</div>
           var t=zoekTermVan();
           // zoeken op cliëntnaam óf op de werknotitie: "linkerknie" vindt de kaart
           // ook als de naam je even ontschiet (de notitie is toch al praktijk-intern)
-          var items=t?base.filter(function(c){return String(c.naam||'').toLowerCase().indexOf(t)>=0||String(c.notitie||'').toLowerCase().indexOf(t)>=0;}):base.slice();
+          var items=t?base.filter(function(c){return String(c.naam||'').toLowerCase().indexOf(t)>=0||String(c.notitie||'').toLowerCase().indexOf(t)>=0||String(c.behandelaar||'').toLowerCase().indexOf(t)>=0;}):base.slice();
           // triage-filter: toon in één tik alleen de kaarten met een openstaand
           // seintje, of alle kaarten die aandacht vragen (hoge pijn, seintje, lang
           // stil of nooit geopend)
@@ -2642,8 +2650,8 @@ bridge2.jpg</div>
           if(!zoek){
             zoek=document.createElement('input');
             zoek.id='k_srv_zoek';zoek.type='search';zoek.className='no-print';
-            zoek.setAttribute('placeholder','Zoek op cliënt of werknotitie…');
-            zoek.setAttribute('aria-label','Zoek een gedeelde kaart op cliëntnaam of werknotitie');
+            zoek.setAttribute('placeholder','Zoek op cliënt, behandelaar of werknotitie…');
+            zoek.setAttribute('aria-label','Zoek een gedeelde kaart op cliëntnaam, behandelaar of werknotitie');
             zoek.style.cssText='width:100%;margin:2px 0 8px;font-size:13px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff';
             el.parentNode.insertBefore(zoek,el);
           }
@@ -2825,6 +2833,19 @@ bridge2.jpg</div>
         .then(function(r){return r.json();})
         .then(function(d){if(d.ok)toonA('Bewaard ✓');else toonA(d.fout||'Mislukt');})
         .catch(function(){toonA('Geen verbinding');});
+      return;
+    }
+    // behandelaar opslaan (leeg = wissen); alleen de ingelogde praktijk
+    var bh=e.target.closest('[data-sbehopslaan]');
+    if(bh){
+      var veldB=document.querySelector("[data-sbeh='"+bh.dataset.sbehopslaan+"']");
+      if(!veldB)return;
+      var oudB=bh.textContent;
+      var toonB=function(t){bh.textContent=t;setTimeout(function(){bh.textContent=oudB;},1600);};
+      fetch('api/kaart/behandelaar',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:bh.dataset.sbehopslaan,naam:veldB.value})})
+        .then(function(r){return r.json();})
+        .then(function(d){if(d.ok)toonB('Bewaard ✓');else toonB(d.fout||'Mislukt');})
+        .catch(function(){toonB('Geen verbinding');});
       return;
     }
     // privé werknotitie opslaan (leeg = wissen); alleen de ingelogde praktijk

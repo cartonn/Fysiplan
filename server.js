@@ -2297,6 +2297,7 @@ async function afhandelen(request, response) {
         notitie: k.notitie || null,
         afspraak: k.afspraak || null,
         oefTrouw: k.oefTrouw || null,
+        behandelaar: k.behandelaar || null,
         doel: Number(k.doel) || 0, gearchiveerd: !!k.gearchiveerd }))
       .sort((a, b) => b.ts - a.ts);
     await sendJson(response, 200, list);
@@ -2361,6 +2362,7 @@ async function afhandelen(request, response) {
         notitie: map[kk] ? map[kk].notitie || null : null,
         afspraak: map[kk] ? map[kk].afspraak || null : null,
         oefTrouw: map[kk] ? map[kk].oefTrouw || null : null,
+        behandelaar: map[kk] ? map[kk].behandelaar || null : null,
         doel: map[kk] ? Number(map[kk].doel) || 0 : 0,
         gearchiveerd: map[kk] ? !!map[kk].gearchiveerd : false };
       await saveJson(kaartenPath, kaarten);
@@ -2408,8 +2410,8 @@ async function afhandelen(request, response) {
     const found = vindKaart(String(q.get("id") || ""));
     if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     const prof = praktijken[found.praktijk.toLowerCase()] || { praktijk: found.praktijk };
-    // de werknotitie is praktijk-intern en gaat nooit mee naar de patiëntpagina
-    const { notitie, ...patientKaart } = found;
+    // werknotitie en behandelaar zijn praktijk-intern en gaan nooit mee naar de patiëntpagina
+    const { notitie, behandelaar, ...patientKaart } = found;
     // ai-vlag: de kaartpagina toont de vraaghulp alleen als de server een AI-sleutel heeft
     await sendJson(response, 200, { ok: true, kaart: patientKaart, praktijk: prof, ai: !!AI_KEY });
     return;
@@ -2655,6 +2657,33 @@ async function afhandelen(request, response) {
       kaart.notitie = tekst || null;
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, notitie: kaart.notitie });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
+  // behandelaar bij een kaart: welke collega hem beheert. Eén praktijk-login is
+  // zo met een heel team te delen (Fysiplan rekent per praktijk, niet per
+  // gebruiker zoals de concurrentie) zonder dat het overzicht een zoekplaatje
+  // wordt. Alleen de ingelogde praktijk schrijft en leest dit; de patiëntroute
+  // stript het veld net als de werknotitie. Leeg wist het veld.
+  if (urlPath === "/api/kaart/behandelaar" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      if (await eisPraktijk(request, response, pk)) return;
+      const map = kaarten[pk] || {};
+      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      // zelfde enumeratierem als op de andere kaart-endpoints
+      if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      // besturingstekens eruit en kort begrensd; als platte tekst getoond in de app
+      const naam = String(b.naam || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 40);
+      kaart.behandelaar = naam || null;
+      await saveJson(kaartenPath, kaarten);
+      await sendJson(response, 200, { ok: true, behandelaar: kaart.behandelaar });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }
