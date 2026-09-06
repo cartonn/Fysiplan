@@ -2630,9 +2630,10 @@ bridge2.jpg</div>
         var toon=function(){
           var base=huidigeBasis();
           var t=zoekTermVan();
-          // zoeken op cliëntnaam óf op de werknotitie: "linkerknie" vindt de kaart
-          // ook als de naam je even ontschiet (de notitie is toch al praktijk-intern)
-          var items=t?base.filter(function(c){return String(c.naam||'').toLowerCase().indexOf(t)>=0||String(c.notitie||'').toLowerCase().indexOf(t)>=0||String(c.behandelaar||'').toLowerCase().indexOf(t)>=0;}):base.slice();
+          // zoeken op cliëntnaam, behandelaar óf werknotitie: "linkerknie" vindt de
+          // kaart ook als de naam je even ontschiet (de notitie is toch praktijk-intern)
+          var past=function(c){return String(c.naam||'').toLowerCase().indexOf(t)>=0||String(c.notitie||'').toLowerCase().indexOf(t)>=0||String(c.behandelaar||'').toLowerCase().indexOf(t)>=0;};
+          var items=t?base.filter(past):base.slice();
           // triage-filter: toon in één tik alleen de kaarten met een openstaand
           // seintje, of alle kaarten die aandacht vragen (hoge pijn, seintje, lang
           // stil of nooit geopend)
@@ -2640,8 +2641,13 @@ bridge2.jpg</div>
           if(fmode==='aandacht')items=items.filter(vraagtAandacht);
           else if(fmode==='seintje')items=items.filter(seintjeOpen);
           if(sortModus()==='aandacht')items.sort(function(a,b){return aandacht(b)-aandacht(a)||(b.ts||0)-(a.ts||0);});
-          if(!items.length){el.innerHTML="<div class='hint'>"+(srvArchiefView?'Geen gearchiveerde kaarten.':(fmode==='seintje'?'Geen openstaande seintjes op dit moment.':(fmode==='aandacht'?'Op dit moment vraagt geen enkele kaart aandacht.':(t?'Geen kaart gevonden voor deze zoekterm.':(lArch.length?'Alle kaarten zijn gearchiveerd — tik op “Gearchiveerd” om ze te zien.':'Nog geen gedeelde kaarten voor deze praktijk.')))))+"</div>";return;}
-          toonLijst(items);
+          // zoeken kijkt ook in het archief: "waar is de kaart van mevrouw De Boer?"
+          // eindigt anders in een misleidend "geen kaart gevonden" terwijl hij er
+          // gewoon is. Archieftreffers komen gedempt achteraan (mét Terughalen-knop);
+          // alleen bij een echte zoekterm en buiten de triage-filters.
+          var extraArch=(t&&!srvArchiefView&&!fmode)?lArch.filter(past):[];
+          if(!items.length&&!extraArch.length){el.innerHTML="<div class='hint'>"+(srvArchiefView?'Geen gearchiveerde kaarten.':(fmode==='seintje'?'Geen openstaande seintjes op dit moment.':(fmode==='aandacht'?'Op dit moment vraagt geen enkele kaart aandacht.':(t?'Geen kaart gevonden voor deze zoekterm.':(lArch.length?'Alle kaarten zijn gearchiveerd — tik op “Gearchiveerd” om ze te zien.':'Nog geen gedeelde kaarten voor deze praktijk.')))))+"</div>";return;}
+          toonLijst(items.concat(extraArch));
         };
         var huidig=huidigeBasis();
         // zoekveld bij een langere lijst: snel een cliënt vinden zonder te scrollen
