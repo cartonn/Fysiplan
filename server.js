@@ -3147,7 +3147,13 @@ async function afhandelen(request, response) {
     // de patiëntpagina zelf; de therapeut die de kaart in de app opent gebruikt de
     // API en telt dus niet mee. Hooguit één schijfschrijf per kaart per 10 minuten.
     const bkKaart = urlPath.startsWith("/k/") ? vindKaart(urlPath.slice(3)) : null;
-    if (bkKaart && !bkKaart.demo) {
+    // linkpreview-bots (WhatsApp, iMessage/Facebot, Telegram, Slack, …) halen de
+    // pagina al op zodra de therapeut de link déélt — dat is geen patiëntbezoek.
+    // Zonder dit filter stond elke gedeelde kaart meteen op "bekeken" en vuurde
+    // de nooit-geopend-triage nooit, precies voor wie de link negeert.
+    const bkUa = String(request.headers["user-agent"] || "");
+    const previewBot = /bot|whatsapp|facebookexternalhit|facebot|telegram|skypeuripreview|iframely|preview|crawler|spider/i.test(bkUa);
+    if (bkKaart && !bkKaart.demo && !previewBot) {
       const nuBk = Date.now();
       const b = bkKaart.bekeken || { t: 0, n: 0 };
       if (nuBk - b.t > 10 * 60 * 1000) {
