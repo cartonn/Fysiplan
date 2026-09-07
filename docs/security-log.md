@@ -840,3 +840,28 @@ Regressies groen: kern (21), praktijk-isolatie (20), v1-inlog (35).
 **Volgende run — pak een ander gebied:** de opname-/videoketen met Cloudflare
 Stream aan (STREAM_ENABLED-pad), of rate limiting op /api/kaarten en /api/opname
 onder gelijktijdige praktijken.
+
+## 2026-09-07 — Rate limiting en plafonds op /api/kaarten en /api/opname onder drukte
+
+**Geauditeerd:** de kaarten- en opnameketen onder gelijktijdig gebruik — de
+plafonds (300 praktijken, 100 kaarten/praktijk, 12 oefeningen, 800 cellen,
+begrensde veldlengtes), de patiënt-schrijfroutes op onbegrensde groei
+(metingen/gedaan op 366, ervaring op 120, oefTrouw op 60 sleutels: alles
+begrensd), de uploadketen (60 MB-plafond, 4 gelijktijdige uploads,
+opslag-waakhond, pad-whitelist op vids) en saveJson zelf (uniek tempbestand
+per schrijfactie + atomaire rename: parallelle saves kunnen elkaars
+halfgeschreven bestand nooit als definitief neerzetten).
+
+**Bevinding: geen gat.** De remmen en plafonds grijpen aantoonbaar; de
+JSON-opslag blijft geldig en compleet onder parallelle schrijvers.
+
+**Increment:** nieuwe regressietest test-kaarten-limieten.mjs (8 checks onder
+vuur): 30 parallelle kaart-POSTs over drie praktijken landen allemaal in een
+geldig kaarten.json, het 100-kaartenplafond weigert nummer 101 netjes terwijl
+bijwerken op het plafond blijft werken, de schrijfrem (40/IP) en leesrem
+(120/IP) geven 429 en een ander IP leest door. Regressies groen:
+opname-token (12), kern (21), headers (15).
+
+**Volgende run — pak een ander gebied:** injectie en path traversal opnieuw
+(na alle nieuwe velden: behandelaar, notitie, oefTrouw-sleutels), of de
+opname-/videoketen met Cloudflare Stream aan (STREAM_ENABLED-pad).
