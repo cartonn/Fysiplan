@@ -568,6 +568,9 @@
   function trh(k){var d=THS[TAAL]||THS.nl;return d[k]!=null?d[k]:THS.nl[k];}
   // kop voor de volgende afspraak (de agenda-knop hergebruikt tr('agknop'))
   var TAF={nl:'Je volgende afspraak',en:'Your next appointment',de:'Dein nächster Termin',fr:'Votre prochain rendez-vous',es:'Tu próxima cita',pl:'Twoja następna wizyta',tr:'Bir sonraki randevun',ar:'موعدك القادم',uk:'Твій наступний візит'};
+  // "vandaag"/"morgen"-accent op de afspraakregel: op de dag zelf moet de
+  // herinnering opvallen, niet opgaan in een datumregel
+  var TAFREL={nl:{v:'Vandaag',m:'Morgen'},en:{v:'Today',m:'Tomorrow'},de:{v:'Heute',m:'Morgen'},fr:{v:'Aujourd’hui',m:'Demain'},es:{v:'Hoy',m:'Mañana'},pl:{v:'Dzisiaj',m:'Jutro'},tr:{v:'Bugün',m:'Yarın'},ar:{v:'اليوم',m:'غدًا'},uk:{v:'Сьогодні',m:'Завтра'}};
   // teksten voor "vraag het aan je kaart" (apart blokje; valt terug op Nederlands)
   var TQ={
     nl:{kop:'Vraag het aan je kaart',intro:'De kaart legt alleen jouw eigen oefeningen uit en geeft geen medisch advies. Vragen worden niet bewaard.',ph:'Bijv. hoe diep moet ik zakken?',knop:'Vraag',bezig:'Even denken…',fout:'Dat lukte even niet; probeer het zo opnieuw.'},
@@ -946,7 +949,15 @@
     if(!a||!a.t||a.t<Date.now()-2*3600000){blok.style.display='none';return;}
     document.getElementById('afkop').textContent=TAF[TAAL]||TAF.nl;
     var d=new Date(a.t);
-    document.getElementById('aftekst').textContent=d.toLocaleString(TAAL==='nl'?'nl-NL':TAAL,{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
+    var tekst=d.toLocaleString(TAAL==='nl'?'nl-NL':TAAL,{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
+    // vandaag of morgen? dan het accentwoord ervoor, zodat de dag zelf opvalt
+    var rel=TAFREL[TAAL]||TAFREL.nl;
+    var vandaagD=new Date();var morgenD=new Date(Date.now()+864e5);
+    var relW=d.toDateString()===vandaagD.toDateString()?rel.v:(d.toDateString()===morgenD.toDateString()?rel.m:'');
+    var el=document.getElementById('aftekst');
+    el.textContent='';
+    if(relW){var b=document.createElement('b');b.textContent=relW+' — ';el.appendChild(b);}
+    el.appendChild(document.createTextNode(tekst));
     var ics=document.getElementById('afics');
     ics.textContent=tr('agknop');
     ics.href='/api/kaart/afspraak.ics?id='+encodeURIComponent(id)+'&taal='+encodeURIComponent(TAAL);
