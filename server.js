@@ -947,7 +947,14 @@ function slug(s) {
   return String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
     .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "x";
 }
-const cleanName = (v, max) => String(v || "").trim().replace(/\s+/g, " ").slice(0, max);
+// namen die verderop als objectsleutel dienen (kaarten[praktijk][naam], accounts,
+// oefTrouw) mogen nooit een prototype-sleutel zijn: een praktijk of kaart met de
+// naam "__proto__" belandt anders op het prototype van het opslagobject —
+// onzichtbaar voor Object.keys, back-ups en plafonds — en "constructor" laat een
+// increment-route op de globale Object-constructor schrijven. Zo'n naam wordt
+// hier leeg gemaakt, waarna elke route hem als "geen naam opgegeven" weigert.
+const verbodenSleutel = /^(__proto__|constructor|prototype)$/i;
+const cleanName = (v, max) => { const s = String(v || "").trim().replace(/\s+/g, " ").slice(0, max); return verbodenSleutel.test(s) ? "" : s; };
 
 function readBody(req, limit = 16 * 1024) {
   return new Promise((resolve, reject) => {
@@ -2523,7 +2530,9 @@ async function afhandelen(request, response) {
       if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const oef = Array.isArray(found.chosen) ? found.chosen[Number(b.oef)] : null;
       const naam = oef ? String(oef.n || "").slice(0, 80) : "";
-      if (!naam) { await sendJson(response, 400, { ok: false, fout: "Onbekende oefening." }); return; }
+      // oefeningnamen komen als sleutel in oefTrouw terecht: prototype-sleutels
+      // ("constructor" zou anders op de globale Object-constructor schrijven) weigeren
+      if (!naam || verbodenSleutel.test(naam)) { await sendJson(response, 400, { ok: false, fout: "Onbekende oefening." }); return; }
       const trouw = (found.oefTrouw = found.oefTrouw || {});
       // plafond tegen opblazen als een kaart vaak van oefeningen wisselt
       if (!trouw[naam] && Object.keys(trouw).length >= 60) { await sendJson(response, 200, { ok: true }); return; }

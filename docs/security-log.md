@@ -865,3 +865,30 @@ opname-token (12), kern (21), headers (15).
 **Volgende run — pak een ander gebied:** injectie en path traversal opnieuw
 (na alle nieuwe velden: behandelaar, notitie, oefTrouw-sleutels), of de
 opname-/videoketen met Cloudflare Stream aan (STREAM_ENABLED-pad).
+
+## 2026-09-08 — Injectie en path traversal, langs de nieuwe velden
+
+**Geauditeerd:** injectie via alle namen die als objectsleutel dienen
+(praktijk, kaartnaam, oefeningnaam in oefTrouw), XSS via de nieuwe velden
+(behandelaar, werknotitie) en de traversal-poorten (/uploads, statische route)
+— met raw-socket-paden, want fetch() normaliseert ".." zelf al.
+
+**Bevinding (gefixt, gedeelde helper wegens security-gat):** cleanName liet
+prototype-sleutels door. Een praktijk of kaart met de naam "__proto__"
+belandde op het prototype van het opslagobject (onzichtbaar voor Object.keys,
+back-ups en plafonds — de kaart verdween stil), en een oefening met de naam
+"constructor" liet /api/kaart/oefening eigenschappen op de globale
+Object-constructor schrijven (tegenbewijs: antwoord ok=true terwijl de eigen
+oefTrouw-sleutel ontbreekt). cleanName maakt zulke namen nu leeg — elke route
+weigert ze als "geen naam opgegeven" — en de oefening-route weigert ze
+expliciet. Voor v1 verandert er niets: geen legitiem gebruik heet "__proto__".
+
+**Increment:** nieuwe regressietest test-proto-injectie.mjs (16 checks:
+prototype-namen -> 400 op claim/kaart/oefening, opslag zonder
+prototype-objectsleutels, gewone flows gezond, XSS-payloads in behandelaar en
+notitie renderen inert in de echte app, traversal raw -> 403). Regressies
+groen: smoke (13), preview-bekeken (10), afspraak-accent (4).
+
+**Volgende run — pak een ander gebied:** de opname-/videoketen met Cloudflare
+Stream aan (STREAM_ENABLED-pad, al twee rotaties doorgeschoven), of de open
+endpoints zonder auth opnieuw (seintje/ervaring/gedaan-familie na alle groei).
