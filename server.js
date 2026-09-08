@@ -2298,6 +2298,9 @@ async function afhandelen(request, response) {
     const list = Object.values(map)
       .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, aantal: (k.chosen || []).length,
         scores: (k.metingen || []).slice(-14), gedaan: (k.gedaan || []).slice(-14),
+        // de allereerste meting apart: het praktijkrapport toont zo het verloop
+        // sinds de start van de behandeling, ook als die buiten de recente 14 valt
+        eersteMeting: (k.metingen && k.metingen.length) ? k.metingen[0] : null,
         bekeken: k.bekeken ? k.bekeken.t : 0,
         seintje: (k.seintje && k.seintje.soort) ? { t: k.seintje.t, soort: k.seintje.soort } : null,
         ervaring: (k.ervaring || []).slice(-1),

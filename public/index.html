@@ -2269,6 +2269,16 @@ bridge2.jpg</div>
     var geopend=lijst.filter(function(c){return c.bekeken>0;}).length;
     var weekActief=lijst.filter(function(c){return c.gedaan&&c.gedaan.some(function(g){return nu-g.t<7*dag;});}).length;
     r.push('Kaarten: '+lijst.length+' actief; '+geopend+' door de patiënt geopend; '+weekActief+' deze week geoefend.');
+    // het kwaliteitsgetal voor verantwoording: pijn van de állereerste meting naar
+    // de laatste, over alle kaarten met een herhaalde meting — dit is het verloop
+    // "sinds de start van de behandeling", niet alleen de recente periode
+    var metStart=lijst.filter(function(c){return c.eersteMeting&&typeof c.eersteMeting.s==='number'&&c.scores&&c.scores.length&&c.scores[c.scores.length-1].t>c.eersteMeting.t;});
+    if(metStart.length){
+      var g1=metStart.reduce(function(a,c){return a+c.eersteMeting.s;},0)/metStart.length;
+      var g2=metStart.reduce(function(a,c){return a+c.scores[c.scores.length-1].s;},0)/metStart.length;
+      var fk=function(x){return (Math.round(x*10)/10).toFixed(1).replace('.',',');};
+      r.push('Pijnverloop sinds de start: van gemiddeld '+fk(g1)+' (eerste meting) naar '+fk(g2)+' (laatste) over '+metStart.length+' kaart'+(metStart.length===1?'':'en')+' met herhaalde meting.');
+    }
     var metPijn=lijst.filter(function(c){return c.scores&&c.scores.length>=2;});
     if(metPijn.length){
       var deltas=metPijn.map(function(c){return c.scores[c.scores.length-1].s-c.scores[0].s;});
