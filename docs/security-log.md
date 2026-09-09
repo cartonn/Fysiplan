@@ -892,3 +892,29 @@ groen: smoke (13), preview-bekeken (10), afspraak-accent (4).
 **Volgende run — pak een ander gebied:** de opname-/videoketen met Cloudflare
 Stream aan (STREAM_ENABLED-pad, al twee rotaties doorgeschoven), of de open
 endpoints zonder auth opnieuw (seintje/ervaring/gedaan-familie na alle groei).
+
+## 2026-09-09 — Opname-/videoketen met Cloudflare Stream aan (STREAM_ENABLED)
+
+**Geauditeerd:** het volledige STREAM_ENABLED-pad, tot nu toe ontestbaar omdat
+de API-basis hardcoded was. Naar het patroon van de mailmock (MAIL_API_BASIS)
+is de basis nu instelbaar (STREAM_API_BASIS, productie-default ongewijzigd
+api.cloudflare.com), waarna de hele keten tegen een lokale mock is bewezen:
+admin-grendel op start/complete, doorloop van uid + upload-URL, de
+URL-whitelist (een kwaadaardige upload-URL uit het API-antwoord -> 502), de
+metadata-binding op complete (uid van een andere oefening -> 409), de
+uid-whitelist (vreemde tekens -> 400), de stream-entry met iframe-URL in het
+publieke manifest, en het opruimen van de oude Stream-video bij vervanging
+(DELETE richting Cloudflare). Ook nagelopen: het token verlaat de server
+nooit, timeouts op alle Stream-aanroepen, en de opnameroute zelf (admin-gemunte
+korte tokens, TTL-opschoning, inhoudscontrole mp4/webm, 60 MB-plafond,
+4 gelijktijdige uploads, opslag-waakhond).
+
+**Bevinding: geen gat** — de keten was goed gebouwd; hij is nu ook bewezen.
+
+**Increment:** STREAM_API_BASIS-testhaak (2 regels, gedragsneutraal) + nieuwe
+regressietest test-stream-keten.mjs (10 checks tegen de mock). Regressies
+groen: smoke (13), preview-bekeken (10), proto-injectie (16).
+
+**Volgende run — pak een ander gebied:** de open patiënt-endpoints opnieuw
+(seintje/ervaring/gedaan/meting-familie na alle groei), of de
+praktijksjablonen- en logoketen.

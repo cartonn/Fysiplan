@@ -44,6 +44,9 @@ const ADMIN_KEY = process.env.ADMIN_KEY || "admin88";
 const STREAM_ACCOUNT_ID = String(process.env.CLOUDFLARE_ACCOUNT_ID || "").trim();
 const STREAM_API_TOKEN = String(process.env.CLOUDFLARE_STREAM_TOKEN || process.env.CLOUDFLARE_API_TOKEN || "").trim();
 const STREAM_ENABLED = !!(STREAM_ACCOUNT_ID && STREAM_API_TOKEN);
+// net als MAIL_API_BASIS: de API-basis is instelbaar zodat de hele Stream-keten
+// tegen een lokale mock te testen is; in productie blijft dit api.cloudflare.com
+const STREAM_API_BASIS = String(process.env.STREAM_API_BASIS || "https://api.cloudflare.com");
 // constant-time vergelijking: het antwoordtempo verraadt niets over de sleutel
 const isAdmin = (req) => {
   const a = Buffer.from(String(req.headers["x-admin-sleutel"] || ""));
@@ -475,7 +478,7 @@ const streamUid = (v) => /^[A-Za-z0-9_-]{1,64}$/.test(String(v || "")) ? String(
 const streamIframe = (uid) => `https://iframe.videodelivery.net/${uid}/iframe`;
 async function cloudflareStream(path, options = {}) {
   if (!STREAM_ENABLED) throw new Error("Cloudflare Stream is niet ingesteld");
-  const r = await fetch(`https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(STREAM_ACCOUNT_ID)}/stream${path}`, {
+  const r = await fetch(`${STREAM_API_BASIS}/client/v4/accounts/${encodeURIComponent(STREAM_ACCOUNT_ID)}/stream${path}`, {
     ...options,
     headers: { authorization: `Bearer ${STREAM_API_TOKEN}`, "content-type": "application/json", ...(options.headers || {}) },
     signal: AbortSignal.timeout(30 * 1000)
