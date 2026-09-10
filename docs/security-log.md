@@ -918,3 +918,26 @@ groen: smoke (13), preview-bekeken (10), proto-injectie (16).
 **Volgende run — pak een ander gebied:** de open patiënt-endpoints opnieuw
 (seintje/ervaring/gedaan/meting-familie na alle groei), of de
 praktijksjablonen- en logoketen.
+
+## 2026-09-10 — Open patiënt-endpoints (seintje/ervaring/gedaan/meting-familie)
+
+**Geauditeerd:** de volledige familie van open kaart-endpoints (alleen het
+kaart-id is de sleutel) met een systematische guard-matrix over alle 24
+routes — schrijf-/leesrem, kruisSite, kaart-raden-rem, eisPraktijk op de
+therapeutroutes en demo-passthrough op de patiëntroutes bleken overal
+consequent aanwezig — plus waarde-fuzzing: scores buiten bereik, verkeerde
+types, injectiestrings, kapotte JSON, oversized bodies (16 KB-afkap via
+req.destroy) en id-raden.
+
+**Bevinding: geen gat.** Veertien misvormde waarden geven allemaal 400 en
+nooit een 500; typeverwarring (soort als array) normaliseert hooguit naar een
+whitelist-waarde; niets van de fuzz bereikt de opslag; de demo-kaart raakt de
+schijf nooit; na alle beschietingen is kaarten.json geldig en werken de
+legitieme flows; 31× id-raden loopt vast op de raden-rem.
+
+**Increment:** nieuwe regressietest test-patient-fuzz.mjs (12 checks) die de
+familie vastklikt. Regressies groen: smoke (13), preview-bekeken (10).
+
+**Volgende run — pak een ander gebied:** de praktijksjablonen- en logoketen
+(eisPraktijk-schrijfroutes met uploads), of security-headers opnieuw wanneer
+er weer nieuwe blokken op /k of /v2/app zijn bijgekomen.
