@@ -981,6 +981,11 @@ bridge2.jpg</div>
     _dash.type='button';_dash.className='mi';_dash.textContent='Dashboard';
     _dash.addEventListener('click',function(){location.href='/dashboard88';});
     document.querySelector('.menu').appendChild(_dash);
+    var _medewerkers=document.createElement('a');
+    _medewerkers.className='mi';_medewerkers.textContent='Medewerkers';
+    _medewerkers.href='/medewerkers';
+    _medewerkers.title='Log in met je persoonlijke beheerdersaccount om toegang in te trekken';
+    document.querySelector('.menu').appendChild(_medewerkers);
     var _core=document.createElement('button');
     _core.type='button';_core.className='mi';_core.textContent='Core 1000';
     _core.addEventListener('click',function(){location.href='/content1000.html';});

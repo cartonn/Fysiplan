@@ -271,6 +271,10 @@ try {
   const beheerHeaders = { cookie: beheerLogin.response.headers.get('set-cookie').split(';', 1)[0] };
   const lijst = await json('/api/medewerkers', { headers: beheerHeaders });
   assert.equal(lijst.response.status, 200);
+  const beheerPagina = await fetch(origin + '/medewerkers', { headers: beheerHeaders });
+  assert.equal(beheerPagina.status, 200);
+  assert.match(await beheerPagina.text(), /Toegang intrekken/);
+  assert.match(await readFile('public/index.html', 'utf8'), /_medewerkers\.href='\/medewerkers'/);
   assert.equal(lijst.body.medewerkers.length, 2);
   assert.ok(lijst.body.medewerkers.every(m => !('hash' in m)));
   const wijzig = { email: 'therapeut@example.nl', geblokkeerd: true };
