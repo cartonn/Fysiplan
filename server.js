@@ -192,6 +192,11 @@ function auditLog(pk, actie, req) {
 const v1AccountsPath = join(dataDir, "v1-accounts.json");
 let v1Accounts = {}; // { emailLower: { email, hash, praktijk, gemaakt, gewijzigd } }
 try { v1Accounts = JSON.parse(await readFile(v1AccountsPath, "utf8")); } catch {}
+// Toegangsbeheer is nadrukkelijk NIET toegankelijk met de openbare admin88-sleutel.
+// Alleen geverifieerde persoonlijke accounts die expliciet zijn aangewezen mogen dit.
+const accountBeheerders = new Set(String(process.env.ACCOUNT_BEHEER_EMAILS || "")
+  .split(",").map((email) => email.trim().toLowerCase()).filter(Boolean));
+const accountBeheerder = (email) => !!email && accountBeheerders.has(email);
 // instel-tokens (activatie en reset): op schijf zodat een herstart een verstuurde
 // maillink niet ongeldig maakt; alleen de sha256-hash van het token wordt bewaard
 const v1TokensPath = join(dataDir, "v1-insteltokens.json");
@@ -292,6 +297,7 @@ function v1SessieVan(req) {
   if (!m) return null;
   const s = v1Sessies.get(m[1]);
   if (!s) return null;
+  if (!v1Accounts[s.email] || v1Accounts[s.email].geblokkeerd) { v1Sessies.delete(m[1]); return null; }
   if (Date.now() - s.t > 30 * 86400000) { v1Sessies.delete(m[1]); return null; }
   return s.email;
 }
@@ -332,6 +338,7 @@ async function serveerV1App(response, email) {
   const account = '<span id="fp1uit" style="display:inline-flex;gap:7px;align-items:center;margin-left:5px;padding-left:10px;'
     + 'border-left:1px solid #e4e7ec;font:12px/1.2 system-ui,-apple-system,sans-serif">'
     + '<span style="color:#667085;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + veiligEmail + '</span>'
+    + (accountBeheerder(email) ? '<a href="/medewerkers" style="color:#1f6feb">Medewerkers</a>' : '')
     + '<button type="button" id="fp1uitknop" style="cursor:pointer;border:1px solid #1f6feb;background:#1f6feb;color:#fff;'
     + 'border-radius:8px;padding:5px 9px;font:600 12px/1 system-ui;box-shadow:0 1px 2px rgba(16,24,40,.06)">Uitloggen</button></span>';
   const script = '<script>document.getElementById("fp1uitknop").addEventListener("click",function(){'
@@ -1768,6 +1775,54 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // Persoonlijk toegangsbeheer: fail closed, geen publieke beheerheader als bypass.
+  if (urlPath === "/medewerkers" || urlPath === "/api/medewerkers") {
+    response.setHeader("cache-control", "no-store");
+    const actor = v1SessieVan(request);
+    if (!actor && urlPath === "/medewerkers") { await serveerV1Inlog(response); return; }
+    if (!accountBeheerder(actor)) { await denied(request, response, "medewerkers-beheer"); return; }
+    if (urlPath === "/medewerkers" && request.method === "GET") {
+      await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "medewerkers.html"), "utf8"));
+      return;
+    }
+    if (urlPath === "/api/medewerkers" && request.method === "GET") {
+      await sendJson(response, 200, { ok: true, medewerkers: Object.values(v1Accounts)
+        .map((acc) => ({ email: acc.email, geblokkeerd: !!acc.geblokkeerd, beheerder: accountBeheerder(acc.email) }))
+        .sort((a, b) => a.email.localeCompare(b.email)) });
+      return;
+    }
+    if (urlPath === "/api/medewerkers" && request.method === "POST") {
+      if (schrijfLimiet(request, response)) return;
+      if (kruisSite(request)) { await weigerKruis(response); return; }
+      const origin = String(request.headers.origin || "");
+      let sameOrigin = !origin;
+      try { if (origin) sameOrigin = new URL(origin).host === eigenHost(request); } catch {}
+      if (!sameOrigin || !String(request.headers["content-type"] || "").startsWith("application/json")) {
+        await weigerKruis(response); return;
+      }
+      try {
+        const b = JSON.parse(await readBody(request));
+        const email = String(b.email || "").trim().toLowerCase();
+        if (typeof b.geblokkeerd !== "boolean" || !Object.hasOwn(v1Accounts, email)) {
+          await sendJson(response, 400, { ok: false, fout: "Kies een bestaande medewerker." }); return;
+        }
+        if (accountBeheerder(email)) {
+          await sendJson(response, 400, { ok: false, fout: "Een beheerder kan hier niet worden geblokkeerd." }); return;
+        }
+        const next = { ...v1Accounts, [email]: { ...v1Accounts[email], geblokkeerd: b.geblokkeerd, gewijzigd: Date.now() } };
+        await saveJson(v1AccountsPath, next);
+        v1Accounts = next;
+        for (const [tok, s] of v1Sessies) if (s.email === email) v1Sessies.delete(tok);
+        for (const [hash, t] of Object.entries(v1Tokens)) if (t.email === email) delete v1Tokens[hash];
+        await saveJson(v1TokensPath, v1Tokens);
+        auditLog(V1_PRAKTIJK, "v1-toegang-" + (b.geblokkeerd ? "ingetrokken" : "hersteld"), request);
+        await sendJson(response, 200, { ok: true });
+      } catch { await sendJson(response, 500, { ok: false, fout: "Wijziging niet bevestigd. Vernieuw de lijst en probeer opnieuw." }); }
+      return;
+    }
+    await sendJson(response, 405, { ok: false }); return;
+  }
+
   // ---- v1-inlog (e-mail + wachtwoord, alleen FysioTotaal) ----
   // status: gebruikt de inlogpagina om te weten of iemand al ingelogd is
   if (urlPath === "/api/v1/status" && request.method === "GET") {
@@ -1801,6 +1856,7 @@ async function afhandelen(request, response) {
           "De praktijkcode klopt niet. Kopieer de volledige code van je praktijk en probeer opnieuw.");
         return;
       }
+      if (v1Accounts[email]?.geblokkeerd) { await sendJson(response, 200, { ok: true, gestuurd: true }); return; }
       if (!v1Accounts[email] && Object.keys(v1Accounts).length >= 200) { await sendJson(response, 400, { ok: false, fout: "Maximum bereikt." }); return; }
       if (mailOpSlot(email)) { await send429(response, 3600, { ok: false, fout: "Er zijn al meerdere mails naar dit adres gestuurd; kijk in je inbox (ook spam) of probeer het over een uur opnieuw." }); return; }
       const token = await maakInstelToken(email);
@@ -1822,7 +1878,7 @@ async function afhandelen(request, response) {
       const email = String(b.email || "").trim().toLowerCase().slice(0, 200);
       if (!mailIngesteld()) { await sendJson(response, 503, { ok: false, fout: "Wachtwoord herstellen staat nog uit op deze server. Vraag je praktijk om hulp." }); return; }
       if (!geldigEmail(email)) { await sendJson(response, 400, { ok: false, fout: "Vul een geldig e-mailadres in." }); return; }
-      if (v1Accounts[email] && !mailOpSlot(email)) {
+      if (v1Accounts[email] && !v1Accounts[email].geblokkeerd && !mailOpSlot(email)) {
         const token = await maakInstelToken(email);
         await stuurMail(email, "Je Fysiplan-wachtwoord opnieuw instellen",
           "Kies via deze link een nieuw wachtwoord voor Fysiplan (24 uur geldig):\n" + instelLink(request, token) +
@@ -1846,7 +1902,7 @@ async function afhandelen(request, response) {
       if (!/^[a-f0-9]{48}$/.test(token)) { await denied(request, response, "v1-insteltoken"); return; }
       if (ww.length < 8) { await sendJson(response, 400, { ok: false, fout: "Kies een wachtwoord van minstens 8 tekens." }); return; }
       const email = await verbruikInstelToken(token);
-      if (!email) {
+      if (!email || v1Accounts[email]?.geblokkeerd) {
         await sendJson(response, 410, { ok: false, fout: "Deze link is verlopen of al gebruikt. Vraag een nieuwe aan via de inlogpagina.", verlopen: true });
         return;
       }
@@ -1877,7 +1933,7 @@ async function afhandelen(request, response) {
         return;
       }
       const acc = v1Accounts[email];
-      if (!acc || !checkHash(ww, acc.hash)) {
+      if (!acc || acc.geblokkeerd || !checkHash(ww, acc.hash)) {
         v1LoginMisTel(email || "?");
         await denied(request, response, "v1-login");
         return;

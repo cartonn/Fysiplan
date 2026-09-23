@@ -129,7 +129,7 @@ html.v2 .v2badge{background:linear-gradient(150deg,#2f66bd,#1c4487);color:#fff;
   html.v2 .wrap{grid-template-columns:1fr;padding:10px;gap:10px}
   /* oefeningenlijst: compact blok boven de kaart, met eigen scroll */
   html.v2 .col-controls{position:static;height:clamp(480px,70svh,640px);max-height:none}
-  html.v2 .col-controls .bd{overflow:hidden}
+  html.v2 .col-controls .bd{overflow-y:auto}
   html.v2 .col-controls .list{min-height:220px;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
   html.v2 .row{gap:7px;padding:7px 5px}
   html.v2 .row .thumb{width:48px !important;height:48px !important;flex-basis:48px}

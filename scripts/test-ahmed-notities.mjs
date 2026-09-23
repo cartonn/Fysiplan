@@ -65,6 +65,7 @@ const app = spawn(process.execPath, ["server.js"], {
     PORT: String(appPort),
     DATA_DIR: dataDir,
     ADMIN_KEY: "test-admin-key",
+    ACCOUNT_BEHEER_EMAILS: "beheerder@example.nl",
     V1_REGISTRATIE_CODE: "test-registratiecode",
     MAIL_API_SLEUTEL: "test-mail-key",
     MAIL_AFZENDER: "Fysiplan <account@fysiplan.nl>",
@@ -260,7 +261,35 @@ try {
   assert.equal(aiCalls[0].body.messages[0].content,
     "<trainingsdoel>Werp-ABC</trainingsdoel>\n<klacht>opbouw werpbelasting na een schouderklacht</klacht>");
 
-  console.log("OK: V1 account/mail/login, V2 categoriebeheer en AI-trainingsdoel werken end-to-end.");
+  // Persoonlijke accountbeheerrechten: de openbare beheerheader volstaat niet.
+  assert.equal((await json('/api/medewerkers', { headers })).response.status, 403);
+  const therapeutCookie = login.response.headers.get('set-cookie').split(';', 1)[0];
+  assert.equal((await json('/api/medewerkers', { headers: { cookie: therapeutCookie } })).response.status, 403);
+  await post('/api/v1/registreer', { email: 'beheerder@example.nl', code: 'test-registratiecode' });
+  const beheerToken = mail.at(-1).text.match(/token=([a-f0-9]{48})/)[1];
+  const beheerLogin = await post('/api/v1/wachtwoord-zetten', { token: beheerToken, wachtwoord: 'Veilig beheerwachtwoord 2026' });
+  const beheerHeaders = { cookie: beheerLogin.response.headers.get('set-cookie').split(';', 1)[0] };
+  const lijst = await json('/api/medewerkers', { headers: beheerHeaders });
+  assert.equal(lijst.response.status, 200);
+  assert.equal(lijst.body.medewerkers.length, 2);
+  assert.ok(lijst.body.medewerkers.every(m => !('hash' in m)));
+  const wijzig = { email: 'therapeut@example.nl', geblokkeerd: true };
+  assert.equal((await post('/api/medewerkers', wijzig, { ...beheerHeaders, origin: 'https://evil.example' })).response.status, 403);
+  assert.equal((await post('/api/medewerkers', { email: 'beheerder@example.nl', geblokkeerd: true }, beheerHeaders)).response.status, 400);
+  assert.equal((await post('/api/medewerkers', wijzig, beheerHeaders)).response.status, 200);
+  assert.equal((await json('/api/v1/status', { headers: { cookie: therapeutCookie } })).body.ingelogd, false);
+  assert.equal((await post('/api/v1/login', { email: wijzig.email, wachtwoord: 'Veilig testwachtwoord 2026' })).response.status, 403);
+  const mailAantal = mail.length;
+  await post('/api/v1/registreer', { email: wijzig.email, code: 'test-registratiecode' });
+  await post('/api/v1/wachtwoord-vergeten', { email: wijzig.email });
+  assert.equal(mail.length, mailAantal, 'Een blokkade kan niet via mail worden omzeild');
+  const oudHerstelToken = mail[1].text.match(/token=([a-f0-9]{48})/)[1];
+  assert.equal((await post('/api/v1/wachtwoord-zetten', { token: oudHerstelToken, wachtwoord: 'Nieuw wachtwoord 2026' })).response.status, 410);
+  assert.equal(JSON.parse(await readFile(join(dataDir, 'v1-accounts.json'), 'utf8'))[wijzig.email].geblokkeerd, true);
+  assert.equal((await post('/api/medewerkers', { ...wijzig, geblokkeerd: false }, beheerHeaders)).response.status, 200);
+  assert.equal((await post('/api/v1/login', { email: wijzig.email, wachtwoord: 'Veilig testwachtwoord 2026' })).response.status, 200);
+  assert.equal((await json('/api/v1/status', { headers: { cookie: therapeutCookie } })).body.ingelogd, false, 'Herstellen reanimeert geen oude sessie');
+  console.log("OK: account/mail/login, persoonlijk intrekken/herstellen, V2 categoriebeheer en AI werken end-to-end.");
 } finally {
   if (app.exitCode === null) app.kill("SIGTERM");
   await Promise.all([
