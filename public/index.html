@@ -726,8 +726,8 @@ bridge2.jpg</div>
   function imgRender(im,size){
     if(im.type==='img'){
       var src=im.src;
-      if(IS_V2&&V2_BEELD==='lijn'&&im.lineSrc)src=im.lineSrc;
-      else if(IS_V2&&V2_BEELD==='kleur'&&im.colorSrc)src=im.colorSrc;
+      if(USE_V2_LIBRARY&&V2_BEELD==='lijn'&&im.lineSrc)src=im.lineSrc;
+      else if(USE_V2_LIBRARY&&V2_BEELD==='kleur'&&im.colorSrc)src=im.colorSrc;
       return "<img class='thumb' style='width:"+(size||34)+"px;height:"+(size||34)+"px' src='"+src+"'/>";
     }
     return svgStr(im.key,im.m,size);
