@@ -1262,6 +1262,31 @@ async function afhandelen(request, response) {
     return;
   }
 
+  if (urlPath === "/api/oefeningen/categorieen" && request.method === "DELETE") {
+    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    if (schrijfLimiet(request, response)) return;
+    try {
+      const b = JSON.parse(await readBody(request));
+      const naam = cleanName(b.naam, 40);
+      const category = customCategories.find(c => c.toLowerCase() === naam.toLowerCase());
+      if (!category || CATS.includes(category)) {
+        await sendJson(response, 400, {ok:false, fout:"Alleen zelf toegevoegde categorieën kunnen worden verwijderd. Standaardcategorieën blijven behouden."}); return;
+      }
+      const entries = [...await readBaseManifest("v1"), ...await readBaseManifest("v2"), ...extra];
+      const used = entries.some(e => {
+        const c = catOverrides[e.naam] || e;
+        return [c.groep, ...(c.ook || [])].includes(category);
+      });
+      if (used) { await sendJson(response, 409, {ok:false, fout:"Deze categorie bevat nog oefeningen. Verplaats ze eerst naar een andere categorie (ook tweede categorieën)."}); return; }
+      const next = customCategories.filter(c => c !== category);
+      await saveJson(customCategoriesPath, next);
+      customCategories = next;
+      await sendJson(response, 200, {ok:true, categorieen:await knownCategories()});
+    } catch { await sendJson(response, 400, {ok:false, fout:"Verwijderen mislukt."}); }
+    return;
+  }
+
   // oefening toevoegen (naam + categorie + plaatje); direct live in v2
   if (urlPath === "/api/oefeningen" && request.method === "POST") {
     if (!isAdmin(request)) { await denied(request, response, urlPath); return; }

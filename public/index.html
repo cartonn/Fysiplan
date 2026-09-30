@@ -57,6 +57,8 @@
   .card .bd{padding:12px 14px}
   .step{display:inline-flex;width:20px;height:20px;border-radius:50%;background:var(--brand);color:#fff;align-items:center;justify-content:center;font-size:11px;font-weight:700}
   .filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  #filters{max-height:96px;overflow-y:auto;overflow-x:hidden;align-content:flex-start;scrollbar-gutter:stable;overscroll-behavior:contain;padding:2px 3px 4px 0}
+  #filters .chip{font-size:11px;padding:4px 8px}
   .chip{font-size:12px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--panel);cursor:pointer;color:var(--muted);transition:.15s}
   .chip:hover{border-color:#cdd3db}
   .chip.on{background:var(--brand-50);border-color:var(--brand-100);color:var(--brand-700);font-weight:600}
@@ -1065,6 +1067,7 @@ bridge2.jpg</div>
       return "<span class='chip"+(curG===x.g?" on":"")+"' data-g=\""+esc(x.g)+"\">"+esc(x.label)+"</span>";
     }).join("");
     if(IS_ADMIN)html+="<button type='button' class='chip cat-add' data-cat-add='1' title='Categorie toevoegen' aria-label='Categorie toevoegen'>+ categorie</button>";
+    if(IS_ADMIN)html+="<button type='button' class='chip' data-cat-delete='1'>Categorie verwijderen</button>";
     f.innerHTML=html;
   }
 
@@ -1517,6 +1520,16 @@ bridge2.jpg</div>
     var r=e.target.closest('.row');if(!r)return;toggleExercise(+r.dataset.id);
   });
   document.getElementById('filters').addEventListener('click',function(e){
+    if(IS_ADMIN&&e.target.closest('[data-cat-delete]')){
+      var naam=prompt('Welke eigen categorie wil je verwijderen? Verplaats eerst de oefeningen naar een andere categorie.',curG==='all'?'':curG);
+      if(!naam||!confirm('Categorie “'+naam+'” verwijderen? Oefeningen worden niet verwijderd.'))return;
+      fetch('/api/oefeningen/categorieen',{method:'DELETE',headers:Object.assign({'content-type':'application/json'},ADMIN_HDR),body:JSON.stringify({naam:naam})})
+        .then(function(r){return r.json();}).then(function(d){
+          if(!d.ok){alert(d.fout||'Verwijderen mislukt.');return;}
+          curG='all';return loadDefaultLibrary().then(function(){renderChips();updateChipCounts();renderList();});
+        }).catch(function(){alert('Geen verbinding met de server.');});
+      return;
+    }
     if(e.target.closest('[data-cat-add]')){openNieuweCategorie();return;}
     var b=e.target.closest('.chip');if(!b)return;
     document.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');});
