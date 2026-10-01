@@ -2316,6 +2316,15 @@ bridge2.jpg</div>
       var fk=function(x){return (Math.round(x*10)/10).toFixed(1).replace('.',',');};
       r.push('Pijnverloop sinds de start: van gemiddeld '+fk(g1)+' (eerste meting) naar '+fk(g2)+' (laatste) over '+metStart.length+' kaart'+(metStart.length===1?'':'en')+' met herhaalde meting.');
     }
+    // PSK geaggregeerd (zelfde opzet als het pijnverloop): van eerste naar laatste
+    // score bij de doelactiviteit, over kaarten met een herhaalde PSK-meting
+    var metPsk=lijst.filter(function(c){return c.pskDoel&&c.pskEerste&&typeof c.pskEerste.s==='number'&&c.psk&&c.psk.length&&c.psk[c.psk.length-1].t>c.pskEerste.t;});
+    if(metPsk.length){
+      var pk1=metPsk.reduce(function(a,c){return a+c.pskEerste.s;},0)/metPsk.length;
+      var pk2=metPsk.reduce(function(a,c){return a+c.psk[c.psk.length-1].s;},0)/metPsk.length;
+      var fp=function(x){return (Math.round(x*10)/10).toFixed(1).replace('.',',');};
+      r.push('PSK (doelactiviteit, 0-10) sinds de start: van gemiddeld '+fp(pk1)+' naar '+fp(pk2)+' over '+metPsk.length+' kaart'+(metPsk.length===1?'':'en')+' met herhaalde meting.');
+    }
     var metPijn=lijst.filter(function(c){return c.scores&&c.scores.length>=2;});
     if(metPijn.length){
       var deltas=metPijn.map(function(c){return c.scores[c.scores.length-1].s-c.scores[0].s;});
@@ -2628,7 +2637,7 @@ bridge2.jpg</div>
               "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>";
           }
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
-            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.afspraak&&c.afspraak.t>Date.now()-2*3600000?" · <span title='Volgende afspraak op de patiëntkaart' style='white-space:nowrap'>afspraak "+new Date(c.afspraak.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+"</span>":"")+"</small></div>"+seinChip+vg+hsChip+
+            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.afspraak&&c.afspraak.t>Date.now()-2*3600000?" · <span title='Volgende afspraak op de patiëntkaart' style='white-space:nowrap'>afspraak "+new Date(c.afspraak.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+"</span>":"")+(c.pskDoel&&c.psk&&c.psk.length?" · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)' style='white-space:nowrap'>PSK "+c.psk[c.psk.length-1].s+"</span>":"")+"</small></div>"+seinChip+vg+hsChip+
             "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
             "<button class='btn' data-skopie='"+esc(c.id)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+
