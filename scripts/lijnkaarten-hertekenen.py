@@ -215,53 +215,61 @@ RESTORE_INK = 0.7         # drempel na papiernormalisatie: daaronder is het inkt
 LINE_MAX_W = 3.6          # dikkere lijnen worden (voorzichtig) dunner gemaakt (eindpx)
 
 
-def text_components(stats: np.ndarray, height: int) -> np.ndarray:
-    """Herkent tekst (copyright, watermerk): een rij van minstens vier kleine,
-    even hoge deeltjes op dezelfde basislijn, dicht naast elkaar."""
+def text_lines(stats: np.ndarray, height: int) -> list[list[tuple]]:
+    """Herkent tekstregels (copyright, watermerk): minstens vier kleine, even
+    hoge deeltjes op dezelfde basislijn, dicht naast elkaar; daarna aangevuld
+    met losse letters verderop op dezelfde regel (lichte letters vallen soms
+    weg, waardoor een woord in stukken uiteenvalt)."""
     count = len(stats)
-    text = np.zeros(count, bool)
     if count < 5:
-        return text
-    biggest = stats[1:, cv2.CC_STAT_AREA].max()
+        return []
+    biggest = stats[1:, 4].max()
     small = [i for i in range(1, count)
-             if stats[i, cv2.CC_STAT_HEIGHT] < height * 0.045 and stats[i, cv2.CC_STAT_AREA] < biggest * 0.01
-             and stats[i, cv2.CC_STAT_HEIGHT] >= height * 0.008]
-    small.sort(key=lambda i: stats[i, cv2.CC_STAT_LEFT])
-    used = set()
+             if height * 0.008 <= stats[i, 3] < height * 0.045 and stats[i, 4] < biggest * 0.01]
+    small.sort(key=lambda i: stats[i, 0])
+    used: set[int] = set()
+    lines = []
     for i in small:
         if i in used:
             continue
         line = [i]
-        ch = stats[i, cv2.CC_STAT_HEIGHT]
-        base = stats[i, cv2.CC_STAT_TOP] + ch
-        right = stats[i, cv2.CC_STAT_LEFT] + stats[i, cv2.CC_STAT_WIDTH]
+        ch = stats[i, 3]
+        base = stats[i, 1] + ch
+        right = stats[i, 0] + stats[i, 2]
         for j in small:
-            if j in used or j in line or stats[j, cv2.CC_STAT_LEFT] < right - ch * 0.3:
+            if j in used or j in line or stats[j, 0] < right - ch * 0.3:
                 continue
-            jb = stats[j, cv2.CC_STAT_TOP] + stats[j, cv2.CC_STAT_HEIGHT]
-            if abs(jb - base) <= ch * 0.35 and stats[j, cv2.CC_STAT_LEFT] - right <= ch * 1.6:
+            if abs(stats[j, 1] + stats[j, 3] - base) <= ch * 0.35 and stats[j, 0] - right <= ch * 1.6:
                 line.append(j)
-                right = stats[j, cv2.CC_STAT_LEFT] + stats[j, cv2.CC_STAT_WIDTH]
-        if len(line) >= 4:
-            text[line] = True
-            used.update(line)
-    # rest van dezelfde regel (vaak onderbroken door te lichte letters): kleine
-    # deeltjes op dezelfde basislijn, niet ver van een al gevonden tekstregel
-    for _ in range(3):
-        found = [i for i in range(1, count) if text[i]]
-        for j in range(1, count):
-            if text[j] or stats[j, cv2.CC_STAT_AREA] >= biggest * 0.01 or stats[j, cv2.CC_STAT_HEIGHT] >= height * 0.045:
+                right = stats[j, 0] + stats[j, 2]
+        if len(line) < 4:
+            continue
+        # aanvullen op dezelfde basislijn
+        for j in small:
+            if j in used or j in line:
                 continue
-            jb = stats[j, cv2.CC_STAT_TOP] + stats[j, cv2.CC_STAT_HEIGHT]
-            for i in found:
-                ch = stats[i, cv2.CC_STAT_HEIGHT]
-                ib = stats[i, cv2.CC_STAT_TOP] + ch
-                near = min(abs(stats[j, cv2.CC_STAT_LEFT] - (stats[i, cv2.CC_STAT_LEFT] + stats[i, cv2.CC_STAT_WIDTH])),
-                           abs(stats[i, cv2.CC_STAT_LEFT] - (stats[j, cv2.CC_STAT_LEFT] + stats[j, cv2.CC_STAT_WIDTH])))
-                if abs(jb - ib) <= ch * 0.4 and near <= ch * 8:
-                    text[j] = True
-                    break
-    return text
+            jb = stats[j, 1] + stats[j, 3]
+            left = min(stats[k, 0] for k in line)
+            right = max(stats[k, 0] + stats[k, 2] for k in line)
+            if abs(jb - base) <= ch * 0.4 and (left - ch * 8 <= stats[j, 0] <= right + ch * 8):
+                line.append(j)
+        used.update(line)
+        lines.append([tuple(int(v) for v in stats[k]) for k in line])
+    return lines
+
+
+def frame_lines(ink: np.ndarray) -> np.ndarray:
+    """Restanten van een scan- of afbeeldingskader: lange, dunne rechte lijnen
+    vlak langs de rand die nergens aan de tekening vastzitten."""
+    h, w = ink.shape
+    count, labels, stats, _ = cv2.connectedComponentsWithStats(ink.astype(np.uint8), 8)
+    frame = np.zeros(count, bool)
+    for i in range(1, count):
+        x, y, bw, bh, _ = stats[i]
+        horizontal = bh <= h * 0.012 and bw >= w * 0.2 and (y >= h * 0.9 or y + bh <= h * 0.1)
+        vertical = bw <= w * 0.012 and bh >= h * 0.2 and (x >= w * 0.9 or x + bw <= w * 0.1)
+        frame[i] = horizontal or vertical
+    return frame[labels]
 
 
 def restore_drawing(gray: np.ndarray) -> Drawing:
@@ -307,18 +315,25 @@ def restore_drawing(gray: np.ndarray) -> Drawing:
         x1, y1 = x0 + stats[1:, 2], y0 + stats[1:, 3]
         at_edge = (x1 <= edge) | (y1 <= edge) | (x0 >= ww - edge) | (y0 >= hh - edge)
         keep[1:] &= ~(at_edge & (areas < areas.max() * 0.01))
-        text = text_components(stats, hh)
-        keep &= ~text
+        lines = text_lines(stats, hh) + [
+            [(x, y, w2, h2, a) for (y, x, h2, w2, a) in line]           # verticale tekst
+            for line in text_lines(stats[:, [1, 0, 3, 2, 4]], ww)]
+        biggest_label = 1 + int(np.argmax(areas))
+        for line in lines:
+            ids = [i for i in range(1, count) if tuple(stats[i]) in {tuple(t) for t in line}]
+            keep[ids] = False
         ink = keep[labels]
-        # letters die net een voet of hand raken zitten in diens deeltje: wis
-        # daarom de hele tekstregel (van eerste tot laatste gevonden letter)
-        if text.any():
-            idx = np.nonzero(text)[0]
-            tx0, ty0 = stats[idx, 0].min(), stats[idx, 1].min()
-            tx1 = (stats[idx, 0] + stats[idx, 2]).max()
-            ty1 = (stats[idx, 1] + stats[idx, 3]).max()
-            ink[ty0:ty1 + 1, tx0:tx1 + 1] = False
-            ink = remove_small(ink, max(30, int(areas.max() * 0.0015)))
+        # letters die net een voet of hand raken zitten in diens deeltje: wis per
+        # tekstregel het kader, maar alleen als de tekening daar nauwelijks ligt
+        figure = labels == biggest_label
+        for line in lines:
+            arr = np.array(line)
+            tx0, ty0 = arr[:, 0].min(), arr[:, 1].min()
+            tx1, ty1 = (arr[:, 0] + arr[:, 2]).max(), (arr[:, 1] + arr[:, 3]).max()
+            if figure[ty0:ty1 + 1, tx0:tx1 + 1].sum() < figure.sum() * 0.01:
+                ink[ty0:ty1 + 1, tx0:tx1 + 1] = False
+        ink = remove_small(ink, max(30, int(areas.max() * 0.0015)))
+        ink &= ~frame_lines(ink)
     border = max(2, int(min(ink.shape) * 0.006))             # scan- en kaderranden
     ink[:border], ink[-border:], ink[:, :border], ink[:, -border:] = False, False, False, False
     # grijswaarden behouden (antialiasing van de tekenaar) in plaats van een harde

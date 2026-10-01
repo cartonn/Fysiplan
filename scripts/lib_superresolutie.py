@@ -92,7 +92,21 @@ def _build(cache: Path):
 
 
 def upscale4(gray: np.ndarray, cache: Path) -> np.ndarray:
-    """gray: uint8 HxW -> float32 (4H x 4W) in [0, 1]."""
+    """gray: uint8 HxW -> float32 (4H x 4W) in [0, 1]. Resultaten worden per
+    bron (sha256) bewaard in cache/sr/, want de AI-stap is het trage deel."""
+    import hashlib
+    import cv2
+    key = hashlib.sha256(gray.tobytes() + str(gray.shape).encode()).hexdigest()[:24]
+    stored = cache / "sr" / f"{key}.png"
+    if stored.exists():
+        return cv2.imread(str(stored), cv2.IMREAD_GRAYSCALE).astype(np.float32) / 255
+    result = _upscale4(gray, cache)
+    stored.parent.mkdir(parents=True, exist_ok=True)
+    cv2.imwrite(str(stored), np.round(result * 255).astype(np.uint8))
+    return result
+
+
+def _upscale4(gray: np.ndarray, cache: Path) -> np.ndarray:
     import torch
     global _model
     if _model is None:
