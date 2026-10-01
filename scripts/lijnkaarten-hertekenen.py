@@ -208,6 +208,137 @@ def load_illustration(gray: np.ndarray) -> Drawing:
     return Drawing(w, h, panel, split, raster=ink, stroke_width=width, kind="illustratie")
 
 
+SR_BELOW = 700           # bronnen kleiner dan dit (lange zijde) eerst AI-superresolutie
+RESTORE_WORK = 1600       # werkresolutie (lange zijde) voor het restaureren
+INK_PAPER, INK_SOLID = 0.9, 0.35   # niveaus: lichter dan dit is papier, donkerder is volle inkt
+RESTORE_INK = 0.7         # drempel na papiernormalisatie: daaronder is het inkt
+LINE_MAX_W = 3.6          # dikkere lijnen worden (voorzichtig) dunner gemaakt (eindpx)
+
+
+def text_components(stats: np.ndarray, height: int) -> np.ndarray:
+    """Herkent tekst (copyright, watermerk): een rij van minstens vier kleine,
+    even hoge deeltjes op dezelfde basislijn, dicht naast elkaar."""
+    count = len(stats)
+    text = np.zeros(count, bool)
+    if count < 5:
+        return text
+    biggest = stats[1:, cv2.CC_STAT_AREA].max()
+    small = [i for i in range(1, count)
+             if stats[i, cv2.CC_STAT_HEIGHT] < height * 0.045 and stats[i, cv2.CC_STAT_AREA] < biggest * 0.01
+             and stats[i, cv2.CC_STAT_HEIGHT] >= height * 0.008]
+    small.sort(key=lambda i: stats[i, cv2.CC_STAT_LEFT])
+    used = set()
+    for i in small:
+        if i in used:
+            continue
+        line = [i]
+        ch = stats[i, cv2.CC_STAT_HEIGHT]
+        base = stats[i, cv2.CC_STAT_TOP] + ch
+        right = stats[i, cv2.CC_STAT_LEFT] + stats[i, cv2.CC_STAT_WIDTH]
+        for j in small:
+            if j in used or j in line or stats[j, cv2.CC_STAT_LEFT] < right - ch * 0.3:
+                continue
+            jb = stats[j, cv2.CC_STAT_TOP] + stats[j, cv2.CC_STAT_HEIGHT]
+            if abs(jb - base) <= ch * 0.35 and stats[j, cv2.CC_STAT_LEFT] - right <= ch * 1.6:
+                line.append(j)
+                right = stats[j, cv2.CC_STAT_LEFT] + stats[j, cv2.CC_STAT_WIDTH]
+        if len(line) >= 4:
+            text[line] = True
+            used.update(line)
+    # rest van dezelfde regel (vaak onderbroken door te lichte letters): kleine
+    # deeltjes op dezelfde basislijn, niet ver van een al gevonden tekstregel
+    for _ in range(3):
+        found = [i for i in range(1, count) if text[i]]
+        for j in range(1, count):
+            if text[j] or stats[j, cv2.CC_STAT_AREA] >= biggest * 0.01 or stats[j, cv2.CC_STAT_HEIGHT] >= height * 0.045:
+                continue
+            jb = stats[j, cv2.CC_STAT_TOP] + stats[j, cv2.CC_STAT_HEIGHT]
+            for i in found:
+                ch = stats[i, cv2.CC_STAT_HEIGHT]
+                ib = stats[i, cv2.CC_STAT_TOP] + ch
+                near = min(abs(stats[j, cv2.CC_STAT_LEFT] - (stats[i, cv2.CC_STAT_LEFT] + stats[i, cv2.CC_STAT_WIDTH])),
+                           abs(stats[i, cv2.CC_STAT_LEFT] - (stats[j, cv2.CC_STAT_LEFT] + stats[j, cv2.CC_STAT_WIDTH])))
+                if abs(jb - ib) <= ch * 0.4 and near <= ch * 8:
+                    text[j] = True
+                    break
+    return text
+
+
+def restore_drawing(gray: np.ndarray) -> Drawing:
+    """Restaureert een bestaande (vaak kleine, JPEG-vervuilde) lijntekening.
+
+    Zoals een retoucheur het zou doen: papier egaliseren (grijze of vergeelde
+    achtergrond, JPEG-waas), opschalen naar werkresolutie, vlekjes en
+    watermerkresten verwijderen, en de randen gladmaken (vervagen + drempel
+    op hoge resolutie geeft vectorachtige contouren). Het tekenwerk zelf, met
+    arcering, opvulling en lijnkarakter, blijft van de oorspronkelijke tekenaar.
+    """
+    g = gray.astype(np.float32)
+    used_sr = False
+    if max(gray.shape) < SR_BELOW:
+        import lib_superresolutie as sr
+        if sr.available():
+            # kleine bron: AI-superresolutie (Real-ESRGAN) i.p.v. bicubisch
+            # opschalen, dat bij 4-8x vergroten wazige, klonterige lijnen geeft
+            g = sr.upscale4(gray, MODEL_CACHE) * 255
+            used_sr = True
+    h, w = g.shape
+    scale = RESTORE_WORK / max(h, w)
+    paper = cv2.GaussianBlur(cv2.dilate(g, np.ones((15, 15), np.uint8)), (0, 0), 5)
+    norm = np.clip(g / np.maximum(paper, 1), 0, 1)
+    norm = cv2.resize(norm, (round(w * scale), round(h * scale)), interpolation=cv2.INTER_CUBIC)
+    norm = cv2.GaussianBlur(norm, (0, 0), min(0.3 * scale, 1.5) if scale > 1 else 0.6)
+    ink = norm < RESTORE_INK
+    count, labels, stats, _ = cv2.connectedComponentsWithStats(ink.astype(np.uint8), 8)
+    if count > 1:
+        areas = stats[1:, cv2.CC_STAT_AREA]
+        # donkerste punt per deeltje: echte inkt wordt ergens (bijna) zwart,
+        # een watermerk of copyrighttekst blijft overal lichtgrijs
+        darkest = np.full(count, 1.0, np.float32)
+        np.minimum.at(darkest, labels.ravel(), norm.ravel())
+        keep = np.zeros(count, bool)
+        keep[1:] = areas >= max(30, areas.max() * 0.0015)   # stof en ruis
+        keep[1:] &= (darkest[1:] < 0.42) | (areas >= areas.max() * 0.02)
+        # afgesneden copyrighttekst langs de rand ("...koutLabs.com"): kleine
+        # deeltjes die volledig in een smalle randstrook liggen
+        hh, ww = ink.shape
+        edge = int(min(hh, ww) * 0.05)
+        x0, y0 = stats[1:, 0], stats[1:, 1]
+        x1, y1 = x0 + stats[1:, 2], y0 + stats[1:, 3]
+        at_edge = (x1 <= edge) | (y1 <= edge) | (x0 >= ww - edge) | (y0 >= hh - edge)
+        keep[1:] &= ~(at_edge & (areas < areas.max() * 0.01))
+        text = text_components(stats, hh)
+        keep &= ~text
+        ink = keep[labels]
+        # letters die net een voet of hand raken zitten in diens deeltje: wis
+        # daarom de hele tekstregel (van eerste tot laatste gevonden letter)
+        if text.any():
+            idx = np.nonzero(text)[0]
+            tx0, ty0 = stats[idx, 0].min(), stats[idx, 1].min()
+            tx1 = (stats[idx, 0] + stats[idx, 2]).max()
+            ty1 = (stats[idx, 1] + stats[idx, 3]).max()
+            ink[ty0:ty1 + 1, tx0:tx1 + 1] = False
+            ink = remove_small(ink, max(30, int(areas.max() * 0.0015)))
+    border = max(2, int(min(ink.shape) * 0.006))             # scan- en kaderranden
+    ink[:border], ink[-border:], ink[:, :border], ink[:, -border:] = False, False, False, False
+    # grijswaarden behouden (antialiasing van de tekenaar) in plaats van een harde
+    # drempel: een harde drempel maakt opgeschaalde dunne lijnen dik en klonterig
+    raster = np.clip((INK_PAPER - norm) / (INK_PAPER - INK_SOLID), 0, 1)
+    raster *= cv2.dilate(ink.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
+    raster[raster < 0.06] = 0
+    core = raster > 0.5
+    dist = cv2.distanceTransform(core.astype(np.uint8), cv2.DIST_L2, 3)
+    ridge = skeletonize(core)
+    width = float(np.median(dist[ridge]) * 2) if ridge.any() else 3.0
+    solid = raster > 0.25
+    grow = np.ones((9, 9), np.uint8)
+    panel = cv2.dilate(solid.astype(np.uint8), grow).astype(bool)
+    split = cv2.dilate(ignore_floor_lines(solid).astype(np.uint8), grow).astype(bool)
+    hh, ww = raster.shape
+    return Drawing(ww, hh, panel, split, raster=raster, stroke_width=width,
+                   kind="gerestaureerd+sr" if used_sr else "gerestaureerd")
+
+
 # ---------------------------------------------------------------- layout
 
 def bbox(mask: np.ndarray) -> tuple[int, int, int, int] | None:
@@ -317,13 +448,14 @@ def layout(drawing: Drawing, allow_rearrange: bool = True) -> tuple[list[Placeme
     split_mask = drawing.split_mask
     cols = split_axis(split_mask, whole, 0, min_gap)
     cols = [c for c in cols if (c[2] - c[0]) * (c[3] - c[1]) > 0]
+    cols = merge_small_panels(split_mask, cols, 0)
     if 2 <= len(cols) <= 4 and substantial(split_mask, cols):
         # vloerlijn hoort weer bij elk paneel: herbereken bbox met volledig masker
         cols = [bbox_within(mask, (c[0], whole[1], c[2], whole[3])) or c for c in cols]
         place_grid(cols, 1, "onder-elkaar")
         if len(cols) >= 3:
             place_grid(cols, 2, "raster")
-    rows = split_axis(split_mask, whole, 1, min_gap)
+    rows = merge_small_panels(split_mask, split_axis(split_mask, whole, 1, min_gap), 1)
     if 2 <= len(rows) <= 4 and substantial(split_mask, rows):
         rows = [bbox_within(mask, (whole[0], r[1], whole[2], r[3])) or r for r in rows]
         place_grid(rows, len(rows), "naast-elkaar")
@@ -342,6 +474,28 @@ def layout(drawing: Drawing, allow_rearrange: bool = True) -> tuple[list[Placeme
     if best[1] != "origineel" and best[0] < original_scale * REARRANGE_GAIN:
         best = candidates[0]
     return best[2], best[1]
+
+
+def merge_small_panels(mask: np.ndarray, boxes: list, axis: int) -> list:
+    """Een los stukje (bankje, halter) hoort bij de dichtstbijzijnde figuur."""
+    boxes = list(boxes)
+    while len(boxes) > 1:
+        areas = [int(mask[y0:y1, x0:x1].sum()) for x0, y0, x1, y1 in boxes]
+        i = int(np.argmin(areas))
+        if areas[i] >= max(areas) * 0.35:
+            break
+        lo, hi = (0, 2) if axis == 0 else (1, 3)
+        gaps = []
+        for j in (i - 1, i + 1):
+            if 0 <= j < len(boxes):
+                gap = boxes[i][lo] - boxes[j][hi] if j < i else boxes[j][lo] - boxes[i][hi]
+                gaps.append((gap, j))
+        j = min(gaps)[1]
+        a, b = boxes[i], boxes[j]
+        merged = (min(a[0], b[0]), min(a[1], b[1]), max(a[2], b[2]), max(a[3], b[3]))
+        boxes[min(i, j)] = merged
+        del boxes[max(i, j)]
+    return boxes
 
 
 def substantial(mask: np.ndarray, boxes) -> bool:
@@ -413,6 +567,12 @@ def render(drawing: Drawing, placements: list[Placement]) -> np.ndarray:
             if grow >= 0.5:
                 k = int(round(grow * 2)) + 1
                 crop = cv2.dilate(crop, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k)))
+            # te zware lijnen (vaak een vergrote, uitgelopen JPEG) iets afslanken,
+            # nooit meer dan een derde, zodat dunne details blijven staan
+            shrink = min(drawing.stroke_width - LINE_MAX_W / pl.scale, drawing.stroke_width / 4) / 2
+            if shrink >= 0.75 and drawing.stroke_width * pl.scale > LINE_MAX_W * 1.25:
+                k = int(round(shrink * 2)) + 1
+                crop = cv2.erode(crop, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k)))
             tw = max(1, int(round((x1 - x0) * pl.scale)))
             th = max(1, int(round((y1 - y0) * pl.scale)))
             interp = cv2.INTER_AREA if pl.scale < 1 else cv2.INTER_CUBIC
@@ -468,8 +628,9 @@ def owner(placements, points):
 
 # ---------------------------------------------------------------- catalogue
 
-# laatste revisie waarin alle oude contourkaarten nog onbewerkt in public/ staan
-CONTOUR_SOURCE_REV = "84cfa30"
+# laatste revisie waarin alle oorspronkelijke lijntekeningen (V1-jpg's en
+# contourkaarten) nog onbewerkt in public/ staan: de bron voor restauratie
+ORIGINAL_REV = "84cfa30"
 
 
 def is_contour_card(gray: np.ndarray) -> bool:
@@ -517,9 +678,12 @@ def file_sha(path: Path) -> str:
 
 
 def draw_card(mode: str, source: str, target: Path) -> dict:
-    """mode 'lijn': neuraal natekenen van een contourkaart; 'kleur': idem vanuit
-    een nieuwe kleurkaart (via de ruwe contour); 'illustratie': alleen opmaak."""
-    if mode == "lijn":
+    """mode 'restauratie': bestaande lijntekening restaureren; 'lijn': neuraal
+    natekenen van een contourkaart; 'kleur': idem vanuit een nieuwe kleurkaart
+    (via de ruwe contour); 'illustratie': alleen opmaak."""
+    if mode == "restauratie":
+        drawing = restore_drawing(read_gray(source))
+    elif mode == "lijn":
         drawing = redraw_from_line(read_gray(source))
     elif mode == "kleur":
         drawing = redraw_from_line(contour_from_color(Path(source)))
@@ -534,8 +698,13 @@ def draw_card(mode: str, source: str, target: Path) -> dict:
     if touches_border(image):
         raise RuntimeError(f"{source}: tekening raakt de rand van het vakje")
     target.parent.mkdir(parents=True, exist_ok=True)
-    tmp = target.with_name(target.name + ".tmp.png")
-    cv2.imwrite(str(tmp), image, [cv2.IMWRITE_PNG_COMPRESSION, 9])
+    if target.suffix.lower() in (".jpg", ".jpeg"):
+        # de bestandsnaam blijft gelijk (catalogus, opgeslagen schema's): dus ook jpg
+        tmp = target.with_name(target.name + ".tmp.jpg")
+        cv2.imwrite(str(tmp), image, [cv2.IMWRITE_JPEG_QUALITY, 95])
+    else:
+        tmp = target.with_name(target.name + ".tmp.png")
+        cv2.imwrite(str(tmp), image, [cv2.IMWRITE_PNG_COMPRESSION, 9])
     tmp.replace(target)
     return {
         "bron": drawing.kind,
@@ -554,25 +723,39 @@ def process(job: tuple[str, str, str, str]) -> dict:
     except Exception as error:  # één kaart mag de rest niet tegenhouden
         return {"pad": pad, "fout": f"{type(error).__name__}: {error}"[:300]}
     result["pad"] = pad
-    result["lijnbron"] = source if mode == "lijn" else None
+    result["origineel"] = source if mode in ("lijn", "restauratie") else None
     return result
 
 
+def original_spec(pad: str) -> str | None:
+    """`git:<rev>:public/<pad>` als het bestand in de originele revisie bestaat."""
+    probe = subprocess.run(["git", "-C", str(ROOT), "cat-file", "-e", f"{ORIGINAL_REV}:public/{pad}"],
+                           capture_output=True)
+    return f"git:{ORIGINAL_REV}:public/{pad}" if probe.returncode == 0 else None
+
+
 def plan_job(line: Path, target: Path, previous: dict | None) -> tuple[str, str, str, str] | None:
-    """Bepaalt per kaart wat er moet gebeuren; None = al klaar, niet aankomen."""
+    """Bepaalt per kaart wat er moet gebeuren; None = al klaar, niet aankomen.
+
+    Restauratie en natekenen werken altijd vanuit het origineel (git), nooit
+    vanuit een eerder resultaat: herhalen stapelt dus geen kwaliteitsverlies.
+    """
     pad = str(line.relative_to(PUBLIC))
     unchanged = previous is not None and previous.get("sha256") == file_sha(line)
-    if unchanged and previous.get("bron") in ("neuraal", "illustratie"):
+    if unchanged and previous.get("bron") in ("gerestaureerd", "gerestaureerd+sr", "neuraal", "illustratie"):
         return None
-    if previous is not None and previous.get("bron") == "neuraal" and previous.get("lijnbron"):
-        return pad, "lijn", previous["lijnbron"], str(target)
-    if unchanged and previous.get("bron") == "hertekend":
-        # eerdere versie van dit script tekende vanuit de kleurfoto: terug naar
-        # de originele contourkaart en die neuraal natekenen
-        return pad, "lijn", f"git:{CONTOUR_SOURCE_REV}:public/{pad}", str(target)
+    if line.suffix.lower() in (".jpg", ".jpeg"):
+        source = (previous or {}).get("origineel") or original_spec(pad) or str(line)
+        return pad, "restauratie", source, str(target)
     if is_contour_card(read_gray(str(line))):
         return pad, "lijn", str(line), str(target)
     return pad, "illustratie", str(line), str(target)
+
+
+def catalogue_images() -> list[Path]:
+    """Precies de lijntekeningen die de app toont: `img` uit public/oefeningen.json."""
+    entries = json.loads((PUBLIC / "oefeningen.json").read_text())
+    return sorted({PUBLIC / entry["img"] for entry in entries if entry.get("img")})
 
 
 def main() -> None:
@@ -583,12 +766,14 @@ def main() -> None:
     parser.add_argument("--lijn", type=Path, help="enkel bestand: teken deze contourkaart neuraal na")
     parser.add_argument("--kleur", type=Path, help="enkel bestand: nieuwe kaart vanuit deze kleurkaart (via contour)")
     parser.add_argument("--illustratie", type=Path, help="enkel bestand: maak deze lijnillustratie passend")
+    parser.add_argument("--restauratie", type=Path, help="enkel bestand: restaureer deze lijntekening")
     parser.add_argument("--naar", type=Path, help="doelbestand bij --lijn/--kleur/--illustratie")
     parser.add_argument("--report", type=Path, default=ROOT / "content" / "lijnkaarten-herteken-rapport.json")
     parser.add_argument("--jobs", type=int, default=0)
     args = parser.parse_args()
 
-    single = [(m, p) for m, p in (("lijn", args.lijn), ("kleur", args.kleur), ("illustratie", args.illustratie)) if p]
+    single = [(m, p) for m, p in (("lijn", args.lijn), ("kleur", args.kleur), ("illustratie", args.illustratie),
+                                  ("restauratie", args.restauratie)) if p]
     if single:
         if not args.naar or len(single) > 1:
             sys.exit("Geef precies één van --lijn/--kleur/--illustratie, met --naar")
@@ -602,7 +787,7 @@ def main() -> None:
     if args.report.exists():
         previous = {entry["pad"]: entry for entry in json.loads(args.report.read_text()).get("kaarten", [])}
 
-    lines = sorted(PUBLIC.glob("images/**/*-line-v1.png"))
+    lines = catalogue_images()
     if args.only:
         lines = [p for p in lines if args.only in str(p)]
     jobs, kept = [], []
@@ -632,12 +817,12 @@ def main() -> None:
         merged = dict(previous)
         for entry in kept + results:
             merged[entry["pad"]] = entry
-        existing = {str(p.relative_to(PUBLIC)) for p in PUBLIC.glob("images/**/*-line-v1.png")}
+        existing = {str(p.relative_to(PUBLIC)) for p in catalogue_images()}
         report = {
             "schemaVersion": 1,
             "uitleg": "gegenereerd door scripts/lijnkaarten-hertekenen.py; sha256 = gepubliceerde kaart",
             "formaat": [OUT_W, OUT_H],
-            "lijndikte": {"pen": NEURAL_W, "illustratieMinimum": ILLUSTRATION_MIN_W},
+            "lijndikte": {"pen": NEURAL_W, "minimum": ILLUSTRATION_MIN_W, "maximum": LINE_MAX_W},
             "model": "Virtual Sketching (Mo et al., SIGGRAPH 2021), ONNX-release browser-models-v1",
             "kaarten": [merged[k] for k in sorted(merged) if k in existing],
         }
