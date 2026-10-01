@@ -40,15 +40,21 @@ Live Railway URL: https://fysiplan-production.up.railway.app
 - `scripts/normalize-image-visibility.py` — brengt lijnzwart, randscherpte en kleur per afbeelding
   op de zichtbaarheid van de biceps-referentie, gemeten op het 56×56-formaat van de keuzelijst,
   zonder afmetingen te wijzigen.
-- `scripts/lijnkaarten-hertekenen.py` (`npm run images:lijnkaarten`) — maakt alle V2-lijnkaarten
-  (`*-line-v1.png`) mooi en passend, altijd vanuit de bestaande lijntekening. De oude automatische
-  contourkaarten worden neuraal nagetekend met Virtual Sketching (Mo et al., SIGGRAPH 2021; ONNX-port
-  in `scripts/lib_virtual_sketching.py`): doorlopende, gladde penstreken met vaste lijndikte, zonder
-  rafels, grimassen of verminkt logo. Echte illustraties houden hun lijnwerk. Daarna worden figuren in
-  panelen geknipt en zo geschikt (origineel, onder elkaar of raster) dat 2–3 personen of persoon +
-  machine op gelijke schaal zo groot mogelijk in het staande 2:3-vakje passen. Idempotent via
-  `content/lijnkaarten-herteken-rapport.json`. Vereist `pip install -r scripts/requirements-lijnkaarten.txt`;
-  het model (~40 MB) komt bij eerste gebruik in `image-work/modellen/`.
+- `scripts/lijnkaarten-hertekenen.py` (`npm run images:lijnkaarten`) — maakt de 319 lijntekeningen die de
+  app toont (`img` in `public/oefeningen.json`) mooi en passend, altijd vanuit de bestaande tekening:
+  - 215 V1-tekeningen (`*.jpg`, vaak klein en JPEG-vervuild) worden **gerestaureerd**: papier
+    egaliseren, kleine bronnen eerst AI-vergroten met Real-ESRGAN (anime_6B, `scripts/lib_superresolutie.py`),
+    vlekjes, kaderlijntjes en watermerk-/copyrighttekst (ook verticaal) weg, gladde randen met behoud
+    van het lijnkarakter, begrensde lijndikte;
+  - 104 Carla-illustraties (`*-line-v1.png`) houden hun lijnwerk.
+  Daarna worden figuren in panelen geknipt (een vloerlijn telt niet, losse stukjes horen bij de
+  dichtstbijzijnde figuur) en zo geschikt (origineel, onder elkaar of raster) dat 2–3 personen of
+  persoon + machine op gelijke schaal zo groot mogelijk in het staande 2:3-vakje (800×1200) passen.
+  Bestandsnamen blijven gelijk. Bron is altijd het origineel uit git (revisie `84cfa30`), dus herhalen
+  stapelt geen kwaliteitsverlies; `content/lijnkaarten-herteken-rapport.json` registreert elke kaart.
+  Nieuwe contourkaarten (`--kleur`/`--lijn`) worden neuraal nagetekend met Virtual Sketching
+  (`scripts/lib_virtual_sketching.py`). Vereist `pip install -r scripts/requirements-lijnkaarten.txt`;
+  modellen komen bij eerste gebruik in `image-work/modellen/`.
 - `railway.json` — Railway build/deploy + healthcheck op `/health`.
 
 ## Scripts
