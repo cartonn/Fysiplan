@@ -2392,6 +2392,9 @@ async function afhandelen(request, response) {
         afspraak: k.afspraak || null,
         oefTrouw: k.oefTrouw || null,
         behandelaar: k.behandelaar || null,
+        pskDoel: k.pskDoel || null,
+        psk: (k.psk || []).slice(-1),
+        pskEerste: (k.psk && k.psk.length) ? k.psk[0] : null,
         doel: Number(k.doel) || 0, gearchiveerd: !!k.gearchiveerd }))
       .sort((a, b) => b.ts - a.ts);
     await sendJson(response, 200, list);
@@ -2457,6 +2460,8 @@ async function afhandelen(request, response) {
         afspraak: map[kk] ? map[kk].afspraak || null : null,
         oefTrouw: map[kk] ? map[kk].oefTrouw || null : null,
         behandelaar: map[kk] ? map[kk].behandelaar || null : null,
+        pskDoel: map[kk] ? map[kk].pskDoel || null : null,
+        psk: map[kk] ? map[kk].psk || [] : [],
         doel: map[kk] ? Number(map[kk].doel) || 0 : 0,
         gearchiveerd: map[kk] ? !!map[kk].gearchiveerd : false };
       await saveJson(kaartenPath, kaarten);
@@ -2780,6 +2785,61 @@ async function afhandelen(request, response) {
       kaart.behandelaar = naam || null;
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, behandelaar: kaart.behandelaar });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
+  // PSK-doelactiviteit (Patiënt Specifieke Klachten): de therapeut zet de
+  // activiteit die de patiënt het belangrijkst vindt ("traplopen"); op /k
+  // verschijnt dan de vraag hoe lastig die nu is (0-10). De meest gebruikte
+  // klinimetrie in de NL-fysiotherapie, hier app-vrij. Leeg wist de activiteit.
+  if (urlPath === "/api/kaart/psk-doel" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      if (await eisPraktijk(request, response, pk)) return;
+      const map = kaarten[pk] || {};
+      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      const tekst = cleanName(b.activiteit, 80);
+      kaart.pskDoel = tekst || null;
+      await saveJson(kaartenPath, kaarten);
+      await sendJson(response, 200, { ok: true, pskDoel: kaart.pskDoel });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
+  // de PSK-score van de patiënt: hoe lastig is de doelactiviteit nu (0-10)?
+  // Eén score per dag (een nieuwe tik vervangt die van vandaag); alleen
+  // registreren en tonen, de duiding blijft bij de fysiotherapeut.
+  if (urlPath === "/api/kaart/psk" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const found = vindKaart(String(b.id || ""));
+      if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      if (!found.pskDoel) { await sendJson(response, 400, { ok: false, fout: "Er staat geen doelactiviteit op deze kaart." }); return; }
+      const score = b.score;
+      if (typeof score !== "number" || !Number.isInteger(score) || score < 0 || score > 10) {
+        await sendJson(response, 400, { ok: false, fout: "Geef een score van 0 tot en met 10." });
+        return;
+      }
+      const e = (found.psk = found.psk || []);
+      const nu = Date.now();
+      const laatste = e[e.length - 1];
+      if (laatste && nlDag(laatste.t) === nlDag(nu)) laatste.s = score;
+      else e.push({ t: nu, s: score });
+      found.psk = e.slice(-120);
+      if (found.demo) { await sendJson(response, 200, { ok: true, psk: found.psk }); return; }
+      await saveJson(kaartenPath, kaarten);
+      await sendJson(response, 200, { ok: true, psk: found.psk });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }

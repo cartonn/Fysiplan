@@ -375,7 +375,7 @@
     outline:3px solid rgba(36,86,166,.6);outline-offset:2px}
   @media print{
     body{background:#fff}
-    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,.skaart,.akaart,#metingkop,#agendakop,#vraagkop,#seinkop,#hskop,.kopacties,.belknop,.appbanner,.demobadge,.infobadge,.oefdone,.oefvoortgang{display:none !important}
+    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,.skaart,.akaart,#metingkop,#agendakop,#vraagkop,#seinkop,#hskop,#pskkop,.kopacties,.belknop,.appbanner,.demobadge,.infobadge,.oefdone,.oefvoortgang{display:none !important}
     .kop,.oef,.schemakaart{box-shadow:none}
   }
 </style>
@@ -454,6 +454,16 @@
     </div>
     <div class="mdank" id="hsdank" role="status" aria-live="polite" style="display:none"></div>
     <p class="mnoot" id="hsnoot">Eén antwoord per dag telt; tik een andere knop om het te wijzigen.</p>
+  </div>
+
+  <!-- PSK: alleen zichtbaar als de therapeut een doelactiviteit heeft gezet -->
+  <h2 id="pskkop" style="display:none">Jouw doelactiviteit</h2>
+  <div class="mkaart" id="pskblok" style="display:none">
+    <p class="mvraag" id="pskvraag"></p>
+    <div class="mschaal" id="pskschaal" role="group" aria-labelledby="pskvraag"></div>
+    <div class="mlabels"><span id="pskl0"></span><span id="pskl10"></span></div>
+    <div class="mdank" id="pskdank" role="status" aria-live="polite" style="display:none"></div>
+    <p class="mnoot" id="psknoot"></p>
   </div>
 
   <div class="akaart" id="antwoordblok" style="display:none" role="status" aria-live="polite">
@@ -572,6 +582,20 @@
   function trh(k){var d=THS[TAAL]||THS.nl;return d[k]!=null?d[k]:THS.nl[k];}
   // kop voor de volgende afspraak (de agenda-knop hergebruikt tr('agknop'))
   var TAF={nl:'Je volgende afspraak',en:'Your next appointment',de:'Dein nächster Termin',fr:'Votre prochain rendez-vous',es:'Tu próxima cita',pl:'Twoja następna wizyta',tr:'Bir sonraki randevun',ar:'موعدك القادم',uk:'Твій наступний візит'};
+  // PSK (Patiënt Specifieke Klachten): de doelactiviteit die de therapeut zette,
+  // met de vraag hoe lastig die nu is (0 = geen moeite, 10 = onmogelijk)
+  var TPSK={
+    nl:{kop:'Jouw doelactiviteit',vraag:'Hoe lastig is dit nu voor je: {a}?',l0:'0 = geen moeite',l10:'10 = onmogelijk',noot:'Eén score per dag telt; tik een ander cijfer om die te wijzigen.',dank:'Genoteerd, dank je wel. Je fysiotherapeut ziet je verloop bij deze kaart.',fout:'Opslaan is niet gelukt, probeer het zo nog eens.'},
+    en:{kop:'Your goal activity',vraag:'How difficult is this for you right now: {a}?',l0:'0 = no difficulty',l10:'10 = impossible',noot:'One score counts per day; tap another number to change it.',dank:'Saved, thank you. Your physiotherapist can see your progress on this card.',fout:'Saving did not work, please try again in a moment.'},
+    de:{kop:'Deine Zielaktivität',vraag:'Wie schwer fällt dir das gerade: {a}?',l0:'0 = keine Mühe',l10:'10 = unmöglich',noot:'Es zählt ein Wert pro Tag; tippe eine andere Zahl an, um ihn zu ändern.',dank:'Gespeichert, danke. Dein Physiotherapeut sieht deinen Verlauf bei dieser Karte.',fout:'Speichern hat nicht geklappt, versuche es gleich noch einmal.'},
+    fr:{kop:'Votre activité cible',vraag:'À quel point est-ce difficile pour vous en ce moment : {a} ?',l0:'0 = aucune difficulté',l10:'10 = impossible',noot:'Un score par jour compte ; touchez un autre chiffre pour le modifier.',dank:'Enregistré, merci. Votre kinésithérapeute peut suivre votre évolution sur cette carte.',fout:'L’enregistrement n’a pas fonctionné, réessayez dans un instant.'},
+    es:{kop:'Tu actividad objetivo',vraag:'¿Cuánto te cuesta esto ahora mismo: {a}?',l0:'0 = sin dificultad',l10:'10 = imposible',noot:'Cuenta una puntuación por día; toca otro número para cambiarla.',dank:'Anotado, gracias. Tu fisioterapeuta puede ver tu evolución en esta tarjeta.',fout:'No se pudo guardar, inténtalo de nuevo en un momento.'},
+    pl:{kop:'Twoja aktywność docelowa',vraag:'Jak trudne jest to teraz dla ciebie: {a}?',l0:'0 = bez trudności',l10:'10 = niemożliwe',noot:'Liczy się jeden wynik dziennie; stuknij inną cyfrę, aby go zmienić.',dank:'Zapisano, dziękujemy. Twój fizjoterapeuta widzi twoje postępy na tej karcie.',fout:'Zapis się nie udał, spróbuj za chwilę ponownie.'},
+    tr:{kop:'Hedef etkinliğin',vraag:'Şu anda bu senin için ne kadar zor: {a}?',l0:'0 = hiç zor değil',l10:'10 = imkânsız',noot:'Günde bir puan sayılır; değiştirmek için başka bir rakama dokun.',dank:'Kaydedildi, teşekkürler. Fizyoterapistin bu karttaki gelişimini görebilir.',fout:'Kaydetme başarısız oldu, birazdan tekrar dene.'},
+    ar:{kop:'نشاطك المستهدف',vraag:'ما مدى صعوبة هذا عليك الآن: {a}؟',l0:'0 = لا صعوبة',l10:'10 = مستحيل',noot:'تُحتسب درجة واحدة في اليوم؛ اضغط رقمًا آخر لتغييرها.',dank:'تم الحفظ، شكرًا لك. يستطيع أخصائي العلاج الطبيعي متابعة تقدمك في هذه البطاقة.',fout:'لم يتم الحفظ، حاول مرة أخرى بعد قليل.'},
+    uk:{kop:'Твоя цільова активність',vraag:'Наскільки це зараз важко для тебе: {a}?',l0:'0 = без труднощів',l10:'10 = неможливо',noot:'Зараховується один результат на день; торкнись іншої цифри, щоб змінити його.',dank:'Збережено, дякуємо. Твій фізіотерапевт бачить твій прогрес на цій картці.',fout:'Не вдалося зберегти, спробуй ще раз за мить.'}
+  };
+  function trpsk(k){var d=TPSK[TAAL]||TPSK.nl;return d[k]!=null?d[k]:TPSK.nl[k];}
   // "vandaag"/"morgen"-accent op de afspraakregel: op de dag zelf moet de
   // herinnering opvallen, niet opgaan in een datumregel
   var TAFREL={nl:{v:'Vandaag',m:'Morgen'},en:{v:'Today',m:'Tomorrow'},de:{v:'Heute',m:'Morgen'},fr:{v:'Aujourd’hui',m:'Demain'},es:{v:'Hoy',m:'Mañana'},pl:{v:'Dzisiaj',m:'Jutro'},tr:{v:'Bugün',m:'Yarın'},ar:{v:'اليوم',m:'غدًا'},uk:{v:'Сьогодні',m:'Завтра'}};
@@ -991,6 +1015,36 @@
     });
   }
 
+  // PSK: de 0-10-schaal verschijnt alleen als de therapeut een doelactiviteit
+  // heeft gezet — opt-in per kaart, dus geen vraagmoeheid voor wie hem niet nodig heeft
+  function tekenPsk(){
+    var kop=document.getElementById('pskkop'),blok=document.getElementById('pskblok');
+    if(!kop||!blok)return;
+    var doel=K&&K.kaart&&K.kaart.pskDoel;
+    if(!doel){kop.style.display='none';blok.style.display='none';return;}
+    kop.textContent=trpsk('kop');
+    document.getElementById('pskvraag').textContent=trpsk('vraag').replace('{a}',doel);
+    document.getElementById('pskl0').textContent=trpsk('l0');
+    document.getElementById('pskl10').textContent=trpsk('l10');
+    document.getElementById('psknoot').textContent=trpsk('noot');
+    var schaal=document.getElementById('pskschaal');
+    if(!schaal.childNodes.length){
+      var h='';
+      for(var s=0;s<=10;s++)h+='<button type="button" data-psk="'+s+'" aria-label="'+s+'" aria-pressed="false">'+s+'</button>';
+      schaal.innerHTML=h;
+    }
+    var m=(K.kaart.psk||[]);
+    var vandaag=dagStr(Date.now());
+    var vDag=null;
+    m.forEach(function(x){if(dagStr(x.t)===vandaag)vDag=x.s;});
+    schaal.querySelectorAll('button').forEach(function(b){
+      var aan=vDag!==null&&Number(b.dataset.psk)===vDag;
+      b.classList.toggle('aan',aan);
+      b.setAttribute('aria-pressed',aan?'true':'false');
+    });
+    kop.style.display='';blok.style.display='';
+  }
+
   // antwoord van de therapeut op een seintje: tonen tot de patiënt het wegtikt
   function tekenAntwoord(){
     var blok=document.getElementById('antwoordblok');if(!blok)return;
@@ -1002,7 +1056,7 @@
     blok.style.display='block';
   }
 
-  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenHerstel();tekenAfspraak();}
+  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenHerstel();tekenPsk();tekenAfspraak();}
 
   // ---- taal wisselen: vaste teksten direct, kaartinhoud via de server (eenmalig per taal) ----
   function wisselTaal(t){
@@ -1400,6 +1454,17 @@
         .catch(function(){dank.style.display='block';dank.textContent=trs('fout');b.classList.remove('aan');delete b.dataset.bezig;});
     });
     // ervaren herstel: één tik stuurt de score (-2..+2), vandaag opnieuw tikken wijzigt
+    // PSK-score: één tik, de server telt één score per dag
+    document.getElementById('pskschaal').addEventListener('click',function(e){
+      var pb=e.target.closest('[data-psk]');if(!pb||!id)return;
+      fetch('/api/kaart/psk',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:id,score:Number(pb.dataset.psk)})})
+        .then(function(r){return r.json();})
+        .then(function(d){var dank=document.getElementById('pskdank');
+          if(d&&d.ok){K.kaart.psk=d.psk||[];tekenPsk();dank.textContent=trpsk('dank');}
+          else dank.textContent=(d&&d.fout)||trpsk('fout');
+          dank.style.display='block';})
+        .catch(function(){var dank=document.getElementById('pskdank');dank.textContent=trpsk('fout');dank.style.display='block';});
+    });
     document.getElementById('hsknoppen').addEventListener('click',function(e){
       var b=e.target.closest('.sbtn');if(!b||b.dataset.bezig)return;
       var score=Number(b.dataset.hs);b.dataset.bezig='1';

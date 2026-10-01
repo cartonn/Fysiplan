@@ -2272,6 +2272,15 @@ bridge2.jpg</div>
       twN.sort(function(a,b){return (tw[b].n||0)-(tw[a].n||0);});
       r.push('Oefentrouw per oefening (afvinkdagen): '+twN.map(function(k2){return k2+' '+tw[k2].n+'x';}).join(', ')+'.');
     }
+    // PSK (Patiënt Specifieke Klachten): dé NL-klinimetrie, hier app-vrij gemeten.
+    // Eerste en laatste score bij de doelactiviteit — plakklaar voor het EPD.
+    var pm=(kaart.psk||[]).filter(function(x){return x&&typeof x.s==='number';});
+    if(kaart.pskDoel&&pm.length){
+      var pe=pm[0],pl=pm[pm.length-1];
+      var pd=new Date(pl.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});
+      var pverloop=pm.length>1?('eerste '+pe.s+', laatst '+pl.s):('score '+pl.s);
+      r.push('PSK ("'+kaart.pskDoel+'", 0-10, app-vrij aangetikt): '+pverloop+' ('+pd+').');
+    }
     // ervaren herstel (GROC-achtig, -2..+2): de app-vrije één-tik-PROM van de kaart
     var ev=(kaart.ervaring||[]).filter(function(x){return x&&typeof x.s==='number';});
     if(ev.length){
@@ -2571,6 +2580,15 @@ bridge2.jpg</div>
               "<div style='display:flex;gap:6px;margin-top:3px'>"+
                 "<input data-sbeh='"+esc(c.id)+"' value='"+esc(c.behandelaar||'')+"' maxlength='40' placeholder='Bijv. Sanne' style='flex:1;min-width:0;font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
                 "<button class='btn' data-sbehopslaan='"+esc(c.id)+"'>Bewaar</button>"+
+              "</div>"+
+            "</div>"+
+            // PSK-doelactiviteit: zet de activiteit die de cliënt het belangrijkst
+            // vindt; op de patiëntkaart verschijnt dan de 0-10-vraag (PSK)
+            "<div style='margin-top:7px'>"+
+              "<small style='color:var(--muted)'>Doelactiviteit (PSK) — de kaart vraagt dan dagelijks hoe lastig dit is, 0-10; leeg = uit</small>"+
+              "<div style='display:flex;gap:6px;margin-top:3px'>"+
+                "<input data-spsk='"+esc(c.id)+"' value='"+esc(c.pskDoel||'')+"' maxlength='80' placeholder='Bijv. traplopen, stofzuigen, een uur wandelen' style='flex:1;min-width:0;font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
+                "<button class='btn' data-spskopslaan='"+esc(c.id)+"'>Bewaar</button>"+
               "</div>"+
             "</div>"+
             // privé werknotitie: alleen voor de praktijk, komt nooit op de patiëntkaart
@@ -2877,6 +2895,19 @@ bridge2.jpg</div>
         .then(function(r){return r.json();})
         .then(function(d){if(d.ok)toonA('Bewaard ✓');else toonA(d.fout||'Mislukt');})
         .catch(function(){toonA('Geen verbinding');});
+      return;
+    }
+    // PSK-doelactiviteit opslaan (leeg = uitzetten); alleen de ingelogde praktijk
+    var ps=e.target.closest('[data-spskopslaan]');
+    if(ps){
+      var veldP=document.querySelector("[data-spsk='"+ps.dataset.spskopslaan+"']");
+      if(!veldP)return;
+      var oudP=ps.textContent;
+      var toonP=function(t){ps.textContent=t;setTimeout(function(){ps.textContent=oudP;},1600);};
+      fetch('api/kaart/psk-doel',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:ps.dataset.spskopslaan,activiteit:veldP.value})})
+        .then(function(r){return r.json();})
+        .then(function(d){if(d.ok)toonP('Bewaard ✓');else toonP(d.fout||'Mislukt');})
+        .catch(function(){toonP('Geen verbinding');});
       return;
     }
     // behandelaar opslaan (leeg = wissen); alleen de ingelogde praktijk
