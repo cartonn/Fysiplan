@@ -1,23 +1,20 @@
 // Lijn-illustratiegraph: tekent elke goedgekeurde V2-kleurkaart ná als schone
 // zwart-wit-illustratie (stijlvoorbeeld: rustige, zelfverzekerde contourlijnen,
 // een eenvoudig vriendelijk gezicht, spaarzame plooilijnen, geen arcering).
-// De gegenereerde tekening vervangt de deterministische contourdetectie op
+// De gegenereerde tekening vervangt de deterministisch hertekende kaart op
 // hetzelfde -line-v1.png-pad en wordt vastgelegd in content/lijn-illustraties.json,
 // zodat scripts/v2-line-art-graph.mjs een illustratie nooit meer overschrijft
 // zolang de onderliggende kleurkaart ongewijzigd is. Wijzigt de kleurkaart wél,
 // dan vervalt de registratie vanzelf en herstelt de keten zich met een verse
-// deterministische lijn tot er opnieuw geïllustreerd is.
+// deterministisch hertekende lijn tot er opnieuw geïllustreerd is.
 import RunwayML from "@runwayml/sdk";
-import sharp from "sharp";
 import { createHash } from "node:crypto";
 import { mkdir, readFile, rename, stat, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { graphLayers, runDag } from "../lib/dag-runner.js";
 import { isRunwayCapacityError } from "../lib/runway-errors.js";
 import {
-  LINE_HEIGHT,
-  LINE_WIDTH,
-  analyzeBinaryLineArt,
+  fitLineIllustration,
   linePathForColor,
   publicAssetPath,
 } from "../lib/v2-line-art.js";
@@ -40,10 +37,6 @@ const injectIndex = args.indexOf("--inject");
 const inject = injectIndex === -1 ? "" : String(args[injectIndex + 1] || "");
 if (!["status", "plan", "run"].includes(command)) throw new Error(`Onbekend commando: ${command}`);
 if (command === "run" && !executeApproved) throw new Error("Gebruik run --execute om illustraties te genereren en te publiceren");
-
-// zwart-op-wit-poort: de gegenereerde tekening heeft antialiasing en moet dus
-// hard worden omgezet; onder deze grens wordt een pixel inkt, erboven papier
-const BINARIZE_THRESHOLD = 176;
 
 const catalogue = JSON.parse(await readFile(cataloguePath, "utf8"));
 const registry = await readJson(registryPath, { schemaVersion: 1, illustraties: [] });
@@ -98,39 +91,10 @@ async function download(url, target) {
   await writeFile(target, Buffer.from(await response.arrayBuffer()));
 }
 
-// zelfde deterministische branding als de kleurgraph, maar in puur lijnwerk
-function logoSvg() {
-  return Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${LINE_WIDTH}" height="${LINE_HEIGHT}">
-    <g transform="translate(20 22)">
-      <rect width="42" height="42" rx="10" fill="#000000"/>
-      <path d="M8 22h7l4-8 7 17 5-10h5" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="52" y="31" font-family="Arial,Helvetica,sans-serif" font-size="26" font-weight="700" fill="#000000">Fysiplan</text>
-    </g>
-  </svg>`);
-}
-
-// generatie -> 800x1200 -> logo -> harde binarisatie -> dezelfde QA als de
-// deterministische lijnkaarten (formaat, puur zwart-wit, plausibele dekking)
+// generatie -> dezelfde opmaakstap als alle lijnkaarten (logo/rand weg, panelen
+// passend in het 2:3-vakje, lijndikte gelijkgetrokken, antialiased) -> QA
 async function finalizeIllustration(generatedPath, outputPath) {
-  const { data, info } = await sharp(generatedPath)
-    .flatten({ background: "#ffffff" })
-    .resize(LINE_WIDTH, LINE_HEIGHT, { fit: "fill" })
-    .composite([{ input: logoSvg(), top: 0, left: 0 }])
-    .flatten({ background: "#ffffff" })
-    .greyscale()
-    .raw()
-    .toBuffer({ resolveWithObject: true });
-  const pixels = Buffer.alloc(info.width * info.height);
-  for (let i = 0; i < pixels.length; i += 1) {
-    pixels[i] = data[i * info.channels] < BINARIZE_THRESHOLD ? 0 : 255;
-  }
-  await mkdir(dirname(outputPath), { recursive: true });
-  const temporary = `${outputPath}.${process.pid}.tmp.png`;
-  await sharp(pixels, { raw: { width: info.width, height: info.height, channels: 1 } })
-    .png({ compressionLevel: 9, colours: 2 })
-    .toFile(temporary);
-  await rename(temporary, outputPath);
-  return analyzeBinaryLineArt(outputPath);
+  return fitLineIllustration(generatedPath, outputPath);
 }
 
 const kandidaten = [];
@@ -153,7 +117,7 @@ const batch = openstaand.slice(0, maxBatch);
 
 if (command !== "run") {
   console.log(JSON.stringify({
-    architecture: "Goedgekeurde kleurkaart -> Runway-illustratie in vaste stijl -> logo + binarisatie -> QA -> registratie",
+    architecture: "Goedgekeurde kleurkaart -> Runway-illustratie in vaste stijl -> opmaak in het 2:3-vakje -> QA -> registratie",
     catalogus: catalogue.length,
     metKleurkaart: kandidaten.length,
     geillustreerd: kandidaten.length - openstaand.length,

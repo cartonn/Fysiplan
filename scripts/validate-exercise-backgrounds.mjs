@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import sharp from "sharp";
-import { analyzeBinaryLineArt, linePathForColor } from "../lib/v2-line-art.js";
+import { analyzeLineArt, linePathForColor } from "../lib/v2-line-art.js";
 
 const root = resolve(new URL("../", import.meta.url).pathname);
 const catalogue = JSON.parse(await readFile(join(root, "public", "oefeningen-v2.json"), "utf8"));
@@ -108,7 +108,7 @@ await Promise.all(catalogue.map(async (exercise) => {
     legacyPairs += 1;
     return;
   }
-  const qa = await analyzeBinaryLineArt(linePath);
+  const qa = await analyzeLineArt(linePath);
   pairRatios.push(qa.blackRatio);
 }));
 

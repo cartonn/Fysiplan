@@ -40,6 +40,13 @@ Live Railway URL: https://fysiplan-production.up.railway.app
 - `scripts/normalize-image-visibility.py` — brengt lijnzwart, randscherpte en kleur per afbeelding
   op de zichtbaarheid van de biceps-referentie, gemeten op het 56×56-formaat van de keuzelijst,
   zonder afmetingen te wijzigen.
+- `scripts/lijnkaarten-hertekenen.py` (`npm run images:lijnkaarten`) — hertekent alle V2-lijnkaarten
+  (`*-line-v1.png`): oude randdetectiekaarten worden vanuit de kleurfoto opnieuw getekend (gladde
+  vectorlijnen, vaste lijndikte, eenvoudig vriendelijk gezicht, geen logo); bestaande illustraties
+  houden hun lijnwerk. Daarna worden figuren in panelen geknipt en zo geschikt (origineel, onder
+  elkaar of raster) dat 2–3 personen of persoon + machine op gelijke schaal zo groot mogelijk in
+  het staande 2:3-vakje passen. Idempotent via `content/lijnkaarten-herteken-rapport.json`.
+  Vereist `pip install -r scripts/requirements-lijnkaarten.txt`.
 - `railway.json` — Railway build/deploy + healthcheck op `/health`.
 
 ## Scripts

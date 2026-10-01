@@ -1,0 +1,3206 @@
+{
+ "schemaVersion": 1,
+ "uitleg": "gegenereerd door scripts/lijnkaarten-hertekenen.py; sha256 = gepubliceerde kaart",
+ "formaat": [
+  800,
+  1200
+ ],
+ "lijndikte": {
+  "silhouet": 3.6,
+  "binnen": 2.2,
+  "gezicht": 2.0,
+  "illustratieMinimum": 1.9
+ },
+ "kaarten": [
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9841,
+   "inktdekking": 0.07096,
+   "sha256": "342acf13cdd9bfd11794f25a90d3caa93ca4b3634061ee08fe0a4dd02dfcd4db",
+   "pad": "images/apparaten/abdominal-apparaat-line-v1.png",
+   "kleurbron": "images/apparaten/abdominal-apparaat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0009,
+   "inktdekking": 0.06874,
+   "sha256": "b4f4b59dd0c1d513dfb76c1ec8ce183f176dce36141339c71a352520bbeb6159",
+   "pad": "images/apparaten/back-apparaat-line-v1.png",
+   "kleurbron": "images/apparaten/back-apparaat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0036,
+   "inktdekking": 0.03954,
+   "sha256": "facdb6291c53e3c780e5c5ff27d0daa9d740f0e471b0b8af2d6bb720625d97d9",
+   "pad": "images/apparaten/backextensie-apparaat-line-v1.png",
+   "kleurbron": "images/apparaten/backextensie-apparaat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9841,
+   "inktdekking": 0.08356,
+   "sha256": "53756d917087d612ec0b756cd80d102ff293d98c9546b1df4a9ab7662c50ff3c",
+   "pad": "images/apparaten/chest-press-apparaat-line-v1.png",
+   "kleurbron": "images/apparaten/chest-press-apparaat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9729,
+   "inktdekking": 0.05201,
+   "sha256": "812194625b6c73b7291dea603f0251a50791d9ac305e0958c4358143cf986cc3",
+   "pad": "images/apparaten/chin-dip-apparaat-line-v1.png",
+   "kleurbron": "images/apparaten/chin-dip-apparaat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0174,
+   "inktdekking": 0.04656,
+   "sha256": "d3a20da9ca7e1cad0ade9799bef6d494d452cb02f649b611640a7f3b4858632a",
+   "pad": "images/apparaten/circle-apparaat-line-v1.png",
+   "kleurbron": "images/apparaten/circle-apparaat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9686,
+   "inktdekking": 0.05625,
+   "sha256": "335419b81b917faa6587c5b69287193a6859a46e6db5823b11a6f8944cbbab5a",
+   "pad": "images/apparaten/crosstrainer-apparaat-line-v1.png",
+   "kleurbron": "images/apparaten/crosstrainer-apparaat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9729,
+   "inktdekking": 0.06082,
+   "sha256": "144388f9d948db569d5513bd466950f6cb2d3415dd4803b6e6de7f6d560ed2aa",
+   "pad": "images/apparaten/dorsi-pecto-apparaat-line-v1.png",
+   "kleurbron": "images/apparaten/dorsi-pecto-apparaat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9729,
+   "inktdekking": 0.04524,
+   "sha256": "d25901ad869daf7224fdca2814d7fdf017256e64e9ab4386dff4af06d5bfb228",
+   "pad": "images/apparaten/endy-armstrekker-line-v1.png",
+   "kleurbron": "images/apparaten/endy-armstrekker-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0045,
+   "inktdekking": 0.06041,
+   "sha256": "9422774e4b549de301a9300f39e03cc677c7cfa8307ae3a29246f49b9d352da9",
+   "pad": "images/apparaten/endy-beenstrekker-line-v1.png",
+   "kleurbron": "images/apparaten/endy-beenstrekker-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0723,
+   "inktdekking": 0.05438,
+   "sha256": "3282038c4dca413fa0c1b38ca15e343bf190b7386d08dd675d1381f7343fa7fa",
+   "pad": "images/apparaten/endy-buikmachine-line-v1.png",
+   "kleurbron": "images/apparaten/endy-buikmachine-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9448,
+   "inktdekking": 0.07019,
+   "sha256": "ef31ed76084b1dc3acddf1baaf4348f3998c0aa024af849c0186020cf28f7a3d",
+   "pad": "images/apparaten/endy-fly-line-v1.png",
+   "kleurbron": "images/apparaten/endy-fly-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9902,
+   "inktdekking": 0.06944,
+   "sha256": "e12bc32258a756f65dfbad98286f263946047775d2505f3a8b053057694d6054",
+   "pad": "images/apparaten/endy-heup-abductie-line-v1.png",
+   "kleurbron": "images/apparaten/endy-heup-abductie-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.972,
+   "inktdekking": 0.07862,
+   "sha256": "440ea44da2342e6470878a1de269df2239686db1578e7fd054ff3b2da66a205a",
+   "pad": "images/apparaten/endy-leg-curl-line-v1.png",
+   "kleurbron": "images/apparaten/endy-leg-curl-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9815,
+   "inktdekking": 0.06164,
+   "sha256": "5739afcda86ebef3346c349b4ab77aa4e4f3c622c43bb6e06af32c2ca9736508",
+   "pad": "images/apparaten/endy-leg-ext-line-v1.png",
+   "kleurbron": "images/apparaten/endy-leg-ext-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9628,
+   "inktdekking": 0.06465,
+   "sha256": "4b436dfe6d0ce596dd3d2ba1171a7c2bf401a34e5ebc793ef687cfa9f6f8b4de",
+   "pad": "images/apparaten/endy-pulldown-line-v1.png",
+   "kleurbron": "images/apparaten/endy-pulldown-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9464,
+   "inktdekking": 0.04532,
+   "sha256": "6163af22d23d3d5115d4ad44a933c9404e1b9b77d50ec8b35dad7cc6185107e4",
+   "pad": "images/apparaten/endy-rotator-line-v1.png",
+   "kleurbron": "images/apparaten/endy-rotator-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0045,
+   "inktdekking": 0.06895,
+   "sha256": "670cc922a7e50df516209a8016da1691f463bd9d8d85210390e3ad9169c0a954",
+   "pad": "images/apparaten/endy-rugmachine-line-v1.png",
+   "kleurbron": "images/apparaten/endy-rugmachine-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0412,
+   "inktdekking": 0.05808,
+   "sha256": "87ab9b1ca2e21c3a2b770a4fabd77e867d7f989b7b96590b348ea4290a8b869e",
+   "pad": "images/apparaten/endy-triceps-dips-line-v1.png",
+   "kleurbron": "images/apparaten/endy-triceps-dips-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9586,
+   "inktdekking": 0.03723,
+   "sha256": "77fe23aa3a949346d2ad8f5987d9684cf1ae9e6ac7cbd85290190a033275e05f",
+   "pad": "images/apparaten/fiets-apparaat-line-v1.png",
+   "kleurbron": "images/apparaten/fiets-apparaat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9267,
+   "inktdekking": 0.07267,
+   "sha256": "aceb3b648ac5c785670383dbcb18ce9ea81e0348646d08bf7910be7aa8369d7c",
+   "pad": "images/apparaten/gluteus-kick-apparaat-line-v1.png",
+   "kleurbron": "images/apparaten/gluteus-kick-apparaat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9504,
+   "inktdekking": 0.07155,
+   "sha256": "5b80a79bcaed58998891ac42e0dd315118483846c566d302abf351b74f02a3d1",
+   "pad": "images/apparaten/leg-press-apparaat-line-v1.png",
+   "kleurbron": "images/apparaten/leg-press-apparaat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9703,
+   "inktdekking": 0.05728,
+   "sha256": "aefabecaef256d7ef980ac6fa2769d1b33258d3f10cb5f32627716c7da30cddb",
+   "pad": "images/apparaten/loopband-apparaat-line-v1.png",
+   "kleurbron": "images/apparaten/loopband-apparaat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0042,
+   "inktdekking": 0.06622,
+   "sha256": "ac7d1ea3fd872f115a2c70003ffe1a5aa1d17922ca3e6c79d8157de56ec954b7",
+   "pad": "images/apparaten/roeier-apparaat-line-v1.png",
+   "kleurbron": "images/apparaten/roeier-apparaat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9424,
+   "inktdekking": 0.06814,
+   "sha256": "01ade8f4c8d678fdad49592aa235f01e1ff573033a0dd5af934ecf4de9fea1d9",
+   "pad": "images/apparaten/rotator-apparaat-line-v1.png",
+   "kleurbron": "images/apparaten/rotator-apparaat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9678,
+   "inktdekking": 0.05155,
+   "sha256": "96a005e9e09c65e5083180ce18e8685a1772465bb083352ccf85da03a35683e7",
+   "pad": "images/apparaten/stairs-apparaat-line-v1.png",
+   "kleurbron": "images/apparaten/stairs-apparaat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.944,
+   "inktdekking": 0.08633,
+   "sha256": "446e6aeadecf34483f74d02efa3eecb7835e04b611b30a2245ec4e98b54705f3",
+   "pad": "images/apparaten/vertical-row-apparaat-line-v1.png",
+   "kleurbron": "images/apparaten/vertical-row-apparaat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0379,
+   "inktdekking": 0.04088,
+   "sha256": "49d229af47774099bcdf743fbcb4b0a54b5649c7bc18910d830a3c2e0b7ac358",
+   "pad": "images/bodyblade/bodyblade-back-line-v1.png",
+   "kleurbron": "images/bodyblade/bodyblade-back-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9834,
+   "inktdekking": 0.03629,
+   "sha256": "80392cbd6dc55a16bf26fd7b261bd79e1dc5ccd54cbfa0acfa252b1535411f8f",
+   "pad": "images/bodyblade/bodyblade-diagonaal-line-v1.png",
+   "kleurbron": "images/bodyblade/bodyblade-diagonaal-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9344,
+   "inktdekking": 0.03203,
+   "sha256": "64afdb0113958d00c8e9890e1f0c17bd2671fb9d429b687ef56fe1597460c0d2",
+   "pad": "images/bodyblade/bodyblade-front-bovengreep-line-v1.png",
+   "kleurbron": "images/bodyblade/bodyblade-front-bovengreep-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.943,
+   "inktdekking": 0.03014,
+   "sha256": "d19a4afbf825dfd4c62664e443984c0de34b44374027d438f5f8d0ebabbc83e7",
+   "pad": "images/bodyblade/bodyblade-front-ondergreep-line-v1.png",
+   "kleurbron": "images/bodyblade/bodyblade-front-ondergreep-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0471,
+   "inktdekking": 0.03883,
+   "sha256": "e05818e3611e1ad3c44980aab6453209243187e90b02c978855d3a127127056e",
+   "pad": "images/bodyblade/bodyblade-front-squat-line-v1.png",
+   "kleurbron": "images/bodyblade/bodyblade-front-squat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0304,
+   "inktdekking": 0.04373,
+   "sha256": "f228f6f6ff50e4cb698610c9e080da6d23113df0b1e199a6741398806d32b6b7",
+   "pad": "images/bodyblade/bodyblade-front-uitstap-line-v1.png",
+   "kleurbron": "images/bodyblade/bodyblade-front-uitstap-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.109,
+   "inktdekking": 0.03809,
+   "sha256": "6d1d6ff48ffbcf6413c0369e084b582f836c5050e33b7772f3f8fd6f52aa76a5",
+   "pad": "images/bodyblade/bodyblade-high-line-v1.png",
+   "kleurbron": "images/bodyblade/bodyblade-high-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9834,
+   "inktdekking": 0.04382,
+   "sha256": "36c558bbd4cd315a5c966e0e830bd0421061c61820839fff13e5c09b3b8d3fc0",
+   "pad": "images/bosu/balans-op-1-been-line-v1.png",
+   "kleurbron": "images/bosu/balans-op-1-been-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0394,
+   "inktdekking": 0.04576,
+   "sha256": "25b5e8a38cc9f21af1bfbbb780c6aa01d47d5219e64f3be9a85e33514e57f6d4",
+   "pad": "images/bosu/bosu-brigdes-line-v1.png",
+   "kleurbron": "images/bosu/bosu-brigdes-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.1021,
+   "inktdekking": 0.03643,
+   "sha256": "ea1da5bd9b89b66d1f3d353866ed2b21c8451bdb992da9b497b89e88a8f0cec5",
+   "pad": "images/bosu/bosu-brigdes-single-leg-line-v1.png",
+   "kleurbron": "images/bosu/bosu-brigdes-single-leg-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "onder-elkaar",
+   "panelen": 2,
+   "schaal": 1.4074,
+   "inktdekking": 0.0397,
+   "sha256": "e8362fb38112be8822dfd389d7ee39dbdea1db3a5fc09e4ac9aa4df80f7db2cc",
+   "pad": "images/bosu/bosu-chest-press-dumbell-line-v1.png",
+   "kleurbron": "images/bosu/bosu-chest-press-dumbell-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0891,
+   "inktdekking": 0.04215,
+   "sha256": "a500b6df0d5bdfd483cab235138a83ba52840b05a61c24b529a8e00c4b97ee9a",
+   "pad": "images/bosu/bosu-leg-pull-in-line-v1.png",
+   "kleurbron": "images/bosu/bosu-leg-pull-in-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.1043,
+   "inktdekking": 0.04591,
+   "sha256": "d12b17f2777a8a4d71ae3dd55b19bcb4be1aa797f0edb32c7b2258f9d74b62d4",
+   "pad": "images/bosu/bosu-mountain-climber-line-v1.png",
+   "kleurbron": "images/bosu/bosu-mountain-climber-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9944,
+   "inktdekking": 0.03721,
+   "sha256": "c2e804b022cc122af6e762fea586c56af0e16086bcdb80db0fc8bdb10c0d0840",
+   "pad": "images/bosu/bosu-plank-leg-lift-line-v1.png",
+   "kleurbron": "images/bosu/bosu-plank-leg-lift-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.1098,
+   "inktdekking": 0.04425,
+   "sha256": "77bb629d9937d203c1b420e9331c9c901f3445f90e02c5f16052561912168b81",
+   "pad": "images/bosu/bosu-plank-line-v1.png",
+   "kleurbron": "images/bosu/bosu-plank-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0739,
+   "inktdekking": 0.04239,
+   "sha256": "4ea9630e7cbe72fdf41287821424c511c7d861bffc06af5fc7a875baaa6af96b",
+   "pad": "images/bosu/bosu-squat-line-v1.png",
+   "kleurbron": "images/bosu/bosu-squat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0804,
+   "inktdekking": 0.03871,
+   "sha256": "402438722e6f41cdce55bc0cf3dab4fc625c7ed66f5a4b8414c0c7803d08c785",
+   "pad": "images/bosu/bosu-v-ups-line-v1.png",
+   "kleurbron": "images/bosu/bosu-v-ups-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9635,
+   "inktdekking": 0.03267,
+   "sha256": "dd5b94dbe870166d4a8c3b4e5efc8466e18166f657764a5fc742bbbd5710e116",
+   "pad": "images/bosu/bosu-zijw-plank-line-v1.png",
+   "kleurbron": "images/bosu/bosu-zijw-plank-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9622,
+   "inktdekking": 0.04545,
+   "sha256": "7ca93e8fb282d1957ea8fe95c9a1797c287a5b5f0e272a0e91184d7d2abd6970",
+   "pad": "images/bovenste-extremiteit/anteflexie-armen-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/anteflexie-armen-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0394,
+   "inktdekking": 0.03871,
+   "sha256": "69d0d68490ed58bbb1b2fcc154aa034dc9c20d66b6bf5802f513b10bc00b70bc",
+   "pad": "images/bovenste-extremiteit/barbell-front-press-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/barbell-front-press-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9468,
+   "inktdekking": 0.05629,
+   "sha256": "3f8034be987216a57a6965a7b4f6149262f08c6d421fc0f1a4173f62abcef180",
+   "pad": "images/bovenste-extremiteit/barbell-neck-press-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/barbell-neck-press-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9406,
+   "inktdekking": 0.03797,
+   "sha256": "c7e1f0f36216a7e527588a5c022caae1756d7a30393d10d22d067fe235831a63",
+   "pad": "images/bovenste-extremiteit/barbell-pull-over-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/barbell-pull-over-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0072,
+   "inktdekking": 0.05935,
+   "sha256": "def9b27677b23c9ba3a8a0be5735a223d4f1e240844fbba36cf1a5463680ef49",
+   "pad": "images/bovenste-extremiteit/bench-press-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/bench-press-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.2315,
+   "inktdekking": 0.0462,
+   "sha256": "c900c75ee78adebe01e139d2735148f2ee8cfe49e35f6efd394dc359372e8346",
+   "pad": "images/bovenste-extremiteit/biceps-alternate-dumbell-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/biceps-alternate-dumbell-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9794,
+   "inktdekking": 0.04449,
+   "sha256": "4d951fd9700de8a383157a2a8cca39e2bc7be3e807913d15c7803657ee96b367",
+   "pad": "images/bovenste-extremiteit/biceps-curl-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/biceps-curl-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0259,
+   "inktdekking": 0.06101,
+   "sha256": "475477371f6e4c4af71b683325e4f94203cc4b13c705d46ad4502b3dd7155920",
+   "pad": "images/bovenste-extremiteit/biceps-pull-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/biceps-pull-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0334,
+   "inktdekking": 0.05758,
+   "sha256": "61109c4feaea4a423c8cf04b79bfb91f4d2234e8e69bb0ce4955fabd70fef71e",
+   "pad": "images/bovenste-extremiteit/dips-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/dips-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0849,
+   "inktdekking": 0.04263,
+   "sha256": "72da004e8144d7ca084405fd97a857eb0442ac71e7a37a2ec6524e0c59a3f08d",
+   "pad": "images/bovenste-extremiteit/dumbell-bench-press-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/dumbell-bench-press-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.2153,
+   "inktdekking": 0.05355,
+   "sha256": "ddaaa1ec22a40b04a7fe3721b4f3e56b31e7fabef24be695c13efe32287dae15",
+   "pad": "images/bovenste-extremiteit/dumbell-front-press-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/dumbell-front-press-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0548,
+   "inktdekking": 0.04163,
+   "sha256": "25a2bc763389d343ec91e91ce660284257916e7181cf2335d89d84d8daeb743b",
+   "pad": "images/bovenste-extremiteit/dumbell-neck-press-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/dumbell-neck-press-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9875,
+   "inktdekking": 0.05214,
+   "sha256": "e5f4d19cef5fe55a4dc42cd6ea02966a36cc01286849727ad23ff0324fec581d",
+   "pad": "images/bovenste-extremiteit/dumbell-pull-over-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/dumbell-pull-over-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9544,
+   "inktdekking": 0.04359,
+   "sha256": "c6f90c9f835bb409ac9f9cebd37d2c47f8d912297d749a7fc05c6dc53adc12d4",
+   "pad": "images/bovenste-extremiteit/duplex-pull-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/duplex-pull-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9661,
+   "inktdekking": 0.05052,
+   "sha256": "3a7b73747ddb2ae787fd0124d448a121b9e6ea4f2c7ac8e2539ba2aaec48aba5",
+   "pad": "images/bovenste-extremiteit/endo-pull-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/endo-pull-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0186,
+   "inktdekking": 0.04927,
+   "sha256": "2d44fe3cb9b532f4d09181ec9f477e4270c4bf83bf19615d93839ace7295d6e5",
+   "pad": "images/bovenste-extremiteit/exo-pull-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/exo-pull-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0221,
+   "inktdekking": 0.04566,
+   "sha256": "2f31197c93182ebf17cc182ccd768dc6e1fd4544cb893641aeff9caae764f072",
+   "pad": "images/bovenste-extremiteit/flyes-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/flyes-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.1644,
+   "inktdekking": 0.04571,
+   "sha256": "9891b2299ea16d885a003e1363259e7d1b69631d23f92607c34bbff5bff2f214",
+   "pad": "images/bovenste-extremiteit/french-press-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/french-press-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9047,
+   "inktdekking": 0.03698,
+   "sha256": "3dff80bee3c936314de407c58c61bd0f53cd523b4af017f28783adbdc6db0130",
+   "pad": "images/bovenste-extremiteit/front-pully-row-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/front-pully-row-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9152,
+   "inktdekking": 0.05762,
+   "sha256": "1b41d8497f8c519d0e4b654aa7e456a143617ce1a247661470023813ea59aa1a",
+   "pad": "images/bovenste-extremiteit/front-raises-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/front-raises-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0258,
+   "inktdekking": 0.04139,
+   "sha256": "4324cdc5b5c67b8a588edfbd642b6a972c64cd5bed46cfc5d20094b7e8ed2db2",
+   "pad": "images/bovenste-extremiteit/incline-bench-press-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/incline-bench-press-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9893,
+   "inktdekking": 0.03994,
+   "sha256": "5130c01a8ca0939510a3ccecf9f304044026a58d5c7847e2d777c3433d02e469",
+   "pad": "images/bovenste-extremiteit/incline-flyes-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/incline-flyes-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9986,
+   "inktdekking": 0.06497,
+   "sha256": "79e0333cbd2e5f83f0e08865347d8e25dd2499fd740c02b2ebd0d70012a0b6f9",
+   "pad": "images/bovenste-extremiteit/lat-pull-front-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/lat-pull-front-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9506,
+   "inktdekking": 0.03832,
+   "sha256": "f4e2f5225bcbfb4c6045e7cdbcc24754a6fd9a8aba53c3a7c0b25188d67b5d93",
+   "pad": "images/bovenste-extremiteit/lateral-raises-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/lateral-raises-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0289,
+   "inktdekking": 0.04416,
+   "sha256": "9aa6e469d5d6d51409665cf5f0cc32efd69b9698678231d4a35fdb688dc985a4",
+   "pad": "images/bovenste-extremiteit/military-press-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/military-press-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0859,
+   "inktdekking": 0.04727,
+   "sha256": "851fb4ffc867ebc4a650416b3d67779e76ecc62bff9145d8f21946f38d6e59ba",
+   "pad": "images/bovenste-extremiteit/nose-breakers-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/nose-breakers-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8967,
+   "inktdekking": 0.03737,
+   "sha256": "2e17659f805f4303b5149837cc356aebb0f6f2e889139e3058ef15dfe4ce8ecd",
+   "pad": "images/bovenste-extremiteit/one-arm-bent-over-row-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/one-arm-bent-over-row-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0627,
+   "inktdekking": 0.03824,
+   "sha256": "ee1d47f00584f83f081554259796abf4ceaf646df8a49559c22ca788dca0ed3a",
+   "pad": "images/bovenste-extremiteit/pully-cross-down-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/pully-cross-down-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0691,
+   "inktdekking": 0.03363,
+   "sha256": "b49cbe4c6ed48b5741f3626770f6f5252b72fddee2a4ad47e225ff7fb7762076",
+   "pad": "images/bovenste-extremiteit/pully-cross-over-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/pully-cross-over-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0071,
+   "inktdekking": 0.04491,
+   "sha256": "17cd79e32fadbc3323b849ee94ef56d34f3aef17faf787a1233f57f9c30e3eaf",
+   "pad": "images/bovenste-extremiteit/pully-cross-up-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/pully-cross-up-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0849,
+   "inktdekking": 0.04125,
+   "sha256": "f6b89c69347732c5952f8669d13950f0a082394d0586767a366ac297f22a8dac",
+   "pad": "images/bovenste-extremiteit/pully-dips-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/pully-dips-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9821,
+   "inktdekking": 0.04617,
+   "sha256": "a511f0c7e6ca8160198e5aefd188514f38b58fc2c56c5c514fa3ace7987ead96",
+   "pad": "images/bovenste-extremiteit/pully-down-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/pully-down-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9661,
+   "inktdekking": 0.03244,
+   "sha256": "b7abebe55995b28cefbaac8c41d9f760a5ad36ba11ae45131ad4f063a8f7a3c5",
+   "pad": "images/bovenste-extremiteit/pully-press-double-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/pully-press-double-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.1577,
+   "inktdekking": 0.03303,
+   "sha256": "90ae31be2e102d23a02e5648638731d6879ebb1e3ce19f51c0d8dbb7968c8c27",
+   "pad": "images/bovenste-extremiteit/pully-press-single-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/pully-press-single-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "naast-elkaar",
+   "panelen": 2,
+   "schaal": 1.2029,
+   "inktdekking": 0.02668,
+   "sha256": "d4c4c80134420ccb2a0230634e2443286aa7ad9e14a1a2c9e63726e6549407b7",
+   "pad": "images/bovenste-extremiteit/pully-pull-over-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/pully-pull-over-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8934,
+   "inktdekking": 0.04751,
+   "sha256": "ef0e12c23e2ce58197b7738080e5367759520318119a76b4e588770a9e625a4c",
+   "pad": "images/bovenste-extremiteit/pully-row-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/pully-row-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0579,
+   "inktdekking": 0.03724,
+   "sha256": "0468f86425e02ca1de26e239bf1b400e8a6ab3c9cdc201de83a41d37ed1e21b1",
+   "pad": "images/bovenste-extremiteit/push-up-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/push-up-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9661,
+   "inktdekking": 0.03054,
+   "sha256": "ae41fcd06c6db7afe471925e07e96edfdbe27147c5306455161b4b18c350936f",
+   "pad": "images/bovenste-extremiteit/reversed-flyes-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/reversed-flyes-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9648,
+   "inktdekking": 0.06039,
+   "sha256": "39ea0de03fd441ad7883e57f9b50ead5ca149f3f07babc6d2acc0f2bc6dcac3d",
+   "pad": "images/bovenste-extremiteit/shoulder-rotation-shrugs-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/shoulder-rotation-shrugs-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9674,
+   "inktdekking": 0.02632,
+   "sha256": "843f050d5173c8fdf8ad645aa780bb75349673a8be2305390d3c37863f0aec0f",
+   "pad": "images/bovenste-extremiteit/triceps-dips-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0128,
+   "inktdekking": 0.02716,
+   "sha256": "866d3d19d3dbdab90fa68ee37fd3383c3e64adf4719d5cc93dc2a687927eb2eb",
+   "pad": "images/bovenste-extremiteit/triceps-dumbell-kickbacks-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/triceps-dumbell-kickbacks-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9753,
+   "inktdekking": 0.04977,
+   "sha256": "fff10ee3c98d242e6d504f0c5073a6febb759d845aa21cef2aa2d20be05b0f95",
+   "pad": "images/bovenste-extremiteit/triceps-push-down-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/triceps-push-down-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.907,
+   "inktdekking": 0.04366,
+   "sha256": "dfc41bff632a44039108c0c5c5e15538a3ac5333851c2b154de14d58c4be6b06",
+   "pad": "images/bovenste-extremiteit/upright-row-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/upright-row-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9128,
+   "inktdekking": 0.05823,
+   "sha256": "abc57a250f938b30905df84473e21972bb8d4ca55c07d6b949e2e75392fadf26",
+   "pad": "images/bovenste-extremiteit/wrist-extension-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/wrist-extension-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9889,
+   "inktdekking": 0.05055,
+   "sha256": "decb62bbda72731c6408dd49d13dea457bf76224ef083a030217f83ae7f065c0",
+   "pad": "images/bovenste-extremiteit/wrist-flexion-line-v1.png",
+   "kleurbron": "images/bovenste-extremiteit/wrist-flexion-avatar-v7.jpg"
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.744,
+   "inktdekking": 0.03212,
+   "sha256": "016c9d6c35d32c11db68e718ce15efa686f8ade3313b508625103ce1c08e6b52",
+   "pad": "images/cardio/alternating-lunge-jumps-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.731,
+   "inktdekking": 0.0301,
+   "sha256": "71568a6dd783db422fb26aa86a61242aa9969641089b07ae8fbf7d24ef9147c1",
+   "pad": "images/cardio/box-jumps-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.914,
+   "inktdekking": 0.04785,
+   "sha256": "d6aae6a6fa5e1f5bd3f97e8b4141d691a32c118e6483312054fbb7c6e30c628e",
+   "pad": "images/cardio/fiets-line-v1.png",
+   "kleurbron": "images/cardio/fiets-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0334,
+   "inktdekking": 0.03682,
+   "sha256": "5ccca699620b941bd5874023ea140a0952deda4b22a3cfc0bfac837f7d8ca99b",
+   "pad": "images/cardio/jumping-jacks-line-v1.png",
+   "kleurbron": "images/cardio/jumping-jacks-avatar-v7.jpg"
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.717,
+   "inktdekking": 0.0257,
+   "sha256": "e2ba8948cb4cbd687ac0372663616338f032f151556fa5d9b180ba1f940e6655",
+   "pad": "images/cardio/long-jumps-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.89,
+   "inktdekking": 0.05814,
+   "sha256": "6e67bc0338dd08d099fe0bf46563068d07dce251acdf5c11ec72e4e3ebfd95a3",
+   "pad": "images/cardio/loopband-line-v1.png",
+   "kleurbron": "images/cardio/loopband-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9674,
+   "inktdekking": 0.05566,
+   "sha256": "cc1c6222937fd69e20565c49c97e0f6a5ee5601d98790d378dd8724dcf405df4",
+   "pad": "images/cardio/roeier-line-v1.png",
+   "kleurbron": "images/cardio/roeier-avatar-v7.jpg"
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7206,
+   "inktdekking": 0.03356,
+   "sha256": "bcc9d5ce0a9b094b53b42b42460806a1f3410d0e40d1b7916e780aa2e6c73952",
+   "pad": "images/cardio/rope-jumping-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7631,
+   "inktdekking": 0.03588,
+   "sha256": "cfdc81583101f72d4eaec6666ac511c47f3deea59d41e98266b3e726f311da18",
+   "pad": "images/cardio/skate-jumps-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7911,
+   "inktdekking": 0.03704,
+   "sha256": "ce2bce3acbfc8890c2f06f65bafcdafc36f68b67f56c6c6b2968e104072d9f56",
+   "pad": "images/cardio/snap-jumps-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "onder-elkaar",
+   "panelen": 2,
+   "schaal": 0.9301,
+   "inktdekking": 0.0324,
+   "sha256": "d9a02772b9ee1025e375c86b3ecd7b377b3c880af31ab24725d575df59c026d7",
+   "pad": "images/cardio/sprints-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9344,
+   "inktdekking": 0.0428,
+   "sha256": "22cdceed214706bdb56470325b41b25cd859a4a7ac29ea9ba8b0bf7dd60dc861",
+   "pad": "images/cardio/squat-jumps-line-v1.png",
+   "kleurbron": "images/cardio/squat-jumps-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9456,
+   "inktdekking": 0.05399,
+   "sha256": "cadb725e9af117e27427ee21b048ec70d8a0866e10905aadcefb6628fcdb954b",
+   "pad": "images/cardio/stairs-line-v1.png",
+   "kleurbron": "images/cardio/stairs-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.087,
+   "inktdekking": 0.04408,
+   "sha256": "377667113deedf5bb33aea5969ff93ebd51bf88a4342bedc8e99a7f407357344",
+   "pad": "images/core/abroller-line-v1.png",
+   "kleurbron": "images/core/abroller-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0579,
+   "inktdekking": 0.03717,
+   "sha256": "d3228f336ca23e94026eb00b76b379a127dd113743a84e2adef254a5ac9a5123",
+   "pad": "images/core/alternate-heel-touchers-line-v1.png",
+   "kleurbron": "images/core/alternate-heel-touchers-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.1302,
+   "inktdekking": 0.0442,
+   "sha256": "02b490db59ceacdb7429078f95c1d4e6e261e4dedd9426f124d226688f89fc9a",
+   "pad": "images/core/back-extension-line-v1.png",
+   "kleurbron": "images/core/back-extension-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9506,
+   "inktdekking": 0.04092,
+   "sha256": "c6afe4142c783961734b291d536fbb3db3c02aae9f0f1be9aa8238ea7eebe44f",
+   "pad": "images/core/barbell-rotation-line-v1.png",
+   "kleurbron": "images/core/barbell-rotation-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9152,
+   "inktdekking": 0.03823,
+   "sha256": "3fdd86ef0662c998e77313fd4fb429fa9f6818d21d9194743f7f31d742baabb9",
+   "pad": "images/core/barbell-twist-line-v1.png",
+   "kleurbron": "images/core/barbell-twist-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9916,
+   "inktdekking": 0.03482,
+   "sha256": "6ee9fb7ef51734335ce562a41ebc4455f854f47143c3ba75ae6e78e8ddbf42b3",
+   "pad": "images/core/bear-crawls-line-v1.png",
+   "kleurbron": "images/core/bear-crawls-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.993,
+   "inktdekking": 0.02663,
+   "sha256": "4a7f5ca0efb40682915fa27b0f62ab8ad9d40c70eba3b55402ca57f46e54b155",
+   "pad": "images/core/benen-laten-zakken-line-v1.png",
+   "kleurbron": "images/core/benen-laten-zakken-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9259,
+   "inktdekking": 0.03098,
+   "sha256": "06ccec22a948da9a4802d27058c73bbc697e41ff12ca358e08e4a9949c482d86",
+   "pad": "images/core/bicycles-buik-line-v1.png",
+   "kleurbron": "images/core/bicycles-buik-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9519,
+   "inktdekking": 0.03272,
+   "sha256": "eda59b5f8d8db34ff17b25bc77ec06e2f1773b98cd62b2abcd2b6431204fbe08",
+   "pad": "images/core/bruggen-1-been-liften-line-v1.png",
+   "kleurbron": "images/core/bruggen-1-been-liften-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.123,
+   "inktdekking": 0.03975,
+   "sha256": "74efbbf54af79ca1981402bb61f1e0604ba4e95e12182f54d58a10f734a65459",
+   "pad": "images/core/bruggen-beginner-line-v1.png",
+   "kleurbron": "images/core/bruggen-beginner-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0548,
+   "inktdekking": 0.03754,
+   "sha256": "c66a1eb7f58ff6dae2ecf904d36a3b126fdff52a5a1197f48980e475b2672b6a",
+   "pad": "images/core/bruggen-met-halter-line-v1.png",
+   "kleurbron": "images/core/bruggen-met-halter-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0186,
+   "inktdekking": 0.04844,
+   "sha256": "2b2b4be3a568517034614fa4987cb1414f14192c82b365254496c04575bbac1f",
+   "pad": "images/core/bruggen-met-halter-op-bank-line-v1.png",
+   "kleurbron": "images/core/bruggen-met-halter-op-bank-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.943,
+   "inktdekking": 0.03157,
+   "sha256": "c1692623e29c93ad4857262ad786d82606e29a1142d4ffd2869bc8f98a7b19d9",
+   "pad": "images/core/bruggen-op-bal-line-v1.png",
+   "kleurbron": "images/core/bruggen-op-bal-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9972,
+   "inktdekking": 0.03028,
+   "sha256": "33b0076210f336b131ec1f93e38d35d893e449701a49d051674f83d6f1dacf3d",
+   "pad": "images/core/crunch-line-v1.png",
+   "kleurbron": "images/core/crunch-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0099,
+   "inktdekking": 0.02622,
+   "sha256": "1b66ad9902ae90e6eadbfd8ee4dc4fdfa5cdab2d3ec83291c5af7543cd45db15",
+   "pad": "images/core/curl-up-line-v1.png",
+   "kleurbron": "images/core/curl-up-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9059,
+   "inktdekking": 0.02685,
+   "sha256": "888edc01d1a161c0f7b6e37c887f917dc9187613ff48b2ca84e4856e1d2e2545",
+   "pad": "images/core/dead-bug-line-v1.png",
+   "kleurbron": "images/core/dead-bug-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9468,
+   "inktdekking": 0.03226,
+   "sha256": "4e15a3bf90691f48b4fdb71349dc074f98aad5c94e63e7e6cb3f394eddbc2993",
+   "pad": "images/core/good-mornings-line-v1.png",
+   "kleurbron": "images/core/good-mornings-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0364,
+   "inktdekking": 0.03707,
+   "sha256": "ec19a4e1511a925a46684f783a274ea11ed40038c901fe0af7955adaee99a4aa",
+   "pad": "images/core/knee-elbow-line-v1.png",
+   "kleurbron": "images/core/knee-elbow-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.993,
+   "inktdekking": 0.02368,
+   "sha256": "617d7fc454d3e660958ba2417ed6e842496d609d598f548d4641fea16c896ddb",
+   "pad": "images/core/leg-raises-line-v1.png",
+   "kleurbron": "images/core/leg-raises-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9944,
+   "inktdekking": 0.02801,
+   "sha256": "3c660aab36beff486346fa8e6e6114e8996eb32c7766654ba4ee93b4ca2b92b1",
+   "pad": "images/core/mobilisatie-rotatie-rug-line-v1.png",
+   "kleurbron": "images/core/mobilisatie-rotatie-rug-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.05,
+   "inktdekking": 0.04451,
+   "sha256": "155ebfa7d7f8ea9cd3ac1153043fbd289d5cc96e26f90a9d4ae45dcd14786e21",
+   "pad": "images/core/mountain-climber-line-v1.png",
+   "kleurbron": "images/core/mountain-climber-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0707,
+   "inktdekking": 0.0396,
+   "sha256": "a65bf7b22c49c733e334654db4037ea4ab0c577045a99e9fb05f59bce159974e",
+   "pad": "images/core/mountain-climber-x-line-v1.png",
+   "kleurbron": "images/core/mountain-climber-x-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0501,
+   "inktdekking": 0.03405,
+   "sha256": "526319a1af683ed6918beed47d9bb5a21cef2587eaa0672c92084c01088fa78c",
+   "pad": "images/core/plank-basis-line-v1.png",
+   "kleurbron": "images/core/plank-basis-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.052,
+   "inktdekking": 0.03637,
+   "sha256": "54533b9a25daae4a47371ffa5a53fd92776231b407a08fbade13444a291cf04f",
+   "pad": "images/core/plank-high-line-v1.png",
+   "kleurbron": "images/core/plank-high-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0739,
+   "inktdekking": 0.03718,
+   "sha256": "851c865916a4c21dbfc39fa1be8767153c54b1f70502f7aae4c2bb29ed033c10",
+   "pad": "images/core/plank-jacks-line-v1.png",
+   "kleurbron": "images/core/plank-jacks-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9674,
+   "inktdekking": 0.03171,
+   "sha256": "c90d0906e6f196b48617724b896aa974cf4f97da8e0ea4df73ea7b925a7f2587",
+   "pad": "images/core/plank-voorwaarts-line-v1.png",
+   "kleurbron": "images/core/plank-voorwaarts-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.1213,
+   "inktdekking": 0.03123,
+   "sha256": "0d52509687076632e9bbbc5bf242b192405a55396d02e4e4c10de07e491e98d5",
+   "pad": "images/core/reversed-crunch-line-v1.png",
+   "kleurbron": "images/core/reversed-crunch-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9506,
+   "inktdekking": 0.02251,
+   "sha256": "921eb39e6e9049cdbd2bece4f16bfb871be3efdf4f6d9b5fcc95988330b85d65",
+   "pad": "images/core/rug-extensie-line-v1.png",
+   "kleurbron": "images/core/rug-extensie-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "onder-elkaar",
+   "panelen": 2,
+   "schaal": 1.1259,
+   "inktdekking": 0.03931,
+   "sha256": "2ca10cb4e641d38d252601920ab1743c2497645bf5cc9eb270af2eb41effc256",
+   "pad": "images/core/rusian-twist-line-v1.png",
+   "kleurbron": "images/core/rusian-twist-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9972,
+   "inktdekking": 0.02645,
+   "sha256": "6577ff8da5f48b599b33e30edf30138c5a2284fd2cacaa91d13cc7b40a10da6a",
+   "pad": "images/core/scissors-1-line-v1.png",
+   "kleurbron": "images/core/scissors-1-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.023,
+   "inktdekking": 0.03041,
+   "sha256": "bd76bac0db934bf5846a9745e59ed53b236de7280fbd8b8a6b08a105d429075e",
+   "pad": "images/core/scissors-2-line-v1.png",
+   "kleurbron": "images/core/scissors-2-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9944,
+   "inktdekking": 0.0444,
+   "sha256": "9c37e8967d761c0a35bc38eb2108ee4704ad8f95508b9b9c77e6fc2192390554",
+   "pad": "images/core/side-bents-line-v1.png",
+   "kleurbron": "images/core/side-bents-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9105,
+   "inktdekking": 0.03684,
+   "sha256": "b31afc56b8c922ee2d844d2560930320ab58cb2f19ad1fe6de8aba680f8f033c",
+   "pad": "images/core/stick-twist-line-v1.png",
+   "kleurbron": "images/core/stick-twist-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9848,
+   "inktdekking": 0.02557,
+   "sha256": "fa7bd1c175074c724f4e90a426c1be8f46c959a60449c88a1a88ad96fcdbae81",
+   "pad": "images/core/superman-line-v1.png",
+   "kleurbron": "images/core/superman-avatar-v7.jpg"
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "onder-elkaar",
+   "panelen": 2,
+   "schaal": 0.907,
+   "inktdekking": 0.04313,
+   "sha256": "6ff04dab68b57c8b212ea4b93516745ba1727927c5b2104b46e31a344345dc81",
+   "pad": "images/exercise-ball/swiss-ball-abs-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "onder-elkaar",
+   "panelen": 2,
+   "schaal": 0.7495,
+   "inktdekking": 0.02944,
+   "sha256": "8b7f790bc6330182741f5fc9f426dfa8a9afbb7c3d0b5d36d45961ccf267f96d",
+   "pad": "images/exercise-ball/swiss-ball-back-ext-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "onder-elkaar",
+   "panelen": 2,
+   "schaal": 0.5865,
+   "inktdekking": 0.02723,
+   "sha256": "e67109951fb98f06b51a887adaefaf6b98a21d04aa654517be73ddea411736ac",
+   "pad": "images/exercise-ball/swiss-ball-core-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.487,
+   "inktdekking": 0.01827,
+   "sha256": "29231ff0738363120741533e4bac86847ba59a9c3207d055e9798189061691c5",
+   "pad": "images/exercise-ball/swiss-ball-dumbbell-biceps-curl-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "onder-elkaar",
+   "panelen": 2,
+   "schaal": 0.9333,
+   "inktdekking": 0.04754,
+   "sha256": "9f7d752a171f28d1eebe5fae5fe2d352430aa1680d48426612df0def84d5adfe",
+   "pad": "images/exercise-ball/swiss-ball-dumbbell-chest-press-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.4681,
+   "inktdekking": 0.01694,
+   "sha256": "70e2982ca5e88ad8ccc73b3c532446df6c2e94170e3d724bbc30e638ff478fcd",
+   "pad": "images/exercise-ball/swiss-ball-dumbbell-flyes-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5317,
+   "inktdekking": 0.01709,
+   "sha256": "ef199e305382b8da81ec8a0e65f8375bc819803478331c83dc32538afff7e01e",
+   "pad": "images/exercise-ball/swiss-ball-feet-to-chest-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7409,
+   "inktdekking": 0.025,
+   "sha256": "bf33e5471fb4ece1086497f40a9ae516d38f1034b0880685bdd9626d60b7a01d",
+   "pad": "images/exercise-ball/swiss-ball-hip-raise-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.6096,
+   "inktdekking": 0.02346,
+   "sha256": "a4af361aa987c9b629316889b1eed25fcf39c7910aafedf48df8a30743360118",
+   "pad": "images/exercise-ball/swiss-ball-knee-to-chest-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5014,
+   "inktdekking": 0.0221,
+   "sha256": "621c19f09dce9e68f48240949febb37cc43caa05e19857b67a56ddaa2845890b",
+   "pad": "images/exercise-ball/swiss-ball-leg-curl-hip-raise-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5485,
+   "inktdekking": 0.02735,
+   "sha256": "2e861fd85abc16c691bfc7ae0cd8d5a24c3746ad9a68d38c5fd731f7706606e7",
+   "pad": "images/exercise-ball/swiss-ball-leg-curl-one-leg-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "onder-elkaar",
+   "panelen": 2,
+   "schaal": 0.6704,
+   "inktdekking": 0.02303,
+   "sha256": "cafee2dc583889aa0393460b8c67bbd05bba62f5d92b6b526577a3e85588fc64",
+   "pad": "images/exercise-ball/swiss-ball-leg-lifts-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7722,
+   "inktdekking": 0.02723,
+   "sha256": "452eb01e6ba4ad8f5b91fba6d8597806a681d646ccacefb637bcae1bff803c22",
+   "pad": "images/exercise-ball/swiss-ball-plank-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5406,
+   "inktdekking": 0.02308,
+   "sha256": "8fc4a8aeb1f893c6d36f4e7fe2a255edb9b7b13c0fb0b8844e82bcc97fd710bd",
+   "pad": "images/exercise-ball/swiss-ball-push-up-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5545,
+   "inktdekking": 0.01745,
+   "sha256": "7bc85823a54947f146eb091cf04178dd544d9a1e6220bd4fb8776c52f1b0c9d7",
+   "pad": "images/exercise-ball/swiss-ball-rollout-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5174,
+   "inktdekking": 0.01751,
+   "sha256": "1238453400b611c701283408d2992b5c7e1e477f99d09e2baa32199be851eaa6",
+   "pad": "images/exercise-ball/swiss-ball-russian-twist-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5571,
+   "inktdekking": 0.01722,
+   "sha256": "031f71a8a572d0ecd43f782653feb90b1e8acad428bf5d70197d472f9a807890",
+   "pad": "images/exercise-ball/swiss-ball-squeezes-adductoren-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7243,
+   "inktdekking": 0.03136,
+   "sha256": "8eca000a01d08a31c49cae5d1bea0f16b5912a9341a772ce0075009fb4ebdb38",
+   "pad": "images/exercise-ball/swiss-ball-wall-squat-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9753,
+   "inktdekking": 0.03604,
+   "sha256": "4df261caf1077014d5ac4cb6a2aa55be91a50cd1cbd516b78c5880a3b6d76765",
+   "pad": "images/foam-roller/foam-rol-glutes-stretch-line-v1.png",
+   "kleurbron": "images/foam-roller/foam-rol-glutes-stretch-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0114,
+   "inktdekking": 0.03987,
+   "sha256": "08dd5f5d51c1ca71a59c292c202134bfe71a656d8072188059812f0341969185",
+   "pad": "images/foam-roller/foam-rol-quat-stretch-line-v1.png",
+   "kleurbron": "images/foam-roller/foam-rol-quat-stretch-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9332,
+   "inktdekking": 0.03543,
+   "sha256": "e2fd48be87302db44a4e8c824e0452908c0f147bb38f57251cb6f6ab367626a2",
+   "pad": "images/foam-roller/foam-rol-upper-back-stretch-line-v1.png",
+   "kleurbron": "images/foam-roller/foam-rol-upper-back-stretch-avatar-v7.jpg"
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.4955,
+   "inktdekking": 0.01141,
+   "sha256": "af8a43eced1b13c0485e45f4471221830a13435027cf6e74ec322c690eebea66",
+   "pad": "images/foam-roller/foam-roller-adductoren-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5294,
+   "inktdekking": 0.01232,
+   "sha256": "ad4c4d9f44d8678d9f5259a724bfc2c77ce5ceae4a01698536e7fcb89a1756e7",
+   "pad": "images/foam-roller/foam-roller-back-extension-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.638,
+   "inktdekking": 0.01251,
+   "sha256": "425b9ab01085f53a08743d58f2e3e5dfd50fe810f9007bcaef8c7289d4611a77",
+   "pad": "images/foam-roller/foam-roller-back-lower-cross-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5133,
+   "inktdekking": 0.00959,
+   "sha256": "d1e0d5e345612b075c230f6f4c5b6203d7fc0d41bc89e9d4bc56ba6216b42071",
+   "pad": "images/foam-roller/foam-roller-back-lower-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5628,
+   "inktdekking": 0.0138,
+   "sha256": "b08bc53d453cb22a225a68166bb68ab116198a3ddb2f859684a57e443a486810",
+   "pad": "images/foam-roller/foam-roller-back-upper-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5537,
+   "inktdekking": 0.0174,
+   "sha256": "9eaf70a468faf82bc5f74f04a0631830e02e253dcf0a2bc1a26e32fdd94c5917",
+   "pad": "images/foam-roller/foam-roller-calf-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5933,
+   "inktdekking": 0.02105,
+   "sha256": "2fda8c6f18cd6d14aae16ab62df0b98b2656efdd5f0cf1474c46e6273643633d",
+   "pad": "images/foam-roller/foam-roller-fore-arm-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "onder-elkaar",
+   "panelen": 2,
+   "schaal": 0.9017,
+   "inktdekking": 0.0437,
+   "sha256": "6d2a56ed2eea03cf658807a8867be48926c99e465c5da545e855dffb2ceff967",
+   "pad": "images/foam-roller/foam-roller-glute-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "onder-elkaar",
+   "panelen": 2,
+   "schaal": 0.9456,
+   "inktdekking": 0.04058,
+   "sha256": "f815d5d0865af979757276a1c5f2de5407571998c2abeb42e4ce4e28a6e2ecf7",
+   "pad": "images/foam-roller/foam-roller-glute-med-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.717,
+   "inktdekking": 0.02731,
+   "sha256": "a6578d7197ec33ed316d427e785526c0f78a1296a97faf8f151d126c22762248",
+   "pad": "images/foam-roller/foam-roller-hamstring-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.4827,
+   "inktdekking": 0.00766,
+   "sha256": "ca691c839f383e96b1518fe7e8ae3ed3f44a97fc418ec48b8335de2178d24122",
+   "pad": "images/foam-roller/foam-roller-lat-stretch-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5633,
+   "inktdekking": 0.01929,
+   "sha256": "3fdf57532733aa7a0ef254f029270eb7ccdd4f7cccf5ad799f77d930c33eb167",
+   "pad": "images/foam-roller/foam-roller-quadriceps-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.4921,
+   "inktdekking": 0.01545,
+   "sha256": "6932262874b2c8443550eefec4da560a527ffdf4124eb37a8818668a0c557d94",
+   "pad": "images/foam-roller/foam-roller-tractus-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9271,
+   "inktdekking": 0.03805,
+   "sha256": "13deeb0db17135c51a9c5dc2aa3cc5f139c7dbcd579979f673e0823e1de19ccf",
+   "pad": "images/kettlebell/kettlebell-swing-line-v1.png",
+   "kleurbron": "images/kettlebell/kettlebell-swing-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9972,
+   "inktdekking": 0.03514,
+   "sha256": "a3702374ebf93590862a779f3a46b1bb387364b4ad2ab5a243bc5987f5249375",
+   "pad": "images/kettlebell/kettlebelle-swing-one-arm-line-v1.png",
+   "kleurbron": "images/kettlebell/kettlebelle-swing-one-arm-avatar-v7.jpg"
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9199,
+   "inktdekking": 0.03625,
+   "sha256": "3720d6a2edf4f29b11cbce639b9420894b353aa0c10916096bced6b0f36cd541",
+   "pad": "images/medicine-ball/medicine-ball-alt-side-slam-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5042,
+   "inktdekking": 0.01175,
+   "sha256": "19bb59ae853da34c93087b6fba40a1749d26d8004905d9903821f283d1c06c1a",
+   "pad": "images/medicine-ball/medicine-ball-chest-press-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.4681,
+   "inktdekking": 0.01205,
+   "sha256": "d7b549745c07791a9d2ffcdf341f7db23a901099ec1aa7e109ebf1e654a0860d",
+   "pad": "images/medicine-ball/medicine-ball-floor-press-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8607,
+   "inktdekking": 0.02826,
+   "sha256": "0067416a111b4aa98246b23985c0ee66134590616a60042c67e44b751d55fe2f",
+   "pad": "images/medicine-ball/medicine-ball-lunge-overhead-press-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5247,
+   "inktdekking": 0.01338,
+   "sha256": "5df9b2c66d5a7f529c2a2cced50e498eff31cf682b61d3e87a48531ecabd8f19",
+   "pad": "images/medicine-ball/medicine-ball-obliques-cross-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7915,
+   "inktdekking": 0.01962,
+   "sha256": "3b9b501ef3b22778dc87fb9363ec0b986cc033bdd117ec9178a2272db2b187a5",
+   "pad": "images/medicine-ball/medicine-ball-overhead-circles-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.6794,
+   "inktdekking": 0.01966,
+   "sha256": "5fe66602b4ee3e0136487cb989596114f5f788ba6590692cfe763ea6c9aaa5d5",
+   "pad": "images/medicine-ball/medicine-ball-push-up-one-arm-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.6629,
+   "inktdekking": 0.02642,
+   "sha256": "ba3c8b0d1b4229ed9904cbff00ae5efcd5771950942af92dc3c2f8c601a82253",
+   "pad": "images/medicine-ball/medicine-ball-push-up-two-arms-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.6866,
+   "inktdekking": 0.0231,
+   "sha256": "bf4f4983139111d9a99c9d81ae0a2f2651f055abc04943875133aad541c3168b",
+   "pad": "images/medicine-ball/medicine-ball-rotation-passes-knee-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7134,
+   "inktdekking": 0.02535,
+   "sha256": "d654b6e3accb6327acb4b2bdb0b77766f38e35ae7467c5e59cf85a85d1036d14",
+   "pad": "images/medicine-ball/medicine-ball-rotation-passes-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7909,
+   "inktdekking": 0.02503,
+   "sha256": "17e82d60ba79e020fb70c68166912b81f3bc756773cab036d01cf3c6a70852b1",
+   "pad": "images/medicine-ball/medicine-ball-slams-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.992,
+   "inktdekking": 0.04277,
+   "sha256": "64caccb8501ced754ae0737ffd23ece3b9f9e2068e9303451d0208b3ac290b5b",
+   "pad": "images/medicine-ball/medicine-ball-swing-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9345,
+   "inktdekking": 0.03188,
+   "sha256": "59fbdd40eeb55d52c007aced583bad0caab726e424acf69873010a273066dbb6",
+   "pad": "images/medicine-ball/medicine-ball-throw-and-jog-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5182,
+   "inktdekking": 0.0124,
+   "sha256": "0cce2b3f61a85dc7e0b44531db8f8b9637f9d3acfb1ed51ef5e7b8716de9f914",
+   "pad": "images/medicine-ball/medicine-ball-v-ups-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.698,
+   "inktdekking": 0.02222,
+   "sha256": "e02e5d12e7c3517795194b2d4bbef9d04cc92b6f16b1939b12c284352818c3d9",
+   "pad": "images/medicine-ball/medicine-ball-wall-throw-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5511,
+   "inktdekking": 0.01288,
+   "sha256": "1632dd755d3127e9d37b0f863e35933ecdefeee304f7d722d77dfeb0c02a6bd4",
+   "pad": "images/mobility/abs-stretch-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.4873,
+   "inktdekking": 0.00896,
+   "sha256": "2af8cb33e7e1a046799cc7b716fd38edb1f35faddea3d3883f4e3d1aef107fb3",
+   "pad": "images/mobility/adductoren-stretch-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.4887,
+   "inktdekking": 0.01197,
+   "sha256": "14586ca282cc3d151c8fe2333919e6041e65b3bd53eddaf4301903ea8a1c5de4",
+   "pad": "images/mobility/back-stretch-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7228,
+   "inktdekking": 0.01347,
+   "sha256": "fa54c481ef40fdaa9b7f3038399ab4095181be30e7a7c852a0732e40a38af441",
+   "pad": "images/mobility/gluteal-stretch-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.6044,
+   "inktdekking": 0.02198,
+   "sha256": "f1d3ef67a33a5fb34cb8f52b3fe6552c0e261572c5aa44a10115076233b3aa04",
+   "pad": "images/mobility/hamstring-stretch-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5597,
+   "inktdekking": 0.01823,
+   "sha256": "f2294fcb537700808daf2ecad45315aabac98f00ecb91a205fa98e7ef86a5fb5",
+   "pad": "images/mobility/hamstring-stretch-one-leg-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.6101,
+   "inktdekking": 0.01912,
+   "sha256": "54e1564c4509350ee7ec73d073554726802b17f43a4ad37daa1aa635187b3367",
+   "pad": "images/mobility/mob-adductoren-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.6426,
+   "inktdekking": 0.01393,
+   "sha256": "db4189f9339bdcc851fccb20eec4d8d64bcd698f717c5eb7229baeb6b8d53b2c",
+   "pad": "images/mobility/mob-back-cat-cow-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7043,
+   "inktdekking": 0.01526,
+   "sha256": "a6dbd905fedd36d1fc3452f6662bd3607f29d93c1acc377b2c64fe47efcbda24",
+   "pad": "images/mobility/mob-back-left-right-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7983,
+   "inktdekking": 0.02262,
+   "sha256": "0cf51035581dbb181576e4cf57a48f2b67a6a61072abd4ba02046afeb6688843",
+   "pad": "images/mobility/mob-hip-circles-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7409,
+   "inktdekking": 0.02338,
+   "sha256": "1bde2c60a60efb92e71556c28a95c23d6ed38971fa938a308516bc1ed4786d07",
+   "pad": "images/mobility/mob-hip-flexion-extension-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.6574,
+   "inktdekking": 0.01947,
+   "sha256": "f8be9b00a9c8284a886be910e30a82ce007e7410a8696fcc0b84b95b670ec90a",
+   "pad": "images/mobility/mob-hip-opener-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.6467,
+   "inktdekking": 0.01248,
+   "sha256": "abf53815324c49898ac616fac72cf7a787732f5f08944568cbb98533c44552c7",
+   "pad": "images/mobility/mob-lower-back-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.5948,
+   "inktdekking": 0.0176,
+   "sha256": "2185c4710ed81f4afb881141ebc887d7626cba5ce8fe68dbdf88ed368fef839e",
+   "pad": "images/mobility/mob-thoracaal-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7658,
+   "inktdekking": 0.03002,
+   "sha256": "1126b009943a4251cb6a4234d45ac4130dbb760b8a0b8bf31be1d2978af32902",
+   "pad": "images/mobility/quadriceps-stretch-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9519,
+   "inktdekking": 0.03843,
+   "sha256": "128d70da5270f0f45306eb17efaf94e54dd8a28cf602ea3aef85531116fb6f91",
+   "pad": "images/onderste-extremiteit/been-pendelen-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/been-pendelen-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9972,
+   "inktdekking": 0.02856,
+   "sha256": "711e5e7764a6daf45f3f4c8f210410c9cad8997d2a718b89a6cb80a3cb3b7b46",
+   "pad": "images/onderste-extremiteit/bridges-kicker-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/bridges-kicker-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.2651,
+   "inktdekking": 0.05104,
+   "sha256": "55f16d5269a53217cd4283742dac19b5bba1eaab492ddbedfb7b86866025e388",
+   "pad": "images/onderste-extremiteit/calf-raises-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/calf-raises-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0723,
+   "inktdekking": 0.0361,
+   "sha256": "4a896fc642dbde8d50f40d542275d4ea32d11d3ec7fd66be4beb66658f8ddce9",
+   "pad": "images/onderste-extremiteit/chair-squat-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/chair-squat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.957,
+   "inktdekking": 0.03973,
+   "sha256": "d64c2d1de569756cc31ed7a691c7964c511d6a734f9e5b6192f0c11c593dbc63",
+   "pad": "images/onderste-extremiteit/crabwalk-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/crabwalk-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.978,
+   "inktdekking": 0.04422,
+   "sha256": "d8a0031e7eadd8c8200aaf9f5f43fdae59f1276f1a938269dcc02816e9834b6a",
+   "pad": "images/onderste-extremiteit/dead-lift-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/dead-lift-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.1338,
+   "inktdekking": 0.04447,
+   "sha256": "c82469b19d912f628b97ff09586a9bb2c38979ddc58dc8fa4303f6333b601053",
+   "pad": "images/onderste-extremiteit/extension-squat-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/extension-squat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8945,
+   "inktdekking": 0.03312,
+   "sha256": "ff0989b191abd6e63a9da7014ecdc455f2c7091a16f3df020cc2c503adaa7583",
+   "pad": "images/onderste-extremiteit/front-squat-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/front-squat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0409,
+   "inktdekking": 0.03502,
+   "sha256": "cb0918a9695c3ec1e033070c25ccedf7ac52baf22f6b8d556ceb8fe2e78b8ec7",
+   "pad": "images/onderste-extremiteit/glute-bridges-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/glute-bridges-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.89,
+   "inktdekking": 0.06123,
+   "sha256": "73895cea3c2168a980929c745c14e002117d7ee4c77cc4d295f3081ceacb01bb",
+   "pad": "images/onderste-extremiteit/hack-squat-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/hack-squat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.89,
+   "inktdekking": 0.03969,
+   "sha256": "0bc4e5416816552c05ed14067e75e7b0d9da138d591885128766ab90d54df52e",
+   "pad": "images/onderste-extremiteit/jefferson-squat-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/jefferson-squat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9727,
+   "inktdekking": 0.03007,
+   "sha256": "7a87438f86fb532e0081a041747374ba38a05fe535628ffb0d486f17ec5c60ed",
+   "pad": "images/onderste-extremiteit/kick-back-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/kick-back-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9117,
+   "inktdekking": 0.02708,
+   "sha256": "f6adec1384219be7451a6495e9c00debff9b8d3a568f29d087b580e4988413bc",
+   "pad": "images/onderste-extremiteit/leg-curl-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/leg-curl-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.97,
+   "inktdekking": 0.0413,
+   "sha256": "e6448a24a077d922dafc561860153bbf8ec6384529771264fc75355b9f0ee995",
+   "pad": "images/onderste-extremiteit/leg-extension-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/leg-extension-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.974,
+   "inktdekking": 0.07112,
+   "sha256": "df87c9c8feed9e525a3cbac3f86787b74f15ffe7fa0d8f61b417976742756f0e",
+   "pad": "images/onderste-extremiteit/leg-press-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/leg-press-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.1108,
+   "inktdekking": 0.0429,
+   "sha256": "6237a740fb66e28fa18e53e1bb94a04b9bef9f746401d8eeb586b8e8011fb6fa",
+   "pad": "images/onderste-extremiteit/lunges-curtsy-alt-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/lunges-curtsy-alt-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0056,
+   "inktdekking": 0.03472,
+   "sha256": "9bec59c1eaf20535ba02417aef9b54466797f6d82ec95b74f6ebceafdf764e38",
+   "pad": "images/onderste-extremiteit/lunges-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/lunges-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9861,
+   "inktdekking": 0.03076,
+   "sha256": "a49ad2fd96f513d89cbced6df1c791dd1d7a9a3b3d522dda967eb57eebf75f3e",
+   "pad": "images/onderste-extremiteit/lying-abduction-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/lying-abduction-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9223,
+   "inktdekking": 0.02684,
+   "sha256": "65bfe8399ca469e2f9f887e7932b198db427449b1ef4193f8c58ea9f9c8cf796",
+   "pad": "images/onderste-extremiteit/lying-adduction-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/lying-adduction-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9767,
+   "inktdekking": 0.03584,
+   "sha256": "2708eb177b49fe3b099d7abc383307c4d1b322270f52b6758bc558f7b9032efb",
+   "pad": "images/onderste-extremiteit/single-leg-squat-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/single-leg-squat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9767,
+   "inktdekking": 0.0419,
+   "sha256": "b43b9e9ae0553a5fbcbacd85a6f68ec4f787ba1c566d09797c54f66b99973194",
+   "pad": "images/onderste-extremiteit/squat-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/squat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9596,
+   "inktdekking": 0.04735,
+   "sha256": "ce2da9029af87404fa5b019f7b6f73364c0c8ae13df79fa8c09f25eb20cd14ac",
+   "pad": "images/onderste-extremiteit/squat-lunges-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/squat-lunges-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.3185,
+   "inktdekking": 0.0358,
+   "sha256": "073a5ea91cf35248cee12c71387006e16438493da3c3cc0b51c97bb8d61141d1",
+   "pad": "images/onderste-extremiteit/standing-abduction-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/standing-abduction-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.4326,
+   "inktdekking": 0.03655,
+   "sha256": "612ce51ab59c1fb5fdab2922f44de686a3e4ee3d1e31068387e63e3c6e9c1dad",
+   "pad": "images/onderste-extremiteit/standing-adduction-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/standing-adduction-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.3719,
+   "inktdekking": 0.03531,
+   "sha256": "05a8b657dc59abb710d3fe7801694c939262ac206e182813bab7411599ec950e",
+   "pad": "images/onderste-extremiteit/standing-gluteus-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/standing-gluteus-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.3185,
+   "inktdekking": 0.04903,
+   "sha256": "4bc7ef6523e2c12ada61a8ebbd4ed2f2b4b7f8c659517b72b7d2a794f8ea0d82",
+   "pad": "images/onderste-extremiteit/step-up-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/step-up-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0334,
+   "inktdekking": 0.05843,
+   "sha256": "ff959a5e1ae412bef68e8ee128fd8a342fd274002de2c314ac7da4e7f55e6226",
+   "pad": "images/onderste-extremiteit/step-up-tempo-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/step-up-tempo-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0486,
+   "inktdekking": 0.04271,
+   "sha256": "8daedabf541ac8715fc31c6489b331ddc02ddf28fcde08af10ac7aa657078f17",
+   "pad": "images/onderste-extremiteit/step-up-with-knee-raise-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9609,
+   "inktdekking": 0.03856,
+   "sha256": "8ca5c2eb6193dfc2f33a7e82dee143c156f42b705a94b408a693658bc3d25f6d",
+   "pad": "images/onderste-extremiteit/surrenders-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/surrenders-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0659,
+   "inktdekking": 0.03599,
+   "sha256": "2e3b8f899e56ed191d979873015c25fefcf26f36937f38d1d20f6290c6413f82",
+   "pad": "images/onderste-extremiteit/wall-sit-line-v1.png",
+   "kleurbron": "images/onderste-extremiteit/wall-sit-avatar-v7.jpg"
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8463,
+   "inktdekking": 0.03605,
+   "sha256": "bbcc7f0dced4ea20db983d6e6330cec2bdb948ddf2f388e899d8ed2f1d474978",
+   "pad": "images/seated-chair/one-leg-standing-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7864,
+   "inktdekking": 0.03923,
+   "sha256": "6fcf680b3f8e876497190544eb0cc3e58e0d54769b2a4ab36993538c6023b558",
+   "pad": "images/seated-chair/seated-ab-contractions-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8367,
+   "inktdekking": 0.03696,
+   "sha256": "b2044a1ab99ef6a6d1a3068d162582c6cfe29ed0b0a82132a20da5b136713043",
+   "pad": "images/seated-chair/seated-ankle-rotations-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8797,
+   "inktdekking": 0.04108,
+   "sha256": "34703f05122aec745bc0aecb42d76b90d67c5096d95c65ecb1e8fa7b84653d8f",
+   "pad": "images/seated-chair/seated-ankle-stretches-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7394,
+   "inktdekking": 0.02887,
+   "sha256": "1191ab66ec0f700eaf677c1d4e9f355fe4dd1a43660a499102298a8775faf734",
+   "pad": "images/seated-chair/seated-arm-circles-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8392,
+   "inktdekking": 0.04206,
+   "sha256": "5b455a81996bcc4eac8a70c142cacfefdcde4994a6d6ab8ec356fba1dc039728",
+   "pad": "images/seated-chair/seated-band-abduction-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8446,
+   "inktdekking": 0.06186,
+   "sha256": "c5ec4ee596ccfa3d1c6c3a13a450319d8e9033feb76a637781809bf63b51a0ec",
+   "pad": "images/seated-chair/seated-band-leg-curl-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8105,
+   "inktdekking": 0.03534,
+   "sha256": "ce4c3c1b4e1350a94cb6d4e4925c52867219075f6ee0611335879fd9a39a8524",
+   "pad": "images/seated-chair/seated-biceps-curl-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8594,
+   "inktdekking": 0.04057,
+   "sha256": "bb7e6258d89f07415e34ecf9d5e4cc2ba06f943817d48d5ce45379da43c3a8aa",
+   "pad": "images/seated-chair/seated-calf-raises-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9013,
+   "inktdekking": 0.04399,
+   "sha256": "3d4d766ad9a1db1a896cdafd1e5b52fb53daca572e7a866f4a647e34f81fc1b5",
+   "pad": "images/seated-chair/seated-cat-cow-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.856,
+   "inktdekking": 0.03529,
+   "sha256": "f071e5e5c1509d89b8718596550b3e2a87aa8514aec87f1bc389a9fc515d4128",
+   "pad": "images/seated-chair/seated-cervical-stretch-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8446,
+   "inktdekking": 0.04018,
+   "sha256": "1cd17c3267c46908c5c65db6f4b9610eed7e14400e6ee2384e3f142dc6414560",
+   "pad": "images/seated-chair/seated-chair-crunches-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7518,
+   "inktdekking": 0.02825,
+   "sha256": "47a93adb0783d0715c3577bcd544a5ee3418cc3d072be13ad71cec6f89d8bc3e",
+   "pad": "images/seated-chair/seated-chair-squats-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.828,
+   "inktdekking": 0.05564,
+   "sha256": "6b3b3c7153b53517bee24469b305e6384df326c4cb28389a9912fc59f93e6d0e",
+   "pad": "images/seated-chair/seated-chest-opener-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8735,
+   "inktdekking": 0.03852,
+   "sha256": "572d6165551e330eadda804471e861cdcec8decfc61ef1da87082a4ab616b8f7",
+   "pad": "images/seated-chair/seated-dumbbell-press-up-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8193,
+   "inktdekking": 0.0432,
+   "sha256": "c441b84e27681964982c04e7cff6da00c7c78a18aa734b8b0bd15b57c834a3c3",
+   "pad": "images/seated-chair/seated-forward-reach-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7558,
+   "inktdekking": 0.03052,
+   "sha256": "b69659085da24a599a4fa161a67d32402564201b5b2246083aa5e5e1e56dc429",
+   "pad": "images/seated-chair/seated-hamstring-stretch-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8373,
+   "inktdekking": 0.05613,
+   "sha256": "a2fb8fdc728581c9fb7af77fbf454708129c91026985b59b2653738a1a865a21",
+   "pad": "images/seated-chair/seated-knee-lift-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8715,
+   "inktdekking": 0.04665,
+   "sha256": "b526ee2d94ce848914f2a6394bd8859e9c130ff384cdca2a6d470f9e8aa46628",
+   "pad": "images/seated-chair/seated-knee-to-elbow-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8784,
+   "inktdekking": 0.0346,
+   "sha256": "efcbe828753419ebb5513a37e70be1a097443bc0197a6d48b5e593b4dbe50395",
+   "pad": "images/seated-chair/seated-lat-stretch-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7706,
+   "inktdekking": 0.03191,
+   "sha256": "b18aaa239a56d16c4a0905f5eb09ff5f4a1a6531b3532426373731e5402df037",
+   "pad": "images/seated-chair/seated-leg-extension-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8137,
+   "inktdekking": 0.04532,
+   "sha256": "568864202b05877fcfb4182f6503b3c9dfe0674e035db2e8b5cffdf8149de8ac",
+   "pad": "images/seated-chair/seated-leg-press-resistance-band-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8311,
+   "inktdekking": 0.04185,
+   "sha256": "0cd9da94043a5c01058d49035a438922a8044c383681001ae8c1471ce93c016f",
+   "pad": "images/seated-chair/seated-lumbar-rotations-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8861,
+   "inktdekking": 0.05379,
+   "sha256": "999554a1fb3b10c0a0e4047c6f51292873265b3b595c23659d8e9ff3d097a540",
+   "pad": "images/seated-chair/seated-marching-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8367,
+   "inktdekking": 0.03531,
+   "sha256": "10a920375ed0447cd29b0fc5f99da9a73ce397c7f6989cf202ec2143fd2ad5c4",
+   "pad": "images/seated-chair/seated-shoulder-roll-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8515,
+   "inktdekking": 0.04566,
+   "sha256": "377a012f86bf55dd7a55bc319cf0fb64bd9e7ad11a1a6c1b7eda0f154849aafd",
+   "pad": "images/seated-chair/seated-shoulder-stretch-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8386,
+   "inktdekking": 0.03334,
+   "sha256": "a52947ab0e8bf0ec94f0fdfde459778cf7d3195248f9a9f173bd92c814c3d318",
+   "pad": "images/seated-chair/seated-side-leans-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7432,
+   "inktdekking": 0.02589,
+   "sha256": "7a9f7c056210b51d503d0d9671181ae8bf4c769cdbf3322e76da1fddbd2f078e",
+   "pad": "images/seated-chair/standing-chair-abduction-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8027,
+   "inktdekking": 0.02872,
+   "sha256": "eadff973a2049110443d0829f164ad75ad5619517e15e3d34e144b0101a64a52",
+   "pad": "images/seated-chair/standing-chair-back-leg-raise-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8854,
+   "inktdekking": 0.03038,
+   "sha256": "6e74cb97768870d0f147b6c31ed4db88cc4a6d1836dd12c0766684879e19fe12",
+   "pad": "images/seated-chair/standing-chair-calf-raises-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7303,
+   "inktdekking": 0.02769,
+   "sha256": "2929c1baddaf35d130e39c3a98f44594f3b18b6f4ff3af981b8fb8913cb0c5c7",
+   "pad": "images/seated-chair/standing-chair-half-squat-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8195,
+   "inktdekking": 0.03047,
+   "sha256": "fa21dd98ef551af084282ee8ac427ca57e4b99b07bcfc62b47ddc47f0f5e7b84",
+   "pad": "images/seated-chair/standing-chair-heel-toe-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8299,
+   "inktdekking": 0.03503,
+   "sha256": "34b062ae03d50ceb868a9e4efd332cb57315ead099034053fd7f1abf8f15f787",
+   "pad": "images/seated-chair/standing-chair-hip-extension-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.7876,
+   "inktdekking": 0.02996,
+   "sha256": "83bbd663eb4ab29cab7220be61919d0e3e6a8d89386d9a8347cbc3cd3b8222c0",
+   "pad": "images/seated-chair/standing-chair-knee-lift-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8156,
+   "inktdekking": 0.03293,
+   "sha256": "63af840de25c74ac41c52c7efe32c849abb18125da0fa3a846fe416f92186473",
+   "pad": "images/seated-chair/standing-chair-leg-curl-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "illustratie",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.8411,
+   "inktdekking": 0.03096,
+   "sha256": "97093f05e0f691a8f35eeb66c31424e8b4de412c96e2d458916fd3c987e137d0",
+   "pad": "images/seated-chair/standing-chair-shoulder-rotations-line-v1.png",
+   "kleurbron": null
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0028,
+   "inktdekking": 0.02859,
+   "sha256": "9699d0032ee2ac9db6c176c7ca9ffdfd7655a122c27cce538bd276466be2839e",
+   "pad": "images/speedladder/voor-zijwaarts-line-v1.png",
+   "kleurbron": "images/speedladder/voor-zijwaarts-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9468,
+   "inktdekking": 0.03647,
+   "sha256": "ed563ed7b50ea167672838de38c5e744b8f254b14a4b0197b965837d6b66a59a",
+   "pad": "images/trx/trx-ab-roll-out-line-v1.png",
+   "kleurbron": "images/trx/trx-ab-roll-out-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9889,
+   "inktdekking": 0.03957,
+   "sha256": "f9d62512efaa44ea8c67a26c20b90e8b98ba86ac9e469feaef569cfe0bce28e7",
+   "pad": "images/trx/trx-biceps-curl-line-v1.png",
+   "kleurbron": "images/trx/trx-biceps-curl-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.97,
+   "inktdekking": 0.04474,
+   "sha256": "6a96485235649d8bd9f06355f6ddae5c9c86757a3ef1e2e5d985ad2e8e5f0a09",
+   "pad": "images/trx/trx-chest-press-line-v1.png",
+   "kleurbron": "images/trx/trx-chest-press-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9653,
+   "inktdekking": 0.03332,
+   "sha256": "397b51aa444c6aebebb2cf91c4de2fea27aae3c8b20b800053213e28474203c3",
+   "pad": "images/trx/trx-flyes-i-line-v1.png",
+   "kleurbron": "images/trx/trx-flyes-i-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9267,
+   "inktdekking": 0.03068,
+   "sha256": "bd2880f5a80e2f184fd980c4ba2081def6efe312deceab99c1d502dc644a7f7c",
+   "pad": "images/trx/trx-flyes-ii-line-v1.png",
+   "kleurbron": "images/trx/trx-flyes-ii-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9344,
+   "inktdekking": 0.04024,
+   "sha256": "54b2f60c8648af65a29a96668c4c8df23af985484664e68e92a7b0756d6f87af",
+   "pad": "images/trx/trx-glute-bridge-line-v1.png",
+   "kleurbron": "images/trx/trx-glute-bridge-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9609,
+   "inktdekking": 0.04554,
+   "sha256": "2432bb0a8c7009b24bde2a582e9b0eb8e8007df646aaa04d03cd2312209af3b3",
+   "pad": "images/trx/trx-lunge-lateral-high-line-v1.png",
+   "kleurbron": "images/trx/trx-lunge-lateral-high-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9235,
+   "inktdekking": 0.04155,
+   "sha256": "a0a4695ffd5ad488040833e06012083c3918ba6e032a8ee46d23aaa2e9b83a0b",
+   "pad": "images/trx/trx-lunge-lateral-low-line-v1.png",
+   "kleurbron": "images/trx/trx-lunge-lateral-low-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9609,
+   "inktdekking": 0.04396,
+   "sha256": "16e2142b4d15d675aec0c853a52902dd013e99f0520d77f66f8aa9788d80834c",
+   "pad": "images/trx/trx-lunge-line-v1.png",
+   "kleurbron": "images/trx/trx-lunge-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9687,
+   "inktdekking": 0.04581,
+   "sha256": "be28e6c365f9a76b0165a5cffd6db54730f003ddf00f1e6352fda40da912314d",
+   "pad": "images/trx/trx-lunge-reverse-line-v1.png",
+   "kleurbron": "images/trx/trx-lunge-reverse-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0601,
+   "inktdekking": 0.04737,
+   "sha256": "17cfcc67d01abf31e580f0daa6ceb6cb739b4628be25c5ce2ffdd62da3f0720e",
+   "pad": "images/trx/trx-mountain-climber-line-v1.png",
+   "kleurbron": "images/trx/trx-mountain-climber-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9876,
+   "inktdekking": 0.03845,
+   "sha256": "9241d1b41bf660af68b3cc9d2dae29e7c2ed2b57a8a36d8c3fcf36c5e4f31a61",
+   "pad": "images/trx/trx-plank-line-v1.png",
+   "kleurbron": "images/trx/trx-plank-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0072,
+   "inktdekking": 0.04409,
+   "sha256": "c21e1f524fbe6f2ed79e505bbb1242992bf0973cae9c08920b34fe1ad3b6c975",
+   "pad": "images/trx/trx-plank-side-line-v1.png",
+   "kleurbron": "images/trx/trx-plank-side-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9223,
+   "inktdekking": 0.0415,
+   "sha256": "1a163ecd6efa1abea04949031f265f471cbb257f902816a159267af3c13071b5",
+   "pad": "images/trx/trx-pull-up-line-v1.png",
+   "kleurbron": "images/trx/trx-pull-up-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9223,
+   "inktdekking": 0.03873,
+   "sha256": "75f6a68dc47f8fe51e9245f152e88f4894b91f5e8d79737f28ded07eaea25e79",
+   "pad": "images/trx/trx-row-line-v1.png",
+   "kleurbron": "images/trx/trx-row-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9807,
+   "inktdekking": 0.04252,
+   "sha256": "8f6713031e95588aa9202494783a1dccb7b131b3eaec059b8301b55848cc7896",
+   "pad": "images/trx/trx-saw-pikes-line-v1.png",
+   "kleurbron": "images/trx/trx-saw-pikes-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9609,
+   "inktdekking": 0.03978,
+   "sha256": "5717a6fcd2ed59c40e3e8c6d24f8a2bd771823ba3f154013e8054dbfa658832b",
+   "pad": "images/trx/trx-squat-line-v1.png",
+   "kleurbron": "images/trx/trx-squat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.1558,
+   "inktdekking": 0.04246,
+   "sha256": "24ce83bfe2c5d0ab0c2a228435342d3250d5703e5ccb5fbc521bb540919d88c4",
+   "pad": "images/trx/trx-squat-overhead-line-v1.png",
+   "kleurbron": "images/trx/trx-squat-overhead-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9807,
+   "inktdekking": 0.04341,
+   "sha256": "308d28654d78d5d9e81f4f71ddc0d8863f0c8a08f2794a1dd2d1e62d580051ef",
+   "pad": "images/trx/trx-squat-pistol-line-v1.png",
+   "kleurbron": "images/trx/trx-squat-pistol-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9903,
+   "inktdekking": 0.0351,
+   "sha256": "5e7fbf33b1b6c2556fa7984594a9d334434765cdd6b16ac5e997e8938f75d111",
+   "pad": "images/trx/trx-triceps-extension-ii-line-v1.png",
+   "kleurbron": "images/trx/trx-triceps-extension-ii-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0304,
+   "inktdekking": 0.04644,
+   "sha256": "89cb86deafbef3602e5cf4808f9f3b26744c142535fbce04591d3a59d3a6be2f",
+   "pad": "images/trx/trx-triceps-extension-line-v1.png",
+   "kleurbron": "images/trx/trx-triceps-extension-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9093,
+   "inktdekking": 0.02772,
+   "sha256": "e5daae749498cc7324593cf4c21d1931a07f00b338702130f5c37a72fdba9801",
+   "pad": "images/yoga/yoga-butterfly-stretch-line-v1.png",
+   "kleurbron": "images/yoga/yoga-butterfly-stretch-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0171,
+   "inktdekking": 0.03519,
+   "sha256": "717d2f2d544238a72ccb035f92dd00c1654512e7297d7044103b91bde0b25387",
+   "pad": "images/yoga/yoga-camel-line-v1.png",
+   "kleurbron": "images/yoga/yoga-camel-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.087,
+   "inktdekking": 0.04866,
+   "sha256": "6b07d67acdefb55338f07e8a2b50fbc1a099d3e6697142e61ba593829f036c48",
+   "pad": "images/yoga/yoga-cat-tail-line-v1.png",
+   "kleurbron": "images/yoga/yoga-cat-tail-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9381,
+   "inktdekking": 0.03116,
+   "sha256": "efd3801bc55b64214a0dba244ef0c5dd860026164e12993db4515110e3ccb08d",
+   "pad": "images/yoga/yoga-cobra-line-v1.png",
+   "kleurbron": "images/yoga/yoga-cobra-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0394,
+   "inktdekking": 0.03647,
+   "sha256": "1090a6015005afab1242e3ddef204da2ac97d84fd9c99361e97480eda8b433eb",
+   "pad": "images/yoga/yoga-deep-squat-line-v1.png",
+   "kleurbron": "images/yoga/yoga-deep-squat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.1005,
+   "inktdekking": 0.03786,
+   "sha256": "60e8bee764556983d41c781539c56cf9c698591bde5200312e82df88d79cc422",
+   "pad": "images/yoga/yoga-downward-dog-line-v1.png",
+   "kleurbron": "images/yoga/yoga-downward-dog-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "onder-elkaar",
+   "panelen": 2,
+   "schaal": 1.1966,
+   "inktdekking": 0.03877,
+   "sha256": "39fe15a429dce3cce0886680b5d3e2bef755f6f890b336d4645734a09b2d4643",
+   "pad": "images/yoga/yoga-ear-pressure-line-v1.png",
+   "kleurbron": "images/yoga/yoga-ear-pressure-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9393,
+   "inktdekking": 0.04008,
+   "sha256": "c3de79ee2dcb56b42992e214ee2d8e353430c17a3415e7829c8d5d68dbb323f0",
+   "pad": "images/yoga/yoga-extended-child-s-pose-line-v1.png",
+   "kleurbron": "images/yoga/yoga-extended-child-s-pose-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.943,
+   "inktdekking": 0.0329,
+   "sha256": "c7b214e2e1c5c96ab57861dfbcd87a61de2fec8a0eb3cabad4886aa146fb78f6",
+   "pad": "images/yoga/yoga-extended-puppy-line-v1.png",
+   "kleurbron": "images/yoga/yoga-extended-puppy-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.899,
+   "inktdekking": 0.02467,
+   "sha256": "1d4482a9117ca49c16e0998bafbeed2707cdf58b21de831b8cd3543f62c3e19a",
+   "pad": "images/yoga/yoga-extended-triangle-line-v1.png",
+   "kleurbron": "images/yoga/yoga-extended-triangle-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9986,
+   "inktdekking": 0.04334,
+   "sha256": "6e35ff172d08dab732203eaa7bb724ba94b87198aab0cf1223ee9af3beb6a070",
+   "pad": "images/yoga/yoga-frog-line-v1.png",
+   "kleurbron": "images/yoga/yoga-frog-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0383,
+   "inktdekking": 0.03954,
+   "sha256": "e614ea1b83371a928b86fa81fac7a6606f3e8fc37078ace8b53f0e8d01ded0f5",
+   "pad": "images/yoga/yoga-full-boat-line-v1.png",
+   "kleurbron": "images/yoga/yoga-full-boat-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0071,
+   "inktdekking": 0.03447,
+   "sha256": "21b2a2addf03b20fa9251ef674fd4eb2dab7a7ff10253f9e9adb90ea1139aca5",
+   "pad": "images/yoga/yoga-glute-stretch-line-v1.png",
+   "kleurbron": "images/yoga/yoga-glute-stretch-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0165,
+   "inktdekking": 0.03396,
+   "sha256": "bf139e106a882b526b907d2abec6e995b9d766d4fbc04c6de5c143fda51c34cc",
+   "pad": "images/yoga/yoga-half-monkey-line-v1.png",
+   "kleurbron": "images/yoga/yoga-half-monkey-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.059,
+   "inktdekking": 0.04287,
+   "sha256": "2718145efb74d1016fa1f4c71d24196f66d8895918aab91ed8cd50b4a04772f8",
+   "pad": "images/yoga/yoga-hamstring-stretch-line-v1.png",
+   "kleurbron": "images/yoga/yoga-hamstring-stretch-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.183,
+   "inktdekking": 0.04882,
+   "sha256": "3d303d165178efdfb1776692fe12d0db37e3d50999e0ceec72190bb0b9337cf9",
+   "pad": "images/yoga/yoga-happy-baby-line-v1.png",
+   "kleurbron": "images/yoga/yoga-happy-baby-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9082,
+   "inktdekking": 0.0298,
+   "sha256": "6914b45e0e31018fc76d74db48b5ffaeda51f69d0b989a8dccea5d9663844001",
+   "pad": "images/yoga/yoga-hip-flexor-stretch-line-v1.png",
+   "kleurbron": "images/yoga/yoga-hip-flexor-stretch-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9944,
+   "inktdekking": 0.02841,
+   "sha256": "3cd8766aa89edcf6cab4af1342749ce73bb5e287c0201e79714f9fc8fcf38b5e",
+   "pad": "images/yoga/yoga-knee-to-chest-hip-stretch-line-v1.png",
+   "kleurbron": "images/yoga/yoga-knee-to-chest-hip-stretch-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9152,
+   "inktdekking": 0.03133,
+   "sha256": "8a2664d00fcd41ed81aed6c20fcaa4e54efcc3b71d6de6959951a2161cde6d67",
+   "pad": "images/yoga/yoga-marichi-s-iii-line-v1.png",
+   "kleurbron": "images/yoga/yoga-marichi-s-iii-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.974,
+   "inktdekking": 0.0386,
+   "sha256": "13e44a492796528c5bfd429472ab2ea94edd3552dfd6e638bd793ce3aef3828c",
+   "pad": "images/yoga/yoga-noose-line-v1.png",
+   "kleurbron": "images/yoga/yoga-noose-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.1521,
+   "inktdekking": 0.04045,
+   "sha256": "b5c4a34fcb267b1aa66860559bb685b05ea3dbaa93a6826ee88ae416156ed9ac",
+   "pad": "images/yoga/yoga-pigeon-line-v1.png",
+   "kleurbron": "images/yoga/yoga-pigeon-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9368,
+   "inktdekking": 0.0294,
+   "sha256": "c9b6abf0e51df57d75a162132bf2085bfe023c60e1cd91236a364f23a08b3061",
+   "pad": "images/yoga/yoga-plow-line-v1.png",
+   "kleurbron": "images/yoga/yoga-plow-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9319,
+   "inktdekking": 0.02449,
+   "sha256": "50ef233fc4ce4520b8b8f961d96ca5685883903064cca46373b8df669c39e574",
+   "pad": "images/yoga/yoga-reverse-warrior-line-v1.png",
+   "kleurbron": "images/yoga/yoga-reverse-warrior-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "onder-elkaar",
+   "panelen": 2,
+   "schaal": 1.1641,
+   "inktdekking": 0.03273,
+   "sha256": "5281cd1cd23b227091cba558e1017dc3853d9e423d8444f6d1363b76178218a1",
+   "pad": "images/yoga/yoga-revolved-downward-facing-dog-line-v1.png",
+   "kleurbron": "images/yoga/yoga-revolved-downward-facing-dog-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0821,
+   "inktdekking": 0.02476,
+   "sha256": "98138e165da37e01c5de302fc5c925e096d8eb7abb0d95219c5c80ba24982220",
+   "pad": "images/yoga/yoga-snake-line-v1.png",
+   "kleurbron": "images/yoga/yoga-snake-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9319,
+   "inktdekking": 0.03145,
+   "sha256": "a47fca832d62953d1bf6cc3770ea251717892029a885c48b8e01f80eb9087a81",
+   "pad": "images/yoga/yoga-warrior-ii-line-v1.png",
+   "kleurbron": "images/yoga/yoga-warrior-ii-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 1.0,
+   "inktdekking": 0.02525,
+   "sha256": "569200a8a17980eea154888a57bd76d9cc63bed733a7a50f93f5c57c040dd0da",
+   "pad": "images/yoga/yoga-warrior-iii-line-v1.png",
+   "kleurbron": "images/yoga/yoga-warrior-iii-avatar-v7.jpg"
+  },
+  {
+   "bron": "hertekend",
+   "indeling": "origineel",
+   "panelen": 1,
+   "schaal": 0.9635,
+   "inktdekking": 0.03692,
+   "sha256": "7328ccfddbab60777911b0d1441ee0eb52665998da6bccd383961a20a02bdca5",
+   "pad": "images/yoga/yoga-wide-angle-seated-forward-bend-line-v1.png",
+   "kleurbron": "images/yoga/yoga-wide-angle-seated-forward-bend-avatar-v7.jpg"
+  }
+ ]
+}

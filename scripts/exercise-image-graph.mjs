@@ -5,7 +5,7 @@ import { copyFile, mkdir, readFile, rename, stat, writeFile } from "node:fs/prom
 import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { graphLayers, runDag } from "../lib/dag-runner.js";
 import { isRunwayCapacityError } from "../lib/runway-errors.js";
-import { createBinaryLineArt, linePathForColor, publicAssetPath } from "../lib/v2-line-art.js";
+import { createLineArt, linePathForColor, publicAssetPath } from "../lib/v2-line-art.js";
 
 const root = resolve(new URL("../", import.meta.url).pathname);
 // Alle nieuwe beeldproductie hoort bij v2. De stabiele v1-catalogus wordt door
@@ -550,7 +550,7 @@ async function publish(node) {
   await copyFile(source, node.output);
   const lineImage = linePathForColor(node.plan.outputImage);
   const lineOutput = publicAssetPath(join(root, "public"), lineImage);
-  await createBinaryLineArt(node.output, lineOutput);
+  await createLineArt(node.output, lineOutput);
   await updateCatalogue(node.plan, lineImage);
   return {
     catalogue: "public/oefeningen-v2.json",

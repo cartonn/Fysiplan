@@ -3,9 +3,9 @@ import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { graphLayers, runDag } from "../lib/dag-runner.js";
 import {
-  analyzeBinaryLineArt,
+  analyzeLineArt,
   assetExists,
-  createBinaryLineArt,
+  createLineArt,
   linePathForColor,
   publicAssetPath,
 } from "../lib/v2-line-art.js";
@@ -92,9 +92,9 @@ async function execute(node, results) {
     }
     const hadLine = lineReadyBeforeRun;
     const geillustreerd = hadLine && await isGeillustreerd(node.exercise, colorPath);
-    if (command === "run" && !geillustreerd && (!hadLine || force)) await createBinaryLineArt(colorPath, linePath);
+    if (command === "run" && !geillustreerd && (!hadLine || force)) await createLineArt(colorPath, linePath);
     const lineReady = await assetExists(linePath);
-    const qa = lineReady ? await analyzeBinaryLineArt(linePath) : null;
+    const qa = lineReady ? await analyzeLineArt(linePath) : null;
     return {
       name: node.exercise.naam,
       colorSource,
@@ -109,7 +109,7 @@ async function execute(node, results) {
   const pairs = pairNodes.map((pairNode) => results.get(pairNode.id));
   const summary = {
     schemaVersion: 1,
-    architecture: "V2 legacy -> exact V1 image reuse; extension -> deterministic binary line companion -> hard QA",
+    architecture: "V2 legacy -> exact V1 image reuse; extension -> deterministic redrawn line companion (scripts/lijnkaarten-hertekenen.py) -> hard QA",
     layers: graphLayers(nodes).map((layer) => layer.map((entry) => entry.id)),
     catalogueCount: catalogue.length,
     selectedCount: selected.length,
