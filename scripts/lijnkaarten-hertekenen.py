@@ -1,37 +1,42 @@
 #!/usr/bin/env python3
-"""Hertekent alle V2-lijnkaarten (`*-line-v1.png`) tot schone, passende tekeningen.
+"""Maakt alle V2-lijnkaarten (`*-line-v1.png`) schoon, mooi en passend.
 
-Twee bronnen, één opmaakstap:
+Uitgangspunt is altijd de bestaande lijntekening, nooit de kleurfoto.
 
-* **Contourkaarten** (de oude Sobel-randdetectie, herkenbaar aan het verminkte
-  logo linksboven) worden volledig opnieuw getekend vanuit de kleurkaart
-  (`*-avatar-v*.jpg`): voorgrondmasker -> vloeiend gesilhouet (zwaardere
-  buitenlijn) + gefilterde binnenlijnen (Canny op een randbewarend gefilterde
-  foto, geskeletteerd, gevectoriseerd, korte snippers en ruis weg,
-  Gauss-gladgestreken). Rond het gezicht wordt agressiever gefilterd zodat er
-  een rustig, vriendelijk gezicht overblijft in plaats van een grimas.
-* **Illustraties** (al echt getekend, maar in wisselende formaten) houden hun
+* **Contourkaarten** (de oude automatische randdetectie: rafelige, dubbele
+  pixellijnen, grimasgezichten, verminkt logo) worden neuraal nagetekend met
+  Virtual Sketching (Mo et al., SIGGRAPH 2021; zie lib_virtual_sketching.py):
+  de lijn wordt tot een middellijn verdund, het model zet er doorlopende
+  penstreken (kwadratische Béziers) overheen, die streken worden aaneengeregen,
+  gladgestreken en met een vaste pen opnieuw getekend.
+* **Illustraties** (al echt getekend, wisselende formaten) houden hun eigen
   lijnwerk; alleen de opmaak verandert.
 
 Opmaak (beide): het logo verdwijnt, de inhoud wordt in losse panelen geknipt
-(figuren/houdingen die door witruimte gescheiden zijn), en de indeling die de
-figuren het grootst in het staande 2:3-vakje laat passen wint: origineel,
-onder elkaar, of een raster. Alle panelen krijgen dezelfde schaal, zodat twee of
-drie personen of een persoon met machine even groot blijven ten opzichte van
-elkaar. Lijnen worden pas na het schalen getekend (4x supersampling,
-antialiasing), dus elke kaart heeft exact dezelfde lijndikte.
+(figuren/houdingen gescheiden door witruimte, of losse figuurgroepen; een
+vloerlijn telt niet als verbinding), en de indeling die de figuren het grootst
+in het staande 2:3-vakje laat passen wint: origineel, onder elkaar of raster.
+Alle panelen krijgen dezelfde schaal, zodat twee of drie personen of een
+persoon met machine in verhouding blijven. Penstreken worden pas na het
+schalen getekend (4x supersampling, antialiasing): elke kaart heeft exact
+dezelfde lijndikte.
 
 Gebruik:
   npm run images:lijnkaarten                      # alles in place (idempotent)
   python3 scripts/lijnkaarten-hertekenen.py --only roeier --out /tmp/proef
+  python3 scripts/lijnkaarten-hertekenen.py --lijn oud-line.png --naar x-line-v1.png
   python3 scripts/lijnkaarten-hertekenen.py --kleur x-avatar-v8.jpg --naar x-line-v1.png
   python3 scripts/lijnkaarten-hertekenen.py --illustratie gegenereerd.png --naar x-line-v1.png
 
-Het rapport content/lijnkaarten-herteken-rapport.json legt per kaart vast hoe
-hij gemaakt is (en de sha256), zodat een volgende run hertekende kaarten
-opnieuw uit kleur tekent maar opgemaakte illustraties niet nogmaals schaalt.
+(--kleur maakt eerst dezelfde ruwe contourlijn als de oude pijplijn en tekent
+die daarna neuraal na: ook nieuwe kaarten lopen dus via de lijn.)
 
-Afhankelijkheden: scripts/requirements-lijnkaarten.txt
+Het rapport content/lijnkaarten-herteken-rapport.json legt per kaart vast hoe
+hij gemaakt is, uit welke bron (een git-revisie van de oude contourkaart) en de
+sha256 van het resultaat; een volgende run slaat ongewijzigde kaarten over.
+
+Afhankelijkheden: scripts/requirements-lijnkaarten.txt. Het model (~40 MB)
+wordt bij eerste gebruik gedownload naar image-work/modellen/.
 """
 
 from __future__ import annotations
@@ -40,7 +45,7 @@ import argparse
 import hashlib
 import json
 import math
-import re
+import subprocess
 import sys
 from concurrent.futures import ProcessPoolExecutor
 from dataclasses import dataclass, field
@@ -58,27 +63,11 @@ OUT_W, OUT_H = 800, 1200
 MARGIN = 0.055            # witrand rondom, als fractie van de breedte
 PANEL_GAP = 0.06          # ruimte tussen herschikte panelen, fractie van de breedte
 SS = 4                    # supersampling voor antialiasing
-OUTER_W = 3.6             # lijndikte silhouet (px in eindformaat)
-INNER_W = 2.2             # lijndikte binnenlijnen
-FACE_W = 2.0              # lijndikte gezichtslijnen
-REARRANGE_GAIN = 1.12
+REARRANGE_GAIN = 1.12     # herschik alleen als figuren minstens 12% groter worden
 ILLUSTRATION_MIN_W = 1.9  # minimale lijndikte van illustraties na schalen
-EDGE_LO, EDGE_HI = 80, 200
-MS_SPATIAL, MS_COLOR = 6, 16
-MIN_INNER = 26
-MIN_CANNY = 34
-MIN_SPUR = 7
-DARK_L = 110     # herschik alleen als figuren minstens 12% groter worden
 
 
 # ---------------------------------------------------------------- helpers
-
-def read_rgb(path: Path) -> np.ndarray:
-    image = cv2.imread(str(path), cv2.IMREAD_COLOR)
-    if image is None:
-        raise RuntimeError(f"kan {path} niet lezen")
-    return image
-
 
 def logo_zone(shape) -> tuple[int, int]:
     h, w = shape[:2]
@@ -102,72 +91,6 @@ def remove_small(mask: np.ndarray, min_area: int) -> np.ndarray:
     keep = np.zeros(count, bool)
     keep[1:] = stats[1:, cv2.CC_STAT_AREA] >= min_area
     return keep[labels]
-
-
-def fill_holes(mask: np.ndarray) -> np.ndarray:
-    m = mask.astype(np.uint8) * 255
-    h, w = m.shape
-    flood = np.pad(m, 1)
-    ff = flood.copy()
-    cv2.floodFill(ff, None, (0, 0), 255)
-    holes = ff[1:-1, 1:-1] == 0
-    # alleen kleine gaten dichten: grote gaten (tussen arm en romp, onder een
-    # zittende knie) zijn echte achtergrond en moeten als lijn zichtbaar blijven
-    count, labels, stats, _ = cv2.connectedComponentsWithStats(holes.astype(np.uint8), 8)
-    small = np.zeros(count, bool)
-    small[1:] = stats[1:, cv2.CC_STAT_AREA] < (h * w) * 0.00004
-    return mask | small[labels]
-
-
-# ---------------------------------------------------------------- tracing
-
-NEIGHBOURS = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
-
-
-def trace_skeleton(skel: np.ndarray) -> list[np.ndarray]:
-    """Zet een 1px-skelet om in polylijnen (x, y), gesplitst op knooppunten."""
-    ys, xs = np.nonzero(skel)
-    pixels = set(zip(ys.tolist(), xs.tolist()))
-    if not pixels:
-        return []
-
-    def nbrs(p):
-        y, x = p
-        return [(y + dy, x + dx) for dy, dx in NEIGHBOURS if (y + dy, x + dx) in pixels]
-
-    degree = {p: len(nbrs(p)) for p in pixels}
-    visited_edges: set[tuple] = set()
-    paths: list[np.ndarray] = []
-
-    def edge_key(a, b):
-        return (a, b) if a < b else (b, a)
-
-    def walk(start, nxt):
-        path = [start, nxt]
-        visited_edges.add(edge_key(start, nxt))
-        prev, cur = start, nxt
-        while degree[cur] == 2:
-            options = [n for n in nbrs(cur) if n != prev and edge_key(cur, n) not in visited_edges]
-            if not options:
-                break
-            nxt = options[0]
-            visited_edges.add(edge_key(cur, nxt))
-            path.append(nxt)
-            prev, cur = cur, nxt
-        return path
-
-    nodes = [p for p in pixels if degree[p] != 2]
-    for node in nodes:
-        for n in nbrs(node):
-            if edge_key(node, n) in visited_edges:
-                continue
-            paths.append(np.array([(x, y) for y, x in walk(node, n)], float))
-    # resterende gesloten lussen
-    for p in pixels:
-        for n in nbrs(p):
-            if edge_key(p, n) not in visited_edges:
-                paths.append(np.array([(x, y) for y, x in walk(p, n)], float))
-    return paths
 
 
 def path_length(path: np.ndarray) -> float:
@@ -221,209 +144,49 @@ class Drawing:
     kind: str = ""
 
 
-def detect_faces(gray: np.ndarray) -> list[tuple[int, int, int, int]]:
-    cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-    profile = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_profileface.xml")
-    faces = list(cascade.detectMultiScale(gray, 1.08, 5, minSize=(24, 24)))
-    faces += list(profile.detectMultiScale(gray, 1.08, 5, minSize=(24, 24)))
-    faces += [(gray.shape[1] - x - w, y, w, h) for x, y, w, h in
-              profile.detectMultiScale(cv2.flip(gray, 1), 1.08, 5, minSize=(24, 24))]
-    return [tuple(map(int, f)) for f in faces]
+MODEL_CACHE = ROOT / "image-work" / "modellen"
+NEURAL_W = 2.3            # pendikte van de neuraal nagetekende kaarten (eindpx)
+NEURAL_MIN_PATH = 14      # losse penhalen korter dan dit (bronpx) zijn ruis
 
 
-def mask_boundary_runs(mask: np.ndarray, allowed: np.ndarray, min_len: float) -> list[np.ndarray]:
-    """Gladde grenslijnen van een materiaalmasker, alleen de stukken binnen `allowed`."""
-    h, w = mask.shape
-    m = remove_small(mask, int(h * w * 0.0003))
-    m = cv2.morphologyEx(m.astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
-    # glimlichtjes en gaatjes binnen een vlak zijn geen vorm: dichtmaken
-    m = ~remove_small(~m.astype(bool), int(h * w * 0.0006))
-    m = cv2.GaussianBlur(m.astype(np.float32), (0, 0), 2.0) > 0.5
-    contours, _ = cv2.findContours(m.astype(np.uint8), cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
-    runs = []
-    for contour in contours:
-        pts = contour[:, 0, :].astype(float)
-        if len(pts) < 10:
-            continue
-        pts = smooth(resample(np.vstack([pts, pts[:1]]), 1.5), 2.4, closed=True)
-        xi = np.clip(np.round(pts[:, 0]).astype(int), 0, w - 1)
-        yi = np.clip(np.round(pts[:, 1]).astype(int), 0, h - 1)
-        ok = allowed[yi, xi]
-        if ok.all():
-            runs.append(pts)
-            continue
-        # splits in aaneengesloten stukken binnen het toegestane gebied
-        start = None
-        for i, flag in enumerate(np.append(ok, False)):
-            if flag and start is None:
-                start = i
-            elif not flag and start is not None:
-                run = pts[start:i]
-                if path_length(run) >= min_len:
-                    runs.append(run)
-                start = None
-    return [r for r in runs if path_length(r) >= min_len]
+def clean_line_ink(gray: np.ndarray) -> np.ndarray:
+    """Oude lijnkaart -> schone inkt: logo, stipjes en gaatjes weg."""
+    h, w = gray.shape
+    ink = gray < 128
+    ink = drop_logo(ink)
+    ink = remove_small(ink, 25)
+    ink = ~remove_small(~ink, 12)          # witte gaatjes in een lijn dichten
+    return ink
 
 
-def face_strokes(lab: np.ndarray, fg: np.ndarray, face) -> list[Stroke]:
-    """Eenvoudig, vriendelijk gezicht: twee ooggestippen en een glimlach.
+def redraw_from_line(gray: np.ndarray, seed: int = 7) -> Drawing:
+    """Neuraal natekenen van een bestaande lijnkaart (Virtual Sketching).
 
-    De gelaatstrekken worden in de foto gezocht (donkere vlekjes t.o.v. de
-    huid), niet geraden; wat niet overtuigend gevonden wordt, wordt niet
-    getekend. Een leeg, rustig gezicht is altijd beter dan een grimas.
+    De pixellijn wordt eerst tot een middellijn verdund, zodat het model één
+    streek per lijn zet in plaats van twee langs de randen van een dikke band.
+    De penstreken worden aaneengeregen, gladgestreken en daarna pas op het
+    eindformaat met een vaste pen getekend.
     """
-    x, y, fw, fh = face
-    h, w = fg.shape
-    x0, y0 = max(0, x), max(0, y)
-    x1, y1 = min(w, x + fw), min(h, y + fh)
-    L = lab[y0:y1, x0:x1, 0].astype(np.float32)
-    A = lab[y0:y1, x0:x1, 1].astype(np.float32)
-    region = np.zeros_like(L, bool)
-    cv2.ellipse(region.view(np.uint8), (int(fw / 2), int(fh * 0.55)), (int(fw * 0.34), int(fh * 0.38)), 0, 0, 360, 1, -1)
-    if region.sum() < 50:
-        return []
-    skin = np.median(L[region])
-    strokes: list[Stroke] = []
-
-    # ogen: donkerste compacte vlekjes in de bovenste helft, links en rechts
-    dark = (L < skin - 38) & region
-    dark = cv2.morphologyEx(dark.astype(np.uint8), cv2.MORPH_OPEN, np.ones((2, 2), np.uint8))
-    count, labels, stats, cents = cv2.connectedComponentsWithStats(dark, 8)
-    eyes = []
-    for i in range(1, count):
-        cx, cy = cents[i]
-        area = stats[i, cv2.CC_STAT_AREA]
-        if fh * 0.30 < cy < fh * 0.58 and fw * 0.0004 * fw < area < fw * fw * 0.02:
-            eyes.append((area, cx, cy))
-    left = [e for e in eyes if e[1] < fw * 0.5]
-    right = [e for e in eyes if e[1] >= fw * 0.5]
-    radius = max(1.6, fw * 0.028)
-    if left and right:
-        le, re_ = max(left), max(right)
-        if abs(le[2] - re_[2]) < fh * 0.09 and fw * 0.22 < re_[1] - le[1] < fw * 0.6:
-            for _, cx, cy in (le, re_):
-                t = np.linspace(0, 2 * np.pi, 16)
-                pts = np.stack([x0 + cx + np.cos(t) * radius * 0.45, y0 + cy + np.sin(t) * radius * 0.45], 1)
-                strokes.append(Stroke(pts, radius * 1.3, closed=True))
-            # glimlach: rood/donker gebied onder de ogen
-            eye_y = (le[2] + re_[2]) / 2
-            mid_x = (le[1] + re_[1]) / 2
-            span = (re_[1] - le[1])
-            mouth = ((A > np.median(A[region]) + 9) | (L < skin - 30)) & region
-            ys, xs = np.nonzero(mouth)
-            sel = (ys > eye_y + span * 0.55) & (ys < eye_y + span * 1.25) & (np.abs(xs - mid_x) < span * 0.55)
-            if sel.sum() > 6:
-                mx0, mx1 = np.percentile(xs[sel], [8, 92])
-                my = np.percentile(ys[sel], 50)
-                half = max((mx1 - mx0) / 2, span * 0.22)
-                cxm = (mx0 + mx1) / 2
-                t = np.linspace(-1, 1, 24)
-                pts = np.stack([x0 + cxm + t * half, y0 + my + (1 - t ** 2) * half * 0.28 - half * 0.08], 1)
-                strokes.append(Stroke(pts, FACE_W))
-    return strokes
-
-
-def redraw_from_color(color_path: Path) -> Drawing:
-    bgr = read_rgb(color_path)
-    h, w = bgr.shape[:2]
-    lab = cv2.cvtColor(bgr, cv2.COLOR_BGR2LAB).astype(np.float32)
-    L = lab[..., 0] * (100 / 255)
-    a = lab[..., 1] - 128
-    b = lab[..., 2] - 128
-    delta_white = np.sqrt((100 - L) ** 2 + a ** 2 + b ** 2)
-
-    # voorgrond: alles wat merkbaar van papierwit afwijkt
-    fg = delta_white > 4.5
-    fg = cv2.morphologyEx(fg.astype(np.uint8), cv2.MORPH_CLOSE, np.ones((5, 5), np.uint8)).astype(bool)
-    fg = drop_logo(fg)
-    fg = remove_small(fg, int(h * w * 0.00006))
-    fg = fill_holes(fg)
-    fg = cv2.morphologyEx(fg.astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8)).astype(bool)
-    fg = remove_small(fg, int(h * w * 0.00006))
-
-    strokes: list[Stroke] = []
-
-    # silhouet: buitencontouren en grote gaten
-    smooth_mask = cv2.GaussianBlur(fg.astype(np.float32), (0, 0), 1.6) > 0.5
-    contours, hierarchy = cv2.findContours(smooth_mask.astype(np.uint8), cv2.RETR_CCOMP, cv2.CHAIN_APPROX_NONE)
-    for contour in contours:
-        pts = contour[:, 0, :].astype(float)
-        if len(pts) < 12 or abs(cv2.contourArea(contour)) < h * w * 0.00004:
+    from lib_virtual_sketching import Vectorizer, chain_strokes
+    h, w = gray.shape
+    ink = clean_line_ink(gray)
+    centre = cv2.dilate(skeletonize(ink).astype(np.uint8), np.ones((2, 2), np.uint8)) > 0
+    size = max(h, w)
+    square = np.ones((size, size), np.float32)
+    square[:h, :w] = np.where(centre, 0.0, 1.0)
+    vectorizer = Vectorizer("line", MODEL_CACHE, threads=1)
+    pen, _ = vectorizer.vectorize(square, seed=seed)
+    strokes = []
+    for path in chain_strokes(pen):
+        if path_length(path) < NEURAL_MIN_PATH:
             continue
-        pts = smooth(resample(np.vstack([pts, pts[:1]]), 1.5), 2.2, closed=True)
-        strokes.append(Stroke(pts, OUTER_W, closed=True))
-
-    # binnenlijnen: mean-shift maakt van de foto vlakke kleurvlakken (stof-
-    # textuur en zachte schaduw verdwijnen, echte randen blijven scherp); daarna
-    # een kleur-Canny: per pixel telt het Lab-kanaal met de grootste gradiënt
-    filtered = cv2.pyrMeanShiftFiltering(bgr, MS_SPATIAL, MS_COLOR, maxLevel=1)
-    filtered = cv2.bilateralFilter(filtered, 7, 30, 5)
-    flab = cv2.cvtColor(filtered, cv2.COLOR_BGR2LAB)
-    gray = cv2.cvtColor(bgr, cv2.COLOR_BGR2GRAY)
-    # helderheid apart: zonder mean-shift (die smelt donkere broek en zwarte
-    # machine samen), met gamma-lift zodat verschillen in het donker even
-    # zwaar tellen als in het licht, plus lokale contrastversterking
-    soft = bgr
-    for _ in range(3):
-        soft = cv2.bilateralFilter(soft, 9, 25, 5)
-    raw_l = cv2.cvtColor(soft, cv2.COLOR_BGR2LAB)[..., 0].astype(np.float32) / 255
-    lifted = (np.power(raw_l, 0.45) * 255).astype(np.uint8)
-    lum = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 12)).apply(lifted)
-    channels = [lum.astype(np.float32), flab[..., 1].astype(np.float32) * 1.6, flab[..., 2].astype(np.float32) * 1.6]
-    gx = np.stack([cv2.Sobel(c, cv2.CV_32F, 1, 0, ksize=3) for c in channels])
-    gy = np.stack([cv2.Sobel(c, cv2.CV_32F, 0, 1, ksize=3) for c in channels])
-    pick = np.argmax(gx ** 2 + gy ** 2, axis=0)[None]
-    dx = np.take_along_axis(gx, pick, 0)[0]
-    dy = np.take_along_axis(gy, pick, 0)[0]
-    edges = cv2.Canny(np.clip(dx, -32767, 32767).astype(np.int16), np.clip(dy, -32767, 32767).astype(np.int16),
-                      EDGE_LO, EDGE_HI, L2gradient=True) > 0
-
-    faces = detect_faces(gray)
-    face_mask = np.zeros((h, w), np.uint8)
-    for x, y, fw, fh in faces:
-        cv2.ellipse(face_mask, (int(x + fw / 2), int(y + fh * 0.55)),
-                    (int(fw * 0.36), int(fh * 0.40)), 0, 0, 360, 1, -1)
-    face_mask = face_mask.astype(bool) & fg
-
-    inner = cv2.erode(smooth_mask.astype(np.uint8), np.ones((7, 7), np.uint8)).astype(bool)
-
-    # materiaalgrenzen: huid tegen kleding en donkere stof/apparaat tegen licht
-    # zijn de lijnen die een illustrator tekent (arm over romp, hals, broekzoom)
-    fl = flab.astype(np.int16)
-    skin = (fl[..., 1] > 136) & (fl[..., 2] > 136) & (fl[..., 0] > 70) & fg
-    chroma = np.hypot(fl[..., 1] - 128, fl[..., 2] - 128)
-    dark = (fl[..., 0] < DARK_L) & (chroma < 11) & fg
-    occupied = np.zeros((h, w), np.uint8)
-    for material in (skin, dark):
-        for pts in mask_boundary_runs(material, inner & ~face_mask, MIN_INNER):
-            strokes.append(Stroke(pts, INNER_W))
-            cv2.polylines(occupied, [np.round(pts).astype(np.int32).reshape(-1, 1, 2)], False, 1, 9)
-
-    # overige randen (plooien, overlappende ledematen) uit de kleur-Canny,
-    # behalve waar al een materiaalgrens of het silhouet ligt
-    edges &= ~face_mask & inner & ~occupied.astype(bool)
-    edges = cv2.dilate(edges.astype(np.uint8), np.ones((2, 2), np.uint8)).astype(bool)
-    skel = skeletonize(edges)
-    # lengte per samenhangende lijn, niet per stukje tussen twee kruispunten:
-    # anders valt een drukke maar echte contour (been tegen machine) in snippers weg
-    count, labels, stats, _ = cv2.connectedComponentsWithStats(skel.astype(np.uint8), 8)
-    keep = np.zeros(count, bool)
-    keep[1:] = stats[1:, cv2.CC_STAT_AREA] >= MIN_CANNY
-    skel = keep[labels]
-
-    for path in trace_skeleton(skel):
-        if len(path) < 3 or path_length(path) < MIN_SPUR:
-            continue
-        strokes.append(Stroke(smooth(resample(path, 1.5), 2.6, closed=False), INNER_W))
-
-    for face in faces:
-        strokes.extend(face_strokes(lab, fg, face))
-
-    return Drawing(w, h, fg, ignore_floor_lines(fg), strokes=strokes, kind="hertekend")
+        pts = smooth(resample(path, 1.2), 1.4, closed=False)
+        strokes.append(Stroke(pts, NEURAL_W))
+    panel = cv2.dilate(ink.astype(np.uint8), np.ones((5, 5), np.uint8)).astype(bool)
+    return Drawing(w, h, panel, ignore_floor_lines(panel), strokes=strokes, kind="neuraal")
 
 
-def load_illustration(line_path: Path) -> Drawing:
-    gray = cv2.imread(str(line_path), cv2.IMREAD_GRAYSCALE)
+def load_illustration(gray: np.ndarray) -> Drawing:
     h, w = gray.shape
     ink = 1.0 - gray.astype(np.float32) / 255.0
     ink[ink < 0.06] = 0           # papierruis weg, papier blijft zuiver wit
@@ -459,7 +222,7 @@ def split_axis(mask: np.ndarray, box, axis: int, min_gap: int) -> list[tuple[int
     x0, y0, x1, y1 = box
     sub = mask[y0:y1, x0:x1]
     profile = sub.any(axis=0 if axis == 0 else 1)
-    runs, start, gap = [], None, 0
+    runs, start, gap, last = [], None, 0, 0
     for i, filled in enumerate(profile):
         if filled:
             if start is None:
@@ -705,23 +468,42 @@ def owner(placements, points):
 
 # ---------------------------------------------------------------- catalogue
 
-def is_contour_card(line_path: Path) -> bool:
+# laatste revisie waarin alle oude contourkaarten nog onbewerkt in public/ staan
+CONTOUR_SOURCE_REV = "84cfa30"
+
+
+def is_contour_card(gray: np.ndarray) -> bool:
     """De oude randdetectie: 800x1200, puur zwart-wit en met het logo linksboven."""
-    gray = cv2.imread(str(line_path), cv2.IMREAD_GRAYSCALE)
     h, w = gray.shape
-    if (w, h) != (OUT_W, OUT_H):
-        return False
-    if len(np.unique(gray)) > 2:
+    if (w, h) != (OUT_W, OUT_H) or len(np.unique(gray)) > 2:
         return False
     zx, zy = logo_zone(gray.shape)
     return (gray[:zy, :zx] < 128).mean() > 0.01
 
 
-def color_source(line_path: Path) -> Path | None:
-    stem = str(line_path)[: -len("-line-v1.png")]
-    matches = sorted(Path(stem).parent.glob(Path(stem).name + "-avatar-v*.jpg"),
-                     key=lambda p: int(re.search(r"-avatar-v(\d+)", p.name).group(1)))
-    return matches[-1] if matches else None
+def read_gray(spec: str) -> np.ndarray:
+    """Pad, of `git:<rev>:<pad>` voor een versie uit de geschiedenis."""
+    if spec.startswith("git:"):
+        _, rev, path = spec.split(":", 2)
+        data = subprocess.run(["git", "-C", str(ROOT), "show", f"{rev}:{path}"],
+                              check=True, capture_output=True).stdout
+        gray = cv2.imdecode(np.frombuffer(data, np.uint8), cv2.IMREAD_GRAYSCALE)
+    else:
+        gray = cv2.imread(spec, cv2.IMREAD_GRAYSCALE)
+    if gray is None:
+        raise RuntimeError(f"kan {spec} niet lezen")
+    return gray
+
+
+def contour_from_color(color_path: Path) -> np.ndarray:
+    """Zelfde ruwe contourlijn als de oude pijplijn (Sobel op 800x1200), als
+    vertrekpunt voor het neurale natekenen van gloednieuwe kaarten."""
+    bgr = cv2.imread(str(color_path), cv2.IMREAD_COLOR)
+    gray = cv2.cvtColor(cv2.resize(bgr, (OUT_W, OUT_H), interpolation=cv2.INTER_AREA), cv2.COLOR_BGR2GRAY)
+    blurred = cv2.GaussianBlur(gray.astype(np.float32), (0, 0), 1.4)
+    gx = cv2.Sobel(blurred, cv2.CV_32F, 1, 0, ksize=3)
+    gy = cv2.Sobel(blurred, cv2.CV_32F, 0, 1, ksize=3)
+    return np.where(np.hypot(gx, gy) >= 90, 0, 255).astype(np.uint8)
 
 
 def touches_border(image: np.ndarray, edge: int = 8) -> bool:
@@ -734,9 +516,15 @@ def file_sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def draw_card(mode: str, source: Path, target: Path) -> dict:
-    """mode 'kleur': hertekenen vanuit een kleurkaart; 'illustratie': opmaak van lijnwerk."""
-    drawing = redraw_from_color(source) if mode == "kleur" else load_illustration(source)
+def draw_card(mode: str, source: str, target: Path) -> dict:
+    """mode 'lijn': neuraal natekenen van een contourkaart; 'kleur': idem vanuit
+    een nieuwe kleurkaart (via de ruwe contour); 'illustratie': alleen opmaak."""
+    if mode == "lijn":
+        drawing = redraw_from_line(read_gray(source))
+    elif mode == "kleur":
+        drawing = redraw_from_line(contour_from_color(Path(source)))
+    else:
+        drawing = load_illustration(read_gray(source))
     placements, arrangement = layout(drawing)
     image = render(drawing, placements)
     if arrangement != "origineel" and touches_border(image):
@@ -761,31 +549,29 @@ def draw_card(mode: str, source: Path, target: Path) -> dict:
 
 def process(job: tuple[str, str, str, str]) -> dict:
     pad, mode, source, target = job
-    result = draw_card(mode, Path(source), Path(target))
+    try:
+        result = draw_card(mode, source, Path(target))
+    except Exception as error:  # één kaart mag de rest niet tegenhouden
+        return {"pad": pad, "fout": f"{type(error).__name__}: {error}"[:300]}
     result["pad"] = pad
-    result["kleurbron"] = str(Path(source).relative_to(PUBLIC)) if mode == "kleur" else None
+    result["lijnbron"] = source if mode == "lijn" else None
     return result
 
 
 def plan_job(line: Path, target: Path, previous: dict | None) -> tuple[str, str, str, str] | None:
-    """Bepaalt per kaart wat er moet gebeuren; None = al klaar, niet aankomen.
-
-    Een eerder hertekende kaart wordt altijd opnieuw uit de kleurkaart getekend
-    (deterministisch, dus verbeteringen aan dit script landen overal). Een al
-    opgemaakte illustratie wordt niet nog eens geschaald (dat zou elke run iets
-    scherpte kosten), tenzij het bestand sindsdien is vervangen.
-    """
+    """Bepaalt per kaart wat er moet gebeuren; None = al klaar, niet aankomen."""
     pad = str(line.relative_to(PUBLIC))
     unchanged = previous is not None and previous.get("sha256") == file_sha(line)
-    if unchanged and previous.get("bron") == "hertekend" and previous.get("kleurbron"):
-        color = PUBLIC / previous["kleurbron"]
-        if color.exists():
-            return pad, "kleur", str(color), str(target)
-    if unchanged and previous.get("bron") == "illustratie":
+    if unchanged and previous.get("bron") in ("neuraal", "illustratie"):
         return None
-    color = color_source(line)
-    if is_contour_card(line) and color:
-        return pad, "kleur", str(color), str(target)
+    if previous is not None and previous.get("bron") == "neuraal" and previous.get("lijnbron"):
+        return pad, "lijn", previous["lijnbron"], str(target)
+    if unchanged and previous.get("bron") == "hertekend":
+        # eerdere versie van dit script tekende vanuit de kleurfoto: terug naar
+        # de originele contourkaart en die neuraal natekenen
+        return pad, "lijn", f"git:{CONTOUR_SOURCE_REV}:public/{pad}", str(target)
+    if is_contour_card(read_gray(str(line))):
+        return pad, "lijn", str(line), str(target)
     return pad, "illustratie", str(line), str(target)
 
 
@@ -794,21 +580,23 @@ def main() -> None:
     parser.add_argument("--write", action="store_true", help="herteken alle kaarten in public/images")
     parser.add_argument("--out", type=Path, help="proefrun: schrijf naar deze map")
     parser.add_argument("--only", default="", help="alleen paden die deze tekst bevatten")
-    parser.add_argument("--kleur", type=Path, help="enkel bestand: herteken vanuit deze kleurkaart")
+    parser.add_argument("--lijn", type=Path, help="enkel bestand: teken deze contourkaart neuraal na")
+    parser.add_argument("--kleur", type=Path, help="enkel bestand: nieuwe kaart vanuit deze kleurkaart (via contour)")
     parser.add_argument("--illustratie", type=Path, help="enkel bestand: maak deze lijnillustratie passend")
-    parser.add_argument("--naar", type=Path, help="doelbestand bij --kleur/--illustratie")
+    parser.add_argument("--naar", type=Path, help="doelbestand bij --lijn/--kleur/--illustratie")
     parser.add_argument("--report", type=Path, default=ROOT / "content" / "lijnkaarten-herteken-rapport.json")
     parser.add_argument("--jobs", type=int, default=0)
     args = parser.parse_args()
 
-    if args.kleur or args.illustratie:
-        if not args.naar:
-            sys.exit("--naar ontbreekt")
-        mode, source = ("kleur", args.kleur) if args.kleur else ("illustratie", args.illustratie)
-        print(json.dumps(draw_card(mode, source.resolve(), args.naar.resolve()), ensure_ascii=False))
+    single = [(m, p) for m, p in (("lijn", args.lijn), ("kleur", args.kleur), ("illustratie", args.illustratie)) if p]
+    if single:
+        if not args.naar or len(single) > 1:
+            sys.exit("Geef precies één van --lijn/--kleur/--illustratie, met --naar")
+        mode, source = single[0]
+        print(json.dumps(draw_card(mode, str(source.resolve()), args.naar.resolve()), ensure_ascii=False))
         return
     if not args.write and not args.out:
-        sys.exit("Gebruik --write (in place), --out <map> (proef) of --kleur/--illustratie met --naar")
+        sys.exit("Gebruik --write (in place), --out <map> (proef) of --lijn/--kleur/--illustratie met --naar")
 
     previous = {}
     if args.report.exists():
@@ -832,12 +620,14 @@ def main() -> None:
     with ProcessPoolExecutor(max_workers=args.jobs or None) as pool:
         results = list(pool.map(process, jobs, chunksize=2))
 
+    failed = [r for r in results if "fout" in r]
+    results = [r for r in results if "fout" not in r]
     summary: dict[str, int] = {}
     for r in results:
         key = f"{r['bron']}/{r['indeling']}"
         summary[key] = summary.get(key, 0) + 1
-    print(json.dumps({"getekend": len(results), "ongewijzigd": len(kept), "verdeling": summary},
-                     indent=2, ensure_ascii=False))
+    print(json.dumps({"getekend": len(results), "ongewijzigd": len(kept), "mislukt": failed,
+                      "verdeling": summary}, indent=2, ensure_ascii=False))
     if args.write:
         merged = dict(previous)
         for entry in kept + results:
@@ -847,11 +637,13 @@ def main() -> None:
             "schemaVersion": 1,
             "uitleg": "gegenereerd door scripts/lijnkaarten-hertekenen.py; sha256 = gepubliceerde kaart",
             "formaat": [OUT_W, OUT_H],
-            "lijndikte": {"silhouet": OUTER_W, "binnen": INNER_W, "gezicht": FACE_W,
-                          "illustratieMinimum": ILLUSTRATION_MIN_W},
+            "lijndikte": {"pen": NEURAL_W, "illustratieMinimum": ILLUSTRATION_MIN_W},
+            "model": "Virtual Sketching (Mo et al., SIGGRAPH 2021), ONNX-release browser-models-v1",
             "kaarten": [merged[k] for k in sorted(merged) if k in existing],
         }
         args.report.write_text(json.dumps(report, indent=1, ensure_ascii=False) + "\n")
+    if failed:
+        sys.exit(1)
 
 
 if __name__ == "__main__":
