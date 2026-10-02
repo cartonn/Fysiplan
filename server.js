@@ -3460,10 +3460,23 @@ async function afhandelen(request, response) {
   }
 
   // echte robots.txt (voorheen viel dit terug op de app-pagina): crawlers blijven
-  // weg bij de patiëntpaden; die sturen bovendien al een noindex-header
+  // weg bij de patiëntpaden; die sturen bovendien al een noindex-header. De
+  // Sitemap-regel wijst zoekmachines naar de landingspagina.
   if (urlPath === "/robots.txt") {
     await send(response, 200, "text/plain; charset=utf-8",
-      "User-agent: *\nDisallow: /k/\nDisallow: /o/\nDisallow: /uploads/\nDisallow: /api/\n");
+      "User-agent: *\nDisallow: /k/\nDisallow: /o/\nDisallow: /uploads/\nDisallow: /api/\nSitemap: https://fysiplan.nl/sitemap.xml\n");
+    return;
+  }
+
+  // sitemap: bewust alleen de publieke landingspagina — de app is gereedschap,
+  // patiëntpaden zijn privé. Vast fysiplan.nl-domein (zelfde keuze als de
+  // Sitemap-regel hierboven): een sitemap mag nooit een gastdomein echoën.
+  if (urlPath === "/sitemap.xml") {
+    await send(response, 200, "application/xml; charset=utf-8",
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+      '  <url><loc>https://fysiplan.nl/v2</loc><changefreq>weekly</changefreq></url>\n' +
+      '</urlset>\n');
     return;
   }
 

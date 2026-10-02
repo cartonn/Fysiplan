@@ -24,6 +24,21 @@
 <meta name="twitter:title" content="Fysiplan: één kaart, op papier én op de telefoon"/>
 <meta name="twitter:description" content="Eén trainingskaart, op papier én op de telefoon. Geen app of account voor de patiënt."/>
 <meta name="twitter:image" content="https://fysiplan.nl/images/og-deelkaart.png"/>
+<!-- gestructureerde data voor zoekmachines: een ld+json-blok wordt nooit
+     uitgevoerd (geen script in CSP-zin), alleen gelezen door crawlers -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Fysiplan",
+  "url": "https://fysiplan.nl/v2",
+  "description": "Oefenkaarten voor fysiotherapiepraktijken: één kaart, als verzorgde geprinte A4 én als mobiele ervaring via een QR-code — zonder app of account voor de patiënt. Met pijnverloop, oefentrouw, PSK en ervaren herstel, naast elk EPD.",
+  "applicationCategory": "MedicalApplication",
+  "operatingSystem": "Web",
+  "inLanguage": "nl",
+  "publisher": { "@type": "Organization", "name": "Fysiplan", "url": "https://fysiplan.nl" }
+}
+</script>
 <style>
   /* ============================================================
      Fysiplan-landing als drukproef.
