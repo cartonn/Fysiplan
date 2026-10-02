@@ -941,3 +941,25 @@ familie vastklikt. Regressies groen: smoke (13), preview-bekeken (10).
 **Volgende run — pak een ander gebied:** de praktijksjablonen- en logoketen
 (eisPraktijk-schrijfroutes met uploads), of security-headers opnieuw wanneer
 er weer nieuwe blokken op /k of /v2/app zijn bijgekomen.
+
+## 2026-10-02 — Praktijksjablonen- en logoketen (eisPraktijk-schrijfroutes met uploads)
+
+**Geauditeerd:** de sjablonenroutes (delen/overschrijven/verwijderen onder
+eisPraktijk + claim-eis, 64 KB-body, plafond 30, 12 oefeningen, veldbegrenzing,
+praktijk-isolatie) en de profiel-/logoketen (kruisSite + schrijfLimiet,
+eisPraktijk op geclaimde profielen, dagplafond + 200-cap op nieuwe praktijken,
+dataURL-whitelist jpeg/png, 100 B-400 kB-grenzen, magic-byte-controle,
+slug-veilige bestandsnamen — traversal in de praktijknaam kan nooit buiten
+uploads/ — en opruiming van het oude logo bij vervanging).
+
+**Bevinding: geen gat.** Opmerkelijk tussendoor: ook de testomgeving zelf
+botste tweemaal op de verdediging (de schrijfrem bij het vullen tot het
+plafond, en de 100-bytes-ondergrens op het logo) — de remmen doen hun werk.
+
+**Increment:** nieuwe regressietest test-sjab-logo-keten.mjs (14 adversariële
+checks, met een programmatisch gebouwd écht PNG om de magic-byte-controle
+eerlijk te passeren). Regressies groen: smoke (13), psk (15).
+
+**Volgende run — pak een ander gebied:** security-headers opnieuw (het
+PSK-blok kwam op /k bij; de nonce dekt hem, maar de headertest mag het
+expliciet vastklikken), of de v1-accountlaag (mailtokens, inlogrem) opnieuw.
