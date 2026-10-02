@@ -45,6 +45,8 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+  p,li{text-wrap:pretty}
   body{font:17.5px/1.66 var(--serif);color:var(--tekst);background:var(--bg);
     -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
   ::selection{background:rgba(36,86,166,.16)}
@@ -86,12 +88,16 @@
   nav .mark{width:27px;height:27px;border-radius:7px;background:var(--blauw);display:flex;align-items:center;justify-content:center;flex:0 0 27px}
   nav .naam{font:700 17px/1 var(--disp);color:var(--inkt);letter-spacing:-.01em;margin-right:14px}
   nav .links{display:flex;gap:2px}
-  nav .links a{font:500 14px/1 var(--disp);color:var(--oranje);text-decoration:none;padding:8px 11px}
-  nav .links a:hover{color:var(--oranje-d)}
+  nav .links a{font:500 14px/1 var(--disp);color:var(--demp);text-decoration:none;padding:8px 11px;transition:color .15s}
+  nav .links a:hover{color:var(--inkt)}
   nav .spacer{flex:1}
   nav .in{font:600 14px/1 var(--disp);color:var(--inkt);text-decoration:none;border:1px solid var(--inkt);
     border-radius:3px;padding:9px 18px;transition:.15s}
   nav .in:hover{background:var(--inkt);color:var(--bg)}
+  nav .probeer{font:600 14px/1 var(--disp);color:#fff;background:var(--oranje);text-decoration:none;
+    border:1px solid var(--oranje);border-radius:3px;padding:9px 16px;transition:background .15s}
+  nav .probeer:hover{background:var(--oranje-d);border-color:var(--oranje-d)}
+  @media (max-width:420px){nav .probeer{display:none}}
   @media (max-width:840px){
     nav .rij{flex-wrap:wrap;height:auto;padding-top:10px;padding-bottom:10px;row-gap:6px}
     nav .links{order:3;flex-basis:100%;margin-left:0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
@@ -102,7 +108,7 @@
   /* ---- hero: redactionele asymmetrie — tekst links, het product rechts ---- */
   .hero{padding:76px 0 84px}
   .hero .twee{display:grid;grid-template-columns:minmax(0,21fr) minmax(0,24fr);gap:48px;align-items:center}
-  .hero .kicker{margin-bottom:26px}
+  .hero .kicker{margin-bottom:26px;line-height:1.7;font-size:11px}
   .hero h1{font:700 clamp(40px,4.2vw,58px)/1.07 var(--serif);letter-spacing:-.022em;color:var(--inkt)}
   .hero .sub{font-size:19px;line-height:1.66;color:var(--demp);max-width:52ch;margin-top:24px}
   .hero .cta{display:flex;align-items:center;gap:22px;margin-top:34px;flex-wrap:wrap}
@@ -116,69 +122,90 @@
     .hero .cta .tl{align-self:center}
   }
 
-  /* het product zelf: de A4 als drukwerk, de telefoon er half voor */
-  .toon{position:relative;min-height:648px}
-  .a4{position:absolute;right:0;top:2px;width:min(452px,100%);aspect-ratio:1/1.3;background:var(--papier);
-    border:1px solid var(--lijn);transform:rotate(.8deg);padding:22px 24px;
+  /* het product zelf: de A4 liggend, precies zoals de app hem print (A4 landscape),
+     met de telefoon er half voor. Alles binnen het vel schaalt mee met de breedte
+     van het vel (container-eenheden), zodat het op elk scherm een ware miniatuur is. */
+  .toon{position:relative;min-height:600px}
+  .a4{position:absolute;left:0;top:6px;width:min(600px,100%);aspect-ratio:297/210;container-type:inline-size;
+    background:var(--papier);border:1px solid var(--lijn);transform:rotate(-.6deg);
     box-shadow:0 1px 2px rgba(60,50,20,.06),0 12px 24px -8px rgba(60,50,20,.14),0 44px 80px -24px rgba(60,50,20,.3)}
-  .a4 .kophol{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid var(--inkt);padding-bottom:10px}
-  .a4 .prak b{font:700 17px/1.1 var(--serif);color:var(--blauw);display:block}
-  .a4 .prak span{font:400 8.5px/1.5 var(--disp);color:var(--zacht);display:block;margin-top:3px}
-  .a4 .invul{text-align:right}
-  .a4 .invul div{font:400 9px/1.9 var(--disp);color:var(--demp)}
-  .a4 .invul i{display:inline-block;width:74px;border-bottom:1px solid var(--zacht);height:1px;vertical-align:baseline}
-  .a4 .oefs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
-  .a4 .oefs figure{margin:0}
-  .a4 .oefs img{width:100%;aspect-ratio:1;object-fit:contain;background:#fff;border:1px solid var(--lijn-z)}
-  .a4 .oefs figcaption{font:600 8px/1.25 var(--disp);color:var(--inkt);margin-top:4px;text-align:center}
-  .a4 table{width:100%;border-collapse:collapse;margin-top:13px}
-  .a4 th,.a4 td{border:1px solid var(--lijn);font:400 8.5px/1 var(--disp);color:var(--tekst);
-    text-align:center;padding:4.5px 2px;font-variant-numeric:tabular-nums}
-  .a4 th{font-weight:600;color:var(--demp);background:var(--lijn-z)}
-  .a4 td.dat{color:var(--zacht)}
-  .a4 .voetje{margin-top:12px}
-  .a4 .voetje span{font:italic 8.5px/1.4 var(--serif);color:var(--zacht)}
+  .a4 .blad{position:absolute;inset:0;padding:3.6cqw 3.8cqw 3cqw;font-size:1.5cqw;display:flex;flex-direction:column;overflow:hidden}
+  .a4 .kop{display:grid;grid-template-columns:1.2fr 1.45fr 1.1fr auto;gap:2em;align-items:start;
+    padding-bottom:1.1em;border-bottom:.14em solid var(--inkt)}
+  .a4 .prak b{font:700 1.75em/1.05 var(--serif);color:var(--blauw);display:block;letter-spacing:-.01em}
+  .a4 .prak span{font:400 .78em/1.55 var(--disp);color:var(--zacht);display:block}
+  .a4 .prak b+span{margin-top:.5em}
+  .a4 .clnt div{display:grid;grid-template-columns:4.6em 1fr;align-items:baseline;border-bottom:1px solid var(--zacht);padding:.15em 0 .1em}
+  .a4 .clnt div+div{margin-top:.25em}
+  .a4 .clnt em{font:600 .78em/1.6 var(--disp);font-style:normal;color:var(--demp)}
+  .a4 .hand{font:400 1.12em/1.3 'Segoe Print','Bradley Hand','Comic Neue','Chalkboard SE',cursive;color:#23468f}
+  .a4 .vak{border:1px solid var(--demp);padding:.5em .65em;min-height:6.2em}
+  .a4 .vak em{font:700 .78em/1.4 var(--disp);font-style:normal;color:var(--inkt);display:block}
+  .a4 .vak .hand{font-size:1em;display:block;margin-top:.2em}
+  .a4 .qr{width:9.6em;text-align:center;margin:-.6em -.4em 0 0}
+  .a4 .qr svg{width:100%;height:auto;display:block}
+  .a4 .qr span{display:block;font:600 .62em/1.25 var(--disp);color:var(--demp);margin-top:.3em}
+  .a4 table{width:100%;border-collapse:collapse;table-layout:fixed;margin-top:1.2em}
+  .a4 th,.a4 td{border:1px solid #8a8370;font:400 .8em/1 var(--disp);color:var(--tekst);
+    text-align:center;padding:.42em 0;font-variant-numeric:tabular-nums}
+  .a4 th.d,.a4 td.d{width:11%}
+  .a4 thead .nrs th{border:none;font:700 .85em/1 var(--disp);color:var(--inkt);padding:0 0 .35em}
+  .a4 thead .pics th{padding:.25em .25em .3em;vertical-align:bottom;background:#fff}
+  .a4 thead .pics img{width:100%;aspect-ratio:5/6;object-fit:contain}
+  .a4 thead .pics span{display:block;font:600 .74em/1.15 var(--disp);color:var(--inkt);margin-top:.25em;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .a4 thead .pics th.d,.a4 thead .nrs th.d{background:none;border:none}
+  .a4 thead .shw th{font-weight:700;color:var(--demp);background:var(--lijn-z);font-size:.7em}
+  .a4 thead .shw th.d{text-align:left;padding-left:.3em;color:var(--inkt)}
+  .a4 tbody td{height:2.45em;padding:0}
+  .a4 tbody td .hand{font-size:1.15em}
+  .a4 tbody td.d .hand{font-size:1.05em}
+  .a4 .voetje{margin-top:auto;padding-top:.7em;display:flex;justify-content:space-between;gap:2em}
+  .a4 .voetje span{font:italic .78em/1.4 var(--serif);color:var(--zacht)}
 
-  .tel{position:absolute;left:-20px;bottom:-10px;width:218px;aspect-ratio:198/408;background:#0d1526;
-    border-radius:32px;padding:8px;transform:rotate(-2deg);
+  .tel{position:absolute;right:-14px;top:212px;width:190px;aspect-ratio:198/408;background:#0d1526;
+    border-radius:30px;padding:7px;transform:rotate(2.2deg);
     box-shadow:0 2px 4px rgba(20,20,40,.25),0 34px 64px -18px rgba(20,25,50,.5)}
-  .tel .scherm{background:var(--bg);border-radius:26px;height:100%;overflow:hidden;padding:14px 12px;position:relative}
-  .tel .notch{position:absolute;top:7px;left:50%;transform:translateX(-50%);width:64px;height:16px;border-radius:99px;background:#0d1526}
+  .tel .scherm{background:var(--bg);border-radius:24px;height:100%;overflow:hidden;padding:13px 11px;position:relative}
+  .tel .notch{position:absolute;top:7px;left:50%;transform:translateX(-50%);width:58px;height:15px;border-radius:99px;background:#0d1526}
   .tel .eyebrow{font:600 6.5px/1 var(--disp);letter-spacing:.18em;text-transform:uppercase;color:var(--zacht);margin-top:16px}
-  .tel h4{font:700 13.5px/1.15 var(--serif);color:var(--inkt);margin-top:5px}
+  .tel h4{font:700 13px/1.15 var(--serif);color:var(--inkt);margin-top:5px}
   .tel .voor{font:400 8px/1.4 var(--disp);color:var(--demp);margin-top:2px}
-  .tel .oefkaartje{background:#fff;border:1px solid var(--lijn-z);border-radius:10px;padding:8px;margin-top:10px;display:flex;gap:8px;align-items:center}
-  .tel .oefkaartje img{width:38px;height:38px;object-fit:contain;background:#fff;border-radius:6px;flex:0 0 38px}
+  .tel .oefkaartje{background:#fff;border:1px solid var(--lijn-z);border-radius:10px;padding:7px;margin-top:9px;display:flex;gap:7px;align-items:center}
+  .tel .oefkaartje img{width:36px;height:36px;object-fit:contain;background:#fff;border-radius:6px;flex:0 0 36px}
   .tel .oefkaartje div{flex:1;min-width:0;text-align:left}
-  .tel .oefkaartje b{font:700 9.5px/1.2 var(--disp);color:var(--inkt);display:block}
-  .tel .oefkaartje span{font:400 7.5px/1.35 var(--disp);color:var(--demp);white-space:nowrap}
+  .tel .oefkaartje b{font:700 9px/1.2 var(--disp);color:var(--inkt);display:block}
+  .tel .oefkaartje span{font:400 7px/1.35 var(--disp);color:var(--demp);white-space:nowrap}
   .tel .video{display:flex;align-items:center;justify-content:center;gap:5px;background:var(--blauw-05);
     border:1px solid var(--blauw-10);border-radius:8px;padding:6px;margin-top:7px;
-    font:600 8px/1 var(--disp);color:var(--blauw)}
+    font:600 7.5px/1 var(--disp);color:var(--blauw)}
   .tel .driehoek{width:0;height:0;border-left:6px solid var(--blauw);border-top:4px solid transparent;border-bottom:4px solid transparent}
   .tel .gedaan{display:flex;align-items:center;gap:6px;background:#eef6ef;border:1px solid #d7e8da;
-    border-radius:8px;padding:7px 8px;margin-top:7px;font:700 8px/1 var(--disp);color:#3e7a52}
+    border-radius:8px;padding:7px 8px;margin-top:7px;font:700 7.5px/1 var(--disp);color:#3e7a52}
   .tel .vink{width:11px;height:11px;border-radius:4px;background:#3e8e5a;position:relative;flex:0 0 11px}
   .tel .vink::after{content:"";position:absolute;left:3.5px;top:1.5px;width:3px;height:5.5px;border:solid #fff;border-width:0 1.5px 1.5px 0;transform:rotate(42deg)}
   .tel .pijn{display:grid;grid-template-columns:repeat(11,1fr);gap:2px;margin-top:8px}
   .tel .pijn i{aspect-ratio:.85;border:1px solid var(--lijn);border-radius:3.5px;background:#fff;
-    font:600 6.5px/2.2 var(--disp);font-style:normal;color:var(--demp);text-align:center;min-width:0}
+    font:600 6px/2.2 var(--disp);font-style:normal;color:var(--demp);text-align:center;min-width:0}
   .tel .pijn i.aan{background:var(--blauw);border-color:var(--blauw);color:#fff}
-  .tel .taal{font:400 7.5px/1.4 var(--disp);color:var(--zacht);text-align:center;margin-top:8px}
+  .tel .taal{font:400 7px/1.4 var(--disp);color:var(--zacht);text-align:center;margin-top:8px}
 
-  .demoqr{position:absolute;right:-16px;bottom:-38px;background:var(--papier);border:1px solid var(--lijn);
-    padding:11px;width:136px;text-align:center;transform:rotate(2deg);
-    box-shadow:0 10px 28px -10px rgba(60,50,20,.3)}
-  .demoqr svg{width:100%;height:auto;display:block}
-  .demoqr span{display:block;font:italic 10.5px/1.4 var(--serif);color:var(--demp);margin-top:7px}
+  /* bijschrift onder het vel, links naast de telefoon: zegt wat je ziet */
+  .bijschrift{position:absolute;left:0;top:calc(min(600px,100%) * 210 / 297 + 34px);max-width:calc(100% - 220px);
+    display:flex;gap:12px;align-items:flex-start}
+  .bijschrift .pijl{font:400 22px/1 var(--serif);color:var(--oranje);margin-top:-2px}
+  .bijschrift p{font:italic 14.5px/1.5 var(--serif);color:var(--demp)}
+  .bijschrift b{font-style:normal;font-weight:600;color:var(--inkt)}
 
-  @media (max-width:1180px){.demoqr{right:0;bottom:-30px}}
   @media (max-width:980px){
     .hero .twee{grid-template-columns:1fr;gap:24px}
-    .toon{min-height:0;margin-top:34px}
-    .a4{position:relative;top:0;right:0;margin:0 auto;transform:rotate(.5deg)}
-    .tel{position:relative;left:0;bottom:0;margin:-90px auto 0;transform:rotate(-1.2deg)}
-    .demoqr{display:none}
+    .toon{min-height:0;margin-top:34px;display:flex;flex-direction:column}
+    .a4{position:relative;top:0;left:0;width:100%;max-width:640px;margin:0 auto;transform:rotate(-.4deg)}
+    .tel{position:relative;right:auto;top:0;align-self:flex-end;margin:-70px 4% 0 0;transform:rotate(2deg);width:178px}
+    .bijschrift{position:relative;top:0;max-width:none;order:3;margin:28px auto 0;max-width:640px;width:100%}
+  }
+  @media (max-width:560px){
+    .tel{transform:rotate(2deg) scale(.8);transform-origin:top right;margin:-56px 2% -78px 0}
   }
 
   /* ---- feitenstrip: een colofonregel, geen badges ---- */
@@ -370,6 +397,7 @@
     </div>
     <span class="spacer"></span>
     <a class="in" href="/v2/app">Inloggen</a>
+    <a class="probeer" href="/v2/app">Probeer gratis</a>
   </div>
 </nav>
 
@@ -379,57 +407,58 @@
       <div>
         <div class="kicker"><span class="etiket">Voor fysiotherapeuten, naast elk EPD</span></div>
         <h1>E&eacute;n kaart.<br/>Op papier &eacute;n<br/>op de telefoon.</h1>
-        <p class="sub">Je pati&euml;nten worden gemiddeld steeds ouder, en juist die groep haakt af op apps en accounts. Daarom maak je in Fysiplan &eacute;&eacute;n kaart die iedereen bedient: een verzorgde geprinte A4 voor wie papier prettig vindt, en dezelfde kaart als volledige mobiele ervaring voor wie de QR-code scant, met bij elke oefening een demonstratie van de beweging en uitleg die zichzelf voorleest. Jouw pati&euml;nt kiest. Jij hoeft niets extra te doen.</p>
+        <p class="sub">Je pati&euml;nten worden steeds ouder, en juist die groep haakt af op apps en accounts. In Fysiplan maak je &eacute;&eacute;n kaart die iedereen bedient: een verzorgde A4 voor wie papier prettig vindt, en via de QR-code dezelfde kaart op de telefoon, met elke oefening voorgedaan en voorgelezen. Jouw pati&euml;nt kiest. Jij doet niets extra.</p>
         <div class="cta">
           <a class="knop oranje" href="/v2/app">Probeer Fysiplan gratis</a>
           <a class="tl" href="/k/demo" target="_blank" rel="noopener">Open een voorbeeldkaart</a>
         </div>
         <p class="noot">Direct in de browser. Klaar in &eacute;&eacute;n minuut, zonder betaalgegevens.</p>
       </div>
-      <div class="toon" aria-label="De geprinte kaart en dezelfde kaart op de telefoon">
-        <div class="a4">
-          <div class="kophol">
-            <div class="prak"><b>FysioTotaal</b><span>Prinsengracht 12, Amsterdam &middot; 020&#8202;-&#8202;123&#8202;45&#8202;67</span></div>
-            <div class="invul"><div>Naam <i></i></div><div>Datum <i></i></div></div>
-          </div>
-          <div class="oefs">
-            <figure><img src="/images/onderste-extremiteit/front-squat-avatar-v7.jpg" alt="Front squat"/><figcaption>Front squat</figcaption></figure>
-            <figure><img src="/images/bovenste-extremiteit/bench-press-avatar-v7.jpg" alt="Bench press"/><figcaption>Bench press</figcaption></figure>
-            <figure><img src="/images/core/abroller-avatar-v7.jpg" alt="Abroller"/><figcaption>Abroller</figcaption></figure>
-            <figure><img src="/images/onderste-extremiteit/lunges-avatar-v7.jpg" alt="Lunges"/><figcaption>Lunges</figcaption></figure>
-          </div>
-          <table aria-hidden="true">
-            <tr><th>Datum</th><th>S</th><th>H</th><th>W</th><th>S</th><th>H</th><th>W</th><th>S</th><th>H</th></tr>
-            <tr><td class="dat">14&#8202;-&#8202;07</td><td>3</td><td>12</td><td>20</td><td>3</td><td>10</td><td>35</td><td>3</td><td>12</td></tr>
-            <tr><td class="dat">17&#8202;-&#8202;07</td><td>3</td><td>12</td><td>22,5</td><td>3</td><td>10</td><td>35</td><td>3</td><td>12</td></tr>
-            <tr><td class="dat">21&#8202;-&#8202;07</td><td>3</td><td>12</td><td>25</td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td class="dat"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-          </table>
-          <div class="voetje">
-            <span>Mee naar huis, op de koelkast, invullen met pen.</span>
+      <div class="toon">
+        <div class="a4" role="img" aria-label="De geprinte trainingskaart: A4 liggend, met praktijkgegevens, cliëntvelden, QR-code, zes genummerde oefeningen en een schema om met pen in te vullen">
+          <div class="blad" aria-hidden="true">
+            <div class="kop">
+              <div class="prak"><b>FysioTotaal</b><span>Prinsengracht 12</span><span>1015 DV Amsterdam</span><span>020&#8202;-&#8202;123&#8202;45&#8202;67</span></div>
+              <div class="clnt">
+                <div><em>Naam</em><span class="hand">Anna de Vries</span></div>
+                <div><em>Leeftijd</em><span class="hand">72</span></div>
+                <div><em>Doel</em><span class="hand">Zelf de trap op</span></div>
+              </div>
+              <div class="vak"><em>Opm.</em><span class="hand">Rustig opbouwen. Stop bij scherpe pijn.</span></div>
+              <div class="qr">__DEMO_QR__<span>Scan voor uitleg en video</span></div>
+            </div>
+            <table>
+              <thead>
+                <tr class="nrs"><th class="d"></th><th colspan="3">1</th><th colspan="3">2</th><th colspan="3">3</th><th colspan="3">4</th><th colspan="3">5</th><th colspan="3">6</th></tr>
+                <tr class="pics"><th class="d"></th><th colspan="3"><img src="/images/onderste-extremiteit/chair-squat-avatar-v7.jpg" alt=""/><span>Stoel-squat</span></th><th colspan="3"><img src="/images/onderste-extremiteit/calf-raises-avatar-v7.jpg" alt=""/><span>Kuitheffen</span></th><th colspan="3"><img src="/images/onderste-extremiteit/glute-bridges-avatar-v7.jpg" alt=""/><span>Bruggen</span></th><th colspan="3"><img src="/images/onderste-extremiteit/lunges-avatar-v7.jpg" alt=""/><span>Lunges</span></th><th colspan="3"><img src="/images/bovenste-extremiteit/anteflexie-armen-avatar-v7.jpg" alt=""/><span>Armen heffen</span></th><th colspan="3"><img src="/images/core/back-extension-avatar-v7.jpg" alt=""/><span>Rugstrekken</span></th></tr>
+                <tr class="shw"><th class="d">Datum</th><th>S</th><th>H</th><th>W</th><th>S</th><th>H</th><th>W</th><th>S</th><th>H</th><th>W</th><th>S</th><th>H</th><th>W</th><th>S</th><th>H</th><th>W</th><th>S</th><th>H</th><th>W</th></tr>
+              </thead>
+              <tbody><tr><td class="d"><span class="hand">2&#8202;-&#8202;10</span></td><td><span class="hand">3</span></td><td><span class="hand">10</span></td><td></td><td><span class="hand">2</span></td><td><span class="hand">15</span></td><td></td><td><span class="hand">3</span></td><td><span class="hand">10</span></td><td></td><td><span class="hand">3</span></td><td><span class="hand">8</span></td><td><span class="hand">1</span></td><td><span class="hand">3</span></td><td><span class="hand">10</span></td><td><span class="hand">1,5</span></td><td><span class="hand">2</span></td><td><span class="hand">10</span></td><td></td></tr><tr><td class="d"><span class="hand">5&#8202;-&#8202;10</span></td><td><span class="hand">3</span></td><td><span class="hand">12</span></td><td></td><td><span class="hand">3</span></td><td><span class="hand">15</span></td><td></td><td><span class="hand">3</span></td><td><span class="hand">10</span></td><td></td><td><span class="hand">3</span></td><td><span class="hand">10</span></td><td><span class="hand">1</span></td><td><span class="hand">3</span></td><td><span class="hand">10</span></td><td><span class="hand">2</span></td><td><span class="hand">2</span></td><td><span class="hand">12</span></td><td></td></tr><tr><td class="d"><span class="hand">9&#8202;-&#8202;10</span></td><td><span class="hand">3</span></td><td><span class="hand">12</span></td><td></td><td><span class="hand">3</span></td><td><span class="hand">15</span></td><td></td><td><span class="hand">3</span></td><td><span class="hand">12</span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td class="d"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td class="d"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td class="d"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody>
+            </table>
+            <div class="voetje"><span>S = series &middot; H = herhalingen &middot; W = gewicht</span><span>Mee naar huis, op de koelkast, invullen met pen.</span></div>
           </div>
         </div>
-        <div class="tel">
+        <div class="tel" aria-label="Dezelfde kaart op de telefoon">
           <div class="scherm">
             <div class="notch"></div>
             <div class="eyebrow">Trainingskaart</div>
             <h4>FysioTotaal</h4>
-            <div class="voor">Voor Anna &middot; 4 oefeningen</div>
+            <div class="voor">Voor Anna &middot; 6 oefeningen</div>
             <div class="oefkaartje">
-              <img src="/images/onderste-extremiteit/front-squat-avatar-v7.jpg" alt=""/>
-              <div><b>Front squat</b><span>3 series &middot; 12 herh. &middot; met uitleg</span></div>
+              <img src="/images/onderste-extremiteit/chair-squat-avatar-v7.jpg" alt=""/>
+              <div><b>Stoel-squat</b><span>3 series &middot; 12 herh. &middot; met uitleg</span></div>
             </div>
             <div class="video"><span class="driehoek"></span>Luister naar de uitleg</div>
             <div class="oefkaartje">
-              <img src="/images/onderste-extremiteit/lunges-avatar-v7.jpg" alt=""/>
-              <div><b>Lunges</b><span>3 series &middot; 12 herh. &middot; met uitleg</span></div>
+              <img src="/images/onderste-extremiteit/calf-raises-avatar-v7.jpg" alt=""/>
+              <div><b>Kuitheffen</b><span>3 series &middot; 15 herh. &middot; met uitleg</span></div>
             </div>
             <div class="gedaan"><span class="vink"></span>Ik heb vandaag geoefend</div>
             <div class="pijn" aria-hidden="true"><i>0</i><i>1</i><i class="aan">2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>10</i></div>
             <div class="taal">Nederlands &middot; English &middot; T&uuml;rk&ccedil;e &middot; &#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577;</div>
           </div>
         </div>
-        <div class="demoqr">__DEMO_QR__<span>Scan: dit is de echte kaart</span></div>
+        <div class="bijschrift"><span class="pijl" aria-hidden="true">&#8593;</span><p><b>Zo print hij echt:</b> A4 liggend, tot twaalf oefeningen, met pen in te vullen. Scan de QR op het vel: dat is de echte voorbeeldkaart.</p></div>
       </div>
     </div>
   </div>
