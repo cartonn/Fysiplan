@@ -458,7 +458,17 @@ function demoKaart() {
     // blijft bewust open, zodat de bezoeker zélf tikt en het live ziet veranderen
     // (demo-interactie wordt niet bewaard — de POST-routes echoën alleen).
     metingen: [[9, 6], [7, 5], [6, 5], [4, 4], [2, 3], [1, 2]].map(([d, s]) => ({ t: nu - d * dg, s })),
-    gedaan: [9, 7, 6, 4, 2, 1].map((d) => ({ t: nu - d * dg }))
+    gedaan: [9, 7, 6, 4, 2, 1].map((d) => ({ t: nu - d * dg })),
+    // de nieuwere lagen horen óók in de voorbeeldkaart — de landing belooft
+    // "mét het verloop dat de therapeut ziet", dus de demo toont het volle
+    // product: oefendoel (weekdoel-regel), PSK-doelactiviteit met dalende
+    // reeks, een afspraak morgen (mét het Morgen-accent en de agenda-knop)
+    // en een eerder herstel-antwoord. Vandaag blijft overal open om te tikken.
+    doel: 4,
+    pskDoel: "Traplopen zonder pijn",
+    psk: [[9, 8], [6, 6], [4, 5], [2, 3], [1, 2]].map(([d, s]) => ({ t: nu - d * dg, s })),
+    afspraak: { t: nu + dg },
+    ervaring: [{ t: nu - 6 * dg, s: 0 }, { t: nu - 2 * dg, s: 1 }]
   };
 }
 function vindKaart(id) {
