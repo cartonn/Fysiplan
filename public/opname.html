@@ -191,16 +191,26 @@
         "<button class='blauw' id='stuur'>Gebruik deze video</button></div></div>");
       document.getElementById('opnieuw').addEventListener('click',opnameUI);
       document.getElementById('stuur').addEventListener('click',function(){
-        var knop=this;knop.disabled=true;knop.textContent='Versturen…';
+        // upload via XHR in plaats van fetch: een opname van een minuut is zo
+        // 10-30 MB en op mobiel uplink duurt dat even — de knop toont daarom de
+        // echte verstuurvoortgang. 99% blijft staan tot de server bevestigt.
+        var knop=this;knop.disabled=true;knop.textContent='Versturen… 0%';
         var ct=(rec.mimeType||mime).indexOf('mp4')>-1?'video/mp4':'video/webm';
-        fetch('/api/opname/upload?token='+token,{method:'POST',headers:{'content-type':ct},body:blob})
-          .then(function(r){return r.json();})
-          .then(function(d){
-            if(!d.ok){knop.disabled=false;knop.textContent='Gebruik deze video';alert(d.fout||'Versturen is niet gelukt.');return;}
-            if(stream)stream.getTracks().forEach(function(t){t.stop();});
-            klaarScherm();
-          })
-          .catch(function(){knop.disabled=false;knop.textContent='Gebruik deze video';alert('Versturen is niet gelukt: geen verbinding.');});
+        var herstel=function(msg){knop.disabled=false;knop.textContent='Gebruik deze video';if(msg)alert(msg);};
+        var x=new XMLHttpRequest();
+        x.open('POST','/api/opname/upload?token='+token);
+        x.setRequestHeader('content-type',ct);
+        x.upload.onprogress=function(e){
+          if(e.lengthComputable)knop.textContent='Versturen… '+Math.min(99,Math.round(e.loaded/e.total*100))+'%';
+        };
+        x.onload=function(){
+          var d=null;try{d=JSON.parse(x.responseText);}catch(e){}
+          if(!d||!d.ok){herstel((d&&d.fout)||'Versturen is niet gelukt.');return;}
+          if(stream)stream.getTracks().forEach(function(t){t.stop();});
+          klaarScherm();
+        };
+        x.onerror=function(){herstel('Versturen is niet gelukt: geen verbinding.');};
+        x.send(blob);
       });
     }
   }
