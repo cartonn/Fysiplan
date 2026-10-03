@@ -483,6 +483,8 @@ bridge2.jpg</div>
       Kies een startpunt per klacht: de oefeningen komen direct op de kaart en zijn daarna
       gewoon aan te passen. Cli&euml;ntgegevens en ingevulde vakjes blijven staan.
     </div>
+    <input id="sj_zoek" type="search" placeholder="Zoek op klacht of oefening (knie, rug, squat&hellip;)" autocomplete="off"
+      style="width:100%;box-sizing:border-box;margin:0 0 8px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:13px"/>
     <div id="sj_lijst" style="max-height:340px;overflow:auto"></div>
     <div class="acts"><button class="btn" id="sj_bewaar" title="Bewaar de oefeningen en dosering van de huidige kaart als je eigen sjabloon (alleen op dit apparaat)">Huidige kaart als sjabloon</button><button class="btn" id="sj_close">Sluiten</button></div>
   </div>
@@ -1741,25 +1743,36 @@ bridge2.jpg</div>
     // het hele team op elk apparaat mee werkt (concurrenten noemen dit "vaste
     // protocollen per klacht", maar dan mét app en account)
     var vanPraktijk=(IS_V2&&Array.isArray(PRAKSJAB))?PRAKSJAB:[];
+    if(!SJABLONEN.length&&!eigen.length&&!vanPraktijk.length){el.innerHTML="<div class='hint'>Geen sjablonen gevonden.</div>";return;}
+    // zoekfilter over naam, omschrijving én oefeningnamen; de knoppen houden de
+    // oorspronkelijke index vast, dus filteren gebeurt op (sjabloon, index)-paren
+    var term=String((document.getElementById('sj_zoek')||{}).value||'').trim().toLowerCase();
+    var past=function(s){ if(!term)return true;
+      var tekst=(s.naam||'')+' '+(s.sub||'')+' '+(s.oefeningen||[]).map(sjabNaam).join(' ');
+      return tekst.toLowerCase().indexOf(term)>=0; };
+    var metIndex=function(lijst){return lijst.map(function(s,i){return {s:s,i:i};}).filter(function(p){return past(p.s);});};
+    var eigenF=metIndex(eigen),prakF=metIndex(vanPraktijk),stdF=metIndex(SJABLONEN);
     var h='';
-    if(eigen.length){
+    if(eigenF.length){
       h+="<div style='font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:2px 0 4px'>Jouw sjablonen</div>";
-      h+=eigen.map(function(s,i){return rij(s,"<button class='btn primary' data-esjab='"+i+"'>Gebruik</button>"+
-        (IS_V2&&(SET.praktijk||'').trim()?"<button class='btn' data-edeel='"+i+"' title='Deel dit sjabloon met de hele praktijk: elke collega kan het dan op elk apparaat gebruiken'>Deel</button>":"")+
-        "<button class='btn' data-edel='"+i+"' title='verwijderen' aria-label='verwijderen'>&times;</button>");}).join("");
+      h+=eigenF.map(function(p){return rij(p.s,"<button class='btn primary' data-esjab='"+p.i+"'>Gebruik</button>"+
+        (IS_V2&&(SET.praktijk||'').trim()?"<button class='btn' data-edeel='"+p.i+"' title='Deel dit sjabloon met de hele praktijk: elke collega kan het dan op elk apparaat gebruiken'>Deel</button>":"")+
+        "<button class='btn' data-edel='"+p.i+"' title='verwijderen' aria-label='verwijderen'>&times;</button>");}).join("");
     }
-    if(vanPraktijk.length){
-      h+="<div style='font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:"+(eigen.length?12:2)+"px 0 4px'>Sjablonen van de praktijk</div>";
-      h+=vanPraktijk.map(function(s,i){return rij({naam:s.naam,sub:'Gedeeld met de hele praktijk',oefeningen:s.oefeningen||[]},
-        "<button class='btn primary' data-psjab='"+i+"'>Gebruik</button><button class='btn' data-pdel='"+i+"' title='verwijderen voor de hele praktijk' aria-label='verwijderen'>&times;</button>");}).join("");
+    if(prakF.length){
+      h+="<div style='font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:"+(eigenF.length?12:2)+"px 0 4px'>Sjablonen van de praktijk</div>";
+      h+=prakF.map(function(p){return rij({naam:p.s.naam,sub:'Gedeeld met de hele praktijk',oefeningen:p.s.oefeningen||[]},
+        "<button class='btn primary' data-psjab='"+p.i+"'>Gebruik</button><button class='btn' data-pdel='"+p.i+"' title='verwijderen voor de hele praktijk' aria-label='verwijderen'>&times;</button>");}).join("");
     }
-    if(eigen.length||vanPraktijk.length){
+    if((eigenF.length||prakF.length)&&stdF.length){
       h+="<div style='font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:12px 0 4px'>Standaardsjablonen</div>";
     }
-    if(!SJABLONEN.length&&!eigen.length&&!vanPraktijk.length){el.innerHTML="<div class='hint'>Geen sjablonen gevonden.</div>";return;}
-    h+=SJABLONEN.map(function(s,i){return rij(s,"<button class='btn primary' data-sjab='"+i+"'>Gebruik</button>");}).join("");
+    h+=stdF.map(function(p){return rij(p.s,"<button class='btn primary' data-sjab='"+p.i+"'>Gebruik</button>");}).join("");
+    if(!h){el.innerHTML="<div class='hint'>Geen sjabloon gevonden voor &ldquo;"+esc(term)+"&rdquo;. Zoek op klacht (knie, rug) of op een oefening.</div>";return;}
     el.innerHTML=h;
   }
+  // tikken in het zoekveld filtert live; bij het openen begint de lijst leeg-gefilterd
+  (function(){var z=document.getElementById('sj_zoek');if(z)z.addEventListener('input',function(){renderSjabLijst();});})();
   // gedeelde praktijksjablonen: cache + laden zodra het sjablonenvenster opent.
   // Zonder ingelogde praktijk geeft de server 401 en blijft de sectie gewoon weg.
   var PRAKSJAB=null;
@@ -1775,7 +1788,7 @@ bridge2.jpg</div>
       })
       .catch(function(){});
   }
-  document.getElementById('sjabBtn').addEventListener('click',function(){renderSjabLijst();laadPrakSjab();openOv('ovSjab');});
+  document.getElementById('sjabBtn').addEventListener('click',function(){var z=document.getElementById('sj_zoek');if(z)z.value='';renderSjabLijst();laadPrakSjab();openOv('ovSjab');});
   // eenmalig welkom (v2): wie vers van de landing komt, landt niet koud in de app
   // maar krijgt de kaart-in-één-minuut-route. Eén keer ooit, daarna nooit meer;
   // bestaande gebruikers (met opgeslagen kaartstaat) zien hem ook niet.
@@ -1787,7 +1800,7 @@ bridge2.jpg</div>
       setTimeout(function(){openOv('ovWelkom');},400);
     }
     document.getElementById('welkom_zelf').addEventListener('click',function(){closeOv('ovWelkom');});
-    document.getElementById('welkom_sjab').addEventListener('click',function(){closeOv('ovWelkom');renderSjabLijst();openOv('ovSjab');});
+    document.getElementById('welkom_sjab').addEventListener('click',function(){closeOv('ovWelkom');var z=document.getElementById('sj_zoek');if(z)z.value='';renderSjabLijst();openOv('ovSjab');});
   }
   document.getElementById('sj_close').addEventListener('click',function(){closeOv('ovSjab');});
   // een oefening-item in een sjabloon is óf een naam (string) óf een object met een
