@@ -963,3 +963,34 @@ eerlijk te passeren). Regressies groen: smoke (13), psk (15).
 **Volgende run — pak een ander gebied:** security-headers opnieuw (het
 PSK-blok kwam op /k bij; de nonce dekt hem, maar de headertest mag het
 expliciet vastklikken), of de v1-accountlaag (mailtokens, inlogrem) opnieuw.
+
+## 2026-10-03 — v1-accountlaag opnieuw (mailtokens, inlogrem)
+
+**Geauditeerd:** de hele v1-mailketen (registreer, wachtwoord-vergeten,
+wachtwoord-zetten, login, logout): tokenopslag (alleen sha256 op schijf,
+24u-geldigheid, eenmalig verbruik, plafond 500), host-pinning van de
+maillink (kwade Host valt terug op fysiplan.nl), mailrem 3/uur per adres,
+inlogrem per adres (10 missers/kwartier) náást de rem per IP,
+registratiecode-vergelijking in constante tijd, sessie-intrekking bij
+wachtwoordwissel en blokkade.
+
+**Bevinding (gefixt): /api/v1/wachtwoord-vergeten was een enumeratie-orakel.**
+Voor een bestaand adres wachtte het antwoord op de mail-API (~460 ms gemeten
+timing-gat t.o.v. een onbekend adres) en gaf een mailstoring een 502 waar een
+onbekend adres 200 kreeg — status én timing verraadden accountbestaan. Fix:
+token maken en mail sturen gebeuren nu ná het antwoord, buiten de request om;
+een mailstoring wordt gelogd (v1-herstelmail-mislukt) en nooit als status
+teruggegeven. Bestaand, onbekend en geblokkeerd adres zijn nu byte-identiek
+en even snel. Registreer houdt zijn 502 bewust: daar lopen bestaand en nieuw
+adres hetzelfde mailpad, dus geen asymmetrie.
+
+**Increment:** de orakel-fix + nieuwe regressietest test-v1-vergeten.mjs
+(9 checks: identieke antwoorden over traag/stuk mailpad, timing-gat < 100 ms,
+mail komt echt aan met gepinde link, link verzilverbaar + inloggen werkt,
+mailrem houdt, geblokkeerd krijgt niets). v1-gedrag voor de gebruiker
+ongewijzigd: zelfde melding, mail komt net zo snel aan.
+
+**Volgende run — pak een ander gebied:** security-headers opnieuw (het
+PSK-blok op /k expliciet vastklikken in de headertest), of de open endpoints
+zonder auth (praktijkenlijst, oefeningen-JSON, /health) op schraap- en
+misbruikranden.

@@ -1913,15 +1913,20 @@ async function afhandelen(request, response) {
       const email = String(b.email || "").trim().toLowerCase().slice(0, 200);
       if (!mailIngesteld()) { await sendJson(response, 503, { ok: false, fout: "Wachtwoord herstellen staat nog uit op deze server. Vraag je praktijk om hulp." }); return; }
       if (!geldigEmail(email)) { await sendJson(response, 400, { ok: false, fout: "Vul een geldig e-mailadres in." }); return; }
+      // het antwoord mag op geen enkele manier verraden of het adres een account
+      // heeft: token maken en mail sturen gebeuren daarom NA het antwoord, buiten
+      // de request af (een mailstoring wordt gelogd, nooit als status teruggegeven)
       if (v1Accounts[email] && !v1Accounts[email].geblokkeerd && !mailOpSlot(email)) {
-        const token = await maakInstelToken(email);
-        await stuurMail(email, "Je Fysiplan-wachtwoord opnieuw instellen",
-          "Kies via deze link een nieuw wachtwoord voor Fysiplan (24 uur geldig):\n" + instelLink(request, token) +
-          "\n\nVroeg je dit niet aan? Negeer deze mail; je huidige wachtwoord blijft dan gewoon werken.");
-        auditLog(V1_PRAKTIJK, "v1-herstelmail-gestuurd", request);
+        (async () => {
+          const token = await maakInstelToken(email);
+          await stuurMail(email, "Je Fysiplan-wachtwoord opnieuw instellen",
+            "Kies via deze link een nieuw wachtwoord voor Fysiplan (24 uur geldig):\n" + instelLink(request, token) +
+            "\n\nVroeg je dit niet aan? Negeer deze mail; je huidige wachtwoord blijft dan gewoon werken.");
+          auditLog(V1_PRAKTIJK, "v1-herstelmail-gestuurd", request);
+        })().catch(() => auditLog(V1_PRAKTIJK, "v1-herstelmail-mislukt", request));
       }
       await sendJson(response, 200, { ok: true, gestuurd: true });
-    } catch { await sendJson(response, 502, { ok: false, fout: "De mail versturen is niet gelukt; probeer het zo opnieuw." }); }
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }
   // wachtwoord zetten: de link uit de mail verzilveren. Het token is eenmalig en
