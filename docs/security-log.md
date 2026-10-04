@@ -994,3 +994,30 @@ ongewijzigd: zelfde melding, mail komt net zo snel aan.
 PSK-blok op /k expliciet vastklikken in de headertest), of de open endpoints
 zonder auth (praktijkenlijst, oefeningen-JSON, /health) op schraap- en
 misbruikranden.
+
+## 2026-10-04 — Open endpoints zonder auth + security-headers /k (PSK-blok)
+
+**Geauditeerd:** de volledige open GET-familie: praktijkenlijst en
+praktijk/status (schraap- en enumeratieranden), kaartenlijst zonder sessie,
+beheerroutes (dashboard, oefeningen/gebruik, core1000) op sleutelgokken,
+/health op infolekkage, beide ICS-routes (afspraak.ics en oefenagenda) op
+Host-vervalsing, het kaartmanifest, en de nonce-CSP op /k met het PSK-blok.
+De vertaal-route (AI-kosten) bleek al achter kruisSite + schrijfLimiet +
+aiLimiet te zitten; dashboard/gebruik/core1000 achter isAdmin; de weekbrief
+achter eisPraktijk.
+
+**Bevinding: geen gat.** De schraaprem houdt (121e lezing van één IP -> 429),
+status verklapt alleen geclaimd/ingelogd, 20 sleutelmissers zetten het IP op
+slot, /health bevat uitsluitend de bedoelde tellingen zonder paden of
+geheimen, beide ICS-routes pinnen op fysiplan.nl bij een kwade Host, en élk
+inline script op /k draagt de nonce — het PSK-blok zit nu expliciet
+vastgeklikt in die controle.
+
+**Increment:** nieuwe regressietest test-open-endpoints.mjs (17 adversariële
+checks) die de familie en de /health-veldenset exact vastklikt. Daarnaast
+draaide gisteravond al de nieuwe E2E test-opname-keten.mjs (9 checks, fake-
+camera) mee als flow-dekking. Regressies groen: smoke (13), v1-vergeten (9).
+
+**Volgende run — pak een ander gebied:** injectie opnieuw (de nieuwere
+schrijfvelden pskDoel/psk/afspraak/behandelaar door de proto-injectiefuzz
+halen), of rate limiting op /api/kaarten-schrijfroutes onder parallelle druk.
