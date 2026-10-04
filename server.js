@@ -2408,7 +2408,10 @@ async function afhandelen(request, response) {
         oefTrouw: k.oefTrouw || null,
         behandelaar: k.behandelaar || null,
         pskDoel: k.pskDoel || null,
-        psk: (k.psk || []).slice(-1),
+        // recente PSK-reeks (zelfde venster als de pijnscores): het overzicht kan
+        // zo een PSK-verloopje tonen zonder de hele kaart op te halen; de laatste
+        // waarde blijft gewoon het laatste element, dus bestaande lezers lopen door
+        psk: (k.psk || []).slice(-14),
         pskEerste: (k.psk && k.psk.length) ? k.psk[0] : null,
         doel: Number(k.doel) || 0, gearchiveerd: !!k.gearchiveerd }))
       .sort((a, b) => b.ts - a.ts);

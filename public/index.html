@@ -2465,16 +2465,26 @@ bridge2.jpg</div>
             var pijnTitel=heeftVerloop?('Pijn: van '+eersteScore+' naar '+lt.s+' (recent verloop) — tik voor de grafiek'):'Pijnverloop bekijken';
             vg="<button class='btn' data-mtoon='"+esc(c.id)+"' title='"+esc(pijnTitel)+"' style='font-size:11.5px;padding:4px 10px'>"+
               "<span style='display:inline-block;width:8px;height:8px;border-radius:99px;background:"+kleur(lt.s)+";margin-right:5px'></span>pijn "+pijnTxt+"</button>";
+            // staafreeks die ook voor het PSK-verloop wordt hergebruikt (zelfde schaal
+            // 0-10, zelfde kleuren: laag = goed)
+            var staafjes=function(reeks){
+              return "<div style='display:flex;align-items:flex-end;gap:6px;height:56px;margin-top:8px'>"+
+                reeks.map(function(m){
+                  var d=new Date(m.t);
+                  return "<div style='flex:1;max-width:34px;display:flex;flex-direction:column;align-items:center;gap:3px'>"+
+                    "<small style='font-weight:700'>"+m.s+"</small>"+
+                    "<span style='width:100%;border-radius:4px 4px 2px 2px;height:"+(4+m.s*3.4)+"px;background:"+kleur(m.s)+"'></span>"+
+                    "<small style='color:var(--muted);font-size:9px'>"+('0'+d.getDate()).slice(-2)+'-'+('0'+(d.getMonth()+1)).slice(-2)+"</small></div>";
+                }).join("")+"</div>";
+            };
+            // het PSK-verloop ernaast (als er een doelactiviteit met reeks is): zo ziet
+            // de therapeut beide klinimetrie-lijnen — pijn én PSK — zonder de kaart
+            // te openen, klaar voor dossier en rapportage
+            var pskDeel=(c.pskDoel&&c.psk&&c.psk.length>=2)?
+              "<small style='color:var(--muted);display:block;margin-top:12px'>PSK bij &ldquo;"+esc(c.pskDoel)+"&rdquo; (0 = geen moeite, 10 = onmogelijk)</small>"+staafjes(c.psk):'';
             vgBlok="<div id='mh_"+esc(c.id)+"' style='display:none;padding:8px 4px 10px;border-bottom:1px solid var(--line)'>"+
               "<small style='color:var(--muted)'>Pijnscore die de patiënt na het oefenen aantikt (0 = geen pijn, 10 = ergste pijn)</small>"+
-              "<div style='display:flex;align-items:flex-end;gap:6px;height:56px;margin-top:8px'>"+
-              c.scores.map(function(m){
-                var d=new Date(m.t);
-                return "<div style='flex:1;max-width:34px;display:flex;flex-direction:column;align-items:center;gap:3px'>"+
-                  "<small style='font-weight:700'>"+m.s+"</small>"+
-                  "<span style='width:100%;border-radius:4px 4px 2px 2px;height:"+(4+m.s*3.4)+"px;background:"+kleur(m.s)+"'></span>"+
-                  "<small style='color:var(--muted);font-size:9px'>"+('0'+d.getDate()).slice(-2)+'-'+('0'+(d.getMonth()+1)).slice(-2)+"</small></div>";
-              }).join("")+"</div></div>";
+              staafjes(c.scores)+pskDeel+"</div>";
           }
           // ervaren herstel (GROC-achtig): het laatste één-tik-antwoord van de patiënt
           // op "hoe gaat het vergeleken met de start?" (alleen tonen, duiding bij de therapeut)
