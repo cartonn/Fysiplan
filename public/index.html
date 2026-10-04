@@ -2310,19 +2310,24 @@ bridge2.jpg</div>
   // herstel, seintjes) over de actieve kaarten samengevat tot een plakklare tekst
   // voor kwaliteitsverantwoording of teamoverleg. Bewust geaggregeerd en zonder
   // cliëntnamen; de duiding blijft bij de praktijk.
-  function praktijkRapport(lijst){
+  function praktijkRapport(lijst,archief){
+    // afgeronde (gearchiveerde) behandelingen tellen mee in de uitkomsten: juist
+    // het eindresultaat van een afgeronde behandeling is wat de praktijk wil
+    // verantwoorden. Weekcijfers (geoefend, oefendoel) blijven over de actieve.
+    archief=archief||[];
+    var alles=lijst.concat(archief);
     var nu=Date.now(),dag=864e5;
     var r=[];
     r.push('Praktijkrapport '+(SET.praktijk||'')+' — '+new Date().toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}));
     r.push('Uitkomsten app-vrij gemeten via de digitale trainingskaarten van Fysiplan (zonder patiënt-app of account).');
     r.push('');
-    var geopend=lijst.filter(function(c){return c.bekeken>0;}).length;
+    var geopend=alles.filter(function(c){return c.bekeken>0;}).length;
     var weekActief=lijst.filter(function(c){return c.gedaan&&c.gedaan.some(function(g){return nu-g.t<7*dag;});}).length;
-    r.push('Kaarten: '+lijst.length+' actief; '+geopend+' door de patiënt geopend; '+weekActief+' deze week geoefend.');
+    r.push('Kaarten: '+lijst.length+' actief'+(archief.length?(', '+archief.length+' afgerond (gearchiveerd)'):'')+'; '+geopend+' door de patiënt geopend; '+weekActief+' deze week geoefend.');
     // het kwaliteitsgetal voor verantwoording: pijn van de állereerste meting naar
     // de laatste, over alle kaarten met een herhaalde meting — dit is het verloop
     // "sinds de start van de behandeling", niet alleen de recente periode
-    var metStart=lijst.filter(function(c){return c.eersteMeting&&typeof c.eersteMeting.s==='number'&&c.scores&&c.scores.length&&c.scores[c.scores.length-1].t>c.eersteMeting.t;});
+    var metStart=alles.filter(function(c){return c.eersteMeting&&typeof c.eersteMeting.s==='number'&&c.scores&&c.scores.length&&c.scores[c.scores.length-1].t>c.eersteMeting.t;});
     if(metStart.length){
       var g1=metStart.reduce(function(a,c){return a+c.eersteMeting.s;},0)/metStart.length;
       var g2=metStart.reduce(function(a,c){return a+c.scores[c.scores.length-1].s;},0)/metStart.length;
@@ -2331,14 +2336,14 @@ bridge2.jpg</div>
     }
     // PSK geaggregeerd (zelfde opzet als het pijnverloop): van eerste naar laatste
     // score bij de doelactiviteit, over kaarten met een herhaalde PSK-meting
-    var metPsk=lijst.filter(function(c){return c.pskDoel&&c.pskEerste&&typeof c.pskEerste.s==='number'&&c.psk&&c.psk.length&&c.psk[c.psk.length-1].t>c.pskEerste.t;});
+    var metPsk=alles.filter(function(c){return c.pskDoel&&c.pskEerste&&typeof c.pskEerste.s==='number'&&c.psk&&c.psk.length&&c.psk[c.psk.length-1].t>c.pskEerste.t;});
     if(metPsk.length){
       var pk1=metPsk.reduce(function(a,c){return a+c.pskEerste.s;},0)/metPsk.length;
       var pk2=metPsk.reduce(function(a,c){return a+c.psk[c.psk.length-1].s;},0)/metPsk.length;
       var fp=function(x){return (Math.round(x*10)/10).toFixed(1).replace('.',',');};
       r.push('PSK (doelactiviteit, 0-10) sinds de start: van gemiddeld '+fp(pk1)+' naar '+fp(pk2)+' over '+metPsk.length+' kaart'+(metPsk.length===1?'':'en')+' met herhaalde meting.');
     }
-    var metPijn=lijst.filter(function(c){return c.scores&&c.scores.length>=2;});
+    var metPijn=alles.filter(function(c){return c.scores&&c.scores.length>=2;});
     if(metPijn.length){
       var deltas=metPijn.map(function(c){return c.scores[c.scores.length-1].s-c.scores[0].s;});
       var som=deltas.reduce(function(a,b){return a+b;},0);
@@ -2351,7 +2356,7 @@ bridge2.jpg</div>
       var haalden=metDoel.filter(function(c){return (c.gedaan||[]).filter(function(g){return nu-g.t<7*dag;}).length>=c.doel;}).length;
       r.push('Oefentrouw: '+haalden+' van de '+metDoel.length+' kaarten met een oefendoel haalde het doel deze week.');
     }
-    var metHerstel=lijst.filter(function(c){return c.ervaring&&c.ervaring.length;});
+    var metHerstel=alles.filter(function(c){return c.ervaring&&c.ervaring.length;});
     if(metHerstel.length){
       var hb=0,hg=0,hs=0;
       metHerstel.forEach(function(c){var s=c.ervaring[c.ervaring.length-1].s;if(s>0)hb++;else if(s===0)hg++;else hs++;});
@@ -2814,7 +2819,7 @@ bridge2.jpg</div>
           if(arb)arb.onclick=function(){srvArchiefView=!srvArchiefView;toonSrvKaarten();};
           var rb=document.getElementById('k_srv_rap');
           if(rb)rb.onclick=function(){
-            var tekst=praktijkRapport(l);
+            var tekst=praktijkRapport(l,lArch);
             var oudR=rb.textContent;
             var toonR=function(t){rb.textContent=t;setTimeout(function(){rb.textContent=oudR;},1600);};
             if(navigator.clipboard&&navigator.clipboard.writeText){
