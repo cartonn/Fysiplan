@@ -1021,3 +1021,26 @@ camera) mee als flow-dekking. Regressies groen: smoke (13), v1-vergeten (9).
 **Volgende run — pak een ander gebied:** injectie opnieuw (de nieuwere
 schrijfvelden pskDoel/psk/afspraak/behandelaar door de proto-injectiefuzz
 halen), of rate limiting op /api/kaarten-schrijfroutes onder parallelle druk.
+
+## 2026-10-05 — Injectie opnieuw: de nieuwere schrijfvelden
+
+**Geauditeerd:** pskDoel, psk, afspraak, behandelaar en doel — de velden die na
+de vorige injectierotatie zijn bijgekomen — op prototype-teksten, type-verwarring
+(string/float/array/object/bool/null als PSK-score), body's met een
+"__proto__"-sleutel, buitensporige afspraakmomenten, tien parallelle PSK-tikken
+op één dag (race op de dag-vervanglogica) en een XSS-payload als doelactiviteit
+op de patiëntkaart.
+
+**Bevinding: geen gat.** cleanName weert prototype-teksten ook hier, de strikte
+geheel-getal-controle houdt elke rare score tegen, afspraak-grenzen houden, de
+canary-kaart blijft schoon na proto-sleutels in de body, parallelle tikken
+vouwen netjes samen tot één dagentry met geldige JSON op schijf, en de payload
+rendert inert als tekst (nonce-CSP + textContent).
+
+**Increment:** nieuwe regressietest test-injectie-nieuwvelden.mjs (18
+adversariële checks). Regressies groen: proto-injectie (16), smoke (13),
+psk (15).
+
+**Volgende run — pak een ander gebied:** deeplinks/gedeelde kaarten
+(nieuwe-link-intrekking, demo-afbakening, bekeken-teller) opnieuw, of de
+uploads-familie (logo én opnamevideo samen) onder parallelle druk.
