@@ -2734,6 +2734,15 @@ bridge2.jpg</div>
           if(fmode==='aandacht')items=items.filter(vraagtAandacht);
           else if(fmode==='seintje')items=items.filter(seintjeOpen);
           if(sortModus()==='aandacht')items.sort(function(a,b){return aandacht(b)-aandacht(a)||(b.ts||0)-(a.ts||0);});
+          // sorteren op afspraak: wie het eerst komt bovenaan (ochtendvoorbereiding —
+          // kaart even bijwerken vóór de patiënt binnenstapt); kaarten zonder
+          // aankomende afspraak volgen daarna op nieuwste eerst
+          if(sortModus()==='afspraak')items.sort(function(a,b){
+            var nuA=Date.now()-2*3600000;
+            var ta=(a.afspraak&&a.afspraak.t>nuA)?a.afspraak.t:Infinity;
+            var tb=(b.afspraak&&b.afspraak.t>nuA)?b.afspraak.t:Infinity;
+            return ta-tb||(b.ts||0)-(a.ts||0);
+          });
           // zoeken kijkt ook in het archief: "waar is de kaart van mevrouw De Boer?"
           // eindigt anders in een misleidend "geen kaart gevonden" terwijl hij er
           // gewoon is. Archieftreffers komen gedempt achteraan (mét Terughalen-knop);
@@ -2764,7 +2773,7 @@ bridge2.jpg</div>
           if(!sortEl){
             sortEl=document.createElement('div');sortEl.id='k_srv_sort';sortEl.className='no-print';sortEl.dataset.mode='nieuw';
             sortEl.style.cssText='display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0 0 8px;font-size:12px;color:var(--muted)';
-            sortEl.innerHTML='<span>Sorteer:</span><button type="button" class="btn" data-sort="nieuw" style="font-size:11.5px;padding:3px 9px">Nieuwste</button><button type="button" class="btn" data-sort="aandacht" title="Hoge pijn, langer niet geoefend of nooit geopende kaart bovenaan" style="font-size:11.5px;padding:3px 9px">Aandacht</button><button type="button" class="btn" data-filter="aandacht" title="Toon alleen de kaarten die nu aandacht vragen — hoge pijn, een openstaand seintje, lang stil of nooit geopend" style="font-size:11.5px;padding:3px 9px;margin-left:8px">Alleen aandacht</button>';
+            sortEl.innerHTML='<span>Sorteer:</span><button type="button" class="btn" data-sort="nieuw" style="font-size:11.5px;padding:3px 9px">Nieuwste</button><button type="button" class="btn" data-sort="aandacht" title="Hoge pijn, langer niet geoefend of nooit geopende kaart bovenaan" style="font-size:11.5px;padding:3px 9px">Aandacht</button><button type="button" class="btn" data-sort="afspraak" title="Wie het eerst komt bovenaan: werk de kaart bij vóór de patiënt binnenstapt" style="font-size:11.5px;padding:3px 9px">Afspraak</button><button type="button" class="btn" data-filter="aandacht" title="Toon alleen de kaarten die nu aandacht vragen — hoge pijn, een openstaand seintje, lang stil of nooit geopend" style="font-size:11.5px;padding:3px 9px;margin-left:8px">Alleen aandacht</button>';
             el.parentNode.insertBefore(sortEl,el);
           }
           sortEl.style.display='flex';markeerSort();markeerFilter();
