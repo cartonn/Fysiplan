@@ -475,6 +475,16 @@ bridge2.jpg</div>
   </div>
 </div>
 
+<!-- invulsuggesties voor het Deel-panel (v2): vaste PSK-doelactiviteiten en de
+     behandelaarnamen die de praktijk al gebruikt (dynamisch gevuld) -->
+<datalist id="pskSugg">
+  <option value="Traplopen"></option><option value="Bukken"></option><option value="Tillen"></option>
+  <option value="Wandelen"></option><option value="Fietsen"></option><option value="Hardlopen"></option>
+  <option value="Stofzuigen"></option><option value="Aankleden"></option><option value="Autorijden"></option>
+  <option value="Zitten op het werk"></option><option value="Sporten"></option><option value="Slapen op de zij"></option>
+</datalist>
+<datalist id="behSugg"></datalist>
+
 <!-- kaartsjablonen (v2) -->
 <div class="ov" id="ovSjab">
   <div class="modal">
@@ -2482,6 +2492,13 @@ bridge2.jpg</div>
         // lArch = gearchiveerd, l = actueel (de standaardweergave).
         var lArch=l.filter(function(c){return c.gearchiveerd;});
         l=l.filter(function(c){return !c.gearchiveerd;});
+        // suggesties voor het behandelaarveld: de namen die op kaarten van deze
+        // praktijk al staan, zodat het team consequent dezelfde spelling gebruikt
+        var behSugg=document.getElementById('behSugg');
+        if(behSugg){
+          var namen=[];l.concat(lArch).forEach(function(c){if(c.behandelaar&&namen.indexOf(c.behandelaar)<0)namen.push(c.behandelaar);});
+          behSugg.innerHTML=namen.sort(function(a,b){return a.localeCompare(b,'nl');}).map(function(n){return "<option value='"+esc(n)+"'></option>";}).join('');
+        }
         // is het archief leeg (bijv. de laatste kaart net teruggehaald)? val terug
         // naar de actuele weergave, anders staart de therapeut naar een leeg archief
         if(srvArchiefView&&!lArch.length)srvArchiefView=false;
@@ -2645,7 +2662,7 @@ bridge2.jpg</div>
             "<div style='margin-top:7px'>"+
               "<small style='color:var(--muted)'>Behandelaar (voor het team-overzicht; komt niet op de patiëntkaart)</small>"+
               "<div style='display:flex;gap:6px;margin-top:3px'>"+
-                "<input data-sbeh='"+esc(c.id)+"' value='"+esc(c.behandelaar||'')+"' maxlength='40' placeholder='Bijv. Sanne' style='flex:1;min-width:0;font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
+                "<input data-sbeh='"+esc(c.id)+"' list='behSugg' value='"+esc(c.behandelaar||'')+"' maxlength='40' placeholder='Bijv. Sanne' style='flex:1;min-width:0;font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
                 "<button class='btn' data-sbehopslaan='"+esc(c.id)+"'>Bewaar</button>"+
               "</div>"+
             "</div>"+
@@ -2654,7 +2671,7 @@ bridge2.jpg</div>
             "<div style='margin-top:7px'>"+
               "<small style='color:var(--muted)'>Doelactiviteit (PSK) — de kaart vraagt dan dagelijks hoe lastig dit is, 0-10; leeg = uit</small>"+
               "<div style='display:flex;gap:6px;margin-top:3px'>"+
-                "<input data-spsk='"+esc(c.id)+"' value='"+esc(c.pskDoel||'')+"' maxlength='80' placeholder='Bijv. traplopen, stofzuigen, een uur wandelen' style='flex:1;min-width:0;font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
+                "<input data-spsk='"+esc(c.id)+"' list='pskSugg' value='"+esc(c.pskDoel||'')+"' maxlength='80' placeholder='Bijv. traplopen, stofzuigen, een uur wandelen' style='flex:1;min-width:0;font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
                 "<button class='btn' data-spskopslaan='"+esc(c.id)+"'>Bewaar</button>"+
               "</div>"+
             "</div>"+
