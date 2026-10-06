@@ -1044,3 +1044,26 @@ psk (15).
 **Volgende run — pak een ander gebied:** deeplinks/gedeelde kaarten
 (nieuwe-link-intrekking, demo-afbakening, bekeken-teller) opnieuw, of de
 uploads-familie (logo én opnamevideo samen) onder parallelle druk.
+
+## 2026-10-06 — Deeplinks en gedeelde kaarten opnieuw
+
+**Geauditeerd:** de hele deeplink-familie: nieuwe-link-intrekking (sessie-eis,
+cross-site-weigering, dode oude link, voortgang mee naar het verse id,
+botsingscontrole), id-raden tegen de raden-rem, demo-afbakening (schrijven
+echoot ok maar bewaart niets), de bekeken-teller (echte browser telt,
+WhatsApp-preview niet, demo nooit) en het archiefpad (patiëntlink blijft
+werken, vernieuwen op een gearchiveerde kaart houdt de voortgang).
+
+**Bevinding: geen gat.** Alle veertien adversariële checks groen op de eerste
+run. Opmerkelijk tussendoor: CI-run #181 van gisteravond bleek 'cancelled' na
+een kwartier GitHub-runnerwachtrij — geen bouwfout (zelfde build was lokaal
+groen); de push van deze run levert het verse CI-bewijs op een head die die
+commit bevat.
+
+**Increment:** nieuwe regressietest test-deeplinks.mjs (14 checks). Na de
+scratchpad-wissing van 2026-10-05 is ook de smoke-basis herbouwd
+(test-smoke.mjs, 13 checks).
+
+**Volgende run — pak een ander gebied:** de uploads-familie (logo én
+opnamevideo) onder parallelle druk, of security-headers opnieuw wanneer er
+nieuwe blokken op /k of /v2/app zijn bijgekomen.
