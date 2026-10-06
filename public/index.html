@@ -960,6 +960,36 @@ bridge2.jpg</div>
     document.getElementById('sjabBtn').style.display='';
     document.getElementById('aiBtn').style.display='';
   }
+  // EPD-koppeling zonder koppeling: elk EPD met een extern-link-veld (Intramed,
+  // FysioRoadmap, …) kan /v2/app?client={naam} openen — de cliëntnaam (en
+  // eventueel ?doel=) staat dan al ingevuld. Alleen lege velden worden gevuld
+  // (een openstaand concept blijft onaangetast). De parameters worden één keer
+  // gelezen; de URL wordt meteen schoongeveegd zodat de naam niet in adresbalk
+  // of historie blijft. loadState() draait bij v2 een tweede keer (async, tegen
+  // de echte bibliotheek) en zet de velden dan opnieuw — daarom wordt dit ná
+  // élke loadState aangeroepen; het "alleen indien leeg" maakt dat idempotent.
+  var epdVoorinvulData=null;
+  if(IS_V2){try{
+    var _qs=new URLSearchParams(location.search);
+    if(_qs.has('client')||_qs.has('doel')){
+      epdVoorinvulData={client:_qs.get('client'),doel:_qs.get('doel')};
+      try{history.replaceState(null,'',location.pathname);}catch(e2){}
+    }
+  }catch(e){}}
+  function epdVoorinvul(){
+    if(!epdVoorinvulData)return;
+    var vul=function(id,val){
+      var el=document.getElementById(id);
+      val=String(val||'').replace(/[\u0000-\u001f\u007f]/g,' ').replace(/\s+/g,' ').trim().slice(0,80);
+      if(el&&val&&!el.value.trim()){
+        el.value=val;
+        el.dispatchEvent(new Event('input',{bubbles:true}));
+        el.dispatchEvent(new Event('change',{bubbles:true}));
+      }
+    };
+    vul('c_naam',epdVoorinvulData.client);
+    vul('c_doel',epdVoorinvulData.doel);
+  }
   if(USE_V2_LIBRARY){
     var _beeldKeuze=document.getElementById('beeldKeuze');
     _beeldKeuze.hidden=false;
@@ -3256,6 +3286,7 @@ bridge2.jpg</div>
   }
   applySettings();
   loadState();
+  epdVoorinvul();
   var printTextTrimmed=setupPrintableTextLimits();
   CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.addEventListener('input',saveState);});
   if(printTextTrimmed)saveState();
@@ -3376,7 +3407,7 @@ bridge2.jpg</div>
       // eerste loadState() draaide tegen de ingebedde standaardlijst en
       // filterde die ids weg. Nu de echte bibliotheek er staat: opnieuw
       // herstellen, anders is de kaart na elke herlaadbeurt leeg.
-      if(IS_V2)loadState();
+      if(IS_V2){loadState();epdVoorinvul();}
       applySettings();render();
     });
   }).catch(function(){buildDefault();applySettings();render();});
