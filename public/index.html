@@ -2273,6 +2273,9 @@ bridge2.jpg</div>
     var r=[];var cl=kaart.client||{};var cells=kaart.cells||{};
     r.push('Oefenkaart '+(kaart.naam||'')+' — '+(kaart.praktijk||''));
     if(kaart.ts)r.push('Aangemaakt: '+new Date(kaart.ts).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}));
+    // bij een afgeronde (gearchiveerde) behandeling is dit de eindsamenvatting:
+    // dat mag het dossier expliciet weten
+    if(kaart.gearchiveerd)r.push('Status: behandeling afgerond (kaart gearchiveerd; de patiëntlink blijft werken).');
     if(cl.c_doel)r.push('Doel: '+cl.c_doel);
     if(cl.c_cave)r.push('Casus/let op: '+cl.c_cave);
     if(cl.c_opm)r.push('Opmerking: '+cl.c_opm);
@@ -2707,6 +2710,7 @@ bridge2.jpg</div>
             // blijft gewoon werken, maar de kaart staat uit het hoofdoverzicht.
             return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line);opacity:.72'>"+
               "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b> <small style='color:var(--muted)'>&middot; gearchiveerd</small><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+"</small></div>"+
+              "<button class='btn' data-sdossier='"+esc(c.id)+"' title='Kopieer de eindsamenvatting (cliënt, oefeningen, pijnverloop, PSK, oefentrouw) om bij het afronden in het EPD-dossier te plakken'>Dossier</button>"+
               "<button class='btn' data-sherstel='"+esc(c.id)+"' title='Terug naar het actuele overzicht'>Terughalen</button>"+
               "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
               "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>";
