@@ -2048,6 +2048,23 @@ async function afhandelen(request, response) {
       }
       praktijken[key] = p;
       await saveJson(praktijkenPath, praktijken);
+      // opruimen op prefix in plaats van alleen "het vorige pad": bij parallelle
+      // vervangingen lazen racers hetzelfde oude pad en bleven hun verliezende
+      // nieuwe bestanden als wezen achter op het volume. De veeg houdt precies
+      // het logo dat het profiel nu noemt en ruimt al het andere van déze slug op
+      // (ook wezen uit het verleden); andermans logo's blijven onaangeraakt.
+      if (b.logo) {
+        try {
+          const prefix = `logo-${slug(p.praktijk)}-`;
+          for (const f of await readdir(uploadsDir)) {
+            if (!f.startsWith(prefix)) continue;
+            // per bestand vers kijken welk logo het profiel nú noemt: een trage
+            // racer mag nooit het bestand wissen waar de laatste opslag naar wijst
+            const huidig = (praktijken[key] && praktijken[key].logo) ? praktijken[key].logo.split("/").pop() : "";
+            if (f !== huidig) { try { await unlink(join(uploadsDir, f)); } catch {} }
+          }
+        } catch {}
+      }
       await sendJson(response, 200, { ok: true, logo: p.logo || "" });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek (of logo te groot)." });

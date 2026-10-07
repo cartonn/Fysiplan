@@ -1067,3 +1067,33 @@ scratchpad-wissing van 2026-10-05 is ook de smoke-basis herbouwd
 **Volgende run — pak een ander gebied:** de uploads-familie (logo én
 opnamevideo) onder parallelle druk, of security-headers opnieuw wanneer er
 nieuwe blokken op /k of /v2/app zijn bijgekomen.
+
+## 2026-10-07 — Uploads-familie onder parallelle druk
+
+**Geauditeerd:** de logo-keten (zes gelijktijdige vervangingen voor één
+praktijk) en de opnamevideo-keten (zes gelijktijdige grote uploads op
+verschillende tokens, dubbele upload op één token, content-length-plafond,
+magic-byte-grendels).
+
+**Bevinding (gefixt): parallelle logo-vervangingen lekten weesbestanden.**
+Elke racer las hetzelfde oude logopad, ruimde dat op en schreef zijn eigen
+nieuwe bestand — maar alleen het laatst opgeslagen profiel wijst ergens naar,
+dus de verliezers bleven als wezen op het volume staan (gemeten: 3 wezen na 6
+parallelle vervangingen; elk tot 400 kB, dus een sluipende
+opslaguitputting). Fix: na elke logo-opslag veegt de route alle
+logo-<slug>-bestanden weg behalve het bestand dat het profiel op dat moment
+noemt — per bestand vers gelezen, zodat een trage racer nooit het winnende
+logo wist. Zelfherstellend: ook wezen uit het verleden worden bij de
+eerstvolgende vervanging opgeruimd. Gedeelde route, gedrag v1 ongewijzigd
+(zelfde antwoorden, zelfde enkelvoudige flow).
+
+**Verder geen gat:** de gelijktijdigheidsrem op video-uploads houdt (max 4,
+rest 429), een dubbel token levert hooguit één bestand en is daarna verbruikt,
+en de grendels (GIF, nep-PNG, 61 MB-header -> 413) staan.
+
+**Increment:** de orphan-fix + nieuwe regressietest test-uploads-parallel.mjs
+(9 checks, met parallelle drukscenario's).
+
+**Volgende run — pak een ander gebied:** security-headers opnieuw (inclusief
+de nieuwe datalist-blokken in de app), of de accountlaag-sessies (verloop,
+intrekking bij wachtwoordwissel) opnieuw.
