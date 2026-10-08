@@ -1166,6 +1166,21 @@ bridge2.jpg</div>
   }
   function renderA4(){
     elEmpty.style.display=chosen.length?'none':'block';
+    // v2: zachte therapietrouw-hint bij grote programma's — geen blokkade, alleen
+    // context: kleinere oefenprogramma's worden thuis aantoonbaar beter volgehouden
+    // (zelfs concurrenten citeren dat 2 oefeningen beter scoren dan 8).
+    if(IS_V2){
+      var th=document.getElementById('trouwhint');
+      if(!th){
+        th=document.createElement('div');th.id='trouwhint';th.className='no-print';
+        th.style.cssText='display:none;margin:6px 0 2px;font-size:12.5px;line-height:1.5;color:#8a5a00;background:#fff7e6;border:1px solid #f2d999;border-radius:10px;padding:8px 12px';
+        elEmpty.parentNode.insertBefore(th,elEmpty);
+      }
+      if(chosen.length>=8){
+        th.textContent='Tip: '+chosen.length+' oefeningen is veel om thuis vol te houden — kleinere programma’s (2–6 oefeningen) geven doorgaans betere therapietrouw. Overweeg te snoeien of in fasen te werken.';
+        th.style.display='block';
+      }else th.style.display='none';
+    }
     // monitoring: links de datumkolom; per plaatje één kolomgroep S/H/W, even breed
     var colKeys=[],names=[],numcells='',piccells='';
     for(var n=0;n<12;n++){
