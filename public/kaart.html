@@ -463,6 +463,7 @@
     <div class="mschaal" id="pskschaal" role="group" aria-labelledby="pskvraag"></div>
     <div class="mlabels"><span id="pskl0"></span><span id="pskl10"></span></div>
     <div class="mdank" id="pskdank" role="status" aria-live="polite" style="display:none"></div>
+    <div class="mtrend mstart" id="pskstart" style="display:none"></div>
     <p class="mnoot" id="psknoot"></p>
   </div>
 
@@ -1042,6 +1043,16 @@
       b.classList.toggle('aan',aan);
       b.setAttribute('aria-pressed',aan?'true':'false');
     });
+    // net als bij de pijnmeting: laat de patiënt de eigen vooruitgang zien
+    // ("eerst 8, nu 3") zodra er metingen op verschillende dagen zijn — dé
+    // motivatieregel van de PSK; hergebruikt de mstart-vertaling (9 talen)
+    var st=document.getElementById('pskstart');
+    if(st){
+      if(m.length>=2&&dagStr(m[0].t)!==dagStr(m[m.length-1].t)){
+        st.textContent=tr('mstart').replace('{a}',m[0].s).replace('{b}',m[m.length-1].s);
+        st.style.display='';
+      }else st.style.display='none';
+    }
     kop.style.display='';blok.style.display='';
   }
 
