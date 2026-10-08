@@ -1097,3 +1097,25 @@ en de grendels (GIF, nep-PNG, 61 MB-header -> 413) staan.
 **Volgende run — pak een ander gebied:** security-headers opnieuw (inclusief
 de nieuwe datalist-blokken in de app), of de accountlaag-sessies (verloop,
 intrekking bij wachtwoordwissel) opnieuw.
+
+## 2026-10-08 — Accountlaag-sessies: verloop en intrekking
+
+**Geauditeerd:** het volledige sessiecontract van de praktijk-accountlaag én de
+v1-cookie-laag: intrekking van álle sessies (ook andere apparaten) bij
+wachtwoordwissel en bij herstel, de verse sessie uit het antwoord, logout die
+alleen de eigen sessie doodt, rare tokens (47/49-hex, niet-hex), de
+praktijkrem op het wachtwoord-endpoint (tien missers -> 429, ook op login),
+eenmaligheid van de herstelcode, en de v1-kant: wachtwoord-zetten trekt de
+bestaande fp1-cookie in.
+
+**Bevinding: geen gat.** Alle achttien adversariële checks groen op de eerste
+run — de intrekkingslogica die de code belooft, gebeurt ook echt.
+
+**Increment:** nieuwe regressietest test-sessies.mjs (18 checks, met
+mail-mock voor de v1-keten). Regressies groen: smoke (13), v1-vergeten was al
+gedekt via de mailketen.
+
+**Volgende run — pak een ander gebied:** security-headers opnieuw (de
+datalist-blokken en het Dossier-knop-pad zijn bijgekomen), of rate limiting
+op /api/kaarten-schrijfroutes onder parallelle druk (nog niet als aparte
+rotatie gedaan).
