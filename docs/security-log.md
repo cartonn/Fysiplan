@@ -1119,3 +1119,24 @@ gedekt via de mailketen.
 datalist-blokken en het Dossier-knop-pad zijn bijgekomen), of rate limiting
 op /api/kaarten-schrijfroutes onder parallelle druk (nog niet als aparte
 rotatie gedaan).
+
+## 2026-10-09 — Rate limiting kaarten-schrijfroutes onder parallelle druk
+
+**Geauditeerd:** de schrijfrem (40/IP/5min) onder een parallelle burst van 50
+gelijktijdige kaart-opslagen, het kaartenplafond per praktijk over wissel-IP's,
+dertig parallelle metingen op één dag (dag-vervanglogica), twee parallelle
+her-opslagen van dezelfde kaart (preservering van voortgang onder race) en een
+2 MB-body tegen het bodylimiet.
+
+**Bevinding: geen gat.** De teller telt exact ook onder gelijktijdigheid
+(hoogstens 40 door, rest 429), het plafond geeft een nette 400, parallelle
+dagmetingen vouwen samen tot één entry met geldige JSON op schijf, de
+preservering wist geen voortgang bij racende her-opslagen, en de dikke body
+wordt afgebroken zonder schade.
+
+**Increment:** nieuwe regressietest test-schrijfdruk.mjs (7 checks onder
+parallelle druk).
+
+**Volgende run — pak een ander gebied:** security-headers opnieuw (de
+datalist-blokken, het Dossier-pad en het pskstart-element zijn sinds de vorige
+headerrotatie bijgekomen), of path traversal opnieuw over de statische routes.
