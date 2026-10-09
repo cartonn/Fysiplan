@@ -2674,6 +2674,7 @@ bridge2.jpg</div>
               "<div style='display:flex;gap:6px;margin-top:3px'>"+
                 "<input type='datetime-local' data-safspraak='"+esc(c.id)+"' value='"+esc(afspraakInput(c))+"' style='font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
                 "<button class='btn' data-safspraakopslaan='"+esc(c.id)+"'>Bewaar</button>"+
+                "<button class='btn' data-safweek='"+esc(c.id)+"' title='Zet de afspraak één week later dan de huidige (of één week vanaf nu) en bewaar direct — fysio-afspraken keren meestal wekelijks terug'>+1 week</button>"+
               "</div>"+
             "</div>"+
             // behandelaar: één praktijk-login, heel het team — wie beheert deze kaart?
@@ -2995,6 +2996,21 @@ bridge2.jpg</div>
     }
     // dossiersamenvatting kopiëren: kaart ophalen, platte tekst bouwen, klembord
     // volgende afspraak opslaan (leeg veld = weghalen); alleen de ingelogde praktijk
+    // "+1 week": vult het veld (vanaf de huidige afspraak, of vanaf nu) en bewaart
+    // meteen via de bestaande Bewaar-knop — één tik voor de wekelijkse vervolgafspraak
+    var aw=e.target.closest('[data-safweek]');
+    if(aw){
+      var veldW=document.querySelector("[data-safspraak='"+aw.dataset.safweek+"']");
+      if(veldW){
+        var basisW=veldW.value?new Date(veldW.value).getTime():Date.now();
+        if(!isFinite(basisW))basisW=Date.now();
+        var dW=new Date(basisW+7*864e5),pz=function(n){return ('0'+n).slice(-2);};
+        veldW.value=dW.getFullYear()+'-'+pz(dW.getMonth()+1)+'-'+pz(dW.getDate())+'T'+pz(dW.getHours())+':'+pz(dW.getMinutes());
+        var okW=document.querySelector("[data-safspraakopslaan='"+aw.dataset.safweek+"']");
+        if(okW)okW.click();
+      }
+      return;
+    }
     var af=e.target.closest('[data-safspraakopslaan]');
     if(af){
       var veldA=document.querySelector("[data-safspraak='"+af.dataset.safspraakopslaan+"']");
