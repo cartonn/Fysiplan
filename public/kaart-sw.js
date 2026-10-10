@@ -1,51 +1,37 @@
-// Service worker voor de digitale kaart (/k): maakt de kaart offline bruikbaar en
-// laat hem als app op het beginscherm werken. Werkt uitsluitend binnen /k/ zodat
-// de rest van de site (waaronder v1) er nooit door wordt geraakt.
-'use strict';
-var CACHE = 'fysiplan-kaart-v1';
-
-self.addEventListener('install', function (e) {
-  self.skipWaiting();
+// Offline-vangnet voor de digitale kaart (/k): netwerk eerst, cache alleen als
+// terugval. Online gedrag verandert dus nooit (de verse respons wint altijd en
+// ververst de cache); zonder bereik opent de kaart uit de laatste geslaagde
+// lading — oefeningen, beelden en de kaartgegevens. Schrijfacties (POST) gaan
+// bewust niet door de cache: zonder bereik melden ze gewoon dat het even niet
+// lukte, precies zoals nu.
+const CACHE = "fysiplan-kaart-v1";
+const cachebaar = (url) => {
+  if (url.origin !== self.location.origin) return false;
+  const p = url.pathname;
+  return p.startsWith("/k/") || p === "/api/kaart" || p === "/api/kaart/manifest" || p.startsWith("/images/");
+};
+self.addEventListener("install", () => { self.skipWaiting(); });
+self.addEventListener("activate", (e) => {
+  e.waitUntil((async () => {
+    for (const k of await caches.keys()) if (k !== CACHE) await caches.delete(k);
+    await self.clients.claim();
+  })());
 });
-self.addEventListener('activate', function (e) {
-  e.waitUntil(caches.keys().then(function (namen) {
-    return Promise.all(namen.filter(function (n) { return n !== CACHE; }).map(function (n) { return caches.delete(n); }));
-  }).then(function () { return self.clients.claim(); }));
-});
-
-// netwerk eerst (de kaart moet altijd de laatste versie tonen), cache als vangnet
-// wanneer de telefoon offline is; grote videobestanden slaan we bewust niet op
-// plafond op de cache: ruim genoeg voor meerdere kaarten met beelden, maar de
-// telefoon van de patiënt loopt nooit vol; het overschot wordt weggesnoeid
-var TELLER = 0;
-function snoei(c) {
-  c.keys().then(function (ks) {
-    for (var i = 0; i < ks.length - 180; i++) c.delete(ks[i]);
-  }).catch(function () {});
-}
-
-self.addEventListener('fetch', function (e) {
-  var req = e.request;
-  if (req.method !== 'GET') return;
-  var url = new URL(req.url);
-  if (url.origin !== self.location.origin) return;
-  if (url.pathname.indexOf('/uploads/videos/') === 0) return;
-  e.respondWith(
-    fetch(req).then(function (antwoord) {
-      if (antwoord && antwoord.status === 200) {
-        var kopie = antwoord.clone();
-        caches.open(CACHE).then(function (c) {
-          c.put(req, kopie);
-          if (++TELLER % 25 === 0) snoei(c);
-        }).catch(function () {});
-      }
-      return antwoord;
-    }).catch(function () {
-      return caches.match(req).then(function (uitCache) {
-        if (uitCache) return uitCache;
-        if (req.mode === 'navigate') return caches.match(url.pathname);
-        return Response.error();
-      });
-    })
-  );
+self.addEventListener("fetch", (e) => {
+  const req = e.request;
+  if (req.method !== "GET") return;
+  let url; try { url = new URL(req.url); } catch { return; }
+  if (!cachebaar(url)) return;
+  e.respondWith((async () => {
+    const cache = await caches.open(CACHE);
+    try {
+      const vers = await fetch(req);
+      if (vers && vers.ok) cache.put(req, vers.clone()).catch(() => {});
+      return vers;
+    } catch (fout) {
+      const hit = await cache.match(req);
+      if (hit) return hit;
+      throw fout;
+    }
+  })());
 });
