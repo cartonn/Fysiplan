@@ -1140,3 +1140,27 @@ parallelle druk).
 **Volgende run — pak een ander gebied:** security-headers opnieuw (de
 datalist-blokken, het Dossier-pad en het pskstart-element zijn sinds de vorige
 headerrotatie bijgekomen), of path traversal opnieuw over de statische routes.
+
+## 2026-10-10 — Security-headers opnieuw + traversal-steekproef
+
+**Geauditeerd:** de volledige headerlaag over alle paginaroutes, inclusief de
+sinds de vorige headerrotatie bijgekomen blokken: /v2 scriptloos (default-src
+'none', de doorstuur- en taallinks zijn pure anchors), /k met nonce-CSP zonder
+unsafe-inline waarin élk inline script de nonce draagt (pskstart en pskblok
+vastgeklikt), /v2/app met de nieuwe v2-blokken (sj_zoek, pskSugg/behSugg),
+nosniff op elke route, nonce-CSP op /o, de noindex-afbakening (patiëntpaden
+wél, landing en v1 niet), raw-traversal op de statische routes en de
+uploads-koppen (nosniff + CORP) op een echt geserveerd logo.
+
+**Bevinding: geen gat.** Negentien checks groen. Twee testdwaalsporen: de
+traversal-verdediging antwoordt met 403 (dichter dan de verwachte 404), en
+/k/../server.js valt binnen de /k-route en serveert gewoon de kaartpagina —
+nooit een bronbestand.
+
+**Increment:** nieuwe regressietest test-headers.mjs (19 checks) die de hele
+headerlaag en de nieuwe elementen vastklikt — de opvolger van de bij een
+containerwissel verloren headertest.
+
+**Volgende run — pak een ander gebied:** de accountlaag claim-flow opnieuw
+(claim-kaping op een praktijk met bestaande kaarten, nieuwePraktijkLimiet), of
+de opname-tokenfamilie opnieuw onder verlooptijd.
