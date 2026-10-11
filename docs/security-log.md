@@ -1164,3 +1164,26 @@ containerwissel verloren headertest.
 **Volgende run — pak een ander gebied:** de accountlaag claim-flow opnieuw
 (claim-kaping op een praktijk met bestaande kaarten, nieuwePraktijkLimiet), of
 de opname-tokenfamilie opnieuw onder verlooptijd.
+
+## 2026-10-11 — Claim-flow opnieuw (claim-kaping, nieuwePraktijkLimiet)
+
+**Geauditeerd:** dubbel claimen (ook met ander hoofdlettergebruik), de
+nieuwe-praktijkrem (5/dag/IP), prototype-namen, het herstelcode-formaat en de
+uniciteit ervan, de beheer-reset (sleutelplicht, hergebruik van de claim,
+behoud van kaartvoortgang) en het gedocumenteerde ontwerpcompromis: een
+ongeclaimde praktijk mét kaarten kan door een derde geclaimd worden.
+
+**Bevinding: geen gat; één bewust restrisico, nu afgebakend bewezen.** De late
+claim is ontwerp (de rechtmatige praktijk moet ná het eerste gebruik kunnen
+beveiligen; app-vrij bestaat er geen identiteitsbewijs) en is begrensd: de
+claim staat in het auditlog, de lijst gaat direct op slot, de
+nieuwe-praktijkrem smoort massaal kapen (6e van één IP -> 429) en de
+beheerder kan elke claim resetten zonder dataverlies. De claim-nudge in het
+overzicht blijft de echte mitigatie: wie zijn kaarten deelt, wordt actief
+naar het slot geleid.
+
+**Increment:** nieuwe regressietest test-claimflow.mjs (11 checks).
+
+**Volgende run — pak een ander gebied:** de opname-tokenfamilie onder
+verlooptijd (opschoning bij verlopen tokens, QR-herfotografie), of de
+vertaal-/AI-routes (aiLimiet, promptafbakening) opnieuw.
