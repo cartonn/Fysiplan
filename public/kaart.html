@@ -375,12 +375,13 @@
     outline:3px solid rgba(36,86,166,.6);outline-offset:2px}
   @media print{
     body{background:#fff}
-    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,.skaart,.akaart,#metingkop,#agendakop,#vraagkop,#seinkop,#hskop,#pskkop,.kopacties,.belknop,.appbanner,.demobadge,.infobadge,.oefdone,.oefvoortgang{display:none !important}
+    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,.skaart,.akaart,#metingkop,#agendakop,#vraagkop,#seinkop,#hskop,#pskkop,#offlijn,.kopacties,.belknop,.appbanner,.demobadge,.infobadge,.oefdone,.oefvoortgang{display:none !important}
     .kop,.oef,.schemakaart{box-shadow:none}
   }
 </style>
 </head>
 <body>
+<div id="offlijn" style="display:none;position:sticky;top:0;z-index:40;font:600 13.5px/1.5 var(--disp);color:#8a5a00;background:#fff7e6;border-bottom:1px solid #f2d999;padding:9px 16px;text-align:center"></div>
 <div class="wrap" id="wrap" style="display:none">
   <header class="kop">
     <div class="eyebrow">Trainingskaart</div>
@@ -582,6 +583,11 @@
   };
   function trh(k){var d=THS[TAAL]||THS.nl;return d[k]!=null?d[k]:THS.nl[k];}
   // kop voor de volgende afspraak (de agenda-knop hergebruikt tr('agknop'))
+  // offline-banner: de kaart werkt offline (service worker), maar dat hoort de
+  // patiënt ook te wéten — anders voelt een mislukte tik als een kapotte kaart
+  var TOFF={nl:'Geen verbinding — dit is je laatst geladen kaart. Scores versturen lukt weer zodra je internet hebt.',en:'No connection — this is your last loaded card. Sending scores will work again once you are online.',de:'Keine Verbindung — dies ist deine zuletzt geladene Karte. Werte senden klappt wieder, sobald du online bist.',fr:'Pas de connexion — voici ta dernière carte chargée. L\u2019envoi des scores refonctionnera dès que tu seras en ligne.',es:'Sin conexión — esta es tu última tarjeta cargada. Enviar puntuaciones volverá a funcionar cuando estés en línea.',pl:'Brak połączenia — to twoja ostatnio wczytana karta. Wysyłanie wyników zadziała znów, gdy będziesz online.',tr:'Bağlantı yok — bu son yüklenen kartın. Puan gönderme, tekrar çevrimiçi olunca çalışır.',ar:'لا يوجد اتصال — هذه آخر بطاقة تم تحميلها. سيعمل إرسال النتائج مجددًا عند اتصالك بالإنترنت.',uk:'Немає з’єднання — це твоя остання завантажена картка. Надсилання результатів запрацює, щойно з’явиться інтернет.'};
+  function tekenOfflijn(){var el=document.getElementById('offlijn');if(!el)return;el.textContent=TOFF[TAAL]||TOFF.nl;el.style.display=(typeof navigator.onLine==='boolean'&&!navigator.onLine)?'block':'none';}
+  window.addEventListener('online',tekenOfflijn);window.addEventListener('offline',tekenOfflijn);
   var TAF={nl:'Je volgende afspraak',en:'Your next appointment',de:'Dein nächster Termin',fr:'Votre prochain rendez-vous',es:'Tu próxima cita',pl:'Twoja następna wizyta',tr:'Bir sonraki randevun',ar:'موعدك القادم',uk:'Твій наступний візит'};
   // PSK (Patiënt Specifieke Klachten): de doelactiviteit die de therapeut zette,
   // met de vraag hoe lastig die nu is (0 = geen moeite, 10 = onmogelijk)
@@ -1067,7 +1073,7 @@
     blok.style.display='block';
   }
 
-  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenHerstel();tekenPsk();tekenAfspraak();}
+  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenHerstel();tekenPsk();tekenAfspraak();tekenOfflijn();}
 
   // ---- taal wisselen: vaste teksten direct, kaartinhoud via de server (eenmalig per taal) ----
   function wisselTaal(t){
