@@ -15,6 +15,7 @@
     "images:line-pairs:generate": "node scripts/v2-line-art-graph.mjs run --execute",
     "images:v2-audit": "node scripts/audit-v2-contact-sheets.mjs",
     "images:lijn-illustraties": "node scripts/lijn-illustratie-graph.mjs plan",
+    "images:lijn-vector": "python3 scripts/lijn-vector.py",
     "images:lijn-illustraties:status": "node scripts/lijn-illustratie-graph.mjs status",
     "images:lijn-illustraties:generate": "node scripts/lijn-illustratie-graph.mjs run --execute",
     "channels:check": "node scripts/publication-channel-graph.mjs",
