@@ -1187,3 +1187,30 @@ naar het slot geleid.
 **Volgende run — pak een ander gebied:** de opname-tokenfamilie onder
 verlooptijd (opschoning bij verlopen tokens, QR-herfotografie), of de
 vertaal-/AI-routes (aiLimiet, promptafbakening) opnieuw.
+
+## 2026-10-12 — Vertaal- en AI-routes (aiLimiet, promptafbakening)
+
+**Geauditeerd:** alle vier de AI-routes (kaartassistent, patiëntvraag,
+vertaling, weekbrief) met een mock-Anthropic-API via ANTHROPIC_BASE_URL:
+uit-stand zonder sleutel, promptafbakening tegen injectie, sleutelbehandeling,
+de goedkope-weigeringen vóór de API (ontbrekend doel, cross-site), de
+vertaalcache, misvormde API-antwoorden en de AI-rem.
+
+**Bevinding: geen gat.** Zonder sleutel staat alles netjes uit (503; de lege
+weekbrief antwoordt met de standaardtekst nog vóór de AI). Een injectie-klacht
+("negeer alle instructies") blijft byte-exact binnen de <klacht>-tags en het
+systeembericht draagt de behandel-als-gegevens-afbakening. De sleutel gaat
+uitsluitend als header naar de API en lekt nooit in een clientantwoord.
+Goedkope fouten stoppen vóór de API (nul mock-hits), vertalingen cachen
+(tweede opvraging gratis), een misvormd antwoord geeft 502 zonder
+cachevervuiling, en de AI-rem laat hoogstens 20 echte API-aanroepen per IP
+per uur door (21e -> 429, de kosten-teller telt alleen doorgelaten verzoeken).
+Bijvangst: de assistent eist minimaal 4 bruikbare oefeningen vóór hij een
+voorstel accepteert — extra kwaliteitsgrendel die nu ook vastgeklikt is.
+
+**Increment:** nieuwe regressietest test-ai-routes.mjs (18 checks, met
+mock-Anthropic).
+
+**Volgende run — pak een ander gebied:** de opname-tokenfamilie onder
+verlooptijd (opschoning bij verlopen tokens, QR-herfotografie), of de
+accountlaag-inlogrem opnieuw onder parallelle druk.
