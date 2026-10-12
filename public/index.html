@@ -2491,15 +2491,28 @@ bridge2.jpg</div>
       var wb=document.createElement('div');
       wb.id='weekbrief';
       wb.innerHTML="<button class='btn' id='wb_knop' type='button' style='margin-top:8px'>Weekbrief van je praktijk</button>"+
+        "<button class='btn' id='wb_kopieer' type='button' style='margin-top:8px;margin-left:6px;display:none' title='Kopieer de weekbrief om in het teamoverleg of de groepsapp te plakken'>Kopieer</button>"+
         "<div id='wb_uit' class='hint' style='display:none;white-space:pre-wrap;margin-top:8px'></div>";
       blok.appendChild(wb);
       document.getElementById('wb_knop').addEventListener('click',function(){
-        var uit=document.getElementById('wb_uit'),k2=this;
-        k2.disabled=true;uit.style.display='';uit.textContent='De weekbrief wordt geschreven…';
+        var uit=document.getElementById('wb_uit'),k2=this,kp=document.getElementById('wb_kopieer');
+        k2.disabled=true;uit.style.display='';kp.style.display='none';uit.textContent='De weekbrief wordt geschreven…';
         fetch('api/praktijk/brief?praktijk='+encodeURIComponent(SET.praktijk||''),PGET())
           .then(function(r){return r.json();})
-          .then(function(d){uit.textContent=d.ok?d.brief:(d.fout||'De weekbrief is nu niet beschikbaar.');k2.disabled=false;})
+          .then(function(d){
+            uit.textContent=d.ok?d.brief:(d.fout||'De weekbrief is nu niet beschikbaar.');
+            if(d.ok&&d.brief)kp.style.display='';
+            k2.disabled=false;
+          })
           .catch(function(){uit.textContent='De weekbrief is nu niet beschikbaar.';k2.disabled=false;});
+      });
+      // de brief is geschreven om te delen (teamoverleg, groepsapp): één klik kopieert
+      document.getElementById('wb_kopieer').addEventListener('click',function(){
+        var kp=this,tekst=document.getElementById('wb_uit').textContent||'';
+        var oudK=kp.textContent,toonK=function(t){kp.textContent=t;setTimeout(function(){kp.textContent=oudK;},1600);};
+        if(navigator.clipboard&&navigator.clipboard.writeText){
+          navigator.clipboard.writeText(tekst).then(function(){toonK('Gekopieerd ✓');}).catch(function(){window.prompt('Kopieer de weekbrief:',tekst);});
+        }else{window.prompt('Kopieer de weekbrief:',tekst);}
       });
     }
     var el=document.getElementById('k_srv_lijst');
