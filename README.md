@@ -49,6 +49,11 @@ Live Railway URL: https://fysiplan-production.up.railway.app
   (vereist Python + Pillow).
 - `npm run videos:check` — controleert IDs, reviewstatus en veilige Stream-URL's van de videotheek.
 - `npm run videos:export` — schrijft de actuele productiewachtrij als CSV naar standaarduitvoer.
+- `npm run images:lijn-vector` — maakt strakke vector-lijntekeningen (SVG + 800x1200 zwart-wit PNG)
+  van de kleurkaarten: één dikke buitencontour, dunne binnenlijnen uit kleurgrenzen en plooien,
+  potrace-curves. Zonder argumenten een proef van 12 oefeningen in `image-work/lijn-vector/`
+  (met contactvel); `-- --alle --publiceer` overschrijft de `-line-v1.png`-kaarten en zet de `.svg`
+  ernaast. Vereist `pip install -r scripts/requirements-lijn-vector.txt`.
 - `npm run start` — start de webserver op `PORT` (Railway) of lokaal op `3000`.
 
 Lokaal draaien: `npm run build && npm run start`, daarna http://localhost:3000
