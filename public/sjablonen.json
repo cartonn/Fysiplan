@@ -410,5 +410,39 @@
    "s": "2",
    "h": "10"
   }
+ },
+ {
+  "naam": "Etalagebenen (claudicatio): lopen en kuitkracht",
+  "sub": "Looptraining bij etalagebenen: dagelijks wandelen tot de pijngrens komt, even rust, en weer verder — plus kracht voor kuiten en benen.",
+  "oefeningen": [
+   "Loopband",
+   "Calf raises",
+   "Standing chair calfs raises",
+   "Step up",
+   "Chair squat",
+   "Lunges",
+   "Balans op 1 been"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "COPD: kracht en conditie",
+  "sub": "Beweegtraining bij COPD: rustige conditie en kracht met steun van een stoel, in eigen tempo en met pauzes tussen de series.",
+  "oefeningen": [
+   "Loopband",
+   "Seated chair squats",
+   "Standing chair half squat",
+   "Standing chair calfs raises",
+   "Standing chair leg curl",
+   "Anteflexie armen",
+   "Mob thoracaal"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "8"
+  }
  }
 ]
