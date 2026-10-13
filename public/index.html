@@ -2476,11 +2476,28 @@ bridge2.jpg</div>
     zet('hmail','mailto:?subject='+encodeURIComponent(vulDeel(d.sh,cid))+'&body='+encodeURIComponent(her));
   }
   var srvArchiefView=false; // toont de gearchiveerde kaarten i.p.v. de actuele
+  // seintjes-badge op de Kaarten-knop: de therapeut ziet bij het openen van de
+  // app meteen dat er patiënten op een antwoord wachten, zonder eerst de lijst
+  // te openen. Telt alleen openstaande vraag- en pijnseintjes op actieve
+  // kaarten; het positieve "het gaat goed" hoeft niet te alarmeren.
+  function zetSeinBadge(n){
+    var kb=document.getElementById('kaartenBtn');if(!kb)return;
+    var b=document.getElementById('kb_sein');
+    if(!n){if(b)b.remove();kb.removeAttribute('title');return;}
+    if(!b){
+      b=document.createElement('span');b.id='kb_sein';b.className='no-print';
+      b.style.cssText='background:#c94f36;color:#fff;border-radius:99px;font-size:10.5px;font-weight:700;padding:1px 6px;margin-left:6px;vertical-align:1px';
+      kb.appendChild(b);
+    }
+    b.textContent=n;
+    var t=n===1?'1 openstaand seintje van een patiënt — open Kaarten om te antwoorden':n+' openstaande seintjes van patiënten — open Kaarten om te antwoorden';
+    b.title=t;kb.title=t;
+  }
   function toonSrvKaarten(){
     var blok=document.getElementById('k_srv');
     var knop=document.getElementById('k_save_srv');
     var pr=(SET.praktijk||'').trim();
-    if(!pr){blok.style.display='none';knop.style.display='none';return;}
+    if(!pr){blok.style.display='none';knop.style.display='none';zetSeinBadge(0);return;}
     blok.style.display='';knop.style.display='';
     document.getElementById('k_srv_naam').textContent='('+pr+')';
     // v2: beveiligingsslot — claim/inloggen per praktijk (alleen in de v2-app)
@@ -2521,11 +2538,12 @@ bridge2.jpg</div>
       .then(function(r){return r.ok?r.json():[];})
       .then(function(l){
         var zoekEl=document.getElementById('k_srv_zoek');
-        if(!Array.isArray(l)||!l.length){if(zoekEl)zoekEl.style.display='none';el.innerHTML="<div class='hint'>Nog geen gedeelde kaarten voor deze praktijk.</div>";return;}
+        if(!Array.isArray(l)||!l.length){if(zoekEl)zoekEl.style.display='none';el.innerHTML="<div class='hint'>Nog geen gedeelde kaarten voor deze praktijk.</div>";zetSeinBadge(0);return;}
         // archiveren: afgeronde kaarten uit het hoofdoverzicht, zonder dataverlies.
         // lArch = gearchiveerd, l = actueel (de standaardweergave).
         var lArch=l.filter(function(c){return c.gearchiveerd;});
         l=l.filter(function(c){return !c.gearchiveerd;});
+        zetSeinBadge(l.filter(function(c){return c.seintje&&(c.seintje.soort==='vraag'||c.seintje.soort==='pijn');}).length);
         // suggesties voor het behandelaarveld: de namen die op kaarten van deze
         // praktijk al staan, zodat het team consequent dezelfde spelling gebruikt
         var behSugg=document.getElementById('behSugg');
@@ -3469,13 +3487,13 @@ bridge2.jpg</div>
   idbAll().then(function(imgs){
     IMGCACHE=imgs||{};
     var lib=loadLib();
-    if(lib){buildLibrary(lib);chosen=[];applySettings();render();return;}
+    if(lib){buildLibrary(lib);chosen=[];applySettings();render();if(IS_V2)toonSrvKaarten();return;}
     return loadDefaultLibrary().then(function(){
       // v2: de kaartstaat is opgeslagen tegen de server-bibliotheek, maar de
       // eerste loadState() draaide tegen de ingebedde standaardlijst en
       // filterde die ids weg. Nu de echte bibliotheek er staat: opnieuw
       // herstellen, anders is de kaart na elke herlaadbeurt leeg.
-      if(IS_V2){loadState();epdVoorinvul();}
+      if(IS_V2){loadState();epdVoorinvul();toonSrvKaarten();}
       applySettings();render();
     });
   }).catch(function(){buildDefault();applySettings();render();});
