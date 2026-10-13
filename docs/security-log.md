@@ -1214,3 +1214,45 @@ mock-Anthropic).
 **Volgende run — pak een ander gebied:** de opname-tokenfamilie onder
 verlooptijd (opschoning bij verlopen tokens, QR-herfotografie), of de
 accountlaag-inlogrem opnieuw onder parallelle druk.
+
+## 2026-10-13 — Opname-tokenfamilie onder verlooptijd
+
+**Geauditeerd:** de hele tokenketen van de video-opname via de scherm-QR:
+start (admin-grendel), status (poll-rem), upload (same-site, formaat- en
+magic-bytes-controle, eenmaligheid), het verlopen van tokens (OPNAME_TTL_MS,
+opschoning aangestoten vanuit start, status én upload) en wat er na het
+verloop met al geüploade bestanden gebeurt.
+
+**Bevinding: één gat gedicht — weesvideo's na tokenverloop.** De verloopketen
+zelf stond goed: een gefotografeerde scherm-QR is na de TTL dood voor status
+én upload, een token is eenmalig en alleen de beheerder kan tokens munten.
+Maar een geüploade video die nooit werd geclaimd (doel 'kaart' zonder dat de
+kaart werd opgeslagen, of een afgebroken keten) bleef na het verlopen van het
+token voorgoed als weesbestand op de schijf staan: opnameOpschonen() wiste
+alleen de Map-entry, nooit het bestand. Juist bij beelden van cliënten hoort
+er niets achter te blijven, en de wezen vraten bovendien stilletjes het
+opslagquotum (VIDEO_OPSLAG_MAX) op. Fix: opnameOpschonen() geeft de paden van
+verlopen, niet-geclaimde uploads nu door aan ruimKaartVideosOp, die het
+bestand alleen weggooit als géén kaart of oefening het nog gebruikt
+(fire-and-forget; de aanstotende aanvraag wacht er niet op). Een video die
+een kaart wél claimt overleeft het verloop aantoonbaar.
+
+**Bijvangst — tweede gat gedicht: de logo-veegrace van 2026-10-07 zat dieper.**
+De regressieronde van deze run liet de parallelle logo-vervanging opnieuw
+falen: racer A kon in zijn prefix-veeg het nét geschreven bestand van racer B
+wissen vóórdat B's profielopslag ernaar wees, waarna B's veeg het bestand van
+A opruimde — nul logobestanden over en een profiel met een bungelende
+verwijzing. Het per-bestand vers lezen van het profiel (de fix van 10-07) kon
+die volgorde niet uitsluiten. Definitieve fix: schrijven, profielopslag en
+veeg zijn nu per praktijk geserialiseerd (inProfielRij, een promise-rij per
+sleutel); validatie en afwijzingen blijven vóór de rij. Drie opeenvolgende
+runs van de parallelle vervanging houden nu precies één bestand over waar het
+profiel naar wijst.
+
+**Increment:** wezenopruiming bij tokenverloop + geserialiseerde
+profielopslag in server.js + nieuwe regressietest test-opname-verloop.mjs
+(11 checks, met korte TTL via OPNAME_TTL_MS).
+
+**Volgende run — pak een ander gebied:** de accountlaag-inlogrem opnieuw
+onder parallelle druk, of de praktijkprofiel-uploads (logo/avatar) onder
+misvormde en te grote bestanden.

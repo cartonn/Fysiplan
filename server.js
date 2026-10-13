@@ -405,7 +405,34 @@ let lopendeUploads = 0;
 const OPNAME_TTL_MS = Math.max(1000, Number(process.env.OPNAME_TTL_MS) || 15 * 60 * 1000);
 function opnameOpschonen() {
   const nu = Date.now();
-  for (const [t, o] of opnames) if (nu - o.made > OPNAME_TTL_MS) opnames.delete(t);
+  // een geüploade maar nooit geclaimde video (doel 'kaart' zonder opgeslagen kaart,
+  // of een afgebroken keten) hoort niet achter te blijven op de schijf: bij het
+  // verlopen van het token gaat het pad langs ruimKaartVideosOp, die het bestand
+  // alleen weggooit als géén kaart of oefening het nog gebruikt. Fire-and-forget:
+  // de aanvraag die de opschoning aanstoot wacht er niet op.
+  const wezen = [];
+  for (const [t, o] of opnames) {
+    if (nu - o.made > OPNAME_TTL_MS) {
+      opnames.delete(t);
+      if (o.video) wezen.push(o.video);
+    }
+  }
+  if (wezen.length) ruimKaartVideosOp(wezen).catch(() => {});
+}
+
+// profielopslag per praktijk serialiseren: twee parallelle logo-vervangingen
+// konden anders elkaars net geschreven bestand wegvegen vóórdat het profiel
+// ernaar wees (nul logobestanden over en een bungelende verwijzing). In de rij
+// ziet elke opslag de vorige volledig afgerond, inclusief de veeg.
+const profielRij = new Map();
+function inProfielRij(key, fn) {
+  const vorige = profielRij.get(key) || Promise.resolve();
+  const eigen = vorige.then(fn, fn);
+  const staart = eigen.catch(() => {}).then(() => {
+    if (profielRij.get(key) === staart) profielRij.delete(key);
+  });
+  profielRij.set(key, staart);
+  return eigen;
 }
 // persoonlijke videobestanden weggooien zodra geen enkele kaart (of oefening) ze nog gebruikt;
 // juist bij beelden van cliënten hoort er niets achter te blijven
@@ -2030,41 +2057,46 @@ async function afhandelen(request, response) {
       if (!praktijken[key] && nieuwePraktijkLimiet(request, response)) return;
       if (!praktijken[key] && Object.keys(praktijken).length >= 200) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal praktijken bereikt." }); return; }
       // praktijklogo: meegestuurd als dataURL, opgeslagen als bestand; zonder nieuw
-      // logo blijft het bestaande logo van deze praktijk gewoon staan
-      const oud = praktijken[key];
+      // logo blijft het bestaande logo van deze praktijk gewoon staan. Validatie
+      // vóór de rij: een afwijzing hoeft nergens op te wachten.
+      let logoBuf = null, logoExt = "";
       if (b.logo) {
         const m = String(b.logo).match(/^data:image\/(jpeg|png);base64,([A-Za-z0-9+/=]+)$/);
         if (!m) { await sendJson(response, 400, { ok: false, fout: "Logo moet een JPEG of PNG zijn." }); return; }
         const buf = Buffer.from(m[2], "base64");
         if (buf.length < 100 || buf.length > 400 * 1024) { await sendJson(response, 400, { ok: false, fout: "Logo is te groot (max. 400 kB)." }); return; }
         if (!echteAfbeelding(buf, m[1])) { await sendJson(response, 400, { ok: false, fout: "Dit bestand is geen geldige JPEG of PNG." }); return; }
-        await mkdir(uploadsDir, { recursive: true });
-        const file = `logo-${slug(p.praktijk)}-${Date.now()}.${m[1] === "png" ? "png" : "jpg"}`;
-        await writeFile(join(uploadsDir, file), buf);
-        p.logo = "uploads/" + file;
-        if (oud && oud.logo && oud.logo.startsWith("uploads/")) { try { await unlink(join(dataDir, oud.logo)); } catch {} }
-      } else if (oud && oud.logo) {
-        p.logo = oud.logo;
+        logoBuf = buf; logoExt = m[1] === "png" ? "png" : "jpg";
       }
-      praktijken[key] = p;
-      await saveJson(praktijkenPath, praktijken);
-      // opruimen op prefix in plaats van alleen "het vorige pad": bij parallelle
-      // vervangingen lazen racers hetzelfde oude pad en bleven hun verliezende
-      // nieuwe bestanden als wezen achter op het volume. De veeg houdt precies
-      // het logo dat het profiel nu noemt en ruimt al het andere van déze slug op
-      // (ook wezen uit het verleden); andermans logo's blijven onaangeraakt.
-      if (b.logo) {
-        try {
-          const prefix = `logo-${slug(p.praktijk)}-`;
-          for (const f of await readdir(uploadsDir)) {
-            if (!f.startsWith(prefix)) continue;
-            // per bestand vers kijken welk logo het profiel nú noemt: een trage
-            // racer mag nooit het bestand wissen waar de laatste opslag naar wijst
-            const huidig = (praktijken[key] && praktijken[key].logo) ? praktijken[key].logo.split("/").pop() : "";
-            if (f !== huidig) { try { await unlink(join(uploadsDir, f)); } catch {} }
-          }
-        } catch {}
-      }
+      // schrijven, profielopslag en veeg geserialiseerd per praktijk (zie
+      // inProfielRij): een parallelle vervanging kan zo nooit meer het net
+      // geschreven bestand van een ander wegvegen vóór het profiel ernaar wijst
+      await inProfielRij(key, async () => {
+        const oud = praktijken[key];
+        if (logoBuf) {
+          await mkdir(uploadsDir, { recursive: true });
+          const file = `logo-${slug(p.praktijk)}-${Date.now()}.${logoExt}`;
+          await writeFile(join(uploadsDir, file), logoBuf);
+          p.logo = "uploads/" + file;
+          if (oud && oud.logo && oud.logo.startsWith("uploads/")) { try { await unlink(join(dataDir, oud.logo)); } catch {} }
+        } else if (oud && oud.logo) {
+          p.logo = oud.logo;
+        }
+        praktijken[key] = p;
+        await saveJson(praktijkenPath, praktijken);
+        // opruimen op prefix: de veeg houdt precies het logo dat het profiel nu
+        // noemt en ruimt al het andere van déze slug op (ook wezen uit het
+        // verleden); andermans logo's blijven onaangeraakt
+        if (logoBuf) {
+          try {
+            const prefix = `logo-${slug(p.praktijk)}-`;
+            const huidig = p.logo.split("/").pop();
+            for (const f of await readdir(uploadsDir)) {
+              if (f.startsWith(prefix) && f !== huidig) { try { await unlink(join(uploadsDir, f)); } catch {} }
+            }
+          } catch {}
+        }
+      });
       await sendJson(response, 200, { ok: true, logo: p.logo || "" });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek (of logo te groot)." });
