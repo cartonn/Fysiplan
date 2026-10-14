@@ -2208,7 +2208,29 @@ bridge2.jpg</div>
     if(!msg||!code)return;
     msg.style.display='';
     msg.innerHTML=esc(intro||'Bewaar deze herstelcode op een veilige plek (bijvoorbeeld de praktijkmap). Hiermee zet je een nieuw wachtwoord als het huidige kwijt is. Hij wordt maar één keer getoond:')+
-      "<div style='font:700 15px/1.6 ui-monospace,monospace;user-select:all;margin-top:4px'>"+esc(code)+"</div>";
+      "<div style='font:700 15px/1.6 ui-monospace,monospace;user-select:all;margin-top:4px'>"+esc(code)+"</div>"+
+      // de code raakt in de praktijk anders gewoon kwijt: één tik kopieert hem,
+      // één tik bewaart hem als tekstbestand voor in de (digitale) praktijkmap
+      "<div style='display:flex;gap:6px;margin-top:6px;flex-wrap:wrap'>"+
+        "<button class='btn' id='ps_hkopie' type='button'>Kopieer</button>"+
+        "<button class='btn' id='ps_hbestand' type='button' title='Bewaar de code als tekstbestand, bijvoorbeeld in de praktijkmap'>Bewaar als bestand</button>"+
+      "</div>";
+    document.getElementById('ps_hkopie').addEventListener('click',function(){
+      var k=this,oud=k.textContent,toon=function(t){k.textContent=t;setTimeout(function(){k.textContent=oud;},1600);};
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(code).then(function(){toon('Gekopieerd ✓');}).catch(function(){window.prompt('Kopieer de herstelcode:',code);});
+      }else{window.prompt('Kopieer de herstelcode:',code);}
+    });
+    document.getElementById('ps_hbestand').addEventListener('click',function(){
+      var pr=PRAKSLOT.pr||(SET.praktijk||'').trim()||'praktijk';
+      var tekst='Fysiplan — herstelcode voor praktijk '+pr+'\r\nCode: '+code+'\r\nBewaard op: '+new Date().toLocaleDateString('nl-NL')+'\r\n\r\n'+
+        'Met deze code zet je een nieuw wachtwoord als het huidige kwijt is.\r\nBewaar dit bestand op een veilige plek (bijvoorbeeld de praktijkmap).\r\n';
+      var a=document.createElement('a');
+      a.href=URL.createObjectURL(new Blob([tekst],{type:'text/plain;charset=utf-8'}));
+      a.download='fysiplan-herstelcode-'+(pr.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'praktijk')+'.txt';
+      document.body.appendChild(a);a.click();
+      setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},800);
+    });
   }
   function prakHerstel(){
     var code=document.getElementById('ps_hcode'),nw=document.getElementById('ps_hnieuw'),knop=document.getElementById('ps_hdo');
