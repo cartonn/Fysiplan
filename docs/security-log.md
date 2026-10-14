@@ -1256,3 +1256,31 @@ profielopslag in server.js + nieuwe regressietest test-opname-verloop.mjs
 **Volgende run — pak een ander gebied:** de accountlaag-inlogrem opnieuw
 onder parallelle druk, of de praktijkprofiel-uploads (logo/avatar) onder
 misvormde en te grote bestanden.
+
+## 2026-10-14 — Accountlaag-inlogrem onder parallelle druk
+
+**Geauditeerd:** de per-praktijk-inlogrem (loginOpSlot/loginMisTel) onder
+gelijktijdigheid: 30 parallelle foute logins vanaf 30 verschillende IP's op
+één praktijk, het gedrag van het slot voor het juiste wachtwoord, hoofdletter-
+varianten, de herstelroute, buurpraktijken en het schonen van de teller na
+een geslaagde login.
+
+**Bevinding: geen gat.** De teller raakt niet corrupt onder parallelle druk:
+van 30 gelijktijdige missers worden er exact 10 geteld (403) en gaan er 20 op
+slot (429) — de controle-en-tel-sectie draait synchroon ná het inlezen van de
+body, dus requests kunnen elkaar daar niet kruisen. Het slot blokkeert daarna
+ook het júiste wachtwoord, hoofdletters omzeilen het niet (praktijknaam wordt
+genormaliseerd vóór de bucket), en de herstelroute deelt het slot — zelfs met
+de goede herstelcode antwoordt hij 429. Een andere praktijk blijft gewoon
+bereikbaar, en na een geslaagde login is de teller aantoonbaar schoon (negen
+verse missers geven negen keer 403; pas de elfde zet het slot er weer op).
+Ontwerpnotitie (geen gat): het slot verloopt een kwartier na de éérste misser
+en latere missers verlengen het niet — een aanhoudende aanvaller haalt zo
+hooguit ~40 gokken per uur per praktijk, wat tegen een behoorlijk wachtwoord
+niets oplevert.
+
+**Increment:** nieuwe regressietest test-inlogrem-parallel.mjs (9 checks).
+
+**Volgende run — pak een ander gebied:** de oefenvideo-beheerroutes
+(admin-grendel, avatar-upload, Stream-keten) of de statistiek- en
+telemetrieroutes (statsEventLimiet, bezoekteller) op vervuiling en groei.
