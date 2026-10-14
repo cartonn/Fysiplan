@@ -1577,7 +1577,16 @@
     // print / bewaar als PDF: de print-CSS verbergt de knoppen en meet-/agenda-
     // blokken en laat oefeningen + schema staan — zo kan een patiënt die papier
     // prettig vindt zijn eigen kaart afdrukken, ook als hij alleen de link kreeg
-    document.getElementById('printBtn').addEventListener('click',function(){window.print();});
+    // bewaar-als-PDF gebruikt de paginatitel als bestandsnaam: tijdens het
+    // printen even "Trainingskaart <naam> — <datum>", daarna de gewone titel terug
+    document.getElementById('printBtn').addEventListener('click',function(){
+      var oud=document.title;
+      var nm=(K&&K.kaart&&K.kaart.naam)?' '+K.kaart.naam:'';
+      document.title=tr('eyebrow')+nm+' — '+new Date().toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});
+      var terug=function(){document.title=oud;window.removeEventListener('afterprint',terug);};
+      window.addEventListener('afterprint',terug);
+      window.print();
+    });
     if(window.speechSynthesis){
       var lb=document.getElementById('leesBtn');
       lb.style.display='';

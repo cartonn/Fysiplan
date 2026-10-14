@@ -1612,11 +1612,24 @@ bridge2.jpg</div>
     }else if(e.key==='Escape'){search.value='';q='';keyboardIndex=-1;renderList();search.blur();}
   });
   var SAFARI_PRINT=/Safari/i.test(navigator.userAgent)&&!/Chrome|Chromium|CriOS|Android/i.test(navigator.userAgent);
+  // bewaar-als-PDF krijgt de paginatitel als bestandsnaam: tijdens het printen
+  // heet de pagina "Oefenkaart <cliënt> — <datum>" in plaats van voor elke
+  // cliënt hetzelfde generieke "Fysiplan v2 — trainingskaarten". Zo hangt de
+  // PDF met een herkenbare naam in het EPD-dossier, zonder handmatig hernoemen.
+  var TITEL_VOOR_PRINT=null;
+  window.addEventListener('afterprint',function(){
+    if(TITEL_VOOR_PRINT!==null){document.title=TITEL_VOOR_PRINT;TITEL_VOOR_PRINT=null;}
+  });
   function doePrint(){
     if(SAFARI_PRINT)document.documentElement.classList.add('safari-print');
     if(normalizePrintableTextFields())saveState();
     if(document.activeElement&&document.activeElement.matches&&document.activeElement.matches('#c_opm,#c_cave'))document.activeElement.blur();
     ping('print');
+    if(IS_V2){
+      var nm=huidigeKaartNaam();
+      TITEL_VOOR_PRINT=document.title;
+      document.title='Oefenkaart'+(nm?' '+nm:'')+' — '+new Date().toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});
+    }
     window.print();
   }
   document.getElementById('printBtn').addEventListener('click',function(){
