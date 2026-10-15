@@ -3811,7 +3811,11 @@
   "exerciseId": "fp_027779ceb994b08e",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "springen",
+   "sprong"
+  ]
  },
  {
   "naam": "Box jumps",
@@ -3822,7 +3826,11 @@
   "exerciseId": "fp_3f0d4e80a394619a",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "springen",
+   "sprong"
+  ]
  },
  {
   "naam": "Long jumps",
@@ -3833,7 +3841,11 @@
   "exerciseId": "fp_efc6b34c568c21b4",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "springen",
+   "sprong"
+  ]
  },
  {
   "naam": "Skate jumps",
@@ -3844,7 +3856,11 @@
   "exerciseId": "fp_896e36079b2d4562",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "springen",
+   "sprong"
+  ]
  },
  {
   "naam": "Sprints",
@@ -3855,7 +3871,11 @@
   "exerciseId": "fp_3b9e14e7264e71a4",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "springen",
+   "sprong"
+  ]
  },
  {
   "naam": "Snap jumps",
@@ -3866,7 +3886,11 @@
   "exerciseId": "fp_4c70180e5dd7d865",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "springen",
+   "sprong"
+  ]
  },
  {
   "naam": "Rope jumping",
@@ -3877,7 +3901,12 @@
   "exerciseId": "fp_7a9033fd674310f4",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "springen",
+   "sprong",
+   "touwtjespringen"
+  ]
  },
  {
   "naam": "Swiss ball wall squat",
@@ -3888,7 +3917,15 @@
   "exerciseId": "fp_f26c61999ac184bd",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal",
+   "kniebuiging",
+   "squat"
+  ]
  },
  {
   "naam": "Swiss ball plank",
@@ -3899,7 +3936,14 @@
   "exerciseId": "fp_11f9dbbabfc572e5",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal",
+   "plank"
+  ]
  },
  {
   "naam": "Swiss ball hip raise",
@@ -3910,7 +3954,15 @@
   "exerciseId": "fp_2cd13067f375afc5",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal",
+   "heup",
+   "heffen"
+  ]
  },
  {
   "naam": "Swiss ball leg curl hip raise",
@@ -3921,7 +3973,17 @@
   "exerciseId": "fp_8dfe2f55da994cbb",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal",
+   "heup",
+   "been",
+   "buigen",
+   "heffen"
+  ]
  },
  {
   "naam": "Swiss ball squeezes adductoren",
@@ -3932,7 +3994,14 @@
   "exerciseId": "fp_0e06ee3270c9952a",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal",
+   "samenknijpen"
+  ]
  },
  {
   "naam": "Swiss ball feet to chest",
@@ -3943,7 +4012,15 @@
   "exerciseId": "fp_e027a1232263ffbd",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal",
+   "borst",
+   "borstspieren"
+  ]
  },
  {
   "naam": "Swiss ball knee to chest",
@@ -3954,7 +4031,16 @@
   "exerciseId": "fp_3fd7f65263a2279b",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal",
+   "borst",
+   "borstspieren",
+   "knie"
+  ]
  },
  {
   "naam": "Swiss ball rollout",
@@ -3965,7 +4051,14 @@
   "exerciseId": "fp_ca69fe932ac4e333",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal",
+   "uitrollen"
+  ]
  },
  {
   "naam": "Swiss ball abs",
@@ -3976,7 +4069,14 @@
   "exerciseId": "fp_390ca950f198eaf7",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal",
+   "buikspieren"
+  ]
  },
  {
   "naam": "Swiss ball back ext",
@@ -3987,7 +4087,14 @@
   "exerciseId": "fp_9b53e6f12f136603",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal",
+   "rug"
+  ]
  },
  {
   "naam": "Swiss ball push up",
@@ -3998,7 +4105,14 @@
   "exerciseId": "fp_237e203f85cb96f8",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal",
+   "opdrukken"
+  ]
  },
  {
   "naam": "Swiss ball leg lifts",
@@ -4009,7 +4123,15 @@
   "exerciseId": "fp_dd9dd39c7f234cad",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal",
+   "been",
+   "heffen"
+  ]
  },
  {
   "naam": "Swiss ball core",
@@ -4020,7 +4142,13 @@
   "exerciseId": "fp_573ddb9f0d931790",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal"
+  ]
  },
  {
   "naam": "Swiss ball leg curl one leg",
@@ -4031,7 +4159,17 @@
   "exerciseId": "fp_8b276d90443725c9",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal",
+   "been",
+   "buigen",
+   "één been",
+   "balans"
+  ]
  },
  {
   "naam": "Swiss ball dumbbell flyes",
@@ -4042,7 +4180,16 @@
   "exerciseId": "fp_55b80e4f630bccda",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal",
+   "halter",
+   "vlinderslag",
+   "borst"
+  ]
  },
  {
   "naam": "Swiss ball dumbbell chest press",
@@ -4053,7 +4200,17 @@
   "exerciseId": "fp_725683c0e7847634",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal",
+   "borst",
+   "borstspieren",
+   "drukken",
+   "halter"
+  ]
  },
  {
   "naam": "Swiss ball dumbbell biceps curl",
@@ -4064,7 +4221,17 @@
   "exerciseId": "fp_5ac0b1004fa007a4",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal",
+   "biceps",
+   "armbuiger",
+   "buigen",
+   "halter"
+  ]
  },
  {
   "naam": "Swiss ball russian twist",
@@ -4075,7 +4242,14 @@
   "exerciseId": "fp_1fcb2074c32b694e",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zwitserse bal",
+   "fitnessbal",
+   "gymbal",
+   "oefenbal",
+   "draaien"
+  ]
  },
  {
   "naam": "Foam roller glute med.",
@@ -4086,7 +4260,13 @@
   "exerciseId": "fp_90e9eb8d9522510c",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "foamroller",
+   "schuimrol",
+   "bil",
+   "bilspieren"
+  ]
  },
  {
   "naam": "Foam roller glute",
@@ -4097,7 +4277,13 @@
   "exerciseId": "fp_6c0fe3bba04367bd",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "foamroller",
+   "schuimrol",
+   "bil",
+   "bilspieren"
+  ]
  },
  {
   "naam": "Foam roller quadriceps",
@@ -4108,7 +4294,13 @@
   "exerciseId": "fp_8b295cf8d4352450",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "foamroller",
+   "schuimrol",
+   "bovenbeen",
+   "quadriceps"
+  ]
  },
  {
   "naam": "Foam roller hamstring",
@@ -4119,7 +4311,13 @@
   "exerciseId": "fp_4c76bb5ec2f5750b",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "foamroller",
+   "schuimrol",
+   "hamstrings",
+   "achterkant bovenbeen"
+  ]
  },
  {
   "naam": "Foam roller calf",
@@ -4130,7 +4328,13 @@
   "exerciseId": "fp_8fb77da919f771d2",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "foamroller",
+   "schuimrol",
+   "kuit",
+   "kuiten"
+  ]
  },
  {
   "naam": "Foam roller tractus",
@@ -4141,7 +4345,12 @@
   "exerciseId": "fp_1475d9e5ff7c119b",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "foamroller",
+   "schuimrol",
+   "buitenkant bovenbeen"
+  ]
  },
  {
   "naam": "Foam roller back upper",
@@ -4152,7 +4361,12 @@
   "exerciseId": "fp_84154b2578401c90",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "foamroller",
+   "schuimrol",
+   "rug"
+  ]
  },
  {
   "naam": "Foam roller lat stretch",
@@ -4163,7 +4377,15 @@
   "exerciseId": "fp_459a21a001379ff4",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "foamroller",
+   "schuimrol",
+   "rekoefening",
+   "rekken",
+   "latissimus",
+   "brede rugspier"
+  ]
  },
  {
   "naam": "Foam roller adductoren",
@@ -4174,7 +4396,11 @@
   "exerciseId": "fp_d1a9f14ec236926a",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "foamroller",
+   "schuimrol"
+  ]
  },
  {
   "naam": "Foam roller fore arm",
@@ -4185,7 +4411,13 @@
   "exerciseId": "fp_b5842218c2acd8d0",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "foamroller",
+   "schuimrol",
+   "arm",
+   "onderarm"
+  ]
  },
  {
   "naam": "Foam roller back lower cross",
@@ -4196,7 +4428,12 @@
   "exerciseId": "fp_7a80af282e5365f5",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "foamroller",
+   "schuimrol",
+   "rug"
+  ]
  },
  {
   "naam": "Foam roller back lower",
@@ -4207,7 +4444,12 @@
   "exerciseId": "fp_3fd0ad562e93e587",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "foamroller",
+   "schuimrol",
+   "rug"
+  ]
  },
  {
   "naam": "Foam roller back extension",
@@ -4218,7 +4460,13 @@
   "exerciseId": "fp_e9358123e578e29b",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "foamroller",
+   "schuimrol",
+   "rug",
+   "strekken"
+  ]
  },
  {
   "naam": "Med ball slams",
@@ -4229,7 +4477,11 @@
   "exerciseId": "fp_3e21b7d2e6b650f9",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "medicijnbal",
+   "werpen"
+  ]
  },
  {
   "naam": "Med ball wall throw",
@@ -4240,7 +4492,12 @@
   "exerciseId": "fp_61f517b18e97eead",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "medicijnbal",
+   "werpen",
+   "gooien"
+  ]
  },
  {
   "naam": "Med ball chest press",
@@ -4251,7 +4508,13 @@
   "exerciseId": "fp_4744640504bedb24",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "medicijnbal",
+   "borst",
+   "borstspieren",
+   "drukken"
+  ]
  },
  {
   "naam": "Med ball floor press",
@@ -4262,7 +4525,11 @@
   "exerciseId": "fp_72446d182c8eb06b",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "medicijnbal",
+   "drukken"
+  ]
  },
  {
   "naam": "Med ball rotation passes",
@@ -4273,7 +4540,11 @@
   "exerciseId": "fp_0c4b960f97f1d61f",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "medicijnbal",
+   "draaien"
+  ]
  },
  {
   "naam": "Med ball rotation passes knee",
@@ -4284,7 +4555,12 @@
   "exerciseId": "fp_b852517e00a4148f",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "medicijnbal",
+   "knie",
+   "draaien"
+  ]
  },
  {
   "naam": "Med ball push up one arm",
@@ -4295,7 +4571,12 @@
   "exerciseId": "fp_9ae1334e0216ae2e",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "medicijnbal",
+   "arm",
+   "opdrukken"
+  ]
  },
  {
   "naam": "Med ball push up two arms",
@@ -4306,7 +4587,11 @@
   "exerciseId": "fp_942ed29424854e9d",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "medicijnbal",
+   "opdrukken"
+  ]
  },
  {
   "naam": "Med. Ball - Alt. Side slam",
@@ -4317,7 +4602,11 @@
   "exerciseId": "fp_2fa3a6c48570a71d",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "medicijnbal",
+   "werpen"
+  ]
  },
  {
   "naam": "Med ball obliques cross",
@@ -4328,7 +4617,11 @@
   "exerciseId": "fp_e3bc3ace06e1a8bd",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "medicijnbal",
+   "schuine buikspieren"
+  ]
  },
  {
   "naam": "Med ball throw and jog",
@@ -4339,7 +4632,12 @@
   "exerciseId": "fp_9ad5104287158635",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "medicijnbal",
+   "werpen",
+   "gooien"
+  ]
  },
  {
   "naam": "Med ball swing",
@@ -4350,7 +4648,11 @@
   "exerciseId": "fp_16adae85403409b5",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "medicijnbal",
+   "zwaaien"
+  ]
  },
  {
   "naam": "Med ball overhead circles",
@@ -4361,7 +4663,11 @@
   "exerciseId": "fp_b30b561f6b7f8387",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "medicijnbal",
+   "draaien"
+  ]
  },
  {
   "naam": "Med ball lunge overhead press",
@@ -4372,7 +4678,11 @@
   "exerciseId": "fp_af3814ca735a1b07",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "medicijnbal",
+   "drukken"
+  ]
  },
  {
   "naam": "Med ball V-ups",
@@ -4383,7 +4693,11 @@
   "exerciseId": "fp_45fd876f33ca5bd9",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "medicijnbal",
+   "buikspieren"
+  ]
  },
  {
   "naam": "Mob Hip flexion/extension",
@@ -4394,7 +4708,13 @@
   "exerciseId": "fp_3f1dfb962741627a",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "mobilisatie",
+   "losmaken",
+   "heup",
+   "strekken"
+  ]
  },
  {
   "naam": "Mob Hip opener",
@@ -4405,7 +4725,13 @@
   "exerciseId": "fp_99e1e9967d6d6cce",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "mobilisatie",
+   "losmaken",
+   "heup",
+   "openen"
+  ]
  },
  {
   "naam": "Mob thoracaal",
@@ -4416,7 +4742,12 @@
   "exerciseId": "fp_cd1a6657d1158157",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "mobilisatie",
+   "losmaken",
+   "borstwervels"
+  ]
  },
  {
   "naam": "Mob adductoren",
@@ -4427,7 +4758,11 @@
   "exerciseId": "fp_69601bcfcf25b2d7",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "mobilisatie",
+   "losmaken"
+  ]
  },
  {
   "naam": "Adductoren stretch",
@@ -4438,7 +4773,11 @@
   "exerciseId": "fp_4f11e7b699d13a42",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "rekoefening",
+   "rekken"
+  ]
  },
  {
   "naam": "Mob lower back",
@@ -4449,7 +4788,12 @@
   "exerciseId": "fp_37cafb9b8739b834",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "mobilisatie",
+   "losmaken",
+   "rug"
+  ]
  },
  {
   "naam": "Mob back cat/cow",
@@ -4460,7 +4804,12 @@
   "exerciseId": "fp_fb18dd6c8b2b3a16",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "mobilisatie",
+   "losmaken",
+   "rug"
+  ]
  },
  {
   "naam": "Mob back left/right",
@@ -4471,7 +4820,12 @@
   "exerciseId": "fp_c0ed244cbd142ccd",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "mobilisatie",
+   "losmaken",
+   "rug"
+  ]
  },
  {
   "naam": "Mob Hip circles",
@@ -4482,7 +4836,13 @@
   "exerciseId": "fp_1169ad7f2a3ea56c",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "mobilisatie",
+   "losmaken",
+   "heup",
+   "draaien"
+  ]
  },
  {
   "naam": "Gluteal stretch",
@@ -4493,7 +4853,13 @@
   "exerciseId": "fp_793dbfaf2845eb08",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "rekoefening",
+   "rekken",
+   "bil",
+   "bilspieren"
+  ]
  },
  {
   "naam": "Hamstring stretch",
@@ -4504,7 +4870,13 @@
   "exerciseId": "fp_31aecb8b4d9b172e",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "rekoefening",
+   "rekken",
+   "hamstrings",
+   "achterkant bovenbeen"
+  ]
  },
  {
   "naam": "Hamstring stretch one leg",
@@ -4515,7 +4887,16 @@
   "exerciseId": "fp_da024ca505e981eb",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "rekoefening",
+   "rekken",
+   "hamstrings",
+   "achterkant bovenbeen",
+   "been",
+   "één been",
+   "balans"
+  ]
  },
  {
   "naam": "Quadriceps stretch",
@@ -4526,7 +4907,13 @@
   "exerciseId": "fp_3265101a912475f3",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "rekoefening",
+   "rekken",
+   "bovenbeen",
+   "quadriceps"
+  ]
  },
  {
   "naam": "Back stretch",
@@ -4537,7 +4924,12 @@
   "exerciseId": "fp_0fd67f9b622d7724",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "rekoefening",
+   "rekken",
+   "rug"
+  ]
  },
  {
   "naam": "Abs stretch",
@@ -4548,7 +4940,12 @@
   "exerciseId": "fp_9798f76661bf3c67",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "rekoefening",
+   "rekken",
+   "buikspieren"
+  ]
  },
  {
   "naam": "Seated side leans",
@@ -4559,7 +4956,11 @@
   "exerciseId": "fp_4da50270005b421f",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening"
+  ]
  },
  {
   "naam": "Seated lat stretch",
@@ -4570,7 +4971,15 @@
   "exerciseId": "fp_7e0445b070d4aa84",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "rekoefening",
+   "rekken",
+   "latissimus",
+   "brede rugspier"
+  ]
  },
  {
   "naam": "Seated lumbar rotations",
@@ -4581,7 +4990,13 @@
   "exerciseId": "fp_063e61e846384264",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "rug",
+   "draaien"
+  ]
  },
  {
   "naam": "Seated cat-cow",
@@ -4592,7 +5007,13 @@
   "exerciseId": "fp_47ff49c27d46e275",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "kat-koe",
+   "rug mobiliseren"
+  ]
  },
  {
   "naam": "Seated foreward reach",
@@ -4603,7 +5024,12 @@
   "exerciseId": "fp_aea0bdac883b00f0",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "reiken"
+  ]
  },
  {
   "naam": "Seated ankle rotations",
@@ -4614,7 +5040,13 @@
   "exerciseId": "fp_16a477f3bf50b61c",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "enkel",
+   "draaien"
+  ]
  },
  {
   "naam": "Seated calfs raises",
@@ -4625,7 +5057,14 @@
   "exerciseId": "fp_074bfa82f6175277",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "kuit",
+   "kuiten",
+   "heffen"
+  ]
  },
  {
   "naam": "Seated knee lift",
@@ -4636,7 +5075,13 @@
   "exerciseId": "fp_9da74a2655c001f9",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "knie",
+   "heffen"
+  ]
  },
  {
   "naam": "Seated leg extension",
@@ -4647,7 +5092,13 @@
   "exerciseId": "fp_583a7b6ccf5e390b",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "been",
+   "strekken"
+  ]
  },
  {
   "naam": "Seated band abduction",
@@ -4658,7 +5109,13 @@
   "exerciseId": "fp_5c9bbb42568e066c",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "elastiek",
+   "weerstandsband"
+  ]
  },
  {
   "naam": "Seated band leg curl",
@@ -4669,7 +5126,15 @@
   "exerciseId": "fp_940a12dcf63225d8",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "been",
+   "buigen",
+   "elastiek",
+   "weerstandsband"
+  ]
  },
  {
   "naam": "Seated hamstring stretch",
@@ -4680,7 +5145,15 @@
   "exerciseId": "fp_0df1add1de9ff580",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "rekoefening",
+   "rekken",
+   "hamstrings",
+   "achterkant bovenbeen"
+  ]
  },
  {
   "naam": "Seated ab contractions",
@@ -4691,7 +5164,13 @@
   "exerciseId": "fp_e367c9af96d7ae60",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "buikspieren",
+   "aanspannen"
+  ]
  },
  {
   "naam": "Seated chair crunches",
@@ -4702,7 +5181,12 @@
   "exerciseId": "fp_963efaf95eb9ea70",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "buikspieren"
+  ]
  },
  {
   "naam": "Seated knee to elbow",
@@ -4713,7 +5197,12 @@
   "exerciseId": "fp_92cd0d5fd88b53b7",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "knie"
+  ]
  },
  {
   "naam": "Seated chair squats",
@@ -4724,7 +5213,13 @@
   "exerciseId": "fp_d288ca26f5c3c5b1",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "kniebuiging",
+   "squat"
+  ]
  },
  {
   "naam": "Seated shoulder stretch",
@@ -4735,7 +5230,14 @@
   "exerciseId": "fp_e6de47880afff3c3",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "rekoefening",
+   "rekken",
+   "schouder"
+  ]
  },
  {
   "naam": "Seated shoulder roll",
@@ -4746,7 +5248,13 @@
   "exerciseId": "fp_55f82056b64addb5",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "schouder",
+   "draaien"
+  ]
  },
  {
   "naam": "Seated arm circles",
@@ -4757,7 +5265,13 @@
   "exerciseId": "fp_cf809350cb39e408",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "arm",
+   "draaien"
+  ]
  },
  {
   "naam": "Seated marching",
@@ -4768,7 +5282,13 @@
   "exerciseId": "fp_992e4cd0badbf045",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "marcheren",
+   "op de plaats lopen"
+  ]
  },
  {
   "naam": "Seated chest opener",
@@ -4779,7 +5299,14 @@
   "exerciseId": "fp_01640004c8145a9a",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "borst",
+   "borstspieren",
+   "openen"
+  ]
  },
  {
   "naam": "Standing chair leg curl",
@@ -4790,7 +5317,13 @@
   "exerciseId": "fp_98820ba98a6ef8a4",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "staand met stoelsteun",
+   "stoeloefening",
+   "been",
+   "buigen"
+  ]
  },
  {
   "naam": "Seated cervical stretch",
@@ -4801,7 +5334,14 @@
   "exerciseId": "fp_d4e49eb464ca42bc",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "rekoefening",
+   "rekken",
+   "nek"
+  ]
  },
  {
   "naam": "Seated ankle stretches",
@@ -4812,7 +5352,14 @@
   "exerciseId": "fp_23208818a88487c7",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "rekoefening",
+   "rekken",
+   "enkel"
+  ]
  },
  {
   "naam": "Seated leg press – resistance band",
@@ -4823,7 +5370,15 @@
   "exerciseId": "fp_538a5caf7b161fb0",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "been",
+   "drukken",
+   "elastiek",
+   "weerstandsband"
+  ]
  },
  {
   "naam": "Standing chair calfs raises",
@@ -4834,7 +5389,14 @@
   "exerciseId": "fp_5d408b649789eb5c",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "staand met stoelsteun",
+   "stoeloefening",
+   "kuit",
+   "kuiten",
+   "heffen"
+  ]
  },
  {
   "naam": "Standing chair heel/toe",
@@ -4845,7 +5407,13 @@
   "exerciseId": "fp_03be7dd54cccd997",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "staand met stoelsteun",
+   "stoeloefening",
+   "hak-teen",
+   "balans"
+  ]
  },
  {
   "naam": "Standing chair half squat",
@@ -4856,7 +5424,13 @@
   "exerciseId": "fp_e718055869c6c0ab",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "staand met stoelsteun",
+   "stoeloefening",
+   "kniebuiging",
+   "squat"
+  ]
  },
  {
   "naam": "Standing chair abductie",
@@ -4867,7 +5441,11 @@
   "exerciseId": "fp_5461e59354073db8",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "staand met stoelsteun",
+   "stoeloefening"
+  ]
  },
  {
   "naam": "Standing chair hip extension",
@@ -4878,7 +5456,13 @@
   "exerciseId": "fp_514654a0d4181742",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "staand met stoelsteun",
+   "stoeloefening",
+   "heup",
+   "strekken"
+  ]
  },
  {
   "naam": "Standing chair back leg raise",
@@ -4889,7 +5473,14 @@
   "exerciseId": "fp_d5e159ca1d7436ac",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "staand met stoelsteun",
+   "stoeloefening",
+   "rug",
+   "been",
+   "heffen"
+  ]
  },
  {
   "naam": "Standing chair knee lift",
@@ -4900,7 +5491,13 @@
   "exerciseId": "fp_5319c4700561725d",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "staand met stoelsteun",
+   "stoeloefening",
+   "knie",
+   "heffen"
+  ]
  },
  {
   "naam": "One leg standing",
@@ -4911,7 +5508,12 @@
   "exerciseId": "fp_14c75a700561d59f",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "been",
+   "één been",
+   "balans"
+  ]
  },
  {
   "naam": "Standing chair shoulder rotations",
@@ -4922,7 +5524,13 @@
   "exerciseId": "fp_4b99c5f11b42a30d",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "staand met stoelsteun",
+   "stoeloefening",
+   "schouder",
+   "draaien"
+  ]
  },
  {
   "naam": "Seated dumbell press up",
@@ -4933,7 +5541,13 @@
   "exerciseId": "fp_08fffade39257e4f",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "drukken",
+   "halter"
+  ]
  },
  {
   "naam": "Seated biceps curl",
@@ -4944,6 +5558,13 @@
   "exerciseId": "fp_5405dc499ab6f482",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
-  "avatarStatus": "generated-v8"
+  "avatarStatus": "generated-v8",
+  "searchAliases": [
+   "zittend",
+   "stoeloefening",
+   "biceps",
+   "armbuiger",
+   "buigen"
+  ]
  }
 ]
