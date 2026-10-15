@@ -1284,3 +1284,32 @@ niets oplevert.
 **Volgende run — pak een ander gebied:** de oefenvideo-beheerroutes
 (admin-grendel, avatar-upload, Stream-keten) of de statistiek- en
 telemetrieroutes (statsEventLimiet, bezoekteller) op vervuiling en groei.
+
+## 2026-10-15 — Oefenvideo-beheerroutes (admin-grendel, avatar-upload, Stream-keten)
+
+**Geauditeerd:** de vier beheerroutes voor oefenvideo's (upload/start,
+upload/complete, de directe volume-upload en de instel-/wisroute), zonder én
+met Cloudflare Stream (mock via STREAM_API_BASIS, twee serverinstanties).
+
+**Bevinding: geen gat.** Alle vier de routes eisen de admin-sleutel
+(constant-time vergeleken). Een traversal-achtig exerciseId strandt op de
+manifest-koppeling (404, geen bestand geschreven) — de bestandsnaam kan alleen
+een bestaand fp_-id dragen. De volume-upload houdt de bekende poorten:
+magic-bytes (nep-mp4 400), 60 MB-plafond (413 vóór het bufferen),
+gelijktijdigheidsrem, en wissen haalt het bestand aantoonbaar van de schijf.
+De Stream-keten valideert de upload-URL tegen het vaste
+upload.videodelivery.net-patroon, filtert rare uids (400), en de server-side
+meta-binding voorkomt dat een uid aan een andere oefening wordt gehangen
+(409); een kloppende koppeling ruimt het oude volumebestand op. Het API-token
+gaat uitsluitend als header naar Cloudflare en lekt in geen enkel antwoord.
+Bekend ontwerp-restrisico (ongewijzigd): de admin-sleutel is
+afscherming-door-verhulling, geen echte authenticatie — in productie hoort
+ADMIN_KEY gezet te zijn.
+
+**Increment:** nieuwe regressietest test-videobeheer.mjs (18 checks, met
+mock-Cloudflare).
+
+**Volgende run — pak een ander gebied:** de statistiek- en telemetrieroutes
+(statsEventLimiet, bezoekteller, oefeningGebruik) op vervuiling en groei, of
+de kaart-leesroutes onder enumeratiedruk (12-hex-ids, kaartMisLimiet)
+opnieuw.
