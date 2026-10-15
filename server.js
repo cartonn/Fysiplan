@@ -1625,6 +1625,29 @@ async function afhandelen(request, response) {
   // uitloggen: de eigen sessie ongeldig maken. De cross-site-check staat hier
   // voor consistentie met alle andere schrijfroutes (verdediging in lagen); de
   // sessieheader zelf is cross-origin toch al niet mee te sturen zonder preflight
+  // recente accountactiviteit van de eigen praktijk: de ingelogde praktijk ziet
+  // wanneer er is ingelogd, gewijzigd of geweigerd (met gemaskeerd IP) en kan zo
+  // zelf opmerken of er iets vreemds met het account gebeurt. Alleen de eigen
+  // praktijk en alleen ingelogd; het volledige logboek blijft serverzijdig.
+  if (urlPath === "/api/praktijk/activiteit" && request.method === "GET") {
+    if (leesLimiet(request, response)) return;
+    const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    const pk = String(q.get("praktijk") || "").trim().toLowerCase();
+    if (!pk || praktijkSessieVan(request) !== pk) {
+      await sendJson(response, 401, { ok: false, fout: "Log eerst in bij deze praktijk.", login: true });
+      return;
+    }
+    const relevant = new Set(["geclaimd", "ingelogd", "login-mislukt", "login-op-slot",
+      "wachtwoord-gewijzigd", "wachtwoord-wijzigen-mislukt", "wachtwoord-hersteld",
+      "herstel-mislukt", "claim-gereset-door-beheer", "kaart-link-vernieuwd"]);
+    const lijst = praktijkAudit
+      .filter((e) => e && e.praktijk === pk && relevant.has(e.actie))
+      .slice(0, 15)
+      .map((e) => ({ t: e.t, actie: e.actie, ip: e.ip }));
+    await sendJson(response, 200, { ok: true, activiteit: lijst });
+    return;
+  }
+
   if (urlPath === "/api/praktijk/logout" && request.method === "POST") {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     const token = String(request.headers["x-praktijk-sessie"] || "").trim();

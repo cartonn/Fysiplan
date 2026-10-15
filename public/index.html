@@ -2166,7 +2166,8 @@ bridge2.jpg</div>
         "<input id='ps_huidig' type='password' autocomplete='current-password' placeholder='Huidig wachtwoord' style='flex:1;min-width:130px'/>"+
         "<input id='ps_nieuw' type='password' autocomplete='new-password' placeholder='Nieuw wachtwoord (min. 8 tekens)' style='flex:1;min-width:150px'/>"+
         "<button class='btn' id='ps_wdo' type='button'>Wijzig</button></div>"+
-      "<div id='ps_msg' style='font-size:12px;color:var(--muted);margin-top:6px;display:none'></div>";
+      "<div id='ps_msg' style='font-size:12px;color:var(--muted);margin-top:6px;display:none'></div>"+
+      "<div id='ps_activiteit' style='font-size:12px;color:var(--muted);margin-top:6px;display:none'></div>";
     blok.insertBefore(s,blok.firstChild);
     document.getElementById('ps_do').addEventListener('click',prakSlotActie);
     document.getElementById('ps_ww').addEventListener('keydown',function(e){if(e.key==='Enter')prakSlotActie();});
@@ -2190,10 +2191,11 @@ bridge2.jpg</div>
       st.innerHTML="🔓 Deze praktijk is nog niet beveiligd. Zet er een wachtwoord op zodat alleen jouw praktijk het kaartoverzicht ziet.";
       form.style.display='flex';ww.placeholder='Kies een wachtwoord (min. 8 tekens)';ww.autocomplete='new-password';knop.textContent='Beveiligen';knop.dataset.act='claim';
     }else if(PRAKSLOT.ingelogd){
-      st.innerHTML="🔒 Beveiligd en ingelogd. <a href='#' id='ps_uit'>Uitloggen</a> · <a href='#' id='ps_wtoon'>Wachtwoord wijzigen</a>";
+      st.innerHTML="🔒 Beveiligd en ingelogd. <a href='#' id='ps_uit'>Uitloggen</a> · <a href='#' id='ps_wtoon'>Wachtwoord wijzigen</a> · <a href='#' id='ps_acttoon' title='Recente accountactiviteit: logins, wijzigingen en geweigerde pogingen, met gemaskeerd IP'>Activiteit</a>";
       form.style.display='none';
       var u=document.getElementById('ps_uit');if(u)u.addEventListener('click',function(e){e.preventDefault();prakLogout();});
       var wt=document.getElementById('ps_wtoon');if(wt)wt.addEventListener('click',function(e){e.preventDefault();var f=document.getElementById('ps_wijzig');f.style.display=f.style.display==='none'?'flex':'none';});
+      var at=document.getElementById('ps_acttoon');if(at)at.addEventListener('click',function(e){e.preventDefault();toonPrakActiviteit();});
     }else{
       document.getElementById('ps_wijzig').style.display='none';
       st.innerHTML="🔒 Deze praktijk is beveiligd. Log in om de gedeelde kaarten te zien. <a href='#' id='ps_vergeten'>Wachtwoord vergeten?</a>";
@@ -2201,6 +2203,31 @@ bridge2.jpg</div>
       var vg=document.getElementById('ps_vergeten');
       if(vg)vg.addEventListener('click',function(e){e.preventDefault();var f=document.getElementById('ps_herstel');f.style.display=f.style.display==='none'?'flex':'none';if(f.style.display==='flex')toonPsMsg('Vul de herstelcode in die je bij het beveiligen hebt bewaard, en kies een nieuw wachtwoord.');});
     }
+  }
+  // recente accountactiviteit: de praktijk ziet zelf of er iets vreemds met het
+  // account gebeurt (logins, wijzigingen, geweigerde pogingen; IP gemaskeerd)
+  function toonPrakActiviteit(){
+    var box=document.getElementById('ps_activiteit');
+    if(!box)return;
+    if(box.style.display!=='none'){box.style.display='none';return;}
+    box.style.display='';box.textContent='Activiteit laden…';
+    var LBL={'geclaimd':'beveiligd (wachtwoord gezet)','ingelogd':'ingelogd','login-mislukt':'mislukte inlogpoging',
+      'login-op-slot':'op slot gezet na te veel pogingen','wachtwoord-gewijzigd':'wachtwoord gewijzigd',
+      'wachtwoord-wijzigen-mislukt':'wachtwoordwijziging geweigerd','wachtwoord-hersteld':'wachtwoord hersteld met herstelcode',
+      'herstel-mislukt':'herstelpoging geweigerd','claim-gereset-door-beheer':'beveiliging gereset door beheer',
+      'kaart-link-vernieuwd':'kaartlink vernieuwd'};
+    fetch('api/praktijk/activiteit?praktijk='+encodeURIComponent((SET.praktijk||'').trim()),PGET())
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(!d.ok){box.textContent=d.fout||'De activiteit is nu niet beschikbaar.';return;}
+        if(!d.activiteit.length){box.textContent='Nog geen accountactiviteit geregistreerd.';return;}
+        box.innerHTML='<b style="color:var(--tekst,inherit)">Recente accountactiviteit</b> (nieuwste eerst, IP gemaskeerd):<br/>'+
+          d.activiteit.map(function(a){
+            var wn=new Date(a.t).toLocaleString('nl-NL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+            return esc(wn)+' — '+esc(LBL[a.actie]||a.actie)+(a.ip?' <small>('+esc(a.ip)+')</small>':'');
+          }).join('<br/>');
+      })
+      .catch(function(){box.textContent='De activiteit is nu niet beschikbaar.';});
   }
   // de herstelcode wordt maar één keer getoond; laat hem nadrukkelijk bewaren
   function toonHerstelcode(code,intro){
