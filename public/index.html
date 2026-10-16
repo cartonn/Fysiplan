@@ -618,7 +618,7 @@ bridge2.jpg</div>
     </div>
     <div id="on_qr" style="display:flex;justify-content:center;margin:6px 0"></div>
     <div id="on_status" style="font-size:13px;color:var(--muted)">Wachten op de video&hellip;</div>
-    <div class="acts" style="justify-content:center"><button class="btn" id="on_cancel">Annuleren</button></div>
+    <div class="acts" style="justify-content:center"><button class="btn" id="on_retry" style="display:none">Nieuwe QR-code</button><button class="btn" id="on_cancel">Annuleren</button></div>
   </div>
 </div>
 
@@ -1271,7 +1271,13 @@ bridge2.jpg</div>
   }
   var opnamePoll=null;
   function stopOpname(){if(opnamePoll){clearInterval(opnamePoll);opnamePoll=null;}}
+  // de laatste opname-aanvraag onthouden: verloopt de QR (een kwartier), dan
+  // start de 'Nieuwe QR-code'-knop dezelfde opname opnieuw zonder het venster
+  // te sluiten en de hele flow opnieuw op te zoeken
+  var OPNAME_LAATSTE=null;
   function startOpname(doel,naam,cb){
+    OPNAME_LAATSTE={doel:doel,naam:naam,cb:cb};
+    var retry=document.getElementById('on_retry');if(retry)retry.style.display='none';
     var hdrs={'content-type':'application/json'};
     if(doel==='oefening')Object.assign(hdrs,ADMIN_HDR);
     fetch('api/opname/start',{method:'POST',headers:hdrs,body:JSON.stringify({doel:doel,naam:naam})})
@@ -1290,7 +1296,11 @@ bridge2.jpg</div>
           fetch('api/opname/status?token='+d.token,{cache:'no-cache'})
             .then(function(r){return r.json();})
             .then(function(s){
-              if(!s.ok){document.getElementById('on_status').textContent='De opnamelink is verlopen — sluit dit venster en probeer het opnieuw.';stopOpname();return;}
+              if(!s.ok){
+                document.getElementById('on_status').textContent='De opnamelink is verlopen — vraag met één klik een nieuwe QR-code aan.';
+                var rt=document.getElementById('on_retry');if(rt)rt.style.display='';
+                stopOpname();return;
+              }
               if(s.klaar){stopOpname();closeOv('ovOpname');cb(s.video);}
             }).catch(function(){});
         },1500);
@@ -1298,6 +1308,9 @@ bridge2.jpg</div>
       .catch(function(){alert('Opname starten is niet gelukt: geen verbinding met de server.');});
   }
   document.getElementById('on_cancel').addEventListener('click',function(){stopOpname();closeOv('ovOpname');});
+  document.getElementById('on_retry').addEventListener('click',function(){
+    if(OPNAME_LAATSTE)startOpname(OPNAME_LAATSTE.doel,OPNAME_LAATSTE.naam,OPNAME_LAATSTE.cb);
+  });
 
   // ---- avatarvideo direct uploaden en aan één stabiele oefening koppelen (beheer) ----
   var pendingVideoId=null,pendingVideoFile=null,videoUploadBusy=false;
