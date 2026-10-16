@@ -1313,3 +1313,33 @@ mock-Cloudflare).
 (statsEventLimiet, bezoekteller, oefeningGebruik) op vervuiling en groei, of
 de kaart-leesroutes onder enumeratiedruk (12-hex-ids, kaartMisLimiet)
 opnieuw.
+
+## 2026-10-16 — Statistiek-/telemetrieroutes + IPv6-remsleutel
+
+**Geauditeerd:** de telemetrie (/api/stats/event, bezoekteller, oefeningGebruik,
+dashboard, gebruiksranglijst) op vervuiling en groei, en de sleutelkeuze van
+álle per-IP-remmen onder adresrotatie.
+
+**Bevinding: één gat gedicht — IPv6-rotatie omzeilde elke per-IP-rem.** De
+telemetrie zelf zat goed: event-types zijn gewhitelist, cross-site wordt
+geweigerd, nep-oefeningnamen halen de gebruiksranglijst niet (manifestcheck),
+dashboard en ranglijst zijn admin-only, en dagstatistieken zijn begrensd
+(120 dagen, 5000 unieke hashes/dag). Maar alle remmen telden per los
+IP-adres, en een IPv6-abonnee heeft doorgaans een heel /64-blok: met elk
+verzoek een vers adres betekende een gratis omzeiling van schrijf-, lees-,
+kaart-raden-, AI-, stats- en adminremmen, plus onbegrensde groei van de
+tellertabellen (geheugen). In productie is IPv4-rotatie niet spoofbaar
+(clientIp neemt het laatste x-forwarded-for-element, dat de Railway-proxy
+toevoegt), dus IPv6 was de enige echte rotatieruimte. Fix: nieuwe
+ipSleutel() bucket IPv6 op /64 voor uitsluitend de remsleutels; audit,
+IP-maskering en de unieke-bezoekerstelling blijven het volledige adres
+gebruiken, en voor IPv4 verandert er niets.
+
+**Increment:** ipSleutel() in server.js (acht remmen + de opname-poll) +
+nieuwe regressietest test-stats-ip6.mjs (10 checks). Brede regressieronde
+over alle remmen groen (smoke, schrijfdruk, inlogrem-parallel, ai-routes,
+deeplinks, uploads-parallel).
+
+**Volgende run — pak een ander gebied:** de kaart-schrijfroutes voor de
+patiënt (meting, gedaan, psk, ervaring, seintje) op mandaat en datadiscipline,
+of de v1-instelketen (mailtokens, eigenHost) opnieuw.

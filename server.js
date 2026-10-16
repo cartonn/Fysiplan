@@ -586,6 +586,18 @@ function clientIp(req) {
   const fwd = delen[delen.length - 1].trim();
   return fwd || req.socket.remoteAddress || "?";
 }
+// sleutel voor álle per-IP-remmen: IPv4 ongewijzigd, IPv6 gebucket op /64.
+// Eén IPv6-abonnee heeft doorgaans een heel /64-blok en kan dus met elk verzoek
+// een vers adres gebruiken; wie per los adres telt geeft zo'n aanvaller een
+// gratis omzeiling van elke rem én onbegrensde groei van de tellertabellen.
+// Alleen de remsleutel bucket; audit, maskering en bezoekersstatistiek blijven
+// het volledige adres gebruiken. (Wisselende schrijfwijzen van hetzelfde adres
+// kunnen hooguit een handvol extra buckets opleveren — geen rotatieruimte.)
+function ipSleutel(req) {
+  const ip = clientIp(req);
+  if (!ip.includes(":")) return ip;
+  return ip.split(":").slice(0, 4).join(":") + "::/64";
+}
 function telBezoek(req, isAdminPagina) {
   const d = dagStats(vandaagKey());
   if (isAdminPagina) d.admin++; else d.bezoek++;
@@ -614,7 +626,7 @@ function schrijfLimiet(req, res) {
   if (schrijfTeller.size > 5000) {
     for (const [k, v] of schrijfTeller) if (nu - v.start > 5 * 60 * 1000) schrijfTeller.delete(k);
   }
-  const ip = clientIp(req);
+  const ip = ipSleutel(req);
   const t = schrijfTeller.get(ip);
   if (!t || nu - t.start > 5 * 60 * 1000) {
     schrijfTeller.set(ip, { start: nu, n: 1 });
@@ -646,7 +658,7 @@ function kaartMisLimiet(req, res) {
   if (kaartMisTeller.size > 5000) {
     for (const [k, v] of kaartMisTeller) if (nu - v.start > 5 * 60 * 1000) kaartMisTeller.delete(k);
   }
-  const ip = clientIp(req);
+  const ip = ipSleutel(req);
   const t = kaartMisTeller.get(ip);
   if (!t || nu - t.start > 5 * 60 * 1000) {
     kaartMisTeller.set(ip, { start: nu, n: 1 });
@@ -760,7 +772,7 @@ function aiLimiet(req, res) {
   // per-IP-rem afgewezen verzoeken het dagmaximum vullen en de AI-hulp voor álle
   // praktijken een dag uitschakelen — tegen nul AI-kosten. Nu telt de dagteller
   // uitsluitend verzoeken die de per-IP-poort passeren, dus echte AI-aanroepen (kosten).
-  const ip = clientIp(req);
+  const ip = ipSleutel(req);
   const t = aiTeller.get(ip);
   if (!t || nu - t.start > 3600e3) aiTeller.set(ip, { start: nu, n: 1 });
   else if (++t.n > 20) {
@@ -786,7 +798,7 @@ const pollTeller = new Map();
 const nieuwePraktijkTeller = new Map();
 function nieuwePraktijkLimiet(req, res) {
   const dag = vandaagKey();
-  const ip = clientIp(req);
+  const ip = ipSleutel(req);
   if (nieuwePraktijkTeller.size > 5000) {
     for (const [k, v] of nieuwePraktijkTeller) if (v.dag !== dag) nieuwePraktijkTeller.delete(k);
   }
@@ -804,7 +816,7 @@ function leesLimiet(req, res) {
   if (leesTeller.size > 5000) {
     for (const [k, v] of leesTeller) if (nu - v.start > 5 * 60 * 1000) leesTeller.delete(k);
   }
-  const ip = clientIp(req);
+  const ip = ipSleutel(req);
   const t = leesTeller.get(ip);
   if (!t || nu - t.start > 5 * 60 * 1000) {
     leesTeller.set(ip, { start: nu, n: 1 });
@@ -1132,7 +1144,7 @@ function statsEventLimiet(req, res) {
   if (statsEventTeller.size > 5000) {
     for (const [k, v] of statsEventTeller) if (nu - v.start > 5 * 60 * 1000) statsEventTeller.delete(k);
   }
-  const ip = clientIp(req);
+  const ip = ipSleutel(req);
   const t = statsEventTeller.get(ip);
   if (!t || nu - t.start > 5 * 60 * 1000) { statsEventTeller.set(ip, { start: nu, n: 1 }); return false; }
   if (++t.n > 120) {
@@ -1153,7 +1165,7 @@ const denied = (req, res, pad, melding = "Alleen beschikbaar voor beheer.") => {
   if (adminMisTeller.size > 5000) {
     for (const [k, v] of adminMisTeller) if (nu - v.start > 5 * 60 * 1000) adminMisTeller.delete(k);
   }
-  const ip = clientIp(req);
+  const ip = ipSleutel(req);
   const t = adminMisTeller.get(ip);
   if (!t || nu - t.start > 5 * 60 * 1000) adminMisTeller.set(ip, { start: nu, n: 1 });
   else if (++t.n > 20) return send429(res, 300, { ok: false, fout: "Even te veel verzoeken; probeer het over een paar minuten opnieuw." });
@@ -2351,7 +2363,7 @@ async function afhandelen(request, response) {
   // (13+ schermen tegelijk achter één IP) maar smoort een eindeloze flood
   if (urlPath === "/api/opname/status" && request.method === "GET") {
     const nuPoll = Date.now();
-    const ipPoll = clientIp(request);
+    const ipPoll = ipSleutel(request);
     const tp = pollTeller.get(ipPoll);
     if (!tp || nuPoll - tp.start > 5 * 60 * 1000) {
       if (pollTeller.size > 5000) {
