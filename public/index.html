@@ -969,6 +969,14 @@ bridge2.jpg</div>
     document.querySelector('.brand').appendChild(_v2b);
     document.getElementById('sjabBtn').style.display='';
     document.getElementById('aiBtn').style.display='';
+    // lege kaart: de hint wijst in v2 óók naar de kortste route — de
+    // Sjablonen-knop bovenin (25 kant-en-klare protocollen, één klik en de
+    // kaart staat vol). Bewust platte tekst: de lege montagetabel legt een
+    // picto-laag over dit gebied die klikken op een eigen knop zou
+    // onderscheppen. Runtime gezet zodat de gedeelde markup voor de
+    // beheerweergave onveranderd blijft.
+    var legeA4=document.getElementById('emptyA4');
+    if(legeA4)legeA4.textContent='Klik links op een oefening — of open "Sjablonen" bovenin: één klik en de kaart staat vol met een kant-en-klaar protocol per klacht.';
   }
   // EPD-koppeling zonder koppeling: elk EPD met een extern-link-veld (Intramed,
   // FysioRoadmap, …) kan /v2/app?client={naam} openen — de cliëntnaam (en
