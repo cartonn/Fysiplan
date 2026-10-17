@@ -1343,3 +1343,29 @@ deeplinks, uploads-parallel).
 **Volgende run — pak een ander gebied:** de kaart-schrijfroutes voor de
 patiënt (meting, gedaan, psk, ervaring, seintje) op mandaat en datadiscipline,
 of de v1-instelketen (mailtokens, eigenHost) opnieuw.
+
+## 2026-10-17 — Patiënt-schrijfroutes (mandaat en datadiscipline)
+
+**Geauditeerd:** de zes open schrijfroutes achter de kaartlink (meting,
+ervaring, gedaan, oefening-afvinkje, seintje, psk) met een geseede kaart om
+ook de randen te raken: typegrenzen, dag-collapse, arraycaps, massatoewijzing,
+prototype-sleutels, het oefTrouw-plafond en het demo-pad.
+
+**Bevinding: geen gat.** Het mandaatmodel (de onraadbare kaartlink is de
+sleutel; enumeratie zit achter kaartMisLimiet) staat, en de datadiscipline is
+strak: scores zijn strikt gehele getallen binnen bereik (float, string, bool,
+null en buiten-bereik geven allemaal 400), er telt één entry per dag (een
+tweede tik vervangt), de caps houden ook bij een geseede kaart met 400 oude
+metingen (direct terug naar 366), timestamps komen van de server, extra velden
+in de body raken de kaart niet (werknotitie, archiefstatus en seintje blijven
+ongemoeid), prototype-sleutels als 'constructor' op het oefenvinkje worden
+geweigerd, het 60-oefeningenplafond op oefTrouw houdt, psk zonder
+doelactiviteit weigert, het seintje blijft een vaste whitelist zonder vrije
+tekst, en de demo-kaart echoot interactie zonder iets te bewaren.
+
+**Increment:** nieuwe regressietest test-patient-schrijf.mjs (19 checks,
+met geseede kaart).
+
+**Volgende run — pak een ander gebied:** de v1-instelketen (mailtokens,
+eigenHost, het fire-and-forget-mailpad) opnieuw, of de AI-kostenrem
+(gedeelde dagteller) onder parallelle druk.
