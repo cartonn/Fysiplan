@@ -1673,8 +1673,24 @@ bridge2.jpg</div>
       // het eerste magische moment van een proefperiode: met één klik zelf zien
       // wat de patiënt ziet — print nooit mee (no-print), alleen v2
       (IS_V2?"<a class='no-print' href='"+url+"' target='_blank' rel='noopener' style='font-size:10.5px;color:var(--brand,#2456a6);text-decoration:underline;margin-top:2px'>Bekijk zelf hoe je pati\u00ebnt hem ziet</a>":'')+
+      // delen op het moment dat de kaart af is: géén omweg via Kaarten -> rij ->
+      // Deel. Zelfde berichten en taalkeuze als het deelpanel; print nooit mee.
+      (IS_V2?"<span class='no-print' style='display:flex;gap:9px;margin-top:3px;font-size:10.5px'>"+
+        "<a id='qr_wa' href='https://wa.me/?text="+encodeURIComponent(deelBericht(id,deelTaalKeuze(id)))+"' target='_blank' rel='noopener' title='Stuur de kaartlink direct via WhatsApp' style='color:var(--brand,#2456a6);text-decoration:underline'>WhatsApp</a>"+
+        "<a id='qr_mail' href='mailto:?subject="+encodeURIComponent(vulDeel(deelTaalVan(deelTaalKeuze(id)).sd,id))+"&body="+encodeURIComponent(deelBericht(id,deelTaalKeuze(id)))+"' title='Stuur de kaartlink per e-mail' style='color:var(--brand,#2456a6);text-decoration:underline'>E-mail</a>"+
+        "<a id='qr_kopie' href='#' title='Kopieer de kaartlink' style='color:var(--brand,#2456a6);text-decoration:underline'>Kopieer link</a></span>":'')+
       (IS_V2?"<span class='qrx no-print' id='qrx' title='QR-code van deze kaart afhalen'>×</span>":'');
     b.style.display='flex';
+    if(IS_V2){
+      var qk=document.getElementById('qr_kopie');
+      if(qk)qk.addEventListener('click',function(e){
+        e.preventDefault();
+        var toon=function(tk){qk.textContent=tk;setTimeout(function(){qk.textContent='Kopieer link';},1600);};
+        if(navigator.clipboard&&navigator.clipboard.writeText){
+          navigator.clipboard.writeText(url).then(function(){toon('Gekopieerd \u2713');}).catch(function(){window.prompt('Kopieer de kaartlink:',url);});
+        }else{window.prompt('Kopieer de kaartlink:',url);}
+      });
+    }
     return true;
   }
   // ---- v2: de QR staat er standaard op zodra de kaart een cliëntnaam heeft ----
