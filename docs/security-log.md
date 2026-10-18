@@ -1369,3 +1369,30 @@ met geseede kaart).
 **Volgende run — pak een ander gebied:** de v1-instelketen (mailtokens,
 eigenHost, het fire-and-forget-mailpad) opnieuw, of de AI-kostenrem
 (gedeelde dagteller) onder parallelle druk.
+
+## 2026-10-18 — AI-kostenrem (gedeelde dagteller) onder parallelle druk
+
+**Geauditeerd:** de AI-rem (aiLimiet: 20/IP/uur + gedeelde dagteller van 300)
+onder gelijktijdigheid, en de plaats van de rem in alle vier de AI-routes
+(assistent, kaartvraag, vertaling, weekbrief), met mock-Anthropic.
+
+**Bevinding: één gat gedicht — de assistent telde de dagteller vóór de
+validatie.** De rem zelf is exact onder druk: 30 parallelle verzoeken van één
+IP laten er precies 20 door (de controle-en-tel-sectie is synchroon), en het
+dagmaximum valt exact op 300 gepasseerde verzoeken — de mock bevestigt
+precies 300 echte AI-aanroepen, en ook een vers adres krijgt daarna het
+dagmaximum. Maar /api/assistent riep de rem aan vóór de bodyvalidatie,
+terwijl de vraag- en briefroute eerst valideren: goedkope 400-verzoeken
+zonder doel of klacht vulden zo de gedeelde dagteller, en een handvol
+adressen (15 × 20) kon de AI-hulp voor álle praktijken een dag gratis
+uitzetten — precies de klasse die de eerdere telt-alleen-doorgelaten-fix
+moest voorkomen. Fix: de rem staat nu ná de goedkope validatie, consistent
+met de andere routes; 40 ongeldige verzoeken raken het dagbudget aantoonbaar
+niet meer, en validatiefouten blijven 400 ook als het dagbudget vol is.
+
+**Increment:** remvolgorde-fix in /api/assistent + nieuwe regressietest
+test-ai-dagrem.mjs (7 checks, met mock-Anthropic en exacte tellingen).
+
+**Volgende run — pak een ander gebied:** de v1-instelketen (mailtokens,
+eigenHost, het fire-and-forget-mailpad) opnieuw, of de security-headers/CSP
+over álle v2-pagina's als regressieronde.

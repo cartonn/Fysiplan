@@ -3222,13 +3222,16 @@ async function afhandelen(request, response) {
     // deze aanroep kost geld; een cross-site pagina mag het budget niet opstoken
     if (kruisSite(request)) { await weigerKruis(response); return; }
     if (schrijfLimiet(request, response)) return;
-    if (aiLimiet(request, response)) return;
     try {
       const b = JSON.parse(await readBody(request));
       const klacht = String(b.klacht || "").trim().slice(0, 500);
       const doel = cleanName(b.doel, 80).replace(/[<>]/g, "");
       if (!doel) { await sendJson(response, 400, { ok: false, fout: "Kies eerst het trainingsdoel." }); return; }
       if (klacht.length < 3) { await sendJson(response, 400, { ok: false, fout: "Omschrijf de klacht in een paar woorden." }); return; }
+      // de AI-rem pas ná de goedkope validatie (zoals bij de vraag- en briefroute):
+      // anders vullen 400-verzoeken zonder doel of klacht de gedeelde dagteller en
+      // kan een handvol adressen de AI-hulp voor álle praktijken gratis uitzetten
+      if (aiLimiet(request, response)) return;
       const manifest = await buildManifest();
       const lijst = manifest.map((e) => e.naam + " | " + e.groep + (e.ook && e.ook.length ? "/" + e.ook.join("/") : "")).join("\n");
       const sys = "Je bent de kaartassistent van Fysiplan, een hulp voor fysiotherapeuten die een trainingskaart samenstellen. " +
