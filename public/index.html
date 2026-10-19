@@ -3012,6 +3012,7 @@ bridge2.jpg</div>
             // praktijkrapport: de app-vrij gemeten uitkomsten in één klik als
             // plakklare tekst (kwaliteitsverantwoording, teamoverleg)
             h+="<button type='button' id='k_srv_rap' class='no-print' title='Kopieer een geaggregeerd uitkomstenrapport van alle actieve kaarten (pijnverloop, oefentrouw, ervaren herstel, seintjes) — zonder cliëntnamen' style='cursor:pointer;background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:12px'>Rapport</button>";
+            h+="<button type='button' id='k_srv_csv' class='no-print' title='Download alle kaarten (actief én gearchiveerd) als CSV — je gegevens zijn van jou, voor backup of overstap' style='cursor:pointer;background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:12px'>Exporteer (CSV)</button>";
           }
           samEl.innerHTML=h;samEl.style.display='flex';
           var ab=document.getElementById('k_srv_sam_aand');
@@ -3034,6 +3035,28 @@ bridge2.jpg</div>
             if(navigator.clipboard&&navigator.clipboard.writeText){
               navigator.clipboard.writeText(tekst).then(function(){toonR('Gekopieerd ✓');}).catch(function(){window.prompt('Kopieer het praktijkrapport:',tekst);});
             }else{window.prompt('Kopieer het praktijkrapport:',tekst);}
+          };
+          // CSV-export van alle kaarten: de gegevens zijn van de praktijk — dit
+          // maakt de geen-lock-in-belofte tastbaar (backup, overstap, eigen Excel).
+          // Puntkomma's en een BOM zodat NL-Excel hem direct goed opent.
+          var xb=document.getElementById('k_srv_csv');
+          if(xb)xb.onclick=function(){
+            var veld=function(v){v=(v==null?'':String(v));return '"'+v.replace(/"/g,'""')+'"';};
+            var dd2=function(t){return t?new Date(t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}):'';};
+            var kop=['Naam','Status','Aangemaakt','Behandelaar','Oefeningen','Laatste pijn','Eerste pijn','PSK-doel','Eerste PSK','Laatste PSK','Oefendoel p/w','Afspraak','Werknotitie','Kaartlink'];
+            var rijen=l.concat(lArch).map(function(c){
+              var s=c.scores||[],ps=c.psk||[];
+              return [c.naam,c.gearchiveerd?'afgerond':'actief',dd2(c.ts),c.behandelaar||'',c.aantal,
+                s.length?s[s.length-1].s:'',(typeof c.eersteMeting==='number')?c.eersteMeting:(s.length?s[0].s:''),
+                c.pskDoel||'',(typeof c.pskEerste==='number')?c.pskEerste:(ps.length?ps[0].s:''),ps.length?ps[ps.length-1].s:'',
+                Number(c.doel)||'',c.afspraak&&c.afspraak.t?dd2(c.afspraak.t):'',c.notitie||'',location.origin+'/k/'+c.id].map(veld).join(';');
+            });
+            var csv='﻿'+kop.map(veld).join(';')+'\r\n'+rijen.join('\r\n')+'\r\n';
+            var a=document.createElement('a');
+            a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+            a.download='fysiplan-kaarten-'+((SET.praktijk||'praktijk').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'praktijk')+'-'+new Date().toISOString().slice(0,10)+'.csv';
+            document.body.appendChild(a);a.click();
+            setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},800);
           };
         }else if(samEl)samEl.style.display='none';
         toon();
