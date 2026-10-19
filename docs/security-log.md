@@ -1396,3 +1396,33 @@ test-ai-dagrem.mjs (7 checks, met mock-Anthropic en exacte tellingen).
 **Volgende run — pak een ander gebied:** de v1-instelketen (mailtokens,
 eigenHost, het fire-and-forget-mailpad) opnieuw, of de security-headers/CSP
 over álle v2-pagina's als regressieronde.
+
+## 2026-10-19 — v1-instelketen opnieuw (mailtokens, eigenHost) onder parallelle druk
+
+**Geauditeerd:** de hele instelketen van de v1-accountlaag met mock-mail:
+registratiecode, host-pinning van de maillink, de mailrem per adres onder
+parallelle druk, tokenopslag op schijf, dubbel verzilveren van hetzelfde
+token, verlopen en misvormde tokens, en het enumeratie-antwoord van de
+vergeten-route.
+
+**Bevinding: geen gat.** Een foute registratiecode geeft 403 zonder mail
+(constant-time vergeleken). Een gespoofte Host-header (evil.com) haalt de
+maillink niet om: die pint op fysiplan.nl (eigenHost). De mailrem per adres
+is exact onder zes parallelle aanvragen (precies drie mails — de
+controle-en-tel-sectie is synchroon). Insteltokens staan uitsluitend als
+sha256 op schijf. Hetzelfde token twee keer tegelijk verzilveren levert
+precies één 200 en één 410 op, en alleen het winnende wachtwoord werkt
+daarna (lookup en delete zitten in één synchroon blok). Een verlopen token
+geeft 410, een niet-hex token strandt op het formaatfilter (403), en de
+vergeten-route antwoordt byte-identiek voor bestaande en onbestaande
+adressen (het mailpad loopt fire-and-forget na het antwoord, zoals op
+2026-10-03 gedicht).
+
+**Increment:** nieuwe regressietest test-v1-instelketen.mjs (9 checks, met
+mock-mail en een vooraf geseed verlopen token) — de oude v1-mailsuite had de
+containerwissels niet overleefd.
+
+**Volgende run — pak een ander gebied:** de security-headers/CSP over álle
+v2-pagina's als regressieronde (landing, app, kaart, opname, manifest), of
+de kaartlijst-leesroutes (/api/kaarten-velden) op datalekken per veld
+opnieuw.
