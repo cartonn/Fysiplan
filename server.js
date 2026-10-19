@@ -3528,6 +3528,27 @@ async function afhandelen(request, response) {
         const veiligeHost = eigenDomein ? netjes : "fysiplan.nl";
         html = html.replace(/__DEMO_QR__/g, await qrSvgVoor("https://" + veiligeHost + "/k/demo", 132));
       }
+      // FAQPage-structuur voor zoekmachines, bij het serveren opgebouwd uit de
+      // échte FAQ-blokken op de pagina: schema en zichtbare tekst kunnen zo
+      // nooit uiteenlopen. Mislukt het parsen, dan valt de placeholder stil weg.
+      let faqSchema = "";
+      try {
+        const ontHtml = (s) => s.replace(/<[^>]+>/g, "").replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
+          .replace(/&(amp|eacute|euml|uuml|euro|thinsp|nbsp|mdash|ndash|ldquo|rdquo|lsquo|rsquo|uacute|iuml|ccedil|ntilde|aacute|hellip|times);/g,
+            (_, e) => ({ amp: "&", eacute: "é", euml: "ë", uuml: "ü", euro: "€", thinsp: " ", nbsp: " ",
+              mdash: "—", ndash: "–", ldquo: "“", rdquo: "”", lsquo: "‘", rsquo: "’",
+              uacute: "ú", iuml: "ï", ccedil: "ç", ntilde: "ñ", aacute: "á", hellip: "…", times: "×" }[e] || ""))
+          .replace(/\s+/g, " ").trim();
+        const vragen = [...html.matchAll(/<details>\s*<summary>([\s\S]*?)<\/summary>\s*<p class="antw">([\s\S]*?)<\/p>/g)]
+          .map((m) => ({ "@type": "Question", "name": ontHtml(m[1]),
+            "acceptedAnswer": { "@type": "Answer", "text": ontHtml(m[2]) } }))
+          .filter((v) => v.name && v.acceptedAnswer.text);
+        if (vragen.length) {
+          faqSchema = '<script type="application/ld+json">' +
+            JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": vragen }) + "<\/script>";
+        }
+      } catch {}
+      html = html.replace("__FAQ_SCHEMA__", faqSchema);
       await send(response, 200, "text/html; charset=utf-8", html);
     }
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
