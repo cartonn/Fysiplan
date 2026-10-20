@@ -2853,6 +2853,15 @@ bridge2.jpg</div>
               "<button class='btn' data-sherinner='"+esc(c.id)+"'>Kopieer bericht</button>"+
               "<a class='btn' data-hwa='"+esc(c.id)+"' href='"+esc(waHref2)+"' target='_blank' rel='noopener' style='text-decoration:none'>WhatsApp</a>"+
               "<a class='btn' data-hmail='"+esc(c.id)+"' href='"+esc(mailHref2)+"' target='_blank' rel='noopener' style='text-decoration:none'>E-mail</a>"+
+            "</div>"+
+            // kort bericht óp de kaart zelf: de patiënt ziet het bij het openen,
+            // zonder app, nummer of mailadres — hetzelfde kanaal als het
+            // seintje-antwoord, nu ook proactief. Eén bericht tegelijk; een nieuw
+            // bericht vervangt het vorige en de patiënt tikt het weg.
+            "<small style='color:var(--muted);display:block;margin-top:10px'>Of zet een kort bericht op de kaart zelf — de patiënt ziet het bij het eerstvolgende openen"+(c.antwoord&&c.antwoord.tekst?" (er staat er nog één klaar; een nieuw bericht vervangt het)":"")+":</small>"+
+            "<div style='display:flex;gap:6px;margin-top:7px'>"+
+              "<input data-sbtekst='"+esc(c.id)+"' maxlength='300' value='"+esc((c.antwoord&&c.antwoord.tekst)||'')+"' placeholder='Bijv. Goed bezig! Vanaf deze week 3 sets.' style='flex:1;min-width:0;font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
+              "<button class='btn' data-sbericht='"+esc(c.id)+"'>Zet op de kaart</button>"+
             "</div></div>";
           if(c.gearchiveerd){
             // gearchiveerde kaart: gedempt, met "terughalen" en openen; de patiëntlink
@@ -2865,7 +2874,7 @@ bridge2.jpg</div>
               "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>";
           }
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
-            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.afspraak&&c.afspraak.t>Date.now()-2*3600000?" · <span title='Volgende afspraak op de patiëntkaart' style='white-space:nowrap'>afspraak "+new Date(c.afspraak.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+"</span>":"")+(c.pskDoel&&c.psk&&c.psk.length?" · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)' style='white-space:nowrap'>PSK "+c.psk[c.psk.length-1].s+"</span>":"")+"</small></div>"+seinChip+vg+hsChip+
+            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.antwoord&&c.antwoord.tekst?" · <span title='Er staat een bericht op de patiëntkaart klaar dat nog niet is weggetikt: “"+esc(c.antwoord.tekst)+"”' style='white-space:nowrap'>bericht klaar</span>":"")+(c.afspraak&&c.afspraak.t>Date.now()-2*3600000?" · <span title='Volgende afspraak op de patiëntkaart' style='white-space:nowrap'>afspraak "+new Date(c.afspraak.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+"</span>":"")+(c.pskDoel&&c.psk&&c.psk.length?" · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)' style='white-space:nowrap'>PSK "+c.psk[c.psk.length-1].s+"</span>":"")+"</small></div>"+seinChip+vg+hsChip+
             "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
             "<button class='btn' data-skopie='"+esc(c.id)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+
@@ -3218,6 +3227,22 @@ bridge2.jpg</div>
         .then(function(r){return r.json();})
         .then(function(d){if(d.ok)toonN('Bewaard ✓');else toonN(d.fout||'Mislukt');})
         .catch(function(){toonN('Geen verbinding');});
+      return;
+    }
+    // kort bericht op de patiëntkaart zetten: zelfde route als het seintje-antwoord
+    // (alleen de ingelogde praktijk; de kaartpagina rendert het als platte tekst)
+    var bk=e.target.closest('[data-sbericht]');
+    if(bk){
+      var veldK=document.querySelector("[data-sbtekst='"+bk.dataset.sbericht+"']");
+      if(!veldK)return;
+      var tk=veldK.value.trim().slice(0,300);
+      var oudK=bk.textContent;
+      var toonK=function(t){bk.textContent=t;setTimeout(function(){bk.textContent=oudK;},1600);};
+      if(!tk){toonK('Bericht is leeg');return;}
+      fetch('api/kaart/antwoord',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:bk.dataset.sbericht,tekst:tk})})
+        .then(function(r){return r.json();})
+        .then(function(d){if(d.ok)toonK('Op de kaart gezet ✓');else toonK(d.fout||'Mislukt');})
+        .catch(function(){toonK('Geen verbinding');});
       return;
     }
     var ds=e.target.closest('[data-sdossier]');

@@ -2486,6 +2486,9 @@ async function afhandelen(request, response) {
         eersteMeting: (k.metingen && k.metingen.length) ? k.metingen[0] : null,
         bekeken: k.bekeken ? k.bekeken.t : 0,
         seintje: (k.seintje && k.seintje.soort) ? { t: k.seintje.t, soort: k.seintje.soort } : null,
+        // eigen bericht aan de patiënt dat nog niet is weggetikt: het overzicht
+        // toont zo "bericht klaar" en het berichtveld start met de huidige tekst
+        antwoord: (k.antwoord && k.antwoord.tekst) ? { t: k.antwoord.t, tekst: k.antwoord.tekst } : null,
         ervaring: (k.ervaring || []).slice(-1),
         notitie: k.notitie || null,
         afspraak: k.afspraak || null,
