@@ -2928,6 +2928,10 @@ bridge2.jpg</div>
         var sortModus=function(){var s=document.getElementById('k_srv_sort');return (s&&s.style.display!=='none'&&s.dataset.mode)||'nieuw';};
         var zoekTermVan=function(){var z=document.getElementById('k_srv_zoek');return (z&&z.style.display!=='none')?z.value.trim().toLowerCase():'';};
         var filterAandacht=function(){var s=document.getElementById('k_srv_sort');return !!(s&&s.style.display!=='none'&&s.dataset.filter==='aandacht');};
+        // gekozen behandelaar-filter (lege string = iedereen); telt alleen als de
+        // keuzelijst ook echt zichtbaar is, anders blijft een oude keuze hangen
+        var behFilterVan=function(){var s=document.getElementById('k_srv_beh'),lab=document.getElementById('k_srv_behlab');return (s&&lab&&lab.style.display!=='none')?String(s.value||''):'';};
+        var vanBehandelaar=function(c,bf){return String(c.behandelaar||'').trim().toLowerCase()===bf;};
         var huidigeBasis=function(){return srvArchiefView?lArch:l;};
         var toon=function(){
           var base=huidigeBasis();
@@ -2936,6 +2940,10 @@ bridge2.jpg</div>
           // kaart ook als de naam je even ontschiet (de notitie is toch praktijk-intern)
           var past=function(c){return String(c.naam||'').toLowerCase().indexOf(t)>=0||String(c.notitie||'').toLowerCase().indexOf(t)>=0||String(c.behandelaar||'').toLowerCase().indexOf(t)>=0;};
           var items=t?base.filter(past):base.slice();
+          // behandelaar-filter: in een teampraktijk wil je vooral je eigen cliënten
+          // zien; werkt samen met zoeken, de triage-filters en het archief
+          var bf=behFilterVan();
+          if(bf)items=items.filter(function(c){return vanBehandelaar(c,bf);});
           // triage-filter: toon in één tik alleen de kaarten met een openstaand
           // seintje, of alle kaarten die aandacht vragen (hoge pijn, seintje, lang
           // stil of nooit geopend)
@@ -2957,7 +2965,8 @@ bridge2.jpg</div>
           // gewoon is. Archieftreffers komen gedempt achteraan (mét Terughalen-knop);
           // alleen bij een echte zoekterm en buiten de triage-filters.
           var extraArch=(t&&!srvArchiefView&&!fmode)?lArch.filter(past):[];
-          if(!items.length&&!extraArch.length){el.innerHTML="<div class='hint'>"+(srvArchiefView?'Geen gearchiveerde kaarten.':(fmode==='seintje'?'Geen openstaande seintjes op dit moment.':(fmode==='aandacht'?'Op dit moment vraagt geen enkele kaart aandacht.':(t?'Geen kaart gevonden voor deze zoekterm.':(lArch.length?'Alle kaarten zijn gearchiveerd — tik op “Gearchiveerd” om ze te zien.':'Nog geen gedeelde kaarten voor deze praktijk.')))))+"</div>";return;}
+          if(bf)extraArch=extraArch.filter(function(c){return vanBehandelaar(c,bf);});
+          if(!items.length&&!extraArch.length){el.innerHTML="<div class='hint'>"+(srvArchiefView?'Geen gearchiveerde kaarten.':(fmode==='seintje'?'Geen openstaande seintjes op dit moment.':(fmode==='aandacht'?'Op dit moment vraagt geen enkele kaart aandacht.':(t?'Geen kaart gevonden voor deze zoekterm.':(bf?'Geen kaarten voor deze behandelaar — kies “Iedereen” om alles te zien.':(lArch.length?'Alle kaarten zijn gearchiveerd — tik op “Gearchiveerd” om ze te zien.':'Nog geen gedeelde kaarten voor deze praktijk.'))))))+"</div>";return;}
           toonLijst(items.concat(extraArch));
         };
         var huidig=huidigeBasis();
@@ -2986,6 +2995,34 @@ bridge2.jpg</div>
             el.parentNode.insertBefore(sortEl,el);
           }
           sortEl.style.display='flex';markeerSort();markeerFilter();
+          // behandelaar-filter voor teampraktijken: één praktijk-login, maar ieder
+          // teamlid wil vooral de eigen cliënten zien. Verschijnt pas bij twee of
+          // meer behandelaars op de kaarten; de keuze blijft per apparaat bewaard
+          var behNamen={};l.concat(lArch).forEach(function(c){var n=String(c.behandelaar||'').trim();if(n)behNamen[n.toLowerCase()]=n;});
+          var behKeys=Object.keys(behNamen).sort();
+          var behSel=document.getElementById('k_srv_beh'),behLab=document.getElementById('k_srv_behlab');
+          if(behKeys.length>=2){
+            if(!behSel){
+              behLab=document.createElement('label');
+              behLab.id='k_srv_behlab';behLab.className='no-print';
+              behLab.style.cssText='display:inline-flex;align-items:center;gap:5px;margin-left:8px';
+              behLab.appendChild(document.createTextNode('Behandelaar:'));
+              behSel=document.createElement('select');
+              behSel.id='k_srv_beh';
+              behSel.setAttribute('aria-label','Toon alleen de kaarten van één behandelaar');
+              behSel.style.cssText='font-size:11.5px;padding:3px 6px;border:1px solid var(--line);border-radius:6px;background:#fff';
+              behLab.appendChild(behSel);
+              sortEl.appendChild(behLab);
+            }
+            // elke run opnieuw binden: anders houdt de handler de lijstdata van een
+            // vorige render vast (zelfde patroon als sortEl.onclick hieronder)
+            behSel.onchange=function(){try{localStorage.setItem('fysiplan_behfilter',behSel.value);}catch(err){}toon();};
+            var behOnthouden='';try{behOnthouden=localStorage.getItem('fysiplan_behfilter')||'';}catch(err){}
+            var behHuidig=behSel.value||behOnthouden;
+            if(!behNamen[behHuidig])behHuidig='';
+            behSel.innerHTML='<option value="">Iedereen</option>'+behKeys.map(function(k){return '<option value="'+esc(k)+'"'+(k===behHuidig?' selected':'')+'>'+esc(behNamen[k])+'</option>';}).join('');
+            behLab.style.display='inline-flex';
+          }else if(behLab){behLab.style.display='none';behSel.value='';}
           sortEl.onclick=function(e){
             var s=e.target.closest('[data-sort]'),f=e.target.closest('[data-filter]');
             if(s){sortEl.dataset.mode=s.dataset.sort;markeerSort();toon();}
