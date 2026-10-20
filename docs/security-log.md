@@ -1426,3 +1426,31 @@ containerwissels niet overleefd.
 v2-pagina's als regressieronde (landing, app, kaart, opname, manifest), of
 de kaartlijst-leesroutes (/api/kaarten-velden) op datalekken per veld
 opnieuw.
+
+## 2026-10-20 — Security-headers/CSP-regressieronde over alle v2-oppervlakken
+
+**Geauditeerd:** elke v2-pagina en elk v2-leesoppervlak op koppen en CSP,
+inclusief de routes die ná de header-audit van 10-10 zijn bijgekomen:
+landing, app, echte kaart, demokaart, opnamepagina, patiëntdata-API,
+webmanifest, afspraak-ICS, oefenagenda-ICS, de nieuwe activiteit-API, de
+serviceworker en de afbeeldingen.
+
+**Bevinding: geen gat.** De landing blijft scriptloos (default-src 'none'),
+app en kaartpagina's dragen een per request unieke nonce, /k en /o dragen
+noindex plus framebescherming, de opnamepagina houdt DENY, camera=(self) en
+COOP. Alle pagina's en data-antwoorden (ook 401's en 404's) gaan met
+no-store, nosniff en een sobere referrer-policy de deur uit — patiëntdata
+kan dus nergens uit een browser- of proxycache terugkomen; uitsluitend
+afbeeldingen/fonts/video zijn (bewust, één dag) cachebaar, en de
+serviceworker zelf is no-store zodat updates altijd doorkomen. De ICS-routes
+zijn host-gepind (een gespoofte Host haalt geen evil.com in de agenda) en
+HSTS staat correct alleen achter de https-proxyheader. Drie aanvankelijk
+rode checks bleken testbedrading (HSTS-conditie, agenda-dagformaat MO/WE,
+absoluut beeldpad), geen productfouten.
+
+**Increment:** nieuwe regressietest test-headers-breed.mjs (16 checks) naast
+de bestaande test-headers.mjs.
+
+**Volgende run — pak een ander gebied:** de kaartlijst-leesroutes op
+datalekken per veld opnieuw (/api/kaarten en de patiënt-GET naast elkaar),
+of de claim-/resetflow van de accountlaag opnieuw onder parallelle druk.
