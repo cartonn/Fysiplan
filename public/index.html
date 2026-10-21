@@ -2804,8 +2804,13 @@ bridge2.jpg</div>
             // volgende afspraak: komt op de patiëntkaart met een agenda-knop (mét alarm)
             "<div style='margin-top:7px'>"+
               "<small style='color:var(--muted)'>Volgende afspraak (komt op de patiëntkaart met een agenda-knop; leeg = weghalen)</small>"+
-              "<div style='display:flex;gap:6px;margin-top:3px'>"+
+              "<div style='display:flex;gap:6px;margin-top:3px;flex-wrap:wrap;align-items:center'>"+
                 "<input type='datetime-local' data-safspraak='"+esc(c.id)+"' value='"+esc(afspraakInput(c))+"' style='font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
+                // wekelijkse behandelreeks: de agenda-knop van de patiënt zet dan in
+                // één keer de hele reeks mét alarmen in de telefoonagenda (RRULE)
+                "<select data-safherhaal='"+esc(c.id)+"' title='Wekelijkse behandelreeks op dezelfde dag en tijd: de patiënt zet met één tik de hele reeks in de agenda, met herinneringen' style='font-size:12px;padding:5px 6px;border:1px solid var(--line);border-radius:8px'>"+
+                  [[0,'eenmalig'],[4,'wekelijks ×4'],[6,'wekelijks ×6'],[8,'wekelijks ×8'],[12,'wekelijks ×12']].map(function(o){return "<option value='"+o[0]+"'"+((Number(c.afspraak&&c.afspraak.herhaal)||0)===o[0]?" selected":"")+">"+o[1]+"</option>";}).join("")+
+                "</select>"+
                 "<button class='btn' data-safspraakopslaan='"+esc(c.id)+"'>Bewaar</button>"+
                 "<button class='btn' data-safweek='"+esc(c.id)+"' title='Zet de afspraak één week later dan de huidige (of één week vanaf nu) en bewaar direct — fysio-afspraken keren meestal wekelijks terug'>+1 week</button>"+
               "</div>"+
@@ -2874,7 +2879,7 @@ bridge2.jpg</div>
               "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>";
           }
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
-            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.antwoord&&c.antwoord.tekst?" · <span title='Er staat een bericht op de patiëntkaart klaar dat nog niet is weggetikt: “"+esc(c.antwoord.tekst)+"”' style='white-space:nowrap'>bericht klaar</span>":"")+(c.afspraak&&c.afspraak.t>Date.now()-2*3600000?" · <span title='Volgende afspraak op de patiëntkaart' style='white-space:nowrap'>afspraak "+new Date(c.afspraak.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+"</span>":"")+(c.pskDoel&&c.psk&&c.psk.length?" · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)' style='white-space:nowrap'>PSK "+c.psk[c.psk.length-1].s+"</span>":"")+"</small></div>"+seinChip+vg+hsChip+
+            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.antwoord&&c.antwoord.tekst?" · <span title='Er staat een bericht op de patiëntkaart klaar dat nog niet is weggetikt: “"+esc(c.antwoord.tekst)+"”' style='white-space:nowrap'>bericht klaar</span>":"")+(c.afspraak&&c.afspraak.t>Date.now()-2*3600000?" · <span title='Volgende afspraak op de patiëntkaart"+(Number(c.afspraak.herhaal)>=2?" — wekelijkse reeks van "+c.afspraak.herhaal:"")+"' style='white-space:nowrap'>afspraak "+new Date(c.afspraak.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+(Number(c.afspraak.herhaal)>=2?" ×"+c.afspraak.herhaal:"")+"</span>":"")+(c.pskDoel&&c.psk&&c.psk.length?" · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)' style='white-space:nowrap'>PSK "+c.psk[c.psk.length-1].s+"</span>":"")+"</small></div>"+seinChip+vg+hsChip+
             "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
             "<button class='btn' data-skopie='"+esc(c.id)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+
@@ -3221,7 +3226,9 @@ bridge2.jpg</div>
       if(veldA.value&&(!tA||isNaN(tA))){alert('Kies een geldige datum en tijd.');return;}
       var oudA=af.textContent;
       var toonA=function(t){af.textContent=t;setTimeout(function(){af.textContent=oudA;},1600);};
-      fetch('api/kaart/afspraak',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:af.dataset.safspraakopslaan,t:tA})})
+      var herhaalSel=document.querySelector("[data-safherhaal='"+af.dataset.safspraakopslaan+"']");
+      var herhaalA=herhaalSel?Number(herhaalSel.value)||0:0;
+      fetch('api/kaart/afspraak',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:af.dataset.safspraakopslaan,t:tA,herhaal:herhaalA})})
         .then(function(r){return r.json();})
         .then(function(d){if(d.ok)toonA('Bewaard ✓');else toonA(d.fout||'Mislukt');})
         .catch(function(){toonA('Geen verbinding');});

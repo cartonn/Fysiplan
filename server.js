@@ -2979,7 +2979,11 @@ async function afhandelen(request, response) {
           await sendJson(response, 400, { ok: false, fout: "Kies een moment in de komende twaalf maanden." });
           return;
         }
-        kaart.afspraak = { t: Math.round(t) };
+        // wekelijks herhalende behandelreeks (zelfde dag en tijd): 2 t/m 12 keer,
+        // al het andere telt als eenmalig — de agenda-ICS krijgt er een RRULE bij
+        const herhaal = Number(b.herhaal);
+        kaart.afspraak = (Number.isInteger(herhaal) && herhaal >= 2 && herhaal <= 12)
+          ? { t: Math.round(t), herhaal } : { t: Math.round(t) };
       } else kaart.afspraak = null;
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, afspraak: kaart.afspraak });
@@ -3029,6 +3033,11 @@ async function afhandelen(request, response) {
       "UID:fysiplan-afspraak-" + found.id + "-" + found.afspraak.t + "@fysiplan.nl",
       "DTSTAMP:" + stamp,
       "DTSTART:" + dtStart,
+      // wekelijkse behandelreeks: één agenda-tik zet alle vervolgafspraken mét
+      // alarmen — het app-vrije antwoord op de afspraakherinneringen van
+      // concurrenten die daar een patiënt-app met pushmeldingen voor eisen
+      ...((Number.isInteger(found.afspraak.herhaal) && found.afspraak.herhaal >= 2)
+        ? ["RRULE:FREQ=WEEKLY;COUNT=" + Math.min(found.afspraak.herhaal, 12)] : []),
       "DURATION:PT30M",
       "SUMMARY:" + icsTekst(taalT.sum + (found.praktijk ? " (" + found.praktijk + ")" : "")),
       "DESCRIPTION:" + icsTekst(taalT.desc + link),

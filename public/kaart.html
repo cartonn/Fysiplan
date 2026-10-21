@@ -590,6 +590,8 @@
   function tekenOfflijn(){var el=document.getElementById('offlijn');if(!el)return;el.textContent=TOFF[TAAL]||TOFF.nl;el.style.display=(typeof navigator.onLine==='boolean'&&!navigator.onLine)?'block':'none';}
   window.addEventListener('online',tekenOfflijn);window.addEventListener('offline',tekenOfflijn);
   var TAF={nl:'Je volgende afspraak',en:'Your next appointment',de:'Dein nächster Termin',fr:'Votre prochain rendez-vous',es:'Tu próxima cita',pl:'Twoja następna wizyta',tr:'Bir sonraki randevun',ar:'موعدك القادم',uk:'Твій наступний візит'};
+  // wekelijkse behandelreeks: "{n}" wordt het aantal nog komende afspraken
+  var TAFHER={nl:'wekelijks, nog {n} keer',en:'weekly, {n} more times',de:'wöchentlich, noch {n} Mal',fr:'chaque semaine, encore {n} fois',es:'semanal, {n} veces más',pl:'co tydzień, jeszcze {n} razy',tr:'haftalık, {n} kez daha',ar:'أسبوعيًا، {n} مرات متبقية',uk:'щотижня, ще {n} разів'};
   // PSK (Patiënt Specifieke Klachten): de doelactiviteit die de therapeut zette,
   // met de vraag hoe lastig die nu is (0 = geen moeite, 10 = onmogelijk)
   var TPSK={
@@ -995,9 +997,14 @@
   function tekenAfspraak(){
     var blok=document.getElementById('afspraakblok');if(!blok)return;
     var a=K&&K.kaart&&K.kaart.afspraak;
-    if(!a||!a.t||a.t<Date.now()-2*3600000){blok.style.display='none';return;}
+    if(!a||!a.t){blok.style.display='none';return;}
+    // wekelijkse reeks: is de eerste afspraak voorbij, rol dan door naar de
+    // eerstvolgende in de reeks, zodat de kaart altijd de échte volgende toont
+    var at=a.t,rest=Number(a.herhaal)||0;
+    if(rest>=2){while(at<Date.now()-2*3600000&&rest>1){at+=7*864e5;rest--;}}
+    if(at<Date.now()-2*3600000){blok.style.display='none';return;}
     document.getElementById('afkop').textContent=TAF[TAAL]||TAF.nl;
-    var d=new Date(a.t);
+    var d=new Date(at);
     var tekst=d.toLocaleString(TAAL==='nl'?'nl-NL':TAAL,{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
     // vandaag of morgen? dan het accentwoord ervoor, zodat de dag zelf opvalt
     var rel=TAFREL[TAAL]||TAFREL.nl;
@@ -1007,6 +1014,8 @@
     el.textContent='';
     if(relW){var b=document.createElement('b');b.textContent=relW+' — ';el.appendChild(b);}
     el.appendChild(document.createTextNode(tekst));
+    // de reeks erbij: "wekelijks, nog N keer" ná de eerstvolgende datum
+    if(rest>=2){el.appendChild(document.createTextNode(' · '+(TAFHER[TAAL]||TAFHER.nl).replace('{n}',rest)));}
     var ics=document.getElementById('afics');
     ics.textContent=tr('agknop');
     ics.href='/api/kaart/afspraak.ics?id='+encodeURIComponent(id)+'&taal='+encodeURIComponent(TAAL);
