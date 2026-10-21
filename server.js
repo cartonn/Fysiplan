@@ -2614,8 +2614,15 @@ async function afhandelen(request, response) {
     const found = vindKaart(String(q.get("id") || ""));
     if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     const prof = praktijken[found.praktijk.toLowerCase()] || { praktijk: found.praktijk };
-    // werknotitie en behandelaar zijn praktijk-intern en gaan nooit mee naar de patiëntpagina
-    const { notitie, behandelaar, ...patientKaart } = found;
+    // expliciete allowlist in plaats van "alles behalve notitie/behandelaar":
+    // deze route is open voor iedereen met de kaartlink, dus een later toegevoegd
+    // praktijk-intern veld mag nooit stilletjes meelekken (fail-closed). Naast de
+    // werknotitie en de behandelaar blijven nu ook ts/bekeken/seintje/oefTrouw/
+    // gearchiveerd binnen: de patiëntpagina gebruikt ze niet (dataminimalisatie).
+    const PATIENT_VELDEN = ["id", "demo", "praktijk", "naam", "client", "chosen", "rows", "cells",
+      "vids", "metingen", "gedaan", "ervaring", "antwoord", "afspraak", "pskDoel", "psk", "doel"];
+    const patientKaart = {};
+    for (const veld of PATIENT_VELDEN) if (veld in found) patientKaart[veld] = found[veld];
     // ai-vlag: de kaartpagina toont de vraaghulp alleen als de server een AI-sleutel heeft
     await sendJson(response, 200, { ok: true, kaart: patientKaart, praktijk: prof, ai: !!AI_KEY });
     return;

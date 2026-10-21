@@ -1454,3 +1454,35 @@ de bestaande test-headers.mjs.
 **Volgende run — pak een ander gebied:** de kaartlijst-leesroutes op
 datalekken per veld opnieuw (/api/kaarten en de patiënt-GET naast elkaar),
 of de claim-/resetflow van de accountlaag opnieuw onder parallelle druk.
+
+## 2026-10-21 — Kaartlijst-leesroutes: datalekken per veld (/api/kaart naast /api/kaarten)
+
+**Gebied.** De open patiëntroute GET /api/kaart (iedereen met de kaartlink) veld
+voor veld naast de geauthenticeerde praktijklijst GET /api/kaarten gelegd, plus
+de andere lezers van dezelfde kaartdata: het meegestuurde praktijkprofiel, de
+AI-vraagcontext, de vertaalroute en de ICS-routes.
+
+**Bevinding: geen actief lek, wel een fail-open patroon.** De patiëntroute
+stripte intern met een denylist (`{ notitie, behandelaar, ...rest }`): elk
+later toegevoegd praktijk-intern veld zou automatisch naar iedereen met de
+link meelekken. Verder bleek de route metadata mee te sturen die de
+patiëntpagina helemaal niet gebruikt (ts, bekeken, seintje, oefTrouw,
+gearchiveerd). Het meegestuurde praktijkprofiel draagt alleen
+briefhoofdvelden (accounthashes staan in aparte stores en komen nergens
+langs); de AI-vraagcontext bevat uitsluitend oefeningen plus de
+patiëntzichtbare c_doel/c_cave — de werknotitie kan dus ook niet via een
+AI-antwoord naar buiten.
+
+**Increment.** De patiëntroute werkt nu met een expliciete allowlist van 17
+velden (fail-closed): een nieuw veld blijft standaard binnen tot iemand hém
+bewust aan de lijst toevoegt, en de vijf ongebruikte metadatavelden gaan niet
+langer mee (dataminimalisatie, geen gedragswijziging voor de patiëntpagina).
+Nieuwe regressietest test-patient-velden.mjs (9 checks) pint de exacte
+veldenset van patiëntroute, demokaart én praktijkprofiel vast en bewijst dat
+de praktijklijst de interne velden wél houdt en de patiëntpagina ongewijzigd
+werkt (oefeningen, bericht, afvinken).
+
+**Volgende run — pak een ander gebied:** de claim-/resetflow van de
+accountlaag opnieuw onder parallelle druk (dubbel claimen, herstelcode-race),
+of de opname-/videoketen op autorisatie per praktijk (kan praktijk A een
+video aan de kaart van praktijk B hangen?).
