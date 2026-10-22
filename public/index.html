@@ -1240,6 +1240,39 @@ bridge2.jpg</div>
     }
     rows+=labelRow('XRM','xrm');
     elMon.innerHTML=head+"<tbody>"+rows+"</tbody>";
+    if(IS_V2)zetBulkDos();
+  }
+  // v2: startdosering voor alle gekozen oefeningen in één keer — vult alleen lege
+  // S/H-vakjes in de eerste schemarij, zodat handmatig ingevulde waarden blijven
+  // staan. Alleen op /v2/app (IS_V2-poort): v1 en /admin88 zien dit nooit, en de
+  // regel print niet mee (no-print).
+  function zetBulkDos(){
+    var elMon=document.getElementById('mon');if(!elMon)return;
+    var el=document.getElementById('bulkdos');
+    if(!el){
+      el=document.createElement('div');
+      el.id='bulkdos';el.className='no-print';
+      el.style.cssText='display:none;align-items:center;gap:7px;flex-wrap:wrap;padding:8px 30px 2px;font-size:12px;color:var(--muted)';
+      el.innerHTML="Startdosering voor alle oefeningen: "+
+        "<input id='bd_s' inputmode='numeric' maxlength='4' placeholder='3' aria-label='series' style='width:44px;font-size:12px;padding:5px 6px;border:1px solid var(--line);border-radius:8px;text-align:center'/>&times;"+
+        "<input id='bd_h' inputmode='numeric' maxlength='6' placeholder='10' aria-label='herhalingen' style='width:52px;font-size:12px;padding:5px 6px;border:1px solid var(--line);border-radius:8px;text-align:center'/>"+
+        "<button class='btn' id='bd_do' type='button' title='Vult series en herhalingen in de eerste schemarij voor elke oefening; al ingevulde vakjes blijven staan'>Vul eerste rij</button>"+
+        "<small>alleen lege vakjes; per oefening aanpassen kan daarna gewoon</small>";
+      elMon.parentNode.insertBefore(el,elMon);
+      el.querySelector('#bd_do').addEventListener('click',function(){
+        var s=el.querySelector('#bd_s').value.trim().slice(0,4),h=el.querySelector('#bd_h').value.trim().slice(0,6);
+        if(!s&&!h)return;
+        chosen.forEach(function(c){
+          var pre='e'+c.o+'.'+(c.i||0);
+          if(s&&!GRID.cells[pre+'|r0|S'])GRID.cells[pre+'|r0|S']=s;
+          if(h&&!GRID.cells[pre+'|r0|H'])GRID.cells[pre+'|r0|H']=h;
+        });
+        var b=el.querySelector('#bd_do'),oud=b.textContent;
+        render();
+        b.textContent='Ingevuld ✓';setTimeout(function(){b.textContent=oud;},1600);
+      });
+    }
+    el.style.display=chosen.length>=2?'flex':'none';
   }
   function render(){updateChipCounts();renderList();renderA4();saveState();}
 
