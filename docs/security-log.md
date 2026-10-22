@@ -1486,3 +1486,38 @@ werkt (oefeningen, bericht, afvinken).
 accountlaag opnieuw onder parallelle druk (dubbel claimen, herstelcode-race),
 of de opname-/videoketen op autorisatie per praktijk (kan praktijk A een
 video aan de kaart van praktijk B hangen?).
+
+## 2026-10-22 — Opname-/videoketen onder parallelle druk (autorisatie + races)
+
+**Gebied.** De opnameketen adversarieel bekeken: wie mag tokens munten, wat
+bindt een upload aan een token, kan praktijk A een video aan (de kaart van)
+praktijk B hangen, en wat gebeurt er onder gelijktijdigheid en rond het
+verlopen van tokens.
+
+**Autorisatie: dicht.** Opname starten is admin-gegrendeld, de upload is
+token-gebonden (12 hex, onraadbaar) met same-origin-eis, inhoudscontrole
+(echte mp4/webm-kop), 60 MB-plafond, vier gelijktijdige uploads maximaal en
+een opslagplafond. Een praktijk kán een bestaand videopad van een andere
+kaart in de eigen vids zetten (het pad lekt alleen via de kaartlink zelf),
+maar dat geeft geen toegang tot iets nieuws en de opruiming is
+referentie-bewust over álle kaarten en oefeningen — laag risico, genoteerd.
+
+**Twee gaten gevonden en gedicht (races).** (1) Tussen de o.video-check en
+het zetten ervan liggen awaits: twee gelijktijdige uploads op hetzelfde token
+passeerden beide de check, waardoor een weesbestand (tot 60 MB) achterbleef
+en de opslagteller dubbel telde. De upload claimt het token nu synchroon
+(o.bezig) vóór de eerste await; de finally geeft de claim vrij. (2) Verliep
+een token tíjdens een lopende upload, dan ruimde opnameOpschonen het weg
+vóór o.video gezet was — het zojuist geschreven bestand werd dan permanent
+wees. De opschoning slaat bezige tokens nu over; de volgende ronde ruimt ze
+alsnog netjes op.
+
+**Increment.** Regressietest test-opname-race.mjs (9 checks): admin-grendel,
+drie gelijktijdige uploads → precies één winnaar en één bestand, token
+overleeft de opschoning zolang de upload loopt (trage chunked upload over de
+TTL-grens), en de wezenopruiming blijft daarna gewoon werken. Bestaande
+opname- en videobeheersuites blijven groen.
+
+**Volgende run — pak een ander gebied:** de claim-/resetflow van de
+accountlaag onder parallelle druk (dubbel claimen, herstelcode-race), of de
+schrijfroutes van de accountsessies (logout/reset overal, sessieplafonds).

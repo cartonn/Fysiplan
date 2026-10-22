@@ -412,7 +412,10 @@ function opnameOpschonen() {
   // de aanvraag die de opschoning aanstoot wacht er niet op.
   const wezen = [];
   for (const [t, o] of opnames) {
-    if (nu - o.made > OPNAME_TTL_MS) {
+    // een upload die nog bezig is (o.bezig) niet onder de voeten wegruimen: het
+    // token verdwijnt dan vóór o.video gezet is en het zojuist geschreven bestand
+    // wordt permanent wees — de volgende opschoningsronde ruimt het alsnog netjes
+    if (nu - o.made > OPNAME_TTL_MS && !o.bezig) {
       opnames.delete(t);
       if (o.video) wezen.push(o.video);
     }
@@ -2396,7 +2399,12 @@ async function afhandelen(request, response) {
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const token = String(q.get("token") || "");
     const o = opnames.get(token);
-    if (!o || o.video) { await sendJson(response, 404, { ok: false, fout: "Opname verlopen of al afgerond. Scan de QR-code opnieuw." }); return; }
+    // o.bezig: het token is al synchroon geclaimd door een lopende upload — tussen
+    // de check hieronder en het zetten van o.video liggen awaits, dus zonder deze
+    // grendel passeren twee gelijktijdige uploads op hetzelfde token beide de
+    // o.video-check en blijft er een weesbestand (tot 60 MB) achter terwijl de
+    // opslagteller dubbel telt
+    if (!o || o.video || o.bezig) { await sendJson(response, 404, { ok: false, fout: "Opname verlopen of al afgerond. Scan de QR-code opnieuw." }); return; }
     // te grote uploads meteen afwijzen (vóór het bufferen) en het aantal gelijktijdige
     // uploads begrenzen: elke upload staat kort in het geheugen
     if (Number(request.headers["content-length"] || 0) > 60 * 1024 * 1024) {
@@ -2407,6 +2415,9 @@ async function afhandelen(request, response) {
       await sendJson(response, 429, { ok: false, fout: "Het is even druk; probeer het over een minuut opnieuw." });
       return;
     }
+    // claim synchroon (geen await tussen de o-check en hier), geef pas daarna de
+    // eerste await de kans; de finally geeft de claim weer vrij
+    o.bezig = true;
     lopendeUploads++;
     try {
       const ct = String(request.headers["content-type"] || "");
@@ -2448,6 +2459,7 @@ async function afhandelen(request, response) {
       await sendJson(response, 400, { ok: false, fout: "Upload mislukt (video te groot?)." });
     } finally {
       lopendeUploads--;
+      o.bezig = false;
     }
     return;
   }
