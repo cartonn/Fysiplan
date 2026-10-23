@@ -1482,6 +1482,12 @@ veldenset van patiëntroute, demokaart én praktijkprofiel vast en bewijst dat
 de praktijklijst de interne velden wél houdt en de patiëntpagina ongewijzigd
 werkt (oefeningen, bericht, afvinken).
 
+**Addendum 2026-10-23:** drie van de vijf geminimaliseerde velden bleken de
+dossier-samenvatting van de praktijk te voeden (die leest via deze route):
+ts, gearchiveerd en oefTrouw reizen weer mee — oefTrouw is bovendien door de
+patiënt zelf aangetikte data, net als het al meereizende gedaan. De kern van
+de fix (allowlist, notitie/behandelaar/seintje/bekeken blijven binnen) staat.
+
 **Volgende run — pak een ander gebied:** de claim-/resetflow van de
 accountlaag opnieuw onder parallelle druk (dubbel claimen, herstelcode-race),
 of de opname-/videoketen op autorisatie per praktijk (kan praktijk A een

@@ -2628,11 +2628,14 @@ async function afhandelen(request, response) {
     const prof = praktijken[found.praktijk.toLowerCase()] || { praktijk: found.praktijk };
     // expliciete allowlist in plaats van "alles behalve notitie/behandelaar":
     // deze route is open voor iedereen met de kaartlink, dus een later toegevoegd
-    // praktijk-intern veld mag nooit stilletjes meelekken (fail-closed). Naast de
-    // werknotitie en de behandelaar blijven nu ook ts/bekeken/seintje/oefTrouw/
-    // gearchiveerd binnen: de patiëntpagina gebruikt ze niet (dataminimalisatie).
-    const PATIENT_VELDEN = ["id", "demo", "praktijk", "naam", "client", "chosen", "rows", "cells",
-      "vids", "metingen", "gedaan", "ervaring", "antwoord", "afspraak", "pskDoel", "psk", "doel"];
+    // praktijk-intern veld mag nooit stilletjes meelekken (fail-closed). De
+    // werknotitie, de behandelaar, het seintje en bekeken blijven binnen;
+    // ts/gearchiveerd/oefTrouw reizen wél mee omdat de dossier-samenvatting van
+    // de praktijk ze via deze route leest (oefTrouw is bovendien door de patiënt
+    // zelf aangetikte data, net als gedaan).
+    const PATIENT_VELDEN = ["id", "demo", "praktijk", "naam", "ts", "client", "chosen", "rows", "cells",
+      "vids", "metingen", "gedaan", "ervaring", "antwoord", "afspraak", "pskDoel", "psk", "doel",
+      "oefTrouw", "gearchiveerd"];
     const patientKaart = {};
     for (const veld of PATIENT_VELDEN) if (veld in found) patientKaart[veld] = found[veld];
     // ai-vlag: de kaartpagina toont de vraaghulp alleen als de server een AI-sleutel heeft

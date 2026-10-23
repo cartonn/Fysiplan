@@ -1711,7 +1711,10 @@ bridge2.jpg</div>
       (IS_V2?"<span class='no-print' style='display:flex;gap:9px;margin-top:3px;font-size:10.5px'>"+
         "<a id='qr_wa' href='https://wa.me/?text="+encodeURIComponent(deelBericht(id,deelTaalKeuze(id)))+"' target='_blank' rel='noopener' title='Stuur de kaartlink direct via WhatsApp' style='color:var(--brand,#2456a6);text-decoration:underline'>WhatsApp</a>"+
         "<a id='qr_mail' href='mailto:?subject="+encodeURIComponent(vulDeel(deelTaalVan(deelTaalKeuze(id)).sd,id))+"&body="+encodeURIComponent(deelBericht(id,deelTaalKeuze(id)))+"' title='Stuur de kaartlink per e-mail' style='color:var(--brand,#2456a6);text-decoration:underline'>E-mail</a>"+
-        "<a id='qr_kopie' href='#' title='Kopieer de kaartlink' style='color:var(--brand,#2456a6);text-decoration:underline'>Kopieer link</a></span>":'')+
+        "<a id='qr_kopie' href='#' title='Kopieer de kaartlink' style='color:var(--brand,#2456a6);text-decoration:underline'>Kopieer link</a>"+
+        // dossierregel op het moment dat het EPD toch al openstaat: kaart af ->
+        // delen -> samenvatting plakken, zonder omweg via de kaartenlijst
+        "<a id='qr_dossier' href='#' title='Kopieer een platte-tekstsamenvatting (cliënt, doel, oefeningen met dosering, kaartlink) om in het EPD-dossier te plakken' style='color:var(--brand,#2456a6);text-decoration:underline'>Kopieer voor dossier</a></span>":'')+
       (IS_V2?"<span class='qrx no-print' id='qrx' title='QR-code van deze kaart afhalen'>×</span>":'');
     b.style.display='flex';
     if(IS_V2){
@@ -1722,6 +1725,21 @@ bridge2.jpg</div>
         if(navigator.clipboard&&navigator.clipboard.writeText){
           navigator.clipboard.writeText(url).then(function(){toon('Gekopieerd \u2713');}).catch(function(){window.prompt('Kopieer de kaartlink:',url);});
         }else{window.prompt('Kopieer de kaartlink:',url);}
+      });
+      var qd=document.getElementById('qr_dossier');
+      if(qd)qd.addEventListener('click',function(e){
+        e.preventDefault();
+        var toonD=function(tk){qd.textContent=tk;setTimeout(function(){qd.textContent='Kopieer voor dossier';},1600);};
+        fetch('api/kaart?id='+id,{cache:'no-cache'})
+          .then(function(r){return r.json();})
+          .then(function(d){
+            if(!d.ok){toonD('Ophalen mislukt');return;}
+            var tekst=dossierTekst(d.kaart);
+            if(navigator.clipboard&&navigator.clipboard.writeText){
+              navigator.clipboard.writeText(tekst).then(function(){toonD('Gekopieerd ✓');}).catch(function(){window.prompt('Kopieer de samenvatting:',tekst);});
+            }else{window.prompt('Kopieer de samenvatting:',tekst);}
+          })
+          .catch(function(){toonD('Geen verbinding');});
       });
     }
     return true;
