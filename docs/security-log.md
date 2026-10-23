@@ -1521,3 +1521,33 @@ opname- en videobeheersuites blijven groen.
 **Volgende run — pak een ander gebied:** de claim-/resetflow van de
 accountlaag onder parallelle druk (dubbel claimen, herstelcode-race), of de
 schrijfroutes van de accountsessies (logout/reset overal, sessieplafonds).
+
+## 2026-10-23 — Claim-/resetflow en sessielaag onder parallelle druk
+
+**Gebied.** De accountlaag adversarieel bekeken op gelijktijdigheid: dubbel
+claimen van dezelfde praktijknaam, dubbel verzilveren van één herstelcode,
+wachtwoord wijzigen naast lopende sessies, en de sessietabel zelf (plafond,
+verloop, invalidatie).
+
+**Bevinding: geen gat.** De check→schrijf-blokken van claim, herstel en
+wachtwoord-wijzigen zijn volledig synchroon (scryptSync, geen await tussen
+controle en toekenning), dus twee gelijktijdige verzoeken kunnen nooit
+allebei winnen: Node serialiseert de blokken en de verliezer toetst
+onvermijdelijk tegen de al vervangen hash of de al gezette claim. De
+herstelcode (80 bits, FP-xxxxx×4) vervangt zichzelf bij elk gebruik, foute
+pogingen tellen in de per-praktijk-inlogrem, en bij herstel én
+wachtwoordwijziging vervallen álle sessies van de praktijk vóór er een verse
+wordt uitgegeven. De sessietabel heeft een verloop van 30 dagen, opruiming
+vanaf 5000 en een harde bovengrens van 50.000 met oudste-eerst-verdringing;
+logout verwijdert het token direct.
+
+**Increment.** Regressietest test-claim-reset-race.mjs (12 checks) pint dit
+vast met echte gelijktijdige verzoeken: één claim-winnaar (alleen diens
+wachtwoord logt in), één herstel-winnaar, oude sessies overal vervallen,
+verbruikte code dood, nieuwe code werkt, logout direct ongeldig. Een
+toekomstige refactor die hier een await tussenzet kleurt zo direct rood.
+Inlogrem-, activiteit- en herstelcode-suites blijven groen.
+
+**Volgende run — pak een ander gebied:** injectie en path traversal opnieuw
+breed (alle nieuwe velden sinds 10-17: herhaal, bericht, behandelaar-filter),
+of de statische bestandslevering en Range-afhandeling van /uploads.
