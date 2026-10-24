@@ -1557,3 +1557,35 @@ Inlogrem-, activiteit- en herstelcode-suites blijven groen.
 **Volgende run — pak een ander gebied:** injectie en path traversal opnieuw
 breed (alle nieuwe velden sinds 10-17: herhaal, bericht, behandelaar-filter),
 of de statische bestandslevering en Range-afhandeling van /uploads.
+
+## 2026-10-24 — Statische levering /uploads (traversal, Range) + injectie nieuwe velden
+
+**Gebied.** De statische bestandslevering van /uploads adversarieel bekeken
+(path traversal, extensie-allowlist, Range-afhandeling, headers op de
+streamende paden) plus injectie-herbevestiging op de velden die er sinds
+10-17 bij kwamen (herhaal, bericht/antwoord, behandelaar-filter,
+bulk-dosering, PSK-chip).
+
+**Bevinding: één kop-gat, verder dicht.** De traversal-grendel
+(decodeURIComponent → normalize → startsWith op de uploads-map) houdt ook
+URL-gecodeerde varianten buiten; alleen .jpg/.png/.mp4/.webm worden
+geserveerd met een gepind content-type; de Range-wiskunde is correct (206
+met juiste content-range/lengte, 416 bij kapotte, omgekeerde of
+buiten-bestand-ranges) en er wordt gestreamd, dus geen geheugendruk. De
+suffix-range (bytes=-100) levert spec-afwijkend het begin van het bestand,
+maar nooit bytes buiten het bestand — genoteerd, geen risico. Wél bleken de
+media-antwoorden (200/206/416) nosniff en referrer-policy te missen doordat
+deze route send() omzeilt met eigen writeHead-aanroepen: het enige oppervlak
+zonder die koppen. Gedicht. De nieuwe velden: herhaal is servervalidatie
+(geheel, 2-12), het bericht gaat per textContent naar de patiëntkaart (een
+vijandig bericht met scripttags en attribuutbrekers rendert als platte
+tekst, bewezen in de browser), en behandelaar-/doseringswaarden lopen overal
+door esc().
+
+**Increment.** Regressietest test-uploads-lever.mjs (9 checks): traversal ×5,
+allowlist, Range-wiskunde (206/416/suffix/omgekeerd), nosniff op alle
+mediapaden, en de injectieketen van bericht tot patiëntscherm.
+
+**Volgende run — pak een ander gebied:** de open schrijfroutes op bulk-misbruik
+opnieuw (kaartMisLimiet-rotatie over veel kaart-id's, statsEvent-flood), of de
+AI-routes (prompt-injectie via kaartvelden in de vraaghulp en de weekbrief).

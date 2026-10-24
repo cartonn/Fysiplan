@@ -3504,7 +3504,11 @@ async function afhandelen(request, response) {
       const s = createReadStream(file, opties);
       s.on("error", () => { try { response.destroy(); } catch {} resolve(); });
       response.on("close", () => { s.destroy(); resolve(); });
+      // deze route schrijft zelf headers (streams) en mist daardoor de vaste
+      // koppen van send(): nosniff en een sobere referrer-policy horen ook op
+      // media, anders is dit het enige oppervlak zonder
       response.writeHead(status, { "content-type": MIME[ext], "accept-ranges": "bytes",
+        "x-content-type-options": "nosniff", "referrer-policy": "same-origin",
         ...extraHeaders, ...cacheHeaders(MIME[ext]) });
       s.pipe(response);
       s.on("end", resolve);
@@ -3516,7 +3520,8 @@ async function afhandelen(request, response) {
       const start = m && m[1] ? parseInt(m[1], 10) : 0;
       const end = m && m[2] ? Math.min(parseInt(m[2], 10), totaal - 1) : totaal - 1;
       if (!m || start > end || start >= totaal) {
-        response.writeHead(416, { "content-range": `bytes */${totaal}` });
+        response.writeHead(416, { "content-range": `bytes */${totaal}`,
+          "x-content-type-options": "nosniff", "referrer-policy": "same-origin" });
         response.end();
         return;
       }
