@@ -3101,6 +3101,22 @@ bridge2.jpg</div>
         // samenvatting bovenaan: één oogopslag op de praktijk (telt over álle kaarten,
         // niet de zoekfilter). De "aandacht"-teller zet met één tik de aandacht-sortering
         // aan. Alleen tellen en tonen; de duiding blijft bij de therapeut.
+        // stilgevallen kaarten voor de opruimknop: 90+ dagen geen enkele activiteit
+        // (aanmaak, oefenvinkje, pijn/PSK/herstel-tik of kaartbezoek), geen
+        // openstaand seintje en geen komende afspraak — die horen in het archief,
+        // niet in de werklijst
+        var laatsteActiviteit=function(c){
+          var acts=[c.ts||0];
+          if(c.gedaan&&c.gedaan.length)acts.push(c.gedaan[c.gedaan.length-1].t);
+          if(c.scores&&c.scores.length)acts.push(c.scores[c.scores.length-1].t);
+          if(c.psk&&c.psk.length)acts.push(c.psk[c.psk.length-1].t);
+          if(c.ervaring&&c.ervaring.length)acts.push(c.ervaring[c.ervaring.length-1].t);
+          if(c.bekeken)acts.push(c.bekeken);
+          return Math.max.apply(null,acts);
+        };
+        var stilKaarten=l.filter(function(c){
+          return nu-laatsteActiviteit(c)>90*dag&&!seintjeOpen(c)&&!(c.afspraak&&c.afspraak.t>nu-2*3600000);
+        });
         var samEl=document.getElementById('k_srv_sam');
         if(huidig.length>=2||lArch.length){
           if(!samEl){
@@ -3127,6 +3143,10 @@ bridge2.jpg</div>
             // plakklare tekst (kwaliteitsverantwoording, teamoverleg)
             h+="<button type='button' id='k_srv_rap' class='no-print' title='Kopieer een geaggregeerd uitkomstenrapport van alle actieve kaarten (pijnverloop, oefentrouw, ervaren herstel, seintjes) — zonder cliëntnamen' style='cursor:pointer;background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:12px'>Rapport</button>";
             h+="<button type='button' id='k_srv_csv' class='no-print' title='Download alle kaarten (actief én gearchiveerd) als CSV — je gegevens zijn van jou, voor backup of overstap' style='cursor:pointer;background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:12px'>Exporteer (CSV)</button>";
+            // opruimen: kaarten die 90+ dagen stil zijn (geen activiteit, geen
+            // openstaand seintje, geen komende afspraak) in één keer archiveren.
+            // Omkeerbaar: alles blijft bewaard en staat onder "Gearchiveerd"
+            if(stilKaarten.length)h+="<button type='button' id='k_srv_opruim' class='no-print' title='Archiveer de kaarten die 90+ dagen stil zijn (geen activiteit van de patiënt, geen openstaand seintje, geen komende afspraak). Alles blijft bewaard, de patiëntlinks blijven werken en terughalen kan altijd onder “Gearchiveerd”.' style='cursor:pointer;background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:12px'>Ruim op ("+stilKaarten.length+")</button>";
           }
           samEl.innerHTML=h;samEl.style.display='flex';
           var ab=document.getElementById('k_srv_sam_aand');
@@ -3141,6 +3161,25 @@ bridge2.jpg</div>
           }
           var arb=document.getElementById('k_srv_arch');
           if(arb)arb.onclick=function(){srvArchiefView=!srvArchiefView;toonSrvKaarten();};
+          // opruimen: met bevestiging, maximaal 25 per keer (binnen de schrijfrem),
+          // en daarna vers renderen zodat teller en archiefknop meteen kloppen
+          var ob=document.getElementById('k_srv_opruim');
+          if(ob)ob.onclick=function(){
+            var batch=stilKaarten.slice(0,25);
+            var rest=stilKaarten.length-batch.length;
+            if(!confirm(stilKaarten.length+' kaart'+(stilKaarten.length===1?' is':'en zijn')+' al 90+ dagen stil (geen activiteit, geen seintje, geen komende afspraak).\n\nArchiveren? Alles blijft bewaard, de patiëntlinks blijven werken en terughalen kan altijd onder “Gearchiveerd”.'+(rest>0?'\n\nEr worden er nu 25 gearchiveerd; klik daarna nog een keer voor de overige '+rest+'.':'')))return;
+            ob.disabled=true;ob.textContent='Bezig…';
+            var i=0;
+            var volgende=function(){
+              if(i>=batch.length){toonSrvKaarten();ping('kaarten-opgeruimd');return;}
+              var c=batch[i++];
+              fetch('api/kaart/archief',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:c.id,archief:true})})
+                .then(function(r){return r.json();})
+                .then(function(){volgende();})
+                .catch(function(){volgende();});
+            };
+            volgende();
+          };
           var rb=document.getElementById('k_srv_rap');
           if(rb)rb.onclick=function(){
             var tekst=praktijkRapport(l,lArch);
