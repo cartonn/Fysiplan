@@ -3171,7 +3171,7 @@ bridge2.jpg</div>
             ob.disabled=true;ob.textContent='Bezig…';
             var i=0;
             var volgende=function(){
-              if(i>=batch.length){toonSrvKaarten();ping('kaarten-opgeruimd');return;}
+              if(i>=batch.length){toonSrvKaarten();return;}
               var c=batch[i++];
               fetch('api/kaart/archief',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:c.id,archief:true})})
                 .then(function(r){return r.json();})

@@ -1589,3 +1589,28 @@ mediapaden, en de injectieketen van bericht tot patiëntscherm.
 **Volgende run — pak een ander gebied:** de open schrijfroutes op bulk-misbruik
 opnieuw (kaartMisLimiet-rotatie over veel kaart-id's, statsEvent-flood), of de
 AI-routes (prompt-injectie via kaartvelden in de vraaghulp en de weekbrief).
+
+## 2026-10-25 — Open schrijfroutes onder bulk-misbruik (plafonds en remmen)
+
+**Gebied.** De open schrijfroutes adversarieel bekeken op volume: kaart-raden
+over veel id's, statsEvent-floods, en de groeiplafonds van de kaartenopslag
+(praktijksleutels, kaarten per praktijk, veldgroottes, reeksen).
+
+**Bevinding: geen gat.** Alles bleek al begrensd en de test pint het vast:
+statsEvent kent een strikte type-allowlist en een eigen rem (120/5min),
+bewaarStats bundelt schijfschrijfacties (max 1×/2s), de kaartenopslag kent
+300 praktijksleutels en 100 kaarten per praktijk (bijwerken blijft werken),
+een vette POST wordt gesaneerd (body 256 kB, cells ≤800×60, chosen ≤12,
+clientvelden ≤500, vids alleen eigen opname-paden), kaart-raden ketst na 30
+missers op kaartMisLimiet (met 48-bit id's is raden sowieso onhaalbaar) en
+de patiëntreeksen blijven afgekapt (gedaan/metingen 366, psk/ervaring 120).
+Bijvangst opgeruimd: een dode statistiekping ('kaarten-opgeruimd') van de
+opruimknop ketste op de allowlist af en is weggehaald.
+
+**Increment.** Regressietest test-bulk-plafonds.mjs (8 checks) met geseede
+volle opslag (100 kaarten, 300 sleutels, 400 gedaan-entries) zodat elk
+plafond écht geraakt wordt.
+
+**Volgende run — pak een ander gebied:** de AI-routes op prompt-injectie via
+kaartvelden (vraaghulp en weekbrief), of de v1-instelketen opnieuw na de
+accountlaagwijzigingen van deze maand.
