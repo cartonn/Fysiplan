@@ -2583,6 +2583,15 @@ bridge2.jpg</div>
     var d=new Date(c.afspraak.t),p=function(n){return ('0'+n).slice(-2);};
     return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'T'+p(d.getHours())+':'+p(d.getMinutes());
   }
+  // eerstvolgende afspraak van een kaart, mét doorrollen van een wekelijkse reeks:
+  // precies wat de patiëntkaart ook toont. Geeft null als alles voorbij is.
+  function volgendeAfspraak(c){
+    if(!c.afspraak||!c.afspraak.t)return null;
+    var t=c.afspraak.t,rest=Number(c.afspraak.herhaal)||0,grens=Date.now()-2*3600000;
+    if(rest>=2){while(t<grens&&rest>1){t+=7*864e5;rest--;}}
+    if(t<grens)return null;
+    return {t:t,rest:rest>=2?rest:0};
+  }
   // de patiëntlink draagt de gekozen taal mee (?taal=), zodat de kaart meteen in
   // de taal van de patiënt opent — ook als diens telefoon op een andere taal staat.
   // De patiënt kan op de kaart altijd nog zelf wisselen (die keuze wint daarna).
@@ -2877,6 +2886,9 @@ bridge2.jpg</div>
                 "<button class='btn' data-safspraakopslaan='"+esc(c.id)+"'>Bewaar</button>"+
                 "<button class='btn' data-safweek='"+esc(c.id)+"' title='Zet de afspraak één week later dan de huidige (of één week vanaf nu) en bewaar direct — fysio-afspraken keren meestal wekelijks terug'>+1 week</button>"+
               "</div>"+
+              // reeks al onderweg: het veld toont de startdatum (bron van waarheid),
+              // dit regeltje toont waar de reeks nu staat — zoals de patiënt hem ziet
+              ((function(){var va=volgendeAfspraak(c);if(!va||!va.rest||va.t===c.afspraak.t)return "";return "<small style='color:var(--muted);display:block;margin-top:3px'>Volgende in de reeks: "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+" (nog "+va.rest+" keer)</small>";})())+
             "</div>"+
             // behandelaar: één praktijk-login, heel het team — wie beheert deze kaart?
             "<div style='margin-top:7px'>"+
@@ -2942,7 +2954,7 @@ bridge2.jpg</div>
               "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>";
           }
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
-            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.antwoord&&c.antwoord.tekst?" · <span title='Er staat een bericht op de patiëntkaart klaar dat nog niet is weggetikt: “"+esc(c.antwoord.tekst)+"”' style='white-space:nowrap'>bericht klaar</span>":"")+(c.afspraak&&c.afspraak.t>Date.now()-2*3600000?" · <span title='Volgende afspraak op de patiëntkaart"+(Number(c.afspraak.herhaal)>=2?" — wekelijkse reeks van "+c.afspraak.herhaal:"")+"' style='white-space:nowrap'>afspraak "+new Date(c.afspraak.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+(Number(c.afspraak.herhaal)>=2?" ×"+c.afspraak.herhaal:"")+"</span>":"")+((!pskChipGetoond&&c.pskDoel&&c.psk&&c.psk.length)?(function(){var pe2=(c.pskEerste&&typeof c.pskEerste.s==='number')?c.pskEerste.s:c.psk[0].s,pl2=c.psk[c.psk.length-1].s;return " · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)"+(pe2!==pl2?" — van "+pe2+" bij de start naar "+pl2:"")+"' style='white-space:nowrap'>PSK "+(pe2!==pl2?pe2+"→"+pl2:pl2)+"</span>";})():"")+"</small></div>"+seinChip+vg+hsChip+
+            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.antwoord&&c.antwoord.tekst?" · <span title='Er staat een bericht op de patiëntkaart klaar dat nog niet is weggetikt: “"+esc(c.antwoord.tekst)+"”' style='white-space:nowrap'>bericht klaar</span>":"")+((function(){var va=volgendeAfspraak(c);if(!va)return "";return " · <span title='Volgende afspraak op de patiëntkaart"+(va.rest?" — wekelijkse reeks, nog "+va.rest+" keer":"")+"' style='white-space:nowrap'>afspraak "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+(va.rest?" ×"+va.rest:"")+"</span>";})())+((!pskChipGetoond&&c.pskDoel&&c.psk&&c.psk.length)?(function(){var pe2=(c.pskEerste&&typeof c.pskEerste.s==='number')?c.pskEerste.s:c.psk[0].s,pl2=c.psk[c.psk.length-1].s;return " · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)"+(pe2!==pl2?" — van "+pe2+" bij de start naar "+pl2:"")+"' style='white-space:nowrap'>PSK "+(pe2!==pl2?pe2+"→"+pl2:pl2)+"</span>";})():"")+"</small></div>"+seinChip+vg+hsChip+
             "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
             "<button class='btn' data-skopie='"+esc(c.id)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+
@@ -3023,9 +3035,9 @@ bridge2.jpg</div>
           // kaart even bijwerken vóór de patiënt binnenstapt); kaarten zonder
           // aankomende afspraak volgen daarna op nieuwste eerst
           if(sortModus()==='afspraak')items.sort(function(a,b){
-            var nuA=Date.now()-2*3600000;
-            var ta=(a.afspraak&&a.afspraak.t>nuA)?a.afspraak.t:Infinity;
-            var tb=(b.afspraak&&b.afspraak.t>nuA)?b.afspraak.t:Infinity;
+            // doorgerolde reeks meenemen: wie (in de reeks) het eerst komt bovenaan
+            var va=volgendeAfspraak(a),vb=volgendeAfspraak(b);
+            var ta=va?va.t:Infinity,tb=vb?vb.t:Infinity;
             return ta-tb||(b.ts||0)-(a.ts||0);
           });
           // zoeken kijkt ook in het archief: "waar is de kaart van mevrouw De Boer?"
