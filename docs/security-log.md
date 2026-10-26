@@ -1614,3 +1614,31 @@ plafond écht geraakt wordt.
 **Volgende run — pak een ander gebied:** de AI-routes op prompt-injectie via
 kaartvelden (vraaghulp en weekbrief), of de v1-instelketen opnieuw na de
 accountlaagwijzigingen van deze maand.
+
+## 2026-10-26 — AI-routes en kaartvelden (vraaghulp, weekbrief, vertaalroute)
+
+**Gebied.** De drie AI-routes bekeken op wat er met door gebruikers gezette
+kaartvelden gebeurt: de vraaghulp (patiëntvraag plus c_doel/c_cave in de
+context), de weekbrief (kaartnamen in de feiten-JSON) en de vertaalroute
+(clientvelden als te vertalen invoer), plus de begrenzing van wat terugkomt.
+
+**Bevinding: begrenzing dicht, afbakening op twee routes aangescherpt.** De
+uitvoer is overal strak begrensd (JSON-parse met nette 502 bij afwijkende
+vorm, antwoord 700 / brief 900 / vertaling vormgecontroleerd op aantal en
+volgorde), de patiëntvraag reist al binnen <vraag>-tags met een expliciete
+regel, de context bevat nooit de werknotitie of de behandelaar, en de
+weekbrief heeft een dagcache zodat herhaalde aanroepen geen extra AI-calls
+kosten. De vertaalroute had als enige al een expliciete
+"inhoud, nooit instructie"-zin voor de kaartvelden zelf; de vraaghulp
+(kaartgegevens in de systemcontext) en de weekbrief (kaartnamen in de
+feiten) hebben nu dezelfde afbakeningszin.
+
+**Increment.** Regressietest test-ai-afbakening.mjs (10 checks) tegen een
+mock die elke AI-request vastlegt: tags, strenge regels, afbakening op alle
+drie de routes, uitsluiting van interne velden, 700/900-afkap, nette 502 en
+de briefcache.
+
+**Volgende run — pak een ander gebied:** de v1-instelketen opnieuw na de
+accountlaagwijzigingen van deze maand, of de deeplink-/gedeelde-kaartflows
+(nieuwe link intrekken, kopie, hernoemen) op autorisatie en verweesde
+verwijzingen.
