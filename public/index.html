@@ -2521,15 +2521,16 @@ bridge2.jpg</div>
   // herstel, seintjes) over de actieve kaarten samengevat tot een plakklare tekst
   // voor kwaliteitsverantwoording of teamoverleg. Bewust geaggregeerd en zonder
   // cliëntnamen; de duiding blijft bij de praktijk.
-  function praktijkRapport(lijst,archief){
+  function praktijkRapport(lijst,archief,behNaam){
     // afgeronde (gearchiveerde) behandelingen tellen mee in de uitkomsten: juist
     // het eindresultaat van een afgeronde behandeling is wat de praktijk wil
     // verantwoorden. Weekcijfers (geoefend, oefendoel) blijven over de actieve.
+    // behNaam: rapport beperkt tot één behandelaar (teamoverleg, kwaliteitsgesprek)
     archief=archief||[];
     var alles=lijst.concat(archief);
     var nu=Date.now(),dag=864e5;
     var r=[];
-    r.push('Praktijkrapport '+(SET.praktijk||'')+' — '+new Date().toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}));
+    r.push('Praktijkrapport '+(SET.praktijk||'')+(behNaam?(' — behandelaar '+behNaam):'')+' — '+new Date().toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}));
     r.push('Uitkomsten app-vrij gemeten via de digitale trainingskaarten van Fysiplan (zonder patiënt-app of account).');
     r.push('');
     var geopend=alles.filter(function(c){return c.bekeken>0;}).length;
@@ -3153,7 +3154,7 @@ bridge2.jpg</div>
             if(lArch.length)h+=archKnop('Gearchiveerd ('+lArch.length+')',false);
             // praktijkrapport: de app-vrij gemeten uitkomsten in één klik als
             // plakklare tekst (kwaliteitsverantwoording, teamoverleg)
-            h+="<button type='button' id='k_srv_rap' class='no-print' title='Kopieer een geaggregeerd uitkomstenrapport van alle actieve kaarten (pijnverloop, oefentrouw, ervaren herstel, seintjes) — zonder cliëntnamen' style='cursor:pointer;background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:12px'>Rapport</button>";
+            h+="<button type='button' id='k_srv_rap' class='no-print' title='Kopieer een geaggregeerd uitkomstenrapport van alle actieve kaarten (pijnverloop, oefentrouw, ervaren herstel, seintjes) — zonder cliëntnamen. Staat het behandelaar-filter aan, dan gaat het rapport alleen over die behandelaar.' style='cursor:pointer;background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:12px'>Rapport</button>";
             h+="<button type='button' id='k_srv_csv' class='no-print' title='Download alle kaarten (actief én gearchiveerd) als CSV — je gegevens zijn van jou, voor backup of overstap' style='cursor:pointer;background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:12px'>Exporteer (CSV)</button>";
             // opruimen: kaarten die 90+ dagen stil zijn (geen activiteit, geen
             // openstaand seintje, geen komende afspraak) in één keer archiveren.
@@ -3194,7 +3195,14 @@ bridge2.jpg</div>
           };
           var rb=document.getElementById('k_srv_rap');
           if(rb)rb.onclick=function(){
-            var tekst=praktijkRapport(l,lArch);
+            // staat het behandelaar-filter aan, dan wordt dit een rapport over
+            // alleen díé behandelaar (teamoverleg, kwaliteitsgesprek per collega);
+            // zonder filter blijft het het volledige praktijkrapport
+            var bf2=behFilterVan();
+            var lR=bf2?l.filter(function(c){return vanBehandelaar(c,bf2);}):l;
+            var aR=bf2?lArch.filter(function(c){return vanBehandelaar(c,bf2);}):lArch;
+            var behNaam=bf2?((lR.concat(aR).map(function(c){return String(c.behandelaar||'').trim();}).find(Boolean))||bf2):null;
+            var tekst=praktijkRapport(lR,aR,behNaam);
             var oudR=rb.textContent;
             var toonR=function(t){rb.textContent=t;setTimeout(function(){rb.textContent=oudR;},1600);};
             if(navigator.clipboard&&navigator.clipboard.writeText){
