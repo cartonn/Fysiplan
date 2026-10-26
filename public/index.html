@@ -2853,6 +2853,19 @@ bridge2.jpg</div>
                 otn.map(function(k2){return esc(k2)+" "+c.oefTrouw[k2].n+"&times;";}).join(" &middot; ")+"</small></div>";
             }
           }
+          // "te zwaar"-tikken van de patiënt per oefening (laatste 21 dagen):
+          // alleen tonen; de aanpassing van de dosering blijft bij de therapeut
+          var zw='';
+          if(c.oefZwaar){
+            var zwNu=Date.now();
+            var zwN=Object.keys(c.oefZwaar).filter(function(k2){return c.oefZwaar[k2]&&c.oefZwaar[k2].t&&zwNu-c.oefZwaar[k2].t<21*864e5;});
+            if(zwN.length){
+              zwN.sort(function(a,b){return (c.oefZwaar[b].t||0)-(c.oefZwaar[a].t||0);});
+              var zwWan=function(t){var dg=Math.floor((zwNu-t)/864e5);return dg<=0?'vandaag':(dg===1?'gisteren':dg+' dagen geleden');};
+              zw="<div style='margin-top:8px'><small style='color:#a23f2c'>Door de pati&euml;nt als te zwaar gemeld: "+
+                zwN.map(function(k2){return esc(k2)+" ("+zwWan(c.oefZwaar[k2].t)+")";}).join(", ")+".</small></div>";
+            }
+          }
           var deelBlok="<div id='deel_"+esc(c.id)+"' style='display:none;padding:8px 4px 10px;border-bottom:1px solid var(--line)'>"+
             "<div style='display:flex;align-items:center;gap:7px;flex-wrap:wrap'>"+
               "<small style='color:var(--muted)'>De patiënt opent de kaart zonder app, gewoon in de browser.</small>"+
@@ -2924,7 +2937,7 @@ bridge2.jpg</div>
               "<button class='btn' data-sarch='"+esc(c.id)+"' title='Zet een afgeronde kaart uit het hoofdoverzicht. Alle voortgang blijft bewaard en de patiëntlink blijft werken; je vindt de kaart terug onder “Gearchiveerd”.'>Archiveer deze kaart</button>"+
               "<small style='color:var(--muted)'>Uit het overzicht, niets gaat verloren.</small>"+
             "</div>"+
-            otr+
+            otr+zw+
             "<small style='color:var(--muted);display:block;margin-top:10px'>Voor het EPD-dossier (Intramed, FysioRoadmap, Incura, …):</small>"+
             "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px'>"+
               "<button class='btn' data-sdossier='"+esc(c.id)+"' title='Kopieer een platte-tekstsamenvatting (cliënt, doel, oefeningen met dosering, kaartlink) om in het dossier te plakken'>Kopieer samenvatting voor dossier</button>"+

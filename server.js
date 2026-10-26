@@ -2506,6 +2506,7 @@ async function afhandelen(request, response) {
         notitie: k.notitie || null,
         afspraak: k.afspraak || null,
         oefTrouw: k.oefTrouw || null,
+        oefZwaar: k.oefZwaar || null,
         behandelaar: k.behandelaar || null,
         pskDoel: k.pskDoel || null,
         // recente PSK-reeks (zelfde venster als de pijnscores): het overzicht kan
@@ -2760,6 +2761,34 @@ async function afhandelen(request, response) {
       const vandaag = nlDag(Date.now());
       if (b.aan !== false) { if (rec.d !== vandaag) { rec.n = Math.min(9999, (rec.n || 0) + 1); rec.d = vandaag; } }
       else if (rec.d === vandaag) { rec.n = Math.max(0, (rec.n || 0) - 1); rec.d = ""; }
+      if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
+      await saveJson(kaartenPath, kaarten);
+      await sendJson(response, 200, { ok: true });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
+  // "te zwaar"-tik per oefening: de patiënt wijst de oefening aan die niet gaat,
+  // zonder bericht te typen. Alleen registreren en tonen (laatste melding per
+  // oefening); de duiding en de aanpassing blijven bij de therapeut. Zelfde
+  // remmen en guards als de oefentrouw-route hierboven.
+  if (urlPath === "/api/kaart/oefzwaar" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const found = vindKaart(String(b.id || ""));
+      if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      const oef = Array.isArray(found.chosen) ? found.chosen[Number(b.oef)] : null;
+      const naam = oef ? String(oef.n || "").slice(0, 80) : "";
+      if (!naam || verbodenSleutel.test(naam)) { await sendJson(response, 400, { ok: false, fout: "Onbekende oefening." }); return; }
+      const zwaar = (found.oefZwaar = found.oefZwaar || {});
+      // plafond zoals bij oefTrouw: een kaart draagt hoogstens 12 oefeningen,
+      // maar wisselende oefeningen mogen de opslag niet laten groeien
+      if (!zwaar[naam] && Object.keys(zwaar).length >= 24) { await sendJson(response, 200, { ok: true }); return; }
+      zwaar[naam] = { t: Date.now() };
       if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true });
