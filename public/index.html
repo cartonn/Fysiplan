@@ -2776,6 +2776,14 @@ bridge2.jpg</div>
                 "<span style='display:inline-block;width:8px;height:8px;border-radius:99px;background:"+hsKl+";margin-right:5px'></span>herstel: "+hsLbl+"</span>";
             }
           }
+          // verse "te zwaar"-melding als chip in de rij: de patiënt wijst een
+          // concrete oefening aan — dat hoort op te vallen zonder het Deel-paneel
+          var zwChip='';
+          var zwLijst=zwaarRecent(c);
+          if(zwLijst.length){
+            zwChip="<span class='btn' title='Door de patiënt als te zwaar gemeld (laatste 7 dagen): "+esc(zwLijst.join(', '))+" — open Deel voor de tijdstippen' style='font-size:11.5px;padding:4px 10px;cursor:default;background:#fdf3ea;border:1px solid #ecd2b8;color:#9a6020'>"+
+              "<span style='display:inline-block;width:8px;height:8px;border-radius:99px;background:#d98a2b;margin-right:5px'></span>te zwaar: "+esc(zwLijst[0])+(zwLijst.length>1?" +"+(zwLijst.length-1):"")+"</span>";
+          }
           // therapietrouw zonder patiënt-app: hoe vaak de patiënt de afgelopen week
           // "ik heb geoefend" aantikte op de digitale kaart (alleen tonen; de duiding
           // blijft bij de therapeut). Dit inzicht hebben concurrenten alleen mét app.
@@ -2968,7 +2976,7 @@ bridge2.jpg</div>
               "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>";
           }
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
-            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.antwoord&&c.antwoord.tekst?" · <span title='Er staat een bericht op de patiëntkaart klaar dat nog niet is weggetikt: “"+esc(c.antwoord.tekst)+"”' style='white-space:nowrap'>bericht klaar</span>":"")+((function(){var va=volgendeAfspraak(c);if(!va)return "";return " · <span title='Volgende afspraak op de patiëntkaart"+(va.rest?" — wekelijkse reeks, nog "+va.rest+" keer":"")+"' style='white-space:nowrap'>afspraak "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+(va.rest?" ×"+va.rest:"")+"</span>";})())+((!pskChipGetoond&&c.pskDoel&&c.psk&&c.psk.length)?(function(){var pe2=(c.pskEerste&&typeof c.pskEerste.s==='number')?c.pskEerste.s:c.psk[0].s,pl2=c.psk[c.psk.length-1].s;return " · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)"+(pe2!==pl2?" — van "+pe2+" bij de start naar "+pl2:"")+"' style='white-space:nowrap'>PSK "+(pe2!==pl2?pe2+"→"+pl2:pl2)+"</span>";})():"")+"</small></div>"+seinChip+vg+hsChip+
+            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.antwoord&&c.antwoord.tekst?" · <span title='Er staat een bericht op de patiëntkaart klaar dat nog niet is weggetikt: “"+esc(c.antwoord.tekst)+"”' style='white-space:nowrap'>bericht klaar</span>":"")+((function(){var va=volgendeAfspraak(c);if(!va)return "";return " · <span title='Volgende afspraak op de patiëntkaart"+(va.rest?" — wekelijkse reeks, nog "+va.rest+" keer":"")+"' style='white-space:nowrap'>afspraak "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+(va.rest?" ×"+va.rest:"")+"</span>";})())+((!pskChipGetoond&&c.pskDoel&&c.psk&&c.psk.length)?(function(){var pe2=(c.pskEerste&&typeof c.pskEerste.s==='number')?c.pskEerste.s:c.psk[0].s,pl2=c.psk[c.psk.length-1].s;return " · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)"+(pe2!==pl2?" — van "+pe2+" bij de start naar "+pl2:"")+"' style='white-space:nowrap'>PSK "+(pe2!==pl2?pe2+"→"+pl2:pl2)+"</span>";})():"")+"</small></div>"+seinChip+zwChip+vg+hsChip+
             "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
             "<button class='btn' data-skopie='"+esc(c.id)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+
@@ -2994,7 +3002,9 @@ bridge2.jpg</div>
           var seinAandacht=(c.seintje&&(c.seintje.soort==='vraag'||c.seintje.soort==='pijn'))?900:0;
           // recent aangetikt "slechter" op de herstelvraag is een rode vlag
           var herstelSlecht=herstelVerslechterd(c)?700:0;
-          return (laatstePijn!==null&&laatstePijn>=7?1000:0)+seinAandacht+herstelSlecht+(nooitGeopend(c)?500:0)+dagenStil;
+          // een verse "te zwaar"-melding is actief contact over een concrete oefening
+          var zwaarAandacht=zwaarRecent(c).length?650:0;
+          return (laatstePijn!==null&&laatstePijn>=7?1000:0)+seinAandacht+herstelSlecht+zwaarAandacht+(nooitGeopend(c)?500:0)+dagenStil;
         };
         // een recent (laatste 14 dagen) aangetikt "slechter" op de herstelvraag:
         // de patiënt zegt zelf dat het achteruitgaat — dat hoort in de triage-bak
@@ -3012,13 +3022,20 @@ bridge2.jpg</div>
           if(c.scores&&c.scores.length)acts.push(c.scores[c.scores.length-1].t);
           var dagenStil=Math.floor((nu-Math.max.apply(null,acts))/dag);
           var seinOpen=!!(c.seintje&&(c.seintje.soort==='vraag'||c.seintje.soort==='pijn'));
-          return (laatstePijn!==null&&laatstePijn>=7)||herstelVerslechterd(c)||dagenStil>=10||nooitGeopend(c)||seinOpen;
+          return (laatstePijn!==null&&laatstePijn>=7)||herstelVerslechterd(c)||dagenStil>=10||nooitGeopend(c)||seinOpen||zwaarRecent(c).length>0;
         };
         var actiefDezeWeek=function(c){return !!(c.gedaan&&c.gedaan.some(function(g){return nu-g.t<7*dag;}));};
         // een openstaand seintje: de patiënt tikte actief "vraag" of "pijn" aan (het
         // positieve "gaat goed" vraagt geen actie). Dit is direct inkomend contact —
         // de app-vrije tegenhanger van de tweerichtingsberichten van concurrent-apps.
         var seintjeOpen=function(c){return !!(c.seintje&&(c.seintje.soort==='vraag'||c.seintje.soort==='pijn'));};
+        // verse "te zwaar"-meldingen (laatste 7 dagen): actief contact van de
+        // patiënt over een concrete oefening — hoort in de triage, niet alleen
+        // verstopt in het Deel-paneel
+        var zwaarRecent=function(c){
+          if(!c.oefZwaar)return [];
+          return Object.keys(c.oefZwaar).filter(function(k2){return c.oefZwaar[k2]&&c.oefZwaar[k2].t&&nu-c.oefZwaar[k2].t<7*dag;});
+        };
         var sortModus=function(){var s=document.getElementById('k_srv_sort');return (s&&s.style.display!=='none'&&s.dataset.mode)||'nieuw';};
         var zoekTermVan=function(){var z=document.getElementById('k_srv_zoek');return (z&&z.style.display!=='none')?z.value.trim().toLowerCase():'';};
         var filterAandacht=function(){var s=document.getElementById('k_srv_sort');return !!(s&&s.style.display!=='none'&&s.dataset.filter==='aandacht');};
@@ -3085,7 +3102,7 @@ bridge2.jpg</div>
           if(!sortEl){
             sortEl=document.createElement('div');sortEl.id='k_srv_sort';sortEl.className='no-print';sortEl.dataset.mode='nieuw';
             sortEl.style.cssText='display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0 0 8px;font-size:12px;color:var(--muted)';
-            sortEl.innerHTML='<span>Sorteer:</span><button type="button" class="btn" data-sort="nieuw" style="font-size:11.5px;padding:3px 9px">Nieuwste</button><button type="button" class="btn" data-sort="aandacht" title="Hoge pijn, langer niet geoefend of nooit geopende kaart bovenaan" style="font-size:11.5px;padding:3px 9px">Aandacht</button><button type="button" class="btn" data-sort="afspraak" title="Wie het eerst komt bovenaan: werk de kaart bij vóór de patiënt binnenstapt" style="font-size:11.5px;padding:3px 9px">Afspraak</button><button type="button" class="btn" data-filter="aandacht" title="Toon alleen de kaarten die nu aandacht vragen — hoge pijn, een openstaand seintje, lang stil of nooit geopend" style="font-size:11.5px;padding:3px 9px;margin-left:8px">Alleen aandacht</button>';
+            sortEl.innerHTML='<span>Sorteer:</span><button type="button" class="btn" data-sort="nieuw" style="font-size:11.5px;padding:3px 9px">Nieuwste</button><button type="button" class="btn" data-sort="aandacht" title="Hoge pijn, een te zwaar-melding, langer niet geoefend of nooit geopende kaart bovenaan" style="font-size:11.5px;padding:3px 9px">Aandacht</button><button type="button" class="btn" data-sort="afspraak" title="Wie het eerst komt bovenaan: werk de kaart bij vóór de patiënt binnenstapt" style="font-size:11.5px;padding:3px 9px">Afspraak</button><button type="button" class="btn" data-filter="aandacht" title="Toon alleen de kaarten die nu aandacht vragen — hoge pijn, een openstaand seintje, een te zwaar-melding, lang stil of nooit geopend" style="font-size:11.5px;padding:3px 9px;margin-left:8px">Alleen aandacht</button>';
             el.parentNode.insertBefore(sortEl,el);
           }
           sortEl.style.display='flex';markeerSort();markeerFilter();
@@ -3163,7 +3180,7 @@ bridge2.jpg</div>
             // openstaande seintjes eerst: direct inkomend contact van de patiënt dat
             // meestal een reactie vraagt, apart van de bredere aandacht-bak
             if(seinN)h+="<button type='button' id='k_srv_sam_sein' class='no-print' title='Patiënten die een seintje stuurden (vraag of pijn): toon alleen die kaarten' style='cursor:pointer;background:#eaf1fb;border:1px solid #c3d4ee;color:#2456a6;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+seinN+"</b> "+(seinN===1?'seintje':'seintjes')+"</button>";
-            h+=aandN?"<button type='button' id='k_srv_sam_aand' class='no-print' title='Hoge pijn, verslechterd ervaren herstel, langer niet geoefend of nooit geopend: zet die kaarten bovenaan' style='cursor:pointer;background:#fbecea;border:1px solid #e7c3bc;color:#a23f2c;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+aandN+"</b> "+(aandN===1?'vraagt':'vragen')+" aandacht</button>":chip('<b>0</b> vragen aandacht');
+            h+=aandN?"<button type='button' id='k_srv_sam_aand' class='no-print' title='Hoge pijn, verslechterd ervaren herstel, een te zwaar-melding, langer niet geoefend of nooit geopend: zet die kaarten bovenaan' style='cursor:pointer;background:#fbecea;border:1px solid #e7c3bc;color:#a23f2c;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+aandN+"</b> "+(aandN===1?'vraagt':'vragen')+" aandacht</button>":chip('<b>0</b> vragen aandacht');
             if(lArch.length)h+=archKnop('Gearchiveerd ('+lArch.length+')',false);
             // praktijkrapport: de app-vrij gemeten uitkomsten in één klik als
             // plakklare tekst (kwaliteitsverantwoording, teamoverleg)
