@@ -384,13 +384,15 @@
     outline:3px solid rgba(36,86,166,.6);outline-offset:2px}
   @media print{
     body{background:#fff}
-    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,.skaart,.akaart,#metingkop,#agendakop,#vraagkop,#seinkop,#hskop,#pskkop,#offlijn,.kopacties,.belknop,.appbanner,.demobadge,.infobadge,.oefdone,.oefzwaar,.oefvoortgang{display:none !important}
+    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,.skaart,.akaart,#metingkop,#agendakop,#vraagkop,#seinkop,#hskop,#pskkop,#offlijn,.kopacties,.belknop,.appbanner,.demobadge,.infobadge,.oefdone,.oefzwaar,.oefvoortgang,.afgerondbanner{display:none !important}
     .kop,.oef,.schemakaart{box-shadow:none}
   }
 </style>
 </head>
 <body>
 <div id="offlijn" style="display:none;position:sticky;top:0;z-index:40;font:600 13.5px/1.5 var(--disp);color:#8a5a00;background:#fff7e6;border-bottom:1px solid #f2d999;padding:9px 16px;text-align:center"></div>
+<!-- afgeronde behandeling: vriendelijke regel dat de kaart van de patiënt blijft -->
+<div id="afgerond" class="afgerondbanner" style="display:none;font:500 13.5px/1.5 var(--disp);color:#3e7a52;background:#eef6ef;border-bottom:1px solid #d7e8da;padding:9px 16px;text-align:center" role="note"></div>
 <div class="wrap" id="wrap" style="display:none">
   <header class="kop">
     <div class="eyebrow">Trainingskaart</div>
@@ -599,6 +601,8 @@
   function tekenOfflijn(){var el=document.getElementById('offlijn');if(!el)return;el.textContent=TOFF[TAAL]||TOFF.nl;el.style.display=(typeof navigator.onLine==='boolean'&&!navigator.onLine)?'block':'none';}
   window.addEventListener('online',tekenOfflijn);window.addEventListener('offline',tekenOfflijn);
   var TAF={nl:'Je volgende afspraak',en:'Your next appointment',de:'Dein nächster Termin',fr:'Votre prochain rendez-vous',es:'Tu próxima cita',pl:'Twoja następna wizyta',tr:'Bir sonraki randevun',ar:'موعدك القادم',uk:'Твій наступний візит'};
+  // afgeronde behandeling: de kaart blijft van de patiënt — zelfmanagement na ontslag
+  var TAFG={nl:'Je behandeling is afgerond. Deze kaart blijft gewoon van jou — oefen rustig verder in je eigen tempo.',en:'Your treatment has finished. This card stays yours — keep practising at your own pace.',de:'Deine Behandlung ist abgeschlossen. Diese Karte bleibt deine — übe in deinem eigenen Tempo weiter.',fr:'Votre traitement est terminé. Cette carte reste la vôtre — continuez à votre rythme.',es:'Tu tratamiento ha terminado. Esta tarjeta sigue siendo tuya: sigue practicando a tu ritmo.',pl:'Twoje leczenie zostało zakończone. Ta karta pozostaje Twoja — ćwicz dalej we własnym tempie.',tr:'Tedavin tamamlandı. Bu kart senin olmaya devam ediyor — kendi tempounda egzersizlere devam et.',ar:'انتهى علاجك. تبقى هذه البطاقة لك — واصل التمارين بوتيرتك الخاصة.',uk:'Твоє лікування завершено. Ця картка залишається твоєю — продовжуй вправи у своєму темпі.'};
   // wekelijkse behandelreeks: "{n}" wordt het aantal nog komende afspraken
   var TAFHER={nl:'wekelijks, nog {n} keer',en:'weekly, {n} more times',de:'wöchentlich, noch {n} Mal',fr:'chaque semaine, encore {n} fois',es:'semanal, {n} veces más',pl:'co tydzień, jeszcze {n} razy',tr:'haftalık, {n} kez daha',ar:'أسبوعيًا، {n} مرات متبقية',uk:'щотижня, ще {n} разів'};
   // PSK (Patiënt Specifieke Klachten): de doelactiviteit die de therapeut zette,
@@ -1119,7 +1123,14 @@
     blok.style.display='block';
   }
 
-  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenHerstel();tekenPsk();tekenAfspraak();tekenOfflijn();}
+  // afgeronde behandeling: toon de blijft-van-jou-regel (niet op de demokaart)
+  function tekenAfgerond(){
+    var el=document.getElementById('afgerond');if(!el)return;
+    var aan=!!(K&&K.kaart&&K.kaart.gearchiveerd)&&id!=='demo';
+    el.textContent=aan?(TAFG[TAAL]||TAFG.nl):'';
+    el.style.display=aan?'block':'none';
+  }
+  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenHerstel();tekenPsk();tekenAfspraak();tekenOfflijn();tekenAfgerond();}
 
   // ---- taal wisselen: vaste teksten direct, kaartinhoud via de server (eenmalig per taal) ----
   function wisselTaal(t){
