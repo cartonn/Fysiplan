@@ -2608,7 +2608,16 @@ async function afhandelen(request, response) {
       const pk = String(b.praktijk || "").trim().toLowerCase();
       const kk = String(b.naam || "").trim().toLowerCase();
       if (await eisPraktijk(request, response, pk)) return;
-      if (!kaarten[pk] || !kaarten[pk][kk]) { await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      // prototype-sleutels zouden via overerving de bestaan-check passeren
+      // (kaarten[pk]['constructor'] is truthy) en een lege 200 opleveren;
+      // en de misser-rem hoort hier net als op elke andere kaartroute, anders
+      // is naam-raden bij een ongeclaimde praktijk goedkoper dan kaart-raden
+      if (verbodenSleutel.test(pk) || verbodenSleutel.test(kk)
+        || !kaarten[pk] || !Object.hasOwn(kaarten[pk], kk)) {
+        if (kaartMisLimiet(request, response)) return;
+        await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." });
+        return;
+      }
       const wegVids = Object.values(kaarten[pk][kk].vids || {});
       delete kaarten[pk][kk];
       if (!Object.keys(kaarten[pk]).length) delete kaarten[pk];

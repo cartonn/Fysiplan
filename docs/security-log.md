@@ -1642,3 +1642,32 @@ de briefcache.
 accountlaagwijzigingen van deze maand, of de deeplink-/gedeelde-kaartflows
 (nieuwe link intrekken, kopie, hernoemen) op autorisatie en verweesde
 verwijzingen.
+
+## 2026-10-27 — Deeplink-/gedeelde-kaartflows (nieuwe link, hernoemen, verwijderen)
+
+**Gebied.** De beheerflows rond gedeelde kaarten adversarieel bekeken:
+autorisatie per route (nieuwe link intrekken, hernoemen, verwijderen,
+oefendoel, archief), het gedrag van oude links, botsende namen,
+prototype-sleutels en verweesde verwijzingen (kaartvideo's).
+
+**Bevinding: autorisatie dicht, twee kleine gaten in de verwijderroute
+gedicht.** Alle vijf flows weigeren bij een geclaimde praktijk zonder sessie
+met 401 vóórdat ze het bestaan van een kaart verraden; nieuwe link maakt de
+oude /k-link direct dood (met misser-rem) terwijl álle voortgang meereist;
+hernoemen botst netjes met 409 en behoudt id en voortgang; en het opruimen
+van kaartvideo's bij verwijderen is referentie-bewust over alle kaarten.
+Twee inconsistenties in de verwijderroute gedicht: (1) het 404-pad miste als
+enige kaartroute de misser-rem, waardoor naam-raden bij een ongeclaimde
+praktijk goedkoper was dan kaart-raden elders; (2) prototype-sleutels als
+naam ('constructor') passeerden de bestaan-check via overerving en kregen
+een lege 200 — delete raakt alleen eigen properties, dus er was geen schade,
+maar de route antwoordt nu een gewone 404 (verbodenSleutel + Object.hasOwn).
+
+**Increment.** Regressietest test-kaartflows-auth.mjs (9 checks) over
+autorisatie, linkrotatie met meereizende voortgang, naamsbotsing,
+prototype-sleutels, de nieuwe misser-rem en de referentie-bewuste
+video-opruiming bij verwijderen.
+
+**Volgende run — pak een ander gebied:** de v1-instelketen opnieuw na de
+accountlaagwijzigingen van deze maand, of een brede E2E-veegronde over de
+oudste suites (sjablonen, logo, QR) tegen de huidige main.
