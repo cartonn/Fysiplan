@@ -1671,3 +1671,27 @@ video-opruiming bij verwijderen.
 **Volgende run — pak een ander gebied:** de v1-instelketen opnieuw na de
 accountlaagwijzigingen van deze maand, of een brede E2E-veegronde over de
 oudste suites (sjablonen, logo, QR) tegen de huidige main.
+
+## 2026-10-28 — Brede E2E-veegronde: alle 67 suites tegen de huidige main
+
+**Gebied.** In plaats van één nieuw auditgebied: de volledige regressiebank
+(67 suites, van de oudste sjablonen-, logo- en QR-flows tot de triage- en
+AI-afbakeningstests van deze week) integraal gedraaid tegen de huidige main,
+om stille drift tussen twee weken aan increments en de oudere asserties op
+te sporen.
+
+**Bevinding: geen drift, niets te repareren.** Alle 67 suites eindigden
+groen — 533 checks in totaal — inclusief de oudste flows (sjablonen, logo,
+QR-kaart, opnameketen, accountlaag, v1-instelketen) en alle security-suites
+(headers, allowlist, races, plafonds, injectie, uploads-levering,
+kaartflow-autorisatie). De v1-instelketen is sinds de herbevestiging van
+10-19 niet geraakt door de accountlaagwijzigingen (gescheiden stores) en
+bleef groen.
+
+**Increment.** Geen codewijziging nodig; de veegronde zelf is het bewijs en
+de uitslag staat per suite in de scratchpad (veegronde-2026-10-28.txt).
+
+**Volgende run — pak een ander gebied:** de accountlaag-leesroutes
+(status/activiteit/sjablonen van de praktijk) op veld-datalekken naar het
+patroon van de /api/kaart-allowlist, of de /v2-landing en /health op
+informatielekken (versies, paden, foutteksten).
