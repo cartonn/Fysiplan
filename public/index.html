@@ -169,6 +169,10 @@
   #a4 .pic .vauto{position:absolute;bottom:4px;left:4px;display:flex;align-items:center;gap:3px;
     padding:3px 5px;border-radius:999px;background:rgba(31,111,235,.92);color:#fff;font-size:8px;font-weight:700;
     line-height:1;box-shadow:0 1px 4px rgba(16,24,40,.22)}
+  /* v2: patiëntsignaal op een geopende gedeelde kaart — "te zwaar" gemeld voor deze oefening */
+  #a4 .pic .zwsig{position:absolute;bottom:4px;right:4px;padding:3px 5px;border-radius:999px;
+    background:rgba(181,88,0,.94);color:#fff;font-size:8px;font-weight:700;line-height:1;
+    box-shadow:0 1px 4px rgba(16,24,40,.22);cursor:help}
   /* ---- modal ---- */
   .ov{position:fixed;inset:0;background:rgba(16,24,40,.45);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
   .ov.on{display:flex}
@@ -1172,6 +1176,25 @@ bridge2.jpg</div>
         "<button class='add"+(has?" on":"")+"' data-add='"+o.id+"' title='"+(has?"van kaart halen":(metVideo?"oefening en video op kaart zetten":"op kaart zetten"))+"' aria-label='"+(has?"van kaart halen":(metVideo?"oefening en video op kaart zetten":"op kaart zetten"))+"'>"+(has?"−":"+")+"</button></div>";
     }).join("");
   }
+  // v2: patiëntsignalen in de editor — opent de therapeut een gedeelde kaart om
+  // hem bij te stellen, dan reizen de verse "te zwaar"-meldingen mee naar het
+  // schema, precies op het moment van de doseringsbeslissing. De data komt uit
+  // de praktijkprojectie (de kaartenlijst); de patiëntroute blijft dit veld
+  // bewust kwijt. Leeg zodra een andere, lokale of lege kaart begint.
+  var SRV_SIGNALEN={},SIGNAAL_KAART=null;
+  function verseZwaar(){
+    if(!IS_V2||!SIGNAAL_KAART||!SIGNAAL_KAART.oefZwaar)return {};
+    var uit={},nuZ=Date.now();
+    Object.keys(SIGNAAL_KAART.oefZwaar).forEach(function(n){
+      var m=SIGNAAL_KAART.oefZwaar[n];
+      if(m&&m.t&&nuZ-m.t<21*864e5)uit[n]=m.t;
+    });
+    return uit;
+  }
+  function dagenGeleden(t){
+    var d=Math.floor((Date.now()-t)/864e5);
+    return d<=0?'vandaag':(d===1?'gisteren':d+' dagen geleden');
+  }
   function renderA4(){
     elEmpty.style.display=chosen.length?'none':'block';
     // v2: zachte therapietrouw-hint bij grote programma's — geen blokkade, alleen
@@ -1188,8 +1211,25 @@ bridge2.jpg</div>
         th.textContent='Tip: '+chosen.length+' oefeningen is veel om thuis vol te houden — kleinere programma’s (2–6 oefeningen) geven doorgaans betere therapietrouw. Overweeg te snoeien of in fasen te werken.';
         th.style.display='block';
       }else th.style.display='none';
+      // patiëntsignalen: één regel boven het schema die zegt wiens kaart dit is
+      // en welke oefeningen te zwaar gemeld zijn (laatste 3 weken)
+      var sb=document.getElementById('signbar');
+      if(!sb){
+        sb=document.createElement('div');sb.id='signbar';sb.className='no-print';
+        sb.style.cssText='display:none;margin:6px 0 2px;font-size:12.5px;line-height:1.5;color:#8a5a00;background:#fff7e6;border:1px solid #f2d999;border-radius:10px;padding:8px 12px';
+        elEmpty.parentNode.insertBefore(sb,elEmpty);
+      }
+      var zwAlle=verseZwaar(),zwNamen=Object.keys(zwAlle);
+      if(zwNamen.length&&SIGNAAL_KAART){
+        zwNamen.sort(function(a,b){return zwAlle[b]-zwAlle[a];});
+        sb.textContent='Signaal van '+SIGNAAL_KAART.naam+' — te zwaar gemeld: '+
+          zwNamen.map(function(n){return n+' ('+dagenGeleden(zwAlle[n])+')';}).join(', ')+
+          '. Verlaag daar de startdosering of kies een lichtere variant.';
+        sb.style.display='block';
+      }else sb.style.display='none';
     }
     // monitoring: links de datumkolom; per plaatje één kolomgroep S/H/W, even breed
+    var zwSig=IS_V2?verseZwaar():{};
     var colKeys=[],names=[],numcells='',piccells='';
     for(var n=0;n<12;n++){
       var inner='';
@@ -1201,6 +1241,10 @@ bridge2.jpg</div>
           if(o.video&&(o.video.eigen||o.video.stream||o.video.yt||o.video.catalog)){
             inner+="<span class='vauto no-print' title='Instructievideo wordt automatisch toegevoegd aan de digitale kaart'>"+
               "<svg width='7' height='7' viewBox='0 0 12 12' aria-hidden='true'><path d='M2 1.5l8 4.5-8 4.5z' fill='currentColor'/></svg>VIDEO</span>";
+          }
+          // patiëntsignaal: deze oefening is "te zwaar" gemeld op de geopende kaart
+          if(zwSig[o.naam]!=null){
+            inner+="<span class='zwsig no-print' title='"+esc(SIGNAAL_KAART.naam)+" meldde deze oefening te zwaar ("+esc(dagenGeleden(zwSig[o.naam]))+"). Verlaag de dosering of kies een lichtere variant.'>TE ZWAAR</span>";
           }
         }
         // v2: oefeningen herordenen met pijltjes (bv. warming-up eerst). Alleen v2;
@@ -2192,6 +2236,7 @@ bridge2.jpg</div>
     return {naam:naam,ts:Date.now(),client:client,chosen:ch,rows:GRID.rows,cells:cells,vids:vids};
   }
   function openCard(c){
+    SIGNAAL_KAART=null;
     var missing=[];
     chosen=[];
     (c.chosen||[]).forEach(function(x){
@@ -2703,6 +2748,9 @@ bridge2.jpg</div>
         // lArch = gearchiveerd, l = actueel (de standaardweergave).
         var lArch=l.filter(function(c){return c.gearchiveerd;});
         l=l.filter(function(c){return !c.gearchiveerd;});
+        // signalen-cache voor de editor: bij "Openen" reizen de verse
+        // te zwaar-meldingen mee naar het schema (zie renderA4)
+        l.concat(lArch).forEach(function(c){if(c.id)SRV_SIGNALEN[c.id]={naam:c.naam,oefZwaar:c.oefZwaar||null};});
         zetSeinBadge(l.filter(function(c){return c.seintje&&(c.seintje.soort==='vraag'||c.seintje.soort==='pijn');}).length);
         // suggesties voor het behandelaarveld: de namen die op kaarten van deze
         // praktijk al staan, zodat het team consequent dezelfde spelling gebruikt
@@ -3513,6 +3561,8 @@ bridge2.jpg</div>
           if(!d.ok){alert('Kaart openen is niet gelukt.');return;}
           if(chosen.length&&!confirm('Huidige kaart vervangen door “'+d.kaart.naam+'”?'))return;
           openCard(d.kaart);
+          // patiëntsignalen uit de praktijkprojectie meenemen naar de editor
+          if(IS_V2&&SRV_SIGNALEN[o.dataset.sopen]){SIGNAAL_KAART=SRV_SIGNALEN[o.dataset.sopen];render();}
           // de gedeelde kaart hééft al een id: zet de QR er meteen op
           QR_UIT_VOOR=null;laatsteDeel='';
           if(IS_V2&&d.kaart.id)ensureQr(function(){toonQr(d.kaart.id);});else verbergQr();
@@ -3565,6 +3615,7 @@ bridge2.jpg</div>
     chosen=[];VIDS={};laatsteDeel='';QR_UIT_VOOR=null;verbergQr();closeOv('ovWis');render();
   });
   document.getElementById('wis_alles').addEventListener('click',function(){
+    SIGNAAL_KAART=null;
     chosen=[];GRID={rows:{},cells:{}};VIDS={};
     CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value='';});
     normalizePrintableTextFields();

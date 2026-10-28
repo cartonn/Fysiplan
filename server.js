@@ -2578,6 +2578,7 @@ async function afhandelen(request, response) {
         notitie: map[kk] ? map[kk].notitie || null : null,
         afspraak: map[kk] ? map[kk].afspraak || null : null,
         oefTrouw: map[kk] ? map[kk].oefTrouw || null : null,
+        oefZwaar: map[kk] ? map[kk].oefZwaar || null : null,
         behandelaar: map[kk] ? map[kk].behandelaar || null : null,
         pskDoel: map[kk] ? map[kk].pskDoel || null : null,
         psk: map[kk] ? map[kk].psk || [] : [],
