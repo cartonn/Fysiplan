@@ -3587,7 +3587,13 @@ async function afhandelen(request, response) {
       "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
     try {
       let html = await readFile(join(publicDir, "v2.html"), "utf8");
-      html = html.replace(/__OPRICHTERS_OVER__/g, String(Math.max(0, 25 - (oprichters.vergeven || 0))));
+      const oprichtersOver = Math.max(0, 25 - (oprichters.vergeven || 0));
+      html = html.replace(/__OPRICHTERS_OVER__/g, String(oprichtersOver));
+      // grammaticaal en uitverkocht-proof: "Nog 1 plekken" en "Nog 0 plekken"
+      // horen niet op een verkooppagina te staan
+      html = html.replace(/__OPRICHTERS_REGEL__/g,
+        oprichtersOver === 0 ? "De oprichtersronde is vol"
+          : (oprichtersOver === 1 ? "Nog 1 plek" : "Nog " + oprichtersOver + " plekken"));
       // levend oefeningenaantal: groeit vanzelf mee met wat de bibliotheek echt serveert
       let telling = 200;
       try { telling = (await buildManifest("v2")).length; } catch {}
