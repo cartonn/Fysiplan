@@ -2541,6 +2541,16 @@ bridge2.jpg</div>
       twN.sort(function(a,b){return (tw[b].n||0)-(tw[a].n||0);});
       r.push('Oefentrouw per oefening (afvinkdagen): '+twN.map(function(k2){return k2+' '+tw[k2].n+'x';}).join(', ')+'.');
     }
+    // door de patiënt gemelde "te zwaar"-signalen horen in de verslaglegging:
+    // de patiënt meldde zelf een probleem met een concrete oefening, en het
+    // dossier laat zo zien dat de praktijk dat signaal had (en kon opvolgen)
+    var zw=kaart.oefZwaar||{};
+    var zwN=Object.keys(zw).filter(function(k2){return zw[k2]&&zw[k2].t;});
+    if(zwN.length){
+      zwN.sort(function(a,b){return (zw[b].t||0)-(zw[a].t||0);});
+      var dz=function(t){return new Date(t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});};
+      r.push('Door de patiënt "te zwaar" gemeld: '+zwN.map(function(k2){return k2+' ('+dz(zw[k2].t)+')';}).join(', ')+'.');
+    }
     // PSK (Patiënt Specifieke Klachten): dé NL-klinimetrie, hier app-vrij gemeten.
     // Eerste en laatste score bij de doelactiviteit — plakklaar voor het EPD.
     var pm=(kaart.psk||[]).filter(function(x){return x&&typeof x.s==='number';});
