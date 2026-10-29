@@ -181,6 +181,17 @@ function auditLog(pk, actie, req) {
   praktijkAudit = praktijkAudit.slice(0, 500);
   saveJson(auditPath, praktijkAudit).catch(() => {});
 }
+// expliciete allowlist voor het publieke praktijkprofiel (zelfde les als de
+// /api/kaart-allowlist): de twee leesroutes die profielen naar buiten sturen —
+// de keuzelijst /api/praktijken en het profiel bij de digitale kaart — zijn
+// open voor iedereen, dus een ouder of later toegevoegd intern veld in
+// praktijken.json mag nooit stilletjes meelekken (fail-closed).
+const PROFIEL_VELDEN = ["praktijk", "adres", "plaats", "tel", "email", "logo"];
+function publiekProfiel(p) {
+  const uit = {};
+  for (const veld of PROFIEL_VELDEN) if (p && veld in p) uit[veld] = p[veld];
+  return uit;
+}
 
 // ---- v1-accountlaag: e-mail + wachtwoord, alleen voor FysioTotaal ----
 // De v1-app op fysiplan.nl zit ALTIJD achter een inlog. Een account aanmaken gaat
@@ -2066,7 +2077,7 @@ async function afhandelen(request, response) {
     // de praktijkenlijst voedt de keuzelijst in de app; de leeslimiet houdt normaal
     // gebruik ongemoeid maar maakt het massaal afschrapen van contactgegevens traag
     if (leesLimiet(request, response)) return;
-    const list = Object.values(praktijken).sort((a, b) => a.praktijk.localeCompare(b.praktijk, "nl"));
+    const list = Object.values(praktijken).map(publiekProfiel).sort((a, b) => a.praktijk.localeCompare(b.praktijk, "nl"));
     await sendJson(response, 200, list);
     return;
   }
@@ -2637,7 +2648,7 @@ async function afhandelen(request, response) {
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const found = vindKaart(String(q.get("id") || ""));
     if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
-    const prof = praktijken[found.praktijk.toLowerCase()] || { praktijk: found.praktijk };
+    const prof = publiekProfiel(praktijken[found.praktijk.toLowerCase()] || { praktijk: found.praktijk });
     // expliciete allowlist in plaats van "alles behalve notitie/behandelaar":
     // deze route is open voor iedereen met de kaartlink, dus een later toegevoegd
     // praktijk-intern veld mag nooit stilletjes meelekken (fail-closed). De

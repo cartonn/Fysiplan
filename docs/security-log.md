@@ -1695,3 +1695,39 @@ de uitslag staat per suite in de scratchpad (veegronde-2026-10-28.txt).
 (status/activiteit/sjablonen van de praktijk) op veld-datalekken naar het
 patroon van de /api/kaart-allowlist, of de /v2-landing en /health op
 informatielekken (versies, paden, foutteksten).
+
+## 2026-10-29 — Accountlaag-leesroutes en open profielroutes: veld-datalekken
+
+**Gebied.** De rotatie van vorige run: alle leesroutes van de accountlaag
+(/api/praktijk/status, /activiteit, /sjablonen GET) plus de open routes die
+praktijkprofielen naar buiten sturen (/api/praktijken GET en het profiel dat
+met /api/kaart meereist naar de digitale kaart), en /health en /v2 op
+informatielekken.
+
+**Bevindingen.** De accountlaag-leesroutes bleken al strak: /status geeft
+twee booleans, /activiteit eist een sessie voor precies die praktijk en
+projecteert expliciet {t, actie, gemaskeerd ip}, /sjablonen zit achter
+eisPraktijk en de opgeslagen sjablonen zijn bij het schrijven al
+gesanitiseerd. /health toont bewust commit/builtAt (het deploysignaal) en
+telt alleen oefeningen. Het gat zat ernaast: de twee open profielroutes
+stuurden het rúwe opslagobject uit praktijken.json — /api/praktijken aan
+iedereen en /api/kaart aan iedereen met een kaartlink. Vandaag bevat dat
+object precies de zes publieke velden, maar een ouder of later toegevoegd
+intern veld (werknotitie, sleutel) zou stilletjes meelekken — precies het
+denylist-risico waarvoor de /api/kaart-allowlist is ingevoerd.
+
+**Fix.** Eén allowlist (PROFIEL_VELDEN: praktijk, adres, plaats, tel,
+email, logo) met projectiehelper publiekProfiel(), toegepast op beide
+leesplekken. Aantoonbaar gedragsneutraal: de consumenten (keuzelijst in de
+editor, kop/belknop van de digitale kaart) gebruiken exact die zes velden,
+dus v1//admin88 merkt niets. Regressietest test-profiel-allowlist.mjs
+(7 checks: geseede interne velden verdwijnen uit beide routes, sortering
+blijft, kaart zonder profiel blijft werken, upsert-regressie).
+
+**E2E.** patient-velden (10), kaartflows-auth (9), editor-signalen (9) en
+smoke (13) groen tegen de fix.
+
+**Volgende run — pak een ander gebied:** de open schrijfroutes van de
+patiëntkaart (meting, gedaan, ervaring, psk, seintje, oefening, oefzwaar)
+op waarde-sanitisatie en afwijkende types (objecten/arrays waar getallen
+horen), of de opname-uploadketen opnieuw na de bezig-grendel van 10-27.
