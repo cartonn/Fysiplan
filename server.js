@@ -1665,7 +1665,8 @@ async function afhandelen(request, response) {
     }
     const relevant = new Set(["geclaimd", "ingelogd", "login-mislukt", "login-op-slot",
       "wachtwoord-gewijzigd", "wachtwoord-wijzigen-mislukt", "wachtwoord-hersteld",
-      "herstel-mislukt", "claim-gereset-door-beheer", "kaart-link-vernieuwd"]);
+      "herstel-mislukt", "herstelcode-vernieuwd", "herstelcode-vernieuwen-mislukt",
+      "claim-gereset-door-beheer", "kaart-link-vernieuwd"]);
     const lijst = praktijkAudit
       .filter((e) => e && e.praktijk === pk && relevant.has(e.actie))
       .slice(0, 15)
@@ -1762,6 +1763,42 @@ async function afhandelen(request, response) {
       const token = nieuweSessie(pk);
       auditLog(pk, "wachtwoord-hersteld", request);
       await sendJson(response, 200, { ok: true, sessie: token, herstelcode });
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+    return;
+  }
+
+  // nieuwe herstelcode voor de ingelogde praktijk: wie de bewaarde code kwijt is
+  // (papier zoek) vervangt hem hier vóórdat het misgaat — anders betekent één
+  // vergeten wachtwoord later een slot dat alleen beheer kan openen. Eist naast
+  // de sessie ook het huidige wachtwoord (een meegelezen sessie mag niet
+  // stilletjes een eigen herstelcode kunnen zetten); foute pogingen tellen mee
+  // in de inlogrem. De oude code vervalt direct; de nieuwe komt één keer mee.
+  if (urlPath === "/api/praktijk/herstelcode" && request.method === "POST") {
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    if (schrijfLimiet(request, response)) return;
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const acc = praktijkAccounts[pk];
+      if (!pk || !acc) { await sendJson(response, 404, { ok: false, fout: "Geen account voor deze praktijk." }); return; }
+      if (praktijkSessieVan(request) !== pk) { await sendJson(response, 401, { ok: false, fout: "Log eerst in bij deze praktijk.", login: true }); return; }
+      if (loginOpSlot(pk)) {
+        await send429(response, 900, { ok: false, fout: "Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw." });
+        return;
+      }
+      if (!checkHash(String(b.huidig || ""), acc.hash)) {
+        loginMisTel(pk);
+        auditLog(pk, "herstelcode-vernieuwen-mislukt", request);
+        await denied(request, response, "praktijk-herstelcode");
+        return;
+      }
+      const herstelcode = maakHerstelcode();
+      acc.herstel = maakHash(herstelcode);
+      acc.gewijzigd = Date.now();
+      await saveJson(accountsPath, praktijkAccounts);
+      loginMisPraktijk.delete(pk);
+      auditLog(pk, "herstelcode-vernieuwd", request);
+      await sendJson(response, 200, { ok: true, herstelcode });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }
