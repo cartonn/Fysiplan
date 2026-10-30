@@ -178,6 +178,17 @@
   .ov.on{display:flex}
   .modal{background:#fff;border-radius:16px;width:400px;max-width:100%;padding:22px 24px;box-shadow:var(--sh-lg);animation:pop .15s ease}
   @keyframes pop{from{transform:translateY(6px) scale(.985);opacity:0}to{transform:none;opacity:1}}
+  /* gratis proef (v2): smalle balk onder de kopregel, nooit op de print */
+  .proefbalk{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;padding:9px 22px;background:#fff7ed;border-bottom:1px solid #f6d7b8;font-size:13.5px;color:#6b3a12}
+  .proefbalk[hidden]{display:none}
+  .proefbalk b{color:#3d2008}
+  .proefbalk .pb-tel{font-variant-numeric:tabular-nums;background:#fff;border:1px solid #f6d7b8;border-radius:999px;padding:2px 10px;font-weight:600}
+  .proefbalk .pb-ruimte{flex:1}
+  .proefbalk a{color:#6b3a12}
+  .proefbalk .btn.primary{padding:6px 12px}
+  .qrtest-code{display:flex;justify-content:center;margin:6px 0 10px}
+  .qrtest-code svg{width:220px;height:220px}
+  .qrtest-stappen{margin:0 0 10px 18px;padding:0;font-size:13px;line-height:1.6;color:var(--muted)}
   #ai_mic{display:inline-flex;align-items:center;gap:6px}
   #ai_mic.luistert{background:#c94f36;border-color:#c94f36;color:#fff;animation:aipuls 1.1s ease-in-out infinite}
   @keyframes aipuls{0%,100%{box-shadow:0 0 0 0 rgba(201,79,54,.45)}50%{box-shadow:0 0 0 6px rgba(201,79,54,0)}}
@@ -267,6 +278,13 @@
   <button class="btn" id="clearBtn">Wis kaart</button>
   <button class="btn primary" id="printBtn">Print trainingsschema (PDF)</button>
 </header>
+<div id="proefBalk" class="proefbalk no-print" role="status" hidden>
+  <span><b>Gratis proef</b> <span id="pb_tekst"></span></span>
+  <span class="pb-tel" id="pb_teller" title="Er passen maximaal 12 oefeningen op één A4">0 / 12 oefeningen</span>
+  <span class="pb-ruimte"></span>
+  <button type="button" class="btn primary" id="pb_qr">Test de QR op je telefoon</button>
+  <a href="/v2/proef?mijn=1">Mijn proef</a>
+</div>
 
 <div class="wrap">
   <!-- col 1: exercise list -->
@@ -457,6 +475,41 @@ bridge2.jpg</div>
     <div class="acts">
       <button class="btn" id="pr_cancel">Annuleren</button>
       <button class="btn primary" id="pr_do">Print / PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- gratis proef (v2): welkom met voorbeeldkaart en de QR-test op de eigen telefoon -->
+<div class="ov" id="ovProefWelkom">
+  <div class="modal">
+    <h3 id="pw_kop">Welkom bij je gratis proef</h3>
+    <div style="font-size:13px;color:var(--muted);line-height:1.6;margin:2px 0 12px">
+      Er staat al een <b>voorbeeldkaart</b> voor lage rugklachten klaar. Zo ga je verder:
+      <ol style="margin:8px 0 0 18px;padding:0">
+        <li>Pas de oefeningen aan: klik links om toe te voegen, op de min om weg te halen. Er passen <b>maximaal 12</b> op een A4.</li>
+        <li><b>Print</b> de kaart of bewaar hem als PDF, met de QR-code erop.</li>
+        <li><b>Scan de QR-code met je eigen telefoon</b> en zie wat je pati&euml;nt ziet.</li>
+      </ol>
+    </div>
+    <input id="pw_praktijk" maxlength="80" autocomplete="organization" placeholder="Naam van je praktijk" aria-label="Naam van je praktijk" style="width:100%;margin:0 0 12px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font:inherit"/>
+    <div class="acts">
+      <button class="btn primary" id="pw_start">Naar mijn voorbeeldkaart</button>
+    </div>
+  </div>
+</div>
+<div class="ov" id="ovQrTest">
+  <div class="modal">
+    <h3>Test de QR met je eigen telefoon</h3>
+    <div id="qt_code" class="qrtest-code"></div>
+    <ol class="qrtest-stappen">
+      <li>Open de camera van je telefoon en richt hem op de code.</li>
+      <li>Tik op de link die verschijnt.</li>
+      <li>Je ziet de kaart zoals je pati&euml;nt hem krijgt: uitleg, video en voorlezen.</li>
+    </ol>
+    <div class="hint" id="qt_link" style="word-break:break-all;margin-bottom:10px"></div>
+    <div class="acts">
+      <a class="btn" id="qt_open" href="#" target="_blank" rel="noopener">Open op deze computer</a>
+      <button class="btn primary" id="qt_dicht">Klaar</button>
     </div>
   </div>
 </div>
@@ -948,6 +1001,12 @@ bridge2.jpg</div>
   function ping(type){try{fetch('api/stats/event',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({type:type})}).catch(function(){});}catch(e){}}
   // v2: /v2/app krijgt de vernieuwde huisstijl en de nieuwe printopties
   var IS_V2=!!window.FYSIPLAN_V2;
+  // gratis proef (v2): de server zet FYSIPLAN_PROEF zolang de proef loopt. Eerste
+  // keer op dit apparaat = welkom + voorbeeldkaart; dat bepalen we nu, vóór de
+  // app zelf iets in localStorage zet.
+  var PROEF=(IS_V2&&window.FYSIPLAN_PROEF&&!window.FYSIPLAN_PROEF.klant)?window.FYSIPLAN_PROEF:null;
+  var PROEF_VERS=false,PROEF_LEEG=false;
+  if(PROEF){try{PROEF_VERS=!localStorage.getItem('fysiplan_proef_start');PROEF_LEEG=!localStorage.getItem('fysiplan_state');}catch(e){}}
   // praktijksessie (v2-accountlaag): een token in localStorage, meegestuurd op de
   // praktijkroutes. In v1 wordt er nooit een token opgeslagen, dus deze helpers
   // geven daar altijd de kale headers terug — v1-gedrag verandert niet.
@@ -1329,7 +1388,7 @@ bridge2.jpg</div>
     }
     el.style.display=chosen.length>=2?'flex':'none';
   }
-  function render(){updateChipCounts();renderList();renderA4();saveState();}
+  function render(){updateChipCounts();renderList();renderA4();saveState();proefTeller();}
 
   function toggleExercise(id){
     var has=chosen.some(function(c){return c.o===id;});
@@ -1837,6 +1896,8 @@ bridge2.jpg</div>
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
       .then(function(d){
         if(!d.ok){
+          // proef net verlopen: de server toont bij herladen de verlopen-melding
+          if(d.proefVerlopen){location.reload();return;}
           // de naam is al beveiligd door een praktijk waar dit apparaat niet bij is ingelogd
           if(d.login)toonQrHint('De praktijknaam \u201c'+pr+'\u201d is al beveiligd. Log in via Kaarten, of vul de naam van je eigen praktijk in.');
           return;
@@ -2020,9 +2081,10 @@ bridge2.jpg</div>
   if(IS_V2){
     var welkomNodig=false;
     try{welkomNodig=!localStorage.getItem('fysiplan_welkom_gezien')&&!localStorage.getItem('fysiplan_state')&&!localStorage.getItem('fysiplan_settings');}catch(e){}
+    // tijdens een proef neemt het proefwelkom (met voorbeeldkaart) deze plek in
     if(welkomNodig){
       try{localStorage.setItem('fysiplan_welkom_gezien','1');}catch(e){}
-      setTimeout(function(){openOv('ovWelkom');},400);
+      if(!PROEF)setTimeout(function(){openOv('ovWelkom');},400);
     }
     // de praktijknaam uit het welkom meteen op de kaart zetten (zelfde pad als typen in het veld)
     var welkomPraktijk=function(){
@@ -2034,6 +2096,78 @@ bridge2.jpg</div>
     document.getElementById('welkom_zelf').addEventListener('click',function(){welkomPraktijk();closeOv('ovWelkom');});
     document.getElementById('welkom_sjab').addEventListener('click',function(){welkomPraktijk();closeOv('ovWelkom');var z=document.getElementById('sj_zoek');if(z)z.value='';renderSjabLijst();openOv('ovSjab');});
   }
+  // ---- gratis proef (v2): balk, voorbeeldkaart en de QR-test op de eigen telefoon ----
+  function proefTeller(){
+    if(!PROEF)return;
+    var t=document.getElementById('pb_teller');
+    if(t){t.textContent=chosen.length+' / 12 oefeningen';t.style.color=chosen.length>=12?'#b42318':'';}
+  }
+  function proefZetPraktijk(nm){
+    var el=document.getElementById('praktijk');
+    if(!nm||!el)return;
+    el.value=nm;el.dispatchEvent(new Event('input'));el.dispatchEvent(new Event('change'));
+  }
+  // een kant-en-klaar rugprogramma als startpunt: niemand begint met een leeg vel,
+  // en met de voorbeeldnaam erop staat de QR-code er meteen
+  function proefVoorbeeldkaart(){
+    fetch('sjablonen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).then(function(l){
+      if(chosen.length||!Array.isArray(l)||!l.length)return;
+      var s=l.filter(function(x){return x.naam==='Lage rugklachten';})[0]||l[0];
+      // zes oefeningen: haalbaar voor de patiënt en ruimte om er zelf bij te zetten
+      pasSjabloonToe({naam:s.naam,dosering:s.dosering,oefeningen:(s.oefeningen||[]).slice(0,6)});
+      closeOv('ovSjab');
+      var cn=document.getElementById('c_naam');
+      if(cn&&!cn.value.trim()){cn.value='Voorbeeldpati\u00ebnt';cn.dispatchEvent(new Event('input'));}
+      render();
+    }).catch(function(){});
+  }
+  function proefStart(){
+    if(!PROEF)return;
+    var balk=document.getElementById('proefBalk');
+    var d=PROEF.dagenOver;
+    document.getElementById('pb_tekst').textContent=d<=1?'\u00b7 laatste dag, t/m '+PROEF.tot:'\u00b7 nog '+d+' dagen, t/m '+PROEF.tot;
+    balk.hidden=false;
+    proefTeller();
+    if(!(SET.praktijk||'').trim()&&PROEF.praktijk)proefZetPraktijk(PROEF.praktijk);
+    if(PROEF_VERS){
+      try{localStorage.setItem('fysiplan_proef_start','1');}catch(e){}
+      if(PROEF_LEEG)proefVoorbeeldkaart();
+      if(PROEF.naam)document.getElementById('pw_kop').textContent='Welkom, '+PROEF.naam+'!';
+      document.getElementById('pw_praktijk').value=(SET.praktijk||'').trim()||PROEF.praktijk||'';
+      setTimeout(function(){openOv('ovProefWelkom');},400);
+    }
+  }
+  document.getElementById('pw_start').addEventListener('click',function(){
+    var nm=document.getElementById('pw_praktijk').value.trim();
+    if(nm&&nm!==(SET.praktijk||'').trim())proefZetPraktijk(nm);
+    closeOv('ovProefWelkom');
+  });
+  document.getElementById('pb_qr').addEventListener('click',function(){
+    var knop=this;
+    if(!chosen.length){alert('Zet eerst minstens \u00e9\u00e9n oefening op de kaart.');return;}
+    if(!(SET.praktijk||'').trim()){alert('Vul eerst de naam van je praktijk in, linksboven op de kaart.');var pe=document.getElementById('praktijk');if(pe)pe.focus();return;}
+    var cn=document.getElementById('c_naam');
+    if(!cn.value.trim()){cn.value='Voorbeeldpati\u00ebnt';cn.dispatchEvent(new Event('input'));}
+    knop.disabled=true;knop.textContent='QR-code maken\u2026';
+    saveServerCard(cn.value.trim(),function(d){
+      knop.disabled=false;knop.textContent='Test de QR op je telefoon';
+      if(!d.ok){
+        if(d.proefVerlopen){location.reload();return;}
+        alert(d.login?'De praktijknaam \u201c'+(SET.praktijk||'')+'\u201d is al beveiligd door een andere praktijk. Vul de naam van je eigen praktijk in.':(d.fout||'De QR-code maken is niet gelukt.'));
+        return;
+      }
+      ensureQr(function(){
+        var url=location.origin+'/k/'+d.id;
+        var svg=window.FYSIQR?FYSIQR.svg(url,220):'';
+        document.getElementById('qt_code').innerHTML=svg;
+        document.getElementById('qt_link').textContent=url;
+        document.getElementById('qt_open').href=url;
+        toonQr(d.id);
+        openOv('ovQrTest');
+      });
+    });
+  });
+  document.getElementById('qt_dicht').addEventListener('click',function(){closeOv('ovQrTest');});
   document.getElementById('sj_close').addEventListener('click',function(){closeOv('ovSjab');});
   // een oefening-item in een sjabloon is óf een naam (string) óf een object met een
   // eigen dosering {n,s,h,w} — dat laatste bij eigen sjablonen die de exacte
@@ -4151,6 +4285,7 @@ bridge2.jpg</div>
       // herstellen, anders is de kaart na elke herlaadbeurt leeg.
       if(IS_V2){loadState();epdVoorinvul();toonSrvKaarten();}
       applySettings();render();
+      proefStart();
     });
   }).catch(function(){buildDefault();applySettings();render();});
 })();

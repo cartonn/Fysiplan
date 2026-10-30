@@ -5,6 +5,7 @@ import { createHash, randomBytes, timingSafeEqual, scryptSync } from "node:crypt
 import { join, extname, normalize, sep } from "node:path";
 import { exerciseId } from "./lib/exercise-id.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
+import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./lib/proef.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -338,6 +339,145 @@ function instelLink(request, token) {
   const proto = (kaal === "localhost" || kaal === "127.0.0.1") ? "http" : "https";
   return proto + "://" + host + "/v1-wachtwoord?token=" + token;
 }
+// ---- gratis proefperiode (v2): /v2/proef ----
+// Een praktijk meldt zich aan met e-mail, contactpersoon en telefoon en krijgt
+// PROEF_DAGEN dagen de volledige app. De aanmelding hangt aan een HttpOnly-cookie
+// (alleen de sha256 van het token staat op schijf). Na afloop serveert /v2/app de
+// verlopen-pagina en weigert /api/kaarten nieuwe kaarten voor dat apparaat; de
+// kaarten die patiënten al hebben (/k/<id>) blijven altijd werken.
+// AVG: alleen deze vier velden plus data, geen IP-adres; automatisch gewist
+// PROEF_BEWAAR_DAGEN na afloop (tenzij beheer de aanmelding op "klant" zet), en
+// de aanmelder kan alles zelf wissen. Inzage alleen voor ACCOUNT_BEHEER_EMAILS.
+const proefPath = join(dataDir, "proef-aanmeldingen.json");
+let proeven = {}; // { id: { id, email, naam, tel, praktijk, gestart, verloopt, akkoord, tokens:[sha256], klant?, doorgaan?, herinnerd?, kaarten? } }
+try { proeven = JSON.parse(await readFile(proefPath, "utf8")); } catch {}
+const PROEF_BEWAAR_DAGEN = 90;
+const proefTokenIndex = new Map(); // sha256(token) -> id
+for (const p of Object.values(proeven)) for (const h of p.tokens || []) proefTokenIndex.set(h, p.id);
+// wie krijgt een seintje bij een nieuwe aanmelding: eigen lijst, anders de accountbeheerders
+const proefMeldingAan = String(process.env.PROEF_MELDING_AAN || process.env.ACCOUNT_BEHEER_EMAILS || "")
+  .split(",").map((e) => e.trim()).filter((e) => geldigEmail(e));
+const bewaarProeven = () => saveJson(proefPath, proeven);
+function proefVan(req) {
+  const m = String(req.headers.cookie || "").match(/(?:^|;\s*)fpproef=([a-f0-9]{48})(?:;|$)/);
+  if (!m) return null;
+  const id = proefTokenIndex.get(tokenHash(m[1]));
+  return (id && proeven[id]) || null;
+}
+const proefVerlopen = (p) => !!p && !p.klant && Date.now() >= p.verloopt;
+function proefCookie(token, request) {
+  const proxyProto = String(request.headers["x-forwarded-proto"] || "").split(",", 1)[0].trim().toLowerCase();
+  const veilig = proxyProto === "https" || !!request.socket?.encrypted;
+  return "fpproef=" + (token || "") + "; Path=/; HttpOnly; SameSite=Lax" + (veilig ? "; Secure" : "") +
+    (token ? "; Max-Age=" + ((PROEF_DAGEN + PROEF_BEWAAR_DAGEN) * 86400) : "; Max-Age=0");
+}
+function proefNieuwToken(p) {
+  const token = randomBytes(24).toString("hex");
+  const h = tokenHash(token);
+  p.tokens = [...(p.tokens || []), h];
+  // hooguit vijf apparaten per aanmelding; de oudste valt af
+  while (p.tokens.length > 5) proefTokenIndex.delete(p.tokens.shift());
+  proefTokenIndex.set(h, p.id);
+  return token;
+}
+function proefWis(id) {
+  const p = proeven[id];
+  if (!p) return;
+  for (const h of p.tokens || []) proefTokenIndex.delete(h);
+  delete proeven[id];
+}
+const datumNl = (ms) => new Date(ms).toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Amsterdam" });
+// de proefpagina's: één sjabloon (public/proef.html) met blokken; alle waarden escapen
+const htmlEsc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+async function serveerProef(request, response, blok, vars = {}, status = 200) {
+  const bron = await readFile(join(publicDir, "proef.html"), "utf8");
+  const m = bron.match(new RegExp("<!--blok:" + blok + "-->([\\s\\S]*?)<!--/blok-->"));
+  const schil = bron.split("<!--blok:")[0].replace(/\s+$/, "\n");
+  let html = schil.replace("__INHOUD__", m ? m[1] : "");
+  const alle = { PROEF_DAGEN: String(PROEF_DAGEN), BEWAAR_DAGEN: String(PROEF_BEWAAR_DAGEN), TITEL: "Gratis proberen", ...vars };
+  // waarden met een _HTML-achtervoegsel zijn al door de server opgebouwd en veilig
+  html = html.replace(/__([A-Z_]+)__/g, (heel, k) => k in alle ? (k.endsWith("_HTML") ? alle[k] : htmlEsc(alle[k]))
+    : (k + "_HTML") in alle ? alle[k + "_HTML"] : "");
+  response.setHeader("x-frame-options", "DENY");
+  response.setHeader("permissions-policy", "camera=(), microphone=(), geolocation=()");
+  response.setHeader("x-robots-tag", "noindex");
+  response.setHeader("content-security-policy",
+    "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'");
+  await send(response, status, "text/html; charset=utf-8", html);
+}
+function proefVars(p, extra = {}) {
+  const d = dagenOver(p.verloopt);
+  return { NAAM: (p.naam || "").split(" ")[0], EMAIL: p.email, TEL: telefoonWeergave(p.tel), EINDDATUM: datumNl(p.verloopt),
+    DAGEN_TEKST: d <= 1 ? "vandaag nog" : d + " dagen", TITEL: "Proef voorbij", ...extra };
+}
+// het aanmeldformulier, eventueel opnieuw met de ingevulde waarden en per veld de fout
+async function proefFormVars(request, w, fouten, suggestie = "", akkoord = false, alarm = "") {
+  const fout = (k) => fouten[k] ? '<p class="melding" role="alert">' + htmlEsc(fouten[k]) + "</p>" : "";
+  const eerste = ["email", "naam", "tel"].find((k) => fouten[k]);
+  let telling = 200;
+  try { telling = (await buildManifest("v2")).length; } catch {}
+  const aantalFouten = Object.keys(fouten).length;
+  return {
+    V_EMAIL: suggestie || w.email || "", V_NAAM: w.naam || "", V_TEL: w.telInvoer || "", V_PRAKTIJK: w.praktijk || "",
+    V_AKKOORD_HTML: akkoord ? " checked" : "",
+    M_EMAIL: fouten.email ? "mis" : "", M_NAAM: fouten.naam ? "mis" : "", M_TEL: fouten.tel ? "mis" : "", M_AKKOORD: fouten.akkoord ? "mis" : "",
+    // bij een tikfout-suggestie staat het verbeterde adres al in het veld; een
+    // tweede keer versturen accepteert dan wat er staat, ook als het toch klopte
+    F_EMAIL_HTML: suggestie ? '<p class="hulp" role="alert">Bedoel je <b>' + htmlEsc(suggestie) + "</b>? We hebben het alvast aangepast. Klopt je eerste adres toch, verander het dan terug.</p>" : fout("email"),
+    EMAIL_OK_HTML: suggestie ? '<input type="hidden" name="email_ok" value="1"/>' : "",
+    F_NAAM_HTML: fout("naam"), F_TEL_HTML: fout("tel"), F_AKKOORD_HTML: fout("akkoord"),
+    AUTOFOCUS_EMAIL_HTML: eerste === "email" ? " autofocus" : "", AUTOFOCUS_NAAM_HTML: eerste === "naam" ? " autofocus" : "", AUTOFOCUS_TEL_HTML: eerste === "tel" ? " autofocus" : "",
+    ALARM_HTML: alarm ? '<p class="alarm" role="alert" style="margin-top:20px">' + htmlEsc(alarm) + "</p>"
+      : (aantalFouten && !(aantalFouten === 1 && suggestie)) ? '<p class="alarm" role="alert" style="margin-top:20px">Nog ' + (aantalFouten === 1 ? "één veld" : aantalFouten + " velden") + " om na te kijken.</p>" : "",
+    EINDDATUM: datumNl(Date.now() + PROEF_DAGEN * 86400000),
+    OEFENINGEN_AANTAL: String(telling),
+    DEMO_QR_HTML: await qrSvgVoor("https://" + eigenHost(request) + "/k/demo", 112)
+  };
+}
+// mailtjes rond de proef: nooit blokkerend, een mislukte mail mag een aanmelding niet tegenhouden
+function proefMail(naar, onderwerp, tekst) {
+  if (!mailIngesteld() || !naar) return;
+  stuurMail(naar, onderwerp, tekst).catch((err) => console.error("proefmail mislukt:", err.message));
+}
+function proefMeldAhmed(onderwerp, p, regel) {
+  for (const aan of proefMeldingAan) proefMail(aan, onderwerp,
+    regel + "\n\nContactpersoon: " + p.naam + "\nPraktijk: " + (p.praktijk || "(nog niet ingevuld)") +
+    "\nE-mail: " + p.email + "\nTelefoon: " + telefoonWeergave(p.tel) +
+    "\nProef: " + datumNl(p.gestart) + " t/m " + datumNl(p.verloopt) +
+    "\n\nAlle aanmeldingen: https://fysiplan.nl/aanmeldingen");
+}
+// één keer per uur: herinnering twee dagen voor het einde (aan de aanmelder en
+// aan beheer, zodat er gebeld kan worden) en het automatisch wissen na afloop
+async function proefRonde() {
+  const nu = Date.now();
+  let gewijzigd = false;
+  for (const p of Object.values(proeven)) {
+    if (!p.klant && nu >= p.verloopt + PROEF_BEWAAR_DAGEN * 86400000) { proefWis(p.id); gewijzigd = true; continue; }
+    if (!p.klant && !p.herinnerd && nu < p.verloopt && p.verloopt - nu <= 2 * 86400000) {
+      p.herinnerd = nu; gewijzigd = true;
+      proefMail(p.email, "Je Fysiplan-proef loopt over twee dagen af",
+        "Hoi " + p.naam + ",\n\nJe gratis proef van Fysiplan loopt tot en met " + datumNl(p.verloopt) + ".\n" +
+        "Wil je daarna doorgaan? Antwoord op deze mail, dan bellen we je om het abonnement af te spreken.\n\n" +
+        "De kaarten die je met patiënten deelde blijven altijd werken.\n\nGroet,\nFysiplan");
+      proefMeldAhmed("Proef loopt bijna af: " + (p.praktijk || p.naam), p, "Deze proef loopt over twee dagen af. Goed moment om even te bellen.");
+    }
+  }
+  if (gewijzigd) await bewaarProeven().catch(() => {});
+}
+setTimeout(() => proefRonde().catch(() => {}), 5000).unref();
+setInterval(() => proefRonde().catch(() => {}), 3600e3).unref();
+// rem op aanmelden: tien per uur per IP (een praktijk met meerdere werkplekken
+// redt dat ruim), plus een harde bovengrens op het aantal open aanmeldingen
+const proefTeller = new Map();
+function proefLimiet(req) {
+  const nu = Date.now();
+  if (proefTeller.size > 5000) for (const [k, v] of proefTeller) if (nu - v.start > 3600e3) proefTeller.delete(k);
+  const ip = ipSleutel(req);
+  const t = proefTeller.get(ip);
+  if (!t || nu - t.start > 3600e3) { proefTeller.set(ip, { start: nu, n: 1 }); return false; }
+  return ++t.n > 10;
+}
+
 // de inlogpagina die de v1-app afschermt; zelfstandige pagina met één inline script
 // (nonce), geen externe bronnen nodig zodat ze los van de gated app-assets werkt
 async function serveerV1Inlog(response) {
@@ -873,7 +1013,7 @@ function leesLimiet(req, res) {
 // accountlaag valt dan weg en de kaarten staan weer open), en zonder v1-accounts.json
 // verliezen de v1-gebruikers hun inlog. De insteltokens zijn bewust kortlevend en
 // blijven buiten de back-up.
-const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath, accountsPath, v1AccountsPath];
+const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath, accountsPath, v1AccountsPath, proefPath];
 async function maakBackup() {
   try {
     const dag = new Date().toISOString().slice(0, 10);
@@ -1544,6 +1684,11 @@ async function afhandelen(request, response) {
       bibliotheek: { oefeningen: count, categorieen: cats, hernoemd: Object.keys(renames).length,
         toegevoegd: extra.length, verwijderd: deleted.length, verplaatst: Object.keys(catOverrides).length,
         praktijken: Object.keys(praktijken).length },
+      // proefaanmeldingen alleen als aantallen: namen en nummers staan op /aanmeldingen
+      proef: (() => { const l = Object.values(proeven); const vandaag = Date.now() - 86400000;
+        return { totaal: l.length, actief: l.filter((p) => !p.klant && !proefVerlopen(p)).length,
+          verlopen: l.filter((p) => proefVerlopen(p)).length, klant: l.filter((p) => p.klant).length,
+          laatste24u: l.filter((p) => p.gestart >= vandaag).length, doorgaan: l.filter((p) => p.doorgaan && !p.klant).length }; })(),
       security: { geweigerd: stats.security.geweigerd, laatste: stats.security.laatste.slice(0, 10),
         adminSleutelAangepast: !!process.env.ADMIN_KEY, volumeActief: dataDir === "/data" || !!process.env.DATA_DIR },
       versie: { commit: buildInfo.commit || "onbekend", builtAt: buildInfo.builtAt || null,
@@ -2663,6 +2808,12 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/kaarten" && request.method === "POST") {
     if (schrijfLimiet(request, response)) return;
     if (kruisSite(request)) { await weigerKruis(response); return; }
+    // na de proefperiode maakt dit apparaat geen nieuwe kaarten meer
+    const proef = proefVan(request);
+    if (proef && proefVerlopen(proef)) {
+      await sendJson(response, 403, { ok: false, proefVerlopen: true, fout: "Je gratis proef is voorbij. Wil je doorgaan? Kijk op fysiplan.nl/v2/proef." });
+      return;
+    }
     try {
       const b = JSON.parse(await readBody(request, 256 * 1024));
       const praktijk = cleanName(b.praktijk, 80);
@@ -2703,6 +2854,8 @@ async function afhandelen(request, response) {
         }
       }
       const oudeVids = map[kk] ? Object.values(map[kk].vids || {}) : [];
+      // alleen een teller voor het aanmeldoverzicht (wie probeert het echt?), nooit de inhoud
+      if (proef && !map[kk]) { proef.kaarten = (proef.kaarten || 0) + 1; bewaarProeven().catch(() => {}); }
       // door de patiënt gegenereerde gegevens blijven bewaard als de therapeut de kaart
       // opnieuw opslaat: pijnscores, de oefen-geschiedenis, of/wanneer de kaart is
       // bekeken, en een openstaand seintje. Zonder dit wist elke kleine kaartwijziging
@@ -3785,9 +3938,176 @@ async function afhandelen(request, response) {
     catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); }
     return;
   }
+  // ---- gratis proefperiode: aanmelden, mijn proef, verlopen ----
+  if (urlPath === "/v2/proef/" || urlPath === "/proef") { response.writeHead(301, { location: "/v2/proef" }); response.end(); return; }
+  if (urlPath === "/v2/proef" && request.method === "GET") {
+    telBezoek(request, false);
+    response.setHeader("cache-control", "no-store");
+    const p = proefVan(request);
+    if (p && proefVerlopen(p)) { await serveerProef(request, response, "verlopen", proefVars(p)); return; }
+    if (p && !new URL(request.url, "http://x").searchParams.has("mijn")) { response.writeHead(303, { location: "/v2/app" }); response.end(); return; }
+    if (p) { await serveerProef(request, response, "mijn", proefVars(p, { TITEL: "Mijn proef" })); return; }
+    await serveerProef(request, response, "formulier", await proefFormVars(request, {}, {}));
+    return;
+  }
+  if (urlPath === "/v2/proef" && request.method === "POST") {
+    response.setHeader("cache-control", "no-store");
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    let b;
+    try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 8 * 1024))); }
+    catch { await send(response, 400, "text/plain; charset=utf-8", "Ongeldig verzoek"); return; }
+    // honingpot ingevuld: doe alsof het gelukt is, bewaar niets
+    if (String(b.website || "").trim()) { response.writeHead(303, { location: "/v2" }); response.end(); return; }
+    const v = valideerAanmelding(b);
+    if (!v.ok) {
+      await serveerProef(request, response, "formulier", await proefFormVars(request, v.waarden, v.fouten, v.suggestie, !!b.akkoord), 422);
+      return;
+    }
+    if (proefLimiet(request)) {
+      await serveerProef(request, response, "formulier", await proefFormVars(request, v.waarden, {},
+        "", true, "Er zijn het afgelopen uur al veel aanmeldingen vanaf dit adres gedaan. Probeer het over een uur opnieuw."), 429);
+      return;
+    }
+    const w = v.waarden;
+    // hetzelfde e-mailadres opnieuw: dezelfde proef terug (geen nieuwe 14 dagen),
+    // met de nieuwste contactgegevens
+    let p = Object.values(proeven).find((x) => x.email === w.email);
+    const nieuw = !p;
+    if (nieuw) {
+      if (Object.keys(proeven).length >= 5000) {
+        await serveerProef(request, response, "formulier", await proefFormVars(request, w, {}, "", true,
+          "Aanmelden lukt op dit moment niet. Mail ons, dan zetten we je proef handmatig klaar."), 503);
+        return;
+      }
+      const nu = Date.now();
+      p = { id: randomBytes(8).toString("hex"), email: w.email, gestart: nu, verloopt: nu + PROEF_DAGEN * 86400000,
+        akkoord: new Date(nu).toISOString(), tokens: [], kaarten: 0 };
+      proeven[p.id] = p;
+    }
+    p.naam = w.naam; p.tel = w.tel;
+    if (w.praktijk) p.praktijk = w.praktijk;
+    const token = proefNieuwToken(p);
+    await bewaarProeven();
+    if (nieuw) {
+      proefMeldAhmed("Nieuwe proefaanmelding: " + (p.praktijk || p.naam), p, "Er heeft zich zojuist iemand aangemeld voor de gratis proef van Fysiplan.");
+      const host = eigenHost(request);
+      const kaal = host.split(":")[0];
+      const terug = ((kaal === "localhost" || kaal === "127.0.0.1") ? "http://" : "https://") + host + "/v2/proef/terug?code=" + token;
+      proefMail(p.email, "Je gratis Fysiplan-proef staat klaar",
+        "Hoi " + p.naam + ",\n\nWelkom bij Fysiplan. Je proef loopt tot en met " + datumNl(p.verloopt) + ".\n\n" +
+        "Verder op een andere computer of je telefoon? Open deze persoonlijke link (deel hem niet):\n" + terug + "\n\n" +
+        "Tip: vul bij de voorbeeldkaart een naam in, print hem en scan de QR-code met je eigen telefoon. " +
+        "Dan zie je precies wat je patiënt ziet.\n\nVragen? Antwoord gewoon op deze mail.\n\nGroet,\nFysiplan");
+    }
+    response.writeHead(303, { location: proefVerlopen(p) ? "/v2/proef" : "/v2/app", "set-cookie": proefCookie(token, request), "cache-control": "no-store" });
+    response.end();
+    return;
+  }
+  // persoonlijke link uit de welkomstmail: de proef ook op een tweede apparaat
+  if (urlPath === "/v2/proef/terug" && request.method === "GET") {
+    response.setHeader("cache-control", "no-store");
+    const code = String(new URL(request.url, "http://x").searchParams.get("code") || "");
+    const id = /^[a-f0-9]{48}$/.test(code) ? proefTokenIndex.get(tokenHash(code)) : null;
+    if (!id || !proeven[id]) {
+      if (kaartMisLimiet(request, response)) return;
+      await serveerProef(request, response, "bericht", { TITEL: "Link werkt niet", ETIKET: "Link verlopen", KOP: "Deze link werkt niet meer.",
+        TEKST: "Misschien zijn je gegevens gewist, of is de link al vervangen. Meld je opnieuw aan met hetzelfde e-mailadres; je houdt dan dezelfde proef.",
+        KNOP_HTML: '<a class="knop oranje" href="/v2/proef">Naar aanmelden</a>' }, 404);
+      return;
+    }
+    // een vers token voor dít apparaat; de maillink blijft bruikbaar voor het volgende
+    const token = proefNieuwToken(proeven[id]);
+    await bewaarProeven();
+    response.writeHead(303, { location: proefVerlopen(proeven[id]) ? "/v2/proef" : "/v2/app", "set-cookie": proefCookie(token, request) });
+    response.end();
+    return;
+  }
+  if (urlPath === "/v2/proef/wissen" && request.method === "POST") {
+    response.setHeader("cache-control", "no-store");
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try { await readBody(request, 2048); } catch {}
+    const p = proefVan(request);
+    if (p) { proefWis(p.id); await bewaarProeven(); }
+    response.setHeader("set-cookie", proefCookie("", request));
+    await serveerProef(request, response, "bericht", { TITEL: "Gegevens gewist", ETIKET: "Gewist", KOP: "Je gegevens zijn gewist.",
+      TEKST: "We bewaren niets meer van je aanmelding en je proef is gestopt. Kaarten die je met patiënten deelde blijven werken.",
+      KNOP_HTML: '<a class="knop omlijnd" href="/v2">Terug naar de site</a>' });
+    return;
+  }
+  if (urlPath === "/v2/proef/doorgaan" && request.method === "POST") {
+    response.setHeader("cache-control", "no-store");
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try { await readBody(request, 2048); } catch {}
+    const p = proefVan(request);
+    if (!p) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
+    if (!p.doorgaan) {
+      p.doorgaan = Date.now();
+      await bewaarProeven();
+      proefMeldAhmed("Wil doorgaan: " + (p.praktijk || p.naam), p, "Deze proefgebruiker heeft op 'Ja, ik wil doorgaan' gedrukt. Bel binnen een werkdag.");
+    }
+    await serveerProef(request, response, "bericht", { TITEL: "Bedankt", ETIKET: "Bedankt", KOP: "Fijn! We bellen je binnen een werkdag.",
+      TEKST: "We nemen contact op via " + telefoonWeergave(p.tel) + " om je abonnement af te spreken. Tot snel.",
+      KNOP_HTML: '<a class="knop omlijnd" href="/v2">Terug naar de site</a>' });
+    return;
+  }
+
+  // overzicht van de proefaanmeldingen: persoonsgegevens, dus net als
+  // toegangsbeheer alleen voor ingelogde ACCOUNT_BEHEER_EMAILS (niet admin88)
+  if (urlPath === "/aanmeldingen" || urlPath === "/api/aanmeldingen") {
+    response.setHeader("cache-control", "no-store");
+    const actor = v1SessieVan(request);
+    if (!actor && urlPath === "/aanmeldingen") { await serveerV1Inlog(response); return; }
+    if (!accountBeheerder(actor)) { await denied(request, response, "aanmeldingen"); return; }
+    if (urlPath === "/aanmeldingen" && request.method === "GET") {
+      await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "aanmeldingen.html"), "utf8"));
+      return;
+    }
+    const lijst = () => Object.values(proeven).sort((a, b) => b.gestart - a.gestart).map((p) => ({
+      id: p.id, email: p.email, naam: p.naam, tel: telefoonWeergave(p.tel), praktijk: p.praktijk || "",
+      gestart: p.gestart, verloopt: p.verloopt, dagenOver: p.klant ? null : dagenOver(p.verloopt),
+      status: p.klant ? "klant" : proefVerlopen(p) ? "verlopen" : "actief", doorgaan: !!p.doorgaan, kaarten: p.kaarten || 0 }));
+    if (urlPath === "/api/aanmeldingen" && request.method === "GET") {
+      if (new URL(request.url, "http://x").searchParams.get("csv") === "1") {
+        const cel = (s) => { const t = String(s == null ? "" : s); const veilig = /^[=+\-@\t\r]/.test(t) ? "'" + t : t; return '"' + veilig.replace(/"/g, '""') + '"'; };
+        const datum = (ms) => new Date(ms).toISOString().slice(0, 10);
+        const csv = "﻿" + ["Contactpersoon;Praktijk;E-mail;Telefoon;Gestart;Loopt tot;Status;Wil doorgaan;Kaarten"]
+          .concat(lijst().map((r) => [r.naam, r.praktijk, r.email, r.tel, datum(r.gestart), datum(r.verloopt), r.status, r.doorgaan ? "ja" : "", r.kaarten].map(cel).join(";")))
+          .join("\r\n");
+        response.setHeader("content-disposition", 'attachment; filename="fysiplan-proefaanmeldingen.csv"');
+        await send(response, 200, "text/csv; charset=utf-8", csv);
+        return;
+      }
+      await sendJson(response, 200, { ok: true, bewaarDagen: PROEF_BEWAAR_DAGEN, aanmeldingen: lijst() });
+      return;
+    }
+    if (urlPath === "/api/aanmeldingen" && request.method === "POST") {
+      if (kruisSite(request) || !String(request.headers["content-type"] || "").startsWith("application/json")) { await weigerKruis(response); return; }
+      try {
+        const b = JSON.parse(await readBody(request));
+        const p = Object.hasOwn(proeven, String(b.id)) ? proeven[String(b.id)] : null;
+        if (!p) { await sendJson(response, 404, { ok: false, fout: "Aanmelding niet gevonden." }); return; }
+        if (b.actie === "wis") proefWis(p.id);
+        else if (b.actie === "klant") p.klant = !p.klant;
+        else if (b.actie === "verleng") { p.verloopt = Math.max(p.verloopt, Date.now()) + 7 * 86400000; p.herinnerd = 0; }
+        else { await sendJson(response, 400, { ok: false, fout: "Onbekende actie." }); return; }
+        await bewaarProeven();
+        await sendJson(response, 200, { ok: true, aanmeldingen: lijst() });
+      } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+      return;
+    }
+    await sendJson(response, 405, { ok: false }); return;
+  }
+
   if (urlPath === "/v2/app" || urlPath === "/v2/app/") {
     if (urlPath === "/v2/app/") { response.writeHead(301, { location: "/v2/app" }); response.end(); return; }
     telBezoek(request, false);
+    // proefperiode voorbij: geen app maar een duidelijke melding met "ik wil doorgaan"
+    const proef = proefVan(request);
+    if (proef && proefVerlopen(proef)) {
+      response.setHeader("cache-control", "no-store");
+      await serveerProef(request, response, "verlopen", proefVars(proef));
+      return;
+    }
     response.setHeader("x-frame-options", "DENY");
     // camera blijft dicht; de microfoon staat open zodat de therapeut de klacht kan
     // inspreken voor de AI-assistent (spraakherkenning in de browser, alleen de tekst
@@ -3807,7 +4127,11 @@ async function afhandelen(request, response) {
       "connect-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'; frame-ancestors 'none'");
     try {
       let html = await readFile(join(publicDir, "index.html"), "utf8");
-      html = html.replace("<head>", '<head><base href="/"/><meta name="color-scheme" content="light"/><script>window.FYSIPLAN_V2=true</script>');
+      // tijdens een proef krijgt de app de stand mee (banner, voorbeeldkaart, QR-test);
+      // alleen wat de app nodig heeft, geen telefoon of e-mail
+      const proefJs = proef ? ";window.FYSIPLAN_PROEF=" + JSON.stringify({ naam: (proef.naam || "").split(" ")[0], praktijk: proef.praktijk || "",
+        dagenOver: proef.klant ? null : dagenOver(proef.verloopt), tot: datumNl(proef.verloopt), klant: !!proef.klant }).replace(/</g, "\\u003c") : "";
+      html = html.replace("<head>", () => '<head><base href="/"/><meta name="color-scheme" content="light"/><script>window.FYSIPLAN_V2=true' + proefJs + '</script>');
       html = html.replace("</head>", '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'%3E%3Crect width=\'32\' height=\'32\' rx=\'8\' fill=\'%232456a6\'/%3E%3Cpath d=\'M5 16h5l2.5 6 5-12 2.5 7h7\' fill=\'none\' stroke=\'%23fff\' stroke-width=\'2.6\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3E%3C/svg%3E"/><link rel="stylesheet" href="/v2.css"/><script src="/qr.js" defer></script></head>');
       // nonce op de inline scripts (na alle injecties); de externe /qr.js houdt zijn src en valt onder 'self'
       html = nonceInlineScripts(html, nonce);
@@ -3924,6 +4248,12 @@ async function afhandelen(request, response) {
   // hetzelfde bestand uitkomen (//index.html, /./index.html, /x/../index.html)
   // liepen hier langs de gate heen de app in. Elk alias gaat terug naar de
   // kanonieke route, waar de gate zit; voor ingelogde gebruikers verandert er niets.
+  // het proefsjabloon is geen losse pagina: de server vult het in op /v2/proef
+  if (filePath === join(publicDir, "proef.html")) {
+    response.writeHead(302, { location: "/v2/proef" });
+    response.end();
+    return;
+  }
   if (filePath === join(publicDir, "index.html")) {
     response.writeHead(302, { location: "/" });
     response.end();

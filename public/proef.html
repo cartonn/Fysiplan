@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="color-scheme" content="light"/>
+<meta name="theme-color" content="#f6f2e9"/>
+<meta name="robots" content="noindex"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232456a6'/%3E%3Cpath d='M5 16h5l2.5 6 5-12 2.5 7h7' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
+<title>__TITEL__ · Fysiplan</title>
+<link rel="preload" href="/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin/>
+<!-- Proefperiode: aanmelden, verlopen en "mijn proef". Net als de landing
+     volledig scriptloos (strikte CSP); de server vult de blokken en
+     controleert het formulier, de browser doet alleen HTML-validatie. -->
+<style>
+  @font-face{font-family:'Newsreader';font-style:normal;font-weight:200 800;font-display:swap;
+    src:url(/fonts/newsreader-latin-opsz-normal.woff2) format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;
+    src:url(/fonts/inter-latin-wght-normal.woff2) format('woff2')}
+  :root{
+    --bg:#f6f2e9; --papier:#fffdf7; --inkt:#232019; --tekst:#3d3a31; --demp:#6b6557; --zacht:#a39c8a;
+    --blauw:#2456a6; --blauw-05:#edf2fa; --oranje:#d4501f; --oranje-d:#b34015;
+    --lijn:#e3dbc6; --lijn-z:#efe9d8; --fout:#b42318; --fout-bg:#fdecea; --goed:#0a6b23; --goed-bg:#e8f2dd;
+    --serif:'Newsreader',Charter,'Iowan Old Style','Palatino Linotype',Georgia,serif;
+    --disp:'Inter','Avenir Next',Seravek,'Segoe UI',system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font:17px/1.6 var(--serif);color:var(--tekst);background:var(--bg);-webkit-font-smoothing:antialiased;min-height:100vh}
+  a{color:inherit}
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--blauw);outline-offset:2px}
+  nav{border-bottom:1px solid var(--lijn);background:rgba(246,242,233,.92)}
+  nav .rij{max-width:1040px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:0 24px;height:60px}
+  nav .mark{width:27px;height:27px;border-radius:7px;background:var(--blauw);display:flex;align-items:center;justify-content:center}
+  nav .naam{font:700 17px/1 var(--disp);color:var(--inkt);text-decoration:none}
+  nav .terug{margin-left:auto;font:500 14px/1 var(--disp);color:var(--demp);text-decoration:none}
+  nav .terug:hover{color:var(--inkt)}
+  main{max-width:1040px;margin:0 auto;padding:44px 24px 64px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:56px;align-items:start}
+  main.smal{grid-template-columns:minmax(0,640px);justify-content:center}
+  @media (max-width:860px){main{grid-template-columns:1fr;gap:36px;padding:28px 16px 48px}}
+  .etiket{font:600 11px/1 var(--disp);letter-spacing:.24em;text-transform:uppercase;color:var(--oranje)}
+  h1{font:700 clamp(30px,4vw,42px)/1.1 var(--serif);letter-spacing:-.018em;color:var(--inkt);margin:14px 0 12px;text-wrap:balance}
+  .lead{color:var(--demp);font-size:18px;max-width:46ch}
+  form{margin-top:26px;display:grid;gap:16px}
+  .veld label{display:block;font:600 14px/1.3 var(--disp);color:var(--inkt);margin-bottom:6px}
+  .veld label small{font-weight:500;color:var(--zacht)}
+  .veld input{width:100%;font:16px/1.3 var(--disp);color:var(--inkt);background:var(--papier);border:1px solid #cfc5ab;border-radius:6px;padding:13px 14px}
+  .veld input:focus{border-color:var(--blauw);outline:none;box-shadow:0 0 0 3px rgba(36,86,166,.14)}
+  .veld.mis input{border-color:var(--fout);background:#fffafa}
+  .melding{font:500 13.5px/1.4 var(--disp);color:var(--fout);margin-top:6px}
+  .veld .hulp{font:400 13px/1.4 var(--disp);color:var(--demp);margin-top:6px}
+  .vink{display:flex;gap:10px;align-items:flex-start;font:400 14px/1.5 var(--disp);color:var(--tekst)}
+  .vink input{width:18px;height:18px;margin-top:2px;flex:0 0 18px;accent-color:var(--blauw)}
+  .vink.mis{color:var(--fout)}
+  .knop{display:inline-block;font:600 16px/1 var(--disp);text-decoration:none;border-radius:3px;padding:16px 28px;border:0;cursor:pointer;text-align:center}
+  .knop.oranje{background:var(--oranje);color:#fff;box-shadow:0 1px 0 rgba(35,32,25,.18),0 10px 26px -10px rgba(212,80,31,.55)}
+  .knop.oranje:hover{background:var(--oranje-d)}
+  .knop.omlijnd{border:1px solid var(--inkt);color:var(--inkt);background:transparent}
+  .knop.omlijnd:hover{background:var(--inkt);color:var(--bg)}
+  .knop.stil{background:transparent;color:var(--demp);text-decoration:underline;padding:8px 0;font-weight:500;font-size:14px}
+  .knoppen{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:6px}
+  .klein{font:400 13px/1.5 var(--disp);color:var(--demp)}
+  .alarm{font:500 14.5px/1.45 var(--disp);color:var(--fout);background:var(--fout-bg);border-radius:6px;padding:12px 14px}
+  .oke{font:500 14.5px/1.45 var(--disp);color:var(--goed);background:var(--goed-bg);border-radius:6px;padding:12px 14px}
+  .val{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  /* rechterkolom: wat je in de proef doet, als een dossierblad */
+  .blad{background:var(--papier);border:1px solid var(--lijn);border-radius:4px;padding:28px 28px 24px;box-shadow:0 1px 0 rgba(35,32,25,.05),0 18px 40px -26px rgba(35,32,25,.35)}
+  .blad h2{font:700 22px/1.25 var(--serif);color:var(--inkt);margin-bottom:14px}
+  .stappen{list-style:none;counter-reset:s;display:grid;gap:14px}
+  .stappen li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:12px;font-size:16px}
+  .stappen li::before{content:counter(s);font:600 13px/28px var(--disp);width:28px;height:28px;border-radius:50%;background:var(--blauw-05);color:var(--blauw);text-align:center}
+  .stappen b{color:var(--inkt)}
+  .qrvak{display:flex;gap:16px;align-items:center;border-top:1px solid var(--lijn-z);margin-top:20px;padding-top:18px}
+  .qrvak svg{flex:0 0 112px;width:112px;height:112px}
+  .qrvak p{font:400 14px/1.5 var(--disp);color:var(--demp)}
+  .qrvak b{color:var(--inkt)}
+  .privacy{margin-top:18px;font:400 13px/1.55 var(--disp);color:var(--demp)}
+  .privacy summary{cursor:pointer;color:var(--inkt);font-weight:600}
+  .privacy ul{margin:8px 0 0 18px}
+  .datum{font:600 15px/1 var(--disp);color:var(--inkt);background:var(--blauw-05);border-radius:999px;padding:8px 14px;display:inline-block;margin:6px 0 2px}
+  @media (max-width:860px){.qrvak{display:none}}
+</style>
+</head>
+<body>
+<nav><div class="rij">
+  <span class="mark"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg></span>
+  <a class="naam" href="/v2">Fysiplan</a>
+  <a class="terug" href="/v2">Terug naar de site</a>
+</div></nav>
+__INHOUD__
+</body>
+</html>
+
+<!--blok:formulier-->
+<main>
+  <div>
+    <span class="etiket">__PROEF_DAGEN__ dagen gratis</span>
+    <h1>Maak je eerste trainingskaart. Vandaag nog.</h1>
+    <p class="lead">Vul drie gegevens in en je zit meteen in Fysiplan. Geen betaalgegevens, geen abonnement; na __PROEF_DAGEN__ dagen stopt de proef vanzelf.</p>
+    __ALARM__
+    <form method="post" action="/v2/proef" novalidate>
+      <div class="veld __M_EMAIL__">
+        <label for="email">E-mailadres</label>
+        <input id="email" name="email" type="email" inputmode="email" autocomplete="email" required maxlength="200" value="__V_EMAIL__" placeholder="naam@praktijk.nl"__AUTOFOCUS_EMAIL__/>
+        __F_EMAIL__
+      </div>
+      <div class="veld __M_NAAM__">
+        <label for="naam">Contactpersoon</label>
+        <input id="naam" name="naam" type="text" autocomplete="name" required maxlength="80" value="__V_NAAM__" placeholder="Voor- en achternaam"__AUTOFOCUS_NAAM__/>
+        __F_NAAM__
+      </div>
+      <div class="veld __M_TEL__">
+        <label for="tel">Telefoonnummer</label>
+        <input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" required maxlength="40" value="__V_TEL__" placeholder="06 1234 5678"__AUTOFOCUS_TEL__/>
+        __F_TEL__
+      </div>
+      <div class="veld">
+        <label for="praktijk">Naam van je praktijk <small>(mag ook later)</small></label>
+        <input id="praktijk" name="praktijk" type="text" autocomplete="organization" maxlength="80" value="__V_PRAKTIJK__" placeholder="Komt boven op elke kaart"/>
+      </div>
+      <!-- honingpot: mensen zien dit veld niet, invulrobots wel -->
+      <div class="val" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"/></div>
+      __EMAIL_OK__
+      <label class="vink __M_AKKOORD__"><input type="checkbox" name="akkoord" value="1"__V_AKKOORD__/>
+        <span>Fysiplan mag deze gegevens gebruiken voor mijn proef en om mij één keer te bellen of mailen over de ervaring.</span></label>
+      __F_AKKOORD__
+      <div class="knoppen"><button class="knop oranje" type="submit">Start mijn gratis proef</button></div>
+      <p class="klein">Je proef loopt tot en met <b>__EINDDATUM__</b>.</p>
+    </form>
+    <details class="privacy">
+      <summary>Wat doen we met je gegevens?</summary>
+      <ul>
+        <li>We bewaren alleen je e-mailadres, naam, telefoonnummer en praktijknaam, plus de start- en einddatum van je proef.</li>
+        <li>We gebruiken ze om je proef te laten werken en om je over de proef te benaderen. Nooit voor reclame van anderen, en we verkopen of delen ze niet.</li>
+        <li>Word je geen klant, dan wissen we je gegevens automatisch __BEWAAR_DAGEN__ dagen na het einde van je proef.</li>
+        <li>Zelf eerder alles wissen kan altijd: in de app via <i>Mijn proef</i>, of met een mailtje.</li>
+        <li>Gegevens van pati&euml;nten horen niet in dit formulier; kaarten die je maakt blijven onder jouw praktijk.</li>
+      </ul>
+    </details>
+  </div>
+  <aside class="blad">
+    <h2>Zo ziet je proef eruit</h2>
+    <ol class="stappen">
+      <li><span><b>Een voorbeeldkaart staat klaar.</b> Je begint niet met een leeg vel, maar met een kant-en-klaar rugprogramma dat je zelf aanpast.</span></li>
+      <li><span><b>Zet tot 12 oefeningen op de kaart.</b> Kies uit __OEFENINGEN_AANTAL__ oefeningen of een van de sjablonen per klacht.</span></li>
+      <li><span><b>Print de A4</b> of bewaar hem als PDF, met de QR-code erop.</span></li>
+      <li><span><b>Scan de QR met je eigen telefoon</b> en zie precies wat je pati&euml;nt ziet: uitleg, video en voorlezen.</span></li>
+    </ol>
+    <div class="qrvak">__DEMO_QR__<p><b>Alvast proberen?</b> Scan deze code met je telefoon en open een voorbeeldkaart zoals je pati&euml;nt hem krijgt.</p></div>
+  </aside>
+</main>
+<!--/blok-->
+
+<!--blok:mijn-->
+<main class="smal">
+  <div>
+    <span class="etiket">Mijn proef</span>
+    <h1>Hoi __NAAM__, je proef loopt nog __DAGEN_TEKST__.</h1>
+    <p class="lead">Tot en met <b>__EINDDATUM__</b> gebruik je Fysiplan gratis. Je proef staat op __EMAIL__.</p>
+    __ALARM__
+    <div class="knoppen" style="margin-top:24px">
+      <a class="knop oranje" href="/v2/app">Verder met mijn kaart</a>
+    </div>
+    <div class="blad" style="margin-top:34px">
+      <h2>Je gegevens wissen</h2>
+      <p class="klein" style="font-size:14.5px">We bewaren je e-mailadres, naam, telefoonnummer en praktijknaam. Wis je ze, dan stopt je proef direct op dit apparaat. Kaarten die je al met pati&euml;nten deelde blijven gewoon werken.</p>
+      <form method="post" action="/v2/proef/wissen" style="margin-top:14px">
+        <label class="vink"><input type="checkbox" name="zeker" value="1" required/><span>Ja, wis mijn gegevens en stop mijn proef.</span></label>
+        <div class="knoppen"><button class="knop omlijnd" type="submit">Gegevens wissen</button></div>
+      </form>
+    </div>
+  </div>
+</main>
+<!--/blok-->
+
+<!--blok:verlopen-->
+<main class="smal">
+  <div>
+    <span class="etiket">Proefperiode voorbij</span>
+    <h1>Je __PROEF_DAGEN__ gratis dagen zitten erop.</h1>
+    <p class="lead">Bedankt voor het proberen, __NAAM__. Sinds <b>__EINDDATUM__</b> kun je geen nieuwe kaarten meer maken. De kaarten die je al met pati&euml;nten deelde blijven werken; zij merken hier niets van.</p>
+    __ALARM__
+    <div class="blad" style="margin-top:28px">
+      <h2>Wil je doorgaan met Fysiplan?</h2>
+      <p class="klein" style="font-size:14.5px">Laat het weten, dan bellen we je binnen een werkdag op __TEL__ om je abonnement af te spreken. Online afrekenen is niet nodig.</p>
+      <form method="post" action="/v2/proef/doorgaan" style="margin-top:16px">
+        <div class="knoppen"><button class="knop oranje" type="submit">Ja, ik wil doorgaan</button></div>
+      </form>
+    </div>
+    <form method="post" action="/v2/proef/wissen" style="margin-top:22px">
+      <input type="hidden" name="zeker" value="1"/>
+      <p class="klein">Liever niet? Dan hoef je niets te doen; we wissen je gegevens automatisch na __BEWAAR_DAGEN__ dagen. <button class="knop stil" type="submit">Nu meteen wissen</button></p>
+    </form>
+  </div>
+</main>
+<!--/blok-->
+
+<!--blok:bericht-->
+<main class="smal">
+  <div>
+    <span class="etiket">__ETIKET__</span>
+    <h1>__KOP__</h1>
+    <p class="lead">__TEKST__</p>
+    <div class="knoppen" style="margin-top:24px">__KNOP__</div>
+  </div>
+</main>
+<!--/blok-->

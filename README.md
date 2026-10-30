@@ -106,6 +106,25 @@ terug naar de gedeelde server-lijst.
   praktijkopname → YouTube-link. Video's worden geserveerd met Range-ondersteuning
   (vereist voor iPhone/Safari).
 
+## Gratis proef van 14 dagen (/v2/proef)
+
+Alle "Probeer gratis"-knoppen op de landing gaan naar **/v2/proef**: e-mailadres, contactpersoon en
+telefoonnummer (praktijknaam optioneel), met controle op tikfouten in het e-maildomein, wegwerpadressen
+en Nederlandse/buitenlandse telefoonnummers. Daarna staat de praktijk direct in `/v2/app` met een
+voorbeeldkaart (6 rugoefeningen), een proefbalk (dagen over, teller x/12) en de knop **Test de QR op je
+telefoon**. De pagina's zijn scriptloos; de logica staat in `lib/proef.js` en `server.js`.
+
+- Proef hangt aan een HttpOnly-cookie `fpproef`; op schijf (`proef-aanmeldingen.json`) staat alleen de hash.
+- Na 14 dagen toont `/v2/app` een verlopen-pagina met **Ja, ik wil doorgaan**, en weigert `/api/kaarten`
+  nieuwe kaarten voor dat apparaat. Gedeelde patiëntkaarten (`/k/<id>`) blijven werken.
+- Meldingen (alleen als mail is ingesteld): nieuwe aanmelding, "wil doorgaan" en twee dagen voor het einde
+  naar `PROEF_MELDING_AAN` (komma-gescheiden; standaard `ACCOUNT_BEHEER_EMAILS`); welkomstmail met een
+  persoonlijke link voor een tweede apparaat en een herinnering naar de aanmelder.
+- Overzicht met CSV-export, "klant geworden", "+7 dagen" en wissen op **/aanmeldingen**, alleen voor
+  ingelogde `ACCOUNT_BEHEER_EMAILS` (niet met admin88). `/dashboard88` toont alleen aantallen.
+- AVG: geen IP-adres opgeslagen, aanmelder kan zelf wissen, automatisch gewist 90 dagen na afloop
+  tenzij klant. `npm run test:proef` test de hele flow tegen een nagebootste maildienst.
+
 ## Beheer via /admin88
 
 De gewone URL is voor het maken en printen van kaarten. Bibliotheekbeheer gebeurt op
