@@ -7,12 +7,12 @@ papiercrème #f6f2e9 in de lichten, iets minder verzadiging) en wordt als
 progressieve JPEG in twee breedtes weggeschreven, zonder EXIF.
 
 Leg de bronfoto's in één map met de plek als bestandsnaam:
-  behandelkamer.jpg  huiskamer.jpg  papier.jpg  telefoon.jpg
+  papier.jpg  balans.jpg  samen.jpg
 
 Gebruik:
   python3 scripts/landing-fotos.py <bronmap>
 
-Uitvoer: public/images/landing/<plek>-1600.jpg en <plek>-800.jpg.
+Uitvoer: public/images/landing/<plek>-1200.jpg en <plek>-600.jpg.
 Vermeld fotograaf en licentie in public/images/landing/BRONNEN.md.
 
 Vereist Pillow (`python3 -m pip install Pillow`).
@@ -27,17 +27,17 @@ UIT = Path(__file__).resolve().parents[1] / "public" / "images" / "landing"
 
 # plek -> (breedte:hoogte, horizontaal en verticaal zwaartepunt van de uitsnede)
 PLEKKEN = {
-    "behandelkamer": ((4, 3), (0.5, 0.45)),
-    "huiskamer": ((4, 3), (0.5, 0.45)),
-    "papier": ((3, 2), (0.5, 0.4)),
-    "telefoon": ((3, 2), (0.5, 0.4)),
+    "begeleiding": ((4, 3), (0.5, 0.35)),  # Kampus Production, Pexels 7551631
+    "papier": ((4, 3), (0.55, 0.5)),   # Kampus Production, Pexels 8439687
+    "balans": ((3, 4), (0.5, 0.62)),   # Mikhail Nilov, Pexels 6972762
+    "samen": ((4, 3), (0.36, 0.55)),   # T Leish, Pexels 6974993
 }
-BREEDTES = (1600, 800)
+BREEDTES = (1200, 600)
 
 INKT = (35, 32, 25)
 CREME = (246, 242, 233)
-VERZADIGING = 0.84   # iets rustiger dan de bron, naast een crème pagina
-DUOTOON = 0.22       # hoeveel van de inkt-crème-duotoon erdoor gaat
+VERZADIGING = 0.8    # iets rustiger dan de bron, naast een crème pagina
+DUOTOON = 0.3        # hoeveel van de inkt-crème-duotoon erdoor gaat
 ZWARTPUNT = 12       # schaduwen nooit puur zwart: de pagina heeft ook geen #000
 
 
@@ -57,7 +57,7 @@ def bewerk(img):
 
 def main():
     ap = ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("bron", type=Path, help="map met behandelkamer.jpg, huiskamer.jpg, ...")
+    ap.add_argument("bron", type=Path, help="map met papier.jpg, balans.jpg en samen.jpg")
     args = ap.parse_args()
     UIT.mkdir(parents=True, exist_ok=True)
     gevonden = 0

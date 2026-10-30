@@ -274,6 +274,25 @@ __FAQ_SCHEMA__
   .slotregel p{font:italic 18px/1.5 var(--serif);color:var(--inkt);text-align:center;max-width:44ch}
 
   /* ---- 02 · zo werkt het: een procesregel als zetwerk ---- */
+  /* beeldband: drie echte foto's (Pexels, zie images/landing/BRONNEN.md), in
+     scripts/landing-fotos.py op het crème-inktpalet afgestemd. De kolommen
+     staan in de verhouding 4:3 | 3:4 | 4:3, zodat alle drie even hoog zijn. */
+  .beeldband{display:grid;grid-template-columns:4fr 2.25fr 4fr;gap:14px;margin:44px 0 0}
+  .beeldband .foto{position:relative;background:var(--lijn-z);overflow:hidden}
+  .beeldband .f-breed,.beeldband .f-breed2{aspect-ratio:4/3}
+  .beeldband img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .beeldband .foto::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(35,32,25,.08);pointer-events:none}
+  .beeldband figcaption{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;gap:8px 28px;flex-wrap:wrap;margin-top:4px}
+  .beeldband figcaption span{font:italic 15px/1.5 var(--serif);color:var(--demp)}
+  .beeldband figcaption .credit{font:400 12px/1.5 var(--disp);font-style:normal;color:var(--zacht)}
+  @media (max-width:700px){
+    .beeldband{grid-template-columns:1fr 1fr;gap:10px;margin-top:32px}
+    .beeldband .f-breed{grid-column:1/-1}
+    .beeldband .f-staand,.beeldband .f-breed2{aspect-ratio:3/4}
+    .beeldband .f-breed2 img{object-position:40% 50%}
+    .beeldband figcaption{flex-direction:column;margin-top:6px}
+  }
+  .beeldband+.stappen{margin-top:44px}
   .stappen{margin-top:40px;border-top:1px solid var(--lijn)}
   .stap{display:grid;grid-template-columns:64px 240px 1fr;gap:26px;align-items:baseline;
     padding:24px 0;border-bottom:1px solid var(--lijn)}
@@ -561,6 +580,12 @@ __FAQ_SCHEMA__
   <div class="kolom">
     <div class="folio"><span class="nr">02</span><span class="etiket">Zo werkt het</span></div>
     <h2>Van behandelkamer naar huiskamer.</h2>
+    <figure class="beeldband">
+      <div class="foto f-breed"><img src="/images/landing/begeleiding-1200.jpg" srcset="/images/landing/begeleiding-600.jpg 600w, /images/landing/begeleiding-1200.jpg 1200w" sizes="(max-width:700px) 92vw, 430px" width="1200" height="900" loading="lazy" decoding="async" alt="Een jonge begeleider oefent met een oudere man: armen gestrekt naar voren"/></div>
+      <div class="foto f-staand"><img src="/images/landing/balans-1200.jpg" srcset="/images/landing/balans-600.jpg 600w, /images/landing/balans-1200.jpg 1200w" sizes="(max-width:700px) 46vw, 245px" width="1200" height="1600" loading="lazy" decoding="async" alt="Een oudere vrouw oefent haar balans op &eacute;&eacute;n been in de woonkamer"/></div>
+      <div class="foto f-breed2"><img src="/images/landing/samen-1200.jpg" srcset="/images/landing/samen-600.jpg 600w, /images/landing/samen-1200.jpg 1200w" sizes="(max-width:700px) 46vw, 430px" width="1200" height="900" loading="lazy" decoding="async" alt="Een ouder echtpaar doet rekoefeningen op matjes in de woonkamer"/></div>
+      <figcaption><span>Thuis, op het eigen tempo: met de kaart op tafel, op de koelkast of op de telefoon.</span><span class="credit">Foto&rsquo;s: Kampus Production, Mikhail Nilov en T&nbsp;Leish, via Pexels</span></figcaption>
+    </figure>
     <div class="stappen">
       <div class="stap"><span class="nr">1</span><div class="wat"><b>Stel de kaart samen</b><span>&plusmn; 1 minuut</span></div><p>Vanuit een sjabloon per klacht of los uit __OEFENINGEN_AANTAL__ oefeningen. Logo en praktijkgegevens staan er al op.</p></div>
       <div class="stap"><span class="nr">2</span><div class="wat"><b>De uitleg zit er al bij</b><span>automatisch</span></div><p>Bij elke oefening staat een duidelijke uitvoeringsuitleg klaar, die de digitale kaart ook voorleest; waar de foto&rsquo;s het toelaten, doet hij de beweging ook voor. Eigen instructievideo koppelen kan per oefening, maar hoeft niet.</p></div>
