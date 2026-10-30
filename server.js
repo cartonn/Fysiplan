@@ -3230,8 +3230,7 @@ async function afhandelen(request, response) {
   }
 
   // behandelaar bij een kaart: welke collega hem beheert. Eén praktijk-login is
-  // zo met een heel team te delen (Fysiplan rekent per praktijk, niet per
-  // gebruiker zoals de concurrentie) zonder dat het overzicht een zoekplaatje
+  // zo met een heel team te delen zonder dat het overzicht een zoekplaatje
   // wordt. Alleen de ingelogde praktijk schrijft en leest dit; de patiëntroute
   // stript het veld net als de werknotitie. Leeg wist het veld.
   if (urlPath === "/api/kaart/behandelaar" && request.method === "POST") {

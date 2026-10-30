@@ -356,14 +356,15 @@ __FAQ_SCHEMA__
   .bronnen{font:italic 12.5px/1.6 var(--serif);color:var(--zacht);margin-top:36px;max-width:80ch}
   @media (max-width:760px){.bewijs{grid-template-columns:1fr;gap:36px}}
 
-  /* ---- 05 · prijs: drie kolommen tussen hairlines ---- */
-  .plannen{display:grid;grid-template-columns:1fr 1fr 1fr;margin-top:48px;border-top:1px solid var(--lijn);border-bottom:1px solid var(--lijn)}
+  /* ---- 05 · prijs: twee kolommen tussen hairlines ---- */
+  .plannen{display:grid;grid-template-columns:1fr 1fr;margin-top:48px;border-top:1px solid var(--lijn);border-bottom:1px solid var(--lijn)}
   .plan{padding:34px 36px 38px;display:flex;flex-direction:column}
   .plan+.plan{border-left:1px solid var(--lijn)}
   .plan .naam{font:600 12px/1 var(--disp);letter-spacing:.2em;text-transform:uppercase;color:var(--inkt)}
   .plan .wie{font:italic 14.5px/1.5 var(--serif);color:var(--demp);margin-top:8px}
   .plan .prijs{margin-top:22px;font:700 52px/1 var(--serif);letter-spacing:-.03em;color:var(--oranje);font-variant-numeric:tabular-nums}
-  .plan .prijs small{font:400 15px/1 var(--serif);letter-spacing:0;color:var(--zacht);margin-left:4px}
+  .plan .prijs small{font:400 15px/1 var(--serif);letter-spacing:0;color:var(--zacht);margin-left:4px;white-space:nowrap}
+  @media (max-width:520px){.plan .prijs small{display:block;margin:10px 0 0}}
   .plan .jaar{font:400 13px/1.5 var(--disp);color:var(--zacht);margin-top:8px}
   .plan ul{list-style:none;margin:22px 0 28px;display:flex;flex-direction:column;gap:11px;flex:1}
   .plan li{font-size:14.8px;line-height:1.5;color:var(--tekst)}
@@ -374,8 +375,8 @@ __FAQ_SCHEMA__
     .plannen{grid-template-columns:1fr}
     .plan+.plan{border-left:none;border-top:1px solid var(--lijn)}
   }
-  /* narekenschuif: kies je teamgrootte en zie waar de vaste praktijkprijs per
-     behandelaar op neerkomt. Bewust zonder script (de landing blijft scriptloos):
+  /* narekenschuif: kies je teamgrootte en zie wat Fysiplan per maand kost naast
+     het gemiddelde per therapeut bij concurrenten. Bewust zonder script (de landing blijft scriptloos):
      verborgen radio's sturen via sibling-selectors het gemarkeerde blokje en de
      bijbehorende uitkomst aan. Zonder CSS tonen alle uitkomsten gewoon onder elkaar. */
   .reken{margin-top:34px;border:1px solid var(--lijn);background:var(--papier);padding:26px 30px 28px}
@@ -552,7 +553,7 @@ __FAQ_SCHEMA__
       <div class="cel"><span class="etiket">Voor de pati&euml;nt</span><p>Geen app of account voor de pati&euml;nt: papier of &eacute;&eacute;n scan.</p></div>
       <div class="cel"><span class="etiket">Taal</span><p>Negen talen, met voorlezen voor wie lezen lastig is.</p></div>
       <div class="cel"><span class="etiket">Bibliotheek</span><p>__OEFENINGEN_AANTAL__ oefeningen, elk in kleur &eacute;n als lijntekening.</p></div>
-      <div class="cel"><span class="etiket">Prijs</span><p>E&eacute;n vaste prijs per praktijk. Nooit per therapeut.</p></div>
+      <div class="cel"><span class="etiket">Prijs</span><p>5,99 euro per therapeut per maand, alle functies inbegrepen.</p></div>
     </div>
   </div>
 </div>
@@ -676,30 +677,18 @@ __FAQ_SCHEMA__
 <section id="prijs" class="sectie vol">
   <div class="kolom">
     <div class="folio"><span class="nr">05</span><span class="etiket">Prijs</span></div>
-    <h2>E&eacute;n vaste prijs per praktijk. Nooit per therapeut.</h2>
+    <h2>E&eacute;n prijs: &euro;&thinsp;5,99 per therapeut per maand.</h2>
     <p class="lead">Alles zit er altijd in: de AI-assistent, negen talen met voorlezen, pijnscore met verloop, de volledige oefenbibliotheek in kleur &eacute;n lijntekening, en agenda-herinneringen. Geen modules, geen prijs per pati&euml;nt of kaart, en je prijs staat minstens 24 maanden vast.</p>
     <div class="plannen">
       <div class="plan">
-        <span class="naam">Solo</span>
-        <p class="wie">Voor de zelfstandige therapeut</p>
-        <div class="prijs">&euro;&thinsp;12<small>/ maand</small></div>
-        <p class="jaar">of 120 euro per jaar (2 maanden gratis)</p>
+        <span class="naam">Fysiplan</span>
+        <p class="wie">Voor elke praktijk, van solo tot groot team</p>
+        <div class="prijs">&euro;&thinsp;5,99<small>/ therapeut / maand</small></div>
+        <p class="jaar">exclusief btw</p>
         <ul>
-          <li>Alle functies, &eacute;&eacute;n therapeut</li>
+          <li>Alle functies, voor elke therapeut</li>
           <li>__OEFENINGEN_AANTAL__ oefeningen plus je eigen materiaal</li>
           <li>Maandelijks opzegbaar</li>
-        </ul>
-        <a class="knop omlijnd" href="/v2/proef">Probeer gratis</a>
-      </div>
-      <div class="plan">
-        <span class="naam">Praktijk</span>
-        <p class="wie">E&eacute;n locatie, onbeperkt behandelaars</p>
-        <div class="prijs">&euro;&thinsp;39<small>/ maand</small></div>
-        <p class="jaar">of 390 euro per jaar (2 maanden gratis)</p>
-        <ul>
-          <li>Onbeperkt behandelaars en werkplekken</li>
-          <li>Komt er een collega bij: nul euro extra</li>
-          <li>Extra locatie: 19 euro per maand</li>
         </ul>
         <a class="knop omlijnd" href="/v2/proef">Probeer gratis</a>
       </div>
@@ -707,10 +696,10 @@ __FAQ_SCHEMA__
         <span class="plekken">__OPRICHTERS_REGEL__</span>
         <span class="naam">Oprichterspraktijken</span>
         <p class="wie">De eerste 25 praktijken</p>
-        <div class="prijs">&euro;&thinsp;29<small>/ maand</small></div>
-        <p class="jaar">of 290 euro per jaar, met 24 maanden prijsgarantie</p>
+        <div class="prijs">&euro;&thinsp;5,99<small>/ therapeut / maand</small></div>
+        <p class="jaar">exclusief btw, met 24 maanden prijsgarantie</p>
         <ul>
-          <li>Alles van Praktijk</li>
+          <li>Alles van Fysiplan</li>
           <li>60 dagen begeleide start, met gratis import van logo en sjablonen</li>
           <li>In ruil: jouw feedback om Fysiplan beter te maken</li>
         </ul>
@@ -722,8 +711,8 @@ __FAQ_SCHEMA__
       <p class="rvraag">Hoeveel behandelaars heeft je praktijk?</p>
       <input type="radio" name="rb" id="rb1"/><input type="radio" name="rb" id="rb2"/><input type="radio" name="rb" id="rb3"/><input type="radio" name="rb" id="rb4"/><input type="radio" name="rb" id="rb5"/><input type="radio" name="rb" id="rb6"/><input type="radio" name="rb" id="rb8" checked/><input type="radio" name="rb" id="rb10"/><input type="radio" name="rb" id="rb12"/>
       <div class="liniaal" role="radiogroup" aria-label="Aantal behandelaars"><label for="rb1">1</label><label for="rb2">2</label><label for="rb3">3</label><label for="rb4">4</label><label for="rb5">5</label><label for="rb6">6</label><label for="rb8">8</label><label for="rb10">10</label><label for="rb12">12+</label></div>
-      <div class="ruit"><div class="ru ru1"><div class="rlinks"><span class="bedrag">&euro;&thinsp;12,00</span><span class="per">per behandelaar per maand. Solo: 12 euro per maand, per praktijk.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;9 p/m</b></div><div class="vr"><span>Fysiplan Solo, 12 euro per praktijk</span><b>&euro;&thinsp;12 p/m</b></div><div class="vb">Groei je later? Bij Fysiplan Praktijk kost elke collega nul euro extra; bij een prijs per therapeut gemiddeld 108 euro per jaar.</div></div></div><div class="ru ru2"><div class="rlinks"><span class="bedrag">&euro;&thinsp;19,50</span><span class="per">per behandelaar per maand. Fysiplan: 39 euro per maand, ongeacht het aantal therapeuten.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;18 p/m</b></div><div class="vr"><span>Fysiplan, 39 euro ongeacht het aantal therapeuten</span><b>&euro;&thinsp;39 p/m</b></div><div class="vb">Elke nieuwe collega: hier nul euro extra, bij een prijs per therapeut gemiddeld 108 euro per jaar.</div></div></div><div class="ru ru3"><div class="rlinks"><span class="bedrag">&euro;&thinsp;13,00</span><span class="per">per behandelaar per maand. Fysiplan: 39 euro per maand, ongeacht het aantal therapeuten.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;27 p/m</b></div><div class="vr"><span>Fysiplan, 39 euro ongeacht het aantal therapeuten</span><b>&euro;&thinsp;39 p/m</b></div><div class="vb">Elke nieuwe collega: hier nul euro extra, bij een prijs per therapeut gemiddeld 108 euro per jaar.</div></div></div><div class="ru ru4"><div class="rlinks"><span class="bedrag">&euro;&thinsp;9,75</span><span class="per">per behandelaar per maand. Fysiplan: 39 euro per maand, ongeacht het aantal therapeuten.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;36 p/m</b></div><div class="vr"><span>Fysiplan, 39 euro ongeacht het aantal therapeuten</span><b>&euro;&thinsp;39 p/m</b></div><div class="vb">Vrijwel gelijk aan het gemiddelde, en jouw prijs stijgt nooit mee met je team.</div></div></div><div class="ru ru5"><div class="rlinks"><span class="bedrag">&euro;&thinsp;7,80</span><span class="per">per behandelaar per maand. Fysiplan: 39 euro per maand, ongeacht het aantal therapeuten.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;45 p/m</b></div><div class="vr"><span>Fysiplan, 39 euro ongeacht het aantal therapeuten</span><b>&euro;&thinsp;39 p/m</b></div><div class="vb groen">Je bespaart &euro;&thinsp;72 per jaar</div></div></div><div class="ru ru6"><div class="rlinks"><span class="bedrag">&euro;&thinsp;6,50</span><span class="per">per behandelaar per maand. Fysiplan: 39 euro per maand, ongeacht het aantal therapeuten.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;54 p/m</b></div><div class="vr"><span>Fysiplan, 39 euro ongeacht het aantal therapeuten</span><b>&euro;&thinsp;39 p/m</b></div><div class="vb groen">Je bespaart &euro;&thinsp;180 per jaar</div></div></div><div class="ru ru8"><div class="rlinks"><span class="bedrag">&euro;&thinsp;4,88</span><span class="per">per behandelaar per maand. Fysiplan: 39 euro per maand, ongeacht het aantal therapeuten.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;72 p/m</b></div><div class="vr"><span>Fysiplan, 39 euro ongeacht het aantal therapeuten</span><b>&euro;&thinsp;39 p/m</b></div><div class="vb groen">Je bespaart &euro;&thinsp;396 per jaar</div></div></div><div class="ru ru10"><div class="rlinks"><span class="bedrag">&euro;&thinsp;3,90</span><span class="per">per behandelaar per maand. Fysiplan: 39 euro per maand, ongeacht het aantal therapeuten.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;90 p/m</b></div><div class="vr"><span>Fysiplan, 39 euro ongeacht het aantal therapeuten</span><b>&euro;&thinsp;39 p/m</b></div><div class="vb groen">Je bespaart &euro;&thinsp;612 per jaar</div></div></div><div class="ru ru12"><div class="rlinks"><span class="bedrag">&euro;&thinsp;3,25</span><span class="per">per behandelaar per maand. Fysiplan: 39 euro per maand, ongeacht het aantal therapeuten.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;108 p/m</b></div><div class="vr"><span>Fysiplan, 39 euro ongeacht het aantal therapeuten</span><b>&euro;&thinsp;39 p/m</b></div><div class="vb groen">Je bespaart &euro;&thinsp;828 per jaar of meer</div></div></div></div>
-      <p class="rnoot">De vergelijking gebruikt het gemiddelde van gangbare prijzen per therapeut per maand bij concurrenten: 12, 9 en 6 euro, gemiddeld 9 euro per therapeut per maand. Fysiplan kost 39 euro per maand, ongeacht het aantal therapeuten; voor een solopraktijk gewoon 12 euro per praktijk. Een nieuwe collega kost nul euro extra, printen en kaarten blijven onbeperkt.</p>
+      <div class="ruit"><div class="ru ru1"><div class="rlinks"><span class="bedrag">&euro;&thinsp;5,99</span><span class="per">per maand voor 1 therapeut, excl. btw.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;9 p/m</b></div><div class="vr"><span>Fysiplan, 5,99 euro per therapeut</span><b>&euro;&thinsp;5,99 p/m</b></div><div class="vb groen">Je bespaart &euro;&thinsp;36 per jaar</div></div></div><div class="ru ru2"><div class="rlinks"><span class="bedrag">&euro;&thinsp;11,98</span><span class="per">per maand voor 2 therapeuten, excl. btw.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;18 p/m</b></div><div class="vr"><span>Fysiplan, 5,99 euro per therapeut</span><b>&euro;&thinsp;11,98 p/m</b></div><div class="vb groen">Je bespaart &euro;&thinsp;72 per jaar</div></div></div><div class="ru ru3"><div class="rlinks"><span class="bedrag">&euro;&thinsp;17,97</span><span class="per">per maand voor 3 therapeuten, excl. btw.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;27 p/m</b></div><div class="vr"><span>Fysiplan, 5,99 euro per therapeut</span><b>&euro;&thinsp;17,97 p/m</b></div><div class="vb groen">Je bespaart &euro;&thinsp;108 per jaar</div></div></div><div class="ru ru4"><div class="rlinks"><span class="bedrag">&euro;&thinsp;23,96</span><span class="per">per maand voor 4 therapeuten, excl. btw.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;36 p/m</b></div><div class="vr"><span>Fysiplan, 5,99 euro per therapeut</span><b>&euro;&thinsp;23,96 p/m</b></div><div class="vb groen">Je bespaart &euro;&thinsp;144 per jaar</div></div></div><div class="ru ru5"><div class="rlinks"><span class="bedrag">&euro;&thinsp;29,95</span><span class="per">per maand voor 5 therapeuten, excl. btw.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;45 p/m</b></div><div class="vr"><span>Fysiplan, 5,99 euro per therapeut</span><b>&euro;&thinsp;29,95 p/m</b></div><div class="vb groen">Je bespaart &euro;&thinsp;181 per jaar</div></div></div><div class="ru ru6"><div class="rlinks"><span class="bedrag">&euro;&thinsp;35,94</span><span class="per">per maand voor 6 therapeuten, excl. btw.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;54 p/m</b></div><div class="vr"><span>Fysiplan, 5,99 euro per therapeut</span><b>&euro;&thinsp;35,94 p/m</b></div><div class="vb groen">Je bespaart &euro;&thinsp;217 per jaar</div></div></div><div class="ru ru8"><div class="rlinks"><span class="bedrag">&euro;&thinsp;47,92</span><span class="per">per maand voor 8 therapeuten, excl. btw.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;72 p/m</b></div><div class="vr"><span>Fysiplan, 5,99 euro per therapeut</span><b>&euro;&thinsp;47,92 p/m</b></div><div class="vb groen">Je bespaart &euro;&thinsp;289 per jaar</div></div></div><div class="ru ru10"><div class="rlinks"><span class="bedrag">&euro;&thinsp;59,90</span><span class="per">per maand voor 10 therapeuten, excl. btw.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;90 p/m</b></div><div class="vr"><span>Fysiplan, 5,99 euro per therapeut</span><b>&euro;&thinsp;59,90 p/m</b></div><div class="vb groen">Je bespaart &euro;&thinsp;361 per jaar</div></div></div><div class="ru ru12"><div class="rlinks"><span class="bedrag">&euro;&thinsp;71,88</span><span class="per">per maand voor 12 therapeuten, excl. btw. Elke volgende therapeut kost 5,99 euro per maand.</span></div><div class="vgl"><div class="vr"><span>Gemiddelde prijs per therapeut per maand bij concurrenten (9 euro)</span><b>&euro;&thinsp;108 p/m</b></div><div class="vr"><span>Fysiplan, 5,99 euro per therapeut</span><b>&euro;&thinsp;71,88 p/m</b></div><div class="vb groen">Je bespaart &euro;&thinsp;433 per jaar, en meer bij een groter team</div></div></div></div>
+      <p class="rnoot">De vergelijking gebruikt het gemiddelde van gangbare prijzen per therapeut per maand bij concurrenten: 12, 9 en 6 euro, gemiddeld 9 euro per therapeut per maand. Fysiplan kost 5,99 euro per therapeut per maand, exclusief btw; de besparing is afgerond op hele euro&rsquo;s. Printen en kaarten blijven onbeperkt.</p>
     </div>
     <div class="beloften">
       <div class="belofte"><b>De prijsbelofte</b><p>Je prijs staat minstens 24 maanden vast.</p></div>
@@ -776,7 +765,7 @@ __FAQ_SCHEMA__
       </details>
       <details>
         <summary>Waarom staat jullie prijs gewoon online?</summary>
-        <p class="antw">Omdat jij moet kunnen vergelijken zonder eerst een demo of offertegesprek in te plannen. De meeste oefensoftware toont geen prijs; wij vinden dat je bij het kiezen op drie dingen moet kunnen letten: een duidelijk bedrag (staat hierboven, en stijgt niet met je team), rustig kunnen proberen (14 dagen gratis, en de <a class="tl" href="/k/demo" target="_blank" rel="noopener">voorbeeldkaart</a> werkt nu meteen) en geen lange binding (stoppen kan maandelijks). Reken het gerust na met de schuif hierboven.</p>
+        <p class="antw">Omdat jij moet kunnen vergelijken zonder eerst een demo of offertegesprek in te plannen. De meeste oefensoftware toont geen prijs; wij vinden dat je bij het kiezen op drie dingen moet kunnen letten: een duidelijk bedrag (5,99 euro per therapeut per maand, alles erin), rustig kunnen proberen (14 dagen gratis, en de <a class="tl" href="/k/demo" target="_blank" rel="noopener">voorbeeldkaart</a> werkt nu meteen) en geen lange binding (stoppen kan maandelijks). Reken het gerust na met de schuif hierboven.</p>
       </details>
       <details>
         <summary>Hoe werkt de gratis proef van 14 dagen?</summary>
