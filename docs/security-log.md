@@ -1731,3 +1731,37 @@ smoke (13) groen tegen de fix.
 patiëntkaart (meting, gedaan, ervaring, psk, seintje, oefening, oefzwaar)
 op waarde-sanitisatie en afwijkende types (objecten/arrays waar getallen
 horen), of de opname-uploadketen opnieuw na de bezig-grendel van 10-27.
+
+## 2026-10-30 — Open schrijfroutes van de patiëntkaart: typen en randwaarden
+
+**Gebied.** De rotatie van vorige run: alle open (linkkennis-)schrijfroutes
+van de patiëntkaart — meting, ervaring, gedaan, oefening, oefzwaar, seintje,
+psk — plus de praktijk-geauthenticeerde schrijfroutes ernaast (psk-doel,
+afspraak, doel, archief, naam, nieuwe-link) en de agenda-ICS-route,
+adversarieel bekeken op waarde-sanitisatie en afwijkende types.
+
+**Bevinding: geen gat.** De open routes zijn consequent streng: scores
+eisen letterlijk `typeof number` + `Number.isInteger` + bereik (dus strings,
+floats, booleans, arrays en objecten stranden op 400), oefening/oefzwaar
+zoeken de naam via de index op de kaart zelf op (verzonnen namen kunnen
+niet), weren prototype-sleutels als oefeningnaam en dragen plafonds
+(60/24 sleutels), het seintje kent alleen de vaste whitelist, en de
+agenda-route valideert dagen tegen een vaste lijst en het tijdstip met een
+strikte regex. De praktijk-routes klemmen numerieke invoer (doel 0..7,
+afspraak binnen 12 maanden, herhaal 2..12) en lopen via eisPraktijk.
+
+**Increment.** Geen codewijziging nodig; het bewijs staat in de nieuwe
+suite test-schrijfroutes-types.mjs (21 checks, scratchpad): per route de
+afwijkende types, indexen buiten de kaart, een onbekende seintje-soort, een
+prototype-pollution-poging via geseede oefeningnamen "constructor"/
+"__proto__", en afsluitend de integriteitscheck dat de kaartdata na de
+hele barrage exact de twee geldige schrijfacties draagt.
+
+**E2E.** opname-race (9), herstelcode-nieuw (10), dossier-zwaar (6) en
+smoke (13) groen tegen main.
+
+**Volgende run — pak een ander gebied:** de security-headers en CSP van de
+vier v2-pagina's (/v2, /v2/app, /k, /o) integraal herijken (frame-ancestors,
+connect-src, media-src tegen de huidige featureset), of de leesroutes met
+linkkennis (/api/kaart/agenda, afspraak.ics, vertaal, manifest) op
+responsvervuiling en cache-gedrag.
