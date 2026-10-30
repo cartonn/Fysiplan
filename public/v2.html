@@ -276,8 +276,8 @@ __FAQ_SCHEMA__
   /* ---- 02 · zo werkt het: een procesregel als zetwerk ---- */
   /* beeldband: drie echte foto's (Pexels, zie images/landing/BRONNEN.md), in
      scripts/landing-fotos.py op het crème-inktpalet afgestemd. De kolommen
-     staan in de verhouding 4:3 | 3:4 | 4:3, zodat alle drie even hoog zijn. */
-  .beeldband{display:grid;grid-template-columns:4fr 2.25fr 4fr;gap:14px;margin:44px 0 0}
+     staan in de verhouding 4:3 | 4:3 | 3:4, zodat alle drie even hoog zijn. */
+  .beeldband{display:grid;grid-template-columns:4fr 4fr 2.25fr;gap:14px;margin:44px 0 0}
   .beeldband .foto{position:relative;background:var(--lijn-z);overflow:hidden}
   .beeldband .f-breed,.beeldband .f-breed2{aspect-ratio:4/3}
   .beeldband img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -289,7 +289,7 @@ __FAQ_SCHEMA__
     .beeldband{grid-template-columns:1fr 1fr;gap:10px;margin-top:32px}
     .beeldband .f-breed{grid-column:1/-1}
     .beeldband .f-staand,.beeldband .f-breed2{aspect-ratio:3/4}
-    .beeldband .f-breed2 img{object-position:40% 50%}
+    .beeldband .f-breed2 img{object-position:34% 50%}
     .beeldband figcaption{flex-direction:column;margin-top:6px}
   }
   .beeldband+.stappen{margin-top:44px}
@@ -581,10 +581,10 @@ __FAQ_SCHEMA__
     <div class="folio"><span class="nr">02</span><span class="etiket">Zo werkt het</span></div>
     <h2>Van behandelkamer naar huiskamer.</h2>
     <figure class="beeldband">
-      <div class="foto f-breed"><img src="/images/landing/begeleiding-1200.jpg" srcset="/images/landing/begeleiding-600.jpg 600w, /images/landing/begeleiding-1200.jpg 1200w" sizes="(max-width:700px) 92vw, 430px" width="1200" height="900" loading="lazy" decoding="async" alt="Een jonge begeleider oefent met een oudere man: armen gestrekt naar voren"/></div>
-      <div class="foto f-staand"><img src="/images/landing/balans-1200.jpg" srcset="/images/landing/balans-600.jpg 600w, /images/landing/balans-1200.jpg 1200w" sizes="(max-width:700px) 46vw, 245px" width="1200" height="1600" loading="lazy" decoding="async" alt="Een oudere vrouw oefent haar balans op &eacute;&eacute;n been in de woonkamer"/></div>
-      <div class="foto f-breed2"><img src="/images/landing/samen-1200.jpg" srcset="/images/landing/samen-600.jpg 600w, /images/landing/samen-1200.jpg 1200w" sizes="(max-width:700px) 46vw, 430px" width="1200" height="900" loading="lazy" decoding="async" alt="Een ouder echtpaar doet rekoefeningen op matjes in de woonkamer"/></div>
-      <figcaption><span>Thuis, op het eigen tempo: met de kaart op tafel, op de koelkast of op de telefoon.</span><span class="credit">Foto&rsquo;s: Kampus Production, Mikhail Nilov en T&nbsp;Leish, via Pexels</span></figcaption>
+      <div class="foto f-breed"><img src="/images/landing/behandelkamer-1200.jpg" srcset="/images/landing/behandelkamer-600.jpg 600w, /images/landing/behandelkamer-1200.jpg 1200w" sizes="(max-width:700px) 92vw, 430px" width="1200" height="900" loading="lazy" decoding="async" alt="Een fysiotherapeut begeleidt een jonge vrouw bij een schouderoefening met een dumbbell"/></div>
+      <div class="foto f-breed2"><img src="/images/landing/begeleiding-1200.jpg" srcset="/images/landing/begeleiding-600.jpg 600w, /images/landing/begeleiding-1200.jpg 1200w" sizes="(max-width:700px) 46vw, 430px" width="1200" height="900" loading="lazy" decoding="async" alt="Een jonge begeleider oefent met een oudere man: armen gestrekt naar voren"/></div>
+      <div class="foto f-staand"><img src="/images/landing/thuis-1200.jpg" srcset="/images/landing/thuis-600.jpg 600w, /images/landing/thuis-1200.jpg 1200w" sizes="(max-width:700px) 46vw, 245px" width="1200" height="1600" loading="lazy" decoding="async" alt="Een vrouw oefent thuis haar balans op &eacute;&eacute;n been"/></div>
+      <figcaption><span>Eerst samen in de behandelkamer, daarna thuis op het eigen tempo: met de kaart op tafel, op de koelkast of op de telefoon.</span><span class="credit">Foto&rsquo;s: Karola G (Kaboompics) en Kampus Production, via Pexels</span></figcaption>
     </figure>
     <div class="stappen">
       <div class="stap"><span class="nr">1</span><div class="wat"><b>Stel de kaart samen</b><span>&plusmn; 1 minuut</span></div><p>Vanuit een sjabloon per klacht of los uit __OEFENINGEN_AANTAL__ oefeningen. Logo en praktijkgegevens staan er al op.</p></div>

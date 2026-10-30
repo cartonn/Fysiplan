@@ -7,7 +7,7 @@ papiercrème #f6f2e9 in de lichten, iets minder verzadiging) en wordt als
 progressieve JPEG in twee breedtes weggeschreven, zonder EXIF.
 
 Leg de bronfoto's in één map met de plek als bestandsnaam:
-  papier.jpg  balans.jpg  samen.jpg
+  behandelkamer.jpg  begeleiding.jpg  thuis.jpg
 
 Gebruik:
   python3 scripts/landing-fotos.py <bronmap>
@@ -25,12 +25,12 @@ from PIL import Image, ImageEnhance, ImageOps
 
 UIT = Path(__file__).resolve().parents[1] / "public" / "images" / "landing"
 
-# plek -> (breedte:hoogte, horizontaal en verticaal zwaartepunt van de uitsnede)
+# plek -> (breedte:hoogte, zwaartepunt van de uitsnede, optioneel eerst inzoomen
+# op een kader links, boven, rechts, onder als fractie van de bron)
 PLEKKEN = {
-    "begeleiding": ((4, 3), (0.5, 0.35)),  # Kampus Production, Pexels 7551631
-    "papier": ((4, 3), (0.55, 0.5)),   # Kampus Production, Pexels 8439687
-    "balans": ((3, 4), (0.5, 0.62)),   # Mikhail Nilov, Pexels 6972762
-    "samen": ((4, 3), (0.36, 0.55)),   # T Leish, Pexels 6974993
+    "behandelkamer": ((4, 3), (0.5, 0.28), None),                     # Karola G (Kaboompics), Pexels 4506073
+    "begeleiding": ((4, 3), (0.5, 0.35), None),                       # Kampus Production, Pexels 7551631
+    "thuis": ((3, 4), (0.5, 0.3), (0.22, 0.27, 1.0, 1.0)),            # Karola G (Kaboompics), Pexels 6633825
 }
 BREEDTES = (1200, 600)
 
@@ -57,17 +57,20 @@ def bewerk(img):
 
 def main():
     ap = ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("bron", type=Path, help="map met papier.jpg, balans.jpg en samen.jpg")
+    ap.add_argument("bron", type=Path, help="map met behandelkamer.jpg, begeleiding.jpg en thuis.jpg")
     args = ap.parse_args()
     UIT.mkdir(parents=True, exist_ok=True)
     gevonden = 0
-    for plek, ((bw, bh), midden) in PLEKKEN.items():
+    for plek, ((bw, bh), midden, kader) in PLEKKEN.items():
         bronnen = sorted(p for p in args.bron.glob(plek + ".*") if p.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp"))
         if not bronnen:
             print(f"- {plek}: geen bron gevonden, overgeslagen")
             continue
         gevonden += 1
         img = bewerk(Image.open(bronnen[0]))
+        if kader:
+            w, h = img.size
+            img = img.crop((round(kader[0] * w), round(kader[1] * h), round(kader[2] * w), round(kader[3] * h)))
         for breedte in BREEDTES:
             hoogte = round(breedte * bh / bw)
             uit = ImageOps.fit(img, (breedte, hoogte), Image.LANCZOS, centering=midden)

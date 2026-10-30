@@ -3,13 +3,14 @@
 Alle drie komen van Pexels en vallen onder de Pexels License
 (https://www.pexels.com/license/): gratis te gebruiken, ook commercieel, en
 naamsvermelding is niet verplicht. We noemen de fotografen toch onder de
-beeldband. Het is niet toegestaan de foto's ongewijzigd door te verkopen of te
+fotoband. Het is niet toegestaan de foto's ongewijzigd door te verkopen of te
 suggereren dat de mensen erop Fysiplan aanbevelen.
 
 | Bestand | Fotograaf | Bron |
 |---|---|---|
-| `papier-*.jpg` | Kampus Production | https://www.pexels.com/photo/smiling-couple-reading-a-paper-and-sitting-on-a-couch-8439687/ |
-| `balans-*.jpg` | Mikhail Nilov | https://www.pexels.com/photo/senior-woman-doing-yoga-exercise-6972762/ |
-| `samen-*.jpg` | T Leish | https://www.pexels.com/photo/an-elderly-couple-practicing-home-yoga-6974993/ |
+| `behandelkamer-*.jpg` | Karola G (Kaboompics) | https://www.pexels.com/photo/chiropractor-assisting-female-patient-with-dumbbell-in-doctor-office-4506073/ |
+| `begeleiding-*.jpg` | Kampus Production | https://www.pexels.com/photo/a-man-exercising-indoors-7551631/ |
+| `thuis-*.jpg` | Karola G (Kaboompics) | https://www.pexels.com/photo/woman-doing-yoga-at-home-6633825/ |
 
-Bijsnijden en kleur afstemmen gebeurt met `python3 scripts/landing-fotos.py <bronmap>`.
+Bijsnijden en kleur afstemmen gebeurt met `python3 scripts/landing-fotos.py <bronmap>`,
+met in die map `behandelkamer.jpg`, `begeleiding.jpg` en `thuis.jpg` (de originelen).
