@@ -12,7 +12,7 @@ Leg de bronfoto's in één map met de plek als bestandsnaam:
 Gebruik:
   python3 scripts/landing-fotos.py <bronmap>
 
-Uitvoer: public/images/landing/<plek>-1200.jpg en <plek>-600.jpg.
+Uitvoer: public/images/landing/<plek>-<breedte>.jpg, twee breedtes per plek.
 Vermeld fotograaf en licentie in public/images/landing/BRONNEN.md.
 
 Vereist Pillow (`python3 -m pip install Pillow`).
@@ -26,13 +26,16 @@ from PIL import Image, ImageEnhance, ImageOps
 UIT = Path(__file__).resolve().parents[1] / "public" / "images" / "landing"
 
 # plek -> (breedte:hoogte, zwaartepunt van de uitsnede, optioneel eerst inzoomen
-# op een kader links, boven, rechts, onder als fractie van de bron)
+# op een kader links, boven, rechts, onder als fractie van de bron, uitvoerbreedtes).
+# Nooit breder dan de uitsnede zelf: opschalen maakt een foto alleen zachter.
 PLEKKEN = {
-    "behandelkamer": ((4, 3), (0.5, 0.28), None),                     # Karola G (Kaboompics), Pexels 4506073
-    "begeleiding": ((4, 3), (0.5, 0.35), None),                       # Kampus Production, Pexels 7551631
-    "thuis": ((3, 4), (0.5, 0.3), (0.22, 0.27, 1.0, 1.0)),            # Karola G (Kaboompics), Pexels 6633825
+    # montage: liggende A4 in een Pexels-foto van SHVETS production (8413183)
+    "behandelkamer": ((4, 3), (0.5, 0.5), (0.3, 0.12, 1.0, 0.86), (1000, 500)),
+    # Kampus Production, Pexels 7551631
+    "begeleiding": ((4, 3), (0.5, 0.35), None, (1200, 600)),
+    # montage: mobiele kaart in een Pexels-foto van Tima Miroshnichenko (6611918)
+    "thuis": ((3, 4), (0.5, 0.5), (0.12, 0.2, 0.88, 0.9), (760, 380)),
 }
-BREEDTES = (1200, 600)
 
 INKT = (35, 32, 25)
 CREME = (246, 242, 233)
@@ -61,7 +64,7 @@ def main():
     args = ap.parse_args()
     UIT.mkdir(parents=True, exist_ok=True)
     gevonden = 0
-    for plek, ((bw, bh), midden, kader) in PLEKKEN.items():
+    for plek, ((bw, bh), midden, kader, breedtes) in PLEKKEN.items():
         bronnen = sorted(p for p in args.bron.glob(plek + ".*") if p.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp"))
         if not bronnen:
             print(f"- {plek}: geen bron gevonden, overgeslagen")
@@ -71,11 +74,11 @@ def main():
         if kader:
             w, h = img.size
             img = img.crop((round(kader[0] * w), round(kader[1] * h), round(kader[2] * w), round(kader[3] * h)))
-        for breedte in BREEDTES:
+        for breedte in breedtes:
             hoogte = round(breedte * bh / bw)
             uit = ImageOps.fit(img, (breedte, hoogte), Image.LANCZOS, centering=midden)
             doel = UIT / f"{plek}-{breedte}.jpg"
-            uit.save(doel, "JPEG", quality=78 if breedte > 1000 else 80, optimize=True, progressive=True)
+            uit.save(doel, "JPEG", quality=80, optimize=True, progressive=True)
             print(f"- {plek}: {doel.name} {breedte}x{hoogte} {doel.stat().st_size // 1024} KB")
     if not gevonden:
         raise SystemExit("Geen enkele bronfoto gevonden.")
