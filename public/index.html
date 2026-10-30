@@ -2685,6 +2685,14 @@ bridge2.jpg</div>
     }
     var seinN=lijst.filter(function(c){return c.seintje&&(c.seintje.soort==='vraag'||c.seintje.soort==='pijn');}).length;
     if(seinN)r.push('Openstaande seintjes van patiënten: '+seinN+'.');
+    // verse "te zwaar"-meldingen (zelfde 3-wekenvenster als het Deel-paneel en de
+    // editor): het opvolgpunt voor teamoverleg — welke programma's vragen bijstelling
+    var zwK=0,zwM=0;
+    lijst.forEach(function(c){
+      var n=Object.keys(c.oefZwaar||{}).filter(function(k2){return c.oefZwaar[k2]&&c.oefZwaar[k2].t&&nu-c.oefZwaar[k2].t<21*dag;}).length;
+      if(n){zwK++;zwM+=n;}
+    });
+    if(zwK)r.push('Te zwaar gemeld (laatste 3 weken): '+zwM+' melding'+(zwM===1?'':'en')+' op '+zwK+' kaart'+(zwK===1?'':'en')+' — opvolgen in dosering of oefenkeuze.');
     return r.join('\n');
   }
   // afspraak-tijd naar de waarde van een datetime-local-veld (lokale kloktijd)
@@ -3370,7 +3378,7 @@ bridge2.jpg</div>
           if(xb)xb.onclick=function(){
             var veld=function(v){v=(v==null?'':String(v));return '"'+v.replace(/"/g,'""')+'"';};
             var dd2=function(t){return t?new Date(t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}):'';};
-            var kop=['Naam','Status','Aangemaakt','Behandelaar','Oefeningen','Laatste pijn','Eerste pijn','PSK-doel','Eerste PSK','Laatste PSK','Oefendoel p/w','Afspraak','Werknotitie','Kaartlink'];
+            var kop=['Naam','Status','Aangemaakt','Behandelaar','Oefeningen','Laatste pijn','Eerste pijn','PSK-doel','Eerste PSK','Laatste PSK','Oefendoel p/w','Te zwaar (3 wk)','Afspraak','Werknotitie','Kaartlink'];
             // altijd de verse stand van de server: een afspraak of PSK-doel die net in dit
             // overzicht is bewaard, hoort er meteen in (de lijst l is van bij het openen)
             var xbTekst=xb.textContent;xb.disabled=true;xb.textContent='Bezig…';
@@ -3382,10 +3390,12 @@ bridge2.jpg</div>
             var alle=Array.isArray(vers)?vers:l.concat(lArch);
             var rijen=alle.map(function(c){
               var s=c.scores||[],ps=c.psk||[];
+              // verse te zwaar-meldingen (3 weken): dezelfde signalen als rapport en editor
+              var zwE=Object.keys(c.oefZwaar||{}).filter(function(k2){return c.oefZwaar[k2]&&c.oefZwaar[k2].t&&Date.now()-c.oefZwaar[k2].t<21*864e5;});
               return [c.naam,c.gearchiveerd?'afgerond':'actief',dd2(c.ts),c.behandelaar||'',c.aantal,
                 s.length?s[s.length-1].s:'',(typeof c.eersteMeting==='number')?c.eersteMeting:(s.length?s[0].s:''),
                 c.pskDoel||'',(typeof c.pskEerste==='number')?c.pskEerste:(ps.length?ps[0].s:''),ps.length?ps[ps.length-1].s:'',
-                Number(c.doel)||'',c.afspraak&&c.afspraak.t?dd2(c.afspraak.t):'',c.notitie||'',location.origin+'/k/'+c.id].map(veld).join(';');
+                Number(c.doel)||'',zwE.join(', '),c.afspraak&&c.afspraak.t?dd2(c.afspraak.t):'',c.notitie||'',location.origin+'/k/'+c.id].map(veld).join(';');
             });
             var csv='﻿'+kop.map(veld).join(';')+'\r\n'+rijen.join('\r\n')+'\r\n';
             var a=document.createElement('a');
