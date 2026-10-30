@@ -260,6 +260,7 @@
   <div class="spacer"></div>
   <button class="btn" id="uploadBtn">Plaatjes uploaden</button>
   <button class="btn" id="addBtn">+ Oefening toevoegen</button>
+  <button class="btn" id="eigenOefBtn" style="display:none">+ Eigen oefening</button>
   <button class="btn" id="aiBtn" style="display:none">AI-hulp</button>
   <button class="btn" id="sjabBtn" style="display:none">Sjablonen</button>
   <button class="btn" id="kaartenBtn">Kaarten</button>
@@ -307,7 +308,7 @@
         <div class="prak">
           <select id="prakSelect" class="no-print" aria-label="Kies praktijk" style="display:none;width:100%;margin-bottom:4px;font-size:11px;padding:3px 6px;border:1px solid var(--line);border-radius:6px;color:var(--muted);background:#fff"></select>
           <img id="prakLogo" alt="" style="display:none"/>
-          <input class="logoIn" id="praktijk" value="FysioTotaal" aria-label="Praktijknaam"/>
+          <input class="logoIn" id="praktijk" value="FysioTotaal" placeholder="Naam van je praktijk" aria-label="Praktijknaam"/>
           <button type="button" class="no-print" id="logoBtn" style="display:none">+ praktijklogo</button>
           <input type="file" id="logoFile" accept="image/jpeg,image/png,image/webp" class="no-print" style="display:none"/>
           <div class="adres">
@@ -467,11 +468,13 @@ bridge2.jpg</div>
     <div style="font-size:13px;color:var(--muted);line-height:1.6;margin:2px 0 12px">
       Je eerste trainingskaart staat in ongeveer een minuut:
       <ol style="margin:8px 0 0 18px;padding:0">
+        <li>Vul de <b>naam van je praktijk</b> in; die komt boven op elke kaart.</li>
         <li>Kies een <b>sjabloon</b> per klacht, of klik links oefeningen aan.</li>
         <li>Vul de <b>cli&euml;ntnaam</b> in &mdash; de QR-code naar de digitale kaart komt er vanzelf op.</li>
         <li><b>Print</b> de A4 of deel de link via WhatsApp.</li>
       </ol>
     </div>
+    <input id="welkom_praktijk" maxlength="80" autocomplete="organization" placeholder="Naam van je praktijk" aria-label="Naam van je praktijk" style="width:100%;margin:0 0 12px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font:inherit"/>
     <div class="acts">
       <button class="btn" id="welkom_zelf">Zelf ontdekken</button>
       <button class="btn primary" id="welkom_sjab">Kies een sjabloon</button>
@@ -805,7 +808,10 @@ bridge2.jpg</div>
   function rebuildLookup(){byNorm={};byStable={};OEF.forEach(function(o){byNorm[normEx(o.naam)]=o.id;if(o.exerciseId)byStable[o.exerciseId]=o.id;});}
   rebuildLookup();
   // practice settings + autosave of the current card
-  var SET={praktijk:'FysioTotaal'};
+  // v2: geen gedeelde standaardnaam. Iedere proefgebruiker begon als "FysioTotaal"
+  // en kwam zo in hetzelfde kaartenoverzicht (of, als die naam beveiligd was, kreeg
+  // geen QR). De therapeut vult de eigen praktijknaam in; v1 blijft FysioTotaal.
+  var SET={praktijk:window.FYSIPLAN_V2?'':'FysioTotaal'};
   try{SET=Object.assign(SET,JSON.parse(localStorage.getItem('fysiplan_settings')||'{}'));}catch(e){}
   function saveSettings(){try{localStorage.setItem('fysiplan_settings',JSON.stringify(SET));}catch(e){}}
   var CLIENTKEYS=['c_naam','c_leeftijd','c_hf','c_zone','c_opm','c_cave','c_doel'];
@@ -973,6 +979,7 @@ bridge2.jpg</div>
     document.querySelector('.brand').appendChild(_v2b);
     document.getElementById('sjabBtn').style.display='';
     document.getElementById('aiBtn').style.display='';
+    document.getElementById('eigenOefBtn').style.display='';
     // lege kaart: de hint wijst in v2 óók naar de kortste route — de
     // Sjablonen-knop bovenin (25 kant-en-klare protocollen, één klik en de
     // kaart staat vol). Bewust platte tekst: de lege montagetabel legt een
@@ -1238,6 +1245,10 @@ bridge2.jpg</div>
         inner="<span class='rm no-print' data-rm='"+n+"' title='verwijderen'>×</span>"+(im?imgRender(im,90):'');
         // v2: de instructievideo zit automatisch bij de oefening (bibliotheekvideo's)
         if(IS_V2&&o){
+          // eigen instructievideo voor deze kaart: opnemen met de telefoon of een YouTube-link
+          var heeftEigen=!!VIDS[normEx(o.naam)];
+          inner+="<span class='vid no-print"+(heeftEigen?" aan":"")+"' role='button' tabindex='0' data-evid='"+n+"' title='"+(heeftEigen?"Eigen video bij deze oefening — wijzigen of weghalen":"Eigen instructievideo toevoegen (opnemen met je telefoon of een YouTube-link)")+"' aria-label='Eigen video'>"+
+            "<svg width='10' height='10' viewBox='0 0 12 12' aria-hidden='true'><path d='M2 1.5l8 4.5-8 4.5z' fill='currentColor'/></svg></span>";
           if(o.video&&(o.video.eigen||o.video.stream||o.video.yt||o.video.catalog)){
             inner+="<span class='vauto no-print' title='Instructievideo wordt automatisch toegevoegd aan de digitale kaart'>"+
               "<svg width='7' height='7' viewBox='0 0 12 12' aria-hidden='true'><path d='M2 1.5l8 4.5-8 4.5z' fill='currentColor'/></svg>VIDEO</span>";
@@ -1363,7 +1374,7 @@ bridge2.jpg</div>
   function startOpname(doel,naam,cb){
     OPNAME_LAATSTE={doel:doel,naam:naam,cb:cb};
     var retry=document.getElementById('on_retry');if(retry)retry.style.display='none';
-    var hdrs={'content-type':'application/json'};
+    var hdrs=PJSON();
     if(doel==='oefening')Object.assign(hdrs,ADMIN_HDR);
     fetch('api/opname/start',{method:'POST',headers:hdrs,body:JSON.stringify({doel:doel,naam:naam})})
       .then(function(r){return r.json();})
@@ -1741,6 +1752,12 @@ bridge2.jpg</div>
   // v2: printopties — indeling, lettergrootte en de QR-code naar de digitale kaart
   document.getElementById('pr_cancel').addEventListener('click',function(){closeOv('ovPrint');});
   function verbergQr(){var b=document.getElementById('qrBlok');b.style.display='none';b.innerHTML='';}
+  // uitleg op de plek van de QR als die er (nog) niet op kan; print nooit mee
+  function toonQrHint(tekst){
+    var b=document.getElementById('qrBlok');
+    b.innerHTML="<small class='no-print' style='max-width:150px;line-height:1.35;color:var(--muted)'>"+esc(tekst)+"</small>";
+    b.style.display='flex';
+  }
   function toonQr(id){
     var url=location.origin+'/k/'+id;
     var b=document.getElementById('qrBlok');
@@ -1811,14 +1828,19 @@ bridge2.jpg</div>
     var naam=huidigeKaartNaam();
     var pr=(SET.praktijk||'').trim();
     if(!naam||!chosen.length){verbergQr();laatsteDeel='';return;}
-    if(!pr||QR_UIT_VOOR===naam.toLowerCase())return;
+    if(QR_UIT_VOOR===naam.toLowerCase())return;
+    if(!pr){toonQrHint('Vul de naam van je praktijk in (linksboven op de kaart), dan komt de QR-code er vanzelf op.');laatsteDeel='';return;}
     var c=currentCard(naam);c.praktijk=pr;
     var afdruk=JSON.stringify(c);
     if(afdruk===laatsteDeel)return;
     fetch('api/kaarten',{method:'POST',headers:PJSON(),body:JSON.stringify(c)})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
       .then(function(d){
-        if(!d.ok)return;
+        if(!d.ok){
+          // de naam is al beveiligd door een praktijk waar dit apparaat niet bij is ingelogd
+          if(d.login)toonQrHint('De praktijknaam \u201c'+pr+'\u201d is al beveiligd. Log in via Kaarten, of vul de naam van je eigen praktijk in.');
+          return;
+        }
         laatsteDeel=afdruk;
         ensureQr(function(){toonQr(d.id);});
       })
@@ -2002,8 +2024,15 @@ bridge2.jpg</div>
       try{localStorage.setItem('fysiplan_welkom_gezien','1');}catch(e){}
       setTimeout(function(){openOv('ovWelkom');},400);
     }
-    document.getElementById('welkom_zelf').addEventListener('click',function(){closeOv('ovWelkom');});
-    document.getElementById('welkom_sjab').addEventListener('click',function(){closeOv('ovWelkom');var z=document.getElementById('sj_zoek');if(z)z.value='';renderSjabLijst();openOv('ovSjab');});
+    // de praktijknaam uit het welkom meteen op de kaart zetten (zelfde pad als typen in het veld)
+    var welkomPraktijk=function(){
+      var wp=document.getElementById('welkom_praktijk'),el=document.getElementById('praktijk');
+      var nm=wp?wp.value.trim():'';
+      if(!nm||!el)return;
+      el.value=nm;el.dispatchEvent(new Event('input'));el.dispatchEvent(new Event('change'));
+    };
+    document.getElementById('welkom_zelf').addEventListener('click',function(){welkomPraktijk();closeOv('ovWelkom');});
+    document.getElementById('welkom_sjab').addEventListener('click',function(){welkomPraktijk();closeOv('ovWelkom');var z=document.getElementById('sj_zoek');if(z)z.value='';renderSjabLijst();openOv('ovSjab');});
   }
   document.getElementById('sj_close').addEventListener('click',function(){closeOv('ovSjab');});
   // een oefening-item in een sjabloon is óf een naam (string) óf een object met een
@@ -2430,7 +2459,7 @@ bridge2.jpg</div>
         if(!d.ok){toonPsMsg(d.fout||'Dat lukte niet. Controleer de herstelcode.');return;}
         setPrakSes(d.sessie);code.value='';nw.value='';
         document.getElementById('ps_herstel').style.display='none';
-        PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;rendPrakSlot();toonSrvKaarten();
+        PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;rendPrakSlot();toonSrvKaarten();reloadLibraryKeepingCard();
         toonHerstelcode(d.herstelcode,'Je wachtwoord is vernieuwd. Dit is je nieuwe herstelcode (de oude werkt niet meer); bewaar hem op een veilige plek:');
       })
       .catch(function(){knop.disabled=false;toonPsMsg('Geen verbinding.');});
@@ -2448,7 +2477,7 @@ bridge2.jpg</div>
         knop.disabled=false;
         if(!d.ok){toonPsMsg(d.fout||'Dat lukte niet.');return;}
         setPrakSes(d.sessie);ww.value='';document.getElementById('ps_msg').style.display='none';
-        PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;rendPrakSlot();toonSrvKaarten();
+        PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;rendPrakSlot();toonSrvKaarten();reloadLibraryKeepingCard();
         if(d.herstelcode)toonHerstelcode(d.herstelcode);
       })
       .catch(function(){knop.disabled=false;toonPsMsg('Geen verbinding.');});
@@ -2775,9 +2804,21 @@ bridge2.jpg</div>
     var el=document.getElementById('k_srv_lijst');
     el.innerHTML="<div class='hint'>Laden…</div>";
     fetch('api/kaarten?praktijk='+encodeURIComponent(pr),PGET())
-      .then(function(r){return r.ok?r.json():[];})
+      .then(function(r){
+        if(r.status===401)return r.json().then(function(d){return {geweigerd:true,beveilig:!!(d&&d.beveilig)};}).catch(function(){return {geweigerd:true};});
+        return r.ok?r.json():[];
+      })
       .then(function(l){
         var zoekEl=document.getElementById('k_srv_zoek');
+        // het overzicht toont cliëntnamen en scores: alleen voor een praktijk met wachtwoord
+        if(l&&l.geweigerd){
+          if(zoekEl)zoekEl.style.display='none';
+          var samW=document.getElementById('k_srv_sam');if(samW)samW.style.display='none';
+          el.innerHTML="<div class='hint'>"+(l.beveilig
+            ?"Je kaarten en de signalen van je pati\u00ebnten (pijn, seintjes, oefenweek) staan klaar. Zet hierboven een wachtwoord op je praktijk om ze te zien; zo kan niemand anders ze openen."
+            :"Log hierboven in om de kaarten van deze praktijk te zien.")+"</div>";
+          zetSeinBadge(0);return;
+        }
         if(!Array.isArray(l)||!l.length){if(zoekEl)zoekEl.style.display='none';el.innerHTML="<div class='hint'>Nog geen gedeelde kaarten voor deze praktijk.</div>";zetSeinBadge(0);return;}
         // archiveren: afgeronde kaarten uit het hoofdoverzicht, zonder dataverlies.
         // lArch = gearchiveerd, l = actueel (de standaardweergave).
@@ -3244,7 +3285,7 @@ bridge2.jpg</div>
           return nu-laatsteActiviteit(c)>90*dag&&!seintjeOpen(c)&&!(c.afspraak&&c.afspraak.t>nu-2*3600000);
         });
         var samEl=document.getElementById('k_srv_sam');
-        if(huidig.length>=2||lArch.length){
+        if(huidig.length||lArch.length){
           if(!samEl){
             samEl=document.createElement('div');samEl.id='k_srv_sam';samEl.className='no-print';
             samEl.style.cssText='display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0 0 8px;font-size:12px';
@@ -3330,7 +3371,16 @@ bridge2.jpg</div>
             var veld=function(v){v=(v==null?'':String(v));return '"'+v.replace(/"/g,'""')+'"';};
             var dd2=function(t){return t?new Date(t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}):'';};
             var kop=['Naam','Status','Aangemaakt','Behandelaar','Oefeningen','Laatste pijn','Eerste pijn','PSK-doel','Eerste PSK','Laatste PSK','Oefendoel p/w','Afspraak','Werknotitie','Kaartlink'];
-            var rijen=l.concat(lArch).map(function(c){
+            // altijd de verse stand van de server: een afspraak of PSK-doel die net in dit
+            // overzicht is bewaard, hoort er meteen in (de lijst l is van bij het openen)
+            var xbTekst=xb.textContent;xb.disabled=true;xb.textContent='Bezig…';
+            fetch('api/kaarten?praktijk='+encodeURIComponent(pr),PGET())
+              .then(function(r){return r.ok?r.json():null;})
+              .catch(function(){return null;})
+              .then(function(vers){
+            xb.disabled=false;xb.textContent=xbTekst;
+            var alle=Array.isArray(vers)?vers:l.concat(lArch);
+            var rijen=alle.map(function(c){
               var s=c.scores||[],ps=c.psk||[];
               return [c.naam,c.gearchiveerd?'afgerond':'actief',dd2(c.ts),c.behandelaar||'',c.aantal,
                 s.length?s[s.length-1].s:'',(typeof c.eersteMeting==='number')?c.eersteMeting:(s.length?s[0].s:''),
@@ -3343,6 +3393,7 @@ bridge2.jpg</div>
             a.download='fysiplan-kaarten-'+((SET.praktijk||'praktijk').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'praktijk')+'-'+new Date().toISOString().slice(0,10)+'.csv';
             document.body.appendChild(a);a.click();
             setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},800);
+              });
           };
         }else if(samEl)samEl.style.display='none';
         toon();
@@ -3661,9 +3712,174 @@ bridge2.jpg</div>
     var ml=e.target.closest('[data-mvl]'),mr=e.target.closest('[data-mvr]');
     if(ml){var i=+ml.dataset.mvl;if(i>0&&i<chosen.length){var t=chosen[i];chosen[i]=chosen[i-1];chosen[i-1]=t;render();}return;}
     if(mr){var j=+mr.dataset.mvr;if(j>=0&&j<chosen.length-1){var u=chosen[j];chosen[j]=chosen[j+1];chosen[j+1]=u;render();}return;}
+    var ev=e.target.closest('[data-evid]');
+    if(ev){var c=chosen[+ev.dataset.evid],eo=c&&OEF[c.o];if(eo)openEigenVideo(eo);return;}
     var rm=e.target.closest('.rm');if(!rm)return;
     var n=+rm.dataset.rm;if(n>=0&&n<chosen.length){chosen.splice(n,1);render();}
   });
+  // ---- v2: eigen oefeningen van de praktijk (naam, foto, uitleg) ----
+  // Staan op de server bij de beveiligde praktijk, zodat ze op elk apparaat van het
+  // team en op de digitale kaart van de patiënt verschijnen. Ze komen achteraan de
+  // bibliotheek in de groep "Eigen oefeningen".
+  var EIGEN_GROEP='Eigen oefeningen';
+  function voegPraktijkOefToe(){
+    var pr=(SET.praktijk||'').trim();
+    OEF=OEF.filter(function(o){return o.bron!=='praktijk';});
+    OEF.forEach(function(o,i){o.id=i;});
+    var klaar=function(lijst){
+      lijst.forEach(function(e){
+        var pad='/'+String(e.img||'').replace(/^\/+/,'');
+        OEF.push({id:OEF.length,naam:e.naam,groep:EIGEN_GROEP,s:3,h:12,bron:'praktijk',exerciseId:e.id,uitleg:e.uitleg||'',
+          starthouding:'',uitvoering:'',opmerking:'',imgs:[{type:'img',src:pad,lineSrc:pad,colorSrc:pad,label:'Plaatje'}]});
+      });
+      if(GROUPS){
+        GROUPS=GROUPS.filter(function(g){return g.g!==EIGEN_GROEP;});
+        if(lijst.length)GROUPS.push({g:EIGEN_GROEP,label:EIGEN_GROEP});
+        renderChips();
+      }
+      rebuildLookup();
+    };
+    if(!pr){klaar([]);return Promise.resolve();}
+    return fetch('api/praktijk/oefeningen?praktijk='+encodeURIComponent(pr),PGET())
+      .then(function(r){return r.ok?r.json():null;})
+      .then(function(d){klaar(d&&d.ok&&Array.isArray(d.oefeningen)?d.oefeningen:[]);})
+      .catch(function(){klaar([]);});
+  }
+  function openEigenOef(){
+    var ovO=document.getElementById('ovEigenOef');
+    if(!ovO){
+      ovO=document.createElement('div');ovO.className='ov';ovO.id='ovEigenOef';
+      ovO.innerHTML="<div class='modal'><h3>Eigen oefening toevoegen</h3>"+
+        "<div class='hint' id='eo_intro' style='margin:2px 0 12px;line-height:1.5'></div>"+
+        "<div id='eo_form'>"+
+        "<input id='eo_naam' maxlength='80' placeholder='Naam van de oefening' style='width:100%;margin-bottom:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit'/>"+
+        "<textarea id='eo_uitleg' maxlength='400' rows='3' placeholder='Uitleg voor de pati\u00ebnt: hoe voer je de oefening uit?' style='width:100%;margin-bottom:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;resize:vertical'></textarea>"+
+        "<label class='hint' style='display:block;margin-bottom:4px'>Foto (bij voorkeur begin- en eindhouding naast elkaar op een witte achtergrond)</label>"+
+        "<input id='eo_foto' type='file' accept='image/jpeg,image/png'/>"+
+        "<div id='eo_lijst' style='margin-top:12px'></div></div>"+
+        "<div class='acts' style='margin-top:14px'><button class='btn' id='eo_sluit' type='button'>Sluiten</button><button class='btn primary' id='eo_bewaar' type='button'>Toevoegen</button></div></div>";
+      document.body.appendChild(ovO);
+      document.getElementById('eo_sluit').addEventListener('click',function(){closeOv('ovEigenOef');});
+      document.getElementById('eo_lijst').addEventListener('click',function(e){
+        var w=e.target.closest('[data-eoweg]');if(!w)return;
+        if(!confirm('Deze eigen oefening verwijderen? Kaarten waar hij op staat tonen dan alleen nog de naam.'))return;
+        fetch('api/praktijk/oefeningen/verwijder',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:w.dataset.eoweg})})
+          .then(function(r){return r.json();})
+          .then(function(d){if(!d.ok){alert(d.fout||'Verwijderen is niet gelukt.');return;}reloadLibraryKeepingCard().then(toonEigenLijst);})
+          .catch(function(){alert('Verwijderen is niet gelukt: geen verbinding.');});
+      });
+      document.getElementById('eo_bewaar').addEventListener('click',function(){
+        var knop=this,naam=document.getElementById('eo_naam').value.trim(),f=document.getElementById('eo_foto').files[0];
+        if(!naam){alert('Geef de oefening een naam.');return;}
+        if(!f){alert('Kies een foto van de oefening.');return;}
+        var rd=new FileReader();
+        rd.onload=function(){
+          resizeDataUrl(rd.result,1200,function(durl){
+            if(!durl){alert('De foto kon niet worden gelezen.');return;}
+            knop.disabled=true;knop.textContent='Bezig…';
+            fetch('api/praktijk/oefeningen',{method:'POST',headers:PJSON(),
+              body:JSON.stringify({praktijk:SET.praktijk||'',naam:naam,uitleg:document.getElementById('eo_uitleg').value,img:durl})})
+              .then(function(r){return r.json();})
+              .then(function(d){
+                knop.disabled=false;knop.textContent='Toevoegen';
+                if(!d.ok){alert(d.fout||'Toevoegen is niet gelukt.');return;}
+                document.getElementById('eo_naam').value='';document.getElementById('eo_uitleg').value='';document.getElementById('eo_foto').value='';
+                reloadLibraryKeepingCard().then(function(){
+                  // meteen op de kaart zetten: daarvoor voegde de therapeut hem toe
+                  var nieuw=OEF.filter(function(o){return o.bron==='praktijk'&&o.naam===naam;})[0];
+                  if(nieuw&&chosen.length<12&&!chosen.some(function(c){return c.o===nieuw.id;}))toggleExercise(nieuw.id);
+                  toonEigenLijst();
+                });
+              })
+              .catch(function(){knop.disabled=false;knop.textContent='Toevoegen';alert('Toevoegen is niet gelukt: geen verbinding.');});
+          });
+        };
+        rd.readAsDataURL(f);
+      });
+    }
+    var pr=(SET.praktijk||'').trim();
+    var form=document.getElementById('eo_form'),bew=document.getElementById('eo_bewaar'),intro=document.getElementById('eo_intro');
+    form.style.display='none';bew.style.display='none';
+    intro.textContent='Even kijken…';
+    openOv('ovEigenOef');
+    if(!pr){intro.textContent='Vul eerst de naam van je praktijk in, linksboven op de kaart.';return;}
+    fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET())
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(!d.geclaimd||!d.ingelogd){
+          intro.textContent='Eigen oefeningen worden bij je praktijk op de server bewaard, zodat je hele team en je pati\u00ebnten ze zien. Zet daarom eerst een wachtwoord op je praktijk (of log in) onder Kaarten.';
+          return;
+        }
+        intro.textContent='De oefening komt in je bibliotheek onder \u201c'+EIGEN_GROEP+'\u201d, voor iedereen van je praktijk, en met foto en uitleg op de digitale kaart.';
+        form.style.display='';bew.style.display='';toonEigenLijst();
+      })
+      .catch(function(){intro.textContent='Geen verbinding met de server.';});
+  }
+  function toonEigenLijst(){
+    var el=document.getElementById('eo_lijst');if(!el)return;
+    var eigen=OEF.filter(function(o){return o.bron==='praktijk';});
+    el.innerHTML=eigen.length?"<div class='hint' style='font-weight:600;margin-bottom:4px'>Jullie eigen oefeningen</div>"+eigen.map(function(o){
+      return "<div style='display:flex;align-items:center;gap:8px;padding:4px 0;border-top:1px solid var(--line)'><span style='flex:1'>"+esc(o.naam)+"</span><button class='btn' type='button' data-eoweg='"+esc(o.exerciseId)+"' aria-label='verwijderen'>&times;</button></div>";
+    }).join(''):'';
+  }
+  document.getElementById('eigenOefBtn').addEventListener('click',openEigenOef);
+
+  // ---- v2: eigen instructievideo per oefening op deze kaart ----
+  // Opnemen gaat met de telefoon (QR naar de opnamepagina) en kan alleen voor een
+  // beveiligde, ingelogde praktijk: anders kon iedereen video's uploaden. Een
+  // YouTube-link plakken kan altijd. De keuze reist mee naar de digitale kaart.
+  var EV_OEF=null;
+  function ytUitLink(t){
+    var m=String(t||'').trim().match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/))([A-Za-z0-9_-]{11})/);
+    if(m)return m[1];
+    return /^[A-Za-z0-9_-]{11}$/.test(String(t||'').trim())?String(t).trim():null;
+  }
+  function openEigenVideo(o){
+    EV_OEF=o;
+    var ovE=document.getElementById('ovEigenVideo');
+    if(!ovE){
+      ovE=document.createElement('div');ovE.className='ov';ovE.id='ovEigenVideo';
+      ovE.innerHTML="<div class='modal'><h3 id='ev_titel'>Eigen instructievideo</h3>"+
+        "<div class='hint' style='margin:2px 0 12px;line-height:1.5'>De video komt bij deze oefening op de digitale kaart van je pati\u00ebnt, achter de QR-code.</div>"+
+        "<div id='ev_status' class='hint' style='margin:0 0 10px;font-weight:600'></div>"+
+        "<button class='btn primary' id='ev_opname' type='button' style='width:100%;margin-bottom:10px'>Neem op met je telefoon</button>"+
+        "<div style='display:flex;gap:6px'><input id='ev_yt' placeholder='of plak een YouTube-link' style='flex:1;min-width:0;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font:inherit'/>"+
+        "<button class='btn' id='ev_yt_ok' type='button'>Koppel</button></div>"+
+        "<div class='acts' style='margin-top:14px'><button class='btn' id='ev_weg' type='button'>Video weghalen</button><button class='btn' id='ev_sluit' type='button'>Sluiten</button></div></div>";
+      document.body.appendChild(ovE);
+      var zet=function(waarde){
+        var k=normEx(EV_OEF.naam);
+        if(waarde)VIDS[k]=waarde;else delete VIDS[k];
+        render();
+      };
+      document.getElementById('ev_sluit').addEventListener('click',function(){closeOv('ovEigenVideo');});
+      document.getElementById('ev_weg').addEventListener('click',function(){zet(null);closeOv('ovEigenVideo');});
+      document.getElementById('ev_yt_ok').addEventListener('click',function(){
+        var id=ytUitLink(document.getElementById('ev_yt').value);
+        if(!id){alert('Dat is geen YouTube-link. Plak de link van de video, bijvoorbeeld https://youtu.be/…');return;}
+        zet('yt:'+id);closeOv('ovEigenVideo');
+      });
+      document.getElementById('ev_opname').addEventListener('click',function(){
+        var pr=(SET.praktijk||'').trim(),naam=EV_OEF.naam;
+        var nietKlaar=function(){alert('Een eigen video opnemen kan zodra je praktijk een wachtwoord heeft en je bent ingelogd. Dat regel je onder Kaarten. Een YouTube-link koppelen kan nu al.');};
+        if(!pr){nietKlaar();return;}
+        fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET())
+          .then(function(r){return r.json();})
+          .then(function(d){
+            if(!d.geclaimd||!d.ingelogd){nietKlaar();return;}
+            closeOv('ovEigenVideo');
+            startOpname('kaart',naam,function(pad){VIDS[normEx(naam)]=pad;render();});
+          })
+          .catch(function(){alert('Geen verbinding met de server.');});
+      });
+    }
+    document.getElementById('ev_titel').textContent='Eigen instructievideo \u2014 '+o.naam;
+    var huidig=VIDS[normEx(o.naam)]||'';
+    document.getElementById('ev_status').textContent=huidig?(/^yt:/.test(huidig)?'Nu gekoppeld: YouTube-video':'Nu gekoppeld: je eigen opname'):'';
+    document.getElementById('ev_yt').value=/^yt:/.test(huidig)?'https://youtu.be/'+huidig.slice(3):'';
+    document.getElementById('ev_weg').style.display=huidig?'':'none';
+    openOv('ovEigenVideo');
+  }
   // add exercise modal
   var ov=document.getElementById('ov'),pendingImg=null;
   // in beheer is de categorie een vrij veld: bestaande naam = die categorie (ook bij ander
@@ -3771,7 +3987,7 @@ bridge2.jpg</div>
 
   // invulbare A4-velden: praktijk + adresblok, en het monitoring-grid
   var elPraktijk=document.getElementById('praktijk');
-  if(elPraktijk){elPraktijk.value=SET.praktijk;elPraktijk.addEventListener('input',function(){SET.praktijk=elPraktijk.value;saveSettings();});}
+  if(elPraktijk){elPraktijk.value=SET.praktijk;elPraktijk.addEventListener('input',function(){SET.praktijk=elPraktijk.value;saveSettings();if(IS_V2)planAutoDeel();});}
   Object.keys(PRAKKEYS).forEach(function(id){
     var el=document.getElementById(id);
     if(el)el.addEventListener('input',function(){SET[PRAKKEYS[id]]=el.value;saveSettings();});
@@ -3863,6 +4079,7 @@ bridge2.jpg</div>
       .catch(function(){return [];}):Promise.resolve([]);
     return Promise.all([bibliotheek,categorieen])
       .then(function(data){if(data[0]&&data[0].length){buildServerLibrary(data[0],data[1]);}else{buildDefault();}})
+      .then(function(){if(IS_V2&&SERVERLIB)return voegPraktijkOefToe();})
       .catch(function(){buildDefault();});
   }
   function buildDefault(){

@@ -806,6 +806,15 @@
     document.getElementById('vraagknop').textContent=trq('knop');
   }
   function vt(s){var m=VERT[TAAL];return (m&&m[s])||s;}
+  // eigen oefeningen van de praktijk staan niet in de bibliotheek; de kaart levert
+  // ze zelf mee (naam, foto, uitleg) en ze gedragen zich verder als elke oefening
+  function metEigen(lib,kaart){
+    var eigen=((kaart&&kaart.eigenOef)||[]).map(function(e){
+      var pad='/'+String(e.img||'').replace(/^\/+/,'');
+      return {naam:e.naam,img:pad,kaartImg:pad,uitleg:e.uitleg||'',exerciseId:e.id};
+    });
+    return (lib||[]).concat(eigen);
+  }
   function cellPrefix(x){return x&&x.id?'x'+x.id:'n'+normEx(x&&x.n);}
   function dagStr(t){var d=new Date(t);return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
   function staafKleur(s){return s<=3?'#3e8e5a':(s<=6?'#d98a2b':'#c94f36');}
@@ -862,7 +871,7 @@
   // ---- de kaart zelf tekenen (oefeningen, schema, meting) in de gekozen taal ----
   function tekenKaart(){
     var kaart=K.kaart,praktijk=K.praktijk,lib=K.lib;
-    var byNorm={},byStable={};(lib||[]).forEach(function(o){byNorm[normEx(o.naam)]=o;if(o.exerciseId)byStable[o.exerciseId]=o;});
+    var byNorm={},byStable={};metEigen(lib,kaart).forEach(function(o){byNorm[normEx(o.naam)]=o;if(o.exerciseId)byStable[o.exerciseId]=o;});
     document.title=tr('eyebrow')+' — '+(praktijk.praktijk||'Fysiplan');
     if(praktijk.logo){var lg=document.getElementById('logo');lg.src='/'+praktijk.logo;lg.style.display='block';}
     document.getElementById('prak').textContent=praktijk.praktijk||kaart.praktijk;
@@ -903,10 +912,13 @@
         }
       }
       var persoonlijk=vids[nk]||null;
+      // een per kaart geplakte YouTube-link ("yt:<id>") speelt als de gewone YouTube-knop
+      var persoonlijkYt=(persoonlijk&&/^yt:/.test(persoonlijk))?persoonlijk.slice(3):null;
+      if(persoonlijkYt)persoonlijk=null;
       var praktijkEigen=(!persoonlijk&&o&&o.video&&o.video.eigen)||null;
       var eigen=persoonlijk||praktijkEigen;
-      var praktijkStream=(!eigen&&o&&o.video&&o.video.stream)||null;
-      var yt=(!eigen&&!praktijkStream&&o&&o.video&&o.video.yt)||null;
+      var praktijkStream=(!eigen&&!persoonlijkYt&&o&&o.video&&o.video.stream)||null;
+      var yt=persoonlijkYt||(!eigen&&!praktijkStream&&o&&o.video&&o.video.yt)||null;
       var catalogus=(!eigen&&!praktijkStream&&!yt&&o&&o.video&&o.video.catalog)||null;
       var stream=(praktijkStream&&praktijkStream.iframe)||(catalogus&&catalogus.iframe);
       var aiVideo=praktijkStream||catalogus;
@@ -1161,6 +1173,10 @@
     var delen=[K.praktijk.praktijk||K.kaart.praktijk||'',tr('veilig')];
     var cl=K.kaart.client||{};
     if(cl.c_doel)delen.push(tr('doel')+': '+vt(cl.c_doel));
+    // de uitvoeringsuitleg per oefening hoort erbij: wie slecht leest, moet ook
+    // horen hóé de oefening gaat, niet alleen hoe hij heet
+    var uitlegVan={},uitlegStabiel={};
+    metEigen(K.lib,K.kaart).forEach(function(o){if(o&&o.uitleg){uitlegVan[normEx(o.naam)]=o.uitleg;if(o.exerciseId)uitlegStabiel[o.exerciseId]=o.uitleg;}});
     (K.kaart.chosen||[]).forEach(function(x,idx){
       var zin=tr('oefening')+' '+(idx+1)+': '+vt(x.n);
       var key=cellPrefix(x)+'.'+(x.i||0);
@@ -1171,9 +1187,12 @@
           zin+='. '+d2.join(', ');break;
         }
       }
+      var uitleg=(x.id&&uitlegStabiel[x.id])||uitlegVan[normEx(x.n)];
+      // een niet-vertaalde Nederlandse uitleg niet in een andere taal voorlezen
+      if(uitleg&&(TAAL==='nl'||vt(uitleg)!==uitleg))zin+='. '+vt(uitleg).replace(/[.\s]+$/,'');
       delen.push(zin);
     });
-    var u=new SpeechSynthesisUtterance(delen.join('. '));
+    var u=new SpeechSynthesisUtterance(delen.map(function(t){return String(t).replace(/[.\s]+$/,'');}).join('. ')+'.');
     u.lang=SPRAAK[TAAL]||'nl-NL';
     u.rate=0.95;
     u.onend=function(){stopLezen();};
@@ -1282,6 +1301,7 @@
     w.hidden=true;w.classList.remove('tweede');w.innerHTML='';
     demo.c1=demo.c2=null;
     document.getElementById('lbimg').style.display='';
+    var luS=document.getElementById('lbuitleg');if(luS.innerHTML)luS.hidden=false;
     var k=document.getElementById('lbdemoKnop');
     k.textContent=tr('demo');k.setAttribute('aria-pressed','false');
     document.getElementById('lbgeluid').hidden=true;
@@ -1403,6 +1423,8 @@
     beeld.setAttribute('aria-label',document.getElementById('lbnaam').textContent);
     wrap.hidden=false;
     img.style.display='none';
+    // de demonstratie heeft zijn eigen uitleg; de losse uitleg eronder zou dubbel staan
+    var luD=document.getElementById('lbuitleg');if(luD.innerHTML)luD.hidden=true;
     knop.textContent=tr('demoUit');knop.setAttribute('aria-pressed','true');
     if(window.speechSynthesis){document.getElementById('lbgeluid').hidden=false;demoGeluidKnop();}
     demoZeg(demo.introTekst+' '+tr('houding1'));
@@ -1466,6 +1488,14 @@
           document.getElementById('lbimg').style.maxHeight='';
         }
         lb.classList.add('open');
+        // de beweging voordoen zodra de foto geladen is: elk oefenbeeld bevat de
+        // begin- en eindhouding; lukt het splitsen niet, dan blijft de foto staan
+        var lbi=document.getElementById('lbimg');
+        var voordoen=function(){
+          if(!lb.classList.contains('open')||lbi.src!==foto.src)return;
+          if(demoSplitsing(lbi)){kd.hidden=false;demoStart();}
+        };
+        if(lbi.complete&&lbi.naturalWidth)voordoen();else lbi.addEventListener('load',voordoen,{once:true});
         return;
       }
       var b=e.target.closest('.vbtn');if(!b)return;

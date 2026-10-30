@@ -176,6 +176,17 @@ async function eisPraktijk(req, res, pk) {
   await sendJson(res, 401, { ok: false, fout: "Log eerst in bij deze praktijk.", login: true });
   return true;
 }
+// strenger dan eisPraktijk, voor de routes die het overzicht van een praktijk
+// prijsgeven (cliëntnamen, scores) of op naam kaarten weghalen: zonder wachtwoord
+// op de praktijk kon iedereen die de praktijknaam kende alles opvragen. De v1-app
+// (eigen accountlaag, altijd ingelogd) en het beheer blijven zoals ze waren.
+async function eisBeveiligdePraktijk(req, res, pk) {
+  if (praktijkGeclaimd(pk)) return eisPraktijk(req, res, pk);
+  if (isAdmin(req) || v1SessieVan(req)) return false;
+  await sendJson(res, 401, { ok: false, beveilig: true,
+    fout: "Zet eerst een wachtwoord op je praktijk; daarna zie je hier je kaarten." });
+  return true;
+}
 function auditLog(pk, actie, req) {
   praktijkAudit.unshift({ t: new Date().toISOString(), praktijk: pk, actie, ip: maskIp(clientIp(req)) });
   praktijkAudit = praktijkAudit.slice(0, 500);
@@ -397,6 +408,17 @@ function weekFeiten(pk) {
 const praktijkSjablonenPath = join(dataDir, "praktijk-sjablonen.json");
 let praktijkSjablonen = {}; // { pkLower: [ { naam, oefeningen:[{n,s?,h?,w?}], t } ] }
 try { praktijkSjablonen = JSON.parse(await readFile(praktijkSjablonenPath, "utf8")); } catch {}
+
+// eigen oefeningen van de praktijk (v2): naam, foto en uitleg, alleen zichtbaar
+// voor de ingelogde praktijk en op de kaarten waar ze op staan
+const praktijkOefeningenPath = join(dataDir, "praktijk-oefeningen.json");
+let praktijkOefeningen = {}; // { pkLower: [ { id:"po_<12 hex>", naam, img:"uploads/oef-…", uitleg, t } ] }
+try { praktijkOefeningen = JSON.parse(await readFile(praktijkOefeningenPath, "utf8")); } catch {}
+const PRAKTIJK_OEF_ID = /^po_[a-f0-9]{12}$/;
+function praktijkOefeningVoorKaart(pk, id) {
+  const o = (praktijkOefeningen[pk] || []).find((x) => x.id === id);
+  return o ? { id: o.id, naam: o.naam, img: o.img, uitleg: o.uitleg || "" } : null;
+}
 
 const oprichtersPath = join(dataDir, "oprichters.json");
 let oprichters = { vergeven: 0 };
@@ -1833,7 +1855,7 @@ async function afhandelen(request, response) {
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const pk = String(q.get("praktijk") || "").trim().toLowerCase();
     if (!pk) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam op." }); return; }
-    if (await eisPraktijk(request, response, pk)) return;
+    if (await eisBeveiligdePraktijk(request, response, pk)) return;
     const feiten = weekFeiten(pk);
     if (!feiten.length) { await sendJson(response, 200, { ok: true, brief: "Er zijn nog geen gedeelde kaarten voor deze praktijk; zodra er kaarten met pijnscores of oefenvinkjes zijn, staat hier elke week een korte samenvatting." }); return; }
     const dag = vandaagKey();
@@ -1863,6 +1885,64 @@ async function afhandelen(request, response) {
 
   // ---- sjablonen van de praktijk (v2): gedeelde protocollen voor het hele team ----
   // lezen: alleen de ingelogde praktijk (de protocollen zijn praktijk-eigen werk)
+  // eigen oefeningen van de praktijk: lijst (alleen de ingelogde praktijk)
+  if (urlPath === "/api/praktijk/oefeningen" && request.method === "GET") {
+    if (leesLimiet(request, response)) return;
+    const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    const pk = String(q.get("praktijk") || "").trim().toLowerCase();
+    if (await eisBeveiligdePraktijk(request, response, pk)) return;
+    await sendJson(response, 200, { ok: true, oefeningen: praktijkOefeningen[pk] || [] });
+    return;
+  }
+  // eigen oefening toevoegen: naam, foto (JPEG/PNG, max 600 kB) en uitleg
+  if (urlPath === "/api/praktijk/oefeningen" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request, 1024 * 1024));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
+      const naam = cleanName(b.naam, 80);
+      if (!naam) { await sendJson(response, 400, { ok: false, fout: "Geef de oefening een naam." }); return; }
+      const uitleg = String(b.uitleg || "").replace(/\s+/g, " ").trim().slice(0, 400);
+      const m = String(b.img || "").match(/^data:image\/(jpeg|png);base64,([A-Za-z0-9+/=]+)$/);
+      if (!m) { await sendJson(response, 400, { ok: false, fout: "Kies een foto (JPEG of PNG)." }); return; }
+      const buf = Buffer.from(m[2], "base64");
+      if (buf.length < 100 || buf.length > 600 * 1024) { await sendJson(response, 400, { ok: false, fout: "De foto is te groot (max. 600 kB)." }); return; }
+      if (!echteAfbeelding(buf, m[1])) { await sendJson(response, 400, { ok: false, fout: "Dit bestand is geen geldige JPEG of PNG." }); return; }
+      const lijst = (praktijkOefeningen[pk] = praktijkOefeningen[pk] || []);
+      if (lijst.length >= 200) { await sendJson(response, 400, { ok: false, fout: "Maximum van 200 eigen oefeningen bereikt." }); return; }
+      if (lijst.some((x) => x.naam.toLowerCase() === naam.toLowerCase())) { await sendJson(response, 409, { ok: false, fout: "Er is al een eigen oefening met deze naam." }); return; }
+      await mkdir(uploadsDir, { recursive: true });
+      const id = "po_" + randomBytes(6).toString("hex");
+      const file = "oef-" + id.slice(3) + (m[1] === "png" ? ".png" : ".jpg");
+      await writeFile(join(uploadsDir, file), buf);
+      lijst.push({ id, naam, img: "uploads/" + file, uitleg, t: Date.now() });
+      await saveJson(praktijkOefeningenPath, praktijkOefeningen);
+      auditLog(pk, "oefening-toegevoegd", request);
+      await sendJson(response, 200, { ok: true, oefeningen: lijst });
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+    return;
+  }
+  // eigen oefening weghalen; kaarten die hem gebruiken tonen dan alleen nog de naam
+  if (urlPath === "/api/praktijk/oefeningen/verwijder" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
+      const lijst = praktijkOefeningen[pk] || [];
+      const idx = lijst.findIndex((x) => x.id === String(b.id || ""));
+      if (idx === -1) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden." }); return; }
+      const [weg] = lijst.splice(idx, 1);
+      await saveJson(praktijkOefeningenPath, praktijkOefeningen);
+      if (/^uploads\/oef-[a-f0-9]{12}\.(jpg|png)$/.test(weg.img)) { try { await unlink(join(dataDir, weg.img)); } catch {} }
+      await sendJson(response, 200, { ok: true, oefeningen: lijst });
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+    return;
+  }
+
   if (urlPath === "/api/praktijk/sjablonen" && request.method === "GET") {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
@@ -2114,7 +2194,14 @@ async function afhandelen(request, response) {
     // de praktijkenlijst voedt de keuzelijst in de app; de leeslimiet houdt normaal
     // gebruik ongemoeid maar maakt het massaal afschrapen van contactgegevens traag
     if (leesLimiet(request, response)) return;
-    const list = Object.values(praktijken).map(publiekProfiel).sort((a, b) => a.praktijk.localeCompare(b.praktijk, "nl"));
+    // de volledige lijst verklapte wie Fysiplan gebruikt (en welke naam je moest
+    // intikken om een onbeveiligd overzicht te zien); alleen v1 en beheer krijgen
+    // hem nog, een ingelogde v2-praktijk ziet alleen het eigen profiel
+    const eigen = praktijkSessieVan(request);
+    const alles = isAdmin(request) || !!v1SessieVan(request);
+    const list = Object.entries(praktijken)
+      .filter(([k, p]) => alles || (eigen && (k === eigen || String(p.praktijk || "").toLowerCase() === eigen)))
+      .map(([, p]) => publiekProfiel(p)).sort((a, b) => a.praktijk.localeCompare(b.praktijk, "nl"));
     await sendJson(response, 200, list);
     return;
   }
@@ -2389,10 +2476,14 @@ async function afhandelen(request, response) {
     // sinds de eigen opname uit de app is verdwenen start alleen de beheerder nog
     // opnames; zonder deze grendel kan iedereen uploadtokens munten en de schijf
     // volschrijven met video's van 60 MB per stuk
-    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
+    // de beheerder neemt bibliotheekvideo's op; een ingelogde, beveiligde praktijk
+    // mag een eigen instructievideo voor een oefening op de eigen kaart opnemen.
+    // Zonder die grendel kon iedereen uploadtokens munten.
+    const praktijkSessie = praktijkSessieVan(request);
+    if (!isAdmin(request) && !(praktijkSessie && praktijkGeclaimd(praktijkSessie))) { await denied(request, response, urlPath); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const doel = b.doel === "oefening" ? "oefening" : "kaart";
+      const doel = b.doel === "oefening" && isAdmin(request) ? "oefening" : "kaart";
       if (doel === "oefening") {
         const naam = String(b.naam || "").trim();
         const manifest = await buildManifest();
@@ -2537,7 +2628,7 @@ async function afhandelen(request, response) {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const pk = String(q.get("praktijk") || "").trim().toLowerCase();
-    if (await eisPraktijk(request, response, pk)) return;
+    if (await eisBeveiligdePraktijk(request, response, pk)) return;
     const map = kaarten[pk] || {};
     const list = Object.values(map)
       .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, aantal: (k.chosen || []).length,
@@ -2599,7 +2690,7 @@ async function afhandelen(request, response) {
       }
       const chosen = (Array.isArray(b.chosen) ? b.chosen : []).slice(0, 12)
         .map((x) => ({ n: sanStr(x && x.n, 80),
-          id: /^fp_[a-f0-9]{16}$/.test(String(x && x.id || "")) ? String(x.id) : "",
+          id: (/^fp_[a-f0-9]{16}$/.test(String(x && x.id || "")) || PRAKTIJK_OEF_ID.test(String(x && x.id || ""))) ? String(x.id) : "",
           i: Math.max(0, Math.min(9, Number(x && x.i) || 0)) }))
         .filter((x) => x.n);
       // persoonlijke video's per oefening (alleen paden van eigen opnames toegestaan)
@@ -2607,7 +2698,8 @@ async function afhandelen(request, response) {
       if (b.vids && typeof b.vids === "object") {
         for (const k of Object.keys(b.vids).slice(0, 12)) {
           const v = String(b.vids[k] || "");
-          if (/^uploads\/videos\/v-[a-f0-9]+\.(mp4|webm)$/.test(v)) vids[sanStr(k, 80)] = v;
+          // eigen opname, of een YouTube-link die de therapeut per oefening plakt
+          if (/^uploads\/videos\/v-[a-f0-9]+\.(mp4|webm)$/.test(v) || /^yt:[A-Za-z0-9_-]{11}$/.test(v)) vids[sanStr(k, 80)] = v;
         }
       }
       const oudeVids = map[kk] ? Object.values(map[kk].vids || {}) : [];
@@ -2656,7 +2748,7 @@ async function afhandelen(request, response) {
       const b = JSON.parse(await readBody(request));
       const pk = String(b.praktijk || "").trim().toLowerCase();
       const kk = String(b.naam || "").trim().toLowerCase();
-      if (await eisPraktijk(request, response, pk)) return;
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
       // prototype-sleutels zouden via overerving de bestaan-check passeren
       // (kaarten[pk]['constructor'] is truthy) en een lege 200 opleveren;
       // en de misser-rem hoort hier net als op elke andere kaartroute, anders
@@ -2699,6 +2791,11 @@ async function afhandelen(request, response) {
     const patientKaart = {};
     for (const veld of PATIENT_VELDEN) if (veld in found) patientKaart[veld] = found[veld];
     // ai-vlag: de kaartpagina toont de vraaghulp alleen als de server een AI-sleutel heeft
+    // eigen oefeningen van de praktijk staan niet in de openbare bibliotheek: naam,
+    // foto en uitleg reizen met de kaart mee (alleen die op déze kaart)
+    const eigenOef = (found.chosen || []).filter((x) => PRAKTIJK_OEF_ID.test(String(x.id || "")))
+      .map((x) => praktijkOefeningVoorKaart(String(found.praktijk || "").toLowerCase(), x.id)).filter(Boolean);
+    if (eigenOef.length) patientKaart.eigenOef = eigenOef;
     await sendJson(response, 200, { ok: true, kaart: patientKaart, praktijk: prof, ai: !!AI_KEY });
     return;
   }
