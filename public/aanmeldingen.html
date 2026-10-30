@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Proefaanmeldingen — Fysiplan</title>
+<style>
+body{font:15px/1.5 system-ui,sans-serif;background:#eef1f5;color:#344054;margin:0;padding:24px}
+main{max-width:1100px;margin:auto;background:white;padding:24px;border-radius:12px}
+a{color:#1f6feb}h1{color:#101828;margin:8px 0 4px}
+.kop{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.kop .ruimte{flex:1}
+table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+th{text-align:left;color:#667085;font-weight:600;padding:8px;border-bottom:1px solid #e4e7ec;white-space:nowrap}
+td{padding:10px 8px;border-bottom:1px solid #f2f4f7;vertical-align:top}
+td small{color:#667085}
+.st{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:600}
+.st.actief{background:#e8f2dd;color:#0a6b23}.st.verlopen{background:#fbeacf;color:#9a5000}.st.klant{background:#eaf1fb;color:#1f4fa3}
+.bel{background:#fdecea;color:#b42318}
+button,.knop{border:1px solid #d0d5dd;background:white;color:#344054;border-radius:8px;padding:6px 10px;cursor:pointer;font:inherit;font-size:13px;text-decoration:none;white-space:nowrap}
+button:hover,.knop:hover{border-color:#1f6feb;color:#1f6feb}
+.acties{display:flex;gap:6px;flex-wrap:wrap}
+#status{min-height:1.5em;color:#667085}
+@media (max-width:760px){thead{display:none}tr{display:block;border-bottom:1px solid #e4e7ec;padding:8px 0}td{display:block;border:0;padding:3px 0}}
+</style></head><body><main>
+<div class="kop"><a href="/dashboard88">← Dashboard</a><span class="ruimte"></span><a class="knop" href="/api/aanmeldingen?csv=1">Download CSV</a></div>
+<h1>Proefaanmeldingen</h1>
+<p>Iedereen die de gratis proef startte. Persoonsgegevens: alleen gebruiken om over de proef contact op te nemen. Wie geen klant wordt, wordt automatisch <span id="bewaar">90</span> dagen na het einde van de proef gewist.</p>
+<p id="status" role="status" aria-live="polite"></p>
+<table><thead><tr><th>Contactpersoon</th><th>Praktijk</th><th>Contact</th><th>Proef</th><th>Kaarten</th><th></th></tr></thead><tbody id="lijst"></tbody></table>
+</main>
+<script>
+const status=document.getElementById('status'),lijst=document.getElementById('lijst');
+const datum=(ms)=>new Date(ms).toLocaleDateString('nl-NL',{day:'numeric',month:'short'});
+function cel(tekst,klein){const td=document.createElement('td');td.textContent=tekst;if(klein){const s=document.createElement('small');s.textContent=klein;td.append(document.createElement('br'),s);}return td;}
+function toon(d){
+  document.getElementById('bewaar').textContent=d.bewaarDagen;
+  lijst.replaceChildren();
+  for(const a of d.aanmeldingen){
+    const tr=document.createElement('tr');
+    tr.append(cel(a.naam),cel(a.praktijk||'—'));
+    const c=document.createElement('td');
+    const m=document.createElement('a');m.href='mailto:'+a.email;m.textContent=a.email;
+    const t=document.createElement('a');t.href='tel:'+a.tel.replace(/\s/g,'');t.textContent=a.tel;
+    c.append(m,document.createElement('br'),t);tr.append(c);
+    const p=document.createElement('td');
+    const st=document.createElement('span');st.className='st '+a.status;
+    st.textContent=a.status==='actief'?'nog '+a.dagenOver+' d':a.status;p.append(st);
+    if(a.doorgaan&&a.status!=='klant'){const b=document.createElement('span');b.className='st bel';b.textContent='wil doorgaan';p.append(' ',b);}
+    const s=document.createElement('small');s.textContent=' '+datum(a.gestart)+' – '+datum(a.verloopt);p.append(document.createElement('br'),s);
+    tr.append(p,cel(String(a.kaarten)));
+    const act=document.createElement('td');const rij=document.createElement('div');rij.className='acties';
+    const knop=(tekst,actie,vraag)=>{const k=document.createElement('button');k.type='button';k.textContent=tekst;k.onclick=()=>doe(a,actie,vraag);rij.append(k);};
+    knop(a.status==='klant'?'Geen klant':'Klant geworden','klant');
+    if(a.status!=='klant')knop('+7 dagen','verleng');
+    knop('Wissen','wis','Alle gegevens van '+a.naam+' definitief wissen?');
+    act.append(rij);tr.append(act);lijst.append(tr);
+  }
+  const actief=d.aanmeldingen.filter(a=>a.status==='actief').length;
+  status.textContent=d.aanmeldingen.length?d.aanmeldingen.length+' aanmeldingen, waarvan '+actief+' actief.':'Nog geen aanmeldingen.';
+}
+async function laad(){
+  status.textContent='Laden…';
+  try{const r=await fetch('/api/aanmeldingen',{cache:'no-store'}),d=await r.json();if(!r.ok)throw Error(d.fout||'Log in met een beheerdersaccount.');toon(d);}
+  catch(e){status.textContent=e.message;}
+}
+async function doe(a,actie,vraag){
+  if(vraag&&!confirm(vraag))return;
+  try{
+    const r=await fetch('/api/aanmeldingen',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:a.id,actie})}),d=await r.json();
+    if(!r.ok)throw Error(d.fout||'Opslaan mislukt.');toon(d);
+  }catch(e){status.textContent=e.message;}
+}
+laad();
+</script></body></html>

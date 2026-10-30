@@ -91,6 +91,10 @@
     </div>
   </div>
 
+  <h2>Gratis proef</h2>
+  <div class="tegels" id="proefTegels"></div>
+  <p class="chartsub" style="margin-top:8px">Namen en telefoonnummers staan op <a href="/aanmeldingen">/aanmeldingen</a> (alleen met een beheerdersaccount).</p>
+
   <h2>Bibliotheek</h2>
   <div class="tegels" id="bibTegels"></div>
 
@@ -177,6 +181,12 @@
         barChart(document.getElementById('chart1'),d.dagen,[{k:'bezoek',l:'bezoeken',c:'--serie1'}]);
         document.getElementById('sub2').textContent='laatste 14 dagen · opgeslagen '+d.dagen.reduce(function(s,x){return s+x.kaartOpgeslagen;},0)+' · geprint '+d.dagen.reduce(function(s,x){return s+x.print;},0);
         barChart(document.getElementById('chart2'),d.dagen,[{k:'kaartOpgeslagen',l:'opgeslagen',c:'--serie1'},{k:'print',l:'geprint',c:'--serie2'}]);
+        var pf=d.proef||{totaal:0,actief:0,verlopen:0,klant:0,laatste24u:0,doorgaan:0};
+        document.getElementById('proefTegels').innerHTML=
+          tegel(pf.actief,'proeven actief','laatste 24 uur: '+pf.laatste24u+' nieuw')+
+          tegel(pf.doorgaan,'willen doorgaan','bellen!')+
+          tegel(pf.verlopen,'proeven verlopen')+
+          tegel(pf.klant,'klant geworden','van '+pf.totaal+' aanmeldingen');
         var b=d.bibliotheek;
         document.getElementById('bibTegels').innerHTML=
           tegel(b.oefeningen,'oefeningen','in '+b.categorieen+' categorieën')+
