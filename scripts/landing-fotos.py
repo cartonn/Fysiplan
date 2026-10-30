@@ -6,8 +6,8 @@ naar het palet van de landing trekt (inktzwart #232019 in de schaduwen,
 papiercrème #f6f2e9 in de lichten, iets minder verzadiging) en wordt als
 progressieve JPEG in twee breedtes weggeschreven, zonder EXIF.
 
-Leg de bronfoto's in één map met de plek als bestandsnaam:
-  behandelkamer.jpg  begeleiding.jpg  thuis.jpg
+Leg de bronfoto's in één map met de plek als bestandsnaam, bijvoorbeeld:
+  behandelkamer.jpg  begeleiding.jpg  thuis.jpg  kaart-papier.png  kaart-telefoon.png
 
 Gebruik:
   python3 scripts/landing-fotos.py <bronmap>
@@ -29,12 +29,13 @@ UIT = Path(__file__).resolve().parents[1] / "public" / "images" / "landing"
 # op een kader links, boven, rechts, onder als fractie van de bron, uitvoerbreedtes).
 # Nooit breder dan de uitsnede zelf: opschalen maakt een foto alleen zachter.
 PLEKKEN = {
-    # montage: liggende A4 in een Pexels-foto van SHVETS production (8413183)
-    "behandelkamer": ((4, 3), (0.5, 0.5), (0.3, 0.12, 1.0, 0.86), (1000, 500)),
-    # Kampus Production, Pexels 7551631
-    "begeleiding": ((4, 3), (0.5, 0.35), None, (1200, 600)),
-    # montage: mobiele kaart in een Pexels-foto van Tima Miroshnichenko (6611918)
-    "thuis": ((3, 4), (0.5, 0.5), (0.12, 0.2, 0.88, 0.9), (760, 380)),
+    # fotoband in 02 'Van behandelkamer naar huiskamer'
+    "behandelkamer": ((4, 3), (0.5, 0.28), None, (1200, 600)),                 # Karola G (Kaboompics), Pexels 4506073
+    "begeleiding": ((4, 3), (0.5, 0.35), None, (1200, 600)),                   # Kampus Production, Pexels 7551631
+    "thuis": ((3, 4), (0.5, 0.3), (0.22, 0.27, 1.0, 1.0), (1200, 600)),        # Karola G (Kaboompics), Pexels 6633825
+    # boven de twee cijfers in 01 'Waarom Fysiplan': papier en telefoon
+    "kaart-papier": ((4, 3), (0.5, 0.5), (0.3, 0.12, 1.0, 0.86), (1000, 500)),  # montage in SHVETS production, Pexels 8413183
+    "kaart-telefoon": ((4, 3), (0.5, 0.58), None, (1000, 500)),                # montage in Tima Miroshnichenko, Pexels 6611918
 }
 
 INKT = (35, 32, 25)
@@ -60,7 +61,7 @@ def bewerk(img):
 
 def main():
     ap = ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("bron", type=Path, help="map met behandelkamer.jpg, begeleiding.jpg en thuis.jpg")
+    ap.add_argument("bron", type=Path, help="map met een bronfoto per plek, zoals behandelkamer.jpg")
     args = ap.parse_args()
     UIT.mkdir(parents=True, exist_ok=True)
     gevonden = 0
@@ -78,7 +79,7 @@ def main():
             hoogte = round(breedte * bh / bw)
             uit = ImageOps.fit(img, (breedte, hoogte), Image.LANCZOS, centering=midden)
             doel = UIT / f"{plek}-{breedte}.jpg"
-            uit.save(doel, "JPEG", quality=80, optimize=True, progressive=True)
+            uit.save(doel, "JPEG", quality=78 if breedte > 1000 else 80, optimize=True, progressive=True)
             print(f"- {plek}: {doel.name} {breedte}x{hoogte} {doel.stat().st_size // 1024} KB")
     if not gevonden:
         raise SystemExit("Geen enkele bronfoto gevonden.")
