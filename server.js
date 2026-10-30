@@ -3631,9 +3631,9 @@ async function afhandelen(request, response) {
     telBezoek(request, false);
     response.setHeader("x-frame-options", "DENY");
     response.setHeader("permissions-policy", "camera=(), microphone=(), geolocation=()");
-    // de landingspagina heeft geen scripts en laadt alleen eigen beelden: dat mag de browser afdwingen
+    // de landingspagina heeft geen scripts en laadt alleen eigen beelden en lettertypes: dat mag de browser afdwingen
     response.setHeader("content-security-policy",
-      "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
+      "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
     try {
       let html = await readFile(join(publicDir, "v2.html"), "utf8");
       const oprichtersOver = Math.max(0, 25 - (oprichters.vergeven || 0));

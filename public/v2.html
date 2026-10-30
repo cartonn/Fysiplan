@@ -9,6 +9,10 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232456a6'/%3E%3Cpath d='M5 16h5l2.5 6 5-12 2.5 7h7' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
 <title>Fysiplan: één kaart, op papier én op de telefoon</title>
 <link rel="canonical" href="https://fysiplan.nl/v2"/>
+<!-- eigen lettertypes (OFL, in /fonts): de drukproef ziet er op Windows en Android
+     hetzelfde uit als op een Mac, en er gaat geen verzoek naar een derde partij -->
+<link rel="preload" href="/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin/>
 <!-- deelkaart: een gedeelde link (WhatsApp, LinkedIn) toont nu titel, omschrijving en logo i.p.v. een kale URL -->
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Fysiplan"/>
@@ -50,20 +54,29 @@ __FAQ_SCHEMA__
      — het echte product als held: de A4 en de telefoon, geen abstracties
      — genummerde secties als een dossier; kleinkapitaal-etiketten als folio's
      ============================================================ */
+  @font-face{font-family:'Newsreader';font-style:normal;font-weight:200 800;font-display:swap;
+    src:url(/fonts/newsreader-latin-opsz-normal.woff2) format('woff2')}
+  @font-face{font-family:'Newsreader';font-style:italic;font-weight:200 800;font-display:swap;
+    src:url(/fonts/newsreader-latin-opsz-italic.woff2) format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;
+    src:url(/fonts/inter-latin-wght-normal.woff2) format('woff2')}
+  @font-face{font-family:'Caveat';font-style:normal;font-weight:400 700;font-display:swap;
+    src:url(/fonts/caveat-latin-wght-normal.woff2) format('woff2')}
   :root{
     --bg:#f6f2e9; --papier:#fffdf7; --inkt:#232019; --tekst:#3d3a31; --demp:#6b6557; --zacht:#a39c8a;
     --blauw:#2456a6; --blauw-d:#193c78; --navy:#152f5b; --blauw-05:#edf2fa; --blauw-10:#d9e4f5;
     --oranje:#d4501f; --oranje-d:#b34015;
     --lijn:#e3dbc6; --lijn-z:#efe9d8;
-    --serif:Charter,'Iowan Old Style','Palatino Linotype',Georgia,'Times New Roman',serif;
-    --disp:'Avenir Next',Seravek,'Segoe UI',system-ui,-apple-system,sans-serif;
+    --serif:'Newsreader',Charter,'Iowan Old Style','Palatino Linotype',Georgia,'Times New Roman',serif;
+    --disp:'Inter','Avenir Next',Seravek,'Segoe UI',system-ui,-apple-system,sans-serif;
     --raster:1120px;
+    --hand:'Caveat','Segoe Print','Bradley Hand',cursive;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
   p,li{text-wrap:pretty}
-  body{font:17.5px/1.66 var(--serif);color:var(--tekst);background:var(--bg);
+  body{font:18px/1.62 var(--serif);font-optical-sizing:auto;color:var(--tekst);background:var(--bg);
     -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
   ::selection{background:rgba(36,86,166,.16)}
   img{display:block;max-width:100%}
@@ -122,9 +135,9 @@ __FAQ_SCHEMA__
   }
 
   /* ---- hero: redactionele asymmetrie — tekst links, het product rechts ---- */
-  .hero{padding:76px 0 84px}
+  .hero .kolom{padding-top:72px;padding-bottom:84px}
   .hero .twee{display:grid;grid-template-columns:minmax(0,21fr) minmax(0,24fr);gap:48px;align-items:center}
-  .hero .kicker{margin-bottom:26px;line-height:1.7;font-size:11px}
+  .hero .kicker{margin-bottom:26px;line-height:1.7;font-size:11px;text-wrap:balance}
   .hero h1{font:700 clamp(40px,4.2vw,58px)/1.07 var(--serif);letter-spacing:-.022em;color:var(--inkt)}
   .hero .sub{font-size:19px;line-height:1.66;color:var(--demp);max-width:52ch;margin-top:24px}
   .hero .cta{display:flex;align-items:center;gap:22px;margin-top:34px;flex-wrap:wrap}
@@ -132,7 +145,9 @@ __FAQ_SCHEMA__
   .hero .cta .tl{font-size:15.5px}
   .hero .noot{font:italic 14.5px/1.5 var(--serif);color:var(--zacht);margin-top:18px}
   @media (max-width:560px){
-    .hero{padding:52px 0 64px}
+    .hero .kolom{padding-top:40px;padding-bottom:56px}
+    .hero .kicker .etiket{letter-spacing:.16em}
+    .hero .sub{font-size:17.5px;line-height:1.58;margin-top:20px}
     .hero .cta{flex-direction:column;align-items:stretch;gap:16px}
     .hero .cta .knop{text-align:center}
     .hero .cta .tl{align-self:center}
@@ -154,10 +169,10 @@ __FAQ_SCHEMA__
   .a4 .clnt div{display:grid;grid-template-columns:4.6em 1fr;align-items:baseline;border-bottom:1px solid var(--zacht);padding:.15em 0 .1em}
   .a4 .clnt div+div{margin-top:.25em}
   .a4 .clnt em{font:600 .78em/1.6 var(--disp);font-style:normal;color:var(--demp)}
-  .a4 .hand{font:400 1.12em/1.3 'Segoe Print','Bradley Hand','Comic Neue','Chalkboard SE',cursive;color:#23468f}
+  .a4 .hand{font:500 1.38em/1.05 var(--hand);color:#23468f}
   .a4 .vak{border:1px solid var(--demp);padding:.5em .65em;min-height:6.2em}
   .a4 .vak em{font:700 .78em/1.4 var(--disp);font-style:normal;color:var(--inkt);display:block}
-  .a4 .vak .hand{font-size:1em;display:block;margin-top:.2em}
+  .a4 .vak .hand{font-size:1.2em;line-height:1.1;display:block;margin-top:.2em}
   .a4 .qr{width:9.6em;text-align:center;margin:-.6em -.4em 0 0}
   .a4 .qr svg{width:100%;height:auto;display:block}
   .a4 .qr span{display:block;font:600 .62em/1.25 var(--disp);color:var(--demp);margin-top:.3em}
@@ -174,8 +189,8 @@ __FAQ_SCHEMA__
   .a4 thead .shw th{font-weight:700;color:var(--demp);background:var(--lijn-z);font-size:.7em}
   .a4 thead .shw th.d{text-align:left;padding-left:.3em;color:var(--inkt)}
   .a4 tbody td{height:2.45em;padding:0}
-  .a4 tbody td .hand{font-size:1.15em}
-  .a4 tbody td.d .hand{font-size:1.05em}
+  .a4 tbody td .hand{font-size:1.75em}
+  .a4 tbody td.d .hand{font-size:1.55em}
   .a4 .voetje{margin-top:auto;padding-top:.7em;display:flex;justify-content:space-between;gap:2em}
   .a4 .voetje span{font:italic .78em/1.4 var(--serif);color:var(--zacht)}
 
@@ -229,7 +244,7 @@ __FAQ_SCHEMA__
   .feiten .rij{display:grid;grid-template-columns:repeat(4,1fr)}
   .feiten .cel{padding:22px 26px;border-left:1px solid var(--lijn)}
   .feiten .cel:first-child{border-left:none;padding-left:0}
-  .feiten .cel .etiket{color:var(--zacht);display:block;margin-bottom:7px}
+  .feiten .cel .etiket{color:var(--zacht);display:block;margin-bottom:7px;line-height:1.45}
   .feiten .cel p{font:400 15.5px/1.45 var(--serif);color:var(--inkt)}
   @media (max-width:900px){
     .feiten .rij{grid-template-columns:1fr 1fr}
@@ -239,8 +254,8 @@ __FAQ_SCHEMA__
   }
 
   /* ---- 01 · waarom: twee grote cijfers, redactioneel gezet ---- */
-  .sectie{padding:92px 0}
-  @media (max-width:700px){.sectie{padding:64px 0}}
+  .sectie>.kolom{padding-top:96px;padding-bottom:96px}
+  @media (max-width:700px){.sectie>.kolom{padding-top:64px;padding-bottom:64px}}
   .twee-stats{display:grid;grid-template-columns:1fr 1fr;margin-top:44px}
   .stat{padding:0 48px 8px 0}
   .stat+.stat{border-left:1px solid var(--lijn);padding:0 0 8px 48px}
@@ -298,6 +313,18 @@ __FAQ_SCHEMA__
   .fx sup{font:600 9px/1 var(--disp);letter-spacing:.14em;text-transform:uppercase;color:var(--oranje);margin-left:7px}
   .fx p{font-size:14.5px;line-height:1.58;color:var(--demp);margin-top:4px}
   @media (max-width:760px){.index{columns:1}}
+  .meer{margin-top:4px}
+  .meer summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:10px;margin-top:18px;
+    font:600 14.5px/1 var(--disp);color:var(--inkt);border:1px solid var(--inkt);border-radius:3px;padding:12px 18px;
+    transition:background .15s,color .15s}
+  .meer summary::-webkit-details-marker{display:none}
+  .meer summary::after{content:"+";font:400 18px/1 var(--disp);transition:transform .18s}
+  .meer[open] summary::after{transform:rotate(45deg)}
+  .meer summary:hover{background:var(--inkt);color:var(--bg)}
+  .meer .open,.meer[open] .dicht{display:none}
+  .meer[open] .open{display:inline}
+  .meer[open] summary{margin-bottom:8px}
+  .meer .index{margin-top:16px}
   .bewijs{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:64px}
   .bw{border-left:2px solid var(--inkt);padding-left:26px}
   .bw .groot{font:700 30px/1.15 var(--serif);letter-spacing:-.02em;color:var(--inkt)}
@@ -384,18 +411,33 @@ __FAQ_SCHEMA__
   .faq .antw{padding:0 44px 22px 2px;font-size:15.5px;line-height:1.68;color:var(--demp);max-width:72ch}
 
   /* ---- slot en colofon ---- */
-  .slot{text-align:center;padding:100px 0 96px}
+  .slot{text-align:center;background:var(--inkt);color:#d9d2c0;border-top:none}
+  .slot .kolom{padding-top:112px;padding-bottom:104px;border-color:rgba(255,253,247,.1)}
+  .slot h2{color:var(--papier)}
+  .slot .noot{color:#a39c8a}
+  .slot .tl{color:var(--papier);text-decoration-color:rgba(255,253,247,.35)}
+  .slot .tl:hover{text-decoration-color:var(--papier)}
+  .slot .knop.oranje{box-shadow:0 14px 34px -12px rgba(212,80,31,.7)}
   .slot h2{margin:0 auto;max-width:20ch}
-  .slot p{font-size:18px;color:var(--demp);max-width:48ch;margin:18px auto 0}
+  .slot p{font-size:19px;color:#d9d2c0;max-width:48ch;margin:18px auto 0}
   .slot .knop{margin-top:34px}
   .slot .noot{font:italic 14px/1.5 var(--serif);color:var(--zacht);margin-top:16px}
-  footer{border-top:1px solid var(--lijn)}
+  .duim{display:none}
+  @media (max-width:700px){
+    body footer .rij{padding-bottom:calc(100px + env(safe-area-inset-bottom))}
+    .duim{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:30;
+      padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(246,242,233,.94);
+      backdrop-filter:saturate(1.2) blur(12px);-webkit-backdrop-filter:saturate(1.2) blur(12px);border-top:1px solid var(--lijn)}
+    .duim .knop{flex:1;text-align:center;padding:15px 12px;font-size:15.5px}
+    .duim .knop.omlijnd{flex:0 0 auto;background:var(--papier)}
+  }
+  footer{background:var(--inkt);border-top:1px solid rgba(255,253,247,.1)}
   footer .rij{max-width:var(--raster);margin:0 auto;padding:26px 40px;display:flex;align-items:baseline;gap:24px;flex-wrap:wrap}
-  @media (min-width:1180px){footer .rij{border-left:1px solid var(--lijn);border-right:1px solid var(--lijn)}}
-  footer p{font:italic 13.5px/1.5 var(--serif);color:var(--zacht)}
+  @media (min-width:1180px){footer .rij{border-left:1px solid rgba(255,253,247,.1);border-right:1px solid rgba(255,253,247,.1)}}
+  footer p{font:italic 14px/1.5 var(--serif);color:#8f887a}
   footer .spacer{flex:1}
-  footer a{font:500 13.5px/1 var(--disp);color:var(--demp);text-decoration:none}
-  footer a:hover{color:var(--inkt)}
+  footer a{font:500 13.5px/1 var(--disp);color:#c9c1ad;text-decoration:none}
+  footer a:hover{color:var(--papier)}
 </style>
 </head>
 <body>
@@ -564,28 +606,33 @@ __FAQ_SCHEMA__
     <div class="folio"><span class="nr">04</span><span class="etiket">Wat erin zit</span></div>
     <h2>Alles voor beide werelden.</h2>
     <div class="index">
-      <div class="fx"><b>Kleur of lijntekening, jouw keuze</b><p>Elke oefening staat er in kleur &eacute;n als rustige lijntekening op. Je wisselt met &eacute;&eacute;n klik; de keuze geldt voor de print en de PDF, de digitale kaart blijft in kleur.</p></div>
       <div class="fx"><b>Elke oefening voorgedaan &eacute;n voorgelezen</b><p>De digitale kaart toont bij elke oefening de beweging van begin- naar eindhouding en leest de uitleg hardop voor. Eigen instructievideo koppelen of opnemen kan per oefening.</p></div>
-      <div class="fx"><b>De cli&euml;nt geeft een pijnscore door</b><sup>Nieuw</sup><p>Na het oefenen tikt de cli&euml;nt op de digitale kaart een score van 0 tot 10 aan. Jij ziet het verloop bij de kaart, de cli&euml;nt hoeft niets te installeren.</p></div>
-      <div class="fx"><b>De kaart beantwoordt vragen</b><sup>Nieuw</sup><p>De cli&euml;nt stelt op de digitale kaart een korte vraag over de uitvoering en krijgt uitleg. Altijd binnen jouw voorschrift, nooit medisch advies, in negen talen.</p></div>
-      <div class="fx"><b>&ldquo;Ik heb geoefend&rdquo; met oefenweek</b><sup>Nieuw</sup><p>E&eacute;n tik na het oefenen; de kaart toont de oefenweek en jij ziet de therapietrouw bij de kaart terug. Zonder app.</p></div>
-      <div class="fx"><b>Oefenmomenten in de agenda</b><sup>Nieuw</sup><p>E&eacute;n knop op de digitale kaart zet vaste oefenmomenten in de agenda van elke telefoon. Werkt op iPhone en Android, zonder app of account.</p></div>
-      <div class="fx"><b>Seintje &eacute;n antwoord</b><sup>Nieuw</sup><p>De cli&euml;nt laat met &eacute;&eacute;n tik weten dat er een vraag is of dat het te veel pijn doet; jij antwoordt kort en dat bericht verschijnt op de kaart. Tweerichting, zonder app.</p></div>
-      <div class="fx"><b>De vergoeding stopt, de kaart niet</b><sup>Nieuw</sup><p>Aanvullende polissen vergoeden vaak maar 3 tot 18 behandelingen per jaar. Rond je het traject af, dan blijft de kaart van de cli&euml;nt gewoon werken: oefeningen, uitleg, agenda-herinneringen en voortgang &mdash; zelfstandig verder op jouw voorschrift.</p></div>
-      <div class="fx"><b>Ervaren herstel in &eacute;&eacute;n tik</b><sup>Nieuw</sup><p>&ldquo;Hoe gaat het vergeleken met de start?&rdquo; Vijf knoppen op de kaart; jij ziet het antwoord in het overzicht, en wie &ldquo;slechter&rdquo; aantikt komt vanzelf bovenaan.</p></div>
-      <div class="fx"><b>Afspraakherinnering zonder app</b><sup>Nieuw</sup><p>Zet de volgende afspraak op de kaart; de cli&euml;nt zet hem met &eacute;&eacute;n knop in de telefoonagenda, met herinnering vooraf. Minder no-shows, geen pati&euml;nten-app nodig.</p></div>
-      <div class="fx"><b>Sjablonen delen met het team</b><sup>Nieuw</sup><p>Deel een eigen sjabloon &eacute;&eacute;n keer met de praktijk en iedere collega gebruikt hetzelfde protocol op elk apparaat.</p></div>
-      <div class="fx"><b>Dossiertekst en praktijkrapport</b><sup>Nieuw</sup><p>E&eacute;n klik kopieert een kant-en-klare dossiersamenvatting per cli&euml;nt (pijnverloop, oefentrouw, ervaren herstel) of een geanonimiseerd praktijkrapport voor kwaliteitsverantwoording.</p></div>
-      <div class="fx"><b>Negen talen en voorlezen</b><sup>Nieuw</sup><p>De digitale kaart schakelt naar onder meer Engels, Turks, Arabisch, Pools en Oekra&iuml;ens, en leest zichzelf hardop voor. Zo doet echt iedereen mee.</p></div>
-      <div class="fx"><b>AI-kaartassistent</b><sup>Nieuw</sup><p>Omschrijf de klacht en krijg een kaartvoorstel uit je eigen oefeningenlijst, met voorzichtige startdosering. Jij beoordeelt en beslist.</p></div>
-      <div class="fx"><b>Als app op het beginscherm</b><sup>Nieuw</sup><p>De cli&euml;nt zet de kaart met &eacute;&eacute;n tik op het beginscherm: eigen icoon, schermvullend en ook offline te gebruiken. Zonder app-store of account.</p></div>
-      <div class="fx"><b>Werkt naast elk EPD</b><p>De PDF hangt in het dossier zoals elk document. Niets migreren, nergens aan vast, en stoppen kan maandelijks.</p></div>
-      <div class="fx"><b>QR-code staat er standaard op</b><p>Zodra de kaart een cli&euml;ntnaam heeft, verschijnt de QR-code vanzelf. De geprinte code blijft altijd werken, ook na latere aanpassingen.</p></div>
+      <div class="fx"><b>Kleur of lijntekening, jouw keuze</b><p>Elke oefening staat er in kleur &eacute;n als rustige lijntekening op. Je wisselt met &eacute;&eacute;n klik; de keuze geldt voor de print en de PDF, de digitale kaart blijft in kleur.</p></div>
+      <div class="fx"><b>De cli&euml;nt geeft een pijnscore door</b><p>Na het oefenen tikt de cli&euml;nt op de digitale kaart een score van 0 tot 10 aan. Jij ziet het verloop bij de kaart, de cli&euml;nt hoeft niets te installeren.</p></div>
+      <div class="fx"><b>&ldquo;Ik heb geoefend&rdquo; met oefenweek</b><p>E&eacute;n tik na het oefenen; de kaart toont de oefenweek en jij ziet de therapietrouw bij de kaart terug. Zonder app.</p></div>
+      <div class="fx"><b>AI-kaartassistent</b><p>Omschrijf de klacht en krijg een kaartvoorstel uit je eigen oefeningenlijst, met voorzichtige startdosering. Jij beoordeelt en beslist.</p></div>
       <div class="fx"><b>__SJABLONEN_AANTAL__ kaartsjablonen per klacht</b><p>Van knie, heup en schouder tot valpreventie, nek en duizeligheid: &eacute;&eacute;n klik en de kaart staat vol. Daarna pas je alles gewoon aan.</p></div>
-      <div class="fx"><b>Je eigen huisstijl</b><p>Logo &eacute;&eacute;n keer uploaden en elke kaart is herkenbaar van jouw praktijk, geprint en digitaal.</p></div>
-      <div class="fx"><b>Kaarten delen met collega&rsquo;s</b><p>Bewaar een kaart bij de praktijk; iedere collega opent hem op elk apparaat.</p></div>
-      <div class="fx"><b>Printen zoals jij wilt</b><p>Uitgebreid of compact, groot lettertype, en een PDF voor het EPD-dossier.</p></div>
+      <div class="fx"><b>Werkt naast elk EPD</b><p>De PDF hangt in het dossier zoals elk document. Niets migreren, nergens aan vast, en stoppen kan maandelijks.</p></div>
+      <div class="fx"><b>Dossiertekst en praktijkrapport</b><p>E&eacute;n klik kopieert een kant-en-klare dossiersamenvatting per cli&euml;nt (pijnverloop, oefentrouw, ervaren herstel) of een geanonimiseerd praktijkrapport voor kwaliteitsverantwoording.</p></div>
     </div>
+    <details class="meer">
+      <summary><span class="dicht">Bekijk alle 21 functies</span><span class="open">Minder tonen</span></summary>
+      <div class="index">
+        <div class="fx"><b>De kaart beantwoordt vragen</b><p>De cli&euml;nt stelt op de digitale kaart een korte vraag over de uitvoering en krijgt uitleg. Altijd binnen jouw voorschrift, nooit medisch advies, in negen talen.</p></div>
+        <div class="fx"><b>Oefenmomenten in de agenda</b><p>E&eacute;n knop op de digitale kaart zet vaste oefenmomenten in de agenda van elke telefoon. Werkt op iPhone en Android, zonder app of account.</p></div>
+        <div class="fx"><b>Seintje &eacute;n antwoord</b><p>De cli&euml;nt laat met &eacute;&eacute;n tik weten dat er een vraag is of dat het te veel pijn doet; jij antwoordt kort en dat bericht verschijnt op de kaart. Tweerichting, zonder app.</p></div>
+        <div class="fx"><b>De vergoeding stopt, de kaart niet</b><p>Aanvullende polissen vergoeden vaak maar 3 tot 18 behandelingen per jaar. Rond je het traject af, dan blijft de kaart van de cli&euml;nt gewoon werken: oefeningen, uitleg, agenda-herinneringen en voortgang &mdash; zelfstandig verder op jouw voorschrift.</p></div>
+        <div class="fx"><b>Ervaren herstel in &eacute;&eacute;n tik</b><p>&ldquo;Hoe gaat het vergeleken met de start?&rdquo; Vijf knoppen op de kaart; jij ziet het antwoord in het overzicht, en wie &ldquo;slechter&rdquo; aantikt komt vanzelf bovenaan.</p></div>
+        <div class="fx"><b>Afspraakherinnering zonder app</b><p>Zet de volgende afspraak op de kaart; de cli&euml;nt zet hem met &eacute;&eacute;n knop in de telefoonagenda, met herinnering vooraf. Minder no-shows, geen pati&euml;nten-app nodig.</p></div>
+        <div class="fx"><b>Sjablonen delen met het team</b><p>Deel een eigen sjabloon &eacute;&eacute;n keer met de praktijk en iedere collega gebruikt hetzelfde protocol op elk apparaat.</p></div>
+        <div class="fx"><b>Negen talen en voorlezen</b><p>De digitale kaart schakelt naar onder meer Engels, Turks, Arabisch, Pools en Oekra&iuml;ens, en leest zichzelf hardop voor. Zo doet echt iedereen mee.</p></div>
+        <div class="fx"><b>Als app op het beginscherm</b><p>De cli&euml;nt zet de kaart met &eacute;&eacute;n tik op het beginscherm: eigen icoon, schermvullend en ook offline te gebruiken. Zonder app-store of account.</p></div>
+        <div class="fx"><b>QR-code staat er standaard op</b><p>Zodra de kaart een cli&euml;ntnaam heeft, verschijnt de QR-code vanzelf. De geprinte code blijft altijd werken, ook na latere aanpassingen.</p></div>
+        <div class="fx"><b>Je eigen huisstijl</b><p>Logo &eacute;&eacute;n keer uploaden en elke kaart is herkenbaar van jouw praktijk, geprint en digitaal.</p></div>
+        <div class="fx"><b>Kaarten delen met collega&rsquo;s</b><p>Bewaar een kaart bij de praktijk; iedere collega opent hem op elk apparaat.</p></div>
+        <div class="fx"><b>Printen zoals jij wilt</b><p>Uitgebreid of compact, groot lettertype, en een PDF voor het EPD-dossier.</p></div>
+      </div>
+    </details>
     <div class="bewijs">
       <div class="bw"><div class="groot">Papier heeft de voorkeur bij ouderen</div><p>Als 70-plussers zelf mogen kiezen, kiest 57 procent een papieren oefenschema. Daarom is de print bij Fysiplan het hart van het product en geen bijlage.</p></div>
       <div class="bw"><div class="groot">Voordoen geeft zekerheid bij het oefenen</div><p>Onderzoek met video-instructie laat zien: cli&euml;nten die hun oefeningen thuis voorgedaan krijgen, doen er meer mee en voelen zich zekerder over de uitvoering. Daarom doet de digitale kaart elke oefening voor en leest hij de uitleg hardop voor; je eigen instructievideo koppel je er met &eacute;&eacute;n klik bij.</p></div>
@@ -722,6 +769,8 @@ __FAQ_SCHEMA__
 </section>
 
 </main>
+
+<div class="duim"><a class="knop omlijnd" href="/k/demo" target="_blank" rel="noopener">Voorbeeld</a><a class="knop oranje" href="/v2/app">Probeer gratis</a></div>
 
 <footer>
   <div class="rij">
