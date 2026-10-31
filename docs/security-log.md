@@ -1765,3 +1765,36 @@ vier v2-pagina's (/v2, /v2/app, /k, /o) integraal herijken (frame-ancestors,
 connect-src, media-src tegen de huidige featureset), of de leesroutes met
 linkkennis (/api/kaart/agenda, afspraak.ics, vertaal, manifest) op
 responsvervuiling en cache-gedrag.
+
+## 2026-10-31 — Vers aanvalsoppervlak (merge PR #35-#39) + CSP van de v2-pagina's
+
+**Gebied.** Eerst het nieuwe oppervlak van de vijf gemergde eigenaars-PR's:
+de gratis-proeflaag (`/v2/proef`, `/v2/proef/terug`, `/aanmeldingen`), de
+beveiligingspoort `eisBeveiligdePraktijk`, de per-oefening YouTube-links en
+de eigen praktijkoefeningen. Daarna de rotatie uit het log: de
+security-headers/CSP van de vier v2-pagina's integraal herijkt.
+
+**Bevindingen: geen gat.** De proeflaag is degelijk — token als HttpOnly-
+cookie (alleen de sha256 op schijf), honeypot, 10/uur-rem per IP, cap op
+tokens/apparaat en op het totaal, en `/aanmeldingen` zit achter de
+ACCOUNT_BEHEER_EMAILS-gate (niet admin88) met CSV-formule-escaping. De
+schrijfroutes blijven correct geautoriseerd: POST /api/kaarten draait nog
+door `eisPraktijk` (geclaimde praktijk → sessie vereist), een verlopen
+proef krijgt 403. De CSP's van /v2, /v2/app, /k, /o en de proefpagina's zijn
+intern consistent en strak: `frame-src` overal exact youtube-nocookie +
+Cloudflare Stream (geen wildcard), `frame-ancestors 'none'` en
+`object-src 'none'` overal, de patiëntkaart /k blijft self-contained (geen
+externe fonts), en alleen /v2/app laadt bewust Google Fonts — uitsluitend in
+style-src/font-src, niet in script- of connect-src.
+
+**Increment.** Geen codewijziging nodig; test-headers.mjs uitgebreid met 11
+nieuwe asserties (28 totaal) die deze CSP-invarianten vastzetten, zodat een
+toekomstige versoepeling (wildcard-frame, externe fonts op /k, een script-
+src op een proefpagina) direct rood wordt. De volledige bank (74 suites)
+stond groen na de merge-herijking van de 20:00-run.
+
+**Volgende run — pak een ander gebied:** de leesroutes met linkkennis
+(/api/kaart/agenda, afspraak.ics, vertaal, manifest) op responsvervuiling,
+cache-headers en host-spoofing, óf de nieuwe eigen-oefeningen-uploadroute
+(/api/praktijk/oefeningen) op bestandsvalidatie en plafonds naar het patroon
+van de logo-upload.
