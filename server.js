@@ -3164,6 +3164,33 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // de therapeut handelt een "te zwaar"-melding af: na het aanpassen van de
+  // dosering (of een belletje) verdwijnt het signaal uit de triage, zodat het
+  // overzicht alleen openstaande aandachtspunten toont. Spiegelt seintje/gezien:
+  // alleen de ingelogde praktijk, en met zelfde misser-rem. Leeg b.oef wist alle
+  // meldingen van de kaart; een losse oefeningnaam wist alleen die ene.
+  if (urlPath === "/api/kaart/oefzwaar/gezien" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      if (await eisPraktijk(request, response, pk)) return;
+      const map = kaarten[pk] || {};
+      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      const oef = b.oef == null ? "" : String(b.oef).slice(0, 80);
+      if (oef && kaart.oefZwaar && Object.hasOwn(kaart.oefZwaar, oef)) delete kaart.oefZwaar[oef];
+      else if (!oef) kaart.oefZwaar = null;
+      if (kaart.oefZwaar && !Object.keys(kaart.oefZwaar).length) kaart.oefZwaar = null;
+      await saveJson(kaartenPath, kaarten);
+      await sendJson(response, 200, { ok: true, oefZwaar: kaart.oefZwaar });
+    } catch {
+      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
+    }
+    return;
+  }
+
   // de therapeut beantwoordt een seintje met een kort bericht dat op de kaart van
   // de patiënt verschijnt ("Bel ons even", "Goed bezig, ga zo door"). Alleen de
   // ingelogde praktijk (eisPraktijk); het antwoord handelt het openstaande seintje

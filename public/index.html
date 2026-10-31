@@ -3047,8 +3047,10 @@ bridge2.jpg</div>
           var zwChip='';
           var zwLijst=zwaarRecent(c);
           if(zwLijst.length){
-            zwChip="<span class='btn' title='Door de patiënt als te zwaar gemeld (laatste 7 dagen): "+esc(zwLijst.join(', '))+" — open Deel voor de tijdstippen' style='font-size:11.5px;padding:4px 10px;cursor:default;background:#fdf3ea;border:1px solid #ecd2b8;color:#9a6020'>"+
-              "<span style='display:inline-block;width:8px;height:8px;border-radius:99px;background:#d98a2b;margin-right:5px'></span>te zwaar: "+esc(zwLijst[0])+(zwLijst.length>1?" +"+(zwLijst.length-1):"")+"</span>";
+            zwChip="<span class='btn' title='Door de patiënt als te zwaar gemeld (laatste 7 dagen): "+esc(zwLijst.join(', '))+" — open Deel voor de tijdstippen' style='font-size:11.5px;padding:4px 4px 4px 10px;cursor:default;background:#fdf3ea;border:1px solid #ecd2b8;color:#9a6020'>"+
+              "<span style='display:inline-block;width:8px;height:8px;border-radius:99px;background:#d98a2b;margin-right:5px'></span>te zwaar: "+esc(zwLijst[0])+(zwLijst.length>1?" +"+(zwLijst.length-1):"")+
+              // afhandelen: na het aanpassen van de dosering verdwijnt het signaal uit de triage
+              "<button data-szwaarklaar='"+esc(c.id)+"' title='Afgehandeld — haal deze te zwaar-melding uit het overzicht (de patiëntgegevens blijven; dit verbergt alleen het aandachtssignaal)' aria-label='te zwaar-melding afhandelen' style='margin-left:6px;border:none;background:transparent;color:#9a6020;font-size:14px;line-height:1;cursor:pointer;padding:0 3px'>&times;</button></span>";
           }
           // therapietrouw zonder patiënt-app: hoe vaak de patiënt de afgelopen week
           // "ik heb geoefend" aantikte op de digitale kaart (alleen tonen; de duiding
@@ -3781,6 +3783,16 @@ bridge2.jpg</div>
         .then(function(r){return r.json();})
         .then(function(d){if(d.ok)toonSrvKaarten();else alert(d.fout||'Dat is niet gelukt.');})
         .catch(function(){alert('Dat is niet gelukt: geen verbinding.');});
+      return;
+    }
+    // "te zwaar"-melding afhandelen: de therapeut heeft de dosering aangepast,
+    // het aandachtssignaal mag uit het overzicht (patiëntgegevens blijven)
+    var zk=e.target.closest('[data-szwaarklaar]');
+    if(zk){
+      fetch('api/kaart/oefzwaar/gezien',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:zk.dataset.szwaarklaar})})
+        .then(function(r){return r.json();})
+        .then(function(d){if(d.ok)toonSrvKaarten();else alert(d.fout||'Afhandelen is niet gelukt.');})
+        .catch(function(){alert('Afhandelen is niet gelukt: geen verbinding.');});
       return;
     }
     var o=e.target.closest('[data-sopen]'),x=e.target.closest('[data-sdel]');
