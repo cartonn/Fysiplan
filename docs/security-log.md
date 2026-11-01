@@ -1798,3 +1798,35 @@ stond groen na de merge-herijking van de 20:00-run.
 cache-headers en host-spoofing, óf de nieuwe eigen-oefeningen-uploadroute
 (/api/praktijk/oefeningen) op bestandsvalidatie en plafonds naar het patroon
 van de logo-upload.
+
+## 2026-11-01 — Eigen-oefeningen-upload + leesroutes met linkkennis
+
+**Gebied.** Twee verse/open oppervlakken: de nieuwe uploadroute voor eigen
+praktijkoefeningen (/api/praktijk/oefeningen, merge PR #36) en de leesroutes
+die alleen kaart-linkkennis vragen (afspraak.ics, agenda, vertaal, manifest),
+op bestandsvalidatie, plafonds, host-spoofing, cache en AI-kosten.
+
+**Bevindingen: geen gat.** De uploadroute spiegelt het eerder geauditeerde
+logo-patroon: eisBeveiligdePraktijk (geclaimde, ingelogde praktijk),
+magic-byte-controle (echteAfbeelding), data-URI beperkt tot JPEG/PNG,
+100 B–600 kB, 200-plafond per praktijk, case-insensitieve naam-dedup, en een
+pad-gevalideerde opruiming bij verwijderen. De naam wordt als data bewaard
+(cleanName, gedeeld met v1, laat < > staan) en overal met esc() weergegeven —
+het systeembrede output-escaping-patroon, met op /k bovendien de nonce-CSP
+die inline handlers blokkeert (vastgelegd in test-headers). De .ics-route pint
+de host (val terug op fysiplan.nl) en escapet alle ICS-velden; vertaal draait
+op een gedeelde per-taal cache en raakt de AI alleen bij een cache-miss, dan
+nog achter kruisSite + schrijfLimiet + aiLimiet. De linkroutes zijn id-gekoppeld,
+dus padgebaseerde caching kan geen kaart van een andere patiënt lekken.
+
+**Increment.** Geen codewijziging; nieuwe regressiesuite
+test-eigen-oefeningen.mjs (11 checks: auth op GET/POST, echte PNG aanvaard
++ bestand op schijf, nep-magic-bytes/gif/te-groot -> 400, naam-dedup 409,
+naam als data-roundtrip, verwijderen ruimt het bestand, en de oefening reist
+mee met de patiëntkaart). Regressies headers (28), uploads-parallel (9) en
+smoke (13) groen.
+
+**Volgende run — pak een ander gebied:** de inlogrem en sessie-levenscyclus
+van de accountlaag opnieuw onder de beveiligingspoort (claim/login/logout/
+wachtwoord/herstel/herstelcode) op race- en lock-out-gedrag, of een brede
+E2E-veegronde over alle suites tegen de huidige main.
