@@ -78,6 +78,17 @@ for(const naam of ['Anteflexie armen','Barbell front press','Push up']){
 const approvedPoses=manifest.entries.filter(e=>e.poseGeometry.status==='geometry-approved');
 assert.equal(approvedPoses.length,manifest.summary.poseGeometryApproved);
 assert(approvedPoses.length>0,'geen enkele houding goedgekeurd: de reparatie doet dan niets');
+// De patiëntkaart mag een oefenfoto nooit stilzwijgend door een lijntekening vervangen.
+// De kaart tekent o.kaartImg (en pas bij ontbreken o.img); de beoordeling moet over
+// datzelfde bestand gaan, en dat bestand mag geen lijntekening zijn.
+const kaartHtml=await fs.readFile('public/kaart.html','utf8');
+assert.ok(kaartHtml.includes("var beeldpad=o?(o.kaartImg||o.img):'';"),'de kaart kiest zelf geen ander beeld');
+assert.ok(kaartHtml.includes("function mediaSource(o){return String(o&&(o.kaartImg||o.img)||'')"),'de beoordeling gaat over hetzelfde beeld als de weergave');
+for(const e of available){
+  const bron=e.kaartImg||e.img;
+  assert.ok(!/line-v1|beginhouding-pijl/.test(bron),'de kaart zou hier een lijntekening tonen: '+e.naam);
+  assert.equal(manifest.entries.find(r=>r.exerciseId===exerciseId(e)).source,bron,e.naam);
+}
 assert.equal(manifest.schemaVersion,2);
 assert(manifest.poseWarning.includes('geen klinische goedkeuring'));
 console.log('PASS: 319 source-linked assets, hashes, five rejections; '+approvedPoses.length+' visueel gecontroleerde uitsnedes, geen klinische goedkeuring afgeleid.');
