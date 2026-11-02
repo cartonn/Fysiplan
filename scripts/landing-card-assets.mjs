@@ -25,6 +25,7 @@ const exercises = [
   ['Standing chair heel toe','seated-chair/standing-chair-heel-toe'],
 ];
 assert.equal(exercises.length,12);
+const arrows=JSON.parse(await fs.readFile(path.join(root,'content/beginhouding-pijl.json'),'utf8'));
 const xml=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;');
 const pieces=[];
 const text=(x,y,s,size=12,weight=400,anchor='start',fill='#101828')=>pieces.push(`<text x="${x}" y="${y}" font-size="${size}" font-weight="${weight}" text-anchor="${anchor}" fill="${fill}">${xml(s)}</text>`);
@@ -44,7 +45,10 @@ text(940,94,'Dosering op advies',12);text(940,109,'van de behandelaar.',12);
 const gx=26,dx=50,ex=76,cw=1018/12,ny=182,py=199,ph=cw*1.5,ly=py+ph,sy=ly+22,by=sy+22,rh=(752-by)/15;
 for(let i=0;i<12;i++){
   const x=ex+i*cw;text(x+cw/2,ny+12,i+1,11.5,700,'middle');rect(x,py,cw,ph,'white');
-  const p=path.join(root,'public/images',exercises[i][1]+'-line-v1.png');
+  const slug=exercises[i][1].split('/').pop();
+  const arrow=arrows.entries.find(e=>e.source.endsWith('/'+slug+'.jpg')||e.source.endsWith('/'+slug+'-line-v1.png'));
+  assert(arrow,'Missing landing arrow illustration: '+exercises[i][0]);
+  const p=path.join(root,'public',arrow.img);
   const buf=await sharp(p).resize(180,270,{fit:'contain',background:'#fff'}).png().toBuffer();
   pieces.push(`<image href="data:image/png;base64,${buf.toString('base64')}" x="${x+2}" y="${py+2}" width="${cw-4}" height="${ph-4}" preserveAspectRatio="xMidYMid meet"/>`);
   const words=exercises[i][0].split(' ');let a='',b='';for(const w of words){if((a+' '+w).length<=16&&!b)a+=(a?' ':'')+w;else b+=(b?' ':'')+w;}

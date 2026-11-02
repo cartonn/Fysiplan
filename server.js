@@ -10,6 +10,8 @@ import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
 const publicDir = join(process.cwd(), "public");
+const arrowCatalog = JSON.parse(await readFile(join(process.cwd(), "content/beginhouding-pijl.json"), "utf8"));
+const arrowImages = new Map(arrowCatalog.entries.map(e => [e.source, e.img]));
 const videoCatalogusPath = join(process.cwd(), "content", "video-catalogus.json");
 const core1000Path = join(process.cwd(), "content", "core-1000.json");
 
@@ -1315,7 +1317,7 @@ async function buildManifest(channel = "v2") {
       if (video && catalogus) video.catalog = catalogus;
       return {
         ...e,
-        img: v2AssetPath(e.img),
+        img: v2AssetPath(arrowImages.get(e.img) || e.img),
         ...(e.kaartImg ? { kaartImg: v2AssetPath(e.kaartImg) } : {}),
         exerciseId: id,
         ...searchMetadata,

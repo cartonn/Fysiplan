@@ -28,7 +28,8 @@ html.v2 .card{border-radius:var(--r-lg)}
 html.v2 .card .hd{background:#fbf8f0;color:var(--muted)}
 html.v2 .row{border-radius:12px}
 html.v2 .row:hover{background:#f7f3e8}
-html.v2 .row .thumb{border-radius:12px;background:#fffdf6;border-color:var(--line)}
+html.v2 .row .thumb{border-radius:12px;background:#fff;border-color:var(--line);object-fit:contain;object-position:center;box-sizing:border-box}
+html.v2 #a4 .pic .thumb{object-fit:contain;object-position:center;box-sizing:border-box;display:block;background:#fff;flex-shrink:0}
 html.v2 .row .add{background:var(--brand-50);border-color:var(--brand-100);color:var(--brand)}
 html.v2 .row .add:hover,html.v2 .row .add.on{background:var(--brand);border-color:var(--brand);color:#fff}
 html.v2 input[type=text],html.v2 input.fld,html.v2 select,html.v2 textarea{background:#fffefa}
