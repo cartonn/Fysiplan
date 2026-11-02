@@ -1,0 +1,11 @@
+Coordinator heartbeat 2026-11-02T21:36:33.883Z
+Claude 831f2bf6 verified busy/working through claude agents --json; supported logs confirm xhigh thinking. No duplicate writer started and no production deployment performed.
+Read complete CLAUDE-NIGHT-TASK.txt and progress JSON. Progress timestamp appears ahead of heartbeat; do not treat that timestamp as reliable chronological evidence. Files are actively changing.
+Independent read-only tests during in-flight edits:
+- test-mobile-media-controls.mjs FAIL: demoSplitsing is not a function (line 25).
+- test-mobile-media-review.mjs FAIL: assumes empty pose metadata; new explicit crops now present (line 21).
+- test-mobile-narration-review.mjs PASS: 319 entries, 15 holds, 67 exact audio matches.
+Failures may be intermediate integration/test migration, but MUST be resolved with equivalent safety assertions, not merely dropped, before deployment.
+Independently viewed before-after-fp_5db16db1c4b85956.png: old midline crops visibly cut both stacked people in half; new frames each show a complete figure and bench. This supports the crop fix for this one example, not clinical correctness or all-319 approval.
+Production video overrides, listening review, remaining drawings, and completed runtime/build validation not independently verified in this check. No completion claim.
+Next heartbeat: inspect running status first, then final diff and all regression tests when writer finishes; retain source-hash and unreviewed safety gates.

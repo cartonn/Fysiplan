@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "session": "claude-night-repair-2026-11-02",
+  "worktree": "/private/tmp/fysiplan-release-20261102",
+  "baseCommit": "9bf215a",
+  "commits": [
+    "4f5680c houding-uitsnedes",
+    "4aec046 stemopname robuust",
+    "53ae691 weergavetest sluitend",
+    "c8ca782 leveringsketen + eerlijk knoplabel",
+    "9ef09c8 herkomst praktijkvideo"
+  ],
+  "lastUpdate": "2026-11-02T22:52:58+0100",
+  "lastUpdateNote": "Timestamp taken from the machine clock (date +%FT%T%z) at the moment of writing, after the coordinator flagged an earlier timestamp as ahead of its heartbeat.",
+  "batch": 3,
+  "deployed": false,
+  "pushed": false,
+  "clinicalApproval": false,
+  "coordinatorNotesAddressed": {
+    "test-mobile-media-controls.mjs FAIL (demoSplitsing is not a function)": "Resolved with stronger assertions, not dropped: the test now drives demoHoudingen and proves the pose view stays off without reviewed metadata, without a proven source hash, with a mismatched source, with wrong image dimensions, with overlapping crops and with an empty crop. It also proves loading the card downloads no images at all, that a rejection blocks immediately, and that mixed review generations are refused.",
+    "test-mobile-media-review.mjs FAIL (assumes empty pose metadata)": "Resolved with stronger assertions: every geometry-approved entry must be status unreviewed, clinicalApproved false, visuallyInspected true, foreignInkPixels 0, silhouetteIoU < 0.90, two labelled crops that pass validatePosePair, present in content/mobile-pose-approvals.json under this exact sha256, and not manually rejected. Rejected entries must carry withheld and no poses. Three entries are re-measured from the source pixels inside the test so the file cannot drift from the measuring code.",
+    "before-after-fp_5db16db1c4b85956.png supports one example only": "Agreed and kept as the scope of that artefact. The per-exercise record is content/mobile-pose-approvals.json (162 inspected assets, hash-bound) plus output/pose-review/inspection-log.md."
+  },
+  "rootCause": {
+    "1-dead-code": "public/kaart.html built demo.info without poseMetadata while demoSplitsing required poseMetadata.reviewStatus==='approved'. Zero writers existed anywhere in the repository, so the pose view was unreachable for all 319 exercises. Confirmed independently by a read-only audit subagent.",
+    "2-midline-split": "Sheets place two figures in one raster with the Fysiplan wordmark baked above the left figure only, so a 50% split gave the logo to the start pose and cut anything crossing the middle. Evidence: output/pose-review/before-after-fp_ff306042c93f0900.png.",
+    "3-logo-in-content-box": "demoUniformFrames derived the content box with a non-white pixel scan that included the baked logo, so the half with the logo got a taller box and the shared scale rendered the two bodies at different sizes and baselines. Same artefact.",
+    "4-stacked-sheets": "38 sheets stack the two figures vertically. An x-split then halves BOTH people and shows left halves in pose 1 and right halves in pose 2. Evidence: before-after-fp_5db16db1c4b85956.png and before-after-fp_0e06ee3270c9952a.png.",
+    "5-layout-offset-read-as-movement": "My own first fix preserved the true offset along the stacking axis, which reads as the body moving. Caught during visual inspection and fixed before any approval: lib/pose-frames.js centres along the layout axis and keeps the real offset only perpendicular to it."
+  },
+  "completed": [
+    "lib/pose-frames.js: shared axis-aware pose geometry (one scale, no stretching, explicit crops only).",
+    "scripts/pose-crop-candidates.mjs: measures all 319 assets; connected components on source pixels, own brand mark recognised by its blue icon, four disqualifying measurements (foreign ink strictly zero, branding outside the crop, figures genuinely separated, silhouette overlap below threshold).",
+    "scripts/render-pose-review.mjs: renders pose frames with exactly the runtime geometry plus a faithful rebuild of the old midline split for before/after evidence.",
+    "Visual inspection of all 41 final contact sheets (162 pair candidates), recorded hash-bound in content/mobile-pose-approvals.json.",
+    "scripts/build-mobile-media-review.mjs merges only visually inspected, measured crops into public/mobile-media-review.json as poseGeometry.status 'geometry-approved' (deliberately not called 'approved'); schemaVersion 2.",
+    "public/kaart.html: pose rendering from explicit crops on canvas, source sha256 verified before the control appears, brand mark drawn by the card itself outside both crops, honest note under the poses in nine languages.",
+    "public/kaart.html: narration and review-gate repairs from the two audits (list under fixedDefects).",
+    "server.js: mp3 served as audio/mpeg with byte ranges (206/416), Content-Length and a cache policy matching hash-named files; review JSON stays no-store.",
+    "public/kaart-sw.js: offline cache version bump so the three gating files cannot be mixed across generations.",
+    "scripts/test-mobile-audio-levering.mjs: new HTTP regression test against the real server.",
+    "npm run test:mobile added and wired into .github/workflows/ci.yml (the mobile gates previously never ran in CI).",
+    "npm run build: green.",
+    "scripts/test-mobile-levering.mjs: cross-check of the keys the card uses against the review file over the running server (all 319 match, 156 poses reach the card), plus sha256 verification of every delivered source on the demo card.",
+    "Practice-uploaded images: an explicit rejection now actually applies (the recheck path hard-coded an images/ prefix).",
+    "Button label changed from \"Beweging tonen\" to \"Houdingen tonen\" in nine languages: the card shows two positions, not a movement recording.",
+    "Practice video text block now names its origin in nine languages instead of presenting library text as instructions for practice footage.",
+    "Regression test: the card never silently substitutes a line drawing for an exercise photo."
+  ],
+  "poseOutcome": {
+    "totalAvailableAssets": 319,
+    "geometryApprovedPairs": 156,
+    "staticFullImage": 158,
+    "withheldBecauseImageRejected": 5,
+    "measuredTally": {
+      "pair-candidate": 162,
+      "overlapping-figures": 39,
+      "branding-overlaps-figure": 20,
+      "foreign-ink-in-crop": 13,
+      "poses-too-similar": 4,
+      "single-figure": 79,
+      "multiple-figures": 1,
+      "ambiguous-objects": 1
+    },
+    "manualVisualRejections": [
+      "Dips: stray handle beside the figure in pose 1 and both figures stand upright, so no dip is depicted",
+      "Step up with knee raise: stray pale blue block next to the figure's own step in pose 1",
+      "Alternating lunge jumps: two alternating stances of one jumping exercise are not a start and end of one movement; the v9 provenance file states the jump transition is not approved"
+    ],
+    "exactListLocation": "content/mobile-pose-approvals.json (inspectedAssets, manualRejections) and public/mobile-media-review.json (poseGeometry per exercise)"
+  },
+  "fixedDefects": [
+    "mp3 delivery without Range/Content-Length/audio MIME (iOS Safari would not play) — fixed and verified live with curl and an automated test",
+    "speelNoor matched narration holds by name only; now by stable id or name, like explanationWithheld",
+    "the missing-recording notice ran before playback, and a blocking alert() expires the tap's user activation; now playback starts first",
+    "withheld media still offered the narration button for the same exercise",
+    "'AI-demonstratie · klinisch gecontroleerd' rendered whenever reviewStatus !== 'concept', and lib/video-catalog.js never sets reviewStatus; now requires clinicallyReviewed === true",
+    "every card open fetched and hashed all rejected images (562 kB) before rendering; rejections now block immediately and hashing runs only for images actually on the card",
+    "backgrounding the phone did not stop the demonstration clock",
+    "stopLezen overwrote the non-Dutch demo sound toggle",
+    "dead narration call that used the translated card name instead of the catalogue name",
+    "#leesBtn exposed no aria-pressed",
+    "mixed review generations (one file from the offline cache) could pair an old hold list with new recordings"
+  ],
+  "testEvidence": {
+    "npm run test:mobile": "eight gates pass, including the end-to-end drawing check and the delivery/key-mapping check over the running server",
+    "npm run build": "green, no artefact drift beyond this change",
+    "live curl": "200 audio/mpeg + accept-ranges + content-length 97612; 206 with content-range bytes 0-1/97612; 416 for an out-of-range request; review JSON still no-store"
+  },
+  "separationOfReviewKinds": {
+    "code-test pass": "done: npm run test:mobile and npm run build",
+    "visual pass": "done for the 162 measured pair candidates (41 contact sheets rendered with the runtime geometry, viewed one by one). NOT done: a per-exercise visual check of the 163 static exercises beyond the measurement, and no full-size inspection of every single asset.",
+    "listening review": "NOT done. No recording was listened to in this session.",
+    "clinical approval": "NOT done and not inferable from anything in this session. Every clinicalApproved stays false and the 15 narration holds stand."
+  },
+  "remaining": [
+    "Listening review of the 67 existing recordings (none were played in this session).",
+    "Clinical approval of execution for all 319 exercises, including the 15 explicit narration holds and the 5 rejected depictions.",
+    "20 exercises where the brand mark overlaps a figure's bounding box and 39 where the two figures overlap: these stay static. A re-render of those source sheets with more separation (and the mark outside both figures) would make a verified pose view possible; that needs image generation, which this session is not authorised to spend on.",
+    "Production practice overrides: uploads/ sources are structurally outside the media-review gate (the gate hard-codes an images/ prefix) and explanationWithheld is a no-op for po_ ids. Not fixed in this commit; see knownGapsNotFixed.",
+    "Per-card pasted YouTube links still outrank the clinically reviewed catalogue video (kaart.html priority order).",
+    "scripts/check-noor-assets.mjs validates public/oefeningen.json (v1) while the card consumes v2.",
+    "The Dutch 'listen' playlist still omits the dosage and the safety sentence that other languages include."
+  ],
+  "knownGapsNotFixed": {
+    "practice-uploaded media": "A practice can publish its own exercise photo (uploads/oef-*.jpg) and its own per-card video. Neither has a review entry, and loadMobileReview only ever blocks entries whose source matches ^images/. Pose views cannot reach them (they are bound to a reviewed sha256), and natural narration cannot reach them (exact text match against the static manifest), but the images and videos themselves are shown unreviewed. Fixing this well means a review dimension for runtime uploads, which is a design decision for the coordinator rather than a night repair.",
+    "production data": "data/ is gitignored, so I cannot say how many practice videos or uploaded images exist in production, nor whether any sits on a live card."
+  },
+  "spending": {
+    "paidGeneration": "none; no image, speech or API generation was performed or requested",
+    "newCredentials": "none",
+    "purchases": "none"
+  },
+  "nextAction": "Awaiting coordinator review. Remaining work needs either a human (listening, clinical approval) or authorisation to re-render 58 source sheets."
+}
