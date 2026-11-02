@@ -22,7 +22,9 @@
     "unreviewed": 314,
     "approved": 0,
     "poseGeometryApproved": 156,
-    "poseStatic": 163
+    "poseStatic": 163,
+    "brandMarkCovered": 215,
+    "brandMarkAbsent": 104
   },
   "entries": [
     {
@@ -80,6 +82,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -137,6 +149,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -165,6 +187,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -193,6 +225,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Binnen de uitsnedes staat 112 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -221,6 +263,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -278,6 +330,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -335,6 +397,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -392,6 +464,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -421,6 +503,16 @@
         "status": "static",
         "reason": "In houding 1 staat een losse handgreep naast het figuur die niet als voorwerp van deze houding te verantwoorden is, en beide figuren staan rechtop: de dip zelf is niet afgebeeld.",
         "rejectedByReviewer": true
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -478,6 +570,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -535,6 +637,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -563,6 +675,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -591,6 +713,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -648,6 +780,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -705,6 +847,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -733,6 +885,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De silhouetten van beide houdingen overlappen voor 93%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -761,6 +923,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -818,6 +990,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -875,6 +1057,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -903,6 +1095,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Binnen de uitsnedes staat 176 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -931,6 +1133,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -959,6 +1171,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Binnen de uitsnedes staat 112 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -987,6 +1209,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1044,6 +1276,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1072,6 +1314,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1129,6 +1381,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1157,6 +1419,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1214,6 +1486,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1271,6 +1553,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1299,6 +1591,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1327,6 +1629,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1355,6 +1667,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1412,6 +1734,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1440,6 +1772,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1497,6 +1839,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1525,6 +1877,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1582,6 +1944,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1610,6 +1982,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1638,6 +2020,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1666,6 +2058,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1723,6 +2125,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1780,6 +2192,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1837,6 +2259,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1865,6 +2297,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1922,6 +2364,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -1979,6 +2431,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2036,6 +2498,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2093,6 +2565,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2150,6 +2632,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2207,6 +2699,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2264,6 +2766,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2321,6 +2833,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2349,6 +2871,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2406,6 +2938,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2434,6 +2976,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2491,6 +3043,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2548,6 +3110,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2605,6 +3177,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2633,6 +3215,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2690,6 +3282,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2747,6 +3349,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2804,6 +3416,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2861,6 +3483,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2918,6 +3550,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -2946,6 +3588,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3003,6 +3655,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3060,6 +3722,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3117,6 +3789,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3174,6 +3856,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3231,6 +3923,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3288,6 +3990,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3345,6 +4057,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3374,6 +4096,16 @@
         "status": "static",
         "reason": "In houding 1 staat naast het eigen opstapje een los lichtblauw blok dat niet bij de oefening hoort.",
         "rejectedByReviewer": true
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3431,6 +4163,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3488,6 +4230,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3518,6 +4270,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3575,6 +4337,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3632,6 +4404,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3689,6 +4471,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3746,6 +4538,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3803,6 +4605,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3860,6 +4672,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3917,6 +4739,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -3974,6 +4806,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4031,6 +4873,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4088,6 +4940,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4145,6 +5007,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4202,6 +5074,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4259,6 +5141,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4316,6 +5208,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4373,6 +5275,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4430,6 +5342,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4487,6 +5409,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4544,6 +5476,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4601,6 +5543,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4629,6 +5581,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4686,6 +5648,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4743,6 +5715,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4800,6 +5782,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4857,6 +5849,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4914,6 +5916,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -4971,6 +5983,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5028,6 +6050,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5085,6 +6117,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5142,6 +6184,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5199,6 +6251,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5256,6 +6318,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5313,6 +6385,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5370,6 +6452,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5427,6 +6519,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5484,6 +6586,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5541,6 +6653,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5569,6 +6691,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5597,6 +6729,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "3 figuren gevonden; welk paar bedoeld is, staat niet vast."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5654,6 +6796,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5711,6 +6863,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5768,6 +6930,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5825,6 +6997,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5882,6 +7064,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5939,6 +7131,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -5996,6 +7198,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6053,6 +7265,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6110,6 +7332,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6167,6 +7399,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6224,6 +7466,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6281,6 +7533,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6309,6 +7571,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6337,6 +7609,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6365,6 +7647,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6393,6 +7685,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Binnen de uitsnedes staat 80 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6421,6 +7723,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6449,6 +7761,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6506,6 +7828,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6534,6 +7866,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6591,6 +7933,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6619,6 +7971,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6676,6 +8038,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6704,6 +8076,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6732,6 +8114,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6760,6 +8152,16 @@
       "poseGeometry": {
         "status": "withheld",
         "reason": "De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6790,6 +8192,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6818,6 +8230,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6846,6 +8268,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6903,6 +8335,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6931,6 +8373,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -6959,6 +8411,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7016,6 +8478,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7044,6 +8516,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7101,6 +8583,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7158,6 +8650,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7215,6 +8717,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7243,6 +8755,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7300,6 +8822,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7328,6 +8860,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7356,6 +8898,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Binnen de uitsnedes staat 176 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7413,6 +8965,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7441,6 +9003,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7469,6 +9041,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7497,6 +9079,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Binnen de uitsnedes staat 256 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7554,6 +9146,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7582,6 +9184,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7639,6 +9251,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7696,6 +9318,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7753,6 +9385,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7810,6 +9452,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7838,6 +9490,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7895,6 +9557,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -7952,6 +9624,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8009,6 +9691,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8037,6 +9729,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8065,6 +9767,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8122,6 +9834,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8150,6 +9872,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8207,6 +9939,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8264,6 +10006,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8321,6 +10073,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8378,6 +10140,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8435,6 +10207,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8463,6 +10245,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8520,6 +10312,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8577,6 +10379,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8634,6 +10446,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8691,6 +10513,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8748,6 +10580,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8776,6 +10618,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De silhouetten van beide houdingen overlappen voor 86%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8833,6 +10685,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8890,6 +10752,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8947,6 +10819,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -8975,6 +10857,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9032,6 +10924,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9060,6 +10962,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9117,6 +11029,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9174,6 +11096,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9231,6 +11163,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9259,6 +11201,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9287,6 +11239,16 @@
       "poseGeometry": {
         "status": "withheld",
         "reason": "De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9315,6 +11277,16 @@
       "poseGeometry": {
         "status": "withheld",
         "reason": "De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9372,6 +11344,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9400,6 +11382,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9457,6 +11449,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9485,6 +11487,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9513,6 +11525,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9570,6 +11592,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9627,6 +11659,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9655,6 +11697,16 @@
       "poseGeometry": {
         "status": "withheld",
         "reason": "De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9683,6 +11735,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9740,6 +11802,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9768,6 +11840,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9825,6 +11907,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9853,6 +11945,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9881,6 +11983,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9938,6 +12050,16 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9966,6 +12088,16 @@
       "poseGeometry": {
         "status": "withheld",
         "reason": "De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -9994,6 +12126,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -10022,6 +12164,16 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": true,
+        "cover": {
+          "x": 14,
+          "y": 14,
+          "w": 178,
+          "h": 58
+        },
+        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
       }
     },
     {
@@ -10053,6 +12205,11 @@
         "status": "static",
         "reason": "De twee afgebeelde standen zijn afwisselende standen van dezelfde sprongoefening, geen begin- en eindhouding van één beweging. output/mobile-lunge-v9-provenance.json stelt expliciet dat de sprongovergang niet is goedgekeurd.",
         "rejectedByReviewer": true
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "afwijkend formaat 1199x1312"
       }
     },
     {
@@ -10110,6 +12267,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -10167,6 +12329,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -10224,6 +12391,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -10252,6 +12424,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Binnen de uitsnedes staat 384 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -10309,6 +12486,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -10366,6 +12548,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -10394,6 +12581,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Binnen de uitsnedes staat 288 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -10451,6 +12643,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -10508,6 +12705,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -10565,6 +12767,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -10593,6 +12800,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De silhouetten van beide houdingen overlappen voor 91%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -10650,6 +12862,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -10707,6 +12924,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -10764,6 +12986,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -10821,6 +13048,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -10878,6 +13110,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -10935,6 +13172,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -10992,6 +13234,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11049,6 +13296,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11077,6 +13329,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11105,6 +13362,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11133,6 +13395,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11190,6 +13457,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11247,6 +13519,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11275,6 +13552,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11303,6 +13585,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11360,6 +13647,11 @@
         "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11388,6 +13680,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Binnen de uitsnedes staat 32 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11416,6 +13713,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De silhouetten van beide houdingen overlappen voor 91%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11444,6 +13746,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Losse voorwerpen horen bij geen of bij beide figuren: 20x40@0,604."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11472,6 +13779,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11500,6 +13812,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11528,6 +13845,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11556,6 +13878,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11584,6 +13911,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11612,6 +13944,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11640,6 +13977,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11670,6 +14012,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11698,6 +14045,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11726,6 +14078,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11754,6 +14111,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11782,6 +14144,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11810,6 +14177,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11838,6 +14210,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11866,6 +14243,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11894,6 +14276,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11922,6 +14309,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11950,6 +14342,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -11978,6 +14375,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12006,6 +14408,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12034,6 +14441,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12062,6 +14474,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12090,6 +14507,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12118,6 +14540,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12146,6 +14573,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12174,6 +14606,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12202,6 +14639,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12230,6 +14672,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12258,6 +14705,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12286,6 +14738,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12314,6 +14771,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12342,6 +14804,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12370,6 +14837,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12398,6 +14870,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12426,6 +14903,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12454,6 +14936,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12482,6 +14969,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12510,6 +15002,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12538,6 +15035,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12566,6 +15068,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12596,6 +15103,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12624,6 +15136,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12652,6 +15169,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12680,6 +15202,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12708,6 +15235,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12736,6 +15268,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12764,6 +15301,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12792,6 +15334,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12820,6 +15367,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12848,6 +15400,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12876,6 +15433,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12904,6 +15466,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12932,6 +15499,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12960,6 +15532,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12988,6 +15565,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13016,6 +15598,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13044,6 +15631,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13072,6 +15664,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13100,6 +15697,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13128,6 +15730,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13156,6 +15763,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13184,6 +15796,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13212,6 +15829,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13240,6 +15862,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13268,6 +15895,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13296,6 +15928,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13324,6 +15961,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13352,6 +15994,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13380,6 +16027,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13408,6 +16060,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13436,6 +16093,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13464,6 +16126,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -13492,6 +16159,11 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     }
   ]

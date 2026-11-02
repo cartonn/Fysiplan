@@ -1,0 +1,84 @@
+{
+  "gemaakt": "2026-11-02T22:42:07.080Z",
+  "viewport": "390x844 @2x",
+  "stappen": [
+    {
+      "wat": "miniatuur Squat",
+      "ingebakkenMerk": true,
+      "afgedekt": true,
+      "blauwLinksboven": 0
+    },
+    {
+      "wat": "miniatuur Dead bug",
+      "ingebakkenMerk": true,
+      "afgedekt": true,
+      "blauwLinksboven": 0
+    },
+    {
+      "wat": "miniatuur Anteflexie armen",
+      "ingebakkenMerk": true,
+      "afgedekt": true,
+      "blauwLinksboven": 0
+    },
+    {
+      "wat": "miniatuur Step up",
+      "ingebakkenMerk": true,
+      "afgedekt": true,
+      "blauwLinksboven": 0
+    },
+    {
+      "wat": "houdingen: merk",
+      "tekst": "Fysiplan",
+      "breedte": 61,
+      "hoogte": 11,
+      "inktOnderMerk": 0,
+      "fotoKaderVerborgen": true
+    },
+    {
+      "wat": "vergrote foto Front raises",
+      "ingebakkenMerk": true,
+      "afgedekt": true,
+      "blauwInBeeldLinksboven": 0,
+      "eigenMerkBlauw": 398,
+      "merkBovenBeeld": true,
+      "schermafdruk": "03-front-raises.png"
+    },
+    {
+      "wat": "vergrote foto Barbell neck press",
+      "ingebakkenMerk": true,
+      "afgedekt": true,
+      "blauwInBeeldLinksboven": 0,
+      "eigenMerkBlauw": 398,
+      "merkBovenBeeld": true,
+      "schermafdruk": "04-barbell-neck-press.png"
+    },
+    {
+      "wat": "vergrote foto Yoga deep squat",
+      "ingebakkenMerk": true,
+      "afgedekt": true,
+      "blauwInBeeldLinksboven": 0,
+      "eigenMerkBlauw": 398,
+      "merkBovenBeeld": true,
+      "schermafdruk": "05-yoga-deep-squat.png"
+    },
+    {
+      "wat": "vergrote foto Foam roller calf",
+      "ingebakkenMerk": false,
+      "afgedekt": false,
+      "blauwInBeeldLinksboven": 0,
+      "eigenMerkBlauw": 398,
+      "merkBovenBeeld": true,
+      "schermafdruk": "06-foam-roller-calf.png"
+    },
+    {
+      "wat": "vergrote foto Seated biceps curl",
+      "ingebakkenMerk": false,
+      "afgedekt": false,
+      "blauwInBeeldLinksboven": 0,
+      "eigenMerkBlauw": 398,
+      "merkBovenBeeld": true,
+      "schermafdruk": "07-seated-biceps-curl.png"
+    }
+  ],
+  "fouten": []
+}

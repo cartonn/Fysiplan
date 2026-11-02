@@ -18,9 +18,9 @@
     "78f7d99 voortgang afgestemd op code",
     "3bf37b4 tekenen en voorlezen kiezen dezelfde oefening; toestelstem: late end/error breekt nieuwe beurt niet af"
   ],
-  "lastUpdate": "2026-11-02T23:32:30+0100",
+  "lastUpdate": "2026-11-02T23:43:04+0100",
   "lastUpdateNote": "Machineklok (date +%FT%T%z) op het moment van schrijven.",
-  "batch": 7,
+  "batch": 8,
   "deployed": false,
   "pushed": false,
   "clinicalApproval": false,
@@ -30,7 +30,8 @@
     "before-after-fp_5db16db1c4b85956.png supports one example only": "Agreed and kept as the scope of that artefact. The per-exercise record is content/mobile-pose-approvals.json (162 inspected assets, hash-bound) plus output/pose-review/inspection-log.md.",
     "22:06Z sendMedia suffix bytes=-500 gaf bytes 0..500": "Opgelost in 1ba3434 met lib/byte-range.js voor BEIDE routes. De tweede route (/uploads/ voor praktijkvideo's) had dezelfde fout al in productie 9bf215a. Aangetoond met de vorige server.js naast de nieuwe: oud \"bytes 0-500/97612\" (stem) en \"bytes 0-500/4099\" (praktijkvideo), nieuw \"bytes 97112-97611/97612\" en \"bytes 3599-4098/4099\". 36 tabelgevallen in scripts/test-byte-range.mjs en 2x12 byte-voor-byte HTTP-gevallen in scripts/test-mobile-levering.mjs.",
     "22:06Z watchdog stopt na onplaying": "Opgelost in 3dcf70b: waiting/stalled starten een wachttijd als er geen loopt (geen verlenging), playing en echte tijdsvoortgang heffen hem op, elk fragment begint opnieuw, stop() ruimt zes handlers op. Nieuwe tests falen aantoonbaar tegen de vorige noor-audio.js (ontimeupdate bestond niet).",
-    "22:06Z verouderde remaining-regels": "Afgestemd op de code; zie reconciliation hieronder met bestand:regel per bewering."
+    "22:06Z verouderde remaining-regels": "Afgestemd op de code; zie reconciliation hieronder met bestand:regel per bewering.",
+    "22:36Z twee schrijvers in dezelfde werkmap": "Gezien. De ongecommitte wijzigingen van de gestopte achtergrondsessie (scripts/kaart-browsercheck.mjs, output/kaart-browsercheck.json, output/kaart-browsercheck-alle.json, output/pose-review/browser/01-kaart.png) zijn niet aangeraakt en niet meegecommit. De merkwijziging laat lbimg.style.display bij de houdingen op none staan, zodat die controle blijft werken."
   },
   "rootCause": {
     "1-dead-code": "public/kaart.html built demo.info without poseMetadata while demoSplitsing required poseMetadata.reviewStatus==='approved'. Zero writers existed anywhere in the repository, so the pose view was unreachable for all 319 exercises. Confirmed independently by a read-only audit subagent.",
@@ -59,7 +60,8 @@
     "Regression test: the card never silently substitutes a line drawing for an exercise photo.",
     "lib/byte-range.js + scripts/test-byte-range.mjs: één RFC 9110-parser voor stemopnames en praktijkvideo's (suffix, open, afgekapt, onvervulbaar, ongeldig, meervoudig); 416 krijgt no-store.",
     "public/noor-audio.js: wachttijd ook bij haperen halverwege een fragment, met opruimtests.",
-    "3bf37b4: één opzoekregel voor tekenen en voorlezen + beurtbewaking toestelstem, met regressietest in scripts/test-mobile-media-controls.mjs"
+    "3bf37b4: één opzoekregel voor tekenen en voorlezen + beurtbewaking toestelstem, met regressietest in scripts/test-mobile-media-controls.mjs",
+    "Eén merk op de patiëntkaart: ingebakken merk gemeten en afgedekt, eigen merk boven elke vergrote foto en bij de houdingen (scripts/brand-mark.mjs, test-mobile-merk.mjs, kaart-merkcheck.mjs)."
   ],
   "poseOutcome": {
     "totalAvailableAssets": 319,
@@ -102,9 +104,10 @@
     "toestelstem: een laat end van een eerder gestopte voorlezing brak een nieuwe af; zonder onerror bleef de knop op Stop; aria-pressed ontbrak op deze route"
   ],
   "testEvidence": {
-    "npm run test:mobile": "negen poorten groen: byte-ranges (36 gevallen), media review (319, 5 afkeuringen, 156 uitsnedes, steekproef opnieuw gemeten), narration review (319, 15 houds, 67 opnames), media controls + videoherkomst, pose layout + kaartweergave (canvas-opdracht), noor-audio inclusief tussentijdse wachttijd, check-noor-assets --partial (67 aanwezig, 252 ontbreken), levering (audio/mpeg, 2x12 range-gevallen byte voor byte, sleutels, voorbeeldkaart hash-gecontroleerd) | 2026-11-02T23:25:18+0100: opnieuw groen na 3bf37b4, inclusief \"Opzoeken en toestelstem: tekenen en voorlezen kiezen dezelfde oefening; een oude voorlezing kan de nieuwe niet afbreken\"",
-    "npm run build": "groen (2026-11-02T23:25:18+0100)",
-    "regressiebewijs": "de nieuwe range-gevallen en de nieuwe wachttijdtests zijn elk gedraaid tegen de vorige code en falen daar"
+    "npm run test:mobile": "negen poorten groen: byte-ranges (36 gevallen), media review (319, 5 afkeuringen, 156 uitsnedes, steekproef opnieuw gemeten), narration review (319, 15 houds, 67 opnames), media controls + videoherkomst, pose layout + kaartweergave (canvas-opdracht), noor-audio inclusief tussentijdse wachttijd, check-noor-assets --partial (67 aanwezig, 252 ontbreken), levering (audio/mpeg, 2x12 range-gevallen byte voor byte, sleutels, voorbeeldkaart hash-gecontroleerd) | 2026-11-02T23:25:18+0100: opnieuw groen na 3bf37b4, inclusief \"Opzoeken en toestelstem: tekenen en voorlezen kiezen dezelfde oefening; een oude voorlezing kan de nieuwe niet afbreken\" | 2026-11-02T23:43:04+0100: groen met de nieuwe merktest",
+    "npm run build": "groen (2026-11-02T23:43:04+0100)",
+    "regressiebewijs": "de nieuwe range-gevallen en de nieuwe wachttijdtests zijn elk gedraaid tegen de vorige code en falen daar",
+    "node scripts/kaart-merkcheck.mjs": "groen (2026-11-02T23:43:04+0100): 4 miniaturen, 5 vergrote foto’s (3 met, 2 zonder ingebakken merk), houdingen"
   },
   "separationOfReviewKinds": {
     "code-test pass": "done: npm run test:mobile and npm run build",
@@ -122,7 +125,7 @@
     "De Nederlandse luisterknop spreekt de dosering en de veiligheidszin niet uit (public/kaart.html:1379 levert alleen naam+uitleg); dat kan niet met de bestaande opnames. Wel staat er sinds 4aec046 bij wat de stem wel en niet uitlegt (public/kaart.html:1117).",
     "Productiedata (data/) zijn niet zichtbaar in deze werkmap: aantal praktijkvideo's en geüploade beelden in productie onbekend.",
     "Statische beelden: 6 lijken inhoudelijk fout en 17 zijn onzeker (output/pose-review/static/inspection.md); vraagt een fysiotherapeut en eventueel nieuw beeld.",
-    "Merk op statische beelden: 85 zonder en 73 met ingebakken merk. Keuze nodig: de kaart tekent het merk zelf (en ingebakken merken worden dan dubbel) of de beelden worden gelijkgetrokken."
+    "Witte hoekjes in de haren bij Front raises, Shoulder rotation (shrugs) en Yoga deep squat zitten in de bron (ingebakken merkvak); alleen met beeldbewerking op te lossen."
   ],
   "knownGapsNotFixed": {
     "practice-uploaded media": "Praktijkfoto's (uploads/oef-*.jpg) en praktijk-/kaartvideo's hebben geen beoordelingsregel en zijn dus onbeoordeeld zichtbaar. Een afkeuring voor zo'n bron werkt wel (public/kaart.html:649, :675), maar wordt niet automatisch aangemaakt. Houdingweergave en natuurlijke stem kunnen ze niet bereiken (gebonden aan beoordeelde sha256 resp. exacte tekst). Bij praktijkvideo's staat sinds 9ef09c8 dat beeld en tekst uit verschillende bron komen. Sinds 1ba3434 leveren praktijkvideo's correcte byte-ranges.",
@@ -133,7 +136,7 @@
     "newCredentials": "none",
     "purchases": "none"
   },
-  "nextAction": "Coördinator: 1ba3434, 3dcf70b en 3bf37b4 nalopen; besluiten over (a) de 6 lijkt-fout- en 17 onzekere statische beelden, (b) merkconsistentie statische beelden, (c) welke van de 158 statische bladen opnieuw gerenderd moeten worden, (d) beoordelingsweg praktijkuploads, (e) YouTube-link vs. catalogusvideo.",
+  "nextAction": "Coördinator: 1ba3434, 3dcf70b en 3bf37b4 nalopen; besluiten over (a) de 6 lijkt-fout- en 17 onzekere statische beelden, (c) welke van de 158 statische bladen opnieuw gerenderd moeten worden, (d) beoordelingsweg praktijkuploads, (e) YouTube-link vs. catalogusvideo.",
   "handoverReport": "output/claude-night-report.md",
   "perExerciseList": "output/mobile-pose-per-exercise.md",
   "inspectionLog": "output/pose-review/inspection-log.md",
@@ -216,6 +219,23 @@
       ],
       "merk": "85 van 158 statische beelden (nr. 74–158) hebben geen Fysiplan-merk, 73 wel: op de kaart wisselt het merk per oefening",
       "nietVeranderd": "geen beeld, beoordelingsbestand of kaartcode aangepast; besluiten liggen bij de coördinator/fysiotherapeut"
+    },
+    "merkFix": {
+      "done": "2026-11-02T23:43:04+0100",
+      "probleem": "Merk wisselde per oefening: 215 van 319 beelden hebben het Fysiplan-merk ingebakken linksboven, 104 niet (85 statisch, 19 met houdingen). Bij de houdingen zette de kaart een eigen tekstmerk, bij de vergrote foto niets.",
+      "oplossing": [
+        "De kaart zet zelf één merk (icoon + Fysiplan, gedeelde stijl .fpmerk/.demomerk) boven elke vergrote foto en bij de houdingen op dezelfde plek, buiten het beeld.",
+        "Een ingebakken merk wordt afgedekt met een wit vlak van 178x58 bronpixels. Alleen als scripts/brand-mark.mjs op de bronpixels bewijst dat de rand rond dat vlak volledig wit is (215/215 ja), alleen bij exact de gemeten afmetingen, en in de vergrote foto pas na de sha256-controle van het getoonde pad. Anders blijft het beeld heel.",
+        "Miniaturen: hetzelfde vlak volgens object-fit:contain, zodat de blauwe stip niet bij de ene oefening wel en de andere niet staat.",
+        "Bronbeelden onveranderd; public/mobile-media-review.json krijgt per regel brandMark (verder byte-gelijk geverifieerd)."
+      ],
+      "tests": [
+        "scripts/test-mobile-media-review.mjs meet alle 319 opnieuw op de bronpixels",
+        "scripts/test-mobile-merk.mjs: laden, afmetingen, hash, verouderde beurt, miniatuurmeetkunde (in npm run test:mobile)",
+        "scripts/kaart-merkcheck.mjs: headless Chromium 390x844, 0 blauwe merkpixels in miniaturen en vergrote foto’s, eigen merk boven het beeld, geen inkt onder het merk bij de houdingen; schermafdrukken in output/pose-review/merk/"
+      ],
+      "nietOpgelost": "Het witte hoekje dat het ingebakken merkvak uit de haren snijdt (Front raises, Shoulder rotation (shrugs), Yoga deep squat) zit in de bron; dat vraagt beeldbewerking.",
+      "scope": "alleen de patiëntkaart (public/kaart.html); landingspagina en therapeutenapp niet aangepast"
     }
   }
 }

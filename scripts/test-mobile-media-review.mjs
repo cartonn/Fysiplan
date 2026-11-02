@@ -3,6 +3,7 @@ import fs from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {exerciseId} from '../lib/exercise-id.js';
 import {validatePosePair} from '../lib/pose-frames.js';
+import {measureBrandMark,MERK_AFDEKKING} from './brand-mark.mjs';
 const manifest=JSON.parse(await fs.readFile('public/mobile-media-review.json','utf8'));
 const approvals=JSON.parse(await fs.readFile('content/mobile-pose-approvals.json','utf8'));
 const inspected=new Map(approvals.inspectedAssets.map(a=>[a.assetSha256,a]));
@@ -97,4 +98,29 @@ for(const e of available){
 }
 assert.equal(manifest.schemaVersion,2);
 assert(manifest.poseWarning.includes('geen klinische goedkeuring'));
-console.log('PASS: 319 source-linked assets, hashes, five rejections; '+approvedPoses.length+' visueel gecontroleerde uitsnedes, geen klinische goedkeuring afgeleid.');
+// Ingebakken merk: elk afdekvlak is opnieuw gemeten op de bronpixels van exact dit bestand,
+// zodat het bestand niet kan afdrijven van de meetcode. Afdekken mag alleen het vaste vlak,
+// alleen op 800x1200, en nooit als iets anders dan het merk de rand ervan raakt.
+let afgedekt=0;
+for(const r of manifest.entries){
+  const m=await measureBrandMark(await fs.readFile('public/'+r.source));
+  assert.ok(r.brandMark,'brandMark ontbreekt: '+r.name);
+  if(m.coverable){
+    afgedekt++;
+    assert.deepEqual(r.brandMark.cover,MERK_AFDEKKING,r.name);
+    assert.equal(r.width,800,r.name);assert.equal(r.height,1200,r.name);
+    assert.equal(m.inkInRing,0,r.name);
+  }else assert.equal(r.brandMark.cover,null,'afdekking zonder bewezen vrij vlak: '+r.name);
+  assert.equal(r.brandMark.present,m.present,r.name);
+}
+assert.equal(afgedekt,215,'215 beelden met een afdekbaar ingebakken merk');
+assert.equal(manifest.summary.brandMarkCovered,215);
+assert.equal(manifest.summary.brandMarkAbsent,104);
+// de drie beelden waar het ingebakken witte vak een hoekje uit de haren snijdt: het
+// afdekvlak ligt binnen dat vak en maakt het niet groter
+for(const naam of ['Front raises','Shoulder rotation (shrugs)','Yoga deep squat'])
+  assert.deepEqual(manifest.entries.find(r=>r.name===naam).brandMark.cover,MERK_AFDEKKING,naam);
+// een beeld zonder merk krijgt nooit een vlak, ook niet als er linksboven haar staat
+for(const naam of ['Foam roller hamstring','Foam roller calf','Standing chair heel/toe','Alternating lunge jumps'])
+  assert.equal(manifest.entries.find(r=>r.name===naam).brandMark.cover,null,naam);
+console.log('PASS: 319 source-linked assets, hashes, five rejections; '+approvedPoses.length+' visueel gecontroleerde uitsnedes, 215 ingebakken merken opnieuw gemeten en afdekbaar, geen klinische goedkeuring afgeleid.');

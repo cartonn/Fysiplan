@@ -16,7 +16,7 @@ Reproduceren: `node scripts/render-static-review.mjs && node scripts/measure-sta
 
 - weergave in orde: 146, met een zichtbare afwijking in het beeld zelf: 12
 - betekenis plausibel: 135, onzeker: 17, lijkt fout: 6
-- **merk:** 85 van de 158 statische beelden (nr. 74–158: cardio, Swiss ball, foam roller, med ball, mobiliteit, stretch, stoeloefeningen) hebben **geen** Fysiplan-merk; nr. 1–73 hebben het merk ingebakken linksboven. Op de kaart wisselt het merk dus per oefening. Bij de houdingweergave tekent de kaart zelf het merk; bij statische beelden niet.
+- **merk:** 85 van de 158 statische beelden (nr. 74–158: cardio, Swiss ball, foam roller, med ball, mobiliteit, stretch, stoeloefeningen) hebben **geen** Fysiplan-merk; nr. 1–73 hebben het merk ingebakken linksboven. Op de kaart wisselde het merk dus per oefening. **Opgelost in sessie 3:** de kaart zet zelf één merk boven elke vergrote foto en dekt een ingebakken merk alleen af met een gemeten, bewezen vrij vlak (scripts/brand-mark.mjs).
 - **achtergrond:** gemeten op een rand van 6 px is alles vrijwel wit; vier beelden zitten net onder 245 gemiddeld (nr. 25, 31, 47, 109: 240–243). Bij nr. 85 zitten twee foto’s met een zichtbare naad onder elkaar.
 - **formaat:** 157× 800×1200; nr. 74 (Alternating lunge jumps, v9) is 1199×1312 en wijkt ook in tekenstijl af.
 - **merkvak over het hoofd:** bij nr. 9, 21 en 49 snijdt het ingebakken merkvak een recht hoekje uit de haren van de linker figuur.

@@ -105,7 +105,15 @@
   .lightbox.open{display:flex}
   /* zelfde rustige uitlegblok als onder de video's, hier onder de vergrote foto */
   .lightbox .lbuitleg{border:none;border-radius:14px;margin-top:8px;max-width:min(92vw,440px);cursor:default}
-  .lightbox img{max-width:100%;max-height:82vh;border-radius:18px;background:#fff;padding:10px}
+  /* vergrote foto: wit kader met bovenin altijd hetzelfde Fysiplan-merk, buiten het beeld.
+     Een ingebakken merk in het beeld wordt met een gemeten wit vlak afgedekt (.merkdek),
+     zodat het merk niet per oefening wisselt; zie scripts/brand-mark.mjs */
+  .lightbox .lbfoto{position:relative;background:#fff;border-radius:18px;padding:34px 10px 10px;max-width:100%}
+  .lightbox .lbbeeld{position:relative;display:block;width:fit-content;max-width:100%;margin:0 auto;line-height:0}
+  .lightbox #lbimg{display:block;max-width:100%;max-height:calc(82vh - 44px);border-radius:8px}
+  .lightbox .lbfoto.wacht .lbbeeld{visibility:hidden}
+  .lightbox .lbfoto .fpmerk{position:absolute;left:20px;top:18px}
+  .merkdek{position:absolute;background:#fff;pointer-events:none}
   .lightbox .lbnaam{position:absolute;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom));
     text-align:center;color:#fff;font:600 15px/1.4 var(--disp);padding:0 20px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
   /* demonstratiestand: de twee houdingen uit het oefenbeeld om en om laten zien */
@@ -128,13 +136,17 @@
   .lightbox .demouitleg{text-align:center;font:400 12.5px/1.5 var(--disp);color:#6b6455;
     padding:2px 10px 2px;max-width:420px;margin:0 auto}
   /* het merk staat buiten de houding-uitsnede en bij beide houdingen op dezelfde plek */
-  .lightbox .demobeeld .demomerk{position:absolute;left:10px;top:8px;z-index:2;
-    font:700 11px/1 var(--disp);letter-spacing:.02em;color:#2f6bd8;pointer-events:none}
+  .lightbox .demobeeld .demomerk{position:absolute;left:10px;top:8px;z-index:2}
+  /* één merk voor de hele kaart: icoon + naam, bij de foto en bij de houdingen gelijk */
+  .fpmerk,.lightbox .demobeeld .demomerk{display:inline-flex;align-items:center;gap:4px;
+    font:700 11px/1 var(--disp);letter-spacing:.02em;color:#1d2433;pointer-events:none}
+  .fpmerk::before,.lightbox .demobeeld .demomerk::before{content:"";flex:0 0 11px;width:11px;height:11px;
+    border-radius:3px;background:#2456a6 url(/images/icoon-192.png) center/cover no-repeat}
   .lightbox .demobron{text-align:center;font:400 11px/1.45 var(--disp);color:#8a8375;
     padding:6px 10px 2px;max-width:420px;margin:0 auto}
   @media (prefers-reduced-motion:reduce){.lightbox .demobeeld canvas.boven{transition:none}}
   @media (prefers-reduced-motion:no-preference){
-    .lightbox.open img{animation:lbin .18s ease-out}
+    .lightbox.open .lbfoto{animation:lbin .18s ease-out}
     @keyframes lbin{from{transform:scale(.94);opacity:0}to{transform:none;opacity:1}}
   }
   .oefinfo{flex:1;min-width:0}
@@ -548,7 +560,7 @@
     <span id="gemaakt">Gemaakt met</span> <a href="https://fysiplan.nl/v2">Fysiplan</a> · <a id="privlink" href="/privacy" target="_blank" rel="noopener">Privacy</a></span>
   </div>
 </div>
-<div class="lightbox" id="lightbox" role="dialog" aria-label="vergrote oefenfoto"><div class="lbknoppen"><button type="button" class="lbknop" id="lbdemoKnop" aria-pressed="false" hidden></button><button type="button" class="lbknop" id="lbgeluid" aria-pressed="false" hidden></button></div><img id="lbimg" alt=""/><div class="vtekst lbuitleg" id="lbuitleg" hidden></div><div class="demowrap" id="lbdemo" hidden></div><div class="lbnaam" id="lbnaam"></div></div>
+<div class="lightbox" id="lightbox" role="dialog" aria-label="vergrote oefenfoto"><div class="lbknoppen"><button type="button" class="lbknop" id="lbdemoKnop" aria-pressed="false" hidden></button><button type="button" class="lbknop" id="lbgeluid" aria-pressed="false" hidden></button></div><div class="lbfoto" id="lbfoto"><span class="fpmerk" aria-hidden="true">Fysiplan</span><span class="lbbeeld"><img id="lbimg" alt=""/><i class="merkdek" id="lbdek" hidden></i></span></div><div class="vtekst lbuitleg" id="lbuitleg" hidden></div><div class="demowrap" id="lbdemo" hidden></div><div class="lbnaam" id="lbnaam"></div></div>
 <div class="appbanner" id="appbanner"><img src="/images/icoon-192.png" alt=""/><span class="tekst" id="ab_tekst"></span><button type="button" class="doen" id="ab_doen"></button><button type="button" class="weg" id="ab_weg" aria-label="sluiten">×</button></div>
 <a class="belknop" id="belknop" style="display:none" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/></svg><span id="beltxt">Bel de praktijk</span></a>
 <div class="fout" id="fout" style="display:none">
@@ -615,7 +627,7 @@
   })();
   var VERT={};
   var K=null;
-  var mediaReviewReady=false,blockedMedia={},explanationHolds=[],poseKeuring={},bronGecontroleerd={},hercontroleGedaan={};
+  var mediaReviewReady=false,blockedMedia={},explanationHolds=[],poseKeuring={},merkDek={},bronGecontroleerd={},hercontroleGedaan={};
   function mediaSource(o){return String(o&&(o.kaartImg||o.img)||'').replace(/^\/+/, '').replace(/^v2\//,'');}
   function mediaKey(o){return String(o&&o.exerciseId||'')+'|'+mediaSource(o);}
   function mediaWithheld(o){return !mediaReviewReady||!!blockedMedia[mediaKey(o)];}
@@ -630,6 +642,42 @@
   }
   function uitsnedenOverlappen(a,b){
     return a.x<b.x+b.w&&b.x<a.x+a.w&&a.y<b.y+b.h&&b.y<a.y+a.h;
+  }
+  // Het afdekvlak van een ingebakken merk als fractie van het beeld, of null. Alleen als
+  // het geladen bestand precies de gemeten afmetingen heeft; anders blijft het beeld heel.
+  function merkVlak(m,breed,hoog){
+    if(!m||!m.cover||breed!==m.width||hoog!==m.height)return null;
+    var c=m.cover;
+    return {l:c.x/breed,t:c.y/hoog,w:c.w/breed,h:c.h/hoog};
+  }
+  // Miniaturen (object-fit:contain): het vlak volgt het werkelijk getekende beeld binnen
+  // het kader. Op 88 px is dat een paar pixels wit op wit; het haalt de blauwe stip weg
+  // die anders bij de ene oefening wel en bij de andere niet linksboven staat.
+  function dekMiniatuur(img){
+    var knop=img.parentNode;if(!knop)return;
+    var oud=knop.querySelector('.merkdek');if(oud)knop.removeChild(oud);
+    var v=merkVlak(merkDek[img.dataset.pose||''],img.naturalWidth,img.naturalHeight);
+    if(!v)return;
+    var cs=getComputedStyle(img);
+    var bl=parseFloat(cs.borderLeftWidth)||0,bt=parseFloat(cs.borderTopWidth)||0;
+    var pl=parseFloat(cs.paddingLeft)||0,pt=parseFloat(cs.paddingTop)||0;
+    var bw=img.clientWidth-pl-(parseFloat(cs.paddingRight)||0),bh=img.clientHeight-pt-(parseFloat(cs.paddingBottom)||0);
+    if(!(bw>0&&bh>0))return;
+    var s=Math.min(bw/img.naturalWidth,bh/img.naturalHeight);
+    var x0=bl+pl+(bw-img.naturalWidth*s)/2,y0=bt+pt+(bh-img.naturalHeight*s)/2;
+    var d=document.createElement('i');d.className='merkdek';d.setAttribute('aria-hidden','true');
+    var l=x0+v.l*img.naturalWidth*s,t=y0+v.t*img.naturalHeight*s;
+    d.style.left=Math.floor(l)+'px';d.style.top=Math.floor(t)+'px';
+    d.style.width=Math.ceil(v.w*img.naturalWidth*s+l-Math.floor(l))+'px';
+    d.style.height=Math.ceil(v.h*img.naturalHeight*s+t-Math.floor(t))+'px';
+    knop.insertBefore(d,img.nextSibling);
+  }
+  function dekMiniaturen(){
+    document.querySelectorAll('#oefs .fotoknop img').forEach(function(img){
+      if(!merkDek[img.dataset.pose||''])return;
+      if(img.complete&&img.naturalWidth)dekMiniatuur(img);
+      else img.addEventListener('load',function(){dekMiniatuur(img);},{once:true});
+    });
   }
   async function loadMobileReview(){
     var responses=await Promise.all([fetch('/mobile-media-review.json',{cache:'no-cache'}),fetch('/mobile-narration-review.json',{cache:'no-cache'})]);
@@ -647,6 +695,11 @@
       // Een afgekeurd beeld blokkeren we meteen. Eerst een hashcontrole afwachten zou
       // betekenen dat de patiënt het intussen gewoon ziet; vrijgeven vraagt bewijs.
       if(e.status==='rejected'){blockedMedia[key]={sha:String(e.assetSha256||'')};return;}
+      // Ingebakken merk: alleen een gemeten vlak bij exact dit bestand en deze afmetingen.
+      var md=e.brandMark&&e.brandMark.cover;
+      if(md&&/^[a-f0-9]{64}$/.test(String(e.assetSha256||''))&&Number.isInteger(e.width)&&Number.isInteger(e.height)&&
+        geldigeUitsnede(md,e.width,e.height))
+        merkDek[key]={source:e.source,assetSha256:e.assetSha256,width:e.width,height:e.height,cover:{x:md.x,y:md.y,w:md.w,h:md.h}};
       var p=e.poseGeometry;
       if(!p||p.status!=='geometry-approved')return;
       if(!Array.isArray(e.poses)||e.poses.length!==2)return;
@@ -1141,6 +1194,7 @@
     });
     document.getElementById('oefs').innerHTML=html||'<div class="oef"><div class="oefkop">'+esc(tr('geenoef'))+'</div></div>';
     if(teControleren.length)herzieAfgekeurd(teControleren);
+    dekMiniaturen();
 
     // ingevuld schema, alleen als er iets staat
     var rowdefs=[];for(var r2=0;r2<12;r2++)rowdefs.push('r'+r2);
@@ -1594,6 +1648,7 @@
     w.hidden=true;w.classList.remove('tweede');w.innerHTML='';
     demo.c1=demo.c2=null;
     document.getElementById('lbimg').style.display='';
+    document.getElementById('lbfoto').hidden=false;
     var luS=document.getElementById('lbuitleg');if(luS.innerHTML)luS.hidden=false;
     var k=document.getElementById('lbdemoKnop');
     k.textContent=tr('demo');k.setAttribute('aria-pressed','false');
@@ -1639,6 +1694,38 @@
       bronGecontroleerd[sleutel]=hash===p.assetSha256;
       return bronGecontroleerd[sleutel];
     }).catch(function(){bronGecontroleerd[sleutel]=false;return false;});
+  }
+  // Vergrote foto: het ingebakken merk pas afdekken als de bytes van precies dit pad bij de
+  // gemeten hash horen, net als bij de houdingen. Tot dan blijft het beeld even onzichtbaar
+  // (geen flits van het oude merk). Lukt de controle niet, dan het beeld zoals het is.
+  var merkBeurt=0;
+  function merkLightbox(sleutel){
+    var beurt=++merkBeurt;
+    var kader=document.getElementById('lbfoto'),dek=document.getElementById('lbdek'),img=document.getElementById('lbimg');
+    dek.hidden=true;
+    var m=merkDek[sleutel||'']||null;
+    var vrij=function(r){if(beurt===merkBeurt)kader.classList.remove('wacht');return r;};
+    if(!m)return Promise.resolve(vrij(false));
+    kader.classList.add('wacht');
+    // nooit langer dan even wachten: een haperend netwerk mag de foto niet verbergen
+    setTimeout(function(){vrij(false);},3000);
+    var src=img.src;
+    return new Promise(function(ok){
+      if(img.complete&&img.naturalWidth){ok(true);return;}
+      img.addEventListener('load',function(){ok(true);},{once:true});
+      img.addEventListener('error',function(){ok(false);},{once:true});
+    }).then(function(geladen){
+      if(beurt!==merkBeurt||img.src!==src)return false;
+      var v=geladen&&merkVlak(m,img.naturalWidth,img.naturalHeight);
+      if(!v)return false;
+      return bevestigBron(m,src).then(function(ok){
+        if(beurt!==merkBeurt||img.src!==src||!ok)return false;
+        dek.style.left=(v.l*100)+'%';dek.style.top=(v.t*100)+'%';
+        dek.style.width=(v.w*100)+'%';dek.style.height=(v.h*100)+'%';
+        dek.hidden=false;
+        return true;
+      });
+    }).then(vrij,function(){return vrij(false);});
   }
   var DEMO_MAAT=640,DEMO_RAND=32;
   // Woordelijk dezelfde meetkunde als poseFrameLayout in lib/pose-frames.js:
@@ -1716,6 +1803,7 @@
     beeld.setAttribute('aria-label',document.getElementById('lbnaam').textContent);
     wrap.hidden=false;
     img.style.display='none';
+    document.getElementById('lbfoto').hidden=true;
     // de demonstratie heeft zijn eigen uitleg; de losse uitleg eronder zou dubbel staan
     var luD=document.getElementById('lbuitleg');if(luD.innerHTML)luD.hidden=true;
     knop.textContent=tr('demoUit');knop.setAttribute('aria-pressed','true');
@@ -1780,6 +1868,7 @@
         demo.info={name:foto.dataset.audioNaam||'',id:foto.dataset.oefId||'',s:foto.dataset.s||'',h:foto.dataset.h||'',
           uitleg:foto.dataset.uitleg||'',poseMetadata:poseKeuring[foto.dataset.pose||'']||null};
         document.getElementById('lbimg').src=foto.src;
+        merkLightbox(foto.dataset.pose);
         var oefEl=foto.closest('.oef').querySelector('.naam');
         document.getElementById('lbnaam').textContent=oefEl?oefEl.textContent:'';
         document.getElementById('lbimg').alt=oefEl?oefEl.textContent:'';
@@ -1791,7 +1880,7 @@
         if(luTekst){
           lu.innerHTML='<div class="vtekst-label">'+esc(tr('uitlegKop'))+'</div><p>'+esc(luTekst)+'</p>';
           lu.hidden=false;
-          document.getElementById('lbimg').style.maxHeight='58vh';
+          document.getElementById('lbimg').style.maxHeight='calc(58vh - 44px)';
         }else{
           lu.hidden=true;lu.innerHTML='';
           document.getElementById('lbimg').style.maxHeight='';
