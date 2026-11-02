@@ -464,6 +464,9 @@ __FAQ_SCHEMA__
   footer .spacer{flex:1}
   footer a{font:500 13.5px/1 var(--disp);color:#c9c1ad;text-decoration:none}
   footer a:hover{color:var(--papier)}
+  footer .beoogd{max-width:var(--raster);margin:0 auto;padding:0 40px 26px;font:400 12.5px/1.55 var(--disp);color:#8f887a;font-style:normal}
+  @media (max-width:820px){footer .beoogd{padding:0 20px 26px}}
+  @media (max-width:700px){body footer .rij{padding-bottom:14px}footer .beoogd{padding-bottom:calc(100px + env(safe-area-inset-bottom))}}
   .reken .eigen-aantal{display:flex;align-items:center;gap:8px}
   .reken input[type=number]{width:110px;min-height:36px;padding:6px;border:1px solid var(--lijn);background:white;color:var(--inkt);font:inherit}
   .reken input[type=number]:focus-visible{outline:2px solid var(--blauw);outline-offset:2px}
@@ -596,11 +599,11 @@ __FAQ_SCHEMA__
         <span class="etiket">Voor jou als therapeut</span>
         <h3>Minder administratie, meer zicht op thuis</h3>
         <ul>
-          <li><span class="v"></span><div><b>Kaart klaar in &eacute;&eacute;n minuut</b><p>Kies een sjabloon per klacht of laat de AI-assistent een voorstel doen uit je eigen bibliotheek. Jij beoordeelt en beslist.</p></div></li>
+          <li><span class="v"></span><div><b>Kaart klaar in &eacute;&eacute;n minuut</b><p>Kies een sjabloon per klacht, of zoek met de zoekhulp oefeningen op lichaamsdeel en trainingsdoel. De keuze en de dosering zijn altijd van jou.</p></div></li>
           <li><span class="v"></span><div><b>Je ziet wat er thuis gebeurt</b><p>Pijnverloop, &ldquo;ik heb geoefend&rdquo;, ervaren herstel en seintjes verschijnen vanzelf bij de kaart, zonder dat je pati&euml;nt iets installeert.</p></div></li>
           <li><span class="v"></span><div><b>Niets migreren</b><p>Fysiplan werkt naast elk EPD: de PDF hangt in het dossier zoals elk document. Stoppen kan maandelijks.</p></div></li>
           <li><span class="v"></span><div><b>Jouw huisstijl, jouw bibliotheek</b><p>Logo &eacute;&eacute;n keer uploaden, eigen oefeningen en eigen video&rsquo;s toevoegen; elke kaart is herkenbaar van jouw praktijk.</p></div></li>
-          <li><span class="v"></span><div><b>Je praktijk beveiligd</b><p>Zet het kaartoverzicht achter een wachtwoord, met strikte scheiding tussen praktijken en een auditlog.</p></div></li>
+          <li><span class="v"></span><div><b>Je praktijk beveiligd</b><p>Pas met een wachtwoord op je praktijk gaat een kaart naar je pati&euml;nt. Strikte scheiding tussen praktijken, een auditlog en een verwerkersovereenkomst bij het beveiligen.</p></div></li>
         </ul>
       </div>
       <div class="hp pat">
@@ -610,7 +613,7 @@ __FAQ_SCHEMA__
           <li><span class="v"></span><div><b>Niets installeren</b><p>Papier voor wie papier prettig vindt; &eacute;&eacute;n scan voor de volledige mobiele ervaring. Geen app, geen account.</p></div></li>
           <li><span class="v"></span><div><b>In de eigen taal</b><p>De kaart schakelt naar negen talen en leest zichzelf hardop voor, ook voor wie lezen lastig is.</p></div></li>
           <li><span class="v"></span><div><b>Elke oefening uitgelegd, de meeste ook voorgedaan</b><p>Bij alle oefeningen staat een korte uitvoeringsuitleg klaar, bij de meeste ook een beweegdemonstratie.</p></div></li>
-          <li><span class="v"></span><div><b>De kaart beantwoordt vragen</b><p>Een korte vraag over de uitvoering krijgt direct uitleg. Altijd binnen wat jij voorschreef, nooit medisch advies.</p></div></li>
+          <li><span class="v"></span><div><b>De kaart beantwoordt vragen</b><p>Een korte vraag over de uitvoering krijgt direct uitleg van een AI-programma, duidelijk zo aangegeven. Alleen over de oefeningen die jij voorschreef, nooit medisch advies.</p></div></li>
           <li><span class="v"></span><div><b>Steun om vol te houden</b><p>Vaste oefenmomenten in de agenda en na elke sessie &eacute;&eacute;n tik: de oefenweek groeit vanzelf.</p></div></li>
         </ul>
       </div>
@@ -627,7 +630,7 @@ __FAQ_SCHEMA__
       <div class="fx"><b>Kleur of lijntekening, jouw keuze</b><p>Elke oefening staat er in kleur &eacute;n als rustige lijntekening op. Je wisselt met &eacute;&eacute;n klik; de keuze geldt voor de print en de PDF, de digitale kaart blijft in kleur.</p></div>
       <div class="fx"><b>De cli&euml;nt geeft een pijnscore door</b><p>Na het oefenen tikt de cli&euml;nt op de digitale kaart een score van 0 tot 10 aan. Jij ziet het verloop bij de kaart, de cli&euml;nt hoeft niets te installeren.</p></div>
       <div class="fx"><b>&ldquo;Ik heb geoefend&rdquo; met oefenweek</b><p>E&eacute;n tik na het oefenen; de kaart toont de oefenweek en jij ziet de therapietrouw bij de kaart terug. Zonder app.</p></div>
-      <div class="fx"><b>AI-kaartassistent</b><p>Omschrijf de klacht en krijg een kaartvoorstel uit je eigen oefeningenlijst, met voorzichtige startdosering. Jij beoordeelt en beslist.</p></div>
+      <div class="fx"><b>Zoekhulp in de bibliotheek</b><p>Kies een lichaamsdeel en een trainingsdoel en vind snel passende oefeningen in de bibliotheek. Geen klacht invullen, geen voorgestelde dosering: jij stelt de kaart samen.</p></div>
       <div class="fx"><b>__SJABLONEN_AANTAL__ kaartsjablonen per klacht</b><p>Van knie, heup en schouder tot valpreventie, nek en duizeligheid: &eacute;&eacute;n klik en de kaart staat vol. Daarna pas je alles gewoon aan.</p></div>
       <div class="fx"><b>Werkt naast elk EPD</b><p>De PDF hangt in het dossier zoals elk document. Niets migreren, nergens aan vast, en stoppen kan maandelijks.</p></div>
       <div class="fx"><b>Dossiertekst en praktijkrapport</b><p>E&eacute;n klik kopieert een kant-en-klare dossiersamenvatting per cli&euml;nt (pijnverloop, oefentrouw, ervaren herstel) of een geanonimiseerd praktijkrapport voor kwaliteitsverantwoording.</p></div>
@@ -635,18 +638,18 @@ __FAQ_SCHEMA__
     <details class="meer">
       <summary><span class="dicht">Bekijk alle 21 functies</span><span class="open">Minder tonen</span></summary>
       <div class="index">
-        <div class="fx"><b>De kaart beantwoordt vragen</b><p>De cli&euml;nt stelt op de digitale kaart een korte vraag over de uitvoering en krijgt uitleg. Altijd binnen jouw voorschrift, nooit medisch advies, in negen talen.</p></div>
+        <div class="fx"><b>De kaart beantwoordt vragen</b><p>De cli&euml;nt stelt op de digitale kaart een korte vraag over de uitvoering en krijgt uitleg van een AI-programma, in negen talen. De kaart zegt er duidelijk bij dat het antwoord van AI komt en geen medisch advies is.</p></div>
         <div class="fx"><b>Oefenmomenten in de agenda</b><p>E&eacute;n knop op de digitale kaart zet vaste oefenmomenten in de agenda van elke telefoon. Werkt op iPhone en Android, zonder app of account.</p></div>
         <div class="fx"><b>Seintje &eacute;n antwoord</b><p>De cli&euml;nt laat met &eacute;&eacute;n tik weten dat er een vraag is of dat het te veel pijn doet; jij antwoordt kort en dat bericht verschijnt op de kaart. Tweerichting, zonder app.</p></div>
-        <div class="fx"><b>De vergoeding stopt, de kaart niet</b><p>Aanvullende polissen vergoeden vaak maar 3 tot 18 behandelingen per jaar. Rond je het traject af, dan blijft de kaart van de cli&euml;nt gewoon werken: oefeningen, uitleg, agenda-herinneringen en voortgang &mdash; zelfstandig verder op jouw voorschrift.</p></div>
-        <div class="fx"><b>Ervaren herstel in &eacute;&eacute;n tik</b><p>&ldquo;Hoe gaat het vergeleken met de start?&rdquo; Vijf knoppen op de kaart; jij ziet het antwoord in het overzicht, en wie &ldquo;slechter&rdquo; aantikt komt vanzelf bovenaan.</p></div>
+        <div class="fx"><b>De vergoeding stopt, de kaart niet</b><p>Aanvullende polissen vergoeden vaak maar 3 tot 18 behandelingen per jaar. Rond je het traject af, dan houdt de cli&euml;nt de kaart nog __BEWAAR_AFGEROND__ dagen online en daarna als print of PDF: oefeningen en uitleg op jouw voorschrift.</p></div>
+        <div class="fx"><b>Ervaren herstel in &eacute;&eacute;n tik</b><p>&ldquo;Hoe gaat het vergeleken met de start?&rdquo; Vijf knoppen op de kaart; jij ziet het antwoord bij de kaart in het overzicht. De software toont, de duiding blijft bij jou.</p></div>
         <div class="fx"><b>Afspraakherinnering zonder app</b><p>Zet de volgende afspraak op de kaart; de cli&euml;nt zet hem met &eacute;&eacute;n knop in de telefoonagenda, met herinnering vooraf. Minder no-shows, geen pati&euml;nten-app nodig.</p></div>
         <div class="fx"><b>Sjablonen delen met het team</b><p>Deel een eigen sjabloon &eacute;&eacute;n keer met de praktijk en iedere collega gebruikt hetzelfde protocol op elk apparaat.</p></div>
         <div class="fx"><b>Negen talen en voorlezen</b><p>De digitale kaart schakelt naar onder meer Engels, Turks, Arabisch, Pools en Oekra&iuml;ens, en leest zichzelf hardop voor. Zo doet echt iedereen mee.</p></div>
         <div class="fx"><b>Als app op het beginscherm</b><p>De cli&euml;nt zet de kaart met &eacute;&eacute;n tik op het beginscherm: eigen icoon, schermvullend en ook offline te gebruiken. Zonder app-store of account.</p></div>
-        <div class="fx"><b>QR-code staat er standaard op</b><p>Zodra de kaart een cli&euml;ntnaam heeft, verschijnt de QR-code vanzelf. De geprinte code blijft altijd werken, ook na latere aanpassingen.</p></div>
+        <div class="fx"><b>QR-code staat er standaard op</b><p>Is je praktijk beveiligd en heeft de kaart een roepnaam, dan verschijnt de QR-code vanzelf. De geprinte code blijft werken, ook na latere aanpassingen.</p></div>
         <div class="fx"><b>Je eigen huisstijl</b><p>Logo &eacute;&eacute;n keer uploaden en elke kaart is herkenbaar van jouw praktijk, geprint en digitaal.</p></div>
-        <div class="fx"><b>Kaarten delen met collega&rsquo;s</b><p>Bewaar een kaart bij de praktijk; iedere collega opent hem op elk apparaat.</p></div>
+        <div class="fx"><b>Kaarten delen met collega&rsquo;s</b><p>Bewaar een kaart bij de praktijk; iedere collega die met het praktijkwachtwoord inlogt, opent hem op elk apparaat.</p></div>
         <div class="fx"><b>Printen zoals jij wilt</b><p>Uitgebreid of compact, groot lettertype, en een PDF voor het EPD-dossier.</p></div>
       </div>
     </details>
@@ -662,7 +665,7 @@ __FAQ_SCHEMA__
   <div class="kolom">
     <div class="folio"><span class="nr">05</span><span class="etiket">Prijs</span></div>
     <h2>E&eacute;n prijs: &euro;&thinsp;9,99 per therapeut per maand.</h2>
-    <p class="lead">Alles zit er altijd in: de AI-assistent, negen talen met voorlezen, pijnscore met verloop, de volledige oefenbibliotheek in kleur &eacute;n lijntekening, en agenda-herinneringen. Geen modules, geen prijs per pati&euml;nt of kaart, en je prijs staat minstens 24 maanden vast.</p>
+    <p class="lead">Alles zit er altijd in: de zoekhulp, negen talen met voorlezen, pijnscore met verloop, de volledige oefenbibliotheek in kleur &eacute;n lijntekening, en agenda-herinneringen. Geen modules, geen prijs per pati&euml;nt of kaart, en je prijs staat minstens 24 maanden vast.</p>
     <div class="plannen">
       <div class="plan">
         <span class="naam">Fysiplan</span>
@@ -732,7 +735,7 @@ __FAQ_SCHEMA__
       </details>
       <details>
         <summary>Werkt Fysiplan samen met mijn EPD?</summary>
-        <p class="antw">De geprinte kaart en de PDF werken naast elk EPD, welk pakket je ook gebruikt: je hangt de PDF in het dossier zoals elk document. Je zit dus nergens aan vast en hoeft niets te migreren of over te stappen. Tip: heeft je EPD een extern-link-veld (zoals Intramed en FysioRoadmap), zet er dan <code>fysiplan.nl/v2/app?client={naam}</code> in &mdash; de kaart opent dan met de cli&euml;ntnaam al ingevuld, zonder dubbel typen. Een directe koppeling met Intramed en Incura staat boven aan onze roadmap.</p>
+        <p class="antw">De geprinte kaart en de PDF werken naast elk EPD, welk pakket je ook gebruikt: je hangt de PDF in het dossier zoals elk document. Je zit dus nergens aan vast en hoeft niets te migreren of over te stappen. Tip: heeft je EPD een extern-link-veld (zoals Intramed en FysioRoadmap), zet er dan <code>fysiplan.nl/v2/app#client={naam}</code> in &mdash; de kaart opent dan met de roepnaam al ingevuld (Jan de Vries wordt Jan V.), zonder dubbel typen. Het deel na het hekje gaat niet naar onze server. Een directe koppeling met Intramed en Incura staat boven aan onze roadmap.</p>
       </details>
       <details>
         <summary>Er zit al een oefenapp bij mijn EPD-pakket. Waarom Fysiplan?</summary>
@@ -748,7 +751,7 @@ __FAQ_SCHEMA__
       </details>
       <details>
         <summary>Hoe zit het met de AVG?</summary>
-        <p class="antw">Zodra je een cli&euml;ntnaam invult, krijgt de kaart automatisch een QR-code en staat hij achter een onraadbare link bij het praktijkprofiel op de server, zodat de digitale kaart altijd de laatste versie toont. Wil je dat voor een kaart niet, dan haal je de QR er met &eacute;&eacute;n klik af en blijft alles op de computer van de praktijk. Verwijder je een kaart, dan worden ook de servergegevens en eventuele video&rsquo;s gewist.</p>
+        <p class="antw">Fysiplan bewaart zo weinig mogelijk. Op de server staat per kaart een roepnaam (zoals Jan K.), de oefeningen met dosering, het doel en de opmerking die je invult, en wat de pati&euml;nt zelf aantikt. Leeftijd en casus blijven op papier en in je eigen browser. De kaart staat achter een onraadbare link; wie de link heeft, kan hem openen. Een kaart verdwijnt vanzelf na __BEWAAR_STIL__ dagen zonder activiteit, of __BEWAAR_AFGEROND__ dagen nadat je de behandeling afrondt; het dossier blijft in je EPD. Je praktijk is de verwerkingsverantwoordelijke, Fysiplan de verwerker: bij het beveiligen ga je akkoord met de <a class="tl" href="/verwerkersovereenkomst">verwerkersovereenkomst</a>. Alles staat in de <a class="tl" href="/privacy">privacyverklaring</a>, inclusief de lijst van subverwerkers. Wil je voor een kaart niets op de server, dan haal je de QR er met &eacute;&eacute;n klik af.</p>
       </details>
       <details>
         <summary>Zit er klinimetrie in voor mijn dossier?</summary>
@@ -764,11 +767,11 @@ __FAQ_SCHEMA__
       </details>
       <details>
         <summary>Kan ik ook weer weg &mdash; met al mijn gegevens?</summary>
-        <p class="antw">Ja, zonder gedoe. E&eacute;n klik in het kaartenoverzicht exporteert &aacute;lle kaarten als CSV (cli&euml;nt, status, pijnscores, PSK, notities en de kaartlinks), en per kaart staat een plakklare samenvatting voor je EPD-dossier klaar. Je pati&euml;nten hebben geen account of app die aan een abonnement vastzit &mdash; hun kaart is een gewone weblink. En verwijderen is bij ons &eacute;cht verwijderen: haal je een kaart weg, dan zijn ook de servergegevens en video&rsquo;s gewist. Je gegevens zijn van jou; dat je makkelijk w&eacute;g kunt, is precies waarom je gerust kunt blijven.</p>
+        <p class="antw">Ja, zonder gedoe. E&eacute;n klik in het kaartenoverzicht exporteert &aacute;lle kaarten als CSV (cli&euml;nt, status, pijnscores, PSK, notities en de kaartlinks), en per kaart staat een plakklare samenvatting voor je EPD-dossier klaar. Je pati&euml;nten hebben geen account of app die aan een abonnement vastzit &mdash; hun kaart is een gewone weblink. Haal je een kaart weg, dan zijn ook de servergegevens en video&rsquo;s van die kaart van de server; alleen de dagelijkse reservekopie houdt ze nog hooguit 7 dagen vast. Je gegevens zijn van jou; dat je makkelijk w&eacute;g kunt, is precies waarom je gerust kunt blijven.</p>
       </details>
       <details>
         <summary>Hoe is de beveiliging geregeld?</summary>
-        <p class="antw">Door klein te houden wat er &uuml;berhaupt aan gegevens is: de pati&euml;nt heeft geen app en geen account, de kaart draagt alleen een voornaam met oefeningen en zelf aangetikte scores, en werknotities van de praktijk komen nooit op de pati&euml;ntkaart. Daaromheen: versleutelde verbindingen, een strikte Content-Security-Policy, limieten op elk endpoint, gehashte wachtwoorden en sessies die bij een wachtwoordwissel overal vervallen. De beveiliging wordt dagelijks geautomatiseerd getoetst; het <a class="tl" href="https://github.com/cartonn/Fysiplan/blob/main/docs/security-log.md" target="_blank" rel="noopener">auditlogboek is openbaar</a>, net als ons <a class="tl" href="/.well-known/security.txt" target="_blank" rel="noopener">meldpunt voor onderzoekers</a>.</p>
+        <p class="antw">Door klein te houden wat er &uuml;berhaupt aan gegevens is: de pati&euml;nt heeft geen app en geen account, de kaart draagt alleen een roepnaam met oefeningen en zelf aangetikte scores, werknotities van de praktijk komen nooit op de pati&euml;ntkaart, en kaarten verdwijnen vanzelf na de bewaartermijn. Daaromheen: versleutelde verbindingen, een strikte Content-Security-Policy, limieten op elk endpoint, gehashte wachtwoorden en sessies die bij een wachtwoordwissel overal vervallen. De beveiliging wordt dagelijks geautomatiseerd getoetst; het <a class="tl" href="https://github.com/cartonn/Fysiplan/blob/main/docs/security-log.md" target="_blank" rel="noopener">auditlogboek is openbaar</a>, net als ons <a class="tl" href="/.well-known/security.txt" target="_blank" rel="noopener">meldpunt voor onderzoekers</a>.</p>
       </details>
     </div>
   </div>
@@ -794,7 +797,10 @@ __FAQ_SCHEMA__
     <span class="spacer"></span>
     <a href="/v2/app">Inloggen</a>
     <a href="/k/demo" target="_blank" rel="noopener">Voorbeeldkaart</a>
+    <a href="/privacy">Privacy</a>
+    <a href="/verwerkersovereenkomst">Verwerkersovereenkomst</a>
   </div>
+  <p class="beoogd">Beoogd gebruik: Fysiplan is een hulpmiddel om oefenkaarten te maken, te printen en met pati&euml;nten te delen, en om te tonen wat pati&euml;nten zelf aangeven. Fysiplan stelt geen diagnose, kiest geen behandeling of dosering en beoordeelt geen scores; dat doet de fysiotherapeut. Fysiplan is niet bedoeld als medisch hulpmiddel.</p>
 </footer>
 
 <script src="/prijs-calculator.js" defer></script>

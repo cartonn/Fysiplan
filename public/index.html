@@ -189,9 +189,6 @@
   .qrtest-code{display:flex;justify-content:center;margin:6px 0 10px}
   .qrtest-code svg{width:220px;height:220px}
   .qrtest-stappen{margin:0 0 10px 18px;padding:0;font-size:13px;line-height:1.6;color:var(--muted)}
-  #ai_mic{display:inline-flex;align-items:center;gap:6px}
-  #ai_mic.luistert{background:#c94f36;border-color:#c94f36;color:#fff;animation:aipuls 1.1s ease-in-out infinite}
-  @keyframes aipuls{0%,100%{box-shadow:0 0 0 0 rgba(201,79,54,.45)}50%{box-shadow:0 0 0 6px rgba(201,79,54,0)}}
   .modal h3{margin:0 0 14px;font-size:17px;color:var(--ink);font-weight:700}
   .modal label{font-size:12px;color:var(--muted);display:block;margin:12px 0 4px;font-weight:600}
   .modal input,.modal select{width:100%;height:36px;border:1px solid var(--line);border-radius:9px;padding:0 11px;font:inherit;background:#fff;color:var(--text)}
@@ -272,7 +269,7 @@
   <button class="btn" id="uploadBtn">Plaatjes uploaden</button>
   <button class="btn" id="addBtn">+ Oefening toevoegen</button>
   <button class="btn" id="eigenOefBtn" style="display:none">+ Eigen oefening</button>
-  <button class="btn" id="aiBtn" style="display:none">AI-hulp</button>
+  <button class="btn" id="aiBtn" style="display:none" title="Zoek oefeningen op lichaamsdeel en trainingsdoel">Zoekhulp</button>
   <button class="btn" id="sjabBtn" style="display:none">Sjablonen</button>
   <button class="btn" id="kaartenBtn">Kaarten</button>
   <button class="btn" id="clearBtn">Wis kaart</button>
@@ -489,6 +486,7 @@ bridge2.jpg</div>
       Er staat al een <b>voorbeeldkaart</b> voor lage rugklachten klaar. Zo ga je verder:
       <ol style="margin:8px 0 0 18px;padding:0">
         <li>Pas de oefeningen aan: klik links om toe te voegen, op de min om weg te halen. Er passen <b>maximaal 12</b> op een A4.</li>
+        <li><b>Zet een wachtwoord op je praktijk</b> (knop Kaarten). Pas dan gaat een kaart naar je pati&euml;nt en ziet alleen jouw praktijk het overzicht.</li>
         <li><b>Print</b> de kaart of bewaar hem als PDF, met de QR-code erop.</li>
         <li><b>Scan de QR-code met je eigen telefoon</b> en zie wat je pati&euml;nt ziet.</li>
       </ol>
@@ -525,7 +523,7 @@ bridge2.jpg</div>
       <ol style="margin:8px 0 0 18px;padding:0">
         <li>Vul de <b>naam van je praktijk</b> in; die komt boven op elke kaart.</li>
         <li>Kies een <b>sjabloon</b> per klacht, of klik links oefeningen aan.</li>
-        <li>Vul de <b>cli&euml;ntnaam</b> in &mdash; de QR-code naar de digitale kaart komt er vanzelf op.</li>
+        <li>Zet een <b>wachtwoord op je praktijk</b> (knop Kaarten) en vul een <b>roepnaam</b> in, zoals Jan K. De QR-code naar de digitale kaart komt er dan vanzelf op.</li>
         <li><b>Print</b> de A4 of deel de link via WhatsApp.</li>
       </ol>
     </div>
@@ -562,41 +560,50 @@ bridge2.jpg</div>
   </div>
 </div>
 
-<!-- AI-kaartassistent (v2): een voorstel voor de therapeut, die beoordeelt en beslist -->
+<!-- Zoekhulp (v2): zoekt oefeningen in de bibliotheek op lichaamsdeel en trainingsdoel. Geen klacht, geen dosering, geen advies. -->
 <div class="ov" id="ovAi">
   <div class="modal">
-    <h3>AI-kaartassistent</h3>
+    <h3>Zoekhulp</h3>
     <div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;line-height:1.5">
-      Kies het trainingsdoel en omschrijf de klacht en het niveau van de cli&euml;nt. De assistent
-      stelt passende oefeningen en trainingsvariabelen voor. Het blijft een voorstel: jij
-      beoordeelt, past aan en beslist wat op de kaart komt.
+      Zoek oefeningen in de bibliotheek op lichaamsdeel en trainingsdoel. De zoekhulp
+      kent geen pati&euml;nt en geeft geen dosering: jij kiest de oefeningen en de dosering.
     </div>
+    <label for="ai_regio">Lichaamsdeel</label>
+    <select id="ai_regio" style="width:100%;margin-bottom:7px">
+      <option value="">Kies een lichaamsdeel…</option>
+      <option>Nek</option>
+      <option>Schouder</option>
+      <option>Elleboog, pols en hand</option>
+      <option>Bovenrug en borst</option>
+      <option>Onderrug</option>
+      <option>Heup en bekken</option>
+      <option>Knie</option>
+      <option>Enkel en voet</option>
+      <option>Romp en core</option>
+      <option>Hele lichaam</option>
+    </select>
     <label for="ai_doel">Trainingsdoel</label>
     <select id="ai_doel" style="width:100%;margin-bottom:7px">
       <option value="">Kies een trainingsdoel…</option>
-      <option>Krachtuithoudingsvermogen</option>
       <option>Mobiliteit</option>
-      <option>Coördinatie en balans</option>
-      <option>Hypertrofie</option>
+      <option>Stabiliteit</option>
+      <option>Krachtuithoudingsvermogen</option>
       <option>Maximale kracht</option>
+      <option>Hypertrofie</option>
       <option>Snelkracht en explosiviteit</option>
+      <option>Coördinatie en balans</option>
       <option>Aeroob uithoudingsvermogen</option>
       <option>Loop-ABC</option>
       <option>Sprong-ABC</option>
       <option>Werp-ABC</option>
-      <option value="anders">Anders…</option>
     </select>
-    <input type="text" id="ai_doel_anders" maxlength="80" style="display:none;margin-bottom:7px" placeholder="Omschrijf het trainingsdoel"/>
-    <label for="ai_klacht">Klacht en niveau</label>
-    <textarea id="ai_klacht" rows="3" style="width:100%;resize:vertical;font-family:inherit;font-size:13px" placeholder="bijv. artrose knie links, vrouw van 68, kan 10 minuten lopen"></textarea>
-    <div id="ai_dicteer" style="display:none;align-items:center;gap:9px;margin-top:6px">
-      <button type="button" class="btn" id="ai_mic" aria-pressed="false" title="Spreek de klacht in; de tekst verschijnt hierboven"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 19v3"/></svg><span>Inspreken</span></button>
-      <span id="ai_mic_status" style="font-size:12px;color:var(--muted)" aria-live="polite"></span>
-    </div>
+    <label for="ai_zoek">Zoekwoorden <small style="font-weight:400">(optioneel)</small></label>
+    <input type="text" id="ai_zoek" maxlength="60" style="width:100%" placeholder="bijv. zonder materiaal, staand, met elastiek"/>
+    <div style="font-size:11.5px;color:var(--muted);margin-top:4px">Typ hier geen naam, klacht of andere gegevens van een pati&euml;nt. De zoekwoorden gaan naar een AI-dienst.</div>
     <div id="ai_result" style="max-height:320px;overflow:auto;margin-top:8px"></div>
     <div class="acts">
       <button class="btn" id="ai_close">Sluiten</button>
-      <button class="btn primary" id="ai_go">Stel een kaart voor</button>
+      <button class="btn primary" id="ai_go">Zoek oefeningen</button>
     </div>
   </div>
 </div>
@@ -678,6 +685,9 @@ bridge2.jpg</div>
       Scan deze code met de <b>camera van je telefoon</b>. Er opent een pagina met &eacute;&eacute;n
       opnameknop — geen app, geen login. Na het versturen verschijnt de video hier vanzelf.
     </div>
+    <div style="font-size:12.5px;color:#8a5a00;background:#fff7e6;border:1px solid #f2d999;border-radius:8px;padding:6px 10px;margin:4px 0 6px;line-height:1.45">
+      Tip: film jezelf of een collega die de oefening voordoet, niet de pati&euml;nt. Een pati&euml;nt in beeld is het meest herleidbare gegeven dat er is.
+    </div>
     <div id="on_qr" style="display:flex;justify-content:center;margin:6px 0"></div>
     <div id="on_status" style="font-size:13px;color:var(--muted)">Wachten op de video&hellip;</div>
     <div class="acts" style="justify-content:center"><button class="btn" id="on_retry" style="display:none">Nieuwe QR-code</button><button class="btn" id="on_cancel">Annuleren</button></div>
@@ -711,7 +721,7 @@ bridge2.jpg</div>
     <div id="k_lijst" style="max-height:220px;overflow:auto"></div>
     <div id="k_srv" style="display:none">
       <label style="margin-top:14px;display:block">Kaarten van de praktijk <span id="k_srv_naam" style="font-weight:400;color:var(--muted)"></span></label>
-      <div style="font-size:12px;color:var(--muted);margin:2px 0 4px">Gedeeld met collega's: iedereen die deze praktijk kiest ziet deze kaarten, op elk apparaat. Let op: de kaart (inclusief cli&euml;ntgegevens) staat dan op de server.</div>
+      <div style="font-size:12px;color:var(--muted);margin:2px 0 4px">Gedeeld binnen je praktijk: wie met het praktijkwachtwoord inlogt, ziet deze kaarten op elk apparaat. Op de server staan de roepnaam, de oefeningen, het doel en de opmerking; leeftijd en casus niet.</div>
       <div id="k_srv_lijst" style="max-height:200px;overflow:auto"></div>
     </div>
     <div class="acts"><button class="btn" id="k_close">Sluiten</button></div>
@@ -760,7 +770,7 @@ bridge2.jpg</div>
         <b>8. Een complete eigen oefeningenlijst uploaden</b>
         Met <strong>Plaatjes uploaden</strong> selecteer je tegelijk één .txt- of .csv-bestand en de bijbehorende afbeeldingen. Zet per oefening eerst de naam, daaronder de afbeeldingsbestandsnamen en daarna een lege regel. De eigen lijst vervangt lokaal de standaardlijst; via <strong>Standaardlijst</strong> keer je terug naar de gedeelde oefeningenlijst.
       </div>
-      <div class="helpsection full">
+      <div class="helpsection full" id="help_privacy">
         <b>Privacy en bewaren</b>
         Kaart, invulvelden en eigen oefeningen worden alleen lokaal in deze browser opgeslagen. Ze worden niet automatisch naar een ander apparaat of een andere browser overgezet.
       </div>
@@ -870,16 +880,25 @@ bridge2.jpg</div>
   try{SET=Object.assign(SET,JSON.parse(localStorage.getItem('fysiplan_settings')||'{}'));}catch(e){}
   function saveSettings(){try{localStorage.setItem('fysiplan_settings',JSON.stringify(SET));}catch(e){}}
   var CLIENTKEYS=['c_naam','c_leeftijd','c_hf','c_zone','c_opm','c_cave','c_doel'];
+  // id van de gedeelde kaart die deze editor bewerkt ('' = nieuwe kaart). Gaat mee
+  // bij delen, zodat de server een tweede patiënt met dezelfde roepnaam niet stil
+  // over de kaart van de eerste heen schrijft (zie POST /api/kaarten).
+  var KAART_ID='';
   function saveState(){
     try{
       var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
-      localStorage.setItem('fysiplan_state',JSON.stringify({chosen:chosen,client:client,grid:GRID,vids:VIDS}));
+      localStorage.setItem('fysiplan_state',JSON.stringify({chosen:chosen,client:client,grid:GRID,vids:VIDS,kaartId:KAART_ID}));
     }catch(e){}
     planAutoDeel();
+  }
+  function zetKaartId(id){
+    KAART_ID=id||'';
+    try{var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');st.kaartId=KAART_ID;localStorage.setItem('fysiplan_state',JSON.stringify(st));}catch(e){}
   }
   function loadState(){
     try{
       var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');
+      if(typeof st.kaartId==='string')KAART_ID=st.kaartId;
       if(Array.isArray(st.chosen))chosen=st.chosen.filter(function(c){return OEF[c.o]&&OEF[c.o].imgs[c.i];});
       if(st.client)CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el&&st.client[k]!=null)el.value=st.client[k];});
       if(st.grid&&typeof st.grid==='object'){GRID={rows:st.grid.rows||{},cells:st.grid.cells||{}};}
@@ -1049,20 +1068,51 @@ bridge2.jpg</div>
     // beheerweergave onveranderd blijft.
     var legeA4=document.getElementById('emptyA4');
     if(legeA4)legeA4.textContent='Klik links op een oefening — of open "Sjablonen" bovenin: één klik en de kaart staat vol met een kant-en-klaar protocol per klacht.';
+    // pakket A: het naamveld is een roepnaam (eventueel met initiaal). De patiënt ziet
+    // alleen het eerste woord; de volledige naam hoort in het EPD, niet op de server.
+    var cnV2=document.getElementById('c_naam');
+    if(cnV2){
+      cnV2.placeholder='bijv. Jan K.';
+      cnV2.maxLength=40;
+      cnV2.setAttribute('aria-label','Roepnaam');
+      cnV2.title='Roepnaam, eventueel met de eerste letter van de achternaam (Jan K.). Je patiënt ziet alleen de roepnaam; de volledige naam hoort in je EPD.';
+      var cnLab=cnV2.parentNode&&cnV2.parentNode.querySelector('label');
+      if(cnLab)cnLab.textContent='Roepnaam';
+      // delen pas als de naam af is: bij het verlaten van het veld (of Enter)
+      cnV2.addEventListener('blur',function(){planAutoDeel();});
+      cnV2.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();cnV2.blur();}});
+    }
+    // Leeftijd en Casus blijven op papier en in deze browser; ze gaan niet naar de server
+    ['c_leeftijd','c_cave'].forEach(function(k){
+      var el=document.getElementById(k);
+      if(el)el.title=(el.title?el.title+' ':'')+'Blijft op de geprinte kaart en in deze browser; gaat niet mee naar de digitale kaart of de server.';
+    });
+    // eerlijke uitleg in Help: in v2 gaat een gedeelde kaart wel naar de server
+    var hp=document.getElementById('help_privacy');
+    if(hp)hp.innerHTML='<b>Privacy en bewaren</b>'+
+      'Een kaart staat eerst alleen in deze browser. Is je praktijk beveiligd en vul je een roepnaam in, dan deelt Fysiplan de kaart met je pati&euml;nt via QR-code of link. '+
+      'Op de server staan dan de roepnaam, de oefeningen met dosering en uitleg, het doel en de opmerking die je invult, en wat je pati&euml;nt zelf aanvinkt of meldt. '+
+      'Leeftijd en Casus blijven op papier en in deze browser. '+
+      'Een gedeelde kaart verdwijnt vanzelf van de server na een periode zonder activiteit, en kort nadat je hem afrondt (archiveert). Kopieer daarom wat je wilt bewaren naar je dossier. '+
+      'Meer in de <a href="/privacy" target="_blank" rel="noopener">privacyverklaring</a> en de <a href="/verwerkersovereenkomst" target="_blank" rel="noopener">verwerkersovereenkomst</a>.';
   }
   // EPD-koppeling zonder koppeling: elk EPD met een extern-link-veld (Intramed,
-  // FysioRoadmap, …) kan /v2/app?client={naam} openen — de cliëntnaam (en
+  // FysioRoadmap, …) kan /v2/app#client={naam} openen — de cliëntnaam (en
   // eventueel ?doel=) staat dan al ingevuld. Alleen lege velden worden gevuld
   // (een openstaand concept blijft onaangetast). De parameters worden één keer
   // gelezen; de URL wordt meteen schoongeveegd zodat de naam niet in adresbalk
   // of historie blijft. loadState() draait bij v2 een tweede keer (async, tegen
   // de echte bibliotheek) en zet de velden dan opnieuw — daarom wordt dit ná
   // élke loadState aangeroepen; het "alleen indien leeg" maakt dat idempotent.
+  // Voorkeur: /v2/app#client={naam} — het deel na # gaat nooit naar de server en
+  // komt dus ook niet in serverlogs. De oude ?client=-links blijven werken.
   var epdVoorinvulData=null;
   if(IS_V2){try{
+    var _hs=new URLSearchParams((location.hash||'').replace(/^#/,''));
     var _qs=new URLSearchParams(location.search);
-    if(_qs.has('client')||_qs.has('doel')){
-      epdVoorinvulData={client:_qs.get('client'),doel:_qs.get('doel')};
+    var _bron=(_hs.has('client')||_hs.has('doel'))?_hs:((_qs.has('client')||_qs.has('doel'))?_qs:null);
+    if(_bron){
+      epdVoorinvulData={client:_bron.get('client'),doel:_bron.get('doel')};
       try{history.replaceState(null,'',location.pathname);}catch(e2){}
     }
   }catch(e){}}
@@ -1077,7 +1127,8 @@ bridge2.jpg</div>
         el.dispatchEvent(new Event('change',{bubbles:true}));
       }
     };
-    vul('c_naam',epdVoorinvulData.client);
+    // het EPD levert de volledige naam; op de kaart komt alleen roepnaam + initiaal
+    vul('c_naam',kaartLabelVan(epdVoorinvulData.client));
     vul('c_doel',epdVoorinvulData.doel);
   }
   if(USE_V2_LIBRARY){
@@ -1291,9 +1342,8 @@ bridge2.jpg</div>
       var zwAlle=verseZwaar(),zwNamen=Object.keys(zwAlle);
       if(zwNamen.length&&SIGNAAL_KAART){
         zwNamen.sort(function(a,b){return zwAlle[b]-zwAlle[a];});
-        sb.textContent='Signaal van '+SIGNAAL_KAART.naam+' — te zwaar gemeld: '+
-          zwNamen.map(function(n){return n+' ('+dagenGeleden(zwAlle[n])+')';}).join(', ')+
-          '. Verlaag daar de startdosering of kies een lichtere variant.';
+        sb.textContent='Melding van '+SIGNAAL_KAART.naam+': te zwaar gemeld bij '+
+          zwNamen.map(function(n){return n+' ('+dagenGeleden(zwAlle[n])+')';}).join(', ')+'.';
         sb.style.display='block';
       }else sb.style.display='none';
     }
@@ -1317,7 +1367,7 @@ bridge2.jpg</div>
           }
           // patiëntsignaal: deze oefening is "te zwaar" gemeld op de geopende kaart
           if(zwSig[o.naam]!=null){
-            inner+="<span class='zwsig no-print' title='"+esc(SIGNAAL_KAART.naam)+" meldde deze oefening te zwaar ("+esc(dagenGeleden(zwSig[o.naam]))+"). Verlaag de dosering of kies een lichtere variant.'>TE ZWAAR</span>";
+            inner+="<span class='zwsig no-print' title='"+esc(SIGNAAL_KAART.naam)+" meldde deze oefening te zwaar ("+esc(dagenGeleden(zwSig[o.naam]))+").'>TE ZWAAR</span>";
           }
         }
         // v2: oefeningen herordenen met pijltjes (bv. warming-up eerst). Alleen v2;
@@ -1815,10 +1865,89 @@ bridge2.jpg</div>
   document.getElementById('pr_cancel').addEventListener('click',function(){closeOv('ovPrint');});
   function verbergQr(){var b=document.getElementById('qrBlok');b.style.display='none';b.innerHTML='';}
   // uitleg op de plek van de QR als die er (nog) niet op kan; print nooit mee
-  function toonQrHint(tekst){
+  function toonQrHint(tekst,knoppen){
     var b=document.getElementById('qrBlok');
-    b.innerHTML="<small class='no-print' style='max-width:150px;line-height:1.35;color:var(--muted)'>"+esc(tekst)+"</small>";
+    b.innerHTML="<small class='no-print' style='max-width:170px;line-height:1.35;color:var(--muted)'>"+esc(tekst)+"</small>"+
+      ((knoppen&&knoppen.length)?"<span class='no-print' style='display:flex;flex-direction:column;gap:3px;margin-top:4px;font-size:10.5px'>"+
+        knoppen.map(function(k){return "<a href='#' data-qract='"+esc(k.act)+"' style='color:var(--brand,#2456a6);text-decoration:underline'>"+esc(k.label)+"</a>";}).join('')+"</span>":'');
     b.style.display='flex';
+  }
+  // ---- pakket A: alleen een roepnaam op de gedeelde kaart ----
+  // "Jan de Vries" -> "Jan V.", "Vries, Jan de" -> "Jan V." (EPD's leveren vaak de
+  // achternaam eerst). Zo blijft de praktijk de kaart herkennen zonder dat de
+  // volledige naam op de server staat; de patiënt ziet alleen "Jan".
+  function kaartLabelVan(naam){
+    var s=String(naam||'').replace(/\s+/g,' ').trim();
+    if(!s)return '';
+    var voor=s,achter='';
+    if(s.indexOf(',')>-1){var d=s.split(',');achter=d[0].trim();voor=d.slice(1).join(' ').trim()||achter;}
+    var w=voor.split(' ');
+    var roep=w[0]||'';
+    var acht=achter?achter.split(' '):(w.length>1?[w[w.length-1]]:[]);
+    var laatste=acht.length?acht[acht.length-1]:'';
+    var ini=laatste?laatste.charAt(0).toUpperCase()+'.':'';
+    return (roep+(ini?' '+ini:'')).trim().slice(0,40);
+  }
+  // lijkt het naamveld een volledige naam? (twee of meer woorden en het laatste is
+  // geen initiaal) Alleen een hulpje: de therapeut beslist
+  function naamLijktVolledig(naam){
+    var w=String(naam||'').replace(/\s+/g,' ').trim().split(' ');
+    if(w.length<2)return false;
+    var l=w[w.length-1];
+    return l.length>=3&&!/\.$/.test(l);
+  }
+  var NAAM_OK='',OVERSCHRIJF='',NA_BEVEILIG=null;
+  // wat er naar de server gaat: zonder leeftijd en Casus (die blijven op papier en in
+  // deze browser) en in v2 met het id van de kaart die deze editor bewerkt
+  function serverKaart(naam){
+    var c=currentCard(naam);
+    c.praktijk=(SET.praktijk||'').trim();
+    if(c.client){delete c.client.c_leeftijd;delete c.client.c_cave;}
+    if(IS_V2){c.kaartId=KAART_ID||'';if(OVERSCHRIJF&&OVERSCHRIJF===String(naam).toLowerCase())c.overschrijf=true;}
+    return c;
+  }
+  // de hint bij een serverweigering: beveiligen, botsende naam of andermans praktijk
+  function toonDeelWeigering(d,naam){
+    var pr=(SET.praktijk||'').trim();
+    if(d.beveilig){
+      toonQrHint('Zet eerst een wachtwoord op je praktijk; daarna komt de QR-code er vanzelf op. Zonder wachtwoord deelt Fysiplan geen pati\u00ebntkaarten.',[{act:'beveilig',label:'Beveilig mijn praktijk'}]);
+      return true;
+    }
+    if(d.bestaat){
+      toonQrHint('Er is al een kaart \u201c'+(d.naam||naam)+'\u201d in je praktijk. Is dit dezelfde pati\u00ebnt? Anders: geef deze kaart een andere roepnaam, bijvoorbeeld met een initiaal.',[{act:'overschrijf',label:'Ja, die kaart bijwerken'}]);
+      return true;
+    }
+    if(d.login){toonQrHint('De praktijknaam \u201c'+pr+'\u201d is al beveiligd. Log in via Kaarten, of vul de naam van je eigen praktijk in.',[{act:'beveilig',label:'Inloggen'}]);return true;}
+    return false;
+  }
+  // volledige naam -> roepnaam met initiaal. Staat er op de server al een kaart met
+  // precies die volledige naam (van vóór de roepnaam), dan wordt díe kaart hernoemd:
+  // zo houdt de patiënt zijn link en voortgang. Anders verandert alleen het veld.
+  function roepnaamToepassen(){
+    var cn=document.getElementById('c_naam');if(!cn)return;
+    var oud=cn.value.trim(),nieuw=kaartLabelVan(oud),pr=(SET.praktijk||'').trim();
+    var zet=function(){cn.value=nieuw;cn.dispatchEvent(new Event('input',{bubbles:true}));laatsteDeel='';deelNu();};
+    fetch('api/kaarten?praktijk='+encodeURIComponent(pr),PGET())
+      .then(function(r){return r.ok?r.json():[];})
+      .then(function(l){
+        var hit=Array.isArray(l)?l.filter(function(c){return String(c.naam||'').toLowerCase()===oud.toLowerCase();})[0]:null;
+        if(!hit){zet();return;}
+        fetch('api/kaart/naam',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:hit.id,naam:nieuw})})
+          .then(function(r){return r.json().catch(function(){return {ok:false};});})
+          .then(function(d){if(d.ok){zetKaartId(hit.id);zet();}else toonQrHint(d.fout||'Naam wijzigen is niet gelukt.');})
+          .catch(function(){toonQrHint('Geen verbinding met de server.');});
+      })
+      .catch(zet);
+  }
+  // Kaarten-paneel openen met het wachtwoordveld in beeld; na beveiligen gaat het delen verder
+  function openBeveiligen(daarna){
+    NA_BEVEILIG=daarna||null;
+    document.getElementById('kaartenBtn').click();
+    setTimeout(function(){
+      var ww=document.getElementById('ps_ww');
+      if(ww){ww.scrollIntoView({block:'center'});ww.focus();}
+      toonPsMsg('Kies een wachtwoord en vink de verwerkersovereenkomst aan. Daarna komt de QR-code vanzelf op je kaart.');
+    },350);
   }
   function toonQr(id){
     var url=location.origin+'/k/'+id;
@@ -1853,7 +1982,7 @@ bridge2.jpg</div>
       if(qd)qd.addEventListener('click',function(e){
         e.preventDefault();
         var toonD=function(tk){qd.textContent=tk;setTimeout(function(){qd.textContent='Kopieer voor dossier';},1600);};
-        fetch('api/kaart?id='+id,{cache:'no-cache'})
+        fetch(praktijkKaartUrl(id),PGET())
           .then(function(r){return r.json();})
           .then(function(d){
             if(!d.ok){toonD('Ophalen mislukt');return;}
@@ -1892,8 +2021,19 @@ bridge2.jpg</div>
     if(!naam||!chosen.length){verbergQr();laatsteDeel='';return;}
     if(QR_UIT_VOOR===naam.toLowerCase())return;
     if(!pr){toonQrHint('Vul de naam van je praktijk in (linksboven op de kaart), dan komt de QR-code er vanzelf op.');laatsteDeel='';return;}
-    var c=currentCard(naam);c.praktijk=pr;
-    var afdruk=JSON.stringify(c);
+    // tijdens het typen van de naam niet delen: een halve naam werd anders een losse kaart
+    var cnF=document.getElementById('c_naam');
+    if(cnF&&document.activeElement===cnF)return;
+    // een volledige naam hoort niet op de gedeelde kaart: eerst een voorstel tonen
+    if(IS_V2&&naamLijktVolledig(naam)&&NAAM_OK!==naam.toLowerCase()){
+      var voorstel=kaartLabelVan(naam);
+      toonQrHint('\u201c'+naam+'\u201d lijkt een volledige naam. Op de digitale kaart hoort alleen een roepnaam; de volledige naam staat in je EPD.',
+        [{act:'roepnaam',label:'Maak er \u201c'+voorstel+'\u201d van'},{act:'naamok',label:'Toch zo laten'}]);
+      laatsteDeel='';return;
+    }
+    var c=serverKaart(naam);
+    // vergelijken zonder tijdstempel en kaart-id: alleen een echte wijziging wordt een POST
+    var afdruk=JSON.stringify(Object.assign({},c,{ts:0,kaartId:'',overschrijf:false}));
     if(afdruk===laatsteDeel)return;
     fetch('api/kaarten',{method:'POST',headers:PJSON(),body:JSON.stringify(c)})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
@@ -1901,16 +2041,27 @@ bridge2.jpg</div>
         if(!d.ok){
           // proef net verlopen: de server toont bij herladen de verlopen-melding
           if(d.proefVerlopen){location.reload();return;}
-          // de naam is al beveiligd door een praktijk waar dit apparaat niet bij is ingelogd
-          if(d.login)toonQrHint('De praktijknaam \u201c'+pr+'\u201d is al beveiligd. Log in via Kaarten, of vul de naam van je eigen praktijk in.');
+          laatsteDeel='';
+          toonDeelWeigering(d,naam);
           return;
         }
         laatsteDeel=afdruk;
+        zetKaartId(d.id);
         ensureQr(function(){toonQr(d.id);});
       })
       .catch(function(){});
   }
   document.getElementById('qrBlok').addEventListener('click',function(e){
+    var act=e.target.closest('[data-qract]');
+    if(act){
+      e.preventDefault();
+      var a=act.dataset.qract,cnA=document.getElementById('c_naam');
+      if(a==='beveilig')openBeveiligen(function(){laatsteDeel='';deelNu();});
+      else if(a==='overschrijf'){OVERSCHRIJF=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
+      else if(a==='roepnaam'&&cnA)roepnaamToepassen();
+      else if(a==='naamok'){NAAM_OK=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
+      return;
+    }
     if(e.target.id!=='qrx')return;
     QR_UIT_VOOR=huidigeKaartNaam().toLowerCase();
     verbergQr();
@@ -1930,9 +2081,23 @@ bridge2.jpg</div>
     // QR: kaart eerst bij de praktijk bewaren, dan de code op de kaart zetten en printen
     if(!(SET.praktijk||'').trim()){alert('Vul eerst de praktijknaam op de kaart in — de digitale kaart hoort bij de praktijk.');return;}
     var cn=document.getElementById('c_naam');
+    if(IS_V2&&cn&&naamLijktVolledig(cn.value)&&NAAM_OK!==cn.value.trim().toLowerCase()){
+      var vs=kaartLabelVan(cn.value);
+      if(confirm('\u201c'+cn.value.trim()+'\u201d lijkt een volledige naam. Op de digitale kaart hoort alleen een roepnaam; de volledige naam staat in je EPD.\n\nOK = maak er \u201c'+vs+'\u201d van\nAnnuleren = zo laten'))
+        {cn.value=vs;cn.dispatchEvent(new Event('input',{bubbles:true}));}
+      else NAAM_OK=cn.value.trim().toLowerCase();
+    }
     var naam=(cn&&cn.value.trim())||('Kaart '+new Date().toLocaleDateString('nl-NL'));
     saveServerCard(naam,function(d){
-      if(!d.ok){alert(d.fout||'De kaart bewaren voor de QR-code is niet gelukt.');return;}
+      if(!d.ok){
+        if(IS_V2&&toonDeelWeigering(d,naam)){
+          closeOv('ovPrint');
+          if(d.beveilig)openBeveiligen(function(){document.getElementById('printBtn').click();});
+          return;
+        }
+        alert(d.fout||'De kaart bewaren voor de QR-code is niet gelukt.');return;
+      }
+      if(IS_V2)zetKaartId(d.id);
       if(!toonQr(d.id)){alert('De QR-code maken is niet gelukt.');return;}
       ping('kaart-opgeslagen');
       closeOv('ovPrint');doePrint();
@@ -2110,8 +2275,8 @@ bridge2.jpg</div>
     if(!nm||!el)return;
     el.value=nm;el.dispatchEvent(new Event('input'));el.dispatchEvent(new Event('change'));
   }
-  // een kant-en-klaar rugprogramma als startpunt: niemand begint met een leeg vel,
-  // en met de voorbeeldnaam erop staat de QR-code er meteen
+  // een kant-en-klaar rugprogramma als startpunt: niemand begint met een leeg vel.
+  // De QR-code komt erop zodra de praktijk beveiligd is (pakket B).
   function proefVoorbeeldkaart(){
     fetch('sjablonen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).then(function(l){
       if(chosen.length||!Array.isArray(l)||!l.length)return;
@@ -2156,9 +2321,12 @@ bridge2.jpg</div>
       knop.disabled=false;knop.textContent='Test de QR op je telefoon';
       if(!d.ok){
         if(d.proefVerlopen){location.reload();return;}
+        if(d.beveilig){toonDeelWeigering(d,cn.value.trim());openBeveiligen(function(){knop.click();});return;}
+        if(d.bestaat){toonDeelWeigering(d,cn.value.trim());return;}
         alert(d.login?'De praktijknaam \u201c'+(SET.praktijk||'')+'\u201d is al beveiligd door een andere praktijk. Vul de naam van je eigen praktijk in.':(d.fout||'De QR-code maken is niet gelukt.'));
         return;
       }
+      zetKaartId(d.id);
       ensureQr(function(){
         var url=location.origin+'/k/'+d.id;
         var svg=window.FYSIQR?FYSIQR.svg(url,220):'';
@@ -2283,117 +2451,60 @@ bridge2.jpg</div>
     renderSjabLijst();
   });
 
-  // ---- AI-kaartassistent (v2): klacht omschrijven, voorstel beoordelen, op de kaart zetten ----
+  // ---- zoekhulp (v2): oefeningen zoeken op lichaamsdeel en doel, zelf kiezen ----
+  // Vroeger de AI-kaartassistent (klacht erin, kaart met dosering eruit). Nu bewust
+  // een zoeker: geen klacht, geen patiëntgegevens, geen dosering (MDR). De gekozen
+  // oefeningen komen erbij op de kaart; de dosering vult de therapeut zelf in.
   var AI_VOORSTEL=null;
   var VIDEO_ICOON="<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M8 6l10 6-10 6z'/></svg>";
   document.getElementById('aiBtn').addEventListener('click',function(){openOv('ovAi');});
   document.getElementById('ai_close').addEventListener('click',function(){closeOv('ovAi');});
-  document.getElementById('ai_doel').addEventListener('change',function(){
-    var anders=document.getElementById('ai_doel_anders');
-    anders.style.display=this.value==='anders'?'block':'none';
-    if(this.value==='anders')anders.focus();
-  });
-  function gekozenAiDoel(){
-    var keuze=document.getElementById('ai_doel').value;
-    return keuze==='anders'?document.getElementById('ai_doel_anders').value.trim():keuze;
-  }
-  // klacht inspreken i.p.v. typen: spraakherkenning in de browser (Web Speech API).
-  // Alleen de herkende TEKST komt in het veld; er gaat niets extra's naar de server —
-  // pas bij "Stel een kaart voor" wordt die tekst (zoals altijd) verstuurd. Wordt de
-  // API niet ondersteund (bijv. Firefox), dan blijft de knop verborgen en typt men gewoon.
-  (function(){
-    var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-    var balk=document.getElementById('ai_dicteer');
-    if(!IS_V2||!SR||!balk)return;
-    var mic=document.getElementById('ai_mic');
-    var stat=document.getElementById('ai_mic_status');
-    var label=mic.querySelector('span');
-    var veld=document.getElementById('ai_klacht');
-    balk.style.display='flex';
-    var rec=null,luistert=false,basis='';
-    var zet=function(t){stat.textContent=t||'';};
-    var stop=function(){if(rec){try{rec.stop();}catch(e){}}};
-    mic.addEventListener('click',function(){
-      if(luistert){stop();return;}
-      try{rec=new SR();}catch(e){zet('Inspreken kan niet in deze browser.');return;}
-      rec.lang='nl-NL';rec.continuous=true;rec.interimResults=true;
-      basis=veld.value.replace(/\s+$/,'');
-      rec.onstart=function(){luistert=true;mic.classList.add('luistert');mic.setAttribute('aria-pressed','true');label.textContent='Stop';zet('Aan het luisteren… spreek de klacht in.');};
-      rec.onerror=function(ev){var m=ev&&ev.error;zet(m==='not-allowed'||m==='service-not-allowed'?'Geen toegang tot de microfoon — sta het toe in je browser.':(m==='no-speech'?'Niets gehoord — probeer het opnieuw.':'Inspreken lukt even niet.'));};
-      rec.onend=function(){luistert=false;mic.classList.remove('luistert');mic.setAttribute('aria-pressed','false');label.textContent='Inspreken';if(/Aan het luisteren/.test(stat.textContent))zet('');};
-      rec.onresult=function(ev){
-        var finaal='',tussen='';
-        for(var i=ev.resultIndex;i<ev.results.length;i++){
-          var res=ev.results[i];
-          if(res.isFinal)finaal+=res[0].transcript; else tussen+=res[0].transcript;
-        }
-        if(finaal)basis=(basis?basis+' ':'')+finaal.trim();
-        veld.value=(basis+(tussen?' '+tussen.trim():'')).replace(/\s+/g,' ').trim();
-      };
-      try{rec.start();}catch(e){zet('Inspreken lukt even niet.');}
-    });
-    // paneel sluiten stopt het luisteren netjes
-    document.getElementById('ai_close').addEventListener('click',stop);
-  })();
+  document.getElementById('ai_zoek').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();document.getElementById('ai_go').click();}});
   document.getElementById('ai_go').addEventListener('click',function(){
-    var kl=document.getElementById('ai_klacht').value.trim();
-    var doel=gekozenAiDoel();
+    var regio=document.getElementById('ai_regio').value;
+    var doel=document.getElementById('ai_doel').value;
+    var zoek=document.getElementById('ai_zoek').value.trim().slice(0,60);
     var uit=document.getElementById('ai_result');
-    if(!doel){alert('Kies eerst het trainingsdoel.');return;}
-    if(kl.length<3){alert('Omschrijf eerst de klacht.');return;}
+    if(!regio||!doel){alert('Kies een lichaamsdeel en een trainingsdoel.');return;}
     var go=document.getElementById('ai_go');
-    go.disabled=true;go.textContent='Bezig met nadenken...';
-    uit.innerHTML="<div class='ai-denken'><i></i><i></i><i></i>De assistent stelt een kaart samen; dit duurt een paar tellen.</div>";
-    fetch('api/assistent',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({klacht:kl,doel:doel})})
+    go.disabled=true;go.textContent='Zoeken…';
+    uit.innerHTML="<div class='ai-denken'><i></i><i></i><i></i>De zoekhulp zoekt in de bibliotheek.</div>";
+    fetch('api/assistent',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({regio:regio,doel:doel,zoek:zoek})})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
       .then(function(d){
-        go.disabled=false;go.textContent='Stel een kaart voor';
-        if(!d.ok){uit.innerHTML="<div class='hint'>"+esc(d.fout||'De AI-hulp is even niet bereikbaar.')+"</div>";return;}
+        go.disabled=false;go.textContent='Zoek oefeningen';
+        if(!d.ok){uit.innerHTML="<div class='hint'>"+esc(d.fout||'De zoekhulp is even niet bereikbaar.')+"</div>";return;}
         AI_VOORSTEL=d;
-        var plan=[d.trainingsdoel,d.frequentie].filter(Boolean).map(function(t){return "<span class='ai-dos'>"+esc(t)+"</span>";}).join('');
-        uit.innerHTML=(plan?"<div class='ai-plan'>"+plan+(d.trainingsnotitie?"<span class='ai-plan-note'>"+esc(d.trainingsnotitie)+"</span>":"")+"</div>":"")+
-          (d.waarschuwing?"<div class='ai-waarschuwing'><b>Eerst controleren</b> "+esc(d.waarschuwing)+"</div>":"")+
-          (d.toelichting?"<div class='ai-toel'>"+esc(d.toelichting)+"</div>":"")+
+        uit.innerHTML="<div class='ai-toel'>Vink aan wat je wilt gebruiken. De oefeningen komen erbij op de kaart; de dosering vul je zelf in.</div>"+
           d.oefeningen.map(function(o,i){
-            var dos=[o.series&&o.series+' series',o.herhalingen&&o.herhalingen+' herhalingen',o.gewicht,
-              o.borg&&'BORG '+o.borg,o.xrm&&'XRM '+o.xrm,o.rust&&'rust '+o.rust,o.tempo&&'tempo '+o.tempo]
-              .filter(Boolean).map(function(t){return "<span class='ai-dos'>"+esc(t)+"</span>";}).join('');
-            // laat zien welke voorgestelde oefeningen een instructievideo meekrijgen,
-            // zodat de therapeut ziet dat de patiënt die oefening ook op beeld krijgt
+            // laat zien welke oefeningen een instructievideo meekrijgen
             var bron=OEF[byNorm[normEx(o.naam)]];
             var vid=(bron&&hasVideo(bron))?"<span class='ai-vid'>"+VIDEO_ICOON+"video</span>":"";
+            var alOp=bron&&chosen.some(function(c){return c.o===bron.id;});
             return "<label class='ai-oef'>"+
-              "<input type='checkbox' checked data-ai='"+i+"'/>"+
-              "<span style='flex:1;min-width:0'><b>"+esc(o.naam)+"</b>"+vid+
-              (dos?"<br/>"+dos:"")+
-              (o.waarom?"<span class='ai-waarom'>"+esc(o.waarom)+"</span>":"")+"</span></label>";
+              "<input type='checkbox'"+(alOp?" disabled":"")+" data-ai='"+i+"'/>"+
+              "<span style='flex:1;min-width:0'><b>"+esc(o.naam)+"</b>"+vid+(alOp?" <small style='color:var(--muted)'>(staat al op de kaart)</small>":"")+
+              (o.traint?"<span class='ai-waarom'>"+esc(o.traint)+"</span>":"")+"</span></label>";
           }).join("")+
           "<div style='margin-top:10px;text-align:right'><button class='btn primary' id='ai_apply'>Zet op de kaart</button></div>";
       })
-      .catch(function(){go.disabled=false;go.textContent='Stel een kaart voor';uit.innerHTML="<div class='hint'>Geen verbinding met de server.</div>";});
+      .catch(function(){go.disabled=false;go.textContent='Zoek oefeningen';uit.innerHTML="<div class='hint'>Geen verbinding met de server.</div>";});
   });
   document.getElementById('ai_result').addEventListener('click',function(e){
     if(e.target.id!=='ai_apply'||!AI_VOORSTEL)return;
-    var gekozen=[];
-    document.querySelectorAll('#ai_result [data-ai]').forEach(function(cb){if(cb.checked)gekozen.push(AI_VOORSTEL.oefeningen[+cb.dataset.ai]);});
-    if(!gekozen.length){alert('Vink minstens één oefening aan.');return;}
-    if(chosen.length&&!confirm('De huidige oefeningen op de kaart vervangen door het voorstel?'))return;
-    var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
-    if(!client.c_doel){client.c_doel=[AI_VOORSTEL.trainingsdoel,AI_VOORSTEL.frequentie].filter(Boolean).join(' · ');}
-    if(!client.c_opm&&AI_VOORSTEL.opmerking){client.c_opm=fittingPrintableText(document.getElementById('c_opm'),AI_VOORSTEL.opmerking);}
-    if(!client.c_cave&&AI_VOORSTEL.casus){client.c_cave=fittingPrintableText(document.getElementById('c_cave'),AI_VOORSTEL.casus);}
-    var cells={};
-    gekozen.forEach(function(o){
-      var nk=normEx(o.naam);
-      if(o.series)cells['n'+nk+'.0|r0|S']=o.series;
-      if(o.herhalingen)cells['n'+nk+'.0|r0|H']=o.herhalingen;
-      if(o.gewicht)cells['n'+nk+'.0|r0|W']=o.gewicht;
-      if(o.borg)cells['n'+nk+'.0|borg0|V']=o.borg;
-      if(o.xrm)cells['n'+nk+'.0|xrm|V']=o.xrm;
+    var ids=[];
+    document.querySelectorAll('#ai_result [data-ai]').forEach(function(cb){
+      if(!cb.checked)return;
+      var o=AI_VOORSTEL.oefeningen[+cb.dataset.ai],id=o?byNorm[normEx(o.naam)]:null;
+      if(id!=null&&OEF[id]&&!chosen.some(function(c){return c.o===id;}))ids.push(id);
     });
-    openCard({client:client,chosen:gekozen.map(function(o){return {n:o.naam,i:0};}),rows:{},cells:cells,vids:VIDS});
+    if(!ids.length){alert('Vink minstens één oefening aan.');return;}
+    var ruimte=12-chosen.length;
+    if(ruimte<=0){alert('Maximaal 12 plaatjes op één A4.');return;}
+    if(ids.length>ruimte)alert('Er passen nog '+ruimte+' oefening'+(ruimte===1?'':'en')+' op de kaart; de eerste '+ruimte+' komen erop.');
+    ids.slice(0,ruimte).forEach(function(id){chosen.push({o:id,i:0});});
+    render();
     closeOv('ovAi');
-    setTimeout(function(){var opm=document.getElementById('c_opm');if(opm)opm.focus();},0);
   });
 
   // ---- kaarten opslaan/openen: lokaal in deze browser (cliëntgegevens blijven lokaal) ----
@@ -2473,6 +2584,10 @@ bridge2.jpg</div>
       "<div id='ps_form' style='display:none;gap:6px;align-items:center;flex-wrap:wrap'>"+
         "<input id='ps_ww' type='password' autocomplete='current-password' placeholder='Wachtwoord' style='flex:1;min-width:130px'/>"+
         "<button class='btn' id='ps_do' type='button'></button></div>"+
+      // AVG art. 28: wie de praktijk beveiligt, gaat namens de praktijk akkoord met de
+      // verwerkersovereenkomst (alleen bij beveiligen, niet bij inloggen)
+      "<label id='ps_vwolab' style='display:none;align-items:flex-start;gap:6px;margin:7px 0 0;font-size:12px;font-weight:400;color:var(--muted)'>"+
+        "<input type='checkbox' id='ps_vwo' style='width:auto;height:auto;flex:0 0 auto;margin-top:2px'/><span>Ik ga namens de praktijk akkoord met de <a href='/verwerkersovereenkomst' target='_blank' rel='noopener'>verwerkersovereenkomst</a>. Fysiplan bewaart de kaarten alleen in opdracht van de praktijk.</span></label>"+
       "<div id='ps_herstel' style='display:none;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px'>"+
         "<input id='ps_hcode' type='text' autocomplete='one-time-code' placeholder='Herstelcode (FP-…)' style='flex:1;min-width:150px'/>"+
         "<input id='ps_hnieuw' type='password' autocomplete='new-password' placeholder='Nieuw wachtwoord (min. 8 tekens)' style='flex:1;min-width:150px'/>"+
@@ -2493,12 +2608,16 @@ bridge2.jpg</div>
     document.getElementById('ps_hdo').addEventListener('click',prakHerstel);
     document.getElementById('ps_hcdo').addEventListener('click',prakNieuweCode);
   }
-  var PRAKSLOT={geclaimd:false,ingelogd:false,pr:''};
+  var PRAKSLOT={geclaimd:false,ingelogd:false,pr:'',bewaar:null};
+  // bewaartermijnen zoals de server ze hanteert (standaard 90 en 30 dagen)
+  function bewaarAfgerond(){return (PRAKSLOT.bewaar&&PRAKSLOT.bewaar.afgerond)||30;}
+  function bewaarStil(){return (PRAKSLOT.bewaar&&PRAKSLOT.bewaar.stil)||90;}
   function toonPrakSlot(pr){
     PRAKSLOT.pr=pr;
     fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET())
       .then(function(r){return r.json();}).then(function(d){
         PRAKSLOT.geclaimd=!!d.geclaimd;PRAKSLOT.ingelogd=!!d.ingelogd;
+        if(d.bewaar)PRAKSLOT.bewaar=d.bewaar;
         rendPrakSlot();
       }).catch(function(){});
   }
@@ -2507,9 +2626,11 @@ bridge2.jpg</div>
         knop=document.getElementById('ps_do'),ww=document.getElementById('ps_ww');
     if(!st)return;
     if(!PRAKSLOT.geclaimd){
-      st.innerHTML="🔓 Deze praktijk is nog niet beveiligd. Zet er een wachtwoord op zodat alleen jouw praktijk het kaartoverzicht ziet.";
+      st.innerHTML="🔓 Deze praktijk is nog niet beveiligd. Zet er een wachtwoord op: daarna deel je kaarten met je pati\u00ebnten en ziet alleen jouw praktijk het overzicht.";
       form.style.display='flex';ww.placeholder='Kies een wachtwoord (min. 8 tekens)';ww.autocomplete='new-password';knop.textContent='Beveiligen';knop.dataset.act='claim';
+      document.getElementById('ps_vwolab').style.display='flex';
     }else if(PRAKSLOT.ingelogd){
+      document.getElementById('ps_vwolab').style.display='none';
       st.innerHTML="🔒 Beveiligd en ingelogd. <a href='#' id='ps_uit'>Uitloggen</a> · <a href='#' id='ps_wtoon'>Wachtwoord wijzigen</a> · <a href='#' id='ps_hctoon' title='Herstelcode kwijt? Maak ingelogd een nieuwe; de oude vervalt direct'>Nieuwe herstelcode</a> · <a href='#' id='ps_acttoon' title='Recente accountactiviteit: logins, wijzigingen en geweigerde pogingen, met gemaskeerd IP'>Activiteit</a>";
       form.style.display='none';
       var u=document.getElementById('ps_uit');if(u)u.addEventListener('click',function(e){e.preventDefault();prakLogout();});
@@ -2517,6 +2638,7 @@ bridge2.jpg</div>
       var hc=document.getElementById('ps_hctoon');if(hc)hc.addEventListener('click',function(e){e.preventDefault();var f=document.getElementById('ps_hcform');f.style.display=f.style.display==='none'?'flex':'none';if(f.style.display==='flex')toonPsMsg('Bevestig met je huidige wachtwoord; de oude herstelcode vervalt direct en de nieuwe wordt één keer getoond.');});
       var at=document.getElementById('ps_acttoon');if(at)at.addEventListener('click',function(e){e.preventDefault();toonPrakActiviteit();});
     }else{
+      document.getElementById('ps_vwolab').style.display='none';
       document.getElementById('ps_wijzig').style.display='none';
       document.getElementById('ps_hcform').style.display='none';
       st.innerHTML="🔒 Deze praktijk is beveiligd. Log in om de gedeelde kaarten te zien. <a href='#' id='ps_vergeten'>Wachtwoord vergeten?</a>";
@@ -2622,9 +2744,13 @@ bridge2.jpg</div>
     var act=knop.dataset.act,w=ww.value;
     if(act==='claim'&&w.length<8){toonPsMsg('Kies een wachtwoord van minstens 8 tekens.');return;}
     if(!w){toonPsMsg('Vul je wachtwoord in.');return;}
+    var vwo=document.getElementById('ps_vwo');
+    if(act==='claim'&&!(vwo&&vwo.checked)){toonPsMsg('Vink aan dat je namens de praktijk akkoord gaat met de verwerkersovereenkomst.');return;}
     knop.disabled=true;
+    var lijf={praktijk:PRAKSLOT.pr,wachtwoord:w};
+    if(act==='claim')lijf.akkoord=true;
     fetch('api/praktijk/'+(act==='claim'?'claim':'login'),{method:'POST',headers:{'content-type':'application/json'},
-      body:JSON.stringify({praktijk:PRAKSLOT.pr,wachtwoord:w})})
+      body:JSON.stringify(lijf)})
       .then(function(r){return r.json().catch(function(){return{ok:false};});})
       .then(function(d){
         knop.disabled=false;
@@ -2632,6 +2758,8 @@ bridge2.jpg</div>
         setPrakSes(d.sessie);ww.value='';document.getElementById('ps_msg').style.display='none';
         PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;rendPrakSlot();toonSrvKaarten();reloadLibraryKeepingCard();
         if(d.herstelcode)toonHerstelcode(d.herstelcode);
+        // de kaart in de editor mag nu gedeeld worden: de QR komt er vanzelf op
+        if(IS_V2){laatsteDeel='';deelNu();}
       })
       .catch(function(){knop.disabled=false;toonPsMsg('Geen verbinding.');});
   }
@@ -2662,9 +2790,11 @@ bridge2.jpg</div>
   function toonPsMsg(t){var m=document.getElementById('ps_msg');if(m){m.textContent=t;m.style.display='';}}
 
   // ---- gedeelde kaarten van de praktijk (v2): server-side, voor alle collega's ----
+  // de praktijk leest haar eigen kaart via de praktijkroute (met sessie); de
+  // patiëntroute /api/kaart geeft sinds de dataminimalisatie alleen nog de roepnaam
+  function praktijkKaartUrl(id){return 'api/praktijk/kaart?praktijk='+encodeURIComponent((SET.praktijk||'').trim())+'&id='+encodeURIComponent(id);}
   function saveServerCard(naam,cb){
-    var c=currentCard(naam);
-    c.praktijk=(SET.praktijk||'').trim();
+    var c=serverKaart(naam);
     fetch('api/kaarten',{method:'POST',headers:PJSON(),body:JSON.stringify(c)})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
       .then(function(d){cb(d);})
@@ -2695,7 +2825,7 @@ bridge2.jpg</div>
     if(kaart.ts)r.push('Aangemaakt: '+new Date(kaart.ts).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}));
     // bij een afgeronde (gearchiveerde) behandeling is dit de eindsamenvatting:
     // dat mag het dossier expliciet weten
-    if(kaart.gearchiveerd)r.push('Status: behandeling afgerond (kaart gearchiveerd; de patiëntlink blijft werken).');
+    if(kaart.gearchiveerd)r.push('Status: behandeling afgerond'+(kaart.verloopt?' (de digitale kaart verdwijnt op '+new Date(kaart.verloopt).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'})+')':'')+'.');
     if(cl.c_doel)r.push('Doel: '+cl.c_doel);
     if(cl.c_cave)r.push('Casus/let op: '+cl.c_cave);
     if(cl.c_opm)r.push('Opmerking: '+cl.c_opm);
@@ -2932,18 +3062,18 @@ bridge2.jpg</div>
     document.getElementById('k_srv_naam').textContent='('+pr+')';
     // v2: beveiligingsslot — claim/inloggen per praktijk (alleen in de v2-app)
     if(window.FYSIPLAN_V2){bouwPrakSlot(blok);toonPrakSlot(pr);}
-    // v2: de weekbrief — korte, beschrijvende AI-samenvatting van de gedeelde
-    // kaarten (alleen in de v2-app; v1 blijft exact zoals hij was)
+    // v2: de weekbrief — een vaste feitenlijst uit de gedeelde kaarten, zonder AI
+    // (alleen in de v2-app; v1 blijft exact zoals hij was)
     if(window.FYSIPLAN_V2&&!document.getElementById('weekbrief')){
       var wb=document.createElement('div');
       wb.id='weekbrief';
       wb.innerHTML="<button class='btn' id='wb_knop' type='button' style='margin-top:8px'>Weekbrief van je praktijk</button>"+
-        "<button class='btn' id='wb_kopieer' type='button' style='margin-top:8px;margin-left:6px;display:none' title='Kopieer de weekbrief om in het teamoverleg of de groepsapp te plakken'>Kopieer</button>"+
+        "<button class='btn' id='wb_kopieer' type='button' style='margin-top:8px;margin-left:6px;display:none' title='Kopieer de weekbrief, bijvoorbeeld voor het teamoverleg. Er staan roepnamen in: deel hem alleen binnen de praktijk.'>Kopieer</button>"+
         "<div id='wb_uit' class='hint' style='display:none;white-space:pre-wrap;margin-top:8px'></div>";
       blok.appendChild(wb);
       document.getElementById('wb_knop').addEventListener('click',function(){
         var uit=document.getElementById('wb_uit'),k2=this,kp=document.getElementById('wb_kopieer');
-        k2.disabled=true;uit.style.display='';kp.style.display='none';uit.textContent='De weekbrief wordt geschreven…';
+        k2.disabled=true;uit.style.display='';kp.style.display='none';uit.textContent='De weekbrief wordt opgehaald…';
         fetch('api/praktijk/brief?praktijk='+encodeURIComponent(SET.praktijk||''),PGET())
           .then(function(r){return r.json();})
           .then(function(d){
@@ -2953,7 +3083,7 @@ bridge2.jpg</div>
           })
           .catch(function(){uit.textContent='De weekbrief is nu niet beschikbaar.';k2.disabled=false;});
       });
-      // de brief is geschreven om te delen (teamoverleg, groepsapp): één klik kopieert
+      // de brief is bedoeld voor het team (teamoverleg): één klik kopieert
       document.getElementById('wb_kopieer').addEventListener('click',function(){
         var kp=this,tekst=document.getElementById('wb_uit').textContent||'';
         var oudK=kp.textContent,toonK=function(t){kp.textContent=t;setTimeout(function(){kp.textContent=oudK;},1600);};
@@ -2971,12 +3101,12 @@ bridge2.jpg</div>
       })
       .then(function(l){
         var zoekEl=document.getElementById('k_srv_zoek');
-        // het overzicht toont cliëntnamen en scores: alleen voor een praktijk met wachtwoord
+        // het overzicht toont roepnamen en scores: alleen voor een praktijk met wachtwoord
         if(l&&l.geweigerd){
           if(zoekEl)zoekEl.style.display='none';
           var samW=document.getElementById('k_srv_sam');if(samW)samW.style.display='none';
           el.innerHTML="<div class='hint'>"+(l.beveilig
-            ?"Je kaarten en de signalen van je pati\u00ebnten (pijn, seintjes, oefenweek) staan klaar. Zet hierboven een wachtwoord op je praktijk om ze te zien; zo kan niemand anders ze openen."
+            ?"Zet hierboven een wachtwoord op je praktijk. Daarna deel je kaarten met je pati\u00ebnten en zie je hier hun oefenweek en meldingen; niemand anders kan ze openen."
             :"Log hierboven in om de kaarten van deze praktijk te zien.")+"</div>";
           zetSeinBadge(0);return;
         }
@@ -3003,7 +3133,8 @@ bridge2.jpg</div>
           var dt=c.ts?new Date(c.ts).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}):'';
           // pijnscores die de patiënt op de digitale kaart aantikt (alleen tonen, duiding blijft bij de therapeut)
           var vg='',vgBlok='',pskChipGetoond=false;
-          var kleur=function(s){return s<=3?'#3e8e5a':(s<=6?'#d98a2b':'#c94f36');};
+          // één neutrale kleur: de waarde zelf tonen, zonder goed/slecht-kleur (MDR: tonen, niet duiden)
+          var kleur=function(){return '#6b7a99';};
           // staafreeks voor pijn én PSK (zelfde schaal 0-10, zelfde kleuren: laag = goed)
           var staafjes=function(reeks){
             return "<div style='display:flex;align-items:flex-end;gap:6px;height:56px;margin-top:8px'>"+
@@ -3054,7 +3185,7 @@ bridge2.jpg</div>
             var hv=c.ervaring[c.ervaring.length-1];
             var hsLbl={'-2':'veel slechter','-1':'iets slechter','0':'hetzelfde','1':'iets beter','2':'veel beter'}[String(hv.s)];
             if(hsLbl){
-              var hsKl=hv.s>0?'#3e8e5a':(hv.s<0?'#c94f36':'#9aa1ab');
+              var hsKl='#9aa1ab';
               var hsDg=Math.floor((Date.now()-hv.t)/864e5);
               var hsWan=hsDg<=0?'vandaag':(hsDg===1?'gisteren':hsDg+' dagen geleden');
               hsChip="<span class='btn' title='Ervaren herstel t.o.v. de start, door de patiënt aangetikt ("+hsWan+")' style='font-size:11.5px;padding:4px 10px;cursor:default'>"+
@@ -3069,7 +3200,7 @@ bridge2.jpg</div>
             zwChip="<span class='btn' title='Door de patiënt als te zwaar gemeld (laatste 7 dagen): "+esc(zwLijst.join(', '))+" — open Deel voor de tijdstippen' style='font-size:11.5px;padding:4px 4px 4px 10px;cursor:default;background:#fdf3ea;border:1px solid #ecd2b8;color:#9a6020'>"+
               "<span style='display:inline-block;width:8px;height:8px;border-radius:99px;background:#d98a2b;margin-right:5px'></span>te zwaar: "+esc(zwLijst[0])+(zwLijst.length>1?" +"+(zwLijst.length-1):"")+
               // afhandelen: na het aanpassen van de dosering verdwijnt het signaal uit de triage
-              "<button data-szwaarklaar='"+esc(c.id)+"' title='Afgehandeld — haal deze te zwaar-melding uit het overzicht (de patiëntgegevens blijven; dit verbergt alleen het aandachtssignaal)' aria-label='te zwaar-melding afhandelen' style='margin-left:6px;border:none;background:transparent;color:#9a6020;font-size:14px;line-height:1;cursor:pointer;padding:0 3px'>&times;</button></span>";
+              "<button data-szwaarklaar='"+esc(c.id)+"' title='Afgehandeld: haal deze te zwaar-melding uit het overzicht (de gegevens op de kaart blijven staan; dit verbergt alleen de melding)' aria-label='te zwaar-melding afhandelen' style='margin-left:6px;border:none;background:transparent;color:#9a6020;font-size:14px;line-height:1;cursor:pointer;padding:0 3px'>&times;</button></span>";
           }
           // therapietrouw zonder patiënt-app: hoe vaak de patiënt de afgelopen week
           // "ik heb geoefend" aantikte op de digitale kaart (alleen tonen; de duiding
@@ -3095,7 +3226,14 @@ bridge2.jpg</div>
           // is de kaart überhaupt geopend? De patiënt die alleen kijkt (video's)
           // tikt niets aan; en wie de link nooit opende, verdient een nieuw duwtje.
           // Alleen tonen — de duiding blijft bij de therapeut.
-          var bkTxt='';
+          var bkTxt='',bwTxt='';
+          // bewaartermijn: ruim van tevoren laten zien dat de kaart verdwijnt
+          if(c.verloopt){
+            var vDg=Math.max(0,Math.ceil((c.verloopt-Date.now())/864e5));
+            if(vDg<=14)bwTxt+=" · <span title='Bewaartermijn: zonder nieuwe activiteit gaat deze kaart met scores en video\u2019s van de server. Kopieer eerst de samenvatting voor het dossier.' style='color:#a23f2c;white-space:nowrap'>verdwijnt "+(vDg<=0?'vandaag':(vDg===1?'morgen':'over '+vDg+' dagen'))+"</span>";
+          }
+          // oudere kaarten met een volledige naam: zacht wijzen op de roepnaam
+          if(naamLijktVolledig(c.naam))bwTxt+=" · <span title='Op de server hoort alleen een roepnaam (Jan K.). Tik op Naam wijzigen; de pati\u00ebntlink en de voortgang blijven.' style='white-space:nowrap'>volledige naam</span>";
           {
             var dagB=864e5,nuB=Date.now();
             if(c.bekeken>0){
@@ -3105,6 +3243,7 @@ bridge2.jpg</div>
               bkTxt=" · <span style='color:#a23f2c'>kaart nog niet geopend</span>";
             }
           }
+          bkTxt+=bwTxt;
           // seintje van de patiënt: één tik op de kaart (vraag / pijn / gaat goed).
           // App-vrije tweerichting-terugkoppeling — concurrenten bieden dit alleen
           // mét patiënt-app. De therapeut handelt het af en tikt het chip weg.
@@ -3131,7 +3270,7 @@ bridge2.jpg</div>
           var waHref='https://wa.me/?text='+encodeURIComponent(deelTekst);
           var mailHref='mailto:?subject='+encodeURIComponent(vulDeel(kT.sd,c.id))+'&body='+encodeURIComponent(deelTekst);
           // warme herinnering voor wie stil is gevallen: dezelfde app-vrije link, andere toon.
-          // Zo wordt het "aandacht"-signaal een handeling: zien wie stil is → in één tik nudgen.
+          // Zien wie stil is en in één tik een herinnering sturen; de duiding blijft bij de therapeut.
           var herinnerTekst=herinnerBericht(c.id,kTaal);
           var waHref2='https://wa.me/?text='+encodeURIComponent(herinnerTekst);
           var mailHref2='mailto:?subject='+encodeURIComponent(vulDeel(kT.sh,c.id))+'&body='+encodeURIComponent(herinnerTekst);
@@ -3179,7 +3318,7 @@ bridge2.jpg</div>
               "<a class='btn' data-dmail='"+esc(c.id)+"' href='"+esc(mailHref)+"' target='_blank' rel='noopener' style='text-decoration:none'>E-mail</a>"+
             "</div>"+
             "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;align-items:center'>"+
-              "<button class='btn' data-shernoem='"+esc(c.id)+"' data-hnaam='"+esc(c.naam)+"' title='Wijzig de naam van deze kaart (bijvoorbeeld een typefout in de cliëntnaam). De patiëntlink en alle voortgang blijven behouden.'>Naam wijzigen</button>"+
+              "<button class='btn' data-shernoem='"+esc(c.id)+"' data-hnaam='"+esc(c.naam)+"' title='Wijzig de naam van deze kaart (een typefout, of maak er een roepnaam van zoals Jan K.). De patiëntlink en alle voortgang blijven behouden.'>Naam wijzigen</button>"+
               "<small style='color:var(--muted)'>Link en voortgang blijven behouden.</small>"+
             "</div>"+
             // volgende afspraak: komt op de patiëntkaart met een agenda-knop (mét alarm)
@@ -3229,8 +3368,8 @@ bridge2.jpg</div>
               "<small style='color:var(--muted)'>De oude link werkt daarna niet meer; de voortgang blijft.</small>"+
             "</div>"+
             "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;align-items:center'>"+
-              "<button class='btn' data-sarch='"+esc(c.id)+"' title='Zet een afgeronde kaart uit het hoofdoverzicht. Alle voortgang blijft bewaard en de patiëntlink blijft werken; je vindt de kaart terug onder “Gearchiveerd”.'>Archiveer deze kaart</button>"+
-              "<small style='color:var(--muted)'>Uit het overzicht, niets gaat verloren.</small>"+
+              "<button class='btn' data-sarch='"+esc(c.id)+"' title='Rond de behandeling af: de kaart gaat uit het overzicht en de patiënt ziet “afgerond”. Na "+bewaarAfgerond()+" dagen verdwijnt hij met alle voortgang van de server; tot dan kun je hem terughalen onder “Gearchiveerd”.'>Rond af (archiveer)</button>"+
+              "<small style='color:var(--muted)'>Na "+bewaarAfgerond()+" dagen gewist; kopieer eerst de samenvatting voor het dossier.</small>"+
             "</div>"+
             otr+zw+
             "<small style='color:var(--muted);display:block;margin-top:10px'>Voor het EPD-dossier (Intramed, FysioRoadmap, Incura, …):</small>"+
@@ -3255,8 +3394,9 @@ bridge2.jpg</div>
           if(c.gearchiveerd){
             // gearchiveerde kaart: gedempt, met "terughalen" en openen; de patiëntlink
             // blijft gewoon werken, maar de kaart staat uit het hoofdoverzicht.
+            var vrlp=c.verloopt?new Date(c.verloopt).toLocaleDateString('nl-NL',{day:'numeric',month:'short'}):'';
             return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line);opacity:.72'>"+
-              "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b> <small style='color:var(--muted)'>&middot; gearchiveerd</small><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+"</small></div>"+
+              "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b> <small style='color:var(--muted)'>&middot; afgerond"+(vrlp?", verdwijnt "+esc(vrlp):"")+"</small><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+"</small></div>"+
               "<button class='btn' data-sdossier='"+esc(c.id)+"' title='Kopieer de eindsamenvatting (cliënt, oefeningen, pijnverloop, PSK, oefentrouw) om bij het afronden in het EPD-dossier te plakken'>Dossier</button>"+
               "<button class='btn' data-sherstel='"+esc(c.id)+"' title='Terug naar het actuele overzicht'>Terughalen</button>"+
               "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
@@ -3276,41 +3416,17 @@ bridge2.jpg</div>
         // nooit geopend: de kaart is ouder dan een dag en de patiëntpagina is nog
         // nooit bekeken — de link is dus waarschijnlijk nooit aangekomen
         var nooitGeopend=function(c){return !(c.bekeken>0)&&!!c.ts&&(nu-c.ts)>dag;};
-        // "aandacht"-prioriteit: hoge laatste pijn weegt het zwaarst, daarna een
-        // nooit geopende kaart, daarna stilte. Alleen tonen/sorteren; de duiding
-        // blijft bij de therapeut.
-        var aandacht=function(c){
-          var laatstePijn=(c.scores&&c.scores.length)?c.scores[c.scores.length-1].s:null;
-          var acts=[c.ts||0];
-          if(c.gedaan&&c.gedaan.length)acts.push(c.gedaan[c.gedaan.length-1].t);
-          if(c.scores&&c.scores.length)acts.push(c.scores[c.scores.length-1].t);
-          var dagenStil=Math.min(60,Math.floor((nu-Math.max.apply(null,acts))/dag));
-          // een openstaand seintje (vraag of pijn) weegt zwaar: de patiënt reikt actief
-          var seinAandacht=(c.seintje&&(c.seintje.soort==='vraag'||c.seintje.soort==='pijn'))?900:0;
-          // recent aangetikt "slechter" op de herstelvraag is een rode vlag
-          var herstelSlecht=herstelVerslechterd(c)?700:0;
-          // een verse "te zwaar"-melding is actief contact over een concrete oefening
-          var zwaarAandacht=zwaarRecent(c).length?650:0;
-          return (laatstePijn!==null&&laatstePijn>=7?1000:0)+seinAandacht+herstelSlecht+zwaarAandacht+(nooitGeopend(c)?500:0)+dagenStil;
+        // Pakket D (MDR): de app duidt geen scores. Geen "aandacht"-labels meer op
+        // basis van pijnhoogte of een slechter-tik; wel tonen en sorteren op datum en
+        // op wat de patiënt zélf meldt (een seintje of een te zwaar-melding).
+        // tijdstip van de laatste openstaande melding van de patiënt (0 = geen)
+        var meldingT=function(c){
+          var t=0;
+          if(seintjeOpen(c))t=Math.max(t,c.seintje.t||0);
+          if(c.oefZwaar)Object.keys(c.oefZwaar).forEach(function(k2){var z=c.oefZwaar[k2];if(z&&z.t&&nu-z.t<7*dag)t=Math.max(t,z.t);});
+          return t;
         };
-        // een recent (laatste 14 dagen) aangetikt "slechter" op de herstelvraag:
-        // de patiënt zegt zelf dat het achteruitgaat — dat hoort in de triage-bak
-        var herstelVerslechterd=function(c){
-          var hv=(c.ervaring&&c.ervaring.length)?c.ervaring[c.ervaring.length-1]:null;
-          return !!(hv&&hv.s<0&&nu-hv.t<14*dag);
-        };
-        // vraagt deze kaart aandacht? hoge laatste pijn (>=7), verslechterd ervaren
-        // herstel, >=10 dagen stil, of een kaart die nooit is geopend. Puur
-        // beschrijvend tellen; de duiding en het handelen blijven bij de therapeut.
-        var vraagtAandacht=function(c){
-          var laatstePijn=(c.scores&&c.scores.length)?c.scores[c.scores.length-1].s:null;
-          var acts=[c.ts||0];
-          if(c.gedaan&&c.gedaan.length)acts.push(c.gedaan[c.gedaan.length-1].t);
-          if(c.scores&&c.scores.length)acts.push(c.scores[c.scores.length-1].t);
-          var dagenStil=Math.floor((nu-Math.max.apply(null,acts))/dag);
-          var seinOpen=!!(c.seintje&&(c.seintje.soort==='vraag'||c.seintje.soort==='pijn'));
-          return (laatstePijn!==null&&laatstePijn>=7)||herstelVerslechterd(c)||dagenStil>=10||nooitGeopend(c)||seinOpen||zwaarRecent(c).length>0;
-        };
+        var heeftMelding=function(c){return meldingT(c)>0;};
         var actiefDezeWeek=function(c){return !!(c.gedaan&&c.gedaan.some(function(g){return nu-g.t<7*dag;}));};
         // een openstaand seintje: de patiënt tikte actief "vraag" of "pijn" aan (het
         // positieve "gaat goed" vraagt geen actie). Dit is direct inkomend contact —
@@ -3342,13 +3458,16 @@ bridge2.jpg</div>
           // zien; werkt samen met zoeken, de triage-filters en het archief
           var bf=behFilterVan();
           if(bf)items=items.filter(function(c){return vanBehandelaar(c,bf);});
-          // triage-filter: toon in één tik alleen de kaarten met een openstaand
-          // seintje, of alle kaarten die aandacht vragen (hoge pijn, seintje, lang
-          // stil of nooit geopend)
+          // filter: toon in één tik alleen de kaarten met een openstaand seintje,
+          // of alle kaarten met een openstaande melding van de patiënt (seintje of
+          // te zwaar). De interne sleutel heet om historische redenen 'aandacht'.
           var fmode=(sortEl&&sortEl.style.display!=='none')?(sortEl.dataset.filter||''):(filterAandacht()?'aandacht':'');
-          if(fmode==='aandacht')items=items.filter(vraagtAandacht);
+          if(fmode==='aandacht')items=items.filter(heeftMelding);
           else if(fmode==='seintje')items=items.filter(seintjeOpen);
-          if(sortModus()==='aandacht')items.sort(function(a,b){return aandacht(b)-aandacht(a)||(b.ts||0)-(a.ts||0);});
+          // meldingen eerst: nieuwste melding van de patiënt bovenaan, dan de rest op datum
+          if(sortModus()==='aandacht')items.sort(function(a,b){return meldingT(b)-meldingT(a)||(b.ts||0)-(a.ts||0);});
+          // langst stil eerst: puur op datum van de laatste activiteit
+          if(sortModus()==='stil')items.sort(function(a,b){return laatsteActiviteit(a)-laatsteActiviteit(b);});
           // sorteren op afspraak: wie het eerst komt bovenaan (ochtendvoorbereiding —
           // kaart even bijwerken vóór de patiënt binnenstapt); kaarten zonder
           // aankomende afspraak volgen daarna op nieuwste eerst
@@ -3364,7 +3483,7 @@ bridge2.jpg</div>
           // alleen bij een echte zoekterm en buiten de triage-filters.
           var extraArch=(t&&!srvArchiefView&&!fmode)?lArch.filter(past):[];
           if(bf)extraArch=extraArch.filter(function(c){return vanBehandelaar(c,bf);});
-          if(!items.length&&!extraArch.length){el.innerHTML="<div class='hint'>"+(srvArchiefView?'Geen gearchiveerde kaarten.':(fmode==='seintje'?'Geen openstaande seintjes op dit moment.':(fmode==='aandacht'?'Op dit moment vraagt geen enkele kaart aandacht.':(t?'Geen kaart gevonden voor deze zoekterm.':(bf?'Geen kaarten voor deze behandelaar — kies “Iedereen” om alles te zien.':(lArch.length?'Alle kaarten zijn gearchiveerd — tik op “Gearchiveerd” om ze te zien.':'Nog geen gedeelde kaarten voor deze praktijk.'))))))+"</div>";return;}
+          if(!items.length&&!extraArch.length){el.innerHTML="<div class='hint'>"+(srvArchiefView?'Geen gearchiveerde kaarten.':(fmode==='seintje'?'Geen openstaande seintjes op dit moment.':(fmode==='aandacht'?'Op dit moment is er geen openstaande melding van een pati\u00ebnt.':(t?'Geen kaart gevonden voor deze zoekterm.':(bf?'Geen kaarten voor deze behandelaar — kies “Iedereen” om alles te zien.':(lArch.length?'Alle kaarten zijn gearchiveerd — tik op “Gearchiveerd” om ze te zien.':'Nog geen gedeelde kaarten voor deze praktijk.'))))))+"</div>";return;}
           toonLijst(items.concat(extraArch));
         };
         var huidig=huidigeBasis();
@@ -3374,14 +3493,14 @@ bridge2.jpg</div>
           if(!zoek){
             zoek=document.createElement('input');
             zoek.id='k_srv_zoek';zoek.type='search';zoek.className='no-print';
-            zoek.setAttribute('placeholder','Zoek op cliënt, behandelaar of werknotitie…');
-            zoek.setAttribute('aria-label','Zoek een gedeelde kaart op cliëntnaam, behandelaar of werknotitie');
+            zoek.setAttribute('placeholder','Zoek op roepnaam, behandelaar of werknotitie…');
+            zoek.setAttribute('aria-label','Zoek een gedeelde kaart op roepnaam, behandelaar of werknotitie');
             zoek.style.cssText='width:100%;margin:2px 0 8px;font-size:13px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff';
             el.parentNode.insertBefore(zoek,el);
           }
           zoek.style.display='';zoek.oninput=toon;
         }else if(zoek)zoek.style.display='none';
-        // sorteertoggle vanaf twee kaarten: nieuwste of "aandacht" bovenaan
+        // sorteertoggle vanaf twee kaarten: nieuwste, meldingen, langst stil of afspraak
         var sortEl=document.getElementById('k_srv_sort');
         var markeerSort=function(){if(!sortEl)return;var m=sortEl.dataset.mode||'nieuw';sortEl.querySelectorAll('[data-sort]').forEach(function(b){var aan=b.dataset.sort===m;b.style.background=aan?'var(--brand)':'';b.style.color=aan?'#fff':'';b.style.borderColor=aan?'var(--brand)':'';b.setAttribute('aria-pressed',aan?'true':'false');});};
         var markeerFilter=function(){if(!sortEl)return;var f=sortEl.dataset.filter==='aandacht';var b=sortEl.querySelector('[data-filter="aandacht"]');if(b){b.style.background=f?'#a23f2c':'';b.style.color=f?'#fff':'';b.style.borderColor=f?'#a23f2c':'';b.setAttribute('aria-pressed',f?'true':'false');}};
@@ -3389,7 +3508,7 @@ bridge2.jpg</div>
           if(!sortEl){
             sortEl=document.createElement('div');sortEl.id='k_srv_sort';sortEl.className='no-print';sortEl.dataset.mode='nieuw';
             sortEl.style.cssText='display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0 0 8px;font-size:12px;color:var(--muted)';
-            sortEl.innerHTML='<span>Sorteer:</span><button type="button" class="btn" data-sort="nieuw" style="font-size:11.5px;padding:3px 9px">Nieuwste</button><button type="button" class="btn" data-sort="aandacht" title="Hoge pijn, een te zwaar-melding, langer niet geoefend of nooit geopende kaart bovenaan" style="font-size:11.5px;padding:3px 9px">Aandacht</button><button type="button" class="btn" data-sort="afspraak" title="Wie het eerst komt bovenaan: werk de kaart bij vóór de patiënt binnenstapt" style="font-size:11.5px;padding:3px 9px">Afspraak</button><button type="button" class="btn" data-filter="aandacht" title="Toon alleen de kaarten die nu aandacht vragen — hoge pijn, een openstaand seintje, een te zwaar-melding, lang stil of nooit geopend" style="font-size:11.5px;padding:3px 9px;margin-left:8px">Alleen aandacht</button>';
+            sortEl.innerHTML='<span>Sorteer:</span><button type="button" class="btn" data-sort="nieuw" style="font-size:11.5px;padding:3px 9px">Nieuwste</button><button type="button" class="btn" data-sort="aandacht" title="Kaarten met een openstaande melding van de patiënt (seintje of te zwaar) bovenaan, nieuwste melding eerst" style="font-size:11.5px;padding:3px 9px">Meldingen</button><button type="button" class="btn" data-sort="stil" title="Kaarten waarop het langst niets gebeurde bovenaan" style="font-size:11.5px;padding:3px 9px">Langst stil</button><button type="button" class="btn" data-sort="afspraak" title="Wie het eerst komt bovenaan: werk de kaart bij vóór de patiënt binnenstapt" style="font-size:11.5px;padding:3px 9px">Afspraak</button><button type="button" class="btn" data-filter="aandacht" title="Toon alleen de kaarten met een openstaande melding van de patiënt: een seintje of een te zwaar-melding" style="font-size:11.5px;padding:3px 9px;margin-left:8px">Alleen meldingen</button>';
             el.parentNode.insertBefore(sortEl,el);
           }
           sortEl.style.display='flex';markeerSort();markeerFilter();
@@ -3429,12 +3548,11 @@ bridge2.jpg</div>
         }else if(sortEl)sortEl.style.display='none';
         // een archief-teller/knop verschijnt zodra er gearchiveerde kaarten zijn
         // samenvatting bovenaan: één oogopslag op de praktijk (telt over álle kaarten,
-        // niet de zoekfilter). De "aandacht"-teller zet met één tik de aandacht-sortering
-        // aan. Alleen tellen en tonen; de duiding blijft bij de therapeut.
-        // stilgevallen kaarten voor de opruimknop: 90+ dagen geen enkele activiteit
-        // (aanmaak, oefenvinkje, pijn/PSK/herstel-tik of kaartbezoek), geen
-        // openstaand seintje en geen komende afspraak — die horen in het archief,
-        // niet in de werklijst
+        // niet de zoekfilter). De meldingenteller zet met één tik de sortering op
+        // meldingen. Alleen tellen en tonen; de duiding blijft bij de therapeut.
+        // laatste activiteit op een kaart (aanmaak, oefenvinkje, pijn/PSK/herstel-tik of
+        // kaartbezoek): voor de sortering "Langst stil". Stille kaarten ruimt de
+        // bewaartermijn op de server zelf op; een opruimknop is daarom niet meer nodig.
         var laatsteActiviteit=function(c){
           var acts=[c.ts||0];
           if(c.gedaan&&c.gedaan.length)acts.push(c.gedaan[c.gedaan.length-1].t);
@@ -3444,9 +3562,6 @@ bridge2.jpg</div>
           if(c.bekeken)acts.push(c.bekeken);
           return Math.max.apply(null,acts);
         };
-        var stilKaarten=l.filter(function(c){
-          return nu-laatsteActiviteit(c)>90*dag&&!seintjeOpen(c)&&!(c.afspraak&&c.afspraak.t>nu-2*3600000);
-        });
         var samEl=document.getElementById('k_srv_sam');
         if(huidig.length||lArch.length){
           if(!samEl){
@@ -3461,22 +3576,21 @@ bridge2.jpg</div>
             h=chip('<b>'+lArch.length+'</b> gearchiveerd')+archKnop('&larr; Terug naar actueel',true);
           }else{
             var actiefN=l.filter(actiefDezeWeek).length;
-            var aandN=l.filter(vraagtAandacht).length;
+            var aandN=l.filter(heeftMelding).length;
+            var weldraN=l.concat(lArch).filter(function(c){return c.verloopt&&c.verloopt-nu<=14*dag;}).length;
             var seinN=l.filter(seintjeOpen).length;
             h=chip('<b>'+l.length+'</b> kaart'+(l.length===1?'':'en'))+chip('<b>'+actiefN+'</b> deze week actief');
             // openstaande seintjes eerst: direct inkomend contact van de patiënt dat
-            // meestal een reactie vraagt, apart van de bredere aandacht-bak
+            // meestal een reactie vraagt, apart van de meldingenteller
             if(seinN)h+="<button type='button' id='k_srv_sam_sein' class='no-print' title='Patiënten die een seintje stuurden (vraag of pijn): toon alleen die kaarten' style='cursor:pointer;background:#eaf1fb;border:1px solid #c3d4ee;color:#2456a6;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+seinN+"</b> "+(seinN===1?'seintje':'seintjes')+"</button>";
-            h+=aandN?"<button type='button' id='k_srv_sam_aand' class='no-print' title='Hoge pijn, verslechterd ervaren herstel, een te zwaar-melding, langer niet geoefend of nooit geopend: zet die kaarten bovenaan' style='cursor:pointer;background:#fbecea;border:1px solid #e7c3bc;color:#a23f2c;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+aandN+"</b> "+(aandN===1?'vraagt':'vragen')+" aandacht</button>":chip('<b>0</b> vragen aandacht');
+            h+=aandN?"<button type='button' id='k_srv_sam_aand' class='no-print' title='Kaarten met een openstaande melding van de patiënt (seintje of te zwaar): zet die bovenaan' style='cursor:pointer;background:#fbecea;border:1px solid #e7c3bc;color:#a23f2c;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+aandN+"</b> met een melding</button>":chip('<b>0</b> meldingen');
+            // bewaartermijn: wat binnen twee weken van de server gaat (ook afgeronde kaarten)
+            if(weldraN)h+="<span title='Bewaartermijn: deze kaarten gaan binnen twee weken van de server. Kopieer eerst wat je nodig hebt naar het dossier (knop Dossier of Kopieer samenvatting).' style='background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;color:#a23f2c'><b>"+weldraN+"</b> verdwijn"+(weldraN===1?'t':'en')+" binnenkort</span>";
             if(lArch.length)h+=archKnop('Gearchiveerd ('+lArch.length+')',false);
             // praktijkrapport: de app-vrij gemeten uitkomsten in één klik als
             // plakklare tekst (kwaliteitsverantwoording, teamoverleg)
             h+="<button type='button' id='k_srv_rap' class='no-print' title='Kopieer een geaggregeerd uitkomstenrapport van alle actieve kaarten (pijnverloop, oefentrouw, ervaren herstel, seintjes) — zonder cliëntnamen. Staat het behandelaar-filter aan, dan gaat het rapport alleen over die behandelaar.' style='cursor:pointer;background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:12px'>Rapport</button>";
             h+="<button type='button' id='k_srv_csv' class='no-print' title='Download alle kaarten (actief én gearchiveerd) als CSV — je gegevens zijn van jou, voor backup of overstap' style='cursor:pointer;background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:12px'>Exporteer (CSV)</button>";
-            // opruimen: kaarten die 90+ dagen stil zijn (geen activiteit, geen
-            // openstaand seintje, geen komende afspraak) in één keer archiveren.
-            // Omkeerbaar: alles blijft bewaard en staat onder "Gearchiveerd"
-            if(stilKaarten.length)h+="<button type='button' id='k_srv_opruim' class='no-print' title='Archiveer de kaarten die 90+ dagen stil zijn (geen activiteit van de patiënt, geen openstaand seintje, geen komende afspraak). Alles blijft bewaard, de patiëntlinks blijven werken en terughalen kan altijd onder “Gearchiveerd”.' style='cursor:pointer;background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:12px'>Ruim op ("+stilKaarten.length+")</button>";
           }
           samEl.innerHTML=h;samEl.style.display='flex';
           var ab=document.getElementById('k_srv_sam_aand');
@@ -3491,25 +3605,6 @@ bridge2.jpg</div>
           }
           var arb=document.getElementById('k_srv_arch');
           if(arb)arb.onclick=function(){srvArchiefView=!srvArchiefView;toonSrvKaarten();};
-          // opruimen: met bevestiging, maximaal 25 per keer (binnen de schrijfrem),
-          // en daarna vers renderen zodat teller en archiefknop meteen kloppen
-          var ob=document.getElementById('k_srv_opruim');
-          if(ob)ob.onclick=function(){
-            var batch=stilKaarten.slice(0,25);
-            var rest=stilKaarten.length-batch.length;
-            if(!confirm(stilKaarten.length+' kaart'+(stilKaarten.length===1?' is':'en zijn')+' al 90+ dagen stil (geen activiteit, geen seintje, geen komende afspraak).\n\nArchiveren? Alles blijft bewaard, de patiëntlinks blijven werken en terughalen kan altijd onder “Gearchiveerd”.'+(rest>0?'\n\nEr worden er nu 25 gearchiveerd; klik daarna nog een keer voor de overige '+rest+'.':'')))return;
-            ob.disabled=true;ob.textContent='Bezig…';
-            var i=0;
-            var volgende=function(){
-              if(i>=batch.length){toonSrvKaarten();return;}
-              var c=batch[i++];
-              fetch('api/kaart/archief',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:c.id,archief:true})})
-                .then(function(r){return r.json();})
-                .then(function(){volgende();})
-                .catch(function(){volgende();});
-            };
-            volgende();
-          };
           var rb=document.getElementById('k_srv_rap');
           if(rb)rb.onclick=function(){
             // staat het behandelaar-filter aan, dan wordt dit een rapport over
@@ -3612,7 +3707,8 @@ bridge2.jpg</div>
     var hn=e.target.closest('[data-shernoem]');
     if(hn){
       var huidig=hn.dataset.hnaam||'';
-      var nieuw=prompt('Nieuwe naam voor deze kaart:',huidig);
+      // pakket A: een volledige naam stelt meteen de roepnaam voor (Jan de Vries → Jan V.)
+      var nieuw=prompt('Nieuwe naam voor deze kaart (roepnaam, bijv. Jan K.):',(IS_V2&&naamLijktVolledig(huidig))?kaartLabelVan(huidig):huidig);
       if(nieuw===null)return;
       nieuw=nieuw.trim();
       if(!nieuw||nieuw===huidig)return;
@@ -3744,7 +3840,7 @@ bridge2.jpg</div>
     if(ds){
       var oudD=ds.textContent;
       var toonD=function(t){ds.textContent=t;setTimeout(function(){ds.textContent=oudD;},1600);};
-      fetch('api/kaart?id='+ds.dataset.sdossier,{cache:'no-cache'})
+      fetch(praktijkKaartUrl(ds.dataset.sdossier),PGET())
         .then(function(r){return r.json();})
         .then(function(d){
           if(!d.ok){toonD('Ophalen mislukt');return;}
@@ -3773,13 +3869,14 @@ bridge2.jpg</div>
     // de app het als een níeuwe kaart (de originele kaart blijft ongemoeid).
     var kp=e.target.closest('[data-skopie]');
     if(kp){
-      fetch('api/kaart?id='+kp.dataset.skopie,{cache:'no-cache'})
+      fetch(praktijkKaartUrl(kp.dataset.skopie),PGET())
         .then(function(r){return r.json();})
         .then(function(d){
           if(!d.ok){alert('Kaart kopiëren is niet gelukt.');return;}
           if(chosen.length&&!confirm('Huidige kaart vervangen door een kopie van “'+d.kaart.naam+'”?'))return;
           openCard(d.kaart);
           CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value='';});
+          zetKaartId('');OVERSCHRIJF='';NAAM_OK='';
           laatsteDeel='';QR_UIT_VOOR=null;verbergQr();render();
           closeOv('ovKaarten');
           document.getElementById('k_result').textContent='';
@@ -3804,8 +3901,8 @@ bridge2.jpg</div>
         .catch(function(){alert('Dat is niet gelukt: geen verbinding.');});
       return;
     }
-    // "te zwaar"-melding afhandelen: de therapeut heeft de dosering aangepast,
-    // het aandachtssignaal mag uit het overzicht (patiëntgegevens blijven)
+    // "te zwaar"-melding afhandelen: de therapeut heeft ernaar gekeken, de
+    // melding mag uit het overzicht (de gegevens op de kaart blijven)
     var zk=e.target.closest('[data-szwaarklaar]');
     if(zk){
       fetch('api/kaart/oefzwaar/gezien',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:zk.dataset.szwaarklaar})})
@@ -3816,12 +3913,13 @@ bridge2.jpg</div>
     }
     var o=e.target.closest('[data-sopen]'),x=e.target.closest('[data-sdel]');
     if(o){
-      fetch('api/kaart?id='+o.dataset.sopen,{cache:'no-cache'})
+      fetch(praktijkKaartUrl(o.dataset.sopen),PGET())
         .then(function(r){return r.json();})
         .then(function(d){
           if(!d.ok){alert('Kaart openen is niet gelukt.');return;}
           if(chosen.length&&!confirm('Huidige kaart vervangen door “'+d.kaart.naam+'”?'))return;
           openCard(d.kaart);
+          zetKaartId(d.kaart.id||'');OVERSCHRIJF='';NAAM_OK=String(d.kaart.naam||'').toLowerCase();
           // patiëntsignalen uit de praktijkprojectie meenemen naar de editor
           if(IS_V2&&SRV_SIGNALEN[o.dataset.sopen]){SIGNAAL_KAART=SRV_SIGNALEN[o.dataset.sopen];render();}
           // de gedeelde kaart hééft al een id: zet de QR er meteen op
@@ -3839,7 +3937,10 @@ bridge2.jpg</div>
         .catch(function(){alert('Verwijderen is niet gelukt: geen verbinding.');});
     }
   });
-  document.getElementById('k_close').addEventListener('click',function(){closeOv('ovKaarten');});
+  document.getElementById('k_close').addEventListener('click',function(){
+    closeOv('ovKaarten');
+    if(NA_BEVEILIG&&PRAKSLOT.ingelogd){var verder=NA_BEVEILIG;NA_BEVEILIG=null;setTimeout(verder,150);}
+  });
   document.getElementById('k_save').addEventListener('click',function(){
     var naam=document.getElementById('k_naam').value.trim();
     if(!naam){alert('Geef de kaart een naam.');return;}
@@ -3857,7 +3958,7 @@ bridge2.jpg</div>
     if(o){
       var c=lijst[+o.dataset.kopen];if(!c)return;
       if(chosen.length&&!confirm('Huidige kaart vervangen door “'+c.naam+'”?'))return;
-      openCard(c);verbergQr();closeOv('ovKaarten');
+      openCard(c);verbergQr();closeOv('ovKaarten');zetKaartId('');OVERSCHRIJF='';
       // lokale kaart heeft nog geen server-id: meteen delen zodat de QR er
       // direct op komt (lukt alleen met cliëntnaam — dezelfde regel als altijd)
       QR_UIT_VOOR=null;laatsteDeel='';deelNu();
@@ -3876,7 +3977,7 @@ bridge2.jpg</div>
     chosen=[];VIDS={};laatsteDeel='';QR_UIT_VOOR=null;verbergQr();closeOv('ovWis');render();
   });
   document.getElementById('wis_alles').addEventListener('click',function(){
-    SIGNAAL_KAART=null;
+    SIGNAAL_KAART=null;zetKaartId('');OVERSCHRIJF='';NAAM_OK='';
     chosen=[];GRID={rows:{},cells:{}};VIDS={};
     CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value='';});
     normalizePrintableTextFields();
@@ -3929,7 +4030,7 @@ bridge2.jpg</div>
         "<div id='eo_form'>"+
         "<input id='eo_naam' maxlength='80' placeholder='Naam van de oefening' style='width:100%;margin-bottom:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit'/>"+
         "<textarea id='eo_uitleg' maxlength='400' rows='3' placeholder='Uitleg voor de pati\u00ebnt: hoe voer je de oefening uit?' style='width:100%;margin-bottom:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;resize:vertical'></textarea>"+
-        "<label class='hint' style='display:block;margin-bottom:4px'>Foto (bij voorkeur begin- en eindhouding naast elkaar op een witte achtergrond)</label>"+
+        "<label class='hint' style='display:block;margin-bottom:4px'>Foto (bij voorkeur begin- en eindhouding naast elkaar op een witte achtergrond). Fotografeer jezelf of een collega, niet een pati\u00ebnt: deze oefening is zichtbaar voor de hele praktijk en op elke kaart waar hij op staat.</label>"+
         "<input id='eo_foto' type='file' accept='image/jpeg,image/png'/>"+
         "<div id='eo_lijst' style='margin-top:12px'></div></div>"+
         "<div class='acts' style='margin-top:14px'><button class='btn' id='eo_sluit' type='button'>Sluiten</button><button class='btn primary' id='eo_bewaar' type='button'>Toevoegen</button></div></div>";
@@ -4015,7 +4116,7 @@ bridge2.jpg</div>
     if(!ovE){
       ovE=document.createElement('div');ovE.className='ov';ovE.id='ovEigenVideo';
       ovE.innerHTML="<div class='modal'><h3 id='ev_titel'>Eigen instructievideo</h3>"+
-        "<div class='hint' style='margin:2px 0 12px;line-height:1.5'>De video komt bij deze oefening op de digitale kaart van je pati\u00ebnt, achter de QR-code.</div>"+
+        "<div class='hint' style='margin:2px 0 12px;line-height:1.5'>De video komt bij deze oefening op de digitale kaart van je pati\u00ebnt, achter de QR-code. Film jezelf of een collega die de oefening voordoet, niet de pati\u00ebnt.</div>"+
         "<div id='ev_status' class='hint' style='margin:0 0 10px;font-weight:600'></div>"+
         "<button class='btn primary' id='ev_opname' type='button' style='width:100%;margin-bottom:10px'>Neem op met je telefoon</button>"+
         "<div style='display:flex;gap:6px'><input id='ev_yt' placeholder='of plak een YouTube-link' style='flex:1;min-width:0;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font:inherit'/>"+
