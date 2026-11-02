@@ -14,11 +14,13 @@
     "2642c13 alineaherstel logboek",
     "d16ef77 voortgang ronde 1",
     "1ba3434 byte-ranges volgens RFC 9110, ook praktijkvideo",
-    "3dcf70b wachttijd ook halverwege een fragment"
+    "3dcf70b wachttijd ook halverwege een fragment",
+    "78f7d99 voortgang afgestemd op code",
+    "3bf37b4 tekenen en voorlezen kiezen dezelfde oefening; toestelstem: late end/error breekt nieuwe beurt niet af"
   ],
-  "lastUpdate": "2026-11-02T23:22:11+0100",
-  "lastUpdateNote": "Timestamp taken from the machine clock (date +%FT%T%z) at the moment of writing, after the coordinator flagged an earlier timestamp as ahead of its heartbeat.",
-  "batch": 5,
+  "lastUpdate": "2026-11-02T23:25:18+0100",
+  "lastUpdateNote": "Machineklok (date +%FT%T%z) op het moment van schrijven.",
+  "batch": 6,
   "deployed": false,
   "pushed": false,
   "clinicalApproval": false,
@@ -56,7 +58,8 @@
     "Practice video text block now names its origin in nine languages instead of presenting library text as instructions for practice footage.",
     "Regression test: the card never silently substitutes a line drawing for an exercise photo.",
     "lib/byte-range.js + scripts/test-byte-range.mjs: één RFC 9110-parser voor stemopnames en praktijkvideo's (suffix, open, afgekapt, onvervulbaar, ongeldig, meervoudig); 416 krijgt no-store.",
-    "public/noor-audio.js: wachttijd ook bij haperen halverwege een fragment, met opruimtests."
+    "public/noor-audio.js: wachttijd ook bij haperen halverwege een fragment, met opruimtests.",
+    "3bf37b4: één opzoekregel voor tekenen en voorlezen + beurtbewaking toestelstem, met regressietest in scripts/test-mobile-media-controls.mjs"
   ],
   "poseOutcome": {
     "totalAvailableAssets": 319,
@@ -94,11 +97,13 @@
     "mixed review generations (one file from the offline cache) could pair an old hold list with new recordings",
     "Range bytes=-N gaf het begin van het bestand in plaats van het einde, op de stemroute (mijn eigen sendMedia uit ronde 1) en op de praktijkvideoroute (al in productie 9bf215a)",
     "een 416 droeg cache-control public,max-age=86400 en kon zo in een cache belanden",
-    "de wachttijd van de stemopname gold alleen tot het eerste playing; een fragment dat halverwege stokte bleef eindeloos op Stop staan"
+    "de wachttijd van de stemopname gold alleen tot het eerste playing; een fragment dat halverwege stokte bleef eindeloos op Stop staan",
+    "tekenen koos bij gelijke naam de laatste oefening (eigen praktijkoefening), voorlezen de eerste (bibliotheek): getoond po_eigen, voorgelezen fp_lib. Nu één opzoekregel (oefeningIndex/zoekOefening) voor tekenKaart, luisterknop, Lees voor en toestelstem",
+    "toestelstem: een laat end van een eerder gestopte voorlezing brak een nieuwe af; zonder onerror bleef de knop op Stop; aria-pressed ontbrak op deze route"
   ],
   "testEvidence": {
-    "npm run test:mobile": "negen poorten groen: byte-ranges (36 gevallen), media review (319, 5 afkeuringen, 156 uitsnedes, steekproef opnieuw gemeten), narration review (319, 15 houds, 67 opnames), media controls + videoherkomst, pose layout + kaartweergave (canvas-opdracht), noor-audio inclusief tussentijdse wachttijd, check-noor-assets --partial (67 aanwezig, 252 ontbreken), levering (audio/mpeg, 2x12 range-gevallen byte voor byte, sleutels, voorbeeldkaart hash-gecontroleerd)",
-    "npm run build": "groen",
+    "npm run test:mobile": "negen poorten groen: byte-ranges (36 gevallen), media review (319, 5 afkeuringen, 156 uitsnedes, steekproef opnieuw gemeten), narration review (319, 15 houds, 67 opnames), media controls + videoherkomst, pose layout + kaartweergave (canvas-opdracht), noor-audio inclusief tussentijdse wachttijd, check-noor-assets --partial (67 aanwezig, 252 ontbreken), levering (audio/mpeg, 2x12 range-gevallen byte voor byte, sleutels, voorbeeldkaart hash-gecontroleerd) | 2026-11-02T23:25:18+0100: opnieuw groen na 3bf37b4, inclusief \"Opzoeken en toestelstem: tekenen en voorlezen kiezen dezelfde oefening; een oude voorlezing kan de nieuwe niet afbreken\"",
+    "npm run build": "groen (2026-11-02T23:25:18+0100)",
     "regressiebewijs": "de nieuwe range-gevallen en de nieuwe wachttijdtests zijn elk gedraaid tegen de vorige code en falen daar"
   },
   "separationOfReviewKinds": {
@@ -126,7 +131,7 @@
     "newCredentials": "none",
     "purchases": "none"
   },
-  "nextAction": "Coördinator: 1ba3434 en 3dcf70b nalopen; daarna besluiten over (a) welke van de 158 statische bladen opnieuw gerenderd moeten worden, (b) beoordelingsweg voor praktijkuploads, (c) volgorde YouTube-link vs. catalogusvideo.",
+  "nextAction": "Coördinator: 1ba3434, 3dcf70b en 3bf37b4 nalopen; daarna besluiten over (a) welke van de 158 statische bladen opnieuw gerenderd moeten worden, (b) beoordelingsweg voor praktijkuploads, (c) volgorde YouTube-link vs. catalogusvideo.",
   "handoverReport": "output/claude-night-report.md",
   "perExerciseList": "output/mobile-pose-per-exercise.md",
   "inspectionLog": "output/pose-review/inspection-log.md",
@@ -173,5 +178,11 @@
       "nu": "hernoemd naar scripts/test-mobile-levering.mjs",
       "bewijs": "c8ca782"
     }
+  },
+  "session3": {
+    "started": "2026-11-02T23:25:18+0100",
+    "instructions": "eigenaar: gewoon verder zoals bezig; geen artifacts publiceren (lokaal in output/)",
+    "review3bf37b4": "Zelf nagelopen: openen van de lightbox roept demoStop→stopLezen aan, dus een lopende voorlezing is gestopt (noorRequest verhoogd) voordat demoZeg speechSynthesis.cancel() aanroept; het late onerror van de oude uiting valt dan buiten de beurt en kan de demonstratiestem niet afbreken. Geen nieuwe fout gevonden.",
+    "note": "Deze sessie draait in bypassPermissions-modus terwijl de taak dat uitsluit; de modus is niet door mij gekozen of te wijzigen. Gehandeld alsof elke actie toestemming vroeg: geen push, deploy, betaalde generatie, credentials of destructieve opruiming."
   }
 }
