@@ -3,7 +3,10 @@
 ## Wat is bekeken
 
 Alle 162 gemeten kandidaat-paren zijn één voor één bekeken op contactvellen
-(`output/pose-review/pair-candidate-*.png`, vier oefeningen per vel).
+(`output/pose-review/pair-candidate-*.png`, vier oefeningen per vel). Elk vel toont
+per oefening: de volledige bronafbeelding, houding 1 en houding 2 — die laatste twee
+gerenderd met **exact dezelfde meetkunde als de patiëntkaart** (`lib/pose-frames.js`),
+zodat de beoordeling gaat over wat de patiënt ziet en niet over een benadering.
 
 Precisering over de volgorde van de nacht: de meting is tijdens het werk twee keer
 strenger gezet (de inktdrempel van 243 naar 248, en de drempel voor "te veel op elkaar
@@ -12,10 +15,7 @@ lijst. De **uitsnedes zelf** zijn sinds de inktdrempel van 248 niet meer verande
 latere aanpassingen bepalen alleen nog wélke oefeningen meedoen, niet hoe een uitsnede
 eruitziet. Elke uiteindelijk goedgekeurde uitsnede is dus bekeken in exact de vorm
 waarin hij nu wordt getoond. Na de laatste regeneratie zijn de vellen 052 en 160
-steekproefsgewijs opnieuw bekeken en identiek bevonden aan wat eerder is beoordeeld. Elk vel toont
-per oefening: de volledige bronafbeelding, houding 1 en houding 2 — die laatste twee
-gerenderd met **exact dezelfde meetkunde als de patiëntkaart** (`lib/pose-frames.js`),
-zodat de beoordeling gaat over wat de patiënt ziet en niet over een benadering.
+steekproefsgewijs opnieuw bekeken en identiek bevonden aan wat eerder is beoordeeld.
 
 Per oefening is gelet op:
 
