@@ -106,20 +106,124 @@ vm.runInContext('merkBeurt++',ctx); // een nieuwe foto is geopend
 loslaten();
 assert.equal(await eerste,false);assert.equal(dek.hidden,true,'een verouderde controle zet niets');
 
-// ---- miniaturen: het vlak volgt object-fit:contain in het kader van 88 px ----
+// ---- miniaturen: pas afdekken na de hashcontrole van precies het getoonde pad ----
+// Afmetingen alleen bewijzen niets: een vervangen beeld van hetzelfde formaat, of een oude
+// kopie uit de cache, verloor anders inhoud onder een vlak dat bij een ander bestand hoort.
 const knop={kids:[],querySelector(){return this.kids.find(k=>k.className==='merkdek')||null;},removeChild(k){this.kids=this.kids.filter(x=>x!==k);},
   insertBefore(k){this.kids.push(k);}};
-const mini={parentNode:knop,dataset:{pose:'fp_a|images/a.jpg'},naturalWidth:800,naturalHeight:1200,clientWidth:86,clientHeight:86,nextSibling:null};
+const PAD_A='https://praktijk.example/v2/images/a.jpg';
+const mini={parentNode:knop,dataset:{pose:'fp_a|images/a.jpg'},src:PAD_A,currentSrc:PAD_A,naturalWidth:800,naturalHeight:1200,clientWidth:86,clientHeight:86,nextSibling:null};
 ctx.getComputedStyle=()=>({borderLeftWidth:'1px',borderTopWidth:'1px',paddingLeft:'4px',paddingTop:'4px',paddingRight:'4px',paddingBottom:'4px'});
 ctx.document.createElement=()=>({style:{},setAttribute(){},className:''});
-vm.runInContext('dekMiniatuur',ctx)(mini);
-const d=knop.kids[0];assert.ok(d,'miniatuur krijgt een vlak');
+const dekMini=(i)=>vm.runInContext('dekMiniatuur',ctx)(i);
+const vergeet=()=>vm.runInContext('bronGecontroleerd={}',ctx);
+const levert=(inhoud)=>{fetches=[];ctx.fetch=async(pad)=>{fetches.push(pad);return {ok:true,arrayBuffer:async()=>inhoud};};};
+
+// 1. vervangen beeld, zelfde pad, zelfde afmetingen, oude hash in de beoordeling: niet afdekken
+vergeet();levert(Buffer.from('vervangen-beeld-van-hetzelfde-formaat'));
+let bezig=dekMini(mini);
+assert.equal(knop.kids.length,0,'zonder bewezen hash komt er nooit meteen een vlak');
+assert.equal(await bezig,false);
+assert.equal(knop.kids.length,0,'vervangen beeld van hetzelfde formaat: de miniatuur blijft heel');
+assert.deepEqual(fetches,['/v2/images/a.jpg'],'gecontroleerd zijn de bytes van precies het getoonde pad');
+
+// 2. de juiste bytes: pas na de controle een vlak, op de plek die object-fit:contain geeft
+vergeet();levert(bytes);
+bezig=dekMini(mini);
+assert.equal(knop.kids.length,0,'tijdens de controle nog geen vlak');
+assert.equal(await bezig,true);
+const d=knop.kids[0];assert.ok(d,'na een geslaagde controle krijgt de miniatuur een vlak');
 // inhoud 78x78, beeld 52x78 gecentreerd: x0 = 1+4+13 = 18, y0 = 5; schaal 0.065
 assert.deepEqual([d.style.left,d.style.top],['18px','5px']);
 assert.ok(parseInt(d.style.width)>=Math.ceil(178*0.065)&&parseInt(d.style.height)>=Math.ceil(58*0.065),'het vlak dekt het hele merk');
-vm.runInContext('dekMiniatuur',ctx)(mini);
+assert.equal(await dekMini(mini),true);
 assert.equal(knop.kids.length,1,'opnieuw tekenen stapelt geen vlakken');
-mini.naturalWidth=1024;vm.runInContext('dekMiniatuur',ctx)(mini);
-assert.equal(knop.kids.length,0,'ander formaat: vlak weg, beeld heel');
+assert.deepEqual(fetches,['/v2/images/a.jpg'],'een bewezen pad wordt niet opnieuw opgehaald');
 
-console.log('Eén merk: ingebakken merk alleen afgedekt bij gemeten vlak, hash en afmetingen; foto en houdingen dragen hetzelfde eigen merk.');
+// 3. een nieuwe controle haalt het oude vlak meteen weg; mislukt ze, dan blijft het weg
+vergeet();fetches=[];ctx.fetch=async(pad)=>{fetches.push(pad);return {ok:false};};
+bezig=dekMini(mini);
+assert.equal(knop.kids.length,0,'het oude vlak verdwijnt zodra opnieuw gecontroleerd wordt');
+assert.equal(await bezig,false);assert.equal(knop.kids.length,0,'bron niet te controleren: beeld heel');
+vergeet();ctx.fetch=async()=>{throw Error('netwerk weg');};
+assert.equal(await dekMini(mini),false);assert.equal(knop.kids.length,0,'netwerkfout: beeld heel');
+
+// 4. ander formaat: geen vlak en ook niets ophalen
+vergeet();levert(bytes);mini.naturalWidth=1024;
+assert.equal(await dekMini(mini),false);assert.equal(knop.kids.length,0,'ander formaat: beeld heel');
+assert.deepEqual(fetches,[]);mini.naturalWidth=800;
+
+// 5. een ander pad dan de beoordeling noemt: niet afdekken, ook al zijn de bytes goed
+vergeet();levert(bytes);mini.src=mini.currentSrc='https://praktijk.example/v2/images/ander.jpg';
+assert.equal(await dekMini(mini),false);assert.equal(knop.kids.length,0);assert.deepEqual(fetches,[]);
+mini.src=mini.currentSrc=PAD_A;
+
+// 6. geen crypto.subtle (oude browser, onveilige verbinding): beeld heel
+vergeet();levert(bytes);const echtCrypto=ctx.crypto;ctx.crypto={};
+assert.equal(await dekMini(mini),false);assert.equal(knop.kids.length,0,'niet te bewijzen: niet afdekken');
+ctx.crypto=echtCrypto;
+
+// ---- races: een verouderde controle zet nooit een vlak ----
+let wachtend=[];
+const houdtVast=()=>{wachtend=[];ctx.fetch=()=>new Promise(r=>wachtend.push(()=>r({ok:true,arrayBuffer:async()=>bytes})));};
+const tik=()=>new Promise(r=>setTimeout(r,0));
+
+// 7. snel vervangen beeld: tijdens de controle krijgt de miniatuur een andere bron
+vergeet();houdtVast();
+bezig=dekMini(mini);await tik();
+mini.src=mini.currentSrc='https://praktijk.example/v2/images/b.jpg';
+wachtend[0]();
+assert.equal(await bezig,false);
+assert.equal(knop.kids.length,0,'de controle van het vorige beeld zet geen vlak op het nieuwe');
+mini.src=mini.currentSrc=PAD_A;
+
+// 8. ander formaat geladen tijdens de controle
+vergeet();houdtVast();
+bezig=dekMini(mini);await tik();mini.naturalWidth=1024;wachtend[0]();
+assert.equal(await bezig,false);assert.equal(knop.kids.length,0);mini.naturalWidth=800;
+
+// 9. de kaart is opnieuw getekend: de oude miniatuur hangt nergens meer aan
+vergeet();houdtVast();
+bezig=dekMini(mini);await tik();mini.parentNode=null;wachtend[0]();
+assert.equal(await bezig,false);assert.equal(knop.kids.length,0,'een losgekoppelde miniatuur krijgt niets');
+mini.parentNode=knop;
+
+// 10. twee controles na elkaar: alleen de laatste telt, ook als de eerste later klaar is
+vergeet();houdtVast();
+const eersteMini=dekMini(mini);const laatsteMini=dekMini(mini);await tik();
+assert.equal(wachtend.length,2);
+wachtend[1]();assert.equal(await laatsteMini,true);assert.equal(knop.kids.length,1);
+wachtend[0]();assert.equal(await eersteMini,false);
+assert.equal(knop.kids.length,1,'een oudere controle stapelt geen tweede vlak');
+
+// 11. de beoordeling verandert tijdens de controle (ander vlak voor deze oefening)
+vergeet();houdtVast();
+bezig=dekMini(mini);await tik();
+vm.runInContext('merkDek["fp_a|images/a.jpg"]=Object.assign({},merkDek["fp_a|images/a.jpg"])',ctx);
+wachtend[0]();assert.equal(await bezig,false,'een vlak uit een vervangen beoordeling telt niet');
+assert.equal(knop.kids.length,0);
+
+// ---- dekMiniaturen: elke nieuwe lading van een miniatuur begint opnieuw ----
+await laad([entry()]);vergeet();levert(bytes);
+const luister={};
+const knop2={kids:[],querySelector:knop.querySelector,removeChild:knop.removeChild,insertBefore:knop.insertBefore};
+const mini2={parentNode:knop2,dataset:{pose:'fp_a|images/a.jpg'},src:PAD_A,currentSrc:PAD_A,complete:false,naturalWidth:0,naturalHeight:0,
+  clientWidth:86,clientHeight:86,nextSibling:null,addEventListener(t,f){(luister[t]=luister[t]||[]).push(f);}};
+ctx.document.querySelectorAll=()=>[mini2];
+vm.runInContext('dekMiniaturen()',ctx);
+assert.equal(knop2.kids.length,0,'nog niet geladen: niets');
+// de luisteraar geeft niets terug: wacht tot de (echte) hashcontrole klaar kan zijn
+const laadt=async()=>{for(const f of luister.load||[])f();for(let i=0;i<50;i++)await tik();};
+mini2.complete=true;mini2.naturalWidth=800;mini2.naturalHeight=1200;
+await laadt();assert.equal(knop2.kids.length,1,'geladen en bewezen: vlak');
+// daarna laadt de miniatuur een ander beeld: het oude vlak mag er niet op blijven staan
+mini2.src=mini2.currentSrc='https://praktijk.example/v2/images/b.jpg';
+await laadt();
+assert.equal(knop2.kids.length,0,'een nieuwe lading van een ander beeld haalt het oude vlak weg');
+mini2.src=mini2.currentSrc=PAD_A;await laadt();assert.equal(knop2.kids.length,1,'terug naar het bewezen beeld: weer een vlak');
+// een mislukte lading (beeld weg, 0x0): het vlak mag niet over een leeg kader blijven staan
+mini2.naturalWidth=0;mini2.naturalHeight=0;
+for(const f of luister.error||[])f();for(let i=0;i<50;i++)await tik();assert.equal(knop2.kids.length,0,'een mislukte lading laat geen vlak achter');
+ctx.document.querySelectorAll=()=>[];
+
+console.log('Eén merk: ingebakken merk alleen afgedekt bij gemeten vlak, afmetingen én bewezen hash van het getoonde pad (vergrote foto en miniaturen, met racebescherming); foto en houdingen dragen hetzelfde eigen merk.');

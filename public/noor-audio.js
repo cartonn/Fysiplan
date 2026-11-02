@@ -10,11 +10,33 @@
   // tweede stokmelding verlengt een lopende wachttijd niet.
   var WACHTTIJD=12000;
   var HAPERT='De opname laadt niet of hapert. Controleer je verbinding en probeer het opnieuw, of lees de uitleg op de kaart.';
+  // Het manifest kan op dezelfde slechte verbinding net zo goed blijven hangen, en de
+  // wachttijd hierboven begint pas als er een opname is. Zonder eigen grens bleef de knop
+  // dan eindeloos op "Stop" staan. Na een mislukte of verlopen poging begint de volgende
+  // aanroep opnieuw; een te laat antwoord van de oude poging telt niet meer mee.
+  var MANIFEST_WACHTTIJD=10000;
+  var GEEN_MANIFEST='Noor-audio is niet beschikbaar.';
+  var MANIFEST_TRAAG='De natuurlijke stem laadt niet. Controleer je verbinding en probeer het opnieuw, of lees de uitleg op de kaart.';
   function load(){
-    if(!loading)loading=fetch('/audio/noor/manifest.json',{cache:'no-cache'}).then(function(r){
-      if(!r.ok)throw Error('Noor-audio is niet beschikbaar.');return r.json();
-    }).then(function(m){manifest=m;return m;}).catch(function(e){loading=null;throw e;});
-    return loading;
+    if(loading)return loading;
+    var ctrl=typeof AbortController==='function'?new AbortController():null,klok=null;
+    var poging=new Promise(function(ok,nee){
+      klok=setTimeout(function(){klok=null;if(ctrl)ctrl.abort();nee(Error(MANIFEST_TRAAG));},MANIFEST_WACHTTIJD);
+      fetch('/audio/noor/manifest.json',ctrl?{cache:'no-cache',signal:ctrl.signal}:{cache:'no-cache'}).then(function(r){
+        if(!r.ok)throw Error(GEEN_MANIFEST);return r.json();
+      }).then(function(m){
+        if(!m||!Array.isArray(m.clips))throw Error(GEEN_MANIFEST);return m;
+      }).then(ok,nee);
+    }).then(function(m){
+      if(klok){clearTimeout(klok);klok=null;}
+      manifest=m;return m;
+    },function(e){
+      if(klok){clearTimeout(klok);klok=null;}
+      if(loading===poging)loading=null;
+      throw e;
+    });
+    loading=poging;
+    return poging;
   }
   function match(name,text){
     return manifest&&manifest.clips.find(function(c){

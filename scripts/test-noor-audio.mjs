@@ -110,4 +110,104 @@ assert.ok(readAll.indexOf("if(TAAL==='nl')")<readAll.indexOf('new SpeechSynthesi
 assert.ok(readAll.includes('speelNoor(items);return;'));
 assert.ok(html.includes("if(TAAL==='nl')return;"),'Dutch pose narration must not use the device voice');
 for(const [,script] of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))new vm.Script(script);
-console.log('OK: Noor lookup, stale-text rejection, playback, end, stop, error, start- en tussentijdse wachttijd (waiting/stalled/herstel/voortgang/opruimen), no patient data requests, inline syntax');
+
+// ---- het manifest zelf blijft hangen ----
+// De wachttijd van een opname begint pas als het manifest er is. Zonder eigen grens bleef
+// de knop op een slechte verbinding eindeloos op "Stop" staan, zonder melding.
+const wachtRij=()=>new Promise(r=>setImmediate(r));
+function verse(fetchImpl,extra={}){
+  const s={timers:[],volgende:1,venster:{}};
+  s.setTimeout=(fn,ms)=>{const id=s.volgende++;s.timers.push({id,fn,ms});return id;};
+  s.clearTimeout=(id)=>{s.timers=s.timers.filter(t=>t.id!==id);};
+  s.vuur=()=>{const l=s.timers;s.timers=[];l.forEach(t=>t.fn());};
+  vm.runInNewContext(source,{window:s.venster,Audio,setTimeout:s.setTimeout,clearTimeout:s.clearTimeout,fetch:fetchImpl,...extra});
+  s.N=s.venster.NoorAudio;
+  return s;
+}
+const spelers=()=>players.length;
+
+// A. een aanvraag die nooit antwoordt: na de grens afgebroken, nette melding, niets blijft hangen
+let afgebroken=0;const opties=[];
+class AC{constructor(){this.signal={aborted:false};}abort(){afgebroken++;this.signal.aborted=true;}}
+let s=verse((url,o)=>{opties.push(o);return new Promise(()=>{});},{AbortController:AC});
+assert.equal(s.timers.length,1,'het ophalen van het manifest heeft een eigen grens');
+assert.equal(s.timers[0].ms,10000);
+assert.ok(opties[0]&&opties[0].signal,'de aanvraag is af te breken');
+let fout='',klaar=0;const voorA=spelers();
+let bezig=s.N.play([{name:'Test',text:'Algemene uitleg.'}],()=>klaar++,m=>fout=m);
+await wachtRij();
+assert.equal(fout,'','binnen de grens: nog geen melding');
+s.vuur();await bezig;
+assert.match(fout,/laadt niet/,'na de grens een melding in plaats van eindeloze stilte');
+assert.equal(afgebroken,1,'de hangende aanvraag wordt afgebroken');
+assert.equal(klaar,0);assert.equal(spelers(),voorA,'zonder manifest wordt geen speler gemaakt');
+assert.equal(s.timers.length,0,'na de grens blijft niets hangen');
+// en zonder AbortController (oudere Safari) werkt de grens net zo
+s=verse(()=>new Promise(()=>{}));
+fout='';bezig=s.N.play([{name:'Test',text:'Algemene uitleg.'}],()=>{},m=>fout=m);
+s.vuur();await bezig;assert.match(fout,/laadt niet/,'ook zonder AbortController een grens');
+
+// B. het antwoord komt, maar de inhoud blijft hangen: ook dat valt binnen de grens
+s=verse(async()=>({ok:true,json:()=>new Promise(()=>{})}));
+await wachtRij();assert.equal(s.timers.length,1,'de grens loopt door tot de inhoud er is');
+fout='';bezig=s.N.play([{name:'Test',text:'Algemene uitleg.'}],()=>{},m=>fout=m);
+s.vuur();await bezig;assert.match(fout,/laadt niet/);
+
+// C. na een verlopen poging begint de volgende opnieuw; een te laat antwoord telt niet
+const aanvragen=[];
+s=verse(()=>new Promise(ok=>aanvragen.push(ok)));
+s.vuur();await wachtRij();
+const tweede=s.N.load();
+assert.equal(aanvragen.length,2,'na een verlopen poging haalt de volgende het manifest opnieuw op');
+aanvragen[1]({ok:true,json:async()=>({clips})});
+await tweede;
+assert.ok(s.N.match('Test','Algemene uitleg.'),'de nieuwe poging levert het manifest');
+assert.equal(s.timers.length,0,'een geslaagde poging ruimt haar grens op');
+aanvragen[0]({ok:true,json:async()=>({clips:[]})});
+await wachtRij();await wachtRij();
+assert.ok(s.N.match('Test','Algemene uitleg.'),'een te laat antwoord van de oude poging overschrijft niets');
+assert.equal(await s.N.load(),await tweede,'een geladen manifest wordt niet opnieuw opgehaald');
+assert.equal(aanvragen.length,2);
+
+// D. foutantwoord of onbruikbare inhoud: melding, en de volgende aanroep probeert opnieuw
+let teller=0;
+s=verse(async()=>{teller++;return teller===1?{ok:false}:teller===2?{ok:true,json:async()=>({})}:{ok:true,json:async()=>({clips})};});
+await assert.rejects(s.N.load(),/niet beschikbaar/);
+await assert.rejects(s.N.load(),/niet beschikbaar/,'een manifest zonder lijst opnames telt niet');
+await s.N.load();assert.equal(teller,3);assert.ok(s.N.match('Test','Algemene uitleg.'));
+assert.equal(s.timers.length,0);
+
+// E. stoppen tijdens het laden: geen melding achteraf en geen geluid achteraf
+s=verse(()=>new Promise(()=>{}));
+fout='';const voorE=spelers();
+bezig=s.N.play([{name:'Test',text:'Algemene uitleg.'}],()=>{},m=>fout=m);
+s.N.stop();s.vuur();await bezig;
+assert.equal(fout,'','na stop meldt een verlopen poging zich niet meer');
+assert.equal(spelers(),voorE);
+let losLaten;
+s=verse(()=>new Promise(ok=>{losLaten=ok;}));
+fout='';bezig=s.N.play([{name:'Test',text:'Algemene uitleg.'}],()=>{},m=>fout=m);
+s.N.stop();losLaten({ok:true,json:async()=>({clips})});await bezig;
+assert.equal(spelers(),voorE,'na stop start een later manifest geen geluid');
+assert.equal(fout,'');assert.equal(s.timers.length,0,'en de grens is opgeruimd');
+
+// F. op de kaart: de knop staat op "Stop" tijdens het laden en komt na de grens vanzelf terug
+s=verse(()=>new Promise(()=>{}));
+const knoppen=new Map();
+const knopEl=id=>{if(!knoppen.has(id))knoppen.set(id,{textContent:'',attrs:{},klassen:new Set(),
+  classList:{add(k){knoppen.get(id).klassen.add(k);},remove(k){knoppen.get(id).klassen.delete(k);}},
+  setAttribute(k,v){this.attrs[k]=v;}});return knoppen.get(id);};
+const meldingen=[];
+const kaart=vm.createContext({document:{getElementById:knopEl,querySelectorAll:()=>[]},window:s.venster,NoorAudio:s.N,
+  mediaReviewReady:true,explanationHolds:[],TAAL:'nl',tr:x=>x==='stop'?'Stop':x,alert:m=>meldingen.push(m),demoGeluidKnop(){}});
+const knip=(a,b)=>{const i=html.indexOf(a);assert.ok(i>=0,a);const j=html.indexOf(b,i);assert.ok(j>i,b);return html.slice(i,j);};
+vm.runInContext(knip('  var bezigLezen=false,noorRequest=0;','  function leesVoor(){')+knip('  async function speelNoor(','  // ---- als app'),kaart);
+bezig=vm.runInContext('speelNoor([{name:"Test",text:"Algemene uitleg."}])',kaart);
+await wachtRij();
+assert.equal(knopEl('leesBtn').attrs['aria-pressed'],'true','tijdens het laden staat de knop op Stop');
+s.vuur();await bezig;
+assert.equal(knopEl('leesBtn').attrs['aria-pressed'],'false','na de grens staat de knop weer op luisteren');
+assert.equal(knopEl('leesTxt').textContent,'Luister naar uitleg');
+assert.equal(meldingen.length,1,'de patiënt krijgt één melding');
+assert.equal(s.timers.length,0);
+console.log('OK: Noor lookup, stale-text rejection, playback, end, stop, error, start- en tussentijdse wachttijd (waiting/stalled/herstel/voortgang/opruimen), begrensd manifest laden (hangend, hangende inhoud, opnieuw na verlopen/mislukt, te laat antwoord genegeerd, stop tijdens laden, kaartknop herstelt), no patient data requests, inline syntax');

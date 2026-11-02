@@ -653,16 +653,32 @@
   // Miniaturen (object-fit:contain): het vlak volgt het werkelijk getekende beeld binnen
   // het kader. Op 88 px is dat een paar pixels wit op wit; het haalt de blauwe stip weg
   // die anders bij de ene oefening wel en bij de andere niet linksboven staat.
+  // Net als bij de vergrote foto pas afdekken als de bytes van precies het getoonde pad
+  // bij de gemeten hash horen. Afmetingen alleen zijn geen bewijs: een vervangen beeld
+  // van hetzelfde formaat, of een oude kopie uit de cache, verloor anders inhoud onder
+  // een vlak dat bij een ander bestand hoort. Tot de controle slaagt blijft de miniatuur
+  // heel; lukt hij niet, dan blijft dat zo. Een oudere controle (de kaart is opnieuw
+  // getekend, het beeld is vervangen) zet nooit meer een vlak.
+  var miniBeurt=0;
   function dekMiniatuur(img){
-    var knop=img.parentNode;if(!knop)return;
+    var knop=img.parentNode;if(!knop)return Promise.resolve(false);
     var oud=knop.querySelector('.merkdek');if(oud)knop.removeChild(oud);
-    var v=merkVlak(merkDek[img.dataset.pose||''],img.naturalWidth,img.naturalHeight);
-    if(!v)return;
+    var beurt=img.merkBeurt=++miniBeurt;
+    var m=merkDek[img.dataset.pose||''],src=img.currentSrc||img.src,breed=img.naturalWidth,hoog=img.naturalHeight;
+    if(!merkVlak(m,breed,hoog))return Promise.resolve(false);
+    return bevestigBron(m,src).then(function(ok){
+      if(!ok||img.merkBeurt!==beurt||img.parentNode!==knop||(img.currentSrc||img.src)!==src||
+        img.naturalWidth!==breed||img.naturalHeight!==hoog||merkDek[img.dataset.pose||'']!==m)return false;
+      return plaatsMiniDek(img,knop,merkVlak(m,breed,hoog));
+    },function(){return false;});
+  }
+  function plaatsMiniDek(img,knop,v){
+    var oud=knop.querySelector('.merkdek');if(oud)knop.removeChild(oud);
     var cs=getComputedStyle(img);
     var bl=parseFloat(cs.borderLeftWidth)||0,bt=parseFloat(cs.borderTopWidth)||0;
     var pl=parseFloat(cs.paddingLeft)||0,pt=parseFloat(cs.paddingTop)||0;
     var bw=img.clientWidth-pl-(parseFloat(cs.paddingRight)||0),bh=img.clientHeight-pt-(parseFloat(cs.paddingBottom)||0);
-    if(!(bw>0&&bh>0))return;
+    if(!(bw>0&&bh>0))return false;
     var s=Math.min(bw/img.naturalWidth,bh/img.naturalHeight);
     var x0=bl+pl+(bw-img.naturalWidth*s)/2,y0=bt+pt+(bh-img.naturalHeight*s)/2;
     var d=document.createElement('i');d.className='merkdek';d.setAttribute('aria-hidden','true');
@@ -671,12 +687,15 @@
     d.style.width=Math.ceil(v.w*img.naturalWidth*s+l-Math.floor(l))+'px';
     d.style.height=Math.ceil(v.h*img.naturalHeight*s+t-Math.floor(t))+'px';
     knop.insertBefore(d,img.nextSibling);
+    return true;
   }
   function dekMiniaturen(){
     document.querySelectorAll('#oefs .fotoknop img').forEach(function(img){
       if(!merkDek[img.dataset.pose||''])return;
+      // elke (nieuwe) lading begint opnieuw: eerst het vlak weg, dan pas weer controleren
+      img.addEventListener('load',function(){dekMiniatuur(img);});
+      img.addEventListener('error',function(){dekMiniatuur(img);});
       if(img.complete&&img.naturalWidth)dekMiniatuur(img);
-      else img.addEventListener('load',function(){dekMiniatuur(img);},{once:true});
     });
   }
   async function loadMobileReview(){
