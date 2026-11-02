@@ -2,9 +2,10 @@ import {readFile} from 'node:fs/promises';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 const source=await readFile('public/noor-audio.js','utf8');
-const clips=[{name:'Test',text:'Test. Algemene uitleg.',src:'/audio/noor/abc123.mp3'}];
+const clips=[{name:'Test',text:'Test. Algemene uitleg.',src:'/audio/noor/abc123.mp3'},
+  {name:'Tweede',text:'Tweede. Andere uitleg.',src:'/audio/noor/def456.mp3'}];
 const players=[];
-class Audio{constructor(){players.push(this);}play(){this.played=true;return Promise.resolve();}pause(){this.paused=true;}load(){}removeAttribute(){this.src='';}}
+class Audio{constructor(){players.push(this);this.currentTime=0;}play(){this.played=true;return Promise.resolve();}pause(){this.paused=true;}load(){}removeAttribute(){this.src='';}}
 const window={};const requests=[];
 // eigen klok, zodat de wachttijd zonder echt wachten te testen is
 let timers=[],nextTimer=1;
@@ -42,6 +43,65 @@ assert.equal(timers.length,0,'de wachttijd stopt zodra het geluid begint');
 vuurTimers();assert.equal(error,'');
 window.NoorAudio.stop();
 assert.equal(timers.length,0,'stoppen laat geen wachttijd achter');
+
+// ---- halverwege stokken: de wachttijd moet opnieuw kunnen starten ----
+const handlers=['onended','onerror','onplaying','onwaiting','onstalled','ontimeupdate'];
+const speel=async()=>{error='';await window.NoorAudio.play([{name:'Test',text:'Algemene uitleg.'}],()=>ended++,s=>error=s);return players.at(-1);};
+
+// 1. loopt eerst, stokt dan definitief: na de wachttijd een nette melding en stilte
+let p=await speel();
+p.onplaying();assert.equal(timers.length,0,'loopt: geen wachttijd');
+p.currentTime=3.2;p.ontimeupdate();
+p.onwaiting();assert.equal(timers.length,1,'stokken start een nieuwe wachttijd');
+assert.equal(timers[0].ms,12000);
+vuurTimers();
+assert.match(error,/hapert/,'een vastgelopen fragment meldt zich');
+assert.ok(p.paused,'na de wachttijd staat de speler stil');
+for(const h of handlers)assert.equal(p[h],null,'opgeruimd na falen: '+h);
+
+// 2. stokt en herstelt: geen melding, wachttijd weg
+p=await speel();
+p.onplaying();p.onwaiting();assert.equal(timers.length,1);
+p.onplaying();assert.equal(timers.length,0,'herstel heft de wachttijd op');
+vuurTimers();assert.equal(error,'');
+
+// 3. 'stalled' terwijl er nog genoeg gebufferd is: zolang de tijd vooruitgaat hoort de
+//    patiënt geluid, dus geen melding
+p.currentTime=1;p.ontimeupdate();
+p.onstalled();assert.equal(timers.length,1,'stalled start de wachttijd');
+p.currentTime=1.25;p.ontimeupdate();assert.equal(timers.length,0,'echte voortgang heft hem op');
+p.onstalled();p.ontimeupdate();assert.equal(timers.length,1,'zonder voortgang blijft de wachttijd staan');
+vuurTimers();assert.match(error,/hapert/,'stalled zonder voortgang eindigt ook in een melding');
+
+// 4. een tweede stokmelding verlengt een lopende wachttijd niet
+p=await speel();
+p.onplaying();p.onwaiting();const eerste=timers[0].id;
+p.onstalled();p.onwaiting();
+assert.equal(timers.length,1);assert.equal(timers[0].id,eerste,'de oorspronkelijke deadline blijft staan');
+window.NoorAudio.stop();assert.equal(timers.length,0);
+for(const h of handlers)assert.equal(p[h],null,'opgeruimd na stop: '+h);
+
+// 5. einde van een afspeellijst: volgende fragment krijgt een eigen wachttijd, aan het
+//    einde blijft niets hangen
+const voor=ended;error='';
+await window.NoorAudio.play([{name:'Test',text:'Algemene uitleg.'},{name:'Tweede',text:'Andere uitleg.'}],()=>ended++,s=>error=s);
+p=players.at(-1);
+p.onplaying();p.currentTime=8;p.ontimeupdate();p.onwaiting();assert.equal(timers.length,1);
+p.onended();
+assert.equal(p.src,clips[1].src,'tweede fragment geladen');
+assert.equal(timers.length,1,'het nieuwe fragment heeft één eigen wachttijd, de oude is weg');
+p.currentTime=0;p.ontimeupdate();assert.equal(timers.length,1,'tijd 0 op het nieuwe fragment telt niet als voortgang');
+p.onplaying();assert.equal(timers.length,0);
+p.onended();
+assert.equal(ended,voor+1,'afspeellijst afgerond');assert.equal(error,'');
+assert.equal(timers.length,0,'na het einde blijft geen wachttijd achter');
+for(const h of handlers)assert.equal(p[h],null,'opgeruimd na het einde: '+h);
+
+// 6. gebeurtenissen van een al gestopte speler doen niets meer
+p=await speel();const oudeWaak=p.onwaiting,oudeVoortgang=p.ontimeupdate;
+window.NoorAudio.stop();
+oudeWaak();oudeVoortgang();assert.equal(timers.length,0,'een oude speler kan geen wachttijd meer starten');
+vuurTimers();assert.equal(error,'');
 assert.deepEqual(requests,['/audio/noor/manifest.json']);
 const html=await readFile('public/kaart.html','utf8');
 assert.ok(html.includes('<script src="/noor-audio.js"></script>'));
@@ -50,4 +110,4 @@ assert.ok(readAll.indexOf("if(TAAL==='nl')")<readAll.indexOf('new SpeechSynthesi
 assert.ok(readAll.includes('speelNoor(items);return;'));
 assert.ok(html.includes("if(TAAL==='nl')return;"),'Dutch pose narration must not use the device voice');
 for(const [,script] of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))new vm.Script(script);
-console.log('OK: Noor lookup, stale-text rejection, playback, end, stop, error, no patient data requests, inline syntax');
+console.log('OK: Noor lookup, stale-text rejection, playback, end, stop, error, start- en tussentijdse wachttijd (waiting/stalled/herstel/voortgang/opruimen), no patient data requests, inline syntax');
