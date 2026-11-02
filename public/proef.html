@@ -77,6 +77,8 @@
   .privacy{margin-top:18px;font:400 13px/1.55 var(--disp);color:var(--demp)}
   .privacy summary{cursor:pointer;color:var(--inkt);font-weight:600}
   .privacy ul{margin:8px 0 0 18px}
+  .privacy p{margin-top:8px}
+  .vink a{color:var(--blauw)}
   .datum{font:600 15px/1 var(--disp);color:var(--inkt);background:var(--blauw-05);border-radius:999px;padding:8px 14px;display:inline-block;margin:6px 0 2px}
   @media (max-width:860px){.qrvak{display:none}}
 </style>
@@ -124,6 +126,9 @@ __INHOUD__
       <label class="vink __M_AKKOORD__"><input type="checkbox" name="akkoord" value="1"__V_AKKOORD__/>
         <span>Fysiplan mag deze gegevens gebruiken voor mijn proef en om mij één keer te bellen of mailen over de ervaring.</span></label>
       __F_AKKOORD__
+      <label class="vink __M_VWO__"><input type="checkbox" name="vwo" value="1"__V_VWO__/>
+        <span>Ik ga namens de praktijk akkoord met de <a href="/verwerkersovereenkomst" target="_blank" rel="noopener">verwerkersovereenkomst</a>: Fysiplan bewaart de oefenkaarten van je pati&euml;nten alleen in opdracht van je praktijk.</span></label>
+      __F_VWO__
       <div class="knoppen"><button class="knop oranje" type="submit">Start mijn gratis proef</button></div>
       <p class="klein">Je proef loopt tot en met <b>__EINDDATUM__</b>.</p>
     </form>
@@ -134,8 +139,9 @@ __INHOUD__
         <li>We gebruiken ze om je proef te laten werken en om je over de proef te benaderen. Nooit voor reclame van anderen, en we verkopen of delen ze niet.</li>
         <li>Word je geen klant, dan wissen we je gegevens automatisch __BEWAAR_DAGEN__ dagen na het einde van je proef.</li>
         <li>Zelf eerder alles wissen kan altijd: in de app via <i>Mijn proef</i>, of met een mailtje.</li>
-        <li>Gegevens van pati&euml;nten horen niet in dit formulier; kaarten die je maakt blijven onder jouw praktijk.</li>
+        <li>Gegevens van pati&euml;nten horen niet in dit formulier. Kaarten die je maakt blijven onder jouw praktijk: daarvoor is Fysiplan verwerker en geldt de verwerkersovereenkomst.</li>
       </ul>
+      <p><a href="/privacy" target="_blank" rel="noopener">Volledige privacyverklaring</a> &middot; <a href="/verwerkersovereenkomst" target="_blank" rel="noopener">Verwerkersovereenkomst</a></p>
     </details>
   </div>
   <aside class="blad">
@@ -143,6 +149,7 @@ __INHOUD__
     <ol class="stappen">
       <li><span><b>Een voorbeeldkaart staat klaar.</b> Je begint niet met een leeg vel, maar met een kant-en-klaar rugprogramma dat je zelf aanpast.</span></li>
       <li><span><b>Zet tot 12 oefeningen op de kaart.</b> Kies uit __OEFENINGEN_AANTAL__ oefeningen of een van de sjablonen per klacht.</span></li>
+      <li><span><b>Zet een wachtwoord op je praktijk.</b> Dat kost een halve minuut; daarna komt de QR-code vanzelf op de kaart. Zonder wachtwoord deelt Fysiplan geen pati&euml;ntkaarten.</span></li>
       <li><span><b>Print de A4</b> of bewaar hem als PDF, met de QR-code erop.</span></li>
       <li><span><b>Scan de QR met je eigen telefoon</b> en zie precies wat je pati&euml;nt ziet: uitleg, video en voorlezen.</span></li>
     </ol>
@@ -163,7 +170,7 @@ __INHOUD__
     </div>
     <div class="blad" style="margin-top:34px">
       <h2>Je gegevens wissen</h2>
-      <p class="klein" style="font-size:14.5px">We bewaren je e-mailadres, naam, telefoonnummer en praktijknaam. Wis je ze, dan stopt je proef direct op dit apparaat. Kaarten die je al met pati&euml;nten deelde blijven gewoon werken.</p>
+      <p class="klein" style="font-size:14.5px">We bewaren je e-mailadres, naam, telefoonnummer en praktijknaam. Wis je ze, dan stopt je proef direct op dit apparaat. Kaarten die je al met pati&euml;nten deelde blijven werken, tot ze na de bewaartermijn vanzelf verdwijnen.</p>
       <form method="post" action="/v2/proef/wissen" style="margin-top:14px">
         <label class="vink"><input type="checkbox" name="zeker" value="1" required/><span>Ja, wis mijn gegevens en stop mijn proef.</span></label>
         <div class="knoppen"><button class="knop omlijnd" type="submit">Gegevens wissen</button></div>
@@ -178,7 +185,7 @@ __INHOUD__
   <div>
     <span class="etiket">Proefperiode voorbij</span>
     <h1>Je __PROEF_DAGEN__ gratis dagen zitten erop.</h1>
-    <p class="lead">Bedankt voor het proberen, __NAAM__. Sinds <b>__EINDDATUM__</b> kun je geen nieuwe kaarten meer maken. De kaarten die je al met pati&euml;nten deelde blijven werken; zij merken hier niets van.</p>
+    <p class="lead">Bedankt voor het proberen, __NAAM__. Sinds <b>__EINDDATUM__</b> kun je geen nieuwe kaarten meer maken. De kaarten die je al met pati&euml;nten deelde blijven werken tot de bewaartermijn afloopt; zij merken hier niets van.</p>
     __ALARM__
     <div class="blad" style="margin-top:28px">
       <h2>Wil je doorgaan met Fysiplan?</h2>

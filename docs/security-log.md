@@ -1830,3 +1830,48 @@ smoke (13) groen.
 van de accountlaag opnieuw onder de beveiligingspoort (claim/login/logout/
 wachtwoord/herstel/herstelcode) op race- en lock-out-gedrag, of een brede
 E2E-veegronde over alle suites tegen de huidige main.
+
+## 2026-11-02 — Privacypakket: minder data, wachtwoordplicht, bewaartermijn, AI-afbakening
+
+**Gebied.** Geen audit-run maar een bewuste verkleining van het risico-oppervlak
+(pakketten A, B en D uit het privacy- en juridisch advies, plus de code van E):
+wat er over een patiënt op de server staat, wie het kan lezen, hoe lang, en wat
+er naar de AI-dienst gaat.
+
+**Wijzigingen.**
+- Delen alleen voor een beveiligde praktijk: `POST /api/kaarten`,
+  `/api/praktijk/brief` en de nieuwe `GET /api/praktijk/kaart` draaien
+  `eisBeveiligdePraktijk`; een onbeveiligde praktijk krijgt `401 {beveilig:true}`.
+  De beheer-bypass werkt alleen nog met een eigen `ADMIN_KEY` (niet met de
+  standaardsleutel `admin88`).
+- Minder data: de patiëntroute `GET /api/kaart` geeft een witte lijst velden
+  terug (geen kaartnaam, notitie, behandelaar of seintje-historie) en van de
+  cliënt alleen het eerste woord van de roepnaam, het doel en de opmerking.
+  Leeftijd en Casus worden niet meer opgeslagen en bij het opstarten uit
+  bestaande kaarten gehaald. Het app-manifest draagt alleen de roepnaam.
+- Botsing op roepnaam: de app stuurt het kaart-id mee; bij een andere kaart met
+  dezelfde naam geeft de server `409 {bestaat:true}` in plaats van stil te
+  overschrijven (zou anders de link en voortgang van een andere patiënt raken).
+- Bewaartermijn: kaarten verlopen na 90 dagen stilte of 30 dagen na afronden
+  (instelbaar), met een eenmalige aanloop van 30 dagen. Verlopen kaarten zijn
+  meteen onzichtbaar (`vindKaart`, overzicht) en worden elke 6 uur gewist,
+  inclusief video's, met een auditregel `kaart-verlopen`.
+- AI: de kaartassistent (klacht in, kaart met dosering uit) is vervangen door
+  een zoekhulp die alleen lichaamsdeel, trainingsdoel en zoekwoorden stuurt en
+  bibliotheeknamen terugkrijgt (gevalideerd tegen de bibliotheek). Vertalen en
+  de vraaghulp sturen alleen bibliotheekteksten en oefeningnamen; vrije tekst van
+  de therapeut gaat niet meer naar de AI. De vertaalcache wordt opgeschoond tot
+  alleen die teksten. De weekbrief is een deterministische feitenlijst zonder AI.
+- Verwerkersovereenkomst: `POST /api/praktijk/claim` eist `akkoord:true` en
+  legt versie en tijdstip vast; de proefaanmelding eist het vinkje `vwo`.
+  Nieuwe scriptloze pagina's `/privacy` en `/verwerkersovereenkomst` met een
+  strikte CSP (`default-src 'none'`, geen scripts, `form-action 'none'`).
+
+**Regressie.** Nieuwe suite `scripts/test-privacy.mjs` (`npm run test:privacy`)
+zet de wachtwoordplicht, het VWO-akkoord, de veldenlijst van de patiëntroute,
+de 409 bij botsing, het verlopen, de juridische pagina's en de zoekhulp-invoer
+vast; `test:proef` is bijgewerkt voor het VWO-vinkje.
+
+**Volgende run — pak een ander gebied:** de bewaartermijn-opruiming onder
+gelijktijdige schrijfacties (race tussen opruimen en een binnenkomende
+meting), en of video's van verlopen kaarten echt overal weg zijn.

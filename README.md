@@ -82,8 +82,11 @@ terug naar de gedeelde server-lijst.
 - **Praktijklogo:** upload bij het praktijkprofiel (`POST /api/praktijken` met `logo`-dataURL,
   bewaard in `uploads/`), print mee op elke kaart.
 - **Gedeelde kaarten per praktijk:** `GET/POST /api/kaarten` en `POST /api/kaarten/verwijder`
-  (opslag `kaarten.json`, sleutel praktijk + kaartnaam, max. 100 per praktijk). Let op: zo'n
-  kaart staat mét cliëntgegevens op de server — de app meldt dat in het deelvenster.
+  (opslag `kaarten.json`, sleutel praktijk + kaartnaam, max. 100 per praktijk). Delen kan pas als
+  de praktijk beveiligd is met een wachtwoord (anders `401 {beveilig:true}`). Het naamveld is in v2
+  een **roepnaam** (bijv. "Jan K."); leeftijd en Casus gaan niet naar de server. Twee kaarten met
+  dezelfde roepnaam overschrijven elkaar niet: de app stuurt het kaart-id mee en de server geeft
+  `409 {bestaat:true}` bij een botsing. Zie **Data & privacy** voor wat er precies wordt bewaard.
 - **QR-code op de print:** aanvinkbaar in het printvenster. De kaart wordt dan bij de praktijk
   bewaard en krijgt een QR (eigen encoder, `public/qr.js`, geen dependencies) naar
   **/k/&lt;id&gt;** (`public/kaart.html`): een mobielvriendelijke, alleen-lezen weergave die de
@@ -103,8 +106,10 @@ terug naar de gedeelde server-lijst.
   bestanden in `uploads/videos/`). In v2 kan de therapeut per kaart ook een **persoonlijke
   video** voor één cliënt opnemen (camera-icoon op het plaatje; opgeslagen in het
   `vids`-veld van de kaart). Voorrang op de digitale kaart: persoonlijke opname →
-  praktijkopname → YouTube-link. Video's worden geserveerd met Range-ondersteuning
-  (vereist voor iPhone/Safari).
+  praktijkopname → YouTube-link die de therapeut zelf op de kaart zette → praktijkvideo in
+  Cloudflare Stream → beoordeelde Fysiplan-video → YouTube-link uit de bibliotheek →
+  conceptvideo. Zo gaat er zo min mogelijk naar YouTube. Video's worden geserveerd met
+  Range-ondersteuning (vereist voor iPhone/Safari).
 
 ## Gratis proef van 14 dagen (/v2/proef)
 
@@ -156,6 +161,8 @@ basisbestand + hernoemingen − verwijderd + toegevoegd. `/health` toont de tell
 De mutatie-API's eisen een sleutel-header die alleen de beheerpagina meestuurt
 (instelbaar via `ADMIN_KEY`, standaard `admin88`). Let op: dit is afscherming-door-verhulling —
 wie de beheer-URL kent, kan beheren. Echte authenticatie is bewust buiten scope gehouden.
+Met de standaardsleutel kan beheer **geen** kaartoverzicht of patiëntgegevens van een praktijk
+lezen; alleen met een eigen `ADMIN_KEY` op de server werkt die beheeringang.
 
 ## V1-account en bevestigingsmail
 
@@ -236,8 +243,45 @@ krijgt:
 
 ## Data & privacy
 
-De **oefening-plaatjes** staan op de server en zijn dus gedeeld/openbaar via de URL — dat is de
-bedoeling (het zijn geen persoonsgegevens). Alle **cliëntgegevens** (naam, leeftijd, kaart-inhoud,
-eigen oefeningen) blijven **lokaal in de browser** (`localStorage`/IndexedDB); daarvan gaat niets
-naar een server. Voor een toekomstige gedeelde/multi-praktijk versie met centrale opslag van
-cliëntdata moeten AVG / NEN 7510 worden ingericht (nu buiten scope).
+> Deze beschrijving is technisch. De juridische teksten staan op **/privacy** en
+> **/verwerkersovereenkomst** (`public/juridisch.html`); laat die door een jurist toetsen
+> voordat je er op vertrouwt.
+
+**v1 (`/`)**: kaarten, cliëntgegevens en eigen oefeningen blijven lokaal in de browser
+(`localStorage`/IndexedDB). De oefening-plaatjes zijn openbaar via hun URL; dat zijn geen
+persoonsgegevens.
+
+**v2 (`/v2/app`)**: een kaart staat eerst alleen in de browser. Is de praktijk beveiligd en heeft
+de kaart een roepnaam, dan deelt de app hem met de patiënt. Fysiplan is dan verwerker voor de
+praktijk (AVG art. 28): bij het beveiligen en bij de proefaanmelding gaat de praktijk akkoord met
+de verwerkersovereenkomst; de versie en het tijdstip staan bij het praktijkaccount (`vwo`).
+
+- **Op de server per gedeelde kaart:** roepnaam (`client.c_naam`), max. HF en trainingszone,
+  doel en opmerking van de therapeut, de oefeningen met dosering en schema, persoonlijke video's,
+  en wat de patiënt zelf aantikt (pijnscore, oefenvinkjes, ervaren herstel, PSK, seintje,
+  te zwaar). Daarnaast de werknotitie, behandelaar en afspraak van de praktijk. Leeftijd en
+  Casus gaan niet naar de server; oudere kaarten worden bij het opstarten opgeschoond.
+- **De patiënt ziet** (`GET /api/kaart`): alleen het eerste woord van de roepnaam, het doel, de
+  opmerking en de kaartinhoud. De volledige kaart staat alleen op `GET /api/praktijk/kaart`
+  (ingelogde praktijk).
+- **Bewaartermijn** (automatisch, elke 6 uur en bij het opstarten): een kaart verdwijnt na
+  `BEWAAR_STIL_DAGEN` (standaard 90) dagen zonder activiteit, of `BEWAAR_AFGEROND_DAGEN`
+  (standaard 30) dagen na afronden (archiveren). Na de invoering geldt eenmalig een aanloop van
+  `BEWAAR_AANLOOP_DAGEN` (standaard 30) dagen (`bewaartermijn.json`), zodat niemand onverwacht
+  kaarten kwijtraakt. De dagelijkse reservekopie bewaart hooguit 7 dagen.
+- **AI** (alleen met `ANTHROPIC_API_KEY`): de zoekhulp stuurt alleen lichaamsdeel, trainingsdoel
+  en een paar zoekwoorden; de vraaghulp op de patiëntkaart stuurt de vraag plus de namen en
+  bibliotheekuitleg van de oefeningen; vertalen gaat alleen over bibliotheekteksten en namen van
+  eigen oefeningen. Geen naam, doel, opmerking of score gaat naar de AI-dienst. De weekbrief is
+  een vaste feitenlijst zonder AI. De patiëntkaart zegt in negen talen dat antwoorden van een
+  AI-programma komen (AI-verordening art. 50).
+- **Beoogd gebruik:** maken, printen en delen van oefenkaarten en tonen wat patiënten zelf
+  aangeven. Fysiplan stelt geen diagnose, kiest geen behandeling of dosering en duidt geen
+  scores (geen rood/groen, geen "aandacht"-labels). Op dit beoogd gebruik rust de inschatting dat
+  Fysiplan geen medisch hulpmiddel is (MDR, MDCG 2019-11); laat die toetsen, en houd nieuwe
+  functies en marketingteksten binnen dit beoogd gebruik.
+
+Omgevingsvariabelen voor de juridische pagina's: `FYSIPLAN_BEDRIJF`, `FYSIPLAN_KVK`,
+`FYSIPLAN_ADRES`, `FYSIPLAN_CONTACT` (anders het adres uit `MAIL_AFZENDER`) en
+`FYSIPLAN_HOSTING_REGIO` (de Railway-regio, bijv. "EU West (Amsterdam)"). Zonder deze waarden
+tonen de pagina's een nette lege plek of "nog niet vastgelegd".

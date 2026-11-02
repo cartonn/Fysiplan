@@ -282,6 +282,11 @@
   .vknoot{font:500 12.5px/1.5 var(--disp);color:var(--zacht);margin-bottom:10px}
   .vantwoord{margin-top:12px;padding:12px 14px;background:var(--blauw-05,#edf2fa);
     border:1px solid var(--lijn);border-radius:12px;font:500 15px/1.55 var(--disp);color:var(--tekst)}
+  .privregel{display:flex;align-items:flex-start;gap:10px;margin:0 0 12px;padding:10px 12px;border:1px solid var(--lijn);border-radius:14px;background:var(--vlak);font:500 13px/1.5 var(--disp);color:var(--zacht)}
+  .privregel>span{flex:1}
+  .privregel a{color:var(--blauw)}
+  .privregel button{flex:0 0 auto;font:700 12.5px/1 var(--disp);color:var(--blauw);background:transparent;border:1px solid var(--lijn);border-radius:999px;padding:8px 12px;cursor:pointer}
+  .vantwoord .vlabel{display:block;font:700 11.5px/1.4 var(--disp);color:var(--zacht);letter-spacing:.04em;text-transform:uppercase;margin-bottom:5px}
   .mschaal{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:6px}
   .mschaal button{min-height:44px}
   .rustblok{margin:16px 0;border:1px solid var(--lijn);border-radius:16px;background:var(--vlak);overflow:hidden}
@@ -396,7 +401,7 @@
     outline:3px solid rgba(36,86,166,.6);outline-offset:2px}
   @media print{
     body{background:#fff}
-    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,.skaart,.akaart,#metingkop,#agendakop,#vraagkop,#seinkop,#hskop,#pskkop,#offlijn,.kopacties,.belknop,.appbanner,.demobadge,.infobadge,.oefdone,.oefzwaar,.oefvoortgang,.afgerondbanner{display:none !important}
+    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,.skaart,.akaart,#metingkop,#agendakop,#vraagkop,#seinkop,#hskop,#pskkop,#offlijn,.kopacties,.belknop,.appbanner,.demobadge,.infobadge,.oefdone,.oefzwaar,.oefvoortgang,.afgerondbanner,.privregel{display:none !important}
     .kop,.oef,.schemakaart{box-shadow:none}
   }
 </style>
@@ -428,17 +433,18 @@
     <div class="client" id="clientblok" style="display:none"></div>
   </header>
 
+  <div class="privregel" id="privregel" role="note" style="display:none"><span><span id="privtekst"></span><a id="privmeer" href="/privacy" target="_blank" rel="noopener">Privacy</a></span><button type="button" id="privok">Begrepen</button></div>
   <div class="veilig" id="veilig"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 16px"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18.1a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg><span id="veiligTxt"></span></div>
 
   <h2><span id="oefkop">Jouw oefeningen</span> <span class="tel" id="oeftel"></span></h2>
   <div class="oefvoortgang" id="oefvoortgang" style="display:none"><span class="ovbalk" aria-hidden="true"><i id="ovvul"></i></span><span class="ovtekst" id="ovtekst"></span><button type="button" class="ovalles" id="ovalles" style="display:none"></button></div>
   <div id="oefs"></div>
 
-  <h2 id="vraagkop" style="display:none">Vraag aan digitale assistent</h2>
+  <h2 id="vraagkop" style="display:none">Vraag over je oefeningen (AI)</h2>
   <div class="vkaart" id="vraagkaart" style="display:none">
-    <p class="vknoot" id="vraagintro">De digitale assistent legt alleen jouw eigen oefeningen uit en geeft geen medisch advies. Vragen worden niet bewaard.</p>
+    <p class="vknoot" id="vraagintro"></p>
     <form class="vrij" id="vraagform">
-      <input type="text" id="vraagveld" maxlength="300" autocomplete="off" aria-label="Vraag aan digitale assistent"/>
+      <input type="text" id="vraagveld" maxlength="300" autocomplete="off" aria-label="Vraag over je oefeningen (AI)"/>
       <button type="submit" class="vgo" id="vraagknop">Vraag</button>
     </form>
     <div class="vantwoord" id="vantwoord" role="status" aria-live="polite" style="display:none"></div>
@@ -534,7 +540,7 @@
   <div class="voet">
     <span id="voet1">Vragen over de uitvoering? Neem contact op met je praktijk.</span><br/>
     <span class="merk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a39c8a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg>
-    <span id="gemaakt">Gemaakt met</span> <a href="https://fysiplan.nl/v2">Fysiplan</a></span>
+    <span id="gemaakt">Gemaakt met</span> <a href="https://fysiplan.nl/v2">Fysiplan</a> · <a id="privlink" href="/privacy" target="_blank" rel="noopener">Privacy</a></span>
   </div>
 </div>
 <div class="lightbox" id="lightbox" role="dialog" aria-label="vergrote oefenfoto"><div class="lbknoppen"><button type="button" class="lbknop" id="lbdemoKnop" aria-pressed="false" hidden></button><button type="button" class="lbknop" id="lbgeluid" aria-pressed="false" hidden></button></div><img id="lbimg" alt=""/><div class="vtekst lbuitleg" id="lbuitleg" hidden></div><div class="demowrap" id="lbdemo" hidden></div><div class="lbnaam" id="lbnaam"></div></div>
@@ -620,8 +626,32 @@
   function tekenOfflijn(){var el=document.getElementById('offlijn');if(!el)return;el.textContent=TOFF[TAAL]||TOFF.nl;el.style.display=(typeof navigator.onLine==='boolean'&&!navigator.onLine)?'block':'none';}
   window.addEventListener('online',tekenOfflijn);window.addEventListener('offline',tekenOfflijn);
   var TAF={nl:'Je volgende afspraak',en:'Your next appointment',de:'Dein nächster Termin',fr:'Votre prochain rendez-vous',es:'Tu próxima cita',pl:'Twoja następna wizyta',tr:'Bir sonraki randevun',ar:'موعدك القادم',uk:'Твій наступний візит'};
-  // afgeronde behandeling: de kaart blijft van de patiënt — zelfmanagement na ontslag
-  var TAFG={nl:'Je behandeling is afgerond. Deze kaart blijft gewoon van jou — oefen rustig verder in je eigen tempo.',en:'Your treatment has finished. This card stays yours — keep practising at your own pace.',de:'Deine Behandlung ist abgeschlossen. Diese Karte bleibt deine — übe in deinem eigenen Tempo weiter.',fr:'Votre traitement est terminé. Cette carte reste la vôtre — continuez à votre rythme.',es:'Tu tratamiento ha terminado. Esta tarjeta sigue siendo tuya: sigue practicando a tu ritmo.',pl:'Twoje leczenie zostało zakończone. Ta karta pozostaje Twoja — ćwicz dalej we własnym tempie.',tr:'Tedavin tamamlandı. Bu kart senin olmaya devam ediyor — kendi tempounda egzersizlere devam et.',ar:'انتهى علاجك. تبقى هذه البطاقة لك — واصل التمارين بوتيرتك الخاصة.',uk:'Твоє лікування завершено. Ця картка залишається твоєю — продовжуй вправи у своєму темпі.'};
+  // afgeronde behandeling: eerlijk over de bewaartermijn. De kaart verdwijnt na een
+  // vaste periode van de server; wie hem wil houden, bewaart hem als PDF.
+  var TAFG={
+    nl:{a:'Je behandeling is afgerond.',b:'Je kunt deze kaart nog gebruiken tot {d}; daarna verdwijnt hij.',c:'Wil je hem houden? Tik op Print en bewaar hem als PDF.'},
+    en:{a:'Your treatment has finished.',b:'You can use this card until {d}; after that it disappears.',c:'Want to keep it? Tap Print and save it as a PDF.'},
+    de:{a:'Deine Behandlung ist abgeschlossen.',b:'Du kannst diese Karte noch bis {d} nutzen; danach verschwindet sie.',c:'Möchtest du sie behalten? Tippe auf Drucken und speichere sie als PDF.'},
+    fr:{a:'Votre traitement est terminé.',b:'Vous pouvez utiliser cette carte jusqu’au {d} ; ensuite, elle disparaît.',c:'Vous voulez la garder ? Touchez Imprimer et enregistrez-la en PDF.'},
+    es:{a:'Tu tratamiento ha terminado.',b:'Puedes usar esta tarjeta hasta el {d}; después desaparece.',c:'¿Quieres conservarla? Toca Imprimir y guárdala como PDF.'},
+    pl:{a:'Twoje leczenie zostało zakończone.',b:'Możesz korzystać z tej karty do {d}; potem zniknie.',c:'Chcesz ją zachować? Stuknij Drukuj i zapisz ją jako PDF.'},
+    tr:{a:'Tedavin tamamlandı.',b:'Bu kartı {d} tarihine kadar kullanabilirsin; sonra kaybolur.',c:'Saklamak ister misin? Yazdır’a dokun ve PDF olarak kaydet.'},
+    ar:{a:'انتهى علاجك.',b:'يمكنك استخدام هذه البطاقة حتى {d}، وبعد ذلك ستختفي.',c:'هل تريد الاحتفاظ بها؟ اضغط على طباعة واحفظها بصيغة PDF.'},
+    uk:{a:'Твоє лікування завершено.',b:'Ти можеш користуватися цією карткою до {d}; потім вона зникне.',c:'Хочеш зберегти її? Натисни «Друк» і збережи як PDF.'}
+  };
+  // privacyregel bij de eerste keer openen en in de voet: van wie de kaart is, waar
+  // de scores heen gaan, en dat de link de sleutel is
+  var TPRIV={
+    nl:{r:'Deze kaart is van {p}. Wat je aantikt, gaat naar jouw fysiotherapeut. Deel de link alleen met wie je vertrouwt.',l:'Privacy',ok:'Begrepen'},
+    en:{r:'This card is from {p}. What you tap goes to your physiotherapist. Only share the link with people you trust.',l:'Privacy',ok:'Got it'},
+    de:{r:'Diese Karte ist von {p}. Was du antippst, geht an deinen Physiotherapeuten. Teile den Link nur mit Menschen, denen du vertraust.',l:'Datenschutz',ok:'Verstanden'},
+    fr:{r:'Cette carte vient de {p}. Ce que vous indiquez est transmis à votre kinésithérapeute. Ne partagez le lien qu’avec des personnes de confiance.',l:'Confidentialité',ok:'Compris'},
+    es:{r:'Esta tarjeta es de {p}. Lo que marcas llega a tu fisioterapeuta. Comparte el enlace solo con personas de confianza.',l:'Privacidad',ok:'Entendido'},
+    pl:{r:'Ta karta jest od {p}. To, co zaznaczysz, trafia do twojego fizjoterapeuty. Udostępniaj link tylko osobom, którym ufasz.',l:'Prywatność',ok:'Rozumiem'},
+    tr:{r:'Bu kart {p} tarafından hazırlandı. İşaretlediklerin fizyoterapistine gider. Bağlantıyı yalnızca güvendiğin kişilerle paylaş.',l:'Gizlilik',ok:'Anladım'},
+    ar:{r:'هذه البطاقة من {p}. ما تضغط عليه يصل إلى أخصائي العلاج الطبيعي الخاص بك. شارك الرابط فقط مع من تثق بهم.',l:'الخصوصية',ok:'فهمت'},
+    uk:{r:'Ця картка від {p}. Те, що ти позначаєш, отримує твій фізіотерапевт. Ділися посиланням лише з тими, кому довіряєш.',l:'Конфіденційність',ok:'Зрозуміло'}
+  };
   // wekelijkse behandelreeks: "{n}" wordt het aantal nog komende afspraken
   var TAFHER={nl:'wekelijks, nog {n} keer',en:'weekly, {n} more times',de:'wöchentlich, noch {n} Mal',fr:'chaque semaine, encore {n} fois',es:'semanal, {n} veces más',pl:'co tydzień, jeszcze {n} razy',tr:'haftalık, {n} kez daha',ar:'أسبوعيًا، {n} مرات متبقية',uk:'щотижня, ще {n} разів'};
   // PSK (Patiënt Specifieke Klachten): de doelactiviteit die de therapeut zette,
@@ -642,16 +672,18 @@
   // herinnering opvallen, niet opgaan in een datumregel
   var TAFREL={nl:{v:'Vandaag',m:'Morgen'},en:{v:'Today',m:'Tomorrow'},de:{v:'Heute',m:'Morgen'},fr:{v:'Aujourd’hui',m:'Demain'},es:{v:'Hoy',m:'Mañana'},pl:{v:'Dzisiaj',m:'Jutro'},tr:{v:'Bugün',m:'Yarın'},ar:{v:'اليوم',m:'غدًا'},uk:{v:'Сьогодні',m:'Завтра'}};
   // teksten voor "vraag het aan je kaart" (apart blokje; valt terug op Nederlands)
+  // AI-verordening art. 50: de patiënt weet dat het antwoord van een AI-programma komt.
+  // AVG art. 13: de vraag gaat naar een AI-dienst in de VS en wordt niet bewaard.
   var TQ={
-    nl:{kop:'Vraag aan digitale assistent',intro:'De digitale assistent legt alleen jouw eigen oefeningen uit en geeft geen medisch advies. Vragen worden niet bewaard.',ph:'Bijv. hoe diep moet ik zakken?',knop:'Vraag',bezig:'Even denken…',fout:'Dat lukte even niet; probeer het zo opnieuw.'},
-    en:{kop:'Ask your card',intro:'The card only explains your own exercises and gives no medical advice. Questions are not stored.',ph:'E.g. how deep should I go?',knop:'Ask',bezig:'Thinking…',fout:'That did not work; please try again in a moment.'},
-    de:{kop:'Frag deine Karte',intro:'Die Karte erklärt nur deine eigenen Übungen und gibt keinen medizinischen Rat. Fragen werden nicht gespeichert.',ph:'Z. B. wie tief soll ich gehen?',knop:'Fragen',bezig:'Einen Moment…',fout:'Das hat gerade nicht geklappt; versuch es gleich noch einmal.'},
-    fr:{kop:'Posez une question à votre carte',intro:'La carte explique uniquement vos propres exercices et ne donne aucun avis médical. Les questions ne sont pas conservées.',ph:'Ex. : jusqu’où descendre ?',knop:'Demander',bezig:'Un instant…',fout:'Cela n’a pas fonctionné ; réessayez dans un instant.'},
-    es:{kop:'Pregunta a tu tarjeta',intro:'La tarjeta solo explica tus propios ejercicios y no da consejos médicos. Las preguntas no se guardan.',ph:'P. ej., ¿hasta dónde debo bajar?',knop:'Preguntar',bezig:'Un momento…',fout:'No ha funcionado; inténtalo de nuevo en un momento.'},
-    pl:{kop:'Zapytaj swoją kartę',intro:'Karta objaśnia tylko twoje ćwiczenia i nie udziela porad medycznych. Pytania nie są zapisywane.',ph:'Np. jak nisko mam zejść?',knop:'Zapytaj',bezig:'Chwileczkę…',fout:'Nie udało się; spróbuj za chwilę.'},
-    tr:{kop:'Kartına sor',intro:'Kart yalnızca kendi egzersizlerini açıklar, tıbbi tavsiye vermez. Sorular kaydedilmez.',ph:'Örn. ne kadar alçalmalıyım?',knop:'Sor',bezig:'Bir saniye…',fout:'Olmadı; birazdan tekrar dene.'},
-    ar:{kop:'اسأل بطاقتك',intro:'البطاقة تشرح تمارينك فقط ولا تقدم نصيحة طبية. الأسئلة لا تُحفظ.',ph:'مثلاً: إلى أي مدى أنزل؟',knop:'اسأل',bezig:'لحظة…',fout:'لم ينجح ذلك؛ حاول مرة أخرى بعد قليل.'},
-    uk:{kop:'Запитай свою картку',intro:'Картка пояснює лише твої вправи і не дає медичних порад. Запитання не зберігаються.',ph:'Напр., як низько присідати?',knop:'Запитати',bezig:'Хвилинку…',fout:'Не вдалося; спробуй ще раз за мить.'}
+    nl:{kop:'Vraag over je oefeningen (AI)',intro:'Antwoorden komen van een AI-programma, niet van je fysiotherapeut. Het legt alleen je eigen oefeningen uit en geeft geen medisch advies. Typ geen naam of andere persoonlijke gegevens: je vraag gaat naar een AI-dienst in de VS en wordt niet bewaard.',ph:'Bijv. hoe diep moet ik zakken?',knop:'Vraag',bezig:'Even denken…',fout:'Dat lukte even niet; probeer het zo opnieuw.',label:'Antwoord van het AI-programma, geen medisch advies'},
+    en:{kop:'Ask about your exercises (AI)',intro:'Answers come from an AI program, not from your physiotherapist. It only explains your own exercises and gives no medical advice. Do not type your name or other personal details: your question goes to an AI service in the US and is not stored.',ph:'E.g. how deep should I go?',knop:'Ask',bezig:'Thinking…',fout:'That did not work; please try again in a moment.',label:'Answer from the AI program, not medical advice'},
+    de:{kop:'Frage zu deinen Übungen (KI)',intro:'Die Antworten kommen von einem KI-Programm, nicht von deinem Physiotherapeuten. Es erklärt nur deine eigenen Übungen und gibt keinen medizinischen Rat. Gib keinen Namen und keine anderen persönlichen Daten ein: Deine Frage geht an einen KI-Dienst in den USA und wird nicht gespeichert.',ph:'Z. B. wie tief soll ich gehen?',knop:'Fragen',bezig:'Einen Moment…',fout:'Das hat gerade nicht geklappt; versuch es gleich noch einmal.',label:'Antwort des KI-Programms, kein medizinischer Rat'},
+    fr:{kop:'Une question sur vos exercices (IA)',intro:'Les réponses viennent d’un programme d’IA, pas de votre kinésithérapeute. Il explique uniquement vos propres exercices et ne donne aucun avis médical. N’écrivez pas votre nom ni d’autres données personnelles : votre question est envoyée à un service d’IA aux États-Unis et n’est pas conservée.',ph:'Ex. : jusqu’où descendre ?',knop:'Demander',bezig:'Un instant…',fout:'Cela n’a pas fonctionné ; réessayez dans un instant.',label:'Réponse du programme d’IA, pas un avis médical'},
+    es:{kop:'Pregunta sobre tus ejercicios (IA)',intro:'Las respuestas vienen de un programa de IA, no de tu fisioterapeuta. Solo explica tus propios ejercicios y no da consejos médicos. No escribas tu nombre ni otros datos personales: tu pregunta se envía a un servicio de IA en EE. UU. y no se guarda.',ph:'P. ej., ¿hasta dónde debo bajar?',knop:'Preguntar',bezig:'Un momento…',fout:'No ha funcionado; inténtalo de nuevo en un momento.',label:'Respuesta del programa de IA, no es un consejo médico'},
+    pl:{kop:'Pytanie o twoje ćwiczenia (AI)',intro:'Odpowiedzi pochodzą od programu AI, a nie od twojego fizjoterapeuty. Objaśnia on tylko twoje ćwiczenia i nie udziela porad medycznych. Nie wpisuj imienia ani innych danych osobowych: twoje pytanie trafia do usługi AI w USA i nie jest zapisywane.',ph:'Np. jak nisko mam zejść?',knop:'Zapytaj',bezig:'Chwileczkę…',fout:'Nie udało się; spróbuj za chwilę.',label:'Odpowiedź programu AI, nie porada medyczna'},
+    tr:{kop:'Egzersizlerin hakkında soru (yapay zekâ)',intro:'Yanıtlar fizyoterapistinden değil, bir yapay zekâ programından gelir. Yalnızca kendi egzersizlerini açıklar, tıbbi tavsiye vermez. Adını veya başka kişisel bilgilerini yazma: sorun ABD’deki bir yapay zekâ hizmetine gider ve kaydedilmez.',ph:'Örn. ne kadar alçalmalıyım?',knop:'Sor',bezig:'Bir saniye…',fout:'Olmadı; birazdan tekrar dene.',label:'Yapay zekâ programının yanıtı, tıbbi tavsiye değildir'},
+    ar:{kop:'سؤال عن تمارينك (ذكاء اصطناعي)',intro:'تأتي الإجابات من برنامج ذكاء اصطناعي، وليس من أخصائي العلاج الطبيعي. يشرح تمارينك فقط ولا يقدم نصيحة طبية. لا تكتب اسمك أو أي بيانات شخصية أخرى: يُرسل سؤالك إلى خدمة ذكاء اصطناعي في الولايات المتحدة ولا يُحفظ.',ph:'مثلاً: إلى أي مدى أنزل؟',knop:'اسأل',bezig:'لحظة…',fout:'لم ينجح ذلك؛ حاول مرة أخرى بعد قليل.',label:'إجابة برنامج الذكاء الاصطناعي، وليست نصيحة طبية'},
+    uk:{kop:'Запитання про твої вправи (ШІ)',intro:'Відповіді надає програма штучного інтелекту, а не твій фізіотерапевт. Вона пояснює лише твої вправи і не дає медичних порад. Не вводь ім’я чи інші особисті дані: твоє запитання надсилається до сервісу ШІ у США і не зберігається.',ph:'Напр., як низько присідати?',knop:'Запитати',bezig:'Хвилинку…',fout:'Не вдалося; спробуй ще раз за мить.',label:'Відповідь програми ШІ, не медична порада'}
   };
   function trq(k){var d=TQ[TAAL]||TQ.nl;return d[k]!=null?d[k]:TQ.nl[k];}
   // teksten voor het oefenvinkje en de oefenweek
@@ -836,7 +868,9 @@
   }
   function cellPrefix(x){return x&&x.id?'x'+x.id:'n'+normEx(x&&x.n);}
   function dagStr(t){var d=new Date(t);return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
-  function staafKleur(s){return s<=3?'#3e8e5a':(s<=6?'#d98a2b':'#c94f36');}
+  // neutrale kleur voor elke score: de kaart toont het verloop en duidt het niet
+  // (geen groen-oranje-rood; de beoordeling blijft bij de fysiotherapeut)
+  function staafKleur(){return '#7d8aa6';}
 
   // ---- vaste teksten van de pagina in de gekozen taal zetten ----
   function tekenStatisch(){
@@ -938,7 +972,11 @@
       var praktijkEigen=(!persoonlijk&&o&&o.video&&o.video.eigen)||null;
       var eigen=persoonlijk||praktijkEigen;
       var praktijkStream=(!eigen&&!persoonlijkYt&&o&&o.video&&o.video.stream)||null;
-      var yt=persoonlijkYt||(!eigen&&!praktijkStream&&o&&o.video&&o.video.yt)||null;
+      // privacy: een beoordeelde Fysiplan-video gaat vóór een YouTube-video uit de
+      // bibliotheek, zodat er minder vaak iets naar Google gaat. Een YouTube-link die
+      // de therapeut zelf op de kaart zette, blijft altijd voorgaan.
+      var catKlaar=!eigen&&!praktijkStream&&!persoonlijkYt&&o&&o.video&&o.video.catalog&&o.video.catalog.iframe&&o.video.catalog.reviewStatus!=='concept';
+      var yt=persoonlijkYt||(!eigen&&!praktijkStream&&!catKlaar&&o&&o.video&&o.video.yt)||null;
       var catalogus=(!eigen&&!praktijkStream&&!yt&&o&&o.video&&o.video.catalog)||null;
       var stream=(praktijkStream&&praktijkStream.iframe)||(catalogus&&catalogus.iframe);
       var aiVideo=praktijkStream||catalogus;
@@ -1155,14 +1193,30 @@
     blok.style.display='block';
   }
 
-  // afgeronde behandeling: toon de blijft-van-jou-regel (niet op de demokaart)
+  // afgeronde behandeling: tot wanneer de kaart blijft, en hoe je hem bewaart
+  // (niet op de demokaart)
+  function datumLang(t){try{return new Date(t).toLocaleDateString(TAAL==='nl'?'nl-NL':TAAL,{day:'numeric',month:'long',year:'numeric'});}catch(e){return new Date(t).toLocaleDateString();}}
   function tekenAfgerond(){
     var el=document.getElementById('afgerond');if(!el)return;
     var aan=!!(K&&K.kaart&&K.kaart.gearchiveerd)&&id!=='demo';
-    el.textContent=aan?(TAFG[TAAL]||TAFG.nl):'';
+    var t=TAFG[TAAL]||TAFG.nl;
+    el.textContent=aan?[t.a,(K.kaart.verloopt?t.b.replace('{d}',datumLang(K.kaart.verloopt)):''),t.c].filter(Boolean).join(' '):'';
     el.style.display=aan?'block':'none';
   }
-  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenHerstel();tekenPsk();tekenAfspraak();tekenOfflijn();tekenAfgerond();}
+  // privacyregel: één keer per kaart bovenaan, en altijd als link in de voet
+  function trp(k){var d=TPRIV[TAAL]||TPRIV.nl;return d[k];}
+  function tekenPrivacy(){
+    var pl=document.getElementById('privlink');if(pl)pl.textContent=trp('l');
+    var el=document.getElementById('privregel');if(!el)return;
+    var gezien=false;try{gezien=!!localStorage.getItem('fp_priv_'+id);}catch(e){}
+    var prak=(K&&((K.praktijk&&K.praktijk.praktijk)||(K.kaart&&K.kaart.praktijk)))||'';
+    if(gezien||id==='demo'||!prak){el.style.display='none';return;}
+    document.getElementById('privtekst').textContent=trp('r').replace('{p}',prak)+' ';
+    var a=document.getElementById('privmeer');a.textContent=trp('l');
+    document.getElementById('privok').textContent=trp('ok');
+    el.style.display='flex';
+  }
+  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenHerstel();tekenPsk();tekenAfspraak();tekenOfflijn();tekenAfgerond();tekenPrivacy();}
 
   // ---- taal wisselen: vaste teksten direct, kaartinhoud via de server (eenmalig per taal) ----
   function wisselTaal(t){
@@ -1661,6 +1715,10 @@
         .then(function(d){delete knop.dataset.bezig;if(d&&d.ok){if(K&&K.kaart)K.kaart.antwoord=null;tekenAntwoord();}})
         .catch(function(){delete knop.dataset.bezig;});
     });
+    document.getElementById('privok').addEventListener('click',function(){
+      try{localStorage.setItem('fp_priv_'+id,'1');}catch(e){}
+      document.getElementById('privregel').style.display='none';
+    });
     document.getElementById('vraagform').addEventListener('submit',function(e){
       e.preventDefault();
       var veld=document.getElementById('vraagveld'),knop=document.getElementById('vraagknop'),ant=document.getElementById('vantwoord');
@@ -1671,7 +1729,12 @@
         body:JSON.stringify({id:id,vraag:q,taal:TAAL})})
         .then(function(r){return r.json();})
         .then(function(d){
-          ant.textContent=d.ok?d.antwoord:((TAAL==='nl'&&d.fout)?d.fout:trq('fout'));
+          if(d.ok){
+            // het antwoord draagt zichtbaar het AI-label (AI-verordening art. 50)
+            ant.textContent='';
+            var lb=document.createElement('span');lb.className='vlabel';lb.textContent=trq('label');
+            ant.appendChild(lb);ant.appendChild(document.createTextNode(d.antwoord));
+          }else ant.textContent=(TAAL==='nl'&&d.fout)?d.fout:trq('fout');
           knop.disabled=false;
         })
         .catch(function(){ant.textContent=trq('fout');knop.disabled=false;});
@@ -1738,7 +1801,8 @@
     // printen even "Trainingskaart <naam> — <datum>", daarna de gewone titel terug
     document.getElementById('printBtn').addEventListener('click',function(){
       var oud=document.title;
-      var nm=(K&&K.kaart&&K.kaart.naam)?' '+K.kaart.naam:'';
+      var cln=(K&&K.kaart&&K.kaart.client)||{};
+      var nm=cln.c_naam?' '+cln.c_naam:'';
       document.title=tr('eyebrow')+nm+' — '+new Date().toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});
       var terug=function(){document.title=oud;window.removeEventListener('afterprint',terug);};
       window.addEventListener('afterprint',terug);

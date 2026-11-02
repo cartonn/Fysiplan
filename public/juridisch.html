@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="color-scheme" content="light"/>
+<meta name="theme-color" content="#f6f2e9"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232456a6'/%3E%3Cpath d='M5 16h5l2.5 6 5-12 2.5 7h7' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
+<title>__TITEL__ · Fysiplan</title>
+<link rel="preload" href="/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin/>
+<!-- Privacyverklaring en verwerkersovereenkomst. Eén sjabloon met twee blokken;
+     de server vult wie Fysiplan is in uit omgevingsvariabelen (FYSIPLAN_BEDRIJF,
+     FYSIPLAN_KVK, FYSIPLAN_ADRES, FYSIPLAN_CONTACT, FYSIPLAN_HOSTING_REGIO) en de
+     bewaartermijnen uit de serverinstellingen, zodat de tekst klopt met de code.
+     Scriptloos, strikte CSP. -->
+<style>
+  @font-face{font-family:'Newsreader';font-style:normal;font-weight:200 800;font-display:swap;
+    src:url(/fonts/newsreader-latin-opsz-normal.woff2) format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;
+    src:url(/fonts/inter-latin-wght-normal.woff2) format('woff2')}
+  :root{
+    --bg:#f6f2e9; --papier:#fffdf7; --inkt:#232019; --tekst:#3d3a31; --demp:#6b6557; --zacht:#a39c8a;
+    --blauw:#2456a6; --blauw-05:#edf2fa; --oranje:#d4501f; --lijn:#e3dbc6; --lijn-z:#efe9d8;
+    --serif:'Newsreader',Charter,'Iowan Old Style','Palatino Linotype',Georgia,serif;
+    --disp:'Inter','Avenir Next',Seravek,'Segoe UI',system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font:17px/1.65 var(--serif);color:var(--tekst);background:var(--bg);-webkit-font-smoothing:antialiased;min-height:100vh}
+  a{color:var(--blauw)}
+  a:focus-visible{outline:2px solid var(--blauw);outline-offset:2px}
+  nav{border-bottom:1px solid var(--lijn);background:rgba(246,242,233,.92)}
+  nav .rij{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:0 24px;height:60px}
+  nav .mark{width:27px;height:27px;border-radius:7px;background:var(--blauw);display:flex;align-items:center;justify-content:center}
+  nav .naam{font:700 17px/1 var(--disp);color:var(--inkt);text-decoration:none}
+  nav .terug{margin-left:auto;font:500 14px/1 var(--disp);color:var(--demp);text-decoration:none}
+  nav .terug:hover{color:var(--inkt)}
+  main{max-width:860px;margin:0 auto;padding:40px 24px 72px}
+  @media (max-width:640px){main{padding:28px 16px 56px}nav .rij{padding:0 16px}}
+  .etiket{font:600 11px/1 var(--disp);letter-spacing:.24em;text-transform:uppercase;color:var(--oranje)}
+  h1{font:700 clamp(28px,4vw,40px)/1.12 var(--serif);letter-spacing:-.018em;color:var(--inkt);margin:14px 0 10px;text-wrap:balance}
+  .lead{color:var(--demp);font-size:18px;max-width:60ch}
+  .versie{font:500 13px/1.4 var(--disp);color:var(--zacht);margin-top:10px}
+  h2{font:700 22px/1.25 var(--serif);color:var(--inkt);margin:38px 0 10px;scroll-margin-top:16px}
+  h3{font:600 15px/1.35 var(--disp);color:var(--inkt);margin:20px 0 6px}
+  p{margin:8px 0;max-width:68ch}
+  ul,ol{margin:8px 0 8px 22px;max-width:66ch}
+  li{margin:4px 0}
+  .blad{background:var(--papier);border:1px solid var(--lijn);border-radius:4px;padding:20px 22px;margin:14px 0;box-shadow:0 1px 0 rgba(35,32,25,.05)}
+  .blad p:first-child{margin-top:0}
+  .klein{font:400 14px/1.55 var(--disp);color:var(--demp)}
+  .tabel{width:100%;border-collapse:collapse;font:400 14.5px/1.5 var(--disp);margin:10px 0}
+  .tabel th,.tabel td{text-align:left;vertical-align:top;padding:9px 10px;border-bottom:1px solid var(--lijn-z)}
+  .tabel th{font-weight:600;color:var(--inkt);background:var(--blauw-05)}
+  @media (max-width:640px){.tabel,.tabel tbody,.tabel tr,.tabel td{display:block;width:100%}.tabel thead{display:none}
+    .tabel tr{border-bottom:1px solid var(--lijn);padding:6px 0}.tabel td{border:0;padding:3px 0}.tabel td:first-child{font-weight:600;color:var(--inkt)}}
+  .inhoud{font:400 14.5px/1.6 var(--disp);margin-top:18px}
+  .inhoud a{margin-right:14px}
+  footer{max-width:860px;margin:0 auto;padding:0 24px 40px;font:400 13px/1.5 var(--disp);color:var(--zacht)}
+</style>
+</head>
+<body>
+<nav><div class="rij">
+  <span class="mark"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg></span>
+  <a class="naam" href="/v2">Fysiplan</a>
+  <a class="terug" href="/v2">Naar de site</a>
+</div></nav>
+__INHOUD__
+<footer>__BEDRIJF__ · <a href="/privacy">Privacy</a> · <a href="/verwerkersovereenkomst">Verwerkersovereenkomst</a></footer>
+</body>
+</html>
+
+<!--blok:privacy-->
+<main>
+  <span class="etiket">Privacy</span>
+  <h1>Hoe Fysiplan met gegevens omgaat</h1>
+  <p class="lead">Fysiplan maakt oefenkaarten voor fysiotherapeuten: op papier en als digitale kaart voor de pati&euml;nt, zonder app of account. Hier lees je welke gegevens daarbij horen, wie ze ziet en hoe lang ze blijven.</p>
+  <p class="versie">Versie __VERSIE__</p>
+  <div class="inhoud"><a href="#wie">Wie we zijn</a><a href="#patient">Voor pati&euml;nten</a><a href="#praktijk">Voor praktijken</a><a href="#beoogd">Wat Fysiplan niet doet</a><a href="#subverwerkers">Andere partijen</a><a href="#rechten">Je rechten</a></div>
+
+  <h2 id="wie">Wie we zijn</h2>
+  <div class="blad">
+    <p><b>__BEDRIJF__</b>__ALIAS_HTML____KVK_HTML____ADRES_HTML__</p>
+    __CONTACT_HTML__
+  </div>
+  <p>Fysiplan heeft twee rollen. Voor de oefenkaarten van pati&euml;nten is de <b>fysiotherapiepraktijk</b> verantwoordelijk; Fysiplan bewaart en toont die gegevens alleen in opdracht van de praktijk, volgens de <a href="/verwerkersovereenkomst">verwerkersovereenkomst</a>. Voor de gegevens van therapeuten die zich aanmelden voor de proef of hun praktijk beveiligen, is Fysiplan zelf verantwoordelijk.</p>
+
+  <h2 id="patient">Voor pati&euml;nten: wat staat er op je digitale kaart?</h2>
+  <ul>
+    <li><b>Wat je therapeut erop zet:</b> je roepnaam, je oefeningen met uitleg en dosering, en eventueel een doel en een opmerking.</li>
+    <li><b>Wat je zelf aantikt:</b> je pijnscore, hoe het gaat, of je hebt geoefend, of een oefening te zwaar is, een seintje aan je praktijk, en je afspraak.</li>
+    <li><b>Wat er niet op hoort:</b> je achternaam, geboortedatum, BSN of diagnose. Fysiplan vraagt daar niet om; je dossier staat bij je praktijk.</li>
+    <li><b>Wie het ziet:</b> jijzelf, en iedereen aan wie je de link of QR-code geeft. Daarnaast alleen je eigen praktijk, die er een wachtwoord voor heeft. Fysiplan kijkt niet in kaarten, behalve als je praktijk om hulp vraagt.</li>
+    <li><b>Hoe lang:</b> een kaart verdwijnt vanzelf __STIL__ dagen nadat er niets meer mee gebeurde, of __AFGEROND__ dagen nadat je therapeut de behandeling afrondde. Daarna staat hij nog hooguit 7 dagen in de dagelijkse reservekopie. Je praktijk kan je kaart ook eerder wissen of je een nieuwe link geven.</li>
+    <li><b>Vraaghulp:</b> stel je een vraag aan je kaart, dan beantwoordt een AI-dienst (Anthropic, Verenigde Staten) die. Alleen je vraag en de namen van je oefeningen gaan mee, niet je naam of scores, en de vraag wordt niet bewaard. Zet er zelf geen persoonsgegevens in.</li>
+    <li><b>Video's:</b> sommige oefenvideo's komen van YouTube (Google) of Cloudflare. Pas als je op afspelen tikt, krijgen zij je IP-adres te zien.</li>
+    <li><b>Geen volgcookies:</b> geen advertenties en geen analysediensten. Je telefoon onthoudt alleen je taal, je vinkjes en de lettergrootte.</li>
+  </ul>
+
+  <h2 id="praktijk">Voor praktijken</h2>
+  <table class="tabel">
+    <thead><tr><th>Gegevens</th><th>Waarvoor</th><th>Hoe lang</th></tr></thead>
+    <tbody>
+      <tr><td>Oefenkaarten met roepnaam en wat de pati&euml;nt aantikt</td><td>De pati&euml;nt laten oefenen en de praktijk laten zien wat de pati&euml;nt zelf meldt (verwerker, in opdracht van de praktijk)</td><td>__STIL__ dagen na de laatste activiteit, of __AFGEROND__ dagen na afronden; plus 7 dagen reservekopie</td></tr>
+      <tr><td>Praktijknaam, wachtwoord en herstelcode (alleen als onomkeerbare hash)</td><td>Alleen jouw praktijk toegang geven tot jouw kaarten</td><td>Zolang de praktijk Fysiplan gebruikt</td></tr>
+      <tr><td>Accountactiviteit (inloggen, wijzigingen) met gemaskeerd IP-adres</td><td>Misbruik herkennen; de praktijk ziet dit zelf onder Activiteit</td><td>De laatste 500 gebeurtenissen</td></tr>
+      <tr><td>Proefaanmelding: e-mail, naam, telefoon, praktijknaam</td><td>De proef laten werken en je &eacute;&eacute;n keer benaderen over je ervaring</td><td>__PROEF_BEWAAR__ dagen na het einde van de proef, tenzij je klant wordt</td></tr>
+      <tr><td>Tellingen per dag (bezoeken, geprinte kaarten)</td><td>Het product verbeteren; alleen aantallen, geen profielen</td><td>120 dagen</td></tr>
+    </tbody>
+  </table>
+  <p>De grondslag voor de kaarten is de behandelovereenkomst tussen praktijk en pati&euml;nt. Voor de proef en het praktijkaccount is dat de overeenkomst met de praktijk en ons gerechtvaardigd belang om de dienst veilig te houden.</p>
+
+  <h2 id="beoogd">Wat Fysiplan niet doet</h2>
+  <div class="blad">
+    <p>Fysiplan is bedoeld om de oefeningen die de fysiotherapeut kiest aan de pati&euml;nt mee te geven, en om wat de pati&euml;nt zelf aantikt (pijnscore, oefenvinkje, seintje) aan de eigen therapeut te tonen. Fysiplan stelt geen diagnose, berekent geen dosering, geeft geen behandeladvies en beoordeelt geen scores. De therapeut beslist.</p>
+    <p>Fysiplan is ook geen dossier. Wat je volgens de WGBO moet bewaren, zet je in je eigen EPD; de knop &ldquo;Kopieer voor dossier&rdquo; maakt daar een tekst voor.</p>
+  </div>
+
+  <h2 id="subverwerkers">Andere partijen die meewerken</h2>
+  <p>Deze partijen verwerken gegevens voor Fysiplan. Het zijn Amerikaanse bedrijven; doorgifte buiten de EU gebeurt op basis van het EU-VS Data Privacy Framework of de standaardcontractbepalingen van de Europese Commissie.</p>
+  <table class="tabel">
+    <thead><tr><th>Partij</th><th>Waarvoor</th><th>Welke gegevens</th></tr></thead>
+    <tbody>
+      <tr><td>Railway</td><td>Server en opslag (regio: __HOSTING__)</td><td>Alles wat op deze pagina staat</td></tr>
+      <tr><td>Anthropic</td><td>AI: de zoekhulp voor therapeuten, de vraaghulp op de kaart en het vertalen van bibliotheekteksten</td><td>Zoekwoorden, de vraag van de pati&euml;nt en oefeningnamen; geen namen, scores of vrije tekst van de therapeut. Niet bewaard door Fysiplan.</td></tr>
+      <tr><td>Cloudflare</td><td>Oefenvideo's afspelen</td><td>IP-adres bij het afspelen</td></tr>
+      <tr><td>Google (YouTube)</td><td>Sommige oefenvideo's (via youtube-nocookie.com) en het lettertype in de app voor therapeuten</td><td>IP-adres bij het afspelen of laden</td></tr>
+      <tr><td>Resend</td><td>E-mail rond de proef</td><td>E-mailadres en naam van de therapeut; geen pati&euml;ntgegevens</td></tr>
+    </tbody>
+  </table>
+  <p class="klein">Verandert deze lijst, dan melden we dat vooraf aan de praktijken (zie de verwerkersovereenkomst).</p>
+
+  <h2 id="rechten">Je rechten</h2>
+  <p><b>Pati&euml;nt?</b> Je kunt je gegevens inzien, laten verbeteren of laten wissen. Vraag het je praktijk: die kan je kaart direct wissen of een nieuwe link maken. Wij helpen de praktijk daarbij.</p>
+  <p><b>Therapeut?</b> Je proefgegevens wis je zelf via <i>Mijn proef</i> in de app, of je mailt ons.</p>
+  <p>Een klacht over het gebruik van persoonsgegevens kun je ook indienen bij de <a href="https://autoriteitpersoonsgegevens.nl" rel="noopener">Autoriteit Persoonsgegevens</a>.</p>
+</main>
+<!--/blok-->
+
+<!--blok:vwo-->
+<main>
+  <span class="etiket">Verwerkersovereenkomst</span>
+  <h1>Verwerkersovereenkomst Fysiplan</h1>
+  <p class="lead">Deze afspraken gelden tussen de fysiotherapiepraktijk en Fysiplan voor de oefenkaarten van pati&euml;nten (artikel 28 AVG). De praktijk gaat akkoord met een vinkje bij het aanmelden voor de proef of bij het beveiligen van de praktijk.</p>
+  <p class="versie">Versie __VERSIE__</p>
+
+  <h2>1. Partijen en rollen</h2>
+  <p>De praktijk is verwerkingsverantwoordelijke: zij bepaalt waarom en hoe pati&euml;ntgegevens worden verwerkt. __BEDRIJF____ALIAS_HTML____KVK_HTML__ is verwerker en verwerkt die gegevens alleen in opdracht van de praktijk. Wie het vinkje zet, verklaart de praktijk hierin te mogen vertegenwoordigen.</p>
+
+  <h2>2. Welke gegevens en waarvoor</h2>
+  <ul>
+    <li><b>Betrokkenen:</b> pati&euml;nten van de praktijk.</li>
+    <li><b>Gegevens:</b> roepnaam, gekozen oefeningen met dosering, doel en opmerking van de therapeut, wat de pati&euml;nt zelf aantikt (pijnscore, ervaren herstel, PSK-score, oefenvinkjes, &ldquo;te zwaar&rdquo;, seintjes), berichten van de praktijk, afspraakmomenten, en eventueel een eigen video of foto bij een oefening. Een deel hiervan zijn gezondheidsgegevens.</li>
+    <li><b>Doel:</b> de pati&euml;nt de oefeningen laten doen en de praktijk laten zien wat de pati&euml;nt zelf meldt. Fysiplan gebruikt de gegevens voor niets anders: niet voor eigen analyses, niet voor marketing, niet om AI-modellen te trainen, en verkoopt of deelt ze niet.</li>
+  </ul>
+
+  <h2>3. Instructies</h2>
+  <p>De praktijk geeft haar instructies door de app te gebruiken zoals bedoeld: kaarten maken, delen, afronden, wissen of een nieuwe link maken. Fysiplan voert die uit en waarschuwt de praktijk als een instructie volgens Fysiplan in strijd is met de wet.</p>
+
+  <h2>4. Geheimhouding</h2>
+  <p>Iedereen die voor Fysiplan bij pati&euml;ntgegevens kan, is tot geheimhouding verplicht. Fysiplan kijkt alleen in kaarten als de praktijk daarom vraagt of als het nodig is om een storing of misbruik te verhelpen.</p>
+
+  <h2>5. Beveiliging</h2>
+  <p>Fysiplan neemt passende maatregelen (artikel 32 AVG), waaronder:</p>
+  <ul>
+    <li>versleutelde verbindingen (HTTPS) en onraadbare kaartlinks, met limieten tegen raden;</li>
+    <li>kaarten van een praktijk zijn pas deelbaar en zichtbaar na een wachtwoord op de praktijk; wachtwoorden en herstelcodes alleen als hash;</li>
+    <li>dataminimalisatie: de pati&euml;ntkaart toont alleen een roepnaam, leeftijd en casus slaat Fysiplan niet op, en vrije tekst van de therapeut gaat niet naar AI-diensten;</li>
+    <li>een vaste bewaartermijn (artikel 10) en een dagelijkse reservekopie die 7 dagen bewaard blijft;</li>
+    <li>een logboek van accountactiviteit met gemaskeerde IP-adressen.</li>
+  </ul>
+  <p>De praktijk zorgt zelf voor een sterk wachtwoord, veilige apparaten en het bewaren van de herstelcode.</p>
+
+  <h2>6. Subverwerkers</h2>
+  <p>De praktijk geeft toestemming voor de subverwerkers op de <a href="/privacy#subverwerkers">privacypagina</a>. Fysiplan legt hun dezelfde plichten op als in deze overeenkomst. Een nieuwe of andere subverwerker meldt Fysiplan minstens 14 dagen vooraf; heeft de praktijk bezwaar, dan kan zij stoppen en haar kaarten laten wissen.</p>
+
+  <h2>7. Doorgifte buiten de EU</h2>
+  <p>Een aantal subverwerkers is Amerikaans. Doorgifte gebeurt alleen op basis van het EU-VS Data Privacy Framework of de standaardcontractbepalingen van de Europese Commissie.</p>
+
+  <h2>8. Hulp aan de praktijk</h2>
+  <p>Fysiplan helpt de praktijk bij verzoeken van pati&euml;nten (inzage, verbetering, wissen); de app heeft daar knoppen voor (&ldquo;Kopieer voor dossier&rdquo;, &ldquo;Nieuwe link&rdquo;, &ldquo;Verwijderen&rdquo;). Fysiplan geeft ook de informatie die de praktijk nodig heeft voor een DPIA of een vraag van de toezichthouder.</p>
+
+  <h2>9. Datalekken</h2>
+  <p>Ontdekt Fysiplan een inbreuk op de beveiliging die pati&euml;ntgegevens raakt, dan meldt Fysiplan dat zonder onnodige vertraging en uiterlijk binnen 48 uur aan de praktijk, met wat er bekend is over de aard, de omvang, de gevolgen en de genomen maatregelen. De praktijk beslist over een melding aan de Autoriteit Persoonsgegevens en aan pati&euml;nten.</p>
+
+  <h2>10. Bewaartermijn en einde</h2>
+  <p>Een kaart wordt automatisch gewist __STIL__ dagen na de laatste activiteit, of __AFGEROND__ dagen nadat de praktijk hem heeft afgerond; daarna staat hij nog hooguit 7 dagen in de reservekopie. Fysiplan is geen dossier: de praktijk legt wat zij moet bewaren vast in haar eigen EPD. Stopt de praktijk met Fysiplan, dan worden haar kaarten binnen 30 dagen gewist, tenzij de wet anders vraagt.</p>
+
+  <h2>11. Controle</h2>
+  <p>Fysiplan geeft de praktijk op verzoek de informatie die nodig is om te laten zien dat deze afspraken worden nageleefd.</p>
+
+  <h2>12. Overige</h2>
+  <p>Deze overeenkomst loopt zolang Fysiplan pati&euml;ntgegevens voor de praktijk verwerkt. Bij een inhoudelijke wijziging krijgt de overeenkomst een nieuwe versie en vraagt Fysiplan opnieuw om akkoord. Op deze overeenkomst is Nederlands recht van toepassing.</p>
+</main>
+<!--/blok-->

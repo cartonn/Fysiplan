@@ -216,7 +216,7 @@ try {
   const landing = await (await fetch(origin + "/v2")).text();
   assert.match(landing, /Meer dan 300/);
   assert.match(landing, /exclusief btw/);
-  assert.match(landing, /Anna — voorbeeld/);
+  assert.match(landing, /trainingskaart-12\.png/);
   const slashNaam = await post("/api/oefeningen/categorieen", { naam: "Werp/ABC" }, headers);
   assert.equal(slashNaam.response.status, 400);
   const toegevoegd = await post("/api/oefeningen/categorieen", { naam: "Werp-ABC" }, headers);
@@ -251,32 +251,31 @@ try {
   assert.equal(geenDoel.response.status, 400);
   assert.equal(aiCalls.length, 0);
 
+  // pakket D (MDR): de kaartassistent (klacht in, kaart met dosering uit) is een
+  // zoekhulp geworden: lichaamsdeel + trainingsdoel + zoekwoorden in, alleen
+  // bibliotheeknamen met één neutrale regel uit. Een meegestuurde klacht gaat niet mee.
   const assistent = await post("/api/assistent", {
+    regio: "Schouder",
     doel: "Werp-ABC",
+    zoek: "met elastiek",
     klacht: "opbouw werpbelasting na een schouderklacht"
   });
   assert.equal(assistent.response.status, 200);
-  assert.equal(assistent.body.trainingsdoel, "Werp-ABC");
-  assert.equal(assistent.body.frequentie, "2× per week");
-  assert.equal(assistent.body.opmerking, "Evalueer pijn en techniek na twee weken.");
-  assert.equal(assistent.body.casus, "Schouder bij werpbelasting");
-  assert.equal(assistent.body.waarschuwing, "Controleer de belastbaarheid voor de eerste sessie.");
-  assert.deepEqual(assistent.body.oefeningen[0], {
-    naam: "Abdominal (apparaat)", series: "3", herhalingen: "8", gewicht: "licht",
-    borg: "4", xrm: "12RM", rust: "60 sec", tempo: "2-1-2", waarom: "Rustige startdosering."
-  });
+  assert.deepEqual(Object.keys(assistent.body).sort(), ["oefeningen", "ok"]);
+  assert.deepEqual(assistent.body.oefeningen[0], { naam: "Abdominal (apparaat)", traint: "" });
+  assert.ok(assistent.body.oefeningen.every((o) => Object.keys(o).sort().join() === "naam,traint"), "geen dosering in het antwoord");
   assert.equal(aiCalls.length, 1);
   assert.equal(aiCalls[0].workspaceId, "test-workspace-id");
-  assert.equal(aiCalls[0].body.max_tokens, 2400);
+  assert.equal(aiCalls[0].body.max_tokens, 900);
   assert.equal(aiCalls[0].body.output_config.effort, "low");
   assert.equal(aiCalls[0].body.output_config.format.type, "json_schema");
-  assert.match(aiCalls[0].body.output_config.format.schema.properties.opmerking.description, /kaartvak Opm/);
-  assert.match(aiCalls[0].body.output_config.format.schema.properties.casus.description, /kernwoorden/);
-  assert.match(aiCalls[0].body.output_config.format.schema.properties.oefeningen.description, /4 tot 6/);
+  assert.deepEqual(Object.keys(aiCalls[0].body.output_config.format.schema.properties), ["oefeningen"]);
+  assert.match(aiCalls[0].body.output_config.format.schema.properties.oefeningen.description, /4 tot 8/);
   assert.equal(aiCalls[0].body.system[0].cache_control.type, "ephemeral");
-  assert.match(aiCalls[0].body.system[0].text, /BORG, XRM, rust en tempo/);
+  assert.match(aiCalls[0].body.system[0].text, /Geef geen dosering/);
+  assert.doesNotMatch(aiCalls[0].body.system[0].text, /BORG, XRM, rust en tempo/);
   assert.equal(aiCalls[0].body.messages[0].content,
-    "<trainingsdoel>Werp-ABC</trainingsdoel>\n<klacht>opbouw werpbelasting na een schouderklacht</klacht>");
+    "<lichaamsdeel>Schouder</lichaamsdeel>\n<trainingsdoel>Werp-ABC</trainingsdoel>\n<zoekwoorden>met elastiek</zoekwoorden>");
 
   // Persoonlijke accountbeheerrechten: de openbare beheerheader volstaat niet.
   assert.equal((await json('/api/medewerkers', { headers })).response.status, 403);

@@ -30,10 +30,14 @@ assert.equal(emailSuggestie("sanne@praktijk.nl"), "");
 {
   const leeg = valideerAanmelding({});
   assert.equal(leeg.ok, false);
-  assert.deepEqual(Object.keys(leeg.fouten).sort(), ["akkoord", "email", "naam", "tel"]);
+  assert.deepEqual(Object.keys(leeg.fouten).sort(), ["akkoord", "email", "naam", "tel", "vwo"]);
   const wegwerp = valideerAanmelding({ email: "x@yopmail.com", naam: "Sanne", tel: "0612345679", akkoord: "1" });
   assert.match(wegwerp.fouten.email, /tijdelijke/);
-  const goed = valideerAanmelding({ email: " Sanne@Praktijk.NL ", naam: "  Sanne   de Vries ", tel: "06 1234 5679", akkoord: "1" });
+  // zonder akkoord op de verwerkersovereenkomst geen proef (AVG art. 28)
+  const zonderVwo = valideerAanmelding({ email: "sanne@praktijk.nl", naam: "Sanne de Vries", tel: "06 1234 5679", akkoord: "1" });
+  assert.equal(zonderVwo.ok, false);
+  assert.match(zonderVwo.fouten.vwo, /verwerkersovereenkomst/);
+  const goed = valideerAanmelding({ email: " Sanne@Praktijk.NL ", naam: "  Sanne   de Vries ", tel: "06 1234 5679", akkoord: "1", vwo: "1" });
   assert.equal(goed.ok, true);
   assert.deepEqual([goed.waarden.email, goed.waarden.naam, goed.waarden.tel], ["sanne@praktijk.nl", "Sanne de Vries", "+31612345679"]);
 }
@@ -105,6 +109,9 @@ try {
   assert.match(pagina.headers.get("content-security-policy"), /form-action 'self'/);
   assert.doesNotMatch(paginaHtml, /__[A-Z_]+__/, "geen open placeholders");
   assert.match(paginaHtml, /<svg/, "demo-QR staat erop");
+  assert.match(paginaHtml, /name="vwo"/, "vinkje voor de verwerkersovereenkomst");
+  assert.match(paginaHtml, /href="\/verwerkersovereenkomst"/);
+  assert.match(paginaHtml, /href="\/privacy"/);
 
   // fouten komen per veld terug, met de ingevulde waarden
   const fout = await formulier({ email: "sanne@", naam: "S", tel: "123", praktijk: "<b>x</b>" });
@@ -118,19 +125,24 @@ try {
   assert.doesNotMatch(foutHtml, /<b>x<\/b>/, "invoer wordt ge-escaped");
 
   // tikfout in het domein: eerst een vraag, daarna geaccepteerd
-  const tik = await formulier({ email: "sanne@gmial.com", naam: "Sanne de Vries", tel: "06 1234 5679", akkoord: "1" });
+  const tik = await formulier({ email: "sanne@gmial.com", naam: "Sanne de Vries", tel: "06 1234 5679", akkoord: "1", vwo: "1" });
   assert.equal(tik.status, 422);
   const tikHtml = await tik.text();
   assert.match(tikHtml, /Bedoel je <b>sanne@gmail.com<\/b>/);
   assert.match(tikHtml, /name="email_ok"/);
+  assert.match(tikHtml, /name="vwo" value="1" checked/, "het vinkje blijft staan bij een tweede poging");
 
   // honingpot: lijkt gelukt, maar er wordt niets bewaard
-  const robot = await formulier({ email: "robot@praktijk.nl", naam: "Robot", tel: "0612345679", akkoord: "1", website: "spam" });
+  const robot = await formulier({ email: "robot@praktijk.nl", naam: "Robot", tel: "0612345679", akkoord: "1", vwo: "1", website: "spam" });
   assert.equal(robot.status, 303);
   assert.equal(robot.headers.get("set-cookie"), null);
 
   // echte aanmelding
-  const ok = await formulier({ email: "sanne@gmail.com", email_ok: "1", naam: "Sanne de Vries", tel: "06 1234 5679", praktijk: "Fysio Zuid", akkoord: "1" });
+  // zonder het tweede vinkje: terug naar het formulier met een melding
+  const geenVwo = await formulier({ email: "sanne@gmail.com", email_ok: "1", naam: "Sanne de Vries", tel: "06 1234 5679", praktijk: "Fysio Zuid", akkoord: "1" });
+  assert.equal(geenVwo.status, 422);
+  assert.match(await geenVwo.text(), /akkoord gaat met de verwerkersovereenkomst/);
+  const ok = await formulier({ email: "sanne@gmail.com", email_ok: "1", naam: "Sanne de Vries", tel: "06 1234 5679", praktijk: "Fysio Zuid", akkoord: "1", vwo: "1" });
   assert.equal(ok.status, 303);
   assert.equal(ok.headers.get("location"), "/v2/app");
   const cookie = cookieUit(ok);
@@ -154,7 +166,7 @@ try {
 
   // nog een keer aanmelden met hetzelfde adres: dezelfde proef, geen nieuwe melding
   const mails = mail.length;
-  const opnieuw = await formulier({ email: "sanne@gmail.com", naam: "Sanne de Vries", tel: "0612345679", akkoord: "1" });
+  const opnieuw = await formulier({ email: "sanne@gmail.com", naam: "Sanne de Vries", tel: "0612345679", akkoord: "1", vwo: "1" });
   assert.equal(opnieuw.status, 303);
   await new Promise((r) => setTimeout(r, 150));
   assert.equal(mail.length, mails);
@@ -165,11 +177,23 @@ try {
   const mijn = await (await fetch(origin + "/v2/proef?mijn=1", { headers: { cookie } })).text();
   assert.match(mijn, /Hoi Sanne, je proef loopt nog 14 dagen/);
 
+  // kaart delen kan pas als de praktijk een wachtwoord heeft (wachtwoordplicht)
+  const onbeveiligd = await fetch(origin + "/api/kaarten", { method: "POST", headers: { "content-type": "application/json", cookie },
+    body: JSON.stringify({ praktijk: "Fysio Zuid", naam: "Voorbeeldpatiënt", chosen: [{ n: "Squat" }] }) });
+  assert.equal(onbeveiligd.status, 401);
+  assert.equal((await onbeveiligd.json()).beveilig, true);
+  const claim = await fetch(origin + "/api/praktijk/claim", { method: "POST", headers: { "content-type": "application/json", cookie },
+    body: JSON.stringify({ praktijk: "Fysio Zuid", wachtwoord: "proef-wachtwoord-1", akkoord: true }) });
+  assert.equal(claim.status, 200);
+  const sessie = (await claim.json()).sessie;
   // kaart opslaan voor de QR werkt en telt mee
-  const kaart = await fetch(origin + "/api/kaarten", { method: "POST", headers: { "content-type": "application/json", cookie },
+  const kaart = await fetch(origin + "/api/kaarten", { method: "POST", headers: { "content-type": "application/json", cookie, "x-praktijk-sessie": sessie },
     body: JSON.stringify({ praktijk: "Fysio Zuid", naam: "Voorbeeldpatiënt", chosen: [{ n: "Squat" }] }) });
   assert.equal(kaart.status, 200);
   const kaartId = (await kaart.json()).id;
+  // de proef bewaart welke versie van de verwerkersovereenkomst is geaccepteerd
+  const proefOpSchijf = JSON.parse(await readFile(join(dataDir, "proef-aanmeldingen.json"), "utf8"));
+  assert.match(Object.values(proefOpSchijf).find((p) => p.email === "sanne@gmail.com").vwo.versie, /^\d{4}-\d{2}-\d{2}$/);
 
   // persoonlijke maillink op een tweede apparaat
   const terug = await fetch(origin + terugLink, { redirect: "manual" });
