@@ -7,6 +7,8 @@
 // "niet beoordeeld" zonder dat iets faalt.
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
 
@@ -14,13 +16,63 @@ const manifest = JSON.parse(await fs.readFile('public/audio/noor/manifest.json',
 assert(manifest.clips.length > 0, 'geen opnames om te controleren');
 const clip = manifest.clips[0].src;
 assert.match(clip, /^\/audio\/noor\/[a-f0-9]{64}\.mp3$/);
+const clipBytes = await fs.readFile('public' + clip);
+
+// Een eigen, lege datamap: de test schrijft niets in de werkmap en kan een praktijk-
+// video neerzetten zoals een upload dat zou doen. Het patroon maakt elke byte uniek
+// genoeg om te zien of een range uit het begin of uit het einde komt.
+const dataDir = await fs.mkdtemp(path.join(os.tmpdir(), 'fysiplan-levering-'));
+const videoBytes = Buffer.alloc(4099);
+for (let i = 0; i < videoBytes.length; i++) videoBytes[i] = (i * 31 + (i >> 8)) & 255;
+await fs.mkdir(path.join(dataDir, 'uploads', 'videos'), { recursive: true });
+await fs.writeFile(path.join(dataDir, 'uploads', 'videos', 'v-rangetest0001.mp4'), videoBytes);
 
 const port = 8700 + (process.pid % 300);
 const server = spawn(process.execPath, ['server.js'], {
-  env: { ...process.env, PORT: String(port) }, stdio: ['ignore', 'pipe', 'pipe']
+  env: { ...process.env, PORT: String(port), DATA_DIR: dataDir }, stdio: ['ignore', 'pipe', 'pipe']
 });
 const stop = () => { try { server.kill('SIGTERM'); } catch {} };
 process.on('exit', stop);
+
+// Range-verzoeken tegen één URL, met de verwachte bytes uit het bestand op schijf.
+// Byte-voor-byte vergelijken, want een kop die "de laatste 500" belooft terwijl de
+// inhoud het begin is, is precies de fout die de coördinator vond.
+async function rangeSuite(url, bytes, soort) {
+  const n = bytes.length;
+  const gevallen = [
+    ['bytes=0-1', 206, 0, 1],
+    ['bytes=10-', 206, 10, n - 1],
+    ['bytes=-500', 206, n - 500, n - 1],
+    ['bytes=-1', 206, n - 1, n - 1],
+    [`bytes=-${n + 50}`, 206, 0, n - 1],
+    [`bytes=100-${n + 1000}`, 206, 100, n - 1],
+    ['bytes=5-2', 200],
+    ['bytes=0-1,5-6', 200],
+    ['items=0-1', 200],
+    ['bytes=abc', 200],
+    [`bytes=${n}-`, 416],
+    ['bytes=-0', 416]
+  ];
+  for (const [kop, status, start, eind] of gevallen) {
+    const r = await fetch(url, { headers: { range: kop } });
+    const body = Buffer.from(await r.arrayBuffer());
+    assert.equal(r.status, status, `${soort} ${kop}: status`);
+    if (status === 206) {
+      assert.equal(r.headers.get('content-range'), `bytes ${start}-${eind}/${n}`, `${soort} ${kop}: content-range`);
+      assert.equal(Number(r.headers.get('content-length')), eind - start + 1, `${soort} ${kop}: content-length`);
+      assert.ok(body.equals(bytes.subarray(start, eind + 1)), `${soort} ${kop}: inhoud komt niet van de beloofde plek`);
+    } else if (status === 200) {
+      assert.equal(r.headers.get('content-range'), null, `${soort} ${kop}: geen content-range bij negeren`);
+      assert.ok(body.equals(bytes), `${soort} ${kop}: ongeldige range levert het hele bestand`);
+    } else {
+      assert.equal(r.headers.get('content-range'), `bytes */${n}`, `${soort} ${kop}: content-range bij 416`);
+      assert.match(r.headers.get('cache-control') || '', /no-store/, `${soort} ${kop}: een 416 mag nooit in een cache belanden`);
+      assert.equal(body.length, 0, `${soort} ${kop}: 416 heeft geen inhoud`);
+    }
+    assert.equal(r.headers.get('accept-ranges'), 'bytes', `${soort} ${kop}: accept-ranges`);
+  }
+  return gevallen.length;
+}
 
 async function wacht() {
   for (let poging = 0; poging < 80; poging++) {
@@ -54,6 +106,20 @@ try {
   const buiten = await fetch(url, { headers: { range: 'bytes=99999999-' } });
   assert.equal(buiten.status, 416);
   assert.match(buiten.headers.get('content-range') || '', /^bytes \*\/\d+$/);
+
+  // de volledige reeks, byte voor byte, voor de stemopname én voor een praktijkvideo
+  const audioGevallen = await rangeSuite(url, clipBytes, 'stemopname');
+  const videoUrl = `http://127.0.0.1:${port}/uploads/videos/v-rangetest0001.mp4`;
+  const videoVol = await fetch(videoUrl);
+  assert.equal(videoVol.status, 200);
+  assert.equal(videoVol.headers.get('content-type'), 'video/mp4');
+  assert.ok(Buffer.from(await videoVol.arrayBuffer()).equals(videoBytes), 'praktijkvideo komt ongeschonden aan');
+  const videoGevallen = await rangeSuite(videoUrl, videoBytes, 'praktijkvideo');
+
+  // HEAD op een stemopname: koppen zonder inhoud, ook bij een suffix
+  const kop = await fetch(url, { method: 'HEAD', headers: { range: 'bytes=-500' } });
+  assert.equal(kop.status, 206);
+  assert.equal(kop.headers.get('content-range'), `bytes ${clipBytes.length - 500}-${clipBytes.length - 1}/${clipBytes.length}`);
 
   // De beoordelingsbestanden mogen juist nooit blijven hangen: een nieuwe houd moet
   // meteen gelden en mag niet uit een proxycache komen.
@@ -105,8 +171,11 @@ try {
       }
     }
   }
-  console.log('Mobiele levering: audio/mpeg met byte-ranges, cachebeleid, gelijke beoordelingsgeneratie, ' +
-    lib.length + ' sleutels sluitend, ' + actief.length + ' actieve uitsnedes, voorbeeldkaart (' + namen.join(', ') + ') hash-gecontroleerd.');
+  console.log('Mobiele levering: audio/mpeg; ' + audioGevallen + ' range-gevallen op een stemopname en ' + videoGevallen +
+    ' op een praktijkvideo byte voor byte juist (suffix, open, afgekapt, ongeldig, meervoudig, 416 zonder cache); cachebeleid, ' +
+    'gelijke beoordelingsgeneratie, ' + lib.length + ' sleutels sluitend, ' + actief.length + ' actieve uitsnedes, voorbeeldkaart (' +
+    namen.join(', ') + ') hash-gecontroleerd.');
 } finally {
   stop();
+  await fs.rm(dataDir, { recursive: true, force: true });
 }

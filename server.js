@@ -4,6 +4,7 @@ import { constants, createReadStream } from "node:fs";
 import { createHash, randomBytes, timingSafeEqual, scryptSync } from "node:crypto";
 import { join, extname, normalize, sep } from "node:path";
 import { exerciseId } from "./lib/exercise-id.js";
+import { byteRange } from "./lib/byte-range.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
 import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./lib/proef.js";
 
@@ -1455,25 +1456,26 @@ async function send(res, status, type, body) {
 // Mediabestanden hebben byte-ranges nodig: iOS Safari opent een opname met
 // "Range: bytes=0-1" en speelt niets af als het antwoord geen 206 met Content-Length is.
 // send() stuurt chunked zonder accept-ranges en is daar dus ongeschikt voor.
+// Een 416 is een foutantwoord: nooit cachen. Caches sleutelen op de URL en niet op de
+// Range-kop, dus een bewaarde 416 zou daarna ook gewone verzoeken kunnen beantwoorden.
+function onvervulbaar(res, size, extra) {
+  res.writeHead(416, { ...extra, "content-range": `bytes */${size}`, "content-length": "0",
+    "cache-control": "no-store, max-age=0" });
+  res.end();
+}
 async function sendMedia(request, res, type, data) {
   const vast = { "content-type": type, "x-content-type-options": "nosniff",
     "referrer-policy": "same-origin", "accept-ranges": "bytes", ...cacheHeaders(type) };
-  const bereik = String(request.headers.range || "").match(/^bytes=(\d*)-(\d*)$/);
-  if (!bereik) {
+  const bereik = byteRange(request.headers.range, data.length);
+  if (bereik.status === 416) { onvervulbaar(res, data.length, vast); return; }
+  if (bereik.status === 200) {
     res.writeHead(200, { ...vast, "content-length": String(data.length) });
     res.end(request.method === "HEAD" ? undefined : data);
     return;
   }
-  const start = bereik[1] ? parseInt(bereik[1], 10) : 0;
-  const eind = bereik[2] ? Math.min(parseInt(bereik[2], 10), data.length - 1) : data.length - 1;
-  if (!(start <= eind) || start >= data.length) {
-    res.writeHead(416, { ...vast, "content-range": `bytes */${data.length}` });
-    res.end();
-    return;
-  }
-  const deel = data.subarray(start, eind + 1);
+  const deel = data.subarray(bereik.start, bereik.end + 1);
   res.writeHead(206, { ...vast, "content-length": String(deel.length),
-    "content-range": `bytes ${start}-${eind}/${data.length}` });
+    "content-range": `bytes ${bereik.start}-${bereik.end}/${data.length}` });
   res.end(request.method === "HEAD" ? undefined : deel);
 }
 const sendJson = (res, status, obj) => send(res, status, "application/json; charset=utf-8", JSON.stringify(obj));
@@ -4109,20 +4111,17 @@ async function afhandelen(request, response) {
       s.on("end", resolve);
     });
     // video: Range-verzoeken beantwoorden, anders speelt iOS Safari niets af
-    const range = request.headers.range;
-    if ((ext === ".mp4" || ext === ".webm") && range) {
-      const m = String(range).match(/bytes=(\d*)-(\d*)/);
-      const start = m && m[1] ? parseInt(m[1], 10) : 0;
-      const end = m && m[2] ? Math.min(parseInt(m[2], 10), totaal - 1) : totaal - 1;
-      if (!m || start > end || start >= totaal) {
-        response.writeHead(416, { "content-range": `bytes */${totaal}`,
-          "x-content-type-options": "nosniff", "referrer-policy": "same-origin" });
-        response.end();
-        return;
-      }
-      await stroom({ start, end }, 206, {
-        "content-range": `bytes ${start}-${end}/${totaal}`,
-        "content-length": end - start + 1
+    // Zelfde parser als de stemopnames: dit was de tweede plek waar "bytes=-500" als
+    // het begin van het bestand werd uitgeleverd in plaats van het einde.
+    const bereik = (ext === ".mp4" || ext === ".webm") ? byteRange(request.headers.range, totaal) : { status: 200 };
+    if (bereik.status === 416) {
+      onvervulbaar(response, totaal, { "accept-ranges": "bytes", "x-content-type-options": "nosniff", "referrer-policy": "same-origin" });
+      return;
+    }
+    if (bereik.status === 206) {
+      await stroom({ start: bereik.start, end: bereik.end }, 206, {
+        "content-range": `bytes ${bereik.start}-${bereik.end}/${totaal}`,
+        "content-length": bereik.end - bereik.start + 1
       });
       return;
     }
