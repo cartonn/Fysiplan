@@ -18,7 +18,7 @@ assert.ok(!html.includes('/images/landing/kaart-papier-1000.jpg'));
 assert.ok(!html.includes('/images/landing/kaart-telefoon-1000.jpg'));
 assert.ok(!html.includes('zes genummerde oefeningen'));
 assert.ok(!html.includes('6 oefeningen'));
-for(const name of ['kaart-papier-sport-12','kaart-telefoon-light'])for(const w of [500,1000]){
+for(const name of ['kaart-papier-natural','kaart-telefoon-light'])for(const w of [500,1000]){
   const filename=`public/images/landing/${name}-${w}.jpg`;
   const m=await sharp(filename).metadata();assert.equal(m.width,w);assert.equal(m.height,w*.75);
   assert.ok(html.includes(`/images/landing/${name}-${w}.jpg`));

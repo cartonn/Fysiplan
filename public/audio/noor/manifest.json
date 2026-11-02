@@ -1,0 +1,377 @@
+{
+  "version": 1,
+  "voice": "Noor",
+  "providerVoice": "Marieke",
+  "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+  "engine": "heygen_voice",
+  "speed": 0.95,
+  "language": "nl",
+  "clips": [
+    {
+      "name": "Anteflexie armen",
+      "text": "Anteflexie armen. Sta rechtop met je armen langs je lichaam. Hef je gestrekte armen rustig naar voren tot schouderhoogte en laat ze weer langzaam zakken.",
+      "src": "/audio/noor/e99733ef99a4b79ba1e6862d0f4d8250a4051bb0fc238c96df8fc50953800ea5.mp3",
+      "duration": 9.195102
+    },
+    {
+      "name": "Barbell front press",
+      "text": "Barbell front press. Sta of zit rechtop met de stang voor je borst op schouderhoogte. Druk de stang recht omhoog tot je armen gestrekt zijn en laat hem rustig terugzakken.",
+      "src": "/audio/noor/7fed64f61bad1ff3593066be45b8cce0f8932201fd9fb48fa91a7c7fc56960ab.mp3",
+      "duration": 11.075918
+    },
+    {
+      "name": "Barbell neck press",
+      "text": "Barbell neck press. Zit rechtop met de stang achter je hoofd op nekhoogte. Druk de stang recht omhoog tot je armen gestrekt zijn en laat hem langzaam terugzakken.",
+      "src": "/audio/noor/4294f104c9074712e092afce7e3e9e9c5ecd875136d70e648e1246877c9b488d.mp3",
+      "duration": 9.377959
+    },
+    {
+      "name": "Barbell pull over",
+      "text": "Barbell pull over. Lig op de bank met de stang boven je borst en gestrekte armen. Beweeg de stang rustig over je hoofd naar achteren en breng hem terug boven je borst.",
+      "src": "/audio/noor/37d9e1e3265b134a6e0bff755120b6f57548230eabc0d77297e41a49f962b267.mp3",
+      "duration": 10.13551
+    },
+    {
+      "name": "Been pendelen",
+      "text": "Been pendelen. Sta rechtop naast een steunpunt en houd je vast. Zwaai je been ontspannen naar voren en naar achteren, terwijl je romp stil blijft.",
+      "src": "/audio/noor/44f4478c53f3280af9f6d861a062f276a7c30d7f8fd6ffecf2642b71e71515b6.mp3",
+      "duration": 8.881633
+    },
+    {
+      "name": "Bench press",
+      "text": "Bench press. Lig op de bank met de stang boven je borst en je voeten op de grond. Laat de stang langzaam naar je borst zakken en druk hem weer omhoog tot je armen gestrekt zijn.",
+      "src": "/audio/noor/6cc382632cabb37f181d643cc842a3227873584b0d623cd0056e9d1a6426f771.mp3",
+      "duration": 10.24
+    },
+    {
+      "name": "Biceps alternate dumbell",
+      "text": "Biceps alternate dumbell. Sta rechtop met in elke hand een dumbell langs je lichaam. Buig om de beurt een arm en breng de dumbell naar je schouder, laat hem daarna rustig zakken.",
+      "src": "/audio/noor/db99e1381377514763bd41ef89cc9579403ba11f98eed6a42756fbcaab8bbb32.mp3",
+      "duration": 10.501224
+    },
+    {
+      "name": "Biceps curl",
+      "text": "Biceps curl. Sta rechtop met het gewicht in je handen en je armen gestrekt langs je lichaam. Buig je ellebogen en breng het gewicht naar je schouders, laat het daarna langzaam zakken.",
+      "src": "/audio/noor/126c3d3099f3ac8c9efdec9dc4abe9782db8bc0fe17f10c2dec7010659402405.mp3",
+      "duration": 11.075918
+    },
+    {
+      "name": "Biceps pull",
+      "text": "Biceps pull. Sta of zit rechtop tegenover het apparaat en pak de handgreep met gestrekte armen. Buig je ellebogen en trek de greep naar je toe, laat hem daarna rustig terugkomen.",
+      "src": "/audio/noor/a3dd72892a3e73199b8a5a7b10b795e3f4251faa02e510af1759bf5a9368eaa3.mp3",
+      "duration": 11.441633
+    },
+    {
+      "name": "Bridges kicker",
+      "text": "Bridges kicker. Lig op je rug met gebogen knieen en voeten plat op de grond. Til je heupen op en strek daarna een been uit in het verlengde van je lichaam, wissel van been.",
+      "src": "/audio/noor/1ec4f1081adcdbc210b17d579125b2994fbd1539c172c8a938ca1041e9841c03.mp3",
+      "duration": 10.553469
+    },
+    {
+      "name": "Calf raises",
+      "text": "Calf raises. Sta rechtop met je voeten op heupbreedte, eventueel met steun. Kom omhoog op je tenen en laat je hielen rustig weer zakken.",
+      "src": "/audio/noor/06c0f985ec141be466f4bab91b8c016d5da0133e737c31bc6f89842beec97555.mp3",
+      "duration": 9.430204
+    },
+    {
+      "name": "Chair squat",
+      "text": "Chair squat. Sta voor een stoel met je voeten op heupbreedte. Zak met je billen naar achteren tot je de stoel bijna raakt en kom weer rechtop.",
+      "src": "/audio/noor/0ef7cb9e3fbed9d5d9d43904a2cc59032e9ba5cf54cfc7b8cd780a35d746e6ae.mp3",
+      "duration": 8.489796
+    },
+    {
+      "name": "Crabwalk",
+      "text": "Crabwalk. Sta in een lichte squathouding met een band om je benen. Stap zijwaarts opzij terwijl je knieen gebogen blijven en houd spanning op de band.",
+      "src": "/audio/noor/97c96017eee9309177d45b2963c5b872ca69546791138f7b12d544d472660c6b.mp3",
+      "duration": 9.560816
+    },
+    {
+      "name": "Dead lift",
+      "text": "Dead lift. Sta met je voeten op heupbreedte, gewicht voor je op de grond. Buig door je knieen en heupen met een rechte rug, pak het gewicht en kom rechtop door je heupen te strekken.",
+      "src": "/audio/noor/4b11cc56e293260635bc41e75eae74871cf2579dde31a4371df24990916d3f0f.mp3",
+      "duration": 10.997551
+    },
+    {
+      "name": "Dips",
+      "text": "Dips. Steun met gestrekte armen op de leggers en houd je lichaam recht. Buig je ellebogen en laat je rustig zakken, druk jezelf daarna weer omhoog.",
+      "src": "/audio/noor/2749c5ef6bf0d1bf160a52183332c6c66e5f54d7873ff45403d598afb9bb66e4.mp3",
+      "duration": 9.639184
+    },
+    {
+      "name": "Dumbell bench press",
+      "text": "Dumbell bench press. Lig op de bank met in elke hand een dumbell boven je borst. Laat de dumbells langzaam naast je borst zakken en druk ze weer omhoog tot gestrekte armen.",
+      "src": "/audio/noor/263b64934c48215c7bb04b256a87d25ac56c60d6fb2e57853c3a02284793f086.mp3",
+      "duration": 10.866939
+    },
+    {
+      "name": "Dumbell front press",
+      "text": "Dumbell front press. Zit of sta rechtop met de dumbells op schouderhoogte voor je. Druk ze recht omhoog tot je armen gestrekt zijn en laat ze rustig terugzakken.",
+      "src": "/audio/noor/7a9e9a96df9b03298e57f3f3aa1d03c99c936f65ad104a48ba8a19a49975fb75.mp3",
+      "duration": 9.691429
+    },
+    {
+      "name": "Dumbell neck press",
+      "text": "Dumbell neck press. Zit rechtop met de dumbells naast je hoofd op schouderhoogte, ellebogen naar buiten. Druk ze recht omhoog tot gestrekte armen en laat ze langzaam terugzakken.",
+      "src": "/audio/noor/b30df915f15434fe547ab05f05d14d54f4064dedeb2138dab66d530e322dea6e.mp3",
+      "duration": 11.389388
+    },
+    {
+      "name": "Dumbell pull over",
+      "text": "Dumbell pull over. Lig op de bank en houd een dumbell met beide handen boven je borst. Beweeg de dumbell met licht gebogen armen over je hoofd naar achteren en breng hem terug.",
+      "src": "/audio/noor/21c2c37c602babd020c796df11f4099c181aad7d528ecfcdf73cf7ed1c84c016.mp3",
+      "duration": 11.023673
+    },
+    {
+      "name": "Duplex pull",
+      "text": "Duplex pull. Sta of zit rechtop tegenover het apparaat en pak beide handgrepen met gestrekte armen. Trek de grepen tegelijk naar je toe en laat ze rustig terugkomen.",
+      "src": "/audio/noor/c4c6aa741cb1c82da5d0318ab0386733248f5b371001a5aff3585af1a2051c09.mp3",
+      "duration": 10.945306
+    },
+    {
+      "name": "Endo pull",
+      "text": "Endo pull. Sta naast het apparaat met je elleboog gebogen in een rechte hoek tegen je lichaam. Draai je onderarm naar binnen richting je buik en laat de greep rustig terugkomen.",
+      "src": "/audio/noor/a58f535dfec8c86d130f15d077b09a1af7b9104c70ead5d2d698d3d0fcf8504f.mp3",
+      "duration": 10.292245
+    },
+    {
+      "name": "Exo pull",
+      "text": "Exo pull. Sta naast het apparaat met je elleboog gebogen in een rechte hoek tegen je lichaam. Draai je onderarm naar buiten van je buik af en laat de greep rustig terugkomen.",
+      "src": "/audio/noor/0441df8208040bd3edcc469977da4cfc56220ac6b46a12896fff97b45639c761.mp3",
+      "duration": 10.736327
+    },
+    {
+      "name": "Extension squat",
+      "text": "Extension squat. Sta met je voeten op heupbreedte, armen voor je uitgestrekt. Zak in een diepe squat en strek jezelf daarna volledig uit omhoog, eventueel op je tenen.",
+      "src": "/audio/noor/4a8b13c65f1ec6337af5d60a74f81798c59e5079a1002064b506be02aef1864b.mp3",
+      "duration": 11.258776
+    },
+    {
+      "name": "Flyes",
+      "text": "Flyes. Lig op de bank met de dumbells boven je borst en licht gebogen armen. Spreid je armen rustig zijwaarts tot borsthoogte en breng ze weer samen boven je borst.",
+      "src": "/audio/noor/0b8b58d16a80f0483d9d3679c570974f7716659bb346e67269805bbc47cfe9ca.mp3",
+      "duration": 10.422857
+    },
+    {
+      "name": "French press",
+      "text": "French press. Lig op de bank met het gewicht boven je hoofd en gestrekte armen. Buig alleen je ellebogen en laat het gewicht naar je voorhoofd zakken, strek daarna je armen weer.",
+      "src": "/audio/noor/b4b5ee10e599fc51ef11aa2f3a516787b431b1ff7df7b7758a37b676beb2911c.mp3",
+      "duration": 10.057143
+    },
+    {
+      "name": "Front pully row",
+      "text": "Front pully row. Sta rechtop voor de pully met de kabel laag en pak het handvat met gestrekte armen. Trek het handvat naar je borst met de ellebogen langs je lichaam en beweeg rustig terug.",
+      "src": "/audio/noor/665561258076c02029edbc8cf2b365a7b7c56a400e73a4835a82c70257366eeb.mp3",
+      "duration": 11.180408
+    },
+    {
+      "name": "Front raises",
+      "text": "Front raises. Sta rechtop met een gewicht in elke hand voor je bovenbenen. Hef de gestrekte armen voorwaarts tot schouderhoogte en laat ze rustig weer zakken.",
+      "src": "/audio/noor/a8996057a8a80d3d2ef3099e47d067c576565250644495a0542260b1aa5c5cc3.mp3",
+      "duration": 10.318367
+    },
+    {
+      "name": "Front squat",
+      "text": "Front squat. Houd het gewicht voor je borst met je ellebogen omhoog, voeten op schouderbreedte. Zak door je knieen met een rechte rug en kom weer omhoog.",
+      "src": "/audio/noor/ffb133a2ffab2097284818190b487586f51e72c278f5e4c9814dc6168d3a63e9.mp3",
+      "duration": 9.012245
+    },
+    {
+      "name": "Glute bridges",
+      "text": "Glute bridges. Lig op je rug met gebogen knieen en voeten plat op de grond. Duw je heupen omhoog tot je lichaam een rechte lijn vormt en laat rustig zakken.",
+      "src": "/audio/noor/d971156c7165535c683388bfa6d2b8ebf1f935db7e87d9d06d7f15f5b0b822be.mp3",
+      "duration": 9.012245
+    },
+    {
+      "name": "Hack squat",
+      "text": "Hack squat. Sta in het apparaat met je rug tegen de leuning en je schouders onder de kussens. Zak door je knieen tot ongeveer 90 graden en duw jezelf rustig weer omhoog.",
+      "src": "/audio/noor/a421327bf2b2d986b2ceafc5eebb255cee58797b16baf3394cfbdc5496e8fcfc.mp3",
+      "duration": 10.292245
+    },
+    {
+      "name": "Incline bench press",
+      "text": "Incline bench press. Lig op de schuine bank met de halter op borsthoogte. Duw het gewicht recht omhoog tot je armen bijna gestrekt zijn en laat het rustig terugzakken.",
+      "src": "/audio/noor/3a81d1bbe544a1287d87c220fdc033a7f5a31bb9ddd06bdea64bc6b72b7b0dbe.mp3",
+      "duration": 10.13551
+    },
+    {
+      "name": "Incline flyes",
+      "text": "Incline flyes. Lig op de schuine bank met de armen licht gebogen boven je borst. Open de armen zijwaarts tot borsthoogte en breng ze weer samen boven je.",
+      "src": "/audio/noor/8292c60210b81e63ab083eadc7fec9cebcd7e86200bd600604b013f2143a3da5.mp3",
+      "duration": 10.370612
+    },
+    {
+      "name": "Jefferson squat",
+      "text": "Jefferson squat. Sta wijdbeens over de stang heen en pak deze met een hand voor en een hand achter je vast. Zak recht naar beneden door je knieen en kom rustig weer omhoog.",
+      "src": "/audio/noor/6355ef349215a05aa490ebf8222bc715a1915ae5b11b51e85decb9df11d390fe.mp3",
+      "duration": 10.24
+    },
+    {
+      "name": "Kick back",
+      "text": "Kick back. Steun op je handen en knieen met een rechte rug. Strek een been rustig naar achteren tot het in het verlengde van je rug is en breng het gecontroleerd terug.",
+      "src": "/audio/noor/36a9bae97f41bc8f5a9395e061009b8a5718d536bd64c7818612bf830c75698e.mp3",
+      "duration": 9.639184
+    },
+    {
+      "name": "Lat pull front",
+      "text": "Lat pull front. Zit aan het apparaat met de bovenbenen onder het kussen en pak de stang breed. Trek de stang voor je hoofd naar je borst en laat hem rustig terug omhoog.",
+      "src": "/audio/noor/44c9d38fd5dbaa028e31a2748bd8779ff6bc0d8f8411034d28ebe9e47153c3d7.mp3",
+      "duration": 10.057143
+    },
+    {
+      "name": "Lateral raises",
+      "text": "Lateral raises. Sta rechtop met een gewicht in elke hand naast je lichaam. Hef de licht gebogen armen zijwaarts tot schouderhoogte en laat ze rustig zakken.",
+      "src": "/audio/noor/05f38781029e3b948e4824bd26c01eb4f9177278072a7c8768ac0447ddb932c4.mp3",
+      "duration": 10.422857
+    },
+    {
+      "name": "Leg curl",
+      "text": "Leg curl. Stel het apparaat zo in dat de rol net boven je hielen ligt. Buig je knieen en trek de rol rustig naar je toe, laat daarna langzaam terugkomen.",
+      "src": "/audio/noor/85683332d812dfb743743dd4399c45ba03b52f300d7460876c7f3475653f4e88.mp3",
+      "duration": 9.639184
+    },
+    {
+      "name": "Leg extension",
+      "text": "Leg extension. Zit in het apparaat met de rol op je onderbenen, net boven je enkels. Strek je knieen rustig tot je benen bijna recht zijn en laat langzaam terugzakken.",
+      "src": "/audio/noor/4047d1e027a42e7fb93ccd781d3623796a87a9d1ceceafe8574aaa1d4faf8736.mp3",
+      "duration": 10.44898
+    },
+    {
+      "name": "Leg press",
+      "text": "Leg press. Zit in het apparaat met je voeten op heupbreedte op de plaat. Duw de plaat weg tot je benen bijna gestrekt zijn en buig je knieen daarna rustig terug.",
+      "src": "/audio/noor/969f92b300278352120ae7bb60fd4a7401bf6377db4928d61ec1887b105ab89b.mp3",
+      "duration": 9.822041
+    },
+    {
+      "name": "Lunges",
+      "text": "Lunges. Sta rechtop en stap met een been ruim naar voren. Zak recht naar beneden tot beide knieen ongeveer 90 graden gebogen zijn en duw jezelf terug naar de beginhouding.",
+      "src": "/audio/noor/c55f4eb61eee0c8f65f7fbdb167022dbc5dd25c57f50c64e059e5c1a667c7d49.mp3",
+      "duration": 10.762449
+    },
+    {
+      "name": "Military press",
+      "text": "Military press. Sta of zit rechtop met de halter op schouderhoogte voor je. Duw het gewicht recht omhoog boven je hoofd en laat het rustig terugzakken.",
+      "src": "/audio/noor/ad29731c88d52a42dc1883bbdc0701ed98b4cdfddd504761a85589b9671aac94.mp3",
+      "duration": 9.299592
+    },
+    {
+      "name": "Nose breakers",
+      "text": "Nose breakers. Lig op de bank met de armen gestrekt omhoog. Buig alleen de ellebogen zodat het gewicht naar je voorhoofd zakt en strek de armen weer.",
+      "src": "/audio/noor/336b0f647fec9437d3dd1eaa9891e742901545d9adc8b804619cf53cc818fc0b.mp3",
+      "duration": 8.933878
+    },
+    {
+      "name": "One arm bent over row",
+      "text": "One arm bent over row. Steun met een hand en knie op de bank en houd je rug recht. Trek het gewicht met de andere arm naar je heup, elleboog langs je lichaam, en laat het rustig zakken.",
+      "src": "/audio/noor/3cec9d0f659caea540bb3ce9e2f23a9fb7f0891399ed247e1f197e5dc1f61e09.mp3",
+      "duration": 11.650612
+    },
+    {
+      "name": "Pully cross down",
+      "text": "Pully cross down. Sta tussen de pully's met de kabels hoog. Trek de handvatten schuin omlaag voor je lichaam samen en beweeg gecontroleerd terug.",
+      "src": "/audio/noor/d058e1f7c142e8b7a5d96260e31c8cefedbeef5ef2059fa86cf15684b8a03e04.mp3",
+      "duration": 8.437551
+    },
+    {
+      "name": "Pully cross over",
+      "text": "Pully cross over. Sta tussen de pully's met de kabels op schouderhoogte. Breng de licht gebogen armen voor je borst naar elkaar toe en open ze rustig weer.",
+      "src": "/audio/noor/f06681fcaae6587615002cc2f15343a7bfd78ca91f3e1688cc59b8881e4baa16.mp3",
+      "duration": 9.482449
+    },
+    {
+      "name": "Pully cross up",
+      "text": "Pully cross up. Sta tussen de pully's met de kabels laag. Breng de handvatten schuin omhoog voor je lichaam samen en laat ze gecontroleerd terugzakken.",
+      "src": "/audio/noor/0fbffb0492db6d4b3566054eadb892f367b55c8cb6a6e8848c5fc4c2556b54da.mp3",
+      "duration": 9.06449
+    },
+    {
+      "name": "Pully dips",
+      "text": "Pully dips. Sta rechtop bij de pully met de kabel hoog. Pak de stang met gebogen armen en duw hem omlaag tot je armen gestrekt zijn, ellebogen langs je lichaam.",
+      "src": "/audio/noor/5511ec4720770aadf966f1b626a053873f00397fffdf3ed1a51c2218ccdec537.mp3",
+      "duration": 10.553469
+    },
+    {
+      "name": "Pully down",
+      "text": "Pully down. Sta voor de pully met de kabel hoog en de armen gestrekt. Trek de stang met gestrekte armen omlaag naar je bovenbenen en beweeg rustig terug.",
+      "src": "/audio/noor/3cea235ce74cd13e7eef9f05be1ea3ab80693b4c9ed51bb511b4b291922b8cb1.mp3",
+      "duration": 9.142857
+    },
+    {
+      "name": "Pully press double",
+      "text": "Pully press double. Sta met de rug naar de pully, in elke hand een handvat op schouderhoogte. Duw beide armen naar voren tot ze gestrekt zijn en kom rustig terug.",
+      "src": "/audio/noor/bc571ee991c971ee6d8ea8c4241b9e6526b1b1c130555b6143ab3664ffbb87ed.mp3",
+      "duration": 10.318367
+    },
+    {
+      "name": "Pully press single",
+      "text": "Pully press single. Sta met de rug naar de pully, een handvat in een hand op schouderhoogte. Duw de arm naar voren tot hij gestrekt is en kom rustig terug.",
+      "src": "/audio/noor/077f377eaf7372a10857690cd314142ad07ba20ca2c93cb2197e0b47951cb5f3.mp3",
+      "duration": 9.06449
+    },
+    {
+      "name": "Pully pull over",
+      "text": "Pully pull over. Lig op de bank met het hoofd richting de pully. Pak de stang met gestrekte armen achter je hoofd en breng hem in een boog naar je heupen.",
+      "src": "/audio/noor/a64b3c8a71ab5ce10dd2469b1837c63c7cf138d1d02465c9d675caecf0915123.mp3",
+      "duration": 9.090612
+    },
+    {
+      "name": "Pully row",
+      "text": "Pully row. Zit aan het apparaat met de voeten op de steunen en de rug recht. Trek het handvat naar je buik, ellebogen langs je lichaam, en beweeg rustig terug.",
+      "src": "/audio/noor/6375c02106c62edfa2e90d646c97eb296b1d6a66c514e3cbd86ee1e754a3f717.mp3",
+      "duration": 9.613061
+    },
+    {
+      "name": "Push up",
+      "text": "Push up. Steun op je handen en tenen, handen iets breder dan schouderbreedte. Buig je ellebogen en laat je borst richting de vloer zakken, duw jezelf daarna weer omhoog.",
+      "src": "/audio/noor/de0b3de28b3296737e9854491d59ee88e65f8dcf6877a76a02b7c6e9be14dc2d.mp3",
+      "duration": 10.945306
+    },
+    {
+      "name": "Reversed flyes",
+      "text": "Reversed flyes. Sta licht voorovergebogen met een gewicht in elke hand, armen recht naar beneden. Beweeg je armen gestrekt zijwaarts omhoog tot schouderhoogte en laat ze rustig terugzakken.",
+      "src": "/audio/noor/809f6acbecaac8d16845e5fd9a93f237371e01e606fdbf84bf7059ae06c60f57.mp3",
+      "duration": 11.62449
+    },
+    {
+      "name": "Shoulder rotation (shrugs)",
+      "text": "Shoulder rotation (shrugs). Sta rechtop met je armen langs je lichaam. Trek je schouders op richting je oren, draai ze naar achteren en laat ze rustig zakken.",
+      "src": "/audio/noor/d43df0f98dd4c7b6dd7ab351adca5bfa2c1f1413f07bd332705a0b2bfd40b82e.mp3",
+      "duration": 9.560816
+    },
+    {
+      "name": "Triceps dips",
+      "text": "Triceps dips. Zet je handen achter je op een stevige stoel of bank, benen naar voren. Buig je ellebogen en laat je billen zakken, duw jezelf daarna weer omhoog.",
+      "src": "/audio/noor/b22526448730874ebe4957f4afc9dcc07cdd07bf52ec07977a1cd112be7acd30.mp3",
+      "duration": 10.553469
+    },
+    {
+      "name": "Triceps dumbell kickbacks",
+      "text": "Triceps dumbell kickbacks. Buig licht voorover met een gewicht in je hand, bovenarm langs je lichaam. Strek je elleboog tot je arm recht naar achteren wijst en buig rustig terug.",
+      "src": "/audio/noor/346b4d859565a7b384135f795bae4137c818e0696160988a036a36c0e1d66645.mp3",
+      "duration": 11.258776
+    },
+    {
+      "name": "Triceps push down",
+      "text": "Triceps push down. Sta rechtop voor het apparaat en pak de stang op borsthoogte, ellebogen tegen je zij. Duw de stang naar beneden tot je armen gestrekt zijn en laat rustig terugkomen.",
+      "src": "/audio/noor/13b43dd06a95594ac2ef6d58dd8891a3b9b323c324b7e621f41d1e61c7cd7243.mp3",
+      "duration": 11.833469
+    },
+    {
+      "name": "Upright row",
+      "text": "Upright row. Sta rechtop met een gewicht in beide handen voor je bovenbenen. Trek het gewicht langs je lichaam omhoog tot borsthoogte, ellebogen wijzen opzij, en laat rustig zakken.",
+      "src": "/audio/noor/d2fa750d695843e914d6c25bbeec4be12c7715fea700955ac1ebe90dca19b91b.mp3",
+      "duration": 11.52
+    },
+    {
+      "name": "Wrist extension",
+      "text": "Wrist extension. Laat je onderarm rusten op een tafel met je handpalm naar beneden, hand over de rand. Beweeg je hand omhoog en laat hem rustig terugzakken.",
+      "src": "/audio/noor/29cecf28e64871b81ea4ebd69690152d481c6aa50166e7e8bc6335c39a078d07.mp3",
+      "duration": 10.187755
+    },
+    {
+      "name": "Wrist flexion",
+      "text": "Wrist flexion. Laat je onderarm rusten op een tafel met je handpalm naar boven, hand over de rand. Beweeg je hand omhoog richting je onderarm en laat hem rustig terugzakken.",
+      "src": "/audio/noor/6306f6e6b43c5d1f36ecf554883db5d34596f9dabfbcdcc5461309c2bc75ce40.mp3",
+      "duration": 10.553469
+    }
+  ]
+}

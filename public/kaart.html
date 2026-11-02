@@ -550,6 +550,7 @@
   <h1>Kaart niet gevonden</h1>
   Deze trainingskaart bestaat niet (meer). Vraag je fysiotherapeut om een nieuwe QR-code.
 </div>
+<script src="/noor-audio.js"></script>
 <script>
 (function(){
   'use strict';
@@ -890,7 +891,7 @@
     zet('akop',trs('akop'));zet('aweg',trs('aweg'));
     zet('hskop',trh('hskop'));zet('hsintro',trh('hsintro'));zet('hsnoot',trh('hsnoot'));
     zet('hs_m2',trh('m2'));zet('hs_m1',trh('m1'));zet('hs_z0',trh('z0'));zet('hs_p1',trh('p1'));zet('hs_p2',trh('p2'));
-    if(!bezigLezen)zet('leesTxt',tr('lees'));
+    if(!bezigLezen)zet('leesTxt',TAAL==='nl'?'Luister naar uitleg':tr('lees'));
     var gb=document.getElementById('grootBtn');
     if(gb){gb.title=trg('groter');gb.setAttribute('aria-label',trg('groter'));}
     var prb=document.getElementById('printBtn');
@@ -1010,6 +1011,7 @@
         '<div class="oefinfo"><div class="naam">'+esc(vt(x.n))+'</div>'+
         (chips?'<div class="chips">'+chips+'</div>':'')+'</div></div>'+
         knop+'<div class="vhouder"></div>'+
+        (TAAL==='nl'&&o&&o.uitleg?(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg)?'<button type="button" class="vbtn" data-noor="'+idx+'">Luister naar Noor</button>':'<div class="vmeta">Natuurlijke stemopname nog niet beschikbaar. De uitleg staat bij de afbeelding.</div>'):'')+
         '<button type="button" class="oefdone" data-idx="'+idx+'" aria-pressed="false"><span class="odv" aria-hidden="true"></span><span class="odt"></span></button>'+
         '<button type="button" class="oefzwaar" data-zidx="'+idx+'"></button></div>';
     });
@@ -1234,15 +1236,24 @@
   // ---- voorlezen met de ingebouwde spraak van de telefoon (gratis, ook offline) ----
   var bezigLezen=false;
   function stopLezen(){
+    if(window.NoorAudio)NoorAudio.stop();
     if(window.speechSynthesis)speechSynthesis.cancel();
     bezigLezen=false;
     var b=document.getElementById('leesBtn');
     b.classList.remove('aan');
-    document.getElementById('leesTxt').textContent=tr('lees');
+    document.getElementById('leesTxt').textContent=TAAL==='nl'?'Luister naar uitleg':tr('lees');
   }
   function leesVoor(){
-    if(!window.speechSynthesis||!K)return;
+    if(!K)return;
     if(bezigLezen){stopLezen();return;}
+    if(TAAL==='nl'){
+      var items=(K.kaart.chosen||[]).map(function(x){
+        var o=metEigen(K.lib,K.kaart).find(function(o){return (x.id&&o.exerciseId===x.id)||normEx(o.naam)===normEx(x.n);});
+        return {name:o?o.naam:x.n,text:o?o.uitleg||'':''};
+      });
+      speelNoor(items);return;
+    }
+    if(!window.speechSynthesis)return;
     var cells=K.kaart.cells||{};
     var delen=[K.praktijk.praktijk||K.kaart.praktijk||'',tr('veilig')];
     var cl=K.kaart.client||{};
@@ -1276,6 +1287,15 @@
     document.getElementById('leesTxt').textContent=tr('stop');
     speechSynthesis.cancel();
     speechSynthesis.speak(u);
+  }
+
+  function speelNoor(items){
+    stopLezen();
+    if(!window.NoorAudio){alert('De natuurlijke stem kon niet laden. Ververs de kaart of lees de uitleg.');return;}
+    bezigLezen=true;
+    document.getElementById('leesBtn').classList.add('aan');
+    document.getElementById('leesTxt').textContent=tr('stop');
+    NoorAudio.play(items,stopLezen,function(message){stopLezen();alert(message);});
   }
 
   // ---- als app op het beginscherm: manifest, offline-werker en een vriendelijke uitnodiging ----
@@ -1321,6 +1341,7 @@
   // de Google-stem op Android), anders de standaardstem van die taal
   var STEMMEN={};
   function vulStemmen(){
+    if(TAAL==='nl'){document.getElementById('stemlabel').hidden=true;return;}
     if(!window.speechSynthesis)return;
     var sel=document.getElementById('stemsel'),lang=SPRAAK[TAAL]||'nl-NL',voorkeur='';
     try{voorkeur=localStorage.getItem('fp_stem_'+lang)||'';}catch(e){}
@@ -1353,6 +1374,7 @@
     return keuze;
   }
   function demoZeg(tekst){
+    if(TAAL==='nl')return; // Never interrupt a natural recording with device voice.
     if(!demo.spraak||!window.speechSynthesis)return;
     try{
       speechSynthesis.cancel();
@@ -1538,7 +1560,8 @@
     var luD=document.getElementById('lbuitleg');if(luD.innerHTML)luD.hidden=true;
     knop.textContent=tr('demoUit');knop.setAttribute('aria-pressed','true');
     if(window.speechSynthesis){document.getElementById('lbgeluid').hidden=false;demoGeluidKnop();}
-    demoZeg(demo.introTekst+' '+tr('houding1'));
+    if(TAAL==='nl'&&demo.spraak)speelNoor([{name:document.getElementById('lbnaam').textContent,text:eigenUitleg}]);
+    else demoZeg(demo.introTekst+' '+tr('houding1'));
     // wie liever geen beweging ziet, stapt met een tik zelf door de houdingen
     var stil=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(!stil)demoKlok();
@@ -1554,6 +1577,13 @@
   function bindEens(){
     // video laden bij een tik; één tegelijk open, de rest pauzeert vanzelf
     document.getElementById('oefs').addEventListener('click',function(e){
+      var noor=e.target.closest('[data-noor]');
+      if(noor){
+        var x=(K.kaart.chosen||[])[Number(noor.dataset.noor)];
+        if(!x)return;
+        var o=metEigen(K.lib,K.kaart).find(function(o){return (x.id&&o.exerciseId===x.id)||normEx(o.naam)===normEx(x.n);});
+        speelNoor([{name:o?o.naam:x.n,text:o?o.uitleg||'':''}]);return;
+      }
       // afvinken van een losse oefening ("gedaan vandaag")
       var od=e.target.closest('.oefdone');
       if(od){toggleOefDaan(Number(od.dataset.idx));return;}
@@ -1762,9 +1792,10 @@
         demoGeluidKnop();
         var dw=document.getElementById('lbdemo');
         if(demo.spraak&&!dw.hidden){
-          demoZeg((demo.introTekst||document.getElementById('lbnaam').textContent)+' '+
+          if(TAAL==='nl')speelNoor([{name:document.getElementById('lbnaam').textContent,text:(demo.info||{}).uitleg||''}]);
+          else demoZeg((demo.introTekst||document.getElementById('lbnaam').textContent)+' '+
             (dw.classList.contains('tweede')?tr('houding2'):tr('houding1')));
-        }else if(window.speechSynthesis){try{speechSynthesis.cancel();}catch(err){}}
+        }else {stopLezen();}
         if(demo.interval)demoKlok();
         return;
       }
@@ -1808,7 +1839,7 @@
       window.addEventListener('afterprint',terug);
       window.print();
     });
-    if(window.speechSynthesis){
+    if(window.speechSynthesis||window.NoorAudio){
       var lb=document.getElementById('leesBtn');
       lb.style.display='';
       lb.addEventListener('click',leesVoor);
@@ -1842,6 +1873,7 @@
     ]).then(function(res){
       if(!res[0]||!res[0].ok){document.getElementById('fout').style.display='block';return;}
       K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1],ai:!!res[0].ai};
+      if(window.NoorAudio)NoorAudio.load().then(function(){tekenKaart();}).catch(function(){});
       bindEens();
       initApp();
       if(TAAL!=='nl')wisselTaal(TAAL);else alles();

@@ -2,6 +2,8 @@
 
 ## Update 2 november 2026
 
+- `kaart-papier-natural-*`: gerichte imagegen-retouche van de eerdere kaartmontage voor papierkromming, belichting en handcontact. Bron `assets/landing/paper-natural-source.png`. De 12 oefenkolommen zijn visueel gecontroleerd. De foto is illustratief; kleine tekst en lijnen zijn door de beeldgenerator opnieuw weergegeven en zijn niet pixel-identiek aan de werkkaart. De losse voorbeeldkaart blijft de ongewijzigde technische weergave.
+
 - `kaart-papier-sport-12-*`: de basis is met de ingebouwde imagegen bewerkt: behandelaar in blauwe polo; vrouwelijke patiënt in sportshirt en trainingsbroek. Vervolgens is het volledige papier deterministisch vervangen door `trainingskaart-12.png`; de beeldgenerator heeft de definitieve tekst, vakken en oefenafbeeldingen niet getekend.
 - `trainingskaart-12.svg` / `.png`: voorbeeldkaart op basis van de afmetingen, kleuren, bestaande oefenbeelden en tabelstructuur van `public/index.html` (`#a4`, `renderA4`). Twaalf oefenkolommen, twee blokken van zes datumregels, twee BORG-regels, één XRM-regel. Getypte, fictieve gegevens. Dit is een presentatievoorbeeld, geen behandeladvies en geen echte patiëntkaart.
 - `kaart-telefoon-light-*`: imagegen-bewerking naar lichte schermweergave. Voorbeeldteller vervolgens technisch op twaalf gezet. Geen wijziging van de werkende patiëntapp door deze fotobewerking.
