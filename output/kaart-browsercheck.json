@@ -1,0 +1,296 @@
+{
+  "gemaakt": "2026-11-02T22:29:47.468Z",
+  "browser": "/Users/builder/Library/Caches/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-mac-arm64/chrome-headless-shell",
+  "kaart": "/k/demo?taal=nl",
+  "viewport": "390x844 @2x, mobiel",
+  "stappen": [
+    {
+      "wat": "kaart geladen",
+      "oefenfotos": 4,
+      "taal": "nl"
+    },
+    {
+      "wat": "houdingen getoond: Squat",
+      "as": "x",
+      "doeken": [
+        {
+          "w": 640,
+          "h": 640,
+          "witteHoeken": true,
+          "inktPixels": 58113,
+          "blauwePixels": 0,
+          "inhoud": {
+            "x": 235,
+            "y": 38,
+            "w": 170,
+            "h": 565
+          }
+        },
+        {
+          "w": 640,
+          "h": 640,
+          "witteHoeken": true,
+          "inktPixels": 49760,
+          "blauwePixels": 0,
+          "inhoud": {
+            "x": 204,
+            "y": 185,
+            "w": 230,
+            "h": 418
+          }
+        }
+      ],
+      "merk": {
+        "tekst": "Fysiplan",
+        "links": 10,
+        "boven": 8
+      },
+      "knop": "Foto tonen",
+      "notitie": "Twee uitsnedes uit dezelfde oefenfoto. Het wisselen laat beide houdingen zien en is geen oefentempo. De uitvoering is niet door een fysiotherapeut goedgekeurd.",
+      "volledigeFotoVerborgen": true,
+      "verwachteFrames": [
+        {
+          "x": 230,
+          "y": 32,
+          "w": 180,
+          "h": 576
+        },
+        {
+          "x": 199,
+          "y": 179,
+          "w": 242,
+          "h": 429
+        }
+      ]
+    },
+    {
+      "wat": "naar de andere houding: Squat",
+      "onderschrift": "Eindhouding"
+    },
+    {
+      "wat": "houdingen getoond: Dead bug",
+      "as": "y",
+      "doeken": [
+        {
+          "w": 640,
+          "h": 640,
+          "witteHoeken": true,
+          "inktPixels": 38981,
+          "blauwePixels": 0,
+          "inhoud": {
+            "x": 111,
+            "y": 195,
+            "w": 386,
+            "h": 248
+          }
+        },
+        {
+          "w": 640,
+          "h": 640,
+          "witteHoeken": true,
+          "inktPixels": 40447,
+          "blauwePixels": 0,
+          "inhoud": {
+            "x": 38,
+            "y": 205,
+            "w": 566,
+            "h": 231
+          }
+        }
+      ],
+      "merk": {
+        "tekst": "Fysiplan",
+        "links": 10,
+        "boven": 8
+      },
+      "knop": "Foto tonen",
+      "notitie": "Twee uitsnedes uit dezelfde oefenfoto. Het wisselen laat beide houdingen zien en is geen oefentempo. De uitvoering is niet door een fysiotherapeut goedgekeurd.",
+      "volledigeFotoVerborgen": true,
+      "verwachteFrames": [
+        {
+          "x": 104,
+          "y": 189,
+          "w": 400,
+          "h": 262
+        },
+        {
+          "x": 32,
+          "y": 198,
+          "w": 576,
+          "h": 245
+        }
+      ]
+    },
+    {
+      "wat": "naar de andere houding: Dead bug",
+      "onderschrift": "Eindhouding"
+    },
+    {
+      "wat": "houdingen getoond: Anteflexie armen",
+      "as": "x",
+      "doeken": [
+        {
+          "w": 640,
+          "h": 640,
+          "witteHoeken": true,
+          "inktPixels": 58237,
+          "blauwePixels": 0,
+          "inhoud": {
+            "x": 217,
+            "y": 39,
+            "w": 204,
+            "h": 562
+          }
+        },
+        {
+          "w": 640,
+          "h": 640,
+          "witteHoeken": true,
+          "inktPixels": 55297,
+          "blauwePixels": 0,
+          "inhoud": {
+            "x": 201,
+            "y": 39,
+            "w": 237,
+            "h": 562
+          }
+        }
+      ],
+      "merk": {
+        "tekst": "Fysiplan",
+        "links": 10,
+        "boven": 8
+      },
+      "knop": "Foto tonen",
+      "notitie": "Twee uitsnedes uit dezelfde oefenfoto. Het wisselen laat beide houdingen zien en is geen oefentempo. De uitvoering is niet door een fysiotherapeut goedgekeurd.",
+      "volledigeFotoVerborgen": true,
+      "verwachteFrames": [
+        {
+          "x": 212,
+          "y": 32,
+          "w": 216,
+          "h": 576
+        },
+        {
+          "x": 195,
+          "y": 32,
+          "w": 250,
+          "h": 576
+        }
+      ]
+    },
+    {
+      "wat": "naar de andere houding: Anteflexie armen",
+      "onderschrift": "Eindhouding"
+    },
+    {
+      "wat": "houdingen getoond: Step up",
+      "as": "x",
+      "doeken": [
+        {
+          "w": 640,
+          "h": 640,
+          "witteHoeken": true,
+          "inktPixels": 41452,
+          "blauwePixels": 0,
+          "inhoud": {
+            "x": 241,
+            "y": 105,
+            "w": 156,
+            "h": 496
+          }
+        },
+        {
+          "w": 640,
+          "h": 640,
+          "witteHoeken": true,
+          "inktPixels": 44951,
+          "blauwePixels": 0,
+          "inhoud": {
+            "x": 240,
+            "y": 38,
+            "w": 159,
+            "h": 544
+          }
+        }
+      ],
+      "merk": {
+        "tekst": "Fysiplan",
+        "links": 10,
+        "boven": 8
+      },
+      "knop": "Foto tonen",
+      "notitie": "Twee uitsnedes uit dezelfde oefenfoto. Het wisselen laat beide houdingen zien en is geen oefentempo. De uitvoering is niet door een fysiotherapeut goedgekeurd.",
+      "volledigeFotoVerborgen": true,
+      "verwachteFrames": [
+        {
+          "x": 235,
+          "y": 100,
+          "w": 169,
+          "h": 508
+        },
+        {
+          "x": 234,
+          "y": 32,
+          "w": 172,
+          "h": 556
+        }
+      ]
+    },
+    {
+      "wat": "naar de andere houding: Step up",
+      "onderschrift": "Eindhouding"
+    },
+    {
+      "wat": "stemopname afgespeeld tot het einde",
+      "oefening": "Squat",
+      "knopTijdensAfspelen": "Stop",
+      "duurSeconden": 9.3,
+      "knopNaAfloop": "Luister naar uitleg"
+    }
+  ],
+  "fouten": [],
+  "dialogen": [],
+  "audioVerzoeken": [
+    {
+      "status": 206,
+      "range": null,
+      "contentRange": "bytes 0-108290/108291",
+      "contentType": "audio/mpeg"
+    }
+  ],
+  "screenshots": [
+    "output/pose-review/browser/01-kaart.png",
+    "output/pose-review/browser/02-squat-start.png",
+    "output/pose-review/browser/03-squat-eind.png",
+    "output/pose-review/browser/04-dead-bug-start.png",
+    "output/pose-review/browser/05-dead-bug-eind.png",
+    "output/pose-review/browser/06-anteflexie-armen-start.png",
+    "output/pose-review/browser/07-anteflexie-armen-eind.png",
+    "output/pose-review/browser/08-step-up-start.png",
+    "output/pose-review/browser/09-step-up-eind.png"
+  ],
+  "oefeningen": [
+    {
+      "naam": "Squat",
+      "pose": "fp_341afb721db82139|images/onderste-extremiteit/squat-avatar-v7.jpg",
+      "src": "/v2/images/onderste-extremiteit/squat-avatar-v7.jpg"
+    },
+    {
+      "naam": "Dead bug",
+      "pose": "fp_11df1ef5264f349b|images/core/dead-bug-avatar-v7.jpg",
+      "src": "/v2/images/core/dead-bug-avatar-v7.jpg"
+    },
+    {
+      "naam": "Anteflexie armen",
+      "pose": "fp_ff306042c93f0900|images/bovenste-extremiteit/anteflexie-armen-avatar-v7.jpg",
+      "src": "/v2/images/bovenste-extremiteit/anteflexie-armen-avatar-v7.jpg"
+    },
+    {
+      "naam": "Step up",
+      "pose": "fp_47c285e34bf280aa|images/onderste-extremiteit/step-up-avatar-v7.jpg",
+      "src": "/v2/images/onderste-extremiteit/step-up-avatar-v7.jpg"
+    }
+  ],
+  "geslaagd": true
+}

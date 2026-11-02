@@ -1606,30 +1606,39 @@
     // blijft de volledige oefenafbeelding staan.
     var p=demo.info&&demo.info.poseMetadata;
     if(!p)return null;
-    var src=img.currentSrc||img.src;
-    if(!src)return null;
-    var pad='';
-    try{pad=new URL(src,location.href).pathname;}catch(e){return null;}
-    if(pad!=='/'+p.source)return null;
+    var pad=bronPad(img.currentSrc||img.src);
+    // Het v2-kanaal levert beelden als /v2/images/...; de beoordeling noemt het bestand
+    // images/... . Zelfde normalisatie als mediaSource(), anders past het nooit.
+    if(!pad||pad.replace(/^\/+/,'').replace(/^v2\//,'')!==p.source)return null;
     if(img.naturalWidth!==p.width||img.naturalHeight!==p.height)return null;
-    if(bronGecontroleerd[p.assetSha256]!==true)return null;
+    if(bronGecontroleerd[pad+'|'+p.assetSha256]!==true)return null;
     if(!p.poses.every(function(x){return geldigeUitsnede(x.crop,p.width,p.height);}))return null;
     if(uitsnedenOverlappen(p.poses[0].crop,p.poses[1].crop))return null;
     return p;
   }
   // De goedkeuring hoort bij déze bytes. Is het beeld vervangen, dan vervalt ze en
   // tonen we de volledige afbeelding; bewijzen lukt niet, dus tonen we niets extra's.
-  function bevestigBron(p){
-    if(bronGecontroleerd[p.assetSha256]!==undefined)return Promise.resolve(bronGecontroleerd[p.assetSha256]);
+  function bronPad(src){
+    if(!src)return '';
+    try{return new URL(src,location.href).pathname;}catch(e){return '';}
+  }
+  // We controleren de bytes van precies de URL die de patiënt ziet (die komt ook meteen
+  // uit de cache), niet van een ander pad naar hetzelfde bestand. De uitkomst geldt dus
+  // per pad en per verwachte hash.
+  function bevestigBron(p,src){
+    var pad=bronPad(src);
+    if(!pad||pad.replace(/^\/+/,'').replace(/^v2\//,'')!==p.source)return Promise.resolve(false);
+    var sleutel=pad+'|'+p.assetSha256;
+    if(bronGecontroleerd[sleutel]!==undefined)return Promise.resolve(bronGecontroleerd[sleutel]);
     if(!window.crypto||!crypto.subtle)return Promise.resolve(false);
-    return fetch('/'+p.source,{cache:'force-cache'}).then(function(r){
+    return fetch(pad,{cache:'force-cache'}).then(function(r){
       if(!r.ok)throw Error('bron niet beschikbaar');
       return r.arrayBuffer();
     }).then(function(buffer){return crypto.subtle.digest('SHA-256',buffer);}).then(function(digest){
       var hash=Array.from(new Uint8Array(digest)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
-      bronGecontroleerd[p.assetSha256]=hash===p.assetSha256;
-      return bronGecontroleerd[p.assetSha256];
-    }).catch(function(){bronGecontroleerd[p.assetSha256]=false;return false;});
+      bronGecontroleerd[sleutel]=hash===p.assetSha256;
+      return bronGecontroleerd[sleutel];
+    }).catch(function(){bronGecontroleerd[sleutel]=false;return false;});
   }
   var DEMO_MAAT=640,DEMO_RAND=32;
   // Woordelijk dezelfde meetkunde als poseFrameLayout in lib/pose-frames.js:
@@ -1802,7 +1811,7 @@
           if(!lb.classList.contains('open')||lbi.src!==foto.src)return;
           var pm=demo.info&&demo.info.poseMetadata;
           if(!pm)return;
-          bevestigBron(pm).then(function(ok){
+          bevestigBron(pm,lbi.currentSrc||lbi.src).then(function(ok){
             if(!ok||!lb.classList.contains('open')||lbi.src!==foto.src)return;
             if(demoHoudingen(lbi)){kd.hidden=false;demoStart();}
           });

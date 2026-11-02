@@ -29,23 +29,52 @@ vm.runInContext('stopLezen()',context);assert.equal(el('lbgeluid').attrs['aria-p
 assert.equal(el('leesBtn').attrs['aria-pressed'],'false');
 
 // ---- houdingen: alleen een beoordeelde uitsnede bij exact dit bestand ----
-const foto={src:'https://praktijk.example/images/avatar.jpg',naturalWidth:800,naturalHeight:1200};
+// Zoals de kaart het echt krijgt: het v2-kanaal levert /v2/images/..., de beoordeling
+// noemt images/... . Een eerdere versie van deze test gebruikte /images/ en zag daardoor
+// niet dat de houdingen in een echte browser nooit verschenen.
+const foto={src:'https://praktijk.example/v2/images/avatar.jpg',naturalWidth:800,naturalHeight:1200};
+const SLEUTEL='/v2/images/avatar.jpg|'+'a'.repeat(64);
 const goedeMeta=()=>({source:'images/avatar.jpg',assetSha256:'a'.repeat(64),axis:'x',width:800,height:1200,
   poses:[{label:'start',crop:{x:10,y:10,w:300,h:1000}},{label:'end',crop:{x:420,y:10,w:300,h:1000}}]});
 assert.equal(context.demoHoudingen(foto),null,'zonder beoordeelde uitsnede geen houdingen');
 context.demo.info.poseMetadata=goedeMeta();
 assert.equal(context.demoHoudingen(foto),null,'zonder bewezen bronbestand geen houdingen');
-context.bronGecontroleerd['a'.repeat(64)]=false;
+context.bronGecontroleerd[SLEUTEL]=false;
 assert.equal(context.demoHoudingen(foto),null,'een afwijkende bron zet de uitsnede buiten werking');
 context.bronGecontroleerd['a'.repeat(64)]=true;
-assert.ok(context.demoHoudingen(foto),'beoordeelde uitsnede bij bewezen bron werkt');
-assert.equal(context.demoHoudingen({src:'https://praktijk.example/images/anders.jpg',naturalWidth:800,naturalHeight:1200}),null,'uitsnede is bronspecifiek');
+assert.equal(context.demoHoudingen(foto),null,'een controle zonder pad telt niet');
+context.bronGecontroleerd[SLEUTEL]=true;
+assert.ok(context.demoHoudingen(foto),'beoordeelde uitsnede bij bewezen bron werkt, via het v2-pad');
+assert.equal(context.demoHoudingen({src:'https://praktijk.example/images/avatar.jpg',naturalWidth:800,naturalHeight:1200}),null,
+  'de controle hoort bij het getoonde pad; een ander pad naar hetzelfde bestand is nog niet gecontroleerd');
+context.bronGecontroleerd['/images/avatar.jpg|'+'a'.repeat(64)]=true;
+assert.ok(context.demoHoudingen({src:'https://praktijk.example/images/avatar.jpg',naturalWidth:800,naturalHeight:1200}),'ook het pad zonder v2 werkt na controle');
+assert.equal(context.demoHoudingen({src:'https://praktijk.example/v2/v2/images/avatar.jpg',naturalWidth:800,naturalHeight:1200}),null,'geen losse prefixen wegstrepen');
+assert.equal(context.demoHoudingen({src:'https://praktijk.example/v2/images/anders.jpg',naturalWidth:800,naturalHeight:1200}),null,'uitsnede is bronspecifiek');
 assert.equal(context.demoHoudingen({src:foto.src,naturalWidth:1024,naturalHeight:1200}),null,'afmetingen moeten kloppen');
 context.demo.info.poseMetadata=goedeMeta();context.demo.info.poseMetadata.poses[1].crop.x=100;
 assert.equal(context.demoHoudingen(foto),null,'overlappende uitsnedes zijn nooit twee houdingen');
 context.demo.info.poseMetadata=goedeMeta();context.demo.info.poseMetadata.poses[0].crop.w=0;
 assert.equal(context.demoHoudingen(foto),null,'lege uitsnede telt niet');
 context.demo.info.poseMetadata=null;
+
+// bevestigBron haalt precies de getoonde URL op en weigert een ander bestand meteen
+{
+  const opgehaald=[];
+  const bytes=new TextEncoder().encode('bronbytes');
+  const sha=createHash('sha256').update(bytes).digest('hex');
+  const bron=vm.createContext({crypto:webcrypto,window:{crypto:webcrypto},URL,location:{href:'https://praktijk.example/k/abc'},bronGecontroleerd:{},
+    fetch:async url=>{opgehaald.push(url);return {ok:true,arrayBuffer:async()=>bytes.buffer};}});
+  vm.runInContext(between('  function bronPad(src){','  var DEMO_MAAT='),bron);
+  const meta={source:'images/avatar.jpg',assetSha256:sha};
+  assert.equal(await bron.bevestigBron(meta,'https://praktijk.example/v2/images/avatar.jpg'),true);
+  assert.deepEqual(opgehaald,['/v2/images/avatar.jpg'],'de getoonde URL wordt gecontroleerd, niet een ander pad');
+  assert.equal(await bron.bevestigBron(meta,'https://praktijk.example/v2/images/avatar.jpg'),true);
+  assert.equal(opgehaald.length,1,'een geslaagde controle wordt onthouden');
+  assert.equal(await bron.bevestigBron(meta,'https://praktijk.example/v2/images/ander.jpg'),false,'een ander bestand wordt zonder ophalen geweigerd');
+  assert.equal(opgehaald.length,1);
+  assert.equal(await bron.bevestigBron({source:'images/avatar.jpg',assetSha256:'0'.repeat(64)},'https://praktijk.example/v2/images/avatar.jpg'),false,'afwijkende bytes: geen houdingen');
+}
 
 assert.ok(html.includes('data-audio-naam="'));assert.ok(html.includes("name:foto.dataset.audioNaam||''"));
 assert.ok(html.includes("name:(demo.info||{}).name||''"));

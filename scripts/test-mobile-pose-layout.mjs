@@ -80,7 +80,7 @@ assert.equal(context.geldigeUitsnede({ x: 0, y: 0, w: 0, h: 10 }, 400, 400), fal
 assert.ok(!html.includes("style.transform='translate("), 'geen verzonnen pose-verplaatsing');
 assert.ok(!html.includes('demoSplitsing'), 'de witruimtesplitsing is verwijderd');
 assert.ok(!html.includes('demoUniformFrames'), 'de oude contentvak-scan is verwijderd');
-assert.ok(html.includes("if(bronGecontroleerd[p.assetSha256]!==true)return null;"), 'uitsnede alleen bij bewezen bronbestand');
+assert.ok(html.includes("if(bronGecontroleerd[pad+'|'+p.assetSha256]!==true)return null;"), 'uitsnede alleen bij bewezen bronbestand, per getoond pad');
 assert.ok(html.includes("p.status!=='geometry-approved'"), 'alleen beoordeelde uitsnedes');
 assert.ok(html.includes("merk.className='demomerk'"), 'het merk staat buiten de uitsnede en bij beide houdingen gelijk');
 assert.ok(html.includes("bronNoot.className='demobron'"), 'de herkomstnotitie staat onder de houdingen');
@@ -116,7 +116,8 @@ const demoDocument = {
 };
 const img = ids.lbimg = stubElement('img');
 img.complete = true; img.naturalWidth = entry.width; img.naturalHeight = entry.height;
-img.src = 'https://praktijk.example/' + entry.source;
+// zoals de kaart het echt krijgt: via het v2-kanaal
+img.src = 'https://praktijk.example/v2/' + entry.source;
 
 const demoContext = vm.createContext({
   document: demoDocument, Math, Number, URL, JSON,
@@ -126,7 +127,7 @@ const demoContext = vm.createContext({
   DEMO_BRON: { nl: 'herkomstnotitie' },
   NoorAudio: { match: () => true },
   demoKlok() {}, demoGeluidKnop() {}, demoZeg() {},
-  bronGecontroleerd: { [entry.assetSha256]: true },
+  bronGecontroleerd: { ['/v2/' + entry.source + '|' + entry.assetSha256]: true },
   demo: { info: { name: entry.name, uitleg: 'uitleg', poseMetadata: {
     source: entry.source, assetSha256: entry.assetSha256, axis: entry.poseGeometry.axis,
     poses: entry.poses, width: entry.width, height: entry.height } } }
