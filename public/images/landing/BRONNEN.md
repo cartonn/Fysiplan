@@ -1,5 +1,14 @@
 # Foto's op de landingspagina (/v2)
 
+## Update 2 november 2026
+
+- `kaart-papier-sport-12-*`: de basis is met de ingebouwde imagegen bewerkt: behandelaar in blauwe polo; vrouwelijke patiënt in sportshirt en trainingsbroek. Vervolgens is het volledige papier deterministisch vervangen door `trainingskaart-12.png`; de beeldgenerator heeft de definitieve tekst, vakken en oefenafbeeldingen niet getekend.
+- `trainingskaart-12.svg` / `.png`: voorbeeldkaart op basis van de afmetingen, kleuren, bestaande oefenbeelden en tabelstructuur van `public/index.html` (`#a4`, `renderA4`). Twaalf oefenkolommen, twee blokken van zes datumregels, twee BORG-regels, één XRM-regel. Getypte, fictieve gegevens. Dit is een presentatievoorbeeld, geen behandeladvies en geen echte patiëntkaart.
+- `kaart-telefoon-light-*`: imagegen-bewerking naar lichte schermweergave. Voorbeeldteller vervolgens technisch op twaalf gezet. Geen wijziging van de werkende patiëntapp door deze fotobewerking.
+- Reproduceerbaar vanuit `assets/landing/patient-sport-source.png` en `assets/landing/phone-light-source.png`, met `scripts/landing-card-assets.mjs` en `scripts/landing-phone-counter.mjs`. De bestaande foto's blijven bewaard.
+
+Deze beelden blijven illustratieve fotomontages, geen testimonials. De kaart is geen letterlijke browser-screenshot; de technische montage gebruikt dezelfde vakindeling en oorspronkelijke oefenafbeeldingen. De links op de landingpage openen de echte app/voorbeeldkaart.
+
 De (basis)foto's komen van Pexels en vallen onder de Pexels License
 (https://www.pexels.com/license/): gratis te gebruiken, ook commercieel, en
 naamsvermelding is niet verplicht. We noemen de fotografen toch op de pagina.

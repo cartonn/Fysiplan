@@ -1,0 +1,26 @@
+import fs from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import sharp from 'sharp';
+const html=await fs.readFile('public/v2.html','utf8');
+const svg=await fs.readFile('public/images/landing/trainingskaart-12.svg','utf8');
+assert.equal((svg.match(/<image /g)||[]).length,12);
+assert.equal((svg.match(/>BORG<\/text>/g)||[]).length,2);
+assert.equal((svg.match(/>XRM<\/text>/g)||[]).length,1);
+assert.equal((svg.match(/>S<\/text>/g)||[]).length,12);
+assert.equal((svg.match(/>H<\/text>/g)||[]).length,12);
+assert.equal((svg.match(/>W<\/text>/g)||[]).length,12);
+assert.ok(html.includes('/images/landing/trainingskaart-12.png'));
+assert.ok(!html.includes('/images/landing/kaart-papier-1000.jpg'));
+assert.ok(!html.includes('/images/landing/kaart-telefoon-1000.jpg'));
+assert.ok(!html.includes('zes genummerde oefeningen'));
+assert.ok(!html.includes('6 oefeningen'));
+for(const name of ['kaart-papier-sport-12','kaart-telefoon-light'])for(const w of [500,1000]){
+  const filename=`public/images/landing/${name}-${w}.jpg`;
+  const m=await sharp(filename).metadata();assert.equal(m.width,w);assert.equal(m.height,w*.75);
+  assert.ok(html.includes(`/images/landing/${name}-${w}.jpg`));
+}
+const app=await fs.readFile('public/index.html','utf8');
+assert.ok(app.includes('for(var n=0;n<12;n++)'));
+assert.ok(app.includes('for(var b=0;b<2;b++)'));
+assert.ok(app.includes("for(var i=0;i<6;i++)rows+=dateRow"));
+console.log('Landing asset checks passed: 12 exercises, correct grids, light-mode and sports-photo assets.');
