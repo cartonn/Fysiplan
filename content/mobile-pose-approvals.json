@@ -1,0 +1,918 @@
+{
+  "schemaVersion": 1,
+  "reviewDate": "2026-11-02",
+  "reviewer": "Claude Opus 5, nachtelijke reparatieopdracht eigenaar 2026-11-02",
+  "reviewKind": "geometric-visual-only",
+  "explicitlyNotApproved": [
+    "klinische juistheid van de uitvoering",
+    "of de afgebeelde variant de voorgeschreven variant is",
+    "beluisteren van de bijbehorende stemopname",
+    "externe of door de praktijk geüploade video's"
+  ],
+  "whatWasChecked": [
+    "Elke goedgekeurde uitsnede is bekeken op een contactvel dat met exact de meetkenmerken van de kaart is gerenderd (lib/pose-frames.js), naast de volledige bronafbeelding.",
+    "Per frame: precies één volledig figuur, geen merk in beeld, geen stuk van de andere tekening, niets weggesneden dat bij de oefening hoort, gelijke schaal, en begin en eind meetbaar verschillend.",
+    "Gemeten en afgedwongen in scripts/pose-crop-candidates.mjs: vreemde inkt in de uitsnede strikt nul, merk buiten de uitsnede, figuren echt gescheiden, silhouetoverlap onder de drempel."
+  ],
+  "inspection": {
+    "contactSheets": "output/pose-review/pair-candidate-*.png",
+    "beforeAfter": "output/pose-review/before-after-*.png",
+    "inspectedVerdict": "pair-candidate",
+    "sheetsViewed": 41,
+    "perSheet": 4,
+    "log": "output/pose-review/inspection-log.md",
+    "recordedAt": "2026-11-03T00:05:00+01:00"
+  },
+  "similarityRule": {
+    "reject": "silhouetteIoU >= 0.90, of silhouetteIoU >= 0.85 met madDirect < 10",
+    "calibratedOn": "visuele vergelijking van Swiss ball squeezes adductoren (0.909/6.97), Foam roller calf (0.906/8.61), Foam rol glutes stretch (0.855/5.07) tegenover Endy Leg ext (0.888/28) en Wrist flexion (0.884/12.59)"
+  },
+  "manualRejections": [
+    {
+      "exerciseId": "fp_013ba6ad937cc9d9",
+      "name": "Dips",
+      "source": "images/bovenste-extremiteit/dips-avatar-v7.jpg",
+      "reason": "In houding 1 staat een losse handgreep naast het figuur die niet als voorwerp van deze houding te verantwoorden is, en beide figuren staan rechtop: de dip zelf is niet afgebeeld.",
+      "evidence": "output/pose-review/before-after-fp_013ba6ad937cc9d9.png"
+    },
+    {
+      "exerciseId": "fp_7dc1478e2b3c17b0",
+      "name": "Step up with knee raise",
+      "source": "images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg",
+      "reason": "In houding 1 staat naast het eigen opstapje een los lichtblauw blok dat niet bij de oefening hoort.",
+      "evidence": "output/pose-review/before-after-fp_7dc1478e2b3c17b0.png"
+    },
+    {
+      "exerciseId": "fp_027779ceb994b08e",
+      "name": "Alternating lunge jumps",
+      "source": "images/cardio/alternating-lunge-jumps-avatar-v9.png",
+      "reason": "De twee afgebeelde standen zijn afwisselende standen van dezelfde sprongoefening, geen begin- en eindhouding van één beweging. output/mobile-lunge-v9-provenance.json stelt expliciet dat de sprongovergang niet is goedgekeurd.",
+      "measurementNote": "madMirrored 10.5 tegenover madDirect 23.39 bevestigt wel dat de beenwissel in v9 werkelijk is hersteld: houding 2 lijkt op het spiegelbeeld van houding 1, niet op houding 1 zelf."
+    }
+  ],
+  "excludedBecauseMediaRejected": [
+    {
+      "exerciseId": "fp_8596981989aa3408",
+      "name": "Rotator (apparaat)"
+    },
+    {
+      "exerciseId": "fp_ece0666d1342d4d2",
+      "name": "Dorsi-pecto (apparaat)"
+    },
+    {
+      "exerciseId": "fp_5993a1f1bdfba6c0",
+      "name": "Endy Armstrekker"
+    },
+    {
+      "exerciseId": "fp_04ace7e010dfef2e",
+      "name": "Endy Rotator"
+    },
+    {
+      "exerciseId": "fp_8d71ff2915e8691a",
+      "name": "TRX pull up"
+    }
+  ],
+  "observations": [
+    {
+      "name": "Front pully row",
+      "note": "Het apparaat hoort bij houding 1; de kabel van houding 2 eindigt in de bron zelf aan de rand van de uitsnede."
+    },
+    {
+      "name": "Endo pull",
+      "note": "De band loopt in de bronafbeelding zelf tot de beeldrand; dat is geen gevolg van de uitsnede."
+    },
+    {
+      "name": "Been pendelen",
+      "note": "De steunpaal is aan houding 2 toegewezen; in houding 1 staat geen steun."
+    },
+    {
+      "name": "Standing gluteus",
+      "note": "Steunpaal toegewezen aan houding 2."
+    },
+    {
+      "name": "Kick back",
+      "note": "Het enkelgewicht/toestel is aan houding 2 toegewezen."
+    },
+    {
+      "name": "Standing abduction",
+      "note": "De weerstandsband is aan houding 2 toegewezen; in houding 1 ligt hij los."
+    },
+    {
+      "name": "Calf raises",
+      "note": "Alleen in houding 1 houdt de persoon een voorwerp vast. Dat is een inconsistentie in de bron, geen fout van de uitsnede."
+    }
+  ],
+  "inspectedAssets": [
+    {
+      "name": "Anteflexie armen",
+      "source": "images/bovenste-extremiteit/anteflexie-armen-avatar-v7.jpg",
+      "assetSha256": "f8f33346dc5383665967481555abb9ceaeecf216d383a121397d3522c1253dd1"
+    },
+    {
+      "name": "Barbell front press",
+      "source": "images/bovenste-extremiteit/barbell-front-press-avatar-v7.jpg",
+      "assetSha256": "32d048286a62bdd0508de279107b1d941d280075f8a22db640c027843265bad2"
+    },
+    {
+      "name": "Biceps alternate dumbell",
+      "source": "images/bovenste-extremiteit/biceps-alternate-dumbell-avatar-v7.jpg",
+      "assetSha256": "5223833e7d4ca0092f0e14fd656f55ae4eaaca189a07f859c7b14262f9cadf10"
+    },
+    {
+      "name": "Biceps curl",
+      "source": "images/bovenste-extremiteit/biceps-curl-avatar-v7.jpg",
+      "assetSha256": "03c5fe9f9e43901abcefb8e74e55e7af8b5368063311d97e6afeb0ac4ade5e87"
+    },
+    {
+      "name": "Biceps pull",
+      "source": "images/bovenste-extremiteit/biceps-pull-avatar-v7.jpg",
+      "assetSha256": "87cde66cf7f4df9885d7d68c5edda4350309114dbc63ac6db2ba87b0fef6107f"
+    },
+    {
+      "name": "Dips",
+      "source": "images/bovenste-extremiteit/dips-avatar-v7.jpg",
+      "assetSha256": "ae7ea9bc2bcf7646e69832179c1ada68c42f1fb39af8e05effe15c6758bf7298"
+    },
+    {
+      "name": "Dumbell bench press",
+      "source": "images/bovenste-extremiteit/dumbell-bench-press-avatar-v7.jpg",
+      "assetSha256": "a4119635d7e6ca7a6d87e4174e142ed7784b3c1318ce31af4d09af969870d43d"
+    },
+    {
+      "name": "Dumbell front press",
+      "source": "images/bovenste-extremiteit/dumbell-front-press-avatar-v7.jpg",
+      "assetSha256": "019a26db7f9d07db4ab6134dbdbc887c8d3faa88b48929e8b12febebf8313f26"
+    },
+    {
+      "name": "Duplex pull",
+      "source": "images/bovenste-extremiteit/duplex-pull-avatar-v7.jpg",
+      "assetSha256": "1c0d88e9b4c7ea2937d113ccce4aed93e8f28cf4396ccaceb946550e7b38fa1f"
+    },
+    {
+      "name": "Endo pull",
+      "source": "images/bovenste-extremiteit/endo-pull-avatar-v7.jpg",
+      "assetSha256": "dc9a5d99456133f03863c2226f3c6326d14fac74549b0841846058f722a0907b"
+    },
+    {
+      "name": "French press",
+      "source": "images/bovenste-extremiteit/french-press-avatar-v7.jpg",
+      "assetSha256": "c6f9c1655b002a6c288c7e7ac04ffb48c73b2ac056069330646e198b5d5954d2"
+    },
+    {
+      "name": "Front pully row",
+      "source": "images/bovenste-extremiteit/front-pully-row-avatar-v7.jpg",
+      "assetSha256": "974ef5509b80ea8671bda510e1010d078945e58f702533f02fc39a6f24cbdf41"
+    },
+    {
+      "name": "Lateral raises",
+      "source": "images/bovenste-extremiteit/lateral-raises-avatar-v7.jpg",
+      "assetSha256": "401a5142799ac621dc6b8909b66b54783c4843f9f7dc1ca5447d981bb15b8d54"
+    },
+    {
+      "name": "Nose breakers",
+      "source": "images/bovenste-extremiteit/nose-breakers-avatar-v7.jpg",
+      "assetSha256": "c331a08d0396592d9a1f384bb77b2e7ebf3cc51f40c883ece329b180e504aa9c"
+    },
+    {
+      "name": "Pully cross down",
+      "source": "images/bovenste-extremiteit/pully-cross-down-avatar-v7.jpg",
+      "assetSha256": "73dd7ccc788caba939ceae66622698b0725d291bbfa858c24620005831992589"
+    },
+    {
+      "name": "Pully cross over",
+      "source": "images/bovenste-extremiteit/pully-cross-over-avatar-v7.jpg",
+      "assetSha256": "ccaaf85a26eeb7a663a0d0b03c96b241f19f59aac26efe18e88682de9e93ee56"
+    },
+    {
+      "name": "Pully press double",
+      "source": "images/bovenste-extremiteit/pully-press-double-avatar-v7.jpg",
+      "assetSha256": "e2f53c226078efef65aea4c7fc637a1e2013ab23de64f9c08838d7b39c81d1b2"
+    },
+    {
+      "name": "Pully pull over",
+      "source": "images/bovenste-extremiteit/pully-pull-over-avatar-v7.jpg",
+      "assetSha256": "1f31001f41a2dc8bc1b8f475b0b3580496211df9304efedfca8f96c2e7ce22eb"
+    },
+    {
+      "name": "Push up",
+      "source": "images/bovenste-extremiteit/push-up-avatar-v7.jpg",
+      "assetSha256": "7691c97137533158454a674fb74c6ff38f6e7f283d0137c863ef95e6cc9a431d"
+    },
+    {
+      "name": "Triceps dumbell kickbacks",
+      "source": "images/bovenste-extremiteit/triceps-dumbell-kickbacks-avatar-v7.jpg",
+      "assetSha256": "b4d3eeae978292fab35eb0e62ca124fd0d0e0cbae1e26ec943fb3d5cdedf91ae"
+    },
+    {
+      "name": "Triceps push down",
+      "source": "images/bovenste-extremiteit/triceps-push-down-avatar-v7.jpg",
+      "assetSha256": "7ccfaac01c579bee5def984afb88ef5661285b69c0da99236ff8a118dc4d9fd1"
+    },
+    {
+      "name": "Upright row",
+      "source": "images/bovenste-extremiteit/upright-row-avatar-v7.jpg",
+      "assetSha256": "2511f1cd4f63d51a1c5e8a39042bcc1302bb9cc5c8fa70cd12ca73c15fa43130"
+    },
+    {
+      "name": "Wrist flexion",
+      "source": "images/bovenste-extremiteit/wrist-flexion-avatar-v7.jpg",
+      "assetSha256": "74b93c223bdc72fe1e9a6d4207cdb45d90deacc1b6da7618ab994616fc88b852"
+    },
+    {
+      "name": "Been pendelen",
+      "source": "images/onderste-extremiteit/been-pendelen-avatar-v7.jpg",
+      "assetSha256": "717beeef1c5b7b52c78eeccba9ae89521b76781918601629ed71aaacda6bb7d7"
+    },
+    {
+      "name": "Bridges kicker",
+      "source": "images/onderste-extremiteit/bridges-kicker-avatar-v7.jpg",
+      "assetSha256": "d88a27ec6138c79d80c3bcf470610936f2fb9a51a3dfae936188543c00608e02"
+    },
+    {
+      "name": "Calf raises",
+      "source": "images/onderste-extremiteit/calf-raises-avatar-v7.jpg",
+      "assetSha256": "3e7e45b6647e1a8eeacd48873b24b9e2c375ac8e5fdf175d3c79a14bf2fcb922"
+    },
+    {
+      "name": "Chair squat",
+      "source": "images/onderste-extremiteit/chair-squat-avatar-v7.jpg",
+      "assetSha256": "a4d98858e15a11f54fa84e98cacf73603a302c0ff8dc632fd62d0bdd9bd96418"
+    },
+    {
+      "name": "Crabwalk",
+      "source": "images/onderste-extremiteit/crabwalk-avatar-v7.jpg",
+      "assetSha256": "d1408e90fa81c5ed7f52c35e0c28534e642283f9b1be40102c064d5b6137f79e"
+    },
+    {
+      "name": "Dead lift",
+      "source": "images/onderste-extremiteit/dead-lift-avatar-v7.jpg",
+      "assetSha256": "b8e06b33e1d670a86608c425a034e9f260c2e4ec38fe754abae41d05599ef31e"
+    },
+    {
+      "name": "Extension squat",
+      "source": "images/onderste-extremiteit/extension-squat-avatar-v7.jpg",
+      "assetSha256": "5c176ae52a7a5c504a2278d76dd654a9896b480b3c6de7d638d7a5eada707935"
+    },
+    {
+      "name": "Glute bridges",
+      "source": "images/onderste-extremiteit/glute-bridges-avatar-v7.jpg",
+      "assetSha256": "dc816ba30abfdb1456a236d39f2f2b7d9f1d81e6b0e9661afa6d4fce5093f76e"
+    },
+    {
+      "name": "Jefferson squat",
+      "source": "images/onderste-extremiteit/jefferson-squat-avatar-v7.jpg",
+      "assetSha256": "445ddcb57b10b5b6c7c9a3044423e61d9ace2b33c0e618cdd66ee9c1c8626330"
+    },
+    {
+      "name": "Kick back",
+      "source": "images/onderste-extremiteit/kick-back-avatar-v7.jpg",
+      "assetSha256": "c47fbc78bda5e5df824fe49dd049a0fce8d29247e3e65bf487ec70002e59f4e3"
+    },
+    {
+      "name": "Leg curl",
+      "source": "images/onderste-extremiteit/leg-curl-avatar-v7.jpg",
+      "assetSha256": "0f892d7e0c50bfe9ebfcf46a31811ee61e172d084b7cfed5698d64609d047fad"
+    },
+    {
+      "name": "Leg press",
+      "source": "images/onderste-extremiteit/leg-press-avatar-v7.jpg",
+      "assetSha256": "d0cc71ac26169aa80be4696f57c1f174f53b68ddc7c1df76682bc313ea8f8ea3"
+    },
+    {
+      "name": "Lunges",
+      "source": "images/onderste-extremiteit/lunges-avatar-v7.jpg",
+      "assetSha256": "e66117e1283e2a3bdc6a376611d6aef43fbb36a58e1712f6eff617a25cc0effe"
+    },
+    {
+      "name": "Lunges curtsy alt",
+      "source": "images/onderste-extremiteit/lunges-curtsy-alt-avatar-v7.jpg",
+      "assetSha256": "5dc585ed5052825385a815a7979fc0a2b1a4fab26e42ed4b3686e084779bf290"
+    },
+    {
+      "name": "Lying abduction",
+      "source": "images/onderste-extremiteit/lying-abduction-avatar-v7.jpg",
+      "assetSha256": "0274c3620c3f2f034a437116b0188ad163cb4c9012c6cae1b133901284322dcc"
+    },
+    {
+      "name": "Lying adduction",
+      "source": "images/onderste-extremiteit/lying-adduction-avatar-v7.jpg",
+      "assetSha256": "b48c81291614c32e0bb5befbf92274183eb4c5b7b9ede3fa8ead227cc3bef25b"
+    },
+    {
+      "name": "Squat",
+      "source": "images/onderste-extremiteit/squat-avatar-v7.jpg",
+      "assetSha256": "928156faa0d4ea1b827080fa36132575f669758a549e30817d6d0a63e90aec23"
+    },
+    {
+      "name": "Squat lunges",
+      "source": "images/onderste-extremiteit/squat-lunges-avatar-v7.jpg",
+      "assetSha256": "2bc3bd0e31d469bad9b94c2e8677f1c974fe773eb2ce7c482a2d7641f6da7f2b"
+    },
+    {
+      "name": "Standing abduction",
+      "source": "images/onderste-extremiteit/standing-abduction-avatar-v7.jpg",
+      "assetSha256": "c986799fbeaba7567589a56255f79dd784f2a1417fc7edf0608d12756f305ba8"
+    },
+    {
+      "name": "Standing adduction",
+      "source": "images/onderste-extremiteit/standing-adduction-avatar-v7.jpg",
+      "assetSha256": "944226dc3e862175f78b022b90d3f9935f0e0da8b2f55c8ef17e41b3ce9e7d2c"
+    },
+    {
+      "name": "Standing gluteus",
+      "source": "images/onderste-extremiteit/standing-gluteus-avatar-v7.jpg",
+      "assetSha256": "b0bb8db68bc1d4db85b7046be2eee0f02276c67c4fc796144939e61e9b884e71"
+    },
+    {
+      "name": "Step up",
+      "source": "images/onderste-extremiteit/step-up-avatar-v7.jpg",
+      "assetSha256": "8961e743e173d5d7dd28037d64520a7b28c1ec3fab2bbb5c7f6590c2ffd1652f"
+    },
+    {
+      "name": "Step up tempo",
+      "source": "images/onderste-extremiteit/step-up-tempo-avatar-v7.jpg",
+      "assetSha256": "f5c085d594cd2a40bb0b3a34c09b4ef5817dbea18bac2246771e06d817e4b194"
+    },
+    {
+      "name": "Step up with knee raise",
+      "source": "images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg",
+      "assetSha256": "2dbad9164159e9602e62bdf374a58ed5bdd2f55b2a2160c83a68ee13528149c3"
+    },
+    {
+      "name": "Surrenders",
+      "source": "images/onderste-extremiteit/surrenders-avatar-v7.jpg",
+      "assetSha256": "67000a8ab3cdaebc523a8d74272352a6025d97d4e88554b2d7df0b38d22de8d4"
+    },
+    {
+      "name": "Wall sit",
+      "source": "images/onderste-extremiteit/wall-sit-avatar-v7.jpg",
+      "assetSha256": "8f5dad30fd267554da433de2478cc3200e93dd8246aabe52cca2f486a947b646"
+    },
+    {
+      "name": "Alternate heel touchers",
+      "source": "images/core/alternate-heel-touchers-avatar-v7.jpg",
+      "assetSha256": "065e091f86178319a54fc36ec8bb1e6d3dc596c893af5bc795fc00a51d98d4aa"
+    },
+    {
+      "name": "Back extension",
+      "source": "images/core/back-extension-avatar-v7.jpg",
+      "assetSha256": "fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50"
+    },
+    {
+      "name": "Barbell rotation",
+      "source": "images/core/barbell-rotation-avatar-v7.jpg",
+      "assetSha256": "ec3846ca32af88b25bc666a83dadfededb5cd91748b5fa82e902df2581b85ea9"
+    },
+    {
+      "name": "Barbell twist",
+      "source": "images/core/barbell-twist-avatar-v7.jpg",
+      "assetSha256": "f6ae1ae75a7f690c32dc2447d7a7b48a22d472f820d5565fa60fa84d24de38e9"
+    },
+    {
+      "name": "Bear crawls",
+      "source": "images/core/bear-crawls-avatar-v7.jpg",
+      "assetSha256": "04b33e2353a46c08207b2d7da2404f18ccd4f64253690f949401bb1429b13114"
+    },
+    {
+      "name": "Benen laten zakken",
+      "source": "images/core/benen-laten-zakken-avatar-v7.jpg",
+      "assetSha256": "7ace4022ebf1ae770e2443c890f629e2b2ca86c9c5a60c1dab47f6c618dcb2b1"
+    },
+    {
+      "name": "Bicycles buik",
+      "source": "images/core/bicycles-buik-avatar-v7.jpg",
+      "assetSha256": "6fe06ba1c9ebf6462736d03c775014492a26d1d894ed689188633e9ba53f01be"
+    },
+    {
+      "name": "Bruggen 1 been liften",
+      "source": "images/core/bruggen-1-been-liften-avatar-v7.jpg",
+      "assetSha256": "d52d0f2e15b5093ffe6735bec2d3803f13fc5a7e3193ba957aabc2558bd62543"
+    },
+    {
+      "name": "Bruggen beginner",
+      "source": "images/core/bruggen-beginner-avatar-v7.jpg",
+      "assetSha256": "bffde6185bdc75dc12907944689b5268b0364bde5ed7edd055bccb3abaf559f1"
+    },
+    {
+      "name": "Bruggen met halter",
+      "source": "images/core/bruggen-met-halter-avatar-v7.jpg",
+      "assetSha256": "6342fd6d568640ae1c517ded4f84883ae4f826c52a2fa286ed1f3a9a943085c0"
+    },
+    {
+      "name": "Bruggen met halter op bank",
+      "source": "images/core/bruggen-met-halter-op-bank-avatar-v7.jpg",
+      "assetSha256": "f0c4a63d08cea62d063d32d805aedce64df7001ea2b9441cfaf067771c3460a1"
+    },
+    {
+      "name": "Bruggen op bal",
+      "source": "images/core/bruggen-op-bal-avatar-v7.jpg",
+      "assetSha256": "b1766b43e41e872b6d31d1cbab16616643b1a5b29f257cfe5211d5e8c2bf4048"
+    },
+    {
+      "name": "Crunch",
+      "source": "images/core/crunch-avatar-v7.jpg",
+      "assetSha256": "899782a2a4ca55e93d29560e813b61a7d6d39702e21d1fad7fdeb6841f007021"
+    },
+    {
+      "name": "Curl up",
+      "source": "images/core/curl-up-avatar-v7.jpg",
+      "assetSha256": "a0c6a51060f2ebd74065b472ca526c8a245916021c0834026320d17f800f1605"
+    },
+    {
+      "name": "Dead bug",
+      "source": "images/core/dead-bug-avatar-v7.jpg",
+      "assetSha256": "95cd2b5bd5d05479d7828e3e6f61f9e9f46196675a240d1252640f7a6008f1a7"
+    },
+    {
+      "name": "Good mornings",
+      "source": "images/core/good-mornings-avatar-v7.jpg",
+      "assetSha256": "a149ad1998f365e07375f52f0873868198adaeb1254438fbef097e6a379a3269"
+    },
+    {
+      "name": "Knee elbow",
+      "source": "images/core/knee-elbow-avatar-v7.jpg",
+      "assetSha256": "608bbc1fe6083a3b0f7a73c4bbc29ac8ddbaec1dbcc0004aa76846040c9224fb"
+    },
+    {
+      "name": "Leg raises",
+      "source": "images/core/leg-raises-avatar-v7.jpg",
+      "assetSha256": "a9b033dacbdae0c67a6337e0623a9674e26edb2e8f3c092acf87170493ecebf2"
+    },
+    {
+      "name": "Mobilisatie rotatie rug",
+      "source": "images/core/mobilisatie-rotatie-rug-avatar-v7.jpg",
+      "assetSha256": "90f723a9e9fe6d82a24d0190552d5af0b461713f10c8b57ed4e97f8f99e2f9e0"
+    },
+    {
+      "name": "Mountain climber x",
+      "source": "images/core/mountain-climber-x-avatar-v7.jpg",
+      "assetSha256": "e3c5ccf18fb26f513d68c1c3137d6ecd311100c1d9807098d2fbe57232202628"
+    },
+    {
+      "name": "Plank basis",
+      "source": "images/core/plank-basis-avatar-v7.jpg",
+      "assetSha256": "9f661fcccb71d2d2e0c0dbfe3d2deb7587d050f811dbca8c01219d14bcc809ac"
+    },
+    {
+      "name": "Plank high",
+      "source": "images/core/plank-high-avatar-v7.jpg",
+      "assetSha256": "da7710c31a79977b415ebeaa413313bcd89c382dfb4d7e42f5402a99330ef2d4"
+    },
+    {
+      "name": "Plank jacks",
+      "source": "images/core/plank-jacks-avatar-v7.jpg",
+      "assetSha256": "98c50a4ca046fd48ecd270a60e5ffdc6de9cdf9ca19f7c09811767e9e02f3190"
+    },
+    {
+      "name": "Plank voorwaarts",
+      "source": "images/core/plank-voorwaarts-avatar-v7.jpg",
+      "assetSha256": "de105b6f15133fee5166f14bd4ef93306e5a46cd5edf486c9b17f1fdf23a50ca"
+    },
+    {
+      "name": "Reversed crunch",
+      "source": "images/core/reversed-crunch-avatar-v7.jpg",
+      "assetSha256": "db1f75d7f0574836c343399e7f32ec9a236c44b1d4ab1e5dc3522f879087b063"
+    },
+    {
+      "name": "Rug extensie",
+      "source": "images/core/rug-extensie-avatar-v7.jpg",
+      "assetSha256": "7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47"
+    },
+    {
+      "name": "Rusian twist",
+      "source": "images/core/rusian-twist-avatar-v7.jpg",
+      "assetSha256": "362f2fbd333a85cb792f0cb48d5df813d00722fe0f847231ced3199182b9dc15"
+    },
+    {
+      "name": "Scissors 1",
+      "source": "images/core/scissors-1-avatar-v7.jpg",
+      "assetSha256": "4846b92278a409b1d8e52721255cb85729c61d20b2b124d1fb47573d0b7355a8"
+    },
+    {
+      "name": "Scissors 2",
+      "source": "images/core/scissors-2-avatar-v7.jpg",
+      "assetSha256": "f18062ab3ed932eb08ade861b9666d0f6746056c8f1731354a73a163b9ce9829"
+    },
+    {
+      "name": "Side bents",
+      "source": "images/core/side-bents-avatar-v7.jpg",
+      "assetSha256": "c46c5aebdccc52640a569fc126f20e843cdd3ca60904ea08086ea60cd86456cf"
+    },
+    {
+      "name": "Stick twist",
+      "source": "images/core/stick-twist-avatar-v7.jpg",
+      "assetSha256": "4711c9092383a4482bce5117f905793be4d9d13d2c0065f99da6bb4ac933a64d"
+    },
+    {
+      "name": "Superman",
+      "source": "images/core/superman-avatar-v7.jpg",
+      "assetSha256": "cc45bacd708908c919816e83c1204f5ae45619db8af5e67e84105bcac3dfa2dc"
+    },
+    {
+      "name": "Fiets",
+      "source": "images/cardio/fiets-avatar-v7.jpg",
+      "assetSha256": "4edc2427444d8346af4310052e5d35ae382dfd8a91d79fa7c12bf83d518d487c"
+    },
+    {
+      "name": "Jumping jacks",
+      "source": "images/cardio/jumping-jacks-avatar-v7.jpg",
+      "assetSha256": "a864df0d267aa91b7f172b3a81d2e9f21d13e0374a1666cc0aec1152bb867260"
+    },
+    {
+      "name": "Loopband",
+      "source": "images/cardio/loopband-avatar-v7.jpg",
+      "assetSha256": "c745515b6c41c181e10920e83513bf46de0194e224081803ed6e3b5967301f95"
+    },
+    {
+      "name": "Stairs",
+      "source": "images/cardio/stairs-avatar-v7.jpg",
+      "assetSha256": "3e5e71fa2f63cfe3f9de9f17808d2609962c29d1aa449bca99c11c64265e66bc"
+    },
+    {
+      "name": "Balans op 1 been",
+      "source": "images/bosu/balans-op-1-been-avatar-v7.jpg",
+      "assetSha256": "9de421fedf052ba705fe2e444b55786488e522e6a42330c7f65c9f28145ee838"
+    },
+    {
+      "name": "Bosu brigdes",
+      "source": "images/bosu/bosu-brigdes-avatar-v7.jpg",
+      "assetSha256": "6b0efa5bc0eaabf8db1b36843a4d113b45971d4ed03470ac449bd333b875a3d7"
+    },
+    {
+      "name": "Bosu brigdes single leg",
+      "source": "images/bosu/bosu-brigdes-single-leg-avatar-v7.jpg",
+      "assetSha256": "bb13c58e4f5eff13b34faca7e99555cde31a818323df17a0a46314c402e2b965"
+    },
+    {
+      "name": "Bosu chest press dumbell",
+      "source": "images/bosu/bosu-chest-press-dumbell-avatar-v7.jpg",
+      "assetSha256": "01610277d0383f6f08f485715f5d9f66232ca7aa08ad917346cd3c67c7226064"
+    },
+    {
+      "name": "Bosu leg pull in",
+      "source": "images/bosu/bosu-leg-pull-in-avatar-v7.jpg",
+      "assetSha256": "6cd768beeadd19444aaf8d2561ca7d3e617b1683a638c1d3a8886b90c312d6fc"
+    },
+    {
+      "name": "Bosu mountain climber",
+      "source": "images/bosu/bosu-mountain-climber-avatar-v7.jpg",
+      "assetSha256": "f3053a2f3592274a6d41306831a6ba21014510382c31c931ea5e49ac1a3e1e13"
+    },
+    {
+      "name": "Bosu plank",
+      "source": "images/bosu/bosu-plank-avatar-v7.jpg",
+      "assetSha256": "d0243060fd3f3d63e680023a422b193f2e0efae73f12f83aac208417206998b3"
+    },
+    {
+      "name": "Bosu plank leg lift",
+      "source": "images/bosu/bosu-plank-leg-lift-avatar-v7.jpg",
+      "assetSha256": "d8ce04d18925bb7fc8c31d6b63db32739701e9459c878303a1f8600737eafe90"
+    },
+    {
+      "name": "Bosu squat",
+      "source": "images/bosu/bosu-squat-avatar-v7.jpg",
+      "assetSha256": "6eb1478baadf6f1a39b48f4c898208577ca50772152619c1260c52b18413a062"
+    },
+    {
+      "name": "Bosu v ups",
+      "source": "images/bosu/bosu-v-ups-avatar-v7.jpg",
+      "assetSha256": "9915fc2e9fab00e4df3b8f8e994a710f3e71fc654872b63a4024bfc82eca323a"
+    },
+    {
+      "name": "Bosu zijw plank",
+      "source": "images/bosu/bosu-zijw-plank-avatar-v7.jpg",
+      "assetSha256": "e8abd5b933e5d63471c4e6eb9fdd707f05bd41d11e64922239ffd69d6fd9f705"
+    },
+    {
+      "name": "TRX lunge",
+      "source": "images/trx/trx-lunge-avatar-v7.jpg",
+      "assetSha256": "fd202536f97c9acea9fe6f21df21159b1181dcc3bc04af9c07067139a8aa8f1b"
+    },
+    {
+      "name": "TRX lunge lateral low",
+      "source": "images/trx/trx-lunge-lateral-low-avatar-v7.jpg",
+      "assetSha256": "d0ff34b31f9023c5d91dfd9e24495a785fa1da4fe3a2954c3beb20902b4afc27"
+    },
+    {
+      "name": "TRX mountain climber",
+      "source": "images/trx/trx-mountain-climber-avatar-v7.jpg",
+      "assetSha256": "76870845bad1ae1f6df3ccc55c28350d759a6fab06571527ddfd896fd5a95f08"
+    },
+    {
+      "name": "TRX squat overhead",
+      "source": "images/trx/trx-squat-overhead-avatar-v7.jpg",
+      "assetSha256": "ba220157d43a2b1c29d3bb5981ca8c902787d92d868579afe1395d34a1974447"
+    },
+    {
+      "name": "TRX triceps extension II",
+      "source": "images/trx/trx-triceps-extension-ii-avatar-v7.jpg",
+      "assetSha256": "9bcf365ed23cc27bfbda8c3f4ae7810267158bd38e56d4b1a562789d7837431b"
+    },
+    {
+      "name": "Yoga camel",
+      "source": "images/yoga/yoga-camel-avatar-v7.jpg",
+      "assetSha256": "3c528533b192d7b6d7d448de0e63f7cc834e8ea01ea82d58f1c31d51f99ccaa3"
+    },
+    {
+      "name": "Yoga cat tail",
+      "source": "images/yoga/yoga-cat-tail-avatar-v7.jpg",
+      "assetSha256": "c5f9bb109a77f2810b83d741d304ec889615fca424b4fc4818b283a638cced74"
+    },
+    {
+      "name": "Yoga cobra",
+      "source": "images/yoga/yoga-cobra-avatar-v7.jpg",
+      "assetSha256": "41553b5f66d3d5471f8ee01c75108171d689b148f97ad0d4117bc7eae0f6a327"
+    },
+    {
+      "name": "Yoga downward dog",
+      "source": "images/yoga/yoga-downward-dog-avatar-v7.jpg",
+      "assetSha256": "e359278fd9a07e807e8b4391ba61c15add6b4e69cba4ecc5b147bf2b513a6f20"
+    },
+    {
+      "name": "Yoga extended puppy",
+      "source": "images/yoga/yoga-extended-puppy-avatar-v7.jpg",
+      "assetSha256": "4b967d10458faf7db05e0c053d97ce0922cee563b0541ac3308f6be6c874bea0"
+    },
+    {
+      "name": "Yoga glute stretch",
+      "source": "images/yoga/yoga-glute-stretch-avatar-v7.jpg",
+      "assetSha256": "214ea6597dcba4a4277d53873a494260eb4410cb00a597f89cfc7516680db136"
+    },
+    {
+      "name": "Yoga hamstring stretch",
+      "source": "images/yoga/yoga-hamstring-stretch-avatar-v7.jpg",
+      "assetSha256": "d2b5e7f8a4aaf575891d6c64d6379d174a3368fc1e57924611966d980f5d812d"
+    },
+    {
+      "name": "Yoga happy baby",
+      "source": "images/yoga/yoga-happy-baby-avatar-v7.jpg",
+      "assetSha256": "522d385a04021cf4dc1e51a3e1201014b4555be08ff5103671e92283d2e2108e"
+    },
+    {
+      "name": "Yoga hip flexor stretch",
+      "source": "images/yoga/yoga-hip-flexor-stretch-avatar-v7.jpg",
+      "assetSha256": "1a291688269ba56075de14b7c7d350a4a60eec92abfec49c216d86b8612e6b60"
+    },
+    {
+      "name": "Yoga knee to chest hip stretch",
+      "source": "images/yoga/yoga-knee-to-chest-hip-stretch-avatar-v7.jpg",
+      "assetSha256": "23078cfdace6379fe85d578037b5f813b477032b3bf51cd6702e5cc9053d333a"
+    },
+    {
+      "name": "Yoga noose",
+      "source": "images/yoga/yoga-noose-avatar-v7.jpg",
+      "assetSha256": "861293ce74f6699d6f7bbffd260642e142b7105cbe100e8340c7017b2d016835"
+    },
+    {
+      "name": "Yoga pigeon",
+      "source": "images/yoga/yoga-pigeon-avatar-v7.jpg",
+      "assetSha256": "853b6cdb5807a2152058cd732fb9a5722d0435cf3d346df41bac9cef61a4da54"
+    },
+    {
+      "name": "Yoga plow",
+      "source": "images/yoga/yoga-plow-avatar-v7.jpg",
+      "assetSha256": "44fc1c4773ade66fa84020f3777bc78813acedf13f59eb44f9dbca3b6200904e"
+    },
+    {
+      "name": "Yoga snake",
+      "source": "images/yoga/yoga-snake-avatar-v7.jpg",
+      "assetSha256": "085287d9624a8d90d25064b280c6e02c27daac00adfad6e91ea35bf7ba59a8a9"
+    },
+    {
+      "name": "Yoga warrior III",
+      "source": "images/yoga/yoga-warrior-iii-avatar-v7.jpg",
+      "assetSha256": "e27f7e9a1988471af1ba05f5ee6189cdb0edad570bbdb0a35187348480bb9eea"
+    },
+    {
+      "name": "Yoga wide angle seated forward bend",
+      "source": "images/yoga/yoga-wide-angle-seated-forward-bend-avatar-v7.jpg",
+      "assetSha256": "1d2aea570ba570ce7b5cd8845f286edefefecd2e9eb55a487e82d625d42ee165"
+    },
+    {
+      "name": "Kettlebell swing",
+      "source": "images/kettlebell/kettlebell-swing-avatar-v7.jpg",
+      "assetSha256": "6b0b447613afe23df1b96facdf46ab542ce9b765edccac3083cc8c5306ef64ca"
+    },
+    {
+      "name": "Kettlebelle swing one arm",
+      "source": "images/kettlebell/kettlebelle-swing-one-arm-avatar-v7.jpg",
+      "assetSha256": "fc10bf55eee1d5cdf50e2d1eaeb273a07bde611df2b1349fc5e2bcf804fc9c36"
+    },
+    {
+      "name": "Bodyblade back",
+      "source": "images/bodyblade/bodyblade-back-avatar-v7.jpg",
+      "assetSha256": "1c3c83c4505e8248fcd0f8b7f58b4b87a225605427fd3e488793d02710c28b4a"
+    },
+    {
+      "name": "Bodyblade front bovengreep",
+      "source": "images/bodyblade/bodyblade-front-bovengreep-avatar-v7.jpg",
+      "assetSha256": "a4ffdd76f958381decb2fb7a877e58f6ed27ee9df6a47bd7de956df53fd4cd48"
+    },
+    {
+      "name": "Bodyblade front ondergreep",
+      "source": "images/bodyblade/bodyblade-front-ondergreep-avatar-v7.jpg",
+      "assetSha256": "ef3dfa0be082cb00bd42ba666b80e7a3dd37baeb4b15f2bd0db981035ac15068"
+    },
+    {
+      "name": "Bodyblade front squat",
+      "source": "images/bodyblade/bodyblade-front-squat-avatar-v7.jpg",
+      "assetSha256": "ad5db18edcc9f1a37bdcb330d45d619615249b3746a856edb80bf5e2215dd431"
+    },
+    {
+      "name": "Bodyblade front uitstap",
+      "source": "images/bodyblade/bodyblade-front-uitstap-avatar-v7.jpg",
+      "assetSha256": "445949d5844c1d6dcf402d8b052577d04e412882b999e74512411ce8a9c9efcf"
+    },
+    {
+      "name": "Bodyblade high",
+      "source": "images/bodyblade/bodyblade-high-avatar-v7.jpg",
+      "assetSha256": "7ec3e7bc96644755a49c1bb5ebe2dcc3fa6933fdbf657ff704a33d16184cde05"
+    },
+    {
+      "name": "Foam rol quat stretch",
+      "source": "images/foam-roller/foam-rol-quat-stretch-avatar-v7.jpg",
+      "assetSha256": "045202e5955feb9ae83612a41c120aba53ac7fd4eb1f4558995b86f09aa629af"
+    },
+    {
+      "name": "Foam rol upper back stretch",
+      "source": "images/foam-roller/foam-rol-upper-back-stretch-avatar-v7.jpg",
+      "assetSha256": "cfbd44ef7e07dadb5cf8d473bc96ebba5cae2418b6d80e9392fba6a42ea975ba"
+    },
+    {
+      "name": "Voor zijwaarts",
+      "source": "images/speedladder/voor-zijwaarts-avatar-v7.jpg",
+      "assetSha256": "ff9463c38857c543e4791adba3e03a53911f7ac54f01ea15bda3374b5f52cb7c"
+    },
+    {
+      "name": "Back (apparaat)",
+      "source": "images/apparaten/back-apparaat-avatar-v7.jpg",
+      "assetSha256": "097c9123bd46c4f7fddf1ec6e5f336365d18fac8ddf4cbb7d4ae4bade0c816fe"
+    },
+    {
+      "name": "Chest press (apparaat)",
+      "source": "images/apparaten/chest-press-apparaat-avatar-v7.jpg",
+      "assetSha256": "d0a6cf415cba237c7e89a418ba848baf637af207cf2a77bc6657a2b29d2ff0ac"
+    },
+    {
+      "name": "Chin-dip (apparaat)",
+      "source": "images/apparaten/chin-dip-apparaat-avatar-v7.jpg",
+      "assetSha256": "ffb9c2a2424def5c7d876af6ba8905ed15e293f681e617cea0669c23d548fc9b"
+    },
+    {
+      "name": "Circle (apparaat)",
+      "source": "images/apparaten/circle-apparaat-avatar-v7.jpg",
+      "assetSha256": "8f551b55c1aed20c8068eefa0ecabacda46429b96bb5a874f5bcf3f1d049233c"
+    },
+    {
+      "name": "Dorsi-pecto (apparaat)",
+      "source": "images/apparaten/dorsi-pecto-apparaat-avatar-v7.jpg",
+      "assetSha256": "890f27cee81d718d298ffc268ce8da2011e1007c88c27de9d3cc8987cd7962c0"
+    },
+    {
+      "name": "Endy Armstrekker",
+      "source": "images/apparaten/endy-armstrekker-avatar-v7.jpg",
+      "assetSha256": "bd89f91fabbba9e39984641dca3e63c576b4295b69aabcc9b4f53993891858fd"
+    },
+    {
+      "name": "Endy Beenstrekker",
+      "source": "images/apparaten/endy-beenstrekker-avatar-v7.jpg",
+      "assetSha256": "a5b0f7f0af0fa8407f0c83da50c8c5f3964be064741ec0d716e1e7257a900227"
+    },
+    {
+      "name": "Endy Fly",
+      "source": "images/apparaten/endy-fly-avatar-v7.jpg",
+      "assetSha256": "5bace58d01e380b2c2f0454dab0509c65ed9064716f531f090ab18b57b92c8a8"
+    },
+    {
+      "name": "Endy Leg ext",
+      "source": "images/apparaten/endy-leg-ext-avatar-v7.jpg",
+      "assetSha256": "aaa90b1a6895fe2097a6bf3176535ad825da1f61913a875ed4d623d8c66d33d2"
+    },
+    {
+      "name": "Endy Pulldown",
+      "source": "images/apparaten/endy-pulldown-avatar-v7.jpg",
+      "assetSha256": "0a7d40f72e1bc5d463bcb45f0d0a4dcf0f368f277c87b720a60e955d4478d871"
+    },
+    {
+      "name": "Endy Rotator",
+      "source": "images/apparaten/endy-rotator-avatar-v7.jpg",
+      "assetSha256": "040f454032db0be4aeda9e8a050c1645587d26b59d68fd1558fc8242824a3cd9"
+    },
+    {
+      "name": "Endy Triceps dips",
+      "source": "images/apparaten/endy-triceps-dips-avatar-v7.jpg",
+      "assetSha256": "181df4cc650820af366d37547b353b21b9922954fb566d070c6614739f33438b"
+    },
+    {
+      "name": "Gluteus kick (apparaat)",
+      "source": "images/apparaten/gluteus-kick-apparaat-avatar-v7.jpg",
+      "assetSha256": "27d851cb7fc52c3ff72c4d520c9bd569fb8cc8b8411b0670bf852b68b43febca"
+    },
+    {
+      "name": "Roeier (apparaat)",
+      "source": "images/apparaten/roeier-apparaat-avatar-v7.jpg",
+      "assetSha256": "1d1be175cad4619a12eab2e96bd1b2e8e8d150c129e662bcfb83403ddc5c3cac"
+    },
+    {
+      "name": "Alternating lunge jumps",
+      "source": "images/cardio/alternating-lunge-jumps-avatar-v9.png",
+      "assetSha256": "ec8121ac160fa381d791bdebf8996945d039e5a3ef565698c7d13a571477cdea"
+    },
+    {
+      "name": "Box jumps",
+      "source": "images/cardio/box-jumps-avatar-v8.jpg",
+      "assetSha256": "b415baac8ef03bf60fe398114e9416a4eea27550129412b2e9c407db43fcb846"
+    },
+    {
+      "name": "Long jumps",
+      "source": "images/cardio/long-jumps-avatar-v8.jpg",
+      "assetSha256": "7a5ec8ba01b1dfd5284e544d535cdc39f543280942a0ba77b1068b83da27b7d3"
+    },
+    {
+      "name": "Skate jumps",
+      "source": "images/cardio/skate-jumps-avatar-v8.jpg",
+      "assetSha256": "0a80a868d28d52e45324be97eb98c36abc617039bfa7d96c790268ae119ee5a2"
+    },
+    {
+      "name": "Snap jumps",
+      "source": "images/cardio/snap-jumps-avatar-v8.jpg",
+      "assetSha256": "968af9fe6574275557aaa57704929c24710a6f13ded26ed3261577831e738e46"
+    },
+    {
+      "name": "Rope jumping",
+      "source": "images/cardio/rope-jumping-avatar-v8.jpg",
+      "assetSha256": "bc6b0df6eb69cc36cd72aac7edd8066c0d1f1da4b9a57e68c0ba3004e1a4340b"
+    },
+    {
+      "name": "Swiss ball plank",
+      "source": "images/exercise-ball/swiss-ball-plank-avatar-v8.jpg",
+      "assetSha256": "c17a94d0231febe70004c2149a6bc251ded2940d53579b800b1e3f4ef7fbf77f"
+    },
+    {
+      "name": "Swiss ball hip raise",
+      "source": "images/exercise-ball/swiss-ball-hip-raise-avatar-v8.jpg",
+      "assetSha256": "20ca60c5608e436bbbe63f79cd8db0165bac138cca318af631276baac2aaec02"
+    },
+    {
+      "name": "Swiss ball leg curl hip raise",
+      "source": "images/exercise-ball/swiss-ball-leg-curl-hip-raise-avatar-v8.jpg",
+      "assetSha256": "3e9e15dac4f5e200413cc49eaadfbd8adde01d84f3534222a51aa748129962a6"
+    },
+    {
+      "name": "Swiss ball feet to chest",
+      "source": "images/exercise-ball/swiss-ball-feet-to-chest-avatar-v8.jpg",
+      "assetSha256": "9de47ea168f78d82dd5dd1767ff4313938ac45079ac95d38f43da3d0e6a99aa9"
+    },
+    {
+      "name": "Swiss ball knee to chest",
+      "source": "images/exercise-ball/swiss-ball-knee-to-chest-avatar-v8.jpg",
+      "assetSha256": "259d5cb81a48f04e024f84fe4991d28b5deca06632997bced27badabda426055"
+    },
+    {
+      "name": "Swiss ball rollout",
+      "source": "images/exercise-ball/swiss-ball-rollout-avatar-v8.jpg",
+      "assetSha256": "453576fd3455b581c9b7919e338fc4c66e10bed7f40ff4c6d58c9d6348c60b57"
+    },
+    {
+      "name": "Swiss ball abs",
+      "source": "images/exercise-ball/swiss-ball-abs-avatar-v8.jpg",
+      "assetSha256": "090c6392bb0dc230443218a5353df1e7aaa618f0d9778e9b705b6fe1c1e308e7"
+    },
+    {
+      "name": "Swiss ball back ext",
+      "source": "images/exercise-ball/swiss-ball-back-ext-avatar-v8.jpg",
+      "assetSha256": "174a586cb91149296de5c27ba196fd3c43f32c9d2037f113bd7c37f5fcc17f83"
+    },
+    {
+      "name": "Swiss ball push up",
+      "source": "images/exercise-ball/swiss-ball-push-up-avatar-v8.jpg",
+      "assetSha256": "0fb423cc0ea851ec5345daf28d9efbcc3376a057d15298e6c0571f083f8ed97c"
+    },
+    {
+      "name": "Swiss ball leg lifts",
+      "source": "images/exercise-ball/swiss-ball-leg-lifts-avatar-v8.jpg",
+      "assetSha256": "c44a0c1b5c62b1458b6a90efa65562e54a59f94f11aacdd3a779e2ff5f493a4d"
+    },
+    {
+      "name": "Swiss ball core",
+      "source": "images/exercise-ball/swiss-ball-core-avatar-v8.jpg",
+      "assetSha256": "4006bd85dd7355f1a8162c83b10bb57aa323249dc05b2a4e0a454c0cb9d988c2"
+    },
+    {
+      "name": "Swiss ball dumbbell biceps curl",
+      "source": "images/exercise-ball/swiss-ball-dumbbell-biceps-curl-avatar-v8.jpg",
+      "assetSha256": "0fafd84b4541921869e488b17e15606798f4b53c7d4598905264a1ba12b0d92d"
+    },
+    {
+      "name": "Swiss ball russian twist",
+      "source": "images/exercise-ball/swiss-ball-russian-twist-avatar-v8.jpg",
+      "assetSha256": "c9eaf1bc9047138ab0c29fc59cb1105ed18173f434603c2febf6e2f89c435683"
+    },
+    {
+      "name": "Foam roller quadriceps",
+      "source": "images/foam-roller/foam-roller-quadriceps-avatar-v8.jpg",
+      "assetSha256": "9b30c4f477af2c691b2ca7157fb6e79ec8d86b6b303393fb041763c9c241fe31"
+    }
+  ],
+  "inspectionClaim": "Elk hieronder genoemde beeld is in de definitieve weergave op een contactvel bekeken. De hash bindt de controle aan exact dit bestand: verandert het beeld, dan vervalt de controle en valt de kaart terug op de volledige afbeelding."
+}

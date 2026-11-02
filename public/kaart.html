@@ -127,6 +127,11 @@
     padding:10px 8px 0;min-height:28px}
   .lightbox .demouitleg{text-align:center;font:400 12.5px/1.5 var(--disp);color:#6b6455;
     padding:2px 10px 2px;max-width:420px;margin:0 auto}
+  /* het merk staat buiten de houding-uitsnede en bij beide houdingen op dezelfde plek */
+  .lightbox .demobeeld .demomerk{position:absolute;left:10px;top:8px;z-index:2;
+    font:700 11px/1 var(--disp);letter-spacing:.02em;color:#2f6bd8;pointer-events:none}
+  .lightbox .demobron{text-align:center;font:400 11px/1.45 var(--disp);color:#8a8375;
+    padding:6px 10px 2px;max-width:420px;margin:0 auto}
   @media (prefers-reduced-motion:reduce){.lightbox .demobeeld canvas.boven{transition:none}}
   @media (prefers-reduced-motion:no-preference){
     .lightbox.open img{animation:lbin .18s ease-out}
@@ -574,6 +579,18 @@
   var SPRAAK={nl:'nl-NL',en:'en-GB',de:'de-DE',fr:'fr-FR',es:'es-ES',pl:'pl-PL',tr:'tr-TR',ar:'ar-SA',uk:'uk-UA'};
   var VIDEO_META={nl:'AI-demonstratie · klinisch gecontroleerd',en:'AI demonstration · clinically reviewed',de:'KI-Demonstration · klinisch geprüft',fr:'Démonstration IA · vérifiée cliniquement',es:'Demostración con IA · revisada clínicamente',pl:'Demonstracja AI · sprawdzona klinicznie',tr:'Yapay zekâ gösterimi · klinik olarak kontrol edildi',ar:'عرض بالذكاء الاصطناعي · تمت مراجعته سريريًا',uk:'ШІ-демонстрація · клінічно перевірено'};
   var VIDEO_META_CONCEPT={nl:'AI-concept · beoordeling door fysiotherapeut volgt',en:'AI concept · physiotherapist review pending',de:'KI-Konzept · physiotherapeutische Prüfung folgt',fr:'Concept IA · validation du kinésithérapeute à venir',es:'Concepto de IA · pendiente de revisión fisioterapéutica',pl:'Koncepcja AI · oczekuje na ocenę fizjoterapeuty',tr:'Yapay zekâ taslağı · fizyoterapist incelemesi bekleniyor',ar:'مسودة بالذكاء الاصطناعي · بانتظار مراجعة أخصائي العلاج الطبيعي',uk:'ШІ-концепт · очікує перевірки фізіотерапевта'};
+  // Onder de twee houdingen: waar de beelden vandaan komen en wat het wisselen niet is.
+  var DEMO_BRON={
+    nl:'Twee uitsnedes uit dezelfde oefenfoto. Het wisselen laat beide houdingen zien en is geen oefentempo. De uitvoering is niet door een fysiotherapeut goedgekeurd.',
+    en:'Two crops from the same exercise photo. The alternation shows both positions and is not an exercise tempo. The execution has not been approved by a physiotherapist.',
+    de:'Zwei Ausschnitte aus demselben Übungsfoto. Der Wechsel zeigt beide Positionen und ist kein Übungstempo. Die Ausführung ist nicht von einem Physiotherapeuten freigegeben.',
+    fr:'Deux recadrages de la même photo d’exercice. L’alternance montre les deux positions et n’est pas un tempo d’exercice. L’exécution n’a pas été validée par un kinésithérapeute.',
+    es:'Dos recortes de la misma foto del ejercicio. La alternancia muestra ambas posiciones y no es un ritmo de ejercicio. La ejecución no ha sido aprobada por un fisioterapeuta.',
+    pl:'Dwa kadry z tego samego zdjęcia ćwiczenia. Przełączanie pokazuje obie pozycje i nie jest tempem ćwiczenia. Wykonanie nie zostało zatwierdzone przez fizjoterapeutę.',
+    tr:'Aynı egzersiz fotoğrafından iki kesit. Değişim iki pozisyonu gösterir, egzersiz temposu değildir. Uygulama bir fizyoterapist tarafından onaylanmamıştır.',
+    ar:'اقتصاصان من نفس صورة التمرين. التبديل يُظهر الوضعيتين وليس إيقاعًا للتمرين. لم يعتمد أخصائي العلاج الطبيعي طريقة الأداء.',
+    uk:'Два фрагменти з того самого фото вправи. Чергування показує обидва положення і не є темпом вправи. Виконання не затверджене фізіотерапевтом.'
+  };
   var VIDEO_TEKST_LABEL={nl:'Uitleg bij de video',en:'Video instructions',de:'Anleitung zum Video',fr:'Instructions de la vidéo',es:'Instrucciones del vídeo',pl:'Instrukcja do filmu',tr:'Video açıklaması',ar:'شرح الفيديو',uk:'Пояснення до відео'};
   // Een eerder gekozen taal wint; anders de taal van de telefoon/browser van de
   // patiënt; anders Nederlands. Zo opent de kaart meteen in de taal van de patiënt,
@@ -593,31 +610,71 @@
   })();
   var VERT={};
   var K=null;
-  var mediaReviewReady=false,blockedMedia={},explanationHolds=[];
+  var mediaReviewReady=false,blockedMedia={},explanationHolds=[],poseKeuring={},bronGecontroleerd={},hercontroleGedaan={};
   function mediaSource(o){return String(o&&(o.kaartImg||o.img)||'').replace(/^\/+/, '').replace(/^v2\//,'');}
   function mediaKey(o){return String(o&&o.exerciseId||'')+'|'+mediaSource(o);}
   function mediaWithheld(o){return !mediaReviewReady||!!blockedMedia[mediaKey(o)];}
   function explanationWithheld(o){return !mediaReviewReady||!o||explanationHolds.some(function(h){return (h.exerciseId&&h.exerciseId===o.exerciseId)||h.name===o.naam;});}
+  // Uitsnede-eisen, woordelijk gelijk aan lib/pose-frames.js. scripts/test-mobile-pose-layout.mjs
+  // draait beide implementaties op dezelfde invoer en vergelijkt de uitkomst.
+  function geldigeUitsnede(c,w,h){
+    if(!c||typeof c!=='object')return false;
+    if(!Number.isInteger(c.x)||!Number.isInteger(c.y)||!Number.isInteger(c.w)||!Number.isInteger(c.h))return false;
+    if(c.w<=0||c.h<=0||c.x<0||c.y<0)return false;
+    return c.x+c.w<=w&&c.y+c.h<=h;
+  }
+  function uitsnedenOverlappen(a,b){
+    return a.x<b.x+b.w&&b.x<a.x+a.w&&a.y<b.y+b.h&&b.y<a.y+a.h;
+  }
   async function loadMobileReview(){
     var responses=await Promise.all([fetch('/mobile-media-review.json',{cache:'no-cache'}),fetch('/mobile-narration-review.json',{cache:'no-cache'})]);
     if(responses.some(function(r){return !r.ok;}))throw Error('Review unavailable');
     var data=await Promise.all(responses.map(function(r){return r.json();}));
     if(!Array.isArray(data[0].entries)||!Array.isArray(data[1].holds))throw Error('Invalid review');
+    // Twee beoordelingsbestanden uit verschillende generaties mogen nooit samen gelden:
+    // offline kan de ene uit de cache komen en de andere van het netwerk, en dan belandt
+    // een nieuwe opname bij een oude houdlijst. Komt de datum niet overeen: alles tegenhouden.
+    if(String(data[0].reviewDate||'')!==String(data[1].reviewDate||''))throw Error('Review generation mismatch');
     explanationHolds=data[1].holds.filter(function(h){return h.status==='hold';});
-    await Promise.all(data[0].entries.filter(function(e){return e.status==='rejected';}).map(async function(e){
-      // An old rejection must not silently reject a different replacement asset.
-      // If verification fails, withhold that candidate until it can be checked.
-      if(!/^images\/[A-Za-z0-9_./-]+$/.test(e.source)||!e.exerciseId)return;
+    data[0].entries.forEach(function(e){
+      if(!e.exerciseId||typeof e.source!=='string')return;
       var key=e.exerciseId+'|'+e.source;
-      try{
-        var response=await fetch('/'+e.source,{cache:'no-cache'});
-        if(!response.ok)throw Error('Image unavailable');
-        var digest=await crypto.subtle.digest('SHA-256',await response.arrayBuffer());
-        var hash=Array.from(new Uint8Array(digest)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
-        if(hash===e.assetSha256)blockedMedia[key]=true;
-      }catch(error){blockedMedia[key]=true;}
-    }));
+      // Een afgekeurd beeld blokkeren we meteen. Eerst een hashcontrole afwachten zou
+      // betekenen dat de patiënt het intussen gewoon ziet; vrijgeven vraagt bewijs.
+      if(e.status==='rejected'){blockedMedia[key]={sha:String(e.assetSha256||'')};return;}
+      var p=e.poseGeometry;
+      if(!p||p.status!=='geometry-approved')return;
+      if(!Array.isArray(e.poses)||e.poses.length!==2)return;
+      if(p.axis!=='x'&&p.axis!=='y')return;
+      if(!/^[a-f0-9]{64}$/.test(String(e.assetSha256||'')))return;
+      if(!Number.isInteger(e.width)||!Number.isInteger(e.height))return;
+      if(!e.poses.every(function(x){return x&&geldigeUitsnede(x.crop,e.width,e.height);}))return;
+      if(uitsnedenOverlappen(e.poses[0].crop,e.poses[1].crop))return;
+      poseKeuring[key]={source:e.source,assetSha256:e.assetSha256,axis:p.axis,
+        poses:[{label:'start',crop:e.poses[0].crop},{label:'end',crop:e.poses[1].crop}],
+        width:e.width,height:e.height};
+    });
     mediaReviewReady=true;
+  }
+  // Een oude afkeuring mag een vervángend beeld niet blijven tegenhouden. Dat controleren
+  // we pas als zo'n oefening echt op deze kaart staat: anders haalt elke patiënt onnodig
+  // honderden kilobytes binnen voor beelden die hij niet eens ziet.
+  function herzieAfgekeurd(sleutels){
+    sleutels.forEach(function(key){
+      if(hercontroleGedaan[key])return;
+      hercontroleGedaan[key]=true;
+      var deel=key.split('|'),bron=deel[1]||'';
+      var verwacht=(blockedMedia[key]&&blockedMedia[key].sha)||'';
+      if(!/^images\/[A-Za-z0-9_./-]+$/.test(bron))return;
+      if(!window.crypto||!crypto.subtle)return;
+      fetch('/'+bron,{cache:'force-cache'}).then(function(r){
+        if(!r.ok)throw Error('Image unavailable');
+        return r.arrayBuffer();
+      }).then(function(buffer){return crypto.subtle.digest('SHA-256',buffer);}).then(function(digest){
+        var hash=Array.from(new Uint8Array(digest)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+        if(verwacht&&hash!==verwacht){delete blockedMedia[key];if(K)tekenKaart();}
+      }).catch(function(){});
+    });
   }
   function tr(k){var d=T[TAAL]||T.nl;return d[k]!=null?d[k]:T.nl[k];}
   // teksten voor het seintje naar de praktijk (apart blokje; valt terug op Nederlands)
@@ -975,11 +1032,12 @@
     var vids=kaart.vids||{};
     var chosen=kaart.chosen||[];
     document.getElementById('oeftel').textContent=chosen.length;
-    var html='';
+    var html='',teControleren=[];
     chosen.forEach(function(x,idx){
       var nk=normEx(x.n);
       var o=(x.id&&byStable[x.id])||byNorm[nk];
       var hideMedia=mediaWithheld(o),holdExplanation=explanationWithheld(o);
+      if(hideMedia&&o&&mediaReviewReady)teControleren.push(mediaKey(o));
       var key=cellPrefix(x)+'.'+(x.i||0);
       // voorschrift: eerste ingevulde rij van het schema als losse chips
       var chips='',eersteS='',eersteH='';
@@ -1003,7 +1061,9 @@
       // privacy: een beoordeelde Fysiplan-video gaat vóór een YouTube-video uit de
       // bibliotheek, zodat er minder vaak iets naar Google gaat. Een YouTube-link die
       // de therapeut zelf op de kaart zette, blijft altijd voorgaan.
-      var catKlaar=!eigen&&!praktijkStream&&!persoonlijkYt&&o&&o.video&&o.video.catalog&&o.video.catalog.iframe&&o.video.catalog.reviewStatus!=='concept';
+      // Positieve bevestiging, geen afwezigheid van 'concept': een video zonder
+      // vastgelegde klinische beoordeling mag nooit als beoordeeld voorgaan.
+      var catKlaar=!eigen&&!praktijkStream&&!persoonlijkYt&&o&&o.video&&o.video.catalog&&o.video.catalog.iframe&&o.video.catalog.clinicallyReviewed===true;
       var yt=persoonlijkYt||(!eigen&&!praktijkStream&&!catKlaar&&o&&o.video&&o.video.yt)||null;
       var catalogus=(!eigen&&!praktijkStream&&!yt&&o&&o.video&&o.video.catalog)||null;
       var stream=(praktijkStream&&praktijkStream.iframe)||(catalogus&&catalogus.iframe);
@@ -1014,10 +1074,10 @@
       if(eigen){
         var eigenMeta=praktijkEigen&&o.video&&o.video.eigenMeta;
         knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(eigenMeta&&eigenMeta.aiGenerated?tr('vidYt'):tr('vidEigen'))+'</button>'+
-          (eigenMeta&&eigenMeta.aiGenerated?'<div class="vmeta">'+esc(eigenMeta.reviewStatus==='concept'?(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl):(VIDEO_META[TAAL]||VIDEO_META.nl))+'</div>':'');
+          (eigenMeta&&eigenMeta.aiGenerated?'<div class="vmeta">'+esc(eigenMeta.clinicallyReviewed===true?(VIDEO_META[TAAL]||VIDEO_META.nl):(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl))+'</div>':'');
       }
       else if(stream)knop='<button class="vbtn" data-stream="'+esc(stream)+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>'+
-        (aiVideo.aiGenerated?'<div class="vmeta">'+esc(aiVideo.reviewStatus==='concept'?(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl):(VIDEO_META[TAAL]||VIDEO_META.nl))+'</div>':'');
+        (aiVideo.aiGenerated?'<div class="vmeta">'+esc(aiVideo.clinicallyReviewed===true?(VIDEO_META[TAAL]||VIDEO_META.nl):(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl))+'</div>':'');
       else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
       if(hideMedia||holdExplanation)knop='';
       var beeldpad=o?(o.kaartImg||o.img):'';
@@ -1034,18 +1094,22 @@
       var fotoLabel=esc(vt(x.n))+': '+esc(heeftVideo?tr('fotoVideo'):tr('fotoBekijk'));
       html+='<div class="oef"><div class="oefkop"><span class="nr">'+(idx+1)+'</span>'+
         (o&&!hideMedia?'<button type="button" class="fotoknop" aria-label="'+fotoLabel+'"><img src="'+esc(beeldpad)+'" alt="" loading="lazy" data-s="'+esc(eersteS)+
-          '" data-h="'+esc(eersteH)+'" data-audio-naam="'+esc(o.naam)+'" data-uitleg="'+esc(holdExplanation?'':(o.uitleg||''))+'" data-heeft-video="'+(heeftVideo?'1':'0')+'"/>'+
+          '" data-h="'+esc(eersteH)+'" data-audio-naam="'+esc(o.naam)+'" data-oef-id="'+esc(o.exerciseId||'')+'" data-pose="'+esc(mediaKey(o))+'" data-uitleg="'+esc(holdExplanation?'':(o.uitleg||''))+'" data-heeft-video="'+(heeftVideo?'1':'0')+'"/>'+
           badge+'</button>':'')+
         '<div class="oefinfo"><div class="naam">'+esc(vt(x.n))+'</div>'+
         (chips?'<div class="chips">'+chips+'</div>':'')+'</div></div>'+
         knop+'<div class="vhouder"></div>'+
         (hideMedia?'<p class="vmeta">De oefenafbeelding wordt gecontroleerd en is tijdelijk niet zichtbaar. Je dosering blijft op deze kaart staan.</p>':'')+
         (holdExplanation?'<p class="vmeta">De algemene uitleg wordt gecontroleerd. Vraag je behandelaar om de uitvoering; je persoonlijke dosering blijft staan.</p>':
-          (TAAL==='nl'&&o&&o.uitleg?(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg)?'<button type="button" class="vbtn" data-noor="'+idx+'">Luister naar Noor</button>':'<div class="vmeta">Natuurlijke stemopname nog niet beschikbaar. De uitleg staat bij de afbeelding.</div>'):''))+
+          // Wordt het beeld teruggehouden, dan bieden we ook de uitleg erbij niet aan:
+          // dezelfde oefening half wel en half niet presenteren is misleidend.
+          (hideMedia?'':
+          (TAAL==='nl'&&o&&o.uitleg?(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg)?'<button type="button" class="vbtn" data-noor="'+idx+'">Luister naar Noor</button>':'<div class="vmeta">Natuurlijke stemopname nog niet beschikbaar. De uitleg staat bij de afbeelding.</div>'):'')))+
         '<button type="button" class="oefdone" data-idx="'+idx+'" aria-pressed="false"><span class="odv" aria-hidden="true"></span><span class="odt"></span></button>'+
         '<button type="button" class="oefzwaar" data-zidx="'+idx+'"></button></div>';
     });
     document.getElementById('oefs').innerHTML=html||'<div class="oef"><div class="oefkop">'+esc(tr('geenoef'))+'</div></div>';
+    if(teControleren.length)herzieAfgekeurd(teControleren);
 
     // ingevuld schema, alleen als er iets staat
     var rowdefs=[];for(var r2=0;r2<12;r2++)rowdefs.push('r'+r2);
@@ -1273,8 +1337,12 @@
     var b=document.getElementById('leesBtn');
     b.classList.remove('aan');
     document.getElementById('leesTxt').textContent=TAAL==='nl'?'Luister naar uitleg':tr('lees');
+    var b2=document.getElementById('leesBtn');b2.setAttribute('aria-pressed','false');
     var geluid=document.getElementById('lbgeluid');
-    if(geluid){geluid.setAttribute('aria-pressed','false');geluid.textContent=TAAL==='nl'?'Luister naar uitleg':tr('geluidAan');}
+    // In andere talen is deze knop de aan/uit-schakelaar van de demonstratiestem; die
+    // stand staat in demo.spraak en mag hier niet overschreven worden.
+    if(geluid&&TAAL==='nl'){geluid.setAttribute('aria-pressed','false');geluid.textContent='Luister naar uitleg';}
+    else if(geluid)demoGeluidKnop();
   }
   function stopVideos(){
     document.querySelectorAll('.vhouder video').forEach(function(v){v.pause();});
@@ -1282,14 +1350,22 @@
     document.querySelectorAll('.vhouder.open').forEach(function(h){h.classList.remove('open');h.innerHTML='';});
     document.querySelectorAll('.vbtn[aria-expanded="true"]').forEach(function(b){b.setAttribute('aria-expanded','false');});
   }
+  // Eén vaste manier om de bibliotheekoefening bij een kaartregel te vinden: eerst op
+  // het stabiele id, pas daarna op naam. Anders kan een eigen oefening met dezelfde naam
+  // de uitleg of de opname van een ándere oefening opleveren.
+  function vindOefening(x){
+    var alle=metEigen(K.lib,K.kaart);
+    return (x&&x.id&&alle.find(function(o){return o.exerciseId===x.id;}))||
+      alle.find(function(o){return normEx(o.naam)===normEx(x&&x.n);})||null;
+  }
   function leesVoor(){
     if(!K)return;
     if(bezigLezen){stopLezen();return;}
     stopVideos();
     if(TAAL==='nl'){
       var items=(K.kaart.chosen||[]).map(function(x){
-        var o=metEigen(K.lib,K.kaart).find(function(o){return (x.id&&o.exerciseId===x.id)||normEx(o.naam)===normEx(x.n);});
-        return {name:o?o.naam:x.n,text:o?o.uitleg||'':''};
+        var o=vindOefening(x);
+        return {name:o?o.naam:x.n,text:o?o.uitleg||'':'',id:(o&&o.exerciseId)||x.id||''};
       });
       speelNoor(items);return;
     }
@@ -1313,7 +1389,7 @@
         }
       }
       var uitleg=(x.id&&uitlegStabiel[x.id])||uitlegVan[normEx(x.n)];
-      var bron=metEigen(K.lib,K.kaart).find(function(o){return (x.id&&o.exerciseId===x.id)||normEx(o.naam)===normEx(x.n);});
+      var bron=vindOefening(x);
       if(explanationWithheld(bron))uitleg='';
       // een niet-vertaalde Nederlandse uitleg niet in een andere taal voorlezen
       if(uitleg&&(TAAL==='nl'||vt(uitleg)!==uitleg))zin+='. '+vt(uitleg).replace(/[.\s]+$/,'');
@@ -1341,6 +1417,7 @@
     var request=noorRequest;
     bezigLezen=true;
     document.getElementById('leesBtn').classList.add('aan');
+    document.getElementById('leesBtn').setAttribute('aria-pressed','true');
     document.getElementById('leesTxt').textContent=tr('stop');
     var geluid=document.getElementById('lbgeluid');
     if(geluid){geluid.textContent=tr('stop');geluid.setAttribute('aria-pressed','true');}
@@ -1349,22 +1426,29 @@
       if(request!==noorRequest)return;
       var held=[],missing=[],available=[];
       items.forEach(function(x){
-        if(explanationHolds.some(function(h){return h.name===x.name;}))held.push(x.name);
+        // Zelfde regel als explanationWithheld: een houd geldt op stabiel id én op naam.
+        // Alleen op naam vergelijken laat een hernoemde oefening door de controle glippen.
+        if(explanationHolds.some(function(h){return (h.exerciseId&&x.id&&h.exerciseId===x.id)||h.name===x.name;}))held.push(x.name);
         else if(!NoorAudio.match(x.name,x.text))missing.push(x.name);
         else available.push(x);
       });
-      if(held.length||missing.length){
-        var message=[];
-        if(held.length)message.push('Uitleg wordt gecontroleerd: '+held.join(', ')+'.');
-        if(missing.length)message.push('Nog geen actuele stemopname: '+missing.join(', ')+'.');
-        message.push(available.length?'Daarna hoor je de beschikbare uitleg voor '+available.length+' oefening(en).':'Er is nu geen stemopname beschikbaar voor deze selectie.');
-        message.push('Volg daarnaast de dosering en opmerkingen van je behandelaar op deze kaart.');
-        alert(message.join('\n\n'));
-      }
-      if(!available.length){stopLezen();return;}
+      if(!available.length){stopLezen();meldOntbrekend(held,missing,0);return;}
       if(request!==noorRequest)return;
+      // Eerst afspelen, daarna pas melden: een alert() blokkeert de pagina zo lang dat de
+      // toestemming die bij de tik hoort verloopt, en dan start het geluid helemaal niet.
       NoorAudio.play(available,stopLezen,function(message){stopLezen();alert(message);});
+      meldOntbrekend(held,missing,available.length);
     }catch(error){if(request!==noorRequest)return;stopLezen();alert('De natuurlijke stem kon niet laden. Probeer opnieuw of lees de beschikbare uitleg.');}
+  }
+
+  function meldOntbrekend(held,missing,beschikbaar){
+    if(!held.length&&!missing.length)return;
+    var message=[];
+    if(held.length)message.push('Uitleg wordt gecontroleerd: '+held.join(', ')+'.');
+    if(missing.length)message.push('Nog geen actuele stemopname: '+missing.join(', ')+'.');
+    message.push(beschikbaar?'Je hoort nu de beschikbare uitleg voor '+beschikbaar+' oefening(en).':'Er is nu geen stemopname beschikbaar voor deze selectie.');
+    message.push('Volg daarnaast de dosering en opmerkingen van je behandelaar op deze kaart.');
+    alert(message.join('\n\n'));
   }
 
   // ---- als app op het beginscherm: manifest, offline-werker en een vriendelijke uitnodiging ----
@@ -1480,74 +1564,92 @@
     k.textContent=tr('demo');k.setAttribute('aria-pressed','false');
     document.getElementById('lbgeluid').hidden=true;
   }
-  function demoSplitsing(img){
-    // Never infer poses from white space: a single body or apparatus can be split.
-    // Only reviewed metadata tied to this exact source may enable pose controls.
+  function demoHoudingen(img){
+    // Nooit uit witruimte afleiden: een enkel lichaam of apparaat kan een witte kolom
+    // bevatten en een arm of halter kan de middellijn kruisen. Alleen een beoordeelde
+    // uitsnede die bij exact dit bestand hoort mag houdingen tonen; in elk ander geval
+    // blijft de volledige oefenafbeelding staan.
     var p=demo.info&&demo.info.poseMetadata;
+    if(!p)return null;
     var src=img.currentSrc||img.src;
-    if(!p||p.reviewStatus!=='approved'||p.source!==src||
-      (p.axis!=='x'&&p.axis!=='y')||!Number.isFinite(p.split)||p.split<=0||p.split>=1)return null;
-    return {as:p.axis,f:p.split,dx:0,dy:0};
+    if(!src)return null;
+    var pad='';
+    try{pad=new URL(src,location.href).pathname;}catch(e){return null;}
+    if(pad!=='/'+p.source)return null;
+    if(img.naturalWidth!==p.width||img.naturalHeight!==p.height)return null;
+    if(bronGecontroleerd[p.assetSha256]!==true)return null;
+    if(!p.poses.every(function(x){return geldigeUitsnede(x.crop,p.width,p.height);}))return null;
+    if(uitsnedenOverlappen(p.poses[0].crop,p.poses[1].crop))return null;
+    return p;
   }
-  // Eén resolutie en één schaal per posepaar: geen uitrekken of inzoomen bij wisselen.
-  // Alleen lege buitenmarges weglaten; personen, matten en apparatuur blijven intact.
-  function demoUniformFrames(frames){
-    var boxes=frames.map(function(c){
-      var b={x:0,y:0,w:c.width,h:c.height};
-      try{
-        var p=c.getContext('2d').getImageData(0,0,c.width,c.height).data;
-        var left=c.width,top=c.height,right=-1,bottom=-1;
-        for(var y=0;y<c.height;y++)for(var x=0;x<c.width;x++){
-          var i=(y*c.width+x)*4;
-          if(p[i+3]>16&&Math.min(p[i],p[i+1],p[i+2])<245){
-            left=Math.min(left,x);right=Math.max(right,x);
-            top=Math.min(top,y);bottom=Math.max(bottom,y);
-          }
-        }
-        if(right>=left&&bottom>=top)b={x:left,y:top,w:right-left+1,h:bottom-top+1};
-      }catch(e){} // cross-origin beelden: behoud het volledige bronvak
-      return b;
-    });
-    var size=640,pad=32;
-    var scale=Math.min((size-2*pad)/Math.max.apply(null,boxes.map(function(b){return b.w;})),
-      (size-2*pad)/Math.max.apply(null,boxes.map(function(b){return b.h;})));
-    return frames.map(function(src,i){
-      var b=boxes[i],c=document.createElement('canvas');c.width=c.height=size;
-      var g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,size,size);
-      g.drawImage(src,b.x,b.y,b.w,b.h,(size-b.w*scale)/2,size-pad-b.h*scale,b.w*scale,b.h*scale);
-      return c;
+  // De goedkeuring hoort bij déze bytes. Is het beeld vervangen, dan vervalt ze en
+  // tonen we de volledige afbeelding; bewijzen lukt niet, dus tonen we niets extra's.
+  function bevestigBron(p){
+    if(bronGecontroleerd[p.assetSha256]!==undefined)return Promise.resolve(bronGecontroleerd[p.assetSha256]);
+    if(!window.crypto||!crypto.subtle)return Promise.resolve(false);
+    return fetch('/'+p.source,{cache:'force-cache'}).then(function(r){
+      if(!r.ok)throw Error('bron niet beschikbaar');
+      return r.arrayBuffer();
+    }).then(function(buffer){return crypto.subtle.digest('SHA-256',buffer);}).then(function(digest){
+      var hash=Array.from(new Uint8Array(digest)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+      bronGecontroleerd[p.assetSha256]=hash===p.assetSha256;
+      return bronGecontroleerd[p.assetSha256];
+    }).catch(function(){bronGecontroleerd[p.assetSha256]=false;return false;});
+  }
+  var DEMO_MAAT=640,DEMO_RAND=32;
+  // Woordelijk dezelfde meetkunde als poseFrameLayout in lib/pose-frames.js:
+  //  * één schaal voor beide houdingen, nooit afzonderlijk passend maken of uitrekken;
+  //  * langs de as waarop het blad de figuren naast (of onder) elkaar zet centreren we:
+  //    die afstand is bladindeling, geen beweging;
+  //  * loodrecht daarop blijft het werkelijke verschil staan, zodat een squat echt
+  //    lager zakt dan de stand.
+  // scripts/test-mobile-pose-layout.mjs draait beide implementaties op dezelfde invoer.
+  function houdingFrames(poses,as,maat,rand){
+    var gestapeld=as==='y';
+    var breedste=Math.max.apply(null,poses.map(function(p){return p.crop.w;}));
+    var hoogste=Math.max.apply(null,poses.map(function(p){return p.crop.h;}));
+    var links=Math.min.apply(null,poses.map(function(p){return p.crop.x;}));
+    var boven=Math.min.apply(null,poses.map(function(p){return p.crop.y;}));
+    var spanX=Math.max.apply(null,poses.map(function(p){return p.crop.x+p.crop.w;}))-links;
+    var spanY=Math.max.apply(null,poses.map(function(p){return p.crop.y+p.crop.h;}))-boven;
+    var vakW=gestapeld?spanX:breedste,vakH=gestapeld?hoogste:spanY;
+    var binnen=maat-2*rand;
+    var schaal=Math.min(binnen/vakW,binnen/vakH);
+    var offsetX=rand+(binnen-vakW*schaal)/2,offsetY=rand+(binnen-vakH*schaal)/2;
+    return poses.map(function(pose){
+      return {sx:pose.crop.x,sy:pose.crop.y,sw:pose.crop.w,sh:pose.crop.h,
+        dx:gestapeld?offsetX+(pose.crop.x-links)*schaal:(maat-pose.crop.w*schaal)/2,
+        dy:gestapeld?(maat-pose.crop.h*schaal)/2:offsetY+(pose.crop.y-boven)*schaal,
+        dw:pose.crop.w*schaal,dh:pose.crop.h*schaal,scale:schaal};
     });
   }
   function demoStart(){
     var img=document.getElementById('lbimg');
     var knop=document.getElementById('lbdemoKnop');
     if(!img.complete||!img.naturalWidth){img.addEventListener('load',demoStart,{once:true});return;}
-    var sp=demoSplitsing(img);
-    if(!sp){knop.hidden=true;return;}
-    var W=img.naturalWidth,H=img.naturalHeight;
+    var p=demoHoudingen(img);
+    if(!p){knop.hidden=true;return;}
     var wrap=document.getElementById('lbdemo');
     wrap.innerHTML='';
     // beide houdingen op een even groot wit doek, zodat ze exact over elkaar vallen
-    function helft(eerste){
-      var c=document.createElement('canvas'),g;
-      if(sp.as==='x'){
-        var sw=Math.round((eerste?sp.f:1-sp.f)*W);
-        c.width=Math.max(Math.round(sp.f*W),Math.round((1-sp.f)*W));c.height=H;
-        g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);
-        g.drawImage(img,eerste?0:Math.round(sp.f*W),0,sw,H,Math.round((c.width-sw)/2),0,sw,H);
-      }else{
-        var sh=Math.round((eerste?sp.f:1-sp.f)*H);
-        c.width=W;c.height=Math.max(Math.round(sp.f*H),Math.round((1-sp.f)*H));
-        g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);
-        g.drawImage(img,0,eerste?0:Math.round(sp.f*H),W,sh,0,Math.round((c.height-sh)/2),W,sh);
-      }
+    var frames=houdingFrames(p.poses,p.axis,DEMO_MAAT,DEMO_RAND);
+    var doeken=frames.map(function(f,i){
+      var c=document.createElement('canvas');c.width=c.height=DEMO_MAAT;
+      var g=c.getContext('2d');
+      g.fillStyle='#fff';g.fillRect(0,0,DEMO_MAAT,DEMO_MAAT);
+      g.drawImage(img,f.sx,f.sy,f.sw,f.sh,f.dx,f.dy,f.dw,f.dh);
+      if(i)c.className='boven';
       return c;
-    }
+    });
     var beeld=document.createElement('div');beeld.className='demobeeld';
-    var frames=demoUniformFrames([helft(true),helft(false)]);
-    var c1=frames[0],c2=frames[1];c2.className='boven';
-    beeld.appendChild(c1);beeld.appendChild(c2);
-    demo.c1=c1;demo.c2=c2;demo.dx=sp.dx||0;demo.dy=sp.dy||0;
+    beeld.appendChild(doeken[0]);beeld.appendChild(doeken[1]);
+    // Het merk is in de bron maar boven één van de twee figuren gezet. Het hoort niet in
+    // een houding-uitsnede thuis; de kaart zet het hier zelf neer, op dezelfde plek bij
+    // beide houdingen, buiten de uitsnede.
+    var merk=document.createElement('span');
+    merk.className='demomerk';merk.setAttribute('aria-hidden','true');merk.textContent='Fysiplan';
+    beeld.appendChild(merk);
+    demo.c1=doeken[0];demo.c2=doeken[1];
     var tekst=document.createElement('div');tekst.className='demotekst';tekst.id='lbdemotekst';
     tekst.textContent=tr('houding1');
     // korte uitleg bij de oefening: uit de bibliotheek als die er is (vertaald waar
@@ -1561,7 +1663,11 @@
     var uitlegEl=document.createElement('div');uitlegEl.className='demouitleg';uitlegEl.id='lbdemouitleg';
     uitlegEl.textContent=uitlegTekst;
     demo.introTekst=document.getElementById('lbnaam').textContent+'. '+uitlegTekst;
-    wrap.appendChild(beeld);wrap.appendChild(tekst);wrap.appendChild(uitlegEl);
+    // eerlijk over wat dit is: twee uitsnedes uit dezelfde foto, geen oefentempo en
+    // geen klinisch goedgekeurde bewegingsopname
+    var bronNoot=document.createElement('div');bronNoot.className='demobron';
+    bronNoot.textContent=DEMO_BRON[TAAL]||DEMO_BRON.nl;
+    wrap.appendChild(beeld);wrap.appendChild(tekst);wrap.appendChild(uitlegEl);wrap.appendChild(bronNoot);
     beeld.setAttribute('role','img');
     beeld.setAttribute('aria-label',document.getElementById('lbnaam').textContent);
     wrap.hidden=false;
@@ -1569,9 +1675,14 @@
     // de demonstratie heeft zijn eigen uitleg; de losse uitleg eronder zou dubbel staan
     var luD=document.getElementById('lbuitleg');if(luD.innerHTML)luD.hidden=true;
     knop.textContent=tr('demoUit');knop.setAttribute('aria-pressed','true');
-    if(window.speechSynthesis){document.getElementById('lbgeluid').hidden=false;demoGeluidKnop();}
-    if(TAAL==='nl'&&demo.spraak)speelNoor([{name:d.name||'',text:eigenUitleg}]);
-    else demoZeg(demo.introTekst+' '+tr('houding1'));
+    // de geluidknop alleen tonen als er voor déze oefening ook echt iets te horen is
+    var geluidKnop=document.getElementById('lbgeluid');
+    if(TAAL==='nl')geluidKnop.hidden=!window.NoorAudio||!NoorAudio.match(d.name||'',d.uitleg||'');
+    else if(window.speechSynthesis){geluidKnop.hidden=false;demoGeluidKnop();}
+    else geluidKnop.hidden=true;
+    // In het Nederlands begint een opname alleen na een tik: automatisch starten wordt
+    // door de telefoon geblokkeerd en zou bovendien synchronie met het wisselen suggereren.
+    if(TAAL!=='nl')demoZeg(demo.introTekst+' '+tr('houding1'));
     // wie liever geen beweging ziet, stapt met een tik zelf door de houdingen
     var stil=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(!stil)demoKlok();
@@ -1591,8 +1702,8 @@
       if(noor){
         var x=(K.kaart.chosen||[])[Number(noor.dataset.noor)];
         if(!x)return;
-        var o=metEigen(K.lib,K.kaart).find(function(o){return (x.id&&o.exerciseId===x.id)||normEx(o.naam)===normEx(x.n);});
-        speelNoor([{name:o?o.naam:x.n,text:o?o.uitleg||'':''}]);return;
+        var o=vindOefening(x);
+        speelNoor([{name:o?o.naam:x.n,text:o?o.uitleg||'':'',id:(o&&o.exerciseId)||x.id||''}]);return;
       }
       // afvinken van een losse oefening ("gedaan vandaag")
       var od=e.target.closest('.oefdone');
@@ -1622,7 +1733,8 @@
         var lb=document.getElementById('lightbox');
         demoStop();
         stopVideos();
-        demo.info={name:foto.dataset.audioNaam||'',s:foto.dataset.s||'',h:foto.dataset.h||'',uitleg:foto.dataset.uitleg||''};
+        demo.info={name:foto.dataset.audioNaam||'',id:foto.dataset.oefId||'',s:foto.dataset.s||'',h:foto.dataset.h||'',
+          uitleg:foto.dataset.uitleg||'',poseMetadata:poseKeuring[foto.dataset.pose||'']||null};
         document.getElementById('lbimg').src=foto.src;
         var oefEl=foto.closest('.oef').querySelector('.naam');
         document.getElementById('lbnaam').textContent=oefEl?oefEl.textContent:'';
@@ -1648,11 +1760,17 @@
           lu.innerHTML+='<p class="vmeta">Volledige oefenafbeelding. De houdingen worden niet automatisch uitgesneden of afgespeeld.</p>';
           lu.hidden=false;
         }
-        // Only reviewed pose metadata can enable a demonstration; default is the full image.
+        // Alleen een beoordeelde uitsnede die bij exact dit bestand hoort kan de
+        // demonstratie aanzetten; de standaard blijft de volledige afbeelding.
         var lbi=document.getElementById('lbimg');
         var voordoen=function(){
           if(!lb.classList.contains('open')||lbi.src!==foto.src)return;
-          if(demoSplitsing(lbi)){kd.hidden=false;demoStart();}
+          var pm=demo.info&&demo.info.poseMetadata;
+          if(!pm)return;
+          bevestigBron(pm).then(function(ok){
+            if(!ok||!lb.classList.contains('open')||lbi.src!==foto.src)return;
+            if(demoHoudingen(lbi)){kd.hidden=false;demoStart();}
+          });
         };
         if(lbi.complete&&lbi.naturalWidth)voordoen();else lbi.addEventListener('load',voordoen,{once:true});
         return;
@@ -1808,16 +1926,17 @@
       if(e.target.closest('#lbgeluid')){
         if(TAAL==='nl'){
           if(bezigLezen)stopLezen();
-          else speelNoor([{name:(demo.info||{}).name||'',text:(demo.info||{}).uitleg||''}]);
+          else speelNoor([{name:(demo.info||{}).name||'',text:(demo.info||{}).uitleg||'',id:(demo.info||{}).id||''}]);
           return;
         }
         demo.spraak=!demo.spraak;
         try{localStorage.setItem('fp_demo_geluid',demo.spraak?'1':'');}catch(err){}
         demoGeluidKnop();
         var dw=document.getElementById('lbdemo');
+        // Dit is de niet-Nederlandse tak: de Nederlandse knop is hierboven al afgehandeld.
+        // Nooit de vertaalde kaartnaam aan een opname koppelen; die hoort bij de catalogusnaam.
         if(demo.spraak&&!dw.hidden){
-          if(TAAL==='nl')speelNoor([{name:document.getElementById('lbnaam').textContent,text:(demo.info||{}).uitleg||''}]);
-          else demoZeg((demo.introTekst||document.getElementById('lbnaam').textContent)+' '+
+          demoZeg((demo.introTekst||document.getElementById('lbnaam').textContent)+' '+
             (dw.classList.contains('tweede')?tr('houding2'):tr('houding1')));
         }else {stopLezen();}
         if(demo.interval)demoKlok();
@@ -1836,7 +1955,9 @@
       if(e.key==='Escape'){lbox.classList.remove('open');demoStop();}
     });
     window.addEventListener('pagehide',function(){stopLezen();stopVideos();demoStop();});
-    document.addEventListener('visibilitychange',function(){if(document.hidden){stopLezen();stopVideos();}});
+    // ook de demonstratie stoppen: anders blijft de klok tikken en praat de
+    // toestelstem door terwijl de telefoon in de zak zit
+    document.addEventListener('visibilitychange',function(){if(document.hidden){stopLezen();stopVideos();demoStop();}});
     var sel=document.getElementById('taalsel');
     sel.value=TAAL;
     sel.addEventListener('change',function(){wisselTaal(sel.value);});

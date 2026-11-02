@@ -2,7 +2,12 @@
 // laat hem als app op het beginscherm werken. Werkt uitsluitend binnen /k/ zodat
 // de rest van de site (waaronder v1) er nooit door wordt geraakt.
 'use strict';
-var CACHE = 'fysiplan-kaart-v1';
+// Versienummer van de offline-cache. Bij een nieuwe versie gooit activate() alles van
+// de vorige weg. Dat is bewust: de kaart leest drie bestanden die bij elkaar horen
+// (mobile-media-review.json, mobile-narration-review.json en het stemmanifest). Zonder
+// zo'n gezamenlijke versiesprong kan een telefoon offline een oude houdlijst met nieuwe
+// opnames combineren. De kaart controleert dat ook zelf nog op reviewDate.
+var CACHE = 'fysiplan-kaart-v2';
 
 self.addEventListener('install', function (e) {
   self.skipWaiting();

@@ -33,6 +33,10 @@
     "test:ahmed-notities": "node scripts/test-ahmed-notities.mjs",
     "test:proef": "node scripts/test-proef.mjs",
     "test:privacy": "node scripts/test-privacy.mjs",
+    "test:mobile": "node scripts/test-mobile-media-review.mjs && node scripts/test-mobile-narration-review.mjs && node scripts/test-mobile-media-controls.mjs && node scripts/test-mobile-pose-layout.mjs && node scripts/test-noor-audio.mjs && node scripts/check-noor-assets.mjs --partial && node scripts/test-mobile-audio-levering.mjs",
+    "poses:measure": "node scripts/pose-crop-candidates.mjs",
+    "poses:review": "node scripts/render-pose-review.mjs",
+    "poses:build": "node scripts/build-mobile-media-review.mjs",
     "videos:languages": "node scripts/video-language-plan.mjs",
     "start": "node server.js",
     "sjablonen:check": "node scripts/valideer-sjablonen.mjs"

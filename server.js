@@ -1424,6 +1424,7 @@ const MIME = {
   ".bmp": "image/bmp",
   ".ico": "image/x-icon",
   ".woff2": "font/woff2",
+  ".mp3": "audio/mpeg",
   ".mp4": "video/mp4",
   ".webm": "video/webm"
 };
@@ -1433,7 +1434,10 @@ const MIME = {
 // onveranderlijke assets (uploads krijgen een unieke bestandsnaam) en mogen één dag
 // gecachet worden.
 function cacheHeaders(type) {
-  if (type.startsWith("image/") || type.startsWith("font/") || type.startsWith("video/")) {
+  // Noor-opnames heten naar de sha256 van hun inhoud: een gewijzigde tekst levert een
+  // ander bestand, dus de oude mag gerust een dag in de cache blijven. Zonder dit werd
+  // elke opname bij elke tik opnieuw volledig opgehaald.
+  if (type.startsWith("image/") || type.startsWith("font/") || type.startsWith("video/") || type.startsWith("audio/")) {
     return { "cache-control": "public, max-age=86400" };
   }
   return {
@@ -1447,6 +1451,30 @@ async function send(res, status, type, body) {
   res.writeHead(status, { "content-type": type, "x-content-type-options": "nosniff",
     "referrer-policy": "same-origin", ...cacheHeaders(type) });
   res.end(body);
+}
+// Mediabestanden hebben byte-ranges nodig: iOS Safari opent een opname met
+// "Range: bytes=0-1" en speelt niets af als het antwoord geen 206 met Content-Length is.
+// send() stuurt chunked zonder accept-ranges en is daar dus ongeschikt voor.
+async function sendMedia(request, res, type, data) {
+  const vast = { "content-type": type, "x-content-type-options": "nosniff",
+    "referrer-policy": "same-origin", "accept-ranges": "bytes", ...cacheHeaders(type) };
+  const bereik = String(request.headers.range || "").match(/^bytes=(\d*)-(\d*)$/);
+  if (!bereik) {
+    res.writeHead(200, { ...vast, "content-length": String(data.length) });
+    res.end(request.method === "HEAD" ? undefined : data);
+    return;
+  }
+  const start = bereik[1] ? parseInt(bereik[1], 10) : 0;
+  const eind = bereik[2] ? Math.min(parseInt(bereik[2], 10), data.length - 1) : data.length - 1;
+  if (!(start <= eind) || start >= data.length) {
+    res.writeHead(416, { ...vast, "content-range": `bytes */${data.length}` });
+    res.end();
+    return;
+  }
+  const deel = data.subarray(start, eind + 1);
+  res.writeHead(206, { ...vast, "content-length": String(deel.length),
+    "content-range": `bytes ${start}-${eind}/${data.length}` });
+  res.end(request.method === "HEAD" ? undefined : deel);
 }
 const sendJson = (res, status, obj) => send(res, status, "application/json; charset=utf-8", JSON.stringify(obj));
 // 429 met Retry-After: nette clients weten zo hoelang ze moeten wachten en blijven niet hameren
@@ -4563,7 +4591,9 @@ async function afhandelen(request, response) {
 
   try {
     const data = await readFile(filePath);
-    await send(response, 200, MIME[extname(filePath)] || "application/octet-stream", data);
+    const type = MIME[extname(filePath)] || "application/octet-stream";
+    if (type.startsWith("audio/")) { await sendMedia(request, response, type, data); return; }
+    await send(response, 200, type, data);
   } catch {
     // SPA-vangnet: onbekende paden serveren de v1-app. Ook dit zit achter de
     // inloggate (behalve /admin88, dat zijn eigen beheersleutel houdt).
