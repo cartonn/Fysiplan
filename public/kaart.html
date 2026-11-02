@@ -591,6 +591,11 @@
     ar:'اقتصاصان من نفس صورة التمرين. التبديل يُظهر الوضعيتين وليس إيقاعًا للتمرين. لم يعتمد أخصائي العلاج الطبيعي طريقة الأداء.',
     uk:'Два фрагменти з того самого фото вправи. Чергування показує обидва положення і не є темпом вправи. Виконання не затверджене фізіотерапевтом.'
   };
+  // Een video van de praktijk of een geplakte link hoort niet bij de bibliotheektekst:
+  // die tekst is algemeen en is nooit tegen deze beelden gelegd. We tonen hem nog steeds,
+  // maar met een eigen kop en een regel die zegt waar elk deel vandaan komt.
+  var VIDEO_TEKST_ALG={nl:'Algemene uitleg bij de oefening',en:'General instructions for this exercise',de:'Allgemeine Anleitung zur Übung',fr:'Instructions générales pour l’exercice',es:'Instrucciones generales del ejercicio',pl:'Ogólny opis ćwiczenia',tr:'Egzersiz için genel açıklama',ar:'شرح عام للتمرين',uk:'Загальний опис вправи'};
+  var VIDEO_BRON_PRAKTIJK={nl:'Deze video komt van je praktijk. De tekst hieronder is de algemene uitleg bij deze oefening uit de bibliotheek.',en:'This video comes from your practice. The text below is the general library instruction for this exercise.',de:'Dieses Video kommt von deiner Praxis. Der Text darunter ist die allgemeine Anleitung aus der Übungsbibliothek.',fr:'Cette vidéo vient de votre cabinet. Le texte ci-dessous est l’instruction générale de la bibliothèque.',es:'Este vídeo es de tu consulta. El texto siguiente es la instrucción general de la biblioteca.',pl:'Ten film pochodzi z twojego gabinetu. Poniższy tekst to ogólny opis z biblioteki ćwiczeń.',tr:'Bu video kliniğinden geliyor. Aşağıdaki metin egzersiz kütüphanesindeki genel açıklamadır.',ar:'هذا الفيديو من عيادتك. النص أدناه هو الشرح العام لهذا التمرين من المكتبة.',uk:'Це відео від твоєї практики. Текст нижче — загальний опис вправи з бібліотеки.'};
   var VIDEO_TEKST_LABEL={nl:'Uitleg bij de video',en:'Video instructions',de:'Anleitung zum Video',fr:'Instructions de la vidéo',es:'Instrucciones del vídeo',pl:'Instrukcja do filmu',tr:'Video açıklaması',ar:'شرح الفيديو',uk:'Пояснення до відео'};
   // Een eerder gekozen taal wint; anders de taal van de telefoon/browser van de
   // patiënt; anders Nederlands. Zo opent de kaart meteen in de taal van de patiënt,
@@ -1075,12 +1080,12 @@
       var videoTekstData=videoTekst?' data-vtekst="'+esc(videoTekst)+'"':'';
       if(eigen){
         var eigenMeta=praktijkEigen&&o.video&&o.video.eigenMeta;
-        knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(eigenMeta&&eigenMeta.aiGenerated?tr('vidYt'):tr('vidEigen'))+'</button>'+
+        knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'" data-vbron="praktijk"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(eigenMeta&&eigenMeta.aiGenerated?tr('vidYt'):tr('vidEigen'))+'</button>'+
           (eigenMeta&&eigenMeta.aiGenerated?'<div class="vmeta">'+esc(eigenMeta.clinicallyReviewed===true?(VIDEO_META[TAAL]||VIDEO_META.nl):(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl))+'</div>':'');
       }
-      else if(stream)knop='<button class="vbtn" data-stream="'+esc(stream)+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>'+
+      else if(stream)knop='<button class="vbtn" data-stream="'+esc(stream)+'" data-vbron="'+(catalogus&&catalogus.iframe===stream?'bibliotheek':'praktijk')+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>'+
         (aiVideo.aiGenerated?'<div class="vmeta">'+esc(aiVideo.clinicallyReviewed===true?(VIDEO_META[TAAL]||VIDEO_META.nl):(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl))+'</div>':'');
-      else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
+      else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'" data-vbron="'+(persoonlijkYt?'praktijk':'bibliotheek')+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
       if(hideMedia||holdExplanation)knop='';
       var beeldpad=o?(o.kaartImg||o.img):'';
       // het v2-kanaal levert al absolute paden (/v2/images/...); oudere relatieve paden
@@ -1791,8 +1796,12 @@
       document.querySelectorAll('.vbtn[aria-expanded="true"]').forEach(function(k){k.setAttribute('aria-expanded','false');});
       if(open)return;
       var videoTekst=b.dataset.vtekst||'';
-      var videoLabel=VIDEO_TEKST_LABEL[TAAL]||VIDEO_TEKST_LABEL.nl;
-      var tekstblok=videoTekst?'<div class="vtekst" role="region" aria-label="'+esc(videoLabel)+'"><div class="vtekst-label">'+esc(videoLabel)+'</div><p>'+esc(videoTekst)+'</p></div>':'';
+      // Alleen bij een video die bij deze oefening hoort heet de tekst "uitleg bij de
+      // video". Bij praktijkbeelden is het de algemene bibliotheektekst, en dat staat erbij.
+      var vanPraktijk=b.dataset.vbron==='praktijk';
+      var videoLabel=vanPraktijk?(VIDEO_TEKST_ALG[TAAL]||VIDEO_TEKST_ALG.nl):(VIDEO_TEKST_LABEL[TAAL]||VIDEO_TEKST_LABEL.nl);
+      var herkomst=vanPraktijk?'<div class="vmeta">'+esc(VIDEO_BRON_PRAKTIJK[TAAL]||VIDEO_BRON_PRAKTIJK.nl)+'</div>':'';
+      var tekstblok=herkomst+(videoTekst?'<div class="vtekst" role="region" aria-label="'+esc(videoLabel)+'"><div class="vtekst-label">'+esc(videoLabel)+'</div><p>'+esc(videoTekst)+'</p></div>':'');
       if(b.dataset.eigen){
         houder.innerHTML='<video controls autoplay playsinline preload="metadata" aria-label="'+esc(videoLabel)+'" src="'+b.dataset.eigen+'"></video>'+tekstblok;
       }else if(b.dataset.yt){

@@ -126,3 +126,22 @@ assert.ok(html.includes("if(hideMedia||holdExplanation)knop='';"),'held content 
 assert.ok(html.includes("(hideMedia?'':"),'teruggehouden beeld biedt ook geen stemopname aan');
 assert.ok(html.includes("clinicallyReviewed===true?(VIDEO_META[TAAL]"),'het label klinisch gecontroleerd vraagt een positieve bevestiging');
 console.log('Mobile media: mutual exclusion, audio button state, canonical names, source-bound poses, fail-closed review and syntax passed.');
+
+// ---- een video van de praktijk draagt nooit de kop "uitleg bij de video" ----
+// De tekst onder een video komt uit de bibliotheek. Bij een praktijkopname of een
+// geplakte link is die tekst nooit tegen díe beelden gelegd; dat hoort erbij te staan.
+const videoCode=between("      var videoTekst=b.dataset.vtekst||'';","      if(b.dataset.eigen){");
+assert.ok(videoCode.includes("var vanPraktijk=b.dataset.vbron==='praktijk';"),'de herkomst van de video wordt gelezen');
+assert.ok(videoCode.includes('VIDEO_TEKST_ALG'),'praktijkbeelden krijgen de algemene kop');
+assert.ok(videoCode.includes('VIDEO_BRON_PRAKTIJK'),'bij praktijkbeelden staat waar beeld en tekst vandaan komen');
+for(const merk of ['data-eigen="/\'+esc(eigen)+\'" data-vbron="praktijk"',
+  "data-vbron=\"'+(catalogus&&catalogus.iframe===stream?'bibliotheek':'praktijk')+'\"",
+  "data-vbron=\"'+(persoonlijkYt?'praktijk':'bibliotheek')+'\""]){
+  assert.ok(html.includes(merk),'herkomst ontbreekt op een videoknop: '+merk.slice(0,40));
+}
+// alle negen talen hebben beide teksten, anders valt een patiënt terug op Nederlands
+for(const woordenboek of ['VIDEO_TEKST_ALG','VIDEO_BRON_PRAKTIJK']){
+  const regel=html.slice(html.indexOf('  var '+woordenboek+'='));
+  for(const taal of ['nl','en','de','fr','es','pl','tr','ar','uk'])assert.ok(regel.slice(0,2000).includes(taal+':'),woordenboek+' mist '+taal);
+}
+console.log('Videoherkomst: praktijkbeelden dragen de algemene bibliotheekkop en benoemen hun herkomst in negen talen.');
