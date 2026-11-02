@@ -130,6 +130,20 @@ Gevonden door twee onafhankelijke read-only audits (praktijk-overrides en stemwe
 | een 416 kreeg `cache-control: public, max-age=86400` | caches sleutelen op de URL, niet op de Range-kop; een bewaarde 416 kon gewone verzoeken beantwoorden. Nu `no-store` |
 | de wachttijd van de stemopname gold alleen tot het eerste `playing` | een fragment dat halverwege stokte bleef eindeloos op "Stop" staan. Nu starten `waiting`/`stalled` een wachttijd (zonder verlenging), en `playing` of echte voortgang heft hem op; de nieuwe tests falen tegen de vorige code |
 
+### Ronde 3, na de onafhankelijke audit van e5991d2 (commit `63f8ee1`)
+
+| wat er mis was | waarom het telt | nu |
+|---|---|---|
+| de miniatuur kreeg het witte merkvlak op basis van alleen de afmetingen; de vergrote foto controleerde wél de sha256, de miniatuur niet (mijn eerdere voortgang zei ten onrechte "hetzelfde vlak" alsof dat ook gold) | een vervangen beeld van hetzelfde formaat of een oude cachekopie verloor inhoud onder een vlak van een ander bestand | eerst `bevestigBron` op precies het getoonde pad; tot dan en bij falen blijft de miniatuur heel. Een verouderde controle (ander pad, ander formaat, hertekend, nieuwere beurt, andere beoordelingsregel) zet niets; elke nieuwe `load`/`error` begint opnieuw |
+| het stemmanifest werd zonder grens opgehaald, terwijl de knop al op "Stop" stond; de wachttijd van 12 s begint pas na het manifest | op een slechte verbinding bleef de knop eindeloos op "Stop", zonder melding | 10 s grens over aanvraag en inhoud, afbreken waar de browser dat kan, daarna opnieuw proberen; een te laat antwoord telt niet; een manifest zonder lijst opnames wordt geweigerd; stoppen tijdens het laden blijft stil |
+
+Beide nieuwe tests falen op de vorige code bij hun eerste nieuwe controle; `npm run
+test:mobile` en `npm run build` zijn groen. Niet gedaan: echte browser of toestel (de
+browsercheck zou bewaarde, nog niet gecommitte uitvoer overschrijven), luistertest,
+klinische beoordeling. Tijdens de hashcontrole is het ingebakken merk op een miniatuur
+even zichtbaar; dat is bewust. Slaagt het manifest pas bij een latere poging, dan
+verschijnen de luisterknoppen per oefening niet alsnog (niet verbreed).
+
 ## 6. Wat blijft liggen — en waarom
 
 1. **Luisterronde.** Geen enkele van de 67 bestaande opnames is beluisterd. 252 van de
@@ -146,8 +160,8 @@ Gevonden door twee onafhankelijke read-only audits (praktijk-overrides en stemwe
    er is niets uitgegeven.**
 4. **Praktijkuploads hebben geen beoordelingsregel.** Een praktijk kan een eigen
    oefenfoto (`uploads/oef-*.jpg`) en een eigen video per kaart publiceren. Een expliciete
-   afkeuring voor zo'n bron werkt inmiddels wél (`public/kaart.html:649` blokkeert elke
-   afgekeurde bron, `:675` laat de hercontrole ook `uploads/` toe), maar het buildscript
+   afkeuring voor zo'n bron werkt inmiddels wél (`public/kaart.html:716` blokkeert elke
+   afgekeurde bron, `:755` laat de hercontrole ook `uploads/` toe), maar het buildscript
    maakt alleen regels voor repository-beelden, dus in de praktijk zijn uploads
    onbeoordeeld zichtbaar. `explanationWithheld` werkt voor `po_`-ids alleen als een houd
    die oefening noemt, en zulke houds bestaan niet. Houdingen en natuurlijke stem kunnen
@@ -155,7 +169,7 @@ Gevonden door twee onafhankelijke read-only audits (praktijk-overrides en stemwe
    een andere bron hebben. Een echte beoordelingsweg voor uploads is een ontwerpkeuze
    voor jou, geen nachtreparatie.
 5. **Een door de therapeut geplakte YouTube-link gaat nog altijd vóór de klinisch
-   beoordeelde catalogusvideo** (`public/kaart.html:1074`). Dat staat zo in de code
+   beoordeelde catalogusvideo** (`public/kaart.html:1166`). Dat staat zo in de code
    beschreven als bewuste keuze; ik heb het niet veranderd, maar het verdient een
    expliciet besluit.
 6. **De Nederlandse luisterknop laat dosering en de veiligheidszin weg** die andere talen
@@ -164,6 +178,12 @@ Gevonden door twee onafhankelijke read-only audits (praktijk-overrides en stemwe
 7. **Productiedata zijn hier niet te zien** (`data/` is gitignored). Ik kan dus niet
    zeggen hoeveel praktijkvideo's of geüploade beelden er in productie staan, laat staan
    of er één op een levende kaart zit.
+8. **Eén kaartpagina voor alle patiëntlinks.** `server.js` serveert voor elke `/k/`-link
+   dezelfde `public/kaart.html`. Alles wat deze nacht aan de kaart veranderde (houdingen,
+   merk, miniatuurmasker, stemopname, wachttijden, manifestgrens) geldt dus ook voor
+   bestaande QR-kaarten die in de V1-editor zijn gemaakt. De V1-editor en -catalogus zelf
+   zijn niet gewijzigd. Moeten V1-links gedragsmatig ongewijzigd blijven, dan is dat een
+   releasebesluit; de code is daar niet op gescheiden.
 
 ## 7. Uitgaven
 
