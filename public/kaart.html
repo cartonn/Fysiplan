@@ -1104,7 +1104,10 @@
           // Wordt het beeld teruggehouden, dan bieden we ook de uitleg erbij niet aan:
           // dezelfde oefening half wel en half niet presenteren is misleidend.
           (hideMedia?'':
-          (TAAL==='nl'&&o&&o.uitleg?(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg)?'<button type="button" class="vbtn" data-noor="'+idx+'">Luister naar Noor</button>':'<div class="vmeta">Natuurlijke stemopname nog niet beschikbaar. De uitleg staat bij de afbeelding.</div>'):'')))+
+          (TAAL==='nl'&&o&&o.uitleg?(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg)?'<button type="button" class="vbtn" data-noor="'+idx+'">Luister naar Noor</button>'+
+            // De opname bevat de algemene uitvoering, niet de dosering of de opmerkingen
+            // van de behandelaar. Dat hoort de patiënt te weten voordat hij luistert.
+            '<div class="vmeta">De stem legt de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op deze kaart.</div>':'<div class="vmeta">Natuurlijke stemopname nog niet beschikbaar. De uitleg staat bij de afbeelding.</div>'):'')))+
         '<button type="button" class="oefdone" data-idx="'+idx+'" aria-pressed="false"><span class="odv" aria-hidden="true"></span><span class="odt"></span></button>'+
         '<button type="button" class="oefzwaar" data-zidx="'+idx+'"></button></div>';
     });
@@ -1361,6 +1364,7 @@
   function leesVoor(){
     if(!K)return;
     if(bezigLezen){stopLezen();return;}
+    if(TAAL!=='nl'&&!window.speechSynthesis)return;
     stopVideos();
     if(TAAL==='nl'){
       var items=(K.kaart.chosen||[]).map(function(x){
@@ -1408,12 +1412,14 @@
   }
 
   async function speelNoor(items){
-    stopVideos();
-    stopLezen();
+    // Pas stoppen als we ook echt iets gaan afspelen: anders eindigt een tik in een
+    // kapotte toestand met een lopende video van de patiënt afgebroken en alleen een melding.
     if(!mediaReviewReady){
       alert('De controle van de algemene uitleg kon niet laden. Ververs de kaart. Je persoonlijke dosering blijft op de kaart staan.');return;
     }
     if(!window.NoorAudio){alert('De natuurlijke stem kon niet laden. Ververs de kaart of lees de uitleg.');return;}
+    stopVideos();
+    stopLezen();
     var request=noorRequest;
     bezigLezen=true;
     document.getElementById('leesBtn').classList.add('aan');
@@ -2020,7 +2026,10 @@
     ]).then(function(res){
       if(!res[0]||!res[0].ok){document.getElementById('fout').style.display='block';return;}
       K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1],ai:!!res[0].ai};
-      if(window.NoorAudio)NoorAudio.load().then(function(){tekenKaart();}).catch(function(){});
+      // Na het laden van het stemmanifest hertekenen we de oefeningen (de luisterknop
+      // hangt ervan af). Alleen tekenKaart() aanroepen wiste de knoppen "gedaan vandaag"
+      // en "te zwaar", want die krijgen hun tekst en stand pas van hun eigen tekenfunctie.
+      if(window.NoorAudio)NoorAudio.load().then(function(){tekenKaart();tekenOefDaan();tekenZwaar();}).catch(function(){});
       bindEens();
       initApp();
       if(TAAL!=='nl')wisselTaal(TAAL);else alles();

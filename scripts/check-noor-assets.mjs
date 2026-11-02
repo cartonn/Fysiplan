@@ -1,6 +1,14 @@
 import {readFile,stat} from 'node:fs/promises';
 import assert from 'node:assert/strict';
-const catalog=JSON.parse(await readFile('public/oefeningen.json','utf8'));
+// De patiëntkaart leest /v2/oefeningen.json, gebouwd uit public/oefeningen-v2.json.
+// Dit script controleerde de bevroren v1-lijn; die twee liepen alleen toevallig gelijk.
+// Alleen oefeningen met een bestaand beeld staan in de kaartbibliotheek.
+const v2=JSON.parse(await readFile('public/oefeningen-v2.json','utf8'));
+const catalog=[];
+for(const e of v2){
+  try{await stat('public/'+(e.kaartImg||e.img));catalog.push(e);}catch{}
+}
+assert.equal(catalog.length,319,'onverwacht aantal beschikbare kaartoefeningen');
 const m=JSON.parse(await readFile('public/audio/noor/manifest.json','utf8'));
 assert.equal(m.voiceId,'ea8f12713f7644ea9ad4ed710901fbbb');
 assert.equal(new Set(m.clips.map(c=>c.name)).size,m.clips.length);

@@ -6,7 +6,13 @@ const clips=[{name:'Test',text:'Test. Algemene uitleg.',src:'/audio/noor/abc123.
 const players=[];
 class Audio{constructor(){players.push(this);}play(){this.played=true;return Promise.resolve();}pause(){this.paused=true;}load(){}removeAttribute(){this.src='';}}
 const window={};const requests=[];
-vm.runInNewContext(source,{window,Audio,fetch:async(url)=>{requests.push(url);return {ok:true,json:async()=>({clips})};}});
+// eigen klok, zodat de wachttijd zonder echt wachten te testen is
+let timers=[],nextTimer=1;
+const setTimeout_=(fn,ms)=>{const id=nextTimer++;timers.push({id,fn,ms});return id;};
+const clearTimeout_=(id)=>{timers=timers.filter(t=>t.id!==id);};
+const vuurTimers=()=>{const lopend=timers;timers=[];lopend.forEach(t=>t.fn());};
+vm.runInNewContext(source,{window,Audio,setTimeout:setTimeout_,clearTimeout:clearTimeout_,
+  fetch:async(url)=>{requests.push(url);return {ok:true,json:async()=>({clips})};}});
 await window.NoorAudio.load();
 assert.ok(window.NoorAudio.match('Test','Algemene uitleg.'));
 assert.equal(window.NoorAudio.match('Test','Gewijzigde uitleg.'),undefined);
@@ -19,6 +25,23 @@ await window.NoorAudio.play([{name:'Test',text:'Algemene uitleg.'}],()=>ended++,
 window.NoorAudio.stop();assert.ok(players[1].paused);assert.equal(players[1].onended,null);
 await window.NoorAudio.play([{name:'Test',text:'Algemene uitleg.'}],()=>{},s=>error=s);
 players[2].onerror();assert.match(error,/niet worden afgespeeld/);
+// een opname die blijft hangen stuurt geen enkele gebeurtenis: zonder eigen wachttijd
+// blijft de knop eindeloos op "Stop" staan terwijl er niets te horen is
+error='';
+await window.NoorAudio.play([{name:'Test',text:'Algemene uitleg.'}],()=>{},s=>error=s);
+assert.equal(timers.length,1,'elke opname krijgt een wachttijd');
+vuurTimers();
+assert.match(error,/laadt niet/);
+assert.ok(players[3].paused,'na de wachttijd staat de speler stil');
+// speelt hij wel af, dan vervalt de wachttijd en blijft hij gewoon doorlopen
+error='';
+await window.NoorAudio.play([{name:'Test',text:'Algemene uitleg.'}],()=>{},s=>error=s);
+assert.equal(timers.length,1);
+players[4].onplaying();
+assert.equal(timers.length,0,'de wachttijd stopt zodra het geluid begint');
+vuurTimers();assert.equal(error,'');
+window.NoorAudio.stop();
+assert.equal(timers.length,0,'stoppen laat geen wachttijd achter');
 assert.deepEqual(requests,['/audio/noor/manifest.json']);
 const html=await readFile('public/kaart.html','utf8');
 assert.ok(html.includes('<script src="/noor-audio.js"></script>'));
