@@ -54,6 +54,12 @@ const lunge=manifest.entries.find(e=>e.name==='Alternating lunge jumps');
 assert.equal(lunge.source,'images/cardio/alternating-lunge-jumps-avatar-v9.png');
 assert.equal(lunge.status,'unreviewed');assert.equal(lunge.presentation,'static');
 assert(manifest.rejectedSources.some(e=>e.source==='images/cardio/alternating-lunge-jumps-avatar-v8.jpg'&&e.status==='rejected'));
+// een afgekeurde vorige versie is aan zijn bytes gebonden, en de kaart leest deze lijst
+for(const e of manifest.rejectedSources){
+  const bytes=await fs.readFile('public/'+e.source);
+  assert.equal(e.assetSha256,createHash('sha256').update(bytes).digest('hex'),'afgekeurde bron niet aan zijn bytes gebonden: '+e.source);
+}
+assert.ok((await fs.readFile('public/kaart.html','utf8')).includes('data[0].rejectedSources'),'de kaart leest de afgekeurde vorige versies');
 assert.equal(manifest.summary.approved,0);assert.equal(manifest.summary.rejected,5);assert.equal(manifest.summary.unreviewed,314);
 // afgekeurde beelden leveren nooit houdingen, ook niet als de meting een paar vindt
 for(const e of manifest.entries.filter(e=>e.status==='rejected')){

@@ -101,7 +101,10 @@ const result={schemaVersion:2,reviewDate:'2026-11-02',scope:'Available repositor
   poseWarning:'poseGeometry.status "geometry-approved" betekent uitsluitend: deze twee uitsnedes zijn gemeten en visueel gecontroleerd op volledigheid, schaal en afwezigheid van vreemde elementen. Het is geen klinische goedkeuring en geen uitspraak over de juiste uitvoering.',
   poseApprovalSource:'content/mobile-pose-approvals.json',
   defaultPresentation:'static',defaultAllowAutomaticPoseSplit:false,
-  rejectedSources:[{exerciseId:'fp_027779ceb994b08e',source:'images/cardio/alternating-lunge-jumps-avatar-v8.jpg',status:'rejected',reason:rejects.get('Alternating lunge jumps')}],
+  rejectedSources:await Promise.all([{exerciseId:'fp_027779ceb994b08e',source:'images/cardio/alternating-lunge-jumps-avatar-v8.jpg',status:'rejected',reason:rejects.get('Alternating lunge jumps')}]
+    // De afkeuring hoort bij exact deze bytes, net als bij de gewone regels; de kaart
+    // blokkeert de bron ook zonder hash, maar met hash is het spoor controleerbaar.
+    .map(async r=>{try{return {...r,assetSha256:createHash('sha256').update(await fs.readFile('public/'+r.source)).digest('hex')};}catch(error){if(error.code==='ENOENT')return r;throw error;}})),
   summary:{total:entries.length,rejected:entries.filter(e=>e.status==='rejected').length,unreviewed:entries.filter(e=>e.status==='unreviewed').length,approved:0,
     poseGeometryApproved:geometryApproved.length,poseStatic:entries.length-geometryApproved.length},entries};
 await fs.writeFile('public/mobile-media-review.json',JSON.stringify(result,null,2)+'\n');

@@ -68,13 +68,17 @@ const reviewEntries=[uploadReject,{exerciseId:'fp_test',source:'images/test.jpg'
 const requests=[];
 const maakReviewContext=(mediaDate,narrationDate)=>vm.createContext({crypto:webcrypto,window:{crypto:webcrypto},K:null,tekenKaart(){},
   fetch:async url=>{requests.push(url);return {ok:true,
-    json:async()=>url.includes('narration')?{reviewDate:narrationDate,holds:[{exerciseId:'fp_held',name:'Held',text:'Old text',status:'hold'}]}:{reviewDate:mediaDate,entries:reviewEntries},
+    json:async()=>url.includes('narration')?{reviewDate:narrationDate,holds:[{exerciseId:'fp_held',name:'Held',text:'Old text',status:'hold'}]}:{reviewDate:mediaDate,entries:reviewEntries,
+      rejectedSources:[{exerciseId:'fp_lunge',source:'images/cardio/lunge-v8.jpg',status:'rejected'}]},
     arrayBuffer:async()=>bytes.buffer};}});
 const reviewContext=maakReviewContext('2026-11-02','2026-11-02');
 vm.runInContext(between('  var mediaReviewReady=','  function tr('),reviewContext);
 assert.equal(reviewContext.mediaWithheld({exerciseId:'fp_test',kaartImg:'/images/test.jpg'}),true,'not rendered before review loaded');
 await reviewContext.loadMobileReview();
 assert.deepEqual(requests,['/mobile-media-review.json','/mobile-narration-review.json'],'het laden van de kaart haalt geen afbeeldingen binnen');
+// een afgekeurde vorige versie blijft afgekeurd, ook al wijst de catalogus er niet meer naar
+assert.equal(reviewContext.mediaWithheld({exerciseId:'fp_lunge',kaartImg:'/v2/images/cardio/lunge-v8.jpg'}),true,'terug naar een afgekeurde versie wordt tegengehouden');
+assert.equal(reviewContext.mediaWithheld({exerciseId:'fp_lunge',kaartImg:'/v2/images/cardio/lunge-v9.png'}),false,'de herstelde versie blijft zichtbaar');
 // een afkeuring van een door de praktijk geüpload beeld moet ook echt werken
 assert.equal(reviewContext.mediaWithheld({exerciseId:'po_praktijk',kaartImg:'/uploads/oef-abc123def456.jpg'}),true,'een afgekeurd praktijkbeeld wordt tegengehouden');
 assert.equal(reviewContext.mediaWithheld({exerciseId:'fp_test',kaartImg:'/images/test.jpg'}),true);

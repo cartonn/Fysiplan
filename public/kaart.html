@@ -659,6 +659,14 @@
         poses:[{label:'start',crop:e.poses[0].crop},{label:'end',crop:e.poses[1].crop}],
         width:e.width,height:e.height};
     });
+    // Afgekeurde vorige versies (zoals de lunge v8 die twee keer hetzelfde been toonde)
+    // staan niet meer als regel in entries, omdat de catalogus er niet meer naar wijst.
+    // Gaat iemand terug naar zo'n bestand, dan moet de afkeuring nog steeds gelden.
+    (Array.isArray(data[0].rejectedSources)?data[0].rejectedSources:[]).forEach(function(e){
+      if(!e||e.status!=='rejected'||!e.exerciseId||typeof e.source!=='string')return;
+      var key=e.exerciseId+'|'+e.source;
+      if(!blockedMedia[key])blockedMedia[key]={sha:String(e.assetSha256||'')};
+    });
     mediaReviewReady=true;
   }
   // Een oude afkeuring mag een vervángend beeld niet blijven tegenhouden. Dat controleren
