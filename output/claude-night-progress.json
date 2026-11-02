@@ -18,9 +18,9 @@
     "78f7d99 voortgang afgestemd op code",
     "3bf37b4 tekenen en voorlezen kiezen dezelfde oefening; toestelstem: late end/error breekt nieuwe beurt niet af"
   ],
-  "lastUpdate": "2026-11-02T23:25:18+0100",
+  "lastUpdate": "2026-11-02T23:32:30+0100",
   "lastUpdateNote": "Machineklok (date +%FT%T%z) op het moment van schrijven.",
-  "batch": 6,
+  "batch": 7,
   "deployed": false,
   "pushed": false,
   "clinicalApproval": false,
@@ -108,7 +108,7 @@
   },
   "separationOfReviewKinds": {
     "code-test pass": "done: npm run test:mobile and npm run build",
-    "visual pass": "done for the 162 measured pair candidates (41 contact sheets rendered with the runtime geometry, viewed one by one). NOT done: a per-exercise visual check of the 163 static exercises beyond the measurement, and no full-size inspection of every single asset.",
+    "visual pass": "done for the 162 measured pair candidates and, since session 3, for all 158 static exercises (contact sheets, not full resolution). Together with the 5 rejected images, every one of the 319 has now been viewed at contact-sheet size at least once; still no clinical judgement.",
     "listening review": "NOT done. No recording was listened to in this session.",
     "clinical approval": "NOT done and not inferable from anything in this session. Every clinicalApproved stays false and the 15 narration holds stand."
   },
@@ -120,7 +120,9 @@
     "explanationWithheld werkt voor praktijkoefeningen (po_-ids) alleen als een houd die oefening bij naam of id noemt; er bestaan geen zulke houds.",
     "Een door de therapeut per kaart geplakte YouTube-link gaat nog altijd vóór de klinisch beoordeelde catalogusvideo (public/kaart.html:1074, catKlaar vereist !persoonlijkYt). Staat in de code als bewuste keuze; vraagt een besluit, niet ongevraagd veranderd.",
     "De Nederlandse luisterknop spreekt de dosering en de veiligheidszin niet uit (public/kaart.html:1379 levert alleen naam+uitleg); dat kan niet met de bestaande opnames. Wel staat er sinds 4aec046 bij wat de stem wel en niet uitlegt (public/kaart.html:1117).",
-    "Productiedata (data/) zijn niet zichtbaar in deze werkmap: aantal praktijkvideo's en geüploade beelden in productie onbekend."
+    "Productiedata (data/) zijn niet zichtbaar in deze werkmap: aantal praktijkvideo's en geüploade beelden in productie onbekend.",
+    "Statische beelden: 6 lijken inhoudelijk fout en 17 zijn onzeker (output/pose-review/static/inspection.md); vraagt een fysiotherapeut en eventueel nieuw beeld.",
+    "Merk op statische beelden: 85 zonder en 73 met ingebakken merk. Keuze nodig: de kaart tekent het merk zelf (en ingebakken merken worden dan dubbel) of de beelden worden gelijkgetrokken."
   ],
   "knownGapsNotFixed": {
     "practice-uploaded media": "Praktijkfoto's (uploads/oef-*.jpg) en praktijk-/kaartvideo's hebben geen beoordelingsregel en zijn dus onbeoordeeld zichtbaar. Een afkeuring voor zo'n bron werkt wel (public/kaart.html:649, :675), maar wordt niet automatisch aangemaakt. Houdingweergave en natuurlijke stem kunnen ze niet bereiken (gebonden aan beoordeelde sha256 resp. exacte tekst). Bij praktijkvideo's staat sinds 9ef09c8 dat beeld en tekst uit verschillende bron komen. Sinds 1ba3434 leveren praktijkvideo's correcte byte-ranges.",
@@ -131,7 +133,7 @@
     "newCredentials": "none",
     "purchases": "none"
   },
-  "nextAction": "Coördinator: 1ba3434, 3dcf70b en 3bf37b4 nalopen; daarna besluiten over (a) welke van de 158 statische bladen opnieuw gerenderd moeten worden, (b) beoordelingsweg voor praktijkuploads, (c) volgorde YouTube-link vs. catalogusvideo.",
+  "nextAction": "Coördinator: 1ba3434, 3dcf70b en 3bf37b4 nalopen; besluiten over (a) de 6 lijkt-fout- en 17 onzekere statische beelden, (b) merkconsistentie statische beelden, (c) welke van de 158 statische bladen opnieuw gerenderd moeten worden, (d) beoordelingsweg praktijkuploads, (e) YouTube-link vs. catalogusvideo.",
   "handoverReport": "output/claude-night-report.md",
   "perExerciseList": "output/mobile-pose-per-exercise.md",
   "inspectionLog": "output/pose-review/inspection-log.md",
@@ -183,6 +185,37 @@
     "started": "2026-11-02T23:25:18+0100",
     "instructions": "eigenaar: gewoon verder zoals bezig; geen artifacts publiceren (lokaal in output/)",
     "review3bf37b4": "Zelf nagelopen: openen van de lightbox roept demoStop→stopLezen aan, dus een lopende voorlezing is gestopt (noorRequest verhoogd) voordat demoZeg speechSynthesis.cancel() aanroept; het late onerror van de oude uiting valt dan buiten de beurt en kan de demonstratiestem niet afbreken. Geen nieuwe fout gevonden.",
-    "note": "Deze sessie draait in bypassPermissions-modus terwijl de taak dat uitsluit; de modus is niet door mij gekozen of te wijzigen. Gehandeld alsof elke actie toestemming vroeg: geen push, deploy, betaalde generatie, credentials of destructieve opruiming."
+    "note": "Deze sessie draait in bypassPermissions-modus terwijl de taak dat uitsluit; de modus is niet door mij gekozen of te wijzigen. Gehandeld alsof elke actie toestemming vroeg: geen push, deploy, betaalde generatie, credentials of destructieve opruiming.",
+    "staticVisualPass": {
+      "done": "2026-11-02T23:32:30+0100",
+      "scope": "alle 158 statische oefeningen, één voor één op 20 hash-gecontroleerde contactbladen (360×540 per tegel); geen volle resolutie, geen klinisch oordeel",
+      "report": "output/pose-review/static/inspection.md",
+      "data": [
+        "output/pose-review/static/notes.tsv",
+        "output/pose-review/static/index.json",
+        "output/pose-review/static/background-brand.json"
+      ],
+      "scripts": [
+        "scripts/render-static-review.mjs",
+        "scripts/measure-static-background.mjs"
+      ],
+      "result": {
+        "weergaveOk": 146,
+        "weergaveAfwijking": 12,
+        "betekenisPlausibel": 135,
+        "onzeker": 17,
+        "lijktFout": 6
+      },
+      "lijktFout": [
+        "4 Dips (geen dip afgebeeld)",
+        "22 Triceps dips (handen steunen op niets)",
+        "28 Step up with knee raise (zwevende blokjes, geen opstap)",
+        "152 Standing chair hip extension (toont knieheffing)",
+        "154 Standing chair knee lift (toont heupextensie; lijkt verwisseld met 152)",
+        "156 Standing chair shoulder rotations (geen schouderrotatie)"
+      ],
+      "merk": "85 van 158 statische beelden (nr. 74–158) hebben geen Fysiplan-merk, 73 wel: op de kaart wisselt het merk per oefening",
+      "nietVeranderd": "geen beeld, beoordelingsbestand of kaartcode aangepast; besluiten liggen bij de coördinator/fysiotherapeut"
+    }
   }
 }

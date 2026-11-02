@@ -1,0 +1,1424 @@
+[
+ {
+  "n": 1,
+  "sheet": 1,
+  "exerciseId": "fp_1828d3579aacc5bc",
+  "name": "Barbell neck press",
+  "source": "images/bovenste-extremiteit/barbell-neck-press-avatar-v7.jpg",
+  "assetSha256": "a575a8533e6ba924325a847e60f728d44c2f48833606150ca9435217bec9ba73",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 2,
+  "sheet": 1,
+  "exerciseId": "fp_5db16db1c4b85956",
+  "name": "Barbell pull over",
+  "source": "images/bovenste-extremiteit/barbell-pull-over-avatar-v7.jpg",
+  "assetSha256": "cb9a62ffdad69e4396ead9155476572635f4964628a69f63a1e356b82fae5d2c",
+  "reason": "Binnen de uitsnedes staat 112 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+ },
+ {
+  "n": 3,
+  "sheet": 1,
+  "exerciseId": "fp_23ffdd3956aecfb4",
+  "name": "Bench press",
+  "source": "images/bovenste-extremiteit/bench-press-avatar-v7.jpg",
+  "assetSha256": "86b53be08ab4f2c9afd9659731ff74ea3593fbce43185c72dd1dc738b92416fd",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 4,
+  "sheet": 1,
+  "exerciseId": "fp_013ba6ad937cc9d9",
+  "name": "Dips",
+  "source": "images/bovenste-extremiteit/dips-avatar-v7.jpg",
+  "assetSha256": "ae7ea9bc2bcf7646e69832179c1ada68c42f1fb39af8e05effe15c6758bf7298",
+  "reason": "In houding 1 staat een losse handgreep naast het figuur die niet als voorwerp van deze houding te verantwoorden is, en beide figuren staan rechtop: de dip zelf is niet afgebeeld."
+ },
+ {
+  "n": 5,
+  "sheet": 1,
+  "exerciseId": "fp_7f4ce1cc338c328f",
+  "name": "Dumbell neck press",
+  "source": "images/bovenste-extremiteit/dumbell-neck-press-avatar-v7.jpg",
+  "assetSha256": "20cab11143e6b702326928bd1882908247a74b2180b824953373ea7714398770",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 6,
+  "sheet": 1,
+  "exerciseId": "fp_7808749387b6f081",
+  "name": "Dumbell pull over",
+  "source": "images/bovenste-extremiteit/dumbell-pull-over-avatar-v7.jpg",
+  "assetSha256": "b9c8ada4e17b20a61fd655d3058741bba1f1da3a146322923554a553a8ddccda",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 7,
+  "sheet": 1,
+  "exerciseId": "fp_5423a6beaa5b75b7",
+  "name": "Exo pull",
+  "source": "images/bovenste-extremiteit/exo-pull-avatar-v7.jpg",
+  "assetSha256": "f85e76ee034c7273195e7abe9dca6e643610379b006f9d4c19feffa889dfa147",
+  "reason": "De silhouetten van beide houdingen overlappen voor 93%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+ },
+ {
+  "n": 8,
+  "sheet": 1,
+  "exerciseId": "fp_7b22cceae60e6805",
+  "name": "Flyes",
+  "source": "images/bovenste-extremiteit/flyes-avatar-v7.jpg",
+  "assetSha256": "c41db07f01858ca9b1a060b966e38b884216642684dbc1ee23690d7e28185ab0",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 9,
+  "sheet": 2,
+  "exerciseId": "fp_4e2e2902d6482607",
+  "name": "Front raises",
+  "source": "images/bovenste-extremiteit/front-raises-avatar-v7.jpg",
+  "assetSha256": "3b451c32e3252b181d3d2b14278f8efe6c4e268a8a47b180318cfb71457ef909",
+  "reason": "Binnen de uitsnedes staat 176 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+ },
+ {
+  "n": 10,
+  "sheet": 2,
+  "exerciseId": "fp_e1f92ebe56d44e0a",
+  "name": "Incline bench press",
+  "source": "images/bovenste-extremiteit/incline-bench-press-avatar-v7.jpg",
+  "assetSha256": "60dbbb6bd7eca80b00a05bff0d111d8bbab98f640e480e4a50b7e3fe8e637bea",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 11,
+  "sheet": 2,
+  "exerciseId": "fp_d61a6fa943e5ba21",
+  "name": "Incline flyes",
+  "source": "images/bovenste-extremiteit/incline-flyes-avatar-v7.jpg",
+  "assetSha256": "7bf6f38e75b32639d8810a047816d1765e067e5738374623e4fd1f19aa125b9e",
+  "reason": "Binnen de uitsnedes staat 112 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+ },
+ {
+  "n": 12,
+  "sheet": 2,
+  "exerciseId": "fp_b3c08cf3e8344649",
+  "name": "Lat pull front",
+  "source": "images/bovenste-extremiteit/lat-pull-front-avatar-v7.jpg",
+  "assetSha256": "c81a270599e27dd09c89bf5fe89712f7e0f2b1a8dc90c9eb2236e8551ef5de1c",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 13,
+  "sheet": 2,
+  "exerciseId": "fp_d49b76635c4c0073",
+  "name": "Military press",
+  "source": "images/bovenste-extremiteit/military-press-avatar-v7.jpg",
+  "assetSha256": "2bcd81bdcec09bed5867c8976d05fedd6d69d66addc911be603deff77832e0e7",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 14,
+  "sheet": 2,
+  "exerciseId": "fp_f926cb9ff106963d",
+  "name": "One arm bent over row",
+  "source": "images/bovenste-extremiteit/one-arm-bent-over-row-avatar-v7.jpg",
+  "assetSha256": "2faf70a906973517ee4c9e36b0065e544156f5d98cf7016f6e7b78a6022ecd29",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 15,
+  "sheet": 2,
+  "exerciseId": "fp_77def39d4ae09ef9",
+  "name": "Pully cross up",
+  "source": "images/bovenste-extremiteit/pully-cross-up-avatar-v7.jpg",
+  "assetSha256": "b54552c6a0013fa3610b0ba4211486d050023586cbb9cec354fd06279941e01e",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 16,
+  "sheet": 2,
+  "exerciseId": "fp_6d1cc89ca3f2d07a",
+  "name": "Pully dips",
+  "source": "images/bovenste-extremiteit/pully-dips-avatar-v7.jpg",
+  "assetSha256": "febe75aa95a294085aa0470fdad73ad28f7fdb4eaa6ba5d0831be2413428f2ac",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 17,
+  "sheet": 3,
+  "exerciseId": "fp_39587ab625e7f5ce",
+  "name": "Pully down",
+  "source": "images/bovenste-extremiteit/pully-down-avatar-v7.jpg",
+  "assetSha256": "566b86d1885ffe7e9c4023aedbe02de189ab05ed942b42e95916a4f3b49ce337",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 18,
+  "sheet": 3,
+  "exerciseId": "fp_338eb9bf2c26dda3",
+  "name": "Pully press single",
+  "source": "images/bovenste-extremiteit/pully-press-single-avatar-v7.jpg",
+  "assetSha256": "26ce5d14e5945b1ac4c8ea3b493d518a55c1d5bdc60e9bf1da837fd08bc14293",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 19,
+  "sheet": 3,
+  "exerciseId": "fp_7cad1ed08189f651",
+  "name": "Pully row",
+  "source": "images/bovenste-extremiteit/pully-row-avatar-v7.jpg",
+  "assetSha256": "392cca472226fcd5ff0b11421ad70b90b163b6565d8184dd44292dd4f3bb2962",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 20,
+  "sheet": 3,
+  "exerciseId": "fp_8db93020a49ad7cc",
+  "name": "Reversed flyes",
+  "source": "images/bovenste-extremiteit/reversed-flyes-avatar-v7.jpg",
+  "assetSha256": "bc8beaf9c03d479fb884229c00967d2ad6f6984ffe04718db3fad07045b729f9",
+  "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+ },
+ {
+  "n": 21,
+  "sheet": 3,
+  "exerciseId": "fp_2851dfd52f89d4e1",
+  "name": "Shoulder rotation (shrugs)",
+  "source": "images/bovenste-extremiteit/shoulder-rotation-shrugs-avatar-v7.jpg",
+  "assetSha256": "b2f91a3e116026dc60cecf491de1c8f59f01b8c1dd2ddf7fc963097d16333c7e",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 22,
+  "sheet": 3,
+  "exerciseId": "fp_f227db5fcf245d9c",
+  "name": "Triceps dips",
+  "source": "images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg",
+  "assetSha256": "7a3f8095e040023498c3d6ec46d1b6a0d31d8d559a2141deecd98770fd84487a",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 23,
+  "sheet": 3,
+  "exerciseId": "fp_ca78db68bfc2ce5e",
+  "name": "Wrist extension",
+  "source": "images/bovenste-extremiteit/wrist-extension-avatar-v7.jpg",
+  "assetSha256": "2329571e8fb4c2f38b8a0e4fd576c07a5793965f6dbe2337c73967e47acd4346",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 24,
+  "sheet": 3,
+  "exerciseId": "fp_97db6b7c4ee71185",
+  "name": "Front squat",
+  "source": "images/onderste-extremiteit/front-squat-avatar-v7.jpg",
+  "assetSha256": "d875acf162ecdaeb9ebc92c869573f1f8d2f8f30a960eb753bfcbce2c6061b3b",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 25,
+  "sheet": 4,
+  "exerciseId": "fp_918ae38b193310b8",
+  "name": "Hack squat",
+  "source": "images/onderste-extremiteit/hack-squat-avatar-v7.jpg",
+  "assetSha256": "d411295707aec9c4e58ed1feb2c5f063f744658a33aeec91e3d9cf51232d4a6e",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 26,
+  "sheet": 4,
+  "exerciseId": "fp_0ba32cc051f02ca6",
+  "name": "Leg extension",
+  "source": "images/onderste-extremiteit/leg-extension-avatar-v7.jpg",
+  "assetSha256": "1802481af851bc653979cdbe6bcc396ebbdc7213b6c6fd426f56fd93db1fa80e",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 27,
+  "sheet": 4,
+  "exerciseId": "fp_0d8160777275f1d9",
+  "name": "Single leg squat",
+  "source": "images/onderste-extremiteit/single-leg-squat-avatar-v7.jpg",
+  "assetSha256": "7f52bc1e92a9c7b7fc4d8b9b0498b3208c3e5934d4c4b3789b0c7c92b354e1c5",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 28,
+  "sheet": 4,
+  "exerciseId": "fp_7dc1478e2b3c17b0",
+  "name": "Step up with knee raise",
+  "source": "images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg",
+  "assetSha256": "2dbad9164159e9602e62bdf374a58ed5bdd2f55b2a2160c83a68ee13528149c3",
+  "reason": "In houding 1 staat naast het eigen opstapje een los lichtblauw blok dat niet bij de oefening hoort."
+ },
+ {
+  "n": 29,
+  "sheet": 4,
+  "exerciseId": "fp_ba8ecef1edfecd32",
+  "name": "Abroller",
+  "source": "images/core/abroller-avatar-v7.jpg",
+  "assetSha256": "2333f209dc0c3e9d8bdd37a06d86e9e149bfc505442b95cc5618591b24b7aa25",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 30,
+  "sheet": 4,
+  "exerciseId": "fp_70914158247cadac",
+  "name": "Mountain climber",
+  "source": "images/core/mountain-climber-avatar-v7.jpg",
+  "assetSha256": "164cb189b149f06069af7b3891ac9a49574d9d300e57237f1ddc77f6f74e3bc5",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 31,
+  "sheet": 4,
+  "exerciseId": "fp_6c3dd765218031ce",
+  "name": "Roeier",
+  "source": "images/cardio/roeier-avatar-v7.jpg",
+  "assetSha256": "01fe4c5c79e0b13ed7b270967000f4dd1f4dffc37441cff64293541440177c73",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 32,
+  "sheet": 4,
+  "exerciseId": "fp_a897d84ff30d4993",
+  "name": "Squat jumps",
+  "source": "images/cardio/squat-jumps-avatar-v7.jpg",
+  "assetSha256": "76e11135e7ac1b8787de69094c4a33eab228b6b03dca60969a29078cb09470f8",
+  "reason": "3 figuren gevonden; welk paar bedoeld is, staat niet vast."
+ },
+ {
+  "n": 33,
+  "sheet": 5,
+  "exerciseId": "fp_0583cc25fb6882d7",
+  "name": "TRX ab roll out",
+  "source": "images/trx/trx-ab-roll-out-avatar-v7.jpg",
+  "assetSha256": "9ac0939dbba7312652caf6108c8e6570d19512ae1a4018ba2261f079514b4a53",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 34,
+  "sheet": 5,
+  "exerciseId": "fp_e13686b64cf3495d",
+  "name": "TRX biceps curl",
+  "source": "images/trx/trx-biceps-curl-avatar-v7.jpg",
+  "assetSha256": "cce8e8506786ffe43c2626a19852eefe78516829d2b73a0d37ed85ce5611ad9b",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 35,
+  "sheet": 5,
+  "exerciseId": "fp_0e47c8da4f3accdd",
+  "name": "TRX chest press",
+  "source": "images/trx/trx-chest-press-avatar-v7.jpg",
+  "assetSha256": "695aaf4e2ec87d2e0c3499c14108cf7c5cecb24ea24e060956add1beccfcccbb",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 36,
+  "sheet": 5,
+  "exerciseId": "fp_c2ae0e94f5738a77",
+  "name": "TRX flyes I",
+  "source": "images/trx/trx-flyes-i-avatar-v7.jpg",
+  "assetSha256": "43e226ed2f78afcc263639a57fc6abf0d0c69b4be7da02c7a83084a6e98e377e",
+  "reason": "Binnen de uitsnedes staat 80 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+ },
+ {
+  "n": 37,
+  "sheet": 5,
+  "exerciseId": "fp_ff018299959429f0",
+  "name": "TRX flyes II",
+  "source": "images/trx/trx-flyes-ii-avatar-v7.jpg",
+  "assetSha256": "b90d5775fdd04c34047493a69178ea0a23e10797b6037cdaf24455f891658de2",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 38,
+  "sheet": 5,
+  "exerciseId": "fp_e8cefa0cdc89c222",
+  "name": "TRX glute bridge",
+  "source": "images/trx/trx-glute-bridge-avatar-v7.jpg",
+  "assetSha256": "a4f050c32ccc2fc84d4c31f9a39bf3c5eaaa7cae1d47d14eeb918f37c81213b6",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 39,
+  "sheet": 5,
+  "exerciseId": "fp_f514c597315a9093",
+  "name": "TRX lunge lateral high",
+  "source": "images/trx/trx-lunge-lateral-high-avatar-v7.jpg",
+  "assetSha256": "a8e127bdfd9909102ee390be8ff71553c1c02950dc0f593c176ac2f40c2c83a4",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 40,
+  "sheet": 5,
+  "exerciseId": "fp_c7a30e5ff9d85248",
+  "name": "TRX lunge reverse",
+  "source": "images/trx/trx-lunge-reverse-avatar-v7.jpg",
+  "assetSha256": "963b6d25770c792440ad5fda2ff643d607bbefbff72ee8a2aec52652374f7919",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 41,
+  "sheet": 6,
+  "exerciseId": "fp_65c52063d3076d21",
+  "name": "TRX plank",
+  "source": "images/trx/trx-plank-avatar-v7.jpg",
+  "assetSha256": "534eabd1b494a5f9f6d1c578b166439d7a8438624bf1b0b8e1715bbc668d8309",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 42,
+  "sheet": 6,
+  "exerciseId": "fp_d62104514b8a2ca3",
+  "name": "TRX plank side",
+  "source": "images/trx/trx-plank-side-avatar-v7.jpg",
+  "assetSha256": "071f1699c9b2361d68184ed4d21335777989d418bb80810ffc1bfc65d88e36d1",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 43,
+  "sheet": 6,
+  "exerciseId": "fp_e28894b278170b61",
+  "name": "TRX row",
+  "source": "images/trx/trx-row-avatar-v7.jpg",
+  "assetSha256": "e73e1fab3d982fb9427cc9a7221d4aeb1700071736d3ad41bc2c9f9643f82822",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 44,
+  "sheet": 6,
+  "exerciseId": "fp_c2db68d9f54ced18",
+  "name": "TRX saw pikes",
+  "source": "images/trx/trx-saw-pikes-avatar-v7.jpg",
+  "assetSha256": "92c1322b49ebe5b1482c017aebaaa73d98e1a518297f97d2c333cc41db623718",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 45,
+  "sheet": 6,
+  "exerciseId": "fp_220ad8ffe4242701",
+  "name": "TRX squat",
+  "source": "images/trx/trx-squat-avatar-v7.jpg",
+  "assetSha256": "c5b1b8a27cbd2669dae5814d1cef6e9a342e049b525b9f4136d974ab652e7429",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 46,
+  "sheet": 6,
+  "exerciseId": "fp_e06bebd7b7358c90",
+  "name": "TRX squat pistol",
+  "source": "images/trx/trx-squat-pistol-avatar-v7.jpg",
+  "assetSha256": "167d1a1a45046531f55b7a1fb08eb672cab879ab625d8c70b68f96ea26d5a64a",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 47,
+  "sheet": 6,
+  "exerciseId": "fp_c4b190023bce96e1",
+  "name": "TRX triceps extension",
+  "source": "images/trx/trx-triceps-extension-avatar-v7.jpg",
+  "assetSha256": "3535ce693a1d15abd870e5e41c6e6904c320464444c82e86b129f1681666614e",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 48,
+  "sheet": 6,
+  "exerciseId": "fp_6363eb3d095af9ff",
+  "name": "Yoga butterfly stretch",
+  "source": "images/yoga/yoga-butterfly-stretch-avatar-v7.jpg",
+  "assetSha256": "856608bf0db7d79e16077a70fc229f7d6eb1f47940a80de9b68b61e60d7f7cf2",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 49,
+  "sheet": 7,
+  "exerciseId": "fp_f6a4e38230c49a26",
+  "name": "Yoga deep squat",
+  "source": "images/yoga/yoga-deep-squat-avatar-v7.jpg",
+  "assetSha256": "1091f257a5d8f510224d25c049fe045bb040f52241db07225191ac6eedd81907",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 50,
+  "sheet": 7,
+  "exerciseId": "fp_45eb69b02317733b",
+  "name": "Yoga ear pressure",
+  "source": "images/yoga/yoga-ear-pressure-avatar-v7.jpg",
+  "assetSha256": "fd275e794c900d0fcb1d4414fbc7aa0d69c399e152c3e2be4c8eaa90ed5fa74f",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 51,
+  "sheet": 7,
+  "exerciseId": "fp_0c813648b61d0a57",
+  "name": "Yoga extended child's pose",
+  "source": "images/yoga/yoga-extended-child-s-pose-avatar-v7.jpg",
+  "assetSha256": "fd912023370b315fb3d0d9abe905f79809675c51acd8f6955d471187266f7141",
+  "reason": "Binnen de uitsnedes staat 176 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+ },
+ {
+  "n": 52,
+  "sheet": 7,
+  "exerciseId": "fp_a97c7ce2c7899d0f",
+  "name": "Yoga extended triangle",
+  "source": "images/yoga/yoga-extended-triangle-avatar-v7.jpg",
+  "assetSha256": "b23343014c8b8870b9f0b20e4943dc246b1d9b3e8c6d35d323c56a4cbecac186",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 53,
+  "sheet": 7,
+  "exerciseId": "fp_8462e52d2da7bf79",
+  "name": "Yoga frog",
+  "source": "images/yoga/yoga-frog-avatar-v7.jpg",
+  "assetSha256": "935d88516c0b82dd850b3de3b54d819f37df1d57cd88535242fb3a79cf5f0914",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 54,
+  "sheet": 7,
+  "exerciseId": "fp_8434579cd7154b6d",
+  "name": "Yoga full boat",
+  "source": "images/yoga/yoga-full-boat-avatar-v7.jpg",
+  "assetSha256": "34b2e69c63c09de38e92890e452735eff2f996d591c21ef9404ebf5728af5672",
+  "reason": "Binnen de uitsnedes staat 256 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+ },
+ {
+  "n": 55,
+  "sheet": 7,
+  "exerciseId": "fp_6303ba477869424f",
+  "name": "Yoga half monkey",
+  "source": "images/yoga/yoga-half-monkey-avatar-v7.jpg",
+  "assetSha256": "d52e6c7b36414eee86e1a86beb977341829306bfde696902fc87d4cc07fff3c4",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 56,
+  "sheet": 7,
+  "exerciseId": "fp_e19ecd2f1a8dd183",
+  "name": "Yoga Marichi’s III",
+  "source": "images/yoga/yoga-marichi-s-iii-avatar-v7.jpg",
+  "assetSha256": "5aeee4d4260d9ec9bb3a5fe4fb0cf81fcd82e02684fd527a67c8ec987601440b",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 57,
+  "sheet": 8,
+  "exerciseId": "fp_2a949cd1df2e6b73",
+  "name": "Yoga reverse warrior",
+  "source": "images/yoga/yoga-reverse-warrior-avatar-v7.jpg",
+  "assetSha256": "dbb66af13827bcf29f432e13c0fe935a062a0b175c1b779f98d944148081a08b",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 58,
+  "sheet": 8,
+  "exerciseId": "fp_091229d871a15a3f",
+  "name": "Yoga revolved downward facing dog",
+  "source": "images/yoga/yoga-revolved-downward-facing-dog-avatar-v7.jpg",
+  "assetSha256": "00f7c5f047b2cbc5de4454412b18b73a07d5608b0b205ee510f53f41e18e3925",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 59,
+  "sheet": 8,
+  "exerciseId": "fp_d9318269f3119cd9",
+  "name": "Yoga warrior II",
+  "source": "images/yoga/yoga-warrior-ii-avatar-v7.jpg",
+  "assetSha256": "a7fbb6438e84295ef261c6dab175be90c703d8d3dec9856b466d28e34eb96847",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 60,
+  "sheet": 8,
+  "exerciseId": "fp_da63729ba577a91a",
+  "name": "Bodyblade diagonaal",
+  "source": "images/bodyblade/bodyblade-diagonaal-avatar-v7.jpg",
+  "assetSha256": "98202f2d61a049e6b246a4cc86edea7e32b1a4ae2e3bc0b3d0bed55038aa8c7b",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 61,
+  "sheet": 8,
+  "exerciseId": "fp_b1b55b86c4100e54",
+  "name": "Foam rol glutes stretch",
+  "source": "images/foam-roller/foam-rol-glutes-stretch-avatar-v7.jpg",
+  "assetSha256": "262c072c68000b552ad2a4ab6bdf225a92aae22dcf4b7085a99104c435b34247",
+  "reason": "De silhouetten van beide houdingen overlappen voor 86%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+ },
+ {
+  "n": 62,
+  "sheet": 8,
+  "exerciseId": "fp_5af0270a5fedd83b",
+  "name": "Abdominal (apparaat)",
+  "source": "images/apparaten/abdominal-apparaat-avatar-v7.jpg",
+  "assetSha256": "afdf4ff3f0bb7ea550687cb2b0db1965302cbb9a8563b7f9bbf277b29f8c895c",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 63,
+  "sheet": 8,
+  "exerciseId": "fp_b5725b610192706a",
+  "name": "Backextensie (apparaat)",
+  "source": "images/apparaten/backextensie-apparaat-avatar-v7.jpg",
+  "assetSha256": "b6696994d6086662ae426cc913ab6ee35bfe192fd6bd1b247bf60f6b73c13c2c",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 64,
+  "sheet": 8,
+  "exerciseId": "fp_b9345bde5c635878",
+  "name": "Crosstrainer (apparaat)",
+  "source": "images/apparaten/crosstrainer-apparaat-avatar-v7.jpg",
+  "assetSha256": "26b13b97856dc26d7c0d42f3770fc19939cf60c7e579116beb2d9c387a192006",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 65,
+  "sheet": 9,
+  "exerciseId": "fp_aaabb27f28a34f46",
+  "name": "Endy Buikmachine",
+  "source": "images/apparaten/endy-buikmachine-avatar-v7.jpg",
+  "assetSha256": "7745783e1fa7c007d6bb676c2206c9e0472da1258daa9f33b35b6795e3bd9876",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 66,
+  "sheet": 9,
+  "exerciseId": "fp_3cb155e4c77ec502",
+  "name": "Endy Heup abductie",
+  "source": "images/apparaten/endy-heup-abductie-avatar-v7.jpg",
+  "assetSha256": "a88761069e52bf16a029e0a801df26fce5e7f4d07b8b85080496427dbb42fda6",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 67,
+  "sheet": 9,
+  "exerciseId": "fp_9c9150323706dcba",
+  "name": "Endy Leg curl",
+  "source": "images/apparaten/endy-leg-curl-avatar-v7.jpg",
+  "assetSha256": "2161cc4f1453eece77b8c416c2bfef45c51a306986f372c6bd4ea4ddc7ca0d56",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 68,
+  "sheet": 9,
+  "exerciseId": "fp_521e3cd46404d3ac",
+  "name": "Endy Rugmachine",
+  "source": "images/apparaten/endy-rugmachine-avatar-v7.jpg",
+  "assetSha256": "c51794d9a33c6e79ae0a78ae6c546f027d28709ec2388f53b3666484cd697a7f",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 69,
+  "sheet": 9,
+  "exerciseId": "fp_762433eae97df9e5",
+  "name": "Fiets (apparaat)",
+  "source": "images/apparaten/fiets-apparaat-avatar-v7.jpg",
+  "assetSha256": "34bcb0fe1eb8d5932639b8f4ecf350c00aaf235ac3c1a2c273a2d807dff8cb33",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 70,
+  "sheet": 9,
+  "exerciseId": "fp_a283bcb81ae6eb31",
+  "name": "Leg press (apparaat)",
+  "source": "images/apparaten/leg-press-apparaat-avatar-v7.jpg",
+  "assetSha256": "d0e36e216267508b735fdf7ebef322984e41f49865d6db5280bb6f24542dc857",
+  "reason": "Het merk-/tekstblok valt binnen een figuur-uitsnede; uitsnijden zou het merk ongelijk over de houdingen verdelen. De volledige afbeelding blijft staan."
+ },
+ {
+  "n": 71,
+  "sheet": 9,
+  "exerciseId": "fp_f2e38bb5f7abf0b2",
+  "name": "Loopband (apparaat)",
+  "source": "images/apparaten/loopband-apparaat-avatar-v7.jpg",
+  "assetSha256": "913d9dc0fd15017a9df23d172a16075c91187038b4a066133952e7779a177924",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 72,
+  "sheet": 9,
+  "exerciseId": "fp_143594f21492f955",
+  "name": "Stairs (apparaat)",
+  "source": "images/apparaten/stairs-apparaat-avatar-v7.jpg",
+  "assetSha256": "64eb6d13ac9ec19db20ce6f936cc383f3d5e79b64face9c05c498a011718b24c",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 73,
+  "sheet": 10,
+  "exerciseId": "fp_e082af3a36965a68",
+  "name": "Vertical row (apparaat)",
+  "source": "images/apparaten/vertical-row-apparaat-avatar-v7.jpg",
+  "assetSha256": "e20bb33eeff75263cea722e309ff3271cf58756020047afa23bd0b0209088d65",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 74,
+  "sheet": 10,
+  "exerciseId": "fp_027779ceb994b08e",
+  "name": "Alternating lunge jumps",
+  "source": "images/cardio/alternating-lunge-jumps-avatar-v9.png",
+  "assetSha256": "ec8121ac160fa381d791bdebf8996945d039e5a3ef565698c7d13a571477cdea",
+  "reason": "De twee afgebeelde standen zijn afwisselende standen van dezelfde sprongoefening, geen begin- en eindhouding van één beweging. output/mobile-lunge-v9-provenance.json stelt expliciet dat de sprongovergang niet is goedgekeurd."
+ },
+ {
+  "n": 75,
+  "sheet": 10,
+  "exerciseId": "fp_3b9e14e7264e71a4",
+  "name": "Sprints",
+  "source": "images/cardio/sprints-avatar-v8.jpg",
+  "assetSha256": "ed70fd2e523ba45321c234e627a1a2908eead4978b5e332309475bcdd64d067c",
+  "reason": "Binnen de uitsnedes staat 384 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+ },
+ {
+  "n": 76,
+  "sheet": 10,
+  "exerciseId": "fp_f26c61999ac184bd",
+  "name": "Swiss ball wall squat",
+  "source": "images/exercise-ball/swiss-ball-wall-squat-avatar-v8.jpg",
+  "assetSha256": "5a188bc6bbaac6a7d9b03488f6b24a8ec1d455d8a63ecaca04ccbf58d6ad753b",
+  "reason": "Binnen de uitsnedes staat 288 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+ },
+ {
+  "n": 77,
+  "sheet": 10,
+  "exerciseId": "fp_0e06ee3270c9952a",
+  "name": "Swiss ball squeezes adductoren",
+  "source": "images/exercise-ball/swiss-ball-squeezes-adductoren-avatar-v8.jpg",
+  "assetSha256": "c56c8a1e8f0f67a70cc8db1e6609d34c821903dc62ecf1ed5f4248cc049b8739",
+  "reason": "De silhouetten van beide houdingen overlappen voor 91%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+ },
+ {
+  "n": 78,
+  "sheet": 10,
+  "exerciseId": "fp_8b276d90443725c9",
+  "name": "Swiss ball leg curl one leg",
+  "source": "images/exercise-ball/swiss-ball-leg-curl-one-leg-avatar-v8.jpg",
+  "assetSha256": "d8ba82aea8d29a1f9ab9a0ed504f5787d40777f749a98b53f22b8417ff568578",
+  "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+ },
+ {
+  "n": 79,
+  "sheet": 10,
+  "exerciseId": "fp_55b80e4f630bccda",
+  "name": "Swiss ball dumbbell flyes",
+  "source": "images/exercise-ball/swiss-ball-dumbbell-flyes-avatar-v8.jpg",
+  "assetSha256": "9bdfde863146c70079b133c6a67d1787b58f500a4505326bd27a502ee39280a0",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 80,
+  "sheet": 10,
+  "exerciseId": "fp_725683c0e7847634",
+  "name": "Swiss ball dumbbell chest press",
+  "source": "images/exercise-ball/swiss-ball-dumbbell-chest-press-avatar-v8.jpg",
+  "assetSha256": "c6febf36884e42bdc02e2c70a6ddc6179fc086803bcf08864b5760640b4142c4",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 81,
+  "sheet": 11,
+  "exerciseId": "fp_90e9eb8d9522510c",
+  "name": "Foam roller glute med.",
+  "source": "images/foam-roller/foam-roller-glute-med-avatar-v8.jpg",
+  "assetSha256": "ab8c4f56fa86ca8ad4faad9f00c80933641029d7cc0f8a814110f6811cdc203d",
+  "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+ },
+ {
+  "n": 82,
+  "sheet": 11,
+  "exerciseId": "fp_6c0fe3bba04367bd",
+  "name": "Foam roller glute",
+  "source": "images/foam-roller/foam-roller-glute-avatar-v8.jpg",
+  "assetSha256": "b251f4a008c027c5e6a29be255fd812e61a35e74228fb26bf820689bfb2a8b22",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 83,
+  "sheet": 11,
+  "exerciseId": "fp_4c76bb5ec2f5750b",
+  "name": "Foam roller hamstring",
+  "source": "images/foam-roller/foam-roller-hamstring-avatar-v8.jpg",
+  "assetSha256": "eef3fe909983493a34d68130a12c202663220283f719b33c9450d09899f70674",
+  "reason": "Binnen de uitsnedes staat 32 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+ },
+ {
+  "n": 84,
+  "sheet": 11,
+  "exerciseId": "fp_8fb77da919f771d2",
+  "name": "Foam roller calf",
+  "source": "images/foam-roller/foam-roller-calf-avatar-v8.jpg",
+  "assetSha256": "fe2c1ae302253fadde11c2a8ed14ba3a7cf6a62288e795f9fe0490f98fbe1d1d",
+  "reason": "De silhouetten van beide houdingen overlappen voor 91%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+ },
+ {
+  "n": 85,
+  "sheet": 11,
+  "exerciseId": "fp_1475d9e5ff7c119b",
+  "name": "Foam roller tractus",
+  "source": "images/foam-roller/foam-roller-tractus-avatar-v8.jpg",
+  "assetSha256": "06477f3271125d954bad61a46552fcc23cacc3cfff3a11d7b1eb1d293c31afe8",
+  "reason": "Losse voorwerpen horen bij geen of bij beide figuren: 20x40@0,604."
+ },
+ {
+  "n": 86,
+  "sheet": 11,
+  "exerciseId": "fp_84154b2578401c90",
+  "name": "Foam roller back upper",
+  "source": "images/foam-roller/foam-roller-back-upper-avatar-v8.jpg",
+  "assetSha256": "5aec81dfab60c48b84a359aaff80e45ea953ba5158681d3e955c243e9efb0a4f",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 87,
+  "sheet": 11,
+  "exerciseId": "fp_459a21a001379ff4",
+  "name": "Foam roller lat stretch",
+  "source": "images/foam-roller/foam-roller-lat-stretch-avatar-v8.jpg",
+  "assetSha256": "9f3c71472ae376ae71b4351c3a0153d1483542082b8621b201d395060cb94a4f",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 88,
+  "sheet": 11,
+  "exerciseId": "fp_d1a9f14ec236926a",
+  "name": "Foam roller adductoren",
+  "source": "images/foam-roller/foam-roller-adductoren-avatar-v8.jpg",
+  "assetSha256": "4c966d0c7920c8416b823dacd88c57fa17b100157b20867a3f5a9ee1947eb1b6",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 89,
+  "sheet": 12,
+  "exerciseId": "fp_b5842218c2acd8d0",
+  "name": "Foam roller fore arm",
+  "source": "images/foam-roller/foam-roller-fore-arm-avatar-v8.jpg",
+  "assetSha256": "75b406220f29f76ed089539c0e5efcc06a729da59b00157ed902468037ae9445",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 90,
+  "sheet": 12,
+  "exerciseId": "fp_7a80af282e5365f5",
+  "name": "Foam roller back lower cross",
+  "source": "images/foam-roller/foam-roller-back-lower-cross-avatar-v8.jpg",
+  "assetSha256": "9a5838d1ea4236f6fef00d8280d75baabdf8177afd9924a056f7a192138ac8a7",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 91,
+  "sheet": 12,
+  "exerciseId": "fp_3fd0ad562e93e587",
+  "name": "Foam roller back lower",
+  "source": "images/foam-roller/foam-roller-back-lower-avatar-v8.jpg",
+  "assetSha256": "3ce3a67978b1fa5351d2814c1b4e26d0763add9c2514101950fa9146422b3581",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 92,
+  "sheet": 12,
+  "exerciseId": "fp_e9358123e578e29b",
+  "name": "Foam roller back extension",
+  "source": "images/foam-roller/foam-roller-back-extension-avatar-v8.jpg",
+  "assetSha256": "a922a10a6f06ef67f4694a76085392506213d0d7b5c278739d21a3b5eff6e5a2",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 93,
+  "sheet": 12,
+  "exerciseId": "fp_3e21b7d2e6b650f9",
+  "name": "Med ball slams",
+  "source": "images/medicine-ball/medicine-ball-slams-avatar-v8.jpg",
+  "assetSha256": "ea0b2a3b1d983c3995771ebe42eb8c3e34420046465f4eda8ea7602b75a32319",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 94,
+  "sheet": 12,
+  "exerciseId": "fp_61f517b18e97eead",
+  "name": "Med ball wall throw",
+  "source": "images/medicine-ball/medicine-ball-wall-throw-avatar-v8.jpg",
+  "assetSha256": "76db6e2d44f59e5f217206567d2d0e11f9382b468ed664bfa86ad2d888283969",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 95,
+  "sheet": 12,
+  "exerciseId": "fp_4744640504bedb24",
+  "name": "Med ball chest press",
+  "source": "images/medicine-ball/medicine-ball-chest-press-avatar-v8.jpg",
+  "assetSha256": "454eaae827204a1e3acbff7a34c80ddc3ac78783597d6c6250f98b2a6349ac82",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 96,
+  "sheet": 12,
+  "exerciseId": "fp_72446d182c8eb06b",
+  "name": "Med ball floor press",
+  "source": "images/medicine-ball/medicine-ball-floor-press-avatar-v8.jpg",
+  "assetSha256": "e6f905c3fbd80982d9b7a6b1b94b226334ff501952840ca629348664d1c04071",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 97,
+  "sheet": 13,
+  "exerciseId": "fp_0c4b960f97f1d61f",
+  "name": "Med ball rotation passes",
+  "source": "images/medicine-ball/medicine-ball-rotation-passes-avatar-v8.jpg",
+  "assetSha256": "265ee45298588c17962814fd6bd423d5c9d9a4bfa8e77051d4c03ebce195486b",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 98,
+  "sheet": 13,
+  "exerciseId": "fp_b852517e00a4148f",
+  "name": "Med ball rotation passes knee",
+  "source": "images/medicine-ball/medicine-ball-rotation-passes-knee-avatar-v8.jpg",
+  "assetSha256": "4b8381e882194fed66cd23df53444220e3e50fb614804ad74377ff82a543701b",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 99,
+  "sheet": 13,
+  "exerciseId": "fp_9ae1334e0216ae2e",
+  "name": "Med ball push up one arm",
+  "source": "images/medicine-ball/medicine-ball-push-up-one-arm-avatar-v8.jpg",
+  "assetSha256": "08df4ca7777db3d505551424119a455a8184bb0c233e4d2f4b905b97a718e5d5",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 100,
+  "sheet": 13,
+  "exerciseId": "fp_942ed29424854e9d",
+  "name": "Med ball push up two arms",
+  "source": "images/medicine-ball/medicine-ball-push-up-two-arms-avatar-v8.jpg",
+  "assetSha256": "b1ea1496211979ecbe8a7f310c891717fda80e9e02b08ab506ee3602ce12b634",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 101,
+  "sheet": 13,
+  "exerciseId": "fp_2fa3a6c48570a71d",
+  "name": "Med. Ball - Alt. Side slam",
+  "source": "images/medicine-ball/medicine-ball-alt-side-slam-avatar-v8.jpg",
+  "assetSha256": "b9735e40d6810159a6d263c878ec0689cf6eee82aef5cbb0c16ca060577c5bef",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 102,
+  "sheet": 13,
+  "exerciseId": "fp_e3bc3ace06e1a8bd",
+  "name": "Med ball obliques cross",
+  "source": "images/medicine-ball/medicine-ball-obliques-cross-avatar-v8.jpg",
+  "assetSha256": "1f83280192c90f515169f499d7c52be1b07de057a5dea3df2abcc2cb2857d01f",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 103,
+  "sheet": 13,
+  "exerciseId": "fp_9ad5104287158635",
+  "name": "Med ball throw and jog",
+  "source": "images/medicine-ball/medicine-ball-throw-and-jog-avatar-v8.jpg",
+  "assetSha256": "5fa1b75a4386e27469fbd11a8a4913c21966679d2b935a4c36ae43df9b04585e",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 104,
+  "sheet": 13,
+  "exerciseId": "fp_16adae85403409b5",
+  "name": "Med ball swing",
+  "source": "images/medicine-ball/medicine-ball-swing-avatar-v8.jpg",
+  "assetSha256": "f6edd812874d83b0c64dea26487041b7ff7a34b75a1f3c3b3a6250c23333664f",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 105,
+  "sheet": 14,
+  "exerciseId": "fp_b30b561f6b7f8387",
+  "name": "Med ball overhead circles",
+  "source": "images/medicine-ball/medicine-ball-overhead-circles-avatar-v8.jpg",
+  "assetSha256": "ffc5fd8ca6d53c7ffd17bf912253a0c406945ce81c5808b15b6724781e0759ee",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 106,
+  "sheet": 14,
+  "exerciseId": "fp_af3814ca735a1b07",
+  "name": "Med ball lunge overhead press",
+  "source": "images/medicine-ball/medicine-ball-lunge-overhead-press-avatar-v8.jpg",
+  "assetSha256": "eb375a977fa6a7a2e4e4ea3d253fedd761e785bedb888b9194401efa7ee02565",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 107,
+  "sheet": 14,
+  "exerciseId": "fp_45fd876f33ca5bd9",
+  "name": "Med ball V-ups",
+  "source": "images/medicine-ball/medicine-ball-v-ups-avatar-v8.jpg",
+  "assetSha256": "a84503e1d5d0c462e18f550d9457cde59d3e847dc8c0fb2e628590108366afb8",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 108,
+  "sheet": 14,
+  "exerciseId": "fp_3f1dfb962741627a",
+  "name": "Mob Hip flexion/extension",
+  "source": "images/mobility/mob-hip-flexion-extension-avatar-v8.jpg",
+  "assetSha256": "92233b2e15279d302e8b0694f40cfa212e5ec4dad3e36315bbcdd1feefa6410b",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 109,
+  "sheet": 14,
+  "exerciseId": "fp_99e1e9967d6d6cce",
+  "name": "Mob Hip opener",
+  "source": "images/mobility/mob-hip-opener-avatar-v8.jpg",
+  "assetSha256": "25d9da265d2abc3eaf797e2688f12546d6907a3d1e63c9171de445ae05fbe9da",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 110,
+  "sheet": 14,
+  "exerciseId": "fp_cd1a6657d1158157",
+  "name": "Mob thoracaal",
+  "source": "images/mobility/mob-thoracaal-avatar-v8.jpg",
+  "assetSha256": "5fd5f202e62e4460d3e583887180afd98d7bd77d93d2f2cce7dfef99633c7bda",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 111,
+  "sheet": 14,
+  "exerciseId": "fp_69601bcfcf25b2d7",
+  "name": "Mob adductoren",
+  "source": "images/mobility/mob-adductoren-avatar-v8.jpg",
+  "assetSha256": "25b8596a537f4a8a099bc2c1ddb553f8dcb7c947af4ce07b5e3d3fd2c71041b3",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 112,
+  "sheet": 14,
+  "exerciseId": "fp_4f11e7b699d13a42",
+  "name": "Adductoren stretch",
+  "source": "images/mobility/adductoren-stretch-avatar-v8.jpg",
+  "assetSha256": "efb17c42629d54fd7abf8340d7505564e52681c325617c4bc1d61e179ba93f04",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 113,
+  "sheet": 15,
+  "exerciseId": "fp_37cafb9b8739b834",
+  "name": "Mob lower back",
+  "source": "images/mobility/mob-lower-back-avatar-v8.jpg",
+  "assetSha256": "a4dfa115a650cca09aa0519e591295f52296f0bc0c8467e3b4ef8bf79ca2982b",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 114,
+  "sheet": 15,
+  "exerciseId": "fp_fb18dd6c8b2b3a16",
+  "name": "Mob back cat/cow",
+  "source": "images/mobility/mob-back-cat-cow-avatar-v8.jpg",
+  "assetSha256": "88efe7096ed280fb49f912f9194ee9a44b450737d6d485bb1ad0f3f7faf64448",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 115,
+  "sheet": 15,
+  "exerciseId": "fp_c0ed244cbd142ccd",
+  "name": "Mob back left/right",
+  "source": "images/mobility/mob-back-left-right-avatar-v8.jpg",
+  "assetSha256": "7c291fd2a46c532996fb6a61392a2f76f6ee615dd9cc545fe2bbefcb24ec1ef3",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 116,
+  "sheet": 15,
+  "exerciseId": "fp_1169ad7f2a3ea56c",
+  "name": "Mob Hip circles",
+  "source": "images/mobility/mob-hip-circles-avatar-v8.jpg",
+  "assetSha256": "973946ab769ba045a896161a0b7137e60b88067cb3447638ce22c1662055e6f0",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 117,
+  "sheet": 15,
+  "exerciseId": "fp_793dbfaf2845eb08",
+  "name": "Gluteal stretch",
+  "source": "images/mobility/gluteal-stretch-avatar-v8.jpg",
+  "assetSha256": "24c70915eeb26ff96271ac22316907067b4e07af659cc88c09ed2f5e84d9860c",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 118,
+  "sheet": 15,
+  "exerciseId": "fp_31aecb8b4d9b172e",
+  "name": "Hamstring stretch",
+  "source": "images/mobility/hamstring-stretch-avatar-v8.jpg",
+  "assetSha256": "a583043180d9b97fa3593c4af68dddad7aebd64c1082e9cd4133dff738844a8c",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 119,
+  "sheet": 15,
+  "exerciseId": "fp_da024ca505e981eb",
+  "name": "Hamstring stretch one leg",
+  "source": "images/mobility/hamstring-stretch-one-leg-avatar-v8.jpg",
+  "assetSha256": "3e009b89f325008ed9d2ab408094a859dac1c29dd6d1c44afbfae237f584e253",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 120,
+  "sheet": 15,
+  "exerciseId": "fp_3265101a912475f3",
+  "name": "Quadriceps stretch",
+  "source": "images/mobility/quadriceps-stretch-avatar-v8.jpg",
+  "assetSha256": "e54ddde75a7c11dde145b730a867344419ddf946ef54cd04a5cfdbe2dfe0c0b0",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 121,
+  "sheet": 16,
+  "exerciseId": "fp_0fd67f9b622d7724",
+  "name": "Back stretch",
+  "source": "images/mobility/back-stretch-avatar-v8.jpg",
+  "assetSha256": "c064a04baa86fc406bc723517eefb25d05187b1de7e54e9206e663afd61e7be4",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 122,
+  "sheet": 16,
+  "exerciseId": "fp_9798f76661bf3c67",
+  "name": "Abs stretch",
+  "source": "images/mobility/abs-stretch-avatar-v8.jpg",
+  "assetSha256": "e3f1399fdeff676612b9b824c0e6f7173acf1bf3e648bb456d77c243ecd8942a",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 123,
+  "sheet": 16,
+  "exerciseId": "fp_4da50270005b421f",
+  "name": "Seated side leans",
+  "source": "images/seated-chair/seated-side-leans-avatar-v8.jpg",
+  "assetSha256": "c8f93c59fee1f3b354a53d12983d6f1196e42583b0d39e64a6579e8d1cdf0f9b",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 124,
+  "sheet": 16,
+  "exerciseId": "fp_7e0445b070d4aa84",
+  "name": "Seated lat stretch",
+  "source": "images/seated-chair/seated-lat-stretch-avatar-v8.jpg",
+  "assetSha256": "0a5b8e5731bdd686dcf4a22b24e289131f267e9f81672a3530d13476dbe23a84",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 125,
+  "sheet": 16,
+  "exerciseId": "fp_063e61e846384264",
+  "name": "Seated lumbar rotations",
+  "source": "images/seated-chair/seated-lumbar-rotations-avatar-v8.jpg",
+  "assetSha256": "fd7b1dc228f3ff4539d2e4430c24efef9137b98a8c45e21ce99b15895a1e51ff",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 126,
+  "sheet": 16,
+  "exerciseId": "fp_47ff49c27d46e275",
+  "name": "Seated cat-cow",
+  "source": "images/seated-chair/seated-cat-cow-avatar-v8.jpg",
+  "assetSha256": "b0024d82dd266001654a354ba543c85fe88b3c8f5e26ddbd17d206e64eb087c6",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 127,
+  "sheet": 16,
+  "exerciseId": "fp_aea0bdac883b00f0",
+  "name": "Seated foreward reach",
+  "source": "images/seated-chair/seated-forward-reach-avatar-v8.jpg",
+  "assetSha256": "f5226a30f2daa0911909cd7864e544b1f6fee15866e0a741aad59b70cc534042",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 128,
+  "sheet": 16,
+  "exerciseId": "fp_16a477f3bf50b61c",
+  "name": "Seated ankle rotations",
+  "source": "images/seated-chair/seated-ankle-rotations-avatar-v8.jpg",
+  "assetSha256": "3f2e249206814f3f70edaaa4a2300ce13c665336a22ffee31f0e25565936667c",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 129,
+  "sheet": 17,
+  "exerciseId": "fp_074bfa82f6175277",
+  "name": "Seated calfs raises",
+  "source": "images/seated-chair/seated-calf-raises-avatar-v8.jpg",
+  "assetSha256": "6b5cfbdaec9741e18164e9ad3350ba3471f550e313d5dbc497f7d7a3f007d72a",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 130,
+  "sheet": 17,
+  "exerciseId": "fp_9da74a2655c001f9",
+  "name": "Seated knee lift",
+  "source": "images/seated-chair/seated-knee-lift-avatar-v8.jpg",
+  "assetSha256": "ec9b9c6f497be3ca2914a088d998b46105ce2eba248237da7b709427dfc5c66a",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 131,
+  "sheet": 17,
+  "exerciseId": "fp_583a7b6ccf5e390b",
+  "name": "Seated leg extension",
+  "source": "images/seated-chair/seated-leg-extension-avatar-v8.jpg",
+  "assetSha256": "8161a39b972c4590c5b0fa3bb31d1f1a916956047b82e3b9e7489cdfb8f02c63",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 132,
+  "sheet": 17,
+  "exerciseId": "fp_5c9bbb42568e066c",
+  "name": "Seated band abduction",
+  "source": "images/seated-chair/seated-band-abduction-avatar-v8.jpg",
+  "assetSha256": "05b05655d62a4893f1e4bd327ee2cb6352005848c9ba0bdb42fd28c532f55219",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 133,
+  "sheet": 17,
+  "exerciseId": "fp_940a12dcf63225d8",
+  "name": "Seated band leg curl",
+  "source": "images/seated-chair/seated-band-leg-curl-avatar-v8.jpg",
+  "assetSha256": "273666a5246a7813ad467b046b96226d9861244c06bd8819e3fade0d9b2998cb",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 134,
+  "sheet": 17,
+  "exerciseId": "fp_0df1add1de9ff580",
+  "name": "Seated hamstring stretch",
+  "source": "images/seated-chair/seated-hamstring-stretch-avatar-v8.jpg",
+  "assetSha256": "f337ff37cef1bc9bb84a44efc74a6f7573660250aa053fec2f3c6d24ab56d538",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 135,
+  "sheet": 17,
+  "exerciseId": "fp_e367c9af96d7ae60",
+  "name": "Seated ab contractions",
+  "source": "images/seated-chair/seated-ab-contractions-avatar-v8.jpg",
+  "assetSha256": "5cd8551976061e40af8a41211832cf0a57d7ee363d3d8bf04c6eb8c08e2c07b2",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 136,
+  "sheet": 17,
+  "exerciseId": "fp_963efaf95eb9ea70",
+  "name": "Seated chair crunches",
+  "source": "images/seated-chair/seated-chair-crunches-avatar-v8.jpg",
+  "assetSha256": "e65d4983d76429dc85462839442aa3b8f965e53c4e13114739b50cda2df33121",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 137,
+  "sheet": 18,
+  "exerciseId": "fp_92cd0d5fd88b53b7",
+  "name": "Seated knee to elbow",
+  "source": "images/seated-chair/seated-knee-to-elbow-avatar-v8.jpg",
+  "assetSha256": "05a65e08fb9f94def71ba821e068e3ffba4a3fb0f92dc94567e43ba31c22896d",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 138,
+  "sheet": 18,
+  "exerciseId": "fp_d288ca26f5c3c5b1",
+  "name": "Seated chair squats",
+  "source": "images/seated-chair/seated-chair-squats-avatar-v8.jpg",
+  "assetSha256": "cdf7cb3b0f1454c5875f6c482d9b752e3550570b0dfcc35c63fbc4f804c9b79b",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 139,
+  "sheet": 18,
+  "exerciseId": "fp_e6de47880afff3c3",
+  "name": "Seated shoulder stretch",
+  "source": "images/seated-chair/seated-shoulder-stretch-avatar-v8.jpg",
+  "assetSha256": "549e4b0916664bac20d77f6ef612d2ffa917b8e940d689adcf5d97cb7e55f853",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 140,
+  "sheet": 18,
+  "exerciseId": "fp_55f82056b64addb5",
+  "name": "Seated shoulder roll",
+  "source": "images/seated-chair/seated-shoulder-roll-avatar-v8.jpg",
+  "assetSha256": "7dc78a6ca3a2c30f89aa1fcaf01d13e4ece59f7b4dee75309c21ccee934777ef",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 141,
+  "sheet": 18,
+  "exerciseId": "fp_cf809350cb39e408",
+  "name": "Seated arm circles",
+  "source": "images/seated-chair/seated-arm-circles-avatar-v8.jpg",
+  "assetSha256": "832a653b7b3b917bebce9ccf075314bdd97e0a63aca3d01830ca97d9bbfafd36",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 142,
+  "sheet": 18,
+  "exerciseId": "fp_992e4cd0badbf045",
+  "name": "Seated marching",
+  "source": "images/seated-chair/seated-marching-avatar-v8.jpg",
+  "assetSha256": "6c442450fa261ebe41a5f691731d3a1786331f5624ec90c9d1b4990de2d179f5",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 143,
+  "sheet": 18,
+  "exerciseId": "fp_01640004c8145a9a",
+  "name": "Seated chest opener",
+  "source": "images/seated-chair/seated-chest-opener-avatar-v8.jpg",
+  "assetSha256": "82f6d253d3d145cf621de994664b7068dfc3764191e49f003126692ce9433ac2",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 144,
+  "sheet": 18,
+  "exerciseId": "fp_98820ba98a6ef8a4",
+  "name": "Standing chair leg curl",
+  "source": "images/seated-chair/standing-chair-leg-curl-avatar-v8.jpg",
+  "assetSha256": "f720f9bc4447c33d271885dc8c415cfec68c29f0b3a99d3c1fe976b56ca65265",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 145,
+  "sheet": 19,
+  "exerciseId": "fp_d4e49eb464ca42bc",
+  "name": "Seated cervical stretch",
+  "source": "images/seated-chair/seated-cervical-stretch-avatar-v8.jpg",
+  "assetSha256": "ccbbf11777349f3799751330fa743ab4e836ee419003c820bad87d9d3d17089c",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 146,
+  "sheet": 19,
+  "exerciseId": "fp_23208818a88487c7",
+  "name": "Seated ankle stretches",
+  "source": "images/seated-chair/seated-ankle-stretches-avatar-v8.jpg",
+  "assetSha256": "1cba854139ead8a2c84b163725040072c0fa8fa310b43e24b9f84def81d7b0ec",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 147,
+  "sheet": 19,
+  "exerciseId": "fp_538a5caf7b161fb0",
+  "name": "Seated leg press – resistance band",
+  "source": "images/seated-chair/seated-leg-press-resistance-band-avatar-v8.jpg",
+  "assetSha256": "7c7a1a40575a29fac48a86b8b2eace8bbb70bb534ccd5261b1755aa580873fc5",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 148,
+  "sheet": 19,
+  "exerciseId": "fp_5d408b649789eb5c",
+  "name": "Standing chair calfs raises",
+  "source": "images/seated-chair/standing-chair-calf-raises-avatar-v8.jpg",
+  "assetSha256": "87dde4e94730ce00ab3f5bb9c7e129a50c5ec7db67ea0315465de97ffc9cae2f",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 149,
+  "sheet": 19,
+  "exerciseId": "fp_03be7dd54cccd997",
+  "name": "Standing chair heel/toe",
+  "source": "images/seated-chair/standing-chair-heel-toe-avatar-v8.jpg",
+  "assetSha256": "e01272f7ad3e5a96541db53668beb42457dc76bdbcf080f5142e820b3e42c2bc",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 150,
+  "sheet": 19,
+  "exerciseId": "fp_e718055869c6c0ab",
+  "name": "Standing chair half squat",
+  "source": "images/seated-chair/standing-chair-half-squat-avatar-v8.jpg",
+  "assetSha256": "06eb4619d6d9db7805e6b4e8dde3daf1563fb82ef418e386614fe9fc44e55934",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 151,
+  "sheet": 19,
+  "exerciseId": "fp_5461e59354073db8",
+  "name": "Standing chair abductie",
+  "source": "images/seated-chair/standing-chair-abduction-avatar-v8.jpg",
+  "assetSha256": "430c444a62a52555f4c7d280f288a18e156cf123b2db42e17bdf8aae2cbed972",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 152,
+  "sheet": 19,
+  "exerciseId": "fp_514654a0d4181742",
+  "name": "Standing chair hip extension",
+  "source": "images/seated-chair/standing-chair-hip-extension-avatar-v8.jpg",
+  "assetSha256": "3f549445eff57fa963e6e742d79d33898a0c177d872dd51b9facab8562950abb",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 153,
+  "sheet": 20,
+  "exerciseId": "fp_d5e159ca1d7436ac",
+  "name": "Standing chair back leg raise",
+  "source": "images/seated-chair/standing-chair-back-leg-raise-avatar-v8.jpg",
+  "assetSha256": "1371624b5fb39c298cf406cb3ab917c3fd7b7b7f2917527b95fb778804660fa5",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 154,
+  "sheet": 20,
+  "exerciseId": "fp_5319c4700561725d",
+  "name": "Standing chair knee lift",
+  "source": "images/seated-chair/standing-chair-knee-lift-avatar-v8.jpg",
+  "assetSha256": "64ab13e0e71e5c0e158066f7e05dc482515ad4312313ee79884f73be17dea048",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 155,
+  "sheet": 20,
+  "exerciseId": "fp_14c75a700561d59f",
+  "name": "One leg standing",
+  "source": "images/seated-chair/one-leg-standing-avatar-v8.jpg",
+  "assetSha256": "9f6d3a68fac3385d0177134f1fb00f025ca5d820a9aa95b1cbb9d2e1f449a14f",
+  "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+ },
+ {
+  "n": 156,
+  "sheet": 20,
+  "exerciseId": "fp_4b99c5f11b42a30d",
+  "name": "Standing chair shoulder rotations",
+  "source": "images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg",
+  "assetSha256": "8290b9e1fe168d92837c72a096dbc84276ec0e70f40de714b6e265b83e7f4e0b",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 157,
+  "sheet": 20,
+  "exerciseId": "fp_08fffade39257e4f",
+  "name": "Seated dumbell press up",
+  "source": "images/seated-chair/seated-dumbbell-press-up-avatar-v8.jpg",
+  "assetSha256": "e670caa10df091e9948f3ed01ac4824a354e010ea261d746b3328b4aad84644c",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ },
+ {
+  "n": 158,
+  "sheet": 20,
+  "exerciseId": "fp_5405dc499ab6f482",
+  "name": "Seated biceps curl",
+  "source": "images/seated-chair/seated-biceps-curl-avatar-v8.jpg",
+  "assetSha256": "f870976720e1391a04cda8511119b6eb94097e2112068317240cbed37b3ed6bd",
+  "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+ }
+]
