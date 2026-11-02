@@ -68,6 +68,58 @@
       "duration": 10.553469
     },
     {
+      "name": "Lunges curtsy alt",
+      "text": "Lunges curtsy alt. Sta rechtop en stap met een been schuin achterlangs je andere been. Zak door beide knieen, kom terug omhoog en wissel steeds van been.",
+      "src": "/audio/noor/846be7305dfb426f2eef527d218b82c3cd540c8d4864f46e0eb760d012650e52.mp3",
+      "duration": 9.552063,
+      "provenance": {
+        "provider": "HeyGen",
+        "route": "existing API result import; no new synthesis",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "model": "heygen-voice-1",
+        "language": "nl",
+        "expressiveness_boost": 1,
+        "requestedSpeed": null,
+        "sourceFile": "output/audio-source/846be7305dfb426f2eef527d218b82c3cd540c8d4864f46e0eb760d012650e52.wav",
+        "sourceDuration": 9.552063,
+        "sourceSha256": "373705eb1335c94c8d33599b32c492c8786b54dc7bc37297b87c0844bf9e87e8",
+        "mp3Sha256": "52e65fde1d4d94a311356b8e457e99da164c6087265f438459a99152565b44fe",
+        "sourceFormat": "wav pcm_s16le, 44100 Hz, mono",
+        "outputFormat": "mp3, 44100 Hz, mono",
+        "processing": "ffmpeg libmp3lame quality 2; no tempo, pitch, trim or gain changes",
+        "exactCatalogTextMatch": true,
+        "deliveryListeningReviewed": false,
+        "clinicalApproved": false,
+        "reviewLimitation": "Technical decode/duration and exact submitted text verified. Audio has not been fully listened to in this import; transcript and clinical correctness are not certified. API result has no requested speed metadata; global legacy speed does not describe this clip."
+      }
+    },
+    {
+      "name": "Lying abduction",
+      "text": "Lying abduction. Lig op je zij met je benen gestrekt op elkaar. Til je bovenste been rustig omhoog en laat het langzaam weer zakken.",
+      "src": "/audio/noor/ef8db823a77cebc1c680eff1f678a53d967769b91bf54feb951800ee166efc6f.mp3",
+      "duration": 7.94229,
+      "provenance": {
+        "provider": "HeyGen",
+        "route": "existing API result import; no new synthesis",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "model": "heygen-voice-1",
+        "language": "nl",
+        "expressiveness_boost": 1,
+        "requestedSpeed": null,
+        "sourceFile": "output/audio-source/ef8db823a77cebc1c680eff1f678a53d967769b91bf54feb951800ee166efc6f.wav",
+        "sourceDuration": 7.941633,
+        "sourceSha256": "c5bc8db18457c33b51af3a7a2ef511300d8c86e0868c44b046eecc9b33e8f7c5",
+        "mp3Sha256": "094da1c8843c2a593b31e5dd874f19d6593a1b63ede20d9862979f451b357d0b",
+        "sourceFormat": "wav pcm_s16le, 44100 Hz, mono",
+        "outputFormat": "mp3, 44100 Hz, mono",
+        "processing": "ffmpeg libmp3lame quality 2; no tempo, pitch, trim or gain changes",
+        "exactCatalogTextMatch": true,
+        "deliveryListeningReviewed": false,
+        "clinicalApproved": false,
+        "reviewLimitation": "Technical decode/duration and exact submitted text verified. Audio has not been fully listened to in this import; transcript and clinical correctness are not certified. API result has no requested speed metadata; global legacy speed does not describe this clip."
+      }
+    },
+    {
       "name": "Calf raises",
       "text": "Calf raises. Sta rechtop met je voeten op heupbreedte, eventueel met steun. Kom omhoog op je tenen en laat je hielen rustig weer zakken.",
       "src": "/audio/noor/06c0f985ec141be466f4bab91b8c016d5da0133e737c31bc6f89842beec97555.mp3",
@@ -372,6 +424,194 @@
       "text": "Wrist flexion. Laat je onderarm rusten op een tafel met je handpalm naar boven, hand over de rand. Beweeg je hand omhoog richting je onderarm en laat hem rustig terugzakken.",
       "src": "/audio/noor/6306f6e6b43c5d1f36ecf554883db5d34596f9dabfbcdcc5461309c2bc75ce40.mp3",
       "duration": 10.553469
+    },
+    {
+      "name": "Lying adduction",
+      "text": "Lying adduction. Lig op je zij met je bovenste been voor je onderste been op de grond. Til je onderste been rustig omhoog en laat het langzaam weer zakken.",
+      "src": "/audio/noor/5aae5668cf078e312f48c9b612e9e9a8dd0aec81dfbd7d4eadbf757183d70dd5.mp3",
+      "duration": 9.122494,
+      "provenance": {
+        "provider": "HeyGen",
+        "route": "existing API result import; no new synthesis",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "model": "heygen-voice-1",
+        "language": "nl",
+        "expressiveness_boost": 1,
+        "requestedSpeed": null,
+        "sourceFile": "output/audio-source/5aae5668cf078e312f48c9b612e9e9a8dd0aec81dfbd7d4eadbf757183d70dd5.wav",
+        "sourceDuration": 9.122494,
+        "sourceSha256": "51ff461327198e25fdc5d57b4ebc4447dafc60d2e994bee755a4656b439e0198",
+        "mp3Sha256": "ccc74cc8547d94fd0c97179a5fcb006c5da6e0d2a72009d387d353bce73975ff",
+        "sourceFormat": "wav pcm_s16le, 44100 Hz, mono",
+        "outputFormat": "mp3, 44100 Hz, mono",
+        "processing": "ffmpeg libmp3lame quality 2; no tempo, pitch, trim or gain changes",
+        "exactCatalogTextMatch": true,
+        "deliveryListeningReviewed": false,
+        "clinicalApproved": false,
+        "reviewLimitation": "Technical decode/duration and exact submitted text verified. Audio has not been fully listened to in this import; transcript and clinical correctness are not certified. API result has no requested speed metadata; global legacy speed does not describe this clip."
+      }
+    },
+    {
+      "name": "Squat",
+      "text": "Squat. Sta rechtop met je voeten op schouderbreedte. Zak door je knieen alsof je op een stoel gaat zitten, houd je rug recht en kom rustig weer omhoog.",
+      "src": "/audio/noor/f892950dc335d8591bffdc7a668fe61b8984c851dc5d7025882b5086231f5139.mp3",
+      "duration": 8.901905,
+      "provenance": {
+        "provider": "HeyGen",
+        "route": "existing API result import; no new synthesis",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "model": "heygen-voice-1",
+        "language": "nl",
+        "expressiveness_boost": 1,
+        "requestedSpeed": null,
+        "sourceFile": "output/audio-source/f892950dc335d8591bffdc7a668fe61b8984c851dc5d7025882b5086231f5139.wav",
+        "sourceDuration": 8.901905,
+        "sourceSha256": "7f2ffecc1959fa329f1d5421091ef267bcf8ed9f7d1ab573dc54d374bf2ab73f",
+        "mp3Sha256": "c727421fec59c0f34a6cbb46c4e9fbe31426a78f9cf907db30e2cc9058476d90",
+        "sourceFormat": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "codec_name": "pcm_s16le",
+              "sample_rate": "44100",
+              "channels": 1
+            }
+          ],
+          "format": {
+            "format_name": "wav",
+            "duration": "8.901905"
+          }
+        },
+        "outputFormat": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "codec_name": "mp3",
+              "sample_rate": "44100",
+              "channels": 1
+            }
+          ],
+          "format": {
+            "format_name": "mp3",
+            "duration": "8.901905"
+          }
+        },
+        "processing": "ffmpeg libmp3lame quality 2; no tempo, pitch, trim or gain changes",
+        "exactCatalogTextMatch": true,
+        "deliveryListeningReviewed": false,
+        "clinicalApproved": false,
+        "reviewLimitation": "Technical decode/duration and exact submitted text verified. Not fully listened to in this import; transcript and clinical correctness are not certified. API result has no requested speed metadata; global legacy speed does not describe this clip."
+      }
+    },
+    {
+      "name": "Dead bug",
+      "text": "Dead bug. Lig op je rug met armen omhoog en knieen gebogen boven je heupen. Strek langzaam een arm en het tegenovergestelde been richting de vloer en kom terug.",
+      "src": "/audio/noor/bdc8bf51171ae5711f481cfae2b872722f089ccfc1cf20a7458bf69fa44237f6.mp3",
+      "duration": 9.807483,
+      "provenance": {
+        "provider": "HeyGen",
+        "route": "existing API result import; no new synthesis",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "model": "heygen-voice-1",
+        "language": "nl",
+        "expressiveness_boost": 1,
+        "requestedSpeed": null,
+        "sourceFile": "output/audio-source/bdc8bf51171ae5711f481cfae2b872722f089ccfc1cf20a7458bf69fa44237f6.wav",
+        "sourceDuration": 9.807483,
+        "sourceSha256": "2dacead3d113ea93b40177e134f2b6c5d1da8c5d35eca8afa183018fd2056d17",
+        "mp3Sha256": "c5dc3493930165bd164ba6a0b8af336656a2f432f62f495f69cebedb15156aac",
+        "sourceFormat": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "codec_name": "pcm_s16le",
+              "sample_rate": "44100",
+              "channels": 1
+            }
+          ],
+          "format": {
+            "format_name": "wav",
+            "duration": "9.807483"
+          }
+        },
+        "outputFormat": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "codec_name": "mp3",
+              "sample_rate": "44100",
+              "channels": 1
+            }
+          ],
+          "format": {
+            "format_name": "mp3",
+            "duration": "9.807483"
+          }
+        },
+        "processing": "ffmpeg libmp3lame quality 2; no tempo, pitch, trim or gain changes",
+        "exactCatalogTextMatch": true,
+        "deliveryListeningReviewed": false,
+        "clinicalApproved": false,
+        "reviewLimitation": "Technical decode/duration and exact submitted text verified. Not fully listened to in this import; transcript and clinical correctness are not certified. API result has no requested speed metadata; global legacy speed does not describe this clip."
+      }
+    },
+    {
+      "name": "Step up",
+      "text": "Step up. Sta voor een verhoging en zet een voet er volledig op. Duw jezelf omhoog tot je rechtop staat en stap rustig weer naar beneden.",
+      "src": "/audio/noor/d16661019b9c30dbc2fe641e1bbb83ac8c5ffef4a48015ab0e0ab24e5e4a18d3.mp3",
+      "duration": 8.518776,
+      "provenance": {
+        "provider": "HeyGen",
+        "route": "existing API result import; no new synthesis",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "model": "heygen-voice-1",
+        "language": "nl",
+        "expressiveness_boost": 1,
+        "requestedSpeed": null,
+        "sourceFile": "output/audio-source/d16661019b9c30dbc2fe641e1bbb83ac8c5ffef4a48015ab0e0ab24e5e4a18d3.wav",
+        "sourceDuration": 8.518776,
+        "sourceSha256": "600fc30b25dcae8e9bf616ca4ad54e9001b7d614316f3ee129b04485519b80d2",
+        "mp3Sha256": "7232a791d1a21a20792227a96e148feb9c0780379ed6519c820a46c2dd570b5e",
+        "sourceFormat": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "codec_name": "pcm_s16le",
+              "sample_rate": "44100",
+              "channels": 1
+            }
+          ],
+          "format": {
+            "format_name": "wav",
+            "duration": "8.518776"
+          }
+        },
+        "outputFormat": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "codec_name": "mp3",
+              "sample_rate": "44100",
+              "channels": 1
+            }
+          ],
+          "format": {
+            "format_name": "mp3",
+            "duration": "8.518776"
+          }
+        },
+        "processing": "ffmpeg libmp3lame quality 2; no tempo, pitch, trim or gain changes",
+        "exactCatalogTextMatch": true,
+        "deliveryListeningReviewed": false,
+        "clinicalApproved": false,
+        "reviewLimitation": "Technical decode/duration and exact submitted text verified. Not fully listened to in this import; transcript and clinical correctness are not certified. API result has no requested speed metadata; global legacy speed does not describe this clip."
+      }
     }
   ]
 }

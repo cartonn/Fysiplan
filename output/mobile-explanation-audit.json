@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "reviewDate": "2026-11-02",
+  "catalog": "public/oefeningen.json",
+  "scope": {
+    "catalogEntries": 319,
+    "textEntriesRead": 319,
+    "visualAssetsInspected": 11,
+    "missingExplanationCount": 0,
+    "existingAudioExactTextMatches": 61,
+    "existingAudioTextMismatches": 0,
+    "avatarPathCount": 215,
+    "lineImagePathCount": 104,
+    "clinicalApproval": false,
+    "limitations": "Read-only source/text audit plus targeted visual inspection, not a clinical review of all 319 exercises, not a playback review of external videos. Findings identify contradictions and insufficient instructions; they do not establish which clinical variant is correct."
+  },
+  "policy": "Hold new narration for audioHolds until intended execution and current text are resolved. Existing withholding reasons are evidence of unresolved review, not new medical conclusions. Do not invent corrected execution from suspect generated imagery. Holds do not authorize deletion of exercises.",
+  "audioHolds": [
+    {"catalogIndex":179,"name":"Yoga ear pressure","reasonCode":"existing-review-hold","evidence":"content/beginhouding-pijl.json withheld 179: first rolling direction only; subsequent knee position and suitability require therapist confirmation.","action":"Resolve the existing execution review before recording."},
+    {"catalogIndex":192,"name":"Yoga noose","reasonCode":"existing-review-hold","evidence":"content/beginhouding-pijl.json withheld 192: arm binding and subsequent hand position are not represented by the arrow.","action":"Confirm complete instruction and whether additional visual detail is required."},
+    {"catalogIndex":219,"name":"Circle (apparaat)","reasonCode":"device-identity-unresolved","evidence":"Existing withheld 219 distinguishes two swinging arms from a new arm-crank concept. Current avatar circle-apparaat-avatar-v7.jpg shows separate moving arms. Text 'cirkelbeweging naar elkaar toe en weer terug' does not identify the intended mechanism.","action":"Confirm device/model and intended arm motion."},
+    {"catalogIndex":221,"name":"Dorsi-pecto (apparaat)","reasonCode":"text-image-contradiction","evidence":"Text: 'grepen boven je ... naar beneden tot borsthoogte'. Avatar dorsi-pecto-apparaat-avatar-v7.jpg shows arms moving from out at the sides to together in front of the chest. Existing withheld 221 confirms conflict.","action":"Resolve chest-fly versus downward-pull variant before changing text or recording."},
+    {"catalogIndex":222,"name":"Endy Armstrekker","reasonCode":"text-image-contradiction","evidence":"Text: upper arms on pad, extend arms downward. Avatar endy-armstrekker-avatar-v7.jpg: seated forward press, no upper-arm support pad. Existing withheld 222 confirms conflict.","action":"Verify intended Endy machine and direction; do not infer correctness from avatar."},
+    {"catalogIndex":230,"name":"Endy Rotator","reasonCode":"text-image-contradiction","evidence":"Text: upper arm at body, elbow ninety degrees, rotate forearm outward. Avatar endy-rotator-avatar-v7.jpg: arm changes to an extended sideways position. Existing withheld 230 requires original device/photo.","action":"Verify machine and movement before narration."},
+    {"catalogIndex":238,"name":"Rotator (apparaat)","reasonCode":"text-image-contradiction","evidence":"Text describes forearm outward rotation. Avatar rotator-apparaat-avatar-v7.jpg depicts seated trunk rotation on a torso machine. Existing withheld 238 explicitly says source shows trunk rotation but text shoulder rotation.","action":"Confirm intended exercise and correct approved source text before narration."},
+    {"catalogIndex":251,"name":"Foam roller back lower cross","reasonCode":"existing-safety-review-hold","evidence":"Existing withheld 251 explicitly says not released and asks therapist to select another execution or remove the card. Current text still directs roller under lower back.","action":"Retain review hold; no new narrated endorsement."},
+    {"catalogIndex":252,"name":"Foam roller back lower","reasonCode":"existing-safety-review-hold","evidence":"Existing withheld 252 explicitly says not released and asks therapist to select another execution or remove the card. Current text still directs rolling over lower back.","action":"Retain review hold; no new narrated endorsement."},
+    {"catalogIndex":263,"name":"Med ball obliques cross","reasonCode":"incomplete-direction","evidence":"Text starts lying with ball above one shoulder and ends 'beweeg gecontroleerd diagonaal terug', without stating which body part moves, destination, or preceding movement that 'terug' refers to.","action":"Obtain precise approved start, moving body part, destination and return. Do not supply guessed diagonal trajectory."},
+    {"catalogIndex":265,"name":"Med ball swing","reasonCode":"missing-named-movement","evidence":"Text ends with bringing the medicine ball between the legs; it never describes the swing or return. Inspected medicine-ball-swing-line-v1.png is a single lowered-ball pose, not a verified movement sequence.","action":"Confirm intended swing trajectory and add its missing phases before recording."},
+    {"catalogIndex":267,"name":"Med ball lunge overhead press","reasonCode":"missing-named-movement","evidence":"Text describes stepping into a lunge while holding ball overhead and returning via front foot; no press phase is described. Inspected image is a single lunge with ball already overhead.","action":"Confirm whether this is overhead-hold lunge or a combined press, then align name/text/visual."},
+    {"catalogIndex":275,"name":"Mob back cat/cow","reasonCode":"name-text-variant-unclear","evidence":"Text describes rounded back followed by neutral; no second named cow phase is described. Inspected mob-back-cat-cow-line-v1.png shows only rounded-back pose.","action":"Confirm whether rounded-to-neutral is deliberate prescribed variant; align name or complete approved instruction."},
+    {"catalogIndex":294,"name":"Seated band leg curl","reasonCode":"missing-equipment-setup","evidence":"Text says band around one ankle and bend knee backward against resistance; it never explains where or how the other end of the resistance band is held/anchored.","action":"Confirm actual resistance setup using approved original before recording a complete self-contained instruction."},
+    {"catalogIndex":310,"name":"Standing chair heel/toe","reasonCode":"missing-named-movement","evidence":"Text only describes flat foot to raised heels and back. It does not describe a toe-raising phase suggested by heel/toe. Inspected standing-chair-heel-toe-line-v1.png shows only raised heels.","action":"Confirm heel-only versus alternating heel/toe variant and align name/text/visual."}
+  ],
+  "integrationFindings": [
+    {"severity":"medium","location":"public/kaart.html demoKlok","evidence":"Pose switches every 2400 ms with sound enabled, independent of actual narration duration or speech phase.","recommendation":"Do not label this as synchronized instruction. Use explicit reviewed pose metadata and meaningful timing; otherwise static illustration plus narration."},
+    {"severity":"medium","location":"public/kaart.html leesVoor Dutch branch","evidence":"Dutch audio uses only library name + explanation; personal sets/repetitions/resistance and client remarks are omitted. Other-language device narration includes more card content.","recommendation":"Show an explicit note that narration covers general execution and patient must follow visible therapist instructions. Do not send patient fields for voice generation."},
+    {"severity":"medium","location":"public/oefeningen.json kaartImg","evidence":"104 entries point at line-v1.png, not avatar-v7. Existing avatar count is 215, not 319.","recommendation":"Track coverage accurately; do not claim all mobile images are avatar pairs."}
+  ],
+  "verifiedExamples": [
+    {"catalogIndex":76,"name":"Abroller","result":"Current avatar shows a loose ab wheel held with two hands, consistent with current kneeling wheel-roll text; no ab-machine mismatch remains in this file."},
+    {"catalogIndex":1,"name":"Anteflexie armen","result":"Avatar shows arms down then lifted forward to shoulder height, consistent with stated direction. Image adds dumbbells not specified in generic text; therapist determines load."}
+  ],
+  "safeProposedChanges": [
+    {"type":"interface-copy","text":"De stem legt de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op deze kaart.","rationale":"Describes actual audio scope without changing clinical instruction or disclosing patient data."}
+  ],
+  "catalogTextEditsApplied": false,
+  "newClinicalInstructionsProposed": false,
+  "remainingEntriesStatus": "No specific text hold identified in this audit; this does not mean clinically approved or all associated videos visually checked."
+}

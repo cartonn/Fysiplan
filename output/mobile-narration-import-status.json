@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-02",
+  "effectiveCatalog": "319 locally available V2 exercises; runtime practice overrides excluded",
+  "counts": {
+    "catalog": 319,
+    "recordingsAvailable": 67,
+    "recordingsMissing": 252,
+    "explicitNarrationHolds": 15,
+    "missingWithoutIdentifiedHold": 237,
+    "legacyRecordings": 61,
+    "existingApiResultsImported": 6,
+    "synthesisCallsByThisImport": 0
+  },
+  "importedNames": ["Lunges curtsy alt", "Lying abduction", "Lying adduction", "Squat", "Dead bug", "Step up"],
+  "verified": ["Exact submitted text matches current effective V2 name and explanation", "None of the six imported clips has an explicit narration hold", "Original returned WAV files preserved under output/audio-source", "WAV and MP3 formats/durations measured with ffprobe", "MP3 encoding only; no pitch, tempo, trimming or gain changes", "Source and MP3 SHA-256 and provider settings recorded per clip"],
+  "reviewLimitations": ["Imported clips have not been fully listened to during this import", "Exact submitted text is not an independently transcribed spoken transcript", "No clinical correctness approval is implied", "Absence of an identified hold does not certify an exercise or video", "Global manifest speed 0.95 refers to legacy recordings; imported API results supplied no requested-speed field", "No complete visual audit of all 319 assets or external videos was performed"],
+  "tests": ["node scripts/check-noor-assets.mjs --partial", "node scripts/test-mobile-narration-review.mjs", "node scripts/test-noor-audio.mjs"],
+  "deploymentPerformedByThisImport": false
+}

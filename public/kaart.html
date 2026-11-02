@@ -593,6 +593,32 @@
   })();
   var VERT={};
   var K=null;
+  var mediaReviewReady=false,blockedMedia={},explanationHolds=[];
+  function mediaSource(o){return String(o&&(o.kaartImg||o.img)||'').replace(/^\/+/, '').replace(/^v2\//,'');}
+  function mediaKey(o){return String(o&&o.exerciseId||'')+'|'+mediaSource(o);}
+  function mediaWithheld(o){return !mediaReviewReady||!!blockedMedia[mediaKey(o)];}
+  function explanationWithheld(o){return !mediaReviewReady||!o||explanationHolds.some(function(h){return (h.exerciseId&&h.exerciseId===o.exerciseId)||h.name===o.naam;});}
+  async function loadMobileReview(){
+    var responses=await Promise.all([fetch('/mobile-media-review.json',{cache:'no-cache'}),fetch('/mobile-narration-review.json',{cache:'no-cache'})]);
+    if(responses.some(function(r){return !r.ok;}))throw Error('Review unavailable');
+    var data=await Promise.all(responses.map(function(r){return r.json();}));
+    if(!Array.isArray(data[0].entries)||!Array.isArray(data[1].holds))throw Error('Invalid review');
+    explanationHolds=data[1].holds.filter(function(h){return h.status==='hold';});
+    await Promise.all(data[0].entries.filter(function(e){return e.status==='rejected';}).map(async function(e){
+      // An old rejection must not silently reject a different replacement asset.
+      // If verification fails, withhold that candidate until it can be checked.
+      if(!/^images\/[A-Za-z0-9_./-]+$/.test(e.source)||!e.exerciseId)return;
+      var key=e.exerciseId+'|'+e.source;
+      try{
+        var response=await fetch('/'+e.source,{cache:'no-cache'});
+        if(!response.ok)throw Error('Image unavailable');
+        var digest=await crypto.subtle.digest('SHA-256',await response.arrayBuffer());
+        var hash=Array.from(new Uint8Array(digest)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+        if(hash===e.assetSha256)blockedMedia[key]=true;
+      }catch(error){blockedMedia[key]=true;}
+    }));
+    mediaReviewReady=true;
+  }
   function tr(k){var d=T[TAAL]||T.nl;return d[k]!=null?d[k]:T.nl[k];}
   // teksten voor het seintje naar de praktijk (apart blokje; valt terug op Nederlands)
   var TSN={
@@ -953,6 +979,7 @@
     chosen.forEach(function(x,idx){
       var nk=normEx(x.n);
       var o=(x.id&&byStable[x.id])||byNorm[nk];
+      var hideMedia=mediaWithheld(o),holdExplanation=explanationWithheld(o);
       var key=cellPrefix(x)+'.'+(x.i||0);
       // voorschrift: eerste ingevulde rij van het schema als losse chips
       var chips='',eersteS='',eersteH='';
@@ -982,7 +1009,7 @@
       var stream=(praktijkStream&&praktijkStream.iframe)||(catalogus&&catalogus.iframe);
       var aiVideo=praktijkStream||catalogus;
       var knop='';
-      var videoTekst=o&&o.uitleg?vt(o.uitleg):'';
+      var videoTekst=!holdExplanation&&o&&o.uitleg?vt(o.uitleg):'';
       var videoTekstData=videoTekst?' data-vtekst="'+esc(videoTekst)+'"':'';
       if(eigen){
         var eigenMeta=praktijkEigen&&o.video&&o.video.eigenMeta;
@@ -992,6 +1019,7 @@
       else if(stream)knop='<button class="vbtn" data-stream="'+esc(stream)+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>'+
         (aiVideo.aiGenerated?'<div class="vmeta">'+esc(aiVideo.reviewStatus==='concept'?(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl):(VIDEO_META[TAAL]||VIDEO_META.nl))+'</div>':'');
       else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
+      if(hideMedia||holdExplanation)knop='';
       var beeldpad=o?(o.kaartImg||o.img):'';
       // het v2-kanaal levert al absolute paden (/v2/images/...); oudere relatieve paden
       // krijgen zelf een schuine streep, zodat er nooit een dubbele ontstaat
@@ -1005,13 +1033,15 @@
       // beschrijvend label voor toetsenbord- en screenreadergebruik
       var fotoLabel=esc(vt(x.n))+': '+esc(heeftVideo?tr('fotoVideo'):tr('fotoBekijk'));
       html+='<div class="oef"><div class="oefkop"><span class="nr">'+(idx+1)+'</span>'+
-        (o?'<button type="button" class="fotoknop" aria-label="'+fotoLabel+'"><img src="'+esc(beeldpad)+'" alt="" loading="lazy" data-s="'+esc(eersteS)+
-          '" data-h="'+esc(eersteH)+'" data-uitleg="'+esc((o.uitleg||''))+'" data-heeft-video="'+(heeftVideo?'1':'0')+'"/>'+
+        (o&&!hideMedia?'<button type="button" class="fotoknop" aria-label="'+fotoLabel+'"><img src="'+esc(beeldpad)+'" alt="" loading="lazy" data-s="'+esc(eersteS)+
+          '" data-h="'+esc(eersteH)+'" data-audio-naam="'+esc(o.naam)+'" data-uitleg="'+esc(holdExplanation?'':(o.uitleg||''))+'" data-heeft-video="'+(heeftVideo?'1':'0')+'"/>'+
           badge+'</button>':'')+
         '<div class="oefinfo"><div class="naam">'+esc(vt(x.n))+'</div>'+
         (chips?'<div class="chips">'+chips+'</div>':'')+'</div></div>'+
         knop+'<div class="vhouder"></div>'+
-        (TAAL==='nl'&&o&&o.uitleg?(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg)?'<button type="button" class="vbtn" data-noor="'+idx+'">Luister naar Noor</button>':'<div class="vmeta">Natuurlijke stemopname nog niet beschikbaar. De uitleg staat bij de afbeelding.</div>'):'')+
+        (hideMedia?'<p class="vmeta">De oefenafbeelding wordt gecontroleerd en is tijdelijk niet zichtbaar. Je dosering blijft op deze kaart staan.</p>':'')+
+        (holdExplanation?'<p class="vmeta">De algemene uitleg wordt gecontroleerd. Vraag je behandelaar om de uitvoering; je persoonlijke dosering blijft staan.</p>':
+          (TAAL==='nl'&&o&&o.uitleg?(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg)?'<button type="button" class="vbtn" data-noor="'+idx+'">Luister naar Noor</button>':'<div class="vmeta">Natuurlijke stemopname nog niet beschikbaar. De uitleg staat bij de afbeelding.</div>'):''))+
         '<button type="button" class="oefdone" data-idx="'+idx+'" aria-pressed="false"><span class="odv" aria-hidden="true"></span><span class="odt"></span></button>'+
         '<button type="button" class="oefzwaar" data-zidx="'+idx+'"></button></div>';
     });
@@ -1234,18 +1264,28 @@
   }
 
   // ---- voorlezen met de ingebouwde spraak van de telefoon (gratis, ook offline) ----
-  var bezigLezen=false;
+  var bezigLezen=false,noorRequest=0;
   function stopLezen(){
+    noorRequest++;
     if(window.NoorAudio)NoorAudio.stop();
     if(window.speechSynthesis)speechSynthesis.cancel();
     bezigLezen=false;
     var b=document.getElementById('leesBtn');
     b.classList.remove('aan');
     document.getElementById('leesTxt').textContent=TAAL==='nl'?'Luister naar uitleg':tr('lees');
+    var geluid=document.getElementById('lbgeluid');
+    if(geluid){geluid.setAttribute('aria-pressed','false');geluid.textContent=TAAL==='nl'?'Luister naar uitleg':tr('geluidAan');}
+  }
+  function stopVideos(){
+    document.querySelectorAll('.vhouder video').forEach(function(v){v.pause();});
+    // Removing the embedded player also stops cross-origin iframe audio.
+    document.querySelectorAll('.vhouder.open').forEach(function(h){h.classList.remove('open');h.innerHTML='';});
+    document.querySelectorAll('.vbtn[aria-expanded="true"]').forEach(function(b){b.setAttribute('aria-expanded','false');});
   }
   function leesVoor(){
     if(!K)return;
     if(bezigLezen){stopLezen();return;}
+    stopVideos();
     if(TAAL==='nl'){
       var items=(K.kaart.chosen||[]).map(function(x){
         var o=metEigen(K.lib,K.kaart).find(function(o){return (x.id&&o.exerciseId===x.id)||normEx(o.naam)===normEx(x.n);});
@@ -1273,6 +1313,8 @@
         }
       }
       var uitleg=(x.id&&uitlegStabiel[x.id])||uitlegVan[normEx(x.n)];
+      var bron=metEigen(K.lib,K.kaart).find(function(o){return (x.id&&o.exerciseId===x.id)||normEx(o.naam)===normEx(x.n);});
+      if(explanationWithheld(bron))uitleg='';
       // een niet-vertaalde Nederlandse uitleg niet in een andere taal voorlezen
       if(uitleg&&(TAAL==='nl'||vt(uitleg)!==uitleg))zin+='. '+vt(uitleg).replace(/[.\s]+$/,'');
       delen.push(zin);
@@ -1289,13 +1331,40 @@
     speechSynthesis.speak(u);
   }
 
-  function speelNoor(items){
+  async function speelNoor(items){
+    stopVideos();
     stopLezen();
+    if(!mediaReviewReady){
+      alert('De controle van de algemene uitleg kon niet laden. Ververs de kaart. Je persoonlijke dosering blijft op de kaart staan.');return;
+    }
     if(!window.NoorAudio){alert('De natuurlijke stem kon niet laden. Ververs de kaart of lees de uitleg.');return;}
+    var request=noorRequest;
     bezigLezen=true;
     document.getElementById('leesBtn').classList.add('aan');
     document.getElementById('leesTxt').textContent=tr('stop');
-    NoorAudio.play(items,stopLezen,function(message){stopLezen();alert(message);});
+    var geluid=document.getElementById('lbgeluid');
+    if(geluid){geluid.textContent=tr('stop');geluid.setAttribute('aria-pressed','true');}
+    try{
+      await NoorAudio.load();
+      if(request!==noorRequest)return;
+      var held=[],missing=[],available=[];
+      items.forEach(function(x){
+        if(explanationHolds.some(function(h){return h.name===x.name;}))held.push(x.name);
+        else if(!NoorAudio.match(x.name,x.text))missing.push(x.name);
+        else available.push(x);
+      });
+      if(held.length||missing.length){
+        var message=[];
+        if(held.length)message.push('Uitleg wordt gecontroleerd: '+held.join(', ')+'.');
+        if(missing.length)message.push('Nog geen actuele stemopname: '+missing.join(', ')+'.');
+        message.push(available.length?'Daarna hoor je de beschikbare uitleg voor '+available.length+' oefening(en).':'Er is nu geen stemopname beschikbaar voor deze selectie.');
+        message.push('Volg daarnaast de dosering en opmerkingen van je behandelaar op deze kaart.');
+        alert(message.join('\n\n'));
+      }
+      if(!available.length){stopLezen();return;}
+      if(request!==noorRequest)return;
+      NoorAudio.play(available,stopLezen,function(message){stopLezen();alert(message);});
+    }catch(error){if(request!==noorRequest)return;stopLezen();alert('De natuurlijke stem kon niet laden. Probeer opnieuw of lees de beschikbare uitleg.');}
   }
 
   // ---- als app op het beginscherm: manifest, offline-werker en een vriendelijke uitnodiging ----
@@ -1332,8 +1401,7 @@
     if(/iphone|ipad|ipod/i.test(navigator.userAgent))setTimeout(function(){toonBanner(true);},2500);
   }
 
-  // ---- demonstratiestand: elk oefenbeeld bevat de begin- en eindhouding, gescheiden
-  // door een witte band; we zoeken die band en tonen de twee houdingen om en om ----
+  // Pose controls require reviewed source-specific metadata; otherwise show the full image.
   var demo={interval:null,cache:{},
     spraak:(function(){try{return localStorage.getItem('fp_demo_geluid')==='1';}catch(e){return false;}})()};
   // gesproken begeleiding bij de demonstratie, in de taal van de kaart; we kiezen
@@ -1413,71 +1481,13 @@
     document.getElementById('lbgeluid').hidden=true;
   }
   function demoSplitsing(img){
+    // Never infer poses from white space: a single body or apparatus can be split.
+    // Only reviewed metadata tied to this exact source may enable pose controls.
+    var p=demo.info&&demo.info.poseMetadata;
     var src=img.currentSrc||img.src;
-    if(Object.prototype.hasOwnProperty.call(demo.cache,src))return demo.cache[src];
-    var uit=null;
-    try{
-      var w=64,h=Math.max(8,Math.round(w*img.naturalHeight/img.naturalWidth));
-      var cv=document.createElement('canvas');cv.width=w;cv.height=h;
-      var cx=cv.getContext('2d',{willReadFrequently:true});
-      cx.fillStyle='#fff';cx.fillRect(0,0,w,h);
-      cx.drawImage(img,0,0,w,h);
-      var d=cx.getImageData(0,0,w,h).data;
-      function inkt(x,y){
-        if(x<w*0.3&&y<h*0.12)return 0; // het logo linksboven telt niet mee
-        var i=(y*w+x)*4;return (d[i]+d[i+1]+d[i+2])/3<232?1:0;
-      }
-      // schoonste witte lijn zoeken: eerst als kolom (houdingen naast elkaar),
-      // dan als rij (houdingen boven elkaar); de schoonste van de twee wint
-      var kol={som:1e9,pos:0},rij={som:1e9,pos:0},x,y,s;
-      for(x=Math.round(w*0.34);x<=Math.round(w*0.66);x++){
-        s=0;for(y=0;y<h;y++)s+=inkt(x,y);
-        if(s<kol.som){kol.som=s;kol.pos=x;}
-      }
-      for(y=Math.round(h*0.34);y<=Math.round(h*0.66);y++){
-        s=0;for(x=0;x<w;x++)s+=inkt(x,y);
-        if(s<rij.som){rij.som=s;rij.pos=y;}
-      }
-      // beide assen proberen, de schoonste eerst; een dunne band (bijvoorbeeld een
-      // TRX-riem) door de scheiding mag, en beide helften moeten een houding bevatten
-      var kand=[{as:'x',f:kol.pos/w,schoon:kol.som/h},{as:'y',f:rij.pos/h,schoon:rij.som/w}]
-        .sort(function(a,b){return a.schoon-b.schoon;});
-      for(var ki=0;ki<kand.length&&!uit;ki++){
-        var kn=kand[ki];
-        if(kn.schoon>0.065)break;
-        var een=0,twee=0;
-        for(y=0;y<h;y++)for(x=0;x<w;x++){
-          if((kn.as==='x'?x/w<kn.f:y/h<kn.f))een+=inkt(x,y);else twee+=inkt(x,y);
-        }
-        if(een>w*h*0.02&&twee>w*h*0.02)uit={as:kn.as,f:kn.f};
-      }
-      if(uit){
-        // richting van de beweging: het zwaartepunt van de twee houdingen bepaalt
-        // hoe de overgang meeschuift (een curl omhoog, een squat omlaag)
-        var s1={x:0,y:0,n:0},s2={x:0,y:0,n:0};
-        for(y=0;y<h;y++)for(x=0;x<w;x++){
-          if(!inkt(x,y))continue;
-          var voor=(uit.as==='x'?x/w<uit.f:y/h<uit.f);
-          var doel2=voor?s1:s2;
-          doel2.x+=voor?x:(uit.as==='x'?x-uit.f*w:x);
-          doel2.y+=voor?y:(uit.as==='y'?y-uit.f*h:y);
-          doel2.n++;
-        }
-        if(s1.n&&s2.n){
-          // zwaartepunten omrekenen naar het gedeelde doek waarin elke helft gecentreerd staat
-          var b1w=(uit.as==='x'?uit.f*w:w),b2w=(uit.as==='x'?(1-uit.f)*w:w);
-          var b1h=(uit.as==='y'?uit.f*h:h),b2h=(uit.as==='y'?(1-uit.f)*h:h);
-          var cw=Math.max(b1w,b2w),ch=Math.max(b1h,b2h);
-          var dx=((s2.x/s2.n+(cw-b2w)/2)-(s1.x/s1.n+(cw-b1w)/2))/cw*100;
-          var dy=((s2.y/s2.n+(ch-b2h)/2)-(s1.y/s1.n+(ch-b1h)/2))/ch*100;
-          var lang2=Math.sqrt(dx*dx+dy*dy),max2=8;
-          if(lang2>max2){dx=dx/lang2*max2;dy=dy/lang2*max2;}
-          uit.dx=dx;uit.dy=dy;
-        }else{uit.dx=0;uit.dy=0;}
-      }
-    }catch(e){}
-    demo.cache[src]=uit;
-    return uit;
+    if(!p||p.reviewStatus!=='approved'||p.source!==src||
+      (p.axis!=='x'&&p.axis!=='y')||!Number.isFinite(p.split)||p.split<=0||p.split>=1)return null;
+    return {as:p.axis,f:p.split,dx:0,dy:0};
   }
   // Eén resolutie en één schaal per posepaar: geen uitrekken of inzoomen bij wisselen.
   // Alleen lege buitenmarges weglaten; personen, matten en apparatuur blijven intact.
@@ -1560,7 +1570,7 @@
     var luD=document.getElementById('lbuitleg');if(luD.innerHTML)luD.hidden=true;
     knop.textContent=tr('demoUit');knop.setAttribute('aria-pressed','true');
     if(window.speechSynthesis){document.getElementById('lbgeluid').hidden=false;demoGeluidKnop();}
-    if(TAAL==='nl'&&demo.spraak)speelNoor([{name:document.getElementById('lbnaam').textContent,text:eigenUitleg}]);
+    if(TAAL==='nl'&&demo.spraak)speelNoor([{name:d.name||'',text:eigenUitleg}]);
     else demoZeg(demo.introTekst+' '+tr('houding1'));
     // wie liever geen beweging ziet, stapt met een tik zelf door de houdingen
     var stil=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1611,10 +1621,12 @@
         }
         var lb=document.getElementById('lightbox');
         demoStop();
-        demo.info={s:foto.dataset.s||'',h:foto.dataset.h||'',uitleg:foto.dataset.uitleg||''};
+        stopVideos();
+        demo.info={name:foto.dataset.audioNaam||'',s:foto.dataset.s||'',h:foto.dataset.h||'',uitleg:foto.dataset.uitleg||''};
         document.getElementById('lbimg').src=foto.src;
         var oefEl=foto.closest('.oef').querySelector('.naam');
         document.getElementById('lbnaam').textContent=oefEl?oefEl.textContent:'';
+        document.getElementById('lbimg').alt=oefEl?oefEl.textContent:'';
         var kd=document.getElementById('lbdemoKnop');
         kd.hidden=true;
         // zelfde rustige uitleg als onder de video's, ook bij oefeningen zonder video
@@ -1629,8 +1641,14 @@
           document.getElementById('lbimg').style.maxHeight='';
         }
         lb.classList.add('open');
-        // de beweging voordoen zodra de foto geladen is: elk oefenbeeld bevat de
-        // begin- en eindhouding; lukt het splitsen niet, dan blijft de foto staan
+        var geluid=document.getElementById('lbgeluid');
+        geluid.hidden=TAAL!=='nl'||!window.NoorAudio||!NoorAudio.match(demo.info.name,demo.info.uitleg);
+        geluid.textContent='Luister naar uitleg';geluid.setAttribute('aria-pressed','false');
+        if(TAAL==='nl'){
+          lu.innerHTML+='<p class="vmeta">Volledige oefenafbeelding. De houdingen worden niet automatisch uitgesneden of afgespeeld.</p>';
+          lu.hidden=false;
+        }
+        // Only reviewed pose metadata can enable a demonstration; default is the full image.
         var lbi=document.getElementById('lbimg');
         var voordoen=function(){
           if(!lb.classList.contains('open')||lbi.src!==foto.src)return;
@@ -1642,6 +1660,7 @@
       var b=e.target.closest('.vbtn');if(!b)return;
       var houder=b.closest('.oef').querySelector('.vhouder');
       var open=houder.classList.contains('open');
+      stopLezen();
       document.querySelectorAll('.vhouder.open').forEach(function(h){h.classList.remove('open');h.innerHTML='';});
       document.querySelectorAll('.vbtn[aria-expanded="true"]').forEach(function(k){k.setAttribute('aria-expanded','false');});
       if(open)return;
@@ -1787,6 +1806,11 @@
         return;
       }
       if(e.target.closest('#lbgeluid')){
+        if(TAAL==='nl'){
+          if(bezigLezen)stopLezen();
+          else speelNoor([{name:(demo.info||{}).name||'',text:(demo.info||{}).uitleg||''}]);
+          return;
+        }
         demo.spraak=!demo.spraak;
         try{localStorage.setItem('fp_demo_geluid',demo.spraak?'1':'');}catch(err){}
         demoGeluidKnop();
@@ -1811,7 +1835,8 @@
     document.addEventListener('keydown',function(e){
       if(e.key==='Escape'){lbox.classList.remove('open');demoStop();}
     });
-    window.addEventListener('pagehide',stopLezen);
+    window.addEventListener('pagehide',function(){stopLezen();stopVideos();demoStop();});
+    document.addEventListener('visibilitychange',function(){if(document.hidden){stopLezen();stopVideos();}});
     var sel=document.getElementById('taalsel');
     sel.value=TAAL;
     sel.addEventListener('change',function(){wisselTaal(sel.value);});
@@ -1870,6 +1895,7 @@
       // De therapeut kan voor editor/PDF een lijntekening kiezen. De digitale
       // patiëntkaart gebruikt bewust altijd het kleurenbeeld uit de v2-catalogus.
       fetch('/v2/oefeningen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
+      ,loadMobileReview().catch(function(){mediaReviewReady=false;})
     ]).then(function(res){
       if(!res[0]||!res[0].ok){document.getElementById('fout').style.display='block';return;}
       K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1],ai:!!res[0].ai};
