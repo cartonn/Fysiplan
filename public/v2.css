@@ -59,8 +59,13 @@ html.v2 .beeldkeuze-qr{font-size:10px;font-weight:650;color:var(--brand);backgro
 /* De keuze Lijntekeningen/Avatar gebruikt bewust de gedeelde basiscomponent
    uit index.html, zodat V2 visueel exact gelijk blijft aan admin. */
 
-/* V2 toont categorieën net als V1/beheer: in meerdere regels, zonder veegbalk. */
-html.v2 .filters{flex-wrap:wrap;overflow:visible;flex:initial;margin-right:0;padding:0}
+/* Alleen het compacte categorieblok scrollt; de oefeningen krijgen de rest. */
+html.v2 #filters{flex:0 0 auto;flex-wrap:wrap;max-height:72px;overflow-y:auto;overflow-x:hidden;
+  align-content:flex-start;margin:0 0 8px;padding:2px 3px 4px 0;scrollbar-gutter:stable;
+  overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+html.v2 .col-controls .bd{overflow:hidden}
+html.v2 .col-controls #list{flex:1 1 0;min-height:0;height:auto;overflow-y:auto;
+  overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 html.v2 .filters .chip{flex:initial;white-space:normal}
 html.v2 .row .nm{min-width:0;overflow-wrap:anywhere}
 
@@ -129,8 +134,8 @@ html.v2 .v2badge{background:linear-gradient(150deg,#2f66bd,#1c4487);color:#fff;
   html.v2 .wrap{grid-template-columns:1fr;padding:10px;gap:10px}
   /* oefeningenlijst: compact blok boven de kaart, met eigen scroll */
   html.v2 .col-controls{position:static;height:clamp(480px,70svh,640px);max-height:none}
-  html.v2 .col-controls .bd{overflow-y:auto}
-  html.v2 .col-controls .list{min-height:220px;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+  html.v2 .col-controls .bd{overflow:hidden}
+  html.v2 .col-controls .list{min-height:0;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
   html.v2 .row{gap:7px;padding:7px 5px}
   html.v2 .row .thumb{width:48px !important;height:48px !important;flex-basis:48px}
   html.v2 .row .fav{width:32px;height:32px}
@@ -204,6 +209,13 @@ html.v2 #a4::after{content:"Neem pijn serieus: stop bij toenemende pijn en overl
   /* veiligheidsregel klein en rustig onderaan het papier */
   html.v2 #a4::after{bottom:1mm;font-size:6.5pt;color:#666}
 }
+
+/* Compacte beeldkeuze naast Help, niet boven de oefenbibliotheek. */
+html.v2 .topbar .menu{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+html.v2 .topbar #beeldKeuze{margin:0;padding:0;border:0;background:none;width:auto}
+html.v2 .topbar #beeldKeuze .beeldkeuze-kop{display:none}
+html.v2 .topbar #beeldKeuze .beeldsegment button{padding:5px 9px;font-size:12px}
+@media print{.shw-legenda{font-size:8px!important}}
 
 /* telefoon en smalle schermen: het A4-werkblad kan opzij vegen, maar niets wees daarop;
    deze hint staat alleen op het scherm en print nooit mee */

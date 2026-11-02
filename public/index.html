@@ -334,6 +334,7 @@
             <input id="p_plaats" placeholder="postcode en plaats" aria-label="Postcode en plaats"/>
             <input id="p_tel" placeholder="telefoon" aria-label="Telefoon"/>
             <input id="p_email" placeholder="e-mail" aria-label="E-mail"/>
+            <input id="p_website" placeholder="website praktijk" aria-label="Website praktijk" maxlength="200"/>
           </div>
         </div>
         <div class="client">
@@ -350,6 +351,7 @@
       </div>
       <div id="emptyA4" class="hint no-print" style="padding:14px 30px 0">Klik links op een oefening — het plaatje komt direct genummerd op de A4.</div>
       <table class="mon" id="mon"></table>
+      <div class="shw-legenda" style="font-size:10px;padding-top:3px">S = series · H = herhalingen · W = weerstand</div>
     </div>
   </div>
 </div>
@@ -1081,6 +1083,7 @@ bridge2.jpg</div>
   if(USE_V2_LIBRARY){
     var _beeldKeuze=document.getElementById('beeldKeuze');
     _beeldKeuze.hidden=false;
+    document.querySelector('.topbar .menu').appendChild(_beeldKeuze);
     syncV2Beeldkeuze();
     _beeldKeuze.addEventListener('click',function(e){
       var knop=e.target.closest('[data-v2-beeld]');
@@ -1955,13 +1958,13 @@ bridge2.jpg</div>
   prakSel.addEventListener('change',function(){
     var p=PRAKTIJKEN[+prakSel.value];if(!p)return;
     SET.praktijk=p.praktijk;SET.adres=p.adres||'';SET.plaats=p.plaats||'';SET.tel=p.tel||'';SET.email=p.email||'';
-    SET.logo=p.logo||'';
+    SET.logo=p.logo||'';SET.website=p.website||'';
     saveSettings();applySettings();
   });
   // ingevulde praktijk + adres automatisch onthouden op de server (bij verlaten van een veld)
   var prakSaveTimer=null;
   function upsertPraktijk(){
-    var p={praktijk:SET.praktijk||'',adres:SET.adres||'',plaats:SET.plaats||'',tel:SET.tel||'',email:SET.email||''};
+    var p={praktijk:SET.praktijk||'',adres:SET.adres||'',plaats:SET.plaats||'',tel:SET.tel||'',email:SET.email||'',website:SET.website||''};
     if(!p.praktijk.trim()||!p.adres.trim())return;
     clearTimeout(prakSaveTimer);
     prakSaveTimer=setTimeout(function(){
@@ -1969,7 +1972,7 @@ bridge2.jpg</div>
         .then(function(r){return r.json();}).then(function(d){if(d.ok)loadPraktijken();}).catch(function(){});
     },600);
   }
-  ['praktijk','p_adres','p_plaats','p_tel','p_email'].forEach(function(id){
+  ['praktijk','p_adres','p_plaats','p_tel','p_email','p_website'].forEach(function(id){
     var el=document.getElementById(id);
     if(el)el.addEventListener('change',upsertPraktijk);
   });
@@ -1992,7 +1995,7 @@ bridge2.jpg</div>
     var rd=new FileReader();
     rd.onload=function(){
       resizeDataUrl(rd.result,320,function(durl){
-        var p={praktijk:SET.praktijk,adres:SET.adres||'',plaats:SET.plaats||'',tel:SET.tel||'',email:SET.email||'',logo:durl};
+        var p={praktijk:SET.praktijk,adres:SET.adres||'',plaats:SET.plaats||'',tel:SET.tel||'',email:SET.email||'',website:SET.website||'',logo:durl};
         fetch('api/praktijken',{method:'POST',headers:PJSON(),body:JSON.stringify(p)})
           .then(function(r){return r.json().catch(function(){return {ok:false};});})
           .then(function(d){
@@ -2043,17 +2046,17 @@ bridge2.jpg</div>
       h+="<div style='font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:2px 0 4px'>Jouw sjablonen</div>";
       h+=eigenF.map(function(p){return rij(p.s,"<button class='btn primary' data-esjab='"+p.i+"'>Gebruik</button>"+
         (IS_V2&&(SET.praktijk||'').trim()?"<button class='btn' data-edeel='"+p.i+"' title='Deel dit sjabloon met de hele praktijk: elke collega kan het dan op elk apparaat gebruiken'>Deel</button>":"")+
-        "<button class='btn' data-edel='"+p.i+"' title='verwijderen' aria-label='verwijderen'>&times;</button>");}).join("");
+        "<button class='btn' data-edit-own='"+p.i+"'>Aanpassen</button><button class='btn' data-edel='"+p.i+"' title='verwijderen' aria-label='verwijderen'>&times;</button>");}).join("");
     }
     if(prakF.length){
       h+="<div style='font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:"+(eigenF.length?12:2)+"px 0 4px'>Sjablonen van de praktijk</div>";
       h+=prakF.map(function(p){return rij({naam:p.s.naam,sub:'Gedeeld met de hele praktijk',oefeningen:p.s.oefeningen||[]},
-        "<button class='btn primary' data-psjab='"+p.i+"'>Gebruik</button><button class='btn' data-pdel='"+p.i+"' title='verwijderen voor de hele praktijk' aria-label='verwijderen'>&times;</button>");}).join("");
+        "<button class='btn primary' data-psjab='"+p.i+"'>Gebruik</button><button class='btn' data-edit-shared='"+p.i+"'>Aanpassen als kopie</button><button class='btn' data-pdel='"+p.i+"' title='verwijderen voor de hele praktijk' aria-label='verwijderen'>&times;</button>");}).join("");
     }
     if((eigenF.length||prakF.length)&&stdF.length){
       h+="<div style='font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:12px 0 4px'>Standaardsjablonen</div>";
     }
-    h+=stdF.map(function(p){return rij(p.s,"<button class='btn primary' data-sjab='"+p.i+"'>Gebruik</button>");}).join("");
+    h+=stdF.map(function(p){return rij(p.s,"<button class='btn primary' data-sjab='"+p.i+"'>Gebruik</button><button class='btn' data-edit-standard='"+p.i+"'>Aanpassen als kopie</button>");}).join("");
     if(!h){el.innerHTML="<div class='hint'>Geen sjabloon gevonden voor &ldquo;"+esc(term)+"&rdquo;. Zoek op klacht (knie, rug) of op een oefening.</div>";return;}
     el.innerHTML=h;
   }
@@ -2173,11 +2176,13 @@ bridge2.jpg</div>
   // eigen dosering {n,s,h,w} — dat laatste bij eigen sjablonen die de exacte
   // dosering meenemen. sjabNaam/sjabDos halen naam en dosering er veilig uit.
   function sjabNaam(n){return (typeof n==='string')?n:(n&&n.n)||'';}
+  var sjabloonBewerkNaam='';
   function pasSjabloonToe(s){
     if(!s)return;
     // een sjabloon vervangt de hele selectie; had de therapeut al oefeningen gekozen,
     // vraag dan eerst — anders raakt dat werk stil kwijt
     if(chosen.length&&!confirm('Je hebt al '+chosen.length+' oefening'+(chosen.length===1?'':'en')+' gekozen. Vervangen door het sjabloon "'+s.naam+'"?'))return;
+    sjabloonBewerkNaam='';document.getElementById('sj_bewaar').textContent='Huidige kaart als sjabloon';
     var missing=[];
     chosen=[];
     // een sjabloon vervangt de héle kaart: begin met een schone dosering-grid
@@ -2201,10 +2206,11 @@ bridge2.jpg</div>
     });
     closeOv('ovSjab');render();
     if(missing.length)alert('Niet meer in de oefeningenlijst (overgeslagen): '+missing.join(', '));
+    return true;
   }
   // eigen sjablonen van de therapeut (alleen op dit apparaat, localStorage)
   function leesEigenSjab(){try{var m=JSON.parse(localStorage.getItem('fysiplan_eigen_sjablonen')||'[]');return Array.isArray(m)?m:[];}catch(e){return [];}}
-  function bewaarEigenSjab(l){try{localStorage.setItem('fysiplan_eigen_sjablonen',JSON.stringify(l.slice(0,50)));}catch(e){}}
+  function bewaarEigenSjab(l){try{localStorage.setItem('fysiplan_eigen_sjablonen',JSON.stringify(l.slice(0,50)));return true;}catch(e){alert('Het sjabloon is niet opgeslagen: de lokale opslag is vol of niet beschikbaar. Je kaart blijft open.');return false;}}
   function huidigAlsSjabloon(naam){
     var oef=chosen.map(function(c){var o=OEF[c.o];if(!o)return null;
       var pre='e'+c.o+'.'+c.i,it={n:o.naam};
@@ -2215,6 +2221,17 @@ bridge2.jpg</div>
     return {naam:naam,sub:'Jouw sjabloon (alleen op dit apparaat)',oefeningen:oef,persoonlijk:true};
   }
   document.getElementById('sj_lijst').addEventListener('click',function(e){
+    var edit=e.target.closest('[data-edit-own],[data-edit-shared],[data-edit-standard]');
+    if(edit){
+      var own=edit.hasAttribute('data-edit-own');
+      var bron=own?leesEigenSjab()[+edit.dataset.editOwn]:edit.hasAttribute('data-edit-shared')?(PRAKSJAB||[])[+edit.dataset.editShared]:SJABLONEN[+edit.dataset.editStandard];
+      if(bron&&pasSjabloonToe(bron)){
+        sjabloonBewerkNaam=bron.naam+(own?'':' — eigen variant');
+        document.getElementById('sj_bewaar').textContent='Aangepaste kaart bewaren';
+        alert('Pas de oefeningen en dosering op de kaart aan. Open daarna Sjablonen en kies Aangepaste kaart bewaren. Een standaard- of praktijksjabloon blijft ongewijzigd; je bewaart een eigen variant.');
+      }
+      return;
+    }
     var eb=e.target.closest('[data-edel]');
     if(eb){var lst=leesEigenSjab();lst.splice(+eb.dataset.edel,1);bewaarEigenSjab(lst);renderSjabLijst();return;}
     // eigen sjabloon delen met de hele praktijk (v2)
@@ -2255,13 +2272,15 @@ bridge2.jpg</div>
   });
   document.getElementById('sj_bewaar').addEventListener('click',function(){
     if(!chosen.length){alert('Kies eerst oefeningen (en vul eventueel de dosering in) om ze als eigen sjabloon te bewaren.');return;}
-    var naam=(window.prompt('Naam voor je eigen sjabloon:','')||'').trim();
+    var naam=(window.prompt('Naam voor je eigen sjabloon:',sjabloonBewerkNaam)||'').trim();
     if(!naam)return;
     var lst=leesEigenSjab();
     var idx=lst.findIndex(function(x){return String(x.naam||'').toLowerCase()===naam.toLowerCase();});
     var sj=huidigAlsSjabloon(naam);
-    if(idx>-1)lst[idx]=sj;else lst.unshift(sj);
-    bewaarEigenSjab(lst);renderSjabLijst();
+    if(idx>-1){if(!confirm('Bestaand eigen sjabloon "'+naam+'" vervangen?'))return;lst[idx]=sj;}else lst.unshift(sj);
+    if(!bewaarEigenSjab(lst))return;
+    sjabloonBewerkNaam='';document.getElementById('sj_bewaar').textContent='Huidige kaart als sjabloon';
+    renderSjabLijst();
   });
 
   // ---- AI-kaartassistent (v2): klacht omschrijven, voorstel beoordelen, op de kaart zetten ----
@@ -4131,7 +4150,7 @@ bridge2.jpg</div>
   // ---- praktijkinstellingen en Help ----
   function openOv(id){document.getElementById(id).classList.add('on');}
   function closeOv(id){document.getElementById(id).classList.remove('on');}
-  var PRAKKEYS={p_adres:'adres',p_plaats:'plaats',p_tel:'tel',p_email:'email'};
+  var PRAKKEYS={p_adres:'adres',p_plaats:'plaats',p_tel:'tel',p_email:'email',p_website:'website'};
   function applySettings(){
     var p=document.getElementById('praktijk');if(p)p.value=SET.praktijk||'';
     Object.keys(PRAKKEYS).forEach(function(id){var el=document.getElementById(id);if(el)el.value=SET[PRAKKEYS[id]]||'';});
@@ -4302,5 +4321,6 @@ bridge2.jpg</div>
   }).catch(function(){buildDefault();applySettings();render();});
 })();
 </script>
+<script src="/release-notes.js" defer></script>
 </body>
 </html>

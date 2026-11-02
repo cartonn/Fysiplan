@@ -190,6 +190,9 @@ try {
 
   const herstel = await post("/api/v1/wachtwoord-vergeten", { email: "therapeut@example.nl" });
   assert.equal(herstel.response.status, 200);
+  // Resetmail wordt bewust buiten de response verstuurd (geen account-enumeratie).
+  // Wacht begrensd op de mockmail in plaats van te racen met de achtergrondtaak.
+  for (let i = 0; i < 100 && mail.length < 2; i++) await new Promise(resolve => setTimeout(resolve, 20));
   assert.equal(mail.length, 2);
 
   const beginCategorieen = await json("/api/oefeningen/categorieen");
@@ -200,6 +203,20 @@ try {
   assert.equal(onbevoegd.response.status, 403);
 
   const headers = { "x-admin-sleutel": "test-admin-key" };
+  const profiel = {praktijk: "Test website", adres: "Teststraat 1", website: "www.voorbeeldpraktijk.nl"};
+  assert.equal((await post("/api/praktijken", profiel, headers)).response.status, 200);
+  let praktijken = (await json("/api/praktijken", {headers})).body;
+  assert.equal(praktijken.find(p => p.praktijk === profiel.praktijk).website, profiel.website);
+  // Een oudere client mag het nieuwe veld niet wissen.
+  assert.equal((await post("/api/praktijken", {praktijk: profiel.praktijk, adres: profiel.adres}, headers)).response.status, 200);
+  praktijken = (await json("/api/praktijken", {headers})).body;
+  assert.equal(praktijken.find(p => p.praktijk === profiel.praktijk).website, profiel.website);
+  assert.equal((await post("/api/praktijken", {...profiel, website: ""}, headers)).response.status, 200);
+  assert.equal((await json("/api/praktijken", {headers})).body.find(p => p.praktijk === profiel.praktijk).website, "");
+  const landing = await (await fetch(origin + "/v2")).text();
+  assert.match(landing, /Meer dan 300/);
+  assert.match(landing, /exclusief btw/);
+  assert.match(landing, /Anna — voorbeeld/);
   const slashNaam = await post("/api/oefeningen/categorieen", { naam: "Werp/ABC" }, headers);
   assert.equal(slashNaam.response.status, 400);
   const toegevoegd = await post("/api/oefeningen/categorieen", { naam: "Werp-ABC" }, headers);

@@ -116,12 +116,11 @@
   .lightbox .lbknop:active{background:rgba(255,255,255,.3)}
   .lightbox .lbknop[aria-pressed="true"]{background:rgba(255,255,255,.92);color:#16130c}
   .lightbox .demowrap{background:#fff;border-radius:18px;padding:10px;cursor:default;max-width:100%}
-  .lightbox .demobeeld{position:relative;overflow:hidden;border-radius:10px}
-  .lightbox .demobeeld canvas{display:block;max-width:100%;max-height:64vh;margin:0 auto;border-radius:10px;
-    transition:transform .85s cubic-bezier(.45,0,.55,1)}
-  .lightbox .demobeeld canvas.boven{position:absolute;top:0;left:0;right:0;margin:0 auto;height:100%;
-    width:auto;max-width:100%;opacity:0;
-    transition:opacity .85s cubic-bezier(.45,0,.55,1),transform .85s cubic-bezier(.45,0,.55,1)}
+  .lightbox .demobeeld{position:relative;overflow:hidden;border-radius:10px;background:#fff;
+    width:min(420px,calc(100vw - 60px),56vh);aspect-ratio:1;margin:0 auto}
+  .lightbox .demobeeld canvas{display:block;width:100%;height:100%;margin:0;border-radius:10px}
+  .lightbox .demobeeld canvas.boven{position:absolute;inset:0;opacity:0;
+    transition:opacity .85s cubic-bezier(.45,0,.55,1)}
   .lightbox .demowrap.tweede canvas.boven{opacity:1}
   /* ondertiteling onder de demonstratie: benoemt de houding die in beeld is */
   .lightbox .demotekst{text-align:center;font:600 15px/1.5 var(--disp);color:var(--inkt);
@@ -283,7 +282,20 @@
   .vknoot{font:500 12.5px/1.5 var(--disp);color:var(--zacht);margin-bottom:10px}
   .vantwoord{margin-top:12px;padding:12px 14px;background:var(--blauw-05,#edf2fa);
     border:1px solid var(--lijn);border-radius:12px;font:500 15px/1.55 var(--disp);color:var(--tekst)}
-  .mschaal{display:grid;grid-template-columns:repeat(11,1fr);gap:5px}
+  .mschaal{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:6px}
+  .mschaal button{min-height:44px}
+  .rustblok{margin:16px 0;border:1px solid var(--lijn);border-radius:16px;background:var(--vlak);overflow:hidden}
+  .rustblok>summary{cursor:pointer;padding:16px;min-height:48px;color:var(--tekst);font:600 16px/1.4 var(--disp)}
+  .rustblok>summary h2{display:inline;margin:0;font:inherit;color:inherit}
+  .rustblok>summary:focus-visible{outline:3px solid var(--blauw);outline-offset:-4px;border-radius:14px}
+  .rustblok[open]>summary{border-bottom:1px solid var(--lijn)}
+  .rustblok>.mkaart,.rustblok>.agkaart{border:0;box-shadow:none;margin:0;border-radius:0}
+  #meting{box-shadow:none}
+  #hsknoppen{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  #hsknoppen button{min-height:48px}
+  #hsknoppen button:last-child{grid-column:1 / -1}
+  @media(max-width:600px){.mschaal{grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}.mschaal button{min-height:46px;font-size:17px}}
+  @media print{.rustblok{display:none!important}}
   .mschaal button{font:700 15px/1 var(--disp);padding:12px 0;border-radius:10px;cursor:pointer;
     border:1px solid var(--lijn);background:var(--chip);color:var(--tekst);
     -webkit-tap-highlight-color:transparent;transition:background .12s,color .12s,border-color .12s}
@@ -407,6 +419,7 @@
         <option value="tr">T&uuml;rk&ccedil;e</option><option value="ar">&#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577;</option>
         <option value="uk">&#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1089;&#1100;&#1082;&#1072;</option>
       </select>
+      <label id="stemlabel" hidden>Stem <select id="stemsel" aria-label="Voorleesstem"><option value="">Automatisch</option></select></label>
       <button type="button" id="leesBtn" style="display:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"/></svg><span id="leesTxt">Lees voor</span></button>
       <button type="button" id="grootBtn" aria-pressed="false" title="Grotere letters"><span aria-hidden="true" style="font-size:11px;font-weight:800;line-height:1">A</span><span aria-hidden="true" style="font-size:16px;font-weight:800;line-height:1">A</span></button>
       <button type="button" id="printBtn" title="Print of bewaar als PDF"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg><span id="printTxt">Print</span></button>
@@ -421,11 +434,11 @@
   <div class="oefvoortgang" id="oefvoortgang" style="display:none"><span class="ovbalk" aria-hidden="true"><i id="ovvul"></i></span><span class="ovtekst" id="ovtekst"></span><button type="button" class="ovalles" id="ovalles" style="display:none"></button></div>
   <div id="oefs"></div>
 
-  <h2 id="vraagkop" style="display:none">Vraag het aan je kaart</h2>
+  <h2 id="vraagkop" style="display:none">Vraag aan digitale assistent</h2>
   <div class="vkaart" id="vraagkaart" style="display:none">
-    <p class="vknoot" id="vraagintro">De kaart legt alleen jouw eigen oefeningen uit en geeft geen medisch advies. Vragen worden niet bewaard.</p>
+    <p class="vknoot" id="vraagintro">De digitale assistent legt alleen jouw eigen oefeningen uit en geeft geen medisch advies. Vragen worden niet bewaard.</p>
     <form class="vrij" id="vraagform">
-      <input type="text" id="vraagveld" maxlength="300" autocomplete="off" aria-label="Vraag het aan je kaart"/>
+      <input type="text" id="vraagveld" maxlength="300" autocomplete="off" aria-label="Vraag aan digitale assistent"/>
       <button type="submit" class="vgo" id="vraagknop">Vraag</button>
     </form>
     <div class="vantwoord" id="vantwoord" role="status" aria-live="polite" style="display:none"></div>
@@ -455,7 +468,8 @@
     <a class="aweg" id="afics" href="#" style="text-decoration:none;display:inline-block">Zet in mijn agenda</a>
   </div>
 
-  <h2 id="hskop">Hoe gaat het nu vergeleken met de start?</h2>
+  <details class="rustblok">
+  <summary><h2 id="hskop">Hoe gaat het nu vergeleken met de start?</h2></summary>
   <div class="mkaart" id="hsblok">
     <p class="sintro" id="hsintro">Eén tik — zo ziet je fysiotherapeut hoe je herstel voelt.</p>
     <div class="sknoppen" id="hsknoppen" role="group" aria-labelledby="hskop">
@@ -468,6 +482,8 @@
     <div class="mdank" id="hsdank" role="status" aria-live="polite" style="display:none"></div>
     <p class="mnoot" id="hsnoot">Eén antwoord per dag telt; tik een andere knop om het te wijzigen.</p>
   </div>
+
+  </details>
 
   <!-- PSK: alleen zichtbaar als de therapeut een doelactiviteit heeft gezet -->
   <h2 id="pskkop" style="display:none">Jouw doelactiviteit</h2>
@@ -498,7 +514,8 @@
     <div class="sdank" id="sdank" role="status" aria-live="polite" style="display:none"></div>
   </div>
 
-  <h2 id="agendakop">Herinnering in je agenda</h2>
+  <details class="rustblok">
+  <summary><h2 id="agendakop">Herinnering in je agenda</h2></summary>
   <div class="agkaart">
     <p id="agintro">Vergeet je oefeningen niet: zet vaste oefenmomenten in de agenda van je telefoon. Kies je dagen en tijdstip.</p>
     <div class="agdagen" id="agdagen"></div>
@@ -509,6 +526,8 @@
     <button class="agbtn" id="agbtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M12 14v4M10 16h4"/></svg><span id="agknopTxt">Zet in mijn agenda</span></button>
     <p class="aghint" id="aghint">Je telefoon opent een agenda-uitnodiging die zichzelf elke week herhaalt. Dit werkt op iPhone en Android, zonder app of account.</p>
   </div>
+
+  </details>
 
   <div id="schema"></div>
 
@@ -624,7 +643,7 @@
   var TAFREL={nl:{v:'Vandaag',m:'Morgen'},en:{v:'Today',m:'Tomorrow'},de:{v:'Heute',m:'Morgen'},fr:{v:'Aujourd’hui',m:'Demain'},es:{v:'Hoy',m:'Mañana'},pl:{v:'Dzisiaj',m:'Jutro'},tr:{v:'Bugün',m:'Yarın'},ar:{v:'اليوم',m:'غدًا'},uk:{v:'Сьогодні',m:'Завтра'}};
   // teksten voor "vraag het aan je kaart" (apart blokje; valt terug op Nederlands)
   var TQ={
-    nl:{kop:'Vraag het aan je kaart',intro:'De kaart legt alleen jouw eigen oefeningen uit en geeft geen medisch advies. Vragen worden niet bewaard.',ph:'Bijv. hoe diep moet ik zakken?',knop:'Vraag',bezig:'Even denken…',fout:'Dat lukte even niet; probeer het zo opnieuw.'},
+    nl:{kop:'Vraag aan digitale assistent',intro:'De digitale assistent legt alleen jouw eigen oefeningen uit en geeft geen medisch advies. Vragen worden niet bewaard.',ph:'Bijv. hoe diep moet ik zakken?',knop:'Vraag',bezig:'Even denken…',fout:'Dat lukte even niet; probeer het zo opnieuw.'},
     en:{kop:'Ask your card',intro:'The card only explains your own exercises and gives no medical advice. Questions are not stored.',ph:'E.g. how deep should I go?',knop:'Ask',bezig:'Thinking…',fout:'That did not work; please try again in a moment.'},
     de:{kop:'Frag deine Karte',intro:'Die Karte erklärt nur deine eigenen Übungen und gibt keinen medizinischen Rat. Fragen werden nicht gespeichert.',ph:'Z. B. wie tief soll ich gehen?',knop:'Fragen',bezig:'Einen Moment…',fout:'Das hat gerade nicht geklappt; versuch es gleich noch einmal.'},
     fr:{kop:'Posez une question à votre carte',intro:'La carte explique uniquement vos propres exercices et ne donne aucun avis médical. Les questions ne sont pas conservées.',ph:'Ex. : jusqu’où descendre ?',knop:'Demander',bezig:'Un instant…',fout:'Cela n’a pas fonctionné ; réessayez dans un instant.'},
@@ -878,6 +897,7 @@
     // telefoonnummer als tel-link: op de telefoon bel je de praktijk in één tik
     var delen=[praktijk.adres,praktijk.plaats].filter(Boolean).map(esc);
     if(praktijk.tel)delen.push('<a href="tel:'+esc(String(praktijk.tel).replace(/[^+\d]/g,''))+'">'+esc(praktijk.tel)+'</a>');
+    if(praktijk.website)delen.push(esc(praktijk.website));
     document.getElementById('adres').innerHTML=delen.join(' · ');
     var bel=document.getElementById('belknop');
     if(praktijk.tel){bel.href='tel:'+String(praktijk.tel).replace(/[^+\d]/g,'');bel.style.display='flex';}
@@ -1195,6 +1215,7 @@
     var u=new SpeechSynthesisUtterance(delen.map(function(t){return String(t).replace(/[.\s]+$/,'');}).join('. ')+'.');
     u.lang=SPRAAK[TAAL]||'nl-NL';
     u.rate=0.95;
+    var gekozenStem=kiesStem();if(gekozenStem)u.voice=gekozenStem;
     u.onend=function(){stopLezen();};
     bezigLezen=true;
     document.getElementById('leesBtn').classList.add('aan');
@@ -1245,13 +1266,31 @@
   // waar mogelijk een vrouwelijke stem van het toestel (Claire of Fenna op iPhone,
   // de Google-stem op Android), anders de standaardstem van die taal
   var STEMMEN={};
-  if(window.speechSynthesis)try{speechSynthesis.onvoiceschanged=function(){STEMMEN={};};}catch(e){}
+  function vulStemmen(){
+    if(!window.speechSynthesis)return;
+    var sel=document.getElementById('stemsel'),lang=SPRAAK[TAAL]||'nl-NL',voorkeur='';
+    try{voorkeur=localStorage.getItem('fp_stem_'+lang)||'';}catch(e){}
+    sel.replaceChildren(new Option('Automatisch',''));
+    speechSynthesis.getVoices().filter(function(v){return v.lang.slice(0,2).toLowerCase()===lang.slice(0,2).toLowerCase();}).forEach(function(v){sel.add(new Option(v.name+' ('+v.lang+')',v.voiceURI));});
+    sel.value=voorkeur;if(sel.selectedIndex<0)sel.value='';
+    document.getElementById('stemlabel').hidden=sel.options.length<2;
+  }
+  if(window.speechSynthesis)try{speechSynthesis.addEventListener('voiceschanged',function(){STEMMEN={};vulStemmen();});}catch(e){}
+  document.getElementById('stemsel').addEventListener('change',function(){
+    try{localStorage.setItem('fp_stem_'+(SPRAAK[TAAL]||'nl-NL'),this.value);}catch(e){}
+    STEMMEN={};stopLezen();
+  });
+  document.getElementById('taalsel').addEventListener('change',function(){setTimeout(vulStemmen,0);});
+  vulStemmen();
   function kiesStem(){
     if(!window.speechSynthesis)return null;
     var lang=SPRAAK[TAAL]||'nl-NL';
     if(Object.prototype.hasOwnProperty.call(STEMMEN,lang))return STEMMEN[lang];
     var alle=[];
     try{alle=speechSynthesis.getVoices()||[];}catch(e){}
+    var voorkeur='';try{voorkeur=localStorage.getItem('fp_stem_'+lang)||'';}catch(e){}
+    var gekozen=alle.find(function(v){return v.voiceURI===voorkeur&&v.lang.slice(0,2).toLowerCase()===lang.slice(0,2).toLowerCase();});
+    if(gekozen)return gekozen;
     var kort=lang.slice(0,2).toLowerCase();
     var perTaal=alle.filter(function(v){return String(v.lang||'').replace('_','-').toLowerCase().indexOf(kort)===0;});
     var vrouw=/female|vrouw|femme|mujer|kobieta|kadın|Claire|Ellen|Fenna|Colette|Lotte|Samantha|Kate|Serena|Martha|Anna|Petra|Katja|Amelie|Audrey|Marie|Monica|Paulina|Zosia|Ewa|Yelda|Filiz|Laila|Mariam|Amira|Lesya|Milena|Google/i;
@@ -1279,22 +1318,13 @@
   function demoWissel(naarTweede){
     var wrap=document.getElementById('lbdemo');
     wrap.classList.toggle('tweede',naarTweede);
-    if(demo.c1&&demo.c2){
-      var k=0.5; // de helft van de zwaartepuntverschuiving per beeld houdt het rustig
-      if(naarTweede){
-        demo.c1.style.transform='translate('+(demo.dx*k)+'%,'+(demo.dy*k)+'%)';
-        demo.c2.style.transform='translate(0,0)';
-      }else{
-        demo.c1.style.transform='translate(0,0)';
-        demo.c2.style.transform='translate('+(-demo.dx*k)+'%,'+(-demo.dy*k)+'%)';
-      }
-    }
     var lbl=naarTweede?tr('houding2'):tr('houding1');
     var t=document.getElementById('lbdemotekst');
     if(t)t.textContent=lbl;
     demoZeg(lbl);
   }
   function demoStop(){
+    stopLezen();
     if(demo.interval){clearInterval(demo.interval);demo.interval=null;}
     if(window.speechSynthesis){try{speechSynthesis.cancel();}catch(e){}}
     var w=document.getElementById('lbdemo');
@@ -1373,6 +1403,35 @@
     demo.cache[src]=uit;
     return uit;
   }
+  // Eén resolutie en één schaal per posepaar: geen uitrekken of inzoomen bij wisselen.
+  // Alleen lege buitenmarges weglaten; personen, matten en apparatuur blijven intact.
+  function demoUniformFrames(frames){
+    var boxes=frames.map(function(c){
+      var b={x:0,y:0,w:c.width,h:c.height};
+      try{
+        var p=c.getContext('2d').getImageData(0,0,c.width,c.height).data;
+        var left=c.width,top=c.height,right=-1,bottom=-1;
+        for(var y=0;y<c.height;y++)for(var x=0;x<c.width;x++){
+          var i=(y*c.width+x)*4;
+          if(p[i+3]>16&&Math.min(p[i],p[i+1],p[i+2])<245){
+            left=Math.min(left,x);right=Math.max(right,x);
+            top=Math.min(top,y);bottom=Math.max(bottom,y);
+          }
+        }
+        if(right>=left&&bottom>=top)b={x:left,y:top,w:right-left+1,h:bottom-top+1};
+      }catch(e){} // cross-origin beelden: behoud het volledige bronvak
+      return b;
+    });
+    var size=640,pad=32;
+    var scale=Math.min((size-2*pad)/Math.max.apply(null,boxes.map(function(b){return b.w;})),
+      (size-2*pad)/Math.max.apply(null,boxes.map(function(b){return b.h;})));
+    return frames.map(function(src,i){
+      var b=boxes[i],c=document.createElement('canvas');c.width=c.height=size;
+      var g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,size,size);
+      g.drawImage(src,b.x,b.y,b.w,b.h,(size-b.w*scale)/2,size-pad-b.h*scale,b.w*scale,b.h*scale);
+      return c;
+    });
+  }
   function demoStart(){
     var img=document.getElementById('lbimg');
     var knop=document.getElementById('lbdemoKnop');
@@ -1390,21 +1449,19 @@
         c.width=Math.max(Math.round(sp.f*W),Math.round((1-sp.f)*W));c.height=H;
         g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);
         g.drawImage(img,eerste?0:Math.round(sp.f*W),0,sw,H,Math.round((c.width-sw)/2),0,sw,H);
-        if(eerste)g.fillRect(Math.round((c.width-sw)/2),0,Math.round(W*0.3),Math.round(H*0.12));
       }else{
         var sh=Math.round((eerste?sp.f:1-sp.f)*H);
         c.width=W;c.height=Math.max(Math.round(sp.f*H),Math.round((1-sp.f)*H));
         g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);
         g.drawImage(img,0,eerste?0:Math.round(sp.f*H),W,sh,0,Math.round((c.height-sh)/2),W,sh);
-        if(eerste)g.fillRect(0,Math.round((c.height-sh)/2),Math.round(W*0.3),Math.round(H*0.12));
       }
       return c;
     }
     var beeld=document.createElement('div');beeld.className='demobeeld';
-    var c1=helft(true),c2=helft(false);c2.className='boven';
+    var frames=demoUniformFrames([helft(true),helft(false)]);
+    var c1=frames[0],c2=frames[1];c2.className='boven';
     beeld.appendChild(c1);beeld.appendChild(c2);
     demo.c1=c1;demo.c2=c2;demo.dx=sp.dx||0;demo.dy=sp.dy||0;
-    c2.style.transform='translate('+(-demo.dx*0.5)+'%,'+(-demo.dy*0.5)+'%)';
     var tekst=document.createElement('div');tekst.className='demotekst';tekst.id='lbdemotekst';
     tekst.textContent=tr('houding1');
     // korte uitleg bij de oefening: uit de bibliotheek als die er is (vertaald waar
@@ -1660,6 +1717,7 @@
     document.addEventListener('keydown',function(e){
       if(e.key==='Escape'){lbox.classList.remove('open');demoStop();}
     });
+    window.addEventListener('pagehide',stopLezen);
     var sel=document.getElementById('taalsel');
     sel.value=TAAL;
     sel.addEventListener('change',function(){wisselTaal(sel.value);});

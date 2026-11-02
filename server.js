@@ -198,7 +198,7 @@ function auditLog(pk, actie, req) {
 // de keuzelijst /api/praktijken en het profiel bij de digitale kaart — zijn
 // open voor iedereen, dus een ouder of later toegevoegd intern veld in
 // praktijken.json mag nooit stilletjes meelekken (fail-closed).
-const PROFIEL_VELDEN = ["praktijk", "adres", "plaats", "tel", "email", "logo"];
+const PROFIEL_VELDEN = ["praktijk", "adres", "plaats", "tel", "email", "logo", "website"];
 function publiekProfiel(p) {
   const uit = {};
   for (const veld of PROFIEL_VELDEN) if (p && veld in p) uit[veld] = p[veld];
@@ -2372,7 +2372,8 @@ async function afhandelen(request, response) {
         adres: cleanName(b.adres, 120),
         plaats: cleanName(b.plaats, 120),
         tel: cleanName(b.tel, 40),
-        email: cleanName(b.email, 120)
+        email: cleanName(b.email, 120),
+        website: cleanName(b.website, 200)
       };
       if (!p.praktijk || !p.adres) { await sendJson(response, 400, { ok: false, fout: "Vul minimaal praktijknaam en adres in." }); return; }
       const key = p.praktijk.toLowerCase();
@@ -2401,6 +2402,8 @@ async function afhandelen(request, response) {
       // geschreven bestand van een ander wegvegen vóór het profiel ernaar wijst
       await inProfielRij(key, async () => {
         const oud = praktijken[key];
+        // Oudere clients kennen website nog niet; een ontbrekend veld wist niets.
+        if (!Object.hasOwn(b, "website")) p.website = oud?.website || "";
         if (logoBuf) {
           await mkdir(uploadsDir, { recursive: true });
           const file = `logo-${slug(p.praktijk)}-${Date.now()}.${logoExt}`;
@@ -3916,9 +3919,9 @@ async function afhandelen(request, response) {
     telBezoek(request, false);
     response.setHeader("x-frame-options", "DENY");
     response.setHeader("permissions-policy", "camera=(), microphone=(), geolocation=()");
-    // de landingspagina heeft geen scripts en laadt alleen eigen beelden en lettertypes: dat mag de browser afdwingen
+    // Alleen eigen scripts voor de prijscalculator; geen externe scripts of verbindingen.
     response.setHeader("content-security-policy",
-      "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
+      "default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
     try {
       let html = await readFile(join(publicDir, "v2.html"), "utf8");
       const oprichtersOver = Math.max(0, 25 - (oprichters.vergeven || 0));
