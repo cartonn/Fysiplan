@@ -11,18 +11,24 @@
     "9ef09c8 herkomst praktijkvideo",
     "57da3fa geen stille lijntekening-vervanging",
     "f200ed8 beoordelingsspoor en rapportage",
-    "2642c13 alineaherstel logboek"
+    "2642c13 alineaherstel logboek",
+    "d16ef77 voortgang ronde 1",
+    "1ba3434 byte-ranges volgens RFC 9110, ook praktijkvideo",
+    "3dcf70b wachttijd ook halverwege een fragment"
   ],
-  "lastUpdate": "2026-11-02T22:55:22+0100",
+  "lastUpdate": "2026-11-02T23:22:11+0100",
   "lastUpdateNote": "Timestamp taken from the machine clock (date +%FT%T%z) at the moment of writing, after the coordinator flagged an earlier timestamp as ahead of its heartbeat.",
-  "batch": 4,
+  "batch": 5,
   "deployed": false,
   "pushed": false,
   "clinicalApproval": false,
   "coordinatorNotesAddressed": {
     "test-mobile-media-controls.mjs FAIL (demoSplitsing is not a function)": "Resolved with stronger assertions, not dropped: the test now drives demoHoudingen and proves the pose view stays off without reviewed metadata, without a proven source hash, with a mismatched source, with wrong image dimensions, with overlapping crops and with an empty crop. It also proves loading the card downloads no images at all, that a rejection blocks immediately, and that mixed review generations are refused.",
     "test-mobile-media-review.mjs FAIL (assumes empty pose metadata)": "Resolved with stronger assertions: every geometry-approved entry must be status unreviewed, clinicalApproved false, visuallyInspected true, foreignInkPixels 0, silhouetteIoU < 0.90, two labelled crops that pass validatePosePair, present in content/mobile-pose-approvals.json under this exact sha256, and not manually rejected. Rejected entries must carry withheld and no poses. Three entries are re-measured from the source pixels inside the test so the file cannot drift from the measuring code.",
-    "before-after-fp_5db16db1c4b85956.png supports one example only": "Agreed and kept as the scope of that artefact. The per-exercise record is content/mobile-pose-approvals.json (162 inspected assets, hash-bound) plus output/pose-review/inspection-log.md."
+    "before-after-fp_5db16db1c4b85956.png supports one example only": "Agreed and kept as the scope of that artefact. The per-exercise record is content/mobile-pose-approvals.json (162 inspected assets, hash-bound) plus output/pose-review/inspection-log.md.",
+    "22:06Z sendMedia suffix bytes=-500 gaf bytes 0..500": "Opgelost in 1ba3434 met lib/byte-range.js voor BEIDE routes. De tweede route (/uploads/ voor praktijkvideo's) had dezelfde fout al in productie 9bf215a. Aangetoond met de vorige server.js naast de nieuwe: oud \"bytes 0-500/97612\" (stem) en \"bytes 0-500/4099\" (praktijkvideo), nieuw \"bytes 97112-97611/97612\" en \"bytes 3599-4098/4099\". 36 tabelgevallen in scripts/test-byte-range.mjs en 2x12 byte-voor-byte HTTP-gevallen in scripts/test-mobile-levering.mjs.",
+    "22:06Z watchdog stopt na onplaying": "Opgelost in 3dcf70b: waiting/stalled starten een wachttijd als er geen loopt (geen verlenging), playing en echte tijdsvoortgang heffen hem op, elk fragment begint opnieuw, stop() ruimt zes handlers op. Nieuwe tests falen aantoonbaar tegen de vorige noor-audio.js (ontimeupdate bestond niet).",
+    "22:06Z verouderde remaining-regels": "Afgestemd op de code; zie reconciliation hieronder met bestand:regel per bewering."
   },
   "rootCause": {
     "1-dead-code": "public/kaart.html built demo.info without poseMetadata while demoSplitsing required poseMetadata.reviewStatus==='approved'. Zero writers existed anywhere in the repository, so the pose view was unreachable for all 319 exercises. Confirmed independently by a read-only audit subagent.",
@@ -41,14 +47,16 @@
     "public/kaart.html: narration and review-gate repairs from the two audits (list under fixedDefects).",
     "server.js: mp3 served as audio/mpeg with byte ranges (206/416), Content-Length and a cache policy matching hash-named files; review JSON stays no-store.",
     "public/kaart-sw.js: offline cache version bump so the three gating files cannot be mixed across generations.",
-    "scripts/test-mobile-audio-levering.mjs: new HTTP regression test against the real server.",
+    "scripts/test-mobile-levering.mjs (hernoemd van test-mobile-audio-levering.mjs in c8ca782): HTTP-regressietest tegen de echte server, sinds 1ba3434 met een eigen tijdelijke DATA_DIR in plaats van ./data.",
     "npm run test:mobile added and wired into .github/workflows/ci.yml (the mobile gates previously never ran in CI).",
     "npm run build: green.",
     "scripts/test-mobile-levering.mjs: cross-check of the keys the card uses against the review file over the running server (all 319 match, 156 poses reach the card), plus sha256 verification of every delivered source on the demo card.",
     "Practice-uploaded images: an explicit rejection now actually applies (the recheck path hard-coded an images/ prefix).",
     "Button label changed from \"Beweging tonen\" to \"Houdingen tonen\" in nine languages: the card shows two positions, not a movement recording.",
     "Practice video text block now names its origin in nine languages instead of presenting library text as instructions for practice footage.",
-    "Regression test: the card never silently substitutes a line drawing for an exercise photo."
+    "Regression test: the card never silently substitutes a line drawing for an exercise photo.",
+    "lib/byte-range.js + scripts/test-byte-range.mjs: één RFC 9110-parser voor stemopnames en praktijkvideo's (suffix, open, afgekapt, onvervulbaar, ongeldig, meervoudig); 416 krijgt no-store.",
+    "public/noor-audio.js: wachttijd ook bij haperen halverwege een fragment, met opruimtests."
   ],
   "poseOutcome": {
     "totalAvailableAssets": 319,
@@ -83,12 +91,15 @@
     "stopLezen overwrote the non-Dutch demo sound toggle",
     "dead narration call that used the translated card name instead of the catalogue name",
     "#leesBtn exposed no aria-pressed",
-    "mixed review generations (one file from the offline cache) could pair an old hold list with new recordings"
+    "mixed review generations (one file from the offline cache) could pair an old hold list with new recordings",
+    "Range bytes=-N gaf het begin van het bestand in plaats van het einde, op de stemroute (mijn eigen sendMedia uit ronde 1) en op de praktijkvideoroute (al in productie 9bf215a)",
+    "een 416 droeg cache-control public,max-age=86400 en kon zo in een cache belanden",
+    "de wachttijd van de stemopname gold alleen tot het eerste playing; een fragment dat halverwege stokte bleef eindeloos op Stop staan"
   ],
   "testEvidence": {
-    "npm run test:mobile": "eight gates pass, including the end-to-end drawing check and the delivery/key-mapping check over the running server",
-    "npm run build": "green, no artefact drift beyond this change",
-    "live curl": "200 audio/mpeg + accept-ranges + content-length 97612; 206 with content-range bytes 0-1/97612; 416 for an out-of-range request; review JSON still no-store"
+    "npm run test:mobile": "negen poorten groen: byte-ranges (36 gevallen), media review (319, 5 afkeuringen, 156 uitsnedes, steekproef opnieuw gemeten), narration review (319, 15 houds, 67 opnames), media controls + videoherkomst, pose layout + kaartweergave (canvas-opdracht), noor-audio inclusief tussentijdse wachttijd, check-noor-assets --partial (67 aanwezig, 252 ontbreken), levering (audio/mpeg, 2x12 range-gevallen byte voor byte, sleutels, voorbeeldkaart hash-gecontroleerd)",
+    "npm run build": "groen",
+    "regressiebewijs": "de nieuwe range-gevallen en de nieuwe wachttijdtests zijn elk gedraaid tegen de vorige code en falen daar"
   },
   "separationOfReviewKinds": {
     "code-test pass": "done: npm run test:mobile and npm run build",
@@ -97,16 +108,17 @@
     "clinical approval": "NOT done and not inferable from anything in this session. Every clinicalApproved stays false and the 15 narration holds stand."
   },
   "remaining": [
-    "Listening review of the 67 existing recordings (none were played in this session).",
-    "Clinical approval of execution for all 319 exercises, including the 15 explicit narration holds and the 5 rejected depictions.",
-    "20 exercises where the brand mark overlaps a figure's bounding box and 39 where the two figures overlap: these stay static. A re-render of those source sheets with more separation (and the mark outside both figures) would make a verified pose view possible; that needs image generation, which this session is not authorised to spend on.",
-    "Production practice overrides: uploads/ sources are structurally outside the media-review gate (the gate hard-codes an images/ prefix) and explanationWithheld is a no-op for po_ ids. Not fixed in this commit; see knownGapsNotFixed.",
-    "Per-card pasted YouTube links still outrank the clinically reviewed catalogue video (kaart.html priority order).",
-    "scripts/check-noor-assets.mjs validates public/oefeningen.json (v1) while the card consumes v2.",
-    "The Dutch 'listen' playlist still omits the dosage and the safety sentence that other languages include."
+    "Luisterronde van de 67 bestaande opnames: niet gedaan, er is geen enkele opname beluisterd.",
+    "Klinische goedkeuring voor alle 319 oefeningen, inclusief de 15 expliciete houds op de uitleg en de 5 afgekeurde afbeeldingen: niet gedaan en nergens uit af te leiden.",
+    "Alle 158 statische oefeningen kunnen alleen met ander bronmateriaal (of een door een mens vastgestelde uitsnede) een houdingweergave krijgen. Per meting: 79 één samenhangend figuur (vaak door een apparaat verbonden), 38 overlappende figuren, 20 merk binnen een figuurvak, 12 losse inkt in de uitsnede, 4 te gelijkende houdingen, 2 niet toewijsbaar, 3 handmatig afgekeurd. Opnieuw renderen vraagt beeldgeneratie; niet geautoriseerd, niets uitgegeven.",
+    "Praktijkuploads (uploads/oef-*.jpg, praktijk- en kaartvideo's) hebben geen beoordelingsregel en worden dus als onbeoordeeld getoond. Een expliciete afkeuring voor zo'n bron werkt sinds 4f5680c/c8ca782 wel, maar het buildscript maakt alleen regels voor repository-beelden; iemand zou ze met de hand moeten toevoegen. Een echte beoordelingsweg voor uploads is een ontwerpkeuze.",
+    "explanationWithheld werkt voor praktijkoefeningen (po_-ids) alleen als een houd die oefening bij naam of id noemt; er bestaan geen zulke houds.",
+    "Een door de therapeut per kaart geplakte YouTube-link gaat nog altijd vóór de klinisch beoordeelde catalogusvideo (public/kaart.html:1074, catKlaar vereist !persoonlijkYt). Staat in de code als bewuste keuze; vraagt een besluit, niet ongevraagd veranderd.",
+    "De Nederlandse luisterknop spreekt de dosering en de veiligheidszin niet uit (public/kaart.html:1379 levert alleen naam+uitleg); dat kan niet met de bestaande opnames. Wel staat er sinds 4aec046 bij wat de stem wel en niet uitlegt (public/kaart.html:1117).",
+    "Productiedata (data/) zijn niet zichtbaar in deze werkmap: aantal praktijkvideo's en geüploade beelden in productie onbekend."
   ],
   "knownGapsNotFixed": {
-    "practice-uploaded media": "A practice can publish its own exercise photo (uploads/oef-*.jpg) and its own per-card video. Neither has a review entry, and loadMobileReview only ever blocks entries whose source matches ^images/. Pose views cannot reach them (they are bound to a reviewed sha256), and natural narration cannot reach them (exact text match against the static manifest), but the images and videos themselves are shown unreviewed. Fixing this well means a review dimension for runtime uploads, which is a design decision for the coordinator rather than a night repair.",
+    "practice-uploaded media": "Praktijkfoto's (uploads/oef-*.jpg) en praktijk-/kaartvideo's hebben geen beoordelingsregel en zijn dus onbeoordeeld zichtbaar. Een afkeuring voor zo'n bron werkt wel (public/kaart.html:649, :675), maar wordt niet automatisch aangemaakt. Houdingweergave en natuurlijke stem kunnen ze niet bereiken (gebonden aan beoordeelde sha256 resp. exacte tekst). Bij praktijkvideo's staat sinds 9ef09c8 dat beeld en tekst uit verschillende bron komen. Sinds 1ba3434 leveren praktijkvideo's correcte byte-ranges.",
     "production data": "data/ is gitignored, so I cannot say how many practice videos or uploaded images exist in production, nor whether any sits on a live card."
   },
   "spending": {
@@ -114,14 +126,52 @@
     "newCredentials": "none",
     "purchases": "none"
   },
-  "nextAction": "Coordinator: diff en npm run test:mobile + npm run build nalopen, daarna beslissen over (a) het opnieuw renderen van 58 bladen en (b) een beoordelingsweg voor praktijkuploads.",
+  "nextAction": "Coördinator: 1ba3434 en 3dcf70b nalopen; daarna besluiten over (a) welke van de 158 statische bladen opnieuw gerenderd moeten worden, (b) beoordelingsweg voor praktijkuploads, (c) volgorde YouTube-link vs. catalogusvideo.",
   "handoverReport": "output/claude-night-report.md",
   "perExerciseList": "output/mobile-pose-per-exercise.md",
   "inspectionLog": "output/pose-review/inspection-log.md",
-  "workingTree": "schoon; alleen CLAUDE-NIGHT-TASK.txt is onverwacht untracked (opdrachtbestand van de eigenaar, bewust niet gecommit)",
+  "workingTree": "schoon op de commits na; alleen CLAUDE-NIGHT-TASK.txt en de coördinatorbestanden zijn untracked. ./data in de werkmap (gitignored) is in ronde 1 door mijn serverruns aangemaakt; niet verwijderd (geen destructieve opruiming), de levertest gebruikt nu een eigen tijdelijke map.",
   "blockers": [
-    "Luisterronde en klinische goedkeuring vragen een mens; niets daarvan is deze nacht gedaan of af te leiden.",
-    "58 oefeningen (20 met het merk over een figuur, 38 met overlappende figuren) kunnen alleen met opnieuw gerenderd bronmateriaal een gecontroleerde houdingweergave krijgen. Beeldgeneratie is in deze sessie niet geautoriseerd; er is niets uitgegeven.",
-    "Een beoordelingsdimensie voor runtime-uploads van praktijken is een ontwerpkeuze voor de coordinator, geen nachtreparatie."
-  ]
+    "Luisterronde en klinische goedkeuring vragen een mens; niets daarvan is gedaan of af te leiden.",
+    "Alle 158 statische oefeningen (zie remaining) hebben ander bronmateriaal nodig voor een houdingweergave; beeldgeneratie is niet geautoriseerd en er is niets uitgegeven.",
+    "Een beoordelingsweg voor runtime-uploads van praktijken is een ontwerpkeuze voor de coördinator."
+  ],
+  "session2": {
+    "started": "2026-11-02 (tweede ronde na coördinatorcontrole 22:06Z)",
+    "instructions": "suffix/open/invalid ranges + HTTP-tests; watchdog ook halverwege een fragment; verouderde remaining-regels tegen de code afstemmen; categorie-werk in fysiplan-category-mix-20261102 niet aanraken; geen deploy, geen credentials, geen betaalde generatie",
+    "siblingCategoryDirectory": "fysiplan-category-mix-20261102 is in deze ronde niet gelezen en niet beschreven"
+  },
+  "reconciliation": {
+    "note": "Regels die in ronde 1 als open stonden maar inmiddels in de code zijn opgelost, of andersom. Elke bewering is op 2026-11-02T23:22:11+0100 tegen de code nagelopen.",
+    "uploads/ structureel buiten de poort (images/-prefix)": {
+      "was": "open",
+      "nu": "grotendeels opgelost",
+      "bewijs": "public/kaart.html:649 blokkeert elke afgekeurde bron ongeacht prefix (4f5680c); public/kaart.html:675 laat de hercontrole ook uploads/ toe (c8ca782). Wat overblijft: er bestaan geen regels voor uploads, zie remaining."
+    },
+    "check-noor-assets valideert v1": {
+      "was": "open",
+      "nu": "opgelost in 4aec046",
+      "bewijs": "scripts/check-noor-assets.mjs:6 leest public/oefeningen-v2.json en eist 319 beschikbare oefeningen"
+    },
+    "Nederlandse luisterknop zonder dosering/veiligheid": {
+      "was": "open",
+      "nu": "deels: eerlijke notitie toegevoegd, inhoud niet",
+      "bewijs": "public/kaart.html:1117 en :1379"
+    },
+    "YouTube-link vóór catalogusvideo": {
+      "was": "open",
+      "nu": "nog steeds zo, bewust niet veranderd",
+      "bewijs": "public/kaart.html:1074"
+    },
+    "aantallen statisch": {
+      "was": "20 merk + 39 overlap",
+      "nu": "158 statisch: 79 één figuur, 38 overlap, 20 merk, 12 losse inkt, 4 te gelijkend, 2 niet toewijsbaar, 3 handmatig; plus 5 withheld (afgekeurd beeld)",
+      "bewijs": "public/mobile-media-review.json: de 39e overlappende (TRX pull up) is een afgekeurd beeld en valt onder withheld"
+    },
+    "test-mobile-audio-levering.mjs": {
+      "was": "genoemd in completed",
+      "nu": "hernoemd naar scripts/test-mobile-levering.mjs",
+      "bewijs": "c8ca782"
+    }
+  }
 }

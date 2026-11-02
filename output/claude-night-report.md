@@ -7,7 +7,13 @@ Werktak: `/private/tmp/fysiplan-release-20261102`, uitgaand van `9bf215a`.
 |---|---|
 | `4f5680c` | begin-/eindhouding met beoordeelde uitsnedes |
 | `4aec046` | robuustheid en eerlijkheid van de stemopname |
-| (volgend) | sluitende weergavetest en rapportage |
+| `53ae691` | weergavetest sluitend tot de canvas-opdracht |
+| `c8ca782` | leveringsketen tot de patiëntlink, eerlijk knoplabel |
+| `9ef09c8` | herkomst van praktijkvideo's benoemd |
+| `57da3fa` | nooit stilzwijgend een lijntekening |
+| `f200ed8`, `2642c13`, `d16ef77` | beoordelingsspoor, rapportage, voortgang |
+| `1ba3434` | **ronde 2:** byte-ranges volgens RFC 9110, ook voor praktijkvideo's |
+| `3dcf70b` | **ronde 2:** wachttijd ook als een opname halverwege stokt |
 
 ## 1. De oorzaak, in volgorde van belang
 
@@ -87,7 +93,7 @@ er wordt nooit stilzwijgend een lijntekening voor in de plaats gezet.
 
 | soort controle | status |
 |---|---|
-| code- en testronde | **gedaan** — `npm run test:mobile` (zeven poorten) en `npm run build` zijn groen |
+| code- en testronde | **gedaan** — `npm run test:mobile` (negen poorten) en `npm run build` zijn groen |
 | visuele ronde | **gedaan voor de 162 gemeten kandidaat-paren**, één voor één op 41 contactvellen in de definitieve weergave. Niet gedaan: een losse visuele controle van de 163 statische oefeningen buiten de meting om |
 | luisterronde | **niet gedaan** — er is deze nacht geen enkele opname beluisterd |
 | klinische goedkeuring | **niet gedaan en nergens uit af te leiden**. Alle `clinicalApproved` blijven false, de vijftien houds op de uitleg staan ongewijzigd, en de vijf afgekeurde beelden blijven afgekeurd |
@@ -116,28 +122,42 @@ Gevonden door twee onafhankelijke read-only audits (praktijk-overrides en stemwe
 | twee beoordelingsbestanden uit verschillende generaties | offline kon een oude houdlijst met nieuwe opnames worden gecombineerd; dat wordt nu geweigerd en de offline-cache kreeg een versiesprong |
 | de mobiele poorten draaiden nergens automatisch | `npm run test:mobile` staat nu in CI |
 
+### Ronde 2, na controle door de coördinator
+
+| wat er mis was | waarom het telt |
+|---|---|
+| `Range: bytes=-500` werd beantwoord als `bytes 0-500` in plaats van de laatste 500 bytes — in mijn eigen `sendMedia` voor de stemopnames, **én** in de route voor praktijkvideo's onder `/uploads/`, waar dat al in productie (`9bf215a`) zo zat | spelers vragen het einde van een bestand zo op (moov-atom van een mp4, ID3v1 van een mp3) en kregen het begin terug met een kop die beweerde dat het het einde was. Beide routes gebruiken nu `lib/byte-range.js`; tegen de vorige `server.js` gaf het verzoek aantoonbaar `bytes 0-500/97612`, nu `bytes 97112-97611/97612` |
+| een 416 kreeg `cache-control: public, max-age=86400` | caches sleutelen op de URL, niet op de Range-kop; een bewaarde 416 kon gewone verzoeken beantwoorden. Nu `no-store` |
+| de wachttijd van de stemopname gold alleen tot het eerste `playing` | een fragment dat halverwege stokte bleef eindeloos op "Stop" staan. Nu starten `waiting`/`stalled` een wachttijd (zonder verlenging), en `playing` of echte voortgang heft hem op; de nieuwe tests falen tegen de vorige code |
+
 ## 6. Wat blijft liggen — en waarom
 
 1. **Luisterronde.** Geen enkele van de 67 bestaande opnames is beluisterd. 252 van de
    319 oefeningen hebben er sowieso geen.
 2. **Klinische goedkeuring.** Vijftien expliciete houds en vijf afgekeurde afbeeldingen
    wachten op een fysiotherapeut. Niets in deze nacht verandert daar iets aan.
-3. **58 oefeningen kunnen alleen met nieuw bronmateriaal.** 20 bladen zetten het merk
-   boven een figuur en 38 laten de twee figuren elkaar overlappen. Opnieuw renderen met
-   meer ruimte tussen de figuren en het merk buiten beide, maakt daar een gecontroleerde
-   houdingweergave mogelijk. Dat vraagt beeldgeneratie; **daar is deze sessie niet voor
-   geautoriseerd en er is niets uitgegeven.**
-4. **Praktijk-overrides staan buiten de poort.** Een praktijk kan een eigen oefenfoto
-   (`uploads/oef-*.jpg`) en een eigen video per kaart publiceren. De beoordelingspoort
-   kent alleen bronnen die met `images/` beginnen, en `explanationWithheld` doet niets
-   voor `po_`-ids. Houdingen en natuurlijke stem kunnen die media niet bereiken (beide
-   zijn aan een beoordeelde hash respectievelijk aan exacte tekst gebonden), maar het
-   beeld en de video zelf worden ongecontroleerd getoond. Dit goed oplossen betekent een
-   beoordelingsdimensie voor runtime-uploads — een ontwerpkeuze voor jou, geen
-   nachtreparatie.
+3. **De 158 statische oefeningen krijgen alleen met ander bronmateriaal een
+   houdingweergave.** Per meting: 79 tonen één samenhangend figuur (vaak door een
+   apparaat verbonden), 38 laten de figuren elkaar overlappen, bij 20 valt het merk in
+   een figuurvak, 12 hebben losse inkt in de uitsnede, 4 houdingen lijken te veel op
+   elkaar, 2 zijn niet toe te wijzen en 3 heb ik na het kijken afgekeurd. Opnieuw renderen
+   met ruimte tussen de figuren en het merk erbuiten maakt een gecontroleerde weergave
+   mogelijk. Dat vraagt beeldgeneratie; **daar is deze sessie niet voor geautoriseerd en
+   er is niets uitgegeven.**
+4. **Praktijkuploads hebben geen beoordelingsregel.** Een praktijk kan een eigen
+   oefenfoto (`uploads/oef-*.jpg`) en een eigen video per kaart publiceren. Een expliciete
+   afkeuring voor zo'n bron werkt inmiddels wél (`public/kaart.html:649` blokkeert elke
+   afgekeurde bron, `:675` laat de hercontrole ook `uploads/` toe), maar het buildscript
+   maakt alleen regels voor repository-beelden, dus in de praktijk zijn uploads
+   onbeoordeeld zichtbaar. `explanationWithheld` werkt voor `po_`-ids alleen als een houd
+   die oefening noemt, en zulke houds bestaan niet. Houdingen en natuurlijke stem kunnen
+   die media niet bereiken; bij praktijkvideo's staat sinds `9ef09c8` dat beeld en tekst
+   een andere bron hebben. Een echte beoordelingsweg voor uploads is een ontwerpkeuze
+   voor jou, geen nachtreparatie.
 5. **Een door de therapeut geplakte YouTube-link gaat nog altijd vóór de klinisch
-   beoordeelde catalogusvideo.** Dat staat zo in de code beschreven als bewuste keuze;
-   ik heb het niet veranderd, maar het verdient een expliciet besluit.
+   beoordeelde catalogusvideo** (`public/kaart.html:1074`). Dat staat zo in de code
+   beschreven als bewuste keuze; ik heb het niet veranderd, maar het verdient een
+   expliciet besluit.
 6. **De Nederlandse luisterknop laat dosering en de veiligheidszin weg** die andere talen
    wel krijgen. Dat kan niet met de bestaande opnames worden opgelost; er staat nu wel
    expliciet bij wat de stem wél en niet zegt.
@@ -158,7 +178,7 @@ aangeraakt.
 npm run poses:measure     # meet alle 319 bladen opnieuw
 npm run poses:review      # contactvellen in output/pose-review/
 npm run poses:build       # bouwt public/mobile-media-review.json opnieuw
-npm run test:mobile       # zeven poorten
+npm run test:mobile       # negen poorten
 npm run build
 node scripts/render-pose-review.mjs --before-after "Squat,Barbell pull over"
 ```
