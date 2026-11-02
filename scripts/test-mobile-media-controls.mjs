@@ -63,7 +63,8 @@ const poseEntry={exerciseId:'fp_pose',source:'images/pose.jpg',status:'unreviewe
 const conceptPose={...poseEntry,exerciseId:'fp_concept',source:'images/concept.jpg',poseGeometry:{status:'static',reason:'niet gecontroleerd'}};
 const brokenPose={...poseEntry,exerciseId:'fp_broken',source:'images/broken.jpg',
   poses:[{label:'start',crop:{x:10,y:10,w:300,h:1000}},{label:'end',crop:{x:100,y:10,w:300,h:1000}}]};
-const reviewEntries=[{exerciseId:'fp_test',source:'images/test.jpg',status:'rejected',assetSha256:hash},{exerciseId:'fp_changed',source:'images/changed.jpg',status:'rejected',assetSha256:'different'},{exerciseId:'fp_unreviewed',source:'images/unreviewed.jpg',status:'unreviewed',assetSha256:hash},poseEntry,conceptPose,brokenPose];
+const uploadReject={exerciseId:'po_praktijk',source:'uploads/oef-abc123def456.jpg',status:'rejected',assetSha256:'different'};
+const reviewEntries=[uploadReject,{exerciseId:'fp_test',source:'images/test.jpg',status:'rejected',assetSha256:hash},{exerciseId:'fp_changed',source:'images/changed.jpg',status:'rejected',assetSha256:'different'},{exerciseId:'fp_unreviewed',source:'images/unreviewed.jpg',status:'unreviewed',assetSha256:hash},poseEntry,conceptPose,brokenPose];
 const requests=[];
 const maakReviewContext=(mediaDate,narrationDate)=>vm.createContext({crypto:webcrypto,window:{crypto:webcrypto},K:null,tekenKaart(){},
   fetch:async url=>{requests.push(url);return {ok:true,
@@ -74,6 +75,8 @@ vm.runInContext(between('  var mediaReviewReady=','  function tr('),reviewContex
 assert.equal(reviewContext.mediaWithheld({exerciseId:'fp_test',kaartImg:'/images/test.jpg'}),true,'not rendered before review loaded');
 await reviewContext.loadMobileReview();
 assert.deepEqual(requests,['/mobile-media-review.json','/mobile-narration-review.json'],'het laden van de kaart haalt geen afbeeldingen binnen');
+// een afkeuring van een door de praktijk geüpload beeld moet ook echt werken
+assert.equal(reviewContext.mediaWithheld({exerciseId:'po_praktijk',kaartImg:'/uploads/oef-abc123def456.jpg'}),true,'een afgekeurd praktijkbeeld wordt tegengehouden');
 assert.equal(reviewContext.mediaWithheld({exerciseId:'fp_test',kaartImg:'/images/test.jpg'}),true);
 assert.equal(reviewContext.mediaWithheld({exerciseId:'fp_test',kaartImg:'/v2/images/test.jpg'}),true);
 assert.equal(reviewContext.mediaWithheld({exerciseId:'fp_changed',kaartImg:'/images/changed.jpg'}),true,'een afkeuring blokkeert meteen, ook voor de hashcontrole');
@@ -90,9 +93,9 @@ assert.equal(reviewContext.poseKeuring['fp_broken|images/broken.jpg'],undefined,
 assert.equal(reviewContext.poseKeuring['fp_test|images/test.jpg'],undefined,'afgekeurd beeld levert nooit houdingen');
 // een vervangen beeld krijgt zijn afkeuring niet geërfd, maar pas na bewijs
 requests.length=0;
-reviewContext.herzieAfgekeurd(['fp_test|images/test.jpg','fp_changed|images/changed.jpg']);
+reviewContext.herzieAfgekeurd(['fp_test|images/test.jpg','fp_changed|images/changed.jpg','po_praktijk|uploads/oef-abc123def456.jpg']);
 await new Promise(resolve=>setTimeout(resolve,10));
-assert.deepEqual(requests,['/images/test.jpg','/images/changed.jpg'],'alleen beelden die echt op de kaart staan worden gecontroleerd');
+assert.deepEqual(requests,['/images/test.jpg','/images/changed.jpg','/uploads/oef-abc123def456.jpg'],'alleen beelden die echt op de kaart staan worden gecontroleerd, praktijkuploads inbegrepen');
 assert.equal(reviewContext.mediaWithheld({exerciseId:'fp_test',kaartImg:'/images/test.jpg'}),true,'gelijke hash blijft geblokkeerd');
 assert.equal(reviewContext.mediaWithheld({exerciseId:'fp_changed',kaartImg:'/images/changed.jpg'}),false,'andere hash: vervangen beeld wordt vrijgegeven');
 // twee beoordelingsbestanden uit verschillende generaties: alles tegenhouden
