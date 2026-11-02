@@ -4,15 +4,18 @@
   "worktree": "/private/tmp/fysiplan-release-20261102",
   "baseCommit": "9bf215a",
   "commits": [
-    "4f5680c houding-uitsnedes",
-    "4aec046 stemopname robuust",
-    "53ae691 weergavetest sluitend",
+    "4f5680c houding-uitsnedes met beoordeelde crops",
+    "4aec046 stemopname robuust en eerlijk",
+    "53ae691 weergavetest sluitend tot de canvas-opdracht",
     "c8ca782 leveringsketen + eerlijk knoplabel",
-    "9ef09c8 herkomst praktijkvideo"
+    "9ef09c8 herkomst praktijkvideo",
+    "57da3fa geen stille lijntekening-vervanging",
+    "f200ed8 beoordelingsspoor en rapportage",
+    "2642c13 alineaherstel logboek"
   ],
-  "lastUpdate": "2026-11-02T22:52:58+0100",
+  "lastUpdate": "2026-11-02T22:55:22+0100",
   "lastUpdateNote": "Timestamp taken from the machine clock (date +%FT%T%z) at the moment of writing, after the coordinator flagged an earlier timestamp as ahead of its heartbeat.",
-  "batch": 3,
+  "batch": 4,
   "deployed": false,
   "pushed": false,
   "clinicalApproval": false,
@@ -111,5 +114,14 @@
     "newCredentials": "none",
     "purchases": "none"
   },
-  "nextAction": "Awaiting coordinator review. Remaining work needs either a human (listening, clinical approval) or authorisation to re-render 58 source sheets."
+  "nextAction": "Coordinator: diff en npm run test:mobile + npm run build nalopen, daarna beslissen over (a) het opnieuw renderen van 58 bladen en (b) een beoordelingsweg voor praktijkuploads.",
+  "handoverReport": "output/claude-night-report.md",
+  "perExerciseList": "output/mobile-pose-per-exercise.md",
+  "inspectionLog": "output/pose-review/inspection-log.md",
+  "workingTree": "schoon; alleen CLAUDE-NIGHT-TASK.txt is onverwacht untracked (opdrachtbestand van de eigenaar, bewust niet gecommit)",
+  "blockers": [
+    "Luisterronde en klinische goedkeuring vragen een mens; niets daarvan is deze nacht gedaan of af te leiden.",
+    "58 oefeningen (20 met het merk over een figuur, 38 met overlappende figuren) kunnen alleen met opnieuw gerenderd bronmateriaal een gecontroleerde houdingweergave krijgen. Beeldgeneratie is in deze sessie niet geautoriseerd; er is niets uitgegeven.",
+    "Een beoordelingsdimensie voor runtime-uploads van praktijken is een ontwerpkeuze voor de coordinator, geen nachtreparatie."
+  ]
 }
