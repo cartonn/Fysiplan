@@ -957,6 +957,19 @@
     });
     return (lib||[]).concat(eigen);
   }
+  // Eén opzoekregel voor de hele kaart. Tekenen en voorlezen gebruikten er twee: bij
+  // tekenen won de laatste naamgenoot (de eigen oefening van de praktijk, want die komt
+  // achteraan), bij voorlezen de eerste (de bibliotheekoefening). Een eigen oefening met
+  // dezelfde naam als een bibliotheekoefening toonde dan de ene en liet de opname van de
+  // andere horen. Eerst het stabiele id, daarna de naam, en bij gelijke naam de laatste.
+  function oefeningIndex(lib,kaart){
+    var byNorm={},byStable={};
+    metEigen(lib,kaart).forEach(function(o){byNorm[normEx(o.naam)]=o;if(o.exerciseId)byStable[o.exerciseId]=o;});
+    return {byNorm:byNorm,byStable:byStable};
+  }
+  function zoekOefening(index,x){
+    return (x&&x.id&&index.byStable[x.id])||index.byNorm[normEx(x&&x.n)]||null;
+  }
   function cellPrefix(x){return x&&x.id?'x'+x.id:'n'+normEx(x&&x.n);}
   function dagStr(t){var d=new Date(t);return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
   // neutrale kleur voor elke score: de kaart toont het verloop en duidt het niet
@@ -1015,7 +1028,7 @@
   // ---- de kaart zelf tekenen (oefeningen, schema, meting) in de gekozen taal ----
   function tekenKaart(){
     var kaart=K.kaart,praktijk=K.praktijk,lib=K.lib;
-    var byNorm={},byStable={};metEigen(lib,kaart).forEach(function(o){byNorm[normEx(o.naam)]=o;if(o.exerciseId)byStable[o.exerciseId]=o;});
+    var oefIndex=oefeningIndex(lib,kaart);
     document.title=tr('eyebrow')+' — '+(praktijk.praktijk||'Fysiplan');
     if(praktijk.logo){var lg=document.getElementById('logo');lg.src='/'+praktijk.logo;lg.style.display='block';}
     document.getElementById('prak').textContent=praktijk.praktijk||kaart.praktijk;
@@ -1042,7 +1055,7 @@
     var html='',teControleren=[];
     chosen.forEach(function(x,idx){
       var nk=normEx(x.n);
-      var o=(x.id&&byStable[x.id])||byNorm[nk];
+      var o=zoekOefening(oefIndex,x);
       var hideMedia=mediaWithheld(o),holdExplanation=explanationWithheld(o);
       if(hideMedia&&o&&mediaReviewReady)teControleren.push(mediaKey(o));
       var key=cellPrefix(x)+'.'+(x.i||0);
@@ -1363,11 +1376,7 @@
   // Eén vaste manier om de bibliotheekoefening bij een kaartregel te vinden: eerst op
   // het stabiele id, pas daarna op naam. Anders kan een eigen oefening met dezelfde naam
   // de uitleg of de opname van een ándere oefening opleveren.
-  function vindOefening(x){
-    var alle=metEigen(K.lib,K.kaart);
-    return (x&&x.id&&alle.find(function(o){return o.exerciseId===x.id;}))||
-      alle.find(function(o){return normEx(o.naam)===normEx(x&&x.n);})||null;
-  }
+  function vindOefening(x){return zoekOefening(oefeningIndex(K.lib,K.kaart),x);}
   function leesVoor(){
     if(!K)return;
     if(bezigLezen){stopLezen();return;}
@@ -1410,9 +1419,14 @@
     u.lang=SPRAAK[TAAL]||'nl-NL';
     u.rate=0.95;
     var gekozenStem=kiesStem();if(gekozenStem)u.voice=gekozenStem;
-    u.onend=function(){stopLezen();};
+    // Een laat 'end' van een eerder, al gestopte voorlezing mag de nieuwe niet afbreken:
+    // stopLezen verhoogt noorRequest, dus alleen de lopende beurt mag zichzelf stoppen.
+    // Zonder onerror bleef de knop bij een spraakfout op "Stop" staan.
+    var beurt=noorRequest;
+    u.onend=u.onerror=function(){if(beurt===noorRequest)stopLezen();};
     bezigLezen=true;
     document.getElementById('leesBtn').classList.add('aan');
+    document.getElementById('leesBtn').setAttribute('aria-pressed','true');
     document.getElementById('leesTxt').textContent=tr('stop');
     speechSynthesis.cancel();
     speechSynthesis.speak(u);

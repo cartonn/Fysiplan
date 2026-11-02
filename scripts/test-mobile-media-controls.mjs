@@ -145,3 +145,44 @@ for(const woordenboek of ['VIDEO_TEKST_ALG','VIDEO_BRON_PRAKTIJK']){
   for(const taal of ['nl','en','de','fr','es','pl','tr','ar','uk'])assert.ok(regel.slice(0,2000).includes(taal+':'),woordenboek+' mist '+taal);
 }
 console.log('Videoherkomst: praktijkbeelden dragen de algemene bibliotheekkop en benoemen hun herkomst in negen talen.');
+
+// ---- tekenen en voorlezen kiezen dezelfde oefening ----
+// Een eigen praktijkoefening met dezelfde naam als een bibliotheekoefening: de kaart
+// toonde de ene en las de andere voor. Beide gebruiken nu één opzoekregel.
+const opzoek=vm.createContext({});
+vm.runInContext(between('  function normEx(s){','\n',)+'\n'+between('  function metEigen(lib,kaart){','  function dagStr(t)')+
+  between('  function vindOefening(x){','  function leesVoor(){'),opzoek);
+opzoek.K={lib:[{naam:'Squat',exerciseId:'fp_lib',uitleg:'bibliotheek'}],
+  kaart:{eigenOef:[{naam:'Squat',id:'po_eigen',img:'uploads/oef-abc.jpg',uitleg:'eigen tekst'}]}};
+const getekend=vm.runInContext("zoekOefening(oefeningIndex(K.lib,K.kaart),{n:'Squat'})",opzoek);
+const voorgelezen=vm.runInContext("vindOefening({n:'Squat'})",opzoek);
+assert.equal(getekend.exerciseId,'po_eigen','zonder id wint bij gelijke naam de eigen oefening, zoals altijd bij tekenen');
+assert.equal(voorgelezen.exerciseId,getekend.exerciseId,'voorlezen kiest dezelfde oefening als tekenen');
+assert.equal(vm.runInContext("vindOefening({n:'Squat',id:'fp_lib'})",opzoek).exerciseId,'fp_lib','een stabiel id gaat altijd voor');
+assert.equal(vm.runInContext("vindOefening({n:'SQUAT!'})",opzoek).exerciseId,'po_eigen','naam wordt genormaliseerd');
+assert.equal(vm.runInContext("vindOefening({n:'Onbekend'})",opzoek),null);
+assert.ok(!html.includes('alle.find(function(o){return normEx(o.naam)'),'geen tweede opzoekregel meer');
+assert.ok(html.includes('var o=zoekOefening(oefIndex,x);'),'tekenen gebruikt de gedeelde regel');
+
+// ---- toestelstem: een laat einde van een gestopte voorlezing breekt de nieuwe niet af ----
+const uitingen=[];
+const spraak={cancel(){},speak(u){uitingen.push(u);}};
+const lees=vm.createContext({document,speechSynthesis:spraak,window:{speechSynthesis:spraak},
+  SpeechSynthesisUtterance:function(t){this.text=t;},NoorAudio:{stop(){}},noorRequest:0,TAAL:'en',
+  tr:k=>k,vt:s=>s,SPRAAK:{en:'en-GB'},kiesStem:()=>null,explanationWithheld:()=>false,demoGeluidKnop(){},stopVideos(){},
+  K:{kaart:{chosen:[{n:'Squat'}],cells:{},client:{}},praktijk:{praktijk:'Praktijk'},lib:[{naam:'Squat',uitleg:'Rustig zakken.'}]}});
+vm.runInContext(between('  function normEx(s){','\n')+'\n'+between('  function metEigen(lib,kaart){','  function dagStr(t)')+
+  between('  var bezigLezen=false,noorRequest=0;','  async function speelNoor('),lees);
+vm.runInContext('leesVoor()',lees);
+const eerste=uitingen.at(-1);assert.equal(lees.bezigLezen,true);
+vm.runInContext('leesVoor()',lees);assert.equal(lees.bezigLezen,false,'tweede tik stopt');
+vm.runInContext('leesVoor()',lees);
+const tweede=uitingen.at(-1);assert.notEqual(tweede,eerste);assert.equal(lees.bezigLezen,true);
+assert.equal(el('leesBtn').attrs['aria-pressed'],'true','ook de toestelstem meldt zijn stand aan een schermlezer');
+eerste.onend();
+assert.equal(lees.bezigLezen,true,'het late einde van de gestopte voorlezing breekt de nieuwe niet af');
+assert.equal(el('leesBtn').attrs['aria-pressed'],'true','knopstand niet door de oude voorlezing gereset');
+tweede.onerror();
+assert.equal(lees.bezigLezen,false,'een spraakfout zet de knop terug in plaats van hem op Stop te laten');
+assert.equal(el('leesBtn').attrs['aria-pressed'],'false');
+console.log('Opzoeken en toestelstem: tekenen en voorlezen kiezen dezelfde oefening; een oude voorlezing kan de nieuwe niet afbreken.');
