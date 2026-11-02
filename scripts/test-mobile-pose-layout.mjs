@@ -85,3 +85,71 @@ assert.ok(html.includes("p.status!=='geometry-approved'"), 'alleen beoordeelde u
 assert.ok(html.includes("merk.className='demomerk'"), 'het merk staat buiten de uitsnede en bij beide houdingen gelijk');
 assert.ok(html.includes("bronNoot.className='demobron'"), 'de herkomstnotitie staat onder de houdingen');
 console.log('Mobile pose layout: kaart en bibliotheek rekenen identiek; één schaal, geen uitrekken, geen heuristiek.');
+
+// ---------------------------------------------------------------------------
+// Tekent de kaart werkelijk de frames die zijn beoordeeld? We draaien demoStart uit
+// public/kaart.html met echte beoordelingsdata en vangen elke canvas-opdracht op.
+const reviewed = JSON.parse(fs.readFileSync(new URL('../public/mobile-media-review.json', import.meta.url), 'utf8'));
+const entry = reviewed.entries.find(e => e.poseGeometry.status === 'geometry-approved');
+assert.ok(entry, 'geen enkele goedgekeurde uitsnede om te tekenen');
+
+const tekeningen = [];
+const gemaakt = [];
+function stubElement(tag) {
+  const node = { tag, children: [], attrs: {}, style: {}, classList: { add() {}, remove() {}, contains: () => false, toggle() {} },
+    setAttribute(k, v) { this.attrs[k] = v; }, appendChild(c) { this.children.push(c); return c; },
+    addEventListener() {}, textContent: '', innerHTML: '', hidden: false };
+  if (tag === 'canvas') {
+    node.getContext = () => ({
+      set fillStyle(v) { node.fill = v; },
+      fillRect(...a) { node.gevuld = a; },
+      drawImage(...a) { tekeningen.push({ canvas: node, args: a }); }
+    });
+  }
+  gemaakt.push(node);
+  return node;
+}
+const ids = {};
+const demoDocument = {
+  getElementById(id) { return (ids[id] = ids[id] || stubElement('div')); },
+  createElement: stubElement
+};
+const img = ids.lbimg = stubElement('img');
+img.complete = true; img.naturalWidth = entry.width; img.naturalHeight = entry.height;
+img.src = 'https://praktijk.example/' + entry.source;
+
+const demoContext = vm.createContext({
+  document: demoDocument, Math, Number, URL, JSON,
+  location: { href: 'https://praktijk.example/k/abc' },
+  window: { matchMedia: () => ({ matches: true }) }, matchMedia: () => ({ matches: true }),
+  TAAL: 'nl', tr: (k) => k, vt: (s) => s,
+  DEMO_BRON: { nl: 'herkomstnotitie' },
+  NoorAudio: { match: () => true },
+  demoKlok() {}, demoGeluidKnop() {}, demoZeg() {},
+  bronGecontroleerd: { [entry.assetSha256]: true },
+  demo: { info: { name: entry.name, uitleg: 'uitleg', poseMetadata: {
+    source: entry.source, assetSha256: entry.assetSha256, axis: entry.poseGeometry.axis,
+    poses: entry.poses, width: entry.width, height: entry.height } } }
+});
+vm.runInContext(between('  function geldigeUitsnede(', '  async function loadMobileReview(') +
+  between('  function demoHoudingen(', '  // met geluid aan wisselen we rustiger'), demoContext);
+vm.runInContext('demoStart()', demoContext);
+
+assert.equal(tekeningen.length, 2, 'precies twee houdingen getekend');
+const verwacht = poseFrameLayout(entry.poses, entry.poseGeometry.axis, 640, 32);
+tekeningen.forEach((t, i) => {
+  const f = verwacht[i];
+  assert.equal(t.canvas.width, 640); assert.equal(t.canvas.height, 640);
+  assert.equal(t.canvas.fill, '#fff', 'elk frame start op wit');
+  assert.deepEqual(t.canvas.gevuld, [0, 0, 640, 640], 'het hele doek wordt wit gemaakt');
+  assert.deepEqual(t.args.slice(1), [f.sx, f.sy, f.sw, f.sh, f.dx, f.dy, f.dw, f.dh],
+    'de kaart tekent exact de beoordeelde uitsnede op de beoordeelde plek');
+  assert.equal(t.args[0], img, 'getekend uit de originele bron, niet uit een tussenbeeld');
+});
+// alleen de tweede houding ligt bovenop, en het merk staat buiten beide uitsnedes
+assert.equal(tekeningen[0].canvas.className, undefined);
+assert.equal(tekeningen[1].canvas.className, 'boven');
+const merk = gemaakt.find(n => n.className === 'demomerk');
+assert.ok(merk && merk.textContent === 'Fysiplan', 'het merk wordt door de kaart zelf gezet');
+assert.ok(gemaakt.some(n => n.className === 'demobron' && n.textContent === 'herkomstnotitie'), 'de herkomstnotitie staat eronder');
+console.log('Kaartweergave: ' + entry.name + ' wordt getekend met exact de beoordeelde uitsnede, schaal en plek.');
