@@ -63,17 +63,36 @@ context.demo.info.poseMetadata=null;
   const opgehaald=[];
   const bytes=new TextEncoder().encode('bronbytes');
   const sha=createHash('sha256').update(bytes).digest('hex');
+  let inhoud=bytes;
   const bron=vm.createContext({crypto:webcrypto,window:{crypto:webcrypto},URL,location:{href:'https://praktijk.example/k/abc'},bronGecontroleerd:{},
-    fetch:async url=>{opgehaald.push(url);return {ok:true,arrayBuffer:async()=>bytes.buffer};}});
+    fetch:async url=>{opgehaald.push(url);return {ok:true,arrayBuffer:async()=>inhoud.buffer};}});
   vm.runInContext(between('  function bronPad(src){','  var DEMO_MAAT='),bron);
   const meta={source:'images/avatar.jpg',assetSha256:sha};
-  assert.equal(await bron.bevestigBron(meta,'https://praktijk.example/v2/images/avatar.jpg'),true);
+  const URL_V2='https://praktijk.example/v2/images/avatar.jpg',KEY='/v2/images/avatar.jpg|'+sha;
+  assert.equal(await bron.bevestigBron(meta,URL_V2),true);
   assert.deepEqual(opgehaald,['/v2/images/avatar.jpg'],'de getoonde URL wordt gecontroleerd, niet een ander pad');
-  assert.equal(await bron.bevestigBron(meta,'https://praktijk.example/v2/images/avatar.jpg'),true);
-  assert.equal(opgehaald.length,1,'een geslaagde controle wordt onthouden');
+  assert.equal(bron.bronGecontroleerd[KEY],true);
+  // Een eerdere 'true' wordt niet hergebruikt: elke aanroep hoort bij een nieuwe lading.
+  // Zonder reset: zelfde pad, andere bytes, dan geen houdingen meer (audit 2026-11-03).
+  inhoud=new TextEncoder().encode('andere-bytes-zelfde-pad');
+  assert.equal(await bron.bevestigBron(meta,URL_V2),false,'een nieuwe lading met andere bytes wordt niet op de oude uitkomst goedgekeurd');
+  assert.equal(opgehaald.length,2,'opnieuw opgehaald, niet onthouden');
+  assert.equal(bron.bronGecontroleerd[KEY],false,'de gedeelde uitkomst volgt de nieuwste controle');
+  inhoud=bytes;
+  assert.equal(await bron.bevestigBron(meta,URL_V2),true,'de beoordeelde bytes terug: weer goed');
+  assert.equal(opgehaald.length,3);
   assert.equal(await bron.bevestigBron(meta,'https://praktijk.example/v2/images/ander.jpg'),false,'een ander bestand wordt zonder ophalen geweigerd');
-  assert.equal(opgehaald.length,1);
-  assert.equal(await bron.bevestigBron({source:'images/avatar.jpg',assetSha256:'0'.repeat(64)},'https://praktijk.example/v2/images/avatar.jpg'),false,'afwijkende bytes: geen houdingen');
+  assert.equal(opgehaald.length,3);
+  assert.equal(await bron.bevestigBron({source:'images/avatar.jpg',assetSha256:'0'.repeat(64)},URL_V2),false,'afwijkende bytes: geen houdingen');
+  // en demoHoudingen leest die nieuwste uitkomst: na een controle met andere bytes geen houdingen
+  bron.demo={info:{poseMetadata:{source:'images/avatar.jpg',assetSha256:sha,axis:'x',width:800,height:1200,
+    poses:[{label:'start',crop:{x:10,y:10,w:300,h:1000}},{label:'end',crop:{x:420,y:10,w:300,h:1000}}]}}};
+  vm.runInContext(between('  function geldigeUitsnede(','  async function loadMobileReview(')+between('  function demoHoudingen(','  function bronPad('),bron);
+  const lb={src:URL_V2,naturalWidth:800,naturalHeight:1200};
+  assert.ok(bron.demoHoudingen(lb),'beoordeelde bytes: houdingen');
+  inhoud=new TextEncoder().encode('weer-andere-bytes');
+  assert.equal(await bron.bevestigBron(meta,URL_V2),false);
+  assert.equal(bron.demoHoudingen(lb),null,'na een nieuwere controle met andere bytes geen houdingen meer, ook zonder reset');
 }
 
 assert.ok(html.includes('data-audio-naam="'));assert.ok(html.includes("name:foto.dataset.audioNaam||''"));

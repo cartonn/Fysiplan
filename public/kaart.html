@@ -653,8 +653,9 @@
   // Miniaturen (object-fit:contain): het vlak volgt het werkelijk getekende beeld binnen
   // het kader. Op 88 px is dat een paar pixels wit op wit; het haalt de blauwe stip weg
   // die anders bij de ene oefening wel en bij de andere niet linksboven staat.
-  // Net als bij de vergrote foto pas afdekken als de bytes van precies het getoonde pad
-  // bij de gemeten hash horen. Afmetingen alleen zijn geen bewijs: een vervangen beeld
+  // Net als bij de vergrote foto pas afdekken als een verse controle van het pad van dit
+  // beeld de gemeten hash oplevert (bij elke nieuwe lading opnieuw; wat die controle wel
+  // en niet bewijst staat bij bevestigBron). Afmetingen alleen zijn geen bewijs: een vervangen beeld
   // van hetzelfde formaat, of een oude kopie uit de cache, verloor anders inhoud onder
   // een vlak dat bij een ander bestand hoort. Tot de controle slaagt blijft de miniatuur
   // heel; lukt hij niet, dan blijft dat zo. Een oudere controle (de kaart is opnieuw
@@ -1690,32 +1691,44 @@
     if(uitsnedenOverlappen(p.poses[0].crop,p.poses[1].crop))return null;
     return p;
   }
-  // De goedkeuring hoort bij déze bytes. Is het beeld vervangen, dan vervalt ze en
-  // tonen we de volledige afbeelding; bewijzen lukt niet, dus tonen we niets extra's.
+  // De goedkeuring hoort bij déze bytes. Levert een verse controle van het pad andere
+  // bytes op, dan vervalt ze en tonen we de volledige afbeelding; lukt de controle niet,
+  // dan tonen we niets extra's.
   function bronPad(src){
     if(!src)return '';
     try{return new URL(src,location.href).pathname;}catch(e){return '';}
   }
-  // We controleren de bytes van precies de URL die de patiënt ziet (die komt ook meteen
-  // uit de cache), niet van een ander pad naar hetzelfde bestand. De uitkomst geldt dus
-  // per pad en per verwachte hash.
+  // We halen het pad op dat het beeld zelf gebruikt, niet een ander pad naar hetzelfde
+  // bestand, en hashen wat fetch() daarvoor teruggeeft (force-cache: normaal dezelfde
+  // HTTP-cachekopie die het beeld net gebruikte). Wat dit NIET bewijst: dat het
+  // gedecodeerde beeld uit precies die bytes komt. De browser laat de bytes van een <img>
+  // niet lezen; een beeld uit het geheugen van de pagina, een uit de cache gezette kopie
+  // of een bestand dat tussen het laden en deze controle op de server wisselt, kan
+  // afwijken. Daarom geen hergebruik van een eerdere uitkomst: elke aanroep hoort bij een
+  // nieuwe lading (miniatuur load/error, openen van de vergrote foto) en haalt opnieuw op.
+  // In bronGecontroleerd staat de uitkomst van de nieuwste afgeronde controle per pad en
+  // hash; een oudere controle die later klaar is, overschrijft die niet.
+  var bronVolgnr=0,bronGeschreven={};
   function bevestigBron(p,src){
     var pad=bronPad(src);
     if(!pad||pad.replace(/^\/+/,'').replace(/^v2\//,'')!==p.source)return Promise.resolve(false);
     var sleutel=pad+'|'+p.assetSha256;
-    if(bronGecontroleerd[sleutel]!==undefined)return Promise.resolve(bronGecontroleerd[sleutel]);
     if(!window.crypto||!crypto.subtle)return Promise.resolve(false);
+    var nr=++bronVolgnr;
+    function leg(ok){
+      if(!(bronGeschreven[sleutel]>nr)){bronGeschreven[sleutel]=nr;bronGecontroleerd[sleutel]=ok;}
+      return ok;
+    }
     return fetch(pad,{cache:'force-cache'}).then(function(r){
       if(!r.ok)throw Error('bron niet beschikbaar');
       return r.arrayBuffer();
     }).then(function(buffer){return crypto.subtle.digest('SHA-256',buffer);}).then(function(digest){
       var hash=Array.from(new Uint8Array(digest)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
-      bronGecontroleerd[sleutel]=hash===p.assetSha256;
-      return bronGecontroleerd[sleutel];
-    }).catch(function(){bronGecontroleerd[sleutel]=false;return false;});
+      return leg(hash===p.assetSha256);
+    }).catch(function(){return leg(false);});
   }
-  // Vergrote foto: het ingebakken merk pas afdekken als de bytes van precies dit pad bij de
-  // gemeten hash horen, net als bij de houdingen. Tot dan blijft het beeld even onzichtbaar
+  // Vergrote foto: het ingebakken merk pas afdekken als een verse controle van dit pad de
+  // gemeten hash oplevert, net als bij de houdingen. Tot dan blijft het beeld even onzichtbaar
   // (geen flits van het oude merk). Lukt de controle niet, dan het beeld zoals het is.
   var merkBeurt=0;
   function merkLightbox(sleutel){
