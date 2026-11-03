@@ -47,6 +47,18 @@ try{
  const neckId='fc_853c97009144ec09';
  const neck=body.drafts.find(d=>d.coreExerciseId===neckId);
  assert.equal(neck.published,false);assert.equal(neck.video,null);assert.equal(neck.audio,null);
+ assert.equal(neck.narrationCandidate.published,false);
+ assert.equal(neck.narrationCandidate.listeningReviewed,false);
+ assert.equal(neck.narrationCandidate.voiceId,'ea8f12713f7644ea9ad4ed710901fbbb');
+ const neckAudio=await readFile(`content/private-exercise-drafts/${neckId}/narration.mp3`);
+ const neckAudioUrl=base+`/api/exercise-drafts/${neckId}/narration`;
+ assert.notEqual((await fetch(neckAudioUrl)).status,200);
+ for(const [range,start,end] of [[null,0,neckAudio.length-1],['bytes=0-31',0,31],['bytes=-16',neckAudio.length-16,neckAudio.length-1]]){
+  const r=await fetch(neckAudioUrl,{headers:{...headers,...(range?{Range:range}:{})}});
+  assert.equal(r.status,range?206:200);assert.equal(r.headers.get('content-type'),'audio/mpeg');assert.match(r.headers.get('cache-control'),/no-store/);
+  assert.deepEqual(Buffer.from(await r.arrayBuffer()),neckAudio.subarray(start,end+1));
+ }
+ assert.notEqual((await fetch(base+`/content/private-exercise-drafts/${neckId}/narration.mp3`)).headers.get('content-type'),'audio/mpeg');
  for(const role of ['line','start','end']){
   const url=base+`/api/exercise-drafts/${neckId}/${role}`;
   assert.notEqual((await fetch(url)).status,200);

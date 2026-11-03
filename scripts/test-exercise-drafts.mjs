@@ -14,6 +14,8 @@ const neckId='fc_853c97009144ec09';
 const neck=await loadDraft({draftRoot:root,id:neckId,catalogue});
 assert.equal(neck.proposedCategory,'Nek');assert.equal(neck.published,false);
 assert.equal(neck.audio,null);assert.equal(neck.video,null);
+assert.equal(neck.narrationCandidate.qaStatus,'pending-independent-review');
+assert.equal(neck.narrationCandidate.sha256,'491fbcf1c822805da74eddca20a1398d0b4af3c299facb175d4e29868355c98e');
 assert.equal(neck.explanation,catalogue.find(r=>r.coreExerciseId===neckId).uitleg);
 for(const heldId of ['fc_2050086df6d023ac','fc_0d5387765cfc38e7','fc_efb221042af6b0a7','fc_4efd59fd568e6c13'])await assert.rejects(loadDraft({draftRoot:root,id:heldId,catalogue}),/Unknown draft ID/);
 const temp=await mkdtemp(join(tmpdir(),'fysiplan-draft-test-'));

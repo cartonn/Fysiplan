@@ -1,0 +1,20 @@
+{
+  "coreExerciseId": "fc_853c97009144ec09",
+  "file": "narration.mp3",
+  "sha256": "491fbcf1c822805da74eddca20a1398d0b4af3c299facb175d4e29868355c98e",
+  "bytes": 366132,
+  "explanationSha256": "6f2797fd1156d0d80bf45832ad090697fab399c4577a8c1a68c29164f19701c8",
+  "textSha256": "e74b69818acd651043e3ac4b85e1e4977bfb73d46d3185ad9c60663868e0754e",
+  "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+  "engine": "heygen_voice",
+  "returnedEngine": "orca",
+  "requestId": "4472930d30c64b64b796e593fb38515f",
+  "language": "nl",
+  "speed": 0.95,
+  "durationSeconds": 11.441625,
+  "published": false,
+  "clinicalApproval": false,
+  "listeningReviewed": false,
+  "qaStatus": "pending-independent-review",
+  "provenance": "Exact copy of existing audio-lane neck narration, generated 2026-11-03; no regeneration or processing. Provider text matched; full listening review pending."
+}
