@@ -22,11 +22,12 @@
     "6b64ac3 houdingen ook in een echte browser (v2-pad), kaart-browsercheck",
     "4d7e090 visuele ronde over alle 158 statische oefeningen",
     "e5991d2 overal hetzelfde Fysiplan-merk op de kaart",
-    "63f8ee1 miniatuurmerk pas na bewezen hash; manifest laden begrensd (audit-P2 x2)"
+    "63f8ee1 miniatuurmerk pas na bewezen hash; manifest laden begrensd (audit-P2 x2)",
+    "fc40de1 bevestigBron controleert elke lading opnieuw; nieuwste uitkomst wint"
   ],
-  "lastUpdate": "2026-11-03T00:45:51+0100",
+  "lastUpdate": "2026-11-03T01:18:20+0100",
   "lastUpdateNote": "Machineklok (date +%FT%T%z) op het moment van schrijven.",
-  "batch": 9,
+  "batch": 10,
   "deployed": false,
   "pushed": false,
   "clinicalApproval": false,
@@ -143,11 +144,11 @@
     "newCredentials": "none",
     "purchases": "none"
   },
-  "nextAction": "Coördinator: 63f8ee1 nalopen (miniatuurmasker na hash, manifestgrens); daarnaast blijven 1ba3434, 3dcf70b, 3bf37b4 en de besluiten (a) 6 lijkt-fout/17 onzekere statische beelden, (c) welke statische bladen opnieuw renderen, (d) beoordelingsweg praktijkuploads, (e) YouTube-link vs. catalogusvideo, (f) gedeelde /k/-route voor V1-kaarten.",
+  "nextAction": "Coördinator: fc40de1 nalopen (verse hashcontrole per lading) naast 63f8ee1; openstaande besluiten ongewijzigd: (a) 6 lijkt-fout/17 onzekere statische beelden, (c) welke statische bladen opnieuw renderen, (d) beoordelingsweg praktijkuploads, (e) YouTube-link vs. catalogusvideo, (f) gedeelde /k/-route voor V1-kaarten.",
   "handoverReport": "output/claude-night-report.md",
   "perExerciseList": "output/mobile-pose-per-exercise.md",
   "inspectionLog": "output/pose-review/inspection-log.md",
-  "workingTree": "Commits t/m 63f8ee1. Niet gecommit en bewust bewaard: scripts/kaart-browsercheck.mjs, output/kaart-browsercheck.json, output/pose-review/browser/01-kaart.png (gewijzigd) en output/kaart-browsercheck-alle.json (untracked). Untracked: CLAUDE-NIGHT-TASK.txt, coördinatorbestanden, auditbestand, node_modules (symlink).",
+  "workingTree": "Commits t/m de voortgangscommit na fc40de1. Niet gecommit en bewust bewaard: scripts/kaart-browsercheck.mjs, output/kaart-browsercheck.json, output/pose-review/browser/01-kaart.png (gewijzigd) en output/kaart-browsercheck-alle.json (untracked). Untracked: CLAUDE-NIGHT-TASK.txt, coördinatorbestanden, auditbestand, node_modules (symlink).",
   "blockers": [
     "Luisterronde en klinische goedkeuring vragen een mens; niets daarvan is gedaan of af te leiden.",
     "Alle 158 statische oefeningen (zie remaining) hebben ander bronmateriaal nodig voor een houdingweergave; beeldgeneratie is niet geautoriseerd en er is niets uitgegeven.",
@@ -253,7 +254,7 @@
     "fixes": {
       "P2 miniatuurmasker zonder hash": {
         "was": "dekMiniatuur (public/kaart.html) zette het witte merkvlak op basis van alleen merkVlak(afmetingen); geen bevestigBron. Vervangen beeld van hetzelfde formaat of oude cachekopie kon inhoud kwijtraken onder een vlak van een ander bestand.",
-        "nu": "public/kaart.html:663 dekMiniatuur haalt het oude vlak meteen weg, roept bevestigBron(m, currentSrc||src) aan (sha256 van precies het getoonde pad) en plaatst pas daarna via plaatsMiniDek. Racebescherming: per miniatuur een beurt; niets zetten als pad, afmetingen, ouder (losgekoppeld na hertekenen) of merkDek-regel tussendoor veranderde. dekMiniaturen luistert naar elke load/error (niet meer once), zodat een nieuwe lading opnieuw begint.",
+        "nu": "public/kaart.html:663 dekMiniatuur haalt het oude vlak meteen weg, roept bevestigBron(m, currentSrc||src) aan (sha256 van wat fetch() voor het pad van het getoonde beeld teruggeeft; zie session5 voor wat dat niet bewijst) en plaatst pas daarna via plaatsMiniDek. Racebescherming: per miniatuur een beurt; niets zetten als pad, afmetingen, ouder (losgekoppeld na hertekenen) of merkDek-regel tussendoor veranderde. dekMiniaturen luistert naar elke load/error (niet meer once), zodat een nieuwe lading opnieuw begint.",
         "gevolg": "Tijdens de hashcontrole is het ingebakken merk op de miniatuur kort zichtbaar (bewust: beter een merk te veel dan inhoud te weinig). Bij falen blijft dat zo."
       },
       "P2 manifest laden onbegrensd": {
@@ -300,6 +301,54 @@
     "nietGedraaid": "Geen echte browser of toestel (kaart-browsercheck niet gedraaid: zou de vuile output/kaart-browsercheck.json en 01-kaart.png overschrijven, die bewaard moesten blijven). Geen luistertest, geen klinische beoordeling.",
     "gedeeldeKaartroute": "server.js serveert voor elke /k/-link dezelfde public/kaart.html. Alle kaartwijzigingen van deze nacht (houdingen, merk, miniatuurmasker, stemopname, wachttijden, manifestgrens) gelden dus ook voor bestaande QR-kaarten, ongeacht of ze in de V1- of V2-editor zijn gemaakt. public/index.html, public/v1* en public/oefeningen.json zijn sinds 9bf215a niet gewijzigd, maar de V1-patiëntweergave is niet kanaal-gescheiden. Als V1-links gedragsmatig ongewijzigd moeten blijven, is dat een releasebesluit.",
     "ongewijzigd": "Geen V1-editor/catalogus, geen categorie-assets (fysiplan-category-mix-20261102 niet aangeraakt), geen credentials, geen push/deploy, geen betaalde generatie. scripts/kaart-browsercheck.mjs, output/kaart-browsercheck.json, output/kaart-browsercheck-alle.json en output/pose-review/browser/01-kaart.png bewust niet aangeraakt en niet gecommit.",
-    "regelverwijzingen": "Regelnummers in remaining/knownGaps/report bijgewerkt naar de stand na 63f8ee1 (716, 755, 1166, 1210, 1469)."
+    "regelverwijzingen": "Regelnummers in remaining/knownGaps/report bijgewerkt naar de stand na 63f8ee1 (716, 755, 1166, 1210, 1469).",
+    "restpunt": "Gevonden door vervolgaudit (session5): bevestigBron onthield true per pad+hash, dus een nieuwe lading van hetzelfde pad werd zonder nieuwe controle afgedekt. Opgelost in session5."
+  },
+  "session5": {
+    "started": "machineklok bij schrijven 2026-11-03T01:18:20+0100 (werk begon kort daarvoor; geen eerdere klokmeting in deze ronde)",
+    "instructions": "Coördinator, vervolgaudit: bevestigBron cachet true per pad+hash; zelfde URL/formaat met andere bytes werd bij een nieuwe lading zonder verse controle afgedekt (eerst true/fetches1, dan true/fetches1/vlak1). Conservatief herstellen voor nieuwe ladingen, racebescherming houden, niet beweren dat exact de getoonde bytes zijn gecontroleerd als de opgehaalde versie kan afwijken; regressietest zonder handmatige cachereset; test:mobile en build; beperkingen vastleggen; daarna stoppen.",
+    "probleem": "bevestigBron (public/kaart.html) gaf een eerder vastgelegde uitkomst terug zodra bronGecontroleerd[pad|hash] bestond. Elke latere lading van hetzelfde pad (miniatuur opnieuw geladen of hertekend, vergrote foto opnieuw geopend, houdingen) kreeg dus de oude true zonder ophalen.",
+    "reproductie": {
+      "script": "tijdelijk, $CLAUDE_JOB_DIR/tmp/repro-lading.mjs (dekMiniatuur + bevestigBron uit kaart.html in een VM, 800x1200, zelfde URL)",
+      "2249b0c": "lading 1: true, fetches 1, vlak 1; lading 2 met andere bytes: true, fetches 1, vlak 1 (gelijk aan de audit)",
+      "na herstel": "lading 1: true, fetches 1, vlak 1; lading 2 met andere bytes: false, fetches 2, vlak 0"
+    },
+    "herstel": [
+      "bevestigBron hergebruikt geen eerdere uitkomst meer: elke aanroep haalt het pad opnieuw op (fetch, cache:force-cache) en hasht. Alle aanroepers horen bij een nieuwe lading: miniatuur load/error (en de eerste keer bij complete), merkLightbox bij elk openen, de houdingen (voordoen) bij elk openen.",
+      "bronGecontroleerd[pad|hash] bevat de uitkomst van de nieuwste (laatst gestarte) afgeronde controle; een oudere controle die later klaar is, overschrijft die niet (volgnummer per controle, bronGeschreven per sleutel). Elke aanroeper krijgt wel zijn eigen uitkomst terug en houdt zijn eigen racecontroles (miniatuur: beurt, pad, afmetingen, ouder, merkDek-regel; vergrote foto: merkBeurt en src; houdingen: lightbox open en src).",
+      "demoHoudingen leest bronGecontroleerd: houdingen verschijnen alleen als de eigen verse controle bij het openen true gaf én de nieuwste gedeelde uitkomst true is. Een nieuwere controle met andere bytes zet ze dus uit (fail-closed).",
+      "Commentaar in kaart.html zegt niet meer dat \"de bytes die de patiënt ziet\" gecontroleerd zijn."
+    ],
+    "watDeControleNietBewijst": [
+      "Gehasht wordt wat fetch() voor hetzelfde pad direct na de lading teruggeeft, niet de bytes waaruit het <img> is gedecodeerd: browsers stellen die niet beschikbaar. Normaal is het dezelfde HTTP-cachekopie (beelden: cache-control public, max-age=86400; de controle gebruikt force-cache).",
+      "Afwijken kan als (a) het beeld uit het geheugen van de pagina komt terwijl de HTTP-cachekopie intussen is vervangen of verwijderd, (b) /kaart-sw.js (netwerk eerst, scope /k/) beide verzoeken los doorgeeft en het bestand tussen beeldlading en controle op de server wisselt, of (c) een tussenliggende cache verschillende versies levert. Alleen als het beeld onbeoordeelde bytes kreeg en de controle tegelijk precies de beoordeelde bytes, wordt ten onrechte afgedekt of worden ten onrechte houdingen getoond; in alle andere afwijkingen faalt de controle dicht (geen vlak, geen houdingen).",
+      "Een al geplaatst vlak op een ander <img> (eerdere lading) blijft staan als een latere lading van hetzelfde pad elders andere bytes oplevert: elk vlak hoort bij de lading van zijn eigen element.",
+      "De knop voor de demonstratie in de vergrote foto (opnieuw starten zonder nieuwe lading) gebruikt de nieuwste gedeelde uitkomst voor dat pad, geen nieuwe fetch."
+    ],
+    "kosten": "Elke nieuwe lading kost één fetch (normaal uit de HTTP-cache, geen netwerk) plus SHA-256. Openen van de vergrote foto: twee (merk en houdingen). Bij het tekenen van de kaart kan een al geladen miniatuur twee keer worden gecontroleerd (complete en het load-event van dezelfde lading); alleen de laatste telt.",
+    "tests": {
+      "scripts/test-mobile-merk.mjs": [
+        "alle handmatige cacheresets verwijderd (vroeger drie bronGecontroleerd={} en dertien vergeet())",
+        "nieuw blok: dekMiniaturen, eerste lading true/fetch 1/vlak 1; zelfde URL andere bytes, tweede load-event: fetch 2, vlak 0, gedeelde uitkomst false; vergrote foto van hetzelfde pad daarna ook false (fetch 3); beoordeelde bytes terug: vlak terug",
+        "oudere controle die later klaar is: krijgt eigen true, maar de gedeelde uitkomst blijft false",
+        "aangepaste bewering: elke nieuwe controle haalt opnieuw op (was: een bewezen pad wordt niet opnieuw opgehaald)"
+      ],
+      "scripts/test-mobile-media-controls.mjs": [
+        "bevestigBron zonder reset: true, dan andere bytes zelfde pad: false, opgehaald 2, gedeelde uitkomst false; terug: true",
+        "demoHoudingen: na een nieuwere controle met andere bytes geen houdingen meer",
+        "vervangen bewering: een geslaagde controle wordt onthouden"
+      ]
+    },
+    "regressiebewijs": {
+      "test-mobile-merk.mjs tegen kaart.html van 2249b0c": "faalt (regel 82: vergrote foto, andere bytes zelfde pad, true !== false); oude test + alleen het nieuwe blok faalt bij fetches.length 0 !== 1 (geen verse controle)",
+      "test-mobile-media-controls.mjs tegen kaart.html van 2249b0c": "faalt: 'een nieuwe lading met andere bytes wordt niet op de oude uitkomst goedgekeurd'"
+    },
+    "testEvidence": {
+      "npm run test:mobile": "exit 0 (2026-11-03T01:18:20+0100)",
+      "npm run build": "exit 0"
+    },
+    "nietGedraaid": "Geen echte browser of toestel (browsercheck zou bewaarde, niet gecommitte uitvoer overschrijven); geen luistertest; geen klinische beoordeling. Geometry-approved blijft alleen een uitspraak over uitsnede en weergave.",
+    "ongewijzigd": "Alleen public/kaart.html (bevestigBron en commentaar) en twee testbestanden. Geen V1-bestanden, geen categorie-assets, geen credentials, geen push/deploy, geen generatie. Vuile browsercheck-bestanden niet aangeraakt.",
+    "commit": "fc40de1"
   }
 }

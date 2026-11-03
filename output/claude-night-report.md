@@ -134,7 +134,7 @@ Gevonden door twee onafhankelijke read-only audits (praktijk-overrides en stemwe
 
 | wat er mis was | waarom het telt | nu |
 |---|---|---|
-| de miniatuur kreeg het witte merkvlak op basis van alleen de afmetingen; de vergrote foto controleerde wél de sha256, de miniatuur niet (mijn eerdere voortgang zei ten onrechte "hetzelfde vlak" alsof dat ook gold) | een vervangen beeld van hetzelfde formaat of een oude cachekopie verloor inhoud onder een vlak van een ander bestand | eerst `bevestigBron` op precies het getoonde pad; tot dan en bij falen blijft de miniatuur heel. Een verouderde controle (ander pad, ander formaat, hertekend, nieuwere beurt, andere beoordelingsregel) zet niets; elke nieuwe `load`/`error` begint opnieuw |
+| de miniatuur kreeg het witte merkvlak op basis van alleen de afmetingen; de vergrote foto controleerde wél de sha256, de miniatuur niet (mijn eerdere voortgang zei ten onrechte "hetzelfde vlak" alsof dat ook gold) | een vervangen beeld van hetzelfde formaat of een oude cachekopie verloor inhoud onder een vlak van een ander bestand | eerst `bevestigBron` op het pad van het getoonde beeld; tot dan en bij falen blijft de miniatuur heel. Een verouderde controle (ander pad, ander formaat, hertekend, nieuwere beurt, andere beoordelingsregel) zet niets; elke nieuwe `load`/`error` begint opnieuw |
 | het stemmanifest werd zonder grens opgehaald, terwijl de knop al op "Stop" stond; de wachttijd van 12 s begint pas na het manifest | op een slechte verbinding bleef de knop eindeloos op "Stop", zonder melding | 10 s grens over aanvraag en inhoud, afbreken waar de browser dat kan, daarna opnieuw proberen; een te laat antwoord telt niet; een manifest zonder lijst opnames wordt geweigerd; stoppen tijdens het laden blijft stil |
 
 Beide nieuwe tests falen op de vorige code bij hun eerste nieuwe controle; `npm run
@@ -143,6 +143,26 @@ browsercheck zou bewaarde, nog niet gecommitte uitvoer overschrijven), luisterte
 klinische beoordeling. Tijdens de hashcontrole is het ingebakken merk op een miniatuur
 even zichtbaar; dat is bewust. Slaagt het manifest pas bij een latere poging, dan
 verschijnen de luisterknoppen per oefening niet alsnog (niet verbreed).
+
+### Ronde 4, vervolgaudit: een eerdere controle werd hergebruikt (commit `fc40de1`)
+
+`bevestigBron` onthield een geslaagde controle per pad en hash. Laadde hetzelfde pad
+opnieuw met andere bytes en hetzelfde formaat (miniatuur opnieuw geladen, vergrote foto
+opnieuw geopend), dan werd zonder nieuwe controle afgedekt: op `2249b0c` gaf de
+reproductie twee keer `true`, één fetch, één vlak. Nu haalt elke lading het pad opnieuw op
+(tweede keer: `false`, twee fetches, geen vlak). De gedeelde uitkomst, die ook de
+houdingen leest, is die van de nieuwste controle; een oudere die later klaar is,
+overschrijft hem niet. De regressietests gebruiken geen handmatige cachereset meer en
+falen op `2249b0c`.
+
+Wat de controle **niet** bewijst: dat het beeld uit precies de gehashte bytes is
+gedecodeerd. De browser laat de bytes van een `<img>` niet lezen; gehasht wordt wat
+`fetch()` voor hetzelfde pad direct na de lading teruggeeft (normaal dezelfde
+HTTP-cachekopie). Wisselt het bestand tussen beeldlading en controle, of komt het beeld uit
+het geheugen van de pagina terwijl de cachekopie intussen anders is, dan kan dat afwijken.
+Bijna elke afwijking faalt dicht (geen vlak, geen houdingen). Alleen als het beeld
+onbeoordeelde bytes kreeg en de controle tegelijk precies de beoordeelde, gaat het mis.
+Kosten: één fetch uit de cache plus SHA-256 per lading. De vergrote foto doet er twee.
 
 ## 6. Wat blijft liggen — en waarom
 
