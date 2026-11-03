@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-03",
+  "baseCommit": "3113b21",
+  "lane": "audio",
+  "implementation": ["Ignore a late rejected play promise from an earlier playlist fragment instead of stopping the next fragment", "Catch synchronous playback failures on later playlist fragments and reset playback cleanly"],
+  "recovery": {"ledger":"/private/tmp/fysiplan-api-batch-258.json","completedResults":6,"alreadyImportedExactText":6,"recoverableMissingClips":0,"newSynthesisCalls":0,"newCharges":0},
+  "counts": {"effectiveCatalog":319,"availableExactTextClips":67,"missingClips":252,"explanationHolds":15,"missingWithoutIdentifiedHold":237},
+  "blocker": "Known ledger contains no unimported completed audio. Creating the remaining 237 clips requires new HeyGen synthesis usage. Latest instruction prohibits paid API/extra usage/purchases, so no synthesis request was made. Historical account balance is not a current quota verification and does not override this restriction. The 15 held explanations additionally need source/variant resolution.",
+  "limitations": ["No provider account/credentials accessed", "No full listening review performed; exact submitted text and existing asset validations do not certify spoken transcript or clinical correctness", "No change to clinical explanation text", "No deployment"],
+  "testsPassed": ["node scripts/test-noor-playlist-races.mjs", "node scripts/test-noor-audio.mjs", "node scripts/check-noor-assets.mjs --partial", "node scripts/test-mobile-narration-review.mjs"]
+}

@@ -67,9 +67,16 @@
         if(token!==serial)return;
         stopWacht();laatsteTijd=0;
         if(i===clips.length){stop();if(done)done();return;}
-        player.src=clips[i++].src;
-        waak();
-        var promise=player.play();if(promise&&promise.catch)promise.catch(function(){fail();});
+        // Elke play()-belofte hoort bij precies dit fragment. Sommige browsers
+        // wijzen een oude belofte pas af nadat het volgende fragment al speelt.
+        // Zo'n oude afwijzing mag de nieuwe opname niet stilleggen.
+        var fragment=++i;
+        try{
+          player.src=clips[fragment-1].src;
+          waak();
+          var promise=player.play();
+          if(promise&&promise.catch)promise.catch(function(){if(fragment===i)fail();});
+        }catch(e){if(fragment===i)fail();}
       }
       player.onplaying=loopt;player.onwaiting=waak;player.onstalled=waak;player.ontimeupdate=voortgang;
       player.onerror=function(){fail();};player.onended=next;next();
