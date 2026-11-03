@@ -1951,8 +1951,8 @@
       if(!actief())return;
       status.textContent=bericht;status.hidden=!bericht;
       if(retry){var knop=document.createElement('button');knop.type='button';knop.textContent=tekst.opnieuw;
-        knop.addEventListener('click',function(){if(!actief())return;var n=++beurt;meld(tekst.laden,false);v.load();
-          try{var p=v.play();if(p&&p.catch)p.catch(function(e){if(n!==beurt||!actief())return;meld(e&&e.name==='NotAllowedError'?tekst.pauze:tekst.fout,e&&e.name!=='NotAllowedError');});}
+        knop.addEventListener('click',function(){if(!actief())return;var n=++beurt;meld(tekst.laden,false);
+          try{v.load();var p=v.play();if(p&&p.catch)p.catch(function(e){if(n!==beurt||!actief())return;meld(e&&e.name==='NotAllowedError'?tekst.pauze:tekst.fout,e&&e.name!=='NotAllowedError');});}
           catch(e){meld(tekst.fout,true);}
         });status.appendChild(knop);}
     }

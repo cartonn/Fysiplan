@@ -3,7 +3,10 @@ Mobile native video repair, baseline 3113b21. No deployment or paid generation.
 Fixed: native practice video with failed network/codec/media previously left a black
 player without actionable error. Real error events now show a status plus retry.
 Retry reloads the same source and requests playback within the user gesture.
-Autoplay denial directs the user to native play controls. Playing clears loading;
+Retry play-promise denial directs the user to native play controls. The initial
+markup autoplay has no captured promise; canplay while paused supplies its hint.
+Synchronous load/play exceptions on retry restore the error/retry status.
+Playing clears loading;
 waiting shows buffering; canplay with paused media shows the play instruction.
 Late retry rejection cannot overwrite playing state or detached/replaced cards.
 Source attribute escaped; native framing explicitly object-fit contain, no crops.
