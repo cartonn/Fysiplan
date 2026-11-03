@@ -1,0 +1,27 @@
+Mobile native video repair, baseline 3113b21. No deployment or paid generation.
+
+Fixed: native practice video with failed network/codec/media previously left a black
+player without actionable error. Real error events now show a status plus retry.
+Retry reloads the same source and requests playback within the user gesture.
+Autoplay denial directs the user to native play controls. Playing clears loading;
+waiting shows buffering; canplay with paused media shows the play instruction.
+Late retry rejection cannot overwrite playing state or detached/replaced cards.
+Source attribute escaped; native framing explicitly object-fit contain, no crops.
+No edits to original media, source holds, category data, clinical flags or audio.
+Non-Dutch status falls back to English. Existing native controls remain available.
+
+Tests: node scripts/test-mobile-video-recovery.mjs; node scripts/test-mobile-media-controls.mjs.
+These are VM/control tests, not true device/browser video or audio-quality QA.
+No local mp4/webm/mov present under public in this worktree. Practice uploaded videos
+are runtime data; cross-origin iframe loading does not prove successful playback.
+Existing external YouTube fallback remains; no iframe load/timeout used as fake proof.
+
+Set13 coordination: category agent confirmed fc_07a47f244d7392e6 is a PRIVATE draft
+with 3 PNGs 1024x1536 (line/start/end), no audio or video. Consumer uses contain,
+centered white background and explicit pose labels. It must not be advertised as
+motion/video or auto-published in the mobile manifest. No still fade or generated
+in-between anatomy introduced by this change. No attempt to bypass file-preview
+browser restriction through another host.
+
+Remaining: real iOS/Android playback validation needs an accessible authorized
+practice video. This patch does not claim its execution/clinical content is correct.

@@ -199,6 +199,9 @@
   .vhouder.open{display:block;animation:vopen .25s ease-out}
   @keyframes vopen{from{opacity:0}to{opacity:1}}
   .vhouder video,.vhouder iframe{display:block;width:100%;aspect-ratio:16/10;border:none;background:#000}
+  .vhouder video{object-fit:contain}
+  .vstatus{padding:10px 14px;font-size:14px;line-height:1.4}
+  .vstatus button{margin:8px 0 0;padding:8px 12px;min-height:44px;display:block}
   .vhouder .ytextern{display:block;padding:10px 14px 4px;text-align:center;font:600 13px/1.35 var(--disp);color:var(--zacht);text-decoration:underline}
   .vtekst{margin:0;padding:15px 17px 17px;background:var(--vlak);border-top:1px solid var(--lijn2)}
   .vtekst-label{display:flex;align-items:center;gap:7px;margin-bottom:6px;font:700 11px/1.2 var(--disp);
@@ -1933,6 +1936,34 @@
     demo.interval=setInterval(function(){demoWissel(!wrap.classList.contains('tweede'));},demo.spraak?2400:1400);
   }
 
+  // Native video's kunnen na het openen nog falen (404, decode, netwerk).
+  // Alleen echte media-events bepalen de status; iframe-load bewijst geen afspelen.
+  function bewaakVideo(v,houder){
+    var tekst=TAAL==='nl'?{
+      fout:'De video kan niet worden afgespeeld. Probeer opnieuw of neem contact op met je praktijk.',
+      laden:'Video laden…',pauze:'Tik op afspelen in de video om te starten.',opnieuw:'Opnieuw proberen'
+    }:{fout:'The video could not play. Retry or contact your practice.',laden:'Loading video…',pauze:'Tap play in the video to start.',opnieuw:'Try again'};
+    var status=document.createElement('div');status.className='vstatus';status.setAttribute('role','status');
+    houder.appendChild(status);
+    var beurt=0;
+    function actief(){return v.isConnected&&houder.contains(v);}
+    function meld(bericht,retry){
+      if(!actief())return;
+      status.textContent=bericht;status.hidden=!bericht;
+      if(retry){var knop=document.createElement('button');knop.type='button';knop.textContent=tekst.opnieuw;
+        knop.addEventListener('click',function(){if(!actief())return;var n=++beurt;meld(tekst.laden,false);v.load();
+          try{var p=v.play();if(p&&p.catch)p.catch(function(e){if(n!==beurt||!actief())return;meld(e&&e.name==='NotAllowedError'?tekst.pauze:tekst.fout,e&&e.name!=='NotAllowedError');});}
+          catch(e){meld(tekst.fout,true);}
+        });status.appendChild(knop);}
+    }
+    v.addEventListener('error',function(){beurt++;meld(tekst.fout,true);});
+    v.addEventListener('playing',function(){beurt++;meld('',false);});
+    v.addEventListener('waiting',function(){meld(tekst.laden,false);});
+    v.addEventListener('canplay',function(){if(v.paused)meld(tekst.pauze,false);});
+    meld(tekst.laden,false);
+    if(v.error)meld(tekst.fout,true);
+  }
+
   // ---- alle knoppen één keer koppelen; hertekenen vervangt alleen de inhoud ----
   function bindEens(){
     // video laden bij een tik; één tegelijk open, de rest pauzeert vanzelf
@@ -2029,7 +2060,8 @@
       var herkomst=vanPraktijk?'<div class="vmeta">'+esc(VIDEO_BRON_PRAKTIJK[TAAL]||VIDEO_BRON_PRAKTIJK.nl)+'</div>':'';
       var tekstblok=herkomst+(videoTekst?'<div class="vtekst" role="region" aria-label="'+esc(videoLabel)+'"><div class="vtekst-label">'+esc(videoLabel)+'</div><p>'+esc(videoTekst)+'</p></div>':'');
       if(b.dataset.eigen){
-        houder.innerHTML='<video controls autoplay playsinline preload="metadata" aria-label="'+esc(videoLabel)+'" src="'+b.dataset.eigen+'"></video>'+tekstblok;
+        houder.innerHTML='<video controls autoplay playsinline preload="metadata" aria-label="'+esc(videoLabel)+'" src="'+esc(b.dataset.eigen)+'"></video>'+tekstblok;
+        bewaakVideo(houder.querySelector('video'),houder);
       }else if(b.dataset.yt){
         houder.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+b.dataset.yt+
           '?autoplay=1&rel=0&modestbranding=1" title="'+esc(videoLabel)+'" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>'+
