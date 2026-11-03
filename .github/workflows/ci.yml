@@ -25,3 +25,5 @@ jobs:
       # patiëntkaart: beoordeelde uitsnedes, teruggehouden beelden, houdlijsten en
       # de uitlevering van de stemopnames.
       - run: npm run test:mobile
+      - run: node scripts/test-noor-playlist-races.mjs
+      - run: npm run test:video-recovery
