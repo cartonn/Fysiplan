@@ -1,0 +1,26 @@
+Private table-pick narration integration, parent bd5df9b, no generation/spend.
+Exact audio-lane copy request7461124262284685a7a9b8fb159c9959, MP3 SHA
+d738d3d206855f8717e7d22c3b4f17396c4911a0f34a80ad6e1078db8c23db7c,
+12.512625s; approved voice ID ea8f12713f7644ea9ad4ed710901fbbb.
+The voice identity is approved, NOT this recording's complete listening/clinical QA.
+listeningReviewed=false, clinicalApproval=false, published=false remain explicit.
+
+Separate narrationCandidate sidecar binds exact draft explanation SHA and spoken
+name+'. '+explanation SHA, voiceID, language, file bytes/hash. Catalogue/draft
+source comparison still enforced. Unchanged source PNGs and motion MP4 retained.
+GET /api/exercise-drafts/fc_07a47f244d7392e6/narration uses same private-admin gate,
+audio/mpeg, byte ranges, private no-store. No public URL or catalogue addition.
+Review page fetches auth headers into revocable blob URL, manual load/play/reload,
+native controls, error feedback; playing audio pauses video and vice versa across
+all review cards. No autoplay, automatic sequencing, mixing or synchronization.
+Full narration contains return-to-table step; UI explicitly says motion only shows
+pickup. Does not pretend full instruction is covered by video.
+
+Tests passed: npm run test:drafts. Auth/default-key denial, private no-store,
+full/prefix/suffix MP3 bytes, no public storage, source text changes (both draft and
+catalogue consistently changed), voice/hash/path/publication mutations, real
+mutual-exclusion helper, no autoplay and retry UI. Not real device listening QA.
+Independent scoped copy permits this integration without all three audio drafts;
+audioagent ce0ef34 also archives the same source in its separate private batch.
+No files deployed, no credit calls. Public release still requires full listening,
+movement review and resolving missing return phase.

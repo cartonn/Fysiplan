@@ -1900,9 +1900,14 @@ async function afhandelen(request, response) {
         await sendJson(response, 200, { published: false, drafts: await listDrafts({ draftRoot, catalogue }) });
         return;
       }
-      const match = urlPath.match(/^\/api\/exercise-drafts\/(fc_[a-f0-9]+)\/(line|start|end|motion)$/);
+      const match = urlPath.match(/^\/api\/exercise-drafts\/(fc_[a-f0-9]+)\/(line|start|end|motion|narration)$/);
       if (!match) { await sendJson(response, 404, { fout: "Concept niet gevonden." }); return; }
       const draft = await loadDraft({ draftRoot, id: match[1], catalogue });
+      if (match[2] === 'narration') {
+        if (!draft.narrationCandidate) { await sendJson(response, 404, { fout: 'Geen stemconcept.' }); return; }
+        await sendMedia(request, response, 'audio/mpeg', await readFile(join(draftRoot, match[1], draft.narrationCandidate.file)), { 'cache-control': 'private, no-store' });
+        return;
+      }
       if (match[2] === 'motion') {
         if (!draft.motionCandidate) { await sendJson(response, 404, { fout: 'Geen bewegingsconcept.' }); return; }
         await sendMedia(request, response, 'video/mp4', await readFile(join(draftRoot, match[1], draft.motionCandidate.file)), { 'cache-control': 'private, no-store' });

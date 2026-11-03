@@ -1,0 +1,20 @@
+{
+  "coreExerciseId": "fc_07a47f244d7392e6",
+  "file": "narration.mp3",
+  "sha256": "d738d3d206855f8717e7d22c3b4f17396c4911a0f34a80ad6e1078db8c23db7c",
+  "bytes": 400404,
+  "explanationSha256": "dada05ce2a25a79bd84aacc62977bb3f9c11a4216d6b8f1576bfb9bdebfa4fe2",
+  "textSha256": "06adba617fe5098503678eba6f41fa75e7705789828f64647b26beae2fa3a1cd",
+  "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+  "engine": "heygen_voice",
+  "returnedEngine": "orca",
+  "requestId": "7461124262284685a7a9b8fb159c9959",
+  "language": "nl",
+  "speed": 0.95,
+  "durationSeconds": 12.512625,
+  "published": false,
+  "clinicalApproval": false,
+  "listeningReviewed": false,
+  "qaStatus": "pending-independent-review",
+  "provenance": "Exact copy of audio lane private table-pick narration, generated 2026-11-03 using one included credit; no new generation or processing. Provider word text matched; full listening review remains pending."
+}

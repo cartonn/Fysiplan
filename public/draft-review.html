@@ -1,12 +1,15 @@
 <!doctype html><html lang="nl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fysiplan – conceptcontrole</title>
 <style>body{font:16px system-ui;margin:24px auto;padding:0 16px;max-width:800px;color:#18304a;background:#f6f8fb}button,input{font:inherit;padding:10px;margin:4px}article{background:white;padding:16px;margin:20px 0;border:1px solid #ddd;border-radius:12px}img{display:block;width:100%;height:auto;aspect-ratio:2/3;max-height:70vh;object-fit:contain;object-position:50% 50%;background:white}small{display:block}button[aria-pressed=true]{background:#164a83;color:white}</style>
 <style>video{display:block;width:100%;aspect-ratio:2/3;max-height:70vh;object-fit:contain;background:white}</style>
-<h1>Conceptcontrole</h1><p>Niet gepubliceerd. Losse houdingen en eventuele bewegingsconcepten zijn apart gelabeld. Geen klinische goedkeuring; er is geen audio toegevoegd.</p>
+<h1>Conceptcontrole</h1><p>Niet gepubliceerd. Afbeeldingen, beweging en stem zijn apart te beoordelen. Geen klinische goedkeuring.</p>
 <form id="login"><label>Beheersleutel <input id="key" type="password" autocomplete="off" required></label><button>Concepten laden</button></form><p id="status" role="status"></p><main id="cards"></main>
 <script type="module">
 const cards=document.getElementById('cards'), status=document.getElementById('status');
 let urls=[];
-const clear=()=>{cards.querySelectorAll('video').forEach(v=>v.pause());urls.forEach(URL.revokeObjectURL);urls=[];cards.replaceChildren();};
+function exclusieveMedia(media){
+ media.addEventListener('play',()=>{cards.querySelectorAll('video,audio').forEach(other=>{if(other!==media)other.pause();});});
+}
+const clear=()=>{cards.querySelectorAll('video,audio').forEach(v=>v.pause());urls.forEach(URL.revokeObjectURL);urls=[];cards.replaceChildren();};
 window.addEventListener('pagehide',clear);
 document.getElementById('login').addEventListener('submit',async event=>{
  event.preventDefault();clear();status.textContent='Laden…';
@@ -34,6 +37,7 @@ document.getElementById('login').addEventListener('submit',async event=>{
     const motion=draft.motionCandidate, heading=document.createElement('h3'),note=document.createElement('p'),video=document.createElement('video'),message=document.createElement('p'),load=document.createElement('button');
     heading.textContent='Bewegingsconcept – nog beoordelen';note.textContent=motion.limitations;
     video.controls=true;video.playsInline=true;video.preload='metadata';video.setAttribute('aria-label','Ongepubliceerd bewegingsconcept: '+draft.originalRecord.naam);
+    exclusieveMedia(video);
     message.setAttribute('role','status');load.type='button';load.textContent='Bewegingsconcept laden';
     let blobUrl=null,busy=false;
     load.addEventListener('click',async()=>{
@@ -50,6 +54,28 @@ document.getElementById('login').addEventListener('submit',async event=>{
     video.addEventListener('error',()=>{message.textContent='Afspelen is mislukt. Laad de video opnieuw.';});
     video.addEventListener('playing',()=>{message.textContent='Bewegingsconcept; nog niet goedgekeurd.';});
     article.append(heading,note,load,message,video);
+   }
+   if(draft.narrationCandidate){
+    const heading=document.createElement('h3'),note=document.createElement('p'),audio=document.createElement('audio'),message=document.createElement('p'),load=document.createElement('button');
+    heading.textContent='Stemconcept – luisteren en beoordelen';
+    note.textContent='Dit is de volledige oefenuitleg, inclusief terugzetten. Het bewegingsconcept hierboven toont alleen het oppakken. De stem is nog niet volledig beluisterd of klinisch goedgekeurd.';
+    audio.controls=true;audio.preload='metadata';audio.setAttribute('aria-label','Ongepubliceerde oefenuitleg: '+draft.originalRecord.naam);exclusieveMedia(audio);
+    message.setAttribute('role','status');load.type='button';load.textContent='Stemconcept laden';
+    let audioUrl=null,busy=false;
+    load.addEventListener('click',async()=>{
+     if(busy)return;busy=true;load.disabled=true;message.textContent='Opname laden…';
+     try{
+      const res=await fetch(`/api/exercise-drafts/${encodeURIComponent(draft.coreExerciseId)}/narration`,{headers,cache:'no-store'});
+      if(!res.ok)throw Error('Opname niet beschikbaar. Controleer de beheersleutel en probeer opnieuw.');
+      const blob=await res.blob();if(!article.isConnected)return;
+      audio.pause();if(audioUrl){URL.revokeObjectURL(audioUrl);urls=urls.filter(u=>u!==audioUrl);}
+      audioUrl=URL.createObjectURL(blob);urls.push(audioUrl);audio.src=audioUrl;audio.load();message.textContent='Gebruik afspelen om de volledige uitleg te beluisteren.';
+     }catch(e){if(article.isConnected)message.textContent=e.message;}
+     finally{busy=false;load.disabled=false;load.textContent='Opname opnieuw laden';}
+    });
+    audio.addEventListener('error',()=>{message.textContent='Afspelen is mislukt. Laad de opname opnieuw.';});
+    audio.addEventListener('playing',()=>{message.textContent='Stemconcept; nog niet goedgekeurd.';});
+    article.append(heading,note,load,message,audio);
    }
   }
   status.textContent=`${result.drafts.length} ongepubliceerd concept. Geen wijzigingen aan trainingskaarten.`;
