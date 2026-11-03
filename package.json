@@ -30,6 +30,7 @@
     "videos:upload-batch": "node scripts/video-upload-batch.mjs",
     "core1000:check": "node scripts/core1000.mjs",
     "core1000:write": "node scripts/core1000.mjs --write",
+    "test:categories": "node scripts/test-category-navigation.mjs",
     "test:ahmed-notities": "node scripts/test-ahmed-notities.mjs",
     "test:proef": "node scripts/test-proef.mjs",
     "test:privacy": "node scripts/test-privacy.mjs",
