@@ -1,0 +1,2097 @@
+{
+ "scope": "Basiscatalogus in de repository (public/oefeningen-v2.json). Runtime-overrides op de server niet meegeteld; die gaan altijd voor.",
+ "inputs": {
+  "public/oefeningen-v2.json": "997048064af6dbb5",
+  "public/mobile-media-review.json": "65ca545b0c7ec3b2",
+  "public/mobile-narration-review.json": "e31b3b5c8f6d2c2c",
+  "public/index.html": "5a0c7e81decf9d74",
+  "content/category-secondary-evidence.json": "5eb5e3167a827ec2"
+ },
+ "totals": {
+  "records": 604,
+  "available": 319,
+  "withoutAsset": 285,
+  "withSecondary": 23,
+  "secondaryLabels": 23,
+  "evidence": {
+   "preexisting": 6,
+   "earlier": 13,
+   "mappings": 4,
+   "notApplied": 5
+  }
+ },
+ "assetGaps": [
+  {
+   "category": "Nek",
+   "missingAssets": 20,
+   "availableIncludingSecondary": 1,
+   "noAutoFill": false,
+   "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
+  },
+  {
+   "category": "Rug",
+   "missingAssets": 25,
+   "availableIncludingSecondary": 13,
+   "noAutoFill": false,
+   "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
+  },
+  {
+   "category": "Bovenste extremiteit",
+   "missingAssets": 50,
+   "availableIncludingSecondary": 45,
+   "noAutoFill": false,
+   "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
+  },
+  {
+   "category": "Onderste extremiteit",
+   "missingAssets": 80,
+   "availableIncludingSecondary": 30,
+   "noAutoFill": false,
+   "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
+  },
+  {
+   "category": "Core",
+   "missingAssets": 20,
+   "availableIncludingSecondary": 34,
+   "noAutoFill": false,
+   "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
+  },
+  {
+   "category": "Balans en valpreventie",
+   "missingAssets": 30,
+   "availableIncludingSecondary": 1,
+   "noAutoFill": false,
+   "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
+  },
+  {
+   "category": "Conditie",
+   "missingAssets": 8,
+   "availableIncludingSecondary": 12,
+   "noAutoFill": false,
+   "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
+  },
+  {
+   "category": "Sportrevalidatie",
+   "missingAssets": 7,
+   "availableIncludingSecondary": 0,
+   "noAutoFill": true,
+   "note": "Alleen nieuwe, specifiek beoordeelde beelden bij bestaande records; niet aanvullen met algemene oefeningen via een secundaire categorie."
+  },
+  {
+   "category": "Neurologische revalidatie",
+   "missingAssets": 15,
+   "availableIncludingSecondary": 0,
+   "noAutoFill": true,
+   "note": "Alleen nieuwe, specifiek beoordeelde beelden bij bestaande records; niet aanvullen met algemene oefeningen via een secundaire categorie."
+  },
+  {
+   "category": "Vestibulair",
+   "missingAssets": 10,
+   "availableIncludingSecondary": 0,
+   "noAutoFill": true,
+   "note": "Alleen nieuwe, specifiek beoordeelde beelden bij bestaande records; niet aanvullen met algemene oefeningen via een secundaire categorie."
+  },
+  {
+   "category": "Bekken & postpartum",
+   "missingAssets": 10,
+   "availableIncludingSecondary": 0,
+   "noAutoFill": true,
+   "note": "Alleen nieuwe, specifiek beoordeelde beelden bij bestaande records; niet aanvullen met algemene oefeningen via een secundaire categorie."
+  },
+  {
+   "category": "Werk en dagelijkse handelingen",
+   "missingAssets": 10,
+   "availableIncludingSecondary": 2,
+   "noAutoFill": false,
+   "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
+  }
+ ],
+ "categories": [
+  {
+   "category": "Nek",
+   "group": "Lichaamsgebied",
+   "storedLabels": [
+    "Nek"
+   ],
+   "records": 21,
+   "primary": 20,
+   "primaryAvailable": 0,
+   "secondary": 1,
+   "secondaryAvailable": 1,
+   "available": 1,
+   "availableClean": 1,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [
+    {
+     "name": "Kin intrekken – zittend actief",
+     "exerciseId": "fp_62d0639e1039e4a1",
+     "coreExerciseId": "fc_2050086df6d023ac"
+    },
+    {
+     "name": "Kin intrekken – liggend ondersteund",
+     "exerciseId": "fp_9ec9e79bac8d8421",
+     "coreExerciseId": "fc_ed6f63998d6a2164"
+    },
+    {
+     "name": "Nek buigen – zittend actief",
+     "exerciseId": "fp_c486527b9ecd41c8",
+     "coreExerciseId": "fc_40dd5453000369cc"
+    },
+    {
+     "name": "Nek buigen – liggend ondersteund",
+     "exerciseId": "fp_9e6911ab1f1e0d44",
+     "coreExerciseId": "fc_27c280db0ff9ff04"
+    },
+    {
+     "name": "Nek strekken – zittend actief",
+     "exerciseId": "fp_a2bf200402f776eb",
+     "coreExerciseId": "fc_3c82c33155e9e958"
+    },
+    {
+     "name": "Nek strekken – functioneel staand",
+     "exerciseId": "fp_801448d68f86c2c2",
+     "coreExerciseId": "fc_dda6e3f8a8ef1d77"
+    },
+    {
+     "name": "Nek draaien – zittend actief",
+     "exerciseId": "fp_fc9259369175667f",
+     "coreExerciseId": "fc_853c97009144ec09"
+    },
+    {
+     "name": "Nek draaien – functioneel staand",
+     "exerciseId": "fp_c662fe9fb9cdcb4a",
+     "coreExerciseId": "fc_94978d72b278d453"
+    },
+    {
+     "name": "Nek zijwaarts buigen – zittend actief",
+     "exerciseId": "fp_44d608cf3a3163b1",
+     "coreExerciseId": "fc_1afcb7bdb7baa422"
+    },
+    {
+     "name": "Nek zijwaarts buigen – isometrisch",
+     "exerciseId": "fp_ede28e3db08e8043",
+     "coreExerciseId": "fc_235f2757a0a9bf8b"
+    },
+    {
+     "name": "Diepe nekflexoren activeren – zittend actief",
+     "exerciseId": "fp_932bf32fa5ca60a6",
+     "coreExerciseId": "fc_96e1e26c339377de"
+    },
+    {
+     "name": "Diepe nekflexoren activeren – liggend ondersteund",
+     "exerciseId": "fp_2bdb88085d76e6b0",
+     "coreExerciseId": "fc_1aba16ba0c3ab4de"
+    },
+    {
+     "name": "Nekrotatie met oogfixatie – zittend actief",
+     "exerciseId": "fp_075c9aa10d0e566a",
+     "coreExerciseId": "fc_4b910890a2f2f4f8"
+    },
+    {
+     "name": "Nekrotatie met oogfixatie – functioneel staand",
+     "exerciseId": "fp_7f1f560bb10c6e1f",
+     "coreExerciseId": "fc_c30a316b7265fd58"
+    },
+    {
+     "name": "Schouderblad liften en ontspannen – zittend actief",
+     "exerciseId": "fp_e3f3ef70eda326a1",
+     "coreExerciseId": "fc_ab59b4079ed25d86"
+    },
+    {
+     "name": "Schouderblad liften en ontspannen – functioneel staand",
+     "exerciseId": "fp_bbcbf27b326af15f",
+     "coreExerciseId": "fc_fbbd364280ea1867"
+    },
+    {
+     "name": "Levator scapulae rek – zittend actief",
+     "exerciseId": "fp_2b31429069932b4b",
+     "coreExerciseId": "fc_28822e943fd23d8a"
+    },
+    {
+     "name": "Levator scapulae rek – functioneel staand",
+     "exerciseId": "fp_f3b0887dee8f2c28",
+     "coreExerciseId": "fc_eb1fe221f6163084"
+    },
+    {
+     "name": "Bovenste trapezius rek – zittend actief",
+     "exerciseId": "fp_734364ac784c6f6a",
+     "coreExerciseId": "fc_900ad9e6b6170739"
+    },
+    {
+     "name": "Bovenste trapezius rek – functioneel staand",
+     "exerciseId": "fp_73abd0a512239c05",
+     "coreExerciseId": "fc_afeec71f0b902609"
+    }
+   ],
+   "secondaryRecords": [
+    "Seated cervical stretch"
+   ],
+   "noAutoFill": false,
+   "gap": "deels-zonder-beeld"
+  },
+  {
+   "category": "Rug",
+   "group": "Lichaamsgebied",
+   "storedLabels": [
+    "Rug"
+   ],
+   "records": 38,
+   "primary": 25,
+   "primaryAvailable": 0,
+   "secondary": 13,
+   "secondaryAvailable": 13,
+   "available": 13,
+   "availableClean": 13,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [
+    {
+     "name": "Rug bol en hol – op handen en knieën",
+     "exerciseId": "fp_1eb30dd39734edc7",
+     "coreExerciseId": "fc_43e2f46134f44243"
+    },
+    {
+     "name": "Rug bol en hol – zittend",
+     "exerciseId": "fp_52dcbb8df86523fe",
+     "coreExerciseId": "fc_6446c0caa826b384"
+    },
+    {
+     "name": "Rug bol en hol – staand",
+     "exerciseId": "fp_44df2bee2b128f87",
+     "coreExerciseId": "fc_b5a0b1955195b0c4"
+    },
+    {
+     "name": "Rug bol en hol – met lichte weerstand",
+     "exerciseId": "fp_4ecc3fa3dbce246b",
+     "coreExerciseId": "fc_7638a0e78e3d6adf"
+    },
+    {
+     "name": "Romp draaien – liggend",
+     "exerciseId": "fp_2721d206afbd57fa",
+     "coreExerciseId": "fc_f21f66686859c3da"
+    },
+    {
+     "name": "Romp draaien – op handen en knieën",
+     "exerciseId": "fp_6b15af42d869f74e",
+     "coreExerciseId": "fc_689fa673a9e89631"
+    },
+    {
+     "name": "Romp draaien – zittend",
+     "exerciseId": "fp_5447d54e26b5bfb4",
+     "coreExerciseId": "fc_e71478262a4e04f1"
+    },
+    {
+     "name": "Romp draaien – staand",
+     "exerciseId": "fp_e91bf651c05afa01",
+     "coreExerciseId": "fc_cf93c6434e719c36"
+    },
+    {
+     "name": "Romp zijwaarts buigen – liggend",
+     "exerciseId": "fp_134b8284155c79c7",
+     "coreExerciseId": "fc_5976aa5b0e4528dc"
+    },
+    {
+     "name": "Romp zijwaarts buigen – zittend",
+     "exerciseId": "fp_63808d0727800855",
+     "coreExerciseId": "fc_759af88530d52e67"
+    },
+    {
+     "name": "Romp zijwaarts buigen – staand",
+     "exerciseId": "fp_2cdbcd6a461f6ee2",
+     "coreExerciseId": "fc_c2151d6081411f27"
+    },
+    {
+     "name": "Rug strekken – liggend",
+     "exerciseId": "fp_cc40c4b9a82decac",
+     "coreExerciseId": "fc_991986ebdb21d76c"
+    },
+    {
+     "name": "Rug strekken – op handen en knieën",
+     "exerciseId": "fp_c0b6c7ac3cecbcc7",
+     "coreExerciseId": "fc_fad9de92160ed800"
+    },
+    {
+     "name": "Rug strekken – zittend",
+     "exerciseId": "fp_2644209935d93785",
+     "coreExerciseId": "fc_7acabb5963687c38"
+    },
+    {
+     "name": "Rug strekken – staand",
+     "exerciseId": "fp_ab474868a73074c7",
+     "coreExerciseId": "fc_075d2bba44bc1907"
+    },
+    {
+     "name": "Knie naar borst – liggend",
+     "exerciseId": "fp_d2795a94a7d11698",
+     "coreExerciseId": "fc_0301bc5a1a722f6e"
+    },
+    {
+     "name": "Knie naar borst – zittend",
+     "exerciseId": "fp_df9d4c0dce89c045",
+     "coreExerciseId": "fc_0d76c61d33323777"
+    },
+    {
+     "name": "Knie naar borst – staand",
+     "exerciseId": "fp_6f6adc087b95e514",
+     "coreExerciseId": "fc_c9d9fbe08c7182eb"
+    },
+    {
+     "name": "Open boek – liggend",
+     "exerciseId": "fp_b2900afa943e315b",
+     "coreExerciseId": "fc_3a97462d2cbbf47f"
+    },
+    {
+     "name": "Open boek – op handen en knieën",
+     "exerciseId": "fp_3484904185da85ed",
+     "coreExerciseId": "fc_486c10a52135ebc7"
+    },
+    {
+     "name": "Open boek – zittend",
+     "exerciseId": "fp_d66473bfb49dfb81",
+     "coreExerciseId": "fc_848f0080a86e171f"
+    },
+    {
+     "name": "Thoracale extensie – liggend",
+     "exerciseId": "fp_009ab760836a2b01",
+     "coreExerciseId": "fc_41e4b01b4311cd5e"
+    },
+    {
+     "name": "Thoracale extensie – op handen en knieën",
+     "exerciseId": "fp_8beb83b36e02ea73",
+     "coreExerciseId": "fc_00b729ad9cfba568"
+    },
+    {
+     "name": "Thoracale extensie – zittend",
+     "exerciseId": "fp_3e968c19f6cf90c7",
+     "coreExerciseId": "fc_85d97a6b4b4625d3"
+    },
+    {
+     "name": "Thoracale extensie – staand",
+     "exerciseId": "fp_bb5b9d2dc2a52e5e",
+     "coreExerciseId": "fc_12fda57fdacad3dc"
+    }
+   ],
+   "secondaryRecords": [
+    "Back extension",
+    "Mobilisatie rotatie rug",
+    "Rug extensie",
+    "Side bents",
+    "Foam roller back upper",
+    "Foam roller back extension",
+    "Mob thoracaal",
+    "Mob lower back",
+    "Mob back left/right",
+    "Back stretch",
+    "Seated side leans",
+    "Seated lumbar rotations",
+    "Seated cat-cow"
+   ],
+   "noAutoFill": false,
+   "gap": "deels-zonder-beeld"
+  },
+  {
+   "category": "Bovenste extremiteit",
+   "group": "Lichaamsgebied",
+   "storedLabels": [
+    "Bovenste extremiteit"
+   ],
+   "records": 95,
+   "primary": 95,
+   "primaryAvailable": 45,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 45,
+   "availableClean": 43,
+   "mediaRejected": 2,
+   "explanationHeld": 0,
+   "missingAssets": [
+    {
+     "name": "Schouder voorwaarts heffen – met stok",
+     "exerciseId": "fp_ffaa4bced40909ad",
+     "coreExerciseId": "fc_03702bf427ce8652"
+    },
+    {
+     "name": "Schouder voorwaarts heffen – actief",
+     "exerciseId": "fp_4f0ea626e702ca39",
+     "coreExerciseId": "fc_666979ac93a2d017"
+    },
+    {
+     "name": "Schouder voorwaarts heffen – isometrisch tegen de muur",
+     "exerciseId": "fp_c68f1cebe61232f9",
+     "coreExerciseId": "fc_7518bd9bb71d880c"
+    },
+    {
+     "name": "Schouder voorwaarts heffen – met elastiek",
+     "exerciseId": "fp_a0dcb069d6808a3c",
+     "coreExerciseId": "fc_4387146876fecac9"
+    },
+    {
+     "name": "Schouder voorwaarts heffen – functioneel reikend",
+     "exerciseId": "fp_878a8fecc7a01576",
+     "coreExerciseId": "fc_33a2d93ee11092b9"
+    },
+    {
+     "name": "Schouder zijwaarts heffen – met stok",
+     "exerciseId": "fp_4fe2a7b1cdd7e048",
+     "coreExerciseId": "fc_ad61fe53d2d30ad7"
+    },
+    {
+     "name": "Schouder zijwaarts heffen – actief",
+     "exerciseId": "fp_246f305c770d2bbf",
+     "coreExerciseId": "fc_554b16dfc340adb1"
+    },
+    {
+     "name": "Schouder zijwaarts heffen – isometrisch tegen de muur",
+     "exerciseId": "fp_7a8d4d496c9cd754",
+     "coreExerciseId": "fc_4f7f0c8b2dfad8a8"
+    },
+    {
+     "name": "Schouder zijwaarts heffen – met elastiek",
+     "exerciseId": "fp_b893849d2bafc7e6",
+     "coreExerciseId": "fc_9708918c7ba49ccb"
+    },
+    {
+     "name": "Schouder zijwaarts heffen – functioneel reikend",
+     "exerciseId": "fp_c18a49ef2077eb55",
+     "coreExerciseId": "fc_225dc6fc519468b4"
+    },
+    {
+     "name": "Schouder naar buiten draaien – actief",
+     "exerciseId": "fp_6f1c23e434f34a86",
+     "coreExerciseId": "fc_e0f762d19d5f198c"
+    },
+    {
+     "name": "Schouder naar buiten draaien – isometrisch tegen de muur",
+     "exerciseId": "fp_542969b52513f876",
+     "coreExerciseId": "fc_3e00e292f20fa79d"
+    },
+    {
+     "name": "Schouder naar buiten draaien – met elastiek",
+     "exerciseId": "fp_2142f6b392621702",
+     "coreExerciseId": "fc_04103dc1431c5605"
+    },
+    {
+     "name": "Schouder naar binnen draaien – actief",
+     "exerciseId": "fp_5a026256b63f0d32",
+     "coreExerciseId": "fc_d5bcb3482574858c"
+    },
+    {
+     "name": "Schouder naar binnen draaien – isometrisch tegen de muur",
+     "exerciseId": "fp_df874c5cb8e23c11",
+     "coreExerciseId": "fc_5990492630e6f663"
+    },
+    {
+     "name": "Schouder naar binnen draaien – met elastiek",
+     "exerciseId": "fp_90a1f821aacd63e4",
+     "coreExerciseId": "fc_fc04a7fd8655fdfb"
+    },
+    {
+     "name": "Schouderblad naar achteren – actief",
+     "exerciseId": "fp_1c843a8c9afe4a64",
+     "coreExerciseId": "fc_dc9ce2c06bbfd6bd"
+    },
+    {
+     "name": "Schouderblad naar achteren – isometrisch tegen de muur",
+     "exerciseId": "fp_e6f5f6aa3b504dcc",
+     "coreExerciseId": "fc_d6e63ed52511fe51"
+    },
+    {
+     "name": "Schouderblad naar achteren – met elastiek",
+     "exerciseId": "fp_9f8e94ce99b08ea6",
+     "coreExerciseId": "fc_333366c477992884"
+    },
+    {
+     "name": "Schouderblad omhoog draaien – actief",
+     "exerciseId": "fp_c9aa75b6015af04d",
+     "coreExerciseId": "fc_882c1efe227e803f"
+    },
+    {
+     "name": "Schouderblad omhoog draaien – met elastiek",
+     "exerciseId": "fp_5529667dd9e51107",
+     "coreExerciseId": "fc_087912d69e656882"
+    },
+    {
+     "name": "Schouderblad omhoog draaien – functioneel reikend",
+     "exerciseId": "fp_6afc4c673a341e55",
+     "coreExerciseId": "fc_92838c7fb57617c5"
+    },
+    {
+     "name": "Serratus punch – actief",
+     "exerciseId": "fp_646a8c9f17d5c52d",
+     "coreExerciseId": "fc_1cdc2eb9fe86602e"
+    },
+    {
+     "name": "Serratus punch – met elastiek",
+     "exerciseId": "fp_d5d7f3ed37392004",
+     "coreExerciseId": "fc_540306ad67f2e937"
+    },
+    {
+     "name": "Serratus punch – functioneel reikend",
+     "exerciseId": "fp_b881d90fe1a8ac24",
+     "coreExerciseId": "fc_dfc23a987e0016bb"
+    },
+    {
+     "name": "Schouder extensie – actief",
+     "exerciseId": "fp_2464a1b5bc06ebdc",
+     "coreExerciseId": "fc_774d7be8975277a9"
+    },
+    {
+     "name": "Schouder extensie – met elastiek",
+     "exerciseId": "fp_e232cb6a8a000a92",
+     "coreExerciseId": "fc_f73a99bdb059c276"
+    },
+    {
+     "name": "Schouder extensie – functioneel reikend",
+     "exerciseId": "fp_1628ca7fef32cc92",
+     "coreExerciseId": "fc_324b7e2d789f67f5"
+    },
+    {
+     "name": "Horizontaal openen – actief",
+     "exerciseId": "fp_79ccdb96161428b8",
+     "coreExerciseId": "fc_75a086465fd56913"
+    },
+    {
+     "name": "Horizontaal openen – met elastiek",
+     "exerciseId": "fp_a55c3caef970aec2",
+     "coreExerciseId": "fc_4378e68aa5faab55"
+    },
+    {
+     "name": "Onderste trapezius heffen – actief",
+     "exerciseId": "fp_46ce9ae616a83d4d",
+     "coreExerciseId": "fc_39388c406779ff27"
+    },
+    {
+     "name": "Onderste trapezius heffen – functioneel reikend",
+     "exerciseId": "fp_6d640337db208d8d",
+     "coreExerciseId": "fc_66908d9476f84888"
+    },
+    {
+     "name": "Schouder pendelen – actief",
+     "exerciseId": "fp_6bcfafbeb75d6479",
+     "coreExerciseId": "fc_8b0a8bf5b0f7db0a"
+    },
+    {
+     "name": "Hand achter de rug brengen – actief",
+     "exerciseId": "fp_57da7438fd7e53bd",
+     "coreExerciseId": "fc_726482f04280ec44"
+    },
+    {
+     "name": "Hand achter de rug brengen – functioneel reikend",
+     "exerciseId": "fp_f041e0b083f54569",
+     "coreExerciseId": "fc_3ec079807b5e79c2"
+    },
+    {
+     "name": "Elleboog buigen – actief",
+     "exerciseId": "fp_76115f29a8301476",
+     "coreExerciseId": "fc_582042140a2a460a"
+    },
+    {
+     "name": "Elleboog buigen – met lichte weerstand",
+     "exerciseId": "fp_a13e066b2da428a6",
+     "coreExerciseId": "fc_08a6d319558fbe91"
+    },
+    {
+     "name": "Elleboog strekken – actief",
+     "exerciseId": "fp_89f3622135fa11bb",
+     "coreExerciseId": "fc_6bcd4a65128879e0"
+    },
+    {
+     "name": "Onderarm naar handpalm boven – actief",
+     "exerciseId": "fp_2257f7147275e1af",
+     "coreExerciseId": "fc_e38b347c73065f95"
+    },
+    {
+     "name": "Onderarm naar handpalm onder – actief",
+     "exerciseId": "fp_c224ac08aefb3fc8",
+     "coreExerciseId": "fc_08cfeeedfb4b8f9f"
+    },
+    {
+     "name": "Pols omhoog – actief",
+     "exerciseId": "fp_b27fb30c91df41ae",
+     "coreExerciseId": "fc_d8ac752144bca4a4"
+    },
+    {
+     "name": "Pols omhoog – met lichte weerstand",
+     "exerciseId": "fp_f59b9c981aac6c74",
+     "coreExerciseId": "fc_5532da663c73f31f"
+    },
+    {
+     "name": "Pols omlaag – actief",
+     "exerciseId": "fp_850cbacf580b69d4",
+     "coreExerciseId": "fc_ce2477410cacb518"
+    },
+    {
+     "name": "Pols naar duimzijde – actief",
+     "exerciseId": "fp_121c180f39b70ea8",
+     "coreExerciseId": "fc_ef4a28637f676c77"
+    },
+    {
+     "name": "Pols naar pinkzijde – actief",
+     "exerciseId": "fp_62c024e7b5a6b549",
+     "coreExerciseId": "fc_e5aae2103437529f"
+    },
+    {
+     "name": "Vingers openen en sluiten – actief",
+     "exerciseId": "fp_41a774f90b07b2b8",
+     "coreExerciseId": "fc_f4dd93506ea188d9"
+    },
+    {
+     "name": "Duim oppositie – actief",
+     "exerciseId": "fp_9572ec02c8b7e467",
+     "coreExerciseId": "fc_01cd46a33951413d"
+    },
+    {
+     "name": "Peesglijden hand – actief",
+     "exerciseId": "fp_42a36ebb50836370",
+     "coreExerciseId": "fc_8c7d1c62f818b029"
+    },
+    {
+     "name": "Knijpkracht – actief",
+     "exerciseId": "fp_509e6f3e795db0ee",
+     "coreExerciseId": "fc_7f91fb8f38c1440f"
+    },
+    {
+     "name": "Knijpkracht – met lichte weerstand",
+     "exerciseId": "fp_ea414e78a78a73de",
+     "coreExerciseId": "fc_b765e6c4113807c7"
+    }
+   ],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "deels-zonder-beeld"
+  },
+  {
+   "category": "Onderste extremiteit",
+   "group": "Lichaamsgebied",
+   "storedLabels": [
+    "Onderste extremiteit"
+   ],
+   "records": 110,
+   "primary": 110,
+   "primaryAvailable": 30,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 30,
+   "availableClean": 29,
+   "mediaRejected": 1,
+   "explanationHeld": 0,
+   "missingAssets": [
+    {
+     "name": "Heup buigen – liggend ondersteund",
+     "exerciseId": "fp_88cc523196e29c4c",
+     "coreExerciseId": "fc_11bd71d8611b1762"
+    },
+    {
+     "name": "Heup buigen – staand met steun",
+     "exerciseId": "fp_2442578ed434c991",
+     "coreExerciseId": "fc_95baf5a1bc158012"
+    },
+    {
+     "name": "Heup buigen – met elastiek",
+     "exerciseId": "fp_b986978185f3fe17",
+     "coreExerciseId": "fc_83538ab797690eec"
+    },
+    {
+     "name": "Heup strekken – staand met steun",
+     "exerciseId": "fp_3b09b6d8e6e2a89e",
+     "coreExerciseId": "fc_29bf469def9af11d"
+    },
+    {
+     "name": "Heup strekken – met elastiek",
+     "exerciseId": "fp_49e22b60cab127a7",
+     "coreExerciseId": "fc_e1912b396a0b944a"
+    },
+    {
+     "name": "Heup strekken – functioneel op één been",
+     "exerciseId": "fp_81ca3c9d4887fa2e",
+     "coreExerciseId": "fc_c7a486edc3a5dbf9"
+    },
+    {
+     "name": "Heup zijwaarts heffen – zijlig",
+     "exerciseId": "fp_23d1de4a8b378576",
+     "coreExerciseId": "fc_a7f69b78b58ddd94"
+    },
+    {
+     "name": "Heup zijwaarts heffen – staand met steun",
+     "exerciseId": "fp_fd8d7ed993823c24",
+     "coreExerciseId": "fc_8ac3c5c338ab978e"
+    },
+    {
+     "name": "Heup zijwaarts heffen – met elastiek",
+     "exerciseId": "fp_b18cbf0acd4c7b66",
+     "coreExerciseId": "fc_5ccec7eec0ceb3a5"
+    },
+    {
+     "name": "Heup zijwaarts heffen – functioneel op één been",
+     "exerciseId": "fp_6c4b9fe382a9a553",
+     "coreExerciseId": "fc_1df334465ad24f57"
+    },
+    {
+     "name": "Heup naar binnen bewegen – liggend ondersteund",
+     "exerciseId": "fp_958b99cdf5b5e6c0",
+     "coreExerciseId": "fc_5f8844f9bbb06397"
+    },
+    {
+     "name": "Heup naar binnen bewegen – staand met steun",
+     "exerciseId": "fp_3a2ef9719718735e",
+     "coreExerciseId": "fc_4dd878a45a183483"
+    },
+    {
+     "name": "Heup naar binnen bewegen – met elastiek",
+     "exerciseId": "fp_14b7d61e0c630576",
+     "coreExerciseId": "fc_ed5bb5f9d781b648"
+    },
+    {
+     "name": "Heup naar buiten draaien – liggend ondersteund",
+     "exerciseId": "fp_778c03647d3cc0b6",
+     "coreExerciseId": "fc_08a9b920254252a0"
+    },
+    {
+     "name": "Heup naar buiten draaien – zijlig",
+     "exerciseId": "fp_8f27db7e8ae72b97",
+     "coreExerciseId": "fc_d2e5f8139cc22cdd"
+    },
+    {
+     "name": "Heup naar buiten draaien – met elastiek",
+     "exerciseId": "fp_60927af16ff9cebf",
+     "coreExerciseId": "fc_4b5697d0ce0df620"
+    },
+    {
+     "name": "Heup naar binnen draaien – liggend ondersteund",
+     "exerciseId": "fp_412a3406b5f02752",
+     "coreExerciseId": "fc_f15419a8bed4ad44"
+    },
+    {
+     "name": "Heup naar binnen draaien – staand met steun",
+     "exerciseId": "fp_419f67ee6d78f8d2",
+     "coreExerciseId": "fc_448fc075c6aebc6b"
+    },
+    {
+     "name": "Clamshell – zijlig",
+     "exerciseId": "fp_5c68547740cd905f",
+     "coreExerciseId": "fc_3c76ef2ef1b9c047"
+    },
+    {
+     "name": "Clamshell – met elastiek",
+     "exerciseId": "fp_ba31b24202f78c31",
+     "coreExerciseId": "fc_f4ac3b80b3e5e26b"
+    },
+    {
+     "name": "Heupscharnier – staand met steun",
+     "exerciseId": "fp_a0c83f527f9c64ad",
+     "coreExerciseId": "fc_1f604a59f34b394e"
+    },
+    {
+     "name": "Heupscharnier – functioneel op één been",
+     "exerciseId": "fp_787572ce5cebf374",
+     "coreExerciseId": "fc_6b639ed423eb228e"
+    },
+    {
+     "name": "Monster walk – met elastiek",
+     "exerciseId": "fp_a76c2e853febd057",
+     "coreExerciseId": "fc_8e5e5f492d29ec15"
+    },
+    {
+     "name": "Heupflexor rek – staand met steun",
+     "exerciseId": "fp_d6b2b579127ac459",
+     "coreExerciseId": "fc_d252ac90054d7c66"
+    },
+    {
+     "name": "Piriformis rek – liggend ondersteund",
+     "exerciseId": "fp_f2a4168f46ca44a5",
+     "coreExerciseId": "fc_d5a58bb89d05489d"
+    },
+    {
+     "name": "Knie buigen – liggend",
+     "exerciseId": "fp_1212845e1e06c85b",
+     "coreExerciseId": "fc_8dac0738ef56a1aa"
+    },
+    {
+     "name": "Knie buigen – zittend",
+     "exerciseId": "fp_c3c784cdc1c03a1d",
+     "coreExerciseId": "fc_f9b88819636b0b82"
+    },
+    {
+     "name": "Knie buigen – staand met steun",
+     "exerciseId": "fp_6652612711745f74",
+     "coreExerciseId": "fc_7fe6a69b5babad30"
+    },
+    {
+     "name": "Knie buigen – met elastiek",
+     "exerciseId": "fp_8b85531676bedc74",
+     "coreExerciseId": "fc_2f41adc210b215b9"
+    },
+    {
+     "name": "Knie strekken – liggend",
+     "exerciseId": "fp_05859d3d9f49ad4f",
+     "coreExerciseId": "fc_366e73bb708e2b18"
+    },
+    {
+     "name": "Knie strekken – zittend",
+     "exerciseId": "fp_cf505e07966207af",
+     "coreExerciseId": "fc_074f4d1dd8bf423d"
+    },
+    {
+     "name": "Knie strekken – staand met steun",
+     "exerciseId": "fp_5910886c0aa7c37b",
+     "coreExerciseId": "fc_6c0928ca205ec113"
+    },
+    {
+     "name": "Knie strekken – met elastiek",
+     "exerciseId": "fp_44ba6cae2dd7c64e",
+     "coreExerciseId": "fc_857d7528724b059b"
+    },
+    {
+     "name": "Quadriceps aanspannen – liggend",
+     "exerciseId": "fp_b7c420895a4b7d4c",
+     "coreExerciseId": "fc_04f1daf4c37087ae"
+    },
+    {
+     "name": "Quadriceps aanspannen – zittend",
+     "exerciseId": "fp_7af0332b608e00e2",
+     "coreExerciseId": "fc_7e52a7a1b76ba444"
+    },
+    {
+     "name": "Straight leg raise – liggend",
+     "exerciseId": "fp_35b70b02cc7dba2d",
+     "coreExerciseId": "fc_9bf13cf795e4e530"
+    },
+    {
+     "name": "Straight leg raise – met elastiek",
+     "exerciseId": "fp_6c757ecc4e08464e",
+     "coreExerciseId": "fc_d3eff36bf1ee840d"
+    },
+    {
+     "name": "Mini-squat – staand met steun",
+     "exerciseId": "fp_5c9ceb20055a6f8a",
+     "coreExerciseId": "fc_f193144158ac3ec6"
+    },
+    {
+     "name": "Mini-squat – met elastiek",
+     "exerciseId": "fp_f623fafaa1ee9c4e",
+     "coreExerciseId": "fc_a7b4b1973c2fbfba"
+    },
+    {
+     "name": "Sit-to-stand – zittend",
+     "exerciseId": "fp_048db79e23621d95",
+     "coreExerciseId": "fc_440944237c927a09"
+    },
+    {
+     "name": "Sit-to-stand – staand met steun",
+     "exerciseId": "fp_3ca340b82645738c",
+     "coreExerciseId": "fc_cc2f1ec88c684e6a"
+    },
+    {
+     "name": "Sit-to-stand – met elastiek",
+     "exerciseId": "fp_b818d1bc299e7372",
+     "coreExerciseId": "fc_782cedbf98d756df"
+    },
+    {
+     "name": "Step-up – staand met steun",
+     "exerciseId": "fp_af17701903e878be",
+     "coreExerciseId": "fc_d1c46fb7bd403cf8"
+    },
+    {
+     "name": "Step-up – op verhoging",
+     "exerciseId": "fp_fd2ac7311f3602ca",
+     "coreExerciseId": "fc_6cd017541cb3fb1a"
+    },
+    {
+     "name": "Step-down – staand met steun",
+     "exerciseId": "fp_4403411960b569c9",
+     "coreExerciseId": "fc_215436c0f6cb427a"
+    },
+    {
+     "name": "Step-down – met elastiek",
+     "exerciseId": "fp_bca1643a66aeffc5",
+     "coreExerciseId": "fc_9b1abb39c8c262c5"
+    },
+    {
+     "name": "Step-down – op verhoging",
+     "exerciseId": "fp_df94638bc908713b",
+     "coreExerciseId": "fc_7caaff5192b04a39"
+    },
+    {
+     "name": "Split squat – staand met steun",
+     "exerciseId": "fp_6e87eedd7cabe09b",
+     "coreExerciseId": "fc_70cc761a1e937456"
+    },
+    {
+     "name": "Split squat – op verhoging",
+     "exerciseId": "fp_4f0b87f8ff4f694d",
+     "coreExerciseId": "fc_6d48f173cbfddeab"
+    },
+    {
+     "name": "Hamstring curl – liggend",
+     "exerciseId": "fp_d0991c8c23527248",
+     "coreExerciseId": "fc_f0e7e426029ffde8"
+    },
+    {
+     "name": "Hamstring curl – zittend",
+     "exerciseId": "fp_55747db401012e8c",
+     "coreExerciseId": "fc_32f73eb8caa06a9c"
+    },
+    {
+     "name": "Hamstring curl – staand met steun",
+     "exerciseId": "fp_7b6bfab821c10c3e",
+     "coreExerciseId": "fc_292f133de46a577c"
+    },
+    {
+     "name": "Hamstring curl – met elastiek",
+     "exerciseId": "fp_c1e1e7d84d51e2c0",
+     "coreExerciseId": "fc_a816e5871d232970"
+    },
+    {
+     "name": "Terminal knee extension – staand met steun",
+     "exerciseId": "fp_e9edad9f8b4d85b9",
+     "coreExerciseId": "fc_c8932f764884054a"
+    },
+    {
+     "name": "Terminal knee extension – met elastiek",
+     "exerciseId": "fp_ede00bf6c29859ae",
+     "coreExerciseId": "fc_f87ad20054b3c2d1"
+    },
+    {
+     "name": "Enkel optrekken – zittend actief",
+     "exerciseId": "fp_c45f2d45ee08c97b",
+     "coreExerciseId": "fc_dc77302a1c93ba91"
+    },
+    {
+     "name": "Enkel optrekken – staand met steun",
+     "exerciseId": "fp_816f941423e962c1",
+     "coreExerciseId": "fc_4b2033291c37810c"
+    },
+    {
+     "name": "Enkel optrekken – met elastiek",
+     "exerciseId": "fp_1c7ffbe372c209b3",
+     "coreExerciseId": "fc_726673a29888da6e"
+    },
+    {
+     "name": "Enkel wegduwen – zittend actief",
+     "exerciseId": "fp_c31c08afa5cab65f",
+     "coreExerciseId": "fc_506b152122ba8f41"
+    },
+    {
+     "name": "Enkel wegduwen – staand met steun",
+     "exerciseId": "fp_e51702036d380ba9",
+     "coreExerciseId": "fc_2d4b2c1aa32d949c"
+    },
+    {
+     "name": "Enkel wegduwen – met elastiek",
+     "exerciseId": "fp_6f26283408684703",
+     "coreExerciseId": "fc_9431de5590406368"
+    },
+    {
+     "name": "Voet naar binnen – zittend actief",
+     "exerciseId": "fp_dc5a7f2e795a3b94",
+     "coreExerciseId": "fc_cda0be17235beeed"
+    },
+    {
+     "name": "Voet naar binnen – met elastiek",
+     "exerciseId": "fp_de200879e3e5e2c2",
+     "coreExerciseId": "fc_2bfe917379e16c19"
+    },
+    {
+     "name": "Voet naar buiten – zittend actief",
+     "exerciseId": "fp_2ef6bb292ea5e7e0",
+     "coreExerciseId": "fc_2e97ce71eabbe869"
+    },
+    {
+     "name": "Voet naar buiten – met elastiek",
+     "exerciseId": "fp_32290bcecf5e0c10",
+     "coreExerciseId": "fc_ef3be9c89dfd6e46"
+    },
+    {
+     "name": "Kuitheffing – staand met steun",
+     "exerciseId": "fp_880081ade491ab91",
+     "coreExerciseId": "fc_34b8c7bede0e1ff1"
+    },
+    {
+     "name": "Kuitheffing – op een verhoging",
+     "exerciseId": "fp_7ffa06115446099e",
+     "coreExerciseId": "fc_72d7a7fecad5ff3f"
+    },
+    {
+     "name": "Kuitheffing – op één been",
+     "exerciseId": "fp_ac41739049146631",
+     "coreExerciseId": "fc_e8939d1eaaa3848f"
+    },
+    {
+     "name": "Kuitrek gestrekte knie – staand met steun",
+     "exerciseId": "fp_5ba67df6a9a9ce97",
+     "coreExerciseId": "fc_970da660eed5669f"
+    },
+    {
+     "name": "Kuitrek gestrekte knie – op een verhoging",
+     "exerciseId": "fp_cc0539f95c3a283d",
+     "coreExerciseId": "fc_65f411ac5a399b8d"
+    },
+    {
+     "name": "Kuitrek gebogen knie – staand met steun",
+     "exerciseId": "fp_356dd6588d389850",
+     "coreExerciseId": "fc_3e86d28593f3fc27"
+    },
+    {
+     "name": "Kuitrek gebogen knie – op een verhoging",
+     "exerciseId": "fp_22180dcd96ebf84e",
+     "coreExerciseId": "fc_26e0b2808a041629"
+    },
+    {
+     "name": "Knie naar voren over voet – staand met steun",
+     "exerciseId": "fp_7952d84f09bb790e",
+     "coreExerciseId": "fc_cef24992348e8f7d"
+    },
+    {
+     "name": "Knie naar voren over voet – op een verhoging",
+     "exerciseId": "fp_596b9f510139c3b0",
+     "coreExerciseId": "fc_334166261c069b4a"
+    },
+    {
+     "name": "Tenen heffen – zittend actief",
+     "exerciseId": "fp_f2e8c6693d824f49",
+     "coreExerciseId": "fc_61633e2d7d480381"
+    },
+    {
+     "name": "Tenen heffen – staand met steun",
+     "exerciseId": "fp_c7836ce19effb42d",
+     "coreExerciseId": "fc_da7d6cc1581f7c71"
+    },
+    {
+     "name": "Korte voet – zittend actief",
+     "exerciseId": "fp_d5120f5873553fd4",
+     "coreExerciseId": "fc_a585857e88ae2e40"
+    },
+    {
+     "name": "Korte voet – staand met steun",
+     "exerciseId": "fp_0aee7fa477549f93",
+     "coreExerciseId": "fc_17c285bf4fb1efc5"
+    },
+    {
+     "name": "Korte voet – op één been",
+     "exerciseId": "fp_5ce54b72ea679a03",
+     "coreExerciseId": "fc_533ee002e0555acf"
+    },
+    {
+     "name": "Tenen spreiden – zittend actief",
+     "exerciseId": "fp_470ead5e26da0109",
+     "coreExerciseId": "fc_bb16c1a51cd515bb"
+    }
+   ],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "deels-zonder-beeld"
+  },
+  {
+   "category": "Core",
+   "group": "Lichaamsgebied",
+   "storedLabels": [
+    "Core"
+   ],
+   "records": 54,
+   "primary": 54,
+   "primaryAvailable": 34,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 34,
+   "availableClean": 34,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [
+    {
+     "name": "Bekken kantelen – liggend",
+     "exerciseId": "fp_5a4c52a711bbd0da",
+     "coreExerciseId": "fc_e67719afce6ea283"
+    },
+    {
+     "name": "Bekken kantelen – op handen en knieën",
+     "exerciseId": "fp_08279fc71366aa1d",
+     "coreExerciseId": "fc_164ceca2c451a6e9"
+    },
+    {
+     "name": "Bekken kantelen – zittend",
+     "exerciseId": "fp_8b43b4f2b8cb2d7c",
+     "coreExerciseId": "fc_e0716a1330efc480"
+    },
+    {
+     "name": "Bekken kantelen – staand",
+     "exerciseId": "fp_9d3161cd781b7994",
+     "coreExerciseId": "fc_4a567baedc40ebd4"
+    },
+    {
+     "name": "Bekken kantelen – met lichte weerstand",
+     "exerciseId": "fp_e7787b96c977c980",
+     "coreExerciseId": "fc_49f10d332d302a5e"
+    },
+    {
+     "name": "Brug – liggend",
+     "exerciseId": "fp_c1a2674e6e8b37a1",
+     "coreExerciseId": "fc_e07aeef0bf691a98"
+    },
+    {
+     "name": "Brug – met lichte weerstand",
+     "exerciseId": "fp_c8c2ca23e18524ec",
+     "coreExerciseId": "fc_892e99f2581bea53"
+    },
+    {
+     "name": "Bird dog – op handen en knieën",
+     "exerciseId": "fp_b3167682caa64b67",
+     "coreExerciseId": "fc_a6edd896bd4200e0"
+    },
+    {
+     "name": "Bird dog – staand",
+     "exerciseId": "fp_e0c0ce4d53b50784",
+     "coreExerciseId": "fc_af144d48d2fa6bec"
+    },
+    {
+     "name": "Bird dog – met lichte weerstand",
+     "exerciseId": "fp_4dd3d123298d83bc",
+     "coreExerciseId": "fc_10ac6e1c7e7b1021"
+    },
+    {
+     "name": "Dead bug – liggend",
+     "exerciseId": "fp_5f412398211b18c6",
+     "coreExerciseId": "fc_ec806bc50d827710"
+    },
+    {
+     "name": "Dead bug – staand",
+     "exerciseId": "fp_d3a6a1473849ade1",
+     "coreExerciseId": "fc_6e6f41316acc5234"
+    },
+    {
+     "name": "Dead bug – met lichte weerstand",
+     "exerciseId": "fp_68e71498e04bde3d",
+     "coreExerciseId": "fc_9127466e54d4048a"
+    },
+    {
+     "name": "Romp heupscharnier – op handen en knieën",
+     "exerciseId": "fp_9338043c94c52f1f",
+     "coreExerciseId": "fc_9a7d1074950fc14d"
+    },
+    {
+     "name": "Romp heupscharnier – zittend",
+     "exerciseId": "fp_cfe79b68bb2bbb79",
+     "coreExerciseId": "fc_dfaf4f468f172ed9"
+    },
+    {
+     "name": "Romp heupscharnier – staand",
+     "exerciseId": "fp_3fad61b466eee53c",
+     "coreExerciseId": "fc_14ad1e81dbb67608"
+    },
+    {
+     "name": "Romp heupscharnier – met lichte weerstand",
+     "exerciseId": "fp_50fd5edeb35381b1",
+     "coreExerciseId": "fc_b9afb611bed36add"
+    },
+    {
+     "name": "Romp draaien – met lichte weerstand",
+     "exerciseId": "fp_c6c8158023b28d42",
+     "coreExerciseId": "fc_91ec773b4aa918aa"
+    },
+    {
+     "name": "Romp zijwaarts buigen – met lichte weerstand",
+     "exerciseId": "fp_f15b1f5dd1dfb35c",
+     "coreExerciseId": "fc_79460ae8de6fef00"
+    },
+    {
+     "name": "Rug strekken – met lichte weerstand",
+     "exerciseId": "fp_c591d23beb426e98",
+     "coreExerciseId": "fc_e8afdecc8524d6b3"
+    }
+   ],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "deels-zonder-beeld"
+  },
+  {
+   "category": "Mobiliteit",
+   "group": "Doel en toepassing",
+   "storedLabels": [
+    "Mobility"
+   ],
+   "records": 15,
+   "primary": 15,
+   "primaryAvailable": 15,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 15,
+   "availableClean": 14,
+   "mediaRejected": 0,
+   "explanationHeld": 1,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Balans en valpreventie",
+   "group": "Doel en toepassing",
+   "storedLabels": [
+    "Balans en valpreventie"
+   ],
+   "records": 31,
+   "primary": 30,
+   "primaryAvailable": 0,
+   "secondary": 1,
+   "secondaryAvailable": 1,
+   "available": 1,
+   "availableClean": 1,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [
+    {
+     "name": "Voeten naast elkaar staan – met steun",
+     "exerciseId": "fp_284957ef09ee1582",
+     "coreExerciseId": "fc_6a3459e816bd4d7c"
+    },
+    {
+     "name": "Voeten naast elkaar staan – zonder steun",
+     "exerciseId": "fp_4bcc073aed3b9f2d",
+     "coreExerciseId": "fc_ef0474e1751f658f"
+    },
+    {
+     "name": "Voeten naast elkaar staan – met hoofdbeweging",
+     "exerciseId": "fp_cc87106ebc1436c7",
+     "coreExerciseId": "fc_0563675ff5fb17b7"
+    },
+    {
+     "name": "Semi-tandemstand – met steun",
+     "exerciseId": "fp_f0663d727b20b2d8",
+     "coreExerciseId": "fc_4efd59fd568e6c13"
+    },
+    {
+     "name": "Semi-tandemstand – zonder steun",
+     "exerciseId": "fp_4ecd3a7fcc64821b",
+     "coreExerciseId": "fc_061c37f1d0bf7794"
+    },
+    {
+     "name": "Semi-tandemstand – met hoofdbeweging",
+     "exerciseId": "fp_1dcd242ec123ba55",
+     "coreExerciseId": "fc_52eb4456b6571ee5"
+    },
+    {
+     "name": "Tandemstand – met steun",
+     "exerciseId": "fp_f9a5a798ccec54bc",
+     "coreExerciseId": "fc_f2bb0167e911ded8"
+    },
+    {
+     "name": "Tandemstand – zonder steun",
+     "exerciseId": "fp_08de342719d46ef9",
+     "coreExerciseId": "fc_523a2aa44f116ef5"
+    },
+    {
+     "name": "Tandemstand – met hoofdbeweging",
+     "exerciseId": "fp_506c830510bf31ca",
+     "coreExerciseId": "fc_abbb9020d7fa5e96"
+    },
+    {
+     "name": "Eenbeenstand – met steun",
+     "exerciseId": "fp_a542ed0f07059b4c",
+     "coreExerciseId": "fc_3ebd4cb1c86cf3b5"
+    },
+    {
+     "name": "Eenbeenstand – zonder steun",
+     "exerciseId": "fp_f493363db578c800",
+     "coreExerciseId": "fc_49462d404ea6805b"
+    },
+    {
+     "name": "Eenbeenstand – met hoofdbeweging",
+     "exerciseId": "fp_1a79b62494a25ff5",
+     "coreExerciseId": "fc_260474f39a0df7c1"
+    },
+    {
+     "name": "Gewicht verplaatsen voor-achter – met steun",
+     "exerciseId": "fp_7c48290b27a4b297",
+     "coreExerciseId": "fc_0035f09e9704a7d7"
+    },
+    {
+     "name": "Gewicht verplaatsen voor-achter – zonder steun",
+     "exerciseId": "fp_ff9bb036c4fdae80",
+     "coreExerciseId": "fc_beccea608c3029fc"
+    },
+    {
+     "name": "Gewicht verplaatsen zijwaarts – met steun",
+     "exerciseId": "fp_08c86a2068731a1d",
+     "coreExerciseId": "fc_0d5387765cfc38e7"
+    },
+    {
+     "name": "Gewicht verplaatsen zijwaarts – zonder steun",
+     "exerciseId": "fp_0f3a9b39b0d96f9b",
+     "coreExerciseId": "fc_aa25189df7f2b3d1"
+    },
+    {
+     "name": "Reiken in stand – met steun",
+     "exerciseId": "fp_2be645c53a08ae85",
+     "coreExerciseId": "fc_bb06a906b2c2ead1"
+    },
+    {
+     "name": "Reiken in stand – zonder steun",
+     "exerciseId": "fp_b79de58eeff05195",
+     "coreExerciseId": "fc_13d4f42cd5d42e1b"
+    },
+    {
+     "name": "Op de plaats marcheren – met steun",
+     "exerciseId": "fp_391ce36b8dd87d72",
+     "coreExerciseId": "fc_4847f5839fbea8ed"
+    },
+    {
+     "name": "Op de plaats marcheren – zonder steun",
+     "exerciseId": "fp_40f7cb3117001639",
+     "coreExerciseId": "fc_2533f49ad524c872"
+    },
+    {
+     "name": "Zijwaarts stappen – met steun",
+     "exerciseId": "fp_182cfe1a8137acad",
+     "coreExerciseId": "fc_aff98ba2f3eed4a1"
+    },
+    {
+     "name": "Zijwaarts stappen – zonder steun",
+     "exerciseId": "fp_21a541d8d8aae697",
+     "coreExerciseId": "fc_2c5f7b37b58c3172"
+    },
+    {
+     "name": "Achterwaarts stappen – met steun",
+     "exerciseId": "fp_b60ee077e227abfd",
+     "coreExerciseId": "fc_2ec462568da67aa5"
+    },
+    {
+     "name": "Achterwaarts stappen – zonder steun",
+     "exerciseId": "fp_b8ae27860ce750fa",
+     "coreExerciseId": "fc_86e33499bed65f8e"
+    },
+    {
+     "name": "Over een obstakel stappen – met steun",
+     "exerciseId": "fp_a5cb52ef07f5f9a4",
+     "coreExerciseId": "fc_627a00c690415086"
+    },
+    {
+     "name": "Over een obstakel stappen – zonder steun",
+     "exerciseId": "fp_03127b77cb1cc5f6",
+     "coreExerciseId": "fc_b1763a1f5e6f37b6"
+    },
+    {
+     "name": "Draaien op de plaats – met steun",
+     "exerciseId": "fp_59f54b0f73b88fab",
+     "coreExerciseId": "fc_93b7f045f74e310c"
+    },
+    {
+     "name": "Draaien op de plaats – zonder steun",
+     "exerciseId": "fp_dab1d71dd3f80bb0",
+     "coreExerciseId": "fc_18dac3364808ab3e"
+    },
+    {
+     "name": "Stoel opstaan en lopen – zonder steun",
+     "exerciseId": "fp_b35dc7ba09862f87",
+     "coreExerciseId": "fc_b8171927f278788b"
+    },
+    {
+     "name": "Dubbele taak lopen – met cognitieve taak",
+     "exerciseId": "fp_f945420fa1df4047",
+     "coreExerciseId": "fc_958e0de1a9242a78"
+    }
+   ],
+   "secondaryRecords": [
+    "One leg standing"
+   ],
+   "noAutoFill": false,
+   "gap": "deels-zonder-beeld"
+  },
+  {
+   "category": "Conditie",
+   "group": "Doel en toepassing",
+   "storedLabels": [
+    "Cardio"
+   ],
+   "records": 20,
+   "primary": 14,
+   "primaryAvailable": 6,
+   "secondary": 6,
+   "secondaryAvailable": 6,
+   "available": 12,
+   "availableClean": 11,
+   "mediaRejected": 0,
+   "explanationHeld": 1,
+   "missingAssets": [
+    {
+     "name": "Diafragma-ademhaling – zittend",
+     "exerciseId": "fp_6aa232defeec08a5",
+     "coreExerciseId": "fc_b21fb04b055a6374"
+    },
+    {
+     "name": "Lippenremademhaling – zittend",
+     "exerciseId": "fp_e17adac2e142f1f8",
+     "coreExerciseId": "fc_3b3dec662966916f"
+    },
+    {
+     "name": "Armen en adem koppelen – met armtaak",
+     "exerciseId": "fp_1a438295edbadd06",
+     "coreExerciseId": "fc_9cf150b2fdc6ab06"
+    },
+    {
+     "name": "Marcheren – interval kort",
+     "exerciseId": "fp_c40ad48736e35070",
+     "coreExerciseId": "fc_53b03384ce37fa2e"
+    },
+    {
+     "name": "Marcheren – interval langer",
+     "exerciseId": "fp_5068cca4a447884a",
+     "coreExerciseId": "fc_b01a96a8a69a7a9b"
+    },
+    {
+     "name": "Opstaan herhalen – interval kort",
+     "exerciseId": "fp_b453c5b39234338f",
+     "coreExerciseId": "fc_4b8218bffa6c5564"
+    },
+    {
+     "name": "Thorax openen – met armtaak",
+     "exerciseId": "fp_0e256fccffffbcff",
+     "coreExerciseId": "fc_c1ba6bba58f0ea88"
+    },
+    {
+     "name": "Zijwaarts stappen – interval kort",
+     "exerciseId": "fp_58610b4cd72c412b",
+     "coreExerciseId": "fc_83e5712db724fbc2"
+    }
+   ],
+   "secondaryRecords": [
+    "Circle (apparaat)",
+    "Crosstrainer (apparaat)",
+    "Fiets (apparaat)",
+    "Loopband (apparaat)",
+    "Roeier (apparaat)",
+    "Stairs (apparaat)"
+   ],
+   "noAutoFill": false,
+   "gap": "deels-zonder-beeld"
+  },
+  {
+   "category": "Wendbaarheid",
+   "group": "Doel en toepassing",
+   "storedLabels": [
+    "Agility"
+   ],
+   "records": 7,
+   "primary": 7,
+   "primaryAvailable": 7,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 7,
+   "availableClean": 7,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Sportrevalidatie",
+   "group": "Doel en toepassing",
+   "storedLabels": [
+    "Sportrevalidatie"
+   ],
+   "records": 7,
+   "primary": 7,
+   "primaryAvailable": 0,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 0,
+   "availableClean": 0,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [
+    {
+     "name": "Hop vooruit – techniek langzaam",
+     "exerciseId": "fp_2edd9e3a8bf351cb",
+     "coreExerciseId": "fc_5b1d066a138ccdf3"
+    },
+    {
+     "name": "Landing op twee benen – techniek langzaam",
+     "exerciseId": "fp_c42d5d8c7ecf1a17",
+     "coreExerciseId": "fc_289895d1214071bf"
+    },
+    {
+     "name": "Landing op één been – techniek langzaam",
+     "exerciseId": "fp_5ab728e004c4f52f",
+     "coreExerciseId": "fc_503d65aa09365e1d"
+    },
+    {
+     "name": "Laterale shuffle – submaximaal",
+     "exerciseId": "fp_0273cc99fa1cd0d6",
+     "coreExerciseId": "fc_3c918288d1699acf"
+    },
+    {
+     "name": "Richtingsverandering – techniek langzaam",
+     "exerciseId": "fp_7cc6fd169d060ebc",
+     "coreExerciseId": "fc_cd28b12babdbd052"
+    },
+    {
+     "name": "Sprinttechniek marcheren – techniek langzaam",
+     "exerciseId": "fp_c769c6c4de22aeca",
+     "coreExerciseId": "fc_6ba08990351cb15a"
+    },
+    {
+     "name": "Versnellen en afremmen – submaximaal",
+     "exerciseId": "fp_de33f5404b293a39",
+     "coreExerciseId": "fc_34255e8d091ea3c2"
+    }
+   ],
+   "secondaryRecords": [],
+   "noAutoFill": true,
+   "gap": "geen-beschikbare-oefening"
+  },
+  {
+   "category": "Neurologische revalidatie",
+   "group": "Doel en toepassing",
+   "storedLabels": [
+    "Neurologische revalidatie"
+   ],
+   "records": 15,
+   "primary": 15,
+   "primaryAvailable": 0,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 0,
+   "availableClean": 0,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [
+    {
+     "name": "Reiken met aangedane arm – met visueel doel",
+     "exerciseId": "fp_6607290919450db5",
+     "coreExerciseId": "fc_666cfa06181603a1"
+    },
+    {
+     "name": "Reiken met aangedane arm – functionele combinatie",
+     "exerciseId": "fp_6a6f541af1ebba77",
+     "coreExerciseId": "fc_cfc59cb0beb2fdd6"
+    },
+    {
+     "name": "Hand openen na grijpen – bilateraal",
+     "exerciseId": "fp_c374f5b2a002ed26",
+     "coreExerciseId": "fc_2ab6250d362bc593"
+    },
+    {
+     "name": "Romp rotatie in zit – bilateraal",
+     "exerciseId": "fp_6d61735a537b3098",
+     "coreExerciseId": "fc_b8ee989efbfcfab7"
+    },
+    {
+     "name": "Symmetrisch opstaan – met fysieke steun",
+     "exerciseId": "fp_bc33d743a44951af",
+     "coreExerciseId": "fc_76c68afc16c35516"
+    },
+    {
+     "name": "Symmetrisch opstaan – met ritmische cue",
+     "exerciseId": "fp_211c89f47639deb5",
+     "coreExerciseId": "fc_60155cd0e61a8d54"
+    },
+    {
+     "name": "Stap initiëren – met visueel doel",
+     "exerciseId": "fp_fca8d4dac2fb58b9",
+     "coreExerciseId": "fc_637b67e2a5c68382"
+    },
+    {
+     "name": "Stap initiëren – met ritmische cue",
+     "exerciseId": "fp_1f28916d68f07669",
+     "coreExerciseId": "fc_5e8876ea59a13e64"
+    },
+    {
+     "name": "Zijwaarts verplaatsen in zit – met visueel doel",
+     "exerciseId": "fp_41ff90180014238c",
+     "coreExerciseId": "fc_3bdef557b5723f2f"
+    },
+    {
+     "name": "Hiel plaatsen – met visueel doel",
+     "exerciseId": "fp_30cc83735513cb0c",
+     "coreExerciseId": "fc_afc4d9221c96ae9f"
+    },
+    {
+     "name": "Voet naar marker – met visueel doel",
+     "exerciseId": "fp_222ab9d7a5d5687a",
+     "coreExerciseId": "fc_f45da1ef3ac1340d"
+    },
+    {
+     "name": "Ritmisch marcheren – met ritmische cue",
+     "exerciseId": "fp_adcfb76849642ec7",
+     "coreExerciseId": "fc_a98dfce4b81e5710"
+    },
+    {
+     "name": "Grote stappen – met ritmische cue",
+     "exerciseId": "fp_975632f0f95c824e",
+     "coreExerciseId": "fc_38008e5077ef0393"
+    },
+    {
+     "name": "Grote stappen – functionele combinatie",
+     "exerciseId": "fp_4b4cdf03e92ccf3f",
+     "coreExerciseId": "fc_22b7c517d84eda44"
+    },
+    {
+     "name": "Brug met symmetrie – bilateraal",
+     "exerciseId": "fp_9b0d3a17a5ed8f8c",
+     "coreExerciseId": "fc_bc3217abb14c2e26"
+    }
+   ],
+   "secondaryRecords": [],
+   "noAutoFill": true,
+   "gap": "geen-beschikbare-oefening"
+  },
+  {
+   "category": "Vestibulair",
+   "group": "Doel en toepassing",
+   "storedLabels": [
+    "Vestibulair"
+   ],
+   "records": 10,
+   "primary": 10,
+   "primaryAvailable": 0,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 0,
+   "availableClean": 0,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [
+    {
+     "name": "Blikstabilisatie horizontaal – zittend langzaam",
+     "exerciseId": "fp_6ef74f256a43157c",
+     "coreExerciseId": "fc_efb221042af6b0a7"
+    },
+    {
+     "name": "Blikstabilisatie horizontaal – staand langzaam",
+     "exerciseId": "fp_f3f6f383c940f974",
+     "coreExerciseId": "fc_cead0131534a2bff"
+    },
+    {
+     "name": "Blikstabilisatie horizontaal – tijdens lopen",
+     "exerciseId": "fp_11de8f0fea486d2d",
+     "coreExerciseId": "fc_bfb33b0593c691bb"
+    },
+    {
+     "name": "Blikstabilisatie verticaal – zittend langzaam",
+     "exerciseId": "fp_9c374def618b9b9f",
+     "coreExerciseId": "fc_c7b3d77f61e147d3"
+    },
+    {
+     "name": "Blikstabilisatie verticaal – staand langzaam",
+     "exerciseId": "fp_fa5accf2e385cd64",
+     "coreExerciseId": "fc_d656a2eb9a76d9ef"
+    },
+    {
+     "name": "Ogen naar doelen – zittend langzaam",
+     "exerciseId": "fp_b1505367e016178b",
+     "coreExerciseId": "fc_411b82de13689588"
+    },
+    {
+     "name": "Ogen naar doelen – staand langzaam",
+     "exerciseId": "fp_66207732613fd2eb",
+     "coreExerciseId": "fc_7eed90930b01e0e8"
+    },
+    {
+     "name": "Doel volgen – zittend langzaam",
+     "exerciseId": "fp_886a77c60aebc20f",
+     "coreExerciseId": "fc_8560671c8e715cf6"
+    },
+    {
+     "name": "Hoofd draaien in stand – staand langzaam",
+     "exerciseId": "fp_e2a07d5f662d49ad",
+     "coreExerciseId": "fc_a1ae4fdf660acec3"
+    },
+    {
+     "name": "Buigen en oprichten – staand langzaam",
+     "exerciseId": "fp_1eb8973666577356",
+     "coreExerciseId": "fc_5ed1df1b5682ceeb"
+    }
+   ],
+   "secondaryRecords": [],
+   "noAutoFill": true,
+   "gap": "geen-beschikbare-oefening"
+  },
+  {
+   "category": "Bekken & postpartum",
+   "group": "Doel en toepassing",
+   "storedLabels": [
+    "Bekken & postpartum"
+   ],
+   "records": 10,
+   "primary": 10,
+   "primaryAvailable": 0,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 0,
+   "availableClean": 0,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [
+    {
+     "name": "Bekkenbodem aanspannen – liggend",
+     "exerciseId": "fp_b161e58d4bafea63",
+     "coreExerciseId": "fc_d3b175db57cddbff"
+    },
+    {
+     "name": "Bekkenbodem ontspannen – liggend",
+     "exerciseId": "fp_af9cd35496058ede",
+     "coreExerciseId": "fc_5f84b78fbf651cdf"
+    },
+    {
+     "name": "Bekkenbodem snel aanspannen – zittend",
+     "exerciseId": "fp_96a6630928d93cd2",
+     "coreExerciseId": "fc_98e2ae0c112e5894"
+    },
+    {
+     "name": "Bekkenbodem met uitademing – liggend",
+     "exerciseId": "fp_94a35e31779075e4",
+     "coreExerciseId": "fc_4c89f053d8c62426"
+    },
+    {
+     "name": "Diepe buikactivatie – liggend",
+     "exerciseId": "fp_24237e101a2c77ad",
+     "coreExerciseId": "fc_13a93af892cd15ed"
+    },
+    {
+     "name": "Bekkenmobiliteit – liggend",
+     "exerciseId": "fp_0474f0286832320f",
+     "coreExerciseId": "fc_0c0c1d08d20d8deb"
+    },
+    {
+     "name": "360 graden ademhaling – eerste fase rustig",
+     "exerciseId": "fp_8d4fb0f3f39ab16e",
+     "coreExerciseId": "fc_dedda204d4d6ff84"
+    },
+    {
+     "name": "Bekkenkanteling postpartum – eerste fase rustig",
+     "exerciseId": "fp_9d33debcffd49100",
+     "coreExerciseId": "fc_c913994a1a47547f"
+    },
+    {
+     "name": "Functioneel opstaan – functioneel",
+     "exerciseId": "fp_2d59f8875bc40b6c",
+     "coreExerciseId": "fc_c59dde6438e9269d"
+    },
+    {
+     "name": "Zijlig heupkracht – zijlig",
+     "exerciseId": "fp_24995dde850e82a4",
+     "coreExerciseId": "fc_2b6821717468e1cd"
+    }
+   ],
+   "secondaryRecords": [],
+   "noAutoFill": true,
+   "gap": "geen-beschikbare-oefening"
+  },
+  {
+   "category": "Werk en dagelijkse handelingen",
+   "group": "Doel en toepassing",
+   "storedLabels": [
+    "Werk en dagelijkse handelingen"
+   ],
+   "records": 12,
+   "primary": 10,
+   "primaryAvailable": 0,
+   "secondary": 2,
+   "secondaryAvailable": 2,
+   "available": 2,
+   "availableClean": 2,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [
+    {
+     "name": "Voorwerp van vloer tillen – ergonomische basis",
+     "exerciseId": "fp_e0a02c06b8fd582d",
+     "coreExerciseId": "fc_032b55a53dbdab28"
+    },
+    {
+     "name": "Voorwerp van vloer tillen – licht en dichtbij",
+     "exerciseId": "fp_5323aabf47e9f41c",
+     "coreExerciseId": "fc_135ada4abb4d2796"
+    },
+    {
+     "name": "Voorwerp van tafel pakken – licht en dichtbij",
+     "exerciseId": "fp_98960414a8cfcb5d",
+     "coreExerciseId": "fc_07a47f244d7392e6"
+    },
+    {
+     "name": "Boven schouderhoogte plaatsen – ergonomische basis",
+     "exerciseId": "fp_010edfd8ac002eaf",
+     "coreExerciseId": "fc_aac28a0ab28bbd7c"
+    },
+    {
+     "name": "Boven schouderhoogte plaatsen – licht en dichtbij",
+     "exerciseId": "fp_1066da8dd15f9fec",
+     "coreExerciseId": "fc_755ad3fa6b77945f"
+    },
+    {
+     "name": "Duwen – licht en dichtbij",
+     "exerciseId": "fp_e971ce59b89cb228",
+     "coreExerciseId": "fc_d8194db9d6d169af"
+    },
+    {
+     "name": "Duwen – met stapverplaatsing",
+     "exerciseId": "fp_c4137e59a9ec24cd",
+     "coreExerciseId": "fc_c06b5e314b8973b5"
+    },
+    {
+     "name": "Trekken – licht en dichtbij",
+     "exerciseId": "fp_c06068464b11826d",
+     "coreExerciseId": "fc_6acf065b27810714"
+    },
+    {
+     "name": "Draaien en plaatsen – met stapverplaatsing",
+     "exerciseId": "fp_04ca0d67787dca33",
+     "coreExerciseId": "fc_0b50191c7b31787d"
+    },
+    {
+     "name": "Langdurig zitten onderbreken – met tempo of herhaling",
+     "exerciseId": "fp_1122c98c2308639e",
+     "coreExerciseId": "fc_bd4e042fc4dacab6"
+    }
+   ],
+   "secondaryRecords": [
+    "Seated foreward reach",
+    "Seated chair squats"
+   ],
+   "noAutoFill": false,
+   "gap": "deels-zonder-beeld"
+  },
+  {
+   "category": "Yoga",
+   "group": "Doel en toepassing",
+   "storedLabels": [
+    "Yoga"
+   ],
+   "records": 28,
+   "primary": 28,
+   "primaryAvailable": 28,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 28,
+   "availableClean": 26,
+   "mediaRejected": 0,
+   "explanationHeld": 2,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Apparaten",
+   "group": "Materiaal en uitgangshouding",
+   "storedLabels": [
+    "Apparaten"
+   ],
+   "records": 27,
+   "primary": 27,
+   "primaryAvailable": 27,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 27,
+   "availableClean": 22,
+   "mediaRejected": 4,
+   "explanationHeld": 5,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Bosu",
+   "group": "Materiaal en uitgangshouding",
+   "storedLabels": [
+    "Bosu"
+   ],
+   "records": 11,
+   "primary": 11,
+   "primaryAvailable": 11,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 11,
+   "availableClean": 11,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "TRX",
+   "group": "Materiaal en uitgangshouding",
+   "storedLabels": [
+    "TRX"
+   ],
+   "records": 21,
+   "primary": 21,
+   "primaryAvailable": 21,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 21,
+   "availableClean": 20,
+   "mediaRejected": 1,
+   "explanationHeld": 0,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Kettlebell",
+   "group": "Materiaal en uitgangshouding",
+   "storedLabels": [
+    "Kettlebell"
+   ],
+   "records": 2,
+   "primary": 2,
+   "primaryAvailable": 2,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 2,
+   "availableClean": 2,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Bodyblade",
+   "group": "Materiaal en uitgangshouding",
+   "storedLabels": [
+    "Bodyblade"
+   ],
+   "records": 7,
+   "primary": 7,
+   "primaryAvailable": 7,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 7,
+   "availableClean": 7,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Foam roller",
+   "group": "Materiaal en uitgangshouding",
+   "storedLabels": [
+    "Foam Roller",
+    "Foam roller"
+   ],
+   "records": 16,
+   "primary": 16,
+   "primaryAvailable": 16,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 16,
+   "availableClean": 14,
+   "mediaRejected": 0,
+   "explanationHeld": 2,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Speedladder",
+   "group": "Materiaal en uitgangshouding",
+   "storedLabels": [
+    "Speedladder"
+   ],
+   "records": 1,
+   "primary": 1,
+   "primaryAvailable": 1,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 1,
+   "availableClean": 1,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Oefenbal",
+   "group": "Materiaal en uitgangshouding",
+   "storedLabels": [
+    "Exercise Ball"
+   ],
+   "records": 18,
+   "primary": 18,
+   "primaryAvailable": 18,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 18,
+   "availableClean": 18,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Medicijnbal",
+   "group": "Materiaal en uitgangshouding",
+   "storedLabels": [
+    "Medicine Ball"
+   ],
+   "records": 15,
+   "primary": 15,
+   "primaryAvailable": 15,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 15,
+   "availableClean": 12,
+   "mediaRejected": 0,
+   "explanationHeld": 3,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Zittend op stoel",
+   "group": "Materiaal en uitgangshouding",
+   "storedLabels": [
+    "Seated Chair"
+   ],
+   "records": 26,
+   "primary": 26,
+   "primaryAvailable": 26,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 26,
+   "availableClean": 25,
+   "mediaRejected": 0,
+   "explanationHeld": 1,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Staand bij stoel",
+   "group": "Materiaal en uitgangshouding",
+   "storedLabels": [
+    "Standing Chair"
+   ],
+   "records": 10,
+   "primary": 10,
+   "primaryAvailable": 10,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 10,
+   "availableClean": 8,
+   "mediaRejected": 1,
+   "explanationHeld": 1,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  }
+ ]
+}

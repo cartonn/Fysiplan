@@ -4359,6 +4359,7 @@
  {
   "naam": "Foam roller back upper",
   "groep": "Foam Roller",
+  "ook": ["Rug"],
   "img": "images/foam-roller/foam-roller-back-upper-line-v1.png",
   "kaartImg": "images/foam-roller/foam-roller-back-upper-avatar-v8.jpg",
   "uitleg": "Lig op je rug met gebogen knieën en plaats de foamroller onder je bovenrug. Ondersteun je hoofd licht met je handen en rol rustig een klein stuk.",
@@ -4458,6 +4459,7 @@
  {
   "naam": "Foam roller back extension",
   "groep": "Foam Roller",
+  "ook": ["Rug"],
   "img": "images/foam-roller/foam-roller-back-extension-line-v1.png",
   "kaartImg": "images/foam-roller/foam-roller-back-extension-avatar-v8.jpg",
   "uitleg": "Lig met de foamroller onder je middenrug en je knieën gebogen. Ondersteun je hoofd licht, open je borst rustig over de roller en kom gecontroleerd terug.",
@@ -5029,6 +5031,7 @@
  {
   "naam": "Seated foreward reach",
   "groep": "Seated Chair",
+  "ook": ["Werk en dagelijkse handelingen"],
   "img": "images/seated-chair/seated-forward-reach-line-v1.png",
   "kaartImg": "images/seated-chair/seated-forward-reach-avatar-v8.jpg",
   "uitleg": "Zit rechtop met je voeten plat. Reik één arm rustig naar voren op schouderhoogte en houd je romp lang.",
@@ -5218,6 +5221,7 @@
  {
   "naam": "Seated chair squats",
   "groep": "Seated Chair",
+  "ook": ["Werk en dagelijkse handelingen"],
   "img": "images/seated-chair/seated-chair-squats-line-v1.png",
   "kaartImg": "images/seated-chair/seated-chair-squats-avatar-v8.jpg",
   "uitleg": "Sta voor de stoel met je voeten op heupbreedte. Duw je heupen naar achteren richting de zitting en kom gecontroleerd weer omhoog.",

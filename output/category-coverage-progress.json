@@ -1,0 +1,95 @@
+{
+  "task": "Volledige V2-categoriedekking onderzoeken en conservatieve, bewezen secundaire mappings op bestaande oefeningen toevoegen",
+  "branch": "codex/audio-recovery-20261103",
+  "base": "e2809bd (audioherstel, behouden) op 736865e",
+  "worktree": "/private/tmp/fysiplan-audio-recovery-20261103",
+  "updated": "2026-11-03",
+  "status": "mappings en tests klaar; lokaal gecommit, niet gepusht, niet gedeployed; klinische keuzes apart gehouden",
+  "applied": {
+    "file": "public/oefeningen-v2.json (alleen 4 regels 'ook' toegevoegd; primaire categorie, id's, beelden, uitleg ongewijzigd)",
+    "mappings": [
+      {"exerciseId": "fp_d288ca26f5c3c5b1", "name": "Seated chair squats", "primary": "Seated Chair", "add": "Werk en dagelijkse handelingen"},
+      {"exerciseId": "fp_aea0bdac883b00f0", "name": "Seated foreward reach", "primary": "Seated Chair", "add": "Werk en dagelijkse handelingen"},
+      {"exerciseId": "fp_84154b2578401c90", "name": "Foam roller back upper", "primary": "Foam Roller", "add": "Rug"},
+      {"exerciseId": "fp_e9358123e578e29b", "name": "Foam roller back extension", "primary": "Foam Roller", "add": "Rug"}
+    ],
+    "evidence": "content/category-secondary-evidence.json: per mapping de bekeken lijn- en kaartbeelden (volle resolutie, binnen public/), uitlegtekst, bron, houding/afkeuringscontrole en productie-overridecontrole; plus herkomst van alle 19 eerdere secundaire categorieen (6 van voor fcade75, 13 uit fcade75)."
+  },
+  "notApplied": [
+    {"name": "Standing chair heel/toe", "proposed": "Balans en valpreventie", "why": "Actieve uitleghouding; naam suggereert tenen-fase die tekst en beeld niet tonen; inhoudelijk gelijk aan Standing chair calfs raises. Opdracht: niet mappen."},
+    {"name": "Chair squat", "proposed": "Werk en dagelijkse handelingen", "why": "Niet gecontroleerd (avatar mist stoel, fasen omgekeerd; onafhankelijke QA). Houding wordt door een andere agent in een eigen worktree gemaakt; hier niets aangepast."},
+    {"name": "Foam rol upper back stretch", "proposed": "Rug", "why": "Basis-lijnbeeld toont zichtbaar 'WorkoutLabs.com' (herkomst derde partij). Geen extra zichtbaarheid tot herkomst en afgeleid pijlbeeld beginhouding-pijl-v1/212.webp zijn beoordeeld; dat pijlbeeld is niet bekeken."},
+    {"name": "Seated lat stretch", "proposed": "Rug", "why": "Zijwaartse rompbuiging (zoals Seated side leans, al Rug); doel tussen flank/rug en schouder. Behandelaarskeuze."},
+    {"name": "Standing chair knee lift", "proposed": "Balans en valpreventie", "why": "Beeld klopt met uitleg (ondersteunde knieheffing, lijkt op 'Op de plaats marcheren – met steun'), maar of dit als balansoefening telt is een klinische keuze; niet toegewezen."}
+  ],
+  "clinicalDecisionsHeldApart": [
+    "Standing chair knee lift -> Balans en valpreventie?",
+    "Seated lat stretch -> Rug of Bovenste extremiteit?",
+    "Standing chair heel/toe: naam/uitleg oplossen en dubbeling met Standing chair calfs raises; pas daarna Balans overwegen",
+    "Neurologische revalidatie, Vestibulair, Bekken & postpartum, Sportrevalidatie: geen enkele secundaire mapping zonder vastgelegde clinicalApproval (test dwingt dit af)"
+  ],
+  "runtimeOverrides": {
+    "checked": "Read-only GET https://fysiplan.nl/v2/oefeningen.json en /health op 2026-11-03: commit 736865e, 319 V2-oefeningen, verplaatst 5, hernoemd/toegevoegd/verwijderd 0",
+    "observed": [
+      {"name": "Abroller", "ook": ["Bovenste extremiteit"]},
+      {"name": "Back extension", "ook": ["Bovenste extremiteit"], "note": "basis heeft Rug; productie-override vervangt dat, dus effectief Rug = 12 i.p.v. 13 na deploy"},
+      {"name": "Balans op 1 been", "ook": ["Onderste extremiteit"]},
+      {"name": "Abdominal (apparaat)", "ook": ["Bovenste extremiteit"]},
+      {"name": "Back (apparaat)", "ook": ["Bovenste extremiteit"]}
+    ],
+    "effect": "Geen override op de 4 nieuwe mappings. Server vervangt groep+ook volledig bij een override (getest met deze 5 plus 2 synthetische op de nieuwe mappings); niets overschreven."
+  },
+  "coverage": {
+    "report": "output/category-coverage-report.json (node scripts/category-coverage.mjs --write)",
+    "scope": "Basiscatalogus in de repo; productie-overrides niet meegeteld",
+    "totals": {"records": 604, "withImage": 319, "withoutImage": 285, "withSecondary": 23},
+    "available": {
+      "Nek": "1 (alleen Seated cervical stretch, secundair); 20 records zonder beeld",
+      "Rug": "13 (alle secundair; 12 effectief door productie-override op Back extension); 25 records zonder beeld",
+      "Balans en valpreventie": "1 (One leg standing, secundair); 30 records zonder beeld",
+      "Werk en dagelijkse handelingen": "2 (nieuw, secundair); 10 records zonder beeld",
+      "Neurologische revalidatie": "0; 15 records zonder beeld; niet auto-vullen",
+      "Vestibulair": "0; 10 records zonder beeld; niet auto-vullen",
+      "Bekken & postpartum": "0; 10 records zonder beeld; niet auto-vullen",
+      "Sportrevalidatie": "0; 7 records zonder beeld; niet auto-vullen",
+      "Bovenste extremiteit": "45; 50 zonder beeld",
+      "Onderste extremiteit": "30; 80 zonder beeld",
+      "Core": "34; 20 zonder beeld",
+      "Conditie": "12 (6 secundair); 8 zonder beeld"
+    },
+    "realAssetGaps": "Per categorie de bestaande records zonder beeld staan in het rapport (assetGaps en categories[].missingAssets, met exerciseId en coreExerciseId). Dat zijn beelden voor bestaande records, geen nieuwe oefening-id's. Grootste gaten waar hergebruik niet veilig kan: Balans 30, Nek 20, Neuro 15, Vestibulair 10, Bekken 10, Werk 10, Sport 7. Nieuwe beelden doet een andere agent buiten deze worktree."
+  },
+  "tests": {
+    "new": {
+      "scripts/test-category-coverage.mjs (in test:categories, dus in CI)": [
+        "elke secundaire categorie in de V2-catalogus heeft bewijs, en elk bewijs staat in de catalogus",
+        "nieuwe mappings: stabiel id, primair ongewijzigd, bestaande categorie, beelden aanwezig en precies de bekeken beelden, niet afgekeurd, geen uitleghouding, bewijsvelden ingevuld",
+        "niet-toegepaste kandidaten (heel/toe, Chair squat, Foam rol upper back stretch, Seated lat stretch, knee lift) hebben die categorie niet",
+        "Neuro/Vestibulair/Bekken/Sport alleen met clinicalApproval",
+        "echte server met tijdelijke DATA_DIR: 5 productie-overrides + 2 op de nieuwe mappings gaan voor; mappings zonder override zichtbaar; V1 krijgt de V2-mappings niet",
+        "dekkingsrapport telt de mappings mee; opgeslagen rapport komt overeen met de catalogus"
+      ],
+      "mutationChecks": "Tijdelijk (en hersteld, byte-gelijk) getest dat de test faalt bij: heel/toe stil naar Balans; Neuro-mapping met bewijs maar zonder goedkeuring; gewijzigde primaire categorie. Alle drie exit 1 met de juiste melding."
+    },
+    "changed": "scripts/test-category-navigation.mjs: migratievergelijking telt verwachte wijzigingen uit het bewijs i.p.v. vaste 13, eist dat elke nieuwe secundaire categorie verklaard is, en controleert dat V1 (public/oefeningen.json) byte-gelijk blijft aan de basis",
+    "run": [
+      {"cmd": "npm run test:categories", "result": "exit 0"},
+      {"cmd": "CATEGORY_MIGRATION_BASE=736865e node scripts/test-category-navigation.mjs", "result": "exit 0 (4 nieuw t.o.v. huidige release)"},
+      {"cmd": "CATEGORY_MIGRATION_BASE=9ac1391 node scripts/test-category-navigation.mjs", "result": "exit 0 (17 t.o.v. basis van fcade75)"},
+      {"cmd": "npm run test:mobile", "result": "exit 0 (incl. audioherstel)"},
+      {"cmd": "npm run build", "result": "exit 0"},
+      {"cmd": "npm run test:ahmed-notities", "result": "exit 1, al vooraf aanwezig: faalt identiek met de ongewijzigde catalogus van e2809bd (V2-img vs V1-img-assertie); niet in CI, buiten scope, niet aangepast"}
+    ]
+  },
+  "remaining": [
+    "Coordinator: onafhankelijke review van de 4 mappings en content/category-secondary-evidence.json voor integratie",
+    "Behandelaar: de vier klinische keuzes hierboven",
+    "Herkomst Foam rol upper back stretch (WorkoutLabs-tekst in basis-lijnbeeld) en het afgeleide pijlbeeld 212.webp laten beoordelen; zelfde soort probleem als Chair squat",
+    "Na deploy: productie-telling controleren (Back extension-override houdt Rug weg; bewust zo gelaten)",
+    "Beelden voor bestaande records zonder beeld (rapport assetGaps) door de beeldagent; Neuro/Vestibulair/Bekken/Sport alleen met specifieke klinische beoordeling",
+    "Physitrack-bewijs voor Werk was alleen eerste pagina 'Arbeidsomstandigheden' (kantoorrek/houding); toegevoegde Werk-mappings steunen op eigen hergebruik-QA en de eigen Werk-categorie, niet op die pagina",
+    "Andere Physitrack-categorieen (Sport, aparte Balans-pagina) nog niet waargenomen"
+  ],
+  "environment": "node_modules is een lokale, niet gecommitte symlink naar de hoofdcheckout (geen installatie). Geen generatie, betaalde API's, aankopen, push, deploy of toegangswijzigingen. Bronbeelden alleen binnen public/ gelezen; geen previews gemaakt.",
+  "notTouched": ["V1 public/oefeningen.json", "beelden en audio", "runtime/gebruikersoverrides", "Chair squat-houding (andere agent)", "category- en release-worktrees"]
+}

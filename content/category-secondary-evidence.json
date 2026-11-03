@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Elke secundaire V2-categorie (ook) in public/oefeningen-v2.json staat hier met herkomst. Een secundaire categorie is een vindbaarheidslabel voor de behandelaar; het is geen klinische claim over werkzaamheid of indicatie. Primaire categorie, exerciseId, beelden, V1 en runtime-overrides (data/categorie-wijzigingen.json) blijven ongemoeid; een override vervangt groep en ook volledig en gaat dus altijd voor.",
+  "noAutoFill": {
+    "categories": ["Neurologische revalidatie", "Vestibulair", "Bekken & postpartum", "Sportrevalidatie"],
+    "rule": "Niet vullen met algemene oefeningen omdat een externe bibliotheek ze in zo'n categorie toont. Een mapping naar een van deze categorieen vraagt een vastgelegde clinicalApproval (wie, datum, onderbouwing)."
+  },
+  "preexisting": [
+    {"name": "Circle (apparaat)", "add": "Cardio", "source": "aanwezig voor fcade75 (9ac1391)"},
+    {"name": "Crosstrainer (apparaat)", "add": "Cardio", "source": "aanwezig voor fcade75 (9ac1391)"},
+    {"name": "Fiets (apparaat)", "add": "Cardio", "source": "aanwezig voor fcade75 (9ac1391)"},
+    {"name": "Loopband (apparaat)", "add": "Cardio", "source": "aanwezig voor fcade75 (9ac1391)"},
+    {"name": "Roeier (apparaat)", "add": "Cardio", "source": "aanwezig voor fcade75 (9ac1391)"},
+    {"name": "Stairs (apparaat)", "add": "Cardio", "source": "aanwezig voor fcade75 (9ac1391)"}
+  ],
+  "earlier": [
+    {"name": "Back extension", "add": "Rug", "source": "fcade75"},
+    {"name": "Rug extensie", "add": "Rug", "source": "fcade75"},
+    {"name": "Mobilisatie rotatie rug", "add": "Rug", "source": "fcade75"},
+    {"name": "Mob thoracaal", "add": "Rug", "source": "fcade75"},
+    {"name": "Mob lower back", "add": "Rug", "source": "fcade75"},
+    {"name": "Mob back left/right", "add": "Rug", "source": "fcade75"},
+    {"name": "Back stretch", "add": "Rug", "source": "fcade75"},
+    {"name": "Seated lumbar rotations", "add": "Rug", "source": "fcade75"},
+    {"name": "Seated cat-cow", "add": "Rug", "source": "fcade75"},
+    {"name": "Seated side leans", "add": "Rug", "source": "fcade75"},
+    {"name": "Side bents", "add": "Rug", "source": "fcade75"},
+    {"name": "Seated cervical stretch", "add": "Nek", "source": "fcade75"},
+    {"name": "One leg standing", "add": "Balans en valpreventie", "source": "fcade75"}
+  ],
+  "mappings": [
+    {
+      "exerciseId": "fp_d288ca26f5c3c5b1",
+      "name": "Seated chair squats",
+      "primary": "Seated Chair",
+      "add": "Werk en dagelijkse handelingen",
+      "checked": "2026-11-03",
+      "evidence": {
+        "visual": "Lijnbeeld images/seated-chair/seated-chair-squats-line-v1.png en kaartbeeld images/seated-chair/seated-chair-squats-avatar-v8.jpg op volle resolutie bekeken: gedeeltelijke squat met heupen naar achteren richting een zichtbare stoel, armen naar voren; beide beelden tonen dezelfde fase.",
+        "text": "Uitleg: voor de stoel staan, heupen naar achteren richting de zitting, gecontroleerd omhoog. Klopt met beide beelden.",
+        "sources": [
+          "fysiplan-category-mix-20261102/reuse-dedup-qa-20261103.json: recommendedMappingCandidates (Werk en dagelijkse handelingen)",
+          "Eigen Werk-categorie bevat dezelfde bewegingscomponent: 'Langdurig zitten onderbreken' (opstaan uit stoel) en 'Voorwerp van vloer tillen' (door de knieen zakken)"
+        ],
+        "holds": "Geen uitleghouding (public/mobile-narration-review.json) en niet afgekeurd (public/mobile-media-review.json)",
+        "runtimeOverride": "Geen override op productie: https://fysiplan.nl/v2/oefeningen.json op 2026-11-03 (commit 736865e, 5 overrides, geen op deze oefening)"
+      },
+      "limits": "Functionele squat richting stoel, geen volledige opsta-transfer. Physitrack 'Arbeidsomstandigheden' (eerste pagina) toonde vooral kantoorrek- en houdingsoefeningen; daar is deze familie niet waargenomen. Chair squat (fp_295fd35a63d44ef8) is dezelfde familie en blijft buiten deze mapping."
+    },
+    {
+      "exerciseId": "fp_aea0bdac883b00f0",
+      "name": "Seated foreward reach",
+      "primary": "Seated Chair",
+      "add": "Werk en dagelijkse handelingen",
+      "checked": "2026-11-03",
+      "evidence": {
+        "visual": "Lijnbeeld images/seated-chair/seated-forward-reach-line-v1.png en kaartbeeld images/seated-chair/seated-forward-reach-avatar-v8.jpg op volle resolutie bekeken: rechtop zittend, een arm naar voren op schouderhoogte, andere hand op het bovenbeen, voeten plat.",
+        "text": "Uitleg: rechtop zitten, een arm rustig naar voren op schouderhoogte, romp lang. Klopt met beide beelden.",
+        "sources": [
+          "fysiplan-category-mix-20261102/reuse-dedup-qa-20261103.json: recommendedMappingCandidates (Werk en dagelijkse handelingen)",
+          "Eigen Werk-categorie bevat reiken naar een werkvlak ('Voorwerp van tafel pakken')"
+        ],
+        "holds": "Geen uitleghouding en niet afgekeurd",
+        "runtimeOverride": "Geen override op productie op 2026-11-03"
+      },
+      "limits": "Geen claim over het hanteren van voorwerpen en geen neurologisch label. Niet hetzelfde als het reiken naar een beker (concept6)."
+    },
+    {
+      "exerciseId": "fp_84154b2578401c90",
+      "name": "Foam roller back upper",
+      "primary": "Foam Roller",
+      "add": "Rug",
+      "checked": "2026-11-03",
+      "evidence": {
+        "visual": "Lijnbeeld images/foam-roller/foam-roller-back-upper-line-v1.png en kaartbeeld images/foam-roller/foam-roller-back-upper-avatar-v8.jpg bekeken: rugligging, knieen gebogen, foamroller dwars onder de bovenrug, handen achter het hoofd.",
+        "text": "Uitleg noemt de plaats letterlijk: 'plaats de foamroller onder je bovenrug'.",
+        "sources": [
+          "Lichaamsgebied volgt uit uitleg en beeld; zelfde regel als de eerdere Rug-mappings in fcade75 (o.a. Mob thoracaal, Back stretch)"
+        ],
+        "holds": "Geen uitleghouding en niet afgekeurd (de afzonderlijke houdingen staan alleen op Foam roller back lower en back lower cross)",
+        "runtimeOverride": "Geen override op productie op 2026-11-03"
+      },
+      "limits": "Lichaamsgebied-label, geen behandelclaim."
+    },
+    {
+      "exerciseId": "fp_e9358123e578e29b",
+      "name": "Foam roller back extension",
+      "primary": "Foam Roller",
+      "add": "Rug",
+      "checked": "2026-11-03",
+      "evidence": {
+        "visual": "Lijnbeeld images/foam-roller/foam-roller-back-extension-line-v1.png en kaartbeeld images/foam-roller/foam-roller-back-extension-avatar-v8.jpg bekeken: rugligging met de foamroller onder de middenrug, borst geopend over de rol, handen achter het hoofd.",
+        "text": "Uitleg noemt de plaats letterlijk: 'Lig met de foamroller onder je middenrug'.",
+        "sources": [
+          "Lichaamsgebied volgt uit uitleg en beeld; zelfde regel als de eerdere Rug-mappings in fcade75"
+        ],
+        "holds": "Geen uitleghouding en niet afgekeurd",
+        "runtimeOverride": "Geen override op productie op 2026-11-03"
+      },
+      "limits": "Lichaamsgebied-label, geen behandelclaim."
+    }
+  ],
+  "notApplied": [
+    {
+      "exerciseId": "fp_03be7dd54cccd997",
+      "name": "Standing chair heel/toe",
+      "proposed": "Balans en valpreventie",
+      "reason": "Actieve uitleghouding in public/mobile-narration-review.json: de naam suggereert ook een tenen-fase die tekst en beeld niet tonen. Beeld en tekst komen inhoudelijk overeen met Standing chair calfs raises (ondersteunde hielheffing); eerst naam/uitleg oplossen en dubbeling met calf raises beoordelen."
+    },
+    {
+      "exerciseId": "fp_295fd35a63d44ef8",
+      "name": "Chair squat",
+      "proposed": "Werk en dagelijkse handelingen",
+      "reason": "Niet gecontroleerd: kaartbeeld mist de stoel uit de uitleg en de fasen staan omgekeerd (onafhankelijke mobiele QA 2026-11-03). Een houding hiervoor wordt in een andere worktree gemaakt."
+    },
+    {
+      "exerciseId": "fp_f53ce2065fb49eb2",
+      "name": "Foam rol upper back stretch",
+      "proposed": "Rug",
+      "reason": "Basis-lijnbeeld images/foam-roller/foam-rol-upper-back-stretch.jpg toont zichtbaar de tekst 'WorkoutLabs.com' (herkomst derde partij). Geen extra zichtbaarheid geven voordat herkomst en het afgeleide pijlbeeld (beginhouding-pijl-v1/212.webp) zijn beoordeeld."
+    },
+    {
+      "exerciseId": "fp_7e0445b070d4aa84",
+      "name": "Seated lat stretch",
+      "proposed": "Rug",
+      "reason": "Beeld toont zijwaartse rompbuiging met handen boven het hoofd (zelfde beweging als Seated side leans, die al Rug heeft). Doel ligt tussen flank/rug en schouder (latissimus); keuze aan de behandelaar."
+    },
+    {
+      "exerciseId": "fp_5319c4700561725d",
+      "name": "Standing chair knee lift",
+      "proposed": "Balans en valpreventie",
+      "reason": "Kaartbeeld (bestand standing-chair-hip-extension-avatar-v8.jpg, bewust gewisseld in 785559c) toont een ondersteunde knieheffing die klopt met de uitleg, en lijkt op 'Op de plaats marcheren – met steun' in Balans. Of een ondersteunde knieheffing als balansoefening telt is een klinische keuze; niet toegewezen."
+    }
+  ]
+}
