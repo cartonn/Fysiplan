@@ -1547,7 +1547,12 @@ bridge2.jpg</div>
       html="<iframe src='"+esc(v.stream.iframe)+"' title='Avatarvideo' allowfullscreen></iframe><div class='video-caption'>"+
         (v.stream.reviewStatus==='concept'?'AI-concept · beoordeling door fysiotherapeut volgt':'Avatarvideo in Cloudflare Stream · geschikt voor de volledige videotheek')+"</div>";
     }else if(v&&v.yt){
-      html="<iframe src='https://www.youtube-nocookie.com/embed/"+esc(v.yt)+"' title='Instructievideo' allowfullscreen></iframe><div class='video-caption'>YouTube-video · te vervangen door een eigen avatarvideo</div>";
+      // Uitwijklink: herstelt de ingesloten speler niet (YouTube verwacht een Referer, deze site
+      // stuurt bewust referrer-policy same-origin). Alleen een gevalideerd id, nieuw tabblad,
+      // geen referrer, alleen na een klik.
+      var ytKijk=/^[A-Za-z0-9_-]{11}$/.test(String(v.yt))?'https://www.youtube.com/watch?v='+v.yt:'';
+      html="<iframe src='https://www.youtube-nocookie.com/embed/"+esc(v.yt)+"' title='Instructievideo' allowfullscreen></iframe><div class='video-caption'>YouTube-video · te vervangen door een eigen avatarvideo</div>"+
+        (ytKijk?"<div class='video-caption'><a class='ytextern' href='"+esc(ytKijk)+"' target='_blank' rel='noopener noreferrer'>Open deze video op YouTube (externe website)</a></div>":"");
     }else if(v&&v.catalog&&v.catalog.iframe){
       html="<iframe src='"+esc(v.catalog.iframe)+"' title='Fysiplan-video' allowfullscreen></iframe><div class='video-caption'>Goedgekeurde Fysiplan-catalogusvideo</div>";
     }
