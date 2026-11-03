@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "private": true,
+  "published": false,
+  "recordings": [
+    {
+      "priority": 1,
+      "coreExerciseId": "fc_07a47f244d7392e6",
+      "name": "Voorwerp van tafel pakken – licht en dichtbij",
+      "text": "Voorwerp van tafel pakken – licht en dichtbij. Sta rechtop voor een tafel met een licht voorwerp dicht bij de rand. Pak het voorwerp rustig op, houd het dicht bij je lichaam en zet het langzaam weer terug.",
+      "textSha256": "06adba617fe5098503678eba6f41fa75e7705789828f64647b26beae2fa3a1cd",
+      "sourceSha256": "9588eee5a560feca149a27df6cfb45162adcb2bd49a7ae7b4dccbb7dd270b682",
+      "characterCount": 205,
+      "existingExactClip": null,
+      "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+      "engine": "heygen_voice",
+      "language": "nl",
+      "speed": 0.95,
+      "status": "prepared-existing-private-draft",
+      "clinicalApproved": false,
+      "publish": false,
+      "audioFile": "content/private-narration-drafts/fc_07a47f244d7392e6/narration.mp3",
+      "sha256": "d738d3d206855f8717e7d22c3b4f17396c4911a0f34a80ad6e1078db8c23db7c",
+      "duration": 12.512625,
+      "requestId": "7461124262284685a7a9b8fb159c9959",
+      "returnedEngine": "orca",
+      "actualPremiumCredits": 1,
+      "format": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "format_name": "mp3",
+          "duration": "12.512625"
+        }
+      },
+      "returnedWordTextExact": true,
+      "wordTimingsValid": true,
+      "listeningReviewed": false,
+      "published": false
+    },
+    {
+      "priority": 2,
+      "coreExerciseId": "fc_853c97009144ec09",
+      "name": "Nek draaien – zittend actief",
+      "text": "Nek draaien – zittend actief. Zit rechtop op een stoel en kijk recht vooruit. Draai je hoofd rustig naar één kant en beweeg langzaam terug naar het midden. Wissel daarna van kant.",
+      "textSha256": "e74b69818acd651043e3ac4b85e1e4977bfb73d46d3185ad9c60663868e0754e",
+      "sourceSha256": "3c2eaebee49d8aa316c6f178eeb4b71664b186fa8010d419b8b6a7643b13a1cd",
+      "characterCount": 179,
+      "existingExactClip": null,
+      "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+      "engine": "heygen_voice",
+      "language": "nl",
+      "speed": 0.95,
+      "status": "prepared-conditional-visual-review",
+      "clinicalApproved": false,
+      "publish": false,
+      "audioFile": "content/private-narration-drafts/fc_853c97009144ec09/narration.mp3",
+      "sha256": "491fbcf1c822805da74eddca20a1398d0b4af3c299facb175d4e29868355c98e",
+      "duration": 11.441625,
+      "requestId": "4472930d30c64b64b796e593fb38515f",
+      "returnedEngine": "orca",
+      "actualPremiumCredits": 1,
+      "format": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "format_name": "mp3",
+          "duration": "11.441625"
+        }
+      },
+      "returnedWordTextExact": true,
+      "wordTimingsValid": true,
+      "listeningReviewed": false,
+      "published": false
+    },
+    {
+      "priority": 3,
+      "coreExerciseId": "fc_2ab6250d362bc593",
+      "name": "Hand openen na grijpen – bilateraal",
+      "text": "Hand openen na grijpen – bilateraal. Zit rechtop aan een tafel met beide handen voor je. Pak met beide handen rustig een voorwerp vast, open daarna je handen langzaam en laat het weer helemaal los.",
+      "textSha256": "34f236b92c0801ff0eb8ba767e30e00b2a0df7341e4ba25e0b4c4899947e3e1a",
+      "sourceSha256": "3c91533d8cef2f8ba0c1e96efa14e52a3ff3aae3e66d65c10c2964af9afc1c09",
+      "characterCount": 197,
+      "existingExactClip": null,
+      "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+      "engine": "heygen_voice",
+      "language": "nl",
+      "speed": 0.95,
+      "status": "prepared-conditional-visual-review",
+      "clinicalApproved": false,
+      "publish": false,
+      "audioFile": "content/private-narration-drafts/fc_2ab6250d362bc593/narration.mp3",
+      "sha256": "e675c876e8eeb35f66a1968b787e535f1f65fcb7c3c527961928c68bd39535c4",
+      "duration": 12.068563,
+      "requestId": "07f0fb2ec95c4c3481e7ac3c505fc44e",
+      "returnedEngine": "orca",
+      "actualPremiumCredits": 1,
+      "format": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "format_name": "mp3",
+          "duration": "12.068563"
+        }
+      },
+      "returnedWordTextExact": true,
+      "wordTimingsValid": true,
+      "listeningReviewed": false,
+      "published": false
+    }
+  ],
+  "limitations": "Returned provider word timing text matches submitted scripts; not independent transcription or listening. No clinical approval. Original returned audio retained without recompression. No public consumer mapping or deployment."
+}
