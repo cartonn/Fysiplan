@@ -612,6 +612,28 @@
         "clinicalApproved": false,
         "reviewLimitation": "Technical decode/duration and exact submitted text verified. Not fully listened to in this import; transcript and clinical correctness are not certified. API result has no requested speed metadata; global legacy speed does not describe this clip."
       }
+    },
+    {
+      "name":"Single leg squat",
+      "text":"Single leg squat. Sta op een been met het andere been iets van de grond. Zak op een been zo ver als lukt door je knie en duw jezelf rustig weer omhoog.",
+      "src":"/audio/noor/a0856a428b7a98cf17b73c2f84740d243d958c74a81af7b852470e19192e29b0.mp3",
+      "duration":9.299592,
+      "provenance":{
+        "provider":"HeyGen MCP included Pro credits",
+        "voiceId":"ea8f12713f7644ea9ad4ed710901fbbb",
+        "requestedEngine":"heygen_voice",
+        "returnedEngine":"orca",
+        "speed":0.95,
+        "language":"nl",
+        "requestId":"d267b5b607684a9c90fb3a4070ab8bbc",
+        "observedPremiumCreditsUsed":1,
+        "sourceFile":"output/audio-source/single-leg-squat-included-original.mp3",
+        "sourceFormat":"Actual MP3 44100 Hz mono; provider URL extension .wav is misleading",
+        "processing":"ffmpeg libmp3lame quality2, no tempo or pitch change",
+        "exactSubmittedTextMatch":true,
+        "deliveryListeningReviewed":false,
+        "clinicalApproved":false
+      }
     }
   ]
 }

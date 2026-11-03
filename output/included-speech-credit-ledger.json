@@ -1,0 +1,30 @@
+{
+ "schemaVersion":1,
+ "authorization":"2026-11-03: included HeyGen Pro credits only; no purchases or extra usage",
+ "speechCreditCap":10,
+ "reservedForOtherLane":20,
+ "balanceBefore":30,
+ "requests":[{
+   "sequence":1,
+   "status":"succeeded-accounted",
+   "balanceAfter":29,
+   "observedPremiumCreditsUsed":1,
+   "cashPurchase":false,
+   "requestId":"d267b5b607684a9c90fb3a4070ab8bbc",
+   "reportedEngine":"orca",
+   "duration":9.299591836734693,
+   "resultFile":"output/included-speech-single-leg-squat-result.json",
+   "name":"Single leg squat",
+   "text":"Single leg squat. Sta op een been met het andere been iets van de grond. Zak op een been zo ver als lukt door je knie en duw jezelf rustig weer omhoog.",
+   "voiceId":"ea8f12713f7644ea9ad4ed710901fbbb",
+   "engine":"heygen_voice",
+   "language":"nl",
+   "speed":0.95,
+   "tool":"heygen_create_speech_without_player",
+   "forceRegenerate":false,
+   "duplicateCheck":"Absent from existing67 clips and six-result API ledger; no source/narration hold at checked base",
+   "singleInitialRequestAuthorized":true,
+   "knownPerCallCreditUpperBound":null,
+   "batchBlockedUntilBoundKnown":true
+ }]
+}
