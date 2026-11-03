@@ -1875,3 +1875,32 @@ vast; `test:proef` is bijgewerkt voor het VWO-vinkje.
 **Volgende run — pak een ander gebied:** de bewaartermijn-opruiming onder
 gelijktijdige schrijfacties (race tussen opruimen en een binnenkomende
 meting), en of video's van verlopen kaarten echt overal weg zijn.
+
+## 2026-11-03 — Bewaartermijn (#40) niet-destructief + accountlaag onder de akkoord-poort
+
+**Gebied.** De rotatie uit het log, toegespitst op het riskantste nieuwe
+gedrag van het Privacypakket (#40): de automatische bewaartermijn die kaarten
+met hun video's verwijdert (verlooptOp/bewaartermijnOpruimen, elke 6 uur), plus
+de accountlaag nu claimen een akkoord op de verwerkersovereenkomst vereist.
+
+**Bevindingen: geen gat.** De verwijdering is niet-destructief opgebouwd:
+laatsteActiviteitKaart telt álle activiteitsbronnen mee (ts, metingen, gedaan,
+psk, ervaring, bekeken, seintje, antwoord, afspraakreeks-einde, te zwaar); een
+actieve kaart houdt 90 dagen vanaf de laatste activiteit; een gearchiveerde
+kaart krijgt gearchiveerdOp=nu bij het archiveren (route regel ~3703) en dus de
+volle 30 dagen — een oude-maar-net-afgeronde kaart verloopt daardoor in de
+toekomst, niet meteen; heropslaan behoudt gearchiveerdOp; en de aanloop-vloer
+(invoering + 30 dagen) beschermt de hele bestaande voorraad bij invoering. De
+accountlaag blijft solide onder de nieuwe poort: claimen zonder akkoord -> 400,
+de per-praktijk-inlogrem zet na 10 missers op slot (429), en een herstelcode is
+eenmalig (daarna verbruikt).
+
+**Increment.** Geen codewijziging; na de scratchpad-wipe het net voor dit
+gebied herbouwd met test-bewaartermijn-accountlaag.mjs (9 checks, mockbare
+bewaartermijnen via env). De privacy-era smoke-suite (18) en de repo-eigen
+test-privacy bleven groen.
+
+**Volgende run — pak een ander gebied:** de opname-uploadketen opnieuw
+(token-claim-race, bezig-grendel, TTL-opschoning, /uploads-levering met Range)
+onder de huidige main, of de AI-vrije zoekhulp/weekbrief-routes (#40 pakket D)
+op afbakening en kostenremmen.
