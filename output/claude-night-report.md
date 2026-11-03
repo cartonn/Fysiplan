@@ -164,6 +164,32 @@ Bijna elke afwijking faalt dicht (geen vlak, geen houdingen). Alleen als het bee
 onbeoordeelde bytes kreeg en de controle tegelijk precies de beoordeelde, gaat het mis.
 Kosten: één fetch uit de cache plus SHA-256 per lading. De vergrote foto doet er twee.
 
+### Ronde 5, broncorrectie: verwisseld stoelpaar en vier defecte bronnen (commit `9e6f50d`)
+
+**Koppeling.** Bij Standing chair hip extension (`fp_514654a0d4181742`) en Standing chair
+knee lift (`fp_5319c4700561725d`) toonde het V2-kaartbeeld de beweging van de ander. Alleen
+`kaartImg` in `public/oefeningen-v2.json` is omgewisseld (2 regels). Ids, teksten, het
+lijnbeeld, V1 en alle bestanden zijn ongewijzigd. De uitzondering staat met pad, sha256,
+vorige koppeling en terugdraai-instructie in `content/v2-avatar-overrides.json`. De
+Carla-pijplijn leidde het kaartbeeld af uit de naam van het lijnbeeld; die volgt nu de
+uitzondering en weigert een import die het beeld van de andere oefening zou overschrijven.
+De build controleert de uitzondering extra (pad, hash, V1-lijnbeeld, uniek gebruik);
+niets is versoepeld. Beide blijven statisch: één figuur, geen begin/eind-paar.
+**Niet aangepast:** de V1-lijnbeelden van dit paar zijn op dezelfde manier verwisseld.
+
+**Houds.** Dips, Triceps dips, Step up with knee raise en Standing chair shoulder rotations
+krijgen een tijdelijke hold op precies dat bestand (pad + sha256), via het bestaande
+afkeurspoor. Er is niets verwijderd en niets klinisch beoordeeld. Beoordeling: 6 van 319
+regels gewijzigd; afgekeurd 5 → 9, onbeoordeeld 314 → 310, houdingen 156 en merken 215
+ongewijzigd.
+
+**Op elke QR-kaart** (ook die uit de V1-editor): het stoelpaar toont nu het passende beeld.
+Bij de vier houds verdwijnen de foto, de luisterknop per oefening (Dips en Triceps dips
+hebben een opname) en de videoknop van die oefening, ook een praktijkvideo. Dosering blijft.
+De knop "Luister naar uitleg" bovenaan speelt de opnames van Dips en Triceps dips nog wel;
+dat gold al voor eerdere afkeuringen en is niet aangepast. In de therapeutenapp gelden de
+houds niet.
+
 ## 6. Wat blijft liggen — en waarom
 
 1. **Luisterronde.** Geen enkele van de 67 bestaande opnames is beluisterd. 252 van de

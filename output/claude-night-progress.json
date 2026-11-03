@@ -23,11 +23,12 @@
     "4d7e090 visuele ronde over alle 158 statische oefeningen",
     "e5991d2 overal hetzelfde Fysiplan-merk op de kaart",
     "63f8ee1 miniatuurmerk pas na bewezen hash; manifest laden begrensd (audit-P2 x2)",
-    "fc40de1 bevestigBron controleert elke lading opnieuw; nieuwste uitkomst wint"
+    "fc40de1 bevestigBron controleert elke lading opnieuw; nieuwste uitkomst wint",
+    "9e6f50d V2-kaartbeeld hip extension/knee lift omgewisseld met uitzondering; 4 tijdelijke bronhouds"
   ],
-  "lastUpdate": "2026-11-03T01:18:20+0100",
+  "lastUpdate": "2026-11-03T01:48:41+0100",
   "lastUpdateNote": "Machineklok (date +%FT%T%z) op het moment van schrijven.",
-  "batch": 10,
+  "batch": 11,
   "deployed": false,
   "pushed": false,
   "clinicalApproval": false,
@@ -133,7 +134,9 @@
     "Productiedata (data/) zijn niet zichtbaar in deze werkmap: aantal praktijkvideo's en geüploade beelden in productie onbekend.",
     "Statische beelden: 6 lijken inhoudelijk fout en 17 zijn onzeker (output/pose-review/static/inspection.md); vraagt een fysiotherapeut en eventueel nieuw beeld.",
     "Witte hoekjes in de haren bij Front raises, Shoulder rotation (shrugs) en Yoga deep squat zitten in de bron (ingebakken merkvak); alleen met beeldbewerking op te lossen.",
-    "Gedeelde /k/-route: alle kaartwijzigingen gelden ook voor V1-gemaakte kaarten (server.js serveert één kaart.html). Releasebesluit nodig als V1-links gedragsmatig ongewijzigd moeten blijven."
+    "Gedeelde /k/-route: alle kaartwijzigingen gelden ook voor V1-gemaakte kaarten (server.js serveert één kaart.html). Releasebesluit nodig als V1-links gedragsmatig ongewijzigd moeten blijven.",
+    "V1-lijnbeelden van Standing chair hip extension en knee lift zijn onderling verwisseld (V2-kaartbeeld is gecorrigeerd, lijnbeeld niet).",
+    "Vier tijdelijke bronhouds (Dips, Triceps dips, Step up with knee raise, Standing chair shoulder rotations) wachten op nieuw beeld of een besluit; de Nederlandse voorleesknop bovenaan speelt de opnames van Dips en Triceps dips nog wel."
   ],
   "knownGapsNotFixed": {
     "practice-uploaded media": "Praktijkfoto's (uploads/oef-*.jpg) en praktijk-/kaartvideo's hebben geen beoordelingsregel en zijn dus onbeoordeeld zichtbaar. Een afkeuring voor zo'n bron werkt wel (public/kaart.html:716, :755), maar wordt niet automatisch aangemaakt. Houdingweergave en natuurlijke stem kunnen ze niet bereiken (gebonden aan beoordeelde sha256 resp. exacte tekst). Bij praktijkvideo's staat sinds 9ef09c8 dat beeld en tekst uit verschillende bron komen. Sinds 1ba3434 leveren praktijkvideo's correcte byte-ranges.",
@@ -144,11 +147,11 @@
     "newCredentials": "none",
     "purchases": "none"
   },
-  "nextAction": "Coördinator: fc40de1 nalopen (verse hashcontrole per lading) naast 63f8ee1; openstaande besluiten ongewijzigd: (a) 6 lijkt-fout/17 onzekere statische beelden, (c) welke statische bladen opnieuw renderen, (d) beoordelingsweg praktijkuploads, (e) YouTube-link vs. catalogusvideo, (f) gedeelde /k/-route voor V1-kaarten.",
+  "nextAction": "Coördinator: 9e6f50d nalopen (koppeling + houds); besluiten over V1-lijnbeelden van het stoelpaar, nieuw beeld voor de vier houds, en of de voorleesknop bovenaan afgekeurde beelden moet overslaan. Eerdere besluiten (a) t/m (f) blijven open.",
   "handoverReport": "output/claude-night-report.md",
   "perExerciseList": "output/mobile-pose-per-exercise.md",
   "inspectionLog": "output/pose-review/inspection-log.md",
-  "workingTree": "Commits t/m de voortgangscommit na fc40de1. Niet gecommit en bewust bewaard: scripts/kaart-browsercheck.mjs, output/kaart-browsercheck.json, output/pose-review/browser/01-kaart.png (gewijzigd) en output/kaart-browsercheck-alle.json (untracked). Untracked: CLAUDE-NIGHT-TASK.txt, coördinatorbestanden, auditbestand, node_modules (symlink).",
+  "workingTree": "Commits t/m de voortgangscommit na 9e6f50d. Niet gecommit en bewust bewaard: scripts/kaart-browsercheck.mjs, output/kaart-browsercheck.json, output/pose-review/browser/01-kaart.png (gewijzigd) en output/kaart-browsercheck-alle.json (untracked). Untracked: CLAUDE-NIGHT-TASK.txt, coördinatorbestanden, auditbestand, node_modules (symlink).",
   "blockers": [
     "Luisterronde en klinische goedkeuring vragen een mens; niets daarvan is gedaan of af te leiden.",
     "Alle 158 statische oefeningen (zie remaining) hebben ander bronmateriaal nodig voor een houdingweergave; beeldgeneratie is niet geautoriseerd en er is niets uitgegeven.",
@@ -350,5 +353,63 @@
     "nietGedraaid": "Geen echte browser of toestel (browsercheck zou bewaarde, niet gecommitte uitvoer overschrijven); geen luistertest; geen klinische beoordeling. Geometry-approved blijft alleen een uitspraak over uitsnede en weergave.",
     "ongewijzigd": "Alleen public/kaart.html (bevestigBron en commentaar) en twee testbestanden. Geen V1-bestanden, geen categorie-assets, geen credentials, geen push/deploy, geen generatie. Vuile browsercheck-bestanden niet aangeraakt.",
     "commit": "fc40de1"
+  },
+  "session6": {
+    "started": "machineklok bij schrijven 2026-11-03T01:48:41+0100 (werk begon kort daarvoor)",
+    "instructions": "Coördinator: verwisselde V2-avatars van Standing chair hip extension (fp_514654a0d4181742) en knee lift (fp_5319c4700561725d) omkeerbaar herstellen, alleen V2 kaartImg; ids/tekst/V1/bronbestanden behouden; geen nep begin/eind-paar; herkomst opnieuw opbouwen; gerichte regressietest; build mag het niet terugdraaien; bij conflict met pariteitsregels een minimale, traceerbare V2-uitzondering. Daarnaast tijdelijke bronspecifieke houds voor Dips, Triceps dips, Step up with knee raise en Standing chair shoulder rotations via het bestaande beoordelingsmechanisme; niets verwijderen, geen klinische goedkeuring.",
+    "commit": "9e6f50d",
+    "eigenControle": "Beelden zelf naast elkaar bekeken (800x1200 avatars en 1024x1536 V1-lijnbeelden; 400x600 verkleind): hip-extension-avatar toont knieheffing, knee-lift-avatar toont gestrekt been naar achteren. Ook de V1-lijnbeelden zijn zo verwisseld. De vier defecte bronnen tonen wat de coördinator beschreef.",
+    "koppeling": {
+      "public/oefeningen-v2.json": "2 regels gewijzigd (alleen kaartImg, tekstueel omgewisseld; verder byte-gelijk). Hip extension → standing-chair-knee-lift-avatar-v8.jpg (sha 64ab13e0…), knee lift → standing-chair-hip-extension-avatar-v8.jpg (sha 3f549445…).",
+      "ongewijzigd": "exerciseId (expliciet veld), naam, uitleg, img (V2-lijnbeeld = V1-lijnbeeld), public/oefeningen.json, alle beeldbestanden (geen bestand verplaatst, hernoemd of overschreven).",
+      "uitzondering": "content/v2-avatar-overrides.json: per oefening exerciseId, nieuw en vorig pad met sha256, lijnbeeld, wat de tekst vraagt, wat vroeger en nu getoond wordt, bewijs, besluit, en terugdraai-instructie.",
+      "pariteitsconflict": "Alleen in scripts/carla-avatar-pipeline.mjs: avatarPath() leidde het kaartbeeld af uit de bestandsnaam van het lijnbeeld; check meldde de correctie dan als ontkoppeld en import zou het beeld van de andere oefening overschrijven en de oude koppeling terugzetten. Nu: avatarPath() volgt de uitzonderingslijst, import weigert voor een uitzondering vóór er iets geschreven wordt. De build-poorten (publication-channel-graph, validate-exercise-backgrounds) eisen voor deze legacykaarten alleen img = V1-img; die blijven ongewijzigd gelden.",
+      "bouwpoort": "scripts/validate-exercise-backgrounds.mjs (in npm run build) eist nu extra: elke uitzondering precies één keer in de catalogus onder die naam, kaartImg exact, sha256 exact, lijnbeeld = V1-lijnbeeld, en het kaartbeeld door precies één oefening gebruikt. Geen bestaande controle versoepeld.",
+      "geenNepPaar": "Beide blijven statisch: meting \"single-figure\" (één samenhangend figuur), sha niet in de houdinggoedkeuringen, poses leeg."
+    },
+    "houds": {
+      "mechanisme": "scripts/build-mobile-media-review.mjs: nieuwe lijst sourceHolds, gebonden aan exerciseId + pad + sha256, via het bestaande afkeurspoor (status rejected, presentation withhold; dat houdt de kaart al tegen). Extra veld hold {temporary:true, kind:source-defect, source, assetSha256, evidence, release}. Verandert het bestand of het pad, dan faalt de bouw van de beoordeling (opnieuw laten beoordelen, niet stilzwijgend laten vervallen of doorgelden).",
+      "bronnen": [
+        "Dips fp_013ba6ad937cc9d9 images/bovenste-extremiteit/dips-avatar-v7.jpg (ae7ea9bc…)",
+        "Triceps dips fp_f227db5fcf245d9c images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg (7a3f8095…)",
+        "Step up with knee raise fp_7dc1478e2b3c17b0 images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg (2dbad916…)",
+        "Standing chair shoulder rotations fp_4b99c5f11b42a30d images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg (8290b9e1…)"
+      ],
+      "nietGedaan": "Niets verwijderd; catalogus wijst nog naar dezelfde bestanden; geen klinische goedkeuring of afkeuring van de uitleg; geen nieuw beeld gemaakt."
+    },
+    "telling": {
+      "public/mobile-media-review.json": "6 van 319 regels gewijzigd: 4 houds (unreviewed → rejected), 2 omgewisselde bronnen (source, assetSha256, classification, observations). Samenvatting: rejected 5 → 9 (5 inhoudelijke afkeuringen + 4 tijdelijke houds), unreviewed 314 → 310, approved 0, poseGeometryApproved 156 (ongewijzigd), brandMarkCovered 215 (ongewijzigd).",
+      "output/mobile-pose-candidates.json": "opnieuw gemeten: 2 van 319 regels gewijzigd (source en sha256 omgewisseld), verdicts en tally ongewijzigd.",
+      "output/pose-review/static/inspection.md": "vervolgnotitie toegevoegd; de tabellen van 2026-11-02 bewust niet herschreven."
+    },
+    "tests": {
+      "scripts/test-v2-avatar-mapping.mjs (nieuw, in test:mobile)": "vaste verwachte koppeling per id met sha256 (los van de uitzonderingslijst), ids/namen/teksten/lijnbeelden/V1 ongewijzigd, bestandshashes van de vier stoelbeelden, uitzonderingslijst consistent en omkeerbaar, beoordeling aan het nieuwe bestand en geen begin/eind-paar, vier houds aan pad+sha, patiëntkaart (loadMobileReview/mediaWithheld uit kaart.html met de echte JSON): 4 tegengehouden, 2 zichtbaar, oude koppeling niet afgekeurd; pijplijn status telt beide als gekoppeld; import geweigerd zonder dat catalogus of beelden veranderen.",
+      "scripts/test-mobile-media-review.mjs": "rejected 9, unreviewed 310, vier houds met pad, sha en temporary, alleen deze vier hebben een hold."
+    },
+    "regressiebewijs": {
+      "methode": "Tijdelijke map met de catalogus van HEAD (a0244db) en de nieuwe scripts; beelden, lib, content en node_modules als symlink (alleen gelezen); daarna verwijderd.",
+      "test-v2-avatar-mapping.mjs": "faalt: 'Standing chair hip extension: V2-kaartbeeld moet de beweging uit de eigen uitleg tonen'",
+      "validate-exercise-backgrounds.mjs (bouwpoort)": "faalt: 'V2-kaartbeeld van Standing chair hip extension wijkt af van de vastgelegde uitzondering'",
+      "build": "npm run build laat public/oefeningen-v2.json, public/mobile-media-review.json, public/oefeningen.json en content/v2-avatar-overrides.json byte-gelijk (sha256 voor en na vergeleken)."
+    },
+    "testEvidence": {
+      "npm run test:mobile": "exit 0 (10 stappen) 2026-11-03T01:48:41+0100",
+      "npm run build": "exit 0, met regel \"V2-kaartbeelduitzonderingen: 2 expliciet vastgelegd\""
+    },
+    "gedeeldeQrImpact": {
+      "route": "Elke /k/-link (ook kaarten uit de V1-editor) laadt dezelfde kaart.html met de live V2-bibliotheek en public/mobile-media-review.json. Na uitrol geldt dit dus voor alle bestaande kaarten met deze oefeningen; hoeveel dat er zijn is hier niet te zien (productiedata ontbreekt).",
+      "gecorrigeerd": "Hip extension en knee lift: miniatuur en vergrote foto tonen nu het beeld dat bij de eigen tekst past. Geen houdingdemonstratie, geen Noor-opname (geen van beide heeft er een), geen ingebakken merk.",
+      "houds": "Dips, Triceps dips, Step up with knee raise, Standing chair shoulder rotations: geen foto meer; in plaats daarvan \"De oefenafbeelding wordt gecontroleerd en is tijdelijk niet zichtbaar. Je dosering blijft op deze kaart staan.\" Bestaand gedrag van het afkeurspoor, ook: geen luisterknop per oefening (Dips en Triceps dips hebben een Noor-opname) en geen videoknop voor die oefening op de kaart, ook niet voor een door de praktijk gekoppelde video of YouTube-link. Dosering, gedaan en te zwaar blijven.",
+      "inconsistentieNietOpgelost": "De Nederlandse knop \"Luister naar uitleg\" bovenaan (leesVoor → speelNoor) speelt wél de opnames van Dips en Triceps dips: hij filtert op uitleg-houds, niet op beeldafkeuringen. Dat gold al voor de vijf eerdere afkeuringen. Niet aangepast (buiten deze opdracht); vraagt een besluit.",
+      "editor": "Therapeutenapp (public/index.html, V2-kleurmodus gebruikt kaartImg): toont de gecorrigeerde avatars; de vier houds gelden daar niet (de beoordeling wordt alleen door de patiëntkaart gelezen). Lijnmodus en V1 tonen nog de verwisselde lijnbeelden. Afdruk/PDF niet gecontroleerd."
+    },
+    "restpunten": [
+      "V1-lijnbeelden van hip extension en knee lift zijn ook verwisseld (en daarmee V2 img); niet aangepast omdat V1 beschermd is. Vraagt een V1-besluit.",
+      "De vier houds vragen nieuw bronmateriaal of een expliciet besluit; beeldgeneratie niet geautoriseerd, niets gemaakt.",
+      "Pre-existing: carla-avatar-pipeline check faalt al op Alternating lunge jumps (v9.png wijkt af van de naamregel); niet in deze opdracht opgenomen.",
+      "Niet getest: dat de bouw van de beoordeling faalt als een gehouden bestand op hetzelfde pad wordt vervangen (code aanwezig, geen test met andere bytes)."
+    ],
+    "nietGedraaid": "Geen echte browser of toestel; geen luistertest; geen klinische beoordeling.",
+    "ongewijzigd": "V1 (public/oefeningen.json), alle beeldbestanden, kaart.html, de vuile browsercheck-bestanden, /private/tmp/fysiplan-category-ui-20261103. Geen push/deploy, generatie, aankopen, toegang of credentials."
   }
 }
