@@ -17,7 +17,7 @@ try{
   assert.notEqual((await fetch(base+path,{headers:{'x-admin-sleutel':'admin88'}})).status,200);
  }
  const res=await fetch(base+'/api/exercise-drafts',{headers});assert.equal(res.status,200);assert.match(res.headers.get('cache-control'),/no-store/);
- const body=await res.json();assert.equal(body.published,false);assert.equal(body.drafts.length,1);
+ const body=await res.json();assert.equal(body.published,false);assert.equal(body.drafts.length,2);
  assert.equal(body.drafts[0].coreExerciseId,'fc_07a47f244d7392e6');
  const motion=body.drafts[0].motionCandidate;
  assert.equal(motion.qaStatus,'pending-independent-review');assert.equal(motion.clinicalApproval,false);assert.equal(motion.published,false);
@@ -44,6 +44,18 @@ try{
   const image=await fetch(base+`/api/exercise-drafts/fc_07a47f244d7392e6/${role}`,{headers});assert.equal(image.status,200);assert.equal(image.headers.get('content-type'),'image/png');
   assert.deepEqual(Buffer.from(await image.arrayBuffer()),await readFile(`content/private-exercise-drafts/fc_07a47f244d7392e6/${role}.png`));
  }
+ const neckId='fc_853c97009144ec09';
+ const neck=body.drafts.find(d=>d.coreExerciseId===neckId);
+ assert.equal(neck.published,false);assert.equal(neck.video,null);assert.equal(neck.audio,null);
+ for(const role of ['line','start','end']){
+  const url=base+`/api/exercise-drafts/${neckId}/${role}`;
+  assert.notEqual((await fetch(url)).status,200);
+  const image=await fetch(url,{headers});assert.equal(image.status,200);
+  assert.match(image.headers.get('cache-control'),/private.*no-store/);
+  assert.deepEqual(Buffer.from(await image.arrayBuffer()),await readFile(`content/private-exercise-drafts/${neckId}/${role}.png`));
+ }
+ assert.ok(!live.some(e=>e.coreExerciseId===neckId),'neck draft stays unpublished');
+ assert.notEqual((await fetch(base+'/api/exercise-drafts/fc_2050086df6d023ac/start',{headers})).status,200,'chin retraction remains held');
  assert.equal((await fetch(base+'/api/exercise-drafts',{headers,method:'POST'})).status,405);
  const publicAttempt=await fetch(base+'/content/private-exercise-drafts/fc_07a47f244d7392e6/start.png');
  assert.ok(!String(publicAttempt.headers.get('content-type')).includes('image/png'));

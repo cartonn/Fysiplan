@@ -10,7 +10,20 @@ const id='fc_07a47f244d7392e6',root=resolve('content/private-exercise-drafts');
 const cataloguePath=resolve('public/oefeningen-v2.json'),before=await readFile(cataloguePath),catalogue=JSON.parse(before);
 const d=await loadDraft({draftRoot:root,id,catalogue});
 assert.equal(d.published,false);assert.equal(d.video,null);assert.equal(d.audio,null);
+const neckId='fc_853c97009144ec09';
+const neck=await loadDraft({draftRoot:root,id:neckId,catalogue});
+assert.equal(neck.proposedCategory,'Nek');assert.equal(neck.published,false);
+assert.equal(neck.audio,null);assert.equal(neck.video,null);
+assert.equal(neck.explanation,catalogue.find(r=>r.coreExerciseId===neckId).uitleg);
+for(const heldId of ['fc_2050086df6d023ac','fc_0d5387765cfc38e7','fc_efb221042af6b0a7','fc_4efd59fd568e6c13'])await assert.rejects(loadDraft({draftRoot:root,id:heldId,catalogue}),/Unknown draft ID/);
 const temp=await mkdtemp(join(tmpdir(),'fysiplan-draft-test-'));
+const neckBundleDir=join(temp,'neck-bundle');await mkdir(neckBundleDir);
+const neckBundle={...neck,schema:'fysiplan-unpublished-import-candidate-v1',assets:structuredClone(neck.assets)};
+for(const role of ['line','start','end']){neckBundle.assets[role].relativePath=`${role}.png`;await copyFile(join(root,neckId,`${role}.png`),join(neckBundleDir,`${role}.png`));}
+const neckBundlePath=join(neckBundleDir,'candidate.json');await writeFile(neckBundlePath,JSON.stringify(neckBundle));
+const neckTarget=join(temp,'neck-import');
+assert.equal((await importDraft({bundlePath:neckBundlePath,cataloguePath,draftRoot:neckTarget})).status,'imported-unpublished');
+assert.equal((await importDraft({bundlePath:neckBundlePath,cataloguePath,draftRoot:neckTarget})).status,'unchanged');
 const bundle={...d,schema:'fysiplan-unpublished-import-candidate-v1'};
 for(const role of ['line','start','end']){bundle.assets[role]={...d.assets[role],relativePath:`${role}.png`};await copyFile(join(root,id,`${role}.png`),join(temp,`${role}.png`));}
 const bundlePath=join(temp,'candidate.json'),draftRoot=join(temp,'private');

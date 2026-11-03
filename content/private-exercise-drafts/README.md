@@ -2,6 +2,10 @@
 
 These files are **not** in `public` and are never merged into either catalogue,
 saved cards, templates, category overrides or the patient mobile experience.
+The private neck-rotation draft (`fc_853c97009144ec09`) contains neutral and
+one-side end stills only. It preserves the exact existing Dutch instruction;
+opposite-side and full-motion demonstration remain absent. Its neutral start
+reuses the chin-retraction start image but does not clear that separate hold.
 The table-pick record keeps its existing ID, category and exact Dutch text.
 
 Import an eligible local candidate using:
