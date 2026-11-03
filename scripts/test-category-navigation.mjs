@@ -4,6 +4,20 @@ const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].ma
 scripts.forEach(s=>new vm.Script(s));
 const helpers=html.split('// CATEGORY_DISPLAY_START')[1].split('// CATEGORY_DISPLAY_END')[0];
 const context={};vm.createContext(context);vm.runInContext(helpers,context);
+// General daily functions stay near mobility/balance, not hidden after specialist
+// labels. This is presentation only: preserve every stored category and alias.
+const ordered=context.categorySections(['Werk en dagelijkse handelingen','Vestibulair','Nek','Foam Roller','Mijn categorie']);
+assert.deepEqual(JSON.parse(JSON.stringify(ordered)),[
+ {title:'Lichaamsgebied',labels:['Nek']},
+ {title:'Doel en toepassing',labels:['Werk en dagelijkse handelingen']},
+ {title:'Specifieke revalidatie',labels:['Vestibulair']},
+ {title:'Materiaal en uitgangshouding',labels:['Foam roller']},
+ {title:'Eigen categorieën',labels:['Mijn categorie']}
+]);
+const navigationGroups=JSON.parse(vm.runInContext('JSON.stringify(groups)',context));
+const flatLabels=navigationGroups.flatMap(([,labels])=>labels);
+assert.equal(flatLabels.length,new Set(flatLabels).size);
+assert.ok(flatLabels.indexOf('Werk en dagelijkse handelingen')<flatLabels.indexOf('Sportrevalidatie'));
 const current=JSON.parse(fs.readFileSync('public/oefeningen-v2.json'));
 // A migration compares against its actual integration base, not an obsolete
 // release that can legitimately have different media. CI functional checks
