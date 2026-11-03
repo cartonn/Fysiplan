@@ -299,6 +299,39 @@ beoordeling:
 Met de kaart van `ac9d32c` slaagt het geval zonder houds en faalt het gemengde geval.
 Niet getest: echte spraak op een toestel (geen browserautomatisering, niets beluisterd).
 
+### Ronde 8, uitwijklink onder YouTube-video's (commit `693c0b3`)
+
+**Aanleiding.** In productie meldt de ingesloten YouTube-speler (o.a. Step up tempo in
+"Met video") een configuratiefout. YouTube verwacht een Referer; deze site stuurt
+bewust `referrer-policy: same-origin`, want de kaartlink is de toegang tot de kaart.
+Die policy is **niet** aangepast.
+
+**Wat.** Onder de ingesloten YouTube-speler, op de patiëntkaart en in het videovoorbeeld
+van beheer, staat nu een link naar `https://www.youtube.com/watch?v=ID`. De link
+verschijnt alleen bij een gevalideerd id (11 tekens `[A-Za-z0-9_-]`) en opent in een nieuw
+tabblad met `rel="noopener noreferrer"`, pas na een tik. Het label staat in de taal van de
+kaart en zegt expliciet dat YouTube opent ("Open deze video op YouTube (externe
+website)"). De link bevat alleen het video-id: geen kaart-id of toegangscode, en geen
+Referer.
+
+**Wat het niet doet.** Het herstelt de ingesloten speler niet, en nergens staat dat het
+dat doet. Speler, bronvolgorde en andere videobronnen zijn ongewijzigd; `server.js` is
+byte-gelijk.
+
+**Tests.** `scripts/test-youtube-uitwijk.mjs` controleert de policy in de bron en live op
+een gestarte server. Daarna draait het de echte klikafhandeling van de kaart en het
+echte beheervoorbeeld:
+- exacte link en ongewijzigde speler;
+- geen kaartgegevens in de link;
+- negen talen;
+- ongeldige of kwaadaardige id's geven geen link;
+- eigen, Stream- en catalogusvideo's geven geen link.
+
+Niet in een browser of op productie geklikt.
+
+**Open besluit.** Een speler die wél werkt zonder de kaartlink als Referer mee te sturen
+vraagt een keuze, bijvoorbeeld eigen of Stream-video in plaats van YouTube.
+
 ## 6. Wat blijft liggen — en waarom
 
 1. **Luisterronde.** Geen enkele van de 67 bestaande opnames is beluisterd. 252 van de

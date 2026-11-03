@@ -26,11 +26,12 @@
     "fc40de1 bevestigBron controleert elke lading opnieuw; nieuwste uitkomst wint",
     "9e6f50d V2-kaartbeeld hip extension/knee lift omgewisseld met uitzondering; 4 tijdelijke bronhouds",
     "785559c V2-lijnbeeld stoelpaar omgewisseld met smalle hash-gebonden uitzondering; voorlezen bovenaan volgt de beeldregel",
-    "d2b6f7a voorlezen in andere talen volgt dezelfde tegenhoudregels (beeld en uitleg) als kaartknoppen en Nederlands"
+    "d2b6f7a voorlezen in andere talen volgt dezelfde tegenhoudregels (beeld en uitleg) als kaartknoppen en Nederlands",
+    "693c0b3 YouTube-uitwijklink onder de ingesloten speler (kaart en beheervoorbeeld); referrer-policy ongewijzigd"
   ],
-  "lastUpdate": "2026-11-03T03:43:21+0100",
+  "lastUpdate": "2026-11-03T04:41:35+0100",
   "lastUpdateNote": "Machineklok (date +%FT%T%z) op het moment van schrijven.",
-  "batch": 13,
+  "batch": 14,
   "deployed": false,
   "pushed": false,
   "clinicalApproval": false,
@@ -147,10 +148,11 @@
     "regressiebewijs": "de nieuwe range-gevallen en de nieuwe wachttijdtests zijn elk gedraaid tegen de vorige code en falen daar",
     "node scripts/kaart-merkcheck.mjs": "groen (2026-11-02T23:43:04+0100): 4 miniaturen, 5 vergrote foto’s (3 met, 2 zonder ingebakken merk), houdingen",
     "ronde 6 (2026-11-03T02:53:38+0100)": "npm run test:mobile exit 0 (12 onderdelen, nieuw: test-v2-uitzondering-mutaties, test-noor-voorlezen-holds) en npm run build exit 0; build meldt \"317 legacykaarten gebruiken exact de V1-afbeelding, 2 een vastgelegde V2-correctie\". Na tests en build byte-gelijk (sha256): public/oefeningen.json, public/oefeningen-v2.json, public/mobile-media-review.json, content/beginhouding-pijl.json, content/v2-avatar-overrides.json, content/v2-image-pair-report.json, output/mobile-pose-candidates.json en de vier bewaarde browsercheckbestanden. Losse run: test-arrow-assets PASS (310 pijlbeelden, 9 tegengehouden). Regressiebewijs tegen 12853c5: voorleestest faalt (afgespeeld: Anteflexie armen, Dips, Triceps dips); oude v2-line-art-graph run --execute zet beide img terug op het V1-pad.",
-    "ronde 7 (2026-11-03T03:43:21+0100)": "npm run test:mobile exit 0 (13 onderdelen, nieuw: test-voorlezen-andere-talen) en npm run build exit 0. Na tests en build byte-gelijk (sha256): public/oefeningen.json, public/oefeningen-v2.json, public/mobile-media-review.json, public/mobile-narration-review.json, public/audio/noor/manifest.json, content/beginhouding-pijl.json, content/v2-avatar-overrides.json, content/v2-image-pair-report.json, output/mobile-pose-candidates.json en de vier bewaarde browsercheckbestanden. Regressiebewijs tegen ac9d32c: zonder houds identieke voorlezing (geval 1 slaagt), gemengde selectie faalt (Dips, Med ball swing en Rotator (apparaat) worden uitgesproken)."
+    "ronde 7 (2026-11-03T03:43:21+0100)": "npm run test:mobile exit 0 (13 onderdelen, nieuw: test-voorlezen-andere-talen) en npm run build exit 0. Na tests en build byte-gelijk (sha256): public/oefeningen.json, public/oefeningen-v2.json, public/mobile-media-review.json, public/mobile-narration-review.json, public/audio/noor/manifest.json, content/beginhouding-pijl.json, content/v2-avatar-overrides.json, content/v2-image-pair-report.json, output/mobile-pose-candidates.json en de vier bewaarde browsercheckbestanden. Regressiebewijs tegen ac9d32c: zonder houds identieke voorlezing (geval 1 slaagt), gemengde selectie faalt (Dips, Med ball swing en Rotator (apparaat) worden uitgesproken).",
+    "ronde 8 (2026-11-03T04:41:35+0100)": "npm run test:mobile exit 0 (14 onderdelen, nieuw: test-youtube-uitwijk) en npm run build exit 0. Na tests en build byte-gelijk (sha256): server.js, beide catalogi, beide beoordelingen, audiomanifest, pijl- en uitzonderingsbestand, v2-image-pair-report, mobile-pose-candidates en de vier bewaarde browsercheckbestanden. Tegen 6397cf8 faalt de nieuwe test (geen uitwijklink)."
   },
   "separationOfReviewKinds": {
-    "code-test pass": "done: npm run test:mobile (13 onderdelen sinds d2b6f7a) en npm run build, laatst groen op 2026-11-03T03:43:21+0100 na d2b6f7a",
+    "code-test pass": "done: npm run test:mobile (14 onderdelen sinds 693c0b3) en npm run build, laatst groen op 2026-11-03T04:41:35+0100 na 693c0b3",
     "visual pass": "done for the 162 measured pair candidates and, since session 3, for all 158 exercises that were static at that time (contact sheets, not full resolution); together with the 5 images rejected then, every one of the 319 has been viewed at contact-sheet size at least once. Since 2026-11-03 four of those 158 are temporarily held (154 static now). Round 6: Claude viewed arrow images 313/315; the coordinator viewed the original chair line drawings. Still no clinical judgement.",
     "listening review": "NOT done. No recording was listened to in this session.",
     "clinical approval": "NOT done and not inferable from anything in this session. Every clinicalApproved stays false and the 15 narration holds stand."
@@ -168,7 +170,8 @@
     "Witte hoekjes in de haren bij Front raises, Shoulder rotation (shrugs) en Yoga deep squat zitten in de bron (ingebakken merkvak); alleen met beeldbewerking op te lossen.",
     "Gedeelde /k/-route: alle kaartwijzigingen gelden ook voor V1-gemaakte kaarten (server.js serveert één kaart.html). Releasebesluit nodig als V1-links gedragsmatig ongewijzigd moeten blijven.",
     "V1-lijnbeelden van Standing chair hip extension en knee lift blijven onderling verwisseld (V2-kaartbeeld en sinds 785559c ook het V2-lijnbeeld zijn gecorrigeerd). V1 heeft geen expliciet id: omwisselen zou ook de afgeleide V1-id's omwisselen; vraagt eerst een expliciet id-veld en een eigen besluit.",
-    "Vier tijdelijke bronhouds (Dips, Triceps dips, Step up with knee raise, Standing chair shoulder rotations) wachten op nieuw beeld of een besluit. Sinds 785559c (Nederlands) en d2b6f7a (andere talen) slaat het voorlezen bovenaan ze over, met melding."
+    "Vier tijdelijke bronhouds (Dips, Triceps dips, Step up with knee raise, Standing chair shoulder rotations) wachten op nieuw beeld of een besluit. Sinds 785559c (Nederlands) en d2b6f7a (andere talen) slaat het voorlezen bovenaan ze over, met melding.",
+    "Ingesloten YouTube-video's kunnen een configuratiefout tonen (YouTube verwacht een Referer; de site stuurt bewust referrer-policy same-origin). Sinds 693c0b3 staat er een uitwijklink naar youtube.com onder de speler; die herstelt de speler niet. Een echte oplossing zonder de kaartlink te lekken is een besluit (bijv. geen YouTube maar eigen/Stream-video)."
   ],
   "knownGapsNotFixed": {
     "practice-uploaded media": "Praktijkfoto's (uploads/oef-*.jpg) en praktijk-/kaartvideo's hebben geen beoordelingsregel en zijn dus onbeoordeeld zichtbaar. Een afkeuring voor zo'n bron werkt wel (public/kaart.html:716, :755), maar wordt niet automatisch aangemaakt. Houdingweergave en natuurlijke stem kunnen ze niet bereiken (gebonden aan beoordeelde sha256 resp. exacte tekst). Bij praktijkvideo's staat sinds 9ef09c8 dat beeld en tekst uit verschillende bron komen. Sinds 1ba3434 leveren praktijkvideo's correcte byte-ranges.",
@@ -179,11 +182,11 @@
     "newCredentials": "none",
     "purchases": "none"
   },
-  "nextAction": "Coördinator: d2b6f7a nalopen (toestelstem volgt dezelfde tegenhoudregels; vijf nieuwe meldingsteksten in negen talen, door Claude vertaald en niet door moedertaalsprekers gelezen). Open besluiten: V1-lijnbeelden van het stoelpaar (vraagt eerst een expliciet V1-id), nieuw beeld voor de vier houds. Eerdere besluiten (a) t/m (f) blijven open.",
+  "nextAction": "Coördinator: 693c0b3 nalopen (YouTube-uitwijklink; herstelt de ingesloten speler niet, referrer-policy bewust ongewijzigd) en d2b6f7a. Open besluiten: hoe de ingesloten YouTube-speler wél kan werken zonder de kaartlink als Referer te lekken (bijv. eigen video of Stream in plaats van YouTube), V1-lijnbeelden van het stoelpaar (vraagt eerst een expliciet V1-id), nieuw beeld voor de vier houds. Eerdere besluiten (a) t/m (f) blijven open.",
   "handoverReport": "output/claude-night-report.md",
   "perExerciseList": "output/mobile-pose-per-exercise.md",
   "inspectionLog": "output/pose-review/inspection-log.md",
-  "workingTree": "Commits t/m de voortgangscommit na d2b6f7a. Niet gecommit en bewust bewaard: scripts/kaart-browsercheck.mjs, output/kaart-browsercheck.json, output/pose-review/browser/01-kaart.png (gewijzigd) en output/kaart-browsercheck-alle.json (untracked); kaart-browsercheck is niet gedraaid. Untracked: CLAUDE-NIGHT-TASK.txt, coördinatorbestanden, auditbestand, node_modules (symlink, niet aangeraakt).",
+  "workingTree": "Commits t/m de voortgangscommit na 693c0b3. Niet gecommit en bewust bewaard: scripts/kaart-browsercheck.mjs, output/kaart-browsercheck.json, output/pose-review/browser/01-kaart.png (gewijzigd) en output/kaart-browsercheck-alle.json (untracked); kaart-browsercheck is niet gedraaid. Untracked: CLAUDE-NIGHT-TASK.txt, coördinatorbestanden, auditbestand, node_modules (symlink, niet aangeraakt).",
   "blockers": [
     "Luisterronde en klinische goedkeuring vragen een mens; niets daarvan is gedaan of af te leiden.",
     "Alle 154 statische oefeningen (zie remaining) hebben ander bronmateriaal nodig voor een houdingweergave; beeldgeneratie is niet geautoriseerd en er is niets uitgegeven.",
@@ -492,6 +495,25 @@
     "nietAangepast": "De lightbox-geluidknop in andere talen leest alleen naam + houding, geen uitleg, en is bij een tegengehouden beeld niet bereikbaar; niet gewijzigd. Service worker niet aangepast (netwerk eerst, geen versiesprong nodig voor kaart.html).",
     "qrImpact": "Elke /k/-kaart (V1- en V2-QR) in een andere taal dan Nederlands: \"Lees voor\" slaat de 20 tegengehouden oefeningen over met melding; zonder geladen controle wordt niets voorgelezen. Nederlands ongewijzigd.",
     "reviewKinds": "code-test: groen. visueel: niet van toepassing. luisteren: geen spraak beluisterd (toestelstem niet op een toestel getest; browser niet geautomatiseerd). klinisch: geen besluit, niets goedgekeurd.",
+    "spending": "geen generatie, geen betaalde aanroep, geen aankopen, geen nieuwe toegang; geen push of deploy."
+  },
+  "session9": {
+    "started": "machineklok bij schrijven 2026-11-03T04:41:35+0100 (werk begon na 6397cf8)",
+    "instructions": "Coördinator: productiebevinding admin \"Met video\": Step up tempo (YouTube) meldt in de ingesloten speler een configuratiefout; YouTube vereist een Referer (developers.google.com/youtube/terms/required-minimum-functionality), de server stuurt bewust referrer-policy same-origin. Policy niet wijzigen, geen kaarttokens versturen. Eerlijke externe uitwijklink onder de bestaande YouTube-speler in het beheervoorbeeld en op de patiëntkaart: target _blank, rel noopener noreferrer, alleen een gevalideerd bestaand id, https://www.youtube.com/watch?v=ID, gelokaliseerd label dat expliciet YouTube opent; speler en bronvolgorde intact; geen automatische navigatie; mag niet claimen dat de speler hersteld is.",
+    "commit": "693c0b3",
+    "scope": {
+      "public/kaart.html": "ytKijkUrl(id) (alleen /^[A-Za-z0-9_-]{11}$/ → https://www.youtube.com/watch?v=ID, anders leeg); in de YouTube-tak van de video-klikafhandeling na het ongewijzigde iframe een <a class=\"ytextern\" target=\"_blank\" rel=\"noopener noreferrer\">; label ytOpen in T voor negen talen (bijv. \"Open this video on YouTube (external website)\"); één CSS-regel .vhouder .ytextern.",
+      "public/index.html": "renderVideoPreview: alleen de YouTube-tak krijgt onder het ongewijzigde iframe en bijschrift een tweede bijschrift met dezelfde link (Nederlands, zoals de rest van het beheer). Geen andere wijziging aan beheer- of categorie-UI.",
+      "ongewijzigd": "server.js (sha-gelijk; referrer-policy viermaal same-origin), iframe-src en -attributen, bronvolgorde (eigen > Stream > beoordeelde catalogus > YouTube; therapeutlink yt: gaat voor), Stream-/eigen-/catalogusbranches, catalogi, beoordelingen.",
+      "eerlijkheid": "De link herstelt de ingesloten speler niet en het label zegt dat ook niet; het zegt alleen dat de video op YouTube (externe website) opent. Het bijschrift in beheer blijft \"YouTube-video · te vervangen door een eigen avatarvideo\".",
+      "privacy": "De link bevat alleen het video-id; rel=noreferrer stuurt geen Referer (de kaart-URL met toegangscode gaat dus niet naar YouTube); geen tracking-parameters; pas na een tik, nieuw tabblad."
+    },
+    "tests": {
+      "scripts/test-youtube-uitwijk.mjs": "(1) server.js: precies viermaal \"referrer-policy\": \"same-origin\"; geen referrerpolicy-attribuut of referrer-meta in kaart/beheer; live server (eigen lege DATA_DIR): /, /k/demo, /kaart.html, /v2/oefeningen.json sturen same-origin. (2) echte klikafhandeling van de kaart in een VM: iframe exact als voorheen en eerst, precies één link met exacte href/target/rel, alleen parameter v, geen kaart-id of /k/ in de link, praktijk-yt-link idem, negen talen, ongeldige/kwaadaardige id's geen link, eigen en Stream geen link, geen window.open/location in de YouTube-tak, bronvolgorde-regels ongewijzigd. (3) echt beheervoorbeeld: iframe en bijschrift ongewijzigd, exacte link, ongeldige id's en andere bronnen geen link, eigen video gaat nog voor YouTube."
+    },
+    "nietGetest": "Niet in een echte browser of op productie geklikt; niet geverifieerd dat youtube.com de video voor elk id toont (een verwijderde of privévideo blijft onbeschikbaar). Vertalingen van het label door Claude, niet door moedertaalsprekers gelezen.",
+    "qrImpact": "Elke /k/-kaart (V1- en V2-QR) met een YouTube-video: onder de speler staat nu de link \"Open deze video op YouTube (externe website)\" (in de kaarttaal). Beheer: alleen het videovoorbeeld.",
+    "reviewKinds": "code-test: groen. visueel: niet in een browser bekeken. luisteren: n.v.t. klinisch: geen besluit.",
     "spending": "geen generatie, geen betaalde aanroep, geen aankopen, geen nieuwe toegang; geen push of deploy."
   }
 }
