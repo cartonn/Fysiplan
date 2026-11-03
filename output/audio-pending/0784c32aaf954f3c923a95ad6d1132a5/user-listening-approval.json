@@ -1,0 +1,11 @@
+{
+  "reviewer": "user",
+  "date": "2026-11-03",
+  "response": "ja is goed",
+  "context": "User listened to direct Squat lunges recording link; parent relayed approval.",
+  "scope": "Listening acceptance of this recording; not clinical approval or an independent agent listening review.",
+  "requestId": "0784c32aaf954f3c923a95ad6d1132a5",
+  "sourceSha256": "03a9ce1628dcf674f233884fc2d8ff6df4e906ecb01fc92d68bc46b31dca6893",
+  "publicAsset": "/audio/noor/6afe6423b0fdfd64258c85941c87b87ce63f9929c58128f268874b2ad05fa96f.mp3",
+  "status": "integrated-locally-not-deployed"
+}

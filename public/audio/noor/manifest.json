@@ -614,25 +614,72 @@
       }
     },
     {
-      "name":"Single leg squat",
-      "text":"Single leg squat. Sta op een been met het andere been iets van de grond. Zak op een been zo ver als lukt door je knie en duw jezelf rustig weer omhoog.",
-      "src":"/audio/noor/a0856a428b7a98cf17b73c2f84740d243d958c74a81af7b852470e19192e29b0.mp3",
-      "duration":9.299592,
-      "provenance":{
-        "provider":"HeyGen MCP included Pro credits",
-        "voiceId":"ea8f12713f7644ea9ad4ed710901fbbb",
-        "requestedEngine":"heygen_voice",
-        "returnedEngine":"orca",
-        "speed":0.95,
-        "language":"nl",
-        "requestId":"d267b5b607684a9c90fb3a4070ab8bbc",
-        "observedPremiumCreditsUsed":1,
-        "sourceFile":"output/audio-source/single-leg-squat-included-original.mp3",
-        "sourceFormat":"Actual MP3 44100 Hz mono; provider URL extension .wav is misleading",
-        "processing":"ffmpeg libmp3lame quality2, no tempo or pitch change",
-        "exactSubmittedTextMatch":true,
-        "deliveryListeningReviewed":false,
-        "clinicalApproved":false
+      "name": "Single leg squat",
+      "text": "Single leg squat. Sta op een been met het andere been iets van de grond. Zak op een been zo ver als lukt door je knie en duw jezelf rustig weer omhoog.",
+      "src": "/audio/noor/a0856a428b7a98cf17b73c2f84740d243d958c74a81af7b852470e19192e29b0.mp3",
+      "duration": 9.299592,
+      "provenance": {
+        "provider": "HeyGen MCP included Pro credits",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "requestedEngine": "heygen_voice",
+        "returnedEngine": "orca",
+        "speed": 0.95,
+        "language": "nl",
+        "requestId": "d267b5b607684a9c90fb3a4070ab8bbc",
+        "observedPremiumCreditsUsed": 1,
+        "sourceFile": "output/audio-source/single-leg-squat-included-original.mp3",
+        "sourceFormat": "Actual MP3 44100 Hz mono; provider URL extension .wav is misleading",
+        "processing": "ffmpeg libmp3lame quality2, no tempo or pitch change",
+        "exactSubmittedTextMatch": true,
+        "deliveryListeningReviewed": false,
+        "clinicalApproved": false
+      }
+    },
+    {
+      "name": "Squat lunges",
+      "text": "Squat lunges. Sta in een lichte spreidstand met een been voor. Zak recht naar beneden door beide knieen en duw jezelf rustig weer omhoog zonder van stand te wisselen.",
+      "src": "/audio/noor/6afe6423b0fdfd64258c85941c87b87ce63f9929c58128f268874b2ad05fa96f.mp3",
+      "duration": 9.960136,
+      "provenance": {
+        "provider": "HeyGen API playground UI",
+        "requestId": "0784c32aaf954f3c923a95ad6d1132a5",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "observedUi": {
+          "model": "Normal",
+          "language": "Dutch",
+          "expressiveness": 1,
+          "speedExposed": false
+        },
+        "requestedSpeed": null,
+        "sourceFile": "output/audio-source/squat-lunges-api-0784c32a.wav",
+        "sourceSha256": "03a9ce1628dcf674f233884fc2d8ff6df4e906ecb01fc92d68bc46b31dca6893",
+        "mp3Sha256": "b545e075c2da5d5a6692289017297845177e95e3515a6dcdab45b3f97abf1d1a",
+        "processing": "MP3 encoding only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": {
+          "reviewer": "user",
+          "date": "2026-11-03",
+          "response": "ja is goed",
+          "context": "User listened to direct Squat lunges recording link; parent relayed approval.",
+          "scope": "Listening acceptance of this recording; not clinical approval or an independent agent listening review."
+        },
+        "agentListeningReviewed": false,
+        "independentTranscriptVerified": false,
+        "clinicalApproved": false,
+        "transcriptReview": {
+          "tool": "Existing Homebrew Whisper 20250625_3, cached small.pt, CPU, Dutch; no initial prompt, no model download or network service",
+          "path": "output/audio-pending/0784c32aaf954f3c923a95ad6d1132a5/squat-lunges-api-0784c32a.json",
+          "text": " Squatlunches, sta in een lichte sprijtstand met een been voor, zak recht naar beneden door beide knieën en doe jezelf rustig weer omhoog zonder van stand te wisselen.",
+          "differences": [
+            "Squat lunges → Squatlunches",
+            "spreidstand → sprijtstand",
+            "duw → doe",
+            "knieen → knieën (spelling only)"
+          ],
+          "conclusion": "Not an exact transcript match. ASR differences may be recognition errors, not proven speech defects. Especially listen to duw/doe before accepting. No synthesis retry requested."
+        },
+        "reviewLimitation": "ASR deviations retained. User accepted playback; agent has not independently listened. Global legacy manifest speed does not describe this clip."
       }
     }
   ]
