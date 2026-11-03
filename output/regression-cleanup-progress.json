@@ -1,0 +1,77 @@
+{
+  "task": "Bestaande fout in test:ahmed-notities (V2-img tegen V1-img) herstellen, zodat de test exact de twee hash-gebonden uitzonderingen volgt zonder de algemene invariant te verzwakken",
+  "branch": "codex/audio-recovery-20261103",
+  "base": "1bcae7d (categorie) op e2809bd (audio) op 736865e; beide commits behouden",
+  "worktree": "/private/tmp/fysiplan-audio-recovery-20261103",
+  "updated": "2026-11-03",
+  "status": "opgelost in de test; productcode correct bevonden en niet aangepast; lokaal gecommit, niet gepusht, niet gedeployed",
+  "baseline": {
+    "command": "node scripts/test-ahmed-notities.mjs (op 1bcae7d, ongewijzigde werkmap)",
+    "result": "exit 1: AssertionError op scripts/test-ahmed-notities.mjs:234 assert.ok(manifest.every((entry) => entry.img.replace(/^\\/v2\\//, \"\") === v1Images.get(entry.naam)))",
+    "alsoBefore": "Zelfde fout met de ongewijzigde catalogus van e2809bd (vastgesteld in de categorie-opdracht), dus niet veroorzaakt door de categoriecommit"
+  },
+  "rootCause": {
+    "summary": "De assertie stamt uit d4ff267 (2026-09-01, 'v2: gebruik exact de v1-afbeeldingen') en is niet meegegaan met twee latere, bewuste productwijzigingen. Niet alleen de twee uitzonderingen: 310 van de 319 geleverde V2-oefeningen wijken in de oude vergelijking af.",
+    "served": "server.js buildManifest: img = v2AssetPath(arrowImages.get(e.img) || e.img), met arrowImages uit content/beginhouding-pijl.json (sleutel source = lijnbeeld). V2 levert dus de pijlversie van het lijnbeeld.",
+    "timeline (offline nagerekend uit de git-catalogi, alleen V2-records die ook in V1 staan)": [
+      {"commit": "d4ff267", "serverPijl": false, "oudeAssertieAfwijkingen": 0, "basisImgOngelijkAanV1": 0},
+      {"commit": "eed69d8^", "serverPijl": false, "oudeAssertieAfwijkingen": 0, "basisImgOngelijkAanV1": 0},
+      {"commit": "eed69d8 'Publish reviewed start-pose arrow illustrations to V2 and landing' (2026-11-02)", "serverPijl": true, "oudeAssertieAfwijkingen": 310, "basisImgOngelijkAanV1": 0},
+      {"commit": "785559c 'Wissel ook het V2-lijnbeeld van het stoelpaar' (2026-11-03)", "serverPijl": true, "oudeAssertieAfwijkingen": 310, "basisImgOngelijkAanV1": 2},
+      {"commit": "736865e / 1bcae7d", "serverPijl": true, "oudeAssertieAfwijkingen": 310, "basisImgOngelijkAanV1": 2}
+    ],
+    "residualAfterArrowMapping": "Na terugvertalen van elk geleverd pijlbeeld naar zijn bron blijven exact twee afwijkingen over: Standing chair hip extension (fp_514654a0d4181742, levert pijl 313 onder standing-chair-knee-lift-line-v1.png) en Standing chair knee lift (fp_5319c4700561725d, levert pijl 315 onder standing-chair-hip-extension-line-v1.png). Dat zijn precies de twee uitzonderingen in content/v2-avatar-overrides.json.",
+    "whyUnnoticed": "test:ahmed-notities staat niet in CI (.github/workflows/ci.yml draait build, test:categories, test:mobile)."
+  },
+  "productCodeVerdict": {
+    "correct": true,
+    "evidence": [
+      "Pijllevering is een bewuste publicatie (eed69d8); pijlbeelden hebben unieke source en img (310/310), tegengehouden pijlbeelden staan apart in 'withheld' en vallen terug op het lijnbeeld",
+      "De twee uitzonderingen zijn per exerciseId gebonden aan paden en sha256 van kaart-, V2-lijn-, V1-lijn- en pijlbeeld (lib/v2-overrides.js assertV2Override); publication-channel-graph en validate-exercise-backgrounds (beide in npm run build) passen exact dezelfde regel toe en slagen",
+      "Elk geleverd pijlbeeld is getekend voor de oefening die het krijgt (pijl.naam === oefeningnaam, 319/319 gecontroleerd)"
+    ],
+    "notChanged": ["server.js", "lib/v2-overrides.js", "public/oefeningen.json (V1)", "public/oefeningen-v2.json", "content/beginhouding-pijl.json", "content/v2-avatar-overrides.json", "alle beelden, ids, teksten en overrides"]
+  },
+  "fix": {
+    "scripts/v2-lijnbeeld-levering.mjs (nieuw, alleen testcode)": [
+      "controleerGeleverdeLijnbeelden: rekent per geleverde oefening vooruit wat de server moet leveren: '/v2/' + pijlbeeld(lijnbeeld) of het lijnbeeld zelf, met lijnbeeld = V1-lijnbeeld, behalve voor een vastgelegde uitzondering (dan override.lineImg, en V1 moet override.v1LineImg zijn). Exacte gelijkheid, geen terugvertaling of tolerantie.",
+      "Eist dat het pijlbeeld voor die oefening getekend is (naam), dat de toegepaste uitzonderingen exact de vastgelegde zijn, en dat de vastgelegde exact de twee bekende exerciseIds zijn (VASTGELEGDE_UITZONDERINGEN)",
+      "laadGecontroleerdeUitzonderingen: draait assertV2Override (paden + sha256) voor elke uitzondering tegen de basiscatalogi"
+    ],
+    "scripts/test-ahmed-notities.mjs": "De oude regel 234 vervangen door de gedeelde controle; de aantal-gelijkheid V1/V2 (regel 233) blijft",
+    "scripts/test-v2-lijnbeeld-levering.mjs (nieuw, in test:mobile en dus in CI)": "Echte server, geleverde manifests, mutaties alleen in het geheugen"
+  },
+  "mutationEvidence": {
+    "inMemory (permanent, npm run test:mobile)": [
+      "317/317: elke niet-uitgezonderde oefening om de beurt een ander geleverd beeld -> faalt",
+      "willekeurige paarwissel van twee gewone oefeningen (wisselt per run, naam in de uitvoer) -> faalt",
+      "ruw lijnbeeld i.p.v. pijlbeeld -> faalt",
+      "uitzondering teruggewisseld naar V1 -> faalt",
+      "elk van de twee uitzonderingen weggehaald -> faalt",
+      "derde uitzondering vastgelegd (ook als die het beeld exact dekt) -> faalt",
+      "pijlbeeld van een andere oefening onder dit lijnbeeld -> faalt",
+      "andere sha256 voor kaart-, V2-lijn-, V1-lijn- of pijlbeeld -> assertV2Override weigert",
+      "en: de oude vergelijking geeft op de echte levering 310 afwijkingen (bewijs dat die onhoudbaar was, niet alleen door de uitzonderingen)"
+    ],
+    "endToEnd (eenmalig, bestanden daarna byte-gelijk hersteld en met shasum gecontroleerd)": [
+      {"mutation": "img gewisseld tussen twee willekeurige gewone V2-oefeningen in public/oefeningen-v2.json: 'Bear crawls' en 'Foam roller fore arm'", "result": "test-ahmed-notities exit 1: 'V2-lijnbeelden wijken af van V1 (2): Bear crawls: levert .../250.webp, verwacht .../081.webp (V1-lijnbeeld images/core/bear-crawls.jpg)'"},
+      {"mutation": "uitzondering 'Standing chair knee lift' weggehaald uit content/v2-avatar-overrides.json", "result": "test-ahmed-notities exit 1: 'Standing chair knee lift: levert .../315.webp, verwacht .../313.webp (V1-lijnbeeld ...knee-lift-line-v1.png)'"}
+    ]
+  },
+  "tests": [
+    {"cmd": "npm run test:ahmed-notities", "result": "exit 0 (was exit 1); de rest van de test (account/mail/login, categoriebeheer, AI-zoekhulp) slaagt ook, geen verborgen vervolgfout"},
+    {"cmd": "node scripts/test-v2-lijnbeeld-levering.mjs", "result": "exit 0: 319 geleverd, 310 met pijlbeeld, 2 uitzonderingen, 317 derde afwijkingen getest"},
+    {"cmd": "npm run test:mobile", "result": "exit 0 (nu inclusief test-v2-lijnbeeld-levering)"},
+    {"cmd": "npm run test:categories", "result": "exit 0"},
+    {"cmd": "npm run build", "result": "exit 0"},
+    {"cmd": "npm run test:proef / npm run test:privacy", "result": "exit 0 / exit 0 (alleen status)"},
+    {"cmd": "node scripts/test-arrow-assets.mjs, test-carla-input, test-image-mode, test-landing-assets, test-prijs-calculator", "result": "alle exit 0 (alleen status; niet in package.json of CI; schreven niets)"}
+  ],
+  "remaining": [
+    "test:ahmed-notities, test:proef, test:privacy en de vijf losse scripts (test-arrow-assets, test-carla-input, test-image-mode, test-landing-assets, test-prijs-calculator) staan niet in CI; daardoor bleef deze fout sinds eed69d8 onopgemerkt. Ze slagen nu en gebruiken alleen lokale nepservers; opnemen in .github/workflows/ci.yml is een keuze voor de coördinator, hier niet gedaan.",
+    "Een derde V2-lijnbeelduitzondering vraagt nu twee bewuste stappen: content/v2-avatar-overrides.json en VASTGELEGDE_UITZONDERINGEN in scripts/v2-lijnbeeld-levering.mjs. Dat is de bedoelde 'exact twee'-regel.",
+    "content/beginhouding-pijl.json staat op clinicalApproved: false terwijl de pijlbeelden geleverd worden (bewust sinds eed69d8). Vastgesteld, niet beoordeeld; geen nieuw klinisch oordeel.",
+    "npm run test:browser (echte browser) niet gedraaid; deze wijziging raakt alleen testcode."
+  ],
+  "environment": "node_modules is een lokale, niet gecommitte symlink naar de hoofdcheckout. Geen nieuwe media, API's, push, deploy, toegang of bypass. Geen bronbeelden bekeken (niet nodig: alleen paden en sha256 via bestaande code). Tijdelijke bestanden alleen in de job-tmp en in mkdtemp-mappen van de tests."
+}

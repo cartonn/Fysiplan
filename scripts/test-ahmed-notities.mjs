@@ -4,6 +4,7 @@ import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { controleerGeleverdeLijnbeelden, laadGecontroleerdeUitzonderingen, VASTGELEGDE_UITZONDERINGEN } from "./v2-lijnbeeld-levering.mjs";
 
 const root = process.cwd();
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-ahmed-notities-"));
@@ -229,9 +230,12 @@ try {
   const v1Manifest = await (await fetch(origin + "/oefeningen.json")).json();
   const manifestResponse = await fetch(origin + "/v2/oefeningen.json");
   const manifest = await manifestResponse.json();
-  const v1Images = new Map(v1Manifest.map((entry) => [entry.naam, entry.img]));
   assert.equal(manifest.length, v1Manifest.length);
-  assert.ok(manifest.every((entry) => entry.img.replace(/^\/v2\//, "") === v1Images.get(entry.naam)));
+  // V2 levert de pijlversie van exact het V1-lijnbeeld; alleen de twee hash-gebonden
+  // uitzonderingen hebben een ander lijnbeeld (scripts/v2-lijnbeeld-levering.mjs).
+  const { overrides: v2Overrides, arrows } = await laadGecontroleerdeUitzonderingen(root);
+  assert.deepEqual(controleerGeleverdeLijnbeelden({ manifest, v1Manifest, arrows, overrides: v2Overrides }),
+    [...VASTGELEGDE_UITZONDERINGEN].sort());
   const oefening = manifest.find((entry) => entry.groep && entry.groep !== "Werp-ABC");
   assert.ok(oefening);
   const tweedeCategorie = await post("/api/oefeningen/categorie", {
