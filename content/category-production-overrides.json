@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Momentopname van de runtime-categorie-overrides (data/categorie-wijzigingen.json) zoals productie ze op 2026-11-03 toepaste, plus de basis-secundaire categorieën die daardoor op productie niet zichtbaar zijn. Alleen voor tests en tellingen: dit bestand wordt nooit naar de server geschreven. Een override is een bewuste beheerkeuze, vervangt groep en ook volledig en gaat altijd voor; niet terugdraaien of aanvullen om een telling te verhogen.",
+  "checked": "2026-11-03",
+  "source": {
+    "health": "https://fysiplan.nl/health",
+    "catalogue": "https://fysiplan.nl/v2/oefeningen.json",
+    "commit": "736865e27157d87240d0aa1575b45630eb56d8cd",
+    "builtAt": "2026-11-03T05:04:51.413Z",
+    "verplaatst": 5,
+    "hernoemd": 0,
+    "toegevoegd": 0,
+    "verwijderd": 0,
+    "v2Oefeningen": 319,
+    "catalogueEtag": "\"7b85242b7434db32\""
+  },
+  "method": "Alleen publieke GET-verzoeken, geen patiëntgegevens. Een override is afgeleid als de geleverde groep/ook van een record afwijkt van public/oefeningen-v2.json op de gedeployde commit 736865e. /health meldt precies 5 overrides en precies 5 records wijken af, dus de set is volledig. buildManifest op 736865e met deze 5 overrides nagebouwd geeft 0 verschillen met de geleverde catalogus (319 records, groep en ook per exerciseId).",
+  "overrides": [
+    {"exerciseId": "fp_ba8ecef1edfecd32", "name": "Abroller", "groep": "Core", "ook": ["Bovenste extremiteit"]},
+    {"exerciseId": "fp_a0a18c0c13673d38", "name": "Back extension", "groep": "Core", "ook": ["Bovenste extremiteit"]},
+    {"exerciseId": "fp_9e8d5fbff3a0f1f8", "name": "Balans op 1 been", "groep": "Bosu", "ook": ["Onderste extremiteit"]},
+    {"exerciseId": "fp_5af0270a5fedd83b", "name": "Abdominal (apparaat)", "groep": "Apparaten", "ook": ["Bovenste extremiteit"]},
+    {"exerciseId": "fp_3e7c08184ca73fae", "name": "Back (apparaat)", "groep": "Apparaten", "ook": ["Bovenste extremiteit"]}
+  ],
+  "shadowedSecondary": [
+    {
+      "exerciseId": "fp_a0a18c0c13673d38",
+      "name": "Back extension",
+      "label": "Rug",
+      "base": {"groep": "Core", "ook": ["Rug"], "source": "fcade75 (content/category-secondary-evidence.json: earlier)"},
+      "effective": {"groep": "Core", "ook": ["Bovenste extremiteit"]},
+      "cause": "De runtime-override op Back extension (Core + Bovenste extremiteit) vervangt ook volledig. De Rug-mapping kwam later in de basiscatalogus (fcade75) en is daardoor op productie niet zichtbaar. Daarom telt Rug op productie 10 en in de basiscatalogus van 736865e 11.",
+      "decision": "Override behouden: het is een bewuste beheerkeuze en geen fout in de telling. Rug weer tonen naast Bovenste extremiteit vraagt een beheerbeslissing; het categorievenster in beheer biedt maar één tweede categorie (vc_tweede), de API accepteert er tot 3."
+    }
+  ]
+}

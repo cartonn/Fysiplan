@@ -32,7 +32,7 @@
     "videos:upload-batch": "node scripts/video-upload-batch.mjs",
     "core1000:check": "node scripts/core1000.mjs",
     "core1000:write": "node scripts/core1000.mjs --write",
-    "test:categories": "node scripts/test-category-navigation.mjs && node scripts/test-category-coverage.mjs",
+    "test:categories": "node scripts/test-category-navigation.mjs && node scripts/test-category-coverage.mjs && node scripts/test-category-effective-runtime.mjs",
     "test:video-recovery": "node scripts/test-mobile-video-recovery.mjs",
     "categories:coverage": "node scripts/category-coverage.mjs",
     "test:ahmed-notities": "node scripts/test-ahmed-notities.mjs",
