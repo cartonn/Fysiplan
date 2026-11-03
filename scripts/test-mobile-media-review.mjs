@@ -61,7 +61,18 @@ for(const e of manifest.rejectedSources){
   assert.equal(e.assetSha256,createHash('sha256').update(bytes).digest('hex'),'afgekeurde bron niet aan zijn bytes gebonden: '+e.source);
 }
 assert.ok((await fs.readFile('public/kaart.html','utf8')).includes('data[0].rejectedSources'),'de kaart leest de afgekeurde vorige versies');
-assert.equal(manifest.summary.approved,0);assert.equal(manifest.summary.rejected,5);assert.equal(manifest.summary.unreviewed,314);
+// vijf inhoudelijke afkeuringen plus vier tijdelijke houds op één bepaalde bron (2026-11-03)
+for(const [id,name,source] of [['fp_013ba6ad937cc9d9','Dips','images/bovenste-extremiteit/dips-avatar-v7.jpg'],
+  ['fp_f227db5fcf245d9c','Triceps dips','images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg'],
+  ['fp_7dc1478e2b3c17b0','Step up with knee raise','images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg'],
+  ['fp_4b99c5f11b42a30d','Standing chair shoulder rotations','images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg']]){
+  const e=manifest.entries.find(e=>e.exerciseId===id);
+  assert.equal(e.name,name);assert.equal(e.source,source,name);assert.equal(e.status,'rejected',name);assert.equal(e.presentation,'withhold',name);
+  assert.equal(e.hold.temporary,true,name);assert.equal(e.hold.source,source,name);assert.equal(e.hold.assetSha256,e.assetSha256,name);
+  assert.equal(e.clinicalApproved,false,name);
+}
+const metHold=manifest.entries.filter(e=>e.hold);assert.equal(metHold.length,4,'alleen de vier bedoelde bronnen hebben een tijdelijke hold');
+assert.equal(manifest.summary.approved,0);assert.equal(manifest.summary.rejected,9);assert.equal(manifest.summary.unreviewed,310);
 // afgekeurde beelden leveren nooit houdingen, ook niet als de meting een paar vindt
 for(const e of manifest.entries.filter(e=>e.status==='rejected')){
   assert.equal(e.poseGeometry.status,'withheld',e.name);assert.deepEqual(e.poses,[],e.name);
@@ -123,4 +134,4 @@ for(const naam of ['Front raises','Shoulder rotation (shrugs)','Yoga deep squat'
 // een beeld zonder merk krijgt nooit een vlak, ook niet als er linksboven haar staat
 for(const naam of ['Foam roller hamstring','Foam roller calf','Standing chair heel/toe','Alternating lunge jumps'])
   assert.equal(manifest.entries.find(r=>r.name===naam).brandMark.cover,null,naam);
-console.log('PASS: 319 source-linked assets, hashes, five rejections; '+approvedPoses.length+' visueel gecontroleerde uitsnedes, 215 ingebakken merken opnieuw gemeten en afdekbaar, geen klinische goedkeuring afgeleid.');
+console.log('PASS: 319 source-linked assets, hashes, nine rejections (five content, four temporary source holds); '+approvedPoses.length+' visueel gecontroleerde uitsnedes, 215 ingebakken merken opnieuw gemeten en afdekbaar, geen klinische goedkeuring afgeleid.');

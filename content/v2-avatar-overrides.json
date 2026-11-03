@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "scope": "Alleen het V2-kaartbeeld (kaartImg in public/oefeningen-v2.json). Ids, namen, teksten, het V2-lijnbeeld (img), de V1-catalogus en alle bronbestanden blijven ongewijzigd.",
+  "rule": "Normaal hoort bij een Carla-oefening kaartImg = img met -line-v1.png vervangen door -avatar-v8.jpg (scripts/carla-avatar-pipeline.mjs). Onderstaande oefeningen wijken daar bewust van af. Elke afwijking is aan exerciseId, pad en sha256 gebonden; scripts/validate-exercise-backgrounds.mjs (in npm run build) en scripts/test-v2-avatar-mapping.mjs (in npm run test:mobile) falen als de catalogus hiervan afwijkt.",
+  "notClinicalApproval": "Een correctie van de koppeling zegt alleen dat het getoonde beeld nu de beweging uit de eigen tekst laat zien. Het is geen klinische goedkeuring; de beoordeling blijft 'unreviewed'.",
+  "overrides": [
+    {
+      "exerciseId": "fp_514654a0d4181742",
+      "name": "Standing chair hip extension",
+      "kaartImg": "images/seated-chair/standing-chair-knee-lift-avatar-v8.jpg",
+      "assetSha256": "64ab13e0e71e5c0e158066f7e05dc482515ad4312313ee79884f73be17dea048",
+      "previousKaartImg": "images/seated-chair/standing-chair-hip-extension-avatar-v8.jpg",
+      "previousAssetSha256": "3f549445eff57fa963e6e742d79d33898a0c177d872dd51b9facab8562950abb",
+      "lineImg": "images/seated-chair/standing-chair-hip-extension-line-v1.png",
+      "explanationExpects": "één gestrekt been naar achteren vanuit de heup",
+      "previousShowed": "knie naar voren omhoog (knieheffing)",
+      "nowShows": "gestrekt been naar achteren, handen op de stoelleuning",
+      "reason": "Beeldbestanden van hip extension en knee lift waren onderling verwisseld; de tekst hoort bij het andere beeld."
+    },
+    {
+      "exerciseId": "fp_5319c4700561725d",
+      "name": "Standing chair knee lift",
+      "kaartImg": "images/seated-chair/standing-chair-hip-extension-avatar-v8.jpg",
+      "assetSha256": "3f549445eff57fa963e6e742d79d33898a0c177d872dd51b9facab8562950abb",
+      "previousKaartImg": "images/seated-chair/standing-chair-knee-lift-avatar-v8.jpg",
+      "previousAssetSha256": "64ab13e0e71e5c0e158066f7e05dc482515ad4312313ee79884f73be17dea048",
+      "lineImg": "images/seated-chair/standing-chair-knee-lift-line-v1.png",
+      "explanationExpects": "één knie gecontroleerd omhoog",
+      "previousShowed": "gestrekt been naar achteren (heupextensie)",
+      "nowShows": "knie naar voren omhoog, handen op de stoelleuning",
+      "reason": "Beeldbestanden van hip extension en knee lift waren onderling verwisseld; de tekst hoort bij het andere beeld."
+    }
+  ],
+  "evidence": [
+    "Onafhankelijke beoordeling op oorspronkelijke resolutie (coördinator, 2026-11-03).",
+    "Visuele controle door de coördinator (2026-11-03).",
+    "Statische visuele ronde van 2026-11-02 (output/pose-review/static/inspection.md, nrs. 152 en 154): 'toont knieheffing' resp. 'toont heupextensie; lijkt verwisseld met 152'.",
+    "Herhaald op 2026-11-03 door Claude naast de V1-lijntekeningen: beide avatars komen overeen met de lijntekening van dezelfde bestandsnaam."
+  ],
+  "knownRelatedDefectNotChanged": "De V1-lijntekeningen zijn op dezelfde manier verwisseld: standing-chair-hip-extension-line-v1.png toont een knieheffing en standing-chair-knee-lift-line-v1.png een heupextensie. V1 (public/oefeningen.json) en het V2-veld img moeten exact gelijk blijven aan V1 en zijn daarom niet aangepast. Wie het lijnbeeld ziet (V1-editor, V2 in lijnmodus) ziet nog de verkeerde beweging; dat vraagt een V1-besluit.",
+  "decidedBy": "coördinator, opdracht van 2026-11-03",
+  "date": "2026-11-03",
+  "revert": "Zet in public/oefeningen-v2.json bij beide exerciseIds kaartImg terug op previousKaartImg, verwijder deze twee regels en draai node scripts/build-mobile-media-review.mjs. Er zijn geen bestanden verplaatst, hernoemd of overschreven."
+}

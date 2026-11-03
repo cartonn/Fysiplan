@@ -18,8 +18,8 @@
   ],
   "summary": {
     "total": 319,
-    "rejected": 5,
-    "unreviewed": 314,
+    "rejected": 9,
+    "unreviewed": 310,
     "approved": 0,
     "poseGeometryApproved": 156,
     "poseStatic": 163,
@@ -490,19 +490,26 @@
       },
       "width": 800,
       "height": 1200,
-      "status": "unreviewed",
+      "status": "rejected",
       "clinicalApproved": false,
-      "presentation": "static",
+      "presentation": "withhold",
       "allowAutomaticPoseSplit": false,
       "reasons": [
-        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+        "Tijdelijk tegengehouden: de steunen zijn onvolledig en er is geen dip afgebeeld; de figuur staat met de voeten op de grond."
       ],
       "observations": [],
+      "hold": {
+        "temporary": true,
+        "kind": "source-defect",
+        "source": "images/bovenste-extremiteit/dips-avatar-v7.jpg",
+        "assetSha256": "ae7ea9bc2bcf7646e69832179c1ada68c42f1fb39af8e05effe15c6758bf7298",
+        "evidence": "Onafhankelijke beoordeling op oorspronkelijke resolutie en visuele controle door de coördinator (2026-11-03); eerder gesignaleerd in de statische visuele ronde van 2026-11-02 (output/pose-review/static/inspection.md).",
+        "release": "Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd."
+      },
       "poses": [],
       "poseGeometry": {
-        "status": "static",
-        "reason": "In houding 1 staat een losse handgreep naast het figuur die niet als voorwerp van deze houding te verantwoorden is, en beide figuren staan rechtop: de dip zelf is niet afgebeeld.",
-        "rejectedByReviewer": true
+        "status": "withheld",
+        "reason": "De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond."
       },
       "brandMark": {
         "present": true,
@@ -2042,22 +2049,30 @@
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
         "chromaticPixels": 320,
-        "visuallyInspected": false
+        "visuallyInspected": true
       },
       "width": 800,
       "height": 1200,
-      "status": "unreviewed",
+      "status": "rejected",
       "clinicalApproved": false,
-      "presentation": "static",
+      "presentation": "withhold",
       "allowAutomaticPoseSplit": false,
       "reasons": [
-        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+        "Tijdelijk tegengehouden: de handen steunen op niets; de stoel of bank uit de uitleg ontbreekt."
       ],
       "observations": [],
+      "hold": {
+        "temporary": true,
+        "kind": "source-defect",
+        "source": "images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg",
+        "assetSha256": "7a3f8095e040023498c3d6ec46d1b6a0d31d8d559a2141deecd98770fd84487a",
+        "evidence": "Onafhankelijke beoordeling op oorspronkelijke resolutie en visuele controle door de coördinator (2026-11-03); eerder gesignaleerd in de statische visuele ronde van 2026-11-02 (output/pose-review/static/inspection.md).",
+        "release": "Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd."
+      },
       "poses": [],
       "poseGeometry": {
-        "status": "static",
-        "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+        "status": "withheld",
+        "reason": "De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond."
       },
       "brandMark": {
         "present": true,
@@ -4083,19 +4098,26 @@
       },
       "width": 800,
       "height": 1200,
-      "status": "unreviewed",
+      "status": "rejected",
       "clinicalApproved": false,
-      "presentation": "static",
+      "presentation": "withhold",
       "allowAutomaticPoseSplit": false,
       "reasons": [
-        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+        "Tijdelijk tegengehouden: losse, zwevende fragmenten in plaats van een verhoging om op te stappen."
       ],
       "observations": [],
+      "hold": {
+        "temporary": true,
+        "kind": "source-defect",
+        "source": "images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg",
+        "assetSha256": "2dbad9164159e9602e62bdf374a58ed5bdd2f55b2a2160c83a68ee13528149c3",
+        "evidence": "Onafhankelijke beoordeling op oorspronkelijke resolutie en visuele controle door de coördinator (2026-11-03); eerder gesignaleerd in de statische visuele ronde van 2026-11-02 (output/pose-review/static/inspection.md).",
+        "release": "Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd."
+      },
       "poses": [],
       "poseGeometry": {
-        "status": "static",
-        "reason": "In houding 1 staat naast het eigen opstapje een los lichtblauw blok dat niet bij de oefening hoort.",
-        "rejectedByReviewer": true
+        "status": "withheld",
+        "reason": "De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond."
       },
       "brandMark": {
         "present": true,
@@ -15938,14 +15960,14 @@
     {
       "exerciseId": "fp_514654a0d4181742",
       "name": "Standing chair hip extension",
-      "source": "images/seated-chair/standing-chair-hip-extension-avatar-v8.jpg",
-      "assetSha256": "3f549445eff57fa963e6e742d79d33898a0c177d872dd51b9facab8562950abb",
+      "source": "images/seated-chair/standing-chair-knee-lift-avatar-v8.jpg",
+      "assetSha256": "64ab13e0e71e5c0e158066f7e05dc482515ad4312313ee79884f73be17dea048",
       "explanationSha256": "f8bd20bfff1632665f0b6f97e196db84bba536733a3d981e2f4a56e58c85c433",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 395,
-        "visuallyInspected": false
+        "chromaticPixels": 401,
+        "visuallyInspected": true
       },
       "width": 800,
       "height": 1200,
@@ -15956,7 +15978,9 @@
       "reasons": [
         "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
       ],
-      "observations": [],
+      "observations": [
+        "Kaartbeeld gecorrigeerd op 2026-11-03: het vorige V2-kaartbeeld (images/seated-chair/standing-chair-hip-extension-avatar-v8.jpg) toonde knie naar voren omhoog (knieheffing); dit beeld toont gestrekt been naar achteren, handen op de stoelleuning, zoals de eigen uitleg. Zie content/v2-avatar-overrides.json. Het V1-lijnbeeld is niet aangepast en toont nog de andere beweging. Geen klinische goedkeuring."
+      ],
       "poses": [],
       "poseGeometry": {
         "status": "static",
@@ -16004,14 +16028,14 @@
     {
       "exerciseId": "fp_5319c4700561725d",
       "name": "Standing chair knee lift",
-      "source": "images/seated-chair/standing-chair-knee-lift-avatar-v8.jpg",
-      "assetSha256": "64ab13e0e71e5c0e158066f7e05dc482515ad4312313ee79884f73be17dea048",
+      "source": "images/seated-chair/standing-chair-hip-extension-avatar-v8.jpg",
+      "assetSha256": "3f549445eff57fa963e6e742d79d33898a0c177d872dd51b9facab8562950abb",
       "explanationSha256": "eccfe5faf3d488ceedb80b2286104899385161099d86066e83e5f8bdb49bc8cf",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 401,
-        "visuallyInspected": false
+        "chromaticPixels": 395,
+        "visuallyInspected": true
       },
       "width": 800,
       "height": 1200,
@@ -16022,7 +16046,9 @@
       "reasons": [
         "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
       ],
-      "observations": [],
+      "observations": [
+        "Kaartbeeld gecorrigeerd op 2026-11-03: het vorige V2-kaartbeeld (images/seated-chair/standing-chair-knee-lift-avatar-v8.jpg) toonde gestrekt been naar achteren (heupextensie); dit beeld toont knie naar voren omhoog, handen op de stoelleuning, zoals de eigen uitleg. Zie content/v2-avatar-overrides.json. Het V1-lijnbeeld is niet aangepast en toont nog de andere beweging. Geen klinische goedkeuring."
+      ],
       "poses": [],
       "poseGeometry": {
         "status": "static",
@@ -16077,22 +16103,30 @@
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
         "chromaticPixels": 484,
-        "visuallyInspected": false
+        "visuallyInspected": true
       },
       "width": 800,
       "height": 1200,
-      "status": "unreviewed",
+      "status": "rejected",
       "clinicalApproved": false,
-      "presentation": "static",
+      "presentation": "withhold",
       "allowAutomaticPoseSplit": false,
       "reasons": [
-        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+        "Tijdelijk tegengehouden: de figuur staat op één been naast de stoel; er is geen schouder- of onderarmrotatie afgebeeld."
       ],
       "observations": [],
+      "hold": {
+        "temporary": true,
+        "kind": "source-defect",
+        "source": "images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg",
+        "assetSha256": "8290b9e1fe168d92837c72a096dbc84276ec0e70f40de714b6e265b83e7f4e0b",
+        "evidence": "Onafhankelijke beoordeling op oorspronkelijke resolutie en visuele controle door de coördinator (2026-11-03); eerder gesignaleerd in de statische visuele ronde van 2026-11-02 (output/pose-review/static/inspection.md).",
+        "release": "Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd."
+      },
       "poses": [],
       "poseGeometry": {
-        "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "status": "withheld",
+        "reason": "De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond."
       },
       "brandMark": {
         "present": false,

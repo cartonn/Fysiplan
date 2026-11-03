@@ -31,6 +31,31 @@ const observations = new Map([
   ['Seated cat-cow', ['Slechts één pose zichtbaar; geen eindpose beschikbaar.']],
   ['TRX row', ['Twee poses aanwezig, maar riemen verhinderen betrouwbare automatische witlijnsplitsing.']]
 ]);
+// Tijdelijke houds op één bepaalde bron: exact dit pad én deze bytes. Ze lopen via hetzelfde
+// afkeurspoor als hierboven (status 'rejected', presentatie 'withhold'), want dat is wat de
+// kaart al tegenhoudt. Er wordt niets verwijderd en niets klinisch beoordeeld. Verandert het
+// bestand op dit pad, of wijst de catalogus naar een ander bestand, dan faalt dit script:
+// dan hoort een mens de nieuwe versie te bekijken, in plaats van dat de hold stilzwijgend
+// vervalt of op ander beeld blijft gelden.
+const HOLD_BEWIJS = 'Onafhankelijke beoordeling op oorspronkelijke resolutie en visuele controle door de coördinator (2026-11-03); eerder gesignaleerd in de statische visuele ronde van 2026-11-02 (output/pose-review/static/inspection.md).';
+const sourceHolds = new Map([
+  ['fp_013ba6ad937cc9d9', {name:'Dips', source:'images/bovenste-extremiteit/dips-avatar-v7.jpg',
+    assetSha256:'ae7ea9bc2bcf7646e69832179c1ada68c42f1fb39af8e05effe15c6758bf7298',
+    reason:'Tijdelijk tegengehouden: de steunen zijn onvolledig en er is geen dip afgebeeld; de figuur staat met de voeten op de grond.'}],
+  ['fp_f227db5fcf245d9c', {name:'Triceps dips', source:'images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg',
+    assetSha256:'7a3f8095e040023498c3d6ec46d1b6a0d31d8d559a2141deecd98770fd84487a',
+    reason:'Tijdelijk tegengehouden: de handen steunen op niets; de stoel of bank uit de uitleg ontbreekt.'}],
+  ['fp_7dc1478e2b3c17b0', {name:'Step up with knee raise', source:'images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg',
+    assetSha256:'2dbad9164159e9602e62bdf374a58ed5bdd2f55b2a2160c83a68ee13528149c3',
+    reason:'Tijdelijk tegengehouden: losse, zwevende fragmenten in plaats van een verhoging om op te stappen.'}],
+  ['fp_4b99c5f11b42a30d', {name:'Standing chair shoulder rotations', source:'images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg',
+    assetSha256:'8290b9e1fe168d92837c72a096dbc84276ec0e70f40de714b6e265b83e7f4e0b',
+    reason:'Tijdelijk tegengehouden: de figuur staat op één been naast de stoel; er is geen schouder- of onderarmrotatie afgebeeld.'}]
+]);
+// Bewust gecorrigeerde V2-kaartbeelden (content/v2-avatar-overrides.json): alleen een
+// observatie bij exact het gecorrigeerde bestand, geen goedkeuring.
+const avatarOverrides = new Map(JSON.parse(await fs.readFile('content/v2-avatar-overrides.json', 'utf8'))
+  .overrides.map(o => [o.exerciseId, o]));
 const approvals = JSON.parse(await fs.readFile('content/mobile-pose-approvals.json', 'utf8'));
 const inspected = new Map(approvals.inspectedAssets.map(a => [a.assetSha256, a]));
 const manualRejections = new Map(approvals.manualRejections.map(r => [r.exerciseId, r]));
@@ -50,9 +75,15 @@ for (const e of base) {
     if(Math.max(pixels[i],pixels[i+1],pixels[i+2])-Math.min(pixels[i],pixels[i+1],pixels[i+2])>20) chromaticPixels++;
   }
   const correctedLunge = e.naam==='Alternating lunge jumps' && source==='images/cardio/alternating-lunge-jumps-avatar-v9.png';
-  const reason = correctedLunge ? undefined : rejects.get(e.naam);
   const id = exerciseId(e);
   const assetSha256 = createHash('sha256').update(bytes).digest('hex');
+  const hold = sourceHolds.get(id);
+  if (hold && (hold.name !== e.naam || hold.source !== source || hold.assetSha256 !== assetSha256)) {
+    throw new Error(`Tijdelijke hold voor ${hold.name} past niet meer bij de catalogus (${source}, ${assetSha256}): eerst opnieuw beoordelen en de hold bijwerken of verwijderen.`);
+  }
+  const reason = correctedLunge ? undefined : (rejects.get(e.naam) || (hold && hold.reason));
+  const override = avatarOverrides.get(id);
+  const corrected = override && override.kaartImg === source && override.assetSha256 === assetSha256;
   const candidate = await poseCandidate(bytes);
   const merk = await measureBrandMark(bytes);
   const seen = inspected.get(assetSha256);
@@ -85,12 +116,14 @@ for (const e of base) {
     assetSha256,
     explanationSha256: createHash('sha256').update(e.uitleg || '').digest('hex'),
     mediaType: chromaticPixels>100 ? 'color_avatar_candidate' : 'line_drawing_candidate',
-    classification: {method:'raster-chroma-80x120-not-filename',chromaticPixels,visuallyInspected:Boolean(seen)||rejects.has(e.naam)||observations.has(e.naam)},
+    classification: {method:'raster-chroma-80x120-not-filename',chromaticPixels,visuallyInspected:Boolean(seen)||rejects.has(e.naam)||observations.has(e.naam)||Boolean(hold)||Boolean(corrected)},
     width:metadata.width,height:metadata.height,
     status:reason?'rejected':'unreviewed',clinicalApproved:false,
     presentation:reason?'withhold':'static',allowAutomaticPoseSplit:false,
     reasons:reason?[reason]:['Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd.'],
-    observations:correctedLunge ? ['Visueel gecontroleerd: rechterbeen voor in linker figuur, linkerbeen voor in rechter figuur; achterknieën boven de grond. Beenwissel hersteld, geen klinische goedkeuring of bewegingsdemonstratie.'] : observations.get(e.naam)||[],
+    observations:correctedLunge ? ['Visueel gecontroleerd: rechterbeen voor in linker figuur, linkerbeen voor in rechter figuur; achterknieën boven de grond. Beenwissel hersteld, geen klinische goedkeuring of bewegingsdemonstratie.'] : corrected ? ['Kaartbeeld gecorrigeerd op 2026-11-03: het vorige V2-kaartbeeld ('+override.previousKaartImg+') toonde '+override.previousShowed+'; dit beeld toont '+override.nowShows+', zoals de eigen uitleg. Zie content/v2-avatar-overrides.json. Het V1-lijnbeeld is niet aangepast en toont nog de andere beweging. Geen klinische goedkeuring.'] : observations.get(e.naam)||[],
+    ...(hold ? {hold:{temporary:true,kind:'source-defect',source:hold.source,assetSha256:hold.assetSha256,evidence:HOLD_BEWIJS,
+      release:'Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd.'}} : {}),
     poses, poseGeometry,
     // Ingebakken eigen merk: de kaart dekt het af en zet overal zelf hetzelfde merk, zodat
     // het niet per oefening wisselt. Alleen met een gemeten, vrij vlak; zie brand-mark.mjs.
@@ -101,6 +134,8 @@ for (const e of base) {
 }
 if(entries.length!==319) throw new Error('Expected 319 available mobile assets, got '+entries.length);
 for(const name of rejects.keys())if(!entries.some(e=>e.name===name))throw new Error('Missing rejection '+name);
+for(const [id,hold] of sourceHolds)if(!entries.some(e=>e.exerciseId===id&&e.source===hold.source&&e.status==='rejected'))throw new Error('Tijdelijke hold niet toegepast: '+hold.name);
+for(const [id,o] of avatarOverrides)if(!entries.some(e=>e.exerciseId===id&&e.source===o.kaartImg&&e.assetSha256===o.assetSha256))throw new Error('Gecorrigeerd kaartbeeld niet in de beoordeling: '+o.name);
 const geometryApproved = entries.filter(e=>e.poseGeometry.status==='geometry-approved');
 if(geometryApproved.some(e=>e.status==='rejected'||e.clinicalApproved))throw new Error('Afgekeurde of klinisch goedgekeurde inzending met houdingen');
 const result={schemaVersion:2,reviewDate:'2026-11-02',scope:'Available repository mobile assets; production practice overrides not included.',

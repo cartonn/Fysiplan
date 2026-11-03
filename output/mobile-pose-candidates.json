@@ -13147,8 +13147,8 @@
   {
    "exerciseId": "fp_514654a0d4181742",
    "name": "Standing chair hip extension",
-   "source": "images/seated-chair/standing-chair-hip-extension-avatar-v8.jpg",
-   "assetSha256": "3f549445eff57fa963e6e742d79d33898a0c177d872dd51b9facab8562950abb",
+   "source": "images/seated-chair/standing-chair-knee-lift-avatar-v8.jpg",
+   "assetSha256": "64ab13e0e71e5c0e158066f7e05dc482515ad4312313ee79884f73be17dea048",
    "width": 800,
    "height": 1200,
    "figureCount": 1,
@@ -13173,8 +13173,8 @@
   {
    "exerciseId": "fp_5319c4700561725d",
    "name": "Standing chair knee lift",
-   "source": "images/seated-chair/standing-chair-knee-lift-avatar-v8.jpg",
-   "assetSha256": "64ab13e0e71e5c0e158066f7e05dc482515ad4312313ee79884f73be17dea048",
+   "source": "images/seated-chair/standing-chair-hip-extension-avatar-v8.jpg",
+   "assetSha256": "3f549445eff57fa963e6e742d79d33898a0c177d872dd51b9facab8562950abb",
    "width": 800,
    "height": 1200,
    "figureCount": 1,

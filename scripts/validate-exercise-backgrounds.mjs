@@ -112,6 +112,32 @@ await Promise.all(catalogue.map(async (exercise) => {
   pairRatios.push(qa.blackRatio);
 }));
 
+// Expliciete V2-kaartbeelduitzonderingen (content/v2-avatar-overrides.json). Dit is een
+// extra eis, geen versoepeling: elke uitzondering moet precies zo in de catalogus staan,
+// aan haar bytes gebonden zijn en het lijnbeeld moet gelijk blijven aan V1. Zo kan een
+// latere bewerking of pijplijnrun de correctie niet stilzwijgend terugdraaien.
+const avatarOverrides = JSON.parse(await readFile(join(root, "content", "v2-avatar-overrides.json"), "utf8"));
+if (avatarOverrides.schemaVersion !== 1 || !Array.isArray(avatarOverrides.overrides)) {
+  throw new Error("content/v2-avatar-overrides.json heeft een onbekende vorm");
+}
+for (const override of avatarOverrides.overrides) {
+  const matches = catalogue.filter((exercise) => exercise.exerciseId === override.exerciseId);
+  if (matches.length !== 1 || matches[0].naam !== override.name) {
+    throw new Error(`V2-uitzondering ${override.exerciseId} (${override.name}) staat niet precies één keer onder die naam in de catalogus`);
+  }
+  const [exercise] = matches;
+  if (exercise.kaartImg !== override.kaartImg) {
+    throw new Error(`V2-kaartbeeld van ${override.name} wijkt af van de vastgelegde uitzondering: ${exercise.kaartImg} in plaats van ${override.kaartImg}`);
+  }
+  if (exercise.img !== override.lineImg || v1ByName.get(override.name)?.img !== override.lineImg) {
+    throw new Error(`Lijnbeeld van ${override.name} is niet meer exact het V1-beeld van de uitzondering`);
+  }
+  const digest = createHash("sha256").update(await readFile(join(root, "public", override.kaartImg))).digest("hex");
+  if (digest !== override.assetSha256) throw new Error(`Kaartbeeld van ${override.name} is gewijzigd na de vastgelegde uitzondering`);
+  const sharing = catalogue.filter((other) => other.kaartImg === override.kaartImg);
+  if (sharing.length !== 1) throw new Error(`Kaartbeeld ${override.kaartImg} wordt door ${sharing.length} oefeningen gebruikt`);
+}
+
 if (process.argv.includes("--strict") && pendingExpansion.length) {
   throw new Error(`Nog ${pendingExpansion.length} uitbreidingskaarten niet gepubliceerd: ${pendingExpansion.join(", ")}`);
 }
@@ -125,3 +151,4 @@ const bereik = (waarden) => waarden.length
 console.log(`Legacy-oefenbeelden geldig: ${legacyCatalogue.length}/215 op #FFFFFF; minimum witvlak ${ratios[0]}; mediaan ${ratios[Math.floor(ratios.length / 2)]}.`);
 console.log(`Top-500-uitbreidingsbeelden geldig: ${expansionRatios.length}/285 op #FFFFFF; nog niet gepubliceerd: ${pendingExpansion.length}; ${bereik(expansionRatios)}.`);
 console.log(`V2-beeldparen geldig: ${legacyPairs + pairRatios.length}/500; nog niet gepubliceerd: ${pendingPairs.length}; ${legacyPairs} legacykaarten gebruiken exact de V1-afbeelding.`);
+console.log(`V2-kaartbeelduitzonderingen: ${avatarOverrides.overrides.length} expliciet vastgelegd en aan pad, hash en V1-lijnbeeld gebonden.`);

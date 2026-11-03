@@ -34,6 +34,15 @@ Reproduceren: `node scripts/render-static-review.mjs && node scripts/measure-sta
 
 Nr. 152 en 154 lijken onderling verwisseld (bestanden standing-chair-hip-extension-avatar-v8.jpg en standing-chair-knee-lift-avatar-v8.jpg). Niet omgewisseld: dat is een inhoudelijk besluit.
 
+**Vervolg 2026-11-03** (na onafhankelijke beoordeling op oorspronkelijke resolutie en
+visuele controle door de coördinator, op diens opdracht):
+- 152 en 154: alleen het V2-kaartbeeld omgewisseld (`public/oefeningen-v2.json`, vastgelegd
+  in `content/v2-avatar-overrides.json`). Ids, teksten, bestanden en V1 ongewijzigd. Het
+  V1-lijnbeeld van beide oefeningen is op dezelfde manier verwisseld en is níet aangepast.
+- 4, 22, 28 en 156: tijdelijke hold op precies dat bronbestand (pad + sha256) in
+  `public/mobile-media-review.json`; de patiëntkaart houdt het beeld tegen. Niets verwijderd.
+- De tabellen hieronder geven de stand van 2026-11-02 weer en zijn niet bijgewerkt.
+
 ## Onzeker (17)
 
 | # | oefening | id | weergave | betekenis | opmerking |

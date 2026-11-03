@@ -21,7 +21,13 @@ const valueAfter = (flag) => {
   const index = process.argv.indexOf(flag);
   return index === -1 ? "" : String(process.argv[index + 1] || "");
 };
-const avatarPath = (exercise) => String(exercise.img).replace(/-line-v1\.png$/, "-avatar-v8.jpg");
+// Expliciete, gedocumenteerde uitzonderingen op de naamregel (zie het bestand zelf). Zonder
+// deze lijst zou 'check' een bewust gecorrigeerde koppeling als fout melden en zou 'import'
+// het beeld van de ándere oefening overschrijven en de oude koppeling terugzetten.
+const avatarOverrides = new Map(JSON.parse(await fs.readFile(path.join(root, "content", "v2-avatar-overrides.json"), "utf8"))
+  .overrides.map((override) => [override.exerciseId, override]));
+const avatarPath = (exercise) => avatarOverrides.get(exercise.exerciseId)?.kaartImg
+  ?? String(exercise.img).replace(/-line-v1\.png$/, "-avatar-v8.jpg");
 const batchSize = Math.max(1, Math.min(50, Number(valueAfter('--batch-size') || 50)));
 const batch = Math.max(1, Number(valueAfter('--batch') || 1));
 
@@ -69,6 +75,9 @@ if (command === 'import') {
   if (!name || !source) throw new Error('import vereist --name en --source');
   const exercise = carla.find((entry) => entry.naam === name);
   if (!exercise) throw new Error(`Geen Carla-oefening gevonden: ${name}`);
+  if (avatarOverrides.has(exercise.exerciseId)) {
+    throw new Error(`Import geweigerd voor ${name}: de koppeling is een expliciete uitzondering in content/v2-avatar-overrides.json en het doelbestand hoort bij een andere oefening. Pas eerst die uitzondering aan.`);
+  }
   const relative = avatarPath(exercise);
   const destination = path.join(root, 'public', relative);
   await fs.mkdir(path.dirname(destination), { recursive: true });
