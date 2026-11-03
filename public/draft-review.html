@@ -1,0 +1,36 @@
+<!doctype html><html lang="nl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fysiplan – conceptcontrole</title>
+<style>body{font:16px system-ui;margin:24px auto;padding:0 16px;max-width:800px;color:#18304a;background:#f6f8fb}button,input{font:inherit;padding:10px;margin:4px}article{background:white;padding:16px;margin:20px 0;border:1px solid #ddd;border-radius:12px}img{display:block;width:100%;height:auto;aspect-ratio:2/3;max-height:70vh;object-fit:contain;object-position:50% 50%;background:white}small{display:block}button[aria-pressed=true]{background:#164a83;color:white}</style>
+<h1>Conceptcontrole</h1><p>Niet gepubliceerd. Dit zijn losse houdingen, geen bewegingsvideo. Er is geen audio toegevoegd.</p>
+<form id="login"><label>Beheersleutel <input id="key" type="password" autocomplete="off" required></label><button>Concepten laden</button></form><p id="status" role="status"></p><main id="cards"></main>
+<script type="module">
+const cards=document.getElementById('cards'), status=document.getElementById('status');
+let urls=[];
+const clear=()=>{urls.forEach(URL.revokeObjectURL);urls=[];cards.replaceChildren();};
+window.addEventListener('pagehide',clear);
+document.getElementById('login').addEventListener('submit',async event=>{
+ event.preventDefault();clear();status.textContent='Laden…';
+ const key=document.getElementById('key').value;document.getElementById('key').value='';
+ const headers={'x-admin-sleutel':key};
+ try{
+  const response=await fetch('/api/exercise-drafts',{headers,cache:'no-store'});
+  if(!response.ok)throw Error('Conceptcontrole niet beschikbaar. Gebruik de ingestelde beheersleutel.');
+  const result=await response.json();
+  for(const draft of result.drafts){
+   if(draft.published!==false||draft.publishable!==false)throw Error('Onverwachte conceptstatus.');
+   const article=document.createElement('article'),title=document.createElement('h2'),text=document.createElement('p'),image=document.createElement('img'),label=document.createElement('p'),nav=document.createElement('div');
+   title.textContent=draft.originalRecord.naam;text.textContent=draft.explanation;image.alt='';
+   const frames={};
+   for(const role of ['line','start','end']){
+    const res=await fetch(`/api/exercise-drafts/${encodeURIComponent(draft.coreExerciseId)}/${role}`,{headers,cache:'no-store'});
+    if(!res.ok)throw Error('Conceptbeeld kon niet worden gecontroleerd.');
+    frames[role]=URL.createObjectURL(await res.blob());urls.push(frames[role]);
+    const button=document.createElement('button');button.type='button';button.textContent=draft.assets[role].label;button.dataset.role=role;
+    button.addEventListener('click',()=>show(role));nav.append(button);
+   }
+   function show(role){image.src=frames[role];image.alt=`${draft.originalRecord.naam}: ${draft.assets[role].label}`;label.textContent=draft.assets[role].label;for(const b of nav.children)b.setAttribute('aria-pressed',String(b.dataset.role===role));}
+   article.append(title,text,nav,label,image);cards.append(article);show('line');
+  }
+  status.textContent=`${result.drafts.length} ongepubliceerd concept. Geen wijzigingen aan trainingskaarten.`;
+ }catch(error){clear();status.textContent=error.message;}
+});
+</script></html>

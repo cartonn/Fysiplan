@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "drafts:import": "node scripts/import-exercise-draft.mjs",
+    "test:drafts": "node scripts/test-exercise-drafts.mjs && node scripts/test-exercise-drafts-http.mjs",
     "build": "node scripts/publication-channel-graph.mjs && node scripts/core1000.mjs && node scripts/video-language-plan.mjs && node scripts/video-catalogus.mjs && node scripts/video-productie.mjs && node scripts/validate-exercise-backgrounds.mjs && node scripts/valideer-sjablonen.mjs && node scripts/build.js",
     "images:normalize": "python3 scripts/normalize-image-visibility.py --write",
     "images:graph": "node scripts/exercise-image-graph.mjs plan",

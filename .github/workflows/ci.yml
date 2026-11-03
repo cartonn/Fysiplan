@@ -27,3 +27,4 @@ jobs:
       - run: npm run test:mobile
       - run: node scripts/test-noor-playlist-races.mjs
       - run: npm run test:video-recovery
+      - run: npm run test:drafts

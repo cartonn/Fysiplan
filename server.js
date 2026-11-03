@@ -5,6 +5,7 @@ import { createHash, randomBytes, timingSafeEqual, scryptSync } from "node:crypt
 import { join, extname, normalize, sep } from "node:path";
 import { exerciseId } from "./lib/exercise-id.js";
 import { byteRange } from "./lib/byte-range.js";
+import { listDrafts, loadDraft } from "./lib/draft-exercise-import.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
 import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./lib/proef.js";
 
@@ -1883,6 +1884,31 @@ async function afhandelen(request, response) {
       versie: { commit: buildInfo.commit || "onbekend", builtAt: buildInfo.builtAt || null,
         uptimeUren: Math.round((Date.now() - startTijd) / 360000) / 10 }
     });
+    return;
+  }
+
+  // Private concept review only: never merged into buildManifest or patient cards.
+  // A public default admin88 key must not expose unpublished assets.
+  if (urlPath === "/api/exercise-drafts" || urlPath.startsWith("/api/exercise-drafts/")) {
+    if (!ADMIN_KEY_EIGEN || !isAdmin(request)) { await denied(request, response, urlPath); return; }
+    if (request.method !== "GET") { await sendJson(response, 405, { fout: "Alleen lezen; publiceren is niet beschikbaar." }); return; }
+    response.setHeader("Cache-Control", "private, no-store");
+    try {
+      const draftRoot = join(process.cwd(), "content/private-exercise-drafts");
+      const catalogue = JSON.parse(await readFile(join(publicDir, "oefeningen-v2.json"), "utf8"));
+      if (urlPath === "/api/exercise-drafts") {
+        await sendJson(response, 200, { published: false, drafts: await listDrafts({ draftRoot, catalogue }) });
+        return;
+      }
+      const match = urlPath.match(/^\/api\/exercise-drafts\/(fc_[a-f0-9]+)\/(line|start|end)$/);
+      if (!match) { await sendJson(response, 404, { fout: "Concept niet gevonden." }); return; }
+      const draft = await loadDraft({ draftRoot, id: match[1], catalogue });
+      const bytes = await readFile(join(draftRoot, match[1], draft.assets[match[2]].file));
+      response.writeHead(200, { "Content-Type": "image/png", "Content-Length": bytes.length, "X-Content-Type-Options": "nosniff" });
+      response.end(bytes);
+    } catch {
+      await sendJson(response, 409, { fout: "Concept ontbreekt of bron/beelden zijn gewijzigd; controleer de import opnieuw." });
+    }
     return;
   }
 
