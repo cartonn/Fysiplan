@@ -1,0 +1,18 @@
+{
+  "request": "Complete category expansion with original line art, avatars, narration and motion videos; Physitrack inspiration only",
+  "date": "2026-11-03",
+  "publication": "No new production deployment in this batch; concepts remain private and clinically unapproved",
+  "completed": ["Category presentation ranking", "Effective production override count regression with Claude", "Private table-pick line/start/end and genuine pickup motion", "Private table-pick narration and mutually exclusive media controls", "Private neck-rotation line/start/end", "Three source-bound category narration recordings"],
+  "credits": {"authorized":30,"spent":9,"balanceBeforeNeckVideo":21,"purchases":0,"nextReservedEstimate":10,"nextOwner":"mobile_flow_audit","nextJob":"one 10-second neck motion candidate, not yet counted as completed"},
+  "remaining": ["Neck narration review-sidecar integration", "Neck motion generation and independent QA", "Table-pick video lacks return-to-table phase", "Grip line arrows remain ambiguous", "Other held categories require image/technique corrections", "Full listening and device playback QA", "Safe production integration after QA"],
+  "claude": {"categoryCount":"c476101c completed a6f7793, integrated 89fd0cc", "lateralAvatar":"3f7adace blocked on external asset read permission; not bypassed"},
+  "storage": "Removed only two clean committed own worktrees audio-recovery-check and speech-included; commits preserved and recoverable. Free space increased from225MiB to686MiB. New trees use sparse checkout.",
+  "imageEdit": {
+    "method":"builtin imagegen",
+    "savedPath":"/Users/builder/Documents/Codex/2026-05-21/ik-wil-een-zzp-platform-bouwen/fysiplan-category-mix-20261102/images/grip-release-line-v2.png",
+    "prompt":"Preserve entire seated gripping start pose. Delete two large movement arrows outside hands/over forearm. Add very small curved arrows directly next to curled fingertips indicating fingers uncurl to release; no wrist/forearm translation. Preserve woman, chair, table, block, white interiors, full frame and black contours; no second pose, inset, labels or shading.",
+    "result":"Independent reviewer still finds hand-translation ambiguity. Candidate only; not activated."
+  },
+  "physitrackEvidence":"Parent actual browser inspected Dutch Arbeidsomstandigheden122 firstpage: posture, wrist stretching, neck rotations, shoulder circles, chest opening, hand pumps, thoracic rotation. No illustrations or descriptions copied.",
+  "tests":"Combined drafts/categories passed including auth, byte ranges, source mutations and actual runtime overrides. Build/privacy passed before final neck merge; final combined rerun still required."
+}
