@@ -24,11 +24,12 @@
     "e5991d2 overal hetzelfde Fysiplan-merk op de kaart",
     "63f8ee1 miniatuurmerk pas na bewezen hash; manifest laden begrensd (audit-P2 x2)",
     "fc40de1 bevestigBron controleert elke lading opnieuw; nieuwste uitkomst wint",
-    "9e6f50d V2-kaartbeeld hip extension/knee lift omgewisseld met uitzondering; 4 tijdelijke bronhouds"
+    "9e6f50d V2-kaartbeeld hip extension/knee lift omgewisseld met uitzondering; 4 tijdelijke bronhouds",
+    "785559c V2-lijnbeeld stoelpaar omgewisseld met smalle hash-gebonden uitzondering; voorlezen bovenaan volgt de beeldregel"
   ],
-  "lastUpdate": "2026-11-03T01:48:41+0100",
+  "lastUpdate": "2026-11-03T02:53:38+0100",
   "lastUpdateNote": "Machineklok (date +%FT%T%z) op het moment van schrijven.",
-  "batch": 11,
+  "batch": 12,
   "deployed": false,
   "pushed": false,
   "clinicalApproval": false,
@@ -74,8 +75,8 @@
   "poseOutcome": {
     "totalAvailableAssets": 319,
     "geometryApprovedPairs": 156,
-    "staticFullImage": 158,
-    "withheldBecauseImageRejected": 5,
+    "staticFullImage": 154,
+    "withheldBecauseImageRejected": 9,
     "measuredTally": {
       "pair-candidate": 162,
       "overlapping-figures": 39,
@@ -91,7 +92,35 @@
       "Step up with knee raise: stray pale blue block next to the figure's own step in pose 1",
       "Alternating lunge jumps: two alternating stances of one jumping exercise are not a start and end of one movement; the v9 provenance file states the jump transition is not approved"
     ],
-    "exactListLocation": "content/mobile-pose-approvals.json (inspectedAssets, manualRejections) and public/mobile-media-review.json (poseGeometry per exercise)"
+    "exactListLocation": "content/mobile-pose-approvals.json (inspectedAssets, manualRejections) and public/mobile-media-review.json (poseGeometry per exercise)",
+    "countsAsOf": "Nageteld op 2026-11-03T02:53:38+0100 uit public/mobile-media-review.json (poseGeometry.status): geometry-approved 156, static 154, withheld 9; samen 319. Tot ronde 5 stond hier 158 statisch / 5 withheld.",
+    "withheldBreakdown": {
+      "contentRejections": [
+        "TRX pull up",
+        "Dorsi-pecto (apparaat)",
+        "Endy Armstrekker",
+        "Endy Rotator",
+        "Rotator (apparaat)"
+      ],
+      "temporarySourceHolds": [
+        "Dips",
+        "Triceps dips",
+        "Step up with knee raise",
+        "Standing chair shoulder rotations"
+      ]
+    },
+    "staticBreakdown": {
+      "single-figure": 78,
+      "overlapping-figures": 37,
+      "branding-overlaps-figure": 20,
+      "foreign-ink-in-crop": 12,
+      "poses-too-similar": 4,
+      "multiple-figures/ambiguous-objects": 2,
+      "manually rejected (Alternating lunge jumps)": 1,
+      "total": 154
+    },
+    "measuredTallyNote": "measuredTally is de meting over alle 319 beelden (ongewijzigd); de uitkomst hierboven telt na visuele controle, handmatige afkeuring en tegenhouden.",
+    "manualVisualRejectionsNote": "Dips en Step up with knee raise zijn sinds 2026-11-03 ook als bron tijdelijk tegengehouden; als statisch-handmatig telt alleen Alternating lunge jumps nog."
   },
   "fixedDefects": [
     "mp3 delivery without Range/Content-Length/audio MIME (iOS Safari would not play) — fixed and verified live with curl and an automated test",
@@ -115,28 +144,29 @@
     "npm run test:mobile": "negen poorten groen (laatst 2026-11-03T00:45:51+0100, na 63f8ee1): byte-ranges (36 gevallen), media review (319, 5 afkeuringen, 156 uitsnedes, steekproef opnieuw gemeten), narration review (319, 15 houds, 67 opnames), media controls + videoherkomst, pose layout + kaartweergave (canvas-opdracht), noor-audio inclusief tussentijdse wachttijd, check-noor-assets --partial (67 aanwezig, 252 ontbreken), levering (audio/mpeg, 2x12 range-gevallen byte voor byte, sleutels, voorbeeldkaart hash-gecontroleerd) | 2026-11-02T23:25:18+0100: opnieuw groen na 3bf37b4, inclusief \"Opzoeken en toestelstem: tekenen en voorlezen kiezen dezelfde oefening; een oude voorlezing kan de nieuwe niet afbreken\" | 2026-11-02T23:43:04+0100: groen met de nieuwe merktest; merk: miniatuur pas na hash + 6 racegevallen; noor: manifestgrens 10 s, opnieuw na verlopen, stop tijdens laden",
     "npm run build": "groen (2026-11-02T23:43:04+0100)",
     "regressiebewijs": "de nieuwe range-gevallen en de nieuwe wachttijdtests zijn elk gedraaid tegen de vorige code en falen daar",
-    "node scripts/kaart-merkcheck.mjs": "groen (2026-11-02T23:43:04+0100): 4 miniaturen, 5 vergrote foto’s (3 met, 2 zonder ingebakken merk), houdingen"
+    "node scripts/kaart-merkcheck.mjs": "groen (2026-11-02T23:43:04+0100): 4 miniaturen, 5 vergrote foto’s (3 met, 2 zonder ingebakken merk), houdingen",
+    "ronde 6 (2026-11-03T02:53:38+0100)": "npm run test:mobile exit 0 (12 onderdelen, nieuw: test-v2-uitzondering-mutaties, test-noor-voorlezen-holds) en npm run build exit 0; build meldt \"317 legacykaarten gebruiken exact de V1-afbeelding, 2 een vastgelegde V2-correctie\". Na tests en build byte-gelijk (sha256): public/oefeningen.json, public/oefeningen-v2.json, public/mobile-media-review.json, content/beginhouding-pijl.json, content/v2-avatar-overrides.json, content/v2-image-pair-report.json, output/mobile-pose-candidates.json en de vier bewaarde browsercheckbestanden. Losse run: test-arrow-assets PASS (310 pijlbeelden, 9 tegengehouden). Regressiebewijs tegen 12853c5: voorleestest faalt (afgespeeld: Anteflexie armen, Dips, Triceps dips); oude v2-line-art-graph run --execute zet beide img terug op het V1-pad."
   },
   "separationOfReviewKinds": {
-    "code-test pass": "done: npm run test:mobile and npm run build",
-    "visual pass": "done for the 162 measured pair candidates and, since session 3, for all 158 static exercises (contact sheets, not full resolution). Together with the 5 rejected images, every one of the 319 has now been viewed at contact-sheet size at least once; still no clinical judgement.",
+    "code-test pass": "done: npm run test:mobile (12 onderdelen sinds ronde 6) en npm run build, laatst groen op 2026-11-03T02:53:38+0100 na 785559c",
+    "visual pass": "done for the 162 measured pair candidates and, since session 3, for all 158 exercises that were static at that time (contact sheets, not full resolution); together with the 5 images rejected then, every one of the 319 has been viewed at contact-sheet size at least once. Since 2026-11-03 four of those 158 are temporarily held (154 static now). Round 6: Claude viewed arrow images 313/315; the coordinator viewed the original chair line drawings. Still no clinical judgement.",
     "listening review": "NOT done. No recording was listened to in this session.",
     "clinical approval": "NOT done and not inferable from anything in this session. Every clinicalApproved stays false and the 15 narration holds stand."
   },
   "remaining": [
     "Luisterronde van de 67 bestaande opnames: niet gedaan, er is geen enkele opname beluisterd.",
-    "Klinische goedkeuring voor alle 319 oefeningen, inclusief de 15 expliciete houds op de uitleg en de 5 afgekeurde afbeeldingen: niet gedaan en nergens uit af te leiden.",
-    "Alle 158 statische oefeningen kunnen alleen met ander bronmateriaal (of een door een mens vastgestelde uitsnede) een houdingweergave krijgen. Per meting: 79 één samenhangend figuur (vaak door een apparaat verbonden), 38 overlappende figuren, 20 merk binnen een figuurvak, 12 losse inkt in de uitsnede, 4 te gelijkende houdingen, 2 niet toewijsbaar, 3 handmatig afgekeurd. Opnieuw renderen vraagt beeldgeneratie; niet geautoriseerd, niets uitgegeven.",
+    "Klinische goedkeuring voor alle 319 oefeningen, inclusief de 15 expliciete houds op de uitleg en de 9 tegengehouden afbeeldingen (5 inhoudelijk afgekeurd, 4 tijdelijke bron-houds): niet gedaan en nergens uit af te leiden.",
+    "Alle 154 statische oefeningen kunnen alleen met ander bronmateriaal (of een door een mens vastgestelde uitsnede) een houdingweergave krijgen. Per meting: 78 één samenhangend figuur (vaak door een apparaat verbonden), 37 overlappende figuren, 20 merk binnen een figuurvak, 12 losse inkt in de uitsnede, 4 te gelijkende houdingen, 2 niet toewijsbaar, 1 handmatig afgekeurd (Alternating lunge jumps). Daarnaast 9 tegengehouden beelden. Opnieuw renderen vraagt beeldgeneratie; niet geautoriseerd, niets uitgegeven.",
     "Praktijkuploads (uploads/oef-*.jpg, praktijk- en kaartvideo's) hebben geen beoordelingsregel en worden dus als onbeoordeeld getoond. Een expliciete afkeuring voor zo'n bron werkt sinds 4f5680c/c8ca782 wel, maar het buildscript maakt alleen regels voor repository-beelden; iemand zou ze met de hand moeten toevoegen. Een echte beoordelingsweg voor uploads is een ontwerpkeuze.",
     "explanationWithheld werkt voor praktijkoefeningen (po_-ids) alleen als een houd die oefening bij naam of id noemt; er bestaan geen zulke houds.",
     "Een door de therapeut per kaart geplakte YouTube-link gaat nog altijd vóór de klinisch beoordeelde catalogusvideo (public/kaart.html:1166, catKlaar vereist !persoonlijkYt). Staat in de code als bewuste keuze; vraagt een besluit, niet ongevraagd veranderd.",
-    "De Nederlandse luisterknop spreekt de dosering en de veiligheidszin niet uit (public/kaart.html:1469 levert alleen naam+uitleg); dat kan niet met de bestaande opnames. Wel staat er sinds 4aec046 bij wat de stem wel en niet uitlegt (public/kaart.html:1210).",
+    "De Nederlandse luisterknop spreekt de dosering en de veiligheidszin niet uit (public/kaart.html:1475, speelNoor(items), levert alleen naam+uitleg); dat kan niet met de bestaande opnames. Wel staat er sinds 4aec046 bij wat de stem wel en niet uitlegt.",
     "Productiedata (data/) zijn niet zichtbaar in deze werkmap: aantal praktijkvideo's en geüploade beelden in productie onbekend.",
     "Statische beelden: 6 lijken inhoudelijk fout en 17 zijn onzeker (output/pose-review/static/inspection.md); vraagt een fysiotherapeut en eventueel nieuw beeld.",
     "Witte hoekjes in de haren bij Front raises, Shoulder rotation (shrugs) en Yoga deep squat zitten in de bron (ingebakken merkvak); alleen met beeldbewerking op te lossen.",
     "Gedeelde /k/-route: alle kaartwijzigingen gelden ook voor V1-gemaakte kaarten (server.js serveert één kaart.html). Releasebesluit nodig als V1-links gedragsmatig ongewijzigd moeten blijven.",
-    "V1-lijnbeelden van Standing chair hip extension en knee lift zijn onderling verwisseld (V2-kaartbeeld is gecorrigeerd, lijnbeeld niet).",
-    "Vier tijdelijke bronhouds (Dips, Triceps dips, Step up with knee raise, Standing chair shoulder rotations) wachten op nieuw beeld of een besluit; de Nederlandse voorleesknop bovenaan speelt de opnames van Dips en Triceps dips nog wel."
+    "V1-lijnbeelden van Standing chair hip extension en knee lift blijven onderling verwisseld (V2-kaartbeeld en sinds 785559c ook het V2-lijnbeeld zijn gecorrigeerd). V1 heeft geen expliciet id: omwisselen zou ook de afgeleide V1-id's omwisselen; vraagt eerst een expliciet id-veld en een eigen besluit.",
+    "Vier tijdelijke bronhouds (Dips, Triceps dips, Step up with knee raise, Standing chair shoulder rotations) wachten op nieuw beeld of een besluit. Sinds 785559c slaat ook de Nederlandse voorleesknop bovenaan ze over (met melding); andere talen (toestelstem) lezen naam en uitleg nog voor."
   ],
   "knownGapsNotFixed": {
     "practice-uploaded media": "Praktijkfoto's (uploads/oef-*.jpg) en praktijk-/kaartvideo's hebben geen beoordelingsregel en zijn dus onbeoordeeld zichtbaar. Een afkeuring voor zo'n bron werkt wel (public/kaart.html:716, :755), maar wordt niet automatisch aangemaakt. Houdingweergave en natuurlijke stem kunnen ze niet bereiken (gebonden aan beoordeelde sha256 resp. exacte tekst). Bij praktijkvideo's staat sinds 9ef09c8 dat beeld en tekst uit verschillende bron komen. Sinds 1ba3434 leveren praktijkvideo's correcte byte-ranges.",
@@ -147,14 +177,14 @@
     "newCredentials": "none",
     "purchases": "none"
   },
-  "nextAction": "Coördinator: 9e6f50d nalopen (koppeling + houds); besluiten over V1-lijnbeelden van het stoelpaar, nieuw beeld voor de vier houds, en of de voorleesknop bovenaan afgekeurde beelden moet overslaan. Eerdere besluiten (a) t/m (f) blijven open.",
+  "nextAction": "Coördinator: 785559c nalopen (V2-lijnbeeld + pijlsleutels stoelpaar, smalle uitzondering in beide poorten, lijnbeeldgraph, voorlezen bovenaan). Open besluiten: V1-lijnbeelden van het stoelpaar (vraagt eerst een expliciet V1-id), nieuw beeld voor de vier houds, en of andere talen dezelfde beeldregel moeten volgen bij voorlezen. Eerdere besluiten (a) t/m (f) blijven open.",
   "handoverReport": "output/claude-night-report.md",
   "perExerciseList": "output/mobile-pose-per-exercise.md",
   "inspectionLog": "output/pose-review/inspection-log.md",
-  "workingTree": "Commits t/m de voortgangscommit na 9e6f50d. Niet gecommit en bewust bewaard: scripts/kaart-browsercheck.mjs, output/kaart-browsercheck.json, output/pose-review/browser/01-kaart.png (gewijzigd) en output/kaart-browsercheck-alle.json (untracked). Untracked: CLAUDE-NIGHT-TASK.txt, coördinatorbestanden, auditbestand, node_modules (symlink).",
+  "workingTree": "Commits t/m de voortgangscommit na 785559c. Niet gecommit en bewust bewaard: scripts/kaart-browsercheck.mjs, output/kaart-browsercheck.json, output/pose-review/browser/01-kaart.png (gewijzigd) en output/kaart-browsercheck-alle.json (untracked); kaart-browsercheck is niet gedraaid. Untracked: CLAUDE-NIGHT-TASK.txt, coördinatorbestanden, auditbestand, node_modules (symlink).",
   "blockers": [
     "Luisterronde en klinische goedkeuring vragen een mens; niets daarvan is gedaan of af te leiden.",
-    "Alle 158 statische oefeningen (zie remaining) hebben ander bronmateriaal nodig voor een houdingweergave; beeldgeneratie is niet geautoriseerd en er is niets uitgegeven.",
+    "Alle 154 statische oefeningen (zie remaining) hebben ander bronmateriaal nodig voor een houdingweergave; beeldgeneratie is niet geautoriseerd en er is niets uitgegeven.",
     "Een beoordelingsweg voor runtime-uploads van praktijken is een ontwerpkeuze voor de coördinator."
   ],
   "session2": {
@@ -411,5 +441,33 @@
     ],
     "nietGedraaid": "Geen echte browser of toestel; geen luistertest; geen klinische beoordeling.",
     "ongewijzigd": "V1 (public/oefeningen.json), alle beeldbestanden, kaart.html, de vuile browsercheck-bestanden, /private/tmp/fysiplan-category-ui-20261103. Geen push/deploy, generatie, aankopen, toegang of credentials."
+  },
+  "session7": {
+    "started": "machineklok bij schrijven 2026-11-03T02:50:23+0100 (werk begon na 12853c5)",
+    "instructions": "Coördinator: na eigen controle van de volledige originele lijntekeningen alleen de V2-lijnbeeldkoppeling (img) van het stoelpaar corrigeren, public/oefeningen.json en alle V1-/bronbestanden byte-gelijk; expliciete twee-regel hash-gebonden V2-uitzondering, pariteitscontroles alleen voor die uitzondering aanpassen; stabiele ids/kaartlinks. Daarna de Nederlandse voorleesknop bovenaan oefeningen met tegengehouden beeld laten overslaan zoals de knop per oefening, met eerlijke melding; geen klinisch-fout-label, niets verwijderen, dosering behouden, geen robotstem. Mutatietests voor bron-houds; voortgangstellingen naar 9/154/156.",
+    "commit": "785559c",
+    "lijnbeeld": {
+      "public/oefeningen-v2.json": "2 regels (alleen img, tekstueel omgewisseld). Hip extension → standing-chair-knee-lift-line-v1.png (sha 7aa98cbb…, toont been naar achteren), knee lift → standing-chair-hip-extension-line-v1.png (sha 1081e18c…, toont knie naar voren).",
+      "pijlbeelden": "content/beginhouding-pijl.json: alleen source van 313 en 315 omgewisseld. De server levert arrowImages.get(e.img); 313/315 zijn per naam getekend en kloppen (zelf bekeken). Zonder deze wissel zou de server het verkeerde pijlbeeld leveren. Geleverde /v2/oefeningen.json voor dit paar daardoor ongewijzigd: geen zichtbare verandering voor therapeut of patiënt.",
+      "ongewijzigd": "exerciseId (expliciet V2-veld = afgeleide V1-id), naam, uitleg, kaartImg (ronde 5), public/oefeningen.json (sha 038af18e…), alle beeldbestanden, pijlbeeldbestanden.",
+      "uitzondering": "content/v2-avatar-overrides.json schema 2: lineImg/lineSha256, previousLineImg, v1LineImg/v1LineSha256, arrow {id,img,sha256,previousSource}; lib/v2-overrides.js assertV2Override controleert pad, naam, uniek gebruik, sha256 van kaart-/V2-lijn-/V1-lijn-/pijlbeeld, pijlsleutel en gelijke V1/V2-id.",
+      "poorten": "publication-channel-graph (v2-gate) en validate-exercise-backgrounds: alleen voor ids in de uitzondering geldt img = override.lineImg (plus volledige assertV2Override); voor alle andere legacykaarten blijft img = V1-img. Uitvoer: 317 exact V1 + 2 vastgelegd.",
+      "generator": "scripts/v2-line-art-graph.mjs: run --execute zette elk legacy-img op V1 (bewezen met de vorige versie in een wegwerpmap); volgt nu de uitzondering. exercise-image-graph.mjs niet aangepast: kan dit paar niet plannen (geen productiegegevens; plan stopt al op Alternating lunge jumps).",
+      "v1Bevinding": "V1-ids zijn afgeleid van het lijnbeeldpad. V1 omwisselen zou de ids van deze twee V1-oefeningen omwisselen; de poorten weigeren dat (mutatietest)."
+    },
+    "voorlezen": {
+      "public/kaart.html": "noorItem(o,x) geeft beeldGehouden = mediaWithheld(o); gebruikt door de knop bovenaan en de knop per oefening. speelNoor slaat beeldGehouden over (na de uitleg-houds, vóór de opnamecontrole) en meldOntbrekend noemt ze: \"Niet voorgelezen, omdat de oefenafbeelding nog wordt gecontroleerd: …\". Alles overgeslagen: \"Er wordt nu niets voorgelezen voor deze selectie.\" (niet: geen opname). Geen toestelstem, geen tekst- of opnamewijziging, dosering blijft de verwijzing.",
+      "nuGeraakt": "Dips en Triceps dips (de enige tegengehouden oefeningen met een actuele opname).",
+      "nietAangepast": "Andere talen (toestelstem) lezen tegengehouden oefeningen nog voor. Mislukt het laden van de controlegegevens, dan speelde en speelt er niets (bestaande regel, nu getest)."
+    },
+    "tests": {
+      "scripts/test-noor-voorlezen-holds.mjs": "leesVoor() uit kaart.html in een VM met echte beoordeling en opnames: gemengde selectie (1 gespeeld, 3 overgeslagen en genoemd, 1 zonder opname apart genoemd), alleen tegengehouden (niets, knop terug, juiste melding), zelfde uitkomst als mediaWithheld voor houds/afkeuringen/gecorrigeerd paar, review niet te laden, opnames bestaan nog. Faalt op 12853c5.",
+      "scripts/test-v2-uitzondering-mutaties.mjs": "wegwerpmappen met symlinks, gemuteerde bestanden als kopie, echte bestanden sha-bewaakt. Houds: ander pad, andere bytes, andere naam → \"past niet meer\"; ander id → \"niet toegepast\"; controle byte-gelijk aan repo. Lijnbeeld: derde afwijking, V2 terug naar V1, V1 gewijzigd (id's lopen uiteen), pijlen niet meegeschoven, verkeerde hash, uitzondering verwijderd → beide poorten falen met de verwachte melding. Graph run --execute laat correctie staan, rest exact V1. ~8 s.",
+      "scripts/test-v2-avatar-mapping.mjs": "eist nu V2-img per oefening, V1-img ongewijzigd, sha van public/oefeningen.json, gelijke V1/V2-id, geleverd pijlbeeld 313/315 per naam, pijlbestand-sha's."
+    },
+    "beoordeling": "public/mobile-media-review.json: 2 van 319 regels gewijzigd (observatietekst stoelpaar: \"Het V2-lijnbeeld is op dezelfde manier gecorrigeerd\"). Samenvatting ongewijzigd: rejected 9, unreviewed 310, poseGeometryApproved 156; poseGeometry static 154, withheld 9. output/mobile-pose-candidates.json ongewijzigd (meet kaartImg).",
+    "qrImpact": "Elke /k/-kaart (V1- en V2-QR, één kaart.html): voorlezen bovenaan slaat nu Dips en Triceps dips over met melding. Lijnbeeldwissel: geen zichtbare verandering op de kaart (gebruikt kaartImg) en niet in de geleverde V2-catalogus (pijlbeeld blijft 313/315). V1-editor/-catalogus ongewijzigd.",
+    "reviewKinds": "code-test: groen. visueel: pijlbeelden 313/315 door Claude bekeken; lijntekeningen door de coördinator. luisteren: niet gedaan. klinisch: niet gedaan, niets goedgekeurd.",
+    "spending": "geen generatie, geen betaalde aanroep, geen aankopen, geen nieuwe toegang; geen push of deploy."
   }
 }

@@ -41,6 +41,8 @@ visuele controle door de coördinator, op diens opdracht):
   V1-lijnbeeld van beide oefeningen is op dezelfde manier verwisseld en is níet aangepast.
 - 4, 22, 28 en 156: tijdelijke hold op precies dat bronbestand (pad + sha256) in
   `public/mobile-media-review.json`; de patiëntkaart houdt het beeld tegen. Niets verwijderd.
+- Ronde 6 (zelfde dag): ook het V2-lijnbeeld (`img`) van 152 en 154 omgewisseld, op basis van
+  de originele lijntekeningen die de coördinator bekeek; V1 blijft verwisseld.
 - De tabellen hieronder geven de stand van 2026-11-02 weer en zijn niet bijgewerkt.
 
 ## Onzeker (17)

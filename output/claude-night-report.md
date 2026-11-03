@@ -75,15 +75,21 @@ goedgekeurd.
 | uitkomst | aantal |
 |---|---|
 | begin-/eindhouding gecontroleerd en actief | **156** |
-| twee figuren overlappen elkaar (uitsnede zou een stuk van de ander bevatten) | 38 |
+| twee figuren overlappen elkaar (uitsnede zou een stuk van de ander bevatten) | 37 |
 | merk valt binnen een figuur-uitsnede | 20 |
 | losse inkt binnen de uitsnede | 12 |
 | houdingen te veel op elkaar lijkend om beweging te heten | 4 |
-| handmatig afgekeurd na visuele controle | 3 |
-| één samenhangend figuur (o.a. alle lijntekeningen) | 79 |
+| handmatig afgekeurd na visuele controle | 1 |
+| één samenhangend figuur (o.a. alle lijntekeningen) | 78 |
 | meer dan twee figuren / losse voorwerpen niet toe te wijzen | 2 |
-| beeld zelf afgekeurd, dus geen houdingen | 5 |
+| beeld zelf tegengehouden, dus geen houdingen (5 inhoudelijk afgekeurd, 4 tijdelijke bron-houds) | 9 |
 | **totaal beschikbare beelden** | **319** |
+
+Stand 2026-11-03 na ronde 5, nageteld uit `public/mobile-media-review.json`: 156
+uitsnedeparen, 154 statisch, 9 tegengehouden. Tot ronde 5 stond hier 158 statisch en 5
+afgekeurd; de vier bron-houds (Dips en Step up with knee raise waren al handmatig
+afgekeurd als paar, Triceps dips en Standing chair shoulder rotations waren statisch)
+schoven van statisch naar tegengehouden.
 
 De volledige lijst met namen staat in `output/mobile-pose-per-exercise.md`.
 De 163 oefeningen zonder houdingen tonen onveranderd de volledige afbeelding —
@@ -93,10 +99,10 @@ er wordt nooit stilzwijgend een lijntekening voor in de plaats gezet.
 
 | soort controle | status |
 |---|---|
-| code- en testronde | **gedaan** — `npm run test:mobile` (negen poorten) en `npm run build` zijn groen |
+| code- en testronde | **gedaan** — `npm run test:mobile` (twaalf onderdelen sinds ronde 6) en `npm run build` zijn groen |
 | visuele ronde | **gedaan voor de 162 gemeten kandidaat-paren**, één voor één op 41 contactvellen in de definitieve weergave. Niet gedaan: een losse visuele controle van de 163 statische oefeningen buiten de meting om |
 | luisterronde | **niet gedaan** — er is deze nacht geen enkele opname beluisterd |
-| klinische goedkeuring | **niet gedaan en nergens uit af te leiden**. Alle `clinicalApproved` blijven false, de vijftien houds op de uitleg staan ongewijzigd, en de vijf afgekeurde beelden blijven afgekeurd |
+| klinische goedkeuring | **niet gedaan en nergens uit af te leiden**. Alle `clinicalApproved` blijven false, de vijftien houds op de uitleg staan ongewijzigd, en de negen tegengehouden beelden (vijf afgekeurd, vier tijdelijke bron-houds) blijven tegengehouden |
 
 De keten is dicht: `scripts/test-mobile-pose-layout.mjs` draait `demoStart()` uit
 `public/kaart.html` met echte beoordelingsdata en vangt elke canvas-opdracht op. Daarmee
@@ -187,20 +193,89 @@ ongewijzigd.
 Bij de vier houds verdwijnen de foto, de luisterknop per oefening (Dips en Triceps dips
 hebben een opname) en de videoknop van die oefening, ook een praktijkvideo. Dosering blijft.
 De knop "Luister naar uitleg" bovenaan speelt de opnames van Dips en Triceps dips nog wel;
-dat gold al voor eerdere afkeuringen en is niet aangepast. In de therapeutenapp gelden de
-houds niet.
+dat gold al voor eerdere afkeuringen en is niet aangepast (in ronde 6 opgelost). In de
+therapeutenapp gelden de houds niet.
+
+### Ronde 6, V2-lijnbeeld van het stoelpaar en voorlezen bovenaan
+
+**Lijnbeeld.** De coördinator bekeek de volledige originele lijntekeningen:
+`standing-chair-hip-extension-line-v1.png` toont de knie naar voren,
+`standing-chair-knee-lift-line-v1.png` het been naar achteren. In
+`public/oefeningen-v2.json` is daarom ook `img` van beide oefeningen omgewisseld
+(2 regels, tekstueel). Kaartbeeld, lijnbeeld en tekst tonen nu per oefening dezelfde
+beweging. Ids (expliciet veld, gelijk aan de afgeleide V1-id), namen, teksten,
+`public/oefeningen.json` (sha `038af18e…`) en alle beeldbestanden zijn byte-gelijk.
+
+**Pijlbeelden.** De server levert voor een V2-lijnbeeld de pijlversie
+(`server.js`: `arrowImages.get(e.img)`). Pijlbeeld 313 (hip extension: pijl van de voet
+naar achteren) en 315 (knee lift: pijl bij de knie omhoog) zijn per naam getekend en
+kloppen al. Alleen hun sleutel (`source`) in `content/beginhouding-pijl.json` schuift mee.
+Anders zou de server na de wissel juist het verkeerde pijlbeeld leveren.
+**Gevolg:** de geleverde V2-catalogus (`/v2/oefeningen.json`) en wat een therapeut of
+patiënt ziet, veranderen voor dit paar niet. De correctie herstelt de onderliggende
+koppeling, zodat lijnmodus, graphs en een nieuwe pijlpublicatie niet meer van het
+verkeerde beeld uitgaan.
+
+**Uitzondering, smal en hash-gebonden.** `content/v2-avatar-overrides.json` (schema 2)
+legt per oefening vast: kaart-, lijn-, V1- en pijlbeeld met pad en sha256, de vorige
+waarden en hoe je terugdraait. `lib/v2-overrides.js` controleert dat volledig; beide
+build-poorten (`publication-channel-graph`, `validate-exercise-backgrounds`) stellen alleen
+deze twee ids vrij van "V2-lijnbeeld = V1-lijnbeeld" en roepen daarbij die controle aan.
+Uitvoer nu: 317 legacykaarten exact V1, 2 een vastgelegde V2-correctie.
+`scripts/v2-line-art-graph.mjs run --execute` zette elk legacy-`img` terug op V1 en zou de
+correctie dus stil terugdraaien (aangetoond met de vorige versie); dat volgt nu dezelfde
+uitzondering. `scripts/exercise-image-graph.mjs` kan dit paar niet plannen (geen
+productiegegevens; `plan` stopt al op Alternating lunge jumps) en is niet aangepast.
+
+**Voorlezen bovenaan.** "Luister naar uitleg" (Nederlands) slaat nu elke oefening over
+waarvan de kaart het beeld tegenhoudt. Dat is dezelfde regel (`mediaWithheld`) als bij de
+knop per oefening, die bij zo'n oefening niet verschijnt. De melding noemt ze: "Niet
+voorgelezen, omdat de oefenafbeelding nog wordt gecontroleerd: …". Wordt er daardoor niets
+voorgelezen, dan staat er "Er wordt nu niets voorgelezen voor deze selectie" en niet dat
+er geen opname is. Er komt geen toestelstem als vervanging. Teksten, opnames en dosering
+zijn niet aangeraakt, en niets wordt als inhoudelijk fout bestempeld. Op dit moment gaat
+het om Dips en Triceps dips: de enige tegengehouden oefeningen met een opname.
+Lukt het laden van de controlegegevens niet, dan speelde en speelt er niets (bestaande
+regel). **Niet aangepast:** andere talen (toestelstem) lezen naam en uitleg van
+tegengehouden oefeningen nog wel voor; de opdracht ging over het Nederlands.
+
+**Tests.** `scripts/test-noor-voorlezen-holds.mjs` draait `leesVoor()` uit de kaart met de
+echte beoordeling en opnames. Met de kaart van ronde 5 faalt de test: Dips en Triceps dips
+worden afgespeeld. `scripts/test-v2-uitzondering-mutaties.mjs` muteert in een wegwerpmap
+en bewaakt de echte bestanden met hun hash:
+houds — ander pad, andere bytes op hetzelfde pad, andere naam, ander id: de bouw faalt
+telkens met de verwachte melding en schrijft geen beoordeling; de controle zonder mutatie
+geeft byte voor byte dezelfde beoordeling als de repo.
+lijnbeelden — een derde oefening die van V1 afwijkt, het V2-lijnbeeld terug naar V1, V1
+"repareren", pijlen niet meegeschoven, een verkeerde hash, of de uitzondering verwijderd:
+beide poorten falen telkens om de verwachte reden.
+graph — `run --execute` laat de correctie staan, en alle andere legacykaarten blijven V1.
+`scripts/test-v2-avatar-mapping.mjs` eist nu ook het juiste V2-lijnbeeld, het
+ongewijzigde V1-beeld en de V1-sha, de gelijke id's en het ongewijzigde geleverde
+pijlbeeld.
+
+**Belangrijk voor een V1-besluit.** V1 heeft geen expliciet id-veld; het id is afgeleid
+van het lijnbeeldpad. De V1-lijnbeelden omwisselen zou dus ook de id's van deze twee
+V1-oefeningen omwisselen. Kaarten die op id zoeken, vinden dan de andere oefening. De
+poorten weigeren dat nu ("exerciseId van V1 en V2 lopen uiteen"). Een V1-correctie vraagt
+eerst een expliciet id in V1 en een eigen besluit.
+
+**Beoordeling:** 2 van 319 regels gewijzigd (alleen de observatietekst van het stoelpaar);
+samenvatting ongewijzigd: 9 tegengehouden, 310 onbeoordeeld, 156 uitsnedeparen, 154
+statisch.
 
 ## 6. Wat blijft liggen — en waarom
 
 1. **Luisterronde.** Geen enkele van de 67 bestaande opnames is beluisterd. 252 van de
    319 oefeningen hebben er sowieso geen.
-2. **Klinische goedkeuring.** Vijftien expliciete houds en vijf afgekeurde afbeeldingen
-   wachten op een fysiotherapeut. Niets in deze nacht verandert daar iets aan.
-3. **De 158 statische oefeningen krijgen alleen met ander bronmateriaal een
-   houdingweergave.** Per meting: 79 tonen één samenhangend figuur (vaak door een
-   apparaat verbonden), 38 laten de figuren elkaar overlappen, bij 20 valt het merk in
+2. **Klinische goedkeuring.** Vijftien expliciete houds en negen tegengehouden afbeeldingen
+   (vijf afgekeurd, vier tijdelijke bron-houds) wachten op een fysiotherapeut. Niets in deze nacht verandert daar iets aan.
+3. **De 154 statische oefeningen krijgen alleen met ander bronmateriaal een
+   houdingweergave.** Per meting: 78 tonen één samenhangend figuur (vaak door een
+   apparaat verbonden), 37 laten de figuren elkaar overlappen, bij 20 valt het merk in
    een figuurvak, 12 hebben losse inkt in de uitsnede, 4 houdingen lijken te veel op
-   elkaar, 2 zijn niet toe te wijzen en 3 heb ik na het kijken afgekeurd. Opnieuw renderen
+   elkaar, 2 zijn niet toe te wijzen en 1 heb ik na het kijken afgekeurd (Alternating
+   lunge jumps). De vier bron-houds en de vijf afgekeurde beelden komen daar nog bij. Opnieuw renderen
    met ruimte tussen de figuren en het merk erbuiten maakt een gecontroleerde weergave
    mogelijk. Dat vraagt beeldgeneratie; **daar is deze sessie niet voor geautoriseerd en
    er is niets uitgegeven.**
@@ -230,6 +305,10 @@ houds niet.
    bestaande QR-kaarten die in de V1-editor zijn gemaakt. De V1-editor en -catalogus zelf
    zijn niet gewijzigd. Moeten V1-links gedragsmatig ongewijzigd blijven, dan is dat een
    releasebesluit; de code is daar niet op gescheiden.
+9. **De V1-lijnbeelden van het stoelpaar blijven verwisseld** (V1-editor, V1-lijnmodus,
+   PDF uit V1). Omwisselen zou ook de afgeleide V1-id's omwisselen; zie ronde 6.
+10. **Andere talen lezen tegengehouden oefeningen nog voor** met de toestelstem; alleen
+   het Nederlands volgt sinds ronde 6 de beeldregel.
 
 ## 7. Uitgaven
 
