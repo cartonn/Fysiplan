@@ -16,6 +16,12 @@ publication flags and refuses differing existing drafts. It imports only the
 explicitly scoped table-pick candidate. Repeating the same import is a no-op.
 This allowlist is a bounded implementation scope, not clinical approval.
 
+Source assets must remain inside the bundle directory after resolving symlinks.
+The importer stages already-verified bytes privately, validates the complete
+staged draft, then atomically renames it into place under an exclusive ID lock.
+Caught write or validation failures remove only that import's temporary files
+and lock, allowing retry without exposing an incomplete draft.
+
 `/draft-review.html` consumes the read-only `/api/exercise-drafts` routes. These
 require the existing custom `ADMIN_KEY` header; the public default `admin88`
 does not grant access. Keys are not stored, and private image replies are

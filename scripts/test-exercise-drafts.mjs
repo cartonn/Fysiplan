@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, writeFile, mkdir, copyFile } from 'node:fs/promises';
+import { mkdtemp, readFile, writeFile, mkdir, copyFile, symlink, readdir } from 'node:fs/promises';
+import fs from 'node:fs';
+import { syncBuiltinESMExports } from 'node:module';
 import { tmpdir } from 'node:os';
 import { Script } from 'node:vm';
 import { join, resolve } from 'node:path';
@@ -30,4 +32,32 @@ new Script(page.match(/<script type="module">([\s\S]*?)<\/script>/)[1]);
 assert.ok(page.includes("['line','start','end']"));
 assert.ok(!page.includes('innerHTML'));
 assert.ok(page.includes('object-fit:contain') && page.includes('object-position:50% 50%'));
+// A lexical child symlink must not permit import from outside the bundle root,
+// even when its bytes match the expected digest.
+const outside=await mkdtemp(join(tmpdir(),'fysiplan-draft-outside-'));
+await copyFile(join(root,id,'line.png'),join(outside,'line.png'));
+await symlink(join(outside,'line.png'),join(temp,'escaped.png'));
+bundle.assets.line.relativePath='escaped.png';await save();
+await assert.rejects(importDraft({bundlePath,cataloguePath,draftRoot:join(temp,'symlink-drafts')}),/symlink escapes/);
+bundle.assets.line.relativePath='line.png';await copyFile(join(root,id,'line.png'),join(temp,'line.png'));await save();
+// Fail after the first staged image, then fail post-write validation. Neither
+// may leave a final-ID directory, lock or staging debris; retry must work.
+const atomicRoot=join(temp,'atomic');
+const originalWrite=fs.promises.writeFile;
+for(const mode of ['write-failure','validation-failure']){
+ fs.promises.writeFile=async(p,bytes,options)=>{
+  if(String(p).includes('.import-') && String(p).endsWith('/start.png')){
+   if(mode==='write-failure')throw new Error('injected disk failure');
+   return originalWrite(p,Buffer.from('bad staged PNG'),options);
+  }
+  return originalWrite(p,bytes,options);
+ };
+ syncBuiltinESMExports();
+ try{await assert.rejects(importDraft({bundlePath,cataloguePath,draftRoot:atomicRoot}),mode==='write-failure'?/injected disk failure/:/PNG/);}
+ finally{fs.promises.writeFile=originalWrite;syncBuiltinESMExports();}
+ assert.deepEqual(await readdir(atomicRoot),[], 'Failed import must leave no partial draft or lock');
+}
+assert.equal((await importDraft({bundlePath,cataloguePath,draftRoot:atomicRoot})).status,'imported-unpublished');
+assert.deepEqual(await readFile(cataloguePath),before);
 console.log('PASS: draft import, idempotency, held IDs denied, source/hash/path/flags checks, catalogue unchanged');
+console.log('PASS: realpath symlink escape rejected; staged write/validation failures cleanly retry');
