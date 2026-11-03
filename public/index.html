@@ -59,6 +59,9 @@
   .filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
   #filters{max-height:96px;overflow-y:auto;overflow-x:hidden;align-content:flex-start;scrollbar-gutter:stable;overscroll-behavior:contain;padding:2px 3px 4px 0}
   #filters .chip{font-size:11px;padding:4px 8px}
+  #filters .category-heading{flex-basis:100%;font-size:10px;font-weight:650;color:var(--muted);margin:3px 0 0}
+  #filters button.chip{font-family:inherit}
+  #filters button.chip:focus-visible{outline:2px solid var(--brand);outline-offset:1px}
   .chip{font-size:12px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--panel);cursor:pointer;color:var(--muted);transition:.15s}
   .chip:hover{border-color:#cdd3db}
   .chip.on{background:var(--brand-50);border-color:var(--brand-100);color:var(--brand-700);font-weight:600}
@@ -1179,19 +1182,48 @@ bridge2.jpg</div>
   var elList=document.getElementById('list'),
       elMon=document.getElementById('mon'),elEmpty=document.getElementById('emptyA4'),elCnt=document.getElementById('cnt');
   var CHIP_LABELS={all:'alle groepen',boven:'bovenste extr.',onder:'onderste extr.',romp:'romp',divers:'divers'};
+  // CATEGORY_DISPLAY_START
+  // Presentation-only taxonomy. Never rewrite persisted category strings or exercise IDs.
+  const aliases=new Map([
+   ['Foam Roller','Foam roller'],['Mobility','Mobiliteit'],['Cardio','Conditie'],
+   ['Exercise Ball','Oefenbal'],['Medicine Ball','Medicijnbal'],
+   ['Seated Chair','Zittend op stoel'],['Standing Chair','Staand bij stoel'],['Agility','Wendbaarheid']
+  ]);
+  const groups=[
+   ['Lichaamsgebied',['Nek','Rug','Bovenste extremiteit','Onderste extremiteit','Core']],
+   ['Doel en toepassing',['Mobiliteit','Balans en valpreventie','Conditie','Wendbaarheid','Sportrevalidatie','Neurologische revalidatie','Vestibulair','Bekken & postpartum','Werk en dagelijkse handelingen','Yoga']],
+   ['Materiaal en uitgangshouding',['Apparaten','Bosu','TRX','Kettlebell','Bodyblade','Foam roller','Speedladder','Oefenbal','Medicijnbal','Zittend op stoel','Staand bij stoel']]
+  ];
+  function displayLabel(label){return aliases.get(label)||label;}
+  function matchesCategory(exercise,filter){
+   if(filter==='all')return true;
+   const target=displayLabel(filter);
+   return [exercise.groep,...(exercise.ook||[])].some(label=>displayLabel(label)===target);
+  }
+  function categorySections(labels){
+   const unique=[...new Set(labels.filter(Boolean).map(displayLabel))];
+   const known=new Set(groups.flatMap(([,labels])=>labels));
+   return [...groups.map(([title,order])=>({title,labels:order.filter(x=>unique.includes(x))})),
+   {title:'Eigen categorieën',labels:unique.filter(x=>!known.has(x)).sort((a,b)=>a.localeCompare(b,'nl'))}].filter(g=>g.labels.length);
+  }
+  function countCategory(exercises,filter){
+   // Record occurrences are not inflated by primary+secondary aliases.
+   return exercises.filter(e=>matchesCategory(e,filter)).length;
+  }
+  // CATEGORY_DISPLAY_END
   function updateChipCounts(){
     document.querySelectorAll('.chip').forEach(function(c){
-      if(c.dataset.catAdd)return;
+      if(c.dataset.catAdd||c.dataset.catDelete)return;
       var g=c.dataset.g;
       if(CUSTOMLIB){c.style.display=(g==='all')?'':'none';if(g==='all')c.textContent='alle oefeningen ('+OEF.length+')';return;}
       c.style.display='';
       var n=OEF.filter(function(o){return inGroep(o,g);}).length;
-      var label=SERVERLIB?(g==='all'?'alle oefeningen':g):CHIP_LABELS[g];
+      var label=SERVERLIB?(g==='all'?'alle oefeningen':(USE_V2_LIBRARY?displayLabel(g):g)):CHIP_LABELS[g];
       c.textContent=label+' ('+n+')';
     });
   }
   // hoort een oefening bij een groep? (groep zelf, of via 'ook' op meerdere plekken zichtbaar)
-  function inGroep(o,g){return g==='all'||o.groep===g||(o.ook&&o.ook.indexOf(g)>-1);}
+  function inGroep(o,g){return USE_V2_LIBRARY?matchesCategory(o,g):(g==='all'||o.groep===g||(o.ook&&o.ook.indexOf(g)>-1));}
   function exerciseKey(o){return o.exerciseId||normEx(o.naam);}
   function isFavorite(o){return !!FAVORITES[exerciseKey(o)];}
   function hasVideo(o){return !!(o.video&&(o.video.eigen||o.video.stream||o.video.yt||o.video.catalog));}
@@ -1240,6 +1272,14 @@ bridge2.jpg</div>
     var html=GROUPS.map(function(x){
       return "<span class='chip"+(curG===x.g?" on":"")+"' data-g=\""+esc(x.g)+"\">"+esc(x.label)+"</span>";
     }).join("");
+    if(USE_V2_LIBRARY&&SERVERLIB){
+      var chip=function(g,label){var on=displayLabel(curG)===g;return "<button type='button' class='chip"+(on?" on":"")+"' aria-pressed='"+on+"' data-g=\""+esc(g)+"\">"+esc(label)+"</button>";};
+      html=chip('all','alle oefeningen');
+      categorySections(GROUPS.filter(function(x){return x.g!=='all';}).map(function(x){return x.g;})).forEach(function(section){
+        html+="<span class='category-heading'>"+esc(section.title)+"</span>";
+        section.labels.forEach(function(g){html+=chip(g,g);});
+      });
+    }
     if(IS_ADMIN)html+="<button type='button' class='chip cat-add' data-cat-add='1' title='Categorie toevoegen' aria-label='Categorie toevoegen'>+ categorie</button>";
     if(IS_ADMIN)html+="<button type='button' class='chip' data-cat-delete='1'>Categorie verwijderen</button>";
     f.innerHTML=html;
@@ -1815,8 +1855,8 @@ bridge2.jpg</div>
     }
     if(e.target.closest('[data-cat-add]')){openNieuweCategorie();return;}
     var b=e.target.closest('.chip');if(!b)return;
-    document.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');});
-    b.classList.add('on');curG=b.dataset.g;renderList();
+    document.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');if(x.hasAttribute('aria-pressed'))x.setAttribute('aria-pressed','false');});
+    b.classList.add('on');if(b.hasAttribute('aria-pressed'))b.setAttribute('aria-pressed','true');curG=b.dataset.g;renderList();
   });
   document.getElementById('search').addEventListener('input',function(e){q=e.target.value.toLowerCase();renderList();});
   document.querySelector('.smart-filters').addEventListener('click',function(e){

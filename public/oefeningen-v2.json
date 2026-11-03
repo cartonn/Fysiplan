@@ -541,6 +541,7 @@
  {
   "naam": "Back extension",
   "groep": "Core",
+  "ook": ["Rug"],
   "img": "images/core/back-extension.jpg",
   "kaartImg": "images/core/back-extension-avatar-v7.jpg",
   "uitleg": "Lig op je buik met je handen naast je hoofd. Til je borst rustig van de grond en laat je weer langzaam zakken."
@@ -660,6 +661,7 @@
  {
   "naam": "Mobilisatie rotatie rug",
   "groep": "Core",
+  "ook": ["Rug"],
   "img": "images/core/mobilisatie-rotatie-rug.jpg",
   "kaartImg": "images/core/mobilisatie-rotatie-rug-avatar-v7.jpg",
   "uitleg": "Lig op je rug met gebogen knieen en armen zijwaarts. Laat je knieen rustig naar een kant zakken en draai ze daarna naar de andere kant."
@@ -716,6 +718,7 @@
  {
   "naam": "Rug extensie",
   "groep": "Core",
+  "ook": ["Rug"],
   "img": "images/core/rug-extensie.jpg",
   "kaartImg": "images/core/rug-extensie-avatar-v7.jpg",
   "uitleg": "Lig op je buik met je handen naast je hoofd. Til je borst rustig een stukje van de vloer en laat weer langzaam zakken."
@@ -744,6 +747,7 @@
  {
   "naam": "Side bents",
   "groep": "Core",
+  "ook": ["Rug"],
   "img": "images/core/side-bents.jpg",
   "kaartImg": "images/core/side-bents-avatar-v7.jpg",
   "uitleg": "Sta rechtop met je voeten op heupbreedte en je armen langs je lichaam. Buig je romp zijwaarts naar een kant en kom terug, wissel daarna van kant."
@@ -4736,6 +4740,7 @@
  {
   "naam": "Mob thoracaal",
   "groep": "Mobility",
+  "ook": ["Rug"],
   "img": "images/mobility/mob-thoracaal-line-v1.png",
   "kaartImg": "images/mobility/mob-thoracaal-avatar-v8.jpg",
   "uitleg": "Kom op handen en knieën en plaats één hand achter je hoofd. Draai je borstkas rustig open richting plafond zonder je onderrug mee te draaien.",
@@ -4782,6 +4787,7 @@
  {
   "naam": "Mob lower back",
   "groep": "Mobility",
+  "ook": ["Rug"],
   "img": "images/mobility/mob-lower-back-line-v1.png",
   "kaartImg": "images/mobility/mob-lower-back-avatar-v8.jpg",
   "uitleg": "Lig op je rug en trek beide knieën rustig richting borst. Houd je schenen vast en laat je lage rug ontspannen.",
@@ -4814,6 +4820,7 @@
  {
   "naam": "Mob back left/right",
   "groep": "Mobility",
+  "ook": ["Rug"],
   "img": "images/mobility/mob-back-left-right-line-v1.png",
   "kaartImg": "images/mobility/mob-back-left-right-avatar-v8.jpg",
   "uitleg": "Lig op je rug met je armen wijd en je knieën gebogen. Laat beide knieën rustig naar één zijde zakken terwijl je schouders op de vloer blijven.",
@@ -4918,6 +4925,7 @@
  {
   "naam": "Back stretch",
   "groep": "Mobility",
+  "ook": ["Rug"],
   "img": "images/mobility/back-stretch-line-v1.png",
   "kaartImg": "images/mobility/back-stretch-avatar-v8.jpg",
   "uitleg": "Kom op knieën en handen, breng je heupen rustig naar je hielen en strek je armen voor je uit. Ontspan je rug en adem rustig door.",
@@ -4950,6 +4958,7 @@
  {
   "naam": "Seated side leans",
   "groep": "Seated Chair",
+  "ook": ["Rug"],
   "img": "images/seated-chair/seated-side-leans-line-v1.png",
   "kaartImg": "images/seated-chair/seated-side-leans-avatar-v8.jpg",
   "uitleg": "Zit rechtop met beide voeten plat. Reik met één arm boven je hoofd en buig rustig zijwaarts; wissel daarna van kant.",
@@ -4984,6 +4993,7 @@
  {
   "naam": "Seated lumbar rotations",
   "groep": "Seated Chair",
+  "ook": ["Rug"],
   "img": "images/seated-chair/seated-lumbar-rotations-line-v1.png",
   "kaartImg": "images/seated-chair/seated-lumbar-rotations-avatar-v8.jpg",
   "uitleg": "Zit rechtop met je voeten plat. Draai je romp rustig naar één zijde en gebruik de rugleuning alleen als lichte steun.",
@@ -5001,6 +5011,7 @@
  {
   "naam": "Seated cat-cow",
   "groep": "Seated Chair",
+  "ook": ["Rug"],
   "img": "images/seated-chair/seated-cat-cow-line-v1.png",
   "kaartImg": "images/seated-chair/seated-cat-cow-avatar-v8.jpg",
   "uitleg": "Zit voor op de stoel met je handen op je knieën. Maak je bovenrug rustig bol en kom gecontroleerd terug naar een lange neutrale rug.",
@@ -5328,6 +5339,7 @@
  {
   "naam": "Seated cervical stretch",
   "groep": "Seated Chair",
+  "ook": ["Nek"],
   "img": "images/seated-chair/seated-cervical-stretch-line-v1.png",
   "kaartImg": "images/seated-chair/seated-cervical-stretch-avatar-v8.jpg",
   "uitleg": "Zit rechtop, laat je hoofd rustig naar één schouder zakken en geef met je hand slechts lichte begeleiding. Wissel daarna van kant.",
@@ -5502,6 +5514,7 @@
  {
   "naam": "One leg standing",
   "groep": "Standing Chair",
+  "ook": ["Balans en valpreventie"],
   "img": "images/seated-chair/one-leg-standing-line-v1.png",
   "kaartImg": "images/seated-chair/one-leg-standing-avatar-v8.jpg",
   "uitleg": "Sta op één been naast de stoel en houd de rugleuning licht vast als dat nodig is. Houd je bekken recht en wissel daarna van zijde.",
