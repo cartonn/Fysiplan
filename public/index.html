@@ -3305,6 +3305,19 @@ bridge2.jpg</div>
               "style='font-size:11.5px;padding:4px 10px;background:"+sm.bg+";border:1px solid "+sm.br+";color:"+sm.fg+"'>"+
               "<span style='display:inline-block;width:8px;height:8px;border-radius:99px;background:"+sm.fg+";margin-right:5px'></span>seintje: "+sm.t+"</button>";
           }
+          // kalme heads-up als de kaart door de bewaartermijn binnenkort verdwijnt:
+          // zo kan de praktijk eerst naar het dossier kopiëren (knop Deel/CSV) voordat
+          // de servergegevens automatisch worden gewist. Informatief, geen actieknop.
+          var verloopChip='';
+          if(c.verloopt){
+            var vdg=Math.ceil((c.verloopt-Date.now())/864e5);
+            if(vdg<=14){
+              var vtxt=vdg<=0?'vandaag':(vdg===1?'morgen':'over '+vdg+' dagen');
+              verloopChip="<span class='btn' title='Door de bewaartermijn verdwijnen de servergegevens van deze kaart "+vtxt+". Kopieer eerst naar je dossier (QR-deelregel of Exporteer CSV) als je ze wilt bewaren; de patiëntlink blijft tot dan werken.' "+
+                "style='font-size:11.5px;padding:4px 10px;cursor:default;background:#f4f1ea;border:1px solid #ddd3c2;color:#766a52'>"+
+                "<span style='display:inline-block;width:8px;height:8px;border-radius:99px;background:#b9a97e;margin-right:5px'></span>verloopt "+vtxt+"</span>";
+            }
+          }
           // deel de kaart in één tik via het eigen kanaal van de patiënt: WhatsApp,
           // e-mail of gewoon de link kopiëren. De patiënt opent hem zonder app of
           // account in de browser — precies de app-vrije belofte van Fysiplan.
@@ -3449,7 +3462,7 @@ bridge2.jpg</div>
               "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>";
           }
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
-            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.antwoord&&c.antwoord.tekst?" · <span title='Er staat een bericht op de patiëntkaart klaar dat nog niet is weggetikt: “"+esc(c.antwoord.tekst)+"”' style='white-space:nowrap'>bericht klaar</span>":"")+((function(){var va=volgendeAfspraak(c);if(!va)return "";return " · <span title='Volgende afspraak op de patiëntkaart"+(va.rest?" — wekelijkse reeks, nog "+va.rest+" keer":"")+"' style='white-space:nowrap'>afspraak "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+(va.rest?" ×"+va.rest:"")+"</span>";})())+((!pskChipGetoond&&c.pskDoel&&c.psk&&c.psk.length)?(function(){var pe2=(c.pskEerste&&typeof c.pskEerste.s==='number')?c.pskEerste.s:c.psk[0].s,pl2=c.psk[c.psk.length-1].s;return " · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)"+(pe2!==pl2?" — van "+pe2+" bij de start naar "+pl2:"")+"' style='white-space:nowrap'>PSK "+(pe2!==pl2?pe2+"→"+pl2:pl2)+"</span>";})():"")+"</small></div>"+seinChip+zwChip+vg+hsChip+
+            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.antwoord&&c.antwoord.tekst?" · <span title='Er staat een bericht op de patiëntkaart klaar dat nog niet is weggetikt: “"+esc(c.antwoord.tekst)+"”' style='white-space:nowrap'>bericht klaar</span>":"")+((function(){var va=volgendeAfspraak(c);if(!va)return "";return " · <span title='Volgende afspraak op de patiëntkaart"+(va.rest?" — wekelijkse reeks, nog "+va.rest+" keer":"")+"' style='white-space:nowrap'>afspraak "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+(va.rest?" ×"+va.rest:"")+"</span>";})())+((!pskChipGetoond&&c.pskDoel&&c.psk&&c.psk.length)?(function(){var pe2=(c.pskEerste&&typeof c.pskEerste.s==='number')?c.pskEerste.s:c.psk[0].s,pl2=c.psk[c.psk.length-1].s;return " · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)"+(pe2!==pl2?" — van "+pe2+" bij de start naar "+pl2:"")+"' style='white-space:nowrap'>PSK "+(pe2!==pl2?pe2+"→"+pl2:pl2)+"</span>";})():"")+"</small></div>"+seinChip+zwChip+verloopChip+vg+hsChip+
             "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
             "<button class='btn' data-skopie='"+esc(c.id)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+
