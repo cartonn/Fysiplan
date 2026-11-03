@@ -222,6 +222,8 @@ const spraak={cancel(){},speak(u){uitingen.push(u);}};
 const lees=vm.createContext({document,speechSynthesis:spraak,window:{speechSynthesis:spraak},
   SpeechSynthesisUtterance:function(t){this.text=t;},NoorAudio:{stop(){}},noorRequest:0,TAAL:'en',
   tr:k=>k,vt:s=>s,SPRAAK:{en:'en-GB'},kiesStem:()=>null,explanationWithheld:()=>false,demoGeluidKnop(){},stopVideos(){},
+  // beoordeling geladen en niets tegengehouden: deze test gaat alleen over de beurtbewaking
+  mediaReviewReady:true,mediaWithheld:()=>false,explanationHolds:[],
   K:{kaart:{chosen:[{n:'Squat'}],cells:{},client:{}},praktijk:{praktijk:'Praktijk'},lib:[{naam:'Squat',uitleg:'Rustig zakken.'}]}});
 vm.runInContext(between('  function normEx(s){','\n')+'\n'+between('  function metEigen(lib,kaart){','  function dagStr(t)')+
   between('  var bezigLezen=false,noorRequest=0;','  async function speelNoor('),lees);
