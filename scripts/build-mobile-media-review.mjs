@@ -54,7 +54,18 @@ const sourceHolds = new Map([
     reason:'Tijdelijk tegengehouden: losse, zwevende fragmenten in plaats van een verhoging om op te stappen.'}],
   ['fp_4b99c5f11b42a30d', {name:'Standing chair shoulder rotations', source:'images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg',
     assetSha256:'8290b9e1fe168d92837c72a096dbc84276ec0e70f40de714b6e265b83e7f4e0b',
-    reason:'Tijdelijk tegengehouden: de figuur staat op één been naast de stoel; er is geen schouder- of onderarmrotatie afgebeeld.'}]
+    reason:'Tijdelijk tegengehouden: de figuur staat op één been naast de stoel; er is geen schouder- of onderarmrotatie afgebeeld.'}],
+  // Bronkeuze open (2026-11-03): beeld en eigen uitleg beschrijven een andere variant. Welke
+  // bedoeld is, beslist de eigenaar/behandelaar; tot dan hetzelfde tegenhoudspoor als hierboven.
+  // Geen klinisch oordeel en geen afkeuring van de oefening. Zie output/back-source-holds-20261103.json.
+  ['fp_a0a18c0c13673d38', {name:'Back extension', source:'images/core/back-extension-avatar-v7.jpg',
+    assetSha256:'fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50', kind:'source-choice-pending',
+    evidence:'Onafhankelijke visuele controle op originele resolutie (800x1200) door Claude en de coördinator (2026-11-03; sourceChoiceBlockers in output/visual-final-seven-20261103.json, overgenomen in output/back-source-holds-20261103.json), bronbytes gelijk aan deze SHA256: horizontale rugstrekbank, enkels onder de rollen, heupen op het kussen, geen vloercontact, armen gekruist op de borst; de eigen uitleg beschrijft buikligging op de grond met de handen naast het hoofd. Bronkeuze (bank- of vloervariant) open bij eigenaar/behandelaar. Tijdelijke visuele bronhold, geen klinisch oordeel en geen afkeuring van de oefening.',
+    reason:'Tijdelijk tegengehouden: het beeld toont een rugstrekbank zonder vloercontact met de armen gekruist, de eigen uitleg buikligging op de grond met de handen naast het hoofd. Welke variant bedoeld is, wordt nog gekozen; geen klinisch oordeel.'}],
+  ['fp_7b07f346644f9c17', {name:'Rug extensie', source:'images/core/rug-extensie-avatar-v7.jpg',
+    assetSha256:'7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47', kind:'source-choice-pending',
+    evidence:'Onafhankelijke visuele controle op originele resolutie (800x1200) door Claude en de coördinator (2026-11-03; sourceChoiceBlockers in output/visual-final-seven-20261103.json, overgenomen in output/back-source-holds-20261103.json), bronbytes gelijk aan deze SHA256: armen gestrekt naar voren en in de eindhouding ook armen en benen van de grond; de eigen uitleg beschrijft handen naast het hoofd en alleen de borst een stukje van de vloer. Bronkeuze (armen naar voren met armen en benen omhoog, of borstheffing met handen naast het hoofd) open bij eigenaar/behandelaar. Tijdelijke visuele bronhold, geen klinisch oordeel en geen afkeuring van de oefening.',
+    reason:'Tijdelijk tegengehouden: het beeld toont gestrekte armen naar voren en armen en benen van de grond, de eigen uitleg handen naast het hoofd en alleen de borst omhoog. Welke variant bedoeld is, wordt nog gekozen; geen klinisch oordeel.'}]
 ]);
 // Bewust gecorrigeerde V2-kaartbeelden (content/v2-avatar-overrides.json): alleen een
 // observatie bij exact het gecorrigeerde bestand, geen goedkeuring.
@@ -126,7 +137,7 @@ for (const e of base) {
     presentation:reason?'withhold':'static',allowAutomaticPoseSplit:false,
     reasons:reason?[reason]:['Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd.'],
     observations:correctedLunge ? ['Visueel gecontroleerd: rechterbeen voor in linker figuur, linkerbeen voor in rechter figuur; achterknieën boven de grond. Beenwissel hersteld, geen klinische goedkeuring of bewegingsdemonstratie.'] : corrected ? ['Kaartbeeld gecorrigeerd op 2026-11-03: het vorige V2-kaartbeeld ('+override.previousKaartImg+') toonde '+override.previousShowed+'; dit beeld toont '+override.nowShows+', zoals de eigen uitleg. Het V2-lijnbeeld is op dezelfde manier gecorrigeerd. Zie content/v2-avatar-overrides.json. Het V1-lijnbeeld is niet aangepast en toont nog de andere beweging. Geen klinische goedkeuring.'] : observations.get(e.naam)||[],
-    ...(hold ? {hold:{temporary:true,kind:'source-defect',source:hold.source,assetSha256:hold.assetSha256,evidence:hold.evidence || HOLD_BEWIJS,
+    ...(hold ? {hold:{temporary:true,kind:hold.kind || 'source-defect',source:hold.source,assetSha256:hold.assetSha256,evidence:hold.evidence || HOLD_BEWIJS,
       release:'Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd.'}} : {}),
     poses, poseGeometry,
     // Ingebakken eigen merk: de kaart dekt het af en zet overal zelf hetzelfde merk, zodat

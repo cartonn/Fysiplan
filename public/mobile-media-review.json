@@ -18,11 +18,11 @@
   ],
   "summary": {
     "total": 319,
-    "rejected": 10,
-    "unreviewed": 309,
+    "rejected": 12,
+    "unreviewed": 307,
     "approved": 0,
-    "poseGeometryApproved": 155,
-    "poseStatic": 164,
+    "poseGeometryApproved": 153,
+    "poseStatic": 166,
     "brandMarkCovered": 215,
     "brandMarkAbsent": 104
   },
@@ -4364,47 +4364,26 @@
       },
       "width": 800,
       "height": 1200,
-      "status": "unreviewed",
+      "status": "rejected",
       "clinicalApproved": false,
-      "presentation": "static",
+      "presentation": "withhold",
       "allowAutomaticPoseSplit": false,
       "reasons": [
-        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+        "Tijdelijk tegengehouden: het beeld toont een rugstrekbank zonder vloercontact met de armen gekruist, de eigen uitleg buikligging op de grond met de handen naast het hoofd. Welke variant bedoeld is, wordt nog gekozen; geen klinisch oordeel."
       ],
       "observations": [],
-      "poses": [
-        {
-          "label": "start",
-          "crop": {
-            "x": 94,
-            "y": 166,
-            "w": 612,
-            "h": 388
-          }
-        },
-        {
-          "label": "end",
-          "crop": {
-            "x": 90,
-            "y": 554,
-            "w": 640,
-            "h": 544
-          }
-        }
-      ],
+      "hold": {
+        "temporary": true,
+        "kind": "source-choice-pending",
+        "source": "images/core/back-extension-avatar-v7.jpg",
+        "assetSha256": "fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50",
+        "evidence": "Onafhankelijke visuele controle op originele resolutie (800x1200) door Claude en de coördinator (2026-11-03; sourceChoiceBlockers in output/visual-final-seven-20261103.json, overgenomen in output/back-source-holds-20261103.json), bronbytes gelijk aan deze SHA256: horizontale rugstrekbank, enkels onder de rollen, heupen op het kussen, geen vloercontact, armen gekruist op de borst; de eigen uitleg beschrijft buikligging op de grond met de handen naast het hoofd. Bronkeuze (bank- of vloervariant) open bij eigenaar/behandelaar. Tijdelijke visuele bronhold, geen klinisch oordeel en geen afkeuring van de oefening.",
+        "release": "Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd."
+      },
+      "poses": [],
       "poseGeometry": {
-        "status": "geometry-approved",
-        "axis": "y",
-        "reviewer": "Claude Opus 5, nachtelijke reparatieopdracht eigenaar 2026-11-02",
-        "reviewDate": "2026-11-02",
-        "reviewKind": "geometric-visual-only",
-        "visuallyInspected": true,
-        "method": "connected components op bronpixels; expliciete uitsnede per houding; geen witruimtesplitsing",
-        "foreignInkPixels": 0,
-        "silhouetteIoU": 0.363,
-        "brandingBoxesOutsideCrop": 2,
-        "clinicalApproved": false,
-        "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+        "status": "withheld",
+        "reason": "De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond."
       },
       "brandMark": {
         "present": true,
@@ -6010,47 +5989,26 @@
       },
       "width": 800,
       "height": 1200,
-      "status": "unreviewed",
+      "status": "rejected",
       "clinicalApproved": false,
-      "presentation": "static",
+      "presentation": "withhold",
       "allowAutomaticPoseSplit": false,
       "reasons": [
-        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+        "Tijdelijk tegengehouden: het beeld toont gestrekte armen naar voren en armen en benen van de grond, de eigen uitleg handen naast het hoofd en alleen de borst omhoog. Welke variant bedoeld is, wordt nog gekozen; geen klinisch oordeel."
       ],
       "observations": [],
-      "poses": [
-        {
-          "label": "start",
-          "crop": {
-            "x": 20,
-            "y": 308,
-            "w": 748,
-            "h": 212
-          }
-        },
-        {
-          "label": "end",
-          "crop": {
-            "x": 20,
-            "y": 740,
-            "w": 768,
-            "h": 288
-          }
-        }
-      ],
+      "hold": {
+        "temporary": true,
+        "kind": "source-choice-pending",
+        "source": "images/core/rug-extensie-avatar-v7.jpg",
+        "assetSha256": "7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47",
+        "evidence": "Onafhankelijke visuele controle op originele resolutie (800x1200) door Claude en de coördinator (2026-11-03; sourceChoiceBlockers in output/visual-final-seven-20261103.json, overgenomen in output/back-source-holds-20261103.json), bronbytes gelijk aan deze SHA256: armen gestrekt naar voren en in de eindhouding ook armen en benen van de grond; de eigen uitleg beschrijft handen naast het hoofd en alleen de borst een stukje van de vloer. Bronkeuze (armen naar voren met armen en benen omhoog, of borstheffing met handen naast het hoofd) open bij eigenaar/behandelaar. Tijdelijke visuele bronhold, geen klinisch oordeel en geen afkeuring van de oefening.",
+        "release": "Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd."
+      },
+      "poses": [],
       "poseGeometry": {
-        "status": "geometry-approved",
-        "axis": "y",
-        "reviewer": "Claude Opus 5, nachtelijke reparatieopdracht eigenaar 2026-11-02",
-        "reviewDate": "2026-11-02",
-        "reviewKind": "geometric-visual-only",
-        "visuallyInspected": true,
-        "method": "connected components op bronpixels; expliciete uitsnede per houding; geen witruimtesplitsing",
-        "foreignInkPixels": 0,
-        "silhouetteIoU": 0.157,
-        "brandingBoxesOutsideCrop": 2,
-        "clinicalApproved": false,
-        "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+        "status": "withheld",
+        "reason": "De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond."
       },
       "brandMark": {
         "present": true,

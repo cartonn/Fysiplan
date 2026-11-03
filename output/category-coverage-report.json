@@ -2,7 +2,7 @@
  "scope": "Basiscatalogus in de repository (public/oefeningen-v2.json). Runtime-overrides op de server niet meegeteld; die gaan altijd voor.",
  "inputs": {
   "public/oefeningen-v2.json": "997048064af6dbb5",
-  "public/mobile-media-review.json": "a18f47e76d767135",
+  "public/mobile-media-review.json": "d7b0aad848d79230",
   "public/mobile-narration-review.json": "e31b3b5c8f6d2c2c",
   "public/index.html": "5a0c7e81decf9d74",
   "content/category-secondary-evidence.json": "5eb5e3167a827ec2"
@@ -242,8 +242,8 @@
    "secondary": 13,
    "secondaryAvailable": 13,
    "available": 13,
-   "availableClean": 13,
-   "mediaRejected": 0,
+   "availableClean": 11,
+   "mediaRejected": 2,
    "explanationHeld": 0,
    "missingAssets": [
     {
@@ -1094,8 +1094,8 @@
    "secondary": 0,
    "secondaryAvailable": 0,
    "available": 34,
-   "availableClean": 34,
-   "mediaRejected": 0,
+   "availableClean": 32,
+   "mediaRejected": 2,
    "explanationHeld": 0,
    "missingAssets": [
     {

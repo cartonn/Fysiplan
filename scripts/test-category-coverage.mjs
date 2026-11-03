@@ -78,6 +78,13 @@ for (const n of bewijs.notApplied) {
 const heelToe = bewijs.notApplied.find((n) => n.name === 'Standing chair heel/toe');
 assert.ok(heelToe && uitleg.holds.some((h) => h.status === 'hold' && h.exerciseId === heelToe.exerciseId), 'heel/toe: houding staat er en de mapping niet');
 assert.ok(bewijs.notApplied.some((n) => n.exerciseId === 'fp_295fd35a63d44ef8'), 'Chair squat staat expliciet bij niet toegepast');
+// Een tijdelijke bronhold (open bronkeuze, 2026-11-03) laat de categorie staan: Back extension
+// en Rug extensie blijven onder Core en Rug vindbaar; alleen hun beeld telt als tegengehouden.
+for (const id of ['fp_a0a18c0c13673d38', 'fp_7b07f346644f9c17']) {
+  const e = v2.find((x) => exerciseId(x) === id);
+  assert.ok(e && e.groep === 'Core' && (e.ook || []).includes('Rug'), `${id}: categorie ongewijzigd`);
+  assert.ok(afgekeurd.has(id + '|' + bronVan(e)), `${e.naam}: beeld tegengehouden`);
+}
 
 // ---- 4. niet-auto-vullen-categorieën ----
 for (const e of v2) for (const g of e.ook || []) {

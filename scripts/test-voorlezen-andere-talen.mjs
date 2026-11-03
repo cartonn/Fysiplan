@@ -146,7 +146,7 @@ for(const taal of TALEN){
 // ---- 6. regel per oefening gelijk aan de kaartknoppen en het Nederlandse voorlezen ----
 {
   const r=context('en');await r.laad();
-  let gelezen=0,overgeslagen=0;
+  let gelezen=0,overgeslagen=0;const wegIds=new Set();
   for(const entry of review.entries){
     const e=lib.find(x=>x.exerciseId===entry.exerciseId);assert.ok(e,entry.name);
     r.ctx.K={lib,kaart:{chosen:keuze(e),cells:{},client:{}},praktijk:{}};
@@ -159,9 +159,11 @@ for(const taal of TALEN){
     const weg=spreek(r).length===0;
     assert.equal(weg,kaartKnopWeg,e.naam+': zelfde uitkomst als de knoppen per oefening');
     assert.equal(weg,nederlandsWeg,e.naam+': zelfde uitkomst als het Nederlandse voorlezen');
-    if(weg)overgeslagen++;else gelezen++;
+    if(weg){overgeslagen++;wegIds.add(e.exerciseId);}else gelezen++;
     if(r.ctx.bezigLezen)vm.runInContext('stopLezen()',r.ctx);
   }
   assert.equal(gelezen+overgeslagen,319);
+  // open bronkeuze (2026-11-03): Back extension en Rug extensie worden net zo overgeslagen
+  for(const id of ['fp_a0a18c0c13673d38','fp_7b07f346644f9c17'])assert.ok(wegIds.has(id),id+' overgeslagen');
   console.log(`Voorlezen in andere talen: per oefening dezelfde regel als de kaartknoppen en het Nederlands (${gelezen} voorgelezen, ${overgeslagen} overgeslagen van 319); gemengd, alles tegengehouden, 8 talen en controle niet te laden getest; zonder houds exact de bestaande voorlezing.`);
 }

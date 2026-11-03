@@ -86,12 +86,27 @@ function kaartContext(chosen){
 {
   const k=kaartContext([]);await vm.runInContext('loadMobileReview()',k.ctx);
   for(const [naam,verwacht] of [['Dips',true],['Triceps dips',true],['Standing chair shoulder rotations',true],['Rotator (apparaat)',true],
+    ['Back extension',true],['Rug extensie',true],['Backextensie (apparaat)',false],
     ['Standing chair hip extension',false],['Standing chair knee lift',false],[normaal.naam,false]]){
     const o=vm.runInContext('vindOefening',k.ctx)({n:naam});
     assert.equal(vm.runInContext('noorItem',k.ctx)(o,{n:naam}).beeldGehouden,verwacht,naam);
     assert.equal(vm.runInContext('mediaWithheld',k.ctx)(o),verwacht,naam+': zelfde uitkomst als de kaartweergave');
   }
   assert.ok(html.includes("speelNoor([noorItem(vindOefening(x),x)]);return;"),'de knop per oefening gebruikt dezelfde regel');
+}
+
+// 3a. open bronkeuze (Back extension, Rug extensie, 2026-11-03): zelfde overslaan als een
+// bronfout. Ze hebben geen opname; het beeld gaat voor, dus ze heten niet "zonder opname".
+{
+  const keuze=[{n:normaal.naam,id:normaal.exerciseId},{n:'Back extension',id:'fp_a0a18c0c13673d38'},{n:'Rug extensie',id:'fp_7b07f346644f9c17'}];
+  for(const x of keuze.slice(1))assert.ok(!heeftOpname(regel(x.n)),x.n+': testgeval zonder opname');
+  const k=kaartContext(keuze);await vm.runInContext('loadMobileReview()',k.ctx);
+  vm.runInContext('leesVoor()',k.ctx);for(let i=0;i<20;i++)await new Promise(r=>setImmediate(r));
+  assert.deepEqual(k.afgespeeld,[normaal.naam]);assert.deepEqual(k.robot,[]);
+  assert.equal(k.meldingen.length,1);
+  assert.match(k.meldingen[0],/Niet voorgelezen, omdat de oefenafbeelding nog wordt gecontroleerd: Back extension, Rug extensie\./);
+  assert.doesNotMatch(k.meldingen[0],/Nog geen actuele stemopname/);
+  assert.doesNotMatch(k.meldingen[0],/fout|onjuist|afgekeurd|klinisch|verwijderd/i);
 }
 
 // 3b. controlegegevens niet te laden: er wordt niets voorgelezen (bestaande regel, blijft gelden)

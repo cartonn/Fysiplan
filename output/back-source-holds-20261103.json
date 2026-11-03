@@ -1,0 +1,1045 @@
+{
+ "schemaVersion": 1,
+ "kind": "Temporary exact-source media holds for two pending source-variant choices (not a clinical rejection)",
+ "date": "2026-11-03",
+ "worktree": "/private/tmp/fysiplan-verified-followup-20261103",
+ "branch": "codex/verified-followup-20261103",
+ "base": "c05da6658c5abac6cff31fc68a4d90f72676b55e",
+ "reviewer": "Claude Opus 5.5 (implementation); visual evidence by Claude and the coordinator, independently",
+ "notClinical": "No clinical approval, no clinical rejection and no choice of intended variant. The manifest uses status \"rejected\"/presentation \"withhold\" only because that is the existing mechanism the patient card already honours (same as the Chair squat hold); the hold record itself is kind \"source-choice-pending\" and its reason/evidence say so explicitly. Not a full clinical QA. No voice or media work completed.",
+ "evidence": {
+  "file": "/private/tmp/fysiplan-audio-recovery-20261103/output/visual-final-seven-20261103.json",
+  "sha256": "51b6ef7fc7839c1ea2e3940b717d1af4be7817192db93976109a6b6ff7ca28db",
+  "fileWorktreeHead": "a35d86682af47ea8881b9e9f6807bdebea587a2c",
+  "note": "Evidence file lives outside this repository; the two relevant items are copied verbatim below so the in-repo hold evidence can point here.",
+  "sourceChoiceBlockers": {
+   "note": "Door de coordinator onafhankelijk bekeken en bevestigd. Niet goedgekeurd. Welke variant bedoeld is (bank of vloer, armen naar voren of handen naast het hoofd), is een bronkeuze voor eigenaar/behandelaar en is hier niet gemaakt.",
+   "items": [
+    {
+     "name": "Back extension",
+     "exerciseId": "fp_a0a18c0c13673d38",
+     "kaartImg": "public/images/core/back-extension-avatar-v7.jpg",
+     "sha256": "fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50",
+     "status": "blocked-source-choice",
+     "approved": false,
+     "mismatch": "Uitleg: buikligging op de grond, handen naast het hoofd, borst van de grond. Beeld: horizontale rugstrekbank, enkels onder de rollen, heupen op het kussen, geen vloercontact, armen gekruist op de borst. V1-lijnbeeld (public/images/core/back-extension.jpg) toont ook de bank.",
+     "confirmedBy": [
+      "Claude (output/visual-next-batch-20261103.json, items[0])",
+      "coordinator (onafhankelijk, 2026-11-03)"
+     ],
+     "categoryLocalVsLive": "lokaal Core + Rug; live Core + Bovenste extremiteit (runtime-override)",
+     "relatedFinding": "Backextensie (apparaat) in deze batch toont een andere bank (schuine 45-gradenbank). Valt de keuze op de bankvariant, dan vraagt de verhouding tussen beide oefeningen ook een besluit."
+    },
+    {
+     "name": "Rug extensie",
+     "exerciseId": "fp_7b07f346644f9c17",
+     "kaartImg": "public/images/core/rug-extensie-avatar-v7.jpg",
+     "sha256": "7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47",
+     "status": "blocked-source-choice",
+     "approved": false,
+     "mismatch": "Uitleg: handen naast het hoofd, alleen de borst een stukje van de vloer. Beeld: armen gestrekt naar voren; in de eindhouding komen ook armen en benen van de grond ('superman'). V1-lijnbeeld (public/images/core/rug-extensie.jpg) toont hetzelfde, met pijlen bij armen en voeten.",
+     "confirmedBy": [
+      "Claude (output/visual-next-batch-20261103.json, items[1])",
+      "coordinator (onafhankelijk, 2026-11-03)"
+     ],
+     "categoryLocalVsLive": "lokaal en live Core + Rug"
+    }
+   ]
+  }
+ },
+ "hashesReadFromDisk": [
+  {
+   "exerciseId": "fp_a0a18c0c13673d38",
+   "name": "Back extension",
+   "source": "images/core/back-extension-avatar-v7.jpg",
+   "sha256ReadFromDisk": "fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50",
+   "evidenceSha256": "fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50",
+   "equal": true,
+   "v1LineImage": "images/core/back-extension.jpg",
+   "v1LineImageSha256": "4e8fdd8cd987369e3ca16619742ced5c066786630148f803e45f90e5688050c1"
+  },
+  {
+   "exerciseId": "fp_7b07f346644f9c17",
+   "name": "Rug extensie",
+   "source": "images/core/rug-extensie-avatar-v7.jpg",
+   "sha256ReadFromDisk": "7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47",
+   "evidenceSha256": "7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47",
+   "equal": true,
+   "v1LineImage": "images/core/rug-extensie.jpg",
+   "v1LineImageSha256": "d2e2eada4ca572589ab1506e063d4f1e23d4ced24e6acc6bd18f5c2a285f72a6"
+  }
+ ],
+ "change": {
+  "mechanism": "Existing sourceHolds map in scripts/build-mobile-media-review.mjs (Chair squat pattern): bound to exerciseId + catalog name + exact kaartImg path + exact SHA-256. The build throws if name, path or bytes differ, and throws if the id no longer resolves (hold not applied). Runtime (kaart.html) blocks on exerciseId|path; SHA binding is a build invariant.",
+  "codeChange": "Two new sourceHolds entries with their own evidence text and kind \"source-choice-pending\"; the hold record kind is now hold.kind || \"source-defect\", so the five existing holds produce byte-identical output.",
+  "holds": [
+   {
+    "exerciseId": "fp_a0a18c0c13673d38",
+    "name": "Back extension",
+    "source": "images/core/back-extension-avatar-v7.jpg",
+    "assetSha256": "fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50",
+    "status": "rejected",
+    "presentation": "withhold",
+    "reasons": [
+     "Tijdelijk tegengehouden: het beeld toont een rugstrekbank zonder vloercontact met de armen gekruist, de eigen uitleg buikligging op de grond met de handen naast het hoofd. Welke variant bedoeld is, wordt nog gekozen; geen klinisch oordeel."
+    ],
+    "hold": {
+     "temporary": true,
+     "kind": "source-choice-pending",
+     "source": "images/core/back-extension-avatar-v7.jpg",
+     "assetSha256": "fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50",
+     "evidence": "Onafhankelijke visuele controle op originele resolutie (800x1200) door Claude en de coördinator (2026-11-03; sourceChoiceBlockers in output/visual-final-seven-20261103.json, overgenomen in output/back-source-holds-20261103.json), bronbytes gelijk aan deze SHA256: horizontale rugstrekbank, enkels onder de rollen, heupen op het kussen, geen vloercontact, armen gekruist op de borst; de eigen uitleg beschrijft buikligging op de grond met de handen naast het hoofd. Bronkeuze (bank- of vloervariant) open bij eigenaar/behandelaar. Tijdelijke visuele bronhold, geen klinisch oordeel en geen afkeuring van de oefening.",
+     "release": "Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd."
+    },
+    "poses": [],
+    "poseGeometry": {
+     "status": "withheld",
+     "reason": "De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond."
+    }
+   },
+   {
+    "exerciseId": "fp_7b07f346644f9c17",
+    "name": "Rug extensie",
+    "source": "images/core/rug-extensie-avatar-v7.jpg",
+    "assetSha256": "7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47",
+    "status": "rejected",
+    "presentation": "withhold",
+    "reasons": [
+     "Tijdelijk tegengehouden: het beeld toont gestrekte armen naar voren en armen en benen van de grond, de eigen uitleg handen naast het hoofd en alleen de borst omhoog. Welke variant bedoeld is, wordt nog gekozen; geen klinisch oordeel."
+    ],
+    "hold": {
+     "temporary": true,
+     "kind": "source-choice-pending",
+     "source": "images/core/rug-extensie-avatar-v7.jpg",
+     "assetSha256": "7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47",
+     "evidence": "Onafhankelijke visuele controle op originele resolutie (800x1200) door Claude en de coördinator (2026-11-03; sourceChoiceBlockers in output/visual-final-seven-20261103.json, overgenomen in output/back-source-holds-20261103.json), bronbytes gelijk aan deze SHA256: armen gestrekt naar voren en in de eindhouding ook armen en benen van de grond; de eigen uitleg beschrijft handen naast het hoofd en alleen de borst een stukje van de vloer. Bronkeuze (armen naar voren met armen en benen omhoog, of borstheffing met handen naast het hoofd) open bij eigenaar/behandelaar. Tijdelijke visuele bronhold, geen klinisch oordeel en geen afkeuring van de oefening.",
+     "release": "Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd."
+    },
+    "poses": [],
+    "poseGeometry": {
+     "status": "withheld",
+     "reason": "De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond."
+    }
+   }
+  ]
+ },
+ "counts": {
+  "before": {
+   "total": 319,
+   "rejected": 10,
+   "unreviewed": 309,
+   "approved": 0,
+   "poseGeometryApproved": 155,
+   "poseStatic": 164,
+   "brandMarkCovered": 215,
+   "brandMarkAbsent": 104
+  },
+  "after": {
+   "total": 319,
+   "rejected": 12,
+   "unreviewed": 307,
+   "approved": 0,
+   "poseGeometryApproved": 153,
+   "poseStatic": 166,
+   "brandMarkCovered": 215,
+   "brandMarkAbsent": 104
+  },
+  "temporaryHolds": {
+   "before": 5,
+   "after": 7
+  },
+  "holdKinds": {
+   "source-defect": [
+    "Dips",
+    "Triceps dips",
+    "Chair squat",
+    "Step up with knee raise",
+    "Standing chair shoulder rotations"
+   ],
+   "source-choice-pending": [
+    "Back extension",
+    "Rug extensie"
+   ]
+  },
+  "poseCropsRemovedFromCard": 2,
+  "note": "rejected 10->12, unreviewed 309->307, poseGeometryApproved 155->153 (both had geometry-approved start/end crops), poseStatic 164->166. brandMark counts unchanged."
+ },
+ "diff": {
+  "files": [
+   {
+    "path": "output/category-coverage-report.json",
+    "insertions": 5,
+    "deletions": 5,
+    "blobBefore": "b1586b986020622616e37cb8ad44fb0235e4a94f",
+    "sha256After": "c0881361c7cbb993d811749f4f53f08d2c6e1ca64ac208f24b85da78e62ab4f7"
+   },
+   {
+    "path": "public/mobile-media-review.json",
+    "insertions": 32,
+    "deletions": 74,
+    "blobBefore": "babf17e9752f9657d3c96e8129462e612fd9309b",
+    "sha256After": "d7b0aad848d792303ebca302da5fbdf29e4bf4f7705573a0c5f8c7fa049b91fb"
+   },
+   {
+    "path": "scripts/build-mobile-media-review.mjs",
+    "insertions": 13,
+    "deletions": 2,
+    "blobBefore": "6d98d5782dc5a2a2165ff53bcf193de499c68976",
+    "sha256After": "9f382c349b0c82733be990c8105643ed77b31c935b6e93be9f99745627217cb7"
+   },
+   {
+    "path": "scripts/test-category-coverage.mjs",
+    "insertions": 7,
+    "deletions": 0,
+    "blobBefore": "1b5ad31b179fdc0826136c8d2d8c1f608267937d",
+    "sha256After": "7cfeabbc70452102006ba891ee74091c3f70f319e6d68ae0db052463127f05e1"
+   },
+   {
+    "path": "scripts/test-mobile-media-review.mjs",
+    "insertions": 25,
+    "deletions": 5,
+    "blobBefore": "01d10abdaa5d5c8c3ea583467c24455f76229975",
+    "sha256After": "25b97e4c970a90e2da209ad65f12b132f015b92122497bc73ef835c6ea9ba8a4"
+   },
+   {
+    "path": "scripts/test-noor-voorlezen-holds.mjs",
+    "insertions": 15,
+    "deletions": 0,
+    "blobBefore": "9262ad1765920ead919a5fc81c4ac7b09dd2b5cf",
+    "sha256After": "6ad308909f12c678e19cc908b3f443e402b222abae75909c80aac7e888a01d12"
+   },
+   {
+    "path": "scripts/test-v2-avatar-mapping.mjs",
+    "insertions": 29,
+    "deletions": 4,
+    "blobBefore": "d3d405bdc873b7bced3b52b9a2413149c35a2c37",
+    "sha256After": "ddbe941faeaa03cf1a5ca9cee5be19b10098521966a996686d137fae93feb9ec"
+   },
+   {
+    "path": "scripts/test-v2-uitzondering-mutaties.mjs",
+    "insertions": 24,
+    "deletions": 4,
+    "blobBefore": "6b457a71ff3ab117658d5cb87556fbe7597b0357",
+    "sha256After": "43b965eb70c6dc4cbcff7597e22a6ba16a59ea2baec801eeaf76d30588016496"
+   },
+   {
+    "path": "scripts/test-voorlezen-andere-talen.mjs",
+    "insertions": 4,
+    "deletions": 2,
+    "blobBefore": "812a9ecabf46c32090332cd125eff9838bb94b54",
+    "sha256After": "be070c6a73beb2af5c4f67c26630193182116584a1f75f1010446561c6881fc1"
+   }
+  ],
+  "reportFileItself": "output/back-source-holds-20261103.json (new; not included in the unified diff below)",
+  "manifest": {
+   "nonEntryKeysChanged": [
+    "summary"
+   ],
+   "reviewDateUnchanged": true,
+   "reviewDate": "2026-11-02",
+   "entriesChanged": 2,
+   "entryOrderUnchanged": true,
+   "entryChanges": [
+    {
+     "exerciseId": "fp_a0a18c0c13673d38",
+     "name": "Back extension",
+     "changedFields": [
+      "status",
+      "presentation",
+      "reasons",
+      "hold",
+      "poses",
+      "poseGeometry"
+     ],
+     "unchangedFields": [
+      "exerciseId",
+      "name",
+      "source",
+      "assetSha256",
+      "explanationSha256",
+      "clinicalApproved",
+      "brandMark",
+      "width",
+      "height"
+     ],
+     "before": {
+      "status": "unreviewed",
+      "presentation": "static",
+      "reasons": [
+       "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "poses": [
+       {
+        "label": "start",
+        "crop": {
+         "x": 94,
+         "y": 166,
+         "w": 612,
+         "h": 388
+        }
+       },
+       {
+        "label": "end",
+        "crop": {
+         "x": 90,
+         "y": 554,
+         "w": 640,
+         "h": 544
+        }
+       }
+      ],
+      "poseGeometryStatus": "geometry-approved",
+      "hold": null
+     },
+     "after": {
+      "status": "rejected",
+      "presentation": "withhold",
+      "reasons": [
+       "Tijdelijk tegengehouden: het beeld toont een rugstrekbank zonder vloercontact met de armen gekruist, de eigen uitleg buikligging op de grond met de handen naast het hoofd. Welke variant bedoeld is, wordt nog gekozen; geen klinisch oordeel."
+      ],
+      "poses": [],
+      "poseGeometryStatus": "withheld",
+      "hold": {
+       "temporary": true,
+       "kind": "source-choice-pending",
+       "source": "images/core/back-extension-avatar-v7.jpg",
+       "assetSha256": "fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50",
+       "evidence": "Onafhankelijke visuele controle op originele resolutie (800x1200) door Claude en de coördinator (2026-11-03; sourceChoiceBlockers in output/visual-final-seven-20261103.json, overgenomen in output/back-source-holds-20261103.json), bronbytes gelijk aan deze SHA256: horizontale rugstrekbank, enkels onder de rollen, heupen op het kussen, geen vloercontact, armen gekruist op de borst; de eigen uitleg beschrijft buikligging op de grond met de handen naast het hoofd. Bronkeuze (bank- of vloervariant) open bij eigenaar/behandelaar. Tijdelijke visuele bronhold, geen klinisch oordeel en geen afkeuring van de oefening.",
+       "release": "Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd."
+      }
+     }
+    },
+    {
+     "exerciseId": "fp_7b07f346644f9c17",
+     "name": "Rug extensie",
+     "changedFields": [
+      "status",
+      "presentation",
+      "reasons",
+      "hold",
+      "poses",
+      "poseGeometry"
+     ],
+     "unchangedFields": [
+      "exerciseId",
+      "name",
+      "source",
+      "assetSha256",
+      "explanationSha256",
+      "clinicalApproved",
+      "brandMark",
+      "width",
+      "height"
+     ],
+     "before": {
+      "status": "unreviewed",
+      "presentation": "static",
+      "reasons": [
+       "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "poses": [
+       {
+        "label": "start",
+        "crop": {
+         "x": 20,
+         "y": 308,
+         "w": 748,
+         "h": 212
+        }
+       },
+       {
+        "label": "end",
+        "crop": {
+         "x": 20,
+         "y": 740,
+         "w": 768,
+         "h": 288
+        }
+       }
+      ],
+      "poseGeometryStatus": "geometry-approved",
+      "hold": null
+     },
+     "after": {
+      "status": "rejected",
+      "presentation": "withhold",
+      "reasons": [
+       "Tijdelijk tegengehouden: het beeld toont gestrekte armen naar voren en armen en benen van de grond, de eigen uitleg handen naast het hoofd en alleen de borst omhoog. Welke variant bedoeld is, wordt nog gekozen; geen klinisch oordeel."
+      ],
+      "poses": [],
+      "poseGeometryStatus": "withheld",
+      "hold": {
+       "temporary": true,
+       "kind": "source-choice-pending",
+       "source": "images/core/rug-extensie-avatar-v7.jpg",
+       "assetSha256": "7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47",
+       "evidence": "Onafhankelijke visuele controle op originele resolutie (800x1200) door Claude en de coördinator (2026-11-03; sourceChoiceBlockers in output/visual-final-seven-20261103.json, overgenomen in output/back-source-holds-20261103.json), bronbytes gelijk aan deze SHA256: armen gestrekt naar voren en in de eindhouding ook armen en benen van de grond; de eigen uitleg beschrijft handen naast het hoofd en alleen de borst een stukje van de vloer. Bronkeuze (armen naar voren met armen en benen omhoog, of borstheffing met handen naast het hoofd) open bij eigenaar/behandelaar. Tijdelijke visuele bronhold, geen klinisch oordeel en geen afkeuring van de oefening.",
+       "release": "Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd."
+      }
+     }
+    }
+   ]
+  },
+  "categoryCoverage": {
+   "totalsUnchanged": true,
+   "assetGapsUnchanged": true,
+   "inputHashChanged": {
+    "public/mobile-media-review.json": {
+     "before": "a18f47e76d767135",
+     "after": "d7b0aad848d79230"
+    }
+   },
+   "categoriesChanged": [
+    {
+     "category": "Rug",
+     "fields": {
+      "availableClean": {
+       "before": 13,
+       "after": 11
+      },
+      "mediaRejected": {
+       "before": 0,
+       "after": 2
+      }
+     }
+    },
+    {
+     "category": "Core",
+     "fields": {
+      "availableClean": {
+       "before": 34,
+       "after": 32
+      },
+      "mediaRejected": {
+       "before": 0,
+       "after": 2
+      }
+     }
+    }
+   ]
+  },
+  "unified": [
+   "diff --git a/output/category-coverage-report.json b/output/category-coverage-report.json",
+   "index b1586b9..1cd1bf1 100644",
+   "--- a/output/category-coverage-report.json",
+   "+++ b/output/category-coverage-report.json",
+   "@@ -2,7 +2,7 @@",
+   "  \"scope\": \"Basiscatalogus in de repository (public/oefeningen-v2.json). Runtime-overrides op de server niet meegeteld; die gaan altijd voor.\",",
+   "  \"inputs\": {",
+   "   \"public/oefeningen-v2.json\": \"997048064af6dbb5\",",
+   "-  \"public/mobile-media-review.json\": \"a18f47e76d767135\",",
+   "+  \"public/mobile-media-review.json\": \"d7b0aad848d79230\",",
+   "   \"public/mobile-narration-review.json\": \"e31b3b5c8f6d2c2c\",",
+   "   \"public/index.html\": \"5a0c7e81decf9d74\",",
+   "   \"content/category-secondary-evidence.json\": \"5eb5e3167a827ec2\"",
+   "@@ -242,8 +242,8 @@",
+   "    \"secondary\": 13,",
+   "    \"secondaryAvailable\": 13,",
+   "    \"available\": 13,",
+   "-   \"availableClean\": 13,",
+   "-   \"mediaRejected\": 0,",
+   "+   \"availableClean\": 11,",
+   "+   \"mediaRejected\": 2,",
+   "    \"explanationHeld\": 0,",
+   "    \"missingAssets\": [",
+   "     {",
+   "@@ -1094,8 +1094,8 @@",
+   "    \"secondary\": 0,",
+   "    \"secondaryAvailable\": 0,",
+   "    \"available\": 34,",
+   "-   \"availableClean\": 34,",
+   "-   \"mediaRejected\": 0,",
+   "+   \"availableClean\": 32,",
+   "+   \"mediaRejected\": 2,",
+   "    \"explanationHeld\": 0,",
+   "    \"missingAssets\": [",
+   "     {",
+   "diff --git a/public/mobile-media-review.json b/public/mobile-media-review.json",
+   "index babf17e..5b9e17e 100644",
+   "--- a/public/mobile-media-review.json",
+   "+++ b/public/mobile-media-review.json",
+   "@@ -18,11 +18,11 @@",
+   "   ],",
+   "   \"summary\": {",
+   "     \"total\": 319,",
+   "-    \"rejected\": 10,",
+   "-    \"unreviewed\": 309,",
+   "+    \"rejected\": 12,",
+   "+    \"unreviewed\": 307,",
+   "     \"approved\": 0,",
+   "-    \"poseGeometryApproved\": 155,",
+   "-    \"poseStatic\": 164,",
+   "+    \"poseGeometryApproved\": 153,",
+   "+    \"poseStatic\": 166,",
+   "     \"brandMarkCovered\": 215,",
+   "     \"brandMarkAbsent\": 104",
+   "   },",
+   "@@ -4364,47 +4364,26 @@",
+   "       },",
+   "       \"width\": 800,",
+   "       \"height\": 1200,",
+   "-      \"status\": \"unreviewed\",",
+   "+      \"status\": \"rejected\",",
+   "       \"clinicalApproved\": false,",
+   "-      \"presentation\": \"static\",",
+   "+      \"presentation\": \"withhold\",",
+   "       \"allowAutomaticPoseSplit\": false,",
+   "       \"reasons\": [",
+   "-        \"Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd.\"",
+   "+        \"Tijdelijk tegengehouden: het beeld toont een rugstrekbank zonder vloercontact met de armen gekruist, de eigen uitleg buikligging op de grond met de handen naast het hoofd. Welke variant bedoeld is, wordt nog gekozen; geen klinisch oordeel.\"",
+   "       ],",
+   "       \"observations\": [],",
+   "-      \"poses\": [",
+   "-        {",
+   "-          \"label\": \"start\",",
+   "-          \"crop\": {",
+   "-            \"x\": 94,",
+   "-            \"y\": 166,",
+   "-            \"w\": 612,",
+   "-            \"h\": 388",
+   "-          }",
+   "-        },",
+   "-        {",
+   "-          \"label\": \"end\",",
+   "-          \"crop\": {",
+   "-            \"x\": 90,",
+   "-            \"y\": 554,",
+   "-            \"w\": 640,",
+   "-            \"h\": 544",
+   "-          }",
+   "-        }",
+   "-      ],",
+   "+      \"hold\": {",
+   "+        \"temporary\": true,",
+   "+        \"kind\": \"source-choice-pending\",",
+   "+        \"source\": \"images/core/back-extension-avatar-v7.jpg\",",
+   "+        \"assetSha256\": \"fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50\",",
+   "+        \"evidence\": \"Onafhankelijke visuele controle op originele resolutie (800x1200) door Claude en de coördinator (2026-11-03; sourceChoiceBlockers in output/visual-final-seven-20261103.json, overgenomen in output/back-source-holds-20261103.json), bronbytes gelijk aan deze SHA256: horizontale rugstrekbank, enkels onder de rollen, heupen op het kussen, geen vloercontact, armen gekruist op de borst; de eigen uitleg beschrijft buikligging op de grond met de handen naast het hoofd. Bronkeuze (bank- of vloervariant) open bij eigenaar/behandelaar. Tijdelijke visuele bronhold, geen klinisch oordeel en geen afkeuring van de oefening.\",",
+   "+        \"release\": \"Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd.\"",
+   "+      },",
+   "+      \"poses\": [],",
+   "       \"poseGeometry\": {",
+   "-        \"status\": \"geometry-approved\",",
+   "-        \"axis\": \"y\",",
+   "-        \"reviewer\": \"Claude Opus 5, nachtelijke reparatieopdracht eigenaar 2026-11-02\",",
+   "-        \"reviewDate\": \"2026-11-02\",",
+   "-        \"reviewKind\": \"geometric-visual-only\",",
+   "-        \"visuallyInspected\": true,",
+   "-        \"method\": \"connected components op bronpixels; expliciete uitsnede per houding; geen witruimtesplitsing\",",
+   "-        \"foreignInkPixels\": 0,",
+   "-        \"silhouetteIoU\": 0.363,",
+   "-        \"brandingBoxesOutsideCrop\": 2,",
+   "-        \"clinicalApproved\": false,",
+   "-        \"note\": \"Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd.\"",
+   "+        \"status\": \"withheld\",",
+   "+        \"reason\": \"De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond.\"",
+   "       },",
+   "       \"brandMark\": {",
+   "         \"present\": true,",
+   "@@ -6010,47 +5989,26 @@",
+   "       },",
+   "       \"width\": 800,",
+   "       \"height\": 1200,",
+   "-      \"status\": \"unreviewed\",",
+   "+      \"status\": \"rejected\",",
+   "       \"clinicalApproved\": false,",
+   "-      \"presentation\": \"static\",",
+   "+      \"presentation\": \"withhold\",",
+   "       \"allowAutomaticPoseSplit\": false,",
+   "       \"reasons\": [",
+   "-        \"Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd.\"",
+   "+        \"Tijdelijk tegengehouden: het beeld toont gestrekte armen naar voren en armen en benen van de grond, de eigen uitleg handen naast het hoofd en alleen de borst omhoog. Welke variant bedoeld is, wordt nog gekozen; geen klinisch oordeel.\"",
+   "       ],",
+   "       \"observations\": [],",
+   "-      \"poses\": [",
+   "-        {",
+   "-          \"label\": \"start\",",
+   "-          \"crop\": {",
+   "-            \"x\": 20,",
+   "-            \"y\": 308,",
+   "-            \"w\": 748,",
+   "-            \"h\": 212",
+   "-          }",
+   "-        },",
+   "-        {",
+   "-          \"label\": \"end\",",
+   "-          \"crop\": {",
+   "-            \"x\": 20,",
+   "-            \"y\": 740,",
+   "-            \"w\": 768,",
+   "-            \"h\": 288",
+   "-          }",
+   "-        }",
+   "-      ],",
+   "+      \"hold\": {",
+   "+        \"temporary\": true,",
+   "+        \"kind\": \"source-choice-pending\",",
+   "+        \"source\": \"images/core/rug-extensie-avatar-v7.jpg\",",
+   "+        \"assetSha256\": \"7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47\",",
+   "+        \"evidence\": \"Onafhankelijke visuele controle op originele resolutie (800x1200) door Claude en de coördinator (2026-11-03; sourceChoiceBlockers in output/visual-final-seven-20261103.json, overgenomen in output/back-source-holds-20261103.json), bronbytes gelijk aan deze SHA256: armen gestrekt naar voren en in de eindhouding ook armen en benen van de grond; de eigen uitleg beschrijft handen naast het hoofd en alleen de borst een stukje van de vloer. Bronkeuze (armen naar voren met armen en benen omhoog, of borstheffing met handen naast het hoofd) open bij eigenaar/behandelaar. Tijdelijke visuele bronhold, geen klinisch oordeel en geen afkeuring van de oefening.\",",
+   "+        \"release\": \"Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd.\"",
+   "+      },",
+   "+      \"poses\": [],",
+   "       \"poseGeometry\": {",
+   "-        \"status\": \"geometry-approved\",",
+   "-        \"axis\": \"y\",",
+   "-        \"reviewer\": \"Claude Opus 5, nachtelijke reparatieopdracht eigenaar 2026-11-02\",",
+   "-        \"reviewDate\": \"2026-11-02\",",
+   "-        \"reviewKind\": \"geometric-visual-only\",",
+   "-        \"visuallyInspected\": true,",
+   "-        \"method\": \"connected components op bronpixels; expliciete uitsnede per houding; geen witruimtesplitsing\",",
+   "-        \"foreignInkPixels\": 0,",
+   "-        \"silhouetteIoU\": 0.157,",
+   "-        \"brandingBoxesOutsideCrop\": 2,",
+   "-        \"clinicalApproved\": false,",
+   "-        \"note\": \"Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd.\"",
+   "+        \"status\": \"withheld\",",
+   "+        \"reason\": \"De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond.\"",
+   "       },",
+   "       \"brandMark\": {",
+   "         \"present\": true,",
+   "diff --git a/scripts/build-mobile-media-review.mjs b/scripts/build-mobile-media-review.mjs",
+   "index 6d98d57..0eacf9c 100644",
+   "--- a/scripts/build-mobile-media-review.mjs",
+   "+++ b/scripts/build-mobile-media-review.mjs",
+   "@@ -54,7 +54,18 @@ const sourceHolds = new Map([",
+   "     reason:'Tijdelijk tegengehouden: losse, zwevende fragmenten in plaats van een verhoging om op te stappen.'}],",
+   "   ['fp_4b99c5f11b42a30d', {name:'Standing chair shoulder rotations', source:'images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg',",
+   "     assetSha256:'8290b9e1fe168d92837c72a096dbc84276ec0e70f40de714b6e265b83e7f4e0b',",
+   "-    reason:'Tijdelijk tegengehouden: de figuur staat op één been naast de stoel; er is geen schouder- of onderarmrotatie afgebeeld.'}]",
+   "+    reason:'Tijdelijk tegengehouden: de figuur staat op één been naast de stoel; er is geen schouder- of onderarmrotatie afgebeeld.'}],",
+   "+  // Bronkeuze open (2026-11-03): beeld en eigen uitleg beschrijven een andere variant. Welke",
+   "+  // bedoeld is, beslist de eigenaar/behandelaar; tot dan hetzelfde tegenhoudspoor als hierboven.",
+   "+  // Geen klinisch oordeel en geen afkeuring van de oefening. Zie output/back-source-holds-20261103.json.",
+   "+  ['fp_a0a18c0c13673d38', {name:'Back extension', source:'images/core/back-extension-avatar-v7.jpg',",
+   "+    assetSha256:'fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50', kind:'source-choice-pending',",
+   "+    evidence:'Onafhankelijke visuele controle op originele resolutie (800x1200) door Claude en de coördinator (2026-11-03; sourceChoiceBlockers in output/visual-final-seven-20261103.json, overgenomen in output/back-source-holds-20261103.json), bronbytes gelijk aan deze SHA256: horizontale rugstrekbank, enkels onder de rollen, heupen op het kussen, geen vloercontact, armen gekruist op de borst; de eigen uitleg beschrijft buikligging op de grond met de handen naast het hoofd. Bronkeuze (bank- of vloervariant) open bij eigenaar/behandelaar. Tijdelijke visuele bronhold, geen klinisch oordeel en geen afkeuring van de oefening.',",
+   "+    reason:'Tijdelijk tegengehouden: het beeld toont een rugstrekbank zonder vloercontact met de armen gekruist, de eigen uitleg buikligging op de grond met de handen naast het hoofd. Welke variant bedoeld is, wordt nog gekozen; geen klinisch oordeel.'}],",
+   "+  ['fp_7b07f346644f9c17', {name:'Rug extensie', source:'images/core/rug-extensie-avatar-v7.jpg',",
+   "+    assetSha256:'7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47', kind:'source-choice-pending',",
+   "+    evidence:'Onafhankelijke visuele controle op originele resolutie (800x1200) door Claude en de coördinator (2026-11-03; sourceChoiceBlockers in output/visual-final-seven-20261103.json, overgenomen in output/back-source-holds-20261103.json), bronbytes gelijk aan deze SHA256: armen gestrekt naar voren en in de eindhouding ook armen en benen van de grond; de eigen uitleg beschrijft handen naast het hoofd en alleen de borst een stukje van de vloer. Bronkeuze (armen naar voren met armen en benen omhoog, of borstheffing met handen naast het hoofd) open bij eigenaar/behandelaar. Tijdelijke visuele bronhold, geen klinisch oordeel en geen afkeuring van de oefening.',",
+   "+    reason:'Tijdelijk tegengehouden: het beeld toont gestrekte armen naar voren en armen en benen van de grond, de eigen uitleg handen naast het hoofd en alleen de borst omhoog. Welke variant bedoeld is, wordt nog gekozen; geen klinisch oordeel.'}]",
+   " ]);",
+   " // Bewust gecorrigeerde V2-kaartbeelden (content/v2-avatar-overrides.json): alleen een",
+   " // observatie bij exact het gecorrigeerde bestand, geen goedkeuring.",
+   "@@ -126,7 +137,7 @@ for (const e of base) {",
+   "     presentation:reason?'withhold':'static',allowAutomaticPoseSplit:false,",
+   "     reasons:reason?[reason]:['Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd.'],",
+   "     observations:correctedLunge ? ['Visueel gecontroleerd: rechterbeen voor in linker figuur, linkerbeen voor in rechter figuur; achterknieën boven de grond. Beenwissel hersteld, geen klinische goedkeuring of bewegingsdemonstratie.'] : corrected ? ['Kaartbeeld gecorrigeerd op 2026-11-03: het vorige V2-kaartbeeld ('+override.previousKaartImg+') toonde '+override.previousShowed+'; dit beeld toont '+override.nowShows+', zoals de eigen uitleg. Het V2-lijnbeeld is op dezelfde manier gecorrigeerd. Zie content/v2-avatar-overrides.json. Het V1-lijnbeeld is niet aangepast en toont nog de andere beweging. Geen klinische goedkeuring.'] : observations.get(e.naam)||[],",
+   "-    ...(hold ? {hold:{temporary:true,kind:'source-defect',source:hold.source,assetSha256:hold.assetSha256,evidence:hold.evidence || HOLD_BEWIJS,",
+   "+    ...(hold ? {hold:{temporary:true,kind:hold.kind || 'source-defect',source:hold.source,assetSha256:hold.assetSha256,evidence:hold.evidence || HOLD_BEWIJS,",
+   "       release:'Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd.'}} : {}),",
+   "     poses, poseGeometry,",
+   "     // Ingebakken eigen merk: de kaart dekt het af en zet overal zelf hetzelfde merk, zodat",
+   "diff --git a/scripts/test-category-coverage.mjs b/scripts/test-category-coverage.mjs",
+   "index 1b5ad31..a9fd4ec 100644",
+   "--- a/scripts/test-category-coverage.mjs",
+   "+++ b/scripts/test-category-coverage.mjs",
+   "@@ -78,6 +78,13 @@ for (const n of bewijs.notApplied) {",
+   " const heelToe = bewijs.notApplied.find((n) => n.name === 'Standing chair heel/toe');",
+   " assert.ok(heelToe && uitleg.holds.some((h) => h.status === 'hold' && h.exerciseId === heelToe.exerciseId), 'heel/toe: houding staat er en de mapping niet');",
+   " assert.ok(bewijs.notApplied.some((n) => n.exerciseId === 'fp_295fd35a63d44ef8'), 'Chair squat staat expliciet bij niet toegepast');",
+   "+// Een tijdelijke bronhold (open bronkeuze, 2026-11-03) laat de categorie staan: Back extension",
+   "+// en Rug extensie blijven onder Core en Rug vindbaar; alleen hun beeld telt als tegengehouden.",
+   "+for (const id of ['fp_a0a18c0c13673d38', 'fp_7b07f346644f9c17']) {",
+   "+  const e = v2.find((x) => exerciseId(x) === id);",
+   "+  assert.ok(e && e.groep === 'Core' && (e.ook || []).includes('Rug'), `${id}: categorie ongewijzigd`);",
+   "+  assert.ok(afgekeurd.has(id + '|' + bronVan(e)), `${e.naam}: beeld tegengehouden`);",
+   "+}",
+   " ",
+   " // ---- 4. niet-auto-vullen-categorieën ----",
+   " for (const e of v2) for (const g of e.ook || []) {",
+   "diff --git a/scripts/test-mobile-media-review.mjs b/scripts/test-mobile-media-review.mjs",
+   "index 01d10ab..42ce370 100644",
+   "--- a/scripts/test-mobile-media-review.mjs",
+   "+++ b/scripts/test-mobile-media-review.mjs",
+   "@@ -61,22 +61,42 @@ for(const e of manifest.rejectedSources){",
+   "   assert.equal(e.assetSha256,createHash('sha256').update(bytes).digest('hex'),'afgekeurde bron niet aan zijn bytes gebonden: '+e.source);",
+   " }",
+   " assert.ok((await fs.readFile('public/kaart.html','utf8')).includes('data[0].rejectedSources'),'de kaart leest de afgekeurde vorige versies');",
+   "-// vijf inhoudelijke afkeuringen plus vijf tijdelijke houds op één bepaalde bron (2026-11-03)",
+   "+// vijf inhoudelijke afkeuringen plus zeven tijdelijke houds op één bepaalde bron (2026-11-03):",
+   "+// vijf bronfouten en twee open bronkeuzes (Back extension, Rug extensie)",
+   "+const BRONKEUZE=new Map([",
+   "+  ['fp_a0a18c0c13673d38','fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50'],",
+   "+  ['fp_7b07f346644f9c17','7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47']]);",
+   " for(const [id,name,source] of [['fp_013ba6ad937cc9d9','Dips','images/bovenste-extremiteit/dips-avatar-v7.jpg'],",
+   "   ['fp_f227db5fcf245d9c','Triceps dips','images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg'],",
+   "   ['fp_7dc1478e2b3c17b0','Step up with knee raise','images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg'],",
+   "   ['fp_4b99c5f11b42a30d','Standing chair shoulder rotations','images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg'],",
+   "-  ['fp_295fd35a63d44ef8','Chair squat','images/onderste-extremiteit/chair-squat-avatar-v7.jpg']]){",
+   "+  ['fp_295fd35a63d44ef8','Chair squat','images/onderste-extremiteit/chair-squat-avatar-v7.jpg'],",
+   "+  ['fp_a0a18c0c13673d38','Back extension','images/core/back-extension-avatar-v7.jpg'],",
+   "+  ['fp_7b07f346644f9c17','Rug extensie','images/core/rug-extensie-avatar-v7.jpg']]){",
+   "   const e=manifest.entries.find(e=>e.exerciseId===id);",
+   "   assert.equal(e.name,name);assert.equal(e.source,source,name);assert.equal(e.status,'rejected',name);assert.equal(e.presentation,'withhold',name);",
+   "   assert.equal(e.hold.temporary,true,name);assert.equal(e.hold.source,source,name);assert.equal(e.hold.assetSha256,e.assetSha256,name);",
+   "   assert.equal(e.clinicalApproved,false,name);",
+   "+  assert.equal(e.hold.kind,BRONKEUZE.has(id)?'source-choice-pending':'source-defect',name+': soort hold');",
+   " }",
+   "-const metHold=manifest.entries.filter(e=>e.hold);assert.equal(metHold.length,5,'alleen de vijf bedoelde bronnen hebben een tijdelijke hold');",
+   "+const metHold=manifest.entries.filter(e=>e.hold);assert.equal(metHold.length,7,'alleen de zeven bedoelde bronnen hebben een tijdelijke hold');",
+   " const chairHold=manifest.entries.find(e=>e.exerciseId==='fp_295fd35a63d44ef8');",
+   " assert.equal(chairHold.assetSha256,'a4d98858e15a11f54fa84e98cacf73603a302c0ff8dc632fd62d0bdd9bd96418');",
+   " assert.match(chairHold.hold.evidence,/originele resolutie/);",
+   "-assert.equal(manifest.summary.approved,0);assert.equal(manifest.summary.rejected,10);assert.equal(manifest.summary.unreviewed,309);",
+   "+// Back extension en Rug extensie: exact deze bytes, open bronkeuze, geen klinisch oordeel. De",
+   "+// eerdere meetkundige controle van de uitsnedes blijft in de approvals staan, maar levert",
+   "+// zolang de hold geldt geen houdingen meer.",
+   "+for(const [id,hash] of BRONKEUZE){",
+   "+  const e=manifest.entries.find(e=>e.exerciseId===id);",
+   "+  assert.equal(e.assetSha256,hash,e.name);assert.equal(e.hold.assetSha256,hash,e.name);",
+   "+  assert.match(e.hold.evidence,/originele resolutie/,e.name);assert.match(e.hold.evidence,/Bronkeuze .* open bij eigenaar\\/behandelaar/,e.name);",
+   "+  assert.match(e.hold.evidence,/geen klinisch oordeel en geen afkeuring van de oefening/,e.name);",
+   "+  assert.match(e.reasons[0],/^Tijdelijk tegengehouden: .*geen klinisch oordeel\\.$/,e.name);",
+   "+  assert.equal(e.poseGeometry.status,'withheld',e.name);assert.deepEqual(e.poses,[],e.name);",
+   "+  assert.ok(inspected.get(hash)?.source===e.source,e.name+': eerdere uitsnedecontrole niet weggehaald');",
+   "+}",
+   "+assert.equal(manifest.summary.approved,0);assert.equal(manifest.summary.rejected,12);assert.equal(manifest.summary.unreviewed,307);",
+   "+assert.equal(manifest.summary.poseGeometryApproved,153);assert.equal(manifest.summary.poseStatic,166);",
+   " // afgekeurde beelden leveren nooit houdingen, ook niet als de meting een paar vindt",
+   " for(const e of manifest.entries.filter(e=>e.status==='rejected')){",
+   "   assert.equal(e.poseGeometry.status,'withheld',e.name);assert.deepEqual(e.poses,[],e.name);",
+   "@@ -138,4 +158,4 @@ for(const naam of ['Front raises','Shoulder rotation (shrugs)','Yoga deep squat'",
+   " // een beeld zonder merk krijgt nooit een vlak, ook niet als er linksboven haar staat",
+   " for(const naam of ['Foam roller hamstring','Foam roller calf','Standing chair heel/toe','Alternating lunge jumps'])",
+   "   assert.equal(manifest.entries.find(r=>r.name===naam).brandMark.cover,null,naam);",
+   "-console.log('PASS: 319 source-linked assets, hashes, ten rejections (five content, five temporary source holds); '+approvedPoses.length+' visueel gecontroleerde uitsnedes, 215 ingebakken merken opnieuw gemeten en afdekbaar, geen klinische goedkeuring afgeleid.');",
+   "+console.log('PASS: 319 source-linked assets, hashes, twelve rejections (five content, seven temporary source holds: five source defects, two pending source choices); '+approvedPoses.length+' visueel gecontroleerde uitsnedes, 215 ingebakken merken opnieuw gemeten en afdekbaar, geen klinische goedkeuring afgeleid.');",
+   "diff --git a/scripts/test-noor-voorlezen-holds.mjs b/scripts/test-noor-voorlezen-holds.mjs",
+   "index 9262ad1..c2348af 100644",
+   "--- a/scripts/test-noor-voorlezen-holds.mjs",
+   "+++ b/scripts/test-noor-voorlezen-holds.mjs",
+   "@@ -86,6 +86,7 @@ function kaartContext(chosen){",
+   " {",
+   "   const k=kaartContext([]);await vm.runInContext('loadMobileReview()',k.ctx);",
+   "   for(const [naam,verwacht] of [['Dips',true],['Triceps dips',true],['Standing chair shoulder rotations',true],['Rotator (apparaat)',true],",
+   "+    ['Back extension',true],['Rug extensie',true],['Backextensie (apparaat)',false],",
+   "     ['Standing chair hip extension',false],['Standing chair knee lift',false],[normaal.naam,false]]){",
+   "     const o=vm.runInContext('vindOefening',k.ctx)({n:naam});",
+   "     assert.equal(vm.runInContext('noorItem',k.ctx)(o,{n:naam}).beeldGehouden,verwacht,naam);",
+   "@@ -94,6 +95,20 @@ function kaartContext(chosen){",
+   "   assert.ok(html.includes(\"speelNoor([noorItem(vindOefening(x),x)]);return;\"),'de knop per oefening gebruikt dezelfde regel');",
+   " }",
+   " ",
+   "+// 3a. open bronkeuze (Back extension, Rug extensie, 2026-11-03): zelfde overslaan als een",
+   "+// bronfout. Ze hebben geen opname; het beeld gaat voor, dus ze heten niet \"zonder opname\".",
+   "+{",
+   "+  const keuze=[{n:normaal.naam,id:normaal.exerciseId},{n:'Back extension',id:'fp_a0a18c0c13673d38'},{n:'Rug extensie',id:'fp_7b07f346644f9c17'}];",
+   "+  for(const x of keuze.slice(1))assert.ok(!heeftOpname(regel(x.n)),x.n+': testgeval zonder opname');",
+   "+  const k=kaartContext(keuze);await vm.runInContext('loadMobileReview()',k.ctx);",
+   "+  vm.runInContext('leesVoor()',k.ctx);for(let i=0;i<20;i++)await new Promise(r=>setImmediate(r));",
+   "+  assert.deepEqual(k.afgespeeld,[normaal.naam]);assert.deepEqual(k.robot,[]);",
+   "+  assert.equal(k.meldingen.length,1);",
+   "+  assert.match(k.meldingen[0],/Niet voorgelezen, omdat de oefenafbeelding nog wordt gecontroleerd: Back extension, Rug extensie\\./);",
+   "+  assert.doesNotMatch(k.meldingen[0],/Nog geen actuele stemopname/);",
+   "+  assert.doesNotMatch(k.meldingen[0],/fout|onjuist|afgekeurd|klinisch|verwijderd/i);",
+   "+}",
+   "+",
+   " // 3b. controlegegevens niet te laden: er wordt niets voorgelezen (bestaande regel, blijft gelden)",
+   " {",
+   "   const k=kaartContext([{n:normaal.naam,id:normaal.exerciseId},{n:'Dips',id:'fp_013ba6ad937cc9d9'}]);",
+   "diff --git a/scripts/test-v2-avatar-mapping.mjs b/scripts/test-v2-avatar-mapping.mjs",
+   "index d3d405b..c1f1cb3 100644",
+   "--- a/scripts/test-v2-avatar-mapping.mjs",
+   "+++ b/scripts/test-v2-avatar-mapping.mjs",
+   "@@ -1,7 +1,8 @@",
+   " // De V2-kaartbeelden van Standing chair hip extension en Standing chair knee lift waren",
+   " // onderling verwisseld (2026-11-03). Deze test legt de wérkelijk verwachte koppeling vast,",
+   " // los van de uitzonderingslijst zelf, zodat een fout in die lijst niet mee \"geldig\" wordt.",
+   "-// Ook vier bronnen met een zichtbaar defect worden op de kaart tijdelijk tegengehouden.",
+   "+// Ook zeven bronnen (vijf met een zichtbaar defect, twee met een open bronkeuze) worden op de",
+   "+// kaart tijdelijk tegengehouden.",
+   " import assert from 'node:assert/strict';",
+   " import fs from 'node:fs';",
+   " import vm from 'node:vm';",
+   "@@ -78,14 +79,29 @@ for(const v of verwacht){",
+   "   assert.ok(r.observations.some(t=>/gecorrigeerd/.test(t)&&/V1-lijnbeeld/.test(t)),'de correctie en wat niet is aangepast staan erbij');",
+   " }",
+   " ",
+   "-// ---- 4. tijdelijke houds op vijf bronnen ----",
+   "+// ---- 4. tijdelijke houds op zeven bronnen (vijf bronfouten, twee open bronkeuzes) ----",
+   " const houds=[",
+   "   ['fp_013ba6ad937cc9d9','Dips','images/bovenste-extremiteit/dips-avatar-v7.jpg'],",
+   "   ['fp_f227db5fcf245d9c','Triceps dips','images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg'],",
+   "   ['fp_7dc1478e2b3c17b0','Step up with knee raise','images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg'],",
+   "   ['fp_4b99c5f11b42a30d','Standing chair shoulder rotations','images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg'],",
+   "-  ['fp_295fd35a63d44ef8','Chair squat','images/onderste-extremiteit/chair-squat-avatar-v7.jpg']",
+   "+  ['fp_295fd35a63d44ef8','Chair squat','images/onderste-extremiteit/chair-squat-avatar-v7.jpg'],",
+   "+  ['fp_a0a18c0c13673d38','Back extension','images/core/back-extension-avatar-v7.jpg'],",
+   "+  ['fp_7b07f346644f9c17','Rug extensie','images/core/rug-extensie-avatar-v7.jpg']",
+   " ];",
+   "+// Back extension en Rug extensie: de hold verandert niets aan de catalogi. V1 en V2 delen id,",
+   "+// naam, uitleg, lijnbeeld en kaartbeeld; precies daardoor geldt de hold ook op een via V1",
+   "+// gemaakte QR-kaart (zie onder).",
+   "+const BRONKEUZE={'fp_a0a18c0c13673d38':'fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50',",
+   "+  'fp_7b07f346644f9c17':'7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47'};",
+   "+for(const [id,hash] of Object.entries(BRONKEUZE)){",
+   "+  const e2=v2.find(x=>exerciseId(x)===id),e1=v1.filter(x=>exerciseId(x)===id);",
+   "+  assert.equal(e1.length,1,id+': precies één V1-record');",
+   "+  for(const k of ['naam','groep','img','kaartImg','uitleg'])assert.equal(e1[0][k],e2[k],e2.naam+': V1 en V2 gelijk op '+k);",
+   "+  assert.equal(sha(e2.kaartImg),hash,e2.naam+': exact de beoordeelde bytes');",
+   "+  assert.ok(fs.existsSync('public/'+e2.img),e2.naam+': V1-lijnbeeld bestaat nog');",
+   "+  assert.equal(review.entries.find(x=>x.exerciseId===id).hold?.kind,'source-choice-pending',e2.naam+': hold op open bronkeuze');",
+   "+}",
+   " for(const [id,naam,bron] of houds){",
+   "   const e=v2.find(x=>exerciseId(x)===id);",
+   "   assert.equal(e.naam,naam);assert.equal(e.kaartImg,bron,naam+': bron niet verwijderd of omgezet');",
+   "@@ -112,6 +128,15 @@ const chair=opKaart('fp_295fd35a63d44ef8');",
+   " assert.equal(kaart.mediaWithheld({...chair,kaartImg:chair.kaartImg.replace('/v2/','/')}),true,'Chair squat op gedeelde QR-route');",
+   " assert.equal(kaart.mediaWithheld({...chair,kaartImg:'/v2/images/review/new-chair.jpg'}),false,'geen hold op ander bronpad');",
+   " assert.equal(kaart.mediaWithheld({...chair,exerciseId:'different-id'}),false,'geen hold op ander id');",
+   "+for(const id of Object.keys(BRONKEUZE)){",
+   "+  const o=opKaart(id);",
+   "+  assert.equal(kaart.mediaWithheld({...o,kaartImg:o.kaartImg.replace('/v2/','/')}),true,o.naam+' op gedeelde QR-route (V1-pad)');",
+   "+  assert.equal(kaart.mediaWithheld({...o,kaartImg:o.kaartImg.replace('/v2/','')}),true,o.naam+' met relatief pad');",
+   "+  assert.equal(kaart.mediaWithheld({...o,kaartImg:'/v2/images/review/'+id+'-nieuw.jpg'}),false,o.naam+': geen hold op ander bronpad');",
+   "+  assert.equal(kaart.mediaWithheld({...o,exerciseId:'different-id'}),false,o.naam+': geen hold op ander id');",
+   "+}",
+   "+// de twee holds blijven bij hun eigen beeld: Backextensie (apparaat), met een andere bank, blijft zichtbaar",
+   "+assert.equal(kaart.mediaWithheld(opKaart('fp_b5725b610192706a')),false,'Backextensie (apparaat) niet meegehouden');",
+   " for(const v of verwacht){",
+   "   assert.equal(kaart.mediaWithheld(opKaart(v.id)),false,v.naam+' toont het gecorrigeerde beeld');",
+   "   assert.equal(kaart.mediaWithheld({exerciseId:v.id,kaartImg:'/v2/'+(v.kaartImg===KNIE?HEUP:KNIE)}),false,'de oude koppeling is niet afgekeurd, alleen niet meer gebruikt');",
+   "@@ -127,4 +152,4 @@ const imp=spawnSync(process.execPath,['scripts/carla-avatar-pipeline.mjs','impor",
+   " assert.notEqual(imp.status,0);assert.match(imp.stderr,/Import geweigerd/,'import voor een uitzondering wordt vóór elk schrijven geweigerd');",
+   " assert.deepEqual([sha('oefeningen-v2.json'),sha(HEUP),sha(KNIE)],voor,'catalogus en beelden onaangeroerd');",
+   " ",
+   "-console.log('V2-kaart- en lijnbeelden: hip extension en knee lift tonen de beweging uit hun eigen uitleg (ids, teksten, geleverde pijlbeelden en V1 byte-gelijk, geen begin/eind-paar); 5 defecte bronnen tijdelijk tegengehouden op de kaart; pijplijn draait de correctie niet terug.');",
+   "+console.log('V2-kaart- en lijnbeelden: hip extension en knee lift tonen de beweging uit hun eigen uitleg (ids, teksten, geleverde pijlbeelden en V1 byte-gelijk, geen begin/eind-paar); 7 bronnen tijdelijk tegengehouden op de kaart (5 defect, 2 open bronkeuze, ook via de gedeelde V1-QR-route); pijplijn draait de correctie niet terug.');",
+   "diff --git a/scripts/test-v2-uitzondering-mutaties.mjs b/scripts/test-v2-uitzondering-mutaties.mjs",
+   "index 6b457a7..1a46a38 100644",
+   "--- a/scripts/test-v2-uitzondering-mutaties.mjs",
+   "+++ b/scripts/test-v2-uitzondering-mutaties.mjs",
+   "@@ -20,7 +20,9 @@ const lees = (p) => JSON.parse(fs.readFileSync(path.join(repo, p), 'utf8'));",
+   " const sha = (p) => createHash('sha256').update(fs.readFileSync(path.join(repo, p))).digest('hex');",
+   " const BEWAAKT = ['public/oefeningen.json', 'public/oefeningen-v2.json', 'public/mobile-media-review.json',",
+   "   'content/beginhouding-pijl.json', 'content/v2-avatar-overrides.json', 'content/v2-image-pair-report.json',",
+   "-  'public/images/bovenste-extremiteit/dips-avatar-v7.jpg'];",
+   "+  'public/images/bovenste-extremiteit/dips-avatar-v7.jpg',",
+   "+  'public/images/core/back-extension-avatar-v7.jpg', 'public/images/core/rug-extensie-avatar-v7.jpg',",
+   "+  'public/images/core/back-extension.jpg', 'public/images/core/rug-extensie.jpg'];",
+   " const voor = BEWAAKT.map(sha);",
+   " const werk = fs.mkdtempSync(path.join(os.tmpdir(), 'fysiplan-uitzondering-'));",
+   " const KOPIEER = ['validate-exercise-backgrounds.mjs', 'publication-channel-graph.mjs', 'v2-line-art-graph.mjs'];",
+   "@@ -87,8 +89,24 @@ try {",
+   "     && !['Dips', 'Triceps dips'].includes(e.naam)).kaartImg;",
+   "   const herschreven = await sharp(fs.readFileSync(path.join(repo, 'public', dips.kaartImg))).jpeg({quality: 88}).toBuffer();",
+   "   assert.notEqual(createHash('sha256').update(herschreven).digest('hex'), sha('public/' + dips.kaartImg));",
+   "+  // Back extension en Rug extensie (open bronkeuze): elk beeld opnieuw gecodeerd, dus zelfde",
+   "+  // inhoud maar andere bytes, precies wat een stille vervanging op hetzelfde pad zou zijn.",
+   "+  const bronkeuzeGevallen = [];",
+   "+  for (const n of ['Back extension', 'Rug extensie']) {",
+   "+    const e = naam(v2, n);",
+   "+    const opnieuw = await sharp(fs.readFileSync(path.join(repo, 'public', e.kaartImg))).jpeg({quality: 87}).toBuffer();",
+   "+    assert.notEqual(createHash('sha256').update(opnieuw).digest('hex'), sha('public/' + e.kaartImg), n);",
+   "+    const fout = new RegExp('Tijdelijke hold voor ' + n + ' past niet meer');",
+   "+    bronkeuzeGevallen.push(",
+   "+      [n + ': ander pad', {bestanden: metV2((c) => { naam(c, n).kaartImg = anderBeeld; })}, fout],",
+   "+      [n + ': andere bytes op hetzelfde pad', {beelden: {[e.kaartImg]: opnieuw}}, fout],",
+   "+      [n + ': andere naam bij hetzelfde id', {bestanden: metV2((c) => { naam(c, n).naam = n + ' (variant)'; })}, fout],",
+   "+      [n + ': ander id (herkoppeld lijnbeeld)', {bestanden: metV2((c) => { naam(c, n).img = 'images/core/' + n.toLowerCase().replace(' ', '-') + '-nieuw.jpg'; })},",
+   "+        new RegExp('Tijdelijke hold niet toegepast: ' + n)]);",
+   "+  }",
+   "   const houdGevallen = [",
+   "     ['controle: exacte bron', {}, null],",
+   "+    ...bronkeuzeGevallen,",
+   "     ['Chair squat: ander pad', {bestanden: metV2((c) => { naam(c, 'Chair squat').kaartImg = anderBeeld; })}, /Tijdelijke hold voor Chair squat past niet meer/],",
+   "     ['Chair squat: andere bytes', {beelden: {'images/onderste-extremiteit/chair-squat-avatar-v7.jpg': herschreven}}, /Tijdelijke hold voor Chair squat past niet meer/],",
+   "     ['ander pad', {bestanden: metV2((c) => { naam(c, 'Dips').kaartImg = anderBeeld; })}, /Tijdelijke hold voor Dips past niet meer/],",
+   "@@ -105,8 +123,10 @@ try {",
+   "     if (!verwacht) {",
+   "       assert.equal(r.code, 0, label + ': ' + r.fout);",
+   "       const review = JSON.parse(fs.readFileSync(path.join(r.root, 'public/mobile-media-review.json'), 'utf8'));",
+   "-      assert.equal(review.summary.rejected, 10, label);",
+   "-      assert.equal(review.entries.filter((e) => e.hold?.temporary).length, 5, label);",
+   "+      assert.equal(review.summary.rejected, 12, label);",
+   "+      assert.equal(review.entries.filter((e) => e.hold?.temporary).length, 7, label);",
+   "+      assert.deepEqual(review.entries.filter((e) => e.hold?.kind === 'source-choice-pending').map((e) => e.exerciseId).sort(),",
+   "+        ['fp_7b07f346644f9c17', 'fp_a0a18c0c13673d38'], label);",
+   "       // de wegwerpmap levert exact dezelfde beoordeling als de repo: het harnas zelf verandert niets",
+   "       assert.equal(fs.readFileSync(path.join(r.root, 'public/mobile-media-review.json'), 'utf8'),",
+   "         fs.readFileSync(path.join(repo, 'public/mobile-media-review.json'), 'utf8'), label);",
+   "@@ -174,4 +194,4 @@ try {",
+   "   fs.rmSync(werk, {recursive: true, force: true});",
+   " }",
+   " assert.deepEqual(BEWAAKT.map(sha), voor, 'echte catalogi, beoordeling, pijlen en beelden byte-gelijk');",
+   "-console.log('Uitzonderingen smal: 5 bron-houds; Dips-mutaties op pad/bytes/naam/id en Chair squat-mutaties op pad/bytes falen; V2-lijnbeeldcorrectie geldt alleen voor de 2 vastgelegde oefeningen (derde afwijking, V1-wijziging, losse pijlen, verkeerde hash of ontbrekende uitzondering falen in beide poorten); de lijnbeeldgraph draait de correctie niet terug.');",
+   "+console.log('Uitzonderingen smal: 7 bron-houds; Dips-, Back extension- en Rug extensie-mutaties op pad/bytes/naam/id en Chair squat-mutaties op pad/bytes falen; V2-lijnbeeldcorrectie geldt alleen voor de 2 vastgelegde oefeningen (derde afwijking, V1-wijziging, losse pijlen, verkeerde hash of ontbrekende uitzondering falen in beide poorten); de lijnbeeldgraph draait de correctie niet terug.');",
+   "diff --git a/scripts/test-voorlezen-andere-talen.mjs b/scripts/test-voorlezen-andere-talen.mjs",
+   "index 812a9ec..1439091 100644",
+   "--- a/scripts/test-voorlezen-andere-talen.mjs",
+   "+++ b/scripts/test-voorlezen-andere-talen.mjs",
+   "@@ -146,7 +146,7 @@ for(const taal of TALEN){",
+   " // ---- 6. regel per oefening gelijk aan de kaartknoppen en het Nederlandse voorlezen ----",
+   " {",
+   "   const r=context('en');await r.laad();",
+   "-  let gelezen=0,overgeslagen=0;",
+   "+  let gelezen=0,overgeslagen=0;const wegIds=new Set();",
+   "   for(const entry of review.entries){",
+   "     const e=lib.find(x=>x.exerciseId===entry.exerciseId);assert.ok(e,entry.name);",
+   "     r.ctx.K={lib,kaart:{chosen:keuze(e),cells:{},client:{}},praktijk:{}};",
+   "@@ -159,9 +159,11 @@ for(const taal of TALEN){",
+   "     const weg=spreek(r).length===0;",
+   "     assert.equal(weg,kaartKnopWeg,e.naam+': zelfde uitkomst als de knoppen per oefening');",
+   "     assert.equal(weg,nederlandsWeg,e.naam+': zelfde uitkomst als het Nederlandse voorlezen');",
+   "-    if(weg)overgeslagen++;else gelezen++;",
+   "+    if(weg){overgeslagen++;wegIds.add(e.exerciseId);}else gelezen++;",
+   "     if(r.ctx.bezigLezen)vm.runInContext('stopLezen()',r.ctx);",
+   "   }",
+   "   assert.equal(gelezen+overgeslagen,319);",
+   "+  // open bronkeuze (2026-11-03): Back extension en Rug extensie worden net zo overgeslagen",
+   "+  for(const id of ['fp_a0a18c0c13673d38','fp_7b07f346644f9c17'])assert.ok(wegIds.has(id),id+' overgeslagen');",
+   "   console.log(`Voorlezen in andere talen: per oefening dezelfde regel als de kaartknoppen en het Nederlands (${gelezen} voorgelezen, ${overgeslagen} overgeslagen van 319); gemengd, alles tegengehouden, 8 talen en controle niet te laden getest; zonder houds exact de bestaande voorlezing.`);",
+   " }",
+   ""
+  ]
+ },
+ "tests": {
+  "node": "v22.22.1",
+  "runs": [
+   {
+    "command": "npm run -s test:mobile",
+    "exit": 0,
+    "lines": [
+     "PASS: 319 source-linked assets, hashes, twelve rejections (five content, seven temporary source holds: five source defects, two pending source choices); 153 visueel gecontroleerde uitsnedes, 215 ingebakken merken opnieuw gemeten en afdekbaar, geen klinische goedkeuring afgeleid.",
+     "V2-kaart- en lijnbeelden: hip extension en knee lift tonen de beweging uit hun eigen uitleg (ids, teksten, geleverde pijlbeelden en V1 byte-gelijk, geen begin/eind-paar); 7 bronnen tijdelijk tegengehouden op de kaart (5 defect, 2 open bronkeuze, ook via de gedeelde V1-QR-route); pijplijn draait de correctie niet terug.",
+     "Uitzonderingen smal: 7 bron-houds; Dips-, Back extension- en Rug extensie-mutaties op pad/bytes/naam/id en Chair squat-mutaties op pad/bytes falen; V2-lijnbeeldcorrectie geldt alleen voor de 2 vastgelegde oefeningen (derde afwijking, V1-wijziging, losse pijlen, verkeerde hash of ontbrekende uitzondering falen in beide poorten); de lijnbeeldgraph draait de correctie niet terug.",
+     "PASS: 319 effective V2 entries, 15 source-hashed holds, 67 exact audio matches; no clinical approval inferred.",
+     "Voorlezen bovenaan: 3 oefening(en) met tegengehouden beeld en een opname (Dips, Triceps dips, Chair squat) worden overgeslagen en eerlijk genoemd, net als bij de knop per oefening; geen toestelstem, opnames en dosering onaangeroerd.",
+     "Voorlezen in andere talen: per oefening dezelfde regel als de kaartknoppen en het Nederlands (296 voorgelezen, 23 overgeslagen van 319); gemengd, alles tegengehouden, 8 talen en controle niet te laden getest; zonder houds exact de bestaande voorlezing.",
+     "Mobiele levering: audio/mpeg; 12 range-gevallen op een stemopname en 12 op een praktijkvideo byte voor byte juist (suffix, open, afgekapt, ongeldig, meervoudig, 416 zonder cache); cachebeleid, gelijke beoordelingsgeneratie, 319 sleutels sluitend, 153 actieve uitsnedes, voorbeeldkaart (Squat, Dead bug, Anteflexie armen, Step up) hash-gecontroleerd."
+    ]
+   },
+   {
+    "command": "npm run -s test:categories",
+    "exit": 0,
+    "lines": [
+     "{\"passed\":true,\"records\":604,\"requiredMappings\":17,\"migrationParentComparison\":false,\"tests\":[\"inlineJSsyntax\",\"requiredsecondary mappings\",\"aliasunion\",\"customlabel escaping\",\"rendered groupedbuttons\",\"legacyV1 exactfilter\",\"adminactions retained\",\"96px scrollbound retained\"],\"newMediaActivated\":false}",
+     "{\"passed\":true,\"mappings\":4,\"earlier\":13,\"preexisting\":6,\"notApplied\":[\"Standing chair heel/toe\",\"Chair squat\",\"Foam rol upper back stretch\",\"Seated lat stretch\",\"Standing chair knee lift\"],\"noAutoFill\":[\"Neurologische revalidatie\",\"Vestibulair\",\"Bekken & postpartum\",\"Sportrevalidatie\"],\"serverOverridesChecked\":7}"
+    ]
+   },
+   {
+    "command": "npm run -s build",
+    "exit": 0,
+    "lines": [
+     "V2-uitzonderingen: 2 expliciet vastgelegd en gebonden aan paden, sha256 (kaart-, lijn-, V1- en pijlbeeld) en stabiele ids.",
+     "Sjablonen geldig: 25 sjablonen, alle verwijzingen gepubliceerd (bibliotheek: 319 oefeningen).",
+     "Fysiplan build metadata written."
+    ],
+    "note": "dist/ is gitignored; build changed no tracked file"
+   },
+   {
+    "command": "npm run -s test:ahmed-notities",
+    "exit": 0,
+    "lines": [
+     "OK: account/mail/login, persoonlijk intrekken/herstellen, V2 categoriebeheer en AI werken end-to-end."
+    ]
+   }
+  ],
+  "baselineAtBase": "test:mobile exit 0 on unmodified c05da66 before any edit (155 crops, ten rejections).",
+  "added": {
+   "scripts/test-mobile-media-review.mjs": "Both holds: exact path, exact SHA-256 (hard-coded from disk), status rejected/withhold, kind source-choice-pending (other five stay source-defect), evidence mentions original resolution + open owner choice + not clinical, reasons end with \"geen klinisch oordeel\", poses withheld; earlier geometric inspection kept in content/mobile-pose-approvals.json but no longer yields crops. Counts 7 holds / 12 rejected / 307 unreviewed / 153 / 166.",
+   "scripts/test-v2-avatar-mapping.mjs": "Both are withheld on the card (/v2/ path), on the shared V1 QR path (/images/...) and with a relative path; not withheld on another source path or another id; V1 and V2 records equal on naam/groep/img/kaartImg/uitleg; bytes equal the hold hash; V1 line image still exists; Backextensie (apparaat) not withheld.",
+   "scripts/test-v2-uitzondering-mutaties.mjs": "Per exercise, in throwaway roots: other kaartImg path, re-encoded bytes on the same path, other name on the same id, other id (relinked line image) all make the build fail with the specific message and write no manifest; control build is byte-equal to the repo manifest (determinism) with 12 rejected / 7 holds / exactly these two source-choice-pending. Both avatars and both V1 line images added to the byte-guard list.",
+   "scripts/test-noor-voorlezen-holds.mjs": "Dutch Noor top button: selection [normal, Back extension, Rug extensie] plays only the normal one; one notice names both under \"oefenafbeelding nog wordt gecontroleerd\", not under \"geen stemopname\", no device voice, no fout/afgekeurd/klinisch wording; per-exercise rule (noorItem.beeldGehouden == mediaWithheld) true for both, false for Backextensie (apparaat).",
+   "scripts/test-voorlezen-andere-talen.mjs": "Other-language device voice: both ids are among the skipped exercises in the 319-exercise consistency sweep (296 read / 23 skipped, was 298 / 21).",
+   "scripts/test-category-coverage.mjs": "Both keep groep Core and secondary Rug, and are counted as media-withheld."
+  },
+  "sabotageCheck": "Ran the five changed read-only tests against the pre-hold manifest (HEAD) in a throwaway root: all five failed on the new assertions (test-mobile-media-review: Back extension; test-v2-avatar-mapping: \"Back extension: hold op open bronkeuze\"; test-noor-voorlezen-holds: Back extension; test-voorlezen-andere-talen: fp_a0a18c0c13673d38 overgeslagen; test-category-coverage: \"Back extension: beeld tegengehouden\").",
+  "notRun": [
+   "scripts/kaart-browsercheck.mjs / test:browser (real browser, not in test:mobile)",
+   "scripts/test-arrow-assets.mjs (arrow manifest, untouched by this change)",
+   "any live/production check"
+  ]
+ },
+ "impact": {
+  "v2QrCard": "Patient card (/k/<id>, kaart.html) for these two exercises: no photo, no start/end crops, no video button, no Noor listen button, and (existing rule: \"Wordt het beeld teruggehouden, dan bieden we ook de uitleg erbij niet aan\") no tap-to-open explanation; shows the existing notice \"De oefenafbeelding wordt gecontroleerd en is tijdelijk niet zichtbaar. Je dosering blijft op deze kaart staan.\" Exercise name, dosage chips, schedule and therapist notes stay. The explanation text in the catalog is unchanged; it is just not presented on the card while the hold stands.",
+  "runtimeBinding": "Unchanged kaart.html behaviour, stated precisely: the card blocks immediately on exerciseId|path; when such an exercise is on the card it fetches that path and, if its SHA-256 differs from the manifest hash, releases the block (herzieAfgekeurd; tested in test-mobile-media-controls \"andere hash: vervangen beeld wordt vrijgegeven\"). So a replacement on the same path is caught by the build (throws) and test:mobile (hash assertion), not kept hidden by the card. This differs from the wording in output/chair-source-hold-20261103.txt (\"blijft runtime tegengehouden\"), which applies to the build, not the card. Not changed here (out of scope).",
+  "sharedV1Qr": "Not V2-only. kaart.html always loads /v2/oefeningen.json and matches card rows by stable id, then name; it strips the /v2/ prefix before the exerciseId|path lookup. V1 and V2 share id, name, uitleg, line image and kaartImg for both exercises, so a card created from the V1 editor shows the same withheld state on its QR link. Same behaviour as the Chair squat hold.",
+  "narration": "Neither exercise has a Noor recording (67 clips; none for these names), so no recording is suppressed. Dutch top \"Luister\" button names them under \"oefenafbeelding nog wordt gecontroleerd\" instead of \"geen stemopname\"; per-exercise listen button is not rendered; other-language device voice skips them and names them. Recordings, texts and narration review unchanged.",
+  "poses": "Both previously had geometry-approved start/end crops on the card; these are withheld while the hold stands. content/mobile-pose-approvals.json is unchanged, so removing the hold restores the crops for these exact bytes.",
+  "categories": "Category mappings unchanged (local Core + Rug; production runtime override for Back extension Core + Bovenste extremiteit still applies). Coverage report: Core and Rug mediaRejected 0->2, availableClean -2; totals and gaps unchanged.",
+  "templates": "public/sjablonen.json template \"Lage rugklachten\" contains Back extension; adding it to a card works as before, the card shows the withheld notice instead of the photo.",
+  "stillVisibleElsewhere": [
+   "V1/V2 therapist editor and printed A4 card use the line drawing / arrow image (images/core/back-extension.jpg, images/core/rug-extensie.jpg and their beginhouding-pijl derivatives). Per the evidence those show the same bench / arms-forward variant. Not held: V1 catalog and source assets were to be preserved.",
+   "Landing page sample card public/images/landing/trainingskaart-12.png (via public/v2.html) includes a Back extension arrow image. Not changed.",
+   "Production: nothing deployed; live fysiplan.nl still shows both photos until this is reviewed and deployed."
+  ]
+ },
+ "preserved": [
+  {
+   "path": "public/oefeningen.json",
+   "sha256": "038af18ed09b5373cf03e951e7de3749ea0071fce615a3d98c8f09af84e7ac2a",
+   "byteEqualToBase": true
+  },
+  {
+   "path": "public/oefeningen-v2.json",
+   "sha256": "997048064af6dbb50cbae0093ce878afbf86cc2f30ea124fa78da326728c4da1",
+   "byteEqualToBase": true
+  },
+  {
+   "path": "public/mobile-narration-review.json",
+   "sha256": "e31b3b5c8f6d2c2c6ceefc846086c2a3308cb8707b7d9d9e8aef01dcd7deeccd",
+   "byteEqualToBase": true
+  },
+  {
+   "path": "content/mobile-pose-approvals.json",
+   "sha256": "7fca75b8ee0570d930edf3c40e0a139d47a9003d9fef679c53e2da7566dffbf1",
+   "byteEqualToBase": true
+  },
+  {
+   "path": "content/v2-avatar-overrides.json",
+   "sha256": "4401c4eda82f43364624c7a626388b8e25d8d53985957fbe0c019728a469e55d",
+   "byteEqualToBase": true
+  },
+  {
+   "path": "content/category-secondary-evidence.json",
+   "sha256": "5eb5e3167a827ec2b02b85f6d1d569c569e0d7d3bb295351c986d0edfc3f9126",
+   "byteEqualToBase": true
+  },
+  {
+   "path": "content/beginhouding-pijl.json",
+   "sha256": "a7ba1f299ffb23f69777284f8cf3fa5430ebbc7dc03691000389729e72389509",
+   "byteEqualToBase": true
+  },
+  {
+   "path": "public/kaart.html",
+   "sha256": "c78cc5acb230db5b8cb63fd0eaf3179de0e11f6db1a58301c05cb15c108d25eb",
+   "byteEqualToBase": true
+  },
+  {
+   "path": "public/audio/noor/manifest.json",
+   "sha256": "cac4d0c243714814cb7e0a6219e91d7fd387dad86d4a909c3244cb78bee5933a",
+   "byteEqualToBase": true
+  },
+  {
+   "path": "public/images/core/back-extension-avatar-v7.jpg",
+   "sha256": "fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50",
+   "byteEqualToBase": true
+  },
+  {
+   "path": "public/images/core/rug-extensie-avatar-v7.jpg",
+   "sha256": "7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47",
+   "byteEqualToBase": true
+  },
+  {
+   "path": "public/images/core/back-extension.jpg",
+   "sha256": "4e8fdd8cd987369e3ca16619742ced5c066786630148f803e45f90e5688050c1",
+   "byteEqualToBase": true
+  },
+  {
+   "path": "public/images/core/rug-extensie.jpg",
+   "sha256": "d2e2eada4ca572589ab1506e063d4f1e23d4ced24e6acc6bd18f5c2a285f72a6",
+   "byteEqualToBase": true
+  }
+ ],
+ "preservedStatement": "No change to V1 or V2 catalog, exercise ids, names, explanations, dosage/cells, category mappings or overrides, source images, line or arrow images, audio, narration review, pose approvals, kaart.html or server code. clinicalApproved stays false everywhere.",
+ "release": "Does not lapse on its own. A text change alone does not release it: the hold is bound to name + path + bytes, not to the explanation. After the owner chooses a variant: if a new image is supplied, the build fails until the hold entry is updated or removed after review; if the text is changed to match the current image, remove the two sourceHolds entries explicitly, rebuild public/mobile-media-review.json and regenerate output/category-coverage-report.json. Reverting this commit restores the previous state exactly.",
+ "related": "Backextensie (apparaat) fp_b5725b610192706a shows a different (45 degree) bench; if the bench variant is chosen, the relation between both exercises needs a decision (from the evidence). Not held.",
+ "notDone": [
+  "No push, deploy, purchase, paid API, generation, access expansion or bypass",
+  "No image, text, catalog, category, audio or approval file changed",
+  "No choice of intended variant; no clinical QA; no voice/media work completed"
+ ]
+}
