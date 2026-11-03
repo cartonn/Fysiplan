@@ -1464,9 +1464,9 @@ function onvervulbaar(res, size, extra) {
     "cache-control": "no-store, max-age=0" });
   res.end();
 }
-async function sendMedia(request, res, type, data) {
+async function sendMedia(request, res, type, data, extraHeaders = {}) {
   const vast = { "content-type": type, "x-content-type-options": "nosniff",
-    "referrer-policy": "same-origin", "accept-ranges": "bytes", ...cacheHeaders(type) };
+    "referrer-policy": "same-origin", "accept-ranges": "bytes", ...cacheHeaders(type), ...extraHeaders };
   const bereik = byteRange(request.headers.range, data.length);
   if (bereik.status === 416) { onvervulbaar(res, data.length, vast); return; }
   if (bereik.status === 200) {
@@ -1900,9 +1900,14 @@ async function afhandelen(request, response) {
         await sendJson(response, 200, { published: false, drafts: await listDrafts({ draftRoot, catalogue }) });
         return;
       }
-      const match = urlPath.match(/^\/api\/exercise-drafts\/(fc_[a-f0-9]+)\/(line|start|end)$/);
+      const match = urlPath.match(/^\/api\/exercise-drafts\/(fc_[a-f0-9]+)\/(line|start|end|motion)$/);
       if (!match) { await sendJson(response, 404, { fout: "Concept niet gevonden." }); return; }
       const draft = await loadDraft({ draftRoot, id: match[1], catalogue });
+      if (match[2] === 'motion') {
+        if (!draft.motionCandidate) { await sendJson(response, 404, { fout: 'Geen bewegingsconcept.' }); return; }
+        await sendMedia(request, response, 'video/mp4', await readFile(join(draftRoot, match[1], draft.motionCandidate.file)), { 'cache-control': 'private, no-store' });
+        return;
+      }
       const bytes = await readFile(join(draftRoot, match[1], draft.assets[match[2]].file));
       response.writeHead(200, { "Content-Type": "image/png", "Content-Length": bytes.length, "X-Content-Type-Options": "nosniff" });
       response.end(bytes);

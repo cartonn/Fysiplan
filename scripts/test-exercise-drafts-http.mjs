@@ -12,13 +12,26 @@ const base=`http://127.0.0.1:${port}`,headers={'x-admin-sleutel':'draft-test-onl
 try{
  let ready=false;for(let i=0;i<100;i++){try{await fetch(base+'/health');ready=true;break;}catch{await new Promise(r=>setTimeout(r,100));}}
  assert.ok(ready,log);
- for(const path of ['/api/exercise-drafts','/api/exercise-drafts/fc_07a47f244d7392e6/line']){
+ for(const path of ['/api/exercise-drafts','/api/exercise-drafts/fc_07a47f244d7392e6/line','/api/exercise-drafts/fc_07a47f244d7392e6/motion']){
   assert.notEqual((await fetch(base+path)).status,200);
   assert.notEqual((await fetch(base+path,{headers:{'x-admin-sleutel':'admin88'}})).status,200);
  }
  const res=await fetch(base+'/api/exercise-drafts',{headers});assert.equal(res.status,200);assert.match(res.headers.get('cache-control'),/no-store/);
  const body=await res.json();assert.equal(body.published,false);assert.equal(body.drafts.length,1);
  assert.equal(body.drafts[0].coreExerciseId,'fc_07a47f244d7392e6');
+ const motion=body.drafts[0].motionCandidate;
+ assert.equal(motion.qaStatus,'pending-independent-review');assert.equal(motion.clinicalApproval,false);assert.equal(motion.published,false);
+ assert.equal(motion.audio,false);assert.equal(motion.fit,'contain');
+ const original=await readFile('content/private-exercise-drafts/fc_07a47f244d7392e6/motion.mp4');
+ const motionPath='/api/exercise-drafts/fc_07a47f244d7392e6/motion';
+ for(const [range,start,end] of [[null,0,original.length-1],['bytes=0-1',0,1],['bytes=-16',original.length-16,original.length-1],['bytes=16-',16,original.length-1]]){
+  const r=await fetch(base+motionPath,{headers:{...headers,...(range?{Range:range}:{})}});
+  assert.equal(r.status,range?206:200);assert.equal(r.headers.get('content-type'),'video/mp4');assert.match(r.headers.get('cache-control'),/private.*no-store/);
+  assert.deepEqual(Buffer.from(await r.arrayBuffer()),original.subarray(start,end+1));
+ }
+ const invalidRange=await fetch(base+motionPath,{headers:{...headers,Range:'bytes=99999999-'}});assert.equal(invalidRange.status,416);assert.match(invalidRange.headers.get('cache-control'),/no-store/);
+ const publicVideo=await fetch(base+'/content/private-exercise-drafts/fc_07a47f244d7392e6/motion.mp4');assert.notEqual(publicVideo.headers.get('content-type'),'video/mp4');
+ const live=await(await fetch(base+'/v2/oefeningen.json')).json();assert.ok(!live.some(e=>e.coreExerciseId==='fc_07a47f244d7392e6'),'private motion never publishes missing exercise');
  for(const role of ['line','start','end']){
   const image=await fetch(base+`/api/exercise-drafts/fc_07a47f244d7392e6/${role}`,{headers});assert.equal(image.status,200);assert.equal(image.headers.get('content-type'),'image/png');
   assert.deepEqual(Buffer.from(await image.arrayBuffer()),await readFile(`content/private-exercise-drafts/fc_07a47f244d7392e6/${role}.png`));

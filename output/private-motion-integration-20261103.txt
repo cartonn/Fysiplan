@@ -1,0 +1,30 @@
+Private motion integration from 36a084e, no new generation or spending.
+Existing skills general-video/video-editing applied: immutable sources, contain
+geometry, no artificial still-fade, crop, loop, speed modification or approval.
+
+Private set13 retains draft.json, line.png, start.png, end.png byte-identically.
+Adds separate source-bound motion.json and motion.mp4 only. Metadata remains
+published=false, clinicalApproval=false and pending-independent-review. Existing
+draft.video stays null: motionCandidate is deliberately separate from publishable
+catalogue video. No catalogue or patient-route publication.
+
+Source: HeyGen job7f4e9fa725e143bfb93ed843eb4c3f50. Actual5credits previously spent.
+Silent streamcopy768x1152,24fps,5.166667s. Hash and original reference hashes checked
+on every private load. Original external output preserved. No new credit calls.
+
+Auth: same existing private-admin gate; default/public admin88 is insufficient.
+Video route GET /api/exercise-drafts/fc_07a47f244d7392e6/motion uses existing byte-
+range logic with explicit private,no-store overriding public media cache. No key
+in video URL: review page fetches authorized bytes and uses revocable blob URL.
+Manual load/play, native controls, no autoplay/loop. Error and reload available.
+Cleanup pauses video and revokes URLs. Still-image controls remain separate.
+
+Tests: test:drafts (including original importer and authenticated HTTP list/assets,
+MP4 byte/ranges/no-public-route, metadata mutations), test-byte-range,
+test-mobile-levering. These are automated tests, not real iPhone playback proof.
+
+Public release blocker: actual candidate shows pickup only, NOT putting box back
+as required by unchanged exercise explanation. Whole-clip temporal/anatomical and
+clinical review still needed. Sampled frame inspection previously found stable
+woman/box/hand contacts and no clipping; this is not full approval. UI explicitly
+labels incomplete movement and pending status. Nothing deployed.

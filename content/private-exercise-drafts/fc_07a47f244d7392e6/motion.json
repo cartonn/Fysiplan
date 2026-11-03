@@ -1,0 +1,28 @@
+{
+  "coreExerciseId": "fc_07a47f244d7392e6",
+  "file": "motion.mp4",
+  "sha256": "a6409642aba8a26fa7ef050cebdc2f50aa41e088209cd1de064201402c56ae3e",
+  "bytes": 373376,
+  "width": 768,
+  "height": 1152,
+  "durationSeconds": 5.166667,
+  "fps": 24,
+  "audio": false,
+  "fit": "contain",
+  "published": false,
+  "clinicalApproval": false,
+  "qaStatus": "pending-independent-review",
+  "referenceSha256": {
+    "start": "2601ba11d8f3ee67560b8fa9c5c4d08001ac5d09fe3d51d444ecbab27cc6ee1f",
+    "end": "5f74dd09f1c88831bfe17371b63d35dd2a31f1f61e23a7cc1f4ed3412ce892a1"
+  },
+  "provenance": {
+    "provider": "HeyGen Video 1",
+    "jobId": "7f4e9fa725e143bfb93ed843eb4c3f50",
+    "generatedAt": "2026-11-03",
+    "includedCreditsUsed": 5,
+    "processing": "Original preserved outside repository; video stream copied without retiming/cropping; unexpected provider audio removed."
+  },
+  "review": "Vijf 1fps-steekproefframes plus begin/eind bekeken: handen houden één doos vast, tafel en voeten blijven stabiel. Geen volledige bewegings- of klinische goedkeuring.",
+  "limitations": "Alleen oppakken tot voor de buik; terugzetten uit de oefenuitleg ontbreekt. Eindhouding wordt eerder dan op 4 seconden bereikt; romp beweegt licht achterwaarts. Niet vrijgeven als volledige oefendemonstratie."
+}
