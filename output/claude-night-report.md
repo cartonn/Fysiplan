@@ -264,6 +264,41 @@ eerst een expliciet id in V1 en een eigen besluit.
 samenvatting ongewijzigd: 9 tegengehouden, 310 onbeoordeeld, 156 uitsnedeparen, 154
 statisch.
 
+### Ronde 7, voorlezen in andere talen (commit `d2b6f7a`)
+
+**Wat.** "Lees voor" in andere talen dan het Nederlands (toestelstem) volgt nu dezelfde
+regels als de knoppen per oefening en het Nederlandse voorlezen. Een oefening wordt
+helemaal overgeslagen (naam, dosering en uitleg) als de kaart het getoonde beeld
+tegenhoudt of als er een houd op de uitleg staat. Lukt het laden van de controle niet,
+dan wordt er niets voorgelezen; voorheen klonken dan naam en dosering zonder uitleg. Een
+melding in de taal van de kaart noemt wat is overgeslagen en waarom, en verwijst naar de
+dosering op de kaart. Wordt alles overgeslagen, dan staat er dat er nu niets wordt
+voorgelezen; er wordt dan niet gesproken en geen andere spraak afgebroken. De melding
+zegt niets over opnames en niets over de juistheid van teksten.
+
+**Ongewijzigd.** Niet-tegengehouden oefeningen klinken precies als voorheen: kaartnummer,
+dosering, vertaalde uitleg (een niet-vertaalde Nederlandse uitleg blijft weg). Ook taal,
+stem, tempo, de beurtbewaking, het Nederlandse voorlezen en alle catalogi, beoordelingen,
+beelden en opnames zijn ongewijzigd. Nu geraakt: 20 van de 319 oefeningen (9 beeld, 15
+uitleg, 4 beide).
+
+**Vertalingen.** Vijf nieuwe meldingsteksten in alle negen talen (`T`/`tr`). Ik heb ze
+geschreven in de stijl van de bestaande teksten; een moedertaalspreker heeft ze niet
+gelezen.
+
+**Tests.** `scripts/test-voorlezen-andere-talen.mjs` draait de echte functies met de echte
+beoordeling:
+- zonder houds exact de oude voorlezing;
+- gemengd en alles tegengehouden;
+- acht talen;
+- controle niet te laden;
+- de beurtbewaking;
+- alle 319 oefeningen één voor één: overslaan precies als de kaartknoppen
+  (`hideMedia||holdExplanation`) en het Nederlands, met 299 voorgelezen en 20 overgeslagen.
+
+Met de kaart van `ac9d32c` slaagt het geval zonder houds en faalt het gemengde geval.
+Niet getest: echte spraak op een toestel (geen browserautomatisering, niets beluisterd).
+
 ## 6. Wat blijft liggen — en waarom
 
 1. **Luisterronde.** Geen enkele van de 67 bestaande opnames is beluisterd. 252 van de
@@ -307,8 +342,8 @@ statisch.
    releasebesluit; de code is daar niet op gescheiden.
 9. **De V1-lijnbeelden van het stoelpaar blijven verwisseld** (V1-editor, V1-lijnmodus,
    PDF uit V1). Omwisselen zou ook de afgeleide V1-id's omwisselen; zie ronde 6.
-10. **Andere talen lezen tegengehouden oefeningen nog voor** met de toestelstem; alleen
-   het Nederlands volgt sinds ronde 6 de beeldregel.
+10. ~~Andere talen lezen tegengehouden oefeningen nog voor~~ — opgelost in ronde 7
+   (`d2b6f7a`).
 
 ## 7. Uitgaven
 

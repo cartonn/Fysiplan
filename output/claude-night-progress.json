@@ -25,11 +25,12 @@
     "63f8ee1 miniatuurmerk pas na bewezen hash; manifest laden begrensd (audit-P2 x2)",
     "fc40de1 bevestigBron controleert elke lading opnieuw; nieuwste uitkomst wint",
     "9e6f50d V2-kaartbeeld hip extension/knee lift omgewisseld met uitzondering; 4 tijdelijke bronhouds",
-    "785559c V2-lijnbeeld stoelpaar omgewisseld met smalle hash-gebonden uitzondering; voorlezen bovenaan volgt de beeldregel"
+    "785559c V2-lijnbeeld stoelpaar omgewisseld met smalle hash-gebonden uitzondering; voorlezen bovenaan volgt de beeldregel",
+    "d2b6f7a voorlezen in andere talen volgt dezelfde tegenhoudregels (beeld en uitleg) als kaartknoppen en Nederlands"
   ],
-  "lastUpdate": "2026-11-03T02:53:38+0100",
+  "lastUpdate": "2026-11-03T03:43:21+0100",
   "lastUpdateNote": "Machineklok (date +%FT%T%z) op het moment van schrijven.",
-  "batch": 12,
+  "batch": 13,
   "deployed": false,
   "pushed": false,
   "clinicalApproval": false,
@@ -145,10 +146,11 @@
     "npm run build": "groen (2026-11-02T23:43:04+0100)",
     "regressiebewijs": "de nieuwe range-gevallen en de nieuwe wachttijdtests zijn elk gedraaid tegen de vorige code en falen daar",
     "node scripts/kaart-merkcheck.mjs": "groen (2026-11-02T23:43:04+0100): 4 miniaturen, 5 vergrote foto’s (3 met, 2 zonder ingebakken merk), houdingen",
-    "ronde 6 (2026-11-03T02:53:38+0100)": "npm run test:mobile exit 0 (12 onderdelen, nieuw: test-v2-uitzondering-mutaties, test-noor-voorlezen-holds) en npm run build exit 0; build meldt \"317 legacykaarten gebruiken exact de V1-afbeelding, 2 een vastgelegde V2-correctie\". Na tests en build byte-gelijk (sha256): public/oefeningen.json, public/oefeningen-v2.json, public/mobile-media-review.json, content/beginhouding-pijl.json, content/v2-avatar-overrides.json, content/v2-image-pair-report.json, output/mobile-pose-candidates.json en de vier bewaarde browsercheckbestanden. Losse run: test-arrow-assets PASS (310 pijlbeelden, 9 tegengehouden). Regressiebewijs tegen 12853c5: voorleestest faalt (afgespeeld: Anteflexie armen, Dips, Triceps dips); oude v2-line-art-graph run --execute zet beide img terug op het V1-pad."
+    "ronde 6 (2026-11-03T02:53:38+0100)": "npm run test:mobile exit 0 (12 onderdelen, nieuw: test-v2-uitzondering-mutaties, test-noor-voorlezen-holds) en npm run build exit 0; build meldt \"317 legacykaarten gebruiken exact de V1-afbeelding, 2 een vastgelegde V2-correctie\". Na tests en build byte-gelijk (sha256): public/oefeningen.json, public/oefeningen-v2.json, public/mobile-media-review.json, content/beginhouding-pijl.json, content/v2-avatar-overrides.json, content/v2-image-pair-report.json, output/mobile-pose-candidates.json en de vier bewaarde browsercheckbestanden. Losse run: test-arrow-assets PASS (310 pijlbeelden, 9 tegengehouden). Regressiebewijs tegen 12853c5: voorleestest faalt (afgespeeld: Anteflexie armen, Dips, Triceps dips); oude v2-line-art-graph run --execute zet beide img terug op het V1-pad.",
+    "ronde 7 (2026-11-03T03:43:21+0100)": "npm run test:mobile exit 0 (13 onderdelen, nieuw: test-voorlezen-andere-talen) en npm run build exit 0. Na tests en build byte-gelijk (sha256): public/oefeningen.json, public/oefeningen-v2.json, public/mobile-media-review.json, public/mobile-narration-review.json, public/audio/noor/manifest.json, content/beginhouding-pijl.json, content/v2-avatar-overrides.json, content/v2-image-pair-report.json, output/mobile-pose-candidates.json en de vier bewaarde browsercheckbestanden. Regressiebewijs tegen ac9d32c: zonder houds identieke voorlezing (geval 1 slaagt), gemengde selectie faalt (Dips, Med ball swing en Rotator (apparaat) worden uitgesproken)."
   },
   "separationOfReviewKinds": {
-    "code-test pass": "done: npm run test:mobile (12 onderdelen sinds ronde 6) en npm run build, laatst groen op 2026-11-03T02:53:38+0100 na 785559c",
+    "code-test pass": "done: npm run test:mobile (13 onderdelen sinds d2b6f7a) en npm run build, laatst groen op 2026-11-03T03:43:21+0100 na d2b6f7a",
     "visual pass": "done for the 162 measured pair candidates and, since session 3, for all 158 exercises that were static at that time (contact sheets, not full resolution); together with the 5 images rejected then, every one of the 319 has been viewed at contact-sheet size at least once. Since 2026-11-03 four of those 158 are temporarily held (154 static now). Round 6: Claude viewed arrow images 313/315; the coordinator viewed the original chair line drawings. Still no clinical judgement.",
     "listening review": "NOT done. No recording was listened to in this session.",
     "clinical approval": "NOT done and not inferable from anything in this session. Every clinicalApproved stays false and the 15 narration holds stand."
@@ -166,7 +168,7 @@
     "Witte hoekjes in de haren bij Front raises, Shoulder rotation (shrugs) en Yoga deep squat zitten in de bron (ingebakken merkvak); alleen met beeldbewerking op te lossen.",
     "Gedeelde /k/-route: alle kaartwijzigingen gelden ook voor V1-gemaakte kaarten (server.js serveert één kaart.html). Releasebesluit nodig als V1-links gedragsmatig ongewijzigd moeten blijven.",
     "V1-lijnbeelden van Standing chair hip extension en knee lift blijven onderling verwisseld (V2-kaartbeeld en sinds 785559c ook het V2-lijnbeeld zijn gecorrigeerd). V1 heeft geen expliciet id: omwisselen zou ook de afgeleide V1-id's omwisselen; vraagt eerst een expliciet id-veld en een eigen besluit.",
-    "Vier tijdelijke bronhouds (Dips, Triceps dips, Step up with knee raise, Standing chair shoulder rotations) wachten op nieuw beeld of een besluit. Sinds 785559c slaat ook de Nederlandse voorleesknop bovenaan ze over (met melding); andere talen (toestelstem) lezen naam en uitleg nog voor."
+    "Vier tijdelijke bronhouds (Dips, Triceps dips, Step up with knee raise, Standing chair shoulder rotations) wachten op nieuw beeld of een besluit. Sinds 785559c (Nederlands) en d2b6f7a (andere talen) slaat het voorlezen bovenaan ze over, met melding."
   ],
   "knownGapsNotFixed": {
     "practice-uploaded media": "Praktijkfoto's (uploads/oef-*.jpg) en praktijk-/kaartvideo's hebben geen beoordelingsregel en zijn dus onbeoordeeld zichtbaar. Een afkeuring voor zo'n bron werkt wel (public/kaart.html:716, :755), maar wordt niet automatisch aangemaakt. Houdingweergave en natuurlijke stem kunnen ze niet bereiken (gebonden aan beoordeelde sha256 resp. exacte tekst). Bij praktijkvideo's staat sinds 9ef09c8 dat beeld en tekst uit verschillende bron komen. Sinds 1ba3434 leveren praktijkvideo's correcte byte-ranges.",
@@ -177,11 +179,11 @@
     "newCredentials": "none",
     "purchases": "none"
   },
-  "nextAction": "Coördinator: 785559c nalopen (V2-lijnbeeld + pijlsleutels stoelpaar, smalle uitzondering in beide poorten, lijnbeeldgraph, voorlezen bovenaan). Open besluiten: V1-lijnbeelden van het stoelpaar (vraagt eerst een expliciet V1-id), nieuw beeld voor de vier houds, en of andere talen dezelfde beeldregel moeten volgen bij voorlezen. Eerdere besluiten (a) t/m (f) blijven open.",
+  "nextAction": "Coördinator: d2b6f7a nalopen (toestelstem volgt dezelfde tegenhoudregels; vijf nieuwe meldingsteksten in negen talen, door Claude vertaald en niet door moedertaalsprekers gelezen). Open besluiten: V1-lijnbeelden van het stoelpaar (vraagt eerst een expliciet V1-id), nieuw beeld voor de vier houds. Eerdere besluiten (a) t/m (f) blijven open.",
   "handoverReport": "output/claude-night-report.md",
   "perExerciseList": "output/mobile-pose-per-exercise.md",
   "inspectionLog": "output/pose-review/inspection-log.md",
-  "workingTree": "Commits t/m de voortgangscommit na 785559c. Niet gecommit en bewust bewaard: scripts/kaart-browsercheck.mjs, output/kaart-browsercheck.json, output/pose-review/browser/01-kaart.png (gewijzigd) en output/kaart-browsercheck-alle.json (untracked); kaart-browsercheck is niet gedraaid. Untracked: CLAUDE-NIGHT-TASK.txt, coördinatorbestanden, auditbestand, node_modules (symlink).",
+  "workingTree": "Commits t/m de voortgangscommit na d2b6f7a. Niet gecommit en bewust bewaard: scripts/kaart-browsercheck.mjs, output/kaart-browsercheck.json, output/pose-review/browser/01-kaart.png (gewijzigd) en output/kaart-browsercheck-alle.json (untracked); kaart-browsercheck is niet gedraaid. Untracked: CLAUDE-NIGHT-TASK.txt, coördinatorbestanden, auditbestand, node_modules (symlink, niet aangeraakt).",
   "blockers": [
     "Luisterronde en klinische goedkeuring vragen een mens; niets daarvan is gedaan of af te leiden.",
     "Alle 154 statische oefeningen (zie remaining) hebben ander bronmateriaal nodig voor een houdingweergave; beeldgeneratie is niet geautoriseerd en er is niets uitgegeven.",
@@ -468,6 +470,28 @@
     "beoordeling": "public/mobile-media-review.json: 2 van 319 regels gewijzigd (observatietekst stoelpaar: \"Het V2-lijnbeeld is op dezelfde manier gecorrigeerd\"). Samenvatting ongewijzigd: rejected 9, unreviewed 310, poseGeometryApproved 156; poseGeometry static 154, withheld 9. output/mobile-pose-candidates.json ongewijzigd (meet kaartImg).",
     "qrImpact": "Elke /k/-kaart (V1- en V2-QR, één kaart.html): voorlezen bovenaan slaat nu Dips en Triceps dips over met melding. Lijnbeeldwissel: geen zichtbare verandering op de kaart (gebruikt kaartImg) en niet in de geleverde V2-catalogus (pijlbeeld blijft 313/315). V1-editor/-catalogus ongewijzigd.",
     "reviewKinds": "code-test: groen. visueel: pijlbeelden 313/315 door Claude bekeken; lijntekeningen door de coördinator. luisteren: niet gedaan. klinisch: niet gedaan, niets goedgekeurd.",
+    "spending": "geen generatie, geen betaalde aanroep, geen aankopen, geen nieuwe toegang; geen push of deploy."
+  },
+  "session8": {
+    "started": "machineklok bij schrijven 2026-11-03T03:43:21+0100 (werk begon na ac9d32c; coördinator had 785559c onafhankelijk nagelopen)",
+    "instructions": "Coördinator: alleen de niet-Nederlandse voorleesroute (toestelstem) dezelfde regels laten volgen als de knoppen per oefening en het Nederlandse voorlezen: mediaWithheld van het getoonde beeld en explanationWithheld. UI-consistentie, geen nieuw klinisch besluit; tegengehouden items overslaan, dosering/tekst/beelden/opnames en niet-tegengehouden vertaalde spraak intact, eerlijke melding in de bestaande vertaalstijl, beurtbewaking behouden, geen misleidende opnamebewering. Tests op de echte functies (gemengd, alles tegengehouden, controle niet te laden).",
+    "commit": "d2b6f7a",
+    "scope": {
+      "gewijzigd": "public/kaart.html: alleen de tak van leesVoor() voor andere talen dan Nederlands (toestelstem), een gedeelde helper uitlegGehouden() (ook gebruikt door speelNoor, zelfde regel als voorheen) en meldOvergeslagen(); 5 nieuwe sleutels in T voor alle negen talen (leesUitlegCheck, leesBeeldCheck, leesNiets, leesDosering, leesGeenControle).",
+      "gedrag": "Een oefening wordt helemaal overgeslagen (naam, dosering en uitleg) als er een houd op de uitleg is (zelfde lijst en vergelijking als het Nederlands) of als de kaart het getoonde beeld tegenhoudt (mediaWithheld). Beide tegelijk telt één keer, onder de uitleg (zoals in het Nederlands). Kaartnummers blijven die van de kaart. Een melding in de taal van de kaart noemt wat is overgeslagen en waarom, en verwijst naar de dosering op de kaart. Geen bewering over opnames, geen oordeel over teksten.",
+      "allesOvergeslagen": "Er wordt niet gesproken en niets afgebroken; de knop blijft op voorlezen; melding met \"nu niets voorgelezen\".",
+      "controleNietGeladen": "Niets voorgelezen (vroeger: naam en dosering zonder uitleg), melding leesGeenControle; gelijk aan het Nederlands en aan de verborgen knoppen per oefening.",
+      "ongewijzigd": "Opbouw en tekst voor niet-tegengehouden oefeningen (praktijk, veiligheidszin, doel, kaartnummer, dosering, vertaalde uitleg; niet-vertaalde Nederlandse uitleg blijft weg), taal/stem/tempo, beurtbewaking (noorRequest), het Nederlandse voorlezen, catalogi, beoordelingen, beelden, opnames, categoriecode.",
+      "nuGeraakt": "20 van de 319 oefeningen worden in andere talen overgeslagen: 9 met tegengehouden beeld en 15 met een houd op de uitleg, waarvan 4 beide hebben (Dorsi-pecto, Endy Armstrekker, Endy Rotator, Rotator (apparaat)).",
+      "vertalingen": "De vijf meldingsteksten in en/de/fr/es/pl/tr/ar/uk zijn door Claude geschreven in de stijl van de bestaande T-teksten; niet door moedertaalsprekers gelezen."
+    },
+    "tests": {
+      "scripts/test-voorlezen-andere-talen.mjs": "echte functies uit kaart.html (T, tr, vt, beoordeling laden, opzoeken, leesVoor, stopLezen) met de echte beoordeling: (1) zonder houds exact de bestaande voorlezing inclusief vertaalde uitleg; (2) gemengd: alleen vrije oefeningen met kaartnummer 1 en 5, één melding, eerst spreken dan melden, dosering onaangeroerd, beurtbewaking; (3) alles tegengehouden: niet spreken, niets afbreken, knop terug, melding herhaalt bij volgende tik; (4) acht talen elk met eigen tekst; (5) controle niet te laden: niets, melding; (6) alle 319 oefeningen afzonderlijk: overslaan exact gelijk aan hideMedia||holdExplanation en aan de Nederlandse regel (299 voorgelezen, 20 overgeslagen). Faalt op ac9d32c bij (2).",
+      "scripts/test-mobile-media-controls.mjs": "beurtbewakingstest krijgt de beoordelingsstand in zijn context (geladen, niets tegengehouden); asserties ongewijzigd."
+    },
+    "nietAangepast": "De lightbox-geluidknop in andere talen leest alleen naam + houding, geen uitleg, en is bij een tegengehouden beeld niet bereikbaar; niet gewijzigd. Service worker niet aangepast (netwerk eerst, geen versiesprong nodig voor kaart.html).",
+    "qrImpact": "Elke /k/-kaart (V1- en V2-QR) in een andere taal dan Nederlands: \"Lees voor\" slaat de 20 tegengehouden oefeningen over met melding; zonder geladen controle wordt niets voorgelezen. Nederlands ongewijzigd.",
+    "reviewKinds": "code-test: groen. visueel: niet van toepassing. luisteren: geen spraak beluisterd (toestelstem niet op een toestel getest; browser niet geautomatiseerd). klinisch: geen besluit, niets goedgekeurd.",
     "spending": "geen generatie, geen betaalde aanroep, geen aankopen, geen nieuwe toegang; geen push of deploy."
   }
 }
