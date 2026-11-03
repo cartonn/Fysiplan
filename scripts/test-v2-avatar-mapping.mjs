@@ -78,12 +78,13 @@ for(const v of verwacht){
   assert.ok(r.observations.some(t=>/gecorrigeerd/.test(t)&&/V1-lijnbeeld/.test(t)),'de correctie en wat niet is aangepast staan erbij');
 }
 
-// ---- 4. tijdelijke houds op vier bronnen ----
+// ---- 4. tijdelijke houds op vijf bronnen ----
 const houds=[
   ['fp_013ba6ad937cc9d9','Dips','images/bovenste-extremiteit/dips-avatar-v7.jpg'],
   ['fp_f227db5fcf245d9c','Triceps dips','images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg'],
   ['fp_7dc1478e2b3c17b0','Step up with knee raise','images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg'],
-  ['fp_4b99c5f11b42a30d','Standing chair shoulder rotations','images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg']
+  ['fp_4b99c5f11b42a30d','Standing chair shoulder rotations','images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg'],
+  ['fp_295fd35a63d44ef8','Chair squat','images/onderste-extremiteit/chair-squat-avatar-v7.jpg']
 ];
 for(const [id,naam,bron] of houds){
   const e=v2.find(x=>exerciseId(x)===id);
@@ -105,6 +106,12 @@ await vm.runInContext('loadMobileReview()',kaart);
 // zoals de server ze levert: /v2/images/...
 const opKaart=(id)=>{const e=v2.find(x=>exerciseId(x)===id);return {exerciseId:id,naam:e.naam,kaartImg:'/v2/'+e.kaartImg,img:'/v2/'+e.img};};
 for(const [id,naam] of houds)assert.equal(kaart.mediaWithheld(opKaart(id)),true,naam+' wordt op de kaart tegengehouden');
+// De gedeelde QR-route normaliseert /v2/: dezelfde bron uit een V1-kaart wordt ook
+// tegengehouden, maar geen andere oefening of vervangend bronpad bij dit id.
+const chair=opKaart('fp_295fd35a63d44ef8');
+assert.equal(kaart.mediaWithheld({...chair,kaartImg:chair.kaartImg.replace('/v2/','/')}),true,'Chair squat op gedeelde QR-route');
+assert.equal(kaart.mediaWithheld({...chair,kaartImg:'/v2/images/review/new-chair.jpg'}),false,'geen hold op ander bronpad');
+assert.equal(kaart.mediaWithheld({...chair,exerciseId:'different-id'}),false,'geen hold op ander id');
 for(const v of verwacht){
   assert.equal(kaart.mediaWithheld(opKaart(v.id)),false,v.naam+' toont het gecorrigeerde beeld');
   assert.equal(kaart.mediaWithheld({exerciseId:v.id,kaartImg:'/v2/'+(v.kaartImg===KNIE?HEUP:KNIE)}),false,'de oude koppeling is niet afgekeurd, alleen niet meer gebruikt');
@@ -120,4 +127,4 @@ const imp=spawnSync(process.execPath,['scripts/carla-avatar-pipeline.mjs','impor
 assert.notEqual(imp.status,0);assert.match(imp.stderr,/Import geweigerd/,'import voor een uitzondering wordt vóór elk schrijven geweigerd');
 assert.deepEqual([sha('oefeningen-v2.json'),sha(HEUP),sha(KNIE)],voor,'catalogus en beelden onaangeroerd');
 
-console.log('V2-kaart- en lijnbeelden: hip extension en knee lift tonen de beweging uit hun eigen uitleg (ids, teksten, geleverde pijlbeelden en V1 byte-gelijk, geen begin/eind-paar); 4 defecte bronnen tijdelijk tegengehouden op de kaart; pijplijn draait de correctie niet terug.');
+console.log('V2-kaart- en lijnbeelden: hip extension en knee lift tonen de beweging uit hun eigen uitleg (ids, teksten, geleverde pijlbeelden en V1 byte-gelijk, geen begin/eind-paar); 5 defecte bronnen tijdelijk tegengehouden op de kaart; pijplijn draait de correctie niet terug.');

@@ -1,0 +1,32 @@
+Tijdelijke visuele bronhold — Chair squat — 2026-11-03
+
+Basis e2809bd. Eigen geïsoleerde worktree; geen edits aan audio-recovery werkmap.
+ID fp_295fd35a63d44ef8; bron images/onderste-extremiteit/chair-squat-avatar-v7.jpg.
+SHA256 a4d98858e15a11f54fa84e98cacf73603a302c0ff8dc632fd62d0bdd9bd96418.
+Live bronbytes eerder gelijk aan deze originele bron gecontroleerd. Stoel ontbreekt
+terwijl uitleg een stoel vereist. Lage squat was startcrop, rechtop was eindcrop.
+Dit is een tijdelijke visuele bronhold, geen klinische beoordeling.
+
+Wijziging: bestaande sourceHolds-mechanisme, status rejected/presentation withhold,
+lege poses en poseGeometry withheld. Build weigert andere bytes/pad/naam/id zonder
+expliciete herbeoordeling. Geen bronafbeelding, catalogus, ID, uitleg, dosering,
+V1-editor, V1-lijnbeeld of audio-opname gewijzigd. Geometrische approvalhistorie
+blijft behouden maar kan deze hold niet overrulen.
+
+Gedeelde QR-impact expliciet: /k/ gebruikt kaart.html en normaliseert /v2/ in
+beeldpaden. Daardoor wordt dezelfde Chair squat avatar ook in een via V1 gemaakte
+patiëntkaart tegengehouden als ID en bron overeenkomen. De bestaande UI behoudt
+kaart/dosering maar toont de controlemelding in plaats van beeld/posepresentatie;
+de bestaande audioselectie sluit een gehouden beeld tevens uit. Dit is dus niet
+uitsluitend V2-QR-gedrag. V1-catalogus en V1-editor blijven byte-ongewijzigd.
+Runtime blokkade is ID+pad; SHA binding is een build-invariant. Een vervanging op
+hetzelfde pad blijft runtime tegengehouden totdat het manifest herbeoordeeld is.
+Een ander bronpad of ander ID krijgt niet automatisch deze hold.
+
+Counts: 319 total; rejected 10; unreviewed 309; approved 0;
+poseGeometryApproved 155; poseStatic 164 (inclusief withheld);
+brandMarkCovered 215; brandMarkAbsent 104; tijdelijke source holds 5.
+
+Tests: mobile-media-review, v2-avatar-mapping (incl. gedeelde QR-normalisatie,
+andere bron/ID), v2-uitzondering-mutaties (incl. Chair squat ander pad/andere bytes).
+Geen deploy of push; onafhankelijke review vereist vóór publicatie.

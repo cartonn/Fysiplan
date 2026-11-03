@@ -89,6 +89,8 @@ try {
   assert.notEqual(createHash('sha256').update(herschreven).digest('hex'), sha('public/' + dips.kaartImg));
   const houdGevallen = [
     ['controle: exacte bron', {}, null],
+    ['Chair squat: ander pad', {bestanden: metV2((c) => { naam(c, 'Chair squat').kaartImg = anderBeeld; })}, /Tijdelijke hold voor Chair squat past niet meer/],
+    ['Chair squat: andere bytes', {beelden: {'images/onderste-extremiteit/chair-squat-avatar-v7.jpg': herschreven}}, /Tijdelijke hold voor Chair squat past niet meer/],
     ['ander pad', {bestanden: metV2((c) => { naam(c, 'Dips').kaartImg = anderBeeld; })}, /Tijdelijke hold voor Dips past niet meer/],
     ['andere bytes op hetzelfde pad', {beelden: {[dips.kaartImg]: herschreven}}, /Tijdelijke hold voor Dips past niet meer/],
     ['andere naam bij hetzelfde id', {bestanden: metV2((c) => { naam(c, 'Dips').naam = 'Dips aan de bank'; })}, /Tijdelijke hold voor Dips past niet meer/],
@@ -103,8 +105,8 @@ try {
     if (!verwacht) {
       assert.equal(r.code, 0, label + ': ' + r.fout);
       const review = JSON.parse(fs.readFileSync(path.join(r.root, 'public/mobile-media-review.json'), 'utf8'));
-      assert.equal(review.summary.rejected, 9, label);
-      assert.equal(review.entries.filter((e) => e.hold?.temporary).length, 4, label);
+      assert.equal(review.summary.rejected, 10, label);
+      assert.equal(review.entries.filter((e) => e.hold?.temporary).length, 5, label);
       // de wegwerpmap levert exact dezelfde beoordeling als de repo: het harnas zelf verandert niets
       assert.equal(fs.readFileSync(path.join(r.root, 'public/mobile-media-review.json'), 'utf8'),
         fs.readFileSync(path.join(repo, 'public/mobile-media-review.json'), 'utf8'), label);
@@ -172,4 +174,4 @@ try {
   fs.rmSync(werk, {recursive: true, force: true});
 }
 assert.deepEqual(BEWAAKT.map(sha), voor, 'echte catalogi, beoordeling, pijlen en beelden byte-gelijk');
-console.log('Uitzonderingen smal: 4 bron-houds falen bij ander pad, andere bytes, andere naam of ander id; V2-lijnbeeldcorrectie geldt alleen voor de 2 vastgelegde oefeningen (derde afwijking, V1-wijziging, losse pijlen, verkeerde hash of ontbrekende uitzondering falen in beide poorten); de lijnbeeldgraph draait de correctie niet terug.');
+console.log('Uitzonderingen smal: 5 bron-houds; Dips-mutaties op pad/bytes/naam/id en Chair squat-mutaties op pad/bytes falen; V2-lijnbeeldcorrectie geldt alleen voor de 2 vastgelegde oefeningen (derde afwijking, V1-wijziging, losse pijlen, verkeerde hash of ontbrekende uitzondering falen in beide poorten); de lijnbeeldgraph draait de correctie niet terug.');

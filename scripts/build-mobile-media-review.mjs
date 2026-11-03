@@ -39,6 +39,10 @@ const observations = new Map([
 // vervalt of op ander beeld blijft gelden.
 const HOLD_BEWIJS = 'Onafhankelijke beoordeling op oorspronkelijke resolutie en visuele controle door de coördinator (2026-11-03); eerder gesignaleerd in de statische visuele ronde van 2026-11-02 (output/pose-review/static/inspection.md).';
 const sourceHolds = new Map([
+  ['fp_295fd35a63d44ef8', {name:'Chair squat', source:'images/onderste-extremiteit/chair-squat-avatar-v7.jpg',
+    assetSha256:'a4d98858e15a11f54fa84e98cacf73603a302c0ff8dc632fd62d0bdd9bd96418',
+    evidence:'Onafhankelijke visuele controle op originele resolutie (2026-11-03), live bronbytes gelijk aan deze SHA256: stoel ontbreekt; bestaande startuitsnede toont de lage squat en einduitsnede rechtop, tegengesteld aan de beschreven beginhouding. Tijdelijke visuele bronhold, geen klinisch oordeel.',
+    reason:'Tijdelijk tegengehouden: de stoel uit de uitleg ontbreekt en de begin- en eindhouding zijn omgekeerd weergegeven.'}],
   ['fp_013ba6ad937cc9d9', {name:'Dips', source:'images/bovenste-extremiteit/dips-avatar-v7.jpg',
     assetSha256:'ae7ea9bc2bcf7646e69832179c1ada68c42f1fb39af8e05effe15c6758bf7298',
     reason:'Tijdelijk tegengehouden: de steunen zijn onvolledig en er is geen dip afgebeeld; de figuur staat met de voeten op de grond.'}],
@@ -122,7 +126,7 @@ for (const e of base) {
     presentation:reason?'withhold':'static',allowAutomaticPoseSplit:false,
     reasons:reason?[reason]:['Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd.'],
     observations:correctedLunge ? ['Visueel gecontroleerd: rechterbeen voor in linker figuur, linkerbeen voor in rechter figuur; achterknieën boven de grond. Beenwissel hersteld, geen klinische goedkeuring of bewegingsdemonstratie.'] : corrected ? ['Kaartbeeld gecorrigeerd op 2026-11-03: het vorige V2-kaartbeeld ('+override.previousKaartImg+') toonde '+override.previousShowed+'; dit beeld toont '+override.nowShows+', zoals de eigen uitleg. Het V2-lijnbeeld is op dezelfde manier gecorrigeerd. Zie content/v2-avatar-overrides.json. Het V1-lijnbeeld is niet aangepast en toont nog de andere beweging. Geen klinische goedkeuring.'] : observations.get(e.naam)||[],
-    ...(hold ? {hold:{temporary:true,kind:'source-defect',source:hold.source,assetSha256:hold.assetSha256,evidence:HOLD_BEWIJS,
+    ...(hold ? {hold:{temporary:true,kind:'source-defect',source:hold.source,assetSha256:hold.assetSha256,evidence:hold.evidence || HOLD_BEWIJS,
       release:'Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd.'}} : {}),
     poses, poseGeometry,
     // Ingebakken eigen merk: de kaart dekt het af en zet overal zelf hetzelfde merk, zodat
