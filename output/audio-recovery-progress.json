@@ -1,0 +1,58 @@
+{
+  "task": "Herstel luisterknoppen per oefening na mislukt/verlopen eerste laden van het Noor-manifest en een geslaagde nieuwe poging via de knop bovenaan",
+  "branch": "codex/audio-recovery-20261103",
+  "base": "736865e",
+  "worktree": "/private/tmp/fysiplan-audio-recovery-20261103",
+  "status": "klaar voor onafhankelijke review door coordinator; lokaal gecommit, niet gepusht, niet gedeployed",
+  "updated": "2026-11-03",
+  "rootCause": "public/kaart.html tekende de knoppen 'Luister naar Noor' alleen opnieuw vanuit de .then() van de eerste NoorAudio.load() bij het opstarten. Mislukte of verliep die eerste poging, dan bleef bij elke oefening 'Natuurlijke stemopname nog niet beschikbaar' staan; een latere geslaagde poging via speelNoor (knop bovenaan) speelde wel af maar herstelde de knoppen per oefening nooit.",
+  "reproductieOudeCode": "Zelfde VM-harnas op kaart.html van 736865e: na verlopen eerste laden en geslaagde poging bovenaan: {knoppenPerOefening:0, nietBeschikbaarRegels:2, spelers:1, knopBovenaan:'true'}. Geluid speelt, knoppen per oefening komen niet terug.",
+  "fix": {
+    "public/kaart.html": [
+      "noorRegel(o,idx): enige plek voor de luisterregel per oefening (knop + uitleg, of de regel 'nog niet beschikbaar', nu gemarkeerd met data-noor-wacht=idx). tekenKaart gebruikt hem; markup van de knop is ongewijzigd.",
+      "herstelNoorKnoppen(): zet alleen #oefs [data-noor-wacht]-regels om naar een knop, met dezelfde voorwaarden als tekenKaart (taal nl, oefening gevonden, uitleg aanwezig, beeld niet tegengehouden, uitleg niet tegengehouden, actuele opname in manifest). Vervangt de regel (outerHTML), voegt nooit toe: idempotent, geen dubbele knoppen. Koppelt geen afhandeling; de knop werkt via de bestaande gedelegeerde klik op #oefs (bindEens).",
+      "speelNoor: roept herstelNoorKnoppen() aan direct na een geslaagde NoorAudio.load(), voor de controle op een verouderde beurt. Een gestopte beurt herstelt dus wel de knoppen maar speelt niets af en meldt niets.",
+      "Opstarten: NoorAudio.load().then(herstelNoorKnoppen) in plaats van tekenKaart();tekenOefDaan();tekenZwaar(). Eén herstelweg voor eerste en latere poging; de hele kaart hertekenen brak een video af die de patient intussen had geopend."
+    ],
+    "public/noor-audio.js": "ongewijzigd (te late antwoorden van een verlopen poging werden daar al genegeerd)"
+  },
+  "tests": {
+    "nieuw": {
+      "scripts/test-noor-knoppen-herstel.mjs": {
+        "inTestMobile": true,
+        "wat": "Echte kaartcode (tekenKaart, leesVoor, speelNoor, herstelNoorKnoppen, opstartregel letterlijk uit kaart.html) + echte noor-audio.js + echt manifest + echte beoordelingsbestanden in een VM; #oefs als tekst met querySelectorAll/outerHTML.",
+        "scenarios": [
+          "1. eerste laden verlopen (10 s-grens) en mislukt (HTTP-fout), daarna geslaagde poging bovenaan: knoppen precies gelijk aan direct goed getekend; opname start; een melding over overgeslagen oefeningen; opnieuw herstellen en opstartregel opnieuw: niets dubbel, lopende opname niet gepauzeerd; herstelde knop speelt de eigen oefening",
+          "2. stoppen tijdens de nieuwe poging (tweede tik), plus intussen geopende video: geen speler, geen melding, knop bovenaan blijft 'Luister naar uitleg', knoppen wel hersteld, open video byte voor byte onaangeroerd; en: gestopte poging verloopt alsnog -> geen melding, derde poging lukt",
+          "3. te laat antwoord van de verlopen eerste poging (met en zonder AbortController): geen knoppen, geen geluid; de lopende poging herstelt daarna",
+          "4. eerste laden loopt nog bij tik bovenaan: een aanvraag, opstartregel en speelNoor herstellen samen precies een keer",
+          "5. tegengehouden: Dips (beeld afgekeurd, heeft opname), Yoga ear pressure (uitleg in houd), synthetische houd op een oefening met opname: nooit een knop, meldingen blijven; houd op stabiel id of beeldblokkade na het tekenen: herstellen kijkt opnieuw en zet niets om; mediaReviewReady=false en andere taal: geen knoppen",
+          "6. statisch: data-noor-knop staat op een plek in de code, herstelNoorKnoppen bevat geen addEventListener, een klikafhandeling voor [data-noor]"
+        ],
+        "tegenOudeCode": "faalt (exit 1), zoals bedoeld"
+      },
+      "scripts/kaart-browsercheck-noor-herstel.mjs": {
+        "inTestMobile": false,
+        "wat": "Optioneel, zoals kaart-browsercheck.mjs: echte server + headless Chromium (Playwright chromium_headless_shell-1228) via CDP, /k/demo?taal=nl, 390x844 mobiel, echte tikken; manifest onderschept met Fetch-domein, service worker omzeild. Schrijft niets in de repo.",
+        "uitkomstNieuweCode": "exit 0: referentie knoppen [0,1,2,3]; mislukt en verlopen -> na falen 0 knoppen, 4 wachtregels; na poging bovenaan knoppen [0,1,2,3] gelijk aan referentie (zelfde outerHTML), uniek, 1 mp3-aanvraag, knop op Stop, geen paginafouten; stop tijdens poging -> knoppen [0,1,2,3], 0 mp3-aanvragen, knop terug, 0 meldingen; herstelde knop tikken speelt af",
+        "uitkomstOudeCode": "exit 1: 'time-out: mislukt: knoppen hersteld'"
+      }
+    },
+    "uitgevoerd": [
+      {"cmd": "npm run test:mobile", "baseline": "exit 0", "na fix": "exit 0 (incl. test-noor-knoppen-herstel.mjs)"},
+      {"cmd": "npm run build", "baseline": "exit 0", "na fix": "exit 0"},
+      {"cmd": "npm run test:categories", "na fix": "exit 0"},
+      {"cmd": "node scripts/test-noor-knoppen-herstel.mjs", "na fix": "exit 0", "op kaart.html van 736865e": "exit 1"},
+      {"cmd": "node scripts/kaart-browsercheck-noor-herstel.mjs", "na fix": "exit 0", "op kaart.html van 736865e": "exit 1"},
+      {"cmd": "node scripts/kaart-browsercheck.mjs (bestaande controle, gedraaid in een tijdelijke kopie zodat getrackte output niet verandert)", "na fix": "exit 0, opname Squat tot het einde afgespeeld via 'Luister naar Noor'"}
+    ],
+    "omgeving": "node v22.22.1; node_modules is een lokale, niet gecommitte symlink naar de node_modules van de hoofdcheckout (sharp 0.35.3, zoals de release-worktree); niets geinstalleerd"
+  },
+  "beperkingen": [
+    "Niet getest op iOS Safari of een echte telefoon; alleen headless Chromium. Of iOS een opname toestaat die pas seconden na de tik start (na een trage nieuwe poging) is niet geverifieerd; dat gedrag van speelNoor is niet veranderd.",
+    "De luisterknop in de vergrote foto (lbgeluid) wordt bij het openen van de vergroting bepaald. Staat de vergroting al open op het moment dat een poging slaagt, dan verschijnt die knop pas bij de volgende keer openen. Niet aangepast (buiten deze fix).",
+    "De VM-test simuleert #oefs als tekst en bootst de klik op een herstelde knop na met dezelfde aanroep als de klikafhandeling; de echte klik is alleen in de browsercontrole gedaan.",
+    "Geen luisterronde of klinische controle; opnames, manifest, V1-catalogus, beelden en patientgegevens zijn niet aangeraakt."
+  ],
+  "nietGedaan": ["push", "deploy", "generatie", "betaalde API's", "nieuwe credentials", "permissiewijzigingen", "wijzigingen in categorie- of release-worktrees"]
+}

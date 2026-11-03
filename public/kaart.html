@@ -1211,10 +1211,7 @@
           // Wordt het beeld teruggehouden, dan bieden we ook de uitleg erbij niet aan:
           // dezelfde oefening half wel en half niet presenteren is misleidend.
           (hideMedia?'':
-          (TAAL==='nl'&&o&&o.uitleg?(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg)?'<button type="button" class="vbtn" data-noor="'+idx+'">Luister naar Noor</button>'+
-            // De opname bevat de algemene uitvoering, niet de dosering of de opmerkingen
-            // van de behandelaar. Dat hoort de patiënt te weten voordat hij luistert.
-            '<div class="vmeta">De stem legt de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op deze kaart.</div>':'<div class="vmeta">Natuurlijke stemopname nog niet beschikbaar. De uitleg staat bij de afbeelding.</div>'):'')))+
+          (TAAL==='nl'&&o&&o.uitleg?noorRegel(o,idx):'')))+
         '<button type="button" class="oefdone" data-idx="'+idx+'" aria-pressed="false"><span class="odv" aria-hidden="true"></span><span class="odt"></span></button>'+
         '<button type="button" class="oefzwaar" data-zidx="'+idx+'"></button></div>';
     });
@@ -1570,6 +1567,9 @@
     if(geluid){geluid.textContent=tr('stop');geluid.setAttribute('aria-pressed','true');}
     try{
       await NoorAudio.load();
+      // Het manifest is er nu, ook als deze beurt intussen is gestopt: dan alsnog de knoppen
+      // per oefening tonen. Dat start en stopt niets; afspelen blijft aan deze beurt gebonden.
+      herstelNoorKnoppen();
       if(request!==noorRequest)return;
       var held=[],missing=[],available=[],beeldWacht=[];
       items.forEach(function(x){
@@ -1603,6 +1603,36 @@
       beeldWacht.length?'Er wordt nu niets voorgelezen voor deze selectie.':'Er is nu geen stemopname beschikbaar voor deze selectie.');
     message.push('Volg daarnaast de dosering en opmerkingen van je behandelaar op deze kaart.');
     alert(message.join('\n\n'));
+  }
+
+  // Eén plek voor de luisterregel bij een oefening, zodat tekenen en herstellen precies
+  // dezelfde knop opleveren. Alleen voor een oefening waarvan beeld en uitleg niet worden
+  // tegengehouden; dat bewaken tekenKaart en herstelNoorKnoppen.
+  function noorRegel(o,idx){
+    if(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg))return '<button type="button" class="vbtn" data-noor="'+idx+'">Luister naar Noor</button>'+
+      // De opname bevat de algemene uitvoering, niet de dosering of de opmerkingen
+      // van de behandelaar. Dat hoort de patiënt te weten voordat hij luistert.
+      '<div class="vmeta">De stem legt de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op deze kaart.</div>';
+    // herkenbaar, zodat herstelNoorKnoppen deze regel later kan omzetten
+    return '<div class="vmeta" data-noor-wacht="'+idx+'">Natuurlijke stemopname nog niet beschikbaar. De uitleg staat bij de afbeelding.</div>';
+  }
+  // Mislukt of verloopt het eerste laden van het stemmanifest, dan staat bij elke oefening
+  // "nog niet beschikbaar". Lukt een latere poging (bijvoorbeeld via de knop bovenaan), dan
+  // zetten we alleen die regels om. Niet de hele kaart hertekenen: dat breekt een open video
+  // af en wist de stand van "gedaan" en "te zwaar". Een regel wordt vervangen, nooit
+  // aangevuld, dus opnieuw aanroepen geeft geen dubbele knoppen. De nieuwe knop werkt via de
+  // ene klikafhandeling op #oefs (bindEens); hier komt geen afhandeling bij.
+  function herstelNoorKnoppen(){
+    var regels=document.querySelectorAll('#oefs [data-noor-wacht]');
+    if(!regels.length||!K||TAAL!=='nl'||!window.NoorAudio)return;
+    var index=oefeningIndex(K.lib,K.kaart),chosen=K.kaart.chosen||[];
+    regels.forEach(function(regel){
+      var idx=Number(regel.dataset.noorWacht),x=chosen[idx],o=x?zoekOefening(index,x):null;
+      // zelfde voorwaarden als bij het tekenen: een tegengehouden beeld of tegengehouden
+      // uitleg krijgt nooit een knop, en zonder actuele opname blijft de regel staan
+      if(!o||!o.uitleg||mediaWithheld(o)||explanationWithheld(o)||!NoorAudio.match(o.naam,o.uitleg))return;
+      regel.outerHTML=noorRegel(o,idx);
+    });
   }
 
   // ---- als app op het beginscherm: manifest, offline-werker en een vriendelijke uitnodiging ----
@@ -2234,10 +2264,10 @@
     ]).then(function(res){
       if(!res[0]||!res[0].ok){document.getElementById('fout').style.display='block';return;}
       K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1],ai:!!res[0].ai};
-      // Na het laden van het stemmanifest hertekenen we de oefeningen (de luisterknop
-      // hangt ervan af). Alleen tekenKaart() aanroepen wiste de knoppen "gedaan vandaag"
-      // en "te zwaar", want die krijgen hun tekst en stand pas van hun eigen tekenfunctie.
-      if(window.NoorAudio)NoorAudio.load().then(function(){tekenKaart();tekenOefDaan();tekenZwaar();}).catch(function(){});
+      // Komt het stemmanifest pas na het tekenen binnen, dan zetten we alleen de wachtende
+      // luisterregels om (herstelNoorKnoppen), dezelfde weg als een latere geslaagde poging.
+      // De hele kaart hertekenen brak een video af die de patiënt intussen had geopend.
+      if(window.NoorAudio)NoorAudio.load().then(function(){herstelNoorKnoppen();}).catch(function(){});
       bindEens();
       initApp();
       if(TAAL!=='nl')wisselTaal(TAAL);else alles();
