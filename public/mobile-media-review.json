@@ -548,19 +548,19 @@
         {
           "label": "start",
           "crop": {
-            "x": 116,
-            "y": 136,
-            "w": 540,
-            "h": 472
+            "x": 164,
+            "y": 628,
+            "w": 500,
+            "h": 552
           }
         },
         {
           "label": "end",
           "crop": {
-            "x": 164,
-            "y": 628,
-            "w": 500,
-            "h": 552
+            "x": 116,
+            "y": 136,
+            "w": 540,
+            "h": 472
           }
         }
       ],
@@ -577,6 +577,19 @@
         "brandingBoxesOutsideCrop": 2,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+      },
+      "poseOrder": {
+        "basis": "semantic-override",
+        "override": "content/mobile-pose-order.json",
+        "reviewDate": "2026-11-03",
+        "measuredOrder": "boven naar onder",
+        "delivered": "omgekeerd ten opzichte van de bladvolgorde",
+        "start": "onderste figuur: armen gestrekt, dumbbells boven de borst",
+        "end": "bovenste figuur: ellebogen gebogen, dumbbells laag naast borst en schouders",
+        "textBasis": "De eigen uitleg begint met 'een dumbell boven je borst', laat de dumbbells daarna naast de borst zakken en eindigt met 'druk ze weer omhoog tot gestrekte armen'. De beginhouding is dus de houding met gestrekte armen.",
+        "geometry": "Ongewijzigd: beide uitsnedes, coördinaten, as y en de meetkundige controle van 2026-11-02 blijven exact zoals gemeten.",
+        "meaning": "Omgedraaid ten opzichte van de bladvolgorde: de onderste uitsnede is de beginhouding, de bovenste de eindhouding.",
+        "clinicalApproved": false
       },
       "brandMark": {
         "present": true,

@@ -3,7 +3,9 @@
 //      exact dit pad, deze bytes, deze naam en dit id; elke afwijking laat de bouw falen;
 //   B. de V2-lijnbeeldcorrectie van hip extension / knee lift (content/v2-avatar-overrides.json):
 //      alleen die twee, hash-gebonden; elke andere afwijking van V1 blijft een fout;
-//   C. de lijnbeeldgraph ("run --execute") draait de correctie niet terug.
+//   C. de lijnbeeldgraph ("run --execute") draait de correctie niet terug;
+//   D. de semantische houdingvolgorde (content/mobile-pose-order.json, Dumbell bench press):
+//      alleen bij exact deze bron, uitleg, naam, id en twee gemeten uitsnedes.
 // Alles draait in een wegwerpmap met symlinks naar de echte bestanden; alleen de gemuteerde
 // bestanden zijn kopieën. De echte catalogi, beoordeling en beelden blijven byte-gelijk.
 import assert from 'node:assert/strict';
@@ -22,7 +24,8 @@ const BEWAAKT = ['public/oefeningen.json', 'public/oefeningen-v2.json', 'public/
   'content/beginhouding-pijl.json', 'content/v2-avatar-overrides.json', 'content/v2-image-pair-report.json',
   'public/images/bovenste-extremiteit/dips-avatar-v7.jpg',
   'public/images/core/back-extension-avatar-v7.jpg', 'public/images/core/rug-extensie-avatar-v7.jpg',
-  'public/images/core/back-extension.jpg', 'public/images/core/rug-extensie.jpg'];
+  'public/images/core/back-extension.jpg', 'public/images/core/rug-extensie.jpg',
+  'content/mobile-pose-order.json', 'public/images/bovenste-extremiteit/dumbell-bench-press-avatar-v7.jpg'];
 const voor = BEWAAKT.map(sha);
 const werk = fs.mkdtempSync(path.join(os.tmpdir(), 'fysiplan-uitzondering-'));
 const KOPIEER = ['validate-exercise-backgrounds.mjs', 'publication-channel-graph.mjs', 'v2-line-art-graph.mjs'];
@@ -137,6 +140,55 @@ try {
     }
   });
 
+  // ---------- D. semantische houdingvolgorde (content/mobile-pose-order.json) ----------
+  // Alleen voor exact deze bron, uitleg, naam, id en twee gemeten uitsnedes; anders faalt de
+  // bouw. Zonder de regel levert de bouw weer de bladvolgorde en verandert verder niets.
+  {
+    const BANK = 'Dumbell bench press', bank = naam(v2, BANK);
+    const volgorde = lees('content/mobile-pose-order.json');
+    const opnieuw = await sharp(fs.readFileSync(path.join(repo, 'public', bank.kaartImg))).jpeg({quality: 87}).toBuffer();
+    assert.notEqual(createHash('sha256').update(opnieuw).digest('hex'), sha('public/' + bank.kaartImg));
+    const metVolgorde = (pas) => { const k = structuredClone(volgorde); pas(k.overrides[0]); return {'content/mobile-pose-order.json': k}; };
+    const pastNiet = /Houdingvolgorde voor Dumbell bench press past niet meer/, wijktAf = /Houdingvolgorde voor Dumbell bench press: de gemeten uitsnedes .* wijken af/;
+    const gevallen = [
+      ['volgorde: andere bytes op hetzelfde pad', {beelden: {[bank.kaartImg]: opnieuw}}, pastNiet],
+      ['volgorde: andere uitleg', {bestanden: metV2((c) => { naam(c, BANK).uitleg += ' Herhaal rustig.'; })}, pastNiet],
+      ['volgorde: andere naam', {bestanden: metV2((c) => { naam(c, BANK).naam = 'Dumbbell bench press'; })}, pastNiet],
+      ['volgorde: ander pad', {bestanden: metV2((c) => { naam(c, BANK).kaartImg = anderBeeld; })}, pastNiet],
+      ['volgorde: vastgelegde uitsnede 1 px anders', {bestanden: metVolgorde((o) => { o.start.crop.y += 1; })}, wijktAf],
+      ['volgorde: beide uitsnedes gelijk vastgelegd', {bestanden: metVolgorde((o) => { o.end.crop = {...o.start.crop}; })}, wijktAf],
+      ['volgorde: verkeerde as', {bestanden: metVolgorde((o) => { o.axis = 'x'; })}, wijktAf],
+      ['volgorde: ander id (herkoppeld lijnbeeld)', {bestanden: metV2((c) => { naam(c, BANK).img = 'images/bovenste-extremiteit/dumbell-bench-press-nieuw.jpg'; })},
+        /Houdingvolgorde niet toegepast: Dumbell bench press/],
+      ['volgorde: regel weggehaald', {bestanden: {'content/mobile-pose-order.json': {...volgorde, overrides: []}}}, null],
+    ];
+    const uitkomst = await Promise.all(gevallen.map(([, opzet]) => {
+      const root = wegwerp(opzet);
+      return draai(root, 'build-mobile-media-review.mjs', [], {kopie: false}).then((r) => ({...r, root}));
+    }));
+    gevallen.forEach(([label, , verwacht], i) => {
+      const r = uitkomst[i];
+      if (verwacht) {
+        assert.notEqual(r.code, 0, label + ': de bouw had moeten falen');
+        assert.match(r.fout, verwacht, label);
+        assert.ok(!fs.existsSync(path.join(r.root, 'public/mobile-media-review.json')), label + ': geen halve beoordeling geschreven');
+        return;
+      }
+      // zonder regel: alleen deze oefening anders, terug in bladvolgorde, zonder poseOrder
+      assert.equal(r.code, 0, label + ': ' + r.fout);
+      const zonder = JSON.parse(fs.readFileSync(path.join(r.root, 'public/mobile-media-review.json'), 'utf8'));
+      const echt = lees('public/mobile-media-review.json');
+      const i0 = echt.entries.findIndex((e) => e.exerciseId === exerciseId(bank));
+      const z = zonder.entries[i0], e = echt.entries[i0];
+      assert.deepEqual(z.poses.map((p) => p.crop), [e.poses[1].crop, e.poses[0].crop], label + ': zonder regel de omgekeerde (bladvolgorde)');
+      assert.equal(z.poseOrder, undefined, label);
+      const {poses: _p, poseOrder: _o, ...restZ} = z, {poses: _q, poseOrder: _r, ...restE} = e;
+      assert.deepEqual(restZ, restE, label + ': verder niets anders aan deze oefening');
+      zonder.entries[i0] = e;
+      assert.deepEqual(zonder, echt, label + ': alle andere oefeningen en de samenvatting gelijk');
+    });
+  }
+
   // ---------- B. V2-lijnbeeldcorrectie: alleen deze twee, hash-gebonden ----------
   const zonderUitzondering = structuredClone(uitzonderingen); zonderUitzondering.overrides = [];
   const verkeerdeHash = structuredClone(uitzonderingen); verkeerdeHash.overrides[0].lineSha256 = '0'.repeat(64);
@@ -194,4 +246,4 @@ try {
   fs.rmSync(werk, {recursive: true, force: true});
 }
 assert.deepEqual(BEWAAKT.map(sha), voor, 'echte catalogi, beoordeling, pijlen en beelden byte-gelijk');
-console.log('Uitzonderingen smal: 7 bron-houds; Dips-, Back extension- en Rug extensie-mutaties op pad/bytes/naam/id en Chair squat-mutaties op pad/bytes falen; V2-lijnbeeldcorrectie geldt alleen voor de 2 vastgelegde oefeningen (derde afwijking, V1-wijziging, losse pijlen, verkeerde hash of ontbrekende uitzondering falen in beide poorten); de lijnbeeldgraph draait de correctie niet terug.');
+console.log('Uitzonderingen smal: 7 bron-houds; Dips-, Back extension- en Rug extensie-mutaties op pad/bytes/naam/id en Chair squat-mutaties op pad/bytes falen; V2-lijnbeeldcorrectie geldt alleen voor de 2 vastgelegde oefeningen (derde afwijking, V1-wijziging, losse pijlen, verkeerde hash of ontbrekende uitzondering falen in beide poorten); de lijnbeeldgraph draait de correctie niet terug; houdingvolgorde Dumbell bench press faalt bij andere bytes/uitleg/naam/pad/id/uitsnede/as en zonder regel verandert alleen die volgorde.');

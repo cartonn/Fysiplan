@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Semantische volgorde van bestaande, meetkundig gecontroleerde houding-uitsnedes. De meting (scripts/pose-crop-candidates.mjs) nummert de twee figuren in bladvolgorde: boven naar onder (as y) of links naar rechts (as x). Dat is bladindeling, geen betekenis. De kaart toont poses[0] als Beginhouding en poses[1] als Eindhouding. Alleen hier vastgelegd, per exact bronbestand en exacte uitleg, mag de geleverde volgorde afwijken van de bladvolgorde.",
+  "rules": [
+    "Alleen de volgorde verandert: dezelfde twee gemeten uitsnedes met dezelfde coördinaten, dezelfde as en dezelfde meetkundige controle (poseGeometry).",
+    "Gebonden aan exerciseId, naam, bronpad, sha256 van de bron, sha256 van de uitleg en de twee gemeten uitsnedes. Wijkt één daarvan af, dan faalt scripts/build-mobile-media-review.mjs: dan hoort een mens opnieuw te kijken.",
+    "Geen klinische goedkeuring: de uitvoering blijft unreviewed en clinicalApproved blijft false."
+  ],
+  "overrides": [
+    {
+      "exerciseId": "fp_4bc24b8993e02443",
+      "name": "Dumbell bench press",
+      "source": "images/bovenste-extremiteit/dumbell-bench-press-avatar-v7.jpg",
+      "assetSha256": "a4119635d7e6ca7a6d87e4174e142ed7784b3c1318ce31af4d09af969870d43d",
+      "explanationSha256": "ca6dfdf83dc6f0002eff6521e489c065a8781838d6557012bdc9b247b0c3c14c",
+      "axis": "y",
+      "start": {
+        "crop": {"x": 164, "y": 628, "w": 500, "h": 552},
+        "shows": "onderste figuur: armen gestrekt, dumbbells boven de borst"
+      },
+      "end": {
+        "crop": {"x": 116, "y": 136, "w": 540, "h": 472},
+        "shows": "bovenste figuur: ellebogen gebogen, dumbbells laag naast borst en schouders"
+      },
+      "textBasis": "De eigen uitleg begint met 'een dumbell boven je borst', laat de dumbbells daarna naast de borst zakken en eindigt met 'druk ze weer omhoog tot gestrekte armen'. De beginhouding is dus de houding met gestrekte armen.",
+      "geometry": "Ongewijzigd: beide uitsnedes, coördinaten, as y en de meetkundige controle van 2026-11-02 blijven exact zoals gemeten.",
+      "meaning": "Omgedraaid ten opzichte van de bladvolgorde: de onderste uitsnede is de beginhouding, de bovenste de eindhouding.",
+      "evidence": "Visuele controle op originele resolutie (800x1200) door Claude (items[4] in output/visual-shoulder-ten-20261103.json van de audio-recovery-werkmap) en onafhankelijk door de coördinator (2026-11-03); opnieuw bekeken bij deze correctie. Bewijsbestand sha256 0b56b4191fa526270491b9b6ad9d5769b67570590390b46628f146e77f72aed9.",
+      "reviewDate": "2026-11-03",
+      "clinicalApproved": false
+    }
+  ]
+}

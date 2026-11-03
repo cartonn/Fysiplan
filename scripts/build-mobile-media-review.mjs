@@ -71,6 +71,23 @@ const sourceHolds = new Map([
 // observatie bij exact het gecorrigeerde bestand, geen goedkeuring.
 const avatarOverrides = new Map(JSON.parse(await fs.readFile('content/v2-avatar-overrides.json', 'utf8'))
   .overrides.map(o => [o.exerciseId, o]));
+// Semantische houdingvolgorde (content/mobile-pose-order.json). De meting nummert de figuren
+// in bladvolgorde (boven->onder of links->rechts); de kaart toont poses[0] als Beginhouding.
+// Alleen voor exact deze bron, deze uitleg en deze twee gemeten uitsnedes mag de geleverde
+// volgorde daarvan afwijken. De uitsnedes zelf en hun meetkundige controle veranderen niet.
+const poseOrder = new Map(JSON.parse(await fs.readFile('content/mobile-pose-order.json', 'utf8'))
+  .overrides.map(o => [o.exerciseId, o]));
+const poseOrderApplied = new Set();
+const sameCrop = (a, b) => Boolean(a && b) && ['x', 'y', 'w', 'h'].every(k => a[k] === b[k]);
+function semanticPoses(o, candidate) {
+  const measured = candidate.poses.map(p => p.crop);
+  const matches = measured.length === 2 && candidate.axis === o.axis &&
+    ((sameCrop(measured[0], o.start.crop) && sameCrop(measured[1], o.end.crop)) ||
+     (sameCrop(measured[0], o.end.crop) && sameCrop(measured[1], o.start.crop)));
+  if (!matches) throw new Error(`Houdingvolgorde voor ${o.name}: de gemeten uitsnedes (${candidate.axis}, ${JSON.stringify(measured)}) wijken af van content/mobile-pose-order.json; opnieuw beoordelen.`);
+  // de gemeten uitsnedes zelf leveren, alleen in de vastgelegde betekenisvolgorde
+  return [{label:'start', crop: measured.find(c => sameCrop(c, o.start.crop))}, {label:'end', crop: measured.find(c => sameCrop(c, o.end.crop))}];
+}
 const approvals = JSON.parse(await fs.readFile('content/mobile-pose-approvals.json', 'utf8'));
 const inspected = new Map(approvals.inspectedAssets.map(a => [a.assetSha256, a]));
 const manualRejections = new Map(approvals.manualRejections.map(r => [r.exerciseId, r]));
@@ -96,6 +113,11 @@ for (const e of base) {
   if (hold && (hold.name !== e.naam || hold.source !== source || hold.assetSha256 !== assetSha256)) {
     throw new Error(`Tijdelijke hold voor ${hold.name} past niet meer bij de catalogus (${source}, ${assetSha256}): eerst opnieuw beoordelen en de hold bijwerken of verwijderen.`);
   }
+  const explanationSha256 = createHash('sha256').update(e.uitleg || '').digest('hex');
+  const order = poseOrder.get(id);
+  if (order && (order.name !== e.naam || order.source !== source || order.assetSha256 !== assetSha256 || order.explanationSha256 !== explanationSha256)) {
+    throw new Error(`Houdingvolgorde voor ${order.name} past niet meer bij de catalogus (${source}, ${assetSha256}, uitleg ${explanationSha256}): eerst opnieuw beoordelen en content/mobile-pose-order.json bijwerken of de regel verwijderen.`);
+  }
   const reason = correctedLunge ? undefined : (rejects.get(e.naam) || (hold && hold.reason));
   const override = avatarOverrides.get(id);
   const corrected = override && override.kaartImg === source && override.assetSha256 === assetSha256;
@@ -103,7 +125,7 @@ for (const e of base) {
   const merk = await measureBrandMark(bytes);
   const seen = inspected.get(assetSha256);
   const manual = manualRejections.get(id);
-  let poses = [], poseGeometry;
+  let poses = [], poseGeometry, poseOrderRecord;
   if (reason) {
     poseGeometry = {status:'withheld', reason:'De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond.'};
   } else if (manual) {
@@ -114,6 +136,15 @@ for (const e of base) {
     poseGeometry = {status:'static', reason:'Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand.'};
   } else {
     poses = candidate.poses;
+    if (order) {
+      poses = semanticPoses(order, candidate);
+      poseOrderApplied.add(id);
+      poseOrderRecord = {basis:'semantic-override', override:'content/mobile-pose-order.json', reviewDate:order.reviewDate,
+        measuredOrder: candidate.axis === 'y' ? 'boven naar onder' : 'links naar rechts',
+        delivered: poses[0].crop === candidate.poses[0].crop ? 'gelijk aan de bladvolgorde' : 'omgekeerd ten opzichte van de bladvolgorde',
+        start: order.start.shows, end: order.end.shows, textBasis: order.textBasis,
+        geometry: order.geometry, meaning: order.meaning, clinicalApproved:false};
+    }
     poseGeometry = {
       status:'geometry-approved', axis:candidate.axis,
       reviewer:approvals.reviewer, reviewDate:approvals.reviewDate, reviewKind:approvals.reviewKind,
@@ -129,7 +160,7 @@ for (const e of base) {
   entries.push({
     exerciseId: id, name: e.naam, source,
     assetSha256,
-    explanationSha256: createHash('sha256').update(e.uitleg || '').digest('hex'),
+    explanationSha256,
     mediaType: chromaticPixels>100 ? 'color_avatar_candidate' : 'line_drawing_candidate',
     classification: {method:'raster-chroma-80x120-not-filename',chromaticPixels,visuallyInspected:Boolean(seen)||rejects.has(e.naam)||observations.has(e.naam)||Boolean(hold)||Boolean(corrected)},
     width:metadata.width,height:metadata.height,
@@ -140,6 +171,8 @@ for (const e of base) {
     ...(hold ? {hold:{temporary:true,kind:hold.kind || 'source-defect',source:hold.source,assetSha256:hold.assetSha256,evidence:hold.evidence || HOLD_BEWIJS,
       release:'Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd.'}} : {}),
     poses, poseGeometry,
+    // betekenis (welke uitsnede begin en eind is), los van de meetkunde hierboven
+    ...(poseOrderRecord ? {poseOrder: poseOrderRecord} : {}),
     // Ingebakken eigen merk: de kaart dekt het af en zet overal zelf hetzelfde merk, zodat
     // het niet per oefening wisselt. Alleen met een gemeten, vrij vlak; zie brand-mark.mjs.
     brandMark: merk.coverable
@@ -150,6 +183,7 @@ for (const e of base) {
 if(entries.length!==319) throw new Error('Expected 319 available mobile assets, got '+entries.length);
 for(const name of rejects.keys())if(!entries.some(e=>e.name===name))throw new Error('Missing rejection '+name);
 for(const [id,hold] of sourceHolds)if(!entries.some(e=>e.exerciseId===id&&e.source===hold.source&&e.status==='rejected'))throw new Error('Tijdelijke hold niet toegepast: '+hold.name);
+for(const [id,o] of poseOrder)if(!poseOrderApplied.has(id))throw new Error('Houdingvolgorde niet toegepast: '+o.name+' (bron ontbreekt, is afgekeurd of tegengehouden, of de uitsnede is niet meer meetkundig goedgekeurd); opnieuw beoordelen.');
 for(const [id,o] of avatarOverrides)if(!entries.some(e=>e.exerciseId===id&&e.source===o.kaartImg&&e.assetSha256===o.assetSha256))throw new Error('Gecorrigeerd kaartbeeld niet in de beoordeling: '+o.name);
 const geometryApproved = entries.filter(e=>e.poseGeometry.status==='geometry-approved');
 if(geometryApproved.some(e=>e.status==='rejected'||e.clinicalApproved))throw new Error('Afgekeurde of klinisch goedgekeurde inzending met houdingen');
