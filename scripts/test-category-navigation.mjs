@@ -5,10 +5,13 @@ scripts.forEach(s=>new vm.Script(s));
 const helpers=html.split('// CATEGORY_DISPLAY_START')[1].split('// CATEGORY_DISPLAY_END')[0];
 const context={};vm.createContext(context);vm.runInContext(helpers,context);
 const current=JSON.parse(fs.readFileSync('public/oefeningen-v2.json'));
-// Shallow CI checkouts lack the migration parent. Functional checks always run;
-// the full non-category byte-equivalence check runs when that parent is present.
+// A migration compares against its actual integration base, not an obsolete
+// release that can legitimately have different media. CI functional checks
+// always run; coordinators explicitly request the stronger migration check.
 let original=null;
-try{original=JSON.parse(execFileSync('git',['show','2249b0c:public/oefeningen-v2.json'],{encoding:'utf8',stdio:['ignore','pipe','ignore']}));}catch{}
+if(process.env.CATEGORY_MIGRATION_BASE){
+ original=JSON.parse(execFileSync('git',['show',process.env.CATEGORY_MIGRATION_BASE+':public/oefeningen-v2.json'],{encoding:'utf8',stdio:['ignore','pipe','ignore']}));
+}
 if(original){
 assert.equal(current.length,original.length);
 let changed=0;
