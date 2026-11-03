@@ -51,18 +51,27 @@ assert.ok(!/<meta[^>]+name=["']?referrer/i.test(kaart) && !/<meta[^>]+name=["']?
 const T = vm.runInNewContext(tussen(kaart, '  var T={', '  var SPRAAK=') + ';T');
 function kaartKlik(taal, dataset) {
   let handler = null;
-  const houder = { innerHTML: '', classList: { contains: () => false, add() {}, remove() {} }, scrollIntoView() {} };
+  const element = () => ({children:[], events:{}, textContent:'', setAttribute(){}, appendChild(n){this.children.push(n);}, addEventListener(t,fn){this.events[t]=fn;}});
+  const nativeVideo = { ...element(), isConnected:true, paused:true, error:null };
+  const houder = { ...element(), innerHTML: '', classList: { contains: () => false, add() {}, remove() {} }, scrollIntoView() {},
+    querySelector: (sel) => sel==='video' ? nativeVideo : null, contains: (el) => el===nativeVideo };
   const b = { dataset, setAttribute() {}, closest: (sel) => (sel === '.oef' ? { querySelector: () => houder } : null) };
   const ctx = vm.createContext({
     TAAL: taal, setTimeout: () => 0, stopLezen() {}, location: { pathname: '/k/' + KAART_ID, href: 'https://fysiplan.example/k/' + KAART_ID },
-    window: {}, document: { getElementById: (id) => (id === 'oefs' ? { addEventListener: (t, fn) => { handler = fn; } } : null), querySelectorAll: () => [] },
+    window: {}, document: { createElement:element, getElementById: (id) => (id === 'oefs' ? { addEventListener: (t, fn) => { handler = fn; } } : null), querySelectorAll: () => [] },
   });
   vm.runInContext(regel(kaart, /  function esc\(s\)\{[^\n]*\n/) + tussen(kaart, '  var T={', '  var SPRAAK=') +
     regel(kaart, /  var VIDEO_TEKST_ALG=[^\n]*\n/) + regel(kaart, /  var VIDEO_BRON_PRAKTIJK=[^\n]*\n/) + regel(kaart, /  var VIDEO_TEKST_LABEL=[^\n]*\n/) +
     regel(kaart, /  function tr\(k\)\{[^\n]*\n/) + regel(kaart, /  function ytKijkUrl\(id\)\{[^\n]*\n/) +
+    tussen(kaart, '  function bewaakVideo(', '  // ---- alle knoppen één keer') +
     tussen(kaart, "    document.getElementById('oefs').addEventListener('click',", "    document.getElementById('mschaal')"), ctx);
   assert.equal(typeof handler, 'function');
   handler({ target: { closest: (sel) => (sel === '.vbtn' ? b : null) } });
+  if(dataset.eigen){
+    assert.equal(typeof nativeVideo.events.error,'function','echte native foutbewaking gekoppeld');
+    nativeVideo.events.error();
+    assert.equal(houder.children[0].children.at(-1).type,'button','native fout biedt echte retry');
+  }
   return houder.innerHTML;
 }
 const linksIn = (html) => [...html.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)].map((m) => m[0]);
