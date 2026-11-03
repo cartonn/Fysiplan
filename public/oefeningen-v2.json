@@ -5450,7 +5450,7 @@
  {
   "naam": "Standing chair hip extension",
   "groep": "Standing Chair",
-  "img": "images/seated-chair/standing-chair-hip-extension-line-v1.png",
+  "img": "images/seated-chair/standing-chair-knee-lift-line-v1.png",
   "kaartImg": "images/seated-chair/standing-chair-knee-lift-avatar-v8.jpg",
   "uitleg": "Houd de stoel vast voor steun. Beweeg één gestrekt been rustig naar achteren vanuit de heup en kom gecontroleerd terug.",
   "exerciseId": "fp_514654a0d4181742",
@@ -5485,7 +5485,7 @@
  {
   "naam": "Standing chair knee lift",
   "groep": "Standing Chair",
-  "img": "images/seated-chair/standing-chair-knee-lift-line-v1.png",
+  "img": "images/seated-chair/standing-chair-hip-extension-line-v1.png",
   "kaartImg": "images/seated-chair/standing-chair-hip-extension-avatar-v8.jpg",
   "uitleg": "Houd de stoel vast voor steun en breng één knie gecontroleerd omhoog. Houd je romp lang en wissel daarna van been.",
   "exerciseId": "fp_5319c4700561725d",

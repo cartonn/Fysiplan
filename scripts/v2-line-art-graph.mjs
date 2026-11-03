@@ -2,6 +2,8 @@ import { createHash } from "node:crypto";
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { graphLayers, runDag } from "../lib/dag-runner.js";
+import { exerciseId } from "../lib/exercise-id.js";
+import { loadV2Overrides } from "../lib/v2-overrides.js";
 import {
   analyzeBinaryLineArt,
   assetExists,
@@ -27,6 +29,9 @@ if (!["status", "plan", "run"].includes(command)) throw new Error(`Onbekend comm
 const catalogue = JSON.parse(await readFile(cataloguePath, "utf8"));
 const v1Catalogue = JSON.parse(await readFile(v1CataloguePath, "utf8"));
 const v1ByName = new Map(v1Catalogue.map((exercise) => [exercise.naam, exercise]));
+// Vastgelegde V2-correcties (content/v2-avatar-overrides.json) houden hun eigen lijnbeeld;
+// zonder dit zou "run" ze bij het herschrijven van de catalogus terugzetten naar V1.
+const v2Overrides = await loadV2Overrides(root);
 // handgetekende illustraties (scripts/lijn-illustratie-graph.mjs) vervangen de
 // deterministische contour op hetzelfde pad; die mag deze graph nooit terugdraaien
 // zolang de onderliggende kleurkaart (colorSha) ongewijzigd is — ook niet met --force
@@ -63,7 +68,9 @@ async function execute(node, results) {
   if (node.kind === "pair") {
     const colorSource = node.exercise.kaartImg || "";
     const isLegacy = !node.exercise.coreExerciseId;
-    const lineSource = isLegacy ? (v1ByName.get(node.exercise.naam)?.img || "") : linePathForColor(colorSource);
+    const override = isLegacy ? v2Overrides.get(exerciseId(node.exercise)) : null;
+    const lineSource = override ? override.lineImg
+      : isLegacy ? (v1ByName.get(node.exercise.naam)?.img || "") : linePathForColor(colorSource);
     const colorPath = publicAssetPath(publicDir, colorSource);
     const linePath = publicAssetPath(publicDir, lineSource);
     const colorReady = await assetExists(colorPath);
@@ -73,7 +80,7 @@ async function execute(node, results) {
         name: node.exercise.naam,
         colorSource,
         lineSource,
-        source: "exact-v1",
+        source: override ? "v2-correction" : "exact-v1",
         status: colorReady && lineReadyBeforeRun ? "ready" : (!colorReady ? "pending-color" : "pending-line"),
         colorReady,
         lineReady: lineReadyBeforeRun,

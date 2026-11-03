@@ -15979,7 +15979,7 @@
         "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
       ],
       "observations": [
-        "Kaartbeeld gecorrigeerd op 2026-11-03: het vorige V2-kaartbeeld (images/seated-chair/standing-chair-hip-extension-avatar-v8.jpg) toonde knie naar voren omhoog (knieheffing); dit beeld toont gestrekt been naar achteren, handen op de stoelleuning, zoals de eigen uitleg. Zie content/v2-avatar-overrides.json. Het V1-lijnbeeld is niet aangepast en toont nog de andere beweging. Geen klinische goedkeuring."
+        "Kaartbeeld gecorrigeerd op 2026-11-03: het vorige V2-kaartbeeld (images/seated-chair/standing-chair-hip-extension-avatar-v8.jpg) toonde knie naar voren omhoog (knieheffing); dit beeld toont gestrekt been naar achteren, handen op de stoelleuning, zoals de eigen uitleg. Het V2-lijnbeeld is op dezelfde manier gecorrigeerd. Zie content/v2-avatar-overrides.json. Het V1-lijnbeeld is niet aangepast en toont nog de andere beweging. Geen klinische goedkeuring."
       ],
       "poses": [],
       "poseGeometry": {
@@ -16047,7 +16047,7 @@
         "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
       ],
       "observations": [
-        "Kaartbeeld gecorrigeerd op 2026-11-03: het vorige V2-kaartbeeld (images/seated-chair/standing-chair-knee-lift-avatar-v8.jpg) toonde gestrekt been naar achteren (heupextensie); dit beeld toont knie naar voren omhoog, handen op de stoelleuning, zoals de eigen uitleg. Zie content/v2-avatar-overrides.json. Het V1-lijnbeeld is niet aangepast en toont nog de andere beweging. Geen klinische goedkeuring."
+        "Kaartbeeld gecorrigeerd op 2026-11-03: het vorige V2-kaartbeeld (images/seated-chair/standing-chair-knee-lift-avatar-v8.jpg) toonde gestrekt been naar achteren (heupextensie); dit beeld toont knie naar voren omhoog, handen op de stoelleuning, zoals de eigen uitleg. Het V2-lijnbeeld is op dezelfde manier gecorrigeerd. Zie content/v2-avatar-overrides.json. Het V1-lijnbeeld is niet aangepast en toont nog de andere beweging. Geen klinische goedkeuring."
       ],
       "poses": [],
       "poseGeometry": {

@@ -2,6 +2,7 @@ import { readFile, stat } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { graphLayers, runDag } from "../lib/dag-runner.js";
 import { linePathForColor } from "../lib/v2-line-art.js";
+import { assertV2Override, loadV2Overrides } from "../lib/v2-overrides.js";
 
 const root = resolve(new URL("../", import.meta.url).pathname);
 const publicDir = join(root, "public");
@@ -55,8 +56,15 @@ async function execute(node, results) {
     const extension = v2.filter((entry) => entry.coreExerciseId);
     assert(extension.length === 285, `v2-Core-uitbreiding moet 285 oefeningen bevatten; gevonden ${extension.length}`);
     const v1ByName = new Map(v1.map((entry) => [entry.naam, entry]));
+    // Alleen vastgelegde, hash-gebonden uitzonderingen mogen van het V1-lijnbeeld afwijken;
+    // assertV2Override controleert ze volledig. Elke andere afwijking blijft een fout.
+    const overrides = await loadV2Overrides(root);
+    const arrows = JSON.parse(await readFile(join(root, "content", "beginhouding-pijl.json"), "utf8"));
+    for (const override of overrides.values()) await assertV2Override(root, override, v2, v1, arrows);
     const pathErrors = v2.filter((entry) => {
       if (!entry.kaartImg) return true;
+      const override = !entry.coreExerciseId && overrides.get(entry.exerciseId);
+      if (override) return entry.img !== override.lineImg || v1ByName.get(entry.naam)?.img !== override.v1LineImg;
       if (!entry.coreExerciseId) return entry.img !== v1ByName.get(entry.naam)?.img;
       return entry.img !== linePathForColor(entry.kaartImg);
     });
@@ -77,7 +85,8 @@ async function execute(node, results) {
       lineDrawingsReady: pairs.filter((pair) => pair.lineReady).length,
       pairsReady: pairs.filter((pair) => pair.pairReady).length,
       pendingCount: pairs.filter((pair) => !pair.pairReady).length,
-      lineRule: "legacy reuses exact V1 images; extensions use black-only contours on pure #FFFFFF",
+      lineRule: "legacy reuses exact V1 images, except hash-bound V2 corrections in content/v2-avatar-overrides.json; extensions use black-only contours on pure #FFFFFF",
+      correctedLegacyLines: overrides.size,
     };
   }
 

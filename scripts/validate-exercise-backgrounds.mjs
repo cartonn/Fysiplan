@@ -3,11 +3,15 @@ import { readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import sharp from "sharp";
 import { analyzeBinaryLineArt, linePathForColor } from "../lib/v2-line-art.js";
+import { assertV2Override, loadV2Overrides } from "../lib/v2-overrides.js";
 
 const root = resolve(new URL("../", import.meta.url).pathname);
 const catalogue = JSON.parse(await readFile(join(root, "public", "oefeningen-v2.json"), "utf8"));
 const v1Catalogue = JSON.parse(await readFile(join(root, "public", "oefeningen.json"), "utf8"));
 const report = JSON.parse(await readFile(join(root, "content", "oefenbeeld-background-qa-v7.json"), "utf8"));
+const arrows = JSON.parse(await readFile(join(root, "content", "beginhouding-pijl.json"), "utf8"));
+// Alleen deze vastgelegde oefeningen mogen in V2 een ander lijnbeeld hebben dan in V1.
+const v2Overrides = await loadV2Overrides(root);
 
 if (report.schemaVersion !== 1 || report.assetVersion !== 7 || report.background !== "#FFFFFF") {
   throw new Error("Oefenbeeldrapport heeft een onbekende versie of achtergrond");
@@ -79,9 +83,11 @@ await Promise.all(top500Expansion.map(async (exercise) => {
 const pairRatios = [];
 const pendingPairs = [];
 let legacyPairs = 0;
+let correctedLegacyPairs = 0;
 await Promise.all(catalogue.map(async (exercise) => {
   const isLegacy = !exercise.coreExerciseId;
-  const expectedLine = isLegacy ? v1ByName.get(exercise.naam)?.img : linePathForColor(exercise.kaartImg);
+  const override = isLegacy ? v2Overrides.get(exercise.exerciseId) : null;
+  const expectedLine = override ? override.lineImg : isLegacy ? v1ByName.get(exercise.naam)?.img : linePathForColor(exercise.kaartImg);
   if (!exercise.kaartImg || exercise.img !== expectedLine) {
     throw new Error(`Geen geldige 1-op-1 kleur/lijn-koppeling voor ${exercise.naam}`);
   }
@@ -105,37 +111,18 @@ await Promise.all(catalogue.map(async (exercise) => {
     return;
   }
   if (isLegacy) {
-    legacyPairs += 1;
+    if (override) correctedLegacyPairs += 1; else legacyPairs += 1;
     return;
   }
   const qa = await analyzeBinaryLineArt(linePath);
   pairRatios.push(qa.blackRatio);
 }));
 
-// Expliciete V2-kaartbeelduitzonderingen (content/v2-avatar-overrides.json). Dit is een
-// extra eis, geen versoepeling: elke uitzondering moet precies zo in de catalogus staan,
-// aan haar bytes gebonden zijn en het lijnbeeld moet gelijk blijven aan V1. Zo kan een
-// latere bewerking of pijplijnrun de correctie niet stilzwijgend terugdraaien.
-const avatarOverrides = JSON.parse(await readFile(join(root, "content", "v2-avatar-overrides.json"), "utf8"));
-if (avatarOverrides.schemaVersion !== 1 || !Array.isArray(avatarOverrides.overrides)) {
-  throw new Error("content/v2-avatar-overrides.json heeft een onbekende vorm");
-}
-for (const override of avatarOverrides.overrides) {
-  const matches = catalogue.filter((exercise) => exercise.exerciseId === override.exerciseId);
-  if (matches.length !== 1 || matches[0].naam !== override.name) {
-    throw new Error(`V2-uitzondering ${override.exerciseId} (${override.name}) staat niet precies één keer onder die naam in de catalogus`);
-  }
-  const [exercise] = matches;
-  if (exercise.kaartImg !== override.kaartImg) {
-    throw new Error(`V2-kaartbeeld van ${override.name} wijkt af van de vastgelegde uitzondering: ${exercise.kaartImg} in plaats van ${override.kaartImg}`);
-  }
-  if (exercise.img !== override.lineImg || v1ByName.get(override.name)?.img !== override.lineImg) {
-    throw new Error(`Lijnbeeld van ${override.name} is niet meer exact het V1-beeld van de uitzondering`);
-  }
-  const digest = createHash("sha256").update(await readFile(join(root, "public", override.kaartImg))).digest("hex");
-  if (digest !== override.assetSha256) throw new Error(`Kaartbeeld van ${override.name} is gewijzigd na de vastgelegde uitzondering`);
-  const sharing = catalogue.filter((other) => other.kaartImg === override.kaartImg);
-  if (sharing.length !== 1) throw new Error(`Kaartbeeld ${override.kaartImg} wordt door ${sharing.length} oefeningen gebruikt`);
+// Expliciete V2-uitzonderingen (content/v2-avatar-overrides.json): extra eisen, geen
+// versoepeling. Elke uitzondering wordt volledig gecontroleerd (paden, sha256 van kaart-,
+// lijn-, V1- en pijlbeeld, stabiele id's). Alle andere legacykaarten blijven exact V1.
+for (const override of v2Overrides.values()) {
+  await assertV2Override(root, override, catalogue, v1Catalogue, arrows);
 }
 
 if (process.argv.includes("--strict") && pendingExpansion.length) {
@@ -150,5 +137,5 @@ const bereik = (waarden) => waarden.length
   : "n.v.t.";
 console.log(`Legacy-oefenbeelden geldig: ${legacyCatalogue.length}/215 op #FFFFFF; minimum witvlak ${ratios[0]}; mediaan ${ratios[Math.floor(ratios.length / 2)]}.`);
 console.log(`Top-500-uitbreidingsbeelden geldig: ${expansionRatios.length}/285 op #FFFFFF; nog niet gepubliceerd: ${pendingExpansion.length}; ${bereik(expansionRatios)}.`);
-console.log(`V2-beeldparen geldig: ${legacyPairs + pairRatios.length}/500; nog niet gepubliceerd: ${pendingPairs.length}; ${legacyPairs} legacykaarten gebruiken exact de V1-afbeelding.`);
-console.log(`V2-kaartbeelduitzonderingen: ${avatarOverrides.overrides.length} expliciet vastgelegd en aan pad, hash en V1-lijnbeeld gebonden.`);
+console.log(`V2-beeldparen geldig: ${legacyPairs + correctedLegacyPairs + pairRatios.length}/500; nog niet gepubliceerd: ${pendingPairs.length}; ${legacyPairs} legacykaarten gebruiken exact de V1-afbeelding, ${correctedLegacyPairs} een vastgelegde V2-correctie.`);
+console.log(`V2-uitzonderingen: ${v2Overrides.size} expliciet vastgelegd en gebonden aan paden, sha256 (kaart-, lijn-, V1- en pijlbeeld) en stabiele ids.`);

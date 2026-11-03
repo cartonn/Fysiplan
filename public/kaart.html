@@ -1459,16 +1459,19 @@
   // het stabiele id, pas daarna op naam. Anders kan een eigen oefening met dezelfde naam
   // de uitleg of de opname van een ándere oefening opleveren.
   function vindOefening(x){return zoekOefening(oefeningIndex(K.lib,K.kaart),x);}
+  // Eén regel voor elke Noor-knop: wordt het beeld dat de kaart bij deze oefening toont
+  // tegengehouden (afgekeurd of tijdelijke hold), dan bieden we de uitleg erbij ook niet
+  // aan, net als bij de knop per oefening. De tekst en de opname blijven gewoon bestaan.
+  function noorItem(o,x){
+    return {name:o?o.naam:x.n,text:o?o.uitleg||'':'',id:(o&&o.exerciseId)||x.id||'',beeldGehouden:!!(o&&mediaWithheld(o))};
+  }
   function leesVoor(){
     if(!K)return;
     if(bezigLezen){stopLezen();return;}
     if(TAAL!=='nl'&&!window.speechSynthesis)return;
     stopVideos();
     if(TAAL==='nl'){
-      var items=(K.kaart.chosen||[]).map(function(x){
-        var o=vindOefening(x);
-        return {name:o?o.naam:x.n,text:o?o.uitleg||'':'',id:(o&&o.exerciseId)||x.id||''};
-      });
+      var items=(K.kaart.chosen||[]).map(function(x){return noorItem(vindOefening(x),x);});
       speelNoor(items);return;
     }
     if(!window.speechSynthesis)return;
@@ -1533,29 +1536,36 @@
     try{
       await NoorAudio.load();
       if(request!==noorRequest)return;
-      var held=[],missing=[],available=[];
+      var held=[],missing=[],available=[],beeldWacht=[];
       items.forEach(function(x){
         // Zelfde regel als explanationWithheld: een houd geldt op stabiel id én op naam.
         // Alleen op naam vergelijken laat een hernoemde oefening door de controle glippen.
         if(explanationHolds.some(function(h){return (h.exerciseId&&x.id&&h.exerciseId===x.id)||h.name===x.name;}))held.push(x.name);
+        // Zelfde regel als de knop per oefening: getoond beeld tegengehouden, dan niet voorlezen.
+        // Nooit een toestelstem als vervanging: die oefening wordt gewoon overgeslagen en genoemd.
+        else if(x.beeldGehouden)beeldWacht.push(x.name);
         else if(!NoorAudio.match(x.name,x.text))missing.push(x.name);
         else available.push(x);
       });
-      if(!available.length){stopLezen();meldOntbrekend(held,missing,0);return;}
+      if(!available.length){stopLezen();meldOntbrekend(held,missing,0,beeldWacht);return;}
       if(request!==noorRequest)return;
       // Eerst afspelen, daarna pas melden: een alert() blokkeert de pagina zo lang dat de
       // toestemming die bij de tik hoort verloopt, en dan start het geluid helemaal niet.
       NoorAudio.play(available,stopLezen,function(message){stopLezen();alert(message);});
-      meldOntbrekend(held,missing,available.length);
+      meldOntbrekend(held,missing,available.length,beeldWacht);
     }catch(error){if(request!==noorRequest)return;stopLezen();alert('De natuurlijke stem kon niet laden. Probeer opnieuw of lees de beschikbare uitleg.');}
   }
 
-  function meldOntbrekend(held,missing,beschikbaar){
-    if(!held.length&&!missing.length)return;
+  function meldOntbrekend(held,missing,beschikbaar,beeldWacht){
+    beeldWacht=beeldWacht||[];
+    if(!held.length&&!missing.length&&!beeldWacht.length)return;
     var message=[];
     if(held.length)message.push('Uitleg wordt gecontroleerd: '+held.join(', ')+'.');
+    if(beeldWacht.length)message.push('Niet voorgelezen, omdat de oefenafbeelding nog wordt gecontroleerd: '+beeldWacht.join(', ')+'.');
     if(missing.length)message.push('Nog geen actuele stemopname: '+missing.join(', ')+'.');
-    message.push(beschikbaar?'Je hoort nu de beschikbare uitleg voor '+beschikbaar+' oefening(en).':'Er is nu geen stemopname beschikbaar voor deze selectie.');
+    message.push(beschikbaar?'Je hoort nu de beschikbare uitleg voor '+beschikbaar+' oefening(en).':
+      // overgeslagen vanwege een beeldcontrole is niet hetzelfde als geen opname: niet beweren dat die ontbreekt
+      beeldWacht.length?'Er wordt nu niets voorgelezen voor deze selectie.':'Er is nu geen stemopname beschikbaar voor deze selectie.');
     message.push('Volg daarnaast de dosering en opmerkingen van je behandelaar op deze kaart.');
     alert(message.join('\n\n'));
   }
@@ -1866,8 +1876,7 @@
       if(noor){
         var x=(K.kaart.chosen||[])[Number(noor.dataset.noor)];
         if(!x)return;
-        var o=vindOefening(x);
-        speelNoor([{name:o?o.naam:x.n,text:o?o.uitleg||'':'',id:(o&&o.exerciseId)||x.id||''}]);return;
+        speelNoor([noorItem(vindOefening(x),x)]);return;
       }
       // afvinken van een losse oefening ("gedaan vandaag")
       var od=e.target.closest('.oefdone');
