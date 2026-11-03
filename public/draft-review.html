@@ -58,7 +58,7 @@ document.getElementById('login').addEventListener('submit',async event=>{
    if(draft.narrationCandidate){
     const heading=document.createElement('h3'),note=document.createElement('p'),audio=document.createElement('audio'),message=document.createElement('p'),load=document.createElement('button');
     heading.textContent='Stemconcept – luisteren en beoordelen';
-    note.textContent='Dit is de volledige oefenuitleg, inclusief terugzetten. Het bewegingsconcept hierboven toont alleen het oppakken. De stem is nog niet volledig beluisterd of klinisch goedgekeurd.';
+    note.textContent='Dit is een concept van de oefenuitleg. Controleer of de stem en de getoonde houdingen of beweging inhoudelijk overeenkomen. De stem is nog niet volledig beluisterd of klinisch goedgekeurd.';
     audio.controls=true;audio.preload='metadata';audio.setAttribute('aria-label','Ongepubliceerde oefenuitleg: '+draft.originalRecord.naam);exclusieveMedia(audio);
     message.setAttribute('role','status');load.type='button';load.textContent='Stemconcept laden';
     let audioUrl=null,busy=false;
