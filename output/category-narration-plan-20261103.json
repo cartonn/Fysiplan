@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-03",
+  "generationAuthorizedByThisPlan": false,
+  "scope": "Three strongest concept candidates from the 14-set index: table pick first, neck rotation and hand release conditional. No text rewriting.",
+  "totalCandidates": 3,
+  "missingExactClips": 3,
+  "creditPlan": {
+    "latestCoordinatedBalance": 24,
+    "observedSpeechCreditsPerRequest": 1,
+    "estimatedThreeRequests": 3,
+    "guaranteedUpperBound": null,
+    "providerMaxChargeParameterAvailable": false,
+    "action": "Do not submit until parent coordinates included-credit allocation and uncertain per-call pricing. Serial only, durable ledger before each call, balance after each call, stop on error/timeout/unexpected debit; no retry or purchase."
+  },
+  "sources": [
+    "https://www.heygen.com/model-context-protocol",
+    "https://www.heygen.com/api-pricing",
+    "https://help.heygen.com/en/articles/15126059-how-to-use-credits-on-heygen"
+  ],
+  "pricingFinding": "Official docs separate MCP premium balance from paid REST, but published current feature table does not state a guaranteed speech MCP per-call price. Observed one credit is evidence, not a contractual ceiling. Connected speech schema has no quote/dry-run/max-cost field.",
+  "entries": [
+    {
+      "priority": 1,
+      "coreExerciseId": "fc_07a47f244d7392e6",
+      "name": "Voorwerp van tafel pakken – licht en dichtbij",
+      "text": "Voorwerp van tafel pakken – licht en dichtbij. Sta rechtop voor een tafel met een licht voorwerp dicht bij de rand. Pak het voorwerp rustig op, houd het dicht bij je lichaam en zet het langzaam weer terug.",
+      "textSha256": "06adba617fe5098503678eba6f41fa75e7705789828f64647b26beae2fa3a1cd",
+      "sourceSha256": "9588eee5a560feca149a27df6cfb45162adcb2bd49a7ae7b4dccbb7dd270b682",
+      "characterCount": 205,
+      "existingExactClip": null,
+      "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+      "engine": "heygen_voice",
+      "language": "nl",
+      "speed": 0.95,
+      "status": "prepared-existing-private-draft",
+      "clinicalApproved": false,
+      "publish": false
+    },
+    {
+      "priority": 2,
+      "coreExerciseId": "fc_853c97009144ec09",
+      "name": "Nek draaien – zittend actief",
+      "text": "Nek draaien – zittend actief. Zit rechtop op een stoel en kijk recht vooruit. Draai je hoofd rustig naar één kant en beweeg langzaam terug naar het midden. Wissel daarna van kant.",
+      "textSha256": "e74b69818acd651043e3ac4b85e1e4977bfb73d46d3185ad9c60663868e0754e",
+      "sourceSha256": "3c2eaebee49d8aa316c6f178eeb4b71664b186fa8010d419b8b6a7643b13a1cd",
+      "characterCount": 179,
+      "existingExactClip": null,
+      "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+      "engine": "heygen_voice",
+      "language": "nl",
+      "speed": 0.95,
+      "status": "prepared-conditional-visual-review",
+      "clinicalApproved": false,
+      "publish": false
+    },
+    {
+      "priority": 3,
+      "coreExerciseId": "fc_2ab6250d362bc593",
+      "name": "Hand openen na grijpen – bilateraal",
+      "text": "Hand openen na grijpen – bilateraal. Zit rechtop aan een tafel met beide handen voor je. Pak met beide handen rustig een voorwerp vast, open daarna je handen langzaam en laat het weer helemaal los.",
+      "textSha256": "34f236b92c0801ff0eb8ba767e30e00b2a0df7341e4ba25e0b4c4899947e3e1a",
+      "sourceSha256": "3c91533d8cef2f8ba0c1e96efa14e52a3ff3aae3e66d65c10c2964af9afc1c09",
+      "characterCount": 197,
+      "existingExactClip": null,
+      "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+      "engine": "heygen_voice",
+      "language": "nl",
+      "speed": 0.95,
+      "status": "prepared-conditional-visual-review",
+      "clinicalApproved": false,
+      "publish": false
+    }
+  ]
+}
