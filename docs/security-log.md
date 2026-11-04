@@ -1904,3 +1904,32 @@ test-privacy bleven groen.
 (token-claim-race, bezig-grendel, TTL-opschoning, /uploads-levering met Range)
 onder de huidige main, of de AI-vrije zoekhulp/weekbrief-routes (#40 pakket D)
 op afbakening en kostenremmen.
+
+## 2026-11-04 — Opname-uploadketen onder de praktijk-opnamepoort (#36)
+
+**Gebied.** De rotatie uit het log: de hele opnameketen (start → status →
+upload → /uploads-levering), nu een ingelogde beveiligde praktijk sinds #36
+een eigen instructievideo mag opnemen (voorheen admin-only). Token-claim-race,
+bezig-grendel, grootte-/inhoudscontrole, TTL-opschoning en Range-levering.
+
+**Bevindingen: geen gat.** start eist admin óf een geclaimde praktijksessie;
+doel 'oefening' (dat de gedeelde oefenbibliotheek overschrijft) blijft
+admin-only — een praktijk wordt afgedwongen naar doel 'kaart'. upload claimt
+het token synchroon (o.bezig) vóór de eerste await, begrenst gelijktijdige
+uploads (lopendeUploads ≤ 4), wijst te grote content-length af vóór het
+bufferen (readBodyRaw-cap 60 MB), en valideert de magic bytes (mp4 'ftyp',
+webm EBML). opnameOpschonen ruimt verlopen tokens op, slaat bezige tokens
+over, en laat weesbestanden via de referentie-bewuste ruimKaartVideosOp gaan.
+De /uploads-route is traversal-veilig (normalize + startsWith-grendel),
+ext-allowlist, nosniff + CORP + referrer-policy, en de Range-parser
+(lib/byte-range.js) levert suffix-verzoeken (bytes=-N) correct als het einde
+(RFC 9110), met 416 bij onvervulbaar.
+
+**Increment.** Geen codewijziging; na de scratchpad-wipe het net voor dit
+gebied herbouwd met test-opname-keten.mjs (12 checks: auth, doel-afdwinging,
+nep-/te-grote-upload, geldige upload, dubbele-upload-404, suffix-Range,
+nosniff/CORP, traversal, TTL-opschoning). Mockbare OPNAME_TTL_MS.
+
+**Volgende run — pak een ander gebied:** de AI-vrije zoekhulp/weekbrief-routes
+(#40 pakket D) op afbakening en kostenremmen, of een brede E2E-veegronde over
+de herstelde suites tegen de huidige main.
