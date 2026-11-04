@@ -2969,6 +2969,23 @@ bridge2.jpg</div>
     var nu=Date.now(),dag=864e5;
     var r=[];
     r.push('Praktijkrapport '+(SET.praktijk||'')+(behNaam?(' — behandelaar '+behNaam):'')+' — '+new Date().toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}));
+    // meetperiode + patiëntaantal in de kop: zo leest het rapport als een gedateerd
+    // verantwoordingsstuk (kwaliteitsregister, verzekeraar, teamoverleg) i.p.v. een
+    // losse notitie. De periode volgt uit de echte kaartdata: vroegste aanmaak tot
+    // de laatste gemeten activiteit over alle meegenomen kaarten.
+    (function(){
+      var dmy=function(t){return new Date(t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});};
+      var laatst=function(c){var a=[c.ts||0];
+        [c.scores,c.gedaan,c.psk,c.ervaring].forEach(function(reeks){if(reeks&&reeks.length&&reeks[reeks.length-1])a.push(reeks[reeks.length-1].t||0);});
+        if(c.bekeken)a.push(c.bekeken);
+        return Math.max.apply(null,a);};
+      var tss=alles.map(function(c){return c.ts||0;}).filter(Boolean);
+      var acts=alles.map(laatst).filter(Boolean);
+      if(tss.length&&acts.length){
+        var van=Math.min.apply(null,tss),tot=Math.max.apply(null,acts);
+        r.push('Meetperiode: '+dmy(van)+' t/m '+dmy(tot)+' · '+alles.length+' patiënt'+(alles.length===1?'':'en')+' ('+lijst.length+' actief, '+archief.length+' afgerond).');
+      }
+    })();
     r.push('Uitkomsten app-vrij gemeten via de digitale trainingskaarten van Fysiplan (zonder patiënt-app of account).');
     r.push('');
     var geopend=alles.filter(function(c){return c.bekeken>0;}).length;
