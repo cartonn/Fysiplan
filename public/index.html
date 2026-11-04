@@ -3704,7 +3704,7 @@ bridge2.jpg</div>
           if(xb)xb.onclick=function(){
             var veld=function(v){v=(v==null?'':String(v));return '"'+v.replace(/"/g,'""')+'"';};
             var dd2=function(t){return t?new Date(t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}):'';};
-            var kop=['Naam','Status','Aangemaakt','Behandelaar','Oefeningen','Laatste pijn','Eerste pijn','PSK-doel','Eerste PSK','Laatste PSK','Oefendoel p/w','Te zwaar (3 wk)','Afspraak','Werknotitie','Kaartlink'];
+            var kop=['Naam','Status','Aangemaakt','Behandelaar','Oefeningen','Laatste pijn','Eerste pijn','PSK-doel','Eerste PSK','Laatste PSK','Oefendoel p/w','Te zwaar (3 wk)','Afspraak','Werknotitie','Verloopt','Kaartlink'];
             // altijd de verse stand van de server: een afspraak of PSK-doel die net in dit
             // overzicht is bewaard, hoort er meteen in (de lijst l is van bij het openen)
             var xbTekst=xb.textContent;xb.disabled=true;xb.textContent='Bezig…';
@@ -3721,7 +3721,11 @@ bridge2.jpg</div>
               return [c.naam,c.gearchiveerd?'afgerond':'actief',dd2(c.ts),c.behandelaar||'',c.aantal,
                 s.length?s[s.length-1].s:'',(typeof c.eersteMeting==='number')?c.eersteMeting:(s.length?s[0].s:''),
                 c.pskDoel||'',(typeof c.pskEerste==='number')?c.pskEerste:(ps.length?ps[0].s:''),ps.length?ps[ps.length-1].s:'',
-                Number(c.doel)||'',zwE.join(', '),c.afspraak&&c.afspraak.t?dd2(c.afspraak.t):'',c.notitie||'',location.origin+'/k/'+c.id].map(veld).join(';');
+                Number(c.doel)||'',zwE.join(', '),c.afspraak&&c.afspraak.t?dd2(c.afspraak.t):'',c.notitie||'',
+                // verloopdatum door de bewaartermijn: zo ziet de praktijk bij de export welke
+                // kaarten binnenkort automatisch van de server verdwijnen (de knop staat er juist
+                // voor backup/overstap voordat dat gebeurt)
+                c.verloopt?dd2(c.verloopt):'',location.origin+'/k/'+c.id].map(veld).join(';');
             });
             var csv='﻿'+kop.map(veld).join(';')+'\r\n'+rijen.join('\r\n')+'\r\n';
             var a=document.createElement('a');
