@@ -186,7 +186,9 @@ const videoCode=between("      var videoTekst=b.dataset.vtekst||'';","      if(b
 assert.ok(videoCode.includes("var vanPraktijk=b.dataset.vbron==='praktijk';"),'de herkomst van de video wordt gelezen');
 assert.ok(videoCode.includes('VIDEO_TEKST_ALG'),'praktijkbeelden krijgen de algemene kop');
 assert.ok(videoCode.includes('VIDEO_BRON_PRAKTIJK'),'bij praktijkbeelden staat waar beeld en tekst vandaan komen');
-for(const merk of ['data-eigen="/\'+esc(eigen)+\'" data-vbron="praktijk"',
+// Een door beheer geüploade AI-avatarvideo hoort bij de bibliotheekoefening (de uitleg is
+// tegen díe beelden gelegd) en draagt data-avatar; andere eigen video's blijven 'praktijk'.
+for(const merk of ['data-eigen="/\'+esc(eigen)+\'" data-vbron="\'+(eigenMeta&&eigenMeta.aiGenerated?\'bibliotheek" data-avatar="1\':\'praktijk\')+\'"',
   "data-vbron=\"'+(catalogus&&catalogus.iframe===stream?'bibliotheek':'praktijk')+'\"",
   "data-vbron=\"'+(persoonlijkYt?'praktijk':'bibliotheek')+'\""]){
   assert.ok(html.includes(merk),'herkomst ontbreekt op een videoknop: '+merk.slice(0,40));

@@ -200,6 +200,9 @@
   @keyframes vopen{from{opacity:0}to{opacity:1}}
   .vhouder video,.vhouder iframe{display:block;width:100%;aspect-ratio:16/10;border:none;background:#000}
   .vhouder video{object-fit:contain}
+  /* avatarvideo's zijn staand (2:3 of 9:16): eigen verhouding, niet hoger dan het scherm */
+  .vhouder > .vmeta{margin:10px 14px 10px}
+  .vhouder video.avatar{aspect-ratio:auto;height:auto;max-height:72vh;background:#fff}
   .vstatus{padding:10px 14px;font-size:14px;line-height:1.4}
   .vstatus button{margin:8px 0 0;padding:8px 12px;min-height:44px;display:block}
   .vhouder .ytextern{display:block;padding:10px 14px 4px;text-align:center;font:600 13px/1.35 var(--disp);color:var(--zacht);text-decoration:underline}
@@ -1183,7 +1186,7 @@
       var videoTekstData=videoTekst?' data-vtekst="'+esc(videoTekst)+'"':'';
       if(eigen){
         var eigenMeta=praktijkEigen&&o.video&&o.video.eigenMeta;
-        knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'" data-vbron="praktijk"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(eigenMeta&&eigenMeta.aiGenerated?tr('vidYt'):tr('vidEigen'))+'</button>'+
+        knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'" data-vbron="'+(eigenMeta&&eigenMeta.aiGenerated?'bibliotheek" data-avatar="1':'praktijk')+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(eigenMeta&&eigenMeta.aiGenerated?tr('vidYt'):tr('vidEigen'))+'</button>'+
           (eigenMeta&&eigenMeta.aiGenerated?'<div class="vmeta">'+esc(eigenMeta.clinicallyReviewed===true?(VIDEO_META[TAAL]||VIDEO_META.nl):(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl))+'</div>':'');
       }
       else if(stream)knop='<button class="vbtn" data-stream="'+esc(stream)+'" data-vbron="'+(catalogus&&catalogus.iframe===stream?'bibliotheek':'praktijk')+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>'+
@@ -1552,6 +1555,14 @@
     alert(m.join('\n\n'));
   }
 
+  // Noor bij een geopende avatarvideo: zelfde controles als de knop per oefening, maar
+  // zonder stopVideos(), want de video hoort juist door te lopen. Sluiten of een andere
+  // video openen roept stopLezen() aan en stopt daarmee ook deze stem.
+  function speelNoorBijVideo(item){
+    if(!window.NoorAudio||!mediaReviewReady||uitlegGehouden(item)||item.beeldGehouden)return;
+    if(!NoorAudio.match(item.name,item.text))return;
+    NoorAudio.play([item],null,function(){});
+  }
   async function speelNoor(items){
     // Pas stoppen als we ook echt iets gaan afspelen: anders eindigt een tik in een
     // kapotte toestand met een lopende video van de patiënt afgebroken en alleen een melding.
@@ -2060,8 +2071,15 @@
       var herkomst=vanPraktijk?'<div class="vmeta">'+esc(VIDEO_BRON_PRAKTIJK[TAAL]||VIDEO_BRON_PRAKTIJK.nl)+'</div>':'';
       var tekstblok=herkomst+(videoTekst?'<div class="vtekst" role="region" aria-label="'+esc(videoLabel)+'"><div class="vtekst-label">'+esc(videoLabel)+'</div><p>'+esc(videoTekst)+'</p></div>':'');
       if(b.dataset.eigen){
-        houder.innerHTML='<video controls autoplay playsinline preload="metadata" aria-label="'+esc(videoLabel)+'" src="'+esc(b.dataset.eigen)+'"></video>'+tekstblok;
+        // Avatarvideo zonder eigen geluid: stil in een lus, en de vooraf opgenomen
+        // Noor-uitleg (stem Marieke) van dezelfde oefening start bij dezelfde tik.
+        var noorKnop=b.dataset.avatar==='1'&&TAAL==='nl'?b.closest('.oef').querySelector('[data-noor]'):null;
+        houder.innerHTML='<video controls autoplay playsinline preload="metadata"'+(b.dataset.avatar==='1'?' class="avatar" muted loop':'')+' aria-label="'+esc(videoLabel)+'" src="'+esc(b.dataset.eigen)+'"></video>'+tekstblok;
         bewaakVideo(houder.querySelector('video'),houder);
+        if(noorKnop){
+          var nx=(K.kaart.chosen||[])[Number(noorKnop.dataset.noor)];
+          if(nx)speelNoorBijVideo(noorItem(vindOefening(nx),nx));
+        }
       }else if(b.dataset.yt){
         houder.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+b.dataset.yt+
           '?autoplay=1&rel=0&modestbranding=1" title="'+esc(videoLabel)+'" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>'+

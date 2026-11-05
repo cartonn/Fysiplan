@@ -32,7 +32,7 @@
       "name": "Anteflexie armen",
       "source": "images/bovenste-extremiteit/anteflexie-armen-avatar-v7.jpg",
       "assetSha256": "f8f33346dc5383665967481555abb9ceaeecf216d383a121397d3522c1253dd1",
-      "explanationSha256": "89149da6ec96332536caa6ede1df3ee997dc5efc2467ab899a99704906785ff1",
+      "explanationSha256": "2a29a8a6ded151cb052e0530a1a242a028258fadc06a25c1c70564d6a8fd83ff",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -99,7 +99,7 @@
       "name": "Barbell front press",
       "source": "images/bovenste-extremiteit/barbell-front-press-avatar-v7.jpg",
       "assetSha256": "32d048286a62bdd0508de279107b1d941d280075f8a22db640c027843265bad2",
-      "explanationSha256": "23a82eb0cb7ddab7a111642968e5ea390e700e73d1282f13f1990cfa7b6635c3",
+      "explanationSha256": "59a8355e00ef8c9e106d9050bc194bb1759edd9e285472b5309e669d988d2cbf",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -347,7 +347,7 @@
       "name": "Biceps curl",
       "source": "images/bovenste-extremiteit/biceps-curl-avatar-v7.jpg",
       "assetSha256": "03c5fe9f9e43901abcefb8e74e55e7af8b5368063311d97e6afeb0ac4ade5e87",
-      "explanationSha256": "8c19a9788fcba5e94113adf4844841bf6b8f6e2dba0e949a20bf4f51fae2179e",
+      "explanationSha256": "bd6c97290ef8d907a1b459547d8525369e0237beb786e1fd5101ac69e81b283e",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -414,7 +414,7 @@
       "name": "Biceps pull",
       "source": "images/bovenste-extremiteit/biceps-pull-avatar-v7.jpg",
       "assetSha256": "87cde66cf7f4df9885d7d68c5edda4350309114dbc63ac6db2ba87b0fef6107f",
-      "explanationSha256": "5a4459a1da604cd4e06415c3d92b6e273a82861c437a60ace73305febc978ed8",
+      "explanationSha256": "6decd4a06ae843987d7735cc8600ef54d78982ba7e5e7c1ad20c376b1d62a78c",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
