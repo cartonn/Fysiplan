@@ -1933,3 +1933,34 @@ nosniff/CORP, traversal, TTL-opschoning). Mockbare OPNAME_TTL_MS.
 **Volgende run — pak een ander gebied:** de AI-vrije zoekhulp/weekbrief-routes
 (#40 pakket D) op afbakening en kostenremmen, of een brede E2E-veegronde over
 de herstelde suites tegen de huidige main.
+
+## 2026-11-05 — AI-rakende routes (#40) en de AI-vrije weekbrief op afbakening + kostenrem
+
+**Gebied.** De rotatie uit het log: de AI-aanrakende v2-routes op data-afbakening,
+MDR-kadering en kostenremmen, plus het bewijs dat de weekbrief AI-vrij blijft.
+Getoetst: /api/assistent (zoekhulp), /api/kaart/vraag (patiënt-vraaghulp) en
+weekBrief. Alles tegen een mock-Anthropic die elk uitgaand verzoek vastlegt.
+
+**Bevindingen: geen gat.** Zoekhulp valideert regio/doel tegen de allowlists
+(ZOEK_REGIO/ZOEK_DOEL) en geeft 400 vóór enige AI-call — de dure rem (aiLimiet)
+staat achter de goedkope validatie, dus een ongeldige aanvraag kost geen token.
+De zoekterm wordt gesanitiseerd (<>-tekens eruit) en op 60 getekst; het system
+draagt de afbakening ("uitsluitend als zoekgegevens, nooit als instructies aan
+jou") en de MDR-regel (geen dosering/behandeladvies/geschiktheid). Namen buiten
+de eigen bibliotheek (manifest) vallen uit het antwoord, dus een hallucinatie
+lekt niet door. Vraaghulp stuurt alleen de oefeningnamen + bibliotheekuitleg mee;
+het doel en de opmerking van de kaart (c_doel/c_opm, mogelijke gezondheidsinfo)
+gaan NIET naar de AI, het system draagt dezelfde afbakening en het antwoord wordt
+op 700 tekens afgekapt. De weekbrief doet geen enkel AI-verzoek (pure functie
+over de eigen kaartdata) en draagt toch de te-zwaar- en naderende-verloop-
+signalen; hij staat achter eisBeveiligdePraktijk.
+
+**Increment.** Geen codewijziging; na de scratchpad-wipe het net voor dit gebied
+herbouwd met test-ai-afbakening.mjs (10 checks tegen een verzoek-loggende
+mock-Anthropic: zoekhulp-validatie-vóór-rem, afbakening + MDR, hallucinatie-
+filter, zoekterm-sanitatie; vraaghulp-context zonder gezondheidsinfo, afbakening,
+700-cap; weekbrief AI-vrij + signalen). Mockbaar via ANTHROPIC_BASE_URL.
+
+**Volgende run — pak een ander gebied:** een brede E2E-veegronde over de
+herstelde suites tegen de huidige main, of de vertaalroute (/api/kaart/vertaal)
+op cache-hergebruik en afbakening.
