@@ -31,3 +31,4 @@ jobs:
       - run: npm run test:beheer
       - run: npm run test:proefpoort
       - run: npm run test:sweep
+      - run: node scripts/test-praktijkgegevens.mjs

@@ -4460,6 +4460,93 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // rechten van betrokkenen en einde van de verwerking (art. 15, 17, 20 en 28 lid 3
+  // onder g AVG): een beveiligde praktijk kan hier alles wat Fysiplan voor haar
+  // bewaart downloaden of in één keer wissen. Scriptloos, zelfde CSP als de
+  // proefpagina's, en elke keer opnieuw met het praktijkwachtwoord (geen sessie):
+  // dezelfde remmen en audit als het gewone inloggen. Een onbeveiligde praktijk
+  // heeft geen wachtwoord en dus geen route hier; die wist losse kaarten in de app.
+  if (urlPath === "/v2/gegevens" && request.method === "GET") {
+    response.setHeader("cache-control", "no-store");
+    await serveerProef(request, response, "gegevens", { TITEL: "Gegevens van je praktijk", V_PRAKTIJK: "", MELDING_HTML: "" });
+    return;
+  }
+  if ((urlPath === "/v2/gegevens/download" || urlPath === "/v2/gegevens/wissen") && request.method === "POST") {
+    response.setHeader("cache-control", "no-store");
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    const wissen = urlPath.endsWith("/wissen");
+    let b = {};
+    try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 4096))); } catch {}
+    const pk = cleanName(b.praktijk, 80).toLowerCase();
+    const opnieuw = (fout, status) => serveerProef(request, response, "gegevens", { TITEL: "Gegevens van je praktijk",
+      V_PRAKTIJK: cleanName(b.praktijk, 80), MELDING_HTML: '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" }, status);
+    if (pk && loginOpSlot(pk)) { await opnieuw("Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
+    const acc = pk && !verbodenSleutel.test(pk) && Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk] : null;
+    if (!acc || !checkHash(String(b.wachtwoord || ""), acc.hash)) {
+      loginMisTel(pk || "?");
+      auditLog(pk || "?", wissen ? "alles-wissen-mislukt" : "download-mislukt", request);
+      await opnieuw("Die praktijknaam en dat wachtwoord horen niet bij elkaar. Alleen een beveiligde praktijk kan hier downloaden of wissen.", 403);
+      return;
+    }
+    loginMisPraktijk.delete(pk);
+    const eigenProfiel = ([k, p]) => k === pk || String(p && p.praktijk || "").toLowerCase() === pk;
+    if (!wissen) {
+      auditLog(pk, "alles-gedownload", request);
+      const pakket = {
+        uitleg: "Alle gegevens die Fysiplan voor deze praktijk bewaart, op het moment van downloaden. " +
+          "Video's, foto's en het logo staan als pad; de bestanden zelf zitten er niet in.",
+        gedownload: new Date().toISOString(),
+        praktijk: pk,
+        account: { gemaakt: acc.gemaakt || null, verwerkersovereenkomst: acc.vwo || null, proef: acc.proef || null },
+        profiel: Object.entries(praktijken).filter(eigenProfiel).map(([, p]) => publiekProfiel(p)),
+        kaarten: Object.values(kaarten[pk] || {}).map((k) => { const v = verlooptOp(k); return { ...k, verlooptOp: Number.isFinite(v) ? new Date(v).toISOString() : null }; }),
+        eigenOefeningen: praktijkOefeningen[pk] || [],
+        sjablonen: praktijkSjablonen[pk] || [],
+        logboek: praktijkAudit.filter((a) => a.praktijk === pk)
+      };
+      const bestand = "fysiplan-" + (slug(pk) || "praktijk") + "-" + new Date().toISOString().slice(0, 10) + ".json";
+      response.writeHead(200, { "content-type": "application/json; charset=utf-8",
+        "content-disposition": 'attachment; filename="' + bestand + '"', "x-content-type-options": "nosniff" });
+      response.end(JSON.stringify(pakket, null, 2));
+      return;
+    }
+    if (String(b.zeker || "").trim().toUpperCase() !== "WISSEN") {
+      await opnieuw("Typ WISSEN in het laatste veld om te bevestigen dat alles weg mag.", 400);
+      return;
+    }
+    const wegVids = Object.values(kaarten[pk] || {}).flatMap((k) => Object.values(k.vids || {}));
+    const aantalKaarten = Object.keys(kaarten[pk] || {}).length;
+    delete kaarten[pk];
+    await saveJson(kaartenPath, kaarten);
+    await ruimKaartVideosOp(wegVids);
+    for (const o of praktijkOefeningen[pk] || []) {
+      if (/^uploads\/oef-[a-f0-9]{12}\.(jpg|png)$/.test(String(o.img || ""))) { try { await unlink(join(dataDir, o.img)); } catch {} }
+    }
+    delete praktijkOefeningen[pk];
+    await saveJson(praktijkOefeningenPath, praktijkOefeningen);
+    delete praktijkSjablonen[pk];
+    await saveJson(praktijkSjablonenPath, praktijkSjablonen);
+    await inProfielRij(pk, async () => {
+      for (const [k, p] of Object.entries(praktijken).filter(eigenProfiel)) {
+        if (/^uploads\/logo-[^/]+$/.test(String(p.logo || ""))) { try { await unlink(join(dataDir, p.logo)); } catch {} }
+        delete praktijken[k];
+      }
+      await saveJson(praktijkenPath, praktijken);
+    });
+    delete praktijkAccounts[pk];
+    await saveJson(accountsPath, praktijkAccounts);
+    for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
+    // het logboek noemde de praktijknaam; alleen het feit dat er gewist is blijft, zonder naam
+    praktijkAudit = praktijkAudit.filter((a) => a.praktijk !== pk);
+    auditLog("(gewist)", "praktijk-alles-gewist", request);
+    await serveerProef(request, response, "bericht", { TITEL: "Alles gewist", ETIKET: "Gewist", KOP: "Alles van je praktijk is gewist.",
+      TEKST: aantalKaarten + (aantalKaarten === 1 ? " kaart" : " kaarten") + ", je eigen oefeningen, sjablonen, praktijkgegevens, wachtwoord en logboek zijn van de server. " +
+        "In de dagelijkse reservekopie staat het nog hooguit 7 dagen. De praktijknaam is weer vrij.",
+      KNOP_HTML: '<a class="knop omlijnd" href="/v2">Naar de site</a>' });
+    return;
+  }
+
   // overzicht van de proefaanmeldingen: persoonsgegevens, dus net als
   // toegangsbeheer alleen voor ingelogde ACCOUNT_BEHEER_EMAILS (niet admin88)
   if (urlPath === "/aanmeldingen" || urlPath === "/api/aanmeldingen") {
