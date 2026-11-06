@@ -1456,7 +1456,7 @@
       "name": "Pully cross down",
       "source": "images/bovenste-extremiteit/pully-cross-down-avatar-v7.jpg",
       "assetSha256": "73dd7ccc788caba939ceae66622698b0725d291bbfa858c24620005831992589",
-      "explanationSha256": "48565ab90e79bf01aaa56e05cbd96898877daeaf4884f4e80dbc86ce2b5f608c",
+      "explanationSha256": "0553fe1c2e02b780ff046fde334456f06fbf2ec7967df32e6c1b382a918d72bc",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -1523,7 +1523,7 @@
       "name": "Pully cross over",
       "source": "images/bovenste-extremiteit/pully-cross-over-avatar-v7.jpg",
       "assetSha256": "ccaaf85a26eeb7a663a0d0b03c96b241f19f59aac26efe18e88682de9e93ee56",
-      "explanationSha256": "af866a735884b6ad057c2e1e85fb858aa421865fca221af85f8ab463db438957",
+      "explanationSha256": "6dd5f785e9711c961bdeb877dfd52e256014672da606ba889b322dd88ef178c9",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -1590,7 +1590,7 @@
       "name": "Pully cross up",
       "source": "images/bovenste-extremiteit/pully-cross-up-avatar-v7.jpg",
       "assetSha256": "b54552c6a0013fa3610b0ba4211486d050023586cbb9cec354fd06279941e01e",
-      "explanationSha256": "9a252b33131e7799a9a59a366389f5b02bbec079087ae501e685d95ded0b89c1",
+      "explanationSha256": "6d060b88d26470f843c74af7ced5f2ae6b56a3bfe45d3e9078248e284c6916d6",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",

@@ -547,21 +547,78 @@
     },
     {
       "name": "Pully cross down",
-      "text": "Pully cross down. Sta tussen de pully's met de kabels hoog. Trek de handvatten schuin omlaag voor je lichaam samen en beweeg gecontroleerd terug.",
-      "src": "/audio/noor/d058e1f7c142e8b7a5d96260e31c8cefedbeef5ef2059fa86cf15684b8a03e04.mp3",
-      "duration": 8.437551
+      "text": "Pully cross down. Sta met je zij naar de pully met de kabel hoog en pak het handvat met één hand. Trek het handvat schuin omlaag voor je lichaam langs naar je andere heup en beweeg gecontroleerd terug.",
+      "src": "/audio/noor/88f21f1c7ae9f8a4db3af32a334811fa6560891841afb302366c4291b360bb8f.mp3",
+      "duration": 12.068571,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "60b81970-d3b5-4aea-8320-fe497760c852",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "50e59e9a2bb6caa2a39a63ccd0611360eef7c51f18d85b908b132d74f3f53f4e",
+        "mp3Sha256": "1a737ba4f761e8f4ac74edf6d4f7d02923510cd1a9ae6f5f92099781d2286d6b",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"pully\" als \"pullie\")",
+        "clinicalApproved": false,
+        "previousSrc": "/audio/noor/d058e1f7c142e8b7a5d96260e31c8cefedbeef5ef2059fa86cf15684b8a03e04.mp3"
+      }
     },
     {
       "name": "Pully cross over",
-      "text": "Pully cross over. Sta tussen de pully's met de kabels op schouderhoogte. Breng de licht gebogen armen voor je borst naar elkaar toe en open ze rustig weer.",
-      "src": "/audio/noor/f06681fcaae6587615002cc2f15343a7bfd78ca91f3e1688cc59b8881e4baa16.mp3",
-      "duration": 9.482449
+      "text": "Pully cross over. Sta voorovergebogen tussen de pully's met de kabels hoog en pak in elke hand een handvat. Trek de handvatten in een boog schuin omlaag tot je handen voor je heupen samenkomen en beweeg gecontroleerd terug.",
+      "src": "/audio/noor/8cd29f89e2560f25c0fc6e90d48fa00581e6fd7f2ae8dc524231b7dbf33311c0.mp3",
+      "duration": 13.531429,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "b2327ee0-f028-4ada-a02b-d8579668387a",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "24a5aa27a81a1380988948876dcec0c5d5dcc45973aab047e1d8d64abfc5731c",
+        "mp3Sha256": "c063273241e5ec1762e6396fe281fa5cf79f3e16c3ff38ef2778f8c3edf40122",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"cross over\" aaneen, \"boog schuin\" aaneen)",
+        "clinicalApproved": false,
+        "previousSrc": "/audio/noor/f06681fcaae6587615002cc2f15343a7bfd78ca91f3e1688cc59b8881e4baa16.mp3"
+      }
     },
     {
       "name": "Pully cross up",
-      "text": "Pully cross up. Sta tussen de pully's met de kabels laag. Breng de handvatten schuin omhoog voor je lichaam samen en laat ze gecontroleerd terugzakken.",
-      "src": "/audio/noor/0fbffb0492db6d4b3566054eadb892f367b55c8cb6a6e8848c5fc4c2556b54da.mp3",
-      "duration": 9.06449
+      "text": "Pully cross up. Sta met je zij naar de pully met de kabel laag en pak het handvat met de hand die het dichtst bij de pully is. Trek het handvat schuin omhoog voor je lichaam langs naar je andere schouder en laat het gecontroleerd terugzakken.",
+      "src": "/audio/noor/d277e17451ef3c26434efed0ad956e5e13fc684059976d31e297130d03b2559e.mp3",
+      "duration": 13.374694,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "dce20e3a-4e94-4bd3-a33d-4e79ace563ff",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "bb9f06f1ba4a388a162d6d0cfbb41908caf2ae21230e504b43c24666847414d8",
+        "mp3Sha256": "6a5a0efaae14f04cc0c6d0db67d5d818276be094f35d3483437573865efdaa04",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"Sta\" als \"Staant\", \"pully\" als \"pulley\")",
+        "clinicalApproved": false,
+        "previousSrc": "/audio/noor/0fbffb0492db6d4b3566054eadb892f367b55c8cb6a6e8848c5fc4c2556b54da.mp3"
+      }
     },
     {
       "name": "Pully dips",
