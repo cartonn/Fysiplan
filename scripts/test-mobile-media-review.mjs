@@ -130,12 +130,13 @@ assert.ok(kaartHtml.includes("var beeldpad=o?(o.kaartImg||o.img):'';"),'de kaart
 assert.ok(kaartHtml.includes("function mediaSource(o){return String(o&&(o.kaartImg||o.img)||'')"),'de beoordeling gaat over hetzelfde beeld als de weergave');
 // Uitzondering: de nieuwe lijntekeningen (content/nieuwe-lijntekeningen.json) horen bij
 // oefeningen die nog géén oefenfoto/avatar hebben; daar vervangt de lijntekening niets.
-// Ze hebben bewust geen kaartImg tot de avatar er is (besluit eigenaar 2026-11-06).
+// Ze hebben bewust geen kaartImg tot de avatar er is (besluit eigenaar 2026-11-06); daarna
+// exact de in het register vastgelegde avatar (scripts/importeer-nieuwe-avatars.mjs).
 const nieuweLijn=new Map(JSON.parse(await fs.readFile('content/nieuwe-lijntekeningen.json','utf8')).lijntekeningen.map(n=>[n.naam,n]));
 for(const e of available){
   const bron=e.kaartImg||e.img;
   const nieuwe=nieuweLijn.get(e.naam);
-  if(nieuwe){assert.ok(!e.kaartImg,e.naam+': nieuwe lijntekening met kaartImg');assert.equal(bron,nieuwe.img,e.naam);}
+  if(nieuwe){assert.equal(e.kaartImg??null,nieuwe.kaartImg??null,e.naam+': kaartImg wijkt af van het register');assert.equal(bron,nieuwe.kaartImg||nieuwe.img,e.naam);}
   else assert.ok(!/line-v1|beginhouding-pijl/.test(bron),'de kaart zou hier een lijntekening tonen: '+e.naam);
   assert.equal(manifest.entries.find(r=>r.exerciseId===exerciseId(e)).source,bron,e.naam);
 }

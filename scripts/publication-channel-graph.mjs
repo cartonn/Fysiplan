@@ -67,7 +67,8 @@ async function execute(node, results) {
       .lijntekeningen.map((entry) => [entry.naam, entry]));
     const pathErrors = v2.filter((entry) => {
       const nieuwe = nieuweLijn.get(entry.naam);
-      if (nieuwe) return Boolean(entry.kaartImg) || !entry.coreExerciseId || entry.img !== nieuwe.img;
+      // met vastgelegde avatar: kaartImg exact het geregistreerde pad; zonder: geen kaartImg
+      if (nieuwe) return (entry.kaartImg ?? null) !== (nieuwe.kaartImg ?? null) || !entry.coreExerciseId || entry.img !== nieuwe.img;
       if (!entry.kaartImg) return true;
       const override = !entry.coreExerciseId && overrides.get(entry.exerciseId);
       if (override) return entry.img !== override.lineImg || v1ByName.get(entry.naam)?.img !== override.v1LineImg;
@@ -83,7 +84,7 @@ async function execute(node, results) {
       return { name: entry.naam, colorReady, lineReady, pairReady: colorReady && lineReady };
     }));
     const unpaired = pairs.filter((pair) => !nieuweLijn.has(pair.name) && pair.colorReady !== pair.lineReady);
-    const nieuweZonderBeeld = pairs.filter((pair) => nieuweLijn.has(pair.name) && !pair.lineReady);
+    const nieuweZonderBeeld = pairs.filter((pair) => nieuweLijn.has(pair.name) && (!pair.lineReady || (Boolean(nieuweLijn.get(pair.name).kaartImg) && !pair.colorReady)));
     assert(nieuweZonderBeeld.length === 0, `nieuwe lijntekeningen ontbreken: ${nieuweZonderBeeld.slice(0, 5).map((pair) => pair.name).join(", ")}`);
     assert(unpaired.length === 0, `v2 bevat ${unpaired.length} half gepubliceerde beeldparen: ${unpaired.slice(0, 5).map((pair) => pair.name).join(", ")}`);
     return {
@@ -93,7 +94,8 @@ async function execute(node, results) {
       lineDrawingsReady: pairs.filter((pair) => pair.lineReady).length,
       pairsReady: pairs.filter((pair) => pair.pairReady).length,
       pendingCount: pairs.filter((pair) => !pair.pairReady && !nieuweLijn.has(pair.name)).length,
-      lineOnlyNew: nieuweLijn.size,
+      lineOnlyNew: [...nieuweLijn.values()].filter((entry) => !entry.kaartImg).length,
+      newWithAvatar: [...nieuweLijn.values()].filter((entry) => entry.kaartImg).length,
       lineRule: "legacy reuses exact V1 images, except hash-bound V2 corrections in content/v2-avatar-overrides.json; extensions use black-only contours on pure #FFFFFF",
       correctedLegacyLines: overrides.size,
     };
