@@ -33,9 +33,9 @@ const STYLE = [
 
 const AVATARS = [
   { nr: "01", lijn: "public/images/nek/kin-intrekken-zittend-actief-line-v1.png", stijl: "stoel",
-    eind: "End position: same seated posture on the chair, the head glided straight backward into a chin tuck (double chin), eyes still looking straight ahead, no nodding." },
+    eind: "Both figures in STRICT side profile facing right. TOP: head clearly poked FORWARD, chin jutting out in front of the chest line, ear well in front of the shoulder. BOTTOM: chin tucked, head glided straight back so the ear is directly above the shoulder, a visible double chin, eyes still level and looking straight ahead, no nodding. The difference in head position between top and bottom must be obvious." },
   { nr: "02", lijn: "public/images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png", stijl: "staand",
-    eind: "End position: standing upright in tandem stance, the rear foot now placed directly in front of the other foot, heel touching the toes, near hand still resting lightly on the chair backrest." },
+    eind: "Both figures in STRICT side profile, feet fully visible. TOP: exactly as the line drawing, one foot a short step behind the other, near hand lightly on the chair backrest. BOTTOM: TANDEM STANCE: both feet on ONE straight line, the heel of the front foot directly touching the toes of the back foot (heel-to-toe, like walking on a tightrope), standing upright, hand lightly on the backrest. The feet must clearly be one in front of the other, not side by side." },
   { nr: "03", lijn: "public/images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-ergonomische-basis-line-v1.png", stijl: "staand",
     eind: "End position: standing fully upright, holding the same cardboard box close against the front of her body with both hands, back straight." },
   { nr: "04", lijn: "public/images/sportrevalidatie/landing-op-twee-benen-techniek-langzaam-line-v1.png", stijl: "staand",
@@ -43,7 +43,7 @@ const AVATARS = [
   { nr: "05", lijn: "public/images/neurologische-revalidatie/symmetrisch-opstaan-met-fysieke-steun-line-v1.png", stijl: "stoel",
     eind: "End position: standing fully upright in front of the same chair, weight equal on both legs, feet side by side, arms relaxed." },
   { nr: "06", lijn: "public/images/vestibulair/blikstabilisatie-horizontaal-zittend-langzaam-line-v1.png", stijl: "stoel",
-    eind: "End position: same seated posture holding the card with the letter A at arm's length, the head turned about 30 degrees to one side while the eyes stay fixed on the letter." },
+    eind: "Both figures in front view, seated, holding the card with the letter A at arm's length straight in front of her nose, the card stays in the same place. TOP: head and face facing straight forward. BOTTOM: the whole head clearly rotated about 40 degrees to her left (face in three-quarter view, nose pointing left of the card) while the EYES stay fixed on the letter A; shoulders and arms do not move. The head rotation must be obvious." },
   { nr: "07", lijn: "public/images/bekken-postpartum/bekkenkanteling-postpartum-eerste-fase-rustig-line-v1.png", stijl: "mat",
     eind: "End position: same back-lying position on the mat, knees bent, feet flat, the pelvis tilted backward so the lower back is flat on the mat; buttocks stay on the mat (not a bridge)." },
 ];
@@ -69,7 +69,7 @@ for (const a of AVATARS) {
   if (!url) throw new Error(`${a.nr}: geen output (${task.status})`);
   const res = await fetch(url);
   if (!res.ok) throw new Error(`${a.nr}: download HTTP ${res.status}`);
-  const file = join(outDir, `${a.nr}-avatar.png`);
+  const file = join(outDir, `${a.nr}-avatar${process.env.SUFFIX || ""}.png`);
   await writeFile(file, Buffer.from(await res.arrayBuffer()));
   log.push({ nr: a.nr, taskId: task.id, file });
   console.log(`${a.nr} klaar -> ${file}`);
