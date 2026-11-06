@@ -960,7 +960,7 @@
       "name": "French press",
       "source": "images/bovenste-extremiteit/french-press-avatar-v7.jpg",
       "assetSha256": "c6f9c1655b002a6c288c7e7ac04ffb48c73b2ac056069330646e198b5d5954d2",
-      "explanationSha256": "355e615f5e3d3d0f9d05f105f2325c601998b4fb8444bd9e7f47e06b95aa7936",
+      "explanationSha256": "65ed7e28749250606ee51fd63be93d5bf8de37326b7de75907f462e5b0c034c0",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -1027,7 +1027,7 @@
       "name": "Front pully row",
       "source": "images/bovenste-extremiteit/front-pully-row-avatar-v7.jpg",
       "assetSha256": "974ef5509b80ea8671bda510e1010d078945e58f702533f02fc39a6f24cbdf41",
-      "explanationSha256": "25610a8d9496dee074b163817ba78d95f97c731cee93f02b74106f0b38361c6f",
+      "explanationSha256": "d4f2dbb687fcc6d80698b39c9240c96107433a99bafd5013b883982665cca871",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -1094,7 +1094,7 @@
       "name": "Front raises",
       "source": "images/bovenste-extremiteit/front-raises-avatar-v7.jpg",
       "assetSha256": "3b451c32e3252b181d3d2b14278f8efe6c4e268a8a47b180318cfb71457ef909",
-      "explanationSha256": "cf90ebed0a643b3f8f3cd09c2d18d0092b1621be9c122d53723e026f249c2045",
+      "explanationSha256": "974ee0561e578ae42e634641b6a576bb035b625c9497e81038b64860ad7fc0d3",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
