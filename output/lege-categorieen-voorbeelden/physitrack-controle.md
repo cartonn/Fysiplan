@@ -17,6 +17,7 @@ Datum: 2026-11-06. Per oefening is het eerste beeld én een beeld op ~35% van de
 
 - **Opnieuw gemaakt met Runway (5 × 5 = 25 credits, saldo daarna 175):** 20 en 21 (statische stand, nu zonder pijl), 41 (pijl naar achteren), 58 (marker vóór haar, pijl naar voren), 115 (elleboog omlaag als beginhouding).
 - **Pijl zelf nagetekend, zonder AI (0 credits):** 1, 3, 10, 11, 23, 24, 26, 28, 29, 35, 37, 53, 77, 80, 81, 82, 84, 85, 94, 104, 105, 106, 112, 113, 118. Oude pijl gewist; nieuwe pijl groot en in één stijl (dikke zwarte lijn, gevulde punt) en begint bij het bewegende lichaamsdeel.
+- **Nacontrole coördinator:** bij Zijlig heupkracht – zijlig de pijl zelf nagetekend (0 credits): hij begint nu op het bovenste been. Functioneel opstaan – functioneel (Bekken & postpartum) buigt al voorover en kijkt omlaag; staat klaar om opnieuw te maken met een rechtop zittende beginhouding, wacht op akkoord voor de Runway-run.
 - Alle 30 bevindingen hierboven zijn daarmee opgelost; de tabel hieronder toont de oorspronkelijke controle.
 
 | # | Groep | Oefening | Bron | Houding | Pijl | Opmerking |
