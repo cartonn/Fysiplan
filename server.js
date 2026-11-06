@@ -62,6 +62,8 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 // versie van de verwerkersovereenkomst (public/juridisch.html): bij elke inhoudelijke
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-02";
+// versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
+const AV_VERSIE = "2026-11-06";
 // wie Fysiplan is, voor /privacy en /verwerkersovereenkomst (art. 13 AVG): in te
 // stellen op de server, zodat er geen bedrijfsgegevens in de openbare repo staan
 const FYSIPLAN_ID = {
@@ -4470,9 +4472,11 @@ async function afhandelen(request, response) {
   // privacyverklaring en verwerkersovereenkomst (art. 13 en 28 AVG): één sjabloon
   // met twee blokken. Bewaartermijnen komen uit de serverinstellingen, zodat de tekst
   // altijd klopt met wat de code doet; wie Fysiplan is komt uit omgevingsvariabelen.
-  if (urlPath === "/privacy" || urlPath === "/verwerkersovereenkomst" || urlPath === "/privacy/" || urlPath === "/verwerkersovereenkomst/") {
+  // plus de algemene voorwaarden (/voorwaarden, concept) in hetzelfde sjabloon
+  const juridischBlok = { "/privacy": "privacy", "/verwerkersovereenkomst": "vwo", "/voorwaarden": "voorwaarden" };
+  if (juridischBlok[urlPath.replace(/\/$/, "")] && urlPath !== "/") {
     if (urlPath.endsWith("/")) { response.writeHead(301, { location: urlPath.slice(0, -1) }); response.end(); return; }
-    const blok = urlPath === "/privacy" ? "privacy" : "vwo";
+    const blok = juridischBlok[urlPath];
     try {
       const bron = await readFile(join(publicDir, "juridisch.html"), "utf8");
       const m = bron.match(new RegExp("<!--blok:" + blok + "-->([\\s\\S]*?)<!--/blok-->"));
@@ -4481,8 +4485,8 @@ async function afhandelen(request, response) {
       const afzender = (MAIL_AFZENDER.match(/[^\s<>]+@[^\s<>]+/) || [""])[0];
       const contact = FYSIPLAN_ID.contact || afzender;
       const vars = {
-        TITEL: blok === "privacy" ? "Privacy" : "Verwerkersovereenkomst",
-        VERSIE: new Date(VWO_VERSIE + "T12:00:00Z").toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Amsterdam" }),
+        TITEL: { privacy: "Privacy", vwo: "Verwerkersovereenkomst", voorwaarden: "Algemene voorwaarden" }[blok],
+        VERSIE: new Date((blok === "voorwaarden" ? AV_VERSIE : VWO_VERSIE) + "T12:00:00Z").toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Amsterdam" }),
         BEDRIJF: FYSIPLAN_ID.bedrijf || "Fysiplan",
         // alleen een aparte handelsnaam als de rechtspersoon anders heet ("Fysiplan B.V." niet)
         ALIAS_HTML: FYSIPLAN_ID.bedrijf && !/^fysiplan\b/i.test(FYSIPLAN_ID.bedrijf) ? " (&ldquo;Fysiplan&rdquo;)" : "",
@@ -4491,7 +4495,7 @@ async function afhandelen(request, response) {
         CONTACT_HTML: contact ? '<p>Vragen over privacy: <a href="mailto:' + htmlEsc(contact) + '">' + htmlEsc(contact) + "</a></p>" : "",
         HOSTING: FYSIPLAN_ID.hosting || "nog niet vastgelegd",
         STIL: String(BEWAAR_STIL_DAGEN), AFGEROND: String(BEWAAR_AFGEROND_DAGEN),
-        PROEF_BEWAAR: String(PROEF_BEWAAR_DAGEN)
+        PROEF_BEWAAR: String(PROEF_BEWAAR_DAGEN), PROEF_DAGEN: String(PROEF_DAGEN)
       };
       // niet-gulzig: twee placeholders direct achter elkaar (__KVK_HTML____ADRES_HTML__)
       // moeten allebei worden ingevuld

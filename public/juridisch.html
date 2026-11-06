@@ -9,7 +9,8 @@
 <title>__TITEL__ · Fysiplan</title>
 <link rel="preload" href="/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin/>
 <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin/>
-<!-- Privacyverklaring en verwerkersovereenkomst. Eén sjabloon met twee blokken;
+<!-- Privacyverklaring, verwerkersovereenkomst en algemene voorwaarden (concept).
+     Eén sjabloon met drie blokken;
      de server vult wie Fysiplan is in uit omgevingsvariabelen (FYSIPLAN_BEDRIJF,
      FYSIPLAN_KVK, FYSIPLAN_ADRES, FYSIPLAN_CONTACT, FYSIPLAN_HOSTING_REGIO) en de
      bewaartermijnen uit de serverinstellingen, zodat de tekst klopt met de code.
@@ -56,6 +57,8 @@
     .tabel tr{border-bottom:1px solid var(--lijn);padding:6px 0}.tabel td{border:0;padding:3px 0}.tabel td:first-child{font-weight:600;color:var(--inkt)}}
   .inhoud{font:400 14.5px/1.6 var(--disp);margin-top:18px}
   .inhoud a{margin-right:14px}
+  .concept{background:#fff4e5;border:1px solid #f3c58f;border-radius:4px;padding:12px 16px;margin:16px 0;font:500 14.5px/1.5 var(--disp);color:#6b3a12}
+  .invul{background:#fff4e5;border:1px dashed #d98a3a;border-radius:3px;padding:0 4px;font:500 .92em/1.5 var(--disp);color:#6b3a12}
   footer{max-width:860px;margin:0 auto;padding:0 24px 40px;font:400 13px/1.5 var(--disp);color:var(--zacht)}
 </style>
 </head>
@@ -66,7 +69,7 @@
   <a class="terug" href="/v2">Naar de site</a>
 </div></nav>
 __INHOUD__
-<footer>__BEDRIJF__ · <a href="/privacy">Privacy</a> · <a href="/verwerkersovereenkomst">Verwerkersovereenkomst</a></footer>
+<footer>__BEDRIJF__ · <a href="/privacy">Privacy</a> · <a href="/verwerkersovereenkomst">Verwerkersovereenkomst</a> · <a href="/voorwaarden">Voorwaarden</a></footer>
 </body>
 </html>
 
@@ -191,5 +194,85 @@ __INHOUD__
 
   <h2>12. Overige</h2>
   <p>Deze overeenkomst loopt zolang Fysiplan pati&euml;ntgegevens voor de praktijk verwerkt. Bij een inhoudelijke wijziging krijgt de overeenkomst een nieuwe versie en vraagt Fysiplan opnieuw om akkoord. Op deze overeenkomst is Nederlands recht van toepassing.</p>
+</main>
+<!--/blok-->
+
+<!--blok:voorwaarden-->
+<main>
+  <span class="etiket">Voorwaarden</span>
+  <h1>Algemene voorwaarden Fysiplan</h1>
+  <p class="lead">Deze voorwaarden gelden voor de gratis proef en voor het abonnement op Fysiplan. Ze zijn kort gehouden: wat Fysiplan doet, wat jij als praktijk doet, en hoe je stopt.</p>
+  <p class="versie">Versie __VERSIE__</p>
+  <p class="concept"><b>Concept.</b> Deze tekst is nog niet getoetst door een jurist. Gemarkeerde stukken worden nog ingevuld. Tot de definitieve versie er is, gelden de afspraken hieronder als uitgangspunt.</p>
+  <div class="inhoud"><a href="#dienst">De dienst</a><a href="#proef">Proef</a><a href="#abonnement">Abonnement</a><a href="#stoppen">Stoppen</a><a href="#praktijk">Wat jij doet</a><a href="#aansprakelijkheid">Aansprakelijkheid</a></div>
+
+  <h2>1. Wie en voor wie</h2>
+  <div class="blad">
+    <p><b>__BEDRIJF__</b>__ALIAS_HTML____KVK_HTML____ADRES_HTML__</p>
+    __CONTACT_HTML__
+  </div>
+  <p>Fysiplan is bedoeld voor fysiotherapiepraktijken en andere zorgverleners die beroepsmatig werken. Deze voorwaarden gelden tussen Fysiplan en de praktijk (&ldquo;jij&rdquo;). Pati&euml;nten gebruiken de digitale kaart zonder account en gaan met Fysiplan geen overeenkomst aan.</p>
+  <p>Algemene voorwaarden van de praktijk zelf gelden niet voor Fysiplan, tenzij we dat schriftelijk afspreken.</p>
+
+  <h2 id="dienst">2. Wat Fysiplan doet</h2>
+  <p>Met Fysiplan maak je oefenkaarten: om te printen en als digitale kaart voor je pati&euml;nt via een QR-code of link. Je pati&euml;nt kan op die kaart aantikken hoe het gaat; dat zie jij terug.</p>
+  <div class="blad">
+    <p><b>Beoogd gebruik.</b> Fysiplan is een hulpmiddel om de oefeningen die de therapeut kiest mee te geven, en om te tonen wat de pati&euml;nt zelf aangeeft. Fysiplan stelt geen diagnose, kiest geen behandeling of dosering en beoordeelt geen scores; dat doet de therapeut. Fysiplan is niet bedoeld als medisch hulpmiddel.</p>
+    <p><b>Geen dossier.</b> Fysiplan vervangt je dossier niet. Wat je volgens de WGBO moet vastleggen, zet je in je eigen EPD. Gedeelde kaarten worden na de <a href="/privacy#praktijk">bewaartermijn</a> automatisch gewist.</p>
+  </div>
+  <p>We werken Fysiplan regelmatig bij. Functies kunnen veranderen of verdwijnen. Verdwijnt iets waar je voor betaalt, dan melden we dat vooraf.</p>
+
+  <h2 id="proef">3. De gratis proef</h2>
+  <ul>
+    <li>De proef duurt __PROEF_DAGEN__ dagen en is gratis. We vragen geen betaalgegevens.</li>
+    <li>Na de proef gaat er niet vanzelf een betaald abonnement in. Je kunt dan geen nieuwe kaarten meer maken. Kaarten die je al deelde, blijven werken tot hun bewaartermijn afloopt.</li>
+    <li>Word je geen klant, dan wissen we je proefgegevens zoals in de <a href="/privacy#praktijk">privacyverklaring</a> staat.</li>
+  </ul>
+
+  <h2 id="abonnement">4. Abonnement en prijs</h2>
+  <ul>
+    <li>Je betaalt per therapeut per maand. De prijs is de prijs die op <a href="/v2">fysiplan.nl</a> staat op het moment dat je het abonnement afsluit, exclusief btw.</li>
+    <li>Betalen en factuur: <span class="invul">in te vullen: betaalwijze, factuurmoment en betaaltermijn</span></li>
+    <li>Prijswijziging: we melden een nieuwe prijs minstens <span class="invul">in te vullen: aantal</span> dagen vooraf. Wil je de nieuwe prijs niet betalen, dan kun je opzeggen voordat hij ingaat.</li>
+  </ul>
+
+  <h2 id="stoppen">5. Looptijd en stoppen</h2>
+  <ul>
+    <li>Het abonnement loopt per maand en is maandelijks opzegbaar. Opzegtermijn: <span class="invul">in te vullen</span>.</li>
+    <li>Opzeggen doe je per e-mail. Je krijgt een bevestiging.</li>
+    <li>Na het einde wissen we de kaarten van je praktijk binnen 30 dagen, zoals in de <a href="/verwerkersovereenkomst">verwerkersovereenkomst</a> staat. Kopieer v&oacute;&oacute;r het einde naar je dossier wat je wilt bewaren.</li>
+    <li>Fysiplan mag het abonnement be&euml;indigen als je deze voorwaarden ernstig schendt, bijvoorbeeld bij misbruik of als je na een herinnering niet betaalt. Fysiplan kan ook stoppen met de dienst; dat melden we minstens 3 maanden vooraf.</li>
+  </ul>
+
+  <h2 id="praktijk">6. Wat jij als praktijk doet</h2>
+  <ul>
+    <li>Je kiest de oefeningen en de dosering en beoordeelt zelf wat je pati&euml;nt meldt. Jij blijft verantwoordelijk voor de behandeling.</li>
+    <li>Je zet geen achternaam, geboortedatum, BSN of diagnose op een gedeelde kaart. Een roepnaam of cli&euml;ntcode is genoeg.</li>
+    <li>Je kiest een sterk wachtwoord, bewaart de herstelcode veilig en deelt de toegang alleen met mensen van je praktijk.</li>
+    <li>Wat je zelf toevoegt (eigen oefeningen, video&rsquo;s, logo) mag je gebruiken, en bevat geen gegevens van pati&euml;nten die daar niet voor gekozen hebben.</li>
+    <li>Je gebruikt Fysiplan niet om de dienst te verstoren, te misbruiken of anderen schade te doen.</li>
+  </ul>
+
+  <h2>7. Privacy</h2>
+  <p>Voor de gegevens van je pati&euml;nten is je praktijk verantwoordelijk en is Fysiplan verwerker. Daarvoor geldt de <a href="/verwerkersovereenkomst">verwerkersovereenkomst</a>, die bij deze voorwaarden hoort. Hoe Fysiplan met gegevens omgaat, lees je in de <a href="/privacy">privacyverklaring</a>.</p>
+
+  <h2>8. Beschikbaarheid</h2>
+  <p>We doen ons best om Fysiplan altijd bereikbaar te houden, maar beloven geen ononderbroken werking. Gepland onderhoud doen we zo veel mogelijk buiten praktijktijden. Een geprinte kaart werkt altijd, ook als de digitale kaart even niet bereikbaar is.</p>
+
+  <h2>9. Rechten op de inhoud</h2>
+  <p>De software, de oefenbibliotheek, de tekeningen, video&rsquo;s en teksten van Fysiplan blijven van Fysiplan of haar leveranciers. Je mag ze gebruiken binnen je praktijk, ook op geprinte kaarten voor je pati&euml;nten, zolang je abonnement of proef loopt. Wat je zelf toevoegt, blijft van jou; Fysiplan gebruikt het alleen om de dienst voor jou te laten werken.</p>
+
+  <h2 id="aansprakelijkheid">10. Aansprakelijkheid</h2>
+  <ul>
+    <li>Fysiplan is niet aansprakelijk voor behandelkeuzes. Die maakt de therapeut.</li>
+    <li>Is Fysiplan toch aansprakelijk, dan is dat beperkt tot <span class="invul">in te vullen: grens, bijvoorbeeld het bedrag van een aantal maanden abonnement</span>. Deze grens geldt niet bij opzet of bewuste roekeloosheid van Fysiplan.</li>
+    <li>Fysiplan is niet aansprakelijk voor indirecte schade, zoals gemiste omzet.</li>
+  </ul>
+
+  <h2>11. Wijzigen van deze voorwaarden</h2>
+  <p>Veranderen deze voorwaarden inhoudelijk, dan krijgen ze een nieuwe versie en melden we dat minstens 30 dagen vooraf. Ben je het er niet mee eens, dan kun je opzeggen voordat de nieuwe versie ingaat.</p>
+
+  <h2>12. Recht en geschillen</h2>
+  <p>Op deze voorwaarden is Nederlands recht van toepassing. Kom je er met ons niet uit, dan gaat het geschil naar <span class="invul">in te vullen: bevoegde rechtbank</span>.</p>
 </main>
 <!--/blok-->
