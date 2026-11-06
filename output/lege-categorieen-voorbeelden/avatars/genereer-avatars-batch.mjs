@@ -83,13 +83,13 @@ for (const s of list) {
   try {
     const task = await client.textToImage.create({
       model: "gpt_image_2",
-      promptText: `${stijl} ${s.no_arrow ? "" : tekst}${extra}`,
+      promptText: `${stijl} ${s.no_arrow ? "" : tekst}${extra}${process.env.EXTRA ? " " + process.env.EXTRA : ""}`,
       referenceImages: [{ uri: await dataUri(lijn) }, { uri: await dataUri(join(root, STIJL[s.ref])) }],
       ratio: "1280:1920", quality: "medium", background: "opaque", outputCount: 1,
     }).waitForTaskOutput({ timeout: 10 * 60_000 });
     const res = await fetch(task.output[0]);
     if (!res.ok) throw new Error(`download HTTP ${res.status}`);
-    await writeFile(join(outDir, cat, `${s.slug}-avatar.png`), Buffer.from(await res.arrayBuffer()));
+    await writeFile(join(outDir, cat, `${s.slug}-avatar${process.env.SUFFIX || ""}.png`), Buffer.from(await res.arrayBuffer()));
     await appendFile(join(lijnDir, "taken.log"), `${new Date().toISOString()} avatar ${cat}/${s.slug} ${task.id}\n`);
     console.log(`klaar ${cat}/${s.slug}`);
   } catch (e) {
