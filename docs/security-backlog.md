@@ -71,7 +71,7 @@ Volgende run: (h) foutmeldingen, daarna (j) npm audit en (f) injectie/XSS.
   2026-11-06, Jayden). `TALEN["__proto__"]` is truthy, dus de taalcheck liet het door; met een AI-sleutel
   werd `vertalingen["__proto__"]` het `Object.prototype` van het hele serverproces en schreef de cache
   daar sleutels op (plus een betaalde AI-aanroep). Hetzelfde patroon zat in de vraaghulp (`VTALEN`).
-  Fix: `Object.hasOwn`. OPGELOST 2026-11-06 PR #PRNR. Test: `npm run test:sweep`.
+  Fix: `Object.hasOwn`. OPGELOST 2026-11-06 PR #49. Test: `npm run test:sweep`.
 
 - **HOOG — verlopen proef blokkeert alleen nieuwe kaarten** (gebruikers-sweep 2026-11-06, persona Mark).
   Met de verlopen proefcookie geven `/api/praktijk/sjablonen`, `/api/praktijk/oefeningen` (upload),

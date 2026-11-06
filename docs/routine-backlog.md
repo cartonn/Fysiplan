@@ -119,14 +119,14 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   ingelogd zonder proefcookie). De app herlaadde bij `proefVerlopen`, maar /v2/app serveert zonder
   cookie gewoon weer de app: 6 herlaadbeurten in 12 s, invoer weg. Nu een vaste melding bovenaan
   ("Je gratis proef is voorbij" met link naar /v2/proef), lezen blijft werken en automatisch delen
-  stopt (`toonProefVoorbij` in public/index.html). OPGELOST 2026-11-06 PR #PRNR. Test: `npm run test:tablet`.
+  stopt (`toonProefVoorbij` in public/index.html). OPGELOST 2026-11-06 PR #49. Test: `npm run test:tablet`.
 - **HOOG — /k: offline werkt pas na het tweede bezoek.** De kaart stuurt de werker nu na het eerste
   laden de adressen die al geladen zijn (pagina, `/api/kaart?id=`, vertaling, beelden); de werker
-  bewaart ze (alleen eigen site, geen video's of schrijfroutes). OPGELOST 2026-11-06 PR #PRNR.
+  bewaart ze (alleen eigen site, geen video's of schrijfroutes). OPGELOST 2026-11-06 PR #49.
   Test: `npm run test:offline`.
 - **HOOG — tablet: knopjes "eigen video" en × onbereikbaar.** Op apparaten zonder aanwijzen staan ze
   nu altijd, 30 px met een tikvlak van 44 px; met toetsenbord zichtbaar bij focus en te openen met
-  Enter/spatie. OPGELOST 2026-11-06 PR #PRNR. Test: `npm run test:tablet`.
+  Enter/spatie. OPGELOST 2026-11-06 PR #49. Test: `npm run test:tablet`.
 
 - **MIDDEL — na een verlopen proef kwamen patiëntseintjes nergens meer aan.** Ahmed koos 2026-11-06
   voor een alleen-lezen overzicht: de verlopen-pagina heeft nu "Seintjes van je patiënten"
