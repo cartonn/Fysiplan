@@ -25,14 +25,14 @@
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/barbell-pull-over.jpg",
   "kaartImg": "images/bovenste-extremiteit/barbell-pull-over-avatar-v7.jpg",
-  "uitleg": "Lig op de bank met de stang boven je borst en gestrekte armen. Beweeg de stang rustig over je hoofd naar achteren en breng hem terug boven je borst."
+  "uitleg": "Lig op de bank met je knieën opgetrokken en je voeten los van de bank. Houd de stang met gestrekte armen boven je borst. Beweeg de stang rustig over je hoofd naar achteren en breng hem terug boven je borst."
  },
  {
   "naam": "Bench press",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/bench-press.jpg",
   "kaartImg": "images/bovenste-extremiteit/bench-press-avatar-v7.jpg",
-  "uitleg": "Lig op de bank met de stang boven je borst en je voeten op de grond. Laat de stang langzaam naar je borst zakken en druk hem weer omhoog tot je armen gestrekt zijn."
+  "uitleg": "Lig op de bank in het rek met je knieën opgetrokken en je voeten van de grond. Laat de stang langzaam naar je borst zakken en druk hem weer omhoog tot je armen gestrekt zijn."
  },
  {
   "naam": "Biceps alternate dumbell",
@@ -88,7 +88,7 @@
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/dumbell-pull-over.jpg",
   "kaartImg": "images/bovenste-extremiteit/dumbell-pull-over-avatar-v7.jpg",
-  "uitleg": "Lig op de bank en houd een dumbell met beide handen boven je borst. Beweeg de dumbell met licht gebogen armen over je hoofd naar achteren en breng hem terug."
+  "uitleg": "Lig op de bank met je knieën opgetrokken en houd een dumbell met beide handen boven je borst. Beweeg de dumbell met licht gebogen armen over je hoofd naar achteren en breng hem terug."
  },
  {
   "naam": "Duplex pull",
@@ -172,7 +172,7 @@
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/military-press.jpg",
   "kaartImg": "images/bovenste-extremiteit/military-press-avatar-v7.jpg",
-  "uitleg": "Sta of zit rechtop met de halter op schouderhoogte voor je. Duw het gewicht recht omhoog boven je hoofd en laat het rustig terugzakken."
+  "uitleg": "Sta rechtop met in elke hand een dumbell op schouderhoogte, handpalmen naar elkaar. Duw de dumbells recht omhoog boven je hoofd en laat ze rustig terugzakken."
  },
  {
   "naam": "Nose breakers",
@@ -214,14 +214,14 @@
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/pully-dips.jpg",
   "kaartImg": "images/bovenste-extremiteit/pully-dips-avatar-v7.jpg",
-  "uitleg": "Sta rechtop bij de pully met de kabel hoog. Pak de stang met gebogen armen en duw hem omlaag tot je armen gestrekt zijn, ellebogen langs je lichaam."
+  "uitleg": "Zit rechtop op de bank met je rug naar de pully en de kabels hoog achter je, in elke hand een handvat naast je borst. Duw de handvatten omlaag tot je armen gestrekt zijn, ellebogen langs je lichaam, en laat ze rustig terugkomen."
  },
  {
   "naam": "Pully down",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/pully-down.jpg",
   "kaartImg": "images/bovenste-extremiteit/pully-down-avatar-v7.jpg",
-  "uitleg": "Sta voor de pully met de kabel hoog en de armen gestrekt. Trek de stang met gestrekte armen omlaag naar je bovenbenen en beweeg rustig terug."
+  "uitleg": "Lig op je rug op de bank met je hoofd bij de pully en pak de brede stang boven je hoofd. Trek de stang in een boog omlaag richting je borst en laat hem rustig teruggaan."
  },
  {
   "naam": "Pully press double",
@@ -242,7 +242,7 @@
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/pully-pull-over.jpg",
   "kaartImg": "images/bovenste-extremiteit/pully-pull-over-avatar-v7.jpg",
-  "uitleg": "Lig op de bank met het hoofd richting de pully. Pak de stang met gestrekte armen achter je hoofd en breng hem in een boog naar je heupen."
+  "uitleg": "Lig half op de schuine bank met je hoofd richting de pully en pak het handvat achter je hoofd. Breng het handvat in een boog over je hoofd naar voren en laat het rustig teruggaan."
  },
  {
   "naam": "Pully row",

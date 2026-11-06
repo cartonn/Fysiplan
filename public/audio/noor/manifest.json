@@ -65,9 +65,28 @@
     },
     {
       "name": "Barbell pull over",
-      "text": "Barbell pull over. Lig op de bank met de stang boven je borst en gestrekte armen. Beweeg de stang rustig over je hoofd naar achteren en breng hem terug boven je borst.",
-      "src": "/audio/noor/37d9e1e3265b134a6e0bff755120b6f57548230eabc0d77297e41a49f962b267.mp3",
-      "duration": 10.13551
+      "text": "Barbell pull over. Lig op de bank met je knieën opgetrokken en je voeten los van de bank. Houd de stang met gestrekte armen boven je borst. Beweeg de stang rustig over je hoofd naar achteren en breng hem terug boven je borst.",
+      "src": "/audio/noor/073f88a259e66802d8da25524ee25d0076c0b82c8851f01da293b78be61705cf.mp3",
+      "duration": 13.635918,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "3aa3d737-72e1-4bf3-ab05-5eb78846236b",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "cbb7b8d3529adf3e13eccfc055d4ce426f70f8eaef158db8a7256801d2d96eaa",
+        "mp3Sha256": "2580e7caadda69764003bd1aafb5d6a30018fcc49175d55d0e5da4ace6078e4f",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"Lig\" als \"Ligt\", \"gestrekte\" als \"gestrekkte\")",
+        "clinicalApproved": false,
+        "previousSrc": "/audio/noor/37d9e1e3265b134a6e0bff755120b6f57548230eabc0d77297e41a49f962b267.mp3"
+      }
     },
     {
       "name": "Been pendelen",
@@ -77,9 +96,28 @@
     },
     {
       "name": "Bench press",
-      "text": "Bench press. Lig op de bank met de stang boven je borst en je voeten op de grond. Laat de stang langzaam naar je borst zakken en druk hem weer omhoog tot je armen gestrekt zijn.",
-      "src": "/audio/noor/6cc382632cabb37f181d643cc842a3227873584b0d623cd0056e9d1a6426f771.mp3",
-      "duration": 10.24
+      "text": "Bench press. Lig op de bank in het rek met je knieën opgetrokken en je voeten van de grond. Laat de stang langzaam naar je borst zakken en druk hem weer omhoog tot je armen gestrekt zijn.",
+      "src": "/audio/noor/37f6a954f7d0661d210b314cee7ff3b944151ca75c2081a64f8264744a1d36d5.mp3",
+      "duration": 10.13551,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "c2c5586d-37b0-4941-910d-b66abe9f9604",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "10423bbee680931d2b6632d9bd8ab85bdf7ea31caf21cc22c1bc56040e8b5a4c",
+        "mp3Sha256": "9eb2b812b61c78bfb1ac47294d60abea34c4fb9e819ef581d3c8e98fb855a6e1",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"Bench press\" als \"Penchpress\", \"Lig\" als \"Ligt\")",
+        "clinicalApproved": false,
+        "previousSrc": "/audio/noor/6cc382632cabb37f181d643cc842a3227873584b0d623cd0056e9d1a6426f771.mp3"
+      }
     },
     {
       "name": "Biceps alternate dumbell",
@@ -264,9 +302,28 @@
     },
     {
       "name": "Dumbell pull over",
-      "text": "Dumbell pull over. Lig op de bank en houd een dumbell met beide handen boven je borst. Beweeg de dumbell met licht gebogen armen over je hoofd naar achteren en breng hem terug.",
-      "src": "/audio/noor/21c2c37c602babd020c796df11f4099c181aad7d528ecfcdf73cf7ed1c84c016.mp3",
-      "duration": 11.023673
+      "text": "Dumbell pull over. Lig op de bank met je knieën opgetrokken en houd een dumbell met beide handen boven je borst. Beweeg de dumbell met licht gebogen armen over je hoofd naar achteren en breng hem terug.",
+      "src": "/audio/noor/a6070e935740f1c1fb76cc451f154945867cf514f3d5c284c47cbb8091ad84f1.mp3",
+      "duration": 11.702857,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "62795a27-94cc-443a-976f-85e1f6accf26",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "5293cc9f6c70f10781828d035a8eda4a727733fd40eedf947bbd2e2f18ffb337",
+        "mp3Sha256": "4e3161d58a477b81569e8bff074ee14726e012fd7c2b97fa7dc7d2445f335cdf",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"dumbell\" als \"dumbbell\", \"licht gebogen\" aaneen)",
+        "clinicalApproved": false,
+        "previousSrc": "/audio/noor/21c2c37c602babd020c796df11f4099c181aad7d528ecfcdf73cf7ed1c84c016.mp3"
+      }
     },
     {
       "name": "Duplex pull",
@@ -453,9 +510,28 @@
     },
     {
       "name": "Military press",
-      "text": "Military press. Sta of zit rechtop met de halter op schouderhoogte voor je. Duw het gewicht recht omhoog boven je hoofd en laat het rustig terugzakken.",
-      "src": "/audio/noor/ad29731c88d52a42dc1883bbdc0701ed98b4cdfddd504761a85589b9671aac94.mp3",
-      "duration": 9.299592
+      "text": "Military press. Sta rechtop met in elke hand een dumbell op schouderhoogte, handpalmen naar elkaar. Duw de dumbells recht omhoog boven je hoofd en laat ze rustig terugzakken.",
+      "src": "/audio/noor/fa34533a44b9b0208e80da0cad490307fb31d3bbffd138bdd83ee19c12296367.mp3",
+      "duration": 11.258776,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "da651fe7-0c08-4afe-adc3-8f448860d5e4",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "fd09c96125d50d56e0eb8b362e243eb1dea9a8cc12b1c753ae401314cbd87826",
+        "mp3Sha256": "721670bac82a8a260e622372fd94653f237bca5f7178337a9cd10625abb54110",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"dumbell\" als \"dumbbell\")",
+        "clinicalApproved": false,
+        "previousSrc": "/audio/noor/ad29731c88d52a42dc1883bbdc0701ed98b4cdfddd504761a85589b9671aac94.mp3"
+      }
     },
     {
       "name": "Nose breakers",
@@ -489,15 +565,53 @@
     },
     {
       "name": "Pully dips",
-      "text": "Pully dips. Sta rechtop bij de pully met de kabel hoog. Pak de stang met gebogen armen en duw hem omlaag tot je armen gestrekt zijn, ellebogen langs je lichaam.",
-      "src": "/audio/noor/5511ec4720770aadf966f1b626a053873f00397fffdf3ed1a51c2218ccdec537.mp3",
-      "duration": 10.553469
+      "text": "Pully dips. Zit rechtop op de bank met je rug naar de pully en de kabels hoog achter je, in elke hand een handvat naast je borst. Duw de handvatten omlaag tot je armen gestrekt zijn, ellebogen langs je lichaam, en laat ze rustig terugkomen.",
+      "src": "/audio/noor/61880772a546e6e972fc8f06eb0a93f1fdd0763b8e4356d099e885bc1e39b346.mp3",
+      "duration": 14.733061,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "98f1a4e2-2d63-43bc-acac-9620b574f378",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "07b4b3170241d54e93c0c71fb3440e85000321a189cf21856e68a43786f71e9b",
+        "mp3Sha256": "4ce6ccfe976a5910f7f743ecefc38d16a30a30082fd01fd2aa0cb7d270f16d37",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"pully\" als \"pulli\", \"Duw\" als \"Doe\", \"ellebogen\" als \"ellenbogen\")",
+        "clinicalApproved": false,
+        "previousSrc": "/audio/noor/5511ec4720770aadf966f1b626a053873f00397fffdf3ed1a51c2218ccdec537.mp3"
+      }
     },
     {
       "name": "Pully down",
-      "text": "Pully down. Sta voor de pully met de kabel hoog en de armen gestrekt. Trek de stang met gestrekte armen omlaag naar je bovenbenen en beweeg rustig terug.",
-      "src": "/audio/noor/3cea235ce74cd13e7eef9f05be1ea3ab80693b4c9ed51bb511b4b291922b8cb1.mp3",
-      "duration": 9.142857
+      "text": "Pully down. Lig op je rug op de bank met je hoofd bij de pully en pak de brede stang boven je hoofd. Trek de stang in een boog omlaag richting je borst en laat hem rustig teruggaan.",
+      "src": "/audio/noor/a6a184b338a50bc12ff6d1e8ab2497f499db0ba03ccbbe3bceb3669fd9dab901.mp3",
+      "duration": 10.684082,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "56f3c52c-8ef8-4a56-834a-ed7d4b561e63",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "e2b97a57ea890d4cc972e64dc27dbad4b19dfd2a32fbc557dc7a9d5dc5f6d8c2",
+        "mp3Sha256": "1a52066b98c3aba0862a22d8e1abddfba987bf156c9e6b4c3bce6b5f11d583d5",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"pully\" als \"pullie\", \"Lig\" als \"Ligg\")",
+        "clinicalApproved": false,
+        "previousSrc": "/audio/noor/3cea235ce74cd13e7eef9f05be1ea3ab80693b4c9ed51bb511b4b291922b8cb1.mp3"
+      }
     },
     {
       "name": "Pully press double",
@@ -513,9 +627,28 @@
     },
     {
       "name": "Pully pull over",
-      "text": "Pully pull over. Lig op de bank met het hoofd richting de pully. Pak de stang met gestrekte armen achter je hoofd en breng hem in een boog naar je heupen.",
-      "src": "/audio/noor/a64b3c8a71ab5ce10dd2469b1837c63c7cf138d1d02465c9d675caecf0915123.mp3",
-      "duration": 9.090612
+      "text": "Pully pull over. Lig half op de schuine bank met je hoofd richting de pully en pak het handvat achter je hoofd. Breng het handvat in een boog over je hoofd naar voren en laat het rustig teruggaan.",
+      "src": "/audio/noor/51f3060318c81cdd0c3904d752ad4ddf24e688ff65e12be9c491a6d5039baff4.mp3",
+      "duration": 11.572245,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "96b33b8a-355e-4bed-842a-9fc11a92f69f",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "c9b98eb729dec25d600e9337f21aab552223775aaae4b34ff63f00ed118aac78",
+        "mp3Sha256": "3d360960807c6f617eed71e32bd4c99455a2b4cae22ac5b6d013e52186b364c8",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"Lig\" als \"Leg\")",
+        "clinicalApproved": false,
+        "previousSrc": "/audio/noor/a64b3c8a71ab5ce10dd2469b1837c63c7cf138d1d02465c9d675caecf0915123.mp3"
+      }
     },
     {
       "name": "Pully row",

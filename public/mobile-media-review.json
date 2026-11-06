@@ -204,7 +204,7 @@
       "name": "Barbell pull over",
       "source": "images/bovenste-extremiteit/barbell-pull-over-avatar-v7.jpg",
       "assetSha256": "cb9a62ffdad69e4396ead9155476572635f4964628a69f63a1e356b82fae5d2c",
-      "explanationSha256": "60a86a18f371e625ac4d41cb74a055218883df534f897c5c18c58d24ed824d32",
+      "explanationSha256": "c78b585bfb69233657bdd5970df68fc0d571ad5992e82208d495c3977ece414d",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -242,7 +242,7 @@
       "name": "Bench press",
       "source": "images/bovenste-extremiteit/bench-press-avatar-v7.jpg",
       "assetSha256": "86b53be08ab4f2c9afd9659731ff74ea3593fbce43185c72dd1dc738b92416fd",
-      "explanationSha256": "13cfc58e1887332f04480c8830e5a5e278651281ffaff6f0e6a59ebdac680900",
+      "explanationSha256": "1638d52dec4f3c2536aae7ffa0abf532276d556efb65b87d25b4c029bd2a42b3",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -712,7 +712,7 @@
       "name": "Dumbell pull over",
       "source": "images/bovenste-extremiteit/dumbell-pull-over-avatar-v7.jpg",
       "assetSha256": "b9c8ada4e17b20a61fd655d3058741bba1f1da3a146322923554a553a8ddccda",
-      "explanationSha256": "70d740a5c3dba460a55694be166b271aaca1dff93aba9762b9a2b79013b1b3c3",
+      "explanationSha256": "011975a92910152f1550f5c0f60cca2056e4ae2e0a2ba1fb90ccffe4da643da2",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -1313,7 +1313,7 @@
       "name": "Military press",
       "source": "images/bovenste-extremiteit/military-press-avatar-v7.jpg",
       "assetSha256": "2bcd81bdcec09bed5867c8976d05fedd6d69d66addc911be603deff77832e0e7",
-      "explanationSha256": "e950acd1d83d97bbd13ed9f19e319897d8fa09af82861fc964273c1c0d95b8b1",
+      "explanationSha256": "e6432c2f1aec0b87785e33205004f63296fb8cb4d75ea775dd566b33b5a61a2f",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -1628,7 +1628,7 @@
       "name": "Pully dips",
       "source": "images/bovenste-extremiteit/pully-dips-avatar-v7.jpg",
       "assetSha256": "febe75aa95a294085aa0470fdad73ad28f7fdb4eaa6ba5d0831be2413428f2ac",
-      "explanationSha256": "1f60a6541b1b39080119672724d697633c02aec0f97c91219925fffdf7f50675",
+      "explanationSha256": "fbc1c2d1de9d5fb212fc665b181e7a6b23cf7a3b7c5c12cc6f492401d63bad59",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -1666,7 +1666,7 @@
       "name": "Pully down",
       "source": "images/bovenste-extremiteit/pully-down-avatar-v7.jpg",
       "assetSha256": "566b86d1885ffe7e9c4023aedbe02de189ab05ed942b42e95916a4f3b49ce337",
-      "explanationSha256": "81510d6888175d8eacd331574efaae3a84d730354d6ad6517f4457c001811e66",
+      "explanationSha256": "2276545c0418a145931575add9e0ac3ca83aa24871052af3040fe3bc07a9b437",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -1809,7 +1809,7 @@
       "name": "Pully pull over",
       "source": "images/bovenste-extremiteit/pully-pull-over-avatar-v7.jpg",
       "assetSha256": "1f31001f41a2dc8bc1b8f475b0b3580496211df9304efedfca8f96c2e7ce22eb",
-      "explanationSha256": "7504e0a0a42f76c123249f5fce6ba10dec50d3a95baf2da03405338db7fe750c",
+      "explanationSha256": "e294a8ca883a1eb332ce37c71d898914e3a2a29467568bf7b6e19deed7287b6e",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
