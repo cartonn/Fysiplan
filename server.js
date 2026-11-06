@@ -45,7 +45,17 @@ try {
 
 // Beheer: /admin88 toont de beheer-weergave; mutatie-API's eisen deze sleutel als header.
 // Let op: dit is afscherming-door-verhulling, geen echte authenticatie.
-const ADMIN_KEY = process.env.ADMIN_KEY || "admin88";
+// Productie (Railway, of NODE_ENV=production) zonder eigen ADMIN_KEY: beheer blijft
+// dicht. De standaardsleutel "admin88" staat in de openbare repo en werkt daarom
+// alleen nog lokaal (ontwikkelen en tests), nooit live.
+const IS_PRODUCTIE = !!(process.env.RAILWAY_ENVIRONMENT || process.env.RAILWAY_ENVIRONMENT_NAME ||
+  process.env.RAILWAY_PROJECT_ID || process.env.NODE_ENV === "production");
+const ADMIN_KEY = (() => {
+  const eigen = String(process.env.ADMIN_KEY || "");
+  if (eigen && eigen !== "admin88") return eigen;
+  return IS_PRODUCTIE ? "" : "admin88";
+})();
+if (IS_PRODUCTIE && !ADMIN_KEY) console.warn("Beheer staat dicht: zet een eigen ADMIN_KEY op de server.");
 // de standaardsleutel staat in de openbare README: met alleen die sleutel geeft de
 // beheerrol géén toegang tot patiëntgegevens (kaartoverzichten van praktijken)
 const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "admin88";
@@ -70,6 +80,7 @@ const STREAM_API_BASIS = String(process.env.STREAM_API_BASIS || "https://api.clo
 // constant-time vergelijking: het antwoordtempo verraadt niets over de sleutel
 const isAdmin = (req) => {
   const a = Buffer.from(String(req.headers["x-admin-sleutel"] || ""));
+  if (!ADMIN_KEY) return false;
   const b = Buffer.from(ADMIN_KEY);
   return a.length === b.length && timingSafeEqual(a, b);
 };

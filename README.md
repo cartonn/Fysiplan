@@ -158,9 +158,10 @@ synchronisatie, wachttijd of aparte deploy nodig. Het geserveerde `oefeningen.js
 basisbestand + hernoemingen − verwijderd + toegevoegd. `/health` toont de tellers
 (`hernoemd`, `toegevoegd`, `verwijderd`).
 
-De mutatie-API's eisen een sleutel-header die alleen de beheerpagina meestuurt
-(instelbaar via `ADMIN_KEY`, standaard `admin88`). Let op: dit is afscherming-door-verhulling —
-wie de beheer-URL kent, kan beheren. Echte authenticatie is bewust buiten scope gehouden.
+De mutatie-API's eisen een sleutel-header (`x-admin-sleutel`). De beheerpagina's vragen de
+beheerder om die sleutel en bewaren hem alleen in het tabblad (sessionStorage); hij staat
+in geen enkel publiek bestand. Live (Railway of `NODE_ENV=production`) werkt alleen een eigen
+`ADMIN_KEY`: zonder die variabele blijft beheer dicht. Alleen lokaal is `admin88` de standaard.
 Met de standaardsleutel kan beheer **geen** kaartoverzicht of patiëntgegevens van een praktijk
 lezen; alleen met een eigen `ADMIN_KEY` op de server werkt die beheeringang.
 

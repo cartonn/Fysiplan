@@ -112,7 +112,10 @@
 
 <script>
 (function(){
-  var HDR={'x-admin-sleutel':'admin88'};
+  // de beheersleutel staat nooit in een publiek bestand: de beheerder voert hem zelf
+  // in en hij blijft alleen in dit tabblad (sessionStorage) bewaard
+  var beheerSleutel=function(opnieuw){var k='';try{if(opnieuw)sessionStorage.removeItem('fysiplan-beheersleutel');k=sessionStorage.getItem('fysiplan-beheersleutel')||'';}catch(e){}if(!k){k=String(window.prompt('Beheersleutel (blijft alleen in dit tabblad bewaard):')||'').trim();if(k){try{sessionStorage.setItem('fysiplan-beheersleutel',k);}catch(e){}}}return k;}
+  var HDR={'x-admin-sleutel':beheerSleutel()};
   var tip=document.getElementById('tip');
   function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   function dagLabel(iso){var d=new Date(iso+'T12:00:00');return d.toLocaleDateString('nl-NL',{day:'numeric',month:'short'});}
@@ -165,7 +168,7 @@
 
   function laad(){
     fetch('/api/dashboard',{headers:HDR,cache:'no-cache'})
-      .then(function(r){if(!r.ok)throw 0;return r.json();})
+      .then(function(r){if(r.status===401||r.status===403){try{sessionStorage.removeItem('fysiplan-beheersleutel');}catch(e){}}if(!r.ok)throw 0;return r.json();})
       .then(function(d){
         document.getElementById('inhoud').style.display='';
         document.getElementById('fout').style.display='none';
