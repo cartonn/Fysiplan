@@ -574,6 +574,11 @@
   <h1>Kaart niet gevonden</h1>
   Deze trainingskaart bestaat niet (meer). Vraag je fysiotherapeut om een nieuwe QR-code.
 </div>
+<div class="fout" id="storing" style="display:none" role="alert">
+  <h1 id="storing_kop">Even geen verbinding</h1>
+  <span id="storing_tekst">Je kaart is er nog, maar hij laadt nu niet. Probeer het over een minuut opnieuw.</span>
+  <br/><button type="button" id="storing_knop" style="margin-top:16px;min-height:44px;padding:0 20px;border-radius:12px;border:1px solid var(--lijn);background:var(--vlak);font:inherit;font-weight:600;cursor:pointer">Opnieuw proberen</button>
+</div>
 <script src="/noor-audio.js"></script>
 <script>
 (function(){
@@ -2303,16 +2308,27 @@
     });
   }
 
+  // Alleen een 404 betekent dat de kaart echt weg is. Druk (429), een serverfout of
+  // geen verbinding is tijdelijk: dan nooit "bestaat niet (meer)" zeggen, want dan denkt
+  // de patiënt dat de kaart weg is en gooit hij de QR weg.
+  function toonStoring(){
+    var t={en:['No connection right now','Your card is still there, but it is not loading right now. Please try again in a minute.','Try again']}[TAAL];
+    if(t){document.getElementById('storing_kop').textContent=t[0];document.getElementById('storing_tekst').textContent=t[1];document.getElementById('storing_knop').textContent=t[2];}
+    document.getElementById('storing').style.display='block';
+  }
+  document.getElementById('storing_knop').addEventListener('click',function(){location.reload();});
   if(!id){document.getElementById('fout').style.display='block';}
   else{
     Promise.all([
-      fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){return r.json();}),
+      fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){
+        return r.json().catch(function(){return {ok:false};}).then(function(d){if(d&&!d.ok)d.status=r.status;return d;});
+      }),
       // De therapeut kan voor editor/PDF een lijntekening kiezen. De digitale
       // patiëntkaart gebruikt bewust altijd het kleurenbeeld uit de v2-catalogus.
       fetch('/v2/oefeningen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
       ,loadMobileReview().catch(function(){mediaReviewReady=false;})
     ]).then(function(res){
-      if(!res[0]||!res[0].ok){document.getElementById('fout').style.display='block';return;}
+      if(!res[0]||!res[0].ok){if(res[0]&&res[0].status===404)document.getElementById('fout').style.display='block';else toonStoring();return;}
       K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1],ai:!!res[0].ai};
       // Komt het stemmanifest pas na het tekenen binnen, dan zetten we alleen de wachtende
       // luisterregels om (herstelNoorKnoppen), dezelfde weg als een latere geslaagde poging.
@@ -2322,7 +2338,7 @@
       initApp();
       if(TAAL!=='nl')wisselTaal(TAAL);else alles();
       document.getElementById('wrap').style.display='block';
-    }).catch(function(){document.getElementById('fout').style.display='block';});
+    }).catch(function(){toonStoring();});
   }
 })();
 </script>

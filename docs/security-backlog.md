@@ -23,6 +23,20 @@ Volgende run: (c) proef-tokens, daarna (h) en (j).
 
 ## Open
 
+- **HOOG — verlopen proef blokkeert alleen nieuwe kaarten** (gebruikers-sweep 2026-11-06, persona Mark).
+  Met de verlopen proefcookie geven `/api/praktijk/sjablonen`, `/api/praktijk/oefeningen` (upload),
+  `/api/opname/start` (60 MB-uploadtoken), `/api/kaart/afspraak` en `/api/kaart/naam` gewoon 200.
+  Zonder proefcookie (ander apparaat, cookies gewist) maakt dezelfde praktijksessie weer nieuwe kaarten:
+  de proef hangt aan het apparaat (`proefVan`), niet aan de praktijk. Controle staat alleen bij
+  `POST /api/kaarten` en `/v2/app`. Fix: proefstatus aan het praktijkaccount koppelen en in één
+  poort voor alle schrijfroutes van de therapeut toetsen (patiëntroutes /k blijven open).
+- **MIDDEL — per-IP-remmen te krap voor een praktijk achter één NAT** (sweep 2026-11-06). Lezen 120
+  en schrijven 40 per 5 min per IP (server.js `leesLimiet`, schrijfrem) gelden voor de hele praktijk
+  incl. auto-delen, en voor patiënten achter CGNAT/sportschool-wifi. De sweep liep er met 4 gebruikers
+  binnen minuten tegenaan. Overweeg rem per praktijksessie/kaart-id naast per IP.
+- **LAAG — POST-body boven de limiet krijgt een verbroken verbinding i.p.v. 413** (`req.destroy()` in
+  de body-lezer). Netjes 413 sturen en dan sluiten.
+
 - **LAAG — remteller op de beheersleutel weigert, maar houdt raden niet tegen.**
   `denied()` geeft na 20 fouten per 5 minuten een 429, maar `isAdmin()` wordt vóór
   `denied()` gecontroleerd: wie tijdens de 429-periode de juiste sleutel stuurt,

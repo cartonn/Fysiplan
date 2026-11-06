@@ -824,6 +824,9 @@ bridge2.jpg</div>
   // escapet álle vijf HTML-gevoelige tekens, óók beide quotes: veel waarden komen
   // in single-quoted attributen (data-sdel, title, value) terecht en een niet-
   // geëscapete quote zou daaruit kunnen breken. Gelijk aan de esc() van kaart.html.
+  // één CSV-cel: aanhalingstekens verdubbeld, en een cel die met = + - @ (of tab/CR)
+  // begint krijgt een ' ervoor, zodat Excel of LibreOffice hem nooit als formule uitvoert
+  function csvCel(v){v=(v==null?'':String(v));if(/^[=+\-@\t\r]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"';}
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];});}
   function normEx(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');}
 
@@ -3706,7 +3709,7 @@ bridge2.jpg</div>
           // Puntkomma's en een BOM zodat NL-Excel hem direct goed opent.
           var xb=document.getElementById('k_srv_csv');
           if(xb)xb.onclick=function(){
-            var veld=function(v){v=(v==null?'':String(v));return '"'+v.replace(/"/g,'""')+'"';};
+            var veld=csvCel;
             var dd2=function(t){return t?new Date(t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}):'';};
             var kop=['Naam','Status','Aangemaakt','Behandelaar','Oefeningen','Laatste pijn','Eerste pijn','PSK-doel','Eerste PSK','Laatste PSK','Oefendoel p/w','Te zwaar (3 wk)','Afspraak','Werknotitie','Verloopt','Kaartlink'];
             // altijd de verse stand van de server: een afspraak of PSK-doel die net in dit
