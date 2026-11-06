@@ -628,7 +628,7 @@
   "groep": "Core",
   "img": "images/core/curl-up.jpg",
   "kaartImg": "images/core/curl-up-avatar-v7.jpg",
-  "uitleg": "Lig op je rug met een been gebogen en je handen onder je onderrug. Til je hoofd en schouders iets op en laat ze rustig weer zakken."
+  "uitleg": "Lig op je rug met gebogen knieën, je voeten plat op de vloer en je handen achter je hoofd. Rol je bovenlichaam omhoog richting je knieën en rol daarna rustig terug naar de vloer."
  },
  {
   "naam": "Dead bug",
@@ -692,7 +692,7 @@
   "groep": "Core",
   "img": "images/core/plank-high.jpg",
   "kaartImg": "images/core/plank-high-avatar-v7.jpg",
-  "uitleg": "Steun op gestrekte armen en je tenen met je handen onder je schouders. Houd je lichaam in een rechte lijn en span je buik aan."
+  "uitleg": "Steun op je zij op een gestrekte arm met je hand onder je schouder en je benen gestrekt op elkaar. Til je heupen op tot je lichaam een rechte lijn vormt en strek je bovenste arm recht omhoog. Houd deze houding vast en wissel van kant."
  },
  {
   "naam": "Plank jacks",
@@ -713,7 +713,7 @@
   "groep": "Core",
   "img": "images/core/reversed-crunch.jpg",
   "kaartImg": "images/core/reversed-crunch-avatar-v7.jpg",
-  "uitleg": "Lig op je rug met gebogen knieen boven je heupen. Til je bekken iets van de vloer door je knieen richting je borst te brengen en laat langzaam weer zakken."
+  "uitleg": "Lig op je rug met je armen naast je lichaam en je benen gestrekt omhoog boven je heupen. Til je bekken iets van de vloer door je voeten recht omhoog te duwen en laat langzaam weer zakken."
  },
  {
   "naam": "Rug extensie",
@@ -750,7 +750,7 @@
   "ook": ["Rug"],
   "img": "images/core/side-bents.jpg",
   "kaartImg": "images/core/side-bents-avatar-v7.jpg",
-  "uitleg": "Sta rechtop met je voeten op heupbreedte en je armen langs je lichaam. Buig je romp zijwaarts naar een kant en kom terug, wissel daarna van kant."
+  "uitleg": "Sta rechtop met je voeten op heupbreedte, een dumbbell in een hand langs je lichaam en je andere arm boven je hoofd. Buig je romp zijwaarts naar de kant van de dumbbell en kom terug, wissel daarna van kant."
  },
  {
   "naam": "Stick twist",
@@ -799,7 +799,7 @@
   "groep": "Cardio",
   "img": "images/cardio/squat-jumps.jpg",
   "kaartImg": "images/cardio/squat-jumps-avatar-v7.jpg",
-  "uitleg": "Sta met je voeten op heupbreedte. Zak in een squat, spring omhoog en land zacht met gebogen knieen in de squat."
+  "uitleg": "Sta voor een lage box met je voeten op heupbreedte. Zak in een squat, spring op de box en land zacht met gebogen knieën. Stap daarna rustig weer naar beneden."
  },
  {
   "naam": "Stairs",
@@ -834,7 +834,7 @@
   "groep": "Bosu",
   "img": "images/bosu/bosu-chest-press-dumbell.jpg",
   "kaartImg": "images/bosu/bosu-chest-press-dumbell-avatar-v7.jpg",
-  "uitleg": "Lig met je bovenrug op de bosu en houd in elke hand een dumbbell bij je borst. Duw de dumbbells recht omhoog en laat ze rustig terugzakken."
+  "uitleg": "Lig met je bovenrug op de bosu, je voeten op de vloer en je heupen omhoog. Houd in elke hand een dumbbell bij je borst met je handpalmen richting je voeten. Duw de dumbbells recht omhoog en laat ze rustig terugzakken."
  },
  {
   "naam": "Bosu leg pull in",
@@ -855,7 +855,7 @@
   "groep": "Bosu",
   "img": "images/bosu/bosu-plank.jpg",
   "kaartImg": "images/bosu/bosu-plank-avatar-v7.jpg",
-  "uitleg": "Steun met je onderarmen op de bosu en zet je voeten naar achteren. Houd je lichaam in een rechte lijn van hoofd tot hielen."
+  "uitleg": "Draai de bosu om en pak met gestrekte armen de randen vast, zet je voeten naar achteren. Houd je lichaam in een rechte lijn van hoofd tot hielen."
  },
  {
   "naam": "Bosu plank leg lift",
@@ -883,7 +883,7 @@
   "groep": "Bosu",
   "img": "images/bosu/bosu-zijw-plank.jpg",
   "kaartImg": "images/bosu/bosu-zijw-plank-avatar-v7.jpg",
-  "uitleg": "Steun met een onderarm op de bosu en stapel je voeten op elkaar. Til je heupen op tot je lichaam een rechte lijn vormt en houd deze houding vast."
+  "uitleg": "Steun met een gestrekte arm met je hand op de bosu, je voeten op elkaar en je andere hand op je heup. Til je heupen op tot je lichaam een rechte lijn vormt en houd deze houding vast."
  },
  {
   "naam": "TRX ab roll out",
