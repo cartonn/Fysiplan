@@ -44,6 +44,10 @@ self.addEventListener('fetch', function (e) {
           if (++TELLER % 25 === 0) snoei(c);
         }).catch(function () {});
       }
+      // druk (429) of een serverfout: liever de laatst geladen kaart dan een foutscherm
+      if (antwoord && (antwoord.status === 429 || antwoord.status >= 500)) {
+        return caches.match(req).then(function (uitCache) { return uitCache || antwoord; });
+      }
       return antwoord;
     }).catch(function () {
       return caches.match(req).then(function (uitCache) {

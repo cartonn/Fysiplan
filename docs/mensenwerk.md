@@ -4,6 +4,13 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Wat gebeurt er met seintjes na een verlopen proef? (gebruikers-sweep, 2026-11-06)
+Na 14 dagen gaat /v2/app op slot, maar patiëntkaarten blijven werken en patiënten kunnen nog
+"Het doet te veel pijn" tikken. De therapeut ziet die seintjes dan nergens meer, terwijl de
+verlopen-pagina zegt dat patiënten niets merken. Kies: (a) het kaartenoverzicht met seintjes blijft
+alleen-lezen open, (b) de verlopen-pagina toont het aantal openstaande seintjes, of (c) de knoppen
+op de patiëntkaart verdwijnen na verloop. Advies: (a). Hoort bij de open keuze wat er na de proef gebeurt.
+
 ### Algemene voorwaarden (legal, 2026-11-06)
 Op https://fysiplan.nl/voorwaarden staat een concept, duidelijk gemarkeerd. Vul deze keuzes in
 (of laat een jurist ze voorstellen); ze staan in de tekst als oranje invulplek in

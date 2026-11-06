@@ -3674,7 +3674,10 @@ async function afhandelen(request, response) {
     };
     const taalT = AFSPRAAK_TAAL[String(q.get("taal") || "").toLowerCase()] || AFSPRAAK_TAAL.nl;
     const d = new Date(found.afspraak.t);
-    // zwevende lokale tijd in Nederlandse klok, net als de oefenmomenten-agenda
+    // De afspraak is één vast moment: tijd in Nederlandse klok mét tijdzone (TZID +
+    // VTIMEZONE). Zonder tijdzone ("zwevend") leest een telefoon die op een andere
+    // tijdzone staat 14:00 als 14:00 daar, en komt de patiënt een uur te laat.
+    // De wekelijkse reeks (RRULE) blijft zo ook over de zomertijdwissel op 14:00.
     const datum = d.toLocaleDateString("sv-SE", { timeZone: "Europe/Amsterdam" });
     const uur = d.toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Europe/Amsterdam" });
     const dtStart = datum.replace(/-/g, "") + "T" + uur.replace(":", "") + "00";
@@ -3689,10 +3692,14 @@ async function afhandelen(request, response) {
     const link = "https://" + veiligeHost + "/k/" + found.id;
     const ics = [
       "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Fysiplan//Trainingskaart//NL", "CALSCALE:GREGORIAN",
+      "BEGIN:VTIMEZONE", "TZID:Europe/Amsterdam",
+      "BEGIN:DAYLIGHT", "TZOFFSETFROM:+0100", "TZOFFSETTO:+0200", "TZNAME:CEST", "DTSTART:19700329T020000", "RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU", "END:DAYLIGHT",
+      "BEGIN:STANDARD", "TZOFFSETFROM:+0200", "TZOFFSETTO:+0100", "TZNAME:CET", "DTSTART:19701025T030000", "RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU", "END:STANDARD",
+      "END:VTIMEZONE",
       "BEGIN:VEVENT",
       "UID:fysiplan-afspraak-" + found.id + "-" + found.afspraak.t + "@fysiplan.nl",
       "DTSTAMP:" + stamp,
-      "DTSTART:" + dtStart,
+      "DTSTART;TZID=Europe/Amsterdam:" + dtStart,
       // wekelijkse behandelreeks: één agenda-tik zet alle vervolgafspraken mét
       // alarmen — het app-vrije antwoord op de afspraakherinneringen van
       // concurrenten die daar een patiënt-app met pushmeldingen voor eisen
