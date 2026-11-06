@@ -23,6 +23,13 @@ Volgende run: (j) npm audit en (f) injectie/XSS, daarna (d) gedeelde kaarten.
 
 ## Open
 
+- **MIDDEL — vreemde opname-video in eigen kaart zetten en daarmee laten wissen** (sweep 2026-11-06,
+  Mark). POST /api/kaarten accepteert in `vids` elk pad dat op `uploads/videos/v-<token>.mp4` lijkt,
+  ook een opname van een andere praktijk (token zichtbaar in de QR op het scherm van die therapeut).
+  Haalt Mark de video daarna van zijn kaart, dan wist `ruimKaartVideosOp` het bestand van de andere
+  praktijk; /api/opname/status blijft daar "klaar" melden en de patiënt krijgt een kapotte video.
+  server.js rond de `vids`-controle in POST /api/kaarten en `ruimKaartVideosOp`. Fix: alleen paden
+  accepteren van opnames/uploads van dezelfde praktijk, en alleen eigen bestanden opruimen.
 - **HOOG — praktijknaam is een wereldwijde sleutel** (sweep 2026-11-06, Sanne). Wie een naam als eerste
   beveiligt, sluit elke andere praktijk met die naam buiten ("Deze praktijk is beveiligd. Log in…");
   een naam kan zo vooraf worden gekaapt. Ook wisselt de praktijk stil als de therapeut de naam op de

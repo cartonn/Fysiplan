@@ -2694,11 +2694,28 @@ bridge2.jpg</div>
   function toonPrakSlot(pr){
     PRAKSLOT.pr=pr;
     fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET())
-      .then(function(r){return r.json();}).then(function(d){
+      .then(function(r){if(!r.ok)throw r.status;return r.json();}).then(function(d){
         PRAKSLOT.geclaimd=!!d.geclaimd;PRAKSLOT.ingelogd=!!d.ingelogd;
         if(d.bewaar)PRAKSLOT.bewaar=d.bewaar;
         rendPrakSlot();
-      }).catch(function(){});
+      }).catch(function(code){
+        // een 429/5xx of geen verbinding is niet "nog niet beveiligd": niets laten beveiligen
+        var st=document.getElementById('ps_status'),form=document.getElementById('ps_form');
+        if(!st)return;
+        if(form)form.style.display='none';
+        var vl=document.getElementById('ps_vwolab');if(vl)vl.style.display='none';
+        st.innerHTML=(code===429?"De server is even druk.":"De beveiliging van je praktijk kan nu niet worden gecontroleerd.")+
+          " Je praktijk en kaarten zijn niet weg. <a href='#' id='ps_opnieuw'>Opnieuw proberen</a>";
+        var o=document.getElementById('ps_opnieuw');
+        if(o)o.addEventListener('click',function(e){e.preventDefault();toonSrvKaarten();});
+      });
+  }
+  function toonOverzichtStoring(el,code,zoekEl){
+    if(zoekEl)zoekEl.style.display='none';
+    el.innerHTML="<div class='hint' role='status'>"+(code===429?"De server is even druk. ":"Het overzicht kan nu niet worden geladen. ")+
+      "Je gedeelde kaarten zijn niet weg. <a href='#' id='k_srv_opnieuw'>Opnieuw proberen</a></div>";
+    var o=document.getElementById('k_srv_opnieuw');
+    if(o)o.addEventListener('click',function(e){e.preventDefault();toonSrvKaarten();});
   }
   function rendPrakSlot(){
     var st=document.getElementById('ps_status'),form=document.getElementById('ps_form'),
@@ -3149,11 +3166,41 @@ bridge2.jpg</div>
     var t=n===1?'1 openstaand seintje van een patiënt — open Kaarten om te antwoorden':n+' openstaande seintjes van patiënten — open Kaarten om te antwoorden';
     b.title=t;kb.title=t;
   }
+  function toonPraktijknaamVraag(blok){
+    blok.style.display='';
+    document.getElementById('k_srv_naam').textContent='';
+    document.getElementById('k_srv_lijst').innerHTML='';
+    ['prakslot','weekbrief'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.display='none';});
+    if(document.getElementById('k_pr_vraag'))return;
+    var v=document.createElement('form');v.id='k_pr_vraag';v.className='no-print';
+    v.style.cssText='display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0';
+    v.innerHTML="<div class='hint' style='flex-basis:100%'>Vul eerst de naam van je praktijk in. Daarna beveilig je hem met een wachtwoord en deel je kaarten met je pati\u00ebnten.</div>"+
+      "<input id='k_pr_in' maxlength='80' autocomplete='organization' placeholder='Naam van je praktijk' aria-label='Naam van je praktijk' style='flex:1;min-width:180px;min-height:44px'/>"+
+      "<button class='btn primary' type='submit' style='min-height:44px'>Verder</button>"+
+      "<div id='k_pr_fout' role='alert' style='flex-basis:100%;color:#b42318;font-size:12.5px'></div>";
+    blok.insertBefore(v,document.getElementById('k_srv_lijst'));
+    v.addEventListener('submit',function(e){
+      e.preventDefault();
+      var naam=(document.getElementById('k_pr_in').value||'').trim().slice(0,80);
+      if(naam.length<2){document.getElementById('k_pr_fout').textContent='Vul een praktijknaam in (minstens 2 tekens).';document.getElementById('k_pr_in').focus();return;}
+      SET.praktijk=naam;saveSettings();
+      var ep=document.getElementById('praktijk');if(ep)ep.value=naam;
+      ['prakslot','weekbrief'].forEach(function(id){var e2=document.getElementById(id);if(e2)e2.style.display='';});
+      toonSrvKaarten();
+    });
+  }
   function toonSrvKaarten(){
     var blok=document.getElementById('k_srv');
     var knop=document.getElementById('k_save_srv');
     var pr=(SET.praktijk||'').trim();
-    if(!pr){blok.style.display='none';knop.style.display='none';zetSeinBadge(0);return;}
+    if(!pr){
+      knop.style.display='none';zetSeinBadge(0);
+      // v2: zonder praktijknaam liep een nieuwe proef hier vast (geen blok, geen uitleg),
+      // terwijl welkom en mail naar "Kaarten" verwijzen. Vraag de naam dan hier.
+      if(window.FYSIPLAN_V2){toonPraktijknaamVraag(blok);return;}
+      blok.style.display='none';return;
+    }
+    var pv=document.getElementById('k_pr_vraag');if(pv)pv.remove();
     blok.style.display='';knop.style.display='';
     document.getElementById('k_srv_naam').textContent='('+pr+')';
     // v2: beveiligingsslot — claim/inloggen per praktijk (alleen in de v2-app)
@@ -3193,10 +3240,12 @@ bridge2.jpg</div>
     fetch('api/kaarten?praktijk='+encodeURIComponent(pr),PGET())
       .then(function(r){
         if(r.status===401)return r.json().then(function(d){return {geweigerd:true,beveilig:!!(d&&d.beveilig)};}).catch(function(){return {geweigerd:true};});
-        return r.ok?r.json():[];
+        // 429/5xx is geen lege praktijk: niet "nog geen gedeelde kaarten" tonen
+        return r.ok?r.json():{storing:r.status};
       })
       .then(function(l){
         var zoekEl=document.getElementById('k_srv_zoek');
+        if(l&&l.storing){toonOverzichtStoring(el,l.storing,zoekEl);return;}
         // het overzicht toont roepnamen en scores: alleen voor een praktijk met wachtwoord
         if(l&&l.geweigerd){
           if(zoekEl)zoekEl.style.display='none';
