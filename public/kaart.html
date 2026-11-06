@@ -1660,7 +1660,21 @@
     try{
       var l=document.createElement('link');l.rel='manifest';l.href='/api/kaart/manifest?id='+id;
       document.head.appendChild(l);
-      if('serviceWorker' in navigator)navigator.serviceWorker.register('/kaart-sw.js',{scope:'/k/'}).catch(function(){});
+      if('serviceWorker' in navigator){
+        navigator.serviceWorker.register('/kaart-sw.js',{scope:'/k/'}).catch(function(){});
+        // eerste bezoek: alles wat al geladen is (pagina, kaartgegevens, beelden) gaat
+        // één keer naar de offline-cache, anders werkt offline pas na een tweede bezoek
+        var naLaden=new Promise(function(ok){if(document.readyState==='complete')ok();else window.addEventListener('load',ok);});
+        Promise.all([navigator.serviceWorker.ready,naLaden]).then(function(r){
+          var reg=r[0];if(!reg||!reg.active)return;
+          var urls=[location.pathname,'/api/kaart?id='+id];
+          if(TAAL&&TAAL!=='nl')urls.push('/api/kaart/vertaal?id='+id+'&taal='+TAAL);
+          try{performance.getEntriesByType('resource').forEach(function(en){
+            var u=new URL(en.name);if(u.origin===location.origin)urls.push(u.pathname+u.search);
+          });}catch(e2){}
+          reg.active.postMessage({type:'bewaar',urls:urls});
+        }).catch(function(){});
+      }
     }catch(e){}
     var standalone=(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||window.navigator.standalone;
     var weg=false;try{weg=localStorage.getItem('fp_app_weg')==='1';}catch(e){}

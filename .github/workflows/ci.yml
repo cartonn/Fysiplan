@@ -31,4 +31,6 @@ jobs:
       - run: npm run test:beheer
       - run: npm run test:proefpoort
       - run: npm run test:sweep
+      - run: npm run test:offline
+      - run: npm run test:tablet
       - run: node scripts/test-praktijkgegevens.mjs
