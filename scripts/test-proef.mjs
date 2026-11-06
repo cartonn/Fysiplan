@@ -67,6 +67,21 @@ await writeFile(join(dataDir, "proef-aanmeldingen.json"), JSON.stringify({
   oud0000000000001: { id: "oud0000000000001", email: "oud@praktijk.nl", naam: "Piet Oud", tel: "+31612340000",
     praktijk: "Fysio Oud", gestart: Date.now() - 15 * dag, verloopt: Date.now() - dag, akkoord: "x", tokens: [sha(verlopenToken)] }
 }));
+// de praktijk achter de verlopen proef: beveiligd, met een kaart waarop een patiënt
+// na het verlopen nog "het doet te veel pijn" tikte, en een kaart zonder seintje
+const pSalt = randomBytes(16);
+await writeFile(join(dataDir, "praktijk-accounts.json"), JSON.stringify({
+  "fysio oud": { hash: "scrypt$" + pSalt.toString("hex") + "$" + scryptSync("oud-wachtwoord-1", pSalt, 32).toString("hex"), gemaakt: Date.now() - 15 * dag }
+}));
+await writeFile(join(dataDir, "kaarten.json"), JSON.stringify({
+  "fysio oud": {
+    "<b>truus</b>": { id: "0ad0ad0ad0a1", praktijk: "Fysio Oud", naam: "<b>Truus</b>", ts: Date.now() - 5 * dag, chosen: [{ n: "Squat", id: "", i: 0 }],
+      rows: {}, cells: {}, vids: {}, metingen: [{ t: Date.now() - 3600000, s: 8 }], ervaring: [{ t: Date.now() - 3600000, s: -1 }],
+      seintje: { t: Date.now() - 3600000, soort: "pijn" } },
+    "jan": { id: "0ad0ad0ad0a2", praktijk: "Fysio Oud", naam: "Jan", ts: Date.now() - 2 * dag, chosen: [{ n: "Squat", id: "", i: 0 }],
+      rows: {}, cells: {}, vids: {} }
+  }
+}));
 const salt = randomBytes(16);
 await writeFile(join(dataDir, "v1-accounts.json"), JSON.stringify({
   "beheerder@example.nl": { email: "beheerder@example.nl", praktijk: "FysioTotaal", gemaakt: Date.now(),
@@ -213,6 +228,35 @@ try {
   assert.equal((await geweigerd.json()).proefVerlopen, true);
   // de patiëntkaart van de lopende proef blijft gewoon open
   assert.equal((await fetch(origin + "/api/kaart?id=" + kaartId)).status, 200);
+
+  // na verloop blijven seintjes en scores zichtbaar: alleen lezen, met het praktijkwachtwoord
+  assert.match(verlopenHtml, /Seintjes van je pati&euml;nten/);
+  assert.match(verlopenHtml, /action="\/v2\/proef\/overzicht"/);
+  assert.match(verlopenHtml, /name="praktijk"[^>]*value="Fysio Oud"/, "praktijknaam staat al ingevuld");
+  const overzicht = (velden, cookie = oud, kop = {}) => fetch(origin + "/v2/proef/overzicht", { method: "POST", redirect: "manual",
+    headers: { "content-type": "application/x-www-form-urlencoded", "x-forwarded-for": "10.4.4.4", ...(cookie ? { cookie } : {}), ...kop },
+    body: new URLSearchParams(velden).toString() });
+  const ovFout = await overzicht({ praktijk: "Fysio Oud", wachtwoord: "fout" });
+  assert.equal(ovFout.status, 403);
+  const ovFoutHtml = await ovFout.text();
+  assert.match(ovFoutHtml, /horen niet bij elkaar/);
+  assert.doesNotMatch(ovFoutHtml, /Truus/, "fout wachtwoord: geen kaarten");
+  const zonderProef = await overzicht({ praktijk: "Fysio Oud", wachtwoord: "oud-wachtwoord-1" }, "");
+  assert.equal(zonderProef.status, 303, "zonder proefcookie geen overzicht");
+  assert.equal((await overzicht({ praktijk: "Fysio Oud", wachtwoord: "oud-wachtwoord-1" }, oud, { "sec-fetch-site": "cross-site" })).status, 403, "cross-site geweigerd");
+  const goed = await overzicht({ praktijk: "Fysio Oud", wachtwoord: "oud-wachtwoord-1" });
+  assert.equal(goed.status, 200);
+  assert.match(goed.headers.get("content-security-policy") || "", /default-src 'none'/);
+  const goedHtml = await goed.text();
+  assert.match(goedHtml, /2 actieve kaarten, 1 seintje/);
+  assert.match(goedHtml, /&lt;b&gt;Truus&lt;\/b&gt;/, "kaartnaam ge-escaped");
+  assert.match(goedHtml, /meldt te veel pijn/);
+  assert.match(goedHtml, /pijn 8/);
+  assert.match(goedHtml, /herstel: iets slechter/);
+  assert.ok(goedHtml.indexOf("Truus") < goedHtml.indexOf(">Jan<"), "kaart met seintje bovenaan");
+  assert.doesNotMatch(goedHtml, /<form[^>]*action="\/api\//, "alleen lezen: geen schrijfformulier");
+  // nog lopende proef: gewoon naar de app
+  assert.equal((await overzicht({ praktijk: "Fysio Oud", wachtwoord: "oud-wachtwoord-1" }, cookie)).status, 303);
 
   // "ik wil doorgaan" -> seintje aan Ahmed
   const voor = mail.length;

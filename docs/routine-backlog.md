@@ -60,8 +60,6 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 - **App: modale vensters niet met toetsenbord**: geen focus naar het venster, geen Escape, geen role=dialog.
 - **App: printversie toont placeholders van het praktijkadres** ("adres / postcode en plaats / …").
 - **App 1280×800: A4 past niet; QR en deelknoppen na delen buiten beeld** (`#a4wrap` scrolt horizontaal).
-- **Proef verlopen: patiëntseintjes komen nergens meer aan**, terwijl de verlopen-pagina zegt dat
-  patiënten niets merken. Productbeslissing, zie mensenwerk.
 - **Foutmelding "Alleen beschikbaar voor beheer." bij fout wachtwoord of foute herstelcode.**
   Al opgelost in open PR #41 (server.js `denied()` met eigen tekst); mergen of overnemen.
 
@@ -80,6 +78,11 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Opgelost
 
+- **MIDDEL — na een verlopen proef kwamen patiëntseintjes nergens meer aan.** Ahmed koos 2026-11-06
+  voor een alleen-lezen overzicht: de verlopen-pagina heeft nu "Seintjes van je patiënten"
+  (praktijknaam + wachtwoord, POST /v2/proef/overzicht), met seintjes bovenaan, pijn, herstel,
+  laatst geoefend en afspraak. Geen sessie, geen schrijfroute. OPGELOST 2026-11-06,
+  PR "kaart: seintjes blijven zichtbaar na een verlopen proef". Test: `npm run test:proef`.
 - **HOOG — CSV-export liet formules door** (`=1+1`, `@SUM`, `+`, `-`): Excel/LibreOffice voerden
   ze uit. Nu krijgt zo'n cel een `'` ervoor (`csvCel` in public/index.html). OPGELOST 2026-11-06,
   PR "kaart: CSV zonder formules, afspraak met tijdzone, druk is geen weg kaart". Test: `npm run test:sweep`.
