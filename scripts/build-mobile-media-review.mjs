@@ -52,9 +52,11 @@ const sourceHolds = new Map([
   ['fp_7dc1478e2b3c17b0', {name:'Step up with knee raise', source:'images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg',
     assetSha256:'2dbad9164159e9602e62bdf374a58ed5bdd2f55b2a2160c83a68ee13528149c3',
     reason:'Tijdelijk tegengehouden: losse, zwevende fragmenten in plaats van een verhoging om op te stappen.'}],
-  ['fp_4b99c5f11b42a30d', {name:'Standing chair shoulder rotations', source:'images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg',
-    assetSha256:'8290b9e1fe168d92837c72a096dbc84276ec0e70f40de714b6e265b83e7f4e0b',
-    reason:'Tijdelijk tegengehouden: de figuur staat op één been naast de stoel; er is geen schouder- of onderarmrotatie afgebeeld.'}],
+  // 2026-11-06: beelden van One leg standing en deze oefening omgewisseld (content/v2-avatar-overrides.json).
+  // Het nieuwe kaartbeeld toont de armen goed, maar de figuur staat op één been: de hold blijft, op het nieuwe bestand.
+  ['fp_4b99c5f11b42a30d', {name:'Standing chair shoulder rotations', source:'images/seated-chair/one-leg-standing-avatar-v8.jpg',
+    assetSha256:'9f6d3a68fac3385d0177134f1fb00f025ca5d820a9aa95b1cbb9d2e1f449a14f',
+    reason:'Tijdelijk tegengehouden: de armen staan goed (ellebogen gebogen, onderarmen naar buiten), maar de figuur staat op één been zonder de stoel; dat hoort niet bij deze oefening.'}],
   // Bronkeuze open (2026-11-03): beeld en eigen uitleg beschrijven een andere variant. Welke
   // bedoeld is, beslist de eigenaar/behandelaar; tot dan hetzelfde tegenhoudspoor als hierboven.
   // Geen klinisch oordeel en geen afkeuring van de oefening. Zie output/back-source-holds-20261103.json.
@@ -167,7 +169,7 @@ for (const e of base) {
     status:reason?'rejected':'unreviewed',clinicalApproved:false,
     presentation:reason?'withhold':'static',allowAutomaticPoseSplit:false,
     reasons:reason?[reason]:['Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd.'],
-    observations:correctedLunge ? ['Visueel gecontroleerd: rechterbeen voor in linker figuur, linkerbeen voor in rechter figuur; achterknieën boven de grond. Beenwissel hersteld, geen klinische goedkeuring of bewegingsdemonstratie.'] : corrected ? ['Kaartbeeld gecorrigeerd op 2026-11-03: het vorige V2-kaartbeeld ('+override.previousKaartImg+') toonde '+override.previousShowed+'; dit beeld toont '+override.nowShows+', zoals de eigen uitleg. Het V2-lijnbeeld is op dezelfde manier gecorrigeerd. Zie content/v2-avatar-overrides.json. Het V1-lijnbeeld is niet aangepast en toont nog de andere beweging. Geen klinische goedkeuring.'] : observations.get(e.naam)||[],
+    observations:correctedLunge ? ['Visueel gecontroleerd: rechterbeen voor in linker figuur, linkerbeen voor in rechter figuur; achterknieën boven de grond. Beenwissel hersteld, geen klinische goedkeuring of bewegingsdemonstratie.'] : corrected ? [`Kaartbeeld gecorrigeerd op ${override.date || '2026-11-03'}: ` + 'het vorige V2-kaartbeeld ('+override.previousKaartImg+') toonde '+override.previousShowed+'; dit beeld toont '+override.nowShows+', zoals de eigen uitleg. Het V2-lijnbeeld is op dezelfde manier gecorrigeerd. Zie content/v2-avatar-overrides.json. Het V1-lijnbeeld is niet aangepast en toont nog de andere beweging. Geen klinische goedkeuring.'] : observations.get(e.naam)||[],
     ...(hold ? {hold:{temporary:true,kind:hold.kind || 'source-defect',source:hold.source,assetSha256:hold.assetSha256,evidence:hold.evidence || HOLD_BEWIJS,
       release:'Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd.'}} : {}),
     poses, poseGeometry,

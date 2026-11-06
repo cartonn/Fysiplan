@@ -49,8 +49,23 @@ for(const v of verwacht){
   const pijlen=lees('content/beginhouding-pijl.json').entries.filter(p=>p.source===e[0].img);
   assert.equal(pijlen.length,1);assert.equal(pijlen[0].img,v.pijl,v.naam+': geleverd pijlbeeld ongewijzigd');assert.equal(pijlen[0].naam,v.naam);
 }
-// V1-catalogus byte-gelijk aan de stand vóór elke correctie van deze nacht
-assert.equal(createHash('sha256').update(fs.readFileSync('public/oefeningen.json')).digest('hex'),'038af18ed09b5373cf03e951e7de3749ea0071fce615a3d98c8f09af84e7ac2a','public/oefeningen.json is ongewijzigd');
+// V1-catalogus byte-gelijk aan de vastgelegde stand. Op 2026-11-05 is op verzoek van Ahmed
+// bewust de uitleg van vier oefeningen aangepast (Anteflexie armen, Barbell front press,
+// Biceps curl, Biceps pull), zodat die klopt met de avatarvideo's en de nieuwe Noor-opnames;
+// V1 en V2 delen de uitleg. Op 2026-11-06 is, na de greepcontrole tegen de lijntekeningen,
+// de uitleg van Anteflexie armen, Biceps curl, Biceps pull en Dips opnieuw aangepast (greep
+// en opstelling volgens de lijntekening). Daarna, dezelfde dag, ook French press, Front pully row
+// en Front raises (opstelling en materiaal volgens de lijntekening). Daarna Barbell pull over,
+// Bench press, Dumbell pull over, Military press, Pully dips, Pully down en Pully pull over
+// (houding en opstelling volgens de lijntekening en de goedgekeurde video). Daarna Pully cross
+// down, Pully cross over en Pully cross up (één of twee handvatten, richting volgens de video). Daarna 15 oefeningen uit pakket 1
+// en 2 (o.a. Reversed flyes, Wrist extension/flexion, Hack squat, Standing abduction) volgens de
+// lijntekening en de goedgekeurde video. Daarna Leg curl (staand met enkelband) en Flyes
+// (voeten op het eind van de bank, handpalmen naar elkaar). Daarna 8 oefeningen uit pakket 3
+// (o.a. Curl up, Plank high, Side bents, Bosu plank, Bosu zijw plank met gestrekte arm) volgens de
+// lijntekening en de goedgekeurde video. Daarna Crunch, Knee elbow en Leg raises (herkansing pakket 3).
+// Elke andere wijziging van dit bestand laat deze test falen.
+assert.equal(createHash('sha256').update(fs.readFileSync('public/oefeningen.json')).digest('hex'),'81b447e1d48201870c3511e5587c8d4ef086c94d621d49695fe5d3b099188a69','public/oefeningen.json is ongewijzigd');
 assert.notEqual(v2.find(x=>x.exerciseId==='fp_514654a0d4181742').kaartImg,v2.find(x=>x.exerciseId==='fp_5319c4700561725d').kaartImg);
 // geen bestand verplaatst, hernoemd of overschreven
 assert.equal(sha(HEUP),BEELD_KNIEHEFFING);assert.equal(sha(KNIE),BEELD_HEUPEXTENSIE);
@@ -60,7 +75,34 @@ assert.equal(sha('images/beginhouding-pijl-v1/313.webp'),'89b9a1102f54acee547772
 assert.equal(sha('images/beginhouding-pijl-v1/315.webp'),'5de647b808443daad9405049fd56229baf04038f5ed4329105d7eedad0e16fec');
 
 // ---- 2. de uitzonderingslijst klopt met de catalogus en is omkeerbaar beschreven ----
-assert.equal(overrides.overrides.length,2,'precies twee uitzonderingen');
+assert.equal(overrides.overrides.length,4,'precies vier uitzonderingen: het stoelpaar 312/314 en het paar 315/316');
+
+// ---- 2b. het paar One leg standing / Standing chair shoulder rotations (2026-11-06) ----
+// De lijntekeningen (en avatars) van beide waren onderling verwisseld. Besluit eigenaar: lijntekening
+// leidend, omwisselen. Alleen V2 img/kaartImg en de pijlsleutel; V1, ids, teksten en bestanden blijven gelijk.
+{
+  const D='images/seated-chair/';
+  const paar=[
+    {id:'fp_14c75a700561d59f',naam:'One leg standing',img:D+'standing-chair-shoulder-rotations-line-v1.png',kaartImg:D+'standing-chair-shoulder-rotations-avatar-v8.jpg',
+      v1img:D+'one-leg-standing-line-v1.png',pijl:'images/beginhouding-pijl-v1/316.webp',tekst:/Sta op één been naast de stoel/},
+    {id:'fp_4b99c5f11b42a30d',naam:'Standing chair shoulder rotations',img:D+'one-leg-standing-line-v1.png',kaartImg:D+'one-leg-standing-avatar-v8.jpg',
+      v1img:D+'standing-chair-shoulder-rotations-line-v1.png',pijl:'images/beginhouding-pijl-v1/317.webp',tekst:/Draai je onderarmen rustig naar buiten/}];
+  for(const v of paar){
+    const e=v2.filter(x=>x.exerciseId===v.id);assert.equal(e.length,1,v.naam);
+    assert.equal(e[0].naam,v.naam);assert.equal(exerciseId(e[0]),v.id);assert.match(e[0].uitleg,v.tekst);
+    assert.equal(e[0].img,v.img,v.naam+': V2-lijnbeeld volgt de tekening');assert.equal(e[0].kaartImg,v.kaartImg,v.naam+': V2-kaartbeeld omgewisseld');
+    const oud=v1.filter(x=>x.naam===v.naam);assert.equal(oud.length,1);assert.equal(oud[0].img,v.v1img,'V1 ongewijzigd');assert.equal(oud[0].uitleg,e[0].uitleg);
+    assert.equal(exerciseId(oud[0]),v.id,'V1 en V2 delen dezelfde id');
+    const pijlen=lees('content/beginhouding-pijl.json').entries.filter(p=>p.source===e[0].img);
+    assert.equal(pijlen.length,1);assert.equal(pijlen[0].img,v.pijl,v.naam+': geleverd pijlbeeld ongewijzigd');assert.equal(pijlen[0].naam,v.naam);
+    const o=overrides.overrides.find(x=>x.exerciseId===v.id);
+    assert.ok(o,v.naam);assert.equal(o.kaartImg,v.kaartImg);assert.equal(o.lineImg,v.img);assert.equal(o.v1LineImg,v.v1img);assert.equal(o.previousLineImg,v.v1img);
+    assert.equal(o.assetSha256,sha(v.kaartImg));assert.equal(o.arrow.img,v.pijl);
+  }
+  // One leg standing toont nu het juiste beeld; Standing chair shoulder rotations blijft tegengehouden (zie 4)
+  const r=review.entries.find(x=>x.exerciseId==='fp_14c75a700561d59f');
+  assert.equal(r.source,paar[0].kaartImg);assert.equal(r.clinicalApproved,false);assert.ok(!r.hold,'One leg standing heeft geen hold');
+}
 for(const v of verwacht){
   const o=overrides.overrides.find(x=>x.exerciseId===v.id);
   assert.ok(o,v.naam);assert.equal(o.kaartImg,v.kaartImg);assert.equal(o.assetSha256,v.sha);assert.equal(o.lineImg,v.img);
@@ -84,7 +126,7 @@ const houds=[
   ['fp_013ba6ad937cc9d9','Dips','images/bovenste-extremiteit/dips-avatar-v7.jpg'],
   ['fp_f227db5fcf245d9c','Triceps dips','images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg'],
   ['fp_7dc1478e2b3c17b0','Step up with knee raise','images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg'],
-  ['fp_4b99c5f11b42a30d','Standing chair shoulder rotations','images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg'],
+  ['fp_4b99c5f11b42a30d','Standing chair shoulder rotations','images/seated-chair/one-leg-standing-avatar-v8.jpg'], // sinds de 315/316-wissel (2026-11-06)
   ['fp_295fd35a63d44ef8','Chair squat','images/onderste-extremiteit/chair-squat-avatar-v7.jpg'],
   ['fp_a0a18c0c13673d38','Back extension','images/core/back-extension-avatar-v7.jpg'],
   ['fp_7b07f346644f9c17','Rug extensie','images/core/rug-extensie-avatar-v7.jpg']
