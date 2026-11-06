@@ -367,7 +367,8 @@
   "pijl_nl": "Lichaam komt naar voren en omhoog tot staan.",
   "view": "side view",
   "ref": "287",
-  "pose_en": "Side view of a person sitting upright on a plain wooden chair, feet flat on the floor, hands resting on the thighs, not using the armrests. Both feet are clearly visible. One curved solid black arrow starts at the chest and curves forward and upward over the knees, showing the body rising to standing."
+  "pose_en": "Side view of a person sitting upright on a plain wooden chair, feet flat on the floor, hands resting on the thighs, not using the armrests. Both feet are clearly visible. One curved solid black arrow starts at the chest and curves forward and upward over the knees, showing the body rising to standing.",
+  "extra_en": "CORRECTION, start position: side view, she sits fully UPRIGHT on the chair: trunk vertical, back straight, shoulders above the hips, NOT leaning forward, hands on her thighs, feet flat. One curved arrow starts at her chest and sweeps forward and then up, showing standing up and walking forward."
  },
  {
   "naam": "Dubbele taak lopen – met cognitieve taak",
@@ -380,6 +381,7 @@
   "pijl_nl": "Ene voet stapt naar voren om te gaan lopen.",
   "view": "side view",
   "ref": "001",
-  "pose_en": "Side view of a person standing upright, feet side by side, arms relaxed by the sides, looking ahead with mouth slightly open as if speaking. Both feet are clearly visible, flat on the floor. One curved solid black arrow starts at the toes of the near foot and curves forward along the floor, ending one step length ahead, showing the first step of walking."
+  "pose_en": "Side view of a person standing upright, feet side by side, arms relaxed by the sides, looking ahead with mouth slightly open as if speaking. Both feet are clearly visible, flat on the floor. One curved solid black arrow starts at the toes of the near foot and curves forward along the floor, ending one step length ahead, showing the first step of walking.",
+  "extra_en": "CORRECTION: strict side profile, she faces RIGHT and looks to the right; the arrow on the floor starts at her front foot and points to the RIGHT, forward in the direction she is looking and walking."
  }
 ]
