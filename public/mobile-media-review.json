@@ -922,7 +922,7 @@
       "name": "Flyes",
       "source": "images/bovenste-extremiteit/flyes-avatar-v7.jpg",
       "assetSha256": "c41db07f01858ca9b1a060b966e38b884216642684dbc1ee23690d7e28185ab0",
-      "explanationSha256": "99ebe3d87f7b7377f2aff3541da2796d249d44a26a1a2afb71ee476e41b5b05c",
+      "explanationSha256": "2810e9dd2181d8cf2b3595b5f2a1394e3706994d6e71367b4a196785d32a1e8e",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -3134,7 +3134,7 @@
       "name": "Leg curl",
       "source": "images/onderste-extremiteit/leg-curl-avatar-v7.jpg",
       "assetSha256": "0f892d7e0c50bfe9ebfcf46a31811ee61e172d084b7cfed5698d64609d047fad",
-      "explanationSha256": "228cbdf321d139197c475dace2b42d696cb886769ac2ab1f88473787bdee8ce0",
+      "explanationSha256": "90fae5863b4bc19497186f83c4b52d590dc51ab7fbf9a0b37c51bdea32833d90",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",

@@ -370,9 +370,28 @@
     },
     {
       "name": "Flyes",
-      "text": "Flyes. Lig op de bank met de dumbells boven je borst en licht gebogen armen. Spreid je armen rustig zijwaarts tot borsthoogte en breng ze weer samen boven je borst.",
-      "src": "/audio/noor/0b8b58d16a80f0483d9d3679c570974f7716659bb346e67269805bbc47cfe9ca.mp3",
-      "duration": 10.422857
+      "text": "Flyes. Lig op de bank met je knieën gebogen en je voeten op het eind van de bank, de dumbells boven je borst met je handpalmen naar elkaar en je armen licht gebogen. Spreid je armen rustig zijwaarts tot borsthoogte en breng ze weer samen boven je borst.",
+      "src": "/audio/noor/e79290e6921ac75e6ebccc19700a93debf814094f9b9fd808b059667e1235960.mp3",
+      "duration": 14.524082,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "9ed824b6-7843-4a75-ac80-c6b69bef7b39",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "343361d90cced0676dafb66ef1f0eb2499f9fd409925550cfe6f76af8b860065",
+        "mp3Sha256": "bc638c7aec73840d13c2d3b93cff1f55a847b06c132e50ae989f6f4651dc331b",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"Flyes\" als \"Flajes\", \"Spreid\" als \"Sprijt\", \"dumbells\" als \"dumbels\")",
+        "clinicalApproved": false,
+        "previousSrc": "/audio/noor/0b8b58d16a80f0483d9d3679c570974f7716659bb346e67269805bbc47cfe9ca.mp3"
+      }
     },
     {
       "name": "French press",
@@ -543,9 +562,28 @@
     },
     {
       "name": "Leg curl",
-      "text": "Leg curl. Stel het apparaat zo in dat de rol net boven je hielen ligt. Buig je knieen en trek de rol rustig naar je toe, laat daarna langzaam terugkomen.",
-      "src": "/audio/noor/85683332d812dfb743743dd4399c45ba03b52f300d7460876c7f3475653f4e88.mp3",
-      "duration": 9.639184
+      "text": "Leg curl. Sta rechtop met een enkelband om je enkel, vastgemaakt aan een kabel of band laag achter je. Buig je knie en breng je hiel rustig richting je bil terwijl je bovenbeen stil blijft, en laat hem langzaam terugkomen.",
+      "src": "/audio/noor/3a52d46791a598253cb87a65501a552f924e09b5e64af5d6ae6cf3b9c051af5b.mp3",
+      "duration": 13.322449,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "d672ced8-5d68-48c9-b015-e682971aa16f",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "d16749f1327366797a584974335a2ce7c21b76f7421de9dea1976d2de2e854c8",
+        "mp3Sha256": "455904bd408274fdd8a5650a3b6f45ec8931b688c965b7af1303280d4ce01675",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"band laag\" aaneen, \"hiel\" als \"heel\")",
+        "clinicalApproved": false,
+        "previousSrc": "/audio/noor/85683332d812dfb743743dd4399c45ba03b52f300d7460876c7f3475653f4e88.mp3"
+      }
     },
     {
       "name": "Leg extension",

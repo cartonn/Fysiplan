@@ -60,8 +60,9 @@ for(const v of verwacht){
 // (houding en opstelling volgens de lijntekening en de goedgekeurde video). Daarna Pully cross
 // down, Pully cross over en Pully cross up (één of twee handvatten, richting volgens de video). Daarna 15 oefeningen uit pakket 1
 // en 2 (o.a. Reversed flyes, Wrist extension/flexion, Hack squat, Standing abduction) volgens de
-// lijntekening en de goedgekeurde video. Elke andere wijziging van dit bestand laat deze test falen.
-assert.equal(createHash('sha256').update(fs.readFileSync('public/oefeningen.json')).digest('hex'),'02a4b3fb3ddf54ebe3b69195256dec77c1c92c23f299ff0b14ba9ad346c3e854','public/oefeningen.json is ongewijzigd');
+// lijntekening en de goedgekeurde video. Daarna Leg curl (staand met enkelband) en Flyes
+// (voeten op het eind van de bank, handpalmen naar elkaar). Elke andere wijziging van dit bestand laat deze test falen.
+assert.equal(createHash('sha256').update(fs.readFileSync('public/oefeningen.json')).digest('hex'),'51188581832682fe5397c6e41c51b0d8c4ee9ef638bf048f0ebc09b08a1e1779','public/oefeningen.json is ongewijzigd');
 assert.notEqual(v2.find(x=>x.exerciseId==='fp_514654a0d4181742').kaartImg,v2.find(x=>x.exerciseId==='fp_5319c4700561725d').kaartImg);
 // geen bestand verplaatst, hernoemd of overschreven
 assert.equal(sha(HEUP),BEELD_KNIEHEFFING);assert.equal(sha(KNIE),BEELD_HEUPEXTENSIE);
