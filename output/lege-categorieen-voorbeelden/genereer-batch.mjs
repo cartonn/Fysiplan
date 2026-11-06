@@ -13,7 +13,7 @@ import { join, resolve } from "node:path";
 
 const root = resolve(new URL("../../", import.meta.url).pathname);
 const dir = resolve(new URL("./", import.meta.url).pathname);
-const MIN_SALDO = 150;
+const MIN_SALDO = Number(process.env.MIN_SALDO || 150);
 
 const specs = readdirSync(join(dir, "specs")).filter((f) => /^spec-.*\.json$/.test(f))
   .flatMap((f) => JSON.parse(readFileSync(join(dir, "specs", f), "utf8")));

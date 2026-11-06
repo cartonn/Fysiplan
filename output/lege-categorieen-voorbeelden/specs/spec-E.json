@@ -205,7 +205,8 @@
   "pijl_nl": "Gebogen pijl vanaf de knie van het voorste been omhoog en naar de borst.",
   "view": "side view",
   "ref": "085",
-  "pose_en": "Side view of one woman lying on her back on an exercise mat, head on the left and feet on the right, both legs straight and resting on the mat, arms relaxed along her sides. One large solid black curved arrow starts at the knee of the leg nearest the viewer and curves up and toward her chest (to the left), showing that knee being drawn to the chest."
+  "pose_en": "Side view of one woman lying on her back on an exercise mat, head on the left and feet on the right, both legs straight and resting on the mat, arms relaxed along her sides. One large solid black curved arrow starts at the knee of the leg nearest the viewer and curves up and toward her chest (to the left), showing that knee being drawn to the chest.",
+  "extra_en": "CORRECTION, start position: NO knee is raised yet and her hands do NOT hold any knee. She lies flat on her back on the mat with BOTH legs straight on the mat, arms by her sides. One curved arrow starts at the knee of the near leg and arcs up toward her chest."
  },
  {
   "naam": "Knie naar borst – zittend",
@@ -218,7 +219,8 @@
   "pijl_nl": "Gebogen pijl vanaf de knie van het voorste been omhoog richting de borst.",
   "view": "side view",
   "ref": "287",
-  "pose_en": "Side view of one woman sitting upright on a simple chair, facing right, both feet flat on the floor, hands resting on her thighs. One large solid black curved arrow starts at the knee nearest the viewer and curves upward and back toward her chest, showing that knee being lifted and drawn to the chest."
+  "pose_en": "Side view of one woman sitting upright on a simple chair, facing right, both feet flat on the floor, hands resting on her thighs. One large solid black curved arrow starts at the knee nearest the viewer and curves upward and back toward her chest, showing that knee being lifted and drawn to the chest.",
+  "extra_en": "CORRECTION, start position: NO knee is raised yet and her hands do NOT hold any knee. She sits upright with BOTH feet flat on the floor and hands resting on her thighs. One curved arrow starts at the front of one knee and arcs up toward her chest."
  },
  {
   "naam": "Knie naar borst – staand",
@@ -231,7 +233,8 @@
   "pijl_nl": "Gebogen pijl vanaf de knie van het voorste been omhoog richting de borst.",
   "view": "side view",
   "ref": "001",
-  "pose_en": "Side view of one woman standing upright, facing right, both feet on the floor hip-width apart, weight on the far leg, arms relaxed at her sides. One large solid black curved arrow starts at the knee of the leg nearest the viewer and curves upward toward her chest, showing that knee being lifted and pulled to the chest."
+  "pose_en": "Side view of one woman standing upright, facing right, both feet on the floor hip-width apart, weight on the far leg, arms relaxed at her sides. One large solid black curved arrow starts at the knee of the leg nearest the viewer and curves upward toward her chest, showing that knee being lifted and pulled to the chest.",
+  "extra_en": "CORRECTION, start position: NO knee is raised yet and her hands do NOT hold any knee. She stands upright on BOTH feet flat on the floor, arms relaxed by her sides. One curved arrow starts at the front of one knee and arcs up toward her chest."
  },
  {
   "naam": "Open boek – liggend",
@@ -244,7 +247,8 @@
   "pijl_nl": "Gebogen pijl vanaf de bovenste hand in een boog omhoog en naar achteren.",
   "view": "three-quarter front view",
   "ref": "085",
-  "pose_en": "Three-quarter front view of one woman lying on her left side on an exercise mat, seen from her front, head on the viewer's left resting on a small cushion, hips and knees bent about ninety degrees and stacked; both arms are straight out in front of her chest at shoulder height, resting on top of each other with palms together. One large solid black curved arrow starts at the top hand and arcs up over her body and backward away from the viewer, showing the top arm opening like a book."
+  "pose_en": "Three-quarter front view of one woman lying on her left side on an exercise mat, seen from her front, head on the viewer's left resting on a small cushion, hips and knees bent about ninety degrees and stacked; both arms are straight out in front of her chest at shoulder height, resting on top of each other with palms together. One large solid black curved arrow starts at the top hand and arcs up over her body and backward away from the viewer, showing the top arm opening like a book.",
+  "extra_en": "CORRECTION, start position: she lies on her side, knees bent, BOTH arms straight out in front of her chest resting on the mat, the top hand lying exactly on top of the bottom hand, palms together. The top arm is NOT raised yet. One curved arrow starts at the top hand and arcs up and backward over her body."
  },
  {
   "naam": "Open boek – op handen en knieën",
