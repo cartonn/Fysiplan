@@ -207,7 +207,8 @@
   "pijl_nl": "Gestrekte arm reikt verder naar voren.",
   "view": "side view",
   "ref": "001",
-  "pose_en": "Side view of a person standing upright with feet hip-width apart next to a plain wooden chair placed beside the figure, one hand resting on the top of the chair backrest; the other arm is raised straight forward at shoulder height. Both feet are clearly visible, flat on the floor. One solid black arrow starts at the fingertips of the raised hand and points horizontally forward, showing the arm reaching further forward."
+  "pose_en": "Side view of a person standing upright with feet hip-width apart next to a plain wooden chair placed beside the figure, one hand resting on the top of the chair backrest; the other arm is raised straight forward at shoulder height. Both feet are clearly visible, flat on the floor. One solid black arrow starts at the fingertips of the raised hand and points horizontally forward, showing the arm reaching further forward.",
+  "extra_en": "CORRECTION, start position: she stands upright with BOTH arms hanging relaxed by her sides, NO arm raised yet. One curved arrow starts at the hand of one arm and sweeps forward and up to shoulder height and further forward, showing the arm reaching forward. Her other hand (the hand nearest the chair) rests on top of the chair backrest for support; the reaching arm is the arm away from the chair."
  },
  {
   "naam": "Reiken in stand – zonder steun",
@@ -220,7 +221,8 @@
   "pijl_nl": "Gestrekte arm reikt verder naar voren.",
   "view": "side view",
   "ref": "001",
-  "pose_en": "Side view of a person standing upright without support, feet hip-width apart, the near arm raised straight forward at shoulder height, the other arm relaxed by the side. Both feet are clearly visible, flat on the floor. One solid black arrow starts at the fingertips of the raised hand and points horizontally forward, showing the arm reaching further forward."
+  "pose_en": "Side view of a person standing upright without support, feet hip-width apart, the near arm raised straight forward at shoulder height, the other arm relaxed by the side. Both feet are clearly visible, flat on the floor. One solid black arrow starts at the fingertips of the raised hand and points horizontally forward, showing the arm reaching further forward.",
+  "extra_en": "CORRECTION, start position: she stands upright with BOTH arms hanging relaxed by her sides, NO arm raised yet. One curved arrow starts at the hand of one arm and sweeps forward and up to shoulder height and further forward, showing the arm reaching forward."
  },
  {
   "naam": "Op de plaats marcheren – met steun",

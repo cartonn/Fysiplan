@@ -207,7 +207,8 @@
   "pijl_nl": "Gebogen pijl achter op het hoofd, schuin naar beneden richting de oksel.",
   "view": "three-quarter front view",
   "ref": "287",
-  "pose_en": "Three-quarter front view of a person sitting upright on a simple chair, feet flat on the floor, hands resting on the thighs, shoulders relaxed, head turned about 45 degrees toward the right and the gaze directed diagonally down toward the right armpit. One curved solid black arrow starts at the back of the head and curves diagonally forward and down toward the right armpit, showing the head bending further in that direction."
+  "pose_en": "Three-quarter front view of a person sitting upright on a simple chair, feet flat on the floor, hands resting on the thighs, shoulders relaxed, head turned about 45 degrees toward the right and the gaze directed diagonally down toward the right armpit. One curved solid black arrow starts at the back of the head and curves diagonally forward and down toward the right armpit, showing the head bending further in that direction.",
+  "extra_en": "CORRECTION, start position: her head is perfectly UPRIGHT and NEUTRAL, facing straight forward, eyes looking ahead, NOT turned and NOT bent. One curved arrow starts beside her nose/chin and curves diagonally down toward her armpit, showing the head turning toward the armpit and bending diagonally down."
  },
  {
   "naam": "Levator scapulae rek – functioneel staand",
@@ -220,7 +221,8 @@
   "pijl_nl": "Gebogen pijl achter op het hoofd, schuin naar beneden richting de oksel.",
   "view": "three-quarter front view",
   "ref": "001",
-  "pose_en": "Three-quarter front view of a person standing upright with feet hip-width apart, arms relaxed at the sides, shoulders relaxed, head turned about 45 degrees toward the right and the gaze directed diagonally down toward the right armpit. One curved solid black arrow starts at the back of the head and curves diagonally forward and down toward the right armpit, showing the head bending further in that direction."
+  "pose_en": "Three-quarter front view of a person standing upright with feet hip-width apart, arms relaxed at the sides, shoulders relaxed, head turned about 45 degrees toward the right and the gaze directed diagonally down toward the right armpit. One curved solid black arrow starts at the back of the head and curves diagonally forward and down toward the right armpit, showing the head bending further in that direction.",
+  "extra_en": "CORRECTION, start position: her head is perfectly UPRIGHT and NEUTRAL, facing straight forward, eyes looking ahead, NOT turned and NOT bent. One curved arrow starts beside her nose/chin and curves diagonally down toward her armpit, showing the head turning toward the armpit and bending diagonally down. She holds NOTHING in her hands: no dumbbells, no weights, no equipment; arms hang relaxed and empty. No mat."
  },
  {
   "naam": "Bovenste trapezius rek – zittend actief",
