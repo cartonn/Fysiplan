@@ -12151,13 +12151,13 @@
     {
       "exerciseId": "fp_62d0639e1039e4a1",
       "name": "Kin intrekken – zittend actief",
-      "source": "images/nek/kin-intrekken-zittend-actief-line-v1.png",
-      "assetSha256": "ceec67cc04f728a1843dffe560824adae453224978d2545210fb4fa1905b9d22",
+      "source": "images/nek/kin-intrekken-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "d3a6505629a6c58a107a446cc8744bfe2a4fdd67b852779d94a6d0565f938236",
       "explanationSha256": "d3a4f596695931d4f32e628e223ee9c9f68108078cfae174eaeb8a13853f23cc",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 381,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12173,7 +12173,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "De silhouetten van beide houdingen overlappen voor 93%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
       },
       "brandMark": {
         "present": false,
@@ -12184,13 +12184,13 @@
     {
       "exerciseId": "fp_9ec9e79bac8d8421",
       "name": "Kin intrekken – liggend ondersteund",
-      "source": "images/nek/kin-intrekken-liggend-ondersteund-line-v1.png",
-      "assetSha256": "dc836543f7df1a03aa4234ea02c16e5e9b330a6342e0f2a19d98b7cdbd6a2913",
+      "source": "images/nek/kin-intrekken-liggend-ondersteund-avatar-v8.jpg",
+      "assetSha256": "8f0bc6ff3013ad4008cad5665087393251b693f658d05177b87044ad01205629",
       "explanationSha256": "bd3674f6814b596c2dd40c7a29500c53cbc60b4da34a83215765f8a5da7eabd8",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 579,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12206,7 +12206,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "De silhouetten van beide houdingen overlappen voor 95%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
       },
       "brandMark": {
         "present": false,
@@ -12217,13 +12217,13 @@
     {
       "exerciseId": "fp_c486527b9ecd41c8",
       "name": "Nek buigen – zittend actief",
-      "source": "images/nek/nek-buigen-zittend-actief-line-v1.png",
-      "assetSha256": "408960790da743d2454da6b094d2660d659839fc82a7186bdf33946b1a5529d4",
+      "source": "images/nek/nek-buigen-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "e7f8b69ee3712ae4583d17fa2fffaf010d03416b14edbeaebcdc565c6d8eadb4",
       "explanationSha256": "896e38a19c9d053301b7499ad30b8a93e4950589a51d3ff8d8e92c216894d7fd",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 480,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12239,7 +12239,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
       },
       "brandMark": {
         "present": false,
@@ -12250,13 +12250,13 @@
     {
       "exerciseId": "fp_9e6911ab1f1e0d44",
       "name": "Nek buigen – liggend ondersteund",
-      "source": "images/nek/nek-buigen-liggend-ondersteund-line-v1.png",
-      "assetSha256": "6b1d998ec04327a7a5117d3c8ed18bd20bf6407b245d30df4e89788fd8789e0c",
+      "source": "images/nek/nek-buigen-liggend-ondersteund-avatar-v8.jpg",
+      "assetSha256": "afa0d57bb628b98835e56b1874f7350b01aa8f28a8b02577a289e4f723689d20",
       "explanationSha256": "e43d3d324e4660fb1832b7e40b9da079dcbb59722b1857f40f553f2bc306ef91",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 548,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12272,7 +12272,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
       },
       "brandMark": {
         "present": false,
@@ -12283,13 +12283,13 @@
     {
       "exerciseId": "fp_a2bf200402f776eb",
       "name": "Nek strekken – zittend actief",
-      "source": "images/nek/nek-strekken-zittend-actief-line-v1.png",
-      "assetSha256": "ba91000aff851f085c6f0a95a5eb2ea8ce0186e53aa6c3c94c6e620c202f4918",
+      "source": "images/nek/nek-strekken-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "293a9229ae0a3ac834542624d5e41e94c30c5622554ee22c38557d2336e71986",
       "explanationSha256": "cc7478583160d6f10d25cdaf0ad33098b236b464e5a034d773e4e91d4b6e60a2",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 370,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12305,7 +12305,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
       },
       "brandMark": {
         "present": false,
@@ -12316,13 +12316,13 @@
     {
       "exerciseId": "fp_801448d68f86c2c2",
       "name": "Nek strekken – functioneel staand",
-      "source": "images/nek/nek-strekken-functioneel-staand-line-v1.png",
-      "assetSha256": "6f64638ab66b8ef3657f39e2b34c6fb6edac632b0b56aa5a06774263351d65aa",
+      "source": "images/nek/nek-strekken-functioneel-staand-avatar-v8.jpg",
+      "assetSha256": "05b1da049050ba81bd06c87b9b27f834f732102466e1db0b5763612fbc8be6ad",
       "explanationSha256": "63424f7b8b85b214961887139fbadbd7d26424c10f1142c99964ea5079e025dd",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 239,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12338,7 +12338,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
       },
       "brandMark": {
         "present": false,
@@ -12349,13 +12349,13 @@
     {
       "exerciseId": "fp_fc9259369175667f",
       "name": "Nek draaien – zittend actief",
-      "source": "images/nek/nek-draaien-zittend-actief-line-v1.png",
-      "assetSha256": "c03ae6c9f28fb17fca9c9e48d0d9d2ce98321e41b4bb0cea234dbca54a2191e4",
+      "source": "images/nek/nek-draaien-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "84efcbf3334ed4aebf39832d34c82ff8f6a621b3b082f18fcd6e4c25d7559dd9",
       "explanationSha256": "6f2797fd1156d0d80bf45832ad090697fab399c4577a8c1a68c29164f19701c8",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 355,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12371,7 +12371,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
       },
       "brandMark": {
         "present": false,
@@ -12382,13 +12382,13 @@
     {
       "exerciseId": "fp_c662fe9fb9cdcb4a",
       "name": "Nek draaien – functioneel staand",
-      "source": "images/nek/nek-draaien-functioneel-staand-line-v1.png",
-      "assetSha256": "29c145faff4b501fe298e2ad7fb3a19e74977208cb4d1a9ed82e2de80a4966e4",
+      "source": "images/nek/nek-draaien-functioneel-staand-avatar-v8.jpg",
+      "assetSha256": "8860ec120d380bd72a7c52dee9829563d93278b018506a0167ebfc5fd18d72dd",
       "explanationSha256": "0cf6f5048e6074a5cbd4946011bc23ea8c402d35a17e65d9cec8a32576b1872c",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 262,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12404,7 +12404,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "De silhouetten van beide houdingen overlappen voor 95%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
       },
       "brandMark": {
         "present": false,
@@ -12415,13 +12415,13 @@
     {
       "exerciseId": "fp_44d608cf3a3163b1",
       "name": "Nek zijwaarts buigen – zittend actief",
-      "source": "images/nek/nek-zijwaarts-buigen-zittend-actief-line-v1.png",
-      "assetSha256": "664f5f50ce19aead91af0f579ddbb59ee344a78c4f26564e89e72af38e9a91ba",
+      "source": "images/nek/nek-zijwaarts-buigen-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "13c81a5d169ae732135865f77f19e4a38f1e678f76ba0fa00a5644aea36b0e0d",
       "explanationSha256": "637822c08598e288acf27ccbcf6ae486e0cb0a80986b820b4e1dc0d04b0014f0",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 357,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12437,7 +12437,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
       },
       "brandMark": {
         "present": false,
@@ -12448,13 +12448,13 @@
     {
       "exerciseId": "fp_ede28e3db08e8043",
       "name": "Nek zijwaarts buigen – isometrisch",
-      "source": "images/nek/nek-zijwaarts-buigen-isometrisch-line-v1.png",
-      "assetSha256": "25539cef6173b61191eeb414084c025c3b8454cfb0b8c9837d487843f7c2e09f",
+      "source": "images/nek/nek-zijwaarts-buigen-isometrisch-avatar-v8.jpg",
+      "assetSha256": "18d927cc1e2579edbf4f72d03514735f8ed5da5786c5aa4d7465c16f414b8d7c",
       "explanationSha256": "f1a88784032f3f85a9f21d3928ab378f1e066e2db9e7c025fa54d6e1591b2ecd",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 385,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12470,7 +12470,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
       },
       "brandMark": {
         "present": false,
@@ -12481,13 +12481,13 @@
     {
       "exerciseId": "fp_932bf32fa5ca60a6",
       "name": "Diepe nekflexoren activeren – zittend actief",
-      "source": "images/nek/diepe-nekflexoren-activeren-zittend-actief-line-v1.png",
-      "assetSha256": "11f4e19d21a7e80a53feafd586cd213c82d271f37071475554400e2d013eddca",
+      "source": "images/nek/diepe-nekflexoren-activeren-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "0ddfd135976093d40fad039a38bccc211f7f08bbb2cafb1fd9c2ba7a31a25486",
       "explanationSha256": "81687e08f77df8baff7aa56dba9f22401c5b353f2cd65be3c96f6a123dac23b5",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 340,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12503,7 +12503,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "De silhouetten van beide houdingen overlappen voor 93%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
       },
       "brandMark": {
         "present": false,
@@ -12514,13 +12514,13 @@
     {
       "exerciseId": "fp_2bdb88085d76e6b0",
       "name": "Diepe nekflexoren activeren – liggend ondersteund",
-      "source": "images/nek/diepe-nekflexoren-activeren-liggend-ondersteund-line-v1.png",
-      "assetSha256": "6db8b8eef95b4f7232608c3253c8a9e3cdd9ce00b58f54ac300d0ded28a6a719",
+      "source": "images/nek/diepe-nekflexoren-activeren-liggend-ondersteund-avatar-v8.jpg",
+      "assetSha256": "2f7a845d690f695950546242b461018e8a9c357e6eebb734860a581b668f356e",
       "explanationSha256": "9b0e10d42b9328d89d296586ccfd79a21b3c3df0aa414698a696e79586b5b0f2",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 570,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12536,7 +12536,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
       },
       "brandMark": {
         "present": false,
@@ -12547,13 +12547,13 @@
     {
       "exerciseId": "fp_075c9aa10d0e566a",
       "name": "Nekrotatie met oogfixatie – zittend actief",
-      "source": "images/nek/nekrotatie-met-oogfixatie-zittend-actief-line-v1.png",
-      "assetSha256": "9e5bca36dba13332c6b8daf9b81189db39e8b0b34acef8f8795b3ba9aedb5858",
+      "source": "images/nek/nekrotatie-met-oogfixatie-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "0ce26dd05f9e5cbfb11b931bef486bba8c4cc42079cce821e64d671d1bd21a13",
       "explanationSha256": "36c4532e35859ee815614418507a1996f32a842cfad1651ef3303c2af08fefa0",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 362,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12569,7 +12569,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "De silhouetten van beide houdingen overlappen voor 95%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
       },
       "brandMark": {
         "present": false,
@@ -12580,13 +12580,13 @@
     {
       "exerciseId": "fp_7f1f560bb10c6e1f",
       "name": "Nekrotatie met oogfixatie – functioneel staand",
-      "source": "images/nek/nekrotatie-met-oogfixatie-functioneel-staand-line-v1.png",
-      "assetSha256": "407dc32a40e5ce66b19347a10213c1b216a86d375e7fd30582959e2dcdb8dd44",
+      "source": "images/nek/nekrotatie-met-oogfixatie-functioneel-staand-avatar-v8.jpg",
+      "assetSha256": "fb80d4a8a2f765b87bd0b31d551ef62ee368818aa284ac0b0dddeb1330d0d64e",
       "explanationSha256": "a667084cdbe888eb2aad05ebda8e4ac3abd36e4e66a2cac349c5e801cd4d54f7",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 237,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12602,7 +12602,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Losse voorwerpen horen bij geen of bij beide figuren: 32x40@384,16, 32x36@384,608."
       },
       "brandMark": {
         "present": false,
@@ -12613,13 +12613,13 @@
     {
       "exerciseId": "fp_e3f3ef70eda326a1",
       "name": "Schouderblad liften en ontspannen – zittend actief",
-      "source": "images/nek/schouderblad-liften-en-ontspannen-zittend-actief-line-v1.png",
-      "assetSha256": "5bdb943d4aa61437a4fba3fff0427f32101d2a614080df0433b8b3eb23eb3c5c",
+      "source": "images/nek/schouderblad-liften-en-ontspannen-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "b5f938034d062f803a44f5978b93a53ae92d2a1b2941ca1e7bfcc32c443eada1",
       "explanationSha256": "ff764bc6c2376340bd791ef0d7e975e7c229e825b1a7ffe56587eb942488fe33",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 339,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12635,7 +12635,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
       },
       "brandMark": {
         "present": false,
@@ -12646,13 +12646,13 @@
     {
       "exerciseId": "fp_bbcbf27b326af15f",
       "name": "Schouderblad liften en ontspannen – functioneel staand",
-      "source": "images/nek/schouderblad-liften-en-ontspannen-functioneel-staand-line-v1.png",
-      "assetSha256": "7f987e376cfc54c1f87a401781ba31a1a558b482ecff3f604be509622fbee525",
+      "source": "images/nek/schouderblad-liften-en-ontspannen-functioneel-staand-avatar-v8.jpg",
+      "assetSha256": "ecbbb6ef2f5d1b9468f6fc926a7b2093b5ce3815343b651ec4c47b4dddbaf5a5",
       "explanationSha256": "84103de01a424c25983c842da7c337bd03df5ce5a03c8f797e6a7cc7f4332f63",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 268,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12668,7 +12668,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
       },
       "brandMark": {
         "present": false,
@@ -12679,13 +12679,13 @@
     {
       "exerciseId": "fp_2b31429069932b4b",
       "name": "Levator scapulae rek – zittend actief",
-      "source": "images/nek/levator-scapulae-rek-zittend-actief-line-v1.png",
-      "assetSha256": "cce5b71b86f3c8edb6f5e525305b595b332012e18eebafbd5d161215c4699822",
+      "source": "images/nek/levator-scapulae-rek-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "091f7e6ce2086c747496e9951567f7f94b2844fe3d746154cec12cd983810d73",
       "explanationSha256": "a44edda683cdc0f22e90f47d3da31904dc730c8c0414e025a28bae96a5deed17",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 359,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12701,7 +12701,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "De silhouetten van beide houdingen overlappen voor 92%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
       },
       "brandMark": {
         "present": false,
@@ -12712,13 +12712,13 @@
     {
       "exerciseId": "fp_f3b0887dee8f2c28",
       "name": "Levator scapulae rek – functioneel staand",
-      "source": "images/nek/levator-scapulae-rek-functioneel-staand-line-v1.png",
-      "assetSha256": "487dc61ec0e06d90070b47d7c163fce51405cf552158e8378072cbd53aa93460",
+      "source": "images/nek/levator-scapulae-rek-functioneel-staand-avatar-v8.jpg",
+      "assetSha256": "535fe28385fa120674ab1569ad78bc1fcdeddc27c7869ce4ef30c1f95b27ed4e",
       "explanationSha256": "8ee63c5478cc60baa2cb7135d87eb4a067d7f9986e8bd4507bb185cf4e214b17",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 256,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12734,7 +12734,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
       },
       "brandMark": {
         "present": false,
@@ -12745,13 +12745,13 @@
     {
       "exerciseId": "fp_734364ac784c6f6a",
       "name": "Bovenste trapezius rek – zittend actief",
-      "source": "images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png",
-      "assetSha256": "b2e1b80a03abe50fac5b3b0907fafeabc65d06ecfd9e226dfe74fbe081342165",
+      "source": "images/nek/bovenste-trapezius-rek-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "86d7830653e854b4f767aa2ace2f952bce50aaac50eef5594117116117c80033",
       "explanationSha256": "3bc5cdf56893162a5506e1f918c3bc223144fd81159a6a04953053f27276521f",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 365,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12767,7 +12767,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
       },
       "brandMark": {
         "present": false,
@@ -12778,13 +12778,13 @@
     {
       "exerciseId": "fp_73abd0a512239c05",
       "name": "Bovenste trapezius rek – functioneel staand",
-      "source": "images/nek/bovenste-trapezius-rek-functioneel-staand-line-v1.png",
-      "assetSha256": "01606007b49fa8abad94e7bf43531817f330bb923d278314f4902c04712bc9d7",
+      "source": "images/nek/bovenste-trapezius-rek-functioneel-staand-avatar-v8.jpg",
+      "assetSha256": "64dc6cd3403e0abb837672c83ba7db7ca3fd6f604fcc74722405a9bd18d24073",
       "explanationSha256": "b3b42a88e748e27aec1ea0bc7a070ff01c00bca81763361d74211101b5480c37",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 247,
         "visuallyInspected": false
       },
       "width": 800,
@@ -12800,7 +12800,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
       },
       "brandMark": {
         "present": false,
@@ -13636,13 +13636,13 @@
     {
       "exerciseId": "fp_284957ef09ee1582",
       "name": "Voeten naast elkaar staan – met steun",
-      "source": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-steun-line-v1.png",
-      "assetSha256": "910ce39dbb569208b6a70a10c634197b89db10769e40bfaf9a3fed581db36ec3",
+      "source": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-steun-avatar-v8.jpg",
+      "assetSha256": "e5f1cfac350507b0a64a4785c0086dfd9dc95c639024269f79e9f344fb849d5b",
       "explanationSha256": "b7c079b69f65ddfeb311ebb55f1766c1f2fd9952c02aee111e23a78b337209c2",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 948,
         "visuallyInspected": false
       },
       "width": 800,
@@ -13669,13 +13669,13 @@
     {
       "exerciseId": "fp_4bcc073aed3b9f2d",
       "name": "Voeten naast elkaar staan – zonder steun",
-      "source": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-zonder-steun-line-v1.png",
-      "assetSha256": "a7cb280590b4a9687e8b46c46ba6f7aa7aa58d6c10cf87a13863d2cb38d06958",
+      "source": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-zonder-steun-avatar-v8.jpg",
+      "assetSha256": "c281b14ee1548faa78cfb7359eb76c0998fe8919b68140892f101b27c5efc9ea",
       "explanationSha256": "20b8d1831abfdd264891350b3ffc207abf2932010346ad59dca99b0b460db2f3",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 420,
         "visuallyInspected": false
       },
       "width": 800,
@@ -13702,13 +13702,13 @@
     {
       "exerciseId": "fp_cc87106ebc1436c7",
       "name": "Voeten naast elkaar staan – met hoofdbeweging",
-      "source": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-hoofdbeweging-line-v1.png",
-      "assetSha256": "5ebcb2641b6366a82e28c6ccc8f320e93b277501f9ba718a61f465a952d0cd46",
+      "source": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-hoofdbeweging-avatar-v8.jpg",
+      "assetSha256": "99fb8f3acbfdb3a608d9da781f4c7341de3fde5c143d96ee5b76939ee6897ad2",
       "explanationSha256": "c07155a2549ddf8f27bae1de1947229618f1c70adb27c208dee215d3c23b7851",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 273,
         "visuallyInspected": false
       },
       "width": 800,
@@ -13724,7 +13724,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "De silhouetten van beide houdingen overlappen voor 87%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
       },
       "brandMark": {
         "present": false,
@@ -14758,13 +14758,13 @@
     {
       "exerciseId": "fp_bc33d743a44951af",
       "name": "Symmetrisch opstaan – met fysieke steun",
-      "source": "images/neurologische-revalidatie/symmetrisch-opstaan-met-fysieke-steun-line-v1.png",
-      "assetSha256": "ce1596950000d32b0c4095f58ca30e7f55751d91b04c06062b47a9c7912e9f5d",
+      "source": "images/neurologische-revalidatie/symmetrisch-opstaan-met-fysieke-steun-avatar-v8.jpg",
+      "assetSha256": "0f1a533ffacc6ba815df78a2a2aefe1a29c585355820327385ca711646d4c1aa",
       "explanationSha256": "ce881c9dd3c9ecefd646d41a16ff8438751b3182d872112a25f391322aceaf7d",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 302,
         "visuallyInspected": false
       },
       "width": 800,
@@ -14780,7 +14780,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
       },
       "brandMark": {
         "present": false,
@@ -15121,13 +15121,13 @@
     {
       "exerciseId": "fp_6ef74f256a43157c",
       "name": "Blikstabilisatie horizontaal – zittend langzaam",
-      "source": "images/vestibulair/blikstabilisatie-horizontaal-zittend-langzaam-line-v1.png",
-      "assetSha256": "97541bc80f470dc44fe4b744a33d494eb6e36172cfcc6d89a1c9dc4f69b37f60",
+      "source": "images/vestibulair/blikstabilisatie-horizontaal-zittend-langzaam-avatar-v8.jpg",
+      "assetSha256": "08b1fe2b424a450ffd6a05487ba405684aed62dcb6cfde54740b1476a372157e",
       "explanationSha256": "5acd5f54d61a9cc09a363b686287785bee853e84c8127a6e989af44a99e7a138",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 239,
         "visuallyInspected": false
       },
       "width": 800,
@@ -15143,7 +15143,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "De silhouetten van beide houdingen overlappen voor 93%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
       },
       "brandMark": {
         "present": false,
@@ -15451,13 +15451,13 @@
     {
       "exerciseId": "fp_e0a02c06b8fd582d",
       "name": "Voorwerp van vloer tillen – ergonomische basis",
-      "source": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-ergonomische-basis-line-v1.png",
-      "assetSha256": "3d64406a69737dfd962b54fcd71731ac53ddf8ec975b3a166c8e7a7e3483011e",
+      "source": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-ergonomische-basis-avatar-v8.jpg",
+      "assetSha256": "7193a80ceb678b66b3656466c3d5505af33800e7af3ed1bae37ca62bfa050cf9",
       "explanationSha256": "3508b699404185cc2764bff18c5755a6d1811b0b9322d02f73e9c7b80c261aae",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 524,
         "visuallyInspected": false
       },
       "width": 800,
@@ -15473,7 +15473,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
       },
       "brandMark": {
         "present": false,
@@ -16012,13 +16012,13 @@
     {
       "exerciseId": "fp_9d33debcffd49100",
       "name": "Bekkenkanteling postpartum – eerste fase rustig",
-      "source": "images/bekken-postpartum/bekkenkanteling-postpartum-eerste-fase-rustig-line-v1.png",
-      "assetSha256": "7bd597ac9de1d4d04ea472c3240bcdbfea8e5483130b01a8a1bba453260db005",
+      "source": "images/bekken-postpartum/bekkenkanteling-postpartum-eerste-fase-rustig-avatar-v8.jpg",
+      "assetSha256": "03b08bcee9e627a3fac43ecaf83dc50d464675e3d91ea6901135bf44dcaa2c33",
       "explanationSha256": "58b45e9073be63ea1aedf6e0731f21193885912bb9fc91ecf7ee7b4ccc489edb",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 510,
         "visuallyInspected": false
       },
       "width": 800,
@@ -16034,7 +16034,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "De silhouetten van beide houdingen overlappen voor 90%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
       },
       "brandMark": {
         "present": false,
@@ -16144,13 +16144,13 @@
     {
       "exerciseId": "fp_c42d5d8c7ecf1a17",
       "name": "Landing op twee benen – techniek langzaam",
-      "source": "images/sportrevalidatie/landing-op-twee-benen-techniek-langzaam-line-v1.png",
-      "assetSha256": "336bd5c45d4fa6f66223fbff96e2fa4bacae38c5378d5197a172210e4492eac7",
+      "source": "images/sportrevalidatie/landing-op-twee-benen-techniek-langzaam-avatar-v8.jpg",
+      "assetSha256": "ddd6d03d4226dc48262852e6de25ccaca597f807a525613eac85ceb57089ae56",
       "explanationSha256": "ff160d92ee3ba06a7f45b567ff72ec642816a91c4adb32a772725c5ddb13c9a6",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 231,
         "visuallyInspected": false
       },
       "width": 800,
@@ -16166,7 +16166,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
       },
       "brandMark": {
         "present": false,

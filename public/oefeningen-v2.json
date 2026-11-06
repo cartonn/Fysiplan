@@ -2803,140 +2803,160 @@
   "groep": "Nek",
   "img": "images/nek/kin-intrekken-zittend-actief-line-v1.png",
   "coreExerciseId": "fc_2050086df6d023ac",
-  "uitleg": "Zit rechtop op een stoel en kijk recht vooruit. Trek je kin rustig recht naar achteren, alsof je een dubbele kin maakt, en laat daarna langzaam weer los."
+  "uitleg": "Zit rechtop op een stoel en kijk recht vooruit. Trek je kin rustig recht naar achteren, alsof je een dubbele kin maakt, en laat daarna langzaam weer los.",
+  "kaartImg": "images/nek/kin-intrekken-zittend-actief-avatar-v8.jpg"
  },
  {
   "naam": "Kin intrekken – liggend ondersteund",
   "groep": "Nek",
   "img": "images/nek/kin-intrekken-liggend-ondersteund-line-v1.png",
   "coreExerciseId": "fc_ed6f63998d6a2164",
-  "uitleg": "Ga op je rug liggen met je hoofd op een kussen. Trek je kin rustig in zodat je achterhoofd zacht in het kussen drukt en laat de beweging langzaam weer los."
+  "uitleg": "Ga op je rug liggen met je hoofd op een kussen. Trek je kin rustig in zodat je achterhoofd zacht in het kussen drukt en laat de beweging langzaam weer los.",
+  "kaartImg": "images/nek/kin-intrekken-liggend-ondersteund-avatar-v8.jpg"
  },
  {
   "naam": "Nek buigen – zittend actief",
   "groep": "Nek",
   "img": "images/nek/nek-buigen-zittend-actief-line-v1.png",
   "coreExerciseId": "fc_40dd5453000369cc",
-  "uitleg": "Zit rechtop op een stoel met je schouders ontspannen. Buig je hoofd rustig naar voren met je kin richting je borst en kom langzaam weer terug."
+  "uitleg": "Zit rechtop op een stoel met je schouders ontspannen. Buig je hoofd rustig naar voren met je kin richting je borst en kom langzaam weer terug.",
+  "kaartImg": "images/nek/nek-buigen-zittend-actief-avatar-v8.jpg"
  },
  {
   "naam": "Nek buigen – liggend ondersteund",
   "groep": "Nek",
   "img": "images/nek/nek-buigen-liggend-ondersteund-line-v1.png",
   "coreExerciseId": "fc_27c280db0ff9ff04",
-  "uitleg": "Ga op je rug liggen met je hoofd op een kussen. Breng je kin rustig richting je borst terwijl je hoofd door het kussen gesteund blijft en beweeg langzaam weer terug."
+  "uitleg": "Ga op je rug liggen met je hoofd op een kussen. Breng je kin rustig richting je borst terwijl je hoofd door het kussen gesteund blijft en beweeg langzaam weer terug.",
+  "kaartImg": "images/nek/nek-buigen-liggend-ondersteund-avatar-v8.jpg"
  },
  {
   "naam": "Nek strekken – zittend actief",
   "groep": "Nek",
   "img": "images/nek/nek-strekken-zittend-actief-line-v1.png",
   "coreExerciseId": "fc_3c82c33155e9e958",
-  "uitleg": "Zit rechtop op een stoel met je schouders ontspannen. Beweeg je hoofd rustig naar achteren zodat je omhoog kijkt en kom langzaam weer terug naar het midden."
+  "uitleg": "Zit rechtop op een stoel met je schouders ontspannen. Beweeg je hoofd rustig naar achteren zodat je omhoog kijkt en kom langzaam weer terug naar het midden.",
+  "kaartImg": "images/nek/nek-strekken-zittend-actief-avatar-v8.jpg"
  },
  {
   "naam": "Nek strekken – functioneel staand",
   "groep": "Nek",
   "img": "images/nek/nek-strekken-functioneel-staand-line-v1.png",
   "coreExerciseId": "fc_dda6e3f8a8ef1d77",
-  "uitleg": "Sta rechtop met je armen langs je lichaam. Kijk rustig omhoog alsof je iets op een hoge plank zoekt en breng je hoofd langzaam weer terug naar het midden."
+  "uitleg": "Sta rechtop met je armen langs je lichaam. Kijk rustig omhoog alsof je iets op een hoge plank zoekt en breng je hoofd langzaam weer terug naar het midden.",
+  "kaartImg": "images/nek/nek-strekken-functioneel-staand-avatar-v8.jpg"
  },
  {
   "naam": "Nek draaien – zittend actief",
   "groep": "Nek",
   "img": "images/nek/nek-draaien-zittend-actief-line-v1.png",
   "coreExerciseId": "fc_853c97009144ec09",
-  "uitleg": "Zit rechtop op een stoel en kijk recht vooruit. Draai je hoofd rustig naar één kant en beweeg langzaam terug naar het midden. Wissel daarna van kant."
+  "uitleg": "Zit rechtop op een stoel en kijk recht vooruit. Draai je hoofd rustig naar één kant en beweeg langzaam terug naar het midden. Wissel daarna van kant.",
+  "kaartImg": "images/nek/nek-draaien-zittend-actief-avatar-v8.jpg"
  },
  {
   "naam": "Nek draaien – functioneel staand",
   "groep": "Nek",
   "img": "images/nek/nek-draaien-functioneel-staand-line-v1.png",
   "coreExerciseId": "fc_94978d72b278d453",
-  "uitleg": "Sta rechtop met je voeten op heupbreedte. Draai je hoofd rustig opzij alsof je over je schouder kijkt en beweeg langzaam terug naar het midden."
+  "uitleg": "Sta rechtop met je voeten op heupbreedte. Draai je hoofd rustig opzij alsof je over je schouder kijkt en beweeg langzaam terug naar het midden.",
+  "kaartImg": "images/nek/nek-draaien-functioneel-staand-avatar-v8.jpg"
  },
  {
   "naam": "Nek zijwaarts buigen – zittend actief",
   "groep": "Nek",
   "img": "images/nek/nek-zijwaarts-buigen-zittend-actief-line-v1.png",
   "coreExerciseId": "fc_1afcb7bdb7baa422",
-  "uitleg": "Zit rechtop op een stoel met je schouders laag en ontspannen. Breng je oor rustig richting je schouder en kom langzaam weer terug naar het midden."
+  "uitleg": "Zit rechtop op een stoel met je schouders laag en ontspannen. Breng je oor rustig richting je schouder en kom langzaam weer terug naar het midden.",
+  "kaartImg": "images/nek/nek-zijwaarts-buigen-zittend-actief-avatar-v8.jpg"
  },
  {
   "naam": "Nek zijwaarts buigen – isometrisch",
   "groep": "Nek",
   "img": "images/nek/nek-zijwaarts-buigen-isometrisch-line-v1.png",
   "coreExerciseId": "fc_235f2757a0a9bf8b",
-  "uitleg": "Zit rechtop en leg je hand tegen de zijkant van je hoofd. Duw je hoofd rustig tegen je hand zonder dat je hoofd beweegt en laat de spanning daarna langzaam weer los."
+  "uitleg": "Zit rechtop en leg je hand tegen de zijkant van je hoofd. Duw je hoofd rustig tegen je hand zonder dat je hoofd beweegt en laat de spanning daarna langzaam weer los.",
+  "kaartImg": "images/nek/nek-zijwaarts-buigen-isometrisch-avatar-v8.jpg"
  },
  {
   "naam": "Diepe nekflexoren activeren – zittend actief",
   "groep": "Nek",
   "img": "images/nek/diepe-nekflexoren-activeren-zittend-actief-line-v1.png",
   "coreExerciseId": "fc_96e1e26c339377de",
-  "uitleg": "Zit rechtop op een stoel en maak je nek lang. Knik je kin rustig een klein stukje naar beneden, alsof je zachtjes ja knikt, en laat daarna langzaam weer los."
+  "uitleg": "Zit rechtop op een stoel en maak je nek lang. Knik je kin rustig een klein stukje naar beneden, alsof je zachtjes ja knikt, en laat daarna langzaam weer los.",
+  "kaartImg": "images/nek/diepe-nekflexoren-activeren-zittend-actief-avatar-v8.jpg"
  },
  {
   "naam": "Diepe nekflexoren activeren – liggend ondersteund",
   "groep": "Nek",
   "img": "images/nek/diepe-nekflexoren-activeren-liggend-ondersteund-line-v1.png",
   "coreExerciseId": "fc_1aba16ba0c3ab4de",
-  "uitleg": "Ga op je rug liggen met je hoofd op een kussen. Knik je kin rustig een klein stukje richting je borst zonder je hoofd op te tillen en laat langzaam weer los."
+  "uitleg": "Ga op je rug liggen met je hoofd op een kussen. Knik je kin rustig een klein stukje richting je borst zonder je hoofd op te tillen en laat langzaam weer los.",
+  "kaartImg": "images/nek/diepe-nekflexoren-activeren-liggend-ondersteund-avatar-v8.jpg"
  },
  {
   "naam": "Nekrotatie met oogfixatie – zittend actief",
   "groep": "Nek",
   "img": "images/nek/nekrotatie-met-oogfixatie-zittend-actief-line-v1.png",
   "coreExerciseId": "fc_4b910890a2f2f4f8",
-  "uitleg": "Zit rechtop op een stoel en kijk naar een vast punt voor je. Draai je hoofd rustig naar één kant terwijl je ogen op het punt gericht blijven en draai langzaam weer terug."
+  "uitleg": "Zit rechtop op een stoel en kijk naar een vast punt voor je. Draai je hoofd rustig naar één kant terwijl je ogen op het punt gericht blijven en draai langzaam weer terug.",
+  "kaartImg": "images/nek/nekrotatie-met-oogfixatie-zittend-actief-avatar-v8.jpg"
  },
  {
   "naam": "Nekrotatie met oogfixatie – functioneel staand",
   "groep": "Nek",
   "img": "images/nek/nekrotatie-met-oogfixatie-functioneel-staand-line-v1.png",
   "coreExerciseId": "fc_c30a316b7265fd58",
-  "uitleg": "Sta rechtop en kijk naar een vast punt voor je. Draai je hoofd rustig opzij terwijl je ogen op het punt gericht blijven en draai langzaam weer terug naar het midden."
+  "uitleg": "Sta rechtop en kijk naar een vast punt voor je. Draai je hoofd rustig opzij terwijl je ogen op het punt gericht blijven en draai langzaam weer terug naar het midden.",
+  "kaartImg": "images/nek/nekrotatie-met-oogfixatie-functioneel-staand-avatar-v8.jpg"
  },
  {
   "naam": "Schouderblad liften en ontspannen – zittend actief",
   "groep": "Nek",
   "img": "images/nek/schouderblad-liften-en-ontspannen-zittend-actief-line-v1.png",
   "coreExerciseId": "fc_ab59b4079ed25d86",
-  "uitleg": "Zit rechtop op een stoel met je armen ontspannen. Trek je schouders rustig op richting je oren en laat ze daarna langzaam weer zakken en helemaal ontspannen."
+  "uitleg": "Zit rechtop op een stoel met je armen ontspannen. Trek je schouders rustig op richting je oren en laat ze daarna langzaam weer zakken en helemaal ontspannen.",
+  "kaartImg": "images/nek/schouderblad-liften-en-ontspannen-zittend-actief-avatar-v8.jpg"
  },
  {
   "naam": "Schouderblad liften en ontspannen – functioneel staand",
   "groep": "Nek",
   "img": "images/nek/schouderblad-liften-en-ontspannen-functioneel-staand-line-v1.png",
   "coreExerciseId": "fc_fbbd364280ea1867",
-  "uitleg": "Sta rechtop met je armen los langs je lichaam. Breng je schouders rustig omhoog richting je oren en laat ze langzaam weer zakken tot ze helemaal ontspannen zijn."
+  "uitleg": "Sta rechtop met je armen los langs je lichaam. Breng je schouders rustig omhoog richting je oren en laat ze langzaam weer zakken tot ze helemaal ontspannen zijn.",
+  "kaartImg": "images/nek/schouderblad-liften-en-ontspannen-functioneel-staand-avatar-v8.jpg"
  },
  {
   "naam": "Levator scapulae rek – zittend actief",
   "groep": "Nek",
   "img": "images/nek/levator-scapulae-rek-zittend-actief-line-v1.png",
   "coreExerciseId": "fc_28822e943fd23d8a",
-  "uitleg": "Zit rechtop op een stoel en kijk schuin naar beneden richting je oksel. Buig je hoofd rustig verder mee tot je een lichte rek in je nek voelt en kom langzaam terug omhoog. Wissel daarna van kant."
+  "uitleg": "Zit rechtop op een stoel en kijk schuin naar beneden richting je oksel. Buig je hoofd rustig verder mee tot je een lichte rek in je nek voelt en kom langzaam terug omhoog. Wissel daarna van kant.",
+  "kaartImg": "images/nek/levator-scapulae-rek-zittend-actief-avatar-v8.jpg"
  },
  {
   "naam": "Levator scapulae rek – functioneel staand",
   "groep": "Nek",
   "img": "images/nek/levator-scapulae-rek-functioneel-staand-line-v1.png",
   "coreExerciseId": "fc_eb1fe221f6163084",
-  "uitleg": "Sta rechtop met ontspannen schouders en kijk schuin naar beneden richting je oksel. Buig je hoofd rustig verder mee tot je een lichte rek in de zijkant van je nek voelt en kom langzaam terug. Wissel van kant."
+  "uitleg": "Sta rechtop met ontspannen schouders en kijk schuin naar beneden richting je oksel. Buig je hoofd rustig verder mee tot je een lichte rek in de zijkant van je nek voelt en kom langzaam terug. Wissel van kant.",
+  "kaartImg": "images/nek/levator-scapulae-rek-functioneel-staand-avatar-v8.jpg"
  },
  {
   "naam": "Bovenste trapezius rek – zittend actief",
   "groep": "Nek",
   "img": "images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png",
   "coreExerciseId": "fc_900ad9e6b6170739",
-  "uitleg": "Zit rechtop op een stoel met ontspannen schouders. Laat je hoofd rustig opzij zakken, met je oor richting je schouder, en breng je hoofd langzaam terug naar het midden. Wissel daarna van kant."
+  "uitleg": "Zit rechtop op een stoel met ontspannen schouders. Laat je hoofd rustig opzij zakken, met je oor richting je schouder, en breng je hoofd langzaam terug naar het midden. Wissel daarna van kant.",
+  "kaartImg": "images/nek/bovenste-trapezius-rek-zittend-actief-avatar-v8.jpg"
  },
  {
   "naam": "Bovenste trapezius rek – functioneel staand",
   "groep": "Nek",
   "img": "images/nek/bovenste-trapezius-rek-functioneel-staand-line-v1.png",
   "coreExerciseId": "fc_afeec71f0b902609",
-  "uitleg": "Sta rechtop en laat je schouders ontspannen hangen. Beweeg je hoofd rustig opzij, met je oor richting je schouder, en kom langzaam terug naar het midden. Wissel daarna van kant."
+  "uitleg": "Sta rechtop en laat je schouders ontspannen hangen. Beweeg je hoofd rustig opzij, met je oor richting je schouder, en kom langzaam terug naar het midden. Wissel daarna van kant.",
+  "kaartImg": "images/nek/bovenste-trapezius-rek-functioneel-staand-avatar-v8.jpg"
  },
  {
   "naam": "Rug bol en hol – op handen en knieën",
@@ -3118,21 +3138,24 @@
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-steun-line-v1.png",
   "coreExerciseId": "fc_6a3459e816bd4d7c",
-  "uitleg": "Sta rechtop met je voeten vlak naast elkaar en houd een stevige stoel of tafel vast. Blijf rustig in deze houding staan en kijk ontspannen voor je uit."
+  "uitleg": "Sta rechtop met je voeten vlak naast elkaar en houd een stevige stoel of tafel vast. Blijf rustig in deze houding staan en kijk ontspannen voor je uit.",
+  "kaartImg": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-steun-avatar-v8.jpg"
  },
  {
   "naam": "Voeten naast elkaar staan – zonder steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-zonder-steun-line-v1.png",
   "coreExerciseId": "fc_ef0474e1751f658f",
-  "uitleg": "Sta rechtop met je voeten vlak naast elkaar, zonder ergens steun te zoeken. Houd je armen ontspannen langs je lichaam en blijf rustig zo staan terwijl je voor je uit kijkt."
+  "uitleg": "Sta rechtop met je voeten vlak naast elkaar, zonder ergens steun te zoeken. Houd je armen ontspannen langs je lichaam en blijf rustig zo staan terwijl je voor je uit kijkt.",
+  "kaartImg": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-zonder-steun-avatar-v8.jpg"
  },
  {
   "naam": "Voeten naast elkaar staan – met hoofdbeweging",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-hoofdbeweging-line-v1.png",
   "coreExerciseId": "fc_0563675ff5fb17b7",
-  "uitleg": "Sta rechtop met je voeten vlak naast elkaar. Draai je hoofd rustig naar links en daarna langzaam naar rechts, terwijl je stevig blijft staan."
+  "uitleg": "Sta rechtop met je voeten vlak naast elkaar. Draai je hoofd rustig naar links en daarna langzaam naar rechts, terwijl je stevig blijft staan.",
+  "kaartImg": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-hoofdbeweging-avatar-v8.jpg"
  },
  {
   "naam": "Semi-tandemstand – met steun",
@@ -3356,7 +3379,8 @@
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/symmetrisch-opstaan-met-fysieke-steun-line-v1.png",
   "coreExerciseId": "fc_76c68afc16c35516",
-  "uitleg": "Zit rechtop op een stoel met steun binnen handbereik, zoals een tafel of leuning. Sta rustig op met je gewicht gelijk over beide benen en ga langzaam weer zitten."
+  "uitleg": "Zit rechtop op een stoel met steun binnen handbereik, zoals een tafel of leuning. Sta rustig op met je gewicht gelijk over beide benen en ga langzaam weer zitten.",
+  "kaartImg": "images/neurologische-revalidatie/symmetrisch-opstaan-met-fysieke-steun-avatar-v8.jpg"
  },
  {
   "naam": "Symmetrisch opstaan – met ritmische cue",
@@ -3433,7 +3457,8 @@
   "groep": "Vestibulair",
   "img": "images/vestibulair/blikstabilisatie-horizontaal-zittend-langzaam-line-v1.png",
   "coreExerciseId": "fc_efb221042af6b0a7",
-  "uitleg": "Zit rechtop op een stoel en houd een doel op ooghoogte voor je, bijvoorbeeld je duim. Draai je hoofd langzaam van links naar rechts terwijl je ogen op het doel gericht blijven."
+  "uitleg": "Zit rechtop op een stoel en houd een doel op ooghoogte voor je, bijvoorbeeld je duim. Draai je hoofd langzaam van links naar rechts terwijl je ogen op het doel gericht blijven.",
+  "kaartImg": "images/vestibulair/blikstabilisatie-horizontaal-zittend-langzaam-avatar-v8.jpg"
  },
  {
   "naam": "Blikstabilisatie horizontaal – staand langzaam",
@@ -3503,7 +3528,8 @@
   "groep": "Werk en dagelijkse handelingen",
   "img": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-ergonomische-basis-line-v1.png",
   "coreExerciseId": "fc_032b55a53dbdab28",
-  "uitleg": "Sta rechtop voor een licht voorwerp op de vloer. Zak rustig door je knieën met een rechte rug, pak het voorwerp dicht bij je lichaam en kom langzaam weer omhoog."
+  "uitleg": "Sta rechtop voor een licht voorwerp op de vloer. Zak rustig door je knieën met een rechte rug, pak het voorwerp dicht bij je lichaam en kom langzaam weer omhoog.",
+  "kaartImg": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-ergonomische-basis-avatar-v8.jpg"
  },
  {
   "naam": "Voorwerp van vloer tillen – licht en dichtbij",
@@ -3622,7 +3648,8 @@
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/bekkenkanteling-postpartum-eerste-fase-rustig-line-v1.png",
   "coreExerciseId": "fc_c913994a1a47547f",
-  "uitleg": "Ga op je rug liggen met je knieën gebogen. Kantel je bekken rustig zodat je onderrug plat op de grond komt en laat je bekken daarna langzaam weer terugkomen."
+  "uitleg": "Ga op je rug liggen met je knieën gebogen. Kantel je bekken rustig zodat je onderrug plat op de grond komt en laat je bekken daarna langzaam weer terugkomen.",
+  "kaartImg": "images/bekken-postpartum/bekkenkanteling-postpartum-eerste-fase-rustig-avatar-v8.jpg"
  },
  {
   "naam": "Functioneel opstaan – functioneel",
@@ -3650,7 +3677,8 @@
   "groep": "Sportrevalidatie",
   "img": "images/sportrevalidatie/landing-op-twee-benen-techniek-langzaam-line-v1.png",
   "coreExerciseId": "fc_289895d1214071bf",
-  "uitleg": "Sta rechtop met je voeten op heupbreedte. Spring rustig een klein stukje omhoog en land zacht op beide benen met je knieën licht gebogen."
+  "uitleg": "Sta rechtop met je voeten op heupbreedte. Spring rustig een klein stukje omhoog en land zacht op beide benen met je knieën licht gebogen.",
+  "kaartImg": "images/sportrevalidatie/landing-op-twee-benen-techniek-langzaam-avatar-v8.jpg"
  },
  {
   "naam": "Landing op één been – techniek langzaam",

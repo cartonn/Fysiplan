@@ -20,7 +20,7 @@ const schrijf = process.argv.includes("--write");
 // Goedgekeurde voorbeeldavatars (Ahmed 2026-11-06), tenzij er een nieuwere in de categoriemap staat.
 const VOORBEELDEN = {
   "Kin intrekken – zittend actief": "01-avatar-v2.png",
-  "Tandemstand – met steun": "02-avatar-v2.png",
+  // "Tandemstand – met steun": 02 is nog niet goed (voeten naast elkaar); wacht op een nieuwe versie in de categoriemap.
   "Voorwerp van vloer tillen – ergonomische basis": "03-avatar.png",
   "Landing op twee benen – techniek langzaam": "04-avatar.png",
   "Symmetrisch opstaan – met fysieke steun": "05-avatar.png",
