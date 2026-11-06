@@ -1,0 +1,602 @@
+[
+  {
+    "slug": "kin-intrekken-liggend-ondersteund",
+    "catslug": "nek",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: lying on the back in the same place, knees bent, chin clearly tucked in toward the throat so the face tilts slightly down toward the feet and the back of the head presses into the pillow, the neck long and flat; head stays on the pillow, body unchanged. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "nek-buigen-zittend-actief",
+    "catslug": "nek",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: sitting upright on the same chair, trunk and shoulders still, head bent forward with the chin close to the chest, eyes looking down at the floor. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "nek-buigen-liggend-ondersteund",
+    "catslug": "nek",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: lying on the back in the same place, knees bent, chin brought down toward the chest while the back of the head still rests on the pillow, eyes looking toward the knees instead of the ceiling. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "nek-strekken-zittend-actief",
+    "catslug": "nek",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: sitting upright on the same chair, trunk and shoulders still, head tilted back so the face looks up at the ceiling, chin raised. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "nek-strekken-functioneel-staand",
+    "catslug": "nek",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: standing upright in the same place, arms by the sides, trunk still, head tilted back so she looks up toward a high shelf, chin raised. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "nek-draaien-zittend-actief",
+    "catslug": "nek",
+    "eind_en": "Both figures in front view. BOTTOM: sitting upright on the same chair, shoulders and trunk still facing forward, head turned about 70 degrees to one side so the face is almost in profile. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "nek-draaien-functioneel-staand",
+    "catslug": "nek",
+    "eind_en": "Both figures in front view. BOTTOM: standing upright with feet hip-width apart, body still facing forward, head turned to one side as if looking over the shoulder, face almost in profile. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "nek-zijwaarts-buigen-zittend-actief",
+    "catslug": "nek",
+    "eind_en": "Both figures in front view. BOTTOM: sitting upright on the same chair, shoulders level and relaxed, head tilted sideways with the right ear clearly lowered toward the right shoulder, face still looking forward. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "nek-zijwaarts-buigen-isometrisch",
+    "catslug": "nek",
+    "eind_en": "Both figures in front view. End position: the same position held steadily, hand pressed against the side of the head and the head staying upright and unmoved; show the effort with slightly tensed neck muscles on that side and the fingers pressing into the temple. The difference is only the effort; posture stays identical."
+  },
+  {
+    "slug": "diepe-nekflexoren-activeren-zittend-actief",
+    "catslug": "nek",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: sitting upright on the same chair, neck long, chin nodded slightly down and in (a small yes-nod), back of the head lifted tall, eyes looking slightly downward; trunk and shoulders still. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "diepe-nekflexoren-activeren-liggend-ondersteund",
+    "catslug": "nek",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: lying on the back in the same place, back of the head still on the pillow, chin nodded slightly toward the chest so the face tips toward the feet and the front of the neck shortens. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "nekrotatie-met-oogfixatie-zittend-actief",
+    "catslug": "nek",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: sitting upright on the same chair, trunk still, head turned clearly to one side while the eyes stay fixed on the same card with the letter A straight ahead (eyes looking sideways out of the turned head). The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "nekrotatie-met-oogfixatie-functioneel-staand",
+    "catslug": "nek",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: standing upright in the same place, body still, head turned clearly to one side while the eyes stay fixed on the same card with the letter A straight ahead. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "schouderblad-liften-en-ontspannen-zittend-actief",
+    "catslug": "nek",
+    "eind_en": "Both figures in front view. BOTTOM: sitting upright on the same chair, arms hanging relaxed, both shoulders pulled high up toward the ears so the neck looks short. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "schouderblad-liften-en-ontspannen-functioneel-staand",
+    "catslug": "nek",
+    "eind_en": "Both figures in front view. BOTTOM: standing upright, arms hanging by the sides, both shoulders pulled high up toward the ears so the neck looks short. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "levator-scapulae-rek-zittend-actief",
+    "catslug": "nek",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: sitting upright on the same chair, shoulders low, head turned about 45 degrees to one side and bent diagonally down so the nose points toward that armpit. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "levator-scapulae-rek-functioneel-staand",
+    "catslug": "nek",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: standing upright, empty hands relaxed by the sides, shoulders low, head turned about 45 degrees and bent diagonally down so the nose points toward that armpit. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "bovenste-trapezius-rek-zittend-actief",
+    "catslug": "nek",
+    "eind_en": "Both figures in front view. BOTTOM: sitting upright on the same chair, shoulders relaxed and level, head tilted sideways with the ear lowered toward the shoulder, face still looking forward. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "bovenste-trapezius-rek-functioneel-staand",
+    "catslug": "nek",
+    "eind_en": "Both figures in front view. BOTTOM: standing upright, shoulders hanging relaxed and level, head tilted sideways with the ear lowered toward the shoulder, face still looking forward. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "voeten-naast-elkaar-staan-met-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in front view. End position: the same position held steadily: standing upright with feet together side by side, one hand on the chair backrest, looking relaxed straight ahead. No arrow."
+  },
+  {
+    "slug": "voeten-naast-elkaar-staan-zonder-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in front view. End position: the same position held steadily: standing upright without support, feet together side by side, arms relaxed by the sides, looking straight ahead. No arrow."
+  },
+  {
+    "slug": "voeten-naast-elkaar-staan-met-hoofdbeweging",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in front view. BOTTOM: standing upright with feet together, arms by the sides, body still facing forward, head turned clearly to one side. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "semi-tandemstand-met-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: standing upright behind the same chair, both hands on the backrest, one foot placed half a foot length in front of the other: the heel of the front foot beside the big toe of the back foot, NOT side by side; both feet fully visible below the chair. End position: the same position held steadily."
+  },
+  {
+    "slug": "semi-tandemstand-zonder-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: standing upright without support, arms relaxed, one foot placed half a foot length in front of the other: the heel of the front foot beside the big toe of the back foot, NOT side by side; both feet fully visible. End position: the same position held steadily."
+  },
+  {
+    "slug": "semi-tandemstand-met-hoofdbeweging",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: the same semi-tandem stance (heel of the front foot beside the big toe of the back foot, both feet fully visible), arms by the sides, body still, head turned clearly to one side. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "tandemstand-zonder-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: standing upright without support, feet on ONE straight line, the heel of the front foot touching the toes of the back foot, NOT side by side; both feet fully visible, arms relaxed, looking ahead."
+  },
+  {
+    "slug": "tandemstand-met-hoofdbeweging",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: the same tandem stance, feet on ONE straight line with the heel of the front foot touching the toes of the back foot, both feet fully visible, body still, head turned clearly to one side. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "eenbeenstand-met-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: standing upright beside the same chair, one hand on the backrest, standing on the leg nearest the chair; the other foot lifted clearly off the floor with the knee bent, trunk upright."
+  },
+  {
+    "slug": "eenbeenstand-zonder-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: standing upright without support on one leg, arms relaxed by the sides, the other foot lifted clearly off the floor with the knee bent, trunk upright."
+  },
+  {
+    "slug": "eenbeenstand-met-hoofdbeweging",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: still standing on the same leg with the other foot just off the floor, arms by the sides, body still, head turned clearly to one side. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "gewicht-verplaatsen-voor-achter-met-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: behind the same chair with hands on the backrest, feet flat in the same place, the whole body leaning forward as one straight line from the ankles so the body weight is over the toes; heels stay on the floor. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "gewicht-verplaatsen-voor-achter-zonder-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: feet flat in the same place, arms by the sides, the whole body leaning forward as one straight line from the ankles so the weight is over the toes; heels stay on the floor. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "gewicht-verplaatsen-zijwaarts-met-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in front view. BOTTOM: behind the same chair with hands on the backrest, feet flat in the same place, hips shifted sideways over one leg so that leg carries the weight and the other leg is unloaded; trunk upright. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "gewicht-verplaatsen-zijwaarts-zonder-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in front view. BOTTOM: feet flat in the same place, arms by the sides, hips shifted sideways over one leg so that leg carries the weight; trunk upright. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "reiken-in-stand-met-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: standing beside the same chair, hand nearest the chair on the backrest, the other arm stretched straight forward at shoulder height reaching as far as possible, trunk leaning slightly forward, both feet flat on the floor."
+  },
+  {
+    "slug": "reiken-in-stand-zonder-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: standing without support, feet flat hip-width apart, one arm stretched straight forward at shoulder height reaching as far as possible, trunk leaning slightly forward, other arm by the side."
+  },
+  {
+    "slug": "op-de-plaats-marcheren-met-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: standing behind the same chair, hands on the backrest, one knee lifted up to about hip height with the thigh horizontal and the foot off the floor, standing on the other leg."
+  },
+  {
+    "slug": "op-de-plaats-marcheren-zonder-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: standing without support, arms by the sides, one knee lifted up to about hip height with the thigh horizontal and the foot off the floor, standing on the other leg."
+  },
+  {
+    "slug": "zijwaarts-stappen-met-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in front view. BOTTOM: standing at the same table with both hands on the tabletop, moved one step sideways along the table: feet side by side again, hip-width apart, hands slid along with her."
+  },
+  {
+    "slug": "zijwaarts-stappen-zonder-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in front view. BOTTOM: standing upright without support, one foot stepped out sideways so the feet are wide apart (more than shoulder width), arms by the sides."
+  },
+  {
+    "slug": "achterwaarts-stappen-met-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: still facing the same direction with one hand on the table, one foot placed a step behind the other so the feet are apart front-to-back, weight on the rear foot, trunk upright."
+  },
+  {
+    "slug": "achterwaarts-stappen-zonder-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: still facing the same direction and looking ahead, one foot placed a step behind the other so the feet are apart front-to-back, weight on the rear foot, trunk upright."
+  },
+  {
+    "slug": "over-een-obstakel-stappen-met-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: hand still on the chair, front foot placed on the floor beyond the rolled-up towel, back foot behind it, so she stands astride the towel."
+  },
+  {
+    "slug": "over-een-obstakel-stappen-zonder-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: without support, front foot placed on the floor beyond the rolled-up towel, back foot behind it, so she stands astride the towel, arms by the sides."
+  },
+  {
+    "slug": "draaien-op-de-plaats-met-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: mid-turn on the spot, body turned about a quarter turn so she stands sideways to the chair with one hand still on the backrest, feet in small steps hip-width apart."
+  },
+  {
+    "slug": "draaien-op-de-plaats-zonder-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: mid-turn on the spot, whole body turned about a quarter turn so she is seen in side profile, feet in small steps hip-width apart, arms by the sides."
+  },
+  {
+    "slug": "stoel-opstaan-en-lopen-zonder-steun",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: standing fully upright in front of the same chair, taking a first step forward away from it, arms relaxed, hands not touching the chair."
+  },
+  {
+    "slug": "dubbele-taak-lopen-met-cognitieve-taak",
+    "catslug": "balans-en-valpreventie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: walking forward mid-stride, one foot in front of the other, arms swinging naturally, mouth slightly open as if speaking. No text or speech bubble."
+  },
+  {
+    "slug": "reiken-met-aangedane-arm-met-visueel-doel",
+    "catslug": "neurologische-revalidatie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: sitting upright on the same chair at the same table, the arm stretched forward along the table with the hand at the cup, fingers about to grasp it; trunk stays upright."
+  },
+  {
+    "slug": "reiken-met-aangedane-arm-functionele-combinatie",
+    "catslug": "neurologische-revalidatie",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: sitting upright at the same table, the arm reached out and the hand placing the cup down on the empty spot next to its original place."
+  },
+  {
+    "slug": "hand-openen-na-grijpen-bilateraal",
+    "catslug": "neurologische-revalidatie",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: sitting at the same table, both hands fully opened with fingers spread and straight, palms just above the soft ball, which lies free on the table. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "romp-rotatie-in-zit-bilateraal",
+    "catslug": "neurologische-revalidatie",
+    "eind_en": "Both figures in front view. BOTTOM: sitting upright on the same chair, feet flat, arms crossed on the chest, upper body and shoulders rotated clearly to one side while the hips and knees stay facing forward. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "symmetrisch-opstaan-met-ritmische-cue",
+    "catslug": "neurologische-revalidatie",
+    "eind_en": "Both figures in the same strict side view. End position: standing fully upright in front of the same chair, weight equal on both legs, feet side by side hip-width apart, arms relaxed; metronome still on the floor."
+  },
+  {
+    "slug": "stap-initieren-met-visueel-doel",
+    "catslug": "neurologische-revalidatie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: front foot stepped forward and placed on the floor marker, back foot behind it, weight shifting forward, trunk upright."
+  },
+  {
+    "slug": "stap-initieren-met-ritmische-cue",
+    "catslug": "neurologische-revalidatie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: one foot stepped forward and placed on the floor, back foot behind it, arms relaxed, trunk upright; metronome still on the floor."
+  },
+  {
+    "slug": "zijwaarts-verplaatsen-in-zit-met-visueel-doel",
+    "catslug": "neurologische-revalidatie",
+    "eind_en": "Both figures in front view. BOTTOM: sitting upright on the same bench, buttocks shifted sideways so she now sits on the marker, feet flat and moved along with her."
+  },
+  {
+    "slug": "hiel-plaatsen-met-visueel-doel",
+    "catslug": "neurologische-revalidatie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: sitting upright on the same chair, one leg moved forward with the knee more straight, heel placed on the floor marker and toes pointing up; the other foot stays flat."
+  },
+  {
+    "slug": "voet-naar-marker-met-visueel-doel",
+    "catslug": "neurologische-revalidatie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: standing on the back leg, the front foot stretched forward with the toes tapping the round floor marker; trunk upright, arms relaxed."
+  },
+  {
+    "slug": "ritmisch-marcheren-met-ritmische-cue",
+    "catslug": "neurologische-revalidatie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: one knee lifted up to about hip height, thigh horizontal, foot off the floor, standing on the other leg, arms relaxed; metronome still on the floor."
+  },
+  {
+    "slug": "grote-stappen-met-ritmische-cue",
+    "catslug": "neurologische-revalidatie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: mid-way in a very large step forward, front heel landing far ahead, back leg stretched with the heel lifting, arms swinging in opposition; metronome still on the floor where she started."
+  },
+  {
+    "slug": "grote-stappen-functionele-combinatie",
+    "catslug": "neurologische-revalidatie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: arrived at the small table after large steps, standing close to it and reaching with one hand to pick up the cup."
+  },
+  {
+    "slug": "brug-met-symmetrie-bilateraal",
+    "catslug": "neurologische-revalidatie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: lying on the back, feet flat and shoulders on the mat, hips lifted so the body forms a straight line from knees to shoulders, both feet pressing equally, arms flat beside the body."
+  },
+  {
+    "slug": "blikstabilisatie-horizontaal-staand-langzaam",
+    "catslug": "vestibulair",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: same stance, arm stretched forward with the thumb up in the same place, head turned clearly to one side while the eyes stay fixed on the thumb. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "blikstabilisatie-horizontaal-tijdens-lopen",
+    "catslug": "vestibulair",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: walking forward mid-stride along the path toward the card with the letter X, head turned clearly to one side while the eyes keep looking at the card. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "blikstabilisatie-verticaal-zittend-langzaam",
+    "catslug": "vestibulair",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: sitting on the same chair, arm and thumb in the same place at eye level, head tilted clearly down (chin toward the chest) while the eyes stay looking up at the thumb. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "blikstabilisatie-verticaal-staand-langzaam",
+    "catslug": "vestibulair",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: same stance, arm and thumb in the same place at eye level, head tilted clearly down (chin toward the chest) while the eyes stay looking up at the thumb. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "ogen-naar-doelen-zittend-langzaam",
+    "catslug": "vestibulair",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: sitting on the same chair, head still facing straight ahead, only the eyes turned to look at the card with the letter B; pupils clearly shifted to the side. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "ogen-naar-doelen-staand-langzaam",
+    "catslug": "vestibulair",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: standing in the same place, head still facing straight ahead, only the eyes turned to look at the card with the letter B; pupils clearly shifted to the side. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "doel-volgen-zittend-langzaam",
+    "catslug": "vestibulair",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: sitting on the same chair, head still facing forward, the stretched arm moved to one side so the thumb is off to the side at eye level, eyes following the thumb. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "hoofd-draaien-in-stand-staand-langzaam",
+    "catslug": "vestibulair",
+    "eind_en": "Both figures in front view. BOTTOM: standing with feet hip-width apart, arms by the sides, body still facing forward, head turned clearly to one side. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "buigen-en-oprichten-staand-langzaam",
+    "catslug": "vestibulair",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: bent forward at the hips with knees slightly bent, one hand reaching down to pick up the small object on the floor in front of the feet, head following the trunk."
+  },
+  {
+    "slug": "voorwerp-van-vloer-tillen-licht-en-dichtbij",
+    "catslug": "werk-en-dagelijkse-handelingen",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: squatted down through the knees with the back straight and upright, both hands holding the light box close in front of the feet, heels on the floor."
+  },
+  {
+    "slug": "voorwerp-van-tafel-pakken-licht-en-dichtbij",
+    "catslug": "werk-en-dagelijkse-handelingen",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: standing upright close to the same table, holding the light object in both hands close against the body at waist height."
+  },
+  {
+    "slug": "boven-schouderhoogte-plaatsen-ergonomische-basis",
+    "catslug": "werk-en-dagelijkse-handelingen",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: standing upright close to the shelf, both arms raised above the head, placing the light object onto the shelf; back straight, not arched."
+  },
+  {
+    "slug": "boven-schouderhoogte-plaatsen-licht-en-dichtbij",
+    "catslug": "werk-en-dagelijkse-handelingen",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: standing upright close to the shelf, both arms raised above shoulder height, placing the light object onto the shelf; back straight, not arched."
+  },
+  {
+    "slug": "duwen-licht-en-dichtbij",
+    "catslug": "werk-en-dagelijkse-handelingen",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: same feet position, hands still on the cart handle, arms more stretched forward and the trunk leaning slightly into the push; the cart has moved a little forward."
+  },
+  {
+    "slug": "duwen-met-stapverplaatsing",
+    "catslug": "werk-en-dagelijkse-handelingen",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: one foot stepped forward toward the cart, hands still on the handle, body leaning slightly into the push; the cart has moved forward."
+  },
+  {
+    "slug": "trekken-licht-en-dichtbij",
+    "catslug": "werk-en-dagelijkse-handelingen",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: same feet position, both hands still on the cart handle, elbows bent back beside the body, hands near the belly; the cart is pulled closer to her."
+  },
+  {
+    "slug": "draaien-en-plaatsen-met-stapverplaatsing",
+    "catslug": "werk-en-dagelijkse-handelingen",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: having stepped sideways and turned the whole body (feet, hips and shoulders together) toward the table, she places the light box on the table with both hands."
+  },
+  {
+    "slug": "langdurig-zitten-onderbreken-met-tempo-of-herhaling",
+    "catslug": "werk-en-dagelijkse-handelingen",
+    "eind_en": "Both figures in the same strict side view. End position: standing fully upright in front of the same chair, weight equal on both legs, feet side by side, arms relaxed."
+  },
+  {
+    "slug": "bekkenbodem-aanspannen-liggend",
+    "catslug": "bekken-postpartum",
+    "eind_en": "Both figures in the same strict side view. End position: identical lying position, knees bent, feet flat; the only visible cue is a gentle tension: lower belly slightly drawn in and the buttocks/inner thighs subtly firmer, with a short upward arrow kept at the pelvic floor. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "bekkenbodem-ontspannen-liggend",
+    "catslug": "bekken-postpartum",
+    "eind_en": "Both figures in the same strict side view. End position: identical relaxed lying position, hands resting on the belly; the belly is visibly softer and slightly rounded outward under the hands, shoulders and knees loose, face calm, eyes closed. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "bekkenbodem-snel-aanspannen-zittend",
+    "catslug": "bekken-postpartum",
+    "eind_en": "Both figures in the same strict side view. End position: identical upright sitting position on the same chair; the only visible cue is the lower belly slightly drawn in and the posture subtly taller, with the short upward arrow at the seat kept. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "bekkenbodem-met-uitademing-liggend",
+    "catslug": "bekken-postpartum",
+    "eind_en": "Both figures in the same strict side view. End position: identical lying position, hand on the belly; on the out-breath the belly under the hand is visibly flatter and gently drawn in, lips slightly pursed as if breathing out. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "diepe-buikactivatie-liggend",
+    "catslug": "bekken-postpartum",
+    "eind_en": "Both figures in the same strict side view. End position: identical lying position with fingertips on the lower belly; the lower belly below the navel is visibly hollowed and drawn in toward the spine, the fingertips sinking slightly in; back and pelvis unchanged. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "bekkenmobiliteit-liggend",
+    "catslug": "bekken-postpartum",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: lying on the back, knees bent, feet flat; pelvis tilted backward so the lower back is pressed completely flat onto the mat with no gap, tailbone slightly curled up (top figure has a neutral pelvis with a small gap under the lower back). The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "360-graden-ademhaling-eerste-fase-rustig",
+    "catslug": "bekken-postpartum",
+    "eind_en": "Both figures in front view. BOTTOM: same relaxed lying position with hands on the lower ribs; the lower rib cage is visibly wider, the hands pushed slightly outward, belly gently risen, as on a full in-breath. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "functioneel-opstaan-functioneel",
+    "catslug": "bekken-postpartum",
+    "eind_en": "Both figures in the same strict side view. End position: standing fully upright in front of the same chair, weight equal on both legs, feet side by side, arms relaxed by the sides."
+  },
+  {
+    "slug": "zijlig-heupkracht-zijlig",
+    "catslug": "bekken-postpartum",
+    "eind_en": "Both figures in front view. BOTTOM: lying on the side on the same mat, head on the lower arm, bottom leg straight on the mat, top leg lifted straight up about 30-40 degrees, knee straight and toes pointing forward."
+  },
+  {
+    "slug": "hop-vooruit-techniek-langzaam",
+    "catslug": "sportrevalidatie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: landed a small distance forward on both feet, hip-width apart, knees and hips softly bent to absorb the landing, arms slightly forward for balance."
+  },
+  {
+    "slug": "landing-op-een-been-techniek-langzaam",
+    "catslug": "sportrevalidatie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: landed forward on ONE leg on the mat in front of the step, standing knee and hip softly bent and the knee in line over the toes, other foot lifted just off the floor behind, hands on the hips; the step stays behind her."
+  },
+  {
+    "slug": "laterale-shuffle-submaximaal",
+    "catslug": "sportrevalidatie",
+    "eind_en": "Both figures in front view. BOTTOM: in a low athletic stance, knees bent, arms slightly bent in front, shifted sideways with the feet wider apart mid-shuffle, leading foot pushed out to the side."
+  },
+  {
+    "slug": "richtingsverandering-techniek-langzaam",
+    "catslug": "sportrevalidatie",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: at the far cone, knees slightly bent, body turned around so she now faces back toward the first cone, outer foot planted to change direction."
+  },
+  {
+    "slug": "sprinttechniek-marcheren-techniek-langzaam",
+    "catslug": "sportrevalidatie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: standing on one leg, the other knee lifted to hip height with the thigh horizontal and the foot under the knee, arms bent about 90 degrees swinging in opposition (opposite arm forward)."
+  },
+  {
+    "slug": "versnellen-en-afremmen-submaximaal",
+    "catslug": "sportrevalidatie",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: walking briskly mid-stride further forward along the floor, longer step, trunk leaning slightly forward, arms swinging bent at the elbows."
+  },
+  {
+    "slug": "rug-bol-en-hol-op-handen-en-knieen",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: on hands and knees in the same place, back rounded high up like a cat (arched toward the ceiling), head dropped down between the arms, tailbone tucked under; hands and knees do not move. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "rug-bol-en-hol-zittend",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: sitting on the same chair, hands on the knees, whole back rounded forward, chin on the chest, shoulders curled forward. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "rug-bol-en-hol-staand",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: same stance with hands on the thighs and knees slightly bent, back rounded high up toward the ceiling, head dropped down, tailbone tucked under. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "rug-bol-en-hol-met-lichte-weerstand",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: on hands and knees in the same place, back rounded high up toward the ceiling, head dropped down between the arms, tailbone tucked under; hands and knees do not move. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "romp-draaien-liggend",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: lying on the back with arms spread on the mat and both shoulders flat, both bent knees lowered together to one side toward the mat, feet stacked on their side."
+  },
+  {
+    "slug": "romp-draaien-op-handen-en-knieen",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: on hands and knees, one hand on the mat, the other arm stretched straight up toward the ceiling with the chest rotated open and the head turned to look at that hand."
+  },
+  {
+    "slug": "romp-draaien-zittend",
+    "catslug": "rug",
+    "eind_en": "Both figures in front view. BOTTOM: sitting upright on the same chair, feet flat, arms crossed on the chest, upper body and shoulders rotated clearly to one side while the hips and knees stay facing forward. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "romp-draaien-staand",
+    "catslug": "rug",
+    "eind_en": "Both figures in front view. BOTTOM: standing with feet hip-width apart, arms crossed on the chest, trunk and shoulders rotated clearly to one side while the hips and feet stay facing forward. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "romp-zijwaarts-buigen-liggend",
+    "catslug": "rug",
+    "eind_en": "Both figures in front view. BOTTOM: lying on the back, legs straight in the same place, trunk bent sideways into a C-curve so one hand has slid down the side of the thigh toward the knee; the other arm stays along the body."
+  },
+  {
+    "slug": "romp-zijwaarts-buigen-zittend",
+    "catslug": "rug",
+    "eind_en": "Both figures in front view. BOTTOM: sitting on the same chair, feet flat, trunk bent sideways so one hand slides down beside the chair leg toward the floor, the other arm along the body; head follows the trunk."
+  },
+  {
+    "slug": "romp-zijwaarts-buigen-staand",
+    "catslug": "rug",
+    "eind_en": "Both figures in front view. BOTTOM: standing with feet hip-width apart, trunk bent sideways so one hand slides down the outside of the leg to about the knee, the other arm along the body."
+  },
+  {
+    "slug": "rug-strekken-liggend",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: lying on the belly, arms straightened pushing the upper body up, chest lifted well off the mat, hips and legs staying flat on the mat, looking forward. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "rug-strekken-op-handen-en-knieen",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: buttocks pushed back to rest near the heels, arms stretched far forward with hands in the same place on the mat, forehead low toward the mat (child's pose)."
+  },
+  {
+    "slug": "rug-strekken-zittend",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: sitting on the same chair, not touching the backrest, hands on the hips, upper body leaning back with the back arched and the chest lifted, looking slightly up. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "rug-strekken-staand",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: standing with feet hip-width apart, hands on the lower back, upper body leaning back with the back arched and the hips pushed slightly forward, looking slightly up. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "knie-naar-borst-liggend",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: lying on the back, the near knee bent and pulled toward the chest, both hands holding just below that knee; the other leg stays straight on the mat."
+  },
+  {
+    "slug": "knie-naar-borst-zittend",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: sitting upright on the same chair, one knee lifted and pulled toward the chest with both hands holding just below the knee; the other foot stays flat on the floor."
+  },
+  {
+    "slug": "knie-naar-borst-staand",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: standing upright on one leg, the other knee lifted and pulled toward the chest with both hands holding just below the knee."
+  },
+  {
+    "slug": "open-boek-liggend",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: lying on the same side with knees bent and stacked, bottom arm still on the mat in front, top arm opened in a wide arc to the other side, resting toward the mat behind her, chest rotated open and head turned to look at that hand."
+  },
+  {
+    "slug": "open-boek-op-handen-en-knieen",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: on hands and knees, the hand still behind the head, the elbow rotated up pointing to the ceiling, chest turned open and head following; the support hand stays on the mat."
+  },
+  {
+    "slug": "open-boek-zittend",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same three-quarter front view. BOTTOM: sitting upright on the same chair, one arm still stretched forward, the other arm opened sideways and backward at shoulder height, chest and head rotated to follow that hand."
+  },
+  {
+    "slug": "thoracale-extensie-liggend",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: lying on the back with knees bent, feet flat, hands behind the head, the upper back extended back over the rolled towel so the head and elbows are lower and closer to the mat, chest lifted. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "thoracale-extensie-op-handen-en-knieen",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: knees in the same place under the hips, hands in the same place forward, chest sunk down toward the mat with the upper back arched, hips staying up, looking at the mat. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "thoracale-extensie-zittend",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: sitting on the same chair, hands behind the head, upper back extended back over the top of the backrest, chest lifted, elbows pointing up, looking slightly up; lower back and hips stay on the seat. The difference between top and bottom must be clearly visible."
+  },
+  {
+    "slug": "thoracale-extensie-staand",
+    "catslug": "rug",
+    "eind_en": "Both figures in the same strict side view. BOTTOM: standing with feet hip-width apart, hands behind the head with elbows out, upper back arched backward, chest lifted, looking slightly up. The difference between top and bottom must be clearly visible."
+  }
+]
