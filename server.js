@@ -4003,7 +4003,10 @@ async function afhandelen(request, response) {
     if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     const TALEN = { en: "Engels", de: "Duits", fr: "Frans", es: "Spaans", pl: "Pools", tr: "Turks", ar: "Arabisch", uk: "Oekraïens" };
     const taal = String(q.get("taal") || "");
-    if (!TALEN[taal]) { await sendJson(response, 400, { ok: false, fout: "Onbekende taal." }); return; }
+    // Object.hasOwn: "__proto__", "constructor" of "toString" zijn geen taal. Anders werd
+    // vertalingen["__proto__"] het Object.prototype van het hele serverproces en schreef
+    // de cache daar sleutels op (gebruikers-sweep 2026-11-06).
+    if (!Object.hasOwn(TALEN, taal)) { await sendJson(response, 400, { ok: false, fout: "Onbekende taal." }); return; }
     // Alleen niet-persoonlijke teksten gaan naar de vertaaldienst: namen en uitleg uit
     // de bibliotheek en namen van eigen praktijkoefeningen. De vrije tekst van de
     // therapeut (doel, opmerking) blijft in het Nederlands op de kaart staan: die kan
@@ -4067,7 +4070,7 @@ async function afhandelen(request, response) {
       const vraag = String(b.vraag || "").trim().slice(0, 300);
       if (vraag.length < 3) { await sendJson(response, 400, { ok: false, fout: "Typ eerst een korte vraag." }); return; }
       const VTALEN = { nl: "Nederlands", en: "Engels", de: "Duits", fr: "Frans", es: "Spaans", pl: "Pools", tr: "Turks", ar: "Arabisch", uk: "Oekraïens" };
-      const taal = VTALEN[String(b.taal || "")] ? String(b.taal) : "nl";
+      const taal = Object.hasOwn(VTALEN, String(b.taal || "")) ? String(b.taal) : "nl";
       if (!AI_KEY) { await sendJson(response, 503, { ok: false, fout: "De vraaghulp staat nog uit op deze server." }); return; }
       if (aiLimiet(request, response)) return;
       // context voor het antwoord: uitsluitend wat er op déze kaart staat

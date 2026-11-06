@@ -29,6 +29,37 @@ function snoei(c) {
   }).catch(function () {});
 }
 
+// Eerste bezoek: de kaart en zijn gegevens zijn al geladen voordat deze werker de
+// pagina beheert, dus gingen ze nooit door de fetch-handler hierboven en stond er
+// niets in de cache. Offline herladen gaf dan een wit scherm. De kaart stuurt daarom,
+// zodra de werker actief is, de adressen die hij al geladen heeft; die halen we hier
+// één keer op en bewaren we. Alleen GET binnen de eigen site, nooit video's of
+// schrijfroutes, en alleen een geslaagd antwoord (200).
+function magBewaren(pad) {
+  if (typeof pad !== 'string' || pad.charAt(0) !== '/' || pad.charAt(1) === '/') return false;
+  if (pad.indexOf('/uploads/videos/') === 0) return false;
+  if (pad.indexOf('/api/') === 0) return /^\/api\/kaart(\/vertaal|\/manifest)?\?id=[a-f0-9]{8,16}(&taal=[a-z]{2})?$/.test(pad);
+  return true;
+}
+self.addEventListener('message', function (e) {
+  var d = e.data;
+  if (!d || d.type !== 'bewaar' || !Array.isArray(d.urls)) return;
+  var paden = d.urls.filter(magBewaren).slice(0, 120);
+  var klaar = caches.open(CACHE).then(function (c) {
+    return Promise.all(paden.map(function (pad) {
+      return c.match(pad).then(function (al) {
+        if (al) return;
+        return fetch(pad, { credentials: 'same-origin' }).then(function (r) {
+          if (r && r.status === 200) return c.put(pad, r);
+        }).catch(function () {});
+      });
+    }));
+  }).then(function () {
+    if (e.source && e.source.postMessage) e.source.postMessage({ type: 'bewaard', aantal: paden.length });
+  }).catch(function () {});
+  if (e.waitUntil) e.waitUntil(klaar);
+});
+
 self.addEventListener('fetch', function (e) {
   var req = e.request;
   if (req.method !== 'GET') return;

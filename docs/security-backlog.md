@@ -23,6 +23,22 @@ Volgende run: (h) foutmeldingen, daarna (j) npm audit en (f) injectie/XSS.
 
 ## Open
 
+- **HOOG — proef overnemen met alleen het e-mailadres** (gebruikers-sweep 2026-11-06, Sanne). Opnieuw
+  aanmelden op /v2/proef met hetzelfde e-mailadres (andere naam/telefoon, praktijknaam leeg) geeft
+  direct een nieuwe proefcookie voor de bestaande proef: de tweede persoon ziet de praktijknaam,
+  overschrijft naam en telefoon van de eerste, en kan via /v2/proef?mijn=1 de gegevens wissen.
+  server.js rond `Object.values(proeven).find(x => x.email === w.email)`. Fix: bij een bestaand adres
+  geen cookie geven maar een inloglink per mail, of een nieuwe aparte proef zonder de oude gegevens.
+- **HOOG — praktijknaam is een wereldwijde sleutel** (sweep 2026-11-06, Sanne). Wie een naam als eerste
+  beveiligt, sluit elke andere praktijk met die naam buiten ("Deze praktijk is beveiligd. Log in…");
+  een naam kan zo vooraf worden gekaapt. Ook wisselt de praktijk stil als de therapeut de naam op de
+  kaart wijzigt. server.js `pk = cleanName(b.praktijk).toLowerCase()` en de 409 bij claimen. Grote
+  ontwerpkeuze (account-id los van de weergavenaam); eerst met Ahmed afstemmen.
+- **MIDDEL — `/api/kaart/afspraak` met een verkeerd type wist de afspraak** (sweep, Jayden). `t: "abc"`
+  of `{}` wordt via `Number(...)||0` een 0 = weghalen; verwacht 400. Alleen de eigen praktijk kan dit.
+- **LAAG — `/api/opname/upload` staat niet in `PROEF_SCHRIJFROUTES`**: een opname-token van vlak voor
+  het verlopen blijft nog ~15 min bruikbaar (sweep, Mark).
+
 - **LAAG — proef wissen en opnieuw aanmelden geeft een nieuwe proef van 14 dagen** (2026-11-06).
   `/v2/proef/wissen` haalt de aanmelding weg; daarna levert hetzelfde e-mailadres een verse proef op.
   Het praktijkaccount blijft sinds PR #47 wel dicht (einddatum staat op het account), dus dit helpt
@@ -50,6 +66,12 @@ Volgende run: (h) foutmeldingen, daarna (j) npm audit en (f) injectie/XSS.
   laat zien hoe het wel kan; overstappen kan later per beheerroute.
 
 ## Opgelost
+
+- **KRITIEK — prototype pollution via `/api/kaart/vertaal?taal=__proto__`** (gebruikers-sweep
+  2026-11-06, Jayden). `TALEN["__proto__"]` is truthy, dus de taalcheck liet het door; met een AI-sleutel
+  werd `vertalingen["__proto__"]` het `Object.prototype` van het hele serverproces en schreef de cache
+  daar sleutels op (plus een betaalde AI-aanroep). Hetzelfde patroon zat in de vraaghulp (`VTALEN`).
+  Fix: `Object.hasOwn`. OPGELOST 2026-11-06 PR #49. Test: `npm run test:sweep`.
 
 - **HOOG — verlopen proef blokkeert alleen nieuwe kaarten** (gebruikers-sweep 2026-11-06, persona Mark).
   Met de verlopen proefcookie geven `/api/praktijk/sjablonen`, `/api/praktijk/oefeningen` (upload),

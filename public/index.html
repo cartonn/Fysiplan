@@ -168,6 +168,15 @@
   #a4 .pic:hover .vid{display:flex}
   #a4 .pic .vid:hover{border-color:var(--brand);color:var(--brand);transform:scale(1.08)}
   #a4 .pic .vid.aan{display:flex;background:var(--brand);border-color:var(--brand);color:#fff}
+  /* tablet en telefoon kennen geen aanwijzen: daar staan beide knopjes altijd zichtbaar en zijn
+     ze groter, met een onzichtbaar tikvlak van 44 px; met het toetsenbord verschijnen ze bij focus */
+  #a4 .pic:focus-within .vid{display:flex}
+  #a4 .pic .vid:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+  @media (hover:none){
+    #a4 .pic .vid{display:flex;width:30px;height:30px}
+    #a4 .pic .rm{display:block;width:30px;height:30px;line-height:29px;font-size:18px}
+    #a4 .pic .vid::after,#a4 .pic .rm::after{content:'';position:absolute;inset:-7px}
+  }
   /* Een catalogus-/praktijkvideo reist automatisch mee met de oefening naar de digitale kaart. */
   #a4 .pic .vauto{position:absolute;bottom:4px;left:4px;display:flex;align-items:center;gap:3px;
     padding:3px 5px;border-radius:999px;background:rgba(31,111,235,.92);color:#fff;font-size:8px;font-weight:700;
@@ -2069,6 +2078,7 @@ bridge2.jpg</div>
     doeAutoDeel();
   }
   function doeAutoDeel(){
+    if(PROEF_VOORBIJ)return;
     var naam=huidigeKaartNaam();
     var pr=(SET.praktijk||'').trim();
     if(!naam||!chosen.length){verbergQr();laatsteDeel='';return;}
@@ -2092,8 +2102,10 @@ bridge2.jpg</div>
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
       .then(function(d){
         if(!d.ok){
-          // proef net verlopen: de server toont bij herladen de verlopen-melding
-          if(d.proefVerlopen){location.reload();return;}
+          // proef verlopen: melding in de app. Niet herladen: op een tweede apparaat
+          // zonder proefcookie serveert /v2/app gewoon weer de app, en dan herlaadde
+          // hij eindeloos (gebruikers-sweep 2026-11-06, iPad)
+          if(d.proefVerlopen){toonProefVoorbij();return;}
           laatsteDeel='';
           toonDeelWeigering(d,naam);
           return;
@@ -2342,6 +2354,20 @@ bridge2.jpg</div>
       render();
     }).catch(function(){});
   }
+  // de proef van deze praktijk is voorbij (de server weigert schrijven met proefVerlopen):
+  // één vaste melding bovenaan, met een echte link; lezen blijft gewoon werken en de app
+  // probeert niet steeds opnieuw te delen
+  var PROEF_VOORBIJ=false;
+  function toonProefVoorbij(){
+    PROEF_VOORBIJ=true;
+    var balk=document.getElementById('proefBalk');if(!balk)return;
+    balk.innerHTML="<span id='pb_voorbij'><b>Je gratis proef is voorbij.</b> Je gedeelde kaarten, seintjes en scores kun je nog lezen; "+
+      "nieuwe kaarten maken of iets wijzigen kan niet meer.</span><span class='pb-ruimte'></span>"+
+      "<a class='btn primary' href='/v2/proef'>Wil je doorgaan?</a>";
+    balk.setAttribute('role','alert');
+    balk.hidden=false;
+    if(balk.scrollIntoView)balk.scrollIntoView({block:'nearest'});
+  }
   function proefStart(){
     if(!PROEF)return;
     var balk=document.getElementById('proefBalk');
@@ -2373,7 +2399,7 @@ bridge2.jpg</div>
     saveServerCard(cn.value.trim(),function(d){
       knop.disabled=false;knop.textContent='Test de QR op je telefoon';
       if(!d.ok){
-        if(d.proefVerlopen){location.reload();return;}
+        if(d.proefVerlopen){toonProefVoorbij();return;}
         if(d.beveilig){toonDeelWeigering(d,cn.value.trim());openBeveiligen(function(){knop.click();});return;}
         if(d.bestaat){toonDeelWeigering(d,cn.value.trim());return;}
         alert(d.login?'De praktijknaam \u201c'+(SET.praktijk||'')+'\u201d is al beveiligd door een andere praktijk. Vul de naam van je eigen praktijk in.':(d.fout||'De QR-code maken is niet gelukt.'));
@@ -4079,6 +4105,13 @@ bridge2.jpg</div>
     if(ev){var c=chosen[+ev.dataset.evid],eo=c&&OEF[c.o];if(eo)openEigenVideo(eo);return;}
     var rm=e.target.closest('.rm');if(!rm)return;
     var n=+rm.dataset.rm;if(n>=0&&n<chosen.length){chosen.splice(n,1);render();}
+  });
+  // eigen-videoknopje op het plaatje ook met Enter of spatie (het is een span met role=button)
+  elMon.addEventListener('keydown',function(e){
+    if(e.key!=='Enter'&&e.key!==' ')return;
+    var ev=e.target.closest&&e.target.closest('[data-evid]');if(!ev)return;
+    e.preventDefault();
+    var c=chosen[+ev.dataset.evid],eo=c&&OEF[c.o];if(eo)openEigenVideo(eo);
   });
   // ---- v2: eigen oefeningen van de praktijk (naam, foto, uitleg) ----
   // Staan op de server bij de beveiligde praktijk, zodat ze op elk apparaat van het

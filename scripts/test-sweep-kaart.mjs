@@ -2,6 +2,7 @@
 // 1. CSV-export van het kaartenoverzicht: geen formule-injectie (Excel/LibreOffice).
 // 2. Afspraak-.ics: tijd mét tijdzone, zodat een telefoon in een andere tijdzone
 //    de afspraak niet een uur verschoven in de agenda zet.
+// 2b. /api/kaart/vertaal weigert taal=__proto__ e.d. (prototype pollution).
 // 3. Cliëntkaart /k: druk (429) of een serverfout zegt nooit "bestaat niet (meer)";
 //    alleen een echte 404 doet dat.
 // `npm run test:sweep`
@@ -67,6 +68,12 @@ try {
   assert.match(ics, /TZOFFSETTO:\+0200/);
   assert.match(ics, /RRULE:FREQ=WEEKLY;COUNT=4/);
   assert.match(ics, /SUMMARY:Physiotherapy appointment/);
+
+  // ---- 2b. vertaalroute: alleen echte talen (geen prototype-sleutels) ----
+  for (const [i, taal] of ["__proto__", "constructor", "toString", "hasOwnProperty"].entries()) {
+    const r = await fetch(origin + "/api/kaart/vertaal?id=abcdefabcdef&taal=" + taal, { headers: { "x-forwarded-for": "10.1.1." + (i + 1) } });
+    assert.equal(r.status, 400, "taal=" + taal + " is geen taal");
+  }
 
   // ---- 3. /k bij 429, 500 en 404 ----
   // zonder browser (CI heeft geen Playwright): de kaart onderscheidt 404 van de rest
