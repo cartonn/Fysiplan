@@ -4257,7 +4257,7 @@ async function afhandelen(request, response) {
     telBezoek(request, false);
     response.setHeader("cache-control", "no-store");
     const p = proefVan(request);
-    if (p && proefVerlopen(p)) { await serveerProef(request, response, "verlopen", proefVars(p)); return; }
+    if (p && proefVerlopen(p)) { await serveerProef(request, response, "verlopen", proefVars(p, { V_PRAKTIJK: p.praktijk || "" })); return; }
     if (p && !new URL(request.url, "http://x").searchParams.has("mijn")) { response.writeHead(303, { location: "/v2/app" }); response.end(); return; }
     if (p) { await serveerProef(request, response, "mijn", proefVars(p, { TITEL: "Mijn proef" })); return; }
     await serveerProef(request, response, "formulier", await proefFormVars(request, {}, {}));
@@ -4366,6 +4366,62 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // na een verlopen proef: de seintjes en scores van patiënten blijven zichtbaar, alleen
+  // lezen. Patiënten kunnen hun kaart nog gebruiken en "het doet te veel pijn" tikken;
+  // zonder dit overzicht kwam dat nergens meer aan. Scriptloos (zelfde CSP als de
+  // proefpagina's), elke keer opnieuw met het praktijkwachtwoord: er komt geen sessie
+  // en geen schrijfroute bij. Zelfde remmen en audit als het gewone inloggen.
+  if (urlPath === "/v2/proef/overzicht" && request.method === "POST") {
+    response.setHeader("cache-control", "no-store");
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    const p = proefVan(request);
+    if (!p || !proefVerlopen(p)) { response.writeHead(303, { location: p ? "/v2/app" : "/v2/proef" }); response.end(); return; }
+    let b = {};
+    try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 4096))); } catch {}
+    const pk = cleanName(b.praktijk, 80).toLowerCase();
+    const opnieuw = async (fout, status) => serveerProef(request, response, "verlopen", proefVars(p, {
+      V_PRAKTIJK: b.praktijk || p.praktijk || "",
+      OVERZICHT_FOUT_HTML: '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" }), status);
+    if (pk && loginOpSlot(pk)) { await opnieuw("Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
+    const acc = praktijkAccounts[pk];
+    if (!acc || !checkHash(String(b.wachtwoord || ""), acc.hash)) {
+      loginMisTel(pk || "?");
+      auditLog(pk || "?", "overzicht-na-proef-mislukt", request);
+      await opnieuw("Die praktijknaam en dat wachtwoord horen niet bij elkaar.", 403);
+      return;
+    }
+    loginMisPraktijk.delete(pk);
+    auditLog(pk, "overzicht-na-proef", request);
+    const nu = Date.now();
+    const SEIN = { vraag: "heeft een vraag", pijn: "meldt te veel pijn", goed: "het gaat goed" };
+    const HERSTEL = { "-2": "veel slechter", "-1": "iets slechter", "0": "hetzelfde", "1": "iets beter", "2": "veel beter" };
+    const kort = (ms) => new Date(ms).toLocaleDateString("nl-NL", { day: "numeric", month: "short", timeZone: "Europe/Amsterdam" });
+    const laatste = (r) => (r && r.length) ? r[r.length - 1] : null;
+    const lijst = Object.values(kaarten[pk] || {})
+      .filter((k) => !k.demo && !k.gearchiveerd && verlooptOp(k) > nu)
+      .map((k) => ({ k, sein: (k.seintje && SEIN[k.seintje.soort]) ? k.seintje : null }))
+      .sort((a, b2) => ((b2.sein ? b2.sein.t : 0) - (a.sein ? a.sein.t : 0)) || ((b2.k.ts || 0) - (a.k.ts || 0)));
+    const rijen = lijst.map(({ k, sein }) => {
+      const m = laatste(k.metingen), e = laatste(k.ervaring), g = laatste(k.gedaan);
+      const delen = [];
+      if (m) delen.push("pijn " + m.s + " (" + kort(m.t) + ")");
+      if (e && HERSTEL[String(e.s)]) delen.push("herstel: " + HERSTEL[String(e.s)]);
+      if (g) delen.push("laatst geoefend " + kort(g.t));
+      if (k.afspraak && k.afspraak.t > nu) delen.push("afspraak " + kort(k.afspraak.t));
+      return "<li" + (sein ? ' class="sein"' : "") + "><b>" + htmlEsc(String(k.naam || "kaart").slice(0, 60)) + "</b>" +
+        (sein ? ' <span class="chip">' + htmlEsc(SEIN[sein.soort]) + " · " + htmlEsc(kort(sein.t)) + "</span>" : "") +
+        '<br/><span class="klein">' + htmlEsc(delen.join(" · ") || "nog niets ingevuld") + "</span></li>";
+    }).join("");
+    const aantal = lijst.filter((x) => x.sein).length;
+    await serveerProef(request, response, "overzicht", proefVars(p, {
+      TITEL: "Overzicht na je proef", PRAKTIJK: cleanName(b.praktijk, 80) || pk,
+      SAMENVATTING: lijst.length + (lijst.length === 1 ? " actieve kaart" : " actieve kaarten") + ", " +
+        aantal + (aantal === 1 ? " seintje" : " seintjes") + " van patiënten.",
+      LIJST_HTML: rijen ? '<ul class="overzicht">' + rijen + "</ul>" : '<p class="klein">Er zijn geen actieve kaarten meer.</p>' }));
+    return;
+  }
+
   // overzicht van de proefaanmeldingen: persoonsgegevens, dus net als
   // toegangsbeheer alleen voor ingelogde ACCOUNT_BEHEER_EMAILS (niet admin88)
   if (urlPath === "/aanmeldingen" || urlPath === "/api/aanmeldingen") {
@@ -4420,7 +4476,7 @@ async function afhandelen(request, response) {
     const proef = proefVan(request);
     if (proef && proefVerlopen(proef)) {
       response.setHeader("cache-control", "no-store");
-      await serveerProef(request, response, "verlopen", proefVars(proef));
+      await serveerProef(request, response, "verlopen", proefVars(proef, { V_PRAKTIJK: proef.praktijk || "" }));
       return;
     }
     response.setHeader("x-frame-options", "DENY");
