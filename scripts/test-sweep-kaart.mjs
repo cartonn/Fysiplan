@@ -69,8 +69,20 @@ try {
   assert.match(ics, /SUMMARY:Physiotherapy appointment/);
 
   // ---- 3. /k bij 429, 500 en 404 ----
+  // zonder browser (CI heeft geen Playwright): de kaart onderscheidt 404 van de rest
+  const kaartHtml = await readFile(join(root, "public/kaart.html"), "utf8");
+  assert.match(kaartHtml, /id="storing"[^>]*role="alert"/, "storingsblok staat op de kaart");
+  assert.match(kaartHtml, /if\(res\[0\]&&res\[0\]\.status===404\)document\.getElementById\('fout'\)\.style\.display='block';else toonStoring\(\);/,
+    "alleen een 404 toont 'bestaat niet (meer)'");
+  assert.match(kaartHtml, /\}\)\.catch\(function\(\)\{toonStoring\(\);\}\);\n  \}\n\}\)\(\);/, "geen verbinding: storing");
+  assert.equal((await fetch(origin + "/api/kaart?id=000000000000", { headers: { "x-forwarded-for": "10.1.0.2" } })).status, 404,
+    "de server geeft voor een onbekende kaart echt 404");
+  // met browser (lokaal, of waar Playwright wel staat): het echte scherm op een iPhone SE
   const require = createRequire(import.meta.url);
-  const { chromium, devices } = require("playwright");
+  let pw = null;
+  try { pw = require("playwright"); } catch { console.log("test-sweep-kaart: geen Playwright, schermcheck van /k overgeslagen (de statische controle hierboven draaide wel)"); }
+  if (pw) {
+  const { chromium, devices } = pw;
   browser = await chromium.launch();
   const toestand = async (status) => {
     const ctx = await browser.newContext({ ...devices["iPhone SE"], serviceWorkers: "block" });
@@ -102,6 +114,7 @@ try {
   await page.goto(origin + "/k/abcdefabcdef");
   await page.waitForFunction(() => getComputedStyle(document.getElementById("wrap")).display === "block", null, { timeout: 15000 });
   await ctx.close();
+  }
 
   // service worker: bij 429/5xx de laatst geladen versie uit de cache
   const sw = await readFile(join(root, "public/kaart-sw.js"), "utf8");
