@@ -31,7 +31,7 @@ const TEKENINGEN = [
   { nr: "02", slug: "balans-tandemstand-met-steun", refs: [STAAND, STOEL],
     pose: "Three-quarter front view, the camera slightly lower so both feet are clearly visible and large enough. She stands next to the backrest of a simple chair, one hand resting lightly on top of the backrest, both feet side by side and parallel. One clearly visible solid black curved arrow starts at the toes of the foot farther from the chair and curves forward to a point directly in front of the toes of the other foot, showing that foot will be placed in a straight line in front, heel touching the toes of the other foot (tandem stance)." },
   { nr: "03", slug: "werk-voorwerp-van-vloer-tillen", refs: [STAAND],
-    pose: "Side view. She is in a deep squat with knees bent, back straight, feet hip-width apart, holding a plain cardboard box close against her body. One arrow runs upward alongside her body, showing her standing up using her legs while the box stays close." },
+    pose: "Strict side view (profile). A plain closed cardboard box stands ON THE FLOOR directly in front of her feet. She squats with knees bent, back straight, feet hip-width apart, and holds the box with both hands on its sides while the box still rests on the floor. One solid black straight arrow points straight up, close along the front of her body, showing her standing up with the box kept close." },
   { nr: "04", slug: "sportrevalidatie-landing-twee-benen", refs: [STAAND],
     pose: "Front view. She stands on a low aerobic step platform, a flat exercise mat on the floor in front of it. One curved arrow goes from the step downward and forward onto the mat, showing a soft two-footed landing with knees over the toes." },
   { nr: "05", slug: "neuro-symmetrisch-opstaan-met-steun", refs: [STOEL],
@@ -39,7 +39,7 @@ const TEKENINGEN = [
   { nr: "06", slug: "vestibulair-blikstabilisatie-horizontaal", refs: [STOEL],
     pose: "Front view. She sits upright on a simple chair, holding a small card at arm's length in front of her eyes; the card shows only the single capital letter A. Above her head is one double-headed curved arrow pointing left and right, showing the head turning side to side while the eyes stay on the letter." },
   { nr: "07", slug: "bekken-postpartum-bekkenkanteling", refs: [MAT],
-    pose: "Side view. She lies on her back on an exercise mat, knees bent, feet flat on the mat, arms resting alongside her body. One small curved arrow near her pelvis shows the pelvis tilting and the lower back pressing gently into the mat. Her hips stay on the mat (this is not a bridge)." },
+    pose: "Strict side view. The figure is LARGE and fills the width of the image, like the other illustrations. She lies on her back on an exercise mat, knees bent, feet flat, arms resting alongside her body, neutral spine with a small visible gap under her lower back. Draw one small solid black curved arrow as a short rotation arc placed BELOW the waistband, at the side of the hip/pelvis bone (between the waist and the top of the thigh), NOT above the belly or stomach. The arc curls around the pelvis showing it rotating backward: the pubic bone tilts up toward the ribs and the lower back flattens onto the mat. Her buttocks stay on the mat (this is not a bridge)." },
 ];
 
 const dataUri = async (path) => `data:image/webp;base64,${(await readFile(path)).toString("base64")}`;
