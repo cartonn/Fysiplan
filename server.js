@@ -401,6 +401,32 @@ function proefVan(req) {
   return (id && proeven[id]) || null;
 }
 const proefVerlopen = (p) => !!p && !p.klant && Date.now() >= p.verloopt;
+// De proef hangt niet alleen aan het apparaat (cookie) maar ook aan het praktijkaccount
+// dat tijdens de proef werd beveiligd: anders maakte dezelfde praktijksessie op een
+// ander apparaat (of met gewiste cookies) gewoon verder kaarten. Op het account staan
+// id én einddatum, zodat het slot blijft staan als de proefgegevens gewist zijn.
+function proefKoppel(acc, p) {
+  if (!acc || !p || acc.proef) return false;
+  acc.proef = { id: p.id, verloopt: p.verloopt };
+  return true;
+}
+function praktijkProefVerlopen(pk) {
+  const k = pk && Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk].proef : null;
+  if (!k) return false;
+  const p = Object.hasOwn(proeven, String(k.id)) ? proeven[String(k.id)] : null;
+  return p ? proefVerlopen(p) : Date.now() >= Number(k.verloopt || 0);
+}
+// alle schrijfroutes van de therapeut; lezen, verwijderen, archiveren, "gezien",
+// wachtwoord en uitloggen blijven open, net als alle patiëntroutes (/k)
+const PROEF_SCHRIJFROUTES = new Set(["/api/kaarten", "/api/praktijk/oefeningen", "/api/praktijk/sjablonen",
+  "/api/praktijken", "/api/opname/start", "/api/kaart/afspraak", "/api/kaart/naam", "/api/kaart/notitie",
+  "/api/kaart/behandelaar", "/api/kaart/psk-doel", "/api/kaart/nieuwe-link", "/api/kaart/doel",
+  "/api/kaart/antwoord", "/api/assistent"]);
+function proefSlotVoor(req, urlPath) {
+  if (req.method !== "POST" || !PROEF_SCHRIJFROUTES.has(urlPath)) return false;
+  if (ADMIN_KEY_EIGEN && isAdmin(req)) return false;
+  return proefVerlopen(proefVan(req)) || praktijkProefVerlopen(praktijkSessieVan(req));
+}
 function proefCookie(token, request) {
   const proxyProto = String(request.headers["x-forwarded-proto"] || "").split(",", 1)[0].trim().toLowerCase();
   const veilig = proxyProto === "https" || !!request.socket?.encrypted;
@@ -1622,6 +1648,14 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // verlopen proef: één poort voor alle schrijfroutes van de therapeut, op apparaat
+  // én op praktijkaccount (zie praktijkProefVerlopen)
+  if (proefSlotVoor(request, urlPath)) {
+    response.setHeader("cache-control", "no-store");
+    await sendJson(response, 403, { ok: false, proefVerlopen: true, fout: "Je gratis proef is voorbij. Wil je doorgaan? Kijk op fysiplan.nl/v2/proef." });
+    return;
+  }
+
   // ---- beheer-API's (alleen met admin-sleutel) ----
 
   // oefeningnaam wijzigen; geldt daarna voor iedereen in v2
@@ -2021,6 +2055,7 @@ async function afhandelen(request, response) {
       const herstelcode = maakHerstelcode();
       praktijkAccounts[pk] = { hash: maakHash(ww), herstel: maakHash(herstelcode), gemaakt: Date.now(),
         vwo: { versie: VWO_VERSIE, t: new Date().toISOString() } };
+      proefKoppel(praktijkAccounts[pk], proefVan(request));
       await saveJson(accountsPath, praktijkAccounts);
       auditLog(pk, "geclaimd", request);
       const token = nieuweSessie(pk);
@@ -2052,6 +2087,9 @@ async function afhandelen(request, response) {
         return;
       }
       loginMisPraktijk.delete(pk); // geslaagd: teller schoon
+      // account dat tijdens een proef van dit apparaat is gemaakt: alsnog koppelen
+      const pr = proefVan(request);
+      if (pr && !pr.klant && Number(acc.gemaakt) >= Number(pr.gestart) && proefKoppel(acc, pr)) await saveJson(accountsPath, praktijkAccounts);
       const token = nieuweSessie(pk);
       auditLog(pk, "ingelogd", request);
       await sendJson(response, 200, { ok: true, sessie: token });

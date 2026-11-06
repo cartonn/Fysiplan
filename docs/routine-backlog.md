@@ -44,6 +44,11 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   `@media (hover:none)` of `:focus-within`; 22×22 px; geen toetsenbordbediening. iPad gen 7.
 
 ### MIDDEL
+- **Therapeut-app: proefslot op een ander apparaat** (van security, 2026-11-06, PR #47). Na een
+  verlopen proef geven alle schrijfroutes (kaart delen, sjabloon, eigen oefening, opname, afspraak,
+  naam, notitie, antwoord, zoekhulp) 403 met `proefVerlopen: true`, ook op een apparaat zonder
+  proefcookie. Controleer dat de app dan de proef-voorbij-melding met link naar /v2/proef toont
+  en niet een algemene foutmelding.
 - **/k: offline afgevinkt bereikt de therapeut nooit.** Geen wachtrij of `online`-handler, terwijl
   de offline-banner "versturen lukt weer zodra je internet hebt" belooft (kaart.html, oefening-POST
   met lege `.catch`; `#gdaan` meldt niets). iPhone SE.
