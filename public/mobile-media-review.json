@@ -32,7 +32,7 @@
       "name": "Anteflexie armen",
       "source": "images/bovenste-extremiteit/anteflexie-armen-avatar-v7.jpg",
       "assetSha256": "f8f33346dc5383665967481555abb9ceaeecf216d383a121397d3522c1253dd1",
-      "explanationSha256": "2a29a8a6ded151cb052e0530a1a242a028258fadc06a25c1c70564d6a8fd83ff",
+      "explanationSha256": "2e197ce10101a8010a6e435515bc49b3055476679d5e41230162755b75a3dad0",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -347,7 +347,7 @@
       "name": "Biceps curl",
       "source": "images/bovenste-extremiteit/biceps-curl-avatar-v7.jpg",
       "assetSha256": "03c5fe9f9e43901abcefb8e74e55e7af8b5368063311d97e6afeb0ac4ade5e87",
-      "explanationSha256": "bd6c97290ef8d907a1b459547d8525369e0237beb786e1fd5101ac69e81b283e",
+      "explanationSha256": "7ed6343c90083acab86e84e7dc71e51e96c03e9e8d19b4f90ece272c3c9ddae2",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -414,7 +414,7 @@
       "name": "Biceps pull",
       "source": "images/bovenste-extremiteit/biceps-pull-avatar-v7.jpg",
       "assetSha256": "87cde66cf7f4df9885d7d68c5edda4350309114dbc63ac6db2ba87b0fef6107f",
-      "explanationSha256": "6decd4a06ae843987d7735cc8600ef54d78982ba7e5e7c1ad20c376b1d62a78c",
+      "explanationSha256": "1334308a6e8be3aa89e7a8f0cf2e4495dccf6173bbf1178fa2cbe703bc4e4a0b",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -481,7 +481,7 @@
       "name": "Dips",
       "source": "images/bovenste-extremiteit/dips-avatar-v7.jpg",
       "assetSha256": "ae7ea9bc2bcf7646e69832179c1ada68c42f1fb39af8e05effe15c6758bf7298",
-      "explanationSha256": "d5d5fae3ec76916043bc997b580fd04d3395d22f079235a1da6ab08eb3a92a60",
+      "explanationSha256": "d162904fe990a009aea31fdab53c4fd18b976dc44eebd60156d42fcc62139f0b",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",

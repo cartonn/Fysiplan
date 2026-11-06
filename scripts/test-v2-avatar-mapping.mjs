@@ -52,8 +52,10 @@ for(const v of verwacht){
 // V1-catalogus byte-gelijk aan de vastgelegde stand. Op 2026-11-05 is op verzoek van Ahmed
 // bewust de uitleg van vier oefeningen aangepast (Anteflexie armen, Barbell front press,
 // Biceps curl, Biceps pull), zodat die klopt met de avatarvideo's en de nieuwe Noor-opnames;
-// V1 en V2 delen de uitleg. Elke andere wijziging van dit bestand laat deze test falen.
-assert.equal(createHash('sha256').update(fs.readFileSync('public/oefeningen.json')).digest('hex'),'6eedf4b211f74cc6dfd9973280dfc429362e202058a9dd7ef0f247cd4748989b','public/oefeningen.json is ongewijzigd');
+// V1 en V2 delen de uitleg. Op 2026-11-06 is, na de greepcontrole tegen de lijntekeningen,
+// de uitleg van Anteflexie armen, Biceps curl, Biceps pull en Dips opnieuw aangepast (greep
+// en opstelling volgens de lijntekening). Elke andere wijziging van dit bestand laat deze test falen.
+assert.equal(createHash('sha256').update(fs.readFileSync('public/oefeningen.json')).digest('hex'),'f17ffb77e4a143e14070aa2e7f14861220e753c566a11e274fd9552bd4b79f4b','public/oefeningen.json is ongewijzigd');
 assert.notEqual(v2.find(x=>x.exerciseId==='fp_514654a0d4181742').kaartImg,v2.find(x=>x.exerciseId==='fp_5319c4700561725d').kaartImg);
 // geen bestand verplaatst, hernoemd of overschreven
 assert.equal(sha(HEUP),BEELD_KNIEHEFFING);assert.equal(sha(KNIE),BEELD_HEUPEXTENSIE);
