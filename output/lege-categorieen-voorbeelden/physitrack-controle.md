@@ -12,6 +12,13 @@ Datum: 2026-11-06. Per oefening is het eerste beeld én een beeld op ~35% van de
 **Opnieuw maken aanbevolen (fout of afwijkend):** 20, 21, 41, 58, 115.
 **Pijl verbeteren (klein/los):** 1, 3, 10, 11, 23, 24, 26, 28, 29, 35, 37, 53, 77, 80, 81, 82, 84, 85, 94, 104, 105, 106, 112, 113, 118 — kan zonder AI door de pijl zelf na te tekenen, of met een nieuwe Runway-poging.
 
+
+## Status na herstel (2026-11-06)
+
+- **Opnieuw gemaakt met Runway (5 × 5 = 25 credits, saldo daarna 175):** 20 en 21 (statische stand, nu zonder pijl), 41 (pijl naar achteren), 58 (marker vóór haar, pijl naar voren), 115 (elleboog omlaag als beginhouding).
+- **Pijl zelf nagetekend, zonder AI (0 credits):** 1, 3, 10, 11, 23, 24, 26, 28, 29, 35, 37, 53, 77, 80, 81, 82, 84, 85, 94, 104, 105, 106, 112, 113, 118. Oude pijl gewist; nieuwe pijl groot en in één stijl (dikke zwarte lijn, gevulde punt) en begint bij het bewegende lichaamsdeel.
+- Alle 30 bevindingen hierboven zijn daarmee opgelost; de tabel hieronder toont de oorspronkelijke controle.
+
 | # | Groep | Oefening | Bron | Houding | Pijl | Opmerking |
 |---|---|---|---|---|---|---|
 | 1 | Nek | Kin intrekken – liggend ondersteund | Physitrack-video | ok | klein (slecht zichtbaar op telefoon) |  |

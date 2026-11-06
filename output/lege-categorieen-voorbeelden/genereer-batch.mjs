@@ -49,7 +49,7 @@ if (cmd === "gen") {
     const extra = s.extra_en ? ` ${s.extra_en}` : "";
     try {
       const task = await rw.textToImage.create({
-        model: "gpt_image_2", promptText: `${STYLE} ${s.pose_en}${extra}`, referenceImages: [{ uri: ref }],
+        model: "gpt_image_2", promptText: `${s.no_arrow ? STYLE.replace(/, and exactly ONE solid black arrow[^.]*\./, ". This is a STATIC stance: draw NO arrow at all.") : STYLE} ${s.pose_en}${extra}`, referenceImages: [{ uri: ref }],
         ratio: "1280:1920", quality: "medium", background: "opaque", outputCount: 1,
       }).waitForTaskOutput({ timeout: 10 * 60_000 });
       const res = await fetch(task.output[0]);

@@ -7,10 +7,12 @@
   "bron_url": "https://au.physitrack.com/home-exercise-video/standing-with-feet-together-version-1",
   "bron_titel": "Standing with feet together Version 1",
   "beginhouding_nl": "Rechtop staan, voeten op heupbreedte, één hand op de stoelleuning.",
-  "pijl_nl": "Ene voet schuift naar binnen tot tegen de andere voet.",
+  "pijl_nl": "Geen pijl (statische stand).",
   "view": "front view",
   "ref": "001",
-  "pose_en": "Front view of a person standing upright with feet hip-width apart next to a plain wooden chair placed beside the figure, one hand resting on the top of the chair backrest, the other arm relaxed by the side. Both feet are clearly visible, flat on the floor. One short solid black arrow starts at the inner side of the foot farthest from the chair and points horizontally inward along the floor to the other foot, showing the feet coming together."
+  "pose_en": "Three-quarter front view. Static balance stance: she stands upright with both feet together, side by side and touching, arms relaxed. There is NO arrow anywhere in the image. One hand rests lightly on the backrest of a simple chair beside her.",
+  "no_arrow": true,
+  "extra_en": ""
  },
  {
   "naam": "Voeten naast elkaar staan – zonder steun",
@@ -20,10 +22,12 @@
   "bron_url": "https://au.physitrack.com/home-exercise-video/standing-with-feet-together-version-1",
   "bron_titel": "Standing with feet together Version 1",
   "beginhouding_nl": "Rechtop staan zonder steun, voeten op heupbreedte, armen langs het lichaam.",
-  "pijl_nl": "Ene voet schuift naar binnen tot tegen de andere voet.",
+  "pijl_nl": "Geen pijl (statische stand).",
   "view": "front view",
   "ref": "001",
-  "pose_en": "Front view of a person standing upright without support, feet hip-width apart, arms relaxed by the sides, looking straight ahead. Both feet are clearly visible, flat on the floor. One short solid black arrow starts at the inner side of the right foot and points horizontally inward along the floor to the left foot, showing the feet coming together."
+  "pose_en": "Front view. Static balance stance: she stands upright with both feet together, side by side and touching, arms relaxed. There is NO arrow anywhere in the image.",
+  "no_arrow": true,
+  "extra_en": ""
  },
  {
   "naam": "Voeten naast elkaar staan – met hoofdbeweging",
@@ -289,7 +293,8 @@
   "pijl_nl": "Ene voet stapt naar achteren.",
   "view": "side view",
   "ref": "001",
-  "pose_en": "Side view of a person standing upright next to a plain table, the near hand resting on the tabletop, the other arm relaxed, feet side by side. Both feet are clearly visible and not hidden by the table legs. One curved solid black arrow starts at the heel of the far-from-table foot and curves backward along the floor, ending one step length behind the body, showing a step backward."
+  "pose_en": "Side view of a person standing upright next to a plain table, the near hand resting on the tabletop, the other arm relaxed, feet side by side. Both feet are clearly visible and not hidden by the table legs. One curved solid black arrow starts at the heel of the far-from-table foot and curves backward along the floor, ending one step length behind the body, showing a step backward.",
+  "extra_en": "CORRECTION: strict side profile, she faces RIGHT with one hand on a table beside her; the arrow starts at the heel of her rear foot and points to the LEFT, BACKWARD, behind her (she steps backward, opposite to where she is looking)."
  },
  {
   "naam": "Achterwaarts stappen – zonder steun",
