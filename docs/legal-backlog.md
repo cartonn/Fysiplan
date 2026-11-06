@@ -13,15 +13,26 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (c) algemene voorwaarden | 2026-11-06 (concept gebouwd, deze run) |
 | (d) code tegen tekst | 2026-11-02 (PR #40), steekproef 2026-11-06 |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-06 (PR praktijkgegevens, deze run) |
-| (f) cookies en lokale opslag | nooit apart |
+| (f) cookies en lokale opslag | 2026-11-06 (PR opslag, deze run) |
 | (g) MDR en AI-verordening | 2026-11-02 (PR #40) |
 | (h) WGBO en KNGF-beroepsregels | nooit apart |
 | (i) begrijpelijkheid (B1) | nooit apart |
 
-Volgende run: (f) cookies en lokale opslag, daarna (h) WGBO en (i) B1.
+Volgende run: (h) WGBO en KNGF, daarna (i) B1 en (b) verwerkersovereenkomst.
 
 ## Open
 
+- **MIDDEL — therapeut kan de app-opslag op een apparaat niet met één knop wissen (2026-11-06).**
+  De app bewaart in de browser de kaarten met naam, leeftijd en casus (`fysiplan_kaarten`,
+  `fysiplan_state`), notities, eigen oefeningen en foto's (IndexedDB `fysiplan`) en de
+  praktijksessie (`fp_praksessie`). Dat staat nu in de privacyverklaring (#opslag) met het advies
+  een eigen apparaat met schermslot te gebruiken. Een knop "Wis Fysiplan van dit apparaat" (bij
+  uitloggen of in Help) hoort in `public/index.html`; wacht tot PR #41 daar gemerged of gesloten is.
+- **LAAG — patiëntopslag (/k) is functioneel, geen toestemming nodig (art. 11.7a lid 3 Tw).**
+  Gecontroleerd 2026-11-06: geen cookies op /k, alleen localStorage (taal, lettergrootte, stem,
+  vinkjes, "te zwaar", privacyregel gezien, app-uitnodiging) en de offline-cache van de
+  service worker. Geen analyse, geen derden behalve video's pas na tikken (al in de verklaring).
+  Bron: Telecommunicatiewet art. 11.7a; AP, "Cookies" (autoriteitpersoonsgegevens.nl).
 - **LAAG — download bevat media als pad, niet als bestand (2026-11-06).** `/v2/gegevens/download`
   geeft kaarten, aantikken, eigen oefeningen, sjablonen, profiel en logboek als JSON; eigen
   video's, foto's en het logo staan erin als pad. Voor inzage (art. 15) volstaat dat meestal,
@@ -45,6 +56,13 @@ Volgende run: (f) cookies en lokale opslag, daarna (h) WGBO en (i) B1.
 
 ## Opgelost
 
+- **MIDDEL — gewiste kaart bleef offline op de telefoon van de patiënt staan.** De service
+  worker hield de kopie van `/api/kaart?id=…` (roepnaam, oefeningen, pijnscores) en `/k/<id>`
+  na wissen of verlopen; offline toonde de telefoon hem nog, ondanks "verdwijnt vanzelf".
+  OPGELOST 2026-11-06: bij 404/410 wist de werker alles van die kaart uit de cache en de kaart
+  wist haar eigen vinkjes in localStorage. Privacyverklaring kreeg een eerlijke sectie "Cookies
+  en opslag op je apparaat" (de oude zin "onthoudt alleen je taal, je vinkjes en de
+  lettergrootte" was onvolledig). Test: `scripts/test-kaart-weg.mjs` (in test:privacy en CI).
 - **HOOG — praktijk kon niet alles exporteren of wissen (art. 15/17/20, art. 28 lid 3 g AVG).**
   OPGELOST 2026-11-06: scriptloze pagina `/v2/gegevens` (praktijknaam + wachtwoord, zelfde
   inlogrem en audit). Download = alles van de praktijk als JSON zonder wachtwoordhashes;

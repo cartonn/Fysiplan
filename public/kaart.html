@@ -943,6 +943,8 @@
   // vult 's nachts weer leeg. Als álle oefeningen af zijn, bevestigt dat vanzelf
   // de dag-teller ("ik heb vandaag geoefend"), zodat de therapeut het meekrijgt.
   function oefDaanSleutel(){return 'fp_oefdaan_'+(id||'x');}
+  // kaart bestaat niet meer: wat deze telefoon over juist die kaart onthield, gaat ook weg
+  function vergeetKaartHier(){try{['fp_oefdaan_','fp_zwaar_','fp_priv_'].forEach(function(p){localStorage.removeItem(p+(id||'x'));});}catch(e){}}
   function leesOefDaan(){
     var vandaag=dagStr(Date.now());
     try{
@@ -2342,7 +2344,7 @@
       fetch('/v2/oefeningen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
       ,loadMobileReview().catch(function(){mediaReviewReady=false;})
     ]).then(function(res){
-      if(!res[0]||!res[0].ok){if(res[0]&&res[0].status===404)document.getElementById('fout').style.display='block';else toonStoring();return;}
+      if(!res[0]||!res[0].ok){if(res[0]&&res[0].status===404){document.getElementById('fout').style.display='block';vergeetKaartHier();}else toonStoring();return;}
       K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1],ai:!!res[0].ai};
       // Komt het stemmanifest pas na het tekenen binnen, dan zetten we alleen de wachtende
       // luisterregels om (herstelNoorKnoppen), dezelfde weg als een latere geslaagde poging.
