@@ -9,8 +9,12 @@
 //   2. 785559c: precies twee oefeningen hebben bewust een ander lijnbeeld dan V1
 //      (content/v2-avatar-overrides.json, per exerciseId gebonden aan paden en sha256 van
 //      kaart-, V2-lijn-, V1-lijn- en pijlbeeld; lib/v2-overrides.js controleert dat).
+//   3. 2026-11-06: nieuwe lijntekeningen voor oefeningen die niet in V1 staan
+//      (content/nieuwe-lijntekeningen.json, per oefening img-pad en sha256); die levert de
+//      server precies op dat pad.
 // Elke andere afwijking van V1 is een fout. Deze controle versoepelt de regel dus niet: hij
 // rekent per oefening vooruit wat de server moet leveren en eist exact dat.
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { assertV2Override, loadV2Overrides } from "../lib/v2-overrides.js";
@@ -25,22 +29,38 @@ export const VASTGELEGDE_UITZONDERINGEN = Object.freeze(["fp_514654a0d4181742", 
 // beeldbestanden (sha256). Gooit bij elke afwijking.
 export async function laadGecontroleerdeUitzonderingen(root) {
   const lees = async (pad) => JSON.parse(await readFile(join(root, pad), "utf8"));
-  const [overrides, v2, v1, arrows] = await Promise.all([
-    loadV2Overrides(root), lees("public/oefeningen-v2.json"), lees("public/oefeningen.json"), lees("content/beginhouding-pijl.json")
+  const [overrides, v2, v1, arrows, nieuwRegister] = await Promise.all([
+    loadV2Overrides(root), lees("public/oefeningen-v2.json"), lees("public/oefeningen.json"), lees("content/beginhouding-pijl.json"),
+    lees("content/nieuwe-lijntekeningen.json")
   ]);
   for (const override of overrides.values()) await assertV2Override(root, override, v2, v1, arrows);
-  return { overrides, arrows };
+  const v1Namen = new Set(v1.map((e) => e.naam));
+  const v2PerNaam = new Map(v2.map((e) => [e.naam, e]));
+  const nieuw = new Map();
+  for (const n of nieuwRegister.lijntekeningen) {
+    if (v1Namen.has(n.naam)) throw new Error(`${n.naam}: staat in V1 en hoort niet bij de nieuwe lijntekeningen`);
+    if (v2PerNaam.get(n.naam)?.img !== n.img) throw new Error(`${n.naam}: img in oefeningen-v2.json wijkt af van ${n.img}`);
+    const sha = createHash("sha256").update(await readFile(join(root, "public", n.img))).digest("hex");
+    if (sha !== n.sha256) throw new Error(`${n.naam}: ${n.img} wijkt af van de vastgelegde sha256`);
+    nieuw.set(n.naam, n);
+  }
+  return { overrides, arrows, nieuw };
 }
 
 // manifest en v1Manifest zijn wat de server levert (/v2/oefeningen.json, /oefeningen.json).
 // Geeft de exerciseIds van de toegepaste uitzonderingen terug; gooit bij elke afwijking.
-export function controleerGeleverdeLijnbeelden({ manifest, v1Manifest, arrows, overrides }) {
+export function controleerGeleverdeLijnbeelden({ manifest, v1Manifest, arrows, overrides, nieuw = new Map() }) {
   const v1Img = new Map(v1Manifest.map((entry) => [entry.naam, entry.img]));
   const pijlBijLijn = new Map(arrows.entries.map((entry) => [entry.source, entry]));
   const fouten = [];
   const toegepast = [];
   for (const entry of manifest) {
     const v1 = v1Img.get(entry.naam);
+    const nieuwe = nieuw.get(entry.naam);
+    if (!v1 && nieuwe) {
+      if (entry.img !== "/v2/" + nieuwe.img) fouten.push(`${entry.naam}: levert ${entry.img}, verwacht nieuwe lijntekening /v2/${nieuwe.img}`);
+      continue;
+    }
     if (!v1) { fouten.push(`${entry.naam}: staat niet in V1`); continue; }
     const override = !entry.coreExerciseId && overrides.get(entry.exerciseId);
     if (override) {

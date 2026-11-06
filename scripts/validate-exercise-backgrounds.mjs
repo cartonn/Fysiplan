@@ -12,6 +12,21 @@ const report = JSON.parse(await readFile(join(root, "content", "oefenbeeld-backg
 const arrows = JSON.parse(await readFile(join(root, "content", "beginhouding-pijl.json"), "utf8"));
 // Alleen deze vastgelegde oefeningen mogen in V2 een ander lijnbeeld hebben dan in V1.
 const v2Overrides = await loadV2Overrides(root);
+// Nieuwe lijntekeningen (2026-11-06) voor uitbreidingsoefeningen zonder avatarkaart: het
+// record heeft dan bewust geen kaartImg, alleen het vastgelegde lijnbeeld (pad + sha256).
+// Zodra de avatar er is, krijgt het record weer een kaartImg en verdwijnt het uit dit register.
+const nieuweLijntekeningen = new Map(JSON.parse(await readFile(join(root, "content", "nieuwe-lijntekeningen.json"), "utf8"))
+  .lijntekeningen.map((entry) => [entry.naam, entry]));
+const nieuwGeldig = [];
+async function controleerNieuweLijntekening(exercise) {
+  const entry = nieuweLijntekeningen.get(exercise.naam);
+  if (exercise.kaartImg) throw new Error(`Nieuwe lijntekening met kaartImg (haal hem uit content/nieuwe-lijntekeningen.json): ${exercise.naam}`);
+  if (exercise.img !== entry.img) throw new Error(`Nieuwe lijntekening op een ander pad dan vastgelegd: ${exercise.naam}`);
+  const bytes = await readFile(join(root, "public", exercise.img));
+  if (createHash("sha256").update(bytes).digest("hex") !== entry.sha256) throw new Error(`Nieuwe lijntekening gewijzigd na vastleggen: ${exercise.naam}`);
+  const metadata = await sharp(bytes).metadata();
+  if (metadata.width !== 800 || metadata.height !== 1200) throw new Error(`Verkeerd formaat nieuwe lijntekening: ${exercise.naam}`);
+}
 
 if (report.schemaVersion !== 1 || report.assetVersion !== 7 || report.background !== "#FFFFFF") {
   throw new Error("Oefenbeeldrapport heeft een onbekende versie of achtergrond");
@@ -56,7 +71,11 @@ await Promise.all(legacyCatalogue.map(async (exercise) => {
 
 const expansionRatios = [];
 const pendingExpansion = [];
+for (const naam of nieuweLijntekeningen.keys()) {
+  if (!top500Expansion.some((exercise) => exercise.naam === naam)) throw new Error(`Nieuwe lijntekening hoort bij geen uitbreidingsoefening: ${naam}`);
+}
 await Promise.all(top500Expansion.map(async (exercise) => {
+  if (nieuweLijntekeningen.has(exercise.naam)) { await controleerNieuweLijntekening(exercise); nieuwGeldig.push(exercise.naam); return; }
   if (!exercise.kaartImg || exercise.img !== linePathForColor(exercise.kaartImg) || !exercise.kaartImg.endsWith("-avatar-v8.jpg")) {
     throw new Error(`Verkeerde v8-kaartkoppeling voor ${exercise.naam}`);
   }
@@ -85,6 +104,7 @@ const pendingPairs = [];
 let legacyPairs = 0;
 let correctedLegacyPairs = 0;
 await Promise.all(catalogue.map(async (exercise) => {
+  if (nieuweLijntekeningen.has(exercise.naam)) return; // hierboven volledig gecontroleerd
   const isLegacy = !exercise.coreExerciseId;
   const override = isLegacy ? v2Overrides.get(exercise.exerciseId) : null;
   const expectedLine = override ? override.lineImg : isLegacy ? v1ByName.get(exercise.naam)?.img : linePathForColor(exercise.kaartImg);
@@ -138,4 +158,5 @@ const bereik = (waarden) => waarden.length
 console.log(`Legacy-oefenbeelden geldig: ${legacyCatalogue.length}/215 op #FFFFFF; minimum witvlak ${ratios[0]}; mediaan ${ratios[Math.floor(ratios.length / 2)]}.`);
 console.log(`Top-500-uitbreidingsbeelden geldig: ${expansionRatios.length}/285 op #FFFFFF; nog niet gepubliceerd: ${pendingExpansion.length}; ${bereik(expansionRatios)}.`);
 console.log(`V2-beeldparen geldig: ${legacyPairs + correctedLegacyPairs + pairRatios.length}/500; nog niet gepubliceerd: ${pendingPairs.length}; ${legacyPairs} legacykaarten gebruiken exact de V1-afbeelding, ${correctedLegacyPairs} een vastgelegde V2-correctie.`);
+console.log(`Nieuwe lijntekeningen zonder avatarkaart: ${nieuwGeldig.length}/${nieuweLijntekeningen.size} geldig (pad, sha256, 800x1200).`);
 console.log(`V2-uitzonderingen: ${v2Overrides.size} expliciet vastgelegd en gebonden aan paden, sha256 (kaart-, lijn-, V1- en pijlbeeld) en stabiele ids.`);

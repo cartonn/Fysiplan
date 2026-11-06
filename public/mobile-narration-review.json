@@ -11,7 +11,7 @@
   "changedTextPolicy": "A changed text hash does not clear a hold. Resolve and explicitly review before recording.",
   "summary": {
     "rawV2Entries": 604,
-    "effectiveEntries": 319,
+    "effectiveEntries": 446,
     "held": 15,
     "clinicalApproved": 0,
     "v1V2TextDifferences": 0,

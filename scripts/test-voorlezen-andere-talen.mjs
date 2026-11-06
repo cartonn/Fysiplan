@@ -162,8 +162,8 @@ for(const taal of TALEN){
     if(weg){overgeslagen++;wegIds.add(e.exerciseId);}else gelezen++;
     if(r.ctx.bezigLezen)vm.runInContext('stopLezen()',r.ctx);
   }
-  assert.equal(gelezen+overgeslagen,319);
+  assert.equal(gelezen+overgeslagen,review.entries.length); // 319 V1-beelden + nieuwe lijntekeningen
   // open bronkeuze (2026-11-03): Back extension en Rug extensie worden net zo overgeslagen
   for(const id of ['fp_a0a18c0c13673d38','fp_7b07f346644f9c17'])assert.ok(wegIds.has(id),id+' overgeslagen');
-  console.log(`Voorlezen in andere talen: per oefening dezelfde regel als de kaartknoppen en het Nederlands (${gelezen} voorgelezen, ${overgeslagen} overgeslagen van 319); gemengd, alles tegengehouden, 8 talen en controle niet te laden getest; zonder houds exact de bestaande voorlezing.`);
+  console.log(`Voorlezen in andere talen: per oefening dezelfde regel als de kaartknoppen en het Nederlands (${gelezen} voorgelezen, ${overgeslagen} overgeslagen van ${review.entries.length}); gemengd, alles tegengehouden, 8 talen en controle niet te laden getest; zonder houds exact de bestaande voorlezing.`);
 }

@@ -42,7 +42,10 @@ for (const name of ['Med ball obliques cross', 'Med ball swing', 'Med ball lunge
   'Mob back cat/cow', 'Seated band leg curl', 'Standing chair heel/toe']) {
   assert(review.holds.some(h => h.name === name), name);
 }
-assert.equal(available.filter(e => v1.find(x => x.naam === e.naam)?.uitleg !== e.uitleg).length, 0);
+// nieuwe lijntekeningen (content/nieuwe-lijntekeningen.json) horen bij oefeningen die niet in V1 staan
+const nieuweLijn = new Set((await read('content/nieuwe-lijntekeningen.json')).lijntekeningen.map(n => n.naam));
+assert.equal(available.filter(e => !nieuweLijn.has(e.naam)).filter(e => v1.find(x => x.naam === e.naam)?.uitleg !== e.uitleg).length, 0);
+assert.equal(available.filter(e => nieuweLijn.has(e.naam) && v1.some(x => x.naam === e.naam)).length, 0);
 // Check every current audio clip, not a fixed 61: later safe generation may add clips.
 for (const clip of clips) {
   const entry = available.find(e => e.naam === clip.name);
