@@ -228,6 +228,37 @@ __INHOUD__
 </main>
 <!--/blok-->
 
+<!--blok:gegevens-->
+<main class="smal">
+  <div>
+    <span class="etiket">Gegevens van je praktijk</span>
+    <h1>Alles meenemen of alles wissen.</h1>
+    <p class="lead">Je praktijk is verantwoordelijk voor de gegevens van je pati&euml;nten. Hier download je alles wat Fysiplan voor je praktijk bewaart, of wis je het in &eacute;&eacute;n keer. Je hebt het wachtwoord van de praktijk nodig.</p>
+    __MELDING__
+    <div class="blad" style="margin-top:28px">
+      <h2>Alles downloaden</h2>
+      <p class="klein" style="font-size:14.5px">Een bestand (JSON) met je kaarten en wat pati&euml;nten aantikten, je eigen oefeningen, sjablonen, praktijkgegevens en het logboek van je account. Handig voor een inzageverzoek of v&oacute;&oacute;r je stopt. Bewaar het veilig: er staan gezondheidsgegevens in.</p>
+      <form method="post" action="/v2/gegevens/download" style="margin-top:12px">
+        <div class="veld"><label for="dl_praktijk">Praktijknaam</label><input id="dl_praktijk" name="praktijk" maxlength="80" autocomplete="organization" required value="__V_PRAKTIJK__"/></div>
+        <div class="veld" style="margin-top:12px"><label for="dl_ww">Wachtwoord van de praktijk</label><input id="dl_ww" name="wachtwoord" type="password" autocomplete="current-password" required/></div>
+        <div class="knoppen"><button class="knop omlijnd" type="submit">Download alles</button></div>
+      </form>
+    </div>
+    <div class="blad" style="margin-top:28px">
+      <h2>Alles wissen</h2>
+      <p class="klein" style="font-size:14.5px">Dit wist meteen alle kaarten van je praktijk (de links werken daarna niet meer), eigen oefeningen met foto&rsquo;s, eigen video&rsquo;s, sjablonen, je logo en praktijkgegevens, het wachtwoord en het logboek. Dit kun je niet ongedaan maken. In de dagelijkse reservekopie staat het nog hooguit 7 dagen. Kopieer eerst naar je dossier wat je moet bewaren.</p>
+      <form method="post" action="/v2/gegevens/wissen" style="margin-top:12px">
+        <div class="veld"><label for="ws_praktijk">Praktijknaam</label><input id="ws_praktijk" name="praktijk" maxlength="80" autocomplete="organization" required value="__V_PRAKTIJK__"/></div>
+        <div class="veld" style="margin-top:12px"><label for="ws_ww">Wachtwoord van de praktijk</label><input id="ws_ww" name="wachtwoord" type="password" autocomplete="current-password" required/></div>
+        <div class="veld" style="margin-top:12px"><label for="ws_zeker">Typ ter bevestiging: <b>WISSEN</b></label><input id="ws_zeker" name="zeker" maxlength="20" autocomplete="off" required/></div>
+        <div class="knoppen"><button class="knop oranje" type="submit">Wis alles van mijn praktijk</button></div>
+      </form>
+    </div>
+    <p class="klein" style="margin-top:22px">Een losse kaart wis je in de app met &ldquo;Verwijderen&rdquo;. Je proefaanmelding (naam, e-mail, telefoon) wis je via <a href="/v2/proef">Mijn proef</a>. Meer in de <a href="/privacy#rechten">privacyverklaring</a>.</p>
+  </div>
+</main>
+<!--/blok-->
+
 <!--blok:bericht-->
 <main class="smal">
   <div>

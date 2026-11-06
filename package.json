@@ -38,7 +38,7 @@
     "test:ahmed-notities": "node scripts/test-ahmed-notities.mjs",
     "test:proef": "node scripts/test-proef.mjs && node scripts/test-proef-poort.mjs",
     "test:proefpoort": "node scripts/test-proef-poort.mjs",
-    "test:privacy": "node scripts/test-privacy.mjs",
+    "test:privacy": "node scripts/test-privacy.mjs && node scripts/test-praktijkgegevens.mjs",
     "test:beheer": "node scripts/test-beheersleutel.mjs",
     "test:sweep": "node scripts/test-sweep-kaart.mjs",
     "test:mobile": "node scripts/test-byte-range.mjs && node scripts/test-mobile-media-review.mjs && node scripts/test-v2-avatar-mapping.mjs && node scripts/test-v2-uitzondering-mutaties.mjs && node scripts/test-v2-lijnbeeld-levering.mjs &&node scripts/test-mobile-narration-review.mjs && node scripts/test-mobile-media-controls.mjs && node scripts/test-noor-voorlezen-holds.mjs && node scripts/test-voorlezen-andere-talen.mjs && node scripts/test-youtube-uitwijk.mjs && node scripts/test-mobile-pose-layout.mjs && node scripts/test-houdingvolgorde.mjs && node scripts/test-mobile-merk.mjs && node scripts/test-noor-audio.mjs && node scripts/test-noor-knoppen-herstel.mjs && node scripts/check-noor-assets.mjs --partial && node scripts/test-mobile-levering.mjs",

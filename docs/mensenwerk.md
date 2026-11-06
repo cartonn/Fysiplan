@@ -4,6 +4,14 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Stoppende praktijk: wissen kan nu zelf (legal, 2026-11-06)
+Verwerkersovereenkomst art. 10 belooft dat kaarten binnen 30 dagen na het einde gewist worden.
+Een praktijk kan dat nu zelf (en vooraf alles downloaden) op https://fysiplan.nl/v2/gegevens.
+Zeg dat in je opzegbevestiging. Wist een praktijk het niet zelf, dan moet jij het binnen 30 dagen
+regelen; vraag de praktijk dan om het via die pagina te doen, of laat een ontwikkelroutine een
+beheerroute bouwen. Laat de jurist ook kijken of de logboekregels (zonder naam) en de
+reservekopie van 7 dagen goed in de tekst staan.
+
 ### Algemene voorwaarden (legal, 2026-11-06)
 Op https://fysiplan.nl/voorwaarden staat een concept, duidelijk gemarkeerd. Vul deze keuzes in
 (of laat een jurist ze voorstellen); ze staan in de tekst als oranje invulplek in
