@@ -10,32 +10,32 @@ daaruit tot en met 2026-11-06.
 |---|---|
 | (a) beheer-endpoints en de admin-sleutel | 2026-11-06 (deze backlog, PR "security: beheersleutel") |
 | (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-03 |
-| (c) proef-tokens en verlopen proeven | 2026-11-06 (PR #47, proefslot op account) |
+| (c) proef-tokens en verlopen proeven | 2026-11-06 (PR #47 proefslot; daarna opnieuw aanmelden) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-10-27 |
 | (e) uploads (video, logo, opname /o) | 2026-11-04 |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-10-24 |
 | (g) security-headers, CSP, cookies, CSRF | 2026-10-31 |
-| (h) foutmeldingen die stacktraces of paden lekken | nooit apart |
+| (h) foutmeldingen die stacktraces of paden lekken | 2026-11-06 (runtime-fuzz 60 schrijfroutes, geen lek) |
 | (i) denial of service: grote bodies, opslaggroei | 2026-10-25 |
 | (j) npm audit | onbekend |
 
-Volgende run: (h) foutmeldingen, daarna (j) npm audit en (f) injectie/XSS.
+Volgende run: (j) npm audit en (f) injectie/XSS, daarna (d) gedeelde kaarten.
 
 ## Open
 
-- **HOOG — proef overnemen met alleen het e-mailadres** (gebruikers-sweep 2026-11-06, Sanne). Opnieuw
-  aanmelden op /v2/proef met hetzelfde e-mailadres (andere naam/telefoon, praktijknaam leeg) geeft
-  direct een nieuwe proefcookie voor de bestaande proef: de tweede persoon ziet de praktijknaam,
-  overschrijft naam en telefoon van de eerste, en kan via /v2/proef?mijn=1 de gegevens wissen.
-  server.js rond `Object.values(proeven).find(x => x.email === w.email)`. Fix: bij een bestaand adres
-  geen cookie geven maar een inloglink per mail, of een nieuwe aparte proef zonder de oude gegevens.
 - **HOOG — praktijknaam is een wereldwijde sleutel** (sweep 2026-11-06, Sanne). Wie een naam als eerste
   beveiligt, sluit elke andere praktijk met die naam buiten ("Deze praktijk is beveiligd. Log in…");
   een naam kan zo vooraf worden gekaapt. Ook wisselt de praktijk stil als de therapeut de naam op de
   kaart wijzigt. server.js `pk = cleanName(b.praktijk).toLowerCase()` en de 409 bij claimen. Grote
   ontwerpkeuze (account-id los van de weergavenaam); eerst met Ahmed afstemmen.
-- **MIDDEL — `/api/kaart/afspraak` met een verkeerd type wist de afspraak** (sweep, Jayden). `t: "abc"`
-  of `{}` wordt via `Number(...)||0` een 0 = weghalen; verwacht 400. Alleen de eigen praktijk kan dit.
+- **LAAG — opnieuw aanmelden verraadt of een e-mailadres al een proef heeft** (2026-11-06). Sinds de
+  fix hieronder krijgt een bekend adres "Met dit e-mailadres loopt al een proef" en een nieuw adres
+  direct de app. Onvermijdelijk zolang aanmelden zonder mailbevestiging direct toegang geeft; de
+  pagina noemt geen naam of praktijk. Fix (eventueel): ook nieuwe aanmeldingen pas na een maillink.
+- **LAAG — wissen via /v2/gegevens haalt ook `acc.proef` weg** (sanity PR #48, 2026-11-06). Na
+  "alles wissen" is de praktijknaam vrij en draagt een nieuw account met die naam geen proefslot meer.
+  Zelfde soort als "proef wissen en opnieuw aanmelden" hieronder; alleen relevant zonder betaalpoort.
+  Fix: bij wissen een sha256 van de praktijknaam + proefeinde bewaren tot de bewaartermijn om is.
 - **LAAG — `/api/opname/upload` staat niet in `PROEF_SCHRIJFROUTES`**: een opname-token van vlak voor
   het verlopen blijft nog ~15 min bruikbaar (sweep, Mark).
 
@@ -66,6 +66,14 @@ Volgende run: (h) foutmeldingen, daarna (j) npm audit en (f) injectie/XSS.
   laat zien hoe het wel kan; overstappen kan later per beheerroute.
 
 ## Opgelost
+
+- **HOOG — proef overnemen met alleen het e-mailadres** (gebruikers-sweep 2026-11-06, Sanne). Opnieuw
+  aanmelden met een bestaand adres gaf direct een proefcookie, liet naam/telefoon overschrijven en
+  gaf via /v2/proef?mijn=1 toegang tot wissen. Fix: zonder geldige proefcookie van díe proef geen
+  cookie en geen wijziging, maar een eenmalige link (24 uur, mailrem 3/uur) naar het echte adres.
+  OPGELOST 2026-11-06 PR "security: proef niet over te nemen met alleen het e-mailadres". Test: `npm run test:proef`.
+- **MIDDEL — `/api/kaart/afspraak` met een verkeerd type wiste de afspraak** (sweep, Jayden). Alleen
+  0/null/leeg haalt weg; tekst, object of lijst geeft 400. OPGELOST 2026-11-06, zelfde PR. Test: `npm run test:proef`.
 
 - **KRITIEK — prototype pollution via `/api/kaart/vertaal?taal=__proto__`** (gebruikers-sweep
   2026-11-06, Jayden). `TALEN["__proto__"]` is truthy, dus de taalcheck liet het door; met een AI-sleutel

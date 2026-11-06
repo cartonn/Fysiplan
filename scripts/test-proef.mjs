@@ -179,12 +179,34 @@ try {
   const zonder = await (await fetch(origin + "/v2/app")).text();
   assert.doesNotMatch(zonder, /FYSIPLAN_PROEF=/);
 
-  // nog een keer aanmelden met hetzelfde adres: dezelfde proef, geen nieuwe melding
+  // nog een keer aanmelden met hetzelfde adres vanaf hetzelfde apparaat: dezelfde proef, geen nieuwe melding
   const mails = mail.length;
-  const opnieuw = await formulier({ email: "sanne@gmail.com", naam: "Sanne de Vries", tel: "0612345679", akkoord: "1", vwo: "1" });
+  const opnieuw = await formulier({ email: "sanne@gmail.com", naam: "Sanne de Vries", tel: "0612345679", akkoord: "1", vwo: "1" }, cookie);
   assert.equal(opnieuw.status, 303);
   await new Promise((r) => setTimeout(r, 150));
   assert.equal(mail.length, mails);
+
+  // security: iemand anders kent alleen het e-mailadres. Geen cookie, niets overschreven,
+  // wel een eenmalige link naar het echte adres
+  const kaper = await formulier({ email: "sanne@gmail.com", naam: "Kees Kaper", tel: "0687654321", akkoord: "1", vwo: "1" });
+  assert.equal(kaper.status, 200, "geen doorsturen naar de app");
+  assert.equal(kaper.headers.get("set-cookie"), null, "geen proefcookie voor wie alleen het adres kent");
+  const kaperHtml = await kaper.text();
+  assert.match(kaperHtml, /loopt al een proef/);
+  assert.doesNotMatch(kaperHtml, /Fysio Zuid|Sanne/, "praktijknaam en naam lekken niet");
+  const kaperOpSchijf = Object.values(JSON.parse(await readFile(join(dataDir, "proef-aanmeldingen.json"), "utf8"))).find((p) => p.email === "sanne@gmail.com");
+  assert.equal(kaperOpSchijf.naam, "Sanne de Vries", "naam niet overschreven");
+  assert.equal(kaperOpSchijf.tel, "+31612345679", "telefoon niet overschreven");
+  await wachtMail(mails + 1);
+  const linkMail = mail.slice(mails).find((m) => m.to[0] === "sanne@gmail.com");
+  assert.ok(linkMail, "eenmalige link naar het echte adres");
+  assert.doesNotMatch(linkMail.text, /Kees|0687654321/);
+  const eenmalig = linkMail.text.match(/\/v2\/proef\/terug\?code=[a-f0-9]{48}/)[0];
+  const eerste = await fetch(origin + eenmalig, { redirect: "manual" });
+  assert.equal(eerste.status, 303);
+  assert.match(eerste.headers.get("set-cookie") || "", /fpproef=[a-f0-9]{48}/);
+  const tweede = await fetch(origin + eenmalig, { redirect: "manual" });
+  assert.equal(tweede.status, 404, "de link werkt maar één keer");
 
   // landing -> proef: met een lopende proef meteen door naar de app
   const door = await fetch(origin + "/v2/proef", { headers: { cookie }, redirect: "manual" });
@@ -206,6 +228,17 @@ try {
     body: JSON.stringify({ praktijk: "Fysio Zuid", naam: "Voorbeeldpatiënt", chosen: [{ n: "Squat" }] }) });
   assert.equal(kaart.status, 200);
   const kaartId = (await kaart.json()).id;
+  // security: een verkeerd type voor t wist de afspraak niet (was: Number("abc")||0 = weghalen)
+  const afspraak = (t) => fetch(origin + "/api/kaart/afspraak", { method: "POST", headers: { "content-type": "application/json", cookie, "x-praktijk-sessie": sessie },
+    body: JSON.stringify({ praktijk: "Fysio Zuid", id: kaartId, t }) });
+  const moment = Date.now() + 3 * 864e5;
+  assert.equal((await afspraak(moment)).status, 200);
+  for (const fout of ["abc", {}, [1], "123"]) assert.equal((await afspraak(fout)).status, 400, "afspraak t=" + JSON.stringify(fout));
+  const kaartNu = JSON.parse(await readFile(join(dataDir, "kaarten.json"), "utf8"))["fysio zuid"];
+  assert.equal(Object.values(kaartNu).find((k) => k.id === kaartId).afspraak.t, Math.round(moment), "afspraak blijft staan");
+  const weg = await afspraak(0);
+  assert.equal(weg.status, 200);
+  assert.equal((await weg.json()).afspraak, null, "0 haalt de afspraak weg");
   // de proef bewaart welke versie van de verwerkersovereenkomst is geaccepteerd
   const proefOpSchijf = JSON.parse(await readFile(join(dataDir, "proef-aanmeldingen.json"), "utf8"));
   assert.match(Object.values(proefOpSchijf).find((p) => p.email === "sanne@gmail.com").vwo.versie, /^\d{4}-\d{2}-\d{2}$/);

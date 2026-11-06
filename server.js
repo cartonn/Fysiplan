@@ -3671,7 +3671,11 @@ async function afhandelen(request, response) {
       const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
       // zelfde enumeratierem als op de andere kaart-endpoints
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
-      const t = Number(b.t) || 0;
+      // weghalen alleen met een expliciete 0/null/leeg; elk ander type (tekst, object,
+      // lijst) is een fout en wist de bestaande afspraak niet
+      const leeg = b.t === 0 || b.t === null || b.t === "" || b.t === undefined;
+      if (!leeg && typeof b.t !== "number") { await sendJson(response, 400, { ok: false, fout: "Ongeldig moment." }); return; }
+      const t = leeg ? 0 : b.t;
       if (t) {
         if (!Number.isFinite(t) || t < Date.now() - 3600000 || t > Date.now() + 366 * 864e5) {
           await sendJson(response, 400, { ok: false, fout: "Kies een moment in de komende twaalf maanden." });
@@ -4323,10 +4327,35 @@ async function afhandelen(request, response) {
       return;
     }
     const w = v.waarden;
-    // hetzelfde e-mailadres opnieuw: dezelfde proef terug (geen nieuwe 14 dagen),
-    // met de nieuwste contactgegevens
+    // hetzelfde e-mailadres opnieuw: dezelfde proef terug (geen nieuwe 14 dagen).
+    // Alleen vanaf een apparaat dat die proef al heeft (geldige proefcookie) worden
+    // de contactgegevens bijgewerkt. Wie alleen het e-mailadres kent, krijgt geen
+    // cookie en verandert niets: er gaat een eenmalige inloglink naar dat adres.
     let p = Object.values(proeven).find((x) => x.email === w.email);
     const nieuw = !p;
+    if (!nieuw && proefVan(request) !== p) {
+      const nu = Date.now();
+      let gestuurd = false;
+      if (mailIngesteld() && !mailOpSlot("proef:" + p.email)) {
+        const code = randomBytes(24).toString("hex");
+        p.mailLink = { h: tokenHash(code), verloopt: nu + 24 * 3600e3 };
+        await bewaarProeven();
+        const host = eigenHost(request);
+        const kaal = host.split(":")[0];
+        proefMail(p.email, "Je link naar je Fysiplan-proef",
+          "Hoi,\n\nIemand (hopelijk jij) meldde zich opnieuw aan voor de Fysiplan-proef met dit e-mailadres.\n" +
+          "Ga verder met je proef via deze persoonlijke link (24 uur geldig, één keer te gebruiken):\n" +
+          ((kaal === "localhost" || kaal === "127.0.0.1") ? "http://" : "https://") + host + "/v2/proef/terug?code=" + code + "\n\n" +
+          "Was jij dit niet? Dan hoef je niets te doen; er is niets veranderd.\n\nGroet,\nFysiplan");
+        gestuurd = true;
+      }
+      await serveerProef(request, response, "bericht", { TITEL: "Kijk in je mail", ETIKET: "Al aangemeld", KOP: "Met dit e-mailadres loopt al een proef.",
+        TEKST: gestuurd
+          ? "We hebben een persoonlijke link naar dat adres gestuurd. Open hem op dit apparaat om verder te gaan; hij werkt 24 uur. Niets ontvangen? Kijk ook bij spam."
+          : "Open de persoonlijke link uit je welkomstmail op dit apparaat om verder te gaan, of mail ons; dan helpen we je verder.",
+        KNOP_HTML: '<a class="knop omlijnd" href="/v2">Naar de site</a>' }, 200);
+      return;
+    }
     if (nieuw) {
       if (Object.keys(proeven).length >= 5000) {
         await serveerProef(request, response, "formulier", await proefFormVars(request, w, {}, "", true,
@@ -4363,11 +4392,17 @@ async function afhandelen(request, response) {
   if (urlPath === "/v2/proef/terug" && request.method === "GET") {
     response.setHeader("cache-control", "no-store");
     const code = String(new URL(request.url, "http://x").searchParams.get("code") || "");
-    const id = /^[a-f0-9]{48}$/.test(code) ? proefTokenIndex.get(tokenHash(code)) : null;
+    let id = /^[a-f0-9]{48}$/.test(code) ? proefTokenIndex.get(tokenHash(code)) : null;
+    // of de eenmalige link na opnieuw aanmelden met een bestaand e-mailadres
+    if (!id && /^[a-f0-9]{48}$/.test(code)) {
+      const h = tokenHash(code);
+      const q = Object.values(proeven).find((x) => x.mailLink && x.mailLink.h === h && x.mailLink.verloopt > Date.now());
+      if (q) { delete q.mailLink; id = q.id; }
+    }
     if (!id || !proeven[id]) {
       if (kaartMisLimiet(request, response)) return;
       await serveerProef(request, response, "bericht", { TITEL: "Link werkt niet", ETIKET: "Link verlopen", KOP: "Deze link werkt niet meer.",
-        TEKST: "Misschien zijn je gegevens gewist, of is de link al vervangen. Meld je opnieuw aan met hetzelfde e-mailadres; je houdt dan dezelfde proef.",
+        TEKST: "Misschien zijn je gegevens gewist, of is de link al vervangen. Meld je opnieuw aan met hetzelfde e-mailadres; dan sturen we een nieuwe link en houd je dezelfde proef.",
         KNOP_HTML: '<a class="knop oranje" href="/v2/proef">Naar aanmelden</a>' }, 404);
       return;
     }
