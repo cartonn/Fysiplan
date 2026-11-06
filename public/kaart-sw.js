@@ -60,6 +60,31 @@ self.addEventListener('message', function (e) {
   if (e.waitUntil) e.waitUntil(klaar);
 });
 
+// Bewaartermijn ook op de telefoon: meldt de server dat een kaart weg is, dan halen we
+// alles van die kaart uit de offline-cache (de pagina /k/<id> en de kaartgegevens,
+// vertaling en manifest). Andere kaarten en gedeelde bestanden blijven staan.
+function kaartIdVan(url) {
+  if (!/^\/api\/kaart(\/vertaal|\/manifest)?$/.test(url.pathname)) return '';
+  var id = url.searchParams.get('id') || '';
+  return /^[a-f0-9]{8,16}$/.test(id) ? id : '';
+}
+function hoortBijKaart(u, id) {
+  if (u.pathname === '/k/' + id) return true;
+  return /^\/api\/kaart(\/vertaal|\/manifest)?$/.test(u.pathname) && u.searchParams.get('id') === id;
+}
+function vergeetKaart(id) {
+  return caches.keys().then(function (namen) {
+    return Promise.all(namen.map(function (n) {
+      return caches.open(n).then(function (c) {
+        return c.keys().then(function (ks) {
+          return Promise.all(ks.filter(function (r) { return hoortBijKaart(new URL(r.url), id); })
+            .map(function (r) { return c.delete(r); }));
+        });
+      });
+    }));
+  }).catch(function () {});
+}
+
 self.addEventListener('fetch', function (e) {
   var req = e.request;
   if (req.method !== 'GET') return;
@@ -68,6 +93,14 @@ self.addEventListener('fetch', function (e) {
   if (url.pathname.indexOf('/uploads/videos/') === 0) return;
   e.respondWith(
     fetch(req).then(function (antwoord) {
+      // de kaart bestaat niet meer (gewist, verlopen of nieuwe link): ook de offline
+      // kopie op de telefoon weg, anders blijven roepnaam en scores offline zichtbaar
+      var weg = antwoord && (antwoord.status === 404 || antwoord.status === 410) ? kaartIdVan(url) : '';
+      if (weg) {
+        var opgeruimd = vergeetKaart(weg);
+        if (e.waitUntil) e.waitUntil(opgeruimd);
+        return opgeruimd.then(function () { return antwoord; }, function () { return antwoord; });
+      }
       if (antwoord && antwoord.status === 200) {
         var kopie = antwoord.clone();
         caches.open(CACHE).then(function (c) {

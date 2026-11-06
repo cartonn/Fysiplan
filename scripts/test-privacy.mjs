@@ -217,6 +217,13 @@ try {
   assert.match(privacy, /EU West \(Amsterdam\)/);
   assert.match(privacy, /privacy@fysiplan\.nl/);
   assert.match(privacy, /90 dagen/);
+  // cookies en lokale opslag (legal 2026-11-06): eerlijk wat het apparaat bewaart
+  assert.match(privacy, /id="opslag"/);
+  assert.match(privacy, /11\.7a Telecommunicatiewet/);
+  assert.match(privacy, /fpproef/);
+  assert.match(privacy, /offline kopie/);
+  assert.match(privacy, /naam, leeftijd en casus gaan nooit naar Fysiplan/);
+  assert.doesNotMatch(privacy, /onthoudt alleen je taal/, "oude, onvolledige zin is weg");
   const vwo = await (await fetch(origin + "/verwerkersovereenkomst")).text();
   assert.match(vwo, /subverwerker/i);
   assert.match(vwo, /48 uur/);

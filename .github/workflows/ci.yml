@@ -34,3 +34,4 @@ jobs:
       - run: npm run test:offline
       - run: npm run test:tablet
       - run: node scripts/test-praktijkgegevens.mjs
+      - run: node scripts/test-kaart-weg.mjs
