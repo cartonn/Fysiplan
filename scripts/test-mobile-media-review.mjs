@@ -69,7 +69,7 @@ const BRONKEUZE=new Map([
 for(const [id,name,source] of [['fp_013ba6ad937cc9d9','Dips','images/bovenste-extremiteit/dips-avatar-v7.jpg'],
   ['fp_f227db5fcf245d9c','Triceps dips','images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg'],
   ['fp_7dc1478e2b3c17b0','Step up with knee raise','images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg'],
-  ['fp_4b99c5f11b42a30d','Standing chair shoulder rotations','images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg'],
+  ['fp_4b99c5f11b42a30d','Standing chair shoulder rotations','images/seated-chair/one-leg-standing-avatar-v8.jpg'], // sinds de 315/316-wissel (2026-11-06)
   ['fp_295fd35a63d44ef8','Chair squat','images/onderste-extremiteit/chair-squat-avatar-v7.jpg'],
   ['fp_a0a18c0c13673d38','Back extension','images/core/back-extension-avatar-v7.jpg'],
   ['fp_7b07f346644f9c17','Rug extensie','images/core/rug-extensie-avatar-v7.jpg']]){

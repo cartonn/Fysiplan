@@ -51,6 +51,56 @@
       "previousShowed": "gestrekt been naar achteren (heupextensie)",
       "nowShows": "knie naar voren omhoog, handen op de stoelleuning",
       "reason": "Beeldbestanden van hip extension en knee lift waren onderling verwisseld; de tekst hoort bij het andere beeld."
+    },
+    {
+      "exerciseId": "fp_14c75a700561d59f",
+      "name": "One leg standing",
+      "kaartImg": "images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg",
+      "assetSha256": "8290b9e1fe168d92837c72a096dbc84276ec0e70f40de714b6e265b83e7f4e0b",
+      "previousKaartImg": "images/seated-chair/one-leg-standing-avatar-v8.jpg",
+      "previousAssetSha256": "9f6d3a68fac3385d0177134f1fb00f025ca5d820a9aa95b1cbb9d2e1f449a14f",
+      "lineImg": "images/seated-chair/standing-chair-shoulder-rotations-line-v1.png",
+      "lineSha256": "52fc0bb7b400812b021cfe829fd1cfbaae05ea436ada92d96a84048322808420",
+      "previousLineImg": "images/seated-chair/one-leg-standing-line-v1.png",
+      "v1LineImg": "images/seated-chair/one-leg-standing-line-v1.png",
+      "v1LineSha256": "a6fef55a649b6e01a48103f4ac9697457b9aa1b05d1b80df269f6f81845a8144",
+      "arrow": {
+        "id": "316",
+        "img": "images/beginhouding-pijl-v1/316.webp",
+        "sha256": "70bcb8c37debe97d387a6045292ac38bd47e5654e4f9d770ac80aaac4b44ad1d",
+        "previousSource": "images/seated-chair/one-leg-standing-line-v1.png",
+        "note": "Pijlbeeld is per oefeningnaam getekend en toont de juiste beweging; alleen de sleutel verschuift mee met het lijnbeeld, zodat de server hetzelfde pijlbeeld blijft leveren."
+      },
+      "explanationExpects": "op één been staan naast de stoel, rugleuning licht vast",
+      "previousShowed": "armen in goalpost-houding (schouderrotatie), in de avatar bovendien op één been",
+      "nowShows": "op één been naast de stoel, één hand op de rugleuning",
+      "reason": "Beeldbestanden van One leg standing en Standing chair shoulder rotations waren onderling verwisseld; de tekst hoort bij het andere beeld. Besluit eigenaar (2026-11-06, 'volg advies'): lijntekening leidend, tekeningen omwisselen.",
+      "date": "2026-11-06"
+    },
+    {
+      "exerciseId": "fp_4b99c5f11b42a30d",
+      "name": "Standing chair shoulder rotations",
+      "kaartImg": "images/seated-chair/one-leg-standing-avatar-v8.jpg",
+      "assetSha256": "9f6d3a68fac3385d0177134f1fb00f025ca5d820a9aa95b1cbb9d2e1f449a14f",
+      "previousKaartImg": "images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg",
+      "previousAssetSha256": "8290b9e1fe168d92837c72a096dbc84276ec0e70f40de714b6e265b83e7f4e0b",
+      "lineImg": "images/seated-chair/one-leg-standing-line-v1.png",
+      "lineSha256": "a6fef55a649b6e01a48103f4ac9697457b9aa1b05d1b80df269f6f81845a8144",
+      "previousLineImg": "images/seated-chair/standing-chair-shoulder-rotations-line-v1.png",
+      "v1LineImg": "images/seated-chair/standing-chair-shoulder-rotations-line-v1.png",
+      "v1LineSha256": "52fc0bb7b400812b021cfe829fd1cfbaae05ea436ada92d96a84048322808420",
+      "arrow": {
+        "id": "317",
+        "img": "images/beginhouding-pijl-v1/317.webp",
+        "sha256": "19f5ad45a58f7e14bb062270689783f8f6485cab753edc26829d6c7c7898f13c",
+        "previousSource": "images/seated-chair/standing-chair-shoulder-rotations-line-v1.png",
+        "note": "Pijlbeeld is per oefeningnaam getekend en toont de juiste beweging; alleen de sleutel verschuift mee met het lijnbeeld, zodat de server hetzelfde pijlbeeld blijft leveren."
+      },
+      "explanationExpects": "ellebogen gebogen langs het lichaam, onderarmen naar buiten draaien",
+      "previousShowed": "op één been naast de stoel (balans), geen schouderrotatie",
+      "nowShows": "lijnbeeld: armen in goalpost-houding op beide voeten; kaartbeeld: armen goed maar staat op één been (blijft tijdelijk tegengehouden)",
+      "reason": "Beeldbestanden van One leg standing en Standing chair shoulder rotations waren onderling verwisseld; de tekst hoort bij het andere beeld. Besluit eigenaar (2026-11-06, 'volg advies'): lijntekening leidend, tekeningen omwisselen.",
+      "date": "2026-11-06"
     }
   ],
   "evidence": [
@@ -59,7 +109,8 @@
     "Statische visuele ronde van 2026-11-02 (output/pose-review/static/inspection.md, nrs. 152 en 154): 'toont knieheffing' resp. 'toont heupextensie; lijkt verwisseld met 152'.",
     "Herhaald op 2026-11-03 door Claude naast de V1-lijntekeningen: beide avatars komen overeen met de lijntekening van dezelfde bestandsnaam.",
     "Coördinator heeft op 2026-11-03 de volledige originele lijntekeningen bekeken: standing-chair-hip-extension-line-v1.png toont de knie naar voren, standing-chair-knee-lift-line-v1.png het been naar achteren.",
-    "Pijlbeelden 313 (hip extension: pijl van de voet naar achteren) en 315 (knee lift: pijl bij de knie omhoog) op 2026-11-03 door Claude bekeken; ze passen bij hun eigen naam en tekst."
+    "Pijlbeelden 313 (hip extension: pijl van de voet naar achteren) en 315 (knee lift: pijl bij de knie omhoog) op 2026-11-03 door Claude bekeken; ze passen bij hun eigen naam en tekst.",
+    "2026-11-06: Claude naast de V2-lijntekeningen, avatars en pijlbeelden 316/317 (output/heygen-review/BESLISLIJST-AHMED.md, punt A): de lijntekening van One leg standing toont de schouderrotatie en omgekeerd; pijlbeelden 316/317 zijn per naam getekend en kloppen al. Besluit eigenaar via de coördinator: omwisselen."
   ],
   "knownRelatedDefectNotChanged": "De V1-lijntekeningen blijven verwisseld: public/oefeningen.json verwijst bij hip extension naar standing-chair-hip-extension-line-v1.png (knieheffing) en bij knee lift naar standing-chair-knee-lift-line-v1.png (heupextensie). V1 is bewust niet aangepast (geen toestemming); de V1-editor en V1-lijnmodus tonen dus nog de andere beweging.",
   "decidedBy": "coördinator: kaartbeeld in de opdracht van 2026-11-03 (ronde 5), lijnbeeld in de vervolgopdracht van 2026-11-03 (ronde 6, onder de bestaande toestemming om V2 te herstellen, niet V1)",

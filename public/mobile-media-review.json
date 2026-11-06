@@ -16013,14 +16013,14 @@
     {
       "exerciseId": "fp_14c75a700561d59f",
       "name": "One leg standing",
-      "source": "images/seated-chair/one-leg-standing-avatar-v8.jpg",
-      "assetSha256": "9f6d3a68fac3385d0177134f1fb00f025ca5d820a9aa95b1cbb9d2e1f449a14f",
+      "source": "images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg",
+      "assetSha256": "8290b9e1fe168d92837c72a096dbc84276ec0e70f40de714b6e265b83e7f4e0b",
       "explanationSha256": "2782ecb91b005794a85f3854d505b64fd210b52df9f410060089b82d7ddfe817",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 492,
-        "visuallyInspected": false
+        "chromaticPixels": 484,
+        "visuallyInspected": true
       },
       "width": 800,
       "height": 1200,
@@ -16031,11 +16031,13 @@
       "reasons": [
         "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
       ],
-      "observations": [],
+      "observations": [
+        "Kaartbeeld gecorrigeerd op 2026-11-06: het vorige V2-kaartbeeld (images/seated-chair/one-leg-standing-avatar-v8.jpg) toonde armen in goalpost-houding (schouderrotatie), in de avatar bovendien op één been; dit beeld toont op één been naast de stoel, één hand op de rugleuning, zoals de eigen uitleg. Het V2-lijnbeeld is op dezelfde manier gecorrigeerd. Zie content/v2-avatar-overrides.json. Het V1-lijnbeeld is niet aangepast en toont nog de andere beweging. Geen klinische goedkeuring."
+      ],
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
       },
       "brandMark": {
         "present": false,
@@ -16046,13 +16048,13 @@
     {
       "exerciseId": "fp_4b99c5f11b42a30d",
       "name": "Standing chair shoulder rotations",
-      "source": "images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg",
-      "assetSha256": "8290b9e1fe168d92837c72a096dbc84276ec0e70f40de714b6e265b83e7f4e0b",
+      "source": "images/seated-chair/one-leg-standing-avatar-v8.jpg",
+      "assetSha256": "9f6d3a68fac3385d0177134f1fb00f025ca5d820a9aa95b1cbb9d2e1f449a14f",
       "explanationSha256": "448199725c246d0e00d9f226506c0cb799b50f4af125bc8e4eb701b85a2e680d",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 484,
+        "chromaticPixels": 492,
         "visuallyInspected": true
       },
       "width": 800,
@@ -16062,14 +16064,16 @@
       "presentation": "withhold",
       "allowAutomaticPoseSplit": false,
       "reasons": [
-        "Tijdelijk tegengehouden: de figuur staat op één been naast de stoel; er is geen schouder- of onderarmrotatie afgebeeld."
+        "Tijdelijk tegengehouden: de armen staan goed (ellebogen gebogen, onderarmen naar buiten), maar de figuur staat op één been zonder de stoel; dat hoort niet bij deze oefening."
       ],
-      "observations": [],
+      "observations": [
+        "Kaartbeeld gecorrigeerd op 2026-11-06: het vorige V2-kaartbeeld (images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg) toonde op één been naast de stoel (balans), geen schouderrotatie; dit beeld toont lijnbeeld: armen in goalpost-houding op beide voeten; kaartbeeld: armen goed maar staat op één been (blijft tijdelijk tegengehouden), zoals de eigen uitleg. Het V2-lijnbeeld is op dezelfde manier gecorrigeerd. Zie content/v2-avatar-overrides.json. Het V1-lijnbeeld is niet aangepast en toont nog de andere beweging. Geen klinische goedkeuring."
+      ],
       "hold": {
         "temporary": true,
         "kind": "source-defect",
-        "source": "images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg",
-        "assetSha256": "8290b9e1fe168d92837c72a096dbc84276ec0e70f40de714b6e265b83e7f4e0b",
+        "source": "images/seated-chair/one-leg-standing-avatar-v8.jpg",
+        "assetSha256": "9f6d3a68fac3385d0177134f1fb00f025ca5d820a9aa95b1cbb9d2e1f449a14f",
         "evidence": "Onafhankelijke beoordeling op oorspronkelijke resolutie en visuele controle door de coördinator (2026-11-03); eerder gesignaleerd in de statische visuele ronde van 2026-11-02 (output/pose-review/static/inspection.md).",
         "release": "Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd."
       },

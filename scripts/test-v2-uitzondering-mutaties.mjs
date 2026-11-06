@@ -240,7 +240,7 @@ try {
     const anders = na.filter((e) => !uitzonderingen.overrides.some((o) => o.exerciseId === exerciseId(e)) && e.img !== naam(v1, e.naam).img);
     assert.deepEqual(anders.map((e) => e.naam), [], 'alle andere legacykaarten blijven exact V1');
     const rapport = JSON.parse(fs.readFileSync(path.join(root, 'content/v2-image-pair-report.json'), 'utf8'));
-    assert.deepEqual(rapport.pairs.filter((p) => p.source === 'v2-correction').map((p) => p.name).sort(), [HEUP, KNIE]);
+    assert.deepEqual(rapport.pairs.filter((p) => p.source === 'v2-correction').map((p) => p.name).sort(), ['One leg standing', HEUP, KNIE, 'Standing chair shoulder rotations']); // + het paar 315/316 (2026-11-06)
   }
 } finally {
   fs.rmSync(werk, {recursive: true, force: true});

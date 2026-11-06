@@ -15,9 +15,11 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { assertV2Override, loadV2Overrides } from "../lib/v2-overrides.js";
 
-// Standing chair hip extension en Standing chair knee lift. Een derde uitzondering vraagt
-// een bewuste wijziging hier, niet alleen een regel in content/v2-avatar-overrides.json.
-export const VASTGELEGDE_UITZONDERINGEN = Object.freeze(["fp_514654a0d4181742", "fp_5319c4700561725d"]);
+// Standing chair hip extension en Standing chair knee lift (2026-11-03), en One leg standing en
+// Standing chair shoulder rotations (2026-11-06, besluit eigenaar: lijntekening leidend). Een
+// volgende uitzondering vraagt een bewuste wijziging hier, niet alleen een regel in
+// content/v2-avatar-overrides.json.
+export const VASTGELEGDE_UITZONDERINGEN = Object.freeze(["fp_514654a0d4181742", "fp_5319c4700561725d", "fp_14c75a700561d59f", "fp_4b99c5f11b42a30d"]);
 
 // Laadt de uitzonderingen en controleert elk volledig tegen de basiscatalogi en de
 // beeldbestanden (sha256). Gooit bij elke afwijking.
