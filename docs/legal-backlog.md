@@ -22,6 +22,12 @@ Volgende run: (h) WGBO en KNGF, daarna (i) B1 en (b) verwerkersovereenkomst.
 
 ## Open
 
+- **MIDDEL — "In de praktijk" in Kaarten bewaart een volledige naam zonder roepnaamvoorstel**
+  (sweep 2026-11-06, Sanne). Print met QR en automatisch delen stellen "Henk V." voor; de knop
+  `k_save_srv` in public/index.html niet. Gevolg: "Henk de Vries" staat op de server, in het
+  overzicht en in de CSV (dataminimalisatie, art. 5 lid 1 c AVG). Ook: de voorbeeldkaart heeft
+  `cn.value='Voorbeeldpatiënt'` als echte waarde; wie erin typt, deelt "VoorbeeldpRiaatiënt", en
+  elke naamswijziging na beveiligen maakt een nieuwe gedeelde kaart (3 kaarten met dezelfde oefeningen).
 - **MIDDEL — therapeut kan de app-opslag op een apparaat niet met één knop wissen (2026-11-06).**
   De app bewaart in de browser de kaarten met naam, leeftijd en casus (`fysiplan_kaarten`,
   `fysiplan_state`), notities, eigen oefeningen en foto's (IndexedDB `fysiplan`) en de

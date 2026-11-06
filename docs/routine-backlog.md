@@ -9,25 +9,26 @@ werk voor Ahmed in `docs/mensenwerk.md`.
 
 | Flow | Desktop 1280 | iPad | iPhone SE | iPhone 14 | Pixel 7 |
 |---|---|---|---|---|---|
-| Proef aanmelden + formulierfouten | 2026-11-06 | – | – | iPhone 13: 2026-11-06 | – |
-| Welkom, praktijknaam, 12 oefeningen | 2026-11-06 | 2026-11-06 | – | – | – |
-| Printversie (lijn, kleur, compact) | 2026-11-06 | 2026-11-06 (lijn, compact) | – | – | – |
-| Beveiligen, herstelcode, inloggen 2e apparaat | 2026-11-06 | 2026-11-06 | – | – | – |
-| Delen, QR, kaartenoverzicht, CSV | 2026-11-06 | – | – | – | – |
-| Teamsjabloon, eigen oefening, eigen video | 2026-11-06 | 2026-11-06 | – | – | – |
-| Opname via telefoon /o | – | – | – | iPhone 13: 2026-11-06 | – |
-| Afspraak, seintje, signalen | 2026-11-06 | – | 2026-11-06 | 2026-11-06 | 2026-11-06 |
-| Proef bijna verlopen / verlopen | 2026-11-06 | 2026-11-06 (gespeeld via 403) | – | – | – |
-| /k: lezen, voorlezen, pijnscore, herstel, gedaan | – | – | 2026-11-06 | 2026-11-06 | 2026-11-06 |
-| /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-06 | 2026-11-06 | 2026-11-06 |
+| Proef aanmelden + formulierfouten | 2026-11-06 22u | – | – | 2026-11-06 22u | – |
+| Welkom, praktijknaam (ook leeg), 12 oefeningen | 2026-11-06 22u | 2026-11-06 | – | 2026-11-06 22u | – |
+| Printversie (lijn, kleur, compact) | 2026-11-06 22u | 2026-11-06 22u (kleur liggend) | – | 2026-11-06 22u (venster) | – |
+| Beveiligen, herstelcode, inloggen 2e apparaat | 2026-11-06 22u | 2026-11-06 22u | – | 2026-11-06 22u | – |
+| Delen, QR, kaartenoverzicht, CSV | 2026-11-06 22u | 2026-11-06 22u | – | 2026-11-06 22u | – |
+| Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-06 22u | 2026-11-06 22u | – | – | – |
+| Opname via telefoon /o | – | 2026-11-06 22u | – | iPhone 13: 2026-11-06 22u | – |
+| Afspraak, seintje, signalen | 2026-11-06 22u | 2026-11-06 22u | 2026-11-06 22u | 2026-11-06 22u | 2026-11-06 22u |
+| Proef bijna verlopen / verlopen | 2026-11-06 | 2026-11-06 (code) | – | – | – |
+| /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | – | 2026-11-06 22u | 2026-11-06 22u | 2026-11-06 22u |
+| /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-06 22u | 2026-11-06 22u | 2026-11-06 22u |
 | /k: video afspelen (eigen opname, YouTube) | – | – | 2026-11-06 | – | – |
 | /k: Duits en Arabisch (rtl) | – | – | 2026-11-06 | – | – |
-| Landing /v2 op mobiel | – | – | – | iPhone 13: 2026-11-06 | – |
+| Landing /v2 op mobiel | – | – | – | iPhone 13: 2026-11-06 | 2026-11-06 22u |
+| Therapeut-app op telefoon | – | – | – | 2026-11-06 22u | – |
 
 Volgende run: de echte verlopen-pagina (server herstarten met een proef-aanmeldingen.json met
-`verloopt` in het verleden: de server leest dat bestand alleen bij het opstarten), kleurprint op
-iPad, eigen oefening met foto via de interface, /k met een bibliotheekvideo (lokaal hebben de
-oefeningen geen video), en de therapeut-app op een telefoon.
+`verloopt` in het verleden: de server leest dat bestand alleen bij het opstarten), de therapeut-app
+op Pixel 7, /k in het Duits op Pixel, iPad-print in Safari kan niet (Chromium draait de PDF), en
+de bibliotheekvideo op /k (lokaal hebben de oefeningen geen video).
 Testtip: Playwright-telefoonprofielen staan op en-US; geef `locale: 'nl-NL'` mee voor een Nederlandse kaart.
 
 Testtip: alle agents delen localhost en dus één IP-bucket van de lees- en schrijfrem. Geef elke
@@ -41,15 +42,22 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   verbergt dan ook de eigen opname, die los staat van het beeld. De app toont de video als "aan";
   de patiënt ziet alleen "De oefenafbeelding wordt gecontroleerd". iPhone SE (Truus, 2026-11-06).
   Let op: de reviewlogica zelf niet aanraken, alleen de eigen video (`vids`) los van het beeld tonen.
-- **Proef zonder praktijknaam loopt vast.** Het formulier zegt "mag ook later"; laat je hem ook in het
-  welkomstvenster leeg, dan toont Kaarten geen beveiligingsblok en geen uitleg (`public/index.html`,
-  `if(!pr){blok.style.display='none'…`), terwijl welkomstvenster en mail naar "knop Kaarten" verwijzen. Desktop (Sanne).
-- **Therapeut-app: 429/5xx lijkt op "nog niet beveiligd" en "nog geen gedeelde kaarten".**
-  `toonPrakSlot` controleert `r.ok` niet (public/index.html, rond `api/praktijk/status`) en de
-  kaartenlijst maakt van elke fout een lege lijst (`return r.ok?r.json():[]`). Collega's denken
-  dat alles weg is of beveiligen opnieuw. Desktop. Wacht op PR #41 (zelfde bestand).
 
 ### MIDDEL
+- **App: Kaarten-venster hoger dan het scherm na beveiligen of een nieuwe herstelcode.** Titel valt
+  boven weg, "Sluiten" onder; scrollen helpt niet (`.ov` zonder `overflow-y:auto`, `.modal` zonder
+  `max-height`, public/index.html rond r. 189). Geldt voor elk hoog venster. Desktop 1280×800 (Mark).
+- **/k: pijnscore toont soms een ander cijfer dan de server bewaart.** 2 en snel 6 tikken op een
+  trage lijn: kaart toont 2, therapeut ziet 6 (mschaal-handler zonder bezig-slot of volgnummer,
+  public/kaart.html). iPhone SE (Truus).
+- **/k: lightbox op iPhone SE staand moeilijk te sluiten.** Geen sluitknop; tik op het witte paneel
+  wisselt de houding; alleen de donkere rand (~15 %, stroken van 18 px) sluit. Paneel bedekt de helft
+  van "Foto tonen" en "Luister naar uitleg". Bij 200 % tekst valt de lightbox buiten beeld. (Truus)
+- **App op iPhone 14: tikdoelen in Kaarten 15–36 px** (Uitloggen, Nieuwe herstelcode, Activiteit
+  15 px; Rapport/CSV 22 px; filterchips 24 px); Kopie en × wrappen naar een eigen regel. (Sanne)
+- **Afspraak "nog N keer" is dubbelzinnig**: bij ×4 staat er "nog 4 keer" vóór de eerste afspraak
+  (kaart.html `tekenAfspraak`/`TAFHER`, index.html `volgendeAfspraak`). Kies "afspraak 1 van 4" of
+  tel de eerstvolgende niet mee. Pixel 7, iPhone 14 (Jayden).
 - **App: proef voorbij bij sjabloon, eigen oefening, afspraak, opname** toont `alert(d.fout)` of kleine
   tekst "Kijk op fysiplan.nl/v2/proef" (geen link, altijd productie). Gebruik `toonProefVoorbij()` uit
   index.html (sinds deze run) bij elke `d.proefVerlopen`. (Mark)
@@ -94,6 +102,19 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   Al opgelost in open PR #41 (server.js `denied()` met eigen tekst); mergen of overnemen.
 
 ### LAAG
+- /k: lang woord zonder spaties in het bericht van de therapeut maakt de pagina 1818 px breed
+  (`.akaart .atekst` zonder `overflow-wrap:anywhere`); erger dan de bekende lange link. (Truus)
+- /k: pijnschaalknoppen 36×46 px op iPhone SE, schaal breekt 6+5 en "10 = ergste pijn" staat los;
+  appbanner bedekt "Neem pijn serieus" bij 8+. (Truus)
+- Proefformulier: "06 1234 5678" (placeholder en voorbeeld in de foutmelding) wordt zelf geweigerd
+  (lib/proef.js). (Sanne, Mark)
+- App op telefoon: "Test de QR op je telefoon" toont een QR en "Open op deze computer"; toetsenbordhints
+  "/ zoeken · Enter toevoegen" staan ook op de telefoon. (Sanne)
+- Kleurprint: staande afbeelding (Rugstrekken, apparaat) steekt boven de cel uit. Desktop (Sanne).
+- Dubbelklik op "Toevoegen" bij Eigen oefening: opgeslagen en daarna 409 "bestaat al" (`eo_bewaar`
+  zet `disabled` pas na FileReader). Desktop (Mark).
+- .ics: lange regels niet gevouwen (RFC 5545, 75 octets) bij een lange praktijknaam. (Jayden)
+- Prijscalculator /v2 zonder bovengrens (99999999999 therapeuten). (Jayden)
 - Dubbelklik op "In de praktijk": kaart wordt opgeslagen, daarna alert "Er is al een kaart …" (409 van de tweede POST). (Sanne)
 - Proefformulier past rare invoer stil aan (`<script>` → "scriptalert(1)/script", 10.000 tekens → 80) in plaats van te melden. (Sanne)
 - Beeldknop heet "Lijntekeningen | Avatar", landing en printvenster zeggen "kleur of lijntekening". (Sanne)
@@ -115,6 +136,19 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Opgelost
 
+- **HOOG — proef zonder praktijknaam liep vast in Kaarten.** Kaarten vraagt nu de praktijknaam
+  (min. 2 tekens) en toont daarna het beveiligingsblok. OPGELOST 2026-11-06 PR #53.
+  Test: `npm run test:praktijkslot`.
+- **HOOG — 429/5xx leek op "nog niet beveiligd" en "nog geen gedeelde kaarten".** Nu: "De server is
+  even druk / kan nu niet laden. Je kaarten zijn niet weg." met "Opnieuw proberen", en geen
+  Beveiligen-knop bij een storing. OPGELOST 2026-11-06 PR #53. Test: `npm run test:praktijkslot`.
+- **HOOG — telefoon en iPad staand: geen beeldkeuze (lijn/kleur) en geen Help** (Sanne, Mark).
+  v2.css verborg `.menu` onder 920 px; nu een eigen regel onder de knoppen. OPGELOST 2026-11-06 PR #53.
+- **HOOG — /k: "Te zwaar?" zei "Doorgegeven ✓" ook als versturen mislukte** (offline, 429, 5xx; Truus).
+  Nu pas na een 2xx, anders "Niet verstuurd. Tik opnieuw". OPGELOST 2026-11-06 PR #53.
+  Test: `npm run test:tezwaar`.
+- **LAAG — afspraak-.ics met taal=__proto__ gaf "SUMMARY:undefined"** (Jayden). `Object.hasOwn`.
+  OPGELOST 2026-11-06 PR #53.
 - **KRITIEK — verlopen proef op een tweede apparaat gaf een eindeloze herlaadlus** (Mark, iPad,
   ingelogd zonder proefcookie). De app herlaadde bij `proefVerlopen`, maar /v2/app serveert zonder
   cookie gewoon weer de app: 6 herlaadbeurten in 12 s, invoer weg. Nu een vaste melding bovenaan

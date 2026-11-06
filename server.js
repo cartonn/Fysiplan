@@ -3714,7 +3714,8 @@ async function afhandelen(request, response) {
       ar: { sum: "موعد العلاج الطبيعي", alarm1: "غدًا: موعدك مع أخصائي العلاج الطبيعي", alarm2: "قريبًا: موعدك مع أخصائي العلاج الطبيعي", desc: "موعدك. بطاقة تمارينك: " },
       uk: { sum: "Візит до фізіотерапевта", alarm1: "Завтра: візит до фізіотерапевта", alarm2: "Скоро: візит до фізіотерапевта", desc: "Твій візит. Твоя картка вправ: " }
     };
-    const taalT = AFSPRAAK_TAAL[String(q.get("taal") || "").toLowerCase()] || AFSPRAAK_TAAL.nl;
+    const taalQ = String(q.get("taal") || "").toLowerCase();
+    const taalT = (Object.hasOwn(AFSPRAAK_TAAL, taalQ) && AFSPRAAK_TAAL[taalQ]) || AFSPRAAK_TAAL.nl; // geen __proto__/constructor
     const d = new Date(found.afspraak.t);
     // De afspraak is één vast moment: tijd in Nederlandse klok mét tijdzone (TZID +
     // VTIMEZONE). Zonder tijdzone ("zwevend") leest een telefoon die op een andere
@@ -3897,7 +3898,8 @@ async function afhandelen(request, response) {
       ar: { sum: "قم بتمارينك", desc: "بطاقة تمارينك بكل التمارين والفيديوهات: ", alarm: "حان وقت تمارينك" },
       uk: { sum: "Зробити вправи", desc: "Твоя картка вправ з усіма вправами та відео: ", alarm: "Час для твоїх вправ" }
     };
-    const taalT = AGENDA_TAAL[String(q.get("taal") || "").toLowerCase()] || AGENDA_TAAL.nl;
+    const taalQ = String(q.get("taal") || "").toLowerCase();
+    const taalT = (Object.hasOwn(AGENDA_TAAL, taalQ) && AGENDA_TAAL[taalQ]) || AGENDA_TAAL.nl; // geen __proto__/constructor
     // eerstvolgend gekozen oefenmoment in Nederlandse tijd (vandaag telt mee als het tijdstip nog komt)
     const kort = { Mon: "MO", Tue: "TU", Wed: "WE", Thu: "TH", Fri: "FR", Sat: "SA", Sun: "SU" };
     const nuTijd = new Date().toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Europe/Amsterdam" });
