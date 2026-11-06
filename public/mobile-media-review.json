@@ -5084,7 +5084,7 @@
       "name": "Crunch",
       "source": "images/core/crunch-avatar-v7.jpg",
       "assetSha256": "899782a2a4ca55e93d29560e813b61a7d6d39702e21d1fad7fdeb6841f007021",
-      "explanationSha256": "3de7af249d70d48d67a288c2ad107d2b8f1742c79f6e0d12c2c91cdd7584f007",
+      "explanationSha256": "d9ee659d30b58233841650303ec18422389dc66882ff41774b4d21d911cf07d5",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -5352,7 +5352,7 @@
       "name": "Knee elbow",
       "source": "images/core/knee-elbow-avatar-v7.jpg",
       "assetSha256": "608bbc1fe6083a3b0f7a73c4bbc29ac8ddbaec1dbcc0004aa76846040c9224fb",
-      "explanationSha256": "1dd14043f86e8a55285c979c43cbe00caaaeb6067678d1a97093a1947c4ac660",
+      "explanationSha256": "a78e23b17ffc3d948063a72a1c570c3f87e19f1b804b78003f9ead7353e006c5",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -5419,7 +5419,7 @@
       "name": "Leg raises",
       "source": "images/core/leg-raises-avatar-v7.jpg",
       "assetSha256": "a9b033dacbdae0c67a6337e0623a9674e26edb2e8f3c092acf87170493ecebf2",
-      "explanationSha256": "a402d2958846fda76b1121b2a5c2a2fa71b9e842c122c639f7bacf21a2b7a25f",
+      "explanationSha256": "197e86228386380c0c171bc952b45456a20152d0737c20a890f66dd519bf5e86",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",

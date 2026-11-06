@@ -1423,6 +1423,81 @@
         "clinicalApproved": false,
         "previousSrc": null
       }
+    },
+    {
+      "name": "Crunch",
+      "text": "Crunch. Lig op je rug met je handen achter je hoofd en til je benen op met gebogen knieën, zodat je voeten in de lucht zijn. Krul je schouders rustig omhoog richting je knieën en laat je langzaam weer zakken.",
+      "src": "/audio/noor/837670fa394122da096de426441b157aaf2493cb99034b81785b97533893f32e.mp3",
+      "duration": 12.173061,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "12aff8df-90a8-4e32-860b-1c7722915471",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "47ae8a0e2adbd285dc72c4a441f9cf310415c8338444b3bf7272a055c9f8f48b",
+        "mp3Sha256": "9ffedb158f62df979e9e309e2c90936a80d139444e6b69db886b815ff7a30061",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"Krul\" als \"Kruil\")",
+        "clinicalApproved": false,
+        "previousSrc": null
+      }
+    },
+    {
+      "name": "Knee elbow",
+      "text": "Knee elbow. Lig op je rug met je handen achter je hoofd en je benen gestrekt. Breng een knie omhoog en draai je tegenovergestelde elleboog naar die knie toe, terwijl je andere been gestrekt blijft. Kom terug en wissel van kant.",
+      "src": "/audio/noor/bda6d0e203f56465e84928d24c3b2dc214120b5d8fb21f0c3f2108383da45a64.mp3",
+      "duration": 14.393469,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "d6bb7780-ec57-43c7-8a82-89b680acf17d",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "1f699e6ea0e1f391118bf7a85e621ffa6c52950f7d133ea953f6a92dbff24521",
+        "mp3Sha256": "b95e9de100e31c37f5ccf2ee0a5ef2c419dbc184fac7ef365171920b0376c64a",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"draai je\" als \"draaien\", \"elleboog\" als \"elboog\")",
+        "clinicalApproved": false,
+        "previousSrc": null
+      }
+    },
+    {
+      "name": "Leg raises",
+      "text": "Leg raises. Lig op je rug op een schuine bank en houd met je handen de bank achter je hoofd vast. Til je gestrekte benen omhoog en laat ze langzaam weer zakken zonder ze neer te leggen.",
+      "src": "/audio/noor/4dd09a4e369523b256e5671275b81d1d5da47585b0241880726c602e8327d6eb.mp3",
+      "duration": 11.389388,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "54094567-18be-47a1-a27f-a8bfaacdf053",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "e521b5605d96966ab6a43b0383cfcc028103a23489b542872337bed7efab50ff",
+        "mp3Sha256": "0bb82edde3c681c997db8cdc0158d19464af3120fe613d79aaa897d48f0da74f",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"houd\" als \"houdt\")",
+        "clinicalApproved": false,
+        "previousSrc": null
+      }
     }
   ]
 }
