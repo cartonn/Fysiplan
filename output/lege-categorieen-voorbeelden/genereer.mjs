@@ -35,7 +35,7 @@ const TEKENINGEN = [
   { nr: "04", slug: "sportrevalidatie-landing-twee-benen", refs: [STAAND],
     pose: "Front view. She stands on a low aerobic step platform, a flat exercise mat on the floor in front of it. One curved arrow goes from the step downward and forward onto the mat, showing a soft two-footed landing with knees over the toes." },
   { nr: "05", slug: "neuro-symmetrisch-opstaan-met-steun", refs: [STOEL],
-    pose: "Side view. She sits on the front part of a simple chair, both feet side by side slightly behind the knees, trunk leaning slightly forward, hands on her thighs. One curved arrow starts at her chest and points forward and upward, showing her standing up with weight equal on both legs." },
+    pose: "Side view. She sits fully UPRIGHT on the front part of a simple chair: trunk vertical, back straight, shoulders above the hips, NOT leaning forward, head level, hands resting on her thighs, both feet flat side by side slightly behind the knees. One solid black curved arrow starts at her chest and sweeps forward and then upward, showing that she will lean forward and stand up with weight equal on both legs." },
   { nr: "06", slug: "vestibulair-blikstabilisatie-horizontaal", refs: [STOEL],
     pose: "Front view. She sits upright on a simple chair, holding a small card at arm's length in front of her eyes; the card shows only the single capital letter A. Above her head is one double-headed curved arrow pointing left and right, showing the head turning side to side while the eyes stay on the letter." },
   { nr: "07", slug: "bekken-postpartum-bekkenkanteling", refs: [MAT],
