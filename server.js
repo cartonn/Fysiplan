@@ -3197,12 +3197,27 @@ async function afhandelen(request, response) {
       // de eerste en kreeg hij diens link, mét diens pijnscores. Een verlopen kaart
       // telt niet meer mee. Oudere clients sturen geen kaartId en houden het oude
       // gedrag (bijwerken op naam); overschrijf=true is de bevestiging "zelfde patiënt".
-      const bestaand = Object.hasOwn(map, kk) && (map[kk].demo || verlooptOp(map[kk]) > Date.now()) ? map[kk] : null;
+      let bestaand = Object.hasOwn(map, kk) && (map[kk].demo || verlooptOp(map[kk]) > Date.now()) ? map[kk] : null;
       if (Object.hasOwn(map, kk) && !bestaand) {
         // verlopen maar nog niet opgeruimd: als nieuwe kaart behandelen (nieuw id)
         const wegOud = Object.values(map[kk].vids || {});
         delete map[kk];
         ruimKaartVideosOp(wegOud).catch(() => {});
+      }
+      // roepnaam verbeterd ("Dirk" → "Dirck"): de editor stuurt het id van de kaart die
+      // hij bewerkt. Zonder dit maakte de nieuwe naam stil een tweede kaart met een
+      // nieuwe QR; de al geprinte QR bleef de oude inhoud tonen en de pijnscores kwamen
+      // op de oude kaart (gebruikers-sweep 2026-11-07). Is de nieuwe naam nog vrij, dan
+      // hernoemen we de bestaande kaart, zoals /api/kaart/naam doet. Het id blijft gelijk.
+      if (!Object.hasOwn(map, kk) && typeof b.kaartId === "string" && b.kaartId) {
+        const oudeSleutel = Object.keys(map).find((k) => map[k] && map[k].id === b.kaartId &&
+          (map[k].demo || verlooptOp(map[k]) > Date.now()));
+        if (oudeSleutel) {
+          map[kk] = map[oudeSleutel];
+          delete map[oudeSleutel];
+          bestaand = map[kk];
+          auditLog(pk, "kaart-hernoemd", request);
+        }
       }
       if (bestaand && typeof b.kaartId === "string" && b.kaartId !== bestaand.id && b.overschrijf !== true) {
         await sendJson(response, 409, { ok: false, bestaat: true, naam: bestaand.naam,
