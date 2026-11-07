@@ -2049,6 +2049,22 @@ bridge2.jpg</div>
       var pq=document.getElementById('pr_qr');
       pq.checked=(QR_UIT_VOOR===null||QR_UIT_VOOR!==huidigeKaartNaam().toLowerCase());
       prMelding(null);prBezig(false);
+      // Niet ingelogd bij een beveiligde praktijk: de QR-code kan er dan niet op, maar
+      // printen moet gewoon kunnen. Vink de QR-code uit en zeg hoe je hem wel krijgt.
+      var meldUit=function(){
+        if(PRAKSLOT.geclaimd&&!PRAKSLOT.ingelogd&&pq.checked){
+          pq.checked=false;
+          prMelding('Je bent niet ingelogd. Je kunt gewoon printen, alleen zonder QR-code. Wil je de QR-code erop? Log dan eerst in.',[{act:'beveilig',label:'Inloggen'}],false,true);
+        }
+      };
+      var prN=(SET.praktijk||'').trim();
+      meldUit();
+      // status hoort bij een andere (net getypte) praktijknaam: even vers ophalen
+      if(prN&&PRAKSLOT.pr!==prN){
+        fetch('api/praktijk/status?praktijk='+encodeURIComponent(prN),PGET()).then(function(r){return r.ok?r.json():null;}).then(function(d){
+          if(!d)return;PRAKSLOT.pr=prN;PRAKSLOT.geclaimd=!!d.geclaimd;PRAKSLOT.ingelogd=!!d.ingelogd;meldUit();
+        }).catch(function(){});
+      }
       openOv('ovPrint');return;
     }
     doePrint();
@@ -2295,13 +2311,13 @@ bridge2.jpg</div>
     var k=document.getElementById('pr_do');
     k.disabled=!!aan;k.textContent=aan?'Even bewaren\u2026':'Print / PDF';
   }
-  function prMelding(tekst,knoppen,metNaamveld){
+  function prMelding(tekst,knoppen,metNaamveld,geenUitweg){
     var m=document.getElementById('pr_melding');
     if(!tekst){m.hidden=true;m.innerHTML='';return;}
     m.innerHTML="<p>"+esc(tekst)+"</p>"+
       (metNaamveld?"<div class='pr-naam'><input id='pr_naam' placeholder='Roepnaam, bijv. Jan K.' autocomplete='off' aria-label='Roepnaam'/></div>":'')+
       "<div class='pr-knoppen'>"+(knoppen||[]).map(function(k){return "<button type='button' class='btn"+(k.hoofd?' primary':'')+"' data-pract='"+esc(k.act)+"'>"+esc(k.label)+"</button>";}).join('')+
-      "<button type='button' class='btn' data-pract='zonderqr'>Print zonder QR-code</button></div>";
+      (geenUitweg?'':"<button type='button' class='btn' data-pract='zonderqr'>Print zonder QR-code</button>")+"</div>";
     m.hidden=false;
     var f=document.getElementById('pr_naam');if(f)setTimeout(function(){f.focus();},30);
   }

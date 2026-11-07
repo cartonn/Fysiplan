@@ -75,6 +75,24 @@ if (pw) {
     await p.waitForFunction(() => (window.__geprint || 0) === 2, null, { timeout: 5000 });
     assert.ok(!(await p.isVisible("#ovPrint")), "venster dicht na printen");
     console.log("test-printknop: venster toont de reden en print daarna (lege roepnaam, bestaande roepnaam)");
+    // 3: niet ingelogd bij een beveiligde praktijk -> QR-code staat uit, printen werkt meteen
+    const ctx2 = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.9.7.2" } });
+    await ctx2.addInitScript(() => { try { localStorage.setItem("fysiplan_welkom_gezien", "1"); localStorage.setItem("fysiplan_release_seen", "2026-11-02-kaarten"); } catch {} window.print = () => { window.__geprint = (window.__geprint || 0) + 1; }; });
+    const q = await ctx2.newPage();
+    q.on("dialog", (d) => d.accept());
+    await q.goto(origin + "/v2/app");
+    await q.waitForSelector("[data-add]", { timeout: 15000 });
+    await q.evaluate(() => { document.querySelectorAll(".ov.on").forEach((o) => o.classList.remove("on")); const e = document.getElementById("praktijk"); e.value = "Fysio Printtest"; e.dispatchEvent(new Event("input", { bubbles: true })); });
+    await q.evaluate(() => { document.querySelectorAll(".ov.on").forEach((o) => o.classList.remove("on")); });
+    await q.click("[data-add]");
+    await q.click("#printBtn");
+    await q.waitForSelector("#pr_melding:not([hidden])", { timeout: 5000 });
+    assert.equal(await q.isChecked("#pr_qr"), false, "niet ingelogd: QR-code staat uit");
+    assert.match(await q.textContent("#pr_melding"), /niet ingelogd/, "uitleg hoe je de QR-code wel krijgt");
+    await q.click("#pr_do");
+    await q.waitForFunction(() => (window.__geprint || 0) === 1, null, { timeout: 5000 });
+    await ctx2.close();
+    console.log("test-printknop: niet ingelogd print meteen, zonder QR-code");
   } finally { await browser.close(); app.kill(); }
 }
 console.log("test-printknop: ok");
