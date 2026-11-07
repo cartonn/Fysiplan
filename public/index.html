@@ -899,21 +899,26 @@ bridge2.jpg</div>
   // bij delen, zodat de server een tweede patiënt met dezelfde roepnaam niet stil
   // over de kaart van de eerste heen schrijft (zie POST /api/kaarten).
   var KAART_ID='';
+  // versie (ts) van de gedeelde kaart zoals deze editor hem het laatst van de server
+  // kreeg. Gaat mee als basisTs: is de kaart intussen elders bewaard, dan weigert de
+  // server (409 verouderd) in plaats van de nieuwere versie en opnames te overschrijven.
+  var KAART_TS=0;
   function saveState(){
     try{
       var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
-      localStorage.setItem('fysiplan_state',JSON.stringify({chosen:chosen,client:client,grid:GRID,vids:VIDS,kaartId:KAART_ID}));
+      localStorage.setItem('fysiplan_state',JSON.stringify({chosen:chosen,client:client,grid:GRID,vids:VIDS,kaartId:KAART_ID,kaartTs:KAART_TS}));
     }catch(e){}
     planAutoDeel();
   }
-  function zetKaartId(id){
-    KAART_ID=id||'';
-    try{var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');st.kaartId=KAART_ID;localStorage.setItem('fysiplan_state',JSON.stringify(st));}catch(e){}
+  function zetKaartId(id,ts){
+    KAART_ID=id||'';KAART_TS=Number(ts)||0;
+    try{var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');st.kaartId=KAART_ID;st.kaartTs=KAART_TS;localStorage.setItem('fysiplan_state',JSON.stringify(st));}catch(e){}
   }
   function loadState(){
     try{
       var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');
       if(typeof st.kaartId==='string')KAART_ID=st.kaartId;
+      KAART_TS=Number(st.kaartTs)||0;
       if(Array.isArray(st.chosen))chosen=st.chosen.filter(function(c){return OEF[c.o]&&OEF[c.o].imgs[c.i];});
       if(st.client)CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el&&st.client[k]!=null)el.value=st.client[k];});
       if(st.grid&&typeof st.grid==='object'){GRID={rows:st.grid.rows||{},cells:st.grid.cells||{}};}
@@ -1965,7 +1970,7 @@ bridge2.jpg</div>
     var c=currentCard(naam);
     c.praktijk=(SET.praktijk||'').trim();
     if(c.client){delete c.client.c_leeftijd;delete c.client.c_cave;}
-    if(IS_V2){c.kaartId=KAART_ID||'';if(OVERSCHRIJF&&OVERSCHRIJF===String(naam).toLowerCase())c.overschrijf=true;}
+    if(IS_V2){c.kaartId=KAART_ID||'';if(KAART_ID)c.basisTs=KAART_TS||0;if(OVERSCHRIJF&&OVERSCHRIJF===String(naam).toLowerCase())c.overschrijf=true;}
     return c;
   }
   // de hint bij een serverweigering: beveiligen, botsende naam of andermans praktijk
@@ -1977,6 +1982,11 @@ bridge2.jpg</div>
     }
     if(d.bestaat){
       toonQrHint('Er is al een kaart \u201c'+(d.naam||naam)+'\u201d in je praktijk. Is dit dezelfde pati\u00ebnt? Anders: geef deze kaart een andere roepnaam, bijvoorbeeld met een initiaal.',[{act:'overschrijf',label:'Ja, die kaart bijwerken'}]);
+      return true;
+    }
+    if(d.verouderd){
+      toonQrHint((KAART_TS?'Deze kaart is intussen op een ander apparaat gewijzigd.':'Fysiplan weet niet zeker of dit de nieuwste versie van deze kaart is.')+' Open eerst de nieuwste versie, anders gaan die wijzigingen (en eigen video\u2019s) verloren.',
+        [{act:'nieuwste',label:'Open de nieuwste versie'},{act:'overschrijf',label:'Toch mijn versie bewaren'}]);
       return true;
     }
     if(d.login){toonQrHint('De praktijknaam \u201c'+pr+'\u201d is al beveiligd. Log in via Kaarten, of vul de naam van je eigen praktijk in.',[{act:'beveilig',label:'Inloggen'}]);return true;}
@@ -1996,7 +2006,7 @@ bridge2.jpg</div>
         if(!hit){zet();return;}
         fetch('api/kaart/naam',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:hit.id,naam:nieuw})})
           .then(function(r){return r.json().catch(function(){return {ok:false};});})
-          .then(function(d){if(d.ok){zetKaartId(hit.id);zet();}else toonQrHint(d.fout||'Naam wijzigen is niet gelukt.');})
+          .then(function(d){if(d.ok){zetKaartId(hit.id,hit.ts);zet();}else toonQrHint(d.fout||'Naam wijzigen is niet gelukt.');})
           .catch(function(){toonQrHint('Geen verbinding met de server.');});
       })
       .catch(zet);
@@ -2096,7 +2106,7 @@ bridge2.jpg</div>
     }
     var c=serverKaart(naam);
     // vergelijken zonder tijdstempel en kaart-id: alleen een echte wijziging wordt een POST
-    var afdruk=JSON.stringify(Object.assign({},c,{ts:0,kaartId:'',overschrijf:false}));
+    var afdruk=JSON.stringify(Object.assign({},c,{ts:0,kaartId:'',overschrijf:false,basisTs:0}));
     if(afdruk===laatsteDeel)return;
     fetch('api/kaarten',{method:'POST',headers:PJSON(),body:JSON.stringify(c)})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
@@ -2111,10 +2121,26 @@ bridge2.jpg</div>
           return;
         }
         laatsteDeel=afdruk;
-        zetKaartId(d.id);
+        zetKaartId(d.id,d.ts);OVERSCHRIJF='';
         ensureQr(function(){toonQr(d.id);});
       })
       .catch(function(){});
+  }
+  // na een 409 verouderd: de versie van de server in deze editor laden (zelfde
+  // stappen als Openen in Kaarten), zodat er niets van het andere apparaat verloren gaat
+  function openNieuwsteVersie(){
+    if(!KAART_ID)return;
+    var id=KAART_ID;
+    fetch(praktijkKaartUrl(id),PGET())
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(!d.ok){toonQrHint(d.fout||'De nieuwste versie openen is niet gelukt.');return;}
+        openCard(d.kaart);
+        zetKaartId(d.kaart.id||id,d.kaart.ts);OVERSCHRIJF='';NAAM_OK=String(d.kaart.naam||'').toLowerCase();
+        QR_UIT_VOOR=null;laatsteDeel='';
+        ensureQr(function(){toonQr(d.kaart.id||id);});
+      })
+      .catch(function(){toonQrHint('Geen verbinding met de server.');});
   }
   document.getElementById('qrBlok').addEventListener('click',function(e){
     var act=e.target.closest('[data-qract]');
@@ -2122,6 +2148,7 @@ bridge2.jpg</div>
       e.preventDefault();
       var a=act.dataset.qract,cnA=document.getElementById('c_naam');
       if(a==='beveilig')openBeveiligen(function(){laatsteDeel='';deelNu();});
+      else if(a==='nieuwste')openNieuwsteVersie();
       else if(a==='overschrijf'){OVERSCHRIJF=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
       else if(a==='roepnaam'&&cnA)roepnaamToepassen();
       else if(a==='naamok'){NAAM_OK=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
@@ -2162,7 +2189,7 @@ bridge2.jpg</div>
         }
         alert(d.fout||'De kaart bewaren voor de QR-code is niet gelukt.');return;
       }
-      if(IS_V2)zetKaartId(d.id);
+      if(IS_V2)zetKaartId(d.id,d.ts);
       if(!toonQr(d.id)){alert('De QR-code maken is niet gelukt.');return;}
       ping('kaart-opgeslagen');
       closeOv('ovPrint');doePrint();
@@ -2405,7 +2432,7 @@ bridge2.jpg</div>
         alert(d.login?'De praktijknaam \u201c'+(SET.praktijk||'')+'\u201d is al beveiligd door een andere praktijk. Vul de naam van je eigen praktijk in.':(d.fout||'De QR-code maken is niet gelukt.'));
         return;
       }
-      zetKaartId(d.id);
+      zetKaartId(d.id,d.ts);
       ensureQr(function(){
         var url=location.origin+'/k/'+d.id;
         var svg=window.FYSIQR?FYSIQR.svg(url,220):'';
@@ -2893,7 +2920,7 @@ bridge2.jpg</div>
     var c=serverKaart(naam);
     fetch('api/kaarten',{method:'POST',headers:PJSON(),body:JSON.stringify(c)})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
-      .then(function(d){cb(d);})
+      .then(function(d){if(d&&d.ok&&d.ts&&d.id===KAART_ID)zetKaartId(d.id,d.ts);cb(d);})
       .catch(function(){cb({ok:false,fout:'Geen verbinding met de server.'});});
   }
   // deel- en herinnerberichten in de taal van de patiënt: de kaart zelf is al
@@ -4096,7 +4123,7 @@ bridge2.jpg</div>
           if(!d.ok){alert('Kaart openen is niet gelukt.');return;}
           if(chosen.length&&!confirm('Huidige kaart vervangen door “'+d.kaart.naam+'”?'))return;
           openCard(d.kaart);
-          zetKaartId(d.kaart.id||'');OVERSCHRIJF='';NAAM_OK=String(d.kaart.naam||'').toLowerCase();
+          zetKaartId(d.kaart.id||'',d.kaart.ts);OVERSCHRIJF='';NAAM_OK=String(d.kaart.naam||'').toLowerCase();
           // patiëntsignalen uit de praktijkprojectie meenemen naar de editor
           if(IS_V2&&SRV_SIGNALEN[o.dataset.sopen]){SIGNAAL_KAART=SRV_SIGNALEN[o.dataset.sopen];render();}
           // de gedeelde kaart hééft al een id: zet de QR er meteen op
