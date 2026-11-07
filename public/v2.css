@@ -535,3 +535,54 @@ html.v2 .fp-kop .tb-acties #clearBtn:hover{color:#b42318;background:#fdf3f2}
   html.v2 .fp-kop>div:first-child,html.v2 .fp-teller{display:none}
   html.v2 .tb-acties{display:flex;gap:6px;flex-wrap:wrap}
 }
+
+/* ======================================================================
+   Werkvlak-indeling (2026-11-07, Ahmed): bij binnenkomst de hele A4 goed
+   zichtbaar, links een scrollbare kolom categorieën naast zoveel mogelijk
+   oefeningen. Smalle zijbalk standaard; acties direct boven de kaart.
+   ====================================================================== */
+@media screen and (min-width:1100px){
+  html.v2 .wrap{grid-template-columns:minmax(400px,430px) minmax(0,1fr);gap:14px;padding:14px 16px 16px}
+  html.v2 .col-controls{top:70px;height:calc(100vh - 84px)}
+  html.v2 .col-controls .hd{padding:11px 14px 10px}
+  html.v2 .col-controls .bd{display:grid;grid-template-columns:132px minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr);
+    column-gap:10px;padding:10px 10px 0 10px;overflow:hidden}
+  /* categorieën: eigen kolom, eigen scroll */
+  html.v2 #filters{grid-column:1;grid-row:1/4;display:flex;flex-direction:column;flex-wrap:nowrap;gap:2px;max-height:none;min-height:0;
+    overflow-y:auto;margin:0;padding:0 4px 12px 0;border-right:1px solid var(--line2);scrollbar-width:thin}
+  html.v2 #filters .chip{display:block;width:100%;text-align:left;border:0;border-radius:7px;background:transparent;color:var(--text);
+    font-size:12.5px;font-weight:500;padding:6px 8px;line-height:1.25;white-space:normal;flex:0 0 auto}
+  html.v2 #filters .chip:hover{background:#f1efe8;color:var(--ink)}
+  html.v2 #filters .chip.on{background:var(--brand-50);color:var(--brand);font-weight:650}
+  html.v2 #filters .category-heading{font-size:10px;letter-spacing:.12em;margin:10px 0 3px 8px;flex:0 0 auto}
+  html.v2 #search{grid-column:2;grid-row:1;height:36px;margin-bottom:6px!important}
+  html.v2 .smart-filters{grid-column:2;grid-row:2;margin:0 0 6px;flex-wrap:wrap;min-height:0;gap:4px}
+  html.v2 .smart-filter{padding:4px 8px;font-size:11.5px}
+  html.v2 .search-hint{display:none}
+  html.v2 .col-controls #list{grid-column:2;grid-row:3;min-height:0;height:auto;margin:0 -6px 0 0;padding:0 6px 10px 0}
+  /* compacte oefenrijen: zoveel mogelijk tegelijk in beeld */
+  html.v2 .row{gap:9px;padding:5px 6px;border-radius:10px}
+  html.v2 .row .thumb{width:44px!important;height:44px!important;flex:0 0 44px;border-radius:8px}
+  html.v2 .row .nm{font-size:13px;line-height:1.25}
+  html.v2 .row .nm small{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  html.v2 .row .add{width:28px;height:28px;border-radius:8px;font-size:16px}
+  html.v2 .row .fav{width:24px;height:24px;font-size:16px}
+  html.v2 .row .video-ok{margin-top:2px;padding:1px 6px;font-size:10px}
+
+  /* rechts: actiebalk boven de kaart, de A4 past in het scherm */
+  html.v2 #a4wrap{padding:10px 14px 14px;overflow:auto}
+  html.v2 #a4wrap .fp-kop{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 0 10px;margin:0}
+  html.v2 #a4wrap .fp-kop>div:first-child{display:none}
+  html.v2 #a4wrap .fp-rechts{flex-direction:row-reverse;align-items:center;justify-content:space-between;width:100%;gap:12px}
+  html.v2 #a4wrap .tb-acties{flex-wrap:nowrap;gap:6px}
+  html.v2 #a4wrap .tb-acties .btn{height:32px;padding:0 11px;font-size:12.5px}
+  html.v2 #a4wrap .fp-teller{display:flex;white-space:nowrap}
+  html.v2 #a4wrap::before{display:none}
+  html.v2 #a4{zoom:var(--a4z,1)}
+}
+@media screen and (min-width:1100px) and (max-width:1279px){
+  html.v2 .wrap{grid-template-columns:360px minmax(0,1fr)}
+  html.v2 .col-controls .bd{grid-template-columns:112px minmax(0,1fr)}
+  html.v2 #a4wrap .tb-acties .btn{padding:0 9px}
+  html.v2 #a4wrap .fp-teller .fp-balk{display:none}
+}
