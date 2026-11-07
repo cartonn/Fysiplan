@@ -27,6 +27,7 @@
   header.topbar .menu .mi{cursor:pointer;padding:6px 10px;border:0;background:transparent;color:inherit;font:inherit;border-radius:8px;transition:.15s}
   header.topbar .menu .mi:hover{background:var(--brand-50);color:var(--brand-700)}
   header.topbar .spacer{flex:1}
+  header.topbar .tb-acties{display:flex;align-items:center;gap:18px}
   header.topbar button{font:inherit}
   .btn{padding:8px 14px;border:1px solid var(--line);background:var(--panel);border-radius:9px;cursor:pointer;color:var(--text);font-weight:500;box-shadow:var(--sh-sm);transition:.15s}
   .btn:hover{background:#f8fafc;border-color:#d0d5dd}
@@ -277,6 +278,7 @@
   </div>
   <div class="menu"><button type="button" class="mi" id="menuHelp">Help</button></div>
   <div class="spacer"></div>
+  <div class="tb-acties">
   <button class="btn" id="uploadBtn">Plaatjes uploaden</button>
   <button class="btn" id="addBtn">+ Oefening toevoegen</button>
   <button class="btn" id="eigenOefBtn" style="display:none">+ Eigen oefening</button>
@@ -284,6 +286,7 @@
   <button class="btn" id="sjabBtn" style="display:none">Sjablonen</button>
   <button class="btn" id="kaartenBtn">Kaarten</button>
   <button class="btn" id="clearBtn">Wis kaart</button>
+  </div>
   <button class="btn primary" id="printBtn">Print trainingsschema (PDF)</button>
 </header>
 <div id="proefBalk" class="proefbalk no-print" role="status" hidden>
@@ -721,6 +724,7 @@ bridge2.jpg</div>
 <div class="ov" id="ovKaarten">
   <div class="modal">
     <h3>Kaarten</h3>
+    <div class="k-eigen">
     <label>Huidige kaart opslaan als</label>
     <div style="display:flex;gap:8px">
       <input type="text" id="k_naam" placeholder="bijv. cliëntnaam of programmanaam" style="flex:1"/>
@@ -730,6 +734,7 @@ bridge2.jpg</div>
     <div id="k_result" style="margin-top:6px;font-size:12px;color:var(--muted)"></div>
     <label style="margin-top:12px;display:block">Opgeslagen kaarten <span style="font-weight:400;color:var(--muted)">(alleen op dit apparaat)</span></label>
     <div id="k_lijst" style="max-height:220px;overflow:auto"></div>
+    </div>
     <div id="k_srv" style="display:none">
       <label style="margin-top:14px;display:block">Kaarten van de praktijk <span id="k_srv_naam" style="font-weight:400;color:var(--muted)"></span></label>
       <div style="font-size:12px;color:var(--muted);margin:2px 0 4px">Gedeeld binnen je praktijk: wie bij deze praktijk inlogt, ziet deze kaarten op elk apparaat. Op de server staan de roepnaam, de oefeningen, het doel en de opmerking; leeftijd en casus niet.</div>
@@ -1154,6 +1159,10 @@ bridge2.jpg</div>
     // het EPD levert de volledige naam; op de kaart komt alleen roepnaam + initiaal
     vul('c_naam',kaartLabelVan(epdVoorinvulData.client));
     vul('c_doel',epdVoorinvulData.doel);
+  }
+  if(window.FYSIPLAN_V2){
+    var _pb=document.getElementById('printBtn');_pb.textContent='Printen';_pb.title='Print het trainingsschema of bewaar het als PDF';
+    document.getElementById('eigenOefBtn').textContent='Eigen oefening';
   }
   if(USE_V2_LIBRARY){
     var _beeldKeuze=document.getElementById('beeldKeuze');
@@ -2770,7 +2779,11 @@ bridge2.jpg</div>
       // andere naam, dan zie je hier bij welke praktijk je werkt
       var bij=PRAKSLOT.naam&&PRAKSLOT.naam.toLowerCase()!==String(PRAKSLOT.pr||'').toLowerCase()?' bij \u201c'+esc(PRAKSLOT.naam)+'\u201d':'';
       var als=PRAKSLOT.wie?' als '+esc(PRAKSLOT.wie):'';
-      st.innerHTML="🔒 Beveiligd en ingelogd"+als+bij+". <a href='#' id='ps_team' title='Collega\u2019s uitnodigen, rollen en je eigen login'>Team</a> · <a href='#' id='ps_uit'>Uitloggen</a> · <a href='#' id='ps_wtoon'>Wachtwoord wijzigen</a> · <a href='#' id='ps_hctoon' title='Herstelcode kwijt? Maak ingelogd een nieuwe; de oude vervalt direct'>Nieuwe herstelcode</a> · <a href='#' id='ps_acttoon' title='Recente accountactiviteit: logins, wijzigingen en geweigerde pogingen, met gemaskeerd IP'>Activiteit</a> · <a href='#' id='ps_wis' title='Wist je login en alles wat Fysiplan op deze computer bewaart'>Wis Fysiplan van dit apparaat</a>";
+      var initialen=String(PRAKSLOT.wie||PRAKSLOT.naam||PRAKSLOT.pr||'?').trim().split(/\s+/).map(function(w){return w.charAt(0);}).join('').slice(0,2).toUpperCase();
+      st.innerHTML="<div class='ps-wie'><span class='ps-av' aria-hidden='true'>"+esc(initialen)+"</span><span>"+(PRAKSLOT.wie?esc(PRAKSLOT.wie):'Ingelogd met het praktijkwachtwoord')+
+        "<small>"+esc(PRAKSLOT.naam||PRAKSLOT.pr||'')+"</small></span><span class='ps-slot'>🔒 Beveiligd</span></div>"+
+        "<span class='sr-only'>Beveiligd en ingelogd"+als+bij+".</span>"+
+        "<div class='ps-acties'><a href='#' id='ps_team' title='Collega\u2019s uitnodigen, rollen en je eigen login'>Team</a><a href='#' id='ps_wtoon'>Wachtwoord wijzigen</a><a href='#' id='ps_hctoon' title='Herstelcode kwijt? Maak ingelogd een nieuwe; de oude vervalt direct'>Nieuwe herstelcode</a><a href='#' id='ps_acttoon' title='Recente accountactiviteit: logins, wijzigingen en geweigerde pogingen, met gemaskeerd IP'>Activiteit</a><a href='#' id='ps_uit'>Uitloggen</a><a href='#' id='ps_wis' title='Wist je login en alles wat Fysiplan op deze computer bewaart'>Wis Fysiplan van dit apparaat</a></div>";
       form.style.display='none';
       var u=document.getElementById('ps_uit');if(u)u.addEventListener('click',function(e){e.preventDefault();prakLogout();});
       var wt=document.getElementById('ps_wtoon');if(wt)wt.addEventListener('click',function(e){e.preventDefault();var f=document.getElementById('ps_wijzig');f.style.display=f.style.display==='none'?'flex':'none';});
@@ -2779,12 +2792,12 @@ bridge2.jpg</div>
       var tm=document.getElementById('ps_team');if(tm)tm.addEventListener('click',function(e){e.preventDefault();openTeam();});
       var wa=document.getElementById('ps_wis');if(wa)wa.addEventListener('click',function(e){e.preventDefault();wisApparaat();});
       // met een eigen login heb je geen herstelcode van de praktijk nodig
-      if(PRAKSLOT.wie){var hcl=document.getElementById('ps_hctoon');if(hcl){hcl.previousSibling&&hcl.previousSibling.nodeType===3&&hcl.previousSibling.remove();hcl.remove();}}
+      if(PRAKSLOT.wie){var hcl=document.getElementById('ps_hctoon');if(hcl)hcl.remove();}
     }else{
       document.getElementById('ps_vwolab').style.display='none';
       document.getElementById('ps_wijzig').style.display='none';
       document.getElementById('ps_hcform').style.display='none';
-      st.innerHTML="🔒 Deze praktijk is beveiligd. Log in om de gedeelde kaarten te zien. <a href='#' id='ps_vergeten'>Wachtwoord vergeten?</a> · <a href='#' id='ps_nieuw' title='Heet jouw praktijk toevallig hetzelfde als een andere? Beveilig dan je eigen praktijk met deze naam.'>Andere praktijk met deze naam?</a> · <a href='#' id='ps_wis' title='Wist alles wat Fysiplan op deze computer bewaart'>Wis Fysiplan van dit apparaat</a>";
+      st.innerHTML="🔒 Deze praktijk is beveiligd. Log in om de gedeelde kaarten te zien.<div class='ps-acties'><a href='#' id='ps_vergeten'>Wachtwoord vergeten?</a><a href='#' id='ps_nieuw' title='Heet jouw praktijk toevallig hetzelfde als een andere? Beveilig dan je eigen praktijk met deze naam.'>Andere praktijk met deze naam?</a><a href='#' id='ps_wis' title='Wist alles wat Fysiplan op deze computer bewaart'>Wis Fysiplan van dit apparaat</a></div>";
       var wa2=document.getElementById('ps_wis');if(wa2)wa2.addEventListener('click',function(e){e.preventDefault();wisApparaat();});
       var nw=document.getElementById('ps_nieuw');
       if(nw)nw.addEventListener('click',function(e){e.preventDefault();PRAKSLOT.nieuw=true;PRAKSLOT.nieuwVoor=PRAKSLOT.pr;rendPrakSlot();});
@@ -2837,20 +2850,22 @@ bridge2.jpg</div>
           "<label style='display:flex;gap:6px;align-items:flex-start;margin-top:6px'><input type='checkbox' id='tm_eregels' style='width:auto;height:auto;margin-top:2px'/><span>Ik heb de werkregels gelezen en houd me eraan.</span></label>"+
           "<button class='btn primary' id='tm_edo' type='button' style='margin-top:8px'>Maak mijn login</button></div>";
       }
-      h+="<div style='font-weight:600;color:var(--ink);margin-bottom:4px'>Mensen in "+esc(d.praktijk||'je praktijk')+"</div>";
+      h+="<div class='tm-kop' style='font-weight:600;color:var(--ink);margin-bottom:4px'>Mensen in "+esc(d.praktijk||'je praktijk')+"</div>";
       if(!d.leden.length)h+="<div>Nog niemand met een eigen login.</div>";
       h+=d.leden.map(function(l){
         var zelf=d.ik&&d.ik.id===l.id;
         var st=l.status==='actief'?(l.laatst?'laatst ingelogd '+new Date(l.laatst).toLocaleDateString('nl-NL',{day:'numeric',month:'short'}):'actief'):'uitgenodigd';
         var rol=d.beheer&&!zelf?"<select data-tmrol='"+esc(l.id)+"' style='width:auto'><option value='therapeut'"+(l.rol==='therapeut'?' selected':'')+">Therapeut</option><option value='beheerder'"+(l.rol==='beheerder'?' selected':'')+">Beheerder</option></select>"
-          :"<span>"+(l.rol==='beheerder'?'Beheerder':'Therapeut')+"</span>";
-        return "<div style='display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid var(--line)'>"+
-          "<div style='flex:1;min-width:0'><b style='color:var(--ink)'>"+esc(l.naam||l.email)+(zelf?' (jij)':'')+"</b><div style='font-size:11.5px'>"+esc(l.email)+" · "+esc(st)+"</div></div>"+rol+
-          (d.beheer&&!zelf?"<button class='btn' type='button' data-tmweg='"+esc(l.id)+"' aria-label='verwijderen' title='Verwijderen; de kaarten blijven bij de praktijk'>&times;</button>":"")+"</div>";
+          :"<span class='tm-rol'>"+(l.rol==='beheerder'?'Beheerder':'Therapeut')+"</span>";
+        var ini=String(l.naam||l.email||'?').trim().split(/\s+/).map(function(w){return w.charAt(0);}).join('').slice(0,2).toUpperCase();
+        return "<div class='tm-lid"+(l.status==='actief'?'':' uitgenodigd')+"' style='display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid var(--line)'>"+
+          "<span class='tm-av' aria-hidden='true'>"+esc(ini)+"</span>"+
+          "<div class='tm-naam' style='flex:1;min-width:0'><b style='color:var(--ink)'>"+esc(l.naam||l.email)+(zelf?' (jij)':'')+"</b><div style='font-size:11.5px'>"+esc(l.email)+" · "+esc(st)+"</div></div>"+rol+
+          (d.beheer&&!zelf?"<button class='btn tm-weg' type='button' data-tmweg='"+esc(l.id)+"' aria-label='verwijderen' title='Verwijderen; de kaarten blijven bij de praktijk'>&times;</button>":"")+"</div>";
       }).join('');
       if(d.beheer){
-        h+="<div style='margin-top:12px;font-weight:600;color:var(--ink)'>Collega uitnodigen</div>"+
-          "<div style='display:flex;gap:6px;flex-wrap:wrap;margin-top:4px'>"+
+        h+="<div class='tm-kop' style='margin-top:12px;font-weight:600;color:var(--ink)'>Collega uitnodigen</div>"+
+          "<div class='tm-uitnodig' style='display:flex;gap:6px;flex-wrap:wrap;margin-top:4px'>"+
           "<input id='tm_unaam' placeholder='Naam' style='flex:1;min-width:110px'/>"+
           "<input id='tm_uemail' type='email' placeholder='E-mail' style='flex:1;min-width:160px'/>"+
           "<select id='tm_urol' style='width:auto'><option value='therapeut'>Therapeut</option><option value='beheerder'>Beheerder</option></select>"+
@@ -3060,11 +3075,12 @@ bridge2.jpg</div>
     var dat=function(v){try{return new Date(String(v).slice(0,10)+'T12:00:00Z').toLocaleDateString('nl-NL',{day:'numeric',month:'long',year:'numeric'});}catch(e){return v;}};
     var stuk={av:'Algemene voorwaarden',vwo:'Verwerkersovereenkomst'};
     var lijst=(a.wijzigingen||[]).map(function(w){return '<li><b>'+esc(stuk[w.stuk]||w.stuk)+' ('+esc(dat(w.versie))+')</b>: '+esc(w.tekst)+'</li>';}).join('');
-    var h="<b>De voorwaarden zijn bijgewerkt.</b> Dit is er veranderd:<ul style='margin:6px 0 6px 18px;padding:0'>"+lijst+"</ul>"+
+    var n=(a.wijzigingen||[]).length;
+    var h="<b>De voorwaarden zijn bijgewerkt.</b> <details><summary>Bekijk wat er veranderd is ("+n+")</summary><ul style='margin:6px 0 6px 18px;padding:0'>"+lijst+"</ul></details>"+
       "Lees ze na: <a href='/voorwaarden' target='_blank' rel='noopener'>algemene voorwaarden</a> · <a href='/verwerkersovereenkomst' target='_blank' rel='noopener'>verwerkersovereenkomst</a>.";
     if(a.beheer){
-      h+="<label style='display:flex;align-items:flex-start;gap:6px;margin:8px 0 6px;font-weight:400'><input type='checkbox' id='ps_akvink' style='width:auto;height:auto;flex:0 0 auto;margin-top:2px'/><span>Ik ga namens de praktijk akkoord met de algemene voorwaarden en de verwerkersovereenkomst.</span></label>"+
-        "<button class='btn' id='ps_akdo' type='button'>Akkoord</button> <span id='ps_akmsg'></span>";
+      h+="<div class='ak-rij'><label style='display:flex;align-items:flex-start;gap:6px;margin:0;font-weight:400;flex:1;min-width:220px'><input type='checkbox' id='ps_akvink' style='width:auto;height:auto;flex:0 0 auto;margin-top:2px'/><span>Ik ga namens de praktijk akkoord met de algemene voorwaarden en de verwerkersovereenkomst.</span></label>"+
+        "<button class='btn primary' id='ps_akdo' type='button'>Akkoord</button></div><span id='ps_akmsg'></span>";
     }else h+="<div style='margin-top:6px'>Een beheerder van je praktijk gaat hier namens de praktijk mee akkoord. Je kunt gewoon doorwerken.</div>";
     el.innerHTML=h;el.style.display='block';
     var b=document.getElementById('ps_akdo');
@@ -3458,22 +3474,23 @@ bridge2.jpg</div>
         var mijn=(PRAKSLOT.wie||'').split(' ')[0].toLowerCase();
         var lijst=d.kaarten.filter(function(k){return !(INBOX_ALLEEN_MIJN&&mijn)||String(k.behandelaar||'').toLowerCase().indexOf(mijn)===0;});
         ib.style.display='';
-        var h="<div style='display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap'>"+
-          "<label style='margin:0'>Nieuw van patiënten"+(d.kaarten.length?" <span style='background:var(--danger,#b4372f);color:#fff;border-radius:99px;padding:1px 7px;font-size:11px'>"+d.kaarten.length+"</span>":"")+"</label>"+
-          (mijn?"<label style='margin:0;font-weight:400;font-size:12px;display:flex;gap:5px;align-items:center'><input type='checkbox' id='ib_mijn' style='width:auto;height:auto'"+(INBOX_ALLEEN_MIJN?' checked':'')+"/>Alleen mijn patiënten</label>":"")+"</div>";
+        var initj=function(n){return String(n||'?').trim().split(/\s+/).map(function(w){return w.charAt(0);}).join('').slice(0,2).toUpperCase();};
+        var h="<div class='ib-kop' style='display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap'>"+
+          "<label style='margin:0'>Nieuw van patiënten"+(d.kaarten.length?" <span class='ib-tel'>"+d.kaarten.length+"</span>":"")+"</label>"+
+          (mijn?"<label class='ib-mijn' style='margin:0;font-weight:400;font-size:12px;display:flex;gap:5px;align-items:center'><input type='checkbox' id='ib_mijn' style='width:auto;height:auto'"+(INBOX_ALLEEN_MIJN?' checked':'')+"/>Alleen mijn patiënten</label>":"")+"</div>";
         if(!lijst.length){
-          h+="<div class='hint' style='margin:4px 0 0'>Niets nieuws. Alles is afgehandeld.</div>";
+          h+="<div class='ib-leeg'>Niets nieuws. Alles is afgehandeld.</div>";
         }else{
-          h+="<div style='max-height:220px;overflow:auto;margin-top:4px'>"+lijst.map(function(k){
-            var wacht=k.wachtWerkdagen>=d.herinnerNa?"<span class='btn' style='font-size:11px;padding:2px 8px;cursor:default;background:#fbeedd;border-color:#ecd2ad;color:#8a4d0f' title='Wacht al "+k.wachtWerkdagen+" werkdagen op afhandeling'>wacht "+k.wachtWerkdagen+" werkdagen</span>":"";
-            var dos=k.inDossier?"<span class='btn' style='font-size:11px;padding:2px 8px;cursor:default'>in dossier</span>":"";
-            return "<div style='padding:8px 0;border-top:1px solid var(--line);display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap'>"+
-              "<div style='flex:1;min-width:160px'><b>"+esc(k.naam)+"</b>"+(k.behandelaar?" <small style='color:var(--muted)'>· "+esc(k.behandelaar)+"</small>":"")+
-              "<div style='font-size:12px;color:var(--text)'>"+k.items.map(function(i){return esc(inboxTekst(i))+" <small style='color:var(--muted)'>("+esc(wanneerTekst(i.t))+")</small>";}).join('<br/>')+"</div></div>"+
-              "<div style='display:flex;gap:5px;flex-wrap:wrap;align-items:center'>"+wacht+dos+
+          h+="<div class='ib-lijst'>"+lijst.map(function(k){
+            var wacht=k.wachtWerkdagen>=d.herinnerNa?"<span class='ib-label wacht' title='Wacht al "+k.wachtWerkdagen+" werkdagen op afhandeling'>wacht "+k.wachtWerkdagen+" werkdagen</span>":"";
+            var dos=k.inDossier?"<span class='ib-label'>in dossier</span>":"";
+            return "<div class='ib-item'><span class='ib-av' aria-hidden='true'>"+esc(initj(k.naam))+"</span>"+
+              "<div class='ib-tekst'><b>"+esc(k.naam)+"</b>"+(k.behandelaar?" <span class='ib-wie'>· "+esc(k.behandelaar)+"</span>":"")+
+              "<div class='ib-wat'>"+k.items.map(function(i){return esc(inboxTekst(i))+" <small>· "+esc(wanneerTekst(i.t))+"</small>";}).join('<br/>')+"</div></div>"+
+              "<div class='ib-knoppen'>"+wacht+dos+
               "<button class='btn' type='button' data-ibdos='"+esc(k.id)+"' title='Kopieer de samenvatting voor het EPD en zet het label In dossier'>Naar dossier</button>"+
               "<button class='btn primary' type='button' data-ibklaar='"+esc(k.id)+"' title='Gezien en afgehandeld; komt in het contactlogboek van de kaart'>Afgehandeld</button></div></div>";
-          }).join('')+"</div><div class='hint' style='margin:4px 0 0;font-size:11px'>Op volgorde van binnenkomst. Fysiplan geeft geen oordeel; de beoordeling is aan jou.</div>";
+          }).join('')+"</div><div class='ib-noot'>Op volgorde van binnenkomst. Fysiplan geeft geen oordeel; de beoordeling is aan jou.</div>";
         }
         ib.innerHTML=h;
         var cm=document.getElementById('ib_mijn');
