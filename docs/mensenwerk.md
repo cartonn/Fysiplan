@@ -18,8 +18,11 @@ Zonder sleutel verandert er niets: alleen "Ja, ik wil doorgaan" en jij belt.
    https://fysiplan.nl/v2/proef met de testbetaling van Mollie, en kijk of de mail "Betaald" komt.
 3. Daarna de **live**sleutel (`live_…`) in `MOLLIE_API_KEY`. De webhook-URL
    (`https://fysiplan.nl/api/mollie/webhook`) geeft de app zelf mee; in Mollie hoef je niets in te stellen.
-4. Vóór live: Mollie in de privacyverklaring als ontvanger noemen en de betaalwijze in de
-   voorwaarden invullen (staat in de legal-backlog).
+4. Mollie staat nu vanzelf in de privacyverklaring zodra de sleutel staat (legal, 2026-11-07), en
+   de voorwaarden beschrijven de eerste maand vooraf. Nog in te vullen in de voorwaarden (art. 4):
+   betaalwijze, factuurmoment en betaaltermijn **na** de eerste maand. Let op: de voorwaarden
+   beloven dat je praktijken laat weten voordat de automatische maandincasso begint; doe dat (of
+   laat de code het doen) vóór de eerste incasso. Laat de 7 jaar bewaren door je boekhouder bevestigen.
 **Nog niet gebouwd (volgende runs):** de maandelijkse incasso na maand 1 (Mollie-subscription op het
 mandaat), opzeggen in de app, en een factuur/btw-bon per betaling. Tot dan: de eerste maand
 loopt via Mollie, de rest regel je zelf.

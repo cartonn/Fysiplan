@@ -11,7 +11,7 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (a) privacyverklaring (art. 13/14 AVG) | 2026-11-02 (PR #40), kort herlezen 2026-11-06 |
 | (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-02 (PR #40) |
 | (c) algemene voorwaarden | 2026-11-06 (concept gebouwd, deze run) |
-| (d) code tegen tekst | 2026-11-02 (PR #40), steekproef 2026-11-06 |
+| (d) code tegen tekst | 2026-11-07 (Mollie/betalen), steekproef 2026-11-06 |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-06 (PR praktijkgegevens, deze run) |
 | (f) cookies en lokale opslag | 2026-11-06 (PR opslag, deze run) |
 | (g) MDR en AI-verordening | 2026-11-02 (PR #40) |
@@ -19,13 +19,9 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (i) begrijpelijkheid (B1) | nooit apart |
 
 Volgende run: (i) B1, daarna (b) verwerkersovereenkomst en (g) MDR/AI-verordening.
+PR #41 staat sinds 2026-11-02 open op `public/index.html`; de punten die daarop wachten blijven liggen.
 
 ## Open
-
-- **MIDDEL — Mollie als ontvanger noemen vóór online betalen aangaat** (praktijk-routine, 2026-11-07).
-  Met `MOLLIE_API_KEY` stuurt de app naam, e-mail en praktijknaam van de contactpersoon naar Mollie
-  (klant + betaling, geen patiëntgegevens). Privacyverklaring (ontvangers, doel "betaling") en
-  algemene voorwaarden (betaalwijze, eerste maand vooraf, incasso daarna) moeten dat noemen.
 
 - **MIDDEL — "In de praktijk" in Kaarten bewaart een volledige naam zonder roepnaamvoorstel**
   (sweep 2026-11-06, Sanne). Print met QR en automatisch delen stellen "Henk V." voor; de knop
@@ -66,6 +62,17 @@ Volgende run: (i) B1, daarna (b) verwerkersovereenkomst en (g) MDR/AI-verordenin
   wissen van opnames, eigen video's en logs volgt in een latere run.
 
 ## Opgelost
+
+- **MIDDEL — Mollie niet genoemd terwijl online betalen kan (art. 13 lid 1 e AVG; art. 6:234 BW).**
+  Met `MOLLIE_API_KEY` (PR #57) gaan naam of praktijknaam, e-mail en bedrag naar Mollie, maar de
+  privacyverklaring noemde Mollie niet en de voorwaarden zeiden "We vragen geen betaalgegevens".
+  OPGELOST 2026-11-07: zodra de sleutel staat, toont `/privacy` een regel "Betaling" (wat, waarvoor,
+  hoe lang: zolang klant, daarna 7 jaar fiscale bewaarplicht, art. 52 AWR) en een alinea over
+  Mollie B.V. als zelfstandig verantwoordelijke; zonder sleutel staat Mollie er niet. Voorwaarden
+  (versie 2026-11-07) beschrijven de eerste maand vooraf via Mollie en de machtiging. Het betaalblok
+  linkt voorwaarden en privacy, en de server bewaart bij de betaling welke voorwaardenversie de
+  praktijk zag (`betaling.av`). Mollie is geen subverwerker (geen patiëntgegevens), dus de
+  subverwerkerslijst en de verwerkersovereenkomst veranderen niet. Test: `scripts/test-abonnement-mollie.mjs`.
 
 - **MIDDEL — seintjes, "te zwaar" en berichten verdwenen spoorloos (WGBO).** Een seintje werd
   gewist zodra de therapeut het afhandelde of beantwoordde, een bericht zodra de patiënt het
