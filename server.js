@@ -1076,8 +1076,21 @@ function schrijfLimiet(req, res) {
 // sturen Sec-Fetch-Site; we weigeren alleen als die expliciet 'cross-site' is. Ontbreekt
 // de header (oudere browser, geen browser), dan laten we door: geen gedragswijziging.
 function kruisSite(req) {
-  return String(req.headers["sec-fetch-site"] || "") === "cross-site";
+  const sfs = String(req.headers["sec-fetch-site"] || "");
+  if (sfs) return sfs === "cross-site";
+  // Oudere browsers (o.a. Safari vóór 16.4) sturen geen Sec-Fetch-Site; dan beslist
+  // Origin. Een Origin van een andere host (of "null" uit een sandbox-iframe) is van
+  // een andere website. Geen Origin (curl, oude GET-formulieren) blijft toegestaan.
+  const origin = req.headers.origin;
+  if (origin === undefined) return false;
+  if (String(origin) === "null") return true;
+  let host = "";
+  try { host = new URL(String(origin)).host.toLowerCase(); } catch { return true; }
+  return host !== String(req.headers.host || "").toLowerCase();
 }
+// een id uit een JSON-body: alleen een echte tekst telt; een lijst of object
+// (["<id>"] werd via String() stil het id) wordt een leeg id en vindt dus niets
+const idTekst = (v) => (typeof v === "string" ? v : "");
 const weigerKruis = (res) => sendJson(res, 403, { ok: false, fout: "Dit verzoek komt van een andere website en is geweigerd." });
 
 // aparte rem op mislukte kaart-opvragingen: het kaart-id is de enige sleutel tot
@@ -2421,7 +2434,7 @@ async function afhandelen(request, response) {
       const pk = cleanName(b.praktijk, 80).toLowerCase();
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const lijst = praktijkOefeningen[pk] || [];
-      const idx = lijst.findIndex((x) => x.id === String(b.id || ""));
+      const idx = lijst.findIndex((x) => x.id === idTekst(b.id));
       if (idx === -1) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden." }); return; }
       const [weg] = lijst.splice(idx, 1);
       await saveJson(praktijkOefeningenPath, praktijkOefeningen);
@@ -3426,7 +3439,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const found = vindKaart(String(b.id || ""));
+      const found = vindKaart(idTekst(b.id));
       if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const score = b.score;
       if (typeof score !== "number" || !Number.isInteger(score) || score < 0 || score > 10) {
@@ -3460,7 +3473,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const found = vindKaart(String(b.id || ""));
+      const found = vindKaart(idTekst(b.id));
       if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const score = b.score;
       if (typeof score !== "number" || !Number.isInteger(score) || score < -2 || score > 2) {
@@ -3491,7 +3504,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const found = vindKaart(String(b.id || ""));
+      const found = vindKaart(idTekst(b.id));
       if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const g = (found.gedaan = found.gedaan || []);
       const nu = Date.now();
@@ -3520,7 +3533,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const found = vindKaart(String(b.id || ""));
+      const found = vindKaart(idTekst(b.id));
       if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const oef = Array.isArray(found.chosen) ? found.chosen[Number(b.oef)] : null;
       const naam = oef ? String(oef.n || "").slice(0, 80) : "";
@@ -3552,7 +3565,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const found = vindKaart(String(b.id || ""));
+      const found = vindKaart(idTekst(b.id));
       if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const oef = Array.isArray(found.chosen) ? found.chosen[Number(b.oef)] : null;
       const naam = oef ? String(oef.n || "").slice(0, 80) : "";
@@ -3584,7 +3597,7 @@ async function afhandelen(request, response) {
       const b = JSON.parse(await readBody(request));
       const soort = String(b.soort || "");
       if (!["vraag", "pijn", "goed"].includes(soort)) { await sendJson(response, 400, { ok: false, fout: "Onbekend seintje." }); return; }
-      const found = vindKaart(String(b.id || ""));
+      const found = vindKaart(idTekst(b.id));
       if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       found.seintje = { t: Date.now(), soort };
       logContact(found, { van: "patient", soort });
@@ -3608,7 +3621,7 @@ async function afhandelen(request, response) {
       const pk = cleanName(b.praktijk, 80).toLowerCase();
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       // dezelfde enumeratierem als op de andere kaart-endpoints: bij een niet-geclaimde
       // praktijk (waar eisPraktijk niet blokkeert) mag ook dit endpoint geen ongebreidelde
       // hit/mis-orakel voor het raden van kaart-id's zijn
@@ -3635,7 +3648,7 @@ async function afhandelen(request, response) {
       const pk = cleanName(b.praktijk, 80).toLowerCase();
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const oef = b.oef == null ? "" : String(b.oef).slice(0, 80);
       if (oef && kaart.oefZwaar && Object.hasOwn(kaart.oefZwaar, oef)) delete kaart.oefZwaar[oef];
@@ -3661,7 +3674,7 @@ async function afhandelen(request, response) {
       const pk = cleanName(b.praktijk, 80).toLowerCase();
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       // zelfde enumeratierem als op de andere kaart-endpoints
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       // besturingstekens eruit en begrensd; de kaartpagina rendert het als tekst
@@ -3686,7 +3699,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const found = vindKaart(String(b.id || ""));
+      const found = vindKaart(idTekst(b.id));
       if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       found.antwoord = null;
       if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
@@ -3710,7 +3723,7 @@ async function afhandelen(request, response) {
       const pk = cleanName(b.praktijk, 80).toLowerCase();
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       // zelfde enumeratierem als op de andere kaart-endpoints
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       // besturingstekens eruit en begrensd; als platte tekst getoond in de app
@@ -3736,7 +3749,7 @@ async function afhandelen(request, response) {
       const pk = cleanName(b.praktijk, 80).toLowerCase();
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       // zelfde enumeratierem als op de andere kaart-endpoints
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       // besturingstekens eruit en kort begrensd; als platte tekst getoond in de app
@@ -3762,7 +3775,7 @@ async function afhandelen(request, response) {
       const pk = cleanName(b.praktijk, 80).toLowerCase();
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const tekst = cleanName(b.activiteit, 80);
       kaart.pskDoel = tekst || null;
@@ -3782,7 +3795,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const found = vindKaart(String(b.id || ""));
+      const found = vindKaart(idTekst(b.id));
       if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       if (!found.pskDoel) { await sendJson(response, 400, { ok: false, fout: "Er staat geen doelactiviteit op deze kaart." }); return; }
       const score = b.score;
@@ -3817,7 +3830,7 @@ async function afhandelen(request, response) {
       const pk = cleanName(b.praktijk, 80).toLowerCase();
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       // zelfde enumeratierem als op de andere kaart-endpoints
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       // weghalen alleen met een expliciete 0/null/leeg; elk ander type (tekst, object,
@@ -3924,7 +3937,7 @@ async function afhandelen(request, response) {
       const pk = cleanName(b.praktijk, 80).toLowerCase();
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const bestaat = new Set();
       for (const m of Object.values(kaarten)) for (const k of Object.values(m)) bestaat.add(k.id);
@@ -3951,7 +3964,7 @@ async function afhandelen(request, response) {
       const pk = cleanName(b.praktijk, 80).toLowerCase();
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const doel = Math.max(0, Math.min(7, Math.round(Number(b.doel) || 0)));
       if (doel) kaart.doel = doel; else delete kaart.doel;
@@ -3975,7 +3988,7 @@ async function afhandelen(request, response) {
       const pk = cleanName(b.praktijk, 80).toLowerCase();
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
+      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       if (b.archief) {
         if (!kaart.gearchiveerd) kaart.gearchiveerdOp = Date.now();
@@ -4001,7 +4014,7 @@ async function afhandelen(request, response) {
       const pk = cleanName(b.praktijk, 80).toLowerCase();
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const oudeSleutel = Object.keys(map).find((k) => map[k].id === String(b.id || ""));
+      const oudeSleutel = Object.keys(map).find((k) => map[k].id === idTekst(b.id));
       if (!oudeSleutel) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const nieuw = cleanName(b.naam, 60);
       if (!nieuw) { await sendJson(response, 400, { ok: false, fout: "Geef een kaartnaam op." }); return; }
@@ -4220,7 +4233,7 @@ async function afhandelen(request, response) {
     if (schrijfLimiet(request, response)) return;
     try {
       const b = JSON.parse(await readBody(request));
-      const found = vindKaart(String(b.id || ""));
+      const found = vindKaart(idTekst(b.id));
       if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const vraag = String(b.vraag || "").trim().slice(0, 300);
       if (vraag.length < 3) { await sendJson(response, 400, { ok: false, fout: "Typ eerst een korte vraag." }); return; }
