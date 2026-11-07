@@ -9,8 +9,8 @@ daaruit tot en met 2026-11-06.
 | Gebied | Laatst geaudit |
 |---|---|
 | (a) beheer-endpoints en de admin-sleutel | 2026-11-06 (deze backlog, PR "security: beheersleutel") |
-| (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-07 (deels: team, eigen logins, uitnodiging, herstel na gedeeld-uit) |
-| (c) proef-tokens en verlopen proeven | 2026-11-06 (PR #47 proefslot; daarna opnieuw aanmelden) |
+| (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-07 (deels: team, eigen logins, uitnodiging, herstel na gedeeld-uit; rollen op gedeeld praktijkwerk) |
+| (c) proef-tokens en verlopen proeven | 2026-11-07 (statisch: cookie/maillink-tokens alleen als sha256, max 5 per proef, eenmalige maillink 24 u, gewiste proef laat geen tokens achter; team-uitnodigen na verlopen proef: dicht) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-07 (vids-eigendom op POST /api/kaarten) |
 | (e) uploads (video, logo, opname /o) | 2026-11-07 (logo-veeg wiste logo's van andere praktijken: opgelost; opname-upload, eigen oefening, /uploads-pad: geen gat) |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-07 (runtime: payloads in alle kaartvelden, /k in nl/en/ar met vertaling, overzicht, sjablonen, eigen oefeningen, serverpagina's; geen gat) |
@@ -19,7 +19,12 @@ daaruit tot en met 2026-11-06.
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-07 (te grote body: nu 413, weglezen begrensd op 10 s en 80 MB) |
 | (j) npm audit | 2026-11-07 (sharp 0.35.3 → 0.35.5, daarna 0 meldingen) |
 
-Volgende run: (c) proef-tokens, daarna de rest van (b) (claim, inlogrem) en (h) foutmeldingen.
+Volgende run: (h) foutmeldingen, daarna de rest van (b) (claim, inlogrem) en (a) beheer.
+
+Sanity 2026-11-07 20u op #81–#85 (logo-veeg, printknop, overzicht na proef met eigen login, proefcookie wissen,
+proefaanmelding in download/wissen): overzicht-login met e-mail valt onder dezelfde rem per praktijknaam en eist een
+actief lid; `?apparaat=1` bij uitloggen zit achter `kruisSite`; download laat `tokens`/`mailLink` weg; een gewiste
+proef met betaling houdt geen apparaat-tokens. Geen gat.
 
 Sanity 2026-11-07 16u op #74–#80 (vraaghulp-grens, kaarttaal, UI-schil, avatarrondjes): geen nieuwe routes;
 nieuwe innerHTML-plekken escapen namen via `esc()`/`avRond()`. Geen gat.
@@ -43,12 +48,13 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
-- **MIDDEL — therapeut (geen beheerder) kan teamsjablonen en eigen oefeningen van de hele praktijk verwijderen of
+- **OPGELOST 2026-11-07 (deze PR) — MIDDEL — therapeut (geen beheerder) kan teamsjablonen en eigen oefeningen van de hele praktijk verwijderen of
   overschrijven** (gebruikers-sweep 2026-11-07 18u, Mark, API). `POST /api/praktijk/sjablonen/verwijder` en
   `/api/praktijk/oefeningen/verwijder` geven 200 voor rol therapeut; opnieuw delen met dezelfde naam overschrijft
   stil. Er wordt geen maker bijgehouden. server.js r. ~2840–2855 en ~2899–2918: alleen `eisPraktijk`, geen
-  `isBeheer`/maker-check. Advies: maker (lid-id) opslaan; verwijderen/overschrijven alleen maker of beheerder.
-- **LAAG — na een verlopen proef kan een beheerder nog collega's uitnodigen** (sweep 18u, Mark). `/api/praktijk/team/*`
+  `isBeheer`/maker-check. Fix: maker (lid-id, `door`) wordt opgeslagen; verwijderen geeft 403 en dezelfde naam
+  delen 409 voor een andere therapeut. Oud werk zonder maker: alleen beheerder. Test: `npm run test:gedeeldwerk`.
+- **OPGELOST 2026-11-07 (deze PR) — LAAG — na een verlopen proef kan een beheerder nog collega's uitnodigen** (sweep 18u, Mark). `/api/praktijk/team/*`
   staat niet in `PROEF_SCHRIJFROUTES` (server.js r. ~529); uitnodigen geeft 200 en de link werkt.
 
 - **MIDDEL — schrijfrem van 40 per 5 minuten per IP geldt voor een hele praktijk achter één wifi** (gebruikers-sweep
@@ -60,7 +66,7 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
   2026-11-07). `/api/praktijk/team/gedeeld-uit` met `uit:false` zet alleen de vlag terug; het oude
   wachtwoord (en de herstelcode) die een vertrokken collega kende, werken dan meteen weer.
   Fix: bij weer aanzetten een nieuw wachtwoord eisen en een nieuwe herstelcode tonen (raakt de teamkaart in de app).
-- **LAAG — team uitnodigen en eigen login maken werken ook na een verlopen proef** (sanity PR #65).
+- **OPGELOST 2026-11-07 (deze PR, dubbel met hierboven) — LAAG — team uitnodigen en eigen login maken werken ook na een verlopen proef** (sanity PR #65).
   `/api/praktijk/team/*` staat niet in `PROEF_SCHRIJFROUTES`. Geen datalek (de proef blijft voor iedereen
   dicht), wel een schrijfroute die open blijft. Fix: `uitnodigen` en `eigen-login` aan de set toevoegen.
 - **LAAG — inloggen met e-mail: tien foute pogingen zetten dat adres een kwartier op slot** (sanity PR #65).
