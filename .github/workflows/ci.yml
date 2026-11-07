@@ -35,5 +35,6 @@ jobs:
       - run: npm run test:tablet
       - run: npm run test:praktijkslot
       - run: npm run test:tezwaar
+      - run: npm run test:opname-eigen
       - run: node scripts/test-praktijkgegevens.mjs
       - run: node scripts/test-kaart-weg.mjs
