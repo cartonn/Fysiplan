@@ -3160,13 +3160,21 @@ async function afhandelen(request, response) {
         }
         // opruimen op prefix: de veeg houdt precies het logo dat het profiel nu
         // noemt en ruimt al het andere van déze slug op (ook wezen uit het
-        // verleden); andermans logo's blijven onaangeraakt
+        // verleden); andermans logo's blijven onaangeraakt. Alleen precies
+        // `logo-<slug>-<tijd>.<ext>`: de prefix "logo-fysio-" is ook het begin van
+        // "logo-fysio-noord-…" (en "logo-p-" van elke praktijkcode), en een ander
+        // profiel met dezelfde slug houdt zijn logo
         if (logoBuf) {
           try {
             const prefix = `logo-${slug(key)}-`;
             const huidig = p.logo.split("/").pop();
+            const inGebruik = new Set(Object.entries(praktijken)
+              .filter(([k, v]) => k !== key && v && typeof v.logo === "string")
+              .map(([, v]) => v.logo.split("/").pop()));
             for (const f of await readdir(uploadsDir)) {
-              if (f.startsWith(prefix) && f !== huidig) { try { await unlink(join(uploadsDir, f)); } catch {} }
+              if (!f.startsWith(prefix) || f === huidig || inGebruik.has(f)) continue;
+              if (!/^\d+\.(png|jpg)$/.test(f.slice(prefix.length))) continue;
+              try { await unlink(join(uploadsDir, f)); } catch {}
             }
           } catch {}
         }
