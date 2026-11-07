@@ -224,7 +224,31 @@ try {
   assert.match(privacy, /offline kopie/);
   assert.match(privacy, /naam, leeftijd en casus gaan nooit naar Fysiplan/);
   assert.doesNotMatch(privacy, /onthoudt alleen je taal/, "oude, onvolledige zin is weg");
+  // art. 13 AVG volledig en B1 (legal 2026-11-07): korte samenvatting bovenaan, alle
+  // rechten, antwoordtermijn, geen geautomatiseerde besluiten, of verstrekken verplicht is,
+  // en een eigen versiedatum die niet blijft hangen op die van de verwerkersovereenkomst
+  assert.match(privacy, /In het kort/);
+  for (const recht of ["inzien", "laten verbeteren", "laten wissen", "beperken", "bezwaar maken", "meenemen"]) {
+    assert.match(privacy, new RegExp("<b>" + recht + "</b>"), "recht: " + recht);
+  }
+  assert.match(privacy, /binnen een maand antwoord/);
+  assert.match(privacy, /alleen door een computer/);
+  assert.match(privacy, /zonder die gegevens kunnen we de proef niet starten/);
+  assert.match(privacy, /Versie 7 november 2026/);
+  assert.match(privacy, /Foutlog/);
+  // de foutlog belooft "zonder kaartlink": controleer de functie die het pad inkort
+  const serverBron = await readFile(join(root, "server.js"), "utf8");
+  const logPadBron = serverBron.match(/function logPad\(url\) \{[\s\S]*?\n\}/);
+  assert.ok(logPadBron, "logPad bestaat");
+  const logPad = new Function(logPadBron[0] + "; return logPad;")();
+  assert.equal(logPad("/api/kaart?id=abcDEF123456"), "/api/kaart");
+  assert.equal(logPad("/k/abcDEF123456"), "/k/…");
+  assert.equal(logPad("/o/tok123?x=1"), "/o/…");
+  assert.equal(logPad("/api/kaart/abc123/pijn"), "/api/kaart/…/pijn");
+  assert.equal(logPad("/v2/app"), "/v2/app");
+  assert.doesNotMatch(serverBron, /console\.error\("verzoek mislukt:", request\.method, request\.url/);
   const vwo = await (await fetch(origin + "/verwerkersovereenkomst")).text();
+  assert.match(vwo, /Versie 2 november 2026/, "verwerkersovereenkomst houdt haar eigen versie");
   assert.match(vwo, /subverwerker/i);
   assert.match(vwo, /48 uur/);
   // algemene voorwaarden (concept): proef en abonnement, beoogd gebruik, geen dossier,
