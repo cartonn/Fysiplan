@@ -2347,7 +2347,7 @@ bridge2.jpg</div>
     // tijdens een proef neemt het proefwelkom (met voorbeeldkaart) deze plek in
     if(welkomNodig){
       try{localStorage.setItem('fysiplan_welkom_gezien','1');}catch(e){}
-      if(!PROEF)setTimeout(function(){openOv('ovWelkom');},400);
+      if(!PROEF)openOv('ovWelkom');
     }
     // de praktijknaam uit het welkom meteen op de kaart zetten (zelfde pad als typen in het veld)
     var welkomPraktijk=function(){

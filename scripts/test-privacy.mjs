@@ -248,7 +248,9 @@ try {
   assert.equal(logPad("/v2/app"), "/v2/app");
   assert.doesNotMatch(serverBron, /console\.error\("verzoek mislukt:", request\.method, request\.url/);
   const vwo = await (await fetch(origin + "/verwerkersovereenkomst")).text();
-  assert.match(vwo, /Versie 2 november 2026/, "verwerkersovereenkomst houdt haar eigen versie");
+  const vwoVersie = serverBron.match(/const VWO_VERSIE = "(\d{4}-\d{2}-\d{2})"/)[1];
+  const vwoDatum = new Date(vwoVersie + "T12:00:00Z").toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Amsterdam" });
+  assert.ok(vwo.includes("Versie " + vwoDatum), "verwerkersovereenkomst toont haar eigen versie (" + vwoDatum + ")");
   assert.match(vwo, /subverwerker/i);
   assert.match(vwo, /48 uur/);
   // algemene voorwaarden (concept): proef en abonnement, beoogd gebruik, geen dossier,
