@@ -495,7 +495,7 @@ function betaalBlok(p) {
     (a.aantal === 1 ? " therapeut" : " therapeuten") + ", betaald tot en met " + htmlEsc(datumNl(a.betaaldTot)) + ".</p>";
   if (p.klant) return "";
   return '<form method="post" action="/v2/proef/betalen" class="blad" style="margin-top:18px">' +
-    '<h2>Direct online afrekenen</h2><p class="klein" style="font-size:14.5px">&euro; 5,99 per therapeut per maand, maandelijks opzegbaar. ' +
+    '<h2>Direct online afrekenen</h2><p class="klein" style="font-size:14.5px">&euro; 10 per therapeut per maand, exclusief btw, maandelijks opzegbaar. ' +
     "Je betaalt nu de eerste maand met iDEAL of je bankkaart; daarna gaat Fysiplan meteen verder.</p>" +
     '<p class="klein" style="font-size:14px">De betaling loopt via Mollie; je geeft daarbij een machtiging voor de volgende maanden. ' +
     'Met betalen ga je akkoord met de <a href="/voorwaarden#abonnement">algemene voorwaarden</a>. Zie ook de <a href="/privacy#betalen">privacyverklaring</a>.</p>' +

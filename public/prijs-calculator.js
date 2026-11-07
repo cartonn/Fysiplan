@@ -10,10 +10,10 @@
   var money = new Intl.NumberFormat('nl-NL', {style:'currency', currency:'EUR'});
   function render(raw) {
     var count = Number(raw);
-    var valid = /^\d+$/.test(raw) && count >= 1 && Number.isSafeInteger(count * 999);
+    var valid = /^\d+$/.test(raw) && count >= 1 && Number.isSafeInteger(count * 1000);
     error.hidden = valid;
     custom.setAttribute('aria-invalid', String(!valid));
-    total.textContent = valid ? money.format(count * 999 / 100) : '—';
+    total.textContent = valid ? money.format(count * 1000 / 100) : '—';
     explanation.textContent = valid ? 'per maand voor ' + count + (count === 1 ? ' therapeut' : ' therapeuten') + ', excl. btw.' : 'Vul een geldig aantal in om de prijs te berekenen.';
   }
   radios.forEach(function (radio) {
