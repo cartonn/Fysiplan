@@ -3811,8 +3811,9 @@ async function afhandelen(request, response) {
     const patientKaart = {};
     for (const veld of PATIENT_VELDEN) if (veld in found) patientKaart[veld] = found[veld];
     patientKaart.client = patientClient(found.client);
-    // afgeronde kaart: de patiënt ziet tot wanneer hij nog bestaat (bewaartermijn)
-    if (found.gearchiveerd && !found.demo) patientKaart.verloopt = verlooptOp(found);
+    // de patiënt ziet tot wanneer de kaart minstens bestaat (bewaartermijn): bij een
+    // afgeronde kaart en in "Mijn gegevens"
+    if (!found.demo) patientKaart.verloopt = verlooptOp(found);
     // ai-vlag: de kaartpagina toont de vraaghulp alleen als de server een AI-sleutel heeft
     // eigen oefeningen van de praktijk staan niet in de openbare bibliotheek: naam,
     // foto en uitleg reizen met de kaart mee (alleen die op déze kaart)

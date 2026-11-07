@@ -62,7 +62,8 @@
     "test:kruissite": "node scripts/test-kruissite-origin.mjs",
     "test:praktijkcode": "node scripts/test-praktijkcode.mjs",
     "test:team": "node scripts/test-team.mjs",
-    "test:inbox": "node scripts/test-inbox.mjs"
+    "test:inbox": "node scripts/test-inbox.mjs",
+    "test:patientkant": "node scripts/test-patientkant.mjs"
   },
   "engines": {
     "node": ">=20"
