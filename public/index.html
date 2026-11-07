@@ -1242,13 +1242,14 @@ bridge2.jpg</div>
   // Breed scherm: de acties staan direct boven de kaart en de hele A4 past op het scherm
   // (alleen het scherm; de print gebruikt altijd de echte maat). Smal: acties boven het werkvlak.
   var BREED=window.matchMedia?window.matchMedia('(min-width:1100px)'):null;
+  var PASBREED=window.matchMedia?window.matchMedia('(min-width:921px)'):null;
   function pasA4(){
     var kop=document.getElementById('fpKop'),wrap=document.getElementById('a4wrap'),a4=document.getElementById('a4');
     if(!kop||!wrap||!a4)return;
     var breed=BREED&&BREED.matches;
     if(breed&&kop.parentNode!==wrap)wrap.insertBefore(kop,wrap.firstChild);
     if(!breed&&kop.parentNode===wrap){var wr=document.querySelector('.wrap');wr.parentNode.insertBefore(kop,wr);}
-    if(!breed){wrap.style.removeProperty('--a4z');return;}
+    if(!(PASBREED&&PASBREED.matches)){wrap.style.removeProperty('--a4z');return;}
     var cs=getComputedStyle(wrap),padX=parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight),padY=parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom);
     var bw=wrap.clientWidth-padX-4;
     var top=wrap.getBoundingClientRect().top+window.scrollY;
