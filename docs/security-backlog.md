@@ -61,9 +61,9 @@ Volgende run: (g) headers/CSP/cookies, daarna (e) uploads en (b) accountlaag.
 
 ## Opgelost
 
-- OPGELOST 2026-11-07 PR #<nr> — te grote request-body krijgt nu een 413 met melding in plaats van een
+- OPGELOST 2026-11-07 PR #58 — te grote request-body krijgt nu een 413 met melding in plaats van een
   verbroken verbinding (ook chunked); dubbel backlogitem samengevoegd.
-- OPGELOST 2026-11-07 PR #<nr> — `/api/opname/upload` weigert na het verlopen van de proef (token onthoudt
+- OPGELOST 2026-11-07 PR #58 — `/api/opname/upload` weigert na het verlopen van de proef (token onthoudt
   proef en praktijk).
 
 - **MIDDEL — vreemde opname-video in eigen kaart zetten en daarmee laten wissen** (sweep 2026-11-06,
