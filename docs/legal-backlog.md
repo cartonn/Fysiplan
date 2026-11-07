@@ -15,10 +15,10 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-06 (PR praktijkgegevens, deze run) |
 | (f) cookies en lokale opslag | 2026-11-06 (PR opslag, deze run) |
 | (g) MDR en AI-verordening | 2026-11-02 (PR #40) |
-| (h) WGBO en KNGF-beroepsregels | nooit apart |
+| (h) WGBO en KNGF-beroepsregels | 2026-11-07 (contactlogboek in de dossiertekst) |
 | (i) begrijpelijkheid (B1) | nooit apart |
 
-Volgende run: (h) WGBO en KNGF, daarna (i) B1 en (b) verwerkersovereenkomst.
+Volgende run: (i) B1, daarna (b) verwerkersovereenkomst en (g) MDR/AI-verordening.
 
 ## Open
 
@@ -61,6 +61,20 @@ Volgende run: (h) WGBO en KNGF, daarna (i) B1 en (b) verwerkersovereenkomst.
   wissen van opnames, eigen video's en logs volgt in een latere run.
 
 ## Opgelost
+
+- **MIDDEL — seintjes, "te zwaar" en berichten verdwenen spoorloos (WGBO).** Een seintje werd
+  gewist zodra de therapeut het afhandelde of beantwoordde, een bericht zodra de patiënt het
+  wegtikte, een "te zwaar"-melding bij afhandelen. "Kopieer voor dossier" nam ze niet mee, en ze
+  stonden nergens anders. Voor de verslaglegging (art. 7:454 BW: gegevens over de gezondheid en
+  de uitgevoerde verrichtingen, voor zover nodig voor goede hulpverlening; KNGF-richtlijn
+  Fysiotherapeutische verslaglegging) hoort een gemelde pijntoename en het antwoord van de
+  therapeut in het dossier van de praktijk. OPGELOST 2026-11-07: de server houdt per kaart een
+  contactlogboek (hooguit 50 regels, zelfde bewaartermijn als de kaart, niet in de
+  patiëntroute); de dossiertekst noemt het met datum en sluit af met "Bron: Fysiplan,
+  overgenomen op …; de digitale kaart wordt na de bewaartermijn gewist". Verder gecontroleerd
+  (h): landing, app, privacyverklaring, verwerkersovereenkomst en voorwaarden zeggen overal dat
+  Fysiplan geen dossier is en dat de praktijk vastlegt in haar EPD; dat klopt met de code.
+  Test: `scripts/test-dossier-contact.mjs` (in test:privacy en CI).
 
 - **MIDDEL — gewiste kaart bleef offline op de telefoon van de patiënt staan.** De service
   worker hield de kopie van `/api/kaart?id=…` (roepnaam, oefeningen, pijnscores) en `/k/<id>`

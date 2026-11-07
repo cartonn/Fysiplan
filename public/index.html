@@ -3002,7 +3002,22 @@ bridge2.jpg</div>
       var de=new Date(lv.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});
       r.push('Ervaren herstel t.o.v. start (GROC-achtig, app-vrij aangetikt): '+lbl+' ('+sTxt+'), laatst '+de+'.');
     }
+    // contact via de kaart (WGBO): seintjes, "te zwaar" en berichten van de praktijk
+    // verdwijnen na afhandeling uit het overzicht en met de kaart na de bewaartermijn;
+    // in het dossier blijven ze, met datum en wie het meldde
+    var ct=(kaart.contact||[]).filter(function(x){return x&&x.t;});
+    if(ct.length){
+      var dc=function(t){return new Date(t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});};
+      var SOORT={vraag:'seintje: heeft een vraag',pijn:'seintje: meldt te veel pijn',goed:'seintje: het gaat goed',zwaar:'oefening te zwaar'};
+      r.push('Contact via de digitale kaart:');
+      ct.forEach(function(x){
+        if(x.van==='praktijk')r.push('  '+dc(x.t)+' praktijk: "'+String(x.tekst||'')+'"');
+        else r.push('  '+dc(x.t)+' patiënt: '+(SOORT[x.soort]||'seintje')+(x.oef?' ('+x.oef+')':''));
+      });
+    }
     if(kaart.id)r.push('Digitale kaart: '+location.origin+'/k/'+kaart.id);
+    // bron en houdbaarheid: Fysiplan is geen dossier, deze tekst is de blijvende kopie
+    r.push('Bron: Fysiplan, overgenomen op '+new Date().toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'})+'. De digitale kaart wordt na de bewaartermijn gewist; bewaar deze tekst in het dossier.');
     return r.join('\n');
   }
   // praktijkrapport: alle app-vrij gemeten uitkomsten (pijn, oefentrouw, ervaren
