@@ -195,7 +195,49 @@ function maakHerstelcode() {
   const hex = randomBytes(10).toString("hex");
   return "FP-" + [hex.slice(0, 5), hex.slice(5, 10), hex.slice(10, 15), hex.slice(15, 20)].join("-");
 }
-const praktijkGeclaimd = (pk) => !!praktijkAccounts[pk];
+const praktijkGeclaimd = (pk) => !!pk && Object.hasOwn(praktijkAccounts, pk);
+
+// ---- vaste praktijkcode, los van de naam ----
+// Vroeger wás een praktijk haar naam: de sleutel overal was de naam in kleine letters.
+// Wie een naam als eerste beveiligde, sloot elke andere praktijk met die naam buiten,
+// en een andere naam op de kaart verplaatste de therapeut stil naar een andere
+// praktijk (security-backlog HOOG, 2026-11-06). Nu:
+// - bestaande accounts houden hun sleutel (geen omzetting van data nodig);
+// - wie een naam beveiligt die al bij een account hoort, krijgt een eigen code
+//   "p-<16 hex>" met de naam alleen als weergave (acc.naam);
+// - met een praktijksessie handelt elke route voor de praktijk van die sessie,
+//   welke naam de app ook meestuurt (praktijkVan).
+const isPraktijkCode = (k) => /^p-[a-f0-9]{16}$/.test(String(k || ""));
+const nieuwePraktijkCode = () => "p-" + randomBytes(8).toString("hex");
+// de naam waaronder een account bekendstaat (kleine letters), voor inloggen op naam
+function accountNaam(pk) {
+  const a = Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk] : null;
+  return String((a && a.naam) || (isPraktijkCode(pk) ? "" : pk)).toLowerCase();
+}
+// alle beveiligde praktijken die bij een ingetikte naam horen (oude sleutel of weergavenaam)
+function accountsMetNaam(naam) {
+  const nk = cleanName(naam, 80).toLowerCase();
+  if (!nk) return [];
+  return Object.keys(praktijkAccounts).filter((k) => k === nk || accountNaam(k) === nk);
+}
+// de praktijk waarvoor dit verzoek handelt: met een geldige sessie altijd de eigen
+// praktijk, anders (onbeveiligd, v1, beheer) de naam zoals vroeger
+function praktijkVan(req, naam) {
+  const s = praktijkSessieVan(req);
+  if (s && praktijkGeclaimd(s)) return s;
+  return cleanName(naam, 80).toLowerCase();
+}
+// de naam die de praktijk zelf gebruikt (profiel, anders de naam bij het beveiligen)
+function weergaveNaam(pk) {
+  const prof = Object.hasOwn(praktijken, pk) ? praktijken[pk] : null;
+  const acc = Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk] : null;
+  return String((prof && prof.praktijk) || (acc && acc.naam) || (isPraktijkCode(pk) ? "" : pk));
+}
+// inloggen op naam + wachtwoord: het account met deze naam waarvan het wachtwoord klopt
+function accountVoorLogin(naam, ww, veld = "hash") {
+  for (const k of accountsMetNaam(naam)) if (checkHash(ww, praktijkAccounts[k][veld])) return k;
+  return null;
+}
 function praktijkSessieVan(req) {
   const token = String(req.headers["x-praktijk-sessie"] || "").trim();
   if (!token) return null;
@@ -223,6 +265,12 @@ async function eisPraktijk(req, res, pk) {
 async function eisBeveiligdePraktijk(req, res, pk, fout) {
   if (praktijkGeclaimd(pk)) return eisPraktijk(req, res, pk);
   if ((ADMIN_KEY_EIGEN && isAdmin(req)) || v1SessieVan(req)) return false;
+  // de naam hoort bij een beveiligde praktijk met een eigen code (sessie verlopen of
+  // nog niet ingelogd): vraag om inloggen, niet om opnieuw te beveiligen
+  if (accountsMetNaam(pk).length) {
+    await sendJson(res, 401, { ok: false, fout: "Log eerst in bij deze praktijk.", login: true });
+    return true;
+  }
   await sendJson(res, 401, { ok: false, beveilig: true,
     fout: fout || "Zet eerst een wachtwoord op je praktijk; daarna zie je hier je kaarten." });
   return true;
@@ -911,6 +959,12 @@ function demoKaart() {
     afspraak: { t: nu + dg },
     ervaring: [{ t: nu - 6 * dg, s: 0 }, { t: nu - 2 * dg, s: 1 }]
   };
+}
+// de praktijksleutel waaronder een gevonden kaart staat (de kaart zelf noemt alleen
+// de weergavenaam, en die is niet uniek meer); de demokaart valt terug op haar naam
+function kaartSleutel(kaart) {
+  for (const pk of Object.keys(kaarten)) if (Object.values(kaarten[pk]).includes(kaart)) return pk;
+  return String((kaart && kaart.praktijk) || "").toLowerCase();
 }
 function vindKaart(id) {
   if (String(id) === "demo") return demoKaart();
@@ -2132,9 +2186,15 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/praktijk/status" && request.method === "GET") {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
-    const pk = String(q.get("praktijk") || "").trim().toLowerCase();
+    const nk = cleanName(q.get("praktijk"), 80).toLowerCase();
+    // ingelogd = er is een geldige sessie. Alle routes handelen dan voor die praktijk,
+    // ook als op de kaart een andere naam staat; naam laat de app zien bij wie je bent
+    // ingelogd, zodat een andere naam niet stil een andere praktijk lijkt.
+    const eigen = praktijkSessieVan(request);
+    const ingelogd = !!eigen && praktijkGeclaimd(eigen);
     // de bewaartermijnen gaan mee, zodat de teksten in de app kloppen met de server
-    await sendJson(response, 200, { ok: true, geclaimd: praktijkGeclaimd(pk), ingelogd: pk && praktijkSessieVan(request) === pk,
+    await sendJson(response, 200, { ok: true, geclaimd: ingelogd || accountsMetNaam(nk).length > 0, ingelogd,
+      naam: ingelogd ? weergaveNaam(eigen) : undefined,
       bewaar: { stil: BEWAAR_STIL_DAGEN, afgerond: BEWAAR_AFGEROND_DAGEN } });
     return;
   }
@@ -2147,11 +2207,17 @@ async function afhandelen(request, response) {
     if (nieuwePraktijkLimiet(request, response)) return;
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const naam = cleanName(b.praktijk, 80);
+      const nk = naam.toLowerCase();
       const ww = String(b.wachtwoord || "");
-      if (!pk) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam op." }); return; }
+      if (!nk) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam op." }); return; }
       if (ww.length < 8) { await sendJson(response, 400, { ok: false, fout: "Kies een wachtwoord van minstens 8 tekens." }); return; }
-      if (praktijkGeclaimd(pk)) { await sendJson(response, 409, { ok: false, fout: "Deze praktijk is al beveiligd. Log in.", login: true }); return; }
+      // naam al in gebruik: eerst vragen of het de eigen praktijk is (inloggen). Kiest de
+      // therapeut bewust "andere praktijk met dezelfde naam" (nieuw: true), dan krijgt
+      // die een eigen code; niemand kan een naam meer vooraf voor een ander bezetten.
+      const bezet = praktijkGeclaimd(nk) || accountsMetNaam(nk).length > 0;
+      if (bezet && b.nieuw !== true) { await sendJson(response, 409, { ok: false, fout: "Deze praktijknaam is al beveiligd. Is het jouw praktijk? Log dan in. Is het een andere praktijk met dezelfde naam? Kies dan “Andere praktijk met deze naam”.", login: true, bezet: true }); return; }
+      const pk = bezet ? nieuwePraktijkCode() : nk;
       // AVG art. 28: wie de praktijk beveiligt (en daarmee kaarten kan delen) gaat
       // namens de praktijk akkoord met de verwerkersovereenkomst
       if (b.akkoord !== true) { await sendJson(response, 400, { ok: false, akkoord: true, fout: "Vink aan dat je namens de praktijk akkoord gaat met de verwerkersovereenkomst." }); return; }
@@ -2159,7 +2225,7 @@ async function afhandelen(request, response) {
       // herstelcode: eenmalig getoond bij het claimen; er is geen e-mail in het
       // systeem, dus dit is de enige zelfbedieningsroute bij een vergeten wachtwoord
       const herstelcode = maakHerstelcode();
-      praktijkAccounts[pk] = { hash: maakHash(ww), herstel: maakHash(herstelcode), gemaakt: Date.now(),
+      praktijkAccounts[pk] = { naam, hash: maakHash(ww), herstel: maakHash(herstelcode), gemaakt: Date.now(),
         vwo: { versie: VWO_VERSIE, t: new Date().toISOString() } };
       proefKoppel(praktijkAccounts[pk], proefVan(request));
       await saveJson(accountsPath, praktijkAccounts);
@@ -2176,23 +2242,26 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      // de rem telt per ingetikte naam: zo knijpt hij ook af als er meerdere
+      // praktijken met dezelfde naam zijn
+      const nk = cleanName(b.praktijk, 80).toLowerCase();
       const ww = String(b.wachtwoord || "");
       // per-praktijk op slot na te veel missers, ongeacht het IP van de aanvaller
-      if (pk && loginOpSlot(pk)) {
-        if ((loginMisPraktijk.get(pk) || {}).n === 10) { loginMisTel(pk); auditLog(pk, "login-op-slot", request); }
+      if (nk && loginOpSlot(nk)) {
+        if ((loginMisPraktijk.get(nk) || {}).n === 10) { loginMisTel(nk); auditLog(nk, "login-op-slot", request); }
         await send429(response, 900, { ok: false, fout: "Te veel inlogpogingen voor deze praktijk; probeer het over een kwartier opnieuw." });
         return;
       }
-      const acc = praktijkAccounts[pk];
+      const pk = accountVoorLogin(nk, ww);
+      const acc = pk ? praktijkAccounts[pk] : null;
       // mislukte inlogpogingen tellen mee in de rem-per-IP én de rem-per-praktijk
-      if (!acc || !checkHash(ww, acc.hash)) {
-        loginMisTel(pk || "?");
+      if (!acc) {
+        loginMisTel(nk || "?");
         await denied(request, response, "praktijk-login");
-        auditLog(pk || "?", "login-mislukt", request);
+        auditLog(accountsMetNaam(nk)[0] || nk || "?", "login-mislukt", request);
         return;
       }
-      loginMisPraktijk.delete(pk); // geslaagd: teller schoon
+      loginMisPraktijk.delete(nk); // geslaagd: teller schoon
       // account dat tijdens een proef van dit apparaat is gemaakt: alsnog koppelen
       const pr = proefVan(request);
       if (pr && !pr.klant && Number(acc.gemaakt) >= Number(pr.gestart) && proefKoppel(acc, pr)) await saveJson(accountsPath, praktijkAccounts);
@@ -2213,7 +2282,7 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/praktijk/activiteit" && request.method === "GET") {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
-    const pk = String(q.get("praktijk") || "").trim().toLowerCase();
+    const pk = praktijkVan(request, q.get("praktijk"));
     if (!pk || praktijkSessieVan(request) !== pk) {
       await sendJson(response, 401, { ok: false, fout: "Log eerst in bij deze praktijk.", login: true });
       return;
@@ -2247,7 +2316,7 @@ async function afhandelen(request, response) {
     if (schrijfLimiet(request, response)) return;
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       const acc = praktijkAccounts[pk];
       if (!pk || !acc) { await sendJson(response, 404, { ok: false, fout: "Geen account voor deze praktijk." }); return; }
       if (praktijkSessieVan(request) !== pk) { await sendJson(response, 401, { ok: false, fout: "Log eerst in bij deze praktijk.", login: true }); return; }
@@ -2288,21 +2357,24 @@ async function afhandelen(request, response) {
     if (schrijfLimiet(request, response)) return;
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
-      const acc = praktijkAccounts[pk];
-      if (pk && loginOpSlot(pk)) {
+      const nk = cleanName(b.praktijk, 80).toLowerCase();
+      const kandidaten = accountsMetNaam(nk);
+      if (nk && loginOpSlot(nk)) {
         await send429(response, 900, { ok: false, fout: "Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw." });
         return;
       }
-      if (!pk || !acc) { loginMisTel(pk || "?"); await denied(request, response, "praktijk-herstel"); return; }
-      if (!acc.herstel) {
+      if (!nk || !kandidaten.length) { loginMisTel(nk || "?"); await denied(request, response, "praktijk-herstel"); return; }
+      if (!kandidaten.some((k) => praktijkAccounts[k].herstel)) {
         await sendJson(response, 404, { ok: false, fout: "Voor dit account is nog geen herstelcode ingesteld. Wijzig ingelogd het wachtwoord om er één te krijgen." });
         return;
       }
+      // bij meerdere praktijken met deze naam: de praktijk waarvan de herstelcode klopt
       const code = String(b.herstelcode || "").trim();
-      if (!code || !checkHash(code, acc.herstel)) {
-        loginMisTel(pk);
-        auditLog(pk, "herstel-mislukt", request);
+      const pk = code ? kandidaten.find((k) => praktijkAccounts[k].herstel && checkHash(code, praktijkAccounts[k].herstel)) : null;
+      const acc = pk ? praktijkAccounts[pk] : null;
+      if (!acc) {
+        loginMisTel(nk);
+        auditLog(kandidaten[0], "herstel-mislukt", request);
         await denied(request, response, "praktijk-herstel");
         return;
       }
@@ -2314,7 +2386,7 @@ async function afhandelen(request, response) {
       acc.gewijzigd = Date.now();
       await saveJson(accountsPath, praktijkAccounts);
       for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
-      loginMisPraktijk.delete(pk);
+      loginMisPraktijk.delete(nk);
       const token = nieuweSessie(pk);
       auditLog(pk, "wachtwoord-hersteld", request);
       await sendJson(response, 200, { ok: true, sessie: token, herstelcode });
@@ -2333,7 +2405,7 @@ async function afhandelen(request, response) {
     if (schrijfLimiet(request, response)) return;
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       const acc = praktijkAccounts[pk];
       if (!pk || !acc) { await sendJson(response, 404, { ok: false, fout: "Geen account voor deze praktijk." }); return; }
       if (praktijkSessieVan(request) !== pk) { await sendJson(response, 401, { ok: false, fout: "Log eerst in bij deze praktijk.", login: true }); return; }
@@ -2366,8 +2438,11 @@ async function afhandelen(request, response) {
     if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
-      if (!pk || !praktijkAccounts[pk]) { await sendJson(response, 404, { ok: false, fout: "Geen account voor deze praktijk." }); return; }
+      const nk = cleanName(b.praktijk, 80).toLowerCase();
+      const kandidaten = praktijkGeclaimd(nk) ? [nk] : accountsMetNaam(nk);
+      if (kandidaten.length > 1) { await sendJson(response, 409, { ok: false, fout: "Meerdere praktijken met deze naam; geef de praktijkcode (p-…).", codes: kandidaten }); return; }
+      const pk = kandidaten[0];
+      if (!pk) { await sendJson(response, 404, { ok: false, fout: "Geen account voor deze praktijk." }); return; }
       delete praktijkAccounts[pk];
       await saveJson(accountsPath, praktijkAccounts);
       for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
@@ -2384,7 +2459,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
-    const pk = String(q.get("praktijk") || "").trim().toLowerCase();
+    const pk = praktijkVan(request, q.get("praktijk"));
     if (!pk) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam op." }); return; }
     if (await eisBeveiligdePraktijk(request, response, pk)) return;
     const brief = weekBrief(pk);
@@ -2399,7 +2474,7 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/praktijk/oefeningen" && request.method === "GET") {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
-    const pk = String(q.get("praktijk") || "").trim().toLowerCase();
+    const pk = praktijkVan(request, q.get("praktijk"));
     if (await eisBeveiligdePraktijk(request, response, pk)) return;
     await sendJson(response, 200, { ok: true, oefeningen: praktijkOefeningen[pk] || [] });
     return;
@@ -2410,7 +2485,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request, 1024 * 1024));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const naam = cleanName(b.naam, 80);
       if (!naam) { await sendJson(response, 400, { ok: false, fout: "Geef de oefening een naam." }); return; }
@@ -2440,7 +2515,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const lijst = praktijkOefeningen[pk] || [];
       const idx = lijst.findIndex((x) => x.id === idTekst(b.id));
@@ -2456,7 +2531,7 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/praktijk/sjablonen" && request.method === "GET") {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
-    const pk = String(q.get("praktijk") || "").trim().toLowerCase();
+    const pk = praktijkVan(request, q.get("praktijk"));
     if (!pk) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam op." }); return; }
     if (await eisPraktijk(request, response, pk)) return;
     await sendJson(response, 200, { ok: true, sjablonen: praktijkSjablonen[pk] || [] });
@@ -2469,7 +2544,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request, 64 * 1024));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       if (await eisPraktijk(request, response, pk)) return;
       if (!praktijkGeclaimd(pk)) { await sendJson(response, 401, { ok: false, fout: "Beveilig eerst de praktijk (wachtwoord) om sjablonen te delen.", login: true }); return; }
       const naam = cleanName(b.naam, 60);
@@ -2499,7 +2574,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       if (await eisPraktijk(request, response, pk)) return;
       const naam = cleanName(b.naam, 60).toLowerCase();
       const lijst = praktijkSjablonen[pk] || [];
@@ -2710,7 +2785,8 @@ async function afhandelen(request, response) {
     const eigen = praktijkSessieVan(request);
     const alles = isAdmin(request) || !!v1SessieVan(request);
     const list = Object.entries(praktijken)
-      .filter(([k, p]) => alles || (eigen && (k === eigen || String(p.praktijk || "").toLowerCase() === eigen)))
+      .filter(([k, p]) => alles || (eigen && (k === eigen ||
+        (!isPraktijkCode(eigen) && !praktijkGeclaimd(k) && String(p.praktijk || "").toLowerCase() === eigen))))
       .map(([, p]) => publiekProfiel(p)).sort((a, b) => a.praktijk.localeCompare(b.praktijk, "nl"));
     await sendJson(response, 200, list);
     return;
@@ -2732,7 +2808,9 @@ async function afhandelen(request, response) {
         website: cleanName(b.website, 200)
       };
       if (!p.praktijk || !p.adres) { await sendJson(response, 400, { ok: false, fout: "Vul minimaal praktijknaam en adres in." }); return; }
-      const key = p.praktijk.toLowerCase();
+      // met een sessie altijd het profiel van de eigen praktijk (vaste code), ook als
+      // de naam verandert; anders zoals vroeger op naam
+      const key = praktijkVan(request, p.praktijk);
       // een geclaimde praktijk kan alleen door de ingelogde praktijk zelf worden bijgewerkt
       if (await eisPraktijk(request, response, key)) return;
       // hetzelfde dagplafond op níeuwe praktijken als op de kaarten- en claim-route:
@@ -2762,7 +2840,7 @@ async function afhandelen(request, response) {
         if (!Object.hasOwn(b, "website")) p.website = oud?.website || "";
         if (logoBuf) {
           await mkdir(uploadsDir, { recursive: true });
-          const file = `logo-${slug(p.praktijk)}-${Date.now()}.${logoExt}`;
+          const file = `logo-${slug(key)}-${Date.now()}.${logoExt}`;
           await writeFile(join(uploadsDir, file), logoBuf);
           p.logo = "uploads/" + file;
           if (oud && oud.logo && oud.logo.startsWith("uploads/")) { try { await unlink(join(dataDir, oud.logo)); } catch {} }
@@ -2771,12 +2849,17 @@ async function afhandelen(request, response) {
         }
         praktijken[key] = p;
         await saveJson(praktijkenPath, praktijken);
+        // nieuwe naam van een beveiligde praktijk: voortaan ook zo in te loggen
+        if (praktijkGeclaimd(key) && praktijkAccounts[key].naam !== p.praktijk) {
+          praktijkAccounts[key].naam = p.praktijk;
+          await saveJson(accountsPath, praktijkAccounts);
+        }
         // opruimen op prefix: de veeg houdt precies het logo dat het profiel nu
         // noemt en ruimt al het andere van déze slug op (ook wezen uit het
         // verleden); andermans logo's blijven onaangeraakt
         if (logoBuf) {
           try {
-            const prefix = `logo-${slug(p.praktijk)}-`;
+            const prefix = `logo-${slug(key)}-`;
             const huidig = p.logo.split("/").pop();
             for (const f of await readdir(uploadsDir)) {
               if (f.startsWith(prefix) && f !== huidig) { try { await unlink(join(uploadsDir, f)); } catch {} }
@@ -3152,7 +3235,7 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/kaarten" && request.method === "GET") {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
-    const pk = String(q.get("praktijk") || "").trim().toLowerCase();
+    const pk = praktijkVan(request, q.get("praktijk"));
     if (await eisBeveiligdePraktijk(request, response, pk)) return;
     const map = kaarten[pk] || {};
     const nuLijst = Date.now();
@@ -3204,7 +3287,7 @@ async function afhandelen(request, response) {
       const praktijk = cleanName(b.praktijk, 80);
       const naam = cleanName(b.naam, 60);
       if (!praktijk || !naam) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam en een kaartnaam op." }); return; }
-      const pk = praktijk.toLowerCase();
+      const pk = praktijkVan(request, praktijk);
       // wachtwoordplicht: patiëntgegevens komen pas op de server als de praktijk een
       // eigenaar met wachtwoord heeft (v1-sessies en een eigen beheersleutel uitgezonderd)
       if (await eisBeveiligdePraktijk(request, response, pk,
@@ -3361,7 +3444,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = String(b.praktijk || "").trim().toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       const kk = String(b.naam || "").trim().toLowerCase();
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
       // prototype-sleutels zouden via overerving de bestaan-check passeren
@@ -3392,7 +3475,8 @@ async function afhandelen(request, response) {
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const found = vindKaart(String(q.get("id") || ""));
     if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
-    const prof = publiekProfiel(praktijken[found.praktijk.toLowerCase()] || { praktijk: found.praktijk });
+    const fpk = kaartSleutel(found);
+    const prof = publiekProfiel((Object.hasOwn(praktijken, fpk) && praktijken[fpk]) || { praktijk: found.praktijk });
     // expliciete allowlist in plaats van "alles behalve notitie/behandelaar":
     // deze route is open voor iedereen met de kaartlink, dus een later toegevoegd
     // praktijk-intern veld mag nooit stilletjes meelekken (fail-closed). De
@@ -3415,7 +3499,7 @@ async function afhandelen(request, response) {
     // eigen oefeningen van de praktijk staan niet in de openbare bibliotheek: naam,
     // foto en uitleg reizen met de kaart mee (alleen die op déze kaart)
     const eigenOef = (found.chosen || []).filter((x) => PRAKTIJK_OEF_ID.test(String(x.id || "")))
-      .map((x) => praktijkOefeningVoorKaart(String(found.praktijk || "").toLowerCase(), x.id)).filter(Boolean);
+      .map((x) => praktijkOefeningVoorKaart(fpk, x.id)).filter(Boolean);
     if (eigenOef.length) patientKaart.eigenOef = eigenOef;
     await sendJson(response, 200, { ok: true, kaart: patientKaart, praktijk: prof, ai: !!AI_KEY });
     return;
@@ -3429,7 +3513,7 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/praktijk/kaart" && request.method === "GET") {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
-    const pk = String(q.get("praktijk") || "").trim().toLowerCase();
+    const pk = praktijkVan(request, q.get("praktijk"));
     if (!pk || verbodenSleutel.test(pk)) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam op." }); return; }
     if (await eisBeveiligdePraktijk(request, response, pk)) return;
     const id = String(q.get("id") || "");
@@ -3627,7 +3711,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
@@ -3654,7 +3738,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
@@ -3680,7 +3764,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
@@ -3729,7 +3813,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
@@ -3755,7 +3839,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
@@ -3781,7 +3865,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
@@ -3836,7 +3920,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
@@ -3943,7 +4027,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
@@ -3970,7 +4054,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
@@ -3994,7 +4078,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
@@ -4020,7 +4104,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try {
       const b = JSON.parse(await readBody(request));
-      const pk = cleanName(b.praktijk, 80).toLowerCase();
+      const pk = praktijkVan(request, b.praktijk);
       if (await eisPraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const oudeSleutel = Object.keys(map).find((k) => map[k].id === idTekst(b.id));
@@ -4702,19 +4786,19 @@ async function afhandelen(request, response) {
     if (!p || !proefVerlopen(p)) { response.writeHead(303, { location: p ? "/v2/app" : "/v2/proef" }); response.end(); return; }
     let b = {};
     try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 4096))); } catch {}
-    const pk = cleanName(b.praktijk, 80).toLowerCase();
+    const nk = cleanName(b.praktijk, 80).toLowerCase();
     const opnieuw = async (fout, status) => serveerProef(request, response, "verlopen", proefVars(p, {
       V_PRAKTIJK: b.praktijk || p.praktijk || "",
       OVERZICHT_FOUT_HTML: '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" }), status);
-    if (pk && loginOpSlot(pk)) { await opnieuw("Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
-    const acc = praktijkAccounts[pk];
-    if (!acc || !checkHash(String(b.wachtwoord || ""), acc.hash)) {
-      loginMisTel(pk || "?");
-      auditLog(pk || "?", "overzicht-na-proef-mislukt", request);
+    if (nk && loginOpSlot(nk)) { await opnieuw("Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
+    const pk = accountVoorLogin(nk, String(b.wachtwoord || ""));
+    if (!pk) {
+      loginMisTel(nk || "?");
+      auditLog(accountsMetNaam(nk)[0] || nk || "?", "overzicht-na-proef-mislukt", request);
       await opnieuw("Die praktijknaam en dat wachtwoord horen niet bij elkaar.", 403);
       return;
     }
-    loginMisPraktijk.delete(pk);
+    loginMisPraktijk.delete(nk);
     auditLog(pk, "overzicht-na-proef", request);
     const nu = Date.now();
     const SEIN = { vraag: "heeft een vraag", pijn: "meldt te veel pijn", goed: "het gaat goed" };
@@ -4763,19 +4847,23 @@ async function afhandelen(request, response) {
     const wissen = urlPath.endsWith("/wissen");
     let b = {};
     try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 4096))); } catch {}
-    const pk = cleanName(b.praktijk, 80).toLowerCase();
+    const nk = cleanName(b.praktijk, 80).toLowerCase();
     const opnieuw = (fout, status) => serveerProef(request, response, "gegevens", { TITEL: "Gegevens van je praktijk",
       V_PRAKTIJK: cleanName(b.praktijk, 80), MELDING_HTML: '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" }, status);
-    if (pk && loginOpSlot(pk)) { await opnieuw("Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
-    const acc = pk && !verbodenSleutel.test(pk) && Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk] : null;
-    if (!acc || !checkHash(String(b.wachtwoord || ""), acc.hash)) {
-      loginMisTel(pk || "?");
-      auditLog(pk || "?", wissen ? "alles-wissen-mislukt" : "download-mislukt", request);
+    if (nk && loginOpSlot(nk)) { await opnieuw("Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
+    const pk = nk && !verbodenSleutel.test(nk) ? accountVoorLogin(nk, String(b.wachtwoord || "")) : null;
+    const acc = pk ? praktijkAccounts[pk] : null;
+    if (!acc) {
+      loginMisTel(nk || "?");
+      auditLog(accountsMetNaam(nk)[0] || nk || "?", wissen ? "alles-wissen-mislukt" : "download-mislukt", request);
       await opnieuw("Die praktijknaam en dat wachtwoord horen niet bij elkaar. Alleen een beveiligde praktijk kan hier downloaden of wissen.", 403);
       return;
     }
-    loginMisPraktijk.delete(pk);
-    const eigenProfiel = ([k, p]) => k === pk || String(p && p.praktijk || "").toLowerCase() === pk;
+    loginMisPraktijk.delete(nk);
+    // alleen het eigen profiel: op sleutel, en bij een oude sleutel (de naam) ook een
+    // profiel onder die naam. Op weergavenaam matchen kon het profiel van een andere
+    // praktijk met dezelfde naam meenemen of wissen.
+    const eigenProfiel = ([k, p]) => k === pk || (!isPraktijkCode(pk) && !praktijkGeclaimd(k) && String(p && p.praktijk || "").toLowerCase() === pk);
     if (!wissen) {
       auditLog(pk, "alles-gedownload", request);
       const pakket = {

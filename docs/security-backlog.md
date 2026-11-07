@@ -30,11 +30,6 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
   haalt het vorige betaal-id uit `mollieBetaalIndex`. Rondt de praktijk daarna tóch de eerste checkout af (twee
   tabbladen), dan wordt die betaling genegeerd: geld afgeschreven, proef blijft dicht. Geen aanvalspad, wel
   integriteit. Fix: oude betaal-id's in de index houden (per proef een lijst) en elke betaalde laten tellen.
-- **HOOG — praktijknaam is een wereldwijde sleutel** (sweep 2026-11-06, Sanne). Wie een naam als eerste
-  beveiligt, sluit elke andere praktijk met die naam buiten ("Deze praktijk is beveiligd. Log in…");
-  een naam kan zo vooraf worden gekaapt. Ook wisselt de praktijk stil als de therapeut de naam op de
-  kaart wijzigt. server.js `pk = cleanName(b.praktijk).toLowerCase()` en de 409 bij claimen. Grote
-  ontwerpkeuze (account-id los van de weergavenaam); eerst met Ahmed afstemmen.
 - **LAAG — opnieuw aanmelden verraadt of een e-mailadres al een proef heeft** (2026-11-06). Sinds de
   fix hieronder krijgt een bekend adres "Met dit e-mailadres loopt al een proef" en een nieuw adres
   direct de app. Onvermijdelijk zolang aanmelden zonder mailbevestiging direct toegang geeft; de
@@ -68,6 +63,12 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Opgelost
 
+- OPGELOST 2026-11-07 (thread "Ontwerp rollen, dossier en opslag", stap 1) — **praktijknaam is een
+  wereldwijde sleutel** (HOOG). Een tweede praktijk met dezelfde naam kiest "Andere praktijk met deze
+  naam" en krijgt een eigen code `p-<16 hex>` (`acc.naam` = weergave); inloggen op naam zoekt het
+  account waarvan het wachtwoord klopt; met een sessie handelt elke route voor de eigen praktijk
+  (`praktijkVan`), dus een andere naam op de kaart wisselt niet meer stil van praktijk. Bestaande
+  accounts houden hun sleutel. Test: `npm run test:praktijkcode`.
 - OPGELOST 2026-11-07 PR #61 — `kruisSite()` weigert nu ook een vreemde of `null`-Origin als
   Sec-Fetch-Site ontbreekt (oudere Safari). Test: `npm run test:kruissite`.
 - OPGELOST 2026-11-07 PR #61 — een kaart-id als lijst of object (`{"id":["<id>"]}`) vindt geen kaart meer

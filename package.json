@@ -59,7 +59,8 @@
     "start": "node server.js",
     "sjablonen:check": "node scripts/valideer-sjablonen.mjs",
     "test:tegroot": "node scripts/test-body-te-groot.mjs",
-    "test:kruissite": "node scripts/test-kruissite-origin.mjs"
+    "test:kruissite": "node scripts/test-kruissite-origin.mjs",
+    "test:praktijkcode": "node scripts/test-praktijkcode.mjs"
   },
   "engines": {
     "node": ">=20"

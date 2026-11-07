@@ -1989,7 +1989,7 @@ bridge2.jpg</div>
         [{act:'nieuwste',label:'Open de nieuwste versie'},{act:'overschrijf',label:'Toch mijn versie bewaren'}]);
       return true;
     }
-    if(d.login){toonQrHint('De praktijknaam \u201c'+pr+'\u201d is al beveiligd. Log in via Kaarten, of vul de naam van je eigen praktijk in.',[{act:'beveilig',label:'Inloggen'}]);return true;}
+    if(d.login){toonQrHint('De praktijknaam \u201c'+pr+'\u201d is beveiligd en je bent niet ingelogd. Log in via Kaarten. Heet een andere praktijk toevallig hetzelfde? Kies daar \u201cAndere praktijk met deze naam\u201d.',[{act:'beveilig',label:'Inloggen'}]);return true;}
     return false;
   }
   // volledige naam -> roepnaam met initiaal. Staat er op de server al een kaart met
@@ -2429,7 +2429,7 @@ bridge2.jpg</div>
         if(d.proefVerlopen){toonProefVoorbij();return;}
         if(d.beveilig){toonDeelWeigering(d,cn.value.trim());openBeveiligen(function(){knop.click();});return;}
         if(d.bestaat){toonDeelWeigering(d,cn.value.trim());return;}
-        alert(d.login?'De praktijknaam \u201c'+(SET.praktijk||'')+'\u201d is al beveiligd door een andere praktijk. Vul de naam van je eigen praktijk in.':(d.fout||'De QR-code maken is niet gelukt.'));
+        alert(d.login?'De praktijknaam \u201c'+(SET.praktijk||'')+'\u201d is beveiligd en je bent niet ingelogd. Log in onder Kaarten. Heet een andere praktijk toevallig hetzelfde? Kies daar \u201cAndere praktijk met deze naam\u201d.':(d.fout||'De QR-code maken is niet gelukt.'));
         return;
       }
       zetKaartId(d.id,d.ts);
@@ -2714,7 +2714,7 @@ bridge2.jpg</div>
     document.getElementById('ps_hdo').addEventListener('click',prakHerstel);
     document.getElementById('ps_hcdo').addEventListener('click',prakNieuweCode);
   }
-  var PRAKSLOT={geclaimd:false,ingelogd:false,pr:'',bewaar:null};
+  var PRAKSLOT={geclaimd:false,ingelogd:false,pr:'',bewaar:null,naam:'',nieuw:false};
   // bewaartermijnen zoals de server ze hanteert (standaard 90 en 30 dagen)
   function bewaarAfgerond(){return (PRAKSLOT.bewaar&&PRAKSLOT.bewaar.afgerond)||30;}
   function bewaarStil(){return (PRAKSLOT.bewaar&&PRAKSLOT.bewaar.stil)||90;}
@@ -2722,7 +2722,8 @@ bridge2.jpg</div>
     PRAKSLOT.pr=pr;
     fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET())
       .then(function(r){if(!r.ok)throw r.status;return r.json();}).then(function(d){
-        PRAKSLOT.geclaimd=!!d.geclaimd;PRAKSLOT.ingelogd=!!d.ingelogd;
+        PRAKSLOT.geclaimd=!!d.geclaimd;PRAKSLOT.ingelogd=!!d.ingelogd;PRAKSLOT.naam=d.naam||'';
+        if(pr!==PRAKSLOT.nieuwVoor)PRAKSLOT.nieuw=false;
         if(d.bewaar)PRAKSLOT.bewaar=d.bewaar;
         rendPrakSlot();
       }).catch(function(code){
@@ -2748,13 +2749,18 @@ bridge2.jpg</div>
     var st=document.getElementById('ps_status'),form=document.getElementById('ps_form'),
         knop=document.getElementById('ps_do'),ww=document.getElementById('ps_ww');
     if(!st)return;
-    if(!PRAKSLOT.geclaimd){
-      st.innerHTML="🔓 Deze praktijk is nog niet beveiligd. Zet er een wachtwoord op: daarna deel je kaarten met je pati\u00ebnten en ziet alleen jouw praktijk het overzicht.";
+    if(!PRAKSLOT.geclaimd||(PRAKSLOT.nieuw&&!PRAKSLOT.ingelogd)){
+      st.innerHTML=PRAKSLOT.nieuw?"🔓 Nieuwe praktijk met de naam \u201c"+esc(PRAKSLOT.pr)+"\u201d. Je krijgt een eigen beveiligde praktijk, los van de andere met deze naam. <a href='#' id='ps_terug'>Toch inloggen</a>":"🔓 Deze praktijk is nog niet beveiligd. Zet er een wachtwoord op: daarna deel je kaarten met je pati\u00ebnten en ziet alleen jouw praktijk het overzicht.";
       form.style.display='flex';ww.placeholder='Kies een wachtwoord (min. 8 tekens)';ww.autocomplete='new-password';knop.textContent='Beveiligen';knop.dataset.act='claim';
       document.getElementById('ps_vwolab').style.display='flex';
+      var tr=document.getElementById('ps_terug');
+      if(tr)tr.addEventListener('click',function(e){e.preventDefault();PRAKSLOT.nieuw=false;rendPrakSlot();});
     }else if(PRAKSLOT.ingelogd){
       document.getElementById('ps_vwolab').style.display='none';
-      st.innerHTML="🔒 Beveiligd en ingelogd. <a href='#' id='ps_uit'>Uitloggen</a> · <a href='#' id='ps_wtoon'>Wachtwoord wijzigen</a> · <a href='#' id='ps_hctoon' title='Herstelcode kwijt? Maak ingelogd een nieuwe; de oude vervalt direct'>Nieuwe herstelcode</a> · <a href='#' id='ps_acttoon' title='Recente accountactiviteit: logins, wijzigingen en geweigerde pogingen, met gemaskeerd IP'>Activiteit</a>";
+      // de server handelt altijd voor de ingelogde praktijk; staat er op de kaart een
+      // andere naam, dan zie je hier bij welke praktijk je werkt
+      var bij=PRAKSLOT.naam&&PRAKSLOT.naam.toLowerCase()!==String(PRAKSLOT.pr||'').toLowerCase()?' bij \u201c'+esc(PRAKSLOT.naam)+'\u201d':'';
+      st.innerHTML="🔒 Beveiligd en ingelogd"+bij+". <a href='#' id='ps_uit'>Uitloggen</a> · <a href='#' id='ps_wtoon'>Wachtwoord wijzigen</a> · <a href='#' id='ps_hctoon' title='Herstelcode kwijt? Maak ingelogd een nieuwe; de oude vervalt direct'>Nieuwe herstelcode</a> · <a href='#' id='ps_acttoon' title='Recente accountactiviteit: logins, wijzigingen en geweigerde pogingen, met gemaskeerd IP'>Activiteit</a>";
       form.style.display='none';
       var u=document.getElementById('ps_uit');if(u)u.addEventListener('click',function(e){e.preventDefault();prakLogout();});
       var wt=document.getElementById('ps_wtoon');if(wt)wt.addEventListener('click',function(e){e.preventDefault();var f=document.getElementById('ps_wijzig');f.style.display=f.style.display==='none'?'flex':'none';});
@@ -2764,7 +2770,9 @@ bridge2.jpg</div>
       document.getElementById('ps_vwolab').style.display='none';
       document.getElementById('ps_wijzig').style.display='none';
       document.getElementById('ps_hcform').style.display='none';
-      st.innerHTML="🔒 Deze praktijk is beveiligd. Log in om de gedeelde kaarten te zien. <a href='#' id='ps_vergeten'>Wachtwoord vergeten?</a>";
+      st.innerHTML="🔒 Deze praktijk is beveiligd. Log in om de gedeelde kaarten te zien. <a href='#' id='ps_vergeten'>Wachtwoord vergeten?</a> · <a href='#' id='ps_nieuw' title='Heet jouw praktijk toevallig hetzelfde als een andere? Beveilig dan je eigen praktijk met deze naam.'>Andere praktijk met deze naam?</a>";
+      var nw=document.getElementById('ps_nieuw');
+      if(nw)nw.addEventListener('click',function(e){e.preventDefault();PRAKSLOT.nieuw=true;PRAKSLOT.nieuwVoor=PRAKSLOT.pr;rendPrakSlot();});
       form.style.display='flex';ww.placeholder='Wachtwoord';ww.autocomplete='current-password';knop.textContent='Inloggen';knop.dataset.act='login';
       var vg=document.getElementById('ps_vergeten');
       if(vg)vg.addEventListener('click',function(e){e.preventDefault();var f=document.getElementById('ps_herstel');f.style.display=f.style.display==='none'?'flex':'none';if(f.style.display==='flex')toonPsMsg('Vul de herstelcode in die je bij het beveiligen hebt bewaard, en kies een nieuw wachtwoord.');});
@@ -2872,6 +2880,7 @@ bridge2.jpg</div>
     knop.disabled=true;
     var lijf={praktijk:PRAKSLOT.pr,wachtwoord:w};
     if(act==='claim')lijf.akkoord=true;
+    if(act==='claim'&&PRAKSLOT.nieuw)lijf.nieuw=true;
     fetch('api/praktijk/'+(act==='claim'?'claim':'login'),{method:'POST',headers:{'content-type':'application/json'},
       body:JSON.stringify(lijf)})
       .then(function(r){return r.json().catch(function(){return{ok:false};});})
@@ -2879,7 +2888,7 @@ bridge2.jpg</div>
         knop.disabled=false;
         if(!d.ok){toonPsMsg(d.fout||'Dat lukte niet.');return;}
         setPrakSes(d.sessie);ww.value='';document.getElementById('ps_msg').style.display='none';
-        PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;rendPrakSlot();toonSrvKaarten();reloadLibraryKeepingCard();
+        PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;PRAKSLOT.nieuw=false;rendPrakSlot();toonSrvKaarten();reloadLibraryKeepingCard();
         if(d.herstelcode)toonHerstelcode(d.herstelcode);
         // de kaart in de editor mag nu gedeeld worden: de QR komt er vanzelf op
         if(IS_V2){laatsteDeel='';deelNu();}
