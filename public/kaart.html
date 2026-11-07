@@ -2402,10 +2402,11 @@
         .then(function(r){return r.json();})
         .then(function(d){
           if(d.ok){
-            // het antwoord draagt zichtbaar het AI-label (AI-verordening art. 50)
+            // het antwoord draagt zichtbaar het AI-label (AI-verordening art. 50); een
+            // vaste verwijzing bij pijn of klachten komt niet van de AI en krijgt het dus niet
             ant.textContent='';
-            var lb=document.createElement('span');lb.className='vlabel';lb.textContent=trq('label');
-            ant.appendChild(lb);ant.appendChild(document.createTextNode(d.antwoord));
+            if(!d.verwezen){var lb=document.createElement('span');lb.className='vlabel';lb.textContent=trq('label');
+            ant.appendChild(lb);}ant.appendChild(document.createTextNode(d.antwoord));
           }else ant.textContent=(TAAL==='nl'&&d.fout)?d.fout:trq('fout');
           knop.disabled=false;
         })

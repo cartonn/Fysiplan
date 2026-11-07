@@ -14,14 +14,25 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (d) code tegen tekst | 2026-11-07 (Mollie/betalen), steekproef 2026-11-06 |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-06 (PR praktijkgegevens, deze run) |
 | (f) cookies en lokale opslag | 2026-11-07 (Google Fonts weg, fp1, wis-knoppen) |
-| (g) MDR en AI-verordening | 2026-11-02 (PR #40) |
+| (g) MDR en AI-verordening | 2026-11-07 (vraaghulp op de kaart, zoekhulp, vertalen, AI-labels, landing en app) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-07 (contactlogboek in de dossiertekst) |
 | (i) begrijpelijkheid (B1) | 2026-11-07 (privacyverklaring: "In het kort"; VWO en voorwaarden nog niet) |
 
-Volgende run: (b) verwerkersovereenkomst, daarna (g) MDR/AI-verordening en (i) B1 voor VWO en voorwaarden.
+Volgende run: (e) rechten van betrokkenen, daarna (d) code tegen tekst (wissen van opnames, eigen video's, logs) en (i) B1 voor VWO en voorwaarden.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **LAAG — praktijk kan de vraaghulp op de kaart niet zelf uitzetten (2026-11-07).** Staat
+  `ANTHROPIC_API_KEY` aan, dan ziet elke patiënt de vraaghulp. De praktijk is
+  verwerkingsverantwoordelijke en kan nu niet kiezen om geen enkele patiëntvraag naar een dienst
+  in de VS te sturen. Sinds deze ronde gaan vragen over pijn en klachten er niet meer heen, en de
+  kaart waarschuwt geen persoonsgegevens te typen. Een schakelaar per praktijk is een keuze; zie
+  "Vraaghulp op de kaart" in `docs/mensenwerk.md`.
+- **LAAG — label "klinisch gecontroleerd" bij AI-video's (`public/kaart.html`, VIDEO_META).**
+  Verschijnt alleen als `clinicallyReviewed === true` in de videocatalogus. Dat is de door Ahmed
+  begeleide videostroom; deze routine raakt de reviewstatus niet aan. Let op dat "klinisch" niet
+  meer belooft dan "beoordeeld door een fysiotherapeut".
 
 - **LAAG — patiëntopslag (/k) is functioneel, geen toestemming nodig (art. 11.7a lid 3 Tw).**
   Gecontroleerd 2026-11-06: geen cookies op /k, alleen localStorage (taal, lettergrootte, stem,
@@ -41,6 +52,19 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
   wissen van opnames, eigen video's en logs volgt in een latere run.
 
 ## Opgelost
+
+- **MIDDEL — vraaghulp op de kaart kreeg vragen over pijn en klachten (2026-11-07).** Een patiënt
+  kon typen "mijn knie doet pijn sinds de operatie, moet ik doorgaan?". Die vraag ging naar de
+  AI-dienst in de VS (gezondheidsgegevens, art. 9 AVG) en alleen de systeeminstructie hield een
+  antwoord over de klacht tegen. Software die op de klacht van één patiënt reageert, schuift richting
+  medisch hulpmiddel (MDR art. 2 lid 1; MDCG 2019-11, stap 3 en 4). OPGELOST 2026-11-07: de server
+  herkent pijn, klachten, medicijnen, operatie en herstel in de 9 talen van de kaart
+  (`lib/vraaghulp-grens.js`) en geeft dan zonder AI een vaste verwijzing naar de eigen praktijk en
+  het seintje "Het doet te veel pijn"; die verwijzing krijgt geen AI-label. Privacyverklaring zegt
+  het erbij. Test: `scripts/test-vraaghulp-grens.mjs` en `npm run test:privacy`.
+  Rest van (g) zonder nieuw gat: zoekhulp zonder klacht/dosering, vertalen zonder vrije tekst, AI-labels
+  op kaart en vraaghulp (art. 50 AI-verordening), landing "stelt geen diagnose, kiest geen behandeling
+  of dosering". Sorteren "melding bovenaan" in de app volgt een tik van de patiënt, geen oordeel.
 
 - **HOOG — de app voor therapeuten laadde het lettertype bij Google (2026-11-07).** `public/index.html`
   haalde Inter van fonts.googleapis.com en fonts.gstatic.com. Daardoor ging bij elk bezoek het

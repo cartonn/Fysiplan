@@ -199,6 +199,13 @@ try {
   const vraagAanvraag = JSON.stringify(aiAanvragen[aiAanvragen.length - 1]);
   assert.match(vraagAanvraag, /Squat/);
   assert.doesNotMatch(vraagAanvraag, /Jan|Vries|Traplopen|Rustig opbouwen|VKB/, "doel, opmerking en naam blijven bij de praktijk");
+  // vraag over pijn of klachten: vaste verwijzing, niets naar de AI-dienst (MDR; AVG art. 9)
+  const voorKlacht = aiAanvragen.length;
+  const klacht = await (await api("/api/kaart/vraag", { methode: "POST", body: { id, vraag: "Mijn knie doet pijn sinds de operatie, moet ik doorgaan?", taal: "en" }, ip: nieuwIp() })).json();
+  assert.equal(klacht.ok, true);
+  assert.equal(klacht.verwezen, true);
+  assert.match(klacht.antwoord, /your own practice/);
+  assert.equal(aiAanvragen.length, voorKlacht, "klachtvraag gaat niet naar de AI-dienst");
 
   // ---- juridische pagina's ----
   for (const pad of ["/privacy", "/verwerkersovereenkomst", "/voorwaarden"]) {
