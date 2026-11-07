@@ -63,7 +63,8 @@
     "test:praktijkcode": "node scripts/test-praktijkcode.mjs",
     "test:team": "node scripts/test-team.mjs",
     "test:inbox": "node scripts/test-inbox.mjs",
-    "test:patientkant": "node scripts/test-patientkant.mjs"
+    "test:patientkant": "node scripts/test-patientkant.mjs",
+    "test:akkoord": "node scripts/test-akkoord.mjs"
   },
   "engines": {
     "node": ">=20"

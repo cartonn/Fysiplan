@@ -156,7 +156,7 @@ try {
   // zonder het tweede vinkje: terug naar het formulier met een melding
   const geenVwo = await formulier({ email: "sanne@gmail.com", email_ok: "1", naam: "Sanne de Vries", tel: "06 1234 5679", praktijk: "Fysio Zuid", akkoord: "1" });
   assert.equal(geenVwo.status, 422);
-  assert.match(await geenVwo.text(), /akkoord gaat met de verwerkersovereenkomst/);
+  assert.match(await geenVwo.text(), /akkoord gaat met de algemene voorwaarden en de verwerkersovereenkomst/);
   const ok = await formulier({ email: "sanne@gmail.com", email_ok: "1", naam: "Sanne de Vries", tel: "06 1234 5679", praktijk: "Fysio Zuid", akkoord: "1", vwo: "1" });
   assert.equal(ok.status, 303);
   assert.equal(ok.headers.get("location"), "/v2/app");
