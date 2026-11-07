@@ -68,6 +68,23 @@ const AV_VERSIE = "2026-11-07";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-07";
+// één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
+// met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
+// wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
+// VWO_VERSIE hier een regel toevoegen (test:akkoord controleert dat).
+const AKKOORD_WIJZIGINGEN = [
+  { stuk: "vwo", versie: "2026-11-02", tekst: "Eerste versie van de verwerkersovereenkomst: Fysiplan bewaart de kaarten alleen in opdracht van de praktijk." },
+  { stuk: "av", versie: "2026-11-07", tekst: "Eerste versie van de algemene voorwaarden: wat Fysiplan doet, de gratis proef, prijs per therapeut, looptijd en stoppen." }
+];
+function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
+function akkoordStatus(acc) {
+  const a = (acc && acc.akkoord) || {};
+  // oudere accounts hebben alleen acc.vwo (van vóór het gezamenlijke akkoord)
+  const av = a.av || null, vwo = a.vwo || (acc && acc.vwo && acc.vwo.versie) || null;
+  const nieuwer = (w) => { const had = w.stuk === "av" ? av : vwo; return !had || w.versie > had; };
+  return { nodig: av !== AV_VERSIE || vwo !== VWO_VERSIE, av: AV_VERSIE, vwo: VWO_VERSIE,
+    t: a.t || null, wie: a.wie || null, wijzigingen: AKKOORD_WIJZIGINGEN.filter(nieuwer) };
+}
 // wie Fysiplan is, voor /privacy en /verwerkersovereenkomst (art. 13 AVG): in te
 // stellen op de server, zodat er geen bedrijfsgegevens in de openbare repo staan
 const FYSIPLAN_ID = {
@@ -2270,7 +2287,28 @@ async function afhandelen(request, response) {
       // eigen login: wie er is ingelogd; perEmail: deze naam logt alleen per persoon in
       wie: ingelogd ? ((sessieLid(sessieVan(request)) || {}).naam || undefined) : undefined,
       perEmail: !ingelogd && accountsMetNaam(nk).length > 0 && accountsMetNaam(nk).every((k) => praktijkAccounts[k].gedeeldUit),
-      bewaar: { stil: BEWAAR_STIL_DAGEN, afgerond: BEWAAR_AFGEROND_DAGEN } });
+      bewaar: { stil: BEWAAR_STIL_DAGEN, afgerond: BEWAAR_AFGEROND_DAGEN },
+      // het akkoord van de praktijk; beheer: alleen een beheerder kan opnieuw akkoord gaan
+      akkoord: ingelogd ? { ...akkoordStatus(praktijkAccounts[eigen]), beheer: isBeheer(sessieVan(request)) } : undefined });
+    return;
+  }
+
+  // opnieuw akkoord gaan met nieuwe voorwaarden en verwerkersovereenkomst (alleen beheerder)
+  if (urlPath === "/api/praktijk/akkoord" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    const s = sessieVan(request);
+    if (!s || !praktijkAccounts[s.pk]) { await sendJson(response, 401, { ok: false, fout: "Log eerst in bij je praktijk.", login: true }); return; }
+    if (!isBeheer(s)) { await sendJson(response, 403, { ok: false, fout: "Alleen een beheerder kan namens de praktijk akkoord gaan." }); return; }
+    let b;
+    try { b = JSON.parse(await readBody(request)); } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); return; }
+    if (b.akkoord !== true) { await sendJson(response, 400, { ok: false, akkoord: true, fout: "Vink aan dat je namens de praktijk akkoord gaat." }); return; }
+    const acc = praktijkAccounts[s.pk], lid = sessieLid(s);
+    acc.akkoord = nieuwAkkoord(lid ? (lid.naam || lid.email) : "");
+    acc.vwo = { versie: VWO_VERSIE, t: acc.akkoord.t };
+    await saveJson(accountsPath, praktijkAccounts);
+    auditLog(s.pk, "akkoord", request);
+    await sendJson(response, 200, { ok: true, akkoord: { ...akkoordStatus(acc), beheer: true } });
     return;
   }
 
@@ -2295,13 +2333,13 @@ async function afhandelen(request, response) {
       const pk = bezet ? nieuwePraktijkCode() : nk;
       // AVG art. 28: wie de praktijk beveiligt (en daarmee kaarten kan delen) gaat
       // namens de praktijk akkoord met de verwerkersovereenkomst
-      if (b.akkoord !== true) { await sendJson(response, 400, { ok: false, akkoord: true, fout: "Vink aan dat je namens de praktijk akkoord gaat met de verwerkersovereenkomst." }); return; }
+      if (b.akkoord !== true) { await sendJson(response, 400, { ok: false, akkoord: true, fout: "Vink aan dat je namens de praktijk akkoord gaat met de voorwaarden en de verwerkersovereenkomst." }); return; }
       if (Object.keys(praktijkAccounts).length >= 1000) { await sendJson(response, 400, { ok: false, fout: "Maximum bereikt." }); return; }
       // herstelcode: eenmalig getoond bij het claimen; er is geen e-mail in het
       // systeem, dus dit is de enige zelfbedieningsroute bij een vergeten wachtwoord
       const herstelcode = maakHerstelcode();
       praktijkAccounts[pk] = { naam, hash: maakHash(ww), herstel: maakHash(herstelcode), gemaakt: Date.now(),
-        vwo: { versie: VWO_VERSIE, t: new Date().toISOString() } };
+        vwo: { versie: VWO_VERSIE, t: new Date().toISOString() }, akkoord: nieuwAkkoord() };
       proefKoppel(praktijkAccounts[pk], proefVan(request));
       await saveJson(accountsPath, praktijkAccounts);
       auditLog(pk, "geclaimd", request);
@@ -2406,7 +2444,7 @@ async function afhandelen(request, response) {
       "wachtwoord-gewijzigd", "wachtwoord-wijzigen-mislukt", "wachtwoord-hersteld",
       "herstel-mislukt", "herstelcode-vernieuwd", "herstelcode-vernieuwen-mislukt",
       "claim-gereset-door-beheer", "kaart-link-vernieuwd", "eigen-login-gemaakt", "collega-uitgenodigd",
-      "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan"]);
+      "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord"]);
     const lijst = praktijkAudit
       .filter((e) => e && e.praktijk === pk && relevant.has(e.actie))
       .slice(0, 15)
@@ -4948,6 +4986,7 @@ async function afhandelen(request, response) {
     if (w.praktijk) p.praktijk = w.praktijk;
     // wie, wanneer en welke versie van de verwerkersovereenkomst accepteerde
     p.vwo = { versie: VWO_VERSIE, t: new Date().toISOString() };
+    p.av = { versie: AV_VERSIE, t: p.vwo.t };
     const token = proefNieuwToken(p);
     await bewaarProeven();
     if (nieuw) {
@@ -5242,7 +5281,7 @@ async function afhandelen(request, response) {
           "Video's, foto's en het logo staan als pad; de bestanden zelf zitten er niet in.",
         gedownload: new Date().toISOString(),
         praktijk: pk,
-        account: { gemaakt: acc.gemaakt || null, verwerkersovereenkomst: acc.vwo || null, proef: acc.proef || null },
+        account: { gemaakt: acc.gemaakt || null, verwerkersovereenkomst: acc.vwo || null, akkoord: acc.akkoord || null, proef: acc.proef || null },
         profiel: Object.entries(praktijken).filter(eigenProfiel).map(([, p]) => publiekProfiel(p)),
         kaarten: Object.values(kaarten[pk] || {}).map((k) => { const v = verlooptOp(k); return { ...k, verlooptOp: Number.isFinite(v) ? new Date(v).toISOString() : null }; }),
         eigenOefeningen: praktijkOefeningen[pk] || [],

@@ -2018,7 +2018,7 @@ bridge2.jpg</div>
     setTimeout(function(){
       var ww=document.getElementById('ps_ww');
       if(ww){ww.scrollIntoView({block:'center'});ww.focus();}
-      toonPsMsg('Kies een wachtwoord en vink de verwerkersovereenkomst aan. Daarna komt de QR-code vanzelf op je kaart.');
+      toonPsMsg('Kies een wachtwoord en vink het akkoord aan. Daarna komt de QR-code vanzelf op je kaart.');
     },350);
   }
   function toonQr(id){
@@ -2695,9 +2695,12 @@ bridge2.jpg</div>
         "<input id='ps_ww' type='password' autocomplete='current-password' placeholder='Wachtwoord' style='flex:1;min-width:130px'/>"+
         "<button class='btn' id='ps_do' type='button'></button></div>"+
       // AVG art. 28: wie de praktijk beveiligt, gaat namens de praktijk akkoord met de
-      // verwerkersovereenkomst (alleen bij beveiligen, niet bij inloggen)
+      // algemene voorwaarden en de verwerkersovereenkomst, in één vinkje (alleen bij
+      // beveiligen, niet bij inloggen)
       "<label id='ps_vwolab' style='display:none;align-items:flex-start;gap:6px;margin:7px 0 0;font-size:12px;font-weight:400;color:var(--muted)'>"+
-        "<input type='checkbox' id='ps_vwo' style='width:auto;height:auto;flex:0 0 auto;margin-top:2px'/><span>Ik ga namens de praktijk akkoord met de <a href='/verwerkersovereenkomst' target='_blank' rel='noopener'>verwerkersovereenkomst</a>. Fysiplan bewaart de kaarten alleen in opdracht van de praktijk.</span></label>"+
+        "<input type='checkbox' id='ps_vwo' style='width:auto;height:auto;flex:0 0 auto;margin-top:2px'/><span>Ik ga namens de praktijk akkoord met de <a href='/voorwaarden' target='_blank' rel='noopener'>algemene voorwaarden</a> en de <a href='/verwerkersovereenkomst' target='_blank' rel='noopener'>verwerkersovereenkomst</a>. Fysiplan bewaart de kaarten alleen in opdracht van de praktijk.</span></label>"+
+      // nieuwe voorwaarden: wat er veranderd is en (voor een beheerder) opnieuw akkoord
+      "<div id='ps_akkoord' role='status' style='display:none;margin:8px 0 2px;padding:10px 12px;border:1px solid #f2d999;background:#fff7e6;border-radius:8px;font-size:12.5px;color:#5a4300'></div>"+
       "<div id='ps_herstel' style='display:none;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px'>"+
         "<input id='ps_hcode' type='text' autocomplete='one-time-code' placeholder='Herstelcode (FP-…)' style='flex:1;min-width:150px'/>"+
         "<input id='ps_hnieuw' type='password' autocomplete='new-password' placeholder='Nieuw wachtwoord (min. 8 tekens)' style='flex:1;min-width:150px'/>"+
@@ -2718,7 +2721,7 @@ bridge2.jpg</div>
     document.getElementById('ps_hdo').addEventListener('click',prakHerstel);
     document.getElementById('ps_hcdo').addEventListener('click',prakNieuweCode);
   }
-  var PRAKSLOT={geclaimd:false,ingelogd:false,pr:'',bewaar:null,naam:'',nieuw:false,wie:'',perEmail:false};
+  var PRAKSLOT={geclaimd:false,ingelogd:false,pr:'',bewaar:null,naam:'',nieuw:false,wie:'',perEmail:false,akkoord:null};
   // bewaartermijnen zoals de server ze hanteert (standaard 90 en 30 dagen)
   function bewaarAfgerond(){return (PRAKSLOT.bewaar&&PRAKSLOT.bewaar.afgerond)||30;}
   function bewaarStil(){return (PRAKSLOT.bewaar&&PRAKSLOT.bewaar.stil)||90;}
@@ -2726,7 +2729,7 @@ bridge2.jpg</div>
     PRAKSLOT.pr=pr;
     fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET())
       .then(function(r){if(!r.ok)throw r.status;return r.json();}).then(function(d){
-        PRAKSLOT.geclaimd=!!d.geclaimd;PRAKSLOT.ingelogd=!!d.ingelogd;PRAKSLOT.naam=d.naam||'';PRAKSLOT.wie=d.wie||'';PRAKSLOT.perEmail=!!d.perEmail;
+        PRAKSLOT.geclaimd=!!d.geclaimd;PRAKSLOT.ingelogd=!!d.ingelogd;PRAKSLOT.naam=d.naam||'';PRAKSLOT.wie=d.wie||'';PRAKSLOT.perEmail=!!d.perEmail;PRAKSLOT.akkoord=d.akkoord||null;
         if(pr!==PRAKSLOT.nieuwVoor)PRAKSLOT.nieuw=false;
         if(d.bewaar)PRAKSLOT.bewaar=d.bewaar;
         rendPrakSlot();
@@ -2753,6 +2756,7 @@ bridge2.jpg</div>
     var st=document.getElementById('ps_status'),form=document.getElementById('ps_form'),
         knop=document.getElementById('ps_do'),ww=document.getElementById('ps_ww');
     if(!st)return;
+    tekenAkkoord();
     if(!PRAKSLOT.geclaimd||(PRAKSLOT.nieuw&&!PRAKSLOT.ingelogd)){
       st.innerHTML=PRAKSLOT.nieuw?"🔓 Nieuwe praktijk met de naam \u201c"+esc(PRAKSLOT.pr)+"\u201d. Je krijgt een eigen beveiligde praktijk, los van de andere met deze naam. <a href='#' id='ps_terug'>Toch inloggen</a>":"🔓 Deze praktijk is nog niet beveiligd. Zet er een wachtwoord op: daarna deel je kaarten met je pati\u00ebnten en ziet alleen jouw praktijk het overzicht.";
       form.style.display='flex';ww.placeholder='Kies een wachtwoord (min. 8 tekens)';ww.autocomplete='new-password';knop.textContent='Beveiligen';knop.dataset.act='claim';
@@ -2766,20 +2770,22 @@ bridge2.jpg</div>
       // andere naam, dan zie je hier bij welke praktijk je werkt
       var bij=PRAKSLOT.naam&&PRAKSLOT.naam.toLowerCase()!==String(PRAKSLOT.pr||'').toLowerCase()?' bij \u201c'+esc(PRAKSLOT.naam)+'\u201d':'';
       var als=PRAKSLOT.wie?' als '+esc(PRAKSLOT.wie):'';
-      st.innerHTML="🔒 Beveiligd en ingelogd"+als+bij+". <a href='#' id='ps_team' title='Collega\u2019s uitnodigen, rollen en je eigen login'>Team</a> · <a href='#' id='ps_uit'>Uitloggen</a> · <a href='#' id='ps_wtoon'>Wachtwoord wijzigen</a> · <a href='#' id='ps_hctoon' title='Herstelcode kwijt? Maak ingelogd een nieuwe; de oude vervalt direct'>Nieuwe herstelcode</a> · <a href='#' id='ps_acttoon' title='Recente accountactiviteit: logins, wijzigingen en geweigerde pogingen, met gemaskeerd IP'>Activiteit</a>";
+      st.innerHTML="🔒 Beveiligd en ingelogd"+als+bij+". <a href='#' id='ps_team' title='Collega\u2019s uitnodigen, rollen en je eigen login'>Team</a> · <a href='#' id='ps_uit'>Uitloggen</a> · <a href='#' id='ps_wtoon'>Wachtwoord wijzigen</a> · <a href='#' id='ps_hctoon' title='Herstelcode kwijt? Maak ingelogd een nieuwe; de oude vervalt direct'>Nieuwe herstelcode</a> · <a href='#' id='ps_acttoon' title='Recente accountactiviteit: logins, wijzigingen en geweigerde pogingen, met gemaskeerd IP'>Activiteit</a> · <a href='#' id='ps_wis' title='Wist je login en alles wat Fysiplan op deze computer bewaart'>Wis Fysiplan van dit apparaat</a>";
       form.style.display='none';
       var u=document.getElementById('ps_uit');if(u)u.addEventListener('click',function(e){e.preventDefault();prakLogout();});
       var wt=document.getElementById('ps_wtoon');if(wt)wt.addEventListener('click',function(e){e.preventDefault();var f=document.getElementById('ps_wijzig');f.style.display=f.style.display==='none'?'flex':'none';});
       var hc=document.getElementById('ps_hctoon');if(hc)hc.addEventListener('click',function(e){e.preventDefault();var f=document.getElementById('ps_hcform');f.style.display=f.style.display==='none'?'flex':'none';if(f.style.display==='flex')toonPsMsg('Bevestig met je huidige wachtwoord; de oude herstelcode vervalt direct en de nieuwe wordt één keer getoond.');});
       var at=document.getElementById('ps_acttoon');if(at)at.addEventListener('click',function(e){e.preventDefault();toonPrakActiviteit();});
       var tm=document.getElementById('ps_team');if(tm)tm.addEventListener('click',function(e){e.preventDefault();openTeam();});
+      var wa=document.getElementById('ps_wis');if(wa)wa.addEventListener('click',function(e){e.preventDefault();wisApparaat();});
       // met een eigen login heb je geen herstelcode van de praktijk nodig
       if(PRAKSLOT.wie){var hcl=document.getElementById('ps_hctoon');if(hcl){hcl.previousSibling&&hcl.previousSibling.nodeType===3&&hcl.previousSibling.remove();hcl.remove();}}
     }else{
       document.getElementById('ps_vwolab').style.display='none';
       document.getElementById('ps_wijzig').style.display='none';
       document.getElementById('ps_hcform').style.display='none';
-      st.innerHTML="🔒 Deze praktijk is beveiligd. Log in om de gedeelde kaarten te zien. <a href='#' id='ps_vergeten'>Wachtwoord vergeten?</a> · <a href='#' id='ps_nieuw' title='Heet jouw praktijk toevallig hetzelfde als een andere? Beveilig dan je eigen praktijk met deze naam.'>Andere praktijk met deze naam?</a>";
+      st.innerHTML="🔒 Deze praktijk is beveiligd. Log in om de gedeelde kaarten te zien. <a href='#' id='ps_vergeten'>Wachtwoord vergeten?</a> · <a href='#' id='ps_nieuw' title='Heet jouw praktijk toevallig hetzelfde als een andere? Beveilig dan je eigen praktijk met deze naam.'>Andere praktijk met deze naam?</a> · <a href='#' id='ps_wis' title='Wist alles wat Fysiplan op deze computer bewaart'>Wis Fysiplan van dit apparaat</a>";
+      var wa2=document.getElementById('ps_wis');if(wa2)wa2.addEventListener('click',function(e){e.preventDefault();wisApparaat();});
       var nw=document.getElementById('ps_nieuw');
       if(nw)nw.addEventListener('click',function(e){e.preventDefault();PRAKSLOT.nieuw=true;PRAKSLOT.nieuwVoor=PRAKSLOT.pr;rendPrakSlot();});
       form.style.display='flex';ww.placeholder=PRAKSLOT.perEmail?'Je wachtwoord':'Wachtwoord (van jou of van de praktijk)';ww.autocomplete='current-password';knop.textContent='Inloggen';knop.dataset.act='login';
@@ -3004,7 +3010,7 @@ bridge2.jpg</div>
     if(act==='claim'&&w.length<8){toonPsMsg('Kies een wachtwoord van minstens 8 tekens.');return;}
     if(!w){toonPsMsg('Vul je wachtwoord in.');return;}
     var vwo=document.getElementById('ps_vwo');
-    if(act==='claim'&&!(vwo&&vwo.checked)){toonPsMsg('Vink aan dat je namens de praktijk akkoord gaat met de verwerkersovereenkomst.');return;}
+    if(act==='claim'&&!(vwo&&vwo.checked)){toonPsMsg('Vink aan dat je namens de praktijk akkoord gaat met de algemene voorwaarden en de verwerkersovereenkomst.');return;}
     knop.disabled=true;
     var lijf={praktijk:PRAKSLOT.pr,wachtwoord:w};
     var emv=(document.getElementById('ps_email')||{}).value||'';
@@ -3046,6 +3052,51 @@ bridge2.jpg</div>
       })
       .catch(function(){knop.disabled=false;toonPsMsg('Geen verbinding.');});
   }
+  // ---- één akkoord: nieuwe voorwaarden tonen met wat er veranderd is ----
+  function tekenAkkoord(){
+    var el=document.getElementById('ps_akkoord');if(!el)return;
+    var a=PRAKSLOT.akkoord;
+    if(!PRAKSLOT.ingelogd||!a||!a.nodig){el.style.display='none';el.innerHTML='';return;}
+    var dat=function(v){try{return new Date(v+'T12:00:00Z').toLocaleDateString('nl-NL',{day:'numeric',month:'long',year:'numeric'});}catch(e){return v;}};
+    var stuk={av:'Algemene voorwaarden',vwo:'Verwerkersovereenkomst'};
+    var lijst=(a.wijzigingen||[]).map(function(w){return '<li><b>'+esc(stuk[w.stuk]||w.stuk)+' ('+esc(dat(w.versie))+')</b>: '+esc(w.tekst)+'</li>';}).join('');
+    var h="<b>De voorwaarden zijn bijgewerkt.</b> Dit is er veranderd:<ul style='margin:6px 0 6px 18px;padding:0'>"+lijst+"</ul>"+
+      "Lees ze na: <a href='/voorwaarden' target='_blank' rel='noopener'>algemene voorwaarden</a> · <a href='/verwerkersovereenkomst' target='_blank' rel='noopener'>verwerkersovereenkomst</a>.";
+    if(a.beheer){
+      h+="<label style='display:flex;align-items:flex-start;gap:6px;margin:8px 0 6px;font-weight:400'><input type='checkbox' id='ps_akvink' style='width:auto;height:auto;flex:0 0 auto;margin-top:2px'/><span>Ik ga namens de praktijk akkoord met de algemene voorwaarden en de verwerkersovereenkomst.</span></label>"+
+        "<button class='btn' id='ps_akdo' type='button'>Akkoord</button> <span id='ps_akmsg'></span>";
+    }else h+="<div style='margin-top:6px'>Een beheerder van je praktijk gaat hier namens de praktijk mee akkoord. Je kunt gewoon doorwerken.</div>";
+    el.innerHTML=h;el.style.display='block';
+    var b=document.getElementById('ps_akdo');
+    if(b)b.addEventListener('click',function(){
+      var m=document.getElementById('ps_akmsg');
+      if(!document.getElementById('ps_akvink').checked){m.textContent='Vink eerst het akkoord aan.';m.style.color='#b3261e';return;}
+      b.disabled=true;
+      fetch('api/praktijk/akkoord',{method:'POST',headers:PJSON(),body:JSON.stringify({akkoord:true})})
+        .then(function(r){return r.json().catch(function(){return{ok:false};});})
+        .then(function(d){b.disabled=false;
+          if(d&&d.ok){PRAKSLOT.akkoord=d.akkoord;tekenAkkoord();toonPsMsg('Bedankt. Het akkoord is vastgelegd met datum en jouw naam.');}
+          else{m.textContent=(d&&d.fout)||'Dat lukte niet. Probeer het opnieuw.';m.style.color='#b3261e';}})
+        .catch(function(){b.disabled=false;m.textContent='Geen verbinding. Probeer het opnieuw.';m.style.color='#b3261e';});
+    });
+  }
+  // ---- Wis Fysiplan van dit apparaat: login, concepten, eigen oefeningen en instellingen ----
+  // Gedeelde kaarten staan bij de praktijk (server) en blijven. Voor een gedeelde of
+  // geleende computer, of als iemand de praktijk verlaat.
+  function wisApparaat(){
+    if(!window.confirm('Alles wat Fysiplan op deze computer bewaart, wordt gewist: je login, concepten, eigen oefeningen, notities en instellingen.\n\nGedeelde kaarten blijven bij je praktijk. Kaarten die je niet hebt gedeeld, ben je kwijt.\n\nDoorgaan?'))return;
+    var klaar=function(){
+      var wis=function(opslag){try{var weg=[];for(var i=0;i<opslag.length;i++){var k=opslag.key(i);if(/^(fp_|fysiplan)/.test(k))weg.push(k);}weg.forEach(function(k){opslag.removeItem(k);});}catch(e){}};
+      wis(localStorage);wis(sessionStorage);
+      var stappen=[];
+      try{if(window.indexedDB)stappen.push(new Promise(function(ok){var r=indexedDB.deleteDatabase('fysiplan');r.onsuccess=r.onerror=r.onblocked=function(){ok();};}));}catch(e){}
+      try{if(window.caches&&caches.keys)stappen.push(caches.keys().then(function(n){return Promise.all(n.map(function(x){return caches.delete(x);}));}).catch(function(){}));}catch(e){}
+      Promise.all(stappen).then(function(){location.href=location.pathname+'?gewist=1';});
+    };
+    // eerst de sessie op de server laten vervallen, dan pas lokaal wissen
+    fetch('api/praktijk/logout',{method:'POST',headers:PJSON()}).then(klaar,klaar);
+  }
+  try{if(/[?&]gewist=1/.test(location.search)&&document.body){history.replaceState(null,'',location.pathname);var gw=document.createElement('div');gw.id='gewist_melding';gw.setAttribute('role','status');gw.textContent='Fysiplan is van dit apparaat gewist.';gw.style.cssText='position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:99999;background:#1f3b2c;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;box-shadow:0 4px 16px rgba(0,0,0,.2)';document.body.appendChild(gw);setTimeout(function(){gw.remove();},6000);}}catch(e){}
   function prakLogout(){
     fetch('api/praktijk/logout',{method:'POST',headers:PJSON()}).catch(function(){});
     setPrakSes('');PRAKSLOT.ingelogd=false;rendPrakSlot();toonSrvKaarten();
