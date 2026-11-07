@@ -61,7 +61,8 @@
     "test:tegroot": "node scripts/test-body-te-groot.mjs",
     "test:kruissite": "node scripts/test-kruissite-origin.mjs",
     "test:praktijkcode": "node scripts/test-praktijkcode.mjs",
-    "test:team": "node scripts/test-team.mjs"
+    "test:team": "node scripts/test-team.mjs",
+    "test:inbox": "node scripts/test-inbox.mjs"
   },
   "engines": {
     "node": ">=20"
