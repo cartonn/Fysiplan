@@ -8,7 +8,8 @@ const catalog=[];
 for(const e of v2){
   try{await stat('public/'+(e.kaartImg||e.img));catalog.push(e);}catch{}
 }
-assert.equal(catalog.length,319,'onverwacht aantal beschikbare kaartoefeningen');
+const nieuw=JSON.parse(await readFile('content/nieuwe-lijntekeningen.json','utf8')).lijntekeningen.length;
+assert.equal(catalog.length,319+nieuw,'onverwacht aantal beschikbare kaartoefeningen');
 const m=JSON.parse(await readFile('public/audio/noor/manifest.json','utf8'));
 assert.equal(m.voiceId,'ea8f12713f7644ea9ad4ed710901fbbb');
 assert.equal(new Set(m.clips.map(c=>c.name)).size,m.clips.length);

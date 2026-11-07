@@ -31,7 +31,13 @@ try{
  }
  const invalidRange=await fetch(base+motionPath,{headers:{...headers,Range:'bytes=99999999-'}});assert.equal(invalidRange.status,416);assert.match(invalidRange.headers.get('cache-control'),/no-store/);
  const publicVideo=await fetch(base+'/content/private-exercise-drafts/fc_07a47f244d7392e6/motion.mp4');assert.notEqual(publicVideo.headers.get('content-type'),'video/mp4');
- const live=await(await fetch(base+'/v2/oefeningen.json')).json();assert.ok(!live.some(e=>e.coreExerciseId==='fc_07a47f244d7392e6'),'private motion never publishes missing exercise');
+ const live=await(await fetch(base+'/v2/oefeningen.json')).json();
+ // Sinds 2026-11-06 staat deze oefening live met een nieuwe lijntekening (content/nieuwe-lijntekeningen.json).
+ // Het privé-concept zelf (beweging, stem, beelden) mag daarbij nooit meekomen.
+ const liveDraft=live.filter(e=>e.coreExerciseId==='fc_07a47f244d7392e6');
+ const nieuweLijn=JSON.parse(await readFile('content/nieuwe-lijntekeningen.json','utf8')).lijntekeningen.find(n=>n.exerciseId===liveDraft[0]?.exerciseId);
+ assert.ok(liveDraft.length===0||(liveDraft.length===1&&nieuweLijn&&liveDraft[0].img==='/v2/'+nieuweLijn.img&&(liveDraft[0].kaartImg||null)===(nieuweLijn.kaartImg?'/v2/'+nieuweLijn.kaartImg:null)&&!liveDraft[0].video),'private motion never publishes with the exercise');
+ assert.ok(!JSON.stringify(live).includes('private-exercise-drafts'),'no private draft path in the live library');
  const narration=body.drafts[0].narrationCandidate;assert.equal(narration.published,false);assert.equal(narration.clinicalApproval,false);assert.equal(narration.listeningReviewed,false);
  const mp3=await readFile('content/private-exercise-drafts/fc_07a47f244d7392e6/narration.mp3');
  for(const range of [null,'bytes=0-1','bytes=-16']){
@@ -66,7 +72,10 @@ try{
   assert.match(image.headers.get('cache-control'),/private.*no-store/);
   assert.deepEqual(Buffer.from(await image.arrayBuffer()),await readFile(`content/private-exercise-drafts/${neckId}/${role}.png`));
  }
- assert.ok(!live.some(e=>e.coreExerciseId===neckId),'neck draft stays unpublished');
+ // ook de nek-oefening staat sinds 2026-11-06 live met een nieuwe lijntekening, maar nooit met de conceptbeelden
+ const liveNeck=live.filter(e=>e.coreExerciseId===neckId);
+ const nieuwPerId=new Map(JSON.parse(await readFile('content/nieuwe-lijntekeningen.json','utf8')).lijntekeningen.map(n=>[n.exerciseId,n]));
+ assert.ok(liveNeck.every(e=>/-line-v1\.png$/.test(e.img)&&(e.kaartImg||null)===(nieuwPerId.get(e.exerciseId)?.kaartImg?'/v2/'+nieuwPerId.get(e.exerciseId).kaartImg:null)&&!String(e.kaartImg||'').includes('private-exercise-drafts')&&!e.video),'neck draft stays unpublished');
  assert.notEqual((await fetch(base+'/api/exercise-drafts/fc_2050086df6d023ac/start',{headers})).status,200,'chin retraction remains held');
  assert.equal((await fetch(base+'/api/exercise-drafts',{headers,method:'POST'})).status,405);
  const publicAttempt=await fetch(base+'/content/private-exercise-drafts/fc_07a47f244d7392e6/start.png');

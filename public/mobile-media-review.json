@@ -17,14 +17,14 @@
     }
   ],
   "summary": {
-    "total": 319,
+    "total": 446,
     "rejected": 12,
-    "unreviewed": 307,
+    "unreviewed": 434,
     "approved": 0,
     "poseGeometryApproved": 153,
-    "poseStatic": 166,
+    "poseStatic": 293,
     "brandMarkCovered": 215,
-    "brandMarkAbsent": 104
+    "brandMarkAbsent": 231
   },
   "entries": [
     {
@@ -12146,6 +12146,4197 @@
           "h": 58
         },
         "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
+      }
+    },
+    {
+      "exerciseId": "fp_62d0639e1039e4a1",
+      "name": "Kin intrekken – zittend actief",
+      "source": "images/nek/kin-intrekken-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "d3a6505629a6c58a107a446cc8744bfe2a4fdd67b852779d94a6d0565f938236",
+      "explanationSha256": "d3a4f596695931d4f32e628e223ee9c9f68108078cfae174eaeb8a13853f23cc",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 381,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 93%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_9ec9e79bac8d8421",
+      "name": "Kin intrekken – liggend ondersteund",
+      "source": "images/nek/kin-intrekken-liggend-ondersteund-avatar-v8.jpg",
+      "assetSha256": "8f0bc6ff3013ad4008cad5665087393251b693f658d05177b87044ad01205629",
+      "explanationSha256": "bd3674f6814b596c2dd40c7a29500c53cbc60b4da34a83215765f8a5da7eabd8",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 579,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 95%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_c486527b9ecd41c8",
+      "name": "Nek buigen – zittend actief",
+      "source": "images/nek/nek-buigen-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "e7f8b69ee3712ae4583d17fa2fffaf010d03416b14edbeaebcdc565c6d8eadb4",
+      "explanationSha256": "896e38a19c9d053301b7499ad30b8a93e4950589a51d3ff8d8e92c216894d7fd",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 480,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_9e6911ab1f1e0d44",
+      "name": "Nek buigen – liggend ondersteund",
+      "source": "images/nek/nek-buigen-liggend-ondersteund-avatar-v8.jpg",
+      "assetSha256": "afa0d57bb628b98835e56b1874f7350b01aa8f28a8b02577a289e4f723689d20",
+      "explanationSha256": "e43d3d324e4660fb1832b7e40b9da079dcbb59722b1857f40f553f2bc306ef91",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 548,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_a2bf200402f776eb",
+      "name": "Nek strekken – zittend actief",
+      "source": "images/nek/nek-strekken-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "293a9229ae0a3ac834542624d5e41e94c30c5622554ee22c38557d2336e71986",
+      "explanationSha256": "cc7478583160d6f10d25cdaf0ad33098b236b464e5a034d773e4e91d4b6e60a2",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 370,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_801448d68f86c2c2",
+      "name": "Nek strekken – functioneel staand",
+      "source": "images/nek/nek-strekken-functioneel-staand-avatar-v8.jpg",
+      "assetSha256": "05b1da049050ba81bd06c87b9b27f834f732102466e1db0b5763612fbc8be6ad",
+      "explanationSha256": "63424f7b8b85b214961887139fbadbd7d26424c10f1142c99964ea5079e025dd",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 239,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_fc9259369175667f",
+      "name": "Nek draaien – zittend actief",
+      "source": "images/nek/nek-draaien-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "84efcbf3334ed4aebf39832d34c82ff8f6a621b3b082f18fcd6e4c25d7559dd9",
+      "explanationSha256": "6f2797fd1156d0d80bf45832ad090697fab399c4577a8c1a68c29164f19701c8",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 355,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_c662fe9fb9cdcb4a",
+      "name": "Nek draaien – functioneel staand",
+      "source": "images/nek/nek-draaien-functioneel-staand-avatar-v8.jpg",
+      "assetSha256": "8860ec120d380bd72a7c52dee9829563d93278b018506a0167ebfc5fd18d72dd",
+      "explanationSha256": "0cf6f5048e6074a5cbd4946011bc23ea8c402d35a17e65d9cec8a32576b1872c",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 262,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 95%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_44d608cf3a3163b1",
+      "name": "Nek zijwaarts buigen – zittend actief",
+      "source": "images/nek/nek-zijwaarts-buigen-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "13c81a5d169ae732135865f77f19e4a38f1e678f76ba0fa00a5644aea36b0e0d",
+      "explanationSha256": "637822c08598e288acf27ccbcf6ae486e0cb0a80986b820b4e1dc0d04b0014f0",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 357,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_ede28e3db08e8043",
+      "name": "Nek zijwaarts buigen – isometrisch",
+      "source": "images/nek/nek-zijwaarts-buigen-isometrisch-avatar-v8.jpg",
+      "assetSha256": "18d927cc1e2579edbf4f72d03514735f8ed5da5786c5aa4d7465c16f414b8d7c",
+      "explanationSha256": "f1a88784032f3f85a9f21d3928ab378f1e066e2db9e7c025fa54d6e1591b2ecd",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 385,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_932bf32fa5ca60a6",
+      "name": "Diepe nekflexoren activeren – zittend actief",
+      "source": "images/nek/diepe-nekflexoren-activeren-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "0ddfd135976093d40fad039a38bccc211f7f08bbb2cafb1fd9c2ba7a31a25486",
+      "explanationSha256": "81687e08f77df8baff7aa56dba9f22401c5b353f2cd65be3c96f6a123dac23b5",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 340,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 93%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_2bdb88085d76e6b0",
+      "name": "Diepe nekflexoren activeren – liggend ondersteund",
+      "source": "images/nek/diepe-nekflexoren-activeren-liggend-ondersteund-avatar-v8.jpg",
+      "assetSha256": "2f7a845d690f695950546242b461018e8a9c357e6eebb734860a581b668f356e",
+      "explanationSha256": "9b0e10d42b9328d89d296586ccfd79a21b3c3df0aa414698a696e79586b5b0f2",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 570,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_075c9aa10d0e566a",
+      "name": "Nekrotatie met oogfixatie – zittend actief",
+      "source": "images/nek/nekrotatie-met-oogfixatie-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "0ce26dd05f9e5cbfb11b931bef486bba8c4cc42079cce821e64d671d1bd21a13",
+      "explanationSha256": "36c4532e35859ee815614418507a1996f32a842cfad1651ef3303c2af08fefa0",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 362,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 95%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_7f1f560bb10c6e1f",
+      "name": "Nekrotatie met oogfixatie – functioneel staand",
+      "source": "images/nek/nekrotatie-met-oogfixatie-functioneel-staand-avatar-v8.jpg",
+      "assetSha256": "fb80d4a8a2f765b87bd0b31d551ef62ee368818aa284ac0b0dddeb1330d0d64e",
+      "explanationSha256": "a667084cdbe888eb2aad05ebda8e4ac3abd36e4e66a2cac349c5e801cd4d54f7",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 237,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Losse voorwerpen horen bij geen of bij beide figuren: 32x40@384,16, 32x36@384,608."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_e3f3ef70eda326a1",
+      "name": "Schouderblad liften en ontspannen – zittend actief",
+      "source": "images/nek/schouderblad-liften-en-ontspannen-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "b5f938034d062f803a44f5978b93a53ae92d2a1b2941ca1e7bfcc32c443eada1",
+      "explanationSha256": "ff764bc6c2376340bd791ef0d7e975e7c229e825b1a7ffe56587eb942488fe33",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 339,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_bbcbf27b326af15f",
+      "name": "Schouderblad liften en ontspannen – functioneel staand",
+      "source": "images/nek/schouderblad-liften-en-ontspannen-functioneel-staand-avatar-v8.jpg",
+      "assetSha256": "ecbbb6ef2f5d1b9468f6fc926a7b2093b5ce3815343b651ec4c47b4dddbaf5a5",
+      "explanationSha256": "84103de01a424c25983c842da7c337bd03df5ce5a03c8f797e6a7cc7f4332f63",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 268,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_2b31429069932b4b",
+      "name": "Levator scapulae rek – zittend actief",
+      "source": "images/nek/levator-scapulae-rek-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "091f7e6ce2086c747496e9951567f7f94b2844fe3d746154cec12cd983810d73",
+      "explanationSha256": "a44edda683cdc0f22e90f47d3da31904dc730c8c0414e025a28bae96a5deed17",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 359,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 92%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_f3b0887dee8f2c28",
+      "name": "Levator scapulae rek – functioneel staand",
+      "source": "images/nek/levator-scapulae-rek-functioneel-staand-avatar-v8.jpg",
+      "assetSha256": "535fe28385fa120674ab1569ad78bc1fcdeddc27c7869ce4ef30c1f95b27ed4e",
+      "explanationSha256": "8ee63c5478cc60baa2cb7135d87eb4a067d7f9986e8bd4507bb185cf4e214b17",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 256,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_734364ac784c6f6a",
+      "name": "Bovenste trapezius rek – zittend actief",
+      "source": "images/nek/bovenste-trapezius-rek-zittend-actief-avatar-v8.jpg",
+      "assetSha256": "86d7830653e854b4f767aa2ace2f952bce50aaac50eef5594117116117c80033",
+      "explanationSha256": "3bc5cdf56893162a5506e1f918c3bc223144fd81159a6a04953053f27276521f",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 365,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_73abd0a512239c05",
+      "name": "Bovenste trapezius rek – functioneel staand",
+      "source": "images/nek/bovenste-trapezius-rek-functioneel-staand-avatar-v8.jpg",
+      "assetSha256": "64dc6cd3403e0abb837672c83ba7db7ca3fd6f604fcc74722405a9bd18d24073",
+      "explanationSha256": "b3b42a88e748e27aec1ea0bc7a070ff01c00bca81763361d74211101b5480c37",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 247,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_1eb30dd39734edc7",
+      "name": "Rug bol en hol – op handen en knieën",
+      "source": "images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png",
+      "assetSha256": "b3da39673a5f7179f69dff1b463fc8e89a5baf2099850a6d91d0740dbfc82554",
+      "explanationSha256": "b1856d4a557a510cb2fa7a602ee47e76d6be4b264d8665dc74498aeda5d19e94",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_52dcbb8df86523fe",
+      "name": "Rug bol en hol – zittend",
+      "source": "images/rug/rug-bol-en-hol-zittend-line-v1.png",
+      "assetSha256": "264d7a2bfc9eacd7abd608c8974951b71e6114592ac77dc599eceb3a50c73415",
+      "explanationSha256": "b1280e5fb24af58f90f6c146a94a2ae6e96970ea3f2a90f6c9715eb4224e5140",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_44df2bee2b128f87",
+      "name": "Rug bol en hol – staand",
+      "source": "images/rug/rug-bol-en-hol-staand-line-v1.png",
+      "assetSha256": "350de28f6cad98c12f76f8124373fd2cb211b0d83a8509aed0461948d9cdd1a3",
+      "explanationSha256": "d47447994bd5675181bcaf627e4c0b55aaf15dfdd2b92e9d94a114e56dcc5dcb",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_4ecc3fa3dbce246b",
+      "name": "Rug bol en hol – met lichte weerstand",
+      "source": "images/rug/rug-bol-en-hol-met-lichte-weerstand-line-v1.png",
+      "assetSha256": "7d7d3cbb91dda52eb09ffa12b556e8c4bbab82e0aab828b133ba0c10f1dc1917",
+      "explanationSha256": "0c5a691c5183cb5afafd216c0d13ad9027dd1d24a7a8178912db8b86f9ea593e",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_2721d206afbd57fa",
+      "name": "Romp draaien – liggend",
+      "source": "images/rug/romp-draaien-liggend-line-v1.png",
+      "assetSha256": "a1203e6925eb04bfe2eba38bb52838e6db24ed0d9ed6932571a7adc4e53dc72f",
+      "explanationSha256": "7d114d97a27ca88d7df051a9c97c20e5746e226d1b48b938f5d68424924f5c2b",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_6b15af42d869f74e",
+      "name": "Romp draaien – op handen en knieën",
+      "source": "images/rug/romp-draaien-op-handen-en-knieen-line-v1.png",
+      "assetSha256": "a6570951ae453b590b9c888338e3937e489bcce56ae0894d4d144c7190d780c6",
+      "explanationSha256": "ed4c2c8a0ea3c99525ea55a47d27ef9998baa297799ede384d1d54f255f3e034",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_5447d54e26b5bfb4",
+      "name": "Romp draaien – zittend",
+      "source": "images/rug/romp-draaien-zittend-line-v1.png",
+      "assetSha256": "3dc3b2ef2eed15d379d1774ce0edbed390030495e32c229ef68898acde90109b",
+      "explanationSha256": "483d3ea86b42b925289fe3d7eb7b86ff06c0381416363b16680c08812f3ccde0",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_e91bf651c05afa01",
+      "name": "Romp draaien – staand",
+      "source": "images/rug/romp-draaien-staand-line-v1.png",
+      "assetSha256": "a7192b23b2dd792f2abf9b0d2d85429a795bc4b800ef406752c43ce11830dd9b",
+      "explanationSha256": "088e1e9f0edd6d2a6cb015dff5bf16ea6ed43fa1933e0c14252b7b2393c3eb0a",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_134b8284155c79c7",
+      "name": "Romp zijwaarts buigen – liggend",
+      "source": "images/rug/romp-zijwaarts-buigen-liggend-line-v1.png",
+      "assetSha256": "84ffd298ab92e95a2ced2724a25376912291804cc24e9628db7b5663d3e4ba84",
+      "explanationSha256": "215dc52b5f6932c5aca326a784a6a599f16a3d4abd2cc4e4d0fc086991cd738c",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_63808d0727800855",
+      "name": "Romp zijwaarts buigen – zittend",
+      "source": "images/rug/romp-zijwaarts-buigen-zittend-line-v1.png",
+      "assetSha256": "36d03f0aedef72b87e3d49af4f424ea22e8e536915ee79caea0e77fbe2025848",
+      "explanationSha256": "0a9e52a34642371337d827cf78e554a2118c3ebd4aa1e0f6b0fb180dbe6961e0",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_2cdbcd6a461f6ee2",
+      "name": "Romp zijwaarts buigen – staand",
+      "source": "images/rug/romp-zijwaarts-buigen-staand-line-v1.png",
+      "assetSha256": "8866093b1f4d046a68a8850c37984144d0280d1fc4dec40d69e25e114a7b6ba5",
+      "explanationSha256": "fafbb2027d88bc81d49a8856e3a068b4b9ee47e54dc875602b689a1a329da513",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_cc40c4b9a82decac",
+      "name": "Rug strekken – liggend",
+      "source": "images/rug/rug-strekken-liggend-line-v1.png",
+      "assetSha256": "59bc8dbb9bd0a693efbfea94d7c3700163bc52be5bc197fa83b64c430e7fa088",
+      "explanationSha256": "c09a141add7c0a16380e1c1a6080646c9035a16562c710d17ef9196fc0bbad60",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_c0b6c7ac3cecbcc7",
+      "name": "Rug strekken – op handen en knieën",
+      "source": "images/rug/rug-strekken-op-handen-en-knieen-line-v1.png",
+      "assetSha256": "9f1cce085af107c1e9ef9fda24f3b11581c74190b2e5946a37d4fc36f3310ae5",
+      "explanationSha256": "8d86172de83dad8266ce3435e41b1374b274b50f665464baaf430ff331a88d8e",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_2644209935d93785",
+      "name": "Rug strekken – zittend",
+      "source": "images/rug/rug-strekken-zittend-line-v1.png",
+      "assetSha256": "1ad0761ebab0f1f17a067f64e9dd8520ad96eaf7a77eb97a01bed9e82f6b9309",
+      "explanationSha256": "b608584c2c26b31ea663bb355a42ceac6f07dc7394e899eab5ca55561039fd13",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_ab474868a73074c7",
+      "name": "Rug strekken – staand",
+      "source": "images/rug/rug-strekken-staand-line-v1.png",
+      "assetSha256": "6a6b890a4c4a121cda586d1b5cb3207a0acfdd735564ebea602d655dfda0c91a",
+      "explanationSha256": "581db8e99f1f9c10acac018b1c2a9d5c1355286d08279101db5ecddc728767c9",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_d2795a94a7d11698",
+      "name": "Knie naar borst – liggend",
+      "source": "images/rug/knie-naar-borst-liggend-line-v1.png",
+      "assetSha256": "df7782fb31d0d0a8cd1a51d535c3b9b3aa08e9aca84de3c218e46b57be969a4a",
+      "explanationSha256": "ceee82306ef276c1f094d13d74ebadef58ec3148674b87acf0b3b2acf8a73b49",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_df9d4c0dce89c045",
+      "name": "Knie naar borst – zittend",
+      "source": "images/rug/knie-naar-borst-zittend-line-v1.png",
+      "assetSha256": "a0b966c6ccfdeff220591d4f0b01ea4aebbcc70f9deba222530b0d7992fbf091",
+      "explanationSha256": "a49f8f4184a4d33a41f3cbc2e2a1a26fb9573f08ad1a9613df78627e5a14ad5b",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_6f6adc087b95e514",
+      "name": "Knie naar borst – staand",
+      "source": "images/rug/knie-naar-borst-staand-line-v1.png",
+      "assetSha256": "d43fae52193392ba6ad1d71813e0d03b13bb31a7f2917816aa7ef17584c9db83",
+      "explanationSha256": "b30f324a61313d17ff67de16b84857e5daf0c470c867677b63cd70f9a3de4eb1",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_b2900afa943e315b",
+      "name": "Open boek – liggend",
+      "source": "images/rug/open-boek-liggend-line-v1.png",
+      "assetSha256": "e6a08ad37c8f13bedc0cc7fadadf0eeeb775bbbe73ea5ebee60f5fd7df7e019a",
+      "explanationSha256": "0a285a17da107fb73a0aeb7f459c1420907de2e606d390d7cc3d3e712d4e1939",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_3484904185da85ed",
+      "name": "Open boek – op handen en knieën",
+      "source": "images/rug/open-boek-op-handen-en-knieen-line-v1.png",
+      "assetSha256": "141b4135ad77a2a744d055d271fdf4ce7dcccdd9b41498af4c9fba325400ec79",
+      "explanationSha256": "39896f7efb9925dceeb808f379e2e85066b03a65f1e829448f8504a9f0f03491",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_d66473bfb49dfb81",
+      "name": "Open boek – zittend",
+      "source": "images/rug/open-boek-zittend-line-v1.png",
+      "assetSha256": "ac7a411fd6f2dda4f99afdeb31cdfd4eaaae17f317beffd3cc54b6be5580014f",
+      "explanationSha256": "56b6ab6f3bd5c677c209cc2274c0b0ff6c95624563e0315442a549ef7930de71",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_009ab760836a2b01",
+      "name": "Thoracale extensie – liggend",
+      "source": "images/rug/thoracale-extensie-liggend-line-v1.png",
+      "assetSha256": "1951f2f76eacc30149998e8eb46438d398264145716956045987107f1c2f82da",
+      "explanationSha256": "9a45cf57d42eb329c1829457d6cd99e45b1d7cff5cfd66011dd052c5be21c382",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_8beb83b36e02ea73",
+      "name": "Thoracale extensie – op handen en knieën",
+      "source": "images/rug/thoracale-extensie-op-handen-en-knieen-line-v1.png",
+      "assetSha256": "6bdac61a06817acb6870e8f1c779f3370610ea65056170f02f73c01a8320d9da",
+      "explanationSha256": "5ea320db1d714e9053458d21d492ab44dc39fcdd509ebd64ae7dc48e7a39e32c",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_3e968c19f6cf90c7",
+      "name": "Thoracale extensie – zittend",
+      "source": "images/rug/thoracale-extensie-zittend-line-v1.png",
+      "assetSha256": "363982c3c684830c8df5648a91769345ef08260e36f0b2c92b37d5c63ac3a707",
+      "explanationSha256": "a63621cde84ea6d20b9326e208c8b2a76e6b9b4df3276e7df3a167573e7579b4",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_bb5b9d2dc2a52e5e",
+      "name": "Thoracale extensie – staand",
+      "source": "images/rug/thoracale-extensie-staand-line-v1.png",
+      "assetSha256": "af7e9d100caf9a57c613a63b25639729fa765a36a0583c3a3eab2d022c6721b4",
+      "explanationSha256": "9a3b4e9f573ea05debf7e7ccb1657dc3a7e97c6a75371858ac90b50c72995430",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_284957ef09ee1582",
+      "name": "Voeten naast elkaar staan – met steun",
+      "source": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-steun-avatar-v8.jpg",
+      "assetSha256": "e5f1cfac350507b0a64a4785c0086dfd9dc95c639024269f79e9f344fb849d5b",
+      "explanationSha256": "b7c079b69f65ddfeb311ebb55f1766c1f2fd9952c02aee111e23a78b337209c2",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 948,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_4bcc073aed3b9f2d",
+      "name": "Voeten naast elkaar staan – zonder steun",
+      "source": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-zonder-steun-avatar-v8.jpg",
+      "assetSha256": "c281b14ee1548faa78cfb7359eb76c0998fe8919b68140892f101b27c5efc9ea",
+      "explanationSha256": "20b8d1831abfdd264891350b3ffc207abf2932010346ad59dca99b0b460db2f3",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 420,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_cc87106ebc1436c7",
+      "name": "Voeten naast elkaar staan – met hoofdbeweging",
+      "source": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-hoofdbeweging-avatar-v8.jpg",
+      "assetSha256": "99fb8f3acbfdb3a608d9da781f4c7341de3fde5c143d96ee5b76939ee6897ad2",
+      "explanationSha256": "c07155a2549ddf8f27bae1de1947229618f1c70adb27c208dee215d3c23b7851",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 273,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 87%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_f0663d727b20b2d8",
+      "name": "Semi-tandemstand – met steun",
+      "source": "images/balans-en-valpreventie/semi-tandemstand-met-steun-line-v1.png",
+      "assetSha256": "9b78908a842860e9ebbae1047bedd6a931b4c9eb36b74cb3dfed314d592138b4",
+      "explanationSha256": "f7b813f8e0e3868ca6a94e059997de241fb9a8d3eb40d03b5bfdbfad10c6da48",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_4ecd3a7fcc64821b",
+      "name": "Semi-tandemstand – zonder steun",
+      "source": "images/balans-en-valpreventie/semi-tandemstand-zonder-steun-line-v1.png",
+      "assetSha256": "d96a4db8fe8464d6e253b5982bfc62718146508836a73d27848ae1d7ec01f067",
+      "explanationSha256": "e511f866ce0bb3d20e7c468be57175130c52e07140db2a01991f66af65e261bd",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_1dcd242ec123ba55",
+      "name": "Semi-tandemstand – met hoofdbeweging",
+      "source": "images/balans-en-valpreventie/semi-tandemstand-met-hoofdbeweging-line-v1.png",
+      "assetSha256": "5bf1710652130745687cfda8f80552d3113f6c9ce94f54753e74f27efb37fa95",
+      "explanationSha256": "59d5b4eeabd44a622c69cf8f865e0ed5f80a21e5ad3144e48c12f7fe0cb7e1bd",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_f9a5a798ccec54bc",
+      "name": "Tandemstand – met steun",
+      "source": "images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png",
+      "assetSha256": "f7f062ba37ac0c8ac56de9a6d73ab401eae15a0e898c2b6b2294b0741d8a61d7",
+      "explanationSha256": "e568e634cc05f6fab6570c84437c693b0310498d5297647ac8cfca1cd222749c",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_08de342719d46ef9",
+      "name": "Tandemstand – zonder steun",
+      "source": "images/balans-en-valpreventie/tandemstand-zonder-steun-line-v1.png",
+      "assetSha256": "281770b76ee99fc4789cda2e1b0bdb4b87a2d7730f5ff87580ed7e4da8de6c13",
+      "explanationSha256": "db74918a8c2e14b0d0673b04f281253ad7a7bdd1faa469997b1c4f811c9a746c",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_506c830510bf31ca",
+      "name": "Tandemstand – met hoofdbeweging",
+      "source": "images/balans-en-valpreventie/tandemstand-met-hoofdbeweging-line-v1.png",
+      "assetSha256": "1a5dfffda3094ba533ace975c14b602e962a44aaca5f92660a0b97e732edae89",
+      "explanationSha256": "76b6d613b39cf8f369c606c5b9cdf415fce33646c0a056a0358d36108ce07ce1",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_a542ed0f07059b4c",
+      "name": "Eenbeenstand – met steun",
+      "source": "images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png",
+      "assetSha256": "bcf8d09e18fc31feb513afd007e50c45ddf9787db9bbcb445261d37c7297541e",
+      "explanationSha256": "3b79db97ed3cfda519ae586d60a0037e5aa90a1c359e23a05033c71ef40d744a",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_f493363db578c800",
+      "name": "Eenbeenstand – zonder steun",
+      "source": "images/balans-en-valpreventie/eenbeenstand-zonder-steun-line-v1.png",
+      "assetSha256": "30386f999302840f81a980e33d5b3f35a4fcaedb37182aada5252c6707f85262",
+      "explanationSha256": "4618dce54c1abf28a080a8d0d7f439210d75fff42a1ce7ec3e4d3d6b86e72f6e",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_1a79b62494a25ff5",
+      "name": "Eenbeenstand – met hoofdbeweging",
+      "source": "images/balans-en-valpreventie/eenbeenstand-met-hoofdbeweging-line-v1.png",
+      "assetSha256": "66e8c11398e6a8ed1d8259580d548f2feea1360a2ba2a76a73228a23a5f5c5c9",
+      "explanationSha256": "5901216929b4dc8405c92d78f77b0cda56135ee737882511b8466774cf4782f0",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_7c48290b27a4b297",
+      "name": "Gewicht verplaatsen voor-achter – met steun",
+      "source": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-line-v1.png",
+      "assetSha256": "e9f955f4b5eaa4b3f9d735c4e68b3dbb5ed17e1aa4c7d55de3e02a128e09273c",
+      "explanationSha256": "ba1c91ed409c2675897493a6c25a45decc5a78972dff1afda4b7514b3af7c954",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_ff9bb036c4fdae80",
+      "name": "Gewicht verplaatsen voor-achter – zonder steun",
+      "source": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-zonder-steun-line-v1.png",
+      "assetSha256": "c54de32c03f3bd34eda399f6008c196cce137318fcba3a5504898172a7a8da8a",
+      "explanationSha256": "67c1ce9b30e83de876f9caca312e1a6509a1c89fa85d28ea081b0d773b35bf39",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_08c86a2068731a1d",
+      "name": "Gewicht verplaatsen zijwaarts – met steun",
+      "source": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png",
+      "assetSha256": "9dc92e9f81e6c0626cda316b00e3fb7bdef1f75ad7ac3dbc430511cf19e84425",
+      "explanationSha256": "fb183459cb7b2dc06ceb1a69557e2fc67c14451f621dea109794d9e3edcbde53",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_0f3a9b39b0d96f9b",
+      "name": "Gewicht verplaatsen zijwaarts – zonder steun",
+      "source": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-zonder-steun-line-v1.png",
+      "assetSha256": "0ed19b2ed86e5e54b4309edf1e706a60c2920deda823048beddd3e123f091578",
+      "explanationSha256": "e2e37eedfbf0228a2d06e3c7a8849f12ed44877dc82911464f8db3156c70e876",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_2be645c53a08ae85",
+      "name": "Reiken in stand – met steun",
+      "source": "images/balans-en-valpreventie/reiken-in-stand-met-steun-line-v1.png",
+      "assetSha256": "a7ae7c96d042def591a3a50b9f81759491965337bc393f3ce64d6fe19991171d",
+      "explanationSha256": "9aafe0ea207d113c318b03036c42c1f1d523729a4cba6be38df9e3acff6790ba",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_b79de58eeff05195",
+      "name": "Reiken in stand – zonder steun",
+      "source": "images/balans-en-valpreventie/reiken-in-stand-zonder-steun-line-v1.png",
+      "assetSha256": "0bd771c83245b7036b91928a84659108909d3acbae162024119541c3da3915a4",
+      "explanationSha256": "261c6ba39713ae85ea0c5f70866c0273e55e781bdcd1aac0526702ae36cf199a",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_391ce36b8dd87d72",
+      "name": "Op de plaats marcheren – met steun",
+      "source": "images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png",
+      "assetSha256": "080ca25b97e5dc2b9feb3b9b9540983dd1c621224d6f567af364e31c98381fdd",
+      "explanationSha256": "9ff24ca7e625327b9631e047bb061878ac0d9fc5747900d65cf494a7007e4675",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_40f7cb3117001639",
+      "name": "Op de plaats marcheren – zonder steun",
+      "source": "images/balans-en-valpreventie/op-de-plaats-marcheren-zonder-steun-line-v1.png",
+      "assetSha256": "6cad15354ba0b8c3c5e3679d7e2d082d98f596c6d7529687bdbda922de49d032",
+      "explanationSha256": "9b91b64d57083e68dbdbd62435c5a49b62ac887c4d156a13e92c6b9b4c385a1d",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_182cfe1a8137acad",
+      "name": "Zijwaarts stappen – met steun",
+      "source": "images/balans-en-valpreventie/zijwaarts-stappen-met-steun-line-v1.png",
+      "assetSha256": "6230915fac2850dd649c21b890fe4d53afdbda7691a1d5496f34b316642dbb91",
+      "explanationSha256": "fae31eebea8d8c7d308b8777a87f6b135865f455c141421bf5bd620db74979c6",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_21a541d8d8aae697",
+      "name": "Zijwaarts stappen – zonder steun",
+      "source": "images/balans-en-valpreventie/zijwaarts-stappen-zonder-steun-line-v1.png",
+      "assetSha256": "01b661a202a57576ec16937102baaf6f9d4561f5d31102ce391c27a725eb7517",
+      "explanationSha256": "83c6eacf4175459e2ec06be1a8dfed33a406656f5983e25c94c0ab29c85bece3",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_b60ee077e227abfd",
+      "name": "Achterwaarts stappen – met steun",
+      "source": "images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png",
+      "assetSha256": "d245a4c8fd6b3fea111fdaecb8f76b50dc530619fcd386d38b02e6650ea893b9",
+      "explanationSha256": "f7dceb1db0e04ebb9f5e17380f5a7a9a5505ab6247e0bed48d4cf6d356d3a7ee",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_b8ae27860ce750fa",
+      "name": "Achterwaarts stappen – zonder steun",
+      "source": "images/balans-en-valpreventie/achterwaarts-stappen-zonder-steun-line-v1.png",
+      "assetSha256": "0caceaddd02d6d309544d98570742b9df1c54d3a2308348efdf9f3d1841e2a31",
+      "explanationSha256": "d3f0e2828ee581c4e9ee7f8a9ca77a6e0bbdbaee5152201504aa1c7a868d66aa",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_a5cb52ef07f5f9a4",
+      "name": "Over een obstakel stappen – met steun",
+      "source": "images/balans-en-valpreventie/over-een-obstakel-stappen-met-steun-line-v1.png",
+      "assetSha256": "99592abca07a1b67a1516cff6531fba6b78034849382db7c0824a9cb60953d40",
+      "explanationSha256": "770ad76477f814e3fc1c2a7184766a1652bb1877d03ea96357f457004c270849",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_03127b77cb1cc5f6",
+      "name": "Over een obstakel stappen – zonder steun",
+      "source": "images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-line-v1.png",
+      "assetSha256": "7c8213e4fb9b0ea1b5a4768f4591e131f83ab9dd926a5100534307de86749f3f",
+      "explanationSha256": "1d8e21f9e3deb1f791ac29d450f6d677736d10f994b0bc73104800dccd3df9fe",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_59f54b0f73b88fab",
+      "name": "Draaien op de plaats – met steun",
+      "source": "images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-line-v1.png",
+      "assetSha256": "ae14d24b33833d90c6eb87fa758bf31ba36585a34027e3d6194b121753767966",
+      "explanationSha256": "a2eb09db8e958388ec3fc077cf5d4dff45fd3647d873d96ae54cdc67a082aa5a",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_dab1d71dd3f80bb0",
+      "name": "Draaien op de plaats – zonder steun",
+      "source": "images/balans-en-valpreventie/draaien-op-de-plaats-zonder-steun-line-v1.png",
+      "assetSha256": "5052c306c38aaa2b38f9238e293513790832e751de5c0b72743caa97a2479a6d",
+      "explanationSha256": "e7f43a6486973ce31580d5e7c16d46b8db85f1d6dee79d688e12c26b5319ecaa",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_b35dc7ba09862f87",
+      "name": "Stoel opstaan en lopen – zonder steun",
+      "source": "images/balans-en-valpreventie/stoel-opstaan-en-lopen-zonder-steun-line-v1.png",
+      "assetSha256": "9ed4e2048d4f3f5f0f3df27719dca59b7d32e4df527ee70bcb128712324ce9d6",
+      "explanationSha256": "3bc209372826889f02fa57570013454c169708e7120bda47b865b8c5d3d775a5",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_f945420fa1df4047",
+      "name": "Dubbele taak lopen – met cognitieve taak",
+      "source": "images/balans-en-valpreventie/dubbele-taak-lopen-met-cognitieve-taak-line-v1.png",
+      "assetSha256": "4fe75a956165018ef074f443a4f582bb8263ab56938d80f83cf75341b914bf0a",
+      "explanationSha256": "effb6b34f3bf172eaa740075f91330ce205be6068b2c5d2d13b8abbd60709c1c",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_6607290919450db5",
+      "name": "Reiken met aangedane arm – met visueel doel",
+      "source": "images/neurologische-revalidatie/reiken-met-aangedane-arm-met-visueel-doel-line-v1.png",
+      "assetSha256": "e10799a2223ab40a713237f0508833b869fccbf5fc97b054cd989f015de3a6cc",
+      "explanationSha256": "86408d67300acf2df96ca57faa479f451a8efa6c5ac8e77d1eec5a8dd7c5096e",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_6a6f541af1ebba77",
+      "name": "Reiken met aangedane arm – functionele combinatie",
+      "source": "images/neurologische-revalidatie/reiken-met-aangedane-arm-functionele-combinatie-line-v1.png",
+      "assetSha256": "3cc326c2c6753d18f0c517b20986388fb07106ea7b60392ee0b53eaef1508542",
+      "explanationSha256": "29dd5e44ed82614f2f9b558a2e1e608eea519e6e875b5155161f49fdf30efba5",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_c374f5b2a002ed26",
+      "name": "Hand openen na grijpen – bilateraal",
+      "source": "images/neurologische-revalidatie/hand-openen-na-grijpen-bilateraal-line-v1.png",
+      "assetSha256": "90d130ae544789799995250e9b2b9ac268dbcb8fe6e5f9b772452d3d6e05c08d",
+      "explanationSha256": "b66b70928fe9c1fe63bb75902e4f7fad775cb4a6b909367ce0680555cecc51ac",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_6d61735a537b3098",
+      "name": "Romp rotatie in zit – bilateraal",
+      "source": "images/neurologische-revalidatie/romp-rotatie-in-zit-bilateraal-line-v1.png",
+      "assetSha256": "828c292cc25c9a21b0d29d44763c149059d2f7746cd514aa1feb7256704305d3",
+      "explanationSha256": "7505bd6aabbb15f76c307689aa250605d12280ba1d3343afdbbbb4545b774009",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_bc33d743a44951af",
+      "name": "Symmetrisch opstaan – met fysieke steun",
+      "source": "images/neurologische-revalidatie/symmetrisch-opstaan-met-fysieke-steun-avatar-v8.jpg",
+      "assetSha256": "0f1a533ffacc6ba815df78a2a2aefe1a29c585355820327385ca711646d4c1aa",
+      "explanationSha256": "ce881c9dd3c9ecefd646d41a16ff8438751b3182d872112a25f391322aceaf7d",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 302,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_211c89f47639deb5",
+      "name": "Symmetrisch opstaan – met ritmische cue",
+      "source": "images/neurologische-revalidatie/symmetrisch-opstaan-met-ritmische-cue-line-v1.png",
+      "assetSha256": "c7979e954b8c8541853b5cf02c49e15f1948995f029e9da7a668e1c7aa24817d",
+      "explanationSha256": "015b857620b8c43770981b8d0448becfe7ade98684dfc0a4d298eddc647aee59",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_fca8d4dac2fb58b9",
+      "name": "Stap initiëren – met visueel doel",
+      "source": "images/neurologische-revalidatie/stap-initieren-met-visueel-doel-line-v1.png",
+      "assetSha256": "f45c9baebd181b4d0eb0567afb1410acba4df94b9a90a821e88b56f32d0ea592",
+      "explanationSha256": "e76355e5ee6161b535f7b2f3c283bd453ad565c5e89490c5acc81bda0b017013",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_1f28916d68f07669",
+      "name": "Stap initiëren – met ritmische cue",
+      "source": "images/neurologische-revalidatie/stap-initieren-met-ritmische-cue-line-v1.png",
+      "assetSha256": "6f49aa52129fe34ecdb0278b3245b71d3c6d24d415ffcc8a29053264430128f3",
+      "explanationSha256": "f5c85e38284e9d6816e6d0909fe17d03742ea76c14c301ef54969ef75ddbad62",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_41ff90180014238c",
+      "name": "Zijwaarts verplaatsen in zit – met visueel doel",
+      "source": "images/neurologische-revalidatie/zijwaarts-verplaatsen-in-zit-met-visueel-doel-line-v1.png",
+      "assetSha256": "5cedd1a4584e3f199550879ab491f61856c13978ef11405405593716ea7a8901",
+      "explanationSha256": "b8fc49aa64597124a5ca3ff3f0932ec7f56e30e6a540ed2e43a37bf8b4efb27e",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_30cc83735513cb0c",
+      "name": "Hiel plaatsen – met visueel doel",
+      "source": "images/neurologische-revalidatie/hiel-plaatsen-met-visueel-doel-line-v1.png",
+      "assetSha256": "26d3ed017740a2644b73174aae687cc6c304466e8a88f0b1e63635f7dea9d71c",
+      "explanationSha256": "f5e23bd04cff038a8b961a8234bf547cb0db912f7630f1de8eb1c0af75622f43",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_222ab9d7a5d5687a",
+      "name": "Voet naar marker – met visueel doel",
+      "source": "images/neurologische-revalidatie/voet-naar-marker-met-visueel-doel-line-v1.png",
+      "assetSha256": "36381800ecfc9dd7bb4b2683daf81adc85375456a66263543511406d42d8e6df",
+      "explanationSha256": "936f6a5bc19673f791e396bc51a11339ccf9ba7232b61f6ac6f4634ae57f28d0",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_adcfb76849642ec7",
+      "name": "Ritmisch marcheren – met ritmische cue",
+      "source": "images/neurologische-revalidatie/ritmisch-marcheren-met-ritmische-cue-line-v1.png",
+      "assetSha256": "60fbe4715682c249b3952465ffd8e4740915a15e79e88d913f782322c8b578b2",
+      "explanationSha256": "80f2b1690a6ccbba1f788c419803900fe2b5aaaadaa375f51db78f4bee48f596",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_975632f0f95c824e",
+      "name": "Grote stappen – met ritmische cue",
+      "source": "images/neurologische-revalidatie/grote-stappen-met-ritmische-cue-line-v1.png",
+      "assetSha256": "76b1da23b032185aefcc7d63b605398d8a0eb67b1971e80238c28c3a09cc8c26",
+      "explanationSha256": "064a938e260e4f8296cd60704c69d3c7abde5f8bf9e5ea54b5d7e2a216a0ad90",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_4b4cdf03e92ccf3f",
+      "name": "Grote stappen – functionele combinatie",
+      "source": "images/neurologische-revalidatie/grote-stappen-functionele-combinatie-line-v1.png",
+      "assetSha256": "a70d90bb477f48fa95f8db368f13abdd253c3e4aa03eb0f8f20b914eb9829c5e",
+      "explanationSha256": "18c2e6e6ae8439d08f3bbaa43eda1228af17a648942502c30ce7aac6ea83aa61",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Binnen de uitsnedes staat 304 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_9b0d3a17a5ed8f8c",
+      "name": "Brug met symmetrie – bilateraal",
+      "source": "images/neurologische-revalidatie/brug-met-symmetrie-bilateraal-line-v1.png",
+      "assetSha256": "b7feef5ed16293475131900809263d5b4ea0a3963f27f82082c4e997cc699615",
+      "explanationSha256": "fc74001cf1e65af1acdd4875c6a77a247954c400ed46f666a0f8e01eb7d622d7",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_6ef74f256a43157c",
+      "name": "Blikstabilisatie horizontaal – zittend langzaam",
+      "source": "images/vestibulair/blikstabilisatie-horizontaal-zittend-langzaam-avatar-v8.jpg",
+      "assetSha256": "08b1fe2b424a450ffd6a05487ba405684aed62dcb6cfde54740b1476a372157e",
+      "explanationSha256": "5acd5f54d61a9cc09a363b686287785bee853e84c8127a6e989af44a99e7a138",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 239,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 93%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_f3f6f383c940f974",
+      "name": "Blikstabilisatie horizontaal – staand langzaam",
+      "source": "images/vestibulair/blikstabilisatie-horizontaal-staand-langzaam-line-v1.png",
+      "assetSha256": "103a8cb6d3656674074e145a2ac52d56025f51184fa59f4c4d64bf28d0941530",
+      "explanationSha256": "40e0ea4b9662f1938b3527b93ec5d5d2e7782ca21a76c0b1747a02f19fbef7e2",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_11de8f0fea486d2d",
+      "name": "Blikstabilisatie horizontaal – tijdens lopen",
+      "source": "images/vestibulair/blikstabilisatie-horizontaal-tijdens-lopen-line-v1.png",
+      "assetSha256": "58c9be57910d5fff489e212a06b841f55f641e3b627b4a936b320c6f6d56648d",
+      "explanationSha256": "6b88b421f250a14055f03f05d525054d3a4a7650eacda56aacbda1985941943e",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_9c374def618b9b9f",
+      "name": "Blikstabilisatie verticaal – zittend langzaam",
+      "source": "images/vestibulair/blikstabilisatie-verticaal-zittend-langzaam-line-v1.png",
+      "assetSha256": "993c48b6c21c24f2128e723a2d451685e0db177a3a970fdcedf5244f271889d6",
+      "explanationSha256": "e6f2a8e96421ed77e682ab543b2b84e6db538eae680243fc2b0d1425604b01f8",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_fa5accf2e385cd64",
+      "name": "Blikstabilisatie verticaal – staand langzaam",
+      "source": "images/vestibulair/blikstabilisatie-verticaal-staand-langzaam-line-v1.png",
+      "assetSha256": "b2c373a737d5d32451a8ad0e7f3078e71c1507ab8f965c9219a34487a8d20062",
+      "explanationSha256": "6bcb03b25b6006b787e1be3c21c76d81887df6877e11211e7d91bd109cba0d98",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_b1505367e016178b",
+      "name": "Ogen naar doelen – zittend langzaam",
+      "source": "images/vestibulair/ogen-naar-doelen-zittend-langzaam-line-v1.png",
+      "assetSha256": "de6494ee81e97519c99dcfcb7c74609b3c76c50973557532280edcee11e078f8",
+      "explanationSha256": "147e7828e0edb147b0df6f3465ff9cb98083c4814a36cb4d3fd7044b8834b659",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_66207732613fd2eb",
+      "name": "Ogen naar doelen – staand langzaam",
+      "source": "images/vestibulair/ogen-naar-doelen-staand-langzaam-line-v1.png",
+      "assetSha256": "1bc26ffb2ddbcd7d2272c96c3833998c4a148505280c58114678c87747f43af0",
+      "explanationSha256": "645f10373545fd487a15799b690f14509dbadb8454a79aa1016a45eeee82b652",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_886a77c60aebc20f",
+      "name": "Doel volgen – zittend langzaam",
+      "source": "images/vestibulair/doel-volgen-zittend-langzaam-line-v1.png",
+      "assetSha256": "988dce4ae4950d355fd0bc027372aa96cdb02521224e22769a6262791c469c51",
+      "explanationSha256": "e6b5a140a6da3e55587f99027622373a5e9ad8b2738ce4da91d0a1f70cc0c8cd",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_e2a07d5f662d49ad",
+      "name": "Hoofd draaien in stand – staand langzaam",
+      "source": "images/vestibulair/hoofd-draaien-in-stand-staand-langzaam-line-v1.png",
+      "assetSha256": "1fbaa49d9bc83384133ca90c1c8c7e20d3d1c9bdf60612647715f4cea98d4975",
+      "explanationSha256": "7311bfb49be1a0ea108bee24e032f44a8012297e09e35189fb5754a45e9c3fb8",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_1eb8973666577356",
+      "name": "Buigen en oprichten – staand langzaam",
+      "source": "images/vestibulair/buigen-en-oprichten-staand-langzaam-line-v1.png",
+      "assetSha256": "476c09c1ef6e80afbd6f794cc9aa014d830af0a898eb98622e0613049a9d6e01",
+      "explanationSha256": "980115398d9819d46e6a9a70c9bbd8ce0c80a3bf14924326795495615951eedb",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_e0a02c06b8fd582d",
+      "name": "Voorwerp van vloer tillen – ergonomische basis",
+      "source": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-ergonomische-basis-avatar-v8.jpg",
+      "assetSha256": "7193a80ceb678b66b3656466c3d5505af33800e7af3ed1bae37ca62bfa050cf9",
+      "explanationSha256": "3508b699404185cc2764bff18c5755a6d1811b0b9322d02f73e9c7b80c261aae",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 524,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_5323aabf47e9f41c",
+      "name": "Voorwerp van vloer tillen – licht en dichtbij",
+      "source": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-licht-en-dichtbij-line-v1.png",
+      "assetSha256": "70ecec4927297081a2c2b1da282c1d72c9d98698fd27e686a0198f3cbcdc5f59",
+      "explanationSha256": "088f0d6c398e60cc5cba898bab2d5c00e7774eaf9724ee8f1dedee3b031d9503",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_98960414a8cfcb5d",
+      "name": "Voorwerp van tafel pakken – licht en dichtbij",
+      "source": "images/werk-en-dagelijkse-handelingen/voorwerp-van-tafel-pakken-licht-en-dichtbij-line-v1.png",
+      "assetSha256": "2c6a4c7b8637e76b40a2c76fdaff8af3476633264f73089ff1cab4db4c28fbe0",
+      "explanationSha256": "dada05ce2a25a79bd84aacc62977bb3f9c11a4216d6b8f1576bfb9bdebfa4fe2",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_010edfd8ac002eaf",
+      "name": "Boven schouderhoogte plaatsen – ergonomische basis",
+      "source": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-ergonomische-basis-line-v1.png",
+      "assetSha256": "06712dc2e280c11cb110b8a8244b2d6e89d28c0cef752fc7067c9355ab5bab9f",
+      "explanationSha256": "2de5d081b1e2aacd5893c0f4e17a7de0b881d5b77075087d44a29be2f8b1b26f",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_1066da8dd15f9fec",
+      "name": "Boven schouderhoogte plaatsen – licht en dichtbij",
+      "source": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-licht-en-dichtbij-line-v1.png",
+      "assetSha256": "985072478654e5510694bad31f4abf434598437f87a79db54379fcc99a11101e",
+      "explanationSha256": "54ac304c16fa2671500d6f23c981978a822fc5007b4e98462d77b20f42a83852",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_e971ce59b89cb228",
+      "name": "Duwen – licht en dichtbij",
+      "source": "images/werk-en-dagelijkse-handelingen/duwen-licht-en-dichtbij-line-v1.png",
+      "assetSha256": "655865b1323cfcd55e3657b38546bbb5007aae5d9de9969e5819a10e6586a494",
+      "explanationSha256": "e101ef1dd1c05553c39bacc80e185bbdaec44e7b6c931f7c2dbb0da5279824d4",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_c4137e59a9ec24cd",
+      "name": "Duwen – met stapverplaatsing",
+      "source": "images/werk-en-dagelijkse-handelingen/duwen-met-stapverplaatsing-line-v1.png",
+      "assetSha256": "ee7ecf9fe7010306a51c6567a7e960620eba38b9c9adb49b38bbefcb55265c5a",
+      "explanationSha256": "8edff8b1a1314bdba7ccd123d9f13f4230a79df4c185bb22d0f9e548b7f25e99",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_c06068464b11826d",
+      "name": "Trekken – licht en dichtbij",
+      "source": "images/werk-en-dagelijkse-handelingen/trekken-licht-en-dichtbij-line-v1.png",
+      "assetSha256": "3afdea7ca74a45427b166122ae585d566e659e3d52e7e20b90b2c326da83510e",
+      "explanationSha256": "a14e6f9ebedd259030bd46790b9e7ffc8c63a4561a56db22de52272084711581",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_04ca0d67787dca33",
+      "name": "Draaien en plaatsen – met stapverplaatsing",
+      "source": "images/werk-en-dagelijkse-handelingen/draaien-en-plaatsen-met-stapverplaatsing-line-v1.png",
+      "assetSha256": "ef69c8703488e30bbd457b18fe0ab01bffc48fc6263a85780023ba4742323b58",
+      "explanationSha256": "4dd437600ef9830ecde7554a478e5deedb8abd1fbbf998f0c5f62c24b395bbfb",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_1122c98c2308639e",
+      "name": "Langdurig zitten onderbreken – met tempo of herhaling",
+      "source": "images/werk-en-dagelijkse-handelingen/langdurig-zitten-onderbreken-met-tempo-of-herhaling-line-v1.png",
+      "assetSha256": "80dde533c80bfc565c97476dabb2685defffa057f3693a2d60709acc95931845",
+      "explanationSha256": "ac1ad2918bca1d01270d00329455bed74c46db1dcc342501ed6c9717b0192af2",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_b161e58d4bafea63",
+      "name": "Bekkenbodem aanspannen – liggend",
+      "source": "images/bekken-postpartum/bekkenbodem-aanspannen-liggend-line-v1.png",
+      "assetSha256": "6486658e364b634d011b235cf5765f8b26bcf20568b8e8c46ba540e6ebc2fab3",
+      "explanationSha256": "d32e6a3898b92f768d3a2e240dac4642b2d067be32bfb508dbb16040ea63b341",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_af9cd35496058ede",
+      "name": "Bekkenbodem ontspannen – liggend",
+      "source": "images/bekken-postpartum/bekkenbodem-ontspannen-liggend-line-v1.png",
+      "assetSha256": "e7a235a4f92c66bcc7a665d88e97bb392d38ff91da0e87e5f69493a730891bc8",
+      "explanationSha256": "5d037f2610c7432a5b9d9331e35f6e05cd88ad1090cf133e3c087055b5d1b13c",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_96a6630928d93cd2",
+      "name": "Bekkenbodem snel aanspannen – zittend",
+      "source": "images/bekken-postpartum/bekkenbodem-snel-aanspannen-zittend-line-v1.png",
+      "assetSha256": "d0ec386e79cd774067d9a1db393a0e61b88ac6747c4cf4850aa76a5ab04a01f5",
+      "explanationSha256": "f1d54142867c47d077e6bb691525e353fa68ea3586c7be76631cbb24706c9896",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_94a35e31779075e4",
+      "name": "Bekkenbodem met uitademing – liggend",
+      "source": "images/bekken-postpartum/bekkenbodem-met-uitademing-liggend-line-v1.png",
+      "assetSha256": "06cafa9c10589cbd360f8866975fc2596bb9785bcfffabc4dbfec7f0d3a7df84",
+      "explanationSha256": "e810ffef9f0dfd59ac0a0c1b9ccc87138956b537ccdf774d41997f5002d6a530",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_24237e101a2c77ad",
+      "name": "Diepe buikactivatie – liggend",
+      "source": "images/bekken-postpartum/diepe-buikactivatie-liggend-line-v1.png",
+      "assetSha256": "849814d6478a123fb533198d404813a7ee7763db58d6e8d24d6f7ad28d4d8c10",
+      "explanationSha256": "2ee1931e9f5c9e626639617759222aac87e32d79eaf38720c67c7530d236a154",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_0474f0286832320f",
+      "name": "Bekkenmobiliteit – liggend",
+      "source": "images/bekken-postpartum/bekkenmobiliteit-liggend-line-v1.png",
+      "assetSha256": "28353244789675c79938ca404966e31b8682074bebf4adce691d2800ec7fc1b0",
+      "explanationSha256": "a09e41c1ae985ad0a6b068c6a94a38827d040b830f5d7e13d612dff5a336e7bc",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_8d4fb0f3f39ab16e",
+      "name": "360 graden ademhaling – eerste fase rustig",
+      "source": "images/bekken-postpartum/360-graden-ademhaling-eerste-fase-rustig-line-v1.png",
+      "assetSha256": "481563bb61a64e7918620581b543abc3910dae469be49c513ef249f6d92f76da",
+      "explanationSha256": "b3fb8c05b1c7e97bb97bb22edd2b136ad32b3b565ac16e478fbcafe75aac98db",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_9d33debcffd49100",
+      "name": "Bekkenkanteling postpartum – eerste fase rustig",
+      "source": "images/bekken-postpartum/bekkenkanteling-postpartum-eerste-fase-rustig-avatar-v8.jpg",
+      "assetSha256": "03b08bcee9e627a3fac43ecaf83dc50d464675e3d91ea6901135bf44dcaa2c33",
+      "explanationSha256": "58b45e9073be63ea1aedf6e0731f21193885912bb9fc91ecf7ee7b4ccc489edb",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 510,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 90%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_2d59f8875bc40b6c",
+      "name": "Functioneel opstaan – functioneel",
+      "source": "images/bekken-postpartum/functioneel-opstaan-functioneel-line-v1.png",
+      "assetSha256": "3a2ea15684093fec590175d7b1719b243659cb3de3be155d03db7c98ccbd8c30",
+      "explanationSha256": "91842f72ded6f4b8b5b80fdb98b49cbeaab57477413e974ec166b980eb716755",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_24995dde850e82a4",
+      "name": "Zijlig heupkracht – zijlig",
+      "source": "images/bekken-postpartum/zijlig-heupkracht-zijlig-line-v1.png",
+      "assetSha256": "f3e5055bcc6ce64b14b79e21cfea4d27c14a0784e4d292e7c9a0ee2d61e29afd",
+      "explanationSha256": "28e6e736772013b5e7228a6830062747a00bd6e8d5df41f2481f5204cee0a12d",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_2edd9e3a8bf351cb",
+      "name": "Hop vooruit – techniek langzaam",
+      "source": "images/sportrevalidatie/hop-vooruit-techniek-langzaam-line-v1.png",
+      "assetSha256": "c667f96432be446c0082b69ac806049b02d8650711c954cf00df73e090b71d50",
+      "explanationSha256": "f8a821aa9845d6041ec0d8e2645a111ff51e0596cfba3a706b19b8cd70aa9339",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_c42d5d8c7ecf1a17",
+      "name": "Landing op twee benen – techniek langzaam",
+      "source": "images/sportrevalidatie/landing-op-twee-benen-techniek-langzaam-avatar-v8.jpg",
+      "assetSha256": "ddd6d03d4226dc48262852e6de25ccaca597f807a525613eac85ceb57089ae56",
+      "explanationSha256": "ff160d92ee3ba06a7f45b567ff72ec642816a91c4adb32a772725c5ddb13c9a6",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 231,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_5ab728e004c4f52f",
+      "name": "Landing op één been – techniek langzaam",
+      "source": "images/sportrevalidatie/landing-op-een-been-techniek-langzaam-line-v1.png",
+      "assetSha256": "363f7b0a72b07271af98b085ca9ed570ae0f2e4437af7d48905865fcbd27d5d9",
+      "explanationSha256": "eff4b312f13e570c483a45b4da7e969682c110cd608a9daa3c8d3548ecc0ccef",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_0273cc99fa1cd0d6",
+      "name": "Laterale shuffle – submaximaal",
+      "source": "images/sportrevalidatie/laterale-shuffle-submaximaal-line-v1.png",
+      "assetSha256": "0276a4472a97c281f56974086ffc8214de8fe3a2189c5255817a72956fe6eb3a",
+      "explanationSha256": "90e16bd06d76e1081412a39f04b36d18473e205503a1384b0be1ccb4f16b00e6",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_7cc6fd169d060ebc",
+      "name": "Richtingsverandering – techniek langzaam",
+      "source": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-line-v1.png",
+      "assetSha256": "a9082a4a8890b049c54145b506b8a02bfe0c1bcef7d8bb7f124ed614f86b34ad",
+      "explanationSha256": "e04794e4ad9810030823fbbb87955438b7b463cfc0dda616476a16990168a1d1",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_c769c6c4de22aeca",
+      "name": "Sprinttechniek marcheren – techniek langzaam",
+      "source": "images/sportrevalidatie/sprinttechniek-marcheren-techniek-langzaam-line-v1.png",
+      "assetSha256": "193a67f321a39d7b3b6302c42834ad30c95fa8c127e15fc61589002aa5bb4d35",
+      "explanationSha256": "e2d8db8c611dc6ea4a34f5796d1308482eaa961b7dfa18d29dc43d186d2f1fc9",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_de33f5404b293a39",
+      "name": "Versnellen en afremmen – submaximaal",
+      "source": "images/sportrevalidatie/versnellen-en-afremmen-submaximaal-line-v1.png",
+      "assetSha256": "6e75eef5299affd8232da7c36b1ad89cd778279fd49ffca60adfb4fc8f59738d",
+      "explanationSha256": "f86f360c6c99c40eb25dd2ad04aa99cc8d4a288d677f421ad3cbb01048f44531",
+      "mediaType": "line_drawing_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 0,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {

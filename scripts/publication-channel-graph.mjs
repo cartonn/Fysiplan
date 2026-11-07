@@ -61,7 +61,14 @@ async function execute(node, results) {
     const overrides = await loadV2Overrides(root);
     const arrows = JSON.parse(await readFile(join(root, "content", "beginhouding-pijl.json"), "utf8"));
     for (const override of overrides.values()) await assertV2Override(root, override, v2, v1, arrows);
+    // nieuwe lijntekeningen zonder avatarkaart (content/nieuwe-lijntekeningen.json): bewust
+    // geen kaartImg, wel exact het vastgelegde lijnbeeld; geen half paar maar een lijn-alleen-stand
+    const nieuweLijn = new Map(JSON.parse(await readFile(join(root, "content", "nieuwe-lijntekeningen.json"), "utf8"))
+      .lijntekeningen.map((entry) => [entry.naam, entry]));
     const pathErrors = v2.filter((entry) => {
+      const nieuwe = nieuweLijn.get(entry.naam);
+      // met vastgelegde avatar: kaartImg exact het geregistreerde pad; zonder: geen kaartImg
+      if (nieuwe) return (entry.kaartImg ?? null) !== (nieuwe.kaartImg ?? null) || !entry.coreExerciseId || entry.img !== nieuwe.img;
       if (!entry.kaartImg) return true;
       const override = !entry.coreExerciseId && overrides.get(entry.exerciseId);
       if (override) return entry.img !== override.lineImg || v1ByName.get(entry.naam)?.img !== override.v1LineImg;
@@ -76,7 +83,9 @@ async function execute(node, results) {
       ]);
       return { name: entry.naam, colorReady, lineReady, pairReady: colorReady && lineReady };
     }));
-    const unpaired = pairs.filter((pair) => pair.colorReady !== pair.lineReady);
+    const unpaired = pairs.filter((pair) => !nieuweLijn.has(pair.name) && pair.colorReady !== pair.lineReady);
+    const nieuweZonderBeeld = pairs.filter((pair) => nieuweLijn.has(pair.name) && (!pair.lineReady || (Boolean(nieuweLijn.get(pair.name).kaartImg) && !pair.colorReady)));
+    assert(nieuweZonderBeeld.length === 0, `nieuwe lijntekeningen ontbreken: ${nieuweZonderBeeld.slice(0, 5).map((pair) => pair.name).join(", ")}`);
     assert(unpaired.length === 0, `v2 bevat ${unpaired.length} half gepubliceerde beeldparen: ${unpaired.slice(0, 5).map((pair) => pair.name).join(", ")}`);
     return {
       sourceCount: v2.length,
@@ -84,7 +93,9 @@ async function execute(node, results) {
       publishedCount: pairs.filter((pair) => pair.colorReady).length,
       lineDrawingsReady: pairs.filter((pair) => pair.lineReady).length,
       pairsReady: pairs.filter((pair) => pair.pairReady).length,
-      pendingCount: pairs.filter((pair) => !pair.pairReady).length,
+      pendingCount: pairs.filter((pair) => !pair.pairReady && !nieuweLijn.has(pair.name)).length,
+      lineOnlyNew: [...nieuweLijn.values()].filter((entry) => !entry.kaartImg).length,
+      newWithAvatar: [...nieuweLijn.values()].filter((entry) => entry.kaartImg).length,
       lineRule: "legacy reuses exact V1 images, except hash-bound V2 corrections in content/v2-avatar-overrides.json; extensions use black-only contours on pure #FFFFFF",
       correctedLegacyLines: overrides.size,
     };

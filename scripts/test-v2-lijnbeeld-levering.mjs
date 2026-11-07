@@ -44,14 +44,14 @@ try {
 }
 assert.ok(manifest && v1Manifest, "server start niet: " + stderr.slice(0, 500));
 
-const { overrides, arrows } = await laadGecontroleerdeUitzonderingen(root);
+const { overrides, arrows, nieuw } = await laadGecontroleerdeUitzonderingen(root);
 const uitzonderingen = [...VASTGELEGDE_UITZONDERINGEN].sort();
-const controleer = (m = manifest, extra = {}) => controleerGeleverdeLijnbeelden({ manifest: m, v1Manifest, arrows, overrides, ...extra });
+const controleer = (m = manifest, extra = {}) => controleerGeleverdeLijnbeelden({ manifest: m, v1Manifest, arrows, overrides, nieuw, ...extra });
 const kopie = () => manifest.map((e) => ({ ...e }));
 const faalt = (omschrijving, fn, patroon = /V2-lijnbeelden wijken af/) => assert.throws(fn, patroon, `${omschrijving} had moeten falen`);
 
 // ---- echte levering ----
-assert.equal(manifest.length, v1Manifest.length);
+assert.equal(manifest.length, v1Manifest.length + nieuw.size, "V1-oefeningen plus de nieuwe lijntekeningen");
 assert.deepEqual(controleer(), uitzonderingen);
 const v1Img = new Map(v1Manifest.map((e) => [e.naam, e.img]));
 const oudeVergelijking = manifest.filter((e) => e.img.replace(/^\/v2\//, "") !== v1Img.get(e.naam));

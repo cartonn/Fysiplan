@@ -230,11 +230,12 @@ try {
   const v1Manifest = await (await fetch(origin + "/oefeningen.json")).json();
   const manifestResponse = await fetch(origin + "/v2/oefeningen.json");
   const manifest = await manifestResponse.json();
-  assert.equal(manifest.length, v1Manifest.length);
-  // V2 levert de pijlversie van exact het V1-lijnbeeld; alleen de twee hash-gebonden
-  // uitzonderingen hebben een ander lijnbeeld (scripts/v2-lijnbeeld-levering.mjs).
-  const { overrides: v2Overrides, arrows } = await laadGecontroleerdeUitzonderingen(root);
-  assert.deepEqual(controleerGeleverdeLijnbeelden({ manifest, v1Manifest, arrows, overrides: v2Overrides }),
+  // V2 levert de pijlversie van exact het V1-lijnbeeld; alleen de hash-gebonden
+  // uitzonderingen hebben een ander lijnbeeld, en de nieuwe lijntekeningen staan niet in V1
+  // (scripts/v2-lijnbeeld-levering.mjs).
+  const { overrides: v2Overrides, arrows, nieuw } = await laadGecontroleerdeUitzonderingen(root);
+  assert.equal(manifest.length, v1Manifest.length + nieuw.size);
+  assert.deepEqual(controleerGeleverdeLijnbeelden({ manifest, v1Manifest, arrows, overrides: v2Overrides, nieuw }),
     [...VASTGELEGDE_UITZONDERINGEN].sort());
   const oefening = manifest.find((entry) => entry.groep && entry.groep !== "Werp-ABC");
   assert.ok(oefening);

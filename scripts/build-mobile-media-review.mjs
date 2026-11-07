@@ -182,7 +182,9 @@ for (const e of base) {
       : {present:merk.present,cover:null,reason:merk.reason}
   });
 }
-if(entries.length!==319) throw new Error('Expected 319 available mobile assets, got '+entries.length);
+// 319 V1-beelden plus de nieuwe lijntekeningen uit content/nieuwe-lijntekeningen.json (2026-11-06)
+const VERWACHT_BESCHIKBAAR = 319 + JSON.parse(await fs.readFile('content/nieuwe-lijntekeningen.json','utf8')).lijntekeningen.length;
+if(entries.length!==VERWACHT_BESCHIKBAAR) throw new Error('Expected '+VERWACHT_BESCHIKBAAR+' available mobile assets, got '+entries.length);
 for(const name of rejects.keys())if(!entries.some(e=>e.name===name))throw new Error('Missing rejection '+name);
 for(const [id,hold] of sourceHolds)if(!entries.some(e=>e.exerciseId===id&&e.source===hold.source&&e.status==='rejected'))throw new Error('Tijdelijke hold niet toegepast: '+hold.name);
 for(const [id,o] of poseOrder)if(!poseOrderApplied.has(id))throw new Error('Houdingvolgorde niet toegepast: '+o.name+' (bron ontbreekt, is afgekeurd of tegengehouden, of de uitsnede is niet meer meetkundig goedgekeurd); opnieuw beoordelen.');

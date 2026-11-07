@@ -11,9 +11,11 @@ const manualRejections=new Set(approvals.manualRejections.map(r=>r.exerciseId));
 const base=JSON.parse(await fs.readFile('public/oefeningen-v2.json','utf8'));
 const available=[];
 for(const e of base){try{await fs.access('public/'+(e.kaartImg||e.img));available.push(e);}catch{}}
-assert.equal(manifest.entries.length,319);
+// 319 V1-beelden plus de nieuwe lijntekeningen (content/nieuwe-lijntekeningen.json)
+const NIEUW=JSON.parse(await fs.readFile('content/nieuwe-lijntekeningen.json','utf8')).lijntekeningen.length;
+assert.equal(manifest.entries.length,319+NIEUW);
 assert.equal(manifest.entries.length,available.length);
-assert.equal(new Set(manifest.entries.map(e=>e.exerciseId)).size,319);
+assert.equal(new Set(manifest.entries.map(e=>e.exerciseId)).size,319+NIEUW);
 assert.equal(manifest.defaultPresentation,'static');
 assert.equal(manifest.defaultAllowAutomaticPoseSplit,false);
 for(const e of available){
@@ -95,8 +97,8 @@ for(const [id,hash] of BRONKEUZE){
   assert.equal(e.poseGeometry.status,'withheld',e.name);assert.deepEqual(e.poses,[],e.name);
   assert.ok(inspected.get(hash)?.source===e.source,e.name+': eerdere uitsnedecontrole niet weggehaald');
 }
-assert.equal(manifest.summary.approved,0);assert.equal(manifest.summary.rejected,12);assert.equal(manifest.summary.unreviewed,307);
-assert.equal(manifest.summary.poseGeometryApproved,153);assert.equal(manifest.summary.poseStatic,166);
+assert.equal(manifest.summary.approved,0);assert.equal(manifest.summary.rejected,12);assert.equal(manifest.summary.unreviewed,307+NIEUW);
+assert.equal(manifest.summary.poseGeometryApproved,153);assert.equal(manifest.summary.poseStatic,166+NIEUW);
 // afgekeurde beelden leveren nooit houdingen, ook niet als de meting een paar vindt
 for(const e of manifest.entries.filter(e=>e.status==='rejected')){
   assert.equal(e.poseGeometry.status,'withheld',e.name);assert.deepEqual(e.poses,[],e.name);
@@ -126,9 +128,16 @@ assert(approvedPoses.length>0,'geen enkele houding goedgekeurd: de reparatie doe
 const kaartHtml=await fs.readFile('public/kaart.html','utf8');
 assert.ok(kaartHtml.includes("var beeldpad=o?(o.kaartImg||o.img):'';"),'de kaart kiest zelf geen ander beeld');
 assert.ok(kaartHtml.includes("function mediaSource(o){return String(o&&(o.kaartImg||o.img)||'')"),'de beoordeling gaat over hetzelfde beeld als de weergave');
+// Uitzondering: de nieuwe lijntekeningen (content/nieuwe-lijntekeningen.json) horen bij
+// oefeningen die nog géén oefenfoto/avatar hebben; daar vervangt de lijntekening niets.
+// Ze hebben bewust geen kaartImg tot de avatar er is (besluit eigenaar 2026-11-06); daarna
+// exact de in het register vastgelegde avatar (scripts/importeer-nieuwe-avatars.mjs).
+const nieuweLijn=new Map(JSON.parse(await fs.readFile('content/nieuwe-lijntekeningen.json','utf8')).lijntekeningen.map(n=>[n.naam,n]));
 for(const e of available){
   const bron=e.kaartImg||e.img;
-  assert.ok(!/line-v1|beginhouding-pijl/.test(bron),'de kaart zou hier een lijntekening tonen: '+e.naam);
+  const nieuwe=nieuweLijn.get(e.naam);
+  if(nieuwe){assert.equal(e.kaartImg??null,nieuwe.kaartImg??null,e.naam+': kaartImg wijkt af van het register');assert.equal(bron,nieuwe.kaartImg||nieuwe.img,e.naam);}
+  else assert.ok(!/line-v1|beginhouding-pijl/.test(bron),'de kaart zou hier een lijntekening tonen: '+e.naam);
   assert.equal(manifest.entries.find(r=>r.exerciseId===exerciseId(e)).source,bron,e.naam);
 }
 assert.equal(manifest.schemaVersion,2);
@@ -150,7 +159,7 @@ for(const r of manifest.entries){
 }
 assert.equal(afgedekt,215,'215 beelden met een afdekbaar ingebakken merk');
 assert.equal(manifest.summary.brandMarkCovered,215);
-assert.equal(manifest.summary.brandMarkAbsent,104);
+assert.equal(manifest.summary.brandMarkAbsent,104+NIEUW); // nieuwe lijntekeningen hebben geen ingebakken merk
 // de drie beelden waar het ingebakken witte vak een hoekje uit de haren snijdt: het
 // afdekvlak ligt binnen dat vak en maakt het niet groter
 for(const naam of ['Front raises','Shoulder rotation (shrugs)','Yoga deep squat'])
@@ -158,4 +167,4 @@ for(const naam of ['Front raises','Shoulder rotation (shrugs)','Yoga deep squat'
 // een beeld zonder merk krijgt nooit een vlak, ook niet als er linksboven haar staat
 for(const naam of ['Foam roller hamstring','Foam roller calf','Standing chair heel/toe','Alternating lunge jumps'])
   assert.equal(manifest.entries.find(r=>r.name===naam).brandMark.cover,null,naam);
-console.log('PASS: 319 source-linked assets, hashes, twelve rejections (five content, seven temporary source holds: five source defects, two pending source choices); '+approvedPoses.length+' visueel gecontroleerde uitsnedes, 215 ingebakken merken opnieuw gemeten en afdekbaar, geen klinische goedkeuring afgeleid.');
+console.log('PASS: '+(319+NIEUW)+' source-linked assets, hashes, twelve rejections (five content, seven temporary source holds: five source defects, two pending source choices); '+approvedPoses.length+' visueel gecontroleerde uitsnedes, 215 ingebakken merken opnieuw gemeten en afdekbaar, geen klinische goedkeuring afgeleid.');

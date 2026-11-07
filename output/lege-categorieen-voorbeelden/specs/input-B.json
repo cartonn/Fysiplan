@@ -1,0 +1,205 @@
+[
+ {
+  "naam": "Voeten naast elkaar staan – met steun",
+  "groep": "Balans en valpreventie",
+  "slug": "voeten-naast-elkaar-staan-met-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop met je voeten vlak naast elkaar en houd een stevige stoel of tafel vast. Blijf rustig in deze houding staan en kijk ontspannen voor je uit."
+ },
+ {
+  "naam": "Voeten naast elkaar staan – zonder steun",
+  "groep": "Balans en valpreventie",
+  "slug": "voeten-naast-elkaar-staan-zonder-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop met je voeten vlak naast elkaar, zonder ergens steun te zoeken. Houd je armen ontspannen langs je lichaam en blijf rustig zo staan terwijl je voor je uit kijkt."
+ },
+ {
+  "naam": "Voeten naast elkaar staan – met hoofdbeweging",
+  "groep": "Balans en valpreventie",
+  "slug": "voeten-naast-elkaar-staan-met-hoofdbeweging",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop met je voeten vlak naast elkaar. Draai je hoofd rustig naar links en daarna langzaam naar rechts, terwijl je stevig blijft staan."
+ },
+ {
+  "naam": "Semi-tandemstand – met steun",
+  "groep": "Balans en valpreventie",
+  "slug": "semi-tandemstand-met-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop achter een stevige stoel en houd de leuning vast. Zet je ene voet een halve voetlengte voor de andere en blijf rustig in deze houding staan."
+ },
+ {
+  "naam": "Semi-tandemstand – zonder steun",
+  "groep": "Balans en valpreventie",
+  "slug": "semi-tandemstand-zonder-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop zonder steun. Zet je ene voet een halve voetlengte voor de andere, houd je armen ontspannen langs je lichaam en blijf rustig zo staan."
+ },
+ {
+  "naam": "Semi-tandemstand – met hoofdbeweging",
+  "groep": "Balans en valpreventie",
+  "slug": "semi-tandemstand-met-hoofdbeweging",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop en zet je ene voet een halve voetlengte voor de andere. Draai je hoofd rustig naar links en daarna langzaam naar rechts, terwijl je stevig blijft staan."
+ },
+ {
+  "naam": "Tandemstand – zonder steun",
+  "groep": "Balans en valpreventie",
+  "slug": "tandemstand-zonder-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop zonder steun. Plaats je ene voet recht voor de andere, zodat de hak je tenen raakt, en houd rustig je balans terwijl je voor je uit kijkt."
+ },
+ {
+  "naam": "Tandemstand – met hoofdbeweging",
+  "groep": "Balans en valpreventie",
+  "slug": "tandemstand-met-hoofdbeweging",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop en plaats je ene voet recht voor de andere, zodat de hak je tenen raakt. Draai je hoofd rustig naar links en daarna langzaam naar rechts, terwijl je in balans blijft."
+ },
+ {
+  "naam": "Eenbeenstand – met steun",
+  "groep": "Balans en valpreventie",
+  "slug": "eenbeenstand-met-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop naast een stevige stoel en houd de leuning vast. Til je ene voet rustig van de grond en blijf even op je andere been staan. Zet je voet daarna langzaam weer neer."
+ },
+ {
+  "naam": "Eenbeenstand – zonder steun",
+  "groep": "Balans en valpreventie",
+  "slug": "eenbeenstand-zonder-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop zonder steun, met je armen ontspannen langs je lichaam. Til je ene voet rustig van de grond en blijf even op je andere been staan. Zet je voet daarna langzaam weer neer."
+ },
+ {
+  "naam": "Eenbeenstand – met hoofdbeweging",
+  "groep": "Balans en valpreventie",
+  "slug": "eenbeenstand-met-hoofdbeweging",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop op je ene been, met je andere voet los van de grond. Draai je hoofd rustig naar links en daarna langzaam naar rechts, terwijl je in balans blijft."
+ },
+ {
+  "naam": "Gewicht verplaatsen voor-achter – met steun",
+  "groep": "Balans en valpreventie",
+  "slug": "gewicht-verplaatsen-voor-achter-met-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop achter een stevige stoel en houd de leuning vast. Verplaats je gewicht rustig naar voren richting je tenen en daarna langzaam naar achteren richting je hakken. Houd je voeten plat op de grond."
+ },
+ {
+  "naam": "Gewicht verplaatsen voor-achter – zonder steun",
+  "groep": "Balans en valpreventie",
+  "slug": "gewicht-verplaatsen-voor-achter-zonder-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte, zonder steun. Verplaats je gewicht rustig naar voren richting je tenen en langzaam terug naar je hakken, terwijl je voeten op de grond blijven."
+ },
+ {
+  "naam": "Gewicht verplaatsen zijwaarts – met steun",
+  "groep": "Balans en valpreventie",
+  "slug": "gewicht-verplaatsen-zijwaarts-met-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop achter een stevige stoel en houd de leuning vast. Verplaats je gewicht rustig naar je ene been en daarna langzaam naar je andere been, terwijl je voeten op de grond blijven staan."
+ },
+ {
+  "naam": "Gewicht verplaatsen zijwaarts – zonder steun",
+  "groep": "Balans en valpreventie",
+  "slug": "gewicht-verplaatsen-zijwaarts-zonder-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte, zonder steun. Verplaats je gewicht rustig van je ene been naar je andere been en beweeg langzaam weer terug, met je voeten plat op de grond."
+ },
+ {
+  "naam": "Reiken in stand – met steun",
+  "groep": "Balans en valpreventie",
+  "slug": "reiken-in-stand-met-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop naast een stevige stoel en houd de leuning met je ene hand vast. Reik met je andere arm rustig naar voren zo ver als lukt en kom langzaam weer terug in de beginhouding."
+ },
+ {
+  "naam": "Reiken in stand – zonder steun",
+  "groep": "Balans en valpreventie",
+  "slug": "reiken-in-stand-zonder-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte, zonder steun. Reik met je arm rustig naar voren of opzij zo ver als lukt en kom langzaam weer terug in de beginhouding."
+ },
+ {
+  "naam": "Op de plaats marcheren – met steun",
+  "groep": "Balans en valpreventie",
+  "slug": "op-de-plaats-marcheren-met-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop achter een stevige stoel en houd de leuning vast. Til je knieën om de beurt rustig op, alsof je op de plaats loopt, en zet je voet steeds langzaam weer neer."
+ },
+ {
+  "naam": "Op de plaats marcheren – zonder steun",
+  "groep": "Balans en valpreventie",
+  "slug": "op-de-plaats-marcheren-zonder-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop zonder steun, met je armen ontspannen langs je lichaam. Til je knieën om de beurt rustig op, alsof je op de plaats loopt, en zet je voet steeds langzaam weer neer."
+ },
+ {
+  "naam": "Zijwaarts stappen – met steun",
+  "groep": "Balans en valpreventie",
+  "slug": "zijwaarts-stappen-met-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop achter een stevige tafel of het aanrecht en houd deze vast. Zet rustig een stap opzij en sluit je andere voet langzaam aan. Stap daarna dezelfde weg weer terug."
+ },
+ {
+  "naam": "Zijwaarts stappen – zonder steun",
+  "groep": "Balans en valpreventie",
+  "slug": "zijwaarts-stappen-zonder-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop met je voeten naast elkaar, zonder steun. Zet rustig een stap opzij en sluit je andere voet langzaam aan. Stap daarna in je eigen tempo weer terug."
+ },
+ {
+  "naam": "Achterwaarts stappen – met steun",
+  "groep": "Balans en valpreventie",
+  "slug": "achterwaarts-stappen-met-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop naast een stevige tafel of het aanrecht en houd deze met je hand vast. Zet rustig een stap naar achteren en sluit je andere voet langzaam aan. Stap daarna weer rustig naar voren."
+ },
+ {
+  "naam": "Achterwaarts stappen – zonder steun",
+  "groep": "Balans en valpreventie",
+  "slug": "achterwaarts-stappen-zonder-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop zonder steun en kijk voor je uit. Zet rustig een stap naar achteren en sluit je andere voet langzaam aan. Stap daarna weer rustig naar voren."
+ },
+ {
+  "naam": "Over een obstakel stappen – met steun",
+  "groep": "Balans en valpreventie",
+  "slug": "over-een-obstakel-stappen-met-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop voor een laag obstakel, zoals een opgerolde handdoek, en houd een stevige stoel of tafel vast. Stap rustig met je ene voet over het obstakel heen en breng je andere voet langzaam erachteraan."
+ },
+ {
+  "naam": "Over een obstakel stappen – zonder steun",
+  "groep": "Balans en valpreventie",
+  "slug": "over-een-obstakel-stappen-zonder-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop voor een laag obstakel, zoals een opgerolde handdoek, zonder steun. Stap rustig met je ene voet over het obstakel heen en breng je andere voet langzaam erachteraan."
+ },
+ {
+  "naam": "Draaien op de plaats – met steun",
+  "groep": "Balans en valpreventie",
+  "slug": "draaien-op-de-plaats-met-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop achter een stevige stoel en houd de leuning met je handen vast. Draai rustig met kleine stapjes een rondje op de plaats en kom langzaam weer terug in je beginhouding."
+ },
+ {
+  "naam": "Draaien op de plaats – zonder steun",
+  "groep": "Balans en valpreventie",
+  "slug": "draaien-op-de-plaats-zonder-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop zonder steun, met je armen ontspannen langs je lichaam. Draai rustig met kleine stapjes een rondje op de plaats en draai daarna langzaam dezelfde weg weer terug."
+ },
+ {
+  "naam": "Stoel opstaan en lopen – zonder steun",
+  "groep": "Balans en valpreventie",
+  "slug": "stoel-opstaan-en-lopen-zonder-steun",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Sta rustig op zonder je handen te gebruiken, loop een klein stukje en ga daarna langzaam weer op de stoel zitten."
+ },
+ {
+  "naam": "Dubbele taak lopen – met cognitieve taak",
+  "groep": "Balans en valpreventie",
+  "slug": "dubbele-taak-lopen-met-cognitieve-taak",
+  "catslug": "balans-en-valpreventie",
+  "uitleg": "Sta rechtop en begin rustig te lopen. Doe tijdens het lopen een denktaak, zoals hardop woorden opnoemen, en blijf ondertussen in je eigen tempo rustig doorstappen."
+ }
+]

@@ -12,6 +12,32 @@ const report = JSON.parse(await readFile(join(root, "content", "oefenbeeld-backg
 const arrows = JSON.parse(await readFile(join(root, "content", "beginhouding-pijl.json"), "utf8"));
 // Alleen deze vastgelegde oefeningen mogen in V2 een ander lijnbeeld hebben dan in V1.
 const v2Overrides = await loadV2Overrides(root);
+// Nieuwe lijntekeningen (2026-11-06) voor uitbreidingsoefeningen: het lijnbeeld is vastgelegd
+// (pad + sha256). Zonder avatar heeft het record bewust geen kaartImg; met avatar is de
+// kaartImg eveneens met pad + sha256 vastgelegd (scripts/importeer-nieuwe-avatars.mjs).
+const nieuweLijntekeningen = new Map(JSON.parse(await readFile(join(root, "content", "nieuwe-lijntekeningen.json"), "utf8"))
+  .lijntekeningen.map((entry) => [entry.naam, entry]));
+const nieuwGeldig = [];
+async function controleerNieuweLijntekening(exercise) {
+  const entry = nieuweLijntekeningen.get(exercise.naam);
+  if ((exercise.kaartImg ?? null) !== (entry.kaartImg ?? null)) throw new Error(`kaartImg wijkt af van content/nieuwe-lijntekeningen.json: ${exercise.naam}`);
+  if (entry.kaartImg) {
+    // vastgelegde avatar (begin + eind): pad, sha256, 800x1200 en voldoende wit vlak
+    const kaart = await readFile(join(root, "public", entry.kaartImg));
+    if (createHash("sha256").update(kaart).digest("hex") !== entry.kaartSha256) throw new Error(`Nieuwe avatar gewijzigd na vastleggen: ${exercise.naam}`);
+    const { data, info } = await sharp(kaart).resize(80, 120, { fit: "fill" }).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+    const meta = await sharp(kaart).metadata();
+    if (meta.width !== 800 || meta.height !== 1200) throw new Error(`Verkeerd formaat nieuwe avatar: ${exercise.naam}`);
+    let wit = 0;
+    for (let o = 0; o < data.length; o += info.channels) if (data[o] >= 245 && data[o + 1] >= 245 && data[o + 2] >= 245) wit += 1;
+    if (wit / (info.width * info.height) < 0.3) throw new Error(`Onvoldoende wit vlak nieuwe avatar: ${exercise.naam}`);
+  }
+  if (exercise.img !== entry.img) throw new Error(`Nieuwe lijntekening op een ander pad dan vastgelegd: ${exercise.naam}`);
+  const bytes = await readFile(join(root, "public", exercise.img));
+  if (createHash("sha256").update(bytes).digest("hex") !== entry.sha256) throw new Error(`Nieuwe lijntekening gewijzigd na vastleggen: ${exercise.naam}`);
+  const metadata = await sharp(bytes).metadata();
+  if (metadata.width !== 800 || metadata.height !== 1200) throw new Error(`Verkeerd formaat nieuwe lijntekening: ${exercise.naam}`);
+}
 
 if (report.schemaVersion !== 1 || report.assetVersion !== 7 || report.background !== "#FFFFFF") {
   throw new Error("Oefenbeeldrapport heeft een onbekende versie of achtergrond");
@@ -56,7 +82,11 @@ await Promise.all(legacyCatalogue.map(async (exercise) => {
 
 const expansionRatios = [];
 const pendingExpansion = [];
+for (const naam of nieuweLijntekeningen.keys()) {
+  if (!top500Expansion.some((exercise) => exercise.naam === naam)) throw new Error(`Nieuwe lijntekening hoort bij geen uitbreidingsoefening: ${naam}`);
+}
 await Promise.all(top500Expansion.map(async (exercise) => {
+  if (nieuweLijntekeningen.has(exercise.naam)) { await controleerNieuweLijntekening(exercise); nieuwGeldig.push(exercise.naam); return; }
   if (!exercise.kaartImg || exercise.img !== linePathForColor(exercise.kaartImg) || !exercise.kaartImg.endsWith("-avatar-v8.jpg")) {
     throw new Error(`Verkeerde v8-kaartkoppeling voor ${exercise.naam}`);
   }
@@ -85,6 +115,7 @@ const pendingPairs = [];
 let legacyPairs = 0;
 let correctedLegacyPairs = 0;
 await Promise.all(catalogue.map(async (exercise) => {
+  if (nieuweLijntekeningen.has(exercise.naam)) return; // hierboven volledig gecontroleerd
   const isLegacy = !exercise.coreExerciseId;
   const override = isLegacy ? v2Overrides.get(exercise.exerciseId) : null;
   const expectedLine = override ? override.lineImg : isLegacy ? v1ByName.get(exercise.naam)?.img : linePathForColor(exercise.kaartImg);
@@ -138,4 +169,5 @@ const bereik = (waarden) => waarden.length
 console.log(`Legacy-oefenbeelden geldig: ${legacyCatalogue.length}/215 op #FFFFFF; minimum witvlak ${ratios[0]}; mediaan ${ratios[Math.floor(ratios.length / 2)]}.`);
 console.log(`Top-500-uitbreidingsbeelden geldig: ${expansionRatios.length}/285 op #FFFFFF; nog niet gepubliceerd: ${pendingExpansion.length}; ${bereik(expansionRatios)}.`);
 console.log(`V2-beeldparen geldig: ${legacyPairs + correctedLegacyPairs + pairRatios.length}/500; nog niet gepubliceerd: ${pendingPairs.length}; ${legacyPairs} legacykaarten gebruiken exact de V1-afbeelding, ${correctedLegacyPairs} een vastgelegde V2-correctie.`);
+console.log(`Nieuwe lijntekeningen: ${nieuwGeldig.length}/${nieuweLijntekeningen.size} geldig (pad, sha256, 800x1200), waarvan ${[...nieuweLijntekeningen.values()].filter((e) => e.kaartImg).length} met vastgelegde avatar.`);
 console.log(`V2-uitzonderingen: ${v2Overrides.size} expliciet vastgelegd en gebonden aan paden, sha256 (kaart-, lijn-, V1- en pijlbeeld) en stabiele ids.`);

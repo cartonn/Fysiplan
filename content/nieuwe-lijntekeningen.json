@@ -1,0 +1,1234 @@
+{
+  "schemaVersion": 1,
+  "stijl": "één figuur in de beginhouding met één zwarte pijl naar de eindhouding, zelfde stijl als images/beginhouding-pijl-v1 (Runway gpt_image_2; goedgekeurd door eigenaar 2026-11-06)",
+  "clinicalApproved": false,
+  "lijntekeningen": [
+    {
+      "exerciseId": "fp_62d0639e1039e4a1",
+      "naam": "Kin intrekken – zittend actief",
+      "groep": "Nek",
+      "img": "images/nek/kin-intrekken-zittend-actief-line-v1.png",
+      "sha256": "ceec67cc04f728a1843dffe560824adae453224978d2545210fb4fa1905b9d22",
+      "bron": null,
+      "bronTitel": "voorbeeldset",
+      "kaartImg": "images/nek/kin-intrekken-zittend-actief-avatar-v8.jpg",
+      "kaartSha256": "d3a6505629a6c58a107a446cc8744bfe2a4fdd67b852779d94a6d0565f938236",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/01-avatar-v2.png"
+    },
+    {
+      "exerciseId": "fp_f9a5a798ccec54bc",
+      "naam": "Tandemstand – met steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png",
+      "sha256": "f7f062ba37ac0c8ac56de9a6d73ab401eae15a0e898c2b6b2294b0741d8a61d7",
+      "bron": null,
+      "bronTitel": "voorbeeldset"
+    },
+    {
+      "exerciseId": "fp_e0a02c06b8fd582d",
+      "naam": "Voorwerp van vloer tillen – ergonomische basis",
+      "groep": "Werk en dagelijkse handelingen",
+      "img": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-ergonomische-basis-line-v1.png",
+      "sha256": "3d64406a69737dfd962b54fcd71731ac53ddf8ec975b3a166c8e7a7e3483011e",
+      "bron": null,
+      "bronTitel": "voorbeeldset",
+      "kaartImg": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-ergonomische-basis-avatar-v8.jpg",
+      "kaartSha256": "7193a80ceb678b66b3656466c3d5505af33800e7af3ed1bae37ca62bfa050cf9",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/03-avatar.png"
+    },
+    {
+      "exerciseId": "fp_c42d5d8c7ecf1a17",
+      "naam": "Landing op twee benen – techniek langzaam",
+      "groep": "Sportrevalidatie",
+      "img": "images/sportrevalidatie/landing-op-twee-benen-techniek-langzaam-line-v1.png",
+      "sha256": "336bd5c45d4fa6f66223fbff96e2fa4bacae38c5378d5197a172210e4492eac7",
+      "bron": null,
+      "bronTitel": "voorbeeldset",
+      "kaartImg": "images/sportrevalidatie/landing-op-twee-benen-techniek-langzaam-avatar-v8.jpg",
+      "kaartSha256": "ddd6d03d4226dc48262852e6de25ccaca597f807a525613eac85ceb57089ae56",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/04-avatar.png"
+    },
+    {
+      "exerciseId": "fp_bc33d743a44951af",
+      "naam": "Symmetrisch opstaan – met fysieke steun",
+      "groep": "Neurologische revalidatie",
+      "img": "images/neurologische-revalidatie/symmetrisch-opstaan-met-fysieke-steun-line-v1.png",
+      "sha256": "ce1596950000d32b0c4095f58ca30e7f55751d91b04c06062b47a9c7912e9f5d",
+      "bron": null,
+      "bronTitel": "voorbeeldset",
+      "kaartImg": "images/neurologische-revalidatie/symmetrisch-opstaan-met-fysieke-steun-avatar-v8.jpg",
+      "kaartSha256": "0f1a533ffacc6ba815df78a2a2aefe1a29c585355820327385ca711646d4c1aa",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/05-avatar.png"
+    },
+    {
+      "exerciseId": "fp_6ef74f256a43157c",
+      "naam": "Blikstabilisatie horizontaal – zittend langzaam",
+      "groep": "Vestibulair",
+      "img": "images/vestibulair/blikstabilisatie-horizontaal-zittend-langzaam-line-v1.png",
+      "sha256": "97541bc80f470dc44fe4b744a33d494eb6e36172cfcc6d89a1c9dc4f69b37f60",
+      "bron": null,
+      "bronTitel": "voorbeeldset",
+      "kaartImg": "images/vestibulair/blikstabilisatie-horizontaal-zittend-langzaam-avatar-v8.jpg",
+      "kaartSha256": "08b1fe2b424a450ffd6a05487ba405684aed62dcb6cfde54740b1476a372157e",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/06-avatar-v2.png"
+    },
+    {
+      "exerciseId": "fp_9d33debcffd49100",
+      "naam": "Bekkenkanteling postpartum – eerste fase rustig",
+      "groep": "Bekken & postpartum",
+      "img": "images/bekken-postpartum/bekkenkanteling-postpartum-eerste-fase-rustig-line-v1.png",
+      "sha256": "7bd597ac9de1d4d04ea472c3240bcdbfea8e5483130b01a8a1bba453260db005",
+      "bron": null,
+      "bronTitel": "voorbeeldset",
+      "kaartImg": "images/bekken-postpartum/bekkenkanteling-postpartum-eerste-fase-rustig-avatar-v8.jpg",
+      "kaartSha256": "03b08bcee9e627a3fac43ecaf83dc50d464675e3d91ea6901135bf44dcaa2c33",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/07-avatar.png"
+    },
+    {
+      "exerciseId": "fp_9ec9e79bac8d8421",
+      "naam": "Kin intrekken – liggend ondersteund",
+      "groep": "Nek",
+      "img": "images/nek/kin-intrekken-liggend-ondersteund-line-v1.png",
+      "sha256": "dc836543f7df1a03aa4234ea02c16e5e9b330a6342e0f2a19d98b7cdbd6a2913",
+      "bron": "https://ca.physitrack.com/home-exercise-video/deep-neck-flexors-in--supine",
+      "bronTitel": "Deep neck flexors in supine (Cervical flexion/deep neck flexors activation, supine; 01)",
+      "kaartImg": "images/nek/kin-intrekken-liggend-ondersteund-avatar-v8.jpg",
+      "kaartSha256": "8f0bc6ff3013ad4008cad5665087393251b693f658d05177b87044ad01205629",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/kin-intrekken-liggend-ondersteund-avatar.png"
+    },
+    {
+      "exerciseId": "fp_c486527b9ecd41c8",
+      "naam": "Nek buigen – zittend actief",
+      "groep": "Nek",
+      "img": "images/nek/nek-buigen-zittend-actief-line-v1.png",
+      "sha256": "408960790da743d2454da6b094d2660d659839fc82a7186bdf33946b1a5529d4",
+      "bron": "https://ca.physitrack.com/home-exercise-video/cervical-range-of-movement-seated---flexion%2c-extension%2c-rotation%2c-slide-flexion",
+      "bronTitel": "Cervical range of movement seated - flexion, extension, rotation, slide flexion (Cervical AROM series, sitting; 02)",
+      "kaartImg": "images/nek/nek-buigen-zittend-actief-avatar-v8.jpg",
+      "kaartSha256": "e7f8b69ee3712ae4583d17fa2fffaf010d03416b14edbeaebcdc565c6d8eadb4",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/nek-buigen-zittend-actief-avatar.png"
+    },
+    {
+      "exerciseId": "fp_9e6911ab1f1e0d44",
+      "naam": "Nek buigen – liggend ondersteund",
+      "groep": "Nek",
+      "img": "images/nek/nek-buigen-liggend-ondersteund-line-v1.png",
+      "sha256": "6b1d998ec04327a7a5117d3c8ed18bd20bf6407b245d30df4e89788fd8789e0c",
+      "bron": "https://ca.physitrack.com/home-exercise-video/head-lift-in-supine",
+      "bronTitel": "Head lift in supine (Cervical flexion strengthening with head lifts, supine)",
+      "kaartImg": "images/nek/nek-buigen-liggend-ondersteund-avatar-v8.jpg",
+      "kaartSha256": "afa0d57bb628b98835e56b1874f7350b01aa8f28a8b02577a289e4f723689d20",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/nek-buigen-liggend-ondersteund-avatar.png"
+    },
+    {
+      "exerciseId": "fp_a2bf200402f776eb",
+      "naam": "Nek strekken – zittend actief",
+      "groep": "Nek",
+      "img": "images/nek/nek-strekken-zittend-actief-line-v1.png",
+      "sha256": "ba91000aff851f085c6f0a95a5eb2ea8ce0186e53aa6c3c94c6e620c202f4918",
+      "bron": "https://us.physitrack.com/home-exercise-video/arom-neck-extension",
+      "bronTitel": "AROM neck extension (Cervical extension AROM, sitting; 02)",
+      "kaartImg": "images/nek/nek-strekken-zittend-actief-avatar-v8.jpg",
+      "kaartSha256": "293a9229ae0a3ac834542624d5e41e94c30c5622554ee22c38557d2336e71986",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/nek-strekken-zittend-actief-avatar.png"
+    },
+    {
+      "exerciseId": "fp_801448d68f86c2c2",
+      "naam": "Nek strekken – functioneel staand",
+      "groep": "Nek",
+      "img": "images/nek/nek-strekken-functioneel-staand-line-v1.png",
+      "sha256": "6f64638ab66b8ef3657f39e2b34c6fb6edac632b0b56aa5a06774263351d65aa",
+      "bron": "https://au.physitrack.com/home-exercise-video/neck-stretches-standing---flexion,-extension,-side-flexion,-rotation",
+      "bronTitel": "Neck stretches standing - flexion, extension, side flexion, rotation",
+      "kaartImg": "images/nek/nek-strekken-functioneel-staand-avatar-v8.jpg",
+      "kaartSha256": "05b1da049050ba81bd06c87b9b27f834f732102466e1db0b5763612fbc8be6ad",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/nek-strekken-functioneel-staand-avatar.png"
+    },
+    {
+      "exerciseId": "fp_fc9259369175667f",
+      "naam": "Nek draaien – zittend actief",
+      "groep": "Nek",
+      "img": "images/nek/nek-draaien-zittend-actief-line-v1.png",
+      "sha256": "c03ae6c9f28fb17fca9c9e48d0d9d2ce98321e41b4bb0cea234dbca54a2191e4",
+      "bron": "https://us.physitrack.com/home-exercise-video/arom-neck-rotation",
+      "bronTitel": "AROM neck rotation (Cervical rotation AROM, sitting; 02)",
+      "kaartImg": "images/nek/nek-draaien-zittend-actief-avatar-v8.jpg",
+      "kaartSha256": "84efcbf3334ed4aebf39832d34c82ff8f6a621b3b082f18fcd6e4c25d7559dd9",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/nek-draaien-zittend-actief-avatar.png"
+    },
+    {
+      "exerciseId": "fp_c662fe9fb9cdcb4a",
+      "naam": "Nek draaien – functioneel staand",
+      "groep": "Nek",
+      "img": "images/nek/nek-draaien-functioneel-staand-line-v1.png",
+      "sha256": "29c145faff4b501fe298e2ad7fb3a19e74977208cb4d1a9ed82e2de80a4966e4",
+      "bron": "https://us.physitrack.com/home-exercise-video/neck-arom",
+      "bronTitel": "Neck AROM (Cervical rotation AROM, warm up, standing)",
+      "kaartImg": "images/nek/nek-draaien-functioneel-staand-avatar-v8.jpg",
+      "kaartSha256": "8860ec120d380bd72a7c52dee9829563d93278b018506a0167ebfc5fd18d72dd",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/nek-draaien-functioneel-staand-avatar.png"
+    },
+    {
+      "exerciseId": "fp_44d608cf3a3163b1",
+      "naam": "Nek zijwaarts buigen – zittend actief",
+      "groep": "Nek",
+      "img": "images/nek/nek-zijwaarts-buigen-zittend-actief-line-v1.png",
+      "sha256": "664f5f50ce19aead91af0f579ddbb59ee344a78c4f26564e89e72af38e9a91ba",
+      "bron": "https://us.physitrack.com/home-exercise-video/arom-neck-side-flexion-in-sit",
+      "bronTitel": "AROM neck side flexion in sit (Cervical side bending AROM, sitting; 02)",
+      "kaartImg": "images/nek/nek-zijwaarts-buigen-zittend-actief-avatar-v8.jpg",
+      "kaartSha256": "13c81a5d169ae732135865f77f19e4a38f1e678f76ba0fa00a5644aea36b0e0d",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/nek-zijwaarts-buigen-zittend-actief-avatar.png"
+    },
+    {
+      "exerciseId": "fp_ede28e3db08e8043",
+      "naam": "Nek zijwaarts buigen – isometrisch",
+      "groep": "Nek",
+      "img": "images/nek/nek-zijwaarts-buigen-isometrisch-line-v1.png",
+      "sha256": "25539cef6173b61191eeb414084c025c3b8454cfb0b8c9837d487843f7c2e09f",
+      "bron": "https://us.physitrack.com/home-exercise-video/isometric-cervical-side-flexion",
+      "bronTitel": "Isometric cervical side flexion - version 3",
+      "kaartImg": "images/nek/nek-zijwaarts-buigen-isometrisch-avatar-v8.jpg",
+      "kaartSha256": "18d927cc1e2579edbf4f72d03514735f8ed5da5786c5aa4d7465c16f414b8d7c",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/nek-zijwaarts-buigen-isometrisch-avatar.png"
+    },
+    {
+      "exerciseId": "fp_932bf32fa5ca60a6",
+      "naam": "Diepe nekflexoren activeren – zittend actief",
+      "groep": "Nek",
+      "img": "images/nek/diepe-nekflexoren-activeren-zittend-actief-line-v1.png",
+      "sha256": "11f4e19d21a7e80a53feafd586cd213c82d271f37071475554400e2d013eddca",
+      "bron": null,
+      "bronTitel": null,
+      "kaartImg": "images/nek/diepe-nekflexoren-activeren-zittend-actief-avatar-v8.jpg",
+      "kaartSha256": "0ddfd135976093d40fad039a38bccc211f7f08bbb2cafb1fd9c2ba7a31a25486",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/diepe-nekflexoren-activeren-zittend-actief-avatar.png"
+    },
+    {
+      "exerciseId": "fp_2bdb88085d76e6b0",
+      "naam": "Diepe nekflexoren activeren – liggend ondersteund",
+      "groep": "Nek",
+      "img": "images/nek/diepe-nekflexoren-activeren-liggend-ondersteund-line-v1.png",
+      "sha256": "6db8b8eef95b4f7232608c3253c8a9e3cdd9ce00b58f54ac300d0ded28a6a719",
+      "bron": "https://uk.physitrack.com/home-exercise-video/deep-neck-flexor-activation-in-supine",
+      "bronTitel": "Deep neck flexor activation in supine",
+      "kaartImg": "images/nek/diepe-nekflexoren-activeren-liggend-ondersteund-avatar-v8.jpg",
+      "kaartSha256": "2f7a845d690f695950546242b461018e8a9c357e6eebb734860a581b668f356e",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/diepe-nekflexoren-activeren-liggend-ondersteund-avatar.png"
+    },
+    {
+      "exerciseId": "fp_075c9aa10d0e566a",
+      "naam": "Nekrotatie met oogfixatie – zittend actief",
+      "groep": "Nek",
+      "img": "images/nek/nekrotatie-met-oogfixatie-zittend-actief-line-v1.png",
+      "sha256": "9e5bca36dba13332c6b8daf9b81189db39e8b0b34acef8f8795b3ba9aedb5858",
+      "bron": "https://us.physitrack.com/home-exercise-video/gaze-stabilisation-%28horizontal%29-in-sitting",
+      "bronTitel": "Gaze stabilisation (horizontal) in sitting (\"VRT gaze stabilization\" Eyes fixed turning head right/left, in sitting; 01)",
+      "kaartImg": "images/nek/nekrotatie-met-oogfixatie-zittend-actief-avatar-v8.jpg",
+      "kaartSha256": "0ce26dd05f9e5cbfb11b931bef486bba8c4cc42079cce821e64d671d1bd21a13",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/nekrotatie-met-oogfixatie-zittend-actief-avatar.png"
+    },
+    {
+      "exerciseId": "fp_7f1f560bb10c6e1f",
+      "naam": "Nekrotatie met oogfixatie – functioneel staand",
+      "groep": "Nek",
+      "img": "images/nek/nekrotatie-met-oogfixatie-functioneel-staand-line-v1.png",
+      "sha256": "407dc32a40e5ce66b19347a10213c1b216a86d375e7fd30582959e2dcdb8dd44",
+      "bron": "https://us.physitrack.com/home-exercise-video/gaze-stabilization-during-head-rotation-%28vestibular-ocular-reflex%29",
+      "bronTitel": "Gaze Stabilization during Head Rotation (vestibular ocular reflex)",
+      "kaartImg": "images/nek/nekrotatie-met-oogfixatie-functioneel-staand-avatar-v8.jpg",
+      "kaartSha256": "fb80d4a8a2f765b87bd0b31d551ef62ee368818aa284ac0b0dddeb1330d0d64e",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/nekrotatie-met-oogfixatie-functioneel-staand-avatar-v2.png"
+    },
+    {
+      "exerciseId": "fp_e3f3ef70eda326a1",
+      "naam": "Schouderblad liften en ontspannen – zittend actief",
+      "groep": "Nek",
+      "img": "images/nek/schouderblad-liften-en-ontspannen-zittend-actief-line-v1.png",
+      "sha256": "5bdb943d4aa61437a4fba3fff0427f32101d2a614080df0433b8b3eb23eb3c5c",
+      "bron": "https://au.physitrack.com/home-exercise-video/slow-shoulder-shrugs",
+      "bronTitel": "Slow shoulder shrugs",
+      "kaartImg": "images/nek/schouderblad-liften-en-ontspannen-zittend-actief-avatar-v8.jpg",
+      "kaartSha256": "b5f938034d062f803a44f5978b93a53ae92d2a1b2941ca1e7bfcc32c443eada1",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/schouderblad-liften-en-ontspannen-zittend-actief-avatar.png"
+    },
+    {
+      "exerciseId": "fp_bbcbf27b326af15f",
+      "naam": "Schouderblad liften en ontspannen – functioneel staand",
+      "groep": "Nek",
+      "img": "images/nek/schouderblad-liften-en-ontspannen-functioneel-staand-line-v1.png",
+      "sha256": "7f987e376cfc54c1f87a401781ba31a1a558b482ecff3f604be509622fbee525",
+      "bron": "https://au.physitrack.com/home-exercise-video/slow-shoulder-shrugs",
+      "bronTitel": "Slow shoulder shrugs",
+      "kaartImg": "images/nek/schouderblad-liften-en-ontspannen-functioneel-staand-avatar-v8.jpg",
+      "kaartSha256": "ecbbb6ef2f5d1b9468f6fc926a7b2093b5ce3815343b651ec4c47b4dddbaf5a5",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/schouderblad-liften-en-ontspannen-functioneel-staand-avatar.png"
+    },
+    {
+      "exerciseId": "fp_2b31429069932b4b",
+      "naam": "Levator scapulae rek – zittend actief",
+      "groep": "Nek",
+      "img": "images/nek/levator-scapulae-rek-zittend-actief-line-v1.png",
+      "sha256": "cce5b71b86f3c8edb6f5e525305b595b332012e18eebafbd5d161215c4699822",
+      "bron": "https://us.physitrack.com/home-exercise-video/levator-scapula-stretching",
+      "bronTitel": "Levator scapula stretching (Levator scapulae stretch, arm behind back, sitting; 02)",
+      "kaartImg": "images/nek/levator-scapulae-rek-zittend-actief-avatar-v8.jpg",
+      "kaartSha256": "091f7e6ce2086c747496e9951567f7f94b2844fe3d746154cec12cd983810d73",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/levator-scapulae-rek-zittend-actief-avatar.png"
+    },
+    {
+      "exerciseId": "fp_f3b0887dee8f2c28",
+      "naam": "Levator scapulae rek – functioneel staand",
+      "groep": "Nek",
+      "img": "images/nek/levator-scapulae-rek-functioneel-staand-line-v1.png",
+      "sha256": "487dc61ec0e06d90070b47d7c163fce51405cf552158e8378072cbd53aa93460",
+      "bron": "https://us.physitrack.com/home-exercise-video/neck-stretch-in-standing-%28levator-scapulae%29",
+      "bronTitel": "Neck Stretch in Standing (Levator Scapulae)",
+      "kaartImg": "images/nek/levator-scapulae-rek-functioneel-staand-avatar-v8.jpg",
+      "kaartSha256": "535fe28385fa120674ab1569ad78bc1fcdeddc27c7869ce4ef30c1f95b27ed4e",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/levator-scapulae-rek-functioneel-staand-avatar.png"
+    },
+    {
+      "exerciseId": "fp_734364ac784c6f6a",
+      "naam": "Bovenste trapezius rek – zittend actief",
+      "groep": "Nek",
+      "img": "images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png",
+      "sha256": "b2e1b80a03abe50fac5b3b0907fafeabc65d06ecfd9e226dfe74fbe081342165",
+      "bron": "https://us.physitrack.com/home-exercise-video/upper-trapezius-stretch-in-sitting",
+      "bronTitel": "Upper trapezius stretch in sitting",
+      "kaartImg": "images/nek/bovenste-trapezius-rek-zittend-actief-avatar-v8.jpg",
+      "kaartSha256": "86d7830653e854b4f767aa2ace2f952bce50aaac50eef5594117116117c80033",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/bovenste-trapezius-rek-zittend-actief-avatar.png"
+    },
+    {
+      "exerciseId": "fp_73abd0a512239c05",
+      "naam": "Bovenste trapezius rek – functioneel staand",
+      "groep": "Nek",
+      "img": "images/nek/bovenste-trapezius-rek-functioneel-staand-line-v1.png",
+      "sha256": "01606007b49fa8abad94e7bf43531817f330bb923d278314f4902c04712bc9d7",
+      "bron": "https://us.physitrack.com/home-exercise-video/cervical-lateral-flexion-stretch",
+      "bronTitel": "Cervical lateral flexion stretch (\"Upper trapezius stretch\" Cervical side bending stretch, standing)",
+      "kaartImg": "images/nek/bovenste-trapezius-rek-functioneel-staand-avatar-v8.jpg",
+      "kaartSha256": "64dc6cd3403e0abb837672c83ba7db7ca3fd6f604fcc74722405a9bd18d24073",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/bovenste-trapezius-rek-functioneel-staand-avatar.png"
+    },
+    {
+      "exerciseId": "fp_284957ef09ee1582",
+      "naam": "Voeten naast elkaar staan – met steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-steun-line-v1.png",
+      "sha256": "910ce39dbb569208b6a70a10c634197b89db10769e40bfaf9a3fed581db36ec3",
+      "bron": "https://au.physitrack.com/home-exercise-video/standing-with-feet-together-version-1",
+      "bronTitel": "Standing with feet together Version 1",
+      "kaartImg": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-steun-avatar-v8.jpg",
+      "kaartSha256": "e5f1cfac350507b0a64a4785c0086dfd9dc95c639024269f79e9f344fb849d5b",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/balans-en-valpreventie/voeten-naast-elkaar-staan-met-steun-avatar.png"
+    },
+    {
+      "exerciseId": "fp_4bcc073aed3b9f2d",
+      "naam": "Voeten naast elkaar staan – zonder steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-zonder-steun-line-v1.png",
+      "sha256": "a7cb280590b4a9687e8b46c46ba6f7aa7aa58d6c10cf87a13863d2cb38d06958",
+      "bron": "https://au.physitrack.com/home-exercise-video/standing-with-feet-together-version-1",
+      "bronTitel": "Standing with feet together Version 1",
+      "kaartImg": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-zonder-steun-avatar-v8.jpg",
+      "kaartSha256": "c281b14ee1548faa78cfb7359eb76c0998fe8919b68140892f101b27c5efc9ea",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/balans-en-valpreventie/voeten-naast-elkaar-staan-zonder-steun-avatar.png"
+    },
+    {
+      "exerciseId": "fp_cc87106ebc1436c7",
+      "naam": "Voeten naast elkaar staan – met hoofdbeweging",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-hoofdbeweging-line-v1.png",
+      "sha256": "5ebcb2641b6366a82e28c6ccc8f320e93b277501f9ba718a61f465a952d0cd46",
+      "bron": "https://us.physitrack.com/home-exercise-video/feet-together-balance-head-turns",
+      "bronTitel": "Feet together balance head turns (Balance, standing, turning head, feet together)",
+      "kaartImg": "images/balans-en-valpreventie/voeten-naast-elkaar-staan-met-hoofdbeweging-avatar-v8.jpg",
+      "kaartSha256": "99fb8f3acbfdb3a608d9da781f4c7341de3fde5c143d96ee5b76939ee6897ad2",
+      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/balans-en-valpreventie/voeten-naast-elkaar-staan-met-hoofdbeweging-avatar.png"
+    },
+    {
+      "exerciseId": "fp_f0663d727b20b2d8",
+      "naam": "Semi-tandemstand – met steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/semi-tandemstand-met-steun-line-v1.png",
+      "sha256": "9b78908a842860e9ebbae1047bedd6a931b4c9eb36b74cb3dfed314d592138b4",
+      "bron": "https://us.physitrack.com/home-exercise-video/semi-tandem-foot-balance",
+      "bronTitel": "Semi-tandem foot balance (Balance, tandem semi stance)"
+    },
+    {
+      "exerciseId": "fp_4ecd3a7fcc64821b",
+      "naam": "Semi-tandemstand – zonder steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/semi-tandemstand-zonder-steun-line-v1.png",
+      "sha256": "d96a4db8fe8464d6e253b5982bfc62718146508836a73d27848ae1d7ec01f067",
+      "bron": "https://au.physitrack.com/home-exercise-video/semi-tandem-stand",
+      "bronTitel": "Semi-Tandem Stand"
+    },
+    {
+      "exerciseId": "fp_1dcd242ec123ba55",
+      "naam": "Semi-tandemstand – met hoofdbeweging",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/semi-tandemstand-met-hoofdbeweging-line-v1.png",
+      "sha256": "5bf1710652130745687cfda8f80552d3113f6c9ce94f54753e74f27efb37fa95",
+      "bron": "https://us.physitrack.com/home-exercise-video/semi-tandem-foot-balance",
+      "bronTitel": "Semi-tandem foot balance (Balance, tandem semi stance)"
+    },
+    {
+      "exerciseId": "fp_08de342719d46ef9",
+      "naam": "Tandemstand – zonder steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/tandemstand-zonder-steun-line-v1.png",
+      "sha256": "281770b76ee99fc4789cda2e1b0bdb4b87a2d7730f5ff87580ed7e4da8de6c13",
+      "bron": "https://us.physitrack.com/home-exercise-video/tandem-stance-balance---version-2",
+      "bronTitel": "Tandem stance balance - version 2"
+    },
+    {
+      "exerciseId": "fp_506c830510bf31ca",
+      "naam": "Tandemstand – met hoofdbeweging",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/tandemstand-met-hoofdbeweging-line-v1.png",
+      "sha256": "1a5dfffda3094ba533ace975c14b602e962a44aaca5f92660a0b97e732edae89",
+      "bron": "https://us.physitrack.com/home-exercise-video/tandem-with-head-turns",
+      "bronTitel": "Tandem with head turns (Balance, tandem stance, turning head, arms out to side, beside chair)"
+    },
+    {
+      "exerciseId": "fp_a542ed0f07059b4c",
+      "naam": "Eenbeenstand – met steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png",
+      "sha256": "bcf8d09e18fc31feb513afd007e50c45ddf9787db9bbcb445261d37c7297541e",
+      "bron": "https://us.physitrack.com/home-exercise-video/single-leg-stance-close-to-support",
+      "bronTitel": "Single-leg stance close to support"
+    },
+    {
+      "exerciseId": "fp_f493363db578c800",
+      "naam": "Eenbeenstand – zonder steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/eenbeenstand-zonder-steun-line-v1.png",
+      "sha256": "30386f999302840f81a980e33d5b3f35a4fcaedb37182aada5252c6707f85262",
+      "bron": "https://au.physitrack.com/home-exercise-video/simple-single-leg-stand",
+      "bronTitel": "Simple single-leg stand"
+    },
+    {
+      "exerciseId": "fp_1a79b62494a25ff5",
+      "naam": "Eenbeenstand – met hoofdbeweging",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/eenbeenstand-met-hoofdbeweging-line-v1.png",
+      "sha256": "66e8c11398e6a8ed1d8259580d548f2feea1360a2ba2a76a73228a23a5f5c5c9",
+      "bron": "https://uk.physitrack.com/home-exercise-video/single-leg-stance%2c-head-turns",
+      "bronTitel": "Single leg stance, head turns"
+    },
+    {
+      "exerciseId": "fp_7c48290b27a4b297",
+      "naam": "Gewicht verplaatsen voor-achter – met steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-line-v1.png",
+      "sha256": "e9f955f4b5eaa4b3f9d735c4e68b3dbb5ed17e1aa4c7d55de3e02a128e09273c",
+      "bron": "https://uk.physitrack.com/home-exercise-video/weight-shift-backwards-forwards-(hands-on-hips)",
+      "bronTitel": "Weight Shift Backwards-Forwards (hands on hips)"
+    },
+    {
+      "exerciseId": "fp_ff9bb036c4fdae80",
+      "naam": "Gewicht verplaatsen voor-achter – zonder steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-zonder-steun-line-v1.png",
+      "sha256": "c54de32c03f3bd34eda399f6008c196cce137318fcba3a5504898172a7a8da8a",
+      "bron": "https://uk.physitrack.com/home-exercise-video/weight-shift-backwards-forwards-(hands-on-hips)",
+      "bronTitel": "Weight Shift Backwards-Forwards (hands on hips)"
+    },
+    {
+      "exerciseId": "fp_08c86a2068731a1d",
+      "naam": "Gewicht verplaatsen zijwaarts – met steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png",
+      "sha256": "9dc92e9f81e6c0626cda316b00e3fb7bdef1f75ad7ac3dbc430511cf19e84425",
+      "bron": "https://us.physitrack.com/home-exercise-video/weight-shift-side-to-side",
+      "bronTitel": "Weight shifting side-to-side close to support"
+    },
+    {
+      "exerciseId": "fp_0f3a9b39b0d96f9b",
+      "naam": "Gewicht verplaatsen zijwaarts – zonder steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-zonder-steun-line-v1.png",
+      "sha256": "0ed19b2ed86e5e54b4309edf1e706a60c2920deda823048beddd3e123f091578",
+      "bron": "https://ca.physitrack.com/home-exercise-video/weight-shifts-in-standing",
+      "bronTitel": "Weight shifts in standing"
+    },
+    {
+      "exerciseId": "fp_2be645c53a08ae85",
+      "naam": "Reiken in stand – met steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/reiken-in-stand-met-steun-line-v1.png",
+      "sha256": "a7ae7c96d042def591a3a50b9f81759491965337bc393f3ce64d6fe19991171d",
+      "bron": null,
+      "bronTitel": null
+    },
+    {
+      "exerciseId": "fp_b79de58eeff05195",
+      "naam": "Reiken in stand – zonder steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/reiken-in-stand-zonder-steun-line-v1.png",
+      "sha256": "0bd771c83245b7036b91928a84659108909d3acbae162024119541c3da3915a4",
+      "bron": null,
+      "bronTitel": null
+    },
+    {
+      "exerciseId": "fp_391ce36b8dd87d72",
+      "naam": "Op de plaats marcheren – met steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png",
+      "sha256": "080ca25b97e5dc2b9feb3b9b9540983dd1c621224d6f567af364e31c98381fdd",
+      "bron": "https://ca.physitrack.com/home-exercise-video/marching-on-spot---close-to-a-stable-surface",
+      "bronTitel": "Marching on spot - close to a stable surface"
+    },
+    {
+      "exerciseId": "fp_40f7cb3117001639",
+      "naam": "Op de plaats marcheren – zonder steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/op-de-plaats-marcheren-zonder-steun-line-v1.png",
+      "sha256": "6cad15354ba0b8c3c5e3679d7e2d082d98f596c6d7529687bdbda922de49d032",
+      "bron": "https://ca.physitrack.com/home-exercise-video/standing-marching",
+      "bronTitel": "Standing marching (Marching, on the spot; 01)"
+    },
+    {
+      "exerciseId": "fp_182cfe1a8137acad",
+      "naam": "Zijwaarts stappen – met steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/zijwaarts-stappen-met-steun-line-v1.png",
+      "sha256": "6230915fac2850dd649c21b890fe4d53afdbda7691a1d5496f34b316642dbb91",
+      "bron": "https://au.physitrack.com/home-exercise-video/side-stepping-with-support",
+      "bronTitel": "Side stepping with support"
+    },
+    {
+      "exerciseId": "fp_21a541d8d8aae697",
+      "naam": "Zijwaarts stappen – zonder steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/zijwaarts-stappen-zonder-steun-line-v1.png",
+      "sha256": "01b661a202a57576ec16937102baaf6f9d4561f5d31102ce391c27a725eb7517",
+      "bron": "https://us.physitrack.com/home-exercise-video/alternate-side-stepping",
+      "bronTitel": "Alternate side stepping"
+    },
+    {
+      "exerciseId": "fp_b60ee077e227abfd",
+      "naam": "Achterwaarts stappen – met steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png",
+      "sha256": "d245a4c8fd6b3fea111fdaecb8f76b50dc530619fcd386d38b02e6650ea893b9",
+      "bron": "https://us.physitrack.com/home-exercise-video/backwards-walking-with-support",
+      "bronTitel": "Backwards Walking with support"
+    },
+    {
+      "exerciseId": "fp_b8ae27860ce750fa",
+      "naam": "Achterwaarts stappen – zonder steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/achterwaarts-stappen-zonder-steun-line-v1.png",
+      "sha256": "0caceaddd02d6d309544d98570742b9df1c54d3a2308348efdf9f3d1841e2a31",
+      "bron": "https://us.physitrack.com/home-exercise-video/backwards-walking",
+      "bronTitel": "Backwards walking (Balance, walking backward, toes touching first - slow)"
+    },
+    {
+      "exerciseId": "fp_a5cb52ef07f5f9a4",
+      "naam": "Over een obstakel stappen – met steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/over-een-obstakel-stappen-met-steun-line-v1.png",
+      "sha256": "99592abca07a1b67a1516cff6531fba6b78034849382db7c0824a9cb60953d40",
+      "bron": "https://au.physitrack.com/home-exercise-video/step-over-and-back",
+      "bronTitel": "Step over and back"
+    },
+    {
+      "exerciseId": "fp_03127b77cb1cc5f6",
+      "naam": "Over een obstakel stappen – zonder steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-line-v1.png",
+      "sha256": "7c8213e4fb9b0ea1b5a4768f4591e131f83ab9dd926a5100534307de86749f3f",
+      "bron": "https://ca.physitrack.com/home-exercise-video/step-over-obstacle-while-walking",
+      "bronTitel": "Step over Obstacle While Walking"
+    },
+    {
+      "exerciseId": "fp_59f54b0f73b88fab",
+      "naam": "Draaien op de plaats – met steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-line-v1.png",
+      "sha256": "ae14d24b33833d90c6eb87fa758bf31ba36585a34027e3d6194b121753767966",
+      "bron": "https://us.physitrack.com/home-exercise-video/360-degree-turn",
+      "bronTitel": "360 degree turn (Balance, standing, turning 360°)"
+    },
+    {
+      "exerciseId": "fp_dab1d71dd3f80bb0",
+      "naam": "Draaien op de plaats – zonder steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/draaien-op-de-plaats-zonder-steun-line-v1.png",
+      "sha256": "5052c306c38aaa2b38f9238e293513790832e751de5c0b72743caa97a2479a6d",
+      "bron": "https://us.physitrack.com/home-exercise-video/360-degree-turn",
+      "bronTitel": "360 degree turn (Balance, standing, turning 360°)"
+    },
+    {
+      "exerciseId": "fp_b35dc7ba09862f87",
+      "naam": "Stoel opstaan en lopen – zonder steun",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/stoel-opstaan-en-lopen-zonder-steun-line-v1.png",
+      "sha256": "9ed4e2048d4f3f5f0f3df27719dca59b7d32e4df527ee70bcb128712324ce9d6",
+      "bron": "https://us.physitrack.com/home-exercise-video/timed-up-and-go",
+      "bronTitel": "Timed up and go (\"Timed up and go TUG\" Gait balance/mobility)"
+    },
+    {
+      "exerciseId": "fp_f945420fa1df4047",
+      "naam": "Dubbele taak lopen – met cognitieve taak",
+      "groep": "Balans en valpreventie",
+      "img": "images/balans-en-valpreventie/dubbele-taak-lopen-met-cognitieve-taak-line-v1.png",
+      "sha256": "4fe75a956165018ef074f443a4f582bb8263ab56938d80f83cf75341b914bf0a",
+      "bron": "https://us.physitrack.com/home-exercise-video/timed-up-and-go-%2528cognitive-task%253a-counting%2529",
+      "bronTitel": "Timed up and go (cognitive task: counting) (\"Timed up and go TUG\" Gait balance/mobility, with cognitive task, counting backwards)"
+    },
+    {
+      "exerciseId": "fp_6607290919450db5",
+      "naam": "Reiken met aangedane arm – met visueel doel",
+      "groep": "Neurologische revalidatie",
+      "img": "images/neurologische-revalidatie/reiken-met-aangedane-arm-met-visueel-doel-line-v1.png",
+      "sha256": "e10799a2223ab40a713237f0508833b869fccbf5fc97b054cd989f015de3a6cc",
+      "bron": "https://uk.physitrack.com/home-exercise-video/sitting-balance---arm-reaching-forwards-%2528adaptive%2529",
+      "bronTitel": "Sitting balance - arm reaching forwards (adaptive)"
+    },
+    {
+      "exerciseId": "fp_6a6f541af1ebba77",
+      "naam": "Reiken met aangedane arm – functionele combinatie",
+      "groep": "Neurologische revalidatie",
+      "img": "images/neurologische-revalidatie/reiken-met-aangedane-arm-functionele-combinatie-line-v1.png",
+      "sha256": "3cc326c2c6753d18f0c517b20986388fb07106ea7b60392ee0b53eaef1508542",
+      "bron": "https://uk.physitrack.com/home-exercise-video/reach-to-grasp-and-place-cup",
+      "bronTitel": "Reach to grasp and place cup"
+    },
+    {
+      "exerciseId": "fp_c374f5b2a002ed26",
+      "naam": "Hand openen na grijpen – bilateraal",
+      "groep": "Neurologische revalidatie",
+      "img": "images/neurologische-revalidatie/hand-openen-na-grijpen-bilateraal-line-v1.png",
+      "sha256": "90d130ae544789799995250e9b2b9ac268dbcb8fe6e5f9b772452d3d6e05c08d",
+      "bron": "https://us.physitrack.com/home-exercise-video/grabbing-a-cup",
+      "bronTitel": "Grabbing a cup ('ADL' Dining - grasping a cup)"
+    },
+    {
+      "exerciseId": "fp_6d61735a537b3098",
+      "naam": "Romp rotatie in zit – bilateraal",
+      "groep": "Neurologische revalidatie",
+      "img": "images/neurologische-revalidatie/romp-rotatie-in-zit-bilateraal-line-v1.png",
+      "sha256": "828c292cc25c9a21b0d29d44763c149059d2f7746cd514aa1feb7256704305d3",
+      "bron": "https://au.physitrack.com/home-exercise-video/seated-trunk-rotations",
+      "bronTitel": "Seated trunk rotations (adaptive)"
+    },
+    {
+      "exerciseId": "fp_211c89f47639deb5",
+      "naam": "Symmetrisch opstaan – met ritmische cue",
+      "groep": "Neurologische revalidatie",
+      "img": "images/neurologische-revalidatie/symmetrisch-opstaan-met-ritmische-cue-line-v1.png",
+      "sha256": "c7979e954b8c8541853b5cf02c49e15f1948995f029e9da7a668e1c7aa24817d",
+      "bron": "https://us.physitrack.com/home-exercise-video/sit-to-stand",
+      "bronTitel": "Sit to stand - hands on thighs"
+    },
+    {
+      "exerciseId": "fp_fca8d4dac2fb58b9",
+      "naam": "Stap initiëren – met visueel doel",
+      "groep": "Neurologische revalidatie",
+      "img": "images/neurologische-revalidatie/stap-initieren-met-visueel-doel-line-v1.png",
+      "sha256": "f45c9baebd181b4d0eb0567afb1410acba4df94b9a90a821e88b56f32d0ea592",
+      "bron": "https://us.physitrack.com/home-exercise-video/increasing-stride-length-with-markers-%2528step-to%2529",
+      "bronTitel": "Increasing stride length with markers (step-to)"
+    },
+    {
+      "exerciseId": "fp_1f28916d68f07669",
+      "naam": "Stap initiëren – met ritmische cue",
+      "groep": "Neurologische revalidatie",
+      "img": "images/neurologische-revalidatie/stap-initieren-met-ritmische-cue-line-v1.png",
+      "sha256": "6f49aa52129fe34ecdb0278b3245b71d3c6d24d415ffcc8a29053264430128f3",
+      "bron": "https://au.physitrack.com/home-exercise-video/step-forward",
+      "bronTitel": "One full step forward and back"
+    },
+    {
+      "exerciseId": "fp_41ff90180014238c",
+      "naam": "Zijwaarts verplaatsen in zit – met visueel doel",
+      "groep": "Neurologische revalidatie",
+      "img": "images/neurologische-revalidatie/zijwaarts-verplaatsen-in-zit-met-visueel-doel-line-v1.png",
+      "sha256": "5cedd1a4584e3f199550879ab491f61856c13978ef11405405593716ea7a8901",
+      "bron": null,
+      "bronTitel": null
+    },
+    {
+      "exerciseId": "fp_30cc83735513cb0c",
+      "naam": "Hiel plaatsen – met visueel doel",
+      "groep": "Neurologische revalidatie",
+      "img": "images/neurologische-revalidatie/hiel-plaatsen-met-visueel-doel-line-v1.png",
+      "sha256": "26d3ed017740a2644b73174aae687cc6c304466e8a88f0b1e63635f7dea9d71c",
+      "bron": null,
+      "bronTitel": null
+    },
+    {
+      "exerciseId": "fp_222ab9d7a5d5687a",
+      "naam": "Voet naar marker – met visueel doel",
+      "groep": "Neurologische revalidatie",
+      "img": "images/neurologische-revalidatie/voet-naar-marker-met-visueel-doel-line-v1.png",
+      "sha256": "36381800ecfc9dd7bb4b2683daf81adc85375456a66263543511406d42d8e6df",
+      "bron": null,
+      "bronTitel": null
+    },
+    {
+      "exerciseId": "fp_adcfb76849642ec7",
+      "naam": "Ritmisch marcheren – met ritmische cue",
+      "groep": "Neurologische revalidatie",
+      "img": "images/neurologische-revalidatie/ritmisch-marcheren-met-ritmische-cue-line-v1.png",
+      "sha256": "60fbe4715682c249b3952465ffd8e4740915a15e79e88d913f782322c8b578b2",
+      "bron": "https://ca.physitrack.com/home-exercise-video/marching-on-spot",
+      "bronTitel": "Marching on spot with arms"
+    },
+    {
+      "exerciseId": "fp_975632f0f95c824e",
+      "naam": "Grote stappen – met ritmische cue",
+      "groep": "Neurologische revalidatie",
+      "img": "images/neurologische-revalidatie/grote-stappen-met-ritmische-cue-line-v1.png",
+      "sha256": "76b1da23b032185aefcc7d63b605398d8a0eb67b1971e80238c28c3a09cc8c26",
+      "bron": "https://us.physitrack.com/home-exercise-video/increasing-stride-length-with-markers-%2528step-through%2529",
+      "bronTitel": "Increasing stride length with markers (step through)"
+    },
+    {
+      "exerciseId": "fp_4b4cdf03e92ccf3f",
+      "naam": "Grote stappen – functionele combinatie",
+      "groep": "Neurologische revalidatie",
+      "img": "images/neurologische-revalidatie/grote-stappen-functionele-combinatie-line-v1.png",
+      "sha256": "a70d90bb477f48fa95f8db368f13abdd253c3e4aa03eb0f8f20b914eb9829c5e",
+      "bron": "https://us.physitrack.com/home-exercise-video/increasing-stride-length-with-markers-%2528step-through%2529",
+      "bronTitel": "Increasing stride length with markers (step through)"
+    },
+    {
+      "exerciseId": "fp_9b0d3a17a5ed8f8c",
+      "naam": "Brug met symmetrie – bilateraal",
+      "groep": "Neurologische revalidatie",
+      "img": "images/neurologische-revalidatie/brug-met-symmetrie-bilateraal-line-v1.png",
+      "sha256": "b7feef5ed16293475131900809263d5b4ea0a3963f27f82082c4e997cc699615",
+      "bron": "https://au.physitrack.com/home-exercise-video/bridging-in-supine",
+      "bronTitel": "Bridging in Supine"
+    },
+    {
+      "exerciseId": "fp_f3f6f383c940f974",
+      "naam": "Blikstabilisatie horizontaal – staand langzaam",
+      "groep": "Vestibulair",
+      "img": "images/vestibulair/blikstabilisatie-horizontaal-staand-langzaam-line-v1.png",
+      "sha256": "103a8cb6d3656674074e145a2ac52d56025f51184fa59f4c4d64bf28d0941530",
+      "bron": "https://us.physitrack.com/home-exercise-video/gaze-stabilisation-%2528horizontal%2529-in-standing",
+      "bronTitel": "Gaze stabilisation (horizontal) in standing"
+    },
+    {
+      "exerciseId": "fp_11de8f0fea486d2d",
+      "naam": "Blikstabilisatie horizontaal – tijdens lopen",
+      "groep": "Vestibulair",
+      "img": "images/vestibulair/blikstabilisatie-horizontaal-tijdens-lopen-line-v1.png",
+      "sha256": "58c9be57910d5fff489e212a06b841f55f641e3b627b4a936b320c6f6d56648d",
+      "bron": "https://us.physitrack.com/home-exercise-video/walking-with-vor-rotation",
+      "bronTitel": "Walking with VOR rotation"
+    },
+    {
+      "exerciseId": "fp_9c374def618b9b9f",
+      "naam": "Blikstabilisatie verticaal – zittend langzaam",
+      "groep": "Vestibulair",
+      "img": "images/vestibulair/blikstabilisatie-verticaal-zittend-langzaam-line-v1.png",
+      "sha256": "993c48b6c21c24f2128e723a2d451685e0db177a3a970fdcedf5244f271889d6",
+      "bron": "https://us.physitrack.com/home-exercise-video/gaze-stabilisation-%2528vertical%2529-in-sitting",
+      "bronTitel": "Gaze stabilisation (vertical) in sitting"
+    },
+    {
+      "exerciseId": "fp_fa5accf2e385cd64",
+      "naam": "Blikstabilisatie verticaal – staand langzaam",
+      "groep": "Vestibulair",
+      "img": "images/vestibulair/blikstabilisatie-verticaal-staand-langzaam-line-v1.png",
+      "sha256": "b2c373a737d5d32451a8ad0e7f3078e71c1507ab8f965c9219a34487a8d20062",
+      "bron": "https://us.physitrack.com/home-exercise-video/gaze-stabilisation-%2528vertical%2529-in-standing",
+      "bronTitel": "Gaze stabilisation (vertical) in standing"
+    },
+    {
+      "exerciseId": "fp_b1505367e016178b",
+      "naam": "Ogen naar doelen – zittend langzaam",
+      "groep": "Vestibulair",
+      "img": "images/vestibulair/ogen-naar-doelen-zittend-langzaam-line-v1.png",
+      "sha256": "de6494ee81e97519c99dcfcb7c74609b3c76c50973557532280edcee11e078f8",
+      "bron": "https://uk.physitrack.com/home-exercise-video/saccades",
+      "bronTitel": "Saccades - Plain Background"
+    },
+    {
+      "exerciseId": "fp_66207732613fd2eb",
+      "naam": "Ogen naar doelen – staand langzaam",
+      "groep": "Vestibulair",
+      "img": "images/vestibulair/ogen-naar-doelen-staand-langzaam-line-v1.png",
+      "sha256": "1bc26ffb2ddbcd7d2272c96c3833998c4a148505280c58114678c87747f43af0",
+      "bron": "https://uk.physitrack.com/home-exercise-video/saccades",
+      "bronTitel": "Saccades - Plain Background"
+    },
+    {
+      "exerciseId": "fp_886a77c60aebc20f",
+      "naam": "Doel volgen – zittend langzaam",
+      "groep": "Vestibulair",
+      "img": "images/vestibulair/doel-volgen-zittend-langzaam-line-v1.png",
+      "sha256": "988dce4ae4950d355fd0bc027372aa96cdb02521224e22769a6262791c469c51",
+      "bron": "https://au.physitrack.com/home-exercise-video/smooth-pursuit---horizontal",
+      "bronTitel": "Smooth Pursuit - Horizontal"
+    },
+    {
+      "exerciseId": "fp_e2a07d5f662d49ad",
+      "naam": "Hoofd draaien in stand – staand langzaam",
+      "groep": "Vestibulair",
+      "img": "images/vestibulair/hoofd-draaien-in-stand-staand-langzaam-line-v1.png",
+      "sha256": "1fbaa49d9bc83384133ca90c1c8c7e20d3d1c9bdf60612647715f4cea98d4975",
+      "bron": "https://uk.physitrack.com/home-exercise-video/head-turns-in-standing",
+      "bronTitel": "Head turns in standing"
+    },
+    {
+      "exerciseId": "fp_1eb8973666577356",
+      "naam": "Buigen en oprichten – staand langzaam",
+      "groep": "Vestibulair",
+      "img": "images/vestibulair/buigen-en-oprichten-staand-langzaam-line-v1.png",
+      "sha256": "476c09c1ef6e80afbd6f794cc9aa014d830af0a898eb98622e0613049a9d6e01",
+      "bron": "https://au.physitrack.com/home-exercise-video/bending-forwards---vestibular-habituation",
+      "bronTitel": "Bending forwards - vestibular habituation"
+    },
+    {
+      "exerciseId": "fp_5323aabf47e9f41c",
+      "naam": "Voorwerp van vloer tillen – licht en dichtbij",
+      "groep": "Werk en dagelijkse handelingen",
+      "img": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-licht-en-dichtbij-line-v1.png",
+      "sha256": "70ecec4927297081a2c2b1da282c1d72c9d98698fd27e686a0198f3cbcdc5f59",
+      "bron": "https://us.physitrack.com/home-exercise-video/picking-objects-from-floor",
+      "bronTitel": "Picking objects from floor"
+    },
+    {
+      "exerciseId": "fp_98960414a8cfcb5d",
+      "naam": "Voorwerp van tafel pakken – licht en dichtbij",
+      "groep": "Werk en dagelijkse handelingen",
+      "img": "images/werk-en-dagelijkse-handelingen/voorwerp-van-tafel-pakken-licht-en-dichtbij-line-v1.png",
+      "sha256": "2c6a4c7b8637e76b40a2c76fdaff8af3476633264f73089ff1cab4db4c28fbe0",
+      "bron": "https://us.physitrack.com/home-exercise-video/reaching-with-object---both-hands",
+      "bronTitel": "Reaching with object - both hands"
+    },
+    {
+      "exerciseId": "fp_010edfd8ac002eaf",
+      "naam": "Boven schouderhoogte plaatsen – ergonomische basis",
+      "groep": "Werk en dagelijkse handelingen",
+      "img": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-ergonomische-basis-line-v1.png",
+      "sha256": "06712dc2e280c11cb110b8a8244b2d6e89d28c0cef752fc7067c9355ab5bab9f",
+      "bron": "https://us.physitrack.com/home-exercise-video/standing-overhead-reach",
+      "bronTitel": "Standing overhead reach"
+    },
+    {
+      "exerciseId": "fp_1066da8dd15f9fec",
+      "naam": "Boven schouderhoogte plaatsen – licht en dichtbij",
+      "groep": "Werk en dagelijkse handelingen",
+      "img": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-licht-en-dichtbij-line-v1.png",
+      "sha256": "985072478654e5510694bad31f4abf434598437f87a79db54379fcc99a11101e",
+      "bron": "https://us.physitrack.com/home-exercise-video/standing-overhead-reach",
+      "bronTitel": "Standing overhead reach"
+    },
+    {
+      "exerciseId": "fp_e971ce59b89cb228",
+      "naam": "Duwen – licht en dichtbij",
+      "groep": "Werk en dagelijkse handelingen",
+      "img": "images/werk-en-dagelijkse-handelingen/duwen-licht-en-dichtbij-line-v1.png",
+      "sha256": "655865b1323cfcd55e3657b38546bbb5007aae5d9de9969e5819a10e6586a494",
+      "bron": null,
+      "bronTitel": null
+    },
+    {
+      "exerciseId": "fp_c4137e59a9ec24cd",
+      "naam": "Duwen – met stapverplaatsing",
+      "groep": "Werk en dagelijkse handelingen",
+      "img": "images/werk-en-dagelijkse-handelingen/duwen-met-stapverplaatsing-line-v1.png",
+      "sha256": "ee7ecf9fe7010306a51c6567a7e960620eba38b9c9adb49b38bbefcb55265c5a",
+      "bron": "https://us.physitrack.com/home-exercise-video/weighted-push---%22power-sled-push%22",
+      "bronTitel": "Weighted push - \"Power sled push\""
+    },
+    {
+      "exerciseId": "fp_c06068464b11826d",
+      "naam": "Trekken – licht en dichtbij",
+      "groep": "Werk en dagelijkse handelingen",
+      "img": "images/werk-en-dagelijkse-handelingen/trekken-licht-en-dichtbij-line-v1.png",
+      "sha256": "3afdea7ca74a45427b166122ae585d566e659e3d52e7e20b90b2c326da83510e",
+      "bron": null,
+      "bronTitel": null
+    },
+    {
+      "exerciseId": "fp_04ca0d67787dca33",
+      "naam": "Draaien en plaatsen – met stapverplaatsing",
+      "groep": "Werk en dagelijkse handelingen",
+      "img": "images/werk-en-dagelijkse-handelingen/draaien-en-plaatsen-met-stapverplaatsing-line-v1.png",
+      "sha256": "ef69c8703488e30bbd457b18fe0ab01bffc48fc6263a85780023ba4742323b58",
+      "bron": null,
+      "bronTitel": null
+    },
+    {
+      "exerciseId": "fp_1122c98c2308639e",
+      "naam": "Langdurig zitten onderbreken – met tempo of herhaling",
+      "groep": "Werk en dagelijkse handelingen",
+      "img": "images/werk-en-dagelijkse-handelingen/langdurig-zitten-onderbreken-met-tempo-of-herhaling-line-v1.png",
+      "sha256": "80dde533c80bfc565c97476dabb2685defffa057f3693a2d60709acc95931845",
+      "bron": "https://us.physitrack.com/home-exercise-video/sit-to-stand-without-arms",
+      "bronTitel": "Sit to stand without arms"
+    },
+    {
+      "exerciseId": "fp_b161e58d4bafea63",
+      "naam": "Bekkenbodem aanspannen – liggend",
+      "groep": "Bekken & postpartum",
+      "img": "images/bekken-postpartum/bekkenbodem-aanspannen-liggend-line-v1.png",
+      "sha256": "6486658e364b634d011b235cf5765f8b26bcf20568b8e8c46ba540e6ebc2fab3",
+      "bron": "https://us.physitrack.com/home-exercise-video/pelvic-floor-contraction-in-crook-lying",
+      "bronTitel": "Pelvic floor contraction in crook lying"
+    },
+    {
+      "exerciseId": "fp_af9cd35496058ede",
+      "naam": "Bekkenbodem ontspannen – liggend",
+      "groep": "Bekken & postpartum",
+      "img": "images/bekken-postpartum/bekkenbodem-ontspannen-liggend-line-v1.png",
+      "sha256": "e7a235a4f92c66bcc7a665d88e97bb392d38ff91da0e87e5f69493a730891bc8",
+      "bron": null,
+      "bronTitel": null
+    },
+    {
+      "exerciseId": "fp_96a6630928d93cd2",
+      "naam": "Bekkenbodem snel aanspannen – zittend",
+      "groep": "Bekken & postpartum",
+      "img": "images/bekken-postpartum/bekkenbodem-snel-aanspannen-zittend-line-v1.png",
+      "sha256": "d0ec386e79cd774067d9a1db393a0e61b88ac6747c4cf4850aa76a5ab04a01f5",
+      "bron": "https://ca.physitrack.com/home-exercise-video/sitting-pelvic-floor-muscle-contraction",
+      "bronTitel": "Sitting Pelvic Floor Muscle Contraction"
+    },
+    {
+      "exerciseId": "fp_94a35e31779075e4",
+      "naam": "Bekkenbodem met uitademing – liggend",
+      "groep": "Bekken & postpartum",
+      "img": "images/bekken-postpartum/bekkenbodem-met-uitademing-liggend-line-v1.png",
+      "sha256": "06cafa9c10589cbd360f8866975fc2596bb9785bcfffabc4dbfec7f0d3a7df84",
+      "bron": "https://uk.physitrack.com/home-exercise-video/basic-setting-in-crook-with-breath-control",
+      "bronTitel": "Basic setting in crook with breath control"
+    },
+    {
+      "exerciseId": "fp_24237e101a2c77ad",
+      "naam": "Diepe buikactivatie – liggend",
+      "groep": "Bekken & postpartum",
+      "img": "images/bekken-postpartum/diepe-buikactivatie-liggend-line-v1.png",
+      "sha256": "849814d6478a123fb533198d404813a7ee7763db58d6e8d24d6f7ad28d4d8c10",
+      "bron": "https://us.physitrack.com/home-exercise-video/transversus-abdominis-and-pelvic-floor-activation-in-crook-lying",
+      "bronTitel": "Transversus abdominis and pelvic floor activation in crook lying"
+    },
+    {
+      "exerciseId": "fp_0474f0286832320f",
+      "naam": "Bekkenmobiliteit – liggend",
+      "groep": "Bekken & postpartum",
+      "img": "images/bekken-postpartum/bekkenmobiliteit-liggend-line-v1.png",
+      "sha256": "28353244789675c79938ca404966e31b8682074bebf4adce691d2800ec7fc1b0",
+      "bron": "https://au.physitrack.com/home-exercise-video/pelvic-tilt-in-crook-lying--v2",
+      "bronTitel": "Pelvic tilt in crook lying- v2"
+    },
+    {
+      "exerciseId": "fp_8d4fb0f3f39ab16e",
+      "naam": "360 graden ademhaling – eerste fase rustig",
+      "groep": "Bekken & postpartum",
+      "img": "images/bekken-postpartum/360-graden-ademhaling-eerste-fase-rustig-line-v1.png",
+      "sha256": "481563bb61a64e7918620581b543abc3910dae469be49c513ef249f6d92f76da",
+      "bron": "https://au.physitrack.com/home-exercise-video/supine-lateral-rib-breathing",
+      "bronTitel": "Supine Lateral Rib Breathing"
+    },
+    {
+      "exerciseId": "fp_2d59f8875bc40b6c",
+      "naam": "Functioneel opstaan – functioneel",
+      "groep": "Bekken & postpartum",
+      "img": "images/bekken-postpartum/functioneel-opstaan-functioneel-line-v1.png",
+      "sha256": "3a2ea15684093fec590175d7b1719b243659cb3de3be155d03db7c98ccbd8c30",
+      "bron": "https://us.physitrack.com/home-exercise-video/sit-to-stand-without-arms",
+      "bronTitel": "Sit to stand without arms"
+    },
+    {
+      "exerciseId": "fp_24995dde850e82a4",
+      "naam": "Zijlig heupkracht – zijlig",
+      "groep": "Bekken & postpartum",
+      "img": "images/bekken-postpartum/zijlig-heupkracht-zijlig-line-v1.png",
+      "sha256": "f3e5055bcc6ce64b14b79e21cfea4d27c14a0784e4d292e7c9a0ee2d61e29afd",
+      "bron": "https://us.physitrack.com/home-exercise-video/arom-hip-abduction-side-lying",
+      "bronTitel": "AROM hip abduction side lying"
+    },
+    {
+      "exerciseId": "fp_2edd9e3a8bf351cb",
+      "naam": "Hop vooruit – techniek langzaam",
+      "groep": "Sportrevalidatie",
+      "img": "images/sportrevalidatie/hop-vooruit-techniek-langzaam-line-v1.png",
+      "sha256": "c667f96432be446c0082b69ac806049b02d8650711c954cf00df73e090b71d50",
+      "bron": "https://us.physitrack.com/home-exercise-video/hop---forwards-and-backwards-over-a-line",
+      "bronTitel": "Hop and hold - forwards and backwards over a line"
+    },
+    {
+      "exerciseId": "fp_5ab728e004c4f52f",
+      "naam": "Landing op één been – techniek langzaam",
+      "groep": "Sportrevalidatie",
+      "img": "images/sportrevalidatie/landing-op-een-been-techniek-langzaam-line-v1.png",
+      "sha256": "363f7b0a72b07271af98b085ca9ed570ae0f2e4437af7d48905865fcbd27d5d9",
+      "bron": "https://au.physitrack.com/home-exercise-video/multi-direction----single-leg-hop-and-hold",
+      "bronTitel": "Multi-direction - single leg hop and hold"
+    },
+    {
+      "exerciseId": "fp_0273cc99fa1cd0d6",
+      "naam": "Laterale shuffle – submaximaal",
+      "groep": "Sportrevalidatie",
+      "img": "images/sportrevalidatie/laterale-shuffle-submaximaal-line-v1.png",
+      "sha256": "0276a4472a97c281f56974086ffc8214de8fe3a2189c5255817a72956fe6eb3a",
+      "bron": "https://na.physitrack.com/home-exercise-video/lateral-shuffle",
+      "bronTitel": "Agility - acceleration / deceleration with lateral shuffle"
+    },
+    {
+      "exerciseId": "fp_7cc6fd169d060ebc",
+      "naam": "Richtingsverandering – techniek langzaam",
+      "groep": "Sportrevalidatie",
+      "img": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-line-v1.png",
+      "sha256": "a9082a4a8890b049c54145b506b8a02bfe0c1bcef7d8bb7f124ed614f86b34ad",
+      "bron": "https://ca.physitrack.com/home-exercise-video/change-of-direction-%E2%80%93-agility-%E2%80%93-straight-line-running-with-jog-backwards---intermediate",
+      "bronTitel": "Change of direction - agility - straight line running with jog backwards - intermediate"
+    },
+    {
+      "exerciseId": "fp_c769c6c4de22aeca",
+      "naam": "Sprinttechniek marcheren – techniek langzaam",
+      "groep": "Sportrevalidatie",
+      "img": "images/sportrevalidatie/sprinttechniek-marcheren-techniek-langzaam-line-v1.png",
+      "sha256": "193a67f321a39d7b3b6302c42834ad30c95fa8c127e15fc61589002aa5bb4d35",
+      "bron": "https://ca.physitrack.com/home-exercise-video/slow-walking-alternating-high-knee-march-with-knee-extension-sweep-%28arm-swing%29",
+      "bronTitel": "Slow walking alternating high knee march with knee extension sweep (arm swing)"
+    },
+    {
+      "exerciseId": "fp_de33f5404b293a39",
+      "naam": "Versnellen en afremmen – submaximaal",
+      "groep": "Sportrevalidatie",
+      "img": "images/sportrevalidatie/versnellen-en-afremmen-submaximaal-line-v1.png",
+      "sha256": "6e75eef5299affd8232da7c36b1ad89cd778279fd49ffca60adfb4fc8f59738d",
+      "bron": "https://na.physitrack.com/home-exercise-video/lateral-shuffle",
+      "bronTitel": "Agility - acceleration / deceleration with lateral shuffle"
+    },
+    {
+      "exerciseId": "fp_1eb30dd39734edc7",
+      "naam": "Rug bol en hol – op handen en knieën",
+      "groep": "Rug",
+      "img": "images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png",
+      "sha256": "b3da39673a5f7179f69dff1b463fc8e89a5baf2099850a6d91d0740dbfc82554",
+      "bron": "https://us.physitrack.com/home-exercise-video/cat-camel-pose",
+      "bronTitel": "Cat camel pose (\"Cat and camel\" Trunk flexion/extension AROM, quadruped; 04)"
+    },
+    {
+      "exerciseId": "fp_52dcbb8df86523fe",
+      "naam": "Rug bol en hol – zittend",
+      "groep": "Rug",
+      "img": "images/rug/rug-bol-en-hol-zittend-line-v1.png",
+      "sha256": "264d7a2bfc9eacd7abd608c8974951b71e6114592ac77dc599eceb3a50c73415",
+      "bron": "https://us.physitrack.com/home-exercise-video/seated-cat-and-camel",
+      "bronTitel": "Seated cat and camel (\"Cat and camel\" Trunk flexion/extension AROM, sitting)"
+    },
+    {
+      "exerciseId": "fp_44df2bee2b128f87",
+      "naam": "Rug bol en hol – staand",
+      "groep": "Rug",
+      "img": "images/rug/rug-bol-en-hol-staand-line-v1.png",
+      "sha256": "350de28f6cad98c12f76f8124373fd2cb211b0d83a8509aed0461948d9cdd1a3",
+      "bron": "https://us.physitrack.com/home-exercise-video/standing-cat-and-camel",
+      "bronTitel": "Standing cat and camel (\"Cat and camel\" Trunk flexion/extension AROM, standing)"
+    },
+    {
+      "exerciseId": "fp_4ecc3fa3dbce246b",
+      "naam": "Rug bol en hol – met lichte weerstand",
+      "groep": "Rug",
+      "img": "images/rug/rug-bol-en-hol-met-lichte-weerstand-line-v1.png",
+      "sha256": "7d7d3cbb91dda52eb09ffa12b556e8c4bbab82e0aab828b133ba0c10f1dc1917",
+      "bron": "https://us.physitrack.com/home-exercise-video/cat-and-camel-with-hands-flat",
+      "bronTitel": "Cat and camel with hands flat (\"Cat and camel\" Trunk flexion/extension AROM, leading with breath, hands flat, quadruped)"
+    },
+    {
+      "exerciseId": "fp_2721d206afbd57fa",
+      "naam": "Romp draaien – liggend",
+      "groep": "Rug",
+      "img": "images/rug/romp-draaien-liggend-line-v1.png",
+      "sha256": "a1203e6925eb04bfe2eba38bb52838e6db24ed0d9ed6932571a7adc4e53dc72f",
+      "bron": "https://us.physitrack.com/home-exercise-video/lumbar-rolling-stretch",
+      "bronTitel": "Lumbar rolling stretch - knee rocks (Lower trunk rotation AROM, supine feet standing)"
+    },
+    {
+      "exerciseId": "fp_6b15af42d869f74e",
+      "naam": "Romp draaien – op handen en knieën",
+      "groep": "Rug",
+      "img": "images/rug/romp-draaien-op-handen-en-knieen-line-v1.png",
+      "sha256": "a6570951ae453b590b9c888338e3937e489bcce56ae0894d4d144c7190d780c6",
+      "bron": "https://au.physitrack.com/home-exercise-video/thread-the-needle-with-rotation",
+      "bronTitel": "Thread the Needle with Rotation"
+    },
+    {
+      "exerciseId": "fp_5447d54e26b5bfb4",
+      "naam": "Romp draaien – zittend",
+      "groep": "Rug",
+      "img": "images/rug/romp-draaien-zittend-line-v1.png",
+      "sha256": "3dc3b2ef2eed15d379d1774ce0edbed390030495e32c229ef68898acde90109b",
+      "bron": "https://ca.physitrack.com/home-exercise-video/seated-trunk-rotation-with-arms-crossed---body-awareness",
+      "bronTitel": "Seated trunk rotation with arms crossed - body awareness"
+    },
+    {
+      "exerciseId": "fp_e91bf651c05afa01",
+      "naam": "Romp draaien – staand",
+      "groep": "Rug",
+      "img": "images/rug/romp-draaien-staand-line-v1.png",
+      "sha256": "a7192b23b2dd792f2abf9b0d2d85429a795bc4b800ef406752c43ce11830dd9b",
+      "bron": "https://us.physitrack.com/home-exercise-video/trunk-rotations-in-standing",
+      "bronTitel": "Trunk Rotations in Standing"
+    },
+    {
+      "exerciseId": "fp_134b8284155c79c7",
+      "naam": "Romp zijwaarts buigen – liggend",
+      "groep": "Rug",
+      "img": "images/rug/romp-zijwaarts-buigen-liggend-line-v1.png",
+      "sha256": "84ffd298ab92e95a2ced2724a25376912291804cc24e9628db7b5663d3e4ba84",
+      "bron": null,
+      "bronTitel": null
+    },
+    {
+      "exerciseId": "fp_63808d0727800855",
+      "naam": "Romp zijwaarts buigen – zittend",
+      "groep": "Rug",
+      "img": "images/rug/romp-zijwaarts-buigen-zittend-line-v1.png",
+      "sha256": "36d03f0aedef72b87e3d49af4f424ea22e8e536915ee79caea0e77fbe2025848",
+      "bron": "https://ca.physitrack.com/home-exercise-video/seated-side-bend",
+      "bronTitel": "Seated Side Bend"
+    },
+    {
+      "exerciseId": "fp_2cdbcd6a461f6ee2",
+      "naam": "Romp zijwaarts buigen – staand",
+      "groep": "Rug",
+      "img": "images/rug/romp-zijwaarts-buigen-staand-line-v1.png",
+      "sha256": "8866093b1f4d046a68a8850c37984144d0280d1fc4dec40d69e25e114a7b6ba5",
+      "bron": "https://us.physitrack.com/home-exercise-video/standing-side-flexion-stretch",
+      "bronTitel": "Standing side flexion stretch (Trunk side bending stretch - progression arm overhead, standing; 01)"
+    },
+    {
+      "exerciseId": "fp_cc40c4b9a82decac",
+      "naam": "Rug strekken – liggend",
+      "groep": "Rug",
+      "img": "images/rug/rug-strekken-liggend-line-v1.png",
+      "sha256": "59bc8dbb9bd0a693efbfea94d7c3700163bc52be5bc197fa83b64c430e7fa088",
+      "bron": "https://us.physitrack.com/home-exercise-video/lumbar-extension-in-prone",
+      "bronTitel": "Lumbar extension in prone (\"Prone press up\" Trunk extension passive; 03)"
+    },
+    {
+      "exerciseId": "fp_c0b6c7ac3cecbcc7",
+      "naam": "Rug strekken – op handen en knieën",
+      "groep": "Rug",
+      "img": "images/rug/rug-strekken-op-handen-en-knieen-line-v1.png",
+      "sha256": "9f1cce085af107c1e9ef9fda24f3b11581c74190b2e5946a37d4fc36f3310ae5",
+      "bron": "https://us.physitrack.com/home-exercise-video/prayer-stretch",
+      "bronTitel": "Prayer stretch (\"Prayer stretch\" Shoulder/trunk extensors stretch, with side bending, quadruped)"
+    },
+    {
+      "exerciseId": "fp_2644209935d93785",
+      "naam": "Rug strekken – zittend",
+      "groep": "Rug",
+      "img": "images/rug/rug-strekken-zittend-line-v1.png",
+      "sha256": "1ad0761ebab0f1f17a067f64e9dd8520ad96eaf7a77eb97a01bed9e82f6b9309",
+      "bron": null,
+      "bronTitel": null
+    },
+    {
+      "exerciseId": "fp_ab474868a73074c7",
+      "naam": "Rug strekken – staand",
+      "groep": "Rug",
+      "img": "images/rug/rug-strekken-staand-line-v1.png",
+      "sha256": "6a6b890a4c4a121cda586d1b5cb3207a0acfdd735564ebea602d655dfda0c91a",
+      "bron": "https://au.physitrack.com/home-exercise-video/lumbar-extension-in-standing",
+      "bronTitel": "Lumbar extension in standing"
+    },
+    {
+      "exerciseId": "fp_d2795a94a7d11698",
+      "naam": "Knie naar borst – liggend",
+      "groep": "Rug",
+      "img": "images/rug/knie-naar-borst-liggend-line-v1.png",
+      "sha256": "df7782fb31d0d0a8cd1a51d535c3b9b3aa08e9aca84de3c218e46b57be969a4a",
+      "bron": "https://ca.physitrack.com/home-exercise-video/single-knee-to-chest",
+      "bronTitel": "Single knee to chest"
+    },
+    {
+      "exerciseId": "fp_df9d4c0dce89c045",
+      "naam": "Knie naar borst – zittend",
+      "groep": "Rug",
+      "img": "images/rug/knie-naar-borst-zittend-line-v1.png",
+      "sha256": "a0b966c6ccfdeff220591d4f0b01ea4aebbcc70f9deba222530b0d7992fbf091",
+      "bron": "https://us.physitrack.com/home-exercise-video/seated-knee-hugs",
+      "bronTitel": "Seated knee hugs 3 (\"Knee hugs\" Hip/lumbar extensors stretch (alternate), sitting; 01)"
+    },
+    {
+      "exerciseId": "fp_6f6adc087b95e514",
+      "naam": "Knie naar borst – staand",
+      "groep": "Rug",
+      "img": "images/rug/knie-naar-borst-staand-line-v1.png",
+      "sha256": "d43fae52193392ba6ad1d71813e0d03b13bb31a7f2917816aa7ef17584c9db83",
+      "bron": null,
+      "bronTitel": null
+    },
+    {
+      "exerciseId": "fp_b2900afa943e315b",
+      "naam": "Open boek – liggend",
+      "groep": "Rug",
+      "img": "images/rug/open-boek-liggend-line-v1.png",
+      "sha256": "e6a08ad37c8f13bedc0cc7fadadf0eeeb775bbbe73ea5ebee60f5fd7df7e019a",
+      "bron": "https://uk.physitrack.com/home-exercise-video/thoracic-rotations-in-side-lying-(open-book)---version-1",
+      "bronTitel": "Thoracic rotations in side lying (open book) - Version 1"
+    },
+    {
+      "exerciseId": "fp_3484904185da85ed",
+      "naam": "Open boek – op handen en knieën",
+      "groep": "Rug",
+      "img": "images/rug/open-boek-op-handen-en-knieen-line-v1.png",
+      "sha256": "141b4135ad77a2a744d055d271fdf4ce7dcccdd9b41498af4c9fba325400ec79",
+      "bron": "https://ca.physitrack.com/home-exercise-video/thoracic-rotation-in-quadruped---hand-behind-head",
+      "bronTitel": "Thoracic rotation in quadruped - hand behind head"
+    },
+    {
+      "exerciseId": "fp_d66473bfb49dfb81",
+      "naam": "Open boek – zittend",
+      "groep": "Rug",
+      "img": "images/rug/open-boek-zittend-line-v1.png",
+      "sha256": "ac7a411fd6f2dda4f99afdeb31cdfd4eaaae17f317beffd3cc54b6be5580014f",
+      "bron": null,
+      "bronTitel": null
+    },
+    {
+      "exerciseId": "fp_009ab760836a2b01",
+      "naam": "Thoracale extensie – liggend",
+      "groep": "Rug",
+      "img": "images/rug/thoracale-extensie-liggend-line-v1.png",
+      "sha256": "1951f2f76eacc30149998e8eb46438d398264145716956045987107f1c2f82da",
+      "bron": "https://us.physitrack.com/home-exercise-video/thoracic-extension-mobilisation-with-towel-roll",
+      "bronTitel": "Thoracic extension mobilisation with towel roll (Thoracic extension ROM, mobilization with movement, over towel, supine)"
+    },
+    {
+      "exerciseId": "fp_8beb83b36e02ea73",
+      "naam": "Thoracale extensie – op handen en knieën",
+      "groep": "Rug",
+      "img": "images/rug/thoracale-extensie-op-handen-en-knieen-line-v1.png",
+      "sha256": "6bdac61a06817acb6870e8f1c779f3370610ea65056170f02f73c01a8320d9da",
+      "bron": null,
+      "bronTitel": null
+    },
+    {
+      "exerciseId": "fp_3e968c19f6cf90c7",
+      "naam": "Thoracale extensie – zittend",
+      "groep": "Rug",
+      "img": "images/rug/thoracale-extensie-zittend-line-v1.png",
+      "sha256": "363982c3c684830c8df5648a91769345ef08260e36f0b2c92b37d5c63ac3a707",
+      "bron": "https://us.physitrack.com/home-exercise-video/thoracic-extension-in-chair-with-towel",
+      "bronTitel": "Thoracic extension in chair with towel (Thoracic extension stretch, over back of sturdy chair, hands behind head; 01)"
+    },
+    {
+      "exerciseId": "fp_bb5b9d2dc2a52e5e",
+      "naam": "Thoracale extensie – staand",
+      "groep": "Rug",
+      "img": "images/rug/thoracale-extensie-staand-line-v1.png",
+      "sha256": "af7e9d100caf9a57c613a63b25639729fa765a36a0583c3a3eab2d022c6721b4",
+      "bron": null,
+      "bronTitel": null
+    }
+  ]
+}
