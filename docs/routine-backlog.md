@@ -9,20 +9,20 @@ werk voor Ahmed in `docs/mensenwerk.md`.
 
 | Flow | Desktop 1280 | iPad | iPhone SE | iPhone 14 | Pixel 7 |
 |---|---|---|---|---|---|
-| Proef aanmelden + formulierfouten | 2026-11-07 18u | 2026-11-07 10u | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
+| Proef aanmelden + formulierfouten | 2026-11-07 22u | 2026-11-07 10u | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
 | Welkom, praktijknaam (ook leeg), 12 oefeningen | 2026-11-07 18u | 2026-11-07 10u | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
-| Printversie (lijn, kleur, compact) | 2026-11-07 18u (onbeveiligd: fix) | 2026-11-07 10u (2 pagina's, PDF) | 2026-11-07 14u | 2026-11-06 22u (venster) | 2026-11-07 10u |
-| Beveiligen, herstelcode, inloggen 2e apparaat | 2026-11-07 18u | 2026-11-07 18u (uitnodiging, staand+liggend) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
-| Delen, QR, kaartenoverzicht, CSV | 2026-11-07 18u | 2026-11-07 10u | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
-| Naam wijzigen in overzicht + daarna verder bewerken | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 14u | – | 2026-11-07 10u |
-| Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-07 18u | 2026-11-07 14u | – | – | – |
-| Opname via telefoon /o | 2026-11-07 10u | 2026-11-06 22u | – | 2026-11-07 10u | – |
-| Afspraak, seintje, signalen | 2026-11-07 14u (fix-test) | 2026-11-07 10u (liggend) | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 14u (.ics) |
+| Printversie (lijn, kleur, compact) | 2026-11-07 22u (lange roepnaam) | 2026-11-07 10u (2 pagina's, PDF) | 2026-11-07 14u | 2026-11-06 22u (venster) | 2026-11-07 10u |
+| Beveiligen, herstelcode, inloggen 2e apparaat | 2026-11-07 22u | 2026-11-07 18u (uitnodiging, staand+liggend) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
+| Delen, QR, kaartenoverzicht, CSV | 2026-11-07 22u (CSV-formules veilig) | 2026-11-07 10u | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
+| Naam wijzigen in overzicht + daarna verder bewerken | 2026-11-07 22u (fix) | 2026-11-07 10u | 2026-11-07 14u | – | 2026-11-07 10u |
+| Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-07 22u (eigen oefening) | 2026-11-07 22u (verkeerd bestand) | – | – | – |
+| Opname via telefoon /o | 2026-11-07 22u | 2026-11-07 22u (staand) | – | 2026-11-07 10u | – |
+| Afspraak, seintje, signalen | 2026-11-07 14u (fix-test) | 2026-11-07 10u (liggend) | 2026-11-07 10u | 2026-11-07 22u (.ics DE) | 2026-11-07 22u (.ics na wegnemen: fix) |
 | Proef bijna verlopen / verlopen (echte verlopen-pagina) | 2026-11-07 18u (eigen login: fix) | 2026-11-07 02u | – | 2026-11-07 02u (breedte) | – |
 | /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | 2026-11-07 06u | 2026-11-07 14u | 2026-11-07 10u | 2026-11-07 14u |
 | /k: gedaan-vinkjes op een tweede apparaat | – | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u |
-| /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-07 18u (2 dagen offline) | 2026-11-07 18u | 2026-11-07 18u |
-| /k: video afspelen (eigen opname, YouTube) | – | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u | – |
+| /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-07 22u (2 dagen offline: fix hertest) | 2026-11-07 22u (DE trage lijn) | 2026-11-07 22u (landscape, 429) |
+| /k: video afspelen (eigen opname, YouTube) | – | 2026-11-07 10u | 2026-11-07 22u (ook offline, 200%) | 2026-11-07 10u | 2026-11-07 22u |
 | /k: Duits en Arabisch (rtl) | – | – | Duits 2026-11-07 14u | Duits 2026-11-07 14u | Arabisch 2026-11-07 18u |
 | Landing /v2 op mobiel / iPad | – | 2026-11-07 18u | 2026-11-07 06u | 2026-11-07 14u | 2026-11-07 14u |
 | Therapeut-app op telefoon | – | – | 2026-11-07 06u | 2026-11-06 22u | 2026-11-07 10u |
@@ -30,10 +30,11 @@ werk voor Ahmed in `docs/mensenwerk.md`.
 | Twee werkplekken op één kaart (oud apparaat/tabblad) | 2026-11-07 06u | 2026-11-07 06u | – | – | – |
 | Team: uitnodigen, rollen, verwijderen, inbox, dossier | 2026-11-07 18u | 2026-11-07 18u | – | – | – |
 | Mijn gegevens /k, Wis van dit apparaat, /v2/gegevens | 2026-11-07 18u | – | 2026-11-07 18u | 2026-11-07 18u | 2026-11-07 18u |
-| Vensters met alleen toetsenbord | 2026-11-07 18u | – | – | – | – |
+| Vensters met alleen toetsenbord | 2026-11-07 22u | – | – | – | – |
 
-Volgende run: print op echte iPad-Safari, /k video (eigen opname, YouTube) op iPhone SE en Pixel 7, /k Duits op
-iPhone 14 met trage lijn, inbox "Alleen mijn patiënten" na een fix, eigen video upload (te groot/verkeerd type) op iPad.
+Volgende run: print op echte iPad-Safari, /k Arabisch/Oekraïens op iPhone SE, landing /v2 op desktop, therapeut-app
+op iPad staand (kaart maken van begin tot eind), /o op Pixel 7, /k "Mijn gegevens" op iPhone 14; Mark kwam deze
+run niet toe aan teamsjabloon, afspraak/seintje, signalen en (bijna) verlopen proef: die eerst.
 
 Testtip: de verlopen-pagina test je met een tweede server op een kopie van de datamap waarin `verloopt`
 in proef-aanmeldingen.json in het verleden staat (wordt alleen bij het opstarten gelezen).
@@ -45,16 +46,25 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 ## Open
 
 ### HOOG
-- **/k: offline twee dagen: dag 1 gaat ongemerkt verloren, ook een vraag** (wachtrij heeft één item per soort zonder
-  datum; seintje van dag 2 overschrijft een online vraag van eerder; `eersteMeting` springt). Opgeschaald van LAAG.
-  kaart.html r. ~1520 `zetInWacht`. iPhone SE (Truus, 2026-11-07 18u).
+- **OPGELOST 2026-11-07 PR #88 — /k: offline twee dagen: dag 1 ging ongemerkt verloren.** Wachtrij per soort per dag
+  met `wanneer`; de server zet de tik op zijn dag (`ont` = ontvangst, voor inbox/dossierlabel). Truus hertestte op
+  iPhone SE: dag 1 en dag 2 kwamen allebei aan, op de juiste dag. Test: `npm run test:wachtrijdagen`.
 - **App op iPad: print kan op 2 pagina's eindigen, met de QR op pagina 2** (eerst nakijken op een echte iPad).
   Met een iPad-UA zet de app `html.safari-print` (kaart 90° gedraaid voor staand papier) terwijl
   `@page{size:A4 landscape}` blijft staan; Chromium-emulatie geeft 2 pagina's, staand en liggend. De klasse
   gaat na `afterprint` niet weg. public/index.html r. 238, 268–273, 1901 (`SAFARI_PRINT`). (Mark, 2026-11-07 06u)
 
 ### MIDDEL
-- **Inbox "Alleen mijn patiënten" verbergt vragen en zegt "Alles is afgehandeld"** terwijl de teller 1 blijft. Kaarten
+- **OPGELOST 2026-11-07 (sweep 22u) — App: na "Naam wijzigen" zette "In de praktijk" de oude naam stil terug** (`#k_naam`
+  hield de oude naam; de server hernoemde terug). Desktop (Sanne, 22u). Test: `npm run test:hernoem`.
+- **OPGELOST 2026-11-07 (sweep 22u) — /k: agendaknop eindigde op een kale Nederlandse JSON-foutpagina** (afspraak
+  intussen weggehaald, 429, 404, 400) zonder weg terug. Nu eerst controleren, anders een melding in de eigen taal onder
+  de knop. Pixel 7 (Jayden, 22u). Test: `npm run test:agendamelding`.
+- **/k lightbox staand op iPhone SE: naam over de uitleg, onderkant onbereikbaar.** Foto begint op y −7, uitlegpaneel
+  loopt tot 576 bij 568 hoog met `overflow:visible` (niet scrollbaar), witte `.lbnaam` staat over de crème uitleg.
+  Onderaan de technische zin "Volledige oefenafbeelding. De houdingen worden niet automatisch uitgesneden of
+  afgespeeld." kaart.html r. 103–117, 2279. (Truus, 22u)
+- **Inbox "Alleen mijn patiënten" verbergt vragen en zegt "Alles is afgehandeld"** (hertest 22u: ongewijzigd) terwijl de teller 1 blijft. Kaarten
   van eigen logins krijgen `behandelaar:null`; het filter zoekt op voornaam in het vrije veld. public/index.html
   r. ~3659–3663. Desktop (Mark, 2026-11-07 18u).
 - **Uitgenodigde collega met typfout in de praktijknaam maakt een losse praktijk** ("nog niet beveiligd" +
@@ -64,9 +74,13 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   aria-pressed=false, weekbolletje blijft leeg); seintjes wel. kaart.html r. ~2330, ~2346. iPhone SE (Truus, 18u).
 - **/k spoedregel zegt "Bel de praktijk" zonder nummer of belknop** als de praktijk geen telefoon heeft ingevuld.
   `tekenSpoed` r. ~1578: tel-link als `K.praktijk.tel` bestaat, anders in de app om een nummer vragen. (Truus, 18u)
-- **Eigen oefening: dubbelklik op Toevoegen maakt twee oefeningen met dezelfde naam** (twee keer 200). De naamcontrole
-  in `/api/praktijk/oefeningen` (server.js r. ~2803) staat vóór de awaits van mkdir/writeFile; de push komt pas daarna.
-  Desktop + iPad (Mark, 2026-11-07 14u).
+- **Eigen oefening: dubbelklik op Toevoegen geeft een valse fout** (hertest 22u: 200 + 409, één oefening, maar daarna
+  "Er is al een eigen oefening met deze naam."). `knop.disabled` gaat pas aan ná FileReader/`resizeDataUrl`
+  (index.html r. ~4795–4805): bezig-slot vóór de FileReader. De serverrace (naamcontrole vóór de awaits, server.js
+  r. ~2834) bestaat nog. Desktop (Mark, 2026-11-07 14u, 22u).
+- **App op iPad liggend: knop Toevoegen bij Eigen oefening valt onder de vensterrand** (lijst "Jullie eigen
+  oefeningen" staat tussen formulier en knoppen; knop y=883 op 810 hoog, venster schuift onzichtbaar; knop 36 px).
+  Knoppen boven de lijst of vast onderaan. index.html r. ~4778–4784. (Mark, 22u)
 - **/k: vaste Nederlandse controlezinnen op een Engelse/Duitse kaart**: "De oefenafbeelding wordt gecontroleerd…" en
   "De algemene uitleg wordt gecontroleerd…" (public/kaart.html r. ~1299–1300) gaan niet door `tr()`. Pixel 7 (EN),
   iPhone 14 en iPhone SE (DE) (Jayden, Truus, 2026-11-07 14u).
@@ -152,13 +166,24 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 - **/k: lightbox in landscape**: bovenkant valt weg, naam over uitleg, knoppen achter de foto.
 - **/k (Engels): servermeldingen in het Nederlands** (`d.fout` direct getoond), en 'gedaan' faalt stil.
 - **/k (Engels, trage lijn): eerst een halflege Nederlandse kaart**, geen laadstaat tot ~3,5 s.
-- **App: modale vensters niet met toetsenbord**: geen focus naar het venster, geen Escape, geen role=dialog. Hertest 18u: ovProefWelkom, ovPrint, ovKaarten, ovSjab, ovWis ongewijzigd; `<dialog>` "Nieuw in Fysiplan" en ovSein werken wel (patroon). `openOv`/`closeOv` r. ~5002.
+- **App: modale vensters niet met toetsenbord**: geen focus naar het venster, geen Escape, geen role=dialog. Hertest 18u: ovProefWelkom, ovPrint, ovKaarten, ovSjab, ovWis ongewijzigd (22u: ook ovQrTest); `<dialog>` "Nieuw in Fysiplan" en ovSein werken wel (patroon). `openOv`/`closeOv` r. ~5002.
 - **App: printversie toont placeholders van het praktijkadres** ("adres / postcode en plaats / …").
 - **LIJKT OPGELOST 2026-11-07 18u (#77): App 1280×800: A4 past niet; QR en deelknoppen na delen buiten beeld.** Sanne zag #a4wrap 736×559, geen horizontaal scrollen, QR en knoppen zichtbaar.
 - **Foutmelding "Alleen beschikbaar voor beheer." bij fout wachtwoord of foute herstelcode.**
   Al opgelost in open PR #41 (server.js `denied()` met eigen tekst); mergen of overnemen.
 
 ### LAAG
+- Eigen oefening: verkeerd fotobestand (.HEIC, .pdf, tekst als .png) geeft alleen alert "De foto kon niet worden
+  gelezen." zonder "gebruik JPEG of PNG". index.html r. ~4799. iPad staand (Mark, 22u).
+- /k video zonder internet: eigen opname zegt "neem contact op met je praktijk" (misleidend offline, en achter de
+  appbanner); YouTube onbereikbaar geeft een zwart vlak zonder melding. kaart.html `bewaakVideo` r. ~2181, yt-tak
+  r. ~2320. iPhone SE (Truus, 22u).
+- /k: `<video>` van de eigen opname heeft aria-label "General instructions for this exercise" (label van het
+  tekstblok, `VIDEO_TEKST_ALG`); verwacht "Video from your therapist: <oefening>". kaart.html r. ~2308. Pixel 7 (Jayden, 22u).
+- Lange roepnaam afgekapt op de print (36 tekens zichtbaar), en lengtes verschillen: editor `c_naam` maxLength 40
+  (index.html r. 1106), Naam wijzigen en server 60 (server.js `cleanName(b.naam, 60)`). Desktop (Sanne, 22u).
+- /v2/proef: 0612345678 wordt als nepnummer geweigerd met de tekst "Gebruik 10 cijfers die met 0 beginnen (mobiel
+  06…)", wat dit nummer al doet. lib/proef.js r. 51, 96: eigen zin geven. Desktop (Sanne, 22u).
 - Team-venster: na meerdere uitnodigingen staat alleen de laatste link; geen "kopieer link" voor eerdere (opnieuw
   uitnodigen maakt de vorige ongeldig). Verwijderknop × 32×36 px, "Zeker?" loopt over de rand. index.html r. ~3060–3100. (Mark, 18u)
 - Akkoord wordt twee keer gevraagd: bij de proef én bij Beveiligen (`#ps_vwolab`). Desktop (Sanne, 18u).

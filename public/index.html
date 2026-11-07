@@ -4410,6 +4410,10 @@ bridge2.jpg</div>
               zetKaartId(KAART_ID,d.ts||KAART_TS);
               var cnv=document.getElementById('c_naam');
               if(cnv){cnv.value=d.naam||nieuw;cnv.dispatchEvent(new Event('input',{bubbles:true}));}
+              // ook het opslagveld in het Kaarten-venster: "In de praktijk" of "Opslaan" met de
+              // oude naam zette de kaart anders stil terug naar die oude naam
+              var knv=document.getElementById('k_naam');
+              if(knv)knv.value=d.naam||nieuw;
             }
             toonSrvKaarten();
           }

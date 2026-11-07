@@ -123,6 +123,7 @@ try {
   assert.ok(hblok, "hernoem-handler gevonden");
   assert.match(hblok[0], /zetKaartId\(KAART_ID,d\.ts/, "open editor neemt de nieuwe versie over");
   assert.match(hblok[0], /getElementById\('c_naam'\)/, "open editor neemt de nieuwe naam over");
+  assert.match(hblok[0], /getElementById\('k_naam'\)[\s\S]*?knv\.value=d\.naam\|\|nieuw/, "opslagveld in Kaarten neemt de nieuwe naam over (geen stille terugzet via In de praktijk)");
 
   console.log("test-kaart-hernoem: OK");
 } catch (e) {

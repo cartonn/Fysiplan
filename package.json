@@ -72,7 +72,8 @@
     "test:logoveeg": "node scripts/test-logo-veeg.mjs",
     "test:sweepoverzicht": "node scripts/test-sweep-overzicht-wis.mjs",
     "test:gedeeldwerk": "node scripts/test-team-gedeeld-werk.mjs",
-    "test:wachtrijdagen": "node scripts/test-wachtrij-dagen.mjs"
+    "test:wachtrijdagen": "node scripts/test-wachtrij-dagen.mjs",
+    "test:agendamelding": "node scripts/test-agenda-melding.mjs"
   },
   "engines": {
     "node": ">=20"
