@@ -68,12 +68,12 @@ Volgende run: (f) injectie/XSS, daarna (i) denial of service en (g) headers/CSP.
 ## Opgelost
 
 - **MIDDEL — vreemde opname-video in eigen kaart zetten en daarmee laten wissen** (sweep 2026-11-06,
-  Mark). OPGELOST 2026-11-07 PR #<nr>. POST /api/kaarten neemt een opnamepad in `vids` alleen nog over als het
+  Mark). OPGELOST 2026-11-07 PR #54. POST /api/kaarten neemt een opnamepad in `vids` alleen nog over als het
   al op een kaart van dezelfde praktijk staat, een bibliotheekvideo is, of uit een opname komt die
   deze praktijk zelf startte (`opnames` onthoudt nu de praktijk). Een vreemd pad wordt stil
   weggelaten. Test: `npm run test:opname-eigen`.
 - **HOOG (alleen ontwikkel-/beeldscripts) — npm audit: sharp ≤0.35.5-rc.1 (libheif, librsvg).**
-  OPGELOST 2026-11-07 PR #<nr>: lockfile naar sharp 0.35.5. De server laadt sharp niet; alleen
+  OPGELOST 2026-11-07 PR #54: lockfile naar sharp 0.35.5. De server laadt sharp niet; alleen
   scripts voor beeldbewerking gebruiken het.
 
 - **HOOG — proef overnemen met alleen het e-mailadres** (gebruikers-sweep 2026-11-06, Sanne). Opnieuw
