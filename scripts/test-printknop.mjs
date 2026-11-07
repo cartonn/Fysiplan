@@ -20,9 +20,10 @@ const index = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(index, /id="pr_melding"/, "printvenster heeft een meldingvak");
 const h = index.match(/getElementById\('pr_do'\)\.addEventListener\('click',function\(\)\{[\s\S]*?\n  \}\);\n/);
 assert.ok(h, "pr_do-afhandeling gevonden");
-for (const k of ["d.bestaat", "d.login", "d.verouderd"]) {
+for (const k of ["d.bestaat", "d.login", "d.verouderd", "d.beveilig"]) {
   assert.match(h[0], new RegExp(k.replace(".", "\\.") + "\\)\\{prMelding"), `${k}: melding in het venster`);
 }
+assert.doesNotMatch(h[0], /d\.beveilig\)\{\s*closeOv/, "onbeveiligde praktijk: venster blijft open (sweep 2026-11-07 18u)");
 assert.doesNotMatch(h[0], /toonDeelWeigering/, "weigering sluit het venster niet meer met alleen een hint op de A4");
 assert.match(h[0], /!cn\.value\.trim\(\)\)\{\s*prMelding/, "lege roepnaam wordt in het venster gevraagd");
 assert.match(index, /data-pract='zonderqr'/, "altijd een uitweg: Print zonder QR-code");
@@ -93,6 +94,28 @@ if (pw) {
     await q.waitForFunction(() => (window.__geprint || 0) === 1, null, { timeout: 5000 });
     await ctx2.close();
     console.log("test-printknop: niet ingelogd print meteen, zonder QR-code");
+    // 4: nieuwe proefgebruiker, praktijk nog niet beveiligd -> venster blijft open met de
+    // reden (Beveiligen of Print zonder QR-code); vroeger sloot het stil en opende Beveiligen
+    const ctx3 = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.9.7.3" } });
+    await ctx3.addInitScript(() => { try { localStorage.setItem("fysiplan_welkom_gezien", "1"); localStorage.setItem("fysiplan_release_seen", "2026-11-02-kaarten"); } catch {} window.print = () => { window.__geprint = (window.__geprint || 0) + 1; }; });
+    const r = await ctx3.newPage();
+    r.on("dialog", (d) => d.accept());
+    await r.goto(origin + "/v2/app");
+    await r.waitForSelector("[data-add]", { timeout: 15000 });
+    await r.evaluate(() => { document.querySelectorAll(".ov.on").forEach((o) => o.classList.remove("on")); const e = document.getElementById("praktijk"); e.value = "Fysio Nog Open"; e.dispatchEvent(new Event("input", { bubbles: true })); });
+    await r.click("[data-add]"); await r.fill("#c_naam", "Mia");
+    await r.click("#printBtn");
+    assert.equal(await r.isChecked("#pr_qr"), true, "niet geclaimd: QR-code staat aan");
+    await r.click("#pr_do");
+    await r.waitForSelector("#pr_melding:not([hidden])", { timeout: 5000 });
+    assert.ok(await r.isVisible("#ovPrint"), "venster blijft open bij een onbeveiligde praktijk");
+    assert.match(await r.textContent("#pr_melding"), /beveiligd/, "reden staat in het venster");
+    assert.ok(await r.isVisible("[data-pract='beveilig']"), "knop Beveiligen");
+    assert.equal(await r.evaluate(() => window.__geprint || 0), 0);
+    await r.click("[data-pract='zonderqr']");
+    await r.waitForFunction(() => (window.__geprint || 0) === 1, null, { timeout: 5000 });
+    await ctx3.close();
+    console.log("test-printknop: onbeveiligde praktijk toont de reden en print zonder QR-code");
   } finally { await browser.close(); app.kill(); }
 }
 console.log("test-printknop: ok");

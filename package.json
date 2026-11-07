@@ -69,7 +69,8 @@
     "test:seintje": "node scripts/test-sweep-seintje-afspraak.mjs",
     "test:teamherstel": "node scripts/test-team-herstel.mjs",
     "test:printknop": "node scripts/test-printknop.mjs",
-    "test:logoveeg": "node scripts/test-logo-veeg.mjs"
+    "test:logoveeg": "node scripts/test-logo-veeg.mjs",
+    "test:sweepoverzicht": "node scripts/test-sweep-overzicht-wis.mjs"
   },
   "engines": {
     "node": ">=20"

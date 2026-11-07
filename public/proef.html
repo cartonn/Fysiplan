@@ -194,11 +194,12 @@ __INHOUD__
     __ALARM__
     <div class="blad" style="margin-top:28px">
       <h2>Seintjes van je pati&euml;nten</h2>
-      <p class="klein" style="font-size:14.5px">Pati&euml;nten kunnen hun kaart nog gebruiken en je een seintje sturen. Bekijk ze hier, alleen lezen, met het wachtwoord van je praktijk.</p>
+      <p class="klein" style="font-size:14.5px">Pati&euml;nten kunnen hun kaart nog gebruiken en je een seintje sturen. Bekijk ze hier, alleen lezen, met het wachtwoord van je praktijk of je eigen login.</p>
       __OVERZICHT_FOUT__
       <form method="post" action="/v2/proef/overzicht" style="margin-top:12px">
         <div class="veld"><label for="ov_praktijk">Praktijknaam</label><input id="ov_praktijk" name="praktijk" maxlength="80" autocomplete="organization" required value="__V_PRAKTIJK__"/></div>
-        <div class="veld" style="margin-top:12px"><label for="ov_ww">Wachtwoord van de praktijk</label><input id="ov_ww" name="wachtwoord" type="password" autocomplete="current-password" required/></div>
+        <div class="veld" style="margin-top:12px"><label for="ov_email">Je e-mail <span style="font-weight:400">(alleen als je met een eigen login werkt)</span></label><input id="ov_email" name="email" type="email" maxlength="120" autocomplete="username" value="__V_OV_EMAIL__"/></div>
+        <div class="veld" style="margin-top:12px"><label for="ov_ww">Wachtwoord <span style="font-weight:400">(van de praktijk, of je eigen bij een eigen login)</span></label><input id="ov_ww" name="wachtwoord" type="password" autocomplete="current-password" required/></div>
         <div class="knoppen"><button class="knop omlijnd" type="submit">Bekijk seintjes en scores</button></div>
       </form>
     </div>
