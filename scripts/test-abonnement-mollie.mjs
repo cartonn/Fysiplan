@@ -89,6 +89,9 @@ try {
   r = await form(srv.origin, "/api/mollie/webhook", { id: "tr_test12345" });
   assert.notEqual(await r.text(), "ok", "zonder sleutel: geen webhook");
   assert.equal(nep.verzoeken.length, 0, "zonder sleutel: niets naar Mollie");
+  html = await (await fetch(srv.origin + "/privacy")).text();
+  assert.doesNotMatch(html, /Mollie/, "zonder sleutel: Mollie niet in de privacyverklaring");
+  assert.doesNotMatch(html, /__[A-Z_]+__/, "zonder sleutel: geen open plekken");
   srv.app.kill(); await new Promise((r) => srv.app.once("exit", r));
 
   // 4. met sleutel
@@ -96,6 +99,15 @@ try {
   html = await (await fetch(srv.origin + "/v2/proef", { headers: { cookie } })).text();
   assert.match(html, /action="\/v2\/proef\/betalen"/, "met sleutel: betaalknop op de verlopen-pagina");
   assert.match(html, /Ja, ik wil doorgaan/, "doorgaan blijft er");
+  assert.match(html, /href="\/voorwaarden#abonnement"/, "betaalblok linkt de voorwaarden");
+  assert.match(html, /machtiging/, "betaalblok noemt de machtiging");
+  // legal: Mollie krijgt naam, e-mail en bedrag; dat moet in de privacyverklaring staan
+  const privacy = await (await fetch(srv.origin + "/privacy")).text();
+  assert.match(privacy, /id="betalen"/, "met sleutel: betaalregel in de tabel");
+  assert.match(privacy, /Mollie B\.V\./, "met sleutel: Mollie als ontvanger genoemd");
+  assert.doesNotMatch(privacy, /__[A-Z_]+__/, "met sleutel: geen open plekken");
+  const voorwaarden = await (await fetch(srv.origin + "/voorwaarden")).text();
+  assert.match(voorwaarden, /eerste maand vooraf, via Mollie/, "voorwaarden noemen de online betaling");
   r = await form(srv.origin, "/v2/proef/betalen", { aantal: "0" }, { cookie });
   assert.equal(r.status, 422, "aantal 0 geweigerd");
   r = await form(srv.origin, "/v2/proef/betalen", { aantal: "2" }, { cookie, "sec-fetch-site": "cross-site" });
@@ -113,6 +125,7 @@ try {
   assert.equal(betaalVerzoek.customerId, "cst_test1");
   assert.equal(betaalVerzoek.metadata.proef, "oud0000000000001");
   assert.equal((await leesProef()).betaling.id, "tr_test12345");
+  assert.match(String((await leesProef()).betaling.av?.versie), /^\d{4}-\d{2}-\d{2}$/, "voorwaardenversie bij de betaling bewaard");
 
   // webhook: onbekend id → 200 maar geen verzoek aan Mollie
   const voor = nep.verzoeken.length;

@@ -64,7 +64,7 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-02";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-06";
+const AV_VERSIE = "2026-11-07";
 // wie Fysiplan is, voor /privacy en /verwerkersovereenkomst (art. 13 AVG): in te
 // stellen op de server, zodat er geen bedrijfsgegevens in de openbare repo staan
 const FYSIPLAN_ID = {
@@ -494,6 +494,8 @@ function betaalBlok(p) {
   return '<form method="post" action="/v2/proef/betalen" class="blad" style="margin-top:18px">' +
     '<h2>Direct online afrekenen</h2><p class="klein" style="font-size:14.5px">&euro; 5,99 per therapeut per maand, maandelijks opzegbaar. ' +
     "Je betaalt nu de eerste maand met iDEAL of je bankkaart; daarna gaat Fysiplan meteen verder.</p>" +
+    '<p class="klein" style="font-size:14px">De betaling loopt via Mollie; je geeft daarbij een machtiging voor de volgende maanden. ' +
+    'Met betalen ga je akkoord met de <a href="/voorwaarden#abonnement">algemene voorwaarden</a>. Zie ook de <a href="/privacy#betalen">privacyverklaring</a>.</p>' +
     '<div class="veld" style="margin-top:12px"><label for="b_aantal">Aantal therapeuten</label>' +
     '<input id="b_aantal" name="aantal" type="number" inputmode="numeric" min="1" max="' + MAX_THERAPEUTEN + '" value="1" required/></div>' +
     '<div class="knoppen"><button class="knop oranje" type="submit">Eerste maand betalen</button></div></form>';
@@ -4595,7 +4597,8 @@ async function afhandelen(request, response) {
       const checkout = String(betaling?._links?.checkout?.href || "");
       if (!geldigBetaalId(betaling?.id) || !/^https?:\/\//.test(checkout)) throw new Error("mollie zonder checkout");
       if (p.betaling?.id) mollieBetaalIndex.delete(p.betaling.id);
-      p.betaling = { id: betaling.id, klant, aantal, status: "open", gemaakt: Date.now() };
+      // welke voorwaarden de praktijk zag toen ze op betalen drukte (art. 6:234 BW)
+      p.betaling = { id: betaling.id, klant, aantal, status: "open", gemaakt: Date.now(), av: { versie: AV_VERSIE, t: new Date().toISOString() } };
       mollieBetaalIndex.set(betaling.id, p.id);
       await bewaarProeven();
       response.writeHead(303, { location: checkout }); response.end();
@@ -4916,7 +4919,14 @@ async function afhandelen(request, response) {
         CONTACT_HTML: contact ? '<p>Vragen over privacy: <a href="mailto:' + htmlEsc(contact) + '">' + htmlEsc(contact) + "</a></p>" : "",
         HOSTING: FYSIPLAN_ID.hosting || "nog niet vastgelegd",
         STIL: String(BEWAAR_STIL_DAGEN), AFGEROND: String(BEWAAR_AFGEROND_DAGEN),
-        PROEF_BEWAAR: String(PROEF_BEWAAR_DAGEN), PROEF_DAGEN: String(PROEF_DAGEN)
+        PROEF_BEWAAR: String(PROEF_BEWAAR_DAGEN), PROEF_DAGEN: String(PROEF_DAGEN),
+        // Mollie staat alleen in de privacyverklaring als online betalen echt aan staat
+        BETAAL_RIJ_HTML: mollieAan() ? '<tr id="betalen"><td>Betaling: naam van de praktijk (of je eigen naam), e-mail, aantal therapeuten, bedrag, '
+          + "en de kenmerken van klant, betaling en machtiging bij Mollie. Geen rekeningnummer of kaartgegevens; die vul je alleen bij Mollie in.</td>"
+          + "<td>Het abonnement afrekenen en vastleggen dat je klant bent</td><td>Zolang je klant bent; facturen en betaalgegevens daarna 7 jaar, omdat de wet dat vraagt (fiscale bewaarplicht)</td></tr>" : "",
+        BETAAL_PARTIJ_HTML: mollieAan() ? "<p><b>Betalen.</b> Reken je online af, dan stuurt Fysiplan de naam van je praktijk (of je eigen naam), je e-mailadres en het bedrag "
+          + "naar Mollie B.V. (Amsterdam, Nederland). Mollie handelt de betaling af en is daarvoor zelf verantwoordelijk; zie de privacyverklaring van Mollie. "
+          + "Mollie krijgt geen pati&euml;ntgegevens.</p>" : ""
       };
       // niet-gulzig: twee placeholders direct achter elkaar (__KVK_HTML____ADRES_HTML__)
       // moeten allebei worden ingevuld
