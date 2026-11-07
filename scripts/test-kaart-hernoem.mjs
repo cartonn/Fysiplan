@@ -64,6 +64,21 @@ try {
   assert.equal(g.status, 200);
   assert.match(JSON.stringify(await g.json()), /Dirck/);
 
+  // iPad opent dezelfde kaart (deelt bij openen, zonder wijziging): versie blijft gelijk,
+  // dus de desktop met die versie mag daarna gewoon zijn wijziging opslaan (Mark, 2026-11-07)
+  await wacht(5);
+  const open = await deel("Dirck", { kaartId: id, basisTs: d2.ts });
+  assert.equal(open.status, 200);
+  assert.equal((await open.json()).ts, d2.ts, "alleen openen hoogt de versie niet op");
+  await wacht(5);
+  const wijzig = await deel("Dirck", { kaartId: id, basisTs: d2.ts, client: { c_naam: "Dirck", c_doel: "traplopen" } });
+  assert.equal(wijzig.status, 200, "desktop na openen op de iPad niet verouderd");
+  const d3 = await wijzig.json();
+  assert.ok(d3.ts > d2.ts, "echte wijziging hoogt de versie wel op");
+  // en de oude versie wordt daarna wel geweigerd (gedrag van PR #56 blijft)
+  assert.equal((await deel("Dirck", { kaartId: id, basisTs: d2.ts, client: { c_naam: "Dirck", c_doel: "fietsen" } })).status, 409);
+  d2.ts = d3.ts;
+
   // botsing: een andere bestaande kaart heeft al de nieuwe naam → nog steeds 409, niets weg
   const r3 = await deel("Ellen", { kaartId: "" });
   assert.equal(r3.status, 200);

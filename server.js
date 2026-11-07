@@ -3278,6 +3278,18 @@ async function afhandelen(request, response) {
           if ((/^uploads\/videos\/v-[a-f0-9]+\.(mp4|webm)$/.test(v) || /^yt:[A-Za-z0-9_-]{11}$/.test(v)) && eigenVideoPad(v)) vids[sanStr(k, 80)] = v;
         }
       }
+      // niets gewijzigd (de editor deelt ook bij alleen openen): versie niet ophogen.
+      // Anders maakte openen op de iPad de geopende kaart op de desktop "verouderd" en
+      // kaatste de 409 tussen twee werkplekken heen en weer (gebruikers-sweep 2026-11-07).
+      if (bestaand && map[kk] === bestaand) {
+        const zelfde = (a, c) => JSON.stringify(a || {}) === JSON.stringify(c || {});
+        if (bestaand.naam === naam && bestaand.praktijk === praktijk && zelfde(bestaand.client, client) &&
+          zelfde(bestaand.chosen || [], chosen) && zelfde(bestaand.rows, rows) && zelfde(bestaand.cells, cells) &&
+          zelfde(bestaand.vids, vids)) {
+          await sendJson(response, 200, { ok: true, id: bestaand.id, ts: bestaand.ts, ongewijzigd: true });
+          return;
+        }
+      }
       const oudeVids = map[kk] ? Object.values(map[kk].vids || {}) : [];
       // alleen een teller voor het aanmeldoverzicht (wie probeert het echt?), nooit de inhoud
       if (proef && !map[kk]) { proef.kaarten = (proef.kaarten || 0) + 1; bewaarProeven().catch(() => {}); }
