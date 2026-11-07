@@ -58,7 +58,8 @@
     "videos:languages": "node scripts/video-language-plan.mjs",
     "start": "node server.js",
     "sjablonen:check": "node scripts/valideer-sjablonen.mjs",
-    "test:tegroot": "node scripts/test-body-te-groot.mjs"
+    "test:tegroot": "node scripts/test-body-te-groot.mjs",
+    "test:kruissite": "node scripts/test-kruissite-origin.mjs"
   },
   "engines": {
     "node": ">=20"

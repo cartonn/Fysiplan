@@ -14,22 +14,22 @@ daaruit tot en met 2026-11-06.
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-07 (vids-eigendom op POST /api/kaarten) |
 | (e) uploads (video, logo, opname /o) | 2026-11-04 |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-07 (runtime: payloads in alle kaartvelden, /k in nl/en/ar met vertaling, overzicht, sjablonen, eigen oefeningen, serverpagina's; geen gat) |
-| (g) security-headers, CSP, cookies, CSRF | 2026-10-31 |
+| (g) security-headers, CSP, cookies, CSRF | 2026-11-07 (runtime: koppen op 11 V2-pagina's en API, cookies HttpOnly+Lax+Secure, praktijksessie via eigen kop; kruisSite kijkt nu ook naar Origin) |
 | (h) foutmeldingen die stacktraces of paden lekken | 2026-11-06 (runtime-fuzz 60 schrijfroutes, geen lek) |
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-07 (te grote body: nu 413, weglezen begrensd op 10 s en 80 MB) |
 | (j) npm audit | 2026-11-07 (sharp 0.35.3 → 0.35.5, daarna 0 meldingen) |
 
-Volgende run: (g) headers/CSP/cookies, daarna (e) uploads en (b) accountlaag.
+Volgende run: (e) uploads, daarna (b) accountlaag en (c) proef-tokens.
+
+Sanity 2026-11-07 08u op #57 (Mollie), #59, #60 (kaart hernoemen): geen gat. De webhook haalt de betaling
+zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaartId alleen in de eigen praktijk.
 
 ## Open
 
-- **LAAG — `kruisSite()` kijkt alleen naar `Sec-Fetch-Site`** (gebruikers-sweep 2026-11-07, Jayden). Een POST
-  naar `/api/kaart/meting` met `Origin: https://evil.example` en zonder Sec-Fetch-Site geeft 200 en overschrijft
-  de pijnscore. Oudere Safari-versies sturen die header niet. Het kaart-id blijft nodig, dus de impact is klein.
-  Fix: ook een vreemde `Origin` weigeren als Sec-Fetch-Site ontbreekt (server.js r. ~1078).
-- **LAAG — id als lijst wordt geaccepteerd** (sweep 2026-11-07, Jayden). `{"id":["<id>"]}` op /api/kaart/gedaan
-  en andere kaartroutes geeft 200 via `String(b.id)`. Geen toegang tot iets nieuws, wel slordige validatie;
-  verwacht 400 bij een niet-string.
+- **LAAG — tweede betaalpoging maakt de eerste onvindbaar** (sanity PR #57, 2026-11-07). `/v2/proef/betalen`
+  haalt het vorige betaal-id uit `mollieBetaalIndex`. Rondt de praktijk daarna tóch de eerste checkout af (twee
+  tabbladen), dan wordt die betaling genegeerd: geld afgeschreven, proef blijft dicht. Geen aanvalspad, wel
+  integriteit. Fix: oude betaal-id's in de index houden (per proef een lijst) en elke betaalde laten tellen.
 - **HOOG — praktijknaam is een wereldwijde sleutel** (sweep 2026-11-06, Sanne). Wie een naam als eerste
   beveiligt, sluit elke andere praktijk met die naam buiten ("Deze praktijk is beveiligd. Log in…");
   een naam kan zo vooraf worden gekaapt. Ook wisselt de praktijk stil als de therapeut de naam op de
@@ -67,6 +67,11 @@ Volgende run: (g) headers/CSP/cookies, daarna (e) uploads en (b) accountlaag.
   laat zien hoe het wel kan; overstappen kan later per beheerroute.
 
 ## Opgelost
+
+- OPGELOST 2026-11-07 PR #61 — `kruisSite()` weigert nu ook een vreemde of `null`-Origin als
+  Sec-Fetch-Site ontbreekt (oudere Safari). Test: `npm run test:kruissite`.
+- OPGELOST 2026-11-07 PR #61 — een kaart-id als lijst of object (`{"id":["<id>"]}`) vindt geen kaart meer
+  (21 routes via `idTekst()`); geeft 404 in plaats van stil het id te gebruiken.
 
 - OPGELOST 2026-11-07 PR #58 — te grote request-body krijgt nu een 413 met melding in plaats van een
   verbroken verbinding (ook chunked); dubbel backlogitem samengevoegd.
