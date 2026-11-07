@@ -8,6 +8,7 @@ import { byteRange } from "./lib/byte-range.js";
 import { listDrafts, loadDraft } from "./lib/draft-exercise-import.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
 import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./lib/proef.js";
+import { vraagOverKlacht, verwijzing } from "./lib/vraaghulp-grens.js";
 import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, MAX_THERAPEUTEN } from "./lib/mollie.js";
 
 const port = Number(process.env.PORT || 3000);
@@ -4719,6 +4720,13 @@ async function afhandelen(request, response) {
       const VTALEN = { nl: "Nederlands", en: "Engels", de: "Duits", fr: "Frans", es: "Spaans", pl: "Pools", tr: "Turks", ar: "Arabisch", uk: "Oekraïens" };
       const taal = Object.hasOwn(VTALEN, String(b.taal || "")) ? String(b.taal) : "nl";
       if (!AI_KEY) { await sendJson(response, 503, { ok: false, fout: "De vraaghulp staat nog uit op deze server." }); return; }
+      // pijn, klachten, medicijnen, operatie of herstel: niet naar de AI-dienst, maar een
+      // vaste verwijzing naar de eigen praktijk (MDR: geen reactie op klachten van één
+      // patiënt; AVG art. 9: gezondheidsgegevens blijven binnen de EU). lib/vraaghulp-grens.js
+      if (vraagOverKlacht(vraag)) {
+        await sendJson(response, 200, { ok: true, antwoord: verwijzing(taal), verwezen: true });
+        return;
+      }
       if (aiLimiet(request, response)) return;
       // context voor het antwoord: uitsluitend wat er op déze kaart staat
       let perNaam = new Map();

@@ -4,6 +4,15 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Vraaghulp op de kaart (legal, 2026-11-07)
+**Wat de code nu doet:** met `ANTHROPIC_API_KEY` ziet elke patiënt "Vraag over je oefeningen (AI)".
+Vragen over pijn, klachten, medicijnen of herstel gaan sinds 7 november niet meer naar de AI-dienst;
+de patiënt krijgt een vaste verwijzing naar de eigen praktijk. Andere vragen (hoe diep zakken?) gaan
+wel naar Anthropic in de VS.
+**Wat jij moet kiezen:** wil je dat een praktijk de vraaghulp voor haar patiënten zelf kan uitzetten?
+Advies: ja, als een praktijk of jurist erom vraagt (een praktijk is verantwoordelijk voor doorgifte
+buiten de EU). Zeg het, dan bouwt de legal-routine een schakelaar in de praktijkinstellingen.
+
 ### Eigen logins en het nieuwe akkoord (legal, 2026-11-07)
 **Wat de code nu doet:** elke praktijk ziet na inloggen één keer "De voorwaarden zijn bijgewerkt"
 met wat er veranderd is; een beheerder vinkt opnieuw aan. Daarna staat per praktijk vast welke
