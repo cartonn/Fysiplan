@@ -46,3 +46,4 @@ jobs:
       - run: npm run test:tegroot
       - run: npm run test:kruissite
       - run: npm run test:praktijkcode
+      - run: npm run test:team

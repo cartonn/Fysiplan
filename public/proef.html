@@ -261,6 +261,33 @@ __INHOUD__
 </main>
 <!--/blok-->
 
+<!--blok:uitnodiging-->
+<main class="smal">
+  <div>
+    <span class="etiket">Uitnodiging &middot; __PRAKTIJK__</span>
+    <h1>Kies je eigen wachtwoord.</h1>
+    <p class="lead">Je werkt in Fysiplan voortaan met je eigen login bij __PRAKTIJK__. Je logt in met <b>__EMAIL__</b> en het wachtwoord dat je hier kiest.</p>
+    __MELDING__
+    <div class="blad" style="margin-top:28px">
+      <form method="post" action="/v2/uitnodiging">
+        <input type="hidden" name="t" value="__TOKEN__"/>
+        <div class="veld"><label for="ui_naam">Je naam</label><input id="ui_naam" name="naam" maxlength="60" autocomplete="name" required value="__V_NAAM__"/></div>
+        <div class="veld" style="margin-top:12px"><label for="ui_ww">Kies een wachtwoord (minstens 8 tekens)</label><input id="ui_ww" name="wachtwoord" type="password" minlength="8" autocomplete="new-password" required/></div>
+        <h2 style="margin-top:22px">Werkregels</h2>
+        <ul class="klein" style="font-size:14.5px;line-height:1.55;padding-left:20px;margin:8px 0 0">
+          <li>Op een kaart staat alleen een roepnaam, bijvoorbeeld &ldquo;Jan K.&rdquo;. De volledige naam hoort in het EPD.</li>
+          <li>Je login is persoonlijk. Deel je wachtwoord niet, ook niet met collega&rsquo;s.</li>
+          <li>Fysiplan is geen alarmknop. Berichten van pati&euml;nten lees je op werkdagen; spoed loopt via telefoon.</li>
+          <li>Het dossier blijft in het EPD van de praktijk. Zet daar wat je moet bewaren.</li>
+          <li>Werk op een apparaat met schermslot, en log uit op een gedeelde computer.</li>
+        </ul>
+        <label class="vink" style="margin-top:14px"><input type="checkbox" name="regels" value="1" required/><span>Ik heb de werkregels gelezen en houd me eraan.</span></label>
+        <div class="knoppen"><button class="knop oranje" type="submit">Wachtwoord opslaan</button></div>
+      </form>
+    </div>
+  </div>
+</main>
+<!--/blok-->
 <!--blok:bericht-->
 <main class="smal">
   <div>
