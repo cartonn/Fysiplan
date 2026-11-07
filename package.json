@@ -65,7 +65,8 @@
     "test:inbox": "node scripts/test-inbox.mjs",
     "test:patientkant": "node scripts/test-patientkant.mjs",
     "test:akkoord": "node scripts/test-akkoord.mjs",
-    "test:gedaansync": "node scripts/test-kaart-gedaan-sync.mjs"
+    "test:gedaansync": "node scripts/test-kaart-gedaan-sync.mjs",
+    "test:teamherstel": "node scripts/test-team-herstel.mjs"
   },
   "engines": {
     "node": ">=20"

@@ -2649,9 +2649,18 @@ async function afhandelen(request, response) {
     try {
       const b = JSON.parse(await readBody(request));
       const nk = cleanName(b.praktijk, 80).toLowerCase();
-      const kandidaten = accountsMetNaam(nk);
+      // een praktijk die het gedeelde wachtwoord heeft uitgezet, doet niet mee: de
+      // herstelcode (op papier in de praktijkmap) kende ook wie al uit het team is. Anders
+      // kon die het gedeelde wachtwoord blijven omzetten, kreeg elke keer een verse code
+      // en logde het hele team uit (security-backlog 2026-11-07)
+      const metNaam = accountsMetNaam(nk);
+      const kandidaten = metNaam.filter((k) => !praktijkAccounts[k].gedeeldUit);
       if (nk && loginOpSlot(nk)) {
         await send429(response, 900, { ok: false, fout: "Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw." });
+        return;
+      }
+      if (metNaam.length && !kandidaten.length) {
+        await sendJson(response, 401, { ok: false, perEmail: true, fout: "Deze praktijk logt in met eigen logins. Wachtwoord kwijt? Vraag de beheerder om een nieuwe uitnodiging." });
         return;
       }
       if (!nk || !kandidaten.length) { loginMisTel(nk || "?"); await denied(request, response, "praktijk-herstel"); return; }
@@ -2676,7 +2685,9 @@ async function afhandelen(request, response) {
       acc.herstel = maakHash(herstelcode);
       acc.gewijzigd = Date.now();
       await saveJson(accountsPath, praktijkAccounts);
-      for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
+      // alleen de sessies met het gedeelde wachtwoord: collega's met een eigen login
+      // hebben hun eigen wachtwoord en blijven ingelogd
+      trekSessiesIn(pk, null);
       loginMisPraktijk.delete(nk);
       const token = nieuweSessie(pk);
       auditLog(pk, "wachtwoord-hersteld", request);

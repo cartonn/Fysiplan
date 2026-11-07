@@ -9,7 +9,7 @@ daaruit tot en met 2026-11-06.
 | Gebied | Laatst geaudit |
 |---|---|
 | (a) beheer-endpoints en de admin-sleutel | 2026-11-06 (deze backlog, PR "security: beheersleutel") |
-| (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-03 |
+| (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-07 (deels: team, eigen logins, uitnodiging, herstel na gedeeld-uit) |
 | (c) proef-tokens en verlopen proeven | 2026-11-06 (PR #47 proefslot; daarna opnieuw aanmelden) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-07 (vids-eigendom op POST /api/kaarten) |
 | (e) uploads (video, logo, opname /o) | 2026-11-04 |
@@ -19,13 +19,28 @@ daaruit tot en met 2026-11-06.
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-07 (te grote body: nu 413, weglezen begrensd op 10 s en 80 MB) |
 | (j) npm audit | 2026-11-07 (sharp 0.35.3 → 0.35.5, daarna 0 meldingen) |
 
-Volgende run: (e) uploads, daarna (b) accountlaag en (c) proef-tokens.
+Volgende run: (e) uploads, daarna (c) proef-tokens en de rest van (b) (claim, inlogrem).
+
+Sanity 2026-11-07 12u op #64–#72 (praktijkcode, team, inbox, patiëntkant, akkoord, wissen, UI): team-routes
+eisen sessie + beheerdersrol (live gelezen), verwijderen trekt sessies meteen in, uitnodigingstoken alleen als
+sha256 en 7 dagen, inbox/dossier via `eisBeveiligdePraktijk` en `praktijkVan`. Eén gat: herstelcode na
+"gedeeld wachtwoord uit" (hieronder opgelost).
 
 Sanity 2026-11-07 08u op #57 (Mollie), #59, #60 (kaart hernoemen): geen gat. De webhook haalt de betaling
 zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaartId alleen in de eigen praktijk.
 
 ## Open
 
+- **LAAG — gedeeld praktijkwachtwoord weer aanzetten brengt het oude wachtwoord terug** (sanity PR #65,
+  2026-11-07). `/api/praktijk/team/gedeeld-uit` met `uit:false` zet alleen de vlag terug; het oude
+  wachtwoord (en de herstelcode) die een vertrokken collega kende, werken dan meteen weer.
+  Fix: bij weer aanzetten een nieuw wachtwoord eisen en een nieuwe herstelcode tonen (raakt de teamkaart in de app).
+- **LAAG — team uitnodigen en eigen login maken werken ook na een verlopen proef** (sanity PR #65).
+  `/api/praktijk/team/*` staat niet in `PROEF_SCHRIJFROUTES`. Geen datalek (de proef blijft voor iedereen
+  dicht), wel een schrijfroute die open blijft. Fix: `uitnodigen` en `eigen-login` aan de set toevoegen.
+- **LAAG — inloggen met e-mail: tien foute pogingen zetten dat adres een kwartier op slot** (sanity PR #65).
+  Wie het e-mailadres van een collega kent, kan die zo steeds buitensluiten. Zelfde afweging als de rem per
+  praktijknaam; eventueel: slot alleen voor IP's zonder eerdere geslaagde login.
 - **LAAG — tweede betaalpoging maakt de eerste onvindbaar** (sanity PR #57, 2026-11-07). `/v2/proef/betalen`
   haalt het vorige betaal-id uit `mollieBetaalIndex`. Rondt de praktijk daarna tóch de eerste checkout af (twee
   tabbladen), dan wordt die betaling genegeerd: geld afgeschreven, proef blijft dicht. Geen aanvalspad, wel
@@ -63,6 +78,12 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Opgelost
 
+- OPGELOST 2026-11-07 PR #73 — **herstelcode werkte nog na "gedeeld praktijkwachtwoord uit"** (MIDDEL).
+  De code ligt op papier in de praktijkmap, dus een vertrokken collega kende hem. Met
+  `/api/praktijk/herstel` kon die het gedeelde wachtwoord omzetten, kreeg elke keer een verse code (de
+  beheerder kon hem niet meer afpakken) en logde álle teamleden uit, zo vaak als die wilde. Nu: een praktijk
+  met het gedeelde wachtwoord uit doet niet mee aan herstel (401, `perEmail`), en herstel trekt alleen nog
+  de sessies met het gedeelde wachtwoord in. Test: `npm run test:teamherstel`.
 - OPGELOST 2026-11-07 (thread "Ontwerp rollen, dossier en opslag", stap 1) — **praktijknaam is een
   wereldwijde sleutel** (HOOG). Een tweede praktijk met dezelfde naam kiest "Andere praktijk met deze
   naam" en krijgt een eigen code `p-<16 hex>` (`acc.naam` = weergave); inloggen op naam zoekt het
