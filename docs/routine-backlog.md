@@ -27,7 +27,7 @@ werk voor Ahmed in `docs/mensenwerk.md`.
 | Twee werkplekken op één kaart (oud apparaat/tabblad) | 2026-11-07 02u | – | – | – | – |
 
 Volgende run: iPad-print, de bibliotheekvideo op /k, therapeut-app op iPhone SE, /k op iPad, landing /v2 op
-iPhone SE, en twee werkplekken op dezelfde kaart op iPad + desktop (sinds PR 'kaart: oud apparaat').
+iPhone SE, en twee werkplekken op dezelfde kaart op iPad + desktop (sinds PR #56).
 Testtip: Playwright-telefoonprofielen staan op en-US; geef `locale: 'nl-NL'` mee voor een Nederlandse kaart.
 
 Testtip: de verlopen-pagina test je met een tweede server op een kopie van de datamap waarin `verloopt`
@@ -116,9 +116,6 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   Al opgelost in open PR #41 (server.js `denied()` met eigen tekst); mergen of overnemen.
 
 ### LAAG
-- /k: lang woord zonder spaties in het bericht van de therapeut maakt de pagina 1818 px breed (2026-11-07: 2241 px
-  op iPhone SE, 1670 px op Pixel 7)
-  (`.akaart .atekst` zonder `overflow-wrap:anywhere`); erger dan de bekende lange link. (Truus)
 - /k: pijnschaalknoppen 36×46 px op iPhone SE, schaal breekt 6+5 en "10 = ergste pijn" staat los;
   appbanner bedekt "Neem pijn serieus" bij 8+. (Truus)
 - Proefformulier: "06 1234 5678" (placeholder en voorbeeld in de foutmelding) wordt zelf geweigerd
@@ -145,7 +142,6 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 - /v2/proef zegt "Vul drie gegevens in", er zijn vijf verplichte velden.
 - Verwerkersovereenkomst twee keer aanvinken (proef en beveiligen).
 - Nieuwe proefgebruiker ziet bij het tweede bezoek meteen "Nieuw in Fysiplan".
-- /k: lange link in bericht van therapeut steekt buiten de kaart (`.atekst` zonder `overflow-wrap:anywhere`).
 - /k: "Ik heb vandaag geoefend" is een aan/uit-knop; nog eens tikken wist de oefendag.
 - /k: lightbox zegt "De uitvoering is niet door een fysiotherapeut goedgekeurd" (verwarrend voor patiënt).
 - App: knoppen 28–36 px hoog op desktop en tablet; Print loopt op iPad liggend tegen de rand. Op 1280 wrappen
@@ -165,11 +161,14 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 - **HOOG — oud apparaat of tabblad overschreef een gedeelde kaart bij het openen en wiste eigen opnames**
   (Truus, desktop, 2026-11-07). De v2-editor stuurt nu `basisTs` mee; is de kaart elders bewaard, dan geeft
   de server 409 `verouderd` en toont de editor "Open de nieuwste versie" / "Toch mijn versie bewaren".
-  OPGELOST 2026-11-07 PR 'kaart: oud apparaat'. Test: `npm run test:kaartversie`.
+  OPGELOST 2026-11-07 PR #56. Test: `npm run test:kaartversie`.
 - **HOOG — /k: eigen video van de therapeut verdween bij een oefening met een afgekeurd beeld** (Chair squat,
   iPhone SE). De eigen opname of per kaart geplakte YouTube-link blijft nu staan, zonder algemene uitlegtekst;
-  bibliotheek- en gegenereerde video's blijven verborgen. OPGELOST 2026-11-07 PR 'kaart: oud apparaat'.
+  bibliotheek- en gegenereerde video's blijven verborgen. OPGELOST 2026-11-07 PR #56.
   Test: `npm run test:kaartversie`.
+- **MIDDEL — /k: lang woord of lange link in het bericht van de therapeut maakte de pagina 2241 px breed**
+  (iPhone SE; tikken kwamen niet meer aan). `.akaart .atekst` breekt nu af. Ook weg: de zin "de tekst
+  hieronder is de algemene uitleg" onder een praktijkvideo zonder uitleg. OPGELOST 2026-11-07 PR #56.
 - **HOOG — proef zonder praktijknaam liep vast in Kaarten.** Kaarten vraagt nu de praktijknaam
   (min. 2 tekens) en toont daarna het beveiligingsblok. OPGELOST 2026-11-06 PR #53.
   Test: `npm run test:praktijkslot`.

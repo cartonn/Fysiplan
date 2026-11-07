@@ -23,6 +23,8 @@ const index = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(index, /if\(KAART_ID\)c\.basisTs=KAART_TS\|\|0;/, "v2-editor stuurt basisTs mee");
 assert.match(index, /if\(d\.verouderd\)\{/, "editor toont een melding bij een verouderde kaart");
 const kaartHtml = await readFile(join(root, "public/kaart.html"), "utf8");
+assert.match(kaartHtml, /var herkomst=vanPraktijk&&videoTekst\?/, "geen 'tekst hieronder' als er geen uitleg volgt");
+assert.match(kaartHtml, /\.akaart \.atekst\{[^}]*overflow-wrap:anywhere/, "lang woord in het bericht van de therapeut breekt af");
 assert.ok(!/if\(hideMedia\|\|holdExplanation\)knop='';/.test(kaartHtml), "eigen video wordt niet meer weggegooid bij een gecontroleerd beeld");
 
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-kaartversie-"));
