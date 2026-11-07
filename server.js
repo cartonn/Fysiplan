@@ -641,6 +641,17 @@ if (!Number.isFinite(bewaarInfo.invoering)) {
   bewaarInfo = { invoering: Date.now() };
   try { await mkdir(dataDir, { recursive: true }); await writeFile(bewaarPath, JSON.stringify(bewaarInfo)); } catch {}
 }
+// contactlogboek per kaart (WGBO, art. 7:454 BW): seintjes, "te zwaar" en berichten
+// van de praktijk worden na afhandeling uit het overzicht gehaald, maar horen in het
+// dossier van de praktijk. Dit korte logboek houdt ze bij de kaart tot de
+// bewaartermijn, zodat "Kopieer voor dossier" ze meeneemt. Alleen via de
+// praktijkroutes leesbaar, niet via /api/kaart (de allowlist daar noemt het niet).
+const logContact = (kaart, item) => {
+  const lijst = Array.isArray(kaart.contact) ? kaart.contact : [];
+  lijst.push({ t: Date.now(), ...item });
+  kaart.contact = lijst.slice(-50);
+};
+
 // laatste teken van gebruik: de praktijk (opslaan), de patiënt (tik, vinkje, seintje,
 // bezoek) of een afspraak die nog moet komen (bij een wekelijkse reeks de laatste)
 function laatsteActiviteitKaart(k) {
@@ -3181,6 +3192,7 @@ async function afhandelen(request, response) {
         behandelaar: map[kk] ? map[kk].behandelaar || null : null,
         pskDoel: map[kk] ? map[kk].pskDoel || null : null,
         psk: map[kk] ? map[kk].psk || [] : [],
+        contact: map[kk] ? map[kk].contact || [] : [],
         doel: map[kk] ? Number(map[kk].doel) || 0 : 0,
         gearchiveerd: map[kk] ? !!map[kk].gearchiveerd : false,
         gearchiveerdOp: map[kk] ? Number(map[kk].gearchiveerdOp) || null : null };
@@ -3430,6 +3442,7 @@ async function afhandelen(request, response) {
       // maar wisselende oefeningen mogen de opslag niet laten groeien
       if (!zwaar[naam] && Object.keys(zwaar).length >= 24) { await sendJson(response, 200, { ok: true }); return; }
       zwaar[naam] = { t: Date.now() };
+      logContact(found, { van: "patient", soort: "zwaar", oef: naam });
       if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true });
@@ -3454,6 +3467,7 @@ async function afhandelen(request, response) {
       const found = vindKaart(String(b.id || ""));
       if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       found.seintje = { t: Date.now(), soort };
+      logContact(found, { van: "patient", soort });
       if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true });
@@ -3534,6 +3548,7 @@ async function afhandelen(request, response) {
       const tekst = String(b.tekst || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 300);
       if (!tekst) { await sendJson(response, 400, { ok: false, fout: "Antwoord is leeg." }); return; }
       kaart.antwoord = { t: Date.now(), tekst };
+      logContact(kaart, { van: "praktijk", tekst });
       kaart.seintje = null;
       await saveJson(kaartenPath, kaarten);
       auditLog(pk, "kaart-antwoord", request);
