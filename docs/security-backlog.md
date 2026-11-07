@@ -68,9 +68,9 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Opgelost
 
-- OPGELOST 2026-11-07 PR #<nr> — `kruisSite()` weigert nu ook een vreemde of `null`-Origin als
+- OPGELOST 2026-11-07 PR #61 — `kruisSite()` weigert nu ook een vreemde of `null`-Origin als
   Sec-Fetch-Site ontbreekt (oudere Safari). Test: `npm run test:kruissite`.
-- OPGELOST 2026-11-07 PR #<nr> — een kaart-id als lijst of object (`{"id":["<id>"]}`) vindt geen kaart meer
+- OPGELOST 2026-11-07 PR #61 — een kaart-id als lijst of object (`{"id":["<id>"]}`) vindt geen kaart meer
   (21 routes via `idTekst()`); geeft 404 in plaats van stil het id te gebruiken.
 
 - OPGELOST 2026-11-07 PR #58 — te grote request-body krijgt nu een 413 met melding in plaats van een
