@@ -897,7 +897,7 @@ bridge2.jpg</div>
   // geen QR). De therapeut vult de eigen praktijknaam in; v1 blijft FysioTotaal.
   var SET={praktijk:window.FYSIPLAN_V2?'':'FysioTotaal'};
   try{SET=Object.assign(SET,JSON.parse(localStorage.getItem('fysiplan_settings')||'{}'));}catch(e){}
-  function saveSettings(){try{localStorage.setItem('fysiplan_settings',JSON.stringify(SET));}catch(e){}}
+  function saveSettings(){try{localStorage.setItem('fysiplan_settings',JSON.stringify(SET));}catch(e){}try{tekenZijbalk();}catch(e){}}
   var CLIENTKEYS=['c_naam','c_leeftijd','c_hf','c_zone','c_opm','c_cave','c_doel'];
   // id van de gedeelde kaart die deze editor bewerkt ('' = nieuwe kaart). Gaat mee
   // bij delen, zodat de server een tweede patiënt met dezelfde roepnaam niet stil
@@ -1160,7 +1160,72 @@ bridge2.jpg</div>
     vul('c_naam',kaartLabelVan(epdVoorinvulData.client));
     vul('c_doel',epdVoorinvulData.doel);
   }
+  // ---- v2: app-schil — zijbalk met navigatie, broodkruimel en paginakop (alleen scherm) ----
+  // De zijbalk bedient dezelfde knoppen als de kopbalk (die blijven bestaan voor tests,
+  // smalle schermen en toetsenbord); op een breed scherm verbergt v2.css de kopbalkknoppen.
+  function zbIcoon(d){return "<svg viewBox='0 0 24 24' width='17' height='17' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'>"+d+"</svg>";}
+  function bouwZijbalk(){
+    if(document.getElementById('fpZij'))return;
+    var klik=function(id){return function(){var b=document.getElementById(id);if(b)b.click();};};
+    var items=[
+      {k:'kaart',t:'Trainingskaart',i:"<rect x='3' y='4' width='18' height='16' rx='2'/><path d='M3 9h18M9 9v11'/>",f:function(){window.scrollTo({top:0,behavior:'smooth'});},aan:true},
+      {k:'kaarten',t:'Kaarten en patiënten',i:"<path d='M16 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 18.5V20'/><circle cx='10' cy='8' r='3.5'/><path d='M20 20v-1.5a3.5 3.5 0 0 0-2.5-3.35M15.5 4.6a3.5 3.5 0 0 1 0 6.8'/>",f:klik('kaartenBtn')},
+      {k:'sjab',t:'Sjablonen',i:"<path d='M12 3l9 5-9 5-9-5z'/><path d='M3 13l9 5 9-5'/>",f:klik('sjabBtn')},
+      {k:'team',t:'Team',i:"<circle cx='9' cy='8' r='3.5'/><path d='M2.5 20v-1a5 5 0 0 1 5-5h3a5 5 0 0 1 5 5v1'/><path d='M17 11h5M19.5 8.5v5'/>",f:function(){if(PRAKSLOT&&PRAKSLOT.ingelogd)openTeam();else document.getElementById('kaartenBtn').click();}}
+    ];
+    var hulp=[
+      {k:'help',t:'Help',i:"<circle cx='12' cy='12' r='9'/><path d='M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7M12 17h.01'/>",f:klik('menuHelp')},
+      {k:'updates',t:'Wat is er nieuw',i:"<path d='M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1'/>",f:function(){var m=[].slice.call(document.querySelectorAll('.topbar .menu .mi')).filter(function(b){return /Updates/.test(b.textContent);})[0];if(m)m.click();}}
+    ];
+    var rij=function(it){return "<button type='button' class='zb-item"+(it.aan?' aan':'')+"' title='"+it.t+"' data-zb='"+it.k+"'"+(it.aan?" aria-current='page'":"")+">"+zbIcoon(it.i)+"<span>"+it.t+"</span>"+(it.k==='kaarten'?"<b class='zb-tel' id='zb_sein' hidden></b>":"")+"</button>";};
+    var z=document.createElement('aside');z.id='fpZij';z.className='fp-zij no-print';z.setAttribute('aria-label','Navigatie');
+    z.innerHTML="<div class='zb-merk'><span class='mark'><svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='#fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M3 12h4l2 5 4-12 2 7h6'/></svg></span><b>fysiplan<i>.</i></b></div>"+
+      "<button type='button' class='zb-praktijk' id='zb_praktijk' title='Je praktijk: inloggen, team en gedeelde kaarten'><span class='zb-pav' id='zb_pav'>?</span><span class='zb-ptekst'><b id='zb_pnaam'>Je praktijk</b><small id='zb_pstat'>Open Kaarten om in te loggen</small></span></button>"+
+      "<div class='zb-label'>Werkruimte</div><nav class='zb-nav'>"+items.map(rij).join('')+"</nav>"+
+      "<div class='zb-label'>Hulp</div><nav class='zb-nav'>"+hulp.map(rij).join('')+"</nav>"+
+      "<div class='zb-ruimte'></div>"+
+      "<div class='zb-tip'><b>Tip</b>Begin met een sjabloon: één klik en de kaart staat klaar. Daarna pas je hem aan.</div>"+
+      "<div class='zb-voet'><a href='/privacy' target='_blank' rel='noopener'>Privacy</a><a href='/voorwaarden' target='_blank' rel='noopener'>Voorwaarden</a><a href='/verwerkersovereenkomst' target='_blank' rel='noopener'>Verwerkersovereenkomst</a></div>";
+    document.body.insertBefore(z,document.body.firstChild);
+    var alle=items.concat(hulp);
+    z.querySelectorAll('[data-zb]').forEach(function(b){var it=alle.filter(function(x){return x.k===b.getAttribute('data-zb');})[0];b.addEventListener('click',it.f);});
+    document.getElementById('zb_praktijk').addEventListener('click',klik('kaartenBtn'));
+    // broodkruimel links in de kopbalk
+    var kr=document.createElement('div');kr.className='fp-kruimel no-print';
+    kr.innerHTML="<button type='button' class='kr-knop' id='zbToggle' aria-label='Zijbalk in- of uitklappen' title='Zijbalk in- of uitklappen'>"+zbIcoon("<rect x='3' y='4' width='18' height='16' rx='2'/><path d='M9 4v16'/>")+"</button><span>Werkruimte</span><i>/</i><b>Trainingskaart</b>";
+    var hb=document.querySelector('header.topbar');hb.insertBefore(kr,hb.querySelector('.menu'));
+    try{if(localStorage.getItem('fp_zij_klein')==='1')document.documentElement.classList.add('zij-klein');}catch(e){}
+    document.getElementById('zbToggle').addEventListener('click',function(){
+      var k=document.documentElement.classList.toggle('zij-klein');
+      try{localStorage.setItem('fp_zij_klein',k?'1':'0');}catch(e){}
+    });
+    // paginakop boven het werkvlak
+    var kop=document.createElement('div');kop.className='fp-kop no-print';kop.id='fpKop';
+    kop.innerHTML="<div><div class='fp-eyebrow'>Werkruimte <i>·</i> <span id='fk_pr'>Trainingskaart maken</span></div><h2>Een kaart in twee minuten.</h2>"+
+      "<p>Kies links de oefeningen. De kaart vult zich vanzelf; print hem of geef hem mee met een QR-code.</p></div>"+
+      "<div class='fp-rechts'><div class='fp-teller'><b id='fk_n'>0</b> <span>van 12 oefeningen</span><span class='fp-balk'><i id='fk_balk'></i></span></div></div>";
+    var wr=document.querySelector('.wrap');wr.parentNode.insertBefore(kop,wr);
+    // de actieknoppen staan voortaan in de paginakop (zoals "Dienst toevoegen" in het voorbeeld)
+    kop.querySelector('.fp-rechts').insertBefore(document.querySelector('header.topbar .tb-acties'),kop.querySelector('.fp-teller'));
+    tekenZijbalk();
+    window.addEventListener('load',function(){tekenZijbalk();tekenKopTeller();});
+  }
+  function tekenZijbalk(){
+    if(!document.getElementById('fpZij'))return;
+    var P=PRAKSLOT||{};
+    var pr=(SET.praktijk||'').trim(),nm=document.getElementById('zb_pnaam'),st=document.getElementById('zb_pstat'),av=document.getElementById('zb_pav');
+    nm.textContent=pr||'Je praktijk';
+    st.textContent=!pr?'Vul je praktijknaam in':P.ingelogd?(P.wie?P.wie:'Ingelogd')+' · beveiligd':(P.geclaimd?'Niet ingelogd':'Open Kaarten om in te loggen');
+    av.textContent=(pr||'?').split(/\s+/).map(function(w){return w.charAt(0);}).join('').slice(0,2).toUpperCase();
+    var fk=document.getElementById('fk_pr');if(fk)fk.textContent=pr||'Trainingskaart maken';
+  }
+  function tekenKopTeller(){
+    var n=document.getElementById('fk_n');if(!n)return;
+    n.textContent=chosen.length;
+    document.getElementById('fk_balk').style.width=Math.min(100,chosen.length/12*100)+'%';
+  }
   if(window.FYSIPLAN_V2){
+    bouwZijbalk();
     var _pb=document.getElementById('printBtn');_pb.textContent='Printen';_pb.title='Print het trainingsschema of bewaar het als PDF';
     document.getElementById('eigenOefBtn').textContent='Eigen oefening';
   }
@@ -1388,6 +1453,7 @@ bridge2.jpg</div>
   }
   function renderA4(){
     elEmpty.style.display=chosen.length?'none':'block';
+    tekenKopTeller();
     // v2: zachte therapietrouw-hint bij grote programma's — geen blokkade, alleen
     // context: kleinere oefenprogramma's worden thuis aantoonbaar beter volgehouden
     // (zelfs concurrenten citeren dat 2 oefeningen beter scoren dan 8).
@@ -2764,6 +2830,7 @@ bridge2.jpg</div>
   function rendPrakSlot(){
     var st=document.getElementById('ps_status'),form=document.getElementById('ps_form'),
         knop=document.getElementById('ps_do'),ww=document.getElementById('ps_ww');
+    tekenZijbalk();
     if(!st)return;
     tekenAkkoord();
     if(!PRAKSLOT.geclaimd||(PRAKSLOT.nieuw&&!PRAKSLOT.ingelogd)){
@@ -3404,6 +3471,7 @@ bridge2.jpg</div>
   // te openen. Telt alleen openstaande vraag- en pijnseintjes op actieve
   // kaarten; het positieve "het gaat goed" hoeft niet te alarmeren.
   function zetSeinBadge(n){
+    var zs=document.getElementById('zb_sein');if(zs){zs.textContent=n||'';zs.hidden=!n;}
     var kb=document.getElementById('kaartenBtn');if(!kb)return;
     var b=document.getElementById('kb_sein');
     if(!n){if(b)b.remove();kb.removeAttribute('title');return;}
