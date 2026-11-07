@@ -15,7 +15,7 @@ werk voor Ahmed in `docs/mensenwerk.md`.
 | Beveiligen, herstelcode, inloggen 2e apparaat | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
 | Delen, QR, kaartenoverzicht, CSV | 2026-11-07 14u | 2026-11-07 10u | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
 | Naam wijzigen in overzicht + daarna verder bewerken | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 14u | – | 2026-11-07 10u |
-| Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-07 10u | 2026-11-07 10u | – | – | – |
+| Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-07 14u | 2026-11-07 14u | – | – | – |
 | Opname via telefoon /o | 2026-11-07 10u | 2026-11-06 22u | – | 2026-11-07 10u | – |
 | Afspraak, seintje, signalen | 2026-11-07 14u (fix-test) | 2026-11-07 10u (liggend) | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 14u (.ics) |
 | Proef bijna verlopen / verlopen (echte verlopen-pagina) | 2026-11-07 02u | 2026-11-07 02u | – | 2026-11-07 02u (breedte) | – |
@@ -48,6 +48,9 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   gaat na `afterprint` niet weg. public/index.html r. 238, 268–273, 1901 (`SAFARI_PRINT`). (Mark, 2026-11-07 06u)
 
 ### MIDDEL
+- **Eigen oefening: dubbelklik op Toevoegen maakt twee oefeningen met dezelfde naam** (twee keer 200). De naamcontrole
+  in `/api/praktijk/oefeningen` (server.js r. ~2803) staat vóór de awaits van mkdir/writeFile; de push komt pas daarna.
+  Desktop + iPad (Mark, 2026-11-07 14u).
 - **/k: vaste Nederlandse controlezinnen op een Engelse/Duitse kaart**: "De oefenafbeelding wordt gecontroleerd…" en
   "De algemene uitleg wordt gecontroleerd…" (public/kaart.html r. ~1299–1300) gaan niet door `tr()`. Pixel 7 (EN),
   iPhone 14 en iPhone SE (DE) (Jayden, Truus, 2026-11-07 14u).
@@ -140,6 +143,8 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   Al opgelost in open PR #41 (server.js `denied()` met eigen tekst); mergen of overnemen.
 
 ### LAAG
+- Sjabloon met `oefeningen:[{n:{a:1}}]` wordt bewaard als oefening "[object Object]" (server.js r. ~2857 `cleanName`
+  op een object); verwacht 400. (Mark, 14u)
 - /k offline: dag en score krijgen het tijdstip van ontvangst; twee offline dagen → de tweede overschrijft de eerste
   (één wachtrij-item per soort). "Te zwaar?" zegt offline al "Doorgegeven ✓" (kaart.html r. ~2212). (Truus, 14u, uit code)
 - Afspraak-.ics: DESCRIPTION/URL wijzen naar `/k/<id>` zonder `?taal=` (server.js r. ~4365). (Jayden, 14u)
