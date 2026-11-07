@@ -586,3 +586,7 @@ html.v2 .fp-kop .tb-acties #clearBtn:hover{color:#b42318;background:#fdf3f2}
   html.v2 #a4wrap .tb-acties .btn{padding:0 9px}
   html.v2 #a4wrap .fp-teller .fp-balk{display:none}
 }
+/* rondjes met initialen: kleur komt per persoon uit avKleur() (inline) */
+html.v2 .fp-av.srv-av{width:32px;height:32px;flex-basis:32px;font-size:12px}
+html.v2 .fp-av.tm-av,html.v2 .fp-av.ib-av{width:36px;height:36px;flex-basis:36px}
+html.v2 .tm-lid.uitgenodigd .fp-av{opacity:.6;border:1px dashed currentColor}

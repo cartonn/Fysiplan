@@ -28,6 +28,7 @@
   header.topbar .menu .mi:hover{background:var(--brand-50);color:var(--brand-700)}
   header.topbar .spacer{flex:1}
   header.topbar .tb-acties{display:flex;align-items:center;gap:18px}
+  .fp-av{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;flex:0 0 34px;border-radius:50%;font-size:12.5px;font-weight:700;letter-spacing:.02em;line-height:1}
   header.topbar button{font:inherit}
   .btn{padding:8px 14px;border:1px solid var(--line);background:var(--panel);border-radius:9px;cursor:pointer;color:var(--text);font-weight:500;box-shadow:var(--sh-sm);transition:.15s}
   .btn:hover{background:#f8fafc;border-color:#d0d5dd}
@@ -1163,6 +1164,28 @@ bridge2.jpg</div>
   // ---- v2: app-schil — zijbalk met navigatie, broodkruimel en paginakop (alleen scherm) ----
   // De zijbalk bedient dezelfde knoppen als de kopbalk (die blijven bestaan voor tests,
   // smalle schermen en toetsenbord); op een breed scherm verbergt v2.css de kopbalkknoppen.
+  // ---- rondjes met initialen: voorletter + eerste letter van de achternaam, elk een eigen kleur ----
+  // "Sanne de Wit" -> SW (tussenvoegsels tellen niet), "Jan K." -> JK, "Fatima" -> F.
+  // De kleur volgt vast uit de naam, zodat dezelfde persoon overal dezelfde kleur heeft.
+  var TUSSEN={'de':1,'den':1,'der':1,'van':1,'von':1,'het':1,"'t":1,'te':1,'ten':1,'ter':1,'in':1,'op':1,'la':1,'le':1,'du':1,'da':1,'di':1,'el':1,'al':1,'bin':1,'ben':1};
+  var AV_KLEUREN=[['#dbe7fb','#1d4ed8'],['#dcf2e4','#15803d'],['#fde7d3','#c2410c'],['#ede4fb','#6d28d9'],['#fbe0e6','#be123c'],
+    ['#d7f1f2','#0f766e'],['#fbf1cc','#a16207'],['#e2e8f0','#334155'],['#fce4f4','#a21caf'],['#e0ecd5','#4d7c0f'],['#dde3fb','#4338ca'],['#f6e3d8','#9a3412']];
+  function avInitialen(naam){
+    var w=String(naam||'').replace(/@.*/,'').replace(/[._]+/g,' ').trim().split(/\s+/).filter(Boolean);
+    if(!w.length)return '?';
+    var eerste=w[0],rest=w.slice(1).filter(function(x){return !TUSSEN[x.toLowerCase()];});
+    var achter=rest.length?rest[rest.length-1]:'';
+    return ((eerste.charAt(0)||'')+(achter.replace(/^[^A-Za-zÀ-ÿ]+/,'').charAt(0)||'')).toUpperCase()||'?';
+  }
+  function avKleur(naam){
+    var t=String(naam||'').trim().toLowerCase(),h=0;
+    for(var i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))>>>0;
+    return AV_KLEUREN[h%AV_KLEUREN.length];
+  }
+  function avRond(naam,klas){
+    var k=avKleur(naam);
+    return "<span class='fp-av"+(klas?' '+klas:'')+"' aria-hidden='true' style='background:"+k[0]+";color:"+k[1]+"'>"+esc(avInitialen(naam))+"</span>";
+  }
   function zbIcoon(d){return "<svg viewBox='0 0 24 24' width='17' height='17' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'>"+d+"</svg>";}
   function bouwZijbalk(){
     if(document.getElementById('fpZij'))return;
@@ -1239,7 +1262,7 @@ bridge2.jpg</div>
     var pr=(SET.praktijk||'').trim(),nm=document.getElementById('zb_pnaam'),st=document.getElementById('zb_pstat'),av=document.getElementById('zb_pav');
     nm.textContent=pr||'Je praktijk';
     st.textContent=!pr?'Vul je praktijknaam in':P.ingelogd?(P.wie?P.wie:'Ingelogd')+' · beveiligd':(P.geclaimd?'Niet ingelogd':'Open Kaarten om in te loggen');
-    av.textContent=(pr||'?').split(/\s+/).map(function(w){return w.charAt(0);}).join('').slice(0,2).toUpperCase();
+    av.textContent=avInitialen(pr||'?');var avk=avKleur(pr||'?');av.style.background=avk[0];av.style.color=avk[1];
     var fk=document.getElementById('fk_pr');if(fk)fk.textContent=pr||'Trainingskaart maken';
   }
   function tekenKopTeller(){
@@ -2869,8 +2892,7 @@ bridge2.jpg</div>
       // andere naam, dan zie je hier bij welke praktijk je werkt
       var bij=PRAKSLOT.naam&&PRAKSLOT.naam.toLowerCase()!==String(PRAKSLOT.pr||'').toLowerCase()?' bij \u201c'+esc(PRAKSLOT.naam)+'\u201d':'';
       var als=PRAKSLOT.wie?' als '+esc(PRAKSLOT.wie):'';
-      var initialen=String(PRAKSLOT.wie||PRAKSLOT.naam||PRAKSLOT.pr||'?').trim().split(/\s+/).map(function(w){return w.charAt(0);}).join('').slice(0,2).toUpperCase();
-      st.innerHTML="<div class='ps-wie'><span class='ps-av' aria-hidden='true'>"+esc(initialen)+"</span><span>"+(PRAKSLOT.wie?esc(PRAKSLOT.wie):'Ingelogd met het praktijkwachtwoord')+
+      st.innerHTML="<div class='ps-wie'>"+avRond(PRAKSLOT.wie||PRAKSLOT.naam||PRAKSLOT.pr||'?','ps-av')+"<span>"+(PRAKSLOT.wie?esc(PRAKSLOT.wie):'Ingelogd met het praktijkwachtwoord')+
         "<small>"+esc(PRAKSLOT.naam||PRAKSLOT.pr||'')+"</small></span><span class='ps-slot'>🔒 Beveiligd</span></div>"+
         "<span class='sr-only'>Beveiligd en ingelogd"+als+bij+".</span>"+
         "<div class='ps-acties'><a href='#' id='ps_team' title='Collega\u2019s uitnodigen, rollen en je eigen login'>Team</a><a href='#' id='ps_wtoon'>Wachtwoord wijzigen</a><a href='#' id='ps_hctoon' title='Herstelcode kwijt? Maak ingelogd een nieuwe; de oude vervalt direct'>Nieuwe herstelcode</a><a href='#' id='ps_acttoon' title='Recente accountactiviteit: logins, wijzigingen en geweigerde pogingen, met gemaskeerd IP'>Activiteit</a><a href='#' id='ps_uit'>Uitloggen</a><a href='#' id='ps_wis' title='Wist je login en alles wat Fysiplan op deze computer bewaart'>Wis Fysiplan van dit apparaat</a></div>";
@@ -2947,9 +2969,9 @@ bridge2.jpg</div>
         var st=l.status==='actief'?(l.laatst?'laatst ingelogd '+new Date(l.laatst).toLocaleDateString('nl-NL',{day:'numeric',month:'short'}):'actief'):'uitgenodigd';
         var rol=d.beheer&&!zelf?"<select data-tmrol='"+esc(l.id)+"' style='width:auto'><option value='therapeut'"+(l.rol==='therapeut'?' selected':'')+">Therapeut</option><option value='beheerder'"+(l.rol==='beheerder'?' selected':'')+">Beheerder</option></select>"
           :"<span class='tm-rol'>"+(l.rol==='beheerder'?'Beheerder':'Therapeut')+"</span>";
-        var ini=String(l.naam||l.email||'?').trim().split(/\s+/).map(function(w){return w.charAt(0);}).join('').slice(0,2).toUpperCase();
+
         return "<div class='tm-lid"+(l.status==='actief'?'':' uitgenodigd')+"' style='display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid var(--line)'>"+
-          "<span class='tm-av' aria-hidden='true'>"+esc(ini)+"</span>"+
+          avRond(l.naam||l.email,'tm-av')+
           "<div class='tm-naam' style='flex:1;min-width:0'><b style='color:var(--ink)'>"+esc(l.naam||l.email)+(zelf?' (jij)':'')+"</b><div style='font-size:11.5px'>"+esc(l.email)+" · "+esc(st)+"</div></div>"+rol+
           (d.beheer&&!zelf?"<button class='btn tm-weg' type='button' data-tmweg='"+esc(l.id)+"' aria-label='verwijderen' title='Verwijderen; de kaarten blijven bij de praktijk'>&times;</button>":"")+"</div>";
       }).join('');
@@ -3565,7 +3587,6 @@ bridge2.jpg</div>
         var mijn=(PRAKSLOT.wie||'').split(' ')[0].toLowerCase();
         var lijst=d.kaarten.filter(function(k){return !(INBOX_ALLEEN_MIJN&&mijn)||String(k.behandelaar||'').toLowerCase().indexOf(mijn)===0;});
         ib.style.display='';
-        var initj=function(n){return String(n||'?').trim().split(/\s+/).map(function(w){return w.charAt(0);}).join('').slice(0,2).toUpperCase();};
         var h="<div class='ib-kop' style='display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap'>"+
           "<label style='margin:0'>Nieuw van patiënten"+(d.kaarten.length?" <span class='ib-tel'>"+d.kaarten.length+"</span>":"")+"</label>"+
           (mijn?"<label class='ib-mijn' style='margin:0;font-weight:400;font-size:12px;display:flex;gap:5px;align-items:center'><input type='checkbox' id='ib_mijn' style='width:auto;height:auto'"+(INBOX_ALLEEN_MIJN?' checked':'')+"/>Alleen mijn patiënten</label>":"")+"</div>";
@@ -3575,7 +3596,7 @@ bridge2.jpg</div>
           h+="<div class='ib-lijst'>"+lijst.map(function(k){
             var wacht=k.wachtWerkdagen>=d.herinnerNa?"<span class='ib-label wacht' title='Wacht al "+k.wachtWerkdagen+" werkdagen op afhandeling'>wacht "+k.wachtWerkdagen+" werkdagen</span>":"";
             var dos=k.inDossier?"<span class='ib-label'>in dossier</span>":"";
-            return "<div class='ib-item'><span class='ib-av' aria-hidden='true'>"+esc(initj(k.naam))+"</span>"+
+            return "<div class='ib-item'>"+avRond(k.naam,'ib-av')+
               "<div class='ib-tekst'><b>"+esc(k.naam)+"</b>"+(k.behandelaar?" <span class='ib-wie'>· "+esc(k.behandelaar)+"</span>":"")+
               "<div class='ib-wat'>"+k.items.map(function(i){return esc(inboxTekst(i))+" <small>· "+esc(wanneerTekst(i.t))+"</small>";}).join('<br/>')+"</div></div>"+
               "<div class='ib-knoppen'>"+wacht+dos+
@@ -3981,14 +4002,14 @@ bridge2.jpg</div>
             // blijft gewoon werken, maar de kaart staat uit het hoofdoverzicht.
             var vrlp=c.verloopt?new Date(c.verloopt).toLocaleDateString('nl-NL',{day:'numeric',month:'short'}):'';
             return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line);opacity:.72'>"+
-              "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b> <small style='color:var(--muted)'>&middot; afgerond"+(vrlp?", verdwijnt "+esc(vrlp):"")+"</small><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+"</small></div>"+
+              avRond(c.naam,'srv-av')+"<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b> <small style='color:var(--muted)'>&middot; afgerond"+(vrlp?", verdwijnt "+esc(vrlp):"")+"</small><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+"</small></div>"+
               "<button class='btn' data-sdossier='"+esc(c.id)+"' title='Kopieer de eindsamenvatting (cliënt, oefeningen, pijnverloop, PSK, oefentrouw) om bij het afronden in het EPD-dossier te plakken'>Dossier</button>"+
               "<button class='btn' data-sherstel='"+esc(c.id)+"' title='Terug naar het actuele overzicht'>Terughalen</button>"+
               "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
               "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>";
           }
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
-            "<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.antwoord&&c.antwoord.tekst?" · <span title='Er staat een bericht op de patiëntkaart klaar dat nog niet is weggetikt: “"+esc(c.antwoord.tekst)+"”' style='white-space:nowrap'>bericht klaar</span>":"")+((function(){var va=volgendeAfspraak(c);if(!va)return "";return " · <span title='Volgende afspraak op de patiëntkaart"+(va.rest?" — wekelijkse reeks, nog "+va.rest+" keer":"")+"' style='white-space:nowrap'>afspraak "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+(va.rest?" ×"+va.rest:"")+"</span>";})())+((!pskChipGetoond&&c.pskDoel&&c.psk&&c.psk.length)?(function(){var pe2=(c.pskEerste&&typeof c.pskEerste.s==='number')?c.pskEerste.s:c.psk[0].s,pl2=c.psk[c.psk.length-1].s;return " · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)"+(pe2!==pl2?" — van "+pe2+" bij de start naar "+pl2:"")+"' style='white-space:nowrap'>PSK "+(pe2!==pl2?pe2+"→"+pl2:pl2)+"</span>";})():"")+"</small></div>"+seinChip+zwChip+verloopChip+vg+hsChip+
+            avRond(c.naam,'srv-av')+"<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.antwoord&&c.antwoord.tekst?" · <span title='Er staat een bericht op de patiëntkaart klaar dat nog niet is weggetikt: “"+esc(c.antwoord.tekst)+"”' style='white-space:nowrap'>bericht klaar</span>":"")+((function(){var va=volgendeAfspraak(c);if(!va)return "";return " · <span title='Volgende afspraak op de patiëntkaart"+(va.rest?" — wekelijkse reeks, nog "+va.rest+" keer":"")+"' style='white-space:nowrap'>afspraak "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+(va.rest?" ×"+va.rest:"")+"</span>";})())+((!pskChipGetoond&&c.pskDoel&&c.psk&&c.psk.length)?(function(){var pe2=(c.pskEerste&&typeof c.pskEerste.s==='number')?c.pskEerste.s:c.psk[0].s,pl2=c.psk[c.psk.length-1].s;return " · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)"+(pe2!==pl2?" — van "+pe2+" bij de start naar "+pl2:"")+"' style='white-space:nowrap'>PSK "+(pe2!==pl2?pe2+"→"+pl2:pl2)+"</span>";})():"")+"</small></div>"+seinChip+zwChip+verloopChip+vg+hsChip+
             "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
             "<button class='btn' data-skopie='"+esc(c.id)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+
