@@ -734,17 +734,22 @@ function weekBrief(pk) {
   const nooitGeopend = actief.filter((k) => !(k.bekeken && k.bekeken.t) && k.ts && nu - k.ts > dag).map(naam);
   const stil = actief.map((k) => ({ k, d: Math.floor((nu - laatsteActief(k)) / dag) }))
     .filter((x) => x.d >= 10).sort((a, b) => b.d - a.d).map((x) => naam(x.k) + " (" + x.d + " dagen)");
-  const verdwijnt = actief.map((k) => ({ k, v: verlooptOp(k) }))
+  const wachten = actief.map((k) => ({ k, items: inboxItems(k) })).filter((x) => x.items.length)
+    .map((x) => ({ k: x.k, w: werkdagenSinds(Math.min(...x.items.map((i) => i.t)), nu) }))
+    .filter((x) => x.w >= INBOX_HERINNER_WERKDAGEN).map((x) => naam(x.k) + " (" + x.w + " werkdagen)");
+  // staat de kaart al bijgewerkt in het dossier, dan is verdwijnen geen probleem
+  const verdwijnt = actief.filter((k) => !inDossierBij(k)).map((k) => ({ k, v: verlooptOp(k) }))
     .filter((x) => x.v - nu <= 14 * dag).sort((a, b) => a.v - b.v)
     .map((x) => naam(x.k) + " (" + Math.max(0, Math.ceil((x.v - nu) / dag)) + " dagen)");
   const datum = new Date(nu).toLocaleDateString("nl-NL", { day: "numeric", month: "long", timeZone: "Europe/Amsterdam" });
   const r = ["Weekbrief " + datum + ": " + actief.length + " actieve kaart" + (actief.length === 1 ? "" : "en") + "."];
   if (seintjes.length) r.push("Wachten op een reactie: " + lijst(seintjes) + ".");
   if (teZwaar.length) r.push("Te zwaar gemeld deze week: " + lijst(teZwaar) + ".");
+  if (wachten.length) r.push("Nog niet afgehandeld na " + INBOX_HERINNER_WERKDAGEN + " werkdagen of langer: " + lijst(wachten) + ".");
   r.push("Deze week geoefend: " + geoefend + " van de " + actief.length + " kaarten.");
   if (nooitGeopend.length) r.push("Link nog nooit geopend: " + lijst(nooitGeopend) + ".");
   if (stil.length) r.push("Tien dagen of langer geen activiteit: " + lijst(stil) + ".");
-  if (verdwijnt.length) r.push("Verdwijnt binnenkort door de bewaartermijn: " + lijst(verdwijnt) + ". Kopieer eerst wat je nodig hebt naar het dossier.");
+  if (verdwijnt.length) r.push("Verdwijnt binnenkort en staat nog niet bijgewerkt in het dossier: " + lijst(verdwijnt) + ". Zet eerst wat je nodig hebt in het dossier.");
   r.push("Alleen feiten uit de kaarten; de beoordeling blijft bij jou.");
   return r.join("\n");
 }
@@ -782,6 +787,38 @@ const logContact = (kaart, item) => {
   lijst.push({ t: Date.now(), ...item });
   kaart.contact = lijst.slice(-50);
 };
+
+// ---- inbox en dossierlabel ----
+// na zoveel werkdagen zonder afhandeling toont de inbox (en de weekbrief) een herinnering
+const INBOX_HERINNER_WERKDAGEN = 3;
+// werkdagen (ma t/m vr) die verstreken zijn sinds t
+function werkdagenSinds(t, nu = Date.now()) {
+  const dag = 86400000;
+  let n = 0;
+  for (let x = Number(t) + dag; x <= nu && n < 60; x += dag) { const w = new Date(x).getUTCDay(); if (w !== 0 && w !== 6) n++; }
+  return n;
+}
+// laatste invoer van de patiënt (niet van de praktijk): daarmee vergelijkt het dossierlabel
+function laatstePatientInvoer(k) {
+  const rij = (r) => (Array.isArray(r) && r.length) ? Number(r[r.length - 1].t) || 0 : 0;
+  const zwaar = Object.values(k.oefZwaar || {}).reduce((m, x) => Math.max(m, Number(x && x.t) || 0), 0);
+  const contact = (k.contact || []).filter((c) => c && c.van === "patient").reduce((m, c) => Math.max(m, Number(c.t) || 0), 0);
+  return Math.max(rij(k.metingen), rij(k.gedaan), rij(k.psk), rij(k.ervaring), k.seintje ? Number(k.seintje.t) || 0 : 0, zwaar, contact);
+}
+// staat alles wat de patiënt doorgaf al in het dossier (label gezet ná de laatste invoer)?
+const inDossierBij = (k) => !!(k && k.dossier && Number(k.dossier.t) >= laatstePatientInvoer(k));
+// wat er voor de inbox openstaat op één kaart
+function inboxItems(k) {
+  const items = [];
+  const sinds = Number(k.inboxGezien) || 0;
+  if (k.seintje && k.seintje.soort) items.push({ soort: "seintje", wat: k.seintje.soort, t: Number(k.seintje.t) || 0 });
+  for (const [oef, x] of Object.entries(k.oefZwaar || {})) if (x && x.t) items.push({ soort: "zwaar", oef, t: Number(x.t) });
+  const m = (k.metingen || []).filter((x) => x && x.t > sinds && x.t > (Number(k.ts) || 0) - 1);
+  if (m.length) items.push({ soort: "pijn", s: m[m.length - 1].s, aantal: m.length, t: Number(m[m.length - 1].t) });
+  const e = (k.ervaring || []).filter((x) => x && x.t > sinds);
+  if (e.length) items.push({ soort: "herstel", s: e[e.length - 1].s, t: Number(e[e.length - 1].t) });
+  return items.sort((a, b) => b.t - a.t);
+}
 
 // laatste teken van gebruik: de praktijk (opslaan), de patiënt (tik, vinkje, seintje,
 // bezoek) of een afspraak die nog moet komen (bij een wekelijkse reeks de laatste)
@@ -3446,6 +3483,72 @@ async function afhandelen(request, response) {
   // ---- gedeelde kaarten per praktijk + de digitale kaart achter de QR-code ----
 
   // lijst van kaarten van één praktijk (licht: alleen naam, datum en aantal oefeningen)
+  // ---- inbox "Nieuw van patiënten" ----
+  // Alles wat patiënten doorgaven en nog niet is afgehandeld, per kaart, op volgorde
+  // van binnenkomst (nieuwste boven). Bewust geen rangorde op ernst: dat is een
+  // medische beoordeling en die blijft bij de therapeut (MDR, zie privacy-juridisch).
+  if (urlPath === "/api/praktijk/inbox" && request.method === "GET") {
+    if (leesLimiet(request, response)) return;
+    const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    const pk = praktijkVan(request, q.get("praktijk"));
+    if (await eisBeveiligdePraktijk(request, response, pk)) return;
+    const nu = Date.now();
+    const kaartenMetNieuws = Object.values(kaarten[pk] || {})
+      .filter((k) => !k.demo && !k.gearchiveerd && verlooptOp(k) > nu)
+      .map((k) => ({ k, items: inboxItems(k) }))
+      .filter((x) => x.items.length)
+      .map(({ k, items }) => {
+        const oudste = Math.min(...items.map((i) => i.t));
+        return { id: k.id, naam: k.naam, behandelaar: k.behandelaar || null, items,
+          laatst: Math.max(...items.map((i) => i.t)), wachtWerkdagen: werkdagenSinds(oudste, nu),
+          dossier: k.dossier || null, inDossier: inDossierBij(k) };
+      })
+      .sort((a, b) => b.laatst - a.laatst);
+    await sendJson(response, 200, { ok: true, kaarten: kaartenMetNieuws, herinnerNa: INBOX_HERINNER_WERKDAGEN });
+    return;
+  }
+  // afgehandeld: seintje en "te zwaar" weg, scores tot nu gezien; het contactlogboek
+  // houdt vast wie het afhandelde (gaat mee in de dossiertekst)
+  if (urlPath === "/api/praktijk/inbox/afgehandeld" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = praktijkVan(request, b.praktijk);
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
+      const kaart = Object.values(kaarten[pk] || {}).find((k) => k.id === idTekst(b.id));
+      if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      const l = sessieLid(sessieVan(request));
+      kaart.seintje = null;
+      kaart.oefZwaar = null;
+      kaart.inboxGezien = Date.now();
+      logContact(kaart, { van: "praktijk", soort: "afgehandeld", ...(l ? { wie: l.naam || l.email } : {}) });
+      await saveJson(kaartenPath, kaarten);
+      await sendJson(response, 200, { ok: true });
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+    return;
+  }
+  // label "In dossier": de therapeut zet de samenvatting in het EPD en vinkt dat hier
+  // aan. De bewaartermijn waarschuwt daarna alleen nog als er sindsdien nieuwe invoer
+  // van de patiënt is gekomen.
+  if (urlPath === "/api/kaart/dossier" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = praktijkVan(request, b.praktijk);
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
+      const kaart = Object.values(kaarten[pk] || {}).find((k) => k.id === idTekst(b.id));
+      if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      const l = sessieLid(sessieVan(request));
+      kaart.dossier = b.aan === false ? null : { t: Date.now(), ...(l ? { wie: l.naam || l.email } : {}) };
+      await saveJson(kaartenPath, kaarten);
+      auditLog(pk, kaart.dossier ? "kaart-in-dossier" : "kaart-dossierlabel-weg", request);
+      await sendJson(response, 200, { ok: true, dossier: kaart.dossier, inDossier: inDossierBij(kaart) });
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+    return;
+  }
+
   if (urlPath === "/api/kaarten" && request.method === "GET") {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
@@ -3480,7 +3583,8 @@ async function afhandelen(request, response) {
         // waarde blijft gewoon het laatste element, dus bestaande lezers lopen door
         psk: (k.psk || []).slice(-14),
         pskEerste: (k.psk && k.psk.length) ? k.psk[0] : null,
-        doel: Number(k.doel) || 0, gearchiveerd: !!k.gearchiveerd }))
+        doel: Number(k.doel) || 0, gearchiveerd: !!k.gearchiveerd,
+        dossier: k.dossier || null, inDossier: inDossierBij(k), nieuw: inboxItems(k).length }))
       .sort((a, b) => b.ts - a.ts);
     await sendJson(response, 200, list);
     return;
@@ -3756,7 +3860,8 @@ async function afhandelen(request, response) {
       const m = (found.metingen = found.metingen || []);
       const nu = Date.now();
       const laatste = m[m.length - 1];
-      if (laatste && nlDag(laatste.t) === nlDag(nu)) laatste.s = score;
+      // zelfde dag: score vervangen, en het tijdstip mee (inbox en dossierlabel kijken ernaar)
+      if (laatste && nlDag(laatste.t) === nlDag(nu)) { laatste.s = score; laatste.t = nu; }
       else m.push({ t: nu, s: score });
       found.metingen = m.slice(-366);
       // voorbeeldkaart: laat de interactie werken maar bewaar niets en tel niet mee

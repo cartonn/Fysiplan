@@ -2059,9 +2059,12 @@ bridge2.jpg</div>
           .then(function(d){
             if(!d.ok){toonD('Ophalen mislukt');return;}
             var tekst=dossierTekst(d.kaart);
+            // het label "In dossier" mee zetten: de bewaartermijn waarschuwt daarna
+            // alleen nog als de patiënt sindsdien iets nieuws doorgaf
+            var label=function(){fetch('api/kaart/dossier',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:(SET.praktijk||'').trim(),id:id})}).catch(function(){});};
             if(navigator.clipboard&&navigator.clipboard.writeText){
-              navigator.clipboard.writeText(tekst).then(function(){toonD('Gekopieerd ✓');}).catch(function(){window.prompt('Kopieer de samenvatting:',tekst);});
-            }else{window.prompt('Kopieer de samenvatting:',tekst);}
+              navigator.clipboard.writeText(tekst).then(function(){toonD('Gekopieerd ✓');label();}).catch(function(){window.prompt('Kopieer de samenvatting:',tekst);label();});
+            }else{window.prompt('Kopieer de samenvatting:',tekst);label();}
           })
           .catch(function(){toonD('Geen verbinding');});
       });
@@ -3175,7 +3178,8 @@ bridge2.jpg</div>
       var SOORT={vraag:'seintje: heeft een vraag',pijn:'seintje: meldt te veel pijn',goed:'seintje: het gaat goed',zwaar:'oefening te zwaar'};
       r.push('Contact via de digitale kaart:');
       ct.forEach(function(x){
-        if(x.van==='praktijk')r.push('  '+dc(x.t)+' praktijk: "'+String(x.tekst||'')+'"');
+        if(x.van==='praktijk'&&x.soort==='afgehandeld')r.push('  '+dc(x.t)+' praktijk: afgehandeld'+(x.wie?' door '+x.wie:''));
+        else if(x.van==='praktijk')r.push('  '+dc(x.t)+' praktijk: "'+String(x.tekst||'')+'"');
         else r.push('  '+dc(x.t)+' patiënt: '+(SOORT[x.soort]||'seintje')+(x.oef?' ('+x.oef+')':''));
       });
     }
@@ -3368,6 +3372,88 @@ bridge2.jpg</div>
       toonSrvKaarten();
     });
   }
+
+  // ---- v2: inbox "Nieuw van patiënten" ----
+  // Alles wat patiënten doorgaven en nog niet is afgehandeld, nieuwste boven. Geen
+  // rangorde op ernst (MDR): tonen, niet duiden. Per kaart: naar het dossier (kopie +
+  // label "In dossier") en "Afgehandeld" (komt in het contactlogboek van de kaart).
+  var INBOX_ALLEEN_MIJN=false;
+  try{INBOX_ALLEEN_MIJN=localStorage.getItem('fp_inbox_mijn')==='1';}catch(e){}
+  function inboxTekst(i){
+    if(i.soort==='seintje')return {vraag:'heeft een vraag',pijn:'meldt te veel pijn',goed:'het gaat goed'}[i.wat]||'seintje';
+    if(i.soort==='zwaar')return 'te zwaar: '+i.oef;
+    if(i.soort==='pijn')return 'pijnscore '+i.s+(i.aantal>1?' ('+i.aantal+' nieuwe)':'');
+    if(i.soort==='herstel')return 'herstel: '+({'-2':'veel slechter','-1':'iets slechter','0':'hetzelfde','1':'iets beter','2':'veel beter'}[String(i.s)]||i.s);
+    return i.soort;
+  }
+  function wanneerTekst(t){
+    var dg=Math.floor((Date.now()-t)/864e5);
+    if(dg<=0)return 'vandaag '+new Date(t).toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'});
+    return dg===1?'gisteren':dg+' dagen geleden';
+  }
+  function laadInbox(blok,pr){
+    var ib=document.getElementById('k_inbox');
+    if(!ib){
+      ib=document.createElement('div');ib.id='k_inbox';
+      ib.style.cssText='margin:10px 0 4px;display:none';
+      // direct vóór "Kaarten van de praktijk" (een direct kind van het blok)
+      var lab=blok.querySelector(':scope > label');
+      if(lab)blok.insertBefore(ib,lab);else blok.appendChild(ib);
+    }
+    fetch('api/praktijk/inbox?praktijk='+encodeURIComponent(pr),PGET())
+      .then(function(r){return r.ok?r.json():null;})
+      .then(function(d){
+        if(!d||!d.ok){ib.style.display='none';return;}
+        var mijn=(PRAKSLOT.wie||'').split(' ')[0].toLowerCase();
+        var lijst=d.kaarten.filter(function(k){return !(INBOX_ALLEEN_MIJN&&mijn)||String(k.behandelaar||'').toLowerCase().indexOf(mijn)===0;});
+        ib.style.display='';
+        var h="<div style='display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap'>"+
+          "<label style='margin:0'>Nieuw van patiënten"+(d.kaarten.length?" <span style='background:var(--danger,#b4372f);color:#fff;border-radius:99px;padding:1px 7px;font-size:11px'>"+d.kaarten.length+"</span>":"")+"</label>"+
+          (mijn?"<label style='margin:0;font-weight:400;font-size:12px;display:flex;gap:5px;align-items:center'><input type='checkbox' id='ib_mijn' style='width:auto;height:auto'"+(INBOX_ALLEEN_MIJN?' checked':'')+"/>Alleen mijn patiënten</label>":"")+"</div>";
+        if(!lijst.length){
+          h+="<div class='hint' style='margin:4px 0 0'>Niets nieuws. Alles is afgehandeld.</div>";
+        }else{
+          h+="<div style='max-height:220px;overflow:auto;margin-top:4px'>"+lijst.map(function(k){
+            var wacht=k.wachtWerkdagen>=d.herinnerNa?"<span class='btn' style='font-size:11px;padding:2px 8px;cursor:default;background:#fbeedd;border-color:#ecd2ad;color:#8a4d0f' title='Wacht al "+k.wachtWerkdagen+" werkdagen op afhandeling'>wacht "+k.wachtWerkdagen+" werkdagen</span>":"";
+            var dos=k.inDossier?"<span class='btn' style='font-size:11px;padding:2px 8px;cursor:default'>in dossier</span>":"";
+            return "<div style='padding:8px 0;border-top:1px solid var(--line);display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap'>"+
+              "<div style='flex:1;min-width:160px'><b>"+esc(k.naam)+"</b>"+(k.behandelaar?" <small style='color:var(--muted)'>· "+esc(k.behandelaar)+"</small>":"")+
+              "<div style='font-size:12px;color:var(--text)'>"+k.items.map(function(i){return esc(inboxTekst(i))+" <small style='color:var(--muted)'>("+esc(wanneerTekst(i.t))+")</small>";}).join('<br/>')+"</div></div>"+
+              "<div style='display:flex;gap:5px;flex-wrap:wrap;align-items:center'>"+wacht+dos+
+              "<button class='btn' type='button' data-ibdos='"+esc(k.id)+"' title='Kopieer de samenvatting voor het EPD en zet het label In dossier'>Naar dossier</button>"+
+              "<button class='btn primary' type='button' data-ibklaar='"+esc(k.id)+"' title='Gezien en afgehandeld; komt in het contactlogboek van de kaart'>Afgehandeld</button></div></div>";
+          }).join('')+"</div><div class='hint' style='margin:4px 0 0;font-size:11px'>Op volgorde van binnenkomst. Fysiplan geeft geen oordeel; de beoordeling is aan jou.</div>";
+        }
+        ib.innerHTML=h;
+        var cm=document.getElementById('ib_mijn');
+        if(cm)cm.addEventListener('change',function(){INBOX_ALLEEN_MIJN=cm.checked;try{localStorage.setItem('fp_inbox_mijn',cm.checked?'1':'0');}catch(e){}laadInbox(blok,pr);});
+        ib.querySelectorAll('[data-ibklaar]').forEach(function(b){
+          b.addEventListener('click',function(){
+            b.disabled=true;
+            fetch('api/praktijk/inbox/afgehandeld',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:b.getAttribute('data-ibklaar')})})
+              .then(function(){toonSrvKaarten();}).catch(function(){b.disabled=false;});
+          });
+        });
+        ib.querySelectorAll('[data-ibdos]').forEach(function(b){
+          b.addEventListener('click',function(){
+            var id=b.getAttribute('data-ibdos'),oud=b.textContent;
+            var toon=function(t){b.textContent=t;setTimeout(function(){b.textContent=oud;},1800);};
+            fetch(praktijkKaartUrl(id),PGET()).then(function(r){return r.json();}).then(function(dk){
+              if(!dk.ok){toon('Ophalen mislukt');return;}
+              var tekst=dossierTekst(dk.kaart);
+              var label=function(){
+                return fetch('api/kaart/dossier',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:id})})
+                  .then(function(){toon('Gekopieerd, label gezet ✓');setTimeout(toonSrvKaarten,900);});
+              };
+              if(navigator.clipboard&&navigator.clipboard.writeText){
+                navigator.clipboard.writeText(tekst).then(label).catch(function(){window.prompt('Kopieer de samenvatting voor het dossier:',tekst);label();});
+              }else{window.prompt('Kopieer de samenvatting voor het dossier:',tekst);label();}
+            }).catch(function(){toon('Geen verbinding');});
+          });
+        });
+      })
+      .catch(function(){ib.style.display='none';});
+  }
   function toonSrvKaarten(){
     var blok=document.getElementById('k_srv');
     var knop=document.getElementById('k_save_srv');
@@ -3414,6 +3500,7 @@ bridge2.jpg</div>
         }else{window.prompt('Kopieer de weekbrief:',tekst);}
       });
     }
+    if(window.FYSIPLAN_V2)laadInbox(blok,pr);
     var el=document.getElementById('k_srv_lijst');
     el.innerHTML="<div class='hint'>Laden…</div>";
     fetch('api/kaarten?praktijk='+encodeURIComponent(pr),PGET())
@@ -3587,7 +3674,9 @@ bridge2.jpg</div>
           // zo kan de praktijk eerst naar het dossier kopiëren (knop Deel/CSV) voordat
           // de servergegevens automatisch worden gewist. Informatief, geen actieknop.
           var verloopChip='';
-          if(c.verloopt){
+          if(c.inDossier){
+            verloopChip="<span class='btn' title='Bijgewerkt in het dossier"+(c.dossier&&c.dossier.wie?" door "+esc(c.dossier.wie):"")+". Verdwijnt de kaart door de bewaartermijn, dan staat alles al in het EPD.' style='font-size:11.5px;padding:4px 10px;cursor:default'>in dossier "+new Date(c.dossier.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+"</span>";
+          }else if(c.verloopt){
             var vdg=Math.ceil((c.verloopt-Date.now())/864e5);
             if(vdg<=14){
               var vtxt=vdg<=0?'vandaag':(vdg===1?'morgen':'over '+vdg+' dagen');
@@ -3914,7 +4003,7 @@ bridge2.jpg</div>
           }else{
             var actiefN=l.filter(actiefDezeWeek).length;
             var aandN=l.filter(heeftMelding).length;
-            var weldraN=l.concat(lArch).filter(function(c){return c.verloopt&&c.verloopt-nu<=14*dag;}).length;
+            var weldraN=l.concat(lArch).filter(function(c){return !c.inDossier&&c.verloopt&&c.verloopt-nu<=14*dag;}).length;
             var seinN=l.filter(seintjeOpen).length;
             h=chip('<b>'+l.length+'</b> kaart'+(l.length===1?'':'en'))+chip('<b>'+actiefN+'</b> deze week actief');
             // openstaande seintjes eerst: direct inkomend contact van de patiënt dat
@@ -3922,7 +4011,7 @@ bridge2.jpg</div>
             if(seinN)h+="<button type='button' id='k_srv_sam_sein' class='no-print' title='Patiënten die een seintje stuurden (vraag of pijn): toon alleen die kaarten' style='cursor:pointer;background:#eaf1fb;border:1px solid #c3d4ee;color:#2456a6;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+seinN+"</b> "+(seinN===1?'seintje':'seintjes')+"</button>";
             h+=aandN?"<button type='button' id='k_srv_sam_aand' class='no-print' title='Kaarten met een openstaande melding van de patiënt (seintje of te zwaar): zet die bovenaan' style='cursor:pointer;background:#fbecea;border:1px solid #e7c3bc;color:#a23f2c;border-radius:99px;padding:3px 10px;font-size:12px'><b>"+aandN+"</b> met een melding</button>":chip('<b>0</b> meldingen');
             // bewaartermijn: wat binnen twee weken van de server gaat (ook afgeronde kaarten)
-            if(weldraN)h+="<span title='Bewaartermijn: deze kaarten gaan binnen twee weken van de server. Kopieer eerst wat je nodig hebt naar het dossier (knop Dossier of Kopieer samenvatting).' style='background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;color:#a23f2c'><b>"+weldraN+"</b> verdwijn"+(weldraN===1?'t':'en')+" binnenkort</span>";
+            if(weldraN)h+="<span title='Bewaartermijn: deze kaarten gaan binnen twee weken van de server en staan nog niet bijgewerkt in het dossier. Zet eerst wat je nodig hebt in het dossier (Naar dossier of Kopieer voor dossier).' style='background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;color:#a23f2c'><b>"+weldraN+"</b> verdwijn"+(weldraN===1?'t':'en')+" binnenkort</span>";
             if(lArch.length)h+=archKnop('Gearchiveerd ('+lArch.length+')',false);
             // praktijkrapport: de app-vrij gemeten uitkomsten in één klik als
             // plakklare tekst (kwaliteitsverantwoording, teamoverleg)
