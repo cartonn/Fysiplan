@@ -1168,8 +1168,9 @@ bridge2.jpg</div>
   // "Sanne de Wit" -> SW (tussenvoegsels tellen niet), "Jan K." -> JK, "Fatima" -> F.
   // De kleur volgt vast uit de naam, zodat dezelfde persoon overal dezelfde kleur heeft.
   var TUSSEN={'de':1,'den':1,'der':1,'van':1,'von':1,'het':1,"'t":1,'te':1,'ten':1,'ter':1,'in':1,'op':1,'la':1,'le':1,'du':1,'da':1,'di':1,'el':1,'al':1,'bin':1,'ben':1};
-  var AV_KLEUREN=[['#dbe7fb','#1d4ed8'],['#dcf2e4','#15803d'],['#fde7d3','#c2410c'],['#ede4fb','#6d28d9'],['#fbe0e6','#be123c'],
-    ['#d7f1f2','#0f766e'],['#fbf1cc','#a16207'],['#e2e8f0','#334155'],['#fce4f4','#a21caf'],['#e0ecd5','#4d7c0f'],['#dde3fb','#4338ca'],['#f6e3d8','#9a3412']];
+  // volle cirkelkleur met witte letter (contrast minstens 4.5:1)
+  var AV_KLEUREN=[['#1d4ed8','#fff'],['#15803d','#fff'],['#c2410c','#fff'],['#6d28d9','#fff'],['#be123c','#fff'],
+    ['#0f766e','#fff'],['#a16207','#fff'],['#334155','#fff'],['#a21caf','#fff'],['#4d7c0f','#fff'],['#4338ca','#fff'],['#9a3412','#fff']];
   function avInitialen(naam){
     var w=String(naam||'').replace(/@.*/,'').replace(/[._]+/g,' ').trim().split(/\s+/).filter(Boolean);
     if(!w.length)return '?';

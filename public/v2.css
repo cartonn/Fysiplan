@@ -590,3 +590,14 @@ html.v2 .fp-kop .tb-acties #clearBtn:hover{color:#b42318;background:#fdf3f2}
 html.v2 .fp-av.srv-av{width:32px;height:32px;flex-basis:32px;font-size:12px}
 html.v2 .fp-av.tm-av,html.v2 .fp-av.ib-av{width:36px;height:36px;flex-basis:36px}
 html.v2 .tm-lid.uitgenodigd .fp-av{opacity:.6;border:1px dashed currentColor}
+/* naamblokken lichtblauw, zodat de mensen eruit springen (Ahmed, 2026-11-07) */
+html.v2{--naamblok:#eaf2fd;--naamblok-rand:#cfe0f8}
+html.v2 .fp-av{box-shadow:0 0 0 2px #fff}
+html.v2 #prakslot{background:var(--naamblok)!important;border-color:var(--naamblok-rand)!important}
+html.v2 #k_inbox .ib-item{background:var(--naamblok);border-color:var(--naamblok-rand)}
+html.v2 .tm-lid{background:var(--naamblok);border:1px solid var(--naamblok-rand)!important;border-radius:12px;padding:10px 12px!important;margin-top:8px}
+html.v2 .tm-kop+.tm-lid{margin-top:4px}
+html.v2 #k_srv_lijst div:has(> .srv-av){background:var(--naamblok);border:1px solid var(--naamblok-rand)!important;border-radius:12px;
+  padding:9px 12px!important;margin-top:6px}
+html.v2 .zb-praktijk{background:var(--naamblok);border-color:var(--naamblok-rand)}
+html.v2 .tm-lid.uitgenodigd .fp-av{opacity:.75;border:0}
