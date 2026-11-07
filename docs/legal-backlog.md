@@ -23,6 +23,26 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **MIDDEL — /k "Mijn gegevens": download mist de seintjes en is onleesbaar voor een patiënt** (gebruikers-sweep
+  2026-11-07 18u, Truus, iPhone SE). De rubriek belooft "pijnscores, gedaan, te zwaar en seintjes", maar de JSON
+  heeft geen `seintje` (server.js r. ~3893 laat het weg in de patiëntkaart) en wel technische sleutels (`chosen`,
+  `vids`, epoch-tijden, `xfp_…|r0|S`). Lokale vinkjes/te zwaar (`fp_oefdaan`, `fp_zwaar`) ontbreken ook. Inzage
+  (art. 15) vraagt begrijpelijke vorm. kaart.html r. ~1595 `downloadMijnGegevens`; sleutels en uitleg ook altijd
+  Nederlands op een EN/AR-kaart (Jayden).
+- **MIDDEL — /k "Wis deze kaart van mijn telefoon" belooft meer dan het doet** (sweep 18u, Jayden iPhone 14, Truus,
+  Sanne). Herladen, terugknop of beginschermicoon openen de kaart meteen weer (URL blijft `/k/<id>`, service worker
+  cachet opnieuw); wat nog niet verstuurd is (`fp_wacht_`) gaat stil verloren terwijl de vraag zegt "bij je
+  praktijk blijft hij bestaan"; `fp_taal`/`fp_groot`/stem blijven staan terwijl juridisch.html r. ~142 zegt dat ze
+  meegaan; appbanner blijft staan. kaart.html r. ~988 `vergeetKaartHier`, r. ~1603 `wisVanTelefoon`.
+- **MIDDEL — /k privacyzin klopt niet helemaal** (sweep 18u, Truus). "Op deze kaart staan alleen je voornaam…":
+  de kaartnaam is vrije invoer en ook opmerking/doel van de therapeut staan erop. "Na je behandeling verdwijnt de
+  kaart vanzelf" botst met Mijn gegevens "blijft bewaard tot minstens …". Contrast 2,6:1. kaart.html TPRIV r. ~869, TMG r. ~866.
+- **LAAG — Privacy-link op een Engelse/Arabische kaart opent een pagina die alleen Nederlands is** en niet het
+  patiëntdeel `#patient` (sweep 18u, Jayden, Pixel 7). kaart.html r. ~473, ~599; server.js `juridischBlok`.
+- **LAAG — /v2/gegevens loopt achter op #84** (sweep 18u, Sanne). Blok "Alles wissen" noemt de proefaanmelding niet
+  (public/proef.html r. ~252), onderaan staat nog "wis je via Mijn proef" (r. ~261); na wissen geen verwijzing naar
+  "Wis Fysiplan van dit apparaat" terwijl roepnaam en praktijknaam nog in de browser staan.
+
 - **LAAG — praktijk kan de vraaghulp op de kaart niet zelf uitzetten (2026-11-07).** Staat
   `ANTHROPIC_API_KEY` aan, dan ziet elke patiënt de vraaghulp. De praktijk is
   verwerkingsverantwoordelijke en kan nu niet kiezen om geen enkele patiëntvraag naar een dienst

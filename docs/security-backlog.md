@@ -43,6 +43,14 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **MIDDEL — therapeut (geen beheerder) kan teamsjablonen en eigen oefeningen van de hele praktijk verwijderen of
+  overschrijven** (gebruikers-sweep 2026-11-07 18u, Mark, API). `POST /api/praktijk/sjablonen/verwijder` en
+  `/api/praktijk/oefeningen/verwijder` geven 200 voor rol therapeut; opnieuw delen met dezelfde naam overschrijft
+  stil. Er wordt geen maker bijgehouden. server.js r. ~2840–2855 en ~2899–2918: alleen `eisPraktijk`, geen
+  `isBeheer`/maker-check. Advies: maker (lid-id) opslaan; verwijderen/overschrijven alleen maker of beheerder.
+- **LAAG — na een verlopen proef kan een beheerder nog collega's uitnodigen** (sweep 18u, Mark). `/api/praktijk/team/*`
+  staat niet in `PROEF_SCHRIJFROUTES` (server.js r. ~529); uitnodigen geeft 200 en de link werkt.
+
 - **MIDDEL — schrijfrem van 40 per 5 minuten per IP geldt voor een hele praktijk achter één wifi** (gebruikers-sweep
   2026-11-07 14u, Mark). Kaart opslaan, afspraak, login, opname en team tellen samen in `schrijfLimiet`
   (server.js r. ~1205–1220). Mark + collega liepen na ±40 gewone handelingen twee keer tegen 429 aan, voor iedereen op

@@ -2597,6 +2597,10 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     const token = String(request.headers["x-praktijk-sessie"] || "").trim();
     if (token) praktijkSessies.delete(token);
+    // "Wis Fysiplan van dit apparaat": ook de proefcookie weg, anders zag de volgende
+    // gebruiker van deze computer de proef (naam, e-mail) en kon hij hem stoppen. De proef
+    // zelf blijft; met hetzelfde e-mailadres opnieuw aanmelden geeft hem terug.
+    if (new URL(request.url, "http://x").searchParams.get("apparaat") === "1") response.setHeader("set-cookie", proefCookie("", request));
     await sendJson(response, 200, { ok: true });
     return;
   }
@@ -5215,13 +5219,24 @@ async function afhandelen(request, response) {
     const nk = cleanName(b.praktijk, 80).toLowerCase();
     const opnieuw = async (fout, status) => serveerProef(request, response, "verlopen", proefVars(p, {
       V_PRAKTIJK: b.praktijk || p.praktijk || "",
+      V_OV_EMAIL: cleanName(b.email, 120),
       OVERZICHT_FOUT_HTML: '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" }), status);
     if (nk && loginOpSlot(nk)) { await opnieuw("Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
-    const pk = accountVoorLogin(nk, String(b.wachtwoord || ""));
+    // met eigen login: e-mail + eigen wachtwoord van een actief lid (alleen lezen, dus elke
+    // rol). Anders bleef het overzicht dicht zodra het gedeelde praktijkwachtwoord uit stond.
+    const em = normEmail(b.email);
+    let pk = null;
+    if (nk && !verbodenSleutel.test(nk)) {
+      if (em) {
+        for (const k of accountsMetNaam(nk)) {
+          if (ledenVan(k).some((l) => l.email === em && lidActief(l) && checkHash(String(b.wachtwoord || ""), l.hash))) { pk = k; break; }
+        }
+      } else pk = accountVoorLogin(nk, String(b.wachtwoord || ""));
+    }
     if (!pk) {
       loginMisTel(nk || "?");
       auditLog(accountsMetNaam(nk)[0] || nk || "?", "overzicht-na-proef-mislukt", request);
-      await opnieuw("Die praktijknaam en dat wachtwoord horen niet bij elkaar.", 403);
+      await opnieuw(em ? "Die praktijknaam, dat e-mailadres en dat wachtwoord horen niet bij elkaar." : "Die praktijknaam en dat wachtwoord horen niet bij elkaar. Werk je met een eigen login? Vul dan ook je e-mail in.", 403);
       return;
     }
     loginMisPraktijk.delete(nk);
