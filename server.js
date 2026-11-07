@@ -846,12 +846,39 @@ function werkdagenSinds(t, nu = Date.now()) {
   for (let x = Number(t) + dag; x <= nu && n < 60; x += dag) { const w = new Date(x).getUTCDay(); if (w !== 0 && w !== 6) n++; }
   return n;
 }
+// ---- tikken uit de offline-wachtrij van de kaart ----
+// Een tik die de telefoon zonder internet bewaarde, komt later binnen met `wanneer`
+// (het moment van tikken). `t` wordt dan dat moment, zodat de score of oefendag op
+// de juiste dag staat; `ont` is wanneer de server hem kreeg. Inbox en dossierlabel
+// kijken naar het laatste van de twee, zodat een late tik toch als nieuw telt.
+const WACHT_MAX_TERUG = 14 * 86400000;
+function tikMoment(b, nu) {
+  const w = Number(b && b.wanneer);
+  if (!Number.isFinite(w) || w > nu + 5 * 60000 || w < nu - WACHT_MAX_TERUG) return nu;
+  return Math.min(Math.round(w), nu);
+}
+const ontvangen = (x) => (x ? Math.max(Number(x.t) || 0, Number(x.ont) || 0) : 0);
+const tikVeld = (t, nu) => (t < nu ? { t, ont: nu } : { t });
+// één waarde per (Nederlandse) dag, op volgorde van tijd: dezelfde dag vervangt (behalve
+// door een oudere tik uit de wachtrij), een eerdere dag schuift op zijn plaats
+function zetDagWaarde(rij, t, s, nu) {
+  const dag = nlDag(t);
+  const bestaand = rij.find((x) => x && nlDag(x.t) === dag);
+  if (bestaand) {
+    if (t < (Number(bestaand.t) || 0)) return;
+    bestaand.s = s; bestaand.t = t;
+    if (t < nu) bestaand.ont = nu; else delete bestaand.ont;
+    return;
+  }
+  rij.push({ ...tikVeld(t, nu), s });
+  rij.sort((a, b) => (Number(a.t) || 0) - (Number(b.t) || 0));
+}
 // laatste invoer van de patiënt (niet van de praktijk): daarmee vergelijkt het dossierlabel
 function laatstePatientInvoer(k) {
-  const rij = (r) => (Array.isArray(r) && r.length) ? Number(r[r.length - 1].t) || 0 : 0;
-  const zwaar = Object.values(k.oefZwaar || {}).reduce((m, x) => Math.max(m, Number(x && x.t) || 0), 0);
-  const contact = (k.contact || []).filter((c) => c && c.van === "patient").reduce((m, c) => Math.max(m, Number(c.t) || 0), 0);
-  return Math.max(rij(k.metingen), rij(k.gedaan), rij(k.psk), rij(k.ervaring), k.seintje ? Number(k.seintje.t) || 0 : 0, zwaar, contact);
+  const rij = (r) => (Array.isArray(r) && r.length) ? r.reduce((m, x) => Math.max(m, ontvangen(x)), 0) : 0;
+  const zwaar = Object.values(k.oefZwaar || {}).reduce((m, x) => Math.max(m, ontvangen(x)), 0);
+  const contact = (k.contact || []).filter((c) => c && c.van === "patient").reduce((m, c) => Math.max(m, ontvangen(c)), 0);
+  return Math.max(rij(k.metingen), rij(k.gedaan), rij(k.psk), rij(k.ervaring), ontvangen(k.seintje), zwaar, contact);
 }
 // staat alles wat de patiënt doorgaf al in het dossier (label gezet ná de laatste invoer)?
 const inDossierBij = (k) => !!(k && k.dossier && Number(k.dossier.t) >= laatstePatientInvoer(k));
@@ -861,9 +888,9 @@ function inboxItems(k) {
   const sinds = Number(k.inboxGezien) || 0;
   if (k.seintje && k.seintje.soort) items.push({ soort: "seintje", wat: k.seintje.soort, t: Number(k.seintje.t) || 0 });
   for (const [oef, x] of Object.entries(k.oefZwaar || {})) if (x && x.t) items.push({ soort: "zwaar", oef, t: Number(x.t) });
-  const m = (k.metingen || []).filter((x) => x && x.t > sinds && x.t > (Number(k.ts) || 0) - 1);
+  const m = (k.metingen || []).filter((x) => x && ontvangen(x) > sinds && ontvangen(x) > (Number(k.ts) || 0) - 1);
   if (m.length) items.push({ soort: "pijn", s: m[m.length - 1].s, aantal: m.length, t: Number(m[m.length - 1].t) });
-  const e = (k.ervaring || []).filter((x) => x && x.t > sinds);
+  const e = (k.ervaring || []).filter((x) => x && ontvangen(x) > sinds);
   if (e.length) items.push({ soort: "herstel", s: e[e.length - 1].s, t: Number(e[e.length - 1].t) });
   return items.sort((a, b) => b.t - a.t);
 }
@@ -3967,10 +3994,9 @@ async function afhandelen(request, response) {
       }
       const m = (found.metingen = found.metingen || []);
       const nu = Date.now();
-      const laatste = m[m.length - 1];
-      // zelfde dag: score vervangen, en het tijdstip mee (inbox en dossierlabel kijken ernaar)
-      if (laatste && nlDag(laatste.t) === nlDag(nu)) { laatste.s = score; laatste.t = nu; }
-      else m.push({ t: nu, s: score });
+      // zelfde dag: score vervangen, en het tijdstip mee (inbox en dossierlabel kijken ernaar);
+      // een tik uit de offline-wachtrij komt op de dag waarop hij gedaan is
+      zetDagWaarde(m, tikMoment(b, nu), score, nu);
       found.metingen = m.slice(-366);
       // voorbeeldkaart: laat de interactie werken maar bewaar niets en tel niet mee
       if (found.demo) { await sendJson(response, 200, { ok: true, metingen: found.metingen }); return; }
@@ -4002,9 +4028,7 @@ async function afhandelen(request, response) {
       }
       const e = (found.ervaring = found.ervaring || []);
       const nu = Date.now();
-      const laatste = e[e.length - 1];
-      if (laatste && nlDag(laatste.t) === nlDag(nu)) laatste.s = score;
-      else e.push({ t: nu, s: score });
+      zetDagWaarde(e, tikMoment(b, nu), score, nu);
       found.ervaring = e.slice(-120);
       if (found.demo) { await sendJson(response, 200, { ok: true, ervaring: found.ervaring }); return; }
       await saveJson(kaartenPath, kaarten);
@@ -4028,14 +4052,16 @@ async function afhandelen(request, response) {
       if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const g = (found.gedaan = found.gedaan || []);
       const nu = Date.now();
-      const laatste = g[g.length - 1];
-      const alVandaag = !!(laatste && nlDag(laatste.t) === nlDag(nu));
+      // de dag van de tik: vandaag, of de dag uit de offline-wachtrij
+      const t = tikMoment(b, nu);
+      const pos = g.findIndex((x) => x && nlDag(x.t) === nlDag(t));
+      const alDie = pos >= 0;
       // aan:true/false zet de dag expliciet (idempotent: een tweede apparaat met een
       // verouderde kaart of een dubbele bevestiging haalt de dag niet weg); zonder
       // aan blijft het de oude aan/uit-tik, voor kaartpagina's die nog in een cache staan
-      const wil = b.aan === true ? true : b.aan === false ? false : !alVandaag;
-      if (alVandaag && !wil) g.pop();
-      else if (!alVandaag && wil) g.push({ t: nu });
+      const wil = b.aan === true ? true : b.aan === false ? false : !alDie;
+      if (alDie && !wil) g.splice(pos, 1);
+      else if (!alDie && wil) { g.push(tikVeld(t, nu)); g.sort((x, y) => (Number(x.t) || 0) - (Number(y.t) || 0)); }
       found.gedaan = g.slice(-366);
       if (found.demo) { await sendJson(response, 200, { ok: true, gedaan: found.gedaan }); return; }
       await saveJson(kaartenPath, kaarten);
@@ -4124,8 +4150,11 @@ async function afhandelen(request, response) {
       if (!["vraag", "pijn", "goed"].includes(soort)) { await sendJson(response, 400, { ok: false, fout: "Onbekend seintje." }); return; }
       const found = vindKaart(idTekst(b.id));
       if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
-      found.seintje = { t: Date.now(), soort };
-      logContact(found, { van: "patient", soort });
+      const nu = Date.now();
+      const t = tikMoment(b, nu);
+      // een ouder seintje uit de offline-wachtrij gaat in het logboek, maar verdringt geen nieuwer
+      if (!found.seintje || !(Number(found.seintje.t) > t)) found.seintje = { ...tikVeld(t, nu), soort };
+      logContact(found, { van: "patient", soort, ...tikVeld(t, nu) });
       if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true });
@@ -4330,9 +4359,7 @@ async function afhandelen(request, response) {
       }
       const e = (found.psk = found.psk || []);
       const nu = Date.now();
-      const laatste = e[e.length - 1];
-      if (laatste && nlDag(laatste.t) === nlDag(nu)) laatste.s = score;
-      else e.push({ t: nu, s: score });
+      zetDagWaarde(e, tikMoment(b, nu), score, nu);
       found.psk = e.slice(-120);
       if (found.demo) { await sendJson(response, 200, { ok: true, psk: found.psk }); return; }
       await saveJson(kaartenPath, kaarten);

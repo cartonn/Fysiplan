@@ -1512,15 +1512,18 @@
   }
 
   // ---- wachtrij: zonder internet blijft wat de patiënt aantikt op de telefoon staan ----
-  // Per kaart in localStorage, één item per soort (de server telt ook één per dag), en
-  // pas weg als de server het echt heeft. Bij laden en bij 'online' gaat het alsnog mee.
+  // Per kaart in localStorage, één item per soort per dag (de server telt ook één per dag),
+  // met het moment van tikken erbij (`wanneer`), zodat twee dagen zonder internet ook twee
+  // dagen blijven; pas weg als de server het echt heeft. Bij laden en 'online' gaat het mee.
   function wachtSleutel(){return 'fp_wacht_'+(id||'x');}
   function leesWacht(){try{var w=JSON.parse(localStorage.getItem(wachtSleutel())||'{}');return w&&typeof w==='object'&&!Array.isArray(w)?w:{};}catch(e){return {};}}
   function bewaarWacht(w){try{if(Object.keys(w).length)localStorage.setItem(wachtSleutel(),JSON.stringify(w));else localStorage.removeItem(wachtSleutel());}catch(e){}}
   function zetInWacht(pad,body){
     if(!id||id==='demo')return;
-    var w=leesWacht();var sleutel=pad+(pad==='/api/kaart/oefzwaar'?'#'+body.oef:'');
-    w[sleutel]={pad:pad,body:body,t:Date.now()};bewaarWacht(w);tekenWacht();
+    var w=leesWacht(),nu=Date.now();
+    var sleutel=pad+(pad==='/api/kaart/oefzwaar'?'#'+body.oef:pad==='/api/kaart/seintje'?'#'+body.soort:'')+'@'+dagStr(nu);
+    var mee={};for(var k in body)mee[k]=body[k];if(!mee.wanneer)mee.wanneer=nu;
+    w[sleutel]={pad:pad,body:mee,t:nu};bewaarWacht(w);tekenWacht();
   }
   function tekenWacht(klaar){
     var el=document.getElementById('wachtrij');if(!el)return;
