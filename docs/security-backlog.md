@@ -23,6 +23,13 @@ Volgende run: (g) headers/CSP/cookies, daarna (e) uploads en (b) accountlaag.
 
 ## Open
 
+- **LAAG — `kruisSite()` kijkt alleen naar `Sec-Fetch-Site`** (gebruikers-sweep 2026-11-07, Jayden). Een POST
+  naar `/api/kaart/meting` met `Origin: https://evil.example` en zonder Sec-Fetch-Site geeft 200 en overschrijft
+  de pijnscore. Oudere Safari-versies sturen die header niet. Het kaart-id blijft nodig, dus de impact is klein.
+  Fix: ook een vreemde `Origin` weigeren als Sec-Fetch-Site ontbreekt (server.js r. ~1078).
+- **LAAG — id als lijst wordt geaccepteerd** (sweep 2026-11-07, Jayden). `{"id":["<id>"]}` op /api/kaart/gedaan
+  en andere kaartroutes geeft 200 via `String(b.id)`. Geen toegang tot iets nieuws, wel slordige validatie;
+  verwacht 400 bij een niet-string.
 - **HOOG — praktijknaam is een wereldwijde sleutel** (sweep 2026-11-06, Sanne). Wie een naam als eerste
   beveiligt, sluit elke andere praktijk met die naam buiten ("Deze praktijk is beveiligd. Log in…");
   een naam kan zo vooraf worden gekaapt. Ook wisselt de praktijk stil als de therapeut de naam op de
