@@ -62,9 +62,9 @@ if (IS_PRODUCTIE && !ADMIN_KEY) console.warn("Beheer staat dicht: zet een eigen 
 const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "admin88";
 // versie van de verwerkersovereenkomst (public/juridisch.html): bij elke inhoudelijke
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
-const VWO_VERSIE = "2026-11-02";
+const VWO_VERSIE = "2026-11-07";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-07";
+const AV_VERSIE = "2026-11-07-2";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-07";
@@ -74,7 +74,9 @@ const PRIVACY_VERSIE = "2026-11-07";
 // VWO_VERSIE hier een regel toevoegen (test:akkoord controleert dat).
 const AKKOORD_WIJZIGINGEN = [
   { stuk: "vwo", versie: "2026-11-02", tekst: "Eerste versie van de verwerkersovereenkomst: Fysiplan bewaart de kaarten alleen in opdracht van de praktijk." },
-  { stuk: "av", versie: "2026-11-07", tekst: "Eerste versie van de algemene voorwaarden: wat Fysiplan doet, de gratis proef, prijs per therapeut, looptijd en stoppen." }
+  { stuk: "av", versie: "2026-11-07", tekst: "Eerste versie van de algemene voorwaarden: wat Fysiplan doet, de gratis proef, prijs per therapeut, looptijd en stoppen." },
+  { stuk: "vwo", versie: "2026-11-07", tekst: "Beveiliging: elke therapeut een eigen login met de rollen beheerder en therapeut; wie uit het team gaat, verliest direct de toegang. Eén akkoord samen met de voorwaarden." },
+  { stuk: "av", versie: "2026-11-07-2", tekst: "Artikel over je account: elke therapeut krijgt een eigen login en je deelt wachtwoorden met niemand." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
@@ -5275,12 +5277,23 @@ async function afhandelen(request, response) {
     const opnieuw = (fout, status) => serveerProef(request, response, "gegevens", { TITEL: "Gegevens van je praktijk",
       V_PRAKTIJK: cleanName(b.praktijk, 80), MELDING_HTML: '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" }, status);
     if (nk && loginOpSlot(nk)) { await opnieuw("Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
-    const pk = nk && !verbodenSleutel.test(nk) ? accountVoorLogin(nk, String(b.wachtwoord || "")) : null;
+    // met eigen login: e-mail + wachtwoord van een beheerder van die praktijk. Zo blijft
+    // downloaden en wissen mogelijk nadat het gedeelde praktijkwachtwoord uit staat.
+    const em = normEmail(b.email);
+    let pk = null;
+    if (nk && !verbodenSleutel.test(nk)) {
+      if (em) {
+        for (const k of accountsMetNaam(nk)) {
+          if (ledenVan(k).some((l) => l.email === em && l.rol === "beheerder" && lidActief(l) && checkHash(String(b.wachtwoord || ""), l.hash))) { pk = k; break; }
+        }
+      } else pk = accountVoorLogin(nk, String(b.wachtwoord || ""));
+    }
     const acc = pk ? praktijkAccounts[pk] : null;
     if (!acc) {
       loginMisTel(nk || "?");
       auditLog(accountsMetNaam(nk)[0] || nk || "?", wissen ? "alles-wissen-mislukt" : "download-mislukt", request);
-      await opnieuw("Die praktijknaam en dat wachtwoord horen niet bij elkaar. Alleen een beveiligde praktijk kan hier downloaden of wissen.", 403);
+      await opnieuw(em ? "Dat e-mailadres en wachtwoord horen niet bij een beheerder van deze praktijk. Alleen een beheerder kan hier downloaden of wissen."
+        : "Die praktijknaam en dat wachtwoord horen niet bij elkaar. Alleen een beveiligde praktijk kan hier downloaden of wissen. Werkt je praktijk met eigen logins? Vul dan ook je e-mail in.", 403);
       return;
     }
     loginMisPraktijk.delete(nk);
@@ -5296,6 +5309,8 @@ async function afhandelen(request, response) {
         gedownload: new Date().toISOString(),
         praktijk: pk,
         account: { gemaakt: acc.gemaakt || null, verwerkersovereenkomst: acc.vwo || null, akkoord: acc.akkoord || null, proef: acc.proef || null },
+        // teamleden zonder wachtwoord of uitnodigingscode
+        team: ledenVan(pk).map((l) => ({ naam: l.naam || "", email: l.email, rol: l.rol, actief: lidActief(l), laatst: l.laatst || null })),
         profiel: Object.entries(praktijken).filter(eigenProfiel).map(([, p]) => publiekProfiel(p)),
         kaarten: Object.values(kaarten[pk] || {}).map((k) => { const v = verlooptOp(k); return { ...k, verlooptOp: Number.isFinite(v) ? new Date(v).toISOString() : null }; }),
         eigenOefeningen: praktijkOefeningen[pk] || [],
@@ -5414,7 +5429,7 @@ async function afhandelen(request, response) {
     const nonce = scriptNonce();
     response.setHeader("content-security-policy",
       "default-src 'self'; script-src 'self' 'nonce-" + nonce + "'; " +
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; " +
+      "style-src 'self' 'unsafe-inline'; font-src 'self'; " +
       "img-src 'self' data: blob:; media-src 'self' blob:; " +
       "frame-src https://www.youtube-nocookie.com https://*.cloudflarestream.com https://iframe.videodelivery.net; " +
       "connect-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'; frame-ancestors 'none'");
@@ -5471,7 +5486,7 @@ async function afhandelen(request, response) {
       const contact = FYSIPLAN_ID.contact || afzender;
       const vars = {
         TITEL: { privacy: "Privacy", vwo: "Verwerkersovereenkomst", voorwaarden: "Algemene voorwaarden" }[blok],
-        VERSIE: new Date(({ voorwaarden: AV_VERSIE, privacy: PRIVACY_VERSIE }[blok] || VWO_VERSIE) + "T12:00:00Z").toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Amsterdam" }),
+        VERSIE: new Date(String({ voorwaarden: AV_VERSIE, privacy: PRIVACY_VERSIE }[blok] || VWO_VERSIE).slice(0, 10) + "T12:00:00Z").toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Amsterdam" }),
         BEDRIJF: FYSIPLAN_ID.bedrijf || "Fysiplan",
         // alleen een aparte handelsnaam als de rechtspersoon anders heet ("Fysiplan B.V." niet)
         ALIAS_HTML: FYSIPLAN_ID.bedrijf && !/^fysiplan\b/i.test(FYSIPLAN_ID.bedrijf) ? " (&ldquo;Fysiplan&rdquo;)" : "",

@@ -48,6 +48,9 @@ if (pw) {
   app.stderr.on("data", (c) => { uit += c; });
   const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
   const browser = await pw.chromium.launch();
+  // het eenmalige welkom opent 400 ms na het laden en kon zo over de knop Kaarten vallen,
+  // nadat de test de overlays al had gesloten; hier is het welkom al gezien
+  const geenWelkom = (c) => c.addInitScript(() => { try { localStorage.setItem("fysiplan_welkom_gezien", "1"); } catch {} });
   const openKaarten = async (page) => {
     await page.goto(origin + "/v2/app");
     await page.waitForSelector("[data-add]", { timeout: 15000 });
@@ -58,6 +61,7 @@ if (pw) {
     for (let i = 0; i < 100; i++) { try { if ((await fetch(origin + "/health")).ok) break; } catch {} await wacht(50); }
     // ---- 1: geen praktijknaam ----
     const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.9.2.1" } });
+    await geenWelkom(ctx);
     const page = await ctx.newPage();
     await page.goto(origin + "/v2/app");
     await page.waitForSelector("[data-add]", { timeout: 15000 });
@@ -77,6 +81,7 @@ if (pw) {
 
     // ---- 2: server druk (429) en storing (503) ----
     const ctx2 = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.9.2.2" } });
+    await geenWelkom(ctx2);
     const p2 = await ctx2.newPage();
     await p2.route("**/api/praktijk/status**", (route) => route.fulfill({ status: 503, contentType: "application/json", body: "{}" }));
     await p2.route("**/api/kaarten?**", (route) => route.fulfill({ status: 429, contentType: "application/json", body: JSON.stringify({ ok: false, fout: "Te veel verzoeken." }) }));
@@ -100,6 +105,7 @@ if (pw) {
     // ---- 3: beeldkeuze en Help op telefoon en iPad staand ----
     for (const [i, toestel] of ["iPhone 14", "iPad (gen 7)"].entries()) {
       const c3 = await browser.newContext({ ...pw.devices[toestel], locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.9.2." + (10 + i) } });
+      await geenWelkom(c3);
       const p3 = await c3.newPage();
       await p3.goto(origin + "/v2/app");
       await p3.waitForSelector("[data-add]", { timeout: 15000 });

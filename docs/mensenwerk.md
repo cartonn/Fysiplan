@@ -4,6 +4,19 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Eigen logins en het nieuwe akkoord (legal, 2026-11-07)
+**Wat de code nu doet:** elke praktijk ziet na inloggen één keer "De voorwaarden zijn bijgewerkt"
+met wat er veranderd is; een beheerder vinkt opnieuw aan. Daarna staat per praktijk vast welke
+versie, wanneer en wie (ook in de download van /v2/gegevens).
+**Wat jij moet doen:**
+1. Kies of "per therapeut" in de voorwaarden betekent "per eigen login" (advies: ja, dan kan een
+   praktijk niet met één gedeeld wachtwoord voor iedereen werken). Zet dat dan in art. 4 en verhoog
+   `AV_VERSIE` met een regel in `AKKOORD_WIJZIGINGEN` (server.js).
+2. Railway bewaart logs 7 dagen (Hobby) of 30 dagen (Pro). De privacyverklaring zegt "hooguit 30
+   dagen"; klopt je abonnement daar niet mee, laat het dan aanpassen.
+3. Laat de jurist privacyverklaring, verwerkersovereenkomst en voorwaarden samen toetsen (staat al
+   hieronder bij Algemene voorwaarden, punt 7).
+
 ### Online betalen via Mollie (praktijk-routine, 2026-11-07)
 **Wat de code nu doet:** zet je `MOLLIE_API_KEY` op Railway, dan krijgen "Mijn proef" en de
 verlopen-pagina een blok "Direct online afrekenen": aantal therapeuten kiezen, eerste maand

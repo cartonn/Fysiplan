@@ -8,33 +8,21 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 
 | Gebied | Laatst gecontroleerd |
 |---|---|
-| (a) privacyverklaring (art. 13/14 AVG) | 2026-11-07 (rechten, verplicht verstrekken, foutlog) |
-| (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-02 (PR #40) |
-| (c) algemene voorwaarden | 2026-11-06 (concept gebouwd, deze run) |
+| (a) privacyverklaring (art. 13/14 AVG) | 2026-11-07 (team, akkoord, Mijn gegevens, Railway-logs) |
+| (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-07 (eigen login per therapeut, één akkoord) |
+| (c) algemene voorwaarden | 2026-11-07 (akkoord met versie, eigen login) |
 | (d) code tegen tekst | 2026-11-07 (Mollie/betalen), steekproef 2026-11-06 |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-06 (PR praktijkgegevens, deze run) |
-| (f) cookies en lokale opslag | 2026-11-06 (PR opslag, deze run) |
+| (f) cookies en lokale opslag | 2026-11-07 (Google Fonts weg, fp1, wis-knoppen) |
 | (g) MDR en AI-verordening | 2026-11-02 (PR #40) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-07 (contactlogboek in de dossiertekst) |
 | (i) begrijpelijkheid (B1) | 2026-11-07 (privacyverklaring: "In het kort"; VWO en voorwaarden nog niet) |
 
 Volgende run: (b) verwerkersovereenkomst, daarna (g) MDR/AI-verordening en (i) B1 voor VWO en voorwaarden.
-PR #41 staat sinds 2026-11-02 open op `public/index.html`; de punten die daarop wachten blijven liggen.
+De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
 
-- **MIDDEL — "In de praktijk" in Kaarten bewaart een volledige naam zonder roepnaamvoorstel**
-  (sweep 2026-11-06, Sanne). Print met QR en automatisch delen stellen "Henk V." voor; de knop
-  `k_save_srv` in public/index.html niet. Gevolg: "Henk de Vries" staat op de server, in het
-  overzicht en in de CSV (dataminimalisatie, art. 5 lid 1 c AVG). Ook: de voorbeeldkaart heeft
-  `cn.value='Voorbeeldpatiënt'` als echte waarde; wie erin typt, deelt "VoorbeeldpRiaatiënt", en
-  elke naamswijziging na beveiligen maakt een nieuwe gedeelde kaart (3 kaarten met dezelfde oefeningen).
-- **MIDDEL — therapeut kan de app-opslag op een apparaat niet met één knop wissen (2026-11-06).**
-  De app bewaart in de browser de kaarten met naam, leeftijd en casus (`fysiplan_kaarten`,
-  `fysiplan_state`), notities, eigen oefeningen en foto's (IndexedDB `fysiplan`) en de
-  praktijksessie (`fp_praksessie`). Dat staat nu in de privacyverklaring (#opslag) met het advies
-  een eigen apparaat met schermslot te gebruiken. Een knop "Wis Fysiplan van dit apparaat" (bij
-  uitloggen of in Help) hoort in `public/index.html`; wacht tot PR #41 daar gemerged of gesloten is.
 - **LAAG — patiëntopslag (/k) is functioneel, geen toestemming nodig (art. 11.7a lid 3 Tw).**
   Gecontroleerd 2026-11-06: geen cookies op /k, alleen localStorage (taal, lettergrootte, stem,
   vinkjes, "te zwaar", privacyregel gezien, app-uitnodiging) en de offline-cache van de
@@ -48,25 +36,33 @@ PR #41 staat sinds 2026-11-02 open op `public/index.html`; de punten die daarop 
 - **LAAG — een onbeveiligde praktijk kan niet alles in één keer wissen.** Zonder wachtwoord is
   er geen bewijs van eigenaarschap. Zo'n praktijk kan geen kaarten delen (wachtwoordplicht sinds
   PR #40), dus er staan geen patiëntgegevens op de server; losse sjablonen/profiel via e-mail.
-- **MIDDEL — app-voet linkt de voorwaarden nog niet.** De Help-tekst "Privacy en bewaren"
-  in `public/index.html` linkt privacy en verwerkersovereenkomst, maar niet `/voorwaarden`.
-  Bewust overgeslagen omdat PR #41 (beveiligen-meldingen) nog open staat op `public/index.html`.
-  Toevoegen zodra #41 gemerged of gesloten is.
-- **MIDDEL — voorwaarden worden bij de proef alleen genoemd, niet geaccepteerd.** Voor een
-  zakelijke klant volstaat terhandstelling vóór of bij het sluiten (art. 6:233-234 BW), en de
-  proefpagina linkt ze nu. Bij het betaalde abonnement hoort een expliciet akkoord met versie
-  en tijdstip (zoals bij de verwerkersovereenkomst, `AV_VERSIE` in server.js). Bouwen zodra er
-  een betaalstroom is (zie mensenwerk, routine praktijken).
 - **LAAG — steekproef (d), 2026-11-06:** avatarvideo's uit PR #42 staan op de eigen server
   (geen nieuwe derde partij), dus de subverwerkerslijst klopt nog. Volledige controle (d) van
   wissen van opnames, eigen video's en logs volgt in een latere run.
 
-- **LAAG — bewaartermijn van de Railway-logs onbekend (2026-11-07).** De foutlog bevat sinds deze
-  run geen kaartlink meer, wel het moment en de foutmelding. Hoe lang Railway logs bewaart, staat
-  niet in de code; de privacyverklaring zegt daarom alleen "bij Railway". Bij de volgende (b)-run
-  nagaan in de Railway-documentatie en de termijn in de tekst zetten.
-
 ## Opgelost
+
+- **HOOG — de app voor therapeuten laadde het lettertype bij Google (2026-11-07).** `public/index.html`
+  haalde Inter van fonts.googleapis.com en fonts.gstatic.com. Daardoor ging bij elk bezoek het
+  IP-adres van de therapeut naar Google, zonder toestemming en zonder noodzaak (LG München I,
+  20-01-2022, 3 O 17493/20; art. 6 AVG). OPGELOST: Inter staat nu op de eigen server
+  (`public/fonts`, OFL), de CSP staat geen Google-lettertypes meer toe, en de privacyverklaring
+  noemt Google alleen nog voor video's.
+- **MIDDEL — teksten liepen achter op rollen, inbox en patiëntkant (2026-11-07).** Teamleden (naam,
+  e-mail, rol), "afgehandeld door" en "in dossier" bij een kaart, het akkoord met naam, de wachtrij
+  op de telefoon van de patiënt, de cookie `fp1` van de oude app en de wis-knoppen stonden niet in
+  de privacyverklaring. De verwerkersovereenkomst noemde nog alleen het praktijkwachtwoord; de
+  voorwaarden zeiden "deel de toegang met mensen van je praktijk". OPGELOST: privacyverklaring,
+  verwerkersovereenkomst (art. 5) en voorwaarden bijgewerkt; `VWO_VERSIE` naar 2026-11-07 en
+  `AV_VERSIE` naar 2026-11-07-2, met regels in `AKKOORD_WIJZIGINGEN`, zodat een beheerder in de app
+  ziet wat er veranderde en opnieuw akkoord gaat. Railway bewaart logs 7 dagen (Hobby) of 30 dagen
+  (Pro) (docs.railway.com/observability/logs); de tekst zegt "hooguit 30 dagen".
+- **MIDDEL — "In de praktijk" bewaarde een volledige naam (art. 5 lid 1 c AVG).** OPGELOST
+  2026-11-07: de knop stelt nu ook een roepnaam voor ("Henk V."), net als printen met QR.
+- **MIDDEL — geen knop om de app-opslag te wissen; voorwaarden niet geaccepteerd en niet gelinkt
+  in de app.** OPGELOST 2026-11-07 (PR #67, #69 en deze ronde): "Wis Fysiplan van dit apparaat" in
+  het praktijkslot en in Help, "Wis deze kaart van mijn telefoon" op de patiëntkaart, één akkoord
+  voor voorwaarden en verwerkersovereenkomst met versie, tijd en wie, en Help linkt `/voorwaarden`.
 
 - **MIDDEL — privacyverklaring miste verplichte onderdelen van art. 13 AVG en een eerlijke versiedatum.**
   Alleen inzien/verbeteren/wissen stond erin; beperken, bezwaar en meenemen (art. 13 lid 2 b),
