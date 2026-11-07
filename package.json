@@ -68,6 +68,7 @@
     "test:gedaansync": "node scripts/test-kaart-gedaan-sync.mjs",
     "test:seintje": "node scripts/test-sweep-seintje-afspraak.mjs",
     "test:teamherstel": "node scripts/test-team-herstel.mjs",
+    "test:printknop": "node scripts/test-printknop.mjs",
     "test:logoveeg": "node scripts/test-logo-veeg.mjs"
   },
   "engines": {
