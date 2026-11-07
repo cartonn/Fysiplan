@@ -12,13 +12,13 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-07 (eigen login per therapeut, één akkoord) |
 | (c) algemene voorwaarden | 2026-11-07 (akkoord met versie, eigen login) |
 | (d) code tegen tekst | 2026-11-07 (Mollie/betalen), steekproef 2026-11-06 |
-| (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-07 (proefaanmelding in download en wissen; team, akkoord en logboek gaan al mee) |
+| (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-07 22u (patiënt: wissen van de telefoon echt volledig; eerder proefaanmelding in download en wissen) |
 | (f) cookies en lokale opslag | 2026-11-07 (Google Fonts weg, fp1, wis-knoppen) |
 | (g) MDR en AI-verordening | 2026-11-07 (vraaghulp op de kaart, zoekhulp, vertalen, AI-labels, landing en app) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-07 (contactlogboek in de dossiertekst) |
 | (i) begrijpelijkheid (B1) | 2026-11-07 (privacyverklaring: "In het kort"; VWO en voorwaarden nog niet) |
 
-Volgende run: (d) code tegen tekst (wissen van opnames, eigen video's, logs), daarna (i) B1 voor VWO en voorwaarden.
+Volgende run: /k "Mijn gegevens"-download leesbaar maken (open MIDDEL), daarna (d) code tegen tekst (wissen van opnames, eigen video's, logs) en (i) B1 voor VWO en voorwaarden.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
@@ -29,14 +29,6 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
   `vids`, epoch-tijden, `xfp_…|r0|S`). Lokale vinkjes/te zwaar (`fp_oefdaan`, `fp_zwaar`) ontbreken ook. Inzage
   (art. 15) vraagt begrijpelijke vorm. kaart.html r. ~1595 `downloadMijnGegevens`; sleutels en uitleg ook altijd
   Nederlands op een EN/AR-kaart (Jayden).
-- **MIDDEL — /k "Wis deze kaart van mijn telefoon" belooft meer dan het doet** (sweep 18u, Jayden iPhone 14, Truus,
-  Sanne). Herladen, terugknop of beginschermicoon openen de kaart meteen weer (URL blijft `/k/<id>`, service worker
-  cachet opnieuw); wat nog niet verstuurd is (`fp_wacht_`) gaat stil verloren terwijl de vraag zegt "bij je
-  praktijk blijft hij bestaan"; `fp_taal`/`fp_groot`/stem blijven staan terwijl juridisch.html r. ~142 zegt dat ze
-  meegaan; appbanner blijft staan. kaart.html r. ~988 `vergeetKaartHier`, r. ~1603 `wisVanTelefoon`.
-- **MIDDEL — /k privacyzin klopt niet helemaal** (sweep 18u, Truus). "Op deze kaart staan alleen je voornaam…":
-  de kaartnaam is vrije invoer en ook opmerking/doel van de therapeut staan erop. "Na je behandeling verdwijnt de
-  kaart vanzelf" botst met Mijn gegevens "blijft bewaard tot minstens …". Contrast 2,6:1. kaart.html TPRIV r. ~869, TMG r. ~866.
 - **LAAG — Privacy-link op een Engelse/Arabische kaart opent een pagina die alleen Nederlands is** en niet het
   patiëntdeel `#patient` (sweep 18u, Jayden, Pixel 7). kaart.html r. ~473, ~599; server.js `juridischBlok`.
 - **LAAG — /v2/gegevens loopt achter op #84** (sweep 18u, Sanne). Blok "Alles wissen" noemt de proefaanmelding niet
@@ -72,6 +64,14 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
   wissen van opnames, eigen video's en logs volgt in een latere run.
 
 ## Opgelost
+
+- **MIDDEL — /k "Wis deze kaart van mijn telefoon" belooft meer dan het doet.** OPGELOST 2026-11-07 PR #__PR__:
+  wist nu alle sleutels van deze kaart plus taal, lettergrootte, stem en app-melding (andere kaarten blijven),
+  waarschuwt als er nog iets niet verstuurd is, zet het adres op `/k?gewist=1` zodat herladen de kaart niet
+  opnieuw opent, en zegt dat een beginschermicoon ook weg moet. Test `scripts/test-kaart-wis-telefoon.mjs`.
+- **MIDDEL — /k privacyzin klopt niet helemaal.** OPGELOST 2026-11-07 PR #__PR__: privacyzin en Mijn gegevens
+  noemen nu roepnaam, oefeningen en wat de fysiotherapeut erbij schreef, en "een tijd na je behandeling wordt
+  de kaart vanzelf gewist" (9 talen); privacyregel in `--grijs` (ca. 4,6:1 in plaats van 2,6:1).
 
 - **MIDDEL — proefaanmelding ontbrak in download en "Alles wissen" (2026-11-07).** `/v2/gegevens`
   beloofde "alle gegevens die Fysiplan voor deze praktijk bewaart", maar de proefaanmelding van die

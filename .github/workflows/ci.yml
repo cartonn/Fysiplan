@@ -41,6 +41,7 @@ jobs:
       - run: node scripts/test-praktijkgegevens.mjs
       - run: node scripts/test-gegevens-proef.mjs
       - run: node scripts/test-kaart-weg.mjs
+      - run: node scripts/test-kaart-wis-telefoon.mjs
       - run: node scripts/test-dossier-contact.mjs
       - run: npm run test:kaartversie
       - run: npm run test:hernoem

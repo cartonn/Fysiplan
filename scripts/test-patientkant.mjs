@@ -89,7 +89,7 @@ try {
       page.on("pageerror", (e) => fouten.push(String(e)));
       await page.goto(origin + "/k/" + id);
       await page.waitForFunction(() => getComputedStyle(document.getElementById("wrap")).display === "block", null, { timeout: 15000 });
-      assert.match(await page.textContent("#privtekst"), /alleen je voornaam/);
+      assert.match(await page.textContent("#privtekst"), /je roepnaam, je oefeningen, wat je fysiotherapeut erbij schreef/);
       assert.match(await page.textContent("#sspoed"), /Spoed\?.*112/);
       assert.ok(await page.isVisible("#mgblok"));
       await page.click("#mgblok summary");
