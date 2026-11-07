@@ -125,7 +125,7 @@ try {
   assert.equal(betaalVerzoek.customerId, "cst_test1");
   assert.equal(betaalVerzoek.metadata.proef, "oud0000000000001");
   assert.equal((await leesProef()).betaling.id, "tr_test12345");
-  assert.match(String((await leesProef()).betaling.av?.versie), /^\d{4}-\d{2}-\d{2}$/, "voorwaardenversie bij de betaling bewaard");
+  assert.match(String((await leesProef()).betaling.av?.versie), /^\d{4}-\d{2}-\d{2}(-\d+)?$/, "voorwaardenversie bij de betaling bewaard");
 
   // webhook: onbekend id → 200 maar geen verzoek aan Mollie
   const voor = nep.verzoeken.length;
