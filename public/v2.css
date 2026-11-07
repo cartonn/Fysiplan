@@ -2,39 +2,38 @@
    op de bestaande app plus een handvol vormcorrecties; v1 op / blijft onaangeroerd. */
 
 html.v2{
-  --brand:#2456a6; --brand-700:#1c4487; --brand-50:#edf2fa; --brand-100:#d9e4f5;
-  --bg:#f6f2e9; --tray:#efe9dc; --panel:#fffefa;
-  --ink:#232019; --text:#3d3a31; --muted:#777162; --soft:#a39c8a;
-  --line:#e7e0cf; --line2:#f0ebdd;
-  --ring:0 0 0 3px rgba(36,86,166,.18);
-  --sh-sm:0 1px 2px rgba(80,64,32,.05);
-  --sh:0 6px 22px rgba(80,64,32,.09);
-  --sh-lg:0 18px 44px rgba(80,64,32,.15);
-  --r:12px; --r-lg:18px;
+  /* modern, rustig palet (2026-11-07): koel lichtgrijs vlak, witte panelen, één heldere blauwe accentkleur */
+  --brand:#2457c5; --brand-700:#1b45a0; --brand-50:#eef3fd; --brand-100:#d8e3fa;
+  --bg:#f4f6f9; --tray:#eceff4; --panel:#ffffff;
+  --ink:#0f172a; --text:#334155; --muted:#64748b; --soft:#94a3b8;
+  --line:#e3e8ef; --line2:#eef2f6;
+  --ring:0 0 0 3px rgba(36,87,197,.18);
+  --sh-sm:0 1px 2px rgba(15,23,42,.05);
+  --sh:0 1px 3px rgba(15,23,42,.06),0 8px 24px rgba(15,23,42,.06);
+  --sh-lg:0 24px 60px rgba(15,23,42,.18);
+  --r:10px; --r-lg:14px;
 }
-html.v2 body{background:
-  radial-gradient(1100px 500px at 85% -10%, rgba(36,86,166,.05), transparent 60%),
-  var(--bg)}
-html.v2 header.topbar{background:rgba(255,254,250,.94);border-bottom:1px solid var(--line)}
-html.v2 header.topbar .mark{border-radius:11px;background:linear-gradient(150deg,#2f66bd,#1c4487)}
-html.v2 .btn{border-radius:999px;border-color:var(--line)}
-html.v2 .btn:hover{border-color:#cfc6ad}
+html.v2 body{background:var(--bg);color:var(--text);letter-spacing:-.003em}
+html.v2 header.topbar{background:rgba(255,255,255,.9);border-bottom:1px solid var(--line);box-shadow:none}
+html.v2 header.topbar .mark{border-radius:9px;background:linear-gradient(150deg,#3b6fe0,#1b45a0)}
+html.v2 .btn{border-radius:var(--r);border-color:var(--line)}
+html.v2 .btn:hover{border-color:#cbd5e1;background:#f8fafc}
 html.v2 .btn.primary{background:var(--brand);border-color:var(--brand)}
 html.v2 .btn.primary:hover{background:var(--brand-700)}
 /* Categorieën gebruiken dezelfde rustige chips als beheer en V1. */
 html.v2 .chip{border-radius:999px;background:var(--panel)}
 html.v2 .chip.on{background:var(--brand-50);border-color:var(--brand-100);color:var(--brand-700);font-weight:600}
 html.v2 .card{border-radius:var(--r-lg)}
-html.v2 .card .hd{background:#fbf8f0;color:var(--muted)}
+html.v2 .card .hd{background:#f8fafc;color:var(--muted)}
 html.v2 .row{border-radius:12px}
-html.v2 .row:hover{background:#f7f3e8}
+html.v2 .row:hover{background:#f5f8fc}
 html.v2 .row .thumb{border-radius:12px;background:#fff;border-color:var(--line);object-fit:contain;object-position:center;box-sizing:border-box}
 html.v2 #a4 .pic .thumb{object-fit:contain;object-position:center;box-sizing:border-box;display:block;background:#fff;flex-shrink:0}
 html.v2 .row .add{background:var(--brand-50);border-color:var(--brand-100);color:var(--brand)}
 html.v2 .row .add:hover,html.v2 .row .add.on{background:var(--brand);border-color:var(--brand);color:#fff}
-html.v2 input[type=text],html.v2 input.fld,html.v2 select,html.v2 textarea{background:#fffefa}
+html.v2 input[type=text],html.v2 input.fld,html.v2 select,html.v2 textarea{background:#ffffff}
 html.v2 #a4 #prakSelect{border-radius:9px;padding:5px 9px;font-size:11.5px;color:var(--text);
-  border-color:var(--line);background:#fffefa;box-shadow:var(--sh-sm)}
+  border-color:var(--line);background:#ffffff;box-shadow:var(--sh-sm)}
 html.v2 .modal{border-radius:18px}
 html.v2 #a4wrap{background:transparent}
 
@@ -50,7 +49,7 @@ html.v2 #a4 .pic .mvknop:focus-visible{outline:none;box-shadow:var(--ring)}
 
 /* Eén kaartkeuze voor scherm en PDF. De patiëntkaart achter de QR-code blijft kleur. */
 html.v2 .beeldkeuze-v2{margin:0 0 12px;padding:11px;border:1px solid var(--line);
-  border-radius:14px;background:#fbf8f0}
+  border-radius:14px;background:#f8fafc}
 html.v2 .beeldkeuze-kop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:9px}
 html.v2 .beeldkeuze-kop>span:first-child{display:flex;flex-direction:column;gap:2px}
 html.v2 .beeldkeuze-kop b{font-size:12px;color:var(--ink)}
@@ -88,28 +87,20 @@ html.v2 #a4 .qrblok .qrx:hover{color:#c94f36;border-color:#e4b8ac}
 html.v2 #a4 .qrblok svg{width:96px;height:96px}
 html.v2 #a4 .qrblok small{font-size:8.5px;color:#667085;text-align:center;max-width:104px;line-height:1.3}
 
-/* werkbalk: sjablonen/kaarten/wis als één gegroepeerd segment, print apart als primaire actie */
-html.v2 header.topbar #sjabBtn{border-radius:999px 0 0 999px;margin-right:0;border-right:none}
-html.v2 header.topbar #kaartenBtn{border-radius:0;margin:0;border-right:none}
-html.v2 header.topbar #clearBtn{border-radius:0 999px 999px 0;margin-left:0}
-html.v2 header.topbar #sjabBtn:hover,html.v2 header.topbar #kaartenBtn:hover,html.v2 header.topbar #clearBtn:hover{
-  background:#f6f2e6;border-color:var(--line)}
-html.v2 header.topbar #printBtn{margin-left:10px}
-
 /* zoekveld als verzorgde pil met focusring */
-html.v2 #search{border-radius:999px;padding:9px 16px;border-color:var(--line);background:#fffefa;box-shadow:var(--sh-sm)}
+html.v2 #search{border-radius:999px;padding:9px 16px;border-color:var(--line);background-color:#ffffff;box-shadow:var(--sh-sm)}
 html.v2 #search:focus{outline:none;border-color:var(--brand);box-shadow:var(--ring)}
 
 /* lijstrijen: zachter, met een lichte lift bij aanwijzen */
 html.v2 .row{border:1px solid transparent;transition:background .12s,border-color .12s,transform .12s}
-html.v2 .row:hover{background:#fbf7ec;border-color:var(--line2);transform:translateY(-1px)}
+html.v2 .row:hover{background:#f5f8fc;border-color:var(--line2);transform:translateY(-1px)}
 
 /* paneelkoppen in kleinkapitaal-stijl */
 html.v2 .card .hd{letter-spacing:.08em;font-size:11.5px}
 
 /* smalle, rustige schuifbalk in de oefeningenlijst */
 html.v2 .list::-webkit-scrollbar{width:8px}
-html.v2 .list::-webkit-scrollbar-thumb{background:#ddd4bd;border-radius:99px}
+html.v2 .list::-webkit-scrollbar-thumb{background:#d5dce6;border-radius:99px}
 html.v2 .list::-webkit-scrollbar-track{background:transparent}
 
 /* lege kaart: vriendelijke hint als zwevend chipje. De dekkende achtergrond en
@@ -151,10 +142,6 @@ html.v2 .v2badge{background:linear-gradient(150deg,#2f66bd,#1c4487);color:#fff;
   html.v2 #a4wrap{overflow-x:auto;padding:10px;-webkit-overflow-scrolling:touch}
   html.v2 .modal{width:min(420px,94vw);padding:18px}
 }
-@media (max-width:520px){
-  html.v2 header.topbar .btn{flex:1 1 calc(50% - 8px)}
-  html.v2 header.topbar .btn.primary{flex-basis:100%}
-}
 
 /* AI-kaartassistent: het voorstel als verzorgde kaartjes met doseringchips */
 html.v2 .ai-plan{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin:8px 0}
@@ -170,7 +157,7 @@ html.v2 .ai-waarschuwing{font-size:12px;line-height:1.5;background:#fff8e8;borde
   border-radius:12px;padding:9px 11px;margin-bottom:8px;color:#704d00}
 html.v2 .ai-waarschuwing b{display:block;margin-bottom:2px;color:#5c3e00}
 html.v2 .ai-oef{display:flex;gap:10px;align-items:flex-start;padding:10px 11px;border:1px solid var(--line);
-  border-radius:12px;margin-bottom:6px;cursor:pointer;background:#fffdf6;transition:border-color .12s,background .12s}
+  border-radius:12px;margin-bottom:6px;cursor:pointer;background:#ffffff;transition:border-color .12s,background .12s}
 html.v2 .ai-oef:hover{border-color:var(--brand-100);background:var(--brand-50)}
 html.v2 .ai-oef input{margin-top:3px;accent-color:var(--brand)}
 html.v2 .ai-dos{display:inline-block;font-size:11px;font-weight:600;color:var(--brand);background:var(--brand-50);
@@ -229,4 +216,204 @@ html.v2 .topbar #beeldKeuze .beeldsegment button{padding:5px 9px;font-size:12px}
 @media screen and (max-width:1160px){
   html.v2 #a4wrap::before{content:'Veeg opzij om het hele blad te zien';display:block;
     font:600 12px/1.4 -apple-system,'Segoe UI',sans-serif;color:#98a2b3;padding:0 0 8px 2px}
+}
+
+/* ======================================================================
+   Moderne laag (2026-11-07). Rustige SaaS-stijl: witte panelen op een koel
+   grijs vlak, knoppen met afgeronde hoeken en een icoon, één regel in de
+   kopbalk, Kaarten als paneel aan de rechterkant. Alleen het scherm: de
+   print en de A4 zelf veranderen niet.
+   ====================================================================== */
+@media screen{
+  /* ---- kopbalk: één regel, nooit tekst over twee regels ---- */
+  html.v2 header.topbar{height:60px;padding:0 18px;gap:10px;flex-wrap:nowrap}
+  html.v2 header.topbar h1{font-size:17px;font-weight:700;letter-spacing:-.02em}
+  html.v2 .v2badge{background:var(--brand-50);color:var(--brand-700);border:1px solid var(--brand-100);
+    font-size:10.5px;padding:1px 7px;margin-left:2px;letter-spacing:.02em}
+  html.v2 .topbar .menu{flex-wrap:nowrap;gap:2px;margin-left:10px;padding-left:12px;border-left:1px solid var(--line)}
+  html.v2 header.topbar .menu .mi{font-size:13.5px;font-weight:500;color:var(--muted);padding:7px 10px;border-radius:8px;white-space:nowrap}
+  html.v2 header.topbar .menu .mi:hover{background:#f1f5f9;color:var(--ink)}
+  html.v2 .topbar #beeldKeuze{margin-left:6px}
+  html.v2 .topbar #beeldKeuze .beeldsegment{background:#f1f5f9;border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px}
+  html.v2 .topbar #beeldKeuze .beeldsegment button{border-radius:7px;color:var(--muted);font-weight:600;padding:5px 11px;min-height:28px;white-space:nowrap}
+  html.v2 .topbar #beeldKeuze .beeldsegment button:hover{background:rgba(255,255,255,.7);color:var(--ink)}
+  html.v2 .topbar #beeldKeuze .beeldsegment button.aan{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(15,23,42,.08),0 0 0 1px rgba(15,23,42,.04)}
+
+  html.v2 .btn{font-weight:550;font-size:13.5px;line-height:1.2;white-space:nowrap;box-shadow:var(--sh-sm);
+    transition:background .12s,border-color .12s,box-shadow .12s,color .12s}
+  html.v2 .btn.primary{box-shadow:0 1px 2px rgba(15,23,42,.1),inset 0 1px 0 rgba(255,255,255,.12)}
+  html.v2 .btn.primary:hover{background:var(--brand-700);border-color:var(--brand-700)}
+  html.v2 header.topbar .btn{height:36px;padding:0 12px;display:inline-flex;align-items:center;gap:7px;margin:0}
+  html.v2 header.topbar .btn:not(.primary){background:transparent;border-color:transparent;box-shadow:none;color:var(--text)}
+  html.v2 header.topbar .btn:not(.primary):hover{background:#f1f5f9;color:var(--ink)}
+  html.v2 header.topbar .tb-acties{gap:2px}
+  html.v2 header.topbar #printBtn{margin-left:6px;padding:0 15px}
+  /* iconen als masker: kleuren mee met de tekst */
+  html.v2 header.topbar .btn::before{content:"";width:16px;height:16px;flex:0 0 16px;background:currentColor;
+    -webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat;opacity:.85}
+  html.v2 header.topbar .btn:not([id])::before{display:none}
+  html.v2 #eigenOefBtn{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E")}
+  html.v2 #aiBtn{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E")}
+  html.v2 #sjabBtn{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M12 3l9 5-9 5-9-5z'/%3E%3Cpath d='M3 13l9 5 9-5'/%3E%3C/svg%3E")}
+  html.v2 #kaartenBtn{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2.5'/%3E%3Cpath d='M3 9h18M8 14h5'/%3E%3C/svg%3E")}
+  html.v2 #clearBtn{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13'/%3E%3C/svg%3E")}
+  html.v2 #printBtn{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M7 9V3h10v6'/%3E%3Crect x='3' y='9' width='18' height='8' rx='2'/%3E%3Cpath d='M7 14h10v7H7z'/%3E%3C/svg%3E")}
+  html.v2 #uploadBtn,html.v2 #addBtn{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E")}
+  html.v2 #kb_sein{background:#e5484d!important;border-radius:99px!important;font-size:10.5px!important;padding:1px 6px!important;margin-left:2px!important}
+
+  /* ---- werkvlak ---- */
+  html.v2 .wrap{gap:18px;padding:18px 20px}
+  html.v2 .card{border-radius:var(--r-lg);border-color:var(--line);box-shadow:var(--sh)}
+  html.v2 .card .hd{background:#fff;color:var(--ink);text-transform:none;letter-spacing:-.01em;font-size:14px;font-weight:650;
+    padding:14px 16px 12px;border-bottom:1px solid var(--line2)}
+  html.v2 .card .hd #cnt{color:var(--soft);font-weight:500;font-size:12.5px}
+  html.v2 .card .bd{padding:12px 14px}
+  html.v2 .chip,html.v2 .smart-filter{border-radius:8px;background:#fff;border-color:var(--line);color:var(--text);font-weight:500}
+  html.v2 .chip:hover,html.v2 .smart-filter:hover{border-color:#cbd5e1;color:var(--ink)}
+  html.v2 .chip.on,html.v2 .smart-filter.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  html.v2 #filters .category-heading{font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--soft)}
+  html.v2 .smart-filter{white-space:nowrap}
+  html.v2 #search{border-radius:var(--r);height:40px;padding:0 12px 0 36px;background-color:#f8fafc;box-shadow:none}
+  html.v2 #search:focus{background-color:#fff}
+  html.v2 .row{border-radius:12px;padding:8px}
+  html.v2 .row:hover{background:#f8fafc;border-color:var(--line);transform:none}
+  html.v2 .row .nm{font-weight:550;letter-spacing:-.01em}
+  html.v2 .row .nm small{color:var(--muted);margin-top:1px}
+  html.v2 .row .thumb{border-radius:10px;border-color:var(--line2);background:#fff}
+  html.v2 .row .add{width:32px;height:32px;border-radius:9px;background:#fff;border:1px solid var(--line);color:var(--ink);font-size:18px;box-shadow:var(--sh-sm)}
+  html.v2 .row .add:hover{background:var(--brand);border-color:var(--brand);color:#fff}
+  html.v2 .row .add.on{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:none}
+  html.v2 .row .fav{color:#d5dce6}
+  html.v2 #a4wrap{background:var(--tray);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:inset 0 1px 2px rgba(15,23,42,.04)}
+  html.v2 #a4{border-radius:4px;box-shadow:0 1px 3px rgba(15,23,42,.08),0 12px 32px rgba(15,23,42,.08)}
+
+  /* ---- vensters ---- */
+  html.v2 .ov{background:rgba(15,23,42,.42);backdrop-filter:blur(3px)}
+  html.v2 .modal{border-radius:16px;box-shadow:var(--sh-lg);border:1px solid rgba(15,23,42,.06)}
+  html.v2 .modal h3{font-size:18px;letter-spacing:-.02em}
+  html.v2 .modal label{color:var(--ink);font-weight:600;font-size:12.5px}
+  html.v2 .modal input,html.v2 .modal select,html.v2 input[type=text],html.v2 input.fld{border-radius:9px;border-color:var(--line);height:38px}
+  html.v2 .modal input[type=radio],html.v2 .modal input[type=checkbox]{height:16px}
+  html.v2 .modal .acts{gap:8px}
+  html.v2 .modal .btn{height:36px;padding:0 14px;display:inline-flex;align-items:center;justify-content:center}
+  html.v2 .hint{color:var(--muted)}
+
+  /* ---- Kaarten: paneel aan de rechterkant, volle hoogte ---- */
+  html.v2 #ovKaarten{justify-content:flex-end;align-items:stretch;padding:0}
+  html.v2 #ovKaarten .modal{width:min(620px,100vw);height:100%;max-height:none;border-radius:18px 0 0 18px;
+    overflow-y:auto;padding:0 28px 0;animation:fpSchuif .2s ease;display:flex;flex-direction:column}
+  @keyframes fpSchuif{from{transform:translateX(24px);opacity:0}to{transform:none;opacity:1}}
+  html.v2 #ovKaarten .modal>h3{position:sticky;top:0;z-index:3;margin:0 -28px 6px;padding:20px 28px 14px;background:rgba(255,255,255,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line2);font-size:20px}
+  html.v2 #ovKaarten .modal>.acts{position:sticky;bottom:0;z-index:3;margin:auto -28px 0;padding:12px 28px;background:rgba(255,255,255,.94);
+    backdrop-filter:blur(6px);border-top:1px solid var(--line2)}
+  html.v2 #ovKaarten #k_srv{order:-1}
+  html.v2 #ovKaarten .modal>h3{order:-2}
+  html.v2 #ovKaarten .modal>.acts{order:9}
+  html.v2 #ovKaarten .k-eigen{margin-top:22px;padding-top:4px;border-top:1px solid var(--line2)}
+  html.v2 #ovKaarten .k-eigen>label:first-child{margin-top:16px}
+  html.v2 #ovKaarten #k_lijst,html.v2 #ovKaarten #k_srv_lijst{max-height:none!important;overflow:visible!important}
+  html.v2 #ovKaarten #k_srv>label,html.v2 #ovKaarten .k-eigen>label,html.v2 #k_inbox .ib-kop>label{font-size:15px!important;font-weight:650;
+    color:var(--ink);letter-spacing:-.01em;margin-top:22px!important}
+  html.v2 #ovKaarten .btn{height:32px;font-size:13px;padding:0 12px;border-radius:9px}
+  html.v2 #ovKaarten .btn.primary{height:34px}
+
+  /* praktijkslot: accountkaart met acties als knoppen */
+  html.v2 #prakslot{margin:14px 0 4px!important;padding:14px 16px!important;border:1px solid var(--line)!important;border-radius:14px!important;
+    background:#f8fafc!important}
+  html.v2 #ps_status{font-size:13.5px!important;color:var(--text)!important;line-height:1.5}
+  html.v2 #ps_status .ps-wie{display:flex;align-items:center;gap:10px;font-weight:600;color:var(--ink)}
+  html.v2 #ps_status .ps-wie small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+  html.v2 #ps_status .ps-av{width:34px;height:34px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;
+    justify-content:center;font-weight:700;font-size:13px;flex:0 0 34px}
+  html.v2 #ps_status .ps-slot{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:650;color:#15803d;background:#ecfdf3;
+    border:1px solid #c6ecd4;border-radius:99px;padding:2px 8px;margin-left:auto}
+  html.v2 .ps-acties{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  html.v2 #prakslot .ps-acties a{display:inline-flex;align-items:center;height:30px;padding:0 11px;border:1px solid var(--line);border-radius:8px;background:#fff;
+    color:var(--text);font-size:12.5px;font-weight:550;text-decoration:none;box-shadow:var(--sh-sm);transition:.12s}
+  html.v2 #prakslot .ps-acties a:hover{border-color:#cbd5e1;color:var(--ink);background:#f8fafc}
+  html.v2 #prakslot .ps-acties a#ps_team{background:var(--brand);border-color:var(--brand);color:#fff}
+  html.v2 #prakslot .ps-acties a#ps_team:hover{background:var(--brand-700)}
+  html.v2 #prakslot .ps-acties a#ps_wis{color:#b42318;border-color:#f4d4d0;background:#fff}
+  html.v2 #prakslot .ps-acties a#ps_wis:hover{background:#fef3f2}
+  html.v2 #ps_form input,html.v2 #ps_herstel input,html.v2 #ps_wijzig input,html.v2 #ps_hcform input{height:38px}
+  html.v2 #ps_form{margin-top:10px}
+
+  /* nieuwe voorwaarden: rustige melding, wijzigingen uitklapbaar */
+  html.v2 #ps_akkoord{margin:12px 0 2px!important;padding:12px 14px!important;border:1px solid #f5dfa6!important;background:#fffbeb!important;
+    border-radius:12px!important;color:#713f12!important;font-size:13px!important;line-height:1.5}
+  html.v2 #ps_akkoord details{margin:6px 0 8px}
+  html.v2 #ps_akkoord summary{cursor:pointer;font-weight:600;color:#92400e;width:max-content;max-width:100%}
+  html.v2 #ps_akkoord ul{margin:6px 0 2px 18px!important;padding:0}
+  html.v2 #ps_akkoord li{margin:3px 0}
+  html.v2 #ps_akkoord a{color:#92400e}
+  html.v2 #ps_akkoord .ak-rij{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+
+  /* inbox: elke patiënt een kaartje; volgorde = binnenkomst, geen kleur voor ernst */
+  html.v2 #k_inbox .ib-kop{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+  html.v2 #k_inbox .ib-kop>label{margin:22px 0 0!important;display:flex;align-items:center;gap:8px}
+  html.v2 #k_inbox .ib-tel{background:var(--ink);color:#fff;border-radius:99px;padding:1px 8px;font-size:11.5px;font-weight:650}
+  html.v2 #k_inbox .ib-mijn{margin:22px 0 0!important;font-weight:500!important;font-size:12.5px!important;color:var(--muted)!important;display:flex;gap:6px;align-items:center}
+  html.v2 #k_inbox .ib-lijst{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+  html.v2 #k_inbox .ib-item{display:flex;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--sh-sm);flex-wrap:wrap}
+  html.v2 #k_inbox .ib-av{width:36px;height:36px;border-radius:50%;background:#f1f5f9;color:var(--text);display:flex;align-items:center;justify-content:center;
+    font-weight:650;font-size:13px;flex:0 0 36px}
+  html.v2 #k_inbox .ib-tekst{flex:1;min-width:150px}
+  html.v2 #k_inbox .ib-tekst b{color:var(--ink);font-size:14px}
+  html.v2 #k_inbox .ib-tekst .ib-wie{color:var(--muted);font-size:12px;font-weight:400}
+  html.v2 #k_inbox .ib-wat{font-size:13px;color:var(--text);margin-top:2px}
+  html.v2 #k_inbox .ib-wat small{color:var(--soft)}
+  html.v2 #k_inbox .ib-knoppen{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  html.v2 #k_inbox .ib-label{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:99px;font-size:11px;font-weight:600;
+    background:#f1f5f9;color:var(--text);border:1px solid var(--line)}
+  html.v2 #k_inbox .ib-label.wacht{background:#fff7ed;color:#9a3412;border-color:#fed7aa}
+  html.v2 #k_inbox .ib-noot{font-size:11.5px;color:var(--soft);margin-top:8px;text-align:left}
+  html.v2 #k_inbox .ib-leeg{display:flex;align-items:center;gap:8px;margin-top:10px;padding:12px 14px;border:1px dashed var(--line);border-radius:12px;
+    color:var(--muted);font-size:13px}
+
+  /* gedeelde kaarten van de praktijk */
+  html.v2 #k_srv_zoek{height:38px;border-radius:9px;margin:8px 0}
+  html.v2 #k_srv_sam>*{border-radius:8px!important}
+  html.v2 #weekbrief{margin:18px 0 10px;padding-top:14px;border-top:1px solid var(--line2)}
+
+  /* ---- team ---- */
+  html.v2 #ovTeam .modal{width:min(600px,100%);max-width:600px!important;padding:24px 26px;max-height:calc(100vh - 32px);overflow:auto}
+  html.v2 #tm_inhoud{color:var(--text)!important;font-size:13.5px}
+  html.v2 .tm-kop{font-size:13px;font-weight:650;color:var(--ink);margin:16px 0 6px}
+  html.v2 .tm-lid{gap:12px!important;padding:10px 0!important;border-top:1px solid var(--line2)!important}
+  html.v2 .tm-kop+.tm-lid{border-top:0!important}
+  html.v2 .tm-naam div{font-size:12px!important}
+  html.v2 .tm-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:650;font-size:13px;
+    background:var(--brand-50);color:var(--brand-700);flex:0 0 36px}
+  html.v2 .tm-lid.uitgenodigd .tm-av{background:#f1f5f9;color:var(--soft);border:1px dashed #cbd5e1}
+  html.v2 .tm-naam{flex:1;min-width:0}
+  html.v2 .tm-naam b{color:var(--ink)}
+  html.v2 .tm-naam div{font-size:12px;color:var(--muted)}
+  html.v2 .tm-rol{font-size:12px;font-weight:600;color:var(--text);background:#f1f5f9;border-radius:99px;padding:3px 9px}
+  html.v2 .tm-lid select{height:32px;border:1px solid var(--line);border-radius:8px;padding:0 8px;font:inherit;font-size:12.5px;background:#fff}
+  html.v2 .tm-weg{width:32px;padding:0!important;color:var(--muted)}
+  html.v2 .tm-uitnodig{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#f8fafc}
+  html.v2 .tm-uitnodig input,html.v2 .tm-uitnodig select{height:36px!important;border:1px solid var(--line);border-radius:8px;padding:0 10px;font:inherit;background:#fff}
+}
+
+/* tablet en telefoon: compacte kop; de knoppen vormen één veegbare rij */
+@media screen and (max-width:920px){
+  html.v2 header.topbar{height:auto;flex-wrap:wrap;gap:8px;padding:10px 12px}
+  html.v2 header.topbar .brand{order:1;margin-right:auto}
+  html.v2 header.topbar #printBtn{order:2;margin-left:0}
+  html.v2 header.topbar .tb-acties{order:3;flex:1 1 100%;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 0;
+    -webkit-mask:linear-gradient(90deg,#000 88%,transparent);mask:linear-gradient(90deg,#000 88%,transparent)}
+  html.v2 header.topbar .tb-acties::-webkit-scrollbar{display:none}
+  html.v2 header.topbar .tb-acties .btn{flex:0 0 auto;height:38px;padding:0 12px;background:#fff!important;border-color:var(--line)!important}
+  html.v2 header.topbar .menu{order:4;flex:1 1 100%;margin-left:0;padding-left:0;border-left:0;overflow-x:auto;gap:4px}
+  html.v2 .modal{width:min(440px,94vw)}
+  html.v2 #ovKaarten .modal{width:100vw;border-radius:0;padding:0 16px}
+  html.v2 #ovKaarten .modal>h3{margin:0 -16px 6px;padding:16px}
+  html.v2 #ovKaarten .modal>.acts{margin:auto -16px 0;padding:10px 16px}
+  html.v2 .search-hint{display:none}
+}
+@media screen{
+  html.v2 #filters{max-height:86px}
+  html.v2 .modal a{color:var(--brand)}
+  html.v2 .modal a:hover{color:var(--brand-700)}
 }
