@@ -878,6 +878,23 @@
     uk:{r:'Ця картка від {p}. Те, що ти позначаєш, отримує твій фізіотерапевт. Ділися посиланням лише з тими, кому довіряєш.',b:'На цій картці твоє ім’я, вправи, те, що дописав фізіотерапевт, і те, що ти позначаєш. Через деякий час після лікування картка видаляється сама.',l:'Конфіденційність',ok:'Зрозуміло'}
   };
   // wekelijkse behandelreeks: "{n}" wordt het aantal nog komende afspraken
+  // agenda-knoppen: melding op de kaart als het agenda-bestand niet komt (geen kale foutpagina)
+  var TAGF={nl:{weg:'Deze afspraak is gewijzigd. Vraag je praktijk naar de nieuwe datum.',fout:'Dat lukte nu niet. Probeer het zo nog eens.'},en:{weg:'This appointment has changed. Ask your practice for the new date.',fout:'That did not work right now. Please try again in a moment.'},de:{weg:'Dieser Termin wurde geändert. Frag deine Praxis nach dem neuen Datum.',fout:'Das hat gerade nicht geklappt. Versuch es gleich noch einmal.'},fr:{weg:'Ce rendez-vous a changé. Demandez la nouvelle date à votre cabinet.',fout:'Cela n\'a pas fonctionné. Réessayez dans un instant.'},es:{weg:'Esta cita ha cambiado. Pide la nueva fecha a tu consulta.',fout:'No ha funcionado. Inténtalo de nuevo en un momento.'},pl:{weg:'Ta wizyta się zmieniła. Zapytaj gabinet o nowy termin.',fout:'Nie udało się. Spróbuj ponownie za chwilę.'},tr:{weg:'Bu randevu değişti. Yeni tarihi kliniğine sor.',fout:'Şu anda olmadı. Birazdan tekrar dene.'},ar:{weg:'تغيّر هذا الموعد. اسأل عيادتك عن الموعد الجديد.',fout:'لم ينجح ذلك الآن. حاول مرة أخرى بعد قليل.'},uk:{weg:'Цей візит змінився. Запитай у своєї практики нову дату.',fout:'Зараз не вдалося. Спробуй ще раз за хвилину.'}};
+  function trag(k){return (TAGF[TAAL]||TAGF.nl)[k];}
+  // eerst vragen of het agenda-bestand er is; pas dan openen. Anders een melding onder de knop.
+  function naarAgenda(url,knop,afspraak){
+    var m=knop.parentNode.querySelector('.agmelding');
+    if(!m){m=document.createElement('p');m.className='agmelding';m.setAttribute('role','status');
+      m.style.cssText='margin:8px 0 0;font-size:15px;color:#7a3b12';knop.insertAdjacentElement('afterend',m);}
+    m.textContent='';
+    fetch(url,{cache:'no-store'})
+      .then(function(r){
+        if(r.ok){location.href=url;return;}
+        if(afspraak&&r.status===404){m.textContent=trag('weg');if(K&&K.kaart)K.kaart.afspraak=null;return;}
+        m.textContent=trag('fout');
+      })
+      .catch(function(){m.textContent=trag('fout');});
+  }
   var TAFHER={nl:'wekelijks, nog {n} keer',en:'weekly, {n} more times',de:'wöchentlich, noch {n} Mal',fr:'chaque semaine, encore {n} fois',es:'semanal, {n} veces más',pl:'co tydzień, jeszcze {n} razy',tr:'haftalık, {n} kez daha',ar:'أسبوعيًا، {n} مرات متبقية',uk:'щотижня, ще {n} разів'};
   // PSK (Patiënt Specifieke Klachten): de doelactiviteit die de therapeut zette,
   // met de vraag hoe lastig die nu is (0 = geen moeite, 10 = onmogelijk)
@@ -1423,6 +1440,7 @@
     var ics=document.getElementById('afics');
     ics.textContent=tr('agknop');
     ics.href='/api/kaart/afspraak.ics?id='+encodeURIComponent(id)+'&taal='+encodeURIComponent(TAAL);
+    ics.onclick=function(e){e.preventDefault();naarAgenda(ics.href,ics,true);};
     blok.style.display='block';
   }
 
@@ -2445,7 +2463,7 @@
       document.querySelectorAll('#agdagen button.aan').forEach(function(b){gekozen.push(b.dataset.dag);});
       if(!gekozen.length){alert(tr('agleeg'));return;}
       var tijd=document.getElementById('agtijd').value||'09:00';
-      location.href='/api/kaart/agenda?id='+id+'&dagen='+gekozen.join(',')+'&tijd='+encodeURIComponent(tijd)+'&taal='+encodeURIComponent(TAAL);
+      naarAgenda('/api/kaart/agenda?id='+encodeURIComponent(id)+'&dagen='+gekozen.join(',')+'&tijd='+encodeURIComponent(tijd)+'&taal='+encodeURIComponent(TAAL),this,false);
     });
     var lbox=document.getElementById('lightbox');
     lbox.addEventListener('click',function(e){
