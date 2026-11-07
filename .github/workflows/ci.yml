@@ -60,3 +60,4 @@ jobs:
       - run: npm run test:seintje
       - run: npm run test:sweepoverzicht
       - run: npm run test:gedeeldwerk
+      - run: npm run test:wachtrijdagen
