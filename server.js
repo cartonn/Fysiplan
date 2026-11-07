@@ -2188,7 +2188,7 @@ async function afhandelen(request, response) {
       // mislukte inlogpogingen tellen mee in de rem-per-IP én de rem-per-praktijk
       if (!acc || !checkHash(ww, acc.hash)) {
         loginMisTel(pk || "?");
-        await denied(request, response, "praktijk-login");
+        await denied(request, response, "praktijk-login", "Dat wachtwoord klopt niet voor deze praktijk.");
         auditLog(pk || "?", "login-mislukt", request);
         return;
       }
@@ -2258,7 +2258,7 @@ async function afhandelen(request, response) {
       if (!checkHash(String(b.huidig || ""), acc.hash)) {
         loginMisTel(pk);
         auditLog(pk, "wachtwoord-wijzigen-mislukt", request);
-        await denied(request, response, "praktijk-wachtwoord");
+        await denied(request, response, "praktijk-wachtwoord", "Je huidige wachtwoord klopt niet.");
         return;
       }
       const nieuw = String(b.nieuw || "");
@@ -2294,7 +2294,7 @@ async function afhandelen(request, response) {
         await send429(response, 900, { ok: false, fout: "Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw." });
         return;
       }
-      if (!pk || !acc) { loginMisTel(pk || "?"); await denied(request, response, "praktijk-herstel"); return; }
+      if (!pk || !acc) { loginMisTel(pk || "?"); await denied(request, response, "praktijk-herstel", "Die herstelcode klopt niet."); return; }
       if (!acc.herstel) {
         await sendJson(response, 404, { ok: false, fout: "Voor dit account is nog geen herstelcode ingesteld. Wijzig ingelogd het wachtwoord om er één te krijgen." });
         return;
@@ -2303,7 +2303,7 @@ async function afhandelen(request, response) {
       if (!code || !checkHash(code, acc.herstel)) {
         loginMisTel(pk);
         auditLog(pk, "herstel-mislukt", request);
-        await denied(request, response, "praktijk-herstel");
+        await denied(request, response, "praktijk-herstel", "Die herstelcode klopt niet.");
         return;
       }
       const nieuw = String(b.nieuw || "");
@@ -2344,7 +2344,7 @@ async function afhandelen(request, response) {
       if (!checkHash(String(b.huidig || ""), acc.hash)) {
         loginMisTel(pk);
         auditLog(pk, "herstelcode-vernieuwen-mislukt", request);
-        await denied(request, response, "praktijk-herstelcode");
+        await denied(request, response, "praktijk-herstelcode", "Je huidige wachtwoord klopt niet.");
         return;
       }
       const herstelcode = maakHerstelcode();
@@ -2679,7 +2679,7 @@ async function afhandelen(request, response) {
       const acc = v1Accounts[email];
       if (!acc || acc.geblokkeerd || !checkHash(ww, acc.hash)) {
         v1LoginMisTel(email || "?");
-        await denied(request, response, "v1-login");
+        await denied(request, response, "v1-login", "Dat e-mailadres of wachtwoord klopt niet.");
         return;
       }
       v1LoginMis.delete(email);
