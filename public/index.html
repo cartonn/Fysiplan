@@ -486,6 +486,7 @@ bridge2.jpg</div>
       Tip voor het dossier: kies in het printvenster <b>Bewaar als PDF</b> en voeg het bestand toe aan het pati&euml;ntdossier in je EPD.
       De PDF gebruikt de beeldkeuze boven de oefeningen; de digitale kaart achter de QR-code blijft altijd in kleur.
     </div>
+    <div id="pr_melding" class="pr-melding" role="alert" hidden></div>
     <div class="acts">
       <button class="btn" id="pr_cancel">Annuleren</button>
       <button class="btn primary" id="pr_do">Print / PDF</button>
@@ -2047,6 +2048,7 @@ bridge2.jpg</div>
     if(IS_V2){
       var pq=document.getElementById('pr_qr');
       pq.checked=(QR_UIT_VOOR===null||QR_UIT_VOOR!==huidigeKaartNaam().toLowerCase());
+      prMelding(null);prBezig(false);
       openOv('ovPrint');return;
     }
     doePrint();
@@ -2284,6 +2286,43 @@ bridge2.jpg</div>
     QR_UIT_VOOR=huidigeKaartNaam().toLowerCase();
     verbergQr();
   });
+  // Het printvenster blijft open tot er echt geprint wordt. Kan de QR-code er niet op
+  // (praktijk niet beveiligd, roepnaam bestaat al, niet ingelogd, oudere versie), dan
+  // staat de reden hier in het venster met een knop om het op te lossen en altijd
+  // "Print zonder QR-code". Vroeger sloot het venster en stond er alleen een kleine
+  // hint op de A4, die je op een verkleinde kaart niet zag: de knop leek niets te doen.
+  function prBezig(aan){
+    var k=document.getElementById('pr_do');
+    k.disabled=!!aan;k.textContent=aan?'Even bewaren\u2026':'Print / PDF';
+  }
+  function prMelding(tekst,knoppen,metNaamveld){
+    var m=document.getElementById('pr_melding');
+    if(!tekst){m.hidden=true;m.innerHTML='';return;}
+    m.innerHTML="<p>"+esc(tekst)+"</p>"+
+      (metNaamveld?"<div class='pr-naam'><input id='pr_naam' placeholder='Roepnaam, bijv. Jan K.' autocomplete='off' aria-label='Roepnaam'/></div>":'')+
+      "<div class='pr-knoppen'>"+(knoppen||[]).map(function(k){return "<button type='button' class='btn"+(k.hoofd?' primary':'')+"' data-pract='"+esc(k.act)+"'>"+esc(k.label)+"</button>";}).join('')+
+      "<button type='button' class='btn' data-pract='zonderqr'>Print zonder QR-code</button></div>";
+    m.hidden=false;
+    var f=document.getElementById('pr_naam');if(f)setTimeout(function(){f.focus();},30);
+  }
+  function printMetQr(){document.getElementById('pr_do').click();}
+  document.getElementById('pr_melding').addEventListener('click',function(e){
+    var k=e.target.closest('[data-pract]');if(!k)return;
+    var a=k.dataset.pract;
+    if(a==='zonderqr'){document.getElementById('pr_qr').checked=false;prMelding(null);printMetQr();return;}
+    if(a==='naam'){
+      var v=(document.getElementById('pr_naam').value||'').trim();
+      if(!v){document.getElementById('pr_naam').focus();return;}
+      var cn=document.getElementById('c_naam');cn.value=v;cn.dispatchEvent(new Event('input',{bubbles:true}));
+      prMelding(null);printMetQr();return;
+    }
+    if(a==='overschrijf'){OVERSCHRIJF=huidigeKaartNaam().toLowerCase();prMelding(null);printMetQr();return;}
+    if(a==='beveilig'){closeOv('ovPrint');openBeveiligen(function(){document.getElementById('printBtn').click();});return;}
+    if(a==='nieuwste'){closeOv('ovPrint');openNieuwsteVersie();return;}
+  });
+  document.getElementById('pr_melding').addEventListener('keydown',function(e){
+    if(e.key==='Enter'&&e.target.id==='pr_naam'){e.preventDefault();var b=this.querySelector("[data-pract='naam']");if(b)b.click();}
+  });
   document.getElementById('pr_do').addEventListener('click',function(){
     var compact=document.getElementById('pr_compact').checked;
     var groot=document.getElementById('pr_groot').checked;
@@ -2292,13 +2331,22 @@ bridge2.jpg</div>
     var metQr=document.getElementById('pr_qr').checked;
     if(!metQr){
       if(IS_V2)QR_UIT_VOOR=huidigeKaartNaam().toLowerCase();
-      verbergQr();closeOv('ovPrint');doePrint();
+      prMelding(null);verbergQr();closeOv('ovPrint');doePrint();
       return;
     }
     QR_UIT_VOOR=null;
     // QR: kaart eerst bij de praktijk bewaren, dan de code op de kaart zetten en printen
-    if(!(SET.praktijk||'').trim()){alert('Vul eerst de praktijknaam op de kaart in — de digitale kaart hoort bij de praktijk.');return;}
+    if(!(SET.praktijk||'').trim()){
+      if(IS_V2){prMelding('Voor de QR-code hoort de kaart bij je praktijk. Vul eerst de praktijknaam linksboven op de kaart in.');return;}
+      alert('Vul eerst de praktijknaam op de kaart in — de digitale kaart hoort bij de praktijk.');return;
+    }
     var cn=document.getElementById('c_naam');
+    // zonder roepnaam heette elke kaart "Kaart <datum>": de tweede kaart van die dag
+    // botste dan met de eerste. Vraag de roepnaam hier in het venster.
+    if(IS_V2&&cn&&!cn.value.trim()){
+      prMelding('Geef de kaart een roepnaam, dan weet je straks bij Kaarten welke pati\u00ebnt dit is.',[{act:'naam',label:'Bewaar en print',hoofd:true}],true);
+      return;
+    }
     if(IS_V2&&cn&&naamLijktVolledig(cn.value)&&NAAM_OK!==cn.value.trim().toLowerCase()){
       var vs=kaartLabelVan(cn.value);
       if(confirm('\u201c'+cn.value.trim()+'\u201d lijkt een volledige naam. Op de digitale kaart hoort alleen een roepnaam; de volledige naam staat in je EPD.\n\nOK = maak er \u201c'+vs+'\u201d van\nAnnuleren = zo laten'))
@@ -2306,17 +2354,23 @@ bridge2.jpg</div>
       else NAAM_OK=cn.value.trim().toLowerCase();
     }
     var naam=(cn&&cn.value.trim())||('Kaart '+new Date().toLocaleDateString('nl-NL'));
+    prMelding(null);prBezig(true);
     saveServerCard(naam,function(d){
+      prBezig(false);
       if(!d.ok){
-        if(IS_V2&&toonDeelWeigering(d,naam)){
+        if(IS_V2&&d.beveilig){
           closeOv('ovPrint');
-          if(d.beveilig)openBeveiligen(function(){document.getElementById('printBtn').click();});
+          openBeveiligen(function(){document.getElementById('printBtn').click();});
           return;
         }
+        if(IS_V2&&d.bestaat){prMelding('Er is al een kaart \u201c'+(d.naam||naam)+'\u201d in je praktijk. Is dit dezelfde pati\u00ebnt? Anders: geef deze kaart een andere roepnaam, bijvoorbeeld met een initiaal.',[{act:'overschrijf',label:'Ja, die kaart bijwerken',hoofd:true}]);return;}
+        if(IS_V2&&d.verouderd){prMelding((KAART_TS?'Deze kaart is intussen op een ander apparaat gewijzigd.':'Fysiplan weet niet zeker of dit de nieuwste versie van deze kaart is.')+' Open eerst de nieuwste versie, anders gaan die wijzigingen verloren.',[{act:'nieuwste',label:'Open de nieuwste versie',hoofd:true},{act:'overschrijf',label:'Toch mijn versie bewaren'}]);return;}
+        if(IS_V2&&d.login){prMelding('De praktijk \u201c'+(SET.praktijk||'').trim()+'\u201d is beveiligd en je bent niet ingelogd. Log eerst in.',[{act:'beveilig',label:'Inloggen',hoofd:true}]);return;}
+        if(IS_V2){prMelding(d.fout||'De kaart bewaren voor de QR-code is niet gelukt.');return;}
         alert(d.fout||'De kaart bewaren voor de QR-code is niet gelukt.');return;
       }
-      if(IS_V2)zetKaartId(d.id,d.ts);
-      if(!toonQr(d.id)){alert('De QR-code maken is niet gelukt.');return;}
+      if(IS_V2){zetKaartId(d.id,d.ts);OVERSCHRIJF='';}
+      if(!toonQr(d.id)){if(IS_V2){prMelding('De QR-code maken is niet gelukt.');return;}alert('De QR-code maken is niet gelukt.');return;}
       ping('kaart-opgeslagen');
       closeOv('ovPrint');doePrint();
     });
