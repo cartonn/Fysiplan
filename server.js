@@ -556,6 +556,27 @@ function proefWis(id) {
   for (const h of p.tokens || []) proefTokenIndex.delete(h);
   delete proeven[id];
 }
+// "Alles wissen" op /v2/gegevens neemt ook de proefaanmelding van die praktijk mee
+// (art. 17 AVG). Is er online betaald, dan blijft alleen wat de fiscale bewaarplicht
+// vraagt (art. 52 AWR, 7 jaar): wie, welke praktijk en de betaling. Telefoon, apparaten
+// en proefgebruik gaan weg, en de aanmelding is niet meer met dat e-mailadres te hervatten.
+const FISCAAL_BEWAAR_MS = 7 * 365.25 * 86400000;
+function proefNaPraktijkWissen(id, nu = Date.now()) {
+  const p = Object.hasOwn(proeven, String(id)) ? proeven[String(id)] : null;
+  if (!p) return null;
+  if (!(p.abonnement && p.abonnement.eersteBetaling)) { proefWis(p.id); return "gewist"; }
+  for (const h of p.tokens || []) proefTokenIndex.delete(h);
+  proeven[p.id] = { id: p.id, email: p.email, naam: p.naam, praktijk: p.praktijk || "", gestart: p.gestart, verloopt: p.verloopt,
+    klant: true, betaling: p.betaling, abonnement: { ...p.abonnement, status: "gestopt" }, gewist: nu, bewaarTot: nu + FISCAAL_BEWAAR_MS };
+  return "betaling";
+}
+// wat de praktijk bij een download over de eigen aanmelding krijgt: alles behalve apparaat-tokens
+function proefVoorDownload(id) {
+  const p = Object.hasOwn(proeven, String(id)) ? proeven[String(id)] : null;
+  if (!p) return null;
+  const { tokens, mailLink, ...rest } = p;
+  return rest;
+}
 const datumNl = (ms) => new Date(ms).toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Amsterdam" });
 // de proefpagina's: één sjabloon (public/proef.html) met blokken; alle waarden escapen
 const htmlEsc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -668,6 +689,8 @@ async function proefRonde() {
   let gewijzigd = false;
   for (const p of Object.values(proeven)) {
     if (!p.klant && nu >= p.verloopt + PROEF_BEWAAR_DAGEN * 86400000) { proefWis(p.id); gewijzigd = true; continue; }
+    if (p.gewist && nu >= Number(p.bewaarTot || 0)) { proefWis(p.id); gewijzigd = true; continue; }
+    if (p.gewist) continue;
     if (!p.klant && !p.herinnerd && nu < p.verloopt && p.verloopt - nu <= 2 * 86400000) {
       p.herinnerd = nu; gewijzigd = true;
       proefMail(p.email, "Je Fysiplan-proef loopt over twee dagen af",
@@ -4990,7 +5013,7 @@ async function afhandelen(request, response) {
     // Alleen vanaf een apparaat dat die proef al heeft (geldige proefcookie) worden
     // de contactgegevens bijgewerkt. Wie alleen het e-mailadres kent, krijgt geen
     // cookie en verandert niets: er gaat een eenmalige inloglink naar dat adres.
-    let p = Object.values(proeven).find((x) => x.email === w.email);
+    let p = Object.values(proeven).find((x) => x.email === w.email && !x.gewist);
     const nieuw = !p;
     if (!nieuw && proefVan(request) !== p) {
       const nu = Date.now();
@@ -5337,6 +5360,8 @@ async function afhandelen(request, response) {
         gedownload: new Date().toISOString(),
         praktijk: pk,
         account: { gemaakt: acc.gemaakt || null, verwerkersovereenkomst: acc.vwo || null, akkoord: acc.akkoord || null, proef: acc.proef || null },
+        // de proefaanmelding (contactpersoon, e-mail, telefoon, betaling) hoort bij de praktijk
+        aanmelding: acc.proef ? proefVoorDownload(acc.proef.id) : null,
         // teamleden zonder wachtwoord of uitnodigingscode
         team: ledenVan(pk).map((l) => ({ naam: l.naam || "", email: l.email, rol: l.rol, actief: lidActief(l), laatst: l.laatst || null })),
         profiel: Object.entries(praktijken).filter(eigenProfiel).map(([, p]) => publiekProfiel(p)),
@@ -5374,6 +5399,8 @@ async function afhandelen(request, response) {
       }
       await saveJson(praktijkenPath, praktijken);
     });
+    const proefUitkomst = acc.proef ? proefNaPraktijkWissen(acc.proef.id) : null;
+    if (proefUitkomst) await bewaarProeven();
     delete praktijkAccounts[pk];
     await saveJson(accountsPath, praktijkAccounts);
     for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
@@ -5381,7 +5408,9 @@ async function afhandelen(request, response) {
     praktijkAudit = praktijkAudit.filter((a) => a.praktijk !== pk);
     auditLog("(gewist)", "praktijk-alles-gewist", request);
     await serveerProef(request, response, "bericht", { TITEL: "Alles gewist", ETIKET: "Gewist", KOP: "Alles van je praktijk is gewist.",
-      TEKST: aantalKaarten + (aantalKaarten === 1 ? " kaart" : " kaarten") + ", je eigen oefeningen, sjablonen, praktijkgegevens, wachtwoord en logboek zijn van de server. " +
+      TEKST: aantalKaarten + (aantalKaarten === 1 ? " kaart" : " kaarten") + ", je eigen oefeningen, sjablonen, praktijkgegevens, wachtwoord, " +
+        (proefUitkomst === "gewist" ? "proefaanmelding " : "") + "en logboek zijn van de server. " +
+        (proefUitkomst === "betaling" ? "Van je betaling bewaren we alleen naam, e-mail, praktijknaam en de betaalgegevens, 7 jaar, omdat de wet dat vraagt. " : "") +
         "In de dagelijkse reservekopie staat het nog hooguit 7 dagen. De praktijknaam is weer vrij.",
       KNOP_HTML: '<a class="knop omlijnd" href="/v2">Naar de site</a>' });
     return;
@@ -5401,7 +5430,7 @@ async function afhandelen(request, response) {
     const lijst = () => Object.values(proeven).sort((a, b) => b.gestart - a.gestart).map((p) => ({
       id: p.id, email: p.email, naam: p.naam, tel: telefoonWeergave(p.tel), praktijk: p.praktijk || "",
       gestart: p.gestart, verloopt: p.verloopt, dagenOver: p.klant ? null : dagenOver(p.verloopt),
-      status: p.klant ? "klant" : proefVerlopen(p) ? "verlopen" : "actief", doorgaan: !!p.doorgaan, kaarten: p.kaarten || 0 }));
+      status: p.gewist ? "gestopt, alleen betaling bewaard" : p.klant ? "klant" : proefVerlopen(p) ? "verlopen" : "actief", doorgaan: !!p.doorgaan, kaarten: p.kaarten || 0 }));
     if (urlPath === "/api/aanmeldingen" && request.method === "GET") {
       if (new URL(request.url, "http://x").searchParams.get("csv") === "1") {
         const cel = (s) => { const t = String(s == null ? "" : s); const veilig = /^[=+\-@\t\r]/.test(t) ? "'" + t : t; return '"' + veilig.replace(/"/g, '""') + '"'; };

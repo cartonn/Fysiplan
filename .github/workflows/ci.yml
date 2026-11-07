@@ -39,6 +39,7 @@ jobs:
       - run: npm run test:opname-eigen
       - run: node scripts/test-vraaghulp-grens.mjs
       - run: node scripts/test-praktijkgegevens.mjs
+      - run: node scripts/test-gegevens-proef.mjs
       - run: node scripts/test-kaart-weg.mjs
       - run: node scripts/test-dossier-contact.mjs
       - run: npm run test:kaartversie
