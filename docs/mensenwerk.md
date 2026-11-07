@@ -7,7 +7,7 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 ### Online betalen via Mollie (praktijk-routine, 2026-11-07)
 **Wat de code nu doet:** zet je `MOLLIE_API_KEY` op Railway, dan krijgen "Mijn proef" en de
 verlopen-pagina een blok "Direct online afrekenen": aantal therapeuten kiezen, eerste maand
-(5,99 per therapeut) betalen met iDEAL of kaart bij Mollie. Na betaling wordt de proef meteen een
+(10 euro per therapeut, excl. btw) betalen met iDEAL of kaart bij Mollie. Na betaling wordt de proef meteen een
 klant (slot eraf, zelfde als "klant" in /aanmeldingen) en krijg je een mail "Betaald: …". De
 betaling is van het type `first`, dus Mollie bewaart een mandaat voor latere maandelijkse incasso.
 Zonder sleutel verandert er niets: alleen "Ja, ik wil doorgaan" en jij belt.
