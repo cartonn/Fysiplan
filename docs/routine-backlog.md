@@ -55,9 +55,9 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   gaat na `afterprint` niet weg. public/index.html r. 238, 268–273, 1901 (`SAFARI_PRINT`). (Mark, 2026-11-07 06u)
 
 ### MIDDEL
-- **OPGELOST 2026-11-07 (sweep 22u) — App: na "Naam wijzigen" zette "In de praktijk" de oude naam stil terug** (`#k_naam`
+- **OPGELOST 2026-11-07 PR #89 — App: na "Naam wijzigen" zette "In de praktijk" de oude naam stil terug** (`#k_naam`
   hield de oude naam; de server hernoemde terug). Desktop (Sanne, 22u). Test: `npm run test:hernoem`.
-- **OPGELOST 2026-11-07 (sweep 22u) — /k: agendaknop eindigde op een kale Nederlandse JSON-foutpagina** (afspraak
+- **OPGELOST 2026-11-07 PR #89 — /k: agendaknop eindigde op een kale Nederlandse JSON-foutpagina** (afspraak
   intussen weggehaald, 429, 404, 400) zonder weg terug. Nu eerst controleren, anders een melding in de eigen taal onder
   de knop. Pixel 7 (Jayden, 22u). Test: `npm run test:agendamelding`.
 - **/k lightbox staand op iPhone SE: naam over de uitleg, onderkant onbereikbaar.** Foto begint op y −7, uitlegpaneel
