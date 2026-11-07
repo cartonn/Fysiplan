@@ -21,6 +21,16 @@ assert.equal(normaliseerTelefoon("0612345"), "");
 assert.equal(normaliseerTelefoon("0611111111"), "");
 assert.equal(normaliseerTelefoon("06 1234 5678"), "");
 assert.equal(normaliseerTelefoon("abc"), "");
+// Sweep 2026-11-07 (Sanne, iPhone SE): het voorbeeld in placeholder en foutmelding mag zelf
+// niet geweigerd worden, anders komt wie het voorbeeld overneemt nooit verder
+{
+  const proefHtml = await readFile(new URL("../public/proef.html", import.meta.url), "utf8");
+  const ph = (proefHtml.match(/id="tel"[^>]*placeholder="([^"]*)"/) || [])[1] || "";
+  const melding = valideerAanmelding({ email: "a@b.nl", naam: "Sanne", tel: "0612", akkoord: true, vwo: true }).fouten?.tel || "";
+  for (const voorbeeld of [ph, melding]) for (const nr of voorbeeld.match(/(?:\+?\d[\d ]{8,}\d)/g) || [])
+    assert.notEqual(normaliseerTelefoon(nr), "", "voorbeeldnummer wordt zelf geweigerd: " + nr);
+  assert.ok(melding, "foutmelding bij een kapot nummer");
+}
 assert.equal(telefoonWeergave("+31612345679"), "06 1234 5679");
 assert.equal(telefoonWeergave("+31201234567"), "020 123 4567");
 assert.equal(telefoonWeergave("+31341123456"), "0341 123 456");

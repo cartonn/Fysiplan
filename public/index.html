@@ -188,7 +188,7 @@
   /* ---- modal ---- */
   .ov{position:fixed;inset:0;background:rgba(16,24,40,.45);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
   .ov.on{display:flex}
-  .modal{background:#fff;border-radius:16px;width:400px;max-width:100%;padding:22px 24px;box-shadow:var(--sh-lg);animation:pop .15s ease}
+  .modal{background:#fff;border-radius:16px;width:400px;max-width:100%;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain;padding:22px 24px;box-shadow:var(--sh-lg);animation:pop .15s ease}
   @keyframes pop{from{transform:translateY(6px) scale(.985);opacity:0}to{transform:none;opacity:1}}
   /* gratis proef (v2): smalle balk onder de kopregel, nooit op de print */
   .proefbalk{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;padding:9px 22px;background:#fff7ed;border-bottom:1px solid #f6d7b8;font-size:13.5px;color:#6b3a12}
@@ -4269,6 +4269,9 @@ bridge2.jpg</div>
     var aw=e.target.closest('[data-safweek]');
     if(aw){
       var veldW=document.querySelector("[data-safspraak='"+aw.dataset.safweek+"']");
+      var okW0=document.querySelector("[data-safspraakopslaan='"+aw.dataset.safweek+"']");
+      // bezig met opslaan: een tweede tik (dubbelklik) mag de afspraak niet nog een week verzetten
+      if(okW0&&okW0.dataset.bezig)return;
       if(veldW){
         var basisW=veldW.value?new Date(veldW.value).getTime():Date.now();
         if(!isFinite(basisW))basisW=Date.now();
@@ -4285,14 +4288,20 @@ bridge2.jpg</div>
       if(!veldA)return;
       var tA=veldA.value?new Date(veldA.value).getTime():0;
       if(veldA.value&&(!tA||isNaN(tA))){alert('Kies een geldige datum en tijd.');return;}
-      var oudA=af.textContent;
-      var toonA=function(t){af.textContent=t;setTimeout(function(){af.textContent=oudA;},1600);};
+      // bezig-slot: een dubbelklik bewaart niet twee keer
+      if(af.dataset.bezig)return;
+      // de echte knoptekst één keer onthouden: een melding ("Mislukt", fouttekst) mag nooit
+      // de nieuwe knoptekst worden als je binnen 1,6 s opnieuw klikt
+      if(!af.dataset.label)af.dataset.label=af.textContent;
+      var oudA=af.dataset.label;
+      af.dataset.bezig='1';
+      var toonA=function(t){af.textContent=t;clearTimeout(af._tA);af._tA=setTimeout(function(){af.textContent=oudA;},t==='Bewaard ✓'?1600:4000);};
       var herhaalSel=document.querySelector("[data-safherhaal='"+af.dataset.safspraakopslaan+"']");
       var herhaalA=herhaalSel?Number(herhaalSel.value)||0:0;
       fetch('api/kaart/afspraak',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:af.dataset.safspraakopslaan,t:tA,herhaal:herhaalA})})
         .then(function(r){return r.json();})
-        .then(function(d){if(d.ok)toonA('Bewaard ✓');else toonA(d.fout||'Mislukt');})
-        .catch(function(){toonA('Geen verbinding');});
+        .then(function(d){delete af.dataset.bezig;if(d.ok)toonA('Bewaard ✓');else if(d.proefVerlopen){af.textContent=oudA;toonProefVoorbij();}else toonA(d.fout||'Mislukt');})
+        .catch(function(){delete af.dataset.bezig;toonA('Geen verbinding');});
       return;
     }
     // PSK-doelactiviteit opslaan (leeg = uitzetten); alleen de ingelogde praktijk
@@ -4401,18 +4410,10 @@ bridge2.jpg</div>
     }
     var sn=e.target.closest('[data-sein]');
     if(sn){
-      // seintje beantwoorden met een kort bericht op de kaart van de patiënt,
-      // of leeg laten om alleen af te handelen (alleen de ingelogde praktijk)
-      var at=prompt('Antwoord voor de patiënt — komt op de kaart te staan (max 300 tekens).\nLeeg laten en OK = seintje alleen afhandelen, zonder antwoord.','');
-      if(at===null)return;
-      at=at.trim().slice(0,300);
-      var sUrl=at?'api/kaart/antwoord':'api/kaart/seintje/gezien';
-      var sBody={praktijk:SET.praktijk||'',id:sn.dataset.sein};
-      if(at)sBody.tekst=at;
-      fetch(sUrl,{method:'POST',headers:PJSON(),body:JSON.stringify(sBody)})
-        .then(function(r){return r.json();})
-        .then(function(d){if(d.ok)toonSrvKaarten();else alert(d.fout||'Dat is niet gelukt.');})
-        .catch(function(){alert('Dat is niet gelukt: geen verbinding.');});
+      // seintje beantwoorden met een kort bericht op de kaart van de patiënt, of bewust
+      // alleen afhandelen: eigen venster met twee knoppen, zodat één klik + Enter een
+      // vraag nooit stil afhandelt zonder antwoord (alleen de ingelogde praktijk)
+      openSeinVenster(sn.dataset.sein,(sn.getAttribute('title')||'').replace(/ — tik om .*$/,''));
       return;
     }
     // "te zwaar"-melding afhandelen: de therapeut heeft ernaar gekeken, de
@@ -4541,6 +4542,50 @@ bridge2.jpg</div>
       .then(function(r){return r.ok?r.json():null;})
       .then(function(d){klaar(d&&d.ok&&Array.isArray(d.oefeningen)?d.oefeningen:[]);})
       .catch(function(){klaar([]);});
+  }
+  // Seintje van een patiënt beantwoorden of bewust alleen afhandelen.
+  // "Beantwoorden" kan alleen met tekst; "Alleen afhandelen" is een aparte knop,
+  // en Enter in het tekstveld verstuurt nooit een leeg antwoord.
+  function openSeinVenster(id,uitleg){
+    var ov=document.getElementById('ovSein');
+    if(!ov){
+      ov=document.createElement('div');ov.className='ov';ov.id='ovSein';
+      ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-labelledby','sn_titel');
+      ov.innerHTML="<div class='modal'><h3 id='sn_titel'>Seintje van de pati\u00ebnt</h3>"+
+        "<div class='hint' id='sn_uitleg' style='margin:2px 0 10px;line-height:1.5'></div>"+
+        "<label class='hint' for='sn_tekst' style='display:block;margin-bottom:4px'>Antwoord voor de pati\u00ebnt (komt op de kaart te staan, max. 300 tekens):</label>"+
+        "<textarea id='sn_tekst' maxlength='300' rows='3' style='width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;resize:vertical'></textarea>"+
+        "<div id='sn_fout' role='alert' style='color:#b42318;font-size:13px;min-height:1.2em;margin-top:6px'></div>"+
+        "<div class='acts' style='margin-top:10px;flex-wrap:wrap;gap:8px'><button class='btn' id='sn_sluit' type='button'>Annuleren</button>"+
+        "<button class='btn' id='sn_af' type='button'>Alleen afhandelen</button>"+
+        "<button class='btn primary' id='sn_ok' type='button'>Beantwoorden</button></div></div>";
+      document.body.appendChild(ov);
+      var stuur=function(metTekst){
+        var knop=document.getElementById(metTekst?'sn_ok':'sn_af'),fout=document.getElementById('sn_fout');
+        if(ov.dataset.bezig)return;
+        var tk=document.getElementById('sn_tekst').value.trim().slice(0,300);
+        if(metTekst&&!tk){fout.textContent='Typ eerst een antwoord, of kies \u201cAlleen afhandelen\u201d.';document.getElementById('sn_tekst').focus();return;}
+        var body={praktijk:SET.praktijk||'',id:ov.dataset.id};if(metTekst)body.tekst=tk;
+        ov.dataset.bezig='1';fout.textContent='';var oud=knop.textContent;knop.textContent='Bezig\u2026';
+        var klaar=function(){delete ov.dataset.bezig;knop.textContent=oud;};
+        fetch(metTekst?'api/kaart/antwoord':'api/kaart/seintje/gezien',{method:'POST',headers:PJSON(),body:JSON.stringify(body)})
+          .then(function(r){return r.json();})
+          .then(function(d){klaar();if(d.ok){closeOv('ovSein');toonSrvKaarten();}
+            else if(d.proefVerlopen){closeOv('ovSein');toonProefVoorbij();}
+            else fout.textContent=d.fout||'Dat is niet gelukt.';})
+          .catch(function(){klaar();fout.textContent='Dat is niet gelukt: geen verbinding.';});
+      };
+      document.getElementById('sn_sluit').addEventListener('click',function(){closeOv('ovSein');});
+      document.getElementById('sn_af').addEventListener('click',function(){stuur(false);});
+      document.getElementById('sn_ok').addEventListener('click',function(){stuur(true);});
+      ov.addEventListener('keydown',function(e){if(e.key==='Escape')closeOv('ovSein');});
+    }
+    ov.dataset.id=id;
+    document.getElementById('sn_uitleg').textContent=uitleg;
+    document.getElementById('sn_tekst').value='';
+    document.getElementById('sn_fout').textContent='';
+    openOv('ovSein');
+    document.getElementById('sn_tekst').focus();
   }
   function openEigenOef(){
     var ovO=document.getElementById('ovEigenOef');
