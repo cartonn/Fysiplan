@@ -9,11 +9,10 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 met wat er veranderd is; een beheerder vinkt opnieuw aan. Daarna staat per praktijk vast welke
 versie, wanneer en wie (ook in de download van /v2/gegevens).
 **Wat jij moet doen:**
-1. Kies of "per therapeut" in de voorwaarden betekent "per eigen login" (advies: ja, dan kan een
-   praktijk niet met één gedeeld wachtwoord voor iedereen werken). Zet dat dan in art. 4 en verhoog
-   `AV_VERSIE` met een regel in `AKKOORD_WIJZIGINGEN` (server.js).
+1. GEDAAN (Ahmed koos 2026-11-07 het advies): voorwaarden art. 4 zeggen nu dat elke eigen login
+   telt als één therapeut (`AV_VERSIE` 2026-11-07-3).
 2. Railway bewaart logs 7 dagen (Hobby) of 30 dagen (Pro). De privacyverklaring zegt "hooguit 30
-   dagen"; klopt je abonnement daar niet mee, laat het dan aanpassen.
+   dagen"; dat klopt voor beide. Alleen bij Enterprise (tot 90 dagen) moet de tekst mee.
 3. Laat de jurist privacyverklaring, verwerkersovereenkomst en voorwaarden samen toetsen (staat al
    hieronder bij Algemene voorwaarden, punt 7).
 
