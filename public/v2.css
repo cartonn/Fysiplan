@@ -128,7 +128,9 @@ html.v2 .v2badge{background:linear-gradient(150deg,#2f66bd,#1c4487);color:#fff;
 
 /* ---- mobiel en smalle tablet: de app blijft bruikbaar op één kolom ---- */
 @media screen and (max-width:920px){
-  html.v2 header.topbar{flex-wrap:wrap;gap:8px;padding:10px 12px}
+  /* smal scherm: de balk loopt over meerdere regels; sticky nam hij op een iPhone SE
+     57 % van het scherm in (gebruikers-sweep 2026-11-07), dus hier scrolt hij mee weg */
+  html.v2 header.topbar{flex-wrap:wrap;gap:8px;padding:10px 12px;position:static}
   html.v2 header.topbar .brand{margin-right:auto}
   html.v2 header.topbar .spacer{display:none}
   /* Help en de beeldkeuze (lijn of kleur, ook voor de print) blijven op telefoon en iPad

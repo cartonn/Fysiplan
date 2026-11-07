@@ -48,6 +48,8 @@
     "test:tezwaar": "node scripts/test-kaart-tezwaar.mjs",
     "test:opname-eigen": "node scripts/test-opname-eigen.mjs",
     "test:kaartversie": "node scripts/test-kaart-versie.mjs",
+    "test:hernoem": "node scripts/test-kaart-hernoem.mjs",
+    "test:topbar": "node scripts/test-topbar-mobiel.mjs",
     "test:mobile": "node scripts/test-byte-range.mjs && node scripts/test-mobile-media-review.mjs && node scripts/test-v2-avatar-mapping.mjs && node scripts/test-v2-uitzondering-mutaties.mjs && node scripts/test-v2-lijnbeeld-levering.mjs &&node scripts/test-mobile-narration-review.mjs && node scripts/test-mobile-media-controls.mjs && node scripts/test-noor-voorlezen-holds.mjs && node scripts/test-voorlezen-andere-talen.mjs && node scripts/test-youtube-uitwijk.mjs && node scripts/test-mobile-pose-layout.mjs && node scripts/test-houdingvolgorde.mjs && node scripts/test-mobile-merk.mjs && node scripts/test-noor-audio.mjs && node scripts/test-noor-knoppen-herstel.mjs && node scripts/check-noor-assets.mjs --partial && node scripts/test-mobile-levering.mjs",
     "test:browser": "node scripts/kaart-browsercheck.mjs",
     "poses:measure": "node scripts/pose-crop-candidates.mjs",

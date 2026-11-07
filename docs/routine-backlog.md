@@ -10,25 +10,25 @@ werk voor Ahmed in `docs/mensenwerk.md`.
 | Flow | Desktop 1280 | iPad | iPhone SE | iPhone 14 | Pixel 7 |
 |---|---|---|---|---|---|
 | Proef aanmelden + formulierfouten | 2026-11-07 02u | – | – | 2026-11-06 22u | – |
-| Welkom, praktijknaam (ook leeg), 12 oefeningen | 2026-11-07 02u | 2026-11-06 | – | 2026-11-06 22u | 2026-11-07 02u |
-| Printversie (lijn, kleur, compact) | 2026-11-07 02u | 2026-11-06 22u (kleur liggend) | – | 2026-11-06 22u (venster) | – |
+| Welkom, praktijknaam (ook leeg), 12 oefeningen | 2026-11-07 06u | 2026-11-06 | 2026-11-07 06u | 2026-11-06 22u | 2026-11-07 02u |
+| Printversie (lijn, kleur, compact) | 2026-11-07 06u | 2026-11-07 06u (2 pagina's?) | – | 2026-11-06 22u (venster) | – |
 | Beveiligen, herstelcode, inloggen 2e apparaat | 2026-11-07 02u | 2026-11-07 02u | – | 2026-11-06 22u | – |
 | Delen, QR, kaartenoverzicht, CSV | 2026-11-07 02u | 2026-11-07 02u | – | 2026-11-06 22u | – |
 | Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-07 02u | 2026-11-07 02u | – | – | – |
 | Opname via telefoon /o | 2026-11-07 02u | 2026-11-06 22u | – | 2026-11-07 02u | – |
 | Afspraak, seintje, signalen | 2026-11-06 22u | 2026-11-06 22u | 2026-11-06 22u | 2026-11-06 22u | 2026-11-06 22u |
 | Proef bijna verlopen / verlopen (echte verlopen-pagina) | 2026-11-07 02u | 2026-11-07 02u | – | 2026-11-07 02u (breedte) | – |
-| /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | – | 2026-11-07 02u | 2026-11-07 02u | 2026-11-07 02u |
+| /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | 2026-11-07 06u | 2026-11-07 02u | 2026-11-07 02u | 2026-11-07 02u |
 | /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-07 02u | 2026-11-07 02u | 2026-11-07 02u |
 | /k: video afspelen (eigen opname, YouTube) | – | – | 2026-11-07 02u | – | – |
 | /k: Duits en Arabisch (rtl) | – | – | 2026-11-06 | – | Duits 2026-11-07 02u |
-| Landing /v2 op mobiel | – | – | – | iPhone 13: 2026-11-06 | 2026-11-06 22u |
-| Therapeut-app op telefoon | – | – | – | 2026-11-06 22u | 2026-11-07 02u |
-| Twee werkplekken op één kaart (oud apparaat/tabblad) | 2026-11-07 02u | – | – | – | – |
+| Landing /v2 op mobiel | – | – | 2026-11-07 06u | iPhone 13: 2026-11-06 | 2026-11-06 22u |
+| Therapeut-app op telefoon | – | – | 2026-11-07 06u | 2026-11-06 22u | 2026-11-07 02u |
+| Twee werkplekken op één kaart (oud apparaat/tabblad) | 2026-11-07 06u | 2026-11-07 06u | – | – | – |
 
-Volgende run: iPad-print, de bibliotheekvideo op /k, therapeut-app op iPhone SE, /k op iPad, landing /v2 op
-iPhone SE, en twee werkplekken op dezelfde kaart op iPad + desktop (sinds PR #56).
-Testtip: Playwright-telefoonprofielen staan op en-US; geef `locale: 'nl-NL'` mee voor een Nederlandse kaart.
+Volgende run: /k-video afspelen (eigen opname; lokaal geen goedgekeurde bibliotheekvideo's), print op een echte
+iPad-Safari, therapeut-app op iPad liggend, /k in het Arabisch op iPhone 14, proef aanmelden op iPad en Pixel 7,
+en hertest van de roepnaam-hernoeming via "Naam wijzigen" in het overzicht.
 
 Testtip: de verlopen-pagina test je met een tweede server op een kopie van de datamap waarin `verloopt`
 in proef-aanmeldingen.json in het verleden staat (wordt alleen bij het opstarten gelezen).
@@ -40,13 +40,23 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 ## Open
 
 ### HOOG
-- **App: roepnaam verbeteren maakt stil een tweede kaart met een nieuwe QR/link.** "Dirk" → "Dirck": er komt
-  /k/<nieuw id> bij, het overzicht toont beide, de al geprinte/verstuurde QR toont de oude inhoud en
-  pijnscores komen op de oude kaart. Geen melding. server.js POST /api/kaarten sleutelt op naam (`map[kk]`);
-  `kaartId` wordt alleen voor de 409-botscheck gebruikt. Oplossing: bij een bekend `kaartId` met een andere
-  naam die kaart hernoemen (zoals /api/kaart/naam) in plaats van een nieuwe maken. Desktop (Sanne, 2026-11-07).
+- **App op iPad: print kan op 2 pagina's eindigen, met de QR op pagina 2** (eerst nakijken op een echte iPad).
+  Met een iPad-UA zet de app `html.safari-print` (kaart 90° gedraaid voor staand papier) terwijl
+  `@page{size:A4 landscape}` blijft staan; Chromium-emulatie geeft 2 pagina's, staand en liggend. De klasse
+  gaat na `afterprint` niet weg. public/index.html r. 238, 268–273, 1901 (`SAFARI_PRINT`). (Mark, 2026-11-07 06u)
+- **/k: "gedaan" per oefening staat alleen in de browser van één apparaat.** iPhone "Alles gedaan" (6/6 naar de
+  server), iPad toont "0 van 6"; aan/uit op de iPad haalt het vinkje van de telefoon weg. kaart.html `leesOefDaan`
+  (localStorage) en `toggleOefDaan`; server houdt `oefTrouw` bij. iPhone SE + iPad (Truus, 2026-11-07 06u).
 
 ### MIDDEL
+- **App: verouderd-melding is minuscuul en de enige waarschuwing** (±9 px tekst, links ±10 px hoog in `#qrBlok`);
+  het formulier blijft bewerkbaar zonder banner, de therapeut typt door. Desktop (Mark, 2026-11-07 06u).
+- **App, verlopen proef bij een collega op iPad: bewerken gaat stil verloren.** De proefbalk staat bovenaan en is
+  na scrollen uit beeld; velden blijven bewerkbaar, `PROEF_VOORBIJ` verstuurt niets zonder melding. (Mark)
+- **App op iPhone SE: Sjablonen-venster onleesbaar.** Tekstkolom ±70 px (één woord per regel), titel valt boven
+  weg; rij met `display:flex` zonder wrap, public/index.html r. ~2281. (Sanne, 2026-11-07 06u)
+- **/k: uitleg niet zichtbaar, wel technische tekst** "Natuurlijke stemopname nog niet beschikbaar. De uitleg staat
+  bij de afbeelding." onder 4 van 6 oefeningen; uitleg pas na tik op de foto (vergrootglas ±20 px). iPhone SE, iPad (Truus).
 - **App op telefoon: deelweigering (409 bestaat/verouderd) staat in `#qrBlok` buiten beeld** (x≈944 px in het
   scrollende A4 op een scherm van 412 px); de therapeut ziet niet waarom de QR ontbreekt. Na een hernoeming
   via het overzicht geeft daarna elke bewerking 409. Pixel 7 (Sanne, 2026-11-07).
@@ -116,6 +126,19 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   Al opgelost in open PR #41 (server.js `denied()` met eigen tekst); mergen of overnemen.
 
 ### LAAG
+- App: dubbelklik op "+" in de oefeningenlijst voegt toe en haalt weer weg (toggle), public/index.html r. ~1358. (Sanne)
+- App: emoji in de roepnaam geeft voorstel "Dirk �." (`kaartLabelVan` met `charAt(0)`, index.html ~r. 1955). (Sanne)
+- App op iPhone SE: knoppengroep Sjablonen | Kaarten | Wis kaart breekt over twee regels (v2.css r. 92–94);
+  welkomstvenster: Enter in praktijknaam doet niets, tekst zegt "klik links". (Sanne)
+- API: `chosen` als string geeft 200 en een kaart zonder oefeningen (verwacht 400). (Mark)
+- /api/kaart/vraag geeft 502 "vraaghulp niet bereikbaar" op een kapotte body in plaats van 400 (server.js r. ~4243). (Jayden)
+- /k: 429 toont "No connection right now", gelijk aan een storing. iPhone 14 (Jayden).
+- Landing /v2 op iPhone SE: kop (82 px) en duimbalk (68 px) nemen 26 % van de hoogte; "Probeer Fysiplan gratis"
+  in de hero half achter de duimbalk. (Jayden)
+- /k: herstelknoppen zonder aria-pressed/eigen label; `#agbtn` begint met svg zonder label; lightbox op iPad
+  zonder sluitknop. (Truus)
+- /k (Engels): mislukte vertaling laat oefennamen stil Nederlands; trage lijn geeft eerst een lege pagina
+  zonder laadstaat (niet meer halfleeg NL). Pixel 7 (Jayden).
 - /k: pijnschaalknoppen 36×46 px op iPhone SE, schaal breekt 6+5 en "10 = ergste pijn" staat los;
   appbanner bedekt "Neem pijn serieus" bij 8+. (Truus)
 - Proefformulier: "06 1234 5678" (placeholder en voorbeeld in de foutmelding) wordt zelf geweigerd
@@ -158,6 +181,13 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Opgelost
 
+- **HOOG — App: roepnaam verbeteren maakte stil een tweede kaart met een nieuwe QR/link** ("Dirk" → "Dirck",
+  ook "Voorbeeldpatiënt" → echte roepnaam). POST /api/kaarten hernoemt nu de kaart van het meegestuurde
+  `kaartId` als de nieuwe naam vrij is; id, QR en voortgang blijven. OPGELOST 2026-11-07 PR #60. Test: `npm run test:hernoem`.
+- **MIDDEL — alleen openen op een tweede werkplek maakte de kaart op de eerste "verouderd"** (409 kaatste heen en
+  weer, Mark, desktop + iPad). Ongewijzigde inhoud hoogt `ts` niet meer op. OPGELOST 2026-11-07 PR #60.
+- **HOOG — App op iPhone SE: sticky bovenbalk nam 57 % van het scherm** (Sanne). Onder 920 px scrolt hij mee weg.
+  OPGELOST 2026-11-07 PR #60. Test: `npm run test:topbar`.
 - **HOOG — oud apparaat of tabblad overschreef een gedeelde kaart bij het openen en wiste eigen opnames**
   (Truus, desktop, 2026-11-07). De v2-editor stuurt nu `basisTs` mee; is de kaart elders bewaard, dan geeft
   de server 409 `verouderd` en toont de editor "Open de nieuwste versie" / "Toch mijn versie bewaren".

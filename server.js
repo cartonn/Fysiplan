@@ -3197,12 +3197,27 @@ async function afhandelen(request, response) {
       // de eerste en kreeg hij diens link, mét diens pijnscores. Een verlopen kaart
       // telt niet meer mee. Oudere clients sturen geen kaartId en houden het oude
       // gedrag (bijwerken op naam); overschrijf=true is de bevestiging "zelfde patiënt".
-      const bestaand = Object.hasOwn(map, kk) && (map[kk].demo || verlooptOp(map[kk]) > Date.now()) ? map[kk] : null;
+      let bestaand = Object.hasOwn(map, kk) && (map[kk].demo || verlooptOp(map[kk]) > Date.now()) ? map[kk] : null;
       if (Object.hasOwn(map, kk) && !bestaand) {
         // verlopen maar nog niet opgeruimd: als nieuwe kaart behandelen (nieuw id)
         const wegOud = Object.values(map[kk].vids || {});
         delete map[kk];
         ruimKaartVideosOp(wegOud).catch(() => {});
+      }
+      // roepnaam verbeterd ("Dirk" → "Dirck"): de editor stuurt het id van de kaart die
+      // hij bewerkt. Zonder dit maakte de nieuwe naam stil een tweede kaart met een
+      // nieuwe QR; de al geprinte QR bleef de oude inhoud tonen en de pijnscores kwamen
+      // op de oude kaart (gebruikers-sweep 2026-11-07). Is de nieuwe naam nog vrij, dan
+      // hernoemen we de bestaande kaart, zoals /api/kaart/naam doet. Het id blijft gelijk.
+      if (!Object.hasOwn(map, kk) && typeof b.kaartId === "string" && b.kaartId) {
+        const oudeSleutel = Object.keys(map).find((k) => map[k] && map[k].id === b.kaartId &&
+          (map[k].demo || verlooptOp(map[k]) > Date.now()));
+        if (oudeSleutel) {
+          map[kk] = map[oudeSleutel];
+          delete map[oudeSleutel];
+          bestaand = map[kk];
+          auditLog(pk, "kaart-hernoemd", request);
+        }
       }
       if (bestaand && typeof b.kaartId === "string" && b.kaartId !== bestaand.id && b.overschrijf !== true) {
         await sendJson(response, 409, { ok: false, bestaat: true, naam: bestaand.naam,
@@ -3261,6 +3276,18 @@ async function afhandelen(request, response) {
           const v = String(b.vids[k] || "");
           // eigen opname, of een YouTube-link die de therapeut per oefening plakt
           if ((/^uploads\/videos\/v-[a-f0-9]+\.(mp4|webm)$/.test(v) || /^yt:[A-Za-z0-9_-]{11}$/.test(v)) && eigenVideoPad(v)) vids[sanStr(k, 80)] = v;
+        }
+      }
+      // niets gewijzigd (de editor deelt ook bij alleen openen): versie niet ophogen.
+      // Anders maakte openen op de iPad de geopende kaart op de desktop "verouderd" en
+      // kaatste de 409 tussen twee werkplekken heen en weer (gebruikers-sweep 2026-11-07).
+      if (bestaand && map[kk] === bestaand) {
+        const zelfde = (a, c) => JSON.stringify(a || {}) === JSON.stringify(c || {});
+        if (bestaand.naam === naam && bestaand.praktijk === praktijk && zelfde(bestaand.client, client) &&
+          zelfde(bestaand.chosen || [], chosen) && zelfde(bestaand.rows, rows) && zelfde(bestaand.cells, cells) &&
+          zelfde(bestaand.vids, vids)) {
+          await sendJson(response, 200, { ok: true, id: bestaand.id, ts: bestaand.ts, ongewijzigd: true });
+          return;
         }
       }
       const oudeVids = map[kk] ? Object.values(map[kk].vids || {}) : [];
