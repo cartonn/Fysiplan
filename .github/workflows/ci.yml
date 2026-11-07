@@ -29,3 +29,18 @@ jobs:
       - run: npm run test:video-recovery
       - run: npm run test:drafts
       - run: npm run test:beheer
+      - run: npm run test:proefpoort
+      - run: npm run test:abonnement
+      - run: npm run test:sweep
+      - run: npm run test:offline
+      - run: npm run test:tablet
+      - run: npm run test:praktijkslot
+      - run: npm run test:tezwaar
+      - run: npm run test:opname-eigen
+      - run: node scripts/test-praktijkgegevens.mjs
+      - run: node scripts/test-kaart-weg.mjs
+      - run: node scripts/test-dossier-contact.mjs
+      - run: npm run test:kaartversie
+      - run: npm run test:hernoem
+      - run: npm run test:topbar
+      - run: npm run test:tegroot

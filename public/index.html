@@ -168,6 +168,15 @@
   #a4 .pic:hover .vid{display:flex}
   #a4 .pic .vid:hover{border-color:var(--brand);color:var(--brand);transform:scale(1.08)}
   #a4 .pic .vid.aan{display:flex;background:var(--brand);border-color:var(--brand);color:#fff}
+  /* tablet en telefoon kennen geen aanwijzen: daar staan beide knopjes altijd zichtbaar en zijn
+     ze groter, met een onzichtbaar tikvlak van 44 px; met het toetsenbord verschijnen ze bij focus */
+  #a4 .pic:focus-within .vid{display:flex}
+  #a4 .pic .vid:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+  @media (hover:none){
+    #a4 .pic .vid{display:flex;width:30px;height:30px}
+    #a4 .pic .rm{display:block;width:30px;height:30px;line-height:29px;font-size:18px}
+    #a4 .pic .vid::after,#a4 .pic .rm::after{content:'';position:absolute;inset:-7px}
+  }
   /* Een catalogus-/praktijkvideo reist automatisch mee met de oefening naar de digitale kaart. */
   #a4 .pic .vauto{position:absolute;bottom:4px;left:4px;display:flex;align-items:center;gap:3px;
     padding:3px 5px;border-radius:999px;background:rgba(31,111,235,.92);color:#fff;font-size:8px;font-weight:700;
@@ -824,6 +833,9 @@ bridge2.jpg</div>
   // escapet álle vijf HTML-gevoelige tekens, óók beide quotes: veel waarden komen
   // in single-quoted attributen (data-sdel, title, value) terecht en een niet-
   // geëscapete quote zou daaruit kunnen breken. Gelijk aan de esc() van kaart.html.
+  // één CSV-cel: aanhalingstekens verdubbeld, en een cel die met = + - @ (of tab/CR)
+  // begint krijgt een ' ervoor, zodat Excel of LibreOffice hem nooit als formule uitvoert
+  function csvCel(v){v=(v==null?'':String(v));if(/^[=+\-@\t\r]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"';}
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];});}
   function normEx(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');}
 
@@ -887,21 +899,26 @@ bridge2.jpg</div>
   // bij delen, zodat de server een tweede patiënt met dezelfde roepnaam niet stil
   // over de kaart van de eerste heen schrijft (zie POST /api/kaarten).
   var KAART_ID='';
+  // versie (ts) van de gedeelde kaart zoals deze editor hem het laatst van de server
+  // kreeg. Gaat mee als basisTs: is de kaart intussen elders bewaard, dan weigert de
+  // server (409 verouderd) in plaats van de nieuwere versie en opnames te overschrijven.
+  var KAART_TS=0;
   function saveState(){
     try{
       var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
-      localStorage.setItem('fysiplan_state',JSON.stringify({chosen:chosen,client:client,grid:GRID,vids:VIDS,kaartId:KAART_ID}));
+      localStorage.setItem('fysiplan_state',JSON.stringify({chosen:chosen,client:client,grid:GRID,vids:VIDS,kaartId:KAART_ID,kaartTs:KAART_TS}));
     }catch(e){}
     planAutoDeel();
   }
-  function zetKaartId(id){
-    KAART_ID=id||'';
-    try{var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');st.kaartId=KAART_ID;localStorage.setItem('fysiplan_state',JSON.stringify(st));}catch(e){}
+  function zetKaartId(id,ts){
+    KAART_ID=id||'';KAART_TS=Number(ts)||0;
+    try{var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');st.kaartId=KAART_ID;st.kaartTs=KAART_TS;localStorage.setItem('fysiplan_state',JSON.stringify(st));}catch(e){}
   }
   function loadState(){
     try{
       var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');
       if(typeof st.kaartId==='string')KAART_ID=st.kaartId;
+      KAART_TS=Number(st.kaartTs)||0;
       if(Array.isArray(st.chosen))chosen=st.chosen.filter(function(c){return OEF[c.o]&&OEF[c.o].imgs[c.i];});
       if(st.client)CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el&&st.client[k]!=null)el.value=st.client[k];});
       if(st.grid&&typeof st.grid==='object'){GRID={rows:st.grid.rows||{},cells:st.grid.cells||{}};}
@@ -1953,7 +1970,7 @@ bridge2.jpg</div>
     var c=currentCard(naam);
     c.praktijk=(SET.praktijk||'').trim();
     if(c.client){delete c.client.c_leeftijd;delete c.client.c_cave;}
-    if(IS_V2){c.kaartId=KAART_ID||'';if(OVERSCHRIJF&&OVERSCHRIJF===String(naam).toLowerCase())c.overschrijf=true;}
+    if(IS_V2){c.kaartId=KAART_ID||'';if(KAART_ID)c.basisTs=KAART_TS||0;if(OVERSCHRIJF&&OVERSCHRIJF===String(naam).toLowerCase())c.overschrijf=true;}
     return c;
   }
   // de hint bij een serverweigering: beveiligen, botsende naam of andermans praktijk
@@ -1965,6 +1982,11 @@ bridge2.jpg</div>
     }
     if(d.bestaat){
       toonQrHint('Er is al een kaart \u201c'+(d.naam||naam)+'\u201d in je praktijk. Is dit dezelfde pati\u00ebnt? Anders: geef deze kaart een andere roepnaam, bijvoorbeeld met een initiaal.',[{act:'overschrijf',label:'Ja, die kaart bijwerken'}]);
+      return true;
+    }
+    if(d.verouderd){
+      toonQrHint((KAART_TS?'Deze kaart is intussen op een ander apparaat gewijzigd.':'Fysiplan weet niet zeker of dit de nieuwste versie van deze kaart is.')+' Open eerst de nieuwste versie, anders gaan die wijzigingen (en eigen video\u2019s) verloren.',
+        [{act:'nieuwste',label:'Open de nieuwste versie'},{act:'overschrijf',label:'Toch mijn versie bewaren'}]);
       return true;
     }
     if(d.login){toonQrHint('De praktijknaam \u201c'+pr+'\u201d is al beveiligd. Log in via Kaarten, of vul de naam van je eigen praktijk in.',[{act:'beveilig',label:'Inloggen'}]);return true;}
@@ -1984,7 +2006,7 @@ bridge2.jpg</div>
         if(!hit){zet();return;}
         fetch('api/kaart/naam',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:hit.id,naam:nieuw})})
           .then(function(r){return r.json().catch(function(){return {ok:false};});})
-          .then(function(d){if(d.ok){zetKaartId(hit.id);zet();}else toonQrHint(d.fout||'Naam wijzigen is niet gelukt.');})
+          .then(function(d){if(d.ok){zetKaartId(hit.id,hit.ts);zet();}else toonQrHint(d.fout||'Naam wijzigen is niet gelukt.');})
           .catch(function(){toonQrHint('Geen verbinding met de server.');});
       })
       .catch(zet);
@@ -2066,6 +2088,7 @@ bridge2.jpg</div>
     doeAutoDeel();
   }
   function doeAutoDeel(){
+    if(PROEF_VOORBIJ)return;
     var naam=huidigeKaartNaam();
     var pr=(SET.praktijk||'').trim();
     if(!naam||!chosen.length){verbergQr();laatsteDeel='';return;}
@@ -2083,23 +2106,41 @@ bridge2.jpg</div>
     }
     var c=serverKaart(naam);
     // vergelijken zonder tijdstempel en kaart-id: alleen een echte wijziging wordt een POST
-    var afdruk=JSON.stringify(Object.assign({},c,{ts:0,kaartId:'',overschrijf:false}));
+    var afdruk=JSON.stringify(Object.assign({},c,{ts:0,kaartId:'',overschrijf:false,basisTs:0}));
     if(afdruk===laatsteDeel)return;
     fetch('api/kaarten',{method:'POST',headers:PJSON(),body:JSON.stringify(c)})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
       .then(function(d){
         if(!d.ok){
-          // proef net verlopen: de server toont bij herladen de verlopen-melding
-          if(d.proefVerlopen){location.reload();return;}
+          // proef verlopen: melding in de app. Niet herladen: op een tweede apparaat
+          // zonder proefcookie serveert /v2/app gewoon weer de app, en dan herlaadde
+          // hij eindeloos (gebruikers-sweep 2026-11-06, iPad)
+          if(d.proefVerlopen){toonProefVoorbij();return;}
           laatsteDeel='';
           toonDeelWeigering(d,naam);
           return;
         }
         laatsteDeel=afdruk;
-        zetKaartId(d.id);
+        zetKaartId(d.id,d.ts);OVERSCHRIJF='';
         ensureQr(function(){toonQr(d.id);});
       })
       .catch(function(){});
+  }
+  // na een 409 verouderd: de versie van de server in deze editor laden (zelfde
+  // stappen als Openen in Kaarten), zodat er niets van het andere apparaat verloren gaat
+  function openNieuwsteVersie(){
+    if(!KAART_ID)return;
+    var id=KAART_ID;
+    fetch(praktijkKaartUrl(id),PGET())
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(!d.ok){toonQrHint(d.fout||'De nieuwste versie openen is niet gelukt.');return;}
+        openCard(d.kaart);
+        zetKaartId(d.kaart.id||id,d.kaart.ts);OVERSCHRIJF='';NAAM_OK=String(d.kaart.naam||'').toLowerCase();
+        QR_UIT_VOOR=null;laatsteDeel='';
+        ensureQr(function(){toonQr(d.kaart.id||id);});
+      })
+      .catch(function(){toonQrHint('Geen verbinding met de server.');});
   }
   document.getElementById('qrBlok').addEventListener('click',function(e){
     var act=e.target.closest('[data-qract]');
@@ -2107,6 +2148,7 @@ bridge2.jpg</div>
       e.preventDefault();
       var a=act.dataset.qract,cnA=document.getElementById('c_naam');
       if(a==='beveilig')openBeveiligen(function(){laatsteDeel='';deelNu();});
+      else if(a==='nieuwste')openNieuwsteVersie();
       else if(a==='overschrijf'){OVERSCHRIJF=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
       else if(a==='roepnaam'&&cnA)roepnaamToepassen();
       else if(a==='naamok'){NAAM_OK=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
@@ -2147,7 +2189,7 @@ bridge2.jpg</div>
         }
         alert(d.fout||'De kaart bewaren voor de QR-code is niet gelukt.');return;
       }
-      if(IS_V2)zetKaartId(d.id);
+      if(IS_V2)zetKaartId(d.id,d.ts);
       if(!toonQr(d.id)){alert('De QR-code maken is niet gelukt.');return;}
       ping('kaart-opgeslagen');
       closeOv('ovPrint');doePrint();
@@ -2339,6 +2381,20 @@ bridge2.jpg</div>
       render();
     }).catch(function(){});
   }
+  // de proef van deze praktijk is voorbij (de server weigert schrijven met proefVerlopen):
+  // één vaste melding bovenaan, met een echte link; lezen blijft gewoon werken en de app
+  // probeert niet steeds opnieuw te delen
+  var PROEF_VOORBIJ=false;
+  function toonProefVoorbij(){
+    PROEF_VOORBIJ=true;
+    var balk=document.getElementById('proefBalk');if(!balk)return;
+    balk.innerHTML="<span id='pb_voorbij'><b>Je gratis proef is voorbij.</b> Je gedeelde kaarten, seintjes en scores kun je nog lezen; "+
+      "nieuwe kaarten maken of iets wijzigen kan niet meer.</span><span class='pb-ruimte'></span>"+
+      "<a class='btn primary' href='/v2/proef'>Wil je doorgaan?</a>";
+    balk.setAttribute('role','alert');
+    balk.hidden=false;
+    if(balk.scrollIntoView)balk.scrollIntoView({block:'nearest'});
+  }
   function proefStart(){
     if(!PROEF)return;
     var balk=document.getElementById('proefBalk');
@@ -2370,13 +2426,13 @@ bridge2.jpg</div>
     saveServerCard(cn.value.trim(),function(d){
       knop.disabled=false;knop.textContent='Test de QR op je telefoon';
       if(!d.ok){
-        if(d.proefVerlopen){location.reload();return;}
+        if(d.proefVerlopen){toonProefVoorbij();return;}
         if(d.beveilig){toonDeelWeigering(d,cn.value.trim());openBeveiligen(function(){knop.click();});return;}
         if(d.bestaat){toonDeelWeigering(d,cn.value.trim());return;}
         alert(d.login?'De praktijknaam \u201c'+(SET.praktijk||'')+'\u201d is al beveiligd door een andere praktijk. Vul de naam van je eigen praktijk in.':(d.fout||'De QR-code maken is niet gelukt.'));
         return;
       }
-      zetKaartId(d.id);
+      zetKaartId(d.id,d.ts);
       ensureQr(function(){
         var url=location.origin+'/k/'+d.id;
         var svg=window.FYSIQR?FYSIQR.svg(url,220):'';
@@ -2665,11 +2721,28 @@ bridge2.jpg</div>
   function toonPrakSlot(pr){
     PRAKSLOT.pr=pr;
     fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET())
-      .then(function(r){return r.json();}).then(function(d){
+      .then(function(r){if(!r.ok)throw r.status;return r.json();}).then(function(d){
         PRAKSLOT.geclaimd=!!d.geclaimd;PRAKSLOT.ingelogd=!!d.ingelogd;
         if(d.bewaar)PRAKSLOT.bewaar=d.bewaar;
         rendPrakSlot();
-      }).catch(function(){});
+      }).catch(function(code){
+        // een 429/5xx of geen verbinding is niet "nog niet beveiligd": niets laten beveiligen
+        var st=document.getElementById('ps_status'),form=document.getElementById('ps_form');
+        if(!st)return;
+        if(form)form.style.display='none';
+        var vl=document.getElementById('ps_vwolab');if(vl)vl.style.display='none';
+        st.innerHTML=(code===429?"De server is even druk.":"De beveiliging van je praktijk kan nu niet worden gecontroleerd.")+
+          " Je praktijk en kaarten zijn niet weg. <a href='#' id='ps_opnieuw'>Opnieuw proberen</a>";
+        var o=document.getElementById('ps_opnieuw');
+        if(o)o.addEventListener('click',function(e){e.preventDefault();toonSrvKaarten();});
+      });
+  }
+  function toonOverzichtStoring(el,code,zoekEl){
+    if(zoekEl)zoekEl.style.display='none';
+    el.innerHTML="<div class='hint' role='status'>"+(code===429?"De server is even druk. ":"Het overzicht kan nu niet worden geladen. ")+
+      "Je gedeelde kaarten zijn niet weg. <a href='#' id='k_srv_opnieuw'>Opnieuw proberen</a></div>";
+    var o=document.getElementById('k_srv_opnieuw');
+    if(o)o.addEventListener('click',function(e){e.preventDefault();toonSrvKaarten();});
   }
   function rendPrakSlot(){
     var st=document.getElementById('ps_status'),form=document.getElementById('ps_form'),
@@ -2847,7 +2920,7 @@ bridge2.jpg</div>
     var c=serverKaart(naam);
     fetch('api/kaarten',{method:'POST',headers:PJSON(),body:JSON.stringify(c)})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
-      .then(function(d){cb(d);})
+      .then(function(d){if(d&&d.ok&&d.ts&&d.id===KAART_ID)zetKaartId(d.id,d.ts);cb(d);})
       .catch(function(){cb({ok:false,fout:'Geen verbinding met de server.'});});
   }
   // deel- en herinnerberichten in de taal van de patiënt: de kaart zelf is al
@@ -2956,7 +3029,22 @@ bridge2.jpg</div>
       var de=new Date(lv.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});
       r.push('Ervaren herstel t.o.v. start (GROC-achtig, app-vrij aangetikt): '+lbl+' ('+sTxt+'), laatst '+de+'.');
     }
+    // contact via de kaart (WGBO): seintjes, "te zwaar" en berichten van de praktijk
+    // verdwijnen na afhandeling uit het overzicht en met de kaart na de bewaartermijn;
+    // in het dossier blijven ze, met datum en wie het meldde
+    var ct=(kaart.contact||[]).filter(function(x){return x&&x.t;});
+    if(ct.length){
+      var dc=function(t){return new Date(t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});};
+      var SOORT={vraag:'seintje: heeft een vraag',pijn:'seintje: meldt te veel pijn',goed:'seintje: het gaat goed',zwaar:'oefening te zwaar'};
+      r.push('Contact via de digitale kaart:');
+      ct.forEach(function(x){
+        if(x.van==='praktijk')r.push('  '+dc(x.t)+' praktijk: "'+String(x.tekst||'')+'"');
+        else r.push('  '+dc(x.t)+' patiënt: '+(SOORT[x.soort]||'seintje')+(x.oef?' ('+x.oef+')':''));
+      });
+    }
     if(kaart.id)r.push('Digitale kaart: '+location.origin+'/k/'+kaart.id);
+    // bron en houdbaarheid: Fysiplan is geen dossier, deze tekst is de blijvende kopie
+    r.push('Bron: Fysiplan, overgenomen op '+new Date().toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'})+'. De digitale kaart wordt na de bewaartermijn gewist; bewaar deze tekst in het dossier.');
     return r.join('\n');
   }
   // praktijkrapport: alle app-vrij gemeten uitkomsten (pijn, oefentrouw, ervaren
@@ -3120,11 +3208,41 @@ bridge2.jpg</div>
     var t=n===1?'1 openstaand seintje van een patiënt — open Kaarten om te antwoorden':n+' openstaande seintjes van patiënten — open Kaarten om te antwoorden';
     b.title=t;kb.title=t;
   }
+  function toonPraktijknaamVraag(blok){
+    blok.style.display='';
+    document.getElementById('k_srv_naam').textContent='';
+    document.getElementById('k_srv_lijst').innerHTML='';
+    ['prakslot','weekbrief'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.display='none';});
+    if(document.getElementById('k_pr_vraag'))return;
+    var v=document.createElement('form');v.id='k_pr_vraag';v.className='no-print';
+    v.style.cssText='display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0';
+    v.innerHTML="<div class='hint' style='flex-basis:100%'>Vul eerst de naam van je praktijk in. Daarna beveilig je hem met een wachtwoord en deel je kaarten met je pati\u00ebnten.</div>"+
+      "<input id='k_pr_in' maxlength='80' autocomplete='organization' placeholder='Naam van je praktijk' aria-label='Naam van je praktijk' style='flex:1;min-width:180px;min-height:44px'/>"+
+      "<button class='btn primary' type='submit' style='min-height:44px'>Verder</button>"+
+      "<div id='k_pr_fout' role='alert' style='flex-basis:100%;color:#b42318;font-size:12.5px'></div>";
+    blok.insertBefore(v,document.getElementById('k_srv_lijst'));
+    v.addEventListener('submit',function(e){
+      e.preventDefault();
+      var naam=(document.getElementById('k_pr_in').value||'').trim().slice(0,80);
+      if(naam.length<2){document.getElementById('k_pr_fout').textContent='Vul een praktijknaam in (minstens 2 tekens).';document.getElementById('k_pr_in').focus();return;}
+      SET.praktijk=naam;saveSettings();
+      var ep=document.getElementById('praktijk');if(ep)ep.value=naam;
+      ['prakslot','weekbrief'].forEach(function(id){var e2=document.getElementById(id);if(e2)e2.style.display='';});
+      toonSrvKaarten();
+    });
+  }
   function toonSrvKaarten(){
     var blok=document.getElementById('k_srv');
     var knop=document.getElementById('k_save_srv');
     var pr=(SET.praktijk||'').trim();
-    if(!pr){blok.style.display='none';knop.style.display='none';zetSeinBadge(0);return;}
+    if(!pr){
+      knop.style.display='none';zetSeinBadge(0);
+      // v2: zonder praktijknaam liep een nieuwe proef hier vast (geen blok, geen uitleg),
+      // terwijl welkom en mail naar "Kaarten" verwijzen. Vraag de naam dan hier.
+      if(window.FYSIPLAN_V2){toonPraktijknaamVraag(blok);return;}
+      blok.style.display='none';return;
+    }
+    var pv=document.getElementById('k_pr_vraag');if(pv)pv.remove();
     blok.style.display='';knop.style.display='';
     document.getElementById('k_srv_naam').textContent='('+pr+')';
     // v2: beveiligingsslot — claim/inloggen per praktijk (alleen in de v2-app)
@@ -3164,10 +3282,12 @@ bridge2.jpg</div>
     fetch('api/kaarten?praktijk='+encodeURIComponent(pr),PGET())
       .then(function(r){
         if(r.status===401)return r.json().then(function(d){return {geweigerd:true,beveilig:!!(d&&d.beveilig)};}).catch(function(){return {geweigerd:true};});
-        return r.ok?r.json():[];
+        // 429/5xx is geen lege praktijk: niet "nog geen gedeelde kaarten" tonen
+        return r.ok?r.json():{storing:r.status};
       })
       .then(function(l){
         var zoekEl=document.getElementById('k_srv_zoek');
+        if(l&&l.storing){toonOverzichtStoring(el,l.storing,zoekEl);return;}
         // het overzicht toont roepnamen en scores: alleen voor een praktijk met wachtwoord
         if(l&&l.geweigerd){
           if(zoekEl)zoekEl.style.display='none';
@@ -3706,7 +3826,7 @@ bridge2.jpg</div>
           // Puntkomma's en een BOM zodat NL-Excel hem direct goed opent.
           var xb=document.getElementById('k_srv_csv');
           if(xb)xb.onclick=function(){
-            var veld=function(v){v=(v==null?'':String(v));return '"'+v.replace(/"/g,'""')+'"';};
+            var veld=csvCel;
             var dd2=function(t){return t?new Date(t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}):'';};
             var kop=['Naam','Status','Aangemaakt','Behandelaar','Oefeningen','Laatste pijn','Eerste pijn','PSK-doel','Eerste PSK','Laatste PSK','Oefendoel p/w','Te zwaar (3 wk)','Afspraak','Werknotitie','Verloopt','Kaartlink'];
             // altijd de verse stand van de server: een afspraak of PSK-doel die net in dit
@@ -4003,7 +4123,7 @@ bridge2.jpg</div>
           if(!d.ok){alert('Kaart openen is niet gelukt.');return;}
           if(chosen.length&&!confirm('Huidige kaart vervangen door “'+d.kaart.naam+'”?'))return;
           openCard(d.kaart);
-          zetKaartId(d.kaart.id||'');OVERSCHRIJF='';NAAM_OK=String(d.kaart.naam||'').toLowerCase();
+          zetKaartId(d.kaart.id||'',d.kaart.ts);OVERSCHRIJF='';NAAM_OK=String(d.kaart.naam||'').toLowerCase();
           // patiëntsignalen uit de praktijkprojectie meenemen naar de editor
           if(IS_V2&&SRV_SIGNALEN[o.dataset.sopen]){SIGNAAL_KAART=SRV_SIGNALEN[o.dataset.sopen];render();}
           // de gedeelde kaart hééft al een id: zet de QR er meteen op
@@ -4076,6 +4196,13 @@ bridge2.jpg</div>
     if(ev){var c=chosen[+ev.dataset.evid],eo=c&&OEF[c.o];if(eo)openEigenVideo(eo);return;}
     var rm=e.target.closest('.rm');if(!rm)return;
     var n=+rm.dataset.rm;if(n>=0&&n<chosen.length){chosen.splice(n,1);render();}
+  });
+  // eigen-videoknopje op het plaatje ook met Enter of spatie (het is een span met role=button)
+  elMon.addEventListener('keydown',function(e){
+    if(e.key!=='Enter'&&e.key!==' ')return;
+    var ev=e.target.closest&&e.target.closest('[data-evid]');if(!ev)return;
+    e.preventDefault();
+    var c=chosen[+ev.dataset.evid],eo=c&&OEF[c.o];if(eo)openEigenVideo(eo);
   });
   // ---- v2: eigen oefeningen van de praktijk (naam, foto, uitleg) ----
   // Staan op de server bij de beveiligde praktijk, zodat ze op elk apparaat van het

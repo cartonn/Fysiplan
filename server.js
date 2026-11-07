@@ -8,6 +8,7 @@ import { byteRange } from "./lib/byte-range.js";
 import { listDrafts, loadDraft } from "./lib/draft-exercise-import.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
 import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./lib/proef.js";
+import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, MAX_THERAPEUTEN } from "./lib/mollie.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -62,6 +63,8 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 // versie van de verwerkersovereenkomst (public/juridisch.html): bij elke inhoudelijke
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-02";
+// versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
+const AV_VERSIE = "2026-11-07";
 // wie Fysiplan is, voor /privacy en /verwerkersovereenkomst (art. 13 AVG): in te
 // stellen op de server, zodat er geen bedrijfsgegevens in de openbare repo staan
 const FYSIPLAN_ID = {
@@ -399,6 +402,32 @@ function proefVan(req) {
   return (id && proeven[id]) || null;
 }
 const proefVerlopen = (p) => !!p && !p.klant && Date.now() >= p.verloopt;
+// De proef hangt niet alleen aan het apparaat (cookie) maar ook aan het praktijkaccount
+// dat tijdens de proef werd beveiligd: anders maakte dezelfde praktijksessie op een
+// ander apparaat (of met gewiste cookies) gewoon verder kaarten. Op het account staan
+// id én einddatum, zodat het slot blijft staan als de proefgegevens gewist zijn.
+function proefKoppel(acc, p) {
+  if (!acc || !p || acc.proef) return false;
+  acc.proef = { id: p.id, verloopt: p.verloopt };
+  return true;
+}
+function praktijkProefVerlopen(pk) {
+  const k = pk && Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk].proef : null;
+  if (!k) return false;
+  const p = Object.hasOwn(proeven, String(k.id)) ? proeven[String(k.id)] : null;
+  return p ? proefVerlopen(p) : Date.now() >= Number(k.verloopt || 0);
+}
+// alle schrijfroutes van de therapeut; lezen, verwijderen, archiveren, "gezien",
+// wachtwoord en uitloggen blijven open, net als alle patiëntroutes (/k)
+const PROEF_SCHRIJFROUTES = new Set(["/api/kaarten", "/api/praktijk/oefeningen", "/api/praktijk/sjablonen",
+  "/api/praktijken", "/api/opname/start", "/api/kaart/afspraak", "/api/kaart/naam", "/api/kaart/notitie",
+  "/api/kaart/behandelaar", "/api/kaart/psk-doel", "/api/kaart/nieuwe-link", "/api/kaart/doel",
+  "/api/kaart/antwoord", "/api/assistent"]);
+function proefSlotVoor(req, urlPath) {
+  if (req.method !== "POST" || !PROEF_SCHRIJFROUTES.has(urlPath)) return false;
+  if (ADMIN_KEY_EIGEN && isAdmin(req)) return false;
+  return proefVerlopen(proefVan(req)) || praktijkProefVerlopen(praktijkSessieVan(req));
+}
 function proefCookie(token, request) {
   const proxyProto = String(request.headers["x-forwarded-proto"] || "").split(",", 1)[0].trim().toLowerCase();
   const veilig = proxyProto === "https" || !!request.socket?.encrypted;
@@ -442,7 +471,51 @@ async function serveerProef(request, response, blok, vars = {}, status = 200) {
 function proefVars(p, extra = {}) {
   const d = dagenOver(p.verloopt);
   return { NAAM: (p.naam || "").split(" ")[0], EMAIL: p.email, TEL: telefoonWeergave(p.tel), EINDDATUM: datumNl(p.verloopt),
-    DAGEN_TEKST: d <= 1 ? "vandaag nog" : d + " dagen", TITEL: "Proef voorbij", ...extra };
+    DAGEN_TEKST: d <= 1 ? "vandaag nog" : d + " dagen", TITEL: "Proef voorbij",
+    AFREKENEN: mollieAan() ? "Liever meteen geregeld? Reken de eerste maand hieronder online af." : "Online afrekenen is niet nodig.",
+    BETAAL_HTML: betaalBlok(p), ...extra };
+}
+
+// ---- abonnement: eerste maand online afrekenen via Mollie (alleen met MOLLIE_API_KEY) ----
+// Zonder sleutel: geen betaalknop, /v2/proef/betalen en de webhook bestaan niet, en
+// "Ja, ik wil doorgaan" (Ahmed belt) blijft de enige weg. Met sleutel betaalt de
+// praktijk de eerste maand (iDEAL of kaart) en wordt de proef direct een klant.
+const MOLLIE_SLEUTEL = String(process.env.MOLLIE_API_KEY || "");
+const MOLLIE_BASIS = String(process.env.MOLLIE_API_BASIS || "https://api.mollie.com");
+const mollieAan = () => !!MOLLIE_SLEUTEL;
+const mollieBetaalIndex = new Map(); // tr_… -> proef-id: de webhook zoekt alleen eigen betalingen op
+for (const p of Object.values(proeven)) if (p.betaling?.id) mollieBetaalIndex.set(p.betaling.id, p.id);
+function betaalBlok(p) {
+  if (!mollieAan() || !p) return "";
+  const a = p.abonnement;
+  if (a && a.status === "actief") return '<p class="klein" style="margin-top:16px">Je abonnement is actief voor ' + a.aantal +
+    (a.aantal === 1 ? " therapeut" : " therapeuten") + ", betaald tot en met " + htmlEsc(datumNl(a.betaaldTot)) + ".</p>";
+  if (p.klant) return "";
+  return '<form method="post" action="/v2/proef/betalen" class="blad" style="margin-top:18px">' +
+    '<h2>Direct online afrekenen</h2><p class="klein" style="font-size:14.5px">&euro; 5,99 per therapeut per maand, maandelijks opzegbaar. ' +
+    "Je betaalt nu de eerste maand met iDEAL of je bankkaart; daarna gaat Fysiplan meteen verder.</p>" +
+    '<p class="klein" style="font-size:14px">De betaling loopt via Mollie; je geeft daarbij een machtiging voor de volgende maanden. ' +
+    'Met betalen ga je akkoord met de <a href="/voorwaarden#abonnement">algemene voorwaarden</a>. Zie ook de <a href="/privacy#betalen">privacyverklaring</a>.</p>' +
+    '<div class="veld" style="margin-top:12px"><label for="b_aantal">Aantal therapeuten</label>' +
+    '<input id="b_aantal" name="aantal" type="number" inputmode="numeric" min="1" max="' + MAX_THERAPEUTEN + '" value="1" required/></div>' +
+    '<div class="knoppen"><button class="knop oranje" type="submit">Eerste maand betalen</button></div></form>';
+}
+// haal de betaling zelf op bij Mollie (de webhook is niet ondertekend) en verwerk hem
+async function mollieVerwerk(id) {
+  const pid = mollieBetaalIndex.get(id);
+  const p = pid && Object.hasOwn(proeven, pid) ? proeven[pid] : null;
+  if (!p) return null;
+  const betaling = await mollie("/payments/" + encodeURIComponent(id), { sleutel: MOLLIE_SLEUTEL, basis: MOLLIE_BASIS });
+  const oordeel = beoordeelBetaling(betaling, p);
+  if (oordeel === "betaald" && markeerBetaald(p, betaling)) {
+    await bewaarProeven();
+    proefMeldAhmed("Betaald: " + (p.praktijk || p.naam), p, "Deze praktijk heeft de eerste maand online betaald (" +
+      p.abonnement.aantal + " therapeut(en), EUR " + p.abonnement.bedrag + "). De proef is nu een klant.");
+  } else if (oordeel === "mislukt" && p.betaling.status !== betaling.status) {
+    p.betaling.status = betaling.status;
+    await bewaarProeven();
+  }
+  return p;
 }
 // het aanmeldformulier, eventueel opnieuw met de ingevulde waarden en per veld de fout
 async function proefFormVars(request, w, fouten, suggestie = "", akkoord = false, alarm = "") {
@@ -613,6 +686,17 @@ if (!Number.isFinite(bewaarInfo.invoering)) {
   bewaarInfo = { invoering: Date.now() };
   try { await mkdir(dataDir, { recursive: true }); await writeFile(bewaarPath, JSON.stringify(bewaarInfo)); } catch {}
 }
+// contactlogboek per kaart (WGBO, art. 7:454 BW): seintjes, "te zwaar" en berichten
+// van de praktijk worden na afhandeling uit het overzicht gehaald, maar horen in het
+// dossier van de praktijk. Dit korte logboek houdt ze bij de kaart tot de
+// bewaartermijn, zodat "Kopieer voor dossier" ze meeneemt. Alleen via de
+// praktijkroutes leesbaar, niet via /api/kaart (de allowlist daar noemt het niet).
+const logContact = (kaart, item) => {
+  const lijst = Array.isArray(kaart.contact) ? kaart.contact : [];
+  lijst.push({ t: Date.now(), ...item });
+  kaart.contact = lijst.slice(-50);
+};
+
 // laatste teken van gebruik: de praktijk (opslaan), de patiënt (tik, vinkje, seintje,
 // bezoek) of een afspraak die nog moet komen (bij een wekelijkse reeks de laatste)
 function laatsteActiviteitKaart(k) {
@@ -1363,32 +1447,52 @@ function slug(s) {
 const verbodenSleutel = /^(__proto__|constructor|prototype)$/i;
 const cleanName = (v, max) => { const s = String(v || "").trim().replace(/\s+/g, " ").slice(0, max); return verbodenSleutel.test(s) ? "" : s; };
 
-function readBody(req, limit = 16 * 1024) {
+// Een te grote body: niet meer bewaren, de rest weglezen en pas daarna antwoorden.
+// Eerder deed de lezer meteen req.destroy(); dan ging de verbinding dicht vóór het
+// antwoord en zag de browser een lege foutpagina of "Failed to fetch" (sweep
+// 2026-11-07). Nu krijgt de handler een fout, en send() wacht tot de client klaar is
+// met versturen en maakt van elk antwoord op dit verzoek een 413 met
+// "connection: close". Antwoorden vóór het einde van de upload gaf een race (EPIPE of
+// reset bij de client). Het weglezen is begrensd in tijd en bytes, zodat een eindeloze
+// upload geen verbinding openhoudt; daarboven gaat de verbinding alsnog hard dicht.
+const TE_GROOT_WEGLEES_MS = 10 * 1000;
+const TE_GROOT_WEGLEES_MAX = 80 * 1024 * 1024;
+function bodyTeGroot(req) {
+  if (req.teGroot) return;
+  let weg = 0;
+  req.teGroot = new Promise((klaar) => {
+    const t = setTimeout(() => { req.destroy(); klaar(); }, TE_GROOT_WEGLEES_MS);
+    t.unref?.();
+    const op = () => { clearTimeout(t); klaar(); };
+    req.on("data", (c) => { weg += c.length; if (weg > TE_GROOT_WEGLEES_MAX) req.destroy(); });
+    req.once("end", op);
+    req.once("close", op);
+    if (req.complete) op();
+  });
+  req.resume();
+}
+function leesBody(req, limit) {
   return new Promise((resolve, reject) => {
+    // een opgegeven content-length boven de grens hoeft niet eerst binnen te komen
+    if (Number(req.headers["content-length"]) > limit) { bodyTeGroot(req); reject(new Error("body te groot")); return; }
     let size = 0;
     const chunks = [];
     req.on("data", (c) => {
+      if (req.teGroot) return;
       size += c.length;
-      if (size > limit) { reject(new Error("body te groot")); req.destroy(); return; }
+      if (size > limit) { chunks.length = 0; bodyTeGroot(req); reject(new Error("body te groot")); return; }
       chunks.push(c);
     });
-    req.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
+    req.on("end", () => { if (!req.teGroot) resolve(Buffer.concat(chunks)); });
     req.on("error", reject);
   });
 }
+function readBody(req, limit = 16 * 1024) {
+  return leesBody(req, limit).then((buf) => buf.toString("utf8"));
+}
 // als readBody, maar levert de ruwe bytes (voor video-uploads)
 function readBodyRaw(req, limit) {
-  return new Promise((resolve, reject) => {
-    let size = 0;
-    const chunks = [];
-    req.on("data", (c) => {
-      size += c.length;
-      if (size > limit) { reject(new Error("body te groot")); req.destroy(); return; }
-      chunks.push(c);
-    });
-    req.on("end", () => resolve(Buffer.concat(chunks)));
-    req.on("error", reject);
-  });
+  return leesBody(req, limit);
 }
 
 // Verhardt de v2-pagina's met een per-antwoord script-nonce, zodat 'unsafe-inline'
@@ -1460,6 +1564,14 @@ function cacheHeaders(type) {
   };
 }
 async function send(res, status, type, body) {
+  // een verzoek met een te grote body krijgt altijd 413, wat de handler ook koos
+  if (res.req && res.req.teGroot) {
+    await res.req.teGroot;
+    if (res.destroyed || res.writableEnded) return;
+    status = 413;
+    res.setHeader("connection", "close");
+    if (/json/.test(type)) body = JSON.stringify({ ok: false, teGroot: true, fout: "Dit is te groot om te versturen." });
+  }
   // nosniff en een sobere referrer-policy op alles: puur verhardend, verandert geen gedrag
   res.writeHead(status, { "content-type": type, "x-content-type-options": "nosniff",
     "referrer-policy": "same-origin", ...cacheHeaders(type) });
@@ -1617,6 +1729,14 @@ async function afhandelen(request, response) {
       // geheimen): zo is "overleeft een herstart" in één blik te controleren
       volumeActief: dataDir === "/data" || !!process.env.DATA_DIR
     });
+    return;
+  }
+
+  // verlopen proef: één poort voor alle schrijfroutes van de therapeut, op apparaat
+  // én op praktijkaccount (zie praktijkProefVerlopen)
+  if (proefSlotVoor(request, urlPath)) {
+    response.setHeader("cache-control", "no-store");
+    await sendJson(response, 403, { ok: false, proefVerlopen: true, fout: "Je gratis proef is voorbij. Wil je doorgaan? Kijk op fysiplan.nl/v2/proef." });
     return;
   }
 
@@ -2019,6 +2139,7 @@ async function afhandelen(request, response) {
       const herstelcode = maakHerstelcode();
       praktijkAccounts[pk] = { hash: maakHash(ww), herstel: maakHash(herstelcode), gemaakt: Date.now(),
         vwo: { versie: VWO_VERSIE, t: new Date().toISOString() } };
+      proefKoppel(praktijkAccounts[pk], proefVan(request));
       await saveJson(accountsPath, praktijkAccounts);
       auditLog(pk, "geclaimd", request);
       const token = nieuweSessie(pk);
@@ -2050,6 +2171,9 @@ async function afhandelen(request, response) {
         return;
       }
       loginMisPraktijk.delete(pk); // geslaagd: teller schoon
+      // account dat tijdens een proef van dit apparaat is gemaakt: alsnog koppelen
+      const pr = proefVan(request);
+      if (pr && !pr.klant && Number(acc.gemaakt) >= Number(pr.gestart) && proefKoppel(acc, pr)) await saveJson(accountsPath, praktijkAccounts);
       const token = nieuweSessie(pk);
       auditLog(pk, "ingelogd", request);
       await sendJson(response, 200, { ok: true, sessie: token });
@@ -2861,7 +2985,10 @@ async function afhandelen(request, response) {
       if (opnames.size >= 200) { await sendJson(response, 429, { ok: false, fout: "Te veel gelijktijdige opnames; probeer het zo weer." }); return; }
       // kort token: de QR-URL (/o/<token>) moet in een kleine, snel scanbare code passen
       const token = randomBytes(6).toString("hex");
-      opnames.set(token, { doel, naam: doel === "oefening" ? b.naam : null, made: Date.now(), video: null });
+      // praktijk: van wie deze opname is. Alleen díé praktijk mag het pad daarna op een
+      // eigen kaart zetten (zie eigenVideoPad bij POST /api/kaarten)
+      opnames.set(token, { doel, naam: doel === "oefening" ? b.naam : null, made: Date.now(), video: null,
+        praktijk: praktijkSessie || null, proef: proefVan(request)?.id || null });
       await sendJson(response, 200, { ok: true, token });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
@@ -2912,6 +3039,15 @@ async function afhandelen(request, response) {
     // o.video-check en blijft er een weesbestand (tot 60 MB) achter terwijl de
     // opslagteller dubbel telt
     if (!o || o.video || o.bezig) { await sendJson(response, 404, { ok: false, fout: "Opname verlopen of al afgerond. Scan de QR-code opnieuw." }); return; }
+    // de telefoon heeft geen sessie of proefcookie: het token onthoudt van welke proef en
+    // praktijk het is. Verloopt die proef terwijl de QR nog openstaat, dan schrijft ook
+    // deze route niets meer weg (zelfde slot als PROEF_SCHRIJFROUTES).
+    const opnameProef = o.proef && Object.hasOwn(proeven, o.proef) ? proeven[o.proef] : null;
+    if (proefVerlopen(opnameProef) || praktijkProefVerlopen(o.praktijk)) {
+      opnames.delete(token);
+      await sendJson(response, 403, { ok: false, proefVerlopen: true, fout: "De gratis proef van deze praktijk is voorbij. Opnemen kan niet meer." });
+      return;
+    }
     // te grote uploads meteen afwijzen (vóór het bufferen) en het aantal gelijktijdige
     // uploads begrenzen: elke upload staat kort in het geheugen
     if (Number(request.headers["content-length"] || 0) > 60 * 1024 * 1024) {
@@ -3061,16 +3197,42 @@ async function afhandelen(request, response) {
       // de eerste en kreeg hij diens link, mét diens pijnscores. Een verlopen kaart
       // telt niet meer mee. Oudere clients sturen geen kaartId en houden het oude
       // gedrag (bijwerken op naam); overschrijf=true is de bevestiging "zelfde patiënt".
-      const bestaand = Object.hasOwn(map, kk) && (map[kk].demo || verlooptOp(map[kk]) > Date.now()) ? map[kk] : null;
+      let bestaand = Object.hasOwn(map, kk) && (map[kk].demo || verlooptOp(map[kk]) > Date.now()) ? map[kk] : null;
       if (Object.hasOwn(map, kk) && !bestaand) {
         // verlopen maar nog niet opgeruimd: als nieuwe kaart behandelen (nieuw id)
         const wegOud = Object.values(map[kk].vids || {});
         delete map[kk];
         ruimKaartVideosOp(wegOud).catch(() => {});
       }
+      // roepnaam verbeterd ("Dirk" → "Dirck"): de editor stuurt het id van de kaart die
+      // hij bewerkt. Zonder dit maakte de nieuwe naam stil een tweede kaart met een
+      // nieuwe QR; de al geprinte QR bleef de oude inhoud tonen en de pijnscores kwamen
+      // op de oude kaart (gebruikers-sweep 2026-11-07). Is de nieuwe naam nog vrij, dan
+      // hernoemen we de bestaande kaart, zoals /api/kaart/naam doet. Het id blijft gelijk.
+      if (!Object.hasOwn(map, kk) && typeof b.kaartId === "string" && b.kaartId) {
+        const oudeSleutel = Object.keys(map).find((k) => map[k] && map[k].id === b.kaartId &&
+          (map[k].demo || verlooptOp(map[k]) > Date.now()));
+        if (oudeSleutel) {
+          map[kk] = map[oudeSleutel];
+          delete map[oudeSleutel];
+          bestaand = map[kk];
+          auditLog(pk, "kaart-hernoemd", request);
+        }
+      }
       if (bestaand && typeof b.kaartId === "string" && b.kaartId !== bestaand.id && b.overschrijf !== true) {
         await sendJson(response, 409, { ok: false, bestaat: true, naam: bestaand.naam,
           fout: "Er is al een kaart \u201c" + bestaand.naam + "\u201d in je praktijk." });
+        return;
+      }
+      // versiecheck: een editor stuurt mee welke versie (ts) hij het laatst van de
+      // server kreeg. Is de kaart sindsdien op een ander apparaat of tabblad bewaard,
+      // dan schreef dit oude apparaat bij het openen stil zijn verouderde kopie terug
+      // en wiste ruimKaartVideosOp de nieuwe opnames (gebruikers-sweep 2026-11-07).
+      // Oudere clients sturen geen basisTs en houden het oude gedrag.
+      if (bestaand && Object.hasOwn(b, "basisTs") && b.kaartId === bestaand.id && b.overschrijf !== true &&
+        Number(bestaand.ts) > (Number(b.basisTs) || 0)) {
+        await sendJson(response, 409, { ok: false, verouderd: true, naam: bestaand.naam, ts: bestaand.ts,
+          fout: "Deze kaart is intussen op een ander apparaat gewijzigd. Open de nieuwste versie via Kaarten." });
         return;
       }
       if (!map[kk] && Object.keys(map).length >= 100) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal kaarten voor deze praktijk bereikt." }); return; }
@@ -3096,13 +3258,36 @@ async function afhandelen(request, response) {
           id: (/^fp_[a-f0-9]{16}$/.test(String(x && x.id || "")) || PRAKTIJK_OEF_ID.test(String(x && x.id || ""))) ? String(x.id) : "",
           i: Math.max(0, Math.min(9, Number(x && x.i) || 0)) }))
         .filter((x) => x.n);
-      // persoonlijke video's per oefening (alleen paden van eigen opnames toegestaan)
+      // persoonlijke video's per oefening (alleen paden van eigen opnames toegestaan).
+      // Eigen = al op een kaart van deze praktijk, een opname die deze praktijk zelf
+      // startte, of een bibliotheekvideo. Zonder die check zette een andere praktijk
+      // een opname van jou (token leesbaar in de scherm-QR) op haar kaart; haalde ze
+      // hem er weer af, dan wiste ruimKaartVideosOp jouw nog niet opgeslagen opname.
+      const eigenVideoPad = (v) => {
+        if (/^yt:/.test(v) || isAdmin(request)) return true;
+        if (Object.values(map).some((k) => Object.values(k.vids || {}).includes(v))) return true;
+        if (Object.values(videolinks).some((x) => x && x.eigen === v)) return true;
+        for (const o of opnames.values()) if (o.video === v) return o.praktijk === pk;
+        return false;
+      };
       const vids = {};
       if (b.vids && typeof b.vids === "object") {
         for (const k of Object.keys(b.vids).slice(0, 12)) {
           const v = String(b.vids[k] || "");
           // eigen opname, of een YouTube-link die de therapeut per oefening plakt
-          if (/^uploads\/videos\/v-[a-f0-9]+\.(mp4|webm)$/.test(v) || /^yt:[A-Za-z0-9_-]{11}$/.test(v)) vids[sanStr(k, 80)] = v;
+          if ((/^uploads\/videos\/v-[a-f0-9]+\.(mp4|webm)$/.test(v) || /^yt:[A-Za-z0-9_-]{11}$/.test(v)) && eigenVideoPad(v)) vids[sanStr(k, 80)] = v;
+        }
+      }
+      // niets gewijzigd (de editor deelt ook bij alleen openen): versie niet ophogen.
+      // Anders maakte openen op de iPad de geopende kaart op de desktop "verouderd" en
+      // kaatste de 409 tussen twee werkplekken heen en weer (gebruikers-sweep 2026-11-07).
+      if (bestaand && map[kk] === bestaand) {
+        const zelfde = (a, c) => JSON.stringify(a || {}) === JSON.stringify(c || {});
+        if (bestaand.naam === naam && bestaand.praktijk === praktijk && zelfde(bestaand.client, client) &&
+          zelfde(bestaand.chosen || [], chosen) && zelfde(bestaand.rows, rows) && zelfde(bestaand.cells, cells) &&
+          zelfde(bestaand.vids, vids)) {
+          await sendJson(response, 200, { ok: true, id: bestaand.id, ts: bestaand.ts, ongewijzigd: true });
+          return;
         }
       }
       const oudeVids = map[kk] ? Object.values(map[kk].vids || {}) : [];
@@ -3127,6 +3312,7 @@ async function afhandelen(request, response) {
         behandelaar: map[kk] ? map[kk].behandelaar || null : null,
         pskDoel: map[kk] ? map[kk].pskDoel || null : null,
         psk: map[kk] ? map[kk].psk || [] : [],
+        contact: map[kk] ? map[kk].contact || [] : [],
         doel: map[kk] ? Number(map[kk].doel) || 0 : 0,
         gearchiveerd: map[kk] ? !!map[kk].gearchiveerd : false,
         gearchiveerdOp: map[kk] ? Number(map[kk].gearchiveerdOp) || null : null };
@@ -3140,7 +3326,7 @@ async function afhandelen(request, response) {
         chosen.forEach((x) => { if (geldig.has(x.n)) stats.oefeningGebruik[x.n] = (stats.oefeningGebruik[x.n] || 0) + 1; });
       } catch {}
       bewaarStats();
-      await sendJson(response, 200, { ok: true, id: map[kk].id });
+      await sendJson(response, 200, { ok: true, id: map[kk].id, ts: map[kk].ts });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek (of kaart te groot)." });
     }
@@ -3376,6 +3562,7 @@ async function afhandelen(request, response) {
       // maar wisselende oefeningen mogen de opslag niet laten groeien
       if (!zwaar[naam] && Object.keys(zwaar).length >= 24) { await sendJson(response, 200, { ok: true }); return; }
       zwaar[naam] = { t: Date.now() };
+      logContact(found, { van: "patient", soort: "zwaar", oef: naam });
       if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true });
@@ -3400,6 +3587,7 @@ async function afhandelen(request, response) {
       const found = vindKaart(String(b.id || ""));
       if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       found.seintje = { t: Date.now(), soort };
+      logContact(found, { van: "patient", soort });
       if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true });
@@ -3480,6 +3668,7 @@ async function afhandelen(request, response) {
       const tekst = String(b.tekst || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 300);
       if (!tekst) { await sendJson(response, 400, { ok: false, fout: "Antwoord is leeg." }); return; }
       kaart.antwoord = { t: Date.now(), tekst };
+      logContact(kaart, { van: "praktijk", tekst });
       kaart.seintje = null;
       await saveJson(kaartenPath, kaarten);
       auditLog(pk, "kaart-antwoord", request);
@@ -3631,7 +3820,11 @@ async function afhandelen(request, response) {
       const kaart = Object.values(map).find((k) => k.id === String(b.id || ""));
       // zelfde enumeratierem als op de andere kaart-endpoints
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
-      const t = Number(b.t) || 0;
+      // weghalen alleen met een expliciete 0/null/leeg; elk ander type (tekst, object,
+      // lijst) is een fout en wist de bestaande afspraak niet
+      const leeg = b.t === 0 || b.t === null || b.t === "" || b.t === undefined;
+      if (!leeg && typeof b.t !== "number") { await sendJson(response, 400, { ok: false, fout: "Ongeldig moment." }); return; }
+      const t = leeg ? 0 : b.t;
       if (t) {
         if (!Number.isFinite(t) || t < Date.now() - 3600000 || t > Date.now() + 366 * 864e5) {
           await sendJson(response, 400, { ok: false, fout: "Kies een moment in de komende twaalf maanden." });
@@ -3670,9 +3863,13 @@ async function afhandelen(request, response) {
       ar: { sum: "موعد العلاج الطبيعي", alarm1: "غدًا: موعدك مع أخصائي العلاج الطبيعي", alarm2: "قريبًا: موعدك مع أخصائي العلاج الطبيعي", desc: "موعدك. بطاقة تمارينك: " },
       uk: { sum: "Візит до фізіотерапевта", alarm1: "Завтра: візит до фізіотерапевта", alarm2: "Скоро: візит до фізіотерапевта", desc: "Твій візит. Твоя картка вправ: " }
     };
-    const taalT = AFSPRAAK_TAAL[String(q.get("taal") || "").toLowerCase()] || AFSPRAAK_TAAL.nl;
+    const taalQ = String(q.get("taal") || "").toLowerCase();
+    const taalT = (Object.hasOwn(AFSPRAAK_TAAL, taalQ) && AFSPRAAK_TAAL[taalQ]) || AFSPRAAK_TAAL.nl; // geen __proto__/constructor
     const d = new Date(found.afspraak.t);
-    // zwevende lokale tijd in Nederlandse klok, net als de oefenmomenten-agenda
+    // De afspraak is één vast moment: tijd in Nederlandse klok mét tijdzone (TZID +
+    // VTIMEZONE). Zonder tijdzone ("zwevend") leest een telefoon die op een andere
+    // tijdzone staat 14:00 als 14:00 daar, en komt de patiënt een uur te laat.
+    // De wekelijkse reeks (RRULE) blijft zo ook over de zomertijdwissel op 14:00.
     const datum = d.toLocaleDateString("sv-SE", { timeZone: "Europe/Amsterdam" });
     const uur = d.toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Europe/Amsterdam" });
     const dtStart = datum.replace(/-/g, "") + "T" + uur.replace(":", "") + "00";
@@ -3687,10 +3884,14 @@ async function afhandelen(request, response) {
     const link = "https://" + veiligeHost + "/k/" + found.id;
     const ics = [
       "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Fysiplan//Trainingskaart//NL", "CALSCALE:GREGORIAN",
+      "BEGIN:VTIMEZONE", "TZID:Europe/Amsterdam",
+      "BEGIN:DAYLIGHT", "TZOFFSETFROM:+0100", "TZOFFSETTO:+0200", "TZNAME:CEST", "DTSTART:19700329T020000", "RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU", "END:DAYLIGHT",
+      "BEGIN:STANDARD", "TZOFFSETFROM:+0200", "TZOFFSETTO:+0100", "TZNAME:CET", "DTSTART:19701025T030000", "RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU", "END:STANDARD",
+      "END:VTIMEZONE",
       "BEGIN:VEVENT",
       "UID:fysiplan-afspraak-" + found.id + "-" + found.afspraak.t + "@fysiplan.nl",
       "DTSTAMP:" + stamp,
-      "DTSTART:" + dtStart,
+      "DTSTART;TZID=Europe/Amsterdam:" + dtStart,
       // wekelijkse behandelreeks: één agenda-tik zet alle vervolgafspraken mét
       // alarmen — het app-vrije antwoord op de afspraakherinneringen van
       // concurrenten die daar een patiënt-app met pushmeldingen voor eisen
@@ -3846,7 +4047,8 @@ async function afhandelen(request, response) {
       ar: { sum: "قم بتمارينك", desc: "بطاقة تمارينك بكل التمارين والفيديوهات: ", alarm: "حان وقت تمارينك" },
       uk: { sum: "Зробити вправи", desc: "Твоя картка вправ з усіма вправами та відео: ", alarm: "Час для твоїх вправ" }
     };
-    const taalT = AGENDA_TAAL[String(q.get("taal") || "").toLowerCase()] || AGENDA_TAAL.nl;
+    const taalQ = String(q.get("taal") || "").toLowerCase();
+    const taalT = (Object.hasOwn(AGENDA_TAAL, taalQ) && AGENDA_TAAL[taalQ]) || AGENDA_TAAL.nl; // geen __proto__/constructor
     // eerstvolgend gekozen oefenmoment in Nederlandse tijd (vandaag telt mee als het tijdstip nog komt)
     const kort = { Mon: "MO", Tue: "TU", Wed: "WE", Thu: "TH", Fri: "FR", Sat: "SA", Sun: "SU" };
     const nuTijd = new Date().toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Europe/Amsterdam" });
@@ -3956,7 +4158,10 @@ async function afhandelen(request, response) {
     if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     const TALEN = { en: "Engels", de: "Duits", fr: "Frans", es: "Spaans", pl: "Pools", tr: "Turks", ar: "Arabisch", uk: "Oekraïens" };
     const taal = String(q.get("taal") || "");
-    if (!TALEN[taal]) { await sendJson(response, 400, { ok: false, fout: "Onbekende taal." }); return; }
+    // Object.hasOwn: "__proto__", "constructor" of "toString" zijn geen taal. Anders werd
+    // vertalingen["__proto__"] het Object.prototype van het hele serverproces en schreef
+    // de cache daar sleutels op (gebruikers-sweep 2026-11-06).
+    if (!Object.hasOwn(TALEN, taal)) { await sendJson(response, 400, { ok: false, fout: "Onbekende taal." }); return; }
     // Alleen niet-persoonlijke teksten gaan naar de vertaaldienst: namen en uitleg uit
     // de bibliotheek en namen van eigen praktijkoefeningen. De vrije tekst van de
     // therapeut (doel, opmerking) blijft in het Nederlands op de kaart staan: die kan
@@ -4020,7 +4225,7 @@ async function afhandelen(request, response) {
       const vraag = String(b.vraag || "").trim().slice(0, 300);
       if (vraag.length < 3) { await sendJson(response, 400, { ok: false, fout: "Typ eerst een korte vraag." }); return; }
       const VTALEN = { nl: "Nederlands", en: "Engels", de: "Duits", fr: "Frans", es: "Spaans", pl: "Pools", tr: "Turks", ar: "Arabisch", uk: "Oekraïens" };
-      const taal = VTALEN[String(b.taal || "")] ? String(b.taal) : "nl";
+      const taal = Object.hasOwn(VTALEN, String(b.taal || "")) ? String(b.taal) : "nl";
       if (!AI_KEY) { await sendJson(response, 503, { ok: false, fout: "De vraaghulp staat nog uit op deze server." }); return; }
       if (aiLimiet(request, response)) return;
       // context voor het antwoord: uitsluitend wat er op déze kaart staat
@@ -4248,7 +4453,7 @@ async function afhandelen(request, response) {
     telBezoek(request, false);
     response.setHeader("cache-control", "no-store");
     const p = proefVan(request);
-    if (p && proefVerlopen(p)) { await serveerProef(request, response, "verlopen", proefVars(p)); return; }
+    if (p && proefVerlopen(p)) { await serveerProef(request, response, "verlopen", proefVars(p, { V_PRAKTIJK: p.praktijk || "" })); return; }
     if (p && !new URL(request.url, "http://x").searchParams.has("mijn")) { response.writeHead(303, { location: "/v2/app" }); response.end(); return; }
     if (p) { await serveerProef(request, response, "mijn", proefVars(p, { TITEL: "Mijn proef" })); return; }
     await serveerProef(request, response, "formulier", await proefFormVars(request, {}, {}));
@@ -4273,10 +4478,35 @@ async function afhandelen(request, response) {
       return;
     }
     const w = v.waarden;
-    // hetzelfde e-mailadres opnieuw: dezelfde proef terug (geen nieuwe 14 dagen),
-    // met de nieuwste contactgegevens
+    // hetzelfde e-mailadres opnieuw: dezelfde proef terug (geen nieuwe 14 dagen).
+    // Alleen vanaf een apparaat dat die proef al heeft (geldige proefcookie) worden
+    // de contactgegevens bijgewerkt. Wie alleen het e-mailadres kent, krijgt geen
+    // cookie en verandert niets: er gaat een eenmalige inloglink naar dat adres.
     let p = Object.values(proeven).find((x) => x.email === w.email);
     const nieuw = !p;
+    if (!nieuw && proefVan(request) !== p) {
+      const nu = Date.now();
+      let gestuurd = false;
+      if (mailIngesteld() && !mailOpSlot("proef:" + p.email)) {
+        const code = randomBytes(24).toString("hex");
+        p.mailLink = { h: tokenHash(code), verloopt: nu + 24 * 3600e3 };
+        await bewaarProeven();
+        const host = eigenHost(request);
+        const kaal = host.split(":")[0];
+        proefMail(p.email, "Je link naar je Fysiplan-proef",
+          "Hoi,\n\nIemand (hopelijk jij) meldde zich opnieuw aan voor de Fysiplan-proef met dit e-mailadres.\n" +
+          "Ga verder met je proef via deze persoonlijke link (24 uur geldig, één keer te gebruiken):\n" +
+          ((kaal === "localhost" || kaal === "127.0.0.1") ? "http://" : "https://") + host + "/v2/proef/terug?code=" + code + "\n\n" +
+          "Was jij dit niet? Dan hoef je niets te doen; er is niets veranderd.\n\nGroet,\nFysiplan");
+        gestuurd = true;
+      }
+      await serveerProef(request, response, "bericht", { TITEL: "Kijk in je mail", ETIKET: "Al aangemeld", KOP: "Met dit e-mailadres loopt al een proef.",
+        TEKST: gestuurd
+          ? "We hebben een persoonlijke link naar dat adres gestuurd. Open hem op dit apparaat om verder te gaan; hij werkt 24 uur. Niets ontvangen? Kijk ook bij spam."
+          : "Open de persoonlijke link uit je welkomstmail op dit apparaat om verder te gaan, of mail ons; dan helpen we je verder.",
+        KNOP_HTML: '<a class="knop omlijnd" href="/v2">Naar de site</a>' }, 200);
+      return;
+    }
     if (nieuw) {
       if (Object.keys(proeven).length >= 5000) {
         await serveerProef(request, response, "formulier", await proefFormVars(request, w, {}, "", true,
@@ -4313,11 +4543,17 @@ async function afhandelen(request, response) {
   if (urlPath === "/v2/proef/terug" && request.method === "GET") {
     response.setHeader("cache-control", "no-store");
     const code = String(new URL(request.url, "http://x").searchParams.get("code") || "");
-    const id = /^[a-f0-9]{48}$/.test(code) ? proefTokenIndex.get(tokenHash(code)) : null;
+    let id = /^[a-f0-9]{48}$/.test(code) ? proefTokenIndex.get(tokenHash(code)) : null;
+    // of de eenmalige link na opnieuw aanmelden met een bestaand e-mailadres
+    if (!id && /^[a-f0-9]{48}$/.test(code)) {
+      const h = tokenHash(code);
+      const q = Object.values(proeven).find((x) => x.mailLink && x.mailLink.h === h && x.mailLink.verloopt > Date.now());
+      if (q) { delete q.mailLink; id = q.id; }
+    }
     if (!id || !proeven[id]) {
       if (kaartMisLimiet(request, response)) return;
       await serveerProef(request, response, "bericht", { TITEL: "Link werkt niet", ETIKET: "Link verlopen", KOP: "Deze link werkt niet meer.",
-        TEKST: "Misschien zijn je gegevens gewist, of is de link al vervangen. Meld je opnieuw aan met hetzelfde e-mailadres; je houdt dan dezelfde proef.",
+        TEKST: "Misschien zijn je gegevens gewist, of is de link al vervangen. Meld je opnieuw aan met hetzelfde e-mailadres; dan sturen we een nieuwe link en houd je dezelfde proef.",
         KNOP_HTML: '<a class="knop oranje" href="/v2/proef">Naar aanmelden</a>' }, 404);
       return;
     }
@@ -4354,6 +4590,223 @@ async function afhandelen(request, response) {
     await serveerProef(request, response, "bericht", { TITEL: "Bedankt", ETIKET: "Bedankt", KOP: "Fijn! We bellen je binnen een werkdag.",
       TEKST: "We nemen contact op via " + telefoonWeergave(p.tel) + " om je abonnement af te spreken. Tot snel.",
       KNOP_HTML: '<a class="knop omlijnd" href="/v2">Terug naar de site</a>' });
+    return;
+  }
+
+  // eerste maand afrekenen: Mollie-klant + eerste betaling (sequenceType "first", zodat
+  // het mandaat later een maandelijkse incasso kan dragen), dan door naar Mollie
+  if (urlPath === "/v2/proef/betalen" && request.method === "POST" && mollieAan()) {
+    response.setHeader("cache-control", "no-store");
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    let b = {};
+    try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 2048))); } catch {}
+    const p = proefVan(request);
+    if (!p || p.klant) { response.writeHead(303, { location: p ? "/v2/app" : "/v2/proef" }); response.end(); return; }
+    const aantal = aantalTherapeuten(b.aantal);
+    const terugNaar = (fout) => serveerProef(request, response, "bericht", { TITEL: "Betalen", ETIKET: "Betalen", KOP: fout,
+      TEKST: "Je kunt het opnieuw proberen of op 'Ja, ik wil doorgaan' drukken; dan bellen we je.",
+      KNOP_HTML: '<a class="knop oranje" href="/v2/proef">Terug</a>' }, aantal ? 502 : 422);
+    if (!aantal) { await terugNaar("Vul een aantal therapeuten in tussen 1 en " + MAX_THERAPEUTEN + "."); return; }
+    if (proefLimiet(request)) { await terugNaar("Even te veel pogingen. Probeer het over een uur opnieuw."); return; }
+    const host = eigenHost(request), kaal = host.split(":")[0];
+    const lokaal = kaal === "localhost" || kaal === "127.0.0.1";
+    const basis = (lokaal ? "http://" : "https://") + host;
+    try {
+      const klant = p.betaling?.klant || (await mollie("/customers", { sleutel: MOLLIE_SLEUTEL, basis: MOLLIE_BASIS, methode: "POST",
+        body: { name: p.praktijk || p.naam, email: p.email, metadata: { proef: p.id } } })).id;
+      const betaling = await mollie("/payments", { sleutel: MOLLIE_SLEUTEL, basis: MOLLIE_BASIS, methode: "POST", body: {
+        amount: maandBedrag(aantal), customerId: klant, sequenceType: "first",
+        description: "Fysiplan, eerste maand, " + aantal + (aantal === 1 ? " therapeut" : " therapeuten"),
+        redirectUrl: basis + "/v2/proef/betaald",
+        // Mollie bereikt localhost niet; daar haalt /v2/proef/betaald de status op
+        ...(lokaal ? {} : { webhookUrl: basis + "/api/mollie/webhook" }),
+        metadata: { proef: p.id } } });
+      const checkout = String(betaling?._links?.checkout?.href || "");
+      if (!geldigBetaalId(betaling?.id) || !/^https?:\/\//.test(checkout)) throw new Error("mollie zonder checkout");
+      if (p.betaling?.id) mollieBetaalIndex.delete(p.betaling.id);
+      // welke voorwaarden de praktijk zag toen ze op betalen drukte (art. 6:234 BW)
+      p.betaling = { id: betaling.id, klant, aantal, status: "open", gemaakt: Date.now(), av: { versie: AV_VERSIE, t: new Date().toISOString() } };
+      mollieBetaalIndex.set(betaling.id, p.id);
+      await bewaarProeven();
+      response.writeHead(303, { location: checkout }); response.end();
+    } catch (err) {
+      console.error("mollie betalen mislukt:", err.message);
+      await terugNaar("Online betalen lukt op dit moment niet.");
+    }
+    return;
+  }
+  // terug van Mollie: status zelf ophalen (werkt ook als de webhook nog niet binnen is)
+  if (urlPath === "/v2/proef/betaald" && request.method === "GET" && mollieAan()) {
+    response.setHeader("cache-control", "no-store");
+    let p = proefVan(request);
+    if (p?.betaling?.id && !p.klant) { try { p = (await mollieVerwerk(p.betaling.id)) || p; } catch (err) { console.error("mollie status:", err.message); } }
+    if (!p) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
+    if (p.klant) {
+      await serveerProef(request, response, "bericht", { TITEL: "Betaald", ETIKET: "Betaald", KOP: "Dank je wel, je abonnement is actief.",
+        TEKST: "Je kunt meteen verder met je kaarten. De factuur volgt per mail.", KNOP_HTML: '<a class="knop oranje" href="/v2/app">Naar mijn kaarten</a>' });
+      return;
+    }
+    const mislukt = ["failed", "canceled", "expired"].includes(p.betaling?.status);
+    await serveerProef(request, response, "bericht", { TITEL: "Betalen", ETIKET: "Betalen",
+      KOP: mislukt ? "De betaling is niet gelukt." : "We wachten nog op de bevestiging van je bank.",
+      TEKST: mislukt ? "Er is niets afgeschreven. Probeer het opnieuw, of druk op 'Ja, ik wil doorgaan', dan bellen we je."
+        : "Dat duurt meestal een paar seconden. Ververs deze pagina zo.",
+      KNOP_HTML: mislukt ? '<a class="knop oranje" href="/v2/proef">Opnieuw proberen</a>' : '<a class="knop oranje" href="/v2/proef/betaald">Opnieuw kijken</a>' });
+    return;
+  }
+  // Mollie meldt een statuswijziging met alleen het id; onbekende id's krijgen ook 200
+  // (niets verraden) en leiden nooit tot een verzoek aan Mollie
+  if (urlPath === "/api/mollie/webhook" && request.method === "POST" && mollieAan()) {
+    let id = "";
+    try { id = new URLSearchParams(await readBody(request, 1024)).get("id") || ""; } catch {}
+    if (geldigBetaalId(id) && mollieBetaalIndex.has(id)) {
+      try { await mollieVerwerk(id); }
+      catch (err) { console.error("mollie webhook:", err.message); await send(response, 503, "text/plain; charset=utf-8", "later"); return; }
+    }
+    await send(response, 200, "text/plain; charset=utf-8", "ok");
+    return;
+  }
+
+  // na een verlopen proef: de seintjes en scores van patiënten blijven zichtbaar, alleen
+  // lezen. Patiënten kunnen hun kaart nog gebruiken en "het doet te veel pijn" tikken;
+  // zonder dit overzicht kwam dat nergens meer aan. Scriptloos (zelfde CSP als de
+  // proefpagina's), elke keer opnieuw met het praktijkwachtwoord: er komt geen sessie
+  // en geen schrijfroute bij. Zelfde remmen en audit als het gewone inloggen.
+  if (urlPath === "/v2/proef/overzicht" && request.method === "POST") {
+    response.setHeader("cache-control", "no-store");
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    const p = proefVan(request);
+    if (!p || !proefVerlopen(p)) { response.writeHead(303, { location: p ? "/v2/app" : "/v2/proef" }); response.end(); return; }
+    let b = {};
+    try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 4096))); } catch {}
+    const pk = cleanName(b.praktijk, 80).toLowerCase();
+    const opnieuw = async (fout, status) => serveerProef(request, response, "verlopen", proefVars(p, {
+      V_PRAKTIJK: b.praktijk || p.praktijk || "",
+      OVERZICHT_FOUT_HTML: '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" }), status);
+    if (pk && loginOpSlot(pk)) { await opnieuw("Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
+    const acc = praktijkAccounts[pk];
+    if (!acc || !checkHash(String(b.wachtwoord || ""), acc.hash)) {
+      loginMisTel(pk || "?");
+      auditLog(pk || "?", "overzicht-na-proef-mislukt", request);
+      await opnieuw("Die praktijknaam en dat wachtwoord horen niet bij elkaar.", 403);
+      return;
+    }
+    loginMisPraktijk.delete(pk);
+    auditLog(pk, "overzicht-na-proef", request);
+    const nu = Date.now();
+    const SEIN = { vraag: "heeft een vraag", pijn: "meldt te veel pijn", goed: "het gaat goed" };
+    const HERSTEL = { "-2": "veel slechter", "-1": "iets slechter", "0": "hetzelfde", "1": "iets beter", "2": "veel beter" };
+    const kort = (ms) => new Date(ms).toLocaleDateString("nl-NL", { day: "numeric", month: "short", timeZone: "Europe/Amsterdam" });
+    const laatste = (r) => (r && r.length) ? r[r.length - 1] : null;
+    const lijst = Object.values(kaarten[pk] || {})
+      .filter((k) => !k.demo && !k.gearchiveerd && verlooptOp(k) > nu)
+      .map((k) => ({ k, sein: (k.seintje && SEIN[k.seintje.soort]) ? k.seintje : null }))
+      .sort((a, b2) => ((b2.sein ? b2.sein.t : 0) - (a.sein ? a.sein.t : 0)) || ((b2.k.ts || 0) - (a.k.ts || 0)));
+    const rijen = lijst.map(({ k, sein }) => {
+      const m = laatste(k.metingen), e = laatste(k.ervaring), g = laatste(k.gedaan);
+      const delen = [];
+      if (m) delen.push("pijn " + m.s + " (" + kort(m.t) + ")");
+      if (e && HERSTEL[String(e.s)]) delen.push("herstel: " + HERSTEL[String(e.s)]);
+      if (g) delen.push("laatst geoefend " + kort(g.t));
+      if (k.afspraak && k.afspraak.t > nu) delen.push("afspraak " + kort(k.afspraak.t));
+      return "<li" + (sein ? ' class="sein"' : "") + "><b>" + htmlEsc(String(k.naam || "kaart").slice(0, 60)) + "</b>" +
+        (sein ? ' <span class="chip">' + htmlEsc(SEIN[sein.soort]) + " · " + htmlEsc(kort(sein.t)) + "</span>" : "") +
+        '<br/><span class="klein">' + htmlEsc(delen.join(" · ") || "nog niets ingevuld") + "</span></li>";
+    }).join("");
+    const aantal = lijst.filter((x) => x.sein).length;
+    await serveerProef(request, response, "overzicht", proefVars(p, {
+      TITEL: "Overzicht na je proef", PRAKTIJK: cleanName(b.praktijk, 80) || pk,
+      SAMENVATTING: lijst.length + (lijst.length === 1 ? " actieve kaart" : " actieve kaarten") + ", " +
+        aantal + (aantal === 1 ? " seintje" : " seintjes") + " van patiënten.",
+      LIJST_HTML: rijen ? '<ul class="overzicht">' + rijen + "</ul>" : '<p class="klein">Er zijn geen actieve kaarten meer.</p>' }));
+    return;
+  }
+
+  // rechten van betrokkenen en einde van de verwerking (art. 15, 17, 20 en 28 lid 3
+  // onder g AVG): een beveiligde praktijk kan hier alles wat Fysiplan voor haar
+  // bewaart downloaden of in één keer wissen. Scriptloos, zelfde CSP als de
+  // proefpagina's, en elke keer opnieuw met het praktijkwachtwoord (geen sessie):
+  // dezelfde remmen en audit als het gewone inloggen. Een onbeveiligde praktijk
+  // heeft geen wachtwoord en dus geen route hier; die wist losse kaarten in de app.
+  if (urlPath === "/v2/gegevens" && request.method === "GET") {
+    response.setHeader("cache-control", "no-store");
+    await serveerProef(request, response, "gegevens", { TITEL: "Gegevens van je praktijk", V_PRAKTIJK: "", MELDING_HTML: "" });
+    return;
+  }
+  if ((urlPath === "/v2/gegevens/download" || urlPath === "/v2/gegevens/wissen") && request.method === "POST") {
+    response.setHeader("cache-control", "no-store");
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    const wissen = urlPath.endsWith("/wissen");
+    let b = {};
+    try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 4096))); } catch {}
+    const pk = cleanName(b.praktijk, 80).toLowerCase();
+    const opnieuw = (fout, status) => serveerProef(request, response, "gegevens", { TITEL: "Gegevens van je praktijk",
+      V_PRAKTIJK: cleanName(b.praktijk, 80), MELDING_HTML: '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" }, status);
+    if (pk && loginOpSlot(pk)) { await opnieuw("Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
+    const acc = pk && !verbodenSleutel.test(pk) && Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk] : null;
+    if (!acc || !checkHash(String(b.wachtwoord || ""), acc.hash)) {
+      loginMisTel(pk || "?");
+      auditLog(pk || "?", wissen ? "alles-wissen-mislukt" : "download-mislukt", request);
+      await opnieuw("Die praktijknaam en dat wachtwoord horen niet bij elkaar. Alleen een beveiligde praktijk kan hier downloaden of wissen.", 403);
+      return;
+    }
+    loginMisPraktijk.delete(pk);
+    const eigenProfiel = ([k, p]) => k === pk || String(p && p.praktijk || "").toLowerCase() === pk;
+    if (!wissen) {
+      auditLog(pk, "alles-gedownload", request);
+      const pakket = {
+        uitleg: "Alle gegevens die Fysiplan voor deze praktijk bewaart, op het moment van downloaden. " +
+          "Video's, foto's en het logo staan als pad; de bestanden zelf zitten er niet in.",
+        gedownload: new Date().toISOString(),
+        praktijk: pk,
+        account: { gemaakt: acc.gemaakt || null, verwerkersovereenkomst: acc.vwo || null, proef: acc.proef || null },
+        profiel: Object.entries(praktijken).filter(eigenProfiel).map(([, p]) => publiekProfiel(p)),
+        kaarten: Object.values(kaarten[pk] || {}).map((k) => { const v = verlooptOp(k); return { ...k, verlooptOp: Number.isFinite(v) ? new Date(v).toISOString() : null }; }),
+        eigenOefeningen: praktijkOefeningen[pk] || [],
+        sjablonen: praktijkSjablonen[pk] || [],
+        logboek: praktijkAudit.filter((a) => a.praktijk === pk)
+      };
+      const bestand = "fysiplan-" + (slug(pk) || "praktijk") + "-" + new Date().toISOString().slice(0, 10) + ".json";
+      response.writeHead(200, { "content-type": "application/json; charset=utf-8",
+        "content-disposition": 'attachment; filename="' + bestand + '"', "x-content-type-options": "nosniff" });
+      response.end(JSON.stringify(pakket, null, 2));
+      return;
+    }
+    if (String(b.zeker || "").trim().toUpperCase() !== "WISSEN") {
+      await opnieuw("Typ WISSEN in het laatste veld om te bevestigen dat alles weg mag.", 400);
+      return;
+    }
+    const wegVids = Object.values(kaarten[pk] || {}).flatMap((k) => Object.values(k.vids || {}));
+    const aantalKaarten = Object.keys(kaarten[pk] || {}).length;
+    delete kaarten[pk];
+    await saveJson(kaartenPath, kaarten);
+    await ruimKaartVideosOp(wegVids);
+    for (const o of praktijkOefeningen[pk] || []) {
+      if (/^uploads\/oef-[a-f0-9]{12}\.(jpg|png)$/.test(String(o.img || ""))) { try { await unlink(join(dataDir, o.img)); } catch {} }
+    }
+    delete praktijkOefeningen[pk];
+    await saveJson(praktijkOefeningenPath, praktijkOefeningen);
+    delete praktijkSjablonen[pk];
+    await saveJson(praktijkSjablonenPath, praktijkSjablonen);
+    await inProfielRij(pk, async () => {
+      for (const [k, p] of Object.entries(praktijken).filter(eigenProfiel)) {
+        if (/^uploads\/logo-[^/]+$/.test(String(p.logo || ""))) { try { await unlink(join(dataDir, p.logo)); } catch {} }
+        delete praktijken[k];
+      }
+      await saveJson(praktijkenPath, praktijken);
+    });
+    delete praktijkAccounts[pk];
+    await saveJson(accountsPath, praktijkAccounts);
+    for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
+    // het logboek noemde de praktijknaam; alleen het feit dat er gewist is blijft, zonder naam
+    praktijkAudit = praktijkAudit.filter((a) => a.praktijk !== pk);
+    auditLog("(gewist)", "praktijk-alles-gewist", request);
+    await serveerProef(request, response, "bericht", { TITEL: "Alles gewist", ETIKET: "Gewist", KOP: "Alles van je praktijk is gewist.",
+      TEKST: aantalKaarten + (aantalKaarten === 1 ? " kaart" : " kaarten") + ", je eigen oefeningen, sjablonen, praktijkgegevens, wachtwoord en logboek zijn van de server. " +
+        "In de dagelijkse reservekopie staat het nog hooguit 7 dagen. De praktijknaam is weer vrij.",
+      KNOP_HTML: '<a class="knop omlijnd" href="/v2">Naar de site</a>' });
     return;
   }
 
@@ -4411,7 +4864,7 @@ async function afhandelen(request, response) {
     const proef = proefVan(request);
     if (proef && proefVerlopen(proef)) {
       response.setHeader("cache-control", "no-store");
-      await serveerProef(request, response, "verlopen", proefVars(proef));
+      await serveerProef(request, response, "verlopen", proefVars(proef, { V_PRAKTIJK: proef.praktijk || "" }));
       return;
     }
     response.setHeader("x-frame-options", "DENY");
@@ -4470,9 +4923,11 @@ async function afhandelen(request, response) {
   // privacyverklaring en verwerkersovereenkomst (art. 13 en 28 AVG): één sjabloon
   // met twee blokken. Bewaartermijnen komen uit de serverinstellingen, zodat de tekst
   // altijd klopt met wat de code doet; wie Fysiplan is komt uit omgevingsvariabelen.
-  if (urlPath === "/privacy" || urlPath === "/verwerkersovereenkomst" || urlPath === "/privacy/" || urlPath === "/verwerkersovereenkomst/") {
+  // plus de algemene voorwaarden (/voorwaarden, concept) in hetzelfde sjabloon
+  const juridischBlok = { "/privacy": "privacy", "/verwerkersovereenkomst": "vwo", "/voorwaarden": "voorwaarden" };
+  if (juridischBlok[urlPath.replace(/\/$/, "")] && urlPath !== "/") {
     if (urlPath.endsWith("/")) { response.writeHead(301, { location: urlPath.slice(0, -1) }); response.end(); return; }
-    const blok = urlPath === "/privacy" ? "privacy" : "vwo";
+    const blok = juridischBlok[urlPath];
     try {
       const bron = await readFile(join(publicDir, "juridisch.html"), "utf8");
       const m = bron.match(new RegExp("<!--blok:" + blok + "-->([\\s\\S]*?)<!--/blok-->"));
@@ -4481,8 +4936,8 @@ async function afhandelen(request, response) {
       const afzender = (MAIL_AFZENDER.match(/[^\s<>]+@[^\s<>]+/) || [""])[0];
       const contact = FYSIPLAN_ID.contact || afzender;
       const vars = {
-        TITEL: blok === "privacy" ? "Privacy" : "Verwerkersovereenkomst",
-        VERSIE: new Date(VWO_VERSIE + "T12:00:00Z").toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Amsterdam" }),
+        TITEL: { privacy: "Privacy", vwo: "Verwerkersovereenkomst", voorwaarden: "Algemene voorwaarden" }[blok],
+        VERSIE: new Date((blok === "voorwaarden" ? AV_VERSIE : VWO_VERSIE) + "T12:00:00Z").toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Amsterdam" }),
         BEDRIJF: FYSIPLAN_ID.bedrijf || "Fysiplan",
         // alleen een aparte handelsnaam als de rechtspersoon anders heet ("Fysiplan B.V." niet)
         ALIAS_HTML: FYSIPLAN_ID.bedrijf && !/^fysiplan\b/i.test(FYSIPLAN_ID.bedrijf) ? " (&ldquo;Fysiplan&rdquo;)" : "",
@@ -4491,7 +4946,14 @@ async function afhandelen(request, response) {
         CONTACT_HTML: contact ? '<p>Vragen over privacy: <a href="mailto:' + htmlEsc(contact) + '">' + htmlEsc(contact) + "</a></p>" : "",
         HOSTING: FYSIPLAN_ID.hosting || "nog niet vastgelegd",
         STIL: String(BEWAAR_STIL_DAGEN), AFGEROND: String(BEWAAR_AFGEROND_DAGEN),
-        PROEF_BEWAAR: String(PROEF_BEWAAR_DAGEN)
+        PROEF_BEWAAR: String(PROEF_BEWAAR_DAGEN), PROEF_DAGEN: String(PROEF_DAGEN),
+        // Mollie staat alleen in de privacyverklaring als online betalen echt aan staat
+        BETAAL_RIJ_HTML: mollieAan() ? '<tr id="betalen"><td>Betaling: naam van de praktijk (of je eigen naam), e-mail, aantal therapeuten, bedrag, '
+          + "en de kenmerken van klant, betaling en machtiging bij Mollie. Geen rekeningnummer of kaartgegevens; die vul je alleen bij Mollie in.</td>"
+          + "<td>Het abonnement afrekenen en vastleggen dat je klant bent</td><td>Zolang je klant bent; facturen en betaalgegevens daarna 7 jaar, omdat de wet dat vraagt (fiscale bewaarplicht)</td></tr>" : "",
+        BETAAL_PARTIJ_HTML: mollieAan() ? "<p><b>Betalen.</b> Reken je online af, dan stuurt Fysiplan de naam van je praktijk (of je eigen naam), je e-mailadres en het bedrag "
+          + "naar Mollie B.V. (Amsterdam, Nederland). Mollie handelt de betaling af en is daarvoor zelf verantwoordelijk; zie de privacyverklaring van Mollie. "
+          + "Mollie krijgt geen pati&euml;ntgegevens.</p>" : ""
       };
       // niet-gulzig: twee placeholders direct achter elkaar (__KVK_HTML____ADRES_HTML__)
       // moeten allebei worden ingevuld

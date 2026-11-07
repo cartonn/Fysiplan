@@ -201,7 +201,7 @@ try {
   assert.doesNotMatch(vraagAanvraag, /Jan|Vries|Traplopen|Rustig opbouwen|VKB/, "doel, opmerking en naam blijven bij de praktijk");
 
   // ---- juridische pagina's ----
-  for (const pad of ["/privacy", "/verwerkersovereenkomst"]) {
+  for (const pad of ["/privacy", "/verwerkersovereenkomst", "/voorwaarden"]) {
     const r = await fetch(origin + pad);
     assert.equal(r.status, 200, pad);
     const html = await r.text();
@@ -217,9 +217,32 @@ try {
   assert.match(privacy, /EU West \(Amsterdam\)/);
   assert.match(privacy, /privacy@fysiplan\.nl/);
   assert.match(privacy, /90 dagen/);
+  // cookies en lokale opslag (legal 2026-11-06): eerlijk wat het apparaat bewaart
+  assert.match(privacy, /id="opslag"/);
+  assert.match(privacy, /11\.7a Telecommunicatiewet/);
+  assert.match(privacy, /fpproef/);
+  assert.match(privacy, /offline kopie/);
+  assert.match(privacy, /naam, leeftijd en casus gaan nooit naar Fysiplan/);
+  assert.doesNotMatch(privacy, /onthoudt alleen je taal/, "oude, onvolledige zin is weg");
   const vwo = await (await fetch(origin + "/verwerkersovereenkomst")).text();
   assert.match(vwo, /subverwerker/i);
   assert.match(vwo, /48 uur/);
+  // algemene voorwaarden (concept): proef en abonnement, beoogd gebruik, geen dossier,
+  // stoppen sluit aan op de verwerkersovereenkomst, en zakelijke keuzes als invulplek
+  const av = await (await fetch(origin + "/voorwaarden")).text();
+  assert.match(av, /<title>Algemene voorwaarden · Fysiplan<\/title>/);
+  assert.match(av, /Concept\./);
+  assert.match(av, /14 dagen/);
+  assert.match(av, /niet bedoeld als medisch hulpmiddel/);
+  assert.match(av, /geen dossier|vervangt je dossier niet/i);
+  assert.match(av, /binnen 30 dagen/);
+  assert.match(av, /class="invul"/);
+  assert.match(av, /href="\/verwerkersovereenkomst"/);
+  assert.doesNotMatch(av, /juridisch advies|kaartvoorstel|startdosering/i);
+  assert.equal((await fetch(origin + "/voorwaarden/", { redirect: "manual" })).status, 301);
+  assert.match(privacy, /href="\/voorwaarden"/, "voet van de juridische pagina's linkt de voorwaarden");
+  const proefPagina = await (await fetch(origin + "/v2/proef")).text();
+  assert.match(proefPagina, /href="\/voorwaarden"/, "proefaanmelding linkt de voorwaarden");
   const slash = await fetch(origin + "/privacy/", { redirect: "manual" });
   assert.equal(slash.status, 301);
   const oudBestand = await fetch(origin + "/juridisch.html", { redirect: "manual" });
@@ -232,6 +255,7 @@ try {
   assert.match(landing, /90 dagen zonder activiteit/);
   assert.match(landing, /Beoogd gebruik/);
   assert.match(landing, /href="\/verwerkersovereenkomst"/);
+  assert.match(landing, /href="\/voorwaarden"/);
   assert.doesNotMatch(landing, /AI-kaartassistent|startdosering|komt vanzelf bovenaan/);
 
   console.log("Privacypakket: alle controles geslaagd.");

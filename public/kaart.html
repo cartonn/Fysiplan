@@ -348,7 +348,7 @@
   /* antwoord van de therapeut op een seintje: valt op, maar print niet mee */
   .akaart{background:var(--blauw-05,#f0f5fd);border:1px solid var(--blauw,#7aa4e8);border-radius:18px;box-shadow:var(--sh);padding:16px;margin-bottom:12px}
   .akaart .akop{font-weight:700;font-size:14px;letter-spacing:.02em;margin-bottom:6px}
-  .akaart .atekst{margin:0 0 8px;white-space:pre-wrap}
+  .akaart .atekst{margin:0 0 8px;white-space:pre-wrap;overflow-wrap:anywhere}
   .akaart .adatum{font-size:12.5px;color:var(--zacht);margin-bottom:10px}
   .akaart .aweg{font:inherit;font-size:14px;padding:8px 14px;border-radius:99px;border:1px solid var(--lijn);background:var(--vlak);color:var(--tekst);cursor:pointer}
   .sintro{font:500 14px/1.5 var(--disp);color:var(--grijs);margin-bottom:12px}
@@ -573,6 +573,11 @@
 <div class="fout" id="fout" style="display:none">
   <h1>Kaart niet gevonden</h1>
   Deze trainingskaart bestaat niet (meer). Vraag je fysiotherapeut om een nieuwe QR-code.
+</div>
+<div class="fout" id="storing" style="display:none" role="alert">
+  <h1 id="storing_kop">Even geen verbinding</h1>
+  <span id="storing_tekst">Je kaart is er nog, maar hij laadt nu niet. Probeer het over een minuut opnieuw.</span>
+  <br/><button type="button" id="storing_knop" style="margin-top:16px;min-height:44px;padding:0 20px;border-radius:12px;border:1px solid var(--lijn);background:var(--vlak);font:inherit;font-weight:600;cursor:pointer">Opnieuw proberen</button>
 </div>
 <script src="/noor-audio.js"></script>
 <script>
@@ -867,9 +872,9 @@
   function trq(k){var d=TQ[TAAL]||TQ.nl;return d[k]!=null?d[k]:TQ.nl[k];}
   // teksten voor het oefenvinkje en de oefenweek
   var TG={
-    nl:{vdaan:'Ik heb vandaag geoefend',vweek:'Jouw oefenweek',som0:'Nog geen keer deze week — pak je ritme weer op, één keer is genoeg om te beginnen.',som1:'Goed bezig — je oefende op {n} van de 7 dagen.',som3:'Sterk! Je oefende op {n} van de 7 dagen. Zo houd je het vol.',groter:'Grotere letters',print:'Print',oefdaan:'Gedaan',oefvoor:'{n} van {t} vandaag gedaan',oefklaar:'Alle oefeningen vandaag gedaan — sterk!',doel:'Je oefendoel: {d}× per week — deze week {n}× gedaan.',doelklaar:'Je haalde je oefendoel van {d}× deze week — sterk!',alles:'Alles gedaan',zwaar:'Te zwaar?',zwaardank:'Doorgegeven ✓',reeks:'Al {n} weken op rij bezig'},
-    en:{vdaan:'I did my exercises today',vweek:'Your exercise week',som0:'Not yet this week — pick your rhythm back up, once is enough to start.',som1:'Well done — you practised on {n} of the last 7 days.',som3:'Strong! You practised on {n} of the last 7 days. That’s how you keep it up.',groter:'Larger text',print:'Print',oefdaan:'Done',oefvoor:'{n} of {t} done today',oefklaar:'All exercises done today — strong!',doel:'Your goal: {d}× per week — done {n}× this week.',doelklaar:'You reached your goal of {d}× this week — strong!',alles:'All done',zwaar:'Too hard?',zwaardank:'Shared ✓',reeks:'{n} weeks in a row now'},
-    de:{vdaan:'Ich habe heute geübt',vweek:'Deine Übungswoche',som0:'Diese Woche noch nicht — nimm deinen Rhythmus wieder auf, einmal genügt zum Start.',som1:'Gut gemacht — du hast an {n} von 7 Tagen geübt.',som3:'Stark! Du hast an {n} von 7 Tagen geübt. So bleibst du dran.',groter:'Größere Schrift',print:'Drucken',oefdaan:'Erledigt',oefvoor:'{n} von {t} heute erledigt',oefklaar:'Alle Übungen heute erledigt — stark!',doel:'Dein Ziel: {d}× pro Woche — diese Woche {n}× geschafft.',doelklaar:'Du hast dein Ziel von {d}× diese Woche erreicht — stark!',alles:'Alles erledigt',zwaar:'Zu schwer?',zwaardank:'Weitergegeben ✓',reeks:'Schon {n} Wochen in Folge dran'},
+    nl:{vdaan:'Ik heb vandaag geoefend',vweek:'Jouw oefenweek',som0:'Nog geen keer deze week — pak je ritme weer op, één keer is genoeg om te beginnen.',som1:'Goed bezig — je oefende op {n} van de 7 dagen.',som3:'Sterk! Je oefende op {n} van de 7 dagen. Zo houd je het vol.',groter:'Grotere letters',print:'Print',oefdaan:'Gedaan',oefvoor:'{n} van {t} vandaag gedaan',oefklaar:'Alle oefeningen vandaag gedaan — sterk!',doel:'Je oefendoel: {d}× per week — deze week {n}× gedaan.',doelklaar:'Je haalde je oefendoel van {d}× deze week — sterk!',alles:'Alles gedaan',zwaar:'Te zwaar?',zwaardank:'Doorgegeven ✓',zwaarbezig:'Versturen…',zwaarmis:'Niet verstuurd. Tik opnieuw',reeks:'Al {n} weken op rij bezig'},
+    en:{vdaan:'I did my exercises today',vweek:'Your exercise week',som0:'Not yet this week — pick your rhythm back up, once is enough to start.',som1:'Well done — you practised on {n} of the last 7 days.',som3:'Strong! You practised on {n} of the last 7 days. That’s how you keep it up.',groter:'Larger text',print:'Print',oefdaan:'Done',oefvoor:'{n} of {t} done today',oefklaar:'All exercises done today — strong!',doel:'Your goal: {d}× per week — done {n}× this week.',doelklaar:'You reached your goal of {d}× this week — strong!',alles:'All done',zwaar:'Too hard?',zwaardank:'Shared ✓',zwaarbezig:'Sending…',zwaarmis:'Not sent. Tap to retry',reeks:'{n} weeks in a row now'},
+    de:{vdaan:'Ich habe heute geübt',vweek:'Deine Übungswoche',som0:'Diese Woche noch nicht — nimm deinen Rhythmus wieder auf, einmal genügt zum Start.',som1:'Gut gemacht — du hast an {n} von 7 Tagen geübt.',som3:'Stark! Du hast an {n} von 7 Tagen geübt. So bleibst du dran.',groter:'Größere Schrift',print:'Drucken',oefdaan:'Erledigt',oefvoor:'{n} von {t} heute erledigt',oefklaar:'Alle Übungen heute erledigt — stark!',doel:'Dein Ziel: {d}× pro Woche — diese Woche {n}× geschafft.',doelklaar:'Du hast dein Ziel von {d}× diese Woche erreicht — stark!',alles:'Alles erledigt',zwaar:'Zu schwer?',zwaardank:'Weitergegeben ✓',zwaarbezig:'Wird gesendet…',zwaarmis:'Nicht gesendet. Erneut tippen',reeks:'Schon {n} Wochen in Folge dran'},
     fr:{vdaan:'J’ai fait mes exercices aujourd’hui',vweek:'Votre semaine d’exercices',som0:'Pas encore cette semaine — reprenez votre rythme, une fois suffit pour commencer.',som1:'Bravo — vous avez fait vos exercices {n} des 7 derniers jours.',som3:'Superbe ! Vous avez fait vos exercices {n} des 7 derniers jours. C’est comme ça qu’on tient.',groter:'Texte plus grand',print:'Imprimer',oefdaan:'Fait',oefvoor:'{n} sur {t} fait aujourd’hui',oefklaar:'Tous les exercices faits aujourd’hui — bravo !',doel:'Ton objectif : {d}× par semaine — {n}× cette semaine.',doelklaar:'Tu as atteint ton objectif de {d}× cette semaine — bravo !',alles:'Tout est fait',zwaar:'Trop dur ?',zwaardank:'Transmis ✓',reeks:'{n} semaines d’affilée'},
     es:{vdaan:'Hoy he hecho mis ejercicios',vweek:'Tu semana de ejercicios',som0:'Aún no esta semana — retoma tu ritmo, una vez basta para empezar.',som1:'Bien hecho — hiciste ejercicio {n} de los últimos 7 días.',som3:'¡Genial! Hiciste ejercicio {n} de los últimos 7 días. Así se mantiene.',groter:'Texto más grande',print:'Imprimir',oefdaan:'Hecho',oefvoor:'{n} de {t} hechos hoy',oefklaar:'Todos los ejercicios hechos hoy — ¡genial!',doel:'Tu meta: {d}× por semana — {n}× esta semana.',doelklaar:'¡Alcanzaste tu meta de {d}× esta semana — genial!',alles:'Todo hecho',zwaar:'¿Demasiado duro?',zwaardank:'Enviado ✓',reeks:'{n} semanas seguidas'},
     pl:{vdaan:'Ćwiczyłem(-am) dzisiaj',vweek:'Twój tydzień ćwiczeń',som0:'Jeszcze nie w tym tygodniu — wróć do rytmu, jeden raz wystarczy na początek.',som1:'Dobra robota — ćwiczyłeś(-aś) przez {n} z 7 dni.',som3:'Świetnie! Ćwiczyłeś(-aś) przez {n} z 7 dni. Tak się utrzymuje formę.',groter:'Większy tekst',print:'Drukuj',oefdaan:'Zrobione',oefvoor:'{n} z {t} zrobione dzisiaj',oefklaar:'Wszystkie ćwiczenia dziś zrobione — świetnie!',doel:'Twój cel: {d}× w tygodniu — w tym tygodniu {n}×.',doelklaar:'Osiągnąłeś(-aś) swój cel {d}× w tym tygodniu — świetnie!',alles:'Wszystko zrobione',zwaar:'Za trudne?',zwaardank:'Przekazano ✓',reeks:'Już {n} tygodni z rzędu'},
@@ -938,6 +943,8 @@
   // vult 's nachts weer leeg. Als álle oefeningen af zijn, bevestigt dat vanzelf
   // de dag-teller ("ik heb vandaag geoefend"), zodat de therapeut het meekrijgt.
   function oefDaanSleutel(){return 'fp_oefdaan_'+(id||'x');}
+  // kaart bestaat niet meer: wat deze telefoon over juist die kaart onthield, gaat ook weg
+  function vergeetKaartHier(){try{['fp_oefdaan_','fp_zwaar_','fp_priv_'].forEach(function(p){localStorage.removeItem(p+(id||'x'));});}catch(e){}}
   function leesOefDaan(){
     var vandaag=dagStr(Date.now());
     try{
@@ -1192,7 +1199,16 @@
       else if(stream)knop='<button class="vbtn" data-stream="'+esc(stream)+'" data-vbron="'+(catalogus&&catalogus.iframe===stream?'bibliotheek':'praktijk')+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>'+
         (aiVideo.aiGenerated?'<div class="vmeta">'+esc(aiVideo.clinicallyReviewed===true?(VIDEO_META[TAAL]||VIDEO_META.nl):(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl))+'</div>':'');
       else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'" data-vbron="'+(persoonlijkYt?'praktijk':'bibliotheek')+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
-      if(hideMedia||holdExplanation)knop='';
+      if(hideMedia||holdExplanation){
+        // Het bibliotheekbeeld of de algemene uitleg wordt gecontroleerd. Een video die
+        // de therapeut zelf opnam of per kaart koppelde staat daar los van en blijft
+        // staan, zonder de algemene uitlegtekst (gebruikers-sweep 2026-11-06/07, Truus).
+        var praktijkEigenMens=praktijkEigen&&!(o.video.eigenMeta&&o.video.eigenMeta.aiGenerated);
+        var therapeutVideo=persoonlijk||praktijkEigenMens;
+        if(therapeutVideo)knop='<button class="vbtn eigen" data-eigen="/'+esc(therapeutVideo)+'" data-vbron="praktijk" aria-expanded="false">'+DRIEHOEK+esc(tr('vidEigen'))+'</button>';
+        else if(persoonlijkYt)knop='<button class="vbtn" data-yt="'+esc(persoonlijkYt)+'" data-vbron="praktijk" aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
+        else knop='';
+      }
       var beeldpad=o?(o.kaartImg||o.img):'';
       // het v2-kanaal levert al absolute paden (/v2/images/...); oudere relatieve paden
       // krijgen zelf een schuine streep, zodat er nooit een dubbele ontstaat
@@ -1655,7 +1671,21 @@
     try{
       var l=document.createElement('link');l.rel='manifest';l.href='/api/kaart/manifest?id='+id;
       document.head.appendChild(l);
-      if('serviceWorker' in navigator)navigator.serviceWorker.register('/kaart-sw.js',{scope:'/k/'}).catch(function(){});
+      if('serviceWorker' in navigator){
+        navigator.serviceWorker.register('/kaart-sw.js',{scope:'/k/'}).catch(function(){});
+        // eerste bezoek: alles wat al geladen is (pagina, kaartgegevens, beelden) gaat
+        // één keer naar de offline-cache, anders werkt offline pas na een tweede bezoek
+        var naLaden=new Promise(function(ok){if(document.readyState==='complete')ok();else window.addEventListener('load',ok);});
+        Promise.all([navigator.serviceWorker.ready,naLaden]).then(function(r){
+          var reg=r[0];if(!reg||!reg.active)return;
+          var urls=[location.pathname,'/api/kaart?id='+id];
+          if(TAAL&&TAAL!=='nl')urls.push('/api/kaart/vertaal?id='+id+'&taal='+TAAL);
+          try{performance.getEntriesByType('resource').forEach(function(en){
+            var u=new URL(en.name);if(u.origin===location.origin)urls.push(u.pathname+u.search);
+          });}catch(e2){}
+          reg.active.postMessage({type:'bewaar',urls:urls});
+        }).catch(function(){});
+      }
     }catch(e){}
     var standalone=(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||window.navigator.standalone;
     var weg=false;try{weg=localStorage.getItem('fp_app_weg')==='1';}catch(e){}
@@ -1991,13 +2021,21 @@
       // "te zwaar"-melding voor één oefening (eenmaal per oefening per dag)
       var oz=e.target.closest('.oefzwaar');
       if(oz){
-        if(oz.classList.contains('aan'))return;
+        if(oz.classList.contains('aan')||oz.dataset.bezig)return;
         var zidx=Number(oz.dataset.zidx);
-        var zst=leesZwaar();
-        if(zst.idx.indexOf(zidx)===-1)zst.idx.push(zidx);
-        try{localStorage.setItem('fp_zwaar_'+id,JSON.stringify(zst));}catch(e2){}
-        tekenZwaar();
-        if(id&&id!=='demo'){try{fetch('/api/kaart/oefzwaar',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:id,oef:zidx})}).catch(function(){});}catch(e3){}}
+        var zetZwaar=function(){
+          var zst=leesZwaar();
+          if(zst.idx.indexOf(zidx)===-1)zst.idx.push(zidx);
+          try{localStorage.setItem('fp_zwaar_'+id,JSON.stringify(zst));}catch(e2){}
+          tekenZwaar();
+        };
+        if(!id||id==='demo'){zetZwaar();return;}
+        // pas "Doorgegeven" tonen als de server de melding echt heeft: offline, 429
+        // of 5xx gaf eerst stil "Doorgegeven ✓" terwijl de therapeut niets kreeg
+        oz.dataset.bezig='1';oz.disabled=true;oz.textContent=trg('zwaarbezig');
+        fetch('/api/kaart/oefzwaar',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:id,oef:zidx})})
+          .then(function(r){if(!r.ok)throw r.status;delete oz.dataset.bezig;zetZwaar();})
+          .catch(function(){delete oz.dataset.bezig;oz.disabled=false;oz.textContent=trg('zwaarmis');});
         return;
       }
       // tik (of Enter/Space, want de fotoknop is een echte knop) op de foto
@@ -2068,7 +2106,8 @@
       // video". Bij praktijkbeelden is het de algemene bibliotheektekst, en dat staat erbij.
       var vanPraktijk=b.dataset.vbron==='praktijk';
       var videoLabel=vanPraktijk?(VIDEO_TEKST_ALG[TAAL]||VIDEO_TEKST_ALG.nl):(VIDEO_TEKST_LABEL[TAAL]||VIDEO_TEKST_LABEL.nl);
-      var herkomst=vanPraktijk?'<div class="vmeta">'+esc(VIDEO_BRON_PRAKTIJK[TAAL]||VIDEO_BRON_PRAKTIJK.nl)+'</div>':'';
+      // zonder uitlegtekst (teruggehouden) is de zin "de tekst hieronder…" onwaar
+      var herkomst=vanPraktijk&&videoTekst?'<div class="vmeta">'+esc(VIDEO_BRON_PRAKTIJK[TAAL]||VIDEO_BRON_PRAKTIJK.nl)+'</div>':'';
       var tekstblok=herkomst+(videoTekst?'<div class="vtekst" role="region" aria-label="'+esc(videoLabel)+'"><div class="vtekst-label">'+esc(videoLabel)+'</div><p>'+esc(videoTekst)+'</p></div>':'');
       if(b.dataset.eigen){
         // Avatarvideo zonder eigen geluid: stil in een lus, en de vooraf opgenomen
@@ -2303,16 +2342,27 @@
     });
   }
 
+  // Alleen een 404 betekent dat de kaart echt weg is. Druk (429), een serverfout of
+  // geen verbinding is tijdelijk: dan nooit "bestaat niet (meer)" zeggen, want dan denkt
+  // de patiënt dat de kaart weg is en gooit hij de QR weg.
+  function toonStoring(){
+    var t={en:['No connection right now','Your card is still there, but it is not loading right now. Please try again in a minute.','Try again']}[TAAL];
+    if(t){document.getElementById('storing_kop').textContent=t[0];document.getElementById('storing_tekst').textContent=t[1];document.getElementById('storing_knop').textContent=t[2];}
+    document.getElementById('storing').style.display='block';
+  }
+  document.getElementById('storing_knop').addEventListener('click',function(){location.reload();});
   if(!id){document.getElementById('fout').style.display='block';}
   else{
     Promise.all([
-      fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){return r.json();}),
+      fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){
+        return r.json().catch(function(){return {ok:false};}).then(function(d){if(d&&!d.ok)d.status=r.status;return d;});
+      }),
       // De therapeut kan voor editor/PDF een lijntekening kiezen. De digitale
       // patiëntkaart gebruikt bewust altijd het kleurenbeeld uit de v2-catalogus.
       fetch('/v2/oefeningen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
       ,loadMobileReview().catch(function(){mediaReviewReady=false;})
     ]).then(function(res){
-      if(!res[0]||!res[0].ok){document.getElementById('fout').style.display='block';return;}
+      if(!res[0]||!res[0].ok){if(res[0]&&res[0].status===404){document.getElementById('fout').style.display='block';vergeetKaartHier();}else toonStoring();return;}
       K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1],ai:!!res[0].ai};
       // Komt het stemmanifest pas na het tekenen binnen, dan zetten we alleen de wachtende
       // luisterregels om (herstelNoorKnoppen), dezelfde weg als een latere geslaagde poging.
@@ -2322,7 +2372,7 @@
       initApp();
       if(TAAL!=='nl')wisselTaal(TAAL);else alles();
       document.getElementById('wrap').style.display='block';
-    }).catch(function(){document.getElementById('fout').style.display='block';});
+    }).catch(function(){toonStoring();});
   }
 })();
 </script>

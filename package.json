@@ -36,9 +36,20 @@
     "test:video-recovery": "node scripts/test-mobile-video-recovery.mjs",
     "categories:coverage": "node scripts/category-coverage.mjs",
     "test:ahmed-notities": "node scripts/test-ahmed-notities.mjs",
-    "test:proef": "node scripts/test-proef.mjs",
-    "test:privacy": "node scripts/test-privacy.mjs",
+    "test:proef": "node scripts/test-proef.mjs && node scripts/test-proef-poort.mjs",
+    "test:proefpoort": "node scripts/test-proef-poort.mjs",
+    "test:abonnement": "node scripts/test-abonnement-mollie.mjs",
+    "test:privacy": "node scripts/test-privacy.mjs && node scripts/test-praktijkgegevens.mjs && node scripts/test-kaart-weg.mjs && node scripts/test-dossier-contact.mjs",
     "test:beheer": "node scripts/test-beheersleutel.mjs",
+    "test:sweep": "node scripts/test-sweep-kaart.mjs",
+    "test:offline": "node scripts/test-kaart-offline.mjs",
+    "test:tablet": "node scripts/test-tablet-knoppen.mjs",
+    "test:praktijkslot": "node scripts/test-kaarten-praktijkslot.mjs",
+    "test:tezwaar": "node scripts/test-kaart-tezwaar.mjs",
+    "test:opname-eigen": "node scripts/test-opname-eigen.mjs",
+    "test:kaartversie": "node scripts/test-kaart-versie.mjs",
+    "test:hernoem": "node scripts/test-kaart-hernoem.mjs",
+    "test:topbar": "node scripts/test-topbar-mobiel.mjs",
     "test:mobile": "node scripts/test-byte-range.mjs && node scripts/test-mobile-media-review.mjs && node scripts/test-v2-avatar-mapping.mjs && node scripts/test-v2-uitzondering-mutaties.mjs && node scripts/test-v2-lijnbeeld-levering.mjs &&node scripts/test-mobile-narration-review.mjs && node scripts/test-mobile-media-controls.mjs && node scripts/test-noor-voorlezen-holds.mjs && node scripts/test-voorlezen-andere-talen.mjs && node scripts/test-youtube-uitwijk.mjs && node scripts/test-mobile-pose-layout.mjs && node scripts/test-houdingvolgorde.mjs && node scripts/test-mobile-merk.mjs && node scripts/test-noor-audio.mjs && node scripts/test-noor-knoppen-herstel.mjs && node scripts/check-noor-assets.mjs --partial && node scripts/test-mobile-levering.mjs",
     "test:browser": "node scripts/kaart-browsercheck.mjs",
     "poses:measure": "node scripts/pose-crop-candidates.mjs",
@@ -46,7 +57,8 @@
     "poses:build": "node scripts/build-mobile-media-review.mjs",
     "videos:languages": "node scripts/video-language-plan.mjs",
     "start": "node server.js",
-    "sjablonen:check": "node scripts/valideer-sjablonen.mjs"
+    "sjablonen:check": "node scripts/valideer-sjablonen.mjs",
+    "test:tegroot": "node scripts/test-body-te-groot.mjs"
   },
   "engines": {
     "node": ">=20"
