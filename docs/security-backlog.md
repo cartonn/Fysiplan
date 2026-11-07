@@ -78,7 +78,7 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Opgelost
 
-- OPGELOST 2026-11-07 PR #PRNR — **herstelcode werkte nog na "gedeeld praktijkwachtwoord uit"** (MIDDEL).
+- OPGELOST 2026-11-07 PR #73 — **herstelcode werkte nog na "gedeeld praktijkwachtwoord uit"** (MIDDEL).
   De code ligt op papier in de praktijkmap, dus een vertrokken collega kende hem. Met
   `/api/praktijk/herstel` kon die het gedeelde wachtwoord omzetten, kreeg elke keer een verse code (de
   beheerder kon hem niet meer afpakken) en logde álle teamleden uit, zo vaak als die wilde. Nu: een praktijk
