@@ -12,13 +12,13 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-07 (eigen login per therapeut, één akkoord) |
 | (c) algemene voorwaarden | 2026-11-07 (akkoord met versie, eigen login) |
 | (d) code tegen tekst | 2026-11-07 (Mollie/betalen), steekproef 2026-11-06 |
-| (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-06 (PR praktijkgegevens, deze run) |
+| (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-07 (proefaanmelding in download en wissen; team, akkoord en logboek gaan al mee) |
 | (f) cookies en lokale opslag | 2026-11-07 (Google Fonts weg, fp1, wis-knoppen) |
 | (g) MDR en AI-verordening | 2026-11-07 (vraaghulp op de kaart, zoekhulp, vertalen, AI-labels, landing en app) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-07 (contactlogboek in de dossiertekst) |
 | (i) begrijpelijkheid (B1) | 2026-11-07 (privacyverklaring: "In het kort"; VWO en voorwaarden nog niet) |
 
-Volgende run: (e) rechten van betrokkenen, daarna (d) code tegen tekst (wissen van opnames, eigen video's, logs) en (i) B1 voor VWO en voorwaarden.
+Volgende run: (d) code tegen tekst (wissen van opnames, eigen video's, logs), daarna (i) B1 voor VWO en voorwaarden.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
@@ -52,6 +52,19 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
   wissen van opnames, eigen video's en logs volgt in een latere run.
 
 ## Opgelost
+
+- **MIDDEL — proefaanmelding ontbrak in download en "Alles wissen" (2026-11-07).** `/v2/gegevens`
+  beloofde "alle gegevens die Fysiplan voor deze praktijk bewaart", maar de proefaanmelding van die
+  praktijk (contactpersoon, e-mail, telefoon, betaling) zat niet in de download (art. 15/20 AVG) en
+  bleef na "Alles wissen" staan (art. 17). Was de praktijk klant, dan werd zij nooit automatisch
+  gewist. OPGELOST 2026-11-07: de download geeft `aanmelding` mee (zonder apparaat-tokens);
+  wissen haalt de aanmelding weg. Na een online betaling blijft alleen naam, e-mail, praktijknaam
+  en de betaling, 7 jaar (fiscale bewaarplicht, art. 52 AWR), daarna wist de uurronde ook die.
+  Telefoon en apparaten gaan meteen weg en hetzelfde e-mailadres hervat die aanmelding niet meer.
+  Privacyverklaring (rij Proefaanmelding) en de gegevenspagina zeggen het erbij.
+  Test: `scripts/test-gegevens-proef.mjs` (in `npm run test:privacy` en CI).
+  Rest van (e) zonder nieuw gat: teamleden, akkoord en logboek zitten al in download en wissen;
+  losse kaart wissen via "Verwijderen" in de app; patiënt via "Mijn gegevens" op /k.
 
 - **MIDDEL — vraaghulp op de kaart kreeg vragen over pijn en klachten (2026-11-07).** Een patiënt
   kon typen "mijn knie doet pijn sinds de operatie, moet ik doorgaan?". Die vraag ging naar de
