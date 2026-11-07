@@ -292,6 +292,10 @@ function praktijkSessieVan(req) {
 }
 const sessieLid = (s) => (s && s.lid) ? lidVan(s.pk, s.lid) : null;
 const isBeheer = (s) => !!s && (!s.lid || (sessieLid(s) || {}).rol === "beheerder");
+// gedeeld praktijkwerk (teamsjabloon, eigen oefening) weghalen of overschrijven: alleen wie
+// het maakte (lid-id in `door`) of een beheerder. Zonder sessie kwam de aanvraag langs het
+// beheer of v1 (eisBeveiligdePraktijk) en mag het. Oud werk zonder maker: alleen beheerder.
+const magGedeeldAanpassen = (s, item, pk) => !s || s.pk !== pk || isBeheer(s) || (!!item && !!item.door && item.door === s.lid);
 // sessies van één lid (of alle sessies met het gedeelde praktijkwachtwoord) intrekken
 function trekSessiesIn(pk, lidId) {
   for (const [token, s] of praktijkSessies) if (s.pk === pk && (lidId ? s.lid === lidId : !s.lid)) praktijkSessies.delete(token);
@@ -529,7 +533,7 @@ function praktijkProefVerlopen(pk) {
 const PROEF_SCHRIJFROUTES = new Set(["/api/kaarten", "/api/praktijk/oefeningen", "/api/praktijk/sjablonen",
   "/api/praktijken", "/api/opname/start", "/api/kaart/afspraak", "/api/kaart/naam", "/api/kaart/notitie",
   "/api/kaart/behandelaar", "/api/kaart/psk-doel", "/api/kaart/nieuwe-link", "/api/kaart/doel",
-  "/api/kaart/antwoord", "/api/assistent"]);
+  "/api/kaart/antwoord", "/api/assistent", "/api/praktijk/team/uitnodigen", "/api/praktijk/team/eigen-login"]);
 function proefSlotVoor(req, urlPath) {
   if (req.method !== "POST" || !PROEF_SCHRIJFROUTES.has(urlPath)) return false;
   if (ADMIN_KEY_EIGEN && isAdmin(req)) return false;
@@ -2833,7 +2837,8 @@ async function afhandelen(request, response) {
       const id = "po_" + randomBytes(6).toString("hex");
       const file = "oef-" + id.slice(3) + (m[1] === "png" ? ".png" : ".jpg");
       await writeFile(join(uploadsDir, file), buf);
-      lijst.push({ id, naam, img: "uploads/" + file, uitleg, t: Date.now() });
+      const maker = sessieVan(request);
+      lijst.push({ id, naam, img: "uploads/" + file, uitleg, t: Date.now(), ...(maker && maker.pk === pk && maker.lid ? { door: maker.lid } : {}) });
       await saveJson(praktijkOefeningenPath, praktijkOefeningen);
       auditLog(pk, "oefening-toegevoegd", request);
       await sendJson(response, 200, { ok: true, oefeningen: lijst });
@@ -2851,6 +2856,10 @@ async function afhandelen(request, response) {
       const lijst = praktijkOefeningen[pk] || [];
       const idx = lijst.findIndex((x) => x.id === idTekst(b.id));
       if (idx === -1) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden." }); return; }
+      if (!magGedeeldAanpassen(sessieVan(request), lijst[idx], pk)) {
+        auditLog(pk, "oefening-verwijderen-geweigerd", request);
+        await sendJson(response, 403, { ok: false, fout: "Alleen wie deze oefening toevoegde of een beheerder van de praktijk kan hem verwijderen." }); return;
+      }
       const [weg] = lijst.splice(idx, 1);
       await saveJson(praktijkOefeningenPath, praktijkOefeningen);
       if (/^uploads\/oef-[a-f0-9]{12}\.(jpg|png)$/.test(weg.img)) { try { await unlink(join(dataDir, weg.img)); } catch {} }
@@ -2891,7 +2900,11 @@ async function afhandelen(request, response) {
       const lijst = (praktijkSjablonen[pk] = praktijkSjablonen[pk] || []);
       const idx = lijst.findIndex((s) => String(s.naam || "").toLowerCase() === naam.toLowerCase());
       if (idx === -1 && lijst.length >= 30) { await sendJson(response, 400, { ok: false, fout: "Maximum van 30 praktijksjablonen bereikt; verwijder er eerst één." }); return; }
-      const sjabloon = { naam, oefeningen, t: Date.now() };
+      const s = sessieVan(request);
+      if (idx > -1 && !magGedeeldAanpassen(s, lijst[idx], pk)) {
+        await sendJson(response, 409, { ok: false, fout: "Er is al een teamsjabloon met deze naam van een collega. Kies een andere naam." }); return;
+      }
+      const sjabloon = { naam, oefeningen, t: Date.now(), ...(idx > -1 && lijst[idx].door ? { door: lijst[idx].door } : s && s.pk === pk && s.lid ? { door: s.lid } : {}) };
       if (idx > -1) lijst[idx] = sjabloon; else lijst.unshift(sjabloon);
       await saveJson(praktijkSjablonenPath, praktijkSjablonen);
       auditLog(pk, "sjabloon-gedeeld", request);
@@ -2911,6 +2924,10 @@ async function afhandelen(request, response) {
       const lijst = praktijkSjablonen[pk] || [];
       const idx = lijst.findIndex((s) => String(s.naam || "").toLowerCase() === naam);
       if (idx === -1) { await sendJson(response, 404, { ok: false, fout: "Sjabloon niet gevonden." }); return; }
+      if (!magGedeeldAanpassen(sessieVan(request), lijst[idx], pk)) {
+        auditLog(pk, "sjabloon-verwijderen-geweigerd", request);
+        await sendJson(response, 403, { ok: false, fout: "Alleen wie dit sjabloon deelde of een beheerder van de praktijk kan het verwijderen." }); return;
+      }
       lijst.splice(idx, 1);
       if (!lijst.length) delete praktijkSjablonen[pk];
       await saveJson(praktijkSjablonenPath, praktijkSjablonen);
