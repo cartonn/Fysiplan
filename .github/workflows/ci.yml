@@ -50,6 +50,7 @@ jobs:
       - run: npm run test:team
       - run: npm run test:teamherstel
       - run: npm run test:printknop
+      - run: npm run test:logoveeg
       - run: npm run test:inbox
       - run: npm run test:patientkant
       - run: npm run test:akkoord

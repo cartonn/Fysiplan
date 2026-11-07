@@ -12,14 +12,26 @@ daaruit tot en met 2026-11-06.
 | (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-07 (deels: team, eigen logins, uitnodiging, herstel na gedeeld-uit) |
 | (c) proef-tokens en verlopen proeven | 2026-11-06 (PR #47 proefslot; daarna opnieuw aanmelden) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-07 (vids-eigendom op POST /api/kaarten) |
-| (e) uploads (video, logo, opname /o) | 2026-11-04 |
+| (e) uploads (video, logo, opname /o) | 2026-11-07 (logo-veeg wiste logo's van andere praktijken: opgelost; opname-upload, eigen oefening, /uploads-pad: geen gat) |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-07 (runtime: payloads in alle kaartvelden, /k in nl/en/ar met vertaling, overzicht, sjablonen, eigen oefeningen, serverpagina's; geen gat) |
 | (g) security-headers, CSP, cookies, CSRF | 2026-11-07 (runtime: koppen op 11 V2-pagina's en API, cookies HttpOnly+Lax+Secure, praktijksessie via eigen kop; kruisSite kijkt nu ook naar Origin) |
 | (h) foutmeldingen die stacktraces of paden lekken | 2026-11-06 (runtime-fuzz 60 schrijfroutes, geen lek) |
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-07 (te grote body: nu 413, weglezen begrensd op 10 s en 80 MB) |
 | (j) npm audit | 2026-11-07 (sharp 0.35.3 → 0.35.5, daarna 0 meldingen) |
 
-Volgende run: (e) uploads, daarna (c) proef-tokens en de rest van (b) (claim, inlogrem).
+Volgende run: (c) proef-tokens, daarna de rest van (b) (claim, inlogrem) en (h) foutmeldingen.
+
+Sanity 2026-11-07 16u op #74–#80 (vraaghulp-grens, kaarttaal, UI-schil, avatarrondjes): geen nieuwe routes;
+nieuwe innerHTML-plekken escapen namen via `esc()`/`avRond()`. Geen gat.
+
+Audit (e) 2026-11-07 16u:
+- **OPGELOST 2026-11-07 (deze PR) — MIDDEL: nieuw logo wiste logo's van andere praktijken.** De opruiming na
+  `POST /api/praktijken` verwijderde elk bestand dat met `logo-<slug>-` begon. Een onbeveiligde praktijk "Fysio"
+  wiste zo zonder login het logo van "Fysio Noord", en "P" dat van elke praktijk met een vaste code (`logo-p-…`).
+  Nu alleen `logo-<slug>-<tijd>.<ext>` en nooit een bestand dat een ander profiel noemt. Test: `npm run test:logoveeg`.
+- Opname-upload (`/api/opname/upload`): token eenmalig, proefslot, 60 MB-grens vóór bufferen, inhoud mp4/webm
+  gecontroleerd, opslagwaakhond. Eigen oefening en logo: JPEG/PNG op magische bytes, 600/400 kB. `/uploads/`:
+  pad-normalisatie, extensielijst, nosniff, CORP same-origin. Geen gat.
 
 Sanity 2026-11-07 12u op #64–#72 (praktijkcode, team, inbox, patiëntkant, akkoord, wissen, UI): team-routes
 eisen sessie + beheerdersrol (live gelezen), verwijderen trekt sessies meteen in, uitnodigingstoken alleen als
