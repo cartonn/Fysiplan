@@ -3858,7 +3858,9 @@ async function afhandelen(request, response) {
     const eigenOef = (found.chosen || []).filter((x) => PRAKTIJK_OEF_ID.test(String(x.id || "")))
       .map((x) => praktijkOefeningVoorKaart(fpk, x.id)).filter(Boolean);
     if (eigenOef.length) patientKaart.eigenOef = eigenOef;
-    await sendJson(response, 200, { ok: true, kaart: patientKaart, praktijk: prof, ai: !!AI_KEY });
+    // dag (Amsterdam-tijd) waarop oefTrouw.d "vandaag" betekent: de kaart toont zo ook
+    // de vinkjes die vandaag op een ander apparaat zijn gezet
+    await sendJson(response, 200, { ok: true, kaart: patientKaart, praktijk: prof, ai: !!AI_KEY, dag: nlDag(Date.now()) });
     return;
   }
 
@@ -3960,8 +3962,13 @@ async function afhandelen(request, response) {
       const g = (found.gedaan = found.gedaan || []);
       const nu = Date.now();
       const laatste = g[g.length - 1];
-      if (laatste && nlDag(laatste.t) === nlDag(nu)) g.pop();
-      else g.push({ t: nu });
+      const alVandaag = !!(laatste && nlDag(laatste.t) === nlDag(nu));
+      // aan:true/false zet de dag expliciet (idempotent: een tweede apparaat met een
+      // verouderde kaart of een dubbele bevestiging haalt de dag niet weg); zonder
+      // aan blijft het de oude aan/uit-tik, voor kaartpagina's die nog in een cache staan
+      const wil = b.aan === true ? true : b.aan === false ? false : !alVandaag;
+      if (alVandaag && !wil) g.pop();
+      else if (!alVandaag && wil) g.push({ t: nu });
       found.gedaan = g.slice(-366);
       if (found.demo) { await sendJson(response, 200, { ok: true, gedaan: found.gedaan }); return; }
       await saveJson(kaartenPath, kaarten);
@@ -4473,10 +4480,17 @@ async function afhandelen(request, response) {
       if (nk !== oudeSleutel && map[nk]) { await sendJson(response, 409, { ok: false, fout: "Er bestaat al een kaart met die naam in deze praktijk." }); return; }
       const kaart = map[oudeSleutel];
       kaart.naam = nieuw;
+      // de roepnaam op /k is client.c_naam: die gaat mee, anders bleef een verbeterde
+      // typfout onzichtbaar voor de patiënt en een ingekorte volledige naam op de server
+      // staan. ts gaat omhoog: een editor met de oude naam (ander apparaat) krijgt bij
+      // zijn volgende opslag "verouderd" en zet de oude naam niet stil terug
+      // (gebruikers-sweep 2026-11-07, Sanne).
+      if (kaart.client && typeof kaart.client === "object" && kaart.client.c_naam) kaart.client.c_naam = nieuw;
+      kaart.ts = Math.max(Date.now(), (Number(kaart.ts) || 0) + 1);
       if (nk !== oudeSleutel) { delete map[oudeSleutel]; map[nk] = kaart; }
       await saveJson(kaartenPath, kaarten);
       auditLog(pk, "kaart-hernoemd", request);
-      await sendJson(response, 200, { ok: true, naam: nieuw });
+      await sendJson(response, 200, { ok: true, naam: nieuw, ts: kaart.ts });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }
