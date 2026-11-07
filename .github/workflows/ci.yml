@@ -48,3 +48,4 @@ jobs:
       - run: npm run test:praktijkcode
       - run: npm run test:team
       - run: npm run test:inbox
+      - run: npm run test:patientkant
