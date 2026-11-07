@@ -60,7 +60,8 @@
     "sjablonen:check": "node scripts/valideer-sjablonen.mjs",
     "test:tegroot": "node scripts/test-body-te-groot.mjs",
     "test:kruissite": "node scripts/test-kruissite-origin.mjs",
-    "test:praktijkcode": "node scripts/test-praktijkcode.mjs"
+    "test:praktijkcode": "node scripts/test-praktijkcode.mjs",
+    "test:team": "node scripts/test-team.mjs"
   },
   "engines": {
     "node": ">=20"
