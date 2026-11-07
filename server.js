@@ -64,7 +64,7 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-07";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-07-2";
+const AV_VERSIE = "2026-11-07-3";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-07";
@@ -76,7 +76,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "vwo", versie: "2026-11-02", tekst: "Eerste versie van de verwerkersovereenkomst: Fysiplan bewaart de kaarten alleen in opdracht van de praktijk." },
   { stuk: "av", versie: "2026-11-07", tekst: "Eerste versie van de algemene voorwaarden: wat Fysiplan doet, de gratis proef, prijs per therapeut, looptijd en stoppen." },
   { stuk: "vwo", versie: "2026-11-07", tekst: "Beveiliging: elke therapeut een eigen login met de rollen beheerder en therapeut; wie uit het team gaat, verliest direct de toegang. Eén akkoord samen met de voorwaarden." },
-  { stuk: "av", versie: "2026-11-07-2", tekst: "Artikel over je account: elke therapeut krijgt een eigen login en je deelt wachtwoorden met niemand." }
+  { stuk: "av", versie: "2026-11-07-2", tekst: "Artikel over je account: elke therapeut krijgt een eigen login en je deelt wachtwoorden met niemand." },
+  { stuk: "av", versie: "2026-11-07-3", tekst: "Prijs: elke persoon met een eigen login telt als één therapeut; een login delen met meerdere mensen mag niet." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
