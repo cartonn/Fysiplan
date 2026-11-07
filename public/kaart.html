@@ -1199,7 +1199,16 @@
       else if(stream)knop='<button class="vbtn" data-stream="'+esc(stream)+'" data-vbron="'+(catalogus&&catalogus.iframe===stream?'bibliotheek':'praktijk')+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>'+
         (aiVideo.aiGenerated?'<div class="vmeta">'+esc(aiVideo.clinicallyReviewed===true?(VIDEO_META[TAAL]||VIDEO_META.nl):(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl))+'</div>':'');
       else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'" data-vbron="'+(persoonlijkYt?'praktijk':'bibliotheek')+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
-      if(hideMedia||holdExplanation)knop='';
+      if(hideMedia||holdExplanation){
+        // Het bibliotheekbeeld of de algemene uitleg wordt gecontroleerd. Een video die
+        // de therapeut zelf opnam of per kaart koppelde staat daar los van en blijft
+        // staan, zonder de algemene uitlegtekst (gebruikers-sweep 2026-11-06/07, Truus).
+        var praktijkEigenMens=praktijkEigen&&!(o.video.eigenMeta&&o.video.eigenMeta.aiGenerated);
+        var therapeutVideo=persoonlijk||praktijkEigenMens;
+        if(therapeutVideo)knop='<button class="vbtn eigen" data-eigen="/'+esc(therapeutVideo)+'" data-vbron="praktijk" aria-expanded="false">'+DRIEHOEK+esc(tr('vidEigen'))+'</button>';
+        else if(persoonlijkYt)knop='<button class="vbtn" data-yt="'+esc(persoonlijkYt)+'" data-vbron="praktijk" aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
+        else knop='';
+      }
       var beeldpad=o?(o.kaartImg||o.img):'';
       // het v2-kanaal levert al absolute paden (/v2/images/...); oudere relatieve paden
       // krijgen zelf een schuine streep, zodat er nooit een dubbele ontstaat

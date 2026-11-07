@@ -174,7 +174,13 @@ context.NoorAudio.load=()=>new Promise(resolve=>{finishLoad=resolve;});
 const pending=context.speelNoor([{name:'Available',text:'Uitleg'}]);context.stopLezen();finishLoad();await pending;
 assert.equal(played,beforeCancelled,'stop while manifest loading prevents delayed playback');
 assert.ok(html.includes("if(explanationWithheld(bron))uitleg='';"),'other languages also suppress held explanation');
-assert.ok(html.includes("if(hideMedia||holdExplanation)knop='';"),'held content cannot expose a video play button');
+// teruggehouden beeld/uitleg: geen bibliotheek- of AI-video; alleen een video die de
+// therapeut zelf opnam of per kaart koppelde blijft, zonder de algemene uitlegtekst
+const holdBlok=html.slice(html.indexOf("if(hideMedia||holdExplanation){"),html.indexOf("var beeldpad=o?(o.kaartImg||o.img):'';"));
+assert.ok(holdBlok.length>0&&holdBlok.length<1500,'held content block present');
+assert.ok(/else knop='';\s*\}/.test(holdBlok),'held content cannot expose a library video play button');
+assert.ok(holdBlok.includes("!(o.video.eigenMeta&&o.video.eigenMeta.aiGenerated)"),'held content never keeps a generated video');
+assert.ok(!holdBlok.includes('vtekst')&&!holdBlok.includes('videoTekstData'),'held content keeps no explanation on the therapist video');
 assert.ok(html.includes("(hideMedia?'':"),'teruggehouden beeld biedt ook geen stemopname aan');
 assert.ok(html.includes("clinicallyReviewed===true?(VIDEO_META[TAAL]"),'het label klinisch gecontroleerd vraagt een positieve bevestiging');
 console.log('Mobile media: mutual exclusion, audio button state, canonical names, source-bound poses, fail-closed review and syntax passed.');

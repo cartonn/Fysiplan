@@ -23,6 +23,9 @@ Volgende run: (f) injectie/XSS, daarna (i) denial of service en (g) headers/CSP.
 
 ## Open
 
+- **LAAG — te grote request-body krijgt geen antwoord** (sweep 2026-11-07, Truus en Sanne). `readBody`
+  (server.js rond r. 1405) doet `req.destroy()` zonder 413; de browser toont een lege `chrome-error://`-pagina
+  of "Failed to fetch". Geen crash of 500. Netjes 413 met een korte melding sturen en dan sluiten.
 - **HOOG — praktijknaam is een wereldwijde sleutel** (sweep 2026-11-06, Sanne). Wie een naam als eerste
   beveiligt, sluit elke andere praktijk met die naam buiten ("Deze praktijk is beveiligd. Log in…");
   een naam kan zo vooraf worden gekaapt. Ook wisselt de praktijk stil als de therapeut de naam op de

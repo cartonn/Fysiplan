@@ -3127,6 +3127,17 @@ async function afhandelen(request, response) {
           fout: "Er is al een kaart \u201c" + bestaand.naam + "\u201d in je praktijk." });
         return;
       }
+      // versiecheck: een editor stuurt mee welke versie (ts) hij het laatst van de
+      // server kreeg. Is de kaart sindsdien op een ander apparaat of tabblad bewaard,
+      // dan schreef dit oude apparaat bij het openen stil zijn verouderde kopie terug
+      // en wiste ruimKaartVideosOp de nieuwe opnames (gebruikers-sweep 2026-11-07).
+      // Oudere clients sturen geen basisTs en houden het oude gedrag.
+      if (bestaand && Object.hasOwn(b, "basisTs") && b.kaartId === bestaand.id && b.overschrijf !== true &&
+        Number(bestaand.ts) > (Number(b.basisTs) || 0)) {
+        await sendJson(response, 409, { ok: false, verouderd: true, naam: bestaand.naam, ts: bestaand.ts,
+          fout: "Deze kaart is intussen op een ander apparaat gewijzigd. Open de nieuwste versie via Kaarten." });
+        return;
+      }
       if (!map[kk] && Object.keys(map).length >= 100) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal kaarten voor deze praktijk bereikt." }); return; }
       const sanStr = (v, m) => String(v == null ? "" : v).slice(0, m);
       const cells = {};
@@ -3206,7 +3217,7 @@ async function afhandelen(request, response) {
         chosen.forEach((x) => { if (geldig.has(x.n)) stats.oefeningGebruik[x.n] = (stats.oefeningGebruik[x.n] || 0) + 1; });
       } catch {}
       bewaarStats();
-      await sendJson(response, 200, { ok: true, id: map[kk].id });
+      await sendJson(response, 200, { ok: true, id: map[kk].id, ts: map[kk].ts });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek (of kaart te groot)." });
     }
