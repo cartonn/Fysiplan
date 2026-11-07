@@ -6,7 +6,7 @@
 // Zonder browser, past in CI. `npm run test:hernoem`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -101,6 +101,28 @@ try {
   assert.equal(r6.status, 200);
   assert.notEqual((await r6.json()).id, id, "andere praktijk krijgt een eigen kaart");
   assert.equal((await lijst()).length, 3, "kaart van de eerste praktijk blijft staan");
+
+  // "Naam wijzigen" in het overzicht (Sanne, 2026-11-07): de roepnaam op /k gaat mee en
+  // een editor met de oude naam en versie zet hem niet stil terug
+  const hn = await post("/api/kaart/naam", { praktijk: "Fysio Hernoem", id, naam: "Dirk B." }, S);
+  assert.equal(hn.status, 200);
+  const dn = await hn.json();
+  assert.ok(dn.ts > d2.ts, "hernoemen hoogt de versie op");
+  const gk = await (await fetch(origin + "/api/kaart?id=" + id, { headers: kop() })).json();
+  assert.equal(gk.kaart.client.c_naam, "Dirk", "de patiënt ziet de verbeterde roepnaam (Dirck → Dirk)");
+  const terug = await deel("Dirck", { kaartId: id, basisTs: d2.ts, client: { c_naam: "Dirck", c_doel: "wandelen" } });
+  assert.equal(terug.status, 409, "oude editor zet de oude naam niet stil terug");
+  assert.equal((await terug.json()).verouderd, true);
+  assert.ok((await lijst()).some((x) => x.naam === "Dirk B."), "naam blijft Dirk B.");
+  // de editor die zelf hernoemde neemt naam en versie over en kan gewoon verder
+  const verder = await deel("Dirk B.", { kaartId: id, basisTs: dn.ts, client: { c_naam: "Dirk B.", c_doel: "wandelen" } });
+  assert.equal(verder.status, 200);
+  assert.ok((await lijst()).some((x) => x.naam === "Dirk B."));
+  const idx = await readFile(join(root, "public/index.html"), "utf8");
+  const hblok = idx.match(/var hn=e\.target\.closest\('\[data-shernoem\]'\);[\s\S]*?\n      return;\n    \}/);
+  assert.ok(hblok, "hernoem-handler gevonden");
+  assert.match(hblok[0], /zetKaartId\(KAART_ID,d\.ts/, "open editor neemt de nieuwe versie over");
+  assert.match(hblok[0], /getElementById\('c_naam'\)/, "open editor neemt de nieuwe naam over");
 
   console.log("test-kaart-hernoem: OK");
 } catch (e) {

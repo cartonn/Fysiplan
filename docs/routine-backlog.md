@@ -9,26 +9,29 @@ werk voor Ahmed in `docs/mensenwerk.md`.
 
 | Flow | Desktop 1280 | iPad | iPhone SE | iPhone 14 | Pixel 7 |
 |---|---|---|---|---|---|
-| Proef aanmelden + formulierfouten | 2026-11-07 02u | – | – | 2026-11-06 22u | – |
-| Welkom, praktijknaam (ook leeg), 12 oefeningen | 2026-11-07 06u | 2026-11-06 | 2026-11-07 06u | 2026-11-06 22u | 2026-11-07 02u |
-| Printversie (lijn, kleur, compact) | 2026-11-07 06u | 2026-11-07 06u (2 pagina's?) | – | 2026-11-06 22u (venster) | – |
-| Beveiligen, herstelcode, inloggen 2e apparaat | 2026-11-07 02u | 2026-11-07 02u | – | 2026-11-06 22u | – |
-| Delen, QR, kaartenoverzicht, CSV | 2026-11-07 02u | 2026-11-07 02u | – | 2026-11-06 22u | – |
-| Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-07 02u | 2026-11-07 02u | – | – | – |
-| Opname via telefoon /o | 2026-11-07 02u | 2026-11-06 22u | – | 2026-11-07 02u | – |
-| Afspraak, seintje, signalen | 2026-11-06 22u | 2026-11-06 22u | 2026-11-06 22u | 2026-11-06 22u | 2026-11-06 22u |
+| Proef aanmelden + formulierfouten | 2026-11-07 10u | 2026-11-07 10u | – | 2026-11-06 22u | 2026-11-07 10u |
+| Welkom, praktijknaam (ook leeg), 12 oefeningen | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 06u | 2026-11-06 22u | 2026-11-07 10u |
+| Printversie (lijn, kleur, compact) | 2026-11-07 10u | 2026-11-07 10u (2 pagina's, PDF) | – | 2026-11-06 22u (venster) | 2026-11-07 10u |
+| Beveiligen, herstelcode, inloggen 2e apparaat | 2026-11-07 10u | 2026-11-07 10u | – | 2026-11-06 22u | 2026-11-07 10u |
+| Delen, QR, kaartenoverzicht, CSV | 2026-11-07 10u | 2026-11-07 10u | – | 2026-11-06 22u | 2026-11-07 10u |
+| Naam wijzigen in overzicht + daarna verder bewerken | 2026-11-07 10u | 2026-11-07 10u | – | – | 2026-11-07 10u |
+| Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-07 10u | 2026-11-07 10u | – | – | – |
+| Opname via telefoon /o | 2026-11-07 10u | 2026-11-06 22u | – | 2026-11-07 10u | – |
+| Afspraak, seintje, signalen | 2026-11-07 10u | 2026-11-07 10u (liggend) | 2026-11-07 10u | 2026-11-07 10u | 2026-11-06 22u |
 | Proef bijna verlopen / verlopen (echte verlopen-pagina) | 2026-11-07 02u | 2026-11-07 02u | – | 2026-11-07 02u (breedte) | – |
-| /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | 2026-11-07 06u | 2026-11-07 02u | 2026-11-07 02u | 2026-11-07 02u |
-| /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-07 02u | 2026-11-07 02u | 2026-11-07 02u |
-| /k: video afspelen (eigen opname, YouTube) | – | – | 2026-11-07 02u | – | – |
-| /k: Duits en Arabisch (rtl) | – | – | 2026-11-06 | – | Duits 2026-11-07 02u |
+| /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | 2026-11-07 06u | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u |
+| /k: gedaan-vinkjes op een tweede apparaat | – | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u |
+| /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u |
+| /k: video afspelen (eigen opname, YouTube) | – | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u | – |
+| /k: Duits en Arabisch (rtl) | – | – | 2026-11-06 | Arabisch 2026-11-07 10u | Duits 2026-11-07 02u |
 | Landing /v2 op mobiel | – | – | 2026-11-07 06u | iPhone 13: 2026-11-06 | 2026-11-06 22u |
-| Therapeut-app op telefoon | – | – | 2026-11-07 06u | 2026-11-06 22u | 2026-11-07 02u |
+| Therapeut-app op telefoon | – | – | 2026-11-07 06u | 2026-11-06 22u | 2026-11-07 10u |
+| Therapeut-app op iPad liggend | – | 2026-11-07 10u | – | – | – |
 | Twee werkplekken op één kaart (oud apparaat/tabblad) | 2026-11-07 06u | 2026-11-07 06u | – | – | – |
 
-Volgende run: /k-video afspelen (eigen opname; lokaal geen goedgekeurde bibliotheekvideo's), print op een echte
-iPad-Safari, therapeut-app op iPad liggend, /k in het Arabisch op iPhone 14, proef aanmelden op iPad en Pixel 7,
-en hertest van de roepnaam-hernoeming via "Naam wijzigen" in het overzicht.
+Volgende run: proef aanmelden en beveiligen op iPhone SE, landing /v2 op iPhone 14 en Pixel 7, /k in het Duits
+op iPhone 14, print op een echte iPad-Safari, proef bijna verlopen/verlopen (tweede server), en de opnamepagina /o
+zonder camera op Pixel 7.
 
 Testtip: de verlopen-pagina test je met een tweede server op een kopie van de datamap waarin `verloopt`
 in proef-aanmeldingen.json in het verleden staat (wordt alleen bij het opstarten gelezen).
@@ -44,11 +47,26 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   Met een iPad-UA zet de app `html.safari-print` (kaart 90° gedraaid voor staand papier) terwijl
   `@page{size:A4 landscape}` blijft staan; Chromium-emulatie geeft 2 pagina's, staand en liggend. De klasse
   gaat na `afterprint` niet weg. public/index.html r. 238, 268–273, 1901 (`SAFARI_PRINT`). (Mark, 2026-11-07 06u)
-- **/k: "gedaan" per oefening staat alleen in de browser van één apparaat.** iPhone "Alles gedaan" (6/6 naar de
-  server), iPad toont "0 van 6"; aan/uit op de iPad haalt het vinkje van de telefoon weg. kaart.html `leesOefDaan`
-  (localStorage) en `toggleOefDaan`; server houdt `oefTrouw` bij. iPhone SE + iPad (Truus, 2026-11-07 06u).
 
 ### MIDDEL
+- **App: na een geweigerde afspraak blijft de fouttekst voorgoed op de knop "Bewaar"**, ook als de volgende
+  opslag lukt ("Kies een moment in de komende twaalf maanden." blijft staan; "+1 week" erft het). `oudA=af.textContent`
+  wordt bij elke klik opnieuw gelezen (public/index.html r. ~3986); onthoud de knoptekst één keer (`data-label`).
+  iPad liggend (Mark, 2026-11-07 10u). De therapeut denkt daardoor dat de afspraak niet bewaard is.
+- **App: seintje "heeft een vraag" afhandelen met één klik + Enter wist de vraag** zonder antwoord: de chip opent een
+  `prompt()`; leeg + OK handelt af. Eigen venster met "Beantwoorden" / "Alleen afhandelen" nodig (public/index.html
+  r. ~4105). Desktop (Truus, 2026-11-07 10u).
+- **App: "Naam wijzigen" zit verstopt in een scrollbox van 200 px** (`#k_srv_lijst` max-height 200px; het deelpaneel is
+  1479 px hoog, de knop staat ±110 px onder de rand, geen hint). public/index.html r. ~736. Desktop, iPad (Sanne, 10u).
+- **Opnamepagina /o loopt vast zonder camera**: "Dat lukte niet" zonder knop Opnieuw en zonder bestandskeuze
+  (`<input type=file accept=video/*>`); het scherm blijft "Wachten op de video…" tonen. public/opname.html r. 103, 127.
+  iPhone 14 + desktop (Mark, 10u).
+- **/k bij 200 % zoom: appbanner bedekt ±30 % en het sluitkruis staat buiten beeld** (scrollWidth 588 op 320). iPhone SE (Truus, 10u).
+- **/k: Engelse oefennamen op een Nederlandse kaart** ("Knee elbow", "Med ball rotation passes knee", "Leg extension",
+  "Seated chair squats", "Abs stretch", "Abroller"). Staat in public/oefeningen-v2.json (r. 650, 4469): die bestanden
+  raken routines niet aan; doorgezet naar mensenwerk (videostroom). iPhone SE (Truus, 10u).
+- **/k (andere taal, trage lijn): weer eerst een halfvolle, aantikbare Nederlandse kaart** (tot ±5 s bij 2,5 s vertraging)
+  terwijl `alles()` op /api/kaart/vertaal wacht (kaart.html r. ~1480). Erger dan het LAAG-punt hieronder. iPhone 14 (Jayden, 10u).
 - **App: verouderd-melding is minuscuul en de enige waarschuwing** (±9 px tekst, links ±10 px hoog in `#qrBlok`);
   het formulier blijft bewerkbaar zonder banner, de therapeut typt door. Desktop (Mark, 2026-11-07 06u).
 - **App, verlopen proef bij een collega op iPad: bewerken gaat stil verloren.** De proefbalk staat bovenaan en is
@@ -126,6 +144,20 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   Al opgelost in open PR #41 (server.js `denied()` met eigen tekst); mergen of overnemen.
 
 ### LAAG
+- /k: uitvinken op apparaat A bereikt apparaat B niet als B die oefeningen zelf in localStorage had aangevinkt
+  (`leesOefDaan` voegt lokaal en server samen). Randgeval na PR #PRNR: na laden de serverstand van vandaag als waarheid
+  nemen, localStorage alleen offline. iPhone 14 + Pixel 7 (Jayden, hertest 10u).
+- Sjablonen-venster ook op desktop 1280 onleesbaar (tekstkolom ±70 px); hoort bij het MIDDEL-punt voor iPhone SE. Na
+  "Deel" blijft de knop Deel bij het eigen sjabloon staan. (Mark, 10u)
+- /k: gegokt of onbekend kaart-id geeft HTTP 200 met "Kaart niet gevonden" (de API zelf geeft 404); beter 404/410. Lekt niets.
+  server.js r. ~4392. (Truus, Mark, 10u)
+- /k: offline zegt de eigen video "neem contact op met je praktijk"; offline pijnscore wordt nooit later verstuurd
+  (hoort bij het offline-punt). iPhone SE (Truus, 10u).
+- /k (Arabisch, vertaling mislukt): voorlezen spreekt Nederlandse namen uit met de Arabische stem, zonder melding
+  (kaart.html `leesVoor` r. ~1526). Ook de uitleg in de lightbox blijft Nederlands zonder melding (Engels, Jayden). (10u)
+- .ics-link verliest de taal (`/k/<id>` zonder `?taal=en`), server.js r. ~3986 en ~4171. (Jayden, 10u)
+- Kleurprint "Avatar" mengt stijlen: bekkenbodemoefeningen als lijntekening, enkele als grijze foto. Desktop (Sanne, 10u).
+- Tip "therapietrouw" (`#trouwhint`) op Pixel 7 links en rechts afgekapt (binnen het geschaalde A4). (Sanne, 10u)
 - App: dubbelklik op "+" in de oefeningenlijst voegt toe en haalt weer weg (toggle), public/index.html r. ~1358. (Sanne)
 - App: emoji in de roepnaam geeft voorstel "Dirk �." (`kaartLabelVan` met `charAt(0)`, index.html ~r. 1955). (Sanne)
 - App op iPhone SE: knoppengroep Sjablonen | Kaarten | Wis kaart breekt over twee regels (v2.css r. 92–94);
@@ -181,6 +213,16 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Opgelost
 
+- **HOOG — "Naam wijzigen" in het overzicht werd bij de volgende bewerking stil teruggedraaid** (de open editor stuurde
+  de oude naam + kaartId; ook `client.c_naam` bleef oud, dus /k zag de verbetering nooit). De open editor neemt nu naam
+  en versie over, de server zet `client.c_naam` mee en hoogt `ts` op (ander apparaat krijgt "verouderd").
+  OPGELOST 2026-11-07 PR #PRNR. Test: `npm run test:hernoem`. (Sanne, desktop + Pixel 7)
+- **HOOG — /k: "gedaan" per oefening stond alleen op één apparaat** (iPhone 6/6, iPad 0/6). De kaart telt nu de vinkjes
+  van vandaag uit `oefTrouw` mee (serverdag via `dag` in GET /api/kaart). OPGELOST 2026-11-07 PR #PRNR.
+  Test: `npm run test:gedaansync`. (Truus, iPhone SE + iPad)
+- **MIDDEL — /k: na "Alles gedaan" haalde een bevestigende tik op "Ik heb vandaag geoefend" de dag stil weg** (kaart bleef
+  "alles gedaan" tonen, therapeut 0 actief). De dag wordt nu expliciet aan/uit gezet (`aan`), de automatische
+  bevestiging is idempotent en uitzetten haalt de vinkjes mee weg. OPGELOST 2026-11-07 PR #PRNR. (Jayden, iPhone 14 + Pixel 7)
 - **HOOG — App: roepnaam verbeteren maakte stil een tweede kaart met een nieuwe QR/link** ("Dirk" → "Dirck",
   ook "Voorbeeldpatiënt" → echte roepnaam). POST /api/kaarten hernoemt nu de kaart van het meegestuurde
   `kaartId` als de nieuwe naam vrij is; id, QR en voortgang blijven. OPGELOST 2026-11-07 PR #60. Test: `npm run test:hernoem`.

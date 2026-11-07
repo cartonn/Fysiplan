@@ -28,6 +28,12 @@ mandaat), opzeggen in de app, en een factuur/btw-bon per betaling. Tot dan: de e
 loopt via Mollie, de rest regel je zelf.
 
 
+### Engelse oefennamen in de Nederlandse bibliotheek (gebruikers-sweep, 2026-11-07)
+**Wat er is:** op een Nederlandse patiëntkaart staan namen als "Knee elbow", "Med ball rotation passes knee",
+"Leg extension", "Seated chair squats", "Abs stretch" en "Abroller". Ze komen uit `public/oefeningen-v2.json`
+(o.a. r. 650 en 4469). Routines raken die bestanden niet aan, want daar werkt jouw videostroom aan.
+**Wat jij moet doen:** laat in de videostroom (of zelf) Nederlandse namen kiezen voor de Engelstalige oefeningen.
+
 ### Stoppende praktijk: wissen kan nu zelf (legal, 2026-11-06)
 Verwerkersovereenkomst art. 10 belooft dat kaarten binnen 30 dagen na het einde gewist worden.
 Een praktijk kan dat nu zelf (en vooraf alles downloaden) op https://fysiplan.nl/v2/gegevens.

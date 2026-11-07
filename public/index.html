@@ -2006,7 +2006,7 @@ bridge2.jpg</div>
         if(!hit){zet();return;}
         fetch('api/kaart/naam',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:hit.id,naam:nieuw})})
           .then(function(r){return r.json().catch(function(){return {ok:false};});})
-          .then(function(d){if(d.ok){zetKaartId(hit.id,hit.ts);zet();}else toonQrHint(d.fout||'Naam wijzigen is niet gelukt.');})
+          .then(function(d){if(d.ok){zetKaartId(hit.id,d.ts||hit.ts);zet();}else toonQrHint(d.fout||'Naam wijzigen is niet gelukt.');})
           .catch(function(){toonQrHint('Geen verbinding met de server.');});
       })
       .catch(zet);
@@ -4197,7 +4197,16 @@ bridge2.jpg</div>
       fetch('api/kaart/naam',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:hn.dataset.shernoem,naam:nieuw})})
         .then(function(r){return r.json();})
         .then(function(d){
-          if(d.ok){toonSrvKaarten();}
+          if(d.ok){
+            // staat deze kaart open in de editor, dan neemt die de nieuwe naam en versie
+            // over; anders zette de volgende automatische opslag de oude naam terug
+            if(IS_V2&&KAART_ID&&KAART_ID===hn.dataset.shernoem){
+              zetKaartId(KAART_ID,d.ts||KAART_TS);
+              var cnv=document.getElementById('c_naam');
+              if(cnv){cnv.value=d.naam||nieuw;cnv.dispatchEvent(new Event('input',{bubbles:true}));}
+            }
+            toonSrvKaarten();
+          }
           else{hn.textContent=oudH;alert(d.fout||'Naam wijzigen is niet gelukt.');}
         })
         .catch(function(){hn.textContent=oudH;alert('Naam wijzigen is niet gelukt: geen verbinding.');});

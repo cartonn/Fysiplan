@@ -983,13 +983,40 @@
   function oefDaanSleutel(){return 'fp_oefdaan_'+(id||'x');}
   // kaart bestaat niet meer: wat deze telefoon over juist die kaart onthield, gaat ook weg
   function vergeetKaartHier(){try{['fp_oefdaan_','fp_zwaar_','fp_priv_','fp_wacht_'].forEach(function(p){localStorage.removeItem(p+(id||'x'));});}catch(e){}}
+  // Wat vandaag op een ánder apparaat is afgevinkt, staat op de server (oefTrouw: per
+  // oefening de dag van de laatste tik, Amsterdam-tijd, K.dag). Die vinkjes tellen hier
+  // ook mee, zodat telefoon en tablet hetzelfde laten zien en een tik op het ene
+  // apparaat het vinkje van het andere niet stil weghaalt.
+  function oefTrouwSleutel(x){return String((x&&x.n)||'').slice(0,80);}
+  function serverOefDaan(vandaag){
+    var uit=[];
+    if(!K||!K.kaart||!K.dag||K.dag!==vandaag)return uit;
+    var tr=K.kaart.oefTrouw||{};
+    (K.kaart.chosen||[]).forEach(function(x,i){
+      var naam=oefTrouwSleutel(x);
+      var rec=naam&&Object.prototype.hasOwnProperty.call(tr,naam)?tr[naam]:null;
+      if(rec&&rec.d===K.dag)uit.push(i);
+    });
+    return uit;
+  }
   function leesOefDaan(){
     var vandaag=dagStr(Date.now());
+    var done=[];
     try{
       var s=JSON.parse(localStorage.getItem(oefDaanSleutel())||'{}');
-      if(s&&s.d===vandaag&&Array.isArray(s.done))return {d:vandaag,done:s.done};
+      if(s&&s.d===vandaag&&Array.isArray(s.done))done=s.done.slice();
     }catch(e){}
-    return {d:vandaag,done:[]};
+    serverOefDaan(vandaag).forEach(function(i){if(done.indexOf(i)===-1)done.push(i);});
+    return {d:vandaag,done:done};
+  }
+  // eigen tik meteen in de serverkopie zetten, anders telt een net uitgevinkte
+  // oefening via oefTrouw nog als gedaan
+  function zetOefTrouwLokaal(idx,aan){
+    if(!K||!K.kaart||!K.dag)return;
+    var x=(K.kaart.chosen||[])[idx];var naam=oefTrouwSleutel(x);if(!naam)return;
+    var tr=K.kaart.oefTrouw=K.kaart.oefTrouw||{};
+    var rec=Object.prototype.hasOwnProperty.call(tr,naam)?tr[naam]:(tr[naam]={n:0,d:''});
+    if(aan)rec.d=K.dag;else if(rec.d===K.dag)rec.d='';
   }
   function bewaarOefDaan(st){try{localStorage.setItem(oefDaanSleutel(),JSON.stringify(st));}catch(e){}}
   function tekenOefDaan(){
@@ -1043,6 +1070,7 @@
     var st=leesOefDaan();
     var p=st.done.indexOf(idx);
     if(p>-1)st.done.splice(p,1);else st.done.push(idx);
+    zetOefTrouwLokaal(idx,p===-1);
     bewaarOefDaan(st);
     tekenOefDaan();
     // telling per oefening naar de praktijk (best effort, alleen aantallen):
@@ -1063,7 +1091,7 @@
     if(g.some(function(x){return dagStr(x.t)===vandaag;}))return;
     var knop=document.getElementById('gdaan');
     if(knop&&knop.dataset.bezig)return;if(knop)knop.dataset.bezig='1';
-    stuur('/api/kaart/gedaan',{id:id})
+    stuur('/api/kaart/gedaan',{id:id,aan:true})
       .then(function(d){if(d&&d.ok){K.kaart.gedaan=d.gedaan||[];tekenGedaan();}if(knop)delete knop.dataset.bezig;})
       .catch(function(){if(knop)delete knop.dataset.bezig;});
   }
@@ -2300,8 +2328,18 @@
     });
     document.getElementById('gdaan').addEventListener('click',function(){
       var knop=this;if(knop.dataset.bezig)return;knop.dataset.bezig='1';
-      stuur('/api/kaart/gedaan',{id:id})
-        .then(function(d){if(d.ok){K.kaart.gedaan=d.gedaan||[];tekenGedaan();}delete knop.dataset.bezig;})
+      // expliciet aan of uit (wat de patiënt nu ziet), geen blinde aan/uit-tik op de server;
+      // ook een tik uit de wachtrij (offline) zet zo de juiste stand
+      var wil=knop.getAttribute('aria-pressed')!=='true';
+      stuur('/api/kaart/gedaan',{id:id,aan:wil})
+        .then(function(d){
+          if(d.ok){
+            K.kaart.gedaan=d.gedaan||[];tekenGedaan();
+            // dag weer uit: de vinkjes per oefening gaan mee uit, anders zegt de kaart
+            // "alles gedaan" terwijl de therapeut geen oefendag ziet
+            if(!wil){var st=leesOefDaan();st.done.slice().forEach(function(i){toggleOefDaan(i);});}
+          }
+          delete knop.dataset.bezig;})
         .catch(function(){delete knop.dataset.bezig;});
     });
     // seintje naar de praktijk: één tik stuurt een vaste soort, geen vrije tekst
@@ -2497,7 +2535,7 @@
       ,loadMobileReview().catch(function(){mediaReviewReady=false;})
     ]).then(function(res){
       if(!res[0]||!res[0].ok){if(res[0]&&res[0].status===404){document.getElementById('fout').style.display='block';vergeetKaartHier();}else toonStoring();return;}
-      K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1],ai:!!res[0].ai};
+      K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1],ai:!!res[0].ai,dag:typeof res[0].dag==='string'?res[0].dag:''};
       // Komt het stemmanifest pas na het tekenen binnen, dan zetten we alleen de wachtende
       // luisterregels om (herstelNoorKnoppen), dezelfde weg als een latere geslaagde poging.
       // De hele kaart hertekenen brak een video af die de patiënt intussen had geopend.
