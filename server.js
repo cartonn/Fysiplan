@@ -1445,32 +1445,52 @@ function slug(s) {
 const verbodenSleutel = /^(__proto__|constructor|prototype)$/i;
 const cleanName = (v, max) => { const s = String(v || "").trim().replace(/\s+/g, " ").slice(0, max); return verbodenSleutel.test(s) ? "" : s; };
 
-function readBody(req, limit = 16 * 1024) {
+// Een te grote body: niet meer bewaren, de rest weglezen en pas daarna antwoorden.
+// Eerder deed de lezer meteen req.destroy(); dan ging de verbinding dicht vóór het
+// antwoord en zag de browser een lege foutpagina of "Failed to fetch" (sweep
+// 2026-11-07). Nu krijgt de handler een fout, en send() wacht tot de client klaar is
+// met versturen en maakt van elk antwoord op dit verzoek een 413 met
+// "connection: close". Antwoorden vóór het einde van de upload gaf een race (EPIPE of
+// reset bij de client). Het weglezen is begrensd in tijd en bytes, zodat een eindeloze
+// upload geen verbinding openhoudt; daarboven gaat de verbinding alsnog hard dicht.
+const TE_GROOT_WEGLEES_MS = 10 * 1000;
+const TE_GROOT_WEGLEES_MAX = 80 * 1024 * 1024;
+function bodyTeGroot(req) {
+  if (req.teGroot) return;
+  let weg = 0;
+  req.teGroot = new Promise((klaar) => {
+    const t = setTimeout(() => { req.destroy(); klaar(); }, TE_GROOT_WEGLEES_MS);
+    t.unref?.();
+    const op = () => { clearTimeout(t); klaar(); };
+    req.on("data", (c) => { weg += c.length; if (weg > TE_GROOT_WEGLEES_MAX) req.destroy(); });
+    req.once("end", op);
+    req.once("close", op);
+    if (req.complete) op();
+  });
+  req.resume();
+}
+function leesBody(req, limit) {
   return new Promise((resolve, reject) => {
+    // een opgegeven content-length boven de grens hoeft niet eerst binnen te komen
+    if (Number(req.headers["content-length"]) > limit) { bodyTeGroot(req); reject(new Error("body te groot")); return; }
     let size = 0;
     const chunks = [];
     req.on("data", (c) => {
+      if (req.teGroot) return;
       size += c.length;
-      if (size > limit) { reject(new Error("body te groot")); req.destroy(); return; }
+      if (size > limit) { chunks.length = 0; bodyTeGroot(req); reject(new Error("body te groot")); return; }
       chunks.push(c);
     });
-    req.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
+    req.on("end", () => { if (!req.teGroot) resolve(Buffer.concat(chunks)); });
     req.on("error", reject);
   });
 }
+function readBody(req, limit = 16 * 1024) {
+  return leesBody(req, limit).then((buf) => buf.toString("utf8"));
+}
 // als readBody, maar levert de ruwe bytes (voor video-uploads)
 function readBodyRaw(req, limit) {
-  return new Promise((resolve, reject) => {
-    let size = 0;
-    const chunks = [];
-    req.on("data", (c) => {
-      size += c.length;
-      if (size > limit) { reject(new Error("body te groot")); req.destroy(); return; }
-      chunks.push(c);
-    });
-    req.on("end", () => resolve(Buffer.concat(chunks)));
-    req.on("error", reject);
-  });
+  return leesBody(req, limit);
 }
 
 // Verhardt de v2-pagina's met een per-antwoord script-nonce, zodat 'unsafe-inline'
@@ -1542,6 +1562,14 @@ function cacheHeaders(type) {
   };
 }
 async function send(res, status, type, body) {
+  // een verzoek met een te grote body krijgt altijd 413, wat de handler ook koos
+  if (res.req && res.req.teGroot) {
+    await res.req.teGroot;
+    if (res.destroyed || res.writableEnded) return;
+    status = 413;
+    res.setHeader("connection", "close");
+    if (/json/.test(type)) body = JSON.stringify({ ok: false, teGroot: true, fout: "Dit is te groot om te versturen." });
+  }
   // nosniff en een sobere referrer-policy op alles: puur verhardend, verandert geen gedrag
   res.writeHead(status, { "content-type": type, "x-content-type-options": "nosniff",
     "referrer-policy": "same-origin", ...cacheHeaders(type) });
@@ -2958,7 +2986,7 @@ async function afhandelen(request, response) {
       // praktijk: van wie deze opname is. Alleen díé praktijk mag het pad daarna op een
       // eigen kaart zetten (zie eigenVideoPad bij POST /api/kaarten)
       opnames.set(token, { doel, naam: doel === "oefening" ? b.naam : null, made: Date.now(), video: null,
-        praktijk: praktijkSessie || null });
+        praktijk: praktijkSessie || null, proef: proefVan(request)?.id || null });
       await sendJson(response, 200, { ok: true, token });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
@@ -3009,6 +3037,15 @@ async function afhandelen(request, response) {
     // o.video-check en blijft er een weesbestand (tot 60 MB) achter terwijl de
     // opslagteller dubbel telt
     if (!o || o.video || o.bezig) { await sendJson(response, 404, { ok: false, fout: "Opname verlopen of al afgerond. Scan de QR-code opnieuw." }); return; }
+    // de telefoon heeft geen sessie of proefcookie: het token onthoudt van welke proef en
+    // praktijk het is. Verloopt die proef terwijl de QR nog openstaat, dan schrijft ook
+    // deze route niets meer weg (zelfde slot als PROEF_SCHRIJFROUTES).
+    const opnameProef = o.proef && Object.hasOwn(proeven, o.proef) ? proeven[o.proef] : null;
+    if (proefVerlopen(opnameProef) || praktijkProefVerlopen(o.praktijk)) {
+      opnames.delete(token);
+      await sendJson(response, 403, { ok: false, proefVerlopen: true, fout: "De gratis proef van deze praktijk is voorbij. Opnemen kan niet meer." });
+      return;
+    }
     // te grote uploads meteen afwijzen (vóór het bufferen) en het aantal gelijktijdige
     // uploads begrenzen: elke upload staat kort in het geheugen
     if (Number(request.headers["content-length"] || 0) > 60 * 1024 * 1024) {

@@ -13,19 +13,16 @@ daaruit tot en met 2026-11-06.
 | (c) proef-tokens en verlopen proeven | 2026-11-06 (PR #47 proefslot; daarna opnieuw aanmelden) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-07 (vids-eigendom op POST /api/kaarten) |
 | (e) uploads (video, logo, opname /o) | 2026-11-04 |
-| (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-10-24 |
+| (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-07 (runtime: payloads in alle kaartvelden, /k in nl/en/ar met vertaling, overzicht, sjablonen, eigen oefeningen, serverpagina's; geen gat) |
 | (g) security-headers, CSP, cookies, CSRF | 2026-10-31 |
 | (h) foutmeldingen die stacktraces of paden lekken | 2026-11-06 (runtime-fuzz 60 schrijfroutes, geen lek) |
-| (i) denial of service: grote bodies, opslaggroei | 2026-10-25 |
+| (i) denial of service: grote bodies, opslaggroei | 2026-11-07 (te grote body: nu 413, weglezen begrensd op 10 s en 80 MB) |
 | (j) npm audit | 2026-11-07 (sharp 0.35.3 → 0.35.5, daarna 0 meldingen) |
 
-Volgende run: (f) injectie/XSS, daarna (i) denial of service en (g) headers/CSP.
+Volgende run: (g) headers/CSP/cookies, daarna (e) uploads en (b) accountlaag.
 
 ## Open
 
-- **LAAG — te grote request-body krijgt geen antwoord** (sweep 2026-11-07, Truus en Sanne). `readBody`
-  (server.js rond r. 1405) doet `req.destroy()` zonder 413; de browser toont een lege `chrome-error://`-pagina
-  of "Failed to fetch". Geen crash of 500. Netjes 413 met een korte melding sturen en dan sluiten.
 - **HOOG — praktijknaam is een wereldwijde sleutel** (sweep 2026-11-06, Sanne). Wie een naam als eerste
   beveiligt, sluit elke andere praktijk met die naam buiten ("Deze praktijk is beveiligd. Log in…");
   een naam kan zo vooraf worden gekaapt. Ook wisselt de praktijk stil als de therapeut de naam op de
@@ -39,9 +36,6 @@ Volgende run: (f) injectie/XSS, daarna (i) denial of service en (g) headers/CSP.
   "alles wissen" is de praktijknaam vrij en draagt een nieuw account met die naam geen proefslot meer.
   Zelfde soort als "proef wissen en opnieuw aanmelden" hieronder; alleen relevant zonder betaalpoort.
   Fix: bij wissen een sha256 van de praktijknaam + proefeinde bewaren tot de bewaartermijn om is.
-- **LAAG — `/api/opname/upload` staat niet in `PROEF_SCHRIJFROUTES`**: een opname-token van vlak voor
-  het verlopen blijft nog ~15 min bruikbaar (sweep, Mark).
-
 - **LAAG — proef wissen en opnieuw aanmelden geeft een nieuwe proef van 14 dagen** (2026-11-06).
   `/v2/proef/wissen` haalt de aanmelding weg; daarna levert hetzelfde e-mailadres een verse proef op.
   Het praktijkaccount blijft sinds PR #47 wel dicht (einddatum staat op het account), dus dit helpt
@@ -55,9 +49,6 @@ Volgende run: (f) injectie/XSS, daarna (i) denial of service en (g) headers/CSP.
   en schrijven 40 per 5 min per IP (server.js `leesLimiet`, schrijfrem) gelden voor de hele praktijk
   incl. auto-delen, en voor patiënten achter CGNAT/sportschool-wifi. De sweep liep er met 4 gebruikers
   binnen minuten tegenaan. Overweeg rem per praktijksessie/kaart-id naast per IP.
-- **LAAG — POST-body boven de limiet krijgt een verbroken verbinding i.p.v. 413** (`req.destroy()` in
-  de body-lezer). Netjes 413 sturen en dan sluiten.
-
 - **LAAG — remteller op de beheersleutel weigert, maar houdt raden niet tegen.**
   `denied()` geeft na 20 fouten per 5 minuten een 429, maar `isAdmin()` wordt vóór
   `denied()` gecontroleerd: wie tijdens de 429-periode de juiste sleutel stuurt,
@@ -69,6 +60,11 @@ Volgende run: (f) injectie/XSS, daarna (i) denial of service en (g) headers/CSP.
   laat zien hoe het wel kan; overstappen kan later per beheerroute.
 
 ## Opgelost
+
+- OPGELOST 2026-11-07 PR #<nr> — te grote request-body krijgt nu een 413 met melding in plaats van een
+  verbroken verbinding (ook chunked); dubbel backlogitem samengevoegd.
+- OPGELOST 2026-11-07 PR #<nr> — `/api/opname/upload` weigert na het verlopen van de proef (token onthoudt
+  proef en praktijk).
 
 - **MIDDEL — vreemde opname-video in eigen kaart zetten en daarmee laten wissen** (sweep 2026-11-06,
   Mark). OPGELOST 2026-11-07 PR #54. POST /api/kaarten neemt een opnamepad in `vids` alleen nog over als het
@@ -115,3 +111,11 @@ Volgende run: (f) injectie/XSS, daarna (i) denial of service en (g) headers/CSP.
   live zonder eigen `ADMIN_KEY` (of met `admin88`) blijft beheer dicht; lokaal blijft
   `admin88` de standaard. Test: `npm run test:beheer` (ook in CI).
   OPGELOST 2026-11-06, PR "security: beheersleutel".
+
+## Sanity 2026-11-07 (04u UTC) op #55, #56, #57
+
+- #57 Mollie: webhook haalt de betaling zelf op, alleen eigen `tr_`-id's, bedrag en proef-id gecontroleerd,
+  idempotent; betaalroute achter `kruisSite` en `proefLimiet`. Geen gat. Let op bij live: `eigenHost` bepaalt
+  redirect- en webhook-URL; alleen de eigen betaling is te beïnvloeden.
+- #55, #56: geen nieuwe endpoints zonder auth; `basisTs`-check alleen voor de eigen praktijk.
+
