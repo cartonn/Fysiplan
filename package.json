@@ -66,6 +66,7 @@
     "test:patientkant": "node scripts/test-patientkant.mjs",
     "test:akkoord": "node scripts/test-akkoord.mjs",
     "test:gedaansync": "node scripts/test-kaart-gedaan-sync.mjs",
+    "test:seintje": "node scripts/test-sweep-seintje-afspraak.mjs",
     "test:teamherstel": "node scripts/test-team-herstel.mjs"
   },
   "engines": {
