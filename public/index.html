@@ -4,9 +4,8 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Fysiplan — trainingskaarten</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<!-- Inter staat op de eigen server (OFL, public/fonts): geen IP-adres naar Google bij het laden -->
+<style>@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-latin-wght-normal.woff2) format('woff2')}</style>
 <style>
   :root{
     --brand:#1f6feb; --brand-700:#1a5fd0; --brand-50:#eef4ff; --brand-100:#dbe7ff;
@@ -1118,7 +1117,8 @@ bridge2.jpg</div>
       'Op de server staan dan de roepnaam, de oefeningen met dosering en uitleg, het doel en de opmerking die je invult, en wat je pati&euml;nt zelf aanvinkt of meldt. '+
       'Leeftijd en Casus blijven op papier en in deze browser. '+
       'Een gedeelde kaart verdwijnt vanzelf van de server na een periode zonder activiteit, en kort nadat je hem afrondt (archiveert). Kopieer daarom wat je wilt bewaren naar je dossier. '+
-      'Meer in de <a href="/privacy" target="_blank" rel="noopener">privacyverklaring</a> en de <a href="/verwerkersovereenkomst" target="_blank" rel="noopener">verwerkersovereenkomst</a>.';
+      'Werk je op een gedeelde computer, of stop je bij de praktijk? Kies dan bij Kaarten voor <b>Wis Fysiplan van dit apparaat</b>. '+
+      'Meer in de <a href="/privacy" target="_blank" rel="noopener">privacyverklaring</a>, de <a href="/verwerkersovereenkomst" target="_blank" rel="noopener">verwerkersovereenkomst</a> en de <a href="/voorwaarden" target="_blank" rel="noopener">algemene voorwaarden</a>.';
   }
   // EPD-koppeling zonder koppeling: elk EPD met een extern-link-veld (Intramed,
   // FysioRoadmap, …) kan /v2/app#client={naam} openen — de cliëntnaam (en
@@ -3057,7 +3057,7 @@ bridge2.jpg</div>
     var el=document.getElementById('ps_akkoord');if(!el)return;
     var a=PRAKSLOT.akkoord;
     if(!PRAKSLOT.ingelogd||!a||!a.nodig){el.style.display='none';el.innerHTML='';return;}
-    var dat=function(v){try{return new Date(v+'T12:00:00Z').toLocaleDateString('nl-NL',{day:'numeric',month:'long',year:'numeric'});}catch(e){return v;}};
+    var dat=function(v){try{return new Date(String(v).slice(0,10)+'T12:00:00Z').toLocaleDateString('nl-NL',{day:'numeric',month:'long',year:'numeric'});}catch(e){return v;}};
     var stuk={av:'Algemene voorwaarden',vwo:'Verwerkersovereenkomst'};
     var lijst=(a.wijzigingen||[]).map(function(w){return '<li><b>'+esc(stuk[w.stuk]||w.stuk)+' ('+esc(dat(w.versie))+')</b>: '+esc(w.tekst)+'</li>';}).join('');
     var h="<b>De voorwaarden zijn bijgewerkt.</b> Dit is er veranderd:<ul style='margin:6px 0 6px 18px;padding:0'>"+lijst+"</ul>"+
@@ -4142,8 +4142,15 @@ bridge2.jpg</div>
       .catch(function(){el.innerHTML="<div class='hint'>Kaarten laden is niet gelukt.</div>";});
   }
   document.getElementById('k_save_srv').addEventListener('click',function(){
-    var naam=document.getElementById('k_naam').value.trim();
+    var kn=document.getElementById('k_naam');
+    var naam=kn.value.trim();
     if(!naam){alert('Geef de kaart een naam.');return;}
+    // dataminimalisatie (art. 5 lid 1 c AVG): ook hier een roepnaam voorstellen, net als bij printen met QR
+    if(IS_V2&&naamLijktVolledig(naam)&&NAAM_OK!==naam.toLowerCase()){
+      var vs=kaartLabelVan(naam);
+      if(confirm('\u201c'+naam+'\u201d lijkt een volledige naam. Op de digitale kaart hoort alleen een roepnaam; de volledige naam staat in je EPD.\n\nOK = maak er \u201c'+vs+'\u201d van\nAnnuleren = zo laten')){naam=vs;kn.value=vs;}
+      else NAAM_OK=naam.toLowerCase();
+    }
     saveServerCard(naam,function(d){
       if(!d.ok){alert(d.fout||'Kaart delen is niet gelukt.');return;}
       document.getElementById('k_result').textContent='Kaart “'+naam+'” gedeeld met de praktijk.';

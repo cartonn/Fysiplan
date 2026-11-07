@@ -5,6 +5,7 @@
 //   alleen een beheerder kan opnieuw akkoord gaan, met naam in het logboek.
 // - Elke huidige versie heeft een regel in AKKOORD_WIJZIGINGEN.
 // - "Wis Fysiplan van dit apparaat" wist login en lokale gegevens (browserdeel).
+// - /v2/gegevens werkt met de eigen login van een beheerder; de app laadt niets van Google.
 // Statisch + API in CI, browser alleen met Playwright. `npm run test:akkoord`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
@@ -90,7 +91,7 @@ try {
   const stT = await status(T);
   assert.equal(stT.akkoord.nodig, true);
   assert.equal(stT.akkoord.beheer, false);
-  assert.deepEqual(stT.akkoord.wijzigingen.map((w) => w.stuk), ["av"], "alleen de voorwaarden zijn nieuw");
+  assert.ok(stT.akkoord.wijzigingen.length > 0 && stT.akkoord.wijzigingen.every((w) => w.stuk === "av"), "alleen de voorwaarden zijn nieuw");
   assert.equal((await post("/api/praktijk/akkoord", { akkoord: true }, T)).status, 403, "therapeut kan niet namens de praktijk akkoord gaan");
   assert.equal((await post("/api/praktijk/akkoord", { akkoord: true })).status, 401);
   assert.equal((await post("/api/praktijk/akkoord", {}, B)).status, 400, "zonder vinkje niet");
@@ -102,6 +103,25 @@ try {
   assert.equal((await status(T)).akkoord.nodig, false);
   const act = await (await get("/api/praktijk/activiteit?praktijk=" + encodeURIComponent(P), B)).json();
   assert.ok(JSON.stringify(act).includes("akkoord"), "akkoord staat in de activiteit");
+  // /v2/gegevens met eigen login: beheerder wel, therapeut niet; team zonder hashes
+  const gegevens = (velden) => fetch(origin + "/v2/gegevens/download", { method: "POST", redirect: "manual",
+    headers: { "content-type": "application/x-www-form-urlencoded", "x-forwarded-for": "10.8.2." + (ip++) },
+    body: new URLSearchParams({ praktijk: P, ...velden }).toString() });
+  const dlB = await gegevens({ email: "bea@akkoord.nl", wachtwoord: "bea-wachtwoord" });
+  assert.equal(dlB.status, 200, "beheerder downloadt met eigen login");
+  const pakket = await dlB.json();
+  assert.deepEqual(pakket.team.map((l) => l.email).sort(), ["bea@akkoord.nl", "tom@akkoord.nl"]);
+  assert.doesNotMatch(JSON.stringify(pakket), /"hash"/, "geen wachtwoordhashes in de download");
+  assert.equal((await gegevens({ email: "tom@akkoord.nl", wachtwoord: "tom-wachtwoord" })).status, 403, "therapeut kan niet alles downloaden");
+
+  // ---- geen lettertype of andere bron van Google in de app; teksten noemen de cookies ----
+  const appHtml = await (await fetch(origin + "/v2/app")).text();
+  assert.doesNotMatch(appHtml, /fonts\.googleapis|fonts\.gstatic/, "lettertype van de eigen server");
+  const csp = (await fetch(origin + "/v2/app")).headers.get("content-security-policy") || "";
+  assert.doesNotMatch(csp, /googleapis|gstatic/);
+  const priv = await (await fetch(origin + "/privacy")).text();
+  for (const w of ["fpproef", "fp1", "Wis Fysiplan van dit apparaat", "Teamleden", "Mijn gegevens"]) assert.ok(priv.includes(w), "privacyverklaring noemt " + w);
+  assert.doesNotMatch(priv, /lettertype in de app/);
   console.log("test-akkoord: API OK");
 
   // ---- browser: banner met wijzigingen en Wis Fysiplan van dit apparaat ----
