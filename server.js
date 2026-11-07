@@ -65,6 +65,9 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 const VWO_VERSIE = "2026-11-02";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
 const AV_VERSIE = "2026-11-07";
+// versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
+// zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
+const PRIVACY_VERSIE = "2026-11-07";
 // wie Fysiplan is, voor /privacy en /verwerkersovereenkomst (art. 13 AVG): in te
 // stellen op de server, zodat er geen bedrijfsgegevens in de openbare repo staan
 const FYSIPLAN_ID = {
@@ -1674,12 +1677,18 @@ const denied = (req, res, pad, melding = "Alleen beschikbaar voor beheer.") => {
   return sendJson(res, 403, { ok: false, fout: melding });
 };
 
+// foutlog zonder kaartlinks: de query (bv. ?id=<kaart-id>) en id's in /k/, /o/ en
+// /api/kaart/ zijn sleutels tot een kaart en horen niet in de logs van de hoster
+function logPad(url) {
+  return String(url || "").split("?")[0].replace(/^\/(k|o|api\/kaart)\/[^/]+/, "/$1/…").slice(0, 200);
+}
+
 // Elk verzoek loopt door dit vangnet: één kapotte aanvraag (bot, rare URL, afgebroken
 // verbinding) mag nooit het hele proces neerhalen. Zonder dit stopt Node bij een
 // onafgevangen fout in de async handler en houdt Railway na drie herstarts de site uit.
 const server = createServer((request, response) => {
   afhandelen(request, response).catch((err) => {
-    console.error("verzoek mislukt:", request.method, request.url, "-", (err && err.message) || err);
+    console.error("verzoek mislukt:", request.method, logPad(request.url), "-", (err && err.message) || err);
     try {
       if (!response.headersSent) {
         response.writeHead(500, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
@@ -4950,7 +4959,7 @@ async function afhandelen(request, response) {
       const contact = FYSIPLAN_ID.contact || afzender;
       const vars = {
         TITEL: { privacy: "Privacy", vwo: "Verwerkersovereenkomst", voorwaarden: "Algemene voorwaarden" }[blok],
-        VERSIE: new Date((blok === "voorwaarden" ? AV_VERSIE : VWO_VERSIE) + "T12:00:00Z").toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Amsterdam" }),
+        VERSIE: new Date(({ voorwaarden: AV_VERSIE, privacy: PRIVACY_VERSIE }[blok] || VWO_VERSIE) + "T12:00:00Z").toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Amsterdam" }),
         BEDRIJF: FYSIPLAN_ID.bedrijf || "Fysiplan",
         // alleen een aparte handelsnaam als de rechtspersoon anders heet ("Fysiplan B.V." niet)
         ALIAS_HTML: FYSIPLAN_ID.bedrijf && !/^fysiplan\b/i.test(FYSIPLAN_ID.bedrijf) ? " (&ldquo;Fysiplan&rdquo;)" : "",

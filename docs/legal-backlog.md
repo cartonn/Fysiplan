@@ -8,7 +8,7 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 
 | Gebied | Laatst gecontroleerd |
 |---|---|
-| (a) privacyverklaring (art. 13/14 AVG) | 2026-11-02 (PR #40), kort herlezen 2026-11-06 |
+| (a) privacyverklaring (art. 13/14 AVG) | 2026-11-07 (rechten, verplicht verstrekken, foutlog) |
 | (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-02 (PR #40) |
 | (c) algemene voorwaarden | 2026-11-06 (concept gebouwd, deze run) |
 | (d) code tegen tekst | 2026-11-07 (Mollie/betalen), steekproef 2026-11-06 |
@@ -16,9 +16,9 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (f) cookies en lokale opslag | 2026-11-06 (PR opslag, deze run) |
 | (g) MDR en AI-verordening | 2026-11-02 (PR #40) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-07 (contactlogboek in de dossiertekst) |
-| (i) begrijpelijkheid (B1) | nooit apart |
+| (i) begrijpelijkheid (B1) | 2026-11-07 (privacyverklaring: "In het kort"; VWO en voorwaarden nog niet) |
 
-Volgende run: (i) B1, daarna (b) verwerkersovereenkomst en (g) MDR/AI-verordening.
+Volgende run: (b) verwerkersovereenkomst, daarna (g) MDR/AI-verordening en (i) B1 voor VWO en voorwaarden.
 PR #41 staat sinds 2026-11-02 open op `public/index.html`; de punten die daarop wachten blijven liggen.
 
 ## Open
@@ -61,7 +61,24 @@ PR #41 staat sinds 2026-11-02 open op `public/index.html`; de punten die daarop 
   (geen nieuwe derde partij), dus de subverwerkerslijst klopt nog. Volledige controle (d) van
   wissen van opnames, eigen video's en logs volgt in een latere run.
 
+- **LAAG — bewaartermijn van de Railway-logs onbekend (2026-11-07).** De foutlog bevat sinds deze
+  run geen kaartlink meer, wel het moment en de foutmelding. Hoe lang Railway logs bewaart, staat
+  niet in de code; de privacyverklaring zegt daarom alleen "bij Railway". Bij de volgende (b)-run
+  nagaan in de Railway-documentatie en de termijn in de tekst zetten.
+
 ## Opgelost
+
+- **MIDDEL — privacyverklaring miste verplichte onderdelen van art. 13 AVG en een eerlijke versiedatum.**
+  Alleen inzien/verbeteren/wissen stond erin; beperken, bezwaar en meenemen (art. 13 lid 2 b),
+  "geen geautomatiseerde besluiten" (lid 2 f), of verstrekken verplicht is (lid 2 e) en de
+  antwoordtermijn van een maand (art. 12 lid 3) ontbraken. De versiedatum kwam van de
+  verwerkersovereenkomst en bleef op 2 november staan, terwijl de tekst op 6 en 7 november veranderde.
+  De foutlog schreef bij een serverfout de volledige URL weg, met kaartlink (`/k/<id>`, `?id=`), naar
+  de logs van Railway. OPGELOST 2026-11-07: rechten als lijst in B1-taal, termijn, geen
+  geautomatiseerde besluiten, wat nodig is voor de proef, alinea "Foutlog", een samenvatting
+  "In het kort" bovenaan (B1), `PRIVACY_VERSIE` los van `VWO_VERSIE` (geen nieuw akkoord nodig),
+  en `logPad()` haalt query en kaart-/opname-id's uit de foutlog. Bron: AVG art. 12 en 13
+  (eur-lex.europa.eu, Verordening 2016/679); AP, "Privacyverklaring". Test: `npm run test:privacy`.
 
 - **MIDDEL — Mollie niet genoemd terwijl online betalen kan (art. 13 lid 1 e AVG; art. 6:234 BW).**
   Met `MOLLIE_API_KEY` (PR #57) gaan naam of praktijknaam, e-mail en bedrag naar Mollie, maar de
