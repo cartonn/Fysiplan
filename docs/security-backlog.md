@@ -11,25 +11,18 @@ daaruit tot en met 2026-11-06.
 | (a) beheer-endpoints en de admin-sleutel | 2026-11-06 (deze backlog, PR "security: beheersleutel") |
 | (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-03 |
 | (c) proef-tokens en verlopen proeven | 2026-11-06 (PR #47 proefslot; daarna opnieuw aanmelden) |
-| (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-10-27 |
+| (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-07 (vids-eigendom op POST /api/kaarten) |
 | (e) uploads (video, logo, opname /o) | 2026-11-04 |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-10-24 |
 | (g) security-headers, CSP, cookies, CSRF | 2026-10-31 |
 | (h) foutmeldingen die stacktraces of paden lekken | 2026-11-06 (runtime-fuzz 60 schrijfroutes, geen lek) |
 | (i) denial of service: grote bodies, opslaggroei | 2026-10-25 |
-| (j) npm audit | onbekend |
+| (j) npm audit | 2026-11-07 (sharp 0.35.3 → 0.35.5, daarna 0 meldingen) |
 
-Volgende run: (j) npm audit en (f) injectie/XSS, daarna (d) gedeelde kaarten.
+Volgende run: (f) injectie/XSS, daarna (i) denial of service en (g) headers/CSP.
 
 ## Open
 
-- **MIDDEL — vreemde opname-video in eigen kaart zetten en daarmee laten wissen** (sweep 2026-11-06,
-  Mark). POST /api/kaarten accepteert in `vids` elk pad dat op `uploads/videos/v-<token>.mp4` lijkt,
-  ook een opname van een andere praktijk (token zichtbaar in de QR op het scherm van die therapeut).
-  Haalt Mark de video daarna van zijn kaart, dan wist `ruimKaartVideosOp` het bestand van de andere
-  praktijk; /api/opname/status blijft daar "klaar" melden en de patiënt krijgt een kapotte video.
-  server.js rond de `vids`-controle in POST /api/kaarten en `ruimKaartVideosOp`. Fix: alleen paden
-  accepteren van opnames/uploads van dezelfde praktijk, en alleen eigen bestanden opruimen.
 - **HOOG — praktijknaam is een wereldwijde sleutel** (sweep 2026-11-06, Sanne). Wie een naam als eerste
   beveiligt, sluit elke andere praktijk met die naam buiten ("Deze praktijk is beveiligd. Log in…");
   een naam kan zo vooraf worden gekaapt. Ook wisselt de praktijk stil als de therapeut de naam op de
@@ -73,6 +66,15 @@ Volgende run: (j) npm audit en (f) injectie/XSS, daarna (d) gedeelde kaarten.
   laat zien hoe het wel kan; overstappen kan later per beheerroute.
 
 ## Opgelost
+
+- **MIDDEL — vreemde opname-video in eigen kaart zetten en daarmee laten wissen** (sweep 2026-11-06,
+  Mark). OPGELOST 2026-11-07 PR #<nr>. POST /api/kaarten neemt een opnamepad in `vids` alleen nog over als het
+  al op een kaart van dezelfde praktijk staat, een bibliotheekvideo is, of uit een opname komt die
+  deze praktijk zelf startte (`opnames` onthoudt nu de praktijk). Een vreemd pad wordt stil
+  weggelaten. Test: `npm run test:opname-eigen`.
+- **HOOG (alleen ontwikkel-/beeldscripts) — npm audit: sharp ≤0.35.5-rc.1 (libheif, librsvg).**
+  OPGELOST 2026-11-07 PR #<nr>: lockfile naar sharp 0.35.5. De server laadt sharp niet; alleen
+  scripts voor beeldbewerking gebruiken het.
 
 - **HOOG — proef overnemen met alleen het e-mailadres** (gebruikers-sweep 2026-11-06, Sanne). Opnieuw
   aanmelden met een bestaand adres gaf direct een proefcookie, liet naam/telefoon overschrijven en

@@ -2901,7 +2901,10 @@ async function afhandelen(request, response) {
       if (opnames.size >= 200) { await sendJson(response, 429, { ok: false, fout: "Te veel gelijktijdige opnames; probeer het zo weer." }); return; }
       // kort token: de QR-URL (/o/<token>) moet in een kleine, snel scanbare code passen
       const token = randomBytes(6).toString("hex");
-      opnames.set(token, { doel, naam: doel === "oefening" ? b.naam : null, made: Date.now(), video: null });
+      // praktijk: van wie deze opname is. Alleen díé praktijk mag het pad daarna op een
+      // eigen kaart zetten (zie eigenVideoPad bij POST /api/kaarten)
+      opnames.set(token, { doel, naam: doel === "oefening" ? b.naam : null, made: Date.now(), video: null,
+        praktijk: praktijkSessie || null });
       await sendJson(response, 200, { ok: true, token });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
@@ -3136,13 +3139,24 @@ async function afhandelen(request, response) {
           id: (/^fp_[a-f0-9]{16}$/.test(String(x && x.id || "")) || PRAKTIJK_OEF_ID.test(String(x && x.id || ""))) ? String(x.id) : "",
           i: Math.max(0, Math.min(9, Number(x && x.i) || 0)) }))
         .filter((x) => x.n);
-      // persoonlijke video's per oefening (alleen paden van eigen opnames toegestaan)
+      // persoonlijke video's per oefening (alleen paden van eigen opnames toegestaan).
+      // Eigen = al op een kaart van deze praktijk, een opname die deze praktijk zelf
+      // startte, of een bibliotheekvideo. Zonder die check zette een andere praktijk
+      // een opname van jou (token leesbaar in de scherm-QR) op haar kaart; haalde ze
+      // hem er weer af, dan wiste ruimKaartVideosOp jouw nog niet opgeslagen opname.
+      const eigenVideoPad = (v) => {
+        if (/^yt:/.test(v) || isAdmin(request)) return true;
+        if (Object.values(map).some((k) => Object.values(k.vids || {}).includes(v))) return true;
+        if (Object.values(videolinks).some((x) => x && x.eigen === v)) return true;
+        for (const o of opnames.values()) if (o.video === v) return o.praktijk === pk;
+        return false;
+      };
       const vids = {};
       if (b.vids && typeof b.vids === "object") {
         for (const k of Object.keys(b.vids).slice(0, 12)) {
           const v = String(b.vids[k] || "");
           // eigen opname, of een YouTube-link die de therapeut per oefening plakt
-          if (/^uploads\/videos\/v-[a-f0-9]+\.(mp4|webm)$/.test(v) || /^yt:[A-Za-z0-9_-]{11}$/.test(v)) vids[sanStr(k, 80)] = v;
+          if ((/^uploads\/videos\/v-[a-f0-9]+\.(mp4|webm)$/.test(v) || /^yt:[A-Za-z0-9_-]{11}$/.test(v)) && eigenVideoPad(v)) vids[sanStr(k, 80)] = v;
         }
       }
       const oudeVids = map[kk] ? Object.values(map[kk].vids || {}) : [];
