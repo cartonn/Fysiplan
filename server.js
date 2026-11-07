@@ -8,6 +8,7 @@ import { byteRange } from "./lib/byte-range.js";
 import { listDrafts, loadDraft } from "./lib/draft-exercise-import.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
 import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./lib/proef.js";
+import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, MAX_THERAPEUTEN } from "./lib/mollie.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -470,7 +471,49 @@ async function serveerProef(request, response, blok, vars = {}, status = 200) {
 function proefVars(p, extra = {}) {
   const d = dagenOver(p.verloopt);
   return { NAAM: (p.naam || "").split(" ")[0], EMAIL: p.email, TEL: telefoonWeergave(p.tel), EINDDATUM: datumNl(p.verloopt),
-    DAGEN_TEKST: d <= 1 ? "vandaag nog" : d + " dagen", TITEL: "Proef voorbij", ...extra };
+    DAGEN_TEKST: d <= 1 ? "vandaag nog" : d + " dagen", TITEL: "Proef voorbij",
+    AFREKENEN: mollieAan() ? "Liever meteen geregeld? Reken de eerste maand hieronder online af." : "Online afrekenen is niet nodig.",
+    BETAAL_HTML: betaalBlok(p), ...extra };
+}
+
+// ---- abonnement: eerste maand online afrekenen via Mollie (alleen met MOLLIE_API_KEY) ----
+// Zonder sleutel: geen betaalknop, /v2/proef/betalen en de webhook bestaan niet, en
+// "Ja, ik wil doorgaan" (Ahmed belt) blijft de enige weg. Met sleutel betaalt de
+// praktijk de eerste maand (iDEAL of kaart) en wordt de proef direct een klant.
+const MOLLIE_SLEUTEL = String(process.env.MOLLIE_API_KEY || "");
+const MOLLIE_BASIS = String(process.env.MOLLIE_API_BASIS || "https://api.mollie.com");
+const mollieAan = () => !!MOLLIE_SLEUTEL;
+const mollieBetaalIndex = new Map(); // tr_… -> proef-id: de webhook zoekt alleen eigen betalingen op
+for (const p of Object.values(proeven)) if (p.betaling?.id) mollieBetaalIndex.set(p.betaling.id, p.id);
+function betaalBlok(p) {
+  if (!mollieAan() || !p) return "";
+  const a = p.abonnement;
+  if (a && a.status === "actief") return '<p class="klein" style="margin-top:16px">Je abonnement is actief voor ' + a.aantal +
+    (a.aantal === 1 ? " therapeut" : " therapeuten") + ", betaald tot en met " + htmlEsc(datumNl(a.betaaldTot)) + ".</p>";
+  if (p.klant) return "";
+  return '<form method="post" action="/v2/proef/betalen" class="blad" style="margin-top:18px">' +
+    '<h2>Direct online afrekenen</h2><p class="klein" style="font-size:14.5px">&euro; 5,99 per therapeut per maand, maandelijks opzegbaar. ' +
+    "Je betaalt nu de eerste maand met iDEAL of je bankkaart; daarna gaat Fysiplan meteen verder.</p>" +
+    '<div class="veld" style="margin-top:12px"><label for="b_aantal">Aantal therapeuten</label>' +
+    '<input id="b_aantal" name="aantal" type="number" inputmode="numeric" min="1" max="' + MAX_THERAPEUTEN + '" value="1" required/></div>' +
+    '<div class="knoppen"><button class="knop oranje" type="submit">Eerste maand betalen</button></div></form>';
+}
+// haal de betaling zelf op bij Mollie (de webhook is niet ondertekend) en verwerk hem
+async function mollieVerwerk(id) {
+  const pid = mollieBetaalIndex.get(id);
+  const p = pid && Object.hasOwn(proeven, pid) ? proeven[pid] : null;
+  if (!p) return null;
+  const betaling = await mollie("/payments/" + encodeURIComponent(id), { sleutel: MOLLIE_SLEUTEL, basis: MOLLIE_BASIS });
+  const oordeel = beoordeelBetaling(betaling, p);
+  if (oordeel === "betaald" && markeerBetaald(p, betaling)) {
+    await bewaarProeven();
+    proefMeldAhmed("Betaald: " + (p.praktijk || p.naam), p, "Deze praktijk heeft de eerste maand online betaald (" +
+      p.abonnement.aantal + " therapeut(en), EUR " + p.abonnement.bedrag + "). De proef is nu een klant.");
+  } else if (oordeel === "mislukt" && p.betaling.status !== betaling.status) {
+    p.betaling.status = betaling.status;
+    await bewaarProeven();
+  }
+  return p;
 }
 // het aanmeldformulier, eventueel opnieuw met de ingevulde waarden en per veld de fout
 async function proefFormVars(request, w, fouten, suggestie = "", akkoord = false, alarm = "") {
@@ -4481,6 +4524,79 @@ async function afhandelen(request, response) {
     await serveerProef(request, response, "bericht", { TITEL: "Bedankt", ETIKET: "Bedankt", KOP: "Fijn! We bellen je binnen een werkdag.",
       TEKST: "We nemen contact op via " + telefoonWeergave(p.tel) + " om je abonnement af te spreken. Tot snel.",
       KNOP_HTML: '<a class="knop omlijnd" href="/v2">Terug naar de site</a>' });
+    return;
+  }
+
+  // eerste maand afrekenen: Mollie-klant + eerste betaling (sequenceType "first", zodat
+  // het mandaat later een maandelijkse incasso kan dragen), dan door naar Mollie
+  if (urlPath === "/v2/proef/betalen" && request.method === "POST" && mollieAan()) {
+    response.setHeader("cache-control", "no-store");
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    let b = {};
+    try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 2048))); } catch {}
+    const p = proefVan(request);
+    if (!p || p.klant) { response.writeHead(303, { location: p ? "/v2/app" : "/v2/proef" }); response.end(); return; }
+    const aantal = aantalTherapeuten(b.aantal);
+    const terugNaar = (fout) => serveerProef(request, response, "bericht", { TITEL: "Betalen", ETIKET: "Betalen", KOP: fout,
+      TEKST: "Je kunt het opnieuw proberen of op 'Ja, ik wil doorgaan' drukken; dan bellen we je.",
+      KNOP_HTML: '<a class="knop oranje" href="/v2/proef">Terug</a>' }, aantal ? 502 : 422);
+    if (!aantal) { await terugNaar("Vul een aantal therapeuten in tussen 1 en " + MAX_THERAPEUTEN + "."); return; }
+    if (proefLimiet(request)) { await terugNaar("Even te veel pogingen. Probeer het over een uur opnieuw."); return; }
+    const host = eigenHost(request), kaal = host.split(":")[0];
+    const lokaal = kaal === "localhost" || kaal === "127.0.0.1";
+    const basis = (lokaal ? "http://" : "https://") + host;
+    try {
+      const klant = p.betaling?.klant || (await mollie("/customers", { sleutel: MOLLIE_SLEUTEL, basis: MOLLIE_BASIS, methode: "POST",
+        body: { name: p.praktijk || p.naam, email: p.email, metadata: { proef: p.id } } })).id;
+      const betaling = await mollie("/payments", { sleutel: MOLLIE_SLEUTEL, basis: MOLLIE_BASIS, methode: "POST", body: {
+        amount: maandBedrag(aantal), customerId: klant, sequenceType: "first",
+        description: "Fysiplan, eerste maand, " + aantal + (aantal === 1 ? " therapeut" : " therapeuten"),
+        redirectUrl: basis + "/v2/proef/betaald",
+        // Mollie bereikt localhost niet; daar haalt /v2/proef/betaald de status op
+        ...(lokaal ? {} : { webhookUrl: basis + "/api/mollie/webhook" }),
+        metadata: { proef: p.id } } });
+      const checkout = String(betaling?._links?.checkout?.href || "");
+      if (!geldigBetaalId(betaling?.id) || !/^https?:\/\//.test(checkout)) throw new Error("mollie zonder checkout");
+      if (p.betaling?.id) mollieBetaalIndex.delete(p.betaling.id);
+      p.betaling = { id: betaling.id, klant, aantal, status: "open", gemaakt: Date.now() };
+      mollieBetaalIndex.set(betaling.id, p.id);
+      await bewaarProeven();
+      response.writeHead(303, { location: checkout }); response.end();
+    } catch (err) {
+      console.error("mollie betalen mislukt:", err.message);
+      await terugNaar("Online betalen lukt op dit moment niet.");
+    }
+    return;
+  }
+  // terug van Mollie: status zelf ophalen (werkt ook als de webhook nog niet binnen is)
+  if (urlPath === "/v2/proef/betaald" && request.method === "GET" && mollieAan()) {
+    response.setHeader("cache-control", "no-store");
+    let p = proefVan(request);
+    if (p?.betaling?.id && !p.klant) { try { p = (await mollieVerwerk(p.betaling.id)) || p; } catch (err) { console.error("mollie status:", err.message); } }
+    if (!p) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
+    if (p.klant) {
+      await serveerProef(request, response, "bericht", { TITEL: "Betaald", ETIKET: "Betaald", KOP: "Dank je wel, je abonnement is actief.",
+        TEKST: "Je kunt meteen verder met je kaarten. De factuur volgt per mail.", KNOP_HTML: '<a class="knop oranje" href="/v2/app">Naar mijn kaarten</a>' });
+      return;
+    }
+    const mislukt = ["failed", "canceled", "expired"].includes(p.betaling?.status);
+    await serveerProef(request, response, "bericht", { TITEL: "Betalen", ETIKET: "Betalen",
+      KOP: mislukt ? "De betaling is niet gelukt." : "We wachten nog op de bevestiging van je bank.",
+      TEKST: mislukt ? "Er is niets afgeschreven. Probeer het opnieuw, of druk op 'Ja, ik wil doorgaan', dan bellen we je."
+        : "Dat duurt meestal een paar seconden. Ververs deze pagina zo.",
+      KNOP_HTML: mislukt ? '<a class="knop oranje" href="/v2/proef">Opnieuw proberen</a>' : '<a class="knop oranje" href="/v2/proef/betaald">Opnieuw kijken</a>' });
+    return;
+  }
+  // Mollie meldt een statuswijziging met alleen het id; onbekende id's krijgen ook 200
+  // (niets verraden) en leiden nooit tot een verzoek aan Mollie
+  if (urlPath === "/api/mollie/webhook" && request.method === "POST" && mollieAan()) {
+    let id = "";
+    try { id = new URLSearchParams(await readBody(request, 1024)).get("id") || ""; } catch {}
+    if (geldigBetaalId(id) && mollieBetaalIndex.has(id)) {
+      try { await mollieVerwerk(id); }
+      catch (err) { console.error("mollie webhook:", err.message); await send(response, 503, "text/plain; charset=utf-8", "later"); return; }
+    }
+    await send(response, 200, "text/plain; charset=utf-8", "ok");
     return;
   }
 

@@ -22,6 +22,11 @@ Volgende run: (i) B1, daarna (b) verwerkersovereenkomst en (g) MDR/AI-verordenin
 
 ## Open
 
+- **MIDDEL — Mollie als ontvanger noemen vóór online betalen aangaat** (praktijk-routine, 2026-11-07).
+  Met `MOLLIE_API_KEY` stuurt de app naam, e-mail en praktijknaam van de contactpersoon naar Mollie
+  (klant + betaling, geen patiëntgegevens). Privacyverklaring (ontvangers, doel "betaling") en
+  algemene voorwaarden (betaalwijze, eerste maand vooraf, incasso daarna) moeten dat noemen.
+
 - **MIDDEL — "In de praktijk" in Kaarten bewaart een volledige naam zonder roepnaamvoorstel**
   (sweep 2026-11-06, Sanne). Print met QR en automatisch delen stellen "Henk V." voor; de knop
   `k_save_srv` in public/index.html niet. Gevolg: "Henk de Vries" staat op de server, in het
