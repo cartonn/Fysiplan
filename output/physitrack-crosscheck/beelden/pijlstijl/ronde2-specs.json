@@ -266,8 +266,9 @@
    "materiaal": "mat",
    "greep": "n.v.t."
   },
-  "pose_en": "Side view of one person on hands and knees on a mat: hands flat directly under the shoulders with straight arms, both knees on the mat directly under the hips, hip-width apart, back flat and level, head in line with the spine. Both knees are bent at 90 degrees with shins resting on the mat. NOT standing, NOT holding a chair. One curved arrow beside the far-side knee points UP and BACK toward the ceiling behind the body.",
-  "opmerking": "Bronbeeld toont twee figuren (begin en eind) met pijl, dus geen content_ref."
+  "pose_en": "Side view. She is on hands and knees (four-point kneeling) on an exercise mat drawn in perspective: hands flat directly under the shoulders, arms straight, BOTH knees on the mat directly under the hips, BOTH shins and both feet resting flat on the mat, back flat and level, head in line with the spine. Both legs are DOWN on the mat; NO leg is lifted. One short curved arrow just above the back of one heel points UP and BACK, showing that leg will later be lifted.",
+  "opmerking": "Bronbeeld toont twee figuren (begin en eind) met pijl, dus geen content_ref.",
+  "pose_en_r1": "Side view of one person on hands and knees on a mat: hands flat directly under the shoulders with straight arms, both knees on the mat directly under the hips, hip-width apart, back flat and level, head in line with the spine. Both knees are bent at 90 degrees with shins resting on the mat. NOT standing, NOT holding a chair. One curved arrow beside the far-side knee points UP and BACK toward the ceiling behind the body."
  },
  {
   "nr": 64,
@@ -416,8 +417,9 @@
    "materiaal": "Geen (mat)",
    "greep": "Steunhand plat op de vloer onder de schouder"
   },
-  "pose_en": "Front view of one person lying on the right side on a mat, upper body propped up on the straight right arm with the right hand flat on the floor directly under the shoulder, elbow locked. Both legs are straight and stacked, feet on top of each other, the right hip still resting on the mat. The left arm rests along the left side of the body. NOT a regular face-down plank, NOT on the forearm. One straight arrow under the hips points UP toward the ceiling.",
-  "opmerking": "Volgens Physitrack gaat de bovenste arm pas tegelijk met het heffen van de heupen omhoog; daarom rust hij in de beginhouding langs het lichaam (fout_in_getoond vroeg arm al omhoog). Bronbeeld heeft watermerk."
+  "pose_en": "Front view. She lies on her right side on an exercise mat drawn in perspective, propped up on the straight right arm with the right hand flat on the mat under the shoulder. Both legs are straight and stacked. Her right HIP and the outside of her right thigh still REST ON THE MAT (the body forms a slanted line from shoulder down to the hip on the mat, the hips are NOT lifted yet). The left arm rests along the left side. One short straight arrow under the right hip points UP.",
+  "opmerking": "Volgens Physitrack gaat de bovenste arm pas tegelijk met het heffen van de heupen omhoog; daarom rust hij in de beginhouding langs het lichaam (fout_in_getoond vroeg arm al omhoog). Bronbeeld heeft watermerk.",
+  "pose_en_r1": "Front view of one person lying on the right side on a mat, upper body propped up on the straight right arm with the right hand flat on the floor directly under the shoulder, elbow locked. Both legs are straight and stacked, feet on top of each other, the right hip still resting on the mat. The left arm rests along the left side of the body. NOT a regular face-down plank, NOT on the forearm. One straight arrow under the hips points UP toward the ceiling."
  },
  {
   "nr": 101,
@@ -536,8 +538,9 @@
    "materiaal": "suspensietrainer (twee banden met handvatten)",
    "greep": "in elke hand een handvat, armen gestrekt"
   },
-  "pose_en": "Front view of one person standing tall facing the anchor point of a suspension trainer, feet about shoulder-width apart. Both arms are straight and reach forward at chest height, each hand gripping one handle of the taut, shortened straps, palms facing down. NOT handles held low at the hips, NOT a staggered forward lunge stance. One curved arrow beside the right foot points OUT to the side and DOWN.",
-  "opmerking": "Conflict: uitleg zegt brede stand met handvatten hoog boven de schouders; Physitrack begint op schouderbreedte met gestrekte armen voor je en stapt dan zijwaarts uit. Physitrack gevolgd. Bronbeeld toont de lungestand (niet het begin), dus geen content_ref. TWIJFEL over armhoogte."
+  "pose_en": "Front view. A suspension trainer hangs from an anchor point high on the wall straight IN FRONT of her (behind the viewer, so the two straps come from the top of the image toward her hands, seen from the front). She stands upright facing the viewer and the anchor, feet shoulder-width apart on an exercise mat drawn in perspective. Both arms are straight forward at chest height toward the viewer, each hand holding one handle, the straps taut. One curved arrow beside one foot points OUT to the side, showing a sideways lunge step.",
+  "opmerking": "Conflict: uitleg zegt brede stand met handvatten hoog boven de schouders; Physitrack begint op schouderbreedte met gestrekte armen voor je en stapt dan zijwaarts uit. Physitrack gevolgd. Bronbeeld toont de lungestand (niet het begin), dus geen content_ref. TWIJFEL over armhoogte.",
+  "pose_en_r1": "Front view of one person standing tall facing the anchor point of a suspension trainer, feet about shoulder-width apart. Both arms are straight and reach forward at chest height, each hand gripping one handle of the taut, shortened straps, palms facing down. NOT handles held low at the hips, NOT a staggered forward lunge stance. One curved arrow beside the right foot points OUT to the side and DOWN."
  },
  {
   "nr": 137,
