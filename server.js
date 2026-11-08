@@ -498,7 +498,7 @@ function instelLink(request, token) {
 // PROEF_DAGEN dagen de volledige app. De aanmelding hangt aan een HttpOnly-cookie
 // (alleen de sha256 van het token staat op schijf). Na afloop serveert /v2/app de
 // verlopen-pagina en weigert /api/kaarten nieuwe kaarten voor dat apparaat; de
-// kaarten die patiënten al hebben (/k/<id>) blijven altijd werken.
+// kaarten die patiënten al hebben (/k/<id>) blijven werken tot hun bewaartermijn afloopt.
 // AVG: alleen deze vier velden plus data, geen IP-adres; automatisch gewist
 // PROEF_BEWAAR_DAGEN na afloop (tenzij beheer de aanmelding op "klant" zet), en
 // de aanmelder kan alles zelf wissen. Inzage alleen voor ACCOUNT_BEHEER_EMAILS.
@@ -717,7 +717,7 @@ async function proefRonde() {
       proefMail(p.email, "Je Fysiplan-proef loopt over twee dagen af",
         "Hoi " + p.naam + ",\n\nJe gratis proef van Fysiplan loopt tot en met " + datumNl(p.verloopt) + ".\n" +
         "Wil je daarna doorgaan? Antwoord op deze mail, dan bellen we je om het abonnement af te spreken.\n\n" +
-        "De kaarten die je met patiënten deelde blijven altijd werken.\n\nGroet,\nFysiplan");
+        "De kaarten die je met patiënten deelde blijven werken tot hun bewaartermijn afloopt (zie fysiplan.nl/privacy).\n\nGroet,\nFysiplan");
       proefMeldAhmed("Proef loopt bijna af: " + (p.praktijk || p.naam), p, "Deze proef loopt over twee dagen af. Goed moment om even te bellen.");
     }
   }
@@ -1074,6 +1074,32 @@ async function ruimKaartVideosOp(paden) {
     }
     if (!inGebruik) { try { await unlink(join(dataDir, pad)); } catch {} }
   }
+}
+// Weesopnames: een opname via /o die nooit op een kaart kwam, stond alleen in het
+// geheugen (opnames). Na een herstart (elke deploy) was het token weg en bleef het
+// bestand voor altijd op de schijf, terwijl privacyverklaring en VWO beloven dat
+// video's met de kaart verdwijnen (legal 2026-11-08, art. 5 lid 1 e AVG). Deze ronde
+// kijkt in de map zelf: een v-<token>-bestand zonder lopend token gaat langs
+// ruimKaartVideosOp, die alleen weggooit wat geen kaart of oefening meer gebruikt.
+async function weesOpnamesOpruimen() {
+  let namen = [];
+  try { namen = await readdir(join(uploadsDir, "videos")); } catch { return 0; }
+  const lopend = new Set();
+  for (const [t, o] of opnames) { lopend.add(t); if (o.video) lopend.add(o.video); }
+  const kandidaten = [];
+  for (const f of namen) {
+    const m = f.match(/^v-([a-f0-9]+)\.(mp4|webm)$/);
+    if (!m || lopend.has(m[1])) continue;
+    const pad = "uploads/videos/" + f;
+    if (!lopend.has(pad)) kandidaten.push(pad);
+  }
+  if (!kandidaten.length) return 0;
+  const voor = kandidaten.length;
+  await ruimKaartVideosOp(kandidaten);
+  let over = 0;
+  for (const pad of kandidaten) { try { await stat(join(dataDir, pad)); over++; } catch {} }
+  if (voor - over) videoOpslag.t = 0; // opslagteller opnieuw tellen
+  return voor - over;
 }
 
 // inhoudscontrole voor afbeeldingsuploads: het bestand moet echt een JPEG of PNG zijn,
@@ -1523,7 +1549,7 @@ const eersteBackup = maakBackup();
 setInterval(maakBackup, 24 * 60 * 60 * 1000).unref();
 // bewaartermijn: elke zes uur verlopen kaarten met hun video's opruimen (vindKaart
 // en het overzicht negeren ze al zodra ze verlopen zijn)
-setInterval(() => bewaartermijnOpruimen().catch(() => {}), 6 * 60 * 60 * 1000).unref();
+setInterval(() => bewaartermijnOpruimen().then(() => weesOpnamesOpruimen()).catch(() => {}), 6 * 60 * 60 * 1000).unref();
 
 
 async function saveJson(path, obj) {
@@ -5202,7 +5228,7 @@ async function afhandelen(request, response) {
     if (p) { proefWis(p.id); await bewaarProeven(); }
     response.setHeader("set-cookie", proefCookie("", request));
     await serveerProef(request, response, "bericht", { TITEL: "Gegevens gewist", ETIKET: "Gewist", KOP: "Je gegevens zijn gewist.",
-      TEKST: "We bewaren niets meer van je aanmelding en je proef is gestopt. Kaarten die je met patiënten deelde blijven werken.",
+      TEKST: "We bewaren niets meer van je aanmelding en je proef is gestopt. Kaarten die je met patiënten deelde blijven werken tot hun bewaartermijn afloopt.",
       KNOP_HTML: '<a class="knop omlijnd" href="/v2">Terug naar de site</a>' });
     return;
   }
@@ -5857,6 +5883,8 @@ server.listen(port, host, () => {
   eersteBackup.finally(async () => {
     try { const n = await bewaartermijnOpruimen(); if (n) console.log(`bewaartermijn: ${n} verlopen kaart(en) gewist`); }
     catch (e) { console.error("bewaartermijn:", e && e.message ? e.message : e); }
+    try { const n = await weesOpnamesOpruimen(); if (n) console.log(`opnames: ${n} niet gebruikte opname(s) gewist`); }
+    catch (e) { console.error("opnames:", e && e.message ? e.message : e); }
     try { await oudeKaartveldenWeg(); } catch (e) { console.error("oude kaartvelden:", e && e.message ? e.message : e); }
     try { await vertaalCacheOpschonen(); } catch (e) { console.error("vertaalcache:", e && e.message ? e.message : e); }
   });
