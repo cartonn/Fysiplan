@@ -9,7 +9,7 @@ daaruit tot en met 2026-11-06.
 | Gebied | Laatst geaudit |
 |---|---|
 | (a) beheer-endpoints en de admin-sleutel | 2026-11-08 (runtime: rem op foute sleutels hield raden niet tegen, opgelost; alle beheerroutes eisen `isAdmin`) |
-| (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-07 (deels: team, eigen logins, uitnodiging, herstel na gedeeld-uit; rollen op gedeeld praktijkwerk) |
+| (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-08 04u (claim, inloggen op naam en e-mail, rem per naam/e-mail/praktijk, wachtwoord wijzigen, herstel, uitnodiging, overzicht en /v2/gegevens met e-mail; gedeeld wachtwoord weer aan: opgelost) |
 | (c) proef-tokens en verlopen proeven | 2026-11-07 (statisch: cookie/maillink-tokens alleen als sha256, max 5 per proef, eenmalige maillink 24 u, gewiste proef laat geen tokens achter; team-uitnodigen na verlopen proef: dicht) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-07 (vids-eigendom op POST /api/kaarten) |
 | (e) uploads (video, logo, opname /o) | 2026-11-07 (logo-veeg wiste logo's van andere praktijken: opgelost; opname-upload, eigen oefening, /uploads-pad: geen gat) |
@@ -19,7 +19,18 @@ daaruit tot en met 2026-11-06.
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-07 (te grote body: nu 413, weglezen begrensd op 10 s en 80 MB) |
 | (j) npm audit | 2026-11-07 (sharp 0.35.3 → 0.35.5, daarna 0 meldingen) |
 
-Volgende run: de rest van (b) (claim, inlogrem), daarna (c) proef-tokens runtime.
+Volgende run: (c) proef-tokens runtime, daarna (d) gedeelde kaarten.
+
+Sanity 2026-11-08 04u op #91–#93 (Mijn gegevens-download, offline vinkje per oefening, factuur): `/v2/proef/factuur`
+alleen met de eigen proefcookie, 404 zonder betaling, alle velden via `esc()`, CSP `default-src 'none'`; de
+patiëntroute geeft van het contactlogboek alleen soort en moment van eigen seintjes; het vinkje gebruikt
+`tikMoment` (hooguit 14 dagen terug) en het plafond van 60 oefeningen. Geen gat.
+
+Audit (b) 2026-11-08 04u: claim (rem nieuwe praktijk, 409 op bezette naam, akkoord verplicht), inloggen op naam
+(rem per naam, gedeeld-uit telt niet mee), op e-mail (rem per adres, alleen actieve leden), wachtwoord wijzigen en
+nieuwe herstelcode (sessie + huidig wachtwoord, rem per praktijk), herstel (gedeeld-uit doet niet mee), uitnodiging
+(token sha256, 7 dagen, eenmalig), overzicht na proef en /v2/gegevens met e-mail (rem per naam, wissen alleen
+beheerder). Eén gat, hieronder opgelost; de overige open punten van (b) staan al in Open.
 
 Sanity 2026-11-08 00u op #87–#89 (wissen van de telefoon, offline-wachtrij met `wanneer`, naam wijzigen): `wanneer`
 komt van de patiënt maar wordt begrensd op hooguit 14 dagen terug en nooit in de toekomst (`tikMoment`), per dag
@@ -27,8 +38,9 @@ komt van de patiënt maar wordt begrensd op hooguit 14 dagen terug en nooit in d
 
 Audit (h) en (a) 2026-11-08 00u:
 - **OPGELOST 2026-11-08 (deze PR) — LAAG: rem op de beheersleutel hield raden niet tegen.** Zie onder Open.
-- **LAAG — `/api/kaart/vraag` geeft 502 "even niet bereikbaar" op een kapotte body** (`{`, `null`, geen JSON). De
+- **OPGELOST 2026-11-08 (deze PR) — LAAG — `/api/kaart/vraag` geeft 502 "even niet bereikbaar" op een kapotte body** (`{`, `null`, geen JSON). De
   algemene `catch` vangt de parse-fout. Geen lek (vaste tekst), wel een misleidende status. Fix: parse-fout → 400.
+  Nu: geen JSON of geen object → 400 vóór de kaart wordt gezocht. Test: `npm run test:teamherstel`.
 
 Sanity 2026-11-07 20u op #81–#85 (logo-veeg, printknop, overzicht na proef met eigen login, proefcookie wissen,
 proefaanmelding in download/wissen): overzicht-login met e-mail valt onder dezelfde rem per praktijknaam en eist een
@@ -71,10 +83,12 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
   (server.js r. ~1205–1220). Mark + collega liepen na ±40 gewone handelingen twee keer tegen 429 aan, voor iedereen op
   dat IP, ±5 minuten. Advies: voor geldige praktijksessies per sessie/lid tellen of een hogere grens; de rem voor
   anonieme routes per IP laten. (Bewijs lokaal: probe met x-forwarded-for.)
-- **LAAG — gedeeld praktijkwachtwoord weer aanzetten brengt het oude wachtwoord terug** (sanity PR #65,
+- **OPGELOST 2026-11-08 (deze PR) — LAAG — gedeeld praktijkwachtwoord weer aanzetten brengt het oude wachtwoord terug** (sanity PR #65,
   2026-11-07). `/api/praktijk/team/gedeeld-uit` met `uit:false` zet alleen de vlag terug; het oude
   wachtwoord (en de herstelcode) die een vertrokken collega kende, werken dan meteen weer.
   Fix: bij weer aanzetten een nieuw wachtwoord eisen en een nieuwe herstelcode tonen (raakt de teamkaart in de app).
+  Nu: `uit:false` eist `wachtwoord` (min. 8), zet een nieuwe hash en herstelcode (één keer getoond in de teamkaart)
+  en trekt oude gedeelde sessies in; het oude wachtwoord en de oude code werken niet meer. Test: `npm run test:teamherstel`.
 - **OPGELOST 2026-11-07 (deze PR, dubbel met hierboven) — LAAG — team uitnodigen en eigen login maken werken ook na een verlopen proef** (sanity PR #65).
   `/api/praktijk/team/*` staat niet in `PROEF_SCHRIJFROUTES`. Geen datalek (de proef blijft voor iedereen
   dicht), wel een schrijfroute die open blijft. Fix: `uitnodigen` en `eigen-login` aan de set toevoegen.
