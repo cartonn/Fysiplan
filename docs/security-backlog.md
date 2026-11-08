@@ -8,18 +8,27 @@ daaruit tot en met 2026-11-06.
 
 | Gebied | Laatst geaudit |
 |---|---|
-| (a) beheer-endpoints en de admin-sleutel | 2026-11-06 (deze backlog, PR "security: beheersleutel") |
+| (a) beheer-endpoints en de admin-sleutel | 2026-11-08 (runtime: rem op foute sleutels hield raden niet tegen, opgelost; alle beheerroutes eisen `isAdmin`) |
 | (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-07 (deels: team, eigen logins, uitnodiging, herstel na gedeeld-uit; rollen op gedeeld praktijkwerk) |
 | (c) proef-tokens en verlopen proeven | 2026-11-07 (statisch: cookie/maillink-tokens alleen als sha256, max 5 per proef, eenmalige maillink 24 u, gewiste proef laat geen tokens achter; team-uitnodigen na verlopen proef: dicht) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-07 (vids-eigendom op POST /api/kaarten) |
 | (e) uploads (video, logo, opname /o) | 2026-11-07 (logo-veeg wiste logo's van andere praktijken: opgelost; opname-upload, eigen oefening, /uploads-pad: geen gat) |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-07 (runtime: payloads in alle kaartvelden, /k in nl/en/ar met vertaling, overzicht, sjablonen, eigen oefeningen, serverpagina's; geen gat) |
 | (g) security-headers, CSP, cookies, CSRF | 2026-11-07 (runtime: koppen op 11 V2-pagina's en API, cookies HttpOnly+Lax+Secure, praktijksessie via eigen kop; kruisSite kijkt nu ook naar Origin) |
-| (h) foutmeldingen die stacktraces of paden lekken | 2026-11-06 (runtime-fuzz 60 schrijfroutes, geen lek) |
+| (h) foutmeldingen die stacktraces of paden lekken | 2026-11-08 (runtime-fuzz 103 routes × GET/POST/PUT/DELETE × 7 kapotte bodies × 3 content-types = 6592 verzoeken, plus pad-traversal en kapotte %-codering: geen stacktrace, geen intern pad, geen fout in het serverlog) |
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-07 (te grote body: nu 413, weglezen begrensd op 10 s en 80 MB) |
 | (j) npm audit | 2026-11-07 (sharp 0.35.3 → 0.35.5, daarna 0 meldingen) |
 
-Volgende run: (h) foutmeldingen, daarna de rest van (b) (claim, inlogrem) en (a) beheer.
+Volgende run: de rest van (b) (claim, inlogrem), daarna (c) proef-tokens runtime.
+
+Sanity 2026-11-08 00u op #87–#89 (wissen van de telefoon, offline-wachtrij met `wanneer`, naam wijzigen): `wanneer`
+komt van de patiënt maar wordt begrensd op hooguit 14 dagen terug en nooit in de toekomst (`tikMoment`), per dag
+één waarde, lijsten blijven op 366/120/50 afgekapt; een ouder seintje verdringt geen nieuwer. Geen gat.
+
+Audit (h) en (a) 2026-11-08 00u:
+- **OPGELOST 2026-11-08 (deze PR) — LAAG: rem op de beheersleutel hield raden niet tegen.** Zie onder Open.
+- **LAAG — `/api/kaart/vraag` geeft 502 "even niet bereikbaar" op een kapotte body** (`{`, `null`, geen JSON). De
+  algemene `catch` vangt de parse-fout. Geen lek (vaste tekst), wel een misleidende status. Fix: parse-fout → 400.
 
 Sanity 2026-11-07 20u op #81–#85 (logo-veeg, printknop, overzicht na proef met eigen login, proefcookie wissen,
 proefaanmelding in download/wissen): overzicht-login met e-mail valt onder dezelfde rem per praktijknaam en eist een
@@ -97,12 +106,13 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
   en schrijven 40 per 5 min per IP (server.js `leesLimiet`, schrijfrem) gelden voor de hele praktijk
   incl. auto-delen, en voor patiënten achter CGNAT/sportschool-wifi. De sweep liep er met 4 gebruikers
   binnen minuten tegenaan. Overweeg rem per praktijksessie/kaart-id naast per IP.
-- **LAAG — remteller op de beheersleutel weigert, maar houdt raden niet tegen.**
+- **OPGELOST 2026-11-08 (deze PR) — LAAG — remteller op de beheersleutel weigert, maar houdt raden niet tegen.**
   `denied()` geeft na 20 fouten per 5 minuten een 429, maar `isAdmin()` wordt vóór
   `denied()` gecontroleerd: wie tijdens de 429-periode de juiste sleutel stuurt,
   komt er gewoon in. Met een lange willekeurige `ADMIN_KEY` praktisch onschadelijk.
   Repro: 25× fout via `x-admin-sleutel`, dan de juiste sleutel → 200.
-  Fix: in de beheerroutes eerst de IP-rem controleren, dan pas de sleutel.
+  Fix: in de beheerroutes eerst de IP-rem controleren, dan pas de sleutel. Nu: `isAdmin()` weigert elke sleutel
+  van een IP dat op de rem staat (`beheerOpRem`); andere IP's merken niets. Test: `npm run test:beheer`.
 - **LAAG — beheer is één gedeelde sleutel, geen account.** Geen audit wie wat
   wijzigde, geen intrekken per persoon. Toegangsbeheer (`ACCOUNT_BEHEER_EMAILS`)
   laat zien hoe het wel kan; overstappen kan later per beheerroute.

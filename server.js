@@ -105,9 +105,12 @@ const STREAM_ENABLED = !!(STREAM_ACCOUNT_ID && STREAM_API_TOKEN);
 // tegen een lokale mock te testen is; in productie blijft dit api.cloudflare.com
 const STREAM_API_BASIS = String(process.env.STREAM_API_BASIS || "https://api.cloudflare.com");
 // constant-time vergelijking: het antwoordtempo verraadt niets over de sleutel
+// Een IP dat op de rem van `denied()` staat (te veel foute sleutels), komt ook met de
+// juiste sleutel niet binnen tot de rem afloopt: anders houdt de rem het raden niet tegen.
 const isAdmin = (req) => {
   const a = Buffer.from(String(req.headers["x-admin-sleutel"] || ""));
   if (!ADMIN_KEY) return false;
+  if (a.length && beheerOpRem(req)) return false;
   const b = Buffer.from(ADMIN_KEY);
   return a.length === b.length && timingSafeEqual(a, b);
 };
@@ -1865,6 +1868,11 @@ function statsEventLimiet(req, res) {
 // per IP volgt 429 in plaats van 403. Met de juiste sleutel verandert er niets, ook
 // niet voor v1-beheer; alleen wie sleutels zit te proberen loopt vast.
 const adminMisTeller = new Map();
+const BEHEER_REM_MS = 5 * 60 * 1000;
+function beheerOpRem(req) {
+  const t = adminMisTeller.get(ipSleutel(req));
+  return !!(t && Date.now() - t.start <= BEHEER_REM_MS && t.n > 20);
+}
 const denied = (req, res, pad, melding = "Alleen beschikbaar voor beheer.") => {
   logGeweigerd(req, pad);
   const nu = Date.now();
