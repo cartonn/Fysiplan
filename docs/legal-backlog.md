@@ -23,11 +23,11 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
-- **LAAG — /k "Mijn gegevens"-download alleen in nl en en** (2026-11-08). OPGELOST 2026-11-08 PR #<nr>: `TMGD` in alle 9 talen,
+- **LAAG — /k "Mijn gegevens"-download alleen in nl en en** (2026-11-08). OPGELOST 2026-11-08 PR #103: `TMGD` in alle 9 talen,
   datums in de kaarttaal, test in `scripts/test-mijn-gegevens.mjs`.
 - **LAAG — /privacy#opslag miste twee patiëntvoorkeuren** (2026-11-08 13u). `fp_app_weg` (melding "zet de kaart op je
   beginscherm" weggeklikt) en `fp_demo_geluid` (geluid bij de bewegingsdemo) stonden niet in de tabel; beide functioneel
-  (art. 11.7a lid 3 Tw), dus geen toestemming nodig, wel uitleg. OPGELOST 2026-11-08 PR #<nr>, `PRIVACY_VERSIE` 2026-11-08.
+  (art. 11.7a lid 3 Tw), dus geen toestemming nodig, wel uitleg. OPGELOST 2026-11-08 PR #103, `PRIVACY_VERSIE` 2026-11-08.
   Gecontroleerd zonder gat: subverwerkers (Cloudflare Stream-upload is alleen beheer/bibliotheek, geen praktijkdata),
   sessionStorage alleen voor de beheersleutel in het tabblad.
 - **LAAG — Privacy-link op een Engelse/Arabische kaart opent een pagina die alleen Nederlands is** en niet het
