@@ -1,0 +1,17 @@
+# Physitrack-controle voorbeeldset (8 lijntekeningen)
+
+Datum: 2026-11-08. Elke tekening is lokaal vergeleken met de beginhouding en uitleg op de openbare Physitrack-pagina. Er is niets van Physitrack opgeslagen of aan Runway gegeven.
+Vier tekeningen zijn één keer opnieuw gemaakt met een scherpere prompt (`extra_en` in `specs/spec-voorbeeld.json`): sleeper stretch, zijplank op knieën, Spanish squat en Copenhagen. De beoordeling hieronder geldt voor de versie die nu in `voorbeeld/` staat.
+
+| # | Tekening | Physitrack-pagina | Houding | Pijl | Opmerking |
+|---|----------|-------------------|---------|------|-----------|
+| 1 | sleeper-stretch-zijlig (herkansing) | us · sleeper-stretch | ok (licht afwijkend) | ok | Ligt op de aangedane zij met het hoofd op een kussen, bovenarm naar voren en onderarm omhoog. Bij Physitrack staat de onderarm duidelijker verticaal en verder van het gezicht. De eerste versie (arm boven het hoofd) was fout. |
+| 2 | borstrek-deuropening-staand | us · pectoralis-stretching | afwijkend | ok | Volgens Physitrack ligt de elleboog op schouderhoogte met de onderarm verticaal tegen de deurpost. In de tekening staat de hand op de post maar hangt de elleboog lager dan de schouder. De pas naar voren en de pijl naar voren kloppen. Nog niet opnieuw gemaakt (creditgrens). |
+| 3 | zijplank-op-knieen (herkansing) | uk · side-plank-on-knees---version-2 | licht afwijkend | ok | Steunt op de onderarm, heup op de mat, hand op de heup. De knieën zijn maar licht gebogen; bij Physitrack zijn ze duidelijk gebogen (ca. 90°). De pijl wijst bij de heup omhoog. |
+| 4 | bekken-heffen-op-trede | us · pelvic-drop | afwijkend | ok | Bij Physitrack hangt het vrije been gestrekt naast de trede, zonder buiging in heup of knie. In de tekening is de knie van het vrije been gebogen en staat de voet naar achteren. De opstap en de hand tegen de muur kloppen. Physitrack begint met het bekken recht en laat het eerst zakken; onze spec begint gezakt en tekent het heffen. |
+| 5 | spanish-squat-met-band (herkansing) | ca · spanish-squat-%2528quadriceps%2529 | ok | ok | De paal staat vóór de persoon en de band zit achter de knieën, zoals Physitrack beschrijft. De pijl wijst achter de billen naar achteren en omlaag. De eerste versie (paal achter, pijl voor) was fout. |
+| 6 | copenhagen-adductie-korte-hefboom (herkansing) | us · short-lever-copenhagen-hold-with-lower-leg-hip-adduction | fout | ok | Bij Physitrack liggen de knie en het onderbeen van het bovenste been op de stoel/bank. In beide versies ligt alleen de voet op de bank (lange hefboom). Ook verschilt de variant: Physitrack begint met de heup al omhoog en beweegt het onderste been, onze spec tekent het heffen van de heup. Moet opnieuw, of bijtekenen. |
+| 7 | zenuwglijden-zittend-heupzenuw | ie · sciatic-nerve-glide-in-seated-position | afwijkend van Physitrack, ok volgens onze spec | ok | Physitrack zit op een bank met één been gestrekt en laat de rug bol zakken (slump). Onze spec volgt een andere variant (stoel, knie strekken en hoofd omhoog). De tekening komt overeen met onze spec. Kiezen welke variant we willen. |
+| 8 | voetzool-rekken-zittend | nz · plantar-fascia-stretch | ok | ok | Enkel over de andere knie, hand trekt de tenen terug. Zoals Physitrack. |
+
+Samenvatting: 4 ok (1, 5, 8, en 7 volgens onze eigen spec), 2 licht afwijkend (2, 3), 1 afwijkend (4) en 1 fout (6). Alle pijlen zitten vast aan het bewegende lichaamsdeel en wijzen de goede kant op.
