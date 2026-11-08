@@ -260,6 +260,10 @@ try {
   assert.ok(vwo.includes("Versie " + vwoDatum), "verwerkersovereenkomst toont haar eigen versie (" + vwoDatum + ")");
   assert.match(vwo, /subverwerker/i);
   assert.match(vwo, /48 uur/);
+  // B1 (legal 2026-11-08): samenvatting bovenaan, en net als de voorwaarden gemarkeerd als concept
+  assert.match(vwo, /In het kort[\s\S]*binnen 48 uur[\s\S]*De artikelen hieronder gelden/);
+  assert.match(vwo, /class="concept"><b>Concept\.<\/b>/);
+  assert.match(vwo, /na 90 dagen zonder gebruik/);
   // algemene voorwaarden (concept): proef en abonnement, beoogd gebruik, geen dossier,
   // stoppen sluit aan op de verwerkersovereenkomst, en zakelijke keuzes als invulplek
   const av = await (await fetch(origin + "/voorwaarden")).text();
@@ -270,6 +274,7 @@ try {
   assert.match(av, /geen dossier|vervangt je dossier niet/i);
   assert.match(av, /binnen 30 dagen/);
   assert.match(av, /class="invul"/);
+  assert.match(av, /In het kort[\s\S]*14 dagen, is gratis[\s\S]*De artikelen hieronder gelden/);
   assert.match(av, /href="\/verwerkersovereenkomst"/);
   assert.doesNotMatch(av, /juridisch advies|kaartvoorstel|startdosering/i);
   assert.equal((await fetch(origin + "/voorwaarden/", { redirect: "manual" })).status, 301);

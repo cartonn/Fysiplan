@@ -5608,7 +5608,8 @@ async function afhandelen(request, response) {
       TEKST: aantalKaarten + (aantalKaarten === 1 ? " kaart" : " kaarten") + ", je eigen oefeningen, sjablonen, praktijkgegevens, wachtwoord, " +
         (proefUitkomst === "gewist" ? "proefaanmelding " : "") + "en logboek zijn van de server. " +
         (proefUitkomst === "betaling" ? "Van je betaling bewaren we alleen naam, e-mail, praktijknaam en de betaalgegevens, 7 jaar, omdat de wet dat vraagt. " : "") +
-        "In de dagelijkse reservekopie staat het nog hooguit 7 dagen. De praktijknaam is weer vrij.",
+        "In de dagelijkse reservekopie staat het nog hooguit 7 dagen. De praktijknaam is weer vrij. " +
+        "In de browser van je eigen computer staan nog namen en kaarten: wis die in de app bij Kaarten met \u201cWis Fysiplan van dit apparaat\u201d.",
       KNOP_HTML: '<a class="knop omlijnd" href="/v2">Naar de site</a>' });
     return;
   }
