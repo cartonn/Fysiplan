@@ -29,7 +29,7 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
   label liet de kaart "bijgewerkt in het dossier" lijken, dus de bewaartermijn waarschuwde niet. De dossiertekst
   noemde het laatste opslaan "Aangemaakt" (ook in de CSV-kop), een onjuiste datum in het dossier.
   Bron: art. 7:454 BW (dossierplicht); KNGF-richtlijn Fysiotherapeutische verslaglegging.
-  OPGELOST 2026-11-08 PR #<nr>: `laatsteDossierInvoer` (server.js) telt ook praktijkberichten en `notitieT`;
+  OPGELOST 2026-11-08 PR #110: `laatsteDossierInvoer` (server.js) telt ook praktijkberichten en `notitieT`;
   dossiertekst neemt de werknotitie mee; "Kaart laatst opgeslagen" en CSV-kop "Laatst opgeslagen"; /privacy noemt
   berichten en werknotitie bij de praktijkgegevens. Test in `scripts/test-dossier-contact.mjs` (faalt zonder fix).
   Gecontroleerd zonder gat: app en landing noemen Fysiplan overal "geen dossier" (/privacy, voorwaarden, VWO,
