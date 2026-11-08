@@ -63,12 +63,12 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 ## Opgelost
 
 - **MIDDEL — verwerkersovereenkomst en voorwaarden zonder samenvatting, VWO niet als concept gemarkeerd.**
-  OPGELOST 2026-11-08 PR #__PR__: beide hebben bovenaan "In het kort" (B1, vijf zinnen, "De artikelen hieronder
+  OPGELOST 2026-11-08 PR #100: beide hebben bovenaan "In het kort" (B1, vijf zinnen, "De artikelen hieronder
   gelden"); de VWO draagt nu ook het label "Concept" zoals de voorwaarden. Geen inhoudelijke wijziging, dus
   `VWO_VERSIE` en `AV_VERSIE` blijven gelijk en er is geen nieuw akkoord nodig. Bron: AVG art. 12 lid 1 (beknopt,
   begrijpelijk, duidelijke taal); AP, "Verwerkersovereenkomst" (autoriteitpersoonsgegevens.nl). Test in
   `scripts/test-privacy.mjs`.
-- **LAAG — /v2/gegevens liep achter op #84.** OPGELOST 2026-11-08 PR #__PR__: "Alles wissen" noemt de
+- **LAAG — /v2/gegevens liep achter op #84.** OPGELOST 2026-11-08 PR #100: "Alles wissen" noemt de
   proefaanmelding, de voetregel zegt dat Mijn proef alleen de aanmelding wist, en pagina én bevestiging na wissen
   wijzen naar "Wis Fysiplan van dit apparaat" voor wat nog in de browser staat. Test in `scripts/test-praktijkgegevens.mjs`.
 
