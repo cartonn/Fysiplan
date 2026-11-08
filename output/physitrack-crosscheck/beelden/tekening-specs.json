@@ -28,8 +28,9 @@
   "slug": "tandemstand-met-steun",
   "ref": "001",
   "no_arrow": true,
-  "pose_en": "Strict side view, the chair seen from the side. Static balance stance: one woman stands upright directly BEHIND a simple sturdy chair, facing the chair backrest, both hands resting lightly on the top of the backrest in front of her. Her feet are in ONE straight line pointing forward: the front foot is placed directly in front of the back foot so the HEEL of the front foot touches the TOES of the back foot (heel-to-toe tandem stance, like standing on a tightrope); both feet fully visible, one clearly in front of the other, no gap. Trunk upright, looking forward. There is NO arrow anywhere in the image. NOT feet side by side, NOT a split or lunge stance.",
-  "pose_en_r1": "Side view. Static balance stance: one woman stands upright directly behind a simple sturdy chair, both hands resting lightly on the top of the chair backrest. Her feet are placed in one straight line, one foot directly in front of the other so that the heel of the front foot touches the toes of the back foot (heel-to-toe tandem stance). Trunk upright, looking forward. There is NO arrow anywhere in the image. Feet clearly heel to toe, NOT a split or lunge stance."
+  "pose_en": "Strict side view, exactly like the feet in the reference: one woman stands upright with her feet in ONE line, the front foot directly in front of the back foot, the HEEL of the front foot touching the TOES of the back foot. A simple sturdy chair stands directly IN FRONT of her (on the side she faces), its backrest facing her, and both her hands rest lightly on the top of the backrest. Trunk upright, looking forward. There is NO arrow anywhere in the image, no floor line.",
+  "pose_en_r1": "Side view. Static balance stance: one woman stands upright directly behind a simple sturdy chair, both hands resting lightly on the top of the chair backrest. Her feet are placed in one straight line, one foot directly in front of the other so that the heel of the front foot touches the toes of the back foot (heel-to-toe tandem stance). Trunk upright, looking forward. There is NO arrow anywhere in the image. Feet clearly heel to toe, NOT a split or lunge stance.",
+  "ref_path": "refs/tandemgang.png"
  },
  {
   "nr": 444,
@@ -47,8 +48,9 @@
   "nr": 464,
   "slug": "blikstabilisatie-horizontaal-staand-langzaam",
   "ref": "001",
-  "pose_en": "Strict side view (profile) of one woman standing upright, feet hip-width apart. One arm is stretched straight FORWARD from the shoulder at eye level, elbow straight, fist closed with the thumb pointing up, the thumb at arm's length directly in front of her eyes; she looks at the thumb. The other arm hangs relaxed. One short solid black curved double-headed arrow just above the top of the head, showing the head turning slowly left and right while the thumb stays still. The arm points straight forward at arm's length, NOT bent, NOT across the face, NOT to the side.",
-  "pose_en_r1": "Three-quarter front view of one woman standing upright, feet hip-width apart. One arm is stretched straight forward in front of her face at eye level with the thumb pointing up, the thumb directly in front of her nose; her eyes look at the thumb. The other arm hangs relaxed. One short solid black curved double-headed arrow just above the head, from side to side, showing the head turning slowly left and right while the thumb stays still in front. The arm points straight FORWARD, NOT out to the side."
+  "pose_en": "Same viewing angle and arm position as the reference, but STANDING upright, feet hip-width apart. One arm is stretched straight forward in front of her face at eye level, elbow straight, fist with the thumb pointing up, the thumb at arm's length directly in front of her nose; she looks at the thumb. The other arm hangs relaxed. One short solid black curved double-headed arrow just above the top of the head, showing the head turning slowly left and right while the thumb stays still. No card, no letters.",
+  "pose_en_r1": "Three-quarter front view of one woman standing upright, feet hip-width apart. One arm is stretched straight forward in front of her face at eye level with the thumb pointing up, the thumb directly in front of her nose; her eyes look at the thumb. The other arm hangs relaxed. One short solid black curved double-headed arrow just above the head, from side to side, showing the head turning slowly left and right while the thumb stays still in front. The arm points straight FORWARD, NOT out to the side.",
+  "ref_path": "refs/blikstabilisatie-zittend.png"
  },
  {
   "nr": 514,

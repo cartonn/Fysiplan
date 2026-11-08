@@ -44,7 +44,7 @@ if (cmd === "gen") {
     if (existsSync(file)) { console.log(`bestaat al ${file}`); continue; }
     const saldo = (await rw.organization.retrieve()).creditBalance;
     if (saldo < MIN_SALDO) { console.log(`STOP: saldo ${saldo} < ${MIN_SALDO}`); break; }
-    const ref = `data:image/webp;base64,${(await readFile(join(root, "public/images/beginhouding-pijl-v1", `${s.ref}.webp`))).toString("base64")}`;
+    const ref = s.ref_path ? `data:image/png;base64,${(await readFile(join(dir, s.ref_path))).toString("base64")}` : `data:image/webp;base64,${(await readFile(join(root, "public/images/beginhouding-pijl-v1", `${s.ref}.webp`))).toString("base64")}`;
     const style = s.no_arrow ? STYLE.replace(/, and exactly ONE solid black arrow[^.]*\./, ". This is a STATIC stance: draw NO arrow at all.") : STYLE;
     try {
       const task = await rw.textToImage.create({
@@ -63,10 +63,10 @@ if (cmd === "gen") {
   // per oefening: oud | nieuw (laatste herkansing als die er is)
   const W = 300, H = 450, LAB = 44, rows = [];
   for (const s of specs) {
-    const r2 = join(out, `${s.nr}-${s.slug}-r2.png`), r1 = join(out, `${s.nr}-${s.slug}.png`);
+    const r3 = join(out, `${s.nr}-${s.slug}-r3.png`), r2 = existsSync(r3) ? r3 : join(out, `${s.nr}-${s.slug}-r2.png`), r1 = join(out, `${s.nr}-${s.slug}.png`);
     const nieuw = existsSync(r2) ? r2 : existsSync(r1) ? r1 : null;
     if (!nieuw) continue;
-    rows.push({ s, oud: join(root, "public", cat[s.nr].img), nieuw, tag: nieuw === r2 ? "nieuw (r2)" : "nieuw" });
+    rows.push({ s, oud: join(root, "public", cat[s.nr].img), nieuw, tag: nieuw === r1 ? "nieuw" : `nieuw (${nieuw.slice(-6, -4)})` });
   }
   const COLS = 4, cells = rows.length * 2, nrows = Math.max(1, Math.ceil(cells / COLS));
   const esc = (t) => t.replaceAll("&", "&amp;").replaceAll("<", "&lt;");

@@ -15,7 +15,7 @@ const dir = resolve(new URL("./", import.meta.url).pathname);
 const root = resolve(dir, "../../../");
 const out = join(dir, "avatars");
 const MIN_SALDO = Number(process.env.MIN_SALDO || 150);
-const specs = JSON.parse(readFileSync(join(dir, "avatar-specs.json"), "utf8"));
+const specs = JSON.parse(readFileSync(join(dir, process.env.SPECS || "avatar-specs.json"), "utf8"));
 const cat = JSON.parse(readFileSync(join(root, "public/oefeningen-v2.json"), "utf8"));
 const tekSpecs = JSON.parse(readFileSync(join(dir, "tekening-specs.json"), "utf8"));
 
@@ -89,6 +89,6 @@ if (cmd === "gen") {
     tiles.push({ input: Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${LAB}"><text x="6" y="18" font-family="Arial" font-size="13" font-weight="bold">${r.a.nr} ${esc(cat[r.a.nr].naam).slice(0, 30)}</text><text x="6" y="36" font-family="Arial" font-size="12">${t}</text></svg>`), left: x, top: y + H });
   }
   await sharp({ create: { width: COLS * W, height: Math.max(1, Math.ceil(k / COLS)) * (H + LAB), channels: 3, background: "#ffffff" } })
-    .composite(tiles).png().toFile(join(out, "_contactvel-avatars-voorbeeld.png"));
+    .composite(tiles).png().toFile(join(out, process.env.SHEET || "_contactvel-avatars-voorbeeld.png"));
   console.log(`contactvel: ${rows.length} oefeningen`);
 }
