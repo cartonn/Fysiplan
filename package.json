@@ -47,6 +47,7 @@
     "test:praktijkslot": "node scripts/test-kaarten-praktijkslot.mjs",
     "test:tezwaar": "node scripts/test-kaart-tezwaar.mjs",
     "test:opname-eigen": "node scripts/test-opname-eigen.mjs",
+    "test:videoquotum": "node scripts/test-video-quotum.mjs",
     "test:kaartversie": "node scripts/test-kaart-versie.mjs",
     "test:hernoem": "node scripts/test-kaart-hernoem.mjs",
     "test:topbar": "node scripts/test-topbar-mobiel.mjs",
