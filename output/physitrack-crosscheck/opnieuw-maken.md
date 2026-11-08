@@ -1,16 +1,17 @@
 # Opnieuw maken na Physitrack-crosscheck
 
-Stand: 400 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oordeel `afwijkend` of `fout`). De lijntekening wint bij conflict; een avatar of video die afwijkt wordt opnieuw gemaakt nadat de tekening klopt.
+Stand: 446 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oordeel `afwijkend` of `fout`). De lijntekening wint bij conflict; een avatar of video die afwijkt wordt opnieuw gemaakt nadat de tekening klopt.
 
 ## Bekend vooraf
 
 - **600 One leg standing / 601 Standing chair shoulder rotations**: gemeld als 'elkaars tekening en avatar'. Gecontroleerd op origin/main (8 nov): de BESTANDSNAMEN zijn verwisseld (600 wijst naar standing-chair-shoulder-rotations-*, 601 naar one-leg-standing-*), maar de beelden zelf horen nu wel bij de juiste oefening. De tekeningen kloppen dus. Wel opnieuw: avatar 601 (staat op één been met het andere opgetrokken; moet op twee benen staan met de armen in goalpost-houding). Aanrader: bestanden hernoemen zodat naam en inhoud gelijk zijn (zelfde situatie bij 597/599 hip extension / knee lift).
 
-## Tekeningen (7)
+## Tekeningen (9)
 
 ### Balans en valpreventie
 
 - **424 Tandemstand – met steun** (afwijkend): Tekening toont een stapstand (voeten ver uit elkaar, pijl van achterste voet naar voren) in plaats van hak-tegen-tenen. Opnieuw tekenen met voeten op één lijn, hak tegen tenen, hand op stoelleuning. Geen avatar.
+- **444 Draaien op de plaats – met steun** (afwijkend): Physitrack 360-gradendraai is zonder steun, in beide richtingen. Met beide handen op een stoelleuning kun je geen heel rondje draaien; tekening (twee handen op leuning, cirkel om stoel heen) opnieuw maken met steun aan één kant, bijv. aanrecht. Avatar: geen avatar (kaartImg ontbreekt), dus niet beoordeeld.
 
 ### Core
 
@@ -32,6 +33,10 @@ Stand: 400 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oor
 ### Standing Chair
 
 - **596 Standing chair abductie** (afwijkend): Tekening en avatar tonen het been schuin naar achteren (deels heupextensie), niet recht zijwaarts. Physitrack: gestrekt been recht opzij, romp stil. Tekening en avatar opnieuw met been zuiver zijwaarts.
+
+### Vestibulair
+
+- **464 Blikstabilisatie horizontaal – staand langzaam** (afwijkend): Tekening toont duim zijwaarts uitgestrekt; volgens Physitrack (en uitleg) moet de duim recht vóór je op ooghoogte zijn. Tekening aanpassen. Avatar: geen avatar (kaartImg ontbreekt), dus niet beoordeeld.
 
 ## Avatars (83)
 
