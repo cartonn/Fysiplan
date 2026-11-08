@@ -31,7 +31,7 @@ Referenties: lijntekening + een goedgekeurde avatar-v7 als stijlvoorbeeld (de fo
 ## Overige avatars (ronde 2), contactvellen per groep: avatars/_contactvel-<groep>.png (lijntekening | oud | nieuw)
 
 Gemaakt: 76 van 79 (plus de 8 van de voorbeeldset = 84). Beoordeeld op contactvel-resolutie tegen lijntekening en uitleg.
-- Goed: 68.
+- Goed: 67.
 - Nog afwijkend:
   - 376 Nek buigen – liggend ondersteund: hoofd blijft op het kussen; de head lift (hoofd net los, kin naar borst) is niet zichtbaar.
   - 55 Jefferson squat: niet duidelijk wijdbeens over de stang; lijkt een gewone deadlift.
