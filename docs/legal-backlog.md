@@ -16,9 +16,9 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (f) cookies en lokale opslag | 2026-11-07 (Google Fonts weg, fp1, wis-knoppen) |
 | (g) MDR en AI-verordening | 2026-11-07 (vraaghulp op de kaart, zoekhulp, vertalen, AI-labels, landing en app) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-07 (contactlogboek in de dossiertekst) |
-| (i) begrijpelijkheid (B1) | 2026-11-07 (privacyverklaring: "In het kort"; VWO en voorwaarden nog niet) |
+| (i) begrijpelijkheid (B1) | 2026-11-08 09u (VWO en voorwaarden: "In het kort", VWO als concept gemarkeerd; /v2/gegevens-tekst) |
 
-Volgende run: (i) B1 voor VWO en voorwaarden, daarna (f) cookies en lokale opslag.
+Volgende run: (f) cookies en lokale opslag, daarna (a) privacyverklaring en (b) subverwerkerslijst.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
@@ -28,9 +28,6 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
   `public/kaart.html` naar de, fr, es, pl, tr, ar, uk is een volgende stap (zelfde stijl als `TMG`).
 - **LAAG — Privacy-link op een Engelse/Arabische kaart opent een pagina die alleen Nederlands is** en niet het
   patiëntdeel `#patient` (sweep 18u, Jayden, Pixel 7). kaart.html r. ~473, ~599; server.js `juridischBlok`.
-- **LAAG — /v2/gegevens loopt achter op #84** (sweep 18u, Sanne). Blok "Alles wissen" noemt de proefaanmelding niet
-  (public/proef.html r. ~252), onderaan staat nog "wis je via Mijn proef" (r. ~261); na wissen geen verwijzing naar
-  "Wis Fysiplan van dit apparaat" terwijl roepnaam en praktijknaam nog in de browser staan.
 
 - **LAAG — praktijk kan de vraaghulp op de kaart niet zelf uitzetten (2026-11-07).** Staat
   `ANTHROPIC_API_KEY` aan, dan ziet elke patiënt de vraaghulp. De praktijk is
@@ -64,6 +61,16 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
   en houdt 7 dagen, zoals de teksten zeggen. Dagstatistieken 120 dagen, anoniem.
 
 ## Opgelost
+
+- **MIDDEL — verwerkersovereenkomst en voorwaarden zonder samenvatting, VWO niet als concept gemarkeerd.**
+  OPGELOST 2026-11-08 PR #__PR__: beide hebben bovenaan "In het kort" (B1, vijf zinnen, "De artikelen hieronder
+  gelden"); de VWO draagt nu ook het label "Concept" zoals de voorwaarden. Geen inhoudelijke wijziging, dus
+  `VWO_VERSIE` en `AV_VERSIE` blijven gelijk en er is geen nieuw akkoord nodig. Bron: AVG art. 12 lid 1 (beknopt,
+  begrijpelijk, duidelijke taal); AP, "Verwerkersovereenkomst" (autoriteitpersoonsgegevens.nl). Test in
+  `scripts/test-privacy.mjs`.
+- **LAAG — /v2/gegevens liep achter op #84.** OPGELOST 2026-11-08 PR #__PR__: "Alles wissen" noemt de
+  proefaanmelding, de voetregel zegt dat Mijn proef alleen de aanmelding wist, en pagina én bevestiging na wissen
+  wijzen naar "Wis Fysiplan van dit apparaat" voor wat nog in de browser staat. Test in `scripts/test-praktijkgegevens.mjs`.
 
 - **MIDDEL — opnames via /o bleven na een herstart voor altijd op de schijf.** OPGELOST 2026-11-08 PR #95:
   het opnametoken stond alleen in het geheugen; kwam een opname niet op een kaart en herstartte de server (elke

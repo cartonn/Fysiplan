@@ -87,6 +87,10 @@ try {
   assert.match(html, /action="\/v2\/gegevens\/download"/);
   assert.match(html, /action="\/v2\/gegevens\/wissen"/);
   assert.doesNotMatch(html, /__[A-Z_]+__/, "geen open plekken in de pagina");
+  // legal 2026-11-08: de tekst loopt gelijk met wat "Alles wissen" echt doet (sinds #84 ook de proefaanmelding)
+  assert.match(html, /Alles wissen<\/h2>[\s\S]*?je proefaanmelding[\s\S]*?<form/);
+  assert.doesNotMatch(html, /Je proefaanmelding \(naam, e-mail, telefoon\) wis je via/);
+  assert.match(html, /Wis Fysiplan van dit apparaat/);
   for (const pad of ["/privacy", "/verwerkersovereenkomst", "/voorwaarden"]) {
     assert.match(await (await fetch(origin + pad)).text(), /href="\/v2\/gegevens"/, pad + " linkt naar de gegevenspagina");
   }
@@ -131,7 +135,10 @@ try {
   // ---- alles wissen ----
   const wis = await formulier("/v2/gegevens/wissen", { praktijk: "Fysio Wis", wachtwoord: "wis-wachtwoord-1", zeker: "wissen" });
   assert.equal(wis.status, 200);
-  assert.match(await wis.text(), /Alles van je praktijk is gewist[\s\S]*2 kaarten/);
+  const wisTekst = await wis.text();
+  assert.match(wisTekst, /Alles van je praktijk is gewist[\s\S]*2 kaarten/);
+  // legal 2026-11-08: na wissen staan namen nog in de browser; wijs de weg naar het apparaat-wissen
+  assert.match(wisTekst, /Wis Fysiplan van dit apparaat/);
   assert.equal((await leesJson("kaarten.json"))["fysio wis"], undefined, "kaarten weg");
   assert.equal((await fetch(origin + "/api/kaart?id=aaaaaaaaaaa1", { headers: { "x-forwarded-for": nieuwIp() } })).status, 404, "patiëntlink werkt niet meer");
   assert.equal((await leesJson("praktijk-oefeningen.json"))["fysio wis"], undefined, "eigen oefeningen weg");
