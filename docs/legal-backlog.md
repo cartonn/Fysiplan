@@ -11,14 +11,14 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (a) privacyverklaring (art. 13/14 AVG) | 2026-11-07 (team, akkoord, Mijn gegevens, Railway-logs) |
 | (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-07 (eigen login per therapeut, één akkoord) |
 | (c) algemene voorwaarden | 2026-11-07 (akkoord met versie, eigen login) |
-| (d) code tegen tekst | 2026-11-07 (Mollie/betalen), steekproef 2026-11-06 |
+| (d) code tegen tekst | 2026-11-08 05u (wissen van opnames, eigen video's, logs, reservekopie; mails/FAQ over gedeelde kaarten) |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-08 01u (patiënt: Mijn gegevens-download leesbaar met eigen seintjes, PR #91) |
 | (f) cookies en lokale opslag | 2026-11-07 (Google Fonts weg, fp1, wis-knoppen) |
 | (g) MDR en AI-verordening | 2026-11-07 (vraaghulp op de kaart, zoekhulp, vertalen, AI-labels, landing en app) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-07 (contactlogboek in de dossiertekst) |
 | (i) begrijpelijkheid (B1) | 2026-11-07 (privacyverklaring: "In het kort"; VWO en voorwaarden nog niet) |
 
-Volgende run: (d) code tegen tekst (wissen van opnames, eigen video's, logs), daarna (i) B1 voor VWO en voorwaarden.
+Volgende run: (i) B1 voor VWO en voorwaarden, daarna (f) cookies en lokale opslag.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
@@ -57,10 +57,22 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
   er geen bewijs van eigenaarschap. Zo'n praktijk kan geen kaarten delen (wachtwoordplicht sinds
   PR #40), dus er staan geen patiëntgegevens op de server; losse sjablonen/profiel via e-mail.
 - **LAAG — steekproef (d), 2026-11-06:** avatarvideo's uit PR #42 staan op de eigen server
-  (geen nieuwe derde partij), dus de subverwerkerslijst klopt nog. Volledige controle (d) van
-  wissen van opnames, eigen video's en logs volgt in een latere run.
+  (geen nieuwe derde partij), dus de subverwerkerslijst klopt nog. Volledige controle (d) gedaan op 2026-11-08.
+- **LAAG — controle (d) 2026-11-08, zonder gat:** een verlopen kaart neemt zijn opnames mee (`bewaartermijnOpruimen`
+  → `ruimKaartVideosOp`), ook bij Verwijderen, opnieuw opslaan en "Alles wissen" op /v2/gegevens. Het praktijklogboek
+  houdt de laatste 500 regels met gemaskeerd IP en zonder kaartlink; de reservekopie bevat alleen JSON (geen video's)
+  en houdt 7 dagen, zoals de teksten zeggen. Dagstatistieken 120 dagen, anoniem.
 
 ## Opgelost
+
+- **MIDDEL — opnames via /o bleven na een herstart voor altijd op de schijf.** OPGELOST 2026-11-08 PR #95:
+  het opnametoken stond alleen in het geheugen; kwam een opname niet op een kaart en herstartte de server (elke
+  deploy) binnen 15 minuten, dan ruimde niets het bestand nog op. Privacyverklaring en VWO art. 10 beloven dat video's
+  met de kaart verdwijnen. Nu ruimt `weesOpnamesOpruimen` bij de start en elke 6 uur elk `v-<token>`-bestand op dat
+  geen lopend token, kaart of oefening meer gebruikt. Bron: AVG art. 5 lid 1 onder e (opslagbeperking).
+  Test `scripts/test-wees-opnames.mjs`.
+- **LAAG — proefmail en FAQ beloofden dat gedeelde kaarten "altijd" blijven werken.** OPGELOST 2026-11-08 PR #95:
+  herinneringsmail, wis-bevestiging en de FAQ op /v2 zeggen nu "tot hun bewaartermijn afloopt", gelijk aan /privacy.
 
 - **MIDDEL — /k "Mijn gegevens": download mist de seintjes en is onleesbaar.** OPGELOST 2026-11-08 PR #91:
   tekstbestand `fysiplan-mijn-gegevens.txt` met kopjes (nl, anders en), datums, oefeningen met dosering, eigen
