@@ -14,7 +14,7 @@ const html = await readFile(join(process.cwd(), "public/kaart.html"), "utf8");
 const blok = html.match(/\/\/ <mgTekst>([\s\S]*?)\/\/ <\/mgTekst>/);
 assert.ok(blok, "mgTekst staat tussen de markeringen");
 const ctx = {};
-vm.runInNewContext(blok[1] + ";this.mgTekst=mgTekst;this.TMGD=TMGD;", ctx);
+vm.runInNewContext(blok[1] + ";this.mgTekst=mgTekst;this.TMGD=TMGD;this.mgTrouwTik=mgTrouwTik;this.mgSeintjeErbij=mgSeintjeErbij;", ctx);
 assert.deepEqual(Object.keys(ctx.TMGD.nl).sort(), Object.keys(ctx.TMGD.en).sort(), "nl en en hebben dezelfde teksten");
 
 const T = Date.UTC(2026, 10, 3, 9, 30);
@@ -75,4 +75,31 @@ assert.doesNotMatch(leeg, /undefined|NaN/);
 // de pagina gebruikt mgTekst voor de download, als tekstbestand
 assert.match(html, /a\.download='fysiplan-mijn-gegevens\.txt'/);
 assert.match(html, /var tekst=mgTekst\(K\.kaart/);
+// sweep 2026-11-08 (Truus): direct na twee vinkjes en een seintje zei de download "0 dagen" en
+// "seintjes: niets"; pas na herladen klopte het. De lokale bijwerking volgt nu de serverregel.
+{
+  const k = { client: { c_naam: "Truus" }, chosen: [{ n: "Squat" }, { n: "Brug" }], oefTrouw: { Brug: { n: 2, d: "2026-11-07" } } };
+  k.oefTrouw = ctx.mgTrouwTik(k.oefTrouw, "Squat", "2026-11-08", true);
+  k.oefTrouw = ctx.mgTrouwTik(k.oefTrouw, "Brug", "2026-11-08", true);
+  k.oefTrouw = ctx.mgTrouwTik(k.oefTrouw, "Brug", "2026-11-08", true); // dubbel tikken telt niet dubbel
+  assert.equal(k.oefTrouw.Squat.n, 1, "nieuwe oefening: 1 dag na eerste vinkje");
+  assert.equal(k.oefTrouw.Brug.n, 3, "bestaande oefening: dag erbij, één keer per dag");
+  ctx.mgTrouwTik(k.oefTrouw, "Brug", "2026-11-08", false);
+  assert.equal(k.oefTrouw.Brug.n, 2, "uitvinken op dezelfde dag haalt de dag weer weg");
+  ctx.mgTrouwTik(k.oefTrouw, "Brug", "2026-11-08", true);
+  ctx.mgSeintjeErbij(k, "vraag", T);
+  ctx.mgSeintjeErbij(k, "<script>", T);
+  assert.equal(k.mijnSeintjes.length, 1, "alleen de drie vaste soorten");
+  const fr = ctx.mgTekst(k, "", {}, "fr", h("fr-FR"));
+  assert.match(fr, /- Squat: 1 jours/);
+  assert.match(fr, /- Brug: 3 jours/);
+  assert.doesNotMatch(fr, /: 0 jours/);
+  assert.ok(fr.includes(ctx.TMGD.fr.seinW.vraag), "eigen seintje staat er direct in");
+}
+// de pagina gebruikt de helpers bij het vinkje en na een verstuurd seintje
+assert.match(html, /K\.kaart\.oefTrouw=mgTrouwTik\(/);
+assert.match(html, /if\(d&&d\.ok\)mgSeintjeErbij\(K&&K\.kaart,soort,/);
+// de privacylinks op de kaart openen meteen het patiëntdeel (sweep 18u, Jayden)
+assert.match(html, /id="privmeer" href="\/privacy#patient"/);
+assert.match(html, /id="privlink" href="\/privacy#patient"/);
 console.log("test-mijn-gegevens: download leesbaar in nl en en, met seintjes en wat alleen op de telefoon staat");
