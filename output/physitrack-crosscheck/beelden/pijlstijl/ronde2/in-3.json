@@ -1,0 +1,172 @@
+[
+ {
+  "nr": 13,
+  "naam": "Duplex pull",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/014.webp",
+  "bron_img": "images/bovenste-extremiteit/duplex-pull.jpg",
+  "uitleg": "Sta rechtop met je gezicht naar het ankerpunt en houd in elke hand een handvat, armen gestrekt schuin naar voren en omhoog. Trek met gestrekte armen beide handen omlaag tot naast je heupen. Laat je armen daarna rustig terugkomen.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/resisted-scapula-retractions-arms-straight",
+  "fout_in_getoond": "Toont een band tussen beide handen op heuphoogte met pijlen schuin omhoog; moet staand met gezicht naar het ankerpunt beginnen, gestrekte armen schuin vooruit-omhoog, met pijl omlaag naar naast de heupen."
+ },
+ {
+  "nr": 18,
+  "naam": "Front pully row",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/019.webp",
+  "bron_img": "images/bovenste-extremiteit/front-pully-row.jpg",
+  "uitleg": "Buig voorover met een rechte rug en steun met één hand op je knie. Pak met de andere hand het handvat van de lage kabel. Trek het handvat naar je heup en laat het rustig terugkomen.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/bent-over-row-with-cable-machine",
+  "fout_in_getoond": "Staat vrijwel rechtop met een stang in beide handen. Moet voorovergebogen met rechte rug tonen, één hand steunend op de knie, de andere hand aan het handvat van de lage kabel, pijl naar de heup."
+ },
+ {
+  "nr": 28,
+  "naam": "Pully cross over",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/029.webp",
+  "bron_img": "images/bovenste-extremiteit/pully-cross-over.jpg",
+  "uitleg": "Sta voorovergebogen tussen de pully's met de kabels hoog en pak in elke hand een handvat. Trek de handvatten in een boog schuin omlaag tot je handen voor je heupen samenkomen en beweeg gecontroleerd terug.",
+  "physitrack_url": "https://nl.physitrack.com/home-exercise-video/incline-cable-chest-fly",
+  "fout_in_getoond": "Rechtop met kabels op schouderhoogte en horizontale pijlen naar binnen. Moet licht voorovergebogen tonen met kabels hoog, armen schuin omhoog-opzij, pijlen in een boog schuin omlaag tot de handen voor de heupen samenkomen."
+ },
+ {
+  "nr": 31,
+  "naam": "Pully down",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/032.webp",
+  "bron_img": "images/bovenste-extremiteit/pully-down.jpg",
+  "uitleg": "Lig op je rug op de bank met je hoofd bij de pully en pak de brede stang boven je hoofd. Trek de stang in een boog omlaag richting je borst en laat hem rustig teruggaan.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/supine-pullover---v2",
+  "fout_in_getoond": "Staand met rechte-arm pulldown. Moet op de rug liggend op de bank met het hoofd naar de pully tonen, brede stang boven/achter het hoofd, pijl in een boog richting de borst."
+ },
+ {
+  "nr": 44,
+  "naam": "Wrist flexion",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/045.webp",
+  "bron_img": "images/bovenste-extremiteit/wrist-flexion.jpg",
+  "uitleg": "Kniel bij een steun en laat je onderarm erop rusten met je handpalm naar boven en een gewichtje in je hand over de rand. Beweeg je hand omhoog richting je onderarm en laat hem rustig terugzakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/wrist-flexion-with-weight",
+  "fout_in_getoond": "Geen gewichtje in de hand en zittend op een kruk. Moet knielend bij een steun tonen, onderarm erop met handpalm omhoog en een gewichtje in de hand over de rand, pijl omhoog richting onderarm."
+ },
+ {
+  "nr": 56,
+  "naam": "Kick back",
+  "groep": "Onderste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/057.webp",
+  "bron_img": "images/onderste-extremiteit/kick-back.jpg",
+  "uitleg": "Steun op je handen en knieën met een rechte rug. Breng een been met gebogen knie naar achteren en omhoog tot je bovenbeen in het verlengde van je rug is, en breng het gecontroleerd terug onder je heup.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/hip-extension-in-4-point-kneeling-(short-lever)",
+  "fout_in_getoond": "Tekening toont staand met steun aan een stoel; moet handen-en-knieënstand (viervoetstand) tonen met één gebogen been dat naar achter-boven gaat."
+ },
+ {
+  "nr": 79,
+  "naam": "Barbell twist",
+  "groep": "Core",
+  "getoond": "images/beginhouding-pijl-v1/080.webp",
+  "bron_img": "images/core/barbell-twist.jpg",
+  "uitleg": "Zet een uiteinde van de stang vast op de grond en houd het andere uiteinde met beide handen vast. Beweeg de stang in een boog van links naar rechts langs je lichaam.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/landmine-(180's-barbell-joystick)",
+  "fout_in_getoond": "Toont een stok over de schouders met romprotatie; moet een landmine tonen: stang met één uiteinde vast op de grond, het andere uiteinde met beide handen voor je vast, gestrekte armen, met een boogpijl van de ene naar de andere kant."
+ },
+ {
+  "nr": 89,
+  "naam": "Curl up",
+  "groep": "Core",
+  "getoond": "images/beginhouding-pijl-v1/090.webp",
+  "bron_img": "images/core/curl-up.jpg",
+  "uitleg": "Lig op je rug met gebogen knieën, je voeten plat op de vloer en je handen achter je hoofd. Rol je bovenlichaam omhoog richting je knieën en rol daarna rustig terug naar de vloer.",
+  "physitrack_url": "https://nz.physitrack.com/home-exercise-video/curl-ups",
+  "fout_in_getoond": "Eén been gestrekt en handen op de borst; uitleg vraagt beide knieën gebogen met voeten plat en handen achter het hoofd (Physitrack zelf: hielen op een bank, armen gekruist, dus ook de uitleg wijkt af). Pijl omhoog klopt."
+ },
+ {
+  "nr": 93,
+  "naam": "Leg raises",
+  "groep": "Core",
+  "getoond": "images/beginhouding-pijl-v1/094.webp",
+  "bron_img": "images/core/leg-raises.jpg",
+  "uitleg": "Lig op je rug op een schuine bank en houd met je handen de bank achter je hoofd vast. Til je gestrekte benen omhoog en laat ze langzaam weer zakken zonder ze neer te leggen.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/bench-knee-tucks-on-a-decline",
+  "fout_in_getoond": "Ligt plat op de grond met armen naast het lichaam; moet ruglig op een schuine bank tonen met handen achter het hoofd aan de bank, pijl benen omhoog. (Physitrack-match is een kniehef-variant op de decline-bank.)"
+ },
+ {
+  "nr": 105,
+  "naam": "Scissors 2",
+  "groep": "Core",
+  "getoond": "images/beginhouding-pijl-v1/106.webp",
+  "bron_img": "images/core/scissors-2.jpg",
+  "uitleg": "Lig op je rug met je hoofd en schouders iets van de vloer en trek één knie naar je borst, je andere been strek je schuin naar voren. Wissel rustig van been, zodat het gebogen been uitstrekt en het gestrekte been naar je borst komt.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/pilates-single-leg-stretch-level-1",
+  "fout_in_getoond": "Toont plat liggen met beide benen gestrekt en hoofd op de mat. Moet tonen: hoofd en schouders van de mat, één knie naar de borst getrokken en het andere been schuin gestrekt, pijl voor het wisselen van de benen."
+ },
+ {
+  "nr": 114,
+  "naam": "Stairs",
+  "groep": "Cardio",
+  "getoond": "images/beginhouding-pijl-v1/122.webp",
+  "bron_img": "images/cardio/stairs.jpg",
+  "uitleg": "Ga rechtop op de pedalen van de stepper staan en houd de leuning licht vast. Duw in een rustig tempo afwisselend je linker- en rechtervoet omlaag.",
+  "physitrack_url": "https://de.physitrack.com/home-exercise-video/stair-climber---treppen-steigen-(maschine)",
+  "fout_in_getoond": "Toont een vaste trap met leuning in plaats van een stepper/traploopmachine. Moet tonen: rechtop staan op de pedalen van een stepper, handen licht op de leuning, pijl voor het afwisselend omlaag duwen van een voet."
+ },
+ {
+  "nr": 134,
+  "naam": "TRX lunge lateral low",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/160.webp",
+  "bron_img": "images/trx/trx-lunge-lateral-low.jpg",
+  "uitleg": "Sta breed met je gezicht naar het ophangpunt en houd de handvatten hoog boven je schouders vast. Zak diep door één knie terwijl je andere been gestrekt blijft. Duw jezelf terug naar het midden.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/trx-lateral-lunge",
+  "fout_in_getoond": "Toont een schuine tredstand met de handvatten laag bij de heupen. Moet tonen: brede zijwaartse stand met gezicht naar het ophangpunt, handvatten hoog boven de schouders, pijl voor diep zijwaarts door één knie zakken."
+ },
+ {
+  "nr": 161,
+  "naam": "Yoga hamstring stretch",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/187.webp",
+  "bron_img": "images/yoga/yoga-hamstring-stretch.jpg",
+  "uitleg": "Zit op de grond met een been gestrekt voor je en zet de voet van je andere been tegen de binnenkant van je gestrekte been. Buig vanuit je heupen naar voren en reik met je handen naar de voet van het gestrekte been.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/seated-hurdler-stretch",
+  "fout_in_getoond": "Tekening toont een liggende hamstringrek met gestrekt been omhoog; moet zittend op de grond zijn met één been gestrekt, de andere voetzool tegen de binnenkant van dat been, en een pijl voor voorover buigen richting de voet."
+ },
+ {
+  "nr": 171,
+  "naam": "Yoga snake",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/197.webp",
+  "bron_img": "images/yoga/yoga-snake.jpg",
+  "uitleg": "Lig op je buik met je handen achter je rug in elkaar. Til rustig je hoofd en borst van de grond en strek je armen naar je voeten, terwijl je benen op de grond blijven.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/prone-back-extension---arms-by-your-side",
+  "fout_in_getoond": "Buiklig met pijl omhoog klopt, maar de handen staan naast de schouders op de mat (opdruk-houding); handen moeten achter de rug in elkaar of langs het lichaam liggen."
+ },
+ {
+  "nr": 200,
+  "naam": "Endy Heup abductie",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/226.webp",
+  "bron_img": "images/apparaten/endy-heup-abductie.jpg",
+  "uitleg": "Sta rechtop naast het apparaat met de enkelband om je buitenste been; de kabel zit laag aan de kant van je standbeen. Houd je zo nodig vast en beweeg je gestrekte been rustig zijwaarts naar buiten tot ongeveer 45 graden. Laat het daarna gecontroleerd terugkomen naast je standbeen.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/cable-hip-abduction",
+  "fout_in_getoond": "Tekening toont een zittend abductie-apparaat; moet staand naast de kabel zijn met de enkelband om het buitenste been, kabel laag aan de kant van het standbeen, en een pijl voor het gestrekte been zijwaarts naar buiten."
+ },
+ {
+  "nr": 525,
+  "naam": "Foam roller glute med.",
+  "groep": "Foam Roller",
+  "getoond": "images/beginhouding-pijl-v1/241.webp",
+  "bron_img": "images/foam-roller/foam-roller-glute-med-line-v1.png",
+  "uitleg": "Ga op je zij liggen met de foamroller onder de zijkant van je bil. Steun op je onderarm en je andere hand. Rol met hulp van je handen en bovenste been rustig heen en weer over de zijkant van je bil.",
+  "physitrack_url": "https://uk.physitrack.com/home-exercise-video/gluteus-medius-foam-rolling",
+  "fout_in_getoond": "Tekening toont zittend rollen met enkel over de knie (zelfde als gewone bilspier-rol). Voor gluteus medius hoort zijligging met de roller onder de zijkant van de bil, steunend op onderarm en andere hand, met een heen-en-weerpijl."
+ },
+ {
+  "nr": 581,
+  "naam": "Seated chair crunches",
+  "groep": "Seated Chair",
+  "getoond": "images/beginhouding-pijl-v1/297.webp",
+  "bron_img": "images/seated-chair/seated-chair-crunches-line-v1.png",
+  "uitleg": "Zit rechtop voor op de stoel met je voeten plat en je armen gestrekt voor je. Span je buikspieren aan en leun gecontroleerd een klein stuk achterover zonder je rug hol te trekken. Kom met je buikspieren terug rechtop.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/pregnancy-core-lean-backs",
+  "fout_in_getoond": "Handen achter het hoofd; de armen moeten gestrekt voor je uit (iets omhoog) zijn. Zit voor op de stoel; pijl romp licht naar achteren klopt."
+ }
+]

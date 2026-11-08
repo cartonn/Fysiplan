@@ -1,0 +1,172 @@
+[
+ {
+  "nr": 7,
+  "naam": "Biceps pull",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/008.webp",
+  "bron_img": "images/bovenste-extremiteit/biceps-pull.jpg",
+  "uitleg": "Sta rechtop tegenover de lage kabel en pak de greep met beide handen vast, handpalmen naar boven en armen gestrekt. Houd je ellebogen langs je lichaam, buig ze en breng de greep naar je schouders. Laat hem daarna rustig terugzakken.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/cable-machine-bicep-curl---version-2",
+  "fout_in_getoond": "Getekend met elastiek met twee handgrepen onder de voeten; moet de lage kabel van een kabelapparaat tonen met één greep in beide handen, handpalmen naar boven."
+ },
+ {
+  "nr": 17,
+  "naam": "French press",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/018.webp",
+  "bron_img": "images/bovenste-extremiteit/french-press.jpg",
+  "uitleg": "Zit rechtop met een dumbell in één hand boven je hoofd, arm gestrekt. Buig je elleboog en laat de dumbell rustig achter je hoofd zakken, houd je bovenarm stil. Strek je arm daarna weer.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/seated-overhead-tricep-press",
+  "fout_in_getoond": "Staand met beide handen en gebogen ellebogen achter het hoofd, pijl omhoog (eindhouding). Moet zittend tonen met één dumbell in één hand en gestrekte arm boven het hoofd, pijl omlaag naar achter het hoofd."
+ },
+ {
+  "nr": 27,
+  "naam": "Pully cross down",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/028.webp",
+  "bron_img": "images/bovenste-extremiteit/pully-cross-down.jpg",
+  "uitleg": "Sta met je zij naar de pully met de kabel hoog en pak het handvat met één hand. Trek het handvat schuin omlaag voor je lichaam langs naar je andere heup en beweeg gecontroleerd terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/cable-woodchops",
+  "fout_in_getoond": "Toont een tweearmige kabel-crossover met beide armen zijwaarts. Moet één figuur met de zij naar de hoge pully tonen, één hand aan het handvat hoog bij de pully, met een diagonale pijl voor het lichaam langs naar de andere heup."
+ },
+ {
+  "nr": 30,
+  "naam": "Pully dips",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/031.webp",
+  "bron_img": "images/bovenste-extremiteit/pully-dips.jpg",
+  "uitleg": "Zit rechtop op de bank met je rug naar de pully en de kabels hoog achter je, in elke hand een handvat naast je borst. Duw de handvatten omlaag tot je armen gestrekt zijn, ellebogen langs je lichaam, en laat ze rustig terugkomen.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/cable-machine-single-arm-pull-down%2c-sitting",
+  "fout_in_getoond": "Staand met een stang aan de hoge kabel (lijkt triceps pushdown). Moet zittend op een bank met de rug naar de pully tonen, kabels hoog achter, in elke hand een handvat naast de borst, pijl omlaag."
+ },
+ {
+  "nr": 43,
+  "naam": "Wrist extension",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/044.webp",
+  "bron_img": "images/bovenste-extremiteit/wrist-extension.jpg",
+  "uitleg": "Kniel bij een bank en laat je onderarm erop rusten met je handpalm naar beneden en een gewichtje in je hand over de rand. Beweeg je hand omhoog en laat hem rustig terugzakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/dumbell-wrist-extension",
+  "fout_in_getoond": "Geen gewichtje in de hand en zittend op een kruk. Moet knielend bij een bank tonen, onderarm op de bank met handpalm omlaag en een gewichtje in de hand over de rand, pijl omhoog."
+ },
+ {
+  "nr": 51,
+  "naam": "Extension squat",
+  "groep": "Onderste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/052.webp",
+  "bron_img": "images/onderste-extremiteit/extension-squat.jpg",
+  "uitleg": "Sta met je voeten op heupbreedte en houd het gewicht met gestrekte armen boven je hoofd. Zak in een diepe squat met een rechte rug terwijl je armen boven je hoofd blijven, en kom weer omhoog tot stand.",
+  "physitrack_url": "https://nl.physitrack.com/home-exercise-video/functionele-overhead-squat",
+  "fout_in_getoond": "Toont een gewone squat met armen vooruit en zonder gewicht. Moet staand tonen met het gewicht (stang/stok) met gestrekte armen boven het hoofd, pijl omlaag naar de diepe squat."
+ },
+ {
+  "nr": 65,
+  "naam": "Squat",
+  "groep": "Onderste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/066.webp",
+  "bron_img": "images/onderste-extremiteit/squat.jpg",
+  "uitleg": "Sta rechtop met je voeten op schouderbreedte en de stang op je bovenrug, je handen naast je schouders. Zak door je knieën alsof je op een stoel gaat zitten, houd je rug recht en kom rustig weer omhoog.",
+  "physitrack_url": "https://nl.physitrack.com/home-exercise-video/back-squat---met-barbell",
+  "fout_in_getoond": "Stang ontbreekt (armen gestrekt naar voren); toon de stang op de bovenrug met handen naast de schouders, voeten op schouderbreedte, pijl omlaag."
+ },
+ {
+  "nr": 88,
+  "naam": "Crunch",
+  "groep": "Core",
+  "getoond": "images/beginhouding-pijl-v1/089.webp",
+  "bron_img": "images/core/crunch.jpg",
+  "uitleg": "Lig op je rug met je handen achter je hoofd en til je benen op met gebogen knieën, zodat je voeten in de lucht zijn. Krul je schouders rustig omhoog richting je knieën en laat je langzaam weer zakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/abdominals-crunch-in-table-top-position",
+  "fout_in_getoond": "Voeten staan plat op de grond en armen gekruist op de borst; moet benen in tafelhouding (knieën gebogen, voeten in de lucht) en handen achter het hoofd tonen, met pijl schouders omhoog naar de knieën."
+ },
+ {
+  "nr": 92,
+  "naam": "Knee elbow",
+  "groep": "Core",
+  "getoond": "images/beginhouding-pijl-v1/093.webp",
+  "bron_img": "images/core/knee-elbow.jpg",
+  "uitleg": "Lig op je rug met je handen achter je hoofd en je benen gestrekt. Breng een knie omhoog en draai je tegenovergestelde elleboog naar die knie toe, terwijl je andere been gestrekt blijft. Kom terug en wissel van kant.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/supine-cycling-opposite-elbow-to-knee",
+  "fout_in_getoond": "Toont staand met knie naar elleboog; moet ruglig tonen met handen achter het hoofd, benen gestrekt, en één pijl van elleboog naar de tegenovergestelde opgetrokken knie."
+ },
+ {
+  "nr": 101,
+  "naam": "Reversed crunch",
+  "groep": "Core",
+  "getoond": "images/beginhouding-pijl-v1/102.webp",
+  "bron_img": "images/core/reversed-crunch.jpg",
+  "uitleg": "Lig op je rug met je armen naast je lichaam en je benen gestrekt omhoog boven je heupen. Til je bekken iets van de vloer door je voeten recht omhoog te duwen en laat langzaam weer zakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/candlesticks",
+  "fout_in_getoond": "Knieën 90 graden gebogen (tafelhouding); moet benen gestrekt recht omhoog boven de heupen tonen, armen naast het lichaam, pijl voeten/bekken recht omhoog."
+ },
+ {
+  "nr": 113,
+  "naam": "Squat jumps",
+  "groep": "Cardio",
+  "getoond": "images/beginhouding-pijl-v1/121.webp",
+  "bron_img": "images/cardio/squat-jumps.jpg",
+  "uitleg": "Sta voor een lage box met je voeten op heupbreedte. Zak in een squat, spring op de box en land zacht met gebogen knieën. Stap daarna rustig weer naar beneden.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/box-jumps---off",
+  "fout_in_getoond": "Er staat geen box in de tekening; alleen een squat met pijl omhoog (lijkt een gewone squat jump). Moet tonen: squathouding voor een lage box met pijl schuin omhoog naar voren op de box."
+ },
+ {
+  "nr": 129,
+  "naam": "TRX flyes I",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/155.webp",
+  "bron_img": "images/trx/trx-flyes-i.jpg",
+  "uitleg": "Sta met je gezicht naar het ophangpunt en leun achterover met gestrekte armen en de handvatten bij elkaar voor je. Trek je gestrekte armen schuin omhoog en uit elkaar tot een Y boven je hoofd, zodat je lichaam rechtop komt. Laat je daarna rustig terug zakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/trx-%22y%22-fly",
+  "fout_in_getoond": "Figuur staat met de rug naar het ophangpunt en leunt voorover; de handvatten zijn niet bij elkaar. Moet tonen: gezicht naar het ophangpunt, achterover leunend met gestrekte armen en handvatten samen voor het lichaam, pijl schuin omhoog naar een Y."
+ },
+ {
+  "nr": 145,
+  "naam": "TRX triceps extension",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/171.webp",
+  "bron_img": "images/trx/trx-triceps-extension.jpg",
+  "uitleg": "Sta met je rug naar het ophangpunt, leun voorover en houd de handvatten met gestrekte armen voor je op hoofdhoogte. Buig alleen je ellebogen zodat je handen naar je voorhoofd komen en je lichaam verder voorover zakt. Strek je armen weer en duw jezelf terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/trx-tricep-extension;-02",
+  "fout_in_getoond": "Beginhouding toont al gebogen ellebogen met de handen boven het hoofd (eindhouding-achtig). Moet tonen: rug naar het ophangpunt, voorover leunend met gestrekte armen voor je op hoofdhoogte, pijl voor het buigen van de ellebogen richting voorhoofd."
+ },
+ {
+  "nr": 170,
+  "naam": "Yoga revolved downward facing dog",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/196.webp",
+  "bron_img": "images/yoga/yoga-revolved-downward-facing-dog.jpg",
+  "uitleg": "Sta in de omgekeerde V met je handen en voeten op de grond. Pak met een hand je tegenovergestelde enkel of onderbeen en draai je romp mee.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/downward-dog-from-4-point",
+  "fout_in_getoond": "Omgekeerde V klopt, maar de pijl loopt over de vloer van handen naar voeten; de pijl moet tonen dat één hand naar de tegenovergestelde enkel/onderbeen reikt met rotatie van de romp."
+ },
+ {
+  "nr": 197,
+  "naam": "Endy Beenstrekker",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/223.webp",
+  "bron_img": "images/apparaten/endy-beenstrekker.jpg",
+  "uitleg": "Ga zitten met je rug tegen de leuning en zet je voeten tegen de voetplaat, met gebogen knieën. Duw de plaat weg door je benen te strekken en laat hem rustig terugkomen.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/leg-press---version-2",
+  "fout_in_getoond": "Tekening toont een leg-extension-apparaat (rol voor de schenen, pijl voor kniestrekken); uitleg en Physitrack beschrijven een leg press: zittend met de rug tegen de leuning, voeten tegen de voetplaat met gebogen knieën en een pijl voor het wegduwen van de plaat. Let op: de naam 'beenstrekker' kan op leg extension duiden; check welk apparaat bedoeld is."
+ },
+ {
+  "nr": 208,
+  "naam": "Gluteus kick (apparaat)",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/234.webp",
+  "bron_img": "images/apparaten/gluteus-kick-apparaat.jpg",
+  "uitleg": "Sta rechtop op het platform van het apparaat en houd de handgreep vast; de rol ligt tegen de achterkant van je werkbeen. Duw je been rustig naar achteren tot je heup gestrekt is, zonder je onderrug hol te trekken. Kom daarna gecontroleerd terug naast je standbeen.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/cable-hip-extension",
+  "fout_in_getoond": "Tekening toont een kickback-apparaat met voetplaat en het werkbeen al gebogen achter het lichaam; moet rechtop staan met het werkbeen naast het standbeen, de rol tegen de achterkant van dat been, en een pijl voor het gestrekte been naar achteren."
+ },
+ {
+  "nr": 552,
+  "naam": "Med ball V-ups",
+  "groep": "Medicine Ball",
+  "getoond": "images/beginhouding-pijl-v1/268.webp",
+  "bron_img": "images/medicine-ball/medicine-ball-v-ups-line-v1.png",
+  "uitleg": "Lig op je rug en houd de medicine ball met beide handen vast. Trek je knieën richting borst terwijl je de bal gecontroleerd omhoog brengt.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/supine-dead-bugs",
+  "fout_in_getoond": "Tekening toont gestrekte benen plat op de mat met de bal boven de borst en twee pijlen. Volgens uitleg en Physitrack (dead bug-achtig) start je op de rug met de bal in gestrekte armen omhoog en de knieën gebogen opgetild; één pijl voor knieën richting borst."
+ }
+]

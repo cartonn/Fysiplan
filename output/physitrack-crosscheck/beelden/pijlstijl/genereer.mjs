@@ -11,9 +11,9 @@ import { extname, join, resolve } from "node:path";
 
 const dir = resolve(new URL("./", import.meta.url).pathname);
 const root = resolve(dir, "../../../../");
-const out = join(dir, "nieuw");
+const out = join(dir, process.env.OUT || "nieuw");
 const MIN_SALDO = Number(process.env.MIN_SALDO || 1000);
-const specs = JSON.parse(readFileSync(join(dir, "specs.json"), "utf8"));
+const specs = JSON.parse(readFileSync(join(dir, process.env.SPECS || "specs.json"), "utf8"));
 const cat = JSON.parse(readFileSync(join(root, "public/oefeningen-v2.json"), "utf8"));
 const pijl = JSON.parse(readFileSync(join(root, "content/beginhouding-pijl.json"), "utf8"));
 
@@ -64,20 +64,26 @@ if (cmd === "gen") {
   const eind = (await rw.organization.retrieve()).creditBalance;
   console.log(`saldo ${start} -> ${eind} (gebruikt ${start - eind})`);
 } else if (cmd === "sheet") {
-  // per oefening: app-beeld oud | nieuw (laatste herkansing)
-  const W = 300, H = 450, LAB = 44, COLS = 4, tiles = [];
+  // per groep (GROEP=1) of alles: app-beeld nu | nieuw (laatste herkansing)
+  const W = 300, H = 450, LAB = 44, COLS = 4;
   const esc = (t) => t.replaceAll("&", "&amp;").replaceAll("<", "&lt;");
-  let k = 0;
+  const groepen = {};
   for (const s of specs) {
     const kand = ["-r3", "-r2", ""].map((x) => join(out, `${s.nr}-${s.slug}${x}.png`)).filter(existsSync);
     if (!kand.length) continue;
-    for (const [p, t] of [[appBeeld(s.nr), "app nu"], [kand[0], "nieuw pijlstijl" + (kand[0].match(/-(r\d)\.png$/)?.[1] ? ` (${kand[0].match(/-(r\d)\.png$/)[1]})` : "")]]) {
+    const g = process.env.GROEP ? (cat[s.nr].groep || cat[s.nr].categorie || "overig") : "alle";
+    (groepen[g] ||= []).push([s, kand[0]]);
+  }
+  for (const [g, lijst] of Object.entries(groepen)) {
+    const tiles = []; let k = 0;
+    for (const [s, nieuw] of lijst) for (const [p, t] of [[appBeeld(s.nr), "app nu"], [nieuw, "nieuw pijlstijl" + (nieuw.match(/-(r\d)\.png$/) ? ` (${nieuw.match(/-(r\d)\.png$/)[1]})` : "")]]) {
       const x = (k % COLS) * W, y = Math.floor(k / COLS) * (H + LAB); k++;
       tiles.push({ input: await sharp(p).resize(W, H, { fit: "contain", background: "#fff" }).png().toBuffer(), left: x, top: y });
       tiles.push({ input: Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${LAB}"><text x="6" y="18" font-family="Arial" font-size="14" font-weight="bold">${s.nr} ${esc(cat[s.nr].naam).slice(0, 34)}</text><text x="6" y="36" font-family="Arial" font-size="13">${t}</text></svg>`), left: x, top: y + H });
     }
+    const naam = process.env.SHEET ? `${process.env.SHEET}-${g.toLowerCase().replace(/[^a-z0-9]+/g, "-")}.png` : "_contactvel-voorbeeld-10.png";
+    await sharp({ create: { width: COLS * W, height: Math.max(1, Math.ceil(k / COLS)) * (H + LAB), channels: 3, background: "#ffffff" } })
+      .composite(tiles).png().toFile(join(dir, naam));
+    console.log(`${naam}: ${lijst.length} oefeningen`);
   }
-  await sharp({ create: { width: COLS * W, height: Math.max(1, Math.ceil(k / COLS)) * (H + LAB), channels: 3, background: "#ffffff" } })
-    .composite(tiles).png().toFile(join(dir, "_contactvel-voorbeeld-10.png"));
-  console.log(`contactvel: ${k / 2} oefeningen`);
 }

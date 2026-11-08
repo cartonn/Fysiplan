@@ -1,0 +1,172 @@
+[
+ {
+  "nr": 1,
+  "naam": "Barbell front press",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/002.webp",
+  "bron_img": "images/bovenste-extremiteit/barbell-front-press.jpg",
+  "uitleg": "Zit rechtop met de stang voor je borst op schouderhoogte. Druk de stang recht omhoog tot je armen gestrekt zijn en laat hem rustig terugzakken.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/seated-barbell-overhead-shoulder-press-%28anterior-deltoid%29",
+  "fout_in_getoond": "Figuur staat; moet zittend (op bank) getekend worden met de stang voor de borst op schouderhoogte en pijl omhoog."
+ },
+ {
+  "nr": 15,
+  "naam": "Exo pull",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/016.webp",
+  "bron_img": "images/bovenste-extremiteit/exo-pull.jpg",
+  "uitleg": "Sta naast het apparaat met je elleboog gebogen in een rechte hoek tegen je lichaam. Draai je onderarm naar buiten van je buik af en laat de greep rustig terugkomen.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/cable-machine-external-rotation",
+  "fout_in_getoond": "Toont een band tussen beide handen voor de buik (dubbelzijdig); moet naast het kabelapparaat staan, één arm met elleboog 90 graden tegen de zij en onderarm voor de buik, pijl naar buiten weg van het lichaam."
+ },
+ {
+  "nr": 24,
+  "naam": "Military press",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/025.webp",
+  "bron_img": "images/bovenste-extremiteit/military-press.jpg",
+  "uitleg": "Sta rechtop met in elke hand een dumbell op schouderhoogte, handpalmen naar elkaar. Duw de dumbells recht omhoog boven je hoofd en laat ze rustig terugzakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/standing-dumbbell-shoulder-press",
+  "fout_in_getoond": "Getekend met een halterstang; moet twee dumbells op schouderhoogte tonen met handpalmen naar elkaar, pijl omhoog."
+ },
+ {
+  "nr": 29,
+  "naam": "Pully cross up",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/030.webp",
+  "bron_img": "images/bovenste-extremiteit/pully-cross-up.jpg",
+  "uitleg": "Sta met je zij naar de pully met de kabel laag. Pak het handvat met de hand die het verst van de pully is, zodat je hand begint bij je heup aan de pullykant. Trek het handvat met een bijna gestrekte arm schuin omhoog voor je lichaam langs naar je andere schouder, weg van de pully, en laat het gecontroleerd terugzakken.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/cable-machine-cross-body-pull",
+  "fout_in_getoond": "Toont beide armen met twee lage kabels en pijlen omhoog. Moet één figuur met de zij naar de lage pully tonen, het handvat in de verst afgelegen hand bij de heup aan pullykant, met een diagonale pijl voor het lichaam langs omhoog naar de andere schouder."
+ },
+ {
+  "nr": 39,
+  "naam": "Triceps dips",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/040.webp",
+  "bron_img": "images/bovenste-extremiteit/triceps-dips.jpg",
+  "uitleg": "Zet je handen achter je op een stevige stoel of bank, benen naar voren. Buig je ellebogen en laat je billen zakken, duw jezelf daarna weer omhoog.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/triceps-dips-on-box",
+  "fout_in_getoond": "Figuur zit gewoon op de bank met handen naast de heupen. Moet vóór de bank tonen met handen achter zich op de rand, billen los van de bank, armen gestrekt en benen naar voren, pijl omlaag."
+ },
+ {
+  "nr": 50,
+  "naam": "Dead lift",
+  "groep": "Onderste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/051.webp",
+  "bron_img": "images/onderste-extremiteit/dead-lift.jpg",
+  "uitleg": "Sta met je voeten op heupbreedte achter een stang op de grond. Buig door je knieën en heupen met een rechte rug en pak de stang bovenhands vast. Kom rechtop door je heupen en knieën te strekken, houd de stang dicht langs je benen en laat hem op dezelfde manier weer zakken.",
+  "physitrack_url": "https://nl.physitrack.com/home-exercise-video/deadlift-met-barbell",
+  "fout_in_getoond": "Getekend met twee dumbells in een heupscharnier met vrijwel gestrekte benen. Moet een halterstang op de grond tonen, knieën en heupen gebogen met rechte rug en bovenhandse greep, pijl omhoog naar stand."
+ },
+ {
+  "nr": 64,
+  "naam": "Single leg squat",
+  "groep": "Onderste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/065.webp",
+  "bron_img": "images/onderste-extremiteit/single-leg-squat.jpg",
+  "uitleg": "Sta op een been voor een bank, met je andere been gestrekt naar voren en je armen voor je uit. Zak op een been rustig tot je op de bank zit en duw jezelf weer omhoog zonder je andere voet neer te zetten.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/single-leg-sit-to-stand-from-chair",
+  "fout_in_getoond": "Bank/stoel ontbreekt; toon staan op één been vlak voor een stoel of bank, ander been gestrekt naar voren, armen vooruit, pijl omlaag naar zitten."
+ },
+ {
+  "nr": 83,
+  "naam": "Bruggen 1 been liften",
+  "groep": "Core",
+  "getoond": "images/beginhouding-pijl-v1/084.webp",
+  "bron_img": "images/core/bruggen-1-been-liften.jpg",
+  "uitleg": "Lig op je rug met één knie gebogen en je voet plat op de grond. Strek je andere been schuin omhoog. Duw je heupen omhoog via je voet op de grond, houd je heupen recht en laat ze rustig zakken. Wissel na de herhalingen van been.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/single-leg-bridge---hands-on-floor,-knee-straight",
+  "fout_in_getoond": "Vrije been is gebogen met de voet in de lucht; moet gestrekt schuin omhoog zijn (lange hefboom), andere knie gebogen met voet plat, pijl heupen omhoog."
+ },
+ {
+  "nr": 91,
+  "naam": "Good mornings",
+  "groep": "Core",
+  "getoond": "images/beginhouding-pijl-v1/092.webp",
+  "bron_img": "images/core/good-mornings.jpg",
+  "uitleg": "Sta rechtop met je handen achter je hoofd en licht gebogen knieen. Buig je romp voorover vanuit je heupen met een rechte rug en kom weer omhoog.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/hip-hinge-and-shoulder-flexion",
+  "fout_in_getoond": "Toont een stok over de schouders en twee pijlen; uitleg vraagt handen achter het hoofd met licht gebogen knieën, zonder materiaal, en één pijl voor het voorover buigen vanuit de heupen."
+ },
+ {
+  "nr": 98,
+  "naam": "Plank high",
+  "groep": "Core",
+  "getoond": "images/beginhouding-pijl-v1/099.webp",
+  "bron_img": "images/core/plank-high.jpg",
+  "uitleg": "Steun op je zij op een gestrekte arm met je hand onder je schouder en je benen gestrekt op elkaar. Til je heupen op tot je lichaam een rechte lijn vormt en strek je bovenste arm recht omhoog. Houd deze houding vast en wissel van kant.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/straight-arm-side-plank",
+  "fout_in_getoond": "Toont een gewone hoge plank zonder pijl; moet een zijplank op gestrekte arm tonen (hand onder schouder, benen gestrekt op elkaar), bovenste arm recht omhoog, met pijl heupen omhoog."
+ },
+ {
+  "nr": 108,
+  "naam": "Superman",
+  "groep": "Core",
+  "getoond": "images/beginhouding-pijl-v1/109.webp",
+  "bron_img": "images/core/superman.jpg",
+  "uitleg": "Zet je handen onder je schouders en je knieën onder je heupen, je rug is recht. Strek één arm naar voren en tegelijk het andere been naar achteren, houd je romp stil en wissel daarna van kant.",
+  "physitrack_url": "https://nz.physitrack.com/home-exercise-video/superman%2c-4-point-kneeling",
+  "fout_in_getoond": "Toont buikligging met armen en benen tegelijk omhoog (superman op de buik). Moet tonen: handen-en-knieënstand (4-puntsstand), rug recht, met pijl voor één arm naar voren en het andere been naar achteren strekken."
+ },
+ {
+  "nr": 121,
+  "naam": "Bosu plank",
+  "groep": "Bosu",
+  "getoond": "images/beginhouding-pijl-v1/147.webp",
+  "bron_img": "images/bosu/bosu-plank.jpg",
+  "uitleg": "Draai de bosu om en pak met gestrekte armen de randen vast, zet je voeten naar achteren. Houd je lichaam in een rechte lijn van hoofd tot hielen.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/shoulder%252fscapula-stability-plank-on-a-bosu-ball",
+  "fout_in_getoond": "Toont een onderarmplank op de bolle kant van de bosu. Moet tonen: bosu omgedraaid (platte kant boven), handen met gestrekte armen aan de randen, lichaam in een rechte lijn."
+ },
+ {
+  "nr": 137,
+  "naam": "TRX plank",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/163.webp",
+  "bron_img": "images/trx/trx-plank.jpg",
+  "uitleg": "Steun op je handen onder je schouders met je voeten in de lussen. Houd je lichaam van hoofd tot hielen in een rechte lijn en span je buik aan.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/trx-straight-arm-suspended-plank",
+  "fout_in_getoond": "Toont een onderarmplank. Volgens uitleg en Physitrack (straight arm) steun je op de handen onder de schouders met gestrekte armen, voeten in de lussen."
+ },
+ {
+  "nr": 164,
+  "naam": "Yoga knee to chest hip stretch",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/190.webp",
+  "bron_img": "images/yoga/yoga-knee-to-chest-hip-stretch.jpg",
+  "uitleg": "Sta rechtop op een been. Til je andere knie op en trek die met beide handen rustig naar je borst, en houd je romp rechtop.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/knee-hugs",
+  "fout_in_getoond": "Tekening toont ruglig met gestrekte benen en een pijl voor beenheffen; moet staand op één been zijn, met een pijl voor de andere knie die met beide handen naar de borst wordt getrokken."
+ },
+ {
+  "nr": 183,
+  "naam": "Bodyblade high",
+  "groep": "Bodyblade",
+  "getoond": "images/beginhouding-pijl-v1/209.webp",
+  "bron_img": "images/bodyblade/bodyblade-high.jpg",
+  "uitleg": "Sta rechtop en strek je armen omhoog met de bodyblade boven je hoofd. Laat het blad heen en weer trillen terwijl je romp en armen stabiel blijven.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/shoulder-abduction-with-bodyblade",
+  "fout_in_getoond": "Tekening toont de bodyblade laag voor de heupen met een pijl omhoog; moet de armen gestrekt boven het hoofd tonen met de bodyblade daar, en alleen een trilaanduiding."
+ },
+ {
+  "nr": 201,
+  "naam": "Endy Leg curl",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/227.webp",
+  "bron_img": "images/apparaten/endy-leg-curl.jpg",
+  "uitleg": "Ga zitten met je onderbenen op het kussen en stel de leuning goed af. Buig je knieen en trek je hielen rustig naar achteren, kom daarna gecontroleerd terug.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/seated-leg-curl---machine-(hamstring)",
+  "fout_in_getoond": "Tekening toont een liggende (prone) leg curl; moet zittend zijn met de onderbenen op het kussen en een pijl voor het buigen van de knieën met de hielen naar achteren/onder."
+ },
+ {
+  "nr": 551,
+  "naam": "Med ball lunge overhead press",
+  "groep": "Medicine Ball",
+  "getoond": "images/beginhouding-pijl-v1/267.webp",
+  "bron_img": "images/medicine-ball/medicine-ball-lunge-overhead-press-line-v1.png",
+  "uitleg": "Stap in een stabiele uitvalspas en houd de medicine ball recht boven je hoofd. Houd je romp recht en duw via je voorste voet terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/lunge%2c-forward%2c-with-march-and-medicine-ball-overhead",
+  "fout_in_getoond": "Figuur loopt met de bal voor de borst en er staan twee pijlen (bal omhoog, lichaam omlaag). Beginhouding hoort staand of in de uitvalspas te zijn met de bal met gestrekte armen boven het hoofd, en één pijl voor de stap/het zakken in de uitvalspas."
+ }
+]
