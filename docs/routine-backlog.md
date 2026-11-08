@@ -49,7 +49,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 ## Open
 
 ### HOOG
-- **OPGELOST 2026-11-08 PR #PRNR — App: volledige patiëntnaam toch op de server na "Maak er Marieke B. van".** Bij
+- **OPGELOST 2026-11-08 PR #92 — App: volledige patiëntnaam toch op de server na "Maak er Marieke B. van".** Bij
   "In de praktijk" + OK werd alleen `#k_naam` de roepnaam; `client.c_naam` ("Marieke de Boer") ging mee en de QR vroeg
   daarna opnieuw. Nu neemt `#c_naam` de roepnaam over en laat `serverKaart` geen volledige naam meer meegaan.
   Desktop (Sanne, 2026-11-08 02u). Test: `npm run test:oefvinkje`.
@@ -94,7 +94,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   aria-pressed=false, weekbolletje blijft leeg); seintjes wel. kaart.html r. ~2330, ~2346. iPhone SE (Truus, 18u).
 - **/k spoedregel zegt "Bel de praktijk" zonder nummer of belknop** als de praktijk geen telefoon heeft ingevuld.
   `tekenSpoed` r. ~1578: tel-link als `K.praktijk.tel` bestaat, anders in de app om een nummer vragen. (Truus, 18u)
-- **OPGELOST 2026-11-08 PR #PRNR — Eigen oefening: dubbelklik op Toevoegen geeft een valse fout** (knop op slot vóór de FileReader, server reserveert de naam vóór de awaits; Mark hertestte: één POST, geen 409) (hertest 22u: 200 + 409, één oefening, maar daarna
+- **OPGELOST 2026-11-08 PR #92 — Eigen oefening: dubbelklik op Toevoegen geeft een valse fout** (knop op slot vóór de FileReader, server reserveert de naam vóór de awaits; Mark hertestte: één POST, geen 409) (hertest 22u: 200 + 409, één oefening, maar daarna
   "Er is al een eigen oefening met deze naam."). `knop.disabled` gaat pas aan ná FileReader/`resizeDataUrl`
   (index.html r. ~4795–4805): bezig-slot vóór de FileReader. De serverrace (naamcontrole vóór de awaits, server.js
   r. ~2834) bestaat nog. Desktop (Mark, 2026-11-07 14u, 22u).
@@ -104,7 +104,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 - **/k: vaste Nederlandse controlezinnen op een Engelse/Duitse kaart**: "De oefenafbeelding wordt gecontroleerd…" en
   "De algemene uitleg wordt gecontroleerd…" (public/kaart.html r. ~1299–1300) gaan niet door `tr()`. Pixel 7 (EN),
   iPhone 14 en iPhone SE (DE) (Jayden, Truus, 2026-11-07 14u).
-- **OPGELOST 2026-11-08 PR #PRNR — /k: vinkje "Gedaan" per oefening gaat offline verloren** (via `stuur()` en de wachtrij per oefening per dag; server telt op de dag van tikken; Truus hertestte op iPhone SE): `/api/kaart/oefening` gaat niet via `stuur()`/de wachtrij
+- **OPGELOST 2026-11-08 PR #92 — /k: vinkje "Gedaan" per oefening gaat offline verloren** (via `stuur()` en de wachtrij per oefening per dag; server telt op de dag van tikken; Truus hertestte op iPhone SE): `/api/kaart/oefening` gaat niet via `stuur()`/de wachtrij
   (lege `.catch`, kaart.html r. ~1079). De rest van de offline-wachtrij werkt wél (pijn, herstel, seintje, te zwaar,
   dag gedaan komen na online vanzelf aan). iPhone SE (Truus, 14u).
 - **/k bij 200 % zoom: hele pagina schuift horizontaal** (582 px op 320): "Alles gedaan", weekbolletjes, "Ik heb vandaag
@@ -174,7 +174,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 - **/k (Arabisch): onvertaalde Nederlandse tekst staat rtl** (punt vooraan); geef niet-vertaalde tekst
   `lang="nl" dir="ltr"`. "De oefenafbeelding wordt gecontroleerd" is niet vertaald. (Truus)
 - **/k: seintjes overschrijven elkaar**: "vraag" en daarna "gaat goed" → de vraag verdwijnt stil (één `seintje`-slot). (Jayden)
-- **OPGELOST 2026-11-08 PR #PRNR — /k: offline afgevinkt bereikt de therapeut nooit.** Geen wachtrij of `online`-handler, terwijl
+- **OPGELOST 2026-11-08 PR #92 — /k: offline afgevinkt bereikt de therapeut nooit.** Geen wachtrij of `online`-handler, terwijl
   de offline-banner "versturen lukt weer zodra je internet hebt" belooft (kaart.html, oefening-POST
   met lege `.catch`; `#gdaan` meldt niets). iPhone SE.
 - **/k: knop "Grotere letters" en 200% tekstgrootte geven horizontaal scrollen en afgeknipte woorden.**
@@ -204,7 +204,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 - /k/<id>/ en /k/<ID in hoofdletters> zeggen "Kaart bestaat niet (meer)" (kaart.html r. 620, server.js `vindKaart`). iPhone SE (Truus, 02u).
 - /k offline: Noor-opname zegt "kon niet worden afgespeeld" zonder te noemen dat er geen internet is (mp3 niet in kaart-sw.js). (Truus, 02u)
 - /k Arabisch bij 200 %: door rtl valt juist het begin van de regels weg (op echt toestel bevestigen). (Truus, 02u)
-- OPGELOST 2026-11-08 PR #PRNR (melding noemt nu JPEG/PNG, nog wel als alert) — Eigen oefening: verkeerd fotobestand (.HEIC, .pdf, tekst als .png) geeft alleen alert "De foto kon niet worden
+- OPGELOST 2026-11-08 PR #92 (melding noemt nu JPEG/PNG, nog wel als alert) — Eigen oefening: verkeerd fotobestand (.HEIC, .pdf, tekst als .png) geeft alleen alert "De foto kon niet worden
   gelezen." zonder "gebruik JPEG of PNG". index.html r. ~4799. iPad staand (Mark, 22u).
 - /k video zonder internet: eigen opname zegt "neem contact op met je praktijk" (misleidend offline, en achter de
   appbanner); YouTube onbereikbaar geeft een zwart vlak zonder melding. kaart.html `bewaakVideo` r. ~2181, yt-tak
