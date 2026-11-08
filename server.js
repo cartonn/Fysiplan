@@ -918,8 +918,17 @@ function laatstePatientInvoer(k) {
   const contact = (k.contact || []).filter((c) => c && c.van === "patient").reduce((m, c) => Math.max(m, ontvangen(c)), 0);
   return Math.max(rij(k.metingen), rij(k.gedaan), rij(k.psk), rij(k.ervaring), ontvangen(k.seintje), zwaar, contact);
 }
-// staat alles wat de patiënt doorgaf al in het dossier (label gezet ná de laatste invoer)?
-const inDossierBij = (k) => !!(k && k.dossier && Number(k.dossier.t) >= laatstePatientInvoer(k));
+// laatste wijziging die in het dossier hoort (WGBO art. 7:454 BW): alles van de patiënt,
+// plus wat de praktijk zelf vastlegt en alleen hier staat: een bericht aan de patiënt
+// en de werknotitie. Een kaart met het label "In dossier" waarvan daarna zo'n regel
+// bijkwam, telt weer als "nog niet bijgewerkt", anders verdwijnt die regel met de
+// bewaartermijn zonder waarschuwing (legal 2026-11-08).
+function laatsteDossierInvoer(k) {
+  const bericht = (k.contact || []).filter((c) => c && c.van === "praktijk" && c.tekst).reduce((m, c) => Math.max(m, Number(c.t) || 0), 0);
+  return Math.max(laatstePatientInvoer(k), bericht, Number(k.notitieT) || 0);
+}
+// staat alles al in het dossier (label gezet ná de laatste invoer)?
+const inDossierBij = (k) => !!(k && k.dossier && Number(k.dossier.t) >= laatsteDossierInvoer(k));
 // wat er voor de inbox openstaat op één kaart
 function inboxItems(k) {
   const items = [];
@@ -4005,6 +4014,7 @@ async function afhandelen(request, response) {
         ervaring: map[kk] ? map[kk].ervaring || [] : [],
         antwoord: map[kk] ? map[kk].antwoord || null : null,
         notitie: map[kk] ? map[kk].notitie || null : null,
+        notitieT: map[kk] ? Number(map[kk].notitieT) || null : null,
         afspraak: map[kk] ? map[kk].afspraak || null : null,
         oefTrouw: map[kk] ? map[kk].oefTrouw || null : null,
         oefZwaar: map[kk] ? map[kk].oefZwaar || null : null,
@@ -4434,7 +4444,9 @@ async function afhandelen(request, response) {
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       // besturingstekens eruit en begrensd; als platte tekst getoond in de app
       const tekst = String(b.tekst || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 500);
+      if ((kaart.notitie || null) !== (tekst || null)) kaart.notitieT = Date.now();
       kaart.notitie = tekst || null;
+      if (!kaart.notitie) delete kaart.notitieT;
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, notitie: kaart.notitie });
     } catch {

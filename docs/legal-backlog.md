@@ -15,13 +15,27 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-08 17u (patiënt: download klopt nu direct na vinkjes en seintje, niet pas na herladen) |
 | (f) cookies en lokale opslag | 2026-11-08 13u (cookies `fpproef`/`fp1` kloppen; alle localStorage-sleutels van /k en de app langs de tekst gelegd; twee ontbraken in /privacy, toegevoegd) |
 | (g) MDR en AI-verordening | 2026-11-07 (vraaghulp op de kaart, zoekhulp, vertalen, AI-labels, landing en app) |
-| (h) WGBO en KNGF-beroepsregels | 2026-11-07 (contactlogboek in de dossiertekst) |
+| (h) WGBO en KNGF-beroepsregels | 2026-11-08 21u (werknotitie mee naar het dossier, dossierlabel vervalt bij nieuwe praktijkregels, datum heet nu "laatst opgeslagen") |
 | (i) begrijpelijkheid (B1) | 2026-11-08 09u (VWO en voorwaarden: "In het kort", VWO als concept gemarkeerd; /v2/gegevens-tekst) |
 
-Volgende run: (h) WGBO/KNGF, daarna (g) MDR en AI-verordening, dan (a) en (b). Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (g) MDR en AI-verordening, dan (a) en (b). Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **MIDDEL — WGBO (2026-11-08 21u): werknotitie en berichten konden ongemerkt met de kaart verdwijnen.**
+  De werknotitie ("linkerknie ontzien") staat alleen in Fysiplan, maar ging niet mee in "Kopieer voor dossier".
+  Het label "In dossier" keek alleen naar invoer van de patiënt: een werknotitie of bericht van de praktijk ná het
+  label liet de kaart "bijgewerkt in het dossier" lijken, dus de bewaartermijn waarschuwde niet. De dossiertekst
+  noemde het laatste opslaan "Aangemaakt" (ook in de CSV-kop), een onjuiste datum in het dossier.
+  Bron: art. 7:454 BW (dossierplicht); KNGF-richtlijn Fysiotherapeutische verslaglegging.
+  OPGELOST 2026-11-08 PR #110: `laatsteDossierInvoer` (server.js) telt ook praktijkberichten en `notitieT`;
+  dossiertekst neemt de werknotitie mee; "Kaart laatst opgeslagen" en CSV-kop "Laatst opgeslagen"; /privacy noemt
+  berichten en werknotitie bij de praktijkgegevens. Test in `scripts/test-dossier-contact.mjs` (faalt zonder fix).
+  Gecontroleerd zonder gat: app en landing noemen Fysiplan overal "geen dossier" (/privacy, voorwaarden, VWO,
+  FAQ), dossiertekst eindigt met bron en bewaartermijn, weekbrief waarschuwt voor kaarten die nog niet in het dossier staan.
+  Nog open (LAAG): opnieuw opslaan van een kaart wist het label "In dossier" (conservatief: de waarschuwing komt
+  terug), maar ook wie het label zette; dat staat wel in het praktijklogboek.
 
 - **MIDDEL (gebruikers-sweep 2026-11-08 14u, Truus) — /k "Download mijn gegevens" direct na tikken klopt niet** (inzage art. 15).
   Na 2 oefeningen afvinken en een seintje toont de download "0 jours" en "Mes messages au cabinet: rien"; pas na herladen
