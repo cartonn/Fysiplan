@@ -41,7 +41,7 @@ const csvCell = (v) => `"${String(v ?? "").replaceAll('"', '""')}"`;
 
 if (cmd === "gen") {
   const rw = client();
-  const list = specs.filter((s) => s.catslug === cat && (only.length ? only.includes(s.slug) : !existsSync(join(dir, cat, `${s.slug}.png`))));
+  const list = specs.filter((s) => s.catslug === cat && s.status !== "uitgesteld" && (only.length ? only.includes(s.slug) : !existsSync(join(dir, cat, `${s.slug}.png`))));
   await mkdir(join(dir, cat), { recursive: true });
   for (const s of list) {
     const saldo = (await rw.organization.retrieve()).creditBalance;
@@ -63,7 +63,7 @@ if (cmd === "gen") {
   }
   console.log(`saldo ${(await rw.organization.retrieve()).creditBalance}`);
 } else if (cmd === "sheet") {
-  const items = specs.filter((s) => s.catslug === cat && existsSync(join(dir, cat, `${s.slug}.png`)));
+  const items = specs.filter((s) => s.catslug === cat && s.status !== "uitgesteld" && existsSync(join(dir, cat, `${s.slug}.png`)));
   const W = 320, H = 480, LAB = 40, COLS = 5, rows = Math.ceil(items.length / COLS);
   const tiles = await Promise.all(items.map(async (s, i) => {
     const img = await sharp(join(dir, cat, `${s.slug}.png`)).resize(W, H).png().toBuffer();
