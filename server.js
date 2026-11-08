@@ -320,6 +320,8 @@ async function eisPraktijk(req, res, pk) {
 // op de praktijk kon iedereen die de praktijknaam kende alles opvragen. De v1-app
 // (eigen accountlaag, altijd ingelogd) en het beheer blijven zoals ze waren —
 // het beheer alleen met een eigen ADMIN_KEY: de standaardsleutel is openbaar.
+// Ook voor de therapeutroutes op één kaart (antwoord, afspraak, archief, nieuwe link, ...):
+// met alleen praktijknaam + kaart-id van de geprinte QR kon iedereen die anders bedienen.
 // Sinds de wachtwoordplicht geldt dit ook voor kaarten délen (POST /api/kaarten):
 // geen patiëntgegevens op de server zonder een praktijk die er de eigenaar van is.
 async function eisBeveiligdePraktijk(req, res, pk, fout) {
@@ -4269,7 +4271,7 @@ async function afhandelen(request, response) {
     try {
       const b = JSON.parse(await readBody(request));
       const pk = praktijkVan(request, b.praktijk);
-      if (await eisPraktijk(request, response, pk)) return;
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       // dezelfde enumeratierem als op de andere kaart-endpoints: bij een niet-geclaimde
@@ -4296,7 +4298,7 @@ async function afhandelen(request, response) {
     try {
       const b = JSON.parse(await readBody(request));
       const pk = praktijkVan(request, b.praktijk);
-      if (await eisPraktijk(request, response, pk)) return;
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
@@ -4322,7 +4324,7 @@ async function afhandelen(request, response) {
     try {
       const b = JSON.parse(await readBody(request));
       const pk = praktijkVan(request, b.praktijk);
-      if (await eisPraktijk(request, response, pk)) return;
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       // zelfde enumeratierem als op de andere kaart-endpoints
@@ -4371,7 +4373,7 @@ async function afhandelen(request, response) {
     try {
       const b = JSON.parse(await readBody(request));
       const pk = praktijkVan(request, b.praktijk);
-      if (await eisPraktijk(request, response, pk)) return;
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       // zelfde enumeratierem als op de andere kaart-endpoints
@@ -4397,7 +4399,7 @@ async function afhandelen(request, response) {
     try {
       const b = JSON.parse(await readBody(request));
       const pk = praktijkVan(request, b.praktijk);
-      if (await eisPraktijk(request, response, pk)) return;
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       // zelfde enumeratierem als op de andere kaart-endpoints
@@ -4423,7 +4425,7 @@ async function afhandelen(request, response) {
     try {
       const b = JSON.parse(await readBody(request));
       const pk = praktijkVan(request, b.praktijk);
-      if (await eisPraktijk(request, response, pk)) return;
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
@@ -4476,7 +4478,7 @@ async function afhandelen(request, response) {
     try {
       const b = JSON.parse(await readBody(request));
       const pk = praktijkVan(request, b.praktijk);
-      if (await eisPraktijk(request, response, pk)) return;
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       // zelfde enumeratierem als op de andere kaart-endpoints
@@ -4583,7 +4585,7 @@ async function afhandelen(request, response) {
     try {
       const b = JSON.parse(await readBody(request));
       const pk = praktijkVan(request, b.praktijk);
-      if (await eisPraktijk(request, response, pk)) return;
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
@@ -4610,7 +4612,7 @@ async function afhandelen(request, response) {
     try {
       const b = JSON.parse(await readBody(request));
       const pk = praktijkVan(request, b.praktijk);
-      if (await eisPraktijk(request, response, pk)) return;
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
@@ -4634,7 +4636,7 @@ async function afhandelen(request, response) {
     try {
       const b = JSON.parse(await readBody(request));
       const pk = praktijkVan(request, b.praktijk);
-      if (await eisPraktijk(request, response, pk)) return;
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
@@ -4660,7 +4662,7 @@ async function afhandelen(request, response) {
     try {
       const b = JSON.parse(await readBody(request));
       const pk = praktijkVan(request, b.praktijk);
-      if (await eisPraktijk(request, response, pk)) return;
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
       const oudeSleutel = Object.keys(map).find((k) => map[k].id === idTekst(b.id));
       if (!oudeSleutel) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
