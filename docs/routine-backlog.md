@@ -49,11 +49,11 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 ## Open
 
 ### HOOG
-- **OPGELOST 2026-11-08 PR #NR — App: na de eerste "In de praktijk" werd het kaart-id niet onthouden** (`saveServerCard`
+- **OPGELOST 2026-11-08 PR #96 — App: na de eerste "In de praktijk" werd het kaart-id niet onthouden** (`saveServerCard`
   nam het alleen over als het al gelijk was aan het lege KAART_ID). Elke volgende opslag gaf 409 "Er is al een kaart" over de
   eigen kaart en een daarna opgenomen eigen video kwam nooit bij de patiënt. iPad liggend (Mark, 2026-11-08 06u).
   Test: `npm run test:eerstedeling`. (Zelfde oorzaak als het MIDDEL-punt "na Maak er … van … 409".)
-- **OPGELOST 2026-11-08 PR #NR — /k toont de naam van een andere patiënt.** Deelde de therapeut onder een andere naam dan
+- **OPGELOST 2026-11-08 PR #96 — /k toont de naam van een andere patiënt.** Deelde de therapeut onder een andere naam dan
   het naamveld (voorbeeldkaart "Voorbeeldpatiënt", of de kaart van een vorige patiënt hergebruikt), dan zag de patiënt
   "Voor <oude naam>" (ook in de beginschermnaam). Nu is de gekozen kaartnaam ook de roepnaam op de server (behalve een
   automatische "Kaart <datum>"). Pixel 7, iPhone 14 (Jayden, 06u). Test: `npm run test:oefvinkje`.
@@ -61,7 +61,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   "In de praktijk" + OK werd alleen `#k_naam` de roepnaam; `client.c_naam` ("Marieke de Boer") ging mee en de QR vroeg
   daarna opnieuw. Nu neemt `#c_naam` de roepnaam over en laat `serverKaart` geen volledige naam meer meegaan.
   Desktop (Sanne, 2026-11-08 02u). Test: `npm run test:oefvinkje`.
-- **OPGELOST 2026-11-08 PR #NR — Seintjes overschrijven elkaar, ook "Het doet te veel pijn" door "Ik heb een vraag"**
+- **OPGELOST 2026-11-08 PR #96 — Seintjes overschrijven elkaar, ook "Het doet te veel pijn" door "Ik heb een vraag"**
   (nu wint het zwaarste open seintje, pijn > vraag > gaat goed; de rest staat in `ook` en verschijnt in inbox en overzicht
   als "(ook een vraag)". Test: `npm run test:seintjevoorrang`) (de therapeut ziet alleen de
   vraag). Was MIDDEL/LAAG (vraag → gaat goed); met pijn klinisch zwaarder. Eén `seintje`-slot op de kaart. (Mark, 02u)
@@ -83,7 +83,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   fout wachtwoord (PR #41 nog niet op main); agendaknop dubbeltik (4 verzoeken); Noor per oefening zonder stop (en op een
   niet-Nederlandse kaart afwezig); Nederlandse servermeldingen op /k EN; 200 % op Pixel 7 (445 px) en iPhone SE (583 px);
   dubbeltik "Gedaan" per oefening; offline pijnscore zonder gekozen stand; lightbox (geen sluitknop, terugknop verlaat de kaart).
-- **OPGELOST 2026-11-08 PR #NR — App: geprinte QR en "Test de QR op je telefoon" nemen de gekozen patiënttaal niet mee**
+- **OPGELOST 2026-11-08 PR #96 — App: geprinte QR en "Test de QR op je telefoon" nemen de gekozen patiënttaal niet mee**
   (ook "Kopieer link" en "Bekijk zelf"; nu via `kaartUrl()`, en de QR tekent opnieuw bij een taalwissel. Past de link met
   taal niet in de kleine QR (langer domein dan fysiplan.nl), dan codeert alleen de QR de kale link. De CSV-kolom Kaartlink
   blijft zonder taal. Test: `npm run test:qrtaal`). WhatsApp-link krijgt
@@ -95,7 +95,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   `@media print{*{animation:none!important}}` in public/v2.html r. ~484. Desktop (Sanne, 02u).
 - **/k: agendaknoppen zonder bezig-slot of feedback op een trage lijn**; `naarAgenda` haalt het .ics twee keer op
   (controle + navigatie), dubbeltik = 2–4 verzoeken (iOS: mogelijk twee importvragen). kaart.html r. ~885–897. Pixel 7 (Jayden, 02u).
-- **OPGELOST 2026-11-08 PR #NR (test:eerstedeling) — App: na "Maak er … van" bij een editor zonder kaartId volgt een 409 over de eigen, net gedeelde kaart**
+- **OPGELOST 2026-11-08 PR #96 (test:eerstedeling) — App: na "Maak er … van" bij een editor zonder kaartId volgt een 409 over de eigen, net gedeelde kaart**
   (`zetKaartId` alleen als `d.id===KAART_ID`, index.html r. ~3312). Desktop (Sanne, 02u).
 - **OPGELOST 2026-11-07 PR #89 — App: na "Naam wijzigen" zette "In de praktijk" de oude naam stil terug** (`#k_naam`
   hield de oude naam; de server hernoemde terug). Desktop (Sanne, 22u). Test: `npm run test:hernoem`.
