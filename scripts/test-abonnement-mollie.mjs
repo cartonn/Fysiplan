@@ -21,19 +21,19 @@ assert.deepEqual(bedragen(1198, false), { totaal: 1198, excl: 1198, btw: 0 });
 assert.equal(euro(1198), "€ 11,98");
 const lev = { bedrijf: "Fysiplan B.V.", kvk: "12345678", adres: "Straat 1, Utrecht", btwNummer: "NL000000000B01" };
 assert.ok(isFactuur(lev)); assert.ok(!isFactuur({ ...lev, kvk: "" }), "zonder KvK geen factuur");
-const proefAb = { aantal: 1, bedrag: "5.99", sinds: Date.UTC(2026, 10, 8), betaaldTot: Date.UTC(2026, 11, 8), eersteBetaling: "tr_x1", factuurNr: "FP-2026-0001" };
+const proefAb = { aantal: 1, bedrag: "9.99", sinds: Date.UTC(2026, 10, 8), betaaldTot: Date.UTC(2026, 11, 8), eersteBetaling: "tr_x1", factuurNr: "FP-2026-0001" };
 const xss = factuurHtml({ leverancier: lev, afnemer: { naam: "<img src=x onerror=alert(1)>", email: "a@b.nl" }, abonnement: proefAb });
 assert.doesNotMatch(xss, /<img/, "praktijknaam wordt ge-escaped");
 assert.doesNotMatch(xss, /<script/i, "factuur is scriptloos");
 
 // 1. pure hulpjes
-assert.deepEqual(maandBedrag(1), { currency: "EUR", value: "5.99" });
-assert.equal(maandBedrag(3).value, "17.97");
-assert.equal(maandBedrag(50).value, "299.50");
+assert.deepEqual(maandBedrag(1), { currency: "EUR", value: "9.99" });
+assert.equal(maandBedrag(3).value, "29.97");
+assert.equal(maandBedrag(50).value, "499.50");
 for (const fout of ["0", "51", "2.5", "", "abc", "-1", "1e1"]) assert.equal(aantalTherapeuten(fout), null, "aantal " + fout);
 assert.equal(aantalTherapeuten(" 3 "), 3);
 const pr = { id: "p1", betaling: { id: "tr_abcd", aantal: 2 } };
-const ok = { id: "tr_abcd", status: "paid", amount: { currency: "EUR", value: "11.98" }, metadata: { proef: "p1" } };
+const ok = { id: "tr_abcd", status: "paid", amount: { currency: "EUR", value: "19.98" }, metadata: { proef: "p1" } };
 assert.equal(beoordeelBetaling(ok, pr), "betaald");
 assert.equal(beoordeelBetaling({ ...ok, metadata: { proef: "p2" } }, pr), "vreemd");
 assert.equal(beoordeelBetaling({ ...ok, amount: { currency: "EUR", value: "0.01" } }, pr), "vreemd");
@@ -135,7 +135,7 @@ try {
   assert.equal(r.status, 303);
   assert.equal(r.headers.get("location"), "https://www.mollie.com/checkout/test", "door naar Mollie");
   const betaalVerzoek = nep.verzoeken.find((v) => v.pad === "/v2/payments").body;
-  assert.deepEqual(betaalVerzoek.amount, { currency: "EUR", value: "11.98" }, "2 x 5,99");
+  assert.deepEqual(betaalVerzoek.amount, { currency: "EUR", value: "19.98" }, "2 x 9,99");
   assert.equal(betaalVerzoek.sequenceType, "first");
   assert.equal(betaalVerzoek.customerId, "cst_test1");
   assert.equal(betaalVerzoek.metadata.proef, "oud0000000000001");
@@ -156,7 +156,7 @@ try {
   await form(srv.origin, "/api/mollie/webhook", { id: "tr_test12345" });
   assert.ok(!(await leesProef()).klant, "verkeerd bedrag telt niet");
   // betaald met het juiste bedrag → klant, en een tweede webhook verandert niets
-  nep.betaling.amount = { currency: "EUR", value: "11.98" };
+  nep.betaling.amount = { currency: "EUR", value: "19.98" };
   await form(srv.origin, "/api/mollie/webhook", { id: "tr_test12345" });
   const na = await leesProef();
   assert.equal(na.klant, true, "betaald is klant");
