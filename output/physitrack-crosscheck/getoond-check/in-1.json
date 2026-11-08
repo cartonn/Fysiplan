@@ -1,0 +1,470 @@
+[
+ {
+  "nr": 0,
+  "naam": "Anteflexie armen",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/001.webp",
+  "uitleg": "Sta rechtop met in elke hand een lichte halter voor je bovenbenen, handpalmen naar je benen. Hef je gestrekte armen rustig naar voren tot schouderhoogte, handpalmen naar beneden, en laat ze weer langzaam zakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/dumbbell-front-raise",
+  "physitrack_titel": "Dumbbell Front Raise - version 1"
+ },
+ {
+  "nr": 1,
+  "naam": "Barbell front press",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/002.webp",
+  "uitleg": "Zit rechtop met de stang voor je borst op schouderhoogte. Druk de stang recht omhoog tot je armen gestrekt zijn en laat hem rustig terugzakken.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/seated-barbell-overhead-shoulder-press-%28anterior-deltoid%29",
+  "physitrack_titel": "Seated Barbell Overhead Shoulder Press (anterior deltoid)"
+ },
+ {
+  "nr": 2,
+  "naam": "Barbell neck press",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/003.webp",
+  "uitleg": "Zit rechtop met de stang achter je hoofd op nekhoogte. Druk de stang recht omhoog tot je armen gestrekt zijn en laat hem langzaam terugzakken.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/neck-press--long-barbell",
+  "physitrack_titel": "Neck press- Long Barbell"
+ },
+ {
+  "nr": 3,
+  "naam": "Barbell pull over",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/004.webp",
+  "uitleg": "Lig op je rug op de bank met je knieën opgetrokken en je voeten van de grond. Houd de stang met beide handen en bijna gestrekte armen boven je borst. Breng de stang in een boog rustig over je hoofd naar achteren en haal hem langs dezelfde weg terug boven je borst.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/bent-arm-barbell-pull-over",
+  "physitrack_titel": "Bent Arm Barbell Pull Over"
+ },
+ {
+  "nr": 4,
+  "naam": "Bench press",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/005.webp",
+  "uitleg": "Lig op je rug op de bank in het rek, met je knieën gebogen en je voeten plat op de bank. Pak de stang iets breder dan je schouders en laat hem rustig zakken tot op je borst. Druk hem daarna weer omhoog tot je armen gestrekt zijn.",
+  "physitrack_url": "https://uk.physitrack.com/home-exercise-video/barbell-bench-press",
+  "physitrack_titel": "Barbell bench press"
+ },
+ {
+  "nr": 5,
+  "naam": "Biceps alternate dumbell",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/006.webp",
+  "uitleg": "Sta rechtop met in elke hand een dumbell langs je lichaam. Buig om de beurt een arm en breng de dumbell naar je schouder, laat hem daarna rustig zakken.",
+  "physitrack_url": "https://uk.physitrack.com/home-exercise-video/alternating-bicep-curl-with-hand-weight",
+  "physitrack_titel": "Alternating bicep curl with hand weight"
+ },
+ {
+  "nr": 6,
+  "naam": "Biceps curl",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/007.webp",
+  "uitleg": "Sta rechtop met in elke hand een dumbell en je armen gestrekt langs je lichaam, handpalmen naar voren. Buig tegelijk je ellebogen en breng de dumbells naar je schouders, laat ze daarna langzaam zakken.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/bicep-curl---standing-with-dumbbells",
+  "physitrack_titel": "Bicep curl - standing with dumbbells"
+ },
+ {
+  "nr": 7,
+  "naam": "Biceps pull",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/008.webp",
+  "uitleg": "Sta rechtop tegenover de lage kabel en pak de greep met beide handen vast, handpalmen naar boven en armen gestrekt. Houd je ellebogen langs je lichaam, buig ze en breng de greep naar je schouders. Laat hem daarna rustig terugzakken.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/cable-machine-bicep-curl---version-2",
+  "physitrack_titel": "Cable machine bicep curl - version 2"
+ },
+ {
+  "nr": 8,
+  "naam": "Dips",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/009.webp",
+  "uitleg": "Sta tussen de twee steunen en pak de handgrepen vast met gestrekte armen. Buig je ellebogen en laat je lichaam rustig zakken, met je romp iets naar voren en je voeten op de grond. Druk jezelf daarna weer omhoog tot je armen gestrekt zijn.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/shoulder-dips-on-bar",
+  "physitrack_titel": "Shoulder Dips on Bar"
+ },
+ {
+  "nr": 9,
+  "naam": "Dumbell bench press",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/010.webp",
+  "uitleg": "Lig op de bank met in elke hand een dumbell boven je borst. Laat de dumbells langzaam naast je borst zakken en druk ze weer omhoog tot gestrekte armen.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/dumbbell-bench-press---with-straight-legs",
+  "physitrack_titel": "Dumbbell bench press - with straight legs"
+ },
+ {
+  "nr": 10,
+  "naam": "Dumbell front press",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/011.webp",
+  "uitleg": "Zit rechtop op de rand van een bank met je voeten plat op de grond. Houd de dumbells vlak voor je schouders, handpalmen naar elkaar en ellebogen naar voren. Druk ze recht omhoog tot je armen gestrekt zijn en laat ze rustig terugzakken.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/shoulder-press-with-dumbbells-%28seated%29",
+  "physitrack_titel": "Shoulder Press with Dumbbells (Seated)"
+ },
+ {
+  "nr": 11,
+  "naam": "Dumbell neck press",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/012.webp",
+  "uitleg": "Zit rechtop met de dumbells naast je hoofd op schouderhoogte, ellebogen naar buiten. Druk ze recht omhoog tot gestrekte armen en laat ze langzaam terugzakken.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/seated-shoulder-press-with-dumbbells",
+  "physitrack_titel": "Seated Shoulder Press with Dumbbells v1"
+ },
+ {
+  "nr": 12,
+  "naam": "Dumbell pull over",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/013.webp",
+  "uitleg": "Lig op de bank met je knieën opgetrokken en houd een dumbell met beide handen boven je borst. Beweeg de dumbell met licht gebogen armen over je hoofd naar achteren en breng hem terug.",
+  "physitrack_url": "https://nz.physitrack.com/home-exercise-video/pullover-with-dumbbells",
+  "physitrack_titel": "Pullover with dumbbells"
+ },
+ {
+  "nr": 13,
+  "naam": "Duplex pull",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/014.webp",
+  "uitleg": "Sta rechtop met je gezicht naar het ankerpunt en houd in elke hand een handvat, armen gestrekt schuin naar voren en omhoog. Trek met gestrekte armen beide handen omlaag tot naast je heupen. Laat je armen daarna rustig terugkomen.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/resisted-scapula-retractions-arms-straight",
+  "physitrack_titel": "Resisted scapula retractions arms straight"
+ },
+ {
+  "nr": 14,
+  "naam": "Endo pull",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/015.webp",
+  "uitleg": "Sta naast het apparaat met je elleboog gebogen in een rechte hoek tegen je lichaam. Draai je onderarm naar binnen richting je buik en laat de greep rustig terugkomen.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/shoulder-internal-rotation-%2528cable-machine%2529",
+  "physitrack_titel": "Shoulder Internal Rotation (Cable Machine)"
+ },
+ {
+  "nr": 15,
+  "naam": "Exo pull",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/016.webp",
+  "uitleg": "Sta naast het apparaat met je elleboog gebogen in een rechte hoek tegen je lichaam. Draai je onderarm naar buiten van je buik af en laat de greep rustig terugkomen.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/cable-machine-external-rotation",
+  "physitrack_titel": "Cable machine external rotation"
+ },
+ {
+  "nr": 16,
+  "naam": "Flyes",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/017.webp",
+  "uitleg": "Lig op de bank met je knieën gebogen en je voeten op het eind van de bank, de dumbells boven je borst met je handpalmen naar elkaar en je armen licht gebogen. Spreid je armen rustig zijwaarts tot borsthoogte en breng ze weer samen boven je borst.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/supine-fly-on-bench",
+  "physitrack_titel": "Supine fly on bench"
+ },
+ {
+  "nr": 17,
+  "naam": "French press",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/018.webp",
+  "uitleg": "Zit rechtop met een dumbell in één hand boven je hoofd, arm gestrekt. Buig je elleboog en laat de dumbell rustig achter je hoofd zakken, houd je bovenarm stil. Strek je arm daarna weer.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/seated-overhead-tricep-press",
+  "physitrack_titel": "Seated Overhead Tricep Press"
+ },
+ {
+  "nr": 18,
+  "naam": "Front pully row",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/019.webp",
+  "uitleg": "Buig voorover met een rechte rug en steun met één hand op je knie. Pak met de andere hand het handvat van de lage kabel. Trek het handvat naar je heup en laat het rustig terugkomen.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/bent-over-row-with-cable-machine",
+  "physitrack_titel": "Bent Over Row with Cable Machine"
+ },
+ {
+  "nr": 19,
+  "naam": "Front raises",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/020.webp",
+  "uitleg": "Sta rechtop met in elke hand een dumbell voor je bovenbenen, handpalmen naar je benen. Hef je gestrekte armen rustig naar voren tot schouderhoogte, handpalmen naar beneden, en laat ze weer langzaam zakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/dumbbell-front-raise",
+  "physitrack_titel": "Dumbbell Front Raise - version 1"
+ },
+ {
+  "nr": 20,
+  "naam": "Incline bench press",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/021.webp",
+  "uitleg": "Lig op de schuine bank met de halter op borsthoogte. Duw het gewicht recht omhoog tot je armen bijna gestrekt zijn en laat het rustig terugzakken.",
+  "physitrack_url": "https://nz.physitrack.com/home-exercise-video/power-rack-incline-bench-press",
+  "physitrack_titel": "Power rack incline bench press"
+ },
+ {
+  "nr": 21,
+  "naam": "Incline flyes",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/022.webp",
+  "uitleg": "Lig op de schuine bank met de armen licht gebogen boven je borst. Open de armen zijwaarts tot borsthoogte en breng ze weer samen boven je.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/incline-dumbbell-chest-flies",
+  "physitrack_titel": "Incline dumbbell chest flies"
+ },
+ {
+  "nr": 22,
+  "naam": "Lat pull front",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/023.webp",
+  "uitleg": "Zit aan het apparaat met de bovenbenen onder het kussen en pak de stang breed. Trek de stang voor je hoofd naar je borst en laat hem rustig terug omhoog.",
+  "physitrack_url": "https://uk.physitrack.com/home-exercise-video/lat-pulldown-(machine)",
+  "physitrack_titel": "Lat pulldown (machine)"
+ },
+ {
+  "nr": 23,
+  "naam": "Lateral raises",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/024.webp",
+  "uitleg": "Sta rechtop met een gewicht in elke hand naast je lichaam. Hef de licht gebogen armen zijwaarts tot schouderhoogte en laat ze rustig zakken.",
+  "physitrack_url": "https://ie.physitrack.com/home-exercise-video/dumbbell-lateral-raise",
+  "physitrack_titel": "Dumbbell Lateral Raise"
+ },
+ {
+  "nr": 24,
+  "naam": "Military press",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/025.webp",
+  "uitleg": "Sta rechtop met in elke hand een dumbell op schouderhoogte, handpalmen naar elkaar. Duw de dumbells recht omhoog boven je hoofd en laat ze rustig terugzakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/standing-dumbbell-shoulder-press",
+  "physitrack_titel": "Standing dumbbell shoulder press"
+ },
+ {
+  "nr": 25,
+  "naam": "Nose breakers",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/026.webp",
+  "uitleg": "Lig op de bank met de armen gestrekt omhoog. Buig alleen de ellebogen zodat het gewicht naar je voorhoofd zakt en strek de armen weer.",
+  "physitrack_url": "https://nl.physitrack.com/home-exercise-video/extensie-triceps-in-ruglig-op-bank-met-dumbbells",
+  "physitrack_titel": "Extensie triceps in ruglig op bank met dumbbells"
+ },
+ {
+  "nr": 26,
+  "naam": "One arm bent over row",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/027.webp",
+  "uitleg": "Steun met een hand en knie op de bank en houd je rug recht. Trek het gewicht met de andere arm naar je heup, elleboog langs je lichaam, en laat het rustig zakken.",
+  "physitrack_url": "https://uk.physitrack.com/home-exercise-video/bent-over-dumbbell-row-on-bench",
+  "physitrack_titel": "Bent-over dumbbell row on bench"
+ },
+ {
+  "nr": 27,
+  "naam": "Pully cross down",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/028.webp",
+  "uitleg": "Sta met je zij naar de pully met de kabel hoog en pak het handvat met één hand. Trek het handvat schuin omlaag voor je lichaam langs naar je andere heup en beweeg gecontroleerd terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/cable-woodchops",
+  "physitrack_titel": "Cable machine high to low woodchops"
+ },
+ {
+  "nr": 28,
+  "naam": "Pully cross over",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/029.webp",
+  "uitleg": "Sta voorovergebogen tussen de pully's met de kabels hoog en pak in elke hand een handvat. Trek de handvatten in een boog schuin omlaag tot je handen voor je heupen samenkomen en beweeg gecontroleerd terug.",
+  "physitrack_url": "https://nl.physitrack.com/home-exercise-video/incline-cable-chest-fly",
+  "physitrack_titel": "Incline cable chest fly"
+ },
+ {
+  "nr": 29,
+  "naam": "Pully cross up",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/030.webp",
+  "uitleg": "Sta met je zij naar de pully met de kabel laag. Pak het handvat met de hand die het verst van de pully is, zodat je hand begint bij je heup aan de pullykant. Trek het handvat met een bijna gestrekte arm schuin omhoog voor je lichaam langs naar je andere schouder, weg van de pully, en laat het gecontroleerd terugzakken.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/cable-machine-cross-body-pull",
+  "physitrack_titel": "Cable machine cross-body pull - version 3"
+ },
+ {
+  "nr": 30,
+  "naam": "Pully dips",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/031.webp",
+  "uitleg": "Zit rechtop op de bank met je rug naar de pully en de kabels hoog achter je, in elke hand een handvat naast je borst. Duw de handvatten omlaag tot je armen gestrekt zijn, ellebogen langs je lichaam, en laat ze rustig terugkomen.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/cable-machine-single-arm-pull-down%2c-sitting",
+  "physitrack_titel": "Cable machine single arm pull-down, sitting"
+ },
+ {
+  "nr": 31,
+  "naam": "Pully down",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/032.webp",
+  "uitleg": "Lig op je rug op de bank met je hoofd bij de pully en pak de brede stang boven je hoofd. Trek de stang in een boog omlaag richting je borst en laat hem rustig teruggaan.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/supine-pullover---v2",
+  "physitrack_titel": "Supine Pullover - v2"
+ },
+ {
+  "nr": 32,
+  "naam": "Pully press double",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/033.webp",
+  "uitleg": "Sta met de rug naar de pully, in elke hand een handvat op schouderhoogte. Duw beide armen naar voren tot ze gestrekt zijn en kom rustig terug.",
+  "physitrack_url": "https://na.physitrack.com/home-exercise-video/cable-press-standing---single-arm",
+  "physitrack_titel": "Cable press standing - single arm"
+ },
+ {
+  "nr": 33,
+  "naam": "Pully press single",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/034.webp",
+  "uitleg": "Sta met de rug naar de pully, een handvat in een hand op schouderhoogte. Duw de arm naar voren tot hij gestrekt is en kom rustig terug.",
+  "physitrack_url": "https://na.physitrack.com/home-exercise-video/cable-press-standing---single-arm",
+  "physitrack_titel": "Cable press standing - single arm"
+ },
+ {
+  "nr": 34,
+  "naam": "Pully pull over",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/035.webp",
+  "uitleg": "Lig half op de schuine bank met je hoofd richting de pully en pak het handvat achter je hoofd. Breng het handvat in een boog over je hoofd naar voren en laat het rustig teruggaan.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/supine-pullover---v2",
+  "physitrack_titel": "Supine Pullover - v2"
+ },
+ {
+  "nr": 35,
+  "naam": "Pully row",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/036.webp",
+  "uitleg": "Zit aan het apparaat met de voeten op de steunen en de rug recht. Trek het handvat naar je buik, ellebogen langs je lichaam, en beweeg rustig terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/seated-cable-machine-row",
+  "physitrack_titel": "Seated cable machine row"
+ },
+ {
+  "nr": 36,
+  "naam": "Push up",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/037.webp",
+  "uitleg": "Steun op je handen en tenen, handen iets breder dan schouderbreedte. Buig je ellebogen en laat je borst richting de vloer zakken, duw jezelf daarna weer omhoog.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/push-up-with-straight-body",
+  "physitrack_titel": "Push up with straight body"
+ },
+ {
+  "nr": 37,
+  "naam": "Reversed flyes",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/038.webp",
+  "uitleg": "Sta ver voorovergebogen met licht gebogen knieën en een rechte rug, met een gewicht in elke hand. Laat je armen recht naar beneden hangen met je handpalmen naar elkaar. Beweeg je armen met licht gebogen ellebogen zijwaarts omhoog tot schouderhoogte en laat ze rustig terugzakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/bent-over-dumbbell-reverse-fly-%25e2%2580%2593-adaptive",
+  "physitrack_titel": "Bent-over dumbbell reverse fly"
+ },
+ {
+  "nr": 38,
+  "naam": "Shoulder rotation (shrugs)",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/039.webp",
+  "uitleg": "Sta rechtop met in elke hand een gewicht, armen gestrekt langs je lichaam en handpalmen naar je toe. Trek je schouders op richting je oren, draai ze naar achteren en laat ze rustig zakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/shoulder-shrugs-with-weights",
+  "physitrack_titel": "Shoulder shrugs with weights"
+ },
+ {
+  "nr": 39,
+  "naam": "Triceps dips",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/040.webp",
+  "uitleg": "Zet je handen achter je op een stevige stoel of bank, benen naar voren. Buig je ellebogen en laat je billen zakken, duw jezelf daarna weer omhoog.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/triceps-dips-on-box",
+  "physitrack_titel": "Triceps dips - on box"
+ },
+ {
+  "nr": 40,
+  "naam": "Triceps dumbell kickbacks",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/041.webp",
+  "uitleg": "Zet een knie en dezelfde hand op de bank, met je rug recht en bijna horizontaal. Houd een gewicht in je andere hand, bovenarm langs je lichaam en elleboog gebogen. Strek je elleboog tot je arm recht naar achteren wijst en buig rustig terug.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/triceps-extension---bent-over-single-arm-with-dumbbell",
+  "physitrack_titel": "Triceps extension - bent over single arm with dumbbell"
+ },
+ {
+  "nr": 41,
+  "naam": "Triceps push down",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/042.webp",
+  "uitleg": "Sta rechtop voor het apparaat en pak de stang op borsthoogte, ellebogen tegen je zij. Duw de stang naar beneden tot je armen gestrekt zijn en laat rustig terugkomen.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/cable-machine-triceps-extension",
+  "physitrack_titel": "Cable machine triceps extension"
+ },
+ {
+  "nr": 42,
+  "naam": "Upright row",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/043.webp",
+  "uitleg": "Sta rechtop met een gewicht in beide handen voor je bovenbenen. Trek het gewicht langs je lichaam omhoog tot borsthoogte, ellebogen wijzen opzij, en laat rustig zakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/upright-row-version-1",
+  "physitrack_titel": "Upright Row version 1"
+ },
+ {
+  "nr": 43,
+  "naam": "Wrist extension",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/044.webp",
+  "uitleg": "Kniel bij een bank en laat je onderarm erop rusten met je handpalm naar beneden en een gewichtje in je hand over de rand. Beweeg je hand omhoog en laat hem rustig terugzakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/dumbell-wrist-extension",
+  "physitrack_titel": "Dumbell wrist extension"
+ },
+ {
+  "nr": 44,
+  "naam": "Wrist flexion",
+  "groep": "Bovenste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/045.webp",
+  "uitleg": "Kniel bij een steun en laat je onderarm erop rusten met je handpalm naar boven en een gewichtje in je hand over de rand. Beweeg je hand omhoog richting je onderarm en laat hem rustig terugzakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/wrist-flexion-with-weight",
+  "physitrack_titel": "Wrist flexion with weight - version 2"
+ },
+ {
+  "nr": 45,
+  "naam": "Been pendelen",
+  "groep": "Onderste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/046.webp",
+  "uitleg": "Sta rechtop naast een steunpunt en houd je vast. Zwaai je been ontspannen naar voren en naar achteren, terwijl je romp stil blijft.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/single-leg-balance-leg-swinging",
+  "physitrack_titel": "Single leg balance leg swinging"
+ },
+ {
+  "nr": 46,
+  "naam": "Bridges kicker",
+  "groep": "Onderste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/047.webp",
+  "uitleg": "Lig op je rug met gebogen knieen en voeten plat op de grond. Til je heupen op en strek daarna een been uit in het verlengde van je lichaam, wissel van been.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/bridge-hold-single-leg-extension",
+  "physitrack_titel": "Bridge hold single leg extension"
+ },
+ {
+  "nr": 47,
+  "naam": "Calf raises",
+  "groep": "Onderste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/048.webp",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte, eventueel met steun. Kom omhoog op je tenen en laat je hielen rustig weer zakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/double-leg-calf-raise-on-floor",
+  "physitrack_titel": "Double leg calf raise on floor"
+ },
+ {
+  "nr": 48,
+  "naam": "Chair squat",
+  "groep": "Onderste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/049.webp",
+  "uitleg": "Sta voor een stoel met je voeten op heupbreedte. Zak met je billen naar achteren tot je de stoel bijna raakt en kom weer rechtop.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/box-squat-with-chair",
+  "physitrack_titel": "Box squat with chair"
+ },
+ {
+  "nr": 49,
+  "naam": "Crabwalk",
+  "groep": "Onderste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/050.webp",
+  "uitleg": "Sta in een lichte squathouding met een band om je benen. Stap zijwaarts opzij terwijl je knieen gebogen blijven en houd spanning op de band.",
+  "physitrack_url": "https://ie.physitrack.com/home-exercise-video/band-resisted-crab-walks",
+  "physitrack_titel": "Band resisted crab walks"
+ },
+ {
+  "nr": 50,
+  "naam": "Dead lift",
+  "groep": "Onderste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/051.webp",
+  "uitleg": "Sta met je voeten op heupbreedte achter een stang op de grond. Buig door je knieën en heupen met een rechte rug en pak de stang bovenhands vast. Kom rechtop door je heupen en knieën te strekken, houd de stang dicht langs je benen en laat hem op dezelfde manier weer zakken.",
+  "physitrack_url": "https://nl.physitrack.com/home-exercise-video/deadlift-met-barbell",
+  "physitrack_titel": "Deadlift - met barbell"
+ },
+ {
+  "nr": 51,
+  "naam": "Extension squat",
+  "groep": "Onderste extremiteit",
+  "getoond": "images/beginhouding-pijl-v1/052.webp",
+  "uitleg": "Sta met je voeten op heupbreedte en houd het gewicht met gestrekte armen boven je hoofd. Zak in een diepe squat met een rechte rug terwijl je armen boven je hoofd blijven, en kom weer omhoog tot stand.",
+  "physitrack_url": "https://nl.physitrack.com/home-exercise-video/functionele-overhead-squat",
+  "physitrack_titel": "Functionele overhead squat"
+ }
+]

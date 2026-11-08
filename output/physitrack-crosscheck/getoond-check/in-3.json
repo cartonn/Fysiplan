@@ -1,0 +1,470 @@
+[
+ {
+  "nr": 104,
+  "naam": "Scissors 1",
+  "groep": "Core",
+  "getoond": "images/beginhouding-pijl-v1/105.webp",
+  "uitleg": "Lig op je rug met je benen gestrekt omhoog. Beweeg je benen afwisselend op en neer als een schaar en houd je onderrug op de vloer.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/double-leg-lifts",
+  "physitrack_titel": "Supine double leg lifts"
+ },
+ {
+  "nr": 105,
+  "naam": "Scissors 2",
+  "groep": "Core",
+  "getoond": "images/beginhouding-pijl-v1/106.webp",
+  "uitleg": "Lig op je rug met je hoofd en schouders iets van de vloer en trek één knie naar je borst, je andere been strek je schuin naar voren. Wissel rustig van been, zodat het gebogen been uitstrekt en het gestrekte been naar je borst komt.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/pilates-single-leg-stretch-level-1",
+  "physitrack_titel": "Pilates single leg stretch level 1"
+ },
+ {
+  "nr": 106,
+  "naam": "Side bents",
+  "groep": "Core",
+  "getoond": "images/beginhouding-pijl-v1/107.webp",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte, een dumbbell in een hand langs je lichaam en je andere arm boven je hoofd. Buig je romp zijwaarts naar de kant van de dumbbell en kom terug, wissel daarna van kant.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/dumbbell-side-bend",
+  "physitrack_titel": "Dumbbell Side Bend"
+ },
+ {
+  "nr": 107,
+  "naam": "Stick twist",
+  "groep": "Core",
+  "getoond": "images/beginhouding-pijl-v1/108.webp",
+  "uitleg": "Sta rechtop met een stok op je schouders achter je nek. Draai je romp rustig afwisselend naar links en naar rechts, je heupen blijven naar voren gericht.",
+  "physitrack_url": "https://ie.physitrack.com/home-exercise-video/standing-trunk-rotation-with-stick",
+  "physitrack_titel": "Standing trunk rotation with stick"
+ },
+ {
+  "nr": 108,
+  "naam": "Superman",
+  "groep": "Core",
+  "getoond": "images/beginhouding-pijl-v1/109.webp",
+  "uitleg": "Zet je handen onder je schouders en je knieën onder je heupen, je rug is recht. Strek één arm naar voren en tegelijk het andere been naar achteren, houd je romp stil en wissel daarna van kant.",
+  "physitrack_url": "https://nz.physitrack.com/home-exercise-video/superman%2c-4-point-kneeling",
+  "physitrack_titel": "Superman, 4 point kneeling"
+ },
+ {
+  "nr": 109,
+  "naam": "Fiets",
+  "groep": "Cardio",
+  "getoond": "images/beginhouding-pijl-v1/110.webp",
+  "uitleg": "Stel het zadel zo in dat je knie licht gebogen blijft als je trapper onderaan staat. Fiets in een rustig en gelijkmatig tempo.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/stationary-cycling-version-3",
+  "physitrack_titel": "Stationary Cycling Version 3"
+ },
+ {
+  "nr": 110,
+  "naam": "Jumping jacks",
+  "groep": "Cardio",
+  "getoond": "images/beginhouding-pijl-v1/113.webp",
+  "uitleg": "Sta rechtop met je voeten bij elkaar en je armen langs je lichaam. Spring je benen zijwaarts uit terwijl je je armen boven je hoofd brengt en spring daarna terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/jumping-jacks---version-2",
+  "physitrack_titel": "Jumping jacks - Version 2"
+ },
+ {
+  "nr": 111,
+  "naam": "Loopband",
+  "groep": "Cardio",
+  "getoond": "images/beginhouding-pijl-v1/114.webp",
+  "uitleg": "Ga op de band staan en kies een rustig tempo. Loop rechtop met je blik naar voren en gebruik de leuning alleen als dat nodig is.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/walking-on-a-treadmill",
+  "physitrack_titel": "Walking on a Treadmill"
+ },
+ {
+  "nr": 112,
+  "naam": "Roeier",
+  "groep": "Cardio",
+  "getoond": "images/beginhouding-pijl-v1/119.webp",
+  "uitleg": "Zet je voeten vast in de steunen en pak het handvat met gestrekte armen. Duw je benen uit en trek daarna het handvat naar je buik, kom rustig terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/rowing-ergometer",
+  "physitrack_titel": "Rowing ergometer"
+ },
+ {
+  "nr": 113,
+  "naam": "Squat jumps",
+  "groep": "Cardio",
+  "getoond": "images/beginhouding-pijl-v1/121.webp",
+  "uitleg": "Sta voor een lage box met je voeten op heupbreedte. Zak in een squat, spring op de box en land zacht met gebogen knieën. Stap daarna rustig weer naar beneden.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/box-jumps---off",
+  "physitrack_titel": "Box jumps on/off"
+ },
+ {
+  "nr": 114,
+  "naam": "Stairs",
+  "groep": "Cardio",
+  "getoond": "images/beginhouding-pijl-v1/122.webp",
+  "uitleg": "Ga rechtop op de pedalen van de stepper staan en houd de leuning licht vast. Duw in een rustig tempo afwisselend je linker- en rechtervoet omlaag.",
+  "physitrack_url": "https://de.physitrack.com/home-exercise-video/stair-climber---treppen-steigen-(maschine)",
+  "physitrack_titel": "Stair climber - Treppen steigen (Maschine)"
+ },
+ {
+  "nr": 115,
+  "naam": "Balans op 1 been",
+  "groep": "Bosu",
+  "getoond": "images/beginhouding-pijl-v1/141.webp",
+  "uitleg": "Ga met een voet midden op de bosu staan en til je andere been iets op. Houd je balans en blijf rechtop staan met een licht gebogen knie.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/single-leg-balance-on-bosu",
+  "physitrack_titel": "Single-leg balance on Bosu"
+ },
+ {
+  "nr": 116,
+  "naam": "Bosu brigdes",
+  "groep": "Bosu",
+  "getoond": "images/beginhouding-pijl-v1/142.webp",
+  "uitleg": "Lig op je rug met je voeten op de bosu en je knieen gebogen. Duw je heupen omhoog tot je lichaam een rechte lijn vormt en zak rustig terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/bosu-bridge",
+  "physitrack_titel": "BOSU Bridge"
+ },
+ {
+  "nr": 117,
+  "naam": "Bosu brigdes single leg",
+  "groep": "Bosu",
+  "getoond": "images/beginhouding-pijl-v1/143.webp",
+  "uitleg": "Lig op je rug met één voet op de bolle kant van de bosu en je andere been gestrekt omhoog. Duw je heupen omhoog tot je schouders, heupen en knie één lijn vormen en zak rustig terug.",
+  "physitrack_url": "https://nz.physitrack.com/home-exercise-video/bridge-single-leg-on-bosu",
+  "physitrack_titel": "Bridge single leg on bosu"
+ },
+ {
+  "nr": 118,
+  "naam": "Bosu chest press dumbell",
+  "groep": "Bosu",
+  "getoond": "images/beginhouding-pijl-v1/144.webp",
+  "uitleg": "Lig met je bovenrug op de bosu, je voeten op de vloer en je heupen omhoog. Houd in elke hand een dumbbell bij je borst met je handpalmen richting je voeten. Duw de dumbbells recht omhoog en laat ze rustig terugzakken.",
+  "physitrack_url": "https://ie.physitrack.com/home-exercise-video/bilateral-chest-press-with-dumbbells",
+  "physitrack_titel": "Bilateral chest press with dumbbells"
+ },
+ {
+  "nr": 119,
+  "naam": "Bosu leg pull in",
+  "groep": "Bosu",
+  "getoond": "images/beginhouding-pijl-v1/145.webp",
+  "uitleg": "Zit op de bosu, leun iets naar achteren en steun met je handen. Trek je knieen naar je borst en strek je benen daarna weer uit.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/v-sit-ups---hand-supported",
+  "physitrack_titel": "V sit ups - hand supported"
+ },
+ {
+  "nr": 120,
+  "naam": "Bosu mountain climber",
+  "groep": "Bosu",
+  "getoond": "images/beginhouding-pijl-v1/146.webp",
+  "uitleg": "Draai de bosu om en pak de randen vast in een plankhouding. Trek om de beurt een knie naar je borst en houd je rug recht.",
+  "physitrack_url": "https://fr.physitrack.com/home-exercise-video/planche-en-mountain-climber-sur-bosu",
+  "physitrack_titel": "Planche en mountain climber sur Bosu"
+ },
+ {
+  "nr": 121,
+  "naam": "Bosu plank",
+  "groep": "Bosu",
+  "getoond": "images/beginhouding-pijl-v1/147.webp",
+  "uitleg": "Draai de bosu om en pak met gestrekte armen de randen vast, zet je voeten naar achteren. Houd je lichaam in een rechte lijn van hoofd tot hielen.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/shoulder%252fscapula-stability-plank-on-a-bosu-ball",
+  "physitrack_titel": "Shoulder/Scapula Stability Plank on a Bosu Ball"
+ },
+ {
+  "nr": 122,
+  "naam": "Bosu plank leg lift",
+  "groep": "Bosu",
+  "getoond": "images/beginhouding-pijl-v1/148.webp",
+  "uitleg": "Steun met je onderarmen op de bosu in een plankhouding. Til om de beurt een gestrekt been iets omhoog en houd je heupen stil.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/forearm-plank-with-straight-leg-lift",
+  "physitrack_titel": "Forearm Plank with Straight Leg Lift"
+ },
+ {
+  "nr": 123,
+  "naam": "Bosu squat",
+  "groep": "Bosu",
+  "getoond": "images/beginhouding-pijl-v1/149.webp",
+  "uitleg": "Ga met beide voeten op de bosu staan. Zak met een rechte rug door je knieen alsof je gaat zitten en kom daarna rustig weer omhoog.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/squat-on-bosu",
+  "physitrack_titel": "Squat on BOSU (uneven side)"
+ },
+ {
+  "nr": 124,
+  "naam": "Bosu v ups",
+  "groep": "Bosu",
+  "getoond": "images/beginhouding-pijl-v1/150.webp",
+  "uitleg": "Zit op de bosu en leun iets naar achteren met je benen gestrekt voor je. Breng je bovenlichaam en benen tegelijk naar elkaar toe en strek daarna weer uit.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/v-sit-ups---hand-supported",
+  "physitrack_titel": "V sit ups - hand supported"
+ },
+ {
+  "nr": 125,
+  "naam": "Bosu zijw plank",
+  "groep": "Bosu",
+  "getoond": "images/beginhouding-pijl-v1/151.webp",
+  "uitleg": "Steun met een gestrekte arm met je hand op de bosu, je voeten op elkaar en je andere hand op je heup. Til je heupen op tot je lichaam een rechte lijn vormt en houd deze houding vast.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/side-plank-on-bosu",
+  "physitrack_titel": "Side Plank on a Bosu Ball"
+ },
+ {
+  "nr": 126,
+  "naam": "TRX ab roll out",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/152.webp",
+  "uitleg": "Sta met je rug naar het ophangpunt, zet je voeten iets naar achteren en houd de handvatten met gestrekte armen voor je heupen. Laat je armen gestrekt naar voren en omhoog gaan terwijl je hele lichaam als een plank voorover leunt. Trek jezelf met je buikspieren terug naar de start.",
+  "physitrack_url": "https://uk.physitrack.com/home-exercise-video/suspension-standing-fallout",
+  "physitrack_titel": "Suspension Standing Fallout"
+ },
+ {
+  "nr": 127,
+  "naam": "TRX biceps curl",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/153.webp",
+  "uitleg": "Sta met je gezicht naar het ophangpunt en leun achterover met gestrekte armen. Trek je handen naar je voorhoofd door je ellebogen te buigen en strek daarna rustig weer.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/trx-bicep-curl",
+  "physitrack_titel": "TRX bicep curl"
+ },
+ {
+  "nr": 128,
+  "naam": "TRX chest press",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/154.webp",
+  "uitleg": "Sta met je rug naar het ophangpunt en leun voorover op de handvatten. Buig je ellebogen tot je borst tussen je handen komt en duw jezelf terug omhoog.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/chest-press-with-suspension-straps",
+  "physitrack_titel": "Chest press with Suspension Straps"
+ },
+ {
+  "nr": 129,
+  "naam": "TRX flyes I",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/155.webp",
+  "uitleg": "Sta met je gezicht naar het ophangpunt en leun achterover met gestrekte armen en de handvatten bij elkaar voor je. Trek je gestrekte armen schuin omhoog en uit elkaar tot een Y boven je hoofd, zodat je lichaam rechtop komt. Laat je daarna rustig terug zakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/trx-%22y%22-fly",
+  "physitrack_titel": "TRX \"Y\" fly"
+ },
+ {
+  "nr": 130,
+  "naam": "TRX flyes II",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/156.webp",
+  "uitleg": "Sta met je gezicht naar het ophangpunt en leun achterover met gestrekte armen voor je. Open je armen zijwaarts en trek jezelf zo omhoog, kom daarna rustig terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/standing-reverse-flyes",
+  "physitrack_titel": "Standing reverse flyes"
+ },
+ {
+  "nr": 131,
+  "naam": "TRX glute bridge",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/157.webp",
+  "uitleg": "Lig op je rug met je hielen in de lussen en je knieen gebogen. Duw je heupen omhoog tot ze op een lijn zijn met je knieen en schouders en zak rustig terug.",
+  "physitrack_url": "https://uk.physitrack.com/home-exercise-video/trx-glute-bridge",
+  "physitrack_titel": "TRX glute bridge"
+ },
+ {
+  "nr": 132,
+  "naam": "TRX lunge",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/158.webp",
+  "uitleg": "Sta op een been met je andere voet achter je in de lus. Zak door je standbeen tot je knie ongeveer haaks staat en kom weer omhoog.",
+  "physitrack_url": "https://uk.physitrack.com/home-exercise-video/trx-bulgarian-split-squat",
+  "physitrack_titel": "TRX Bulgarian split squat"
+ },
+ {
+  "nr": 133,
+  "naam": "TRX lunge lateral high",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/159.webp",
+  "uitleg": "Sta breed met je gezicht naar het ophangpunt en houd de handvatten voor je borst vast. Verplaats je gewicht naar één kant en zak door die knie, terwijl je andere been gestrekt blijft. Duw jezelf terug naar het midden.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/trx-lateral-lunge",
+  "physitrack_titel": "TRX lateral lunge"
+ },
+ {
+  "nr": 134,
+  "naam": "TRX lunge lateral low",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/160.webp",
+  "uitleg": "Sta breed met je gezicht naar het ophangpunt en houd de handvatten hoog boven je schouders vast. Zak diep door één knie terwijl je andere been gestrekt blijft. Duw jezelf terug naar het midden.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/trx-lateral-lunge",
+  "physitrack_titel": "TRX lateral lunge"
+ },
+ {
+  "nr": 135,
+  "naam": "TRX lunge reverse",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/161.webp",
+  "uitleg": "Sta rechtop met de handvatten voor je. Stap met een been naar achteren en zak tot beide knieen ongeveer haaks staan, kom daarna terug naar stand.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/trx-lunge",
+  "physitrack_titel": "TRX Lunge"
+ },
+ {
+  "nr": 136,
+  "naam": "TRX mountain climber",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/162.webp",
+  "uitleg": "Steun op je handen met je voeten in de lussen, je lichaam in een rechte lijn. Trek om de beurt een knie richting je borst en strek het been weer.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/trx-straight-arm-suspended-plank",
+  "physitrack_titel": "TRX straight arm suspended plank"
+ },
+ {
+  "nr": 137,
+  "naam": "TRX plank",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/163.webp",
+  "uitleg": "Steun op je handen onder je schouders met je voeten in de lussen. Houd je lichaam van hoofd tot hielen in een rechte lijn en span je buik aan.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/trx-straight-arm-suspended-plank",
+  "physitrack_titel": "TRX straight arm suspended plank"
+ },
+ {
+  "nr": 138,
+  "naam": "TRX plank side",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/164.webp",
+  "uitleg": "Lig op je zij met je voeten op elkaar in de lussen en steun op je hand onder je schouder. Til je heupen op tot je lichaam een rechte lijn vormt en houd dit vast.",
+  "physitrack_url": "https://ie.physitrack.com/home-exercise-video/trx-side-plank",
+  "physitrack_titel": "TRX side plank"
+ },
+ {
+  "nr": 139,
+  "naam": "TRX pull up",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/165.webp",
+  "uitleg": "Zit op de grond recht onder het ophangpunt met gestrekte benen en houd de handvatten met gestrekte armen boven je vast. Trek je borst naar de handvatten tot je billen loskomen en je lichaam een rechte lijn vormt op je hielen. Zak rustig terug.",
+  "physitrack_url": "https://www.physitrack.com/exercise-library/how-to-perform-the-trx-row-exercise",
+  "physitrack_titel": "TRX row"
+ },
+ {
+  "nr": 140,
+  "naam": "TRX row",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/166.webp",
+  "uitleg": "Leun achterover met gestrekte armen en je lichaam in een rechte lijn. Trek je borst naar de handvatten door je ellebogen langs je lichaam te buigen en strek weer.",
+  "physitrack_url": "https://www.physitrack.com/exercise-library/how-to-perform-the-trx-row-exercise",
+  "physitrack_titel": "TRX row"
+ },
+ {
+  "nr": 141,
+  "naam": "TRX saw pikes",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/167.webp",
+  "uitleg": "Steun op je handen met je voeten in de lussen. Duw je heupen omhoog tot een omgekeerde V en kom terug naar de rechte lijn.",
+  "physitrack_url": "https://uk.physitrack.com/home-exercise-video/trx-pike",
+  "physitrack_titel": "TRX pike"
+ },
+ {
+  "nr": 142,
+  "naam": "TRX squat",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/168.webp",
+  "uitleg": "Sta rechtop met de handvatten voor je en je voeten op heupbreedte. Zak door je knieen tot je bovenbenen ongeveer horizontaal zijn en kom weer omhoog.",
+  "physitrack_url": "https://na.physitrack.com/home-exercise-video/suspension-squats",
+  "physitrack_titel": "Suspension Squats"
+ },
+ {
+  "nr": 143,
+  "naam": "TRX squat overhead",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/169.webp",
+  "uitleg": "Houd de handvatten gestrekt boven je hoofd en sta met je voeten op heupbreedte. Zak door je knieen in een squat terwijl je armen omhoog blijven en kom weer omhoog.",
+  "physitrack_url": "https://na.physitrack.com/home-exercise-video/suspension-squats",
+  "physitrack_titel": "Suspension Squats"
+ },
+ {
+  "nr": 144,
+  "naam": "TRX squat pistol",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/170.webp",
+  "uitleg": "Pak de TRX-handvatten vast, sta rechtop en til een been gestrekt naar voren. Zak op het standbeen door de knie naar een diepe hurkzit en kom weer omhoog.",
+  "physitrack_url": "https://uk.physitrack.com/home-exercise-video/suspension-strap-pistol-squat",
+  "physitrack_titel": "Suspension strap pistol squat"
+ },
+ {
+  "nr": 145,
+  "naam": "TRX triceps extension",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/171.webp",
+  "uitleg": "Sta met je rug naar het ophangpunt, leun voorover en houd de handvatten met gestrekte armen voor je op hoofdhoogte. Buig alleen je ellebogen zodat je handen naar je voorhoofd komen en je lichaam verder voorover zakt. Strek je armen weer en duw jezelf terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/trx-tricep-extension;-02",
+  "physitrack_titel": "TRX Tricep Extension; 02"
+ },
+ {
+  "nr": 146,
+  "naam": "TRX triceps extension II",
+  "groep": "TRX",
+  "getoond": "images/beginhouding-pijl-v1/172.webp",
+  "uitleg": "Leun voorover in de TRX met de ellebogen gebogen naast je hoofd. Duw jezelf omhoog door je armen volledig te strekken en buig ze langzaam terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/trx-tricep-extension;-02",
+  "physitrack_titel": "TRX Tricep Extension; 02"
+ },
+ {
+  "nr": 147,
+  "naam": "Yoga butterfly stretch",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/173.webp",
+  "uitleg": "Zit rechtop met de voetzolen tegen elkaar en de knieën naar buiten. Laat de knieën richting de grond zakken en buig eventueel licht naar voren.",
+  "physitrack_url": "https://www.physitrack.com/exercise-library/how-to-perform-the-butterfly-stretch-exercise",
+  "physitrack_titel": "Butterfly Stretch"
+ },
+ {
+  "nr": 148,
+  "naam": "Yoga camel",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/174.webp",
+  "uitleg": "Kniel rechtop met de heupen boven de knieën. Leun rustig naar achteren, duw de heupen naar voren en pak je hielen vast.",
+  "physitrack_url": "",
+  "physitrack_titel": ""
+ },
+ {
+  "nr": 149,
+  "naam": "Yoga cat tail",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/175.webp",
+  "uitleg": "Lig op je zij en buig je bovenste knie naar voren. Pak met de bovenste hand de enkel van je onderste been achter je vast en draai je bovenlichaam rustig open.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/side-lying-quadriceps-stretch",
+  "physitrack_titel": "Side lying quadriceps stretch"
+ },
+ {
+  "nr": 150,
+  "naam": "Yoga cobra",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/176.webp",
+  "uitleg": "Lig op je buik met de handen onder je schouders. Duw je bovenlichaam omhoog, strek je armen en houd je heupen op de grond.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/cobra-stretch",
+  "physitrack_titel": "Cobra stretch"
+ },
+ {
+  "nr": 151,
+  "naam": "Yoga deep squat",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/177.webp",
+  "uitleg": "Sta met de voeten iets breder dan heupbreedte. Zak in een diepe hurkzit, houd de hielen op de grond en duw met de ellebogen de knieën licht naar buiten.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/frog-pose",
+  "physitrack_titel": "Frog pose (Frog squat hip adductors stretch)"
+ },
+ {
+  "nr": 152,
+  "naam": "Yoga downward dog",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/178.webp",
+  "uitleg": "Start op handen en knieën. Duw je heupen omhoog en naar achteren tot je lichaam een omgekeerde V vormt, met gestrekte armen en benen.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/downward-dog-from-4-point",
+  "physitrack_titel": "Downward dog from 4 point"
+ },
+ {
+  "nr": 154,
+  "naam": "Yoga extended child's pose",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/180.webp",
+  "uitleg": "Kniel met je billen op je hielen. Schuif je armen gestrekt naar voren en laat je borst en voorhoofd richting de grond zakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/childs-pose",
+  "physitrack_titel": "NEUCAR 1.3 Childs pose kneeling"
+ },
+ {
+  "nr": 155,
+  "naam": "Yoga extended puppy",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/181.webp",
+  "uitleg": "Start op handen en knieën met de heupen boven de knieën. Loop je handen naar voren en laat je borst richting de grond zakken, armen gestrekt.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/puppy-dog-pose",
+  "physitrack_titel": "Puppy Dog Pose"
+ },
+ {
+  "nr": 156,
+  "naam": "Yoga extended triangle",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/182.webp",
+  "uitleg": "Sta met je voeten wijd uit elkaar, draai je voorste voet naar buiten en je achterste voet iets naar binnen. Schuif je heupen opzij en laat je hand langs je voorste been zakken tot bij je enkel, terwijl je andere arm recht omhoog wijst.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/triangle-pose",
+  "physitrack_titel": "Triangle Pose"
+ }
+]

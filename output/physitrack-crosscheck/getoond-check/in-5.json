@@ -1,0 +1,470 @@
+[
+ {
+  "nr": 500,
+  "naam": "Alternating lunge jumps",
+  "groep": "Agility",
+  "getoond": "images/beginhouding-pijl-v1/111.webp",
+  "uitleg": "Kom gecontroleerd in een uitvalspas en wissel tijdens een kleine sprong van voorste been. Land zacht in de uitvalspas en houd je romp rechtop.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/jumping-lunges---alternate-with-arms-on-hips",
+  "physitrack_titel": "Jumping lunges - alternate with arms on hips"
+ },
+ {
+  "nr": 501,
+  "naam": "Box jumps",
+  "groep": "Agility",
+  "getoond": "images/beginhouding-pijl-v1/112.webp",
+  "uitleg": "Zak licht door je knieen voor een stabiele opstapbox. Spring gecontroleerd op de box, land zacht met beide voeten en kom rustig weer af.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/box-jumps---off",
+  "physitrack_titel": "Box jumps on/off"
+ },
+ {
+  "nr": 502,
+  "naam": "Long jumps",
+  "groep": "Agility",
+  "getoond": "images/beginhouding-pijl-v1/115.webp",
+  "uitleg": "Zak licht door je knieen, zwaai je armen naar achteren en spring met beide voeten gecontroleerd naar voren. Land zacht met gebogen knieen en je voeten naast elkaar.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/jumping-forwards-and-backwards",
+  "physitrack_titel": "Jumping forwards and backwards"
+ },
+ {
+  "nr": 503,
+  "naam": "Skate jumps",
+  "groep": "Agility",
+  "getoond": "images/beginhouding-pijl-v1/116.webp",
+  "uitleg": "Spring zijwaarts van het ene been naar het andere. Land zacht met een licht gebogen knie en breng het vrije been schuin achter het standbeen langs.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/skater-jumps",
+  "physitrack_titel": "Lateral bounds/Skater Jumps"
+ },
+ {
+  "nr": 504,
+  "naam": "Sprints",
+  "groep": "Agility",
+  "getoond": "images/beginhouding-pijl-v1/117.webp",
+  "uitleg": "Vertrek vanuit een lichte vooroverhelling en versnel met korte krachtige passen. Houd je romp stabiel en gebruik je armen in tegengestelde richting van je benen.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/sprint-start-%28acceleration%29",
+  "physitrack_titel": "Sprint Start (acceleration)"
+ },
+ {
+  "nr": 505,
+  "naam": "Snap jumps",
+  "groep": "Agility",
+  "getoond": "images/beginhouding-pijl-v1/118.webp",
+  "uitleg": "Zak licht door je knieen en maak een kleine, snelle sprong recht omhoog. Land veerkrachtig met je knieen licht gebogen en herhaal gecontroleerd.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/jumping---narrow-leg",
+  "physitrack_titel": "Jumping - narrow leg"
+ },
+ {
+  "nr": 506,
+  "naam": "Rope jumping",
+  "groep": "Agility",
+  "getoond": "images/beginhouding-pijl-v1/120.webp",
+  "uitleg": "Houd de uiteinden van het springtouw vast en spring licht met beide voeten terwijl het touw onder je voeten doorgaat. Land zacht en houd je romp rechtop.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/jump-rope-skipping-%E2%80%93-two-footed-pogo-jumps",
+  "physitrack_titel": "Jump rope skipping – two footed pogo jumps"
+ },
+ {
+  "nr": 507,
+  "naam": "Swiss ball wall squat",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/123.webp",
+  "uitleg": "Plaats de oefenbal tussen je onderrug en de muur. Zak rustig door je knieen terwijl de bal langs de muur rolt, houd je knieen boven je voeten en kom weer omhoog.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/wall-squats-with-stability-ball",
+  "physitrack_titel": "Wall squats with stability ball"
+ },
+ {
+  "nr": 508,
+  "naam": "Swiss ball plank",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/124.webp",
+  "uitleg": "Steun met je onderarmen op de oefenbal. Begin eventueel op je knieen en strek daarna je benen tot je lichaam een rechte lijn vormt van schouders tot hielen.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/elbow-plank-on-the-ball",
+  "physitrack_titel": "Elbow Plank on the Ball"
+ },
+ {
+  "nr": 509,
+  "naam": "Swiss ball hip raise",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/125.webp",
+  "uitleg": "Lig op je rug met je onderbenen op de oefenbal. Span je buik en bilspieren aan, til je heupen op tot je lichaam een rechte lijn vormt en zak rustig terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/straight-leg-bridge-with-legs-elevated---version-6",
+  "physitrack_titel": "Straight leg bridge with legs elevated - Version 6"
+ },
+ {
+  "nr": 510,
+  "naam": "Swiss ball leg curl hip raise",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/126.webp",
+  "uitleg": "Lig op je rug met je hielen op de oefenbal en houd je heupen omhoog. Trek de bal naar je toe door je knieen te buigen en strek je benen daarna weer gecontroleerd.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/bridge-with-bilateral-hamstring-curls-on-ball",
+  "physitrack_titel": "Bridge with bilateral hamstring curls on ball"
+ },
+ {
+  "nr": 511,
+  "naam": "Swiss ball squeezes adductoren",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/127.webp",
+  "uitleg": "Lig op je rug met je knieen gebogen en een bal tussen je knieen. Knijp de bal rustig samen vanuit je bovenbenen, houd kort vast en ontspan weer.",
+  "physitrack_url": "https://nz.physitrack.com/home-exercise-video/swiss-ball-inner-thigh-squeeze",
+  "physitrack_titel": "Swiss ball inner thigh squeeze"
+ },
+ {
+  "nr": 512,
+  "naam": "Swiss ball feet to chest",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/128.webp",
+  "uitleg": "Neem een hoge plank aan met je voeten op de oefenbal. Houd je benen gestrekt en rol de bal naar je toe door je heupen omhoog te tillen; keer rustig terug naar plank.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/core-pike-on-stability-ball",
+  "physitrack_titel": "Core pike on stability ball"
+ },
+ {
+  "nr": 513,
+  "naam": "Swiss ball knee to chest",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/129.webp",
+  "uitleg": "Neem een hoge plank aan met je voeten op de oefenbal. Buig je knieen en trek de bal gecontroleerd richting je borst, strek daarna je benen weer.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/plank-knee-tuck-on-stability-ball---version-2",
+  "physitrack_titel": "Plank knee tuck on stability ball - version 2"
+ },
+ {
+  "nr": 514,
+  "naam": "Swiss ball rollout",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/130.webp",
+  "uitleg": "Kniel achter de oefenbal met je onderarmen erop en je handen tegen elkaar. Rol de bal rustig naar voren terwijl je heupen meegaan, tot je lichaam van knieën tot hoofd een rechte lijn vormt, en houd je onderrug vlak. Trek de bal daarna gecontroleerd terug.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/rolling-gym-ball-forward-with-forearms",
+  "physitrack_titel": "Rolling gym ball forward with forearms into modified plank"
+ },
+ {
+  "nr": 515,
+  "naam": "Swiss ball abs",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/131.webp",
+  "uitleg": "Lig met je onderrug op de oefenbal en je voeten stevig op de grond. Span je buik aan en maak een kleine gecontroleerde rompbuiging, zonder aan je nek te trekken.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/abdominal-exercise-ball-crunch",
+  "physitrack_titel": "Abdominal Exercise Ball Crunch"
+ },
+ {
+  "nr": 516,
+  "naam": "Swiss ball back ext",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/132.webp",
+  "uitleg": "Lig met je buik op de oefenbal en houd je voeten stevig op de grond. Hef je romp rustig tot hij in lijn is met je benen en zak gecontroleerd terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/back-extensions-on-ball-arms-crossed",
+  "physitrack_titel": "Back extensions on ball arms crossed"
+ },
+ {
+  "nr": 517,
+  "naam": "Swiss ball push up",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/133.webp",
+  "uitleg": "Neem een hoge plank aan met je schenen op de oefenbal. Buig je ellebogen gecontroleerd voor een push-up, houd je lichaam lang en druk weer omhoog.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/decline-push-up",
+  "physitrack_titel": "Decline push up"
+ },
+ {
+  "nr": 518,
+  "naam": "Swiss ball leg lifts",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/134.webp",
+  "uitleg": "Lig op je rug met de oefenbal tussen je onderbenen. Til je gestrekte benen met de bal gecontroleerd omhoog en laat ze langzaam terugzakken zonder je onderrug hol te trekken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/bilateral-leg-raise-in-supine---with-stability-ball",
+  "physitrack_titel": "Bilateral leg raise in supine - with stability ball"
+ },
+ {
+  "nr": 519,
+  "naam": "Swiss ball core",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/135.webp",
+  "uitleg": "Zit rechtop op de oefenbal met je voeten plat op de grond en je handen op je bovenbenen. Span je romp aan, strek je armen naar voren en til een voet met gebogen knie van de grond. Houd je balans en zet de voet weer neer.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/seated-leg-lifts-on-stability-ball---body-awareness",
+  "physitrack_titel": "Seated leg lifts on stability ball - body awareness"
+ },
+ {
+  "nr": 520,
+  "naam": "Swiss ball leg curl one leg",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/136.webp",
+  "uitleg": "Lig op je rug met een hiel op de oefenbal en het andere been gestrekt omhoog. Houd je heupen op en trek de bal met je standbeen naar je toe, strek daarna weer.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/bridge-single-leg-hamstring-curls-on-ball",
+  "physitrack_titel": "Bridge single leg hamstring curls on ball"
+ },
+ {
+  "nr": 521,
+  "naam": "Swiss ball dumbbell flyes",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/137.webp",
+  "uitleg": "Steun met je bovenrug op de oefenbal en houd je heupen hoog. Open je armen met de dumbbells zijwaarts met licht gebogen ellebogen en breng ze gecontroleerd boven je borst samen.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/supine-fly-on-stability-ball---weight",
+  "physitrack_titel": "Supine fly on stability ball - weight"
+ },
+ {
+  "nr": 522,
+  "naam": "Swiss ball dumbbell chest press",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/138.webp",
+  "uitleg": "Steun met je bovenrug op de oefenbal en houd je heupen hoog. Druk de dumbbells vanuit gebogen ellebogen rustig recht omhoog boven je borst en laat gecontroleerd terugzakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/supine-chest-press-on-stability-ball---weight",
+  "physitrack_titel": "Supine chest press on stability ball - weight"
+ },
+ {
+  "nr": 523,
+  "naam": "Swiss ball dumbbell biceps curl",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/139.webp",
+  "uitleg": "Zit rechtop op de oefenbal met de dumbbells naast je lichaam. Buig je ellebogen om de gewichten naar je schouders te brengen en laat ze rustig zakken.",
+  "physitrack_url": "https://uk.physitrack.com/home-exercise-video/seated-biceps-curl-with-dumbbells",
+  "physitrack_titel": "Seated biceps curl - with dumbbells"
+ },
+ {
+  "nr": 524,
+  "naam": "Swiss ball russian twist",
+  "groep": "Exercise Ball",
+  "getoond": "images/beginhouding-pijl-v1/140.webp",
+  "uitleg": "Zit stabiel op de oefenbal met je handen voor je borst. Draai je romp rustig afwisselend naar links en rechts zonder je bekken mee te draaien.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/trunk-rotation-with-a-ball,-on-a-stability-ball",
+  "physitrack_titel": "Trunk rotation with a ball, on a stability ball"
+ },
+ {
+  "nr": 525,
+  "naam": "Foam roller glute med.",
+  "groep": "Foam Roller",
+  "getoond": "images/beginhouding-pijl-v1/241.webp",
+  "uitleg": "Ga op je zij liggen met de foamroller onder de zijkant van je bil. Steun op je onderarm en je andere hand. Rol met hulp van je handen en bovenste been rustig heen en weer over de zijkant van je bil.",
+  "physitrack_url": "https://uk.physitrack.com/home-exercise-video/gluteus-medius-foam-rolling",
+  "physitrack_titel": "Gluteus medius foam rolling"
+ },
+ {
+  "nr": 526,
+  "naam": "Foam roller glute",
+  "groep": "Foam Roller",
+  "getoond": "images/beginhouding-pijl-v1/242.webp",
+  "uitleg": "Ga op de foamroller zitten met één enkel over de andere knie. Verplaats je gewicht naar de bilspier en rol rustig heen en weer.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/gluteal-foam-rolling---version-2",
+  "physitrack_titel": "Gluteal foam rolling - version 2"
+ },
+ {
+  "nr": 527,
+  "naam": "Foam roller quadriceps",
+  "groep": "Foam Roller",
+  "getoond": "images/beginhouding-pijl-v1/243.webp",
+  "uitleg": "Ga op je buik liggen met de foamroller onder de voorkant van je bovenbenen. Steun op je onderarmen en rol langzaam van boven de knie richting heup en terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/quadriceps-foam-roll",
+  "physitrack_titel": "Quadriceps foam roll"
+ },
+ {
+  "nr": 528,
+  "naam": "Foam roller hamstring",
+  "groep": "Foam Roller",
+  "getoond": "images/beginhouding-pijl-v1/244.webp",
+  "uitleg": "Zit met gestrekte benen en plaats de foamroller onder je bovenbenen. Til je heupen licht op met steun van je handen en rol rustig heen en weer.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/hamstring-foam-roll",
+  "physitrack_titel": "Hamstring foam rolling"
+ },
+ {
+  "nr": 529,
+  "naam": "Foam roller calf",
+  "groep": "Foam Roller",
+  "getoond": "images/beginhouding-pijl-v1/245.webp",
+  "uitleg": "Zit met één onderbeen op de foamroller en steun met je handen achter je. Rol langzaam over de kuit en wissel daarna van been.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/unilateral-calf-foam-roller",
+  "physitrack_titel": "Unilateral calf foam roller"
+ },
+ {
+  "nr": 530,
+  "naam": "Foam roller tractus",
+  "groep": "Foam Roller",
+  "getoond": "images/beginhouding-pijl-v1/246.webp",
+  "uitleg": "Ga op je zij liggen met de foamroller onder de buitenzijde van je bovenbeen. Steun op je onderarm en rol gecontroleerd over een klein traject.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/itb-foam-rolling---version-2",
+  "physitrack_titel": "ITB foam rolling - version 2"
+ },
+ {
+  "nr": 531,
+  "naam": "Foam roller back upper",
+  "groep": "Foam Roller",
+  "getoond": "images/beginhouding-pijl-v1/247.webp",
+  "uitleg": "Lig op je rug met gebogen knieën en de foamroller dwars onder je bovenrug. Ondersteun je hoofd met je handen en til je billen op. Duw met je voeten en rol rustig een klein stuk over je bovenrug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/thoracic-paraspinal-foam-roll",
+  "physitrack_titel": "Thoracic paraspinal foam roll"
+ },
+ {
+  "nr": 532,
+  "naam": "Foam roller lat stretch",
+  "groep": "Foam Roller",
+  "getoond": "images/beginhouding-pijl-v1/248.webp",
+  "uitleg": "Ga op je zij liggen met de foamroller onder de zijkant van je bovenrug. Strek de onderste arm boven je hoofd en rol langzaam over het gebied.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/lat-dorsi-foam-roll",
+  "physitrack_titel": "Lat dorsi foam roll"
+ },
+ {
+  "nr": 533,
+  "naam": "Foam roller adductoren",
+  "groep": "Foam Roller",
+  "getoond": "images/beginhouding-pijl-v1/249.webp",
+  "uitleg": "Ga op je buik liggen en plaats de foamroller onder de binnenzijde van één bovenbeen. Steun op je onderarmen en rol langzaam over een klein traject.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/hip-adductor-foam-roll",
+  "physitrack_titel": "Hip adductor foam roll"
+ },
+ {
+  "nr": 534,
+  "naam": "Foam roller fore arm",
+  "groep": "Foam Roller",
+  "getoond": "images/beginhouding-pijl-v1/250.webp",
+  "uitleg": "Zit comfortabel en leg je onderarm met de handpalm omlaag op de foamroller. Gebruik je andere hand om de druk te doseren en rol langzaam heen en weer.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/seated-wrist-flexor-and-pronator-self-myofascial-release",
+  "physitrack_titel": "Seated wrist flexor and pronator self-myofascial release"
+ },
+ {
+  "nr": 537,
+  "naam": "Foam roller back extension",
+  "groep": "Foam Roller",
+  "getoond": "images/beginhouding-pijl-v1/253.webp",
+  "uitleg": "Lig met de foamroller onder je middenrug en je knieën gebogen. Ondersteun je hoofd licht, open je borst rustig over de roller en kom gecontroleerd terug.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/segmental-thoracic-extension-over-foam-roll---hands-behind-head",
+  "physitrack_titel": "Segmental thoracic extension over foam roll - hands behind head"
+ },
+ {
+  "nr": 538,
+  "naam": "Med ball slams",
+  "groep": "Medicine Ball",
+  "getoond": "images/beginhouding-pijl-v1/254.webp",
+  "uitleg": "Sta stabiel met de medicine ball boven je hoofd. Span je romp aan, breng de bal krachtig recht naar beneden en vang hem gecontroleerd op.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/medicine-ball-floor-slams",
+  "physitrack_titel": "Medicine ball floor slams"
+ },
+ {
+  "nr": 539,
+  "naam": "Med ball wall throw",
+  "groep": "Medicine Ball",
+  "getoond": "images/beginhouding-pijl-v1/255.webp",
+  "uitleg": "Sta recht voor een vrije muur en houd de medicine ball voor je borst. Duw de bal met beide handen naar de muur en vang hem zacht op.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/medicine-ball-chest-throw",
+  "physitrack_titel": "Medicine ball chest throw"
+ },
+ {
+  "nr": 540,
+  "naam": "Med ball chest press",
+  "groep": "Medicine Ball",
+  "getoond": "images/beginhouding-pijl-v1/256.webp",
+  "uitleg": "Lig op je rug met gebogen knieën en houd de medicine ball boven je borst. Strek je armen rustig uit en laat de bal gecontroleerd terugzakken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/supine-chest-press-with-weights",
+  "physitrack_titel": "Supine chest press with weights"
+ },
+ {
+  "nr": 541,
+  "naam": "Med ball floor press",
+  "groep": "Medicine Ball",
+  "getoond": "images/beginhouding-pijl-v1/257.webp",
+  "uitleg": "Lig op je rug met gebogen knieën en houd de medicine ball dicht bij je borst. Duw hem recht omhoog en buig je ellebogen rustig terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/supine-chest-press-with-weights",
+  "physitrack_titel": "Supine chest press with weights"
+ },
+ {
+  "nr": 542,
+  "naam": "Med ball rotation passes",
+  "groep": "Medicine Ball",
+  "getoond": "images/beginhouding-pijl-v1/258.webp",
+  "uitleg": "Sta zijwaarts naast een vrije muur, iets meer dan een armlengte ervan af, en houd de medicine ball met beide handen op heuphoogte. Draai je romp licht van de muur weg en gooi de bal met een schepbeweging tegen de muur. Vang hem gecontroleerd op en doe daarna hetzelfde aan de andere kant.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/medicine-ball-side-throw",
+  "physitrack_titel": "Medicine ball side throw"
+ },
+ {
+  "nr": 543,
+  "naam": "Med ball rotation passes knee",
+  "groep": "Medicine Ball",
+  "getoond": "images/beginhouding-pijl-v1/259.webp",
+  "uitleg": "Kniel zijwaarts naast een vrije muur, iets meer dan een armlengte ervan af, met het been aan de muurkant voor en die voet plat. Draai je romp weg van de muur en breng de bal naar je heup. Draai dan krachtig terug, gooi de bal tegen de muur en vang hem op.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/half-kneeling-medicine-ball-throw-%e2%80%93-inside-leg-up",
+  "physitrack_titel": "Half kneeling medicine ball lateral throw – inside leg up"
+ },
+ {
+  "nr": 544,
+  "naam": "Med ball push up one arm",
+  "groep": "Medicine Ball",
+  "getoond": "images/beginhouding-pijl-v1/260.webp",
+  "uitleg": "Neem een hoge plank met één hand op de medicine ball en de andere hand op de vloer, je lichaam in één lijn. Buig rustig je armen tot je borst richting vloer zakt en duw terug. Rol de bal naar je andere hand en herhaal aan die kant.",
+  "physitrack_url": "https://uk.physitrack.com/home-exercise-video/push-up-with-ball-shuffle",
+  "physitrack_titel": "Push-up with ball shuffle"
+ },
+ {
+  "nr": 545,
+  "naam": "Med ball push up two arms",
+  "groep": "Medicine Ball",
+  "getoond": "images/beginhouding-pijl-v1/261.webp",
+  "uitleg": "Neem een hoge plank met beide handen op de medicine ball. Houd je lichaam in één lijn, buig gecontroleerd door je armen en duw terug.",
+  "physitrack_url": "https://ie.physitrack.com/home-exercise-video/plank---on-medicine-ball",
+  "physitrack_titel": "Plank - on medicine ball"
+ },
+ {
+  "nr": 546,
+  "naam": "Med. Ball - Alt. Side slam",
+  "groep": "Medicine Ball",
+  "getoond": "images/beginhouding-pijl-v1/262.webp",
+  "uitleg": "Sta breed en stabiel met de medicine ball. Breng hem gecontroleerd schuin naar de buitenzijde van één voet en wissel daarna van kant.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/woodchop-with-stability-ball",
+  "physitrack_titel": "Woodchop with stability ball"
+ },
+ {
+  "nr": 547,
+  "naam": "Med ball obliques cross",
+  "groep": "Medicine Ball",
+  "getoond": "images/beginhouding-pijl-v1/263.webp",
+  "uitleg": "Lig op je rug met gebogen knieën en je voeten plat, en houd de medicine ball met beide handen boven je hoofd. Rol je bovenrug op en breng de bal schuin over je lichaam naar de buitenkant van de andere knie. Zak gecontroleerd terug en wissel van kant.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/forward-reach-with-ball",
+  "physitrack_titel": "Forward reach, trunk rotation with ball"
+ },
+ {
+  "nr": 548,
+  "naam": "Med ball throw and jog",
+  "groep": "Medicine Ball",
+  "getoond": "images/beginhouding-pijl-v1/264.webp",
+  "uitleg": "Maak een lichte voorwaartse stap met de medicine ball voor je borst. Stoot de bal gecontroleerd vooruit en hervat daarna rustig je pas.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/medicine-ball-chest-throw",
+  "physitrack_titel": "Medicine ball chest throw"
+ },
+ {
+  "nr": 549,
+  "naam": "Med ball swing",
+  "groep": "Medicine Ball",
+  "getoond": "images/beginhouding-pijl-v1/265.webp",
+  "uitleg": "Sta met je voeten op heupbreedte en houd de medicine ball met gestrekte armen tussen je benen, knieën licht gebogen en rug recht. Strek je heupen en zwaai de bal naar voren tot borsthoogte. Laat hem gecontroleerd terugzwaaien terwijl je weer vanuit je heupen buigt.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/posterior-chain-hip-hinge",
+  "physitrack_titel": "Posterior chain wide-leg hip hinge"
+ },
+ {
+  "nr": 550,
+  "naam": "Med ball overhead circles",
+  "groep": "Medicine Ball",
+  "getoond": "images/beginhouding-pijl-v1/266.webp",
+  "uitleg": "Sta rechtop en houd de medicine ball met beide handen boven je hoofd. Maak rustig kleine cirkels zonder je onderrug hol te trekken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/around-the-world",
+  "physitrack_titel": "Medicine Ball Around the World"
+ },
+ {
+  "nr": 551,
+  "naam": "Med ball lunge overhead press",
+  "groep": "Medicine Ball",
+  "getoond": "images/beginhouding-pijl-v1/267.webp",
+  "uitleg": "Stap in een stabiele uitvalspas en houd de medicine ball recht boven je hoofd. Houd je romp recht en duw via je voorste voet terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/lunge%2c-forward%2c-with-march-and-medicine-ball-overhead",
+  "physitrack_titel": "Lunge, forward, with march and medicine ball overhead"
+ },
+ {
+  "nr": 552,
+  "naam": "Med ball V-ups",
+  "groep": "Medicine Ball",
+  "getoond": "images/beginhouding-pijl-v1/268.webp",
+  "uitleg": "Lig op je rug en houd de medicine ball met beide handen vast. Trek je knieën richting borst terwijl je de bal gecontroleerd omhoog brengt.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/supine-dead-bugs",
+  "physitrack_titel": "Supine dead bugs"
+ },
+ {
+  "nr": 553,
+  "naam": "Mob Hip flexion/extension",
+  "groep": "Mobility",
+  "getoond": "images/beginhouding-pijl-v1/269.webp",
+  "uitleg": "Neem een halfknielende uitvalspas met je romp rechtop. Kantel je bekken licht naar achteren en beweeg rustig naar voren tot je rek voor in de heup voelt.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/hip-flexor-stretch",
+  "physitrack_titel": "Half kneeling hip flexor stretch"
+ }
+]

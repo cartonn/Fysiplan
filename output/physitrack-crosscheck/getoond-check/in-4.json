@@ -1,0 +1,470 @@
+[
+ {
+  "nr": 157,
+  "naam": "Yoga frog",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/183.webp",
+  "uitleg": "Steun op je onderarmen en knieën op een mat. Schuif je knieën naar buiten tot je rek voelt aan de binnenkant van je bovenbenen, en laat je heupen rustig naar achteren zakken richting je hielen.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/kneeling-hip-adductor-stretch-%22frog%22",
+  "physitrack_titel": "Kneeling hip adductor stretch \"Frog\""
+ },
+ {
+  "nr": 158,
+  "naam": "Yoga full boat",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/184.webp",
+  "uitleg": "Zit op de grond en leun licht achterover. Til je gestrekte benen op en strek je armen naar voren, zodat je lichaam een V vormt.",
+  "physitrack_url": "https://www.physitrack.com/exercise-library/how-to-perform-the-boat-pose-exercise",
+  "physitrack_titel": "Boat Pose"
+ },
+ {
+  "nr": 159,
+  "naam": "Yoga glute stretch",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/185.webp",
+  "uitleg": "Lig op je rug en leg een enkel op de andere knie. Pak het onderste bovenbeen vast en trek het rustig naar je borst.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/glute-stretch---supine",
+  "physitrack_titel": "Glute stretch - supine (Figure 4)"
+ },
+ {
+  "nr": 160,
+  "naam": "Yoga half monkey",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/186.webp",
+  "uitleg": "Kniel op een been en strek het andere been naar voren met de hiel op de grond. Schuif je heupen naar achteren en buig met een rechte rug over het gestrekte been.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/hamstring-stretch-in-half-kneeling",
+  "physitrack_titel": "Hamstring stretch in half kneeling"
+ },
+ {
+  "nr": 161,
+  "naam": "Yoga hamstring stretch",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/187.webp",
+  "uitleg": "Zit op de grond met een been gestrekt voor je en zet de voet van je andere been tegen de binnenkant van je gestrekte been. Buig vanuit je heupen naar voren en reik met je handen naar de voet van het gestrekte been.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/seated-hurdler-stretch",
+  "physitrack_titel": "Seated hurdler stretch"
+ },
+ {
+  "nr": 162,
+  "naam": "Yoga happy baby",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/188.webp",
+  "uitleg": "Lig op je rug en trek je knieën naar je oksels. Pak de buitenkant van je voeten vast en houd je onderrug op de grond.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/happy-baby-pose",
+  "physitrack_titel": "Happy baby pose (\"sloth\")"
+ },
+ {
+  "nr": 163,
+  "naam": "Yoga hip flexor stretch",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/189.webp",
+  "uitleg": "Kniel met een voet voor je op de grond. Schuif je heupen naar voren tot je rek voelt aan de voorkant van je achterste heup, houd je romp rechtop.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/hip-flexor-stretching-in-kneeling",
+  "physitrack_titel": "Hip flexor stretching in kneeling"
+ },
+ {
+  "nr": 164,
+  "naam": "Yoga knee to chest hip stretch",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/190.webp",
+  "uitleg": "Sta rechtop op een been. Til je andere knie op en trek die met beide handen rustig naar je borst, en houd je romp rechtop.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/knee-hugs",
+  "physitrack_titel": "Knee hugs (standing)"
+ },
+ {
+  "nr": 165,
+  "naam": "Yoga Marichi’s III",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/191.webp",
+  "uitleg": "Zit met een been gestrekt en zet de andere voet plat naast je knie. Draai je romp naar de gebogen knie en zet je elleboog tegen de buitenkant van die knie.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/long-sit-rotation",
+  "physitrack_titel": "Long sit rotation"
+ },
+ {
+  "nr": 167,
+  "naam": "Yoga pigeon",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/193.webp",
+  "uitleg": "Schuif vanuit handen en knieën een gebogen been naar voren en strek het andere been naar achteren. Zak met je heupen richting de grond en houd ze recht naar voren.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/upright-pigeon-pose",
+  "physitrack_titel": "Upright pigeon pose"
+ },
+ {
+  "nr": 168,
+  "naam": "Yoga plow",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/194.webp",
+  "uitleg": "Lig op je rug met je armen naast je lichaam. Breng je gestrekte benen over je hoofd naar achteren tot je tenen achter je hoofd de grond raken, en houd je armen gestrekt op de grond met de handen in elkaar.",
+  "physitrack_url": "",
+  "physitrack_titel": ""
+ },
+ {
+  "nr": 169,
+  "naam": "Yoga reverse warrior",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/195.webp",
+  "uitleg": "Sta in een wijde stand met je voorste knie gebogen. Laat je achterste hand op je achterste been rusten en strek je voorste arm omhoog terwijl je zijwaarts achterover buigt.",
+  "physitrack_url": "",
+  "physitrack_titel": ""
+ },
+ {
+  "nr": 170,
+  "naam": "Yoga revolved downward facing dog",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/196.webp",
+  "uitleg": "Sta in de omgekeerde V met je handen en voeten op de grond. Pak met een hand je tegenovergestelde enkel of onderbeen en draai je romp mee.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/downward-dog-from-4-point",
+  "physitrack_titel": "Downward dog from 4 point"
+ },
+ {
+  "nr": 171,
+  "naam": "Yoga snake",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/197.webp",
+  "uitleg": "Lig op je buik met je handen achter je rug in elkaar. Til rustig je hoofd en borst van de grond en strek je armen naar je voeten, terwijl je benen op de grond blijven.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/prone-back-extension---arms-by-your-side",
+  "physitrack_titel": "Prone back extension - arms by your side"
+ },
+ {
+  "nr": 172,
+  "naam": "Yoga warrior II",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/198.webp",
+  "uitleg": "Sta in een wijde stand en buig je voorste knie boven je enkel. Strek beide armen zijwaarts op schouderhoogte en kijk over je voorste hand.",
+  "physitrack_url": "",
+  "physitrack_titel": ""
+ },
+ {
+  "nr": 173,
+  "naam": "Yoga warrior III",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/199.webp",
+  "uitleg": "Sta op een been en kantel je romp naar voren tot deze horizontaal is. Strek je andere been naar achteren en je armen naar voren, zodat je lichaam een lijn vormt.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/warrior-three",
+  "physitrack_titel": "Warrior three"
+ },
+ {
+  "nr": 174,
+  "naam": "Yoga wide angle seated forward bend",
+  "groep": "Yoga",
+  "getoond": "images/beginhouding-pijl-v1/200.webp",
+  "uitleg": "Zit met je benen wijd gestrekt op de grond. Buig met een rechte rug vanuit je heupen naar voren en laat je handen naar voren schuiven.",
+  "physitrack_url": "https://ie.physitrack.com/home-exercise-video/seated-v-stretch",
+  "physitrack_titel": "Seated V-Stretch"
+ },
+ {
+  "nr": 175,
+  "naam": "Kettlebell swing",
+  "groep": "Kettlebell",
+  "getoond": "images/beginhouding-pijl-v1/201.webp",
+  "uitleg": "Sta met je voeten op heupbreedte en houd de kettlebell met twee handen tussen je benen. Zwaai hem met gestrekte armen naar voren door je heupen krachtig te strekken.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/kettlebell-one-arm-swing",
+  "physitrack_titel": "Kettlebell one arm swing"
+ },
+ {
+  "nr": 176,
+  "naam": "Kettlebelle swing one arm",
+  "groep": "Kettlebell",
+  "getoond": "images/beginhouding-pijl-v1/202.webp",
+  "uitleg": "Sta met je voeten op heupbreedte en houd de kettlebell in een hand tussen je benen. Zwaai hem naar voren door je heupen krachtig te strekken, houd je rug recht.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/kettle-bell-single-arm-swing",
+  "physitrack_titel": "Kettle Bell Single Arm Swing"
+ },
+ {
+  "nr": 177,
+  "naam": "Bodyblade back",
+  "groep": "Bodyblade",
+  "getoond": "images/beginhouding-pijl-v1/203.webp",
+  "uitleg": "Sta rechtop en houd de bodyblade achter je rug vast. Beweeg hem met korte snelle bewegingen heen en weer terwijl je romp stil blijft.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/shoulder-abduction-with-bodyblade",
+  "physitrack_titel": "Shoulder stabilization in abduction with bodyblade"
+ },
+ {
+  "nr": 178,
+  "naam": "Bodyblade diagonaal",
+  "groep": "Bodyblade",
+  "getoond": "images/beginhouding-pijl-v1/204.webp",
+  "uitleg": "Sta rechtop en houd de bodyblade met beide handen schuin voor je lichaam. Beweeg hem met korte snelle bewegingen langs de diagonale lijn heen en weer.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/shoulder-abduction-with-bodyblade",
+  "physitrack_titel": "Shoulder stabilization in abduction with bodyblade"
+ },
+ {
+  "nr": 179,
+  "naam": "Bodyblade front bovengreep",
+  "groep": "Bodyblade",
+  "getoond": "images/beginhouding-pijl-v1/205.webp",
+  "uitleg": "Sta rechtop en houd de bodyblade met een bovengreep voor je op schouderhoogte. Beweeg hem met korte snelle bewegingen heen en weer, houd je romp stil.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/shoulder-abduction-with-bodyblade",
+  "physitrack_titel": "Shoulder stabilization in abduction with bodyblade"
+ },
+ {
+  "nr": 180,
+  "naam": "Bodyblade front ondergreep",
+  "groep": "Bodyblade",
+  "getoond": "images/beginhouding-pijl-v1/206.webp",
+  "uitleg": "Sta rechtop en houd de bodyblade met een ondergreep voor je borst, armen licht gebogen. Laat het blad snel heen en weer trillen terwijl je romp stil blijft.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/shoulder-abduction-with-bodyblade",
+  "physitrack_titel": "Shoulder stabilization in abduction with bodyblade"
+ },
+ {
+  "nr": 181,
+  "naam": "Bodyblade front squat",
+  "groep": "Bodyblade",
+  "getoond": "images/beginhouding-pijl-v1/207.webp",
+  "uitleg": "Sta met je voeten op heupbreedte en houd de trillende bodyblade voor je uit. Zak in een squat door je knieen te buigen en kom rustig weer omhoog.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/shoulder-abduction-with-bodyblade",
+  "physitrack_titel": "Shoulder stabilization in abduction with bodyblade"
+ },
+ {
+  "nr": 182,
+  "naam": "Bodyblade front uitstap",
+  "groep": "Bodyblade",
+  "getoond": "images/beginhouding-pijl-v1/208.webp",
+  "uitleg": "Houd de trillende bodyblade voor je borst. Stap met een been naar voren in een uitvalspas, buig beide knieen en stap terug naar de beginhouding.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/shoulder-abduction-with-bodyblade",
+  "physitrack_titel": "Shoulder stabilization in abduction with bodyblade"
+ },
+ {
+  "nr": 183,
+  "naam": "Bodyblade high",
+  "groep": "Bodyblade",
+  "getoond": "images/beginhouding-pijl-v1/209.webp",
+  "uitleg": "Sta rechtop en strek je armen omhoog met de bodyblade boven je hoofd. Laat het blad heen en weer trillen terwijl je romp en armen stabiel blijven.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/shoulder-abduction-with-bodyblade",
+  "physitrack_titel": "Shoulder stabilization in abduction with bodyblade"
+ },
+ {
+  "nr": 184,
+  "naam": "Foam rol glutes stretch",
+  "groep": "Foam roller",
+  "getoond": "images/beginhouding-pijl-v1/210.webp",
+  "uitleg": "Ga met één bil op de foam roller zitten en leg de enkel van dat been op je andere knie. Steun met je hand achter je en rol langzaam heen en weer over je bilspier.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/gluteal-foam-rolling---version-2",
+  "physitrack_titel": "Gluteal foam rolling - version 2"
+ },
+ {
+  "nr": 185,
+  "naam": "Foam rol quat stretch",
+  "groep": "Foam roller",
+  "getoond": "images/beginhouding-pijl-v1/211.webp",
+  "uitleg": "Lig op je buik met de foam roller onder je bovenbenen en steun op je handen met gestrekte armen. Rol langzaam heen en weer van vlak boven je knie tot je heup.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/foam-roll-quadriceps",
+  "physitrack_titel": "Foam Roll Quadriceps"
+ },
+ {
+  "nr": 186,
+  "naam": "Foam rol upper back stretch",
+  "groep": "Foam roller",
+  "getoond": "images/beginhouding-pijl-v1/212.webp",
+  "uitleg": "Lig op je rug met de foam roller onder je bovenrug en je knieen gebogen. Til je heupen iets op en rol langzaam over je bovenrug heen en weer.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/thoracic-extension-using-a-foam-roller",
+  "physitrack_titel": "Thoracic extension using a foam roller - version 2"
+ },
+ {
+  "nr": 187,
+  "naam": "Voor zijwaarts",
+  "groep": "Speedladder",
+  "getoond": "images/beginhouding-pijl-v1/213.webp",
+  "uitleg": "Sta naast de speedladder. Stap met beide voeten om de beurt zijwaarts in een vak en beweeg zo vak voor vak verder, blijf licht op je voorvoeten.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/ladder-runs-lateral-quick-step",
+  "physitrack_titel": "Ladder runs lateral quick step"
+ },
+ {
+  "nr": 188,
+  "naam": "Abdominal (apparaat)",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/214.webp",
+  "uitleg": "Stel de stoel zo in dat het kussen tegen je bovenlichaam rust. Buig je romp naar voren door je buikspieren aan te spannen en kom rustig terug.",
+  "physitrack_url": "https://ie.physitrack.com/home-exercise-video/ab-crunch-in-a-machine---version-1",
+  "physitrack_titel": "Ab Crunch in a Machine - Version 1"
+ },
+ {
+  "nr": 189,
+  "naam": "Back (apparaat)",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/215.webp",
+  "uitleg": "Ga zitten met je rug tegen het kussen en stel de stoel op je lengte in. Duw je romp gecontroleerd naar achteren en kom langzaam terug naar de beginstand.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/seated-back-extension-machine",
+  "physitrack_titel": "Seated Back Extension Machine"
+ },
+ {
+  "nr": 190,
+  "naam": "Backextensie (apparaat)",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/216.webp",
+  "uitleg": "Stel het kussen ter hoogte van je heupen in en haak je voeten vast. Buig je romp naar voren en kom omhoog tot je lichaam een rechte lijn vormt.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/45-degree-back-extension",
+  "physitrack_titel": "45 degree back extension"
+ },
+ {
+  "nr": 191,
+  "naam": "Chest press (apparaat)",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/217.webp",
+  "uitleg": "Ga zitten met de handgrepen op borsthoogte. Duw de grepen naar voren tot je armen bijna gestrekt zijn en laat ze rustig terugkomen.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/chest-press",
+  "physitrack_titel": "Chest press"
+ },
+ {
+  "nr": 192,
+  "naam": "Chin-dip (apparaat)",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/218.webp",
+  "uitleg": "Steun met gestrekte armen op de dipgrepen en laat je benen vrij hangen. Buig je ellebogen tot ongeveer 90 graden en laat je rustig zakken. Duw jezelf daarna weer omhoog tot je armen gestrekt zijn.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/shoulder-dips-on-bar",
+  "physitrack_titel": "Shoulder Dips on Bar"
+ },
+ {
+  "nr": 194,
+  "naam": "Crosstrainer (apparaat)",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/220.webp",
+  "uitleg": "Ga op de pedalen staan en pak de bewegende stangen vast. Beweeg je benen en armen in een vloeiend, doorlopend ritme, rechtop met je romp.",
+  "physitrack_url": "https://nl.physitrack.com/home-exercise-video/crosstrainer",
+  "physitrack_titel": "Crosstrainer"
+ },
+ {
+  "nr": 197,
+  "naam": "Endy Beenstrekker",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/223.webp",
+  "uitleg": "Ga zitten met je rug tegen de leuning en zet je voeten tegen de voetplaat, met gebogen knieën. Duw de plaat weg door je benen te strekken en laat hem rustig terugkomen.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/leg-press---version-2",
+  "physitrack_titel": "Inclined Leg Press Version 2"
+ },
+ {
+  "nr": 198,
+  "naam": "Endy Buikmachine",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/224.webp",
+  "uitleg": "Ga zitten in het apparaat met je rug tegen de leuning en pak de handgrepen vast. Buig je romp rustig naar voren en kom daarna gecontroleerd terug omhoog.",
+  "physitrack_url": "https://ie.physitrack.com/home-exercise-video/ab-crunch-in-a-machine---version-1",
+  "physitrack_titel": "Ab Crunch in a Machine - Version 1"
+ },
+ {
+  "nr": 199,
+  "naam": "Endy Fly",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/225.webp",
+  "uitleg": "Ga zitten met je rug tegen de leuning en je onderarmen tegen de kussens. Beweeg je armen rustig naar elkaar toe voor je borst en laat ze daarna gecontroleerd terugkomen.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/pec-deck",
+  "physitrack_titel": "Shoulder adduction on pec deck machine"
+ },
+ {
+  "nr": 200,
+  "naam": "Endy Heup abductie",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/226.webp",
+  "uitleg": "Sta rechtop naast het apparaat met de enkelband om je buitenste been; de kabel zit laag aan de kant van je standbeen. Houd je zo nodig vast en beweeg je gestrekte been rustig zijwaarts naar buiten tot ongeveer 45 graden. Laat het daarna gecontroleerd terugkomen naast je standbeen.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/cable-hip-abduction",
+  "physitrack_titel": "Cable hip abduction"
+ },
+ {
+  "nr": 201,
+  "naam": "Endy Leg curl",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/227.webp",
+  "uitleg": "Ga zitten met je onderbenen op het kussen en stel de leuning goed af. Buig je knieen en trek je hielen rustig naar achteren, kom daarna gecontroleerd terug.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/seated-leg-curl---machine-(hamstring)",
+  "physitrack_titel": "Seated leg curl - machine (hamstring)"
+ },
+ {
+  "nr": 202,
+  "naam": "Endy Leg ext",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/228.webp",
+  "uitleg": "Ga zitten met je onderbenen achter het kussen en je knieen op de draaias van het apparaat. Strek je benen rustig naar voren en laat ze daarna gecontroleerd zakken.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/leg-extension-in-a-machine",
+  "physitrack_titel": "Leg Extension in a Machine"
+ },
+ {
+  "nr": 203,
+  "naam": "Endy Pulldown",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/229.webp",
+  "uitleg": "Ga zitten en pak de stang boven je hoofd vast. Trek de stang rustig naar beneden richting je borst en laat hem daarna gecontroleerd terug omhoog gaan.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/lat-pulldown-machine",
+  "physitrack_titel": "Lat Pulldown Machine"
+ },
+ {
+  "nr": 205,
+  "naam": "Endy Rugmachine",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/231.webp",
+  "uitleg": "Ga zitten met je rug tegen het kussen en je voeten stevig op de steunen. Duw je romp rustig naar achteren en kom daarna gecontroleerd terug naar de beginstand.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/back-extension-machine",
+  "physitrack_titel": "Seated Back Extension Machine - version 2"
+ },
+ {
+  "nr": 206,
+  "naam": "Endy Triceps dips",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/232.webp",
+  "uitleg": "Ga zitten en pak de handgrepen naast je lichaam vast. Duw de grepen rustig naar beneden tot je armen gestrekt zijn en buig ze daarna gecontroleerd terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/seated-triceps-dip-machine",
+  "physitrack_titel": "Seated triceps dip machine"
+ },
+ {
+  "nr": 207,
+  "naam": "Fiets (apparaat)",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/233.webp",
+  "uitleg": "Stel het zadel zo af dat je knie licht gebogen blijft als de trapper onderaan staat. Fiets in een rustig en gelijkmatig tempo.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/stationary-cycling-version-3",
+  "physitrack_titel": "Stationary Cycling Version 3"
+ },
+ {
+  "nr": 208,
+  "naam": "Gluteus kick (apparaat)",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/234.webp",
+  "uitleg": "Sta rechtop op het platform van het apparaat en houd de handgreep vast; de rol ligt tegen de achterkant van je werkbeen. Duw je been rustig naar achteren tot je heup gestrekt is, zonder je onderrug hol te trekken. Kom daarna gecontroleerd terug naast je standbeen.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/cable-hip-extension",
+  "physitrack_titel": "Cable hip extension"
+ },
+ {
+  "nr": 209,
+  "naam": "Leg press (apparaat)",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/235.webp",
+  "uitleg": "Ga zitten met je rug tegen de leuning en je voeten op heupbreedte op de plaat. Duw de plaat rustig weg tot je benen bijna gestrekt zijn en buig ze daarna gecontroleerd terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/leg-press---version-2",
+  "physitrack_titel": "Inclined Leg Press Version 2"
+ },
+ {
+  "nr": 210,
+  "naam": "Loopband (apparaat)",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/236.webp",
+  "uitleg": "Ga op de band staan en kies een rustig tempo. Loop rechtop met een normale paslengte en kijk voor je uit.",
+  "physitrack_url": "https://au.physitrack.com/home-exercise-video/walking-on-a-treadmill",
+  "physitrack_titel": "Walking on a Treadmill"
+ },
+ {
+  "nr": 211,
+  "naam": "Roeier (apparaat)",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/237.webp",
+  "uitleg": "Ga zitten met je voeten vast in de steunen en pak het handvat. Duw je benen uit, leun licht achterover en trek het handvat naar je buik, kom daarna rustig terug.",
+  "physitrack_url": "https://us.physitrack.com/home-exercise-video/rowing-ergometer",
+  "physitrack_titel": "Rowing ergometer"
+ },
+ {
+  "nr": 213,
+  "naam": "Stairs (apparaat)",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/239.webp",
+  "uitleg": "Ga op de treden staan en houd zo nodig de leuning licht vast. Stap in een rustig en gelijkmatig tempo omhoog en blijf rechtop staan.",
+  "physitrack_url": "https://de.physitrack.com/home-exercise-video/stair-climber---treppen-steigen-(maschine)",
+  "physitrack_titel": "Stair climber - Treppen steigen (Maschine)"
+ },
+ {
+  "nr": 214,
+  "naam": "Vertical row (apparaat)",
+  "groep": "Apparaten",
+  "getoond": "images/beginhouding-pijl-v1/240.webp",
+  "uitleg": "Ga zitten met je borst tegen het steunkussen en pak de handgrepen. Trek de grepen rustig naar je toe met je ellebogen langs je lichaam en kom daarna gecontroleerd terug.",
+  "physitrack_url": "https://ca.physitrack.com/home-exercise-video/seated-row---version-1",
+  "physitrack_titel": "Seated Row - Version 1"
+ }
+]
