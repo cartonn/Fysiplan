@@ -27,7 +27,7 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
   Na 2 oefeningen afvinken en een seintje toont de download "0 jours" en "Mes messages au cabinet: rien"; pas na herladen
   klopt het. `zetOefTrouwLokaal` maakt `{n:0}` (kaart.html r. ~1038), download print `n` (r. ~1661); `mijnSeintjes` wordt
   na een seintje niet lokaal bijgewerkt (r. ~1669). Alle talen. iPhone SE.
-  OPGELOST 2026-11-08 PR #<nr>: `mgTrouwTik` volgt de serverregel van /api/kaart/oefening (één dag telt één keer,
+  OPGELOST 2026-11-08 PR #107: `mgTrouwTik` volgt de serverregel van /api/kaart/oefening (één dag telt één keer,
   uitvinken dezelfde dag haalt hem weg); na een verstuurd seintje zet `mgSeintjeErbij` het meteen in `mijnSeintjes`.
   Test in `scripts/test-mijn-gegevens.mjs` (faalt zonder fix). Rest: een seintje uit de offline-wachtrij komt pas na
   herladen in de seintjeslijst; tot dan staat het onder "Nog niet verstuurd", dus niets ontbreekt.
@@ -41,7 +41,7 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
   sessionStorage alleen voor de beheersleutel in het tabblad.
 - **LAAG — Privacy-link op een Engelse/Arabische kaart opent een pagina die alleen Nederlands is** en niet het
   patiëntdeel `#patient` (sweep 18u, Jayden, Pixel 7). kaart.html r. ~473, ~599; server.js `juridischBlok`.
-  DEELS OPGELOST 2026-11-08 PR #<nr>: beide links gaan nu naar `/privacy#patient` met `hreflang="nl"`. Nog open (LAAG):
+  DEELS OPGELOST 2026-11-08 PR #107: beide links gaan nu naar `/privacy#patient` met `hreflang="nl"`. Nog open (LAAG):
   het patiëntdeel van /privacy is alleen Nederlands; vertalen in de 9 kaarttalen is de volgende stap.
 
 - **LAAG — praktijk kan de vraaghulp op de kaart niet zelf uitzetten (2026-11-07).** Staat
