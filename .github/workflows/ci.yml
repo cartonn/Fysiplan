@@ -71,3 +71,4 @@ jobs:
       - run: npm run test:dubbeltik
       - run: npm run test:kaartroutes
       - run: npm run test:landingprint
+      - run: npm run test:offlinestand
