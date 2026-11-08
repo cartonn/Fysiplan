@@ -166,7 +166,8 @@
   "pijl_nl": "Pijl bij de kin recht omlaag (mond langzaam openen zonder dat de tong loskomt, en weer sluiten).",
   "view": "side view",
   "ref": "306",
-  "pose_en": "Side view, head and upper body large in the frame, of a person sitting upright on a chair with relaxed shoulders, mouth closed, face calm. One short solid black arrow starts at the chin and points straight down, showing the jaw opening slowly."
+  "pose_en": "Side view, head and upper body large in the frame, of a person sitting upright on a chair with relaxed shoulders, mouth closed, face calm. One short solid black arrow starts at the chin and points straight down, showing the jaw opening slowly.",
+  "extra_en": "IMPORTANT: START position: the mouth is CLOSED, lips together."
  },
  {
   "naam": "Zijplank op onderarm en voeten",
@@ -192,7 +193,8 @@
   "pijl_nl": "Pijl vanaf de handen recht naar voren, weg van de borst (armen strekken zonder de romp naar het ankerpunt te laten draaien).",
   "view": "front view",
   "ref": "107",
-  "pose_en": "Front view of a person standing upright facing the viewer, feet hip-width, knees slightly bent. A sturdy vertical post stands at her LEFT SIDE (beside her, not in front or behind). A taut resistance band runs horizontally at chest height from the post to her two hands, which are held together against the middle of her chest. One solid black arrow starts at the hands and points straight toward the viewer (forward), showing the arms pressing straight out in front without rotating."
+  "pose_en": "Front view of a person standing upright facing the viewer, feet hip-width, knees slightly bent. A sturdy vertical post stands at her LEFT SIDE (beside her, not in front or behind). A taut resistance band runs horizontally at chest height from the post to her two hands, which are held together against the middle of her chest. One solid black arrow starts at the hands and points straight toward the viewer (forward), showing the arms pressing straight out in front without rotating.",
+  "extra_en": "IMPORTANT: START position: both hands are held together AGAINST the middle of the chest, elbows bent (arms NOT yet extended). The arrow starts at the hands and points straight toward the viewer (out of the picture), NOT sideways toward or away from the post; draw it as a short arrow pointing forward-down in perspective."
  },
  {
   "naam": "Hamstring rekken in ruglig met band",
@@ -231,7 +233,8 @@
   "pijl_nl": "Pijl bij de hiel van één been recht omhoog (gestrekt been een stukje optillen en laten zakken).",
   "view": "side view",
   "ref": "109",
-  "pose_en": "Side view of a person lying face down on an exercise mat with a small pillow under her hips, forehead resting on her folded hands, both legs straight on the mat. One solid black arrow starts at the heel of the near leg and points straight up, showing the straight leg being lifted a little."
+  "pose_en": "Side view of a person lying face down on an exercise mat with a small pillow under her hips, forehead resting on her folded hands, both legs straight on the mat. One solid black arrow starts at the heel of the near leg and points straight up, showing the straight leg being lifted a little.",
+  "extra_en": "IMPORTANT: START position: BOTH legs lie flat on the mat, NO leg is lifted yet. The arrow starts just above the heel of the near leg and points up."
  },
  {
   "naam": "Nordic hamstring – geknield",
@@ -283,7 +286,8 @@
   "pijl_nl": "Pijl bij de knie recht omlaag (bovenbeen aanspannen en de knieholte naar de mat duwen).",
   "view": "side view",
   "ref": "082",
-  "pose_en": "Side view of a person lying on her back on an exercise mat, head down. The near leg is straight with a rolled towel under the ankle, so the back of the knee is slightly off the mat. The other knee is bent with the foot flat. One short solid black arrow starts just above the near knee and points straight down to the mat, showing the knee being pressed straight."
+  "pose_en": "Side view of a person lying on her back on an exercise mat, head down. The near leg is straight with a rolled towel under the ankle, so the back of the knee is slightly off the mat. The other knee is bent with the foot flat. One short solid black arrow starts just above the near knee and points straight down to the mat, showing the knee being pressed straight.",
+  "extra_en": "IMPORTANT: the rolled towel lies under the ANKLE (just above the heel), NOT under the knee, so the knee hangs slightly in the air. The arrow points down onto the top of the KNEE (kneecap)."
  },
  {
   "naam": "Excentrisch hiel laten zakken op één been",
@@ -296,7 +300,8 @@
   "pijl_nl": "Pijl bij de hiel van het steunbeen recht omlaag (hiel langzaam onder het niveau van de trede laten zakken).",
   "view": "side view",
   "ref": "048",
-  "pose_en": "Side view of a person standing high on the toes on the edge of a low step, only the front of the foot on the step and the heel in the air. One hand rests lightly on the back of a chair beside her. Her weight is on one leg; the other foot is lifted just behind. One solid black arrow starts at the heel of the standing leg and points straight down, showing the heel being lowered below the step."
+  "pose_en": "Side view of a person standing high on the toes on the edge of a low step, only the front of the foot on the step and the heel in the air. One hand rests lightly on the back of a chair beside her. Her weight is on one leg; the other foot is lifted just behind. One solid black arrow starts at the heel of the standing leg and points straight down, showing the heel being lowered below the step.",
+  "extra_en": "IMPORTANT: the STANDING foot is on the step with only the ball of the foot on the edge and its heel raised high (on tiptoe). The arrow is placed directly under the heel of that STANDING foot and points down. The other foot is lifted slightly behind, with NO arrow near it."
  },
  {
   "naam": "Kuitrek met handdoek in langzit",
@@ -349,7 +354,8 @@
   "pijl_nl": "Pijl voor de voeten vooruit (kleine stappen vooruit lopen op de hielen).",
   "view": "side view",
   "ref": "310",
-  "pose_en": "Side view of a person standing upright on both heels with the toes and front of both feet lifted off the floor, arms relaxed at the sides, looking forward. One solid black arrow in front of the feet points forward horizontally, showing walking forward on the heels."
+  "pose_en": "Side view of a person standing upright on both heels with the toes and front of both feet lifted off the floor, arms relaxed at the sides, looking forward. One solid black arrow in front of the feet points forward horizontally, showing walking forward on the heels.",
+  "extra_en": "IMPORTANT: she stands ONLY on her heels: the soles and toes of both shoes point clearly upward, lifted well off the floor, so the shoes are tilted at about 30 degrees with only the heels touching the floor."
  },
  {
   "naam": "Op de tenen lopen",
