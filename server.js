@@ -2868,12 +2868,17 @@ async function afhandelen(request, response) {
       const lijst = (praktijkOefeningen[pk] = praktijkOefeningen[pk] || []);
       if (lijst.length >= 200) { await sendJson(response, 400, { ok: false, fout: "Maximum van 200 eigen oefeningen bereikt." }); return; }
       if (lijst.some((x) => x.naam.toLowerCase() === naam.toLowerCase())) { await sendJson(response, 409, { ok: false, fout: "Er is al een eigen oefening met deze naam." }); return; }
-      await mkdir(uploadsDir, { recursive: true });
       const id = "po_" + randomBytes(6).toString("hex");
       const file = "oef-" + id.slice(3) + (m[1] === "png" ? ".png" : ".jpg");
-      await writeFile(join(uploadsDir, file), buf);
       const maker = sessieVan(request);
-      lijst.push({ id, naam, img: "uploads/" + file, uitleg, t: Date.now(), ...(maker && maker.pk === pk && maker.lid ? { door: maker.lid } : {}) });
+      // eerst in de lijst (vóór de awaits), zodat een tweede verzoek met dezelfde naam
+      // tegelijk de naamcontrole hierboven niet meer passeert
+      const rij = { id, naam, img: "uploads/" + file, uitleg, t: Date.now(), ...(maker && maker.pk === pk && maker.lid ? { door: maker.lid } : {}) };
+      lijst.push(rij);
+      try {
+        await mkdir(uploadsDir, { recursive: true });
+        await writeFile(join(uploadsDir, file), buf);
+      } catch (e) { const i = lijst.indexOf(rij); if (i > -1) lijst.splice(i, 1); throw e; }
       await saveJson(praktijkOefeningenPath, praktijkOefeningen);
       auditLog(pk, "oefening-toegevoegd", request);
       await sendJson(response, 200, { ok: true, oefeningen: lijst });
@@ -4109,9 +4114,11 @@ async function afhandelen(request, response) {
       // plafond tegen opblazen als een kaart vaak van oefeningen wisselt
       if (!trouw[naam] && Object.keys(trouw).length >= 60) { await sendJson(response, 200, { ok: true }); return; }
       const rec = (trouw[naam] = trouw[naam] || { n: 0, d: "" });
-      const vandaag = nlDag(Date.now());
-      if (b.aan !== false) { if (rec.d !== vandaag) { rec.n = Math.min(9999, (rec.n || 0) + 1); rec.d = vandaag; } }
-      else if (rec.d === vandaag) { rec.n = Math.max(0, (rec.n || 0) - 1); rec.d = ""; }
+      // een vinkje uit de offline-wachtrij telt op de dag van tikken (`wanneer`);
+      // `d` blijft de laatste dag, zodat een late tik van gisteren vandaag niet wist
+      const dag = nlDag(tikMoment(b, Date.now()));
+      if (b.aan !== false) { if (rec.d !== dag) { rec.n = Math.min(9999, (rec.n || 0) + 1); if (!rec.d || dag > rec.d) rec.d = dag; } }
+      else if (rec.d === dag) { rec.n = Math.max(0, (rec.n || 0) - 1); rec.d = ""; }
       if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true });

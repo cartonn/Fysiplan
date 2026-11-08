@@ -1096,8 +1096,8 @@
     // telling per oefening naar de praktijk (best effort, alleen aantallen):
     // zo ziet de therapeut welke oefening blijft liggen — zonder patiënt-app
     if(id&&id!=='demo'){
-      try{fetch('/api/kaart/oefening',{method:'POST',headers:{'content-type':'application/json'},
-        body:JSON.stringify({id:id,oef:idx,aan:p===-1})}).catch(function(){});}catch(e){}
+      // via stuur(): zonder internet gaat het vinkje in de wachtrij en later alsnog mee
+      try{stuur('/api/kaart/oefening',{id:id,oef:idx,aan:p===-1}).catch(function(){});}catch(e){}
     }
     // alle oefeningen af -> bevestig de dag-teller (idempotent; server telt één keer per dag)
     var totaal=document.querySelectorAll('#oefs .oefdone').length;
@@ -1539,7 +1539,7 @@
   function zetInWacht(pad,body){
     if(!id||id==='demo')return;
     var w=leesWacht(),nu=Date.now();
-    var sleutel=pad+(pad==='/api/kaart/oefzwaar'?'#'+body.oef:pad==='/api/kaart/seintje'?'#'+body.soort:'')+'@'+dagStr(nu);
+    var sleutel=pad+(pad==='/api/kaart/oefzwaar'||pad==='/api/kaart/oefening'?'#'+body.oef:pad==='/api/kaart/seintje'?'#'+body.soort:'')+'@'+dagStr(nu);
     var mee={};for(var k in body)mee[k]=body[k];if(!mee.wanneer)mee.wanneer=nu;
     w[sleutel]={pad:pad,body:mee,t:nu};bewaarWacht(w);tekenWacht();
   }

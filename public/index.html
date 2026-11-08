@@ -2111,6 +2111,10 @@ bridge2.jpg</div>
     var c=currentCard(naam);
     c.praktijk=(SET.praktijk||'').trim();
     if(c.client){delete c.client.c_leeftijd;delete c.client.c_cave;}
+    // koos de therapeut de roepnaam ("Marieke B.") voor de kaartnaam, dan gaat de volledige
+    // naam uit het editorveld ook niet als c_naam mee naar de server
+    if(IS_V2&&c.client&&c.client.c_naam&&naam&&String(c.client.c_naam).trim().toLowerCase()!==String(naam).trim().toLowerCase()&&
+       kaartLabelVan(c.client.c_naam).toLowerCase()===String(naam).trim().toLowerCase())c.client.c_naam=String(naam).trim();
     if(IS_V2){c.kaartId=KAART_ID||'';if(KAART_ID)c.basisTs=KAART_TS||0;if(OVERSCHRIJF&&OVERSCHRIJF===String(naam).toLowerCase())c.overschrijf=true;}
     return c;
   }
@@ -4347,7 +4351,13 @@ bridge2.jpg</div>
     // dataminimalisatie (art. 5 lid 1 c AVG): ook hier een roepnaam voorstellen, net als bij printen met QR
     if(IS_V2&&naamLijktVolledig(naam)&&NAAM_OK!==naam.toLowerCase()){
       var vs=kaartLabelVan(naam);
-      if(confirm('\u201c'+naam+'\u201d lijkt een volledige naam. Op de digitale kaart hoort alleen een roepnaam; de volledige naam staat in je EPD.\n\nOK = maak er \u201c'+vs+'\u201d van\nAnnuleren = zo laten')){naam=vs;kn.value=vs;}
+      if(confirm('\u201c'+naam+'\u201d lijkt een volledige naam. Op de digitale kaart hoort alleen een roepnaam; de volledige naam staat in je EPD.\n\nOK = maak er \u201c'+vs+'\u201d van\nAnnuleren = zo laten')){
+        // ook de roepnaam in de editor: die reist als client.c_naam mee naar de server,
+        // anders stond de volledige naam daar toch (en vroeg de QR er opnieuw om)
+        var cnv=document.getElementById('c_naam');
+        if(cnv&&cnv.value.trim().toLowerCase()===naam.toLowerCase()){cnv.value=vs;cnv.dispatchEvent(new Event('input',{bubbles:true}));}
+        naam=vs;kn.value=vs;
+      }
       else NAAM_OK=naam.toLowerCase();
     }
     saveServerCard(naam,function(d){
@@ -4800,11 +4810,14 @@ bridge2.jpg</div>
         var knop=this,naam=document.getElementById('eo_naam').value.trim(),f=document.getElementById('eo_foto').files[0];
         if(!naam){alert('Geef de oefening een naam.');return;}
         if(!f){alert('Kies een foto van de oefening.');return;}
+        // bezig-slot meteen, vóór het lezen van de foto: een dubbelklik stuurt anders twee keer
+        if(knop.disabled)return;
+        knop.disabled=true;knop.textContent='Bezig…';
         var rd=new FileReader();
+        rd.onerror=function(){knop.disabled=false;knop.textContent='Toevoegen';alert('De foto kon niet worden gelezen. Gebruik een JPEG- of PNG-foto.');};
         rd.onload=function(){
           resizeDataUrl(rd.result,1200,function(durl){
-            if(!durl){alert('De foto kon niet worden gelezen.');return;}
-            knop.disabled=true;knop.textContent='Bezig…';
+            if(!durl){knop.disabled=false;knop.textContent='Toevoegen';alert('De foto kon niet worden gelezen. Gebruik een JPEG- of PNG-foto.');return;}
             fetch('api/praktijk/oefeningen',{method:'POST',headers:PJSON(),
               body:JSON.stringify({praktijk:SET.praktijk||'',naam:naam,uitleg:document.getElementById('eo_uitleg').value,img:durl})})
               .then(function(r){return r.json();})
