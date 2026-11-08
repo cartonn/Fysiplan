@@ -10,6 +10,21 @@ import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { aantalTherapeuten, maandBedrag, beoordeelBetaling } from "../lib/mollie.js";
+import { volgendFactuurNr, bedragen, naarCent, euro, factuurHtml, isFactuur } from "../lib/factuur.js";
+
+// 1b. factuur: nummering, btw en escapen
+assert.equal(volgendFactuurNr([], 2026), "FP-2026-0001");
+assert.equal(volgendFactuurNr([{ abonnement: { factuurNr: "FP-2026-0007" } }, { abonnement: { factuurNr: "FP-2025-0042" } }, {}], 2026), "FP-2026-0008");
+assert.equal(naarCent("11.98"), 1198); assert.equal(naarCent("10"), 1000); assert.equal(naarCent("x"), 0);
+assert.deepEqual(bedragen(1198, true), { totaal: 1198, excl: 990, btw: 208 });
+assert.deepEqual(bedragen(1198, false), { totaal: 1198, excl: 1198, btw: 0 });
+assert.equal(euro(1198), "€ 11,98");
+const lev = { bedrijf: "Fysiplan B.V.", kvk: "12345678", adres: "Straat 1, Utrecht", btwNummer: "NL000000000B01" };
+assert.ok(isFactuur(lev)); assert.ok(!isFactuur({ ...lev, kvk: "" }), "zonder KvK geen factuur");
+const proefAb = { aantal: 1, bedrag: "5.99", sinds: Date.UTC(2026, 10, 8), betaaldTot: Date.UTC(2026, 11, 8), eersteBetaling: "tr_x1", factuurNr: "FP-2026-0001" };
+const xss = factuurHtml({ leverancier: lev, afnemer: { naam: "<img src=x onerror=alert(1)>", email: "a@b.nl" }, abonnement: proefAb });
+assert.doesNotMatch(xss, /<img/, "praktijknaam wordt ge-escaped");
+assert.doesNotMatch(xss, /<script/i, "factuur is scriptloos");
 
 // 1. pure hulpjes
 assert.deepEqual(maandBedrag(1), { currency: "EUR", value: "5.99" });
@@ -152,8 +167,37 @@ try {
 
   html = await (await fetch(srv.origin + "/v2/proef/betaald", { headers: { cookie } })).text();
   assert.match(html, /abonnement is actief/, "bedankpagina");
+  assert.match(html, /href="\/v2\/proef\/factuur">Betaalbewijs bekijken/, "bedankpagina linkt het betaalbewijs");
+  html = await (await fetch(srv.origin + "/v2/proef?mijn=1", { headers: { cookie } })).text();
+  assert.match(html, /href="\/v2\/proef\/factuur"/, "Mijn abonnement linkt het betaalbewijs");
+  // factuur/betaalbewijs: alleen voor de eigen praktijk, met nummer en het betaalde bedrag
+  r = await fetch(srv.origin + "/v2/proef/factuur");
+  assert.equal(r.status, 404, "zonder proefcookie geen factuur");
+  r = await fetch(srv.origin + "/v2/proef/factuur", { headers: { cookie } });
+  assert.equal(r.status, 200);
+  assert.match(r.headers.get("content-security-policy") || "", /default-src 'none'/, "strikte CSP");
+  html = await r.text();
+  const jaar = new Date().toLocaleDateString("nl-NL", { year: "numeric", timeZone: "Europe/Amsterdam" });
+  const totaal = euro(naarCent(maandBedrag(2).value));
+  assert.match(html, /<h1>Betaalbewijs<\/h1>/, "zonder btw-id een betaalbewijs");
+  assert.match(html, /geen factuur voor de btw/);
+  assert.match(html, new RegExp("FP-" + jaar + "-0001"), "eerste factuurnummer van het jaar");
+  assert.ok(html.includes(totaal), "betaald bedrag " + totaal);
+  assert.doesNotMatch(html, /Btw 21%/, "betaalbewijs rekent geen btw");
+  assert.equal((await leesProef()).abonnement.factuurNr, "FP-" + jaar + "-0001", "nummer bewaard");
   html = await (await fetch(srv.origin + "/v2/app", { headers: { cookie } })).text();
   assert.doesNotMatch(html, /gratis dagen zitten erop/, "na betalen geen verlopen-pagina meer");
+  srv.app.kill(); await new Promise((r) => srv.app.once("exit", r));
+
+  // 5. met btw-id en bedrijfsgegevens: een echte factuur, zelfde nummer
+  srv = await start({ MOLLIE_API_KEY: "test_sleutel", MOLLIE_API_BASIS: mollieBasis, FYSIPLAN_BTW_NUMMER: "NL000000000B01",
+    FYSIPLAN_BEDRIJF: "Fysiplan B.V.", FYSIPLAN_KVK: "12345678", FYSIPLAN_ADRES: "Straat 1, Utrecht" });
+  html = await (await fetch(srv.origin + "/v2/proef/factuur", { headers: { cookie } })).text();
+  const b = bedragen(naarCent(maandBedrag(2).value), true);
+  assert.match(html, /<h1>Factuur<\/h1>/, "met btw-id een factuur");
+  assert.match(html, /Btw-id NL000000000B01/); assert.match(html, /KvK 12345678/);
+  assert.match(html, /Btw 21%/); assert.ok(html.includes(euro(b.btw)) && html.includes(euro(b.excl)), "btw uitgesplitst");
+  assert.match(html, /FP-\d{4}-0001/, "nummer verandert niet bij opnieuw bekijken");
   console.log("abonnement via Mollie: alle controles groen");
 } catch (err) {
   if (srv) console.error(srv.app.uit.slice(-2000));
