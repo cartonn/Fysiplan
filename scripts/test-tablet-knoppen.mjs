@@ -24,7 +24,7 @@ assert.match(media[1], /::after\{content:'';position:absolute;inset:-7px\}/, "ti
 assert.match(index, /#a4 \.pic:focus-within \.vid\{display:flex\}/, "zichtbaar bij toetsenbordfocus");
 assert.match(index, /elMon\.addEventListener\('keydown'[\s\S]{0,200}\[data-evid\]/, "Enter/spatie opent eigen video");
 assert.doesNotMatch(index, /proefVerlopen\)\{location\.reload/, "verlopen proef herlaadt de app niet (herlaadlus)");
-assert.match(index, /function toonProefVoorbij\(\)/, "verlopen proef: melding in de app");
+assert.match(index, /function toonProefVoorbij\(anker,stil\)/, "verlopen proef: melding in de app");
 
 const require = createRequire(import.meta.url);
 let pw = null;
