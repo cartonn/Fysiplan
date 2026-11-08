@@ -63,3 +63,4 @@ jobs:
       - run: npm run test:gedeeldwerk
       - run: npm run test:wachtrijdagen
       - run: npm run test:agendamelding
+      - run: npm run test:oefvinkje
