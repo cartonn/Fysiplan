@@ -81,4 +81,15 @@ await metServer({}, async (basis) => {
   assert.equal(await dash(basis, "admin88"), 200, "lokale standaardsleutel werkt niet meer");
 });
 
+// 6. de rem op foute sleutels houdt raden echt tegen: wie op de rem staat, komt ook met de
+// juiste sleutel niet binnen; een ander IP (de echte beheerder) merkt er niets van
+await metServer({ RAILWAY_ENVIRONMENT: "production", ADMIN_KEY: "test-eigen-sleutel-123" }, async (basis) => {
+  const met = (sleutel, ip) =>
+    fetch(basis + "/api/dashboard", { headers: { "x-admin-sleutel": sleutel, "x-forwarded-for": ip } }).then((r) => r.status);
+  for (let i = 0; i < 21; i++) await met("fout-" + i, "10.66.0.1");
+  assert.equal(await met("nog-fout", "10.66.0.1"), 429, "rem op foute sleutels staat niet aan");
+  assert.equal(await met("test-eigen-sleutel-123", "10.66.0.1"), 429, "juiste sleutel komt door de rem heen: raden wordt niet tegengehouden");
+  assert.equal(await met("test-eigen-sleutel-123", "10.66.0.2"), 200, "rem van één IP sluit beheer voor iedereen");
+});
+
 console.log("test-beheersleutel: ok");
