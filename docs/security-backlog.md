@@ -11,7 +11,7 @@ daaruit tot en met 2026-11-06.
 | (a) beheer-endpoints en de admin-sleutel | 2026-11-08 (runtime: rem op foute sleutels hield raden niet tegen, opgelost; alle beheerroutes eisen `isAdmin`) |
 | (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-08 04u (claim, inloggen op naam en e-mail, rem per naam/e-mail/praktijk, wachtwoord wijzigen, herstel, uitnodiging, overzicht en /v2/gegevens met e-mail; gedeeld wachtwoord weer aan: opgelost) |
 | (c) proef-tokens en verlopen proeven | 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
-| (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-07 (vids-eigendom op POST /api/kaarten) |
+| (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-08 12u (therapeutroutes op één kaart open bij praktijk zonder wachtwoord: opgelost; id 48 bits + misrem 30/5 min per IP, patiëntroute met allowlist, praktijkroutes alleen eigen map) |
 | (e) uploads (video, logo, opname /o) | 2026-11-07 (logo-veeg wiste logo's van andere praktijken: opgelost; opname-upload, eigen oefening, /uploads-pad: geen gat) |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-07 (runtime: payloads in alle kaartvelden, /k in nl/en/ar met vertaling, overzicht, sjablonen, eigen oefeningen, serverpagina's; geen gat) |
 | (g) security-headers, CSP, cookies, CSRF | 2026-11-07 (runtime: koppen op 11 V2-pagina's en API, cookies HttpOnly+Lax+Secure, praktijksessie via eigen kop; kruisSite kijkt nu ook naar Origin) |
@@ -19,7 +19,29 @@ daaruit tot en met 2026-11-06.
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-07 (te grote body: nu 413, weglezen begrensd op 10 s en 80 MB) |
 | (j) npm audit | 2026-11-07 (sharp 0.35.3 → 0.35.5, daarna 0 meldingen) |
 
-Volgende run: (d) gedeelde kaarten, daarna (g) headers/CSRF en (i) opslaggroei.
+Volgende run: (g) headers/CSRF, daarna (i) opslaggroei en (j) npm audit.
+
+Sanity 2026-11-08 12u op #99–#101 (prijs €9,99, samenvatting VWO/voorwaarden, dubbeltik/seintje-antwoord): geen
+nieuwe routes of velden; de nieuwe foutmelding in de seintje-venster is vaste tekst. Geen gat.
+
+Audit (d) 2026-11-08 12u:
+- **OPGELOST 2026-11-08 (deze PR) — MIDDEL — therapeutroutes op één kaart open voor iedereen bij een praktijk
+  zonder wachtwoord.** `/api/kaart/antwoord`, `afspraak`, `nieuwe-link`, `archief`, `naam`, `notitie`,
+  `behandelaar`, `psk-doel`, `doel`, `seintje/gezien` en `oefzwaar/gezien` gebruikten `eisPraktijk`, die bij een
+  niet-geclaimde praktijk alles doorlaat. Kaarten van zo'n praktijk bestaan (gedeeld via v1 of de beheersleutel,
+  of van vóór de wachtwoordplicht). Met alleen de praktijknaam en het kaart-id (beide op de geprinte kaart/QR) kon
+  iedereen namens "de praktijk" een bericht en afspraak op de patiëntkaart zetten (phishing), de kaart archiveren
+  (weg na de bewaartermijn), de patiëntlink breken of het seintje wegtikken. Repro lokaal: POST
+  `/api/kaart/antwoord` met `{praktijk, id, tekst}` zonder cookie gaf 200. Nu: `eisBeveiligdePraktijk`, dezelfde
+  poort als het overzicht; v1-sessies en een eigen beheersleutel werken nog. Test: `npm run test:kaartroutes`.
+- **LAAG — teamsjablonen van een praktijk zonder wachtwoord zijn op naam te lezen/overschrijven**
+  (`/api/praktijk/sjablonen` GET/POST/verwijder en `POST /api/praktijken` gebruiken `eisPraktijk`). Geen
+  patiëntgegevens; v2 deelt pas na beveiligen. Fix (eventueel): ook `eisBeveiligdePraktijk`, na een check dat de
+  app sjablonen niet vóór het beveiligen opslaat.
+- Verder nagelopen, geen gat: kaart-id 6 bytes (48 bits) met `kaartMisLimiet` (30 missers per 5 min per IP, laatste
+  XFF-element, IPv6 per /64) op alle kaartroutes; `GET /api/kaart` geeft alleen de allowlist (geen notitie,
+  behandelaar, seintje, contactlogboek, kaartlabel); praktijkroutes zoeken alleen in de map van de eigen sessie
+  (`praktijkVan`), dus geen IDOR tussen praktijken; `nieuwe-link` maakt het oude id meteen ongeldig.
 
 Sanity 2026-11-08 08u op #95–#96 (weesopnames, seintje-voorrang, QR-taal, roepnaam = kaartnaam, eerste deling):
 `weesOpnamesOpruimen` raakt alleen `v-<hex>.mp4|webm` zonder lopend token en laat `ruimKaartVideosOp` beslissen

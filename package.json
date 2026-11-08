@@ -78,7 +78,8 @@
     "test:wachtrijdagen": "node scripts/test-wachtrij-dagen.mjs",
     "test:agendamelding": "node scripts/test-agenda-melding.mjs",
     "test:oefvinkje": "node scripts/test-sweep-oefvinkje-wachtrij.mjs",
-    "test:dubbeltik": "node scripts/test-sweep-dubbeltik-breedte.mjs"
+    "test:dubbeltik": "node scripts/test-sweep-dubbeltik-breedte.mjs",
+    "test:kaartroutes": "node scripts/test-kaart-praktijkroutes.mjs"
   },
   "engines": {
     "node": ">=20"

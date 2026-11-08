@@ -69,3 +69,4 @@ jobs:
       - run: npm run test:qrtaal
       - run: npm run test:eerstedeling
       - run: npm run test:dubbeltik
+      - run: npm run test:kaartroutes
