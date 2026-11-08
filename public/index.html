@@ -4403,7 +4403,11 @@ bridge2.jpg</div>
       }
       else NAAM_OK=naam.toLowerCase();
     }
+    // bezig-slot: een dubbelklik gaf een tweede POST met een 409 en het valse alarm
+    // "intussen op een ander apparaat gewijzigd" (sweep 2026-11-08, Mark)
+    var skn=this;if(skn.dataset.bezig)return;skn.dataset.bezig='1';
     saveServerCard(naam,function(d){
+      delete skn.dataset.bezig;
       if(!d.ok){alert(d.fout||'Kaart delen is niet gelukt.');return;}
       document.getElementById('k_result').textContent='Kaart “'+naam+'” gedeeld met de praktijk.';
       toonSrvKaarten();ping('kaart-opgeslagen');
@@ -4813,7 +4817,10 @@ bridge2.jpg</div>
         fetch(metTekst?'api/kaart/antwoord':'api/kaart/seintje/gezien',{method:'POST',headers:PJSON(),body:JSON.stringify(body)})
           .then(function(r){return r.json();})
           .then(function(d){klaar();if(d.ok){closeOv('ovSein');toonSrvKaarten();}
-            else if(d.proefVerlopen){closeOv('ovSein');toonProefVoorbij();}
+            // proef voorbij: venster blijft open met de reden; de melding in de proefbalk
+            // stond achter dit venster en de collega dacht dat het antwoord verstuurd was
+            else if(d.proefVerlopen){toonProefVoorbij();
+              fout.innerHTML='<b>Niet verstuurd:</b> de gratis proef van je praktijk is voorbij. Je kunt seintjes nog lezen, maar niet meer beantwoorden of afhandelen. <a href="/v2/proef">Wil je doorgaan?</a>';}
             else fout.textContent=d.fout||'Dat is niet gelukt.';})
           .catch(function(){klaar();fout.textContent='Dat is niet gelukt: geen verbinding.';});
       };
