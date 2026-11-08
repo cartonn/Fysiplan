@@ -100,6 +100,33 @@ try {
   assert.equal((await nogmaals.json()).herstelcode, undefined);
   assert.equal((await post("/api/praktijk/login", { praktijk: "Fysio Herstel", wachtwoord: "weer-eigen-ww" })).status, 200);
 
+  // ---- collega verwijderen en het praktijkwachtwoord in één keer uitzetten (security 2026-11-08) ----
+  // De sweep vond: na x in Team logde de oud-collega gewoon weer in met praktijknaam + praktijkwachtwoord.
+  const uitn = await post("/api/praktijk/team/uitnodigen", { email: "mark@herstel.nl", naam: "Mark", rol: "therapeut" }, S);
+  assert.equal(uitn.status, 200);
+  const tok = new URL((await uitn.json()).link).searchParams.get("t");
+  const form = await fetch(origin + "/v2/uitnodiging", { method: "POST", headers: { "content-type": "application/x-www-form-urlencoded", "x-forwarded-for": "10.7.1.1" },
+    body: new URLSearchParams({ t: tok, naam: "Mark", wachtwoord: "mark-wachtwoord", regels: "1" }) });
+  assert.equal(form.status, 200);
+  const markId = (await (await get("/api/praktijk/team", S)).json()).leden.find((l) => l.email === "mark@herstel.nl").id;
+  const Gw = ses(await (await post("/api/praktijk/login", { praktijk: "Fysio Herstel", wachtwoord: "weer-eigen-ww" })).json());
+  const vraag = await post("/api/praktijk/team/verwijder", { id: markId }, S);
+  assert.equal(vraag.status, 409, "niet stil verwijderen zolang het praktijkwachtwoord werkt");
+  assert.equal((await post("/api/praktijk/team/verwijder", { id: markId, gedeeld: "onzin" }, S)).status, 409);
+  const weg = await post("/api/praktijk/team/verwijder", { id: markId, gedeeld: "uit" }, S);
+  assert.equal(weg.status, 200);
+  assert.equal((await weg.json()).gedeeldUit, true);
+  assert.equal((await post("/api/praktijk/login", { praktijk: "Fysio Herstel", wachtwoord: "weer-eigen-ww" })).status, 401,
+    "de oud-collega komt niet meer binnen met het praktijkwachtwoord");
+  assert.equal((await post("/api/praktijk/login", { email: "mark@herstel.nl", wachtwoord: "mark-wachtwoord" })).status, 403);
+  assert.equal((await get("/api/praktijk/team", Gw)).status, 401, "sessies met het praktijkwachtwoord vervallen");
+  assert.equal((await get("/api/praktijk/team", S)).status, 200, "de eigen login blijft ingelogd");
+  // een uitgenodigde collega die nooit inlogde: gewoon weg, geen vraag
+  await post("/api/praktijk/team/gedeeld-uit", { uit: false, wachtwoord: "weer-aan-ww-1" }, S);
+  await post("/api/praktijk/team/uitnodigen", { email: "nooit@herstel.nl", rol: "therapeut" }, S);
+  const nooitId = (await (await get("/api/praktijk/team", S)).json()).leden.find((l) => l.email === "nooit@herstel.nl").id;
+  assert.equal((await post("/api/praktijk/team/verwijder", { id: nooitId }, S)).status, 200);
+
   // ---- vraaghulp: een kapotte body is 400, geen 502 "even niet bereikbaar" ----
   for (const body of ["{", "null", "[]", "42", "geen json"]) {
     const r = await fetch(origin + "/api/kaart/vraag", { method: "POST", headers: kop(), body });

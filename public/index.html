@@ -3132,7 +3132,26 @@ bridge2.jpg</div>
       el.querySelectorAll('[data-tmweg]').forEach(function(btn){
         btn.addEventListener('click',function(){
           if(btn.dataset.zeker!=='1'){btn.dataset.zeker='1';btn.textContent='Zeker?';return;}
-          teamPost('verwijder',{id:btn.getAttribute('data-tmweg')}).then(function(r){if(!r.ok)msg(r.fout||'Dat lukte niet.');laadTeam();});
+          var wegId=btn.getAttribute('data-tmweg');
+          teamPost('verwijder',{id:wegId}).then(function(r){
+            if(r.gedeeldAan){
+              // het gedeelde praktijkwachtwoord werkt nog: de beheerder kiest bewust
+              var m=document.getElementById('tm_msg');if(!m)return;
+              m.style.color='var(--ink)';
+              m.innerHTML="<div style='padding:8px 10px;border:1px solid var(--line);border-radius:8px'>"+esc(r.fout||'')+
+                (r.kanUit?"":" Verander daarna het praktijkwachtwoord.")+
+                "<div style='display:flex;gap:6px;flex-wrap:wrap;margin-top:6px'>"+
+                (r.kanUit?"<button class='btn primary' type='button' data-tmkeus='uit'>Verwijder en zet het praktijkwachtwoord uit</button>":"")+
+                "<button class='btn' type='button' data-tmkeus='laten'>Alleen verwijderen</button></div></div>";
+              m.querySelectorAll('[data-tmkeus]').forEach(function(k){
+                k.addEventListener('click',function(){
+                  teamPost('verwijder',{id:wegId,gedeeld:k.getAttribute('data-tmkeus')}).then(function(r2){laadTeam(function(){if(!r2.ok)msg(r2.fout||'Dat lukte niet.');});});
+                });
+              });
+              return;
+            }
+            if(!r.ok)msg(r.fout||'Dat lukte niet.');laadTeam();
+          });
         });
       });
       var gd=document.getElementById('tm_gedeeld');
