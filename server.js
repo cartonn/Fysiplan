@@ -5218,17 +5218,30 @@ async function afhandelen(request, response) {
     response.end();
     return;
   }
-  // persoonlijke link uit de welkomstmail: de proef ook op een tweede apparaat
-  if (urlPath === "/v2/proef/terug" && request.method === "GET") {
+  // persoonlijke link uit de welkomstmail: de proef ook op een tweede apparaat.
+  // Security (2026-11-08): de GET zette meteen de proefcookie. Elke website kon zo met
+  // één link (top-level navigatie, SameSite=Lax laat de cookie dan toe) de eigen,
+  // verlopen proef van de aanvaller op het apparaat van een therapeut zetten: de app
+  // ging daar op slot, en een praktijk die daarna werd beveiligd of inlogde, werd aan
+  // díe proef gekoppeld (login-CSRF). En een linkscanner in de mail verbruikte de
+  // eenmalige link al voordat de therapeut hem opende. Nu: een GET die van een andere
+  // site komt (of zonder Sec-Fetch-Site) toont alleen een knop; de cookie komt pas bij
+  // een POST van fysiplan zelf (kruisSite), of bij een link die de gebruiker zelf
+  // opende (Sec-Fetch-Site: none, bijvoorbeeld vanuit een mail-app).
+  if (urlPath === "/v2/proef/terug" && (request.method === "GET" || request.method === "POST")) {
     response.setHeader("cache-control", "no-store");
-    const code = String(new URL(request.url, "http://x").searchParams.get("code") || "");
-    let id = /^[a-f0-9]{48}$/.test(code) ? proefTokenIndex.get(tokenHash(code)) : null;
+    response.setHeader("referrer-policy", "no-referrer");
+    let code = "";
+    if (request.method === "POST") {
+      if (kruisSite(request)) { await weigerKruis(response); return; }
+      try { code = String(new URLSearchParams(await readBody(request, 1024)).get("code") || ""); } catch {}
+    } else code = String(new URL(request.url, "http://x").searchParams.get("code") || "");
+    const geldig = /^[a-f0-9]{48}$/.test(code);
+    const h = geldig ? tokenHash(code) : "";
+    let id = geldig ? proefTokenIndex.get(h) : null;
     // of de eenmalige link na opnieuw aanmelden met een bestaand e-mailadres
-    if (!id && /^[a-f0-9]{48}$/.test(code)) {
-      const h = tokenHash(code);
-      const q = Object.values(proeven).find((x) => x.mailLink && x.mailLink.h === h && x.mailLink.verloopt > Date.now());
-      if (q) { delete q.mailLink; id = q.id; }
-    }
+    const q = !id && geldig ? Object.values(proeven).find((x) => x.mailLink && x.mailLink.h === h && x.mailLink.verloopt > Date.now()) : null;
+    if (q) id = q.id;
     if (!id || !proeven[id]) {
       if (kaartMisLimiet(request, response)) return;
       await serveerProef(request, response, "bericht", { TITEL: "Link werkt niet", ETIKET: "Link verlopen", KOP: "Deze link werkt niet meer.",
@@ -5236,6 +5249,17 @@ async function afhandelen(request, response) {
         KNOP_HTML: '<a class="knop oranje" href="/v2/proef">Naar aanmelden</a>' }, 404);
       return;
     }
+    const sfs = String(request.headers["sec-fetch-site"] || "");
+    if (request.method === "GET" && sfs !== "none" && sfs !== "same-origin") {
+      // dit apparaat heeft deze proef al: niets te doen
+      if (proefVan(request) === proeven[id]) { response.writeHead(303, { location: proefVerlopen(proeven[id]) ? "/v2/proef" : "/v2/app" }); response.end(); return; }
+      await serveerProef(request, response, "bericht", { TITEL: "Verder met je proef", ETIKET: "Je proef", KOP: "Verder met je proef op dit apparaat?",
+        TEKST: "Druk op de knop om je Fysiplan-proef op dit apparaat te openen. Kreeg je deze link niet zelf van Fysiplan per mail? Druk dan niet op de knop.",
+        KNOP_HTML: '<form method="post" action="/v2/proef/terug"><input type="hidden" name="code" value="' + htmlEsc(code) + '"/>' +
+          '<button class="knop oranje" type="submit">Ga verder met mijn proef</button></form>' });
+      return;
+    }
+    if (q) delete q.mailLink;
     // een vers token voor dít apparaat; de maillink blijft bruikbaar voor het volgende
     const token = proefNieuwToken(proeven[id]);
     await bewaarProeven();

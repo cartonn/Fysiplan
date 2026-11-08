@@ -212,10 +212,18 @@ try {
   assert.ok(linkMail, "eenmalige link naar het echte adres");
   assert.doesNotMatch(linkMail.text, /Kees|0687654321/);
   const eenmalig = linkMail.text.match(/\/v2\/proef\/terug\?code=[a-f0-9]{48}/)[0];
-  const eerste = await fetch(origin + eenmalig, { redirect: "manual" });
+  // security: een linkscanner (GET zonder Sec-Fetch-Site) verbruikt de eenmalige link niet
+  const scanner = await fetch(origin + eenmalig, { redirect: "manual" });
+  assert.equal(scanner.status, 200, "GET zonder Sec-Fetch-Site toont alleen een knop");
+  assert.equal(scanner.headers.get("set-cookie"), null, "geen cookie op een GET van buiten");
+  assert.match(await scanner.text(), /<form method="post" action="\/v2\/proef\/terug">/);
+  const eenmaligCode = eenmalig.split("code=")[1];
+  const terugPost = (code, extra = {}) => fetch(origin + "/v2/proef/terug", { method: "POST", redirect: "manual",
+    headers: { "content-type": "application/x-www-form-urlencoded", "sec-fetch-site": "same-origin", ...extra }, body: "code=" + code });
+  const eerste = await terugPost(eenmaligCode);
   assert.equal(eerste.status, 303);
   assert.match(eerste.headers.get("set-cookie") || "", /fpproef=[a-f0-9]{48}/);
-  const tweede = await fetch(origin + eenmalig, { redirect: "manual" });
+  const tweede = await terugPost(eenmaligCode);
   assert.equal(tweede.status, 404, "de link werkt maar één keer");
 
   // landing -> proef: met een lopende proef meteen door naar de app
@@ -254,9 +262,23 @@ try {
   assert.match(Object.values(proefOpSchijf).find((p) => p.email === "sanne@gmail.com").vwo.versie, /^\d{4}-\d{2}-\d{2}$/);
 
   // persoonlijke maillink op een tweede apparaat
-  const terug = await fetch(origin + terugLink, { redirect: "manual" });
+  // security (login-CSRF): een andere website die naar de link navigeert, zet geen proefcookie
+  const kruisGet = await fetch(origin + terugLink, { redirect: "manual", headers: { "sec-fetch-site": "cross-site" } });
+  assert.equal(kruisGet.status, 200);
+  assert.equal(kruisGet.headers.get("set-cookie"), null, "cross-site GET zet geen proefcookie");
+  const kruisPost = await terugPost(terugLink.split("code=")[1], { "sec-fetch-site": "cross-site" });
+  assert.equal(kruisPost.status, 403, "cross-site POST geweigerd");
+  assert.equal(kruisPost.headers.get("set-cookie"), null);
+  const vreemdeOrigin = await terugPost(terugLink.split("code=")[1], { "sec-fetch-site": "", origin: "https://kwaad.example" });
+  assert.equal(vreemdeOrigin.status, 403, "POST met andere Origin geweigerd");
+  // zelf geopend vanuit een mail-app (Sec-Fetch-Site: none): meteen door, zoals voorheen
+  const terug = await fetch(origin + terugLink, { redirect: "manual", headers: { "sec-fetch-site": "none" } });
   assert.equal(terug.status, 303);
   assert.match(cookieUit(terug), /^fpproef=[a-f0-9]{48}$/);
+  // de knop op de bevestigingspagina werkt ook
+  const knop = await terugPost(terugLink.split("code=")[1]);
+  assert.equal(knop.status, 303);
+  assert.match(cookieUit(knop), /^fpproef=[a-f0-9]{48}$/);
   assert.equal((await fetch(origin + "/v2/proef/terug?code=" + "0".repeat(48))).status, 404);
 
   // verlopen proef: melding in plaats van de app, geen nieuwe kaarten
