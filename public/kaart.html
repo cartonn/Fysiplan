@@ -471,7 +471,7 @@
     <div class="client" id="clientblok" style="display:none"></div>
   </header>
 
-  <div class="privregel" id="privregel" role="note" style="display:none"><span><span id="privtekst"></span><a id="privmeer" href="/privacy" target="_blank" rel="noopener">Privacy</a></span><button type="button" id="privok">Begrepen</button></div>
+  <div class="privregel" id="privregel" role="note" style="display:none"><span><span id="privtekst"></span><a id="privmeer" href="/privacy#patient" hreflang="nl" target="_blank" rel="noopener">Privacy</a></span><button type="button" id="privok">Begrepen</button></div>
   <div class="wachtrij" id="wachtrij" role="status" aria-live="polite" style="display:none"></div>
   <div class="veilig" id="veilig"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 16px"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18.1a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg><span id="veiligTxt"></span></div>
 
@@ -597,7 +597,7 @@
   <div class="voet">
     <span id="voet1">Vragen over de uitvoering? Neem contact op met je praktijk.</span><br/>
     <span class="merk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a39c8a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg>
-    <span id="gemaakt">Gemaakt met</span> <a href="https://fysiplan.nl/v2">Fysiplan</a> · <a id="privlink" href="/privacy" target="_blank" rel="noopener">Privacy</a></span>
+    <span id="gemaakt">Gemaakt met</span> <a href="https://fysiplan.nl/v2">Fysiplan</a> · <a id="privlink" href="/privacy#patient" hreflang="nl" target="_blank" rel="noopener">Privacy</a></span>
   </div>
 </div>
 <div class="lightbox" id="lightbox" role="dialog" aria-label="vergrote oefenfoto"><div class="lbknoppen"><button type="button" class="lbknop" id="lbdemoKnop" aria-pressed="false" hidden></button><button type="button" class="lbknop" id="lbgeluid" aria-pressed="false" hidden></button></div><div class="lbfoto" id="lbfoto"><span class="fpmerk" aria-hidden="true">Fysiplan</span><span class="lbbeeld"><img id="lbimg" alt=""/><i class="merkdek" id="lbdek" hidden></i></span></div><div class="vtekst lbuitleg" id="lbuitleg" hidden></div><div class="demowrap" id="lbdemo" hidden></div><div class="lbnaam" id="lbnaam"></div></div>
@@ -1035,9 +1035,7 @@
   function zetOefTrouwLokaal(idx,aan){
     if(!K||!K.kaart||!K.dag)return;
     var x=(K.kaart.chosen||[])[idx];var naam=oefTrouwSleutel(x);if(!naam)return;
-    var tr=K.kaart.oefTrouw=K.kaart.oefTrouw||{};
-    var rec=Object.prototype.hasOwnProperty.call(tr,naam)?tr[naam]:(tr[naam]={n:0,d:''});
-    if(aan)rec.d=K.dag;else if(rec.d===K.dag)rec.d='';
+    K.kaart.oefTrouw=mgTrouwTik(K.kaart.oefTrouw,naam,K.dag,aan);
   }
   function bewaarOefDaan(st){try{localStorage.setItem(oefDaanSleutel(),JSON.stringify(st));}catch(e){}}
   function tekenOefDaan(){
@@ -1683,6 +1681,21 @@
       r.push('- '+h.dagTijd(b.wanneer||w.t)+': '+wat);});
     r.push('',L.slot);
     return r.join('\n')+'\n';
+  }
+  // De telling per oefening en de eigen seintjes lokaal bijwerken zoals de server ze
+  // bijwerkt, zodat "Download mijn gegevens" direct na een tik klopt (inzage, art. 15 AVG)
+  // en niet pas na herladen. Zelfde regel als /api/kaart/oefening: één dag telt één keer.
+  function mgTrouwTik(tr,naam,dag,aan){
+    tr=tr||{};
+    var rec=Object.prototype.hasOwnProperty.call(tr,naam)?tr[naam]:(tr[naam]={n:0,d:''});
+    if(aan){if(rec.d!==dag){rec.n=Math.min(9999,(Number(rec.n)||0)+1);rec.d=dag;}}
+    else if(rec.d===dag){rec.n=Math.max(0,(Number(rec.n)||0)-1);rec.d='';}
+    return tr;
+  }
+  function mgSeintjeErbij(k,soort,t){
+    if(!k||['vraag','pijn','goed'].indexOf(soort)===-1)return;
+    if(!Array.isArray(k.mijnSeintjes))k.mijnSeintjes=[];
+    k.mijnSeintjes.push({soort:soort,t:t});
   }
   // </mgTekst>
   function downloadMijnGegevens(){
@@ -2472,7 +2485,7 @@
       knoppen.forEach(function(k){k.classList.toggle('aan',k===b);});
       var dank=document.getElementById('sdank');
       stuur('/api/kaart/seintje',{id:id,soort:soort})
-        .then(function(d){dank.style.display='block';dank.textContent=d&&d.ok?trs('dank'):trs('fout');if(!d||!d.ok)b.classList.remove('aan');delete b.dataset.bezig;})
+        .then(function(d){dank.style.display='block';dank.textContent=d&&d.ok?trs('dank'):trs('fout');if(d&&d.ok)mgSeintjeErbij(K&&K.kaart,soort,Date.now());if(!d||!d.ok)b.classList.remove('aan');delete b.dataset.bezig;})
         .catch(function(e){dank.style.display='block';delete b.dataset.bezig;if(e&&e.wacht){dank.textContent=trw('een');return;}dank.textContent=trs('fout');b.classList.remove('aan');});
     });
     // ervaren herstel: één tik stuurt de score (-2..+2), vandaag opnieuw tikken wijzigt
