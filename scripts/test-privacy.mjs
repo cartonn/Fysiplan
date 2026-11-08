@@ -241,7 +241,7 @@ try {
   assert.match(privacy, /binnen een maand antwoord/);
   assert.match(privacy, /alleen door een computer/);
   assert.match(privacy, /zonder die gegevens kunnen we de proef niet starten/);
-  assert.match(privacy, /Versie 7 november 2026/);
+  assert.match(privacy, /Versie 8 november 2026/);
   assert.match(privacy, /Foutlog/);
   // de foutlog belooft "zonder kaartlink": controleer de functie die het pad inkort
   const serverBron = await readFile(join(root, "server.js"), "utf8");
