@@ -1112,6 +1112,12 @@ bridge2.jpg</div>
       cnV2.addEventListener('blur',function(){planAutoDeel();});
       cnV2.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();cnV2.blur();}});
     }
+    // Doel en Opmerking: de server bewaart hooguit 500 tekens. Zonder grens in het veld werd
+    // een lange tekst stil afgekapt (sweep 2026-11-08); nu stopt het veld zelf bij 500.
+    ['c_doel','c_opm'].forEach(function(k){
+      var el=document.getElementById(k);
+      if(el)el.maxLength=500;
+    });
     // Leeftijd en Casus blijven op papier en in deze browser; ze gaan niet naar de server
     ['c_leeftijd','c_cave'].forEach(function(k){
       var el=document.getElementById(k);
@@ -2091,16 +2097,29 @@ bridge2.jpg</div>
     if(s.indexOf(',')>-1){var d=s.split(',');achter=d[0].trim();voor=d.slice(1).join(' ').trim()||achter;}
     var w=voor.split(' ');
     var roep=w[0]||'';
-    var acht=achter?achter.split(' '):(w.length>1?[w[w.length-1]]:[]);
+    // tekens als @, = of emoji rond de roepnaam vallen weg (sweep 2026-11-08)
+    roep=roep.replace(/^[^\p{L}]+|[^\p{L}\p{M}'\-]+$/gu,'')||roep;
+    // staat er al een initiaal ("Marieke B. knie", "Jan K. schouder"), dan is het al een
+    // roepnaam: die initiaal houden in plaats van de eerste letter van het laatste woord
+    for(var i=1;i<w.length&&!achter;i++){
+      if(IS_INITIAAL.test(w[i]))return (roep+' '+w[i].charAt(0).toUpperCase()+'.').slice(0,40);
+    }
+    // achternaam = laatste woord dat (na weghalen van tekens als 😀 of ") met een letter begint
+    var acht=(achter?achter.split(' '):w.slice(1)).map(function(x){return x.replace(/^[^\p{L}]+/u,'');})
+      .filter(function(x){return /^\p{L}/u.test(x);});
     var laatste=acht.length?acht[acht.length-1]:'';
-    var ini=laatste?laatste.charAt(0).toUpperCase()+'.':'';
+    var ini=laatste?Array.from(laatste)[0].toUpperCase()+'.':'';
     return (roep+(ini?' '+ini:'')).trim().slice(0,40);
   }
+  // één letter met een punt, eventueel gevolgd door leestekens: "B." of "B.;"
+  var IS_INITIAAL=/^\p{L}\.[^\p{L}]*$/u;
   // lijkt het naamveld een volledige naam? (twee of meer woorden en het laatste is
   // geen initiaal) Alleen een hulpje: de therapeut beslist
   function naamLijktVolledig(naam){
     var w=String(naam||'').replace(/\s+/g,' ').trim().split(' ');
     if(w.length<2)return false;
+    // al een roepnaam met initiaal en een toevoeging ("Jan K. schouder links")
+    if(w.slice(1).some(function(x){return IS_INITIAAL.test(x);}))return false;
     var l=w[w.length-1];
     return l.length>=3&&!/\.$/.test(l);
   }

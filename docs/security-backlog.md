@@ -116,6 +116,14 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **MIDDEL (gebruikers-sweep 2026-11-08 14u, Mark) — verwijderde collega komt weer binnen met het gedeelde praktijkwachtwoord.**
+  Na × in Team vervalt zijn eigen sessie (401/403), maar inloggen met praktijknaam + praktijkwachtwoord geeft 200 en een
+  beheerderssessie (sessie zonder lid = beheer, server.js r. ~299 `isBeheer`; verwijderen r. ~2660–2671 trekt alleen
+  lid-sessies in). Het Team-venster belooft "kan een vertrokken collega er niet meer in" (index.html r. ~3044).
+  Voorstel: bij verwijderen waarschuwen of het gedeelde wachtwoord automatisch uitzetten zodra er eigen logins zijn.
+- **LAAG (sweep 14u, Jayden) — bericht van de therapeut laat tekst-omkeertekens (U+202E e.d.) door** naar /k; alleen
+  \u0000–\u001f wordt gefilterd (server.js r. ~4333). Geen XSS (platte tekst), wel misleidende weergave.
+
 - **LAAG — `kruisSite` laat `Sec-Fetch-Site: same-site` door** (audit (c) 2026-11-08). Een subdomein (of een andere
   app op `*.up.railway.app`, als dat domein niet op de Public Suffix List staat) telt zo als dezelfde site en mag
   POST'en met de proefcookie (`/v2/proef/wissen`, `doorgaan`). Geen bekend subdomein in handen van een ander. Fix:
