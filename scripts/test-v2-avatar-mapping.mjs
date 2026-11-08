@@ -65,7 +65,7 @@ for(const v of verwacht){
 // (o.a. Curl up, Plank high, Side bents, Bosu plank, Bosu zijw plank met gestrekte arm) volgens de
 // lijntekening en de goedgekeurde video. Daarna Crunch, Knee elbow en Leg raises (herkansing pakket 3).
 // Elke andere wijziging van dit bestand laat deze test falen.
-assert.equal(createHash('sha256').update(fs.readFileSync('public/oefeningen.json')).digest('hex'),'81b447e1d48201870c3511e5587c8d4ef086c94d621d49695fe5d3b099188a69','public/oefeningen.json is ongewijzigd');
+assert.equal(createHash('sha256').update(fs.readFileSync('public/oefeningen.json')).digest('hex'),'c9d246286c7b8f659e5de0dcebdbc1b78490429792d28bcfdcb863d17710df5a','public/oefeningen.json is ongewijzigd');
 assert.notEqual(v2.find(x=>x.exerciseId==='fp_514654a0d4181742').kaartImg,v2.find(x=>x.exerciseId==='fp_5319c4700561725d').kaartImg);
 // geen bestand verplaatst, hernoemd of overschreven
 assert.equal(sha(HEUP),BEELD_KNIEHEFFING);assert.equal(sha(KNIE),BEELD_HEUPEXTENSIE);
