@@ -10,7 +10,7 @@ daaruit tot en met 2026-11-06.
 |---|---|
 | (a) beheer-endpoints en de admin-sleutel | 2026-11-08 (runtime: rem op foute sleutels hield raden niet tegen, opgelost; alle beheerroutes eisen `isAdmin`) |
 | (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-08 04u (claim, inloggen op naam en e-mail, rem per naam/e-mail/praktijk, wachtwoord wijzigen, herstel, uitnodiging, overzicht en /v2/gegevens met e-mail; gedeeld wachtwoord weer aan: opgelost) |
-| (c) proef-tokens en verlopen proeven | 2026-11-07 (statisch: cookie/maillink-tokens alleen als sha256, max 5 per proef, eenmalige maillink 24 u, gewiste proef laat geen tokens achter; team-uitnodigen na verlopen proef: dicht) |
+| (c) proef-tokens en verlopen proeven | 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-07 (vids-eigendom op POST /api/kaarten) |
 | (e) uploads (video, logo, opname /o) | 2026-11-07 (logo-veeg wiste logo's van andere praktijken: opgelost; opname-upload, eigen oefening, /uploads-pad: geen gat) |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-07 (runtime: payloads in alle kaartvelden, /k in nl/en/ar met vertaling, overzicht, sjablonen, eigen oefeningen, serverpagina's; geen gat) |
@@ -19,7 +19,32 @@ daaruit tot en met 2026-11-06.
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-07 (te grote body: nu 413, weglezen begrensd op 10 s en 80 MB) |
 | (j) npm audit | 2026-11-07 (sharp 0.35.3 → 0.35.5, daarna 0 meldingen) |
 
-Volgende run: (c) proef-tokens runtime, daarna (d) gedeelde kaarten.
+Volgende run: (d) gedeelde kaarten, daarna (g) headers/CSRF en (i) opslaggroei.
+
+Sanity 2026-11-08 08u op #95–#96 (weesopnames, seintje-voorrang, QR-taal, roepnaam = kaartnaam, eerste deling):
+`weesOpnamesOpruimen` raakt alleen `v-<hex>.mp4|webm` zonder lopend token en laat `ruimKaartVideosOp` beslissen
+(niets wat een kaart of oefening nog gebruikt); `zetSeintje` krijgt alleen een gecontroleerde `soort`, `ook` bevat
+alleen vraag/pijn en het overzicht escapet via `htmlEsc`. Geen gat.
+
+Audit (c) 2026-11-08 08u:
+- **OPGELOST 2026-11-08 (deze PR) — MIDDEL — login-CSRF via de maillink `/v2/proef/terug`.** De GET zette meteen
+  de proefcookie. Elke website kon een therapeut met één link (top-level navigatie; `SameSite=Lax` stuurt dan mee)
+  de eigen, verlopen proef van de aanvaller laten overnemen. Gevolg: op dat apparaat de verlopen-pagina en 403 op
+  alle schrijfroutes (`proefSlotVoor` kijkt naar de cookie), ook voor een betalende praktijk; en een praktijk die
+  daarna op dat apparaat werd beveiligd (`claim`) of inlogde, werd met `proefKoppel` blijvend aan de proef van de
+  aanvaller gekoppeld, waarmee die praktijk op elk apparaat dicht ging. Daarnaast verbruikte een linkscanner in de
+  mailbox de eenmalige maillink al vóórdat de therapeut hem opende. Nu: een GET van een andere site of zonder
+  `Sec-Fetch-Site` toont alleen een knop; de cookie komt pas bij een POST van fysiplan zelf (`kruisSite`) of bij
+  een link die de gebruiker zelf opende (`Sec-Fetch-Site: none`, mail-app). De eenmalige link wordt pas dan
+  verbruikt. Test: `npm run test:proef`.
+- Verder runtime nagelopen, geen gat: opnieuw aanmelden met een bekend adres zet geen cookie en wijzigt niets
+  (maillink naar het echte adres); opnieuw aanmelden met de eigen verlopen proef verlengt niets; `/v2/proef/wissen`,
+  `doorgaan`, `betalen` en `overzicht` achter `kruisSite`; raden van een code valt onder `kaartMisLimiet` (192 bits).
+- **Afgesloten 2026-11-08 — LAAG (te controleren) — patiëntroutes accepteren `text/plain`** (zie Open): geen gat.
+  Alle patiënt-POST-routes staan achter `kruisSite`; een browser stuurt bij een cross-site POST altijd `Origin` en
+  (sinds 2023 overal) `Sec-Fetch-Site`, dus een andere website wordt geweigerd ongeacht het content-type. Een verzoek
+  zónder Origin komt niet uit een browser (curl), en dat kan hooguit wat de kaartlink zelf al toestaat: de
+  patiëntroutes werken op het kaart-id, niet op een cookie.
 
 Sanity 2026-11-08 04u op #91–#93 (Mijn gegevens-download, offline vinkje per oefening, factuur): `/v2/proef/factuur`
 alleen met de eigen proefcookie, 404 zonder betaling, alle velden via `esc()`, CSP `default-src 'none'`; de
@@ -69,7 +94,11 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
-- **LAAG (te controleren) — patiëntroutes accepteren `content-type: text/plain`** (gebruikers-sweep 2026-11-08 06u, Truus):
+- **LAAG — `kruisSite` laat `Sec-Fetch-Site: same-site` door** (audit (c) 2026-11-08). Een subdomein (of een andere
+  app op `*.up.railway.app`, als dat domein niet op de Public Suffix List staat) telt zo als dezelfde site en mag
+  POST'en met de proefcookie (`/v2/proef/wissen`, `doorgaan`). Geen bekend subdomein in handen van een ander. Fix:
+  alleen `same-origin` en `none` toestaan, na een check dat geen eigen route van `same-site` afhangt.
+- **AFGESLOTEN 2026-11-08 (geen gat, zie audit (c) 08u) — LAAG (te controleren) — patiëntroutes accepteren `content-type: text/plain`** (gebruikers-sweep 2026-11-08 06u, Truus):
   `POST /api/kaart/meting` met text/plain geeft 200. Zo'n verzoek is een "simple request" zonder CORS-voorcontrole; nagaan of
   `kruisSite` (Origin/Referer) dit voor andere sites in alle gevallen tegenhoudt, ook zonder Origin-kop.
 - **OPGELOST 2026-11-07 (deze PR) — MIDDEL — therapeut (geen beheerder) kan teamsjablonen en eigen oefeningen van de hele praktijk verwijderen of
