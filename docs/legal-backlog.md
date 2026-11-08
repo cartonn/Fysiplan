@@ -13,19 +13,23 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (c) algemene voorwaarden | 2026-11-07 (akkoord met versie, eigen login) |
 | (d) code tegen tekst | 2026-11-08 05u (wissen van opnames, eigen video's, logs, reservekopie; mails/FAQ over gedeelde kaarten) |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-08 01u (patiënt: Mijn gegevens-download leesbaar met eigen seintjes, PR #91) |
-| (f) cookies en lokale opslag | 2026-11-07 (Google Fonts weg, fp1, wis-knoppen) |
+| (f) cookies en lokale opslag | 2026-11-08 13u (cookies `fpproef`/`fp1` kloppen; alle localStorage-sleutels van /k en de app langs de tekst gelegd; twee ontbraken in /privacy, toegevoegd) |
 | (g) MDR en AI-verordening | 2026-11-07 (vraaghulp op de kaart, zoekhulp, vertalen, AI-labels, landing en app) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-07 (contactlogboek in de dossiertekst) |
 | (i) begrijpelijkheid (B1) | 2026-11-08 09u (VWO en voorwaarden: "In het kort", VWO als concept gemarkeerd; /v2/gegevens-tekst) |
 
-Volgende run: (f) cookies en lokale opslag, daarna (a) privacyverklaring en (b) subverwerkerslijst.
+Volgende run: (h) WGBO/KNGF, daarna (g) MDR en AI-verordening, dan (a) en (b).
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
 
-- **LAAG — /k "Mijn gegevens"-download alleen in nl en en** (2026-11-08). Sinds PR #91 is de download leesbaar,
-  maar kopjes zijn Nederlands op een Nederlandse kaart en Engels in de andere 7 talen. Vertalen van `TMGD` in
-  `public/kaart.html` naar de, fr, es, pl, tr, ar, uk is een volgende stap (zelfde stijl als `TMG`).
+- **LAAG — /k "Mijn gegevens"-download alleen in nl en en** (2026-11-08). OPGELOST 2026-11-08 PR #103: `TMGD` in alle 9 talen,
+  datums in de kaarttaal, test in `scripts/test-mijn-gegevens.mjs`.
+- **LAAG — /privacy#opslag miste twee patiëntvoorkeuren** (2026-11-08 13u). `fp_app_weg` (melding "zet de kaart op je
+  beginscherm" weggeklikt) en `fp_demo_geluid` (geluid bij de bewegingsdemo) stonden niet in de tabel; beide functioneel
+  (art. 11.7a lid 3 Tw), dus geen toestemming nodig, wel uitleg. OPGELOST 2026-11-08 PR #103, `PRIVACY_VERSIE` 2026-11-08.
+  Gecontroleerd zonder gat: subverwerkers (Cloudflare Stream-upload is alleen beheer/bibliotheek, geen praktijkdata),
+  sessionStorage alleen voor de beheersleutel in het tabblad.
 - **LAAG — Privacy-link op een Engelse/Arabische kaart opent een pagina die alleen Nederlands is** en niet het
   patiëntdeel `#patient` (sweep 18u, Jayden, Pixel 7). kaart.html r. ~473, ~599; server.js `juridischBlok`.
 

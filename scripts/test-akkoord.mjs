@@ -120,7 +120,7 @@ try {
   const csp = (await fetch(origin + "/v2/app")).headers.get("content-security-policy") || "";
   assert.doesNotMatch(csp, /googleapis|gstatic/);
   const priv = await (await fetch(origin + "/privacy")).text();
-  for (const w of ["fpproef", "fp1", "Wis Fysiplan van dit apparaat", "Teamleden", "Mijn gegevens"]) assert.ok(priv.includes(w), "privacyverklaring noemt " + w);
+  for (const w of ["fpproef", "fp1", "Wis Fysiplan van dit apparaat", "Teamleden", "Mijn gegevens", "bewegingsdemo", "beginscherm"]) assert.ok(priv.includes(w), "privacyverklaring noemt " + w);
   assert.doesNotMatch(priv, /lettertype in de app/);
   console.log("test-akkoord: API OK");
 

@@ -52,7 +52,20 @@ assert.match(en, /^My data at Fysiplan/);
 assert.match(en, /More pain/);
 assert.match(en, /Pain scores/);
 assert.doesNotMatch(en, /Roepnaam|Pijnscores|herhalingen|Mijn seintjes/, "Engelse download zonder Nederlandse kopjes");
-assert.equal(ctx.mgTekst(kaart, "", lokaal, "ar", h("en-GB")).split("\n")[0], "My data at Fysiplan", "andere talen: Engels");
+// Legal 2026-11-08 13u: alle talen van de kaart hebben eigen kopjes, met dezelfde sleutels als nl
+const TALEN = ["de", "fr", "es", "pl", "tr", "ar", "uk"];
+const sleutels = (o) => JSON.stringify(Object.keys(o).sort().map((k) => [k, o[k] && typeof o[k] === "object" && !Array.isArray(o[k]) ? Object.keys(o[k]).sort() : Array.isArray(o[k]) ? o[k].length : typeof o[k]]));
+for (const t of TALEN) {
+  assert.ok(ctx.TMGD[t], "download-teksten in " + t);
+  assert.equal(sleutels(ctx.TMGD[t]), sleutels(ctx.TMGD.nl), t + ": zelfde teksten als nl");
+  const tx = ctx.mgTekst(kaart, "Fysio Test", lokaal, t, h("en-GB"));
+  assert.equal(tx.split("\n")[0], ctx.TMGD[t].titel, t + ": eigen titel");
+  assert.doesNotMatch(tx, /Roepnaam|Pijnscores|Mijn seintjes|My data|Pain scores|undefined|NaN|\{n\}/, t + ": geen nl/en-kopjes of kapotte waarden");
+  assert.ok(tx.includes(ctx.TMGD[t].seinW.pijn), t + ": seintje vertaald");
+}
+assert.equal(ctx.mgTekst(kaart, "", lokaal, "xx", h("en-GB")).split("\n")[0], "My data at Fysiplan", "onbekende taal: Engels");
+// de pagina geeft de taal van de kaart door, niet alleen nl/en
+assert.match(html, /var mt=TMGD\[TAAL\]\?TAAL:'en'/, "download volgt de kaarttaal");
 
 // lege kaart: geen fouten, overal "niets"
 const leeg = ctx.mgTekst({ client: {} }, "", {}, "nl", h("nl-NL"));
