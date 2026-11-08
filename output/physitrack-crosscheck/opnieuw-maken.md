@@ -1,12 +1,16 @@
 # Opnieuw maken na Physitrack-crosscheck
 
-Stand: 300 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oordeel `afwijkend` of `fout`). De lijntekening wint bij conflict; een avatar of video die afwijkt wordt opnieuw gemaakt nadat de tekening klopt.
+Stand: 400 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oordeel `afwijkend` of `fout`). De lijntekening wint bij conflict; een avatar of video die afwijkt wordt opnieuw gemaakt nadat de tekening klopt.
 
 ## Bekend vooraf
 
-- **600 One leg standing / 601 Standing chair shoulder rotations**: hebben elkaars tekening en avatar. Omwisselen (tekening én avatar).
+- **600 One leg standing / 601 Standing chair shoulder rotations**: gemeld als 'elkaars tekening en avatar'. Gecontroleerd op origin/main (8 nov): de BESTANDSNAMEN zijn verwisseld (600 wijst naar standing-chair-shoulder-rotations-*, 601 naar one-leg-standing-*), maar de beelden zelf horen nu wel bij de juiste oefening. De tekeningen kloppen dus. Wel opnieuw: avatar 601 (staat op één been met het andere opgetrokken; moet op twee benen staan met de armen in goalpost-houding). Aanrader: bestanden hernoemen zodat naam en inhoud gelijk zijn (zelfde situatie bij 597/599 hip extension / knee lift).
 
-## Tekeningen (4)
+## Tekeningen (7)
+
+### Balans en valpreventie
+
+- **424 Tandemstand – met steun** (afwijkend): Tekening toont een stapstand (voeten ver uit elkaar, pijl van achterste voet naar voren) in plaats van hak-tegen-tenen. Opnieuw tekenen met voeten op één lijn, hak tegen tenen, hand op stoelleuning. Geen avatar.
 
 ### Core
 
@@ -17,11 +21,19 @@ Stand: 300 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oor
 
 - **525 Foam roller glute med.** (afwijkend): Physitrack doet gluteus medius in zijlig met de roller onder de zijkant van de bil. Tekening en avatar tonen de zittende figuur-4 houding (gelijk aan Foam roller glute, nr 526). Tekening en avatar opnieuw maken in zijlig.
 
+### Nek
+
+- **376 Nek buigen – liggend ondersteund** (afwijkend): Bron (head lift) tilt het hoofd van het kussen; uitleg, tekening en avatar laten het hoofd op het kussen liggen, waardoor de oefening vrijwel gelijk is aan nr 374 (kin intrekken liggend). Keuze nodig: oefening als head lift uitvoeren (tekening en avatar: hoofd net los van kussen, kin naar borst) of samenvoegen met 374.
+
 ### Onderste extremiteit
 
 - **45 Been pendelen** (fout): Tekening toont een andere oefening (buiklig op bank, schaarbeweging met gestrekte benen), geen beenpendel; nieuwe tekening nodig: staand met steun, been zwaait voor-achter. Uitleg volgt Physitrack en blijft. Avatar: been gaat zijwaarts i.p.v. voor-achter en steun ontbreekt in startbeeld.
 
-## Avatars (77)
+### Standing Chair
+
+- **596 Standing chair abductie** (afwijkend): Tekening en avatar tonen het been schuin naar achteren (deels heupextensie), niet recht zijwaarts. Physitrack: gestrekt been recht opzij, romp stil. Tekening en avatar opnieuw met been zuiver zijwaarts.
+
+## Avatars (83)
 
 ### Apparaten
 
@@ -95,6 +107,13 @@ Stand: 300 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oor
 
 - **540 Med ball chest press** (fout): dichtstbij: supine chest press met gewichten (geen medicine-ball-versie bij Physitrack). Avatar houdt de bal met één hand en de andere arm ligt op de vloer; tekening toont beide handen aan de bal. Avatar opnieuw met beide handen. Let op: bijna gelijk aan 541 (Med ball floor press).
 
+### Nek
+
+- **376 Nek buigen – liggend ondersteund** (afwijkend): Bron (head lift) tilt het hoofd van het kussen; uitleg, tekening en avatar laten het hoofd op het kussen liggen, waardoor de oefening vrijwel gelijk is aan nr 374 (kin intrekken liggend). Keuze nodig: oefening als head lift uitvoeren (tekening en avatar: hoofd net los van kussen, kin naar borst) of samenvoegen met 374.
+- **385 Nekrotatie met oogfixatie – zittend actief** (afwijkend): Physitrack: hoofd afwisselend naar beide kanten, ogen blijven op het doel, tempo aanpassen als beeld wazig wordt. Uitleg noemt maar één kant. Avatar eindbeeld: ogen kijken mee opzij en niet naar de letter A; avatar opnieuw met blik vast op A terwijl het hoofd draait.
+- **386 Nekrotatie met oogfixatie – functioneel staand** (afwijkend): Physitrack: hoofd heen en weer, blik vast op doel (duim of voorwerp), staand op balanskussen als variant; letter op de muur is een geldige variant. Uitleg noemt maar één kant. Avatar eindbeeld: ogen volgen het hoofd en kijken weg van de letter A; avatar opnieuw met blik vast op A.
+- **389 Levator scapulae rek – zittend actief** (afwijkend): Physitrack: hand van de rekkant achter de rug, andere hand trekt het hoofd schuin naar voren richting andere oksel, rek vasthouden. Uitleg en tekening tonen alleen actieve beweging zonder handen (tekening: handen op knieën). Avatar eindbeeld: hoofd recht naar voren gebogen (kin naar borst) in plaats van schuin richting oksel; avatar opnieuw met draai en buiging richting oksel.
+
 ### Onderste extremiteit
 
 - **45 Been pendelen** (afwijkend): Tekening toont een andere oefening (buiklig op bank, schaarbeweging met gestrekte benen), geen beenpendel; nieuwe tekening nodig: staand met steun, been zwaait voor-achter. Uitleg volgt Physitrack en blijft. Avatar: been gaat zijwaarts i.p.v. voor-achter en steun ontbreekt in startbeeld.
@@ -116,6 +135,11 @@ Stand: 300 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oor
 ### Speedladder
 
 - **187 Voor zijwaarts** (afwijkend): Uitleg en tekening kloppen met Physitrack (naast de ladder, snel zijwaarts in en uit de vakken, licht op de voorvoeten). Avatar toont geen speedladder: avatar opnieuw met ladder op de grond en een voet in een vak.
+
+### Standing Chair
+
+- **596 Standing chair abductie** (afwijkend): Tekening en avatar tonen het been schuin naar achteren (deels heupextensie), niet recht zijwaarts. Physitrack: gestrekt been recht opzij, romp stil. Tekening en avatar opnieuw met been zuiver zijwaarts.
+- **601 Standing chair shoulder rotations** (afwijkend): Bestanden heten one-leg-standing-*. Tekening: ellebogen staan van het lichaam af (meer ER in 45 graden abductie) i.p.v. tegen de zij. Avatar staat bovendien op één been: fout gemengd met One leg standing. Avatar opnieuw op twee benen, ellebogen tegen de zij.
 
 ### TRX
 

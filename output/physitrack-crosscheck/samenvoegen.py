@@ -43,7 +43,11 @@ md = ["# Opnieuw maken na Physitrack-crosscheck", "",
       "Bron per regel: resultaten.csv (oordeel `afwijkend` of `fout`). De lijntekening wint bij conflict; "
       "een avatar of video die afwijkt wordt opnieuw gemaakt nadat de tekening klopt.", "",
       "## Bekend vooraf", "",
-      "- **600 One leg standing / 601 Standing chair shoulder rotations**: hebben elkaars tekening en avatar. Omwisselen (tekening én avatar).", ""]
+      "- **600 One leg standing / 601 Standing chair shoulder rotations**: gemeld als 'elkaars tekening en avatar'. "
+      "Gecontroleerd op origin/main (8 nov): de BESTANDSNAMEN zijn verwisseld (600 wijst naar standing-chair-shoulder-rotations-*, "
+      "601 naar one-leg-standing-*), maar de beelden zelf horen nu wel bij de juiste oefening. De tekeningen kloppen dus. "
+      "Wel opnieuw: avatar 601 (staat op één been met het andere opgetrokken; moet op twee benen staan met de armen in goalpost-houding). "
+      "Aanrader: bestanden hernoemen zodat naam en inhoud gelijk zijn (zelfde situatie bij 597/599 hip extension / knee lift).", ""]
 for kop, rs in regels.items():
     md += [f"## {kop} ({len(rs)})", ""]
     per_groep = collections.defaultdict(list)
