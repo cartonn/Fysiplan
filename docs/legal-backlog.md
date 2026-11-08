@@ -65,13 +65,13 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Opgelost
 
-- **MIDDEL — opnames via /o bleven na een herstart voor altijd op de schijf.** OPGELOST 2026-11-08 PR #__PR__:
+- **MIDDEL — opnames via /o bleven na een herstart voor altijd op de schijf.** OPGELOST 2026-11-08 PR #95:
   het opnametoken stond alleen in het geheugen; kwam een opname niet op een kaart en herstartte de server (elke
   deploy) binnen 15 minuten, dan ruimde niets het bestand nog op. Privacyverklaring en VWO art. 10 beloven dat video's
   met de kaart verdwijnen. Nu ruimt `weesOpnamesOpruimen` bij de start en elke 6 uur elk `v-<token>`-bestand op dat
   geen lopend token, kaart of oefening meer gebruikt. Bron: AVG art. 5 lid 1 onder e (opslagbeperking).
   Test `scripts/test-wees-opnames.mjs`.
-- **LAAG — proefmail en FAQ beloofden dat gedeelde kaarten "altijd" blijven werken.** OPGELOST 2026-11-08 PR #__PR__:
+- **LAAG — proefmail en FAQ beloofden dat gedeelde kaarten "altijd" blijven werken.** OPGELOST 2026-11-08 PR #95:
   herinneringsmail, wis-bevestiging en de FAQ op /v2 zeggen nu "tot hun bewaartermijn afloopt", gelijk aan /privacy.
 
 - **MIDDEL — /k "Mijn gegevens": download mist de seintjes en is onleesbaar.** OPGELOST 2026-11-08 PR #91:
