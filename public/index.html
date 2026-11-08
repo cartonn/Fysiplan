@@ -2113,8 +2113,13 @@ bridge2.jpg</div>
     if(c.client){delete c.client.c_leeftijd;delete c.client.c_cave;}
     // koos de therapeut de roepnaam ("Marieke B.") voor de kaartnaam, dan gaat de volledige
     // naam uit het editorveld ook niet als c_naam mee naar de server
-    if(IS_V2&&c.client&&c.client.c_naam&&naam&&String(c.client.c_naam).trim().toLowerCase()!==String(naam).trim().toLowerCase()&&
-       kaartLabelVan(c.client.c_naam).toLowerCase()===String(naam).trim().toLowerCase())c.client.c_naam=String(naam).trim();
+    // Breder (gebruikers-sweep 2026-11-08, Jayden): de patiënt ziet op /k "Voor <c_naam>".
+    // Deelt de therapeut onder een andere naam dan het naamveld (voorbeeldkaart, of de
+    // kaart van een vorige patiënt hergebruikt), dan zag de nieuwe patiënt de naam van
+    // de vorige. De gekozen kaartnaam is dus ook de roepnaam op de server; alleen een
+    // automatische naam ("Kaart 8-11-2026") laat het naamveld staan.
+    if(IS_V2&&c.client&&c.client.c_naam&&naam&&!/^Kaart \d/.test(String(naam).trim())&&
+       String(c.client.c_naam).trim().toLowerCase()!==String(naam).trim().toLowerCase())c.client.c_naam=String(naam).trim();
     if(IS_V2){c.kaartId=KAART_ID||'';if(KAART_ID)c.basisTs=KAART_TS||0;if(OVERSCHRIJF&&OVERSCHRIJF===String(naam).toLowerCase())c.overschrijf=true;}
     return c;
   }
@@ -2166,10 +2171,18 @@ bridge2.jpg</div>
       toonPsMsg('Kies een wachtwoord en vink het akkoord aan. Daarna komt de QR-code vanzelf op je kaart.');
     },350);
   }
+  // QR van de kaartlink met de patiënttaal; past die niet in de kleine QR (langere
+  // domeinnaam), dan de kale link: de kaart kiest dan zelf de taal van de telefoon
+  function qrSvg(id,px){
+    if(!window.FYSIQR)return '';
+    return FYSIQR.svg(kaartUrl(id),px)||FYSIQR.svg(location.origin+'/k/'+id,px);
+  }
   function toonQr(id){
-    var url=location.origin+'/k/'+id;
+    // met de gekozen patiënttaal (?taal=..), net als de WhatsApp-link: de geprinte QR
+    // opent zo meteen in de taal van de patiënt
+    var url=kaartUrl(id);
     var b=document.getElementById('qrBlok');
-    b.innerHTML=window.FYSIQR?FYSIQR.svg(url,120):'';
+    b.innerHTML=qrSvg(id,120);
     if(!b.innerHTML){verbergQr();return false;}
     b.innerHTML+='<small>Scan voor de digitale kaart</small>'+
       // het eerste magische moment van een proefperiode: met één klik zelf zien
@@ -2632,8 +2645,8 @@ bridge2.jpg</div>
       }
       zetKaartId(d.id,d.ts);
       ensureQr(function(){
-        var url=location.origin+'/k/'+d.id;
-        var svg=window.FYSIQR?FYSIQR.svg(url,220):'';
+        var url=kaartUrl(d.id);
+        var svg=qrSvg(d.id,220);
         document.getElementById('qt_code').innerHTML=svg;
         document.getElementById('qt_link').textContent=url;
         document.getElementById('qt_open').href=url;
@@ -3338,7 +3351,11 @@ bridge2.jpg</div>
     var c=serverKaart(naam);
     fetch('api/kaarten',{method:'POST',headers:PJSON(),body:JSON.stringify(c)})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
-      .then(function(d){if(d&&d.ok&&d.ts&&d.id===KAART_ID)zetKaartId(d.id,d.ts);cb(d);})
+      .then(function(d){
+        // ook bij de eerste deling (nog geen KAART_ID) het id onthouden: anders gaf elke
+        // volgende opslag een 409 "bestaat al" over de eigen kaart en kwam een daarna
+        // opgenomen eigen video nooit op de kaart van de patiënt (sweep 2026-11-08, Mark)
+        if(d&&d.ok&&d.ts&&d.id&&(d.id===KAART_ID||!KAART_ID))zetKaartId(d.id,d.ts);cb(d);})
       .catch(function(){cb({ok:false,fout:'Geen verbinding met de server.'});});
   }
   // deel- en herinnerberichten in de taal van de patiënt: de kaart zelf is al
@@ -3943,11 +3960,12 @@ bridge2.jpg</div>
               pijn:{t:'meldt te veel pijn',bg:'#fbecea',br:'#e7c3bc',fg:'#a23f2c'},
               goed:{t:'meldt: het gaat goed',bg:'#eef6ef',br:'#cfe4d4',fg:'#3e7a52'}};
             var sm=sMap[c.seintje.soort]||sMap.vraag;
+            var seinOok=function(sj){var o=(sj.ook||[]).filter(function(x){return x!==sj.soort&&(x==='vraag'||x==='pijn');});return o.length?' (ook '+o.map(function(x){return x==='pijn'?'te veel pijn':'een vraag';}).join(' en ')+')':'';};
             var sdg=Math.floor((Date.now()-c.seintje.t)/864e5);
             var swan=sdg<=0?'vandaag':(sdg===1?'gisteren':sdg+' dagen geleden');
             seinChip="<button class='btn' data-sein='"+esc(c.id)+"' title='Seintje van de patiënt ("+swan+") — tik om te beantwoorden of af te handelen' "+
               "style='font-size:11.5px;padding:4px 10px;background:"+sm.bg+";border:1px solid "+sm.br+";color:"+sm.fg+"'>"+
-              "<span style='display:inline-block;width:8px;height:8px;border-radius:99px;background:"+sm.fg+";margin-right:5px'></span>seintje: "+sm.t+"</button>";
+              "<span style='display:inline-block;width:8px;height:8px;border-radius:99px;background:"+sm.fg+";margin-right:5px'></span>seintje: "+sm.t+seinOok(c.seintje)+"</button>";
           }
           // kalme heads-up als de kaart door de bewaartermijn binnenkort verdwijnt:
           // zo kan de praktijk eerst naar het dossier kopiëren (knop Deel/CSV) voordat
@@ -4395,7 +4413,10 @@ bridge2.jpg</div>
   // gekozen taal en onthoud die keuze voor deze kaart
   document.getElementById('k_srv_lijst').addEventListener('change',function(e){
     var s=e.target.closest('[data-staal]');
-    if(s){bewaarDeelTaal(s.dataset.staal,s.value);zetDeelLinks(s.dataset.staal);return;}
+    if(s){bewaarDeelTaal(s.dataset.staal,s.value);zetDeelLinks(s.dataset.staal);
+      // taal van de kaart die nu open staat: QR op de kaart (en dus de print) meteen mee
+      if(s.dataset.staal===KAART_ID){var qb=document.getElementById('qrBlok');if(qb&&qb.style.display==='flex')toonQr(KAART_ID);}
+      return;}
     // oefendoel per week zetten (alleen de ingelogde praktijk)
     var dl=e.target.closest('[data-sdoel]');
     if(dl){

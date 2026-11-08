@@ -9,32 +9,32 @@ werk voor Ahmed in `docs/mensenwerk.md`.
 
 | Flow | Desktop 1280 | iPad | iPhone SE | iPhone 14 | Pixel 7 |
 |---|---|---|---|---|---|
-| Proef aanmelden + formulierfouten | 2026-11-08 02u | 2026-11-07 10u | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
+| Proef aanmelden + formulierfouten | 2026-11-08 06u (rare invoer, 413) | 2026-11-07 10u | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
 | Welkom, praktijknaam (ook leeg), 12 oefeningen | 2026-11-07 18u | 2026-11-07 10u | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
-| Printversie (lijn, kleur, compact) | 2026-11-08 02u (ook landing printen) | 2026-11-07 10u (2 pagina's, PDF) | 2026-11-07 14u | 2026-11-06 22u (venster) | 2026-11-07 10u |
+| Printversie (lijn, kleur, compact) | 2026-11-08 06u (lange naam, QR-taal: fix) | 2026-11-07 10u (2 pagina's, PDF) | 2026-11-07 14u | 2026-11-06 22u (venster) | 2026-11-07 10u |
 | Beveiligen, herstelcode, inloggen 2e apparaat | 2026-11-08 02u | 2026-11-08 02u (staand) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
-| Delen, QR, kaartenoverzicht, CSV | 2026-11-08 02u (roepnaam: fix) | 2026-11-08 02u (staand) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
+| Delen, QR, kaartenoverzicht, CSV | 2026-11-08 06u (QR-taal: fix, CSV-formules ok) | 2026-11-08 02u (staand) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
 | Naam wijzigen in overzicht + daarna verder bewerken | 2026-11-07 22u (fix) | 2026-11-07 10u | 2026-11-07 14u | – | 2026-11-07 10u |
-| Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-08 02u (dubbelklik: fix) | 2026-11-08 02u (teamsjabloon collega) | – | – | – |
-| Opname via telefoon /o | 2026-11-07 22u | 2026-11-07 22u (staand) | – | 2026-11-07 10u | 2026-11-08 02u |
-| Afspraak, seintje, signalen | 2026-11-08 02u | 2026-11-08 02u (staand) | 2026-11-07 10u | 2026-11-07 22u (.ics DE) | 2026-11-07 22u (.ics na wegnemen: fix) |
+| Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-08 02u (dubbelklik: fix) | 2026-11-08 06u liggend (eigen video na 1e deling: fix) | – | – | – |
+| Opname via telefoon /o | 2026-11-07 22u | 2026-11-08 06u (liggend, nep-camera) | – | 2026-11-07 10u | 2026-11-08 02u |
+| Afspraak, seintje, signalen | 2026-11-08 02u | 2026-11-08 06u (pijn+vraag: fix) | 2026-11-07 10u | 2026-11-08 06u (.ics dubbeltik) | 2026-11-08 06u (.ics dubbeltik) |
 | Proef bijna verlopen / verlopen (echte verlopen-pagina) | 2026-11-08 02u | 2026-11-08 02u (collega) | – | 2026-11-07 02u (breedte) | – |
 | /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | 2026-11-07 06u | 2026-11-07 14u | 2026-11-07 10u | 2026-11-07 14u |
 | /k: gedaan-vinkjes op een tweede apparaat | – | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u |
-| /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-08 02u (offline vinkje: fix) | 2026-11-08 02u (EN trage lijn, landscape) | 2026-11-07 22u (landscape, 429) |
+| /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-08 06u (200 %, offline) | 2026-11-08 06u (landscape, terugknop) | 2026-11-08 06u (200 %, trage lijn, 429 EN) |
 | /k: video afspelen (eigen opname, YouTube) | – | 2026-11-07 10u | 2026-11-07 22u (ook offline, 200%) | 2026-11-07 10u | 2026-11-07 22u |
-| /k: Duits en Arabisch (rtl) | – | – | ar + uk 2026-11-08 02u | Duits 2026-11-07 14u | Arabisch 2026-11-07 18u |
+| /k: Duits en Arabisch (rtl) | – | – | de + tr + pl 2026-11-08 06u | Duits 2026-11-07 14u | Arabisch 2026-11-07 18u |
 | Landing /v2 (desktop: ook printen) | 2026-11-08 02u | 2026-11-07 18u | 2026-11-07 06u | 2026-11-07 14u | 2026-11-07 14u |
 | Therapeut-app op telefoon | – | – | 2026-11-07 06u | 2026-11-06 22u | 2026-11-07 10u |
 | Therapeut-app op iPad liggend | – | 2026-11-07 10u | – | – | – |
 | Twee werkplekken op één kaart (oud apparaat/tabblad) | 2026-11-07 06u | 2026-11-07 06u | – | – | – |
-| Team: uitnodigen, rollen, verwijderen, inbox, dossier | 2026-11-07 18u | 2026-11-07 18u | – | – | – |
+| Team: uitnodigen, rollen, verwijderen, inbox, dossier | 2026-11-08 06u | 2026-11-08 06u liggend (team van 3) | – | – | – |
 | Mijn gegevens /k, Wis van dit apparaat, /v2/gegevens | 2026-11-07 18u | – | 2026-11-07 18u | 2026-11-08 02u | 2026-11-07 18u |
-| Vensters met alleen toetsenbord | 2026-11-07 22u | – | – | – | – |
+| Vensters met alleen toetsenbord | 2026-11-08 06u (nog stuk) | – | – | – | – |
 
-Volgende run (na 2026-11-08 02u): eigen video op de kaart zetten (nep-camera: chromium.launch met
-`--use-fake-device-for-media-stream --use-fake-ui-for-media-stream`), print op echte iPad-Safari, /k Duits/Turks/Pools op
-iPhone SE, therapeut-app op iPad liggend met een team van 3, /k 200 % op Pixel 7, Inbox "Alleen mijn patiënten" hertesten.
+Volgende run (na 2026-11-08 06u): iPad staand (Mark sloeg het over), proef bijna verlopen, verlopen proef bij een collega
+(sessies staan in het geheugen: log op de tweede server opnieuw in), teamsjabloon via de UI, seintje beantwoorden, /k Arabisch
+en Oekraïens op Pixel 7, landing /v2 op iPhone SE. WebKit is niet geïnstalleerd: "iPhone"-devices draaien in Chromium.
 
 Testtip: de verlopen-pagina test je met een tweede server op een kopie van de datamap waarin `verloopt`
 in proef-aanmeldingen.json in het verleden staat (wordt alleen bij het opstarten gelezen).
@@ -49,11 +49,21 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 ## Open
 
 ### HOOG
+- **OPGELOST 2026-11-08 PR #NR — App: na de eerste "In de praktijk" werd het kaart-id niet onthouden** (`saveServerCard`
+  nam het alleen over als het al gelijk was aan het lege KAART_ID). Elke volgende opslag gaf 409 "Er is al een kaart" over de
+  eigen kaart en een daarna opgenomen eigen video kwam nooit bij de patiënt. iPad liggend (Mark, 2026-11-08 06u).
+  Test: `npm run test:eerstedeling`. (Zelfde oorzaak als het MIDDEL-punt "na Maak er … van … 409".)
+- **OPGELOST 2026-11-08 PR #NR — /k toont de naam van een andere patiënt.** Deelde de therapeut onder een andere naam dan
+  het naamveld (voorbeeldkaart "Voorbeeldpatiënt", of de kaart van een vorige patiënt hergebruikt), dan zag de patiënt
+  "Voor <oude naam>" (ook in de beginschermnaam). Nu is de gekozen kaartnaam ook de roepnaam op de server (behalve een
+  automatische "Kaart <datum>"). Pixel 7, iPhone 14 (Jayden, 06u). Test: `npm run test:oefvinkje`.
 - **OPGELOST 2026-11-08 PR #92 — App: volledige patiëntnaam toch op de server na "Maak er Marieke B. van".** Bij
   "In de praktijk" + OK werd alleen `#k_naam` de roepnaam; `client.c_naam` ("Marieke de Boer") ging mee en de QR vroeg
   daarna opnieuw. Nu neemt `#c_naam` de roepnaam over en laat `serverKaart` geen volledige naam meer meegaan.
   Desktop (Sanne, 2026-11-08 02u). Test: `npm run test:oefvinkje`.
-- **Seintjes overschrijven elkaar, ook "Het doet te veel pijn" door "Ik heb een vraag"** (de therapeut ziet alleen de
+- **OPGELOST 2026-11-08 PR #NR — Seintjes overschrijven elkaar, ook "Het doet te veel pijn" door "Ik heb een vraag"**
+  (nu wint het zwaarste open seintje, pijn > vraag > gaat goed; de rest staat in `ook` en verschijnt in inbox en overzicht
+  als "(ook een vraag)". Test: `npm run test:seintjevoorrang`) (de therapeut ziet alleen de
   vraag). Was MIDDEL/LAAG (vraag → gaat goed); met pijn klinisch zwaarder. Eén `seintje`-slot op de kaart. (Mark, 02u)
 - **OPGELOST 2026-11-07 PR #88 — /k: offline twee dagen: dag 1 ging ongemerkt verloren.** Wachtrij per soort per dag
   met `wanneer`; de server zet de tik op zijn dag (`ont` = ontvangst, voor inbox/dossierlabel). Truus hertestte op
@@ -64,7 +74,19 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   gaat na `afterprint` niet weg. public/index.html r. 238, 268–273, 1901 (`SAFARI_PRINT`). (Mark, 2026-11-07 06u)
 
 ### MIDDEL
-- **App: geprinte QR en "Test de QR op je telefoon" nemen de gekozen patiënttaal niet mee.** WhatsApp-link krijgt
+- **/k in het Turks schuift horizontaal, ook op 100 %** (367 px op 320): "Hepsi tamam" valt buiten beeld. `.oefvoortgang`
+  (kaart.html r. 177) zonder `flex-wrap`, `.ovtekst` nowrap. iPhone SE (Truus, 2026-11-08 06u).
+- **App op iPad liggend: knopjes eigen video en × op de kaart ±17 px** (en "Ja, die kaart bijwerken" 7 px hoog): het A4 is
+  geschaald (±0,57), dus de 30 px + `::after` uit PR #49 wordt ±17–25 px. index.html r. 176–179. (Mark, 06u)
+- **Hertest 06u, nog stuk:** Inbox "Alleen mijn patiënten" (alle kaarten van eigen logins `behandelaar:null`); vensters met
+  toetsenbord (ovProefWelkom, ovPrint, ovKaarten, ovQrTest); lange praktijknaam in print; "Alleen beschikbaar voor beheer." bij
+  fout wachtwoord (PR #41 nog niet op main); agendaknop dubbeltik (4 verzoeken); Noor per oefening zonder stop (en op een
+  niet-Nederlandse kaart afwezig); Nederlandse servermeldingen op /k EN; 200 % op Pixel 7 (445 px) en iPhone SE (583 px);
+  dubbeltik "Gedaan" per oefening; offline pijnscore zonder gekozen stand; lightbox (geen sluitknop, terugknop verlaat de kaart).
+- **OPGELOST 2026-11-08 PR #NR — App: geprinte QR en "Test de QR op je telefoon" nemen de gekozen patiënttaal niet mee**
+  (ook "Kopieer link" en "Bekijk zelf"; nu via `kaartUrl()`, en de QR tekent opnieuw bij een taalwissel. Past de link met
+  taal niet in de kleine QR (langer domein dan fysiplan.nl), dan codeert alleen de QR de kale link. De CSV-kolom Kaartlink
+  blijft zonder taal. Test: `npm run test:qrtaal`). WhatsApp-link krijgt
   `?taal=ar`, maar `toonQr` (index.html r. ~2166) en het QR-testvenster (r. ~2631) bouwen `/k/<id>` zonder `kaartUrl()`.
   Een Russischtalige telefoon krijgt dan Nederlands. Desktop → iPhone SE (Truus, 2026-11-08 02u).
 - **/k: "Luister naar Noor" per oefening heeft geen stopknop of speelstand**; alleen de bovenste knop wordt "Stop" (ver
@@ -73,7 +95,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   `@media print{*{animation:none!important}}` in public/v2.html r. ~484. Desktop (Sanne, 02u).
 - **/k: agendaknoppen zonder bezig-slot of feedback op een trage lijn**; `naarAgenda` haalt het .ics twee keer op
   (controle + navigatie), dubbeltik = 2–4 verzoeken (iOS: mogelijk twee importvragen). kaart.html r. ~885–897. Pixel 7 (Jayden, 02u).
-- **App: na "Maak er … van" bij een editor zonder kaartId volgt een 409 over de eigen, net gedeelde kaart**
+- **OPGELOST 2026-11-08 PR #NR (test:eerstedeling) — App: na "Maak er … van" bij een editor zonder kaartId volgt een 409 over de eigen, net gedeelde kaart**
   (`zetKaartId` alleen als `d.id===KAART_ID`, index.html r. ~3312). Desktop (Sanne, 02u).
 - **OPGELOST 2026-11-07 PR #89 — App: na "Naam wijzigen" zette "In de praktijk" de oude naam stil terug** (`#k_naam`
   hield de oude naam; de server hernoemde terug). Desktop (Sanne, 22u). Test: `npm run test:hernoem`.
@@ -193,6 +215,11 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   Al opgelost in open PR #41 (server.js `denied()` met eigen tekst); mergen of overnemen.
 
 ### LAAG
+- Eigen oefening met een te kleine of lege foto (1×1 PNG) zegt "De foto is te groot (max. 600 kB)." server.js r. ~2937. (Mark, 06u)
+- /k EN: .ics-bestanden heten "afspraak.ics"/"oefenmomenten.ics" en het beginscherm "Trainingskaart …" (server.js r. ~4565,
+  ~4754, ~4935). (Jayden, 06u)
+- Proefformulier met meer dan 8 KB (alleen zonder `maxlength`) geeft een kale tekstpagina "Ongeldig verzoek" (413) en
+  alle invoer is weg. server.js r. ~5140. (Sanne, 06u)
 - Teamsjabloon van een ander: therapeut ziet × "verwijderen voor de hele praktijk"; server weigert pas na de bevestiging
   met een alert (index.html r. ~2509 `data-pdel`). iPad staand (Mark, 2026-11-08 02u).
 - Verlopen proef: "+1 week" laat de nieuwe datum in het veld staan terwijl niets is bewaard (index.html r. ~4455 `data-safweek`). iPad (Mark, 02u).

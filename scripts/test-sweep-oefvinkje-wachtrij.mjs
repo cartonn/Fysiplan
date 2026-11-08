@@ -27,8 +27,8 @@ assert.match(kaartHtml, /function zetInWacht[\s\S]{0,300}pad==='\/api\/kaart\/oe
 const appHtml = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(appHtml, /if\(knop\.disabled\)return;\s*knop\.disabled=true;knop\.textContent='Bezig…';\s*var rd=new FileReader\(\);/,
   "eigen oefening: bezig-slot vóór het lezen van de foto");
-assert.match(appHtml, /function serverKaart[\s\S]{0,600}kaartLabelVan\(c\.client\.c_naam\)[\s\S]{0,120}c\.client\.c_naam=String\(naam\)\.trim\(\)/,
-  "serverKaart stuurt geen volledige naam mee als de kaart een roepnaam kreeg");
+assert.match(appHtml, /function serverKaart[\s\S]{0,1200}String\(c\.client\.c_naam\)\.trim\(\)\.toLowerCase\(\)!==String\(naam\)\.trim\(\)\.toLowerCase\(\)\)c\.client\.c_naam=String\(naam\)\.trim\(\)/,
+  "serverKaart stuurt de gekozen kaartnaam als roepnaam (geen volledige naam, geen naam van een vorige patiënt)");
 
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-oefvinkje-"));
 const reserve = createServer();
@@ -146,9 +146,21 @@ try {
       assert.equal(verstuurd.naam, "Marieke B.");
       assert.equal((verstuurd.client || {}).c_naam, "Marieke B.", "geen volledige naam naar de server: " + JSON.stringify(verstuurd.client));
       assert.equal(await ap.inputValue("#c_naam"), "Marieke B.", "editor neemt de roepnaam over");
+      // sweep 2026-11-08 (Jayden): naamveld van de voorbeeldkaart of een vorige patiënt,
+      // kaart gedeeld als "Jayden": de server (en dus /k) krijgt "Jayden", niet de oude naam
+      verstuurd = null;
+      await ap.evaluate(() => {
+        const c = document.getElementById("c_naam"); c.value = "Voorbeeldpatiënt"; c.dispatchEvent(new Event("input", { bubbles: true }));
+        document.getElementById("k_naam").value = "Jayden";
+        document.getElementById("k_save_srv").click();
+      });
+      for (let i = 0; i < 40 && !verstuurd; i++) await wacht(100);
+      assert.ok(verstuurd, "tweede kaart verstuurd");
+      assert.equal(verstuurd.naam, "Jayden");
+      assert.equal((verstuurd.client || {}).c_naam, "Jayden", "geen naam van een andere patiënt naar /k: " + JSON.stringify(verstuurd.client));
       await dc.close();
     } finally { await browser.close(); }
-    console.log("browserdeel: offline vinkje komt aan, roepnaam zonder volledige naam");
+    console.log("browserdeel: offline vinkje komt aan, roepnaam zonder volledige naam, geen naam van een vorige patiënt");
   } else console.log("browserdeel overgeslagen (geen Playwright)");
 
   console.log("test-sweep-oefvinkje-wachtrij: alles groen");

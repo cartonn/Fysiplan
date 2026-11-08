@@ -876,6 +876,25 @@ function tikMoment(b, nu) {
 }
 const ontvangen = (x) => (x ? Math.max(Number(x.t) || 0, Number(x.ont) || 0) : 0);
 const tikVeld = (t, nu) => (t < nu ? { t, ont: nu } : { t });
+// openstaand seintje: een nieuw seintje vervangt alleen een even zwaar of lichter
+// seintje. "Het doet te veel pijn" blijft dus staan als daarna "Ik heb een vraag" of
+// "Het gaat goed" komt, en een vraag verdwijnt niet door "Het gaat goed". Wat er
+// intussen nog binnenkwam (vraag of pijn) staat in `ook`, zodat de therapeut het ziet.
+const SEIN_GEWICHT = { goed: 1, vraag: 2, pijn: 3 };
+function zetSeintje(kaart, soort, t, nu) {
+  const oud = kaart.seintje && SEIN_GEWICHT[kaart.seintje.soort] ? kaart.seintje : null;
+  const telt = (x) => x === "vraag" || x === "pijn";
+  if (!oud) { kaart.seintje = { ...tikVeld(t, nu), soort }; return; }
+  const gOud = SEIN_GEWICHT[oud.soort], gNieuw = SEIN_GEWICHT[soort];
+  const ook = new Set(Array.isArray(oud.ook) ? oud.ook.filter(telt) : []);
+  if (gNieuw > gOud || (gNieuw === gOud && !(Number(oud.t) > t))) {
+    if (telt(oud.soort)) ook.add(oud.soort);
+    ook.delete(soort);
+    kaart.seintje = { ...tikVeld(t, nu), soort, ...(ook.size ? { ook: [...ook] } : {}) };
+    return;
+  }
+  if (telt(soort) && soort !== oud.soort) { ook.add(soort); oud.ook = [...ook]; }
+}
 // één waarde per (Nederlandse) dag, op volgorde van tijd: dezelfde dag vervangt (behalve
 // door een oudere tik uit de wachtrij), een eerdere dag schuift op zijn plaats
 function zetDagWaarde(rij, t, s, nu) {
@@ -904,6 +923,10 @@ function inboxItems(k) {
   const items = [];
   const sinds = Number(k.inboxGezien) || 0;
   if (k.seintje && k.seintje.soort) items.push({ soort: "seintje", wat: k.seintje.soort, t: Number(k.seintje.t) || 0 });
+  // wat er naast het zwaarste open seintje nog binnenkwam (zetSeintje): ook in de inbox
+  if (k.seintje && Array.isArray(k.seintje.ook)) for (const w of k.seintje.ook) {
+    if ((w === "vraag" || w === "pijn") && w !== k.seintje.soort) items.push({ soort: "seintje", wat: w, t: Number(k.seintje.t) || 0 });
+  }
   for (const [oef, x] of Object.entries(k.oefZwaar || {})) if (x && x.t) items.push({ soort: "zwaar", oef, t: Number(x.t) });
   const m = (k.metingen || []).filter((x) => x && ontvangen(x) > sinds && ontvangen(x) > (Number(k.ts) || 0) - 1);
   if (m.length) items.push({ soort: "pijn", s: m[m.length - 1].s, aantal: m.length, t: Number(m[m.length - 1].t) });
@@ -3764,7 +3787,7 @@ async function afhandelen(request, response) {
         // sinds de start van de behandeling, ook als die buiten de recente 14 valt
         eersteMeting: (k.metingen && k.metingen.length) ? k.metingen[0] : null,
         bekeken: k.bekeken ? k.bekeken.t : 0,
-        seintje: (k.seintje && k.seintje.soort) ? { t: k.seintje.t, soort: k.seintje.soort } : null,
+        seintje: (k.seintje && k.seintje.soort) ? { t: k.seintje.t, soort: k.seintje.soort, ...(Array.isArray(k.seintje.ook) && k.seintje.ook.length ? { ook: k.seintje.ook.filter((x) => x === "vraag" || x === "pijn") } : {}) } : null,
         // eigen bericht aan de patiënt dat nog niet is weggetikt: het overzicht
         // toont zo "bericht klaar" en het berichtveld start met de huidige tekst
         antwoord: (k.antwoord && k.antwoord.tekst) ? { t: k.antwoord.t, tekst: k.antwoord.tekst } : null,
@@ -4225,8 +4248,8 @@ async function afhandelen(request, response) {
       if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const nu = Date.now();
       const t = tikMoment(b, nu);
-      // een ouder seintje uit de offline-wachtrij gaat in het logboek, maar verdringt geen nieuwer
-      if (!found.seintje || !(Number(found.seintje.t) > t)) found.seintje = { ...tikVeld(t, nu), soort };
+      // een ouder of lichter seintje gaat in het logboek, maar verdringt geen nieuwer of zwaarder
+      zetSeintje(found, soort, t, nu);
       logContact(found, { van: "patient", soort, ...tikVeld(t, nu) });
       if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
       await saveJson(kaartenPath, kaarten);
@@ -5393,7 +5416,7 @@ async function afhandelen(request, response) {
       if (g) delen.push("laatst geoefend " + kort(g.t));
       if (k.afspraak && k.afspraak.t > nu) delen.push("afspraak " + kort(k.afspraak.t));
       return "<li" + (sein ? ' class="sein"' : "") + "><b>" + htmlEsc(String(k.naam || "kaart").slice(0, 60)) + "</b>" +
-        (sein ? ' <span class="chip">' + htmlEsc(SEIN[sein.soort]) + " · " + htmlEsc(kort(sein.t)) + "</span>" : "") +
+        (sein ? ' <span class="chip">' + htmlEsc(SEIN[sein.soort] + (Array.isArray(sein.ook) && sein.ook.includes("vraag") && sein.soort !== "vraag" ? " (ook een vraag)" : "")) + " · " + htmlEsc(kort(sein.t)) + "</span>" : "") +
         '<br/><span class="klein">' + htmlEsc(delen.join(" · ") || "nog niets ingevuld") + "</span></li>";
     }).join("");
     const aantal = lijst.filter((x) => x.sein).length;
