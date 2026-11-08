@@ -13,9 +13,9 @@ Credits: 30 tekeningen + 6 herkansingen = 180 credits, saldo na afloop 720. Eers
 | bovenste-extremiteit | buiklig-armen-heffen-t | ok | ok | |
 | bovenste-extremiteit | schouder-heffen-ruglig-stok | ok | ok | |
 | bovenste-extremiteit | polsbuigers-rekken | ok | ok | |
-| bovenste-extremiteit | polsstrekkers-rekken | licht afwijkend | ok | De pols is in de beginhouding al gebogen. |
+| bovenste-extremiteit | polsstrekkers-rekken | ok (ronde 3) | ok | Pols begint nu recht. |
 | bovenste-extremiteit | excentrisch-pols-zakken | ok | ok | Steun is een krukje in plaats van een tafel. |
-| bovenste-extremiteit | zenuwglijden-arm-medianus | licht afwijkend | ok | Elleboog bijna gestrekt in plaats van 90°. |
+| bovenste-extremiteit | zenuwglijden-arm-medianus | ok (ronde 3) | ok | Dienbladhouding: elleboog 90°, handpalm omhoog. |
 | nek | scalenus-rekken-zittend | ok | ok | |
 | nek | mond-openen-tong-gehemelte | ok (herkansing) | ok | In de eerste versie stond de mond al open. |
 | core | zijplank-onderarm-voeten | ok | ok | |
@@ -31,9 +31,9 @@ Credits: 30 tekeningen + 6 herkansingen = 180 credits, saldo na afloop 720. Eers
 | onderste-extremiteit | kuitrek-handdoek-langzit | ok | ok | |
 | onderste-extremiteit | enkel-abc-langzit | ok | ok | |
 | balans | eenbeenstand-op-kussen | ok | geen pijl (statisch) | |
-| balans | op-de-hakken-lopen | **fout** | ok | Ook na de herkansing staat ze niet op de hielen. Moet worden nagetekend. |
+| balans | op-de-hakken-lopen | ok (ronde 3, 2 pogingen) | ok | Op de hielen met de voorvoeten van de grond (de lift is bescheiden). Bij de eerste poging wees de pijl achteruit. |
 | balans | op-de-tenen-lopen | ok | ok | |
-| balans | tandemgang | licht afwijkend | ok | De voeten staan niet duidelijk hak-tegen-teen. |
+| balans | tandemgang | ok (ronde 3) | ok | Voeten hak-tegen-teen op één lijn. |
 | vestibulair | brandt-daroff | ok | ok | Hoofd naar links gedraaid, pijl naar rechts gaan liggen. |
 
-Samenvatting: 26 ok, 3 licht afwijkend, 1 fout (op de hakken lopen).
+Samenvatting na ronde 3 (2026-11-08, 25 credits): alle 30 volgen de Physitrack-richting.

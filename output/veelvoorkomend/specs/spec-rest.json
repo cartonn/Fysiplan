@@ -114,7 +114,8 @@
   "pijl_nl": "Gebogen pijl bij de hand omlaag richting het lichaam (pols en vingers naar beneden buigen tot rek aan de buitenkant van de onderarm).",
   "view": "side view",
   "ref": "044",
-  "pose_en": "Side view of a person standing upright. One arm is straight out in front at shoulder height, elbow fully straight, back of the hand facing up. The other hand rests on the back of the outstretched hand. One solid black curved arrow at the hand curves down and back toward the body, showing the wrist being bent down."
+  "pose_en": "Side view of a person standing upright. One arm is straight out in front at shoulder height, elbow fully straight, back of the hand facing up. The other hand rests on the back of the outstretched hand. One solid black curved arrow at the hand curves down and back toward the body, showing the wrist being bent down.",
+  "extra_en": "IMPORTANT: START position: the wrist of the outstretched arm is STRAIGHT (hand in line with the forearm, not yet bent). The other hand rests flat on the back of that hand. The arrow at the fingers curves downward."
  },
  {
   "naam": "Excentrisch pols laten zakken – zittend",
@@ -140,7 +141,8 @@
   "pijl_nl": "Pijl bij de hand naar buiten (elleboog strekken en pols naar achteren buigen, stoppen bij de eerste spanning, en weer terug).",
   "view": "front view",
   "ref": "024",
-  "pose_en": "Front view of a person standing upright facing the viewer. One arm is held out to the side at shoulder height with the elbow bent about 90 degrees and the palm facing up, like carrying a tray; the other arm hangs relaxed. One solid black arrow starts at the raised hand and points outward away from the body, showing the elbow straightening and the wrist bending back."
+  "pose_en": "Front view of a person standing upright facing the viewer. One arm is held out to the side at shoulder height with the elbow bent about 90 degrees and the palm facing up, like carrying a tray; the other arm hangs relaxed. One solid black arrow starts at the raised hand and points outward away from the body, showing the elbow straightening and the wrist bending back.",
+  "extra_en": "IMPORTANT: the upper arm is out to the side horizontally at shoulder height and the elbow is bent at a clear RIGHT ANGLE so the forearm points straight UP; the hand is bent back with the palm facing up to the ceiling next to the head, like carrying a tray. The arrow starts at that hand and points outward and down to the side."
  },
  {
   "naam": "Scalenus rekken – zittend",
@@ -353,9 +355,9 @@
   "beginhouding_nl": "Rechtop staan op beide hielen, tenen en voorvoeten omhoog van de grond, armen ontspannen.",
   "pijl_nl": "Pijl voor de voeten vooruit (kleine stappen vooruit lopen op de hielen).",
   "view": "side view",
-  "ref": "310",
+  "ref": "001",
   "pose_en": "Side view of a person standing upright on both heels with the toes and front of both feet lifted off the floor, arms relaxed at the sides, looking forward. One solid black arrow in front of the feet points forward horizontally, showing walking forward on the heels.",
-  "extra_en": "IMPORTANT: she stands ONLY on her heels: the soles and toes of both shoes point clearly upward, lifted well off the floor, so the shoes are tilted at about 30 degrees with only the heels touching the floor."
+  "extra_en": "IMPORTANT: this is HEEL walking, the opposite of tiptoe. Both heels are ON the floor and the FRONT of both feet (toes and balls of the feet) are raised UP off the floor, so each shoe sole makes a clear upward angle with the floor and there is a visible empty gap under the toes. The heels are NOT raised. She faces to the RIGHT of the picture. The arrow is placed in FRONT of her raised toes (on the right side) and points to the RIGHT, the direction she is facing."
  },
  {
   "naam": "Op de tenen lopen",
@@ -381,7 +383,8 @@
   "pijl_nl": "Pijl vooruit langs de lijn (hak-teen vooruit lopen op de lijn).",
   "view": "side view",
   "ref": "316",
-  "pose_en": "Side view of a person standing upright on a straight line drawn on the floor, one foot directly in front of the other so the front heel touches the toes of the back foot. Arms slightly out to the sides for balance, looking forward. One solid black arrow above the line in front of the feet points forward, showing heel-to-toe walking along the line."
+  "pose_en": "Side view of a person standing upright on a straight line drawn on the floor, one foot directly in front of the other so the front heel touches the toes of the back foot. Arms slightly out to the sides for balance, looking forward. One solid black arrow above the line in front of the feet points forward, showing heel-to-toe walking along the line.",
+  "extra_en": "IMPORTANT: both feet stand on the same straight line, one directly in front of the other: the HEEL of the front foot TOUCHES the TOES of the back foot (no space between them). Arms slightly out to the sides."
  },
  {
   "naam": "Brandt-Daroff",
