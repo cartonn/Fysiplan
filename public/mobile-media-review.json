@@ -204,7 +204,7 @@
       "name": "Barbell pull over",
       "source": "images/bovenste-extremiteit/barbell-pull-over-avatar-v7.jpg",
       "assetSha256": "cb9a62ffdad69e4396ead9155476572635f4964628a69f63a1e356b82fae5d2c",
-      "explanationSha256": "c78b585bfb69233657bdd5970df68fc0d571ad5992e82208d495c3977ece414d",
+      "explanationSha256": "2065525ea2febe8ae988d8df60b019f52f7a29ce79460d8128b9dfd87df02c8e",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -242,7 +242,7 @@
       "name": "Bench press",
       "source": "images/bovenste-extremiteit/bench-press-avatar-v7.jpg",
       "assetSha256": "86b53be08ab4f2c9afd9659731ff74ea3593fbce43185c72dd1dc738b92416fd",
-      "explanationSha256": "1638d52dec4f3c2536aae7ffa0abf532276d556efb65b87d25b4c029bd2a42b3",
+      "explanationSha256": "3d98b76381144a9855262eb7f69bacb8a230490b0b1e48ddd7c23970c0c7a92d",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -607,7 +607,7 @@
       "name": "Dumbell front press",
       "source": "images/bovenste-extremiteit/dumbell-front-press-avatar-v7.jpg",
       "assetSha256": "019a26db7f9d07db4ab6134dbdbc887c8d3faa88b48929e8b12febebf8313f26",
-      "explanationSha256": "6e12253c928037272c39adb4aa7632793a04dcc2ef4dc4b3a3411779b4861e53",
+      "explanationSha256": "77650ce59f9fcb8834678cff4ca44ee8798ec0138cf37fc3e5824014e67e497b",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -750,7 +750,7 @@
       "name": "Duplex pull",
       "source": "images/bovenste-extremiteit/duplex-pull-avatar-v7.jpg",
       "assetSha256": "1c0d88e9b4c7ea2937d113ccce4aed93e8f28cf4396ccaceb946550e7b38fa1f",
-      "explanationSha256": "8b8eb81f817080b705d951aa929c1c119dc3d866a31993056d9a6f8e9b5cd455",
+      "explanationSha256": "4c31e08ef8403842ccd26d860f1451147c99a5767bd7ba20bb2715aa3eb31be2",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -1094,7 +1094,7 @@
       "name": "Front raises",
       "source": "images/bovenste-extremiteit/front-raises-avatar-v7.jpg",
       "assetSha256": "3b451c32e3252b181d3d2b14278f8efe6c4e268a8a47b180318cfb71457ef909",
-      "explanationSha256": "974ee0561e578ae42e634641b6a576bb035b625c9497e81038b64860ad7fc0d3",
+      "explanationSha256": "1b85adc020be960ab8c3fa7672a1ef09d100e4b04e2c55298e50e8b363e19a04",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -1590,7 +1590,7 @@
       "name": "Pully cross up",
       "source": "images/bovenste-extremiteit/pully-cross-up-avatar-v7.jpg",
       "assetSha256": "b54552c6a0013fa3610b0ba4211486d050023586cbb9cec354fd06279941e01e",
-      "explanationSha256": "6d060b88d26470f843c74af7ced5f2ae6b56a3bfe45d3e9078248e284c6916d6",
+      "explanationSha256": "a2680037af3e919f02001e0cc8a4e813b6b080a6486b70785ba545e2c3c2ff83",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -1981,7 +1981,7 @@
       "name": "Reversed flyes",
       "source": "images/bovenste-extremiteit/reversed-flyes-avatar-v7.jpg",
       "assetSha256": "bc8beaf9c03d479fb884229c00967d2ad6f6984ffe04718db3fad07045b729f9",
-      "explanationSha256": "2b96587849cc3edebb7cd38dd4f59c1aa4f172450f0729483768ff95bb42c133",
+      "explanationSha256": "e4b23e091a2fbb188933718981aae182390fff60f597eb2fed1be2b02c3045b6",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -2019,7 +2019,7 @@
       "name": "Shoulder rotation (shrugs)",
       "source": "images/bovenste-extremiteit/shoulder-rotation-shrugs-avatar-v7.jpg",
       "assetSha256": "b2f91a3e116026dc60cecf491de1c8f59f01b8c1dd2ddf7fc963097d16333c7e",
-      "explanationSha256": "2e8cc23e26cad948e6076eb501913b7e29e9d14b63f320c8f54b0a62bb30f46b",
+      "explanationSha256": "ad5cc292ef8a1b36990b3a09e3d86c8227fb34fa6cb4c894d019b48048628106",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -2103,7 +2103,7 @@
       "name": "Triceps dumbell kickbacks",
       "source": "images/bovenste-extremiteit/triceps-dumbell-kickbacks-avatar-v7.jpg",
       "assetSha256": "b4d3eeae978292fab35eb0e62ca124fd0d0e0cbae1e26ec943fb3d5cdedf91ae",
-      "explanationSha256": "66ce53f69722845e3db1cf5079cb69c2e8f10f8d91e8d51df8d5d97791e36b04",
+      "explanationSha256": "fec6a21115251f62bc0833f16494a18d6e4cb09bf16e32c63f7493ce44a94172",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -2723,7 +2723,7 @@
       "name": "Dead lift",
       "source": "images/onderste-extremiteit/dead-lift-avatar-v7.jpg",
       "assetSha256": "b8e06b33e1d670a86608c425a034e9f260c2e4ec38fe754abae41d05599ef31e",
-      "explanationSha256": "8b3983a350f3a14918b15cdd246e0c18239f5d06860e42a1fd93a38e24b8a823",
+      "explanationSha256": "7d85ce7fe5aba7b124aecfe7c422005804640e516a8c6282314cfd5b76cd807a",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -2857,7 +2857,7 @@
       "name": "Front squat",
       "source": "images/onderste-extremiteit/front-squat-avatar-v7.jpg",
       "assetSha256": "d875acf162ecdaeb9ebc92c869573f1f8d2f8f30a960eb753bfcbce2c6061b3b",
-      "explanationSha256": "0b8d24cd5c9dc9162893d77828b8176164e18a9265cd9efd01fc6655d9e69cf0",
+      "explanationSha256": "03487217d16a06454bafa304b3fee9231d9c86b034d64e32a9b2ebf48487ae20",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -3440,7 +3440,7 @@
       "name": "Lying abduction",
       "source": "images/onderste-extremiteit/lying-abduction-avatar-v7.jpg",
       "assetSha256": "0274c3620c3f2f034a437116b0188ad163cb4c9012c6cae1b133901284322dcc",
-      "explanationSha256": "98c97df7aa766a451d218ffb22b652be0a5ac8caa99e7e1ae89e8eb477744ca6",
+      "explanationSha256": "1f908ef2eb3e20ae8f3cf52e54312062e23d8449c523424818e9dea340c38451",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -4368,7 +4368,7 @@
       "name": "Back extension",
       "source": "images/core/back-extension-avatar-v7.jpg",
       "assetSha256": "fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50",
-      "explanationSha256": "97d3c41a85b13c4c4be326ec076b3b6d66bff67259e859e3e7ccfc4572d45819",
+      "explanationSha256": "01969ec2fcfcab2657bc81980fca6657f0af2ea53e2f34b645e3f88d8b7ab8db",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -4749,7 +4749,7 @@
       "name": "Bruggen 1 been liften",
       "source": "images/core/bruggen-1-been-liften-avatar-v7.jpg",
       "assetSha256": "d52d0f2e15b5093ffe6735bec2d3803f13fc5a7e3193ba957aabc2558bd62543",
-      "explanationSha256": "5060f93adf4a3ccb8fe435a803397c0e91b006cb31782c6d54c032f971bb735e",
+      "explanationSha256": "a6f28df563b2fddfa24a6355f774989b1e1849846eb7d79908c1d600163f316c",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -5017,7 +5017,7 @@
       "name": "Bruggen op bal",
       "source": "images/core/bruggen-op-bal-avatar-v7.jpg",
       "assetSha256": "b1766b43e41e872b6d31d1cbab16616643b1a5b29f257cfe5211d5e8c2bf4048",
-      "explanationSha256": "39924d26a9394df2b94455a6b85f184aa65e9156453589423b626222547a5579",
+      "explanationSha256": "92465118921963cdd369579e02e97af1f6de246216da5adad1b0c4102b78d5cf",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -5993,7 +5993,7 @@
       "name": "Rug extensie",
       "source": "images/core/rug-extensie-avatar-v7.jpg",
       "assetSha256": "7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47",
-      "explanationSha256": "57c602f51d76f3c71e5242174747554aaaebfd632e73a3be1cb8e39aa54f4512",
+      "explanationSha256": "c7eee060a655e94afb3b00c2ffcbaf0f64008d29a9a3b67dc0d366a14ab8f5be",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -6173,7 +6173,7 @@
       "name": "Scissors 2",
       "source": "images/core/scissors-2-avatar-v7.jpg",
       "assetSha256": "f18062ab3ed932eb08ade861b9666d0f6746056c8f1731354a73a163b9ce9829",
-      "explanationSha256": "db077cde322005db608a3db4d844a297ade5285be6207e4b8d37f1d6242ff19c",
+      "explanationSha256": "4bdc516debc2514286d8dd836dd30329bb1429682289d1a07ada649b6418f0e5",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -6374,7 +6374,7 @@
       "name": "Superman",
       "source": "images/core/superman-avatar-v7.jpg",
       "assetSha256": "cc45bacd708908c919816e83c1204f5ae45619db8af5e67e84105bcac3dfa2dc",
-      "explanationSha256": "ee0a2d1eea8a2cea9cb9e82398c4a2a9b27ffb6f7b33f0c2ff360fb5f912aede",
+      "explanationSha256": "988d8eb73fca6c202802f9495c748c9146711815b6fd5703700f337e4e40e349",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -6718,7 +6718,7 @@
       "name": "Stairs",
       "source": "images/cardio/stairs-avatar-v7.jpg",
       "assetSha256": "3e5e71fa2f63cfe3f9de9f17808d2609962c29d1aa449bca99c11c64265e66bc",
-      "explanationSha256": "9a492b297752b72b52768613f10dc3aadcbabf8552650006d3587b46399b4ce0",
+      "explanationSha256": "a08cfba0b1510a50bb8d195b56fe4e2ecca71d9cae26feeadc051e07e1163acf",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -6919,7 +6919,7 @@
       "name": "Bosu brigdes single leg",
       "source": "images/bosu/bosu-brigdes-single-leg-avatar-v7.jpg",
       "assetSha256": "bb13c58e4f5eff13b34faca7e99555cde31a818323df17a0a46314c402e2b965",
-      "explanationSha256": "4fb8f06fed1ac0a77bb0236c84dd4a129fe3778965b1abf275f6fa7cfd083ca7",
+      "explanationSha256": "0251eb4f0181a73acdd9cafb5735f2a009d811c33c7698c770aea017909f8f81",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -7522,7 +7522,7 @@
       "name": "TRX ab roll out",
       "source": "images/trx/trx-ab-roll-out-avatar-v7.jpg",
       "assetSha256": "9ac0939dbba7312652caf6108c8e6570d19512ae1a4018ba2261f079514b4a53",
-      "explanationSha256": "a87be6cc3088897e11f2d03592773d61faf4545884d7cdf60d728981e5afb0f4",
+      "explanationSha256": "3172d9aaaf2de4bec9448d2d60acf54fb5053601a0ccf68e1feae4852834a07e",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -7636,7 +7636,7 @@
       "name": "TRX flyes I",
       "source": "images/trx/trx-flyes-i-avatar-v7.jpg",
       "assetSha256": "43e226ed2f78afcc263639a57fc6abf0d0c69b4be7da02c7a83084a6e98e377e",
-      "explanationSha256": "0fdc3e372e100161d9be419e32c1565a55304b285cc9e1095f24e6d6ab35182e",
+      "explanationSha256": "8f3517885aadd36929ab4ee296fd23b065f71ab8e5190a1109d524b52963208d",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -7817,7 +7817,7 @@
       "name": "TRX lunge lateral high",
       "source": "images/trx/trx-lunge-lateral-high-avatar-v7.jpg",
       "assetSha256": "a8e127bdfd9909102ee390be8ff71553c1c02950dc0f593c176ac2f40c2c83a4",
-      "explanationSha256": "c09b948dd1276194e600c5aaa494d263ff696d4240a8f39f9bef4549d6cd6620",
+      "explanationSha256": "973cce33fe2c97b85812062a67ca6ced4ea41d049e0e67757fb44297b222ea2e",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -7855,7 +7855,7 @@
       "name": "TRX lunge lateral low",
       "source": "images/trx/trx-lunge-lateral-low-avatar-v7.jpg",
       "assetSha256": "d0ff34b31f9023c5d91dfd9e24495a785fa1da4fe3a2954c3beb20902b4afc27",
-      "explanationSha256": "56d8a8420202fdfc647b9d0a63dc7a16073551f48d4a4c2e89b84b2381eed617",
+      "explanationSha256": "8ee8fc0f53094cf2827028caaaa466f4d6c2965921f4db4b65f88d72ebd755b1",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -8027,7 +8027,7 @@
       "name": "TRX plank",
       "source": "images/trx/trx-plank-avatar-v7.jpg",
       "assetSha256": "534eabd1b494a5f9f6d1c578b166439d7a8438624bf1b0b8e1715bbc668d8309",
-      "explanationSha256": "a1f7644f52b7c989d20aff92e7fcfba9e74ecd9324cec23fbebc4b9898573caf",
+      "explanationSha256": "8a59417aa2e0ab4b7129cbd4b96b3f3c85580594a1ced7ff13984d565e9a5b18",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -8065,7 +8065,7 @@
       "name": "TRX plank side",
       "source": "images/trx/trx-plank-side-avatar-v7.jpg",
       "assetSha256": "071f1699c9b2361d68184ed4d21335777989d418bb80810ffc1bfc65d88e36d1",
-      "explanationSha256": "b21557176c5918c0764e5bb3c181b949a7c3b854d7cefb19c710995f5ced3b60",
+      "explanationSha256": "3b6dd44560dc9d7d934fa4a0a570faf9a46cc8a724080a7c21b7ede9a1c28659",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -8103,7 +8103,7 @@
       "name": "TRX pull up",
       "source": "images/trx/trx-pull-up-avatar-v7.jpg",
       "assetSha256": "474c16affdc73f6a9c1f4c76348f91527ae4ae6941002c7361fe4fdb5b301a2f",
-      "explanationSha256": "3d33a186a4b185724a8d6f623114393617b352d03be648481d1ed41f0fbbdb7a",
+      "explanationSha256": "15955d27d9e88e621d7d893f9d747f6f2a7ef656c28825a86d7f97dd370c44d2",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -8362,7 +8362,7 @@
       "name": "TRX triceps extension",
       "source": "images/trx/trx-triceps-extension-avatar-v7.jpg",
       "assetSha256": "3535ce693a1d15abd870e5e41c6e6904c320464444c82e86b129f1681666614e",
-      "explanationSha256": "35e9f27e46dc13e115bb139620dfa512f7886e374001c7d3624f0eade3dc255f",
+      "explanationSha256": "10b4d069567953c29d9ba11c4ca764e0892122b87075542580de73992678f093",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -8954,7 +8954,7 @@
       "name": "Yoga extended triangle",
       "source": "images/yoga/yoga-extended-triangle-avatar-v7.jpg",
       "assetSha256": "b23343014c8b8870b9f0b20e4943dc246b1d9b3e8c6d35d323c56a4cbecac186",
-      "explanationSha256": "601f09fd5cbc3bf3485b0346fa1bb0a6c17f0bbeaeca21733ffbc8077a10f5e3",
+      "explanationSha256": "4007a73d5a2d5a030561d0b93c057b9feb05aae8fa92cab0309720246a79cbd7",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -8992,7 +8992,7 @@
       "name": "Yoga frog",
       "source": "images/yoga/yoga-frog-avatar-v7.jpg",
       "assetSha256": "935d88516c0b82dd850b3de3b54d819f37df1d57cd88535242fb3a79cf5f0914",
-      "explanationSha256": "c8f5edff22f0d1701312c1b81cbf26faf5d9983f27db47a31a3ed13c0a67011c",
+      "explanationSha256": "0fe5b8312e79bdf5099dbac761737cff2a543fde34fb94f14a8748cb2d71adaa",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -9173,7 +9173,7 @@
       "name": "Yoga hamstring stretch",
       "source": "images/yoga/yoga-hamstring-stretch-avatar-v7.jpg",
       "assetSha256": "d2b5e7f8a4aaf575891d6c64d6379d174a3368fc1e57924611966d980f5d812d",
-      "explanationSha256": "8261bc94be1e39b3207c0cf62da1e7816d7c7b5d9389295b4ee1e1ac51f13a49",
+      "explanationSha256": "d8c8801f1cb3a8476584599b3c99d03f5e298b90d5543b0d7bb243082a4000ee",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -9374,7 +9374,7 @@
       "name": "Yoga knee to chest hip stretch",
       "source": "images/yoga/yoga-knee-to-chest-hip-stretch-avatar-v7.jpg",
       "assetSha256": "23078cfdace6379fe85d578037b5f813b477032b3bf51cd6702e5cc9053d333a",
-      "explanationSha256": "43ecfaedaabcd7e449f45ff399bd8fa8083f3bed22c673ed3264c43261ad45b2",
+      "explanationSha256": "f703236b463802e8c27c9d7ada926d2d3c34a5cdf46dc70a018a6106a2fc0824",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -9613,7 +9613,7 @@
       "name": "Yoga plow",
       "source": "images/yoga/yoga-plow-avatar-v7.jpg",
       "assetSha256": "44fc1c4773ade66fa84020f3777bc78813acedf13f59eb44f9dbca3b6200904e",
-      "explanationSha256": "f7785bc05d64f86f2f6dd428894b3c64e44d5ac5ae99173c4eb9802cc28b2c05",
+      "explanationSha256": "bc256c039d79388e0d69d06cd351a5a855ff3137695f5c81a6fb3a748a09b015",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -9756,7 +9756,7 @@
       "name": "Yoga snake",
       "source": "images/yoga/yoga-snake-avatar-v7.jpg",
       "assetSha256": "085287d9624a8d90d25064b280c6e02c27daac00adfad6e91ea35bf7ba59a8a9",
-      "explanationSha256": "e67bdab9839678c10e6e4fc78fa7d03e665fd6da08f809694e418899e3143ef7",
+      "explanationSha256": "824521042a46fce347c7b1b0418d268a89018850db92f426a701cdf341fe89e7",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -10569,7 +10569,7 @@
       "name": "Foam rol glutes stretch",
       "source": "images/foam-roller/foam-rol-glutes-stretch-avatar-v7.jpg",
       "assetSha256": "262c072c68000b552ad2a4ab6bdf225a92aae22dcf4b7085a99104c435b34247",
-      "explanationSha256": "234d7be78f172f0b629f4ebc9e098d5d7bf44ab7ed965c18ff9a6a5d34d2abef",
+      "explanationSha256": "b01e3f8484d5803ada0c0bb3fe70a7390b229684e4d88cfc114abe1269391b43",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -10607,7 +10607,7 @@
       "name": "Foam rol quat stretch",
       "source": "images/foam-roller/foam-rol-quat-stretch-avatar-v7.jpg",
       "assetSha256": "045202e5955feb9ae83612a41c120aba53ac7fd4eb1f4558995b86f09aa629af",
-      "explanationSha256": "a09806265ee8c7413c885b228c187f5bde18513b200671bf3fb92d11ee22b4aa",
+      "explanationSha256": "0a2190fa737760d2b87be09d3e51f1a4c78644405dd135dc26baf6cf95a18d9a",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -11018,7 +11018,7 @@
       "name": "Chin-dip (apparaat)",
       "source": "images/apparaten/chin-dip-apparaat-avatar-v7.jpg",
       "assetSha256": "ffb9c2a2424def5c7d876af6ba8905ed15e293f681e617cea0669c23d548fc9b",
-      "explanationSha256": "aff8fbb6d8aaf35557a76f399360b8e7e18090b1e846380caf88e3bf6d4ea37f",
+      "explanationSha256": "8885ec35cbba83202508cf3a4d4349fa255b952587d748f3678ff38fbac02d52",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -11085,7 +11085,7 @@
       "name": "Circle (apparaat)",
       "source": "images/apparaten/circle-apparaat-avatar-v7.jpg",
       "assetSha256": "8f551b55c1aed20c8068eefa0ecabacda46429b96bb5a874f5bcf3f1d049233c",
-      "explanationSha256": "85ff0d75becadd048e0fa6a0986fe4833a949135ede7293540788ed8038fdc89",
+      "explanationSha256": "045535b2a117346ab41fca23c54bb8e7f68b1b1ceecef139cb3b9763c112e962",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -11228,7 +11228,7 @@
       "name": "Endy Armstrekker",
       "source": "images/apparaten/endy-armstrekker-avatar-v7.jpg",
       "assetSha256": "bd89f91fabbba9e39984641dca3e63c576b4295b69aabcc9b4f53993891858fd",
-      "explanationSha256": "fcdc2b91dc3136399f21d4465c4edd8dbbcc2528304f96110191dfcd2d3424a3",
+      "explanationSha256": "1f44b195de24b85c520156897b3f974579470546b6d4198fb84905cfba2c26c1",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -11266,7 +11266,7 @@
       "name": "Endy Beenstrekker",
       "source": "images/apparaten/endy-beenstrekker-avatar-v7.jpg",
       "assetSha256": "a5b0f7f0af0fa8407f0c83da50c8c5f3964be064741ec0d716e1e7257a900227",
-      "explanationSha256": "39b3c6ecba82b98c345371db4cfad202f3fb52990e5aeeb80ab95e1117355bd1",
+      "explanationSha256": "c5dab52af8ca0f3fb78734c5138777dd4411ee0496f7b969b11f9b647fb22a72",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -11438,7 +11438,7 @@
       "name": "Endy Heup abductie",
       "source": "images/apparaten/endy-heup-abductie-avatar-v7.jpg",
       "assetSha256": "a88761069e52bf16a029e0a801df26fce5e7f4d07b8b85080496427dbb42fda6",
-      "explanationSha256": "00637b2e16e78934185d37dfbdb5e8bd5eab18e37552f1b0326d8812f68d1ba3",
+      "explanationSha256": "98e35e9e95746f866a556abed880183f985dfe41d3b6de2b45831dd2e0bd7c67",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -11829,7 +11829,7 @@
       "name": "Gluteus kick (apparaat)",
       "source": "images/apparaten/gluteus-kick-apparaat-avatar-v7.jpg",
       "assetSha256": "27d851cb7fc52c3ff72c4d520c9bd569fb8cc8b8411b0670bf852b68b43febca",
-      "explanationSha256": "6d522d2fad3b6723eae997d49a2ec007f4219dbaf78f8010f6865fc944ccbe90",
+      "explanationSha256": "8335a3e6f8d7acc6c494dd315041c2185c4cc834955b0c1c354f3d2b48263f44",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -12039,7 +12039,7 @@
       "name": "Rotator (apparaat)",
       "source": "images/apparaten/rotator-apparaat-avatar-v7.jpg",
       "assetSha256": "4bbe11d6b4bf9f9752b8d919d8cf4d7228b7d5175efa9ca124dfe19d79d532a1",
-      "explanationSha256": "fc169ec53e2be4d55c87137a576e4c85cf1835a63a523020047ba241c4ad8ad7",
+      "explanationSha256": "1f4f5dce97e510219fab26ffcd915b97817dc6d01024a8fb11ef237a2080d665",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -12186,7 +12186,7 @@
       "name": "Kin intrekken – liggend ondersteund",
       "source": "images/nek/kin-intrekken-liggend-ondersteund-avatar-v8.jpg",
       "assetSha256": "8f0bc6ff3013ad4008cad5665087393251b693f658d05177b87044ad01205629",
-      "explanationSha256": "bd3674f6814b596c2dd40c7a29500c53cbc60b4da34a83215765f8a5da7eabd8",
+      "explanationSha256": "ee9387bea7fe0b60ae5112b51c139e6bd2fa770f918eec4207db4d1db757ed98",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -12252,7 +12252,7 @@
       "name": "Nek buigen – liggend ondersteund",
       "source": "images/nek/nek-buigen-liggend-ondersteund-avatar-v8.jpg",
       "assetSha256": "afa0d57bb628b98835e56b1874f7350b01aa8f28a8b02577a289e4f723689d20",
-      "explanationSha256": "e43d3d324e4660fb1832b7e40b9da079dcbb59722b1857f40f553f2bc306ef91",
+      "explanationSha256": "9653ebb68bb9805a4c53ad993372e1cd11c31b52e7f2ba9e1cca8bbfafc9bdd2",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -12549,7 +12549,7 @@
       "name": "Nekrotatie met oogfixatie – zittend actief",
       "source": "images/nek/nekrotatie-met-oogfixatie-zittend-actief-avatar-v8.jpg",
       "assetSha256": "0ce26dd05f9e5cbfb11b931bef486bba8c4cc42079cce821e64d671d1bd21a13",
-      "explanationSha256": "36c4532e35859ee815614418507a1996f32a842cfad1651ef3303c2af08fefa0",
+      "explanationSha256": "a1acf73a6abf0ab8b284869a2350066fdc2678e05d977e1da8d8526b9d7e492c",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -12582,7 +12582,7 @@
       "name": "Nekrotatie met oogfixatie – functioneel staand",
       "source": "images/nek/nekrotatie-met-oogfixatie-functioneel-staand-avatar-v8.jpg",
       "assetSha256": "fb80d4a8a2f765b87bd0b31d551ef62ee368818aa284ac0b0dddeb1330d0d64e",
-      "explanationSha256": "a667084cdbe888eb2aad05ebda8e4ac3abd36e4e66a2cac349c5e801cd4d54f7",
+      "explanationSha256": "059fa67abd2fdbec613cf90a4b2ff836e85603719680bdd42291313e95625764",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -12681,7 +12681,7 @@
       "name": "Levator scapulae rek – zittend actief",
       "source": "images/nek/levator-scapulae-rek-zittend-actief-avatar-v8.jpg",
       "assetSha256": "091f7e6ce2086c747496e9951567f7f94b2844fe3d746154cec12cd983810d73",
-      "explanationSha256": "a44edda683cdc0f22e90f47d3da31904dc730c8c0414e025a28bae96a5deed17",
+      "explanationSha256": "1bfb08a6404193efe3cfc3f44f0ec0da0df3ef1a3de17b38bb1265a8a57cf4b6",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -12714,7 +12714,7 @@
       "name": "Levator scapulae rek – functioneel staand",
       "source": "images/nek/levator-scapulae-rek-functioneel-staand-avatar-v8.jpg",
       "assetSha256": "535fe28385fa120674ab1569ad78bc1fcdeddc27c7869ce4ef30c1f95b27ed4e",
-      "explanationSha256": "8ee63c5478cc60baa2cb7135d87eb4a067d7f9986e8bd4507bb185cf4e214b17",
+      "explanationSha256": "b42839bc545d98ca5a0694314d935e77c0e78e7341bd689d635ffc50d64d1eb7",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -12747,7 +12747,7 @@
       "name": "Bovenste trapezius rek – zittend actief",
       "source": "images/nek/bovenste-trapezius-rek-zittend-actief-avatar-v8.jpg",
       "assetSha256": "86d7830653e854b4f767aa2ace2f952bce50aaac50eef5594117116117c80033",
-      "explanationSha256": "3bc5cdf56893162a5506e1f918c3bc223144fd81159a6a04953053f27276521f",
+      "explanationSha256": "0792a9bd5656c8c4e08e50fcac7da6fcca54c8b33a109da3e8666a9a6b4d74b1",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -12912,7 +12912,7 @@
       "name": "Rug bol en hol – met lichte weerstand",
       "source": "images/rug/rug-bol-en-hol-met-lichte-weerstand-line-v1.png",
       "assetSha256": "7d7d3cbb91dda52eb09ffa12b556e8c4bbab82e0aab828b133ba0c10f1dc1917",
-      "explanationSha256": "0c5a691c5183cb5afafd216c0d13ad9027dd1d24a7a8178912db8b86f9ea593e",
+      "explanationSha256": "da9b3ca447a0b545dca8c0c7037471ec78d7ab5e77c748b2824df02ac66bf276",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -13308,7 +13308,7 @@
       "name": "Knie naar borst – liggend",
       "source": "images/rug/knie-naar-borst-liggend-line-v1.png",
       "assetSha256": "df7782fb31d0d0a8cd1a51d535c3b9b3aa08e9aca84de3c218e46b57be969a4a",
-      "explanationSha256": "ceee82306ef276c1f094d13d74ebadef58ec3148674b87acf0b3b2acf8a73b49",
+      "explanationSha256": "f34f0e1e35bba717a5841fa3f9d180cdb9d201b0e0567e3086ceeb7be9e7fa16",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -13539,7 +13539,7 @@
       "name": "Thoracale extensie – op handen en knieën",
       "source": "images/rug/thoracale-extensie-op-handen-en-knieen-line-v1.png",
       "assetSha256": "6bdac61a06817acb6870e8f1c779f3370610ea65056170f02f73c01a8320d9da",
-      "explanationSha256": "5ea320db1d714e9053458d21d492ab44dc39fcdd509ebd64ae7dc48e7a39e32c",
+      "explanationSha256": "085b5ff9af6b8539a7de95be49aa00cba247e28213e68ef89b465ab660e15db6",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -13572,7 +13572,7 @@
       "name": "Thoracale extensie – zittend",
       "source": "images/rug/thoracale-extensie-zittend-line-v1.png",
       "assetSha256": "363982c3c684830c8df5648a91769345ef08260e36f0b2c92b37d5c63ac3a707",
-      "explanationSha256": "a63621cde84ea6d20b9326e208c8b2a76e6b9b4df3276e7df3a167573e7579b4",
+      "explanationSha256": "2f47e49a2a05872ae6aeb41f8d55aacb2604e2bb68cb078fed430eff4dc133fa",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -14331,7 +14331,7 @@
       "name": "Zijwaarts stappen – zonder steun",
       "source": "images/balans-en-valpreventie/zijwaarts-stappen-zonder-steun-line-v1.png",
       "assetSha256": "01b661a202a57576ec16937102baaf6f9d4561f5d31102ce391c27a725eb7517",
-      "explanationSha256": "83c6eacf4175459e2ec06be1a8dfed33a406656f5983e25c94c0ab29c85bece3",
+      "explanationSha256": "2cf255a3b7869093761a850e9b195aae0c38f99d05bfe10e971128ca7e43d2ec",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -14364,7 +14364,7 @@
       "name": "Achterwaarts stappen – met steun",
       "source": "images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png",
       "assetSha256": "d245a4c8fd6b3fea111fdaecb8f76b50dc530619fcd386d38b02e6650ea893b9",
-      "explanationSha256": "f7dceb1db0e04ebb9f5e17380f5a7a9a5505ab6247e0bed48d4cf6d356d3a7ee",
+      "explanationSha256": "c0795292995d6fc649c3f233e1cb48a2858abfae133f2790b37337374e1fa7e3",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -14397,7 +14397,7 @@
       "name": "Achterwaarts stappen – zonder steun",
       "source": "images/balans-en-valpreventie/achterwaarts-stappen-zonder-steun-line-v1.png",
       "assetSha256": "0caceaddd02d6d309544d98570742b9df1c54d3a2308348efdf9f3d1841e2a31",
-      "explanationSha256": "d3f0e2828ee581c4e9ee7f8a9ca77a6e0bbdbaee5152201504aa1c7a868d66aa",
+      "explanationSha256": "986d1b983170f9f8e4b605c423d53bca0bdc0cbfa6b17f91e2ea6bb629a4027d",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -14430,7 +14430,7 @@
       "name": "Over een obstakel stappen – met steun",
       "source": "images/balans-en-valpreventie/over-een-obstakel-stappen-met-steun-line-v1.png",
       "assetSha256": "99592abca07a1b67a1516cff6531fba6b78034849382db7c0824a9cb60953d40",
-      "explanationSha256": "770ad76477f814e3fc1c2a7184766a1652bb1877d03ea96357f457004c270849",
+      "explanationSha256": "5dde8418362a9ae3bcc6ef7da449fcb2d47ed3b2a2458dac84a53135b6e15752",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -14463,7 +14463,7 @@
       "name": "Over een obstakel stappen – zonder steun",
       "source": "images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-line-v1.png",
       "assetSha256": "7c8213e4fb9b0ea1b5a4768f4591e131f83ab9dd926a5100534307de86749f3f",
-      "explanationSha256": "1d8e21f9e3deb1f791ac29d450f6d677736d10f994b0bc73104800dccd3df9fe",
+      "explanationSha256": "e6ad929e90d6276a6cc92efc9dbf6a798c3244a9beed0febbe467f6b188f6fd3",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -14496,7 +14496,7 @@
       "name": "Draaien op de plaats – met steun",
       "source": "images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-line-v1.png",
       "assetSha256": "ae14d24b33833d90c6eb87fa758bf31ba36585a34027e3d6194b121753767966",
-      "explanationSha256": "a2eb09db8e958388ec3fc077cf5d4dff45fd3647d873d96ae54cdc67a082aa5a",
+      "explanationSha256": "119c215d7e66eb96df851cf1b4c85bf7e4543c6551d5babe324d64c539b3c7d7",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -14562,7 +14562,7 @@
       "name": "Stoel opstaan en lopen – zonder steun",
       "source": "images/balans-en-valpreventie/stoel-opstaan-en-lopen-zonder-steun-line-v1.png",
       "assetSha256": "9ed4e2048d4f3f5f0f3df27719dca59b7d32e4df527ee70bcb128712324ce9d6",
-      "explanationSha256": "3bc209372826889f02fa57570013454c169708e7120bda47b865b8c5d3d775a5",
+      "explanationSha256": "fd58563c670152d7b21a2d4e07c839c73230c39d06bad9f7316e112be78a60d3",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -14595,7 +14595,7 @@
       "name": "Dubbele taak lopen – met cognitieve taak",
       "source": "images/balans-en-valpreventie/dubbele-taak-lopen-met-cognitieve-taak-line-v1.png",
       "assetSha256": "4fe75a956165018ef074f443a4f582bb8263ab56938d80f83cf75341b914bf0a",
-      "explanationSha256": "effb6b34f3bf172eaa740075f91330ce205be6068b2c5d2d13b8abbd60709c1c",
+      "explanationSha256": "1675416e94d66f0ce62faf9783d591c257228f80d26735ffc517ca55dac7dadc",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -14628,7 +14628,7 @@
       "name": "Reiken met aangedane arm – met visueel doel",
       "source": "images/neurologische-revalidatie/reiken-met-aangedane-arm-met-visueel-doel-line-v1.png",
       "assetSha256": "e10799a2223ab40a713237f0508833b869fccbf5fc97b054cd989f015de3a6cc",
-      "explanationSha256": "86408d67300acf2df96ca57faa479f451a8efa6c5ac8e77d1eec5a8dd7c5096e",
+      "explanationSha256": "445c28744d8b8df7d1f6f2b73f754f9caa71e2905d46ce4dede1ac78460b1534",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -14694,7 +14694,7 @@
       "name": "Hand openen na grijpen – bilateraal",
       "source": "images/neurologische-revalidatie/hand-openen-na-grijpen-bilateraal-line-v1.png",
       "assetSha256": "90d130ae544789799995250e9b2b9ac268dbcb8fe6e5f9b772452d3d6e05c08d",
-      "explanationSha256": "b66b70928fe9c1fe63bb75902e4f7fad775cb4a6b909367ce0680555cecc51ac",
+      "explanationSha256": "7443ae986f44f245b48b9a38a6aa33244aeffa1cb2e40c98151531290a6ff3d2",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -14760,7 +14760,7 @@
       "name": "Symmetrisch opstaan – met fysieke steun",
       "source": "images/neurologische-revalidatie/symmetrisch-opstaan-met-fysieke-steun-avatar-v8.jpg",
       "assetSha256": "0f1a533ffacc6ba815df78a2a2aefe1a29c585355820327385ca711646d4c1aa",
-      "explanationSha256": "ce881c9dd3c9ecefd646d41a16ff8438751b3182d872112a25f391322aceaf7d",
+      "explanationSha256": "ec6b2e9443504cd35721bc31f8cd8e9c424d1227a5a9c0e70e689f60720abf83",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -14793,7 +14793,7 @@
       "name": "Symmetrisch opstaan – met ritmische cue",
       "source": "images/neurologische-revalidatie/symmetrisch-opstaan-met-ritmische-cue-line-v1.png",
       "assetSha256": "c7979e954b8c8541853b5cf02c49e15f1948995f029e9da7a668e1c7aa24817d",
-      "explanationSha256": "015b857620b8c43770981b8d0448becfe7ade98684dfc0a4d298eddc647aee59",
+      "explanationSha256": "337d1f6e5fc515350654bedfa3388dea761fb11d919e563638c9430c928470a5",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -14826,7 +14826,7 @@
       "name": "Stap initiëren – met visueel doel",
       "source": "images/neurologische-revalidatie/stap-initieren-met-visueel-doel-line-v1.png",
       "assetSha256": "f45c9baebd181b4d0eb0567afb1410acba4df94b9a90a821e88b56f32d0ea592",
-      "explanationSha256": "e76355e5ee6161b535f7b2f3c283bd453ad565c5e89490c5acc81bda0b017013",
+      "explanationSha256": "66ac756894488950d37dc5e9ce3dc2db70989bd71ba64b46a017de48baffe5f5",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -14859,7 +14859,7 @@
       "name": "Stap initiëren – met ritmische cue",
       "source": "images/neurologische-revalidatie/stap-initieren-met-ritmische-cue-line-v1.png",
       "assetSha256": "6f49aa52129fe34ecdb0278b3245b71d3c6d24d415ffcc8a29053264430128f3",
-      "explanationSha256": "f5c85e38284e9d6816e6d0909fe17d03742ea76c14c301ef54969ef75ddbad62",
+      "explanationSha256": "2192cbc594e91f357b981ba0a399ff8b3f3db3fa05b357eba69674c013df7752",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -14958,7 +14958,7 @@
       "name": "Voet naar marker – met visueel doel",
       "source": "images/neurologische-revalidatie/voet-naar-marker-met-visueel-doel-line-v1.png",
       "assetSha256": "36381800ecfc9dd7bb4b2683daf81adc85375456a66263543511406d42d8e6df",
-      "explanationSha256": "936f6a5bc19673f791e396bc51a11339ccf9ba7232b61f6ac6f4634ae57f28d0",
+      "explanationSha256": "a72d28b20f9eab6faf7b9c94a4c5aee215bb1bae21795cc5bdabf1b327a50ef0",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -15024,7 +15024,7 @@
       "name": "Grote stappen – met ritmische cue",
       "source": "images/neurologische-revalidatie/grote-stappen-met-ritmische-cue-line-v1.png",
       "assetSha256": "76b1da23b032185aefcc7d63b605398d8a0eb67b1971e80238c28c3a09cc8c26",
-      "explanationSha256": "064a938e260e4f8296cd60704c69d3c7abde5f8bf9e5ea54b5d7e2a216a0ad90",
+      "explanationSha256": "39bb518edea0d50abe7d6e7859d0768cc1bc94244d7c0169955430550e7666e5",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -15420,7 +15420,7 @@
       "name": "Buigen en oprichten – staand langzaam",
       "source": "images/vestibulair/buigen-en-oprichten-staand-langzaam-line-v1.png",
       "assetSha256": "476c09c1ef6e80afbd6f794cc9aa014d830af0a898eb98622e0613049a9d6e01",
-      "explanationSha256": "980115398d9819d46e6a9a70c9bbd8ce0c80a3bf14924326795495615951eedb",
+      "explanationSha256": "a1635d19603ecd90507514f71795eaf0b21d11aff422f3aeda18f0da38ca9c9d",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -15651,7 +15651,7 @@
       "name": "Duwen – met stapverplaatsing",
       "source": "images/werk-en-dagelijkse-handelingen/duwen-met-stapverplaatsing-line-v1.png",
       "assetSha256": "ee7ecf9fe7010306a51c6567a7e960620eba38b9c9adb49b38bbefcb55265c5a",
-      "explanationSha256": "8edff8b1a1314bdba7ccd123d9f13f4230a79df4c185bb22d0f9e548b7f25e99",
+      "explanationSha256": "70c939f167dbbe2439ca4695764c3c1ed68851a683416d98c518d40cc75c210b",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -15816,7 +15816,7 @@
       "name": "Bekkenbodem ontspannen – liggend",
       "source": "images/bekken-postpartum/bekkenbodem-ontspannen-liggend-line-v1.png",
       "assetSha256": "e7a235a4f92c66bcc7a665d88e97bb392d38ff91da0e87e5f69493a730891bc8",
-      "explanationSha256": "5d037f2610c7432a5b9d9331e35f6e05cd88ad1090cf133e3c087055b5d1b13c",
+      "explanationSha256": "157ea32d619185bb4c512fe175801767cc1f5f1828f3dc9dd835cff711b1f217",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -15915,7 +15915,7 @@
       "name": "Diepe buikactivatie – liggend",
       "source": "images/bekken-postpartum/diepe-buikactivatie-liggend-line-v1.png",
       "assetSha256": "849814d6478a123fb533198d404813a7ee7763db58d6e8d24d6f7ad28d4d8c10",
-      "explanationSha256": "2ee1931e9f5c9e626639617759222aac87e32d79eaf38720c67c7530d236a154",
+      "explanationSha256": "549ce9d40df148a7bcfc0b572fb3f311512ef0aae78fc924509a31fc90fb384c",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -16113,7 +16113,7 @@
       "name": "Hop vooruit – techniek langzaam",
       "source": "images/sportrevalidatie/hop-vooruit-techniek-langzaam-line-v1.png",
       "assetSha256": "c667f96432be446c0082b69ac806049b02d8650711c954cf00df73e090b71d50",
-      "explanationSha256": "f8a821aa9845d6041ec0d8e2645a111ff51e0596cfba3a706b19b8cd70aa9339",
+      "explanationSha256": "015089d7a8691841a026aed917909240a2a9a0a9bc1677e7ed7199fef08dc144",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -16146,7 +16146,7 @@
       "name": "Landing op twee benen – techniek langzaam",
       "source": "images/sportrevalidatie/landing-op-twee-benen-techniek-langzaam-avatar-v8.jpg",
       "assetSha256": "ddd6d03d4226dc48262852e6de25ccaca597f807a525613eac85ceb57089ae56",
-      "explanationSha256": "ff160d92ee3ba06a7f45b567ff72ec642816a91c4adb32a772725c5ddb13c9a6",
+      "explanationSha256": "0c2b6810c0aaaea57ef38b4c828489dc00ad159937e79187db685e9f19ea4b52",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -16179,7 +16179,7 @@
       "name": "Landing op één been – techniek langzaam",
       "source": "images/sportrevalidatie/landing-op-een-been-techniek-langzaam-line-v1.png",
       "assetSha256": "363f7b0a72b07271af98b085ca9ed570ae0f2e4437af7d48905865fcbd27d5d9",
-      "explanationSha256": "eff4b312f13e570c483a45b4da7e969682c110cd608a9daa3c8d3548ecc0ccef",
+      "explanationSha256": "670eeffb23421237324a8b3d919f949dfab551bb967d1e9ae436f159f21aaeda",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -16212,7 +16212,7 @@
       "name": "Laterale shuffle – submaximaal",
       "source": "images/sportrevalidatie/laterale-shuffle-submaximaal-line-v1.png",
       "assetSha256": "0276a4472a97c281f56974086ffc8214de8fe3a2189c5255817a72956fe6eb3a",
-      "explanationSha256": "90e16bd06d76e1081412a39f04b36d18473e205503a1384b0be1ccb4f16b00e6",
+      "explanationSha256": "d69c4373431d9beb056c2ec04f09d34b0b923e73d9494efc9b3b9fc07217da2c",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -16245,7 +16245,7 @@
       "name": "Richtingsverandering – techniek langzaam",
       "source": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-line-v1.png",
       "assetSha256": "a9082a4a8890b049c54145b506b8a02bfe0c1bcef7d8bb7f124ed614f86b34ad",
-      "explanationSha256": "e04794e4ad9810030823fbbb87955438b7b463cfc0dda616476a16990168a1d1",
+      "explanationSha256": "7a78e1a180236efb4d4596ab256b2e4b48eae0ddcefb64d365afd14cd24e7cc3",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -16278,7 +16278,7 @@
       "name": "Sprinttechniek marcheren – techniek langzaam",
       "source": "images/sportrevalidatie/sprinttechniek-marcheren-techniek-langzaam-line-v1.png",
       "assetSha256": "193a67f321a39d7b3b6302c42834ad30c95fa8c127e15fc61589002aa5bb4d35",
-      "explanationSha256": "e2d8db8c611dc6ea4a34f5796d1308482eaa961b7dfa18d29dc43d186d2f1fc9",
+      "explanationSha256": "28c124377a116f4dc01fed16820e38ffad346dec646066b53c1ffd0274ac3051",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -16311,7 +16311,7 @@
       "name": "Versnellen en afremmen – submaximaal",
       "source": "images/sportrevalidatie/versnellen-en-afremmen-submaximaal-line-v1.png",
       "assetSha256": "6e75eef5299affd8232da7c36b1ad89cd778279fd49ffca60adfb4fc8f59738d",
-      "explanationSha256": "f86f360c6c99c40eb25dd2ad04aa99cc8d4a288d677f421ad3cbb01048f44531",
+      "explanationSha256": "e65c6f638452a39ca04b97d163d2ef1e6c271c8f66c056e3f7f8ff4f08081815",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -17099,7 +17099,7 @@
       "name": "Swiss ball rollout",
       "source": "images/exercise-ball/swiss-ball-rollout-avatar-v8.jpg",
       "assetSha256": "453576fd3455b581c9b7919e338fc4c66e10bed7f40ff4c6d58c9d6348c60b57",
-      "explanationSha256": "352956d967cce2ccd5e9d95cecea7c2506ca0c86252219b08077ad1086476b0e",
+      "explanationSha256": "aa4cdf376450a2f5c599c651c5bf3856fb1e843aa4e0c5e9722105dc1217e93f",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -17409,7 +17409,7 @@
       "name": "Swiss ball core",
       "source": "images/exercise-ball/swiss-ball-core-avatar-v8.jpg",
       "assetSha256": "4006bd85dd7355f1a8162c83b10bb57aa323249dc05b2a4e0a454c0cb9d988c2",
-      "explanationSha256": "b37f411f74f7524392fe37c985ab5eeeb50346754172c1623c427ac1b237d57c",
+      "explanationSha256": "18535b687aab1126f5a03df1e4621cff421780e92d3b573cb7b77a0f81c36544",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -17694,7 +17694,7 @@
       "name": "Foam roller glute med.",
       "source": "images/foam-roller/foam-roller-glute-med-avatar-v8.jpg",
       "assetSha256": "ab8c4f56fa86ca8ad4faad9f00c80933641029d7cc0f8a814110f6811cdc203d",
-      "explanationSha256": "39a3e531c217e6bb61073020bd2f2f3c3aed6621b5043af95beb46ef2c268fba",
+      "explanationSha256": "20a2a711b69436a9763e38f2304a57be64d675ef9097d342aba6b26b555cf8fc",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -17921,7 +17921,7 @@
       "name": "Foam roller back upper",
       "source": "images/foam-roller/foam-roller-back-upper-avatar-v8.jpg",
       "assetSha256": "5aec81dfab60c48b84a359aaff80e45ea953ba5158681d3e955c243e9efb0a4f",
-      "explanationSha256": "61813663551ed890475b8b728c743f522a887577ad9d4e9a9309e368185b42b4",
+      "explanationSha256": "b6c4d5e43774bdb9815c1bd5f43cb99e68a67db2434c8e8708904351a000d380",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -18053,7 +18053,7 @@
       "name": "Foam roller back lower cross",
       "source": "images/foam-roller/foam-roller-back-lower-cross-avatar-v8.jpg",
       "assetSha256": "9a5838d1ea4236f6fef00d8280d75baabdf8177afd9924a056f7a192138ac8a7",
-      "explanationSha256": "bd6c4effa1c9b0e512a791df9f590651a063440fdd05d1712456a25c4591e2f2",
+      "explanationSha256": "3aafa20b5b872cadf03326f004e3093220d3f4b2c694fd74e4e43006c30a5c0f",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -18286,7 +18286,7 @@
       "name": "Med ball rotation passes",
       "source": "images/medicine-ball/medicine-ball-rotation-passes-avatar-v8.jpg",
       "assetSha256": "265ee45298588c17962814fd6bd423d5c9d9a4bfa8e77051d4c03ebce195486b",
-      "explanationSha256": "9ce578e495202773243bd514e895855ef5bb20713267be2a112a45350fb2cb94",
+      "explanationSha256": "6a6f539de6c4ed7e0303912a43801152222447ff52613eec79e0d69d238ca47a",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -18319,7 +18319,7 @@
       "name": "Med ball rotation passes knee",
       "source": "images/medicine-ball/medicine-ball-rotation-passes-knee-avatar-v8.jpg",
       "assetSha256": "4b8381e882194fed66cd23df53444220e3e50fb614804ad74377ff82a543701b",
-      "explanationSha256": "8d56ec288ad91814d63c08bca1eed2a375d1b4f743591612f229a3f1940a6988",
+      "explanationSha256": "e60e3999f87e9336ca55c939eeb99e99181aeca84d38fc78c607837ee6fa34e0",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -18352,7 +18352,7 @@
       "name": "Med ball push up one arm",
       "source": "images/medicine-ball/medicine-ball-push-up-one-arm-avatar-v8.jpg",
       "assetSha256": "08df4ca7777db3d505551424119a455a8184bb0c233e4d2f4b905b97a718e5d5",
-      "explanationSha256": "8489cb258a6503699e0794fd7124b12322fe13e451b155f599daf9632d7f1a7a",
+      "explanationSha256": "4f669d9a6de6edcfae2efb0c3c32465356dec07f243efcc374d576bebea0a358",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -18451,7 +18451,7 @@
       "name": "Med ball obliques cross",
       "source": "images/medicine-ball/medicine-ball-obliques-cross-avatar-v8.jpg",
       "assetSha256": "1f83280192c90f515169f499d7c52be1b07de057a5dea3df2abcc2cb2857d01f",
-      "explanationSha256": "6cc9cd8cc75e188150fff139027185d8192311685e27741eff453090bb18b733",
+      "explanationSha256": "2a7dcb734481c8bb50f628104fa9ae87ecc7c67e3c1bc6926131da11cd66144c",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -18517,7 +18517,7 @@
       "name": "Med ball swing",
       "source": "images/medicine-ball/medicine-ball-swing-avatar-v8.jpg",
       "assetSha256": "f6edd812874d83b0c64dea26487041b7ff7a34b75a1f3c3b3a6250c23333664f",
-      "explanationSha256": "57ce7a85a9104a29edefc89c279eaf9c2f7a492c83477395f56be2e2f8ff3aca",
+      "explanationSha256": "04c927335d1f1ecfb4603eeb78c5c0188611615918f5b0f98957cb70812fc556",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -18847,7 +18847,7 @@
       "name": "Mob back cat/cow",
       "source": "images/mobility/mob-back-cat-cow-avatar-v8.jpg",
       "assetSha256": "88efe7096ed280fb49f912f9194ee9a44b450737d6d485bb1ad0f3f7faf64448",
-      "explanationSha256": "3ad1484564d6955589e547cbcaf8b74952a0ddc73e4f07ec299e1b0f13eeeacb",
+      "explanationSha256": "8bcecd9b6c89e983dc2e732ea5031a1e9d769367aac5ca3876fad706862da70a",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -19210,7 +19210,7 @@
       "name": "Seated lumbar rotations",
       "source": "images/seated-chair/seated-lumbar-rotations-avatar-v8.jpg",
       "assetSha256": "fd7b1dc228f3ff4539d2e4430c24efef9137b98a8c45e21ce99b15895a1e51ff",
-      "explanationSha256": "809303725eb4733d30388184746ba170f1d763510b2ef8813382b2a6e350057d",
+      "explanationSha256": "d5cd90e47dcd205dc4b2437fde3141c15d47337793fddbcef5e27f55988f8fc4",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -19243,7 +19243,7 @@
       "name": "Seated cat-cow",
       "source": "images/seated-chair/seated-cat-cow-avatar-v8.jpg",
       "assetSha256": "b0024d82dd266001654a354ba543c85fe88b3c8f5e26ddbd17d206e64eb087c6",
-      "explanationSha256": "fc2d7250929c5766aeca02f9f5ad29b64879b229e2f5a95bfbcb30597f9673b2",
+      "explanationSha256": "f6426577e1b254570f5b4979c94cbf2071a4621b6a4eb99d1169b4122f878707",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -19278,7 +19278,7 @@
       "name": "Seated foreward reach",
       "source": "images/seated-chair/seated-forward-reach-avatar-v8.jpg",
       "assetSha256": "f5226a30f2daa0911909cd7864e544b1f6fee15866e0a741aad59b70cc534042",
-      "explanationSha256": "a0fe5d14701ae5b0805d86347bb599ffaac800236be55dea5a04c4957dace4f6",
+      "explanationSha256": "213a6b8bdb22e7e3d18f4a73ad334c7c90a9723369237e1cd0a62af67ee81214",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -19476,7 +19476,7 @@
       "name": "Seated band leg curl",
       "source": "images/seated-chair/seated-band-leg-curl-avatar-v8.jpg",
       "assetSha256": "273666a5246a7813ad467b046b96226d9861244c06bd8819e3fade0d9b2998cb",
-      "explanationSha256": "b0e351ad6bb888ebd6958e58a4d1a81cb1d60d64f866eeb0e78efd8d471a91b7",
+      "explanationSha256": "33861b0b745c46f8408cb9b65b6a692c2f1135c5b45bc671527b17a0f0b34d12",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -19575,7 +19575,7 @@
       "name": "Seated chair crunches",
       "source": "images/seated-chair/seated-chair-crunches-avatar-v8.jpg",
       "assetSha256": "e65d4983d76429dc85462839442aa3b8f965e53c4e13114739b50cda2df33121",
-      "explanationSha256": "3025af4a104f07f3aaa90e31c7de75ffbfd0740ee338abe668cc836ceb4d4e80",
+      "explanationSha256": "7030fdf72a67459cc2fa580712c76ba841cd95662a696c013f6cd0f168a6c413",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -20004,7 +20004,7 @@
       "name": "Standing chair heel/toe",
       "source": "images/seated-chair/standing-chair-heel-toe-avatar-v8.jpg",
       "assetSha256": "e01272f7ad3e5a96541db53668beb42457dc76bdbcf080f5142e820b3e42c2bc",
-      "explanationSha256": "1b3d1149f12911afd5a271f0a22e8a24e25b021ea3f5a19d1128314b61c9fd7f",
+      "explanationSha256": "1f95d1336febd5ee13441f5d0e97d1553af16b190086aeacc679b34b14095ba0",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",

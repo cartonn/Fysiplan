@@ -64,8 +64,11 @@ for(const v of verwacht){
 // (voeten op het eind van de bank, handpalmen naar elkaar). Daarna 8 oefeningen uit pakket 3
 // (o.a. Curl up, Plank high, Side bents, Bosu plank, Bosu zijw plank met gestrekte arm) volgens de
 // lijntekening en de goedgekeurde video. Daarna Crunch, Knee elbow en Leg raises (herkansing pakket 3).
+// Op 2026-11-08, na de Physitrack-crosscheck (output/physitrack-crosscheck/), de uitleg van 98
+// V2-oefeningen (waarvan 60 gedeeld met V1) in dezelfde richting als Physitrack gezet en daarna
+// 10 bijgesteld na een tweede, onafhankelijke controle.
 // Elke andere wijziging van dit bestand laat deze test falen.
-assert.equal(createHash('sha256').update(fs.readFileSync('public/oefeningen.json')).digest('hex'),'81b447e1d48201870c3511e5587c8d4ef086c94d621d49695fe5d3b099188a69','public/oefeningen.json is ongewijzigd');
+assert.equal(createHash('sha256').update(fs.readFileSync('public/oefeningen.json')).digest('hex'),'cec021a4bcd7fa6b7ebd22dead4f1b141646844988368b487432ba9b1b5485e9','public/oefeningen.json is ongewijzigd');
 assert.notEqual(v2.find(x=>x.exerciseId==='fp_514654a0d4181742').kaartImg,v2.find(x=>x.exerciseId==='fp_5319c4700561725d').kaartImg);
 // geen bestand verplaatst, hernoemd of overschreven
 assert.equal(sha(HEUP),BEELD_KNIEHEFFING);assert.equal(sha(KNIE),BEELD_HEUPEXTENSIE);

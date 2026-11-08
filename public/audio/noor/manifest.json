@@ -64,60 +64,10 @@
       "duration": 9.377959
     },
     {
-      "name": "Barbell pull over",
-      "text": "Barbell pull over. Lig op de bank met je knieën opgetrokken en je voeten los van de bank. Houd de stang met gestrekte armen boven je borst. Beweeg de stang rustig over je hoofd naar achteren en breng hem terug boven je borst.",
-      "src": "/audio/noor/073f88a259e66802d8da25524ee25d0076c0b82c8851f01da293b78be61705cf.mp3",
-      "duration": 13.635918,
-      "provenance": {
-        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
-        "requestId": "3aa3d737-72e1-4bf3-ab05-5eb78846236b",
-        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
-        "providerVoice": "Marieke",
-        "requestedEngine": "heygen_voice",
-        "speed": 0.95,
-        "language": "nl",
-        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
-        "sourceSha256": "cbb7b8d3529adf3e13eccfc055d4ce426f70f8eaef158db8a7256801d2d96eaa",
-        "mp3Sha256": "2580e7caadda69764003bd1aafb5d6a30018fcc49175d55d0e5da4ace6078e4f",
-        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
-        "exactCatalogTextMatch": true,
-        "userListeningApproval": null,
-        "agentListeningReviewed": false,
-        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"Lig\" als \"Ligt\", \"gestrekte\" als \"gestrekkte\")",
-        "clinicalApproved": false,
-        "previousSrc": "/audio/noor/37d9e1e3265b134a6e0bff755120b6f57548230eabc0d77297e41a49f962b267.mp3"
-      }
-    },
-    {
       "name": "Been pendelen",
       "text": "Been pendelen. Sta rechtop naast een steunpunt en houd je vast. Zwaai je been ontspannen naar voren en naar achteren, terwijl je romp stil blijft.",
       "src": "/audio/noor/44f4478c53f3280af9f6d861a062f276a7c30d7f8fd6ffecf2642b71e71515b6.mp3",
       "duration": 8.881633
-    },
-    {
-      "name": "Bench press",
-      "text": "Bench press. Lig op de bank in het rek met je knieën opgetrokken en je voeten van de grond. Laat de stang langzaam naar je borst zakken en druk hem weer omhoog tot je armen gestrekt zijn.",
-      "src": "/audio/noor/37f6a954f7d0661d210b314cee7ff3b944151ca75c2081a64f8264744a1d36d5.mp3",
-      "duration": 10.13551,
-      "provenance": {
-        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
-        "requestId": "c2c5586d-37b0-4941-910d-b66abe9f9604",
-        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
-        "providerVoice": "Marieke",
-        "requestedEngine": "heygen_voice",
-        "speed": 0.95,
-        "language": "nl",
-        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
-        "sourceSha256": "10423bbee680931d2b6632d9bd8ab85bdf7ea31caf21cc22c1bc56040e8b5a4c",
-        "mp3Sha256": "9eb2b812b61c78bfb1ac47294d60abea34c4fb9e819ef581d3c8e98fb855a6e1",
-        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
-        "exactCatalogTextMatch": true,
-        "userListeningApproval": null,
-        "agentListeningReviewed": false,
-        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"Bench press\" als \"Penchpress\", \"Lig\" als \"Ligt\")",
-        "clinicalApproved": false,
-        "previousSrc": "/audio/noor/6cc382632cabb37f181d643cc842a3227873584b0d623cd0056e9d1a6426f771.mp3"
-      }
     },
     {
       "name": "Biceps alternate dumbell",
@@ -208,32 +158,6 @@
       }
     },
     {
-      "name": "Lying abduction",
-      "text": "Lying abduction. Lig op je zij met je benen gestrekt op elkaar. Til je bovenste been rustig omhoog en laat het langzaam weer zakken.",
-      "src": "/audio/noor/ef8db823a77cebc1c680eff1f678a53d967769b91bf54feb951800ee166efc6f.mp3",
-      "duration": 7.94229,
-      "provenance": {
-        "provider": "HeyGen",
-        "route": "existing API result import; no new synthesis",
-        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
-        "model": "heygen-voice-1",
-        "language": "nl",
-        "expressiveness_boost": 1,
-        "requestedSpeed": null,
-        "sourceFile": "output/audio-source/ef8db823a77cebc1c680eff1f678a53d967769b91bf54feb951800ee166efc6f.wav",
-        "sourceDuration": 7.941633,
-        "sourceSha256": "c5bc8db18457c33b51af3a7a2ef511300d8c86e0868c44b046eecc9b33e8f7c5",
-        "mp3Sha256": "094da1c8843c2a593b31e5dd874f19d6593a1b63ede20d9862979f451b357d0b",
-        "sourceFormat": "wav pcm_s16le, 44100 Hz, mono",
-        "outputFormat": "mp3, 44100 Hz, mono",
-        "processing": "ffmpeg libmp3lame quality 2; no tempo, pitch, trim or gain changes",
-        "exactCatalogTextMatch": true,
-        "deliveryListeningReviewed": false,
-        "clinicalApproved": false,
-        "reviewLimitation": "Technical decode/duration and exact submitted text verified. Audio has not been fully listened to in this import; transcript and clinical correctness are not certified. API result has no requested speed metadata; global legacy speed does not describe this clip."
-      }
-    },
-    {
       "name": "Calf raises",
       "text": "Calf raises. Sta rechtop met je voeten op heupbreedte, eventueel met steun. Kom omhoog op je tenen en laat je hielen rustig weer zakken.",
       "src": "/audio/noor/06c0f985ec141be466f4bab91b8c016d5da0133e737c31bc6f89842beec97555.mp3",
@@ -250,12 +174,6 @@
       "text": "Crabwalk. Sta in een lichte squathouding met een band om je benen. Stap zijwaarts opzij terwijl je knieen gebogen blijven en houd spanning op de band.",
       "src": "/audio/noor/97c96017eee9309177d45b2963c5b872ca69546791138f7b12d544d472660c6b.mp3",
       "duration": 9.560816
-    },
-    {
-      "name": "Dead lift",
-      "text": "Dead lift. Sta met je voeten op heupbreedte, gewicht voor je op de grond. Buig door je knieen en heupen met een rechte rug, pak het gewicht en kom rechtop door je heupen te strekken.",
-      "src": "/audio/noor/4b11cc56e293260635bc41e75eae74871cf2579dde31a4371df24990916d3f0f.mp3",
-      "duration": 10.997551
     },
     {
       "name": "Dips",
@@ -289,12 +207,6 @@
       "duration": 10.866939
     },
     {
-      "name": "Dumbell front press",
-      "text": "Dumbell front press. Zit of sta rechtop met de dumbells op schouderhoogte voor je. Druk ze recht omhoog tot je armen gestrekt zijn en laat ze rustig terugzakken.",
-      "src": "/audio/noor/7a9e9a96df9b03298e57f3f3aa1d03c99c936f65ad104a48ba8a19a49975fb75.mp3",
-      "duration": 9.691429
-    },
-    {
       "name": "Dumbell neck press",
       "text": "Dumbell neck press. Zit rechtop met de dumbells naast je hoofd op schouderhoogte, ellebogen naar buiten. Druk ze recht omhoog tot gestrekte armen en laat ze langzaam terugzakken.",
       "src": "/audio/noor/b30df915f15434fe547ab05f05d14d54f4064dedeb2138dab66d530e322dea6e.mp3",
@@ -324,12 +236,6 @@
         "clinicalApproved": false,
         "previousSrc": "/audio/noor/21c2c37c602babd020c796df11f4099c181aad7d528ecfcdf73cf7ed1c84c016.mp3"
       }
-    },
-    {
-      "name": "Duplex pull",
-      "text": "Duplex pull. Sta of zit rechtop tegenover het apparaat en pak beide handgrepen met gestrekte armen. Trek de grepen tegelijk naar je toe en laat ze rustig terugkomen.",
-      "src": "/audio/noor/c4c6aa741cb1c82da5d0318ab0386733248f5b371001a5aff3585af1a2051c09.mp3",
-      "duration": 10.945306
     },
     {
       "name": "Endo pull",
@@ -442,37 +348,6 @@
         "clinicalApproved": false,
         "previousSrc": "/audio/noor/665561258076c02029edbc8cf2b365a7b7c56a400e73a4835a82c70257366eeb.mp3"
       }
-    },
-    {
-      "name": "Front raises",
-      "text": "Front raises. Sta rechtop en houd één schijf met beide handen vast voor je bovenbenen. Hef je gestrekte armen rustig naar voren tot schouderhoogte en laat de schijf weer langzaam zakken.",
-      "src": "/audio/noor/c9c18d115dc65ee2984266f8fca0aac90dd090b5bcce7b7aedbe5464b30aaeb6.mp3",
-      "duration": 11.755102,
-      "provenance": {
-        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
-        "requestId": "8b4e5fbe-3488-4db7-afba-1857ed570568",
-        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
-        "providerVoice": "Marieke",
-        "requestedEngine": "heygen_voice",
-        "speed": 0.95,
-        "language": "nl",
-        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
-        "sourceSha256": "4ec1731b417983d3a706f8f6053e3d9844b5a4aaffa7949b1f9aff877e1b9f69",
-        "mp3Sha256": "2ef1abc441a462007facb5f0656ede7ff15fcc9bfce0acb14c5405a0caa8bd32",
-        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
-        "exactCatalogTextMatch": true,
-        "userListeningApproval": null,
-        "agentListeningReviewed": false,
-        "asrCheck": "Whisper small (nl): volledige tekst woordelijk herkend",
-        "clinicalApproved": false,
-        "previousSrc": "/audio/noor/a8996057a8a80d3d2ef3099e47d067c576565250644495a0542260b1aa5c5cc3.mp3"
-      }
-    },
-    {
-      "name": "Front squat",
-      "text": "Front squat. Houd het gewicht voor je borst met je ellebogen omhoog, voeten op schouderbreedte. Zak door je knieen met een rechte rug en kom weer omhoog.",
-      "src": "/audio/noor/ffb133a2ffab2097284818190b487586f51e72c278f5e4c9814dc6168d3a63e9.mp3",
-      "duration": 9.012245
     },
     {
       "name": "Glute bridges",
@@ -691,31 +566,6 @@
       }
     },
     {
-      "name": "Pully cross up",
-      "text": "Pully cross up. Sta met je zij naar de pully met de kabel laag en pak het handvat met de hand die het dichtst bij de pully is. Trek het handvat schuin omhoog voor je lichaam langs naar je andere schouder en laat het gecontroleerd terugzakken.",
-      "src": "/audio/noor/d277e17451ef3c26434efed0ad956e5e13fc684059976d31e297130d03b2559e.mp3",
-      "duration": 13.374694,
-      "provenance": {
-        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
-        "requestId": "dce20e3a-4e94-4bd3-a33d-4e79ace563ff",
-        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
-        "providerVoice": "Marieke",
-        "requestedEngine": "heygen_voice",
-        "speed": 0.95,
-        "language": "nl",
-        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
-        "sourceSha256": "bb9f06f1ba4a388a162d6d0cfbb41908caf2ae21230e504b43c24666847414d8",
-        "mp3Sha256": "6a5a0efaae14f04cc0c6d0db67d5d818276be094f35d3483437573865efdaa04",
-        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
-        "exactCatalogTextMatch": true,
-        "userListeningApproval": null,
-        "agentListeningReviewed": false,
-        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"Sta\" als \"Staant\", \"pully\" als \"pulley\")",
-        "clinicalApproved": false,
-        "previousSrc": "/audio/noor/0fbffb0492db6d4b3566054eadb892f367b55c8cb6a6e8848c5fc4c2556b54da.mp3"
-      }
-    },
-    {
       "name": "Pully dips",
       "text": "Pully dips. Zit rechtop op de bank met je rug naar de pully en de kabels hoog achter je, in elke hand een handvat naast je borst. Duw de handvatten omlaag tot je armen gestrekt zijn, ellebogen langs je lichaam, en laat ze rustig terugkomen.",
       "src": "/audio/noor/61880772a546e6e972fc8f06eb0a93f1fdd0763b8e4356d099e885bc1e39b346.mp3",
@@ -815,47 +665,10 @@
       "duration": 10.945306
     },
     {
-      "name": "Reversed flyes",
-      "text": "Reversed flyes. Sta ver voorovergebogen met gebogen knieën en een rechte rug, een gewicht in elke hand, armen recht naar beneden en handpalmen naar elkaar. Beweeg je armen gestrekt zijwaarts omhoog tot schouderhoogte en laat ze rustig terugzakken.",
-      "src": "/audio/noor/e59e6e3c0f2318cf671426746f4a1bb21a0f0a9b275cdcfbb891300e8a03eb66.mp3",
-      "duration": 15.856327,
-      "provenance": {
-        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
-        "requestId": "6b994b4f-28d2-4555-a9a3-17a7052b3c67",
-        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
-        "providerVoice": "Marieke",
-        "requestedEngine": "heygen_voice",
-        "speed": 0.95,
-        "language": "nl",
-        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
-        "sourceSha256": "5ef2ee252c25e932230b26d1f0edb4dd22793b32c7d5b232e0f3ccb493eb8e6a",
-        "mp3Sha256": "0af0c4183fec6ef6daed1e8c48e2f4d1e50dcfeb0016ec681ab4046f1e8ab2d4",
-        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
-        "exactCatalogTextMatch": true,
-        "userListeningApproval": null,
-        "agentListeningReviewed": false,
-        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"Reversed flyes\" als \"Reverse flyers\", \"Beweeg\" als \"Beweef\")",
-        "clinicalApproved": false,
-        "previousSrc": "/audio/noor/809f6acbecaac8d16845e5fd9a93f237371e01e606fdbf84bf7059ae06c60f57.mp3"
-      }
-    },
-    {
-      "name": "Shoulder rotation (shrugs)",
-      "text": "Shoulder rotation (shrugs). Sta rechtop met je armen langs je lichaam. Trek je schouders op richting je oren, draai ze naar achteren en laat ze rustig zakken.",
-      "src": "/audio/noor/d43df0f98dd4c7b6dd7ab351adca5bfa2c1f1413f07bd332705a0b2bfd40b82e.mp3",
-      "duration": 9.560816
-    },
-    {
       "name": "Triceps dips",
       "text": "Triceps dips. Zet je handen achter je op een stevige stoel of bank, benen naar voren. Buig je ellebogen en laat je billen zakken, duw jezelf daarna weer omhoog.",
       "src": "/audio/noor/b22526448730874ebe4957f4afc9dcc07cdd07bf52ec07977a1cd112be7acd30.mp3",
       "duration": 10.553469
-    },
-    {
-      "name": "Triceps dumbell kickbacks",
-      "text": "Triceps dumbell kickbacks. Buig licht voorover met een gewicht in je hand, bovenarm langs je lichaam. Strek je elleboog tot je arm recht naar achteren wijst en buig rustig terug.",
-      "src": "/audio/noor/346b4d859565a7b384135f795bae4137c818e0696160988a036a36c0e1d66645.mp3",
-      "duration": 11.258776
     },
     {
       "name": "Triceps push down",
@@ -1495,6 +1308,306 @@
         "userListeningApproval": null,
         "agentListeningReviewed": false,
         "asrCheck": "Whisper small (nl): volledige tekst herkend (\"houd\" als \"houdt\")",
+        "clinicalApproved": false,
+        "previousSrc": null
+      }
+    },
+    {
+      "name": "Barbell pull over",
+      "text": "Barbell pull over. Lig op je rug op de bank met je knieën opgetrokken en je voeten van de grond. Houd de stang met beide handen en bijna gestrekte armen boven je borst. Breng de stang in een boog rustig over je hoofd naar achteren en haal hem langs dezelfde weg terug boven je borst.",
+      "src": "/audio/noor/8194120611dda41c1d4cdce822837fbdd64a8d072451e272d12eec94eca90649.mp3",
+      "duration": 15.804082,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "5d98bab0960f4320af718f22e5f70dfe",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "9d588132e7af8c213da04967047a8b8b804e47238388ea52957384b08ce0729e",
+        "mp3Sha256": "fda523d2ab2371328a72ef082e16b4cedc602e22f499842393752ffcd93a31d1",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend, einde niet afgekapt",
+        "clinicalApproved": false,
+        "previousSrc": null
+      }
+    },
+    {
+      "name": "Bench press",
+      "text": "Bench press. Lig op je rug op de bank in het rek, met je knieën gebogen en je voeten plat op de bank. Pak de stang iets breder dan je schouders en laat hem rustig zakken tot op je borst. Druk hem daarna weer omhoog tot je armen gestrekt zijn.",
+      "src": "/audio/noor/0a7501494418bc898b89b3b8ec94482f9a9326b5d6c82e1df307296522f9a435.mp3",
+      "duration": 15.203265,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "b8ea5b5e98444d28befd97a8e2454895",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "0ed47805225291b344a39b979714d5b3324b4e2351e4ec23821561d95d5cbe26",
+        "mp3Sha256": "dd63eef477bc14ed79c6e99f9062ebaed91c8e459c65c294a20b361e7f96f58b",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend, einde niet afgekapt",
+        "clinicalApproved": false,
+        "previousSrc": null
+      }
+    },
+    {
+      "name": "Dumbell front press",
+      "text": "Dumbell front press. Zit rechtop op de rand van een bank met je voeten plat op de grond. Houd de dumbells vlak voor je schouders, handpalmen naar elkaar en ellebogen naar voren. Druk ze recht omhoog tot je armen gestrekt zijn en laat ze rustig terugzakken.",
+      "src": "/audio/noor/a67434766f335b673d9ce5b58fdad23470d27917b134f46b842683dff1b32f49.mp3",
+      "duration": 15.098776,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "c8d3f7bb1530490b9145e84a90f3f07c",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "9e142b6099dd3b38b1697a0bf7af7a99cd100eae354f107047345a499f701165",
+        "mp3Sha256": "a2a7caadef7a4a47bb90184204a70c4466bee42ceef975afe993765aa87512fe",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend, einde niet afgekapt",
+        "clinicalApproved": false,
+        "previousSrc": null
+      }
+    },
+    {
+      "name": "Duplex pull",
+      "text": "Duplex pull. Sta rechtop met je gezicht naar het ankerpunt en houd in elke hand een handvat, armen gestrekt schuin naar voren en omhoog. Trek met gestrekte armen beide handen omlaag tot naast je heupen. Laat je armen daarna rustig terugkomen.",
+      "src": "/audio/noor/ded738f564d4493bd4e42ee21bac322b4be305b9290a75b31acdd31a86fc3332.mp3",
+      "duration": 14.680816,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "cb871676eba04d1d8b8071f7bd898555",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "cbd6f876ee1502a682a59dc77d31bf4f1b57fc86d4658674506f104e12fa7863",
+        "mp3Sha256": "33029bd7c59abe239f726aba0b41ce7f2bb77a2b680b2f2a63ee7d443622ec81",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend, einde niet afgekapt (\"houd\" als \"houdt\")",
+        "clinicalApproved": false,
+        "previousSrc": null
+      }
+    },
+    {
+      "name": "Front raises",
+      "text": "Front raises. Sta rechtop met in elke hand een dumbell voor je bovenbenen, handpalmen naar je benen. Hef je gestrekte armen rustig naar voren tot schouderhoogte, handpalmen naar beneden, en laat ze weer langzaam zakken.",
+      "src": "/audio/noor/ea56cd5b15d095e20b5fbf0e68118455756e5a5946d881022676c62ba68ed264.mp3",
+      "duration": 13.897143,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "8e170c11ead34f85b5afa75f135872be",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "1f79f0317e0c6c1b4587937b755716a5111406aa54f853d8da0f4e4935ff9dd1",
+        "mp3Sha256": "3670f75d48db2caf113a1234b392938ddc0fa4d2376948a4786304626cd6a20e",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend, einde niet afgekapt",
+        "clinicalApproved": false,
+        "previousSrc": null
+      }
+    },
+    {
+      "name": "Pully cross up",
+      "text": "Pully cross up. Sta met je zij naar de pully met de kabel laag. Pak het handvat met de hand die het verst van de pully is, zodat je hand begint bij je heup aan de pullykant. Trek het handvat met een bijna gestrekte arm schuin omhoog voor je lichaam langs naar je andere schouder, weg van de pully, en laat het gecontroleerd terugzakken.",
+      "src": "/audio/noor/6969735b2c607086658c4a3c01404ab285fe6778dd9b290b344c834e3d3059ac.mp3",
+      "duration": 19.670204,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "de3587b679db43c8ae7798411de305e1",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "bdd5cd2e6136a7bd8d4cc088f2147653d69f1fc02ce260df4de830ff4ec61db7",
+        "mp3Sha256": "a18b8a493e58583f3ae7b9c684102d5192688508a9a849147995f12b464a68c1",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend, einde niet afgekapt",
+        "clinicalApproved": false,
+        "previousSrc": null
+      }
+    },
+    {
+      "name": "Reversed flyes",
+      "text": "Reversed flyes. Sta ver voorovergebogen met licht gebogen knieën en een rechte rug, met een gewicht in elke hand. Laat je armen recht naar beneden hangen met je handpalmen naar elkaar. Beweeg je armen met licht gebogen ellebogen zijwaarts omhoog tot schouderhoogte en laat ze rustig terugzakken.",
+      "src": "/audio/noor/ea73ecab8c1d14ffeb141c7deb19e2d8872147dd8e4d642e87899b418367fa93.mp3",
+      "duration": 17.972245,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "12f8db3f36b141afbc3fc147889ec068",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "cfa68f7717e5a1817bb51a122173b00f5833dfe83038eea11406d1f2bce4834a",
+        "mp3Sha256": "a04a3c0729337b35c8a6e5d1784b4dd8ec18890b404936a747aacf9a252a2a3e",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend, einde niet afgekapt (naam als \"reverse flyers\")",
+        "clinicalApproved": false,
+        "previousSrc": null
+      }
+    },
+    {
+      "name": "Shoulder rotation (shrugs)",
+      "text": "Shoulder rotation (shrugs). Sta rechtop met in elke hand een gewicht, armen gestrekt langs je lichaam en handpalmen naar je toe. Trek je schouders op richting je oren, draai ze naar achteren en laat ze rustig zakken.",
+      "src": "/audio/noor/86981341cf861b268503c8e9403ecc18136d404bad78502e5f0ba95f44cfb988.mp3",
+      "duration": 13.949388,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "a53a50a88d984a84a10266c7eff40a6c",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "53e5effc6ac233bdb440eb89b78c2b975af9bcfeece480bcaba424983a3068d1",
+        "mp3Sha256": "3ded7c016ebe350f2a9389f3fd6552bd50a3b96adb745a6ec3e58e74e7d986ad",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend, einde niet afgekapt",
+        "clinicalApproved": false,
+        "previousSrc": null
+      }
+    },
+    {
+      "name": "Triceps dumbell kickbacks",
+      "text": "Triceps dumbell kickbacks. Zet een knie en dezelfde hand op de bank, met je rug recht en bijna horizontaal. Houd een gewicht in je andere hand, bovenarm langs je lichaam en elleboog gebogen. Strek je elleboog tot je arm recht naar achteren wijst en buig rustig terug.",
+      "src": "/audio/noor/afc0058bab7bf884444cade406755eca8e5cee14612c683c4a92010e43779af6.mp3",
+      "duration": 17.136327,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "ebbe0756b1064d4982e1c0acf2e72e90",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "ac996000ad7594fae711bc7c07dff059eaef3922659d6bedce3a9cb2c9912bc8",
+        "mp3Sha256": "49a1a39b218379bd2876a76acdecf5554b7c41d213a453279f3b5387d4bc6d7e",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend, einde niet afgekapt (naam als \"3ceps dumble kickpacks\")",
+        "clinicalApproved": false,
+        "previousSrc": null
+      }
+    },
+    {
+      "name": "Dead lift",
+      "text": "Dead lift. Sta met je voeten op heupbreedte achter een stang op de grond. Buig door je knieën en heupen met een rechte rug en pak de stang bovenhands vast. Kom rechtop door je heupen en knieën te strekken, houd de stang dicht langs je benen en laat hem op dezelfde manier weer zakken.",
+      "src": "/audio/noor/df3a72d7cfd11e05baec64ecdc56d0de852eb20a920c0d3255abb6c355c4e3c7.mp3",
+      "duration": 16.143673,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "5c85e3a44630430d971fd98c82735538",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "c08e40310ad227bdf3566df77b03abab0c374829db15aa3b0f5214e6c9a27203",
+        "mp3Sha256": "e47a4b6398e27883e0ac4ffe94b39ae82b55d9b5bcfa3fbae16dfc1743923176",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend, einde niet afgekapt (\"houd\" als \"hou\")",
+        "clinicalApproved": false,
+        "previousSrc": null
+      }
+    },
+    {
+      "name": "Front squat",
+      "text": "Front squat. Sta met je voeten op schouderbreedte en leg de stang op de voorkant van je schouders. Kruis je armen en houd de stang vast met je vingers, ellebogen hoog naar voren. Zak door je knieën en heupen met een rechte rug tot je bovenbenen ongeveer horizontaal zijn en kom weer omhoog.",
+      "src": "/audio/noor/d179f4afe7653977067821b9a174a00cb7fadaeb583d9aee1b28c4331837142f.mp3",
+      "duration": 17.188571,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "12863bb9775246f584926d3044dbd910",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "bd216c29a2abf27aae3688cc13072c448aeff688378bed55604a7af06b8c9941",
+        "mp3Sha256": "8bf0971c5510cad75ac330182f9c857bbcd3cf51e1ea402eb936cc25fb713f34",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend, einde niet afgekapt",
+        "clinicalApproved": false,
+        "previousSrc": null
+      }
+    },
+    {
+      "name": "Lying abduction",
+      "text": "Lying abduction. Lig op je zij met je hoofd op je onderste arm en buig je onderste been voor steun. Til je gestrekte bovenste been rustig zijwaarts omhoog zonder je heup naar achteren te kantelen, en laat het langzaam weer zakken.",
+      "src": "/audio/noor/a04fb3e94da0d6dfde163da78d13b4305b6dc8080edcb6e44db7b7dab01c411d.mp3",
+      "duration": 14.524082,
+      "provenance": {
+        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
+        "requestId": "ad8ffa25e5d3430f8035822d1a3f89a7",
+        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
+        "providerVoice": "Marieke",
+        "requestedEngine": "heygen_voice",
+        "speed": 0.95,
+        "language": "nl",
+        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
+        "sourceSha256": "179f8662e8c4cf187109cb789cd3f7a13dfcc16488424006b91c8e4b3c0751ba",
+        "mp3Sha256": "95b052bd7cede3d2f5571a318dbda0ef884f9b94a137a2dc559886bd22a11a05",
+        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
+        "exactCatalogTextMatch": true,
+        "userListeningApproval": null,
+        "agentListeningReviewed": false,
+        "asrCheck": "Whisper small (nl): volledige tekst herkend, einde niet afgekapt",
         "clinicalApproved": false,
         "previousSrc": null
       }
