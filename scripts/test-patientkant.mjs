@@ -95,8 +95,11 @@ try {
       await page.click("#mgblok summary");
       assert.match(await page.textContent("#mg_tot"), /Blijft bewaard tot minstens \d+ \w+ \d{4}/);
       const [dl] = await Promise.all([page.waitForEvent("download"), page.click("#mg_dl")]);
-      const pakket = JSON.parse(await readFile(await dl.path(), "utf8"));
-      assert.equal(pakket.kaart.id, id);
+      assert.equal(dl.suggestedFilename(), "fysiplan-mijn-gegevens.txt");
+      const pakket = await readFile(await dl.path(), "utf8");
+      assert.match(pakket, /Mijn gegevens bij Fysiplan/);
+      assert.match(pakket, /== Mijn oefeningen ==/);
+      assert.doesNotMatch(pakket, /"chosen"|\d{13}/, "leesbaar, geen sleutels of tijdstempels");
       if (process.env.SCREENSHOT_DIR) await page.locator("#mgblok").screenshot({ path: join(process.env.SCREENSHOT_DIR, "patient-mijn-gegevens.png") });
 
       // offline: pijnscore en seintje blijven op de telefoon

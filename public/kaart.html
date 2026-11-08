@@ -1613,12 +1613,79 @@
     tot.textContent=K.kaart.verloopt?trmg('tot').replace('{d}',datumLang(K.kaart.verloopt)):'';
     document.getElementById('mg_hoelang').style.display=K.kaart.verloopt?'':'none';
   }
+  // Legal 2026-11-08 (inzage, art. 12 en 15 AVG): de download is een leesbaar tekstbestand
+  // in de taal van de kaart (nl, anders Engels), met datums in plaats van tijdstempels,
+  // oefeningnamen in plaats van sleutels, het laatste seintje en wat alleen op deze
+  // telefoon staat (vandaag afgevinkt, te zwaar, nog niet verstuurd).
+  // <mgTekst>
+  var TMGD={nl:{titel:'Mijn gegevens bij Fysiplan',op:'Gedownload op',prak:'Praktijk',tot:'Kaart bewaard tot minstens',over:'Over mij',roep:'Roepnaam',doel:'Doel',opm:'Opmerking van je fysiotherapeut',oef:'Mijn oefeningen',ser:'series',her:'herhalingen',pijn:'Pijnscores (0 = geen pijn, 10 = ergste pijn)',herst:'Ervaren herstel sinds de start',herstW:['veel slechter','slechter','gelijk','beter','veel beter'],act:'Doelactiviteit',actS:'Hoe goed lukt het (0 tot 10)',ged:'Dagen waarop ik heb geoefend',trouw:'Afgevinkt per oefening',dagen:'dagen',zw:'Te zwaar gemeld',sein:'Mijn seintjes aan de praktijk',seinW:{vraag:'Ik heb een vraag',pijn:'Meer pijn',goed:'Het gaat goed'},antw:'Bericht van de praktijk',afs:'Volgende afspraak',afsH:'wekelijks, {n} keer',tel:'Alleen op deze telefoon',telD:'Vandaag afgevinkt',telZ:'Vandaag te zwaar',wacht:'Nog niet verstuurd (zonder internet aangetikt)',wachtW:{'/api/kaart/meting':'pijnscore','/api/kaart/gedaan':'geoefend','/api/kaart/psk':'doelactiviteit','/api/kaart/ervaring':'herstel','/api/kaart/oefzwaar':'te zwaar','/api/kaart/seintje':'seintje','/api/kaart/oefening':'oefening afgevinkt'},geen:'niets',slot:'Je dossier staat bij je praktijk, niet in dit bestand. Vragen over je gegevens, of alles inzien? Vraag het je praktijk.'},
+    en:{titel:'My data at Fysiplan',op:'Downloaded on',prak:'Practice',tot:'Card kept until at least',over:'About me',roep:'First name',doel:'Goal',opm:'Note from your physiotherapist',oef:'My exercises',ser:'sets',her:'repetitions',pijn:'Pain scores (0 = no pain, 10 = worst pain)',herst:'Recovery since the start',herstW:['much worse','worse','the same','better','much better'],act:'Goal activity',actS:'How well it goes (0 to 10)',ged:'Days I exercised',trouw:'Ticked off per exercise',dagen:'days',zw:'Reported as too hard',sein:'My messages to the practice',seinW:{vraag:'I have a question',pijn:'More pain',goed:'It is going well'},antw:'Message from the practice',afs:'Next appointment',afsH:'weekly, {n} times',tel:'Only on this phone',telD:'Ticked off today',telZ:'Too hard today',wacht:'Not sent yet (tapped without internet)',wachtW:{'/api/kaart/meting':'pain score','/api/kaart/gedaan':'exercised','/api/kaart/psk':'goal activity','/api/kaart/ervaring':'recovery','/api/kaart/oefzwaar':'too hard','/api/kaart/seintje':'message','/api/kaart/oefening':'exercise ticked off'},geen:'nothing',slot:'Your medical record is at your practice, not in this file. Questions about your data, or want to see everything? Ask your practice.'}};
+  // kaart, praktijk: zoals de server ze gaf; lokaal: {done:[idx],zwaar:[idx],wacht:{}}; taal;
+  // h: {datum(t), dagTijd(t), naam(x), sleutel(x)} — los van de pagina, zodat de test hem los draait
+  function mgTekst(kaart,praktijk,lokaal,taal,h){
+    var L=TMGD[taal]||TMGD.en,r=[],k=kaart||{},c=k.client||{},kies=k.chosen||[],cells=k.cells||{};
+    function kop(t){r.push('','== '+t+' ==');}
+    function rij(lijst,fn){lijst=Array.isArray(lijst)?lijst.filter(function(x){return x&&x.t;}):[];if(!lijst.length){r.push('- '+L.geen);return;}lijst.forEach(function(x){r.push('- '+h.datum(x.t)+': '+fn(x));});}
+    function naamIdx(i){var x=kies[i];return x?h.naam(x):'#'+(Number(i)+1);}
+    r.push(L.titel,L.op+': '+h.dagTijd(Date.now()));
+    if(praktijk)r.push(L.prak+': '+praktijk);
+    if(k.verloopt)r.push(L.tot+': '+h.datum(k.verloopt));
+    kop(L.over);
+    r.push(L.roep+': '+(c.c_naam||'-'));
+    if(c.c_doel)r.push(L.doel+': '+c.c_doel);
+    if(c.c_opm)r.push(L.opm+': '+c.c_opm);
+    kop(L.oef);
+    if(!kies.length)r.push('- '+L.geen);
+    kies.forEach(function(x,i){
+      var regel=(i+1)+'. '+h.naam(x),key=h.sleutel(x),dos=[];
+      for(var n=0;n<12;n++){var s=cells[key+'|r'+n+'|S'],hh=cells[key+'|r'+n+'|H'],w=cells[key+'|r'+n+'|W'];
+        if(s||hh||w){var d=[];if(s)d.push(s+' '+L.ser);if(hh)d.push(hh+' '+L.her);if(w)d.push(w);dos.push(d.join(', '));}}
+      if(dos.length)regel+=' ('+dos.join('; ')+')';
+      r.push(regel);
+    });
+    kop(L.pijn);rij(k.metingen,function(x){return String(x.s);});
+    kop(L.herst);rij(k.ervaring,function(x){var s=Number(x.s);return (s>0?'+':'')+s+' ('+(L.herstW[s+2]||'')+')';});
+    if(k.pskDoel){kop(L.act+': '+k.pskDoel);r.push(L.actS+':');rij(k.psk,function(x){return String(x.s);});}
+    kop(L.ged);
+    var g=(Array.isArray(k.gedaan)?k.gedaan:[]).filter(function(x){return x&&x.t;});
+    r.push(g.length?'- '+g.map(function(x){return h.datum(x.t);}).join(', '):'- '+L.geen);
+    kop(L.trouw);
+    var tr=k.oefTrouw||{},tn=Object.keys(tr);
+    if(!tn.length)r.push('- '+L.geen);
+    tn.forEach(function(n){r.push('- '+n+': '+(Number(tr[n]&&tr[n].n)||0)+' '+L.dagen);});
+    kop(L.zw);
+    var zw=k.oefZwaar||{},zn=Object.keys(zw);
+    if(!zn.length)r.push('- '+L.geen);
+    zn.forEach(function(n){r.push('- '+n+': '+(zw[n]&&zw[n].t?h.datum(zw[n].t):''));});
+    kop(L.sein);
+    rij(k.mijnSeintjes,function(x){return L.seinW[x.soort]||x.soort;});
+    if(k.antwoord&&k.antwoord.tekst){kop(L.antw);r.push('- '+h.dagTijd(k.antwoord.t)+': '+k.antwoord.tekst);}
+    if(k.afspraak&&k.afspraak.t){kop(L.afs);r.push('- '+h.dagTijd(k.afspraak.t)+(k.afspraak.herhaal?' ('+L.afsH.replace('{n}',k.afspraak.herhaal)+')':''));}
+    var lo=lokaal||{};
+    kop(L.tel);
+    r.push(L.telD+': '+((lo.done||[]).length?(lo.done||[]).map(naamIdx).join(', '):L.geen));
+    r.push(L.telZ+': '+((lo.zwaar||[]).length?(lo.zwaar||[]).map(naamIdx).join(', '):L.geen));
+    var wq=lo.wacht||{},wk=Object.keys(wq);
+    r.push(L.wacht+': '+(wk.length?'':L.geen));
+    wk.forEach(function(s){var w=wq[s]||{},b=w.body||{},wat=L.wachtW[w.pad]||'?';
+      if(w.pad==='/api/kaart/oefzwaar'||w.pad==='/api/kaart/oefening')wat+=' ('+naamIdx(b.oef)+')';
+      else if(w.pad==='/api/kaart/seintje')wat+=' ('+(L.seinW[b.soort]||b.soort)+')';
+      else if(typeof b.score==='number')wat+=': '+b.score;
+      r.push('- '+h.dagTijd(b.wanneer||w.t)+': '+wat);});
+    r.push('',L.slot);
+    return r.join('\n')+'\n';
+  }
+  // </mgTekst>
   function downloadMijnGegevens(){
-    var kaart={};Object.keys(K.kaart||{}).forEach(function(k){if(k!=='eigenOef')kaart[k]=K.kaart[k];});
-    var pakket={gedownload:new Date().toISOString(),uitleg:'Gegevens van je Fysiplan-kaart, zoals de server ze aan deze telefoon geeft.',
-      praktijk:(K.praktijk&&K.praktijk.praktijk)||'',kaart:kaart,nogNietVerstuurd:leesWacht()};
-    var blob=new Blob([JSON.stringify(pakket,null,2)],{type:'application/json'});
-    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='fysiplan-mijn-gegevens.json';
+    var lokaal={done:leesOefDaan().done,zwaar:leesZwaar().idx,wacht:leesWacht()};
+    var loc=TAAL==='nl'?'nl-NL':'en-GB';
+    var tekst=mgTekst(K.kaart,(K.praktijk&&K.praktijk.praktijk)||K.kaart.praktijk||'',lokaal,TAAL==='nl'?'nl':'en',{
+      datum:function(t){return new Date(t).toLocaleDateString(loc,{day:'numeric',month:'long',year:'numeric',timeZone:'Europe/Amsterdam'});},
+      dagTijd:function(t){return new Date(t).toLocaleString(loc,{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'Europe/Amsterdam'});},
+      naam:function(x){return TAAL==='nl'?String(x.n||''):vt(x.n);},
+      sleutel:function(x){return cellPrefix(x)+'.'+(x.i||0);}});
+    var blob=new Blob(['﻿'+tekst],{type:'text/plain;charset=utf-8'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='fysiplan-mijn-gegevens.txt';
     document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1000);
   }
   // Legal 2026-11-07: "Wis deze kaart van mijn telefoon" wist alles wat bij deze kaart

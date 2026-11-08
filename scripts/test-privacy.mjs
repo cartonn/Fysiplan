@@ -149,7 +149,7 @@ try {
   // ---- de patiëntroute: alleen de roepnaam en wat de patiënt nodig heeft ----
   const pat = await (await api("/api/kaart?id=" + id)).json();
   assert.deepEqual(pat.kaart.client, { c_naam: "Jan", c_doel: "Traplopen", c_opm: "Rustig opbouwen" });
-  for (const veld of ["naam", "notitie", "behandelaar", "seintje", "bekeken"]) {
+  for (const veld of ["naam", "notitie", "behandelaar", "seintje", "bekeken", "contact"]) {
     assert.equal(Object.hasOwn(pat.kaart, veld), false, "patiëntroute zonder " + veld);
   }
   assert.doesNotMatch(JSON.stringify(pat), /Vries|VKB|"54"/);
