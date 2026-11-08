@@ -11,7 +11,7 @@
   "view": "front three-quarter view",
   "ref": "063",
   "pose_en": "A person lying on their side on an exercise mat, head resting on a small pillow, knees slightly bent. The bottom arm (the one she lies on) reaches straight forward from the shoulder at shoulder height on the mat, elbow bent 90 degrees so the forearm and hand point straight up at the ceiling. The top hand rests on the wrist of the bottom arm. One solid black curved arrow starts at the raised bottom hand and curves forward and down toward the mat in front of the belly, showing the forearm being gently pressed down (internal rotation of the shoulder).",
-  "extra_en": "IMPORTANT: the bottom arm is NOT raised overhead and NOT on top of the body; the upper arm lies on the mat pointing straight forward from the bottom shoulder, perpendicular to the body, and only the forearm stands vertically. The arrow touches the raised bottom hand."
+  "extra_en": "IMPORTANT: the head rests on the pillow on its own; the bottom arm is NOT under the head. The bottom upper arm lies on the mat pointing straight forward, perpendicular to the torso, at the height of the shoulder, clearly in front of the chest. The bottom forearm points straight UP to the ceiling from the elbow (elbow bent 90 degrees). The top hand holds the bottom wrist from above."
  },
  {
   "naam": "Borstrek in deuropening – staand",
@@ -51,7 +51,8 @@
   "pijl_nl": "Pijl bij de heup van het vrije been, recht omhoog (bekken optrekken tot het weer horizontaal staat, met de bilspier van het steunbeen).",
   "view": "front view",
   "ref": "071",
-  "pose_en": "Front view of a person standing on one leg on a low step (a simple box), one hand lightly touching a wall at the side for balance. The standing leg on the step is straight. The other leg hangs straight down beside the step, free in the air, and the pelvis on that free side has dropped slightly so that free foot is a little lower than the top of the step. Shoulders stay level. One solid black arrow starts at the hip of the free leg and points straight up, showing the pelvis being hitched back up to level."
+  "pose_en": "Front view of a person standing on one leg on a low step (a simple box), one hand lightly touching a wall at the side for balance. The standing leg on the step is straight. The other leg hangs straight down beside the step, free in the air, and the pelvis on that free side has dropped slightly so that free foot is a little lower than the top of the step. Shoulders stay level. One solid black arrow starts at the hip of the free leg and points straight up, showing the pelvis being hitched back up to level.",
+  "extra_en": "IMPORTANT: the free leg hangs fully STRAIGHT (knee straight, not bent) just beside the step, its foot clearly LOWER than the top of the step and not touching the floor. The pelvis is visibly tilted: the hip on the free-leg side is lower than the hip on the standing side. The arrow is placed at the side of the pelvis (the hip bone) of the free leg, not on the thigh."
  },
  {
   "naam": "Spanish squat – met band",
@@ -65,7 +66,7 @@
   "view": "side view",
   "ref": "066",
   "pose_en": "Side view of a person standing upright with feet hip-width apart. A thick resistance strap loops around the back of both knees and is anchored to a sturdy vertical post in front of the person, at knee height; the strap is taut. Arms are relaxed in front. One solid black arrow starts at the hips and points backward and down, showing the person sitting back into the strap while the shins stay vertical.",
-  "extra_en": "IMPORTANT: the post stands IN FRONT of the person (the side the face looks toward) and the strap passes BEHIND the knees (at the back of the knees, popliteal fossa). The arrow is BEHIND the buttocks, pointing backward and down, away from the post."
+  "extra_en": "IMPORTANT: the post stands IN FRONT of the person, on the side she is facing (she looks toward the post). The strap goes from the post backward around the BACK of both knees. She is about one step away from the post so the strap is taut. The arrow starts at her buttocks and points backward and down, away from the post."
  },
  {
   "naam": "Copenhagen adductie – korte hefboom",
@@ -79,7 +80,7 @@
   "view": "front view",
   "ref": "151",
   "pose_en": "Front view of a person lying on their side on an exercise mat next to a low flat bench, propped on the bottom forearm with the elbow under the shoulder. The top leg is bent at the knee and the inside of that top knee rests on the bench, lower leg over the bench. The bottom leg lies straight on the mat underneath the bench. The hip still rests on the mat; the top hand on the hip. One solid black arrow starts at the bottom side of the hip and points straight up, showing the hips being lifted into a straight line, supported by the top knee on the bench.",
-  "extra_en": "IMPORTANT: this is the SHORT lever version: the top KNEE (not the foot or ankle) lies on the bench, the top knee is bent about 90 degrees and the lower leg and foot hang down over the far side of the bench. The bottom leg is straight on the mat under the bench."
+  "extra_en": "IMPORTANT: the top leg is bent about 90 degrees and the inside of the top KNEE and the inner side of the lower leg lie flat on top of the bench (not the foot). The bottom leg lies straight on the mat beneath the bench. The hip still touches the mat in the start position."
  },
  {
   "naam": "Zenuwglijden zittend – heupzenuw",
