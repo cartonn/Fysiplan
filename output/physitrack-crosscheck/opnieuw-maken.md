@@ -1,6 +1,6 @@
 # Opnieuw maken na Physitrack-crosscheck
 
-Stand: 150 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oordeel `afwijkend` of `fout`). De lijntekening wint bij conflict; een avatar of video die afwijkt wordt opnieuw gemaakt nadat de tekening klopt.
+Stand: 225 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oordeel `afwijkend` of `fout`). De lijntekening wint bij conflict; een avatar of video die afwijkt wordt opnieuw gemaakt nadat de tekening klopt.
 
 ## Bekend vooraf
 
@@ -17,7 +17,16 @@ Stand: 150 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oor
 
 - **45 Been pendelen** (fout): Tekening toont een andere oefening (buiklig op bank, schaarbeweging met gestrekte benen), geen beenpendel; nieuwe tekening nodig: staand met steun, been zwaait voor-achter. Uitleg volgt Physitrack en blijft. Avatar: been gaat zijwaarts i.p.v. voor-achter en steun ontbreekt in startbeeld.
 
-## Avatars (63)
+## Avatars (74)
+
+### Apparaten
+
+- **192 Chin-dip (apparaat)** (afwijkend): Tekening toont een dip/chin-station zonder kniekussen; uitleg en avatar gaan uit van een kniekussen (geassisteerde dipmachine). Uitleg nu voor de dip; de chin-up aan de bovenste stang staat niet in de tekening uitgewerkt. Avatar opnieuw: vrij hangend op de dipgrepen, niet knielend.
+- **197 Endy Beenstrekker** (afwijkend): Tekening toont een zittende leg press met voetplaat; uitleg en avatar tonen een leg extension met de onderbenen achter een rol. Avatar opnieuw: voeten tegen de voetplaat van het schuine Endy-apparaat en benen strekken.
+- **200 Endy Heup abductie** (afwijkend): Tekening toont staande kabel-abductie op één been (geldige Physitrack-variant). Uitleg en avatar beschrijven/tonen een zittend abductie-apparaat met kussens. Uitleg herschreven naar staande variant; avatar opnieuw: staand, enkelband, gestrekt been zijwaarts naar buiten, romp rechtop.
+- **201 Endy Leg curl** (afwijkend): Tekening en Physitrack: zittend (half achterover), dijrol op de bovenbenen, knieën buigen. Avatar toont een liggende (buik) leg curl. Avatar opnieuw zittend in een zittende leg-curl met dijrol.
+- **204 Endy Rotator** (afwijkend): dichtstbij: zittende exorotatie met band (geen rotator-apparaat in Physitrack); richting uitleg (elleboog 90 graden tegen lichaam, onderarm naar buiten) klopt daarmee. Avatar: in de eindstand staat de bovenarm van het lichaam af en de elleboog is bijna gestrekt (horizontale abductie i.p.v. exorotatie). Avatar opnieuw: bovenarm tegen de romp, elleboog 90 graden, alleen onderarm naar buiten draaien.
+- **205 Endy Rugmachine** (fout): Tekening en Physitrack: kussen tegen de bovenrug, armen gekruist, romp duwt naar achteren. Avatar beweegt de romp naar voren (flexie) en het kussen zit niet tegen de bovenrug. Avatar opnieuw: start licht voorover met kussen tegen bovenrug, eind romp naar achteren gedrukt.
 
 ### Bosu
 
@@ -91,6 +100,10 @@ Stand: 150 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oor
 - **70 Step up** (afwijkend): Avatar toont geen gewicht, start naast de step zonder voet erop, en eindigt op één been op een lage step met het andere been zwevend: gewicht voor de schouder toevoegen, startvoet op de kist en eindhouding rechtop op de kist. Video (dumbbell voor de borst) klopt.
 - **71 Step up tempo** (afwijkend): Physitrack heeft geen aparte tempo-variant; gewone step up (en voor hoog tempo 'Plyometric - step ups') ligt het dichtst bij. Avatar toont geen verhoging: alleen staan en een knieheffing in de lucht; kist/step toevoegen met voet erop. Video klopt (vlot op- en afstappen met armen in loophouding).
 
+### Speedladder
+
+- **187 Voor zijwaarts** (afwijkend): Uitleg en tekening kloppen met Physitrack (naast de ladder, snel zijwaarts in en uit de vakken, licht op de voorvoeten). Avatar toont geen speedladder: avatar opnieuw met ladder op de grond en een voet in een vak.
+
 ### TRX
 
 - **127 TRX biceps curl** (afwijkend): Avatar start met al gebogen ellebogen (handen bij de borst) in plaats van gestrekte armen, en in het eindbeeld staat het lichaam niet rechter dan bij de start. Avatar opnieuw: start armen gestrekt en schuin achterover, eind bijna rechtop met handen bij het voorhoofd.
@@ -99,6 +112,13 @@ Stand: 150 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oor
 - **130 TRX flyes II** (afwijkend): Tekening: start achterover leunend met gestrekte armen voor de borst, eind rechtop met armen in een T. Avatar heeft de volgorde omgedraaid (eerst T, dan handen samen) en de ellebogen gebogen in het tweede beeld; ook geen verschil in lichaamshoek. Avatar opnieuw.
 - **132 TRX lunge** (fout): Tekening en uitleg: achterste voet in de lus, handen vrij. Avatar toont een gewone lunge met beide voeten op de grond en de handvatten in de handen. Avatar opnieuw volgens tekening.
 - **139 TRX pull up** (fout): dichtstbij: TRX row / inverted row. Huidige uitleg (hangen met gebogen knieën) klopt niet met de tekening (zit op de grond, benen gestrekt, eindigt als plank op de hielen); nieuwe uitleg volgt de tekening. Avatar toont staande achterover leunende curl/row; opnieuw volgens tekening.
+
+### Yoga
+
+- **153 Yoga ear pressure** (fout): Geen Physitrack-pagina gevonden (ook niet in de yoga-lijst). Avatar: start is buikligging op de onderarmen in plaats van rugligging; eind: knieen niet naast de oren, schenen niet op de grond en handen in de nek. Avatar opnieuw: start in rugligging, eind benen over het hoofd met knieen naast de oren zoals de tekening.
+- **157 Yoga frog** (afwijkend): Physitrack en tekening: steunen op de onderarmen, niet op de handen. Avatar: knieen blijven ongeveer heupbreed in start en eind; knieen moeten duidelijk wijd uit elkaar (eind op onderarmen klopt wel).
+- **164 Yoga knee to chest hip stretch** (afwijkend): Tekening toont de staande variant; uitleg en avatar zijn liggend. Uitleg aangepast aan tekening (geldige Physitrack-variant). Avatar opnieuw: staand, knie met beide handen naar de borst.
+- **166 Yoga noose** (afwijkend): Geen Physitrack-pagina gevonden. Avatar: start is een brede hurkzit met handen in gebed (voeten niet bij elkaar); eind: handen voor de schenen, geen arm om de knieen met de handen achter de rug. Avatar opnieuw volgens tekening: voeten bij elkaar, romp gedraaid, arm om de knieen.
 
 ## Video's (8)
 
