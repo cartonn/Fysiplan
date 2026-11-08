@@ -90,11 +90,36 @@ try {
   assert.match(tekst, /praktijk: "Doe de squat tot 90 graden, bel bij meer pijn\."/);
   assert.match(tekst, /Bron: Fysiplan, overgenomen op \d\d-\d\d-\d{4}\. De digitale kaart wordt na de bewaartermijn gewist/);
 
+  assert.match(tekst, /Kaart laatst opgeslagen: \d\d-\d\d-\d{4}/, "ts is laatst opgeslagen, geen aanmaakdatum");
+  assert.doesNotMatch(tekst, /Aangemaakt:/);
+
+  // Legal 2026-11-08 (WGBO): de werknotitie staat alleen in Fysiplan en gaat mee naar het
+  // dossier; het label "In dossier" vervalt als de praktijk daarna een notitie of bericht
+  // toevoegt, anders verdwijnt die regel met de bewaartermijn zonder waarschuwing.
+  const lijstKaart = async () => (await (await fetch(origin + "/api/kaarten?praktijk=fysio%20dossier", { headers: kop(S) })).json()).find((k) => k.id === ID);
+  assert.equal((await post("/api/kaart/dossier", { praktijk: "Fysio Dossier", id: ID }, S)).status, 200);
+  assert.equal((await lijstKaart()).inDossier, true, "net in het dossier gezet");
+  await new Promise((r) => setTimeout(r, 5));
+  assert.equal((await post("/api/kaart/notitie", { praktijk: "Fysio Dossier", id: ID, tekst: "Linkerknie ontzien" }, S)).status, 200);
+  assert.equal((await lijstKaart()).inDossier, false, "werknotitie na het label: weer niet bijgewerkt");
+  const pr2 = await (await fetch(origin + "/api/praktijk/kaart?praktijk=fysio%20dossier&id=" + ID, { headers: kop(S) })).json();
+  assert.match(ctx.dossierTekst(pr2.kaart), /Werknotitie therapeut: Linkerknie ontzien/);
+  const pat2 = await (await fetch(origin + "/api/kaart?id=" + ID, { headers: kop() })).json();
+  assert.doesNotMatch(JSON.stringify(pat2.kaart), /Linkerknie|notitie/, "werknotitie blijft van de patiëntroute af");
+  assert.equal((await post("/api/kaart/dossier", { praktijk: "Fysio Dossier", id: ID }, S)).status, 200);
+  assert.equal((await lijstKaart()).inDossier, true);
+  // dezelfde notitie nog eens bewaren is geen nieuwe regel
+  assert.equal((await post("/api/kaart/notitie", { praktijk: "Fysio Dossier", id: ID, tekst: "Linkerknie ontzien" }, S)).status, 200);
+  assert.equal((await lijstKaart()).inDossier, true, "ongewijzigde notitie laat het label staan");
+  await new Promise((r) => setTimeout(r, 5));
+  assert.equal((await post("/api/kaart/antwoord", { praktijk: "Fysio Dossier", id: ID, tekst: "Morgen rustig aan." }, S)).status, 200);
+  assert.equal((await lijstKaart()).inDossier, false, "bericht aan de patiënt na het label: weer niet bijgewerkt");
+
   // plafond: het logboek groeit niet onbeperkt
   for (let i = 0; i < 60; i++) await post("/api/kaart/seintje", { id: ID, soort: "goed" });
   const opslag = JSON.parse(await readFile(join(dataDir, "kaarten.json"), "utf8"))["fysio dossier"].truus;
   assert.equal(opslag.contact.length, 50, "hooguit 50 regels per kaart");
-  console.log("test-dossier-contact: seintjes, te zwaar en berichten blijven tot de bewaartermijn en gaan mee naar het dossier");
+  console.log("test-dossier-contact: seintjes, te zwaar, berichten en werknotitie gaan mee naar het dossier; het dossierlabel vervalt bij nieuwe praktijkregels");
 } catch (e) {
   console.error(uit.slice(-2000));
   throw e;
