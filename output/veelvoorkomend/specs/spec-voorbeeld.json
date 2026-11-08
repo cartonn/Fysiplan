@@ -24,7 +24,8 @@
   "pijl_nl": "Pijl vanaf de borst recht naar voren, door de deuropening (romp rustig naar voren laten gaan tot rek voor in de borst/schouder).",
   "view": "side view",
   "ref": "001",
-  "pose_en": "Side view of a person standing upright inside a simple doorway (draw the door frame as two plain vertical lines and a top line). One forearm rests vertically flat against the door frame with the elbow bent 90 degrees at shoulder height, palm on the frame. The foot on the same side is a small step forward through the doorway, the other foot behind, body upright, not yet leaning. One solid black arrow starts at the chest and points straight forward through the doorway, showing the body leaning gently forward to stretch the front of the chest and shoulder."
+  "pose_en": "Side view of a person standing upright inside a simple doorway (draw the door frame as two plain vertical lines and a top line). One forearm rests vertically flat against the door frame with the elbow bent 90 degrees at shoulder height, palm on the frame. The foot on the same side is a small step forward through the doorway, the other foot behind, body upright, not yet leaning. One solid black arrow starts at the chest and points straight forward through the doorway, showing the body leaning gently forward to stretch the front of the chest and shoulder.",
+  "extra_en": "IMPORTANT: the upper arm is horizontal at SHOULDER height (elbow level with the shoulder, not lower), the elbow bent 90 degrees so the forearm points straight UP along the door frame, palm and forearm flat against the frame. The arrow starts at the chest, not at the arm."
  },
  {
   "naam": "Zijplank op knieën – zijlig",
@@ -47,12 +48,12 @@
   "catslug": "voorbeeld",
   "bron_url": "https://mstrust.org.uk/sites/default/files/files/25-hip-hitch.pdf",
   "bron_titel": "MS Trust – Hip hitch; Physitrack 'Pelvic drop (Hip hike, gluteus medius strengthening, on bench, standing)' (us.physitrack.com/home-exercise-video/pelvic-drop) ter controle",
-  "beginhouding_nl": "Staand op één been op een trede, zijkant naar de muur, één hand licht tegen de muur. Het steunbeen is gestrekt; het vrije been hangt gestrekt naast de trede en het bekken is aan die kant iets gezakt (vrije voet lager dan de trede).",
-  "pijl_nl": "Pijl bij de heup van het vrije been, recht omhoog (bekken optrekken tot het weer horizontaal staat, met de bilspier van het steunbeen).",
+  "beginhouding_nl": "Staand op één been op een trede, één hand licht tegen de muur. Steunbeen gestrekt; het vrije been hangt gestrekt naast de trede (knie en heup niet gebogen), het bekken staat nog recht.",
+  "pijl_nl": "Pijl bij de voet van het vrije been, recht omlaag (bekken aan de vrije kant langzaam laten zakken en daarna weer optrekken met de bilspier van het steunbeen).",
   "view": "front view",
   "ref": "071",
-  "pose_en": "Front view of a person standing on one leg on a low step (a simple box), one hand lightly touching a wall at the side for balance. The standing leg on the step is straight. The other leg hangs straight down beside the step, free in the air, and the pelvis on that free side has dropped slightly so that free foot is a little lower than the top of the step. Shoulders stay level. One solid black arrow starts at the hip of the free leg and points straight up, showing the pelvis being hitched back up to level.",
-  "extra_en": "IMPORTANT: the free leg hangs fully STRAIGHT (knee straight, not bent) just beside the step, its foot clearly LOWER than the top of the step and not touching the floor. The pelvis is visibly tilted: the hip on the free-leg side is lower than the hip on the standing side. The arrow is placed at the side of the pelvis (the hip bone) of the free leg, not on the thigh."
+  "pose_en": "Front view of a person standing on one leg on a low step (a simple box), one hand lightly touching a wall at the side for balance. The standing leg on the step is straight. The other leg hangs fully straight beside the step, free in the air, knee and hip not bent, the foot at the level of the top of the step. The pelvis and shoulders are level. One solid black arrow starts under the foot of the free leg and points straight down, showing the free leg and that side of the pelvis being lowered slowly toward the floor.",
+  "extra_en": "IMPORTANT: the free leg is completely STRAIGHT (no bend at knee or hip), hanging right beside the step, not behind it. The arrow points DOWN from the free foot."
  },
  {
   "naam": "Spanish squat – met band",
@@ -73,14 +74,14 @@
   "groep": "Sportrevalidatie",
   "slug": "copenhagen-adductie-korte-hefboom",
   "catslug": "voorbeeld",
-  "bron_url": "https://www.physiotutors.com/wiki/copenhagen-adduction-exercise/",
-  "bron_titel": "Physiotutors – Copenhagen Adduction Exercise; Physitrack 'Short lever Copenhagen hold' (us.physitrack.com) ter controle",
-  "beginhouding_nl": "Zijlig op een mat naast een lage bank, steunend op de onderarm (elleboog onder de schouder). De binnenkant van de bovenste knie ligt op de bank, onderbeen hangt eroverheen; het onderste been ligt gestrekt op de mat onder de bank. Heup nog op de mat.",
-  "pijl_nl": "Pijl vanaf de heup omhoog (heup heffen tot een rechte lijn; het onderste been komt mee richting de bank).",
+  "bron_url": "https://ca.physitrack.com/home-exercise-video/short-lever-copenhagen-hip-adduction-exercise-with-hold",
+  "bron_titel": "Physitrack – Short lever Copenhagen hip adduction exercise with hold (beginhouding en richting); Physiotutors – Copenhagen Adduction Exercise ter aanvulling",
+  "beginhouding_nl": "Zijlig op een mat naast een stoel of lage bank, steunend op de onderarm (elleboog onder de schouder). Het bovenste been is gestrekt in lijn met de romp; de knie en het onderste deel van de bovenbeen liggen op de bank. Het onderste been ligt gestrekt op de mat onder de bank. Heup nog op de mat, bovenste hand op de heup.",
+  "pijl_nl": "Pijl vanaf de heup recht omhoog (heup heffen tot een rechte lijn van schouder tot het bovenste been op de bank).",
   "view": "front view",
   "ref": "151",
-  "pose_en": "Front view of a person lying on their side on an exercise mat next to a low flat bench, propped on the bottom forearm with the elbow under the shoulder. The top leg is bent at the knee and the inside of that top knee rests on the bench, lower leg over the bench. The bottom leg lies straight on the mat underneath the bench. The hip still rests on the mat; the top hand on the hip. One solid black arrow starts at the bottom side of the hip and points straight up, showing the hips being lifted into a straight line, supported by the top knee on the bench.",
-  "extra_en": "IMPORTANT: the top leg is bent about 90 degrees and the inside of the top KNEE and the inner side of the lower leg lie flat on top of the bench (not the foot). The bottom leg lies straight on the mat beneath the bench. The hip still touches the mat in the start position."
+  "pose_en": "Front view of a person lying on their side on an exercise mat next to a low flat bench, propped on the bottom forearm with the elbow under the shoulder. The top leg is STRAIGHT, in line with the body, and rests on the bench with the knee and lower thigh on the bench seat; the lower leg and foot of the top leg extend past the far edge of the bench. The bottom leg lies straight on the mat underneath the bench. The hip still rests on the mat; the top hand on the hip. One solid black arrow starts at the bottom side of the hip and points straight up, showing the hips being lifted into a straight line with the supported top leg.",
+  "extra_en": "IMPORTANT: the bench is short and stands under the MIDDLE of the top leg: it touches only the top KNEE. The top lower leg and the top foot stick out in the air BEYOND the bench and do not touch anything. The top knee is straight."
  },
  {
   "naam": "Zenuwglijden zittend – heupzenuw",
@@ -89,11 +90,12 @@
   "catslug": "voorbeeld",
   "bron_url": "https://ie.physitrack.com/home-exercise-video/sciatic-nerve-glide-in-seated-position",
   "bron_titel": "Physitrack – Sciatic nerve glide in seated position; Hinge Health – Nerve flossing ter aanvulling",
-  "beginhouding_nl": "Zitten op een stoel, rug licht bol, handen op de dijen. Hoofd gebogen met de kin naar de borst, knieën 90°, voeten plat op de grond.",
-  "pijl_nl": "Pijl bij de voet van één been, naar voren-omhoog (knie strekken en tenen naar je toe, terwijl het hoofd tegelijk omhoog kijkt).",
-  "view": "side view",
+  "beginhouding_nl": "Rechtop zitten op een behandelbank of tafel: één been gestrekt op de bank (lange zit), het andere been hangt over de rand met de voet op de grond. Handen naast het lichaam of op de dijen, rug recht, hoofd rechtop.",
+  "pijl_nl": "Gebogen pijl bij hoofd en bovenrug, naar voren-omlaag (onderuit zakken: rug laten bollen en kin naar de borst, daarna weer rechtop).",
+  "view": "zijaanzicht",
   "ref": "287",
-  "pose_en": "Side view of a person sitting on a simple chair with the upper back slightly rounded, hands resting on the thighs. The head is bent forward with the chin toward the chest. Both knees are bent 90 degrees with both feet flat on the floor. One solid black curved arrow starts at the front foot and curves forward and up, showing that knee straightening with the toes pulled up."
+  "pose_en": "Side view of a person sitting upright on a simple treatment bench: one leg lies fully straight along the bench in front of her (long sitting, toes up), the other leg hangs over the side of the bench with that foot flat on the floor. Back straight, head upright, hands resting on the thighs. One solid black curved arrow starts at the back of the head and upper back and curves forward and down, showing the person slumping: rounding the back and bringing the chin to the chest.",
+  "extra_en": "IMPORTANT: start position is UPRIGHT (not slumped). Only one leg is on the bench; the other foot is on the floor."
  },
  {
   "naam": "Voetzool rekken – zittend",
