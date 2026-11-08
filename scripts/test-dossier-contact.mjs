@@ -62,6 +62,11 @@ try {
   const pat = await (await fetch(origin + "/api/kaart?id=" + ID, { headers: kop() })).json();
   assert.equal(pat.ok, true);
   assert.equal("contact" in pat.kaart, false, "het contactlogboek reist niet mee naar de patiëntroute");
+  // inzage (legal 2026-11-08): de eigen seintjes wel, ook na afhandeling, alleen soort en moment
+  assert.equal(pat.kaart.mijnSeintjes.length, 1, "eigen seintje in Mijn gegevens");
+  assert.deepEqual(Object.keys(pat.kaart.mijnSeintjes[0]).sort(), ["soort", "t"]);
+  assert.equal(pat.kaart.mijnSeintjes[0].soort, "pijn");
+  assert.doesNotMatch(JSON.stringify(pat.kaart), /90 graden/, "berichten uit het logboek blijven binnen");
 
   // praktijkroute: alles staat er, in volgorde, ook na afhandeling
   const pr = await (await fetch(origin + "/api/praktijk/kaart?praktijk=fysio%20dossier&id=" + ID, { headers: kop(S) })).json();

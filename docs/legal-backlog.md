@@ -12,23 +12,20 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-07 (eigen login per therapeut, één akkoord) |
 | (c) algemene voorwaarden | 2026-11-07 (akkoord met versie, eigen login) |
 | (d) code tegen tekst | 2026-11-07 (Mollie/betalen), steekproef 2026-11-06 |
-| (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-07 22u (patiënt: wissen van de telefoon echt volledig; eerder proefaanmelding in download en wissen) |
+| (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-08 01u (patiënt: Mijn gegevens-download leesbaar met eigen seintjes, PR #91) |
 | (f) cookies en lokale opslag | 2026-11-07 (Google Fonts weg, fp1, wis-knoppen) |
 | (g) MDR en AI-verordening | 2026-11-07 (vraaghulp op de kaart, zoekhulp, vertalen, AI-labels, landing en app) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-07 (contactlogboek in de dossiertekst) |
 | (i) begrijpelijkheid (B1) | 2026-11-07 (privacyverklaring: "In het kort"; VWO en voorwaarden nog niet) |
 
-Volgende run: /k "Mijn gegevens"-download leesbaar maken (open MIDDEL), daarna (d) code tegen tekst (wissen van opnames, eigen video's, logs) en (i) B1 voor VWO en voorwaarden.
+Volgende run: (d) code tegen tekst (wissen van opnames, eigen video's, logs), daarna (i) B1 voor VWO en voorwaarden.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
 
-- **MIDDEL — /k "Mijn gegevens": download mist de seintjes en is onleesbaar voor een patiënt** (gebruikers-sweep
-  2026-11-07 18u, Truus, iPhone SE). De rubriek belooft "pijnscores, gedaan, te zwaar en seintjes", maar de JSON
-  heeft geen `seintje` (server.js r. ~3893 laat het weg in de patiëntkaart) en wel technische sleutels (`chosen`,
-  `vids`, epoch-tijden, `xfp_…|r0|S`). Lokale vinkjes/te zwaar (`fp_oefdaan`, `fp_zwaar`) ontbreken ook. Inzage
-  (art. 15) vraagt begrijpelijke vorm. kaart.html r. ~1595 `downloadMijnGegevens`; sleutels en uitleg ook altijd
-  Nederlands op een EN/AR-kaart (Jayden).
+- **LAAG — /k "Mijn gegevens"-download alleen in nl en en** (2026-11-08). Sinds PR #91 is de download leesbaar,
+  maar kopjes zijn Nederlands op een Nederlandse kaart en Engels in de andere 7 talen. Vertalen van `TMGD` in
+  `public/kaart.html` naar de, fr, es, pl, tr, ar, uk is een volgende stap (zelfde stijl als `TMG`).
 - **LAAG — Privacy-link op een Engelse/Arabische kaart opent een pagina die alleen Nederlands is** en niet het
   patiëntdeel `#patient` (sweep 18u, Jayden, Pixel 7). kaart.html r. ~473, ~599; server.js `juridischBlok`.
 - **LAAG — /v2/gegevens loopt achter op #84** (sweep 18u, Sanne). Blok "Alles wissen" noemt de proefaanmelding niet
@@ -65,6 +62,10 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Opgelost
 
+- **MIDDEL — /k "Mijn gegevens": download mist de seintjes en is onleesbaar.** OPGELOST 2026-11-08 PR #91:
+  tekstbestand `fysiplan-mijn-gegevens.txt` met kopjes (nl, anders en), datums, oefeningen met dosering, eigen
+  seintjes (via `mijnSeintjes`, alleen soort en moment, ook na afhandeling) en wat alleen op de telefoon staat.
+  Bron: AVG art. 12 lid 1 (beknopt, begrijpelijk, duidelijke taal) en art. 15. Test `scripts/test-mijn-gegevens.mjs`.
 - **MIDDEL — /k "Wis deze kaart van mijn telefoon" belooft meer dan het doet.** OPGELOST 2026-11-07 PR #87:
   wist nu alle sleutels van deze kaart plus taal, lettergrootte, stem en app-melding (andere kaarten blijven),
   waarschuwt als er nog iets niet verstuurd is, zet het adres op `/k?gewist=1` zodat herladen de kaart niet

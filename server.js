@@ -3951,6 +3951,12 @@ async function afhandelen(request, response) {
     const patientKaart = {};
     for (const veld of PATIENT_VELDEN) if (veld in found) patientKaart[veld] = found[veld];
     patientKaart.client = patientClient(found.client);
+    // de eigen seintjes (alleen soort en moment, ook na afhandeling) voor "Mijn gegevens":
+    // de patiënt stuurde ze zelf, dus ze horen bij de inzage (art. 15 AVG). Het
+    // contactlogboek zelf (berichten van de praktijk, wie wat afhandelde) blijft binnen.
+    patientKaart.mijnSeintjes = (Array.isArray(found.contact) ? found.contact : [])
+      .filter((c) => c && c.van === "patient" && ["vraag", "pijn", "goed"].includes(c.soort))
+      .map((c) => ({ soort: c.soort, t: Number(c.t) || 0 }));
     // de patiënt ziet tot wanneer de kaart minstens bestaat (bewaartermijn): bij een
     // afgeronde kaart en in "Mijn gegevens"
     if (!found.demo) patientKaart.verloopt = verlooptOp(found);
