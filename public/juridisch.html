@@ -21,13 +21,13 @@
   @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;
     src:url(/fonts/inter-latin-wght-normal.woff2) format('woff2')}
   :root{
-    --bg:#f6f2e9; --papier:#fffdf7; --inkt:#232019; --tekst:#3d3a31; --demp:#6b6557; --zacht:#a39c8a;
+    --bg:#f6f2e9; --papier:#fffdf7; --inkt:#232019; --tekst:#3d3a31; --demp:#6b6557; --zacht:#6f6858;
     --blauw:#2456a6; --blauw-05:#edf2fa; --oranje:#d4501f; --lijn:#e3dbc6; --lijn-z:#efe9d8;
     --serif:'Newsreader',Charter,'Iowan Old Style','Palatino Linotype',Georgia,serif;
     --disp:'Inter','Avenir Next',Seravek,'Segoe UI',system-ui,-apple-system,sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font:17px/1.65 var(--serif);color:var(--tekst);background:var(--bg);-webkit-font-smoothing:antialiased;min-height:100vh}
+  body{font:17px/1.65 var(--serif);color:var(--tekst);background:var(--bg);-webkit-font-smoothing:antialiased;min-height:100vh;overflow-wrap:break-word;hyphens:auto}
   a{color:var(--blauw)}
   a:focus-visible{outline:2px solid var(--blauw);outline-offset:2px}
   nav{border-bottom:1px solid var(--lijn);background:rgba(246,242,233,.92)}

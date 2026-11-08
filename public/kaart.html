@@ -2459,7 +2459,13 @@
           // één tik weg; geen oordeel of advies. Hergebruikt de bestaande vertalingen.
           toonPijnNudge(Number(b.dataset.score));
         })
-        .catch(function(e){dank.style.display='block';dank.textContent=e&&e.wacht?trw('een'):tr('mfout');if(e&&e.wacht)toonPijnNudge(Number(b.dataset.score));});
+        .catch(function(e){dank.style.display='block';dank.textContent=e&&e.wacht?trw('een'):tr('mfout');
+          if(e&&e.wacht){
+            // offline: de score staat in de wachtrij; toon hem nu al als gekozen (vandaag vervangen)
+            var vandaag=dagStr(Date.now());
+            K.kaart.metingen=(K.kaart.metingen||[]).filter(function(x){return dagStr(x.t)!==vandaag;}).concat([{t:Date.now(),s:Number(b.dataset.score)}]);
+            tekenMeting();toonPijnNudge(Number(b.dataset.score));
+          }});
     });
     document.getElementById('gdaan').addEventListener('click',function(){
       var knop=this;if(knop.dataset.bezig)return;knop.dataset.bezig='1';
@@ -2475,7 +2481,17 @@
             if(!wil){var st=leesOefDaan();st.done.slice().forEach(function(i){toggleOefDaan(i);});}
           }
           delete knop.dataset.bezig;})
-        .catch(function(){delete knop.dataset.bezig;});
+        .catch(function(e){
+          // zonder internet staat de tik in de wachtrij: toon nu al de stand die straks op de
+          // server komt, anders blijft de knop "aan" terwijl de dag eruit gaat (en andersom)
+          if(e&&e.wacht){
+            var vandaag=dagStr(Date.now());
+            var g=(K.kaart.gedaan||[]).filter(function(x){return dagStr(x.t)!==vandaag;});
+            if(wil)g.push({t:Date.now()});
+            K.kaart.gedaan=g;tekenGedaan();
+            if(!wil){var st=leesOefDaan();st.done.slice().forEach(function(i){toggleOefDaan(i);});}
+          }
+          delete knop.dataset.bezig;});
     });
     // seintje naar de praktijk: één tik stuurt een vaste soort, geen vrije tekst
     document.getElementById('sknoppen').addEventListener('click',function(e){

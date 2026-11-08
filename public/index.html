@@ -2123,7 +2123,7 @@ bridge2.jpg</div>
     var l=w[w.length-1];
     return l.length>=3&&!/\.$/.test(l);
   }
-  var NAAM_OK='',OVERSCHRIJF='',NA_BEVEILIG=null;
+  var NAAM_OK='',OVERSCHRIJF='',HERNOEM_VOOR='',NA_BEVEILIG=null;
   // wat er naar de server gaat: zonder leeftijd en Casus (die blijven op papier en in
   // deze browser) en in v2 met het id van de kaart die deze editor bewerkt
   function serverKaart(naam){
@@ -2139,7 +2139,9 @@ bridge2.jpg</div>
     // automatische naam ("Kaart 8-11-2026") laat het naamveld staan.
     if(IS_V2&&c.client&&c.client.c_naam&&naam&&!/^Kaart \d/.test(String(naam).trim())&&
        String(c.client.c_naam).trim().toLowerCase()!==String(naam).trim().toLowerCase())c.client.c_naam=String(naam).trim();
-    if(IS_V2){c.kaartId=KAART_ID||'';if(KAART_ID)c.basisTs=KAART_TS||0;if(OVERSCHRIJF&&OVERSCHRIJF===String(naam).toLowerCase())c.overschrijf=true;}
+    if(IS_V2){c.kaartId=KAART_ID||'';if(KAART_ID)c.basisTs=KAART_TS||0;if(OVERSCHRIJF&&OVERSCHRIJF===String(naam).toLowerCase())c.overschrijf=true;
+      // gekozen: zelfde patiënt, alleen de naam van de open kaart verbeteren (zelfde QR)
+      if(KAART_ID&&HERNOEM_VOOR&&HERNOEM_VOOR===String(naam).toLowerCase())c.hernoem=true;}
     return c;
   }
   // de hint bij een serverweigering: beveiligen, botsende naam of andermans praktijk
@@ -2151,6 +2153,11 @@ bridge2.jpg</div>
     }
     if(d.bestaat){
       toonQrHint('Er is al een kaart \u201c'+(d.naam||naam)+'\u201d in je praktijk. Is dit dezelfde pati\u00ebnt? Anders: geef deze kaart een andere roepnaam, bijvoorbeeld met een initiaal.',[{act:'overschrijf',label:'Ja, die kaart bijwerken'}]);
+      return true;
+    }
+    if(d.hernoemVraag){
+      toonQrHint('Deze editor heeft de kaart van \u201c'+(d.naam||'')+'\u201d open, met een eigen QR-code. Is \u201c'+naam+'\u201d een andere pati\u00ebnt, of verbeter je alleen de naam?',
+        [{act:'nieuwkaart',label:'Nieuwe kaart voor \u201c'+naam+'\u201d'},{act:'hernoem',label:'Zelfde pati\u00ebnt, naam verbeteren'}]);
       return true;
     }
     if(d.verouderd){
@@ -2167,7 +2174,7 @@ bridge2.jpg</div>
   function roepnaamToepassen(){
     var cn=document.getElementById('c_naam');if(!cn)return;
     var oud=cn.value.trim(),nieuw=kaartLabelVan(oud),pr=(SET.praktijk||'').trim();
-    var zet=function(){cn.value=nieuw;cn.dispatchEvent(new Event('input',{bubbles:true}));laatsteDeel='';deelNu();};
+    var zet=function(){HERNOEM_VOOR=nieuw.toLowerCase();cn.value=nieuw;cn.dispatchEvent(new Event('input',{bubbles:true}));laatsteDeel='';deelNu();};
     fetch('api/kaarten?praktijk='+encodeURIComponent(pr),PGET())
       .then(function(r){return r.ok?r.json():[];})
       .then(function(l){
@@ -2332,6 +2339,8 @@ bridge2.jpg</div>
       else if(a==='overschrijf'){OVERSCHRIJF=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
       else if(a==='roepnaam'&&cnA)roepnaamToepassen();
       else if(a==='naamok'){NAAM_OK=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
+      else if(a==='hernoem'){HERNOEM_VOOR=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
+      else if(a==='nieuwkaart'){zetKaartId('',0);laatsteDeel='';deelNu();}
       return;
     }
     if(e.target.id!=='qrx')return;
@@ -3385,11 +3394,22 @@ bridge2.jpg</div>
   // de praktijk leest haar eigen kaart via de praktijkroute (met sessie); de
   // patiëntroute /api/kaart geeft sinds de dataminimalisatie alleen nog de roepnaam
   function praktijkKaartUrl(id){return 'api/praktijk/kaart?praktijk='+encodeURIComponent((SET.praktijk||'').trim())+'&id='+encodeURIComponent(id);}
-  function saveServerCard(naam,cb){
+  function saveServerCard(naam,cb,keuze){
     var c=serverKaart(naam);
+    if(keuze==='hernoem')c.hernoem=true;
+    else if(keuze==='nieuw'){c.kaartId='';delete c.basisTs;}
     fetch('api/kaarten',{method:'POST',headers:PJSON(),body:JSON.stringify(c)})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
       .then(function(d){
+        // andere naam dan de kaart die deze editor bewerkt: niet stil hernoemen, want dan
+        // opent de al geprinte QR van de vorige patiënt deze kaart (sweep 2026-11-08, Sanne)
+        if(d&&d.hernoemVraag&&!keuze){
+          var nieuw=confirm('Deze editor heeft de kaart van \u201c'+(d.naam||'')+'\u201d open, met een eigen QR-code.\n\n'+
+            'OK = nieuwe kaart voor \u201c'+naam+'\u201d met een eigen QR-code (andere pati\u00ebnt)\n'+
+            'Annuleren = alleen de naam van \u201c'+(d.naam||'')+'\u201d verbeteren naar \u201c'+naam+'\u201d (zelfde pati\u00ebnt en QR)');
+          saveServerCard(naam,cb,nieuw?'nieuw':'hernoem');return;
+        }
+        if(d&&d.ok&&d.id&&keuze==='nieuw'){zetKaartId(d.id,d.ts);cb(d);return;}
         // ook bij de eerste deling (nog geen KAART_ID) het id onthouden: anders gaf elke
         // volgende opslag een 409 "bestaat al" over de eigen kaart en kwam een daarna
         // opgenomen eigen video nooit op de kaart van de patiënt (sweep 2026-11-08, Mark)
@@ -4437,7 +4457,7 @@ bridge2.jpg</div>
         // anders stond de volledige naam daar toch (en vroeg de QR er opnieuw om)
         var cnv=document.getElementById('c_naam');
         if(cnv&&cnv.value.trim().toLowerCase()===naam.toLowerCase()){cnv.value=vs;cnv.dispatchEvent(new Event('input',{bubbles:true}));}
-        naam=vs;kn.value=vs;
+        naam=vs;kn.value=vs;HERNOEM_VOOR=vs.toLowerCase();
       }
       else NAAM_OK=naam.toLowerCase();
     }

@@ -3874,6 +3874,22 @@ async function afhandelen(request, response) {
       if (!Object.hasOwn(map, kk) && typeof b.kaartId === "string" && b.kaartId) {
         const oudeSleutel = Object.keys(map).find((k) => map[k] && map[k].id === b.kaartId &&
           (map[k].demo || verlooptOp(map[k]) > Date.now()));
+        // Alleen met een expliciete keuze (hernoem=true): zonder die vraag hernoemde
+        // "opslaan als Piet V." vanuit de editor van Jan K. stil Jans kaart; Jans geprinte
+        // QR opende daarna de kaart van Piet (gebruikers-sweep 2026-11-08, Sanne). De
+        // editor vraagt nu: zelfde patiënt (naam verbeteren) of nieuwe kaart (kaartId leeg).
+        if (oudeSleutel && b.hernoem !== true) {
+          // een verouderde editor (kaart intussen elders gewijzigd/hernoemd) hoort eerst dát
+          const oud = map[oudeSleutel];
+          if (Object.hasOwn(b, "basisTs") && b.overschrijf !== true && Number(oud.ts) > (Number(b.basisTs) || 0)) {
+            await sendJson(response, 409, { ok: false, verouderd: true, naam: oud.naam, ts: oud.ts,
+              fout: "Deze kaart is intussen op een ander apparaat gewijzigd. Open de nieuwste versie via Kaarten." });
+            return;
+          }
+          await sendJson(response, 409, { ok: false, hernoemVraag: true, naam: map[oudeSleutel].naam,
+            fout: "Deze editor bewerkt de kaart \u201c" + map[oudeSleutel].naam + "\u201d. Kies: naam verbeteren of een nieuwe kaart." });
+          return;
+        }
         if (oudeSleutel) {
           map[kk] = map[oudeSleutel];
           delete map[oudeSleutel];
