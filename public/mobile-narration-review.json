@@ -94,9 +94,9 @@
     {
       "exerciseId": "fp_8596981989aa3408",
       "name": "Rotator (apparaat)",
-      "text": "Ga rechtop op de zitting van het apparaat zitten met je knieën tussen de kussens en pak de handgrepen vast. Draai rustig vanuit je romp naar één kant tegen de weerstand in en kom gecontroleerd terug naar het midden. Herhaal naar de andere kant.",
-      "explanationSha256": "4dc5c88f18ea7425af28f3efd0dfb6d681633d9dc52619cec9c0d062991f6dfd",
-      "narrationSha256": "26c921732511fee48fe0c7a3d8b18ca1212be70222b696c8ef92cb2858f8ac7e",
+      "text": "Ga rechtop op de zitting zitten met je knieën tussen de kussens en pak de handgrepen vast. Draai rustig je heupen en benen met de zitting mee naar één kant tegen de weerstand in, terwijl je bovenlichaam en blik naar voren blijven. Kom gecontroleerd terug naar het midden en herhaal naar de andere kant.",
+      "explanationSha256": "1f4f5dce97e510219fab26ffcd915b97817dc6d01024a8fb11ef237a2080d665",
+      "narrationSha256": "be6f7512ac408a761142b47831abfe817a977e00d8dc4eb6d73c824d1961ebb2",
       "status": "hold",
       "clinicalApproved": false,
       "reasonCode": "text-image-contradiction",

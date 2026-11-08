@@ -204,7 +204,7 @@
       "name": "Barbell pull over",
       "source": "images/bovenste-extremiteit/barbell-pull-over-avatar-v7.jpg",
       "assetSha256": "cb9a62ffdad69e4396ead9155476572635f4964628a69f63a1e356b82fae5d2c",
-      "explanationSha256": "66071c3cc8663e7ab139a9a554efac6492abf26f257ad50f3c67a819cc5fbe1a",
+      "explanationSha256": "2065525ea2febe8ae988d8df60b019f52f7a29ce79460d8128b9dfd87df02c8e",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -242,7 +242,7 @@
       "name": "Bench press",
       "source": "images/bovenste-extremiteit/bench-press-avatar-v7.jpg",
       "assetSha256": "86b53be08ab4f2c9afd9659731ff74ea3593fbce43185c72dd1dc738b92416fd",
-      "explanationSha256": "b9eb1223c3b4829d1d4bd97ca0d91bcf32a6704049c373322cf4f4bd20a0f2cd",
+      "explanationSha256": "3d98b76381144a9855262eb7f69bacb8a230490b0b1e48ddd7c23970c0c7a92d",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -8992,7 +8992,7 @@
       "name": "Yoga frog",
       "source": "images/yoga/yoga-frog-avatar-v7.jpg",
       "assetSha256": "935d88516c0b82dd850b3de3b54d819f37df1d57cd88535242fb3a79cf5f0914",
-      "explanationSha256": "f532d73f0c2a45a62acdbddb72ee385e49fd188fa520766fe5215568c2769331",
+      "explanationSha256": "0fe5b8312e79bdf5099dbac761737cff2a543fde34fb94f14a8748cb2d71adaa",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -12039,7 +12039,7 @@
       "name": "Rotator (apparaat)",
       "source": "images/apparaten/rotator-apparaat-avatar-v7.jpg",
       "assetSha256": "4bbe11d6b4bf9f9752b8d919d8cf4d7228b7d5175efa9ca124dfe19d79d532a1",
-      "explanationSha256": "4dc5c88f18ea7425af28f3efd0dfb6d681633d9dc52619cec9c0d062991f6dfd",
+      "explanationSha256": "1f4f5dce97e510219fab26ffcd915b97817dc6d01024a8fb11ef237a2080d665",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -12681,7 +12681,7 @@
       "name": "Levator scapulae rek – zittend actief",
       "source": "images/nek/levator-scapulae-rek-zittend-actief-avatar-v8.jpg",
       "assetSha256": "091f7e6ce2086c747496e9951567f7f94b2844fe3d746154cec12cd983810d73",
-      "explanationSha256": "c7304c88515ca07da73fb5bdfad5bef582ee90edb7a9531bedba54fbab10e8e2",
+      "explanationSha256": "1bfb08a6404193efe3cfc3f44f0ec0da0df3ef1a3de17b38bb1265a8a57cf4b6",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -12714,7 +12714,7 @@
       "name": "Levator scapulae rek – functioneel staand",
       "source": "images/nek/levator-scapulae-rek-functioneel-staand-avatar-v8.jpg",
       "assetSha256": "535fe28385fa120674ab1569ad78bc1fcdeddc27c7869ce4ef30c1f95b27ed4e",
-      "explanationSha256": "db11734798d680acd15caa0222d72bdde3721a1e8a93d99dc19abb3c315aef84",
+      "explanationSha256": "b42839bc545d98ca5a0694314d935e77c0e78e7341bd689d635ffc50d64d1eb7",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -13539,7 +13539,7 @@
       "name": "Thoracale extensie – op handen en knieën",
       "source": "images/rug/thoracale-extensie-op-handen-en-knieen-line-v1.png",
       "assetSha256": "6bdac61a06817acb6870e8f1c779f3370610ea65056170f02f73c01a8320d9da",
-      "explanationSha256": "b41627e5d44ebd03febd7237b5acbdcf268d6c3a82ec75e8dfc0bba92e04944d",
+      "explanationSha256": "085b5ff9af6b8539a7de95be49aa00cba247e28213e68ef89b465ab660e15db6",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -15024,7 +15024,7 @@
       "name": "Grote stappen – met ritmische cue",
       "source": "images/neurologische-revalidatie/grote-stappen-met-ritmische-cue-line-v1.png",
       "assetSha256": "76b1da23b032185aefcc7d63b605398d8a0eb67b1971e80238c28c3a09cc8c26",
-      "explanationSha256": "eb3673f6032b1c13f032e98b24d981c9e5939a49e6bec8e4ac6f35281cc73453",
+      "explanationSha256": "39bb518edea0d50abe7d6e7859d0768cc1bc94244d7c0169955430550e7666e5",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -16113,7 +16113,7 @@
       "name": "Hop vooruit – techniek langzaam",
       "source": "images/sportrevalidatie/hop-vooruit-techniek-langzaam-line-v1.png",
       "assetSha256": "c667f96432be446c0082b69ac806049b02d8650711c954cf00df73e090b71d50",
-      "explanationSha256": "7c5b22e61654d9c8f1956056b30d29e457f48830c105bbd5ab57ebbfac9ce719",
+      "explanationSha256": "015089d7a8691841a026aed917909240a2a9a0a9bc1677e7ed7199fef08dc144",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -16245,7 +16245,7 @@
       "name": "Richtingsverandering – techniek langzaam",
       "source": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-line-v1.png",
       "assetSha256": "a9082a4a8890b049c54145b506b8a02bfe0c1bcef7d8bb7f124ed614f86b34ad",
-      "explanationSha256": "ff6ff5f8dc6d0dc20a7e0e5b6e4772ea7e68f13fcba5fda1c1f846f69d6d2830",
+      "explanationSha256": "7a78e1a180236efb4d4596ab256b2e4b48eae0ddcefb64d365afd14cd24e7cc3",
       "mediaType": "line_drawing_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -17099,7 +17099,7 @@
       "name": "Swiss ball rollout",
       "source": "images/exercise-ball/swiss-ball-rollout-avatar-v8.jpg",
       "assetSha256": "453576fd3455b581c9b7919e338fc4c66e10bed7f40ff4c6d58c9d6348c60b57",
-      "explanationSha256": "4649bea6c41e1dc25fafd7be933e18330a6b000caa1a251741ea7ce849590a28",
+      "explanationSha256": "aa4cdf376450a2f5c599c651c5bf3856fb1e843aa4e0c5e9722105dc1217e93f",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -17921,7 +17921,7 @@
       "name": "Foam roller back upper",
       "source": "images/foam-roller/foam-roller-back-upper-avatar-v8.jpg",
       "assetSha256": "5aec81dfab60c48b84a359aaff80e45ea953ba5158681d3e955c243e9efb0a4f",
-      "explanationSha256": "3f84bb0b8288e33a5804fdb337909ae25e3c2acb148206cef37436e44614b5b2",
+      "explanationSha256": "b6c4d5e43774bdb9815c1bd5f43cb99e68a67db2434c8e8708904351a000d380",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",

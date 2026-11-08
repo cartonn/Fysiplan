@@ -177,3 +177,13 @@ Stand: 446 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oor
 ### Core
 
 - **93 Leg raises** (afwijkend): dichtstbij: Bench Knee Tucks on a Decline. Daar trek je de knieën gebogen in; Physitrack heeft geen gestrekte beenheffing op een schuine bank. De avatar ligt plat op de vloer met de armen langs het lichaam. Volgens de tekening hoort ze op een schuine bank te liggen, met de handen achter het hoofd aan de bank. Video: de benen gaan om en om omhoog in plaats van samen, en de handen zijn achter het hoofd in plaats van aan de bank.
+
+## Na de tweede controle (2026-11-08)
+
+Een tweede, onafhankelijke controle (tweede-controle.csv op branch claude/project-thread-i8kbtd) vond 84 ok, 13 kleine aanpassingen en 1 fout. Verwerkt in de uitleg: 3, 4, 212, 389, 390, 415, 460, 493, 497 en 514. Bij 3 en 4 volgt de uitleg nu de tekening (knieën opgetrokken, voeten op de bank); dat is ook een Physitrack-variant.
+Uitleg bewust gehouden, tekening moet opnieuw (extra op de lijst):
+
+- **452 Symmetrisch opstaan – met fysieke steun**: tekening toont geen tafel of stoel om op te steunen; bijtekenen.
+- **514 Swiss ball rollout**: tweede figuur lijkt op de tenen te steunen; knieën moeten op de grond blijven.
+- **581 Seated chair crunches**: tekening toont handen achter het hoofd; volgens Physitrack en uitleg armen gestrekt naar voren.
+- **444** en **525** stonden al op de lijst (tekening opnieuw, uitleg houden).

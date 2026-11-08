@@ -25,14 +25,14 @@
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/barbell-pull-over.jpg",
   "kaartImg": "images/bovenste-extremiteit/barbell-pull-over-avatar-v7.jpg",
-  "uitleg": "Lig op je rug op de bank met je voeten plat op de grond. Houd de stang met beide handen en bijna gestrekte armen boven je borst. Breng de stang in een boog rustig over je hoofd naar achteren en haal hem langs dezelfde weg terug boven je borst."
+  "uitleg": "Lig op je rug op de bank met je knieën opgetrokken en je voeten van de grond. Houd de stang met beide handen en bijna gestrekte armen boven je borst. Breng de stang in een boog rustig over je hoofd naar achteren en haal hem langs dezelfde weg terug boven je borst."
  },
  {
   "naam": "Bench press",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/bench-press.jpg",
   "kaartImg": "images/bovenste-extremiteit/bench-press-avatar-v7.jpg",
-  "uitleg": "Lig op je rug op de bank in het rek, knieen gebogen en voeten plat op de grond. Pak de stang iets breder dan je schouders en laat hem rustig zakken tot op je borst. Druk hem daarna weer omhoog tot je armen gestrekt zijn."
+  "uitleg": "Lig op je rug op de bank in het rek, met je knieën gebogen en je voeten plat op de bank. Pak de stang iets breder dan je schouders en laat hem rustig zakken tot op je borst. Druk hem daarna weer omhoog tot je armen gestrekt zijn."
  },
  {
   "naam": "Biceps alternate dumbell",
@@ -1115,7 +1115,7 @@
   "groep": "Yoga",
   "img": "images/yoga/yoga-frog.jpg",
   "kaartImg": "images/yoga/yoga-frog-avatar-v7.jpg",
-  "uitleg": "Steun op je onderarmen en knieen op een mat. Schuif je knieen naar buiten tot je rek voelt aan de binnenkant van je bovenbenen, en laat je heupen rustig naar achteren zakken richting je hielen."
+  "uitleg": "Steun op je onderarmen en knieën op een mat. Schuif je knieën naar buiten tot je rek voelt aan de binnenkant van je bovenbenen, en laat je heupen rustig naar achteren zakken richting je hielen."
  },
  {
   "naam": "Yoga full boat",
@@ -1515,7 +1515,7 @@
   "groep": "Apparaten",
   "img": "images/apparaten/rotator-apparaat.jpg",
   "kaartImg": "images/apparaten/rotator-apparaat-avatar-v7.jpg",
-  "uitleg": "Ga rechtop op de zitting van het apparaat zitten met je knieën tussen de kussens en pak de handgrepen vast. Draai rustig vanuit je romp naar één kant tegen de weerstand in en kom gecontroleerd terug naar het midden. Herhaal naar de andere kant."
+  "uitleg": "Ga rechtop op de zitting zitten met je knieën tussen de kussens en pak de handgrepen vast. Draai rustig je heupen en benen met de zitting mee naar één kant tegen de weerstand in, terwijl je bovenlichaam en blik naar voren blijven. Kom gecontroleerd terug naar het midden en herhaal naar de andere kant."
  },
  {
   "naam": "Stairs (apparaat)",
@@ -2931,7 +2931,7 @@
   "groep": "Nek",
   "img": "images/nek/levator-scapulae-rek-zittend-actief-line-v1.png",
   "coreExerciseId": "fc_28822e943fd23d8a",
-  "uitleg": "Zit rechtop op een stoel en leg de hand aan de kant die je wilt rekken achter je rug. Draai je hoofd schuin naar je andere oksel en laat je kin zakken; trek met je andere hand je hoofd zacht verder mee tot je rek voelt van je achterhoofd tot je schouderblad. Houd dit even vast, kom langzaam terug en wissel van kant.",
+  "uitleg": "Zit rechtop op een stoel met je handen op je bovenbenen en ontspannen schouders. Draai je hoofd schuin naar je oksel en laat je kin rustig zakken tot je rek voelt van je achterhoofd tot je schouderblad. Houd dit even vast, kom langzaam terug en wissel van kant.",
   "kaartImg": "images/nek/levator-scapulae-rek-zittend-actief-avatar-v8.jpg"
  },
  {
@@ -2939,7 +2939,7 @@
   "groep": "Nek",
   "img": "images/nek/levator-scapulae-rek-functioneel-staand-line-v1.png",
   "coreExerciseId": "fc_eb1fe221f6163084",
-  "uitleg": "Sta rechtop met ontspannen schouders. Draai je hoofd schuin naar je oksel en laat je kin zakken; leg zo nodig je hand op je achterhoofd en trek je hoofd zacht verder mee tot je rek voelt in de zijkant van je nek. Houd dit even vast, kom langzaam terug en wissel van kant.",
+  "uitleg": "Sta rechtop met ontspannen schouders en je armen langs je lichaam. Draai je hoofd schuin naar je oksel en laat je kin zakken; leg zo nodig je hand op je achterhoofd en trek je hoofd zacht verder mee tot je rek voelt van je achterhoofd tot je schouderblad. Houd dit even vast, kom langzaam terug en wissel van kant.",
   "kaartImg": "images/nek/levator-scapulae-rek-functioneel-staand-avatar-v8.jpg"
  },
  {
@@ -3117,7 +3117,7 @@
   "groep": "Rug",
   "img": "images/rug/thoracale-extensie-op-handen-en-knieen-line-v1.png",
   "coreExerciseId": "fc_00b729ad9cfba568",
-  "uitleg": "Ga op handen en knieën zitten. Loop met je handen een flink stuk naar voren en laat je borstkas rustig richting de vloer zakken, terwijl je heupen boven je knieën blijven. Houd dit even vast en kom langzaam terug."
+  "uitleg": "Ga op handen en knieën zitten met je handen onder je schouders en je knieën onder je heupen. Laat je borstkas rustig richting de vloer zakken, zodat je bovenrug hol wordt, terwijl je armen gestrekt blijven. Houd dit even vast en kom langzaam terug."
  },
  {
   "naam": "Thoracale extensie – zittend",
@@ -3436,7 +3436,7 @@
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/grote-stappen-met-ritmische-cue-line-v1.png",
   "coreExerciseId": "fc_38008e5077ef0393",
-  "uitleg": "Leg een paar markeringen op de vloer, zo ver uit elkaar dat je grote stappen moet maken, en sta rechtop aan het begin. Loop op de tel of het ritme van muziek vooruit en zet bij elke stap je voet op de volgende markering."
+  "uitleg": "Sta rechtop met ruimte voor je en zet een metronoom of muziek met een duidelijke tel aan. Loop vooruit en maak op elke tel een grote, bewuste stap. Houd je romp rechtop en laat je armen meezwaaien."
  },
  {
   "naam": "Grote stappen – functionele combinatie",
@@ -3670,7 +3670,7 @@
   "groep": "Sportrevalidatie",
   "img": "images/sportrevalidatie/hop-vooruit-techniek-langzaam-line-v1.png",
   "coreExerciseId": "fc_5b1d066a138ccdf3",
-  "uitleg": "Sta op één been achter een lijn op de vloer. Hop rustig over de lijn naar voren, land zacht met een licht gebogen knie en kom tot rust. Hop daarna op dezelfde manier terug."
+  "uitleg": "Sta op één been achter een lijn op de vloer. Hop rustig over de lijn naar voren, land zacht met een licht gebogen knie en blijf twee tellen stil staan. Loop terug naar de lijn en begin opnieuw."
  },
  {
   "naam": "Landing op twee benen – techniek langzaam",
@@ -3699,7 +3699,7 @@
   "groep": "Sportrevalidatie",
   "img": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-line-v1.png",
   "coreExerciseId": "fc_cd28b12babdbd052",
-  "uitleg": "Zet een paar pionnen op een rechte lijn voor je. Loop rustig naar voren naar een pion, rem af en loop achteruit terug naar de eerste pion. Maak de afstand daarna steeds iets langer."
+  "uitleg": "Zet twee pionnen een paar meter uit elkaar en sta rechtop bij de eerste pion. Loop rustig naar de andere pion, rem af, draai om de pion heen en loop terug naar het begin. Maak de afstand of het tempo daarna steeds iets groter."
  },
  {
   "naam": "Sprinttechniek marcheren – techniek langzaam",
@@ -3960,7 +3960,7 @@
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-rollout-line-v1.png",
   "kaartImg": "images/exercise-ball/swiss-ball-rollout-avatar-v8.jpg",
-  "uitleg": "Kniel achter de oefenbal met je onderarmen erop. Rol de bal naar voren door je knieen te strekken, tot je lichaam een rechte lijn vormt, en houd je onderrug vlak. Trek de bal daarna rustig terug.",
+  "uitleg": "Kniel achter de oefenbal met je onderarmen erop en je handen tegen elkaar. Rol de bal rustig naar voren terwijl je heupen meegaan, tot je lichaam van knieën tot hoofd een rechte lijn vormt, en houd je onderrug vlak. Trek de bal daarna gecontroleerd terug.",
   "exerciseId": "fp_ca69fe932ac4e333",
   "lineStatus": "verified-v1",
   "v1Source": "carla",
@@ -4273,7 +4273,7 @@
   ],
   "img": "images/foam-roller/foam-roller-back-upper-line-v1.png",
   "kaartImg": "images/foam-roller/foam-roller-back-upper-avatar-v8.jpg",
-  "uitleg": "Lig op je rug met gebogen knieen en de foamroller dwars onder je bovenrug. Ondersteun je hoofd met je handen en til je billen op. Duw met je voeten en rol rustig een klein stuk over je bovenrug.",
+  "uitleg": "Lig op je rug met gebogen knieën en de foamroller dwars onder je bovenrug. Ondersteun je hoofd met je handen en til je billen op. Duw met je voeten en rol rustig een klein stuk over je bovenrug.",
   "exerciseId": "fp_84154b2578401c90",
   "lineStatus": "verified-v1",
   "v1Source": "carla",

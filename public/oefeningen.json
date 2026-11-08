@@ -25,14 +25,14 @@
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/barbell-pull-over.jpg",
   "kaartImg": "images/bovenste-extremiteit/barbell-pull-over-avatar-v7.jpg",
-  "uitleg": "Lig op je rug op de bank met je voeten plat op de grond. Houd de stang met beide handen en bijna gestrekte armen boven je borst. Breng de stang in een boog rustig over je hoofd naar achteren en haal hem langs dezelfde weg terug boven je borst."
+  "uitleg": "Lig op je rug op de bank met je knieën opgetrokken en je voeten van de grond. Houd de stang met beide handen en bijna gestrekte armen boven je borst. Breng de stang in een boog rustig over je hoofd naar achteren en haal hem langs dezelfde weg terug boven je borst."
  },
  {
   "naam": "Bench press",
   "groep": "Bovenste extremiteit",
   "img": "images/bovenste-extremiteit/bench-press.jpg",
   "kaartImg": "images/bovenste-extremiteit/bench-press-avatar-v7.jpg",
-  "uitleg": "Lig op je rug op de bank in het rek, knieen gebogen en voeten plat op de grond. Pak de stang iets breder dan je schouders en laat hem rustig zakken tot op je borst. Druk hem daarna weer omhoog tot je armen gestrekt zijn."
+  "uitleg": "Lig op je rug op de bank in het rek, met je knieën gebogen en je voeten plat op de bank. Pak de stang iets breder dan je schouders en laat hem rustig zakken tot op je borst. Druk hem daarna weer omhoog tot je armen gestrekt zijn."
  },
  {
   "naam": "Biceps alternate dumbell",
@@ -907,7 +907,7 @@
   "groep": "Exercise Ball",
   "img": "images/exercise-ball/swiss-ball-rollout-line-v1.png",
   "kaartImg": "images/exercise-ball/swiss-ball-rollout-line-v1.png",
-  "uitleg": "Kniel achter de oefenbal met je onderarmen erop. Rol de bal naar voren door je knieen te strekken, tot je lichaam een rechte lijn vormt, en houd je onderrug vlak. Trek de bal daarna rustig terug."
+  "uitleg": "Kniel achter de oefenbal met je onderarmen erop en je handen tegen elkaar. Rol de bal rustig naar voren terwijl je heupen meegaan, tot je lichaam van knieën tot hoofd een rechte lijn vormt, en houd je onderrug vlak. Trek de bal daarna gecontroleerd terug."
  },
  {
   "naam": "Swiss ball abs",
@@ -1278,7 +1278,7 @@
   "groep": "Yoga",
   "img": "images/yoga/yoga-frog.jpg",
   "kaartImg": "images/yoga/yoga-frog-avatar-v7.jpg",
-  "uitleg": "Steun op je onderarmen en knieen op een mat. Schuif je knieen naar buiten tot je rek voelt aan de binnenkant van je bovenbenen, en laat je heupen rustig naar achteren zakken richting je hielen."
+  "uitleg": "Steun op je onderarmen en knieën op een mat. Schuif je knieën naar buiten tot je rek voelt aan de binnenkant van je bovenbenen, en laat je heupen rustig naar achteren zakken richting je hielen."
  },
  {
   "naam": "Yoga full boat",
@@ -1678,7 +1678,7 @@
   "groep": "Apparaten",
   "img": "images/apparaten/rotator-apparaat.jpg",
   "kaartImg": "images/apparaten/rotator-apparaat-avatar-v7.jpg",
-  "uitleg": "Ga rechtop op de zitting van het apparaat zitten met je knieën tussen de kussens en pak de handgrepen vast. Draai rustig vanuit je romp naar één kant tegen de weerstand in en kom gecontroleerd terug naar het midden. Herhaal naar de andere kant."
+  "uitleg": "Ga rechtop op de zitting zitten met je knieën tussen de kussens en pak de handgrepen vast. Draai rustig je heupen en benen met de zitting mee naar één kant tegen de weerstand in, terwijl je bovenlichaam en blik naar voren blijven. Kom gecontroleerd terug naar het midden en herhaal naar de andere kant."
  },
  {
   "naam": "Stairs (apparaat)",
@@ -1744,7 +1744,7 @@
   "groep": "Foam Roller",
   "img": "images/foam-roller/foam-roller-back-upper-line-v1.png",
   "kaartImg": "images/foam-roller/foam-roller-back-upper-line-v1.png",
-  "uitleg": "Lig op je rug met gebogen knieen en de foamroller dwars onder je bovenrug. Ondersteun je hoofd met je handen en til je billen op. Duw met je voeten en rol rustig een klein stuk over je bovenrug."
+  "uitleg": "Lig op je rug met gebogen knieën en de foamroller dwars onder je bovenrug. Ondersteun je hoofd met je handen en til je billen op. Duw met je voeten en rol rustig een klein stuk over je bovenrug."
  },
  {
   "naam": "Foam roller lat stretch",
