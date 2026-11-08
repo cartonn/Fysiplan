@@ -10,6 +10,7 @@ import { publicCatalogVideo } from "./lib/video-catalog.js";
 import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./lib/proef.js";
 import { vraagOverKlacht, verwijzing } from "./lib/vraaghulp-grens.js";
 import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, MAX_THERAPEUTEN } from "./lib/mollie.js";
+import { volgendFactuurNr, factuurHtml, isFactuur } from "./lib/factuur.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -96,7 +97,9 @@ const FYSIPLAN_ID = {
   kvk: String(process.env.FYSIPLAN_KVK || "").trim(),
   adres: String(process.env.FYSIPLAN_ADRES || "").trim(),
   contact: String(process.env.FYSIPLAN_CONTACT || "").trim(),
-  hosting: String(process.env.FYSIPLAN_HOSTING_REGIO || "").trim()
+  hosting: String(process.env.FYSIPLAN_HOSTING_REGIO || "").trim(),
+  // alleen voor de factuur bij een online betaling; zonder btw-id wordt het een betaalbewijs
+  btwNummer: String(process.env.FYSIPLAN_BTW_NUMMER || "").trim()
 };
 const STREAM_ACCOUNT_ID = String(process.env.CLOUDFLARE_ACCOUNT_ID || "").trim();
 const STREAM_API_TOKEN = String(process.env.CLOUDFLARE_STREAM_TOKEN || process.env.CLOUDFLARE_API_TOKEN || "").trim();
@@ -624,7 +627,8 @@ function betaalBlok(p) {
   if (!mollieAan() || !p) return "";
   const a = p.abonnement;
   if (a && a.status === "actief") return '<p class="klein" style="margin-top:16px">Je abonnement is actief voor ' + a.aantal +
-    (a.aantal === 1 ? " therapeut" : " therapeuten") + ", betaald tot en met " + htmlEsc(datumNl(a.betaaldTot)) + ".</p>";
+    (a.aantal === 1 ? " therapeut" : " therapeuten") + ", betaald tot en met " + htmlEsc(datumNl(a.betaaldTot)) +
+    '. <a href="/v2/proef/factuur">' + (isFactuur(FYSIPLAN_ID) ? "Factuur" : "Betaalbewijs") + " bekijken en printen</a></p>";
   if (p.klant) return "";
   return '<form method="post" action="/v2/proef/betalen" class="blad" style="margin-top:18px">' +
     '<h2>Direct online afrekenen</h2><p class="klein" style="font-size:14.5px">&euro; 5,99 per therapeut per maand, maandelijks opzegbaar. ' +
@@ -643,6 +647,7 @@ async function mollieVerwerk(id) {
   const betaling = await mollie("/payments/" + encodeURIComponent(id), { sleutel: MOLLIE_SLEUTEL, basis: MOLLIE_BASIS });
   const oordeel = beoordeelBetaling(betaling, p);
   if (oordeel === "betaald" && markeerBetaald(p, betaling)) {
+    geefFactuurNr(p);
     await bewaarProeven();
     proefMeldAhmed("Betaald: " + (p.praktijk || p.naam), p, "Deze praktijk heeft de eerste maand online betaald (" +
       p.abonnement.aantal + " therapeut(en), EUR " + p.abonnement.bedrag + "). De proef is nu een klant.");
@@ -651,6 +656,15 @@ async function mollieVerwerk(id) {
     await bewaarProeven();
   }
   return p;
+}
+// doorlopend factuurnummer per jaar, één keer per betaling (ook voor oudere betalingen
+// zonder nummer, bij de eerste keer bekijken); gewiste praktijken tellen mee (7 jaar)
+function geefFactuurNr(p) {
+  const a = p && p.abonnement;
+  if (!a || !a.eersteBetaling || a.factuurNr) return false;
+  const jaar = new Date(a.sinds || Date.now()).toLocaleDateString("nl-NL", { year: "numeric", timeZone: "Europe/Amsterdam" });
+  a.factuurNr = volgendFactuurNr(Object.values(proeven), jaar);
+  return true;
 }
 // het aanmeldformulier, eventueel opnieuw met de ingevulde waarden en per veld de fout
 async function proefFormVars(request, w, fouten, suggestie = "", akkoord = false, alarm = "") {
@@ -5244,7 +5258,8 @@ async function afhandelen(request, response) {
     if (!p) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
     if (p.klant) {
       await serveerProef(request, response, "bericht", { TITEL: "Betaald", ETIKET: "Betaald", KOP: "Dank je wel, je abonnement is actief.",
-        TEKST: "Je kunt meteen verder met je kaarten. De factuur volgt per mail.", KNOP_HTML: '<a class="knop oranje" href="/v2/app">Naar mijn kaarten</a>' });
+        TEKST: "Je kunt meteen verder met je kaarten.", KNOP_HTML: '<a class="knop oranje" href="/v2/app">Naar mijn kaarten</a> ' +
+          '<a class="knop omlijnd" href="/v2/proef/factuur">' + (isFactuur(FYSIPLAN_ID) ? "Factuur" : "Betaalbewijs") + " bekijken</a>" });
       return;
     }
     const mislukt = ["failed", "canceled", "expired"].includes(p.betaling?.status);
@@ -5253,6 +5268,20 @@ async function afhandelen(request, response) {
       TEKST: mislukt ? "Er is niets afgeschreven. Probeer het opnieuw, of druk op 'Ja, ik wil doorgaan', dan bellen we je."
         : "Dat duurt meestal een paar seconden. Ververs deze pagina zo.",
       KNOP_HTML: mislukt ? '<a class="knop oranje" href="/v2/proef">Opnieuw proberen</a>' : '<a class="knop oranje" href="/v2/proef/betaald">Opnieuw kijken</a>' });
+    return;
+  }
+  // factuur of betaalbewijs van de eigen online betaling: alleen met de proefcookie van
+  // deze praktijk, alleen lezen, scriptloos. Zonder betaling bestaat de pagina niet.
+  if (urlPath === "/v2/proef/factuur" && request.method === "GET") {
+    response.setHeader("cache-control", "no-store");
+    const p = proefVan(request);
+    if (!p || !p.abonnement?.eersteBetaling) { await send(response, 404, "text/plain; charset=utf-8", "Not found"); return; }
+    if (geefFactuurNr(p)) await bewaarProeven();
+    response.setHeader("x-frame-options", "DENY");
+    response.setHeader("x-robots-tag", "noindex");
+    response.setHeader("content-security-policy", "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
+    await send(response, 200, "text/html; charset=utf-8", factuurHtml({ leverancier: FYSIPLAN_ID,
+      afnemer: { naam: p.praktijk || p.naam, email: p.email }, abonnement: p.abonnement }));
     return;
   }
   // Mollie meldt een statuswijziging met alleen het id; onbekende id's krijgen ook 200

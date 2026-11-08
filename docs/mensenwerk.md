@@ -45,8 +45,25 @@ Zonder sleutel verandert er niets: alleen "Ja, ik wil doorgaan" en jij belt.
    beloven dat je praktijken laat weten voordat de automatische maandincasso begint; doe dat (of
    laat de code het doen) vóór de eerste incasso. Laat de 7 jaar bewaren door je boekhouder bevestigen.
 **Nog niet gebouwd (volgende runs):** de maandelijkse incasso na maand 1 (Mollie-subscription op het
-mandaat), opzeggen in de app, en een factuur/btw-bon per betaling. Tot dan: de eerste maand
-loopt via Mollie, de rest regel je zelf.
+mandaat) en opzeggen in de app. Tot dan: de eerste maand loopt via Mollie, de rest regel je zelf.
+
+### Factuur per online betaling (praktijk-routine, 2026-11-08)
+**Wat de code nu doet:** na een online betaling ziet de praktijk op de bedankpagina en in "Mijn proef"
+een link naar `/v2/proef/factuur` (alleen met de eigen proefcookie, printbaar, scriptloos). Elke betaling
+krijgt een doorlopend nummer per jaar (`FP-2026-0001`, ...), dat ook na "Alles wissen" 7 jaar bewaard blijft.
+Zonder btw-id is het een **betaalbewijs** met de zin "geen factuur voor de btw"; met de variabelen hieronder
+een **factuur** met 21% btw uitgesplitst.
+**Wat jij moet doen:**
+1. Zet op Railway `FYSIPLAN_BTW_NUMMER` (je btw-id, `NL…B01`), naast `FYSIPLAN_BEDRIJF`, `FYSIPLAN_KVK` en
+   `FYSIPLAN_ADRES`. Pas als alle vier er staan, heet de pagina "Factuur".
+2. **Beslissen (btw):** de landing en voorwaarden zeggen "exclusief btw", maar Mollie schrijft nu precies
+   prijs × therapeuten af. De factuur rekent de btw daarom **uit** het betaalde bedrag (bij 10 euro: 8,26 +
+   1,74 btw). Wil je de btw er bovenop (12,10 incl.), zeg het; dan past deze routine het afrekenbedrag aan.
+   Zit je in de kleineondernemersregeling (KOR), laat `FYSIPLAN_BTW_NUMMER` dan leeg en meld het, dan komt er
+   een KOR-factuur zonder btw.
+3. Boven 100 euro incl. btw (vanaf 9 therapeuten bij 10 euro) vraagt de wet ook het adres van de praktijk op
+   de factuur. Fysiplan vraagt dat nu niet; laat het je boekhouder bevestigen, dan bouwt een volgende run
+   een veld "factuuradres".
 
 
 ### Engelse oefennamen in de Nederlandse bibliotheek (gebruikers-sweep, 2026-11-07)
