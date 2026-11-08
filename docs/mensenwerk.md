@@ -28,7 +28,7 @@ versie, wanneer en wie (ook in de download van /v2/gegevens).
 ### Online betalen via Mollie (praktijk-routine, 2026-11-07)
 **Wat de code nu doet:** zet je `MOLLIE_API_KEY` op Railway, dan krijgen "Mijn proef" en de
 verlopen-pagina een blok "Direct online afrekenen": aantal therapeuten kiezen, eerste maand
-(5,99 per therapeut) betalen met iDEAL of kaart bij Mollie. Na betaling wordt de proef meteen een
+(9,99 per therapeut, excl. btw) betalen met iDEAL of kaart bij Mollie. Na betaling wordt de proef meteen een
 klant (slot eraf, zelfde als "klant" in /aanmeldingen) en krijg je een mail "Betaald: …". De
 betaling is van het type `first`, dus Mollie bewaart een mandaat voor latere maandelijkse incasso.
 Zonder sleutel verandert er niets: alleen "Ja, ik wil doorgaan" en jij belt.
@@ -57,11 +57,11 @@ een **factuur** met 21% btw uitgesplitst.
 1. Zet op Railway `FYSIPLAN_BTW_NUMMER` (je btw-id, `NL…B01`), naast `FYSIPLAN_BEDRIJF`, `FYSIPLAN_KVK` en
    `FYSIPLAN_ADRES`. Pas als alle vier er staan, heet de pagina "Factuur".
 2. **Beslissen (btw):** de landing en voorwaarden zeggen "exclusief btw", maar Mollie schrijft nu precies
-   prijs × therapeuten af. De factuur rekent de btw daarom **uit** het betaalde bedrag (bij 10 euro: 8,26 +
-   1,74 btw). Wil je de btw er bovenop (12,10 incl.), zeg het; dan past deze routine het afrekenbedrag aan.
+   prijs × therapeuten af. De factuur rekent de btw daarom **uit** het betaalde bedrag (bij 9,99 euro: 8,26 +
+   1,73 btw). Wil je de btw er bovenop (12,09 incl.), zeg het; dan past deze routine het afrekenbedrag aan.
    Zit je in de kleineondernemersregeling (KOR), laat `FYSIPLAN_BTW_NUMMER` dan leeg en meld het, dan komt er
    een KOR-factuur zonder btw.
-3. Boven 100 euro incl. btw (vanaf 9 therapeuten bij 10 euro) vraagt de wet ook het adres van de praktijk op
+3. Boven 100 euro incl. btw (vanaf 9 therapeuten bij 9,99 euro) vraagt de wet ook het adres van de praktijk op
    de factuur. Fysiplan vraagt dat nu niet; laat het je boekhouder bevestigen, dan bouwt een volgende run
    een veld "factuuradres".
 
