@@ -1,19 +1,23 @@
 # Opnieuw maken na Physitrack-crosscheck
 
-Stand: 119 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oordeel `afwijkend` of `fout`). De lijntekening wint bij conflict; een avatar of video die afwijkt wordt opnieuw gemaakt nadat de tekening klopt.
+Stand: 150 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oordeel `afwijkend` of `fout`). De lijntekening wint bij conflict; een avatar of video die afwijkt wordt opnieuw gemaakt nadat de tekening klopt.
 
 ## Bekend vooraf
 
 - **600 One leg standing / 601 Standing chair shoulder rotations**: hebben elkaars tekening en avatar. Omwisselen (tekening én avatar).
 
-## Tekeningen (2)
+## Tekeningen (3)
 
 ### Core
 
 - **75 Abroller** (afwijkend): Uitleg en avatar tonen de knielende uitrol met het buikwiel, zoals Physitrack. De tekening toont een ander apparaat: een crunchframe in ruglig, en dat is geen Physitrack-variant van de abroller. Tekening vervangen door de knielende uitrol met het buikwiel; de avatar klopt dan wel. Let op: spec_tekening en videoprompt beschrijven nu ook het crunchframe.
 - **107 Stick twist** (afwijkend): Physitrack: stok achter de nek op de schouders en romp draaien, zoals de uitleg. Tekening toont stok diagonaal (één hand hoog, één laag) met zijwaartse kanteling: andere variant, geen Physitrack-match; tekening vervangen door stok op de schouders. Avatar volgt Physitrack (stok op schouders) maar eindbeeld draait vooral het hoofd, romp nauwelijks: duidelijker romprotatie tonen.
 
-## Avatars (48)
+### Onderste extremiteit
+
+- **45 Been pendelen** (fout): Tekening toont een andere oefening (buiklig op bank, schaarbeweging met gestrekte benen), geen beenpendel; nieuwe tekening nodig: staand met steun, been zwaait voor-achter. Uitleg volgt Physitrack en blijft. Avatar: been gaat zijwaarts i.p.v. voor-achter en steun ontbreekt in startbeeld.
+
+## Avatars (63)
 
 ### Bosu
 
@@ -34,6 +38,17 @@ Stand: 119 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oor
 - **18 Front pully row** (afwijkend): Physitrack-variant met kabel is tweehandig; eenarmige voorovergebogen roei (tekening, uitleg) is een geldige variant (vgl. Single hand Exercise Band Bent Over Row). Avatar: staat rechtop en roeit met twee handen een stang naar de buik; tekening: romp ca. 45 graden voorover, een hand, handvat naar de heup. Avatar opnieuw. Video klopt.
 - **23 Lateral raises** (fout): Physitrack: handpalmen naar beneden; tekening toont de halters rechtop (duim omhoog/handpalm naar voren), een gangbare maar andere greep, en heft iets boven schouderhoogte. Avatar: eindstand met ellebogen 90 graden gebogen en onderarmen verticaal (lijkt startstand schouderpers), geen zijwaarts heffen met bijna gestrekte armen. Avatar opnieuw.
 - **24 Military press** (fout): Physitrack gebruikt handpalmen naar voren; tekening en uitleg kiezen neutrale greep (handpalmen naar elkaar), een geldige variant. Avatar gebruikt een halterstang i.p.v. twee dumbells: opnieuw maken. Video klopt (dumbells, neutrale greep).
+- **27 Pully cross down** (afwijkend): Avatar toont twee handvatten (start armen zijwaarts op borsthoogte, eind handen samen voor het lichaam) i.p.v. één handvat van hoog-opzij schuin omlaag naar de andere heup. Video: de hand start hoog aan de kant weg van de pully en eindigt bij de heup aan de pullykant, dus richting naar het anker toe; moet zijn: start hoog aan de pullykant, schuin omlaag over het lichaam naar de andere heup (weg van het anker).
+- **28 Pully cross over** (afwijkend): Avatar: rechtop, kabels horizontaal op borsthoogte, handen komen voor de borst samen; moet zijn: licht voorovergebogen, kabels hoog, handen schuin omlaag tot voor de heupen. Video klopt (hoge pully's, handen naar voor de heupen).
+- **29 Pully cross up** (fout): Tekening: werkarm is de arm ver van de pully, start bij de heup aan de pullykant, beweging schuin omhoog weg van het anker (zoals Physitrack laag-naar-hoog diagonaal; Physitrack-video met twee handen, tekening eenarmig). Uitleg zei 'hand dichtst bij de pully' = andere variant. Avatar fout: twee lage kabels, voorwaartse armheffing met twee handen. Video: gebruikt de hand dichtst bij de pully en trekt naar de andere schouder; aanpassen naar de tekening.
+- **30 Pully dips** (afwijkend): dichtstbij: zittend met de rug naar de kabel, maar eenarmig en een trekbeweging. Avatar staat (geen bank) en zit niet; moet zittend op bank met rugleuning, rug naar hoge pully. Video klopt met tekening (zittend, handvatten naast borst/schouder omlaag duwen).
+- **31 Pully down** (fout): Twijfel: Physitrack heeft geen exacte liggende pulldown aan hoge kabel; dichtstbij is de supine pullover (armen van boven het hoofd naar voren/omlaag). Avatar fout: zittende lat pulldown i.p.v. op de rug op de bank met het hoofd bij de pully. Video klopt met tekening.
+- **34 Pully pull over** (fout): Physitrack-kabelversie (cable machine supine pull-over) werkt in tegengestelde richting (voeten naar de machine); supine pullover v2 past bij de richting van de tekening. Avatar fout: staand, geen bank, kabel van onder. Video: kabel komt van hoog boven i.p.v. op hoofdhoogte achter, en de handen gaan met gebogen ellebogen naar de borst (meer pulldown dan boog over het hoofd).
+- **39 Triceps dips** (afwijkend): Avatar: stoel/bank ontbreekt (handen steunen op niets), beweging verder herkenbaar.
+- **40 Triceps dumbell kickbacks** (afwijkend): Uitleg miste de steun op de bank en 'licht voorover' klopt niet met tekening/Physitrack (romp ver voorover met steun). Avatar: staand zonder bank, arm hangt in start gestrekt omlaag i.p.v. bovenarm langs de romp met gebogen elleboog.
+- **42 Upright row** (fout): Avatar fout: eindpositie is een curl/front-rack (ellebogen omlaag, stang voor de schouders) i.p.v. ellebogen opzij en hoger dan de handen. Video: brede greep, tekening en Physitrack tonen smalle greep; beweging verder goed.
+- **43 Wrist extension** (afwijkend): Avatar: zittend op kruk zonder gewicht i.p.v. knielend met gewicht. Video: onderarm komt los van de steun (elleboog buigt, curl-achtig); alleen de pols mag bewegen, onderarm blijft liggen.
+- **44 Wrist flexion** (afwijkend): Avatar: geen gewicht in de hand en in het eindbeeld komt de onderarm omhoog (elleboogbuiging) i.p.v. alleen polsbuiging met onderarm op de steun.
 
 ### Cardio
 
@@ -60,6 +75,8 @@ Stand: 119 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oor
 
 ### Onderste extremiteit
 
+- **45 Been pendelen** (afwijkend): Tekening toont een andere oefening (buiklig op bank, schaarbeweging met gestrekte benen), geen beenpendel; nieuwe tekening nodig: staand met steun, been zwaait voor-achter. Uitleg volgt Physitrack en blijft. Avatar: been gaat zijwaarts i.p.v. voor-achter en steun ontbreekt in startbeeld.
+- **48 Chair squat** (afwijkend): Avatar: stoel ontbreekt en de squat is veel dieper dan de zitting; moet stoel achter haar en billen tot net boven de zitting.
 - **50 Dead lift** (afwijkend): Uitleg noemt alleen 'gewicht'; materiaal (stang), bovenhandse greep en stang dicht langs de benen toegevoegd. Physitrack-hoofdvariant start staand met licht gebogen knieën en hinge; tekening (vanaf de grond met gebogen knieën) is een geldige klassieke variant. Avatar toont dumbbells en een stijve-benen-hinge in plaats van een halterstang vanaf de grond: avatar opnieuw maken met stang. Video (stang vanaf de grond) klopt.
 - **51 Extension squat** (afwijkend): Physitrack gebruikt een stok boven het hoofd; tekening met kettlebell is een geldige belaste variant. Avatar start met de kettlebell laag voor de heupen (armen niet boven het hoofd) en houdt in de eindhouding een bal in plaats van een kettlebell: start en eind moeten beide armen gestrekt boven het hoofd met kettlebell tonen. Video klopt.
 - **54 Hack squat** (fout): dichtstbij: Physitrack 'Hack squat' is de machinevariant (slede met schoudersteunen); een hack squat met halterstang achter de benen, zoals de tekening, heeft Physitrack niet. Avatar toont de hack-squat-machine i.p.v. stang achter de benen: in strijd met de tekening, avatar opnieuw maken (staand, stang met gestrekte armen achter de benen). Video (stang achter de benen) klopt met tekening. Twijfel: bij keuze voor de Physitrack-variant moeten tekening, uitleg en video juist naar de machine.
@@ -71,6 +88,8 @@ Stand: 119 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oor
 - **66 Squat lunges** (afwijkend): Physitrack heeft geen aparte split squat met stang op de rug; de split squat met stang als belasting is een geldige variant. Avatar toont geen stang en start met voeten naast elkaar (uitvalspas) i.p.v. in spreidstand met stang op de bovenrug: avatar aanpassen. Video klopt.
 - **67 Standing abduction** (afwijkend): Avatar toont een miniband om de enkels zonder kabel en zonder rek, en in de eindhouding gaat het been nauwelijks opzij: avatar opnieuw met enkelmanchet, kabel laag aan de kant van het standbeen, handen aan een rek en been duidelijk zijwaarts. Video klopt (uitslag vrij klein).
 - **68 Standing adduction** (fout): Avatar toont een miniband om de enkels met het been naar buiten (abductie-achtig) i.p.v. kabel laag opzij en been naar binnen voor het standbeen langs: avatar opnieuw maken. Video: kabel en richting kloppen, maar het werkbeen komt nauwelijks voor/langs het standbeen; kruisen moet duidelijker.
+- **70 Step up** (afwijkend): Avatar toont geen gewicht, start naast de step zonder voet erop, en eindigt op één been op een lage step met het andere been zwevend: gewicht voor de schouder toevoegen, startvoet op de kist en eindhouding rechtop op de kist. Video (dumbbell voor de borst) klopt.
+- **71 Step up tempo** (afwijkend): Physitrack heeft geen aparte tempo-variant; gewone step up (en voor hoog tempo 'Plyometric - step ups') ligt het dichtst bij. Avatar toont geen verhoging: alleen staan en een knieheffing in de lucht; kist/step toevoegen met voet erop. Video klopt (vlot op- en afstappen met armen in loophouding).
 
 ### TRX
 
@@ -81,7 +100,7 @@ Stand: 119 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oor
 - **132 TRX lunge** (fout): Tekening en uitleg: achterste voet in de lus, handen vrij. Avatar toont een gewone lunge met beide voeten op de grond en de handvatten in de handen. Avatar opnieuw volgens tekening.
 - **139 TRX pull up** (fout): dichtstbij: TRX row / inverted row. Huidige uitleg (hangen met gebogen knieën) klopt niet met de tekening (zit op de grond, benen gestrekt, eindigt als plank op de hielen); nieuwe uitleg volgt de tekening. Avatar toont staande achterover leunende curl/row; opnieuw volgens tekening.
 
-## Video's (5)
+## Video's (8)
 
 ### Bovenste extremiteit
 
@@ -89,6 +108,9 @@ Stand: 119 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oor
 - **3 Barbell pull over** (fout): Physitrack: voeten plat op de vloer; tekening en huidige uitleg: knieen opgetrokken, voeten los (geen Physitrack-variant, wel veilige alternatieve houding; keuze aan therapeut). Tekening toont gewicht in eindpositie onder bankhoogte achter het hoofd, klopt verder. Avatar: voeten op de vloer (wijkt af van tekening, klopt met Physitrack). Video: gebruikt dumbbells i.p.v. stang en buigt de ellebogen sterk (lijkt triceps-extensie): opnieuw maken met stang en bijna gestrekte armen.
 - **12 Dumbell pull over** (afwijkend): Physitrack: armen gestrekt; uitleg 'licht gebogen' is acceptabel. Avatar: voeten op de vloer i.p.v. benen opgetrokken zoals tekening. Video: ellebogen buigen in de eindstand sterk (halter naast het hoofd, lijkt triceps-extensie) en de halter komt niet onder bankhoogte; opnieuw met vaste, bijna gestrekte armen.
 - **19 Front raises** (afwijkend): Tekening toont dumbells (in zijaanzicht als rondje = bovenhandse greep), uitleg en video gebruiken een losse schijf met twee handen. Uitleg aangepast naar dumbells (komt daarmee overeen met nr 0 Anteflexie armen; mogelijk dubbele oefening). Avatar klopt met tekening. Video opnieuw met twee dumbells.
+- **27 Pully cross down** (afwijkend): Avatar toont twee handvatten (start armen zijwaarts op borsthoogte, eind handen samen voor het lichaam) i.p.v. één handvat van hoog-opzij schuin omlaag naar de andere heup. Video: de hand start hoog aan de kant weg van de pully en eindigt bij de heup aan de pullykant, dus richting naar het anker toe; moet zijn: start hoog aan de pullykant, schuin omlaag over het lichaam naar de andere heup (weg van het anker).
+- **29 Pully cross up** (afwijkend): Tekening: werkarm is de arm ver van de pully, start bij de heup aan de pullykant, beweging schuin omhoog weg van het anker (zoals Physitrack laag-naar-hoog diagonaal; Physitrack-video met twee handen, tekening eenarmig). Uitleg zei 'hand dichtst bij de pully' = andere variant. Avatar fout: twee lage kabels, voorwaartse armheffing met twee handen. Video: gebruikt de hand dichtst bij de pully en trekt naar de andere schouder; aanpassen naar de tekening.
+- **43 Wrist extension** (afwijkend): Avatar: zittend op kruk zonder gewicht i.p.v. knielend met gewicht. Video: onderarm komt los van de steun (elleboog buigt, curl-achtig); alleen de pols mag bewegen, onderarm blijft liggen.
 
 ### Core
 
