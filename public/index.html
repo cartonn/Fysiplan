@@ -189,6 +189,8 @@
   /* ---- modal ---- */
   .ov{position:fixed;inset:0;background:rgba(16,24,40,.45);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
   .ov.on{display:flex}
+  .proef-voorbij-ov{flex-basis:100%;margin:8px 0;padding:10px 12px;border-radius:10px;background:#fff4e5;border:1px solid #f0b46a;color:#5a3300;font-size:14px;line-height:1.4}
+  .proef-voorbij-ov a{color:#5a3300;font-weight:600}
   .modal{background:#fff;border-radius:16px;width:400px;max-width:100%;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain;padding:22px 24px;box-shadow:var(--sh-lg);animation:pop .15s ease}
   @keyframes pop{from{transform:translateY(6px) scale(.985);opacity:0}to{transform:none;opacity:1}}
   /* gratis proef (v2): smalle balk onder de kopregel, nooit op de print */
@@ -2302,7 +2304,7 @@ bridge2.jpg</div>
           // proef verlopen: melding in de app. Niet herladen: op een tweede apparaat
           // zonder proefcookie serveert /v2/app gewoon weer de app, en dan herlaadde
           // hij eindeloos (gebruikers-sweep 2026-11-06, iPad)
-          if(d.proefVerlopen){toonProefVoorbij();return;}
+          if(d.proefVerlopen){toonProefVoorbij(null,true);return;}
           laatsteDeel='';
           toonDeelWeigering(d,naam);
           return;
@@ -2624,7 +2626,7 @@ bridge2.jpg</div>
   // één vaste melding bovenaan, met een echte link; lezen blijft gewoon werken en de app
   // probeert niet steeds opnieuw te delen
   var PROEF_VOORBIJ=false;
-  function toonProefVoorbij(){
+  function toonProefVoorbij(anker,stil){
     PROEF_VOORBIJ=true;
     var balk=document.getElementById('proefBalk');if(!balk)return;
     balk.innerHTML="<span id='pb_voorbij'><b>Je gratis proef is voorbij.</b> Je gedeelde kaarten, seintjes en scores kun je nog lezen; "+
@@ -2633,6 +2635,26 @@ bridge2.jpg</div>
     balk.setAttribute('role','alert');
     balk.hidden=false;
     if(balk.scrollIntoView)balk.scrollIntoView({block:'nearest'});
+    // de balk staat áchter een open venster (Kaarten, team, eigen oefening): zet de reden ook
+    // in dat venster, naast de knop als die bekend is, zodat een weigering nooit stil is.
+    // Het seintje-venster heeft al een eigen melding.
+    var tekstPV='<b>Niet bewaard:</b> de gratis proef van je praktijk is voorbij. Lezen kan nog, wijzigen niet meer. <a href="/v2/proef">Wil je doorgaan?</a>';
+    var maakPV=function(){var n=document.createElement('p');n.className='proef-voorbij-ov';n.setAttribute('role','alert');n.innerHTML=tekstPV;return n;};
+    // stil: een automatische opslag op de achtergrond; dan alleen de balk
+    if(stil)return;
+    if(anker&&anker.closest&&anker.closest('.ov.on')){
+      // onder de rij van de knop, niet erin: de rijen met een invoerveld wrappen niet en
+      // het veld werd dan 18 px smal
+      var rij=anker.parentNode,na=rij.nextElementSibling;
+      if(!(na&&na.classList.contains('proef-voorbij-ov')))rij.parentNode.insertBefore(maakPV(),rij.nextSibling);
+      return;
+    }
+    Array.prototype.forEach.call(document.querySelectorAll('.ov.on .modal'),function(m){
+      if(m.closest('#ovSein'))return;
+      var n=m.querySelector(':scope > .proef-voorbij-ov');
+      if(!n){n=maakPV();m.insertBefore(n,m.firstChild);}
+      m.scrollTop=0;
+    });
   }
   function proefStart(){
     if(!PROEF)return;
@@ -4488,7 +4510,10 @@ bridge2.jpg</div>
       var sel=dl;sel.disabled=true;
       fetch('api/kaart/doel',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:sel.dataset.sdoel,doel:Number(sel.value)||0})})
         .then(function(r){return r.json();})
-        .then(function(d){sel.disabled=false;if(d.ok)toonSrvKaarten();else alert(d.fout||'Oefendoel opslaan is niet gelukt.');})
+        .then(function(d){sel.disabled=false;if(d.ok)toonSrvKaarten();
+          // verlopen proef: terug naar de bewaarde keuze, met de reden naast het veld
+          else if(d.proefVerlopen){Array.prototype.forEach.call(sel.options,function(o){if(o.defaultSelected)sel.value=o.value;});toonProefVoorbij(sel);}
+          else alert(d.fout||'Oefendoel opslaan is niet gelukt.');})
         .catch(function(){sel.disabled=false;alert('Oefendoel opslaan is niet gelukt: geen verbinding.');});
     }
   });
@@ -4607,7 +4632,7 @@ bridge2.jpg</div>
       var herhaalA=herhaalSel?Number(herhaalSel.value)||0:0;
       fetch('api/kaart/afspraak',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:af.dataset.safspraakopslaan,t:tA,herhaal:herhaalA})})
         .then(function(r){return r.json();})
-        .then(function(d){delete af.dataset.bezig;if(d.ok)toonA('Bewaard ✓');else if(d.proefVerlopen){af.textContent=oudA;toonProefVoorbij();}else toonA(d.fout||'Mislukt');})
+        .then(function(d){delete af.dataset.bezig;if(d.ok)toonA('Bewaard ✓');else if(d.proefVerlopen){af.textContent=oudA;toonProefVoorbij(af);}else toonA(d.fout||'Mislukt');})
         .catch(function(){delete af.dataset.bezig;toonA('Geen verbinding');});
       return;
     }
@@ -4620,7 +4645,7 @@ bridge2.jpg</div>
       var toonP=function(t){ps.textContent=t;setTimeout(function(){ps.textContent=oudP;},1600);};
       fetch('api/kaart/psk-doel',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:ps.dataset.spskopslaan,activiteit:veldP.value})})
         .then(function(r){return r.json();})
-        .then(function(d){if(d.ok)toonP('Bewaard ✓');else toonP(d.fout||'Mislukt');})
+        .then(function(d){if(d.ok)toonP('Bewaard ✓');else if(d.proefVerlopen)toonProefVoorbij(ps);else toonP(d.fout||'Mislukt');})
         .catch(function(){toonP('Geen verbinding');});
       return;
     }
@@ -4633,7 +4658,7 @@ bridge2.jpg</div>
       var toonB=function(t){bh.textContent=t;setTimeout(function(){bh.textContent=oudB;},1600);};
       fetch('api/kaart/behandelaar',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:bh.dataset.sbehopslaan,naam:veldB.value})})
         .then(function(r){return r.json();})
-        .then(function(d){if(d.ok)toonB('Bewaard ✓');else toonB(d.fout||'Mislukt');})
+        .then(function(d){if(d.ok)toonB('Bewaard ✓');else if(d.proefVerlopen)toonProefVoorbij(bh);else toonB(d.fout||'Mislukt');})
         .catch(function(){toonB('Geen verbinding');});
       return;
     }
@@ -4646,7 +4671,7 @@ bridge2.jpg</div>
       var toonN=function(t){nt.textContent=t;setTimeout(function(){nt.textContent=oudN;},1600);};
       fetch('api/kaart/notitie',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:nt.dataset.snotitieopslaan,tekst:veldN.value})})
         .then(function(r){return r.json();})
-        .then(function(d){if(d.ok)toonN('Bewaard ✓');else toonN(d.fout||'Mislukt');})
+        .then(function(d){if(d.ok)toonN('Bewaard ✓');else if(d.proefVerlopen)toonProefVoorbij(nt);else toonN(d.fout||'Mislukt');})
         .catch(function(){toonN('Geen verbinding');});
       return;
     }

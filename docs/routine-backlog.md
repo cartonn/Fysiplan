@@ -18,24 +18,25 @@ werk voor Ahmed in `docs/mensenwerk.md`.
 | Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-08 02u (dubbelklik: fix) | 2026-11-08 18u liggend (uploads ok, × bij andermans sjabloon) | – | – | – |
 | Opname via telefoon /o | 2026-11-07 22u | 2026-11-08 18u (nep-camera, komt aan op /k) | – | 2026-11-07 10u | 2026-11-08 02u |
 | Afspraak, seintje, signalen | 2026-11-08 18u (herstel/pijn-verloop onzichtbaar) | 2026-11-08 18u staand (afspraak na verlopen proef stil) | 2026-11-08 18u (seintje → inbox ok) | 2026-11-08 06u (.ics dubbeltik) | 2026-11-08 06u (.ics dubbeltik) |
-| Proef bijna verlopen / verlopen (echte verlopen-pagina) | 2026-11-08 02u | 2026-11-08 18u staand (afspraak, afgehandeld) | – | 2026-11-07 02u (breedte) | – |
-| /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | 2026-11-07 06u | 2026-11-08 18u | 2026-11-08 14u (herstel 4 dagen) | 2026-11-08 14u (herstel 4 dagen) |
+| Proef bijna verlopen / verlopen (echte verlopen-pagina) | 2026-11-08 22u (Bewaar-knoppen in Kaarten: fix) | 2026-11-08 18u staand (afspraak, afgehandeld) | – | 2026-11-07 02u (breedte) | – |
+| /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | 2026-11-07 06u | 2026-11-08 22u (Luister-alert) | 2026-11-08 14u (herstel 4 dagen) | 2026-11-08 14u (herstel 4 dagen) |
 | /k: gedaan-vinkjes op een tweede apparaat | – | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u |
-| /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-08 18u (offline geoefend-uit: fix; 200 % nu 386 px) | 2026-11-08 18u (landscape lightbox, terugknop) | 2026-11-08 18u (trage lijn, pijnscore snel wisselen ok) |
-| /k: video afspelen (eigen opname, YouTube) | – | 2026-11-07 10u | 2026-11-07 22u (ook offline, 200%) | 2026-11-07 10u | 2026-11-07 22u |
-| /k: andere talen | – | – | de/tr 2026-11-08 18u (vertaalfout stil) | Duits/EN 2026-11-08 18u | ar + uk 2026-11-08 10u (te zwaar: fix) |
-| Landing /v2 (desktop: ook printen) | 2026-11-08 14u (print: fix) | 2026-11-08 18u staand+liggend (nav 22 px) | 2026-11-08 10u | 2026-11-07 14u | 2026-11-07 14u |
+| /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-08 22u (lightbox: fix; 200 % nog 224 op 160) | 2026-11-08 22u (lightbox liggend: fix; terugknop nog stuk) | 2026-11-08 18u (trage lijn, pijnscore snel wisselen ok) |
+| /k: video afspelen (eigen opname, YouTube) | – | 2026-11-08 22u (webm + mp4, staand/liggend) | 2026-11-07 22u (ook offline, 200%) | 2026-11-07 10u | 2026-11-07 22u |
+| /k: andere talen | – | – | de/tr 2026-11-08 18u (vertaalfout stil) | pl/ar 2026-11-08 22u (RTL-naam: fix) | ar + uk 2026-11-08 10u (te zwaar: fix) |
+| Landing /v2 (desktop: ook printen) | 2026-11-08 14u (print: fix) | 2026-11-08 18u staand+liggend (nav 22 px) | 2026-11-08 22u (47 tikdoelen < 44 px, 200 % schuift) | 2026-11-07 14u | 2026-11-08 22u (taallinks klein) |
 | Therapeut-app op telefoon | – | – | 2026-11-07 06u | 2026-11-06 22u | 2026-11-07 10u |
 | Therapeut-app op iPad liggend | – | 2026-11-07 10u | – | – | – |
 | Twee werkplekken op één kaart (oud apparaat/tabblad) | 2026-11-07 06u | 2026-11-07 06u | – | – | – |
 | Team: uitnodigen, rollen, verwijderen, inbox, dossier | 2026-11-08 14u (heruitnodigen, verwijderen) | 2026-11-08 18u (inbox Alleen mijn patiënten nog stuk) | – | – | – |
 | /privacy (100 % en 200 %) | – | – | 2026-11-08 18u (200 % schoof: fix) | – | – |
 | Mijn gegevens /k, Wis van dit apparaat, /v2/gegevens | 2026-11-07 18u | – | 2026-11-08 14u (fr: download loopt achter) | 2026-11-08 02u | 2026-11-07 18u |
-| Vensters met alleen toetsenbord | 2026-11-08 18u (nog stuk: geen focus-val, geen Escape, geen role=dialog) | – | – | – | – |
+| Vensters met alleen toetsenbord | 2026-11-08 18u (nog stuk: geen focus-val, geen Escape, geen role=dialog) | 2026-11-08 22u staand+liggend (nog stuk) | – | – | – |
 
-Volgende run (na 2026-11-08 18u): verlopen proef op desktop (eigen oefening toevoegen, afspraak), /k video met YouTube op iPad,
-vensters met toetsenbord op iPad, landing /v2 op iPhone SE en Pixel 7, /k Pools/Arabisch op iPhone 14, therapeut-app niet op telefoon
-(therapeuten werken op desktop/tablet). WebKit is niet geïnstalleerd: "iPhone"-devices draaien in Chromium.
+Volgende run (na 2026-11-08 22u): vensters met toetsenbord (focus-val + Escape, eigen fix waard), landing /v2 tikdoelen op iPhone SE,
+team/inbox "Alleen mijn patiënten" op desktop, /o met nep-camera op iPhone 14, herstel over meerdere dagen op Pixel 7, teamsjabloon
+op iPad. Therapeut-app niet op telefoon (therapeuten werken op desktop/tablet). WebKit is niet geïnstalleerd: "iPhone"-devices draaien in Chromium.
+Testtip: 200 % op /k of landing is met een mobiele viewport van 160 px slecht na te bootsen (de viewport rekt mee met een bredere pagina).
 
 Testtip: de verlopen-pagina test je met een tweede server op een kopie van de datamap waarin `verloopt`
 in proef-aanmeldingen.json in het verleden staat (wordt alleen bij het opstarten gelezen).
@@ -55,7 +56,16 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   opende Piets kaart en Jans scores stonden bij Piet. De server hernoemt nu alleen met `hernoem:true`; anders 409 `hernoemVraag`
   en de app vraagt "nieuwe kaart (eigen QR)" of "zelfde patiënt, naam verbeteren" (ook in de QR-hint). Een roepnaamvoorstel geldt
   als zelfde patiënt. Desktop (Sanne, 18u).
-- **App, verlopen proef: afspraak bewaren wordt stil geweigerd.** 403, knop springt terug naar "Bewaar", de nieuwe datum blijft
+- **OPGELOST 2026-11-08 (deze PR, test:lightbox) — /k-lightbox op een kleine telefoon onbruikbaar.** iPhone SE staand: foto
+  begon op y −32, de witte naam stond over de uitleg, de onderkant was onbereikbaar, geen sluitknop (bij 200 % zag de patiënt
+  geen foto). Nu scrollbaar met `safe center`, naam boven de foto, sluitknop van 44 px rechtsboven. Ook iPhone 14 liggend (ar).
+  iPhone SE (Truus, 22u), iPhone 14 (Jayden, 22u). Nog open: terugknop sluit de lightbox niet (staat bij de hertest-lijst).
+- **OPGELOST 2026-11-08 (deze PR, test:lightbox) — App, verlopen proef: Bewaar in het Kaarten-venster weigerde stil.** Afspraak:
+  melding alleen in de proefbalk áchter het venster; Behandelaar, Doelactiviteit en Werknotitie: 1,6 s servertekst als knoptekst,
+  daarna "Bewaar" alsof het gelukt was; Oefendoel bleef op de niet-bewaarde keuze. Nu een blijvende melding "Niet bewaard …
+  Wil je doorgaan?" onder de rij (veld houdt zijn breedte), oefendoel springt terug; de automatische opslag zet geen blok in het
+  venster. iPad staand (Mark, 22u), desktop (Sanne, 22u). Was:
+  **App, verlopen proef: afspraak bewaren wordt stil geweigerd.** 403, knop springt terug naar "Bewaar", de nieuwe datum blijft
   in het veld; de melding staat alleen in `#proefBalk` achter het Kaarten-venster (zelfde patroon als het seintje-antwoord in
   PR #101). `toonProefVoorbij()` index.html r. ~2627; aanroepen r. ~2305, ~2668, ~4607. iPad staand (Mark, 18u).
 - **OPGELOST 2026-11-08 PR #101 — App, verlopen proef: collega beantwoordt een seintje en ziet geen fout.** De server weigerde
@@ -87,6 +97,22 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   gaat na `afterprint` niet weg. public/index.html r. 238, 268–273, 1901 (`SAFARI_PRINT`). (Mark, 2026-11-07 06u)
 
 ### MIDDEL
+- **OPGELOST 2026-11-08 (deze PR, test:lightbox) — /k in het Arabisch: Nederlandse oefennaam in RTL** ("graden 360", ".1 Mobilisatie
+  rotatie rug" in de schemakop). Nu `dir="auto"` op oefennaam, schemakop en lightboxnaam. iPhone 14 (Jayden, 22u).
+- **Landing /v2 op iPhone SE: 47 tikdoelen kleiner dan 44 px.** Nav-links 22 px hoog ("Vragen" half buiten beeld zonder hint,
+  `div.links` 372 op 240), "Inloggen" 34, "Open een voorbeeldkaart" 22, taallinks 17, voetlinks 14, prijsknoppen 1–12 46×38.
+  public/v2.html r. 118, 134 (`nav .links a` padding 6px 10px 2px 0), r. 445 (`footer a` line-height 1). Taallinks openen in
+  een nieuw tabblad (r. 593, `target=_blank`). iPhone SE (Truus, 22u), Pixel 7 (Jayden, 22u).
+- **Landing /v2 bij 200 % zoom schuift horizontaal** (312 px inhoud op 160): vaste zijmarge 40 px (r. 114), `.feiten .rij`
+  blijft `1fr 1fr` (r. 250–251), sticky nav neemt bij CSS-zoom de helft van het scherm. iPhone SE (Truus, 22u).
+- **/k: "Luister naar uitleg" bovenaan geeft een systeem-alert "Nog geen actuele stemopname: …"** ook op een nieuwe kaart uit de
+  app (niet alleen oude kaarten). Knop alleen tonen als er minstens één opname is, of een melding in de pagina.
+  kaart.html r. ~1922, ~1930–1942 (`meldOntbrekend`). iPhone SE (Truus, 22u).
+- **Hertest 22u, nog stuk:** dubbelklik × (nu 200 + 404 "Kaart niet gevonden.") en Kopie (twee vragen) in het kaartenoverzicht,
+  × is 34×32 px (Sanne, desktop); vensters met alleen toetsenbord ook op iPad staand/liggend: focus blijft achter het venster,
+  Escape sluit niet, geen role=dialog (`openOv`/`closeOv` index.html r. ~5150) (Mark); /k 200 % nog 224 px op 160 (Begrepen,
+  weekbolletjes, voettekst); /k vertaalfout stil (pl/ar/en); trage lijn eerst een Nederlandse kaart; terugknop met open
+  lightbox verlaat de kaart (Jayden, Truus).
 - **OPGELOST 2026-11-08 (deze PR, test:offlinestand) — /k offline: "Ik heb vandaag geoefend" nog eens tikken haalde de dag stil weg**
   (knop bleef groen, `{aan:false}` in de wachtrij; na online was de dag weg terwijl de vinkjes per oefening bleven). Nu gaat de
   knop zichtbaar uit met de vinkjes mee. Ook: offline pijnscore staat nu als gekozen (aria-pressed). iPhone SE (Truus, 18u).
@@ -271,6 +297,16 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   Al opgelost in open PR #41 (server.js `denied()` met eigen tekst); mergen of overnemen.
 
 ### LAAG
+- **Verlopen proef: "+1 week" bij de afspraak schuift de datum in het veld door, ook als bewaren geweigerd wordt** (na twee tikken
+  22-11 in het veld, niets bewaard). iPad (Mark, 22u).
+- **Verlopen-pagina /v2/proef vult de praktijknaam niet in** als die pas in de app is ingevuld (proefrecord `praktijk` leeg;
+  `acc.proef` kent hem wel; `proefZetPraktijk` index.html r. ~2606 werkt alleen lokaal). Desktop (Sanne, 22u).
+- **Proefformulier: 0612345678 geeft "Dit nummer klopt niet. Gebruik 10 cijfers die met 0 beginnen"** terwijl het wel 10 cijfers
+  zijn (bewuste nepnummerlijst); zeg "Vul je echte nummer in". lib/proef.js r. 52, 96. Nog geen `aria-invalid`. (Sanne, 22u)
+- **/k-schema: S/H/W en de legenda blijven Nederlandse afkortingen in pl/ar**; Arabisch "2 مجموعات, 15 تكرارات" met Latijnse komma.
+  iPhone 14 (Jayden, 22u).
+- **.ics-DESCRIPTION linkt naar /k/<id> zonder `?taal=`** (nog te bevestigen, server.js r. ~4630): op een nieuw apparaat opent de
+  kaart vanuit de agenda in het Nederlands. (Jayden, 22u)
 - **Proefformulier: alleen een fout in een vinkje → focus gaat naar body** (`eerste` kijkt alleen naar email/naam/tel, server.js r. ~674). Desktop (Sanne, 18u).
 - **/k lightbox liggend op iPhone 14: witte oefennaam over de grijze disclaimer** (`.lbnaam` absolute, kaart.html r. ~118). (Jayden, 18u)
 - **Teamsjabloon: therapeut (geen beheerder) ziet × bij het sjabloon van een collega**; server weigert terecht 403. iPad liggend (Mark, 18u).
