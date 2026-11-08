@@ -1,23 +1,27 @@
 # Opnieuw maken na Physitrack-crosscheck
 
-Stand: 225 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oordeel `afwijkend` of `fout`). De lijntekening wint bij conflict; een avatar of video die afwijkt wordt opnieuw gemaakt nadat de tekening klopt.
+Stand: 300 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oordeel `afwijkend` of `fout`). De lijntekening wint bij conflict; een avatar of video die afwijkt wordt opnieuw gemaakt nadat de tekening klopt.
 
 ## Bekend vooraf
 
 - **600 One leg standing / 601 Standing chair shoulder rotations**: hebben elkaars tekening en avatar. Omwisselen (tekening én avatar).
 
-## Tekeningen (3)
+## Tekeningen (4)
 
 ### Core
 
 - **75 Abroller** (afwijkend): Uitleg en avatar tonen de knielende uitrol met het buikwiel, zoals Physitrack. De tekening toont een ander apparaat: een crunchframe in ruglig, en dat is geen Physitrack-variant van de abroller. Tekening vervangen door de knielende uitrol met het buikwiel; de avatar klopt dan wel. Let op: spec_tekening en videoprompt beschrijven nu ook het crunchframe.
 - **107 Stick twist** (afwijkend): Physitrack: stok achter de nek op de schouders en romp draaien, zoals de uitleg. Tekening toont stok diagonaal (één hand hoog, één laag) met zijwaartse kanteling: andere variant, geen Physitrack-match; tekening vervangen door stok op de schouders. Avatar volgt Physitrack (stok op schouders) maar eindbeeld draait vooral het hoofd, romp nauwelijks: duidelijker romprotatie tonen.
 
+### Foam Roller
+
+- **525 Foam roller glute med.** (afwijkend): Physitrack doet gluteus medius in zijlig met de roller onder de zijkant van de bil. Tekening en avatar tonen de zittende figuur-4 houding (gelijk aan Foam roller glute, nr 526). Tekening en avatar opnieuw maken in zijlig.
+
 ### Onderste extremiteit
 
 - **45 Been pendelen** (fout): Tekening toont een andere oefening (buiklig op bank, schaarbeweging met gestrekte benen), geen beenpendel; nieuwe tekening nodig: staand met steun, been zwaait voor-achter. Uitleg volgt Physitrack en blijft. Avatar: been gaat zijwaarts i.p.v. voor-achter en steun ontbreekt in startbeeld.
 
-## Avatars (74)
+## Avatars (77)
 
 ### Apparaten
 
@@ -81,6 +85,15 @@ Stand: 225 van 446 oefeningen gecontroleerd. Bron per regel: resultaten.csv (oor
 - **101 Reversed crunch** (afwijkend): Tekening en video tonen gestrekte benen recht omhoog met bekken optillen (Physitrack Candlesticks; daar liggen de handen onder het stuitje, hier naast het lichaam, dat is acceptabel). Avatar toont knieën 90/90 gebogen (klassieke reverse crunch) in plaats van gestrekte benen omhoog: avatar opnieuw maken volgens tekening.
 - **105 Scissors 2** (afwijkend): Tekening toont been-wissel in één vlak (gebogen knie naar borst, ander been gestrekt, hoofd/schouders opgetild) = Physitrack Pilates single leg stretch. Uitleg beschreef horizontaal kruisen van de benen. Avatar: hoofd ligt op de vloer, armen naast het lichaam en in start en eind is hetzelfde been gebogen (geen wissel zichtbaar); eindbeeld moet het andere been gebogen tonen, hoofd en schouders iets opgetild.
 - **108 Superman** (afwijkend): Tekening toont viervoetstand met tegengestelde arm en been (Physitrack 'Superman, 4 point kneeling'). Uitleg en avatar tonen de buikligvariant (die hoort bij 'Rug extensie', nr 102). Uitleg aangepast aan tekening; avatar opnieuw maken in viervoetstand.
+
+### Foam Roller
+
+- **525 Foam roller glute med.** (afwijkend): Physitrack doet gluteus medius in zijlig met de roller onder de zijkant van de bil. Tekening en avatar tonen de zittende figuur-4 houding (gelijk aan Foam roller glute, nr 526). Tekening en avatar opnieuw maken in zijlig.
+- **535 Foam roller back lower cross** (afwijkend): Physitrack rolt met de voeten heen en weer over de lage rug; de uitleg zegt alleen 'klein bewegen'. Tekening toont een arm boven het hoofd, die variant staat niet bij Physitrack. Avatar wijkt af van de tekening: één been gekruist over de andere knie en geen arm boven het hoofd; avatar opnieuw volgens tekening (beide voeten plat). Twijfel: betekenis van 'cross' in de naam is onduidelijk.
+
+### Medicine Ball
+
+- **540 Med ball chest press** (fout): dichtstbij: supine chest press met gewichten (geen medicine-ball-versie bij Physitrack). Avatar houdt de bal met één hand en de andere arm ligt op de vloer; tekening toont beide handen aan de bal. Avatar opnieuw met beide handen. Let op: bijna gelijk aan 541 (Med ball floor press).
 
 ### Onderste extremiteit
 
