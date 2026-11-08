@@ -1909,6 +1909,22 @@ async function videoOpslagVol(extraBytes) {
   }
   return videoOpslag.bytes + extraBytes > VIDEO_OPSLAG_MAX;
 }
+// quotum per praktijk (security 2026-11-08): zonder dit kon één gratis geclaimde praktijk
+// met eigen opnames op haar kaarten (100 kaarten × 12 video's × 60 MB) de hele
+// videogrens hierboven blijvend volzetten, waarna elke andere praktijk een 507 kreeg.
+// Telt de opnames op de eigen kaarten plus de nog niet opgeslagen opnames.
+const VIDEO_PRAKTIJK_MAX = Math.max(0.01, Number(process.env.VIDEO_PRAKTIJK_MAX_MB) || 500) * 1024 * 1024;
+async function praktijkVideoBytes(pk) {
+  const paden = new Set();
+  const map = Object.hasOwn(kaarten, pk) ? kaarten[pk] : {};
+  for (const k of Object.values(map || {})) {
+    for (const v of Object.values((k && k.vids) || {})) if (/^uploads\/videos\/v-[a-f0-9]+\.(mp4|webm)$/.test(String(v))) paden.add(v);
+  }
+  for (const o of opnames.values()) if (o.praktijk === pk && o.video) paden.add(o.video);
+  let som = 0;
+  for (const pad of paden) { try { som += (await stat(join(dataDir, pad))).size; } catch {} }
+  return som;
+}
 
 // eigen ruime rem voor de open statistiek-teller: normaal gebruik (printen, kaarten
 // opslaan) haalt dit nooit, maar hameren schrijft dan niet meer naar schijf
@@ -3674,6 +3690,11 @@ async function afhandelen(request, response) {
       }
       if (await videoOpslagVol(buf.length)) {
         await sendJson(response, 507, { ok: false, fout: "De videopslag is vol; de opname kan nu niet bewaard worden." });
+        return;
+      }
+      if (o.doel === "kaart" && o.praktijk && (await praktijkVideoBytes(o.praktijk)) + buf.length > VIDEO_PRAKTIJK_MAX) {
+        await sendJson(response, 507, { ok: false, praktijkVol: true,
+          fout: "De videoruimte van deze praktijk is vol (" + Math.round(VIDEO_PRAKTIJK_MAX / 1048576) + " MB). Haal eerst oude eigen video's van kaarten af." });
         return;
       }
       await mkdir(join(uploadsDir, "videos"), { recursive: true });

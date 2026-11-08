@@ -16,10 +16,32 @@ daaruit tot en met 2026-11-06.
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-07 (runtime: payloads in alle kaartvelden, /k in nl/en/ar met vertaling, overzicht, sjablonen, eigen oefeningen, serverpagina's; geen gat) |
 | (g) security-headers, CSP, cookies, CSRF | 2026-11-08 16u (runtime: CSP, frame-ancestors, nosniff, referrer, no-store op /v2, /v2/proef, /v2/app, /k, /o, /privacy, /verwerkersovereenkomst en API; geen inline script zonder nonce; HSTS alleen achter https. Geen gat) |
 | (h) foutmeldingen die stacktraces of paden lekken | 2026-11-08 (runtime-fuzz 103 routes × GET/POST/PUT/DELETE × 7 kapotte bodies × 3 content-types = 6592 verzoeken, plus pad-traversal en kapotte %-codering: geen stacktrace, geen intern pad, geen fout in het serverlog) |
-| (i) denial of service: grote bodies, opslaggroei | 2026-11-07 (te grote body: nu 413, weglezen begrensd op 10 s en 80 MB) |
-| (j) npm audit | 2026-11-07 (sharp 0.35.3 → 0.35.5, daarna 0 meldingen) |
+| (i) denial of service: grote bodies, opslaggroei | 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
+| (j) npm audit | 2026-11-08 20u (0 meldingen, ook dev) |
 
-Volgende run: (i) opslaggroei en (j) npm audit, daarna (e) uploads.
+Volgende run: (e) uploads, daarna (f) injectie/XSS.
+
+Sanity 2026-11-08 20u op #106–#108 (verwijderde collega, Mijn gegevens-download, niet stil hernoemen): de nieuwe
+409-vraag in `POST /api/kaarten` zit achter dezelfde praktijkpoort en geeft alleen de naam van een kaart uit de
+eigen map terug. Geen gat.
+
+Audit (i) + (j) 2026-11-08 20u:
+- **OPGELOST 2026-11-08 (deze PR) — MIDDEL — één praktijk kon de videogrens voor alle praktijken volzetten.**
+  Iedereen kan gratis een praktijk claimen (5 per IP per dag) en daarna via `/api/opname/start` + `/o` eigen
+  video's tot 60 MB uploaden en op de eigen kaarten zetten (100 kaarten × 12 video's). Die tellen tegen de gedeelde
+  grens `VIDEO_OPSLAG_MAX_MB` (4 GB) en verdwijnen pas met de kaart. Na ~70 uploads kreeg elke andere praktijk
+  blijvend 507 "videopslag is vol". Nu: quotum per praktijk `VIDEO_PRAKTIJK_MAX_MB` (standaard 500 MB) over de
+  opnames op de eigen kaarten plus nog niet opgeslagen opnames; daarboven 507 met `praktijkVol`, andere praktijken
+  merken niets. Test: `npm run test:videoquotum`.
+- **LAAG — restrisico: meerdere geclaimde praktijken samen** (8 × 500 MB = 4 GB, met 5 claims per IP per dag twee
+  dagen vanaf één IP). Voorgestelde fix: bij de 507 van de gedeelde grens een melding in het beheerdashboard, of
+  voor praktijken in een proef een lager quotum (bv. 100 MB). Nu niet gebouwd: het quotum maakt het al veel duurder.
+- **LAAG — gelijktijdige uploads kunnen het quotum met hooguit 4 × 60 MB overschrijden** (`lopendeUploads` ≤ 4, de
+  telling gebeurt na het bufferen). Acceptabel; fix zou een reservering per praktijk zijn.
+- Verder nagelopen, geen gat: plafonds op praktijken (200/300/1000), kaarten per praktijk (100), metingen/gedaan
+  (366), ervaring/psk (120), contactlogboek (50), oefTrouw (60), oefzwaar (24), eigen oefeningen (200, foto 600 kB),
+  sjablonen (30), teamleden (50), proeven (5000), v1-tokens (500), opnametokens (200, TTL 15 min), logo 400 kB,
+  eigen categorieën (100); `/api/stats/event` alleen tellers met eigen rem. `npm audit`: 0 meldingen.
 
 Sanity 2026-11-08 16u op #103–#105 (Mijn gegevens in 9 talen, roepnaamvoorstel/landing printbaar, oefenteksten):
 alleen `PRIVACY_VERSIE` in server.js, geen nieuwe routes; de nieuwe vertalingen zijn vaste tekst. Geen gat.
