@@ -492,6 +492,10 @@ __FAQ_SCHEMA__
   @keyframes fp-in{from{opacity:0;transform:translateY(34px) scale(.985)}to{opacity:1;transform:none}}
   @keyframes fp-zweef{to{transform:translateY(-48px)}}
   @keyframes fp-voortgang{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  /* Printen/PDF: blokken die nog niet in beeld zijn gescrold staan op opacity 0 door de
+     scroll-animatie; op papier moet alles gewoon zichtbaar zijn (sweep 2026-11-08). */
+  @media print{*,*::before,*::after{animation:none!important;transition:none!important}
+    body::before{display:none!important}}
 </style>
 </head>
 <body>

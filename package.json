@@ -79,7 +79,8 @@
     "test:agendamelding": "node scripts/test-agenda-melding.mjs",
     "test:oefvinkje": "node scripts/test-sweep-oefvinkje-wachtrij.mjs",
     "test:dubbeltik": "node scripts/test-sweep-dubbeltik-breedte.mjs",
-    "test:kaartroutes": "node scripts/test-kaart-praktijkroutes.mjs"
+    "test:kaartroutes": "node scripts/test-kaart-praktijkroutes.mjs",
+    "test:landingprint": "node scripts/test-sweep-landingprint-langetekst.mjs"
   },
   "engines": {
     "node": ">=20"

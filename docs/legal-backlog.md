@@ -23,6 +23,11 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **MIDDEL (gebruikers-sweep 2026-11-08 14u, Truus) — /k "Download mijn gegevens" direct na tikken klopt niet** (inzage art. 15).
+  Na 2 oefeningen afvinken en een seintje toont de download "0 jours" en "Mes messages au cabinet: rien"; pas na herladen
+  klopt het. `zetOefTrouwLokaal` maakt `{n:0}` (kaart.html r. ~1038), download print `n` (r. ~1661); `mijnSeintjes` wordt
+  na een seintje niet lokaal bijgewerkt (r. ~1669). Alle talen. iPhone SE.
+
 - **LAAG — /k "Mijn gegevens"-download alleen in nl en en** (2026-11-08). OPGELOST 2026-11-08 PR #103: `TMGD` in alle 9 talen,
   datums in de kaarttaal, test in `scripts/test-mijn-gegevens.mjs`.
 - **LAAG — /privacy#opslag miste twee patiëntvoorkeuren** (2026-11-08 13u). `fp_app_weg` (melding "zet de kaart op je
