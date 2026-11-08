@@ -2635,11 +2635,23 @@ async function afhandelen(request, response) {
     // login, en vervallen alle sessies die met het gedeelde wachtwoord zijn gemaakt
     if (urlPath === "/api/praktijk/team/gedeeld-uit") {
       if (!ik) { await sendJson(response, 400, { ok: false, fout: "Maak eerst je eigen login; anders kom je er zelf niet meer in." }); return; }
+      // weer aanzetten: alleen met een nieuw praktijkwachtwoord en een nieuwe herstelcode.
+      // Het oude wachtwoord en de oude code (op papier) kende ook wie intussen uit het
+      // team is; die mogen niet stil weer gaan werken (security-backlog 2026-11-07)
+      let herstelcode;
+      if (b.uit === false && acc.gedeeldUit) {
+        const ww = String(b.wachtwoord || "");
+        if (ww.length < 8) { await sendJson(response, 400, { ok: false, wachtwoord: true, fout: "Kies een nieuw praktijkwachtwoord van minstens 8 tekens; het oude werkt niet meer." }); return; }
+        herstelcode = maakHerstelcode();
+        acc.hash = maakHash(ww);
+        acc.herstel = maakHash(herstelcode);
+        acc.gewijzigd = Date.now();
+      }
       acc.gedeeldUit = b.uit !== false;
       await opslaan();
-      if (acc.gedeeldUit) trekSessiesIn(pk, null);
+      trekSessiesIn(pk, null);
       auditLog(pk, acc.gedeeldUit ? "praktijkwachtwoord-uit" : "praktijkwachtwoord-aan", request);
-      await sendJson(response, 200, { ok: true, gedeeldUit: acc.gedeeldUit });
+      await sendJson(response, 200, { ok: true, gedeeldUit: acc.gedeeldUit, ...(herstelcode ? { herstelcode } : {}) });
       return;
     }
     await sendJson(response, 404, { ok: false, fout: "Niet gevonden." });
@@ -4825,8 +4837,11 @@ async function afhandelen(request, response) {
     // pagina mag hem niet aanroepen. Fail-open, dus gedrag verandert niet.
     if (kruisSite(request)) { await weigerKruis(response); return; }
     if (schrijfLimiet(request, response)) return;
+    // een kapotte body is een fout van de aanvrager (400), geen storing van de vraaghulp (502)
+    let b;
+    try { b = JSON.parse(await readBody(request)); } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); return; }
+    if (!b || typeof b !== "object" || Array.isArray(b)) { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); return; }
     try {
-      const b = JSON.parse(await readBody(request));
       const found = vindKaart(idTekst(b.id));
       if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const vraag = String(b.vraag || "").trim().slice(0, 300);

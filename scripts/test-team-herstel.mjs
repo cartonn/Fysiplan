@@ -4,6 +4,8 @@
 // omzetten, kreeg elke keer een verse herstelcode en logde het hele team uit.
 // - Zolang het gedeelde wachtwoord aan staat, werkt herstel en blijven eigen logins ingelogd.
 // - Staat het uit, dan weigert herstel (401, perEmail) en verandert er niets.
+// - Weer aanzetten kan alleen met een nieuw wachtwoord; de oude code vervalt (2026-11-08).
+// - /api/kaart/vraag met een kapotte body geeft 400, geen 502.
 // Zonder browser, past in CI. `npm run test:teamherstel`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
@@ -69,11 +71,40 @@ try {
   assert.equal(await readFile(join(dataDir, "praktijk-accounts.json"), "utf8"), voor, "account onveranderd");
   assert.equal((await get("/api/praktijk/team", S)).status, 200, "het team blijft ingelogd");
 
-  // ---- gedeeld wachtwoord weer aan: herstel werkt weer ----
-  assert.equal((await post("/api/praktijk/team/gedeeld-uit", { uit: false }, S)).status, 200);
-  const h3 = await post("/api/praktijk/herstel", { praktijk: "Fysio Herstel", herstelcode: code, nieuw: "weer-eigen-ww" });
-  assert.equal(h3.status, 200);
+  // ---- gedeeld wachtwoord weer aan: alleen met een nieuw wachtwoord en een nieuwe code ----
+  // (security 2026-11-08) het oude wachtwoord en de oude code kende ook een oud-collega
+  const zonder = await post("/api/praktijk/team/gedeeld-uit", { uit: false }, S);
+  assert.equal(zonder.status, 400, "weer aanzetten zonder nieuw wachtwoord wordt geweigerd");
+  assert.equal((await zonder.json()).wachtwoord, true);
+  assert.equal((await post("/api/praktijk/team/gedeeld-uit", { uit: false, wachtwoord: "kort" }, S)).status, 400);
+  assert.equal((await post("/api/praktijk/login", { praktijk: "Fysio Herstel", wachtwoord: "nieuw-praktijkww" })).status, 401,
+    "na een geweigerde poging blijft het gedeelde wachtwoord uit");
+  const aan = await post("/api/praktijk/team/gedeeld-uit", { uit: false, wachtwoord: "vers-praktijkww" }, S);
+  assert.equal(aan.status, 200);
+  const aj = await aan.json();
+  assert.equal(aj.gedeeldUit, false);
+  assert.match(aj.herstelcode || "", /^FP-/, "weer aanzetten geeft een nieuwe herstelcode");
+  assert.notEqual(aj.herstelcode, code);
+  assert.equal((await post("/api/praktijk/login", { praktijk: "Fysio Herstel", wachtwoord: "nieuw-praktijkww" })).status, 403,
+    "het oude gedeelde wachtwoord werkt niet meer");
+  assert.equal((await post("/api/praktijk/herstel", { praktijk: "Fysio Herstel", herstelcode: code, nieuw: "aanvaller-ww-456" })).status, 403,
+    "de oude herstelcode van papier werkt niet meer");
+  assert.equal((await post("/api/praktijk/login", { praktijk: "Fysio Herstel", wachtwoord: "vers-praktijkww" })).status, 200,
+    "het nieuwe gedeelde wachtwoord werkt");
+  const h3 = await post("/api/praktijk/herstel", { praktijk: "Fysio Herstel", herstelcode: aj.herstelcode, nieuw: "weer-eigen-ww" });
+  assert.equal(h3.status, 200, "de nieuwe herstelcode werkt");
   assert.equal((await get("/api/praktijk/team", S)).status, 200);
+  // al aan: nogmaals aanzetten verandert niets en vraagt geen wachtwoord
+  const nogmaals = await post("/api/praktijk/team/gedeeld-uit", { uit: false }, S);
+  assert.equal(nogmaals.status, 200);
+  assert.equal((await nogmaals.json()).herstelcode, undefined);
+  assert.equal((await post("/api/praktijk/login", { praktijk: "Fysio Herstel", wachtwoord: "weer-eigen-ww" })).status, 200);
+
+  // ---- vraaghulp: een kapotte body is 400, geen 502 "even niet bereikbaar" ----
+  for (const body of ["{", "null", "[]", "42", "geen json"]) {
+    const r = await fetch(origin + "/api/kaart/vraag", { method: "POST", headers: kop(), body });
+    assert.equal(r.status, 400, "kapotte body " + JSON.stringify(body) + " geeft 400");
+  }
 
   console.log("test-team-herstel: ok");
 } catch (e) {

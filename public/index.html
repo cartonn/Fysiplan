@@ -3106,7 +3106,32 @@ bridge2.jpg</div>
       var gd=document.getElementById('tm_gedeeld');
       if(gd)gd.addEventListener('click',function(e){
         e.preventDefault();
-        teamPost('gedeeld-uit',{uit:gd.getAttribute('data-uit')==='1'}).then(function(r){if(!r.ok)msg(r.fout||'Dat lukte niet.');laadTeam();});
+        if(gd.getAttribute('data-uit')==='1'){
+          teamPost('gedeeld-uit',{uit:true}).then(function(r){if(!r.ok)msg(r.fout||'Dat lukte niet.');laadTeam();});
+          return;
+        }
+        // weer aanzetten kan alleen met een nieuw wachtwoord: het oude kende ook wie al weg is
+        var vak=document.getElementById('tm_gdform');
+        if(vak){vak.style.display=vak.style.display==='none'?'flex':'none';return;}
+        vak=document.createElement('div');vak.id='tm_gdform';
+        vak.style.cssText='display:flex;gap:6px;flex-wrap:wrap;margin-top:6px';
+        vak.innerHTML="<input id='tm_gdww' type='password' autocomplete='new-password' placeholder='Nieuw praktijkwachtwoord (min. 8 tekens)' style='flex:1;min-width:200px'/>"+
+          "<button class='btn primary' id='tm_gddo' type='button'>Zet weer aan</button>";
+        gd.parentNode.appendChild(vak);
+        document.getElementById('tm_gddo').addEventListener('click',function(){
+          var ww=document.getElementById('tm_gdww').value;
+          if(ww.length<8){msg('Kies een nieuw praktijkwachtwoord van minstens 8 tekens; het oude werkt niet meer.');return;}
+          teamPost('gedeeld-uit',{uit:false,wachtwoord:ww}).then(function(r){
+            if(!r.ok){msg(r.fout||'Dat lukte niet.');return;}
+            laadTeam(function(){
+              if(!r.herstelcode)return;
+              var m=document.getElementById('tm_msg');if(!m)return;
+              m.style.color='var(--ink)';
+              m.innerHTML="Het praktijkwachtwoord werkt weer, met het nieuwe wachtwoord. Bewaar deze nieuwe herstelcode op een veilige plek; de oude werkt niet meer:"+
+                "<div style='font:700 15px/1.6 ui-monospace,monospace;user-select:all;margin-top:4px'>"+esc(r.herstelcode)+"</div>";
+            });
+          });
+        });
       });
       if(na)na();
     }).catch(function(){el.textContent='Geen verbinding met de server.';});
