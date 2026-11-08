@@ -2663,11 +2663,28 @@ async function afhandelen(request, response) {
       if (acc.gedeeldUit && doel.rol === "beheerder" && lidActief(doel) && beheerders().length <= 1) {
         await sendJson(response, 400, { ok: false, fout: "Er moet minstens één beheerder overblijven." }); return;
       }
+      // werkt het gedeelde praktijkwachtwoord nog, dan kan een vertrokken collega daarmee
+      // gewoon weer inloggen (als beheerder). Niet stil verwijderen: de beheerder kiest
+      // "praktijkwachtwoord ook uit" of bewust "laten" (security-backlog 2026-11-08)
+      let gedeeldOokUit = false;
+      if (!acc.gedeeldUit && lidActief(doel)) {
+        if (b.gedeeld === "uit") {
+          if (!ik) { await sendJson(response, 400, { ok: false, fout: "Maak eerst je eigen login; anders kom je er zelf niet meer in. Of verander daarna het praktijkwachtwoord." }); return; }
+          gedeeldOokUit = true;
+        } else if (b.gedeeld !== "laten") {
+          await sendJson(response, 409, { ok: false, gedeeldAan: true, kanUit: !!ik,
+            fout: "Het praktijkwachtwoord werkt nog. Kende deze collega het, dan kan die daarmee weer inloggen." });
+          return;
+        }
+      }
       acc.leden = acc.leden.filter((x) => x !== doel);
+      if (gedeeldOokUit) acc.gedeeldUit = true;
       await opslaan();
       trekSessiesIn(pk, doel.id);
+      if (gedeeldOokUit) trekSessiesIn(pk, null);
       auditLog(pk, "collega-verwijderd", request);
-      await sendJson(response, 200, { ok: true });
+      if (gedeeldOokUit) auditLog(pk, "praktijkwachtwoord-uit", request);
+      await sendJson(response, 200, { ok: true, ...(gedeeldOokUit ? { gedeeldUit: true } : {}) });
       return;
     }
     if (urlPath === "/api/praktijk/team/rol") {

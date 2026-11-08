@@ -14,12 +14,15 @@ daaruit tot en met 2026-11-06.
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-08 12u (therapeutroutes op één kaart open bij praktijk zonder wachtwoord: opgelost; id 48 bits + misrem 30/5 min per IP, patiëntroute met allowlist, praktijkroutes alleen eigen map) |
 | (e) uploads (video, logo, opname /o) | 2026-11-07 (logo-veeg wiste logo's van andere praktijken: opgelost; opname-upload, eigen oefening, /uploads-pad: geen gat) |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-07 (runtime: payloads in alle kaartvelden, /k in nl/en/ar met vertaling, overzicht, sjablonen, eigen oefeningen, serverpagina's; geen gat) |
-| (g) security-headers, CSP, cookies, CSRF | 2026-11-07 (runtime: koppen op 11 V2-pagina's en API, cookies HttpOnly+Lax+Secure, praktijksessie via eigen kop; kruisSite kijkt nu ook naar Origin) |
+| (g) security-headers, CSP, cookies, CSRF | 2026-11-08 16u (runtime: CSP, frame-ancestors, nosniff, referrer, no-store op /v2, /v2/proef, /v2/app, /k, /o, /privacy, /verwerkersovereenkomst en API; geen inline script zonder nonce; HSTS alleen achter https. Geen gat) |
 | (h) foutmeldingen die stacktraces of paden lekken | 2026-11-08 (runtime-fuzz 103 routes × GET/POST/PUT/DELETE × 7 kapotte bodies × 3 content-types = 6592 verzoeken, plus pad-traversal en kapotte %-codering: geen stacktrace, geen intern pad, geen fout in het serverlog) |
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-07 (te grote body: nu 413, weglezen begrensd op 10 s en 80 MB) |
 | (j) npm audit | 2026-11-07 (sharp 0.35.3 → 0.35.5, daarna 0 meldingen) |
 
-Volgende run: (g) headers/CSRF, daarna (i) opslaggroei en (j) npm audit.
+Volgende run: (i) opslaggroei en (j) npm audit, daarna (e) uploads.
+
+Sanity 2026-11-08 16u op #103–#105 (Mijn gegevens in 9 talen, roepnaamvoorstel/landing printbaar, oefenteksten):
+alleen `PRIVACY_VERSIE` in server.js, geen nieuwe routes; de nieuwe vertalingen zijn vaste tekst. Geen gat.
 
 Sanity 2026-11-08 12u op #99–#101 (prijs €9,99, samenvatting VWO/voorwaarden, dubbeltik/seintje-antwoord): geen
 nieuwe routes of velden; de nieuwe foutmelding in de seintje-venster is vaste tekst. Geen gat.
@@ -116,11 +119,13 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
-- **MIDDEL (gebruikers-sweep 2026-11-08 14u, Mark) — verwijderde collega komt weer binnen met het gedeelde praktijkwachtwoord.**
-  Na × in Team vervalt zijn eigen sessie (401/403), maar inloggen met praktijknaam + praktijkwachtwoord geeft 200 en een
-  beheerderssessie (sessie zonder lid = beheer, server.js r. ~299 `isBeheer`; verwijderen r. ~2660–2671 trekt alleen
-  lid-sessies in). Het Team-venster belooft "kan een vertrokken collega er niet meer in" (index.html r. ~3044).
-  Voorstel: bij verwijderen waarschuwen of het gedeelde wachtwoord automatisch uitzetten zodra er eigen logins zijn.
+- **OPGELOST 2026-11-08 (deze PR) — MIDDEL (gebruikers-sweep 2026-11-08 14u, Mark) — verwijderde collega komt weer binnen met het gedeelde praktijkwachtwoord.**
+  Na × in Team vervalt zijn eigen sessie, maar inloggen met praktijknaam + praktijkwachtwoord gaf 200 en een
+  beheerderssessie. Nu: zolang het praktijkwachtwoord werkt, geeft `/api/praktijk/team/verwijder` voor een actieve
+  collega 409 (`gedeeldAan`), en kiest de beheerder in de app "Verwijder en zet het praktijkwachtwoord uit"
+  (`gedeeld:"uit"`, alleen met eigen login; trekt ook alle gedeelde sessies in) of bewust "Alleen verwijderen"
+  (`gedeeld:"laten"`, met de tip het wachtwoord te veranderen). Uitgenodigden die nooit inlogden gaan gewoon weg.
+  Test: `npm run test:teamherstel` en `npm run test:team`.
 - **LAAG (sweep 14u, Jayden) — bericht van de therapeut laat tekst-omkeertekens (U+202E e.d.) door** naar /k; alleen
   \u0000–\u001f wordt gefilterd (server.js r. ~4333). Geen XSS (platte tekst), wel misleidende weergave.
 
