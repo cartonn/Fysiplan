@@ -23390,8 +23390,8 @@
     {
       "order": 397,
       "exerciseId": "fp_4ecc3fa3dbce246b",
-      "sourceName": "Rug bol en hol – met lichte weerstand",
-      "titleNl": "Rug bol en hol – met lichte weerstand",
+      "sourceName": "Rug bol en hol – op de adem",
+      "titleNl": "Rug bol en hol – op de adem",
       "category": "Rug",
       "referenceImage": "images/rug/rug-bol-en-hol-met-lichte-weerstand-line-v1.png",
       "script": {
@@ -23400,7 +23400,7 @@
         "movement": "Maak je rug geleidelijk rond en daarna rustig lang. Beweeg gecontroleerd tegen weerstand en vertraag de terugweg.",
         "cue": "Verdeel de beweging over de hele wervelkolom.",
         "safety": "Stop bij scherpe of toenemende pijn en overleg met je fysiotherapeut als je twijfelt.",
-        "narration": "Dit is rug bol en hol – met lichte weerstand. Neem een stabiele houding en houd een licht elastiek of gewicht vast. Maak je rug geleidelijk rond en daarna rustig lang. Beweeg gecontroleerd tegen weerstand en vertraag de terugweg. Verdeel de beweging over de hele wervelkolom. Stop bij scherpe of toenemende pijn en overleg met je fysiotherapeut als je twijfelt."
+        "narration": "Dit is rug bol en hol – op de adem. Neem een stabiele houding en houd een licht elastiek of gewicht vast. Maak je rug geleidelijk rond en daarna rustig lang. Beweeg gecontroleerd tegen weerstand en vertraag de terugweg. Verdeel de beweging over de hele wervelkolom. Stop bij scherpe of toenemende pijn en overleg met je fysiotherapeut als je twijfelt."
       },
       "shotPlan": {
         "captureBatch": "14-rug",
@@ -23443,7 +23443,7 @@
       },
       "publication": {
         "status": "blocked",
-        "reason": "Twee klinische reviewers moeten de eindvideo goedkeuren."
+        "reason": "Het script is gewijzigd; script- en eindreview zijn automatisch ingetrokken."
       }
     },
     {
