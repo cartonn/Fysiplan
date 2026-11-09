@@ -155,6 +155,8 @@
   #a4 table.mon input{border:none;width:100%;height:18px;text-align:center;font-size:9.5px;padding:0;background:transparent;font-family:inherit;color:#101828}
   #a4 table.mon input:focus{outline:none;background:var(--brand-50);border-radius:2px}
   #a4 table.mon input.drow{font-size:9px}
+  /* lange dosering uit een behandelkaart (4×20″) past nog in het smalle H-vakje */
+  #a4 table.mon input.kl{font-size:8px;letter-spacing:-.04em}
   #a4 table.mon thead tr:nth-child(1){height:17px}
   #a4 table.mon thead tr:nth-child(3){height:22px}
   #a4 table.mon thead tr:nth-child(4){height:22px}
@@ -1616,7 +1618,7 @@ bridge2.jpg</div>
     head+="</tr></thead>";
     function dateRow(r){
       var tr="<tr><td class='dd'><input class='drow' data-row='"+r+"' value='"+esc(GRID.rows[r]||'')+"' placeholder='__-__'/></td>";
-      colKeys.forEach(function(ck){['S','H','W'].forEach(function(f){var key=ck+'|'+r+'|'+f;tr+="<td><input data-k='"+key+"' value='"+esc(GRID.cells[key]||'')+"'/></td>";});});
+      colKeys.forEach(function(ck){['S','H','W'].forEach(function(f){var key=ck+'|'+r+'|'+f;var gv=String(GRID.cells[key]||'');tr+="<td><input data-k='"+key+"'"+(gv.length>4?" class='kl'":"")+" value='"+esc(gv)+"'/></td>";});});
       return tr+"</tr>";
     }
     function labelRow(lbl,r){
@@ -2566,6 +2568,9 @@ bridge2.jpg</div>
   function sjDosTekst(item,s){
     var od=(item&&typeof item==='object')?item:null,dz=s.dosering||{};
     var se=(od&&od.s)||dz.s||'',he=(od&&od.h)||dz.h||'',we=(od&&od.w)||dz.w||'';
+    // "10 × 5 sec" = 10 herhalingen van 5 seconden vasthouden; in het voorbeeld voluit
+    var vast=/^(\d+) × (\d+ (?:sec|min))$/.exec(he);
+    if(vast)he=vast[1]+', '+vast[2]+' vasthouden';
     var t=se&&he?se+' × '+he:(se?se+' series':(he||''));
     return t+(we?' · '+we:'');
   }
@@ -2822,6 +2827,11 @@ bridge2.jpg</div>
   // eigen dosering {n,s,h,w} — dat laatste bij eigen sjablonen en bij standaardkaarten
   // met een dosering per oefening. sjabNaam haalt de naam er veilig uit.
   function sjabNaam(n){return (typeof n==='string')?n:(n&&n.n)||'';}
+  // het H-vakje op de A4 is maar een paar tekens breed: "4 × 20 sec" wordt 4×20″, "60 sec" 60″, "5 min" 5′
+  function sjKortH(h){
+    return String(h).replace(/^(\d+) × (\d+) sec$/,'$1×$2″').replace(/^(\d+) × (\d+) min$/,'$1×$2′')
+      .replace(/^(\d+) sec$/,'$1″').replace(/^(\d+) min$/,'$1′');
+  }
   var sjabloonBewerkNaam='';
   // erbij: de oefeningen komen achter wat er al op de kaart staat (dubbele overgeslagen);
   // anders vervangt de behandelkaart de hele kaart (eerst vragen als er al iets op staat)
@@ -2847,7 +2857,7 @@ bridge2.jpg</div>
           chosen.push({o:id,i:0});
           var sv=(od&&od.s)||(dz&&dz.s)||'',hv=(od&&od.h)||(dz&&dz.h)||'',wv=(od&&od.w)||(dz&&dz.w)||'';
           if(sv)GRID.cells['e'+id+'.0|r0|S']=sv;
-          if(hv)GRID.cells['e'+id+'.0|r0|H']=hv;
+          if(hv)GRID.cells['e'+id+'.0|r0|H']=sjKortH(hv);
           if(wv)GRID.cells['e'+id+'.0|r0|W']=wv;
         }else vol++;
       }

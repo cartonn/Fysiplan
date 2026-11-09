@@ -469,5 +469,3061 @@
    "s": "2",
    "h": "8"
   }
+ },
+ {
+  "naam": "Nek: beeldschermwerk",
+  "sub": "Rekken en houding verbeteren voor nek en schouders bij schermwerk.",
+  "categorie": "Nek",
+  "oefeningen": [
+   {
+    "n": "Bovenste trapezius rek – zittend actief",
+    "s": "10",
+    "h": "30 sec"
+   },
+   {
+    "n": "Levator scapulae rek – zittend actief",
+    "s": "10",
+    "h": "30 sec"
+   },
+   {
+    "n": "Schouderblad liften en ontspannen – functioneel staand",
+    "s": "3",
+    "h": "10 × 2 sec"
+   },
+   {
+    "n": "Kin intrekken – zittend actief",
+    "s": "3",
+    "h": "20"
+   },
+   {
+    "n": "Pully row",
+    "s": "3",
+    "h": "15"
+   }
+  ]
+ },
+ {
+  "naam": "Nek: beweeglijkheid",
+  "sub": "Nek rustig in alle richtingen bewegen.",
+  "categorie": "Nek",
+  "oefeningen": [
+   {
+    "n": "Nek buigen – zittend actief",
+    "s": "3",
+    "h": "5"
+   },
+   {
+    "n": "Nek strekken – zittend actief",
+    "s": "3",
+    "h": "5"
+   },
+   {
+    "n": "Nek zijwaarts buigen – zittend actief",
+    "s": "3",
+    "h": "5"
+   },
+   {
+    "n": "Nek draaien – zittend actief",
+    "s": "3",
+    "h": "5"
+   },
+   {
+    "n": "Seated shoulder roll",
+    "s": "3",
+    "h": "5"
+   }
+  ]
+ },
+ {
+  "naam": "Nek: bovenste gekruist syndroom",
+  "sub": "Diepe nekspieren activeren en bovenrug openen bij een naar voren hangende houding.",
+  "categorie": "Nek",
+  "oefeningen": [
+   {
+    "n": "Seated shoulder roll",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Romp draaien – zittend",
+    "s": "3",
+    "h": "10 × 3 sec"
+   },
+   {
+    "n": "Diepe nekflexoren activeren – zittend actief",
+    "s": "3",
+    "h": "10 × 10 sec"
+   },
+   {
+    "n": "Diepe nekflexoren activeren – liggend ondersteund",
+    "s": "3",
+    "h": "10 × 10 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Nek: cervicale hernia",
+  "sub": "Nek en bovenrug voorzichtig strekken en draaien bij een hernia in de nek.",
+  "categorie": "Nek",
+  "oefeningen": [
+   {
+    "n": "Nek strekken – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Nek draaien – zittend actief",
+    "s": "3",
+    "h": "10 × 3 sec"
+   },
+   {
+    "n": "Thoracale extensie – liggend",
+    "s": "3",
+    "h": "60 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Nek: preventie bij zittend werk",
+  "sub": "Nek en bovenrug bewegen om nekklachten achter het bureau te voorkomen.",
+  "categorie": "Nek",
+  "oefeningen": [
+   {
+    "n": "Nek zijwaarts buigen – zittend actief",
+    "s": "3",
+    "h": "4 × 15 sec"
+   },
+   {
+    "n": "Levator scapulae rek – zittend actief",
+    "s": "3",
+    "h": "4 × 15 sec"
+   },
+   {
+    "n": "Thoracale extensie – zittend",
+    "s": "3",
+    "h": "60 sec"
+   },
+   {
+    "n": "Thoracale extensie – liggend",
+    "s": "2",
+    "h": "2 min"
+   },
+   {
+    "n": "Kin intrekken – zittend actief",
+    "s": "3",
+    "h": "10 × 5 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Nek: scheefhals (torticollis)",
+  "sub": "Nek ontspannen en weer volledig leren bewegen bij een stijve, scheve nek.",
+  "categorie": "Nek",
+  "oefeningen": [
+   {
+    "n": "Nek zijwaarts buigen – zittend actief",
+    "s": "3",
+    "h": "5 × 10 sec"
+   },
+   {
+    "n": "Levator scapulae rek – zittend actief",
+    "s": "3",
+    "h": "5 × 10 sec"
+   },
+   {
+    "n": "Kin intrekken – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Schouderblad liften en ontspannen – functioneel staand",
+    "s": "3",
+    "h": "10 × 2 sec"
+   },
+   {
+    "n": "Thoracale extensie – liggend",
+    "s": "3",
+    "h": "60 sec"
+   },
+   {
+    "n": "Romp draaien – zittend",
+    "s": "3",
+    "h": "6 × 3 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Nek: spanning en houding",
+  "sub": "Rekken en bewegen bij nekklachten door spanning of houding.",
+  "categorie": "Nek",
+  "oefeningen": [
+   {
+    "n": "Levator scapulae rek – zittend actief",
+    "s": "10",
+    "h": "20 sec"
+   },
+   {
+    "n": "Bovenste trapezius rek – zittend actief",
+    "s": "3",
+    "h": "5 × 20 sec"
+   },
+   {
+    "n": "Nek buigen – zittend actief",
+    "s": "3",
+    "h": "5 × 20 sec"
+   },
+   {
+    "n": "Nek zijwaarts buigen – zittend actief",
+    "s": "3",
+    "h": "5 × 20 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Nek: spanningshoofdpijn",
+  "sub": "Nek- en schouderspieren ontspannen en rekken tegen hoofdpijn door spanning.",
+  "categorie": "Nek",
+  "oefeningen": [
+   {
+    "n": "Nek buigen – zittend actief",
+    "s": "3",
+    "h": "4 × 20 sec"
+   },
+   {
+    "n": "Levator scapulae rek – zittend actief",
+    "s": "3",
+    "h": "4 × 20 sec"
+   },
+   {
+    "n": "Kin intrekken – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Nek zijwaarts buigen – zittend actief",
+    "s": "3",
+    "h": "4 × 20 sec"
+   },
+   {
+    "n": "Thoracale extensie – liggend",
+    "s": "3",
+    "h": "60 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Nek: uitstralende zenuwklachten in de arm",
+  "sub": "Nek rustig in alle richtingen bewegen bij zenuwpijn die naar de arm trekt.",
+  "categorie": "Nek",
+  "oefeningen": [
+   {
+    "n": "Nek zijwaarts buigen – zittend actief",
+    "s": "3",
+    "h": "4 × 10 sec"
+   },
+   {
+    "n": "Nek buigen – zittend actief",
+    "s": "3",
+    "h": "4 × 10 sec"
+   },
+   {
+    "n": "Nek draaien – zittend actief",
+    "s": "3",
+    "h": "4"
+   },
+   {
+    "n": "Kin intrekken – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Levator scapulae rek – zittend actief",
+    "s": "3",
+    "h": "4 × 10 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Schouder: instabiliteit fase 5",
+  "sub": "Explosieve en belaste oefeningen als laatste stap voor terugkeer naar sport.",
+  "categorie": "Schouder",
+  "fase": 5,
+  "oefeningen": [
+   {
+    "n": "Med ball rotation passes knee",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Push up",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Step up with knee raise",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Schouder: rotator cuff fase 4",
+  "sub": "Schouder en romp samen belasten in de laatste herstelfase.",
+  "categorie": "Schouder",
+  "fase": 4,
+  "oefeningen": [
+   {
+    "n": "Swiss ball knee to chest",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Swiss ball plank",
+    "s": "3",
+    "h": "10 × 30 sec"
+   },
+   {
+    "n": "Pully press double",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Bekken: herstel na de bevalling",
+  "sub": "Bekkenbodem, romp en bovenrug rustig weer activeren na de bevalling.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Bekkenbodem snel aanspannen – zittend",
+    "s": "1",
+    "h": "10 × 20 sec"
+   },
+   {
+    "n": "Bekkenbodem aanspannen – liggend",
+    "s": "1",
+    "h": "10 × 20 sec"
+   },
+   {
+    "n": "Bekkenmobiliteit – liggend",
+    "s": "1",
+    "h": "10 × 20 sec"
+   },
+   {
+    "n": "Seated shoulder roll",
+    "s": "1",
+    "h": "10"
+   },
+   {
+    "n": "Thoracale extensie – zittend",
+    "s": "1",
+    "h": "10 × 10 sec"
+   },
+   {
+    "n": "Romp draaien – liggend",
+    "s": "1",
+    "h": "10 × 10 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Bovenrug: beeldschermwerk",
+  "sub": "Bewegen en versterken van de bovenrug voor wie veel achter een scherm zit.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Romp draaien – zittend",
+    "s": "3",
+    "h": "12 × 5 sec"
+   },
+   {
+    "n": "Rug bol en hol – zittend",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Rug extensie",
+    "s": "3",
+    "h": "15"
+   },
+   {
+    "n": "Pully row",
+    "s": "3",
+    "h": "15"
+   }
+  ]
+ },
+ {
+  "naam": "Bovenrug: beweeglijkheid",
+  "sub": "Bovenrug in alle richtingen bewegen om soepel te blijven.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Seated shoulder roll",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Thoracale extensie – zittend",
+    "s": "5",
+    "h": "5 × 5 sec"
+   },
+   {
+    "n": "Romp draaien – zittend",
+    "s": "5",
+    "h": "5 × 5 sec"
+   },
+   {
+    "n": "Romp zijwaarts buigen – zittend",
+    "s": "5",
+    "h": "5 × 5 sec"
+   },
+   {
+    "n": "Thoracale extensie – liggend",
+    "s": "3",
+    "h": "5 × 120 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Bovenrug: preventie bij zittend werk",
+  "sub": "Bovenrug en schouders los houden tijdens een werkdag achter het bureau.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Romp draaien – zittend",
+    "s": "3",
+    "h": "5 × 10 sec"
+   },
+   {
+    "n": "Thoracale extensie – zittend",
+    "s": "3",
+    "h": "5 × 10 sec"
+   },
+   {
+    "n": "Romp zijwaarts buigen – zittend",
+    "s": "3",
+    "h": "5 × 10 sec"
+   },
+   {
+    "n": "Seated shoulder roll",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Foam roller back extension",
+    "s": "3",
+    "h": "5 × 10 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Bovenrug: stijfheid",
+  "sub": "Bovenrug mobiliseren en strekken bij stijfheid en pijn tussen de schouderbladen.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Rug extensie",
+    "s": "3",
+    "h": "15"
+   },
+   {
+    "n": "Knie naar borst – liggend",
+    "s": "3",
+    "h": "10 × 3 sec"
+   },
+   {
+    "n": "Romp draaien – zittend",
+    "s": "3",
+    "h": "6 × 5 sec"
+   },
+   {
+    "n": "Thoracale extensie – liggend",
+    "s": "2",
+    "h": "3 min"
+   },
+   {
+    "n": "Romp draaien – op handen en knieën",
+    "s": "3",
+    "h": "3 × 20 sec"
+   },
+   {
+    "n": "Mob lower back",
+    "s": "3",
+    "h": "15 × 3 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Bovenrug: thoracale hernia",
+  "sub": "Voorzichtig strekken en draaien van de bovenrug bij discusklachten.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Thoracale extensie – liggend",
+    "s": "2",
+    "h": "3 min"
+   },
+   {
+    "n": "Rug extensie",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Romp draaien – zittend",
+    "s": "3",
+    "h": "6 × 5 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Lage rug: beeldschermwerk",
+  "sub": "Lage rug soepel en stabiel houden bij veel zitten.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Rug bol en hol – op handen en knieën",
+    "s": "3",
+    "h": "5"
+   },
+   {
+    "n": "Rug strekken – liggend",
+    "s": "1",
+    "h": "2 × 60 sec"
+   },
+   {
+    "n": "Bekkenbodem aanspannen – liggend",
+    "s": "1",
+    "h": "20 × 2 sec"
+   },
+   {
+    "n": "Plank basis",
+    "s": "1",
+    "h": "3 × 20 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Lage rug: beweeglijkheid",
+  "sub": "Lage rug buigen, strekken en draaien om soepel te blijven.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Rug strekken – staand",
+    "s": "3",
+    "h": "5 × 5 sec"
+   },
+   {
+    "n": "Yoga wide angle seated forward bend",
+    "s": "3",
+    "h": "5 × 5 sec"
+   },
+   {
+    "n": "Romp draaien – liggend",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Knie naar borst – liggend",
+    "s": "3",
+    "h": "10 × 5 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Lage rug: mobiliteit in lig",
+  "sub": "Rustige oefeningen in rugligging om de lage rug soepel te maken.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Glute bridges",
+    "s": "2",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Romp draaien – liggend",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Knie naar borst – liggend",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Rug strekken – liggend",
+    "s": "3",
+    "h": "10 × 5 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Lage rug: preventie bij zittend werk",
+  "sub": "Lage rug bewegen en ontspannen om klachten door zitten te voorkomen.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Romp draaien – zittend",
+    "s": "3",
+    "h": "6 × 5 sec"
+   },
+   {
+    "n": "Seated hamstring stretch",
+    "s": "3",
+    "h": "4 × 20 sec"
+   },
+   {
+    "n": "Romp draaien – liggend",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Rug strekken – liggend",
+    "s": "3",
+    "h": "5 × 5 sec"
+   },
+   {
+    "n": "Bekkenbodem aanspannen – liggend",
+    "s": "3",
+    "h": "10 × 5 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Romp: basis stabiliteit",
+  "sub": "Rompspieren sterker maken met plank, bal en rugstrekking.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Rug extensie",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Plank high",
+    "s": "5",
+    "h": "5 × 20 sec"
+   },
+   {
+    "n": "Swiss ball plank",
+    "s": "5",
+    "h": "5 × 20 sec"
+   },
+   {
+    "n": "Kick back",
+    "s": "3",
+    "h": "10 × 3 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Rug: acute lumbale hernia",
+  "sub": "Rustige strekoefeningen en ontspanning voor de lage rug in de acute fase.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Yoga cobra",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Rug strekken – staand",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Knie naar borst – liggend",
+    "s": "1",
+    "h": "1"
+   }
+  ]
+ },
+ {
+  "naam": "Rug: bukken en tillen",
+  "sub": "Rug en romp voorbereiden op veilig bukken en tillen.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Knie naar borst – liggend",
+    "s": "3",
+    "h": "10 × 3 sec"
+   },
+   {
+    "n": "Romp draaien – liggend",
+    "s": "3",
+    "h": "10 × 3 sec"
+   },
+   {
+    "n": "Rug strekken – liggend",
+    "s": "3",
+    "h": "3 × 10 sec"
+   },
+   {
+    "n": "Thoracale extensie – liggend",
+    "s": "3",
+    "h": "60 sec"
+   },
+   {
+    "n": "Glute bridges",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Plank basis",
+    "s": "3",
+    "h": "5 × 30 sec"
+   },
+   {
+    "n": "Rug extensie",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Rug: chronische discusklachten",
+  "sub": "Mobiliteit van de lage rug bij langdurige slijtage van de tussenwervelschijf.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Rug strekken – liggend",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Knie naar borst – liggend",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Romp draaien – liggend",
+    "s": "3",
+    "h": "10 × 3 sec"
+   },
+   {
+    "n": "Rug extensie",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Rug: lage rugklachten subacuut (uitgebreid)",
+  "sub": "Strekken, mobiliseren en de rug weer belasten bij subacute klachten.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Rug extensie",
+    "s": "3",
+    "h": "15"
+   },
+   {
+    "n": "Rug strekken – liggend",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Good mornings",
+    "s": "3",
+    "h": "15"
+   },
+   {
+    "n": "Foam roller back lower",
+    "s": "3",
+    "h": "3"
+   }
+  ]
+ },
+ {
+  "naam": "Rug: lage rugpijn subacuut",
+  "sub": "Rustig bewegen en de rug- en bilspieren activeren als de eerste pijn wat gezakt is.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Glute bridges",
+    "s": "2",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Rug strekken – liggend",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Romp draaien – liggend",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Rug extensie",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Rug: lumbale hernia",
+  "sub": "Strekken, draaien en ontlasten van de lage rug bij een hernia.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Knie naar borst – liggend",
+    "s": "3",
+    "h": "5"
+   },
+   {
+    "n": "Romp draaien – liggend",
+    "s": "3",
+    "h": "10 × 3 sec"
+   },
+   {
+    "n": "Rug strekken – liggend",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Rug extensie",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Romp zijwaarts buigen – staand",
+    "s": "3",
+    "h": "5 × 2 sec"
+   },
+   {
+    "n": "Rug strekken – staand",
+    "s": "3",
+    "h": "5 × 4 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Rug: onderste gekruist syndroom",
+  "sub": "Bil- en rugspieren activeren en heupen rekken bij een holle-rughouding.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Yoga extended child's pose",
+    "s": "3",
+    "h": "5 × 15 sec"
+   },
+   {
+    "n": "Glute bridges",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Mob lower back",
+    "s": "3",
+    "h": "5 × 15 sec"
+   },
+   {
+    "n": "Superman",
+    "s": "4",
+    "h": "10 × 3 sec"
+   },
+   {
+    "n": "Quadriceps stretch",
+    "s": "3",
+    "h": "5 × 15 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Rug: scoliose",
+  "sub": "Romp zijwaarts en in strekking trainen bij een scoliose.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Romp zijwaarts buigen – staand",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Rug extensie",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Swiss ball back ext",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Rug: spondylolyse en spondylolisthesis niveau 1",
+  "sub": "Basis voor rompstabiliteit met bekkenbodem, rug- en buikspieren.",
+  "categorie": "Rug en bekken",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Bekkenbodem aanspannen – liggend",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Superman",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Curl up",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Glute bridges",
+    "s": "1",
+    "h": "1"
+   }
+  ]
+ },
+ {
+  "naam": "Rug: spondylolyse en spondylolisthesis niveau 2",
+  "sub": "Romp en bilspieren zwaarder belasten, met behoud van een neutrale rug.",
+  "categorie": "Rug en bekken",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Superman",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Bruggen 1 been liften",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Mountain climber",
+    "s": "1",
+    "h": "1"
+   }
+  ]
+ },
+ {
+  "naam": "Rug: spondylolyse en spondylolisthesis niveau 3",
+  "sub": "Dynamische rompstabiliteit met bal en eenbenige oefeningen.",
+  "categorie": "Rug en bekken",
+  "fase": 3,
+  "oefeningen": [
+   {
+    "n": "Swiss ball knee to chest",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Swiss ball leg curl hip raise",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Curl up",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Bruggen 1 been liften",
+    "s": "1",
+    "h": "1"
+   }
+  ]
+ },
+ {
+  "naam": "Rug: uitstralende pijn in het been",
+  "sub": "Rug strekken en hamstrings los maken in de latere fase van zenuwpijn.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Rug extensie",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Foam roller hamstring",
+    "s": "3",
+    "h": "1"
+   },
+   {
+    "n": "Seated hamstring stretch",
+    "s": "3",
+    "h": "3 × 10 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Zwangerschap: tweede trimester",
+  "sub": "Bekkenbodem, heup en rug in beweging houden tijdens de zwangerschap.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   {
+    "n": "Bekkenbodem aanspannen – liggend",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Lying abduction",
+    "s": "3",
+    "h": "15"
+   },
+   {
+    "n": "Bruggen op bal",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Rug bol en hol – op handen en knieën",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Been: kracht met eigen lichaamsgewicht",
+  "sub": "Benen en heupen thuis sterker maken met weinig of geen materiaal.",
+  "categorie": "Heup en bovenbeen",
+  "oefeningen": [
+   {
+    "n": "Crabwalk",
+    "s": "3",
+    "h": "15"
+   },
+   {
+    "n": "Bridges kicker",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Yoga deep squat",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Squat lunges",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Heup: artrose, kracht met stoel",
+  "sub": "Heupspieren staand met stoel sterker maken bij (beginnende) heupartrose.",
+  "categorie": "Heup en bovenbeen",
+  "oefeningen": [
+   {
+    "n": "Standing chair knee lift",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing chair abductie",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing chair hip extension",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Glute bridges",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Functioneel opstaan – functioneel",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Eenbeenstand – zonder steun",
+    "s": "3",
+    "h": "5 × 10 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Heup: artrose, oefenprogramma",
+  "sub": "Heupkracht, opstaan en balans bij klachten van heupartrose.",
+  "categorie": "Heup en bovenbeen",
+  "oefeningen": [
+   {
+    "n": "Standing chair knee lift",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing chair abductie",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing chair hip extension",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Glute bridges",
+    "s": "3",
+    "h": "10 × 3 sec"
+   },
+   {
+    "n": "Functioneel opstaan – functioneel",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Tandemstand – met steun",
+    "s": "3",
+    "h": "5 × 10 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Heup: labrumletsel fase 2",
+  "sub": "Heup staand sterker maken en balans trainen.",
+  "categorie": "Heup en bovenbeen",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Op de plaats marcheren – zonder steun",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing abduction",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing gluteus",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Eenbeenstand – zonder steun",
+    "s": "3",
+    "h": "3 × 20 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Heup: labrumletsel fase 3",
+  "sub": "Belasting opvoeren met squat, uitvalspas en sprongen.",
+  "categorie": "Heup en bovenbeen",
+  "fase": 3,
+  "oefeningen": [
+   {
+    "n": "Swiss ball wall squat",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lunges",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Skate jumps",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Heup: totale heupprothese fase 2",
+  "sub": "Opstaan, fietsen en heupspieren trainen in de mobiliserende fase.",
+  "categorie": "Heup en bovenbeen",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Functioneel opstaan – functioneel",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Fiets",
+    "s": "1",
+    "h": "10 min"
+   },
+   {
+    "n": "Glute bridges",
+    "s": "3",
+    "h": "15"
+   },
+   {
+    "n": "Standing chair hip extension",
+    "s": "3",
+    "h": "15"
+   },
+   {
+    "n": "Standing chair half squat",
+    "s": "3",
+    "h": "15"
+   }
+  ]
+ },
+ {
+  "naam": "Heup: totale heupprothese fase 2 (staand)",
+  "sub": "Staande oefeningen voor heupkracht en stappen na een heupprothese.",
+  "categorie": "Heup en bovenbeen",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Op de plaats marcheren – zonder steun",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Glute bridges",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing chair abductie",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Heup: totale heupprothese fase 3",
+  "sub": "Balans en heupkracht verder opbouwen in de late herstelfase.",
+  "categorie": "Heup en bovenbeen",
+  "fase": 3,
+  "oefeningen": [
+   {
+    "n": "Lying abduction",
+    "s": "3",
+    "h": "15"
+   },
+   {
+    "n": "Eenbeenstand – zonder steun",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing chair abductie",
+    "s": "3",
+    "h": "15"
+   },
+   {
+    "n": "Standing chair calfs raises",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: VKB-reconstructie fase 1",
+  "sub": "Eerste kracht van heup en been na een voorste-kruisbandreconstructie.",
+  "categorie": "Knie",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lying abduction",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing chair abductie",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing chair hip extension",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Good mornings",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Crabwalk",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: VKB-reconstructie fase 2",
+  "sub": "Heupspieren en beenkracht opbouwen in de middenfase.",
+  "categorie": "Knie",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lying abduction",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing chair abductie",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing chair hip extension",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Good mornings",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Crabwalk",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lunges",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: VKB-reconstructie fase 3",
+  "sub": "Heup en knie dynamisch belasten in de late fase na de operatie.",
+  "categorie": "Knie",
+  "fase": 3,
+  "oefeningen": [
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lying abduction",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing chair abductie",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Crabwalk",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: VKB-revalidatie fase 2",
+  "sub": "Squat, opstappen en balans in de eerste weken na de operatie.",
+  "categorie": "Knie",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Swiss ball wall squat",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Eenbeenstand – zonder steun",
+    "s": "1",
+    "h": "3 × 20 sec"
+   },
+   {
+    "n": "Tandemstand – zonder steun",
+    "s": "1",
+    "h": "3 × 20 sec"
+   },
+   {
+    "n": "Seated hamstring stretch",
+    "s": "3",
+    "h": "3 × 15 sec"
+   },
+   {
+    "n": "Fiets",
+    "s": "1",
+    "h": "15 min"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: VKB-revalidatie fase 3",
+  "sub": "Kracht en conditie verder opbouwen met toestellen en uitvalspassen.",
+  "categorie": "Knie",
+  "fase": 3,
+  "oefeningen": [
+   {
+    "n": "Lunges",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Stairs (apparaat)",
+    "s": "1",
+    "h": "10 min"
+   },
+   {
+    "n": "Roeier",
+    "s": "1",
+    "h": "10 min"
+   },
+   {
+    "n": "Plank basis",
+    "s": "1",
+    "h": "4 × 30 sec"
+   },
+   {
+    "n": "Swiss ball knee to chest",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Leg press",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Bosu brigdes",
+    "s": "3",
+    "h": "10 × 5 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: VKB-revalidatie fase 4",
+  "sub": "Sprongen, wendingen en kracht voor terugkeer naar sport.",
+  "categorie": "Knie",
+  "fase": 4,
+  "oefeningen": [
+   {
+    "n": "Leg extension",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Long jumps",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Alternating lunge jumps",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Skate jumps",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Box jumps",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Swiss ball knee to chest",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Loopband",
+    "s": "1",
+    "h": "30 min"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: artrose voorkomen",
+  "sub": "Bovenbeen en balans trainen om knieartrose te voorkomen.",
+  "categorie": "Knie",
+  "oefeningen": [
+   {
+    "n": "Seated leg extension",
+    "s": "3",
+    "h": "10 × 10 sec"
+   },
+   {
+    "n": "Functioneel opstaan – functioneel",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Wall sit",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Seated hamstring stretch",
+    "s": "3",
+    "h": "5 × 15 sec"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Tandemstand – zonder steun",
+    "s": "3",
+    "h": "5 × 10 sec"
+   },
+   {
+    "n": "Eenbeenstand – zonder steun",
+    "s": "3",
+    "h": "5 × 10 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: artrose, actief oefenprogramma",
+  "sub": "Breed programma voor kracht, balans en conditie bij knieartrose.",
+  "categorie": "Knie",
+  "oefeningen": [
+   {
+    "n": "Chair squat",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Wall sit",
+    "s": "3",
+    "h": "3 × 30 sec"
+   },
+   {
+    "n": "Squat lunges",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Crabwalk",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Eenbeenstand – met steun",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Good mornings",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Glute bridges",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Calf raises",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Fiets",
+    "s": "1",
+    "h": "30 min"
+   },
+   {
+    "n": "Been pendelen",
+    "s": "3",
+    "h": "10 sec"
+   },
+   {
+    "n": "Bruggen 1 been liften",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: artrose, kracht en stabiliteit (licht)",
+  "sub": "Oefeningen met steun van een stoel voor kracht rond knie en heup bij artrose.",
+  "categorie": "Knie",
+  "oefeningen": [
+   {
+    "n": "Standing chair knee lift",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lying abduction",
+    "s": "3",
+    "h": "10 × 3 sec"
+   },
+   {
+    "n": "Seated band abduction",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing chair half squat",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing chair abductie",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Chair squat",
+    "s": "3",
+    "h": "10 × 3 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: blessurepreventie voorste kruisband",
+  "sub": "Warming-up met rek, sprongen en landingen om kruisbandletsel te voorkomen.",
+  "categorie": "Knie",
+  "oefeningen": [
+   {
+    "n": "Quadriceps stretch",
+    "s": "1",
+    "h": "2 × 30 sec"
+   },
+   {
+    "n": "Adductoren stretch",
+    "s": "1",
+    "h": "2 × 30 sec"
+   },
+   {
+    "n": "Yoga hip flexor stretch",
+    "s": "1",
+    "h": "2 × 30 sec"
+   },
+   {
+    "n": "Alternating lunge jumps",
+    "s": "1",
+    "h": "20"
+   },
+   {
+    "n": "Long jumps",
+    "s": "1",
+    "h": "40"
+   },
+   {
+    "n": "Op de plaats marcheren – zonder steun",
+    "s": "1",
+    "h": "40 sec"
+   },
+   {
+    "n": "Skate jumps",
+    "s": "1",
+    "h": "40"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: collateraal bandletsel fase 2",
+  "sub": "Kracht en balans van de knie opbouwen na een verrekte zijband.",
+  "categorie": "Knie",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Swiss ball wall squat",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Eenbeenstand – met hoofdbeweging",
+    "s": "3",
+    "h": "5 × 20 sec"
+   },
+   {
+    "n": "Tandemstand – met hoofdbeweging",
+    "s": "3",
+    "h": "5 × 20 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: degeneratieve meniscusklachten fase 1",
+  "sub": "Rustig opbouwen van kracht en controle rond de knie, met fiets en toestellen.",
+  "categorie": "Knie",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Fiets",
+    "s": "1",
+    "h": "20 min"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Swiss ball leg curl hip raise",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Leg press (apparaat)",
+    "s": "2",
+    "h": "15"
+   },
+   {
+    "n": "Leg extension",
+    "s": "2",
+    "h": "15"
+   },
+   {
+    "n": "Leg curl",
+    "s": "2",
+    "h": "15"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: degeneratieve meniscusklachten fase 2",
+  "sub": "Kracht verder opbouwen en sprongen toevoegen bij meniscusslijtage.",
+  "categorie": "Knie",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Fiets",
+    "s": "1",
+    "h": "20 min"
+   },
+   {
+    "n": "Swiss ball leg curl hip raise",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Leg press (apparaat)",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Leg extension",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Leg curl",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Skate jumps",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: iliotibiale bandsyndroom",
+  "sub": "Heupspieren sterker maken en bovenbeen rekken bij pijn aan de buitenkant van de knie.",
+  "categorie": "Knie",
+  "oefeningen": [
+   {
+    "n": "Crabwalk",
+    "s": "3",
+    "h": "6"
+   },
+   {
+    "n": "Quadriceps stretch",
+    "s": "3",
+    "h": "4 × 20 sec"
+   },
+   {
+    "n": "Glute bridges",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: meniscusklachten",
+  "sub": "Stabiliteit en kracht van de knie bij meniscusschade.",
+  "categorie": "Knie",
+  "oefeningen": [
+   {
+    "n": "Bruggen 1 been liften",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Eenbeenstand – zonder steun",
+    "s": "3",
+    "h": "5 × 20 sec"
+   },
+   {
+    "n": "Swiss ball wall squat",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: meniscusletsel, kracht en controle niveau 1",
+  "sub": "Stabiliteit van knie, heup en romp trainen bij een jong, actief meniscusletsel.",
+  "categorie": "Knie",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Chair squat",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Bruggen op bal",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Plank basis",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Plank high",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Standing abduction",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Standing gluteus",
+    "s": "1",
+    "h": "1"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: meniscusletsel, kracht in de sportschool",
+  "sub": "Beenspieren sterker maken op toestellen na een meniscusletsel.",
+  "categorie": "Knie",
+  "oefeningen": [
+   {
+    "n": "Leg press (apparaat)",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Leg extension",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Kettlebell swing",
+    "s": "1",
+    "h": "1"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: patellapeesklachten fase 2",
+  "sub": "Bovenbeen belasten en rekken bij pijn aan de kniepees.",
+  "categorie": "Knie",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Swiss ball wall squat",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Quadriceps stretch",
+    "s": "3",
+    "h": "5 × 15 sec"
+   },
+   {
+    "n": "Tandemstand – zonder steun",
+    "s": "2",
+    "h": "60 sec"
+   },
+   {
+    "n": "Eenbeenstand – zonder steun",
+    "s": "3",
+    "h": "3 × 20 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Knie: totale knieprothese fase 3 (balans)",
+  "sub": "Opstaan, traplopen en balans in de late fase na een knieprothese.",
+  "categorie": "Knie",
+  "fase": 3,
+  "oefeningen": [
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Functioneel opstaan – functioneel",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Tandemstand – zonder steun",
+    "s": "3",
+    "h": "60 sec"
+   },
+   {
+    "n": "Eenbeenstand – zonder steun",
+    "s": "3",
+    "h": "4 × 20 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Enkel: achillespeesklachten",
+  "sub": "Kuit belasten en balans trainen bij pijn aan de achillespees.",
+  "categorie": "Enkel en voet",
+  "oefeningen": [
+   {
+    "n": "Standing chair calfs raises",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Tandemstand – zonder steun",
+    "s": "3",
+    "h": "5 × 30 sec"
+   },
+   {
+    "n": "Eenbeenstand – zonder steun",
+    "s": "3",
+    "h": "5 × 30 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Voet: disfunctie tibialis posterior",
+  "sub": "Kuit en voetboog sterker maken bij klachten aan de binnenkant van enkel en voet.",
+  "categorie": "Enkel en voet",
+  "oefeningen": [
+   {
+    "n": "Foam roller calf",
+    "s": "1",
+    "h": "20"
+   },
+   {
+    "n": "Seated calfs raises",
+    "s": "3",
+    "h": "15 × 4 sec"
+   },
+   {
+    "n": "Standing chair calfs raises",
+    "s": "2",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Calf raises",
+    "s": "3",
+    "h": "10 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Artrose heup en knie: niveau 1",
+  "sub": "Eerste stap in kracht en stabiliteit van heup en knie bij artrose.",
+  "categorie": "Ouderen en balans",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Seated band leg curl",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing abduction",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing adduction",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Bruggen op bal",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Artrose heup en knie: niveau 2",
+  "sub": "Opstaan, traplopen en heupspieren trainen voor meer zekerheid bij artrose.",
+  "categorie": "Ouderen en balans",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Functioneel opstaan – functioneel",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Seated band leg curl",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Standing abduction",
+    "s": "1",
+    "h": "1"
+   }
+  ]
+ },
+ {
+  "naam": "Balans: niveau 1",
+  "sub": "Eenvoudige oefeningen om stevig te leren staan en stappen.",
+  "categorie": "Ouderen en balans",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Tandemstand – zonder steun",
+    "s": "1",
+    "h": "10 × 3 sec"
+   },
+   {
+    "n": "Op de plaats marcheren – zonder steun",
+    "s": "1",
+    "h": "30 sec"
+   },
+   {
+    "n": "Zijwaarts stappen – zonder steun",
+    "s": "2",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Balans: niveau 2",
+  "sub": "Evenwicht oefenen tijdens bewegen, zoals uitvalspas en grote stappen.",
+  "categorie": "Ouderen en balans",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Lunges",
+    "s": "1",
+    "h": "10"
+   },
+   {
+    "n": "Calf raises",
+    "s": "1",
+    "h": "10"
+   },
+   {
+    "n": "Grote stappen – met ritmische cue",
+    "s": "1",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Ouderen: knieartrose voorkomen",
+  "sub": "Kracht en balans voor de knie bij ouderen.",
+  "categorie": "Ouderen en balans",
+  "oefeningen": [
+   {
+    "n": "Seated leg extension",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Functioneel opstaan – functioneel",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Voeten naast elkaar staan – met hoofdbeweging",
+    "s": "3",
+    "h": "5 × 20 sec"
+   },
+   {
+    "n": "Eenbeenstand – zonder steun",
+    "s": "3",
+    "h": "5 × 20 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Valpreventie: kracht en balans",
+  "sub": "Opstaan, stappen en evenwicht oefenen om vallen te voorkomen.",
+  "categorie": "Ouderen en balans",
+  "oefeningen": [
+   {
+    "n": "Bruggen beginner",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Functioneel opstaan – functioneel",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Calf raises",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Voeten naast elkaar staan – zonder steun",
+    "s": "4",
+    "h": "5 × 10 sec"
+   },
+   {
+    "n": "Voeten naast elkaar staan – met steun",
+    "s": "4",
+    "h": "5 × 10 sec"
+   },
+   {
+    "n": "Zijwaarts stappen – zonder steun",
+    "s": "5",
+    "h": "4"
+   }
+  ]
+ },
+ {
+  "naam": "Valpreventie: uitgebreid programma",
+  "sub": "Uitgebreide reeks voor beenkracht en evenwicht bij ouderen.",
+  "categorie": "Ouderen en balans",
+  "oefeningen": [
+   {
+    "n": "Seated leg extension",
+    "s": "1",
+    "h": "10 × 3 sec"
+   },
+   {
+    "n": "Standing chair abductie",
+    "s": "1",
+    "h": "10"
+   },
+   {
+    "n": "Seated band abduction",
+    "s": "1",
+    "h": "10"
+   },
+   {
+    "n": "Calf raises",
+    "s": "1",
+    "h": "10"
+   },
+   {
+    "n": "Standing chair half squat",
+    "s": "1",
+    "h": "10"
+   },
+   {
+    "n": "Achterwaarts stappen – zonder steun",
+    "s": "1",
+    "h": "4"
+   },
+   {
+    "n": "Zijwaarts stappen – zonder steun",
+    "s": "1",
+    "h": "4"
+   },
+   {
+    "n": "Tandemstand – met steun",
+    "s": "1",
+    "h": "5 × 10 sec"
+   },
+   {
+    "n": "Eenbeenstand – zonder steun",
+    "s": "1",
+    "h": "5 × 10 sec"
+   },
+   {
+    "n": "Functioneel opstaan – functioneel",
+    "s": "1",
+    "h": "10"
+   },
+   {
+    "n": "Symmetrisch opstaan – met fysieke steun",
+    "s": "1",
+    "h": "60 sec"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "1",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Arm: krachttraining na neurologische aandoening niveau 3",
+  "sub": "Arm- en polsspieren verder versterken met lichte gewichten.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 3,
+  "oefeningen": [
+   {
+    "n": "Seated biceps curl",
+    "s": "1",
+    "h": "10"
+   },
+   {
+    "n": "French press",
+    "s": "1",
+    "h": "10 × 2 sec"
+   },
+   {
+    "n": "Wrist extension",
+    "s": "1",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Arm: krachttraining na neurologische aandoening niveau 4",
+  "sub": "Gevorderde kracht voor schouder, arm en pols.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 4,
+  "oefeningen": [
+   {
+    "n": "Lateral raises",
+    "s": "1",
+    "h": "10"
+   },
+   {
+    "n": "Anteflexie armen",
+    "s": "1",
+    "h": "10"
+   },
+   {
+    "n": "Nose breakers",
+    "s": "1",
+    "h": "10"
+   },
+   {
+    "n": "Wrist extension",
+    "s": "1",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Balans: neurologisch herstel fase 1",
+  "sub": "Eenvoudige stand- en hoofdbewegingen om evenwicht op te bouwen.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Voeten naast elkaar staan – zonder steun",
+    "s": "1",
+    "h": "3 × 60 sec"
+   },
+   {
+    "n": "Semi-tandemstand – zonder steun",
+    "s": "1",
+    "h": "3 × 60 sec"
+   },
+   {
+    "n": "Hoofd draaien in stand – staand langzaam",
+    "s": "1",
+    "h": "3 × 60 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Balans: neurologisch herstel fase 2",
+  "sub": "Balans uitdagen in smalle stand, op één been en bij opstappen.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Tandemstand – zonder steun",
+    "s": "1",
+    "h": "3 × 60 sec"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "20"
+   },
+   {
+    "n": "Eenbeenstand – zonder steun",
+    "s": "1",
+    "h": "3 × 60 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Been: kracht na beroerte fase 1",
+  "sub": "Opstaan, traplopen en squatten om het aangedane been sterker te maken.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Functioneel opstaan – functioneel",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Chair squat",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Lunges",
+    "s": "3",
+    "h": "8"
+   }
+  ]
+ },
+ {
+  "naam": "Been: kracht na beroerte fase 2",
+  "sub": "Het aangedane been verder belasten in squat en uitvalspas.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Swiss ball wall squat",
+    "s": "3",
+    "h": "8 × 3 sec"
+   },
+   {
+    "n": "Functioneel opstaan – functioneel",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lunges",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Duizeligheid: blikstabilisatie fase 1",
+  "sub": "Ogen en hoofd laten samenwerken om duizeligheid te verminderen.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Ogen naar doelen – zittend langzaam",
+    "s": "3",
+    "h": "40"
+   },
+   {
+    "n": "Blikstabilisatie horizontaal – staand langzaam",
+    "s": "3",
+    "h": "60 sec"
+   },
+   {
+    "n": "Blikstabilisatie verticaal – staand langzaam",
+    "s": "3",
+    "h": "40"
+   }
+  ]
+ },
+ {
+  "naam": "Hersenschudding: nek en bovenrug deel 1",
+  "sub": "Beweeglijkheid van nek en bovenrug terugwinnen na een hersenschudding.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Nek draaien – zittend actief",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Open boek – liggend",
+    "s": "1",
+    "h": "1"
+   },
+   {
+    "n": "Kin intrekken – liggend ondersteund",
+    "s": "1",
+    "h": "1"
+   }
+  ]
+ },
+ {
+  "naam": "MS: algemeen oefenprogramma",
+  "sub": "Rekken, opstaan en balans voor mensen met multiple sclerose.",
+  "categorie": "Neurologie en duizeligheid",
+  "oefeningen": [
+   {
+    "n": "Bovenste trapezius rek – zittend actief",
+    "s": "2",
+    "h": "4 × 10 sec"
+   },
+   {
+    "n": "Functioneel opstaan – functioneel",
+    "s": "2",
+    "h": "10"
+   },
+   {
+    "n": "Tandemstand – met steun",
+    "s": "2",
+    "h": "5 × 20 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Romp: stabiliteit na neurologische aandoening fase 1",
+  "sub": "Eerste stap in rompcontrole in lig, zit en op handen en knieën.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Bruggen beginner",
+    "s": "2",
+    "h": "8 × 3 sec"
+   },
+   {
+    "n": "Rug bol en hol – op handen en knieën",
+    "s": "1",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Romp draaien – zittend",
+    "s": "1",
+    "h": "10 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Romp: stabiliteit na neurologische aandoening fase 2",
+  "sub": "Rompcontrole uitbreiden met bal en nekstabiliteit.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Bruggen beginner",
+    "s": "2",
+    "h": "10"
+   },
+   {
+    "n": "Bruggen op bal",
+    "s": "2",
+    "h": "8 × 3 sec"
+   },
+   {
+    "n": "Diepe nekflexoren activeren – liggend ondersteund",
+    "s": "2",
+    "h": "8 × 3 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Hartrevalidatie: circuit fase 1 niveau 1",
+  "sub": "Eenvoudig circuit van fiets, opstappen en armoefeningen met evenveel rust als inspanning.",
+  "categorie": "Hart, vaten en longen",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Biceps curl",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Fiets",
+    "s": "3",
+    "h": "5 min"
+   },
+   {
+    "n": "Triceps dumbell kickbacks",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lateral raises",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Hartrevalidatie: circuit fase 1 niveau 2",
+  "sub": "Circuit met iets meer stations, inspanning en rust wisselen elkaar af.",
+  "categorie": "Hart, vaten en longen",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Biceps curl",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Fiets",
+    "s": "3",
+    "h": "5 min"
+   },
+   {
+    "n": "Triceps dumbell kickbacks",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lateral raises",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Op de plaats marcheren – zonder steun",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Hartrevalidatie: circuit fase 1 niveau 3",
+  "sub": "Uitgebreid circuit met zijwaarts stappen en marcheren erbij.",
+  "categorie": "Hart, vaten en longen",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Biceps curl",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Fiets",
+    "s": "3",
+    "h": "5 min"
+   },
+   {
+    "n": "Triceps dumbell kickbacks",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lateral raises",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Op de plaats marcheren – zonder steun",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Zijwaarts stappen – zonder steun",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Hartrevalidatie: circuit fase 2 niveau 1",
+  "sub": "Langere inspanningsblokken met korte actieve rust.",
+  "categorie": "Hart, vaten en longen",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Biceps curl",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Fiets",
+    "s": "3",
+    "h": "5 min"
+   },
+   {
+    "n": "Triceps dumbell kickbacks",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lateral raises",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Pully press double",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Hartrevalidatie: circuit fase 2 niveau 2",
+  "sub": "Circuit met marcheren en armkracht, langere inspanning per station.",
+  "categorie": "Hart, vaten en longen",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Op de plaats marcheren – zonder steun",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Biceps curl",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Fiets",
+    "s": "3",
+    "h": "5 min"
+   },
+   {
+    "n": "Triceps dumbell kickbacks",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lateral raises",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Pully press double",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Hartrevalidatie: circuit fase 2 niveau 3",
+  "sub": "Zwaarste circuit: conditie en kracht afwisselen met korte rustmomenten.",
+  "categorie": "Hart, vaten en longen",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Op de plaats marcheren – zonder steun",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Biceps curl",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Fiets",
+    "s": "3",
+    "h": "5 min"
+   },
+   {
+    "n": "Triceps dumbell kickbacks",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lateral raises",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Zijwaarts stappen – zonder steun",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Pully press double",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Hartrevalidatie: sportschool niveau 1",
+  "sub": "Rustige start met loopband, fiets, roeier en lichte armoefeningen.",
+  "categorie": "Hart, vaten en longen",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Loopband",
+    "s": "3",
+    "h": "5 min"
+   },
+   {
+    "n": "Lateral raises",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Roeier",
+    "s": "3",
+    "h": "5 min"
+   },
+   {
+    "n": "Fiets",
+    "s": "3",
+    "h": "5 min"
+   },
+   {
+    "n": "Biceps curl",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Hartrevalidatie: sportschool niveau 3",
+  "sub": "Conditie en kracht op toestellen in de laatste fase van hartrevalidatie.",
+  "categorie": "Hart, vaten en longen",
+  "fase": 3,
+  "oefeningen": [
+   {
+    "n": "Loopband",
+    "s": "3",
+    "h": "5 min"
+   },
+   {
+    "n": "Roeier",
+    "s": "3",
+    "h": "5 min"
+   },
+   {
+    "n": "Fiets",
+    "s": "3",
+    "h": "5 min"
+   },
+   {
+    "n": "Dumbell bench press",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lat pull front",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Leg press",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Herstel na covid: eerste 6 weken",
+  "sub": "Lichte oefeningen voor armen en benen om weer op gang te komen.",
+  "categorie": "Hart, vaten en longen",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Seated leg extension",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Functioneel opstaan – functioneel",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Standing chair calfs raises",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Glute bridges",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Biceps curl",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Anteflexie armen",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Herstel na covid: na 6 weken",
+  "sub": "Kracht en conditie verder uitbreiden voor armen en benen.",
+  "categorie": "Hart, vaten en longen",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Functioneel opstaan – functioneel",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Standing chair knee lift",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Standing chair abductie",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Standing chair half squat",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lunges",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Step up tempo",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Biceps curl",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Anteflexie armen",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Algemeen: kracht voor het hele lichaam",
+  "sub": "Basisoefeningen voor kracht en uithoudingsvermogen van armen, benen en romp.",
+  "categorie": "Algemeen en sport",
+  "oefeningen": [
+   {
+    "n": "Triceps dips",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Military press",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lunges",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Plank basis",
+    "s": "3",
+    "h": "3 × 30 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Algemeen: warming-up met rekken",
+  "sub": "Het hele lichaam losmaken en rekken voor inspanning.",
+  "categorie": "Algemeen en sport",
+  "oefeningen": [
+   {
+    "n": "Standing chair leg curl",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Nek zijwaarts buigen – zittend actief",
+    "s": "3",
+    "h": "5 × 10 sec"
+   },
+   {
+    "n": "Op de plaats marcheren – zonder steun",
+    "s": "3",
+    "h": "20"
+   },
+   {
+    "n": "Bovenste trapezius rek – zittend actief",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Good mornings",
+    "s": "3",
+    "h": "15"
+   },
+   {
+    "n": "Schouderblad liften en ontspannen – functioneel staand",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Levator scapulae rek – zittend actief",
+    "s": "3",
+    "h": "10 × 10 sec"
+   },
+   {
+    "n": "Seated shoulder roll",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Romp draaien – zittend",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Seated hamstring stretch",
+    "s": "3",
+    "h": "5 × 15 sec"
+   },
+   {
+    "n": "Calf raises",
+    "s": "3",
+    "h": "20"
+   },
+   {
+    "n": "Lunges",
+    "s": "3",
+    "h": "15"
+   }
+  ]
+ },
+ {
+  "naam": "Kind: lopen op de tenen",
+  "sub": "Balans en voetafwikkeling oefenen voor kinderen die op hun tenen lopen.",
+  "categorie": "Algemeen en sport",
+  "oefeningen": [
+   {
+    "n": "Tandemstand – zonder steun",
+    "s": "5",
+    "h": "5 × 20 sec"
+   },
+   {
+    "n": "Bear crawls",
+    "s": "5",
+    "h": "30 sec"
+   },
+   {
+    "n": "Achterwaarts stappen – zonder steun",
+    "s": "5",
+    "h": "30 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Sport: hamstringblessure fase 2",
+  "sub": "Bilspieren en achterkant bovenbeen weer belasten na een verrekking.",
+  "categorie": "Algemeen en sport",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Glute bridges",
+    "s": "3",
+    "h": "12"
+   },
+   {
+    "n": "Bruggen 1 been liften",
+    "s": "4",
+    "h": "15"
+   },
+   {
+    "n": "Squat",
+    "s": "4",
+    "h": "8"
+   }
+  ]
+ },
+ {
+  "naam": "Werk: rekken nek, rug en benen",
+  "sub": "Korte rekoefeningen om stijfheid door werk te verminderen.",
+  "categorie": "Algemeen en sport",
+  "oefeningen": [
+   {
+    "n": "Levator scapulae rek – zittend actief",
+    "s": "3",
+    "h": "5 × 15 sec"
+   },
+   {
+    "n": "Bovenste trapezius rek – zittend actief",
+    "s": "3",
+    "h": "5 × 15 sec"
+   },
+   {
+    "n": "Rug strekken – staand",
+    "s": "3",
+    "h": "5 × 15 sec"
+   },
+   {
+    "n": "Seated hamstring stretch",
+    "s": "3",
+    "h": "5 × 15 sec"
+   }
+  ]
  }
 ]
