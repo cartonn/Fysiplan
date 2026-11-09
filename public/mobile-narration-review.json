@@ -10,8 +10,8 @@
   "unlistedStatus": "not_assessed_for_clinical_approval",
   "changedTextPolicy": "A changed text hash does not clear a hold. Resolve and explicitly review before recording.",
   "summary": {
-    "rawV2Entries": 695,
-    "effectiveEntries": 542,
+    "rawV2Entries": 719,
+    "effectiveEntries": 570,
     "held": 15,
     "clinicalApproved": 0,
     "v1V2TextDifferences": 0,
