@@ -1513,5 +1513,188 @@
         "pose": "pair-candidate"
       }
     ]
+  },
+  "uitlegRonde3": {
+    "datum": "2026-11-09",
+    "akkoord": "Ahmed: \"ja\" (09:59) op de tweede controleronde; merge alleen op zijn go",
+    "bron": "output/physitrack-crosscheck/ronde3-controle.csv (branch claude/project-thread-i8kbtd)",
+    "uitleg": [
+      {
+        "nr": 3,
+        "naam": "Barbell pull over",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Physitrack: voeten plat op de vloer (zoals tekening), ellebogen gebogen"
+      },
+      {
+        "nr": 4,
+        "naam": "Bench press",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Physitrack: voeten plat op de vloer, zoals tekening en avatar"
+      },
+      {
+        "nr": 12,
+        "naam": "Dumbell pull over",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Tekening en avatar (voeten op de vloer, gestrekte armen, boog naar achter het hoofd) kloppen met Physitrack"
+      },
+      {
+        "nr": 16,
+        "naam": "Flyes",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Physitrack: knieën gebogen, ellebogen licht gebogen, zakken tot horizontaal; voetplaats niet genoemd"
+      },
+      {
+        "nr": 34,
+        "naam": "Pully pull over",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Tekening (ruglig op vlakke bank, handvat achter het hoofd, boog naar voren) past bij Physitrack (ruglig, knieën gebogen, armen naar de bovenbenen); de vlakke ba"
+      },
+      {
+        "nr": 40,
+        "naam": "Triceps dumbell kickbacks",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Physitrack: staand voorovergebogen met de vrije hand op een steun op heuphoogte, niet knielend"
+      },
+      {
+        "nr": 54,
+        "naam": "Hack squat",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Physitrack en tekening tonen het hack-squatapparaat"
+      },
+      {
+        "nr": 103,
+        "naam": "Rusian twist",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Houding en draaipijlen kloppen, maar de Physitrack-variant gebruikt een bal en houdt de hielen op de mat; bal ontbreekt in tekening en uitleg (geen Physitrack-p"
+      },
+      {
+        "nr": 146,
+        "naam": "TRX triceps extension II",
+        "v2": 1,
+        "v1": 1,
+        "reden": "dichtstbij: TRX Tricep Extension; 02"
+      },
+      {
+        "nr": 173,
+        "naam": "Yoga warrior III",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Tekening: houding (armen omhoog, achterste voet op de tenen) past bij Physitrack, maar er staan nog twee pijlen; een pijl voor het kantelen van romp en been"
+      },
+      {
+        "nr": 387,
+        "naam": "Schouderblad liften en ontspannen – zittend actief",
+        "v2": 1,
+        "v1": 0,
+        "reden": "Tekening: pijl staat maar bij één schouder, terwijl beide schouders omhoog gaan; verder klopt de houding (handen op bovenbenen)"
+      },
+      {
+        "nr": 391,
+        "naam": "Bovenste trapezius rek – zittend actief",
+        "v2": 1,
+        "v1": 0,
+        "reden": "Physitrack zittend: hand over het hoofd en rek vasthouden; tekening toont alleen actief kantelen zonder hand (bruikbaar)"
+      },
+      {
+        "nr": 392,
+        "naam": "Bovenste trapezius rek – functioneel staand",
+        "v2": 1,
+        "v1": 0,
+        "reden": "Tekening en avatar kloppen (actieve variant is geldig, hand op hoofd optioneel)"
+      },
+      {
+        "nr": 460,
+        "naam": "Grote stappen – met ritmische cue",
+        "v2": 1,
+        "v1": 0,
+        "reden": "Physitrack dwingt de grote stap af met markeringen op de vloer; de tekening toont die ook, de uitleg noemt ze niet"
+      },
+      {
+        "nr": 462,
+        "naam": "Brug met symmetrie – bilateraal",
+        "v2": 1,
+        "v1": 0,
+        "reden": "Tekening klopt"
+      },
+      {
+        "nr": 482,
+        "naam": "Langdurig zitten onderbreken – met tempo of herhaling",
+        "v2": 1,
+        "v1": 0,
+        "reden": "Tekening: pijl klopt, maar er staat een vage extra boogje/streepje bij de knieën (beeldfout); opschonen"
+      },
+      {
+        "nr": 509,
+        "naam": "Swiss ball hip raise",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Tekening en avatar leggen de hielen/enkels op de bal, uitleg zegt onderbenen; uitleg gelijktrekken met de tekening."
+      },
+      {
+        "nr": 516,
+        "naam": "Swiss ball back ext",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Avatar: start en eind zijn vrijwel gelijk, de beweging is niet te zien; start duidelijk voorovergebogen over de bal tonen en eind in rechte lijn"
+      },
+      {
+        "nr": 519,
+        "naam": "Swiss ball core",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Tekening (wint) toont handen op de bovenbenen en een voet optillen; avatar-eind en uitleg voegen armen naar voren toe"
+      },
+      {
+        "nr": 538,
+        "naam": "Med ball slams",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Uitleg zegt 'breng de bal naar beneden' maar niet dat je hem op de grond gooit en door je knieën zakt; Physitrack gooit de bal echt tegen de vloer"
+      },
+      {
+        "nr": 552,
+        "naam": "Med ball V-ups",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Tekening en avatar starten nu met de bal in gestrekte armen omhoog en de knieën gebogen opgetild"
+      },
+      {
+        "nr": 582,
+        "naam": "Seated knee to elbow",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Avatar houdt maar één hand achter het hoofd en legt de andere hand op de opgetilde knie; beide handen horen achter het hoofd, zoals in tekening en Physitrack"
+      }
+    ],
+    "wachtOpTekening": [
+      15,
+      57,
+      106,
+      128,
+      187,
+      199,
+      389,
+      415,
+      493,
+      497
+    ],
+    "openVraag": [
+      38,
+      66,
+      212,
+      390,
+      551
+    ],
+    "vergrendeld": [
+      475
+    ]
   }
 }
