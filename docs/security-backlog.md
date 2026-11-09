@@ -10,16 +10,26 @@ daaruit tot en met 2026-11-06.
 |---|---|
 | (a) beheer-endpoints en de admin-sleutel | 2026-11-09 12u (statisch: 17 `isAdmin`-routes, /aanmeldingen en /medewerkers alleen `ACCOUNT_BEHEER_EMAILS`, geen admin88 in publieke bestanden, productie zonder eigen `ADMIN_KEY` dicht, rem vóór sleutel. Geen gat) |
 | (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-09 12u (team: eigen login, uitnodigen, verwijderen, rol, gedeeld uit; uitnodiging verzilveren; wachtwoord per lid; v1-login/registratie. Nieuw: LAAG uitnodigingsmail als spamkanaal, zie Open) · 2026-11-08 04u (claim, inloggen op naam en e-mail, rem per naam/e-mail/praktijk, wachtwoord wijzigen, herstel, uitnodiging, overzicht en /v2/gegevens met e-mail; gedeeld wachtwoord weer aan: opgelost) |
-| (c) proef-tokens en verlopen proeven | 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
+| (c) proef-tokens en verlopen proeven | 2026-11-09 16u (koppelen van een account aan een proef bij inloggen, nu ook gevolgd door wissen na 30 dagen: oude proefcookie hing een gewone praktijk aan een verlopen proef, opgelost; claim, slot en wissen alleen voor de eigen proef) · 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-08 12u (therapeutroutes op één kaart open bij praktijk zonder wachtwoord: opgelost; id 48 bits + misrem 30/5 min per IP, patiëntroute met allowlist, praktijkroutes alleen eigen map) |
 | (e) uploads (video, logo, opname /o) | 2026-11-09 00u (praktijkprofiel + logo van een praktijk zonder wachtwoord overschrijfbaar met alleen de naam: opgelost; opname-upload, beheer-upload, /uploads-pad, type/grootte/magische bytes: geen gat) |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-09 08u (runtime met Chromium: payloads in teamnaam, uitnodiging, eigen oefening, teamsjabloon, alle kaartvelden, bericht, notitie, behandelaar, doel; app-start, Kaarten-paneel, inbox, Team, Activiteit, Rapport, Sjablonen, /k in nl/en/ar: niets geïnjecteerd, geen CSP-melding. CSV-exports met formule-escape, afspraak-ICS zonder regelinjectie. Geen gat) |
 | (g) security-headers, CSP, cookies, CSRF | 2026-11-08 16u (runtime: CSP, frame-ancestors, nosniff, referrer, no-store op /v2, /v2/proef, /v2/app, /k, /o, /privacy, /verwerkersovereenkomst en API; geen inline script zonder nonce; HSTS alleen achter https. Geen gat); 2026-11-09 08u: `kruisSite` liet same-site door, opgelost) |
-| (h) foutmeldingen die stacktraces of paden lekken | 2026-11-08 (runtime-fuzz 103 routes × GET/POST/PUT/DELETE × 7 kapotte bodies × 3 content-types = 6592 verzoeken, plus pad-traversal en kapotte %-codering: geen stacktrace, geen intern pad, geen fout in het serverlog) |
-| (i) denial of service: grote bodies, opslaggroei | 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
-| (j) npm audit | 2026-11-08 20u (0 meldingen, ook dev) |
+| (h) foutmeldingen die stacktraces of paden lekken | 2026-11-09 16u (statisch: alle `sendJson`/`send` met `err.message`/`e.stack` in server.js, routes/ en lib/ sinds 8-11, ook opzeggen, factuur, wissen na proef: interne fouten gaan alleen naar het serverlog. Geen gat) · 2026-11-08 (runtime-fuzz 103 routes × GET/POST/PUT/DELETE × 7 kapotte bodies × 3 content-types = 6592 verzoeken, plus pad-traversal en kapotte %-codering: geen stacktrace, geen intern pad, geen fout in het serverlog) |
+| (i) denial of service: grote bodies, opslaggroei | 2026-11-09 20u (remmen: schrijf-/leesrem per IP zette een hele praktijk achter één wifi plus de patiënten daar op 429: opgelost met een rem per praktijk; plafonds per praktijk ongewijzigd) · 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
+| (j) npm audit | 2026-11-09 20u (0 meldingen, ook dev) |
 
-Volgende run: (h) foutmeldingen, daarna (c) proef-tokens.
+Volgende run: (d) gedeelde kaarten, daarna (g) headers/CSP/cookies en (a) beheer.
+
+Sanity 2026-11-09 20u op #139–#140 (juridische teksten B1, wissen na proef alleen met vinkje, knop na uitnodiging met
+klaargezette praktijknaam, behandelkaartenbibliotheek): `/v2/proef/wissen` houdt `kruisSite` en eist nu ook `zeker=1`;
+de knoplink gaat door `htmlEsc`, `TEKST` door `serveerProef` (escapet); `?praktijk=` gaat alleen in `.value`; de nieuwe
+`innerHTML` in de bibliotheek escapet namen met `esc()`, sleutels zijn `bron:index`. Geen gat.
+
+Sanity 2026-11-09 16u op #129–#137 (wissen na proef zonder abonnement 30 dagen, linkerpaneel, avatars, Noor-stop en
+wachtrij op /k): `proefRonde` wist alleen accounts met `acc.proef.id` van een verlopen niet-klant-aanmelding; de koppeling
+bij inloggen was te ruim (zie Open, opgelost). #130 en #137 zijn alleen front-end; de nieuwe meldingen op /k zijn
+`textContent`, de wachtrij herhaalt alleen de eigen patiëntroutes. Geen ander gat.
 
 Sanity 2026-11-09 12u op #120–#128 (proefpraktijk zonder abonnement wissen, roepnaamvoorstel alleen bij dezelfde voornaam,
 duidelijke foutmeldingen bij inloggen, Physitrack-beelden): `proefZonderAbonnementWissen` laat klanten staan zolang hun
@@ -174,6 +184,34 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **AFGESLOTEN 2026-11-09 20u als beveiligingspunt, doorgezet naar docs/mensenwerk.md (zakelijke keuze).** Geen technisch gat:
+  iedereen kan in /v2/app een praktijk beveiligen zonder proef (bewuste keuze), dus een typfout of een nieuwe naam is geen
+  omzeiling die alleen een team heeft. Of de app zonder proef of abonnement open moet blijven, beslist Ahmed. Oorspronkelijke melding:
+  **MIDDEL (doorgezet door de gebruikers-sweep 2026-11-09 18u) — praktijk zonder proef via een (typ)naam.** Mark (iPad): een collega
+  typte "Fysio Marktest." en Beveiligen maakte een tweede praktijkaccount zonder `proef`; op een kopie met verlopen proef gaf
+  `POST /api/kaarten` daar 200. `proefKoppel` (server.js r. ~2644) koppelt alleen via de proefcookie van dat apparaat. Bekend dat
+  /v2/app zonder proef open is (bewuste keuze), maar zo omzeilt een team ook de verlopen proef. De sweep zet nu de praktijknaam
+  klaar na een uitnodiging (deze PR); een "bedoel je …?" op namen lekt praktijknamen, dus eerst hier beoordelen.
+
+- **OPGELOST 2026-11-09 (deze PR) — MIDDEL — oude proefcookie op het apparaat hangt een gewone praktijk aan een
+  verlopen proef, die daarna helemaal gewist wordt** (sanity #133/#136). Inloggen met naam en wachtwoord koppelde het
+  account aan de proef van de cookie zodra `acc.gemaakt >= proef.gestart`, ook als de praktijk ná het einde van die
+  proef was gemaakt. Gevolg: de praktijk ging direct op slot, en sinds #133 wist de proefronde 30 dagen na die oude
+  proef het hele account mét de patiëntkaarten. Repro lokaal: proef 46 dagen verlopen, praktijk vandaag beveiligd
+  zonder proef, inloggen met `cookie: fpproef=<oud>` gaf `acc.proef = {id: oud}`. Kan per ongeluk (gedeelde computer)
+  of door een collega met het praktijkwachtwoord. Nu: alleen koppelen als het account binnen die proef is gemaakt
+  (`gestart <= gemaakt <= verloopt`). Test: `npm run test:oudeproef`.
+- **OPGELOST 2026-11-09 (deze PR) — MIDDEL (doorgezet door gebruikers-sweep 2026-11-09 14u) — herstelcode is hoofdlettergevoelig.** Uitgegeven als
+  `FP-a0713-dff95-…`; in hoofdletters overgetypt (papieren code) geeft 403 en telt mee voor het slot van 15 minuten.
+  server.js r. ~2994 (`String(b.herstelcode).trim()` zonder normalisatie). Advies: client en server normaliseren
+  (kleine letters, streepjes/spaties). Desktop (Sanne). Nu: `herstelcodeNormaal` op de server zet hoofdletters,
+  spaties en ontbrekende streepjes terug naar de uitgegeven vorm; een echt verkeerde code blijft 403. Test: `npm run test:oudeproef`.
+- **DEELS OPGELOST 2026-11-09 20u (deze PR): sessieverkeer telt per praktijk, zie MIDDEL hieronder. Open: seintjes van patiënten
+  delen nog één bak per IP, en sessies alleen in het geheugen.** LAAG (doorgezet door gebruikers-sweep 2026-11-09 14u) — schrijfrem is één bucket per IP voor alle routes (40/5 min,
+  server.js r. ~1467). Snel tikken op de pijnscore blokkeerde het pijnseintje. De kaart zet zo'n tik nu in de wachtrij
+  (PR van de sweep), maar overweeg een eigen bucket voor seintjes. Ook: praktijksessies alleen in het geheugen
+  (r. ~173), dus elke deploy logt iedereen uit en de eerste autosave daarna geeft stil 401 (Mark).
+
 - **OPGELOST 2026-11-09 (deze PR) — MIDDEL — onleesbaar `proef-aanmeldingen.json` wist klanten** (sanity #123). Bij een
   kapot bestand startte de server met `proeven = {}`; het rondje van 5 s na de start zag dan bij elk account met een oude
   proef "aanmelding weg" en wiste het (team, profiel, sjablonen) zodra er geen kaarten waren, ook bij betalende klanten.
@@ -230,7 +268,10 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 - **OPGELOST 2026-11-07 (deze PR) — LAAG — na een verlopen proef kan een beheerder nog collega's uitnodigen** (sweep 18u, Mark). `/api/praktijk/team/*`
   staat niet in `PROEF_SCHRIJFROUTES` (server.js r. ~529); uitnodigen geeft 200 en de link werkt.
 
-- **MIDDEL — schrijfrem van 40 per 5 minuten per IP geldt voor een hele praktijk achter één wifi** (gebruikers-sweep
+- **OPGELOST 2026-11-09 20u (deze PR) — nu telt een verzoek met een geldige praktijksessie per praktijk (schrijven 200, lezen
+  600 per 5 min) plus een ruimere bak voor alle sessies op één IP (400 / 1200); anoniem (patiënt, inloggen, aanmelden) blijft
+  40 / 120 per IP en telt het team niet meer mee. Een nep-sessiekop telt gewoon per IP. Test: `npm run test:rempraktijk`.**
+  MIDDEL — schrijfrem van 40 per 5 minuten per IP geldt voor een hele praktijk achter één wifi (gebruikers-sweep
   2026-11-07 14u, Mark). Kaart opslaan, afspraak, login, opname en team tellen samen in `schrijfLimiet`
   (server.js r. ~1205–1220). Mark + collega liepen na ±40 gewone handelingen twee keer tegen 429 aan, voor iedereen op
   dat IP, ±5 minuten. Advies: voor geldige praktijksessies per sessie/lid tellen of een hogere grens; de rem voor
@@ -268,7 +309,9 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
   volgende login vanaf het proefapparaat.** Een sessie op een ander apparaat die nooit opnieuw vanaf
   het proefapparaat inlogt, blijft tot de sessie (30 dagen) verloopt open. Koppelen op praktijknaam
   (`p.praktijk`) is bewust niet gedaan: die naam is vrije invoer en zou andermans account kunnen sluiten.
-- **MIDDEL — per-IP-remmen te krap voor een praktijk achter één NAT** (sweep 2026-11-06). Lezen 120
+- **OPGELOST 2026-11-09 20u voor de praktijk (deze PR, zie hierboven); open als LAAG: patiënten achter CGNAT/sportschool-wifi
+  delen nog 40/120 per IP. Voorstel: patiëntroutes per kaart-id tellen naast een ruimere IP-bak.**
+  MIDDEL — per-IP-remmen te krap voor een praktijk achter één NAT (sweep 2026-11-06). Lezen 120
   en schrijven 40 per 5 min per IP (server.js `leesLimiet`, schrijfrem) gelden voor de hele praktijk
   incl. auto-delen, en voor patiënten achter CGNAT/sportschool-wifi. De sweep liep er met 4 gebruikers
   binnen minuten tegenaan. Overweeg rem per praktijksessie/kaart-id naast per IP.

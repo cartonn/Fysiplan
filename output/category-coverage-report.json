@@ -1,15 +1,15 @@
 {
  "scope": "Basiscatalogus in de repository (public/oefeningen-v2.json). Runtime-overrides op de server niet meegeteld; die gaan altijd voor.",
  "inputs": {
-  "public/oefeningen-v2.json": "60ed02331d04924f",
-  "public/mobile-media-review.json": "9516d0a744c9640a",
-  "public/mobile-narration-review.json": "d557de5d0027f633",
-  "public/index.html": "73fab4e7aeb71caa",
+  "public/oefeningen-v2.json": "7bce846d5d1dc1ab",
+  "public/mobile-media-review.json": "9af7b05864999732",
+  "public/mobile-narration-review.json": "1e61cfcf26612e6e",
+  "public/index.html": "785ba562286c5cf7",
   "content/category-secondary-evidence.json": "38afbf1e0f0eb85a"
  },
  "totals": {
-  "records": 604,
-  "available": 446,
+  "records": 633,
+  "available": 475,
   "withoutAsset": 158,
   "withSecondary": 246,
   "secondaryLabels": 315,
@@ -24,7 +24,7 @@
   {
    "category": "Bovenste extremiteit",
    "missingAssets": 50,
-   "availableIncludingSecondary": 85,
+   "availableIncludingSecondary": 114,
    "noAutoFill": false,
    "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
   },
@@ -79,13 +79,13 @@
    "storedLabels": [
     "Bovenste extremiteit"
    ],
-   "records": 135,
-   "primary": 95,
-   "primaryAvailable": 45,
+   "records": 164,
+   "primary": 124,
+   "primaryAvailable": 74,
    "secondary": 40,
    "secondaryAvailable": 40,
-   "available": 85,
-   "availableClean": 85,
+   "available": 114,
+   "availableClean": 114,
    "mediaRejected": 0,
    "explanationHeld": 0,
    "missingAssets": [

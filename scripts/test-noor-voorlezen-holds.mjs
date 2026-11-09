@@ -33,6 +33,8 @@ assert.ok(normaal,'een gewone oefening met opname');
 
 function kaartContext(chosen){
   const el=new Map(),meldingen=[],afgespeeld=[],robot=[];
+  // meldingen staan sinds 2026-11-09 op de pagina (#noorMelding), niet meer in een alert()
+  el.set('noorMelding',{hidden:true,set textContent(v){if(v)meldingen.push(String(v));},get textContent(){return '';}});
   const knop=id=>{if(!el.has(id))el.set(id,{textContent:'',attrs:{},hidden:false,classList:{add(){},remove(){}},setAttribute(k,v){this.attrs[k]=v;}});return el.get(id);};
   const NoorAudio={stop(){},load:async()=>manifest,
     match:(name,text)=>manifest.clips.find(c=>c.name===name&&c.text===name+'. '+text),
@@ -45,7 +47,7 @@ function kaartContext(chosen){
   const normEx=html.match(/  function normEx\(s\)\{[^\n]*\n/)[0];
   vm.runInContext(normEx+tussen('  var mediaReviewReady=false,','  function geldigeUitsnede(')+
     tussen('  function geldigeUitsnede(','  async function loadMobileReview(')+tussen('  async function loadMobileReview(','  // Een oude afkeuring mag')+
-    tussen('  function metEigen(','  function cellPrefix(')+tussen('  var bezigLezen=false,noorRequest=0;','  // ---- als app'),ctx);
+    tussen('  function metEigen(','  function cellPrefix(')+tussen('  var bezigLezen=false,noorRequest=0,noorBron=-1;','  // ---- als app'),ctx);
   ctx.K={lib,kaart:{chosen,cells:{'dosering':'3x10'}},praktijk:{}};
   return {ctx,knop,meldingen,afgespeeld,robot};
 }
@@ -99,7 +101,7 @@ function kaartContext(chosen){
     assert.equal(vm.runInContext('noorItem',k.ctx)(o,{n:naam}).beeldGehouden,verwacht,naam);
     assert.equal(vm.runInContext('mediaWithheld',k.ctx)(o),verwacht,naam+': zelfde uitkomst als de kaartweergave');
   }
-  assert.ok(html.includes("speelNoor([noorItem(vindOefening(x),x)]);return;"),'de knop per oefening gebruikt dezelfde regel');
+  assert.ok(html.includes("speelNoor([noorItem(vindOefening(x),x)],ni);return;"),'de knop per oefening gebruikt dezelfde regel');
 }
 
 // 3a. tegengehouden zonder opname (testhold op Back extension en Rug extensie): zelfde overslaan als een

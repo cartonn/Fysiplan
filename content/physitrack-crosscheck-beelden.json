@@ -2333,5 +2333,597 @@
       "naam": "Rug bol en hol – op de adem",
       "status": "nog niet doorgevoerd"
     }
+  },
+  "avatarsRonde3b": {
+    "datum": "2026-11-09",
+    "toelichting": "Avatars voor oefeningen zonder kaartImg, gemaakt in Runway met akkoord van Ahmed (max 550 credits), nagekeken naast de lijntekening.",
+    "inDeApp": [
+      {
+        "nr": 393,
+        "naam": "Rug bol en hol – op handen en knieën",
+        "kaartImg": "images/rug/rug-bol-en-hol-op-handen-en-knieen-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 394,
+        "naam": "Rug bol en hol – zittend",
+        "kaartImg": "images/rug/rug-bol-en-hol-zittend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 395,
+        "naam": "Rug bol en hol – staand",
+        "kaartImg": "images/rug/rug-bol-en-hol-staand-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 396,
+        "naam": "Rug bol en hol – met lichte weerstand",
+        "kaartImg": "images/rug/rug-bol-en-hol-met-lichte-weerstand-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 397,
+        "naam": "Romp draaien – liggend",
+        "kaartImg": "images/rug/romp-draaien-liggend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 398,
+        "naam": "Romp draaien – op handen en knieën",
+        "kaartImg": "images/rug/romp-draaien-op-handen-en-knieen-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 400,
+        "naam": "Romp draaien – staand",
+        "kaartImg": "images/rug/romp-draaien-staand-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 401,
+        "naam": "Romp zijwaarts buigen – liggend",
+        "kaartImg": "images/rug/romp-zijwaarts-buigen-liggend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 402,
+        "naam": "Romp zijwaarts buigen – zittend",
+        "kaartImg": "images/rug/romp-zijwaarts-buigen-zittend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 403,
+        "naam": "Romp zijwaarts buigen – staand",
+        "kaartImg": "images/rug/romp-zijwaarts-buigen-staand-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 404,
+        "naam": "Rug strekken – liggend",
+        "kaartImg": "images/rug/rug-strekken-liggend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 405,
+        "naam": "Rug strekken – op handen en knieën",
+        "kaartImg": "images/rug/rug-strekken-op-handen-en-knieen-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 406,
+        "naam": "Rug strekken – zittend",
+        "kaartImg": "images/rug/rug-strekken-zittend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 407,
+        "naam": "Rug strekken – staand",
+        "kaartImg": "images/rug/rug-strekken-staand-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 408,
+        "naam": "Knie naar borst – liggend",
+        "kaartImg": "images/rug/knie-naar-borst-liggend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 409,
+        "naam": "Knie naar borst – zittend",
+        "kaartImg": "images/rug/knie-naar-borst-zittend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 410,
+        "naam": "Knie naar borst – staand",
+        "kaartImg": "images/rug/knie-naar-borst-staand-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 411,
+        "naam": "Open boek – liggend",
+        "kaartImg": "images/rug/open-boek-liggend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 412,
+        "naam": "Open boek – op handen en knieën",
+        "kaartImg": "images/rug/open-boek-op-handen-en-knieen-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 413,
+        "naam": "Open boek – zittend",
+        "kaartImg": "images/rug/open-boek-zittend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 414,
+        "naam": "Thoracale extensie – liggend",
+        "kaartImg": "images/rug/thoracale-extensie-liggend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 415,
+        "naam": "Thoracale extensie – op handen en knieën",
+        "kaartImg": "images/rug/thoracale-extensie-op-handen-en-knieen-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 416,
+        "naam": "Thoracale extensie – zittend",
+        "kaartImg": "images/rug/thoracale-extensie-zittend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 417,
+        "naam": "Thoracale extensie – staand",
+        "kaartImg": "images/rug/thoracale-extensie-staand-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 448,
+        "naam": "Reiken met aangedane arm – met visueel doel",
+        "kaartImg": "images/neurologische-revalidatie/reiken-met-aangedane-arm-met-visueel-doel-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 450,
+        "naam": "Hand openen na grijpen – bilateraal",
+        "kaartImg": "images/neurologische-revalidatie/hand-openen-na-grijpen-bilateraal-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 453,
+        "naam": "Symmetrisch opstaan – met ritmische cue",
+        "kaartImg": "images/neurologische-revalidatie/symmetrisch-opstaan-met-ritmische-cue-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 454,
+        "naam": "Stap initiëren – met visueel doel",
+        "kaartImg": "images/neurologische-revalidatie/stap-initieren-met-visueel-doel-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 455,
+        "naam": "Stap initiëren – met ritmische cue",
+        "kaartImg": "images/neurologische-revalidatie/stap-initieren-met-ritmische-cue-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 456,
+        "naam": "Zijwaarts verplaatsen in zit – met visueel doel",
+        "kaartImg": "images/neurologische-revalidatie/zijwaarts-verplaatsen-in-zit-met-visueel-doel-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 457,
+        "naam": "Hiel plaatsen – met visueel doel",
+        "kaartImg": "images/neurologische-revalidatie/hiel-plaatsen-met-visueel-doel-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 458,
+        "naam": "Voet naar marker – met visueel doel",
+        "kaartImg": "images/neurologische-revalidatie/voet-naar-marker-met-visueel-doel-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 459,
+        "naam": "Ritmisch marcheren – met ritmische cue",
+        "kaartImg": "images/neurologische-revalidatie/ritmisch-marcheren-met-ritmische-cue-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 460,
+        "naam": "Grote stappen – met ritmische cue",
+        "kaartImg": "images/neurologische-revalidatie/grote-stappen-met-ritmische-cue-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 461,
+        "naam": "Grote stappen – functionele combinatie",
+        "kaartImg": "images/neurologische-revalidatie/grote-stappen-functionele-combinatie-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 462,
+        "naam": "Brug met symmetrie – bilateraal",
+        "kaartImg": "images/neurologische-revalidatie/brug-met-symmetrie-bilateraal-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 464,
+        "naam": "Blikstabilisatie horizontaal – staand langzaam",
+        "kaartImg": "images/vestibulair/blikstabilisatie-horizontaal-staand-langzaam-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 466,
+        "naam": "Blikstabilisatie verticaal – zittend langzaam",
+        "kaartImg": "images/vestibulair/blikstabilisatie-verticaal-zittend-langzaam-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 467,
+        "naam": "Blikstabilisatie verticaal – staand langzaam",
+        "kaartImg": "images/vestibulair/blikstabilisatie-verticaal-staand-langzaam-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 468,
+        "naam": "Ogen naar doelen – zittend langzaam",
+        "kaartImg": "images/vestibulair/ogen-naar-doelen-zittend-langzaam-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 469,
+        "naam": "Ogen naar doelen – staand langzaam",
+        "kaartImg": "images/vestibulair/ogen-naar-doelen-staand-langzaam-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 470,
+        "naam": "Doel volgen – zittend langzaam",
+        "kaartImg": "images/vestibulair/doel-volgen-zittend-langzaam-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 471,
+        "naam": "Hoofd draaien in stand – staand langzaam",
+        "kaartImg": "images/vestibulair/hoofd-draaien-in-stand-staand-langzaam-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 472,
+        "naam": "Buigen en oprichten – staand langzaam",
+        "kaartImg": "images/vestibulair/buigen-en-oprichten-staand-langzaam-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 474,
+        "naam": "Voorwerp van vloer tillen – licht en dichtbij",
+        "kaartImg": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-licht-en-dichtbij-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 476,
+        "naam": "Boven schouderhoogte plaatsen – ergonomische basis",
+        "kaartImg": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-ergonomische-basis-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 477,
+        "naam": "Boven schouderhoogte plaatsen – licht en dichtbij",
+        "kaartImg": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-licht-en-dichtbij-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 478,
+        "naam": "Duwen – licht en dichtbij",
+        "kaartImg": "images/werk-en-dagelijkse-handelingen/duwen-licht-en-dichtbij-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 479,
+        "naam": "Duwen – met stapverplaatsing",
+        "kaartImg": "images/werk-en-dagelijkse-handelingen/duwen-met-stapverplaatsing-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 480,
+        "naam": "Trekken – licht en dichtbij",
+        "kaartImg": "images/werk-en-dagelijkse-handelingen/trekken-licht-en-dichtbij-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 481,
+        "naam": "Draaien en plaatsen – met stapverplaatsing",
+        "kaartImg": "images/werk-en-dagelijkse-handelingen/draaien-en-plaatsen-met-stapverplaatsing-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 482,
+        "naam": "Langdurig zitten onderbreken – met tempo of herhaling",
+        "kaartImg": "images/werk-en-dagelijkse-handelingen/langdurig-zitten-onderbreken-met-tempo-of-herhaling-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 483,
+        "naam": "Bekkenbodem aanspannen – liggend",
+        "kaartImg": "images/bekken-postpartum/bekkenbodem-aanspannen-liggend-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 491,
+        "naam": "Functioneel opstaan – functioneel",
+        "kaartImg": "images/bekken-postpartum/functioneel-opstaan-functioneel-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 492,
+        "naam": "Zijlig heupkracht – zijlig",
+        "kaartImg": "images/bekken-postpartum/zijlig-heupkracht-zijlig-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 493,
+        "naam": "Hop vooruit – techniek langzaam",
+        "kaartImg": "images/sportrevalidatie/hop-vooruit-techniek-langzaam-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 496,
+        "naam": "Laterale shuffle – submaximaal",
+        "kaartImg": "images/sportrevalidatie/laterale-shuffle-submaximaal-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 498,
+        "naam": "Sprinttechniek marcheren – techniek langzaam",
+        "kaartImg": "images/sportrevalidatie/sprinttechniek-marcheren-techniek-langzaam-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 499,
+        "naam": "Versnellen en afremmen – submaximaal",
+        "kaartImg": "images/sportrevalidatie/versnellen-en-afremmen-submaximaal-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 421,
+        "naam": "Semi-tandemstand – met steun",
+        "kaartImg": "images/balans-en-valpreventie/semi-tandemstand-met-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 422,
+        "naam": "Semi-tandemstand – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/semi-tandemstand-zonder-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 423,
+        "naam": "Semi-tandemstand – met hoofdbeweging",
+        "kaartImg": "images/balans-en-valpreventie/semi-tandemstand-met-hoofdbeweging-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 425,
+        "naam": "Tandemstand – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/tandemstand-zonder-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 426,
+        "naam": "Tandemstand – met hoofdbeweging",
+        "kaartImg": "images/balans-en-valpreventie/tandemstand-met-hoofdbeweging-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 427,
+        "naam": "Eenbeenstand – met steun",
+        "kaartImg": "images/balans-en-valpreventie/eenbeenstand-met-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 428,
+        "naam": "Eenbeenstand – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/eenbeenstand-zonder-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 430,
+        "naam": "Gewicht verplaatsen voor-achter – met steun",
+        "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 431,
+        "naam": "Gewicht verplaatsen voor-achter – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-zonder-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 432,
+        "naam": "Gewicht verplaatsen zijwaarts – met steun",
+        "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 434,
+        "naam": "Reiken in stand – met steun",
+        "kaartImg": "images/balans-en-valpreventie/reiken-in-stand-met-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 435,
+        "naam": "Reiken in stand – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/reiken-in-stand-zonder-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 436,
+        "naam": "Op de plaats marcheren – met steun",
+        "kaartImg": "images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 437,
+        "naam": "Op de plaats marcheren – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/op-de-plaats-marcheren-zonder-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 439,
+        "naam": "Zijwaarts stappen – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/zijwaarts-stappen-zonder-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 440,
+        "naam": "Achterwaarts stappen – met steun",
+        "kaartImg": "images/balans-en-valpreventie/achterwaarts-stappen-met-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 441,
+        "naam": "Achterwaarts stappen – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/achterwaarts-stappen-zonder-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 445,
+        "naam": "Draaien op de plaats – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/draaien-op-de-plaats-zonder-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 446,
+        "naam": "Stoel opstaan en lopen – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/stoel-opstaan-en-lopen-zonder-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 447,
+        "naam": "Dubbele taak lopen – met cognitieve taak",
+        "kaartImg": "images/balans-en-valpreventie/dubbele-taak-lopen-met-cognitieve-taak-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 424,
+        "naam": "Tandemstand – met steun",
+        "kaartImg": "images/balans-en-valpreventie/tandemstand-met-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 399,
+        "naam": "Romp draaien – zittend",
+        "kaartImg": "images/rug/romp-draaien-zittend-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 429,
+        "naam": "Eenbeenstand – met hoofdbeweging",
+        "kaartImg": "images/balans-en-valpreventie/eenbeenstand-met-hoofdbeweging-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 433,
+        "naam": "Gewicht verplaatsen zijwaarts – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-zonder-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 442,
+        "naam": "Over een obstakel stappen – met steun",
+        "kaartImg": "images/balans-en-valpreventie/over-een-obstakel-stappen-met-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 443,
+        "naam": "Over een obstakel stappen – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 444,
+        "naam": "Draaien op de plaats – met steun",
+        "kaartImg": "images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 449,
+        "naam": "Reiken met aangedane arm – functionele combinatie",
+        "kaartImg": "images/neurologische-revalidatie/reiken-met-aangedane-arm-functionele-combinatie-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 451,
+        "naam": "Romp rotatie in zit – bilateraal",
+        "kaartImg": "images/neurologische-revalidatie/romp-rotatie-in-zit-bilateraal-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 465,
+        "naam": "Blikstabilisatie horizontaal – tijdens lopen",
+        "kaartImg": "images/vestibulair/blikstabilisatie-horizontaal-tijdens-lopen-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 495,
+        "naam": "Landing op één been – techniek langzaam",
+        "kaartImg": "images/sportrevalidatie/landing-op-een-been-techniek-langzaam-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 497,
+        "naam": "Richtingsverandering – techniek langzaam",
+        "kaartImg": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-avatar-v8.jpg",
+        "herkansing": true
+      }
+    ],
+    "nietInDeApp": {
+      "onvoldoende": [
+        438
+      ],
+      "inwendigeBeweging": {
+        "nrs": [
+          484,
+          485,
+          486,
+          487,
+          488,
+          489
+        ],
+        "advies": "pijl intekenen in plaats van opnieuw genereren"
+      },
+      "vergrendeld": {
+        "nrs": [
+          475
+        ],
+        "reden": "privé-concept met eigen beelden; uitleg vergrendeld"
+      }
+    },
+    "herkansing": {
+      "datum": "2026-11-09",
+      "credits": 60,
+      "maximum": 70,
+      "inDeApp": [
+        399,
+        429,
+        433,
+        442,
+        443,
+        444,
+        449,
+        451,
+        465,
+        495,
+        497
+      ]
+    }
   }
 }

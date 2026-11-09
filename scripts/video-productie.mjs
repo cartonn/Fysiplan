@@ -7,7 +7,11 @@ const root = new URL("../", import.meta.url);
 const libraryUrl = new URL("public/oefeningen-v2.json", root);
 const manifestUrl = new URL("content/video-productie-v2.json", root);
 const oefeningen = JSON.parse(await readFile(libraryUrl, "utf8"));
-const productieOefeningen = oefeningen.filter((oefening) => oefening.v1Source !== "carla");
+// Nieuwe oefeningen (nieuweOefening in content/nieuwe-lijntekeningen.json, sinds 2026-11-09) vallen
+// buiten de vaste top 500 voor de videoproductie.
+const nieuweOefeningen = new Set(JSON.parse(await readFile(new URL("content/nieuwe-lijntekeningen.json", root), "utf8"))
+  .lijntekeningen.filter((entry) => entry.nieuweOefening).map((entry) => entry.naam));
+const productieOefeningen = oefeningen.filter((oefening) => oefening.v1Source !== "carla" && !nieuweOefeningen.has(oefening.naam));
 const core1000 = JSON.parse(await readFile(new URL("content/core-1000.json", root), "utf8"));
 const coreById = new Map((core1000.exercises || []).map((entry) => [entry.exerciseId, entry]));
 const SAFETY = "Stop bij scherpe of toenemende pijn en volg de dosering van je fysiotherapeut.";

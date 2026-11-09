@@ -38,8 +38,9 @@
     "test:ahmed-notities": "node scripts/test-ahmed-notities.mjs",
     "test:proef": "node scripts/test-proef.mjs && node scripts/test-proef-poort.mjs",
     "test:proefpoort": "node scripts/test-proef-poort.mjs",
+    "test:oudeproef": "node scripts/test-oude-proef-herstelcode.mjs",
     "test:abonnement": "node scripts/test-abonnement-mollie.mjs && node scripts/test-abonnement-einde.mjs",
-    "test:privacy": "node scripts/test-vraaghulp-grens.mjs && node scripts/test-privacy.mjs && node scripts/test-praktijkgegevens.mjs && node scripts/test-gegevens-proef.mjs && node scripts/test-kaart-weg.mjs && node scripts/test-kaart-wis-telefoon.mjs && node scripts/test-mijn-gegevens.mjs && node scripts/test-dossier-contact.mjs && node scripts/test-wees-opnames.mjs && node scripts/test-proef-einde-wissen.mjs",
+    "test:privacy": "node scripts/test-vraaghulp-grens.mjs && node scripts/test-privacy.mjs && node scripts/test-praktijkgegevens.mjs && node scripts/test-gegevens-proef.mjs && node scripts/test-kaart-weg.mjs && node scripts/test-kaart-wis-telefoon.mjs && node scripts/test-mijn-gegevens.mjs && node scripts/test-dossier-contact.mjs && node scripts/test-wees-opnames.mjs && node scripts/test-proef-einde-wissen.mjs && node scripts/test-juridisch-b1.mjs",
     "test:beheer": "node scripts/test-beheersleutel.mjs",
     "test:sweep": "node scripts/test-sweep-kaart.mjs",
     "test:offline": "node scripts/test-kaart-offline.mjs",
@@ -91,7 +92,14 @@
     "test:dubbelklikoverzicht": "node scripts/test-sweep-dubbelklik-overzicht.mjs",
     "test:kaart200taal": "node scripts/test-sweep-kaart-200-taal.mjs",
     "test:roepnaamander": "node scripts/test-sweep-roepnaam-andere-patient.mjs",
-    "test:kaartladen": "node scripts/test-sweep-kaart-laden.mjs"
+    "test:kaartladen": "node scripts/test-sweep-kaart-laden.mjs",
+    "test:noorstop": "node scripts/test-sweep-noor-stop.mjs",
+    "test:kaartdruk": "node scripts/test-sweep-kaart-druk.mjs",
+    "test:nieuwekaartnaam": "node scripts/test-sweep-nieuwe-kaart-naam.mjs",
+    "test:proefwissen": "node scripts/test-sweep-proef-wissen-vinkje.mjs",
+    "test:pijnscorebezig": "node scripts/test-sweep-pijnscore-bezig.mjs",
+    "test:uitnodigingpraktijk": "node scripts/test-sweep-uitnodiging-praktijk.mjs",
+    "test:rempraktijk": "node scripts/test-rem-praktijk.mjs"
   },
   "engines": {
     "node": ">=20"

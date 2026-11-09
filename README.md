@@ -127,7 +127,7 @@ telefoon**. De pagina's zijn scriptloos; de logica staat in `lib/proef.js` en `s
   persoonlijke link voor een tweede apparaat en een herinnering naar de aanmelder.
 - Overzicht met CSV-export, "klant geworden", "+7 dagen" en wissen op **/aanmeldingen**, alleen voor
   ingelogde `ACCOUNT_BEHEER_EMAILS` (niet met admin88). `/dashboard88` toont alleen aantallen.
-- AVG: geen IP-adres opgeslagen, aanmelder kan zelf wissen, automatisch gewist 90 dagen na afloop
+- AVG: geen IP-adres opgeslagen, aanmelder kan zelf wissen, automatisch gewist 30 dagen na afloop
   tenzij klant. `npm run test:proef` test de hele flow tegen een nagebootste maildienst.
 
 ## Beheer via /admin88
