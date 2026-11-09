@@ -442,7 +442,10 @@
       "img": "images/balans-en-valpreventie/eenbeenstand-met-hoofdbeweging-line-v1.png",
       "sha256": "66e8c11398e6a8ed1d8259580d548f2feea1360a2ba2a76a73228a23a5f5c5c9",
       "bron": "https://uk.physitrack.com/home-exercise-video/single-leg-stance%2c-head-turns",
-      "bronTitel": "Single leg stance, head turns"
+      "bronTitel": "Single leg stance, head turns",
+      "kaartImg": "images/balans-en-valpreventie/eenbeenstand-met-hoofdbeweging-avatar-v8.jpg",
+      "kaartSha256": "506a6cd03e0e90cff7390786feaeafc38e8c0e4d2242335708721274464aa1ae",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/429-eenbeenstand-met-hoofdbeweging-avatar-r3.png"
     },
     {
       "exerciseId": "fp_7c48290b27a4b297",
@@ -487,7 +490,10 @@
       "img": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-zonder-steun-line-v1.png",
       "sha256": "0ed19b2ed86e5e54b4309edf1e706a60c2920deda823048beddd3e123f091578",
       "bron": "https://ca.physitrack.com/home-exercise-video/weight-shifts-in-standing",
-      "bronTitel": "Weight shifts in standing"
+      "bronTitel": "Weight shifts in standing",
+      "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-zonder-steun-avatar-v8.jpg",
+      "kaartSha256": "bcd7daa48d85f773792d67798f5ae0232a47c587990a99bdf268aa8250f22816",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/433-gewicht-verplaatsen-zijwaarts-zonder-steun-avatar-r2.png"
     },
     {
       "exerciseId": "fp_2be645c53a08ae85",
@@ -589,7 +595,10 @@
       "img": "images/balans-en-valpreventie/over-een-obstakel-stappen-met-steun-line-v1.png",
       "sha256": "99592abca07a1b67a1516cff6531fba6b78034849382db7c0824a9cb60953d40",
       "bron": "https://au.physitrack.com/home-exercise-video/step-over-and-back",
-      "bronTitel": "Step over and back"
+      "bronTitel": "Step over and back",
+      "kaartImg": "images/balans-en-valpreventie/over-een-obstakel-stappen-met-steun-avatar-v8.jpg",
+      "kaartSha256": "38244d7c5fb318a7b9f2610d640a85ffe386a2a00a118ef8f9061831adc394b3",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/442-over-een-obstakel-stappen-met-steun-avatar-r2.png"
     },
     {
       "exerciseId": "fp_03127b77cb1cc5f6",
@@ -598,7 +607,10 @@
       "img": "images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-line-v1.png",
       "sha256": "7c8213e4fb9b0ea1b5a4768f4591e131f83ab9dd926a5100534307de86749f3f",
       "bron": "https://ca.physitrack.com/home-exercise-video/step-over-obstacle-while-walking",
-      "bronTitel": "Step over Obstacle While Walking"
+      "bronTitel": "Step over Obstacle While Walking",
+      "kaartImg": "images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-avatar-v8.jpg",
+      "kaartSha256": "894f16513d4bb525f1db89ec67297c18a733700df432b23fb9db1c801b8148f8",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/443-over-een-obstakel-stappen-zonder-steun-avatar-r2.png"
     },
     {
       "exerciseId": "fp_59f54b0f73b88fab",
@@ -607,7 +619,10 @@
       "img": "images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-line-v1.png",
       "sha256": "87c4ec67759be8635bd9db3b950fbd2ca890c819c598314e92f084a5d3bfaa12",
       "bron": "https://us.physitrack.com/home-exercise-video/360-degree-turn",
-      "bronTitel": "360 degree turn (Balance, standing, turning 360°)"
+      "bronTitel": "360 degree turn (Balance, standing, turning 360°)",
+      "kaartImg": "images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-avatar-v8.jpg",
+      "kaartSha256": "7fb7f9b3e476c7974cfe94d65889225ea302b6e74c22991da511f66e6d219568",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/444-draaien-op-de-plaats-met-steun-avatar-r2.png"
     },
     {
       "exerciseId": "fp_dab1d71dd3f80bb0",
@@ -664,7 +679,10 @@
       "img": "images/neurologische-revalidatie/reiken-met-aangedane-arm-functionele-combinatie-line-v1.png",
       "sha256": "3cc326c2c6753d18f0c517b20986388fb07106ea7b60392ee0b53eaef1508542",
       "bron": "https://uk.physitrack.com/home-exercise-video/reach-to-grasp-and-place-cup",
-      "bronTitel": "Reach to grasp and place cup"
+      "bronTitel": "Reach to grasp and place cup",
+      "kaartImg": "images/neurologische-revalidatie/reiken-met-aangedane-arm-functionele-combinatie-avatar-v8.jpg",
+      "kaartSha256": "1925849319c1cf72f3882ddfae3e9eb377869d05a95205bc65af79050a00e61a",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/449-reiken-met-aangedane-arm-functionele-combinatie-avatar-r2.png"
     },
     {
       "exerciseId": "fp_c374f5b2a002ed26",
@@ -685,7 +703,10 @@
       "img": "images/neurologische-revalidatie/romp-rotatie-in-zit-bilateraal-line-v1.png",
       "sha256": "828c292cc25c9a21b0d29d44763c149059d2f7746cd514aa1feb7256704305d3",
       "bron": "https://au.physitrack.com/home-exercise-video/seated-trunk-rotations",
-      "bronTitel": "Seated trunk rotations (adaptive)"
+      "bronTitel": "Seated trunk rotations (adaptive)",
+      "kaartImg": "images/neurologische-revalidatie/romp-rotatie-in-zit-bilateraal-avatar-v8.jpg",
+      "kaartSha256": "a9937c3c6e18aebc9fda3fc146e1e421cc9076e07fc1456613aa6ddfff132fac",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/451-romp-rotatie-in-zit-bilateraal-avatar-r2.png"
     },
     {
       "exerciseId": "fp_211c89f47639deb5",
@@ -826,7 +847,10 @@
       "img": "images/vestibulair/blikstabilisatie-horizontaal-tijdens-lopen-line-v1.png",
       "sha256": "58c9be57910d5fff489e212a06b841f55f641e3b627b4a936b320c6f6d56648d",
       "bron": "https://us.physitrack.com/home-exercise-video/walking-with-vor-rotation",
-      "bronTitel": "Walking with VOR rotation"
+      "bronTitel": "Walking with VOR rotation",
+      "kaartImg": "images/vestibulair/blikstabilisatie-horizontaal-tijdens-lopen-avatar-v8.jpg",
+      "kaartSha256": "75719b2fc3e000cc457636ba4c34a84cc2ca85d419ab8749965422be9a0563f0",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/465-blikstabilisatie-horizontaal-tijdens-lopen-avatar-r2.png"
     },
     {
       "exerciseId": "fp_9c374def618b9b9f",
@@ -1126,7 +1150,10 @@
       "img": "images/sportrevalidatie/landing-op-een-been-techniek-langzaam-line-v1.png",
       "sha256": "363f7b0a72b07271af98b085ca9ed570ae0f2e4437af7d48905865fcbd27d5d9",
       "bron": "https://au.physitrack.com/home-exercise-video/multi-direction----single-leg-hop-and-hold",
-      "bronTitel": "Multi-direction - single leg hop and hold"
+      "bronTitel": "Multi-direction - single leg hop and hold",
+      "kaartImg": "images/sportrevalidatie/landing-op-een-been-techniek-langzaam-avatar-v8.jpg",
+      "kaartSha256": "245f06561e5d4a29831e982099e86baccd475b7a1196e7156e3f5f86da845b3f",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/495-landing-op-een-been-techniek-langzaam-avatar-r3.png"
     },
     {
       "exerciseId": "fp_0273cc99fa1cd0d6",
@@ -1147,7 +1174,10 @@
       "img": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-line-v1.png",
       "sha256": "fd9aa6197e9f9ebd2ba51568230a30a83bb6ce577399c6978527912e365fd644",
       "bron": "https://ca.physitrack.com/home-exercise-video/change-of-direction-%E2%80%93-agility-%E2%80%93-straight-line-running-with-jog-backwards---intermediate",
-      "bronTitel": "Change of direction - agility - straight line running with jog backwards - intermediate"
+      "bronTitel": "Change of direction - agility - straight line running with jog backwards - intermediate",
+      "kaartImg": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-avatar-v8.jpg",
+      "kaartSha256": "db091ff361386b7798598807a300c7c7dfae324dcdf0ec219a52c51ac3fa2c9f",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/497-richtingsverandering-techniek-langzaam-avatar-r2.png"
     },
     {
       "exerciseId": "fp_c769c6c4de22aeca",
@@ -1252,7 +1282,10 @@
       "img": "images/rug/romp-draaien-zittend-line-v1.png",
       "sha256": "3dc3b2ef2eed15d379d1774ce0edbed390030495e32c229ef68898acde90109b",
       "bron": "https://ca.physitrack.com/home-exercise-video/seated-trunk-rotation-with-arms-crossed---body-awareness",
-      "bronTitel": "Seated trunk rotation with arms crossed - body awareness"
+      "bronTitel": "Seated trunk rotation with arms crossed - body awareness",
+      "kaartImg": "images/rug/romp-draaien-zittend-avatar-v8.jpg",
+      "kaartSha256": "79f26a59f14951a6d16003d2a1f4494beada885dde2f6c8d216721b62f315c0b",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/399-romp-draaien-zittend-avatar-r2.png"
     },
     {
       "exerciseId": "fp_e91bf651c05afa01",

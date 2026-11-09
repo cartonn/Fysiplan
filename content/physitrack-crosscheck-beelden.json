@@ -2817,22 +2817,77 @@
         "naam": "Tandemstand – met steun",
         "kaartImg": "images/balans-en-valpreventie/tandemstand-met-steun-avatar-v8.jpg",
         "herkansing": false
+      },
+      {
+        "nr": 399,
+        "naam": "Romp draaien – zittend",
+        "kaartImg": "images/rug/romp-draaien-zittend-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 429,
+        "naam": "Eenbeenstand – met hoofdbeweging",
+        "kaartImg": "images/balans-en-valpreventie/eenbeenstand-met-hoofdbeweging-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 433,
+        "naam": "Gewicht verplaatsen zijwaarts – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-zonder-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 442,
+        "naam": "Over een obstakel stappen – met steun",
+        "kaartImg": "images/balans-en-valpreventie/over-een-obstakel-stappen-met-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 443,
+        "naam": "Over een obstakel stappen – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 444,
+        "naam": "Draaien op de plaats – met steun",
+        "kaartImg": "images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 449,
+        "naam": "Reiken met aangedane arm – functionele combinatie",
+        "kaartImg": "images/neurologische-revalidatie/reiken-met-aangedane-arm-functionele-combinatie-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 451,
+        "naam": "Romp rotatie in zit – bilateraal",
+        "kaartImg": "images/neurologische-revalidatie/romp-rotatie-in-zit-bilateraal-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 465,
+        "naam": "Blikstabilisatie horizontaal – tijdens lopen",
+        "kaartImg": "images/vestibulair/blikstabilisatie-horizontaal-tijdens-lopen-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 495,
+        "naam": "Landing op één been – techniek langzaam",
+        "kaartImg": "images/sportrevalidatie/landing-op-een-been-techniek-langzaam-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 497,
+        "naam": "Richtingsverandering – techniek langzaam",
+        "kaartImg": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-avatar-v8.jpg",
+        "herkansing": true
       }
     ],
     "nietInDeApp": {
       "onvoldoende": [
-        399,
-        429,
-        433,
-        438,
-        442,
-        443,
-        444,
-        449,
-        451,
-        465,
-        495,
-        497
+        438
       ],
       "inwendigeBeweging": {
         "nrs": [
@@ -2851,6 +2906,24 @@
         ],
         "reden": "privé-concept met eigen beelden; uitleg vergrendeld"
       }
+    },
+    "herkansing": {
+      "datum": "2026-11-09",
+      "credits": 60,
+      "maximum": 70,
+      "inDeApp": [
+        399,
+        429,
+        433,
+        442,
+        443,
+        444,
+        449,
+        451,
+        465,
+        495,
+        497
+      ]
     }
   }
 }
