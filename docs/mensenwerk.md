@@ -4,6 +4,14 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Einde van een opgezegd abonnement (legal, 2026-11-09)
+**Wat de code nu doet:** na opzeggen loopt het abonnement tot het einde van de betaalde maand. Daarna is de
+praktijk geen klant meer (geen nieuwe kaarten), en 30 dagen later wist Fysiplan alles van die praktijk; alleen
+naam, e-mail, praktijknaam en betaling blijven 7 jaar. Jij krijgt een mail op de dag dat het abonnement stopt.
+**Wat jij moet kiezen:** (1) wil je dat de praktijk een paar dagen vóór het wissen nog een mail krijgt? Advies: ja,
+zodra er een maandincasso is. (2) Teruggave van geld bij opzeggen halverwege de maand: de code boekt niets terug;
+zet je keuze in de voorwaarden (art. 5) of laat de jurist het zeggen. (3) De opzegtermijn in art. 5 is nog een invulplek.
+
 ### Vraaghulp op de kaart (legal, 2026-11-07)
 **Wat de code nu doet:** met `ANTHROPIC_API_KEY` ziet elke patiënt "Vraag over je oefeningen (AI)".
 Vragen over pijn, klachten, medicijnen of herstel gaan sinds 7 november niet meer naar de AI-dienst;

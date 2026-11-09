@@ -10,20 +10,35 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 |---|---|
 | (a) privacyverklaring (art. 13/14 AVG) | 2026-11-07 (team, akkoord, Mijn gegevens, Railway-logs) |
 | (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-07 (eigen login per therapeut, één akkoord) |
-| (c) algemene voorwaarden | 2026-11-07 (akkoord met versie, eigen login) |
-| (d) code tegen tekst | 2026-11-08 05u (wissen van opnames, eigen video's, logs, reservekopie; mails/FAQ over gedeelde kaarten) |
+| (c) algemene voorwaarden | 2026-11-09 05u (opzeggen in de app, einde abonnement; `AV_VERSIE` 2026-11-09) |
+| (d) code tegen tekst | 2026-11-09 05u (einde abonnement: wissen 30 dagen na het einde gebouwd) |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-08 17u (patiënt: download klopt nu direct na vinkjes en seintje, niet pas na herladen) |
 | (f) cookies en lokale opslag | 2026-11-08 13u (cookies `fpproef`/`fp1` kloppen; alle localStorage-sleutels van /k en de app langs de tekst gelegd; twee ontbraken in /privacy, toegevoegd) |
 | (g) MDR en AI-verordening | 2026-11-09 01u (vraaghulp gaf mogelijk doseringsadvies: opgelost; videolabels AI-concept/klinisch gecontroleerd volgen de reviewstatus; landing en app zonder sorteer- of doseringsbelofte) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-08 21u (werknotitie mee naar het dossier, dossierlabel vervalt bij nieuwe praktijkregels, datum heet nu "laatst opgeslagen") |
 | (i) begrijpelijkheid (B1) | 2026-11-08 09u (VWO en voorwaarden: "In het kort", VWO als concept gemarkeerd; /v2/gegevens-tekst) |
 
-Volgende run: (a) privacyverklaring, dan (b) verwerkersovereenkomst en (c) voorwaarden. Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (a) privacyverklaring, dan (b) verwerkersovereenkomst. Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
 
+- **HOOG — code tegen tekst (2026-11-09 05u): een opgezegd abonnement stopte nooit en er werd nooit gewist.**
+  Voorwaarden art. 5 en verwerkersovereenkomst art. 10 beloven: na het einde worden de kaarten van de praktijk binnen
+  30 dagen gewist. Na opzeggen bleef `proef.klant` echter voor altijd `true`: de praktijk kon na de betaalde maand
+  gratis kaarten blijven maken, en kaarten, account, profiel en aanmelding (met telefoon) bleven staan (art. 5 lid 1e
+  en art. 28 lid 3g AVG). OPGELOST 2026-11-09 (deze PR): `abonnementEindeStap` (lib/mollie.js) in de uurlijkse
+  proefronde zet na `betaaldTot` het abonnement op "beeindigd" (geen klant, proefpoort dicht, gedeelde kaarten werken
+  nog) en wist 30 dagen later alles van de praktijk via `praktijkAllesWissen` (dezelfde route als "Alles wissen" op
+  /v2/gegevens; fiscale gegevens blijven 7 jaar). Pagina, mail en voorwaarden noemen de 30 dagen.
+  Test: `scripts/test-abonnement-einde.mjs` (faalt zonder fix), plus unit-test in `test-abonnement-mollie.mjs`.
+  Nog niet: een abonnement dat stopt omdat een maandincasso mislukt (er is nog geen incasso); de praktijk krijgt
+  geen herinneringsmail vlak voor het wissen (zie mensenwerk).
+
 - **MIDDEL — voorwaarden (2026-11-09, gemeld door de praktijk-routine): opzeggen kan nu ook in de app.**
+  OPGELOST 2026-11-09 (deze PR): art. 5 zegt nu "zelf in de app (Mijn proef) of per e-mail", stopt aan het einde van
+  de betaalde maand, intrekken kan tot die dag. Nieuwe `AV_VERSIE` 2026-11-09 met regel in `AKKOORD_WIJZIGINGEN`
+  (beheerders zien het in de app). Opzegtermijn blijft een invulplek voor Ahmed.
   `public/juridisch.html` (abonnement) zegt "Opzeggen doe je per e-mail. Je krijgt een bevestiging." en "Opzegtermijn:
   in te vullen". Sinds PR "praktijk: abonnement zelf opzeggen" kan een betalende praktijk op /v2/proef?mijn=1 zelf
   opzeggen; dat gaat in per het einde van de al betaalde maand (`abonnement.betaaldTot`), tot dan kan ze het intrekken,
