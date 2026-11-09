@@ -14,14 +14,33 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (d) code tegen tekst | 2026-11-08 05u (wissen van opnames, eigen video's, logs, reservekopie; mails/FAQ over gedeelde kaarten) |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-08 17u (patiënt: download klopt nu direct na vinkjes en seintje, niet pas na herladen) |
 | (f) cookies en lokale opslag | 2026-11-08 13u (cookies `fpproef`/`fp1` kloppen; alle localStorage-sleutels van /k en de app langs de tekst gelegd; twee ontbraken in /privacy, toegevoegd) |
-| (g) MDR en AI-verordening | 2026-11-07 (vraaghulp op de kaart, zoekhulp, vertalen, AI-labels, landing en app) |
+| (g) MDR en AI-verordening | 2026-11-09 01u (vraaghulp gaf mogelijk doseringsadvies: opgelost; videolabels AI-concept/klinisch gecontroleerd volgen de reviewstatus; landing en app zonder sorteer- of doseringsbelofte) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-08 21u (werknotitie mee naar het dossier, dossierlabel vervalt bij nieuwe praktijkregels, datum heet nu "laatst opgeslagen") |
 | (i) begrijpelijkheid (B1) | 2026-11-08 09u (VWO en voorwaarden: "In het kort", VWO als concept gemarkeerd; /v2/gegevens-tekst) |
 
-Volgende run: (g) MDR en AI-verordening, dan (a) en (b). Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (a) privacyverklaring, dan (b) verwerkersovereenkomst en (c) voorwaarden. Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **HOOG — MDR (2026-11-09 01u): de AI-vraaghulp op /k kon een dosering invullen.**
+  Een vraag als "Hoeveel herhalingen moet ik doen?", "Hoe vaak per dag?" of "Mag ik zwaarder?" ging naar de AI-dienst,
+  die de dosering van de kaart niet meekrijgt en hem dus zelf moest bedenken. Dat is doseringsadvies per patiënt,
+  precies de grens waarop software een medisch hulpmiddel wordt (MDCG 2019-11, regel 11 MDR; Fysiplan belooft
+  "kiest geen behandeling of dosering"). De systeemprompt verbood alleen "aantallen veranderen", niet ze noemen.
+  OPGELOST 2026-11-09 (deze PR): `vraagOverDosering` in `lib/vraaghulp-grens.js` vangt hoe vaak/hoeveel/hoe lang/
+  hoe zwaar af in de 9 kaarttalen; de server geeft dan een vaste verwijzing ("staat op je kaart, vraag je praktijk",
+  zonder AI-label) en roept de AI-dienst niet aan. Prompt: "noem of verander nooit aantallen ... of hoe vaak".
+  /privacy (patiëntdeel, `PRIVACY_VERSIE` 2026-11-09) en landing zeggen het erbij. Test: `scripts/test-vraaghulp-grens.mjs`
+  (faalt zonder fix). Bewust ruim: "hoe lang moet ik vasthouden?" wordt ook verwezen; een onterechte verwijzing
+  kost de patiënt niets.
+  Gecontroleerd zonder gat: videolabel "AI-demonstratie · klinisch gecontroleerd" verschijnt alleen bij
+  `clinicallyReviewed === true`, anders "AI-concept · beoordeling volgt" (AI-verordening art. 50 lid 4, alle 9 talen);
+  landingsfoto's dragen "AI-bewerkt"; zoekhulp geeft geen dosering; sorteren "meldingen eerst" gaat alleen over
+  meldingen die de patiënt zelf stuurde, niet over scores (geen "wie slechter wordt komt bovenaan").
+- **LAAG — landing: "auditlogboek is openbaar" linkte naar het oude `docs/security-log.md`** (sinds 7 nov niet meer
+  bijgewerkt), terwijl de tekst zegt dat de beveiliging doorlopend getoetst wordt. OPGELOST 2026-11-09 (deze PR):
+  link naar `docs/security-backlog.md`.
 
 - **MIDDEL — WGBO (2026-11-08 21u): werknotitie en berichten konden ongemerkt met de kaart verdwijnen.**
   De werknotitie ("linkerknie ontzien") staat alleen in Fysiplan, maar ging niet mee in "Kopieer voor dossier".
