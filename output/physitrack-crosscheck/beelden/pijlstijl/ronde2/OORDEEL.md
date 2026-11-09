@@ -17,3 +17,6 @@ Specs: ronde2-specs.json (Physitrack per oefening geopend; eigen woorden). Niets
 ## Uitleg wijkt af van Physitrack (tekening volgt Physitrack; uitleg nog bijwerken)
 17, 24, 28, 30, 31, 43, 44, 50, 51, 64, 79, 88, 89, 92, 101, 105, 134, 171, 208, 581 (zie opmerking per spec).
 Open: 197 nu leg press (Physitrack + uitleg); 170 en 552 geen exacte Physitrack-match.
+
+## Besluit 9 nov
+Ahmed: bij 50 (Dead lift) en 208 (Gluteus kick) Physitrack volgen. Tekening en nieuwe uitleg doen dat al; geen nieuwe Runway-run nodig.
