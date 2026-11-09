@@ -14,13 +14,25 @@ Zelf beoordeeld; maximaal 2 pogingen per beeld. Rijen met "catalogus" zijn besta
 | eenbeenstand-ogen-dicht | Eenbeenstand – ogen dicht | **goed** |  |
 | hiel-tikken-ruglig | Hiel tikken – ruglig met benen in de lucht | **goed** |  |
 | hamstring-kuit-rekken-ruglig-band | Hamstring en kuit rekken – ruglig met band | **goed** |  |
-| hoppen-op-plaats-een-been | Hoppen op de plaats – op één been | **goed** | 2e poging |
+| hoppen-op-plaats-een-been | Hoppen op de plaats – op één been | **goed** |  |
 | knie-strekken-been-op-stoel | Knie strekken – been op een stoel | **goed** |  |
 | bovenbeen-voorkant-rekken-buiklig-band | Voorkant bovenbeen rekken – buiklig met band | **goed** |  |
 | vooruit-achteruit-springen | Vooruit en achteruit springen – twee benen | **goed** |  |
 | zenuw-glijden-been-ruglig | Zenuw glijden been – ruglig | **goed** |  |
 | knie-langzaam-strekken-buiklig-met-hulp | Knie langzaam strekken – buiklig met hulp | **goed** |  |
 | uitvalspas-elastiek-opzij | Uitvalspas met elastiek opzij – knie recht houden | **goed** |  |
+| straight-leg-raise-liggend | Straight leg raise – liggend | **goed** | catalogus |
+| terminal-knee-extension-met-elastiek | Terminal knee extension – met elastiek | **goed** | catalogus |
+| quadriceps-aanspannen-liggend | Quadriceps aanspannen – liggend | **goed** | catalogus; statisch: begin en eind gelijk (aanspannen) |
+| mini-squat-met-elastiek | Mini-squat – met elastiek | **goed** | catalogus |
+| clamshell-zijlig | Clamshell – zijlig | **goed** | catalogus |
+| hamstring-curl-liggend | Hamstring curl – liggend | **goed** | catalogus |
+| knie-buigen-liggend | Knie buigen – liggend | **goed** | catalogus |
+| knie-strekken-liggend | Knie strekken – liggend | **goed** | catalogus |
+| heup-zijwaarts-heffen-met-elastiek | Heup zijwaarts heffen – met elastiek | **goed** | catalogus |
+| knie-buigen-zittend | Knie buigen – zittend | **goed** | catalogus |
+| knie-buigen-staand-met-steun | Knie buigen – staand met steun | **goed** | catalogus |
+| clamshell-met-elastiek | Clamshell – met elastiek | **goed** | catalogus |
 
-Totaal: goed 15, matig 1, fout 0.
-Kosten knie: ca. 170 credits.
+Totaal: goed 27, matig 1, fout 0.
+Kosten knie: ca. 300 credits (incl. catalogusaanvulling).
