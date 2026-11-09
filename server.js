@@ -64,9 +64,9 @@ if (IS_PRODUCTIE && !ADMIN_KEY) console.warn("Beheer staat dicht: zet een eigen 
 const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "admin88";
 // versie van de verwerkersovereenkomst (public/juridisch.html): bij elke inhoudelijke
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
-const VWO_VERSIE = "2026-11-07";
+const VWO_VERSIE = "2026-11-09";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-09";
+const AV_VERSIE = "2026-11-09-2";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-09";
@@ -80,7 +80,9 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "vwo", versie: "2026-11-07", tekst: "Beveiliging: elke therapeut een eigen login met de rollen beheerder en therapeut; wie uit het team gaat, verliest direct de toegang. Eén akkoord samen met de voorwaarden." },
   { stuk: "av", versie: "2026-11-07-2", tekst: "Artikel over je account: elke therapeut krijgt een eigen login en je deelt wachtwoorden met niemand." },
   { stuk: "av", versie: "2026-11-07-3", tekst: "Prijs: elke persoon met een eigen login telt als één therapeut; een login delen met meerdere mensen mag niet." },
-  { stuk: "av", versie: "2026-11-09", tekst: "Stoppen: opzeggen kan nu ook zelf in de app. Het abonnement stopt aan het einde van de betaalde maand; 30 dagen later wissen we alles van je praktijk." }
+  { stuk: "av", versie: "2026-11-09", tekst: "Stoppen: opzeggen kan nu ook zelf in de app. Het abonnement stopt aan het einde van de betaalde maand; 30 dagen later wissen we alles van je praktijk." },
+  { stuk: "av", versie: "2026-11-09-2", tekst: "Proef: word je geen klant, dan wissen we 90 dagen na de proef alles van je praktijk, ook de kaarten die je deelde." },
+  { stuk: "vwo", versie: "2026-11-09", tekst: "Einde: na de proef zonder abonnement wissen we alles na 90 dagen. Nieuw: een wettelijke vordering melden we vooraf, Fysiplan blijft verantwoordelijk voor subverwerkers, en de praktijk mag de afspraken laten controleren." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
@@ -787,7 +789,19 @@ async function proefRonde() {
   const nu = Date.now();
   let gewijzigd = false;
   for (const p of Object.values(proeven)) {
-    if (!p.klant && nu >= p.verloopt + PROEF_BEWAAR_DAGEN * 86400000) { proefWis(p.id); gewijzigd = true; continue; }
+    if (!p.klant && nu >= p.verloopt + PROEF_BEWAAR_DAGEN * 86400000) {
+      // proef zonder abonnement: niet alleen de aanmelding, ook de praktijk zelf gaat nu weg,
+      // met haar gedeelde kaarten. Een kaart die de patiënt bleef openen, verliep anders nooit,
+      // en dan bleef ook het account voor altijd staan (verwerkersovereenkomst art. 10,
+      // voorwaarden art. 3; art. 5 lid 1e en art. 28 lid 3g AVG). Alleen hier, waar de
+      // aanmelding zelf zegt dat er geen klant is; een ontbrekend bestand wist dus nooit kaarten.
+      const pks = Object.keys(praktijkAccounts).filter((k) => String(praktijkAccounts[k].proef?.id || "") === p.id);
+      for (const pk of pks) {
+        await praktijkAllesWissen(pk).then(() => auditLog("(gewist)", "praktijk-gewist-na-proef", null))
+          .catch((e) => console.error("wissen na proef:", e.message));
+      }
+      proefWis(p.id); gewijzigd = true; continue;
+    }
     if (p.gewist && nu >= Number(p.bewaarTot || 0)) { proefWis(p.id); gewijzigd = true; continue; }
     if (p.gewist) continue;
     // opgezegd abonnement: na de betaalde maand gestopt (geen nieuwe kaarten meer), en
@@ -811,7 +825,8 @@ async function proefRonde() {
       proefMail(p.email, "Je Fysiplan-proef loopt over twee dagen af",
         "Hoi " + p.naam + ",\n\nJe gratis proef van Fysiplan loopt tot en met " + datumNl(p.verloopt) + ".\n" +
         "Wil je daarna doorgaan? Antwoord op deze mail, dan bellen we je om het abonnement af te spreken.\n\n" +
-        "De kaarten die je met patiënten deelde blijven werken tot hun bewaartermijn afloopt (zie fysiplan.nl/privacy).\n\nGroet,\nFysiplan");
+        "De kaarten die je met patiënten deelde blijven werken tot hun bewaartermijn afloopt, en uiterlijk tot " + PROEF_BEWAAR_DAGEN +
+        " dagen na je proef (zie fysiplan.nl/privacy).\n\nGroet,\nFysiplan");
       proefMeldAhmed("Proef loopt bijna af: " + (p.praktijk || p.naam), p, "Deze proef loopt over twee dagen af. Goed moment om even te bellen.");
     }
   }
