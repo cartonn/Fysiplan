@@ -261,7 +261,9 @@
     #a4 table.mon thead tr:nth-child(1){height:4mm}
     #a4 table.mon thead tr:nth-child(3){height:5mm}
     #a4 table.mon thead tr:nth-child(4){height:5mm}
-    #a4 table.mon tbody tr{height:6.7mm}
+    /* 6.2 mm: ook in Safari (blad 197 mm hoog) passen de laatste rij en de S/H/W-legenda (2026-11-09) */
+    #a4 table.mon tbody tr{height:6.2mm}
+    #a4 .shw-legenda{flex:0 0 auto}
     /* Safari houdt de macOS-printerstand op Staand. Draai de kaart daarom
        binnen het beschikbare A4-printvlak, zodat één klik toch het vel vult. */
     html.safari-print,html.safari-print body{width:197mm;height:276mm}
@@ -1248,6 +1250,9 @@ bridge2.jpg</div>
     tekenZijbalk();
     window.addEventListener('load',function(){tekenZijbalk();tekenKopTeller();pasA4();});
     window.addEventListener('resize',pasA4);
+    // tips, dosering of extra rijen veranderen de hoogte van de kaart: opnieuw inpassen
+    if(window.ResizeObserver){var _a4h=0;new ResizeObserver(function(){var a=document.getElementById('a4'),w=document.getElementById('a4wrap');if(!a||!w)return;
+      var h=Math.round(a.getBoundingClientRect().height/(parseFloat(w.style.getPropertyValue('--a4z'))||1));if(h!==_a4h){_a4h=h;pasA4();}}).observe(document.getElementById('a4'));}
     pasA4();
   }
   // Breed scherm: de acties staan direct boven de kaart en de hele A4 past op het scherm
@@ -1265,7 +1270,11 @@ bridge2.jpg</div>
     var bw=wrap.clientWidth-padX-4;
     var top=wrap.getBoundingClientRect().top+window.scrollY;
     var bh=window.innerHeight-top-padY-kop.offsetHeight-14;
-    var z=Math.min(1,bw/1122,bh/794);
+    // Op het scherm staan boven de tabel nog tips en de startdosering (niet op de print); de kaart
+    // groeit daarom mee en we passen de hele kaart in, met legenda (Ahmed, 2026-11-09).
+    var huidig=parseFloat(wrap.style.getPropertyValue('--a4z'))||1;
+    var hoog=Math.max(794,a4.getBoundingClientRect().height/huidig);
+    var z=Math.min(1,bw/1122,bh/hoog);
     z=Math.max(.55,Math.floor(z*100)/100);
     wrap.style.setProperty('--a4z',z);
   }

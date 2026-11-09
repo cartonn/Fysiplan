@@ -580,6 +580,10 @@ html.v2 .fp-kop .tb-acties #clearBtn:hover{color:#b42318;background:#fdf3f2}
   html.v2 #a4wrap::before{display:none}
   html.v2 #a4{zoom:var(--a4z,1)}
 }
+/* scherm: de kaart groeit mee met tips en startdosering, zodat onderste rijen en S/H/W-legenda zichtbaar blijven (Ahmed, 2026-11-09) */
+@media screen and (min-width:921px){
+  html.v2 #a4{height:auto;max-height:none}
+}
 @media screen and (min-width:1100px) and (max-width:1279px){
   html.v2 .wrap{grid-template-columns:360px minmax(0,1fr)}
   html.v2 .col-controls .bd{grid-template-columns:112px minmax(0,1fr)}
