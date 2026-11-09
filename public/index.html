@@ -3337,6 +3337,8 @@ bridge2.jpg</div>
         if(d.herstelcode)toonHerstelcode(d.herstelcode);
         // de kaart in de editor mag nu gedeeld worden: de QR komt er vanzelf op
         if(IS_V2){laatsteDeel='';deelNu();}
+        // het praktijkprofiel (adres, telefoon) wordt pas na beveiligen bewaard; stuur het nu mee
+        if(IS_V2&&act==='claim')upsertPraktijk();
       })
       .catch(function(){knop.disabled=false;toonPsMsg('Geen verbinding.');});
   }

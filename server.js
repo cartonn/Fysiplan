@@ -3318,8 +3318,14 @@ async function afhandelen(request, response) {
       // met een sessie altijd het profiel van de eigen praktijk (vaste code), ook als
       // de naam verandert; anders zoals vroeger op naam
       const key = praktijkVan(request, p.praktijk);
-      // een geclaimde praktijk kan alleen door de ingelogde praktijk zelf worden bijgewerkt
-      if (await eisPraktijk(request, response, key)) return;
+      // een geclaimde praktijk kan alleen door de ingelogde praktijk zelf worden bijgewerkt.
+      // Ook een praktijk zónder wachtwoord is niet meer open: haar profiel (telefoon,
+      // e-mail, website, logo) staat op elke gedeelde patiëntkaart, dus met alleen de
+      // praktijknaam kon iedereen daar een eigen nummer of link neerzetten (phishing
+      // namens de praktijk). Zelfde poort als de therapeutroutes op een kaart: zonder
+      // wachtwoord alleen v1 (eigen login) en een eigen beheersleutel (security 2026-11-09).
+      if (await eisBeveiligdePraktijk(request, response, key,
+        "Zet eerst een wachtwoord op je praktijk; daarna bewaren we het praktijkprofiel en logo.")) return;
       // hetzelfde dagplafond op níeuwe praktijken als op de kaarten- en claim-route:
       // zonder dit is dit profiel-endpoint de onbewaakte route waarlangs één IP de
       // 200-praktijken-namespace kan volzetten (elk met een 400 kB-logo) en zo echte

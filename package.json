@@ -83,7 +83,8 @@
     "test:kaartroutes": "node scripts/test-kaart-praktijkroutes.mjs",
     "test:landingprint": "node scripts/test-sweep-landingprint-langetekst.mjs",
     "test:offlinestand": "node scripts/test-offline-stand.mjs",
-    "test:lightbox": "node scripts/test-sweep-lightbox-proefvenster.mjs"
+    "test:lightbox": "node scripts/test-sweep-lightbox-proefvenster.mjs",
+    "test:profielovername": "node scripts/test-profiel-overname.mjs"
   },
   "engines": {
     "node": ">=20"
