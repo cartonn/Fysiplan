@@ -2,7 +2,8 @@
 
 - **Ronde 1 (proefset):** akkoord Ahmed "maak de 6 voor max 120". Verbruikt 85 credits (740 → 655).
 - **Ronde 2:** akkoord Ahmed "akkoord, maak de 24 en de herkansingen voor maximaal 400 credits". Verbruikt **290 credits** (655 → 365): 27 lijntekeningen, 31 avatars en 0 fouten.
-- **Totaal:** 375 credits. Saldo 365.
+- **Ronde 3:** nummer 26 opnieuw, akkoord max 20. Verbruikt 15 credits (365 → 350).
+- **Totaal:** 390 credits. Saldo 350.
 
 Overzicht: `_contactvel.png` toont per oefening de lijntekening en de avatar (begin boven, eind onder).
 Afgekeurde of eerdere versies staan als `*-poging1.png` en `*-v1.png`. Niets staat in `public/` of in de oefeningen-JSON.
@@ -35,10 +36,10 @@ Hand- en polsoefeningen zijn ingezoomd (vanaf de taille, tafelrand in beeld).
 | 23 | Vingers buigen en strekken met hulp | ✅ | |
 | 24 | Knijpen in therapieklei | ⚠️ matig | verschil begin/eind klein |
 | 25 | Duim buigen en strekken | ✅ | beweging subtiel |
-| 26 | Duim zijwaarts van de hand | ✅ | |
+| 26 | Duim zijwaarts van de hand | ⚠️ matig | ronde 3 (akkoord Ahmed, max 20 credits, 15 gebruikt): lijntekening opnieuw en nu goed (close-up van bovenaf, duim tegen wijsvinger, pijl zijwaarts). Avatar: 2 pogingen, geen van beide overtuigend. Poging 1 staat als avatar (duim gaat zijwaarts maar weinig, onderarm hangt); poging 2 is wel een close-up, maar laat het eind niet duidelijk zien |
 | 27 | Duim optillen van de tafel | ✅ | |
 | 28 | Elleboog buigen en strekken met hulp | ✅ | |
 | 29 | Zenuwglijden duimkant (n. radialis) | ✅ | |
 | 30 | Zenuwglijden handpalm (n. medianus) | ✅ | lijntekening opnieuw (de eerste had een halter) |
 
-**Samengevat:** 26 goed, 2 matig (4 en 24) en 2 opnieuw (11 en 20). Voor 11 en 20 is een close-up van alleen de hand nodig, of een foto als voorbeeld.
+**Samengevat:** 25 goed, 3 matig (4, 24 en 26) en 2 opnieuw (11 en 20). Voor 11 en 20 is een close-up van alleen de hand nodig, of een foto als voorbeeld.
