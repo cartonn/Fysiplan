@@ -80,6 +80,9 @@ html.v2 #logoBtn:hover{color:var(--brand);border-color:var(--brand-100)}
 
 /* QR-blok in de kaartkop: staat er standaard op zodra de kaart een cliëntnaam heeft */
 html.v2 #a4 .qrblok{flex-direction:column;align-items:center;gap:3px;align-self:flex-start;flex:0 0 auto;position:relative}
+/* deelknoppen onder de QR mogen afbreken, anders duwt de rij de cliëntvelden (Roepnaam e.d.) tot een paar px smal */
+html.v2 #a4 .qrblok{max-width:132px}
+html.v2 #a4 .qrblok>span{flex-wrap:wrap;justify-content:center;column-gap:8px!important;row-gap:2px;text-align:center}
 html.v2 #a4 .qrblok .qrx{position:absolute;top:-9px;right:-9px;width:20px;height:20px;border-radius:99px;
   background:#fff;border:1px solid var(--line);color:var(--muted);display:flex;align-items:center;
   justify-content:center;font-size:13px;font-weight:700;cursor:pointer;box-shadow:var(--sh-sm)}

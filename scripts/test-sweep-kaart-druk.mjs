@@ -69,7 +69,8 @@ try {
 
   await p.click("#oefs .oefdone");
   await p.click("#gdaan");
-  await p.waitForFunction(() => /busy right now/.test(document.getElementById("wachtrij").textContent || ""), null, { timeout: 5000 });
+  // wachten tot beide tikken in de wachtrij staan (de tweede 429 kan net later binnenkomen)
+  await p.waitForFunction(() => /busy right now/.test(document.getElementById("wachtrij").textContent || "") && /2 saved/.test(document.getElementById("wachtrij").textContent || ""), null, { timeout: 5000 }).catch(() => {});
   const wachtrij = await p.evaluate(() => { const el = document.getElementById("wachtrij"); return { t: el.textContent, zicht: getComputedStyle(el).display !== "none" }; });
   assert.ok(wachtrij.zicht, "wachtrijmelding zichtbaar");
   assert.doesNotMatch(wachtrij.t, /once you are online/, "niet beweren dat er geen internet is: " + wachtrij.t);

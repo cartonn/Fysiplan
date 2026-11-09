@@ -11,31 +11,31 @@ werk voor Ahmed in `docs/mensenwerk.md`.
 |---|---|---|---|---|---|
 | Proef aanmelden + formulierfouten | 2026-11-09 18u (ok; 0612345678 nog misleidend) | 2026-11-08 10u staand | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
 | Welkom, praktijknaam (ook leeg), 12 oefeningen | 2026-11-09 18u (ok; lange naam 66 tekens; "Nieuw in Fysiplan" direct na welkom) | 2026-11-07 10u | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
-| Printversie (lijn, kleur, compact) | 2026-11-09 18u (1 pagina met QR ok; lange praktijknaam en placeholders nog op de print) | 2026-11-08 14u liggend+staand, groot lettertype (nog 2 pagina's) | 2026-11-07 14u | 2026-11-06 22u (venster) | 2026-11-07 10u |
+| Printversie (lijn, kleur, compact) | 2026-11-09 22u (lange naam afgekapt en placeholders op de print: nog open) | 2026-11-09 22u liggend (printknop ok; kaartvelden 8–11 px hoog) | 2026-11-07 14u | 2026-11-06 22u (venster) | 2026-11-07 10u |
 | Beveiligen, herstelcode, inloggen 2e apparaat | 2026-11-09 18u (ok; herstelcode kleine letters ok) | 2026-11-09 18u staand (typfout collega: losse praktijk → fix via klaargezette naam) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
-| Delen, QR, kaartenoverzicht, CSV | 2026-11-09 18u (CSV en formule-escape ok; 60 tekens naam loopt uit het venster) | 2026-11-08 02u (staand) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
+| Delen, QR, kaartenoverzicht, CSV | 2026-11-09 22u (Roepnaam 24 px naast de QR → OPGELOST, test:qrroepnaam; na Uitloggen blijven QR en deelknoppen) | 2026-11-08 02u (staand) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
 | Naam wijzigen in overzicht + daarna verder bewerken | 2026-11-09 18u (nieuwe kaart: naamveld volgt → OPGELOST, test:nieuwekaartnaam) | 2026-11-07 10u | 2026-11-07 14u | – | 2026-11-07 10u |
 | Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-09 18u (ok; 30 MB foto verkleind, .exe nette melding) | 2026-11-09 18u liggend (Carla ziet sjabloon en eigen oefening) | – | – | – |
 | Opname via telefoon /o | 2026-11-09 14u (ok; vals "verouderd" na opname OPGELOST) | 2026-11-09 18u (nep-camera ok; .exe 400) | – | 2026-11-07 10u | 2026-11-09 10u (ok) |
-| Afspraak, seintje, signalen | 2026-11-09 18u (seintje + score 8 in inbox en overzicht, antwoord bij patiënt) | 2026-11-08 18u staand (afspraak na verlopen proef stil) | 2026-11-08 18u (seintje → inbox ok) | 2026-11-09 18u (.ics dubbeltik: 2 downloads) | 2026-11-09 18u (.ics ok, Engels) |
-| Proef bijna verlopen / verlopen (echte verlopen-pagina) | 2026-11-09 18u (403 proefVerlopen ok, ook collega 2e apparaat) | 2026-11-09 18u ("Nu meteen wissen": vinkje + 44 px → OPGELOST, test:proefwissen) | – | 2026-11-07 02u (breedte) | – |
-| /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | 2026-11-09 14u staand+liggend (ok; tikdoelen) | 2026-11-09 18u (Noor-stop ok; inbox ok; "Ik heb een vraag" zonder tekst) | 2026-11-09 18u | 2026-11-09 18u (pijnscore bezig-stand + rode fout → OPGELOST, test:pijnscorebezig) |
+| Afspraak, seintje, signalen | 2026-11-09 18u (seintje + score 8 in inbox en overzicht, antwoord bij patiënt) | 2026-11-08 18u staand (afspraak na verlopen proef stil) | 2026-11-08 18u (seintje → inbox ok) | 2026-11-09 22u (.ics dubbeltik nog 2 downloads; tijdzone kaart ≠ Mijn gegevens) | 2026-11-09 18u (.ics ok, Engels) |
+| Proef bijna verlopen / verlopen (echte verlopen-pagina) | 2026-11-09 18u (403 proefVerlopen ok, ook collega 2e apparaat) | 2026-11-09 22u liggend (2e apparaat zonder proefcookie: geen melding tot de eerste 403) | – | 2026-11-07 02u (breedte) | – |
+| /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | 2026-11-09 14u staand+liggend (ok; tikdoelen) | 2026-11-09 22u (dubbeltik ok; "Ik heb een vraag" zonder inhoud nog) | 2026-11-09 18u | 2026-11-09 18u (pijnscore bezig-stand + rode fout → OPGELOST, test:pijnscorebezig) |
 | /k: gedaan-vinkjes op een tweede apparaat | – | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u |
 | /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-09 18u (offline ok; meldingen blijven staan na versturen) | 2026-11-09 10u (trage vertaling + 404 NL: fix) | 2026-11-09 18u (liggend, terug, trage lijn ok) 
-| /k: video afspelen (eigen opname, YouTube) | – | 2026-11-08 22u (webm + mp4, staand/liggend) | 2026-11-07 22u (ook offline, 200%) | 2026-11-07 10u | 2026-11-07 22u |
-| /k: andere talen | – | – | de/tr/en/ar 2026-11-09 18u (mislukte vertaling: algemene uitleg i.p.v. echte → HOOG) | pl/ar 2026-11-08 22u (RTL-naam: fix) | ar + uk 2026-11-08 10u (te zwaar: fix) |
-| Landing /v2 (desktop: ook printen) | 2026-11-08 14u (print: fix) | 2026-11-09 10u staand+liggend (nav 22/30 px nog) | 2026-11-09 18u (200 %: 513 px breed door <code> in FAQ; nav 22 px) | 2026-11-09 14u staand+liggend (tikdoelen nav 22, taallinks 17, voet 14) | 2026-11-08 22u (taallinks klein) |
+| /k: video afspelen (eigen opname, YouTube) | – | 2026-11-08 22u (webm + mp4, staand/liggend) | 2026-11-07 22u (ook offline, 200%) | 2026-11-07 10u | 2026-11-09 22u (eigen webm, ook liggend ok) |
+| /k: andere talen | – | – | de/tr 2026-11-09 22u (mislukte vertaling → echte uitleg in NL met melding OPGELOST, test:nietvertaald; demostem las NL met Duitse stem: mee opgelost) | pl/ar 2026-11-08 22u (RTL-naam: fix) | ar + uk 2026-11-08 10u (te zwaar: fix) |
+| Landing /v2 (desktop: ook printen) | 2026-11-08 14u (print: fix) | 2026-11-09 10u staand+liggend (nav 22/30 px nog) | 2026-11-09 18u (200 %: 513 px breed door <code> in FAQ; nav 22 px) | 2026-11-09 22u staand+liggend (38/40 tikdoelen < 44 px) | 2026-11-08 22u (taallinks klein) |
 | Therapeut-app op telefoon | – | – | 2026-11-07 06u | 2026-11-06 22u | 2026-11-07 10u |
 | Therapeut-app op iPad liggend | – | 2026-11-07 10u | – | – | – |
-| Twee werkplekken op één kaart (oud apparaat/tabblad) | 2026-11-07 06u | 2026-11-07 06u | – | – | – |
+| Twee werkplekken op één kaart (oud apparaat/tabblad) | 2026-11-09 22u (409 + keuze ok; melding ±7 px) | 2026-11-09 22u liggend (idem) | – | – | – |
 | Team: uitnodigen, rollen, verwijderen, inbox, dossier | 2026-11-09 18u (dubbelklik "Nodig uit" = 2 tokens) | 2026-11-09 18u staand (na uitnodiging naam raden → OPGELOST, test:uitnodigingpraktijk) | – | – | – |
 | /privacy (100 % en 200 %) | – | – | 2026-11-09 18u (ok; kopregellinks 14–17 px) | – | – |
 | Mijn gegevens /k, Wis van dit apparaat, /v2/gegevens | 2026-11-09 18u (/v2/gegevens: naam niet ingevuld, melding bovenaan) | – | 2026-11-09 18u (wis laat avatars in de cache) | 2026-11-08 02u | 2026-11-09 18u (download Engels ok) |
 | Vensters met alleen toetsenbord | 2026-11-09 18u (Kaarten en Print: focus-val en Escape ok) | 2026-11-09 02u staand (fix, in test:vensterterug) | – | – | – |
 
-Volgende run (na 2026-11-09 18u): HOOG /k mislukte vertaling vervangt de echte uitleg door algemene zinnen (kaart.html
-r. ~2354), lange praktijknaam in print + placeholders op de print (index.html), "Ik heb een vraag" zonder tekst (keuze?).
-Niet getest deze run: therapeut-app iPad liggend (print), twee werkplekken, /k video (geen video's lokaal), iPhone 14 landing.
+Volgende run (na 2026-11-09 22u): .ics dubbeltik (kaart.html `naarAgenda` + `#agbtn`), na Uitloggen QR/deelknoppen/roepnaam
+weg (`prakLogout`), verlopen proef op een 2e apparaat meteen tonen (`/api/praktijk/status` zonder `proefVerlopen`), lange
+praktijknaam + placeholders op de print. Niet getest deze run: /o met camera, compacte/grote printvariant, iPad staand.
 Therapeut-app niet op telefoon (therapeuten werken op desktop/tablet). WebKit is niet geïnstalleerd: "iPhone"-devices draaien in Chromium.
 Testtip: 200 % op /k of landing is met een mobiele viewport van 160 px slecht na te bootsen (de viewport rekt mee met een bredere pagina).
 
@@ -51,6 +51,34 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Open
 
+### Sweep 2026-11-09 22u
+- **OPGELOST 2026-11-09 22u (deze PR, test:nietvertaald) — HOOG /k: mislukte vertaling verving de echte uitleg door algemene
+  zinnen.** De bewegingsdemo toont nu de echte uitleg in het Nederlands (`lang="nl"`) met een korte melding in de taal van de
+  patiënt ("Diese Anleitung gibt es noch nicht auf Deutsch…"); ook in de foto-uitleg. Een mislukte vertaling wordt niet meer als
+  lege vertaling bewaard, dus de kaart probeert het later opnieuw. "Ton an" leest de Nederlandse uitleg niet meer met een
+  Duitse stem voor (gevonden door Truus bij de hertest). Hertest Truus iPhone SE de/tr: ok.
+- **OPGELOST 2026-11-09 22u (deze PR, test:qrroepnaam) — MIDDEL App: Roepnaam, Leeftijd, max. HF en Trainingszone 24 px breed zodra
+  de QR op de A4 staat** (Sanne, 1280 en 1600). De rij deelknoppen onder de QR breekt nu af; Roepnaam 110 px op 1280.
+- **MIDDEL (nieuw, Sanne) — na Uitloggen blijven de QR, "Bekijk zelf…" en de deelknoppen van de laatste patiënt werken**, roepnaam
+  blijft ook na herladen. index.html r. ~3565 `prakLogout()` roept geen `verbergQr()` aan en leegt `#c_naam` niet.
+- **MIDDEL (nieuw, Mark iPad) — verlopen proef op een tweede apparaat (ingelogd, geen proefcookie): de app toont niets tot de eerste
+  403.** `/api/praktijk/status` geeft geen `proefVerlopen`, dus `toonProefVoorbij` start niet bij het laden.
+- **MIDDEL (nieuw, Mark iPad liggend) — kaartvoorbeeld op de iPad: velden 8–11 px hoog** (Roepnaam e.d. 189×11, praktijkvelden 137×8,
+  schemacellen 14×10). Het A4-voorbeeld wordt verkleind; op tablet een grotere bewerkstand overwegen.
+- **MIDDEL (herhaald, Mark) — melding "intussen op een ander apparaat gewijzigd" ±7 px met links van ±10 px** in het QR-vak
+  (index.html r. ~2201 `toonQrHint`). Werking zelf is goed (409, geen stil overschrijven).
+- **MIDDEL (herhaald, Truus) — "Zet op beginscherm"-balk**: bij 200 % tekst 177 px hoog (31 % van het scherm), dekt "Luister naar
+  uitleg" af; kruisje 21×34 #b9b2a0. Ook nieuw: `privmeer`-link 46×16; tekst rgb(119,113,98) 4,35:1 op "0 van 7 vandaag gedaan".
+- **LAAG (nieuw)** — Dubbelklik "Deel" in het kaartenoverzicht klapt open en meteen dicht (Sanne). Escape in het QR-testvenster
+  zet de focus op body (Sanne). /v2/proef > 8 KB geeft een kale "Ongeldig verzoek"-pagina; /v2/gegevens bij 413 "naam en wachtwoord
+  horen niet bij elkaar" (Sanne, alleen met devtools). Seintjesvenster bij verlopen proef zegt "niet afhandelen" terwijl
+  afhandelen wel werkt (Mark, index.html r. ~5097). "Too hard?" na een 400 blijft eindeloos "Tap to retry" (Jayden). Offline
+  .ics-tik geeft de algemene foutmelding (Jayden). Kaartlink in de .ics zonder `?taal=` (Jayden).
+- **OPGELOST (hertest Mark 22u) — inbox markeerde een seintje als gezien na een 403** (`inboxGezien` bestaat niet meer; vraag blijft
+  in de inbox). Dubbelklik "Nodig uit": UI toont één rij per collega (tokens niet nagekeken).
+- Bevestigd, nog open: .ics dubbeltik (2 downloads, ook `oefenmomenten.ics`), tijdzone kaart vs Mijn gegevens, landing-tikdoelen
+  iPhone 14, lange praktijknaam en placeholders op de print, "Ik heb een vraag" zonder inhoud, tikdoelen /k, Noor-dekking.
+
 ### Sweep 2026-11-09 18u
 - **OPGELOST 2026-11-09 18u (deze PR, test:nieuwekaartnaam) — App: na "In de praktijk" als nieuwe kaart bleef de editor op de
   oude naam.** Het naamveld (en QR) volgt nu de nieuwe kaart (`volgNieuweKaart`); autosaves 200, Jokes kaart blijft ongemoeid.
@@ -65,7 +93,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   `zetDank` geeft fout rood en wachtrij neutraal; ook bij herstel (PSK), ervaren herstel en seintjes.
 - **OPGELOST 2026-11-09 18u (deze PR, test:proefwissen) — "Nu meteen wissen" op de verlopen-pagina wiste met één tik.** Verplicht
   vinkje, knop 44 px, server wist alleen met `zeker=1` (anders terug naar /v2/proef).
-- **HOOG (nieuw, Truus iPhone SE, tr/de/en/ar) — /k mislukte vertaling vervangt de echte oefenuitleg door algemene zinnen**
+- **OPGELOST 2026-11-09 22u (test:nietvertaald) — HOOG (nieuw, Truus iPhone SE, tr/de/en/ar) — /k mislukte vertaling vervangt de echte oefenuitleg door algemene zinnen**
   ("Rustig van begin- naar eindhouding…"); halters/schouderhoogte weg, geen melding, `VERT[taal]={}` blijft staan (geen nieuwe
   poging). kaart.html r. ~2354 (`eigenUitleg=''` als niet vertaald) en `wisselTaal` r. ~1821. Advies: dan de Nederlandse uitleg
   tonen (lang="nl") met een korte melding, en de lege vertaling niet bewaren.
@@ -125,7 +153,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   `<img …>` wordt "img O." (Sanne). Print: vak 12 1 px hoger (Sanne). Andere talen: leesVoor gebruikt nog alert() (kaart.html
   r. ~1854/1913).
 
-- **LAAG (doorgezet door security 2026-11-09 12u) — app: inbox markeert een seintje als gezien terwijl het antwoord 403 kreeg**
+- **OPGELOST (hertest 2026-11-09 22u) — LAAG (doorgezet door security 2026-11-09 12u) — app: inbox markeert een seintje als gezien terwijl het antwoord 403 kreeg**
   (verlopen proef). `public/index.html` r. ~3786 zet `inboxGezien` ook na de 403 op `/api/kaart/antwoord`, waardoor de vraag
   uit de inbox verdwijnt zonder antwoord aan de patiënt. Alleen bij een geslaagd antwoord als gezien markeren.
 
