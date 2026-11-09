@@ -65,7 +65,9 @@ if (pw) {
     });
     assert.equal(r.vid, "flex", "eigen-videoknop zichtbaar op iPad");
     assert.notEqual(r.rm, "none", "verwijderknop zichtbaar op iPad");
-    assert.ok(r.w >= 30 && r.h >= 30 && r.rmW >= 30, "knopjes minstens 30 px: " + JSON.stringify(r));
+    // zichtbaar minstens 24 px (de ingezoomde A4 laat anders de tekening niet meer zien, Ahmed 2026-11-09);
+    // het onzichtbare tikvlak eromheen maakt er 44 px van, zie de controle hieronder
+    assert.ok(r.w >= 24 && r.h >= 24 && r.rmW >= 24, "knopjes minstens 24 px: " + JSON.stringify(r));
     assert.ok(r.naastRaakt, "tikvlak loopt door tot 44 px: " + JSON.stringify(r));
     await page.tap("#a4 .pic .vid");
     await page.waitForSelector("#ovEigenVideo.on", { timeout: 5000 });

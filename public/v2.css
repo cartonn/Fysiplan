@@ -708,3 +708,39 @@ html.v2 #pr_do:disabled{opacity:.7;cursor:progress}
   html.v2 .sjb-voorbeeld{grid-column:1 / -1;border-left:0;border-top:1px solid var(--line);max-height:46vh}
 }
 @media print{html.v2 .sjb-bewerk{display:none!important}}
+/* iPad staand (700-920 px): het hele A4-blad past op de breedte, zonder opzij te vegen
+   (de zoom zet pasA4 in index.html); telefoons blijven ongewijzigd */
+@media screen and (min-width:700px) and (max-width:920px){
+  html.v2 #a4{zoom:var(--a4z,1);height:auto;max-height:none}
+  html.v2 #a4wrap::before{display:none}
+  html.v2 #a4wrap{overflow:hidden}
+}
+/* behandelkaarten op een staand scherm: het venster gebruikt de hoogte, het voorbeeld krijgt meer ruimte */
+@media screen and (max-width:980px){
+  html.v2 #ovSjab .modal.sjb{height:calc(100vh - 32px);height:calc(100dvh - 32px);max-height:1100px}
+  html.v2 .sjb-body{grid-template-rows:minmax(0,1fr) minmax(0,1.15fr)}
+  html.v2 .sjb-voorbeeld{max-height:none}
+  html.v2 .sjb-cats,html.v2 .sjb-lijst{min-height:0}
+}
+/* lage laptopschermen (720-800 px hoog): compactere kop, zodat lijst en voorbeeld de ruimte houden */
+@media screen and (max-height:800px) and (min-width:981px){
+  html.v2 .sjb-kop{padding:14px 24px 6px}
+  html.v2 .sjb-kop p{display:none}
+  html.v2 .sjb-zoek{padding-bottom:10px}
+  html.v2 .sjb-vb-oef li{padding:4px 0}
+}
+/* tablet: de kaart is ingezoomd (--a4z < 1), maar de knopjes op de oefening blijven 30 px groot om te tikken */
+@media screen and (hover:none){
+  html.v2 #a4 .pic .vid,html.v2 #a4 .pic .rm{width:calc(30px / var(--a4z,1));height:calc(30px / var(--a4z,1))}
+  html.v2 #a4 .pic .rm{line-height:calc(29px / var(--a4z,1));font-size:calc(18px / var(--a4z,1))}
+  html.v2 #a4 .pic .vid::after,html.v2 #a4 .pic .rm::after{inset:calc(-7px / var(--a4z,1))}
+}
+/* iPad: het oefenvakje is smal; zet afspelen linksonder en verwijderen rechtsboven, zodat de tekening zichtbaar blijft */
+@media screen and (hover:none) and (min-width:700px){
+  html.v2 #a4 .pic .vid{top:auto;bottom:calc(3px / var(--a4z,1));left:calc(3px / var(--a4z,1))}
+  html.v2 #a4 .pic .rm{top:calc(3px / var(--a4z,1));right:calc(3px / var(--a4z,1))}
+  /* zichtbaar 24 px, tikvlak 44 px (24 + 2×10): de tekening blijft te zien, tikken blijft makkelijk */
+  html.v2 #a4 .pic .vid,html.v2 #a4 .pic .rm{width:calc(24px / var(--a4z,1));height:calc(24px / var(--a4z,1))}
+  html.v2 #a4 .pic .rm{line-height:calc(23px / var(--a4z,1));font-size:calc(15px / var(--a4z,1))}
+  html.v2 #a4 .pic .vid::after,html.v2 #a4 .pic .rm::after{inset:calc(-10px / var(--a4z,1))}
+}

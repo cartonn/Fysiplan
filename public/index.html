@@ -1275,15 +1275,20 @@ bridge2.jpg</div>
   // (alleen het scherm; de print gebruikt altijd de echte maat). Smal: acties boven het werkvlak.
   var BREED=window.matchMedia?window.matchMedia('(min-width:1100px)'):null;
   var PASBREED=window.matchMedia?window.matchMedia('(min-width:921px)'):null;
+  var TABLETSTAAND=window.matchMedia?window.matchMedia('(min-width:700px) and (max-width:920px)'):null;
   function pasA4(){
     var kop=document.getElementById('fpKop'),wrap=document.getElementById('a4wrap'),a4=document.getElementById('a4');
     if(!kop||!wrap||!a4)return;
     var breed=BREED&&BREED.matches;
     if(breed&&kop.parentNode!==wrap)wrap.insertBefore(kop,wrap.firstChild);
     if(!breed&&kop.parentNode===wrap){var wr=document.querySelector('.wrap');wr.parentNode.insertBefore(kop,wr);}
-    if(!(PASBREED&&PASBREED.matches)){wrap.style.removeProperty('--a4z');return;}
+    var staand=!(PASBREED&&PASBREED.matches)&&TABLETSTAAND&&TABLETSTAAND.matches;
+    if(!(PASBREED&&PASBREED.matches)&&!staand){wrap.style.removeProperty('--a4z');return;}
     var cs=getComputedStyle(wrap),padX=parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight),padY=parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom);
     var bw=wrap.clientWidth-padX-4;
+    // iPad staand: de kaart staat onder de oefeningenlijst; pas hem op de breedte in, zodat
+    // het hele blad zichtbaar is zonder opzij te vegen (inzoomen met twee vingers kan altijd)
+    if(staand){wrap.style.setProperty('--a4z',Math.max(.5,Math.floor(Math.min(1,bw/1122)*100)/100));return;}
     var top=wrap.getBoundingClientRect().top+window.scrollY;
     var bh=window.innerHeight-top-padY-kop.offsetHeight-14;
     // Op het scherm staan boven de tabel nog tips en de startdosering (niet op de print); de kaart
