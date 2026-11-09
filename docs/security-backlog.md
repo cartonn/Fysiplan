@@ -10,16 +10,21 @@ daaruit tot en met 2026-11-06.
 |---|---|
 | (a) beheer-endpoints en de admin-sleutel | 2026-11-09 12u (statisch: 17 `isAdmin`-routes, /aanmeldingen en /medewerkers alleen `ACCOUNT_BEHEER_EMAILS`, geen admin88 in publieke bestanden, productie zonder eigen `ADMIN_KEY` dicht, rem vóór sleutel. Geen gat) |
 | (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-09 12u (team: eigen login, uitnodigen, verwijderen, rol, gedeeld uit; uitnodiging verzilveren; wachtwoord per lid; v1-login/registratie. Nieuw: LAAG uitnodigingsmail als spamkanaal, zie Open) · 2026-11-08 04u (claim, inloggen op naam en e-mail, rem per naam/e-mail/praktijk, wachtwoord wijzigen, herstel, uitnodiging, overzicht en /v2/gegevens met e-mail; gedeeld wachtwoord weer aan: opgelost) |
-| (c) proef-tokens en verlopen proeven | 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
+| (c) proef-tokens en verlopen proeven | 2026-11-09 16u (koppelen van een account aan een proef bij inloggen, nu ook gevolgd door wissen na 30 dagen: oude proefcookie hing een gewone praktijk aan een verlopen proef, opgelost; claim, slot en wissen alleen voor de eigen proef) · 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-08 12u (therapeutroutes op één kaart open bij praktijk zonder wachtwoord: opgelost; id 48 bits + misrem 30/5 min per IP, patiëntroute met allowlist, praktijkroutes alleen eigen map) |
 | (e) uploads (video, logo, opname /o) | 2026-11-09 00u (praktijkprofiel + logo van een praktijk zonder wachtwoord overschrijfbaar met alleen de naam: opgelost; opname-upload, beheer-upload, /uploads-pad, type/grootte/magische bytes: geen gat) |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-09 08u (runtime met Chromium: payloads in teamnaam, uitnodiging, eigen oefening, teamsjabloon, alle kaartvelden, bericht, notitie, behandelaar, doel; app-start, Kaarten-paneel, inbox, Team, Activiteit, Rapport, Sjablonen, /k in nl/en/ar: niets geïnjecteerd, geen CSP-melding. CSV-exports met formule-escape, afspraak-ICS zonder regelinjectie. Geen gat) |
 | (g) security-headers, CSP, cookies, CSRF | 2026-11-08 16u (runtime: CSP, frame-ancestors, nosniff, referrer, no-store op /v2, /v2/proef, /v2/app, /k, /o, /privacy, /verwerkersovereenkomst en API; geen inline script zonder nonce; HSTS alleen achter https. Geen gat); 2026-11-09 08u: `kruisSite` liet same-site door, opgelost) |
-| (h) foutmeldingen die stacktraces of paden lekken | 2026-11-08 (runtime-fuzz 103 routes × GET/POST/PUT/DELETE × 7 kapotte bodies × 3 content-types = 6592 verzoeken, plus pad-traversal en kapotte %-codering: geen stacktrace, geen intern pad, geen fout in het serverlog) |
+| (h) foutmeldingen die stacktraces of paden lekken | 2026-11-09 16u (statisch: alle `sendJson`/`send` met `err.message`/`e.stack` in server.js, routes/ en lib/ sinds 8-11, ook opzeggen, factuur, wissen na proef: interne fouten gaan alleen naar het serverlog. Geen gat) · 2026-11-08 (runtime-fuzz 103 routes × GET/POST/PUT/DELETE × 7 kapotte bodies × 3 content-types = 6592 verzoeken, plus pad-traversal en kapotte %-codering: geen stacktrace, geen intern pad, geen fout in het serverlog) |
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
 | (j) npm audit | 2026-11-08 20u (0 meldingen, ook dev) |
 
-Volgende run: (h) foutmeldingen, daarna (c) proef-tokens.
+Volgende run: (i) denial of service, daarna (j) npm audit en (d) gedeelde kaarten.
+
+Sanity 2026-11-09 16u op #129–#137 (wissen na proef zonder abonnement 30 dagen, linkerpaneel, avatars, Noor-stop en
+wachtrij op /k): `proefRonde` wist alleen accounts met `acc.proef.id` van een verlopen niet-klant-aanmelding; de koppeling
+bij inloggen was te ruim (zie Open, opgelost). #130 en #137 zijn alleen front-end; de nieuwe meldingen op /k zijn
+`textContent`, de wachtrij herhaalt alleen de eigen patiëntroutes. Geen ander gat.
 
 Sanity 2026-11-09 12u op #120–#128 (proefpraktijk zonder abonnement wissen, roepnaamvoorstel alleen bij dezelfde voornaam,
 duidelijke foutmeldingen bij inloggen, Physitrack-beelden): `proefZonderAbonnementWissen` laat klanten staan zolang hun
@@ -174,10 +179,19 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
-- **MIDDEL (doorgezet door gebruikers-sweep 2026-11-09 14u) — herstelcode is hoofdlettergevoelig.** Uitgegeven als
+- **OPGELOST 2026-11-09 (deze PR) — MIDDEL — oude proefcookie op het apparaat hangt een gewone praktijk aan een
+  verlopen proef, die daarna helemaal gewist wordt** (sanity #133/#136). Inloggen met naam en wachtwoord koppelde het
+  account aan de proef van de cookie zodra `acc.gemaakt >= proef.gestart`, ook als de praktijk ná het einde van die
+  proef was gemaakt. Gevolg: de praktijk ging direct op slot, en sinds #133 wist de proefronde 30 dagen na die oude
+  proef het hele account mét de patiëntkaarten. Repro lokaal: proef 46 dagen verlopen, praktijk vandaag beveiligd
+  zonder proef, inloggen met `cookie: fpproef=<oud>` gaf `acc.proef = {id: oud}`. Kan per ongeluk (gedeelde computer)
+  of door een collega met het praktijkwachtwoord. Nu: alleen koppelen als het account binnen die proef is gemaakt
+  (`gestart <= gemaakt <= verloopt`). Test: `npm run test:oudeproef`.
+- **OPGELOST 2026-11-09 (deze PR) — MIDDEL (doorgezet door gebruikers-sweep 2026-11-09 14u) — herstelcode is hoofdlettergevoelig.** Uitgegeven als
   `FP-a0713-dff95-…`; in hoofdletters overgetypt (papieren code) geeft 403 en telt mee voor het slot van 15 minuten.
   server.js r. ~2994 (`String(b.herstelcode).trim()` zonder normalisatie). Advies: client en server normaliseren
-  (kleine letters, streepjes/spaties). Desktop (Sanne).
+  (kleine letters, streepjes/spaties). Desktop (Sanne). Nu: `herstelcodeNormaal` op de server zet hoofdletters,
+  spaties en ontbrekende streepjes terug naar de uitgegeven vorm; een echt verkeerde code blijft 403. Test: `npm run test:oudeproef`.
 - **LAAG (doorgezet door gebruikers-sweep 2026-11-09 14u) — schrijfrem is één bucket per IP voor alle routes** (40/5 min,
   server.js r. ~1467). Snel tikken op de pijnscore blokkeerde het pijnseintje. De kaart zet zo'n tik nu in de wachtrij
   (PR van de sweep), maar overweeg een eigen bucket voor seintjes. Ook: praktijksessies alleen in het geheugen
