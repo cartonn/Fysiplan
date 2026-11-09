@@ -1,7 +1,7 @@
 // Proef zonder abonnement (voorwaarden art. 3, privacyverklaring "Voor praktijken"): de
-// aanmelding verdwijnt 90 dagen na de proef, en vóór deze fix bleef het praktijkaccount
+// aanmelding verdwijnt 30 dagen na de proef, en vóór deze fix bleef het praktijkaccount
 // (team met namen en e-mail, profiel, sjablonen, eigen oefeningen) daarna voor altijd staan.
-// Nu gaat 90 dagen na de proef alles van de praktijk weg, ook gedeelde kaarten die de patiënt
+// Nu gaat 30 dagen na de proef alles van de praktijk weg, ook gedeelde kaarten die de patiënt
 // bleef openen (die verliepen anders nooit, en het account dus ook niet: verwerkersovereenkomst
 // art. 10, voorwaarden art. 3). Zonder browser. `npm run test:privacy`
 import assert from "node:assert/strict";
@@ -57,12 +57,12 @@ try {
   assert.ok(Object.values(pk).every(Boolean), "accounts gekoppeld aan de aanmelding");
   await stop(app);
 
-  // de tijd verspringt: drie proeven zijn al meer dan 90 dagen voorbij (aanmelding wordt gewist),
-  // "recent" pas 30 dagen; "klant" werd klant. Praktijk "kaart" heeft nog een gedeelde kaart.
+  // de tijd verspringt: drie proeven zijn al meer dan 30 dagen voorbij (aanmelding wordt gewist),
+  // "recent" pas 10 dagen; "klant" werd klant. Praktijk "kaart" heeft nog een gedeelde kaart.
   const acc = await lees("praktijk-accounts.json");
   const pr = await lees("proef-aanmeldingen.json");
-  for (const id of ["oud", "kaart", "klant"]) { pr[id].verloopt = nu - 95 * dag; acc[pk[id]].proef.verloopt = nu - 95 * dag; }
-  pr.recent.verloopt = nu - 30 * dag; acc[pk.recent].proef.verloopt = nu - 30 * dag;
+  for (const id of ["oud", "kaart", "klant"]) { pr[id].verloopt = nu - 35 * dag; acc[pk[id]].proef.verloopt = nu - 35 * dag; }
+  pr.recent.verloopt = nu - 10 * dag; acc[pk.recent].proef.verloopt = nu - 10 * dag;
   await writeFile(join(dataDir, "proef-aanmeldingen.json"), JSON.stringify(pr));
   await writeFile(join(dataDir, "praktijk-accounts.json"), JSON.stringify(acc));
   // "kaart" heeft een kaart die de patiënt gisteren nog opende; "recent" en "klant" ook een kaart
@@ -77,9 +77,9 @@ try {
     if (!(pk.oud in na) && !(pk.kaart in na)) break;
   }
   const proevenNa = await lees("proef-aanmeldingen.json");
-  assert.ok(!proevenNa.oud && !proevenNa.kaart, "aanmeldingen 90 dagen na de proef gewist (bestond al)");
+  assert.ok(!proevenNa.oud && !proevenNa.kaart, "aanmeldingen 30 dagen na de proef gewist (bestond al)");
   assert.ok(!(pk.oud in na), "account van een proef zonder abonnement gewist zodra er geen kaarten meer zijn");
-  assert.ok(!(pk.kaart in na), "account gewist 90 dagen na de proef, ook met een nog gebruikte kaart");
+  assert.ok(!(pk.kaart in na), "account gewist 30 dagen na de proef, ook met een nog gebruikte kaart");
   const kaartenNa = await lees("kaarten.json");
   assert.ok(!kaartenNa[pk.kaart], "gedeelde kaart van een proef zonder abonnement gewist");
   assert.ok(kaartenNa[pk.recent]?.k2, "kaart van een proef binnen de termijn blijft");
