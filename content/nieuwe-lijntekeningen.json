@@ -137,7 +137,7 @@
       "naam": "Nek strekken – functioneel staand",
       "groep": "Nek",
       "img": "images/nek/nek-strekken-functioneel-staand-line-v1.png",
-      "sha256": "6f64638ab66b8ef3657f39e2b34c6fb6edac632b0b56aa5a06774263351d65aa",
+      "sha256": "00cf9d4c7f7b3fe061af40dadf732c1564ec8a1047545dc50861aad21d77226c",
       "bron": "https://au.physitrack.com/home-exercise-video/neck-stretches-standing---flexion,-extension,-side-flexion,-rotation",
       "bronTitel": "Neck stretches standing - flexion, extension, side flexion, rotation",
       "kaartImg": "images/nek/nek-strekken-functioneel-staand-avatar-v8.jpg",
@@ -686,7 +686,7 @@
       "naam": "Grote stappen – met ritmische cue",
       "groep": "Neurologische revalidatie",
       "img": "images/neurologische-revalidatie/grote-stappen-met-ritmische-cue-line-v1.png",
-      "sha256": "76b1da23b032185aefcc7d63b605398d8a0eb67b1971e80238c28c3a09cc8c26",
+      "sha256": "3603c9502e525e420768bb64d271859cfb11fa7a5f8afd1b6a2a7db0577ffc38",
       "bron": "https://us.physitrack.com/home-exercise-video/increasing-stride-length-with-markers-%2528step-through%2529",
       "bronTitel": "Increasing stride length with markers (step through)"
     },
@@ -695,7 +695,7 @@
       "naam": "Grote stappen – functionele combinatie",
       "groep": "Neurologische revalidatie",
       "img": "images/neurologische-revalidatie/grote-stappen-functionele-combinatie-line-v1.png",
-      "sha256": "a70d90bb477f48fa95f8db368f13abdd253c3e4aa03eb0f8f20b914eb9829c5e",
+      "sha256": "23bbe0c17a1d83b6d1e18416db902a42fd49dc856dddf047f05c85489448bc26",
       "bron": "https://us.physitrack.com/home-exercise-video/increasing-stride-length-with-markers-%2528step-through%2529",
       "bronTitel": "Increasing stride length with markers (step through)"
     },
@@ -929,7 +929,7 @@
       "naam": "360 graden ademhaling – eerste fase rustig",
       "groep": "Bekken & postpartum",
       "img": "images/bekken-postpartum/360-graden-ademhaling-eerste-fase-rustig-line-v1.png",
-      "sha256": "481563bb61a64e7918620581b543abc3910dae469be49c513ef249f6d92f76da",
+      "sha256": "35d2a2e3f5f298253c232f7d6053d90cfcc8482111caf66d753a161745deaf0c",
       "bron": "https://au.physitrack.com/home-exercise-video/supine-lateral-rib-breathing",
       "bronTitel": "Supine Lateral Rib Breathing"
     },
@@ -1082,7 +1082,7 @@
       "naam": "Romp zijwaarts buigen – liggend",
       "groep": "Rug",
       "img": "images/rug/romp-zijwaarts-buigen-liggend-line-v1.png",
-      "sha256": "84ffd298ab92e95a2ced2724a25376912291804cc24e9628db7b5663d3e4ba84",
+      "sha256": "b2d8121dc22dd47fdb876f69e0d5d0601e242dfaed6cee6d6803e62ab7c34d85",
       "bron": null,
       "bronTitel": null
     },

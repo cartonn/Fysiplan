@@ -960,7 +960,7 @@
       "name": "French press",
       "source": "images/bovenste-extremiteit/french-press-avatar-v7.jpg",
       "assetSha256": "c6f9c1655b002a6c288c7e7ac04ffb48c73b2ac056069330646e198b5d5954d2",
-      "explanationSha256": "65ed7e28749250606ee51fd63be93d5bf8de37326b7de75907f462e5b0c034c0",
+      "explanationSha256": "7112ae2c74e089d9b6e5863618946b4f737affe724ea31087641b8970adbc092",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -1313,7 +1313,7 @@
       "name": "Military press",
       "source": "images/bovenste-extremiteit/military-press-avatar-v7.jpg",
       "assetSha256": "2bcd81bdcec09bed5867c8976d05fedd6d69d66addc911be603deff77832e0e7",
-      "explanationSha256": "e6432c2f1aec0b87785e33205004f63296fb8cb4d75ea775dd566b33b5a61a2f",
+      "explanationSha256": "cd3bab53f892754e4f8db1b118e7da9e7a2adc97906dbee9f24e6d0eac5b7e74",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -1523,7 +1523,7 @@
       "name": "Pully cross over",
       "source": "images/bovenste-extremiteit/pully-cross-over-avatar-v7.jpg",
       "assetSha256": "ccaaf85a26eeb7a663a0d0b03c96b241f19f59aac26efe18e88682de9e93ee56",
-      "explanationSha256": "6dd5f785e9711c961bdeb877dfd52e256014672da606ba889b322dd88ef178c9",
+      "explanationSha256": "f723d3974dedac19fcce16dd86e24a8318a6bd0aa446bbd0cb759d4eaedbe5d7",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -1628,7 +1628,7 @@
       "name": "Pully dips",
       "source": "images/bovenste-extremiteit/pully-dips-avatar-v7.jpg",
       "assetSha256": "febe75aa95a294085aa0470fdad73ad28f7fdb4eaa6ba5d0831be2413428f2ac",
-      "explanationSha256": "fbc1c2d1de9d5fb212fc665b181e7a6b23cf7a3b7c5c12cc6f492401d63bad59",
+      "explanationSha256": "5ad1bfda711bac06dd093ca2b30dbb25140e2b210d8df117408693b443a1b61c",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -1666,7 +1666,7 @@
       "name": "Pully down",
       "source": "images/bovenste-extremiteit/pully-down-avatar-v7.jpg",
       "assetSha256": "566b86d1885ffe7e9c4023aedbe02de189ab05ed942b42e95916a4f3b49ce337",
-      "explanationSha256": "2276545c0418a145931575add9e0ac3ca83aa24871052af3040fe3bc07a9b437",
+      "explanationSha256": "9149414c7447918990a5aae629e1000e577d799309c164079605fbbd11e5e34d",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -2304,7 +2304,7 @@
       "name": "Wrist extension",
       "source": "images/bovenste-extremiteit/wrist-extension-avatar-v7.jpg",
       "assetSha256": "2329571e8fb4c2f38b8a0e4fd576c07a5793965f6dbe2337c73967e47acd4346",
-      "explanationSha256": "24c2d737ef6a8e896789e02dd31afee43e55fa9724140734743b4eb4ab1432bd",
+      "explanationSha256": "8449befc959e40d44e74fafc6fb1308d202e15d71bb4f4b261a16ab66fca499d",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -2342,7 +2342,7 @@
       "name": "Wrist flexion",
       "source": "images/bovenste-extremiteit/wrist-flexion-avatar-v7.jpg",
       "assetSha256": "74b93c223bdc72fe1e9a6d4207cdb45d90deacc1b6da7618ab994616fc88b852",
-      "explanationSha256": "de32bc9deefce9a672ea5d8fb1d0e3ed05e53953222a1ed20fbf8ad55b62308e",
+      "explanationSha256": "1d8fca30f5ea434bef7d467fea7f98a419293425bbe27d5fe7b2ce98ffe8084b",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -2723,7 +2723,7 @@
       "name": "Dead lift",
       "source": "images/onderste-extremiteit/dead-lift-avatar-v7.jpg",
       "assetSha256": "b8e06b33e1d670a86608c425a034e9f260c2e4ec38fe754abae41d05599ef31e",
-      "explanationSha256": "7d85ce7fe5aba7b124aecfe7c422005804640e516a8c6282314cfd5b76cd807a",
+      "explanationSha256": "df2546759e29a3af73c6a8bd7c0b130402d2371c3cf35802c0246fb563d1e65d",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -2790,7 +2790,7 @@
       "name": "Extension squat",
       "source": "images/onderste-extremiteit/extension-squat-avatar-v7.jpg",
       "assetSha256": "5c176ae52a7a5c504a2278d76dd654a9896b480b3c6de7d638d7a5eada707935",
-      "explanationSha256": "4a610cf9038e7585b21e95b16cf80ca35f76e368028d4507be3be3f71fa4d83c",
+      "explanationSha256": "434a92a05eb1d6e2a02cd279151347c0b0b03f6845177b5db1b3c4526ed411f8",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -3574,7 +3574,7 @@
       "name": "Single leg squat",
       "source": "images/onderste-extremiteit/single-leg-squat-avatar-v7.jpg",
       "assetSha256": "7f52bc1e92a9c7b7fc4d8b9b0498b3208c3e5934d4c4b3789b0c7c92b354e1c5",
-      "explanationSha256": "9af5c16ebe30e76bc4d97f1c9dc617c16601a3434ecf2c03b9e0c927d5b8cfbf",
+      "explanationSha256": "598a1a7f728f209e8468e76cabbd2dc53e4371076d9859b40694dca776e96e67",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -4481,7 +4481,7 @@
       "name": "Barbell twist",
       "source": "images/core/barbell-twist-avatar-v7.jpg",
       "assetSha256": "f6ae1ae75a7f690c32dc2447d7a7b48a22d472f820d5565fa60fa84d24de38e9",
-      "explanationSha256": "c127c31080f23466e975a5f2f100d36321b4b6db8b9c6d813507f53376daa799",
+      "explanationSha256": "1f0e31fcd1465ad15c19072f1481238fd5e5057142098cffe66295582eb3f0ec",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -5084,7 +5084,7 @@
       "name": "Crunch",
       "source": "images/core/crunch-avatar-v7.jpg",
       "assetSha256": "899782a2a4ca55e93d29560e813b61a7d6d39702e21d1fad7fdeb6841f007021",
-      "explanationSha256": "d9ee659d30b58233841650303ec18422389dc66882ff41774b4d21d911cf07d5",
+      "explanationSha256": "8cab7dfeef048e8106f6015b26a60d024286d7ea382f0d4363d7ad5558704875",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -5151,7 +5151,7 @@
       "name": "Curl up",
       "source": "images/core/curl-up-avatar-v7.jpg",
       "assetSha256": "a0c6a51060f2ebd74065b472ca526c8a245916021c0834026320d17f800f1605",
-      "explanationSha256": "ce0d0a1667e13c692e14c83a88ed8b2b386a639bf990d0f35b439a18d8dc09bb",
+      "explanationSha256": "f2837a56300cb61e934000cfbcd1f1828645685dc25e7171b968ebb06f0e8da5",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -5352,7 +5352,7 @@
       "name": "Knee elbow",
       "source": "images/core/knee-elbow-avatar-v7.jpg",
       "assetSha256": "608bbc1fe6083a3b0f7a73c4bbc29ac8ddbaec1dbcc0004aa76846040c9224fb",
-      "explanationSha256": "a78e23b17ffc3d948063a72a1c570c3f87e19f1b804b78003f9ead7353e006c5",
+      "explanationSha256": "65dc606ac1191d48dbdb8869f9fc1b05572cb543c5f6027da9f6033bfa56923a",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -5926,7 +5926,7 @@
       "name": "Reversed crunch",
       "source": "images/core/reversed-crunch-avatar-v7.jpg",
       "assetSha256": "db1f75d7f0574836c343399e7f32ec9a236c44b1d4ab1e5dc3522f879087b063",
-      "explanationSha256": "1be01492a3c98ec549a0357703204a73f5f041518afc6131d2524cc3cbf4e390",
+      "explanationSha256": "6c0a75136431740627de77fe74b463cceb555a9d4826a390b118d8c1f912692f",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -6173,7 +6173,7 @@
       "name": "Scissors 2",
       "source": "images/core/scissors-2-avatar-v7.jpg",
       "assetSha256": "f18062ab3ed932eb08ade861b9666d0f6746056c8f1731354a73a163b9ce9829",
-      "explanationSha256": "4bdc516debc2514286d8dd836dd30329bb1429682289d1a07ada649b6418f0e5",
+      "explanationSha256": "2ad0139f3e378efc690b82c21438f1d2510dc678873938d1569df19f3f65f520",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -7855,7 +7855,7 @@
       "name": "TRX lunge lateral low",
       "source": "images/trx/trx-lunge-lateral-low-avatar-v7.jpg",
       "assetSha256": "d0ff34b31f9023c5d91dfd9e24495a785fa1da4fe3a2954c3beb20902b4afc27",
-      "explanationSha256": "8ee8fc0f53094cf2827028caaaa466f4d6c2965921f4db4b65f88d72ebd755b1",
+      "explanationSha256": "5fa3e2386c25dad16135c27ef5d4a76c8128f06e694d538b66d4f9fe7d50aa29",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -9756,7 +9756,7 @@
       "name": "Yoga snake",
       "source": "images/yoga/yoga-snake-avatar-v7.jpg",
       "assetSha256": "085287d9624a8d90d25064b280c6e02c27daac00adfad6e91ea35bf7ba59a8a9",
-      "explanationSha256": "824521042a46fce347c7b1b0418d268a89018850db92f426a701cdf341fe89e7",
+      "explanationSha256": "0f3b8cbc40de1f12f5baf4f9f8d62d06578de70ba2500923b7a07c14d7ee91a3",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -11829,7 +11829,7 @@
       "name": "Gluteus kick (apparaat)",
       "source": "images/apparaten/gluteus-kick-apparaat-avatar-v7.jpg",
       "assetSha256": "27d851cb7fc52c3ff72c4d520c9bd569fb8cc8b8411b0670bf852b68b43febca",
-      "explanationSha256": "8335a3e6f8d7acc6c494dd315041c2185c4cc834955b0c1c354f3d2b48263f44",
+      "explanationSha256": "f75ecd4e1473274c49d07115d4fbfe24351db3506764ea225630592c59445ac8",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -13076,7 +13076,7 @@
       "exerciseId": "fp_134b8284155c79c7",
       "name": "Romp zijwaarts buigen – liggend",
       "source": "images/rug/romp-zijwaarts-buigen-liggend-line-v1.png",
-      "assetSha256": "84ffd298ab92e95a2ced2724a25376912291804cc24e9628db7b5663d3e4ba84",
+      "assetSha256": "b2d8121dc22dd47fdb876f69e0d5d0601e242dfaed6cee6d6803e62ab7c34d85",
       "explanationSha256": "215dc52b5f6932c5aca326a784a6a599f16a3d4abd2cc4e4d0fc086991cd738c",
       "mediaType": "line_drawing_candidate",
       "classification": {
@@ -13097,7 +13097,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
       },
       "brandMark": {
         "present": false,
@@ -15023,7 +15023,7 @@
       "exerciseId": "fp_975632f0f95c824e",
       "name": "Grote stappen – met ritmische cue",
       "source": "images/neurologische-revalidatie/grote-stappen-met-ritmische-cue-line-v1.png",
-      "assetSha256": "76b1da23b032185aefcc7d63b605398d8a0eb67b1971e80238c28c3a09cc8c26",
+      "assetSha256": "3603c9502e525e420768bb64d271859cfb11fa7a5f8afd1b6a2a7db0577ffc38",
       "explanationSha256": "39bb518edea0d50abe7d6e7859d0768cc1bc94244d7c0169955430550e7666e5",
       "mediaType": "line_drawing_candidate",
       "classification": {
@@ -15056,7 +15056,7 @@
       "exerciseId": "fp_4b4cdf03e92ccf3f",
       "name": "Grote stappen – functionele combinatie",
       "source": "images/neurologische-revalidatie/grote-stappen-functionele-combinatie-line-v1.png",
-      "assetSha256": "a70d90bb477f48fa95f8db368f13abdd253c3e4aa03eb0f8f20b914eb9829c5e",
+      "assetSha256": "23bbe0c17a1d83b6d1e18416db902a42fd49dc856dddf047f05c85489448bc26",
       "explanationSha256": "18c2e6e6ae8439d08f3bbaa43eda1228af17a648942502c30ce7aac6ea83aa61",
       "mediaType": "line_drawing_candidate",
       "classification": {
@@ -15077,7 +15077,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Binnen de uitsnedes staat 304 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
       },
       "brandMark": {
         "present": false,
@@ -15980,7 +15980,7 @@
       "exerciseId": "fp_8d4fb0f3f39ab16e",
       "name": "360 graden ademhaling – eerste fase rustig",
       "source": "images/bekken-postpartum/360-graden-ademhaling-eerste-fase-rustig-line-v1.png",
-      "assetSha256": "481563bb61a64e7918620581b543abc3910dae469be49c513ef249f6d92f76da",
+      "assetSha256": "35d2a2e3f5f298253c232f7d6053d90cfcc8482111caf66d753a161745deaf0c",
       "explanationSha256": "b3fb8c05b1c7e97bb97bb22edd2b136ad32b3b565ac16e478fbcafe75aac98db",
       "mediaType": "line_drawing_candidate",
       "classification": {
@@ -19575,7 +19575,7 @@
       "name": "Seated chair crunches",
       "source": "images/seated-chair/seated-chair-crunches-avatar-v8.jpg",
       "assetSha256": "e65d4983d76429dc85462839442aa3b8f965e53c4e13114739b50cda2df33121",
-      "explanationSha256": "7030fdf72a67459cc2fa580712c76ba841cd95662a696c013f6cd0f168a6c413",
+      "explanationSha256": "11b7c04eda29e7d007c9cef56dac17eb4c3bfa6f10fa77d2d8ccaab38d95b5b4",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
