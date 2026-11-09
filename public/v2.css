@@ -541,7 +541,7 @@ html.v2 .fp-kop .tb-acties #clearBtn:hover{color:#b42318;background:#fdf3f2}
   html.v2 .col-controls #list{grid-column:2;grid-row:3;min-height:0;height:auto;margin:0 -6px 0 0;padding:0 6px 10px 0}
   /* compacte oefenrijen: zoveel mogelijk tegelijk in beeld */
   html.v2 .row{gap:9px;padding:5px 6px;border-radius:10px}
-  html.v2 .row .thumb{width:60px!important;height:60px!important;flex:0 0 60px;border-radius:9px}
+  html.v2 .row .thumb{width:76px!important;height:76px!important;flex:0 0 76px;border-radius:10px;padding:1px}
   html.v2 .row .nm{font-size:13px;line-height:1.25}
   html.v2 .row .nm small{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   html.v2 .row .add{width:28px;height:28px;border-radius:8px;font-size:16px}
