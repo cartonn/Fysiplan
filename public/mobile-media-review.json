@@ -23,8 +23,8 @@
     "approved": 0,
     "poseGeometryApproved": 168,
     "poseStatic": 278,
-    "brandMarkCovered": 154,
-    "brandMarkAbsent": 292
+    "brandMarkCovered": 147,
+    "brandMarkAbsent": 299
   },
   "entries": [
     {
@@ -934,12 +934,12 @@
       "exerciseId": "fp_2b06a69981dc6f70",
       "name": "French press",
       "source": "images/bovenste-extremiteit/french-press-avatar-v7.jpg",
-      "assetSha256": "c6f9c1655b002a6c288c7e7ac04ffb48c73b2ac056069330646e198b5d5954d2",
+      "assetSha256": "e7cfe9f7c215bc681f0650af2734dac897739b3d815cb9a1262aca9b27d9acfa",
       "explanationSha256": "7112ae2c74e089d9b6e5863618946b4f737affe724ea31087641b8970adbc092",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 489,
+        "chromaticPixels": 217,
         "visuallyInspected": true
       },
       "width": 800,
@@ -956,45 +956,40 @@
         {
           "label": "start",
           "crop": {
-            "x": 160,
-            "y": 196,
-            "w": 208,
-            "h": 808
+            "x": 248,
+            "y": 8,
+            "w": 312,
+            "h": 600
           }
         },
         {
           "label": "end",
           "crop": {
-            "x": 460,
-            "y": 44,
-            "w": 208,
-            "h": 976
+            "x": 248,
+            "y": 640,
+            "w": 312,
+            "h": 496
           }
         }
       ],
       "poseGeometry": {
         "status": "geometry-approved",
-        "axis": "x",
+        "axis": "y",
         "reviewer": "Claude Opus 5, nachtelijke reparatieopdracht eigenaar 2026-11-02",
         "reviewDate": "2026-11-02",
         "reviewKind": "geometric-visual-only",
         "visuallyInspected": true,
         "method": "connected components op bronpixels; expliciete uitsnede per houding; geen witruimtesplitsing",
         "foreignInkPixels": 0,
-        "silhouetteIoU": 0.79,
-        "brandingBoxesOutsideCrop": 2,
+        "silhouetteIoU": 0.5,
+        "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
       },
       "brandMark": {
-        "present": true,
-        "cover": {
-          "x": 14,
-          "y": 14,
-          "w": 178,
-          "h": 58
-        },
-        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -2723,12 +2718,12 @@
       "exerciseId": "fp_4dec0874589408c6",
       "name": "Extension squat",
       "source": "images/onderste-extremiteit/extension-squat-avatar-v7.jpg",
-      "assetSha256": "5c176ae52a7a5c504a2278d76dd654a9896b480b3c6de7d638d7a5eada707935",
+      "assetSha256": "ad74c150441d7243094d4da6192a06b5c260bd8e11ce160394e2e44fa0d89168",
       "explanationSha256": "434a92a05eb1d6e2a02cd279151347c0b0b03f6845177b5db1b3c4526ed411f8",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 570,
+        "chromaticPixels": 242,
         "visuallyInspected": true
       },
       "width": 800,
@@ -2745,45 +2740,40 @@
         {
           "label": "start",
           "crop": {
-            "x": 104,
-            "y": 336,
-            "w": 244,
-            "h": 780
+            "x": 268,
+            "y": 24,
+            "w": 292,
+            "h": 600
           }
         },
         {
           "label": "end",
           "crop": {
-            "x": 416,
-            "y": 264,
-            "w": 336,
-            "h": 856
+            "x": 256,
+            "y": 680,
+            "w": 304,
+            "h": 448
           }
         }
       ],
       "poseGeometry": {
         "status": "geometry-approved",
-        "axis": "x",
+        "axis": "y",
         "reviewer": "Claude Opus 5, nachtelijke reparatieopdracht eigenaar 2026-11-02",
         "reviewDate": "2026-11-02",
         "reviewKind": "geometric-visual-only",
         "visuallyInspected": true,
         "method": "connected components op bronpixels; expliciete uitsnede per houding; geen witruimtesplitsing",
         "foreignInkPixels": 0,
-        "silhouetteIoU": 0.515,
-        "brandingBoxesOutsideCrop": 2,
+        "silhouetteIoU": 0.363,
+        "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
       },
       "brandMark": {
-        "present": true,
-        "cover": {
-          "x": 14,
-          "y": 14,
-          "w": 178,
-          "h": 58
-        },
-        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -2957,13 +2947,13 @@
       "exerciseId": "fp_99e5838f4bff098d",
       "name": "Jefferson squat",
       "source": "images/onderste-extremiteit/jefferson-squat-avatar-v7.jpg",
-      "assetSha256": "445ddcb57b10b5b6c7c9a3044423e61d9ace2b33c0e618cdd66ee9c1c8626330",
+      "assetSha256": "da819e405ae9debe1d47d3c463d1d9f82dda7c03c675b2f5ef796389f64294ea",
       "explanationSha256": "79ab0004b8b919297be1b9b586e31654eaeb4989a919f5ad72177ad306e11449",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 510,
-        "visuallyInspected": true
+        "chromaticPixels": 300,
+        "visuallyInspected": false
       },
       "width": 800,
       "height": 1200,
@@ -2975,49 +2965,15 @@
         "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
       ],
       "observations": [],
-      "poses": [
-        {
-          "label": "start",
-          "crop": {
-            "x": 0,
-            "y": 364,
-            "w": 400,
-            "h": 764
-          }
-        },
-        {
-          "label": "end",
-          "crop": {
-            "x": 400,
-            "y": 668,
-            "w": 400,
-            "h": 460
-          }
-        }
-      ],
+      "poses": [],
       "poseGeometry": {
-        "status": "geometry-approved",
-        "axis": "x",
-        "reviewer": "Claude Opus 5, nachtelijke reparatieopdracht eigenaar 2026-11-02",
-        "reviewDate": "2026-11-02",
-        "reviewKind": "geometric-visual-only",
-        "visuallyInspected": true,
-        "method": "connected components op bronpixels; expliciete uitsnede per houding; geen witruimtesplitsing",
-        "foreignInkPixels": 0,
-        "silhouetteIoU": 0.328,
-        "brandingBoxesOutsideCrop": 2,
-        "clinicalApproved": false,
-        "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
+        "status": "static",
+        "reason": "Binnen de uitsnedes staat 80 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
       },
       "brandMark": {
-        "present": true,
-        "cover": {
-          "x": 14,
-          "y": 14,
-          "w": 178,
-          "h": 58
-        },
-        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -3588,12 +3544,12 @@
       "exerciseId": "fp_341afb721db82139",
       "name": "Squat",
       "source": "images/onderste-extremiteit/squat-avatar-v7.jpg",
-      "assetSha256": "928156faa0d4ea1b827080fa36132575f669758a549e30817d6d0a63e90aec23",
+      "assetSha256": "49611c85c1d7a1a619dc1ba9824462f43cb07b8a27a68877861ab3523edc9aae",
       "explanationSha256": "eb13a703fce0def703ad393be1f0a340ac5f4c03724da41366c2a518ebe93216",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 662,
+        "chromaticPixels": 230,
         "visuallyInspected": true
       },
       "width": 800,
@@ -3610,45 +3566,40 @@
         {
           "label": "start",
           "crop": {
-            "x": 48,
-            "y": 228,
-            "w": 280,
-            "h": 896
+            "x": 228,
+            "y": 20,
+            "w": 340,
+            "h": 580
           }
         },
         {
           "label": "end",
           "crop": {
-            "x": 420,
-            "y": 456,
-            "w": 376,
-            "h": 668
+            "x": 224,
+            "y": 676,
+            "w": 344,
+            "h": 484
           }
         }
       ],
       "poseGeometry": {
         "status": "geometry-approved",
-        "axis": "x",
+        "axis": "y",
         "reviewer": "Claude Opus 5, nachtelijke reparatieopdracht eigenaar 2026-11-02",
         "reviewDate": "2026-11-02",
         "reviewKind": "geometric-visual-only",
         "visuallyInspected": true,
         "method": "connected components op bronpixels; expliciete uitsnede per houding; geen witruimtesplitsing",
         "foreignInkPixels": 0,
-        "silhouetteIoU": 0.449,
-        "brandingBoxesOutsideCrop": 2,
+        "silhouetteIoU": 0.451,
+        "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
       },
       "brandMark": {
-        "present": true,
-        "cover": {
-          "x": 14,
-          "y": 14,
-          "w": 178,
-          "h": 58
-        },
-        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -5301,12 +5252,12 @@
       "exerciseId": "fp_63ae62c389c88fb3",
       "name": "Leg raises",
       "source": "images/core/leg-raises-avatar-v7.jpg",
-      "assetSha256": "a9b033dacbdae0c67a6337e0623a9674e26edb2e8f3c092acf87170493ecebf2",
+      "assetSha256": "cb11f2e6564d4280bf7468271113a9333e6645dbc32611d2fb9889cede2eb3f8",
       "explanationSha256": "197e86228386380c0c171bc952b45456a20152d0737c20a890f66dd519bf5e86",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 334,
+        "chromaticPixels": 239,
         "visuallyInspected": true
       },
       "width": 800,
@@ -5323,19 +5274,19 @@
         {
           "label": "start",
           "crop": {
-            "x": 48,
-            "y": 320,
-            "w": 736,
-            "h": 164
+            "x": 56,
+            "y": 100,
+            "w": 708,
+            "h": 440
           }
         },
         {
           "label": "end",
           "crop": {
-            "x": 52,
-            "y": 608,
-            "w": 624,
-            "h": 416
+            "x": 56,
+            "y": 540,
+            "w": 684,
+            "h": 624
           }
         }
       ],
@@ -5348,20 +5299,15 @@
         "visuallyInspected": true,
         "method": "connected components op bronpixels; expliciete uitsnede per houding; geen witruimtesplitsing",
         "foreignInkPixels": 0,
-        "silhouetteIoU": 0.095,
-        "brandingBoxesOutsideCrop": 2,
+        "silhouetteIoU": 0.161,
+        "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
       },
       "brandMark": {
-        "present": true,
-        "cover": {
-          "x": 14,
-          "y": 14,
-          "w": 178,
-          "h": 58
-        },
-        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -9277,12 +9223,12 @@
       "exerciseId": "fp_bbb40b64d7bd2bf7",
       "name": "Yoga knee to chest hip stretch",
       "source": "images/yoga/yoga-knee-to-chest-hip-stretch-avatar-v7.jpg",
-      "assetSha256": "23078cfdace6379fe85d578037b5f813b477032b3bf51cd6702e5cc9053d333a",
-      "explanationSha256": "f703236b463802e8c27c9d7ada926d2d3c34a5cdf46dc70a018a6106a2fc0824",
+      "assetSha256": "880976eb36f40170bb1f112cf6e294af5d792f6e8d2bcf474ba3ef927803f44f",
+      "explanationSha256": "fd5f5c16036c294d1e58e0892ce27fff61ab89c27c33f0384fd75fed4fe090b2",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 370,
+        "chromaticPixels": 419,
         "visuallyInspected": true
       },
       "width": 800,
@@ -9299,19 +9245,19 @@
         {
           "label": "start",
           "crop": {
-            "x": 56,
-            "y": 264,
-            "w": 728,
-            "h": 244
+            "x": 178,
+            "y": 14,
+            "w": 380,
+            "h": 588
           }
         },
         {
           "label": "end",
           "crop": {
-            "x": 56,
-            "y": 728,
-            "w": 732,
-            "h": 340
+            "x": 178,
+            "y": 602,
+            "w": 380,
+            "h": 556
           }
         }
       ],
@@ -9324,20 +9270,15 @@
         "visuallyInspected": true,
         "method": "connected components op bronpixels; expliciete uitsnede per houding; geen witruimtesplitsing",
         "foreignInkPixels": 0,
-        "silhouetteIoU": 0.529,
-        "brandingBoxesOutsideCrop": 2,
+        "silhouetteIoU": 0.769,
+        "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
       },
       "brandMark": {
-        "present": true,
-        "cover": {
-          "x": 14,
-          "y": 14,
-          "w": 178,
-          "h": 58
-        },
-        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -9382,12 +9323,12 @@
       "exerciseId": "fp_56265637371590fd",
       "name": "Yoga noose",
       "source": "images/yoga/yoga-noose-avatar-v7.jpg",
-      "assetSha256": "861293ce74f6699d6f7bbffd260642e142b7105cbe100e8340c7017b2d016835",
+      "assetSha256": "0de98d8386472006cd52c1629d3f629f77c3f6b4506727174793cd7968acb9a5",
       "explanationSha256": "446d907ceff3454d67274d5bbf17877055b2d0b98831c12824e6f464de2bec9b",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 874,
+        "chromaticPixels": 564,
         "visuallyInspected": true
       },
       "width": 800,
@@ -9404,45 +9345,40 @@
         {
           "label": "start",
           "crop": {
-            "x": 8,
-            "y": 296,
-            "w": 380,
-            "h": 584
+            "x": 56,
+            "y": 56,
+            "w": 680,
+            "h": 592
           }
         },
         {
           "label": "end",
           "crop": {
-            "x": 428,
-            "y": 312,
-            "w": 332,
-            "h": 604
+            "x": 52,
+            "y": 648,
+            "w": 692,
+            "h": 500
           }
         }
       ],
       "poseGeometry": {
         "status": "geometry-approved",
-        "axis": "x",
+        "axis": "y",
         "reviewer": "Claude Opus 5, nachtelijke reparatieopdracht eigenaar 2026-11-02",
         "reviewDate": "2026-11-02",
         "reviewKind": "geometric-visual-only",
         "visuallyInspected": true,
         "method": "connected components op bronpixels; expliciete uitsnede per houding; geen witruimtesplitsing",
         "foreignInkPixels": 0,
-        "silhouetteIoU": 0.659,
-        "brandingBoxesOutsideCrop": 2,
+        "silhouetteIoU": 0.565,
+        "brandingBoxesOutsideCrop": 0,
         "clinicalApproved": false,
         "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
       },
       "brandMark": {
-        "present": true,
-        "cover": {
-          "x": 14,
-          "y": 14,
-          "w": 178,
-          "h": 58
-        },
-        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -12207,13 +12143,13 @@
       "exerciseId": "fp_9e6911ab1f1e0d44",
       "name": "Nek buigen – liggend ondersteund",
       "source": "images/nek/nek-buigen-liggend-ondersteund-avatar-v8.jpg",
-      "assetSha256": "afa0d57bb628b98835e56b1874f7350b01aa8f28a8b02577a289e4f723689d20",
+      "assetSha256": "05cb487841b3852a94c60b455b988f3f6fef3734d3c0a989801cfe47a27e05ce",
       "explanationSha256": "9653ebb68bb9805a4c53ad993372e1cd11c31b52e7f2ba9e1cca8bbfafc9bdd2",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 548,
-        "visuallyInspected": false
+        "chromaticPixels": 480,
+        "visuallyInspected": true
       },
       "width": 800,
       "height": 1200,
@@ -12225,10 +12161,39 @@
         "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
       ],
       "observations": [],
-      "poses": [],
+      "poses": [
+        {
+          "label": "start",
+          "crop": {
+            "x": 16,
+            "y": 244,
+            "w": 768,
+            "h": 284
+          }
+        },
+        {
+          "label": "end",
+          "crop": {
+            "x": 8,
+            "y": 640,
+            "w": 784,
+            "h": 296
+          }
+        }
+      ],
       "poseGeometry": {
-        "status": "static",
-        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+        "status": "geometry-approved",
+        "axis": "y",
+        "reviewer": "Claude Opus 5, nachtelijke reparatieopdracht eigenaar 2026-11-02",
+        "reviewDate": "2026-11-02",
+        "reviewKind": "geometric-visual-only",
+        "visuallyInspected": true,
+        "method": "connected components op bronpixels; expliciete uitsnede per houding; geen witruimtesplitsing",
+        "foreignInkPixels": 0,
+        "silhouetteIoU": 0.828,
+        "brandingBoxesOutsideCrop": 0,
+        "clinicalApproved": false,
+        "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
       },
       "brandMark": {
         "present": false,

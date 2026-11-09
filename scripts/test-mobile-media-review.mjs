@@ -158,10 +158,10 @@ for(const r of manifest.entries){
   }else assert.equal(r.brandMark.cover,null,'afdekking zonder bewezen vrij vlak: '+r.name);
   assert.equal(r.brandMark.present,m.present,r.name);
 }
-// 2026-11-09: 61 legacy-avatars vervangen door nieuwe avatars uit de Physitrack-crosscheck, zonder ingebakken merk.
-assert.equal(afgedekt,154,'154 beelden met een afdekbaar ingebakken merk');
-assert.equal(manifest.summary.brandMarkCovered,154);
-assert.equal(manifest.summary.brandMarkAbsent,165+NIEUW); // nieuwe lijntekeningen hebben geen ingebakken merk
+// 2026-11-09: 61 (ronde 3: nog 7) legacy-avatars vervangen door nieuwe avatars uit de Physitrack-crosscheck, zonder ingebakken merk.
+assert.equal(afgedekt,147,'147 beelden met een afdekbaar ingebakken merk');
+assert.equal(manifest.summary.brandMarkCovered,147);
+assert.equal(manifest.summary.brandMarkAbsent,172+NIEUW); // nieuwe lijntekeningen hebben geen ingebakken merk
 // de drie beelden waar het ingebakken witte vak een hoekje uit de haren snijdt: het
 // afdekvlak ligt binnen dat vak en maakt het niet groter
 for(const naam of ['Front raises','Shoulder rotation (shrugs)','Yoga deep squat'])
@@ -169,4 +169,4 @@ for(const naam of ['Front raises','Shoulder rotation (shrugs)','Yoga deep squat'
 // een beeld zonder merk krijgt nooit een vlak, ook niet als er linksboven haar staat
 for(const naam of ['Foam roller hamstring','Foam roller calf','Standing chair heel/toe','Alternating lunge jumps'])
   assert.equal(manifest.entries.find(r=>r.name===naam).brandMark.cover,null,naam);
-console.log('PASS: '+(319+NIEUW)+' source-linked assets, hashes, twelve rejections (five content, seven temporary source holds: five source defects, two pending source choices); '+approvedPoses.length+' visueel gecontroleerde uitsnedes, 154 ingebakken merken opnieuw gemeten en afdekbaar, geen klinische goedkeuring afgeleid.');
+console.log('PASS: '+(319+NIEUW)+' source-linked assets, hashes, twelve rejections (five content, seven temporary source holds: five source defects, two pending source choices); '+approvedPoses.length+' visueel gecontroleerde uitsnedes, 147 ingebakken merken opnieuw gemeten en afdekbaar, geen klinische goedkeuring afgeleid.');
