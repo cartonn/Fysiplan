@@ -15,7 +15,9 @@ const v2=lees('public/oefeningen-v2.json'),review=lees('public/mobile-media-revi
 // Testgeval: sinds 2026-11-09 heeft geen echte tegengehouden bron nog een opname (de holds op Dips en
 // Triceps dips zijn opgeheven met een nieuwe avatar). Om dezelfde regel te blijven toetsen houden we in
 // deze test twee oefeningen met een opname tegen, precies zoals de beoordeling een hold vastlegt.
-const TESTHOLD=['Biceps curl','Triceps dips'];
+// Back extension en Rug extensie hadden tot 2026-11-09 een echte open-bronkeuzehold zonder opname; die
+// zijn opgeheven, maar het geval "tegengehouden zonder opname" toetsen we hier op dezelfde manier.
+const TESTHOLD=['Biceps curl','Triceps dips','Back extension','Rug extensie'];
 for(const r of review.entries)if(TESTHOLD.includes(r.name)){r.status='rejected';r.presentation='withhold';}
 // zoals de server ze levert
 const lib=v2.map(e=>({...e,exerciseId:exerciseId(e),img:'/v2/'+e.img,kaartImg:'/v2/'+e.kaartImg}));
@@ -100,7 +102,7 @@ function kaartContext(chosen){
   assert.ok(html.includes("speelNoor([noorItem(vindOefening(x),x)]);return;"),'de knop per oefening gebruikt dezelfde regel');
 }
 
-// 3a. open bronkeuze (Back extension, Rug extensie, 2026-11-03): zelfde overslaan als een
+// 3a. tegengehouden zonder opname (testhold op Back extension en Rug extensie): zelfde overslaan als een
 // bronfout. Ze hebben geen opname; het beeld gaat voor, dus ze heten niet "zonder opname".
 {
   const keuze=[{n:normaal.naam,id:normaal.exerciseId},{n:'Back extension',id:'fp_a0a18c0c13673d38'},{n:'Rug extensie',id:'fp_7b07f346644f9c17'}];

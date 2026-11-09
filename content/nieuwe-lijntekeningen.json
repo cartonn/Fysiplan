@@ -12,7 +12,7 @@
       "bron": null,
       "bronTitel": "voorbeeldset",
       "kaartImg": "images/nek/kin-intrekken-zittend-actief-avatar-v8.jpg",
-      "kaartSha256": "d3a6505629a6c58a107a446cc8744bfe2a4fdd67b852779d94a6d0565f938236",
+      "kaartSha256": "15854f67cbe5caddd313cc8d4532cd90921ae691238b94b803a378a9b4a55b64",
       "kaartBron": "output/lege-categorieen-voorbeelden/avatars/01-avatar-v2.png"
     },
     {
@@ -81,7 +81,7 @@
       "bron": null,
       "bronTitel": "voorbeeldset",
       "kaartImg": "images/bekken-postpartum/bekkenkanteling-postpartum-eerste-fase-rustig-avatar-v8.jpg",
-      "kaartSha256": "03b08bcee9e627a3fac43ecaf83dc50d464675e3d91ea6901135bf44dcaa2c33",
+      "kaartSha256": "be3f0572ba25f6ed9577f2e1cc636b984dc186e6590fcbb9230465a017396d1e",
       "kaartBron": "output/lege-categorieen-voorbeelden/avatars/07-avatar.png"
     },
     {
@@ -213,7 +213,7 @@
       "bron": "https://uk.physitrack.com/home-exercise-video/deep-neck-flexor-activation-in-supine",
       "bronTitel": "Deep neck flexor activation in supine",
       "kaartImg": "images/nek/diepe-nekflexoren-activeren-liggend-ondersteund-avatar-v8.jpg",
-      "kaartSha256": "2f7a845d690f695950546242b461018e8a9c357e6eebb734860a581b668f356e",
+      "kaartSha256": "5d5b439ebc16b5f67f90a151d7f8cf7b395217ad7f20d8a6ad4bcae6e8abbc4d",
       "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/diepe-nekflexoren-activeren-liggend-ondersteund-avatar.png"
     },
     {
@@ -225,7 +225,7 @@
       "bron": "https://us.physitrack.com/home-exercise-video/gaze-stabilisation-%28horizontal%29-in-sitting",
       "bronTitel": "Gaze stabilisation (horizontal) in sitting (\"VRT gaze stabilization\" Eyes fixed turning head right/left, in sitting; 01)",
       "kaartImg": "images/nek/nekrotatie-met-oogfixatie-zittend-actief-avatar-v8.jpg",
-      "kaartSha256": "9812888609f2d76fd94e746f34640cbec0d7d2284477dd5ab23f7ed75bf1132f",
+      "kaartSha256": "1755b37009fa0ea4e91e80609673a624b3d160fb15e1c6f4bd65e56c1bd500c1",
       "kaartBron": "output/physitrack-crosscheck/beelden/avatars (Physitrack-crosscheck 2026-11-08)"
     },
     {
@@ -237,7 +237,7 @@
       "bron": "https://us.physitrack.com/home-exercise-video/gaze-stabilization-during-head-rotation-%28vestibular-ocular-reflex%29",
       "bronTitel": "Gaze Stabilization during Head Rotation (vestibular ocular reflex)",
       "kaartImg": "images/nek/nekrotatie-met-oogfixatie-functioneel-staand-avatar-v8.jpg",
-      "kaartSha256": "37a678bc84095838afb0b5db91cfd01327fa5ffc67702771535708023a93e194",
+      "kaartSha256": "07cc90a9fa9c29421b84e2f4a7ca1b008772dc1d8649559dfb0c52b4210e9f05",
       "kaartBron": "output/physitrack-crosscheck/beelden/avatars (Physitrack-crosscheck 2026-11-08)"
     },
     {
@@ -515,7 +515,7 @@
       "naam": "Achterwaarts stappen – met steun",
       "groep": "Balans en valpreventie",
       "img": "images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png",
-      "sha256": "d245a4c8fd6b3fea111fdaecb8f76b50dc530619fcd386d38b02e6650ea893b9",
+      "sha256": "44ed8fa0306197ac462e05575f3cbdcfa706294a3236b7c050699ab5550924dd",
       "bron": "https://us.physitrack.com/home-exercise-video/backwards-walking-with-support",
       "bronTitel": "Backwards Walking with support"
     },
@@ -956,7 +956,7 @@
       "naam": "Hop vooruit – techniek langzaam",
       "groep": "Sportrevalidatie",
       "img": "images/sportrevalidatie/hop-vooruit-techniek-langzaam-line-v1.png",
-      "sha256": "c667f96432be446c0082b69ac806049b02d8650711c954cf00df73e090b71d50",
+      "sha256": "0e0a97d4f6e6881f4b71239e7da0b770bb561344d3b74e50e9f8db7424241d88",
       "bron": "https://us.physitrack.com/home-exercise-video/hop---forwards-and-backwards-over-a-line",
       "bronTitel": "Hop and hold - forwards and backwards over a line"
     },
@@ -983,7 +983,7 @@
       "naam": "Richtingsverandering – techniek langzaam",
       "groep": "Sportrevalidatie",
       "img": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-line-v1.png",
-      "sha256": "a9082a4a8890b049c54145b506b8a02bfe0c1bcef7d8bb7f124ed614f86b34ad",
+      "sha256": "fd9aa6197e9f9ebd2ba51568230a30a83bb6ce577399c6978527912e365fd644",
       "bron": "https://ca.physitrack.com/home-exercise-video/change-of-direction-%E2%80%93-agility-%E2%80%93-straight-line-running-with-jog-backwards---intermediate",
       "bronTitel": "Change of direction - agility - straight line running with jog backwards - intermediate"
     },
@@ -1208,7 +1208,7 @@
       "naam": "Thoracale extensie – op handen en knieën",
       "groep": "Rug",
       "img": "images/rug/thoracale-extensie-op-handen-en-knieen-line-v1.png",
-      "sha256": "6bdac61a06817acb6870e8f1c779f3370610ea65056170f02f73c01a8320d9da",
+      "sha256": "9688ec7de2ef9935345cdf61be212fe5fb5dd73f9a0bf9826493febb7979247c",
       "bron": null,
       "bronTitel": null
     },
