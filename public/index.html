@@ -158,9 +158,7 @@
   #a4 table.mon thead tr:nth-child(1){height:17px}
   #a4 table.mon thead tr:nth-child(3){height:22px}
   #a4 table.mon thead tr:nth-child(4){height:22px}
-  #a4 table.mon tbody tr{height:23px}
-  /* S/H/W-legenda hoort altijd zichtbaar onder het raster: nooit laten wegdrukken */
-  #a4 .shw-legenda{flex:0 0 auto;color:#475467}
+  #a4 table.mon tbody tr{height:26px}
   #emptyA4{position:absolute;top:170px;left:26px;right:26px;z-index:2;pointer-events:none}
   /* knopjes op het plaatje: binnen het vak (het vak snijdt alles erbuiten af), zichtbaar bij aanwijzen */
   #a4 .pic .rm{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:#d92d20;color:#fff;font-size:15px;font-weight:700;line-height:21px;text-align:center;cursor:pointer;display:none;box-shadow:0 1px 5px rgba(16,24,40,.3)}
@@ -263,11 +261,9 @@
     #a4 table.mon thead tr:nth-child(1){height:4mm}
     #a4 table.mon thead tr:nth-child(3){height:5mm}
     #a4 table.mon thead tr:nth-child(4){height:5mm}
-    /* rijen iets lager en extra ruimte onderin: zo passen raster, S/H/W-legenda
-       en de veiligheidsregel samen op het vel en valt er onderaan niets weg */
-    #a4 table.mon tbody tr{height:6.1mm}
-    #a4{padding-bottom:5mm}
-    #a4 .shw-legenda{font-size:8px;padding-top:1mm}
+    /* 6.2 mm: ook in Safari (blad 197 mm hoog) passen de laatste rij en de S/H/W-legenda (2026-11-09) */
+    #a4 table.mon tbody tr{height:6.2mm}
+    #a4 .shw-legenda{flex:0 0 auto}
     /* Safari houdt de macOS-printerstand op Staand. Draai de kaart daarom
        binnen het beschikbare A4-printvlak, zodat één klik toch het vel vult. */
     html.safari-print,html.safari-print body{width:197mm;height:276mm}
@@ -371,7 +367,7 @@
         </div>
         <div id="qrBlok" class="qrblok" style="display:none"></div>
       </div>
-      <div id="emptyA4" class="hint no-print" style="padding:6px 30px 0">Klik links op een oefening — het plaatje komt direct genummerd op de A4.</div>
+      <div id="emptyA4" class="hint no-print" style="padding:14px 30px 0">Klik links op een oefening — het plaatje komt direct genummerd op de A4.</div>
       <table class="mon" id="mon"></table>
       <div class="shw-legenda" style="font-size:10px;padding-top:3px">S = series · H = herhalingen · W = weerstand</div>
     </div>
@@ -1254,6 +1250,9 @@ bridge2.jpg</div>
     tekenZijbalk();
     window.addEventListener('load',function(){tekenZijbalk();tekenKopTeller();pasA4();});
     window.addEventListener('resize',pasA4);
+    // tips, dosering of extra rijen veranderen de hoogte van de kaart: opnieuw inpassen
+    if(window.ResizeObserver){var _a4h=0;new ResizeObserver(function(){var a=document.getElementById('a4'),w=document.getElementById('a4wrap');if(!a||!w)return;
+      var h=Math.round(a.getBoundingClientRect().height/(parseFloat(w.style.getPropertyValue('--a4z'))||1));if(h!==_a4h){_a4h=h;pasA4();}}).observe(document.getElementById('a4'));}
     pasA4();
   }
   // Breed scherm: de acties staan direct boven de kaart en de hele A4 past op het scherm
@@ -1271,7 +1270,11 @@ bridge2.jpg</div>
     var bw=wrap.clientWidth-padX-4;
     var top=wrap.getBoundingClientRect().top+window.scrollY;
     var bh=window.innerHeight-top-padY-kop.offsetHeight-14;
-    var z=Math.min(1,bw/1122,bh/794);
+    // Op het scherm staan boven de tabel nog tips en de startdosering (niet op de print); de kaart
+    // groeit daarom mee en we passen de hele kaart in, met legenda (Ahmed, 2026-11-09).
+    var huidig=parseFloat(wrap.style.getPropertyValue('--a4z'))||1;
+    var hoog=Math.max(794,a4.getBoundingClientRect().height/huidig);
+    var z=Math.min(1,bw/1122,bh/hoog);
     z=Math.max(.55,Math.floor(z*100)/100);
     wrap.style.setProperty('--a4z',z);
   }
@@ -1527,8 +1530,7 @@ bridge2.jpg</div>
       if(!th){
         th=document.createElement('div');th.id='trouwhint';th.className='no-print';
         th.style.cssText='display:none;margin:6px 0 2px;font-size:12.5px;line-height:1.5;color:#8a5a00;background:#fff7e6;border:1px solid #f2d999;border-radius:10px;padding:8px 12px';
-        // boven het A4-blad, niet erin: anders duwt de hint de onderkant van de kaart weg
-        var _a4=document.getElementById('a4');_a4.parentNode.insertBefore(th,_a4);
+        elEmpty.parentNode.insertBefore(th,elEmpty);
       }
       if(chosen.length>=8){
         th.textContent='Tip: '+chosen.length+' oefeningen is veel om thuis vol te houden — kleinere programma’s (2–6 oefeningen) geven doorgaans betere therapietrouw. Overweeg te snoeien of in fasen te werken.';
@@ -1540,8 +1542,7 @@ bridge2.jpg</div>
       if(!sb){
         sb=document.createElement('div');sb.id='signbar';sb.className='no-print';
         sb.style.cssText='display:none;margin:6px 0 2px;font-size:12.5px;line-height:1.5;color:#8a5a00;background:#fff7e6;border:1px solid #f2d999;border-radius:10px;padding:8px 12px';
-        // boven het A4-blad, niet erin: anders duwt de hint de onderkant van de kaart weg
-        var _a4=document.getElementById('a4');_a4.parentNode.insertBefore(sb,_a4);
+        elEmpty.parentNode.insertBefore(sb,elEmpty);
       }
       var zwAlle=verseZwaar(),zwNamen=Object.keys(zwAlle);
       if(zwNamen.length&&SIGNAAL_KAART){
@@ -1623,14 +1624,13 @@ bridge2.jpg</div>
     if(!el){
       el=document.createElement('div');
       el.id='bulkdos';el.className='no-print';
-      el.style.cssText='display:none;align-items:center;gap:7px;flex-wrap:wrap;padding:0 2px 8px;font-size:12px;color:var(--muted)';
+      el.style.cssText='display:none;align-items:center;gap:7px;flex-wrap:wrap;padding:8px 30px 2px;font-size:12px;color:var(--muted)';
       el.innerHTML="Startdosering voor alle oefeningen: "+
         "<input id='bd_s' inputmode='numeric' maxlength='4' placeholder='3' aria-label='series' style='width:44px;font-size:12px;padding:5px 6px;border:1px solid var(--line);border-radius:8px;text-align:center'/>&times;"+
         "<input id='bd_h' inputmode='numeric' maxlength='6' placeholder='10' aria-label='herhalingen' style='width:52px;font-size:12px;padding:5px 6px;border:1px solid var(--line);border-radius:8px;text-align:center'/>"+
         "<button class='btn' id='bd_do' type='button' title='Vult series en herhalingen in de eerste schemarij voor elke oefening; al ingevulde vakjes blijven staan'>Vul eerste rij</button>"+
         "<small>alleen lege vakjes; per oefening aanpassen kan daarna gewoon</small>";
-      // boven het A4-blad, niet erin: anders valt de onderkant (S/H/W-legenda) van de kaart af
-      var _a4=document.getElementById('a4');_a4.parentNode.insertBefore(el,_a4);
+      elMon.parentNode.insertBefore(el,elMon);
       el.querySelector('#bd_do').addEventListener('click',function(){
         var s=el.querySelector('#bd_s').value.trim().slice(0,4),h=el.querySelector('#bd_h').value.trim().slice(0,6);
         if(!s&&!h)return;

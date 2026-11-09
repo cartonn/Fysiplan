@@ -63,15 +63,13 @@ for(const e of manifest.rejectedSources){
   assert.equal(e.assetSha256,createHash('sha256').update(bytes).digest('hex'),'afgekeurde bron niet aan zijn bytes gebonden: '+e.source);
 }
 assert.ok((await fs.readFile('public/kaart.html','utf8')).includes('data[0].rejectedSources'),'de kaart leest de afgekeurde vorige versies');
-// vijf inhoudelijke afkeuringen plus vijf tijdelijke houds op één bepaalde bron (2026-11-03; op 2026-11-09
-// zijn de holds op Chair squat en Standing chair shoulder rotations opgeheven met een nieuwe avatar):
+// vijf inhoudelijke afkeuringen plus drie tijdelijke houds op één bepaalde bron (2026-11-03; op 2026-11-09
+// zijn de holds op Chair squat, Standing chair shoulder rotations, Dips en Triceps dips opgeheven met een nieuwe avatar):
 // vijf bronfouten en twee open bronkeuzes (Back extension, Rug extensie)
 const BRONKEUZE=new Map([
   ['fp_a0a18c0c13673d38','fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50'],
   ['fp_7b07f346644f9c17','7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47']]);
-for(const [id,name,source] of [['fp_013ba6ad937cc9d9','Dips','images/bovenste-extremiteit/dips-avatar-v7.jpg'],
-  ['fp_f227db5fcf245d9c','Triceps dips','images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg'],
-  ['fp_7dc1478e2b3c17b0','Step up with knee raise','images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg'],
+for(const [id,name,source] of [['fp_7dc1478e2b3c17b0','Step up with knee raise','images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg'],
   ['fp_a0a18c0c13673d38','Back extension','images/core/back-extension-avatar-v7.jpg'],
   ['fp_7b07f346644f9c17','Rug extensie','images/core/rug-extensie-avatar-v7.jpg']]){
   const e=manifest.entries.find(e=>e.exerciseId===id);
@@ -80,8 +78,8 @@ for(const [id,name,source] of [['fp_013ba6ad937cc9d9','Dips','images/bovenste-ex
   assert.equal(e.clinicalApproved,false,name);
   assert.equal(e.hold.kind,BRONKEUZE.has(id)?'source-choice-pending':'source-defect',name+': soort hold');
 }
-const metHold=manifest.entries.filter(e=>e.hold);assert.equal(metHold.length,5,'alleen de vijf bedoelde bronnen hebben een tijdelijke hold');
-for(const id of ['fp_295fd35a63d44ef8','fp_4b99c5f11b42a30d']){const e=manifest.entries.find(e=>e.exerciseId===id);
+const metHold=manifest.entries.filter(e=>e.hold);assert.equal(metHold.length,3,'alleen de drie bedoelde bronnen hebben een tijdelijke hold');
+for(const id of ['fp_295fd35a63d44ef8','fp_4b99c5f11b42a30d','fp_013ba6ad937cc9d9','fp_f227db5fcf245d9c']){const e=manifest.entries.find(e=>e.exerciseId===id);
   assert.ok(!e.hold,e.name+': hold opgeheven met nieuwe avatar');assert.notEqual(e.status,'rejected',e.name);}
 // Back extension en Rug extensie: exact deze bytes, open bronkeuze, geen klinisch oordeel. De
 // eerdere meetkundige controle van de uitsnedes blijft in de approvals staan, maar levert
@@ -95,9 +93,9 @@ for(const [id,hash] of BRONKEUZE){
   assert.equal(e.poseGeometry.status,'withheld',e.name);assert.deepEqual(e.poses,[],e.name);
   assert.ok(inspected.get(hash)?.source===e.source,e.name+': eerdere uitsnedecontrole niet weggehaald');
 }
-assert.equal(manifest.summary.approved,0);assert.equal(manifest.summary.rejected,10);assert.equal(manifest.summary.unreviewed,309+NIEUW);
+assert.equal(manifest.summary.approved,0);assert.equal(manifest.summary.rejected,8);assert.equal(manifest.summary.unreviewed,311+NIEUW);
 // 2026-11-09 Physitrack-crosscheck: 71 nieuwe avatars; later rondes 3 en 4; gemeten paren op een contactvel bekeken (169).
-assert.equal(manifest.summary.poseGeometryApproved,170);assert.equal(manifest.summary.poseStatic,149+NIEUW);
+assert.equal(manifest.summary.poseGeometryApproved,171);assert.equal(manifest.summary.poseStatic,148+NIEUW);
 // afgekeurde beelden leveren nooit houdingen, ook niet als de meting een paar vindt
 for(const e of manifest.entries.filter(e=>e.status==='rejected')){
   assert.equal(e.poseGeometry.status,'withheld',e.name);assert.deepEqual(e.poses,[],e.name);
@@ -157,9 +155,9 @@ for(const r of manifest.entries){
   assert.equal(r.brandMark.present,m.present,r.name);
 }
 // 2026-11-09: 61 (ronde 3: nog 7, ronde 4: nog 1) legacy-avatars vervangen door nieuwe avatars uit de Physitrack-crosscheck, zonder ingebakken merk.
-assert.equal(afgedekt,145,'145 beelden met een afdekbaar ingebakken merk');
-assert.equal(manifest.summary.brandMarkCovered,145);
-assert.equal(manifest.summary.brandMarkAbsent,174+NIEUW); // nieuwe lijntekeningen hebben geen ingebakken merk
+assert.equal(afgedekt,143,'143 beelden met een afdekbaar ingebakken merk');
+assert.equal(manifest.summary.brandMarkCovered,143);
+assert.equal(manifest.summary.brandMarkAbsent,176+NIEUW); // nieuwe lijntekeningen hebben geen ingebakken merk
 // de drie beelden waar het ingebakken witte vak een hoekje uit de haren snijdt: het
 // afdekvlak ligt binnen dat vak en maakt het niet groter
 for(const naam of ['Front raises','Shoulder rotation (shrugs)','Yoga deep squat'])
@@ -167,4 +165,4 @@ for(const naam of ['Front raises','Shoulder rotation (shrugs)','Yoga deep squat'
 // een beeld zonder merk krijgt nooit een vlak, ook niet als er linksboven haar staat
 for(const naam of ['Foam roller hamstring','Foam roller calf','Standing chair heel/toe','Alternating lunge jumps'])
   assert.equal(manifest.entries.find(r=>r.name===naam).brandMark.cover,null,naam);
-console.log('PASS: '+(319+NIEUW)+' source-linked assets, hashes, ten rejections (five content, five temporary source holds: three source defects, two pending source choices); '+approvedPoses.length+' visueel gecontroleerde uitsnedes, 145 ingebakken merken opnieuw gemeten en afdekbaar, geen klinische goedkeuring afgeleid.');
+console.log('PASS: '+(319+NIEUW)+' source-linked assets, hashes, eight rejections (five content, three temporary source holds: one source defect, two pending source choices); '+approvedPoses.length+' visueel gecontroleerde uitsnedes, 143 ingebakken merken opnieuw gemeten en afdekbaar, geen klinische goedkeuring afgeleid.');

@@ -24,6 +24,10 @@ const noorBron=fs.readFileSync('public/noor-audio.js','utf8');
 const tussen=(a,b)=>{const i=html.indexOf(a);assert.ok(i>=0,a);const j=html.indexOf(b,i+a.length);assert.ok(j>i,b);return html.slice(i,j);};
 const manifest=lees('public/audio/noor/manifest.json');
 const v2=lees('public/oefeningen-v2.json');
+// Testgeval: sinds 2026-11-09 heeft geen echte tegengehouden bron nog een opname (hold op Dips opgeheven).
+// We houden in deze test Biceps curl tegen, precies zoals de beoordeling een hold vastlegt.
+const REVIEW=lees('public/mobile-media-review.json');
+for(const r of REVIEW.entries)if(r.name==='Biceps curl'){r.status='rejected';r.presentation='withhold';}
 // zoals de server ze levert
 const lib=v2.map(e=>({...e,exerciseId:exerciseId(e),img:'/v2/'+e.img,kaartImg:'/v2/'+e.kaartImg}));
 const heeftOpname=e=>manifest.clips.some(c=>c.name===e.naam&&c.text===e.naam+'. '+e.uitleg);
@@ -97,7 +101,7 @@ function maakKaart(chosen,{abort=false}={}){
     tr:k=>k==='stop'?'Stop':k,alert:m=>meldingen.push(String(m)),demoGeluidKnop(){},tekenMeting(){},
     DRIEHOEK:'',VIDEO_META:{},VIDEO_META_CONCEPT:{},
     fetch:async url=>{
-      if(url==='/mobile-media-review.json')return {ok:true,json:async()=>lees('public/mobile-media-review.json')};
+      if(url==='/mobile-media-review.json')return {ok:true,json:async()=>JSON.parse(JSON.stringify(REVIEW))};
       if(url==='/mobile-narration-review.json')return {ok:true,json:async()=>lees('public/mobile-narration-review.json')};
       throw Error('onverwachte aanvraag vanuit de kaart: '+url);
     }});
@@ -130,8 +134,8 @@ const metOpname=lib.filter(e=>heeftOpname(e)&&zichtbaar(e));
 assert.ok(metOpname.length>=3,'minstens drie zichtbare oefeningen met een actuele opname');
 const [A,B,E]=metOpname;
 const zoek=naam=>{const e=lib.find(x=>x.naam===naam);assert.ok(e,naam);return e;};
-const dips=zoek('Dips'),gehouden=zoek('Yoga ear pressure'),zonder=zoek('Standing chair hip extension');
-assert.ok(heeftOpname(dips)&&probe.ctx.mediaWithheld(dips),'testgeval: Dips heeft een opname maar een tegengehouden beeld');
+const dips=zoek('Biceps curl'),gehouden=zoek('Yoga ear pressure'),zonder=zoek('Standing chair hip extension');
+assert.ok(heeftOpname(dips)&&probe.ctx.mediaWithheld(dips),'testgeval: Biceps curl heeft een opname maar een (test)tegengehouden beeld');
 assert.ok(probe.ctx.explanationWithheld(gehouden)&&!probe.ctx.mediaWithheld(gehouden),'testgeval: uitleg van Yoga ear pressure wordt gecontroleerd');
 assert.ok(!heeftOpname(zonder)&&zichtbaar(zonder)&&zonder.uitleg,'testgeval: zichtbare oefening zonder actuele opname');
 // E heeft een opname maar krijgt in de test een houd op de uitleg: het lastigste geval
@@ -180,7 +184,7 @@ for(const [soort,faal] of [['verlopen',k=>k.n.verloop()],['mislukt',k=>k.n.weige
   assert.ok(speler.gestart&&!speler.paused&&speler.src===clip(A),soort+': de eerste beschikbare opname loopt');
   assert.equal(k.meldingen.length,1,soort+': één melding over wat is overgeslagen');
   assert.match(k.meldingen[0],/Uitleg wordt gecontroleerd: .*Yoga ear pressure/);
-  assert.match(k.meldingen[0],new RegExp('Niet voorgelezen, omdat de oefenafbeelding nog wordt gecontroleerd: Dips'));
+  assert.match(k.meldingen[0],new RegExp('Niet voorgelezen, omdat de oefenafbeelding nog wordt gecontroleerd: Biceps curl'));
   // nog een keer herstellen, en de opstartregel nog eens: niets dubbel, niets onderbroken
   vm.runInContext('herstelNoorKnoppen();herstelNoorKnoppen();',k.ctx);vm.runInContext(START,k.ctx);await rust();
   assert.equal(k.oefs.html,REF,soort+': opnieuw herstellen verandert niets');

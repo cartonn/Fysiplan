@@ -41,12 +41,7 @@ const HOLD_BEWIJS = 'Onafhankelijke beoordeling op oorspronkelijke resolutie en 
 const sourceHolds = new Map([
   // 2026-11-09: holds op Chair squat en Standing chair shoulder rotations opgeheven; beide hebben een
   // nieuwe avatar uit de Physitrack-crosscheck (content/physitrack-crosscheck-beelden.json, holdsOpgeheven).
-  ['fp_013ba6ad937cc9d9', {name:'Dips', source:'images/bovenste-extremiteit/dips-avatar-v7.jpg',
-    assetSha256:'ae7ea9bc2bcf7646e69832179c1ada68c42f1fb39af8e05effe15c6758bf7298',
-    reason:'Tijdelijk tegengehouden: de steunen zijn onvolledig en er is geen dip afgebeeld; de figuur staat met de voeten op de grond.'}],
-  ['fp_f227db5fcf245d9c', {name:'Triceps dips', source:'images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg',
-    assetSha256:'7a3f8095e040023498c3d6ec46d1b6a0d31d8d559a2141deecd98770fd84487a',
-    reason:'Tijdelijk tegengehouden: de handen steunen op niets; de stoel of bank uit de uitleg ontbreekt.'}],
+  // 2026-11-09: holds op Dips en Triceps dips opgeheven met een nieuwe avatar (Physitrack-crosscheck, ronde 5).
   ['fp_7dc1478e2b3c17b0', {name:'Step up with knee raise', source:'images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg',
     assetSha256:'2dbad9164159e9602e62bdf374a58ed5bdd2f55b2a2160c83a68ee13528149c3',
     reason:'Tijdelijk tegengehouden: losse, zwevende fragmenten in plaats van een verhoging om op te stappen.'}],

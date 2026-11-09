@@ -1353,6 +1353,13 @@
       "v2": 1,
       "v1": 1,
       "reden": "zittend, zoals de tekening en de avatar"
+    },
+    {
+      "nr": 8,
+      "naam": "Dips",
+      "v2": 1,
+      "v1": 1,
+      "reden": "voeten los tussen de leggers, zoals tekening, avatar en Physitrack"
     }
   ],
   "avatarsRonde3": {
@@ -1483,17 +1490,27 @@
         "qa": false,
         "bron": "avatars/601-standing-chair-shoulder-rotations-avatar.png"
       }
-    ],
-    "nogNiet": [
+    ]
+  },
+  "avatarsRonde5": {
+    "datum": "2026-11-09",
+    "akkoord": "Ahmed: \"Ja runway-runs voor 2 avatars mogen, maximaal 20 credits\" (09:00)",
+    "avatars": [
       {
         "nr": 8,
         "naam": "Dips",
-        "reden": "nieuwe avatar staat met de voeten op de grond achter één stang; de tekening toont parallelle leggers"
+        "kaartImg": "images/bovenste-extremiteit/dips-avatar-v7.jpg",
+        "sha256": "934fa2b9c011db5d611cf725225887de8fc3a6a380ba870e106c6bce17961b68",
+        "bron": "avatars-r5/8-dips-avatar.png",
+        "pose": "pair-candidate"
       },
       {
         "nr": 39,
         "naam": "Triceps dips",
-        "reden": "nieuwe avatar gebruikt een bank; de tekening een stoel"
+        "kaartImg": "images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg",
+        "sha256": "e5b3f3d96cdfba13d4e11f23e9b6c0555f21de0a36224ba3dff8464abb043fc6",
+        "bron": "avatars-r5/39-triceps-dips-avatar.png",
+        "pose": "pair-candidate"
       }
     ]
   }

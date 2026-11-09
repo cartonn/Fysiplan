@@ -94,8 +94,9 @@
       "output": "images/bovenste-extremiteit/dips-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.71837,
-      "sha256": "ae7ea9bc2bcf7646e69832179c1ada68c42f1fb39af8e05effe15c6758bf7298"
+      "nearWhiteRatio": 0.85135,
+      "sha256": "934fa2b9c011db5d611cf725225887de8fc3a6a380ba870e106c6bce17961b68",
+      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (ronde 5); tijdelijke hold opgeheven."
     },
     {
       "order": 10,
@@ -416,8 +417,9 @@
       "output": "images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.84582,
-      "sha256": "7a3f8095e040023498c3d6ec46d1b6a0d31d8d559a2141deecd98770fd84487a"
+      "nearWhiteRatio": 0.76115,
+      "sha256": "e5b3f3d96cdfba13d4e11f23e9b6c0555f21de0a36224ba3dff8464abb043fc6",
+      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (ronde 5); tijdelijke hold opgeheven."
     },
     {
       "order": 41,
