@@ -104,7 +104,8 @@ assert.equal(overrides.overrides.length,4,'precies vier uitzonderingen: het stoe
     assert.ok(o,v.naam);assert.equal(o.kaartImg,v.kaartImg);assert.equal(o.lineImg,v.img);assert.equal(o.v1LineImg,v.v1img);assert.equal(o.previousLineImg,v.v1img);
     assert.equal(o.assetSha256,sha(v.kaartImg));assert.equal(o.arrow.img,v.pijl);
   }
-  // One leg standing toont nu het juiste beeld; Standing chair shoulder rotations blijft tegengehouden (zie 4)
+  // One leg standing toont nu het juiste beeld; Standing chair shoulder rotations heeft sinds 2026-11-09 een
+  // nieuwe avatar (twee benen, voor de stoel) en geen hold meer (zie 4)
   const r=review.entries.find(x=>x.exerciseId==='fp_14c75a700561d59f');
   assert.equal(r.source,paar[0].kaartImg);assert.equal(r.clinicalApproved,false);assert.ok(!r.hold,'One leg standing heeft geen hold');
 }
@@ -126,13 +127,13 @@ for(const v of verwacht){
   assert.ok(r.observations.some(t=>/gecorrigeerd/.test(t)&&/V1-lijnbeeld/.test(t)),'de correctie en wat niet is aangepast staan erbij');
 }
 
-// ---- 4. tijdelijke houds op zeven bronnen (vijf bronfouten, twee open bronkeuzes) ----
+// ---- 4. tijdelijke houds op vijf bronnen (drie bronfouten, twee open bronkeuzes) ----
+// 2026-11-09: holds op Chair squat en Standing chair shoulder rotations opgeheven met een nieuwe avatar
+// uit de Physitrack-crosscheck (content/physitrack-crosscheck-beelden.json, holdsOpgeheven).
 const houds=[
   ['fp_013ba6ad937cc9d9','Dips','images/bovenste-extremiteit/dips-avatar-v7.jpg'],
   ['fp_f227db5fcf245d9c','Triceps dips','images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg'],
   ['fp_7dc1478e2b3c17b0','Step up with knee raise','images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg'],
-  ['fp_4b99c5f11b42a30d','Standing chair shoulder rotations','images/seated-chair/one-leg-standing-avatar-v8.jpg'], // sinds de 315/316-wissel (2026-11-06)
-  ['fp_295fd35a63d44ef8','Chair squat','images/onderste-extremiteit/chair-squat-avatar-v7.jpg'],
   ['fp_a0a18c0c13673d38','Back extension','images/core/back-extension-avatar-v7.jpg'],
   ['fp_7b07f346644f9c17','Rug extensie','images/core/rug-extensie-avatar-v7.jpg']
 ];
@@ -171,10 +172,11 @@ const opKaart=(id)=>{const e=v2.find(x=>exerciseId(x)===id);return {exerciseId:i
 for(const [id,naam] of houds)assert.equal(kaart.mediaWithheld(opKaart(id)),true,naam+' wordt op de kaart tegengehouden');
 // De gedeelde QR-route normaliseert /v2/: dezelfde bron uit een V1-kaart wordt ook
 // tegengehouden, maar geen andere oefening of vervangend bronpad bij dit id.
-const chair=opKaart('fp_295fd35a63d44ef8');
-assert.equal(kaart.mediaWithheld({...chair,kaartImg:chair.kaartImg.replace('/v2/','/')}),true,'Chair squat op gedeelde QR-route');
-assert.equal(kaart.mediaWithheld({...chair,kaartImg:'/v2/images/review/new-chair.jpg'}),false,'geen hold op ander bronpad');
-assert.equal(kaart.mediaWithheld({...chair,exerciseId:'different-id'}),false,'geen hold op ander id');
+const dips=opKaart('fp_013ba6ad937cc9d9');
+assert.equal(kaart.mediaWithheld({...dips,kaartImg:dips.kaartImg.replace('/v2/','/')}),true,'Dips op gedeelde QR-route');
+assert.equal(kaart.mediaWithheld({...dips,kaartImg:'/v2/images/review/new-dips.jpg'}),false,'geen hold op ander bronpad');
+assert.equal(kaart.mediaWithheld({...dips,exerciseId:'different-id'}),false,'geen hold op ander id');
+for(const id of ['fp_295fd35a63d44ef8','fp_4b99c5f11b42a30d'])assert.equal(kaart.mediaWithheld(opKaart(id)),false,id+': hold opgeheven, nieuwe avatar zichtbaar');
 for(const id of Object.keys(BRONKEUZE)){
   const o=opKaart(id);
   assert.equal(kaart.mediaWithheld({...o,kaartImg:o.kaartImg.replace('/v2/','/')}),true,o.naam+' op gedeelde QR-route (V1-pad)');
