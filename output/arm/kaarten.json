@@ -1,0 +1,157 @@
+[
+ {
+  "naam": "Vinger: strekpees middenkootje (knopsgatletsel)",
+  "categorie": "Elleboog, pols en hand",
+  "sub": "De vingergewrichten apart buigen na letsel van de strekpees boven het middelste kootje.",
+  "oefeningen": [
+   "Middelste vingerkootje buigen – met blokkeren",
+   "Vingertopje buigen – met blokkeren",
+   "Knokkels buigen met rechte vingers (tafelstand)"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Arm en hand na hersenletsel – fase 1",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Eerste oefeningen voor elleboog en hand na een beroerte of ander hersenletsel.",
+  "fase": 1,
+  "oefeningen": [
+   "Seated shoulder roll",
+   "Elleboog buigen en strekken – ruglig met arm omhoog",
+   "Vuist maken en hand openen"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Arm en hand na hersenletsel – fase 2",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Elleboog, pols en hand actiever bewegen aan tafel na hersenletsel.",
+  "fase": 2,
+  "oefeningen": [
+   "Elleboog strekken over tafel – met handdoek",
+   "Pols omhoog – actief",
+   "Vuist maken en hand openen"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Arm en hand na hersenletsel – rekken",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Schouder, onderarm en pols soepel houden bij een stijve arm na hersenletsel.",
+  "oefeningen": [
+   "Gevouwen handen kantelen – ellebogen op tafel",
+   "Schouder naar buiten draaien met stok – staand",
+   "Pols buigen en strekken – duim omhoog"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Handvaardigheid na hersenletsel",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Fijne grepen oefenen met kneedgum, knijpers en kleine voorwerpen.",
+  "oefeningen": [
+   "Kneedgum draaien tussen duim en wijsvinger",
+   "Knijpers rond een beker zetten",
+   "Voorwerpen herkennen op de tast – ogen dicht"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Gevoel in de hand trainen",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Het gevoel in hand en vingers opnieuw trainen met voorwerpen en stoffen.",
+  "oefeningen": [
+   "Hand plat op tafel voelen – met kijken",
+   "Vingertoppen aanraken met verschillende stoffen",
+   "Voorwerpen herkennen op de tast – ogen dicht"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Transfers: liggen, zitten en opstaan",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Veilig van liggen naar zitten en van zitten naar staan komen.",
+  "oefeningen": [
+   "Sit-to-stand – zittend",
+   "Van liggen naar zitten – over de zij uit bed",
+   "Opstaan uit de stoel – looprek voor je"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "5"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Hoofdpijn met nek/schouder fase 1",
+  "categorie": "Nek",
+  "sub": "Nek, bovenrug en schouderbladen rustig activeren bij aanhoudende hoofdpijn.",
+  "fase": 1,
+  "oefeningen": [
+   "Schouderbladen naar achteren – buiklig met armen heffen",
+   "Diepe nekflexoren activeren – liggend ondersteund",
+   "Bovenrug strekken – buiklig met handen onder het voorhoofd",
+   "Nek isometrisch buigen – hand op voorhoofd"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Kind: elleboog en onderarm",
+  "categorie": "Elleboog, pols en hand",
+  "sub": "Elleboog en onderarm weer soepel maken bij kinderen.",
+  "oefeningen": [
+   "Elleboog buigen en strekken met hulp",
+   "Vingers langs de muur omhoog lopen",
+   "Onderarm draaien – handpalm op en neer"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Kind: na een elleboogbreuk",
+  "categorie": "Elleboog, pols en hand",
+  "sub": "Buigen, strekken en draaien van de arm na een elleboogbreuk bij kinderen, met de eerste kracht.",
+  "oefeningen": [
+   "Elleboog buigen en strekken met hulp",
+   "Vingers langs de muur omhoog lopen",
+   "Onderarm draaien – handpalm op en neer",
+   "Biceps alternate dumbell"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ }
+]
