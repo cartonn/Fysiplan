@@ -1761,6 +1761,11 @@
     "n": "Crabwalk",
     "s": "3",
     "h": "10"
+   },
+   {
+    "n": "Chair squat",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -1913,6 +1918,16 @@
     "n": "Bosu brigdes",
     "s": "3",
     "h": "10 × 5 sec"
+   },
+   {
+    "n": "Eenbeenstand – ogen dicht",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Hiel tikken – ruglig met benen in de lucht",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -1956,6 +1971,26 @@
     "n": "Loopband",
     "s": "1",
     "h": "30 min"
+   },
+   {
+    "n": "Vooruit en achteruit springen – twee benen",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Hoppen op de plaats – op één been",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Hoppen in vier richtingen – op één been",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Landing op twee benen – techniek langzaam",
+    "s": "3",
+    "h": "8"
    }
   ]
  },
@@ -2139,6 +2174,11 @@
     "n": "Skate jumps",
     "s": "1",
     "h": "40"
+   },
+   {
+    "n": "Hamstring en kuit rekken – ruglig met band",
+    "s": "3",
+    "h": "8"
    }
   ]
  },
@@ -2162,6 +2202,11 @@
     "n": "Tandemstand – met hoofdbeweging",
     "s": "3",
     "h": "5 × 20 sec"
+   },
+   {
+    "n": "Brug op de tenen – ruglig",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -2200,6 +2245,11 @@
     "n": "Leg curl",
     "s": "2",
     "h": "15"
+   },
+   {
+    "n": "Chair squat",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -2236,6 +2286,11 @@
    },
    {
     "n": "Skate jumps",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Hinkelen in een X-patroon",
     "s": "3",
     "h": "10"
    }
@@ -2280,6 +2335,11 @@
    },
    {
     "n": "Swiss ball wall squat",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Hamstring rekken – staand met hiel vooruit",
     "s": "3",
     "h": "10"
    }
@@ -2919,6 +2979,16 @@
     "n": "Kin intrekken – liggend ondersteund",
     "s": "1",
     "h": "1"
+   },
+   {
+    "n": "Borstspier rekken tegen de muur",
+    "s": "2",
+    "h": "10"
+   },
+   {
+    "n": "Yoga snake",
+    "s": "2",
+    "h": "10"
    }
   ]
  },
@@ -2941,6 +3011,11 @@
     "n": "Tandemstand – met steun",
     "s": "2",
     "h": "5 × 20 sec"
+   },
+   {
+    "n": "Armen naar voren schuiven over de tafel",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -2964,6 +3039,11 @@
     "n": "Romp draaien – zittend",
     "s": "1",
     "h": "10 sec"
+   },
+   {
+    "n": "360 graden ademhaling – eerste fase rustig",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -4667,6 +4747,385 @@
   "dosering": {
    "s": "3",
    "h": "10"
+  }
+ },
+ {
+  "naam": "Knie: buitenste knieband, vroege fase",
+  "sub": "Eerste fase na een blessure van de buitenste knieband: buigen, strekken en het bovenbeen aanspannen.",
+  "categorie": "Knie",
+  "fase": 1,
+  "oefeningen": [
+   "Knie buigen – zittend met hulp van het andere been",
+   "Knie strekken – been op een stoel",
+   "Seated hamstring stretch",
+   "Glute bridges"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Knie: buitenste knieband, late fase",
+  "sub": "Uitvalspassen en sprongen als laatste stap na een blessure van de buitenste knieband.",
+  "categorie": "Knie",
+  "fase": 3,
+  "oefeningen": [
+   "Lunges",
+   "Skate jumps",
+   "Vooruit en achteruit springen – twee benen"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "8"
+  }
+ },
+ {
+  "naam": "Knie: bakercyste",
+  "sub": "De knie soepel houden en het bovenbeen versterken bij een zwelling in de knieholte.",
+  "categorie": "Knie",
+  "oefeningen": [
+   "Knie buigen – zittend met hulp van het andere been",
+   "Knie strekken – been op een stoel",
+   "Swiss ball wall squat",
+   "Glute bridges",
+   "Hamstring rekken – staand met hiel vooruit"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Knie: kraakbeen achter de knieschijf",
+  "sub": "Het bovenbeen versterken en rekken bij pijn door het kraakbeen achter de knieschijf.",
+  "categorie": "Knie",
+  "oefeningen": [
+   "Glute bridges",
+   "Voorkant bovenbeen rekken – buiklig met band",
+   "Been heffen met voet naar buiten – half liggend op de ellebogen"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Knie: knieschijf loopt niet goed fase 1",
+  "sub": "De binnenste bovenbeenspier activeren en de buitenkant losmaken als de knieschijf niet goed spoort.",
+  "categorie": "Knie",
+  "fase": 1,
+  "oefeningen": [
+   "Been heffen met voet naar buiten – half liggend op de ellebogen",
+   "Foam roller glute med.",
+   "Quadriceps stretch"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Knie: pijn voor de knie fase 3",
+  "sub": "Uitvalspassen en sprongen met een rechte knie, als laatste stap bij pijn voor de knie.",
+  "categorie": "Knie",
+  "fase": 3,
+  "oefeningen": [
+   "Uitvalspas met elastiek opzij – knie recht houden",
+   "Skate jumps",
+   "Hoppen in vier richtingen – op één been"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "8"
+  }
+ },
+ {
+  "naam": "Knie: patellapeesklachten fase 3",
+  "sub": "Springen en landen opbouwen voor terugkeer naar sport bij kniepeesklachten.",
+  "categorie": "Knie",
+  "fase": 3,
+  "oefeningen": [
+   "Lunges",
+   "Alternating lunge jumps",
+   "Landing op twee benen – techniek langzaam",
+   "Hoppen in vier richtingen – op één been"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "8"
+  }
+ },
+ {
+  "naam": "Knie: Osgood-Schlatter (jeugd)",
+  "sub": "Bovenbeen en heup rekken bij groeipijn onder de knie bij jongeren.",
+  "categorie": "Knie",
+  "oefeningen": [
+   "Quadriceps stretch",
+   "Hamstring rekken – staand met hiel vooruit",
+   "Yoga hip flexor stretch"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Knie: klachten voorkant bovenbeen",
+  "sub": "De voorkant van het bovenbeen losmaken en rekken bij spierklachten.",
+  "categorie": "Knie",
+  "oefeningen": [
+   "Foam roller quadriceps",
+   "Voorkant bovenbeen rekken – buiklig met band",
+   "Foam roller tractus"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Knie: hamstringklachten fase 1",
+  "sub": "De achterkant van het bovenbeen losmaken en rustig rekken bij hamstringklachten.",
+  "categorie": "Knie",
+  "fase": 1,
+  "oefeningen": [
+   "Foam roller hamstring",
+   "Hamstring en kuit rekken – ruglig met band",
+   "Yoga pigeon"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Knie: hamstringklachten fase 2",
+  "sub": "De hamstrings rustig belasten en de zenuw aan de achterkant van het been laten glijden.",
+  "categorie": "Knie",
+  "fase": 2,
+  "oefeningen": [
+   "Seated band leg curl",
+   "Knie langzaam strekken – buiklig met hulp",
+   "Zenuw glijden been – ruglig"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Knie: knieprothese fase 2",
+  "sub": "Na een knieprothese verder buigen en strekken en de eerste kracht opbouwen.",
+  "categorie": "Knie",
+  "fase": 2,
+  "oefeningen": [
+   "Knie buigen – zittend met hulp van het andere been",
+   "Seated leg extension",
+   "Glute bridges"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Knie: voorste kruisband fase 1",
+  "sub": "Direct na een kruisbandblessure of -operatie: zwelling afvoeren, buigen en de bovenbeenspier activeren.",
+  "categorie": "Knie",
+  "fase": 1,
+  "oefeningen": [
+   "Seated ankle rotations",
+   "Been heffen met voet naar buiten – half liggend op de ellebogen",
+   "Glute bridges",
+   "Knie buigen – zittend met hulp van het andere been"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Knie: meniscusletsel, kracht en controle niveau 2",
+  "sub": "Vervolg op niveau 1: zwaardere oefeningen voor kracht en controle rond de knie.",
+  "categorie": "Knie",
+  "fase": 2,
+  "oefeningen": [
+   "Chair squat",
+   "Swiss ball leg curl hip raise",
+   "Step up tempo"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Duizeligheid: blikstabilisatie fase 3",
+  "sub": "Blikstabilisatie tijdens lopen en met een bewegend doel.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 3,
+  "oefeningen": [
+   "Bal opgooien en nakijken – staand",
+   "Blikstabilisatie horizontaal – zittend langzaam",
+   "Blikstabilisatie verticaal – zittend langzaam",
+   "Voet voor voet lopen – met hoofd draaien",
+   "Blikstabilisatie horizontaal – staand langzaam"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Duizeligheid: gewenning fase 1",
+  "sub": "Wennen aan bewegingen die duizelig maken, te beginnen in lig en zit.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 1,
+  "oefeningen": [
+   "Ogen heen en weer – ruglig",
+   "Ogen naar doelen – zittend langzaam",
+   "Nek draaien – zittend actief"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Duizeligheid: gewenning fase 2",
+  "sub": "Gewenning met bukken en het volgen van een bal in zit.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 2,
+  "oefeningen": [
+   "Bukken en oprichten – zittend",
+   "Buigen en oprichten – staand langzaam",
+   "Bal van hand naar hand gooien – zittend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Duizeligheid: gewenning fase 3",
+  "sub": "Gewenning in stand met een bewegend doel en hoofdbewegingen.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 3,
+  "oefeningen": [
+   "Draaiende paraplu volgen – staand",
+   "Blikstabilisatie horizontaal – staand langzaam",
+   "Blikstabilisatie horizontaal – tijdens lopen"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Balans: neurologisch herstel fase 3",
+  "sub": "Evenwicht tijdens lopen en bij gericht stappen, als vervolg op fase 1 en 2.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 3,
+  "oefeningen": [
+   "Voet naar marker – met visueel doel",
+   "Voeten naast elkaar staan – met hoofdbeweging",
+   "Lunges",
+   "Voet voor voet lopen – met hoofd draaien"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Hersenschudding: evenwicht deel 1",
+  "sub": "Eerste evenwichtsoefeningen na een hersenschudding, met rustige hoofdbewegingen.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 1,
+  "oefeningen": [
+   "Blikstabilisatie verticaal – zittend langzaam",
+   "Blikstabilisatie horizontaal – zittend langzaam",
+   "Voeten samen op balansmat – hoofd op en neer"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Hersenschudding: evenwicht deel 2",
+  "sub": "Evenwicht tijdens lopen met hoofd draaien en van richting veranderen.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 2,
+  "oefeningen": [
+   "Blikstabilisatie horizontaal – tijdens lopen",
+   "Voet voor voet lopen – met hoofd draaien",
+   "Achtjes lopen om twee pionnen"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Hersenschudding: nek deel 2",
+  "sub": "De nekspieren aanspannen zonder bewegen, als vervolg op deel 1.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 2,
+  "oefeningen": [
+   "Diepe nekflexoren activeren – liggend ondersteund",
+   "Nek isometrisch – voor, achter en opzij",
+   "Nek isometrisch buigen – hand op voorhoofd"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10 × 5 sec"
+  }
+ },
+ {
+  "naam": "Hersenschudding: oogbewegingen niveau 1",
+  "sub": "Rustige oogoefeningen in lig na een hersenschudding.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 1,
+  "oefeningen": [
+   "Ogen heen en weer – ruglig",
+   "Duim naar de neus – ruglig",
+   "Ogen naar doelen – zittend langzaam"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Hersenschudding: oogbewegingen niveau 2",
+  "sub": "Een doel volgen met de ogen, zittend.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 2,
+  "oefeningen": [
+   "Ogen naar doelen – zittend langzaam",
+   "Doel volgen – zittend langzaam",
+   "Doel volgen verticaal – zittend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Hersenschudding: oogbewegingen niveau 3",
+  "sub": "Een bewegende bal of paraplu volgen met de ogen, zittend en staand.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 3,
+  "oefeningen": [
+   "Bal van hand naar hand gooien – zittend",
+   "Bal opgooien en nakijken – staand",
+   "Draaiende paraplu volgen – staand"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
   }
  }
 ]

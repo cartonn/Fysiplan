@@ -17,14 +17,14 @@
     }
   ],
   "summary": {
-    "total": 516,
+    "total": 542,
     "rejected": 6,
-    "unreviewed": 510,
+    "unreviewed": 536,
     "approved": 0,
     "poseGeometryApproved": 170,
-    "poseStatic": 346,
+    "poseStatic": 372,
     "brandMarkCovered": 115,
-    "brandMarkAbsent": 401
+    "brandMarkAbsent": 427
   },
   "entries": [
     {
@@ -22578,6 +22578,864 @@
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
         "chromaticPixels": 419,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_245cafa7e033894a",
+      "name": "Hamstring rekken – staand met hiel vooruit",
+      "source": "images/onderste-extremiteit/hamstring-rekken-staand-avatar-v8.jpg",
+      "assetSha256": "f5752b1a415cb5df7a16bfc16f157aa46830b9edadfc3130d4a7f32f05629c84",
+      "explanationSha256": "8e8a45bdbb9b65b8ff140989011f0dfbb8f2b01fa147bf130422ac10d60541d1",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 733,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_5c0938ee004506be",
+      "name": "Knie buigen – zittend met hulp van het andere been",
+      "source": "images/onderste-extremiteit/knie-buigen-zittend-met-hulp-avatar-v8.jpg",
+      "assetSha256": "62ae2648d0693fe465584d25a87fd8fde4a05621286bb7752f8a67a0bca5c42a",
+      "explanationSha256": "1181ba49989b8f8b4c72d4a3d67c40e688d166b9b592072e9cb4def0bb88b886",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 422,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_3b2b636ae2510c3a",
+      "name": "Been heffen met voet naar buiten – half liggend op de ellebogen",
+      "source": "images/onderste-extremiteit/been-heffen-voet-buiten-half-liggend-avatar-v8.jpg",
+      "assetSha256": "51228807c9e70942cfffc82552ba50a0dafb0d123a5578fd71e08fb910d0ccd7",
+      "explanationSha256": "ae85db28ecd54c68a85291a979146e984a915b70d3790e2bad945a988fdc4a45",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 348,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_5263fdff224c613d",
+      "name": "Hoppen in vier richtingen – op één been",
+      "source": "images/onderste-extremiteit/hoppen-vier-richtingen-een-been-avatar-v8.jpg",
+      "assetSha256": "97f5e4ff2cb62cb710647d6342a4ee605b5c1817fe93867e85ec70cce8c97888",
+      "explanationSha256": "39d9ed377075616e90120e82bfd73e70dc8add767486ba611890d05c5f274477",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 393,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_4990f2f1c99a47b6",
+      "name": "Brug op de tenen – ruglig",
+      "source": "images/onderste-extremiteit/brug-op-tenen-ruglig-avatar-v8.jpg",
+      "assetSha256": "f1d35e2f534b33ac79589b4e6d1a97a0e0128e7ea130671a14887bc40d92d4c8",
+      "explanationSha256": "c5aca6a1ee28ce21f2067b87bde0a4486224225bba2914cd157e5499925d25ea",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 618,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_dc521a28b0d90a11",
+      "name": "Eenbeenstand – ogen dicht",
+      "source": "images/onderste-extremiteit/eenbeenstand-ogen-dicht-avatar-v8.jpg",
+      "assetSha256": "0ef280e07beea0c9a154f61c891591d628e50bcaeec4a95e3e91bb8749ecdd52",
+      "explanationSha256": "e652c8276b73f8c9212586864e44764e29408932d884439bdc2cc249945f5983",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 403,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_31e8a1cd445c78dd",
+      "name": "Hiel tikken – ruglig met benen in de lucht",
+      "source": "images/onderste-extremiteit/hiel-tikken-ruglig-avatar-v8.jpg",
+      "assetSha256": "8f952492f968732a2dd5c1b206353d337722f9126605b0e675ef3a21dafd4165",
+      "explanationSha256": "90dc0402dc9a0bc469b9b025dce1ec4532892af0fe1ad853fa0c6f8ae4340905",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 391,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_d405c6008db50e59",
+      "name": "Hamstring en kuit rekken – ruglig met band",
+      "source": "images/onderste-extremiteit/hamstring-kuit-rekken-ruglig-band-avatar-v8.jpg",
+      "assetSha256": "c94f2967d89d4f26bd96b877fecbfdc8e16bca635394a48e13e371089aaafa9e",
+      "explanationSha256": "feefc51d053c16a126fbb7238c28a63314597ebffb640e385eaed2cf39be8505",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 275,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_0568fbe35007c68d",
+      "name": "Hoppen op de plaats – op één been",
+      "source": "images/onderste-extremiteit/hoppen-op-plaats-een-been-avatar-v8.jpg",
+      "assetSha256": "a06c10659adef484e2bd5094a65346c46cb8695f1690e2cf0a14e3b2f151f854",
+      "explanationSha256": "a60e18749ef7140027579176384081f624cf969e765930264b4b55bbdac0eef4",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 194,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_c93da4e7421889e3",
+      "name": "Knie strekken – been op een stoel",
+      "source": "images/onderste-extremiteit/knie-strekken-been-op-stoel-avatar-v8.jpg",
+      "assetSha256": "25c15d1d27f663686f8d22ad797de91de16c9364fa49d74a8f0cc973d42f620a",
+      "explanationSha256": "54f59ad40c15e97825ac160a8d59a3d3a8a4cd5faf24c7d70ed2a401bbf84ff7",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 340,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_c2c15806332bf0f0",
+      "name": "Voorkant bovenbeen rekken – buiklig met band",
+      "source": "images/onderste-extremiteit/bovenbeen-voorkant-rekken-buiklig-band-avatar-v8.jpg",
+      "assetSha256": "29b0088998af0e14c57309b95d73ceb0da184a6d6328c3acfa4867a1638e89d4",
+      "explanationSha256": "505eff0c2d47aafb1a0d475cd33c0dd5961d447ee8fdfffadb4784ed1bb90c17",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 493,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_f9cf3f0f1dd43e19",
+      "name": "Vooruit en achteruit springen – twee benen",
+      "source": "images/onderste-extremiteit/vooruit-achteruit-springen-avatar-v8.jpg",
+      "assetSha256": "36cc05c400abfc2093ca561ce0d9050cf60bc34e5e5a59ea5a57b8fca348c71a",
+      "explanationSha256": "926a228f3cf086778f06d261a1540391bbec9a17b64ba6bc6d92534825e041e9",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 271,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_60694eb216b5ef20",
+      "name": "Zenuw glijden been – ruglig",
+      "source": "images/onderste-extremiteit/zenuw-glijden-been-ruglig-avatar-v8.jpg",
+      "assetSha256": "303b2ae2650d4eb7ac6c7a8b11d3a31466d58e5a8efafa3220c74fd42f98a248",
+      "explanationSha256": "863ff9ec7eff4c9f151b066a0eafaa70ef38a69ce024673326f98f0968f1f9db",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 412,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_188c9f445c8fb834",
+      "name": "Knie langzaam strekken – buiklig met hulp",
+      "source": "images/onderste-extremiteit/knie-langzaam-strekken-buiklig-met-hulp-avatar-v8.jpg",
+      "assetSha256": "9d46404f4a01214d7a512a5c0425d2fa78fbcf2f109e1b9e1de4acb7384f5cb3",
+      "explanationSha256": "6b7abe03d322b7050ea9a49ec927f2a5f7a722eddb98997ee10fe5d87a6a4cbc",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 319,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_d922c8e00bfe38d9",
+      "name": "Uitvalspas met elastiek opzij – knie recht houden",
+      "source": "images/onderste-extremiteit/uitvalspas-elastiek-opzij-avatar-v8.jpg",
+      "assetSha256": "99fb481cd0018118ee3b37f57817bee8fc09e78d563f16883c87f35789c4f665",
+      "explanationSha256": "37db44410e9e92eda23ee4be3832f0325b22386d7989452d61108fdea7c3f061",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 373,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_f242d3a6d8ef868b",
+      "name": "Nek isometrisch – voor, achter en opzij",
+      "source": "images/neurologische-revalidatie/nek-isometrisch-voor-achter-opzij-avatar-v8.jpg",
+      "assetSha256": "a9cfc7c6034915336d0552ac20778e3275c297a07f0ac6b495eca084ab532d4b",
+      "explanationSha256": "61025f56773492d14157d484ec03b2fb9ed0272ccc86ceedf57a8d81454d8cf4",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1390,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_c3c1c9e262719aef",
+      "name": "Achtjes lopen om twee pionnen",
+      "source": "images/neurologische-revalidatie/achtjes-lopen-pionnen-avatar-v8.jpg",
+      "assetSha256": "b1d111e14f12e34ab1995e7264f8b455e40eb8940f460087477c71f53ce94d8c",
+      "explanationSha256": "ec9b1bbb962292001b6b2475cfcfd889c92b94512060a775a7bd9455af8c9ec9",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 365,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_dc17912c575cded9",
+      "name": "Bal opgooien en nakijken – staand",
+      "source": "images/neurologische-revalidatie/bal-opgooien-nakijken-staand-avatar-v8.jpg",
+      "assetSha256": "7a5f78a0841fba1348d6a3c9b63601e84fcbc2e9f9ae2f768571e98a30218862",
+      "explanationSha256": "905e08b9c919ec02aa59e6e9fc999616bce275f63446419e359882941d638c7a",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 196,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Losse voorwerpen horen bij geen of bij beide figuren: 48x56@312,528."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_52fdc2e12305b9ab",
+      "name": "Bal van hand naar hand gooien – zittend",
+      "source": "images/neurologische-revalidatie/bal-hand-naar-hand-zittend-avatar-v8.jpg",
+      "assetSha256": "fd5d88f17e700f79d96b0ea8b3a59929650242d274123cbd6068676e825f2aeb",
+      "explanationSha256": "bcb863e104fd8c01a80d67f5bcff312a293c3e81a49b3f02165d470fa7959a2e",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 439,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_6dd8db4b3819d9a8",
+      "name": "Draaiende paraplu volgen – staand",
+      "source": "images/neurologische-revalidatie/paraplu-draaien-staand-avatar-v8.jpg",
+      "assetSha256": "177df91b2506a398099cd9306f0a367b928bf3b5f977cd9cd54981238a516efa",
+      "explanationSha256": "4e7a10fa949c05fa137570040d5f6a54b2d528edf702a880db3cf9a9ac590f02",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 810,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_4d3846e3caaaa604",
+      "name": "Nek isometrisch buigen – hand op voorhoofd",
+      "source": "images/neurologische-revalidatie/nek-isometrisch-buigen-voorhoofd-avatar-v8.jpg",
+      "assetSha256": "c4473f26e654eae3fbcea928099cda9c459b13972d194eda2744e5273ef1433e",
+      "explanationSha256": "a5d69e5ee2bcbe7343ddeccb59c86feeea6dbd95f66519a847176dd4726634df",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1905,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_fcc650012e023675",
+      "name": "Ogen heen en weer – ruglig",
+      "source": "images/neurologische-revalidatie/ogen-heen-en-weer-ruglig-avatar-v8.jpg",
+      "assetSha256": "0e5d1af8593a178f0eaa4d5ee826a7cf6fa5fd672dda33acf9823f4d6cecd510",
+      "explanationSha256": "01abbe1eee1c9eb793e3f50ddc5300025f39c1c1075d9343d3778e2d45f2ee05",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 2138,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 98%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_ad1b3cecdf80ef6d",
+      "name": "Voeten samen op balansmat – hoofd op en neer",
+      "source": "images/neurologische-revalidatie/voeten-samen-balansmat-hoofd-op-neer-avatar-v8.jpg",
+      "assetSha256": "960cb23462f8e1d82cf6d5c317cfe6a41b432b674f4c9397a6e716977b616f82",
+      "explanationSha256": "de0de9f9b8630f9f7551ff56ddb5ddf3a3a0c4f7da44867c01ef0733700f67d1",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 176,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_f9a5bcea8cf12316",
+      "name": "Bukken en oprichten – zittend",
+      "source": "images/neurologische-revalidatie/bukken-oprichten-zittend-avatar-v8.jpg",
+      "assetSha256": "7d6892d93681f49c58e8c4727c53d83f47c8ea3b02a4981053b4d88660016faa",
+      "explanationSha256": "e53327994597dece1badf61b29a2702201071fc9637f3305f4e0916b74e035b6",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 777,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Binnen de uitsnedes staat 192 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_1932630cf284059d",
+      "name": "Doel volgen verticaal – zittend",
+      "source": "images/neurologische-revalidatie/doel-volgen-verticaal-zittend-avatar-v8.jpg",
+      "assetSha256": "bda0b694a135e73091dd45e7adce732fc3d976c8fe7293f5ab8a759bab1f343c",
+      "explanationSha256": "1dfff71defaf3550216b07da536a171ce9445f1ce83386db60e7cf55731fa9fe",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 849,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_7b79345129ed8b24",
+      "name": "Duim naar de neus – ruglig",
+      "source": "images/neurologische-revalidatie/duim-naar-neus-ruglig-avatar-v8.jpg",
+      "assetSha256": "436adf8033bda861ee4a27f4951bb631c13b92dc0d3f97bed34d0fb1091e1db6",
+      "explanationSha256": "deb973d7720785acd4f9fa4e3c7cbf8c6beff86f7f476c58d0647e521df906fb",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 555,
         "visuallyInspected": false
       },
       "width": 800,
