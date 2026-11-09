@@ -139,19 +139,9 @@
       "assetSha256": "a4119635d7e6ca7a6d87e4174e142ed7784b3c1318ce31af4d09af969870d43d"
     },
     {
-      "name": "Dumbell front press",
-      "source": "images/bovenste-extremiteit/dumbell-front-press-avatar-v7.jpg",
-      "assetSha256": "019a26db7f9d07db4ab6134dbdbc887c8d3faa88b48929e8b12febebf8313f26"
-    },
-    {
       "name": "Duplex pull",
       "source": "images/bovenste-extremiteit/duplex-pull-avatar-v7.jpg",
       "assetSha256": "1c0d88e9b4c7ea2937d113ccce4aed93e8f28cf4396ccaceb946550e7b38fa1f"
-    },
-    {
-      "name": "Endo pull",
-      "source": "images/bovenste-extremiteit/endo-pull-avatar-v7.jpg",
-      "assetSha256": "dc9a5d99456133f03863c2226f3c6326d14fac74549b0841846058f722a0907b"
     },
     {
       "name": "French press",
@@ -174,34 +164,9 @@
       "assetSha256": "c331a08d0396592d9a1f384bb77b2e7ebf3cc51f40c883ece329b180e504aa9c"
     },
     {
-      "name": "Pully cross down",
-      "source": "images/bovenste-extremiteit/pully-cross-down-avatar-v7.jpg",
-      "assetSha256": "73dd7ccc788caba939ceae66622698b0725d291bbfa858c24620005831992589"
-    },
-    {
-      "name": "Pully cross over",
-      "source": "images/bovenste-extremiteit/pully-cross-over-avatar-v7.jpg",
-      "assetSha256": "ccaaf85a26eeb7a663a0d0b03c96b241f19f59aac26efe18e88682de9e93ee56"
-    },
-    {
-      "name": "Pully press double",
-      "source": "images/bovenste-extremiteit/pully-press-double-avatar-v7.jpg",
-      "assetSha256": "e2f53c226078efef65aea4c7fc637a1e2013ab23de64f9c08838d7b39c81d1b2"
-    },
-    {
-      "name": "Pully pull over",
-      "source": "images/bovenste-extremiteit/pully-pull-over-avatar-v7.jpg",
-      "assetSha256": "1f31001f41a2dc8bc1b8f475b0b3580496211df9304efedfca8f96c2e7ce22eb"
-    },
-    {
       "name": "Push up",
       "source": "images/bovenste-extremiteit/push-up-avatar-v7.jpg",
       "assetSha256": "7691c97137533158454a674fb74c6ff38f6e7f283d0137c863ef95e6cc9a431d"
-    },
-    {
-      "name": "Triceps dumbell kickbacks",
-      "source": "images/bovenste-extremiteit/triceps-dumbell-kickbacks-avatar-v7.jpg",
-      "assetSha256": "b4d3eeae978292fab35eb0e62ca124fd0d0e0cbae1e26ec943fb3d5cdedf91ae"
     },
     {
       "name": "Triceps push down",
@@ -212,11 +177,6 @@
       "name": "Upright row",
       "source": "images/bovenste-extremiteit/upright-row-avatar-v7.jpg",
       "assetSha256": "2511f1cd4f63d51a1c5e8a39042bcc1302bb9cc5c8fa70cd12ca73c15fa43130"
-    },
-    {
-      "name": "Wrist flexion",
-      "source": "images/bovenste-extremiteit/wrist-flexion-avatar-v7.jpg",
-      "assetSha256": "74b93c223bdc72fe1e9a6d4207cdb45d90deacc1b6da7618ab994616fc88b852"
     },
     {
       "name": "Been pendelen",
@@ -239,16 +199,6 @@
       "assetSha256": "a4d98858e15a11f54fa84e98cacf73603a302c0ff8dc632fd62d0bdd9bd96418"
     },
     {
-      "name": "Crabwalk",
-      "source": "images/onderste-extremiteit/crabwalk-avatar-v7.jpg",
-      "assetSha256": "d1408e90fa81c5ed7f52c35e0c28534e642283f9b1be40102c064d5b6137f79e"
-    },
-    {
-      "name": "Dead lift",
-      "source": "images/onderste-extremiteit/dead-lift-avatar-v7.jpg",
-      "assetSha256": "b8e06b33e1d670a86608c425a034e9f260c2e4ec38fe754abae41d05599ef31e"
-    },
-    {
       "name": "Extension squat",
       "source": "images/onderste-extremiteit/extension-squat-avatar-v7.jpg",
       "assetSha256": "5c176ae52a7a5c504a2278d76dd654a9896b480b3c6de7d638d7a5eada707935"
@@ -267,11 +217,6 @@
       "name": "Kick back",
       "source": "images/onderste-extremiteit/kick-back-avatar-v7.jpg",
       "assetSha256": "c47fbc78bda5e5df824fe49dd049a0fce8d29247e3e65bf487ec70002e59f4e3"
-    },
-    {
-      "name": "Leg curl",
-      "source": "images/onderste-extremiteit/leg-curl-avatar-v7.jpg",
-      "assetSha256": "0f892d7e0c50bfe9ebfcf46a31811ee61e172d084b7cfed5698d64609d047fad"
     },
     {
       "name": "Leg press",
@@ -302,11 +247,6 @@
       "name": "Squat",
       "source": "images/onderste-extremiteit/squat-avatar-v7.jpg",
       "assetSha256": "928156faa0d4ea1b827080fa36132575f669758a549e30817d6d0a63e90aec23"
-    },
-    {
-      "name": "Squat lunges",
-      "source": "images/onderste-extremiteit/squat-lunges-avatar-v7.jpg",
-      "assetSha256": "2bc3bd0e31d469bad9b94c2e8677f1c974fe773eb2ce7c482a2d7641f6da7f2b"
     },
     {
       "name": "Standing abduction",
@@ -344,44 +284,14 @@
       "assetSha256": "67000a8ab3cdaebc523a8d74272352a6025d97d4e88554b2d7df0b38d22de8d4"
     },
     {
-      "name": "Wall sit",
-      "source": "images/onderste-extremiteit/wall-sit-avatar-v7.jpg",
-      "assetSha256": "8f5dad30fd267554da433de2478cc3200e93dd8246aabe52cca2f486a947b646"
-    },
-    {
-      "name": "Alternate heel touchers",
-      "source": "images/core/alternate-heel-touchers-avatar-v7.jpg",
-      "assetSha256": "065e091f86178319a54fc36ec8bb1e6d3dc596c893af5bc795fc00a51d98d4aa"
-    },
-    {
-      "name": "Back extension",
-      "source": "images/core/back-extension-avatar-v7.jpg",
-      "assetSha256": "fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50"
-    },
-    {
       "name": "Barbell rotation",
       "source": "images/core/barbell-rotation-avatar-v7.jpg",
       "assetSha256": "ec3846ca32af88b25bc666a83dadfededb5cd91748b5fa82e902df2581b85ea9"
     },
     {
-      "name": "Barbell twist",
-      "source": "images/core/barbell-twist-avatar-v7.jpg",
-      "assetSha256": "f6ae1ae75a7f690c32dc2447d7a7b48a22d472f820d5565fa60fa84d24de38e9"
-    },
-    {
-      "name": "Bear crawls",
-      "source": "images/core/bear-crawls-avatar-v7.jpg",
-      "assetSha256": "04b33e2353a46c08207b2d7da2404f18ccd4f64253690f949401bb1429b13114"
-    },
-    {
       "name": "Benen laten zakken",
       "source": "images/core/benen-laten-zakken-avatar-v7.jpg",
       "assetSha256": "7ace4022ebf1ae770e2443c890f629e2b2ca86c9c5a60c1dab47f6c618dcb2b1"
-    },
-    {
-      "name": "Bicycles buik",
-      "source": "images/core/bicycles-buik-avatar-v7.jpg",
-      "assetSha256": "6fe06ba1c9ebf6462736d03c775014492a26d1d894ed689188633e9ba53f01be"
     },
     {
       "name": "Bruggen 1 been liften",
@@ -409,16 +319,6 @@
       "assetSha256": "b1766b43e41e872b6d31d1cbab16616643b1a5b29f257cfe5211d5e8c2bf4048"
     },
     {
-      "name": "Crunch",
-      "source": "images/core/crunch-avatar-v7.jpg",
-      "assetSha256": "899782a2a4ca55e93d29560e813b61a7d6d39702e21d1fad7fdeb6841f007021"
-    },
-    {
-      "name": "Curl up",
-      "source": "images/core/curl-up-avatar-v7.jpg",
-      "assetSha256": "a0c6a51060f2ebd74065b472ca526c8a245916021c0834026320d17f800f1605"
-    },
-    {
       "name": "Dead bug",
       "source": "images/core/dead-bug-avatar-v7.jpg",
       "assetSha256": "95cd2b5bd5d05479d7828e3e6f61f9e9f46196675a240d1252640f7a6008f1a7"
@@ -444,11 +344,6 @@
       "assetSha256": "90f723a9e9fe6d82a24d0190552d5af0b461713f10c8b57ed4e97f8f99e2f9e0"
     },
     {
-      "name": "Mountain climber x",
-      "source": "images/core/mountain-climber-x-avatar-v7.jpg",
-      "assetSha256": "e3c5ccf18fb26f513d68c1c3137d6ecd311100c1d9807098d2fbe57232202628"
-    },
-    {
       "name": "Plank basis",
       "source": "images/core/plank-basis-avatar-v7.jpg",
       "assetSha256": "9f661fcccb71d2d2e0c0dbfe3d2deb7587d050f811dbca8c01219d14bcc809ac"
@@ -457,11 +352,6 @@
       "name": "Plank high",
       "source": "images/core/plank-high-avatar-v7.jpg",
       "assetSha256": "da7710c31a79977b415ebeaa413313bcd89c382dfb4d7e42f5402a99330ef2d4"
-    },
-    {
-      "name": "Plank jacks",
-      "source": "images/core/plank-jacks-avatar-v7.jpg",
-      "assetSha256": "98c50a4ca046fd48ecd270a60e5ffdc6de9cdf9ca19f7c09811767e9e02f3190"
     },
     {
       "name": "Plank voorwaarts",
@@ -489,11 +379,6 @@
       "assetSha256": "4846b92278a409b1d8e52721255cb85729c61d20b2b124d1fb47573d0b7355a8"
     },
     {
-      "name": "Scissors 2",
-      "source": "images/core/scissors-2-avatar-v7.jpg",
-      "assetSha256": "f18062ab3ed932eb08ade861b9666d0f6746056c8f1731354a73a163b9ce9829"
-    },
-    {
       "name": "Side bents",
       "source": "images/core/side-bents-avatar-v7.jpg",
       "assetSha256": "c46c5aebdccc52640a569fc126f20e843cdd3ca60904ea08086ea60cd86456cf"
@@ -502,11 +387,6 @@
       "name": "Stick twist",
       "source": "images/core/stick-twist-avatar-v7.jpg",
       "assetSha256": "4711c9092383a4482bce5117f905793be4d9d13d2c0065f99da6bb4ac933a64d"
-    },
-    {
-      "name": "Superman",
-      "source": "images/core/superman-avatar-v7.jpg",
-      "assetSha256": "cc45bacd708908c919816e83c1204f5ae45619db8af5e67e84105bcac3dfa2dc"
     },
     {
       "name": "Fiets",
@@ -527,11 +407,6 @@
       "name": "Stairs",
       "source": "images/cardio/stairs-avatar-v7.jpg",
       "assetSha256": "3e5e71fa2f63cfe3f9de9f17808d2609962c29d1aa449bca99c11c64265e66bc"
-    },
-    {
-      "name": "Balans op 1 been",
-      "source": "images/bosu/balans-op-1-been-avatar-v7.jpg",
-      "assetSha256": "9de421fedf052ba705fe2e444b55786488e522e6a42330c7f65c9f28145ee838"
     },
     {
       "name": "Bosu brigdes",
@@ -564,11 +439,6 @@
       "assetSha256": "d0243060fd3f3d63e680023a422b193f2e0efae73f12f83aac208417206998b3"
     },
     {
-      "name": "Bosu plank leg lift",
-      "source": "images/bosu/bosu-plank-leg-lift-avatar-v7.jpg",
-      "assetSha256": "d8ce04d18925bb7fc8c31d6b63db32739701e9459c878303a1f8600737eafe90"
-    },
-    {
       "name": "Bosu squat",
       "source": "images/bosu/bosu-squat-avatar-v7.jpg",
       "assetSha256": "6eb1478baadf6f1a39b48f4c898208577ca50772152619c1260c52b18413a062"
@@ -577,11 +447,6 @@
       "name": "Bosu v ups",
       "source": "images/bosu/bosu-v-ups-avatar-v7.jpg",
       "assetSha256": "9915fc2e9fab00e4df3b8f8e994a710f3e71fc654872b63a4024bfc82eca323a"
-    },
-    {
-      "name": "Bosu zijw plank",
-      "source": "images/bosu/bosu-zijw-plank-avatar-v7.jpg",
-      "assetSha256": "e8abd5b933e5d63471c4e6eb9fdd707f05bd41d11e64922239ffd69d6fd9f705"
     },
     {
       "name": "TRX lunge",
@@ -604,19 +469,9 @@
       "assetSha256": "ba220157d43a2b1c29d3bb5981ca8c902787d92d868579afe1395d34a1974447"
     },
     {
-      "name": "TRX triceps extension II",
-      "source": "images/trx/trx-triceps-extension-ii-avatar-v7.jpg",
-      "assetSha256": "9bcf365ed23cc27bfbda8c3f4ae7810267158bd38e56d4b1a562789d7837431b"
-    },
-    {
       "name": "Yoga camel",
       "source": "images/yoga/yoga-camel-avatar-v7.jpg",
       "assetSha256": "3c528533b192d7b6d7d448de0e63f7cc834e8ea01ea82d58f1c31d51f99ccaa3"
-    },
-    {
-      "name": "Yoga cat tail",
-      "source": "images/yoga/yoga-cat-tail-avatar-v7.jpg",
-      "assetSha256": "c5f9bb109a77f2810b83d741d304ec889615fca424b4fc4818b283a638cced74"
     },
     {
       "name": "Yoga cobra",
@@ -639,29 +494,9 @@
       "assetSha256": "214ea6597dcba4a4277d53873a494260eb4410cb00a597f89cfc7516680db136"
     },
     {
-      "name": "Yoga hamstring stretch",
-      "source": "images/yoga/yoga-hamstring-stretch-avatar-v7.jpg",
-      "assetSha256": "d2b5e7f8a4aaf575891d6c64d6379d174a3368fc1e57924611966d980f5d812d"
-    },
-    {
-      "name": "Yoga happy baby",
-      "source": "images/yoga/yoga-happy-baby-avatar-v7.jpg",
-      "assetSha256": "522d385a04021cf4dc1e51a3e1201014b4555be08ff5103671e92283d2e2108e"
-    },
-    {
-      "name": "Yoga hip flexor stretch",
-      "source": "images/yoga/yoga-hip-flexor-stretch-avatar-v7.jpg",
-      "assetSha256": "1a291688269ba56075de14b7c7d350a4a60eec92abfec49c216d86b8612e6b60"
-    },
-    {
       "name": "Yoga knee to chest hip stretch",
       "source": "images/yoga/yoga-knee-to-chest-hip-stretch-avatar-v7.jpg",
       "assetSha256": "23078cfdace6379fe85d578037b5f813b477032b3bf51cd6702e5cc9053d333a"
-    },
-    {
-      "name": "Yoga noose",
-      "source": "images/yoga/yoga-noose-avatar-v7.jpg",
-      "assetSha256": "861293ce74f6699d6f7bbffd260642e142b7105cbe100e8340c7017b2d016835"
     },
     {
       "name": "Yoga pigeon",
@@ -722,11 +557,6 @@
       "name": "Bodyblade front uitstap",
       "source": "images/bodyblade/bodyblade-front-uitstap-avatar-v7.jpg",
       "assetSha256": "445949d5844c1d6dcf402d8b052577d04e412882b999e74512411ce8a9c9efcf"
-    },
-    {
-      "name": "Bodyblade high",
-      "source": "images/bodyblade/bodyblade-high-avatar-v7.jpg",
-      "assetSha256": "7ec3e7bc96644755a49c1bb5ebe2dcc3fa6933fdbf657ff704a33d16184cde05"
     },
     {
       "name": "Foam rol quat stretch",
@@ -799,16 +629,6 @@
       "assetSha256": "040f454032db0be4aeda9e8a050c1645587d26b59d68fd1558fc8242824a3cd9"
     },
     {
-      "name": "Endy Triceps dips",
-      "source": "images/apparaten/endy-triceps-dips-avatar-v7.jpg",
-      "assetSha256": "181df4cc650820af366d37547b353b21b9922954fb566d070c6614739f33438b"
-    },
-    {
-      "name": "Gluteus kick (apparaat)",
-      "source": "images/apparaten/gluteus-kick-apparaat-avatar-v7.jpg",
-      "assetSha256": "27d851cb7fc52c3ff72c4d520c9bd569fb8cc8b8411b0670bf852b68b43febca"
-    },
-    {
       "name": "Roeier (apparaat)",
       "source": "images/apparaten/roeier-apparaat-avatar-v7.jpg",
       "assetSha256": "1d1be175cad4619a12eab2e96bd1b2e8e8d150c129e662bcfb83403ddc5c3cac"
@@ -879,11 +699,6 @@
       "assetSha256": "090c6392bb0dc230443218a5353df1e7aaa618f0d9778e9b705b6fe1c1e308e7"
     },
     {
-      "name": "Swiss ball back ext",
-      "source": "images/exercise-ball/swiss-ball-back-ext-avatar-v8.jpg",
-      "assetSha256": "174a586cb91149296de5c27ba196fd3c43f32c9d2037f113bd7c37f5fcc17f83"
-    },
-    {
       "name": "Swiss ball push up",
       "source": "images/exercise-ball/swiss-ball-push-up-avatar-v8.jpg",
       "assetSha256": "0fb423cc0ea851ec5345daf28d9efbcc3376a057d15298e6c0571f083f8ed97c"
@@ -902,11 +717,6 @@
       "name": "Swiss ball dumbbell biceps curl",
       "source": "images/exercise-ball/swiss-ball-dumbbell-biceps-curl-avatar-v8.jpg",
       "assetSha256": "0fafd84b4541921869e488b17e15606798f4b53c7d4598905264a1ba12b0d92d"
-    },
-    {
-      "name": "Swiss ball russian twist",
-      "source": "images/exercise-ball/swiss-ball-russian-twist-avatar-v8.jpg",
-      "assetSha256": "c9eaf1bc9047138ab0c29fc59cb1105ed18173f434603c2febf6e2f89c435683"
     },
     {
       "name": "Foam roller quadriceps",
@@ -935,13 +745,6 @@
       "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
     },
     {
-      "name": "Endo pull",
-      "source": "images/bovenste-extremiteit/endo-pull-avatar-v7.jpg",
-      "assetSha256": "ccd3baf0571698a8b0a1379fefe442620c51678258e1d261f5021f82827e260e",
-      "reviewDate": "2026-11-09",
-      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
-    },
-    {
       "name": "Front pully row",
       "source": "images/bovenste-extremiteit/front-pully-row-avatar-v7.jpg",
       "assetSha256": "9d2e1c3b170a2f1b69aa43404fa391a1be7d7a0dfcc208e7c5af32bb3fa42ad5",
@@ -963,13 +766,6 @@
       "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
     },
     {
-      "name": "Pully cross over",
-      "source": "images/bovenste-extremiteit/pully-cross-over-avatar-v7.jpg",
-      "assetSha256": "2aac32b93236530ebb41bd32d7a7c140b4b3f9fe806cb6799ce2c47c26f79887",
-      "reviewDate": "2026-11-09",
-      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
-    },
-    {
       "name": "Pully cross up",
       "source": "images/bovenste-extremiteit/pully-cross-up-avatar-v7.jpg",
       "assetSha256": "ab638f3f4d416e6ace99fa3cf5b57c538ba7925f0f0ba298150bd527f28b669d",
@@ -980,20 +776,6 @@
       "name": "Pully dips",
       "source": "images/bovenste-extremiteit/pully-dips-avatar-v7.jpg",
       "assetSha256": "b4b274ca1883367a3e3b1ceb1a72cdad8fe5fb6fde7445609d7011a75933ecd7",
-      "reviewDate": "2026-11-09",
-      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
-    },
-    {
-      "name": "Pully pull over",
-      "source": "images/bovenste-extremiteit/pully-pull-over-avatar-v7.jpg",
-      "assetSha256": "5457387a8ffa6ea355952decb66ba7196348317d2b3960d025e0bf239b92796f",
-      "reviewDate": "2026-11-09",
-      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
-    },
-    {
-      "name": "Triceps dumbell kickbacks",
-      "source": "images/bovenste-extremiteit/triceps-dumbell-kickbacks-avatar-v7.jpg",
-      "assetSha256": "e937212a6825e5b72a4cc085871f0877dd1ac79626ad856fadcf7724541537c0",
       "reviewDate": "2026-11-09",
       "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
     },
@@ -1012,20 +794,6 @@
       "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
     },
     {
-      "name": "Dead lift",
-      "source": "images/onderste-extremiteit/dead-lift-avatar-v7.jpg",
-      "assetSha256": "f9e17fe8852961cf5c11ae35facdb7b8c8af2dd0390d10f5e319037180761244",
-      "reviewDate": "2026-11-09",
-      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
-    },
-    {
-      "name": "Hack squat",
-      "source": "images/onderste-extremiteit/hack-squat-avatar-v7.jpg",
-      "assetSha256": "ffd6523303e7b123374ed85dcc21b44c71d4ab2279a345046372400c5ce99b27",
-      "reviewDate": "2026-11-09",
-      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
-    },
-    {
       "name": "Kick back",
       "source": "images/onderste-extremiteit/kick-back-avatar-v7.jpg",
       "assetSha256": "c85c3cf21dfbf23c39365bbcb812438f6c039d6380847d44f590b998908cf83e",
@@ -1036,13 +804,6 @@
       "name": "Single leg squat",
       "source": "images/onderste-extremiteit/single-leg-squat-avatar-v7.jpg",
       "assetSha256": "a4e65d501826179417368b5e7edc28ff7a3c226a43d9c787aba339162339e1de",
-      "reviewDate": "2026-11-09",
-      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
-    },
-    {
-      "name": "Squat lunges",
-      "source": "images/onderste-extremiteit/squat-lunges-avatar-v7.jpg",
-      "assetSha256": "f5447e3a8586447b31ed6df78efc193d21486623ac2905c32e04d57c7b086326",
       "reviewDate": "2026-11-09",
       "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
     },
@@ -1075,20 +836,6 @@
       "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
     },
     {
-      "name": "Barbell twist",
-      "source": "images/core/barbell-twist-avatar-v7.jpg",
-      "assetSha256": "cf95be74d4cb5e065f4b842772ad1ea8f3c15e2ceb632929487ecf2d7e956441",
-      "reviewDate": "2026-11-09",
-      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
-    },
-    {
-      "name": "Bear crawls",
-      "source": "images/core/bear-crawls-avatar-v7.jpg",
-      "assetSha256": "affa815e210b343f2afbf4758154f3b2f9a398886fbdfff9815404a02518a6db",
-      "reviewDate": "2026-11-09",
-      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
-    },
-    {
       "name": "Bruggen 1 been liften",
       "source": "images/core/bruggen-1-been-liften-avatar-v7.jpg",
       "assetSha256": "39870cbcc570e50e6231799d2b6700e2201e41cb34ae3929d41f51aa25e510f9",
@@ -1103,13 +850,6 @@
       "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
     },
     {
-      "name": "Crunch",
-      "source": "images/core/crunch-avatar-v7.jpg",
-      "assetSha256": "2876426c7e19fbeac257930c0efe09daddb57a9e2e97a74759bb43371914cefc",
-      "reviewDate": "2026-11-09",
-      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
-    },
-    {
       "name": "Good mornings",
       "source": "images/core/good-mornings-avatar-v7.jpg",
       "assetSha256": "0e4f4035db6120f92c28371de1b65f160d0e4ef7633d991fa4bb070cbccf473f",
@@ -1120,13 +860,6 @@
       "name": "Plank high",
       "source": "images/core/plank-high-avatar-v7.jpg",
       "assetSha256": "bc2a24ae88fbc153612add8cd96a622762ef3239f1fc1094abfc84e97c8bb4ec",
-      "reviewDate": "2026-11-09",
-      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
-    },
-    {
-      "name": "Plank jacks",
-      "source": "images/core/plank-jacks-avatar-v7.jpg",
-      "assetSha256": "21e8b58113d7ae241a1537a13b613263d0a7acdf1dbb5bdc5ca7f7a3304eb708",
       "reviewDate": "2026-11-09",
       "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
     },
@@ -1187,13 +920,6 @@
       "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
     },
     {
-      "name": "TRX chest press",
-      "source": "images/trx/trx-chest-press-avatar-v7.jpg",
-      "assetSha256": "7e34837e4081b2eb2a860cc424ed5c298b268a115b1e378b29d7dab1b0c39938",
-      "reviewDate": "2026-11-09",
-      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
-    },
-    {
       "name": "TRX flyes II",
       "source": "images/trx/trx-flyes-ii-avatar-v7.jpg",
       "assetSha256": "4dfcbe576f462384277193e33c9019aa11568b3856aa532258c7ffe66008d273",
@@ -1211,13 +937,6 @@
       "name": "TRX pull up",
       "source": "images/trx/trx-pull-up-avatar-v7.jpg",
       "assetSha256": "49afb148464fec31462d2c56a023b48ea1d29c601118c7f83cc7e507ff53aa60",
-      "reviewDate": "2026-11-09",
-      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
-    },
-    {
-      "name": "Yoga ear pressure",
-      "source": "images/yoga/yoga-ear-pressure-avatar-v7.jpg",
-      "assetSha256": "c990bfcabec6cb549e7a390deaa1674c6f41b0b0cbe45255eba3b7b3c06d0ab8",
       "reviewDate": "2026-11-09",
       "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
     },
@@ -1267,20 +986,6 @@
       "name": "Endy Rugmachine",
       "source": "images/apparaten/endy-rugmachine-avatar-v7.jpg",
       "assetSha256": "dae3aa194e08dfbf3f86a705778d260cf9ecd4bfad346b8d6a7ed8802f5968a8",
-      "reviewDate": "2026-11-09",
-      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
-    },
-    {
-      "name": "Nekrotatie met oogfixatie – zittend actief",
-      "source": "images/nek/nekrotatie-met-oogfixatie-zittend-actief-avatar-v8.jpg",
-      "assetSha256": "9812888609f2d76fd94e746f34640cbec0d7d2284477dd5ab23f7ed75bf1132f",
-      "reviewDate": "2026-11-09",
-      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
-    },
-    {
-      "name": "Nekrotatie met oogfixatie – functioneel staand",
-      "source": "images/nek/nekrotatie-met-oogfixatie-functioneel-staand-avatar-v8.jpg",
-      "assetSha256": "37a678bc84095838afb0b5db91cfd01327fa5ffc67702771535708023a93e194",
       "reviewDate": "2026-11-09",
       "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
     },
@@ -1355,13 +1060,6 @@
       "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
     },
     {
-      "name": "Yoga noose",
-      "source": "images/yoga/yoga-noose-avatar-v7.jpg",
-      "assetSha256": "0de98d8386472006cd52c1629d3f629f77c3f6b4506727174793cd7968acb9a5",
-      "reviewDate": "2026-11-09",
-      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
-    },
-    {
       "name": "Nek buigen – liggend ondersteund",
       "source": "images/nek/nek-buigen-liggend-ondersteund-avatar-v8.jpg",
       "assetSha256": "05cb487841b3852a94c60b455b988f3f6fef3734d3c0a989801cfe47a27e05ce",
@@ -1376,13 +1074,6 @@
       "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck (ronde 4); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
     },
     {
-      "name": "Standing chair shoulder rotations",
-      "source": "images/seated-chair/one-leg-standing-avatar-v8.jpg",
-      "assetSha256": "779afde6b3af12ea96d532f2d24af220b692cc138bc83227360705dbc760514f",
-      "reviewDate": "2026-11-09",
-      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
-    },
-    {
       "name": "Dips",
       "source": "images/bovenste-extremiteit/dips-avatar-v7.jpg",
       "assetSha256": "934fa2b9c011db5d611cf725225887de8fc3a6a380ba870e106c6bce17961b68",
@@ -1395,6 +1086,272 @@
       "assetSha256": "e5b3f3d96cdfba13d4e11f23e9b6c0555f21de0a36224ba3dff8464abb043fc6",
       "reviewDate": "2026-11-09",
       "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck (ronde 5); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Endo pull",
+      "source": "images/bovenste-extremiteit/endo-pull-avatar-v7.jpg",
+      "assetSha256": "3602f176539e3f3e6fef94cd404cc48d1362423d8441c8f551b3bf0bba8a920b",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Pully cross down",
+      "source": "images/bovenste-extremiteit/pully-cross-down-avatar-v7.jpg",
+      "assetSha256": "563bfc0831b1ebea5d90cbab1c60f506b51d64de414f8f3effd639a1fcfc157e",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Pully cross over",
+      "source": "images/bovenste-extremiteit/pully-cross-over-avatar-v7.jpg",
+      "assetSha256": "ae31f67051b5b2961f8a04bed3718e5de5aa0a55de66f91168205dfe08e896fe",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Pully pull over",
+      "source": "images/bovenste-extremiteit/pully-pull-over-avatar-v7.jpg",
+      "assetSha256": "6f24f2f73782bffaec48dda0f5cebc9217754cb1a75799903de6dfbf32aac279",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Shoulder rotation (shrugs)",
+      "source": "images/bovenste-extremiteit/shoulder-rotation-shrugs-avatar-v7.jpg",
+      "assetSha256": "244776f34e38c438c165bc74b8c15a70acd54472fc1b1488ab834710feb64653",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Triceps dumbell kickbacks",
+      "source": "images/bovenste-extremiteit/triceps-dumbell-kickbacks-avatar-v7.jpg",
+      "assetSha256": "48ff3b01017ffe6113a0a9797c94f56259c62020909fb2cc6b433596a378660f",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Crabwalk",
+      "source": "images/onderste-extremiteit/crabwalk-avatar-v7.jpg",
+      "assetSha256": "6b2c9a2a1106e16e2845a291986fd0dd1c6edda88ae79e2dfbf7d5169b58109e",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Dead lift",
+      "source": "images/onderste-extremiteit/dead-lift-avatar-v7.jpg",
+      "assetSha256": "c3befa2f30c059a4f213021fc245807eb4268e3ba6f3b6d2821ca2d975684e65",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Hack squat",
+      "source": "images/onderste-extremiteit/hack-squat-avatar-v7.jpg",
+      "assetSha256": "7af8a404bf2cadd247d80c619857a5f00e65a5e94306fc5ee33f584e619344be",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Leg curl",
+      "source": "images/onderste-extremiteit/leg-curl-avatar-v7.jpg",
+      "assetSha256": "151643a8714c39eb038b28241e7de8b03d9bbc313f4729f007bd59d8fcd03c2b",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Squat lunges",
+      "source": "images/onderste-extremiteit/squat-lunges-avatar-v7.jpg",
+      "assetSha256": "dfda6f11816589b97f0ada85f0c34a67767c352077ad0054ad132af2131d776c",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Wall sit",
+      "source": "images/onderste-extremiteit/wall-sit-avatar-v7.jpg",
+      "assetSha256": "4ffd6fb9c0fbcaa0ea8b8390bf5ff1945fd04905459108c592f36a8bcb2f0281",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Alternate heel touchers",
+      "source": "images/core/alternate-heel-touchers-avatar-v7.jpg",
+      "assetSha256": "0ff3f568cfabe3912f29aa42ba98bf7e30829ed97d5014ec8ba055c8b4a51f1a",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Back extension",
+      "source": "images/core/back-extension-avatar-v7.jpg",
+      "assetSha256": "dfb4d562fdb7e4553a0c9d118f23e381afd0089399b86b9d2fc226450b33cffa",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Barbell twist",
+      "source": "images/core/barbell-twist-avatar-v7.jpg",
+      "assetSha256": "f878b4e0a29d9e061680cf985d7bde23efb449053954c64004629b4fc3e38f57",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Bear crawls",
+      "source": "images/core/bear-crawls-avatar-v7.jpg",
+      "assetSha256": "83f6833e8769329889cbecd8abfd8ff1a788334e192d47b742d3d410b68f1fdb",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Bicycles buik",
+      "source": "images/core/bicycles-buik-avatar-v7.jpg",
+      "assetSha256": "a691016e67c04f68f919b230d4718a07a537368d81fdcfc263f0a6c5c11c4362",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Crunch",
+      "source": "images/core/crunch-avatar-v7.jpg",
+      "assetSha256": "e32726e0b63c613782e67a6eb46654a4c4bed764f31b99f13c0ebc702c209746",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Curl up",
+      "source": "images/core/curl-up-avatar-v7.jpg",
+      "assetSha256": "8404df7e75731f949eb30254d1be58651d9803c5b1ba70303173c8de6e9f7a78",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Mountain climber x",
+      "source": "images/core/mountain-climber-x-avatar-v7.jpg",
+      "assetSha256": "ea164315cf86c7dc01e1990b6305cca5dcdaa6f82582981854b61f98f8d80fd1",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Scissors 2",
+      "source": "images/core/scissors-2-avatar-v7.jpg",
+      "assetSha256": "748b551c8684c32d0c7cf3334ddf57de7cef83d806ce65fb155023b9d298d4d1",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Superman",
+      "source": "images/core/superman-avatar-v7.jpg",
+      "assetSha256": "0c53b5ff243c505f378d41591c04ee016143959618344c70801d268fe062b056",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Balans op 1 been",
+      "source": "images/bosu/balans-op-1-been-avatar-v7.jpg",
+      "assetSha256": "f2221c6d7ec2bc0e94b8b5bcf6d9674ef04c22c6fad74490613d90d33bf2144d",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Bosu zijw plank",
+      "source": "images/bosu/bosu-zijw-plank-avatar-v7.jpg",
+      "assetSha256": "0de8d7e31b3e8def48f912d04970094ae6726bee9c6140036a3aa3b7f3d37c54",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "TRX ab roll out",
+      "source": "images/trx/trx-ab-roll-out-avatar-v7.jpg",
+      "assetSha256": "f5742fe12de7ba5737f8b5bcc82b92f3603ac6bb81b558fdac0804c09f6dc5c1",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "TRX chest press",
+      "source": "images/trx/trx-chest-press-avatar-v7.jpg",
+      "assetSha256": "f9a6540dcc4d0dce1cac7775ba05256ba0ae2b4e139b004abb809e2931cc422c",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "TRX triceps extension II",
+      "source": "images/trx/trx-triceps-extension-ii-avatar-v7.jpg",
+      "assetSha256": "058720fd42d8f99ee4535cb124461e2096b761fdc68a36c5d3cc2688c7229b8b",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Yoga cat tail",
+      "source": "images/yoga/yoga-cat-tail-avatar-v7.jpg",
+      "assetSha256": "1dac5f8042ed1ef8dbfca12d2dd898820107ce0889c1f1a0b16a1881c2b152b1",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Yoga ear pressure",
+      "source": "images/yoga/yoga-ear-pressure-avatar-v7.jpg",
+      "assetSha256": "4c6099cf1e3d4483f25a10ed51c123e6df6a66cd7cf1a93c6ee04f8e001ff416",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Yoga happy baby",
+      "source": "images/yoga/yoga-happy-baby-avatar-v7.jpg",
+      "assetSha256": "4ecf2a357475ecb2d221e042e1b0f9c49afa525afe32a9274bdc0d7c59a042df",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Yoga hip flexor stretch",
+      "source": "images/yoga/yoga-hip-flexor-stretch-avatar-v7.jpg",
+      "assetSha256": "67cf8f6414e2ae293a7dde5624bfd07bac70007fdaff765fe782d0aa4cb5be14",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Yoga noose",
+      "source": "images/yoga/yoga-noose-avatar-v7.jpg",
+      "assetSha256": "9bfbdd207a04f3fd11b5d625554f46515f80a099008ecaf9ce27da2f36501f22",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Bodyblade high",
+      "source": "images/bodyblade/bodyblade-high-avatar-v7.jpg",
+      "assetSha256": "e8528d199d2a62188a853accaba2aafa83183d803c01b271b9204143303be413",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Endy Triceps dips",
+      "source": "images/apparaten/endy-triceps-dips-avatar-v7.jpg",
+      "assetSha256": "d1a38e8efd83cf5ca5ed87d4cc54b943932f710e9b2d7f1adcb293fda8c7ebc9",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Swiss ball back ext",
+      "source": "images/exercise-ball/swiss-ball-back-ext-avatar-v8.jpg",
+      "assetSha256": "b2c958471602aa9618d4438ddfc2691436cc2f02ab95ac1bdb26473e8a641934",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Foam roller back upper",
+      "source": "images/foam-roller/foam-roller-back-upper-avatar-v8.jpg",
+      "assetSha256": "f2ebb79a8f363efc810a20839fc3f014c2547b1a8ef3b0efa87635d8891470de",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Standing chair knee lift",
+      "source": "images/seated-chair/standing-chair-hip-extension-avatar-v8.jpg",
+      "assetSha256": "9db88256c4f1a08adfadea28d5fe791d1ba31a6ebc07a8b43bf1540c0c5ab8a8",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Standing chair shoulder rotations",
+      "source": "images/seated-chair/one-leg-standing-avatar-v8.jpg",
+      "assetSha256": "dddc836d046c188b93b9915565c1baf28cd5d2f4a35b30d1d565b00614a92bdc",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-controle (ronde 3); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
     }
   ],
   "inspectionClaim": "Elk hieronder genoemde beeld is in de definitieve weergave op een contactvel bekeken. De hash bindt de controle aan exact dit bestand: verandert het beeld, dan vervalt de controle en valt de kaart terug op de volledige afbeelding."

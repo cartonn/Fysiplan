@@ -44,18 +44,10 @@ const sourceHolds = new Map([
   // 2026-11-09: holds op Dips en Triceps dips opgeheven met een nieuwe avatar (Physitrack-crosscheck, ronde 5).
   ['fp_7dc1478e2b3c17b0', {name:'Step up with knee raise', source:'images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg',
     assetSha256:'2dbad9164159e9602e62bdf374a58ed5bdd2f55b2a2160c83a68ee13528149c3',
-    reason:'Tijdelijk tegengehouden: losse, zwevende fragmenten in plaats van een verhoging om op te stappen.'}],
-  // Bronkeuze open (2026-11-03): beeld en eigen uitleg beschrijven een andere variant. Welke
-  // bedoeld is, beslist de eigenaar/behandelaar; tot dan hetzelfde tegenhoudspoor als hierboven.
-  // Geen klinisch oordeel en geen afkeuring van de oefening. Zie output/back-source-holds-20261103.json.
-  ['fp_a0a18c0c13673d38', {name:'Back extension', source:'images/core/back-extension-avatar-v7.jpg',
-    assetSha256:'fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50', kind:'source-choice-pending',
-    evidence:'Onafhankelijke visuele controle op originele resolutie (800x1200) door Claude en de coördinator (2026-11-03; sourceChoiceBlockers in output/visual-final-seven-20261103.json, overgenomen in output/back-source-holds-20261103.json), bronbytes gelijk aan deze SHA256: horizontale rugstrekbank, enkels onder de rollen, heupen op het kussen, geen vloercontact, armen gekruist op de borst; de eigen uitleg beschrijft buikligging op de grond met de handen naast het hoofd. Bronkeuze (bank- of vloervariant) open bij eigenaar/behandelaar. Tijdelijke visuele bronhold, geen klinisch oordeel en geen afkeuring van de oefening.',
-    reason:'Tijdelijk tegengehouden: het beeld toont een rugstrekbank zonder vloercontact met de armen gekruist, de eigen uitleg buikligging op de grond met de handen naast het hoofd. Welke variant bedoeld is, wordt nog gekozen; geen klinisch oordeel.'}],
-  ['fp_7b07f346644f9c17', {name:'Rug extensie', source:'images/core/rug-extensie-avatar-v7.jpg',
-    assetSha256:'7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47', kind:'source-choice-pending',
-    evidence:'Onafhankelijke visuele controle op originele resolutie (800x1200) door Claude en de coördinator (2026-11-03; sourceChoiceBlockers in output/visual-final-seven-20261103.json, overgenomen in output/back-source-holds-20261103.json), bronbytes gelijk aan deze SHA256: armen gestrekt naar voren en in de eindhouding ook armen en benen van de grond; de eigen uitleg beschrijft handen naast het hoofd en alleen de borst een stukje van de vloer. Bronkeuze (armen naar voren met armen en benen omhoog, of borstheffing met handen naast het hoofd) open bij eigenaar/behandelaar. Tijdelijke visuele bronhold, geen klinisch oordeel en geen afkeuring van de oefening.',
-    reason:'Tijdelijk tegengehouden: het beeld toont gestrekte armen naar voren en armen en benen van de grond, de eigen uitleg handen naast het hoofd en alleen de borst omhoog. Welke variant bedoeld is, wordt nog gekozen; geen klinisch oordeel.'}]
+    reason:'Tijdelijk tegengehouden: losse, zwevende fragmenten in plaats van een verhoging om op te stappen.'}]
+  // 2026-11-09: holds op Back extension en Rug extensie (bronkeuze open) opgeheven. Beide volgen nu
+  // Physitrack: rugstrekbank resp. armen en benen gestrekt van de vloer, in tekening, avatar en uitleg
+  // (content/physitrack-crosscheck-beelden.json, beeldenRonde3).
 ]);
 // Bewust gecorrigeerde V2-kaartbeelden (content/v2-avatar-overrides.json): alleen een
 // observatie bij exact het gecorrigeerde bestand, geen goedkeuring.
