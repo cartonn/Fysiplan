@@ -35,6 +35,9 @@ const AVATAR = [
 const mime = { ".png": "image/png", ".jpg": "image/jpeg", ".webp": "image/webp" };
 const uri = async (p) => `data:${mime[extname(p)]};base64,${(await readFile(p)).toString("base64")}`;
 const [cmd, ...only] = process.argv.slice(2);
+const ZOOM_L = " Frame the picture CLOSER than the reference: show her from the waist up (or only the forearm and hand where stated), so the forearm, wrist, hand and fingers are large and every finger is clearly drawn.";
+const ZOOM_A = " Use a CLOSER framing for both figures (from the waist up, table edge visible where there is a table), so the forearm, wrist, hand and fingers are large and the movement is clearly visible.";
+const STATIC_A = (a) => a.replace(/The image shows the SAME woman TWICE:[^.]*\.,?/, "The image shows the woman ONCE, holding the drawn position (a static hold).").replace("both from the same viewing angle, same scale, fully visible, not overlapping.", "").replace(" and move in the direction of its arrow", "");
 
 if (cmd === "sheet") {
   const W = 300, H = 450, LAB = 36;
@@ -54,7 +57,7 @@ if (cmd === "sheet") {
 if (!process.env.RUNWAYML_API_SECRET) process.loadEnvFile(join(main, ".env"));
 const rw = new RunwayML();
 const saldo = async () => (await rw.organization.retrieve()).creditBalance;
-const bf = join(dir, "budget.json");
+const bf = join(dir, process.env.BUDGETFILE || "budget.json");
 if (!existsSync(bf)) await writeFile(bf, JSON.stringify({ start: await saldo() }) + "\n");
 const start = JSON.parse(readFileSync(bf, "utf8")).start;
 
@@ -68,7 +71,7 @@ for (const s of specs.filter((s) => (only.length ? only.includes(s.slug) : !exis
   try {
     const task = await rw.textToImage.create({
       model: "gpt_image_2",
-      promptText: cmd === "lijn" ? `${LIJN} ${s.pose_en}${process.env.EXTRA ? " " + process.env.EXTRA : ""}` : `${AVATAR} ${s.eind_en}${process.env.EXTRA ? " " + process.env.EXTRA : ""}`,
+      promptText: cmd === "lijn" ? `${LIJN} ${s.pose_en}${s.zoom ? ZOOM_L : ""}${process.env.EXTRA ? " " + process.env.EXTRA : ""}` : `${s.static ? STATIC_A(AVATAR) : AVATAR} ${s.eind_en}${s.zoom ? ZOOM_A : ""}${process.env.EXTRA ? " " + process.env.EXTRA : ""}`,
       referenceImages: cmd === "lijn" ? [{ uri: await uri(join(main, "public/images/beginhouding-pijl-v1", `${s.ref}.webp`)) }] : [{ uri: await uri(lijn) }, { uri: await uri(join(main, AV[s.ref])) }],
       ratio: "1280:1920", quality: "medium", background: "opaque", outputCount: 1,
     }).waitForTaskOutput({ timeout: 10 * 60_000 });
