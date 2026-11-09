@@ -1473,24 +1473,44 @@ function logGeweigerd(req, pad) {
 // eenvoudige schrijflimiet per IP voor de open API's (kaarten, opnames, praktijkprofielen):
 // normaal praktijkgebruik haalt dit nooit, maar het stopt scripts die de opslag volpompen.
 // Venster van 5 minuten, max. 40 schrijfacties per IP; overschrijding wordt gelogd.
+// Met een geldige praktijksessie telt een verzoek NIET in die IP-bak maar per praktijk
+// (200 per 5 min) plus een ruimere bak voor alle sessies op één IP (400): een team achter
+// één wifi zette anders na ±40 gewone handelingen de hele praktijk én de patiënten in de
+// wachtkamer vijf minuten op 429 (security-backlog MIDDEL "schrijfrem per IP", sweep 7-11).
 const schrijfTeller = new Map();
-function schrijfLimiet(req, res) {
+const schrijfPraktijkTeller = new Map();
+const schrijfSessieIpTeller = new Map();
+const VENSTER_MS = 5 * 60 * 1000;
+const SCHRIJF_IP_MAX = 40, SCHRIJF_PRAKTIJK_MAX = 200, SCHRIJF_SESSIE_IP_MAX = 400;
+const LEES_IP_MAX = 120, LEES_PRAKTIJK_MAX = 600, LEES_SESSIE_IP_MAX = 1200;
+// telt één verzoek in `teller` onder `sleutel`; geeft true als het venster vol is
+// (de eerste overschrijding wordt gelogd met `logPad`)
+function telVenster(teller, sleutel, max, req, logPad) {
   const nu = Date.now();
-  if (schrijfTeller.size > 5000) {
-    for (const [k, v] of schrijfTeller) if (nu - v.start > 5 * 60 * 1000) schrijfTeller.delete(k);
+  if (teller.size > 5000) {
+    for (const [k, v] of teller) if (nu - v.start > VENSTER_MS) teller.delete(k);
   }
-  const ip = ipSleutel(req);
-  const t = schrijfTeller.get(ip);
-  if (!t || nu - t.start > 5 * 60 * 1000) {
-    schrijfTeller.set(ip, { start: nu, n: 1 });
-    return false;
-  }
-  if (++t.n > 40) {
-    if (t.n === 41) logGeweigerd(req, "limiet");
-    send429(res, 300, { ok: false, fout: "Even te veel verzoeken achter elkaar; probeer het over een paar minuten opnieuw." });
+  const t = teller.get(sleutel);
+  if (!t || nu - t.start > VENSTER_MS) { teller.set(sleutel, { start: nu, n: 1 }); return false; }
+  if (++t.n > max) {
+    if (t.n === max + 1) logGeweigerd(req, logPad);
     return true;
   }
   return false;
+}
+// remmen voor schrijven en lezen: anoniem (patiënt, aanmelden, inloggen) per IP; met een
+// geldige praktijksessie per praktijk en per IP in een eigen, ruimere bak
+function remVol(req, ipTeller, ipMax, pkTeller, pkMax, sesIpTeller, sesIpMax, logPad) {
+  const pk = praktijkSessieVan(req);
+  if (!pk) return telVenster(ipTeller, ipSleutel(req), ipMax, req, logPad);
+  return telVenster(pkTeller, pk, pkMax, req, logPad + "-praktijk") ||
+    telVenster(sesIpTeller, ipSleutel(req), sesIpMax, req, logPad + "-sessies");
+}
+function schrijfLimiet(req, res) {
+  if (!remVol(req, schrijfTeller, SCHRIJF_IP_MAX, schrijfPraktijkTeller, SCHRIJF_PRAKTIJK_MAX,
+    schrijfSessieIpTeller, SCHRIJF_SESSIE_IP_MAX, "limiet")) return false;
+  send429(res, 300, { ok: false, fout: "Even te veel verzoeken achter elkaar; probeer het over een paar minuten opnieuw." });
+  return true;
 }
 
 // CSRF-rem voor de open v2-schrijfroutes: een kwaadaardige site kan met een bekende
@@ -1676,23 +1696,13 @@ function nieuwePraktijkLimiet(req, res) {
   }
   return false;
 }
+const leesPraktijkTeller = new Map();
+const leesSessieIpTeller = new Map();
 function leesLimiet(req, res) {
-  const nu = Date.now();
-  if (leesTeller.size > 5000) {
-    for (const [k, v] of leesTeller) if (nu - v.start > 5 * 60 * 1000) leesTeller.delete(k);
-  }
-  const ip = ipSleutel(req);
-  const t = leesTeller.get(ip);
-  if (!t || nu - t.start > 5 * 60 * 1000) {
-    leesTeller.set(ip, { start: nu, n: 1 });
-    return false;
-  }
-  if (++t.n > 120) {
-    if (t.n === 121) logGeweigerd(req, "leeslimiet");
-    send429(res, 300, { ok: false, fout: "Even te veel verzoeken achter elkaar; probeer het over een paar minuten opnieuw." });
-    return true;
-  }
-  return false;
+  if (!remVol(req, leesTeller, LEES_IP_MAX, leesPraktijkTeller, LEES_PRAKTIJK_MAX,
+    leesSessieIpTeller, LEES_SESSIE_IP_MAX, "leeslimiet")) return false;
+  send429(res, 300, { ok: false, fout: "Even te veel verzoeken achter elkaar; probeer het over een paar minuten opnieuw." });
+  return true;
 }
 
 // dagelijkse reservekopie van alle databestanden (laatste 7 dagen): vangnet tegen
