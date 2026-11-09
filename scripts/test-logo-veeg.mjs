@@ -35,8 +35,11 @@ await new Promise((r) => reserve.listen(0, "127.0.0.1", r));
 const port = reserve.address().port;
 await new Promise((r) => reserve.close(r));
 const origin = `http://127.0.0.1:${port}`;
+// sinds 2026-11-09 schrijft alleen een beveiligde praktijk, v1 of het beheer een profiel;
+// de veeg zelf testen we met de eigen beheersleutel
+const SLEUTEL = "test-sleutel-" + Math.random().toString(16).slice(2);
 const app = spawn(process.execPath, ["server.js"], {
-  cwd: root, env: { ...process.env, HOST: "127.0.0.1", PORT: String(port), DATA_DIR: dataDir, ADMIN_KEY: "" },
+  cwd: root, env: { ...process.env, HOST: "127.0.0.1", PORT: String(port), DATA_DIR: dataDir, ADMIN_KEY: SLEUTEL },
   stdio: ["ignore", "pipe", "pipe"]
 });
 let uit = "";
@@ -46,17 +49,17 @@ const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
 let ip = 1;
 const profiel = (praktijk) => fetch(origin + "/api/praktijken", {
   method: "POST",
-  headers: { "content-type": "application/json", "x-forwarded-for": "10.44.0." + (ip++) },
+  headers: { "content-type": "application/json", "x-forwarded-for": "10.44.0." + (ip++), "x-admin-sleutel": SLEUTEL },
   body: JSON.stringify({ praktijk, adres: "Ergens 1", logo: "data:image/png;base64," + png.toString("base64") })
 });
 try {
   for (let i = 0; i < 100; i++) { try { if ((await fetch(origin + "/health")).ok) break; } catch {} await wacht(50); }
 
-  // aanvaller zonder login: praktijk "Fysio" (prefix van "Fysio Noord" en "Fysio 1")
+  // praktijk "Fysio" (prefix van "Fysio Noord" en "Fysio 1")
   let r = await profiel("Fysio");
   assert.equal(r.status, 200, "nieuw profiel met logo");
   const eigen = (await r.json()).logo.split("/").pop();
-  // aanvaller zonder login: praktijk "P" (prefix van elke praktijkcode p-<hex>)
+  // praktijk "P" (prefix van elke praktijkcode p-<hex>)
   assert.equal((await profiel("P")).status, 200);
   // tweede logo voor "Fysio": de eerste moet dan weg (eigen opruiming blijft werken)
   await wacht(5);

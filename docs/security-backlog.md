@@ -12,14 +12,32 @@ daaruit tot en met 2026-11-06.
 | (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-08 04u (claim, inloggen op naam en e-mail, rem per naam/e-mail/praktijk, wachtwoord wijzigen, herstel, uitnodiging, overzicht en /v2/gegevens met e-mail; gedeeld wachtwoord weer aan: opgelost) |
 | (c) proef-tokens en verlopen proeven | 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-08 12u (therapeutroutes op één kaart open bij praktijk zonder wachtwoord: opgelost; id 48 bits + misrem 30/5 min per IP, patiëntroute met allowlist, praktijkroutes alleen eigen map) |
-| (e) uploads (video, logo, opname /o) | 2026-11-07 (logo-veeg wiste logo's van andere praktijken: opgelost; opname-upload, eigen oefening, /uploads-pad: geen gat) |
+| (e) uploads (video, logo, opname /o) | 2026-11-09 00u (praktijkprofiel + logo van een praktijk zonder wachtwoord overschrijfbaar met alleen de naam: opgelost; opname-upload, beheer-upload, /uploads-pad, type/grootte/magische bytes: geen gat) |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-07 (runtime: payloads in alle kaartvelden, /k in nl/en/ar met vertaling, overzicht, sjablonen, eigen oefeningen, serverpagina's; geen gat) |
 | (g) security-headers, CSP, cookies, CSRF | 2026-11-08 16u (runtime: CSP, frame-ancestors, nosniff, referrer, no-store op /v2, /v2/proef, /v2/app, /k, /o, /privacy, /verwerkersovereenkomst en API; geen inline script zonder nonce; HSTS alleen achter https. Geen gat) |
 | (h) foutmeldingen die stacktraces of paden lekken | 2026-11-08 (runtime-fuzz 103 routes × GET/POST/PUT/DELETE × 7 kapotte bodies × 3 content-types = 6592 verzoeken, plus pad-traversal en kapotte %-codering: geen stacktrace, geen intern pad, geen fout in het serverlog) |
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
 | (j) npm audit | 2026-11-08 20u (0 meldingen, ook dev) |
 
-Volgende run: (e) uploads, daarna (f) injectie/XSS.
+Volgende run: (f) injectie/XSS, daarna (a) beheer.
+
+Sanity 2026-11-09 00u op #109–#111 (videoquotum, werknotitie mee naar dossier, lightbox/proefvenster): `notitieT`
+reist alleen mee in het praktijkoverzicht (achter de praktijkpoort), niet in de patiëntroute (allowlist); de nieuwe
+`innerHTML` in de app is vaste tekst. Geen gat.
+
+Audit (e) 2026-11-09 00u:
+- **OPGELOST 2026-11-09 (deze PR) — MIDDEL — praktijkprofiel en logo van een praktijk zonder wachtwoord
+  overschrijfbaar door iedereen.** `POST /api/praktijken` gebruikte `eisPraktijk`, die bij een niet-geclaimde praktijk
+  alles doorlaat. Het profiel (telefoon, e-mail, website, logo) staat via `/api/kaart` op elke gedeelde patiëntkaart
+  van die praktijk. Met alleen de praktijknaam (staat op de geprinte kaart) kon iedereen er een eigen nummer, website
+  of logo neerzetten: phishing namens de praktijk. Repro lokaal: POST `/api/praktijken` met `{praktijk, adres, tel}`
+  zonder cookie gaf 200 en `/api/kaart?id=…` toonde daarna het valse nummer. Nu: `eisBeveiligdePraktijk` (zonder
+  wachtwoord alleen v1 en een eigen beheersleutel); de v2-app stuurt het profiel direct na beveiligen mee.
+  Test: `npm run test:profielovername`.
+- Verder nagelopen, geen gat: `/api/opname/upload` (token 48 bits, eenmalig, TTL, cross-site dicht, 60 MB vóór
+  bufferen, mp4/webm op magische bytes, quotum), beheer-uploads (alleen `isAdmin`), logo en eigen-oefeningfoto
+  (dataURL-regex + `echteAfbeelding`, 400/600 kB), `/uploads/` (normalize + prefixcheck, extensie-allowlist,
+  nosniff, CORP same-origin, noindex).
 
 Sanity 2026-11-08 20u op #106–#108 (verwijderde collega, Mijn gegevens-download, niet stil hernoemen): de nieuwe
 409-vraag in `POST /api/kaarten` zit achter dezelfde praktijkpoort en geeft alleen de naam van een kaart uit de

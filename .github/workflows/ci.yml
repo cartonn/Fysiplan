@@ -74,3 +74,4 @@ jobs:
       - run: npm run test:landingprint
       - run: npm run test:offlinestand
       - run: npm run test:lightbox
+      - run: npm run test:profielovername
