@@ -40,7 +40,7 @@
   "pose_en": "She lies FACE DOWN (prone) on an exercise mat on the floor, seen from the side, head to the left, forehead resting on a small rolled towel, legs straight. Both arms lie straight alongside her body with the palms facing down. Her shoulders are relaxed. The arrow is a short curved arrow above her right hand pointing UP, showing the arms lifting a few centimetres off the mat.",
   "eind_en": "END position: still lying face down with the forehead on the towel and the legs on the mat, she squeezes her shoulder blades together and down and lifts BOTH straight arms a few centimetres off the mat alongside her body, palms facing down. Head stays down.",
   "zoom": false,
-  "extra_avatar": "CLOSE-UP framing: show both figures from the head to the hips only (legs may be cut off), seen from the side, lying face down, forehead on a towel. TOP: both arms rest flat on the mat beside the body, palms down, shoulders relaxed. BOTTOM: both straight arms are clearly LIFTED off the mat - a clear visible gap of about 10 cm between the hands/forearms and the mat - and the shoulder blades are visibly squeezed together; the head stays on the towel. In the BOTTOM figure the hands and forearms are at least a hand's width above the mat, with a large visible gap and a slight shadow on the mat beneath them."
+  "extra_avatar": "EXTREME CLOSE-UP framing seen exactly from the side: show only the head, shoulders, upper back and arms (the body is cut off at the hips). Lying face down, forehead on a towel. TOP: arms rest flat on the mat beside the body. BOTTOM: both straight arms are lifted HIGH off the mat - the hands are about 15 cm above the mat with a large clear gap underneath - and the shoulder blades are visibly squeezed together; head stays down on the towel."
  },
  {
   "slug": "schouderblad-naar-achteren-actief",
@@ -50,5 +50,195 @@
   "eind_en": "END position: she stands tall with her shoulders drawn back and down, chest slightly open, shoulder blades pulled together, arms still relaxed beside her body; the shoulders do not lift.",
   "zoom": false,
   "extra_avatar": "CLOSE-UP framing: show both figures from the head to the hips only, seen exactly from the side, facing left. TOP: a clearly SLUMPED posture, shoulders rounded far forward, upper back rounded, chest sunken. BOTTOM: upright, shoulders pulled clearly BACK and DOWN, chest open, upper back straight. The difference in shoulder position must be obvious at a glance; arms hang relaxed in both."
+ },
+ {
+  "slug": "schouder-buiten-draaien-isometrisch-muur",
+  "naam": "Schouder naar buiten draaien – isometrisch tegen de muur",
+  "ref": "001",
+  "static": true,
+  "pose_en": "Frame her from the hips up. She stands upright, seen from the FRONT, with her RIGHT side next to a wall (the wall on the viewer's left). Her right elbow is bent 90 degrees and held against her side, the forearm pointing forward, and the BACK (outside) of her right wrist presses against the wall. Nothing moves. Draw a short straight arrow at the back of the right wrist pointing INTO the wall, showing the outward push.",
+  "eind_en": "She holds this position: right elbow bent 90 degrees against her side, back of the right wrist pressing outward against the wall, muscles tensed, nothing moves.",
+  "extra_avatar": "Frame her from the hips up, seen from the front, wall directly beside her right side, the back of the right wrist clearly touching the wall."
+ },
+ {
+  "slug": "schouderblad-naar-achteren-elastiek",
+  "naam": "Schouderblad naar achteren – met elastiek",
+  "ref": "001",
+  "pose_en": "Frame her from the knees up. She stands upright, seen from her right side, facing left toward a door. An elastic band is anchored to the door at waist height and she holds one end in each hand, both arms stretched straight forward, the band slightly taut. The arrow is a straight arrow at her right elbow pointing BACKWARD, showing the elbows pulling back along the body.",
+  "eind_en": "END position: both elbows bent and pulled back alongside the body past the trunk, hands beside the waist, shoulder blades squeezed together, chest open, band stretched to the door.",
+  "extra_avatar": "Frame both figures from the knees up, seen from the side, door and band anchor clearly visible. TOP: arms straight forward. BOTTOM: elbows pulled far back, shoulder blades squeezed."
+ },
+ {
+  "slug": "schouder-voorwaarts-heffen-stok",
+  "naam": "Schouder voorwaarts heffen – met stok",
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the side, facing left. She holds a straight stick horizontally in front of her thighs with both hands, shoulder-width apart, arms straight. The arrow is a long curved arrow from her hands going forward and UP in a big arc to above her head, showing the straight arms raising the stick forward and up.",
+  "eind_en": "END position: both straight arms raised forward and up, the stick held horizontally above her head.",
+  "zoom": false
+ },
+ {
+  "slug": "schouder-zijwaarts-heffen-stok",
+  "naam": "Schouder zijwaarts heffen – met stok",
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the FRONT. She holds a straight stick in front of her body, one hand at each end, the stick horizontal at hip height, arms relaxed. The arrow is a long curved arrow at her right hand going SIDEWAYS and UP, showing the left hand pushing the stick so that the right arm rises sideways.",
+  "eind_en": "END position: seen from the front, the right arm is raised straight out to the side to above shoulder height, holding one end of the stick; the left hand holds the other end at chest height in front of her body and pushes the stick to the right.",
+  "zoom": false
+ },
+ {
+  "slug": "schouder-extensie-actief",
+  "naam": "Schouder extensie – actief",
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the side, facing left, both arms hanging straight beside her body, palms facing her thighs. The arrow is a curved arrow at her right hand pointing BACKWARD and up, showing the straight arm moving backward.",
+  "eind_en": "END position: the right arm is straight and moved backward behind her body as far as comfortable, the trunk stays upright and does not lean forward.",
+  "zoom": false,
+  "extra_avatar": "Seen exactly from the side, facing left. BOTTOM: the straight right arm is clearly moved far BACKWARD behind the body (about 45 degrees behind the trunk), trunk upright."
+ },
+ {
+  "slug": "arm-schuin-omhoog-elastiek",
+  "naam": "Arm schuin omhoog trekken – met elastiek",
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the FRONT, standing with her LEFT foot on one end of an elastic band. Her right hand holds the other end LOW in front of her LEFT hip, arm straight and crossed in front of her body. The arrow is a long diagonal arrow from the right hand going UP and OUT to the upper right above her right shoulder, showing the diagonal pull.",
+  "eind_en": "END position: seen from the front, the right arm is straight and raised diagonally up and out above her right shoulder, thumb pointing backward, the band stretched diagonally across her body from her left foot to her right hand.",
+  "zoom": false
+ },
+ {
+  "slug": "arm-schuin-omlaag-elastiek",
+  "naam": "Arm schuin omlaag trekken – met elastiek",
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the FRONT. An elastic band is anchored HIGH on a door to her right, above head height. Her right hand holds the band with the arm straight and raised diagonally UP and OUT to the upper right. The arrow is a long diagonal arrow from the right hand going DOWN and ACROSS her body toward her left hip.",
+  "eind_en": "END position: seen from the front, the straight right arm has been pulled diagonally down across her body, the right hand now beside her LEFT hip, the band stretched from the high anchor to her hand.",
+  "zoom": false
+ },
+ {
+  "slug": "borstspier-rekken-muur",
+  "naam": "Borstspier rekken tegen de muur",
+  "ref": "001",
+  "static": true,
+  "pose_en": "Frame her from the knees up. She stands with her RIGHT side next to a wall, seen from the side. Her right arm is straight and stretched slightly BACKWARD, the right palm flat on the wall at shoulder height behind her. She has stepped forward with the left foot and her chest is turned slightly AWAY from the wall. No arrow needed except one small curved arrow at her chest showing the trunk turning away from the wall.",
+  "eind_en": "She holds the stretch: right palm flat on the wall at shoulder height behind her, arm straight, a step forward, chest turned away from the wall.",
+  "extra_avatar": "Frame her from the knees up. The wall is clearly visible; her right palm is on the wall BEHIND her at shoulder height and her chest turns away from it."
+ },
+ {
+  "slug": "schouder-buiten-draaien-stok-staand",
+  "naam": "Schouder naar buiten draaien met stok – staand",
+  "ref": "001",
+  "pose_en": "Frame her from the hips up, seen from the FRONT. She holds a straight stick horizontally in front of her belly with both hands, both elbows bent 90 degrees and held against her sides, palms facing up, forearms pointing forward. The arrow is a curved arrow at her RIGHT hand going OUTWARD to the side, showing the right forearm rotating outward, pushed by the left hand via the stick.",
+  "eind_en": "END position: seen from the front, the right elbow stays against her side, the right forearm has rotated OUTWARD to point out to the right side; the left hand has pushed the stick across toward the right, the left hand now in front of her belly.",
+  "extra_avatar": "Frame both figures from the hips up, seen from the front. The right elbow stays pressed against her side in both; only the right forearm turns outward."
+ },
+ {
+  "slug": "schouder-buiten-draaien-stok-ruglig",
+  "naam": "Schouder naar buiten draaien met stok – ruglig",
+  "ref": "001",
+  "pose_en": "She lies on her BACK on an exercise mat, seen from above at an angle, knees bent, feet flat. Her right upper arm rests on the mat beside her body on a small cushion, elbow bent 90 degrees, forearm pointing up to the ceiling. Both hands hold a stick: the right hand at one end, the left hand further along. The arrow is a curved arrow at the right hand going OUTWARD and down toward the mat, showing the right forearm rotating outward, pushed by the left hand via the stick.",
+  "eind_en": "END position: still lying on her back, the right elbow stays beside her body on the cushion, the right forearm has rotated outward and down toward the mat, pushed by the stick held in the left hand across her body.",
+  "extra_avatar": "Lying on the back on a mat, seen from above at an angle so both arms and the stick are clearly visible; the right elbow stays beside her body in both figures."
+ },
+ {
+  "slug": "schouder-buiten-draaien-arm-op-tafel",
+  "naam": "Schouder naar buiten draaien – arm zijwaarts op tafel",
+  "ref": "287",
+  "pose_en": "Frame her from the hips up. She sits upright on a chair, seen from the FRONT, next to a table on her right. Her right upper arm rests SIDEWAYS on the table, out to the side almost at shoulder height, elbow bent 90 degrees, forearm lying flat on the table pointing forward. The arrow is a curved arrow at the right hand going UP, showing the forearm rotating upward while the upper arm stays on the table.",
+  "eind_en": "END position: the right upper arm still rests sideways on the table, elbow bent 90 degrees, but the forearm now points straight UP to the ceiling.",
+  "extra_avatar": "Frame both figures from the hips up, seen from the front, table on her right side clearly visible with the upper arm lying on it in both figures."
+ },
+ {
+  "slug": "schouder-buiten-draaien-zijlig",
+  "naam": "Schouder naar buiten draaien – zijlig",
+  "ref": "001",
+  "pose_en": "She lies on her LEFT side on an exercise mat, seen from the front, head resting on a pillow, knees slightly bent. Her right (upper) elbow is bent 90 degrees, the upper arm held against her side with a small rolled towel between arm and body, the right forearm resting across her belly. The arrow is a curved arrow at the right hand going UP toward the ceiling, showing the forearm rotating upward.",
+  "eind_en": "END position: still lying on her left side, the right elbow stays against her side on the towel, the right forearm has rotated UP and points to the ceiling.",
+  "extra_avatar": "Lying on her left side, seen from the front. In BOTH figures the right ELBOW stays bent 90 degrees and pressed against her side (a towel between upper arm and body) - the arm is NEVER straight and the upper arm never lifts. TOP: forearm rests across the belly. BOTTOM: only the forearm has rotated up so the hand points to the ceiling, elbow still on the side."
+ },
+ {
+  "slug": "sleeper-stretch",
+  "naam": "Sleeper stretch – zijlig",
+  "ref": "001",
+  "static": true,
+  "pose_en": "She lies on her RIGHT side on an exercise mat, seen from the front, head on a pillow, knees bent. Her right upper arm lies on the mat straight out in front of her chest at shoulder height, the right elbow bent 90 degrees, forearm pointing up. Her left hand holds the right wrist and presses the right forearm gently DOWN toward the mat. A small curved arrow at the right hand points forward and down toward the mat.",
+  "eind_en": "She holds the stretch: lying on her right side, right upper arm in front of her at shoulder height, right forearm pressed forward and down toward the mat by her left hand.",
+  "extra_avatar": "Lying on the right side, seen from the front, both hands and the right forearm clearly visible."
+ },
+ {
+  "slug": "armen-schuiven-over-tafel",
+  "naam": "Armen naar voren schuiven over de tafel",
+  "ref": "287",
+  "pose_en": "She sits on a chair, seen from the side, facing left, at a table. Her forearms and hands rest on a towel on the table close to her body, back upright. The arrow is a long straight arrow along the table from her hands pointing FORWARD, showing the arms sliding forward.",
+  "eind_en": "END position: both arms slid far forward over the table on the towel, straight, her trunk bent forward and her head lowered between her arms.",
+  "zoom": false
+ },
+ {
+  "slug": "vingers-langs-muur-omhoog",
+  "naam": "Vingers langs de muur omhoog lopen",
+  "ref": "001",
+  "pose_en": "Frame her from the knees up. She stands facing a wall, seen from the side, about a forearm's length away. The fingertips of her right hand touch the wall at chest height. The arrow is a straight arrow along the wall from her fingers pointing UP.",
+  "eind_en": "END position: her right arm is raised high, the fingertips have walked up the wall above her head, her shoulder stays low.",
+  "zoom": false
+ },
+ {
+  "slug": "handen-achter-hoofd-ellebogen-openen",
+  "naam": "Handen achter het hoofd, ellebogen openen – ruglig",
+  "ref": "001",
+  "pose_en": "She lies on her BACK on an exercise mat, seen from above at an angle, knees bent, feet flat. Her hands are clasped behind her head and both elbows point up to the ceiling. The arrows are two small curved arrows at the elbows pointing OUTWARD and down toward the mat.",
+  "eind_en": "END position: still lying on her back with hands clasped behind the head, both elbows have opened outward and down toward the mat.",
+  "extra_avatar": "Seen from above at an angle so both elbows are clearly visible. TOP: elbows point up. BOTTOM: elbows open wide, close to the mat."
+ },
+ {
+  "slug": "hand-achter-rug-handdoek",
+  "naam": "Hand achter de rug omhoog – met handdoek",
+  "ref": "001",
+  "pose_en": "Frame her from the knees up. She stands upright, seen from BEHIND. A towel hangs vertically down her back: her LEFT hand holds the top of the towel above her left shoulder, her RIGHT hand holds the bottom of the towel behind her lower back. The arrow is a straight arrow at the left hand pointing UP, showing the left hand pulling the towel up.",
+  "eind_en": "END position: seen from behind, the left hand has pulled the towel up above her head, and the right hand behind her back has slid up to between her shoulder blades.",
+  "extra_avatar": "Seen from BEHIND, from the knees up, so both hands and the towel on her back are clearly visible."
+ },
+ {
+  "slug": "arm-omhoog-ruglig-met-hulp",
+  "naam": "Arm omhoog brengen in ruglig – met hulp",
+  "ref": "001",
+  "pose_en": "She lies on her BACK on an exercise mat, seen from the side, knees bent, feet flat. Her left hand holds her right wrist, both hands resting on her belly. The arrow is a long curved arrow from her hands going UP and over toward her head, showing both straight arms being raised.",
+  "eind_en": "END position: still lying on her back, both straight arms raised overhead toward the mat behind her head, the left hand still holding the right wrist.",
+  "zoom": false,
+  "extra_avatar": "BOTTOM: both arms are STRAIGHT (elbows fully extended), raised overhead and resting toward the mat behind her head, the left hand still holding the right wrist. Not hands behind the head."
+ },
+ {
+  "slug": "schouderbladen-plat-ruglig-arm-heffen",
+  "naam": "Schouderbladen plat in ruglig – arm heffen",
+  "ref": "001",
+  "pose_en": "She lies on her BACK on an exercise mat, seen from the side, knees bent, feet flat, arms beside her body, shoulders flat on the mat. The arrow is a curved arrow at her right hand going UP toward the ceiling, showing the straight arm lifting with the thumb leading.",
+  "eind_en": "END position: still lying on her back, the right arm is straight and points up to the ceiling, thumb leading; the shoulders stay flat on the mat.",
+  "zoom": false
+ },
+ {
+  "slug": "schouderbladen-handen-knieen",
+  "naam": "Schouderbladen laten zakken en duwen – handen en knieën",
+  "ref": "001",
+  "pose_en": "She is on her hands and knees on an exercise mat, seen from the side, hands under her shoulders, arms straight, her chest SAGGED down between her shoulder blades (shoulder blades squeezed together). The arrow is a straight arrow above her upper back pointing UP.",
+  "eind_en": "END position: still on hands and knees with straight arms, she has pushed the floor away so her upper back is rounded UP and the shoulder blades are spread apart.",
+  "extra_avatar": "Seen from the side, framed so the upper back is large. TOP: chest sagged down between the shoulders. BOTTOM: upper back clearly rounded up. Arms stay straight in both."
+ },
+ {
+  "slug": "bal-tegen-muur-rollen",
+  "naam": "Bal tegen de muur rollen",
+  "ref": "001",
+  "pose_en": "Frame her from the hips up. She stands facing a wall, seen from the side. Her right arm is straight forward at shoulder height, the palm pressing a ball against the wall. The arrow is a small circular arrow around the ball, showing small circles with the ball.",
+  "eind_en": "END position: same position, the ball rolled slightly higher on the wall, the arm still straight at shoulder height.",
+  "extra_avatar": "Frame both figures from the hips up, seen from the side, the ball and wall clearly visible. The ball is slightly higher in the bottom figure."
+ },
+ {
+  "slug": "leunen-op-handen-tafel",
+  "naam": "Leunen op je handen aan tafel",
+  "ref": "001",
+  "static": true,
+  "pose_en": "Frame her from the knees up. She stands in front of a table, seen from the side, her hands flat on the table with fingers forward, arms straight, leaning her body weight forward onto her hands, shoulder blades low and back. A short straight arrow at her shoulder points DOWN toward her hands.",
+  "eind_en": "She holds this position: hands flat on the table, arms straight, body weight leaning forward onto the hands, shoulders low.",
+  "extra_avatar": "Frame her from the knees up, the table clearly visible."
+ },
+ {
+  "slug": "onderarm-buiten-draaien-ruglig-met-hulp",
+  "naam": "Onderarm naar buiten draaien in ruglig – met hulp (na operatie)",
+  "ref": "001",
+  "pose_en": "She lies on her BACK on an exercise mat, seen from above at an angle, knees bent. Her right upper arm rests beside her body on a cushion, elbow bent 90 degrees, the right forearm resting on her belly. Her left hand holds the right wrist. The arrow is a curved arrow at the right hand going UP and OUTWARD, showing the left hand turning the right forearm outward.",
+  "eind_en": "END position: still lying on her back, the right elbow stays beside her body on the cushion, the right forearm has been turned outward by the left hand until it points straight up to the ceiling.",
+  "extra_avatar": "Seen from above at an angle. In BOTH figures the right upper arm lies flat on the cushion beside her body and the right elbow is bent 90 degrees - the arm is never lifted or straightened. TOP: right forearm rests across the belly, left hand on the right wrist. BOTTOM: the right forearm has been rotated outward so it lies flat on the mat pointing away from her body (out to the side), elbow still beside the body, left hand still guiding the wrist."
  }
 ]

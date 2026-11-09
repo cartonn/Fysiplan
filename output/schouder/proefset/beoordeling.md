@@ -33,3 +33,42 @@ Aanpak: ingezoomd (heupen en hoger), driekwart vooraanzicht, arm uitdrukkelijk a
 
 Stand proefset: goed 1, 2, 4, 6 · matig 5 · fout 3.
 Advies voor 3: niet opnieuw in 90 graden proberen. Het model maakt van de eindhouding steeds een gestrekte arm. Beter de variant met de elleboog in de zij (bovenarm langs het lichaam) gebruiken, of 3 voorlopig zonder avatar laten.
+
+## Eindstand alle 29 (ronde 3, 9 november 2026)
+
+Per oefening: `<slug>.png` = lijntekening, `<slug>-avatar.png` = avatar (begin boven, eind onder). Pogingen met achtervoegsel (-poging1, -ronde1, ...) niet gebruiken.
+
+| slug | oefening | oordeel | opmerking |
+|---|---|---|---|
+| arm-voorwaarts-laten-zakken-stok | Arm voorwaarts laten zakken – met stok (excentrisch) | **goed** |  |
+| arm-zijwaarts-laten-zakken-stok | Arm zijwaarts laten zakken – met stok (excentrisch) | **goed** |  |
+| schouder-binnen-draaien-90-elastiek | Schouder naar binnen draaien in 90 graden – met elastiek | **fout** | niet gebruiken; vervangen door bestaande catalogusoefening "Schouder naar binnen draaien – met elastiek" (elleboog in de zij, heeft al beeld) |
+| schouder-buiten-draaien-90-elastiek | Schouder naar buiten draaien in 90 graden – met elastiek | **goed** | ronde 2 |
+| buiklig-schouderbladen-armen-heffen | Schouderbladen naar achteren – buiklig met armen heffen | **matig** | armen komen maar een klein stukje los (3 rondes) |
+| schouderblad-naar-achteren-actief | Schouderblad naar achteren – actief | **goed** | ronde 2 |
+| schouder-buiten-draaien-isometrisch-muur | Schouder naar buiten draaien – isometrisch tegen de muur | **goed** |  |
+| schouderblad-naar-achteren-elastiek | Schouderblad naar achteren – met elastiek | **goed** |  |
+| schouder-voorwaarts-heffen-stok | Schouder voorwaarts heffen – met stok | **goed** |  |
+| schouder-zijwaarts-heffen-stok | Schouder zijwaarts heffen – met stok | **goed** |  |
+| schouder-extensie-actief | Schouder extensie – actief | **matig** | arm gaat maar beperkt naar achteren (2 pogingen) |
+| arm-schuin-omhoog-elastiek | Arm schuin omhoog trekken – met elastiek | **goed** |  |
+| arm-schuin-omlaag-elastiek | Arm schuin omlaag trekken – met elastiek | **goed** |  |
+| borstspier-rekken-muur | Borstspier rekken tegen de muur | **goed** |  |
+| schouder-buiten-draaien-stok-staand | Schouder naar buiten draaien met stok – staand | **goed** |  |
+| schouder-buiten-draaien-stok-ruglig | Schouder naar buiten draaien met stok – ruglig | **goed** |  |
+| schouder-buiten-draaien-arm-op-tafel | Schouder naar buiten draaien – arm zijwaarts op tafel | **goed** |  |
+| schouder-buiten-draaien-zijlig | Schouder naar buiten draaien – zijlig | **goed** | 2e poging |
+| sleeper-stretch | Sleeper stretch – zijlig | **goed** |  |
+| armen-schuiven-over-tafel | Armen naar voren schuiven over de tafel | **goed** |  |
+| vingers-langs-muur-omhoog | Vingers langs de muur omhoog lopen | **goed** |  |
+| handen-achter-hoofd-ellebogen-openen | Handen achter het hoofd, ellebogen openen – ruglig | **goed** |  |
+| hand-achter-rug-handdoek | Hand achter de rug omhoog – met handdoek | **goed** |  |
+| arm-omhoog-ruglig-met-hulp | Arm omhoog brengen in ruglig – met hulp | **matig** | armen boven het hoofd maar ellebogen iets gebogen (2 pogingen) |
+| schouderbladen-plat-ruglig-arm-heffen | Schouderbladen plat in ruglig – arm heffen | **goed** |  |
+| schouderbladen-handen-knieen | Schouderbladen laten zakken en duwen – handen en knieën | **goed** |  |
+| bal-tegen-muur-rollen | Bal tegen de muur rollen | **goed** |  |
+| leunen-op-handen-tafel | Leunen op je handen aan tafel | **goed** |  |
+| onderarm-buiten-draaien-ruglig-met-hulp | Onderarm naar buiten draaien in ruglig – met hulp (na operatie) | **goed** | 2e poging; onderarm wijst eind omhoog, elleboog naast het lichaam |
+
+Totaal: goed 25, matig 3, fout 1.
+Kosten schouder totaal: ca. 330 credits (proefset 130 + rest ca. 200).

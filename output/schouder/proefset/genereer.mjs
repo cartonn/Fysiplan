@@ -57,7 +57,7 @@ if (cmd === "sheet") {
 if (!process.env.RUNWAYML_API_SECRET) process.loadEnvFile(join(main, ".env"));
 const rw = new RunwayML();
 const saldo = async () => (await rw.organization.retrieve()).creditBalance;
-const bf = join(dir, process.env.BUDGETFILE || "budget.json");
+const bf = resolve(dir, process.env.BUDGETFILE || "budget.json");
 if (!existsSync(bf)) await writeFile(bf, JSON.stringify({ start: await saldo() }) + "\n");
 const start = JSON.parse(readFileSync(bf, "utf8")).start;
 

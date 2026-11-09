@@ -1,0 +1,406 @@
+[
+ {
+  "naam": "Schouder: instabiliteit fase 1",
+  "categorie": "Schouder",
+  "sub": "Eerste fase bij een instabiele schouder of na een luxatie: rustig bewegen en de schouderspieren licht aanspannen.",
+  "fase": 1,
+  "oefeningen": [
+   "Arm omhoog brengen in ruglig – met hulp",
+   "Onderarm naar buiten draaien in ruglig – met hulp (na operatie)",
+   "Schouder naar buiten draaien – isometrisch tegen de muur",
+   "Schouderblad naar achteren – actief",
+   "Seated shoulder roll",
+   "Schouder naar binnen draaien – isometrisch tegen de muur"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Schouder: instabiliteit fase 2",
+  "categorie": "Schouder",
+  "sub": "Beweeglijkheid van de instabiele schouder terugwinnen met een stok en de eerste draaioefeningen.",
+  "fase": 2,
+  "oefeningen": [
+   "Schouder voorwaarts heffen – met stok",
+   "Schouder zijwaarts heffen – met stok",
+   "Hand achter de rug omhoog – met handdoek",
+   "Schouder naar buiten draaien met stok – staand",
+   "Schouderblad naar achteren – actief",
+   "Schouder naar buiten draaien – zijlig",
+   "Schouder naar buiten draaien – arm zijwaarts op tafel"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Schouder: instabiliteit fase 3",
+  "categorie": "Schouder",
+  "sub": "Kracht en controle van schouder en schouderblad opbouwen met stok, elastiek en steunoefeningen.",
+  "fase": 3,
+  "oefeningen": [
+   "Endo pull",
+   "Arm voorwaarts laten zakken – met stok (excentrisch)",
+   "Arm zijwaarts laten zakken – met stok (excentrisch)",
+   "Schouderblad naar achteren – met elastiek",
+   "Schouderbladen naar achteren – buiklig met armen heffen",
+   "Schouderbladen laten zakken en duwen – handen en knieën",
+   "Bal tegen de muur rollen"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Schouder: instabiliteit fase 4",
+  "categorie": "Schouder",
+  "sub": "Zwaardere kracht met elastiek in alle richtingen, ook met de arm op schouderhoogte.",
+  "fase": 4,
+  "oefeningen": [
+   "Schouder naar buiten draaien in 90 graden – met elastiek",
+   "Schouder naar binnen draaien – met elastiek",
+   "Arm schuin omhoog trekken – met elastiek",
+   "Arm schuin omlaag trekken – met elastiek",
+   "Swiss ball plank",
+   "Schouderbladen laten zakken en duwen – handen en knieën",
+   "Arm voorwaarts laten zakken – met stok (excentrisch)",
+   "Arm zijwaarts laten zakken – met stok (excentrisch)"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Schouderprothese fase 1",
+  "categorie": "Schouder",
+  "sub": "Eerste weken na een schouderprothese: de arm met hulp bewegen en nek en schouderblad soepel houden.",
+  "fase": 1,
+  "oefeningen": [
+   "Arm omhoog brengen in ruglig – met hulp",
+   "Onderarm naar buiten draaien in ruglig – met hulp (na operatie)",
+   "Schouder naar buiten draaien – isometrisch tegen de muur",
+   "Schouderblad naar achteren – actief",
+   "Nek buigen – zittend actief",
+   "Nek strekken – zittend actief",
+   "Nek draaien – zittend actief",
+   "Nek zijwaarts buigen – zittend actief"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Schouderprothese fase 2",
+  "categorie": "Schouder",
+  "sub": "Na een schouderprothese de arm weer zelf leren bewegen in alle richtingen.",
+  "fase": 2,
+  "oefeningen": [
+   "Handen achter het hoofd, ellebogen openen – ruglig",
+   "Schouder naar buiten draaien met stok – ruglig",
+   "Sleeper stretch – zijlig",
+   "Schouder zijwaarts heffen – actief",
+   "Armen naar voren schuiven over de tafel",
+   "Schouder extensie – actief",
+   "Vingers langs de muur omhoog lopen"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Schouderprothese fase 3",
+  "categorie": "Schouder",
+  "sub": "Eerste krachtopbouw na een schouderprothese met draaioefeningen en langzaam laten zakken van de arm.",
+  "fase": 3,
+  "oefeningen": [
+   "Schouder naar buiten draaien – zijlig",
+   "Schouder naar buiten draaien – arm zijwaarts op tafel",
+   "Exo pull",
+   "Endo pull",
+   "Arm voorwaarts laten zakken – met stok (excentrisch)",
+   "Arm zijwaarts laten zakken – met stok (excentrisch)"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Schouderprothese fase 4",
+  "categorie": "Schouder",
+  "sub": "Kracht met elastiek opbouwen voor dagelijks gebruik van de arm na een schouderprothese.",
+  "fase": 4,
+  "oefeningen": [
+   "Schouder naar buiten draaien in 90 graden – met elastiek",
+   "Schouder naar binnen draaien – met elastiek",
+   "Arm voorwaarts laten zakken – met stok (excentrisch)",
+   "Arm zijwaarts laten zakken – met stok (excentrisch)",
+   "Arm schuin omlaag trekken – met elastiek",
+   "Schouderblad omhoog draaien – met elastiek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Subacromiale pijn fase 1",
+  "categorie": "Schouder",
+  "sub": "Pijn bij het heffen van de arm: het schouderblad leren sturen en de schouderspieren rustig belasten.",
+  "fase": 1,
+  "oefeningen": [
+   "Exo pull",
+   "Endo pull",
+   "Arm voorwaarts laten zakken – met stok (excentrisch)",
+   "Schouderblad naar achteren – actief"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Subacromiale pijn fase 2",
+  "categorie": "Schouder",
+  "sub": "Draaikracht en schouderbladspieren versterken als de pijn bij het heffen afneemt.",
+  "fase": 2,
+  "oefeningen": [
+   "Schouder naar buiten draaien – arm zijwaarts op tafel",
+   "Schouder naar binnen draaien – met elastiek",
+   "Schouderbladen naar achteren – buiklig met armen heffen"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Subacromiale pijn fase 3",
+  "categorie": "Schouder",
+  "sub": "Volledige schouderkracht opbouwen met elastiek en drukken boven het hoofd.",
+  "fase": 3,
+  "oefeningen": [
+   "Schouder naar buiten draaien in 90 graden – met elastiek",
+   "Schouder naar binnen draaien – met elastiek",
+   "Arm schuin omhoog trekken – met elastiek",
+   "Military press",
+   "Arm zijwaarts laten zakken – met stok (excentrisch)",
+   "Arm voorwaarts laten zakken – met stok (excentrisch)"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Rotator cuff fase 1",
+  "categorie": "Schouder",
+  "sub": "Begin van het herstel van de rotator cuff: licht aanspannen en naar buiten draaien zonder zware belasting.",
+  "fase": 1,
+  "oefeningen": [
+   "Schouder naar buiten draaien – isometrisch tegen de muur",
+   "Schouder naar buiten draaien – actief",
+   "Schouder naar buiten draaien – zijlig",
+   "Schouderblad naar achteren – actief"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Rotator cuff fase 2",
+  "categorie": "Schouder",
+  "sub": "De rotator cuff sterker maken met elastiek en oefeningen voor de schouderbladen.",
+  "fase": 2,
+  "oefeningen": [
+   "Horizontaal openen – met elastiek",
+   "Exo pull",
+   "Schouder naar buiten draaien – arm zijwaarts op tafel",
+   "Schouder naar binnen draaien – met elastiek",
+   "Schouderbladen naar achteren – buiklig met armen heffen"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Rotator cuff fase 3",
+  "categorie": "Schouder",
+  "sub": "Kracht van de rotator cuff op schouderhoogte en gecontroleerd laten zakken van de arm.",
+  "fase": 3,
+  "oefeningen": [
+   "Schouder naar buiten draaien in 90 graden – met elastiek",
+   "Schouder naar binnen draaien – met elastiek",
+   "Arm schuin omhoog trekken – met elastiek",
+   "Arm zijwaarts laten zakken – met stok (excentrisch)",
+   "Arm voorwaarts laten zakken – met stok (excentrisch)"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Schouderbladcontrole fase 1",
+  "categorie": "Schouder",
+  "sub": "Het schouderblad leren sturen in lig, op handen en knieën en leunend op een tafel.",
+  "fase": 1,
+  "oefeningen": [
+   "Schouderbladen plat in ruglig – arm heffen",
+   "Schouderbladen laten zakken en duwen – handen en knieën",
+   "Leunen op je handen aan tafel",
+   "Schouderblad sturen – zijlig met arm op een bal"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Schouderbladcontrole fase 2",
+  "categorie": "Schouder",
+  "sub": "Controle over het schouderblad verder opbouwen met elastiek en steun op de handen.",
+  "fase": 2,
+  "oefeningen": [
+   "Schouderblad naar achteren – met elastiek",
+   "Schouderblad naar achteren – zittend met arm op een bal",
+   "Schouderbladen plat in ruglig – arm heffen",
+   "Schouderbladen laten zakken en duwen – handen en knieën"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Schouderartrose",
+  "categorie": "Schouder",
+  "sub": "Een stijve schouder met slijtage soepel houden met rustige beweegoefeningen.",
+  "oefeningen": [
+   "Schouder pendelen – actief",
+   "Armen naar voren schuiven over de tafel",
+   "Hand achter de rug omhoog – met handdoek",
+   "Schouder naar buiten draaien met stok – ruglig",
+   "Handen achter het hoofd, ellebogen openen – ruglig",
+   "Arm voorwaarts laten zakken – met stok (excentrisch)"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Schouderartrose – preventie",
+  "categorie": "Schouder",
+  "sub": "Schouder en bovenrug beweeglijk en sterk houden om klachten door slijtage voor te blijven.",
+  "oefeningen": [
+   "Armen naar voren schuiven over de tafel",
+   "Schouder naar buiten draaien met stok – ruglig",
+   "Handen achter het hoofd, ellebogen openen – ruglig",
+   "Thoracale extensie – liggend",
+   "Schouder naar buiten draaien – zijlig",
+   "Arm voorwaarts laten zakken – met stok (excentrisch)",
+   "Arm zijwaarts laten zakken – met stok (excentrisch)",
+   "Bovenste trapezius rek – zittend actief"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Frozen shoulder – mobiliteit",
+  "categorie": "Schouder",
+  "sub": "Rekken en bewegen in alle richtingen bij een stijve schouder (frozen shoulder).",
+  "oefeningen": [
+   "Armen naar voren schuiven over de tafel",
+   "Schouder naar buiten draaien met stok – ruglig",
+   "Hand achter de rug omhoog – met handdoek",
+   "Sleeper stretch – zijlig"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Schouder: algemene beweeglijkheid",
+  "categorie": "Schouder",
+  "sub": "Algemene beweegoefeningen om de schouder in alle richtingen soepel te houden.",
+  "oefeningen": [
+   "Schouder voorwaarts heffen – met stok",
+   "Vingers langs de muur omhoog lopen",
+   "Schouder zijwaarts heffen – met stok",
+   "Schouder extensie – actief",
+   "Schouder naar buiten draaien met stok – staand",
+   "Hand achter de rug omhoog – met handdoek"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Schouder: instabiliteit fase 5",
+  "categorie": "Schouder",
+  "sub": "Explosieve en belaste oefeningen als laatste stap voor terugkeer naar sport.",
+  "fase": 5,
+  "oefeningen": [
+   "Bal tegen de muur gooien – squat op een bosu",
+   "Med ball rotation passes knee",
+   "Push up",
+   "Step up with knee raise"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "8"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Schouder: rotator cuff fase 4",
+  "categorie": "Schouder",
+  "sub": "Schouder en romp samen belasten in de laatste herstelfase.",
+  "fase": 4,
+  "oefeningen": [
+   "Swiss ball knee to chest",
+   "Swiss ball plank",
+   "Pully press double",
+   "Bal tegen de muur rollen"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ }
+]
