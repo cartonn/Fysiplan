@@ -19,3 +19,11 @@ Goed, in de app zetten: 399, 433, 442, 443, 444, 449, 451, 465, 497 (-r2) en 429
 Nog twijfel: 438 (-r2, zijstap aan tafel nauwelijks zichtbaar), niet opnemen.
 484-489: geen nieuwe run; pijl intekenen (coordinator).
 Contactvel: ../ronde3b/_vel-r3.png
+
+## Afronding (22:07, akkoord Ahmed 22:05/22:06 via coordinator, max 60 credits): 10 credits
+- 438: -r3 goed (eindstand duidelijk brede stand, één voet zijwaarts, handen op tafel). 2 credits-taken (10 credits), 1 poging.
+- 484-489: bestaande avatar + zwarte pijl met witte rand in de eindstand, zelfde plek/richting als de lijntekening
+  (sharp/SVG, ronde3b/pijl.mjs, geen Runway): 484 omlaag bij het bekken, 485 omhoog bij zitvlak, 486 omhoog bij het bekken,
+  487 schuin omlaag op de onderbuik, 488 dubbele pijl bij het bekken, 489 horizontaal boven de borst. Alle zes goed.
+  Bestanden: <nr>-<slug>-avatar-pijl.png. Contactvel: ../ronde3b/_vel-pijl.png.
+Eindstand: alle 99 avatars goed.
