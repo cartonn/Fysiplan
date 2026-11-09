@@ -432,9 +432,9 @@ html.v2{
   --line:#e6e4dc; --line2:#efeee8;
   --ring:0 0 0 3px rgba(29,58,107,.16);
 }
-.fp-zij,.fp-kruimel{display:none}
+.fp-zij,.fp-kruimel,.zb-praktijk,.fp-hulp{display:none}
 @media screen{
-  html.v2 header.topbar .mark,html.v2 .fp-zij .mark{background:var(--brand)}
+  html.v2 header.topbar .mark{background:var(--brand)}
   html.v2 .chip.on,html.v2 .smart-filter.on{background:var(--brand);border-color:var(--brand)}
   html.v2 #k_inbox .ib-tel{background:var(--brand)}
   html.v2 .row .add.on,html.v2 .row .add:hover{background:var(--brand);border-color:var(--brand)}
@@ -442,64 +442,42 @@ html.v2{
   html.v2 .card .hd{font-size:13.5px}
 }
 @media screen and (min-width:1100px){
-  html.v2 body{padding-left:236px;transition:padding-left .18s ease}
-  html.v2.zij-klein body{padding-left:68px}
-
-  /* zijbalk */
-  html.v2 .fp-zij{display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;width:236px;z-index:32;
-    background:#fbfaf6;border-right:1px solid var(--line);padding:16px 12px 14px;overflow-y:auto;overflow-x:hidden;transition:width .18s ease}
-  html.v2.zij-klein .fp-zij{width:68px}
-  html.v2 .zb-merk{display:flex;align-items:center;gap:9px;padding:2px 6px 14px}
-  html.v2 .zb-merk .mark{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex:0 0 30px}
-  html.v2 .zb-merk b{font-size:19px;font-weight:750;letter-spacing:-.04em;color:var(--brand)}
-  html.v2 .zb-merk b i{font-style:normal;color:#c98a2b}
-  html.v2 .zb-praktijk{display:flex;align-items:center;gap:9px;width:100%;padding:9px 10px;margin:0 0 16px;border:1px solid var(--line);border-radius:11px;
-    background:#fff;cursor:pointer;text-align:left;font:inherit;box-shadow:0 1px 2px rgba(20,27,38,.04)}
+  /* Geen navigatiebalk links meer (Ahmed, 2026-11-09): Sjablonen en Kaarten stonden er
+     dubbel. De kopbalk draagt merk, praktijk, beeldkeuze, Hulp en Printen; links is
+     alle ruimte voor categorieën en oefeningen. */
+  html.v2 header.topbar{height:56px;background:rgba(245,244,239,.86);border-bottom:1px solid var(--line);padding:0 16px}
+  html.v2 header.topbar .brand{display:flex;order:1}
+  html.v2 header.topbar .brand .mark{width:30px;height:30px}
+  html.v2 header.topbar h1{color:var(--brand);font-size:18px;font-weight:750;letter-spacing:-.04em}
+  html.v2 .topbar .menu>.mi{display:none}
+  html.v2 header.topbar .menu{border-left:0;margin-left:0;padding-left:0;order:4}
+  html.v2 header.topbar .spacer{order:3}
+  html.v2 header.topbar #printBtn{order:6;height:34px;border-radius:9px}
+  /* praktijk: naast het merk; opent Kaarten (inloggen, account, Team) */
+  html.v2 .zb-praktijk{order:2;display:flex;align-items:center;gap:8px;max-width:260px;height:38px;padding:0 12px 0 5px;margin-left:10px;
+    border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;text-align:left;font:inherit}
   html.v2 .zb-praktijk:hover{border-color:#d6d3c9}
+  html.v2 .zb-praktijk:focus-visible{outline:none;box-shadow:var(--ring)}
   html.v2 .zb-pav{width:28px;height:28px;border-radius:8px;background:var(--brand-50);color:var(--brand);display:flex;align-items:center;justify-content:center;
     font-size:11px;font-weight:750;flex:0 0 28px}
-  html.v2 .zb-ptekst{min-width:0;display:flex;flex-direction:column}
+  html.v2 .zb-ptekst{min-width:0;display:flex;flex-direction:column;line-height:1.2}
   html.v2 .zb-ptekst b{font-size:12.5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   html.v2 .zb-ptekst small{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  html.v2 .zb-label{font-size:10.5px;font-weight:650;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);padding:10px 10px 6px}
-  html.v2 .zb-nav{display:flex;flex-direction:column;gap:1px}
-  html.v2 .zb-item{display:flex;align-items:center;gap:10px;width:100%;height:36px;padding:0 10px;border:0;border-radius:9px;background:transparent;
-    color:var(--text);font:inherit;font-size:13.5px;font-weight:500;cursor:pointer;text-align:left;white-space:nowrap}
-  html.v2 .zb-item svg{flex:0 0 17px;color:var(--muted)}
-  html.v2 .zb-item:hover{background:#f1efe8;color:var(--ink)}
-  html.v2 .zb-item.aan{background:var(--brand-50);color:var(--brand);font-weight:650}
-  html.v2 .zb-item.aan svg{color:var(--brand)}
-  html.v2 .zb-item:focus-visible{outline:none;box-shadow:var(--ring)}
-  html.v2 .zb-tel{margin-left:auto;font-size:10.5px;font-weight:700;color:#b42318;background:#fdecea;border-radius:99px;padding:1px 7px}
-  html.v2 .zb-ruimte{flex:1}
-  html.v2 .zb-tip{font-size:11.5px;line-height:1.45;color:var(--muted);background:#f3f1ea;border:1px solid var(--line);border-radius:11px;padding:10px 11px;margin:14px 0 10px}
-  html.v2 .zb-tip b{display:block;color:var(--ink);font-size:12px;margin-bottom:2px}
-  html.v2 .zb-voet{display:flex;flex-wrap:wrap;gap:4px 10px;padding:0 6px}
-  html.v2 .zb-voet a{font-size:10.5px;color:var(--soft);text-decoration:underline;text-underline-offset:2px}
-  html.v2 .zb-voet a:hover{color:var(--text)}
-  /* ingeklapt: alleen iconen */
-  html.v2.zij-klein .fp-zij{padding:16px 10px}
-  html.v2.zij-klein .zb-merk{padding:2px 9px 14px}
-  html.v2.zij-klein .zb-merk b,html.v2.zij-klein .zb-ptekst,html.v2.zij-klein .zb-item span,html.v2.zij-klein .zb-tip,
-  html.v2.zij-klein .zb-voet,html.v2.zij-klein .zb-label{display:none}
-  html.v2.zij-klein .zb-praktijk{padding:9px;justify-content:center}
-  html.v2.zij-klein .zb-item{justify-content:center;padding:0;position:relative}
-  html.v2.zij-klein .zb-tel{position:absolute;top:2px;right:2px;padding:0 5px}
-  html.v2.zij-klein .zb-nav+.zb-label{display:block;height:1px;padding:0;margin:10px 6px;background:var(--line);font-size:0}
-
-  /* kopbalk: broodkruimel links, beeldkeuze en Printen rechts */
-  html.v2 header.topbar{height:56px;background:rgba(245,244,239,.86);border-bottom:1px solid var(--line)}
-  html.v2 header.topbar .brand{display:none}
-  html.v2 .topbar .menu>.mi{display:none}
-  html.v2 header.topbar .menu{border-left:0;margin-left:0;padding-left:0;order:3}
-  html.v2 header.topbar .spacer{order:2}
-  html.v2 header.topbar #printBtn{order:4;height:34px;border-radius:9px}
-  html.v2 .fp-kruimel{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);order:1}
-  html.v2 .fp-kruimel i{font-style:normal;color:var(--soft)}
-  html.v2 .fp-kruimel b{color:var(--ink);font-weight:550}
-  html.v2 .fp-kruimel .kr-knop{width:30px;height:30px;border:0;background:transparent;border-radius:8px;color:var(--muted);display:flex;align-items:center;
-    justify-content:center;cursor:pointer;margin-right:4px}
-  html.v2 .fp-kruimel .kr-knop:hover{background:#ecebe4;color:var(--ink)}
+  /* Hulp-menu: Help, Wat is er nieuw en de juridische links */
+  html.v2 .fp-hulp{order:5;position:relative;display:block}
+  html.v2 .fp-hulpknop{height:34px;display:inline-flex;align-items:center;gap:6px;padding:0 10px;border:0;border-radius:9px;background:transparent;
+    color:var(--text);font:inherit;font-size:13px;font-weight:550;cursor:pointer}
+  html.v2 .fp-hulpknop:hover,html.v2 .fp-hulpknop[aria-expanded="true"]{background:#ecebe4;color:var(--ink)}
+  html.v2 .fp-hulpknop:focus-visible{outline:none;box-shadow:var(--ring)}
+  html.v2 .fp-hulpmenu{position:absolute;right:0;top:calc(100% + 6px);z-index:40;min-width:220px;padding:6px;background:#fff;border:1px solid var(--line);
+    border-radius:12px;box-shadow:0 12px 32px rgba(20,27,38,.14)}
+  html.v2 .fp-hulpmenu[hidden]{display:none}
+  html.v2 .fp-hulpmenu>button{display:block;width:100%;text-align:left;padding:8px 10px;border:0;border-radius:8px;background:transparent;font:inherit;
+    font-size:13.5px;color:var(--ink);cursor:pointer}
+  html.v2 .fp-hulpmenu>button:hover,html.v2 .fp-hulpmenu>button:focus-visible{background:#f1efe8;outline:none}
+  html.v2 .fp-hulpvoet{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px;padding:8px 10px 4px;border-top:1px solid var(--line2)}
+  html.v2 .fp-hulpvoet a{font-size:11.5px;color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+  html.v2 .fp-hulpvoet a:hover{color:var(--ink)}
   html.v2 .topbar #beeldKeuze .beeldsegment{background:#ecebe4;border-color:var(--line)}
 
   /* paginakop */
@@ -542,11 +520,12 @@ html.v2 .fp-kop .tb-acties #clearBtn:hover{color:#b42318;background:#fdf3f2}
    oefeningen. Smalle zijbalk standaard; acties direct boven de kaart.
    ====================================================================== */
 @media screen and (min-width:1100px){
-  html.v2 .wrap{grid-template-columns:minmax(400px,430px) minmax(0,1fr);gap:14px;padding:14px 16px 16px}
+  html.v2 .wrap{grid-template-columns:minmax(440px,490px) minmax(0,1fr);gap:14px;padding:14px 16px 16px}
   html.v2 .col-controls{top:70px;height:calc(100vh - 84px)}
-  html.v2 .col-controls .hd{padding:11px 14px 10px}
-  html.v2 .col-controls .bd{display:grid;grid-template-columns:132px minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr);
-    column-gap:10px;padding:10px 10px 0 10px;overflow:hidden}
+  html.v2 .col-controls>.hd{display:none}
+  html.v2 .smart-filters .sf-tel{margin-left:auto;font-size:11.5px;color:var(--muted);white-space:nowrap}
+  html.v2 .col-controls .bd{display:grid;grid-template-columns:164px minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr);
+    column-gap:10px;padding:12px 10px 0 10px;overflow:hidden}
   /* categorieën: eigen kolom, eigen scroll */
   html.v2 #filters{grid-column:1;grid-row:1/4;display:flex;flex-direction:column;flex-wrap:nowrap;gap:2px;max-height:none;min-height:0;
     overflow-y:auto;margin:0;padding:0 4px 12px 0;border-right:1px solid var(--line2);scrollbar-width:thin}
@@ -585,8 +564,11 @@ html.v2 .fp-kop .tb-acties #clearBtn:hover{color:#b42318;background:#fdf3f2}
   html.v2 #a4{height:auto;max-height:none}
 }
 @media screen and (min-width:1100px) and (max-width:1279px){
-  html.v2 .wrap{grid-template-columns:360px minmax(0,1fr)}
-  html.v2 .col-controls .bd{grid-template-columns:112px minmax(0,1fr)}
+  html.v2 .wrap{grid-template-columns:430px minmax(0,1fr)}
+  html.v2 .col-controls .bd{grid-template-columns:124px minmax(0,1fr)}
+  html.v2 .smart-filters{flex-wrap:nowrap}
+  html.v2 .row .nm{font-size:12.5px}
+  html.v2 .zb-praktijk{max-width:200px}
   html.v2 #a4wrap .tb-acties .btn{padding:0 9px}
   html.v2 #a4wrap .fp-teller .fp-balk{display:none}
 }
@@ -622,8 +604,6 @@ html.v2 .tm-lid.uitgenodigd .fp-av{opacity:.75;border:0}
   html.v2 .row .add:hover{transform:scale(1.12)}
   html.v2 #a4 .pic{transition:box-shadow .2s ease}
   html.v2 #a4 .pic:hover{box-shadow:inset 0 0 0 2px var(--brand-100)}
-  html.v2 .zb-item{transition:background .15s ease,color .15s ease,padding-left .18s ease}
-  html.v2:not(.zij-klein) .zb-item:hover{padding-left:14px}
   /* binnenkomen: kaartjes in Kaarten en het team glijden na elkaar in */
   html.v2 #k_inbox .ib-item,html.v2 .tm-lid,html.v2 #k_srv_lijst div:has(> .srv-av){animation:fpKomIn .35s cubic-bezier(.2,.7,.2,1) both}
   html.v2 #k_inbox .ib-item:nth-child(2),html.v2 .tm-lid:nth-of-type(3){animation-delay:.05s}
