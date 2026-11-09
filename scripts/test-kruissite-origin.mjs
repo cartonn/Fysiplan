@@ -3,6 +3,10 @@
 //    sturen die niet; een andere website kon dan via zo'n browser de pijnscore of
 //    "gedaan" van een kaart overschrijven. Nu beslist Origin als Sec-Fetch-Site ontbreekt.
 // 2. {"id":["<id>"]} werd via String() stil het kaart-id. Nu telt alleen een echte tekst.
+// 3. (2026-11-09) "Sec-Fetch-Site: same-site" liet elk subdomein of elke app op hetzelfde
+//    registreerbare domein door. De proefcookie (SameSite=Lax) gaat dan mee, dus zo'n pagina
+//    kon /v2/proef/opzeggen, wissen of doorgaan laten posten. Nu telt same-site alleen met
+//    een Origin die precies deze host is.
 // `npm run test:kruissite`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
@@ -60,6 +64,20 @@ try {
   assert.equal((await meting(9, { origin: "http://127.0.0.1:1" })).status, 403, "andere poort is een andere site");
   assert.equal((await meting(9, { origin: "rommel" })).status, 403, "onleesbare Origin wordt geweigerd");
   assert.equal((await scores()).at(-1).s, 5, "de pijnscore is niet overschreven");
+
+  // same-site: een subdomein of een buurapp op hetzelfde domein is niet deze site
+  const host = new URL(origin).host;
+  assert.equal((await meting(9, { "sec-fetch-site": "same-site", origin: "https://x.fysiplan.nl" })).status, 403, "same-site van een subdomein wordt geweigerd");
+  assert.equal((await meting(9, { "sec-fetch-site": "same-site" })).status, 403, "same-site zonder Origin wordt geweigerd");
+  assert.equal((await scores()).at(-1).s, 5, "de pijnscore is niet overschreven door same-site");
+  assert.equal((await meting(6, { "sec-fetch-site": "same-site", origin: "http://" + host })).status, 200, "same-site met precies deze host mag");
+  assert.equal((await meting(5, { "sec-fetch-site": "none" })).status, 200, "none (zelf getypt/bladwijzer) blijft toegestaan");
+  for (const pad of ["/v2/proef/opzeggen", "/v2/proef/wissen", "/v2/proef/doorgaan"]) {
+    const r = await fetch(origin + pad, { method: "POST", redirect: "manual", body: "actie=opzeggen&zeker=1",
+      headers: { "content-type": "application/x-www-form-urlencoded", "x-forwarded-for": "10.33.2." + (ip++),
+        "sec-fetch-site": "same-site", origin: "https://x.fysiplan.nl", cookie: "fpproef=" + "a".repeat(48) } });
+    assert.equal(r.status, 403, pad + " weigert een post van een subdomein");
+  }
 
   // id als lijst: geen kaart
   const lijst = await meting(7, {}, [ID]);
